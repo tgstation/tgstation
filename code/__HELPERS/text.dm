@@ -819,3 +819,10 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 #define is_alpha(X) ((text2ascii(X) <= 122) && (text2ascii(X) >= 97))
 #define is_digit(X) ((length(X) == 1) && (length(text2num(X)) == 1))
+
+//json decode that will return null on parse error instead of runtiming.
+/proc/safe_json_decode(data)
+	try
+		return json_decode(data)
+	catch
+		return

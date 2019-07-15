@@ -229,6 +229,15 @@
 /obj/item/reagent_containers/spray/waterflower/attack_self(mob/user) //Don't allow changing how much the flower sprays
 	return
 
+///Subtype used for the lavaland clown ruin.
+/obj/item/reagent_containers/spray/waterflower/superlube
+	name = "clown flower"
+	desc = "A delightly devilish flower... you got a feeling where this is going."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "clownflower"
+	volume = 30
+	list_reagents = list(/datum/reagent/lube/superlube = 30)
+
 /obj/item/reagent_containers/spray/waterflower/cyborg
 	reagent_flags = NONE
 	volume = 100
