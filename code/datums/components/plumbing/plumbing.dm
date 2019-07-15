@@ -145,7 +145,7 @@
 	//TODO: Let plumbers directly plumb into one another without ducts if placed adjacent to each other
 
 /// Toggle our machinery on or off. This is called by a hook from default_unfasten_wrench with anchored as only param, so we dont have to copypaste this on every object that can move
-/datum/component/plumbing/proc/toggle_active(ob/O, new_state)
+/datum/component/plumbing/proc/toggle_active(obj/O, new_state)
 	if(new_state)
 		enable()
 	else

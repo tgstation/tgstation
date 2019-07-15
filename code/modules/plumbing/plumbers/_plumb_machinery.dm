@@ -10,4 +10,31 @@
 	density = TRUE
 	active_power_usage = 30
 	use_power = ACTIVE_POWER_USE
+	///Plumbing machinery is always gonna need reagents, so we might aswell put it here
+	var/buffer = 50
+	///Flags for reagents, like INJECTABLE, TRANSPARENT bla bla everything thats in DEFINES/reagents.dm
+	var/reagent_flags
 
+/obj/machinery/plumbing/input/Initialize(mapload)
+	. = ..()
+	create_reagents(buffer, reagent_flags)
+
+///We can empty beakers in here and everything
+/obj/machinery/plumbing/input
+	name = "input gate"
+	desc = "Can be manually filled with reagents from containers."
+	reagent_flags = TRANSPARENT | REFILLABLE
+
+/obj/machinery/plumbing/input/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/plumbing/simple_supply)
+
+///We can fill beakers in here and everything. we dont inheret from input because it has nothing that we need
+/obj/machinery/plumbing/output
+	name = "output gate"
+	desc = "A manual output for plumbing systems, for taking reagents directly into containers."
+	reagent_flags = TRANSPARENT | DRAINABLE
+
+/obj/machinery/plumbing/output/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/plumbing/simple_demand)
