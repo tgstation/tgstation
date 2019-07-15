@@ -103,4 +103,4 @@
 
 /obj/item/storage/wallet/random/PopulateContents()
 	new /obj/item/holochip(src, rand(5,30))
-	update_icon()
+	icon_state = "wallet"
