@@ -21,9 +21,9 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 	Initialize()
 
 /datum/controller/global_vars/Destroy(force)
-	if(!force)
-		return QDEL_HINT_IWILLGC
-	return ..()
+	// This is done to prevent an exploit where admins can get around protected vars
+	SHOULD_CALL_PARENT(0)
+	return QDEL_HINT_IWILLGC
 
 /datum/controller/global_vars/stat_entry()
 	if(!statclick)
