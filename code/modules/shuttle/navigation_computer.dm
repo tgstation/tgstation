@@ -5,6 +5,7 @@
 	var/datum/action/innate/shuttledocker_rotate/rotate_action = new
 	var/datum/action/innate/shuttledocker_place/place_action = new
 	var/shuttleId = ""
+	var/shuttleDestination_type = ""
 	var/shuttlePortId = ""
 	var/shuttlePortDestination_type = ""
 	var/shuttlePortName = "custom location"
@@ -20,7 +21,7 @@
 	var/turf/designating_target_loc
 	var/jammed = FALSE
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/Initialize()
+/obj/machinery/computer/camera_advanced/shuttle_docker/Initialize(mapload)
 	. = ..()
 	GLOB.navigation_computers += src
 
@@ -273,6 +274,7 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	if(port && (shuttleId == initial(shuttleId) || override))
 		shuttleId = port.id
+		shuttleDestination_type = port.destination_type
 		shuttlePortId = "[port.id]_custom"
 		shuttlePortDestination_type = "[port.id]_custom"
 		shuttlePortName = "[shuttleId]_[shuttlePortName]"
