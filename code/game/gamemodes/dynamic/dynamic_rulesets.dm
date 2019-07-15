@@ -2,6 +2,7 @@
 	var/name = "" // For admin logging
 	var/persistent = FALSE // If set to TRUE, the rule won't be discarded after being executed, and dynamic will call rule_process() every SSTicker tick
 	var/repeatable = FALSE // If set to TRUE, dynamic mode will be able to draft this ruleset again later on. (doesn't apply for roundstart rules)
+	var/repeatable_weight_decrease = 2 // If set higher than 0, decreases weight by itself causing the ruleset to appear less often the more it is repeated.
 	var/list/mob/candidates = list() // List of players that are being drafted for this rule
 	var/list/datum/mind/assigned = list() // List of players that were selected for this rule
 	var/antag_flag = null // Preferences flag such as ROLE_WIZARD that need to be turned on for players to be antag
@@ -94,11 +95,14 @@
 		return FALSE
 	return TRUE
 
+// Gets weight of the ruleset
+// Note that this decreases weight if repeatable is TRUE and repeatable_weight_decrease is higher than 0
+// Note: If you don't want repeatable rulesets to decrease their weight use the weight variable directly
 /datum/dynamic_ruleset/proc/get_weight()
-	if(repeatable && weight > 1)
+	if(repeatable && weight > 1 && repeatable_weight_decrease > 0)
 		for(var/datum/dynamic_ruleset/DR in mode.executed_rules)
 			if(istype(DR, type))
-				weight = max(weight-2,1)
+				weight = max(weight-repeatable_weight_decrease,1)
 	return weight
 
 // Here you can remove candidates that do not meet your requirements.
