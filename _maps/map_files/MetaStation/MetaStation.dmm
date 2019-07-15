@@ -143,13 +143,15 @@
 	dir = 4;
 	pixel_x = -26
 	},
-/obj/machinery/chem_dispenser/drinks,
 /obj/structure/sign/barsign{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
+	},
+/obj/item/book/manual/wiki/barman_recipes{
+	pixel_y = 5
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
@@ -163,9 +165,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "aau" = (
-/obj/machinery/camera{
-	c_tag = "Bar"
-	},
 /obj/machinery/requests_console{
 	department = "Bar";
 	departmentType = 2;
@@ -173,17 +172,11 @@
 	receive_ore_updates = 1
 	},
 /obj/structure/table,
-/obj/item/book/manual/wiki/barman_recipes{
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/food/drinks/shaker,
-/obj/item/reagent_containers/glass/rag{
-	pixel_y = 5
-	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+/obj/machinery/chem_dispenser/drinks,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "aav" = (
@@ -746,8 +739,22 @@
 	dir = 1
 	},
 /obj/structure/table,
+/obj/item/reagent_containers/glass/rag{
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/drinks/shaker,
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar)
+"abQ" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
 /obj/machinery/newscaster{
 	pixel_y = 32
+	},
+/obj/machinery/camera{
+	c_tag = "Bar"
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
@@ -108288,8 +108295,8 @@ aao
 aap
 bmO
 aas
+abP
 aaL
-bwO
 bAi
 bBT
 bwO
@@ -109316,7 +109323,7 @@ boP
 brg
 bto
 bmP
-abP
+abQ
 bwO
 bAl
 bBT
