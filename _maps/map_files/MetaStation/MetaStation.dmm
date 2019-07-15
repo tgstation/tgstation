@@ -138,7 +138,6 @@
 /turf/open/floor/plasteel,
 /area/storage/art)
 "aas" = (
-/obj/structure/table,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = -26
@@ -153,15 +152,16 @@
 /obj/item/book/manual/wiki/barman_recipes{
 	pixel_y = 5
 	},
+/obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "aat" = (
-/obj/structure/table,
 /obj/machinery/chem_dispenser/drinks/beer,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+/obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "aau" = (
@@ -171,12 +171,12 @@
 	pixel_y = 30;
 	receive_ore_updates = 1
 	},
-/obj/structure/table,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
 /obj/machinery/chem_dispenser/drinks,
+/obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "aav" = (
@@ -738,11 +738,11 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/table,
 /obj/item/reagent_containers/glass/rag{
 	pixel_y = 5
 	},
 /obj/item/reagent_containers/food/drinks/shaker,
+/obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "abQ" = (
@@ -756,12 +756,23 @@
 /obj/machinery/camera{
 	c_tag = "Bar"
 	},
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-10"
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "abR" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/starboard/fore)
+"abS" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar)
 "abV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/light/small{
@@ -108296,7 +108307,7 @@ aap
 bmO
 aas
 abP
-aaL
+abS
 bAi
 bBT
 bwO
@@ -108552,7 +108563,7 @@ boN
 aar
 bmO
 aat
-bwO
+aaL
 byy
 bAj
 bBT
