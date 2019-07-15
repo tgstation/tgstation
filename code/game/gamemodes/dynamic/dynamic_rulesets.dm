@@ -164,6 +164,9 @@
 		if (!P.client || !P.mind) // Are they connected?
 			candidates.Remove(P)
 			continue
+		if(mode.age_check(P.client))
+			candidates.Remove(P)
+			continue
 		if(P.mind.special_role) // We really don't want to give antag to an antag.
 			candidates.Remove(P)
 			continue
@@ -178,6 +181,9 @@
 	for (var/mob/P in candidates)
 		if (!istype(P, required_type))
 			candidates.Remove(P) // Can be a new_player, etc.
+			continue
+		if(mode.age_check(P.client))
+			candidates.Remove(P)
 			continue
 		if (!P.client || !P.mind || !P.mind.assigned_role || P.mind.special_role) // Are they connected? Are they an antag already?
 			candidates.Remove(P)
