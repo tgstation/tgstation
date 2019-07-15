@@ -165,11 +165,12 @@
 
 	var/list/processing_list = list(O)
 	var/list/processed_list = list()
+	var/index = 1
 	var/obj/item/organ/found_organ
 
-	while(processing_list.len)
+	while(index <= length(processing_list))
 
-		var/atom/A = processing_list[1]
+		var/atom/A = processing_list[index]
 
 		if(istype(A, /obj/item/organ))
 			found_organ = A
@@ -185,7 +186,7 @@
 			if(!processed_list[B] && !istype(B, /obj/structure/closet/crate/freezer) && !istype(B, /obj/structure/closet/secure_closet/freezer))
 				processing_list+= B
 
-		processing_list.Cut(1, 2)
+		index++
 		processed_list[A] = A
 
 	return
