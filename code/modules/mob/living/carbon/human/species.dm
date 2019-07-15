@@ -963,9 +963,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
  * Equip the outfit required for life. Replaces items currently worn.
  */ 
 /datum/species/proc/give_important_for_life(mob/living/carbon/human/human_to_equip)
-	if(outfit_important_for_life)
-		outfit_important_for_life= new()
-		outfit_important_for_life.equip(human_to_equip)
+	if(!outfit_important_for_life)
+		return
+		
+	outfit_important_for_life= new()
+	outfit_important_for_life.equip(human_to_equip)
 
 ////////
 //LIFE//
