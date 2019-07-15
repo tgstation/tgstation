@@ -72,7 +72,7 @@
 /datum/dynamic_ruleset/latejoin/provocateur
 	name = "Provocateur"
 	antag_datum = /datum/antagonist/rev/head
-	antag_flag = ROLE_REV_HEAD
+	antag_flag = ROLE_REV
 	restricted_roles = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director")
 	enemy_roles = list("AI", "Cyborg", "Security Officer","Detective","Head of Security", "Captain", "Warden")
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
@@ -99,7 +99,7 @@
 	var/mob/M = pick(candidates)
 	candidates -= M
 	assigned += M.mind
-	M.mind.special_role = antag_flag
+	M.mind.special_role = ROLE_REV_HEAD
 	var/datum/antagonist/rev/head/new_head = new()
 	new_head.give_flash = TRUE
 	new_head.give_hud = TRUE
