@@ -233,7 +233,7 @@
 /datum/techweb_node/regulated_bluespace
 	id = "regulated_bluespace"
 	display_name = "Regulated Bluespace Research"
-	description = "Bluespace technology using stable and balanced procedures, unwilling to damaging the fabric of bluespace. Lawed by galactic conventions."
+	description = "Bluespace technology using stable and balanced procedures. Required by galactic convention for public use."
 	prereq_ids = list()//"bluespace_travel")
 	design_ids = list("spaceship_navigation_beacon")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
