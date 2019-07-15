@@ -960,7 +960,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	return 0 //This is not a boolean, it's the multiplier for the damage that the user takes from the item.It is added onto the check_weakness value of the mob, and then the force of the item is multiplied by this value
 
 /**
- * Soft equip the outfit required for life. Soft equip will equip if the slot is free, or drop to floor.
+ * Equip the outfit required for life. Replaces items currently worn.
  */ 
 /datum/species/proc/give_important_for_life(mob/living/carbon/human/human_to_equip)
 	if(outfit_important_for_life)
