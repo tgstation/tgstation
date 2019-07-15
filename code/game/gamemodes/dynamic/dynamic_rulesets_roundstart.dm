@@ -40,6 +40,58 @@
 
 //////////////////////////////////////////////
 //                                          //
+//           BLOOD BROTHERS                 //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/roundstart/traitorbro
+	name = "Blood Brothers"
+	persistent = FALSE
+	antag_flag = ROLE_BROTHER
+	antag_datum = /datum/antagonist/brother/
+	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	restricted_roles = list("Cyborg")
+	required_candidates = 2
+	weight = 4
+	cost = 15
+	requirements = list(50,40,40,30,30,20,15,15,15,15)
+	high_population_requirement = 15
+	var/list/datum/team/brother_team/pre_brother_teams = list()
+	var/const/team_amount = 2 //hard limit on brother teams if scaling is turned off
+	var/const/min_team_size = 2
+
+/datum/dynamic_ruleset/roundstart/traitorbro/pre_execute()
+	var/num_teams = team_amount
+	var/bsc = CONFIG_GET(number/brother_scaling_coeff)
+	if(bsc)
+		num_teams = max(1, round(num_players() / bsc))
+
+	for(var/j = 1 to num_teams)
+		if(candidates.len < min_team_size || candidates.len < required_candidates)
+			break
+		var/datum/team/brother_team/team = new
+		var/team_size = prob(10) ? min(3, candidates.len) : 2
+		for(var/k = 1 to team_size)
+			var/mob/bro = pick(candidates)
+			candidates -= bro
+			assigned += bro.mind
+			team.add_member(bro.mind)
+			bro.mind.special_role = "brother"
+			bro.mind.restricted_roles = restricted_roles
+		pre_brother_teams += team
+
+/datum/dynamic_ruleset/roundstart/traitorbro/execute()
+	for(var/datum/team/brother_team/team in pre_brother_teams)
+		team.pick_meeting_area()
+		team.forge_brother_objectives()
+		for(var/datum/mind/M in team.members)
+			M.add_antag_datum(/datum/antagonist/brother, team)
+		team.update_name()
+	mode.brother_teams += pre_brother_teams
+	return ..()
+
+//////////////////////////////////////////////
+//                                          //
 //               CHANGELINGS                //
 //                                          //
 //////////////////////////////////////////////

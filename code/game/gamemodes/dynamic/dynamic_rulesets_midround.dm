@@ -132,8 +132,8 @@
 	name = "Syndicate Sleeper Agent"
 	antag_datum = /datum/antagonist/traitor
 	antag_flag = ROLE_TRAITOR
-	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Cyborg")
-	restricted_roles = list("AI", "Free Golem", "Servant Golem", "Lifebringer")
+	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
+	restricted_roles = list("Cyborg", "AI", "Free Golem", "Servant Golem", "Lifebringer")
 	required_candidates = 1
 	weight = 7
 	cost = 10
@@ -154,11 +154,11 @@
 /datum/dynamic_ruleset/midround/autotraitor/trim_candidates()
 	..()
 	for(var/mob/living/player in living_players)
-		if(isAI(player))
-			living_players -= player // Your assigned role doesn't change when you are turned into AI
+		if(issilicon(player)) // Your assigned role doesn't change when you are turned into a silicon.
+			living_players -= player 
 			continue
 		if(is_centcom_level(player.z))
-			living_players -= player // We don't autotator people in centcom
+			living_players -= player // We don't autotator people in CentCom
 			continue
 		if(player.mind && (player.mind.special_role))
 			living_players -= player // We don't autotator people with roles already
@@ -188,7 +188,7 @@
 	antag_datum = /datum/antagonist/traitor
 	antag_flag = ROLE_MALF
 	enemy_roles = list("Security Officer", "Warden","Detective","Head of Security", "Captain", "Scientist", "Chemist", "Research Director", "Chief Engineer")
-	exclusive_roles = list("AI", "Free Golem", "Servant Golem", "Lifebringer")
+	exclusive_roles = list("AI")
 	required_enemies = list(4,4,4,4,4,4,2,2,2,0)
 	required_candidates = 1
 	weight = 1
