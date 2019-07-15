@@ -429,12 +429,8 @@
 /turf/closed/wall,
 /area/security/prison)
 "abf" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/structure/table,
-/turf/open/floor/plasteel,
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
 /area/crew_quarters/bar)
 "abg" = (
 /obj/machinery/door/poddoor{
@@ -508,6 +504,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"abp" = (
+/obj/structure/sign/poster/random,
+/turf/closed/wall,
+/area/maintenance/central)
 "abq" = (
 /obj/structure/holohoop{
 	pixel_y = 29
@@ -589,6 +589,14 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/starboard/fore)
+"abw" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "abx" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/turf_decal/stripes/line{
@@ -632,6 +640,11 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/freezer,
 /area/security/prison)
+"abC" = (
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "abD" = (
 /obj/structure/chair/stool,
 /obj/effect/decal/cleanable/dirt,
@@ -666,6 +679,18 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"abI" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "abJ" = (
 /obj/structure/window/reinforced,
 /obj/effect/turf_decal/tile/blue{
@@ -704,6 +729,28 @@
 	icon_state = "platingdmg3"
 	},
 /area/security/prison)
+"abO" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"abP" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/machinery/newscaster{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar)
 "abR" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space,
@@ -33424,28 +33471,6 @@
 	icon_state = "platingdmg2"
 	},
 /area/maintenance/central)
-"buL" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -23
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"buM" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27
-	},
-/obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "buO" = (
 /obj/machinery/door/airlock{
 	name = "Bar Storage";
@@ -34323,15 +34348,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/central)
-"bwJ" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/door/firedoor,
-/obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "bwO" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -106989,7 +107005,7 @@ bti
 bcg
 bcg
 bcg
-bcg
+abp
 bBP
 bDy
 bFf
@@ -107243,8 +107259,8 @@ bmJ
 boJ
 bra
 btj
-buL
-bdO
+abw
+abO
 byv
 bcl
 bBQ
@@ -107500,8 +107516,8 @@ aWf
 aWf
 brb
 aXJ
+abC
 aWf
-aZa
 aWf
 dCE
 bBR
@@ -107757,8 +107773,8 @@ bmK
 boK
 brc
 brc
-buM
-bwJ
+abI
+byw
 byw
 byw
 byw
@@ -108013,10 +108029,10 @@ bkT
 bmL
 boL
 bmO
-bmM
+bmO
 bmP
-bmP
-dhT
+abf
+abf
 bmP
 bBS
 bDC
@@ -109300,7 +109316,7 @@ boP
 brg
 bto
 bmP
-abf
+abP
 bwO
 bAl
 bBT
