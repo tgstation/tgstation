@@ -659,7 +659,7 @@
 	dir = 1;
 	dwidth = 4;
 	height = 5;
-	id = "caravansyndicate1_ambush";
+	destination_type = "caravansyndicate1_ambush";
 	name = "Trade Route";
 	roundstart_template = /datum/map_template/shuttle/ruin/syndicate_fighter_shiv;
 	width = 9
