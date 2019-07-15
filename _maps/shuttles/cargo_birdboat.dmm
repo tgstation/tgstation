@@ -4,6 +4,7 @@
 /area/shuttle/supply)
 "e" = (
 /obj/machinery/conveyor{
+	dir = 2;
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
@@ -81,6 +82,7 @@
 /area/shuttle/supply)
 "p" = (
 /obj/machinery/button/door{
+	dir = 2;
 	id = "QMLoaddoor2";
 	name = "Loading Doors";
 	pixel_x = 24;
@@ -180,6 +182,7 @@
 /area/shuttle/supply)
 "R" = (
 /obj/machinery/conveyor{
+	dir = 2;
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},

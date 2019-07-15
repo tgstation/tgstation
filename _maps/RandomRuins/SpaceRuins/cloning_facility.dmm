@@ -287,9 +287,9 @@
 /area/space/nearstation)
 "M" = (
 /obj/structure/fluff/broken_flooring{
-	dir = 8;
+	name = "broken plating";
 	icon_state = "plating";
-	name = "broken plating"
+	dir = 8
 	},
 /turf/template_noop,
 /area/space/nearstation)

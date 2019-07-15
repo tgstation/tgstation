@@ -3,8 +3,9 @@
 	name = "nuclear particle"
 	icon_state = "nuclear_particle"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	flag = "rad"
-	irradiate = 5000
+	damage = 10
+	damage_type = TOX
+	irradiate = 2500 //enough to knockdown and induce vomiting
 	speed = 0.4
 	hitsound = 'sound/weapons/emitter2.ogg'
 	impact_type = /obj/effect/projectile/impact/xray

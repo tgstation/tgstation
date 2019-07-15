@@ -132,14 +132,10 @@
 	icon_state = "sandwater_t"
 	baseturfs = /turf/open/floor/plating/beach/coastline_t
 
-/turf/open/floor/plating/beach/coastline_b //need to make this water subtype.
+/turf/open/floor/plating/beach/coastline_b
 	name = "coastline"
 	icon_state = "sandwater_b"
 	baseturfs = /turf/open/floor/plating/beach/coastline_b
-	footstep = FOOTSTEP_LAVA
-	barefootstep = FOOTSTEP_LAVA
-	clawfootstep = FOOTSTEP_LAVA
-	heavyfootstep = FOOTSTEP_LAVA
 
 /turf/open/floor/plating/beach/water
 	gender = PLURAL
@@ -147,10 +143,6 @@
 	desc = "You get the feeling that nobody's bothered to actually make this water functional..."
 	icon_state = "water"
 	baseturfs = /turf/open/floor/plating/beach/water
-	footstep = FOOTSTEP_LAVA //placeholder, kinda.
-	barefootstep = FOOTSTEP_LAVA
-	clawfootstep = FOOTSTEP_LAVA
-	heavyfootstep = FOOTSTEP_LAVA
 
 /turf/open/floor/plating/beach/coastline_t/sandwater_inner
 	icon_state = "sandwater_inner"
@@ -248,13 +240,4 @@
 /turf/open/floor/plating/snowed/temperatre
 	temperature = 255.37
 
-/turf/open/floor/plating/grass
-	name = "grass"
-	desc = "A patch of grass."
-	icon_state = "grass"
-	broken_states = list("sand")
-	bullet_bounce_sound = null
-	footstep = FOOTSTEP_GRASS
-	barefootstep = FOOTSTEP_GRASS
-	clawfootstep = FOOTSTEP_GRASS
-	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+

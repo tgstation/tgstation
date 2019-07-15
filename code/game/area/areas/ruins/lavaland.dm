@@ -6,8 +6,7 @@
 /area/ruin/powered/clownplanet
 	icon_state = "dk_yellow"
 
-/area/ruin/unpowered/gaia
-	name = "Patch of Eden"
+/area/ruin/powered/animal_hospital
 	icon_state = "dk_yellow"
 
 /area/ruin/powered/snow_biodome

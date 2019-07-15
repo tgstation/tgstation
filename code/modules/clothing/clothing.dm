@@ -21,6 +21,8 @@
 	var/toggle_cooldown = null
 	var/cooldown = 0
 
+	var/blocks_shove_knockdown = FALSE //Whether wearing the clothing item blocks the ability for shove to knock down.
+
 	var/clothing_flags = NONE
 
 	//Var modification - PLEASE be careful with this I know who you are and where you live

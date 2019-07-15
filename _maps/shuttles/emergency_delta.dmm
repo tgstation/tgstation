@@ -530,7 +530,9 @@
 /obj/machinery/door/airlock/medical/glass{
 	name = "Escape Shuttle Infirmary"
 	},
-/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aW" = (
@@ -538,12 +540,13 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
+	dheight = 0;
 	dwidth = 11;
 	height = 18;
 	name = "Delta emergency shuttle";
-	port_direction = 4;
+	width = 30;
 	preferred_direction = 2;
-	width = 30
+	port_direction = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -604,7 +607,9 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bd" = (
-/obj/structure/closet/crate/medical,
+/obj/structure/closet/crate/medical{
+	name = "medical crate"
+	},
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/o2{
 	pixel_x = 3;
@@ -764,7 +769,9 @@
 	name = "Cockpit";
 	req_access_txt = "19"
 	},
-/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bv" = (
@@ -928,7 +935,9 @@
 /obj/machinery/door/airlock/external{
 	name = "Emergency Recovery Airlock"
 	},
-/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bS" = (

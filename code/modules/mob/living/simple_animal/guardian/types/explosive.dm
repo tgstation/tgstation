@@ -1,9 +1,3 @@
-#define UNREGISTER_BOMB_SIGNALS(A) \
-	do { \
-		UnregisterSignal(A, boom_signals); \
-		UnregisterSignal(A, COMSIG_PARENT_EXAMINE); \
-	} while (0)
-
 //Bomb
 /mob/living/simple_animal/hostile/guardian/bomb
 	melee_damage_lower = 15
@@ -15,7 +9,6 @@
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Explosive modules active. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's an explosive carp! Boom goes the fishy.</span>"
 	var/bomb_cooldown = 0
-	var/static/list/boom_signals = list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_BUMPED, COMSIG_ATOM_ATTACK_HAND)
 
 /mob/living/simple_animal/hostile/guardian/bomb/Stat()
 	..()
@@ -45,32 +38,61 @@
 		return
 	if(isobj(A) && Adjacent(A))
 		if(bomb_cooldown <= world.time && !stat)
+			var/obj/guardian_bomb/B = new /obj/guardian_bomb(get_turf(A))
 			to_chat(src, "<span class='danger'><B>Success! Bomb armed!</B></span>")
 			bomb_cooldown = world.time + 200
-			RegisterSignal(A, COMSIG_PARENT_EXAMINE, .proc/display_examine)
-			RegisterSignal(A, boom_signals, .proc/kaboom)
-			addtimer(CALLBACK(src, .proc/disable, A), 600, TIMER_UNIQUE|TIMER_OVERRIDE)
+			B.spawner = src
+			B.disguise(A)
 		else
 			to_chat(src, "<span class='danger'><B>Your powers are on cooldown! You must wait 20 seconds between bombs.</B></span>")
 
-/mob/living/simple_animal/hostile/guardian/bomb/proc/kaboom(atom/source, mob/living/explodee)
-	if(!istype(explodee))
-		return
-	if(explodee == src || explodee == summoner || hasmatchingsummoner(explodee))
-		return
-	to_chat(explodee, "<span class='danger'><B>[source] was boobytrapped!</B></span>")
-	to_chat(src, "<span class='danger'><B>Success! Your trap caught [explodee]</B></span>")
-	var/turf/T = get_turf(source)
-	playsound(T,'sound/effects/explosion2.ogg', 200, 1)
-	new /obj/effect/temp_visual/explosion(T)
-	explodee.ex_act(EXPLODE_HEAVY)
-	UNREGISTER_BOMB_SIGNALS(source)
+/obj/guardian_bomb
+	name = "bomb"
+	desc = "You shouldn't be seeing this!"
+	var/obj/stored_obj
+	var/mob/living/simple_animal/hostile/guardian/spawner
 
-/mob/living/simple_animal/hostile/guardian/bomb/proc/disable(atom/A)
-	to_chat(src, "<span class='danger'><B>Failure! Your trap didn't catch anyone this time.</B></span>")
-	UNREGISTER_BOMB_SIGNALS(A)
 
-/mob/living/simple_animal/hostile/guardian/bomb/proc/display_examine(datum/source, mob/user, text)
-	text += "<span class='holoparasite'>It glows with a strange <font color=\"[namedatum.colour]\">light</font>!</span>"
+/obj/guardian_bomb/proc/disguise(obj/A)
+	A.forceMove(src)
+	stored_obj = A
+	opacity = A.opacity
+	anchored = A.anchored
+	density = A.density
+	appearance = A.appearance
+	addtimer(CALLBACK(src, .proc/disable), 600)
 
-#undef UNREGISTER_BOMB_SIGNALS
+/obj/guardian_bomb/proc/disable()
+	stored_obj.forceMove(get_turf(src))
+	to_chat(spawner, "<span class='danger'><B>Failure! Your trap didn't catch anyone this time.</B></span>")
+	qdel(src)
+
+/obj/guardian_bomb/proc/detonate(mob/living/user)
+	if(isliving(user))
+		if(user != spawner && user != spawner.summoner && !spawner.hasmatchingsummoner(user))
+			to_chat(user, "<span class='danger'><B>[src] was boobytrapped!</B></span>")
+			to_chat(spawner, "<span class='danger'><B>Success! Your trap caught [user]</B></span>")
+			var/turf/T = get_turf(src)
+			stored_obj.forceMove(T)
+			playsound(T,'sound/effects/explosion2.ogg', 200, 1)
+			new /obj/effect/temp_visual/explosion(T)
+			user.ex_act(EXPLODE_HEAVY)
+			qdel(src)
+		else
+			to_chat(user, "<span class='holoparasite'>[src] glows with a strange <font color=\"[spawner.namedatum.colour]\">light</font>, and you don't touch it.</span>")
+
+/obj/guardian_bomb/Bumped(atom/A)
+	detonate(A)
+	..()
+
+/obj/guardian_bomb/attackby(mob/living/user)
+	detonate(user)
+
+//ATTACK HAND IGNORING PARENT RETURN VALUE
+/obj/guardian_bomb/attack_hand(mob/living/user)
+	detonate(user)
+
+/obj/guardian_bomb/examine(mob/user)
+	. = stored_obj.examine(user)
+	if(get_dist(user,src)<=2)
+		. += "<span class='holoparasite'>It glows with a strange <font color=\"[spawner.namedatum.colour]\">light</font>!</span>"

@@ -1212,6 +1212,7 @@
 /area/ruin/space/derelict/bridge)
 "fp" = (
 /obj/machinery/door/window{
+	dir = 2;
 	name = "Captain's Quarters";
 	req_access_txt = "20"
 	},
@@ -1794,9 +1795,9 @@
 "hF" = (
 /obj/structure/table,
 /obj/machinery/computer/pod/old{
-	id = "derelict_gun";
 	name = "ProComp IIe";
-	pixel_y = 7
+	pixel_y = 7;
+	id = "derelict_gun"
 	},
 /turf/open/floor/plasteel/chapel,
 /area/ruin/space/derelict/medical/chapel)
@@ -3416,6 +3417,7 @@
 /area/ruin/space/derelict/se_solar)
 "nT" = (
 /obj/docking_port/stationary{
+	dheight = 0;
 	dir = 2;
 	dwidth = 11;
 	height = 22;
@@ -3444,7 +3446,8 @@
 /obj/machinery/power/solar_control{
 	dir = 1;
 	id = "derelictsolar";
-	name = "Primary Solar Control"
+	name = "Primary Solar Control";
+	track = 0
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,

@@ -6,8 +6,8 @@
 	effectdesc = "will move your core when manually expanding near it."
 	analyzerdescdamage = "Does high brute and burn damage."
 	analyzerdesceffect = "Is highly mobile and generates resources rapidly."
-	color = "#4F4441"
-	complementary_color = "#414C4F"
+	color = "#CDC0B0"
+	complementary_color = "#FFF68F"
 	reagent = /datum/reagent/blob/networked_fibers
 
 /datum/blobstrain/reagent/networked_fibers/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/camera/blob/O)
@@ -29,7 +29,7 @@
 /datum/reagent/blob/networked_fibers
 	name = "Networked Fibers"
 	taste_description = "efficiency"
-	color = "#4F4441"
+	color = "#CDC0B0"
 
 /datum/reagent/blob/networked_fibers/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()

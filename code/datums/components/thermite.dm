@@ -1,7 +1,6 @@
 /datum/component/thermite
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/amount
-	var/burn_coeff
 	var/overlay
 
 	var/static/list/blacklist = typecacheof(list(
@@ -16,7 +15,7 @@
 		/turf/closed/indestructible,
 		/turf/open/indestructible)
 		)
-
+	
 	var/static/list/resistlist = typecacheof(
 		/turf/closed/wall/r_wall
 		)
@@ -24,13 +23,10 @@
 /datum/component/thermite/Initialize(_amount)
 	if(!istype(parent, /turf) || blacklist[parent.type])
 		return COMPONENT_INCOMPATIBLE
-
 	if(immunelist[parent.type])
-		burn_coeff = 0 //Yeah the overlay can still go on it and be cleaned but you arent burning down a diamond wall
-	else if(resistlist[parent.type])
-		burn_coeff = 0.25
-	else
-		burn_coeff = 1
+		_amount*=0 //Yeah the overlay can still go on it and be cleaned but you arent burning down a diamond wall
+	if(resistlist[parent.type])
+		_amount*=0.25
 
 	amount = _amount*10
 
@@ -62,13 +58,15 @@
 
 	playsound(master, 'sound/items/welder.ogg', 100, 1)
 
-	if(amount * burn_coeff >= 50)
+	if(amount >= 50)
+		var/burning_time = max(100, 100-amount)
 		master = master.Melt()
 		master.burn_tile()
 		if(user)
 			master.add_hiddenprint(user)
-	QDEL_IN(fakefire, 10 SECONDS)
-	qdel(src)
+		QDEL_IN(fakefire, burning_time)
+	else
+		QDEL_IN(fakefire, 50)
 
 /datum/component/thermite/proc/clean_react(datum/source, strength)
 	//Thermite is just some loose powder, you could probably clean it with your hands. << todo?

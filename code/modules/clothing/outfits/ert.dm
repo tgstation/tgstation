@@ -19,7 +19,7 @@
 
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
-	W.update_label()
+	W.update_label(W.registered_name, W.assignment)
 
 /datum/outfit/ert/commander
 	name = "ERT Commander"
@@ -173,7 +173,7 @@
 	back = /obj/item/storage/backpack/satchel
 	r_pocket = /obj/item/pda/heads
 	l_hand = /obj/item/clipboard
-	id = /obj/item/card/id/centcom
+	id = /obj/item/card/id
 
 /datum/outfit/centcom_official/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
@@ -185,6 +185,7 @@
 	pda.update_label()
 
 	var/obj/item/card/id/W = H.wear_id
+	W.icon_state = "centcom"
 	W.access = get_centcom_access("CentCom Official")
 	W.access += ACCESS_WEAPONS
 	W.assignment = "CentCom Official"

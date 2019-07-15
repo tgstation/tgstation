@@ -510,6 +510,7 @@
 				/obj/item/stack/sheet/mineral/gold{amount = 15} = 10,
 				/obj/item/book/granter/spell/barnyard = 4,
 				/obj/item/pickaxe/drill/diamonddrill = 6,
+				/obj/item/borg/upgrade/vtec = 7,
 				/obj/item/borg/upgrade/disablercooler = 7)
 
 

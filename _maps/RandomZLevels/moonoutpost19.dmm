@@ -12,46 +12,48 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
 "ag" = (
 /obj/structure/alien/weeds,
-/obj/structure/alien/egg/burst,
+/obj/structure/alien/egg/burst{
+	desc = "A large mottled egg."
+	},
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
 "ai" = (
 /obj/structure/alien/weeds,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
 "aj" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
 "ak" = (
 /obj/structure/alien/weeds,
 /mob/living/simple_animal/hostile/alien,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
 "am" = (
 /obj/structure/alien/weeds/node,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
 "ap" = (
@@ -61,8 +63,8 @@
 /obj/item/clothing/mask/facehugger/impregnated,
 /obj/item/gun/ballistic/automatic/pistol,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
 "as" = (
@@ -70,8 +72,8 @@
 /obj/structure/alien/resin/wall,
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
 "at" = (
@@ -81,24 +83,24 @@
 /obj/structure/alien/weeds,
 /mob/living/simple_animal/hostile/alien/sentinel,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
 "av" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
 "aw" = (
 /obj/structure/alien/weeds/node,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
 "ay" = (
@@ -153,8 +155,8 @@
 /obj/structure/alien/weeds/node,
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
 "aE" = (
@@ -167,8 +169,8 @@
 /obj/item/melee/baton/loaded,
 /obj/item/clothing/head/helmet,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
 "aF" = (
@@ -236,20 +238,24 @@
 /area/awaymission/moonoutpost19/syndicate)
 "aJ" = (
 /obj/structure/alien/weeds,
-/obj/structure/alien/egg/burst,
+/obj/structure/alien/egg/burst{
+	desc = "A large mottled egg."
+	},
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
 "aK" = (
 /obj/structure/alien/weeds,
-/obj/structure/alien/egg/burst,
+/obj/structure/alien/egg/burst{
+	desc = "A large mottled egg."
+	},
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
 "aM" = (
@@ -258,8 +264,8 @@
 	plants_off = 1
 	},
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
 "aN" = (
@@ -329,8 +335,8 @@
 	pixel_y = -6
 	},
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/main)
 "aT" = (
@@ -342,8 +348,8 @@
 	plants_off = 1
 	},
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
 "aU" = (
@@ -412,23 +418,25 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "aZ" = (
-/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 2
+	},
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "ba" = (
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/main)
 "bc" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
 "bd" = (
@@ -463,7 +471,9 @@
 /area/awaymission/moonoutpost19/syndicate)
 "bh" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 2
+	},
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -489,8 +499,8 @@
 /obj/item/clothing/under/syndicate,
 /obj/item/clothing/glasses/night,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
 "bl" = (
@@ -873,9 +883,11 @@
 /area/awaymission/moonoutpost19/syndicate)
 "bT" = (
 /obj/machinery/power/smes{
+	charge = 0;
 	input_level = 10000;
 	inputting = 0;
-	output_level = 15000
+	output_level = 15000;
+	outputting = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/plating{
@@ -909,20 +921,21 @@
 /obj/structure/alien/weeds/node,
 /mob/living/simple_animal/hostile/alien,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
 "bX" = (
 /obj/machinery/conveyor{
+	dir = 2;
 	id = "awaysyndie"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/plating{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -935,8 +948,8 @@
 	},
 /obj/structure/alien/weeds,
 /turf/open/floor/plating{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bZ" = (
@@ -948,16 +961,16 @@
 	},
 /obj/structure/alien/weeds,
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "ca" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -969,8 +982,8 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -983,8 +996,8 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -995,10 +1008,10 @@
 	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched2";
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1011,8 +1024,8 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1023,8 +1036,8 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1036,8 +1049,8 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1051,8 +1064,8 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1125,15 +1138,15 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cp" = (
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cq" = (
@@ -1142,8 +1155,8 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1151,17 +1164,17 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/public/glass{
 	density = 0;
+	set_obj_flags = "EMAGGED";
 	icon_state = "open";
-	name = "Dormitories";
-	set_obj_flags = "EMAGGED"
+	name = "Dormitories"
 	},
 /obj/item/stack/rods,
 /obj/item/shard{
 	icon_state = "small"
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cs" = (
@@ -1172,24 +1185,24 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "ct" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1200,8 +1213,8 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1251,14 +1264,15 @@
 /area/awaymission/moonoutpost19/syndicate)
 "cC" = (
 /obj/machinery/mineral/processing_unit{
-	dir = 1
+	dir = 1;
+	output_dir = 2
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/plating{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1274,8 +1288,8 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1286,8 +1300,8 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1298,8 +1312,8 @@
 /obj/item/shard,
 /obj/structure/alien/weeds,
 /turf/open/floor/plating{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cH" = (
@@ -1311,8 +1325,8 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1323,8 +1337,8 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1334,15 +1348,18 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cK" = (
 /obj/machinery/power/apc/highcap/fifteen_k{
+	dir = 2;
+	locked = 1;
 	name = "Worn-out APC";
 	pixel_y = -23;
+	req_access = null;
 	req_access_txt = "150";
 	start_charge = 0
 	},
@@ -1352,8 +1369,8 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1367,8 +1384,8 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1384,9 +1401,12 @@
 /area/awaymission/moonoutpost19/syndicate)
 "cN" = (
 /obj/machinery/power/port_gen/pacman{
+	desc = "A portable generator for emergency backup power.";
 	name = "P.A.C.M.A.N.-type portable generator"
 	},
-/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
 /obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -1395,9 +1415,12 @@
 "cO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/port_gen/pacman/super{
+	desc = "A portable generator for emergency backup power.";
 	name = "S.U.P.E.R.P.A.C.M.A.N.-type portable generator"
 	},
-/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
 /obj/structure/cable,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -1422,17 +1445,17 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cR" = (
 /turf/open/floor/plasteel{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged4";
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1451,8 +1474,8 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1460,16 +1483,16 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock{
 	density = 0;
+	set_obj_flags = "EMAGGED";
 	icon_state = "open";
 	id_tag = "awaydorm4";
 	name = "Dorm 1";
-	opacity = 0;
-	set_obj_flags = "EMAGGED"
+	opacity = 0
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cU" = (
@@ -1487,26 +1510,26 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cW" = (
 /turf/open/floor/plasteel{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged2";
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cX" = (
 /turf/open/floor/plasteel{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged3";
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1521,9 +1544,9 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 1;
 	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1538,15 +1561,15 @@
 /obj/structure/bed,
 /obj/item/bedsheet/syndie,
 /turf/open/floor/wood{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "da" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "db" = (
@@ -1574,8 +1597,8 @@
 	plants_off = 1
 	},
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
 "de" = (
@@ -1588,8 +1611,8 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1609,9 +1632,9 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 1;
 	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1625,8 +1648,8 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "di" = (
@@ -1634,8 +1657,8 @@
 	dir = 4
 	},
 /turf/open/floor/wood{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "dj" = (
@@ -1662,8 +1685,8 @@
 /obj/effect/turf_decal/loading_area,
 /obj/structure/alien/weeds,
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1673,8 +1696,8 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1683,17 +1706,17 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "do" = (
 /turf/open/floor/plasteel{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged1";
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1705,9 +1728,9 @@
 /obj/item/shovel,
 /obj/item/pickaxe,
 /turf/open/floor/plating{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3";
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1719,8 +1742,8 @@
 	pixel_y = -32
 	},
 /turf/open/floor/wood{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "dr" = (
@@ -1735,8 +1758,8 @@
 	},
 /obj/item/suppressor,
 /turf/open/floor/wood{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "ds" = (
@@ -1761,15 +1784,15 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
 	density = 0;
+	set_obj_flags = "EMAGGED";
 	icon_state = "open";
 	opacity = 0;
-	req_access_txt = "150";
-	set_obj_flags = "EMAGGED"
+	req_access_txt = "150"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "dv" = (
@@ -1779,8 +1802,8 @@
 	pixel_y = -4
 	},
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/main)
 "dw" = (
@@ -1794,16 +1817,16 @@
 	dir = 9
 	},
 /turf/open/floor/plating{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "dx" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "dy" = (
@@ -1816,8 +1839,8 @@
 	dir = 5
 	},
 /turf/open/floor/plating{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1827,8 +1850,8 @@
 	pixel_y = 9
 	},
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/main)
 "dA" = (
@@ -1845,16 +1868,16 @@
 	dir = 10
 	},
 /turf/open/floor/plating{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "dC" = (
 /turf/open/floor/plating{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1";
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1865,8 +1888,8 @@
 	dir = 6
 	},
 /turf/open/floor/plating{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
@@ -1877,8 +1900,8 @@
 	icon_state = "ltrails_1"
 	},
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/main)
 "dF" = (
@@ -1888,8 +1911,8 @@
 	icon_state = "ltrails_2"
 	},
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/main)
 "dG" = (
@@ -1900,8 +1923,8 @@
 	},
 /obj/item/mining_scanner,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/main)
 "dH" = (
@@ -1910,18 +1933,18 @@
 	},
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/main)
 "dI" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
 	density = 0;
+	set_obj_flags = "EMAGGED";
 	icon_state = "open";
 	opacity = 0;
-	req_access_txt = "150";
-	set_obj_flags = "EMAGGED"
+	req_access_txt = "150"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -1932,15 +1955,15 @@
 "dJ" = (
 /obj/item/storage/bag/ore,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/main)
 "dK" = (
 /obj/item/pickaxe/drill,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/main)
 "dL" = (
@@ -1960,8 +1983,8 @@
 	pixel_y = -4
 	},
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/main)
 "dO" = (
@@ -1974,23 +1997,23 @@
 /obj/item/clothing/head/helmet/space/syndicate/orange,
 /obj/item/clothing/mask/facehugger/impregnated,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
 "dP" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/main)
 "dQ" = (
 /obj/structure/alien/weeds/node,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/main)
 "dS" = (
@@ -2000,30 +2023,30 @@
 	plants_off = 1
 	},
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
 "dT" = (
 /obj/structure/alien/weeds,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/main)
 "dV" = (
 /obj/structure/alien/weeds/node,
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/main)
 "dY" = (
 /obj/machinery/light/small,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
 "dZ" = (
@@ -2128,7 +2151,9 @@
 	dir = 1
 	},
 /obj/structure/alien/weeds,
-/obj/structure/alien/egg/burst,
+/obj/structure/alien/egg/burst{
+	desc = "A large mottled egg."
+	},
 /obj/machinery/camera{
 	c_tag = "Xenobiology Containment North";
 	network = list("mo19x")
@@ -2227,7 +2252,9 @@
 /area/awaymission/moonoutpost19/research)
 "eH" = (
 /obj/structure/alien/weeds,
-/obj/structure/alien/egg/burst,
+/obj/structure/alien/egg/burst{
+	desc = "A large mottled egg."
+	},
 /turf/open/floor/engine,
 /area/awaymission/moonoutpost19/research)
 "eI" = (
@@ -2238,12 +2265,14 @@
 /area/awaymission/moonoutpost19/research)
 "eK" = (
 /turf/open/floor/plasteel/white/side{
+	dir = 2;
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
 "eL" = (
 /obj/structure/alien/weeds,
 /turf/open/floor/plasteel/white/side{
+	dir = 2;
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
@@ -2298,6 +2327,7 @@
 /area/awaymission/moonoutpost19/research)
 "eS" = (
 /obj/machinery/power/port_gen/pacman{
+	desc = "A portable generator for emergency backup power.";
 	name = "P.A.C.M.A.N.-type portable generator"
 	},
 /obj/structure/cable,
@@ -2307,6 +2337,7 @@
 /area/awaymission/moonoutpost19/research)
 "eT" = (
 /obj/machinery/power/port_gen/pacman/super{
+	desc = "A portable generator for emergency backup power.";
 	name = "S.U.P.E.R.P.A.C.M.A.N.-type portable generator"
 	},
 /obj/structure/cable,
@@ -2346,7 +2377,8 @@
 	charge = 1.5e+006;
 	input_level = 10000;
 	inputting = 0;
-	output_level = 15000
+	output_level = 15000;
+	outputting = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/plating{
@@ -2417,7 +2449,9 @@
 	pixel_x = 32
 	},
 /obj/structure/alien/weeds,
-/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 2
+	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
@@ -2449,6 +2483,7 @@
 /area/awaymission/moonoutpost19/research)
 "fh" = (
 /obj/machinery/firealarm{
+	dir = 2;
 	pixel_y = 24
 	},
 /obj/structure/table,
@@ -2532,7 +2567,9 @@
 /area/awaymission/moonoutpost19/research)
 "fw" = (
 /obj/structure/alien/weeds,
-/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 2
+	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
@@ -2543,11 +2580,11 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/research{
 	density = 0;
+	set_obj_flags = "EMAGGED";
 	icon_state = "open";
 	name = "Xenobiology Lab";
 	opacity = 0;
-	req_access_txt = "201";
-	set_obj_flags = "EMAGGED"
+	req_access_txt = "201"
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel{
@@ -2736,6 +2773,7 @@
 "fT" = (
 /obj/structure/closet/secure_closet{
 	icon_state = "sec";
+	locked = 1;
 	name = "security officer's locker";
 	req_access_txt = "201"
 	},
@@ -2800,7 +2838,9 @@
 	pixel_x = 32
 	},
 /obj/structure/alien/weeds,
-/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 2
+	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
@@ -2914,7 +2954,9 @@
 	pixel_x = 28
 	},
 /obj/structure/alien/weeds,
-/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 2
+	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
@@ -3136,9 +3178,12 @@
 	locked = 0;
 	name = "Worn-out APC";
 	pixel_x = 24;
+	req_access = null;
 	start_charge = 100
 	},
-/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 2
+	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
@@ -3266,7 +3311,9 @@
 	pixel_x = 23;
 	req_access = null
 	},
-/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 2
+	},
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -3348,7 +3395,9 @@
 /turf/open/floor/engine,
 /area/awaymission/moonoutpost19/research)
 "hb" = (
-/obj/machinery/light/broken,
+/obj/machinery/light/broken{
+	dir = 2
+	},
 /obj/structure/alien/weeds,
 /obj/machinery/camera{
 	c_tag = "Xenobiology Containment South";
@@ -3437,8 +3486,8 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/egg,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/hive)
 "hm" = (
@@ -3446,6 +3495,7 @@
 	req_access_txt = "201"
 	},
 /turf/open/floor/plasteel/white/side{
+	dir = 2;
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
@@ -3458,6 +3508,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/white/side{
+	dir = 2;
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
@@ -3480,6 +3531,7 @@
 "hq" = (
 /obj/structure/closet/secure_closet{
 	icon_state = "rd";
+	locked = 1;
 	name = "research director's locker";
 	req_access_txt = "201"
 	},
@@ -3497,6 +3549,7 @@
 	pixel_y = 2
 	},
 /obj/machinery/firealarm{
+	dir = 2;
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -3543,7 +3596,9 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "hw" = (
-/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 2
+	},
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -3616,11 +3671,11 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/command{
 	density = 0;
+	set_obj_flags = "EMAGGED";
 	icon_state = "open";
 	name = "Research Director's Office";
 	opacity = 0;
-	req_access_txt = "201";
-	set_obj_flags = "EMAGGED"
+	req_access_txt = "201"
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -3631,7 +3686,9 @@
 	dir = 1;
 	pixel_y = -32
 	},
-/obj/machinery/light/small/broken,
+/obj/machinery/light/small/broken{
+	dir = 2
+	},
 /obj/item/paper/fluff/awaymissions/moonoutpost19/research/evacuation,
 /obj/machinery/camera{
 	c_tag = "Research Division";
@@ -3785,8 +3842,8 @@
 "hV" = (
 /obj/machinery/light/small,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "hW" = (
@@ -3900,7 +3957,9 @@
 /area/awaymission/moonoutpost19/research)
 "ig" = (
 /obj/structure/closet/l3closet,
-/obj/machinery/light/small/broken,
+/obj/machinery/light/small/broken{
+	dir = 2
+	},
 /turf/open/floor/plasteel/white/side{
 	dir = 1;
 	heat_capacity = 1e+006
@@ -4163,7 +4222,9 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = -32
 	},
-/obj/machinery/light/small/broken,
+/obj/machinery/light/small/broken{
+	dir = 2
+	},
 /obj/machinery/camera{
 	c_tag = "Research Director's Office";
 	dir = 1;
@@ -4202,7 +4263,9 @@
 /area/awaymission/moonoutpost19/research)
 "iL" = (
 /obj/machinery/light/small,
-/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -4297,7 +4360,9 @@
 /turf/closed/wall/rust,
 /area/awaymission/moonoutpost19/arrivals)
 "iU" = (
-/obj/machinery/vending/boozeomat,
+/obj/machinery/vending/boozeomat{
+	req_access_txt = "0"
+	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -4350,8 +4415,8 @@
 /obj/item/stack/rods,
 /obj/item/shard,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/main)
 "jb" = (
@@ -4581,24 +4646,24 @@
 "jA" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1";
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "jB" = (
 /obj/structure/grille,
 /turf/open/floor/plating{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "jC" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "jD" = (
@@ -4626,6 +4691,7 @@
 	locked = 0;
 	name = "Worn-out APC";
 	pixel_y = 23;
+	req_access = null;
 	start_charge = 100
 	},
 /obj/structure/cable,
@@ -4802,20 +4868,20 @@
 "kc" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched2";
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kd" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged1";
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -4824,8 +4890,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -4836,37 +4902,37 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kg" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1";
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kh" = (
 /obj/structure/cable,
 /turf/open/floor/plating{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1";
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "ki" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged3";
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -5037,17 +5103,17 @@
 /area/awaymission/moonoutpost19/arrivals)
 "kB" = (
 /turf/open/floor/plasteel{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged2";
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kC" = (
 /turf/open/floor/plating{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kD" = (
@@ -5056,27 +5122,27 @@
 	desc = "They look like human remains. The skeleton is curled up in fetal position with the hands placed near the throat."
 	},
 /turf/open/floor/plasteel{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged4";
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kE" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kF" = (
 /turf/open/floor/plasteel{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged5";
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -5084,8 +5150,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -5173,17 +5239,17 @@
 	icon_state = "medium"
 	},
 /turf/open/floor/plating{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kQ" = (
 /obj/structure/grille/broken,
 /obj/item/stack/rods,
 /turf/open/floor/plating{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3";
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -5191,7 +5257,9 @@
 /obj/machinery/door/firedoor/closed{
 	opacity = 0
 	},
-/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 2
+	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -5347,8 +5415,8 @@
 	icon_state = "small"
 	},
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/main)
 "lj" = (
@@ -5356,8 +5424,8 @@
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "lk" = (
@@ -5368,8 +5436,8 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -5380,8 +5448,8 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -5539,8 +5607,8 @@
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "lF" = (
@@ -5572,8 +5640,8 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -5582,8 +5650,8 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -5713,8 +5781,8 @@
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "mg" = (
@@ -5726,10 +5794,12 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "mh" = (
-/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 2
+	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -5770,6 +5840,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "mm" = (
 /obj/structure/closet/secure_closet{
+	icon_state = "secure";
 	locked = 0;
 	name = "kitchen Cabinet";
 	req_access_txt = "201"
@@ -5871,10 +5942,12 @@
 /area/awaymission/moonoutpost19/arrivals)
 "mx" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 2
+	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -6024,8 +6097,8 @@
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "mP" = (
@@ -6041,8 +6114,8 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -6053,10 +6126,10 @@
 	icon_state = "ltrails_1"
 	},
 /turf/open/floor/plasteel{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched2";
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -6132,8 +6205,8 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -6183,10 +6256,10 @@
 /area/awaymission/moonoutpost19/arrivals)
 "ni" = (
 /turf/open/floor/plasteel{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched2";
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -6196,10 +6269,10 @@
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged2";
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -6240,8 +6313,8 @@
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "nq" = (
@@ -6255,10 +6328,10 @@
 	network = list("mo19")
 	},
 /turf/open/floor/plasteel{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged1";
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -6300,8 +6373,8 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/cafeteria{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -6324,8 +6397,8 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/cafeteria{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -6335,10 +6408,12 @@
 	pixel_x = 23;
 	req_access = null
 	},
-/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 2
+	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -6375,8 +6450,8 @@
 	icon_state = "ltrails_1"
 	},
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/main)
 "nD" = (
@@ -6389,9 +6464,9 @@
 	icon_state = "ltrails_2"
 	},
 /turf/open/floor/plating{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1";
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -6402,9 +6477,9 @@
 	icon_state = "ltrails_2"
 	},
 /turf/open/floor/plating{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3";
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -6416,8 +6491,8 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -6429,8 +6504,8 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -6491,8 +6566,8 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -6502,8 +6577,8 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -6544,10 +6619,10 @@
 /obj/structure/table,
 /obj/item/toy/cards/deck,
 /turf/open/floor/plasteel{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged1";
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -6591,10 +6666,10 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched2";
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -6603,10 +6678,12 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/generic,
-/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 2
+	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -6622,8 +6699,8 @@
 "oa" = (
 /obj/structure/chair/comfy/black,
 /turf/open/floor/plating{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "ob" = (
@@ -6636,8 +6713,8 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel{
-	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006;
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -6654,15 +6731,15 @@
 	icon_state = "small"
 	},
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/main)
 "oe" = (
 /obj/item/trash/candy,
 /turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/main)
 "oT" = (
@@ -6681,6 +6758,7 @@
 /obj/structure/window/reinforced,
 /obj/structure/closet/secure_closet{
 	icon_state = "science";
+	locked = 1;
 	name = "scientist's locker";
 	req_access_txt = "201"
 	},

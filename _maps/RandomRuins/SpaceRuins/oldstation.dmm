@@ -169,6 +169,7 @@
 /area/ruin/space/has_grav/ancientstation/hivebot)
 "aF" = (
 /obj/structure/shuttle/engine/large{
+	icon_state = "large_engine";
 	dir = 4
 	},
 /turf/closed/wall,
@@ -2389,6 +2390,7 @@
 "gv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc{
+	dir = 2;
 	name = "Charlie Kitchen APC";
 	pixel_y = -23;
 	start_charge = 0

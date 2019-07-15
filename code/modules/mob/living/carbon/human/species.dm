@@ -47,7 +47,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/deathsound //used to set the mobs deathsound on species change
 	var/list/special_step_sounds //Sounds to override barefeet walkng
 	var/grab_sound //Special sound for grabbing
-	var/datum/outfit/outfit_important_for_life /// A path to an outfit that is important for species life e.g. plasmaman outfit
 
 	// species-only traits. Can be found in DNA.dm
 	var/list/species_traits = list()
@@ -155,7 +154,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/should_have_eyes = TRUE
 	var/should_have_ears = TRUE
 	var/should_have_tongue = TRUE
-	var/should_have_liver = !(TRAIT_NOMETABOLISM in inherent_traits)
+	var/should_have_liver = !(NOLIVER in species_traits)
 	var/should_have_stomach = !(NOSTOMACH in species_traits)
 	var/should_have_tail = mutanttail
 	// 413 start -- butts
@@ -303,12 +302,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(TRAIT_VIRUSIMMUNE in inherent_traits)
 		for(var/datum/disease/A in C.diseases)
 			A.cure(FALSE)
-
-	if(TRAIT_TOXIMMUNE in inherent_traits)
-		C.setToxLoss(0, TRUE, TRUE)
-
-	if(TRAIT_NOMETABOLISM in inherent_traits)
-		C.reagents.end_metabolization(C, keep_liverless = TRUE)
 
 	C.add_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE, 100, override=TRUE, multiplicative_slowdown=speedmod, movetypes=(~FLYING))
 
@@ -983,19 +976,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/check_species_weakness(obj/item, mob/living/attacker)
 	return 0 //This is not a boolean, it's the multiplier for the damage that the user takes from the item.It is added onto the check_weakness value of the mob, and then the force of the item is multiplied by this value
 
-/**
- * Equip the outfit required for life. Replaces items currently worn.
- */ 
-/datum/species/proc/give_important_for_life(mob/living/carbon/human/human_to_equip)
-	if(!outfit_important_for_life)
-		return
-		
-	outfit_important_for_life= new()
-	outfit_important_for_life.equip(human_to_equip)
-
 ////////
-//LIFE//
-////////
+	//LIFE//
+	////////
 
 /datum/species/proc/handle_digestion(mob/living/carbon/human/H)
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))

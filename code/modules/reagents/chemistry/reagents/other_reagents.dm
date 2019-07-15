@@ -309,25 +309,17 @@
 	description = "Slowly heals all damage types. Has a rather high overdose threshold. Glows with mysterious power."
 	overdose_threshold = 150
 
-///Used for clownery
 /datum/reagent/lube
 	name = "Space Lube"
 	description = "Lubricant is a substance introduced between two moving surfaces to reduce the friction and wear between them. giggity."
 	color = "#009CA8" // rgb: 0, 156, 168
 	taste_description = "cherry" // by popular demand
-	var/lube_kind = TURF_WET_LUBE ///What kind of slipperiness gets added to turfs.
 
 /datum/reagent/lube/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T))
 		return
 	if(reac_volume >= 1)
-		T.MakeSlippery(lube_kind, 15 SECONDS, min(reac_volume * 2 SECONDS, 120))
-
-///Stronger kind of lube. Applies TURF_WET_SUPERLUBE.
-/datum/reagent/lube/superlube
-	name = "Super Duper Lube"
-	description = "This \[REDACTED\] has been outlawed after the incident on \[DATA EXPUNGED\]."
-	lube_kind = TURF_WET_SUPERLUBE
+		T.MakeSlippery(TURF_WET_LUBE, 15 SECONDS, min(reac_volume * 2 SECONDS, 120))
 
 /datum/reagent/spraytan
 	name = "Spray Tan"
@@ -1257,7 +1249,7 @@
 	name = "Blue Crayon Powder"
 	colorname = "blue"
 	color = "#00B7EF" // blue
-	random_color_list = list("#71CAE5")
+	random_color_list = list("#00B7EF")
 
 /datum/reagent/colorful_reagent/crayonpowder/purple
 	name = "Purple Crayon Powder"
@@ -1275,7 +1267,7 @@
 	name = "Black Crayon Powder"
 	colorname = "black"
 	color = "#1C1C1C" // not quite black
-	random_color_list = list("#8D8D8D")	//more grey than black, not enough to hide your true colors
+	random_color_list = list("#404040")
 
 /datum/reagent/colorful_reagent/crayonpowder/white
 	name = "White Crayon Powder"

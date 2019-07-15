@@ -168,8 +168,7 @@
 
 /obj/item/gun/ballistic/revolver/russian/do_spin()
 	. = ..()
-	if(.)
-		spun = TRUE
+	spun = TRUE
 
 /obj/item/gun/ballistic/revolver/russian/attackby(obj/item/A, mob/user, params)
 	..()

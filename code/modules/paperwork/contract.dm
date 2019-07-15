@@ -289,7 +289,6 @@
 		id = worn.GetID()
 	if(id)
 		id.icon_state = "gold"
-		id.uses_overlays = TRUE
 		id.access = get_all_accesses()+get_all_centcom_access()
 		id.assignment = "Captain"
 		id.update_label()

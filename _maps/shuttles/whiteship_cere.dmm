@@ -11,6 +11,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/docking_port/mobile{
+	dheight = 0;
 	dir = 2;
 	dwidth = 8;
 	height = 16;
@@ -18,6 +19,7 @@
 	launch_status = 0;
 	name = "NT Recovery White-Ship";
 	port_direction = 8;
+	preferred_direction = 1;
 	width = 16
 	},
 /turf/open/floor/plating,
