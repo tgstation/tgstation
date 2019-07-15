@@ -67,7 +67,8 @@
 	layer = 3
 	},
 /obj/machinery/door/window/survival_pod{
-	dir = 1
+	dir = 1;
+	icon_state = "windoor"
 	},
 /turf/open/floor/carpet/black,
 /area/survivalpod)
@@ -132,6 +133,7 @@
 /area/survivalpod)
 "u" = (
 /obj/machinery/door/window/survival_pod{
+	icon_state = "windoor";
 	dir = 1
 	},
 /turf/open/floor/carpet/black,
@@ -167,6 +169,7 @@
 /area/survivalpod)
 "y" = (
 /obj/structure/sink/kitchen{
+	icon_state = "sink_alt";
 	dir = 4;
 	pixel_x = -13
 	},

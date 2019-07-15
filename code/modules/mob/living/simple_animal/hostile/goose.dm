@@ -67,10 +67,12 @@
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/attacked_by(obj/item/O, mob/user)
 	. = ..()
-	if(istype(O, /obj/item/reagent_containers/food))
-		feed(O)
+	feed(O)
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/feed(obj/item/reagent_containers/food/tasty)
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/feed(obj/item/O)
+	var/obj/item/reagent_containers/food/tasty = O
+	if(!istype(O))
+		return
 	if (contents.len > GOOSE_SATIATED)
 		visible_message("<span class='notice'>[src] looks too full to eat \the [tasty]!</span>")
 		return

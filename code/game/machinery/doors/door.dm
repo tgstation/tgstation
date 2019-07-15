@@ -84,7 +84,6 @@
 	return ..()
 
 /obj/machinery/door/Bumped(atom/movable/AM)
-	. = ..()
 	if(operating || (obj_flags & EMAGGED))
 		return
 	if(ismob(AM))

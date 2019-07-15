@@ -53,6 +53,7 @@
 
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 
+	var/speed = 0 // VTEC speed boost.
 	var/magpulse = FALSE // Magboot-like effect.
 	var/ionpulse = FALSE // Jetpack-like effect.
 	var/ionpulse_on = FALSE // Jetpack-like effect.
@@ -766,7 +767,7 @@
 	qdel(src)
 
 /mob/living/silicon/robot/modules
-	var/set_module = /obj/item/robot_module
+	var/set_module = null
 
 /mob/living/silicon/robot/modules/Initialize()
 	. = ..()
@@ -999,6 +1000,7 @@
 
 	upgrades.Cut()
 
+	speed = 0
 	ionpulse = FALSE
 	revert_shell()
 

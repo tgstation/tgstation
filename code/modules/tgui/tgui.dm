@@ -75,7 +75,7 @@
 		master_ui.children += src
 	src.state = state
 
-	var/datum/asset/assets = get_asset_datum(/datum/asset/group/tgui)
+	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/tgui)
 	assets.send(user)
 
  /**

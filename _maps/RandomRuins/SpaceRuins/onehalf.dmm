@@ -519,6 +519,7 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
+	dir = 2;
 	name = "Hallway APC";
 	pixel_y = -23
 	},

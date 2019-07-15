@@ -197,7 +197,6 @@
 			if(computer && ((id_card.assignment in head_subordinates) || id_card.assignment == "Assistant"))
 				id_card.assignment = "Unassigned"
 				remove_nt_access(id_card)
-				id_card.update_label()
 
 		if("PRG_edit")
 			if(computer && authorized())
@@ -205,7 +204,6 @@
 					var/temp_name = reject_bad_name(input("Enter name.", "Name", id_card.registered_name))
 					if(temp_name)
 						id_card.registered_name = temp_name
-						id_card.update_label()
 					else
 						computer.visible_message("<span class='notice'>[computer] buzzes rudely.</span>")
 				//else if(params["account"])
@@ -239,7 +237,6 @@
 					remove_nt_access(id_card)
 					apply_access(id_card, access)
 					id_card.assignment = t1
-					id_card.update_label()
 
 		if("PRG_access")
 			if(params["allowed"] && computer && authorized())
@@ -280,6 +277,9 @@
 				reg_ids -= regsel
 			else
 				reg_ids += regsel
+
+	if(id_card)
+		id_card.name = text("[id_card.registered_name]'s ID Card ([id_card.assignment])")
 
 	return 1
 

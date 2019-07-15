@@ -154,7 +154,8 @@
 /area/ruin/powered/beach)
 "aF" = (
 /obj/machinery/vending/boozeomat{
-	set_obj_flags = "EMAGGED"
+	set_obj_flags = "EMAGGED";
+	req_access_txt = "0"
 	},
 /turf/open/floor/wood,
 /area/ruin/powered/beach)

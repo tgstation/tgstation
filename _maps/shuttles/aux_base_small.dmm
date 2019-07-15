@@ -49,7 +49,11 @@
 /area/shuttle/auxillary_base)
 "j" = (
 /obj/docking_port/mobile/auxillary_base{
-	dir = 2
+	dheight = 4;
+	dir = 2;
+	dwidth = 4;
+	height = 9;
+	width = 9
 	},
 /obj/machinery/bluespace_beacon,
 /obj/machinery/computer/auxillary_base,

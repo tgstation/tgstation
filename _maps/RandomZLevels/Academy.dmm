@@ -43,7 +43,10 @@
 "aj" = (
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
-	pixel_y = 23
+	environ = 3;
+	equipment = 3;
+	pixel_y = 23;
+	req_access = null
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet,
@@ -1017,7 +1020,10 @@
 "ek" = (
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
-	pixel_y = 23
+	environ = 3;
+	equipment = 3;
+	pixel_y = 23;
+	req_access = null
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/grimy,
@@ -1861,11 +1867,15 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "ha" = (
-/turf/open/floor/plasteel/white/side,
+/turf/open/floor/plasteel/white/side{
+	dir = 2
+	},
 /area/awaymission/academy/classrooms)
 "hb" = (
 /obj/structure/chair/stool,
-/turf/open/floor/plasteel/white/side,
+/turf/open/floor/plasteel/white/side{
+	dir = 2
+	},
 /area/awaymission/academy/classrooms)
 "hc" = (
 /turf/closed/wall/r_wall,
@@ -1885,7 +1895,10 @@
 "hl" = (
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
-	pixel_y = 23
+	environ = 3;
+	equipment = 3;
+	pixel_y = 23;
+	req_access = null
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -2081,17 +2094,23 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "il" = (
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
 /area/awaymission/academy/academyaft)
 "im" = (
 /obj/structure/mirror{
 	pixel_y = 28
 	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
 /area/awaymission/academy/academyaft)
 "in" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
 /area/awaymission/academy/academyaft)
 "io" = (
 /obj/structure/rack,
@@ -2115,7 +2134,9 @@
 /area/awaymission/academy/academyaft)
 "ir" = (
 /obj/structure/mineral_door/iron,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
 /area/awaymission/academy/academyaft)
 "is" = (
 /obj/structure/rack,
@@ -2140,13 +2161,17 @@
 	pixel_x = -12;
 	pixel_y = 2
 	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
 /area/awaymission/academy/academyaft)
 "iw" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
 /area/awaymission/academy/academyaft)
 "ix" = (
 /obj/machinery/light{
@@ -2164,14 +2189,18 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
 /area/awaymission/academy/academyaft)
 "iA" = (
 /obj/structure/sink{
 	dir = 4;
 	pixel_x = 11
 	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
 /area/awaymission/academy/academyaft)
 "iB" = (
 /obj/structure/rack,
@@ -2190,7 +2219,9 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
 /area/awaymission/academy/academyaft)
 "iE" = (
 /obj/machinery/light{
@@ -2211,7 +2242,9 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
 /area/awaymission/academy/academyaft)
 "iH" = (
 /obj/item/paper,
@@ -2246,7 +2279,9 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/vomit,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
 /area/awaymission/academy/academyaft)
 "iO" = (
 /obj/structure/cable,
@@ -2638,7 +2673,10 @@
 "kh" = (
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
-	pixel_y = 23
+	environ = 3;
+	equipment = 3;
+	pixel_y = 23;
+	req_access = null
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet,
@@ -2711,8 +2749,8 @@
 /area/awaymission/academy/academygate)
 "kw" = (
 /turf/closed/indestructible/fakeglass{
-	dir = 8;
-	icon_state = "fakewindows"
+	icon_state = "fakewindows";
+	dir = 8
 	},
 /area/awaymission/academy/headmaster)
 "kx" = (
@@ -2724,7 +2762,9 @@
 /obj/machinery/door/poddoor/shutters{
 	id = "AcademyGate"
 	},
-/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
 "kz" = (
@@ -2766,16 +2806,20 @@
 /area/awaymission/academy/academyaft)
 "kF" = (
 /turf/closed/indestructible/fakeglass{
-	dir = 8;
-	icon_state = "fakewindows2"
+	icon_state = "fakewindows2";
+	dir = 8
 	},
 /area/awaymission/academy/headmaster)
 "kG" = (
 /mob/living/simple_animal/hostile/wizard,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
 /area/awaymission/academy/academyaft)
 "kI" = (
-/obj/machinery/gateway/centeraway,
+/obj/machinery/gateway/centeraway{
+	calibrated = 1
+	},
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
@@ -3297,8 +3341,8 @@
 /area/awaymission/academy/academycellar)
 "mW" = (
 /turf/closed/indestructible/fakeglass{
-	dir = 4;
-	icon_state = "fakewindows"
+	icon_state = "fakewindows";
+	dir = 4
 	},
 /area/awaymission/academy/headmaster)
 "mX" = (
@@ -3311,14 +3355,14 @@
 /area/space/nearstation)
 "mZ" = (
 /turf/closed/indestructible/fakeglass{
-	dir = 1;
-	icon_state = "fakewindows"
+	icon_state = "fakewindows";
+	dir = 1
 	},
 /area/awaymission/academy/headmaster)
 "na" = (
 /turf/closed/indestructible/fakeglass{
-	dir = 1;
-	icon_state = "fakewindows2"
+	icon_state = "fakewindows2";
+	dir = 1
 	},
 /area/awaymission/academy/headmaster)
 "nb" = (
@@ -3337,38 +3381,38 @@
 /area/awaymission/academy/headmaster)
 "nd" = (
 /turf/closed/indestructible/fakeglass{
-	dir = 1;
-	icon_state = "fakewindows"
+	icon_state = "fakewindows";
+	dir = 1
 	},
 /area/awaymission/academy/academyengine)
 "ne" = (
 /turf/closed/indestructible/fakeglass{
-	dir = 1;
-	icon_state = "fakewindows2"
+	icon_state = "fakewindows2";
+	dir = 1
 	},
 /area/awaymission/academy/academyengine)
 "nf" = (
 /turf/closed/indestructible/fakeglass{
-	dir = 6;
-	icon_state = "fakewindows2"
+	icon_state = "fakewindows2";
+	dir = 6
 	},
 /area/awaymission/academy/headmaster)
 "ng" = (
 /turf/closed/indestructible/fakeglass{
-	dir = 8;
-	icon_state = "fakewindows"
+	icon_state = "fakewindows";
+	dir = 8
 	},
 /area/awaymission/academy/academyengine)
 "nh" = (
 /turf/closed/indestructible/fakeglass{
-	dir = 8;
-	icon_state = "fakewindows2"
+	icon_state = "fakewindows2";
+	dir = 8
 	},
 /area/awaymission/academy/academyengine)
 "ni" = (
 /turf/closed/indestructible/fakeglass{
-	dir = 4;
-	icon_state = "fakewindows"
+	icon_state = "fakewindows";
+	dir = 4
 	},
 /area/awaymission/academy/academyengine)
 "nj" = (
@@ -3429,7 +3473,9 @@
 /area/awaymission/academy/headmaster)
 "DX" = (
 /obj/structure/cable,
-/turf/open/floor/plasteel/white/side,
+/turf/open/floor/plasteel/white/side{
+	dir = 2
+	},
 /area/awaymission/academy/classrooms)
 "In" = (
 /obj/effect/turf_decal/stripes/line{

@@ -155,6 +155,11 @@
 	icon_state = "engineering"
 	build_path = /obj/machinery/computer/station_alert
 
+/obj/item/circuitboard/computer/teleporter
+	name = "Teleporter (Computer Board)"
+	icon_state = "engineering"
+	build_path = /obj/machinery/computer/teleporter
+
 /obj/item/circuitboard/computer/turbine_computer
 	name = "Turbine Computer (Computer Board)"
 	icon_state = "engineering"
@@ -368,11 +373,6 @@
 	name = "Robotics Control (Computer Board)"
 	icon_state = "science"
 	build_path = /obj/machinery/computer/robotics
-
-/obj/item/circuitboard/computer/teleporter
-	name = "Teleporter (Computer Board)"
-	icon_state = "science"
-	build_path = /obj/machinery/computer/teleporter
 
 /obj/item/circuitboard/computer/xenobiology
 	name = "circuit board (Xenobiology Console)"

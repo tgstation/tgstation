@@ -149,7 +149,6 @@
 	if(istype(R))
 		beegent = R
 		name = "[initial(name)] ([R.name])"
-		real_name = name
 		poison_type = null
 		generate_bee_visuals()
 

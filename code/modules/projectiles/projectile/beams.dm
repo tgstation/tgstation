@@ -55,7 +55,6 @@
 /obj/item/projectile/beam/xray
 	name = "\improper X-ray beam"
 	icon_state = "xray"
-	flag = "rad"
 	damage = 15
 	irradiate = 300
 	range = 15

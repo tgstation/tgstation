@@ -16,8 +16,8 @@
 "ag" = (
 /obj/machinery/porta_turret{
 	dir = 8;
-	installation = /obj/item/gun/energy/lasercannon;
-	set_obj_flags = "EMAGGED"
+	set_obj_flags = "EMAGGED";
+	installation = /obj/item/gun/energy/lasercannon
 	},
 /turf/open/floor/engine,
 /area/awaymission/BMPship/Aft)
@@ -308,12 +308,16 @@
 	},
 /area/awaymission/BMPship/Fore)
 "bv" = (
-/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Fore)
 "bw" = (
 /obj/machinery/light/small,
-/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Fore)
 "bx" = (
@@ -361,24 +365,32 @@
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
 "bM" = (
-/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
 "bN" = (
 /obj/machinery/light/small,
-/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
 "bO" = (
 /obj/structure/kitchenspike,
-/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
 "bP" = (
 /obj/structure/closet/crate,
 /obj/item/analyzer,
 /obj/item/stack/spacecash/c10,
-/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
 "bQ" = (
@@ -386,7 +398,9 @@
 /obj/item/stack/spacecash/c1000,
 /obj/item/stack/spacecash/c200,
 /obj/item/stack/spacecash/c500,
-/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
 "bR" = (
@@ -395,7 +409,9 @@
 /obj/item/organ/appendix,
 /obj/item/reagent_containers/food/snacks/meat/slab,
 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/golem/adamantine,
-/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
 "bU" = (
@@ -411,7 +427,9 @@
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
 	environ = 0;
-	pixel_y = 23
+	equipment = 3;
+	pixel_y = 23;
+	req_access = null
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet,
@@ -449,7 +467,9 @@
 /turf/open/floor/plasteel,
 /area/awaymission/BMPship/Midship)
 "ca" = (
-/obj/structure/sink,
+/obj/structure/sink{
+	dir = 2
+	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -760,7 +780,9 @@
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
 	environ = 0;
-	pixel_y = 23
+	equipment = 3;
+	pixel_y = 23;
+	req_access = null
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -944,7 +966,8 @@
 "dN" = (
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
-	pixel_y = 23
+	pixel_y = 23;
+	req_access = null
 	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -1626,8 +1649,8 @@
 "gl" = (
 /obj/machinery/porta_turret{
 	dir = 8;
-	installation = /obj/item/gun/energy/lasercannon;
-	set_obj_flags = "EMAGGED"
+	set_obj_flags = "EMAGGED";
+	installation = /obj/item/gun/energy/lasercannon
 	},
 /turf/open/floor/engine,
 /area/awaymission/BMPship/Fore)
@@ -1806,13 +1829,17 @@
 /area/awaymission/BMPship/Aft)
 "hd" = (
 /obj/machinery/door/airlock/titanium,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
 /area/awaymission/BMPship/Aft)
 "he" = (
 /obj/structure/mirror{
 	pixel_y = 28
 	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
 /area/awaymission/BMPship/Aft)
 "hf" = (
 /obj/structure/toilet{
@@ -1821,7 +1848,9 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
 /area/awaymission/BMPship/Aft)
 "hg" = (
 /turf/open/floor/plating/airless{
@@ -1848,8 +1877,12 @@
 /turf/open/floor/plasteel,
 /area/awaymission/BMPship/Aft)
 "hl" = (
-/obj/structure/sink,
-/turf/open/floor/plasteel/cafeteria,
+/obj/structure/sink{
+	dir = 2
+	},
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
 /area/awaymission/BMPship/Aft)
 "hn" = (
 /obj/item/clothing/gloves/color/fyellow,
