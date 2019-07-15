@@ -37,7 +37,6 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	
 	// Threat logging vars
 	var/threat_level = 0 // The "threat cap", threat shouldn't normally go above this and is used in ruleset calculations
-	var/starting_threat = 0 // Threat_level's initially rolled value. Threat_level isn't changed by many things.
 	var/threat = 0 // Set at the beginning of the round. Spent by the mode to "purchase" rules.
 	var/list/threat_log = list() // Running information about the threat. Can store text or datum entries.
 
@@ -205,7 +204,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/list/out = "<TITLE>Threat Log</TITLE><B><font size='3'>Threat Log</font></B><br><B>Starting Threat:</B> [starting_threat]<BR>"
+	var/list/out = "<TITLE>Threat Log</TITLE><B><font size='3'>Threat Log</font></B><br><B>Starting Threat:</B> [threat_level]<BR>"
 
 	for(var/entry in threat_log)
 		if(istext(entry))
@@ -222,7 +221,6 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	peaceful_percentage = round(lorentz_cummulative_distribution(relative_threat, GLOB.dynamic_curve_centre, GLOB.dynamic_curve_width), 0.01)*100
 
 	threat = threat_level
-	starting_threat = threat_level
 
 /datum/game_mode/dynamic/can_start()
 	message_admins("Dynamic mode parameters for the round:")
