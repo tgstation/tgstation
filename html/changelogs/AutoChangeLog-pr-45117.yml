@@ -1,0 +1,9 @@
+author: "Akrilla"
+delete-after: True
+changes: 
+  - rscadd: "Contractor Hub. A unique store for contractors to buy items with Contractor Rep, with two Rep being given when completing a contract."
+  - rscadd: "Contractor pinpointer, available through the Hub. A very inaccurate pinpointer that ignores suit sensors."
+  - rscadd: "Call reinforcements, available through the Hub. Limited to a one-time buy for a contractor, you can purchase an agent to be sent down to help in your mission. Role is polled to ghosts."
+  - rscadd: "Blackout, available through the Hub. Disable station power for a small duration - an expensive, but powerful option of getting into secure areas."
+  - rscadd: "Fulton extraction, available through the Hub. Purchase a fulton extraction kit to help move your targets across the station for those difficult dropoffs."
+  - tweak: "Assigning yourself to another tablet will give you another contract set."
