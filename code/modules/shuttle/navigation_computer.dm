@@ -32,9 +32,7 @@
 		if(jumpto_ports[S.id])
 			z_lock |= S.z
 	var/list/whitelist_turfs_typecache = list()
-	for(var/WT in whitelist_turfs)
-		whitelist_turfs_typecache |= typecacheof(WT, FALSE, FALSE)
-	whitelist_turfs = whitelist_turfs_typecache
+	whitelist_turfs = typecacheof(whitelist_turfs)
 
 	z_locked |= SSmapping.levels_by_trait(ZTRAIT_RESERVED)
 	z_locked |= SSmapping.levels_by_trait(ZTRAIT_CENTCOM)
