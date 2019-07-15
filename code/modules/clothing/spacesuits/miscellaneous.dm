@@ -294,7 +294,7 @@ Contains:
 	name = "Engineering EVA helmet"
 	icon_state = "engspace_suit"
 	item_state = "space"
-	desc = "A lightweight space suit designed to protect the wearer from the vacuum of space and minor radiation."
+	desc = "A lightweight space helmet designed to protect the wearer from the vacuum of space and minor radiation."
 	flash_protect = 0
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 45, "fire" = 50, "acid" = 30)
 
@@ -327,7 +327,7 @@ Contains:
 	name = "Cargo EVA helmet"
 	icon_state = "cargospace_suit"
 	item_state = "space"
-	desc = "A lightweight space suit, good for when you forget to close the shuttle shutters."
+	desc = "A lightweight space helmet, good for when you forget to close the shuttle shutters."
 	flash_protect = 0
 	armor = list("melee" = 5, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 20, "fire" = 50, "acid" = 60)
 
@@ -343,7 +343,7 @@ Contains:
 	name = "Science EVA helmet"
 	icon_state = "scispace_suit"
 	item_state = "space"
-	desc = "A lightweight space suit, almost good enough to explore the unkown."
+	desc = "A lightweight space helmet, almost good enough to explore the unkown."
 	flash_protect = 0
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 20, "bio" = 100, "rad" = 10, "fire" = 30, "acid" = 90)
 
@@ -360,7 +360,7 @@ Contains:
 	name = "Janitorial EVA helmet"
 	icon_state = "janispace_suit"
 	item_state = "space"
-	desc = "A lightweight space suit for janitors, because it's not good enough to clean the station just on the inside."
+	desc = "A lightweight space helmet for janitors, because it's not good enough to clean the station just on the inside."
 	flash_protect = 0
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 10, "fire" = 30, "acid" = 30)
 
