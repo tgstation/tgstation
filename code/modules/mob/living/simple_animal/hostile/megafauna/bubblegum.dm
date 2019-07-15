@@ -411,7 +411,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/grant_achievement(medaltype,scoretype)
 	. = ..()
 	if(.)
-		SSshuttle.shuttle_purchase_requirements_met |= "bubblegum"
+		SSshuttle.shuttle_purchase_requirements_met |= SHUTTLE_UNLOCK_BUBBLEGUM
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/do_attack_animation(atom/A, visual_effect_icon)
 	if(!charging)

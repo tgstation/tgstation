@@ -318,7 +318,7 @@
 	display_name = "Cyborg Upgrades: Combat"
 	description = "Military grade upgrades for cyborgs."
 	prereq_ids = list("adv_robotics", "adv_engi" , "weaponry")
-	design_ids = list("borg_upgrade_vtec", "borg_upgrade_disablercooler")
+	design_ids = list("borg_upgrade_disablercooler")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 5000
 
@@ -978,6 +978,9 @@
 	export_price = 20000
 	hidden = TRUE
 	design_ids = list("alienalloy")
+
+/datum/techweb_node/alientech/on_research() //Unlocks the Zeta shuttle for purchase
+		SSshuttle.shuttle_purchase_requirements_met |= SHUTTLE_UNLOCK_ALIENTECH
 
 /datum/techweb_node/alien_bio
 	id = "alien_bio"

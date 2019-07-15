@@ -20,6 +20,20 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/starboard/fore)
+"aaf" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "hopline";
+	name = "Queue Shutters"
+	},
+/obj/effect/landmark/event_spawn,
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/machinery/ticket_machine{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "aag" = (
 /obj/machinery/power/solar{
 	id = "forestarboard";
@@ -28,6 +42,12 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/starboard/fore)
+"aah" = (
+/obj/machinery/button/ticket_machine{
+	pixel_y = 8
+	},
+/turf/closed/wall/r_wall,
+/area/crew_quarters/heads/hop)
 "aao" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
@@ -60445,17 +60465,6 @@
 /obj/machinery/vending/coffee,
 /turf/open/floor/wood,
 /area/library)
-"chY" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "hopline";
-	name = "Queue Shutters"
-	},
-/obj/effect/landmark/event_spawn,
-/obj/effect/turf_decal/loading_area{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "chZ" = (
 /obj/machinery/computer/security/mining{
 	dir = 4
@@ -151620,7 +151629,7 @@ buq
 buq
 cen
 buq
-chY
+aaf
 bur
 bUB
 bUB
@@ -152384,7 +152393,7 @@ bMp
 bOy
 bQz
 bSz
-bUB
+aah
 bWQ
 bYZ
 caN
