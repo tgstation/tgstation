@@ -2189,6 +2189,7 @@
 	name = "Guide to Dank Mimery"
 	desc = "A parcel containing \"Guide to Dank Mimery - a primer on basic pantomime.\""
 	cost = 500
+	contains = list(/obj/item/book/mimery)
 	crate_name = "parcel"
 	crate_type = /obj/item/smallDelivery
 
