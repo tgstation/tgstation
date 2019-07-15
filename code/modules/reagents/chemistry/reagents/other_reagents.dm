@@ -1761,7 +1761,7 @@
 		if(prob(8))
 			var/dread = pick("Something is moving in your stomach...", \
 				"A wet growl echoes from your stomach...", \
-				"For a moment you feel like [get_area(C)] is moving, but it's your stomach...")
+				"For a moment you feel like your surroundings are moving, but it's your stomach...")
 			to_chat(C, "<span class='userdanger'>[dread]</span>")
 			yuck_cycle = current_cycle
 	else
