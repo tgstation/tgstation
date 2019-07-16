@@ -26,7 +26,6 @@
 /obj/structure/legionturret/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
-//	flick("legion_turret_intro", src)
 
 /obj/structure/legionturret/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -51,10 +50,10 @@
 	var/turf/T1 = get_turf(src)
 	if(!T || !T1)
 		return
-	//someone has buried tracer code in spaghetti. OOF OUCH
+	//Now we generate the tracer.
 	var/angle = Get_Angle(T1, T)
-	var/datum/point/vector/V = new(T1.x, T1.y, T1.z, 0, 0, angle) //Let's see if this works.
-	generate_tracer_between_points(V, V.return_vector_after_increments(6), /obj/effect/projectile/tracer/legion/tracer, 0, shot_delay, 0, 0, 0, null) //REEE I hate you this.
+	var/datum/point/vector/V = new(T1.x, T1.y, T1.z, 0, 0, angle)
+	generate_tracer_between_points(V, V.return_vector_after_increments(6), /obj/effect/projectile/tracer/legion/tracer, 0, shot_delay, 0, 0, 0, null)
 	playsound(src, 'sound/machines/airlockopen.ogg', 100, TRUE)
 	addtimer(CALLBACK(src, .proc/fire_beam, angle), shot_delay)
 
