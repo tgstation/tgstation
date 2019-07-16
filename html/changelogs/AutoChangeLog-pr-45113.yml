@@ -1,5 +1,0 @@
-author: "Alek2ander"
-delete-after: True
-changes: 
-  - tweak: "Agent IDs and chameleon PDAs now automatically update their labels and icons when transforming."
-  - tweak: "Selecting a chameleon outfit will set equipped agent IDs and chameleon PDAs to display the appropriate job."
