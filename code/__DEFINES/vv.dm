@@ -42,6 +42,9 @@
 #define GET_VV_TARGET locate(href_list[VV_HK_TARGET])
 #define GET_VV_VAR_TARGET href_list[VV_HK_VARNAME]
 
+//Helper for getting something to vv_do_topic in general
+#define VV_TOPIC_LINK(datum, href_key, text) "<a href='?_src_=vars;[HrefToken()];[href_key]=TRUE;target=[REF(datum)]'>text</a>"
+
 //Helpers for vv_get_dropdown()
 #define VV_DROPDOWN_OPTION(href_key, name) . += "<option value='?_src_=vars;[HrefToken()];[href_key]=TRUE;target=[REF(src)]'>[name]</option>"
 
@@ -71,33 +74,37 @@
 #define VV_HK_MARK "mark"
 
 // /atom
-#define VV_HK_ATOM_EXPLODE "turf_explode"
-#define VV_HK_ATOM_EMP "turf_emp"
+#define VV_HK_MODIFY_TRANSFORM "atom_transform"
+#define VV_HK_ADD_REAGENT "addreagent"
+#define VV_HK_TRIGGER_EMP "empulse"
+#define VV_HK_TRIGGER_EXPLOSION "explode"
 
 // /obj
 #define VV_HK_OSAY "osay"
 #define VV_HK_MASS_DEL_TYPE "mass_delete_type"
 #define VV_HK_ARMOR_MOD "mod_obj_armor"
 
+// /mob/living/carbon
+#define VV_HK_MAKE_AI "aiify"
+#define VV_HK_MODIFY_BODYPART "mod_bodypart"
+#define VV_HK_MODIFY_ORGANS "organs_modify"
+#define VV_HK_HALLUCINATION "force_hallucinate"
+#define VV_HK_MARTIAL_ART "give_martial_art"
+#define VV_HK_GIVE_TRAUMA "give_trauma"
+#define VV_HK_CURE_TRAUMA "cure_trauma"
+
+// /mob/living/carbon/human
+#define VV_HK_COPY_OUTFIT "copy_outfit"
+#define VV_HK_MOD_QUIRKS "quirkmod"
+#define VV_HK_MAKE_MONKEY "human_monkify"
+#define VV_HK_MAKE_CYBORG "human_cyborgify"
+#define VV_HK_MAKE_SLIME "human_slimeify"
+#define VV_HK_MAKE_ALIEN "human_alienify"
+#define VV_HK_SET_SPECIES "setspecies"
+#define VV_HK_PURRBATION "purrbation"
+
 // misc
 #define VV_HK_SPACEVINE_PURGE "spacevine_purge"
-
-
-
-
-
-
-
-
-
-
-/atom
-
-	VV_DROPDOWN_OPTION(VV_HK_MODIFY_TRANSFORM, "Modify Transform")
-	VV_DROPDOWN_OPTION(VV_HK_ADD_REAGENT, "Add Reagent")
-	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EMP, "EMP Pulse")
-	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EXPLOSION, "Explosion")
-
 
 
 
