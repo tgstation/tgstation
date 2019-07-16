@@ -196,7 +196,7 @@
 	if(last_legion)
 		loot = list(/obj/item/staff/storm)
 		elimination = FALSE
-	else if(prob(20)) //20% chance for loot. Raised because there wasn't much reason to kill this thing and the total amount of skulls is lower.
+	else if(prob(20)) //20% chance for sick lootz.
 		loot = list(/obj/structure/closet/crate/necropolis/tendril)
 		if(!true_spawn)
 			loot = null
@@ -207,7 +207,7 @@
 	size--
 	if(size < 1)
 		return FALSE
-	adjustHealth(-maxHealth) //We heal ourselves in preparation
+	adjustHealth(-maxHealth) //We heal in preparation of the split
 	switch(size) //Yay, switches
 		if(3 to INFINITY)
 			icon = initial(icon)
@@ -224,7 +224,7 @@
 			pixel_x = 0
 			pixel_y = 0
 			maxHealth = 200
-	adjustHealth(0) //Make the health HUD look correctly.
+	adjustHealth(0) //Make the health HUD look correct.
 	visible_message("<span class='boldannounce'>This is getting out of hands. Now there are three of them!</span>")
 	for(var/i in 1 to 2) //Create three skulls in total
 		var/mob/living/simple_animal/hostile/megafauna/legion/L = new(loc)
