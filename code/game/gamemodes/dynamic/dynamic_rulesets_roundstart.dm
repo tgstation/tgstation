@@ -46,7 +46,6 @@
 
 /datum/dynamic_ruleset/roundstart/traitorbro
 	name = "Blood Brothers"
-	persistent = FALSE
 	antag_flag = ROLE_BROTHER
 	antag_datum = /datum/antagonist/brother/
 	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
@@ -79,6 +78,7 @@
 			bro.mind.special_role = "brother"
 			bro.mind.restricted_roles = restricted_roles
 		pre_brother_teams += team
+	return TRUE
 
 /datum/dynamic_ruleset/roundstart/traitorbro/execute()
 	for(var/datum/team/brother_team/team in pre_brother_teams)
@@ -88,7 +88,7 @@
 			M.add_antag_datum(/datum/antagonist/brother, team)
 		team.update_name()
 	mode.brother_teams += pre_brother_teams
-	return ..()
+	return TRUE
 
 //////////////////////////////////////////////
 //                                          //
