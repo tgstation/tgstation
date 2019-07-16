@@ -13,20 +13,7 @@
 	if(href_list["Vars"])
 		debug_variables(locate(href_list["Vars"]))
 
-	//rest of this should proabbly be eventually moved to vv_do_topic in datums
-
-
-
-
-
-
-
-
-
-
-
-
-//Needs +VAREDIT past this point
+//Stuff below aren't in dropdowns/etc.
 
 	if(check_rights(R_VAREDIT))
 
