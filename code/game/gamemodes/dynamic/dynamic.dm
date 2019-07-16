@@ -53,8 +53,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	var/list/executed_rules = list()
 
 	var/list/list/current_players = list(CURRENT_LIVING_PLAYERS, CURRENT_LIVING_ANTAGS, CURRENT_DEAD_PLAYERS, CURRENT_OBSERVERS)
-
-	var/last_injection_update = 0
+	
 	var/latejoin_injection_cooldown = 0
 	var/midround_injection_cooldown = 0
 	var/forced_injection = FALSE
