@@ -26,13 +26,16 @@
 	. = ..()
 	SSshuttle.beacons |= src
 
-/obj/machinery/spaceship_navigation_beacon/random/Initialize()
-	.=..()
-	randomise_beacon()
+	if(id == "random_generated")
+		id = GUID()
+	if(access_code == "random_generated")
+		access_code = GUID()
 
 /obj/machinery/spaceship_navigation_beacon/proc/randomise_beacon()
-	id = GUID() //gives us a random id.
-	access_code = GUID() //gives us a random access code.
+	if(prob(40))
+		id = GUID() //gives us a random id.
+	if(prob(30))
+		access_code = GUID() //gives us a random access code.
 
 obj/machinery/spaceship_navigation_beacon/emp_act()
 	randomise_beacon()
