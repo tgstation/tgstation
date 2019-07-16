@@ -505,7 +505,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		return 100
 	var/chance = 0
 	// If the high pop override is in effect, we reduce the impact of population on the antag injection chance
-	var/high_pop_factor = (current_players[CURRENT_LIVING_PLAYERS] >= GLOB.dynamic_high_pop_limit)
+	var/high_pop_factor = (current_players[CURRENT_LIVING_PLAYERS].len >= GLOB.dynamic_high_pop_limit)
 	var/max_pop_per_antag = max(5,15 - round(threat_level/10) - round(current_players[CURRENT_LIVING_PLAYERS].len/(high_pop_factor ? 10 : 5))) // https://docs.google.com/spreadsheets/d/1QLN_OBHqeL4cm9zTLEtxlnaJHHUu0IUPzPbsI-DFFmc/edit#gid=2053826290
 	if (!current_players[CURRENT_LIVING_ANTAGS].len)
 		chance += 50 // No antags at all? let's boost those odds!
