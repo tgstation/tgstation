@@ -276,5 +276,19 @@
 	list_reagents = list(/datum/reagent/medicine/potass_iodide = 15)
 	rename_with_volume = TRUE
 
+/obj/item/reagent_containers/pill/trophazole
+	name = "trophazole pill"
+	desc = "Used to treat brute damage of minor and moderate severity.The carving in the pill says 'Eat before ingesting'."
+	icon_state = "pill9"
+	list_reagents = list(/datum/reagent/medicine/trophazole = 15)
+	rename_with_volume = TRUE
+
+/obj/item/reagent_containers/pill/iron
+	name = "iron pill"
+	desc = "Used to reduce bloodloss slowly."
+	icon_state = "pill9"
+	list_reagents = list(/datum/reagent/medicine/iron = 30)
+	rename_with_volume = TRUE
+
 
 

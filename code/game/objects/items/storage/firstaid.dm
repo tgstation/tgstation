@@ -69,7 +69,7 @@
 		return
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/silver_sulf = 3,
-		/obj/item/storage/pill_bottle/kelotane = 1,
+		/obj/item/reagent_containers/spray/rhigoxane = 1,
 		/obj/item/reagent_containers/syringe/oxandrolone = 1,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
 		/obj/item/healthanalyzer = 1)
@@ -116,7 +116,7 @@
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/syringe/perfluorodecalin = 3,
 		/obj/item/storage/pill_bottle/dexalin = 1,
-		/obj/item/reagent_containers/pill/salbutamol = 1,
+		/obj/item/storage/pill_bottle/iron = 1,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
@@ -137,7 +137,7 @@
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/styptic = 3,
 		/obj/item/stack/medical/gauze = 1,
-		/obj/item/storage/pill_bottle/bicaridine = 1,
+		/obj/item/storage/pill_bottle/trophazole = 1,
 		/obj/item/reagent_containers/syringe/salacid = 1,
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
@@ -295,6 +295,22 @@
 /obj/item/storage/pill_bottle/potassiodide/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/pill/potassiodide(src)
+
+/obj/item/storage/pill_bottle/trophazole
+	name = "bottle of trophazole pills"
+	desc = "Contains pills used to treat brute damage.The tag in the bottle states 'Eat before ingesting'."
+
+/obj/item/storage/pill_bottle/trophazole/PopulateContents()
+	for(var/i in 1 to 4)
+		new /obj/item/reagent_containers/pill/trophazole(src)
+
+/obj/item/storage/pill_bottle/iron
+	name = "bottle of iron pills"
+	desc = "Contains pills used to reduce blood loss slowly.The tag in the bottle states 'Only take one each five minutes'."
+
+/obj/item/storage/pill_bottle/iron/PopulateContents()
+	for(var/i in 1 to 4)
+		new /obj/item/reagent_containers/pill/iron(src)
 
 /obj/item/storage/pill_bottle/mannitol
 	name = "bottle of mannitol pills"
