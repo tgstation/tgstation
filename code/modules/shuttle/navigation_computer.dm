@@ -54,7 +54,7 @@
 		if("Add ID")
 			sellect = replacetext(lowertext(input("Enter the ID to add", "Input ID") as text), " ", "_")
 			if(sellect && Adjacent(user))
-				beacon_codes |= sellect
+				beacon_codes[sellect] = TRUE
 		if("Remove ID")
 			sellect = input("Choice ID to remove", "ID to remove") as null|anything in beacon_codes
 			if(sellect && Adjacent(user))
@@ -62,7 +62,7 @@
 		if("Add access code")
 			sellect = replacetext(lowertext(input("Enter the access code to add", "Input access code") as text), " ", "_")
 			if(sellect && Adjacent(user))
-				beacon_access_codes |= sellect
+				beacon_access_codes[sellect] = TRUE
 		if("Remove access code")
 			sellect = input("Choice access code to remove", "Access code to remove") as null|anything in beacon_access_codes
 			if(sellect && Adjacent(user))
@@ -395,8 +395,8 @@
 		if(console.z_locked.len && nav_beacon.z)
 			if(nav_beacon.z in console.z_locked)
 				break
-		if(!nav_beacon.id || (nav_beacon.id && console.beacon_codes[nav_beacon.id]))
-			if(!nav_beacon.access_code || (nav_beacon.access_code && console.beacon_access_codes[nav_beacon.access_code]))
+		if(!nav_beacon.id || console.beacon_codes[nav_beacon.id])
+			if(!nav_beacon.access_code || console.beacon_access_codes[nav_beacon.access_code])
 				L["([L.len]) [nav_beacon.name] [nav_beacon.id] located: [nav_beacon.x] [nav_beacon.y] [nav_beacon.z]"] = nav_beacon
 			else
 				L["([L.len]) [nav_beacon.name] [nav_beacon.id] locked"] = null
