@@ -250,7 +250,13 @@
 		cleanup_field(d)
 	return ..()
 
+/obj/machinery/power/shieldwallgen/should_have_node()
+	return anchored
 
+/obj/machinery/power/shieldwallgen/connect_to_network()
+	if(!anchored)
+		return FALSE
+	. = ..()
 
 /obj/machinery/power/shieldwallgen/process()
 	if(active)
@@ -333,6 +339,9 @@
 	. = default_unfasten_wrench(user, I, 0)
 	if(. == SUCCESSFUL_UNFASTEN && anchored)
 		connect_to_network()
+		var/turf/T = get_turf(src)
+		var/obj/structure/cable/C = locate(/obj/structure/cable) in T
+		C.update_icon()
 
 
 /obj/machinery/power/shieldwallgen/attackby(obj/item/W, mob/user, params)
