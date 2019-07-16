@@ -219,6 +219,8 @@
 
 		// Limbs? (And I have no other healing)
 		if (amInCoffinWhileTorpor)
+
+			// Heal Missing
 			var/list/missing = owner.current.get_missing_limbs()
 			if (missing.len)
 				// 1) Find ONE Limb and regenerate it.
@@ -232,6 +234,13 @@
 				playsound(owner.current, 'sound/magic/demon_consume.ogg', 50, 1)
 				// DONE! After regenerating a limb, we stop here.
 				return TRUE
+			else
+				// Remove Prosthetic/False Limb
+				for(var/obj/item/bodypart/BP in owner.current.bodyparts)
+					if (istype(BP) && BP.status == 2)
+						BP.drop_limb()
+						break
+						// NOTE: Limbs have a "status", like their hosts "stat". 2 is dead (aka Prosthetic). 1 seems to be idle/alive.
 
 			// Cure Final Disabilities
 			CureDisabilities()
