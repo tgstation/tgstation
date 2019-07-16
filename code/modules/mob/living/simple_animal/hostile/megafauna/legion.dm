@@ -14,6 +14,7 @@
   *
   *Difficulty: Medium
   *
+  *SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
   */
 /mob/living/simple_animal/hostile/megafauna/legion
 	name = "Legion"
@@ -21,7 +22,7 @@
 	maxHealth = 700
 	icon_state = "mega_legion"
 	icon_living = "mega_legion"
-	desc = "One of the many restless."
+	desc = "One of many."
 	icon = 'icons/mob/lavaland/96x96megafauna.dmi'
 	attacktext = "chomps"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
@@ -97,12 +98,16 @@
 		if(4)
 			create_legion_turrets()
 
+//SKULLS
+
 ///Attack proc. Spawns a singular legion skull.
 /mob/living/simple_animal/hostile/megafauna/legion/proc/create_legion_skull()
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
 	A.GiveTarget(target)
 	A.friends = friends
 	A.faction = faction
+
+//CHARGE
 
 ///Attack proc. Gives legion some movespeed buffs and switches the AI to melee. At lower sizes, this also throws the skull at the player.
 /mob/living/simple_animal/hostile/megafauna/legion/proc/charge_target()
@@ -116,7 +121,22 @@
 	addtimer(CALLBACK(src, .proc/reset_charge), 60)
 	var/mob/living/L = target
 	if(!istype(L) || L.stat != DEAD) //I know, weird syntax, but it just works.
-		addtimer(CALLBACK(src, /atom/movable/.proc/throw_at, target, 7, 1.2, src, FALSE, FALSE, CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/effects/meteorimpact.ogg', 50 * size, TRUE, 2), INFINITY), 20)
+		addtimer(CALLBACK(src, .proc/throw_thyself), 20)
+
+///This is the proc that actually does the throwing. Charge only adds a timer for this.
+/mob/living/simple_animal/hostile/megafauna/legion/proc/throw_thyself()
+	playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 50, TRUE)
+	throw_at(target, 7, 1.1, src, FALSE, FALSE, CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/effects/meteorimpact.ogg', 50 * size, TRUE, 2), INFINITY)
+
+///Deals some extra damage on throw impact.
+/mob/living/simple_animal/hostile/megafauna/legion/throw_impact(mob/living/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(istype(hit_atom))
+		playsound(src, attack_sound, 100, TRUE)
+		hit_atom.apply_damage(22 * size / 2) //It gets pretty hard to dodge the skulls when there are a lot of them. Scales down with size
+		hit_atom.safe_throw_at(get_step(src, get_dir(src, hit_atom)), 2) //Some knockback. Prevent the legion from melee directly after the throw.
+
+//TURRETS
 
 ///Attack proc. Creates up to three legion turrets on suitable turfs nearby.
 /mob/living/simple_animal/hostile/megafauna/legion/proc/create_legion_turrets(minimum = 1, maximum = size)
@@ -136,14 +156,6 @@
 	. = ..()
 	if(target)
 		wander = TRUE
-
-///Deals some extra damage on throw impact.
-/mob/living/simple_animal/hostile/megafauna/legion/throw_impact(mob/living/hit_atom, datum/thrownthing/throwingdatum)
-	. = ..()
-	if(istype(hit_atom))
-		playsound(src, attack_sound, 100, TRUE)
-		hit_atom.apply_damage(melee_damage_lower)
-		hit_atom.safe_throw_at(get_edge_target_turf(hit_atom, get_dir(src, hit_atom)), 4)
 
 ///This makes sure that the legion door opens on taking damage, so you can't cheese this boss.
 /mob/living/simple_animal/hostile/megafauna/legion/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
@@ -192,10 +204,10 @@
 
 ///Splits legion into smaller skulls.
 /mob/living/simple_animal/hostile/megafauna/legion/proc/Split()
-	adjustHealth(-maxHealth) //We heal ourselves in preparation
 	size--
 	if(size < 1)
 		return FALSE
+	adjustHealth(-maxHealth) //We heal ourselves in preparation
 	switch(size) //Yay, switches
 		if(3 to INFINITY)
 			icon = initial(icon)
@@ -212,7 +224,7 @@
 			pixel_x = 0
 			pixel_y = 0
 			maxHealth = 200
-	adjustHealth(-maxHealth)
+	adjustHealth(0) //Make the health HUD look correctly.
 	visible_message("<span class='boldannounce'>This is getting out of hands. Now there are three of them!</span>")
 	for(var/i in 1 to 2) //Create three skulls in total
 		var/mob/living/simple_animal/hostile/megafauna/legion/L = new(loc)

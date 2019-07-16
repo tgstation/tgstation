@@ -26,7 +26,7 @@
 /obj/structure/legionturret/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	flick("legion_turret_intro", src)
+//	flick("legion_turret_intro", src)
 
 /obj/structure/legionturret/Destroy()
 	STOP_PROCESSING(SSobj, src)
