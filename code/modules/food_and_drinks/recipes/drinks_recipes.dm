@@ -781,3 +781,11 @@
 	id = /datum/reagent/consumable/red_queen
 	results = list(/datum/reagent/consumable/red_queen = 10)
 	required_reagents = list(/datum/reagent/consumable/tea = 6, /datum/reagent/mercury = 2, /datum/reagent/consumable/blackpepper = 1, /datum/reagent/growthserum = 1)
+
+/datum/chemical_reaction/flaming_homer
+	name = "Flaming Homer"
+	id = /datum/reagent/consumable/ethanol/flaming_homer
+	results = list(/datum/reagent/consumable/ethanol/flaming_homer = 11)
+	required_reagents = list(/datum/reagent/consumable/ethanol/tequila = 5, /datum/reagent/consumable/ethanol/creme_de_menthe = 5, /datum/reagent/medicine/spaceacillin = 1) //spaceacillan standing in for cough syrup aka codeine
+	mix_message = "The drink fizzes and pops for a moment until a cool flame settles on top."
+	required_temp = 350

@@ -2092,3 +2092,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "planet_cracker"
 	glass_name = "Planet Cracker"
 	glass_desc = "Although historians believe the drink was originally created to commemorate the end of an important conflict in man's past, its origins have largely been forgotten and it is today seen more as a general symbol of human supremacy."
+
+/datum/reagent/consumable/ethanol/flaming_homer //its basically lean
+	name = "Flaming Homer"
+	description = "This drink is essentially a combination of varying alcoholic beverages and cough syrup. Only for the truly desperate."
+	color = "#af50b8"
+	boozepwr = 60
+	quality = DRINK_FANTASTIC
+	taste_description = "chaos and desperation"
+	glass_icon_state = "flaming_homer"
+	glass_name = "Flaming Homer"
+	glass_desc = "'I don't know the scientific reason, but fire made it good.'"
