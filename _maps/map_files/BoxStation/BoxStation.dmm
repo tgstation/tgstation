@@ -28217,12 +28217,12 @@
 /turf/open/floor/plasteel,
 /area/teleporter)
 "buX" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/teleporter)
 "buY" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -33942,7 +33942,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bJH" = (
-/obj/machinery/shieldwallgen/xenobiologyaccess,
+/obj/machinery/power/shieldwallgen/xenobiologyaccess,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/science/xenobiology)
@@ -49329,7 +49329,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
 "cTX" = (
-/obj/machinery/shieldwallgen/xenobiologyaccess,
+/obj/machinery/power/shieldwallgen/xenobiologyaccess,
 /obj/structure/sign/poster/official/safety_eye_protection{
 	pixel_x = 32
 	},

@@ -1805,7 +1805,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "afg" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
 /area/teleporter)
@@ -1817,7 +1817,7 @@
 /turf/open/floor/plasteel/dark,
 /area/teleporter)
 "afi" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/structure/window/reinforced,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
@@ -12302,7 +12302,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "aEP" = (
-/obj/machinery/shieldwallgen/xenobiologyaccess,
+/obj/machinery/power/shieldwallgen/xenobiologyaccess,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/science/xenobiology)
