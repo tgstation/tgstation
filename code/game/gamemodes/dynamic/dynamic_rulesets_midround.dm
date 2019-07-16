@@ -286,7 +286,7 @@
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/finish_setup(mob/new_character, index)
 	if (index == 1) // Our first guy is the leader
 		var/datum/antagonist/nukeop/leader/new_role = new
+		nuke_team = new_role.nuke_team
 		new_character.mind.add_antag_datum(new_role)
-		setup_role(new_role)
 	else
 		return ..()
