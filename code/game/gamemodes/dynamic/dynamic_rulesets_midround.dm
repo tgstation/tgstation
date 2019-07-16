@@ -121,7 +121,7 @@
 	var/datum/antagonist/new_role = new antag_datum()
 	setup_role(new_role)
 	new_character.mind.add_antag_datum(new_role)
-	new_character.midn.special_role = antag_flag
+	new_character.mind.special_role = antag_flag
 
 /datum/dynamic_ruleset/midround/from_ghosts/proc/setup_role(datum/antagonist/new_role)
 	return
