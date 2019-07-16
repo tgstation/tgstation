@@ -252,6 +252,9 @@
 		return FALSE
 	return ..()
 
+/datum/dynamic_ruleset/midround/from_ghosts/wizard/finish_setup(mob/new_character, index)
+	..()
+	new_character.forceMove(pick(GLOB.wizardstart))
 
 //////////////////////////////////////////////
 //                                          //
