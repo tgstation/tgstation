@@ -1,5 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - rscadd: "Added a new loot item to the lavaland clown ruin."
-  - rscdel: "Removed the slime core from said ruin."
