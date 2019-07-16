@@ -1,5 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Sentient diseases can no longer pick two cures that react and disappear when eaten."
-  - balance: "Sentient disease cures are now consistently harder, will only pick cures from tier 6 and up."

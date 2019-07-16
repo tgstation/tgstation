@@ -1,6 +1,0 @@
-author: "redmoogle"
-delete-after: True
-changes: 
-  - tweak: "made the bar slightly bigger on Metastation"
-  - tweak: "made the art storage slightly smaller on Metastation"
-  - rscadd: "added plants and preparation space in the Metastation bar"
