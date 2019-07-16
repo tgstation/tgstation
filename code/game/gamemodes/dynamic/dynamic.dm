@@ -238,10 +238,6 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	midround_injection_cooldown = round(CLAMP(exp_distribution(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max)) + world.time
 	message_admins("Dynamic Mode initialized with a Threat Level of... [threat_level]!")
 	log_game("DYNAMIC: Dynamic Mode initialized with a Threat Level of... [threat_level]!")
-	if (GLOB.player_list.len >= GLOB.dynamic_high_pop_limit)
-		message_admins("High Population Override is in effect! Threat Level will have more impact on which roles will appear, and player population less.")
-		log_game("DYNAMIC: High Population Override is in effect! Threat Level will have more impact on which roles will appear, and player population less.")
-
 	return TRUE
 
 /datum/game_mode/dynamic/pre_setup()
@@ -316,7 +312,9 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	if (GLOB.dynamic_classic_secret)
 		extra_rulesets_amount = 0
 	else
-		if (GLOB.player_list.len > GLOB.dynamic_high_pop_limit)
+		if (roundstart_pop_ready > GLOB.dynamic_high_pop_limit)
+			message_admins("High Population Override is in effect! Threat Level will have more impact on which roles will appear, and player population less.")
+			log_game("DYNAMIC: High Population Override is in effect! Threat Level will have more impact on which roles will appear, and player population less.")
 			if (threat_level > high_pop_second_rule_req)
 				extra_rulesets_amount++
 				if (threat_level > high_pop_third_rule_req)
@@ -511,7 +509,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		return 100
 	var/chance = 0
 	// If the high pop override is in effect, we reduce the impact of population on the antag injection chance
-	var/high_pop_factor = (GLOB.player_list.len >= GLOB.dynamic_high_pop_limit)
+	var/high_pop_factor = (current_players[CURRENT_LIVING_PLAYERS] >= GLOB.dynamic_high_pop_limit)
 	var/max_pop_per_antag = max(5,15 - round(threat_level/10) - round(current_players[CURRENT_LIVING_PLAYERS].len/(high_pop_factor ? 10 : 5))) // https://docs.google.com/spreadsheets/d/1QLN_OBHqeL4cm9zTLEtxlnaJHHUu0IUPzPbsI-DFFmc/edit#gid=2053826290
 	if (!current_players[CURRENT_LIVING_ANTAGS].len)
 		chance += 50 // No antags at all? let's boost those odds!
