@@ -287,7 +287,7 @@
 	name = "iron pill"
 	desc = "Used to reduce bloodloss slowly."
 	icon_state = "pill9"
-	list_reagents = list(/datum/reagent/medicine/iron = 30)
+	list_reagents = list(/datum/reagent/iron = 30)
 	rename_with_volume = TRUE
 
 
