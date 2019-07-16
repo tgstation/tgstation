@@ -535,6 +535,7 @@
 
 /atom/vv_get_dropdown()
 	. = ..()
+	VV_DROPDOWN_OPTION("", "---------")
 	if(!ismovableatom(src))
 		var/turf/curturf = get_turf(src)
 		if(curturf)
@@ -548,7 +549,7 @@
 	. = ..()
 	if(href_list[VV_HK_ADD_REAGENT] && check_rights(R_VAREDIT))
 		if(!reagents)
-			var/amount = input(usr, "Specify the reagent size of [A]", "Set Reagent Size", 50) as num
+			var/amount = input(usr, "Specify the reagent size of [src]", "Set Reagent Size", 50) as num
 			if(amount)
 				create_reagents(amount)
 
@@ -577,12 +578,12 @@
 				var/amount = input(usr, "Choose the amount to add.", "Choose the amount.", reagents.maximum_volume) as num
 				if(amount)
 					reagents.add_reagent(chosen_id, amount)
-					log_admin("[key_name(usr)] has added [amount] units of [chosen_id] to \the [A]")
-					message_admins("<span class='notice'>[key_name(usr)] has added [amount] units of [chosen_id] to \the [A]</span>")
+					log_admin("[key_name(usr)] has added [amount] units of [chosen_id] to [src]")
+					message_admins("<span class='notice'>[key_name(usr)] has added [amount] units of [chosen_id] to [src]</span>")
 	if(href_list[VV_HK_TRIGGER_EXPLOSION] && check_rights(R_FUN))
-		usr.client.holder.cmd_admin_explosion(src)
+		usr.client.cmd_admin_explosion(src)
 	if(href_list[VV_HK_TRIGGER_EMP] && check_rights(R_FUN))
-		usr.client.holder.cmd_admin_emp(src)
+		usr.client.cmd_admin_emp(src)
 	if(href_list[VV_HK_MODIFY_TRANSFORM] && check_rights(R_VAREDIT))
 		var/result = input(usr, "Choose the transformation to apply","Transform Mod") as null|anything in list("Scale","Translate","Rotate")
 		var/matrix/M = transform

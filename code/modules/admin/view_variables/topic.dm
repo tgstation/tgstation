@@ -28,7 +28,7 @@
 
 //Needs +VAREDIT past this point
 
-	else if(check_rights(R_VAREDIT))
+	if(check_rights(R_VAREDIT))
 
 	//~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
 

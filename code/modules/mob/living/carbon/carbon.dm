@@ -951,11 +951,11 @@
 			return
 		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
 			return
-		holder.Topic(href, list("makeai"=href_list[VV_HK_TARGET]))
+		usr.client.holder.Topic("vv_override", list("makeai"=href_list[VV_HK_TARGET]))
 	if(href_list[VV_HK_MODIFY_ORGANS])
 		if(!check_rights(NONE))
 			return
-		usr.holdermanipulate_organs(src)
+		usr.client.manipulate_organs(src)
 	if(href_list[VV_HK_MARTIAL_ART])
 		if(!check_rights(NONE))
 			return

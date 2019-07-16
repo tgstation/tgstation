@@ -84,6 +84,19 @@
 #define VV_HK_MASS_DEL_TYPE "mass_delete_type"
 #define VV_HK_ARMOR_MOD "mod_obj_armor"
 
+// /mob
+#define VV_HK_GIB "gib"
+#define VV_HK_GIVE_SPELL "give_spell"
+#define VV_HK_REMOVE_SPELL "remove_spell"
+#define VV_HK_GIVE_DISEASE "give_disease"
+#define VV_HK_GODMODE "godmode"
+#define VV_HK_DROP_ALL "dropall"
+#define VV_HK_REGEN_ICONS "regen_icons"
+#define VV_HK_PLAYER_PANEL "player_panel"
+#define VV_HK_BUILDMODE "buildmode"
+#define VV_HK_DIRECT_CONTROL "direct_control"
+#define VV_HK_OFFER_GHOSTS "offer_ghosts"
+
 // /mob/living/carbon
 #define VV_HK_MAKE_AI "aiify"
 #define VV_HK_MODIFY_BODYPART "mod_bodypart"

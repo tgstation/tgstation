@@ -821,7 +821,7 @@
 /mob/living/carbon/human/vv_do_topic(list/href_list)
 	. = ..()
 	if(href_list[VV_HK_COPY_OUTFIT])
-		if(!ceck_rights(R_SPAWN))
+		if(!check_rights(R_SPAWN))
 			return
 		copy_outfit()
 	if(href_list[VV_HK_MOD_QUIRKS])
@@ -850,25 +850,25 @@
 			return
 		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
 			return
-		usr.holder.Topic(href, list("monkeyone"=href_list[VV_HK_TARGET]))
-	if(href_list[VV_HK_MAKE_ROBOT])
+		usr.client.holder.Topic("vv_override", list("monkeyone"=href_list[VV_HK_TARGET]))
+	if(href_list[VV_HK_MAKE_CYBORG])
 		if(!check_rights(R_SPAWN))
 			return
 		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
 			return
-		usr.holder.Topic(href, list("makerobot"=href_list[VV_HK_TARGET]))
+		usr.client.holder.Topic("vv_override", list("makerobot"=href_list[VV_HK_TARGET]))
 	if(href_list[VV_HK_MAKE_ALIEN])
 		if(!check_rights(R_SPAWN))
 			return
 		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
 			return
-		usr.holder.Topic(href, list("makealien"=href_list[VV_HK_TARGET]))
+		usr.client.holder.Topic("vv_override", list("makealien"=href_list[VV_HK_TARGET]))
 	if(href_list[VV_HK_MAKE_SLIME])
 		if(!check_rights(R_SPAWN))
 			return
 		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
 			return
-		usr.holder.Topic(href, list("makeslime"=href_list[VV_HK_TARGET]))
+		usr.client.holder.Topic("vv_override", list("makeslime"=href_list[VV_HK_TARGET]))
 	if(href_list[VV_HK_SET_SPECIES])
 		if(!check_rights(R_SPAWN))
 			return
