@@ -71,15 +71,20 @@
 
 /obj/machinery/computer/prisoner/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/card/id))
-		return attack_hand(user)
+		insert_id_prisoner(usr)
 	else
 		return ..()
+
+/obj/machinery/computer/prisoner/AltClick(mob/user)
+	if(!user.canUseTopic(src, issilicon(user)))
+		return
+	eject_id_prisoner(user)
+
 
 /obj/machinery/computer/prisoner/process()
 	if(!..())
 		src.updateDialog()
 	return
-
 
 /obj/machinery/computer/prisoner/Topic(href, href_list)
 	if(..())
@@ -89,21 +94,11 @@
 
 		if(href_list["id"])
 			if(href_list["id"] =="insert" && !inserted_id)
-				var/obj/item/card/id/prisoner/I = usr.is_holding_item_of_type(/obj/item/card/id/prisoner)
-				if(I)
-					if(!usr.transferItemToLoc(I, src))
-						return
-					inserted_id = I
-					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-				else
-					to_chat(usr, "<span class='danger'>No valid ID.</span>")
+				insert_id_prisoner(usr)
 			else if(inserted_id)
 				switch(href_list["id"])
 					if("eject")
-						inserted_id.forceMove(drop_location())
-						inserted_id.verb_pickup()
-						inserted_id = null
-						playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+						eject_id_prisoner(usr)
 					if("reset")
 						inserted_id.points = 0
 					if("setgoal")
@@ -144,3 +139,26 @@
 		src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
+
+/obj/machinery/computer/prisoner/proc/insert_id_prisoner(mob/user)
+	var/obj/item/card/id/prisoner/I = usr.is_holding_item_of_type(/obj/item/card/id/prisoner)
+	if(I)
+		if(!usr.transferItemToLoc(I, src))
+			return
+		inserted_id = I
+		usr.visible_message("<span class='notice'>[usr] inserts an ID card into the console.</span>", \
+						"<span class='notice'>You insert the ID card into the console.</span>")
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+	else
+		to_chat(usr, "<span class='danger'>No valid ID.</span>")
+	src.updateUsrDialog()
+
+/obj/machinery/computer/prisoner/proc/eject_id_prisoner(mob/user)
+	inserted_id.forceMove(drop_location())
+	if(!issilicon(usr) && Adjacent(usr))
+		usr.put_in_hands(inserted_id)
+		inserted_id = null
+		usr.visible_message("<span class='notice'>[usr] gets an ID card from the console.</span>", \
+							"<span class='notice'>You get the ID card from the console.</span>")
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+	src.updateUsrDialog()
