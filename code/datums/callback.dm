@@ -62,7 +62,7 @@
 /world/proc/ImmediateInvokeAsync(thingtocall, proctocall, ...)
 	set waitfor = FALSE
 
-	if (!thingtocall)
+	if (!thingtocall || QDELETED(thingtocall))
 		return
 
 	var/list/calling_arguments = length(args) > 2 ? args.Copy(3) : null
@@ -82,7 +82,7 @@
 					return world.PushUsr(arglist(list(M, src) + args))
 				return world.PushUsr(M, src)
 
-	if (!object)
+	if (!object || QDELETED(object))
 		return
 
 	var/list/calling_arguments = arguments
