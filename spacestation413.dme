@@ -2942,7 +2942,6 @@
 #include "spacestation413\code\modules\mob\living\carbon\human\species_types\trolls.dm"
 #include "spacestation413\code\modules\mob\living\silicon\robot\login.dm"
 #include "spacestation413\code\modules\mob\living\simple_animal\bot\buttbot.dm"
-#include "spacestation413\code\modules\mob\living\simple_animal\friendly\dog.dm"
 #include "spacestation413\code\modules\mob\living\simple_animal\hostile\floor_cluwne.dm"
 #include "spacestation413\code\modules\paperwork\photography.dm"
 #include "spacestation413\code\modules\reagents\chemistry\reagents\drug_reagents.dm"
