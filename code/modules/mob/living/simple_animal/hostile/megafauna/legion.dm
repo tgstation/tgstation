@@ -1,29 +1,28 @@
-/*
-
-LEGION
-
-Legion spawns from the necropolis gate in the far north of lavaland. It is the guardian of the Necropolis and emerges from within whenever an intruder tries to enter through its gate.
-Whenever Legion emerges, everything in lavaland will receive a notice via color, audio, and text. This is because Legion is powerful enough to slaughter the entirety of lavaland with little effort.
-
-It has two attack modes that it constantly rotates between.
-
-In ranged mode, it will behave like a normal legion - retreating when possible and firing legion skulls at the target.
-In charge mode, it will spin and rush its target, attacking with melee whenever possible.
-
-When Legion dies, it drops a staff of storms, which allows its wielder to call and disperse ash storms at will and functions as a powerful melee weapon.
-
-Difficulty: Medium
-
-*/
-
+/**
+  *LEGION
+  *
+  *Legion spawns from the necropolis gate in the far north of lavaland. It is the guardian of the Necropolis and emerges from within whenever an intruder tries to enter through its gate.
+  *Whenever Legion emerges, everything in lavaland will receive a notice via color, audio, and text. This is because Legion is powerful enough to slaughter the entirety of lavaland with little effort. LOL
+  *
+  **It has three attacks.
+  **Spawn Skull. Most of the time it will use this attack. Spawns a single legion skull.
+  **Spawn Sentinel. The legion will spawn up to three sentinels, depending on its size.
+  **CHARGE! The legion starts spinning and tries to melee the player. If it has already split, it will try to flick itself towards the player, dealing some damage if it hits.
+  *
+  *When Legion dies, it will split into three smaller skulls up to three times.
+  *If you kill all of the smaller ones it drops a staff of storms, which allows its wielder to call and disperse ash storms at will and functions as a powerful melee weapon.
+  *
+  *Difficulty: Medium
+  *
+  */
 /mob/living/simple_animal/hostile/megafauna/legion
 	name = "Legion"
-	health = 800
-	maxHealth = 800
-	icon_state = "legion"
-	icon_living = "legion"
-	desc = "One of many."
-	icon = 'icons/mob/lavaland/legion.dmi'
+	health = 500 //Doesn't sound like a lot, but in total this is 3755 HP slit across all legions.
+	maxHealth = 500
+	icon_state = "mega_legion"
+	icon_living = "mega_legion"
+	desc = "One of the many restless."
+	icon = 'icons/mob/lavaland/96x96megafauna.dmi'
 	attacktext = "chomps"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	speak_emote = list("echoes")
@@ -36,13 +35,13 @@ Difficulty: Medium
 	retreat_distance = 5
 	minimum_distance = 5
 	ranged_cooldown_time = 20
-	var/size = 5
+	var/size = 3
 	var/charging = FALSE
 	internal_type = /obj/item/gps/internal/legion
 	medal_type = BOSS_MEDAL_LEGION
 	score_type = LEGION_SCORE
-	pixel_y = -90
-	pixel_x = -75
+	pixel_y = -16
+	pixel_x = -32
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 13
 	wander = FALSE
@@ -94,9 +93,9 @@ Difficulty: Medium
 		if(0 to 2)
 			create_legion_skull()
 		if(3)
-			create_legion_turrets()
-		if(4)
 			charge_target()
+		if(4)
+			create_legion_turrets()
 
 /mob/living/simple_animal/hostile/megafauna/legion/proc/create_legion_skull()
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
@@ -106,33 +105,42 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/legion/proc/charge_target()
 	visible_message("<span class='warning'><b>[src] charges!</b></span>")
-	SpinAnimation(speed = 20, loops = 5)
+	SpinAnimation(speed = 20, loops = 3, parallel = FALSE)
 	ranged = FALSE
 	retreat_distance = 0
 	minimum_distance = 0
 	set_varspeed(0)
 	charging = TRUE
-	addtimer(CALLBACK(src, .proc/reset_charge), 50)
+
+	addtimer(CALLBACK(src, .proc/reset_charge), 60)
+	if(size < 3) //Lower sized legions will throw themselves at the player.
+		addtimer(CALLBACK(src, /atom/movable/.proc/throw_at, target, 7, 1.2, src, FALSE, FALSE, CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/effects/meteorimpact.ogg', 100, TRUE, 2), INFINITY), 20)
 
 ///Attack proc. Creates up to three legion turrets on suitable turfs nearby.
-/mob/living/simple_animal/hostile/megafauna/legion/proc/create_legion_turrets()
-	visible_message("<span class='warning'><b>[src] screams!</b></span>")
+/mob/living/simple_animal/hostile/megafauna/legion/proc/create_legion_turrets(minimum = 1, maximum = size)
 	playsound(src, 'sound/magic/RATTLEMEBONES.ogg', 100, TRUE)
 	var/list/possiblelocations = list()
 	for(var/turf/T in oview(src, 3)) //Only place the turrets on open turfs
 		if(is_blocked_turf(T))
 			continue
 		possiblelocations += T
-	for(var/i in 1 to min(rand(2, 3), LAZYLEN(possiblelocations))) //Spawns between two and three. Makes sure aren't spawning in nullspace.
+	for(var/i in 1 to min(rand(minimum, maximum), LAZYLEN(possiblelocations))) //Spawns between two and three. Makes sure aren't spawning in nullspace.
 		var/chosen = pick(possiblelocations)
 		var/turret = new /obj/structure/legionturret(chosen)
-		QDEL_IN(turret, 2 MINUTES) //They only stay around for two minutes
+		QDEL_IN(turret, 30 SECONDS) //They only stay around for half a minute
 		possiblelocations -= chosen
 
 /mob/living/simple_animal/hostile/megafauna/legion/GiveTarget(new_target)
 	. = ..()
 	if(target)
 		wander = TRUE
+
+/mob/living/simple_animal/hostile/megafauna/legion/throw_impact(mob/living/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(istype(hit_atom))
+		playsound(src, attack_sound, 100, TRUE)
+		hit_atom.apply_damage(melee_damage_lower)
+		hit_atom.safe_throw_at(get_edge_target_turf(hit_atom, get_dir(src, hit_atom)), 4)
 
 /mob/living/simple_animal/hostile/megafauna/legion/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(GLOB.necropolis_gate && true_spawn)
@@ -159,29 +167,26 @@ Difficulty: Medium
 		return
 	if(size > 1)
 		adjustHealth(-maxHealth) //heal ourself to full in prep for splitting
-		var/mob/living/simple_animal/hostile/megafauna/legion/L = new(loc)
-
-		L.maxHealth = round(maxHealth * 0.6,DAMAGE_PRECISION)
-		maxHealth = L.maxHealth
-
-		L.health = L.maxHealth
+		maxHealth = round(maxHealth * 0.7,DAMAGE_PRECISION)
 		health = maxHealth
-
 		size--
-		L.size = size
-
-		L.resize = L.size * 0.2
-		transform = initial(transform)
-		resize = size * 0.2
-
-		L.update_transform()
-		update_transform()
-
-		L.faction = faction.Copy()
-
-		L.GiveTarget(target)
-
-		visible_message("<span class='boldannounce'>[src] splits in twain!</span>")
+		switch(size) //Yay, switches
+			if(3 to INFINITY)
+				icon = 'icons/mob/lavaland/96x96megafauna.dmi'
+				pixel_x = -32
+				pixel_y = -16
+			if(2)
+				icon = 'icons/mob/lavaland/64x64megafauna.dmi'
+				pixel_x = -16
+				pixel_y = -8
+			if(1)
+				icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+				pixel_x = 0
+				pixel_y = 0
+		visible_message("<span class='boldannounce'>This is getting out of hands. Now there are three of them!</span>")
+		for(1 to 2) //Create three skulls in total
+			var/mob/living/simple_animal/hostile/megafauna/legion/L = new(loc)
+			L.setVarsAfterSplit(src)
 	else
 		var/last_legion = TRUE
 		for(var/mob/living/simple_animal/hostile/megafauna/legion/other in GLOB.mob_living_list)
@@ -196,6 +201,16 @@ Difficulty: Medium
 		if(!true_spawn)
 			loot = null
 		..()
+
+/mob/living/simple_animal/hostile/megafauna/legion/proc/setVarsAfterSplit(var/mob/living/simple_animal/hostile/megafauna/legion/L)
+	maxHealth = L.maxHealth
+	health = L.maxHealth
+	size = L.size
+	icon = L.icon
+	pixel_x = L.pixel_x
+	pixel_y = L.pixel_y
+	faction = L.faction.Copy()
+	GiveTarget(L.target)
 
 /obj/item/gps/internal/legion
 	icon_state = null

@@ -21,7 +21,7 @@
 	///Ticks on every process. If smaller than firing_cooldown, this tries to shoot.
 	var/firing_timer = 0
 	///How long it takes between shooting the tracer and the projectile.
-	var/shot_delay = 4
+	var/shot_delay = 8
 	///Compared with the targeted mobs. If they have the faction, turret won't shoot.
 	var/faction = list("mining")
 
@@ -50,14 +50,15 @@
 ///Called when attacking a target. Shoots a projectile at the turf underneat the target.
 /obj/structure/legionturret/proc/fire(atom/target)
 	var/turf/T = get_turf(target)
-	if(!T)
+	var/turf/T1 = get_turf(src)
+	if(!T || !T1)
 		return
-	var/obj/item/projectile/tracer = new tracer_type(loc)
-	tracer.firer = src
-	tracer.preparePixelProjectile(target, src)
-	tracer.fire()
+	//someone has buried tracer code in spaghetti. OOF OUCH
+	var/angle = Get_Angle(T1, T)
+	var/datum/point/vector/V = new(T1.x, T1.y, T1.z, 0, 0, angle) //Let's see if this works.
+	generate_tracer_between_points(V, V.return_vector_after_increments(6), /obj/effect/projectile/tracer/legion/tracer, 0, shot_delay, 0, 0, 0, null) //REEE I hate you this.
 	playsound(src, 'sound/machines/airlockopen.ogg', 100, TRUE)
-	addtimer(CALLBACK(src, .proc/fire_beam, tracer.Angle), shot_delay)
+	addtimer(CALLBACK(src, .proc/fire_beam, angle), shot_delay)
 
 ///Called shot_delay after the turret shot the tracer. Shoots a projectile into the same direction.
 /obj/structure/legionturret/proc/fire_beam(angle)

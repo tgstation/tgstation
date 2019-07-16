@@ -722,7 +722,7 @@
 	small_icon_state = "goliath2"
 
 /datum/action/small_sprite/megafauna/legion
-	small_icon_state = "dwarf_legion"
+	small_icon_state = "mega_legion"
 
 /datum/action/small_sprite/megafauna/spacedragon
 	small_icon = 'icons/mob/carp.dmi'
