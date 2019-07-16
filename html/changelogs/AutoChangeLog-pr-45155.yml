@@ -1,4 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - rscadd: "Objects dropped and thrown will have a slight random pixel offset"
