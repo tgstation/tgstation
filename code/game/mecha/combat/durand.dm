@@ -24,11 +24,11 @@
 	. = ..()
 	if(defence_mode)
 		if(!use_power(100))
-			defense_action.turnoff()
+			defense_action.Activate(quiet = TRUE)
 
 /obj/mecha/combat/durand/go_out(forced, atom/newloc = loc)
 	if(defence_mode)
-		defense_action.turnoff()
+		defense_action.Activate(quiet = TRUE)
 	. = ..()
 
 /**Checks if defense mode is enabled, and if the attacker is standing in an area covered by the shield.
@@ -54,6 +54,34 @@ Expects a turf. Returns true if the attack should be blocked, false if not.*/
 		return TRUE
 	return FALSE
 
+/**An object to take the hit for us when using the Durand's defense mode.
+It is spawned by the Durand (see the durand.dm file) when an attack is made and determined to be blocked by the shield.
+Attacks are passed to it after creation. It will deal the damage as power drain to the mech and then self-delete.*/
+/obj/mech_defence_mode_scapegoat //projectiles get passed to this when defence mode is enabled
+	name = "defence grid"
+	max_integrity = 10000
+	obj_integrity = 10000
+	var/obj/mecha/combat/durand/chassis
+
+
+/obj/mech_defence_mode_scapegoat/take_damage()
+	if(!chassis)
+		qdel(src)
+		return
+	. = ..()
+	if(!chassis.use_power((max_integrity - obj_integrity) * 100))
+		chassis.cell?.charge = 0
+		chassis.defense_action.Activate(quiet = TRUE)
+	qdel(src)
+
+/obj/mech_defence_mode_scapegoat/play_attack_sound()
+	playsound(src, 'sound/mecha/mech_shield_deflect.ogg', 100, 1)
+
+/datum/action/innate/mecha/mech_defence_mode
+	name = "Toggle Defence Mode"
+	button_icon_state = "mech_defense_mode_off"
+	var/image/def_overlay
+
 /obj/mecha/combat/durand/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, armor_penetration = 0)
 	if(defence_check(user.loc))
 		log_message("Attack absorbed by defence field. Attacker - [user].", LOG_MECHA, color="orange")
@@ -77,6 +105,7 @@ Expects a turf. Returns true if the attack should be blocked, false if not.*/
 	if(defence_check(Proj.loc))
 		log_message("Hit by projectile. Type: [Proj.name]([Proj.flag]).", LOG_MECHA, color="red")
 		log_message("Attack absorbed by defence field.", LOG_MECHA, color="orange")
+		Proj.hitsound = 'sound/mecha/mech_shield_deflect.ogg'
 		var/obj/mech_defence_mode_scapegoat/goat = new /obj/mech_defence_mode_scapegoat(loc)
 		goat.chassis = src
 		goat.bullet_act(Proj)
@@ -89,5 +118,14 @@ Expects a turf. Returns true if the attack should be blocked, false if not.*/
 		var/obj/mech_defence_mode_scapegoat/goat = new /obj/mech_defence_mode_scapegoat(loc)
 		goat.chassis = src
 		goat.attackby(W, user, params)
+	else
+		. = ..()
+
+/obj/mecha/combat/durand/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	if(defence_check(AM.loc))
+		log_message("Impact with [AM] absorbed by defence field.", LOG_MECHA, color="orange")
+		var/obj/mech_defence_mode_scapegoat/goat = new /obj/mech_defence_mode_scapegoat(loc)
+		goat.chassis = src
+		goat.hitby(AM, skipcatch, hitpush, blocked, throwingdatum)
 	else
 		. = ..()

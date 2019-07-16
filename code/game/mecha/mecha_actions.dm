@@ -164,63 +164,26 @@
 		chassis.log_message("Toggled thrusters.", LOG_MECHA)
 		chassis.occupant_message("<font color='[chassis.thrusters_active ?"blue":"red"]'>Thrusters [chassis.thrusters_active ?"en":"dis"]abled.")
 
-/**An object to take the hit for us when using the Durand's defense mode.
-It is spawned by the Durand (see the durand.dm file) when an attack is made and determined to be blocked by the shield.
-Attacks are passed to it after creation. It will deal the damage as power drain to the mech and then self-delete.*/
-/obj/mech_defence_mode_scapegoat //projectiles get passed to this when defence mode is enabled
-	name = "defence grid"
-	max_integrity = 10000
-	obj_integrity = 10000
-	var/obj/mecha/chassis
-
-
-/obj/mech_defence_mode_scapegoat/take_damage()
-	if(!chassis)
-		qdel(src)
-		return
-	. = ..()
-	if(!chassis.use_power((max_integrity - obj_integrity) * 100))
-		chassis.cell?.charge = 0
-		chassis.defense_action.turnoff()
-	qdel(src)
-
-/datum/action/innate/mecha/mech_defence_mode
-	name = "Toggle Defence Mode"
-	button_icon_state = "mech_defense_mode_off"
-	var/image/def_overlay
-
-
-/datum/action/innate/mecha/mech_defence_mode/Activate(forced_state = null)
+/datum/action/innate/mecha/mech_defence_mode/Activate(forced_state = null, var/quiet = FALSE)
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	if(!isnull(forced_state))
 		chassis.defence_mode = forced_state
 	else
 		chassis.defence_mode = !chassis.defence_mode
-	if(chassis.defence_mode)
-		def_overlay = new(chassis.icon, icon_state = "durand_def")
-		def_overlay.pixel_y = 4
-		chassis.add_overlay(def_overlay)
-		//sleep(3)
-		//chassis.cut_overlay(def_overlay)
-		//def_overlay = new(chassis.icon, icon_state = "durand_def")
-		//def_overlay.pixel_y = 4
-		//chassis.add_overlay(def_overlay)
-//		set_light(l_range = MINIMUM_USEFUL_LIGHT_RANGE	, l_power = 1, l_color = "#00FFFF")
-	else
-		chassis.cut_overlay(def_overlay)
-//		set_light(0)
-
 	button_icon_state = "mech_defense_mode_[chassis.defence_mode ? "on" : "off"]"
-	chassis.occupant_message("<span class='notice'>You [chassis.defence_mode?"enable":"disable"] [chassis] defence mode.</span>")
+	if(!quiet)
+		chassis.occupant_message("<span class='notice'>You [chassis.defence_mode?"enable":"disable"] [chassis] defence mode.</span>")
 	chassis.log_message("Toggled defence mode.", LOG_MECHA)
 	UpdateButtonIcon()
 
-///Defense Disable proc that allows code to shut off defense mode without implying input from a user (no chat messages).
-datum/action/innate/mecha/mech_defence_mode/proc/turnoff()
-	chassis.defence_mode = FALSE
-	chassis.cut_overlay(def_overlay)
-	chassis.defense_action?.UpdateButtonIcon()
+	if(chassis.defence_mode)
+		def_overlay = new(chassis.icon, icon_state = "durand_def")
+		def_overlay.appearance_flags = RESET_COLOR
+		def_overlay.pixel_y = 4
+		chassis.add_overlay(def_overlay)
+	else
+		chassis.cut_overlay(def_overlay)
 
 /datum/action/innate/mecha/mech_overload_mode
 	name = "Toggle leg actuators overload"

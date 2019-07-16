@@ -110,7 +110,6 @@
 	//Action vars
 	var/thrusters_active = FALSE
 	var/defence_mode = FALSE
-	var/defence_mode_deflect_chance = 35
 	var/leg_overload_mode = FALSE
 	var/leg_overload_coeff = 100
 	var/zoom_mode = FALSE
