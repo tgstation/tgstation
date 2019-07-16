@@ -142,6 +142,9 @@
 
 /obj/machinery/computer/prisoner/proc/insert_id_prisoner(mob/user)
 	var/obj/item/card/id/prisoner/I = usr.is_holding_item_of_type(/obj/item/card/id/prisoner)
+	if(inserted_id)
+		to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
+		return
 	if(I)
 		if(!usr.transferItemToLoc(I, src))
 			return
