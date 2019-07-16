@@ -294,7 +294,7 @@
 
 /obj/item/storage/pill_bottle/potassiodide/PopulateContents()
 	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/pill/potass_iodide(src)
+		new /obj/item/reagent_containers/pill/potassiodide(src)
 
 /obj/item/storage/pill_bottle/mannitol
 	name = "bottle of mannitol pills"
