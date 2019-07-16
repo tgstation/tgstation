@@ -30,7 +30,7 @@
 		M.mind.restricted_roles = restricted_roles
 	return TRUE
 
-/datum/dynamic_ruleset/roundstart/traitor/process()
+/datum/dynamic_ruleset/roundstart/traitor/rule_process()
 	if (autotraitor_cooldown > 0)
 		autotraitor_cooldown--
 	else

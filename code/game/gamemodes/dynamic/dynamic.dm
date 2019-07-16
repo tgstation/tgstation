@@ -43,7 +43,11 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	var/list/roundstart_rules = list()
 	var/list/latejoin_rules = list()
 	var/list/midround_rules = list()
-	var/list/second_rule_req = list(100,100,80,70,60,40,20,0,0,0)// Requirements for extra round start rules
+	// Pop range per requirement. If this is the default five, the pop range for requirements are:
+	// 0-4, 5-9, 10-14, 15-19, 20-24, 25-29, 30-34, 35-39, 40-54, 45+
+	var/pop_per_requirement = 5
+	// Second and third rule requirements are the threat level requirements per pop range, see pop_per_requirement for pop range.
+	var/list/second_rule_req = list(100,100,80,70,60,40,20,0,0,0)
 	var/list/third_rule_req = list(100,100,100,90,80,70,50,30,10,0)
 	var/high_pop_second_rule_req = 50
 	var/high_pop_third_rule_req = 70
@@ -299,7 +303,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			if (rule.ready())
 				drafted_rules[rule] = rule.weight
 
-	var/indice_pop = min(10,round(roundstart_pop_ready/5)+1)
+	var/indice_pop = min(10,round(roundstart_pop_ready/pop_per_requirement)+1)
 	var/extra_rulesets_amount = 0
 	if (GLOB.dynamic_classic_secret)
 		extra_rulesets_amount = 0
