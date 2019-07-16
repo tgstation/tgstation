@@ -264,3 +264,18 @@
 	name = "spider extract syringe"
 	desc = "Contains crikey juice - makes any gold core create the most deadly companions in the world."
 	list_reagents = list(/datum/reagent/spider_extract = 1)
+
+/obj/item/reagent_containers/syringe/oxandrolone
+	name = "syringe (oxandrolone)"
+	desc = "Contains oxandrolone, used to treat severe burns."
+	list_reagents = list(/datum/reagent/medicine/oxandrolone = 15)
+
+/obj/item/reagent_containers/syringe/salacid
+	name = "syringe (salicyclic acid)"
+	desc = "Contains salicyclic acid, used to treat severe brute damage."
+	list_reagents = list(/datum/reagent/medicine/sal_acid = 15)
+
+/obj/item/reagent_containers/syringe/penacid
+	name = "syringe (pentetic acid)"
+	desc = "Contains pentetic acid, used to reduce high levels of radiation and heal severe toxins."
+	list_reagents = list(/datum/reagent/medicine/pen_acid = 15)

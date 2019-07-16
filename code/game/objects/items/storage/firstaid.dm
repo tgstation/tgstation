@@ -69,7 +69,8 @@
 		return
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/silver_sulf = 3,
-		/obj/item/reagent_containers/pill/oxandrolone = 2,
+		/obj/item/storage/pill_bottle/kelotane = 1,
+		/obj/item/reagent_containers/syringe/oxandrolone = 1,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
@@ -92,7 +93,10 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/reagent_containers/pill/charcoal = 6,
+	    /obj/item/reagent_containers/pill/charcoal = 3,
+		/obj/item/storage/pill_bottle/antitoxin = 1,
+		/obj/item/storage/pill_bottle/potassiodide = 1,
+		/obj/item/reagent_containers/syringe/penacid = 1,
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
 
@@ -110,7 +114,9 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/reagent_containers/syringe/perfluorodecalin = 5,
+		/obj/item/reagent_containers/syringe/perfluorodecalin = 3,
+		/obj/item/storage/pill_bottle/dexalin = 1,
+		/obj/item/reagent_containers/pill/salbutamol = 1,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
@@ -129,8 +135,10 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/reagent_containers/pill/patch/styptic = 4,
-		/obj/item/stack/medical/gauze = 2,
+		/obj/item/reagent_containers/pill/patch/styptic = 3,
+		/obj/item/stack/medical/gauze = 1,
+		/obj/item/storage/pill_bottle/bicaridine = 1,
+		/obj/item/reagent_containers/syringe/salacid = 1,
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
 
@@ -232,6 +240,38 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/charcoal(src)
 
+/obj/item/storage/pill_bottle/bicaridine
+	name = "bottle of bicaridine pills"
+	desc = "Contains pills used to treat brute damage."
+
+/obj/item/storage/pill_bottle/bicaridine/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/pill/bicaridine(src)
+
+/obj/item/storage/pill_bottle/kelotane
+	name = "bottle of kelotane pills"
+	desc = "Contains pills used to treat burns."
+
+/obj/item/storage/pill_bottle/kelotane/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/pill/kelotane(src)
+
+/obj/item/storage/pill_bottle/antitoxin
+	name = "bottle of anti-toxin pills"
+	desc = "Contains pills used to counter toxins."
+
+/obj/item/storage/pill_bottle/antitoxin/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/pill/antitoxin(src)
+
+/obj/item/storage/pill_bottle/dexalin
+	name = "bottle of dexalin pills"
+	desc = "Contains pills used to counter minor oxygen deprivation."
+
+/obj/item/storage/pill_bottle/dexalin/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/pill/dexalin(src)
+
 /obj/item/storage/pill_bottle/epinephrine
 	name = "bottle of epinephrine pills"
 	desc = "Contains pills used to stabilize patients."
@@ -247,6 +287,14 @@
 /obj/item/storage/pill_bottle/mutadone/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/mutadone(src)
+
+/obj/item/storage/pill_bottle/potassiodide
+	name = "bottle of potassium iodide pills"
+	desc = "Contains pills used to reduce radiation damage."
+
+/obj/item/storage/pill_bottle/potassiodide/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/pill/potass_iodide(src)
 
 /obj/item/storage/pill_bottle/mannitol
 	name = "bottle of mannitol pills"
