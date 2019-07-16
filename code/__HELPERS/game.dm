@@ -324,6 +324,19 @@
 		else if(isliving(M.current))
 			return M.current.stat != DEAD
 	return FALSE
+	
+/**
+  * Exiled check
+  * 
+  * Checks if the current body of the mind has an exile implant and is currently in 
+  * an away mission. Returns FALSE if any of those conditions aren't met.
+  */ 
+/proc/considered_exiled(datum/mind/M)
+	if(!ishuman(M?.current))
+		return FALSE
+	for(var/obj/item/implant/I in M.current.implants)
+		if(istype(I, /obj/item/implant/exile && M.current.onAwayMission()))
+			return TRUE
 
 /proc/considered_afk(datum/mind/M)
 	return !M || !M.current || !M.current.client || M.current.client.is_afk()
