@@ -5,6 +5,7 @@
 //////////////////////////////////////////////
 
 /datum/dynamic_ruleset/midround // Can be drafted once in a while during a round
+	ruletype = "Midround"
 	var/list/living_players = list()
 	var/list/living_antags = list()
 	var/list/dead_players = list()

@@ -53,7 +53,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	var/list/executed_rules = list()
 
 	var/list/list/current_players = list(CURRENT_LIVING_PLAYERS, CURRENT_LIVING_ANTAGS, CURRENT_DEAD_PLAYERS, CURRENT_OBSERVERS)
-	
+
 	var/latejoin_injection_cooldown = 0
 	var/midround_injection_cooldown = 0
 	var/forced_injection = FALSE
@@ -83,14 +83,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	if (executed_rules.len > 0)
 		dat += "<br/>"
 		for (var/datum/dynamic_ruleset/DR in executed_rules)
-			var/ruletype = ""
-			if (istype (DR, /datum/dynamic_ruleset/roundstart))
-				ruletype = "Roundstart"
-			else if (istype (DR, /datum/dynamic_ruleset/latejoin))
-				ruletype = "Latejoin"
-			else if (istype (DR, /datum/dynamic_ruleset/midround))
-				ruletype = "Midround"
-			dat += "[ruletype] - <b>[DR.name]</b><br>"
+			dat += "[DR.ruletype] - <b>[DR.name]</b><br>"
 	else
 		dat += "none.<br>"
 	dat += "<br>Injection Timers: (<b>[GetInjectionChance()]%</b> chance)<BR>"

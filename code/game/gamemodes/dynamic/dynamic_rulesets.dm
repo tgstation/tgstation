@@ -1,5 +1,6 @@
 /datum/dynamic_ruleset
 	var/name = "" // For admin logging
+	var/ruletype = "" // For admin logging, do not change unless making a new rule type.
 	var/persistent = FALSE // If set to TRUE, the rule won't be discarded after being executed, and dynamic will call rule_process() every SSTicker tick
 	var/repeatable = FALSE // If set to TRUE, dynamic mode will be able to draft this ruleset again later on. (doesn't apply for roundstart rules)
 	var/repeatable_weight_decrease = 2 // If set higher than 0, decreases weight by itself causing the ruleset to appear less often the more it is repeated.
@@ -47,6 +48,7 @@
 		qdel(src)
 
 /datum/dynamic_ruleset/roundstart // One or more of those drafted at roundstart
+	ruletype = "Roundstart"
 
 /datum/dynamic_ruleset/roundstart/delayed/ // Executed with a 30 seconds delay
 	var/delay = 30 SECONDS
@@ -54,11 +56,12 @@
 
 // Can be drafted when a player joins the server
 /datum/dynamic_ruleset/latejoin
+	ruletype = "Latejoin"
 
 // By default, a rule is acceptable if it satisfies the threat level/population requirements.
 // If your rule has extra checks, such as counting security officers, do that in ready() instead
 /datum/dynamic_ruleset/proc/acceptable(population=0, threat_level=0)
-	if (GLOB.player_list.len >= GLOB.dynamic_high_pop_limit)
+	if (population >= GLOB.dynamic_high_pop_limit)
 		return (threat_level >= high_population_requirement)
 	else
 		var/indice_pop = min(10,round(population/pop_per_requirement)+1)
