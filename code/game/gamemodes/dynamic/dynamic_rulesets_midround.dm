@@ -36,7 +36,7 @@
 		if (!M.client) // Are they connected?
 			trimmed_list.Remove(M)
 			continue
-		if(mode.age_check(M.client))
+		if(!mode.age_check(M.client))
 			trimmed_list.Remove(M)
 			continue
 		if (!(antag_name in M.client.prefs.be_special) || is_banned_from(M.ckey, list(antag_name, ROLE_SYNDICATE)))//are they willing and not antag-banned?

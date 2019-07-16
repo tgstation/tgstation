@@ -485,7 +485,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	current_players[CURRENT_DEAD_PLAYERS] = list()
 	current_players[CURRENT_OBSERVERS] = list()
 	for (var/mob/M in GLOB.player_list)
-		if (istype(M,/mob/dead/new_player))
+		if (istype(M, /mob/dead/new_player))
 			continue
 		if (M.stat != DEAD)
 			current_players[CURRENT_LIVING_PLAYERS].Add(M)
@@ -541,7 +541,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		forced_latejoin_rule.candidates = list(newPlayer)
 		forced_latejoin_rule.trim_candidates()
 		log_game("DYNAMIC: Forcing ruleset [forced_latejoin_rule]")
-		if (forced_latejoin_rule.ready(1))
+		if (forced_latejoin_rule.ready(TRUE))
 			picking_latejoin_rule(list(forced_latejoin_rule))
 		forced_latejoin_rule = null
 
