@@ -31,7 +31,7 @@
 	return xeno_team
 
 //XENO
-/mob/living/carbon/alien/mind_initialize()
+/mob/living/carbon/alien/larva/mind_initialize()
 	..()
 	if(!mind.has_antag_datum(/datum/antagonist/xeno))
 		mind.add_antag_datum(/datum/antagonist/xeno)
