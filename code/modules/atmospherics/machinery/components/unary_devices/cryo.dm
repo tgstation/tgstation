@@ -182,7 +182,9 @@
 	if(mob_occupant.stat == DEAD) // We don't bother with dead people.
 		return
 
-	if(mob_occupant.health >= mob_occupant.getMaxHealth()) // Don't bother with fully healed people.
+	//if(mob_occupant.health >= mob_occupant.getMaxHealth()) // Don't bother with fully healed people.
+	var/total_damage = mob_occupant.getOxyLoss() + mob_occupant.getToxLoss() + mob_occupant.getFireLoss_nonProsthetic() + mob_occupant.getBruteLoss_nonProsthetic() + mob_occupant.getCloneLoss()// FULP: Check damage, minus prosthetics.
+	if (total_damage <= 0)
 		on = FALSE
 		update_icon()
 		playsound(src, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
@@ -365,10 +367,10 @@
 		data["occupant"]["health"] = round(mob_occupant.health, 1)
 		data["occupant"]["maxHealth"] = mob_occupant.maxHealth
 		data["occupant"]["minHealth"] = HEALTH_THRESHOLD_DEAD
-		data["occupant"]["bruteLoss"] = round(mob_occupant.getBruteLoss(), 1)
+		data["occupant"]["bruteLoss"] = round(mob_occupant.getBruteLoss_nonProsthetic(), 1) // FULP: Don't count Prosthetics.
 		data["occupant"]["oxyLoss"] = round(mob_occupant.getOxyLoss(), 1)
 		data["occupant"]["toxLoss"] = round(mob_occupant.getToxLoss(), 1)
-		data["occupant"]["fireLoss"] = round(mob_occupant.getFireLoss(), 1)
+		data["occupant"]["fireLoss"] = round(mob_occupant.getFireLoss_nonProsthetic(), 1) // FULP: Don't count Prosthetics.
 		data["occupant"]["bodyTemperature"] = round(mob_occupant.bodytemperature, 1)
 		if(mob_occupant.bodytemperature < TCRYO)
 			data["occupant"]["temperaturestatus"] = "good"

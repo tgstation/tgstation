@@ -188,7 +188,7 @@
 		var/amInCoffinWhileTorpor = istype(C.loc, /obj/structure/closet/crate/coffin) && (mult == 0 || HAS_TRAIT(C, TRAIT_DEATHCOMA)) // Check for mult 0 OR death coma. (mult 0 means we're testing from coffin)
 		if(amInCoffinWhileTorpor)
 			mult *= 5 // Increase multiplier if we're sleeping in a coffin.
-			fireheal = min(C.getFireLoss(), regenRate) // NOTE: Burn damage ONLY heals in torpor.
+			fireheal = min(C.getFireLoss_nonProsthetic(), regenRate) // NOTE: Burn damage ONLY heals in torpor.
 			costMult = 0.25
 			// Extinguish Fire
 			C.ExtinguishMob()
@@ -200,7 +200,7 @@
 			//if (C.getFireLoss() > owner.current.getMaxHealth())
 			//	fireheal = regenRate / 2
 		// BRUTE: Always Heal
-		var/bruteheal = min(C.getBruteLoss(), regenRate)
+		var/bruteheal = min(C.getBruteLoss_nonProsthetic(), regenRate)
 
 		// Heal if Damaged
 		if (bruteheal + fireheal > 0)
@@ -211,6 +211,7 @@
 			C.adjustBruteLoss(-bruteheal * mult, forced=TRUE)// Heal BRUTE / BURN in random portions throughout the body.
 			C.adjustFireLoss(-fireheal * mult, forced=TRUE)
 			//C.heal_overall_damage(bruteheal * mult, fireheal * mult)				 // REMOVED: We need to FORCE this, because otherwise, vamps won't heal EVER. Swapped to above.
+
 			// Pay Cost
 			AddBloodVolume((bruteheal * -0.5 + fireheal * -1) / mult * costMult)	// Costs blood to heal
 
@@ -219,6 +220,7 @@
 
 		// Limbs? (And I have no other healing)
 		if (amInCoffinWhileTorpor)
+			message_admins("TXX: In Coffin In Torpor  [amInCoffinWhileTorpor]")
 
 			// Heal Missing
 			var/list/missing = owner.current.get_missing_limbs()
@@ -234,13 +236,17 @@
 				playsound(owner.current, 'sound/magic/demon_consume.ogg', 50, 1)
 				// DONE! After regenerating a limb, we stop here.
 				return TRUE
-			else
+
+			/*else // REMOVED: For now, let's just leave prosthetics on. Maybe you WANT to be a robovamp.
 				// Remove Prosthetic/False Limb
-				for(var/obj/item/bodypart/BP in owner.current.bodyparts)
+				for(var/obj/item/bodypart/BP in C.bodyparts)
+					message_admins("T1: [BP] ")
 					if (istype(BP) && BP.status == 2)
+						message_admins("T2: [BP] ")
 						BP.drop_limb()
-						break
+						return TRUE
 						// NOTE: Limbs have a "status", like their hosts "stat". 2 is dead (aka Prosthetic). 1 seems to be idle/alive.
+			*/
 
 			// Cure Final Disabilities
 			CureDisabilities()
@@ -302,7 +308,7 @@
 		// 	FINAL DEATH
 
 	// Fire Damage? (above double health)
-	if (owner.current.getFireLoss() >= owner.current.getMaxHealth() * 2)
+	if (owner.current.getFireLoss_nonProsthetic() >= owner.current.getMaxHealth() * 2)
 		FinalDeath()
 		return
 	// Staked while "Temp Death" or Asleep
@@ -324,8 +330,9 @@
 				//		P.Deactivate()
 
 		//	TEMP DEATH
-
-	var/total_damage = owner.current.getBruteLoss() + owner.current.getFireLoss()
+	var/total_brute = owner.current.getBruteLoss_nonProsthetic()
+	var/total_burn = owner.current.getFireLoss_nonProsthetic()
+	var/total_damage = total_brute + total_burn
 	// Died? Convert to Torpor (fake death)
 	if (owner.current.stat >= DEAD)
 		Torpor_Begin()
@@ -334,7 +341,7 @@
 			to_chat(owner, "<span class='warning'>Your wounds will not heal until you disable the <span class='boldnotice'>Masquerade</span> power.</span>")
 	// End Torpor:
 	else	// No damage, OR brute healed and NOT in coffin (since you cannot heal burn)
-		if (total_damage <= 0 || owner.current.getBruteLoss() <= 0 && !istype(owner.current.loc, /obj/structure/closet/crate/coffin))
+		if (total_damage <= 0 || total_brute <= 0 && !istype(owner.current.loc, /obj/structure/closet/crate/coffin))
 			// Not Daytime, Not in Torpor
 			if (!SSticker.mode.is_daylight() && HAS_TRAIT_FROM(owner.current, TRAIT_DEATHCOMA, "bloodsucker"))
 				Torpor_End()
