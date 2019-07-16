@@ -489,7 +489,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			continue
 		if (M.stat != DEAD)
 			current_players[CURRENT_LIVING_PLAYERS].Add(M)
-			if (M.mind && (M.mind.special_role || M.mind.antag_datums.len > 0))
+			if (M.mind && (M.mind.special_role || M.mind.antag_datums?.len > 0))
 				current_players[CURRENT_LIVING_ANTAGS].Add(M)
 		else
 			if (istype(M,/mob/dead/observer))
