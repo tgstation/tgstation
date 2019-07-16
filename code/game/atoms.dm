@@ -264,6 +264,25 @@
 
 	return FALSE
 
+/**
+  * Is the atom in an away mission
+  *
+  * Must be in the away mission z-level to return TRUE
+  *
+  * Also used in gamemode code for win conditions
+  */
+/atom/proc/onAwayMission()
+	var/turf/T = get_turf(src)
+	if(!T)
+		return FALSE
+
+	if(is_away_level(T.z))
+		return TRUE
+
+	return FALSE
+
+
+
 ///This atom has been hit by a hulkified mob in hulk mode (user)
 /atom/proc/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	SEND_SIGNAL(src, COMSIG_ATOM_HULK_ATTACK, user)
