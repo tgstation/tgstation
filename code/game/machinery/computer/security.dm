@@ -39,7 +39,7 @@
 
 /obj/machinery/computer/secure_data/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/card/id))
-		insert_id(usr)
+		insert_id(user)
 	else
 		return ..()
 

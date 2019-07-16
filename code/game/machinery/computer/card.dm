@@ -69,14 +69,14 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				if (!user.transferItemToLoc(idcard,src))
 					return
 				scan = idcard
-				usr.visible_message("<span class='notice'>[usr] inserts an ID card into the console.</span>", \
+				user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
 								"<span class='notice'>You insert the ID card into the console.</span>")
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			else if(!modify)
 				if (!user.transferItemToLoc(idcard,src))
 					return
 				modify = idcard
-				usr.visible_message("<span class='notice'>[usr] inserts an ID card into the console.</span>", \
+				user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
 								"<span class='notice'>You insert the ID card into the console.</span>")
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		else
@@ -84,7 +84,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				if (!user.transferItemToLoc(idcard,src))
 					return
 				modify = idcard
-				usr.visible_message("<span class='notice'>[usr] inserts an ID card into the console.</span>", \
+				user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
 								"<span class='notice'>You insert the ID card into the console.</span>")
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		updateUsrDialog()
@@ -559,15 +559,15 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
 		return
 	if(!modify)
-		var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id)
+		var/obj/item/I = user.is_holding_item_of_type(/obj/item/card/id)
 		if(I)
-			if(!usr.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(I, src))
 				return
-			src.modify = I
-			usr.visible_message("<span class='notice'>[usr] inserts an ID card into the console.</span>", \
+			modify = I
+			user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
 							"<span class='notice'>You insert the ID card into the console.</span>")
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-			src.updateUsrDialog()
+			updateUsrDialog()
 
 /obj/machinery/computer/card/proc/get_subordinates(rank)
 	for(var/datum/job/job in SSjob.occupations)

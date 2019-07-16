@@ -157,15 +157,15 @@
 		to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
 		return
 	if(!scan)
-		var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id)
+		var/obj/item/I = user.is_holding_item_of_type(/obj/item/card/id)
 		if(I)
-			if(!usr.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(I, src))
 				return
-			src.scan = I
-			usr.visible_message("<span class='notice'>[usr] inserts an ID card into the console.</span>", \
+			scan = I
+			user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
 							"<span class='notice'>You insert the ID card into the console.</span>")
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-			src.updateUsrDialog()
+			updateUsrDialog()
 
 /obj/machinery/computer/proc/eject_id(mob/user)
 	if(!scan)
@@ -179,4 +179,4 @@
 		user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
 						"<span class='notice'>You get the ID card from the console.</span>")
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-		src.updateUsrDialog()
+		updateUsrDialog()

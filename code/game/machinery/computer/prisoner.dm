@@ -71,7 +71,7 @@
 
 /obj/machinery/computer/prisoner/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/card/id))
-		insert_id_prisoner(usr)
+		insert_id_prisoner(user)
 	else
 		return ..()
 
@@ -141,27 +141,27 @@
 	return
 
 /obj/machinery/computer/prisoner/proc/insert_id_prisoner(mob/user)
-	var/obj/item/card/id/prisoner/I = usr.is_holding_item_of_type(/obj/item/card/id/prisoner)
+	var/obj/item/card/id/prisoner/I = user.is_holding_item_of_type(/obj/item/card/id/prisoner)
 	if(inserted_id)
 		to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
 		return
 	if(I)
-		if(!usr.transferItemToLoc(I, src))
+		if(!user.transferItemToLoc(I, src))
 			return
 		inserted_id = I
-		usr.visible_message("<span class='notice'>[usr] inserts an ID card into the console.</span>", \
+		user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
 						"<span class='notice'>You insert the ID card into the console.</span>")
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 	else
-		to_chat(usr, "<span class='danger'>No valid ID.</span>")
-	src.updateUsrDialog()
+		to_chat(user, "<span class='danger'>No valid ID.</span>")
+	updateUsrDialog()
 
 /obj/machinery/computer/prisoner/proc/eject_id_prisoner(mob/user)
 	inserted_id.forceMove(drop_location())
-	if(!issilicon(usr) && Adjacent(usr))
-		usr.put_in_hands(inserted_id)
+	if(!issilicon(user) && Adjacent(user))
+		user.put_in_hands(inserted_id)
 		inserted_id = null
-		usr.visible_message("<span class='notice'>[usr] gets an ID card from the console.</span>", \
+		user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
 							"<span class='notice'>You get the ID card from the console.</span>")
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-	src.updateUsrDialog()
+	updateUsrDialog()
