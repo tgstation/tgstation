@@ -1,4 +1,4 @@
-<ui-display title='Select' button>
+<ui-display button>
   {{#partial button}}
     {{#each data.possible_amounts}}
       <ui-button icon='plus' state='{{data.amount == . ? "selected" : null}}' action='amount' params='{"target": {{.}}}'>{{.}}</ui-button>
