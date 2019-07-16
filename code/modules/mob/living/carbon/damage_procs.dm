@@ -1,19 +1,20 @@
 
 
-/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE)
+/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE)
 	var/hit_percent = (100-blocked)/100
 	if(!damage || (!forced && hit_percent <= 0))
 		return 0
 
 	var/obj/item/bodypart/BP = null
-	if(isbodypart(def_zone)) //we specified a bodypart object
-		BP = def_zone
-	else
-		if(!def_zone)
-			def_zone = ran_zone(def_zone)
-		BP = get_bodypart(check_zone(def_zone))
-		if(!BP)
-			BP = bodyparts[1]
+	if(!spread_damage)
+		if(isbodypart(def_zone)) //we specified a bodypart object
+			BP = def_zone
+		else
+			if(!def_zone)
+				def_zone = ran_zone(def_zone)
+			BP = get_bodypart(check_zone(def_zone))
+			if(!BP)
+				BP = bodyparts[1]
 
 	var/damage_amount = forced ? damage : damage * hit_percent
 	switch(damagetype)
@@ -87,6 +88,8 @@
 			blood_volume -= 5*amount
 		else
 			blood_volume -= amount
+	if(HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
+		amount = min(amount, 0)
 	return ..()
 
 /mob/living/carbon/getStaminaLoss()

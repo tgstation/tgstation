@@ -13,6 +13,7 @@
 	ui_x = 600
 	ui_y = 600
 	var/error = ""
+	var/page = CONTRACT_UPLINK_PAGE_CONTRACTS
 
 /datum/computer_file/program/contract_uplink/run_program(var/mob/living/user)
 	. = ..(user)
@@ -39,13 +40,15 @@
 			// contract system.
 			// We also create their contracts at this point.
 			if (traitor_data)
-				// We don't give them more contracts if they somehow assign themselves to a new uplink.
+				// Only play greet sound, and handle contractor hub when assigning for the first time.
 				if (!traitor_data.assigned_contracts.len)
-					traitor_data.create_contracts()
 					user.playsound_local(user, 'sound/effects/contractstartup.ogg', 100, 0)
+					traitor_data.contractor_hub = new
+					traitor_data.contractor_hub.create_hub_items()
+
+				traitor_data.create_contracts()
+
 				hard_drive.traitor_data = traitor_data
-			else
-				error = "Incorrect login details."
 			return 1
 		if("PRG_call_extraction")
 			if (hard_drive.traitor_data.current_contract.status != CONTRACT_STATUS_EXTRACTING)
@@ -54,9 +57,11 @@
 					hard_drive.traitor_data.current_contract.status = CONTRACT_STATUS_EXTRACTING
 				else
 					user.playsound_local(user, 'sound/machines/uplinkerror.ogg', 50)
+					error = "Either both you or your target aren't at the dropoff location, or the pod hasn't got a valid place to land. Clear space, or make sure you're both inside."
 			else 
 				user.playsound_local(user, 'sound/machines/uplinkerror.ogg', 50)
-			
+				error = "Already extracting... Place the target into the pod. If the pod was destroyed, you will need to cancel this contract."
+
 			return 1
 		if("PRG_contract_abort")
 			var/contract_id = hard_drive.traitor_data.current_contract.id
@@ -82,7 +87,21 @@
 			else
 				user.playsound_local(user, 'sound/machines/uplinkerror.ogg', 50)
 			return 1
+		if ("PRG_clear_error")
+			error = ""
+		if("PRG_contractor_hub")
+			page = CONTRACT_UPLINK_PAGE_HUB
+		if ("PRG_hub_back")
+			page = CONTRACT_UPLINK_PAGE_CONTRACTS
+		if ("buy_hub")
+			if (hard_drive.traitor_data.owner.current == user)
+				var/item = params["item"]
 
+				for (var/datum/contractor_item/hub_item in hard_drive.traitor_data.contractor_hub.hub_items)
+					if (hub_item.name == item)
+						hub_item.handle_purchase(hard_drive.traitor_data.contractor_hub, user)
+			else
+				error = "Invalid user... You weren't recognised as the user of this system."
 
 /datum/computer_file/program/contract_uplink/ui_data(mob/user)
 	var/list/data = list()
@@ -90,18 +109,30 @@
 
 	if (hard_drive && hard_drive.traitor_data != null)
 		var/datum/antagonist/traitor/traitor_data = hard_drive.traitor_data
-
-		error = ""
 		data = get_header_data()
 
 		if (traitor_data.current_contract)
 			data["ongoing_contract"] = TRUE
 			if (traitor_data.current_contract.status == CONTRACT_STATUS_EXTRACTING)
 				data["extraction_enroute"] = TRUE
-
+		
 		data["logged_in"] = TRUE
 		data["station_name"] = GLOB.station_name
 		data["redeemable_tc"] = traitor_data.contract_TC_to_redeem
+		data["contract_rep"] = traitor_data.contractor_hub.contract_rep
+
+		data["page"] = page
+
+		data["error"] = error
+
+		for (var/datum/contractor_item/hub_item in traitor_data.contractor_hub.hub_items)
+			data["contractor_hub_items"] += list(list(
+				"name" = hub_item.name,
+				"desc" = hub_item.desc,
+				"cost" = hub_item.cost,
+				"limited" = hub_item.limited,
+				"item_icon" = hub_item.item_icon
+			))
 
 		for (var/datum/syndicate_contract/contract in traitor_data.assigned_contracts)
 			data["contracts"] += list(list(
@@ -133,6 +164,5 @@
 
 			data["dropoff_direction"] = direction
 	else
-		data["error"] = error
 		data["logged_in"] = FALSE
 	return data

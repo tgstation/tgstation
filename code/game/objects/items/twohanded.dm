@@ -33,7 +33,7 @@
 	if(!wielded || !user)
 		return
 	wielded = 0
-	if(force_unwielded)
+	if(!isnull(force_unwielded))
 		force = force_unwielded
 	var/sf = findtext(name," (Wielded)")
 	if(sf)
@@ -263,6 +263,7 @@
  * Double-Bladed Energy Swords - Cheridan
  */
 /obj/item/twohanded/dualsaber
+	icon = 'icons/obj/transforming_energy.dmi'
 	icon_state = "dualsaber0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'

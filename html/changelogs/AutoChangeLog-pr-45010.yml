@@ -1,4 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - balance: "Cleanbots clean slightly faster. They also treat dead rats they kill like trash now."

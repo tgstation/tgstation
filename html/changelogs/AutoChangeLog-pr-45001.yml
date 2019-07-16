@@ -1,7 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - rscadd: "You now get the cakehat by cooking a whole birthday cake."
-  - rscdel: "The cakehat has been removed from all maps."
-  - tweak: "Birthday cake recipe no longer requires a cakehat. It now needs a candle, sugar and caramel."
-  - rscadd: "Metastation bar now has a new plant. Her name is Potty."

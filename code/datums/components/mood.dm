@@ -297,7 +297,7 @@
 	screen_obj_sanity = new
 	hud.infodisplay += screen_obj
 	hud.infodisplay += screen_obj_sanity
-	RegisterSignal(hud, COMSIG_PARENT_QDELETED, .proc/unmodify_hud)
+	RegisterSignal(hud, COMSIG_PARENT_QDELETING, .proc/unmodify_hud)
 	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/hud_click)
 
 /datum/component/mood/proc/unmodify_hud(datum/source)
@@ -352,9 +352,7 @@
 
 /datum/component/mood/proc/check_area_mood(datum/source, var/area/A)
 	if(A.mood_bonus)
-		var/datum/mood_event/M = add_event(null, "area", /datum/mood_event/area)
-		M.mood_change = A.mood_bonus
-		M.description = A.mood_message
+		add_event(null, "area", /datum/mood_event/area, list(A.mood_bonus, A.mood_message))
 	else
 		clear_event(null, "area")
 
