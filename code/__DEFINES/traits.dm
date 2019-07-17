@@ -228,3 +228,5 @@
 #define ANTI_DROP_IMPLANT_TRAIT "anti-drop-implant"
 #define HIVEMIND_ONE_MIND_TRAIT "one_mind"
 #define VR_ZONE_TRAIT "vr_zone_trait"
+#define ABDUCTOR_IMPLANT "abductor_implant"
+#define SURGEON_IMPLANT "surgeon_implant"

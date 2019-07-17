@@ -146,13 +146,13 @@
 
 /obj/item/organ/cyberimp/brain/abductor_interface/Insert()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_ABDUCTOR_TRAINING, "interface")
-	ADD_TRAIT(owner, TRAIT_ABDUCTOR_SCIENTIST_TRAINING, "interface")
+	ADD_TRAIT(owner, TRAIT_ABDUCTOR_TRAINING, ABDUCTOR_IMPLANT)
+	ADD_TRAIT(owner, TRAIT_ABDUCTOR_SCIENTIST_TRAINING, ABDUCTOR_IMPLANT)
 
 /obj/item/organ/cyberimp/brain/abductor_interface/Remove(mob/living/carbon/M, special = FALSE)
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_ABDUCTOR_TRAINING, "interface")
-	REMOVE_TRAIT(owner, TRAIT_ABDUCTOR_SCIENTIST_TRAINING, "interface")
+	REMOVE_TRAIT(owner, TRAIT_ABDUCTOR_TRAINING, ABDUCTOR_IMPLANT)
+	REMOVE_TRAIT(owner, TRAIT_ABDUCTOR_SCIENTIST_TRAINING, ABDUCTOR_IMPLANT)
 
 /obj/item/organ/cyberimp/brain/surgeon
 	name = "Surgery Helper Implant"
@@ -162,10 +162,10 @@
 
 /obj/item/organ/cyberimp/brain/surgeon/Insert()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_SURGEON, "implant")
+	ADD_TRAIT(owner, TRAIT_SURGEON, SURGEON_IMPLANT)
 
 /obj/item/organ/cyberimp/brain/surgeon/Remove(mob/living/carbon/M, special = FALSE)
-	REMOVE_TRAIT(owner, TRAIT_SURGEON, "implant")
+	REMOVE_TRAIT(owner, TRAIT_SURGEON, SURGEON_IMPLANT)
 	. = ..()
 
 //[[[[MOUTH]]]]
