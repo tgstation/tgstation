@@ -1,5 +1,5 @@
 /datum/job/chief_engineer
-	title = "Chief Engineer"
+	title = "Chief Redstone Engineer"
 	flag = CHIEF
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list("Captain")
@@ -32,7 +32,7 @@
 	display_order = JOB_DISPLAY_ORDER_CHIEF_ENGINEER
 
 /datum/outfit/job/ce
-	name = "Chief Engineer"
+	name = "Chief Redstone Engineer"
 	jobtype = /datum/job/chief_engineer
 
 	id = /obj/item/card/id/silver
@@ -53,7 +53,7 @@
 	chameleon_extras = /obj/item/stamp/ce
 
 /datum/outfit/job/ce/rig
-	name = "Chief Engineer (Hardsuit)"
+	name = "Chief Redstone Engineer (Hardsuit)"
 
 	mask = /obj/item/clothing/mask/breath
 	suit = /obj/item/clothing/suit/space/hardsuit/engine/elite

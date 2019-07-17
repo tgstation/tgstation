@@ -1,5 +1,5 @@
 /datum/job/engineer
-	title = "Station Engineer"
+	title = "Redstone Engineer"
 	flag = ENGINEER
 	department_head = list("Chief Engineer")
 	department_flag = ENGSEC
@@ -23,7 +23,7 @@
 	display_order = JOB_DISPLAY_ORDER_STATION_ENGINEER
 
 /datum/outfit/job/engineer
-	name = "Station Engineer"
+	name = "Redstone Engineer"
 	jobtype = /datum/job/engineer
 
 	belt = /obj/item/storage/belt/utility/full/engi
@@ -42,11 +42,11 @@
 	backpack_contents = list(/obj/item/modular_computer/tablet/preset/advanced=1)
 
 /datum/outfit/job/engineer/gloved
-	name = "Station Engineer (Gloves)"
+	name = "Redstone Engineer (Gloves)"
 	gloves = /obj/item/clothing/gloves/color/yellow
 
 /datum/outfit/job/engineer/gloved/rig
-	name = "Station Engineer (Hardsuit)"
+	name = "Redstone Engineer (Hardsuit)"
 	mask = /obj/item/clothing/mask/breath
 	suit = /obj/item/clothing/suit/space/hardsuit/engine
 	suit_store = /obj/item/tank/internals/oxygen
