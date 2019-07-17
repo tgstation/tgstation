@@ -474,6 +474,7 @@
 			if (src == C.wear_mask) // if it's in the human/monkey mouth, transfer reagents to the mob
 				var/fraction = min(REAGENTS_METABOLISM/reagents.total_volume, 1)
 				reagents.reaction(C, INGEST, fraction)
+				to_chat(C, "Handling reagents")
 				if(!reagents.trans_to(C, REAGENTS_METABOLISM))
 					reagents.remove_any(REAGENTS_METABOLISM)
 				return
@@ -484,18 +485,25 @@
 	if(iscarbon(loc))
 		var/mob/living/carbon/C = loc
 		next_succ = world.time
+		to_chat(C, "Processing")
 		if(succ_dur < 1)
 			qdel(src)
+			to_chat(C, "Qdeling")
 		if(src == C.wear_mask)
 			succ_dur--
 			if((reagents && reagents.total_volume) && (next_succ <= world.time))
 				handle_reagents()
+				to_chat(C, "Processing Successful")
 				next_succ = world.time + succ_int
 
 
 /obj/item/reagent_containers/food/snacks/lollipop/equipped(mob/user, slot)
 	. = ..()
-	START_PROCESSING(SSobj, src)
+	if(slot == ITEM_SLOT_MASK)
+		START_PROCESSING(SSobj, src)
+		to_chat(user, "Item Equipped Successfully")
+	else
+		STOP_PROCESSING(SSobj, src)
 
 /obj/item/reagent_containers/food/snacks/lollipop/Destroy()
 	STOP_PROCESSING(SSobj, src)
