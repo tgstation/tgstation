@@ -1,6 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - bugfix: "clowns cannot cure their clumsyness with mutadone anymore"
-  - bugfix: "fixes mutadone proofness not working"
-  - balance: "mutadone no longer cures \"weird\" mutations such as those you get from the wizard"
