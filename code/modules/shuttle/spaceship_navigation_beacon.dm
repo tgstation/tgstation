@@ -57,12 +57,12 @@ obj/machinery/spaceship_navigation_beacon/emp_act()
 			to_chat(user, "<span class='notice'>You change beacon name to [name].</span>")
 	else 
 		locked =!locked
-		to_chat(user, "<span class='notice'>You [locked?:"","un"]lock [src].</span>")
+		to_chat(user, "<span class='notice'>You [locked ? "" : "un"]lock [src].</span>")
 	return TRUE
 
 /obj/machinery/spaceship_navigation_beacon/examine()
 	.=..()
-	. += "<span class='warning'>Status: [locked?  "LOCKED" , "Stable"] </span>"
+	. += "<span class='warning'>Status: [locked ? "LOCKED" : "Stable"] </span>"
 
 /obj/machinery/spaceship_navigation_beacon/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "core-open", "core", W))
