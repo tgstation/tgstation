@@ -8,11 +8,9 @@
 	var/shuttlePortId = ""
 	var/shuttlePortName = "custom location"
 	var/list/jumpto_ports = list() //hashset of ports to jump to and ignore for collision purposes
-	var/list/beacon_codes = list() //hashset of beacon to jump to
-	var/list/beacon_access_codes = list() //hashset of access codes to beacons
 	var/obj/docking_port/stationary/my_port //the custom docking port placed by this console
 	var/obj/docking_port/mobile/shuttle_port //the mobile docking port of the connected shuttle
-	var/list/z_locked = list(0) //z forbided for custom docking
+	var/list/locked_traits = list(ZTRAIT_RESERVED, ZTRAIT_CENTCOM, ZTRAIT_AWAY, ZTRAIT_REEBE) //traits forbided for custom docking
 	var/view_range = 7
 	var/x_offset = 0
 	var/y_offset = 0
@@ -33,61 +31,9 @@
 			z_lock |= S.z
 	whitelist_turfs = typecacheof(whitelist_turfs)
 
-	z_locked |= SSmapping.levels_by_trait(ZTRAIT_RESERVED)
-	z_locked |= SSmapping.levels_by_trait(ZTRAIT_CENTCOM)
-	z_locked |= SSmapping.levels_by_trait(ZTRAIT_AWAY)
-	z_locked |= SSmapping.levels_by_trait(ZTRAIT_REEBE)
-
 /obj/machinery/computer/camera_advanced/shuttle_docker/Destroy()
 	. = ..()
 	GLOB.navigation_computers -= src
-
-/obj/machinery/computer/camera_advanced/shuttle_docker/multitool_act(mob/living/user, obj/item/multitool/I)
-	.=..()
-	if (!istype(I) || !is_operational() || !can_use(user))
-		return
-	var/choice = input("Choice", "") as null|anything in list("Add ID","Remove ID","Add access code","Remove access code","Cancel")
-	if(QDELETED(src) || !Adjacent(user))
-		return
-	var/sellect
-	switch(choice)
-		if("Add ID")
-			sellect = replacetext(lowertext(input("Enter the ID to add", "Input ID") as text), " ", "_")
-			if(sellect && Adjacent(user))
-				beacon_codes[sellect] = TRUE
-		if("Remove ID")
-			sellect = input("Choice ID to remove", "ID to remove") as null|anything in beacon_codes
-			if(sellect && Adjacent(user))
-				beacon_codes -= sellect
-		if("Add access code")
-			sellect = replacetext(lowertext(input("Enter the access code to add", "Input access code") as text), " ", "_")
-			if(sellect && Adjacent(user))
-				beacon_access_codes[sellect] = TRUE
-		if("Remove access code")
-			sellect = input("Choice access code to remove", "Access code to remove") as null|anything in beacon_access_codes
-			if(sellect && Adjacent(user))
-				beacon_access_codes -= sellect
-	return TRUE
-
-/obj/machinery/computer/camera_advanced/shuttle_docker/examine()
-	.=..()
-	var/msg = ""
-	msg += "<span class='warning'>Available ID's:"
-	if(beacon_codes.len)
-		for(var/id in beacon_codes)
-			msg += " [id],"
-	else
-		msg += " none,"
-	. += msg
-	msg = ""
-	msg += "Access codes:"
-	if(beacon_access_codes.len)
-		for(var/access_code in beacon_access_codes)
-			msg += " [access_code],"
-	else
-		msg += " none,"
-	msg += "</span>"
-	. += msg
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/attack_hand(mob/user)
 	if(jammed)
@@ -200,8 +146,6 @@
 		my_port.hidden = shuttle_port.hidden
 	my_port.setDir(the_eye.dir)
 	my_port.forceMove(locate(eyeobj.x - x_offset, eyeobj.y - y_offset, eyeobj.z))
-	var/area/newarea = get_area(src)
-	my_port.area_type = newarea?.type
 
 	if(current_user.client)
 		current_user.client.images -= the_eye.placed_images
@@ -248,7 +192,7 @@
 	var/turf/eyeturf = get_turf(the_eye)
 	if(!eyeturf)
 		return SHUTTLE_DOCKER_BLOCKED
-	if(z_locked.len && (eyeturf.z in z_locked))
+	if(eyeturf.z && level_has_any_trait(eyeturf.z, locked_traits))
 		return SHUTTLE_DOCKER_BLOCKED
 
 	. = SHUTTLE_DOCKER_LANDING_CLEAR
@@ -392,14 +336,12 @@
 		if(!V)
 			continue
 		var/obj/machinery/spaceship_navigation_beacon/nav_beacon = V
-		if(console.z_locked.len && nav_beacon.z)
-			if(nav_beacon.z in console.z_locked)
-				break
-		if(!nav_beacon.id || console.beacon_codes[nav_beacon.id])
-			if(!nav_beacon.access_code || console.beacon_access_codes[nav_beacon.access_code])
-				L["([L.len]) [nav_beacon.name] [nav_beacon.id] located: [nav_beacon.x] [nav_beacon.y] [nav_beacon.z]"] = nav_beacon
-			else
-				L["([L.len]) [nav_beacon.name] [nav_beacon.id] locked"] = null
+		if(nav_beacon.z && level_has_any_trait(nav_beacon.z, locked_traits)))
+			break
+		if(!nav_beacon.locked)
+			L["([L.len]) [nav_beacon.name] located: [nav_beacon.x] [nav_beacon.y] [nav_beacon.z]"] = nav_beacon
+		else
+			L["([L.len]) [nav_beacon.name] locked"] = null
 
 	playsound(console, 'sound/machines/terminal_prompt.ogg', 25, 0)
 	var/selected = input("Choose location to jump to", "Locations", null) as null|anything in L
