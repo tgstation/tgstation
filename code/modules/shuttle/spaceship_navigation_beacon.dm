@@ -15,8 +15,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 0
 
-	var/id = ""
-	var/access_code = ""
+	var/locked = FALSE
 
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/spaceship_navigation_beacon
@@ -26,11 +25,6 @@
 	. = ..()
 	SSshuttle.beacons |= src
 
-	if(id == "random_generated")
-		id = GUID()
-	if(access_code == "random_generated")
-		access_code = GUID()
-
 /obj/machinery/spaceship_navigation_beacon/proc/randomise_beacon()
 	if(prob(40))
 		id = GUID() //gives us a random id.
@@ -38,7 +32,7 @@
 		access_code = GUID() //gives us a random access code.
 
 obj/machinery/spaceship_navigation_beacon/emp_act()
-	randomise_beacon()
+	locked = TRUE
 
 /obj/machinery/spaceship_navigation_beacon/Destroy()
 	SSshuttle.beacons -= src
@@ -56,15 +50,19 @@ obj/machinery/spaceship_navigation_beacon/emp_act()
 	update_icon()
 
 /obj/machinery/spaceship_navigation_beacon/multitool_act(mob/living/user, obj/item/multitool/I)
-	if (istype(I))
-		id = replacetext((input("Enter the ID for this beacon", "Input ID", id) as text), " ", "_")
-		access_code = replacetext((input("Enter the access code for this beacon", "Input access code", access_code) as text), " ", "_")
-		name = "Beacon_[input("Enter the custom name for this beacon", "It be Beacon ..your input..") as text]"
-		return TRUE
+	if(panel_open)
+		new_name = "Beacon_[input("Enter the custom name for this beacon", "It be Beacon ..your input..") as text]"
+		if(new_name && Adjacent(user))
+			name = new_name
+			to_chat(user, "<span class='notice'>You change beacon name to [name].</span>")
+	else 
+		locked =!locked
+		to_chat(user, "<span class='notice'>You [locked?:"","un"]lock [src].</span>")
+	return TRUE
 
 /obj/machinery/spaceship_navigation_beacon/examine()
 	.=..()
-	. += "<span class='warning'>ID: [id], Access code: [access_code] </span>"
+	. += "<span class='warning'>Status: [locked?  "LOCKED" , "Stable"] </span>"
 
 /obj/machinery/spaceship_navigation_beacon/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "core-open", "core", W))
