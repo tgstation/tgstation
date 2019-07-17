@@ -192,7 +192,7 @@
 	var/turf/eyeturf = get_turf(the_eye)
 	if(!eyeturf)
 		return SHUTTLE_DOCKER_BLOCKED
-	if(eyeturf.z && SSmapping.level_has_any_trait(eyeturf.z, locked_traits))
+	if(!eyeturf.z || SSmapping.level_has_any_trait(eyeturf.z, locked_traits))
 		return SHUTTLE_DOCKER_BLOCKED
 
 	. = SHUTTLE_DOCKER_LANDING_CLEAR
