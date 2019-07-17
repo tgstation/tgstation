@@ -135,6 +135,10 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		if(rule.flags == HIGHLANDER_RULESET)
 			if(rule.check_finished()) // Only the rule that actually finished the round sets round result.
 				return rule.round_result()
+	// If it got to this part, just pick one highlander if it exists
+	for(var/datum/dynamic_ruleset/rule in executed_rules)
+		if(rule.flags == HIGHLANDER_RULESET)
+			return rule.round_result()
 	return ..()
 
 /datum/game_mode/dynamic/send_intercept()

@@ -766,6 +766,7 @@
 	else
 		return FALSE
 
+// This does not get called. Look into making it work.
 /datum/dynamic_ruleset/roundstart/monkey/round_result()
 	if(check_monkey_victory())
 		SSticker.mode_result = "win - monkey win"
