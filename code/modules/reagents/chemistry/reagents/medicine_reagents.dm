@@ -1408,7 +1408,7 @@
 
 /datum/reagent/medicine/sanguiose
 	name = "Sanguiose"
-	description = "A chemical developed to aid in the buchering proccess, it causes a chemical reaction which consumes blood and oxygen while healing cuts, bruises, and other similar injuries,"
+	description = "A chemical developed to aid in the butchering proccess, it causes a chemical reaction which consumes blood and oxygen while healing cuts, bruises, and other similar injuries,"
 	reagent_state = LIQUID
 	color = "#FF6464"
 	metabolization_rate = 0.5* REAGENTS_METABOLISM
@@ -1468,7 +1468,7 @@
 
 /datum/reagent/medicine/ferveatium
 	name = "Ferveatium"
-	description = "A chemical previously used to cook questionable meat, it has come to enjoy a new life as a treatment for many posions."
+	description = "A chemical previously used to cook questionable meat, it has come to enjoy a new life as a treatment for many poisons."
 	reagent_state = LIQUID
 	color = "#00FFFF"
 	metabolization_rate = 0.5* REAGENTS_METABOLISM
