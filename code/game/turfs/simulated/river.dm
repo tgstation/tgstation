@@ -53,7 +53,7 @@
 				cur_turf = get_step(cur_turf, cur_dir)
 				continue
 			else
-				var/turf/river_turf = cur_turf.ChangeTurf(turf_type, null, CHANGETURF_IGNORE_AIR)
+				var/turf/river_turf = cur_turf.ChangeTurf(turf_type, turf_type, CHANGETURF_IGNORE_AIR)
 				river_turf.Spread(25, 11, whitelist_area)
 
 	for(var/WP in river_nodes)
