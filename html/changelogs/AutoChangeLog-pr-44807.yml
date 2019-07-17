@@ -1,5 +1,0 @@
-author: "Dennok"
-delete-after: True
-changes: 
-  - rscadd: "Bluespace Navigation Gigabeacon"
-  - rscadd: "Navigation computer now use trait blacklist to filter out z levels to where it can't place custom dock."
