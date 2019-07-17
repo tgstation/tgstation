@@ -111,10 +111,3 @@
 	e_cost = 70
 	fire_sound = 'sound/weapons/resonator_fire.ogg'
 	select_name = "shield"
-
-/obj/item/ammo_casing/energy/laser/scatter/small
-	projectile_type = /obj/item/projectile/beam/laser/lowenergy
-	e_cost = 120
-	pellets = 5
-	variance = 50
-	select_name = "scatter"

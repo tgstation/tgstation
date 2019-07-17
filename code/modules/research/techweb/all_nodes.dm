@@ -1,4 +1,5 @@
 
+
 //Current rate: 135000 research points in 90 minutes
 
 //Base Nodes
@@ -601,7 +602,7 @@
 	display_name = "Electric Weapons"
 	description = "Weapons using electric technology"
 	prereq_ids = list("weaponry", "adv_power"  , "emp_basic")
-	design_ids = list("stunrevolver", "ioncarbine", "lens_SHD", "lens_SHK")
+	design_ids = list("stunrevolver", "ioncarbine", "lens_SHK", "lens_SHD")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -628,7 +629,7 @@
 	display_name = "Beam Weaponry"
 	description = "Various basic beam weapons"
 	prereq_ids = list("adv_weaponry")
-	design_ids = list("temp_gun", "xray_laser", "lens_ECO", "lens_INC")
+	design_ids = list("temp_gun", "xray_laser", "lens_INC", "lens_ECO")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
