@@ -32,7 +32,7 @@
 /obj/item/melee/synthetic_arm_blade
 	name = "synthetic arm blade"
 	desc = "A grotesque blade that on closer inspection seems made of synthetic flesh, it still feels like it would hurt very badly as a weapon."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/changeling_items.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
@@ -76,17 +76,15 @@
 		final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()
 
-/obj/item/melee/sabre/on_exit_storage(obj/item/storage/S)
-	..()
-	var/obj/item/storage/belt/sabre/B = S
+/obj/item/melee/sabre/on_exit_storage(datum/component/storage/concrete/S)
+	var/obj/item/storage/belt/sabre/B = S.real_location()
 	if(istype(B))
-		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
+		playsound(B, 'sound/items/unsheath.ogg', 25, TRUE)
 
-/obj/item/melee/sabre/on_enter_storage(obj/item/storage/S)
-	..()
-	var/obj/item/storage/belt/sabre/B = S
+/obj/item/melee/sabre/on_enter_storage(datum/component/storage/concrete/S)
+	var/obj/item/storage/belt/sabre/B = S.real_location()
 	if(istype(B))
-		playsound(B, 'sound/items/sheath.ogg', 25, 1)
+		playsound(B, 'sound/items/sheath.ogg', 25, TRUE)
 
 /obj/item/melee/sabre/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is trying to cut off all [user.p_their()] limbs with [src]! it looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -177,11 +175,11 @@
 
 	var/cooldown = 40 // Default wait time until can stun again.
 	var/stun_time_carbon = 60 // How long we stun for - 6 seconds.
-	var/stun_time_silicon = 0.60 // Multiplier for stunning silicons; if enabled, is 60% of human stun time. 
-	var/affect_silicon = FALSE // Does it stun silicons. 
+	var/stun_time_silicon = 0.60 // Multiplier for stunning silicons; if enabled, is 60% of human stun time.
+	var/affect_silicon = FALSE // Does it stun silicons.
 	var/on_sound // "On" sound, played when switching between able to stun or not.
 	var/on_stun_sound = "sound/effects/woodhit.ogg" // Default path to sound for when we stun.
-	var/stun_animation = FALSE // Do we animate the "hit" when stunning.
+	var/stun_animation = TRUE // Do we animate the "hit" when stunning.
 	var/on = TRUE // Are we on or off
 
 	var/on_icon_state // What is our sprite when turned on
@@ -227,7 +225,7 @@
 	.["local"] = "<span class='danger'>You pulse [target]'s sensors with the baton!</span>"
 
 	return .
-	
+
 // Are we applying any special effects when we stun to carbon
 /obj/item/melee/classic_baton/proc/additional_effects_carbon(mob/living/target, mob/living/user)
 	return
@@ -263,7 +261,7 @@
 
 				user.visible_message(desc["visible"], desc["local"])
 				playsound(get_turf(src), on_stun_sound, 100, TRUE, -1)
-				
+
 				if (stun_animation)
 					user.do_attack_animation(target)
 			else
@@ -387,12 +385,11 @@
 	item_flags = NONE
 	force = 5
 
-	cooldown = 30 
+	cooldown = 20
 	stun_time_carbon = 85 
 	affect_silicon = TRUE 
 	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
-	stun_animation = TRUE 
 
 	on_icon_state = "contractor_baton_1"
 	off_icon_state = "contractor_baton_0"

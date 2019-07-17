@@ -71,7 +71,6 @@
 /area/shuttle/supply)
 "i" = (
 /obj/machinery/door/poddoor{
-	density = 1;
 	id = "QMLoaddoor";
 	name = "Supply Dock Loading Door"
 	},
@@ -122,8 +121,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/docking_port/mobile/supply{
 	dir = 4;
-	dwidth = 4;
-	width = 12
+	dwidth = 4
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/supply)
@@ -167,7 +165,6 @@
 	req_access_txt = "31"
 	},
 /obj/machinery/button/door{
-	dir = 2;
 	id = "QMLoaddoor2";
 	layer = 4;
 	name = "On Ramp Toggle";
@@ -211,7 +208,6 @@
 /area/shuttle/supply)
 "t" = (
 /obj/machinery/door/poddoor{
-	density = 1;
 	id = "QMLoaddoor2";
 	name = "Supply Dock Loading Door"
 	},
