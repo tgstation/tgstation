@@ -1411,7 +1411,7 @@
 	description = "A chemical developed to aid in the buchering proccess, it causes a chemical reaction which consumes blood and oxygen while healing cuts, bruises, and other similar injuries,"
 	reagent_state = LIQUID
 	color = "#FF6464"
-	metabolization_rate = 0.4* REAGENTS_METABOLISM
+	metabolization_rate = 0.5* REAGENTS_METABOLISM
 	overdose_threshold = 25
 	taste_description = "salty"
 
@@ -1439,7 +1439,7 @@
 	description = "An industrial cryostorage chemical previously used for preservation and storage. It removes oxygen from the body and heals to prevent and heal burns. If too much is injected the reaction will speed up dramatically removing all oxygen quickly."
 	reagent_state = LIQUID
 	color = "#00FFFF"
-	metabolization_rate = 0.4* REAGENTS_METABOLISM
+	metabolization_rate = 0.5* REAGENTS_METABOLISM
 	overdose_threshold = 25
 	taste_description = "Oil"
 
@@ -1471,7 +1471,7 @@
 	description = "A chemical previously used to cook questionable meat, it has come to enjoy a new life as a treatment for many posions."
 	reagent_state = LIQUID
 	color = "#00FFFF"
-	metabolization_rate = 0.4* REAGENTS_METABOLISM
+	metabolization_rate = 0.5* REAGENTS_METABOLISM
 	overdose_threshold = 25
 	taste_description = "Fire"
 
