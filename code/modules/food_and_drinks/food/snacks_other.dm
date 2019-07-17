@@ -455,8 +455,8 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/omnizine = 2)	//Honk
 	var/mutable_appearance/head
 	var/headcolor = rgb(0, 0, 0)
-	var/succ_dur = 300
-	var/succ_int = 15
+	var/succ_dur = 180
+	var/succ_int = 100
 	var/next_succ = 0
 	tastes = list("candy" = 1)
 	foodtype = JUNKFOOD | SUGAR
@@ -474,34 +474,27 @@
 			if (src == C.wear_mask) // if it's in the human/monkey mouth, transfer reagents to the mob
 				var/fraction = min(REAGENTS_METABOLISM/reagents.total_volume, 1)
 				reagents.reaction(C, INGEST, fraction)
-				to_chat(C, "Handling reagents")
 				if(!reagents.trans_to(C, REAGENTS_METABOLISM))
 					reagents.remove_any(REAGENTS_METABOLISM)
 				return
 		reagents.remove_any(REAGENTS_METABOLISM)
 
 /obj/item/reagent_containers/food/snacks/lollipop/process()
-	. = ..()
 	if(iscarbon(loc))
 		var/mob/living/carbon/C = loc
-		next_succ = world.time
-		to_chat(C, "Processing")
 		if(succ_dur < 1)
 			qdel(src)
-			to_chat(C, "Qdeling")
-		if(src == C.wear_mask)
-			succ_dur--
-			if((reagents && reagents.total_volume) && (next_succ <= world.time))
-				handle_reagents()
-				to_chat(C, "Processing Successful")
-				next_succ = world.time + succ_int
+			return
+		succ_dur--
+		if((reagents && reagents.total_volume) && (next_succ <= world.time))
+			handle_reagents()
+			next_succ = world.time + succ_int
 
 
 /obj/item/reagent_containers/food/snacks/lollipop/equipped(mob/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_MASK)
+	if(slot == SLOT_WEAR_MASK)
 		START_PROCESSING(SSobj, src)
-		to_chat(user, "Item Equipped Successfully")
 	else
 		STOP_PROCESSING(SSobj, src)
 
