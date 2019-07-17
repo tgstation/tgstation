@@ -192,7 +192,7 @@
 	var/turf/eyeturf = get_turf(the_eye)
 	if(!eyeturf)
 		return SHUTTLE_DOCKER_BLOCKED
-	if(eyeturf.z && level_has_any_trait(eyeturf.z, locked_traits))
+	if(eyeturf.z && SSmapping.level_has_any_trait(eyeturf.z, locked_traits))
 		return SHUTTLE_DOCKER_BLOCKED
 
 	. = SHUTTLE_DOCKER_LANDING_CLEAR
@@ -336,7 +336,7 @@
 		if(!V)
 			continue
 		var/obj/machinery/spaceship_navigation_beacon/nav_beacon = V
-		if(nav_beacon.z && level_has_any_trait(nav_beacon.z, locked_traits))
+		if(nav_beacon.z && SSmapping.level_has_any_trait(nav_beacon.z, console.locked_traits))
 			break
 		if(!nav_beacon.locked)
 			L["([L.len]) [nav_beacon.name] located: [nav_beacon.x] [nav_beacon.y] [nav_beacon.z]"] = nav_beacon
