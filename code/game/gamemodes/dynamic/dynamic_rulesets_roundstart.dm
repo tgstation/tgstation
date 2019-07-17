@@ -289,7 +289,7 @@
 	for(var/datum/mind/M in assigned)
 		if (leader)
 			leader = FALSE
-			var/datum/antagonist/nukeop/leader/new_op = add_antag_datum(antag_leader_datum)
+			var/datum/antagonist/nukeop/leader/new_op = M.add_antag_datum(antag_leader_datum)
 			nuke_team = new_op.nuke_team
 		else
 			var/datum/antagonist/nukeop/new_op = new antag_datum()
@@ -786,7 +786,7 @@
 	cost = 0
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	high_population_requirement = 101
-	var/meteordelay = 1000
+	var/meteordelay = 2000
 	var/nometeors = 0
 	var/rampupdelta = 5
 
