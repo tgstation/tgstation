@@ -127,7 +127,7 @@
 	obj_integrity = min(max_integrity, obj_integrity+core_regen)
 	if(overmind)
 		overmind.update_health_hud()
-		Pulse_Area(overmind, 20, 40, TRUE)
+		Pulse_Area(overmind, 24, 40, TRUE)
 	INVOKE_ASYNC(src, .proc/pulseNodes)
 	playsound(src.loc, 'sound/effects/singlebeat.ogg', 600, 1, pressure_affected = FALSE)
 	..()

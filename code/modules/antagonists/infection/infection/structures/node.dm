@@ -8,7 +8,7 @@
 	max_integrity = 200
 	health_regen = 3
 	point_return = 5
-	build_time = 25
+	build_time = 150
 	upgrade_subtype = /datum/infection_upgrade/node
 	var/expansion_range = 8
 	var/expansion_amount = 16

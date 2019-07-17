@@ -1,8 +1,8 @@
 /datum/action/cooldown/infection
 	name = "Infection Power"
 	desc = "New Infection Power"
-	icon_icon = 'icons/mob/blob.dmi'
-	button_icon_state = "blank_blob"
+	icon_icon = 'icons/mob/infection/action_icons.dmi'
+	button_icon_state = ""
 	cooldown_time = 0
 	var/cost = 0 // cost to actually use
 	var/upgrade_cost = 0 // cost to buy from the evolution shop
@@ -80,16 +80,14 @@
 	name = "Create Shield Infection"
 	desc = "Create a shield infection, which is harder to kill and has resistances to different types of attacks."
 	cost = 5
-	icon_icon = 'icons/obj/smooth_structures/infection_wall.dmi'
-	button_icon_state = "smooth"
+	button_icon_state = "wall"
 	type_to_create = /obj/structure/infection/shield
 
 /datum/action/cooldown/infection/creator/resource
 	name = "Create Resource Infection"
 	desc = "Create a resource tower which will gradually generate resources for you."
 	cost = 25
-	icon_icon = 'icons/mob/infection/crystaline_infection_medium.dmi'
-	button_icon_state = "crystalresource-base"
+	button_icon_state = "resource"
 	type_to_create = /obj/structure/infection/resource
 	distance_from_similar = 4
 	needs_node = TRUE
@@ -98,8 +96,7 @@
 	name = "Create Node Infection"
 	desc = "Create a node, which will power nearby factory and resource structures. Beware however, these towers become slower with time."
 	cost = 25
-	icon_icon = 'icons/mob/infection/crystaline_infection_large.dmi'
-	button_icon_state = "crystalnode-base"
+	button_icon_state = "node"
 	type_to_create = /obj/structure/infection/node
 	distance_from_similar = 5
 
@@ -107,7 +104,7 @@
 	name = "Create Factory Infection"
 	desc = "Create a spore tower that will spawn spores to harass your enemies."
 	cost = 40
-	button_icon_state = "blob_factory"
+	button_icon_state = "factory"
 	type_to_create = /obj/structure/infection/factory
 	distance_from_similar = 7
 	needs_node = TRUE
@@ -116,8 +113,7 @@
 	name = "Create Turret Infection"
 	desc = "Create a turret that will automatically fire at your enemies."
 	cost = 50
-	icon_icon = 'icons/mob/infection/crystaline_infection_medium.dmi'
-	button_icon_state = "crystalturret-base"
+	button_icon_state = "turret"
 	type_to_create = /obj/structure/infection/turret
 	distance_from_similar = 8
 	needs_node = TRUE
@@ -127,8 +123,7 @@
 	name = "Create Beam Turret Infection"
 	desc = "Create a turret that will automatically fire and instantly stick to your enemies."
 	cost = 50
-	icon_icon = 'icons/mob/infection/crystaline_infection_medium.dmi'
-	button_icon_state = "crystalhitscan-layer"
+	button_icon_state = "beamturret"
 	type_to_create = /obj/structure/infection/turret/beam
 	distance_from_similar = 8
 	needs_node = TRUE

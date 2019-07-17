@@ -59,8 +59,8 @@
 
 /obj/item/infectionkiller/excaliju/proc/proc_start(mob/living/M, mob/living/user)
 	playsound(src.loc, 'sound/weapons/wpnProc.ogg', 300, 1, vary = FALSE, pressure_affected = FALSE)
-	if(!is_procced() && prob(33))
-		to_chat(user, "<span class='colossus'><b>[pick("KEEP FIGHTING DWARVES!","PROTECT THE WALL!","OLDDD MAAAN WILLAKERRRS!")]</b></span>")
+	if(!is_procced() && prob(20))
+		to_chat(user, "<span class='colossus'><b>[pick("DEATH FEARS ME!","PROTECT THE SHRINE!","OLDDD MAAAN WILLAKERRRS!")]</b></span>")
 	proctime = world.time + 30 // 3 seconds of big ass damage to other infection mobs if you manage to kill one infection mob, chain procs
 	addtimer(CALLBACK(src, .proc/proc_end), 30)
 

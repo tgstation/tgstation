@@ -23,7 +23,22 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	placing = TRUE
 	var/turf/start = pick(GLOB.infection_spawns)
 	var/datum/map_template/infection_start/template = new
-	var/list/hit_turfs = template.get_affected_turfs(start, CENTERED = TRUE)
+	var/list/hit_turfs = template.get_affected_turfs(start, centered = TRUE)
+	var/list/ripples = list()
+	for(var/turf/T in hit_turfs)
+		ripples += new /obj/effect/abstract/ripple(T, 200)
+	sleep(200)
+	for(var/ripple in ripples)
+		qdel(ripple)
+	for(var/turf/T in hit_turfs)
+		for(var/i in 1 to 3)
+			for(var/atom/thing in T.contents)
+				if(ismob(thing))
+					var/mob/M = thing
+					M.visible_message("<span class='warning'>The infection meteor slams into [M]!</span>")
+					M.gib()
+				else
+					thing.blob_act()
 	template.load(start, centered = TRUE)
 	forceMove(start)
 	var/obj/structure/infection/core/I = new(start, src, base_point_rate, 1)

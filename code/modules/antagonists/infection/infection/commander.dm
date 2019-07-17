@@ -28,7 +28,7 @@ GLOBAL_VAR(infection_commander)
 	var/last_attack = 0
 	var/list/infection_mobs = list()
 	var/list/resource_infection = list()
-	var/nodes_required = TRUE //if the infection needs nodes to place resource and factory blobs
+	var/nodes_required = FALSE //if the infection needs nodes to place resource and factory blobs
 	var/placed = FALSE
 	var/placing = FALSE
 	var/freecam = FALSE

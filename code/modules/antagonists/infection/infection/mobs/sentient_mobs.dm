@@ -11,7 +11,7 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	obj_damage = 20
 	crystal_color = "#ff8c00"
-	var/respawn_time = 30
+	var/respawn_time = 5
 	var/current_respawn_time = -1
 	var/can_respawn = FALSE
 	var/upgrade_points = 0

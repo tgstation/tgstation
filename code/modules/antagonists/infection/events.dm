@@ -66,7 +66,7 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 	if(minion_types.len)
 		for(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/spore in (C.infection_mobs - boss_spore))
 			spore.forceMove(GLOB.infection_core)
-			var/minion_type = pick(minion_types)
+			var/minion_type = pickweight(minion_types)
 			var/mob/living/simple_animal/minion = new minion_type(start)
 			minion.add_atom_colour(C.color, FIXED_COLOUR_PRIORITY)
 			minion.AddComponent(/datum/component/spore_controlled, spore)
@@ -97,14 +97,38 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 //
 */
 
-/datum/round_event_control/infection/carp
-	name = "Doom Event: Magical Carp Creatures"
-	typepath = /datum/round_event/infection/carp
+/datum/round_event_control/infection/space
+	name = "Doom Event: Space Creatures"
+	typepath = /datum/round_event/infection/space
 
-/datum/round_event/infection/carp
+/datum/round_event/infection/space
 	boss_type = /mob/living/simple_animal/hostile/megafauna/dragon/space_dragon
 	boss_drop_list = list(/obj/item/infectionkiller/excaliju)
-	minion_types = list(/mob/living/simple_animal/hostile/carp/ranged, /mob/living/simple_animal/hostile/carp/ranged/chaos)
+	minion_types = list(/mob/living/simple_animal/hostile/pirate/melee/space, /mob/living/simple_animal/hostile/bear, /mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient)
 	minion_drop_list = list()
-	warning_message = "Magical Carp Creatures are invading the station!"
+	warning_message = "Space Creatures are invading the station!"
 	warning_jingle = 'sound/weapons/bite.ogg'
+
+/datum/round_event_control/infection/demon
+	name = "Doom Event: Demons From Hell"
+	typepath = /datum/round_event/infection/demon
+
+/datum/round_event/infection/demon
+	boss_type = /mob/living/simple_animal/slaughter
+	boss_drop_list = list(/obj/item/infectionkiller/excaliju)
+	minion_types = list(/mob/living/simple_animal/hostile/asteroid/goliath=1, /mob/living/simple_animal/hostile/asteroid/basilisk/watcher=2, /mob/living/simple_animal/hostile/asteroid/hivelord/legion=3)
+	minion_drop_list = list()
+	warning_message = "Demons From Hell are invading the station!"
+	warning_jingle = 'sound/magic/enter_blood.ogg'
+
+/datum/round_event_control/infection/paperwizard
+	name = "Doom Event: Paper Wizard"
+	typepath = /datum/round_event/infection/paperwizard
+
+/datum/round_event/infection/paperwizard
+	boss_type = /mob/living/simple_animal/hostile/boss/paper_wizard
+	boss_drop_list = list(/obj/item/infectionkiller/excaliju)
+	minion_types = list(/mob/living/simple_animal/hostile/stickman, /mob/living/simple_animal/hostile/stickman/ranged, /mob/living/simple_animal/hostile/stickman/dog)
+	minion_drop_list = list()
+	warning_message = "The Paper Wizard is invading the station!"
+	warning_jingle = 'sound/weapons/emitter.ogg'

@@ -1,8 +1,10 @@
 /obj/structure/infection/factory
 	name = "factory infection"
-	icon = 'icons/mob/blob.dmi'
-	icon_state = "blob_factory"
+	icon = 'icons/mob/infection/crystaline_infection_medium.dmi'
+	icon_state = "crystalinvasion-layer"
 	desc = "A thick spire of tendrils."
+	pixel_x = -16
+	pixel_y = 0
 	max_integrity = 200
 	health_regen = 1
 	point_return = 5
@@ -16,6 +18,16 @@
 /obj/structure/infection/factory/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
+
+/obj/structure/infection/factory/update_icon()
+	. = ..()
+	underlays.Cut()
+	var/mutable_appearance/factory_base = mutable_appearance('icons/mob/infection/crystaline_infection_medium.dmi', "crystalinvasion-base")
+	var/mutable_appearance/infection_base = mutable_appearance('icons/mob/infection/infection.dmi', "normal")
+	infection_base.pixel_x = -pixel_x
+	infection_base.pixel_y = -pixel_y
+	underlays += factory_base
+	underlays += infection_base
 
 /obj/structure/infection/factory/Destroy()
 	for(var/mob/living/simple_animal/hostile/infection/infectionspore/spore in spores)
@@ -32,7 +44,7 @@
 		return
 	if(spore_delay > world.time)
 		return
-	flick("blob_factory_glow", src)
+	flick(pick("crystalinvasion-effect", "crystalinvasion-effect-2"), src)
 	spore_delay = world.time + spore_cooldown
 	var/mob/living/simple_animal/hostile/infection/infectionspore/IS = new/mob/living/simple_animal/hostile/infection/infectionspore(src.loc, src, overmind)
 	if(overmind) //if we don't have an overmind, we don't need to do anything but make a spore
