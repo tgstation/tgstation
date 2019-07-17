@@ -325,6 +325,7 @@
 	var/list/L = list()
 	for(var/V in SSshuttle.stationary)
 		if(!V)
+			stack_trace()
 			continue
 		var/obj/docking_port/stationary/S = V
 		if(console.z_lock.len && !(S.z in console.z_lock))
@@ -334,6 +335,7 @@
 
 	for(var/V in SSshuttle.beacons)
 		if(!V)
+			stack_trace()
 			continue
 		var/obj/machinery/spaceship_navigation_beacon/nav_beacon = V
 		if(!nav_beacon.z || SSmapping.level_has_any_trait(nav_beacon.z, console.locked_traits))
