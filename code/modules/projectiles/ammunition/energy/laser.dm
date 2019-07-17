@@ -22,6 +22,7 @@
 
 /obj/item/ammo_casing/energy/laser/scatter
 	projectile_type = /obj/item/projectile/beam/scatter
+	e_cost = 130
 	pellets = 5
 	variance = 25
 	select_name = "scatter"
@@ -68,3 +69,45 @@
 	projectile_type = /obj/item/projectile/beam/mindflayer
 	select_name = "MINDFUCK"
 	fire_sound = 'sound/weapons/laser.ogg'
+
+/obj/item/ammo_casing/energy/laser/rico
+	projectile_type = /obj/item/projectile/beam/laser/rico
+	e_cost = 100
+	fire_sound = 'sound/weapons/laser3.ogg'
+	select_name = "bouncing"
+
+/obj/item/ammo_casing/energy/laser/shock
+	projectile_type = /obj/item/projectile/beam/laser/shock
+	e_cost = 120
+	fire_sound = 'sound/weapons/laser3.ogg'
+	select_name = "shock"
+
+/obj/item/ammo_casing/energy/laser/blinding
+	projectile_type = /obj/item/projectile/beam/laser/blinding
+	e_cost = 130
+	fire_sound = 'sound/weapons/laser3.ogg'
+	select_name = "blinding"
+
+/obj/item/ammo_casing/energy/laser/invisible
+	projectile_type = /obj/item/projectile/beam/laser/invisible
+	e_cost = 100
+	fire_sound = 'sound/weapons/laser3.ogg'
+	select_name = "stealth"
+
+/obj/item/ammo_casing/energy/laser/incendiary
+	projectile_type = /obj/item/projectile/beam/laser/incendiary
+	e_cost = 120
+	fire_sound = 'sound/weapons/laser3.ogg'
+	select_name = "incendiary"
+
+/obj/item/ammo_casing/energy/laser/lowenergy
+	projectile_type = /obj/item/projectile/beam/laser/lowenergy
+	e_cost = 30
+	fire_sound = 'sound/weapons/laser3.ogg'
+	select_name = "economic"
+
+/obj/item/ammo_casing/energy/laser/shield
+	projectile_type = /obj/item/projectile/energy/shield
+	e_cost = 70
+	fire_sound = 'sound/weapons/resonator_fire.ogg'
+	select_name = "shield"

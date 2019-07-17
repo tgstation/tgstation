@@ -8,6 +8,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	ammo_x_offset = 1
 	shaded_charge = 1
+	modifystate = TRUE //this is used for different icons based on the projectile type
 
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"

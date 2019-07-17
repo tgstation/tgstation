@@ -223,7 +223,7 @@
 /obj/item/projectile/Bump(atom/A)
 	var/datum/point/pcache = trajectory.copy_to()
 	var/turf/T = get_turf(A)
-	if(check_ricochet(A) && check_ricochet_flag(A) && ricochets < ricochets_max)
+	if((ricochets < ricochets_max) && (check_ricochet(A) && check_ricochet_flag(A) || (reflectable & REFLECT_MAX)))
 		ricochets++
 		if(A.handle_ricochet(src))
 			on_ricochet(A)

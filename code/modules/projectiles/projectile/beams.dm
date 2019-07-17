@@ -185,3 +185,82 @@
 		var/mob/living/carbon/M = target
 		M.visible_message("<span class='danger'>[M] explodes into a shower of gibs!</span>")
 		M.gib()
+
+/obj/item/projectile/beam/laser/shock
+	name = "\improper charged beam"
+	icon_state = "spark"
+	damage = 10
+	jitter = 10
+	stutter = 10
+	hitsound = 'sound/weapons/wave.ogg'
+	light_color = LIGHT_COLOR_CYAN
+	tracer_type = /obj/effect/projectile/tracer/stun
+	muzzle_type = /obj/effect/projectile/tracer/stun
+	impact_type = /obj/effect/projectile/impact/stun
+
+/obj/item/projectile/beam/laser/shock/on_hit(atom/target)
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		C.electrocute_act(10, src, 1, FALSE, FALSE, FALSE, FALSE, FALSE)
+		C.confused += 6
+		if(prob(20))
+			C.dropItemToGround(C.get_active_held_item())
+
+/obj/item/projectile/beam/laser/blinding
+	name = "\improper blinding beam"
+	icon_state = "blinding"
+	eyeblur = 5
+	damage = 8
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
+	light_color = LIGHT_COLOR_PURPLE
+	tracer_type = /obj/effect/projectile/tracer/xray
+	muzzle_type = /obj/effect/projectile/muzzle/xray
+	impact_type = /obj/effect/projectile/impact/xray
+
+/obj/item/projectile/beam/laser/blinding/on_hit(atom/target)
+	. = ..()
+	if(ishuman(target) && prob(60))
+		var/mob/living/carbon/human/H = target
+		H.blind_eyes(5)
+		H.emote("scream")
+
+/obj/item/projectile/beam/laser/incendiary
+	name = "\improper incendiary beam"
+	icon_state = "lava"
+	damage = 8
+	var/fire_stacks = 2
+	light_color = LIGHT_COLOR_ORANGE
+
+/obj/item/projectile/beam/laser/incendiary/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/M = target
+		M.adjust_bodytemperature(((100-blocked)/100)*(300 - M.bodytemperature))
+		if(prob(40))
+			M.adjust_fire_stacks(fire_stacks)
+			M.IgniteMob()
+
+/obj/item/projectile/beam/laser/lowenergy
+	name = "\improper small laser beam"
+	icon_state = "mini"
+	damage = 10
+
+/obj/item/projectile/beam/laser/rico
+	name = "\improper bouncing plasma ball"
+	icon_state = "pulse0"
+	ricochets_max = 100
+	ricochet_chance = 100
+	reflectable = REFLECT_MAX
+	damage = 15
+	hitsound = 'sound/weapons/pulse3.ogg'
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
+	light_color = LIGHT_COLOR_ORANGE
+	tracer_type = /obj/effect/projectile/tracer/xray
+	muzzle_type = /obj/effect/projectile/muzzle/xray
+	impact_type = /obj/effect/projectile/impact/xray
+
+/obj/item/projectile/beam/laser/invisible
+	invisibility = INVISIBILITY_MAXIMUM
+	damage = 15
+	range = 10
+	light_color = LIGHT_COLOR_PINK

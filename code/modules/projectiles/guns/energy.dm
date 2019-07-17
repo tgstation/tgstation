@@ -20,6 +20,7 @@
 	var/charge_delay = 4
 	var/use_cyborg_cell = FALSE //whether the gun's cell drains the cyborg user's cell to recharge
 	var/dead_cell = FALSE //set to true so the gun is given an empty cell
+	var/special_ammo = FALSE //used for external lens
 
 /obj/item/gun/energy/emp_act(severity)
 	. = ..()
@@ -123,7 +124,7 @@
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	fire_sound = shot.fire_sound
 	fire_delay = shot.delay
-	if (shot.select_name)
+	if (shot.select_name && user)
 		to_chat(user, "<span class='notice'>[src] is now set to [shot.select_name].</span>")
 	chambered = null
 	recharge_newshot(TRUE)
@@ -146,7 +147,7 @@
 	var/itemState = null
 	if(!initial(item_state))
 		itemState = icon_state
-	if (modifystate)
+	if(modifystate)
 		add_overlay("[icon_state]_[shot.select_name]")
 		iconState += "_[shot.select_name]"
 		if(itemState)
@@ -165,6 +166,9 @@
 	if(itemState)
 		itemState += "[ratio]"
 		item_state = itemState
+	if(special_ammo)
+		add_overlay("[icon_state]_empty")
+
 
 /obj/item/gun/energy/suicide_act(mob/living/user)
 	if (istype(user) && can_shoot() && can_trigger_gun(user) && user.get_bodypart(BODY_ZONE_HEAD))

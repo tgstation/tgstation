@@ -95,3 +95,22 @@
 /obj/item/projectile/energy/trap/cyborg/on_range()
 	do_sparks(1, TRUE, src)
 	qdel(src)
+
+/obj/item/projectile/energy/shield
+	name = "energy barricade"
+	icon_state = "e_netting"
+	damage = 40
+	damage_type = STAMINA
+	hitsound = 'sound/weapons/resonator_fire.ogg'
+	range = 2
+
+/obj/item/projectile/energy/shield/Initialize()
+	. = ..()
+	SpinAnimation()
+
+/obj/item/projectile/energy/shield/on_range()
+	var/turf/Tloc = get_turf(src)
+	if(!locate(/obj/structure/barricade/security/holobarricade) in Tloc)
+		new /obj/structure/barricade/security/holobarricade(Tloc)
+	do_sparks(1, TRUE, src)
+	return ..()
