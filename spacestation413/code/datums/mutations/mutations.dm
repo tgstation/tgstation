@@ -58,3 +58,36 @@
 
 /datum/mutation/human/hulk
 	species_allowed = list()
+
+/mob/living/carbon/human/proc/spurdofy()
+	dna.add_mutation(SPURDOMUT)
+
+
+/datum/mutation/human/spurdo
+	name = "Spurdo"
+	desc = "A horrific affliction from the dark realms of Finland."
+	quality = MINOR_NEGATIVE
+	locked = TRUE
+	text_gain_indication = "<span class='notice'>You feel an insatiable craving for Euroshopper brand energy drink.</span>"
+	text_lose_indication = "<span class='notice'>You no longer feel very ebin.</span>"
+
+/datum/mutation/human/spurdo/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+
+/datum/mutation/human/spurdo/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	UnregisterSignal(owner, COMSIG_MOB_SAY)
+
+/datum/mutation/human/spurdo/proc/handle_speech(datum/source, list/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message)
+		message = replacetext(message,"c","g")
+		message = replacetext(message,"k","g")
+		message = replacetext(message,"t","d")
+		message = replacetext(message,"th","d")
+		if(prob(30))
+			message += " :[pick("D", "DD", "DDD")]!"
+		speech_args[SPEECH_MESSAGE] = trim(message)
