@@ -7,7 +7,7 @@
 	req_access = list(ACCESS_ARMORY)
 	circuit = /obj/item/circuitboard/computer/gulag_teleporter_console
 	var/default_goal = 200
-	var/obj/item/card/id/prisoner/id = null
+	var/obj/item/card/id/prisoner/inserted_id
 	var/obj/machinery/gulag_teleporter/teleporter = null
 	var/obj/structure/gulag_beacon/beacon = null
 	var/mob/living/carbon/human/prisoner = null
@@ -15,25 +15,32 @@
 
 	light_color = LIGHT_COLOR_RED
 
+/obj/machinery/computer/gulag_teleporter_computer/examine(mob/user)
+	. = ..()
+	if(inserted_id)
+		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
+
 /obj/machinery/computer/gulag_teleporter_computer/Initialize()
 	. = ..()
 	scan_machinery()
 
 /obj/machinery/computer/gulag_teleporter_computer/Destroy()
-	if(id)
-		id.forceMove(get_turf(src))
+	if(inserted_id)
+		inserted_id.forceMove(get_turf(src))
 	return ..()
 
-/obj/machinery/computer/gulag_teleporter_computer/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/card/id/prisoner))
-		if(!id)
-			if (!user.transferItemToLoc(W,src))
+/obj/machinery/computer/gulag_teleporter_computer/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/card/id/prisoner))
+		if(!inserted_id)
+			if (!user.transferItemToLoc(I,src))
 				return
-			id = W
-			to_chat(user, "<span class='notice'>You insert [W].</span>")
+			inserted_id = I
+			user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
+								"<span class='notice'>You insert the ID card into the console.</span>")
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			return
 		else
-			to_chat(user, "<span class='notice'>There's an ID inserted already.</span>")
+			to_chat(user, "<span class='warning'>There's an ID inserted already!</span>")
 	return ..()
 
 /obj/machinery/computer/gulag_teleporter_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
@@ -52,7 +59,7 @@
 	if(teleporter && (teleporter.occupant && ishuman(teleporter.occupant)))
 		prisoner = teleporter.occupant
 		prisoner_list["name"] = prisoner.real_name
-		if(id)
+		if(inserted_id)
 			can_teleport = TRUE
 		if(!isnull(GLOB.data_core.general))
 			for(var/r in GLOB.data_core.security)
@@ -71,15 +78,16 @@
 	if(beacon)
 		data["beacon"] = beacon
 		data["beacon_location"] = "([beacon.x], [beacon.y], [beacon.z])"
-	if(id)
-		data["id"] = id
-		data["id_name"] = id.registered_name
-		data["goal"] = id.goal
+	if(inserted_id)
+		data["id"] = inserted_id
+		data["id_name"] = inserted_id.registered_name
+		data["goal"] = inserted_id.goal
 	data["can_teleport"] = can_teleport
 
 	return data
 
 /obj/machinery/computer/gulag_teleporter_computer/ui_act(action, list/params)
+	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 	if(..())
 		return
 	if(!allowed(usr))
@@ -91,24 +99,30 @@
 		if("scan_beacon")
 			beacon = findbeacon()
 		if("handle_id")
-			if(id)
-				usr.put_in_hands(id)
-				id = null
+			if(inserted_id)
+				usr.put_in_hands(inserted_id)
+				inserted_id = null
+				usr.visible_message("<span class='notice'>[usr] gets an ID card from the console.</span>", \
+									"<span class='notice'>You get the ID card from the console.</span>")
+				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			else
 				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id/prisoner)
 				if(I)
 					if(!usr.transferItemToLoc(I, src))
 						return
-					id = I
+					inserted_id = I
+					usr.visible_message("<span class='notice'>[usr] inserts an ID card into the console.</span>", \
+										"<span class='notice'>You insert the ID card into the console.</span>")
+					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		if("set_goal")
-			var/new_goal = input("Set the amount of points:", "Points", id.goal) as num|null
+			var/new_goal = input("Set the amount of points:", "Points", inserted_id.goal) as num|null
 			if(!isnum(new_goal))
 				return
 			if(!new_goal)
 				new_goal = default_goal
 			if (new_goal > 1000)
 				to_chat(usr, "The entered amount of points is too large. Points have instead been set to the maximum allowed amount.")
-			id.goal = CLAMP(new_goal, 0, 1000) //maximum 1000 points
+			inserted_id.goal = CLAMP(new_goal, 0, 1000) //maximum 1000 points
 		if("toggle_open")
 			if(teleporter.locked)
 				to_chat(usr, "The teleporter is locked")
@@ -140,16 +154,16 @@
 	return locate(/obj/structure/gulag_beacon)
 
 /obj/machinery/computer/gulag_teleporter_computer/proc/teleport(mob/user)
-	if(!id) //incase the ID was removed after the transfer timer was set.
+	if(!inserted_id) //incase the ID was removed after the transfer timer was set.
 		say("Warning: Unable to transfer prisoner without a valid Prisoner ID inserted!")
 		return
 	var/id_goal_not_set
-	if(!id.goal)
+	if(!inserted_id.goal)
 		id_goal_not_set = TRUE
-		id.goal = default_goal
-		say("[id]'s ID card goal defaulting to [id.goal] points.")
-	log_game("[key_name(user)] teleported [key_name(prisoner)] to the Labor Camp [COORD(beacon)] for [id_goal_not_set ? "default goal of ":""][id.goal] points.")
-	teleporter.handle_prisoner(id, temporary_record)
+		inserted_id.goal = default_goal
+		say("[inserted_id]'s ID card goal defaulting to [inserted_id.goal] points.")
+	log_game("[key_name(user)] teleported [key_name(prisoner)] to the Labor Camp [COORD(beacon)] for [id_goal_not_set ? "default goal of ":""][inserted_id.goal] points.")
+	teleporter.handle_prisoner(inserted_id, temporary_record)
 	playsound(src, 'sound/weapons/emitter.ogg', 50, 1)
 	prisoner.forceMove(get_turf(beacon))
 	prisoner.Paralyze(40) // small travel dizziness
@@ -159,5 +173,19 @@
 	if(teleporter.locked)
 		teleporter.locked = FALSE
 	teleporter.toggle_open()
-	id = null
+	inserted_id = null
 	temporary_record = null
+
+/obj/machinery/computer/gulag_teleporter_computer/AltClick(mob/user)
+	if(!user.canUseTopic(src, issilicon(user)))
+		return
+	if(!inserted_id)
+		to_chat(user, "<span class='warning'>There's no ID card in the console!</span>")
+	if(inserted_id)
+		inserted_id.forceMove(drop_location())
+		if(!issilicon(user) && Adjacent(user))
+			user.put_in_hands(inserted_id)
+			inserted_id = null
+			user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
+								"<span class='notice'>You get the ID card from the console.</span>")
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)

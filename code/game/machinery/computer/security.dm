@@ -6,7 +6,6 @@
 	req_one_access = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS)
 	circuit = /obj/item/circuitboard/computer/secure_data
 	scan = null
-	uses_id = TRUE
 	var/authenticated = null
 	var/rank = null
 	var/screen = null
@@ -37,8 +36,8 @@
 	clockwork = TRUE //it'd look weird
 	pass_flags = PASSTABLE
 
-/obj/machinery/computer/secure_data/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/card/id))
+/obj/machinery/computer/secure_data/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/card/id))
 		insert_id(user)
 	else
 		return ..()

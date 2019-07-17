@@ -15,11 +15,10 @@
 	var/icon_screen = "generic"
 	var/clockwork = FALSE
 	var/time_to_screwdrive = 20
-	var/uses_id = FALSE
 
 /obj/machinery/computer/examine(mob/user)
 	. = ..()
-	if(uses_id && scan)
+	if(scan)
 		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
 
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
@@ -88,7 +87,6 @@
 		if(I.use_tool(src, user, time_to_screwdrive, volume=50))
 			deconstruct(TRUE, user)
 	return TRUE
-
 
 /obj/machinery/computer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -163,7 +161,7 @@
 				return
 			scan = I
 			user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
-							"<span class='notice'>You insert the ID card into the console.</span>")
+								"<span class='notice'>You insert the ID card into the console.</span>")
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			updateUsrDialog()
 
@@ -177,6 +175,6 @@
 			user.put_in_hands(scan)
 		scan = null
 		user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
-						"<span class='notice'>You get the ID card from the console.</span>")
+							"<span class='notice'>You get the ID card from the console.</span>")
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		updateUsrDialog()

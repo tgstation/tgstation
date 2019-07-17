@@ -15,6 +15,11 @@
 
 	light_color = LIGHT_COLOR_RED
 
+/obj/machinery/computer/prisoner/examine(mob/user)
+	. = ..()
+	if(inserted_id)
+		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
+
 /obj/machinery/computer/prisoner/ui_interact(mob/user)
 	. = ..()
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
@@ -79,7 +84,6 @@
 	if(!user.canUseTopic(src, issilicon(user)))
 		return
 	eject_id_prisoner(user)
-
 
 /obj/machinery/computer/prisoner/process()
 	if(!..())
@@ -150,7 +154,7 @@
 			return
 		inserted_id = I
 		user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
-						"<span class='notice'>You insert the ID card into the console.</span>")
+							"<span class='notice'>You insert the ID card into the console.</span>")
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 	else
 		to_chat(user, "<span class='danger'>No valid ID.</span>")

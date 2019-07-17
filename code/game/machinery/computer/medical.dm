@@ -8,7 +8,6 @@
 	req_one_access = list(ACCESS_MEDICAL, ACCESS_FORENSICS_LOCKERS)
 	circuit = /obj/item/circuitboard/computer/med_data
 	scan = null
-	uses_id = TRUE
 	var/authenticated = null
 	var/rank = null
 	var/screen = null
@@ -26,8 +25,8 @@
 /obj/machinery/computer/med_data/syndie
 	icon_keyboard = "syndie_key"
 
-/obj/machinery/computer/med_data/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/card/id))
+/obj/machinery/computer/med_data/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/card/id))
 		insert_id(user)
 	else
 		return ..()

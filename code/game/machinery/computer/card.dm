@@ -17,7 +17,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	req_one_access = list(ACCESS_HEADS, ACCESS_CHANGE_IDS)
 	circuit = /obj/item/circuitboard/computer/card
 	scan = null
-	uses_id = TRUE
 	var/obj/item/card/id/modify = null
 	var/authenticated = 0
 	var/mode = 0
@@ -51,6 +50,11 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 	light_color = LIGHT_COLOR_BLUE
 
+/obj/machinery/computer/card/examine(mob/user)
+	. = ..()
+	if(scan || modify)
+		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
+
 /obj/machinery/computer/card/proc/get_jobs()
 	return get_all_jobs()
 
@@ -61,33 +65,16 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	. = ..()
 	change_position_cooldown = CONFIG_GET(number/id_console_jobslot_delay)
 
-/obj/machinery/computer/card/attackby(obj/O, mob/user, params)//TODO:SANITY
-	if(istype(O, /obj/item/card/id))
-		var/obj/item/card/id/idcard = O
-		if(check_access(idcard))
-			if(!scan)
-				if (!user.transferItemToLoc(idcard,src))
-					return
-				scan = idcard
-				user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
-								"<span class='notice'>You insert the ID card into the console.</span>")
-				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-			else if(!modify)
-				if (!user.transferItemToLoc(idcard,src))
-					return
-				modify = idcard
-				user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
-								"<span class='notice'>You insert the ID card into the console.</span>")
-				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+/obj/machinery/computer/card/attackby(obj/I, mob/user, params)
+	if(istype(I, /obj/item/card/id))
+		if(!scan)
+			insert_id(user)
+			return
+		if(!modify)
+			insert_id_modify(user)
+			return
 		else
-			if(!modify)
-				if (!user.transferItemToLoc(idcard,src))
-					return
-				modify = idcard
-				user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
-								"<span class='notice'>You insert the ID card into the console.</span>")
-				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-		updateUsrDialog()
+			to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
 	else
 		return ..()
 
@@ -120,7 +107,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 //Check if you can't open a new position for a certain job
 /obj/machinery/computer/card/proc/job_blacklisted(jobtitle)
 	return (jobtitle in blacklisted)
-
 
 //Logic check for Topic() if you can open the job
 /obj/machinery/computer/card/proc/can_open_job(datum/job/job)
@@ -229,7 +215,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		var/target_owner = (modify && modify.registered_name) ? html_encode(modify.registered_name) : "--------"
 		var/target_rank = (modify && modify.assignment) ? html_encode(modify.assignment) : "Unassigned"
 
-
 		if(!authenticated)
 			header += {"<br><i>Please insert the cards into the slots</i><br>
 				Target: <a href='?src=[REF(src)];choice=modify'>[target_name]</a><br>
@@ -242,7 +227,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				<a href='?src=[REF(src)];choice=logout'>Log Out</a></div>"}
 
 		header += "<hr>"
-
 
 		var/body
 
@@ -565,7 +549,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				return
 			modify = I
 			user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
-							"<span class='notice'>You insert the ID card into the console.</span>")
+								"<span class='notice'>You insert the ID card into the console.</span>")
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			updateUsrDialog()
 
