@@ -5,7 +5,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/robot_suit
 	materials = list(MAT_METAL=15000)
-	construction_time = 500
+	construction_time = 400
 	category = list("Cyborg")
 
 /datum/design/borg_chest
@@ -14,7 +14,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/bodypart/chest/robot
 	materials = list(MAT_METAL=40000)
-	construction_time = 350
+	construction_time = 300
 	category = list("Cyborg")
 
 /datum/design/borg_head
@@ -23,7 +23,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/bodypart/head/robot
 	materials = list(MAT_METAL=5000)
-	construction_time = 350
+	construction_time = 250
 	category = list("Cyborg")
 
 /datum/design/borg_l_arm
@@ -32,7 +32,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/bodypart/l_arm/robot
 	materials = list(MAT_METAL=10000)
-	construction_time = 200
+	construction_time = 170
 	category = list("Cyborg")
 
 /datum/design/borg_r_arm
@@ -41,7 +41,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/bodypart/r_arm/robot
 	materials = list(MAT_METAL=10000)
-	construction_time = 200
+	construction_time = 170
 	category = list("Cyborg")
 
 /datum/design/borg_l_leg
@@ -50,7 +50,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/bodypart/l_leg/robot
 	materials = list(MAT_METAL=10000)
-	construction_time = 200
+	construction_time = 170
 	category = list("Cyborg")
 
 /datum/design/borg_r_leg
@@ -59,7 +59,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/bodypart/r_leg/robot
 	materials = list(MAT_METAL=10000)
-	construction_time = 200
+	construction_time = 170
 	category = list("Cyborg")
 
 //Ripley
@@ -69,7 +69,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/ripley
 	materials = list(MAT_METAL=20000)
-	construction_time = 100
+	construction_time = 150
 	category = list("Ripley")
 
 //firefighter subtype
@@ -79,7 +79,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/firefighter
 	materials = list(MAT_METAL=20000)
-	construction_time = 100
+	construction_time = 150
 	category = list("Firefighter")
 
 /datum/design/ripley_torso
@@ -97,7 +97,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ripley_left_arm
 	materials = list(MAT_METAL=15000)
-	construction_time = 150
+	construction_time = 130
 	category = list("Ripley","Firefighter")
 
 /datum/design/ripley_right_arm
@@ -106,7 +106,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ripley_right_arm
 	materials = list(MAT_METAL=15000)
-	construction_time = 150
+	construction_time = 130
 	category = list("Ripley","Firefighter")
 
 /datum/design/ripley_left_leg
@@ -115,7 +115,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ripley_left_leg
 	materials = list(MAT_METAL=15000)
-	construction_time = 150
+	construction_time = 130
 	category = list("Ripley","Firefighter")
 
 /datum/design/ripley_right_leg
@@ -124,7 +124,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/ripley_right_leg
 	materials = list(MAT_METAL=15000)
-	construction_time = 150
+	construction_time = 130
 	category = list("Ripley","Firefighter")
 
 //Odysseus
@@ -134,7 +134,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/odysseus
 	materials = list(MAT_METAL=20000)
-	construction_time = 100
+	construction_time = 150
 	category = list("Odysseus")
 
 /datum/design/odysseus_torso
@@ -152,7 +152,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/odysseus_head
 	materials = list(MAT_METAL=6000,MAT_GLASS=10000)
-	construction_time = 100
+	construction_time = 130
 	category = list("Odysseus")
 
 /datum/design/odysseus_left_arm
@@ -161,7 +161,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/odysseus_left_arm
 	materials = list(MAT_METAL=6000)
-	construction_time = 120
+	construction_time = 110
 	category = list("Odysseus")
 
 /datum/design/odysseus_right_arm
@@ -170,7 +170,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/odysseus_right_arm
 	materials = list(MAT_METAL=6000)
-	construction_time = 120
+	construction_time = 110
 	category = list("Odysseus")
 
 /datum/design/odysseus_left_leg
@@ -198,7 +198,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/gygax
 	materials = list(MAT_METAL=20000)
-	construction_time = 100
+	construction_time = 200
 	category = list("Gygax")
 
 /datum/design/gygax_torso
@@ -216,7 +216,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_head
 	materials = list(MAT_METAL=10000,MAT_GLASS=5000, MAT_DIAMOND=2000)
-	construction_time = 200
+	construction_time = 180
 	category = list("Gygax")
 
 /datum/design/gygax_left_arm
@@ -271,7 +271,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/durand
 	materials = list(MAT_METAL=25000)
-	construction_time = 100
+	construction_time = 150
 	category = list("Durand")
 
 /datum/design/durand_torso
@@ -298,7 +298,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_left_arm
 	materials = list(MAT_METAL=10000,MAT_SILVER=4000)
-	construction_time = 200
+	construction_time = 150
 	category = list("Durand")
 
 /datum/design/durand_right_arm
@@ -307,7 +307,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_right_arm
 	materials = list(MAT_METAL=10000,MAT_SILVER=4000)
-	construction_time = 200
+	construction_time = 150
 	category = list("Durand")
 
 /datum/design/durand_left_leg
@@ -344,7 +344,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/honker
 	materials = list(MAT_METAL=20000)
-	construction_time = 100
+	construction_time = 150
 	category = list("H.O.N.K")
 
 /datum/design/honk_torso
@@ -409,7 +409,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/chassis/phazon
 	materials = list(MAT_METAL=20000)
-	construction_time = 100
+	construction_time = 150
 	category = list("Phazon")
 
 /datum/design/phazon_torso
@@ -527,7 +527,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/generator
 	materials = list(MAT_METAL=10000,MAT_GLASS=1000,MAT_SILVER=2000,MAT_PLASMA=5000)
-	construction_time = 100
+	construction_time = 150
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_mousetrap_mortar
