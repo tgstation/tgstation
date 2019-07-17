@@ -69,7 +69,7 @@
 	quality = MINOR_NEGATIVE
 	locked = TRUE
 	text_gain_indication = "<span class='notice'>You feel an insatiable craving for Euroshopper brand energy drink.</span>"
-	text_lose_indication = "<span class='notice'>You no longer have strong feelings about the winter war.</span>"
+	text_lose_indication = "<span class='notice'>You no longer feel very ebin.</span>"
 
 /datum/mutation/human/spurdo/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -89,5 +89,5 @@
 		message = replacetext(message,"t","d")
 		message = replacetext(message,"th","d")
 		if(prob(30))
-			message += " :[pick("D, DD, DDD")]!"
+			message += " :[pick("D", "DD", "DDD")]!"
 		speech_args[SPEECH_MESSAGE] = trim(message)
