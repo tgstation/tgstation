@@ -53,7 +53,7 @@
 
 /obj/item/external_lens/economic
 	name = "external lens: low power consuption ray"
-	desc = "Trades fire power for high efficency, kill people with many smalls shots."
+	desc = "Trades firepower for high efficiency, to kill people with many small shots."
 	stored_ammo_type = /obj/item/ammo_casing/energy/laser/lowenergy
 	overlay = "economic"
 
