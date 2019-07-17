@@ -289,9 +289,8 @@
 	for(var/datum/mind/M in assigned)
 		if (leader)
 			leader = FALSE
-			var/datum/antagonist/nukeop/leader/new_op = new antag_leader_datum()
+			var/datum/antagonist/nukeop/leader/new_op = add_antag_datum(antag_leader_datum)
 			nuke_team = new_op.nuke_team
-			M.add_antag_datum(new_op)
 		else
 			var/datum/antagonist/nukeop/new_op = new antag_datum()
 			M.add_antag_datum(new_op)
@@ -620,6 +619,7 @@
 		assigned += sleeping_agent.mind
 		sleeping_agent.mind.restricted_roles = restricted_roles
 		sleeping_agent.mind.special_role = ROLE_OVERTHROW
+	return TRUE
 
 /datum/dynamic_ruleset/roundstart/overthrow/execute()
 	for(var/i in assigned)
@@ -751,7 +751,7 @@
 		var/datum/antagonist/monkey/M = add_monkey_leader(carrier)
 		if(M)
 			monkey_team = M.monkey_team
-	return ..()
+	return TRUE
 
 /datum/dynamic_ruleset/roundstart/monkey/proc/check_monkey_victory()
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)

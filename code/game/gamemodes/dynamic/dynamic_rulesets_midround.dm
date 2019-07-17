@@ -264,6 +264,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear
 	name = "Nuclear Assault"
+	antag_flag = ROLE_OPERATIVE
 	antag_datum = /datum/antagonist/nukeop
 	enemy_roles = list("AI", "Cyborg", "Security Officer", "Warden","Detective","Head of Security", "Captain")
 	required_enemies = list(3,3,3,3,3,2,1,1,0,0)
@@ -289,6 +290,8 @@
 	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/finish_setup(mob/new_character, index)
+	new_character.mind.special_role = "Nuclear Operative"
+	new_character.mind.assigned_role = "Nuclear Operative"
 	if (index == 1) // Our first guy is the leader
 		var/datum/antagonist/nukeop/leader/new_role = new
 		nuke_team = new_role.nuke_team
