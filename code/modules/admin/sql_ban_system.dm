@@ -72,10 +72,10 @@
 		if(GLOB.admin_datums[C.ckey] || GLOB.deadmins[C.ckey])
 			is_admin = TRUE
 		var/datum/DBQuery/query_build_ban_cache = SSdbcore.NewQuery("SELECT role, applies_to_admins FROM [format_table_name("ban")] WHERE ckey = '[player_key]' AND unbanned_datetime IS NULL AND (expiration_time IS NULL OR expiration_time > NOW())")
-		if(!query_build_ban_cache.warn_execute())
+		if(!query_build_ban_cache.warn_execute(async = FALSE))
 			qdel(query_build_ban_cache)
 			return
-		while(query_build_ban_cache.NextRow())
+		while(query_build_ban_cache.NextRow(async = FALSE))
 			if(is_admin && !text2num(query_build_ban_cache.item[2]))
 				continue
 			C.ban_cache[query_build_ban_cache.item[1]] = TRUE
