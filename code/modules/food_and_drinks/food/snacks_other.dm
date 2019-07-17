@@ -481,7 +481,6 @@
 
 /obj/item/reagent_containers/food/snacks/lollipop/process()
 	if(iscarbon(loc))
-		var/mob/living/carbon/C = loc
 		if(succ_dur < 1)
 			qdel(src)
 			return
