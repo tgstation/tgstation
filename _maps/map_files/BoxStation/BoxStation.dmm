@@ -50774,6 +50774,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"olB" = (
+/obj/structure/cable,
+/obj,
+/obj/machinery/photocopier,
+/turf/open/floor/carpet,
+/area/crew_quarters/heads/hop)
 "orP" = (
 /obj/machinery/button/door{
 	id = "telelab";
