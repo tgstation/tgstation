@@ -39,7 +39,7 @@
 				target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 			removed(target, 1)
 			qdel(src)
-			return FALSE
+			return TRUE //the implant is still used
 
 		var/datum/antagonist/hivevessel/woke = target.is_wokevessel()
 		if(is_hivemember(target))

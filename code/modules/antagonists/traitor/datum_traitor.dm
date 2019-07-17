@@ -15,8 +15,10 @@
 	var/traitor_kind = TRAITOR_HUMAN //Set on initial assignment
 	var/datum/syndicate_contract/current_contract
 	var/list/datum/syndicate_contract/assigned_contracts = list()
+	var/list/assigned_targets = list()
 	var/contract_TC_payed_out = 0
 	var/contract_TC_to_redeem = 0
+	var/datum/contractor_hub/contractor_hub
 	can_hijack = HIJACK_HIJACKER
 
 /datum/antagonist/traitor/on_gain()
@@ -51,8 +53,12 @@
 
 	// Randomise order, so we don't have contracts always in payout order.
 	to_generate = shuffle(to_generate)
-	
-	var/list/assigned_targets = list()
+
+	// Support contract generation happening multiple times
+	var/start_index = 1
+	if (assigned_contracts.len != 0)
+		start_index = assigned_contracts.len + 1
+
 	// Generate contracts, and find the lowest paying.
 	for (var/i = 1; i <= to_generate.len; i++)
 		var/datum/syndicate_contract/contract_to_add = new(owner, to_generate[i], assigned_targets)
@@ -65,8 +71,10 @@
 			lowest_paying_contract = contract_to_add
 
 		total += contract_payout_total
-		contract_to_add.id = i
+		contract_to_add.id = start_index
 		assigned_contracts.Add(contract_to_add)
+
+		start_index++
 
 	// If the threshold for TC payouts isn't reached, boost the lowest paying contract
 	if (total < lowest_TC_threshold)
