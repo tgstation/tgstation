@@ -93,8 +93,8 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
-	    /obj/item/reagent_containers/pill/charcoal = 3,
-		/obj/item/storage/pill_bottle/antitoxin = 1,
+	    /obj/item/storage/pill_bottle/charcoal/less = 1,
+		/obj/item/reagent_containers/syringe/thializid = 3,
 		/obj/item/storage/pill_bottle/potassiodide = 1,
 		/obj/item/reagent_containers/syringe/penacid = 1,
 		/obj/item/healthanalyzer = 1)
@@ -115,9 +115,9 @@
 		return
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/syringe/perfluorodecalin = 3,
-		/obj/item/storage/pill_bottle/dexalin = 1,
-		/obj/item/storage/pill_bottle/iron = 1,
+		/obj/item/reagent_containers/hypospray/medipen/salbutamol = 1,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
+		/obj/item/storage/pill_bottle/iron = 1,
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
 
@@ -238,6 +238,12 @@
 
 /obj/item/storage/pill_bottle/charcoal/PopulateContents()
 	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/charcoal(src)
+
+/obj/item/storage/pill_bottle/charcoal/less
+
+/obj/item/storage/pill_bottle/charcoal/less/PopulateContents()
+	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/pill/charcoal(src)
 
 /obj/item/storage/pill_bottle/bicaridine

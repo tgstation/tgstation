@@ -145,6 +145,11 @@
 	desc = "A rapid way to get you out of a tight situation and fast! You'll feel rather drowsy, though."
 	list_reagents = list(/datum/reagent/medicine/morphine = 10)
 
+/obj/item/reagent_containers/hypospray/medipen/salbutamol
+	name = "salbutamol medipen"
+	desc = "A autoinjector containing salbutamol, used to heal oxygen damage quickly."
+	list_reagents = list(/datum/reagent/medicine/salbutamol = 10)
+
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure
 	name = "BVAK autoinjector"
 	desc = "Bio Virus Antidote Kit autoinjector. Has a two use system for yourself, and someone else. Inject when infected."

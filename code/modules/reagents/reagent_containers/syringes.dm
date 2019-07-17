@@ -279,3 +279,8 @@
 	name = "syringe (pentetic acid)"
 	desc = "Contains pentetic acid, used to reduce high levels of radiation and heal severe toxins."
 	list_reagents = list(/datum/reagent/medicine/pen_acid = 15)
+
+/obj/item/reagent_containers/syringe/thializid
+	name = "syringe (thializid)"
+	desc = "Contains thializid, used to treat toxins and purge chemicals.The tag on the syringe states 'Inject one time per minute'"
+	list_reagents = list(/datum/reagent/medicine/thializid = 15)
