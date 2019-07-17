@@ -334,16 +334,6 @@
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/lensSCT
-	name = "external lens: scatter"
-	desc = "Shoots mini lasers in all directions."
-	id = "lens_SCT"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 6000, MAT_URANIUM = 1500, MAT_SILVER = 2000,  MAT_GOLD = 5000)
-	build_path = /obj/item/external_lens/scatter
-	category = list("Ammo")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
 /datum/design/lensRIC
 	name = "external lens: bouncing"
 	desc = "The shots bounce on walls! Cool!"
