@@ -53,7 +53,7 @@
 				cur_turf = get_step(cur_turf, cur_dir)
 				continue
 			else
-				var/turf/river_turf = cur_turf.ChangeTurf(turf_type, turf_type, CHANGETURF_IGNORE_AIR)
+				var/turf/river_turf = cur_turf.ChangeTurf(turf_type, list(turf_type), CHANGETURF_IGNORE_AIR)
 				river_turf.Spread(25, 11, whitelist_area)
 
 	for(var/WP in river_nodes)
@@ -89,16 +89,16 @@
 
 	for(var/F in cardinal_turfs) //cardinal turfs are always changed but don't always spread
 		var/turf/T = F
-		if(!istype(T, logged_turf_type) && T.ChangeTurf(type, null, CHANGETURF_IGNORE_AIR) && prob(probability))
+		if(!istype(T, logged_turf_type) && T.ChangeTurf(type, list(type), CHANGETURF_IGNORE_AIR) && prob(probability))
 			T.Spread(probability - prob_loss, prob_loss, whitelisted_area)
 
 	for(var/F in diagonal_turfs) //diagonal turfs only sometimes change, but will always spread if changed
 		var/turf/T = F
-		if(!istype(T, logged_turf_type) && prob(probability) && T.ChangeTurf(type, null, CHANGETURF_IGNORE_AIR))
+		if(!istype(T, logged_turf_type) && prob(probability) && T.ChangeTurf(type, list(type), CHANGETURF_IGNORE_AIR))
 			T.Spread(probability - prob_loss, prob_loss, whitelisted_area)
 		else if(ismineralturf(T))
 			var/turf/closed/mineral/M = T
-			M.ChangeTurf(M.turf_type, null, CHANGETURF_IGNORE_AIR)
+			M.ChangeTurf(M.turf_type, list(M.turf_type), CHANGETURF_IGNORE_AIR)
 
 
 #undef RANDOM_UPPER_X
