@@ -204,7 +204,7 @@
 	var/cultist_cap = list(2,2,3,4,4,4,4,4,4,4)
 	var/datum/team/cult/main_cult
 
-/datum/dynamic_ruleset/roundstart/bloodcult/ready(forced = 0)
+/datum/dynamic_ruleset/roundstart/bloodcult/ready(forced = FALSE)
 	var/indice_pop = min(10,round(mode.roundstart_pop_ready/5)+1)
 	required_candidates = cultist_cap[indice_pop]
 	. = ..()
@@ -264,7 +264,7 @@
 	var/datum/team/nuclear/nuke_team
 
 
-/datum/dynamic_ruleset/roundstart/nuclear/ready(forced = 0)
+/datum/dynamic_ruleset/roundstart/nuclear/ready(forced = FALSE)
 	var/indice_pop = min(10,round(mode.roundstart_pop_ready/5)+1)
 	required_candidates = operative_cap[indice_pop]
 	. = ..()
@@ -361,7 +361,7 @@
 	var/datum/team/revolution/revolution
 	var/finished = 0
 
-/datum/dynamic_ruleset/roundstart/delayed/revs/ready(forced = 0)
+/datum/dynamic_ruleset/roundstart/delayed/revs/ready(forced = FALSE)
 	if (forced)
 		required_heads = 1
 		required_candidates = 1

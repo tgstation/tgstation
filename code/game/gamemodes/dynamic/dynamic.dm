@@ -283,8 +283,6 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		message_admins("Drafting players for forced ruleset [rule.name].")
 		log_game("DYNAMIC: Drafting players for forced ruleset [rule.name].")
 		rule.mode = src
-		rule.candidates = candidates.Copy()
-		rule.trim_candidates()
 		if (rule.ready(TRUE)) // Ignoring enemy job requirements
 			picking_roundstart_rule(list(rule))
 
@@ -298,8 +296,6 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			if(rule.flags == HIGHLANDER_RULESET && check_for_highlander(drafted_rules))
 				continue
 		if (rule.acceptable(roundstart_pop_ready,threat_level) && threat >= rule.cost)	// If we got the population and threat required
-			rule.candidates = candidates.Copy()
-			rule.trim_candidates()
 			if (rule.ready())
 				drafted_rules[rule] = rule.weight
 
@@ -352,6 +348,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 
 		spend_threat(starting_rule.cost)
 		threat_log += "[worldtime2text()]: Roundstart [starting_rule.name] spent [starting_rule.cost]"
+		starting_rule.candidates = candidates.Copy()
+		starting_rule.trim_candidates()
 		if (starting_rule.pre_execute())
 			executed_rules += starting_rule
 			if (starting_rule.persistent)
