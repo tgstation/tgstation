@@ -77,7 +77,7 @@
 			beat = BEAT_NONE
 
 		if((damage > low_threshold) && prob(20 * (damage/maxHealth)) && !failing)
-			to_chat(owner, "<span class='warning'>[damage > high_threshold ? "You feel a lingering pain in your chest." : "Your left arm prickles with pain, and the pain in your chest grows stronger!"].</span>")
+			to_chat(owner, "<span class='warning'>[damage > high_threshold ? "You feel a lingering pain in your chest." : "Your left arm prickles with pain, and the pain in your chest grows stronger!"]</span>")
 
 	if(failing)	//heart broke, stopped beating, death imminent
 		if(owner.stat == CONSCIOUS)
