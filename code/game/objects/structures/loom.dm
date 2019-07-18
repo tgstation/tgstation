@@ -16,7 +16,7 @@
 	return ..()
 
 /obj/structure/loom/wrench_act(mob/living/user, obj/item/I)
-	. = ..()
+	..()
 	default_unfasten_wrench(user, I, 5)
 	return TRUE
 
