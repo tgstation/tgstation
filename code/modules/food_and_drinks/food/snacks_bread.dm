@@ -256,17 +256,6 @@
 	filling_color = color
 	foodtype |= FRIED
 
-/obj/item/reagent_containers/food/snacks/butteredtoast
-	name = "buttered toast"
-	desc = "Butter lightly spread over a piece of toast."
-	icon = 'icons/obj/food/food.dmi'
-	icon_state = "butteredtoast"
-	bitesize = 3
-	filling_color = "#FFA500"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 4)
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
-	tastes = list("butter" = 1, "toast" = 1)
-
 /obj/item/reagent_containers/food/snacks/butterbiscuit
 	name = "butter biscuit"
 	desc = "Well butter my biscuit!"
@@ -276,6 +265,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("butter" = 1, "biscuit" = 1)
+	foodtype = GRAIN | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/butterdog
 	name = "butterdog"

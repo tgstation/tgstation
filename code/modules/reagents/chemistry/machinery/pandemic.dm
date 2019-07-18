@@ -29,11 +29,11 @@
 	if(beaker)
 		var/is_close
 		if(Adjacent(user)) //don't reveal exactly what's inside unless they're close enough to see the UI anyway.
-			to_chat(user, "It contains \a [beaker].")
+			. += "It contains \a [beaker]."
 			is_close = TRUE
 		else
-			to_chat(user, "It has a beaker inside it.")
-		to_chat(user, "<span class='info'>Alt-click to eject [is_close ? beaker : "the beaker"].</span>")
+			. += "It has a beaker inside it."
+		. += "<span class='info'>Alt-click to eject [is_close ? beaker : "the beaker"].</span>"
 
 /obj/machinery/computer/pandemic/AltClick(mob/user)
 	. = ..()
@@ -204,6 +204,8 @@
 				A.AssignName(new_name)
 				. = TRUE
 		if("create_culture_bottle")
+			if (wait)
+				return
 			var/id = get_virus_id_by_index(text2num(params["index"]))
 			var/datum/disease/advance/A = SSdisease.archive_diseases[id]
 			if(!istype(A) || !A.mutable)
@@ -222,6 +224,8 @@
 			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 50)
 			. = TRUE
 		if("create_vaccine_bottle")
+			if (wait)
+				return
 			var/id = params["index"]
 			var/datum/disease/D = SSdisease.archive_diseases[id]
 			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())

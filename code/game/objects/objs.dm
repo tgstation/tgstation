@@ -219,11 +219,11 @@
 	.["Modify armor values"] = "?_src_=vars;[HrefToken()];modarmor=[REF(src)]"
 
 /obj/examine(mob/user)
-	..()
+	. = ..()
 	if(obj_flags & UNIQUE_RENAME)
-		to_chat(user, "<span class='notice'>Use a pen on it to rename it or change its description.</span>")
+		. += "<span class='notice'>Use a pen on it to rename it or change its description.</span>"
 	if(unique_reskin && !current_skin)
-		to_chat(user, "<span class='notice'>Alt-click it to reskin it.</span>")
+		. += "<span class='notice'>Alt-click it to reskin it.</span>"
 
 /obj/AltClick(mob/user)
 	. = ..()
@@ -250,3 +250,6 @@
 	if(atmosanalyzer_scan(user, src))
 		return TRUE
 	return ..()
+
+/obj/proc/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
+	return

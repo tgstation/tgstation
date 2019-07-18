@@ -22,7 +22,7 @@
 
 /datum/wires/explosive/chem_grenade/interactable(mob/user)
 	var/obj/item/grenade/chem_grenade/G = holder
-	if(G.stage == WIRED)
+	if(G.stage == GRENADE_WIRED)
 		return TRUE
 
 /datum/wires/explosive/chem_grenade/attach_assembly(color, obj/item/assembly/S)

@@ -13,8 +13,8 @@
 	to_chat(user, "Paper level: [stored_paper]/[max_paper].")
 
 /obj/item/computer_hardware/printer/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Paper level: [stored_paper]/[max_paper].</span>")
+	. = ..()
+	. += "<span class='notice'>Paper level: [stored_paper]/[max_paper].</span>"
 
 
 /obj/item/computer_hardware/printer/proc/print_text(var/text_to_print, var/paper_title = "")

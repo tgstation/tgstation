@@ -182,11 +182,11 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/medspray
-	name = "Medical Spray"
-	desc = "A medical spray bottle, designed for precision application, with an unscrewable cap."
-	id = "medspray"
-	build_path = /obj/item/reagent_containers/medspray
+/datum/design/medigel
+	name = "Medical Gel"
+	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap."
+	id = "medigel"
+	build_path = /obj/item/reagent_containers/medigel
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2500, MAT_GLASS = 500)
 	category = list("Medical Designs")
@@ -230,6 +230,36 @@
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_PLASMA = 2000, MAT_URANIUM = 3000, MAT_TITANIUM = 3000)
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/medical_spray_bottle
+	name = "Medical Spray Bottle"
+	desc = "A traditional spray bottle used to generate a fine mist. Not to be confused with a medspray."
+	id = "med_spray_bottle"
+	build_type = PROTOLATHE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(MAT_PLASTIC = 2000)
+	build_path = /obj/item/reagent_containers/spray/medical
+	category = list("Medical Designs")
+
+/datum/design/chem_pack
+	name = "Intravenous Medicine Bag"
+	desc = "A plastic pressure bag for IV administration of drugs."
+	id = "chem_pack"
+	build_type = PROTOLATHE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(MAT_PLASTIC = 2000)
+	build_path = /obj/item/reagent_containers/chem_pack
+	category = list("Medical Designs")
+
+/datum/design/blood_pack
+	name = "Blood Pack"
+	desc = "Is used to contain blood used for transfusion. Must be attached to an IV drip."
+	id = "blood_pack"
+	build_type = PROTOLATHE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(MAT_PLASTIC = 1000)
+	build_path = /obj/item/reagent_containers/blood
+	category = list("Medical Designs")
 
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
@@ -545,11 +575,21 @@
 	var/surgery
 
 /datum/design/surgery/experimental_dissection
-	name = "Experimental Dissection"
-	desc = "A surgical procedure which deeply analyzes the biology of a corpse, and automatically adds new findings to the research database."
-	id = "surgery_exp_dissection"
-	surgery = /datum/surgery/advanced/experimental_dissection
+	name = "Advanced Dissection"
+	desc = "A surgical procedure which analyzes the biology of a corpse, and automatically adds new findings to the research database."
+	id = "surgery_adv_dissection"
+	surgery = /datum/surgery/advanced/experimental_dissection/adv
 	research_icon_state = "surgery_chest"
+
+/datum/design/surgery/experimental_dissection/exp
+	name = "Experimental Dissection"
+	id = "surgery_exp_dissection"
+	surgery = /datum/surgery/advanced/experimental_dissection/exp
+
+/datum/design/surgery/experimental_dissection/ext
+	name = "Extraterrestrial Dissection"
+	id = "surgery_ext_dissection"
+	surgery = /datum/surgery/advanced/experimental_dissection/alien
 
 /datum/design/surgery/lobotomy
 	name = "Lobotomy"
@@ -648,6 +688,13 @@
 	desc = "A surgical procedure which severely reduces the amount of blood lost in case of injury."
 	id = "surgery_vein_thread"
 	surgery = /datum/surgery/advanced/bioware/vein_threading
+	research_icon_state = "surgery_chest"
+
+/datum/design/surgery/muscled_veins
+	name = "Vein Muscle Membrane"
+	desc = "A surgical procedure which adds a muscled membrane to blood vessels, allowing them to pump blood without a heart."
+	id = "surgery_muscled_veins"
+	surgery = /datum/surgery/advanced/bioware/muscled_veins
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/ligament_hook

@@ -97,14 +97,12 @@ the new instance inside the host to be updated to the template's stats.
 
 
 /mob/camera/disease/examine(mob/user)
-	..()
+	. = ..()
 	if(isobserver(user))
-		to_chat(user, "<span class='notice'>[src] has [points]/[total_points] adaptation points.</span>")
-		to_chat(user, "<span class='notice'>[src] has the following unlocked:</span>")
-		for(var/A in purchased_abilities)
-			var/datum/disease_ability/B = A
-			if(istype(B))
-				to_chat(user, "<span class='notice'>[B.name]</span>")
+		. += {"<span class='notice'>[src] has [points]/[total_points] adaptation points.</span>
+		<span class='notice'>[src] has the following unlocked:</span>"}
+		for(var/datum/disease_ability/ability in purchased_abilities)
+			. += "<span class='notice'>[ability.name]</span>"
 
 /mob/camera/disease/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	return
@@ -154,7 +152,7 @@ the new instance inside the host to be updated to the template's stats.
 			set_name = "Sentient Virus"
 			break
 		if(taken_names[input])
-			to_chat(src, "<span class='notice'>You cannot use the name of such a well-known disease!</span>")
+			to_chat(src, "<span class='warning'>You cannot use the name of such a well-known disease!</span>")
 		else
 			set_name = input
 	real_name = "[set_name] (Sentient Disease)"

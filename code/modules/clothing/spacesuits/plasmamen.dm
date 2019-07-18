@@ -15,8 +15,8 @@
 
 
 /obj/item/clothing/suit/space/eva/plasmaman/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>There [extinguishes_left == 1 ? "is" : "are"] [extinguishes_left] extinguisher charge\s left in this suit.</span>")
+	. = ..()
+	. += "<span class='notice'>There [extinguishes_left == 1 ? "is" : "are"] [extinguishes_left] extinguisher charge\s left in this suit.</span>"
 
 
 /obj/item/clothing/suit/space/eva/plasmaman/proc/Extinguish(mob/living/carbon/human/H)
@@ -166,3 +166,15 @@
 	desc = "A grey helmet bearing a pair of purple stripes, designating the wearer as a janitor."
 	icon_state = "janitor_envirohelm"
 	item_state = "janitor_envirohelm"
+
+/obj/item/clothing/head/helmet/space/plasmaman/mime
+	name = "mime envirosuit helmet"
+	desc = "The make-up is painted on, it's a miracle it doesn't chip. It's not very colourful."
+	icon_state = "mime_envirohelm"
+	item_state = "mime_envirohelm"
+
+/obj/item/clothing/head/helmet/space/plasmaman/clown
+	name = "clown envirosuit helmet"
+	desc = "The make-up is painted on, it's a miracle it doesn't chip. <i>'HONK!'</i>"
+	icon_state = "clown_envirohelm"
+	item_state = "clown_envirohelm"
