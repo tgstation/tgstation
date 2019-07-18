@@ -11,6 +11,8 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/stationary = list()
 	var/list/beacons = list()
 	var/list/transit = list()
+	var/mobile_amount
+	var/stationary_amount
 
 	var/list/transit_requesters = list()
 	var/list/transit_request_failures = list()
@@ -509,12 +511,19 @@ SUBSYSTEM_DEF(shuttle)
 		mobile = SSshuttle.mobile
 	if (istype(SSshuttle.stationary))
 		stationary = SSshuttle.stationary
+	if (istype(SSshuttle.beacons))
+		beacons = SSshuttle.beacons
 	if (istype(SSshuttle.transit))
 		transit = SSshuttle.transit
 	if (istype(SSshuttle.transit_requesters))
 		transit_requesters = SSshuttle.transit_requesters
 	if (istype(SSshuttle.transit_request_failures))
 		transit_request_failures = SSshuttle.transit_request_failures
+
+	if (istype(SSshuttle.mobile_amount))
+		transit = SSshuttle.mobile_amount
+	if (istype(SSshuttle.stationary_amount))
+		transit = SSshuttle.stationary_amount
 
 	if (istype(SSshuttle.emergency))
 		emergency = SSshuttle.emergency
