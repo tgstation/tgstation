@@ -20,9 +20,33 @@
 		preview += item
 	images += preview
 	if(alert(src,"Confirm location.","Template Confirm","Yes","No") == "Yes")
-		var/obj/docking_port/mobile/M = template.load(T, centered = TRUE)
-		if(M)
-			template.post_load(M)
+		if(template.load(T, centered = TRUE))
+
+			var/affected = S.get_affected_turfs(BL, centered=TRUE)
+
+			var/found = 0
+			// Search the turfs for docking ports
+			// - We need to find the mobile docking port because that is the heart of
+			//   the shuttle.
+			// - We need to check that no additional ports have slipped in from the
+			//   template, because that causes unintended behaviour.
+			for(var/T in affected)
+				for(var/obj/docking_port/P in T)
+					if(istype(P, /obj/docking_port/mobile))
+						found++
+						if(found > 1)
+							qdel(P, force=TRUE)
+							log_world("Map warning: Shuttle Template [S.mappath] has multiple mobile docking ports.")
+						else
+							preview_shuttle = P
+					if(istype(P, /obj/docking_port/stationary))
+						log_world("Map warning: Shuttle Template [S.mappath] has a stationary docking port.")
+			if(!found)
+				var/msg = "load_template(): Shuttle Template [S.mappath] has no mobile docking port."
+			//Everything fine
+			else
+				S.post_load(preview_shuttle)
+
 			message_admins("<span class='adminnotice'>[key_name_admin(src)] has placed a map template ([template.name]) at [ADMIN_COORDJMP(T)]</span>")
 		else
 			to_chat(src, "Failed to place map")
