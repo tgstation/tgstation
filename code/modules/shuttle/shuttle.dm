@@ -13,7 +13,7 @@
 	anchored = TRUE
 	var/id ///for identifying shuttle or dock among many others, necessarily be unical
 	var/destination_type ///for map edits, work as category for search, shuttles can be allowed to fly to category
-	
+
 	dir = NORTH /// this should point -away- from the dockingport door, ie towards the ship
 	var/width = 0	///size of covered area, perpendicular to dir
 	var/height = 0	///size of covered area, parallel to dir
@@ -22,7 +22,7 @@
 
 	var/area_type
 	var/hidden = FALSE ///are we invisible to shuttle navigation computers?
-	
+
 	var/delete_after = FALSE ///Delete this port after ship fly off.
 
 	///these objects are indestructible
@@ -169,10 +169,10 @@
 
 /obj/docking_port/stationary/Initialize(mapload)
 	. = ..()
-	SSshuttle.stationary[id] = src
 	SSshuttle.stationary_amount++
 	id = "[destination_type][SSshuttle.stationary_amount]"
 	name = "[name] dock[SSshuttle.stationary_amount]"
+	SSshuttle.stationary[id] = src
 	if(!area_type)
 		var/area/place = get_area(src)
 		area_type = place?.type // We might be created in nullspace
@@ -283,6 +283,9 @@
 /obj/docking_port/mobile/proc/register()
 	if(SSshuttle.mobile[id])
 		stack_trace("[src] [id] already in SSshuttle.mobile! Replacing existing id.")
+	if(!id || id == initial(id))
+		stack_trace("[src] dont have unique id on register(). Generatng.")
+		id = "[id][GUID()]"
 	SSshuttle.mobile[id] = src
 
 /obj/docking_port/mobile/Destroy(force)

@@ -94,14 +94,16 @@ SUBSYSTEM_DEF(shuttle)
 	for(var/thing in mobile)
 		if(!thing)
 			mobile.Remove(thing)
+			WARNING("[thing] removed from SSshuttle mobile by fire()")
 			continue
 		var/obj/docking_port/mobile/P = mobile[thing]
 		if(!P)
 			mobile.Remove(thing)
+			WARNING("[thing] [P] removed from SSshuttle mobile by fire()")
 			continue
 		P.check()
 	for(var/thing in transit)
-		var/obj/docking_port/stationary/transit/T = transit[thing]
+		var/obj/docking_port/stationary/transit/T = thing
 		if(!T.owner)
 			qdel(T, force=TRUE)
 		// This next one removes transit docks/zones that aren't
@@ -875,31 +877,25 @@ SUBSYSTEM_DEF(shuttle)
 				. = TRUE
 		if("jump_to")
 			if(params["type"] == "mobile")
-				for(var/i in mobile)
-					var/obj/docking_port/mobile/M = i
-					if(M.id == params["id"])
-						user.forceMove(get_turf(M))
-						. = TRUE
-						break
+				var/obj/docking_port/mobile/M = getShuttle(params["id"])
+				if(M)
+					user.forceMove(get_turf(M))
+					. = TRUE
 
 		if("fly")
-			for(var/i in mobile)
-				var/obj/docking_port/mobile/M = i
-				if(M.id == params["id"])
-					. = TRUE
-					M.admin_fly_shuttle(user)
-					break
+			var/obj/docking_port/mobile/M = getShuttle(params["id"])
+			if(M)
+				. = TRUE
+				M.admin_fly_shuttle(user)
 
 		if("fast_travel")
-			for(var/i in mobile)
-				var/obj/docking_port/mobile/M = i
-				if(M.id == params["id"] && M.timer && M.timeLeft(1) >= 50)
-					M.setTimer(50)
-					. = TRUE
-					message_admins("[key_name_admin(usr)] fast travelled [M]")
-					log_admin("[key_name(usr)] fast travelled [M]")
-					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[M.name]")
-					break
+			var/obj/docking_port/mobile/M = getShuttle(params["id"])
+			if(M && M.timer && M.timeLeft(1) >= 50)
+				M.setTimer(50)
+				. = TRUE
+				message_admins("[key_name_admin(usr)] fast travelled [M]")
+				log_admin("[key_name(usr)] fast travelled [M]")
+				SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[M.name]")
 
 		if("preview")
 			if(S)
