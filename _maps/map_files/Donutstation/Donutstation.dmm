@@ -213,7 +213,7 @@
 	},
 /obj/structure/window/reinforced/tinted,
 /obj/machinery/door/window/eastleft,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/fitness/recreation)
 "aaK" = (
 /obj/structure/bodycontainer/morgue,
@@ -806,7 +806,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "ack" = (
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/fitness/recreation)
 "acm" = (
 /obj/machinery/door/poddoor/incinerator_toxmix,
@@ -2734,7 +2734,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/blobstart,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/fitness/recreation)
 "aho" = (
 /obj/machinery/holopad,
@@ -7404,7 +7404,7 @@
 	brightness = 3;
 	dir = 8
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/fitness/recreation)
 "ats" = (
 /turf/open/floor/wood,
@@ -13209,6 +13209,7 @@
 	dir = 1;
 	network = list("ss13","Medical")
 	},
+/obj/item/toy/figure/geneticist,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics/cloning)
 "aGN" = (
@@ -15038,6 +15039,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod One"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aLw" = (
@@ -17476,6 +17478,9 @@
 "aRR" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Three"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -23520,7 +23525,7 @@
 /obj/structure/mirror{
 	pixel_x = 28
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/fitness/recreation)
 "bgd" = (
 /obj/effect/turf_decal/tile/blue{
@@ -27784,7 +27789,7 @@
 /obj/structure/mirror{
 	pixel_x = -28
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/fitness/recreation)
 "bqb" = (
 /obj/structure/table/wood,
@@ -28367,7 +28372,7 @@
 /obj/machinery/door/airlock{
 	name = "Unisex Restrooms"
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/fitness/recreation)
 "brg" = (
 /obj/structure/disposalpipe/segment{
@@ -39447,7 +39452,7 @@
 	},
 /obj/structure/window/reinforced/tinted,
 /obj/machinery/door/window/westright,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/fitness/recreation)
 "bQo" = (
 /obj/structure/falsewall{
@@ -42881,6 +42886,11 @@
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"bZQ" = (
+/obj/structure/lattice,
+/obj/item/storage/toolbox/electrical,
+/turf/open/space/basic,
+/area/space/nearstation)
 "bZS" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
@@ -43605,6 +43615,9 @@
 /obj/machinery/door/window/northleft{
 	name = "Corpse Chute";
 	req_one_access_txt = "5; 68"
+	},
+/obj/structure/sign/warning/bodysposal{
+	pixel_y = -32
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics/cloning)
@@ -45580,14 +45593,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"eNt" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "eNw" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -45638,6 +45643,11 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
+"eRH" = (
+/obj/structure/cable,
+/obj/item/clothing/head/cone,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "eSa" = (
 /obj/machinery/power/apc{
 	areastring = "/area/quartermaster/office";
@@ -45768,6 +45778,18 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/teleporter)
+"fjh" = (
+/obj/docking_port/stationary{
+	dir = 2;
+	dwidth = 11;
+	height = 22;
+	id = "whiteship_home";
+	name = "SS13: Auxiliary Dock, Station-Port";
+	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
+	width = 35
+	},
+/turf/open/space/basic,
+/area/space)
 "fpA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 9
@@ -45788,6 +45810,11 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
+"fst" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "fvY" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -46116,12 +46143,6 @@
 /obj/machinery/power/terminal,
 /turf/open/floor/plating,
 /area/construction)
-"gUa" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable,
-/obj/structure/grille/broken,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "gVB" = (
 /obj/machinery/computer/med_data,
 /obj/machinery/power/apc{
@@ -46226,6 +46247,15 @@
 	},
 /turf/open/floor/carpet,
 /area/security/detectives_office)
+"hlS" = (
+/obj/machinery/door/airlock/external{
+	name = "Escape Pod One"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "hmG" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /obj/effect/turf_decal/stripes/line{
@@ -46291,10 +46321,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"hsl" = (
-/obj/item/screwdriver,
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "htS" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 28
@@ -46309,6 +46335,14 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"hyH" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 2;
+	name = "2maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "hAk" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
@@ -46887,6 +46921,13 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
+"jJa" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "jJz" = (
 /obj/machinery/photocopier,
 /obj/item/radio/intercom{
@@ -47108,6 +47149,13 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
+"kDS" = (
+/obj/machinery/door/airlock/external{
+	name = "Port External Shuttle Dock"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "kLE" = (
 /obj/machinery/power/apc{
 	areastring = "/area/crew_quarters/fitness/locker_room";
@@ -47209,12 +47257,6 @@
 /obj/structure/curtain,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/fitness/locker_room)
-"loR" = (
-/mob/living/simple_animal/hostile/lizard/space{
-	name = "Oversees-the-Crew"
-	},
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "ltw" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -48297,6 +48339,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port)
+"peJ" = (
+/mob/living/simple_animal/hostile/lizard/space{
+	name = "Unscrews-the-Tables"
+	},
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "pgT" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	name = "External Gas to Loop"
@@ -48520,11 +48568,14 @@
 	name = "Cloning Bay APC";
 	pixel_y = -23
 	},
-/obj/item/toy/figure/geneticist,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/item/paper{
+	info = "Too many bodies, not enough bags? Throw 'em down the chute! Out of sight - Out of mind!";
+	name = "Why can't I hold all these corpses? - Proper Corpse Disposal 101"
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics/cloning)
 "qag" = (
@@ -48712,6 +48763,10 @@
 /obj/machinery/camera/autoname,
 /turf/open/floor/plasteel/dark,
 /area/engine/engine_room)
+"qEU" = (
+/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "qHu" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical{
@@ -48957,14 +49012,6 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
-"rPI" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Excess Security Supplies";
-	req_one_access_txt = "12"
-	},
-/obj/effect/mapping_helpers/airlock/abandoned,
-/turf/open/floor/plating,
-/area/maintenance/department/security)
 "rQo" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -49189,6 +49236,15 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"syo" = (
+/obj/machinery/door/airlock/external{
+	name = "Escape Pod Three"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard)
 "szx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
@@ -49254,6 +49310,14 @@
 	dir = 9
 	},
 /area/science/research)
+"sJj" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Excess Security Supplies";
+	req_one_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
+/turf/open/floor/plating,
+/area/maintenance/department/security)
 "sKR" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/effect/turf_decal/stripes/line{
@@ -49342,10 +49406,6 @@
 	pixel_x = -25
 	},
 /obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
-"thX" = (
-/mob/living/simple_animal/hostile/retaliate/goose/vomit,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "tlY" = (
@@ -49456,6 +49516,15 @@
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
+"tDO" = (
+/obj/machinery/door/airlock/external{
+	name = "Port External Shuttle Dock"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "tFw" = (
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/airalarm{
@@ -49619,11 +49688,6 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
-"ujz" = (
-/obj/structure/cable,
-/obj/item/clothing/head/cone,
-/turf/open/floor/plating,
-/area/maintenance/port)
 "unF" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/spawner/lootdrop/crate_spawner,
@@ -49664,6 +49728,12 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
+"urA" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/obj/structure/grille/broken,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "utL" = (
 /obj/structure/table,
 /obj/item/stack/sheet/metal/fifty,
@@ -49911,11 +49981,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
-"veT" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "vgy" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
@@ -50553,13 +50618,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space/nearstation)
-"xdF" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/port)
 "xdQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -50684,6 +50742,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
+"xFP" = (
+/obj/item/screwdriver,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "xGM" = (
 /obj/structure/closet/firecloset,
 /obj/effect/turf_decal/stripes/line{
@@ -69453,7 +69515,7 @@ aeS
 bTU
 bmj
 yma
-gUa
+urA
 yma
 yma
 yma
@@ -73062,7 +73124,7 @@ aaa
 avq
 aLv
 bTU
-aLv
+hlS
 bTU
 hSh
 afJ
@@ -73115,8 +73177,8 @@ rEa
 bVX
 sjP
 sjP
-veT
-veT
+fst
+fst
 sjP
 sjP
 azH
@@ -74138,7 +74200,7 @@ aIY
 bMs
 bZp
 bVL
-ujz
+eRH
 bMs
 bVY
 aeH
@@ -74918,7 +74980,7 @@ aal
 bWg
 azH
 sjP
-eNt
+hyH
 azH
 aaa
 aaa
@@ -74930,7 +74992,7 @@ aaa
 aaa
 aaa
 aaa
-abE
+aaa
 aaa
 aaa
 aaa
@@ -75177,8 +75239,8 @@ aRr
 sjP
 bZv
 azH
-aaa
-aaa
+azH
+azH
 aaa
 aaa
 aaa
@@ -75426,17 +75488,17 @@ bVX
 rEa
 acB
 acB
-loR
+peJ
 bWx
-aal
+bZQ
 aal
 azH
 rck
 sjP
-azH
-aaa
-aaa
-aaa
+kDS
+aBx
+tDO
+fjh
 aaa
 aaa
 aaa
@@ -75678,7 +75740,7 @@ bTo
 bMs
 acB
 bMs
-xdF
+jJa
 acB
 acB
 acB
@@ -75686,13 +75748,13 @@ bWa
 aal
 bWl
 aal
-hsl
+xFP
 aRr
 aBx
 sjP
 azH
 azH
-aaa
+azH
 aaa
 aaa
 aaa
@@ -75951,7 +76013,7 @@ bTs
 azH
 aaa
 aaa
-abE
+aaa
 aaa
 aaa
 aaa
@@ -76205,7 +76267,7 @@ azH
 bZu
 sjP
 aBx
-bWK
+azH
 aaa
 aaa
 aaa
@@ -76462,7 +76524,7 @@ asy
 asy
 sjP
 aBx
-bXI
+azH
 aaa
 aaa
 aaa
@@ -76719,7 +76781,7 @@ bPs
 asy
 sjP
 bXV
-bXI
+bWK
 aaa
 aaa
 aaa
@@ -77747,7 +77809,7 @@ bOW
 asy
 sjP
 aBx
-bXI
+bXJ
 aaa
 aaa
 aaa
@@ -78004,7 +78066,7 @@ bOX
 asy
 sjP
 aBx
-bXI
+azH
 aaa
 aaa
 aaa
@@ -78261,7 +78323,7 @@ bOY
 azH
 sjP
 aBx
-bXJ
+azH
 aaa
 aaa
 aaa
@@ -78269,7 +78331,7 @@ aaa
 aaa
 aaa
 aaa
-abE
+aaa
 aaa
 aaa
 aaa
@@ -78762,7 +78824,7 @@ bTw
 aRg
 aRg
 aKz
-thX
+qEU
 aUi
 bRm
 aoh
@@ -95216,7 +95278,7 @@ aQK
 uoF
 aQK
 aQK
-rPI
+sJj
 aQK
 aQK
 aQK
@@ -95988,7 +96050,7 @@ fid
 aQK
 aQK
 aQK
-rPI
+sJj
 aQK
 aQK
 aQK
@@ -99266,7 +99328,7 @@ aaa
 aaa
 asj
 asj
-aRR
+syo
 asj
 asj
 aaa
