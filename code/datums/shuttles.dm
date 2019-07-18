@@ -100,6 +100,7 @@
 /datum/map_template/shuttle/proc/post_load(obj/docking_port/mobile/M)
 	if(movement_force)
 		M.movement_force = movement_force.Copy()
+	M.linkup(src)
 
 /datum/map_template/shuttle/emergency
 	port_id = "emergency"
