@@ -286,6 +286,7 @@ GLOBAL_LIST_INIT(bananium_recipes, list ( \
 	throw_range = 3
 	sheettype = "titanium"
 	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/titanium = 20)
 	point_value = 20
 	merge_type = /obj/item/stack/sheet/mineral/titanium
 
@@ -316,6 +317,7 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	throw_range = 3
 	sheettype = "plastitanium"
 	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT, MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/titanium = 20, /datum/reagent/toxin/plasma = 20)
 	point_value = 45
 	merge_type = /obj/item/stack/sheet/mineral/plastitanium
 

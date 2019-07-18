@@ -1744,3 +1744,11 @@
 	color = "#ED2939"
 	taste_description = "upside down"
 	can_synth = FALSE
+
+/datum/reagent/titanium
+	name = "Titanium"
+	description = "A silvery element with the highest strength-to-density ratio of all known metals."
+	reagent_state = SOLID
+	color = "#8C8C85"
+	taste_mult = 0.1
+	taste_description = "metal"

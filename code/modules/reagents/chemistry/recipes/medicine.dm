@@ -267,3 +267,15 @@
 	results = list(/datum/reagent/medicine/thializid = 5)
 	required_reagents = list(/datum/reagent/sulfur = 1, /datum/reagent/fluorine = 1, /datum/reagent/toxin = 1, /datum/reagent/nitrous_oxide = 2)
 
+/datum/chemical_reaction/mitomidal
+	name = "Mitomidal"
+	id = /datum/reagent/medicine/mitomidal
+	results = list(/datum/reagent/medicine/mitomidal = 3)
+	required_reagents = list(/datum/reagent/titanium = 1, /datum/reagent/ammonia = 1, /datum/reagent/fuel = 1)
+
+/datum/chemical_reaction/hollstein
+	name = "Hollstein's Adduct"
+	id = /datum/reagent/medicine/hollstein
+	results = list(/datum/reagent/medicine/hollstein = 0.1)
+	required_reagents = list(/datum/reagent/medicine/mitomidal = 0.2, /datum/reagent/medicine/rezadone = 0.2)
+	required_container = /mob/living/carbon

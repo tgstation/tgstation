@@ -202,6 +202,7 @@ GLOBAL_LIST_INIT(titaniumglass_recipes, list(
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/titaniumglass
+	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/titanium = 10)
 
 /obj/item/stack/sheet/titaniumglass/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.titaniumglass_recipes
@@ -221,6 +222,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/plastitaniumglass
+	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/titanium = 10, /datum/reagent/toxin/plasma = 10)
 
 /obj/item/stack/sheet/plastitaniumglass/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.plastitaniumglass_recipes

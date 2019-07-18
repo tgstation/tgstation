@@ -282,7 +282,7 @@
 		var/datum/reagent/R = reagent
 		if(QDELETED(R.holder))
 			continue
-		
+
 		if(!C)
 			C = R.holder.my_atom
 
@@ -415,7 +415,7 @@
 						matching_container = 1
 
 					else
-						if(cached_my_atom.type == C.required_container)
+						if(istype(cached_my_atom, C.required_container))
 							matching_container = 1
 					if (isliving(cached_my_atom) && !C.mob_react) //Makes it so certain chemical reactions don't occur in mobs
 						return

@@ -1479,5 +1479,45 @@
 	M.adjust_disgust(3)
 	..()
 	. = 1
+/datum/reagent/medicine/mitomidal
+	name = "Mitomidal"
+	description = "This phramaceutical increase the rate of wound healing by acccerlating cell division, this increase unfortunatley comes at the cost of increased DNA adduct formation."
+	reagent_state = LIQUID
+	color = "#C34B78"
+	metabolization_rate = 1 * REAGENTS_METABOLISM
+	overdose_threshold = 30
+	taste_description = "metallic sweetness"
+	var/clonecalc
+
+/datum/reagent/medicine/mitomidal/on_mob_life(mob/living/carbon/M)
+	clonecalc = min(M.getBruteLoss(),4) * 0.15 * REM ///Gives a clone damage "debt" of 15% of the brute damage healed, effectively decreasing max health untill cryo or rezadone can be administred.
+	M.adjustBruteLoss(-4*REM, 0)
+	M.adjustCloneLoss(clonecalc, 0)
+	..()
+	. = 1
+
+/datum/reagent/medicine/mitomidal/overdose_process(mob/living/carbon/M)
+	M.adjustBruteLoss(5*REM, 0)
+	M.dizziness++
+
+/datum/reagent/medicine/hollstein ///This reagent is added to prevent cheesing with 0.5 rezadone pills while you are still on mitomidal while adding some extra mechanical depth to the two drugs.
+	name = "Hollstein's Adduct"
+	description = "A large molecule formed from several mitomidal and rezadone units. It's structure and pharmacology are not well characterized."
+	reagent_state = SOLID
+	metabolization_rate = 0.125 * REAGENTS_METABOLISM
+	taste_mult = 0
+
+/datum/reagent/medicine/hollstein/on_mob_life(mob/living/carbon/M)
+	M.adjustCloneLoss(-0.4, 0)
+	M.dizziness--
+
+/datum/reagent/medicine/hollstein/on_mob_metabolize(mob/living/L)
+	..()
+	ADD_TRAIT(L, TRAIT_IGNOREDAMAGESLOWDOWN, type) //If pain ever gets implemented this should probably give partial pain reduction instead and another minor effect be added
+
+
+/datum/reagent/medicine/hollstein/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_IGNOREDAMAGESLOWDOWN, type)
+	..()
 
 #undef PERF_BASE_DAMAGE
