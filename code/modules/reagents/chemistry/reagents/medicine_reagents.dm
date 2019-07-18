@@ -1490,7 +1490,7 @@
 	var/clonecalc
 
 /datum/reagent/medicine/mitomidal/on_mob_life(mob/living/carbon/M)
-	clonecalc = min(M.getBruteLoss(),4) * 0.15 * REM ///Gives a clone damage "debt" of 15% of the brute damage healed, effectively decreasing max health untill cryo or rezadone can be administred.
+	clonecalc = min(M.getBruteLoss(),4) * 0.2 * REM ///Gives a clone damage "debt" of 20% of the brute damage healed, effectively decreasing max health untill cryo or rezadone can be administred.
 	M.adjustBruteLoss(-4*REM, 0)
 	M.adjustCloneLoss(clonecalc, 0)
 	..()
