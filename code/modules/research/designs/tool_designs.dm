@@ -49,7 +49,7 @@
 	id = "electroadaptive_pseudocircuit"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 300)
-	build_path = /obj/item/device/electroadaptive_pseudocircuit
+	build_path = /obj/item/electroadaptive_pseudocircuit
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
