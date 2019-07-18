@@ -677,10 +677,10 @@ SUBSYSTEM_DEF(shuttle)
 
 	if(istype(destination_port))
 		D = destination_port
-	else if(existing_shuttle)
-		timer = existing_shuttle.timer
-		mode = existing_shuttle.mode
-		D = existing_shuttle.get_docked()
+	//else if(existing_shuttle)
+	//	timer = existing_shuttle.timer
+	//	mode = existing_shuttle.mode
+	//	D = existing_shuttle.get_docked()
 
 	if(!D)
 		D = generate_transit_dock(preview_shuttle)
@@ -696,8 +696,8 @@ SUBSYSTEM_DEF(shuttle)
 		WARNING("Template shuttle [preview_shuttle] cannot dock at [D] ([result]).")
 		return
 
-	if(existing_shuttle)
-		existing_shuttle.jumpToNullSpace()
+	//if(existing_shuttle)
+	//	existing_shuttle.jumpToNullSpace()
 
 	var/list/force_memory = preview_shuttle.movement_force
 	preview_shuttle.movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
