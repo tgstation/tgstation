@@ -13,21 +13,26 @@
 	var/obj/item/storage = null
 								// if you add more storage slots, update cook() to clear their radiation too.
 
-	var/suit_type = null
-	var/helmet_type = null
-	var/mask_type = null
-	var/storage_type = null
+	var/suit_type = null /// What type of spacesuit the unit starts with when spawned.
+	var/helmet_type = null /// What type of space helmet the unit starts with when spawned.
+	var/mask_type = null /// What type of breathmask the unit starts with when spawned.
+	var/storage_type = null /// What type of additional item the unit starts with when spawned.
 
 	state_open = FALSE
-	var/locked = FALSE
+	var/locked = FALSE /// If the SSU's doors are locked closed. Can be toggled manually via the UI, but is also locked automatically when the UV decontamination sequence is running.
 	panel_open = FALSE
-	var/safeties = TRUE
+	var/safeties = TRUE /// If safety wire is cut/pulsed, the SSU can run the decontamination sequence while occupied by a mob. The mob will be burned during every cycle of cook().
 
-	var/uv = FALSE
-	var/uv_super = FALSE
-	var/uv_cycles = 6
-	var/message_cooldown
-	var/breakout_time = 300
+	var/uv = FALSE /// If UV decontamination sequence is running. See cook()
+	var/uv_super = FALSE /**
+							* If the SSU's hack wire is cut/pulsed.
+							* Modifies effects of cook()
+							* * If FALSE, decontamination sequence will clear radiation for all atoms (and their contents) contained inside the unit, and burn any mobs inside.
+							* * If TRUE, decontamination sequence will delete all items contained within, and if occupied by a mob, intensifies burn damage delt. All wires will be cut at the end.
+							*/
+	var/uv_cycles = 6 /// How many cycles remain for the decontamination sequence.
+	var/message_cooldown /// Cooldown for occupant breakout messages via relaymove()
+	var/breakout_time = 300 /// How long it takes to break out of the SSU.
 
 /obj/machinery/suit_storage_unit/standard_unit
 	suit_type = /obj/item/clothing/suit/space/eva
@@ -164,6 +169,9 @@
 		dump_contents()
 	update_icon()
 
+/**
+  * Drops all contents of the unit onto the ground.
+*/
 /obj/machinery/suit_storage_unit/proc/dump_contents()
 	dropContents()
 	helmet = null
@@ -212,6 +220,14 @@
 		close_machine(target)
 		add_fingerprint(user)
 
+/**
+  * UV decontamination sequence.
+  * Duration is determined by the uv_cycles var.
+  * Effects determined by the uv_super var.
+  * * If FALSE, all atoms (and their contents) contained are cleared of radiation. If a mob is inside, they are burned every cycle.
+  * * If TRUE, all items contained are destroyed, and burn damage applied to the mob is increased. All wires will be cut at the end.
+  * All atoms still inside at the end of all cycles are ejected from the unit.
+*/
 /obj/machinery/suit_storage_unit/proc/cook()
 	if(uv_cycles)
 		uv_cycles--
