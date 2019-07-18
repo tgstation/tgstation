@@ -215,10 +215,10 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	usr << browse(out.Join(), "window=threatlog;size=700x500")
 
 /datum/game_mode/dynamic/proc/generate_threat()
-	relative_threat = lorentz_distribution(GLOB.dynamic_curve_centre, GLOB.dynamic_curve_width)
+	relative_threat = LORENTZ_DISTRIBUTION(GLOB.dynamic_curve_centre, GLOB.dynamic_curve_width)
 	threat_level = round(lorentz2threat(relative_threat), 0.1)
 
-	peaceful_percentage = round(lorentz_cummulative_distribution(relative_threat, GLOB.dynamic_curve_centre, GLOB.dynamic_curve_width), 0.01)*100
+	peaceful_percentage = round(LORENTZ_CUMULATIVE_DISTRIBUTION(relative_threat, GLOB.dynamic_curve_centre, GLOB.dynamic_curve_width), 0.01)*100
 
 	threat = threat_level
 
@@ -232,10 +232,10 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	generate_threat()
 
 	var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
-	latejoin_injection_cooldown = round(CLAMP(exp_distribution(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time
+	latejoin_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time
 
 	var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
-	midround_injection_cooldown = round(CLAMP(exp_distribution(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max)) + world.time
+	midround_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max)) + world.time
 	message_admins("Dynamic Mode initialized with a Threat Level of... [threat_level]!")
 	log_game("DYNAMIC: Dynamic Mode initialized with a Threat Level of... [threat_level]!")
 	return TRUE
@@ -476,7 +476,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			if (drafted_rules.len > 0)
 				picking_midround_rule(drafted_rules)
 		var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
-		midround_injection_cooldown = round(CLAMP(exp_distribution(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max)) + world.time
+		midround_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max)) + world.time
 
 /datum/game_mode/dynamic/proc/update_playercounts()
 	current_players[CURRENT_LIVING_PLAYERS] = list()
@@ -563,7 +563,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 
 		if (drafted_rules.len > 0 && picking_latejoin_rule(drafted_rules))
 			var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
-			latejoin_injection_cooldown = round(CLAMP(exp_distribution(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time
+			latejoin_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time
 
 // Regenerate threat, but no more than our original threat level.
 /datum/game_mode/dynamic/proc/refund_threat(regain)
@@ -583,3 +583,26 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	for (var/datum/dynamic_ruleset/roundstart/DR in drafted_rules)
 		if (DR.flags == HIGHLANDER_RULESET)
 			return TRUE
+
+/datum/game_mode/dynamic/proc/lorentz2threat(x)
+	switch (x)
+		if (-INFINITY to -20)
+			return rand(0, 10)
+		if (-20 to -10)
+			return RULE_OF_THREE(-40, -20, x) + 50
+		if (-10 to -5)
+			return RULE_OF_THREE(-30, -10, x) + 50
+		if (-5 to -2.5)
+			return RULE_OF_THREE(-20, -5, x) + 50
+		if (-2.5 to -0)
+			return RULE_OF_THREE(-10, -2.5, x) + 50
+		if (0 to 2.5)
+			return RULE_OF_THREE(10, 2.5, x) + 50
+		if (2.5 to 5)
+			return RULE_OF_THREE(20, 5, x) + 50
+		if (5 to 10)
+			return RULE_OF_THREE(30, 10, x) + 50
+		if (10 to 20)
+			return RULE_OF_THREE(40, 20, x) + 50
+		if (20 to INFINITY)
+			return rand(90, 100)
