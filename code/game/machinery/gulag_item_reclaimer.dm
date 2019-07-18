@@ -12,6 +12,11 @@
 	var/obj/item/card/id/prisoner/inserted_id = null
 	var/obj/machinery/gulag_teleporter/linked_teleporter = null
 
+/obj/machinery/gulag_item_reclaimer/examine(mob/user)
+	. = ..()
+	if(inserted_id)
+		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
+
 /obj/machinery/gulag_item_reclaimer/Destroy()
 	for(var/i in contents)
 		var/obj/item/I = i
@@ -30,16 +35,22 @@
 	obj_flags |= EMAGGED
 
 /obj/machinery/gulag_item_reclaimer/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/card/id/prisoner))
-		if(!inserted_id)
-			if(!user.transferItemToLoc(I, src))
+	if(istype(I, /obj/item/card/id))
+		if(istype(I, /obj/item/card/id/prisoner))
+			if(!inserted_id)
+				if(!user.transferItemToLoc(I, src))
+					return
+				inserted_id = I
+				user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
+									"<span class='notice'>You insert the ID card into the console.</span>")
+				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 				return
-			inserted_id = I
-			to_chat(user, "<span class='notice'>You insert [I].</span>")
-			return
+			else
+				to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
 		else
-			to_chat(user, "<span class='notice'>There's an ID inserted already.</span>")
-	return ..()
+			to_chat(user, "<span class='warning'>Error: Invalid ID</span>")
+	else
+		return ..()
 
 /obj/machinery/gulag_item_reclaimer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -86,12 +97,18 @@
 			if(inserted_id)
 				usr.put_in_hands(inserted_id)
 				inserted_id = null
+				usr.visible_message("<span class='notice'>[usr] gets an ID card from the console.</span>", \
+									"<span class='notice'>You get the ID card from the console.</span>")
+				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			else
 				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id/prisoner)
 				if(I)
 					if(!usr.transferItemToLoc(I, src))
 						return
 					inserted_id = I
+					usr.visible_message("<span class='notice'>[usr] inserts an ID card into the console.</span>", \
+										"<span class='notice'>You insert the ID card into the console.</span>")
+					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 
 		if("release_items")
 			var/mob/living/carbon/human/H = locate(params["mobref"]) in stored_items
@@ -130,3 +147,17 @@
 		stored_items[user] -= W
 		W.forceMove(drop_location)
 	stored_items -= user
+
+/obj/machinery/gulag_item_reclaimer/AltClick(mob/user)
+	if(!user.canUseTopic(src, issilicon(user)))
+		return
+	if(!inserted_id)
+		to_chat(user, "<span class='warning'>There's no ID card in the console!</span>")
+	if(inserted_id)
+		inserted_id.forceMove(drop_location())
+		if(!issilicon(user) && Adjacent(user))
+			user.put_in_hands(inserted_id)
+			inserted_id = null
+			user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
+								"<span class='notice'>You get the ID card from the console.</span>")
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
