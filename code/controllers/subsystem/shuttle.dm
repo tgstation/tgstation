@@ -649,8 +649,9 @@ SUBSYSTEM_DEF(shuttle)
 		QDEL_NULL(preview_reservation)
 
 	if(!preview_shuttle)
-		if(load_template(loading_template))
-			preview_shuttle.linkup(loading_template, destination_port)
+		//if(load_template(loading_template))
+			//preview_shuttle.linkup(loading_template, destination_port)
+		load_template(loading_template)
 		preview_template = loading_template
 
 	// get the existing shuttle information, if any
