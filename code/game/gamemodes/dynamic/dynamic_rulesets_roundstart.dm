@@ -106,7 +106,7 @@
 	weight = 3
 	cost = 30
 	requirements = list(80,70,60,50,40,20,20,10,10,10)
-	high_population_requirement = 30
+	high_population_requirement = 10
 	var/team_mode_probability = 30
 
 /datum/dynamic_ruleset/roundstart/changeling/pre_execute()
@@ -117,9 +117,7 @@
 		assigned += M.mind
 		M.mind.restricted_roles = restricted_roles
 		M.mind.special_role = ROLE_CHANGELING
-	return TRUE
 
-/datum/dynamic_ruleset/roundstart/changeling/execute()
 	var/team_mode = FALSE
 	if(prob(team_mode_probability)) 
 		team_mode = TRUE
@@ -132,7 +130,10 @@
 
 		if(possible_team_objectives.len && prob(20*assigned.len))
 			GLOB.changeling_team_objective_type = pick(possible_team_objectives)
+			
+	return TRUE
 
+/datum/dynamic_ruleset/roundstart/changeling/execute()
 	for(var/datum/mind/changeling in assigned)
 		var/datum/antagonist/changeling/new_antag = new antag_datum()
 		new_antag.team_mode = team_mode
@@ -155,7 +156,7 @@
 	weight = 3
 	cost = 30
 	requirements = list(90,90,70,40,30,20,10,10,10,10)
-	high_population_requirement = 40
+	high_population_requirement = 10
 	var/list/roundstart_wizards = list()
 
 /datum/dynamic_ruleset/roundstart/wizard/acceptable(population=0, threat=0)
@@ -199,7 +200,7 @@
 	weight = 3
 	cost = 30
 	requirements = list(90,80,60,30,20,10,10,10,10,10)
-	high_population_requirement = 40
+	high_population_requirement = 10
 	flags = HIGHLANDER_RULESET
 	var/cultist_cap = list(2,2,3,4,4,4,4,4,4,4)
 	var/datum/team/cult/main_cult
@@ -258,7 +259,7 @@
 	weight = 3
 	cost = 40
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
-	high_population_requirement = 60
+	high_population_requirement = 10
 	flags = HIGHLANDER_RULESET
 	var/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
 	var/datum/team/nuclear/nuke_team
@@ -354,7 +355,7 @@
 	weight = 2
 	cost = 35
 	requirements = list(101,101,70,40,30,20,10,10,10,10)
-	high_population_requirement = 50
+	high_population_requirement = 10
 	delay = 5 MINUTES
 	flags = HIGHLANDER_RULESET
 	var/required_heads = 3
@@ -450,7 +451,7 @@
 	weight = 3
 	cost = 30
 	requirements = list(101,101,70,40,30,20,10,10,10,10)
-	high_population_requirement = 50
+	high_population_requirement = 10
 
 /datum/dynamic_ruleset/roundstart/hivemind/pre_execute()
 	var/num_hosts = max( 1 , rand(0,1) + min(8, round(num_players() / 8) ) )

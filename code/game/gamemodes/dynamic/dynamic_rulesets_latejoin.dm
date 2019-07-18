@@ -5,15 +5,14 @@
 //////////////////////////////////////////////
 
 /datum/dynamic_ruleset/latejoin/trim_candidates()
-	var/role_name = initial(antag_flag)
-	for(var/mob/living/carbon/P in candidates)
+	for(var/mob/P in candidates)
 		if (!P.client || !P.mind || !P.mind.assigned_role) // Are they connected?
 			candidates.Remove(P)
 			continue
 		if(!mode.age_check(P.client))
 			candidates.Remove(P)
 			continue
-		if (!(role_name in P.client.prefs.be_special) || is_banned_from(P.ckey, list(role_name, ROLE_SYNDICATE)) || (antag_flag_override && is_banned_from(P.ckey, list(antag_flag_override))))//are they willing and not antag-banned?
+		if (!(antag_flag in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag, ROLE_SYNDICATE)) || (antag_flag_override && is_banned_from(P.ckey, list(antag_flag_override))))//are they willing and not antag-banned?
 			candidates.Remove(P)
 			continue
 		if (P.mind.assigned_role in restricted_roles) // Does their job allow for it?
@@ -107,5 +106,6 @@
 	new_head.give_flash = TRUE
 	new_head.give_hud = TRUE
 	new_head.remove_clumsy = TRUE
-	M.mind.add_antag_datum(new_head)
+	new_head = M.mind.add_antag_datum(new_head)
+	new_head.rev_team.max_headrevs = 1 // Only one revhead if it is latejoin.
 	return TRUE

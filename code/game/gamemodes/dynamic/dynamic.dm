@@ -11,10 +11,10 @@
 
  // -- Injection delays
 GLOBAL_VAR_INIT(dynamic_latejoin_delay_min, (5 MINUTES))
-GLOBAL_VAR_INIT(dynamic_latejoin_delay_max, (30 MINUTES))
+GLOBAL_VAR_INIT(dynamic_latejoin_delay_max, (25 MINUTES))
 
 GLOBAL_VAR_INIT(dynamic_midround_delay_min, (15 MINUTES))
-GLOBAL_VAR_INIT(dynamic_midround_delay_max, (50 MINUTES))
+GLOBAL_VAR_INIT(dynamic_midround_delay_max, (35 MINUTES))
 
 GLOBAL_VAR_INIT(dynamic_no_stacking, TRUE)
 GLOBAL_VAR_INIT(dynamic_curve_centre, 0)

@@ -199,7 +199,9 @@
 	weight = 1
 	cost = 35
 	requirements = list(101,101,80,70,60,60,50,50,40,40)
-	high_population_requirement = 65
+	high_population_requirement = 35
+	var/ion_announce = 33
+	var/removeDontImproveChance = 10
 
 /datum/dynamic_ruleset/midround/malf/trim_candidates()
 	..()
@@ -222,6 +224,12 @@
 	assigned += M.mind
 	var/datum/antagonist/traitor/AI = new
 	M.mind.add_antag_datum(AI)
+	if(prob(33))
+		priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", 'sound/ai/ionstorm.ogg')
+		if(prob(removeDontImproveChance))
+			M.replace_random_law(generate_ion_law(), list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
+		else
+			M.add_ion_law(generate_ion_law())
 	return TRUE
 
 //////////////////////////////////////////////
@@ -272,7 +280,7 @@
 	weight = 5
 	cost = 35
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
-	high_population_requirement = 60
+	high_population_requirement = 10
 	var/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
 	var/datum/team/nuclear/nuke_team
 	flags = HIGHLANDER_RULESET
