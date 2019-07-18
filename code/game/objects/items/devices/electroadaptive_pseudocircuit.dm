@@ -23,13 +23,13 @@
 
 /obj/item/electroadaptive_pseudocircuit/proc/adapt_circuit(mob/user, circuit_cost = 0)
 	if(recharging)
-		to_chat(R, "<span class='warning'>[src] needs some time to recharge first.</span>")
+		to_chat(user, "<span class='warning'>[src] needs some time to recharge first.</span>")
 		return
 	if(!circuits)
-		to_chat(R, "<span class='warning'>You need more material. Use [src] on existing simple circuits to break them down.</span>")
+		to_chat(user, "<span class='warning'>You need more material. Use [src] on existing simple circuits to break them down.</span>")
 		return
 	to_chat(user, "<span class='notice'>You start adapt circuit...</span>")
-	if(do_after(user, 50, target = src) && P.use(1))
+	if(do_after(user, 50, target = src))
 		return Print_circuit(user, circuit_cost)
 
 /obj/item/electroadaptive_pseudocircuit/cyborg/adapt_circuit(mob/user, circuit_cost = 0)
@@ -53,7 +53,7 @@
 	return Print_circuit(user, circuit_cost)
 
 /obj/item/electroadaptive_pseudocircuit/proc/Print_circuit(mob/user, circuit_cost = 0)
-	playsound(R, 'sound/items/rped.ogg', 50, TRUE)
+	playsound(user, 'sound/items/rped.ogg', 50, TRUE)
 	recharging = TRUE
 	circuits--
 	update_icon()
@@ -73,13 +73,13 @@
 	. = ..()
 	if(!proximity)
 		return
-	Eat_circuit(atom/target, mob/living/user)
+	Eat_circuit(target, user)
 
 /obj/item/electroadaptive_pseudocircuit/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
 	Eat_circuit(I, user)
 
-/obj/item/electroadaptive_pseudocircuit/Eat_circuit(atom/target, mob/living/user)
+/obj/item/electroadaptive_pseudocircuit/proc/Eat_circuit(atom/target, mob/living/user)
 	if(!is_type_in_typecache(target, recycleable_circuits))
 		return
 	circuits++
