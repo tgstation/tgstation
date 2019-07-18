@@ -224,7 +224,7 @@
 	assigned += M.mind
 	var/datum/antagonist/traitor/AI = new
 	M.mind.add_antag_datum(AI)
-	if(prob(33))
+	if(prob(ion_announce))
 		priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", 'sound/ai/ionstorm.ogg')
 		if(prob(removeDontImproveChance))
 			M.replace_random_law(generate_ion_law(), list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
