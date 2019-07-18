@@ -325,7 +325,7 @@
 				if(mode == SHUTTLE_STRANDED)
 					return
 				for(var/A in SSshuttle.mobile)
-					var/obj/docking_port/mobile/M = A
+					var/obj/docking_port/mobile/M = SSshuttle.mobile[A]
 					if(M.launch_status == UNLAUNCHED) //Pods will not launch from the mine/planet, and other ships won't launch unless we tell them to.
 						M.check_transit_zone()
 
