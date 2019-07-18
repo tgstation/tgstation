@@ -300,6 +300,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			if(rule.flags == HIGHLANDER_RULESET && check_for_highlander(drafted_rules))
 				continue
 		if (rule.acceptable(roundstart_pop_ready,threat_level) && threat >= rule.cost)	// If we got the population and threat required
+			rule.candidates = candidates.Copy()
+			rule.trim_candidates()
 			if (rule.ready())
 				drafted_rules[rule] = rule.weight
 
@@ -340,6 +342,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	var/datum/dynamic_ruleset/roundstart/starting_rule = pickweight(drafted_rules)
 
 	if (starting_rule)
+		message_admins("DYNAMIC: Picking a [istype(starting_rule, /datum/dynamic_ruleset/roundstart/delayed/) ? " delayed " : ""] ruleset...<font size='3'>[starting_rule.name]</font>!")
 		log_game("DYNAMIC: Picking a [istype(starting_rule, /datum/dynamic_ruleset/roundstart/delayed/) ? " delayed " : ""] ruleset...<font size='3'>[starting_rule.name]</font>!")
 
 		roundstart_rules -= starting_rule
@@ -352,7 +355,6 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 
 		spend_threat(starting_rule.cost)
 		threat_log += "[worldtime2text()]: Roundstart [starting_rule.name] spent [starting_rule.cost]"
-		starting_rule.candidates = candidates.Copy()
 		starting_rule.trim_candidates()
 		if (starting_rule.pre_execute())
 			executed_rules += starting_rule

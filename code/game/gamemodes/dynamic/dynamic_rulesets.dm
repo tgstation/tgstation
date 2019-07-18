@@ -166,7 +166,6 @@
 
 // Checks if candidates are connected and if they are banned or don't want to be the antagonist.
 /datum/dynamic_ruleset/roundstart/trim_candidates()
-	var/antag_name = initial(antag_flag)
 	for(var/mob/dead/new_player/P in candidates)
 		if (!P.client || !P.mind) // Are they connected?
 			candidates.Remove(P)
@@ -177,14 +176,13 @@
 		if(P.mind.special_role) // We really don't want to give antag to an antag.
 			candidates.Remove(P)
 			continue
-		if (!(antag_name in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_name, ROLE_SYNDICATE)) || (antag_flag_override && is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE))))//are they willing and not antag-banned?
+		if (!(antag_flag in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag, ROLE_SYNDICATE)) || (antag_flag_override && is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE))))//are they willing and not antag-banned?
 			candidates.Remove(P)
 			continue
 
 // Checks if candidates are required mob type, connected, banned and if the job is exclusive to the role. 
 /datum/dynamic_ruleset/roundstart/delayed/trim_candidates()
 	. = ..()
-	var/antag_name = initial(antag_flag)
 	for (var/mob/P in candidates)
 		if (!istype(P, required_type))
 			candidates.Remove(P) // Can be a new_player, etc.
@@ -198,7 +196,7 @@
 		if(P.mind.special_role || P.mind.antag_datums?.len > 0) // Are they an antag already?
 			candidates.Remove(P)
 			continue
-		if (!(antag_name in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_name, ROLE_SYNDICATE)) || (antag_flag_override && is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE))))//are they willing and not antag-banned?
+		if (!(antag_flag in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag, ROLE_SYNDICATE)) || (antag_flag_override && is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE))))//are they willing and not antag-banned?
 			candidates.Remove(P)
 			continue
 		if ((exclusive_roles.len > 0) && !(P.mind.assigned_role in exclusive_roles)) // Is the rule exclusive to their job?
