@@ -1,0 +1,4 @@
+author: "wesoda25"
+delete-after: True
+changes: 
+  - bugfix: "Shades captured with a purified soulstone now appear as purified shades instead of cult shades"
