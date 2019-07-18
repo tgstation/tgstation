@@ -19,11 +19,15 @@
 	return attack_hand(user)
 
 /obj/item/reagent_containers/hypospray/attack(mob/living/M, mob/user)
+	inject(M, user)
+
+///Handles all injection checks, injection and logging.
+/obj/item/reagent_containers/hypospray/proc/inject(mob/living/M, mob/user)
 	if(!reagents.total_volume)
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
-		return
+		return FALSE
 	if(!iscarbon(M))
-		return
+		return FALSE
 
 	//Always log attemped injects for admins
 	var/list/injected = list()
@@ -35,20 +39,20 @@
 	if(reagents.total_volume && (ignore_flags || M.can_inject(user, 1))) // Ignore flag should be checked first or there will be an error message.
 		to_chat(M, "<span class='warning'>You feel a tiny prick!</span>")
 		to_chat(user, "<span class='notice'>You inject [M] with [src].</span>")
-
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
 		reagents.reaction(M, INJECT, fraction)
+		
 		if(M.reagents)
 			var/trans = 0
 			if(!infinite)
 				trans = reagents.trans_to(M, amount_per_transfer_from_this, transfered_by = user)
 			else
 				trans = reagents.copy_to(M, amount_per_transfer_from_this)
-
 			to_chat(user, "<span class='notice'>[trans] unit\s injected.  [reagents.total_volume] unit\s remaining in [src].</span>")
-
-
 			log_combat(user, M, "injected", src, "([contained])")
+		return TRUE
+	return FALSE
+
 
 /obj/item/reagent_containers/hypospray/CMO
 	list_reagents = list(/datum/reagent/medicine/omnizine = 30)
@@ -97,23 +101,16 @@
 	user.visible_message("<span class='suicide'>[user] begins to choke on \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return OXYLOSS//ironic. he could save others from oxyloss, but not himself.
 
-/obj/item/reagent_containers/hypospray/medipen/attack(mob/M, mob/user)
-	if(!reagents.total_volume)
-		to_chat(user, "<span class='warning'>[src] is empty!</span>")
-		return
-	..()
-	if(!iscyborg(user))
+/obj/item/reagent_containers/hypospray/inject(mob/living/M, mob/user)
+	. = ..()
+	if(.)
 		reagents.maximum_volume = 0 //Makes them useless afterwards
 		reagents.flags = NONE
-	update_icon()
-	addtimer(CALLBACK(src, .proc/cyborg_recharge, user), 80)
+		update_icon()
 
-/obj/item/reagent_containers/hypospray/medipen/proc/cyborg_recharge(mob/living/silicon/robot/user)
-	if(!reagents.total_volume && iscyborg(user))
-		var/mob/living/silicon/robot/R = user
-		if(R.cell.use(100))
-			reagents.add_reagent_list(list_reagents)
-			update_icon()
+/obj/item/reagent_containers/hypospray/medipen/attack_self(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		inject(user, user)
 
 /obj/item/reagent_containers/hypospray/medipen/update_icon()
 	if(reagents.total_volume > 0)
@@ -160,14 +157,6 @@
 	volume = 57
 	amount_per_transfer_from_this = 57
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/leporazine = 15, /datum/reagent/medicine/tricordrazine = 15, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/lavaland_extract = 2, /datum/reagent/medicine/omnizine = 5)
-
-/obj/item/reagent_containers/hypospray/medipen/species_mutator
-	name = "species mutator medipen"
-	desc = "Embark on a whirlwind tour of racial insensitivity by \
-		literally appropriating other races."
-	volume = 1
-	amount_per_transfer_from_this = 1
-	list_reagents = list("unstablemutationtoxin" = 1)
 
 /obj/item/reagent_containers/hypospray/combat/heresypurge
 	name = "holy water autoinjector"

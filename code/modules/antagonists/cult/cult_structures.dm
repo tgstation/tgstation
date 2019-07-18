@@ -66,7 +66,7 @@
 		return ..()
 
 /obj/structure/destructible/cult/ratvar_act()
-	if(take_damage(rand(25, 50), BURN) && src) //if we still exist
+	if(take_damage(rand(25, 50), BURN) && !QDELETED(src)) //if we still exist
 		var/previouscolor = color
 		color = "#FAE48C"
 		animate(src, color = previouscolor, time = 8)

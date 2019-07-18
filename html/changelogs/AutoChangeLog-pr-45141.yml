@@ -1,4 +1,0 @@
-author: "YPOQ"
-delete-after: True
-changes: 
-  - bugfix: "Fixed gravitokinetic guardian's gravity effect remaining forever if the guardian dies."

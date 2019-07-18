@@ -1,4 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - code_imp: "Slight changes the self-repair borg module. It no longer references the borg that owns it."
