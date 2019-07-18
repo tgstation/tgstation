@@ -1,13 +1,17 @@
 //////////////EXTERNAL LENS//////////////
 
+///holder objectile for the extralasers component
 /obj/item/external_lens
 	name = "external lens"
 	icon_state = "external"
 	desc = "These lens modify the laser frequency and trajectory giving them special effects."
 	icon = 'icons/obj/guns/energy.dmi'
 	w_class = WEIGHT_CLASS_SMALL
+	///what kind of projectile it adds
 	var/stored_ammo_type = /obj/item/ammo_casing/energy/laser
-	var/restricted_type = /obj/item/gun/energy/laser //which type of laser gun it can be assigned to
+	///what kind of laser gun it can be applied to
+	var/restricted_type = /obj/item/gun/energy/laser
+	///the icon it has
 	var/overlay = "laser"
 
 /obj/item/external_lens/Initialize()

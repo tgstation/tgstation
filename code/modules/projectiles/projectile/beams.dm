@@ -201,7 +201,7 @@
 /obj/item/projectile/beam/laser/shock/on_hit(atom/target)
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		C.electrocute_act(10, src, 1, FALSE, FALSE, FALSE, FALSE, FALSE)
+		C.electrocute_act(10, src, 1, stun = FALSE)
 		C.confused += 6
 		if(prob(20))
 			C.dropItemToGround(C.get_active_held_item())
@@ -260,7 +260,7 @@
 	impact_type = /obj/effect/projectile/impact/xray
 
 /obj/item/projectile/beam/laser/invisible
-	invisibility = INVISIBILITY_MAXIMUM
+	invisibility = INVISIBILITY_OBSERVER
 	damage = 15
 	range = 10
 	light_color = LIGHT_COLOR_PINK

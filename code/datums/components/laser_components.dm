@@ -1,6 +1,9 @@
+///it handles adding and removing the projectile
 /datum/component/extralasers
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
+	///the path of the external lens object, used it when it has to be spawned
 	var/lens_path
+	///the laser object
 	var/obj/item/ammo_casing/energy/ammo
 
 /datum/component/extralasers/Initialize(_ammo, _lens_path)
@@ -22,11 +25,13 @@
 	qdel(ammo)
 	return ..()
 
+///it new() the projectile and adds it in the ammo types
 /datum/component/extralasers/proc/attach()
 	var/obj/item/gun/energy/laser/L = parent
 	ammo =  new ammo (src)
 	L.ammo_type  += ammo
 
+///removes the projectile from available ammo types
 /datum/component/extralasers/proc/detach()
 	var/obj/item/gun/energy/laser/L = parent
 	if(L.chambered)

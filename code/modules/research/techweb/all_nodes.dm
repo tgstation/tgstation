@@ -610,7 +610,7 @@
 	display_name = "Electric Weapons"
 	description = "Weapons using electric technology"
 	prereq_ids = list("weaponry", "adv_power"  , "emp_basic")
-	design_ids = list("stunrevolver", "ioncarbine", "lens_SHK", "lens_SHD")
+	design_ids = list("stunrevolver", "ioncarbine", "lens_shk", "lens_shd")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -619,7 +619,7 @@
 	display_name = "Radioactive Weaponry"
 	description = "Weapons using radioactive technology."
 	prereq_ids = list("adv_engi", "adv_weaponry")
-	design_ids = list("nuclear_gun", "lens_RIC")
+	design_ids = list("nuclear_gun", "lens_ric")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -637,7 +637,7 @@
 	display_name = "Beam Weaponry"
 	description = "Various basic beam weapons"
 	prereq_ids = list("adv_weaponry")
-	design_ids = list("temp_gun", "xray_laser", "lens_ECO", "lens_INC")
+	design_ids = list("temp_gun", "xray_laser", "lens_eco", "lens_inc")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -646,7 +646,7 @@
 	display_name = "Advanced Beam Weaponry"
 	description = "Various advanced beam weapons"
 	prereq_ids = list("beam_weapons")
-	design_ids = list("beamrifle", "lens_STH", "lens_BLN")
+	design_ids = list("beamrifle", "lens_sth", "lens_bln")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
