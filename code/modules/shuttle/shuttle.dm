@@ -170,8 +170,9 @@
 /obj/docking_port/stationary/Initialize(mapload)
 	. = ..()
 	SSshuttle.stationary += src
-	id = "[destination_type][SSshuttle.stationary.len]"
-	name = "[name] dock[SSshuttle.stationary.len]"
+	SSshuttle.stationary_amount++
+	id = "[destination_type][SSshuttle.stationary_amount]"
+	name = "[name] dock[SSshuttle.stationary_amount]"
 	if(!area_type)
 		var/area/place = get_area(src)
 		area_type = place?.type // We might be created in nullspace
@@ -281,6 +282,7 @@
 
 /obj/docking_port/mobile/proc/register()
 	SSshuttle.mobile += src
+	
 
 /obj/docking_port/mobile/Destroy(force)
 	if(force)
@@ -295,8 +297,9 @@
 /obj/docking_port/mobile/Initialize(mapload)
 	. = ..()
 
-	id = "[destination_type][SSshuttle.mobile.len]"
-	name = "[name] shuttle[SSshuttle.mobile.len]"
+	SSshuttle.mobile_amount++
+	id = "[destination_type][SSshuttle.mobile_amount]"
+	name = "[name] shuttle[SSshuttle.mobile_amount]"
 
 	shuttle_areas = list()
 	var/list/all_turfs = return_ordered_turfs(x, y, z, dir)
