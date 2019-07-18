@@ -337,7 +337,7 @@
 
 			success &= (check_transit_zone() == TRANSIT_READY)
 			for(var/A in SSshuttle.mobile)
-				var/obj/docking_port/mobile/M = A
+				var/obj/docking_port/mobile/M = SSshuttle.mobile[A]
 				if(M.launch_status == UNLAUNCHED)
 					success &= (M.check_transit_zone() == TRANSIT_READY)
 			if(!success)
@@ -353,7 +353,7 @@
 			if(time_left <= 0 && !SSshuttle.emergencyNoEscape)
 				//move each escape pod (or applicable spaceship) to its corresponding transit dock
 				for(var/A in SSshuttle.mobile)
-					var/obj/docking_port/mobile/M = A
+					var/obj/docking_port/mobile/M = SSshuttle.mobile[A]
 					M.on_emergency_launch()
 
 				//now move the actual emergency shuttle to its transit dock
@@ -386,7 +386,7 @@
 				if(area_parallax)
 					parallax_slowdown()
 					for(var/A in SSshuttle.mobile)
-						var/obj/docking_port/mobile/M = A
+						var/obj/docking_port/mobile/M = SSshuttle.mobile[A]
 						if(M.launch_status == ENDGAME_LAUNCHED)
 							if(istype(M, /obj/docking_port/mobile/pod))
 								M.parallax_slowdown()
@@ -394,7 +394,7 @@
 			if(time_left <= 0)
 				//move each escape pod to its corresponding escape dock
 				for(var/A in SSshuttle.mobile)
-					var/obj/docking_port/mobile/M = A
+					var/obj/docking_port/mobile/M = SSshuttle.mobile[A]
 					M.on_emergency_dock()
 
 				// now move the actual emergency shuttle to centcom

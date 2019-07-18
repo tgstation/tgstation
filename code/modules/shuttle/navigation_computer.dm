@@ -29,14 +29,15 @@
 	if(!mapload)
 		connect_to_shuttle(SSshuttle.get_containing_shuttle(src))
 
-		for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
+		for(var/port in SSshuttle.stationary)
+			var/obj/docking_port/stationary/S = SSshuttle.stationary[port]
 			if(S.destination_type == shuttleDestination_type)
 				jumpto_ports[S.id] = TRUE
 
 	for(var/V in SSshuttle.stationary)
 		if(!V)
 			continue
-		var/obj/docking_port/stationary/S = V
+		var/obj/docking_port/stationary/S = SSshuttle.stationary[V]
 		if(jumpto_ports[S.id])
 			z_lock |= S.z
 	whitelist_turfs = typecacheof(whitelist_turfs)
@@ -359,7 +360,7 @@
 		if(!V)
 			stack_trace("SSshuttle.beacons have null entry!")
 			continue
-		var/obj/machinery/spaceship_navigation_beacon/nav_beacon = V
+		var/obj/machinery/spaceship_navigation_beacon/nav_beacon = SSshuttle.stationary[V]
 		if(!nav_beacon.z || SSmapping.level_has_any_trait(nav_beacon.z, console.locked_traits))
 			break
 		if(!nav_beacon.locked)

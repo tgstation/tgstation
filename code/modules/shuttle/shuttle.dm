@@ -169,7 +169,7 @@
 
 /obj/docking_port/stationary/Initialize(mapload)
 	. = ..()
-	SSshuttle.stationary += src
+	SSshuttle.stationary[id] = src
 	SSshuttle.stationary_amount++
 	id = "[destination_type][SSshuttle.stationary_amount]"
 	name = "[name] dock[SSshuttle.stationary_amount]"
@@ -187,7 +187,7 @@
 
 /obj/docking_port/stationary/Destroy(force)
 	if(force)
-		SSshuttle.stationary -= src
+		SSshuttle.stationary -= id
 	. = ..()
 
 /obj/docking_port/stationary/Moved(atom/oldloc, dir, forced)
@@ -287,6 +287,8 @@
 
 /obj/docking_port/mobile/Destroy(force)
 	if(force)
+		if(!SSshuttle.mobile[id])
+			stack_trace("[src] [id] already deleted or not exist in  SSshuttle.mobile!")
 		SSshuttle.mobile -= id
 		destination = null
 		previous = null

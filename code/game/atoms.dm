@@ -221,7 +221,7 @@
 
 	if(is_reserved_level(T.z))
 		for(var/A in SSshuttle.mobile)
-			var/obj/docking_port/mobile/M = A
+			var/obj/docking_port/mobile/M = SSshuttle.mobile[A]
 			if(M.launch_status == ENDGAME_TRANSIT)
 				for(var/place in M.shuttle_areas)
 					var/area/shuttle/shuttle_area = place
@@ -237,7 +237,7 @@
 
 	//Check for centcom shuttles
 	for(var/A in SSshuttle.mobile)
-		var/obj/docking_port/mobile/M = A
+		var/obj/docking_port/mobile/M = SSshuttle.mobile[A]
 		if(M.launch_status == ENDGAME_LAUNCHED)
 			for(var/place in M.shuttle_areas)
 				var/area/shuttle/shuttle_area = place

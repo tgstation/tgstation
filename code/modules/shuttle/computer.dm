@@ -22,7 +22,8 @@
 	var/dat = "Status: [M ? M.getStatusText() : "*Missing*"]<br><br>"
 	if(M)
 		var/destination_found
-		for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
+		for(var/port in SSshuttle.stationary)
+			var/obj/docking_port/stationary/S = SSshuttle.stationary[port]
 			if(!options.Find(S.destination_type))
 				continue
 			if(!M.check_dock(S, silent=TRUE))
