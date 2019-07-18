@@ -336,8 +336,6 @@
 			. |= BP.on_life(stam_regen)
 
 /mob/living/carbon/proc/handle_organs()
-	if(!dna)
-		return
 	for(var/V in internal_organs)
 		var/obj/item/organ/O = V
 		O.on_life()
