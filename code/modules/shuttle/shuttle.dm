@@ -281,12 +281,13 @@
 	var/list/hidden_turfs = list()
 
 /obj/docking_port/mobile/proc/register()
-	SSshuttle.mobile += src
-	
+	if(SSshuttle.mobile[id])
+		stack_trace("[src] [id] already in SSshuttle.mobile! Replacing existing id.")
+	SSshuttle.mobile[id] = src
 
 /obj/docking_port/mobile/Destroy(force)
 	if(force)
-		SSshuttle.mobile -= src
+		SSshuttle.mobile -= id
 		destination = null
 		previous = null
 		QDEL_NULL(assigned_transit)		///don't need it where we're goin'!
