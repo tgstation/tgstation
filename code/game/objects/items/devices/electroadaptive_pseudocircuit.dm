@@ -11,18 +11,31 @@
 	var/static/recycleable_circuits = typecacheof(list(/obj/item/electronics/firelock, /obj/item/electronics/airalarm, /obj/item/electronics/firealarm, \
 	/obj/item/electronics/apc))//A typecache of circuits consumable for material
 
-/obj/item/electroadaptive_pseudocircuit/Initialize()
+/obj/item/electroadaptive_pseudocircuit/cyborg/Initialize()
 	. = ..()
 	maptext = "[circuits]"
 
 /obj/item/electroadaptive_pseudocircuit/examine(mob/user)
 	. = ..()
-	if(iscyborg(user))
-		. += {"<span class='notice'>It has material for <b>[circuits]</b> circuit[circuits == 1 ? "" : "s"]. Use the pseudocircuit on existing circuits to gain material.</span>\n
-		<span class='notice'>Serves as a substitute for <b>fire/air alarm</b>, <b>firelock</b>, and <b>APC</b> electronics.</span>\n
-		<span class='notice'>It can also be used on an APC with no power cell to <b>fabricate a low-capacity cell</b> at a high power cost.</span>"}
+	. += {"<span class='notice'>It has material for <b>[circuits]</b> circuit[circuits == 1 ? "" : "s"]. Use the pseudocircuit on existing circuits to gain material.</span>\n
+	<span class='notice'>Serves as a substitute for <b>fire/air alarm</b>, <b>firelock</b>, and <b>APC</b> electronics.</span>\n
+	<span class='notice'>It can also be used on an APC with no power cell to <b>fabricate a low-capacity cell</b> at a high power cost.</span>"}
 
-/obj/item/electroadaptive_pseudocircuit/proc/adapt_circuit(mob/living/silicon/robot/R, circuit_cost = 0)
+/obj/item/electroadaptive_pseudocircuit/proc/adapt_circuit(mob/user, circuit_cost = 0)
+	if(recharging)
+		to_chat(R, "<span class='warning'>[src] needs some time to recharge first.</span>")
+		return
+	if(!circuits)
+		to_chat(R, "<span class='warning'>You need more material. Use [src] on existing simple circuits to break them down.</span>")
+		return
+	to_chat(user, "<span class='notice'>You start adapt circuit...</span>")
+	if(do_after(user, 50, target = src) && P.use(1))
+		return Print_circuit(user, circuit_cost)
+
+/obj/item/electroadaptive_pseudocircuit/cyborg/adapt_circuit(mob/user, circuit_cost = 0)
+	if(!iscyborg(user))
+		return FALSE
+	var/mob/living/silicon/robot/R = user
 	if(QDELETED(R) || !istype(R))
 		return
 	if(!R.cell)
@@ -37,23 +50,40 @@
 	if(!circuits)
 		to_chat(R, "<span class='warning'>You need more material. Use [src] on existing simple circuits to break them down.</span>")
 		return
+	return Print_circuit(user, circuit_cost)
+
+/obj/item/electroadaptive_pseudocircuit/proc/Print_circuit(mob/user, circuit_cost = 0)
 	playsound(R, 'sound/items/rped.ogg', 50, TRUE)
 	recharging = TRUE
 	circuits--
-	maptext = "[circuits]"
-	icon_state = "[initial(icon_state)]_recharging"
+	update_icon()
 	var/recharge_time = min(600, circuit_cost * 5)  //40W of cost for one fabrication = 20 seconds of recharge time; this is to prevent spamming
 	addtimer(CALLBACK(src, .proc/recharge), recharge_time)
 	return TRUE //The actual circuit magic itself is done on a per-object basis
+
+/obj/item/electroadaptive_pseudocircuit/update_icon()
+	. = ..()
+	icon_state = "[initial(icon_state)][recharging ? "_recharging" : ""]"
+
+/obj/item/electroadaptive_pseudocircuit/cyborg/update_icon()
+	. = ..()
+	maptext = "[circuits]"
 
 /obj/item/electroadaptive_pseudocircuit/afterattack(atom/target, mob/living/user, proximity)
 	. = ..()
 	if(!proximity)
 		return
+	Eat_circuit(atom/target, mob/living/user)
+
+/obj/item/electroadaptive_pseudocircuit/attacked_by(obj/item/I, mob/living/user)
+	. = ..()
+	Eat_circuit(I, user)
+
+/obj/item/electroadaptive_pseudocircuit/Eat_circuit(atom/target, mob/living/user)
 	if(!is_type_in_typecache(target, recycleable_circuits))
 		return
 	circuits++
-	maptext = "[circuits]"
+	update_icon()
 	user.visible_message("<span class='notice'>User breaks down [target] with [src].</span>", \
 	"<span class='notice'>You recycle [target] into [src]. It now has material for <b>[circuits]</b> circuits.</span>")
 	playsound(user, 'sound/items/deconstruct.ogg', 50, TRUE)
@@ -62,4 +92,4 @@
 /obj/item/electroadaptive_pseudocircuit/proc/recharge()
 	playsound(src, 'sound/machines/chime.ogg', 25, TRUE)
 	recharging = FALSE
-	icon_state = initial(icon_state)
+	update_icon()
