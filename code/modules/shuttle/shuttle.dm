@@ -170,7 +170,7 @@
 /obj/docking_port/stationary/Initialize(mapload)
 	. = ..()
 	SSshuttle.stationary_amount++
-	id = "[destination_type][SSshuttle.stationary_amount]"
+	id = "[destination_type]_[SSshuttle.stationary_amount]"
 	name = "[name] dock[SSshuttle.stationary_amount]"
 	SSshuttle.stationary[id] = src
 	if(!area_type)
@@ -304,7 +304,7 @@
 	. = ..()
 
 	SSshuttle.mobile_amount++
-	id = "[destination_type][SSshuttle.mobile_amount]"
+	id = "[destination_type]_[SSshuttle.mobile_amount]"
 	name = "[name] shuttle[SSshuttle.mobile_amount]"
 
 	shuttle_areas = list()
@@ -324,17 +324,12 @@
 
 /// Called after the shuttle is loaded from template
 /obj/docking_port/mobile/proc/linkup(datum/map_template/shuttle/template, obj/docking_port/stationary/dock)
-	var/list/static/shuttle_id = list()
-	var/idnum = ++shuttle_id[template]
-	if(idnum > 1)
-		id = "[id][idnum]"
-		name = "[name] [idnum]"
 	for(var/place in shuttle_areas)
 		var/area/area = place
-		area.connect_to_shuttle(src, dock, idnum, FALSE)
+		area.connect_to_shuttle(src, dock, id, FALSE)
 		for(var/each in place)
 			var/atom/atom = each
-			atom.connect_to_shuttle(src, dock, idnum, FALSE)
+			atom.connect_to_shuttle(src, dock, id, FALSE)
 
 
 ///this is a hook for custom behaviour. Maybe at some point we could add checks to see if engines are intact
