@@ -520,10 +520,10 @@ SUBSYSTEM_DEF(shuttle)
 	if (istype(SSshuttle.transit_request_failures))
 		transit_request_failures = SSshuttle.transit_request_failures
 
-	if (istype(SSshuttle.mobile_amount))
-		transit = SSshuttle.mobile_amount
-	if (istype(SSshuttle.stationary_amount))
-		transit = SSshuttle.stationary_amount
+	if (SSshuttle.mobile_amount)
+		mobile_amount = SSshuttle.mobile_amount
+	if (SSshuttle.stationary_amount)
+		stationary_amount = SSshuttle.stationary_amount
 
 	if (istype(SSshuttle.emergency))
 		emergency = SSshuttle.emergency
