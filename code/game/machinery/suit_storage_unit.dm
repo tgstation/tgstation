@@ -371,6 +371,17 @@
 
 	return ..()
 
+/*	ref tg-git issue #45036
+	screwdriving it open while it's running a decontamination sequence without closing the panel prior to finish
+	causes the SSU to break due to state_open being set to TRUE at the end, and the panel becoming inaccessible.
+*/
+/obj/machinery/suit_storage_unit/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/I)
+	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_SCREWDRIVER && uv)
+		to_chat(user, "<span class='warning'>It might not be wise to fiddle with [src] while it's running...</span>")
+		return TRUE
+	return ..()
+
+
 /obj/machinery/suit_storage_unit/default_pry_open(obj/item/I)//needs to check if the storage is locked.
 	. = !(state_open || panel_open || is_operational() || locked || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR
 	if(.)

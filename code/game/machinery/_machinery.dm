@@ -397,8 +397,8 @@ Class Procs:
 			panel_open = FALSE
 			icon_state = icon_state_closed
 			to_chat(user, "<span class='notice'>You close the maintenance hatch of [src].</span>")
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/I)
 	if(panel_open && I.tool_behaviour == TOOL_WRENCH)
