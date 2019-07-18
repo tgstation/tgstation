@@ -117,7 +117,13 @@
 		assigned += M.mind
 		M.mind.restricted_roles = restricted_roles
 		M.mind.special_role = ROLE_CHANGELING
+	return TRUE
 
+/datum/dynamic_ruleset/roundstart/changeling/execute()
+	for(var/datum/mind/changeling in assigned)
+		var/datum/antagonist/changeling/new_antag = new antag_datum()
+		new_antag.team_mode = team_mode
+		changeling.add_antag_datum(new_antag)
 	var/team_mode = FALSE
 	if(prob(team_mode_probability)) 
 		team_mode = TRUE
@@ -130,15 +136,6 @@
 
 		if(possible_team_objectives.len && prob(20*assigned.len))
 			GLOB.changeling_team_objective_type = pick(possible_team_objectives)
-			
-	return TRUE
-
-/datum/dynamic_ruleset/roundstart/changeling/execute()
-	for(var/datum/mind/changeling in assigned)
-		var/datum/antagonist/changeling/new_antag = new antag_datum()
-		new_antag.team_mode = team_mode
-		changeling.add_antag_datum(new_antag)
-
 	return TRUE
 
 //////////////////////////////////////////////
