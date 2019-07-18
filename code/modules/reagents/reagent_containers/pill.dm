@@ -241,34 +241,6 @@
 	if(prob(20))
 		desc = pick(descs)
 
-/obj/item/reagent_containers/pill/bicaridine
-	name = "bicaridine pill"
-	desc = "Used to treat brute damage of any severity, commonly used to treat minor wounds."
-	icon_state = "pill9"
-	list_reagents = list(/datum/reagent/medicine/bicaridine = 15)
-	rename_with_volume = TRUE
-
-/obj/item/reagent_containers/pill/kelotane
-	name = "kelotane pill"
-	desc = "Used to treat burn damage of any severity, commonly used to treat minor burns."
-	icon_state = "pill9"
-	list_reagents = list(/datum/reagent/medicine/kelotane = 15)
-	rename_with_volume = TRUE
-
-/obj/item/reagent_containers/pill/antitoxin
-	name = "anti-toxin pill"
-	desc = "Used to neutralize toxin damage of any severity, commonly used to treat minor toxicity."
-	icon_state = "pill9"
-	list_reagents = list(/datum/reagent/medicine/antitoxin = 15)
-	rename_with_volume = TRUE
-
-/obj/item/reagent_containers/pill/dexalin
-	name = "dexalin pill"
-	desc = "Used to treat oxygen deprivation of any severity, commonly used to treat minor oxygen deprivation."
-	icon_state = "pill9"
-	list_reagents = list(/datum/reagent/medicine/dexalin = 15)
-	rename_with_volume = TRUE
-
 /obj/item/reagent_containers/pill/potassiodide
 	name = "potassium iodide pill"
 	desc = "Used to reduce low radiation damage very effectively."

@@ -246,38 +246,6 @@
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/pill/charcoal(src)
 
-/obj/item/storage/pill_bottle/bicaridine
-	name = "bottle of bicaridine pills"
-	desc = "Contains pills used to treat brute damage."
-
-/obj/item/storage/pill_bottle/bicaridine/PopulateContents()
-	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/pill/bicaridine(src)
-
-/obj/item/storage/pill_bottle/kelotane
-	name = "bottle of kelotane pills"
-	desc = "Contains pills used to treat burns."
-
-/obj/item/storage/pill_bottle/kelotane/PopulateContents()
-	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/pill/kelotane(src)
-
-/obj/item/storage/pill_bottle/antitoxin
-	name = "bottle of anti-toxin pills"
-	desc = "Contains pills used to counter toxins."
-
-/obj/item/storage/pill_bottle/antitoxin/PopulateContents()
-	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/pill/antitoxin(src)
-
-/obj/item/storage/pill_bottle/dexalin
-	name = "bottle of dexalin pills"
-	desc = "Contains pills used to counter minor oxygen deprivation."
-
-/obj/item/storage/pill_bottle/dexalin/PopulateContents()
-	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/pill/dexalin(src)
-
 /obj/item/storage/pill_bottle/epinephrine
 	name = "bottle of epinephrine pills"
 	desc = "Contains pills used to stabilize patients."
