@@ -20,7 +20,9 @@
 		preview += item
 	images += preview
 	if(alert(src,"Confirm location.","Template Confirm","Yes","No") == "Yes")
-		if(template.load(T, centered = TRUE))
+		var/obj/docking_port/mobile/M = template.load(T, centered = TRUE)
+		if(M)
+			template.post_load(M)
 			message_admins("<span class='adminnotice'>[key_name_admin(src)] has placed a map template ([template.name]) at [ADMIN_COORDJMP(T)]</span>")
 		else
 			to_chat(src, "Failed to place map")
