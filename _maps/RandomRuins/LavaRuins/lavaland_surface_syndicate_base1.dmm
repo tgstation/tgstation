@@ -540,9 +540,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "ed" = (
-/obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
@@ -555,6 +552,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/power/rad_collector,
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "ee" = (
@@ -1183,14 +1181,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "eZ" = (
-/obj/structure/rack{
-	dir = 8
-	},
-/obj/item/stack/sheet/cardboard{
-	amount = 3
-	},
-/obj/item/stack/rods/twentyfive,
-/obj/item/stock_parts/cell/high/plus,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -1202,6 +1192,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/power/rad_collector,
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "fa" = (
@@ -2520,12 +2511,12 @@
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "hU" = (
 /obj/machinery/light/small,
-/obj/structure/filingcabinet/chestdrawer,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/structure/tank_dispenser/plasma,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "hV" = (
@@ -3325,7 +3316,7 @@
 "jv" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/suit_storage_unit/radsuit,
+/obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "jw" = (
@@ -3570,6 +3561,7 @@
 	dir = 4;
 	name = "emergency shower"
 	},
+/obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "jV" = (
@@ -3582,6 +3574,7 @@
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/stripes,
+/obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "jW" = (
@@ -4453,6 +4446,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/head/welding,
 /obj/item/weldingtool/largetank,
+/obj/item/analyzer,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "lM" = (
@@ -4883,6 +4877,10 @@
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "mK" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/atmos_control/tank/toxin_tank{
+	icon_state = "computer";
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "mM" = (
@@ -6010,10 +6008,6 @@
 "JB" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	icon_state = "pipe11-2";
-	dir = 8
-	},
-/obj/machinery/computer/atmos_control/tank/toxin_tank{
-	icon_state = "computer";
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
