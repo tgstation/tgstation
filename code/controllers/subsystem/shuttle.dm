@@ -86,7 +86,7 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/controller/subsystem/shuttle/proc/initial_load()
 	for(var/s in stationary)
-		var/obj/docking_port/stationary/S = s
+		var/obj/docking_port/stationary/S = stationary[s]
 		S.load_roundstart()
 		CHECK_TICK
 
@@ -95,10 +95,13 @@ SUBSYSTEM_DEF(shuttle)
 		if(!thing)
 			mobile.Remove(thing)
 			continue
-		var/obj/docking_port/mobile/P = thing
+		var/obj/docking_port/mobile/P = mobile[thing]
+		if(!P)
+			mobile.Remove(thing)
+			continue
 		P.check()
 	for(var/thing in transit)
-		var/obj/docking_port/stationary/transit/T = thing
+		var/obj/docking_port/stationary/transit/T = transit[thing]
 		if(!T.owner)
 			qdel(T, force=TRUE)
 		// This next one removes transit docks/zones that aren't
@@ -162,20 +165,24 @@ SUBSYSTEM_DEF(shuttle)
 	emergencyNoRecall = FALSE
 
 /datum/controller/subsystem/shuttle/proc/getShuttle(id)
-	for(var/obj/docking_port/mobile/M in mobile)
-		if(M.id == id)
-			return M
+	if(mobile[id])
+		return mobile[id]
+	WARNING("couldn't find shuttle with id: [id]. try to find match destination_type")
+	for(var/port in mobile)
+		var/obj/docking_port/mobile/M = mobile[port]
 		if(M.destination_type == id)
 			return M
-	WARNING("couldn't find shuttle with id: [id]")
+	WARNING("couldn't find shuttle with destination_type: [id]")
 
 /datum/controller/subsystem/shuttle/proc/getDock(id)
-	for(var/obj/docking_port/stationary/S in stationary)
-		if(S.id == id)
-			return S
-		if(S.destination_type == id)
-			return S
-	WARNING("couldn't find dock with id: [id]")
+	if(stationary[id])
+		return stationary[id]
+	WARNING("couldn't find dock with id: [id]. try to find match destination_type")
+	for(var/port in stationary)
+		var/obj/docking_port/stationary/M = stationary[port]
+		if(M.destination_type == id)
+			return M
+	WARNING("couldn't find dock with destination_type: [id]")
 
 /datum/controller/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
 	if(!emergency)
@@ -579,38 +586,36 @@ SUBSYSTEM_DEF(shuttle)
 	var/area/current = get_area(A)
 	if(istype(current, /area/shuttle) && !istype(current, /area/shuttle/transit))
 		return TRUE
-	for(var/obj/docking_port/mobile/M in mobile)
+	for(var/port in mobile)
+		var/obj/docking_port/mobile/M = mobile[port]
 		if(M.is_in_shuttle_bounds(A))
 			return TRUE
 
 /datum/controller/subsystem/shuttle/proc/get_containing_shuttle(atom/A)
-	var/list/mobile_cache = mobile
-	for(var/i in 1 to mobile_cache.len)
-		var/obj/docking_port/port = mobile_cache[i]
-		if(port.is_in_shuttle_bounds(A))
-			return port
+	for(var/port in mobile)
+		var/obj/docking_port/dock = mobile[port]
+		if(dock.is_in_shuttle_bounds(A))
+			return dock
 
 /datum/controller/subsystem/shuttle/proc/get_containing_dock(atom/A)
 	. = list()
-	var/list/stationary_cache = stationary
-	for(var/i in 1 to stationary_cache.len)
-		var/obj/docking_port/port = stationary_cache[i]
-		if(port.is_in_shuttle_bounds(A))
-			. += port
+	for(var/port in stationary)
+		var/obj/docking_port/dock = stationary[port]
+		if(dock.is_in_shuttle_bounds(A))
+			. += dock
 
 /datum/controller/subsystem/shuttle/proc/get_dock_overlap(x0, y0, x1, y1, z)
 	. = list()
-	var/list/stationary_cache = stationary
-	for(var/i in 1 to stationary_cache.len)
-		var/obj/docking_port/port = stationary_cache[i]
-		if(!port || port.z != z)
+	for(var/port in stationary)
+		var/obj/docking_port/dock = stationary[port]
+		if(!dock || dock.z != z)
 			continue
-		var/list/bounds = port.return_coords()
+		var/list/bounds = dock.return_coords()
 		var/list/overlap = get_overlap(x0, y0, x1, y1, bounds[1], bounds[2], bounds[3], bounds[4])
 		var/list/xs = overlap[1]
 		var/list/ys = overlap[2]
 		if(xs.len && ys.len)
-			.[port] = overlap
+			.[dock] = overlap
 
 /datum/controller/subsystem/shuttle/proc/update_hidden_docking_ports(list/remove_turfs, list/add_turfs)
 	var/list/remove_images = list()
@@ -827,7 +832,7 @@ SUBSYSTEM_DEF(shuttle)
 	// Status panel
 	data["shuttles"] = list()
 	for(var/i in mobile)
-		var/obj/docking_port/mobile/M = i
+		var/obj/docking_port/mobile/M = mobile[i]
 		var/timeleft = M.timeLeft(1)
 		var/list/L = list()
 		L["name"] = M.name
