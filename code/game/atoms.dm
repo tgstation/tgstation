@@ -954,7 +954,7 @@
 
 ///Analyzer act
 /atom/proc/analyzer_act(mob/living/user, obj/item/I)
-	return
+	return SEND_SIGNAL(src, COMSIG_ATOM_ANALYSER_ACT, user, I)
 
 ///Generate a tag for this atom
 /atom/proc/GenerateTag()
