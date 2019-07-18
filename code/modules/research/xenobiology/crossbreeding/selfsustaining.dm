@@ -12,6 +12,7 @@ Self-sustaining extracts:
 	name = "autoslime"
 	desc = "It resembles a normal slime extract, but seems filled with a strange, multi-colored fluid."
 	var/obj/item/slime_extract/extract
+	var/effect_desc = "A self-sustaining slime extract. When used, lets you choose which reaction you want."
 
 //Just divides into the actual item.
 /obj/item/slimecross/selfsustaining/Initialize()
@@ -43,7 +44,7 @@ Self-sustaining extracts:
 		amount = 4
 		reagentselect = "plasma"
 	if(reagentselect == "holy water and uranium")
-		reagentselect = "holywater"
+		reagentselect = /datum/reagent/water/holywater
 		secondary = "uranium"
 	extract.forceMove(user.drop_location())
 	qdel(src)
@@ -51,6 +52,11 @@ Self-sustaining extracts:
 	extract.reagents.add_reagent(reagentselect,amount)
 	if(secondary)
 		extract.reagents.add_reagent(secondary,amount)
+
+/obj/item/autoslime/examine(mob/user)
+  . = ..()
+  if(effect_desc)
+    . += "<span class='notice'>[effect_desc]</span>"
 
 //Different types.
 

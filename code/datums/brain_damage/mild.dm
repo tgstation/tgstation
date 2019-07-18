@@ -192,7 +192,8 @@
 
 	var/static/list/common_words = world.file2list("strings/1000_most_common.txt")
 
-/datum/brain_trauma/mild/expressive_aphasia/on_say(message)
+/datum/brain_trauma/mild/expressive_aphasia/handle_speech(datum/source, list/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
 	if(message)
 		var/list/message_split = splittext(message, " ")
 		var/list/new_message = list()
@@ -201,13 +202,13 @@
 			var/suffix = copytext(word,-1)
 
 			// Check if we have a suffix and break it out of the word
-			if(suffix in list("." , "," , ";" , "!" , ":" , "?"))  
+			if(suffix in list("." , "," , ";" , "!" , ":" , "?"))
 				word = copytext(word,1,-1)
 			else
 				suffix = ""
 
 			word = html_decode(word)
-		
+
 			if(lowertext(word) in common_words)
 				new_message += word + suffix
 			else
@@ -219,7 +220,7 @@
 					shuffle_inplace(charlist)
 					charlist.len = round(charlist.len * 0.5,1)
 					new_message += html_encode(jointext(charlist,"")) + suffix
-					
+
 		message = jointext(new_message, " ")
-		
-	return trim(message)
+
+	speech_args[SPEECH_MESSAGE] = trim(message)

@@ -4,13 +4,14 @@
 	desc = "A glowing bluespace crystal, not much is known about how they work. It looks very delicate."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "bluespace_crystal"
+	item_color = "cosmos"
 	singular_name = "bluespace crystal"
 	w_class = WEIGHT_CLASS_TINY
 	materials = list(MAT_BLUESPACE=MINERAL_MATERIAL_AMOUNT)
 	points = 50
 	var/blink_range = 8 // The teleport range when crushed/thrown at someone.
 	refined_type = /obj/item/stack/sheet/bluespace_crystal
-	grind_results = list("bluespace" = 20)
+	grind_results = list(/datum/reagent/bluespace = 20)
 
 /obj/item/stack/ore/bluespace_crystal/refined
 	name = "refined bluespace crystal"
@@ -53,7 +54,7 @@
 	blink_range = 4 // Not as good as the organic stuff!
 	points = 0 //nice try
 	refined_type = null
-	grind_results = list("bluespace" = 10, "silicon" = 20)
+	grind_results = list(/datum/reagent/bluespace = 10, /datum/reagent/silicon = 20)
 
 //Polycrystals, aka stacks
 /obj/item/stack/sheet/bluespace_crystal
@@ -66,7 +67,7 @@
 	materials = list(MAT_BLUESPACE=MINERAL_MATERIAL_AMOUNT)
 	attack_verb = list("bluespace polybashed", "bluespace polybattered", "bluespace polybludgeoned", "bluespace polythrashed", "bluespace polysmashed")
 	novariants = TRUE
-	grind_results = list("bluespace" = 20)
+	grind_results = list(/datum/reagent/bluespace = 20)
 	point_value = 30
 	var/crystal_type = /obj/item/stack/ore/bluespace_crystal/refined
 

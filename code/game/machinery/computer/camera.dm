@@ -227,7 +227,7 @@
 
 /obj/machinery/computer/security/telescreen/entertainment/Initialize()
 	. = ..()
-	AddComponent(/datum/component/redirect, list(COMSIG_CLICK = CALLBACK(src, .proc/BigClick)))
+	RegisterSignal(src, COMSIG_CLICK, .proc/BigClick)
 
 // Bypass clickchain to allow humans to use the telescreen from a distance
 /obj/machinery/computer/security/telescreen/entertainment/proc/BigClick()

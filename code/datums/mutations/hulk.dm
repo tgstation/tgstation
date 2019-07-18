@@ -18,6 +18,7 @@
 	ADD_TRAIT(owner, TRAIT_PUSHIMMUNE, TRAIT_HULK)
 	owner.update_body_parts()
 	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "hulk", /datum/mood_event/hulk)
+	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
 
 /datum/mutation/human/hulk/on_attack_hand(atom/target, proximity)
 	if(proximity) //no telekinetic hulk attack
@@ -36,7 +37,9 @@
 	owner.update_body_parts()
 	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "hulk")
 
-/datum/mutation/human/hulk/say_mod(message)
+/datum/mutation/human/hulk/proc/handle_speech(original_message, wrapped_message)
+	var/message = wrapped_message[1]
 	if(message)
-		message = "[uppertext(replacetext(message, ".", "!"))]!!"
-	return message
+		message = "[replacetext(message, ".", "!")]!!"
+	wrapped_message[1] = message
+	return COMPONENT_UPPERCASE_SPEECH

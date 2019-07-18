@@ -1,0 +1,5 @@
+author: "MadoFrog"
+delete-after: True
+changes: 
+  - bugfix: "custom titles now display correctly"
+  - code_imp: "the directories for custom songs and titles have been added to .gitignore"

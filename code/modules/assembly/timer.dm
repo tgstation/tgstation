@@ -31,8 +31,8 @@
 	. = ..()
 
 /obj/item/assembly/timer/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The timer is [timing ? "counting down from [time]":"set for [time] seconds"].</span>")
+	. = ..()
+	. += "<span class='notice'>The timer is [timing ? "counting down from [time]":"set for [time] seconds"].</span>"
 
 /obj/item/assembly/timer/activate()
 	if(!..())

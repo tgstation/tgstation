@@ -35,6 +35,8 @@
 GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for the badmin verb for now
 
 /obj/effect/proc_holder/Destroy()
+	if (action)
+		qdel(action)
 	if(ranged_ability_user)
 		remove_ranged_ability()
 	return ..()
@@ -155,7 +157,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	var/turf/T = get_turf(user)
 	if(is_centcom_level(T.z) && !centcom_cancast) //Certain spells are not allowed on the centcom zlevel
-		to_chat(user, "<span class='notice'>You can't cast this spell here.</span>")
+		to_chat(user, "<span class='warning'>You can't cast this spell here!</span>")
 		return FALSE
 
 	if(!skipcharge)
@@ -163,20 +165,20 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			return FALSE
 
 	if(user.stat && !stat_allowed)
-		to_chat(user, "<span class='notice'>Not when you're incapacitated.</span>")
+		to_chat(user, "<span class='warning'>Not when you're incapacitated!</span>")
 		return FALSE
 
 	if(!antimagic_allowed)
-		var/antimagic = user.anti_magic_check(TRUE, FALSE, major = FALSE, self = TRUE)
+		var/antimagic = user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE)
 		if(antimagic)
 			if(isitem(antimagic))
 				to_chat(user, "<span class='notice'>[antimagic] is interfering with your magic.</span>")
 			else
-				to_chat(user, "<span class='notice'>Magic seems to flee from you, you can't gather enough power to cast this spell.</span>")
+				to_chat(user, "<span class='warning'>Magic seems to flee from you, you can't gather enough power to cast this spell.</span>")
 			return FALSE
 
 	if(!phase_allowed && istype(user.loc, /obj/effect/dummy))
-		to_chat(user, "<span class='notice'>[name] cannot be cast unless you are completely manifested in the material plane.</span>")
+		to_chat(user, "<span class='warning'>[name] cannot be cast unless you are completely manifested in the material plane!</span>")
 		return FALSE
 
 	if(ishuman(user))
@@ -184,7 +186,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		var/mob/living/carbon/human/H = user
 
 		if((invocation_type == "whisper" || invocation_type == "shout") && !H.can_speak_vocal())
-			to_chat(user, "<span class='notice'>You can't get the words out!</span>")
+			to_chat(user, "<span class='warning'>You can't get the words out!</span>")
 			return FALSE
 
 		var/list/casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe,
@@ -196,24 +198,24 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 		if(clothes_req) //clothes check
 			if(!is_type_in_typecache(H.wear_suit, casting_clothes))
-				to_chat(H, "<span class='notice'>I don't feel strong enough without my robe.</span>")
+				to_chat(H, "<span class='warning'>You don't feel strong enough without your robe!</span>")
 				return FALSE
 			if(!is_type_in_typecache(H.head, casting_clothes))
-				to_chat(H, "<span class='notice'>I don't feel strong enough without my hat.</span>")
+				to_chat(H, "<span class='warning'>You don't feel strong enough without your hat!</span>")
 				return FALSE
 		if(cult_req) //CULT_REQ CLOTHES CHECK
 			if(!istype(H.wear_suit, /obj/item/clothing/suit/magusred) && !istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/cult))
-				to_chat(H, "<span class='notice'>I don't feel strong enough without my armor.</span>")
+				to_chat(H, "<span class='warning'>You don't feel strong enough without your armor.</span>")
 				return FALSE
 			if(!istype(H.head, /obj/item/clothing/head/magus) && !istype(H.head, /obj/item/clothing/head/helmet/space/hardsuit/cult))
-				to_chat(H, "<span class='notice'>I don't feel strong enough without my helmet.</span>")
+				to_chat(H, "<span class='warning'>You don't feel strong enough without your helmet.</span>")
 				return FALSE
 	else
 		if(clothes_req || human_req)
-			to_chat(user, "<span class='notice'>This spell can only be cast by humans!</span>")
+			to_chat(user, "<span class='warning'>This spell can only be cast by humans!</span>")
 			return FALSE
 		if(nonabstract_req && (isbrain(user) || ispAI(user)))
-			to_chat(user, "<span class='notice'>This spell can only be cast by physical beings!</span>")
+			to_chat(user, "<span class='warning'>This spell can only be cast by physical beings!</span>")
 			return FALSE
 
 
@@ -239,7 +241,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		if("charges")
 			if(!charge_counter)
 				if(!silent)
-					to_chat(user, "<span class='notice'>[name] has no charges left.</span>")
+					to_chat(user, "<span class='warning'>[name] has no charges left!</span>")
 				return FALSE
 	return TRUE
 
@@ -265,7 +267,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
-	still_recharging_msg = "<span class='notice'>[name] is still recharging.</span>"
+	still_recharging_msg = "<span class='warning'>[name] is still recharging!</span>"
 	charge_counter = charge_max
 
 /obj/effect/proc_holder/spell/Destroy()
@@ -513,7 +515,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(user.stat && !stat_allowed)
 		return FALSE
 
-	if(!antimagic_allowed && user.anti_magic_check(TRUE, FALSE, major = FALSE, self = TRUE))
+	if(!antimagic_allowed && user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE))
 		return FALSE
 
 	if(!ishuman(user))
