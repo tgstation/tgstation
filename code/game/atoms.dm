@@ -898,16 +898,16 @@
 	if(. == COMPONENT_BLOCK_TOOL_ATTACK)
 		return TRUE
 
-//! Tool-specific behavior procs. To be overridden in subtypes.
+//! Tool-specific behavior procs. They send signals, so try to call ..()
 ///
 
 ///Crowbar act
 /atom/proc/crowbar_act(mob/living/user, obj/item/I)
-	return SEND_SIGNAL(src, COMSIG_ATOM_CROWBAR_ACT, user, I) == COMPONENT_BLOCK_TOOL_ATTACK ? TRUE : FALSE
+	return SEND_SIGNAL(src, COMSIG_ATOM_CROWBAR_ACT, user, I)
 
 ///Multitool act
 /atom/proc/multitool_act(mob/living/user, obj/item/I)
-	return SEND_SIGNAL(src, COMSIG_ATOM_MULTITOOL_ACT, user, I) == COMPONENT_BLOCK_TOOL_ATTACK ? TRUE : FALSE
+	return SEND_SIGNAL(src, COMSIG_ATOM_MULTITOOL_ACT, user, I)
 
 ///Check if the multitool has an item in it's data buffer
 /atom/proc/multitool_check_buffer(user, obj/item/I, silent = FALSE)
@@ -919,19 +919,19 @@
 
 ///Screwdriver act
 /atom/proc/screwdriver_act(mob/living/user, obj/item/I)
-	return SEND_SIGNAL(src, COMSIG_ATOM_SCREWDRIVER_ACT, user, I) == COMPONENT_BLOCK_TOOL_ATTACK ? TRUE : FALSE
+	return SEND_SIGNAL(src, COMSIG_ATOM_SCREWDRIVER_ACT, user, I)
 
 ///Wrench act
 /atom/proc/wrench_act(mob/living/user, obj/item/I)
-	return SEND_SIGNAL(src, COMSIG_ATOM_WRENCH_ACT, user, I) == COMPONENT_BLOCK_TOOL_ATTACK ? TRUE : FALSE
+	return SEND_SIGNAL(src, COMSIG_ATOM_WRENCH_ACT, user, I)
 
 ///Wirecutter act
 /atom/proc/wirecutter_act(mob/living/user, obj/item/I)
-	return SEND_SIGNAL(src, COMSIG_ATOM_WIRECUTTER_ACT, user, I) == COMPONENT_BLOCK_TOOL_ATTACK ? TRUE : FALSE
+	return SEND_SIGNAL(src, COMSIG_ATOM_WIRECUTTER_ACT, user, I)
 
 ///Welder act
 /atom/proc/welder_act(mob/living/user, obj/item/I)
-	return SEND_SIGNAL(src, COMSIG_ATOM_WELDER_ACT, user, I) == COMPONENT_BLOCK_TOOL_ATTACK ? TRUE : FALSE
+	return SEND_SIGNAL(src, COMSIG_ATOM_WELDER_ACT, user, I)
 
 ///Analyzer act
 /atom/proc/analyzer_act(mob/living/user, obj/item/I)
