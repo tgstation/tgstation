@@ -4,8 +4,8 @@
 	name = "Mark Champion"
 	desc = "Selects a single human in our range as our champion. They will carry the disease but not be affected by it, and will spread it to others around him. Upon death, they will revive as a greater minion."
 
-	action_background_icon_state = "bg_hive"
-	action_icon_state = "mindswap"
+	action_background_icon_state = "bg_melting"
+	action_icon_state = "mark"
 
 	school = "transmutation"
 	charge_max = 600
@@ -62,9 +62,9 @@
 	name = "Change Colors"
 	desc = "Swap colors to your liking! You only have one minute to do this before your color locks in, so decide fast!"
 	check_flags = AB_CHECK_CONSCIOUS
-	button_icon_state = "lay_web"
-	icon_icon = 'icons/mob/actions/actions_animal.dmi'
-	background_icon_state = "bg_alien"
+	button_icon_state = "colors"
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	background_icon_state = "bg_melting"
 
 /datum/action/innate/colorchange/Activate()
 	owner.color = input(owner, "Choose your new color", "Color","#"+owner.color) as color|null
@@ -74,14 +74,14 @@
 	name = "Slime Toss"
 	desc = "Fires a heavy hitting slime projectile, stuns and infects the target with the slime disease. Converts critical humans into minions."
 
-	action_background_icon_state = "bg_hive"
-	action_icon_state = "mindswap" //change
+	action_background_icon_state = "bg_melting"
+	action_icon_state = "slimeball" //change
 
 	charge_max = 500
 	range = 20
 	projectile_type = /obj/item/projectile/slime
-	base_icon_state = "fireball"
-	action_icon_state = "fireball0"
+	base_icon_state = "slimeball0"
+	action_icon_state = "slimeball1"
 	sound = 'sound/effects/slime_ready.ogg'
 	active_msg = "You ready a slime toss!"
 	deactive_msg = "You decide against tossing slime."

@@ -19,6 +19,7 @@
 	process_dead = TRUE
 	var/mob/living/simple_animal/hostile/melting/creator
 	var/obj/item/slime_mask/mask
+	
 	//bantype = "Melting" antag ban! duh!
 
 /datum/disease/transformation/melting/New(mob_source)
@@ -43,8 +44,9 @@
 		if(3)
 			if(affected_mob.stat == DEAD)
 				do_disease_transformation(affected_mob)
-			if(!mask)
+			if(isnull(mask))
 				mask = new(get_turf(affected_mob))
+
 
 			if(prob(6))
 				to_chat(affected_mob, "<span class='danger'>You feel a burning pain in your chest.</span>")

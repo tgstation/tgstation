@@ -5,13 +5,14 @@
 	real_name = "melting"
 	desc = "While seemingly nice in appearance, this creature is completely evil."
 	icon = 'icons/mob/melting.dmi'
-	icon_state = "melting_base"
-	icon_living = "melting_base"
+	icon_state = ""
+	icon_living = ""
+	bubble_icon = "melting"
+	pixel_x = -16
+	pixel_y = -4
 	speed = 2
 	a_intent = INTENT_HARM
-	stop_automated_movement = 1
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
 	maxHealth = 150
 	health = 150
 	healable = 0
@@ -20,21 +21,18 @@
 	melee_damage_upper = 20
 	see_in_dark = 8
 	gender = NEUTER
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	vision_range = 1 // Only attack when target is close
-	wander = FALSE
 	attacktext = "glomps"
 	attack_sound = 'sound/effects/blobattack.ogg'
 	del_on_death = TRUE
 	var/obj/effect/proc_holder/spell/targeted/mark/mark
 	var/datum/action/innate/colorchange/colors
 	var/obj/effect/proc_holder/spell/aimed/slime/slimeball
+	var/static/mutable_appearance/slimebody_overlay
 
 /mob/living/simple_animal/hostile/melting/Initialize()
 	. = ..()
 	name = "[pick(GLOB.melting_first_names)] [pick(GLOB.melting_last_names)]"
-	color = rgb(rand(100, 255), rand(100, 255), rand(100, 255))
-	add_overlay("melting_shine")
+	setup_icons()
 	mark = new
 	AddSpell(mark)
 	colors = new
@@ -42,6 +40,20 @@
 	addtimer(CALLBACK(src, .proc/remove_colorpick), 1 MINUTES)
 	slimeball = new
 	AddSpell(slimeball)
+
+/mob/living/simple_animal/hostile/melting/proc/setup_icons()
+	cut_overlays()
+	var/slimebody_color = rgb(rand(100, 255), rand(100, 255), rand(100, 255))
+	slimebody_overlay = slimebody_overlay || mutable_appearance('icons/mob/melting.dmi')
+	slimebody_overlay.icon_state = "melting_base"
+	slimebody_overlay.color = slimebody_color
+	slimebody_overlay.alpha = 200
+	add_overlay(slimebody_overlay)
+	add_overlay("melting_shine")
+
+/mob/living/simple_animal/hostile/melting/proc/test_alpha(new_alphas = 255)
+	slimebody_overlay.alpha = new_alphas
+	to_chat(world, "alpha set to [new_alphas]!")
 
 /mob/living/simple_animal/hostile/melting/proc/remove_colorpick()
 	if(colors)
