@@ -101,6 +101,8 @@
 		A.cancel_camera()
 		if(purified)
 			icon_state = "purified_soulstone"
+			A.icon_state = "ghost1"
+			A.name = "Purified [initial(A.name)]"
 		else
 			icon_state = "soulstone"
 		name = initial(name)
