@@ -345,7 +345,8 @@
 /datum/dynamic_ruleset/roundstart/delayed/revs
 	name = "Revolution"
 	persistent = TRUE
-	antag_flag = ROLE_REV
+	antag_flag = ROLE_REV_HEAD
+	antag_flag_override = ROLE_REV
 	antag_datum = /datum/antagonist/rev/head
 	restricted_roles = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director")
 	required_candidates = 3
@@ -381,7 +382,7 @@
 		candidates -= M
 		assigned += M.mind
 		M.mind.restricted_roles = restricted_roles
-		M.mind.special_role = ROLE_REV_HEAD
+		M.mind.special_role = antag_flag
 		var/datum/antagonist/rev/head/new_head = new antag_datum()
 		new_head.give_flash = TRUE
 		new_head.give_hud = TRUE

@@ -13,6 +13,8 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts
 	weight = 0
+	// List of ghost candidates for the midround ruleset.
+	var/list/applicants = list()
 	var/makeBody = TRUE
 
 /datum/dynamic_ruleset/midround/trim_candidates()
@@ -78,7 +80,31 @@
 	send_applications(possible_candidates)
 	return TRUE
 
-/datum/dynamic_ruleset/midround/from_ghosts/review_applications()
+// This sends a poll to ghosts if they want to be a ghost spawn from a ruleset.
+/datum/dynamic_ruleset/midround/from_ghosts/proc/send_applications(list/possible_volunteers = list())
+	if (possible_volunteers.len <= 0) // This shouldn't happen, as ready() should return FALSE if there is not a single valid candidate
+		message_admins("Possible volunteers was 0. This shouldn't appear, because of ready(), unless you forced it!")
+		return
+	message_admins("DYNAMIC MODE: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
+	log_game("DYNAMIC: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
+
+	applicants = pollGhostCandidates("The mode is looking for volunteers to become [initial(antag_flag)]", antag_flag, SSticker.mode, antag_flag, poll_time = 600)
+	
+	if(!applicants || applicants.len <= 0)
+		message_admins("DYNAMIC MODE: [name] received no applications.")
+		log_game("DYNAMIC: [name] received no applications.")
+		mode.refund_threat(cost)
+		mode.threat_log += "[worldtime2text()]: Rule [name] refunded [cost] (no applications)"
+		mode.executed_rules -= src
+		return
+
+	message_admins("DYNAMIC MODE: [applicants.len] players volunteered for [name].")
+	log_game("DYNAMIC: [applicants.len] players volunteered for [name].")
+	review_applications()
+
+// Here is where you can check if your ghost applicants are valid for the ruleset.
+// Called by send_applications().
+/datum/dynamic_ruleset/midround/from_ghosts/proc/review_applications()
 	message_admins("Applicant list: [english_list(applicants)]")
 	for (var/i = required_candidates, i > 0, i--)
 		if(applicants.len <= 0)
@@ -223,6 +249,7 @@
 	candidates -= M
 	assigned += M.mind
 	var/datum/antagonist/traitor/AI = new
+	M.mind.special_role = antag_flag
 	M.mind.add_antag_datum(AI)
 	if(prob(ion_announce))
 		priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", 'sound/ai/ionstorm.ogg')

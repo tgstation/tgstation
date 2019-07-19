@@ -1,39 +1,53 @@
 /datum/dynamic_ruleset
-	var/name = "" // For admin logging
-	var/ruletype = "" // For admin logging, do not change unless making a new rule type.
-	var/persistent = FALSE // If set to TRUE, the rule won't be discarded after being executed, and dynamic will call rule_process() every SSTicker tick
-	var/repeatable = FALSE // If set to TRUE, dynamic mode will be able to draft this ruleset again later on. (doesn't apply for roundstart rules)
-	var/repeatable_weight_decrease = 2 // If set higher than 0, decreases weight by itself causing the ruleset to appear less often the more it is repeated.
-	var/list/mob/candidates = list() // List of players that are being drafted for this rule
-	var/list/datum/mind/assigned = list() // List of players that were selected for this rule
-	var/antag_flag = null // Preferences flag such as ROLE_WIZARD that need to be turned on for players to be antag
+	// For admin logging and round end screen.
+	var/name = ""
+	// For admin logging and round end screen, do not change this unless making a new rule type.
+	var/ruletype = "" 
+	// If set to TRUE, the rule won't be discarded after being executed, and dynamic will call rule_process() every time it ticks.
+	var/persistent = FALSE 
+	// If set to TRUE, dynamic mode will be able to draft this ruleset again later on. (doesn't apply for roundstart rules)
+	var/repeatable = FALSE 
+	// If set higher than 0 decreases weight by itself causing the ruleset to appear less often the more it is repeated.
+	var/repeatable_weight_decrease = 2 
+	// List of players that are being drafted for this rule
+	var/list/mob/candidates = list() 
+	// List of players that were selected for this rule
+	var/list/datum/mind/assigned = list() 
+	// Preferences flag such as ROLE_WIZARD that need to be turned on for players to be antag
+	var/antag_flag = null 
+	// The antagonist datum that is assigned to the mobs mind on ruleset execution.
 	var/datum/antagonist/antag_datum = null
-	var/list/protected_roles = list() // If set, and config flag protect_roles_from_antagonist is false, then the rule will pick players from these roles.
-	var/list/restricted_roles = list() // If set, rule will deny candidates from those roles
-	var/list/exclusive_roles = list() // If set, rule will only accept candidates from those roles, IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
-	var/list/enemy_roles = list() // If set, there needs to be a certain amount of players doing those roles (among the players who won't be drafted) for the rule to be drafted IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
-	var/required_enemies = list(1,1,0,0,0,0,0,0,0,0) // If enemy_roles was set, this is the amount of enemy job workers needed per threat_level range (0-10,10-20,etc) IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
-	var/required_candidates = 0 // The rule needs this many candidates (post-trimming) to be executed (example: Cult need 4 players at round start)
-	var/weight = 5 // 1 -> 9, probability for this rule to be picked against other rules
-	var/cost = 0 // Threat cost for this rule.
-
+	 // If set, and config flag protect_roles_from_antagonist is false, then the rule will not pick players from these roles.
+	var/list/protected_roles = list()
+	// If set, rule will deny candidates from those roles always.
+	var/list/restricted_roles = list() 
+	// If set, rule will only accept candidates from those roles, IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
+	var/list/exclusive_roles = list() 
+	// If set, there needs to be a certain amount of players doing those roles (among the players who won't be drafted) for the rule to be drafted IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
+	var/list/enemy_roles = list() 
+	// If enemy_roles was set, this is the amount of enemy job workers needed per threat_level range (0-10,10-20,etc) IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
+	var/required_enemies = list(1,1,0,0,0,0,0,0,0,0) 
+	// The rule needs this many candidates (post-trimming) to be executed (example: Cult needs 4 players at round start)
+	var/required_candidates = 0 
+	// 1 -> 9, probability for this rule to be picked against other rules
+	var/weight = 5 
+	// Threat cost for this rule, this is decreased from the mode's threat when the rule is executed.
+	var/cost = 0 
+	// A flag that determines how the ruleset is handled
+	// HIGHLANDER_RULESET are rulesets can end the round.
+	// TRAITOR_RULESET and MINOR_RULESET can't end the round and have no difference right now.
 	var/flags = 0
-
-	// For midround polling
-	var/list/applicants = list()
-
-	// Pop range per requirement. If this is the default five, the pop range for requirements are:
-	// 0-4, 5-9, 10-14, 15-19, 20-24, 25-29, 30-34, 35-39, 40-54, 45+
-	var/pop_per_requirement = 5
+	// Pop range per requirement. If zero defaults to mode's pop_per_requirement.
+	var/pop_per_requirement = 0
 	// Requirements are the threat level requirements per pop range.
 	// With the default values, The rule will never get drafted below 10 threat level (aka: "peaceful extended"), and it requires a higher threat level at lower pops.
 	var/list/requirements = list(40,30,20,10,10,10,10,10,10,10)
 	// An alternative, static requirement used instead when pop is over mode's high_pop_limit. 
-	var/high_population_requirement = 10.
-
+	var/high_population_requirement = 10
+	// Reference to the mode, use this instead of SSticker.mode.
 	var/datum/game_mode/dynamic/mode = null
-
-	var/antag_flag_override = null // If a role is to be considered another for the purpose of banning.
+	// If a role is to be considered another for the purpose of banning.
+	var/antag_flag_override = null 
 
 /datum/dynamic_ruleset/New()
 	..()
@@ -64,7 +78,7 @@
 	if (population >= GLOB.dynamic_high_pop_limit)
 		return (threat_level >= high_population_requirement)
 	else
-		var/indice_pop = min(10,round(population/pop_per_requirement)+1)
+		var/indice_pop = min(10,round(population/pop_per_requirement ? pop_per_requirement : mode.pop_per_requirement)+1)
 		return (threat_level >= requirements[indice_pop])
 
 // This is called if persistent variable is true everytime SSTicker ticks.
@@ -113,33 +127,6 @@
 // Usually this does not need to be changed unless you need some specific requirements from your candidates.
 /datum/dynamic_ruleset/proc/trim_candidates()
 	return
-
-// This sends a poll to ghosts if they want to be a ghost spawn from a ruleset.
-// Called by from_ghost midround rulesets.
-/datum/dynamic_ruleset/proc/send_applications(list/possible_volunteers = list())
-	if (possible_volunteers.len <= 0) // This shouldn't happen, as ready() should return FALSE if there is not a single valid candidate
-		message_admins("Possible volunteers was 0. This shouldn't appear, because of ready(), unless you forced it!")
-		return
-	message_admins("DYNAMIC MODE: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
-	log_game("DYNAMIC: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
-
-	applicants = pollGhostCandidates("The mode is looking for volunteers to become [initial(antag_flag)]", antag_flag, SSticker.mode, antag_flag, poll_time = 600)
-	
-	if(!applicants || applicants.len <= 0)
-		message_admins("DYNAMIC MODE: [name] received no applications.")
-		log_game("DYNAMIC: [name] received no applications.")
-		mode.refund_threat(cost)
-		mode.threat_log += "[worldtime2text()]: Rule [name] refunded [cost] (no applications)"
-		mode.executed_rules -= src
-		return
-
-	message_admins("DYNAMIC MODE: [applicants.len] players volunteered for [name].")
-	log_game("DYNAMIC: [applicants.len] players volunteered for [name].")
-	review_applications()
-
-// Here is where you can check if your ghost applicants are still valid.
-// Called by send_applications().
-/datum/dynamic_ruleset/proc/review_applications()
 
 // Counts how many players are ready at roundstart.
 // Used only by non-delayed roundstart rulesets. 

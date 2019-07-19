@@ -16,13 +16,26 @@ GLOBAL_VAR_INIT(dynamic_latejoin_delay_max, (25 MINUTES))
 GLOBAL_VAR_INIT(dynamic_midround_delay_min, (15 MINUTES))
 GLOBAL_VAR_INIT(dynamic_midround_delay_max, (35 MINUTES))
 
+// Are HIGHLANDER_RULESETs allowed to stack?
 GLOBAL_VAR_INIT(dynamic_no_stacking, TRUE)
+// A number between -5 and +5. 
+// Negative value will give a more peaceful round and
+// positive value will give a round with higher threat.
 GLOBAL_VAR_INIT(dynamic_curve_centre, 0)
+// A number between 0.5 and 4.
+// Higher value will favour extreme rounds and
+// lower value rounds closer to the average.
 GLOBAL_VAR_INIT(dynamic_curve_width, 1.8)
+// If enabled only picks a single starting rule and executes only autotraitor midround ruleset. 
 GLOBAL_VAR_INIT(dynamic_classic_secret, FALSE)
+// How many roundstart players required for high population override to take effect.
 GLOBAL_VAR_INIT(dynamic_high_pop_limit, 60)
+// If enabled does not accept or execute any rulesets.
 GLOBAL_VAR_INIT(dynamic_forced_extended, FALSE)
+// How high threat is required for HIGHLANDER_RULESETs stacking.
+// This is independent of dynamic_no_stacking.
 GLOBAL_VAR_INIT(dynamic_stacking_limit, 90)
+// List of forced roundstart rulesets.
 GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 
 /datum/game_mode/dynamic
@@ -49,11 +62,16 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	// Second and third rule requirements are the threat level requirements per pop range, see pop_per_requirement for pop range.
 	var/list/second_rule_req = list(100,100,80,70,60,40,20,0,0,0)
 	var/list/third_rule_req = list(100,100,100,90,80,70,50,30,10,0)
+	// Threat requirements for extra rulesets when high pop override is in effect. 
 	var/high_pop_second_rule_req = 50
 	var/high_pop_third_rule_req = 70
+	// How many players joined the game when starting.
 	var/roundstart_pop_ready = 0
+	// List of candidates used on roundstart rulesets.
 	var/list/candidates = list()
+	// Rules that are processed, rule_process is called on the rules in this list.
 	var/list/current_rules = list()
+	// List of executed rulesets.
 	var/list/executed_rules = list()
 
 	var/list/list/current_players = list(CURRENT_LIVING_PLAYERS, CURRENT_LIVING_ANTAGS, CURRENT_DEAD_PLAYERS, CURRENT_OBSERVERS)
@@ -129,15 +147,15 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	
 	AdminPanel() // Refreshes the window
 
-// This needs to be changed to take the result from the ruleset that ended the game mode
+// Checks if there are HIGHLANDER_RULESETs and calls the rule's round_result() proc
 /datum/game_mode/dynamic/set_round_result()
 	for(var/datum/dynamic_ruleset/rule in executed_rules)
-		if(rule.flags == HIGHLANDER_RULESET)
+		if(rule.flags & HIGHLANDER_RULESET)
 			if(rule.check_finished()) // Only the rule that actually finished the round sets round result.
 				return rule.round_result()
 	// If it got to this part, just pick one highlander if it exists
 	for(var/datum/dynamic_ruleset/rule in executed_rules)
-		if(rule.flags == HIGHLANDER_RULESET)
+		if(rule.flags & HIGHLANDER_RULESET)
 			return rule.round_result()
 	return ..()
 
@@ -193,7 +211,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	if(force_ending)
 		return TRUE
 	for(var/datum/dynamic_ruleset/rule in executed_rules)
-		if(rule.flags == HIGHLANDER_RULESET)
+		if(rule.flags & HIGHLANDER_RULESET)
 			return rule.check_finished()
 
 /datum/game_mode/dynamic/proc/show_threatlog(mob/admin)
@@ -241,14 +259,16 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	return TRUE
 
 /datum/game_mode/dynamic/pre_setup()
-	for (var/rule in subtypesof(/datum/dynamic_ruleset/roundstart) - /datum/dynamic_ruleset/roundstart/delayed/)
-		roundstart_rules += new rule()
-	for (var/rule in subtypesof(/datum/dynamic_ruleset/latejoin))
-		latejoin_rules += new rule()
-	for (var/rule in subtypesof(/datum/dynamic_ruleset/midround))
-		var/datum/dynamic_ruleset/midround/DR = rule
-		if (initial(DR.weight))
-			midround_rules += new rule()
+	for (var/datum/dynamic_ruleset/rule in subtypesof(/datum/dynamic_ruleset))
+		switch(rule.ruletype)
+			if("Roundstart")
+				roundstart_rules += new rule()
+			if("Latejoin")
+				latejoin_rules += new rule()
+			if("Midround")
+				var/datum/dynamic_ruleset/midround/DR = rule
+				if (initial(DR.weight))
+					midround_rules += new rule()
 	for(var/mob/dead/new_player/player in GLOB.player_list)
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
 			roundstart_pop_ready++
@@ -297,7 +317,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	var/list/drafted_rules = list()
 	for (var/datum/dynamic_ruleset/roundstart/rule in roundstart_rules)
 		if (threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
-			if(rule.flags == HIGHLANDER_RULESET && check_for_highlander(drafted_rules))
+			if(rule.flags & HIGHLANDER_RULESET && check_for_highlander(drafted_rules))
 				continue
 		if (rule.acceptable(roundstart_pop_ready,threat_level) && threat >= rule.cost)	// If we got the population and threat required
 			rule.candidates = candidates.Copy()
@@ -469,7 +489,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 						continue
 					// No stacking : only one round-enter, unless > stacking_limit threat.
 					if (threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
-						if(rule.flags == HIGHLANDER_RULESET && check_for_highlander(drafted_rules))
+						if(rule.flags & HIGHLANDER_RULESET && check_for_highlander(drafted_rules))
 							continue
 					rule.candidates = list()
 					rule.candidates = current_players.Copy()
@@ -557,7 +577,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 					continue
 				// No stacking : only one round-enter, unless > stacking_limit threat.
 				if (threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
-					if(rule.flags == HIGHLANDER_RULESET && check_for_highlander(drafted_rules))
+					if(rule.flags & HIGHLANDER_RULESET && check_for_highlander(drafted_rules))
 						continue
 					
 				rule.candidates = list(newPlayer)
@@ -585,7 +605,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 
 /datum/game_mode/dynamic/proc/check_for_highlander(list/drafted_rules)
 	for (var/datum/dynamic_ruleset/roundstart/DR in drafted_rules)
-		if (DR.flags == HIGHLANDER_RULESET)
+		if (DR.flags & HIGHLANDER_RULESET)
 			return TRUE
 
 /datum/game_mode/dynamic/proc/lorentz2threat(x)
