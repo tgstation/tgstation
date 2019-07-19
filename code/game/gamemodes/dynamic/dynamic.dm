@@ -90,7 +90,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			dat += "[DR.ruletype] - <b>[DR.name]</b><br>"
 	else
 		dat += "none.<br>"
-	dat += "<br>Injection Timers: (<b>[GetInjectionChance()]%</b> chance)<BR>"
+	dat += "<br>Injection Timers: (<b>[GetInjectionChance(TRUE)]%</b> chance)<BR>"
 	dat += "Latejoin: [latejoin_injection_cooldown>60*10 ? "[round(latejoin_injection_cooldown/60/10,0.1)] minutes" : "[latejoin_injection_cooldown] seconds"] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
 	dat += "Midround: [midround_injection_cooldown>60*10 ? "[round(midround_injection_cooldown/60/10,0.1)] minutes" : "[midround_injection_cooldown] seconds"] <a href='?src=\ref[src];[HrefToken()];injectmid=2'>\[Now!\]</a><BR>"
 	usr << browse(dat.Join(), "window=gamemode_panel;size=500x500")
@@ -500,9 +500,9 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 					continue
 			current_players[CURRENT_DEAD_PLAYERS].Add(M) // Players who actually died (and admins who ghosted, would be nice to avoid counting them somehow)
 
-/datum/game_mode/dynamic/proc/GetInjectionChance()
+/datum/game_mode/dynamic/proc/GetInjectionChance(dry_run = FALSE)
 	if(forced_injection)
-		forced_injection = FALSE
+		forced_injection = !dry_run
 		return 100
 	var/chance = 0
 	// If the high pop override is in effect, we reduce the impact of population on the antag injection chance
