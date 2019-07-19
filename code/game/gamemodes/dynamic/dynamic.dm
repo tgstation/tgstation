@@ -342,8 +342,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	var/datum/dynamic_ruleset/roundstart/starting_rule = pickweight(drafted_rules)
 
 	if (starting_rule)
-		message_admins("Picking a [istype(starting_rule, /datum/dynamic_ruleset/roundstart/delayed/) ? " delayed " : ""] ruleset...<font size='3'>[starting_rule.name]</font>!")
-		log_game("DYNAMIC: Picking a [istype(starting_rule, /datum/dynamic_ruleset/roundstart/delayed/) ? " delayed " : ""] ruleset...<font size='3'>[starting_rule.name]</font>!")
+		message_admins("Picking a [istype(starting_rule, /datum/dynamic_ruleset/roundstart/delayed/) ? " delayed " : ""] ruleset [starting_rule.name]")
+		log_game("DYNAMIC: Picking a [istype(starting_rule, /datum/dynamic_ruleset/roundstart/delayed/) ? " delayed " : ""] ruleset [starting_rule.name]")
 
 		roundstart_rules -= starting_rule
 		drafted_rules -= starting_rule
@@ -387,6 +387,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		threat_log += "[worldtime2text()]: Latejoin [latejoin_rule.name] spent [latejoin_rule.cost]"
 		if (latejoin_rule.execute())
 			var/mob/M = pick(latejoin_rule.assigned)
+			message_admins("[key_name(M)] joined the station, and was selected by the [latejoin_rule.name] ruleset.")
 			log_game("DYNAMIC: [key_name(M)] joined the station, and was selected by the [latejoin_rule.name] ruleset.")
 			executed_rules += latejoin_rule
 			if (latejoin_rule.persistent)
@@ -404,6 +405,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		spend_threat(midround_rule.cost)
 		threat_log += "[worldtime2text()]: Midround [midround_rule.name] spent [midround_rule.cost]"
 		if (midround_rule.execute())
+			message_admins("Injecting midround rule [midround_rule.name]")
 			log_game("DYNAMIC: Injecting some threats...[midround_rule.name]!")
 			executed_rules += midround_rule
 			if (midround_rule.persistent)
