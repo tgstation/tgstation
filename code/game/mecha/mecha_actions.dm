@@ -1,3 +1,5 @@
+#define COMSIG_ACTIVATE "activate"
+
 //////////////////////////////////////// Action Buttons ///////////////////////////////////////////////
 
 /obj/mecha/proc/GrantActions(mob/living/user, human_occupant = 0)
@@ -164,26 +166,8 @@
 		chassis.log_message("Toggled thrusters.", LOG_MECHA)
 		chassis.occupant_message("<font color='[chassis.thrusters_active ?"blue":"red"]'>Thrusters [chassis.thrusters_active ?"en":"dis"]abled.")
 
-/datum/action/innate/mecha/mech_defence_mode/Activate(forced_state = null, var/quiet = FALSE)
-	if(!owner || !chassis || chassis.occupant != owner)
-		return
-	if(!isnull(forced_state))
-		chassis.defence_mode = forced_state
-	else
-		chassis.defence_mode = !chassis.defence_mode
-	button_icon_state = "mech_defense_mode_[chassis.defence_mode ? "on" : "off"]"
-	if(!quiet)
-		chassis.occupant_message("<span class='notice'>You [chassis.defence_mode?"enable":"disable"] [chassis] defence mode.</span>")
-	chassis.log_message("Toggled defence mode.", LOG_MECHA)
-	UpdateButtonIcon()
-
-	if(chassis.defence_mode)
-		def_overlay = new(chassis.icon, icon_state = "durand_def")
-		def_overlay.appearance_flags = RESET_COLOR
-		def_overlay.pixel_y = 4
-		chassis.add_overlay(def_overlay)
-	else
-		chassis.cut_overlay(def_overlay)
+/datum/action/innate/mecha/mech_defence_mode/Activate(forced_state = FALSE)
+	SEND_SIGNAL(chassis, COMSIG_ACTIVATE, args) ///Signal sent to the mech, to be handed to the shield. See durand.dm for more details
 
 /datum/action/innate/mecha/mech_overload_mode
 	name = "Toggle leg actuators overload"
