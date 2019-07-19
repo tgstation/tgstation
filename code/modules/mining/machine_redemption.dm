@@ -292,8 +292,7 @@
 				if(!amount)
 					return
 
-				var/stored_amount = CEILING(amount / MINERAL_MATERIAL_AMOUNT, 0.01)
-				to_chat(world, "[stored_amount]")
+				var/stored_amount = CEILING(amount / MINERAL_MATERIAL_AMOUNT, 0.1)
 
 				if(!stored_amount)
 					return
