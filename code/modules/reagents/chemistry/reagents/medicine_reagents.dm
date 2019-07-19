@@ -1479,6 +1479,7 @@
 	M.adjust_disgust(3)
 	..()
 	. = 1
+
 /datum/reagent/medicine/mitomidal
 	name = "Mitomidal"
 	description = "This phramaceutical increase the rate of wound healing by acccerlating cell division, this increase unfortunatley comes at the cost of increased DNA adduct formation."
@@ -1499,6 +1500,8 @@
 /datum/reagent/medicine/mitomidal/overdose_process(mob/living/carbon/M)
 	M.adjustBruteLoss(5*REM, 0)
 	M.dizziness++
+	..()
+	. = 1
 
 /datum/reagent/medicine/hollstein ///This reagent is added to prevent cheesing with 0.5 rezadone pills while you are still on mitomidal while adding some extra mechanical depth to the two drugs.
 	name = "Hollstein's Adduct"
@@ -1509,7 +1512,10 @@
 
 /datum/reagent/medicine/hollstein/on_mob_life(mob/living/carbon/M)
 	M.adjustCloneLoss(-0.4, 0)
-	M.dizziness--
+	if(M.dizziness)
+		M.dizziness--
+	..()
+	. = 1
 
 /datum/reagent/medicine/hollstein/on_mob_metabolize(mob/living/L)
 	..()
