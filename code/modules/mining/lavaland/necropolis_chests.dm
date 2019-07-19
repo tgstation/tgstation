@@ -447,7 +447,7 @@
 	name = "hook"
 	ammo_type = /obj/item/ammo_casing/magic/hook/bounty
 
-/obj/item/gun/magic/hook/bounty/shoot_with_empty_chamber(mob/living/user as mob|obj)
+/obj/item/gun/magic/hook/bounty/shoot_with_empty_chamber(mob/living/user)
 	to_chat(user, "<span class='warning'>The [src] isn't ready to fire yet!</span>")
 
 /obj/item/ammo_casing/magic/hook/bounty
