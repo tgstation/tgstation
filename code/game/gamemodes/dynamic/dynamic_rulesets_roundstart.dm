@@ -261,7 +261,6 @@
 	var/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
 	var/datum/team/nuclear/nuke_team
 
-
 /datum/dynamic_ruleset/roundstart/nuclear/ready(forced = FALSE)
 	var/indice_pop = min(10,round(mode.roundstart_pop_ready/5)+1)
 	required_candidates = operative_cap[indice_pop]

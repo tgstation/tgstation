@@ -320,6 +320,11 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			if(rule.flags & HIGHLANDER_RULESET && check_for_highlander(drafted_rules))
 				continue
 		if (rule.acceptable(roundstart_pop_ready,threat_level) && threat >= rule.cost)	// If we got the population and threat required
+			// A hacky but this will do for now. This allows delayed rulesets to be ran but it will refund if ready fails
+			// and forces a midround injection.
+			if(istype(rule, /datum/dynamic_ruleset/roundstart/delayed))
+				drafted_rules[rule] = rule.weight
+				continue
 			rule.candidates = candidates.Copy()
 			rule.trim_candidates()
 			if (rule.ready())
@@ -371,7 +376,9 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		if (istype(starting_rule, /datum/dynamic_ruleset/roundstart/delayed/))
 			var/datum/dynamic_ruleset/roundstart/delayed/rule = starting_rule
 			spend_threat(rule.cost)
+			threat_log += "[worldtime2text()]: Roundstart [rule.name] spent [rule.cost]"
 			addtimer(CALLBACK(src, .proc/execute_delayed, rule), rule.delay)
+			return TRUE
 
 		spend_threat(starting_rule.cost)
 		threat_log += "[worldtime2text()]: Roundstart [starting_rule.name] spent [starting_rule.cost]"
@@ -392,11 +399,22 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 /datum/game_mode/dynamic/proc/execute_delayed(datum/dynamic_ruleset/roundstart/delayed/rule)
 	rule.candidates = GLOB.player_list.Copy()
 	rule.trim_candidates()
+	if(!rule.ready())
+		refund_threat(rule.cost)
+		threat_log += "[worldtime2text()]: Roundstart [rule.name] refunded [rule.cost]"
+		// Forces a midround injection so if it is the only ruleset picked something will still happen.
+		// This is a bit hacky but 
+		forced_injection = TRUE
+		midround_injection_cooldown = 0
+		return FALSE
 	if(rule.execute())
 		executed_rules += rule
 		if (rule.persistent)
 			current_rules += rule
 		return TRUE
+	else
+		stack_trace("The delayed roundstart rule \"[rule.name]\" failed to execute.")
+		return FALSE
 	
 /datum/game_mode/dynamic/proc/picking_latejoin_rule(list/drafted_rules = list())
 	var/datum/dynamic_ruleset/latejoin/latejoin_rule = pickweight(drafted_rules)
