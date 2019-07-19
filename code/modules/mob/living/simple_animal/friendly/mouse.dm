@@ -133,10 +133,10 @@
 	if(proximity_flag && reagents && target.is_open_container())
 		// is_open_container will not return truthy if target.reagents doesn't exist
 		var/datum/reagents/target_reagents = target.reagents
-		var/fuel_amount = reagents.maximum_volume - reagents.total_volume * (4 / 3)
-		if(target_reagents.has_reagent(/datum/reagent/fuel) && target_reagents.trans_id_to(src, /datum/reagent/fuel, fuel_amount))
+		var/trans_amount = reagents.maximum_volume - reagents.total_volume * (4 / 3)
+		if(target_reagents.has_reagent(/datum/reagent/fuel) && target_reagents.trans_to(src, trans_amount))
 			to_chat(user, "<span class='notice'>You dip [src] into [target].</span>")
-			reagents.trans_id_to(target, /datum/reagent/yuck, reagents.get_reagent_amount(/datum/reagent/yuck))
+			reagents.trans_to(target, reagents.total_volume)
 		else
 			to_chat(user, "<span class='warning'>That's a terrible idea.</span>")
 	else
