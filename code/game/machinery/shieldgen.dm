@@ -283,6 +283,7 @@
 		for(var/d in GLOB.cardinals)
 			cleanup_field(d)
 
+/// Constructs the actual field walls in the specified direction, cleans up old/stuck shields before doing so
 /obj/machinery/power/shieldwallgen/proc/setup_field(direction)
 	if(!direction)
 		return
@@ -294,7 +295,7 @@
 
 	for(var/i in 1 to shield_range) //checks out to 8 tiles away for another generator
 		T = get_step(T, direction)
-		G = (locate(/obj/machinery/power/shieldwallgen) in T)
+		G = locate(/obj/machinery/power/shieldwallgen) in T
 		if(G)
 			if(!G.active)
 				return
@@ -311,6 +312,7 @@
 		new/obj/machinery/shieldwall(T, src, G)
 	return TRUE
 
+/// cleans up fields in the specified direction if they belong to this generator
 /obj/machinery/power/shieldwallgen/proc/cleanup_field(direction)
 	var/obj/machinery/shieldwall/F
 	var/obj/machinery/power/shieldwallgen/G
@@ -443,11 +445,12 @@
 	if(damage_type == BRUTE || damage_type == BURN)
 		drain_power(damage_amount)
 
+/// succs power from the connected shield wall generator
 /obj/machinery/shieldwall/proc/drain_power(drain_amount)
 	if(needs_power && gen_primary)
-		gen_primary.add_load(drain_amount*0.5)
+		gen_primary.add_load(drain_amount * 0.5)
 		if(gen_secondary) //using power may cause us to be destroyed
-			gen_secondary.add_load(drain_amount*0.5)
+			gen_secondary.add_load(drain_amount * 0.5)
 
 /obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
