@@ -1472,7 +1472,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
 "fH" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
