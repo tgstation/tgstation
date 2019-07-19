@@ -1,0 +1,5 @@
+author: "Naloacisamazing"
+delete-after: True
+changes: 
+  - rscadd: "Added a co2 area to allow fusion to be done."
+  - rscadd: "few freezers and pipes to help"
