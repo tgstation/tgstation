@@ -116,9 +116,6 @@
 		if(do_after(user, 14.4, target = src))
 			for(var/B in D.blueprints)
 				if(B)
-					var/datum/design/design = B
-					if(!design.build_type & AUTOLATHE)
-						continue
 					stored_research.add_design(B)
 		busy = FALSE
 		return TRUE
