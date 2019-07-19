@@ -1,8 +1,8 @@
 /obj/structure/infection/shield
 	name = "strong infection"
+	desc = "A solid wall of slightly twitching tendrils."
 	icon = 'icons/obj/smooth_structures/infection_wall.dmi'
 	icon_state = "smooth"
-	desc = "A solid wall of slightly twitching tendrils."
 	smooth = SMOOTH_TRUE
 	max_integrity = 150
 	brute_resist = 0.5
@@ -10,9 +10,7 @@
 	explosion_block = 3
 	point_return = 0
 	build_time = 100
-	var/damaged_icon = "smooth"
-	var/damaged_desc = "A wall of twitching tendrils."
-	var/damaged_name = "weakened strong infection"
+	atmosblock = TRUE
 	var/list/crystal_colors = list("#3333aa" = 20, "#33aa33" = 15, "#aa3333" = 15, "#ffffff" = 8, "#822282" = 4, "#444444" = 1)
 
 /obj/structure/infection/shield/Initialize(mapload)
@@ -30,27 +28,19 @@
 /obj/structure/infection/shield/evolve_menu(var/mob/camera/commander/C)
 	return
 
-/obj/structure/infection/shield/update_icon()
-	..()
-	if(obj_integrity <= 75)
-		icon_state = damaged_icon
-		name = damaged_name
-		desc = damaged_desc
-		atmosblock = FALSE
-	else
-		icon_state = initial(icon_state)
-		name = initial(name)
-		desc = initial(desc)
-		atmosblock = TRUE
-	air_update_turf(1)
-
-/*/obj/structure/infection/shield/reflective
+/obj/structure/infection/shield/reflective
 	name = "reflective infection"
 	desc = "A solid wall of slightly twitching tendrils with a reflective glow."
-	damaged_desc = "A wall of twitching tendrils with a reflective glow."
-	damaged_name = "weakened reflective infection"
+	icon = 'icons/mob/infection/infection.dmi'
+	icon_state = "reflective"
+	smooth = SMOOTH_FALSE
 	flags_1 = CHECK_RICOCHET_1
 	max_integrity = 200
+
+/obj/structure/infection/shield/reflective/Initialize(mapload)
+	. = ..()
+	canSmoothWith = list()
+	vis_contents.Cut()
 
 /obj/structure/infection/shield/reflective/handle_ricochet(obj/item/projectile/P)
 	var/turf/p_turf = get_turf(P)
@@ -65,12 +55,6 @@
 		visible_message("<span class='warning'>[P] reflects off [src]!</span>")
 	return TRUE
 
-/obj/structure/infection/shield/reflective/strong
-	name = "strong reflective infection"
-	damaged_desc = "A wall of twitching tendrils with a reflective glow."
-	damaged_name = "weakened strong reflective infection"
-	brute_resist = 0.25
-
-/obj/structure/infection/shield/reflective/strong/core
+/obj/structure/infection/shield/reflective/core
 	name = "core reflective infection"
-	point_return = 0*/
+	point_return = 0

@@ -1,6 +1,6 @@
 
 /obj/screen/infection
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/infection/action_icons.dmi'
 
 /obj/screen/infection/MouseEntered(location,control,params)
 	openToolTip(usr,src,params,title = name,content = desc, theme = "blob")
@@ -9,7 +9,7 @@
 	closeToolTip(usr)
 
 /obj/screen/infection/InfectionHelp
-	icon_state = "ui_help"
+	icon_state = "help_hud"
 	name = "Infection Help"
 	desc = "Help on playing the infection!"
 
@@ -19,7 +19,7 @@
 		I.infection_help()
 
 /obj/screen/infection/JumpToNode
-	icon_state = "ui_tonode"
+	icon_state = "node_hud"
 	name = "Jump to Node"
 	desc = "Moves your camera to a selected node."
 
@@ -29,7 +29,7 @@
 		I.jump_to_node()
 
 /obj/screen/infection/JumpToCore
-	icon_state = "ui_tocore"
+	icon_state = "core_hud"
 	name = "Jump to Core"
 	desc = "Moves your camera to your core."
 
@@ -39,7 +39,7 @@
 		I.transport_core()
 
 /obj/screen/infection/Evolve
-	icon_state = "ui_swap"
+	icon_state = "upgrade_hud"
 	name = "Evolution"
 	desc = "Purchase traits that make you stronger."
 

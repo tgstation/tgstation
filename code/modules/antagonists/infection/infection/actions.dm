@@ -5,7 +5,6 @@
 	button_icon_state = ""
 	cooldown_time = 0
 	var/cost = 0 // cost to actually use
-	var/upgrade_cost = 0 // cost to buy from the evolution shop
 
 /datum/action/cooldown/infection/New()
 	name = name + " ([cost])"
@@ -31,7 +30,6 @@
 	desc = "Allows you to move your camera to anywhere, whether or not you have an infection next to it."
 	icon_icon = 'icons/obj/clothing/glasses.dmi'
 	button_icon_state = "godeye"
-	upgrade_cost = 1
 
 /datum/action/cooldown/infection/freecam/fire(mob/camera/commander/I, turf/T)
 	I.freecam = !I.freecam
@@ -42,7 +40,6 @@
 	desc = "Allows you to see the health of creatures on your screen."
 	icon_icon = 'icons/obj/clothing/glasses.dmi'
 	button_icon_state = "healthhud"
-	upgrade_cost = 1
 
 /datum/action/cooldown/infection/medicalhud/fire(mob/camera/commander/I, turf/T)
 	I.toggle_medical_hud()
@@ -54,7 +51,6 @@
 	icon_icon = 'icons/obj/grenade.dmi'
 	button_icon_state = "emp"
 	cooldown_time = 300
-	upgrade_cost = 1
 
 /datum/action/cooldown/infection/emppulse/fire(mob/camera/commander/I, turf/T)
 	if(locate(/obj/structure/infection) in T.contents)
@@ -95,7 +91,7 @@
 /datum/action/cooldown/infection/creator/node
 	name = "Create Node Infection"
 	desc = "Create a node, which will power nearby factory and resource structures. Beware however, these towers become slower with time."
-	cost = 25
+	cost = 50
 	button_icon_state = "node"
 	type_to_create = /obj/structure/infection/node
 	distance_from_similar = 5
@@ -103,7 +99,7 @@
 /datum/action/cooldown/infection/creator/factory
 	name = "Create Factory Infection"
 	desc = "Create a spore tower that will spawn spores to harass your enemies."
-	cost = 40
+	cost = 50
 	button_icon_state = "factory"
 	type_to_create = /obj/structure/infection/factory
 	distance_from_similar = 7
@@ -117,7 +113,6 @@
 	type_to_create = /obj/structure/infection/turret
 	distance_from_similar = 8
 	needs_node = TRUE
-	upgrade_cost = 1
 
 /datum/action/cooldown/infection/creator/beamturret
 	name = "Create Beam Turret Infection"
@@ -127,4 +122,10 @@
 	type_to_create = /obj/structure/infection/turret/beam
 	distance_from_similar = 8
 	needs_node = TRUE
-	upgrade_cost = 1
+
+/datum/action/cooldown/infection/creator/reflective
+	name = "Create Reflective Shield Infection"
+	desc = "Create a shield that will reflect projectiles back at your enemies."
+	cost = 10
+	button_icon_state = "reflective"
+	type_to_create = /obj/structure/infection/shield/reflective

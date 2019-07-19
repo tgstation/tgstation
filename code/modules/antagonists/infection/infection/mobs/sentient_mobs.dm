@@ -107,7 +107,9 @@
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/respawn(var/set_time = respawn_time)
 	current_respawn_time = set_time
+	var/did_decrement = FALSE // don't spam people who are changing types
 	while(current_respawn_time > 0)
+		did_decrement = TRUE
 		if(current_respawn_time < 5 || current_respawn_time % 5 == 0)
 			to_chat(src, "<b>Respawning in [current_respawn_time] seconds.</b>")
 		sleep(10)
@@ -117,8 +119,9 @@
 			death()
 			return
 		current_respawn_time--
-	to_chat(src, "<b>You may now respawn!</b>")
-	playsound_local(src, 'sound/effects/genetics.ogg', 50)
+	if(did_decrement)
+		to_chat(src, "<b>You may now respawn!</b>")
+		playsound_local(src, 'sound/effects/genetics.ogg', 50)
 	can_respawn = TRUE
 	current_respawn_time = -1
 	return

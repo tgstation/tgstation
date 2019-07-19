@@ -1,9 +1,27 @@
 /obj/item/infectionkiller
 	name = "infection killer"
 	desc = "This should not be seen, post an issue on github."
-	slot_flags = ITEM_SLOT_BACK
+	w_class = WEIGHT_CLASS_BULKY
 	light = 6
 	resistance_flags = INDESTRUCTIBLE
+
+/obj/item/infectionkiller/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/stationloving, FALSE, FALSE)
+	var/obj/item/gps/internal/legendary/L = new /obj/item/gps/internal/legendary(src)
+	L.gpstag = "Legendary [name] Signal"
+	var/obj/item/beacon/B = new /obj/item/beacon(src)
+	B.name = "Legendary [name] Beacon"
+	B.renamed = TRUE
+
+/obj/item/gps/internal/legendary
+	icon_state = null
+	gpstag = "Legendary Signal"
+	desc = "Holds immense power."
+	invisibility = 100
+
+/obj/item/infectionkiller/prevent_content_explosion()
+	return TRUE
 
 /obj/item/infectionkiller/blob_act()
 	return
@@ -48,7 +66,7 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	force = 30
 	armour_penetration = 50
-	block_chance = 75
+	block_chance = 50
 	sharpness = IS_SHARP
 	var/proctime = 0
 
@@ -71,9 +89,11 @@
 
 /obj/item/infectionkiller/excaliju/before_mob_attack(mob/living/M, mob/living/user)
 	if(is_procced())
-		src.force *= 10
+		src.force *= 5
 
 /obj/item/infectionkiller/excaliju/after_mob_attack(mob/living/M, mob/living/user)
 	src.force = initial(force)
 	if(!M || M.stat == DEAD)
 		proc_start(M, user)
+	if(is_procced())
+		user.changeNext_move(CLICK_CD_MELEE * 0.25)

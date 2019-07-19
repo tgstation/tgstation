@@ -128,21 +128,15 @@
 
 /obj/structure/infection/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSBLOB))
-		return 1
-	return 0
-
-/obj/structure/infection/CanAtmosPass(turf/T)
-	// override for shield blobs etc
-	if(atmosblock)
-		return FALSE
-	// atmos can pass if there's an infection structure the other turf as well (atmos can only pass between other infections like a cell wall)
-	var/obj/structure/infection/INF = locate(/obj/structure/infection) in T
-	if(INF && !isspaceturf(T))
 		return TRUE
 	return FALSE
 
+/obj/structure/infection/CanAtmosPass(turf/T)
+	// override for shield blobs etc
+	return !atmosblock
+
 /obj/structure/infection/CanAStarPass(ID, dir, caller)
-	. = 0
+	. = FALSE
 	if(ismovableatom(caller))
 		var/atom/movable/mover = caller
 		. = . || (mover.pass_flags & PASSBLOB)
@@ -252,8 +246,8 @@
 		I.forceMove(T)
 		I.update_icon()
 		I.ConsumeTile()
-		if(T.dynamic_lighting == 0)
-			T.dynamic_lighting = 1
+		if(T.dynamic_lighting == FALSE)
+			T.dynamic_lighting = TRUE
 			T.lighting_build_overlay()
 		return I
 	else
@@ -350,7 +344,7 @@
 /obj/structure/infection/normal
 	name = "normal infection"
 	icon_state = "normal"
-	//layer = TURF_LAYER
+	layer = TURF_LAYER
 	light_range = 2
 	obj_integrity = 25
 	max_integrity = 25
@@ -362,10 +356,7 @@
 	return
 
 /obj/structure/infection/normal/CanPass(atom/movable/mover, turf/target)
-	. = ..()
-	if(. || !istype(mover, /obj/item/projectile))
-		return TRUE
-	return FALSE
+	return TRUE
 
 /obj/structure/infection/normal/Crossed(atom/movable/mover)
 	if(istype(mover) && (mover.pass_flags & PASSBLOB))

@@ -1,3 +1,5 @@
+#define PULSE_COOLDOWN_MOD CLAMP((world.time - timecreated) / 300, 1, 8)
+
 /obj/structure/infection/node
 	name = "infection node"
 	desc = "A large, pulsating mass."
@@ -27,7 +29,9 @@
 /obj/structure/infection/node/update_icon()
 	. = ..()
 	underlays.Cut()
+	add_atom_colour("#ff[num2hex(255 - (PULSE_COOLDOWN_MOD - 1) * 255/7)][num2hex(255 - (PULSE_COOLDOWN_MOD - 1) * 255/7)]", FIXED_COLOUR_PRIORITY)
 	var/mutable_appearance/node_base = mutable_appearance('icons/mob/infection/crystaline_infection_large.dmi', "crystalnode-base")
+	node_base.color = null
 	underlays += node_base
 
 /obj/structure/infection/node/Destroy()
@@ -36,7 +40,8 @@
 	STOP_PROCESSING(SSobj, src)
 
 /obj/structure/infection/node/Life()
-	pulse_cooldown = base_pulse_cd * CLAMP((world.time - timecreated) / 300, 1, 8)
+	update_icon()
+	pulse_cooldown = base_pulse_cd * PULSE_COOLDOWN_MOD
 	if(overmind && world.time >= next_pulse)
 		overmind.infection_core.topulse += src
 

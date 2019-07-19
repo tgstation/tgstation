@@ -1,5 +1,5 @@
 /obj/screen/infection/InfectionSporeHelp
-	icon_state = "ui_help"
+	icon_state = "help_hud"
 	name = "Infection Help"
 	desc = "Help on playing the infection!"
 
@@ -8,7 +8,7 @@
 	I.infection_help()
 
 /obj/screen/infection/Refund
-	icon_state = "ui_factory"
+	icon_state = "revert_hud"
 	name = "Revert Evolutions"
 	desc = "Refund all currently purchased traits."
 
@@ -17,7 +17,7 @@
 	I.refund_upgrades()
 
 /obj/screen/infection/EvolveSpore
-	icon_state = "ui_swap"
+	icon_state = "upgrade_hud"
 	name = "Evolution"
 	desc = "Purchase traits that make you stronger."
 
@@ -26,7 +26,7 @@
 	I.evolve_menu()
 
 /obj/screen/infection/Respawn
-	icon_state = "ui_blobbernaut"
+	icon_state = "core_hud"
 	name = "Respawn"
 	desc = "Lets you come back from the dead once you have finished reforming."
 

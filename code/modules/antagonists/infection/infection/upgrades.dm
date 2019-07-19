@@ -42,6 +42,12 @@
 	action_type = /datum/action/cooldown/infection/creator/beamturret
 	cost = 1
 
+/datum/infection_upgrade/overmind/reflective
+	name = "Reflective Shield Infection"
+	description = "Gives you the ability to create reflective shield infection. These reflect projectiles back at whatever sent them."
+	action_type = /datum/action/cooldown/infection/creator/reflective
+	cost = 1
+
 /datum/infection_upgrade/overmind/freecam
 	name = "Full Vision"
 	description = "Allows you to see the entire station with no restrictions on the movement of your camera."
