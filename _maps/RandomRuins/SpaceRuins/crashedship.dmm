@@ -937,7 +937,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/BMPship/Fore)
 "dL" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Midship)
