@@ -46,8 +46,7 @@
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "k" = (
-/obj/structure/sign/poster/contraband/bountyhunters{
-	},
+/obj/structure/sign/poster/contraband/bountyhunters,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/hunter)
 "l" = (
@@ -74,7 +73,7 @@
 /turf/open/floor/pod/light,
 /area/shuttle/hunter)
 "p" = (
-/obj/effect/mob_spawn/human/fugitive/bounty,
+/obj/effect/mob_spawn/human/fugitive/bounty/hook,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter)
 "q" = (
@@ -188,11 +187,46 @@
 /obj/machinery/suit_storage_unit/open,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter)
-"P" = (
-/obj/effect/mob_spawn/human/fugitive/bounty{
+"M" = (
+/obj/effect/mob_spawn/human/fugitive/bounty/armor{
 	icon_state = "sleeper";
 	dir = 1
 	},
+/turf/open/floor/pod/light,
+/area/shuttle/hunter)
+"N" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external,
+/obj/docking_port/stationary{
+	dwidth = 11;
+	height = 16;
+	id = "pirateship_home";
+	name = "Deep Space";
+	width = 17
+	},
+/obj/docking_port/mobile{
+	dheight = 3;
+	dwidth = 3;
+	height = 13;
+	id = "huntership";
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	name = "hunter shuttle";
+	rechargeTime = 1800;
+	width = 15
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"P" = (
+/obj/structure/fluff/empty_sleeper{
+	icon_state = "sleeper-open";
+	dir = 1
+	},
+/turf/open/floor/pod/light,
+/area/shuttle/hunter)
+"Z" = (
+/obj/effect/mob_spawn/human/fugitive/bounty/synth,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter)
 
@@ -299,7 +333,7 @@ c
 d
 h
 j
-l
+N
 "}
 (8,1,1) = {"
 b
@@ -411,11 +445,11 @@ a
 a
 a
 i
-p
+Z
 z
 s
 z
-P
+M
 i
 a
 a

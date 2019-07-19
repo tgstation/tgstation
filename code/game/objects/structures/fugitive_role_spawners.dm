@@ -51,6 +51,11 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 
+/obj/effect/mob_spawn/human/fugitive/bounty/Destroy()
+	var/obj/structure/fluff/empty_sleeper/S = new(drop_location())
+	S.setDir(dir)
+	return ..()
+
 /obj/effect/mob_spawn/human/fugitive/bounty/armor
 	outfit = /datum/outfit/bountyarmor
 

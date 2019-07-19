@@ -189,22 +189,20 @@
 	A.other_pair = B
 	B.other_pair = A
 
-/obj/item/pinpointer/hunter
+/obj/item/pinpointer/shuttle
 	name = "fugitive pinpointer"
-	desc = "A handheld tracking device that locks onto escapees marked by Nanotrasen."
+	desc = "A handheld tracking device that locates the bounty hunter shuttle for quick escapes."
 	icon_state = "pinpointer_hunter"
-	process_scan = FALSE
 	icon_suffix = "_hunter"
+	var/obj/shuttleport
 
-/obj/item/pinpointer/hunter/scan_for_target()
-	var/list/ideal_targets = list()
-	var/list/all_targets = list()
-	for(var/datum/antagonist/fugitive/fugitive_antagonist in GLOB.antagonists)
-		if(!fugitive_antagonist.owner)
-			continue
-		all_targets += fugitive_antagonist.owner
-		if(fugitive_antagonist.owner.current.z == src.z)
-			ideal_targets += fugitive_antagonist.owner
-	target = pick(ideal_targets)
-	if(!target)
-		target = pick(all_targets)
+/obj/item/pinpointer/shuttle/Initialize(mapload)
+	. = ..()
+	shuttleport = SSshuttle.getShuttle("huntership")
+
+/obj/item/pinpointer/shuttle/scan_for_target()
+	target = shuttleport
+
+/obj/item/pinpointer/shuttle/Destroy()
+	shuttleport = null
+	. = ..()
