@@ -463,7 +463,7 @@ RLD
 		"Grilles & Windows" = image(icon = 'icons/mob/radial.dmi', icon_state = "grillewindow"),
 		"Floors & Walls" = image(icon = 'icons/mob/radial.dmi', icon_state = "wallfloor")
 	)
-	if(upgrade)
+	if(upgrade & RCD_UPGRADE_FRAMES)
 		choices += list(
 		"Machine Frames" = image(icon = 'icons/mob/radial.dmi', icon_state = "machine"),
 		"Computer Frames" = image(icon = 'icons/mob/radial.dmi', icon_state = "computer_dir"),
