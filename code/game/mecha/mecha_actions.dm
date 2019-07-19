@@ -1,5 +1,3 @@
-#define COMSIG_ACTIVATE "activate"
-
 //////////////////////////////////////// Action Buttons ///////////////////////////////////////////////
 
 /obj/mecha/proc/GrantActions(mob/living/user, human_occupant = 0)
@@ -167,7 +165,7 @@
 		chassis.occupant_message("<font color='[chassis.thrusters_active ?"blue":"red"]'>Thrusters [chassis.thrusters_active ?"en":"dis"]abled.")
 
 /datum/action/innate/mecha/mech_defence_mode/Activate(forced_state = FALSE)
-	SEND_SIGNAL(chassis, COMSIG_ACTIVATE, args) ///Signal sent to the mech, to be handed to the shield. See durand.dm for more details
+	SEND_SIGNAL(chassis, COMSIG_MECHA_ACTION_ACTIVATE, args) ///Signal sent to the mech, to be handed to the shield. See durand.dm for more details
 
 /datum/action/innate/mecha/mech_overload_mode
 	name = "Toggle leg actuators overload"

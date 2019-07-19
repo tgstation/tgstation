@@ -1,6 +1,3 @@
-#define COMSIG_ACTIVATE "activate"
-#define COMSIG_PROJECTILE_PREHIT "com_proj_prehit"
-
 /obj/mecha/combat/durand
 	desc = "An aging combat exosuit utilized by the Nanotrasen corporation. Originally developed to combat hostile alien lifeforms."
 	name = "\improper Durand"
@@ -20,7 +17,7 @@
 	shield = new/obj/durand_shield
 	shield.chassis = src
 	shield.layer = layer
-	RegisterSignal(src, COMSIG_ACTIVATE, .proc/relay)
+	RegisterSignal(src, COMSIG_MECHA_ACTION_ACTIVATE, .proc/relay)
 //	RegisterSignal(src, COMSIG_PROJECTILE_PREHIT, .proc/prehit)
 	. = ..()
 
@@ -60,7 +57,7 @@
 /obj/mecha/combat/durand/proc/relay(datum/source, list/signal_args)
 	if(!shield)
 		return
-	SEND_SIGNAL(shield, COMSIG_ACTIVATE, source, signal_args)
+	SEND_SIGNAL(shield, COMSIG_MECHA_ACTION_ACTIVATE, source, signal_args)
 
 ///obj/mecha/combat/durand/proc/prehit(obj/item/projectile/source, list/signal_args)
 //	if(defence_check(source.loc))
@@ -150,7 +147,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 
 /obj/durand_shield/Initialize()
 	. = ..()
-	RegisterSignal(src, COMSIG_ACTIVATE, .proc/activate)
+	RegisterSignal(src, COMSIG_MECHA_ACTION_ACTIVATE, .proc/activate)
 
 /obj/durand_shield/proc/activate(datum/source, var/datum/action/innate/mecha/mech_defence_mode/button, list/signal_args)
 	if(!chassis || !chassis.occupant)
