@@ -14,9 +14,11 @@
 	var/should_equip = TRUE
 	var/traitor_kind = TRAITOR_HUMAN //Set on initial assignment
 	var/datum/syndicate_contract/current_contract
-	var/list/assigned_contracts = list()
+	var/list/datum/syndicate_contract/assigned_contracts = list()
+	var/list/assigned_targets = list()
 	var/contract_TC_payed_out = 0
 	var/contract_TC_to_redeem = 0
+	var/datum/contractor_hub/contractor_hub
 	can_hijack = HIJACK_HIJACKER
 
 /datum/antagonist/traitor/on_gain()
@@ -32,25 +34,47 @@
 	..()
 
 /datum/antagonist/traitor/proc/create_contracts()
-	var/contract_generation_quantity = 6
+	// 6 contracts
+	var/list/to_generate = list(
+		CONTRACT_PAYOUT_LARGE,
+		CONTRACT_PAYOUT_MEDIUM,
+		CONTRACT_PAYOUT_SMALL,
+		CONTRACT_PAYOUT_SMALL,
+		CONTRACT_PAYOUT_SMALL,
+		CONTRACT_PAYOUT_SMALL
+	)
+
 	// We don't want the sum of all the payouts to be under this amount
-	var/lowest_TC_threshold = 28
+	var/lowest_TC_threshold = 30
 
 	var/total = 0
 	var/lowest_paying_sum = 0
 	var/datum/syndicate_contract/lowest_paying_contract
-	
-	for (var/i = 1; i <= contract_generation_quantity; i++)
-		var/datum/syndicate_contract/contract_to_add = new(owner)
+
+	// Randomise order, so we don't have contracts always in payout order.
+	to_generate = shuffle(to_generate)
+
+	// Support contract generation happening multiple times
+	var/start_index = 1
+	if (assigned_contracts.len != 0)
+		start_index = assigned_contracts.len + 1
+
+	// Generate contracts, and find the lowest paying.
+	for (var/i = 1; i <= to_generate.len; i++)
+		var/datum/syndicate_contract/contract_to_add = new(owner, to_generate[i], assigned_targets)
 		var/contract_payout_total = contract_to_add.contract.payout + contract_to_add.contract.payout_bonus
+		
+		assigned_targets.Add(contract_to_add.contract.target)
 
 		if (!lowest_paying_contract || (contract_payout_total < lowest_paying_sum))
 			lowest_paying_sum = contract_payout_total
 			lowest_paying_contract = contract_to_add
 
 		total += contract_payout_total
-		contract_to_add.id = i
+		contract_to_add.id = start_index
 		assigned_contracts.Add(contract_to_add)
+
+		start_index++
 
 	// If the threshold for TC payouts isn't reached, boost the lowest paying contract
 	if (total < lowest_TC_threshold)
@@ -394,7 +418,7 @@
 
 	if (completed_contracts > 0)
 		var/pluralCheck = "contract"
-		if (completed_contracts > 1) 
+		if (completed_contracts > 1)
 			pluralCheck = "contracts"
 		result += "<br>Completed <span class='greentext'>[completed_contracts]</span> [pluralCheck] for a total of \
 					<span class='greentext'>[tc_total] TC</span>!<br>"

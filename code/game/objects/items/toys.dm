@@ -234,7 +234,7 @@
 /obj/item/toy/sword
 	name = "toy sword"
 	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/transforming_energy.dmi'
 	icon_state = "sword0"
 	item_state = "sword0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -868,7 +868,7 @@
 
 /obj/item/toy/cards/singlecard
 	name = "card"
-	desc = "a card"
+	desc = "A playing card used to play card games like poker."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "singlecard_down_nanotrasen"
 	w_class = WEIGHT_CLASS_TINY
@@ -1407,3 +1407,18 @@
 
 /obj/item/toy/dummy/GetVoice()
 	return doll_name
+
+/obj/item/toy/seashell
+	name = "seashell"
+	desc = "May you always have a shell in your pocket and sand in your shoes. Whatever that's supposed to mean."
+	icon = 'icons/misc/beach.dmi'
+	icon_state = "shell1"
+	var/static/list/possible_colors = list("" =  2, COLOR_PURPLE_GRAY = 1, COLOR_OLIVE = 1, COLOR_PALE_BLUE_GRAY = 1, COLOR_RED_GRAY = 1)
+
+/obj/item/toy/seashell/Initialize()
+	. = ..()
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
+	icon_state = "shell[rand(1,3)]"
+	color = pickweight(possible_colors)
+	setDir(pick(GLOB.cardinals))

@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - bugfix: "Staff of change xenos no longer delay the end of wizard rounds."

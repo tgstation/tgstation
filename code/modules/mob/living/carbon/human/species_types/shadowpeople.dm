@@ -160,6 +160,7 @@
 
 /obj/item/light_eater
 	name = "light eater" //as opposed to heavy eater
+	icon = 'icons/obj/changeling_items.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	force = 25

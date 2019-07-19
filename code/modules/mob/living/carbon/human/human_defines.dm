@@ -28,6 +28,7 @@
 	var/undershirt = "Nude" //Which undershirt the player wants
 	var/socks = "Nude" //Which socks the player wants
 	var/backbag = DBACKPACK		//Which backpack type the player has chosen.
+	var/jumpsuit_style = PREF_SUIT		//suit/skirt
 
 	//Equipment slots
 	var/obj/item/clothing/wear_suit = null
@@ -37,8 +38,6 @@
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/obj/item/s_store = null
-
-	var/hygiene = HYGIENE_LEVEL_NORMAL
 
 	var/special_voice = "" // For changing our voice. Used by a symptom.
 

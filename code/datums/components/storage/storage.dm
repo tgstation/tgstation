@@ -125,7 +125,7 @@
 	if (can_hold_list != null)
 		can_hold = typecacheof(can_hold_list)
 
-	if (cant_hold_list != null)	
+	if (cant_hold_list != null)
 		cant_hold = typecacheof(cant_hold_list)
 
 /datum/component/storage/proc/generate_hold_desc(can_hold_list)
@@ -211,7 +211,7 @@
 		things = typecache_filter_list(things, typecacheof(I.type))
 	var/len = length(things)
 	if(!len)
-		to_chat(M, "<span class='notice'>You failed to pick up anything with [parent].</span>")
+		to_chat(M, "<span class='warning'>You failed to pick up anything with [parent]!</span>")
 		return
 	var/datum/progressbar/progress = new(M, len, I.loc)
 	var/list/rejections = list()
@@ -284,6 +284,8 @@
 		if(I.loc != real_location)
 			continue
 		remove_from_storage(I, target)
+		I.pixel_x = rand(-10,10)
+		I.pixel_y = rand(-10,10)
 		if(trigger_on_found && I.on_found())
 			return FALSE
 		if(TICK_CHECK)
