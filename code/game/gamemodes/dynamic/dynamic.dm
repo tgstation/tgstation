@@ -259,16 +259,14 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	return TRUE
 
 /datum/game_mode/dynamic/pre_setup()
-	for (var/datum/dynamic_ruleset/rule in subtypesof(/datum/dynamic_ruleset))
-		switch(rule.ruletype)
-			if("Roundstart")
-				roundstart_rules += new rule()
-			if("Latejoin")
-				latejoin_rules += new rule()
-			if("Midround")
-				var/datum/dynamic_ruleset/midround/DR = rule
-				if (initial(DR.weight))
-					midround_rules += new rule()
+	for (var/rule in subtypesof(/datum/dynamic_ruleset/roundstart) - /datum/dynamic_ruleset/roundstart/delayed/)
+		roundstart_rules += new rule()
+	for (var/rule in subtypesof(/datum/dynamic_ruleset/latejoin))
+		latejoin_rules += new rule()
+	for (var/rule in subtypesof(/datum/dynamic_ruleset/midround))
+		var/datum/dynamic_ruleset/midround/DR = rule
+		if (initial(DR.weight))
+			midround_rules += new rule()
 	for(var/mob/dead/new_player/player in GLOB.player_list)
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
 			roundstart_pop_ready++
@@ -320,7 +318,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			if(rule.flags & HIGHLANDER_RULESET && check_for_highlander(drafted_rules))
 				continue
 		if (rule.acceptable(roundstart_pop_ready,threat_level) && threat >= rule.cost)	// If we got the population and threat required
-			// A hacky but this will do for now. This allows delayed rulesets to be ran but it will refund if ready fails
+			// Hacky but this will do for now. This allows delayed rulesets to be ran but it will refund if ready fails
 			// and forces a midround injection.
 			if(istype(rule, /datum/dynamic_ruleset/roundstart/delayed))
 				drafted_rules[rule] = rule.weight
