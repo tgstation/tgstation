@@ -642,15 +642,14 @@
 	return 1
 
 /mob/living/carbon/human/singularity_act()
-	var/gain = 20
+	. = 20
 	if(mind)
 		if((mind.assigned_role == "Station Engineer") || (mind.assigned_role == "Chief Engineer") )
-			gain = 100
+			. = 100
 		if(mind.assigned_role == "Clown")
-			gain = rand(-1000, 1000)
-	investigate_log("([key_name(src)]) has been consumed by the singularity.", INVESTIGATE_SINGULO) //Oh that's where the clown ended up!
-	gib()
-	return(gain)
+			. = rand(-1000, 1000)
+	..()
+	return
 
 /mob/living/carbon/human/help_shake_act(mob/living/carbon/M)
 	if(!istype(M))
