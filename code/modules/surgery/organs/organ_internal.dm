@@ -71,7 +71,7 @@
 	return
 
 /obj/item/organ/process()	//only necessary for when the organ is outside of a living
-	if(synthetic || !can_decompose || istype(loc, /obj/item/mmi) || istype(loc, /obj/machinery/clonepod))
+	if(synthetic || !can_decompose || istype(loc, /obj/item/mmi))
 		return
 	else if(!owner)
 		if(damage >= maxHealth)
