@@ -18,10 +18,15 @@ matrix:
             - python3-setuptools
       install:
         - tools/travis/install_build_tools.sh
+        - tools/travis/install_spaceman_dmm.sh dreamchecker
       script:
         - tools/travis/check_filedirs.sh tgstation.dme
-        - tools/travis/build_tools.sh
-        - tools/travis/lint_grep.sh
+        - tools/travis/check_changelogs.sh
+        - find . -name "*.php" -print0 | xargs -0 -n1 php -l
+        - find . -name "*.json" -not -path "./tgui/node_modules/*" -print0 | xargs -0 python3 ./tools/json_verifier.py
+        - tools/travis/build_tgui.sh
+        - tools/travis/check_grep.sh
+        - ~/dreamchecker
 
     - name: "Compile All Maps"
       addons:
@@ -47,7 +52,6 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - libstdc++6:i386
-            - libssl-dev:i386
             - gcc-multilib
             - g++-7
             - g++-7-multilib
@@ -55,23 +59,35 @@ matrix:
             - libmariadbd-dev
       cache:
         directories:
-          - $HOME/.cargo
-          - $HOME/.rustup
           - $HOME/BYOND
           - $HOME/libmariadb
       install:
         - tools/travis/install_byond.sh
         - source $HOME/BYOND/byond/bin/byondsetup
         - tools/travis/install_libmariadb.sh
-        - curl https://sh.rustup.rs -sSf | sh -s -- -y --default-host i686-unknown-linux-gnu
-        - source ~/.cargo/env
+        - tools/travis/install_rust_g.sh
       before_script:
         - mysql -u root -e 'CREATE DATABASE tg_travis;'
         - mysql -u root tg_travis < SQL/tgstation_schema.sql
         - mysql -u root -e 'CREATE DATABASE tg_travis_prefixed;'
         - mysql -u root tg_travis_prefixed < SQL/tgstation_schema_prefixed.sql
-        - tools/travis/build_rust_g.sh
         - tools/travis/build_bsql.sh
       script:
         - tools/travis/dm.sh -DTRAVISBUILDING tgstation.dme || travis_terminate 1
         - tools/travis/run_server.sh
+
+    - name: "Generate Documentation"
+      # Only run for non-PR commits to the real master branch.
+      if: branch = master AND head_branch IS blank
+      install:
+        - tools/travis/install_spaceman_dmm.sh dmdoc
+      before_script:
+        # Travis checks out a hash, try to get back on a branch.
+        - git checkout $TRAVIS_BRANCH || true
+      script:
+        - ~/dmdoc
+      deploy:
+        provider: pages
+        skip_cleanup: true
+        local_dir: dmdoc
+        github_token: $DMDOC_GITHUB_TOKEN

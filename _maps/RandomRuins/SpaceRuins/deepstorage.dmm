@@ -49,7 +49,6 @@
 /area/ruin/space/has_grav/deepstorage/crusher)
 "an" = (
 /obj/machinery/conveyor{
-	dir = 2;
 	id = "bunkerrecycle"
 	},
 /turf/open/floor/plating,
@@ -131,7 +130,6 @@
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aE" = (
 /obj/machinery/power/apc/away{
-	dir = 2;
 	name = "Recycling APC";
 	pixel_y = -23
 	},
@@ -665,7 +663,6 @@
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bN" = (
 /obj/machinery/power/apc/away{
-	dir = 2;
 	name = "Kitchen APC";
 	pixel_y = -23
 	},
@@ -1587,7 +1584,6 @@
 	dir = 4
 	},
 /obj/machinery/power/apc/away{
-	dir = 2;
 	name = "Main Area APC";
 	pixel_y = -23
 	},

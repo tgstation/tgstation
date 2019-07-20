@@ -271,22 +271,22 @@
 	icon_state = "janidrobe"
 	product_ads = "Come and get your janitorial clothing, now endorsed by lizard janitors everywhere!"
 	vend_reply = "Thank you for using the JaniDrobe!"
-	products = list(/obj/item/clothing/under/rank/janitor = 1,
-					/obj/item/cartridge/janitor = 1,
+	products = list(/obj/item/clothing/under/rank/janitor = 2,
+					/obj/item/cartridge/janitor = 2,
 					/obj/item/clothing/under/rank/janitor/skirt = 2,
-					/obj/item/clothing/gloves/color/black = 1,
-					/obj/item/clothing/head/soft/purple = 1,
-					/obj/item/paint/paint_remover = 1,
-					/obj/item/melee/flyswatter = 1,
-					/obj/item/flashlight = 1,
+					/obj/item/clothing/gloves/color/black = 2,
+					/obj/item/clothing/head/soft/purple = 2,
+					/obj/item/paint/paint_remover = 2,
+					/obj/item/melee/flyswatter = 2,
+					/obj/item/flashlight = 2,
 					/obj/item/clothing/suit/caution = 6,
-					/obj/item/holosign_creator/janibarrier = 1,
-					/obj/item/lightreplacer = 1,
-					/obj/item/soap/nanotrasen = 1,
-					/obj/item/storage/bag/trash = 1,
-					/obj/item/clothing/shoes/galoshes = 1,
+					/obj/item/holosign_creator/janibarrier = 2,
+					/obj/item/lightreplacer = 2,
+					/obj/item/soap/nanotrasen = 2,
+					/obj/item/storage/bag/trash = 2,
+					/obj/item/clothing/shoes/galoshes = 2,
 					/obj/item/watertank/janitor = 1,
-					/obj/item/storage/belt/janitor = 1)
+					/obj/item/storage/belt/janitor = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/jani_wardrobe
 	payment_department = ACCOUNT_SRV
 /obj/item/vending_refill/wardrobe/jani_wardrobe
@@ -298,14 +298,8 @@
 	icon_state = "lawdrobe"
 	product_ads = "OBJECTION! Get the rule of law for yourself!"
 	vend_reply = "Thank you for using the LawDrobe!"
-	products = list(/obj/item/clothing/under/lawyer/female = 1,
-					/obj/item/clothing/under/lawyer/black = 1,
-					/obj/item/clothing/under/lawyer/black/skirt = 1,
-					/obj/item/clothing/under/lawyer/red = 1,
-					/obj/item/clothing/under/lawyer/red/skirt = 1,
-					/obj/item/clothing/under/lawyer/bluesuit = 1,
+	products = list(/obj/item/clothing/under/lawyer/bluesuit = 1,
 					/obj/item/clothing/under/lawyer/bluesuit/skirt = 1,
-					/obj/item/clothing/under/lawyer/blue/skirt = 1,
 					/obj/item/clothing/suit/toggle/lawyer = 1,
 					/obj/item/clothing/under/lawyer/purpsuit = 1,
 					/obj/item/clothing/under/lawyer/purpsuit/skirt = 1,
@@ -313,6 +307,16 @@
 					/obj/item/clothing/under/lawyer/blacksuit = 1,
 					/obj/item/clothing/under/lawyer/blacksuit/skirt = 1,
 					/obj/item/clothing/suit/toggle/lawyer/black = 1,
+					/obj/item/clothing/under/lawyer/female = 1,
+					/obj/item/clothing/under/lawyer/female/skirt = 1,
+					/obj/item/clothing/under/lawyer/really_black = 1,
+					/obj/item/clothing/under/lawyer/really_black/skirt = 1,
+					/obj/item/clothing/under/lawyer/blue = 1,
+					/obj/item/clothing/under/lawyer/blue/skirt = 1,
+					/obj/item/clothing/under/lawyer/red = 1,
+					/obj/item/clothing/under/lawyer/red/skirt = 1,
+					/obj/item/clothing/under/lawyer/black = 1,
+					/obj/item/clothing/under/lawyer/black/skirt = 1,
 					/obj/item/clothing/shoes/laceup = 2,
 					/obj/item/clothing/accessory/lawyers_badge = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/law_wardrobe

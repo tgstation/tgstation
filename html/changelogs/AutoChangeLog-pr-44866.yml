@@ -1,5 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Added the Quantum Spin Inverter device to the science protolathe under the Miniaturized Bluespace node."
-  - rscadd: "The Quantum Spin Inverter can form a link with another QSI; when linked, it can be used inhand to swap location with the linked device after 2.5 seconds. Swapping will teleport the device's holder and/or container as well if it isn't anchored."

@@ -127,9 +127,7 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "z" = (
-/obj/structure/chair/comfy/brown{
-	dir = 2
-	},
+/obj/structure/chair/comfy/brown,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "A" = (
