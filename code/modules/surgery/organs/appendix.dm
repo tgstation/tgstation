@@ -5,7 +5,6 @@
 	slot = ORGAN_SLOT_APPENDIX
 	var/inflamed = FALSE
 	var/failed = FALSE	//set to 0 to limit failing message to only occur once
-	Unique_Failure_Msg = "<span class='danger'>Subject's appendix has burst and needs to be removed immediately!</span>"
 
 /obj/item/organ/appendix/update_icon()
 	if(inflamed)

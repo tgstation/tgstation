@@ -13,7 +13,6 @@
 	var/toxLethality = LIVER_DEFAULT_TOX_LETHALITY//affects how much damage toxins do to the liver
 	var/filterToxins = TRUE //whether to filter toxins
 	maxHealth = STANDARD_ORGAN_THRESHOLD
-	Unique_Failure_Msg = "<span class='danger'>Subject is suffering from liver failure: Apply Corazone and begin a liver transplant immediately!</span>"
 
 #define HAS_SILENT_TOXIN 0 //don't provide a feedback message if this is the only toxin present
 #define HAS_NO_TOXIN 1
@@ -22,7 +21,7 @@
 /obj/item/organ/liver/on_life()
 	if(HAS_TRAIT(owner, TRAIT_NOMETABOLISM))
 		return
-		
+
 	var/mob/living/carbon/C = owner
 	..()	//perform general on_life()
 	if(istype(C))

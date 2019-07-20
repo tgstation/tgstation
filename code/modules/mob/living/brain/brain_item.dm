@@ -14,7 +14,6 @@
 	maxHealth	= BRAIN_DAMAGE_DEATH
 	low_threshold = 45
 	high_threshold = 120
-	Unique_Failure_Msg = "<span class='danger'>Subject's brain is too damaged to function, and must be given brain surgery or mannitol!</span>"
 	var/suicided = FALSE
 	var/mob/living/brain/brainmob = null
 	var/brain_death = FALSE //if the brainmob was intentionally killed by attacking the brain after removal, or by severe braindamage
