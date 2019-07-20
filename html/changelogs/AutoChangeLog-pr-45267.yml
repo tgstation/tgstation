@@ -1,0 +1,4 @@
+author: "loserXD"
+delete-after: True
+changes: 
+  - bugfix: "You no longer see \"Mind Control suddenly wakes up, as though he was under foreign control!\" when a hivemind host mind controls someone"
