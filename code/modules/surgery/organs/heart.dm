@@ -5,6 +5,11 @@
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_HEART
 	decay_factor = 6 * STANDARD_ORGAN_DECAY		//designed to fail about 2.5 minutes after death
+	low_threshold_passed = "<span class='info'>Prickles of pain appear then die out from within your chest...</span>"
+	high_threshold_passed = "<span class='warning'>Something inside your chest hurts, and the pain isn't subsiding. You notice yourself breathing far faster than before.</span>"
+	now_fixed = "<span class='info'>Your heart begins to beat again.</span>"
+	high_threshold_cleared = "<span class='info'>The pain in your chest has died down, and your breathing becomes more relaxed.</span>"
+
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 	var/beating = 1
 	var/icon_base = "heart"
@@ -75,9 +80,6 @@
 		else if(beat == BEAT_FAST)
 			H.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
-
-		if((damage > low_threshold) && prob(20 * (damage/maxHealth)) && !failing)
-			to_chat(owner, "<span class='warning'>[damage > high_threshold ? "You feel a lingering pain in your chest." : "Your left arm prickles with pain, and the pain in your chest grows stronger!"]</span>")
 
 	if(failing)	//heart broke, stopped beating, death imminent
 		if(owner.stat == CONSCIOUS)

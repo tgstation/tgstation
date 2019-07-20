@@ -21,6 +21,15 @@
 	var/high_threshold	= STANDARD_ORGAN_THRESHOLD * 0.45		//when severe organ damage occurs
 	var/low_threshold	= STANDARD_ORGAN_THRESHOLD * 0.1		//when minor organ damage occurs
 
+	//variables for determining what we alert the owner with when they pass/clear the damage thresholds
+	var/prev_damage = 0
+	var/low_threshold_passed
+	var/high_threshold_passed
+	var/now_failing
+	var/now_fixed
+	var/high_threshold_cleared
+	var/low_threshold_cleared
+
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	if(!iscarbon(M) || owner == M)
 		return
@@ -58,14 +67,14 @@
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
 
-/obj/item/organ/process()	//only necessary for when the organ is outside of a living
+/obj/item/organ/process()	//runs decay when outside of a person
 	if(synthetic || !can_decompose || istype(loc, /obj/item/mmi))
 		return
+	if(damage >= maxHealth)
+		failing = TRUE
+		damage = maxHealth
+		return
 	else if(!owner)
-		if(damage >= maxHealth)
-			failing = TRUE
-			damage = maxHealth
-			return
 		damage = min(maxHealth, damage + (maxHealth * decay_factor))
 
 	else
@@ -79,21 +88,48 @@
 				return
 			damage = min(maxHealth, damage + (maxHealth * decay_factor))
 
-/obj/item/organ/proc/on_life()
+/obj/item/organ/proc/on_life()	//repair organ damage if the organ is not failing
 	var/mob/living/carbon/C = owner
 	if(!C)
 		return
 	if(damage >= maxHealth)
 		failing = TRUE
 		damage = maxHealth
+		check_damage_thresholds(damage, prev_damage, C)
+		prev_damage = damage
 		return
-	//repair organ damage if the organ is not failing
 	if((!failing) && (C.stat !=DEAD))
-		if(synthetic)
-			damage = max(0, damage - (maxHealth * 4 * healing_factor))
-			return
 		damage = max(0, damage - (maxHealth * healing_factor))
+		check_damage_thresholds(damage, prev_damage, C)
+		prev_damage = damage
 	return
+
+//checking damage thresholds to send the owner a message is done in brain_item.dm but on process,
+//this is done on life to ensure we update the owner if they get revived with new organ damage
+/obj/item/organ/proc/check_damage_thresholds(var/D, var/prev_D, var/M)
+	if(D == prev_D)
+		return
+	var/delta = D - prev_D
+	if(delta > 0)
+		if(D == maxHealth)
+			if(now_failing)
+				to_chat(M, now_failing)
+		else if(D > high_threshold && prev_D <= high_threshold)
+			if(high_threshold_passed)
+				to_chat(M, high_threshold_passed)
+		else if(D > low_threshold && prev_D <= low_threshold)
+			if(low_threshold_passed)
+				to_chat(M, low_threshold_passed)
+	else if(delta < 0)
+		if(prev_D > low_threshold && prev_D <= low_threshold)
+			if(low_threshold_cleared)
+				to_chat(M, low_threshold_cleared)
+		else if(prev_D > high_threshold && D <= high_threshold)
+			if(high_threshold_cleared)
+				to_chat(M, high_threshold_cleared)
+		else if(prev_D == maxHealth)
+			if(now_fixed)
+				to_chat(M, now_fixed)
 
 /obj/item/organ/examine(mob/user)
 	. = ..()

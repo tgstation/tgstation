@@ -271,7 +271,7 @@ GENE SCANNER
 					max_damage += ", "	//prelude the organ if we've already reported an organ
 					max_damage += organ.name	//this just slaps the organ name into the string of text
 				else
-					max_damage = "<span class='alert'> Non-Functional Organs: "	//our initial statement
+					max_damage = "\t<span class='alert'>Non-Functional Organs: "	//our initial statement
 					max_damage += organ.name
 			else if(organ.damage > organ.high_threshold)
 				report_organs = TRUE
@@ -279,7 +279,7 @@ GENE SCANNER
 					major_damage += ", "
 					major_damage += organ.name
 				else
-					major_damage = "<span class='info'> Severely Damaged Organs: "
+					major_damage = "\t<span class='info'>Severely Damaged Organs: "
 					major_damage += organ.name
 			else if(organ.damage > organ.low_threshold)
 				report_organs = TRUE
@@ -287,20 +287,20 @@ GENE SCANNER
 					minor_damage += ", "
 					minor_damage += organ.name
 				else
-					minor_damage = "<span class='info'> Damaged Organs: "
+					minor_damage = "\t<span class='info'>Mildly Damaged Organs: "
 					minor_damage += organ.name
 
 		if(report_organs)	//we either finish the list, or set it to be empty if no organs were reported in that category
 			if(!max_damage)
-				max_damage = "<span class='alert'> Non-Functional Organs: </span>"
+				max_damage = "\t<span class='alert'>Non-Functional Organs: </span>"
 			else
 				max_damage += "</span>"
 			if(!major_damage)
-				major_damage = "<span class='alert'> Severely Damaged Organs: </span>"
+				major_damage = "\t<span class='alert'>Severely Damaged Organs: </span>"
 			else
 				major_damage += "</span>"
 			if(!minor_damage)
-				minor_damage = "<span class='info'> Damaged Organs: </span>"
+				minor_damage = "\t<span class='info'>Mildly Damaged Organs: </span>"
 			else
 				minor_damage += "</span>"
 			to_chat(user, minor_damage)

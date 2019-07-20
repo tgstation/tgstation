@@ -7,6 +7,9 @@
 	slot = ORGAN_SLOT_LUNGS
 	gender = PLURAL
 	w_class = WEIGHT_CLASS_NORMAL
+	high_threshold_passed = "<span class='warning'>You feel some sort of constriction around your chest as your breathing becomes shallow and rapid.</span>"
+	now_fixed = "<span class='warning'>Your lungs seem to once again be able to hold air.</span>"
+	high_threshold_cleared = "<span class='info'>The constriction around your chest loosens as your breathing calms down.</span>"
 
 	//Breath damage
 
@@ -383,8 +386,6 @@
 
 /obj/item/organ/lungs/on_life()
 	..()
-	if((damage > low_threshold) && prob(20 * (damage/maxHealth)) && !failing)
-		to_chat(owner, "<span class='warning'>Your breathing is noticeably shallower.</span>")
 	if((!failed) && (failing))
 		if(owner.stat == CONSCIOUS)
 			owner.visible_message("<span class='userdanger'>[owner] grabs [owner.p_their()] throat, struggling for breath!</span>")

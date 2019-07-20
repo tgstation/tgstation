@@ -14,13 +14,14 @@
 	maxHealth	= BRAIN_DAMAGE_DEATH
 	low_threshold = 45
 	high_threshold = 120
+
 	var/suicided = FALSE
 	var/mob/living/brain/brainmob = null
 	var/brain_death = FALSE //if the brainmob was intentionally killed by attacking the brain after removal, or by severe braindamage
 	var/decoy_override = FALSE	//if it's a fake brain with no brainmob assigned. Feedback messages will be faked as if it does have a brainmob. See changelings & dullahans.
 	//two variables necessary for calculating whether we get a brain trauma or not
-	var/prev_damage = 0
 	var/damage_delta = 0
+
 
 	var/list/datum/brain_trauma/traumas = list()
 
@@ -196,7 +197,6 @@
 	return ..()
 
 /obj/item/organ/brain/on_life()
-	..()
 	if(damage >= BRAIN_DAMAGE_DEATH) //rip
 		to_chat(src, "<span class='userdanger'>The last spark of life in your brain fizzles out...</span>")
 		owner.death()
