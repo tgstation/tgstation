@@ -16,6 +16,16 @@
 /datum/team/contractor_team
 	show_roundend_report = FALSE
 
+/datum/antagonist/traitor/contractor_support/forge_traitor_objectives()
+	var/datum/objective/generic_objective = new
+
+	generic_objective.name = "Follow Contractor's Orders"
+	generic_objective.explanation_text = "Follow your orders. Assist agents in this mission area."
+
+	generic_objective.completed = TRUE
+
+	add_objective(generic_objective)
+
 /datum/contractor_hub
 	var/contract_rep = 0
 	var/list/hub_items = list()
