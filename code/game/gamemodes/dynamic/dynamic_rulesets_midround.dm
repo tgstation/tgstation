@@ -105,10 +105,9 @@
 // Here is where you can check if your ghost applicants are valid for the ruleset.
 // Called by send_applications().
 /datum/dynamic_ruleset/midround/from_ghosts/proc/review_applications()
-	message_admins("Applicant list: [english_list(applicants)]")
-	for (var/i = required_candidates, i > 0, i--)
+	for (var/i = 1, i < required_candidates, i++)
 		if(applicants.len <= 0)
-			if(i == required_candidates)
+			if(i == 1)
 				// We have found no candidates so far and we are out of applicants.
 				mode.refund_threat(cost)
 				mode.threat_log += "[worldtime2text()]: Rule [name] refunded [cost] (all applications invalid)"
@@ -121,12 +120,12 @@
 				applicant = applicant.ghostize(FALSE)
 			else // Not dead? Disregard them, pick a new applicant
 				message_admins("[name]: Rule could not use [applicant], not dead.")
-				i++
+				i--
 				continue
 
 		if(!applicant)
 			message_admins("[name]: Applicant was null. This may be caused if the mind changed bodies after applying.")
-			i++
+			i--
 			continue
 		message_admins("DEBUG: Selected [applicant] for rule.")
 

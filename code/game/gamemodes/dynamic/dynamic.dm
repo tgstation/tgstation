@@ -325,7 +325,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 				continue
 			rule.candidates = candidates.Copy()
 			rule.trim_candidates()
-			if (rule.ready())
+			if (rule.ready() && rule.candidates.len > 0)
 				drafted_rules[rule] = rule.weight
 
 	var/indice_pop = min(10,round(roundstart_pop_ready/pop_per_requirement)+1)
@@ -510,7 +510,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 					rule.candidates = list()
 					rule.candidates = current_players.Copy()
 					rule.trim_candidates()
-					if (rule.ready())
+					if (rule.ready() && rule.candidates.len > 0)
 						drafted_rules[rule] = rule.get_weight()
 
 			if (drafted_rules.len > 0)
