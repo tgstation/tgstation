@@ -46786,6 +46786,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
+/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -51163,6 +51164,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
+"rHa" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/landmark/beacon_start/east,
+/turf/open/floor/plasteel,
+/area/hallway/primary/starboard)
 "rHZ" = (
 /obj/structure/rack,
 /obj/item/wrench,
@@ -51997,6 +52005,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
+"xqG" = (
+/obj/effect/landmark/infection_start,
+/turf/open/space/basic,
+/area/space)
 "xwN" = (
 /turf/open/floor/plating,
 /area/engine/engine_smes)
@@ -98218,7 +98230,7 @@ aZf
 aFz
 bbF
 aYV
-aXq
+rHa
 aYV
 bfX
 bhB
@@ -106676,7 +106688,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+xqG
 aaa
 aaa
 aaa

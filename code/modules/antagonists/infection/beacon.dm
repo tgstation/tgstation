@@ -54,7 +54,7 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 	C.upgrade_points++
 	for(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/spore in C.infection_mobs)
 		spore.add_points(200)
-	if(GLOB.infection_beacons.len > 1)
+	if(GLOB.infection_beacons.len > 0)
 		INVOKE_ASYNC(src, .proc/destroyed_announcement)
 	return ..()
 
