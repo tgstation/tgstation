@@ -24,6 +24,11 @@
 	var/obj/item/disk/design_disk/inserted_disk
 	var/datum/component/remote_materials/materials
 
+/obj/machinery/mineral/ore_redemption/examine(mob/user)
+	. = ..()
+	if(inserted_id)
+		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
+
 /obj/machinery/mineral/ore_redemption/Initialize(mapload)
 	. = ..()
 	stored_research = new /datum/techweb/specialized/autounlocking/smelter
@@ -179,11 +184,18 @@
 		return
 	if(istype(W, /obj/item/card/id))
 		var/obj/item/card/id/I = user.get_active_held_item()
-		if(istype(I) && !istype(inserted_id))
-			if(!user.transferItemToLoc(I, src))
+		if(istype(I))
+			if(!inserted_id)
+				if(!user.transferItemToLoc(I, src))
+					return
+				user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
+									"<span class='notice'>You insert the ID card into the console.</span>")
+				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+				inserted_id = I
+				interact(user)
 				return
-			inserted_id = I
-			interact(user)
+			else
+				to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
 		return
 
 	if(istype(W, /obj/item/disk/design_disk))
@@ -261,13 +273,22 @@
 				return
 			usr.put_in_hands(inserted_id)
 			inserted_id = null
+			usr.visible_message("<span class='notice'>[usr] gets an ID card from the console.</span>", \
+								"<span class='notice'>You get the ID card from the console.</span>")
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			return TRUE
 		if("Insert")
 			var/obj/item/card/id/I = usr.get_active_held_item()
 			if(istype(I))
+				if(inserted_id)
+					to_chat(usr, "<span class='warning'>There's already an ID card in the console!</span>")
+					return
 				if(!usr.transferItemToLoc(I,src))
 					return
 				inserted_id = I
+				usr.visible_message("<span class='notice'>[usr] inserts an ID card into the console.</span>", \
+									"<span class='notice'>You insert the ID card into the console.</span>")
+				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			else
 				to_chat(usr, "<span class='warning'>Not a valid ID!</span>")
 			return TRUE
@@ -365,3 +386,17 @@
 	else
 		icon_state = "[initial(icon_state)]-off"
 	return
+
+/obj/machinery/mineral/ore_redemption/AltClick(mob/user)
+	if(!user.canUseTopic(src, issilicon(user)))
+		return
+	if(!inserted_id)
+		to_chat(user, "<span class='warning'>There's no ID card in the console!</span>")
+	if(inserted_id)
+		inserted_id.forceMove(drop_location())
+		if(!issilicon(user) && Adjacent(user))
+			user.put_in_hands(inserted_id)
+			inserted_id = null
+			user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
+								"<span class='notice'>You get the ID card from the console.</span>")
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
