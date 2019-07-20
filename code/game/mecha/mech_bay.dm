@@ -34,6 +34,10 @@
 		recharge_console.recharge_port = null
 	return ..()
 
+/obj/machinery/mech_bay_recharge_port/setDir(new_dir)
+	. = ..()
+	recharging_turf = get_step(loc, dir)
+
 /obj/machinery/mech_bay_recharge_port/RefreshParts()
 	var/MC
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
@@ -41,9 +45,9 @@
 	max_charge = MC * 25
 
 /obj/machinery/mech_bay_recharge_port/examine(mob/user)
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Base recharge rate at <b>[max_charge]J</b> per cycle.<span>")
+		. += "<span class='notice'>The status display reads: Base recharge rate at <b>[max_charge]J</b> per cycle.</span>"
 
 /obj/machinery/mech_bay_recharge_port/process()
 	if(stat & NOPOWER || !recharge_console)

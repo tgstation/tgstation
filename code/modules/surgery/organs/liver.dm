@@ -9,40 +9,37 @@
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_LIVER
 	desc = "Pairing suggestion: chianti and fava beans."
-	var/damage = 0 //liver damage, 0 is no damage, damage=maxHealth causes liver failure
 	var/alcohol_tolerance = ALCOHOL_RATE//affects how much damage the liver takes from alcohol
-	var/failing //is this liver failing?
-	var/maxHealth = LIVER_DEFAULT_HEALTH
 	var/toxTolerance = LIVER_DEFAULT_TOX_TOLERANCE//maximum amount of toxins the liver can just shrug off
 	var/toxLethality = LIVER_DEFAULT_TOX_LETHALITY//affects how much damage toxins do to the liver
 	var/filterToxins = TRUE //whether to filter toxins
+	maxHealth = LIVER_DEFAULT_HEALTH
+	Unique_Failure_Msg = "<span class='danger'>Subject is suffering from liver failure: Apply Corazone and begin a liver transplant immediately!</span>"
 
 #define HAS_SILENT_TOXIN 0 //don't provide a feedback message if this is the only toxin present
 #define HAS_NO_TOXIN 1
 #define HAS_PAINFUL_TOXIN 2
 
 /obj/item/organ/liver/on_life()
+	if(HAS_TRAIT(owner, TRAIT_NOMETABOLISM))
+		return
+		
 	var/mob/living/carbon/C = owner
-
+	..()	//perform general on_life()
 	if(istype(C))
 		if(!failing)//can't process reagents with a failing liver
-			//slowly heal liver damage
-			damage = max(0, damage - 0.1)
 
 			var/provide_pain_message = HAS_NO_TOXIN
 			if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
 				//handle liver toxin filtration
-				for(var/I in C.reagents.reagent_list)
-					var/datum/reagent/pickedreagent = I
-					if(istype(pickedreagent, /datum/reagent/toxin))
-						var/thisamount = C.reagents.get_reagent_amount(pickedreagent)
-						if (thisamount <= toxTolerance && thisamount)
-							C.reagents.remove_reagent(pickedreagent, 1)
-						else
-							damage += (thisamount*toxLethality)
-							var/datum/reagent/toxin/found_toxin = pickedreagent
-							if(provide_pain_message != HAS_PAINFUL_TOXIN)
-								provide_pain_message = found_toxin.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN
+				for(var/datum/reagent/toxin/T in C.reagents.reagent_list)
+					var/thisamount = C.reagents.get_reagent_amount(T.type)
+					if (thisamount && thisamount <= toxTolerance)
+						C.reagents.remove_reagent(T.type, 1)
+					else
+						damage += (thisamount*toxLethality)
+						if(provide_pain_message != HAS_PAINFUL_TOXIN)
+							provide_pain_message = T.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN
 
 			//metabolize reagents
 			C.reagents.metabolize(C, can_overdose=TRUE)

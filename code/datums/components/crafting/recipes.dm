@@ -548,6 +548,13 @@
 				/obj/item/stack/sheet/animalhide/ashdrake = 5)
 	category = CAT_PRIMAL
 
+/datum/crafting_recipe/firebrand
+	name = "Firebrand"
+	result = /obj/item/match/firebrand
+	time = 100 //Long construction time. Making fire is hard work.
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 2)
+	category = CAT_PRIMAL
+
 /datum/crafting_recipe/gold_horn
 	name = "Golden Bike Horn"
 	result = /obj/item/bikehorn/golden
@@ -584,6 +591,20 @@
 	time = 60
 	reqs = list(/obj/item/grown/log = 5)
 	result = /obj/structure/bonfire
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/rake //Category resorting incoming
+	name = "Rake"
+	time = 30
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 5)
+	result = /obj/item/cultivator/rake
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/woodbucket
+	name = "Wooden Bucket"
+	time = 30
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 3)
+	result = /obj/item/reagent_containers/glass/bucket/wooden
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/headpike
@@ -625,7 +646,7 @@
 
 
 /datum/crafting_recipe/rcl
-	name = "Makeshift Rapid Cable Layer"
+	name = "Makeshift Rapid Pipe Cleaner Layer"
 	result = /obj/item/twohanded/rcl/ghetto
 	time = 40
 	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
@@ -687,6 +708,6 @@
 	name = "Improvised Jetpack"
 	result = /obj/item/tank/jetpack/improvised
 	time = 30
-	reqs = list(/obj/item/tank/internals/oxygen/red = 2, /obj/item/extinguisher = 1, /obj/item/pipe = 3, /obj/item/stack/cable_coil = 30)//red oxygen tank so it looks right
+	reqs = list(/obj/item/tank/internals/oxygen = 2, /obj/item/extinguisher = 1, /obj/item/pipe = 3, /obj/item/stack/cable_coil = MAXCOIL)
 	category = CAT_MISC
 	tools = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)

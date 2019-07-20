@@ -76,7 +76,6 @@
 	dir = 5
 	},
 /obj/effect/turf_decal/box/corners{
-	icon_state = "box_corners";
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral,
@@ -350,7 +349,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/box/corners{
-	icon_state = "box_corners";
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral,
@@ -375,7 +373,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/box/corners{
-	icon_state = "box_corners";
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
@@ -821,9 +818,7 @@
 	dir = 1
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	pixel_x = 0;
-	pixel_y = 0
+	icon_state = "plant-21"
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
@@ -900,8 +895,7 @@
 	dir = 8
 	},
 /obj/machinery/status_display/evac{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
@@ -1156,9 +1150,7 @@
 	dir = 1
 	},
 /obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	pixel_x = 0;
-	pixel_y = 0
+	icon_state = "plant-21"
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
@@ -1261,7 +1253,6 @@
 	pixel_y = 6
 	},
 /obj/item/radio{
-	pixel_x = 0;
 	pixel_y = 4
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -1311,9 +1302,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "ct" = (
-/obj/structure/closet/crate/medical{
-	name = "medical crate"
-	},
+/obj/structure/closet/crate/medical,
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/o2{
 	pixel_x = 3;
@@ -1341,9 +1330,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/machinery/sleeper{
-	dir = 4
-	},
+/obj/machinery/stasis,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "cv" = (
@@ -1390,9 +1377,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/machinery/sleeper{
-	dir = 8
-	},
+/obj/machinery/stasis,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "cz" = (
@@ -1673,8 +1658,7 @@
 "dc" = (
 /obj/structure/shuttle/engine/heater,
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 0
+	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1

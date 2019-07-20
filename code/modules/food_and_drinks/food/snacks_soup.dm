@@ -102,8 +102,9 @@
 /obj/item/reagent_containers/food/snacks/soup/mystery/Initialize()
 	. = ..()
 	extra_reagent = pick(/datum/reagent/consumable/capsaicin, /datum/reagent/consumable/frostoil, /datum/reagent/medicine/omnizine, /datum/reagent/consumable/banana, /datum/reagent/blood, /datum/reagent/toxin/slimejelly, /datum/reagent/toxin, /datum/reagent/consumable/banana, /datum/reagent/carbon, /datum/reagent/medicine/oculine)
-	bonus_reagents = list("[extra_reagent]" = 5, /datum/reagent/consumable/nutriment = 6)
-	reagents.add_reagent("[extra_reagent]", 5)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	bonus_reagents[extra_reagent] = 5
+	reagents.add_reagent(extra_reagent, 5)
 
 /obj/item/reagent_containers/food/snacks/soup/hotchili
 	name = "hot chili"
@@ -224,4 +225,12 @@
 	icon_state = "redbeetsoup"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("beet" = 1)
+	foodtype = VEGETABLES
+
+/obj/item/reagent_containers/food/snacks/soup/onion
+	name = "french onion soup"
+	desc = "Good enough to make a grown mime cry."
+	icon_state = "onionsoup"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 5)
+	tastes = list("caramelized onions" = 1)
 	foodtype = VEGETABLES

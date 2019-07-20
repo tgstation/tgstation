@@ -103,28 +103,28 @@
 	return ..()
 
 /obj/machinery/camera/examine(mob/user)
-	..()
+	. += ..()
 	if(isEmpProof(TRUE)) //don't reveal it's upgraded if was done via MALF AI Upgrade Camera Network ability
-		to_chat(user, "It has electromagnetic interference shielding installed.")
+		. += "It has electromagnetic interference shielding installed."
 	else
-		to_chat(user, "<span class='info'>It can be shielded against electromagnetic interference with some <b>plasma</b>.</span>")
+		. += "<span class='info'>It can be shielded against electromagnetic interference with some <b>plasma</b>.</span>"
 	if(isXRay(TRUE)) //don't reveal it's upgraded if was done via MALF AI Upgrade Camera Network ability
-		to_chat(user, "It has an X-ray photodiode installed.")
+		. += "It has an X-ray photodiode installed."
 	else
-		to_chat(user, "<span class='info'>It can be upgraded with an X-ray photodiode with an <b>analyzer</b>.</span>")
+		. += "<span class='info'>It can be upgraded with an X-ray photodiode with an <b>analyzer</b>.</span>"
 	if(isMotion())
-		to_chat(user, "It has a proximity sensor installed.")
+		. += "It has a proximity sensor installed."
 	else
-		to_chat(user, "<span class='info'>It can be upgraded with a <b>proximity sensor</b>.</span>")
+		. += "<span class='info'>It can be upgraded with a <b>proximity sensor</b>.</span>"
 
 	if(!status)
-		to_chat(user, "<span class='info'>It's currently deactivated.</span>")
+		. += "<span class='info'>It's currently deactivated.</span>"
 		if(!panel_open && powered())
-			to_chat(user, "<span class='notice'>You'll need to open its maintenance panel with a <b>screwdriver</b> to turn it back on.</span>")
+			. += "<span class='notice'>You'll need to open its maintenance panel with a <b>screwdriver</b> to turn it back on.</span>"
 	if(panel_open)
-		to_chat(user, "<span class='info'>Its maintenance panel is currently open.</span>")
+		. += "<span class='info'>Its maintenance panel is currently open.</span>"
 		if(!status && powered())
-			to_chat(user, "<span class='info'>It can reactivated with a <b>screwdriver</b>.</span>")
+			. += "<span class='info'>It can reactivated with a <b>screwdriver</b>.</span>"
 
 /obj/machinery/camera/emp_act(severity)
 	. = ..()

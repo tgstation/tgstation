@@ -20,7 +20,7 @@
 	return
 	//I recommend you set the result amount to the total volume of all components.
 
-/datum/chemical_reaction/proc/chemical_mob_spawn(datum/reagents/holder, amount_to_spawn, reaction_name, mob_class = HOSTILE_SPAWN, mob_faction = "chemicalsummon")
+/datum/chemical_reaction/proc/chemical_mob_spawn(datum/reagents/holder, amount_to_spawn, reaction_name, mob_class = HOSTILE_SPAWN, mob_faction = "chemicalsummon", random = TRUE)
 	if(holder && holder.my_atom)
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
@@ -42,7 +42,11 @@
 			C.flash_act()
 
 		for(var/i in 1 to amount_to_spawn)
-			var/mob/living/simple_animal/S = create_random_mob(get_turf(holder.my_atom), mob_class)
+			var/mob/living/simple_animal/S
+			if(random)
+				S = create_random_mob(get_turf(holder.my_atom), mob_class)
+			else
+				S = new mob_class(get_turf(holder.my_atom))//Spawn our specific mob_class
 			S.faction |= mob_faction
 			if(prob(50))
 				for(var/j = 1, j <= rand(1, 3), j++)

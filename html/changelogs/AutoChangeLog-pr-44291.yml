@@ -1,4 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - bugfix: "Above ground smugglers satchels no longer leave a phantom object behind on t-ray scanners"
