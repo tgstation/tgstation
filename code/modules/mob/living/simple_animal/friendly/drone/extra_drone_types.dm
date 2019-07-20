@@ -93,10 +93,20 @@
 	icon_living = icon_state
 	icon_dead = "[visualAppearence]_dead"
 
-/obj/item/drone_shell/dusty
+/obj/effect/mob_spawn/drone_dusty
 	name = "derelict drone shell"
 	desc = "A long-forgotten drone shell. It seems kind of... Space Russian."
-	drone_type = /mob/living/simple_animal/drone/derelict
+	icon = 'icons/mob/drone.dmi'
+	icon_state = "drone_maint_hat"
+	density = FALSE
+	anchored = FALSE
+	mob_type = /mob/living/simple_animal/drone/derelict
+	mob_name = "derelict drone"
+	death = FALSE
+	roundstart = FALSE
+	flavour_text = {"
+	<b>You are a drone on KS13. Repair, maintain and improve the station that housed you on activation.</b>
+	"}
 
 /mob/living/simple_animal/drone/derelict
 	name = "derelict drone"
