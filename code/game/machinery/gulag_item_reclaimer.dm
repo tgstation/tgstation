@@ -30,7 +30,7 @@
 	obj_flags |= EMAGGED
 
 /obj/machinery/gulag_item_reclaimer/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/card/id/prisoner))
+	if(istype(I, /obj/item/card/id))
 		if(!inserted_id)
 			if(!user.transferItemToLoc(I, src))
 				return
