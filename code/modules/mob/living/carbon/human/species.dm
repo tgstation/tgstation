@@ -967,11 +967,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /**
  * Equip the outfit required for life. Replaces items currently worn.
- */ 
+ */
 /datum/species/proc/give_important_for_life(mob/living/carbon/human/human_to_equip)
 	if(!outfit_important_for_life)
 		return
-		
+
 	outfit_important_for_life= new()
 	outfit_important_for_life.equip(human_to_equip)
 
@@ -1154,9 +1154,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	return
 
 /datum/species/proc/spec_emag_act(mob/living/carbon/human/H, mob/user)
-	return
-
-/datum/species/proc/spec_electrocute_act(mob/living/carbon/human/H, shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	return
 
 /datum/species/proc/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
@@ -1508,7 +1505,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
 	if(!damage || (!forced && hit_percent <= 0))
 		return 0
-	
+
 	var/obj/item/bodypart/BP = null
 	if(!spread_damage)
 		if(isbodypart(def_zone))
