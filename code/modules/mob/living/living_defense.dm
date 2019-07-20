@@ -343,10 +343,9 @@
 		O.emp_act(severity)
 
 /mob/living/singularity_act()
-	var/gain = 20
 	investigate_log("([key_name(src)]) has been consumed by the singularity.", INVESTIGATE_SINGULO) //Oh that's where the clown ended up!
 	gib()
-	return(gain)
+	return 20
 
 /mob/living/narsie_act()
 	if(status_flags & GODMODE || QDELETED(src))
