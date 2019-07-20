@@ -42,6 +42,8 @@
 	item_icon = "fa-user-friends"
 	limited = 1
 	cost = 2
+	var/played_by_key /// Used for round end screen to display ckey
+	var/contractor_support_mob_name /// Used for round end screen to display their mob name
 
 /datum/contractor_item/contractor_partner/handle_purchase(var/datum/contractor_hub/hub, mob/living/user)
 	. = ..()
@@ -104,6 +106,9 @@
 	partner.forceMove(arrival_pod)
 	partner.ckey = key
 
+	played_by_key = key
+	contractor_support_mob_name = partner.real_name
+
 	// flavour text
 	to_chat(partner, "<span class='big bold'>You are the Syndicate agent that answered the requested for backup.</span><span class='big'> <span class='danger'><b>Your mission is to support the specialist agent, [user.real_name], anyway possible - you must stay with them, and follow any orders they give.</b></span><br>\
 	<br>\
@@ -138,6 +143,8 @@
 		limited -= 1
 	else if (limited == 0)
 		return FALSE
+
+	purchased_items.Add(src)
 
 	if (item && ispath(item))
 		var/atom/item_to_create = new item(get_turf(user))

@@ -409,19 +409,7 @@
 
 	var/special_role_text = lowertext(name)
 
-	var/completed_contracts = 0
-	var/tc_total = contract_TC_payed_out + contract_TC_to_redeem
-	for (var/datum/syndicate_contract/contract in assigned_contracts)
-		if (contract.status == CONTRACT_STATUS_COMPLETE)
-			completed_contracts++
-
-
-	if (completed_contracts > 0)
-		var/pluralCheck = "contract"
-		if (completed_contracts > 1)
-			pluralCheck = "contracts"
-		result += "<br>Completed <span class='greentext'>[completed_contracts]</span> [pluralCheck] for a total of \
-					<span class='greentext'>[tc_total] TC</span>!<br>"
+	result += contractor_round_end()
 
 	if(traitorwin)
 		result += "<span class='greentext'>The [special_role_text] was successful!</span>"
@@ -430,6 +418,31 @@
 		SEND_SOUND(owner.current, 'sound/ambience/ambifailure.ogg')
 
 	return result.Join("<br>")
+
+/datum/antagonist/traitor/proc/contractor_round_end()
+	var/completed_contracts = 0
+	var/tc_total = contract_TC_payed_out + contract_TC_to_redeem
+	for (var/datum/syndicate_contract/contract in assigned_contracts)
+		if (contract.status == CONTRACT_STATUS_COMPLETE)
+			completed_contracts++
+
+	if (completed_contracts > 0)
+		var/contractor_item_icons = "" // Icons of purchases
+		var/contractor_support_unit // Set if they had a support unit - and shows appended to their contracts completed
+
+		for (var/datum/contractor_item/contractor_purchase in contractor_hub.purchased_items
+			contractor_item_icons += "<span class='tooltip_container'>\[<i class="fas [item_icon]"></i><span class='tooltip_hover'><b>[name]</b><br>[cost]<br>[desc]</span></span>"
+			
+			if (istype(contractor_purchase, ))
+
+		var/pluralCheck = "contract"
+		if (completed_contracts > 1)
+			pluralCheck = "contracts"
+
+		result += "<br>Completed <span class='greentext'>[completed_contracts]</span> [pluralCheck] for a total of \
+					<span class='greentext'>[tc_total] TC</span>! [contractor_support_unit]<br>"
+
+	return result
 
 /datum/antagonist/traitor/roundend_report_footer()
 	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
