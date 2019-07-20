@@ -155,7 +155,7 @@
 		to_chat(src, "<span class='warning'>We are unable to revert our form any further!</span>")
 		return
 	to_chat(src, "<span class='warning'>Successfully reverted to base evolution!</span>")
-	add_points(spent_upgrade_points)
+	add_points(round(spent_upgrade_points / 2, 1))
 	spent_upgrade_points = 0
 	// reset the spore to default
 	transfer_to_type(/mob/living/simple_animal/hostile/infection/infectionspore/sentient)

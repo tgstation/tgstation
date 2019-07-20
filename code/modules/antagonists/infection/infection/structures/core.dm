@@ -37,10 +37,11 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/infection/core/proc/generate_announcement()
-	priority_announce("The infection core has landed, I hope you've prepared well.\n\n\
-					   You should see our reinforcements warp in near the emergency shuttle outpost as we send them in.\n\n\
-					   Good luck. I'll be here to notify you should anything change for better or for worse.",
-					  "Biohazard Containment Commander", 'sound/misc/notice1.ogg')
+	priority_announce("The substance has landed, all available crew members are now required by threat of execution to fight the infection in any way possible.\n\n\
+					   We've also analyzed the substance further, and deemed it to be a threat to continued operations in your solar system.\n\n\
+					   Reinforcements have been requested to be sent in, though we've been detecting anomalous signals coming from the substance's origin point as well.\n\n\
+					   If you stop the source of these signals, you may be able to disable the enemy entirely. Good luck.",
+					   "CentCom Biohazard Division", 'sound/misc/notice1.ogg')
 
 /obj/structure/infection/core/evolve_menu(var/mob/camera/commander/C)
 	return

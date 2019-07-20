@@ -34882,7 +34882,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bEI" = (
@@ -55345,6 +55344,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/lab)
+"dng" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/landmark/beacon_start/east,
+/turf/open/floor/plasteel,
+/area/hallway/primary/starboard)
 "dqu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
@@ -56527,13 +56533,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
-"lXm" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/landmark/beacon_start/east,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "mdr" = (
 /obj/machinery/nuclearbomb/beer,
 /turf/open/floor/plating,
@@ -57489,6 +57488,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
+"tCh" = (
+/obj/effect/landmark/beacon_start/east,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "tDw" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -57713,6 +57716,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"vpU" = (
+/obj/effect/landmark/beacon_start/east,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "vqI" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -57861,10 +57868,6 @@
 	},
 /turf/open/floor/plating,
 /area/science/nanite)
-"wlb" = (
-/obj/effect/landmark/beacon_start/east,
-/turf/open/space/basic,
-/area/space)
 "wph" = (
 /obj/docking_port/stationary{
 	area_type = /area/construction/mining/aux_base;
@@ -104200,7 +104203,7 @@ alP
 alP
 alP
 alP
-anf
+vpU
 alP
 aqD
 arz
@@ -104233,7 +104236,7 @@ aZf
 aFz
 bbF
 aYV
-aXq
+dng
 aYV
 bfX
 bhB
@@ -104287,7 +104290,7 @@ cNW
 cOx
 cBL
 cOe
-cOe
+tCh
 cvO
 cNW
 cNW
@@ -108597,7 +108600,7 @@ aNa
 aQE
 aNa
 aaf
-wlb
+aaa
 aaf
 aNa
 aQE
@@ -108646,7 +108649,7 @@ cNW
 cNW
 cNW
 cNW
-lXm
+clt
 cNW
 cNW
 cNW

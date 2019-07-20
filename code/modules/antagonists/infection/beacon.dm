@@ -1,5 +1,3 @@
-GLOBAL_LIST_INIT(commander_phrases, list("He says the phrase."))
-
 GLOBAL_LIST_EMPTY(infection_beacons)
 GLOBAL_LIST_EMPTY(beacon_spawns)
 
@@ -57,11 +55,12 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 	for(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/spore in C.infection_mobs)
 		spore.add_points(200)
 	if(GLOB.infection_beacons.len > 1)
-		addtimer(CALLBACK(src, .proc/destroyed_announcement), 80)
+		INVOKE_ASYNC(src, .proc/destroyed_announcement)
 	return ..()
 
-/obj/structure/beacon_generator/proc/destroyed_announcement()
-	priority_announce("We've lost a beacon, we only have [GLOB.infection_beacons.len] left. Remember, [pick(GLOB.commander_phrases)]","Biohazard Containment Commander", 'sound/misc/notice1.ogg')
+/obj/structure/beacon_generator/proc/destroyed_announcement(beacons_left = GLOB.infection_beacons.len)
+	sleep(80)
+	priority_announce("A beacon has been consumed by the infection, only [beacons_left] remain.","CentCom Biohazard Division", 'sound/misc/notice1.ogg')
 
 /obj/structure/beacon_generator/process()
 	obj_integrity = min(obj_integrity + 10, max_integrity)

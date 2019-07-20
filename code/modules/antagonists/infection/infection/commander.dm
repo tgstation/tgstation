@@ -74,15 +74,16 @@ GLOBAL_VAR(infection_commander)
 		unlockable_actions += new upgrade_type()
 
 /mob/camera/commander/proc/generate_announcement()
-	priority_announce("Unfortunate news. An infectious core is headed to your station on a meteor.\n\n\
-					   Infectious cores are almost indestructible beings that consume everything around them in order to replicate themselves. They adapt to almost any environment.\n\n\
-					   Our calculations estimate the infection core will arrive in [(autoplace_time - world.time)/600] minutes.\n\n\
-					   Forcefield Generators are being deployed to defend your station. Protect these from the bulk of the infection.",
-					  "Biohazard Containment Commander", 'sound/misc/notice1.ogg')
+	priority_announce("[station_name()]: An abnormal and biological meteor has been detected on a collision course with your station. \n\n\
+					   This substance appears to be self replicating, and will stop at nothing to consume all matter around it.\n\n\
+					   Our calculations estimate the meteor will impact in [(autoplace_time - world.time)/600] minutes.\n\n\
+					   We will be deploying beacons that will defend the majority of your station, provided that they are not destroyed.\n\n\
+					   Further updates will be given as we analyze the substance. Prepare to fight, your AI will be remotely updated in order to effectively combat this danger.",
+					  "CentCom Biohazard Division", 'sound/misc/notice1.ogg')
 
 /mob/camera/commander/proc/defeated_announcement()
-	priority_announce("You've defeated the infection, congratulations.",
-					  "Biohazard Containment Commander", 'sound/misc/notice2.ogg')
+	priority_announce("Our scanners detect no trace of any sentient infectious substance, threat neutralized.",
+					  "CentCom Biohazard Division", 'sound/misc/notice2.ogg')
 
 /mob/camera/commander/proc/place_beacons()
 	for(var/obj/effect/landmark/beacon_start/B in GLOB.beacon_spawns)
@@ -102,7 +103,7 @@ GLOBAL_VAR(infection_commander)
 			qdel(src)
 	else if(!victory_in_progress && !GLOB.infection_beacons.len)
 		victory_in_progress = TRUE
-		priority_announce("It's over, the infection is unstoppable now.", "Biohazard Containment Commander")
+		priority_announce("The infection is replicating at an unstoppable rate, total station takeover estimated at T-minus 25 seconds.", "CentCom Biohazard Division")
 		set_security_level("delta")
 		max_infection_points = INFINITY
 		infection_points = INFINITY

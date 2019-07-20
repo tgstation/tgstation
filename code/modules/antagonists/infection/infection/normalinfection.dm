@@ -161,7 +161,7 @@
 		pulsing_overmind = overmind
 	Be_Pulsed()
 	ConsumeTile()
-	next_pulse = world.time + pulse_cooldown // increases cooldown based on greater time alive
+	next_pulse = world.time + pulse_cooldown
 	for(var/i = 1 to count)
 		if(!angles.len)
 			reset_angles()
@@ -324,7 +324,7 @@
 	newicon.dir = I.dir
 	newicon.pixel_x = I.pixel_x
 	newicon.pixel_y = I.pixel_y
-	newicon.layer = layer
+	newicon.layer = TABLE_LAYER
 	if(overmind)
 		newicon.color = overmind.infection_color
 	newicon.transform = matrix(0.5, 0, 0, 0, 0.5, 0)

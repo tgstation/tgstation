@@ -75,7 +75,7 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 			minion.pass_flags |= PASSBLOB
 			GLOB.doom_event_mobs += minion
 	if(warning_message && warning_jingle)
-		priority_announce("[warning_message]","Biohazard Containment Commander", warning_jingle)
+		priority_announce("[warning_message]","CentCom Biohazard Division", warning_jingle)
 
 /datum/component/spore_controlled
 	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/realmob
@@ -110,7 +110,7 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 	warning_jingle = 'sound/weapons/bite.ogg'
 
 /datum/round_event_control/infection/demon
-	name = "Doom Event: Demons From Hell"
+	name = "Doom Event: Demons From Lavaland"
 	typepath = /datum/round_event/infection/demon
 
 /datum/round_event/infection/demon
@@ -118,7 +118,7 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 	boss_drop_list = list(/obj/item/infectionkiller/excaliju)
 	minion_types = list(/mob/living/simple_animal/hostile/asteroid/goliath=1, /mob/living/simple_animal/hostile/asteroid/basilisk/watcher=2, /mob/living/simple_animal/hostile/asteroid/hivelord/legion=3)
 	minion_drop_list = list()
-	warning_message = "Demons From Hell are invading the station!"
+	warning_message = "Demons From Lavaland are invading the station!"
 	warning_jingle = 'sound/magic/enter_blood.ogg'
 
 /datum/round_event_control/infection/paperwizard
@@ -132,3 +132,27 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 	minion_drop_list = list()
 	warning_message = "The Paper Wizard is invading the station!"
 	warning_jingle = 'sound/weapons/emitter.ogg'
+
+/datum/round_event_control/infection/syndicate
+	name = "Doom Event: The Syndicate"
+	typepath = /datum/round_event/infection/syndicate
+
+/datum/round_event/infection/syndicate
+	boss_type = /mob/living/simple_animal/hostile/syndicate/ranged/shotgun/space/stormtrooper
+	boss_drop_list = list(/obj/item/infectionkiller/excaliju)
+	minion_types = list(/mob/living/simple_animal/hostile/syndicate=1, /mob/living/simple_animal/hostile/syndicate/melee/sword/space=1, /mob/living/simple_animal/hostile/viscerator=5)
+	minion_drop_list = list()
+	warning_message = "Syndicate Operatives are invading the station!"
+	warning_jingle = 'sound/machines/alarm.ogg'
+
+/datum/round_event_control/infection/jungle
+	name = "Doom Event: Jungle Madness"
+	typepath = /datum/round_event/infection/jungle
+
+/datum/round_event/infection/jungle
+	boss_type = /mob/living/simple_animal/hostile/jungle/leaper
+	boss_drop_list = list(/obj/item/infectionkiller/excaliju)
+	minion_types = list(/mob/living/simple_animal/hostile/gorilla=1, /mob/living/simple_animal/hostile/poison/bees=2, /mob/living/simple_animal/hostile/killertomato=2, /mob/living/simple_animal/hostile/mushroom=2)
+	minion_drop_list = list()
+	warning_message = "Jungle Creatures are invading the station!"
+	warning_jingle = 'sound/creatures/gorilla.ogg'
