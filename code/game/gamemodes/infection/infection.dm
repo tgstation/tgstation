@@ -7,7 +7,7 @@
 	required_enemies = 6
 	recommended_enemies = 6
 	antag_flag = ROLE_INFECTION
-	enemy_minimum_age = 14 // these should be somewhat experienced players for an all out war mode
+	enemy_minimum_age = 0 // these should be somewhat experienced players for an all out war mode
 	round_ends_with_antag_death = TRUE
 
 	announce_span = "danger"

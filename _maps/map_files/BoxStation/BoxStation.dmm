@@ -6206,7 +6206,6 @@
 /area/hallway/primary/fore)
 "anS" = (
 /obj/machinery/holopad,
-/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "anT" = (
@@ -15423,7 +15422,6 @@
 /area/hallway/primary/port)
 "aNl" = (
 /obj/structure/cable,
-/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "aNp" = (
@@ -30234,7 +30232,6 @@
 /area/hallway/primary/central)
 "bAf" = (
 /obj/machinery/holopad,
-/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bAg" = (
@@ -49397,13 +49394,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/lab)
-"dng" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/landmark/beacon_start/east,
-/turf/open/floor/plasteel,
-/area/hallway/primary/starboard)
 "dqu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
@@ -49700,13 +49690,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"fKP" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/landmark/beacon_start/east,
-/turf/open/floor/plasteel,
-/area/hallway/primary/starboard)
 "fXM" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -49967,13 +49950,6 @@
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
-"ixb" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/effect/landmark/beacon_start/east,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "iBZ" = (
 /obj/machinery/power/smes,
 /obj/structure/cable,
@@ -50284,10 +50260,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/science/mixing/chamber)
-"kAy" = (
-/obj/effect/landmark/infection_start,
-/turf/open/space/basic,
-/area/space)
 "kGA" = (
 /obj/structure/chair/office/light{
 	dir = 4
@@ -51505,10 +51477,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/brig)
-"tCh" = (
-/obj/effect/landmark/beacon_start/east,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "tDw" = (
 /obj/machinery/light_switch{
 	pixel_y = 28
@@ -51718,10 +51686,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"vpU" = (
-/obj/effect/landmark/beacon_start/east,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "vqI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -68410,7 +68374,7 @@ amA
 akB
 anI
 aol
-ixb
+aol
 aol
 aol
 arI
@@ -90544,7 +90508,7 @@ aVz
 bak
 bbz
 aYV
-fKP
+bdp
 aYV
 bfL
 bhn
@@ -90563,7 +90527,7 @@ bhh
 bwK
 bhh
 bhh
-jmF
+bhh
 btV
 bof
 bGV
@@ -98221,7 +98185,7 @@ alP
 alP
 alP
 alP
-vpU
+anf
 alP
 aqD
 arz
@@ -98254,7 +98218,7 @@ aZf
 aFz
 bbF
 aYV
-dng
+aXq
 aYV
 bfX
 bhB
@@ -98308,7 +98272,7 @@ cNW
 cOx
 cBL
 cOe
-tCh
+cOe
 cvO
 cNW
 cNW
@@ -108529,7 +108493,7 @@ aaa
 aaa
 aaa
 aaa
-kAy
+aaa
 aaa
 aaa
 aaa

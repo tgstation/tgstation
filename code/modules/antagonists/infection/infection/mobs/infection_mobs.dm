@@ -67,8 +67,7 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/infection/proc/infection_chat(msg)
-	var/spanned_message = say_quote(msg, get_spans())
-	var/rendered = "<font color=\"#EE4000\"><b>\[Infection Telepathy\] [real_name]</b> [spanned_message]</font>"
+	var/rendered = "<font color=\"#EE4000\"><b>\[Infection Telepathy\] [real_name]</b> [msg]</font>"
 	for(var/M in GLOB.mob_list)
 		if(iscommander(M) || isinfectionmonster(M))
 			to_chat(M, rendered)
