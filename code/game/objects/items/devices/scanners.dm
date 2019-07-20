@@ -144,11 +144,6 @@ GENE SCANNER
 		var/mob/living/carbon/human/H = M
 		if(H.undergoing_cardiac_arrest() && H.stat != DEAD)
 			to_chat(user, "<span class='danger'>Subject suffering from heart attack: Apply defibrillation or other electric shock immediately!</span>")
-		//organ failure messages
-		for(var/O in H.internal_organs)
-			var/obj/item/organ/organ = O
-			if(organ.failing)
-				to_chat(user, organ.Assemble_Failure_Message())
 
 	to_chat(user, "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>")
 
@@ -250,15 +245,6 @@ GENE SCANNER
 				to_chat(user, "\t<span class='alert'>Subject does not have eyes.</span>")
 
 
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		for(var/O in H.internal_organs)
-			var/obj/item/organ/organ = O
-			if(organ.damage > organ.low_threshold)
-				to_chat(user, "\t<span class='alert'>[organ.damage > organ.high_threshold ? "Severe" : "Minor"] damaged detected within [organ].</span>")
-		if(advanced && H.has_dna())
-			to_chat(user, "\t<span class='info'>Genetic Stability: [H.dna.stability]%.</span>")
-
 	// Body part damage report
 	if(iscarbon(M) && mode == 1)
 		var/mob/living/carbon/C = M
@@ -267,6 +253,62 @@ GENE SCANNER
 			to_chat(user, "<span class='info'>\tDamage: <span class='info'><font color='red'>Brute</font></span>-<font color='#FF8000'>Burn</font>-<font color='green'>Toxin</font>-<font color='blue'>Suffocation</font>\n\t\tSpecifics: <font color='red'>[brute_loss]</font>-<font color='#FF8000'>[fire_loss]</font>-<font color='green'>[tox_loss]</font>-<font color='blue'>[oxy_loss]</font></span>")
 			for(var/obj/item/bodypart/org in damaged)
 				to_chat(user, "\t\t<span class='info'>[capitalize(org.name)]: [(org.brute_dam > 0) ? "<font color='red'>[org.brute_dam]</font></span>" : "<font color='red'>0</font>"]-[(org.burn_dam > 0) ? "<font color='#FF8000'>[org.burn_dam]</font>" : "<font color='#FF8000'>0</font>"]")
+
+	//Organ damages report
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/minor_damage
+		var/major_damage
+		var/max_damage
+		var/report_organs = FALSE
+
+		//Piece together the lists to be reported
+		for(var/O in H.internal_organs)
+			var/obj/item/organ/organ = O
+			if(organ.failing)
+				report_organs = TRUE	//if we report one organ, we report all organs, even if the lists are empty, just for consistency
+				if(max_damage)
+					max_damage += ", "	//prelude the organ if we've already reported an organ
+					max_damage += organ.name	//this just slaps the organ name into the string of text
+				else
+					max_damage = "<span class='alert'> Non-Functional Organs: "	//our initial statement
+					max_damage += organ.name
+			else if(organ.damage > organ.high_threshold)
+				report_organs = TRUE
+				if(major_damage)
+					major_damage += ", "
+					major_damage += organ.name
+				else
+					major_damage = "<span class='info'> Severely Damaged Organs: "
+					major_damage += organ.name
+			else if(organ.damage > organ.low_threshold)
+				report_organs = TRUE
+				if(minor_damage)
+					minor_damage += ", "
+					minor_damage += organ.name
+				else
+					minor_damage = "<span class='info'> Damaged Organs: "
+					minor_damage += organ.name
+
+		if(report_organs)	//we either finish the list, or set it to be empty if no organs were reported in that category
+			if(!max_damage)
+				max_damage = "<span class='alert'> Non-Functional Organs: </span>"
+			else
+				max_damage += "</span>"
+			if(!major_damage)
+				major_damage = "<span class='alert'> Severely Damaged Organs: </span>"
+			else
+				major_damage += "</span>"
+			if(!minor_damage)
+				minor_damage = "<span class='info'> Damaged Organs: </span>"
+			else
+				minor_damage += "</span>"
+			to_chat(user, minor_damage)
+			to_chat(user, major_damage)
+			to_chat(user, max_damage)
+		//Genetic damage
+		if(advanced && H.has_dna())
+			to_chat(user, "\t<span class='info'>Genetic Stability: [H.dna.stability]%.</span>")
 
 	// Species and body temperature
 	if(ishuman(M))
