@@ -1234,6 +1234,10 @@
 			icon = 'icons/obj/doors/airlocks/station/freezer.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 			assemblytype = /obj/structure/door_assembly/door_assembly_fre
+		if("Science")
+			icon = 'icons/obj/doors/airlocks/station/science.dmi'
+			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
+			assemblytype = /obj/structure/door_assembly/door_assembly_science
 		if("Virology")
 			icon = 'icons/obj/doors/airlocks/station/virology.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
