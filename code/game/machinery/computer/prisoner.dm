@@ -10,28 +10,22 @@
 	var/timeleft = 60
 	var/stop = 0
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
-	var/obj/item/card/id/prisoner/inserted_id
 	circuit = /obj/item/circuitboard/computer/prisoner
 
 	light_color = LIGHT_COLOR_RED
 
-/obj/machinery/computer/prisoner/examine(mob/user)
-	. = ..()
-	if(inserted_id)
-		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
-
 /obj/machinery/computer/prisoner/ui_interact(mob/user)
 	. = ..()
-	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 	var/dat = ""
 	if(screen == 0)
 		dat += "<HR><A href='?src=[REF(src)];lock=1'>{Log In}</A>"
 	else if(screen == 1)
 		dat += "<H3>Prisoner ID Management</H3>"
-		if(inserted_id)
-			dat += text("<A href='?src=[REF(src)];id=eject'>[inserted_id]</A><br>")
-			dat += text("Collected Points: [inserted_id.points]. <A href='?src=[REF(src)];id=reset'>Reset.</A><br>")
-			dat += text("Card goal: [inserted_id.goal].  <A href='?src=[REF(src)];id=setgoal'>Set </A><br>")
+		if(inserted_prisoner_id)
+			dat += text("<A href='?src=[REF(src)];id=eject'>[inserted_prisoner_id]</A><br>")
+			dat += text("Collected Points: [inserted_prisoner_id.points]. <A href='?src=[REF(src)];id=reset'>Reset.</A><br>")
+			dat += text("Card goal: [inserted_prisoner_id.goal].  <A href='?src=[REF(src)];id=setgoal'>Set </A><br>")
 			dat += text("Space Law recommends quotas of 100 points per minute they would normally serve in the brig.<BR>")
 		else
 			dat += text("<A href='?src=[REF(src)];id=insert'>Insert Prisoner ID.</A><br>")
@@ -76,14 +70,12 @@
 
 /obj/machinery/computer/prisoner/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/card/id))
-		insert_id_prisoner(user)
+		if(screen)
+			id_insert_prisoner(user)
+		else
+			to_chat(user, "<span class='danger'>Unauthorized access.</span>")
 	else
 		return ..()
-
-/obj/machinery/computer/prisoner/AltClick(mob/user)
-	if(!user.canUseTopic(src, issilicon(user)))
-		return
-	eject_id_prisoner(user)
 
 /obj/machinery/computer/prisoner/process()
 	if(!..())
@@ -97,19 +89,19 @@
 		usr.set_machine(src)
 
 		if(href_list["id"])
-			if(href_list["id"] =="insert" && !inserted_id)
-				insert_id_prisoner(usr)
-			else if(inserted_id)
+			if(href_list["id"] =="insert" && !inserted_prisoner_id)
+				id_insert_prisoner(usr)
+			else if(inserted_prisoner_id)
 				switch(href_list["id"])
 					if("eject")
-						eject_id_prisoner(usr)
+						id_eject_prisoner(usr)
 					if("reset")
-						inserted_id.points = 0
+						inserted_prisoner_id.points = 0
 					if("setgoal")
 						var/num = round(input(usr, "Choose prisoner's goal:", "Input an Integer", null) as num|null)
 						if(num >= 0)
 							num = min(num,1000) //Cap the quota to the equivilent of 10 minutes.
-							inserted_id.goal = num
+							inserted_prisoner_id.goal = num
 		else if(href_list["inject1"])
 			var/obj/item/implant/I = locate(href_list["inject1"]) in GLOB.tracked_chem_implants
 			if(I && istype(I))
@@ -126,9 +118,9 @@
 		else if(href_list["lock"])
 			if(src.allowed(usr))
 				screen = !screen
-				playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
+				playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
 			else
-				to_chat(usr, "Unauthorized Access.")
+				to_chat(usr, "<span class='danger'>Unauthorized access.</span>")
 
 		else if(href_list["warn"])
 			var/warning = copytext(sanitize(input(usr,"Message:","Enter your message here!","")),1,MAX_MESSAGE_LEN)
@@ -143,29 +135,3 @@
 		src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
-
-/obj/machinery/computer/prisoner/proc/insert_id_prisoner(mob/user)
-	var/obj/item/card/id/prisoner/I = user.is_holding_item_of_type(/obj/item/card/id/prisoner)
-	if(inserted_id)
-		to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
-		return
-	if(I)
-		if(!user.transferItemToLoc(I, src))
-			return
-		inserted_id = I
-		user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
-							"<span class='notice'>You insert the ID card into the console.</span>")
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-	else
-		to_chat(user, "<span class='danger'>No valid ID.</span>")
-	updateUsrDialog()
-
-/obj/machinery/computer/prisoner/proc/eject_id_prisoner(mob/user)
-	inserted_id.forceMove(drop_location())
-	if(!issilicon(user) && Adjacent(user))
-		user.put_in_hands(inserted_id)
-		inserted_id = null
-		user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
-							"<span class='notice'>You get the ID card from the console.</span>")
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-	updateUsrDialog()

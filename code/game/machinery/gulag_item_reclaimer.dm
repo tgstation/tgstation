@@ -9,13 +9,7 @@
 	idle_power_usage = 100
 	active_power_usage = 2500
 	var/list/stored_items = list()
-	var/obj/item/card/id/prisoner/inserted_id = null
 	var/obj/machinery/gulag_teleporter/linked_teleporter = null
-
-/obj/machinery/gulag_item_reclaimer/examine(mob/user)
-	. = ..()
-	if(inserted_id)
-		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
 
 /obj/machinery/gulag_item_reclaimer/Destroy()
 	for(var/i in contents)
@@ -23,9 +17,9 @@
 		I.forceMove(get_turf(src))
 	if(linked_teleporter)
 		linked_teleporter.linked_reclaimer = null
-	if(inserted_id)
-		inserted_id.forceMove(get_turf(src))
-		inserted_id = null
+	if(inserted_prisoner_id)
+		inserted_prisoner_id.forceMove(get_turf(src))
+		inserted_prisoner_id = null
 	return ..()
 
 /obj/machinery/gulag_item_reclaimer/emag_act(mob/user)
@@ -36,19 +30,7 @@
 
 /obj/machinery/gulag_item_reclaimer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/card/id))
-		if(istype(I, /obj/item/card/id/prisoner))
-			if(!inserted_id)
-				if(!user.transferItemToLoc(I, src))
-					return
-				inserted_id = I
-				user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
-									"<span class='notice'>You insert the ID card into the console.</span>")
-				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-				return
-			else
-				to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
-		else
-			to_chat(user, "<span class='warning'>Error: Invalid ID</span>")
+		id_insert_prisoner(user)
 	else
 		return ..()
 
@@ -66,10 +48,10 @@
 	if(allowed(user))
 		can_reclaim = TRUE
 
-	if(inserted_id)
-		data["id"] = inserted_id
-		data["id_name"] = inserted_id.registered_name
-		if(inserted_id.points >= inserted_id.goal)
+	if(inserted_prisoner_id)
+		data["id"] = inserted_prisoner_id
+		data["id_name"] = inserted_prisoner_id.registered_name
+		if(inserted_prisoner_id.points >= inserted_prisoner_id.goal)
 			can_reclaim = TRUE
 
 	var/list/mobs = list()
@@ -94,25 +76,15 @@
 /obj/machinery/gulag_item_reclaimer/ui_act(action, list/params)
 	switch(action)
 		if("handle_id")
-			if(inserted_id)
-				usr.put_in_hands(inserted_id)
-				inserted_id = null
-				usr.visible_message("<span class='notice'>[usr] gets an ID card from the console.</span>", \
-									"<span class='notice'>You get the ID card from the console.</span>")
-				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+			if(inserted_prisoner_id)
+				id_eject_prisoner(usr)
 			else
 				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id/prisoner)
 				if(I)
-					if(!usr.transferItemToLoc(I, src))
-						return
-					inserted_id = I
-					usr.visible_message("<span class='notice'>[usr] inserts an ID card into the console.</span>", \
-										"<span class='notice'>You insert the ID card into the console.</span>")
-					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-
+					id_insert_prisoner(usr)
 		if("release_items")
 			var/mob/living/carbon/human/H = locate(params["mobref"]) in stored_items
-			if ((H == usr || allowed(usr)) && inserted_id)
+			if ((H == usr || allowed(usr)) && inserted_prisoner_id)
 				var/obj/item/card/id/target_id
 				if (stored_items[H])
 					idloop:
@@ -127,13 +99,13 @@
 									target_id = potential_id
 									break idloop
 				if (target_id)
-					target_id.registered_account.adjust_money(inserted_id.points * 0.5)
+					target_id.registered_account.adjust_money(inserted_prisoner_id.points * 0.5)
 					var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SEC)
 					if(D)
-						D.adjust_money(inserted_id.points * 0.5)
+						D.adjust_money(inserted_prisoner_id.points * 0.5)
 				else
-					new /obj/item/holochip(drop_location(), inserted_id.points)
-					to_chat(usr, "An ID with your bank account registration was not located amongst your items, a sum of [inserted_id.points] has been dispensed as holochips.")
+					new /obj/item/holochip(drop_location(), inserted_prisoner_id.points)
+					to_chat(usr, "An ID with your bank account registration was not located amongst your items, a sum of [inserted_prisoner_id.points] has been dispensed as holochips.")
 				drop_items(H)
 			else
 				to_chat(usr, "Access denied.")
@@ -147,17 +119,3 @@
 		stored_items[user] -= W
 		W.forceMove(drop_location)
 	stored_items -= user
-
-/obj/machinery/gulag_item_reclaimer/AltClick(mob/user)
-	if(!user.canUseTopic(src, issilicon(user)))
-		return
-	if(!inserted_id)
-		to_chat(user, "<span class='warning'>There's no ID card in the console!</span>")
-	if(inserted_id)
-		inserted_id.forceMove(drop_location())
-		if(!issilicon(user) && Adjacent(user))
-			user.put_in_hands(inserted_id)
-			inserted_id = null
-			user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
-								"<span class='notice'>You get the ID card from the console.</span>")
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)

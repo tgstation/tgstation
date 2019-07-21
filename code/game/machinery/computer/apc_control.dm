@@ -11,7 +11,6 @@
 	var/list/result_filters //For sorting the results
 	var/checking_logs = 0
 	var/list/logs
-	var/authenticated = 0
 	var/auth_id = "\[NULL\]"
 
 /obj/machinery/computer/apc_control/Initialize()

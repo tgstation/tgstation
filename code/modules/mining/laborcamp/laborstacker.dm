@@ -10,15 +10,9 @@ GLOBAL_LIST(labor_sheet_values)
 	density = FALSE
 	var/obj/machinery/mineral/stacking_machine/laborstacker/stacking_machine = null
 	var/machinedir = SOUTH
-	var/obj/item/card/id/prisoner/inserted_id
 	var/obj/machinery/door/airlock/release_door
 	var/door_tag = "prisonshuttle"
 	var/obj/item/radio/Radio //needed to send messages to sec radio
-
-/obj/machinery/mineral/labor_claim_console/examine(mob/user)
-	. = ..()
-	if(inserted_id)
-		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
 
 /obj/machinery/mineral/labor_claim_console/Initialize()
 	. = ..()
@@ -39,18 +33,10 @@ GLOBAL_LIST(labor_sheet_values)
 	return a["value"] - b["value"]
 
 /obj/machinery/mineral/labor_claim_console/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/card/id/prisoner))
-		if(!inserted_id)
-			if(!user.transferItemToLoc(I, src))
-				return
-			inserted_id = I
-			user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
-								"<span class='notice'>You insert the ID card into the console.</span>")
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-			return
-		else
-			to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
-	return ..()
+	if(istype(I, /obj/item/card/id))
+		id_insert_prisoner(user)
+	else
+		return ..()
 
 /obj/machinery/mineral/labor_claim_console/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -64,11 +50,11 @@ GLOBAL_LIST(labor_sheet_values)
 	var/can_go_home = FALSE
 
 	data["emagged"] = (obj_flags & EMAGGED) ? 1 : 0
-	if(inserted_id)
-		data["id"] = inserted_id
-		data["id_name"] = inserted_id.registered_name
-		data["points"] = inserted_id.points
-		data["goal"] = inserted_id.goal
+	if(inserted_prisoner_id)
+		data["id"] = inserted_prisoner_id
+		data["id_name"] = inserted_prisoner_id.registered_name
+		data["points"] = inserted_prisoner_id.points
+		data["goal"] = inserted_prisoner_id.goal
 	if(check_auth())
 		can_go_home = TRUE
 
@@ -85,28 +71,13 @@ GLOBAL_LIST(labor_sheet_values)
 		return
 	switch(action)
 		if("handle_id")
-			if(inserted_id)
+			if(inserted_prisoner_id)
 				if(!usr.get_active_held_item())
-					usr.put_in_hands(inserted_id)
-					inserted_id = null
-					usr.visible_message("<span class='notice'>[usr] gets an ID card from the console.</span>", \
-										"<span class='notice'>You get the ID card from the console.</span>")
-					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-				else
-					inserted_id.forceMove(get_turf(src))
-					inserted_id = null
-					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+					id_eject_prisoner(usr)
 			else
-				var/obj/item/I = usr.get_active_held_item()
-				if(istype(I, /obj/item/card/id/prisoner))
-					if(!usr.transferItemToLoc(I, src))
-						return
-					inserted_id = I
-					usr.visible_message("<span class='notice'>[usr] inserts an ID card into the console.</span>", \
-										"<span class='notice'>You insert the ID card into the console.</span>")
-					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+				id_insert_prisoner(usr)
 		if("claim_points")
-			inserted_id.points += stacking_machine.points
+			inserted_prisoner_id.points += stacking_machine.points
 			stacking_machine.points = 0
 			to_chat(usr, "Points transferred.")
 		if("move_shuttle")
@@ -123,13 +94,13 @@ GLOBAL_LIST(labor_sheet_values)
 					else
 						if(!(obj_flags & EMAGGED))
 							Radio.set_frequency(FREQ_SECURITY)
-							Radio.talk_into(src, "[inserted_id.registered_name] has returned to the station. Minerals and Prisoner ID card ready for retrieval.", FREQ_SECURITY)
+							Radio.talk_into(src, "[inserted_prisoner_id.registered_name] has returned to the station. Minerals and Prisoner ID card ready for retrieval.", FREQ_SECURITY)
 						to_chat(usr, "<span class='notice'>Shuttle received message and will be sent shortly.</span>")
 
 /obj/machinery/mineral/labor_claim_console/proc/check_auth()
 	if(obj_flags & EMAGGED)
 		return 1 //Shuttle is emagged, let any ol' person through
-	return (istype(inserted_id) && inserted_id.points >= inserted_id.goal) //Otherwise, only let them out if the prisoner's reached his quota.
+	return (istype(inserted_prisoner_id) && inserted_prisoner_id.points >= inserted_prisoner_id.goal) //Otherwise, only let them out if the prisoner's reached his quota.
 
 /obj/machinery/mineral/labor_claim_console/proc/locate_stacking_machine()
 	stacking_machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
@@ -143,23 +114,7 @@ GLOBAL_LIST(labor_sheet_values)
 		obj_flags |= EMAGGED
 		to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
 
-/obj/machinery/mineral/labor_claim_console/AltClick(mob/user)
-	if(!user.canUseTopic(src, issilicon(user)))
-		return
-	if(!inserted_id)
-		to_chat(user, "<span class='warning'>There's no ID card in the console!</span>")
-	if(inserted_id)
-		inserted_id.forceMove(drop_location())
-		if(!issilicon(user) && Adjacent(user))
-			user.put_in_hands(inserted_id)
-			inserted_id = null
-			user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
-								"<span class='notice'>You get the ID card from the console.</span>")
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-
-
 /**********************Prisoner Collection Unit**************************/
-
 
 /obj/machinery/mineral/stacking_machine/laborstacker
 	force_connect = TRUE
@@ -176,6 +131,7 @@ GLOBAL_LIST(labor_sheet_values)
 	return ..()
 
 /**********************Point Lookup Console**************************/
+
 /obj/machinery/mineral/labor_points_checker
 	name = "points checking console"
 	desc = "A console used by prisoners to check the progress on their quotas. Simply swipe a prisoner ID."

@@ -5,8 +5,6 @@
 	icon_keyboard = "security_key"
 	req_one_access = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS)
 	circuit = /obj/item/circuitboard/computer/secure_data
-	scan = null
-	var/authenticated = null
 	var/rank = null
 	var/screen = null
 	var/datum/data/record/active1 = null
@@ -38,14 +36,14 @@
 
 /obj/machinery/computer/secure_data/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/card/id))
-		insert_id(user)
+		id_insert_scan(user)
 	else
 		return ..()
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.
 /obj/machinery/computer/secure_data/ui_interact(mob/user)
 	. = ..()
-	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 	if(src.z > 6)
 		to_chat(user, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
 		return
@@ -54,7 +52,7 @@
 	if(temp)
 		dat = text("<TT>[]</TT><BR><BR><A href='?src=[REF(src)];choice=Clear Screen'>Clear Screen</A>", temp)
 	else
-		dat = text("Confirm Identity: <A href='?src=[REF(src)];choice=Confirm Identity'>[]</A><HR>", (scan ? text("[]", scan.name) : "----------"))
+		dat = text("Confirm Identity: <A href='?src=[REF(src)];choice=Confirm Identity'>[]</A><HR>", (inserted_scan_id ? text("[]", inserted_scan_id.name) : "----------"))
 		if(authenticated)
 			switch(screen)
 				if(1)
@@ -325,18 +323,18 @@ What a mess.*/
 				active2 = null
 
 			if("Confirm Identity")
-				if(scan)
-					eject_id(usr)
+				if(inserted_scan_id)
+					id_eject_scan(usr)
 					return
 				else
-					insert_id(usr)
+					id_insert_scan(usr)
 
 			if("Log Out")
 				authenticated = null
 				screen = null
 				active1 = null
 				active2 = null
-				playsound(src, 'sound/machines/terminal_off.ogg', 50, 0)
+				playsound(src, 'sound/machines/terminal_off.ogg', 50, FALSE)
 
 			if("Log In")
 				if(issilicon(usr))
@@ -346,22 +344,23 @@ What a mess.*/
 					authenticated = borg.name
 					rank = "AI"
 					screen = 1
-					playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 				else if(IsAdminGhost(usr))
 					active1 = null
 					active2 = null
 					authenticated = usr.client.holder.admin_signature
 					rank = "Central Command"
 					screen = 1
-					playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
-				else if(istype(scan, /obj/item/card/id))
+				else if(istype(inserted_scan_id, /obj/item/card/id))
 					active1 = null
 					active2 = null
-					if(check_access(scan))
-						authenticated = scan.registered_name
-						rank = scan.assignment
+					if(check_access(inserted_scan_id))
+						authenticated = inserted_scan_id.registered_name
+						rank = inserted_scan_id.assignment
 						screen = 1
-						playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
+					else
+						to_chat(usr, "<span class='danger'>Unauthorized Access.</span>")
+				playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
+
 //RECORD FUNCTIONS
 			if("Record Maintenance")
 				screen = 2

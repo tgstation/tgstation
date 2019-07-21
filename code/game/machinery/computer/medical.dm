@@ -7,8 +7,6 @@
 	icon_keyboard = "med_key"
 	req_one_access = list(ACCESS_MEDICAL, ACCESS_FORENSICS_LOCKERS)
 	circuit = /obj/item/circuitboard/computer/med_data
-	scan = null
-	var/authenticated = null
 	var/rank = null
 	var/screen = null
 	var/datum/data/record/active1
@@ -27,18 +25,18 @@
 
 /obj/machinery/computer/med_data/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/card/id))
-		insert_id(user)
+		id_insert_scan(user)
 	else
 		return ..()
 
 /obj/machinery/computer/med_data/ui_interact(mob/user)
 	. = ..()
-	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 	var/dat
 	if(temp)
 		dat = text("<TT>[temp]</TT><BR><BR><A href='?src=[REF(src)];temp=1'>Clear Screen</A>")
 	else
-		dat = text("Confirm Identity: <A href='?src=[REF(src)];scan=1'>[]</A><HR>", (src.scan ? text("[]", src.scan.name) : "----------"))
+		dat = text("Confirm Identity: <A href='?src=[REF(src)];inserted_scan_id=1'>[]</A><HR>", (src.inserted_scan_id ? text("[]", src.inserted_scan_id.name) : "----------"))
 		if(src.authenticated)
 			switch(src.screen)
 				if(1)
@@ -203,17 +201,17 @@
 		usr.set_machine(src)
 		if(href_list["temp"])
 			src.temp = null
-		if(href_list["scan"])
-			if(scan)
-				eject_id(usr)
+		if(href_list["inserted_scan_id"])
+			if(inserted_scan_id)
+				id_eject_scan(usr)
 			else
-				insert_id(usr)
+				id_insert_scan(usr)
 		else if(href_list["logout"])
 			src.authenticated = null
 			src.screen = null
 			src.active1 = null
 			src.active2 = null
-			playsound(src, 'sound/machines/terminal_off.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_off.ogg', 50, FALSE)
 		else if(href_list["choice"])
 			// SORTING!
 			if(href_list["choice"] == "Sorting")
@@ -240,14 +238,16 @@
 				src.authenticated = 1
 				src.rank = "Central Command"
 				src.screen = 1
-			else if(istype(src.scan, /obj/item/card/id))
+			else if(istype(src.inserted_scan_id, /obj/item/card/id))
 				src.active1 = null
 				src.active2 = null
-				if(src.check_access(src.scan))
-					src.authenticated = src.scan.registered_name
-					src.rank = src.scan.assignment
+				if(src.check_access(src.inserted_scan_id))
+					src.authenticated = src.inserted_scan_id.registered_name
+					src.rank = src.inserted_scan_id.assignment
 					src.screen = 1
-			playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
+				else
+					to_chat(usr, "<span class='danger'>Unauthorized access.</span>")
+			playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
 		if(src.authenticated)
 
 			if(href_list["screen"])
