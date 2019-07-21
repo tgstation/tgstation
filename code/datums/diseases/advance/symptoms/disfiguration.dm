@@ -28,7 +28,8 @@ BONUS
 	symptom_delay_max = 75
 
 /datum/symptom/disfiguration/Activate(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/M = A.affected_mob
 	if (HAS_TRAIT(M, TRAIT_DISFIGURED))
@@ -41,8 +42,8 @@ BONUS
 
 
 /datum/symptom/disfiguration/End(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
-	var/mob/living/carbon/M = A.affected_mob
-	if(M && HAS_TRAIT(M, TRAIT_DISFIGURED))
-		REMOVE_TRAIT(M, TRAIT_DISFIGURED, DISEASE_TRAIT)
+	if(A.affected_mob)
+		REMOVE_TRAIT(A.affected_mob, TRAIT_DISFIGURED, DISEASE_TRAIT)

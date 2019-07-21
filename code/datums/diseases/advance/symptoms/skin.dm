@@ -9,14 +9,14 @@ Polyvitiligo
 	Critical Level.
 
 BONUS
-	Makes the mob gain colorful reagent.
+	Makes the mob gain a random crayon powder colorful reagent.
 
 //////////////////////////////////////
 */
 
 /datum/symptom/polyvitiligo
 	name = "Polyvitiligo"
-	desc = "The virus replaces the melanin in the skin with colorful reagent."
+	desc = "The virus replaces the melanin in the skin with reactive pigment."
 	stealth = -1
 	resistance = 3
 	stage_speed = 1
@@ -32,7 +32,9 @@ BONUS
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
 		if(5)
-			M.reagents.add_reagent(/datum/reagent/colorful_reagent, 30)
+			var/color = pick(subtypesof(/datum/reagent/colorful_reagent/crayonpowder))
+			if(M.reagents.total_volume <= (M.reagents.maximum_volume/10)) // no flooding humans with 1000 units of colorful reagent
+				M.reagents.add_reagent(color, 5)
 		else
 			if (prob(50)) // spam
 				M.visible_message("<span class='warning'>[M] looks rather vibrant...</span>", "<span class='notice'>The colors, man, the colors...</span>")
