@@ -17,9 +17,9 @@
 	. = ..()
 	if(key_type)
 		if(!inserted_key)
-			to_chat(user, "<span class='notice'>Put a key inside it by clicking it with the key.</span>")
+			. += "<span class='notice'>Put a key inside it by clicking it with the key.</span>"
 		else
-			to_chat(user, "<span class='notice'>Alt-click [src] to remove the key.</span>")
+			. += "<span class='notice'>Alt-click [src] to remove the key.</span>"
 
 /obj/vehicle/ridden/generate_action_type(actiontype)
 	var/datum/action/vehicle/ridden/A = ..()
@@ -43,14 +43,14 @@
 				inserted_key.forceMove(drop_location())
 			inserted_key = I
 		else
-			to_chat(user, "<span class='notice'>[I] seems to be stuck to your hand!</span>")
+			to_chat(user, "<span class='warning'>[I] seems to be stuck to your hand!</span>")
 		return
 	return ..()
 
 /obj/vehicle/ridden/AltClick(mob/user)
 	if(inserted_key && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		if(!is_occupant(user))
-			to_chat(user, "<span class='notice'>You must be riding the [src] to remove [src]'s key!</span>")
+			to_chat(user, "<span class='warning'>You must be riding the [src] to remove [src]'s key!</span>")
 			return
 		to_chat(user, "<span class='notice'>You remove \the [inserted_key] from \the [src].</span>")
 		inserted_key.forceMove(drop_location())
@@ -83,7 +83,7 @@
 
 			if(message_cooldown < world.time)
 				to_chat(user, "<span class='warning'>You can't seem to manage that with[how_many_arms ? " your arm[how_many_arms > 1 ? "s" : null]" : "out arms"]...</span>")
-				message_cooldown = world.time + 5 SECONDS			
+				message_cooldown = world.time + 5 SECONDS
 			return FALSE
 	var/datum/component/riding/R = GetComponent(/datum/component/riding)
 	R.handle_ride(user, direction)

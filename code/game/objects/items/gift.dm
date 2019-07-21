@@ -35,7 +35,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 /obj/item/a_gift/examine(mob/M)
 	. = ..()
 	if(HAS_TRAIT(M, TRAIT_PRESENT_VISION) || isobserver(M))
-		to_chat(M, "<span class='notice'>It contains \a [initial(contains_type.name)].</span>")
+		. += "<span class='notice'>It contains \a [initial(contains_type.name)].</span>"
 
 /obj/item/a_gift/attack_self(mob/M)
 	if(HAS_TRAIT(M, TRAIT_CANNOT_OPEN_PRESENTS))

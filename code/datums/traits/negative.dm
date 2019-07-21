@@ -201,6 +201,15 @@
 /datum/quirk/family_heirloom/on_clone(data)
 	heirloom = data
 
+/datum/quirk/frail
+	name = "Frail"
+	desc = "Your bones might as well be made of glass! Your limbs can take less damage before they become disabled."
+	value = -2
+	mob_trait = TRAIT_EASYLIMBDISABLE
+	gain_text = "<span class='danger'>You feel frail.</span>"
+	lose_text = "<span class='notice'>You feel sturdy again.</span>"
+	medical_record_text = "Patient has unusually frail bones, recommend calcium-rich diet."
+
 /datum/quirk/heavy_sleeper
 	name = "Heavy Sleeper"
 	desc = "You sleep like a rock! Whenever you're put to sleep or knocked unconscious, you take a little bit longer to wake up."
@@ -366,6 +375,15 @@
 	to_chat(quirk_holder, "<span class='boldannounce'>Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
 	you need to use a welding tool and cables to repair it, instead of bruise packs and ointment.</span>")
 
+/datum/quirk/pushover
+	name = "Pushover"
+	desc = "Your first instinct is always to let people push you around. Resisting out of grabs will take conscious effort."
+	value = -2
+	mob_trait = TRAIT_GRABWEAKNESS
+	gain_text = "<span class='danger'>You feel like a pushover.</span>"
+	lose_text = "<span class='notice'>You feel like standing up for yourself.</span>"
+	medical_record_text = "Patient presents a notably unassertive personality and is easy to manipulate."
+
 /datum/quirk/insanity
 	name = "Reality Dissociation Syndrome"
 	desc = "You suffer from a severe disorder that causes very vivid hallucinations. Mindbreaker toxin can suppress its effects, and you are immune to mindbreaker's hallucinogenic properties. <b>This is not a license to grief.</b>"
@@ -376,7 +394,7 @@
 	medical_record_text = "Patient suffers from acute Reality Dissociation Syndrome and experiences vivid hallucinations."
 
 /datum/quirk/insanity/on_process()
-	if(quirk_holder.reagents.has_reagent(/datum/reagent/toxin/mindbreaker))
+	if(quirk_holder.reagents.has_reagent(/datum/reagent/toxin/mindbreaker, needs_metabolizing = TRUE))
 		quirk_holder.hallucination = 0
 		return
 	if(prob(2)) //we'll all be mad soon enough

@@ -49,7 +49,7 @@
 				msg = "It's started to get a little smaller than it used to be, but it'll definitely still last for a while."
 			else
 				msg = "It's seen some light use, but it's still pretty fresh."
-	to_chat(user, "<span class='notice'>[msg]</span>")
+	. += "<span class='notice'>[msg]</span>"
 
 /obj/item/soap/nanotrasen
 	desc = "A heavy duty bar of Nanotrasen brand soap. Smells of plasma."
@@ -102,13 +102,8 @@
 
 	else if(ishuman(target) && user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
 		var/mob/living/carbon/human/H = user
-		if(user.zone_selected == "mouth")
-			user.visible_message("<span class='warning'>\the [user] washes \the [target]'s mouth out with [src.name]!</span>", "<span class='notice'>You wash \the [target]'s mouth out with [src.name]!</span>") //washes mouth out with soap sounds better than 'the soap' here
-			H.lip_style = null //removes lipstick
-			H.adjust_hygiene(5) //it kinda works i guess
-		else
-			user.visible_message("<span class='warning'>\the [user] washes \the [target] with [src.name]!</span>", "<span class='notice'>You wash \the [target] with [src.name]!</span>")
-			H.adjust_hygiene(20)
+		user.visible_message("<span class='warning'>\the [user] washes \the [target]'s mouth out with [src.name]!</span>", "<span class='notice'>You wash \the [target]'s mouth out with [src.name]!</span>") //washes mouth out with soap sounds better than 'the soap' here			if(user.zone_selected == "mouth")
+		H.lip_style = null //removes lipstick
 		H.update_body()
 		decreaseUses(user)
 		return
@@ -151,14 +146,16 @@
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("HONKED")
-	var/component = /datum/component/squeak/bikehorn
 
 /obj/item/bikehorn/Initialize()
 	. = ..()
-	AddComponent(component, 50)
+	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50)
 
 /obj/item/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "honk", /datum/mood_event/honk)
+	if(user != M && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if (HAS_TRAIT(H, TRAIT_CLUMSY)) //only clowns can unlock its true powers
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "honk", /datum/mood_event/honk)
 	return ..()
 
 /obj/item/bikehorn/suicide_act(mob/user)
@@ -171,7 +168,10 @@
 	name = "air horn"
 	desc = "Damn son, where'd you find this?"
 	icon_state = "air_horn"
-	component = /datum/component/squeak/airhorn
+
+/obj/item/bikehorn/airhorn/Initialize()
+	. = ..()
+	AddComponent(/datum/component/squeak, list('sound/items/airhorn2.ogg'=1), 50)
 
 //golden bikehorn
 /obj/item/bikehorn/golden

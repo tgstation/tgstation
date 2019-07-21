@@ -17,9 +17,14 @@
 
 /datum/surgery_step/cut_fat/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] begins to cut away [target]'s excess fat.", "<span class='notice'>You begin to cut away [target]'s excess fat...</span>")
+	display_results(user, target, "<span class='notice'>You begin to cut away [target]'s excess fat...</span>",
+			"[user] begins to cut away [target]'s excess fat.",
+			"[user] begins to cut [target]'s [target_zone] with [tool].")
 
 /datum/surgery_step/cut_fat/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] cuts [target]'s excess fat loose!", "<span class='notice'>You cut [target]'s excess fat loose.</span>")
+	display_results(user, target, "<span class='notice'>You cut [target]'s excess fat loose.</span>",
+			"[user] cuts [target]'s excess fat loose!",
+			"[user] finishes the cut on [target]'s [target_zone].")
 	return 1
 
 //remove fat
@@ -29,10 +34,14 @@
 	time = 32
 
 /datum/surgery_step/remove_fat/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to extract [target]'s loose fat!", "<span class='notice'>You begin to extract [target]'s loose fat...</span>")
+	display_results(user, target, "<span class='notice'>You begin to extract [target]'s loose fat...</span>",
+			"[user] begins to extract [target]'s loose fat!",
+			"[user] begins to extract something from [target]'s [target_zone].")
 
 /datum/surgery_step/remove_fat/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] extracts [target]'s fat!", "<span class='notice'>You extract [target]'s fat.</span>")
+	display_results(user, target, "<span class='notice'>You extract [target]'s fat.</span>",
+			"[user] extracts [target]'s fat!",
+			"[user] extracts [target]'s fat!")
 	target.overeatduration = 0 //patient is unfatted
 	var/removednutriment = target.nutrition
 	target.set_nutrition(NUTRITION_LEVEL_WELL_FED)

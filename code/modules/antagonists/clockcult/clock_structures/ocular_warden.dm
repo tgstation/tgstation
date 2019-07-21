@@ -25,8 +25,8 @@
 	return ..()
 
 /obj/structure/destructible/clockwork/ocular_warden/examine(mob/user)
-	..()
-	to_chat(user, "<span class='brass'>[target ? "<b>It's fixated on [target]!</b>" : "Its gaze is wandering aimlessly."]</span>")
+	. = ..()
+	. += "<span class='brass'>[target ? "<b>It's fixated on [target]!</b>" : "Its gaze is wandering aimlessly."]</span>"
 
 /obj/structure/destructible/clockwork/ocular_warden/hulk_damage()
 	return 25

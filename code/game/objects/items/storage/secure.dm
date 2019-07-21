@@ -31,8 +31,8 @@
 	STR.max_combined_w_class = 14
 
 /obj/item/storage/secure/examine(mob/user)
-	..()
-	to_chat(user, text("The service panel is currently <b>[open ? "unscrewed" : "screwed shut"]</b>."))
+	. = ..()
+	. += "The service panel is currently <b>[open ? "unscrewed" : "screwed shut"]</b>."
 
 /obj/item/storage/secure/attackby(obj/item/W, mob/user, params)
 	if(SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
@@ -54,7 +54,7 @@
 				else
 					l_hacking = 0
 			else
-				to_chat(user, "<span class='notice'>You must <b>unscrew</b> the service panel before you can pulse the wiring.</span>")
+				to_chat(user, "<span class='warning'>You must <b>unscrew</b> the service panel before you can pulse the wiring!</span>")
 			return
 		//At this point you have exhausted all the special things to do when locked
 		// ... but it's still locked.

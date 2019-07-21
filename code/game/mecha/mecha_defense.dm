@@ -151,7 +151,14 @@
 		use_power((cell.charge/3)/(severity*2))
 		take_damage(30 / severity, BURN, "energy", 1)
 	log_message("EMP detected", LOG_MECHA, color="red")
-	check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
+
+	if(istype(src, /obj/mecha/combat))
+		mouse_pointer = 'icons/mecha/mecha_mouse-disable.dmi'
+		occupant?.update_mouse_pointer()
+	if(!equipment_disabled && occupant) //prevent spamming this message with back-to-back EMPs
+		to_chat(occupant, "<span=danger>Error -- Connection to equipment control unit has been lost.</span>")
+	addtimer(CALLBACK(src, /obj/mecha/proc/restore_equipment), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+	equipment_disabled = 1
 
 /obj/mecha/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature>max_temperature)
@@ -165,6 +172,10 @@
 			to_chat(user, "[src]-[W] interface initialized successfully.")
 		else
 			to_chat(user, "[src]-[W] interface initialization failed.")
+		return
+
+	if(istype(W, /obj/item/mecha_ammo))
+		ammo_resupply(W, user)
 		return
 
 	if(W.GetID())
@@ -296,11 +307,7 @@
 		clearInternalDamage(MECHA_INT_CONTROL_LOST)
 
 /obj/mecha/narsie_act()
-	if(occupant)
-		var/mob/living/L = occupant
-		go_out(TRUE)
-		if(L)
-			L.narsie_act()
+	emp_act(EMP_HEAVY)
 
 /obj/mecha/ratvar_act()
 	if((GLOB.ratvar_awakens || GLOB.clockwork_gateway_activated) && occupant)

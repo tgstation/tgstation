@@ -165,5 +165,5 @@
 /datum/fantasy_affix/fool/apply(datum/component/fantasy/comp, newName)
 	. = ..()
 	var/obj/item/master = comp.parent
-	comp.appliedComponents += master.AddComponent(/datum/component/squeak/bikehorn)
+	comp.appliedComponents += master.AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50)
 	return "[newName] of the fool"

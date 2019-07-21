@@ -206,7 +206,7 @@
 	build_path = /obj/item/locator
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	
+
 /datum/design/quantum_keycard
 	name = "Quantum Keycard"
 	desc = "Allows for the construction of a quantum keycard."
@@ -259,16 +259,6 @@
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
 /////////////////////////////////////////
-
-/datum/design/mop
-	name = "Mop"
-	desc = "It mops."
-	id = "mop"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000)
-	build_path = /obj/item/mop
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/advmop
 	name = "Advanced Mop"

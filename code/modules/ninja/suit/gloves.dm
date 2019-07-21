@@ -76,6 +76,6 @@
 	candrain=!candrain
 
 /obj/item/clothing/gloves/space_ninja/examine(mob/user)
-	..()
+	. = ..()
 	if(HAS_TRAIT_FROM(src, TRAIT_NODROP, NINJA_SUIT_TRAIT))
-		to_chat(user, "The energy drain mechanism is <B>[candrain?"active":"inactive"]</B>.")
+		. += "The energy drain mechanism is <B>[candrain?"active":"inactive"]</B>."

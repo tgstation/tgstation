@@ -11,12 +11,14 @@
 	var/list/key_emotes = GLOB.emote_list[act]
 
 	if(!length(key_emotes))
-		to_chat(src, "<span class='notice'>'[act]' emote does not exist. Say *help for a list.</span>")
+		if(intentional)
+			to_chat(src, "<span class='notice'>'[act]' emote does not exist. Say *help for a list.</span>")
 		return
 	for(var/datum/emote/P in key_emotes)
 		if(P.run_emote(src, param, m_type, intentional))
 			return
-	to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
+	if(intentional)
+		to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
 
 /datum/emote/flip
 	key = "flip"

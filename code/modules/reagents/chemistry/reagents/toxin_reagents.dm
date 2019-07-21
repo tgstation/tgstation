@@ -150,11 +150,11 @@
 	toxpwr = 0.5
 	taste_description = "death"
 
-/datum/reagent/toxin/zombiepowder/on_mob_add(mob/living/L)
+/datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/L)
 	..()
 	L.fakedeath(type)
 
-/datum/reagent/toxin/zombiepowder/on_mob_delete(mob/living/L)
+/datum/reagent/toxin/zombiepowder/on_mob_end_metabolize(mob/living/L)
 	L.cure_fakedeath(type)
 	..()
 
@@ -171,11 +171,11 @@
 	toxpwr = 0.8
 	taste_description = "death"
 
-/datum/reagent/toxin/ghoulpowder/on_mob_add(mob/living/L)
+/datum/reagent/toxin/ghoulpowder/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_FAKEDEATH, type)
 
-/datum/reagent/toxin/ghoulpowder/on_mob_delete(mob/living/L)
+/datum/reagent/toxin/ghoulpowder/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_FAKEDEATH, type)
 	..()
 
@@ -435,6 +435,8 @@
 	M.adjustBrainLoss(3*REM, 150)
 	if(M.toxloss <= 60)
 		M.adjustToxLoss(1*REM, 0)
+	if(current_cycle >= 4)
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smacked out", /datum/mood_event/narcotic_heavy, name)
 	if(current_cycle >= 18)
 		M.Sleeping(40, 0)
 	..()
@@ -477,7 +479,7 @@
 
 /datum/reagent/toxin/itching_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
-		M.reagents.add_reagent(/datum/reagent/toxin/itching_powder, reac_volume)
+		M.reagents?.add_reagent(/datum/reagent/toxin/itching_powder, reac_volume)
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/M)
 	if(prob(15))
@@ -699,7 +701,7 @@
 				animate(transform = matrix(-rotation, MATRIX_ROTATE), time = 5, easing = QUAD_EASING)
 	return ..()
 
-/datum/reagent/toxin/rotatium/on_mob_delete(mob/living/M)
+/datum/reagent/toxin/rotatium/on_mob_end_metabolize(mob/living/M)
 	if(M && M.hud_used)
 		var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
 		for(var/whole_screen in screens)
@@ -734,7 +736,7 @@
 				animate(transform = -newmatrix, time = 5, easing = QUAD_EASING)
 	return ..()
 
-/datum/reagent/toxin/skewium/on_mob_delete(mob/living/M)
+/datum/reagent/toxin/skewium/on_mob_end_metabolize(mob/living/M)
 	if(M && M.hud_used)
 		var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
 		for(var/whole_screen in screens)
@@ -833,10 +835,10 @@
 	toxpwr = 0
 	taste_description = "stillness"
 
-/datum/reagent/toxin/mimesbane/on_mob_add(mob/living/L)
+/datum/reagent/toxin/mimesbane/on_mob_metabolize(mob/living/L)
 	ADD_TRAIT(L, TRAIT_EMOTEMUTE, type)
 
-/datum/reagent/toxin/mimesbane/on_mob_delete(mob/living/L)
+/datum/reagent/toxin/mimesbane/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_EMOTEMUTE, type)
 
 /datum/reagent/toxin/bonehurtingjuice //oof ouch
@@ -848,13 +850,11 @@
 	taste_description = "bone hurting"
 	overdose_threshold = 50
 
-/datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/M)
+/datum/reagent/toxin/bonehurtingjuice/on_mob_metabolize(mob/living/carbon/M)
 	M.say("oof ouch my bones", forced = /datum/reagent/toxin/bonehurtingjuice)
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/M)
 	M.adjustStaminaLoss(7.5, 0)
-	if(HAS_TRAIT(M, TRAIT_CALCIUM_HEALER))
-		M.adjustBruteLoss(0.5, 0)
 	if(prob(20))
 		switch(rand(1, 3))
 			if(1)

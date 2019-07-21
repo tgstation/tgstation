@@ -4,7 +4,7 @@
 /obj/item/defibrillator
 	name = "defibrillator"
 	desc = "A device that delivers powerful shocks to detachable paddles that resuscitate incapacitated patients."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/defib.dmi'
 	icon_state = "defibunit"
 	item_state = "defibunit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -39,6 +39,16 @@
 	cell = new(src)
 	update_icon()
 	return
+
+/obj/item/defibrillator/fire_act(exposed_temperature, exposed_volume)
+	. = ..()
+	if(paddles?.loc == src)
+		paddles.fire_act(exposed_temperature, exposed_volume)
+
+/obj/item/defibrillator/extinguish()
+	. = ..()
+	if(paddles?.loc == src)
+		paddles.extinguish()
 
 /obj/item/defibrillator/update_icon()
 	update_power()
@@ -276,7 +286,7 @@
 /obj/item/twohanded/shockpaddles
 	name = "defibrillator paddles"
 	desc = "A pair of plastic-gripped paddles with flat metal surfaces that are used to deliver powerful electric shocks."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/defib.dmi'
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -285,6 +295,7 @@
 	force = 0
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
+	resistance_flags = INDESTRUCTIBLE
 
 	var/revivecost = 1000
 	var/cooldown = FALSE
@@ -309,6 +320,12 @@
 /obj/item/twohanded/shockpaddles/Moved()
 	. = ..()
 	check_range()
+
+
+/obj/item/twohanded/shockpaddles/fire_act(exposed_temperature, exposed_volume)
+	. = ..()
+	if((req_defib && defib) && loc != defib)
+		defib.fire_act(exposed_temperature, exposed_volume)
 
 /obj/item/twohanded/shockpaddles/proc/check_range()
 	if(!req_defib)
@@ -644,7 +661,7 @@
 
 /obj/item/twohanded/shockpaddles/cyborg
 	name = "cyborg defibrillator paddles"
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/defib.dmi'
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
 	req_defib = FALSE
@@ -665,7 +682,7 @@
 	name = "syndicate defibrillator paddles"
 	desc = "A pair of paddles used to revive deceased operatives. It possesses both the ability to penetrate armor and to deliver powerful shocks offensively."
 	combat = TRUE
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/defib.dmi'
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
 	req_defib = FALSE
