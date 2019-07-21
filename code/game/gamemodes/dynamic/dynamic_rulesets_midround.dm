@@ -13,7 +13,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts
 	weight = 0
-	// List of ghost candidates for the midround ruleset.
+	/// List of ghost candidates for the midround ruleset.
 	var/list/applicants = list()
 	var/makeBody = TRUE
 
@@ -80,7 +80,7 @@
 	send_applications(possible_candidates)
 	return TRUE
 
-// This sends a poll to ghosts if they want to be a ghost spawn from a ruleset.
+/// This sends a poll to ghosts if they want to be a ghost spawn from a ruleset.
 /datum/dynamic_ruleset/midround/from_ghosts/proc/send_applications(list/possible_volunteers = list())
 	if (possible_volunteers.len <= 0) // This shouldn't happen, as ready() should return FALSE if there is not a single valid candidate
 		message_admins("Possible volunteers was 0. This shouldn't appear, because of ready(), unless you forced it!")
@@ -102,8 +102,8 @@
 	log_game("DYNAMIC: [applicants.len] players volunteered for [name].")
 	review_applications()
 
-// Here is where you can check if your ghost applicants are valid for the ruleset.
-// Called by send_applications().
+/// Here is where you can check if your ghost applicants are valid for the ruleset.
+/// Called by send_applications().
 /datum/dynamic_ruleset/midround/from_ghosts/proc/review_applications()
 	for (var/i = 1, i < required_candidates, i++)
 		if(applicants.len <= 0)
