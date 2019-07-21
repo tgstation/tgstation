@@ -47,13 +47,6 @@
 	glass_type = /obj/machinery/door/airlock/research/glass
 	airlock_type = /obj/machinery/door/airlock/research
 
-/obj/structure/door_assembly/door_assembly_science
-	name = "science airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station/science.dmi'
-	base_name = "science airlock"
-	glass_type = /obj/machinery/door/airlock/science/glass
-	airlock_type = /obj/machinery/door/airlock/science
-
 /obj/structure/door_assembly/door_assembly_med
 	name = "medical airlock assembly"
 	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
