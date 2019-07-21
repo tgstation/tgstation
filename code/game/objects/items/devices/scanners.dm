@@ -296,7 +296,7 @@ GENE SCANNER
 			else
 				max_damage += "</span>"
 			if(!major_damage)
-				major_damage = "\t<span class='alert'>Severely Damaged Organs: </span>"
+				major_damage = "\t<span class='info'>Severely Damaged Organs: </span>"
 			else
 				major_damage += "</span>"
 			if(!minor_damage)
