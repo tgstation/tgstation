@@ -404,10 +404,12 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				if (inserted_modify_id)
 					inserted_modify_id.assignment = t1
 					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+					modify.update_label()
 		if ("demote")
 			if(inserted_modify_id.assignment in head_subordinates || inserted_modify_id.assignment == "Assistant")
 				inserted_modify_id.assignment = "Unassigned"
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+				modify.update_label()
 			else
 				to_chat(usr, "<span class='error'>You are not authorized to demote this position.</span>")
 		if ("reg")
@@ -418,6 +420,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 					if(newName)
 						inserted_modify_id.registered_name = newName
 						playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+						modify.update_label()
 					else
 						to_chat(usr, "<span class='error'>Invalid name entered.</span>")
 						updateUsrDialog()

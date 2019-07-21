@@ -17,7 +17,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/docking_port/mobile{
 	callTime = 250;
-	dheight = 0;
 	dir = 2;
 	dwidth = 11;
 	height = 17;
@@ -357,8 +356,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Hospital Ship Crew Quarters APC";
-	pixel_y = 23;
-	req_access = null
+	pixel_y = 23
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -997,8 +995,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Hospital Ship Medbay APC";
-	pixel_y = 23;
-	req_access = null
+	pixel_y = 23
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
@@ -2002,8 +1999,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Hospital Ship Bridge APC";
-	pixel_y = 23;
-	req_access = null
+	pixel_y = 23
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
