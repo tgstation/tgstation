@@ -12,9 +12,13 @@
 		battery = new battery_type(src)
 	..()
 
+/obj/item/computer_hardware/battery/Destroy()
+	. = ..()
+	QDEL_NULL(battery)
+
 /obj/item/computer_hardware/battery/handle_atom_del(atom/A)
 	if(A == battery)
-		QDEL_NULL(battery)
+		try_eject(0, null, TRUE)
 	. = ..()
 
 /obj/item/computer_hardware/battery/try_insert(obj/item/I, mob/living/user = null)
