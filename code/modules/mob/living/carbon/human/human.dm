@@ -778,8 +778,6 @@
 	for(var/datum/mutation/human/HM in dna.mutations)
 		if(HM.quality != POSITIVE)
 			dna.remove_mutation(HM.name)
-	if(!CONFIG_GET(flag/disable_human_mood))
-		AddComponent(/datum/component/mood) //Restores sanity. Long live highlander.
 	..()
 
 /mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)

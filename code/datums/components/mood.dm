@@ -22,6 +22,7 @@
 	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
 	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
 	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/check_area_mood)
+	RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/on_revive)
 
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	var/mob/living/owner = parent
@@ -355,6 +356,11 @@
 		add_event(null, "area", /datum/mood_event/area, list(A.mood_bonus, A.mood_message))
 	else
 		clear_event(null, "area")
+
+/datum/component/mood/proc/on_revive(datum/source, full_heal)
+	if(!full_heal)
+		return
+	setSanity(initial(sanity))
 
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN
