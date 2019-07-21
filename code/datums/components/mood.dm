@@ -182,7 +182,7 @@
 		if(4)
 			setSanity(sanity-0.05, minimum=SANITY_UNSTABLE)
 		if(5)
-			setSanity(sanity+0.1, maximum=SANITY_GREAT)
+			setSanity(sanity+0.1, maximum=SANITY_NEUTRAL)
 		if(6)
 			setSanity(sanity+0.2, maximum=SANITY_GREAT)
 		if(7)
