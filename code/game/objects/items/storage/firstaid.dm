@@ -86,14 +86,13 @@
 
 /obj/item/storage/firstaid/toxin/Initialize(mapload)
 	. = ..()
-	icon_state = pick("antitoxin","antitoxfirstaid","antitoxfirstaid2","antitoxfirstaid3")
+	icon_state = pick("antitoxin","antitoxfirstaid","antitoxfirstaid2")
 
 /obj/item/storage/firstaid/toxin/PopulateContents()
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/reagent_containers/syringe/charcoal = 4,
-		/obj/item/storage/pill_bottle/charcoal = 2,
+		/obj/item/reagent_containers/pill/charcoal = 6,
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
 
@@ -106,6 +105,10 @@
 /obj/item/storage/firstaid/o2/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins hitting [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return OXYLOSS
+
+/obj/item/storage/firstaid/o2/Initialize(mapload)
+	. = ..()
+	icon_state = pick("o2","o2second")
 
 /obj/item/storage/firstaid/o2/PopulateContents()
 	if(empty)
@@ -125,6 +128,10 @@
 /obj/item/storage/firstaid/brute/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins beating [user.p_them()]self over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
+
+/obj/item/storage/firstaid/brute/Initialize(mapload)
+	. = ..()
+	icon_state = pick("brute","brute2")
 
 /obj/item/storage/firstaid/brute/PopulateContents()
 	if(empty)

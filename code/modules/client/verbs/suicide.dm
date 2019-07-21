@@ -241,17 +241,17 @@
 		if(CONSCIOUS)
 			return TRUE
 		if(SOFT_CRIT)
-			to_chat(src, "You can't commit suicide while in a critical condition!")
+			to_chat(src, "<span class='warning'>You can't commit suicide while in a critical condition!</span>")
 		if(UNCONSCIOUS)
-			to_chat(src, "You need to be conscious to commit suicide!")
+			to_chat(src, "<span class='warning'>You need to be conscious to commit suicide!</span>")
 		if(DEAD)
-			to_chat(src, "You're already dead!")
+			to_chat(src, "<span class='warning'>You're already dead!</span>")
 	return
 
 /mob/living/carbon/canSuicide()
 	if(!..())
 		return
 	if(!(mobility_flags & MOBILITY_USE))	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
-		to_chat(src, "You can't commit suicide whilst immobile! ((You can type Ghost instead however.))")
+		to_chat(src, "<span class='warning'>You can't commit suicide whilst immobile! ((You can type Ghost instead however.))</span>")
 		return
 	return TRUE

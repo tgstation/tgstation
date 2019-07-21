@@ -32,7 +32,7 @@
 		return 0
 
 	if(!isturf(user.loc))
-		to_chat(user, "<span class='notice'>You can't evolve here!</span>")
+		to_chat(user, "<span class='warning'>You can't evolve here!</span>")
 		return 0
 	if(!get_alien_type(/mob/living/carbon/alien/humanoid/royal))
 		var/mob/living/carbon/alien/humanoid/royal/praetorian/new_xeno = new (user.loc)

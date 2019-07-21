@@ -31,6 +31,7 @@
 
 /obj/machinery/computer/camera_advanced/syndie
 	icon_keyboard = "syndie_key"
+	circuit = /obj/item/circuitboard/computer/advanced_camera
 
 /obj/machinery/computer/camera_advanced/proc/CreateEye()
 	eyeobj = new()
@@ -49,7 +50,7 @@
 
 /obj/machinery/proc/remove_eye_control(mob/living/user)
 	CRASH("[type] does not implement ai eye handling")
-	
+
 /obj/machinery/computer/camera_advanced/remove_eye_control(mob/living/user)
 	if(!user)
 		return
@@ -102,7 +103,7 @@
 	if(!is_operational()) //you cant use broken machine you chumbis
 		return
 	if(current_user)
-		to_chat(user, "The console is already in use!")
+		to_chat(user, "<span class='warning'>The console is already in use!</span>")
 		return
 	var/mob/living/L = user
 

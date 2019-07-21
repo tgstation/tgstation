@@ -9,6 +9,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/list/mobile = list()
 	var/list/stationary = list()
+	var/list/beacons = list()
 	var/list/transit = list()
 
 	var/list/transit_requesters = list()
@@ -661,6 +662,9 @@ SUBSYSTEM_DEF(shuttle)
 		D = existing_shuttle.get_docked()
 
 	if(!D)
+		D = generate_transit_dock(preview_shuttle)
+
+	if(!D)
 		CRASH("No dock found for preview shuttle ([preview_template.name]), aborting.")
 
 	var/result = preview_shuttle.canDock(D)
@@ -901,4 +905,3 @@ SUBSYSTEM_DEF(shuttle)
 					message_admins("[key_name_admin(usr)] loaded [mdp] with the shuttle manipulator.")
 					log_admin("[key_name(usr)] loaded [mdp] with the shuttle manipulator.</span>")
 					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[mdp.name]")
-

@@ -33,7 +33,7 @@
 	if(!wielded || !user)
 		return
 	wielded = 0
-	if(force_unwielded)
+	if(!isnull(force_unwielded))
 		force = force_unwielded
 	var/sf = findtext(name," (Wielded)")
 	if(sf)
@@ -263,6 +263,7 @@
  * Double-Bladed Energy Swords - Cheridan
  */
 /obj/item/twohanded/dualsaber
+	icon = 'icons/obj/transforming_energy.dmi'
 	icon_state = "dualsaber0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -720,7 +721,7 @@
 
 /obj/item/twohanded/pitchfork/demonic/attack(mob/target, mob/living/carbon/human/user)
 	if(user.mind && user.owns_soul() && !is_devil(user))
-		to_chat(user, "<span class ='warning'>[src] burns in your hands.</span>")
+		to_chat(user, "<span class='warning'>[src] burns in your hands.</span>")
 		user.apply_damage(rand(force/2, force), BURN, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 	..()
 

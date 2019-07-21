@@ -416,7 +416,7 @@
 	to_chat(S, "<span class='warning'>This object does not contain solid matter. Aborting.</span>")
 	return FALSE
 
-/obj/machinery/shieldwallgen/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+/obj/machinery/power/shieldwallgen/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	to_chat(S, "<span class='warning'>Destroying this object would have an unpredictable effect on structure integrity. Aborting.</span>")
 	return FALSE
 

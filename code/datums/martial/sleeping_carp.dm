@@ -7,8 +7,6 @@
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
 	id = MARTIALART_SLEEPINGCARP
-	deflection_chance = 100
-	reroute_deflection = TRUE
 	no_guns = TRUE
 	allow_temp_override = FALSE
 	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
@@ -49,7 +47,7 @@
 		D.apply_damage(5, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 		D.Stun(60)
 		return TRUE
-	
+
 	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/proc/backKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -113,7 +111,7 @@
 		add_to_streak("G",D)
 		if(check_streak(A,D)) //if a combo is made no grab upgrade is done
 			return TRUE
-		old_grab_state = A.grab_state 
+		old_grab_state = A.grab_state
 		D.grabbedby(A, 1)
 		if(old_grab_state == GRAB_PASSIVE)
 			D.drop_all_held_items()
@@ -147,6 +145,23 @@
 	if(check_streak(A,D))
 		return TRUE
 	return ..()
+
+/datum/martial_art/the_sleeping_carp/on_projectile_hit(mob/living/carbon/human/A, obj/item/projectile/P, def_zone)
+	. = ..()
+	if(A.incapacitated(FALSE, TRUE)) //NO STUN
+		return BULLET_ACT_HIT
+	if(!(A.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
+		return BULLET_ACT_HIT
+	if(A.dna && A.dna.check_mutation(HULK)) //NO HULK
+		return BULLET_ACT_HIT
+	if(!isturf(A.loc)) //NO MOTHERFLIPPIN MECHS!
+		return BULLET_ACT_HIT
+	A.visible_message("<span class='danger'>[A] deflects the projectile; [A.p_they()] can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+	playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
+	P.firer = A
+	P.setAngle(rand(0, 360))//SHING
+	return BULLET_ACT_FORCE_PIERCE
+
 
 /mob/living/carbon/human/proc/sleeping_carp_help()
 	set name = "Recall Teachings"
@@ -185,7 +200,7 @@
 /obj/item/twohanded/bostaff/attack(mob/target, mob/living/user)
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
-		to_chat(user, "<span class ='warning'>You club yourself over the head with [src].</span>")
+		to_chat(user, "<span class='warning'>You club yourself over the head with [src].</span>")
 		user.Paralyze(60)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user

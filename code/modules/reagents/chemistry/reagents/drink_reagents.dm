@@ -200,13 +200,9 @@
 	glass_desc = "White and nutritious goodness!"
 
 /datum/reagent/consumable/milk/on_mob_life(mob/living/carbon/M)
-	if(HAS_TRAIT(M, TRAIT_CALCIUM_HEALER))
-		M.heal_bodypart_damage(1.5,0, 0)
+	if(M.getBruteLoss() && prob(20))
+		M.heal_bodypart_damage(1,0, 0)
 		. = 1
-	else
-		if(M.getBruteLoss() && prob(20))
-			M.heal_bodypart_damage(1,0, 0)
-			. = 1
 	if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
 		holder.remove_reagent(/datum/reagent/consumable/capsaicin, 2)
 	..()
@@ -311,7 +307,7 @@
 
 /datum/reagent/consumable/tea/arnold_palmer/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
-		to_chat(M, "<span class = 'notice'>[pick("You remember to square your shoulders.","You remember to keep your head down.","You can't decide between squaring your shoulders and keeping your head down.","You remember to relax.","You think about how someday you'll get two strokes off your golf game.")]</span>")
+		to_chat(M, "<span class='notice'>[pick("You remember to square your shoulders.","You remember to keep your head down.","You can't decide between squaring your shoulders and keeping your head down.","You remember to relax.","You think about how someday you'll get two strokes off your golf game.")]</span>")
 	..()
 	. = 1
 
