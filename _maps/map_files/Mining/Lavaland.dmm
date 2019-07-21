@@ -1224,6 +1224,7 @@
 	dir = 10
 	},
 /obj/structure/cable,
+/obj/machinery/bluespace_beacon,
 /turf/open/floor/plasteel/dark,
 /area/mine/maintenance)
 "dz" = (
