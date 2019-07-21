@@ -9,7 +9,7 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 	var/show_roundend_report = TRUE
 	var/has_hud = FALSE /// Does the team have its own HUD?
 	var/hud_icon_state = "traitor" /// Default icon
-	var/datum/atom_hud/antag/team_hud = new/// HUD datum
+	var/datum/atom_hud/antag/team/team_hud = new /// HUD datum
 
 /datum/team/New(starting_members)
 	. = ..()
@@ -36,14 +36,14 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 /datum/team/proc/add_member(datum/mind/new_member)
 	if (has_hud)
 		team_hud.join_hud(new_member.current)
-		set_antag_hud(new_member.current, hud_icon_state)
+		set_antag_hud(new_member.current, hud_icon_state, TRUE)
 
 	members |= new_member
 
 /datum/team/proc/remove_member(datum/mind/member)
 	if (has_hud)
 		team_hud.leave_hud(member.current)
-		set_antag_hud(member.current, null)
+		set_antag_hud(member.current, null, TRUE)
 
 	members -= member
 
