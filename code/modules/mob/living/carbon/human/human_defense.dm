@@ -778,14 +778,14 @@
 			if(0 to NUTRITION_LEVEL_STARVING)
 				to_chat(src, "<span class='danger'>You're starving!</span>")
 
-
+	//Compiles then shows the list of damaged organs and broken organs
 	var/list/broken = list()
 	var/list/damaged = list()
 	var/broken_message
 	var/damaged_message
 	var/broken_plural
 	var/damaged_plural
-
+	//Sets organs into their proper list
 	for(var/O in internal_organs)
 		var/obj/item/organ/organ = O
 		if(organ.failing)
@@ -796,7 +796,7 @@
 			if(damaged.len)
 				damaged += ", "
 			damaged += organ.name
-
+	//Checks to enforce proper grammar, inserts words as necessary into the list
 	if(broken.len)
 		if(broken.len > 1)
 			broken.Insert(broken.len, "and ")
@@ -805,6 +805,7 @@
 			var/holder = broken[1]	//our one and only element
 			if(holder[lentext(holder)] == "s")
 				broken_plural = TRUE
+		//Put the items in that list into a string of text
 		for(var/B in broken)
 			broken_message += B
 		to_chat(src, "<span class='warning'> Your [broken_message] [broken_plural ? "are" : "is"] non-functional!</span>")

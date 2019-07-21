@@ -95,39 +95,43 @@
 	if(damage >= maxHealth)
 		failing = TRUE
 		damage = maxHealth
-		check_damage_thresholds(damage, prev_damage, C)
+		check_damage_thresholds(C)
 		prev_damage = damage
 		return
 	if((!failing) && (C.stat !=DEAD))
 		damage = max(0, damage - (maxHealth * healing_factor))
-		check_damage_thresholds(damage, prev_damage, C)
+		check_damage_thresholds(C)
 		prev_damage = damage
 	return
 
-//checking damage thresholds to send the owner a message is done in brain_item.dm but on process,
-//this is done on life to ensure we update the owner if they get revived with new organ damage
-/obj/item/organ/proc/check_damage_thresholds(var/D, var/prev_D, var/M)
-	if(D == prev_D)
+/** check_damage_thresholds
+  * input: M (a mob, the owner of the organ we call the proc on)
+  * output:
+  * description: By checking our current damage against our previous damage, we can decide whether we've passed an organ threshold.
+  *				 If we have, send the corresponding threshold message to the owner, if such a message exists.
+  */
+/obj/item/organ/proc/check_damage_thresholds(var/M)
+	if(damage == prev_damage)
 		return
-	var/delta = D - prev_D
+	var/delta = damage - prev_damage
 	if(delta > 0)
-		if(D == maxHealth)
+		if(damage == maxHealth)
 			if(now_failing)
 				to_chat(M, now_failing)
-		else if(D > high_threshold && prev_D <= high_threshold)
+		else if(damage > high_threshold && prev_damage <= high_threshold)
 			if(high_threshold_passed)
 				to_chat(M, high_threshold_passed)
-		else if(D > low_threshold && prev_D <= low_threshold)
+		else if(damage > low_threshold && prev_damage <= low_threshold)
 			if(low_threshold_passed)
 				to_chat(M, low_threshold_passed)
 	else if(delta < 0)
-		if(prev_D > low_threshold && prev_D <= low_threshold)
+		if(prev_damage > low_threshold && damage <= low_threshold)
 			if(low_threshold_cleared)
 				to_chat(M, low_threshold_cleared)
-		else if(prev_D > high_threshold && D <= high_threshold)
+		else if(prev_damage > high_threshold && damage <= high_threshold)
 			if(high_threshold_cleared)
 				to_chat(M, high_threshold_cleared)
-		else if(prev_D == maxHealth)
+		else if(prev_damage == maxHealth)
 			if(now_fixed)
 				to_chat(M, now_fixed)
 
@@ -187,11 +191,13 @@
 /obj/item/organ/item_action_slot_check(slot,mob/user)
 	return //so we don't grant the organ's action to mobs who pick up the organ.
 
+///Adjusts an organ's damage by the amount "d", up to a maximum amount, which is by default max damage
 /obj/item/organ/proc/applyOrganDamage(var/d, var/maximum = maxHealth)	//use for damaging effects
 	if(maximum < d + damage)
 		d = max(0, maximum - damage)
 	damage = max(0, damage + d)
 
+///SETS an organ's damage to the amount "d", and in doing so clears or sets the failing flag, good for when you have an effect that should fix an organ if broken
 /obj/item/organ/proc/setOrganDamage(var/d)	//use mostly for admin heals
 	damage = CLAMP(d, 0 ,maxHealth)
 	if(d >= maxHealth)

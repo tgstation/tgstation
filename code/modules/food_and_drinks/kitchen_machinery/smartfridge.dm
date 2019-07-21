@@ -154,6 +154,7 @@
 			O.forceMove(src)
 			return TRUE
 
+///Really simple proc, just moves the object "O" into the hands of mob "M" if able, done so I could modify the proc a little for the organ fridge
 /obj/machinery/smartfridge/proc/dispense(obj/item/O, var/mob/M)
 	if(!M.put_in_hands(O))
 		O.forceMove(drop_location())

@@ -159,8 +159,13 @@
 		processing_list.Cut(1, 2)
 		processing_list += A.contents
 
-// Recursive loop based off of the recursive mob check. Necessary for preventing organ decay without running every tick.
-// Takes in a variable "atom/O" and looks for any/all organs to toggle decompose, excluding other organ safe containers
+/** recursive_organ_check
+  * inputs: O (object to start with), decompose (either 1 or 0, sets each organ found's can_decompose to this)
+  * outputs:
+  * description: A pseudo-recursive loop based off of the recursive mob check, this check looks for any organs held
+  *				 within 'O', setting their can_decompose flag. This check excludes items held within other safe organ
+  *				 storage units, so that only the lowest level of container dictates whether we do or don't decompose
+  */
 /proc/recursive_organ_check(atom/O, var/decompose)
 
 	var/list/processing_list = list(O)
@@ -182,7 +187,7 @@
 				found_organ = organ
 				found_organ.can_decompose = decompose
 
-		for(var/atom/B in A)
+		for(var/atom/B in A)	//objects held within other objects are added to the processing list, unless that object is something that can hold organs safely
 			if(!processed_list[B] && !istype(B, /obj/structure/closet/crate/freezer) && !istype(B, /obj/structure/closet/secure_closet/freezer))
 				processing_list+= B
 

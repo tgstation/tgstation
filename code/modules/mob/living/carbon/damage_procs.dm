@@ -112,16 +112,32 @@
 		return
 	adjustStaminaLoss(diff, updating_health, forced)
 
-/mob/living/carbon/adjustOrganLoss(slot, amount, maximum = 500)	//maximum is some arbitrarily large number to ensure that if no maximum is given, we allow it to reach any organ's maximum health
+/** adjustOrganLoss
+  * inputs: slot (organ slot, like ORGAN_SLOT_HEART), amount (damage to be done), and maximum (currently an arbitrarily large number, can be set so as to limit damage)
+  * outputs:
+  * description: If an organ exists in the slot requested, and we are capable of taking damage (we don't have GODMODE on), call the damage proc on that organ.
+  */
+/mob/living/carbon/adjustOrganLoss(slot, amount, maximum = 500)
 	var/obj/item/organ/O = getorganslot(slot)
 	if(O && !(status_flags & GODMODE))
 		O.applyOrganDamage(amount, maximum)
 
+/** setOrganLoss
+  * inputs: slot (organ slot, like ORGAN_SLOT_HEART), amount(damage to be set to)
+  * outputs:
+  * description: If an organ exists in the slot requested, and we are capable of taking damage (we don't have GODMODE on), call the set damage proc on that organ, which can
+  *				 set or clear the failing variable on that organ, making it either cease or start functions again, unlike adjustOrganLoss.
+  */
 /mob/living/carbon/setOrganLoss(slot, amount)
 	var/obj/item/organ/O = getorganslot(slot)
 	if(O && !(status_flags & GODMODE))
 		O.setOrganDamage(amount)
 
+/** getOrganLoss
+  * inputs: slot (organ slot, like ORGAN_SLOT_HEART)
+  * outputs: organ damage
+  * description: If an organ exists in the slot requested, return the amount of damage that organ has
+  */
 /mob/living/carbon/getOrganLoss(slot)
 	var/obj/item/organ/O = getorganslot(slot)
 	if(O)
