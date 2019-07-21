@@ -9,7 +9,7 @@
 
 #define RULESET_STOP_PROCESSING 1
 
- // -- Injection delays
+// -- Injection delays
 GLOBAL_VAR_INIT(dynamic_latejoin_delay_min, (5 MINUTES))
 GLOBAL_VAR_INIT(dynamic_latejoin_delay_max, (25 MINUTES))
 
@@ -56,19 +56,24 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	/// Running information about the threat. Can store text or datum entries.
 	var/list/threat_log = list() 
 
+	/// List of roundstart rules used for selecting the rules.
 	var/list/roundstart_rules = list()
+	/// List of latejoin rules used for selecting the rules.
 	var/list/latejoin_rules = list()
+	/// List of midround rules used for selecting the rules.
 	var/list/midround_rules = list()
 	/// Pop range per requirement. If this is the default five, the pop range for requirements are:
 	/// 0-4, 5-9, 10-14, 15-19, 20-24, 25-29, 30-34, 35-39, 40-54, 45+
 	var/pop_per_requirement = 5
-	/// Second and third rule requirements are the threat level requirements per pop range, see pop_per_requirement for pop range.
+	/// The requirement used for checking if a second rule should be selected.
 	var/list/second_rule_req = list(100,100,80,70,60,40,20,0,0,0)
+	/// The requirement used for checking if a third rule should be selected.
 	var/list/third_rule_req = list(100,100,100,90,80,70,50,30,10,0)
-	/// Threat requirements for extra rulesets when high pop override is in effect. 
+	/// Threat requirement for a second ruleset when high pop override is in effect. 
 	var/high_pop_second_rule_req = 50
+	/// Threat requirement for a third ruleset when high pop override is in effect. 
 	var/high_pop_third_rule_req = 70
-	/// How many players joined the game when starting.
+	/// Number of players who were ready on roundstart.
 	var/roundstart_pop_ready = 0
 	/// List of candidates used on roundstart rulesets.
 	var/list/candidates = list()
@@ -76,19 +81,22 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	var/list/current_rules = list()
 	/// List of executed rulesets.
 	var/list/executed_rules = list()
-
+	/// Associative list of current players, in order: living players, living antagonists, dead players and observers.
 	var/list/list/current_players = list(CURRENT_LIVING_PLAYERS, CURRENT_LIVING_ANTAGS, CURRENT_DEAD_PLAYERS, CURRENT_OBSERVERS)
 
+	/// When world.time is over this number the mode tries to inject a latejoin ruleset.
 	var/latejoin_injection_cooldown = 0
+	/// When world.time is over this number the mode tries to inject a midround ruleset.
 	var/midround_injection_cooldown = 0
+	/// When TRUE GetInjectionChance returns 100.
 	var/forced_injection = FALSE
 
+	/// Forced ruleset to be executed for the next latejoin.
 	var/datum/dynamic_ruleset/latejoin/forced_latejoin_rule = null
 
+	/// When current_players was updated last time.
 	var/pop_last_updated = 0
-
-	var/relative_threat = 0 // Relative threat, Lorentz-distributed.
-
+	/// How many percent of the rounds are more peaceful.
 	var/peaceful_percentage = 50
 
 /datum/game_mode/dynamic/AdminPanel()
@@ -235,8 +243,9 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 
 	usr << browse(out.Join(), "window=threatlog;size=700x500")
 
+/// Generates the threat level using lorentz distribution and assigns peaceful_percentage.
 /datum/game_mode/dynamic/proc/generate_threat()
-	relative_threat = LORENTZ_DISTRIBUTION(GLOB.dynamic_curve_centre, GLOB.dynamic_curve_width)
+	var/relative_threat = LORENTZ_DISTRIBUTION(GLOB.dynamic_curve_centre, GLOB.dynamic_curve_width)
 	threat_level = round(lorentz2threat(relative_threat), 0.1)
 
 	peaceful_percentage = round(LORENTZ_CUMULATIVE_DISTRIBUTION(relative_threat, GLOB.dynamic_curve_centre, GLOB.dynamic_curve_width), 0.01)*100
@@ -298,9 +307,9 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		rule.candidates.Cut() // The rule should not use candidates at this point as they all are null.
 		if(!rule.execute())
 			stack_trace("The starting rule \"[rule.name]\" failed to execute.")
-	
 	..()
 
+/// A simple roundstart proc used when dynamic_forced_roundstart_ruleset has rules in it.
 /datum/game_mode/dynamic/proc/rigged_roundstart()
 	message_admins("[GLOB.dynamic_forced_roundstart_ruleset.len] rulesets being forced. Will now attempt to draft players for them.")
 	log_game("DYNAMIC: [GLOB.dynamic_forced_roundstart_ruleset.len] rulesets being forced. Will now attempt to draft players for them.")
@@ -308,7 +317,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		message_admins("Drafting players for forced ruleset [rule.name].")
 		log_game("DYNAMIC: Drafting players for forced ruleset [rule.name].")
 		rule.mode = src
-		if (rule.ready(TRUE)) // Ignoring enemy job requirements
+		if (rule.ready(TRUE))
 			picking_roundstart_rule(list(rule))
 
 /datum/game_mode/dynamic/proc/roundstart()
@@ -364,6 +373,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		return FALSE
 	return TRUE
 
+/// Picks a random roundstart rule from the list given as an argument and executes it.
 /datum/game_mode/dynamic/proc/picking_roundstart_rule(list/drafted_rules = list())
 	var/datum/dynamic_ruleset/roundstart/starting_rule = pickweight(drafted_rules)
 
@@ -397,6 +407,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			stack_trace("The starting rule \"[starting_rule.name]\" failed to pre_execute.")
 	return FALSE
 
+/// Executes delayed roundstart rules and has a hack in it.
 /datum/game_mode/dynamic/proc/execute_delayed(datum/dynamic_ruleset/roundstart/delayed/rule)
 	rule.candidates = GLOB.player_list.Copy()
 	rule.trim_candidates()
@@ -416,7 +427,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	else
 		stack_trace("The delayed roundstart rule \"[rule.name]\" failed to execute.")
 		return FALSE
-	
+
+/// Picks a random latejoin rule from the list given as an argument and executes it.
 /datum/game_mode/dynamic/proc/picking_latejoin_rule(list/drafted_rules = list())
 	var/datum/dynamic_ruleset/latejoin/latejoin_rule = pickweight(drafted_rules)
 	if (latejoin_rule)
@@ -436,6 +448,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			stack_trace("The latejoin rule \"[latejoin_rule.name]\" failed to execute.")
 	return FALSE
 
+/// Picks a random midround rule from the list given as an argument and executes it.
 /datum/game_mode/dynamic/proc/picking_midround_rule(list/drafted_rules = list())
 	var/datum/dynamic_ruleset/midround/midround_rule = pickweight(drafted_rules)
 	if (midround_rule)
@@ -454,7 +467,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			stack_trace("The midround rule \"[midround_rule.name]\" failed to execute.")
 	return FALSE
 
-/datum/game_mode/dynamic/proc/picking_specific_rule(ruletype, forced=0) // An experimental proc to allow admins to call rules on the fly or have rules call other rules
+/// An experimental proc to allow admins to call rules on the fly or have rules call other rules.
+/datum/game_mode/dynamic/proc/picking_specific_rule(ruletype, forced=0)
 	var/datum/dynamic_ruleset/midround/new_rule
 	if(ispath(ruletype))
 		new_rule = new ruletype() // You should only use it to call midround rules though.
@@ -521,6 +535,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
 		midround_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max)) + world.time
 
+/// Updates current_players.
 /datum/game_mode/dynamic/proc/update_playercounts()
 	current_players[CURRENT_LIVING_PLAYERS] = list()
 	current_players[CURRENT_LIVING_ANTAGS] = list()
@@ -541,6 +556,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 					continue
 			current_players[CURRENT_DEAD_PLAYERS].Add(M) // Players who actually died (and admins who ghosted, would be nice to avoid counting them somehow)
 
+/// Gets the chance for latejoin and midround injection, the dry_run argument is only used for forced injection.
 /datum/game_mode/dynamic/proc/GetInjectionChance(dry_run = FALSE)
 	if(forced_injection)
 		forced_injection = !dry_run
@@ -548,7 +564,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	var/chance = 0
 	// If the high pop override is in effect, we reduce the impact of population on the antag injection chance
 	var/high_pop_factor = (current_players[CURRENT_LIVING_PLAYERS].len >= GLOB.dynamic_high_pop_limit)
-	var/max_pop_per_antag = max(5,15 - round(threat_level/10) - round(current_players[CURRENT_LIVING_PLAYERS].len/(high_pop_factor ? 10 : 5))) // https://docs.google.com/spreadsheets/d/1QLN_OBHqeL4cm9zTLEtxlnaJHHUu0IUPzPbsI-DFFmc/edit#gid=2053826290
+	var/max_pop_per_antag = max(5,15 - round(threat_level/10) - round(current_players[CURRENT_LIVING_PLAYERS].len/(high_pop_factor ? 10 : 5)))
 	if (!current_players[CURRENT_LIVING_ANTAGS].len)
 		chance += 50 // No antags at all? let's boost those odds!
 	else
@@ -565,6 +581,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 		chance -= 15
 	return round(max(0,chance))
 
+/// Removes the rule_type from rule_list
 /datum/game_mode/dynamic/proc/remove_rule(list/rule_list, rule_type)
 	for(var/datum/dynamic_ruleset/DR in rule_list)
 		if(istype(DR,rule_type))
@@ -608,25 +625,27 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
 			latejoin_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time
 
-// Regenerate threat, but no more than our original threat level.
+/// Refund threat, but no more than threat_level.
 /datum/game_mode/dynamic/proc/refund_threat(regain)
 	threat = min(threat_level,threat+regain)
 
-// Generate threat and increase the threat_level if it goes beyond, capped at 100
+/// Generate threat and increase the threat_level if it goes beyond, capped at 100
 /datum/game_mode/dynamic/proc/create_threat(gain)
 	threat = min(100, threat+gain)
-	if(threat>threat_level)
+	if(threat > threat_level)
 		threat_level = threat
 
-// Expend threat, but do not fall below 0.
+/// Expend threat, can't fall under 0.
 /datum/game_mode/dynamic/proc/spend_threat(cost)
 	threat = max(threat-cost,0)
 
+/// Checks the list given as arguments for HIGHLANDER_RULESET rules.
 /datum/game_mode/dynamic/proc/check_for_highlander(list/drafted_rules)
 	for (var/datum/dynamic_ruleset/roundstart/DR in drafted_rules)
 		if (DR.flags & HIGHLANDER_RULESET)
 			return TRUE
 
+/// Turns the value generated by lorentz distribution to threat value between 0 and 100.
 /datum/game_mode/dynamic/proc/lorentz2threat(x)
 	switch (x)
 		if (-INFINITY to -20)
