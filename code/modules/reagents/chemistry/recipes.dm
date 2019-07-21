@@ -53,11 +53,11 @@
 					step(S, pick(NORTH,SOUTH,EAST,WEST))
 
 ///Simulates a vortex that moves nearby movable atoms towards or away from the turf T. Range also determines the strength of the effect. High values cause nearby objects to be thrown.
-/datum/chemical_reaction/proc/goonchem_vortex(turf/T, setting_type, range)
+/proc/goonchem_vortex(turf/T, setting_type, range)
 	for(var/atom/movable/X in orange(range, T))
 		if(X.anchored)
 			continue
-		if(iseffect(X) || iscameramob(X) || isobserver(X))
+		if(iseffect(X) || iscameramob(X) || isdead(X))
 			continue
 		var/distance = get_dist(X, T)
 		var/moving_power = max(range - distance, 1)
@@ -69,8 +69,8 @@
 				X.throw_at(T, moving_power, 1)
 		else
 			if(setting_type)
-				if(step_away(X, T) && moving_power > 2) //Can happen twice at most. So this is fine.
+				if(step_away(X, T) && moving_power > 1) //Can happen twice at most. So this is fine.
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/_step_away, X, T), 2)
 			else
-				if(step_towards(X, T) && moving_power > 2)
+				if(step_towards(X, T) && moving_power > 1)
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/_step_towards, X, T), 2)
