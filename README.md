@@ -1,4 +1,4 @@
-## /tg/station codebase
+## station codebase
 
 [![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation) [![Krihelimeter](https://www.krihelinator.xyz/badge/tgstation/tgstation)](https://www.krihelinator.xyz)  
 [![Percentage of issues still open](https://isitmaintained.com/badge/open/tgstation/tgstation.svg)](https://isitmaintained.com/project/tgstation/tgstation "Percentage of issues still open") [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/tgstation/tgstation.svg)](https://isitmaintained.com/project/tgstation/tgstation "Average time to resolve an issue") ![Coverage](https://img.shields.io/badge/coverage---2%25-red.svg)  
