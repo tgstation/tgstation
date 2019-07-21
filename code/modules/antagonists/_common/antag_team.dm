@@ -9,15 +9,16 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 	var/show_roundend_report = TRUE
 	var/has_hud = FALSE /// Does the team have its own HUD?
 	var/hud_icon_state = "traitor" /// Default icon
-	var/datum/atom_hud/antag/team_hud /// HUD datum
+	var/datum/atom_hud/antag/team_hud = new/// HUD datum
 
 /datum/team/New(starting_members)
 	. = ..()
 	GLOB.antagonist_teams += src
 
 	if (has_hud)
-		team_hud = new /datum/atom_hud/antag
-	
+		team_hud.self_visible = TRUE
+		GLOB.huds += team_hud
+
 	if(starting_members)
 		if(islist(starting_members))
 			for(var/datum/mind/M in starting_members)
@@ -40,6 +41,10 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 	members |= new_member
 
 /datum/team/proc/remove_member(datum/mind/member)
+	if (has_hud)
+		team_hud.leave_hud(member.current)
+		set_antag_hud(member.current, null)
+
 	members -= member
 
 //Display members/victory/failure/objectives for the team
