@@ -182,6 +182,7 @@
 
 	// Add AntagHUD to everyone, see who was really evil the whole time!
 	for(var/datum/atom_hud/antag/H in GLOB.huds)
+		H.self_visible = TRUE
 		for(var/m in GLOB.player_list)
 			var/mob/M = m
 			H.add_hud_to(M)
