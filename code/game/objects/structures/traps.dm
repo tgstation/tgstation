@@ -153,10 +153,11 @@
 	radio.talk_into(src, "Fugitive has triggered this trap in the [get_area_name(src)]!", RADIO_CHANNEL_COMMON)
 
 /obj/item/bountytrap/attack_self(mob/living/user)
-	if(!user || !user.temporarilyRemoveItemFromInventory(src))//visibly unequips
+	var/turf/T = get_turf(src)
+	if(!user || !user.transferItemToLoc(src, T))//visibly unequips
 		return
 	to_chat(user, "<span class=notice>You set up [src]. Examine while close to disarm it.</span>")
-	stored_trap.forceMove(get_turf(src))//moves trap to ground
+	stored_trap.forceMove(T)//moves trap to ground
 	forceMove(stored_trap)//moves item into trap
 
 /obj/item/bountytrap/Destroy()
