@@ -3,8 +3,6 @@ Materials are now instanced datums, with an associative list of them being kept 
 
 These materials call on_applied() on whatever item they are applied to, common effects are adding components, changing color and changing description. This allows us to differentiate items based on the material they are made out of.area
 
-Core procs & defines:
-
 */
 
 SUBSYSTEM_DEF(materials)
@@ -19,7 +17,8 @@ SUBSYSTEM_DEF(materials)
 /datum/controller/subsystem/materials/Initialize(timeofday)
 	InitializeMaterials()
 	return ..()
-	
+
+///Ran on initialize, populated the materials and materials_by_category dictionaries with their appropiate vars (See these variables for more info)
 /datum/controller/subsystem/materials/proc/InitializeMaterials(timeofday)
 	for(var/type in subtypesof(/datum/material))
 		var/datum/material/ref = new type
