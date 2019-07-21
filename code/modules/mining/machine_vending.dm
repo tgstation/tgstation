@@ -115,7 +115,7 @@
 				inserted_id = null
 				usr.visible_message("<span class='notice'>[usr] gets an ID card from the console.</span>", \
 								"<span class='notice'>You get the ID card from the console.</span>")
-				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 		else if(href_list["choice"] == "insert")
 			var/obj/item/card/id/I = usr.get_active_held_item()
 			if(istype(I))
@@ -124,7 +124,7 @@
 				inserted_id = I
 				usr.visible_message("<span class='notice'>[usr] inserts an ID card into the console.</span>", \
 									"<span class='notice'>You insert the ID card into the console.</span>")
-				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 			else
 				to_chat(usr, "<span class='warning'>Error: No valid ID!</span>")
 				flick(icon_deny, src)
@@ -166,7 +166,7 @@
 				inserted_id = C
 				user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
 									"<span class='notice'>You insert the ID card into the console.</span>")
-				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 				interact(user)
 			else
 				to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
@@ -226,7 +226,7 @@
 			inserted_id = null
 			user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
 								"<span class='notice'>You get the ID card from the console.</span>")
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 		updateUsrDialog()
 
 
