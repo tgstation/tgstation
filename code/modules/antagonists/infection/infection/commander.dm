@@ -24,7 +24,7 @@ GLOBAL_VAR(infection_commander)
 	var/obj/structure/infection/core/infection_core = null // The infection commanders's core
 	var/infection_points = 0
 	var/max_infection_points = 100
-	var/upgrade_points = 10 // obtained by destroying beacons
+	var/upgrade_points = 1 // obtained by destroying beacons
 	var/last_attack = 0
 	var/list/infection_mobs = list()
 	var/list/resource_infection = list()
@@ -33,8 +33,7 @@ GLOBAL_VAR(infection_commander)
 	var/placing = FALSE
 	var/freecam = FALSE
 	var/base_point_rate = 2 //for core placement
-	var/autoplace_time = 40 // a few seconds, just so it isnt sudden at game start
-	var/place_beacons_delay = 10
+	var/autoplace_time = CORE_AUTOPLACE_TIME // 5 minutes
 	var/victory_in_progress = FALSE
 	var/infection_color = "#ffffff"
 	var/datum/atom_hud/medical_hud
@@ -42,7 +41,8 @@ GLOBAL_VAR(infection_commander)
 	var/list/default_actions = list(/datum/action/cooldown/infection/creator/shield,
 									/datum/action/cooldown/infection/creator/resource,
 									/datum/action/cooldown/infection/creator/node,
-									/datum/action/cooldown/infection/creator/factory)
+									/datum/action/cooldown/infection/creator/factory,
+									/datum/action/cooldown/infection/coregrab)
 
 	var/list/unlockable_actions = list()
 
@@ -59,8 +59,8 @@ GLOBAL_VAR(infection_commander)
 	if(infection_core)
 		infection_core.update_icon()
 	SSshuttle.registerHostileEnvironment(src)
-	addtimer(CALLBACK(src, .proc/generate_announcement), place_beacons_delay / 2)
-	addtimer(CALLBACK(src, .proc/place_beacons), place_beacons_delay)
+	addtimer(CALLBACK(src, .proc/generate_announcement), CORE_AUTOPLACE_TIME * 0.1)
+	addtimer(CALLBACK(src, .proc/place_beacons), CORE_AUTOPLACE_TIME * 0.3)
 	for(var/type_action in default_actions)
 		var/datum/action/cooldown/infection/add_action = new type_action()
 		add_action.Grant(src)
@@ -78,8 +78,9 @@ GLOBAL_VAR(infection_commander)
 					   This substance appears to be self replicating, and will stop at nothing to consume all matter around it.\n\n\
 					   Our calculations estimate the meteor will impact in [(autoplace_time - world.time)/600] minutes.\n\n\
 					   We will be deploying beacons that will defend the majority of your station, provided that they are not destroyed.\n\n\
-					   Further updates will be given as we analyze the substance. Prepare to fight, your AI will be remotely updated in order to effectively combat this danger.",
+					   Further updates will be given as we analyze the substance.",
 					  "CentCom Biohazard Division", 'sound/misc/notice1.ogg')
+
 
 /mob/camera/commander/proc/defeated_announcement()
 	priority_announce("Our scanners detect no trace of any sentient infectious substance, threat neutralized.",

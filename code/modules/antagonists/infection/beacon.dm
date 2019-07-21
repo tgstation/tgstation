@@ -52,8 +52,13 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 	GLOB.infection_beacons -= src
 	var/mob/camera/commander/C = GLOB.infection_commander
 	C.upgrade_points++
+	C.max_infection_points += 50
+	C.base_point_rate++
+	C.add_points(C.max_infection_points)
+	to_chat(C, "<span class='notice'>You feel pure energy surge through you...</span>")
 	for(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/spore in C.infection_mobs)
 		spore.add_points(200)
+		to_chat(spore, "<span class='notice'>You feel pure energy surge through you...</span>")
 	if(GLOB.infection_beacons.len > 0)
 		INVOKE_ASYNC(src, .proc/destroyed_announcement)
 	return ..()

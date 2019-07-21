@@ -27,7 +27,11 @@
 	. = ..()
 	underlays.Cut()
 	var/mutable_appearance/node_base = mutable_appearance('icons/mob/infection/crystaline_infection_large.dmi', "crystalnode-base")
+	var/mutable_appearance/infection_base = mutable_appearance('icons/mob/infection/infection.dmi', "normal")
+	infection_base.pixel_x = -pixel_x
+	infection_base.pixel_y = -pixel_y
 	underlays += node_base
+	underlays += infection_base
 
 /obj/structure/infection/node/Destroy()
 	. = ..()

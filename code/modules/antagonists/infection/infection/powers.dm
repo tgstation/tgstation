@@ -31,9 +31,9 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	for(var/ripple in ripples)
 		qdel(ripple)
 	for(var/turf/T in hit_turfs)
-		for(var/i in 1 to 3)
+		for(var/i in 1 to 10)
 			for(var/atom/thing in T.contents)
-				if(ismob(thing))
+				if(isliving(thing))
 					var/mob/M = thing
 					M.visible_message("<span class='warning'>The infection meteor slams into [M]!</span>")
 					M.gib()
@@ -124,15 +124,15 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 		to_chat(src, "<span class='warning'>You no longer require a nearby node or core to place factory and resource infections.</span>")
 
 /mob/camera/commander/proc/create_spore()
-	to_chat(src, "<span class='warning'>Attempting to create a sentient spore...</span>")
+	to_chat(src, "<span class='warning'>Attempting to create a sentient slime...</span>")
 
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as an evolving infection spore?", ROLE_INFECTION, null, ROLE_INFECTION, 50) //players must answer rapidly
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as an evolving infection slime?", ROLE_INFECTION, null, ROLE_INFECTION, 50) //players must answer rapidly
 	if(LAZYLEN(candidates)) //if we got at least one candidate, they're a sentient spore now.
 		var/mob/dead/observer/C = pick(candidates)
 		var/datum/mind/spore_mind = C.mind
 		spore_mind.add_antag_datum(/datum/antagonist/infection/spore)
 		return TRUE
-	to_chat(src, "<span class='warning'>You could not conjure a sentience for your spore. Try again later.</span>")
+	to_chat(src, "<span class='warning'>You could not conjure a sentience for your slime. Try again later.</span>")
 	upgrade_points++
 
 /mob/camera/commander/verb/evolve_menu()
@@ -163,17 +163,17 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 
 /mob/camera/commander/verb/rally_spores_power()
 	set category = "Infection"
-	set name = "Rally Spores"
-	set desc = "Rally your spores to move to a target location."
+	set name = "Rally Slimes"
+	set desc = "Rally your slimes to move to a target location."
 	var/turf/T = get_turf(src)
 	rally_spores(T)
 
 /mob/camera/commander/proc/rally_spores(turf/T)
-	to_chat(src, "You direct your selected spores.")
+	to_chat(src, "You direct the slimes you can see.")
 	var/list/surrounding_turfs = block(locate(T.x - 1, T.y - 1, T.z), locate(T.x + 1, T.y + 1, T.z))
 	if(!surrounding_turfs.len)
 		return
-	for(var/mob/living/simple_animal/hostile/infection/infectionspore/IS in infection_mobs)
+	for(var/mob/living/simple_animal/hostile/infection/infectionspore/IS in infection_mobs && urange(7, src))
 		if(isturf(IS.loc) && get_dist(IS, T) <= 35)
 			IS.LoseTarget()
 			IS.Goto(pick(surrounding_turfs), IS.move_to_delay)
@@ -181,7 +181,7 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 /mob/camera/commander/verb/infection_broadcast()
 	set category = "Infection"
 	set name = "Infection Broadcast"
-	set desc = "Speak with your infection spores and infesternauts as your mouthpieces."
+	set desc = "Speak with your infection slimes as your mouthpieces."
 	var/speak_text = input(src, "What would you like to say with your minions?", "Infection Broadcast", null) as text
 	if(!speak_text)
 		return
@@ -197,12 +197,13 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	set name = "*Infection Help*"
 	set desc = "Help on how to infection."
 	to_chat(src, "<b>As the commander, you command the nearly impossible to kill infection!</b>")
-	to_chat(src, "<b>Your job is to delegate resources. Upgrade your defenses and create an army of sentient spores. Protect the boss creatures and destroy the beacons to win.</b>")
+	to_chat(src, "<b>Your job is to delegate resources. Upgrade your defenses and create an army of sentient slimes. Protect the boss creatures and destroy the beacons to win.</b>")
 	to_chat(src, "<i>Normal Infections</i> will expand your reach and can be upgraded into special infections that perform certain functions.")
 	to_chat(src, "<b>You can upgrade normal infections into various types, using the powers on your action bar.</b>")
 	to_chat(src, "<b>To destroy the beacons, place nodes nearby which will expand on them and drain their power.</b>")
 	to_chat(src, "<b>Destroying beacons grants you upgrade points which can be used to unlock powers in your evolution shop on the HUD.</b>")
+	to_chat(src, "<i>You may also bring corpses of sentient humans to your core in order to convert them into evolving slimes.</i>")
 	to_chat(src, "<b>In addition to the buttons on your HUD, there are a few click shortcuts to speed up expansion and defense.</b>")
-	to_chat(src, "<b>Shortcuts:</b> Click = Upgrade Infection (Must be near infection) <b>|</b> Middle Mouse Click = Move selected spores <b>|</b> Ctrl Click = Create Shield Infection <b>|</b> Alt Click = Remove Infection")
+	to_chat(src, "<b>Shortcuts:</b> Click = Upgrade Infection (Must be near infection) <b>|</b> Middle Mouse Click = Move slimes on screen <b>|</b> Ctrl Click = Create Shield Infection <b>|</b> Alt Click = Remove Infection")
 	if(!placed && autoplace_time <= world.time)
 		to_chat(src, "<span class='big'><font color=\"#EE4000\">You will automatically place your core in [DisplayTimeText(max(autoplace_time - world.time, 0))].</font></span>")

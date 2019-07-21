@@ -135,7 +135,7 @@
 	add_overlay(slime_crystal)
 
 /mob/living/simple_animal/hostile/infection/infectionspore/weak
-	name = "fragile blob spore"
+	name = "fragile infection slime"
 	health = 15
 	maxHealth = 15
 	melee_damage_lower = 1

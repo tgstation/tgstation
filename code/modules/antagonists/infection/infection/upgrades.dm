@@ -48,17 +48,37 @@
 	action_type = /datum/action/cooldown/infection/creator/reflective
 	cost = 1
 
+/datum/infection_upgrade/overmind/vacuum
+	name = "Vacuum Infection"
+	description = "Gives you the ability to create vacuum infection. Vacuum infection automatically suck in any non-infectious objects, and damage them once they are on top."
+	action_type = /datum/action/cooldown/infection/creator/vacuum
+	cost = 1
+
 /datum/infection_upgrade/overmind/freecam
 	name = "Full Vision"
 	description = "Allows you to see the entire station with no restrictions on the movement of your camera."
-	action_type = /datum/action/cooldown/infection/freecam
 	cost = 1
+
+/datum/infection_upgrade/overmind/freecam/upgrade_effect(mob/camera/commander/parentcommander)
+	parentcommander.freecam = TRUE
 
 /datum/infection_upgrade/overmind/medical
 	name = "Medical Diagnostics System"
 	description = "Allows you to see the health of allies and enemies alike, giving you even greater strategical planning power with your forces."
-	action_type = /datum/action/cooldown/infection/medicalhud
 	cost = 1
+
+/datum/infection_upgrade/overmind/medical/upgrade_effect(mob/camera/commander/parentcommander)
+	parentcommander.toggle_medical_hud()
+
+/datum/infection_upgrade/overmind/createslime
+	name = "Create Evolving Slime"
+	description = "Attempts to create an evolving slime for your army."
+	cost = 1
+	times = 10
+
+/datum/infection_upgrade/overmind/createslime/upgrade_effect(mob/camera/commander/parentcommander)
+	if(!parentcommander.create_spore())
+		times++
 
 ///////////////////////////////
 // Spore Type Change Upgrades//
@@ -244,3 +264,9 @@
 //////////////////////////
 
 /datum/infection_upgrade/beamturret
+
+/////////////////////
+// Vacuum Upgrades///
+/////////////////////
+
+/datum/infection_upgrade/vacuum

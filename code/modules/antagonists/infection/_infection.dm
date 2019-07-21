@@ -1,4 +1,3 @@
-#define DOOM_CLOCK_EVENT_DELAY 6000 // 10 minutes per event
 #define SAME_INFECTION_TYPE(check, typetocheck) (check.type == typetocheck || check.building == typetocheck)
 
 /datum/antagonist/infection
@@ -58,6 +57,9 @@
 	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/S = new /mob/living/simple_animal/hostile/infection/infectionspore/sentient(C, null, C)
 	if(C.infection_core)
 		S.forceMove(get_turf(C.infection_core))
+	else
+		// roundstart boys get gifts
+		S.add_points(400)
 	S.update_icons()
 	S.infection_help()
 	C.infection_mobs += S

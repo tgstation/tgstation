@@ -14,6 +14,7 @@
 	var/resource_delay = 0
 	var/point_rate = 2
 	var/list/topulse = list()
+	var/list/converting = list()
 
 /obj/structure/infection/core/Initialize(mapload, client/new_overmind = null, new_rate = 2, placed = 0)
 	if(GLOB.infection_core)
@@ -129,9 +130,38 @@
 	if(overmind)
 		overmind.update_health_hud()
 		Pulse_Area(overmind, 24, 40, TRUE)
+	for(var/mob/living/carbon/C in urange(2, src))
+		if(C.stat != DEAD || isnull(C.mind) || converting.Find(C.mind))
+			continue
+		converting.Add(C.mind)
+		INVOKE_ASYNC(src, .proc/convert_carbon, C)
 	INVOKE_ASYNC(src, .proc/pulseNodes)
 	playsound(src.loc, 'sound/effects/singlebeat.ogg', 600, 1, pressure_affected = FALSE)
 	..()
+
+/obj/structure/infection/core/proc/convert_carbon(mob/living/carbon/C)
+	var/timeleft = world.time + CORE_CONVERSION_TIME
+	C.visible_message("<span class='notice'>[C] begins to have their energy sucked as their corpse enters the cores radius!</span>")
+	var/stored_mind = C.mind
+	var/turf/T = get_turf(src)
+	var/datum/beam/B = T.Beam(C, icon_state="drain_life", time=INFINITY, maxdistance=INFINITY)
+	while(timeleft > world.time)
+		sleep(10)
+		if(!C || get_dist(src, C) > 2)
+			converting.Remove(stored_mind)
+			qdel(B)
+			return
+	converting.Remove(stored_mind)
+	qdel(B)
+	C.visible_message("<span class='notice'>[C] disintegrates as their energy begins to circle the core!</span>")
+	C.dust()
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as an evolving infection slime?", ROLE_INFECTION, null, ROLE_INFECTION, 50) //players must answer rapidly
+	if(LAZYLEN(candidates)) //if we got at least one candidate, they're a sentient spore now.
+		var/mob/dead/observer/O = pick(candidates)
+		var/datum/mind/spore_mind = O.mind
+		spore_mind.add_antag_datum(/datum/antagonist/infection/spore)
+		return
+
 
 /obj/structure/infection/core/proc/pulseNodes()
 	if(topulse.len)

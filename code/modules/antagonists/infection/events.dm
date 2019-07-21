@@ -140,7 +140,7 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 /datum/round_event/infection/syndicate
 	boss_type = /mob/living/simple_animal/hostile/syndicate/ranged/shotgun/space/stormtrooper
 	boss_drop_list = list(/obj/item/infectionkiller/excaliju)
-	minion_types = list(/mob/living/simple_animal/hostile/syndicate=1, /mob/living/simple_animal/hostile/syndicate/melee/sword/space=1, /mob/living/simple_animal/hostile/viscerator=5)
+	minion_types = list(/mob/living/simple_animal/hostile/syndicate=1, /mob/living/simple_animal/hostile/viscerator=10)
 	minion_drop_list = list()
 	warning_message = "Syndicate Operatives are invading the station!"
 	warning_jingle = 'sound/machines/alarm.ogg'
@@ -150,9 +150,9 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 	typepath = /datum/round_event/infection/jungle
 
 /datum/round_event/infection/jungle
-	boss_type = /mob/living/simple_animal/hostile/jungle/leaper
+	boss_type = /mob/living/simple_animal/hostile/gorilla
 	boss_drop_list = list(/obj/item/infectionkiller/excaliju)
-	minion_types = list(/mob/living/simple_animal/hostile/gorilla=1, /mob/living/simple_animal/hostile/poison/bees=2, /mob/living/simple_animal/hostile/killertomato=2, /mob/living/simple_animal/hostile/mushroom=2)
+	minion_types = list(/mob/living/simple_animal/hostile/poison/bees=2, /mob/living/simple_animal/hostile/killertomato=2, /mob/living/simple_animal/hostile/mushroom=2)
 	minion_drop_list = list()
 	warning_message = "Jungle Creatures are invading the station!"
 	warning_jingle = 'sound/creatures/gorilla.ogg'

@@ -91,8 +91,8 @@
 	return
 
 /obj/structure/infection/tesla_act(power)
-	. = ..()
 	eat_nearby_singularity()
+	. = ..()
 	return
 
 /obj/structure/infection/proc/eat_nearby_singularity()
@@ -188,7 +188,8 @@
 				var/turf/finalturf = get_final_expand_turf(toaffect[j-1], toaffect[j], dir_to_next)
 				previous.expand(finalturf, overmind, space_expand)
 				break
-			INF.ConsumeTile()
+			if(iswallturf(INF.loc))
+				INF.loc.blob_act(INF)
 			INF.air_update_turf(1)
 			INF.Be_Pulsed()
 			previous = INF
@@ -319,16 +320,17 @@
 	if(structure_build_time == null)
 		structure_build_time = I.build_time
 	var/obj/effect/overlay/vis/newicon = new
-	newicon.icon = I.icon
-	newicon.icon_state = I.icon_state
-	newicon.dir = I.dir
-	newicon.pixel_x = I.pixel_x
-	newicon.pixel_y = I.pixel_y
+	newicon.icon = initial(I.icon)
+	newicon.icon_state = initial(I.icon_state)
+	newicon.dir = initial(I.dir)
+	newicon.pixel_x = initial(I.pixel_x)
+	newicon.pixel_y = initial(I.pixel_y)
 	newicon.layer = TABLE_LAYER
 	if(overmind)
 		newicon.color = overmind.infection_color
-	newicon.transform = matrix(0.5, 0, 0, 0, 0.5, 0)
-	animate(newicon, transform = matrix(), time = structure_build_time)
+	var/default_transform = I.transform
+	newicon.transform = I.transform.Scale(0.5, 0.5)
+	animate(newicon, transform = default_transform, time = structure_build_time)
 	vis_contents += newicon
 	name = "building [I.name]"
 	building = type

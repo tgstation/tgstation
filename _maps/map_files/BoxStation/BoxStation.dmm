@@ -51095,6 +51095,10 @@
 /obj/structure/grille/broken,
 /turf/open/space/basic,
 /area/space/nearstation)
+"qwH" = (
+/obj/effect/landmark/beacon_start/east,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "qyN" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/noticeboard{
@@ -98197,7 +98201,7 @@ alP
 alP
 alP
 alP
-anf
+qwH
 alP
 aqD
 arz
@@ -106677,18 +106681,18 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 xqG
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa

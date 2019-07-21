@@ -126,7 +126,7 @@
 	icon_state = "lightning-projectile"
 	layer = ABOVE_MOB_LAYER
 	damage = 25
-	speed = 5
+	speed = 2.5
 	damage_type = BRUTE
 	pass_flags = PASSTABLE | PASSBLOB
 	nodamage = FALSE
@@ -148,5 +148,5 @@
 
 /obj/structure/infection/turret/core/Initialize()
 	. = ..()
-	AddComponent(/datum/component/knockback, 4)
+	AddComponent(/datum/component/knockback, -4)
 	AddComponent(/datum/component/summoning, list(/mob/living/simple_animal/hostile/infection/infectionspore), 10, 4, 0, "forms from the raw energy!", 'sound/effects/blobattack.ogg')

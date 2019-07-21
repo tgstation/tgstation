@@ -1398,6 +1398,7 @@
 #include "code\modules\antagonists\infection\infection\structures\resource.dm"
 #include "code\modules\antagonists\infection\infection\structures\shield.dm"
 #include "code\modules\antagonists\infection\infection\structures\turret.dm"
+#include "code\modules\antagonists\infection\infection\structures\vacuum.dm"
 #include "code\modules\antagonists\magic_servant\servant.dm"
 #include "code\modules\antagonists\monkey\monkey.dm"
 #include "code\modules\antagonists\morph\morph.dm"

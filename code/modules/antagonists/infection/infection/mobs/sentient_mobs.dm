@@ -1,17 +1,17 @@
-#define ISRESPAWNING (istype(loc, /obj/structure/infection))
+#define ISRESPAWNING (istype(loc, /obj/structure/infection) || istype(loc, /mob/camera/commander))
 
 //////////////////////
 // Player Controlled//
 //////////////////////
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient
-	name = "evolving spore"
-	desc = "An extremely strong spore in the early stages of life, what will it become next?"
+	name = "evolving slime"
+	desc = "An extremely strong slime in the early stages of life, what will it become next?"
 	hud_type = /datum/hud/infection_spore
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	obj_damage = 20
 	crystal_color = "#ff8c00"
-	var/respawn_time = 5
+	var/respawn_time = 15
 	var/current_respawn_time = -1
 	var/can_respawn = FALSE
 	var/upgrade_points = 0
@@ -77,11 +77,11 @@
 		to_chat(src, "<span class='warning'>You cannot afford this, you need at least [diff * -1] more points!</span>")
 		return FALSE
 	upgrade_points = diff
-	spent_upgrade_points += diff
+	spent_upgrade_points += cost
 	return TRUE
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/infection_help()
-	to_chat(src, "<b>You are an evolving spore!</b>")
+	to_chat(src, "<b>You are an evolving slime!</b>")
 	to_chat(src, "You are an evolving creature that can select evolutions in order to become stronger \n<b>You will respawn as long as the core still exists.</b>")
 	to_chat(src, "You can communicate with other infectious creatures via <b>:b</b>")
 	return
@@ -121,7 +121,7 @@
 		current_respawn_time--
 	if(did_decrement)
 		to_chat(src, "<b>You may now respawn!</b>")
-		playsound_local(src, 'sound/effects/genetics.ogg', 50)
+		playsound_local(src, 'sound/effects/splat.ogg', 100)
 	can_respawn = TRUE
 	current_respawn_time = -1
 	return
@@ -155,7 +155,10 @@
 		to_chat(src, "<span class='warning'>We are unable to revert our form any further!</span>")
 		return
 	to_chat(src, "<span class='warning'>Successfully reverted to base evolution!</span>")
-	add_points(round(spent_upgrade_points / 2, 1))
+	if(istype(loc, /mob/camera/commander))
+		add_points(spent_upgrade_points) // no cost when in loading
+	else
+		add_points(round(spent_upgrade_points / 2, 1))
 	spent_upgrade_points = 0
 	// reset the spore to default
 	transfer_to_type(/mob/living/simple_animal/hostile/infection/infectionspore/sentient)
@@ -180,8 +183,8 @@
 	cycle_cooldown = world.time + 5
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/infector
-	name = "infector spore"
-	desc = "A spore that oozes infective pus from all of it's pores. It can reanimate corpses of the dead to do its bidding."
+	name = "infector slime"
+	desc = "A slime that oozes infective pus from all of it's pores."
 	health = 80
 	maxHealth = 80
 	melee_damage_lower = 20
@@ -190,25 +193,27 @@
 	upgrade_subtype = /datum/infection_upgrade/infector
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/hunter
-	name = "hunter spore"
-	desc = "A congealed but fast moving spore with the abilities to hunt down and consume intruders of the infection."
+	name = "hunter slime"
+	desc = "A congealed but fast moving slime with the abilities to hunt down and consume intruders of the infection."
 	health = 60
 	maxHealth = 60
 	speed = -1
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	crystal_color = "#dc143c"
+	respawn_time = 30
 	upgrade_subtype = /datum/infection_upgrade/hunter
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/destructive
-	name = "destructive spore"
-	desc = "A slow moving but bulky and heavily damaging spore that is useful for taking out buildings and walls, as well as defending infection structures."
+	name = "destructive slime"
+	desc = "A slow moving but bulky and heavily damaging slime that is useful for taking out buildings and walls, as well as defending infection structures."
 	health = 100
 	maxHealth = 100
 	speed = 1
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	crystal_color = "#4169e1"
+	respawn_time = 30
 	transform = matrix(1.5, 0, 0, 0, 1.5, 0)
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
 	upgrade_subtype = /datum/infection_upgrade/destructive

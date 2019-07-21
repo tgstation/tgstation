@@ -23,25 +23,109 @@
 /datum/action/cooldown/infection/proc/fire(mob/camera/commander/I, turf/T)
 	return TRUE
 
-/datum/action/cooldown/infection/freecam
-	name = "Full Vision"
-	desc = "Allows you to move your camera to anywhere, whether or not you have an infection next to it."
-	icon_icon = 'icons/obj/clothing/glasses.dmi'
-	button_icon_state = "godeye"
+/datum/action/cooldown/infection/coregrab
+	name = "Core Grab"
+	desc = "Causes a rift over an infection that a few seconds after creation, ruptures, sending everything on the turf to the core of the infection."
+	icon_icon = 'icons/effects/effects.dmi'
+	button_icon_state = "bluestream_fade"
+	cost = 50
+	cooldown_time = 600
 
-/datum/action/cooldown/infection/freecam/fire(mob/camera/commander/I, turf/T)
-	I.freecam = !I.freecam
-	to_chat(I, "<span class='notice'>Successfully toggled [name]!</span>")
+/datum/action/cooldown/infection/coregrab/fire(mob/camera/commander/I, turf/T)
+	var/obj/structure/infection/S = locate(/obj/structure/infection) in T.contents
+	if(S)
+		StartCooldown()
+		playsound(T, 'sound/effects/seedling_chargeup.ogg', 100, FALSE, pressure_affected = FALSE)
+		new /obj/effect/temp_visual/bluespace_fissure(T)
+		sleep(9)
+		new /obj/effect/temp_visual/bluespace_fissure(T)
+		sleep(9)
+		if(I.infection_core)
+			var/list/possible_turfs = orange(2, I.infection_core)
+			for(var/atom/movable/M in T.contents - S)
+				if(M.anchored)
+					continue
+				M.forceMove(pick(possible_turfs))
+		return
+	to_chat(I, "<span class='warning'>You must be above an infection to use this ability!</span>")
 
-/datum/action/cooldown/infection/medicalhud
-	name = "Medical Hud"
-	desc = "Allows you to see the health of creatures on your screen."
-	icon_icon = 'icons/obj/clothing/glasses.dmi'
-	button_icon_state = "healthhud"
+/datum/action/cooldown/infection/creator
+	name = "Create"
+	desc = "New Creation Power"
+	var/type_to_create
+	var/distance_from_similar = 0
+	var/needs_node = FALSE
 
-/datum/action/cooldown/infection/medicalhud/fire(mob/camera/commander/I, turf/T)
-	I.toggle_medical_hud()
-	to_chat(I, "<span class='notice'>Successfully toggled [name]!</span>")
+/datum/action/cooldown/infection/creator/fire(mob/camera/commander/I, turf/T)
+	I.createSpecial(cost, type_to_create, distance_from_similar, needs_node, T)
+	return TRUE
+
+/datum/action/cooldown/infection/creator/shield
+	name = "Create Shield Infection"
+	desc = "Create a shield infection, which is harder to kill and has resistances to different types of attacks."
+	cost = 5
+	button_icon_state = "wall"
+	type_to_create = /obj/structure/infection/shield
+
+/datum/action/cooldown/infection/creator/reflective
+	name = "Create Reflective Shield Infection"
+	desc = "Create a shield that will reflect projectiles back at your enemies."
+	cost = 10
+	button_icon_state = "reflective"
+	type_to_create = /obj/structure/infection/shield/reflective
+
+/datum/action/cooldown/infection/creator/node
+	name = "Create Node Infection"
+	desc = "Create a node, which will power nearby factory and resource structures."
+	cost = 50
+	button_icon_state = "node"
+	type_to_create = /obj/structure/infection/node
+	distance_from_similar = 6
+
+/datum/action/cooldown/infection/creator/resource
+	name = "Create Resource Infection"
+	desc = "Create a resource tower which will gradually generate resources for you."
+	cost = 25
+	button_icon_state = "resource"
+	type_to_create = /obj/structure/infection/resource
+	distance_from_similar = 4
+	needs_node = TRUE
+
+/datum/action/cooldown/infection/creator/factory
+	name = "Create Factory Infection"
+	desc = "Create a spore tower that will spawn spores to harass your enemies."
+	cost = 50
+	button_icon_state = "factory"
+	type_to_create = /obj/structure/infection/factory
+	distance_from_similar = 7
+	needs_node = TRUE
+
+/datum/action/cooldown/infection/creator/turret
+	name = "Create Turret Infection"
+	desc = "Create a turret that will automatically fire at your enemies."
+	cost = 50
+	button_icon_state = "turret"
+	type_to_create = /obj/structure/infection/turret
+	distance_from_similar = 8
+	needs_node = TRUE
+
+/datum/action/cooldown/infection/creator/beamturret
+	name = "Create Beam Turret Infection"
+	desc = "Create a turret that will automatically fire and instantly stick to your enemies."
+	cost = 50
+	button_icon_state = "beamturret"
+	type_to_create = /obj/structure/infection/turret/beam
+	distance_from_similar = 8
+	needs_node = TRUE
+
+/datum/action/cooldown/infection/creator/vacuum
+	name = "Create Vacuum Infection"
+	desc = "Create a vacuum that will suck in anything non-infectious, as well as hurt things caught in it."
+	cost = 50
+	button_icon_state = "vacuum"
+	type_to_create = /obj/structure/infection/vacuum
+	distance_from_similar = 8
+	needs_node = TRUE
 
 /datum/action/cooldown/infection/mininode
 	name = "Miniature Node"
@@ -84,72 +168,3 @@
 	for(var/mob/living/L in get_hearers_in_view(4, T) - infector)
 		L.Paralyze(200)
 		L.soundbang_act(1, 200, 10, 15)
-
-/datum/action/cooldown/infection/creator
-	name = "Create"
-	desc = "New Creation Power"
-	var/type_to_create
-	var/distance_from_similar = 0
-	var/needs_node = FALSE
-
-/datum/action/cooldown/infection/creator/fire(mob/camera/commander/I, turf/T)
-	I.createSpecial(cost, type_to_create, distance_from_similar, needs_node, T)
-	return TRUE
-
-/datum/action/cooldown/infection/creator/shield
-	name = "Create Shield Infection"
-	desc = "Create a shield infection, which is harder to kill and has resistances to different types of attacks."
-	cost = 5
-	button_icon_state = "wall"
-	type_to_create = /obj/structure/infection/shield
-
-/datum/action/cooldown/infection/creator/resource
-	name = "Create Resource Infection"
-	desc = "Create a resource tower which will gradually generate resources for you."
-	cost = 25
-	button_icon_state = "resource"
-	type_to_create = /obj/structure/infection/resource
-	distance_from_similar = 6
-	needs_node = TRUE
-
-/datum/action/cooldown/infection/creator/node
-	name = "Create Node Infection"
-	desc = "Create a node, which will power nearby factory and resource structures. Beware however, these towers become slower with time."
-	cost = 50
-	button_icon_state = "node"
-	type_to_create = /obj/structure/infection/node
-	distance_from_similar = 7
-
-/datum/action/cooldown/infection/creator/factory
-	name = "Create Factory Infection"
-	desc = "Create a spore tower that will spawn spores to harass your enemies."
-	cost = 50
-	button_icon_state = "factory"
-	type_to_create = /obj/structure/infection/factory
-	distance_from_similar = 7
-	needs_node = TRUE
-
-/datum/action/cooldown/infection/creator/turret
-	name = "Create Turret Infection"
-	desc = "Create a turret that will automatically fire at your enemies."
-	cost = 50
-	button_icon_state = "turret"
-	type_to_create = /obj/structure/infection/turret
-	distance_from_similar = 8
-	needs_node = TRUE
-
-/datum/action/cooldown/infection/creator/beamturret
-	name = "Create Beam Turret Infection"
-	desc = "Create a turret that will automatically fire and instantly stick to your enemies."
-	cost = 50
-	button_icon_state = "beamturret"
-	type_to_create = /obj/structure/infection/turret/beam
-	distance_from_similar = 8
-	needs_node = TRUE
-
-/datum/action/cooldown/infection/creator/reflective
-	name = "Create Reflective Shield Infection"
-	desc = "Create a shield that will reflect projectiles back at your enemies."
-	cost = 10
-	button_icon_state = "reflective"
-	type_to_create = /obj/structure/infection/shield/reflective
