@@ -527,7 +527,9 @@
 		if(owner.stat < DEAD)
 			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
 			if(held_index)
-				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
+				var/item = owner.get_item_for_held_index(held_index)
+				if(item)
+					owner.dropItemToGround(item)
 	if(owner.hud_used)
 		var/obj/screen/inventory/hand/L = owner.hud_used.hand_slots["[held_index]"]
 		if(L)
@@ -591,7 +593,9 @@
 		if(owner.stat < DEAD)
 			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
 			if(held_index)
-				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
+				var/item = owner.get_item_for_held_index(held_index)
+				if(item)
+					owner.dropItemToGround(item)
 	if(owner.hud_used)
 		var/obj/screen/inventory/hand/R = owner.hud_used.hand_slots["[held_index]"]
 		if(R)
