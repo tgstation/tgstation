@@ -64,8 +64,8 @@
 	set_antag_hud(current, antag_hud_icon_state)
 	set_antag_hud(current, team_antag_hud_icon_state, TRUE)
 
-	if(newhud)
-		newhud.join_hud(current)
+	if(global_newhud)
+		global_newhud.join_hud(current)
 	if(team_newhud)
 		team_newhud.join_hud(current)
 
