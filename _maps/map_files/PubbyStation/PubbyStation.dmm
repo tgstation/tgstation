@@ -35718,7 +35718,6 @@
 	department = "Atmospherics";
 	departmentType = 3;
 	name = "Atmos RC";
-	pixel_x = 0;
 	pixel_y = 30
 	},
 /turf/open/floor/plasteel,
