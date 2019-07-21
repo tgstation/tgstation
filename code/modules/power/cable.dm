@@ -81,8 +81,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		if(linked_dirs & check_dir)
 			var/TB = get_step(loc, check_dir)
 			var/obj/structure/cable/C = locate(/obj/structure/cable) in TB
-			C.linked_dirs &= ~inverse
-			C.update_icon()
+			if(C)
+				C.linked_dirs &= ~inverse
+				C.update_icon()
 
 	if(powernet)
 		cut_cable_from_powernet()				// update the powernets
