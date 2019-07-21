@@ -59,8 +59,7 @@
 		return
 	switch(severity)
 		if(1)
-			obj_integrity = 0
-			qdel(src)
+			take_damage(INFINITY, BRUTE, "bomb", 0)
 		if(2)
 			take_damage(rand(100, 250), BRUTE, "bomb", 0)
 		if(3)
