@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - bugfix: "Fixed various inconsistencies and other oddness on Pubbystation."
