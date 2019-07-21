@@ -430,6 +430,10 @@
 	suffix = "cere"
 	name = "NT Construction Vessel"
 
+/datum/map_template/shuttle/whiteship/donut
+	suffix = "donut"
+	name = "NT Long-Distance Bluespace Jumper"
+
 /datum/map_template/shuttle/whiteship/delta
 	suffix = "delta"
 	name = "NT Frigate"

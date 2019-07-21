@@ -86,7 +86,7 @@
 
 /obj/item/storage/firstaid/toxin/Initialize(mapload)
 	. = ..()
-	icon_state = pick("antitoxin","antitoxfirstaid","antitoxfirstaid2","antitoxfirstaid3")
+	icon_state = pick("antitoxin","antitoxfirstaid","antitoxfirstaid2")
 
 /obj/item/storage/firstaid/toxin/PopulateContents()
 	if(empty)
@@ -106,6 +106,10 @@
 	user.visible_message("<span class='suicide'>[user] begins hitting [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return OXYLOSS
 
+/obj/item/storage/firstaid/o2/Initialize(mapload)
+	. = ..()
+	icon_state = pick("o2","o2second")
+
 /obj/item/storage/firstaid/o2/PopulateContents()
 	if(empty)
 		return
@@ -124,6 +128,10 @@
 /obj/item/storage/firstaid/brute/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins beating [user.p_them()]self over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
+
+/obj/item/storage/firstaid/brute/Initialize(mapload)
+	. = ..()
+	icon_state = pick("brute","brute2")
 
 /obj/item/storage/firstaid/brute/PopulateContents()
 	if(empty)
