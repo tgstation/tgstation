@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - bugfix: "Virology on Boxstation has lost its science defying lightbulb. This is a sad day for virologists as a whole."
