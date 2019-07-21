@@ -44,7 +44,9 @@
 		stylesheets["spritesheet_[sheet.name].css"] = "data/spritesheets/[sheet.name]"
 	else
 		stylesheets["[ckey(name)].css"] = file
-		register_asset("[ckey(name)].css", file)
+
+		if (!SSassets.cache[asset_name])
+			register_asset("[ckey(name)].css", file)
 
 /datum/browser/proc/add_script(name, file)
 	scripts["[ckey(name)].js"] = file
