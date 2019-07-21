@@ -1,19 +1,22 @@
-/obj/effect/appearance_clone
+/image/photo
+	var/_step_x = 0
+	var/_step_y = 0
 
-/obj/effect/appearance_clone/New(loc, atom/A)			//Intentionally not Initialize(), to make sure the clone assumes the intended appearance in time for the camera getFlatIcon.
+/image/photo/New(location, atom/A)			//Intentionally not Initialize(), to make sure the clone assumes the intended appearance in time for the camera getFlatIcon.
 	if(istype(A))
+		loc = location
 		appearance = A.appearance
 		dir = A.dir
 		if(ismovableatom(A))
 			var/atom/movable/AM = A
-			step_x = AM.step_x
-			step_y = AM.step_y
+			_step_x = AM.step_x
+			_step_y = AM.step_y
 	. = ..()
 
 /obj/item/camera/proc/camera_get_icon(list/turfs, turf/center, psize_x = 96, psize_y = 96, datum/turf_reservation/clone_area, size_x, size_y, total_x, total_y)
-	var/list/atoms = list()
+	var/list/images = list()
 	var/skip_normal = FALSE
-	var/wipe_atoms = FALSE
+	var/wipe_images = FALSE
 
 	if(istype(clone_area) && total_x == clone_area.width && total_y == clone_area.height && size_x >= 0 && size_y > 0)
 		var/cloned_center_x = round(clone_area.bottom_left_coords[1] + ((total_x - 1) / 2))
@@ -25,26 +28,26 @@
 			var/turf/newT = locate(cloned_center_x + offset_x, cloned_center_y + offset_y, clone_area.bottom_left_coords[3])
 			if(!(newT in clone_area.reserved_turfs))		//sanity check so we don't overwrite other areas somehow
 				continue
-			atoms += new /obj/effect/appearance_clone(newT, T)
+			images += new /image/photo(newT, T)
 			if(T.loc.icon_state)
-				atoms += new /obj/effect/appearance_clone(newT, T.loc)
+				images += new /image/photo(newT, T.loc)
 			for(var/i in T.contents)
 				var/atom/A = i
 				if(!A.invisibility || (see_ghosts && isobserver(A)))
-					atoms += new /obj/effect/appearance_clone(newT, A)
+					images += new /image/photo(newT, A)
 		skip_normal = TRUE
-		wipe_atoms = TRUE
+		wipe_images = TRUE
 		center = locate(cloned_center_x, cloned_center_y, clone_area.bottom_left_coords[3])
 
 	if(!skip_normal)
 		for(var/i in turfs)
 			var/turf/T = i
-			atoms += T
+			images += new /image/photo(T.loc, T)
 			for(var/atom/movable/A in T)
 				if(A.invisibility)
 					if(!(see_ghosts && isobserver(A)))
 						continue
-				atoms += A
+				images += new /image/photo(A.loc, A)
 			CHECK_TICK
 
 	var/icon/res = icon('icons/effects/96x96.dmi', "")
@@ -52,10 +55,10 @@
 
 	var/list/sorted = list()
 	var/j
-	for(var/i in 1 to atoms.len)
-		var/atom/c = atoms[i]
+	for(var/i in 1 to images.len)
+		var/image/c = images[i]
 		for(j = sorted.len, j > 0, --j)
-			var/atom/c2 = sorted[j]
+			var/image/c2 = sorted[j]
 			if(c2.layer <= c.layer)
 				break
 		sorted.Insert(j+1, c)
@@ -65,13 +68,10 @@
 	var/ycomp = FLOOR(psize_y / 2, 1) - 15
 
 
-	for(var/atom/A in sorted)
-		var/xo = (A.x - center.x) * world.icon_size + A.pixel_x + xcomp
-		var/yo = (A.y - center.y) * world.icon_size + A.pixel_y + ycomp
-		if(ismovableatom(A))
-			var/atom/movable/AM = A
-			xo += AM.step_x
-			yo += AM.step_y
+	for(var/Adummy in sorted)
+		var/image/photo/A = Adummy
+		var/xo = (A.x - center.x) * world.icon_size + A.pixel_x + xcomp + A._step_x
+		var/yo = (A.y - center.y) * world.icon_size + A.pixel_y + ycomp + A._step_y
 		var/icon/img = getFlatIcon(A)
 		if(img)
 			res.Blend(img, blendMode2iconMode(A.blend_mode), xo, yo)
@@ -83,7 +83,7 @@
 		else
 			playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
 
-	if(wipe_atoms)
-		QDEL_LIST(atoms)
+	if(wipe_images)
+		QDEL_LIST(images)
 
 	return res
