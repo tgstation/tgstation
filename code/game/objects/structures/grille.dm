@@ -17,6 +17,18 @@
 	var/broken_type = /obj/structure/grille/broken
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
+/obj/structure/grille/Initialize()
+	. = ..()
+	var/obj/structure/cable/C = locate(/obj/structure/cable) in loc
+	if(C)
+		C.update_icon()
+
+/obj/structure/grille/Destroy()
+	. = ..()
+	var/obj/structure/cable/C = locate(/obj/structure/cable) in loc
+	if(C)
+		C.update_icon()
+
 /obj/structure/grille/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	update_icon()
