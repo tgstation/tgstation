@@ -13,9 +13,7 @@
 /datum/action/cooldown/infection/Trigger()
 	if(!..())
 		return FALSE
-	if(!iscommander(owner))
-		return FALSE
-	var/mob/camera/commander/I = owner
+	var/mob/I = owner
 	var/turf/T = get_turf(I)
 	if(T)
 		fire(I, T)
@@ -45,21 +43,47 @@
 	I.toggle_medical_hud()
 	to_chat(I, "<span class='notice'>Successfully toggled [name]!</span>")
 
-/datum/action/cooldown/infection/emppulse
-	name = "Emp Pulse"
-	desc = "Charges up an EMP Pulse centered on the infection you are above."
-	icon_icon = 'icons/obj/grenade.dmi'
-	button_icon_state = "emp"
-	cooldown_time = 300
+/datum/action/cooldown/infection/mininode
+	name = "Miniature Node"
+	desc = "Creates a miniature node on the infection you're standing on."
+	button_icon_state = "node"
+	cooldown_time = 900
 
-/datum/action/cooldown/infection/emppulse/fire(mob/camera/commander/I, turf/T)
-	if(locate(/obj/structure/infection) in T.contents)
+/datum/action/cooldown/infection/mininode/fire(mob/infector, turf/T)
+	var/obj/structure/infection/I = locate(/obj/structure/infection) in T.contents
+	if(I)
 		StartCooldown()
-		playsound(T, pick('sound/weapons/ionrifle.ogg'), 300, FALSE, pressure_affected = FALSE)
-		new /obj/effect/temp_visual/impact_effect/ion(T)
-		sleep(20)
-		return empulse(T, 3, 6)
-	to_chat(I, "<span class='warning'>You must be above an infection to use this ability!</span>")
+		playsound(T, 'sound/effects/splat.ogg', 100, FALSE, pressure_affected = FALSE)
+		I.change_to(/obj/structure/infection/node/mini, I.overmind)
+		return
+	to_chat(infector, "<span class='warning'>You must be above an infection to use this ability!</span>")
+
+/datum/action/cooldown/infection/flash
+	name = "Bright Flash"
+	desc = "Creates a bright flash of light centered around you."
+	icon_icon = 'icons/obj/assemblies/new_assemblies.dmi'
+	button_icon_state = "flash"
+	cooldown_time = 900
+
+/datum/action/cooldown/infection/flash/fire(mob/infector, turf/T)
+	StartCooldown()
+	playsound(T, 'sound/weapons/flash.ogg', 100, FALSE, pressure_affected = FALSE)
+	for(var/mob/living/L in viewers(infector,4) - infector)
+		L.flash_act()
+
+/datum/action/cooldown/infection/voice
+	name = "Booming Voice"
+	desc = "A large sound erupts from your body, possibly stunning opponents around you."
+	icon_icon = 'icons/obj/projectiles.dmi'
+	button_icon_state = "kinetic_blast"
+	cooldown_time = 900
+
+/datum/action/cooldown/infection/voice/fire(mob/infector, turf/T)
+	StartCooldown()
+	playsound(T, 'sound/voice/ed209_20sec.ogg', 100, FALSE, pressure_affected = FALSE)
+	for(var/mob/living/L in get_hearers_in_view(4, T) - infector)
+		L.Paralyze(200)
+		L.soundbang_act(1, 200, 10, 15)
 
 /datum/action/cooldown/infection/creator
 	name = "Create"
@@ -85,7 +109,7 @@
 	cost = 25
 	button_icon_state = "resource"
 	type_to_create = /obj/structure/infection/resource
-	distance_from_similar = 4
+	distance_from_similar = 6
 	needs_node = TRUE
 
 /datum/action/cooldown/infection/creator/node
@@ -94,7 +118,7 @@
 	cost = 50
 	button_icon_state = "node"
 	type_to_create = /obj/structure/infection/node
-	distance_from_similar = 5
+	distance_from_similar = 7
 
 /datum/action/cooldown/infection/creator/factory
 	name = "Create Factory Infection"

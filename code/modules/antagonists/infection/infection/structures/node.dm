@@ -11,7 +11,8 @@
 	build_time = 150
 	upgrade_subtype = /datum/infection_upgrade/node
 	var/expansion_range = 8
-	var/expansion_amount = 16
+	var/expansion_amount = 12
+	var/shield_creation = FALSE
 
 /obj/structure/infection/node/Initialize()
 	GLOB.infection_nodes += src
@@ -35,6 +36,10 @@
 
 /obj/structure/infection/node/Life()
 	update_icon()
+	if(shield_creation)
+		for(var/obj/structure/infection/normal/N in orange(1, src))
+			if(prob(25))
+				INVOKE_ASYNC(N, .proc/change_to, /obj/structure/infection/shield, overmind)
 	if(overmind && world.time >= next_pulse)
 		overmind.infection_core.topulse += src
 
@@ -42,3 +47,20 @@
 	playsound(src.loc, 'sound/effects/singlebeat.ogg', 600, 1, pressure_affected = FALSE)
 	var/state_chosen = prob(50) ? "right" : "left"
 	flick("crystalnode-layer-[state_chosen]", src)
+
+/obj/structure/infection/node/mini
+	name = "miniature infection node"
+	desc = "A smaller, pulsating mass."
+	icon = 'icons/mob/infection/crystaline_infection_large.dmi'
+	icon_state = "crystalnode-layer"
+	transform = matrix(0.5, 0, 0, 0, 0.5, 0)
+	max_integrity = 50
+	health_regen = 2
+	point_return = 0
+	upgrade_subtype = null
+	expansion_range = 6
+	expansion_amount = 6
+
+/obj/structure/infection/node/mini/Initialize()
+	. = ..()
+	QDEL_IN(src, 300)

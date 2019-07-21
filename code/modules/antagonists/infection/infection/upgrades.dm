@@ -54,12 +54,6 @@
 	action_type = /datum/action/cooldown/infection/freecam
 	cost = 1
 
-/datum/infection_upgrade/overmind/emppulse
-	name = "Electromagnetic Pulse"
-	description = "Generates an EMP in an area around your camera. Charges up for a period of time overlaying the area it will EMP before doing so."
-	action_type = /datum/action/cooldown/infection/emppulse
-	cost = 1
-
 /datum/infection_upgrade/overmind/medical
 	name = "Medical Diagnostics System"
 	description = "Allows you to see the health of allies and enemies alike, giving you even greater strategical planning power with your forces."
@@ -96,7 +90,30 @@
 // Infector Spore Upgrades//
 ////////////////////////////
 
-/datum/infection_upgrade/infector
+/datum/infection_upgrade/infector/suction
+	name = "Suction Cups"
+	description = "The amazing power of delta pressure allows you to grab and pull things around."
+	cost = 200
+
+/datum/infection_upgrade/infector/suction/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/infector/parentinfector)
+	parentinfector.verbs += /mob/living/verb/pulled
+
+/datum/infection_upgrade/infector/spacewalk
+	name = "Compressed Air Storage"
+	description = "The stored air in your body allows you to move anywhere, including space, with ease."
+	cost = 200
+
+/datum/infection_upgrade/infector/spacewalk/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/infector/parentinfector)
+	parentinfector.spacewalk = TRUE
+
+/datum/infection_upgrade/infector/mininode
+	name = "Miniature Node"
+	description = "Allows you to place down a miniature node that lasts a short time, but expands infection around it like a true node."
+	cost = 600
+
+/datum/infection_upgrade/infector/mininode/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/infector/parentinfector)
+	var/datum/action/cooldown/infection/add_action = new /datum/action/cooldown/infection/mininode()
+	add_action.Grant(parentinfector)
 
 //////////////////////////
 // Hunter Spore Upgrades//
@@ -110,6 +127,23 @@
 /datum/infection_upgrade/hunter/lifesteal/upgrade_effect(atom/parent)
 	parent.AddComponent(/datum/component/lifesteal, 5)
 
+/datum/infection_upgrade/hunter/napalm
+	name = "Burning Fists"
+	description = "Your body now produces fluid which allows you to increasingly set on fire targets that you hit."
+	cost = 200
+
+/datum/infection_upgrade/hunter/napalm/upgrade_effect(atom/parent)
+	parent.AddComponent(/datum/component/igniter)
+
+/datum/infection_upgrade/hunter/flash
+	name = "Bright Flash"
+	description = "Gain the ability to create bright flashes of light around you that can disorient opponents without protection."
+	cost = 200
+
+/datum/infection_upgrade/hunter/flash/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/hunter/parenthunter)
+	var/datum/action/cooldown/infection/add_action = new /datum/action/cooldown/infection/flash()
+	add_action.Grant(parenthunter)
+
 ///////////////////////////////
 // Destructive Spore Upgrades//
 ///////////////////////////////
@@ -121,6 +155,25 @@
 
 /datum/infection_upgrade/destructive/hydraulic_fists/upgrade_effect(atom/parent)
 	parent.AddComponent(/datum/component/knockback, 4)
+
+/datum/infection_upgrade/destructive/lead
+	name = "Lead Muscles"
+	description = "The muscles in your body are converted to a lead based substance, causing you to be almost impossible to move, and making you able to move many things."
+	cost = 200
+
+/datum/infection_upgrade/destructive/lead/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/destructive/parentdestructive)
+	parentdestructive.move_force = MOVE_FORCE_EXTREMELY_STRONG
+	parentdestructive.move_resist = MOVE_FORCE_EXTREMELY_STRONG
+	parentdestructive.pull_force = MOVE_FORCE_EXTREMELY_STRONG
+
+/datum/infection_upgrade/destructive/voice
+	name = "Booming Voice"
+	description = "Gain the ability to shout at a massive volume, which could stun nearby unprotected opponents."
+	cost = 200
+
+/datum/infection_upgrade/destructive/voice/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/destructive/parentdestructive)
+	var/datum/action/cooldown/infection/add_action = new /datum/action/cooldown/infection/voice()
+	add_action.Grant(parentdestructive)
 
 ////////////////////
 // Turret Upgrades//
@@ -134,15 +187,6 @@
 /datum/infection_upgrade/turret/flak_bullets/upgrade_effect(atom/parent)
 	parent.AddComponent(/datum/component/shrapnel, /obj/item/projectile/bullet/infection/flak, 2)
 
-/datum/infection_upgrade/turret/armour_penetration
-	name = "Armour Penetration"
-	description = "Increases the armour penetration of the turret."
-	cost = 15
-	times = 3
-
-/datum/infection_upgrade/infernal/armour_penetration/upgrade_effect(atom/parent)
-	return
-
 //////////////////////
 // Resource Upgrades//
 //////////////////////
@@ -150,7 +194,7 @@
 /datum/infection_upgrade/resource/storage_unit
 	name = "Storage Unit"
 	description = "Increases the point return of this infection every time it produces, up to a maximum of 100 points. You can remove the structure at any time to claim the extra points."
-	cost = 100
+	cost = 80
 
 /datum/infection_upgrade/resource/storage_unit/upgrade_effect(obj/structure/infection/resource/parentresource)
 	parentresource.point_return_gain += 0.25
@@ -165,7 +209,28 @@
 	description = "Automatically produces shield infection from all normal infection that are adjacent."
 	cost = 50
 
-/datum/infection_upgrade/node/defensive_shield/upgrade_effect(atom/parent)
+/datum/infection_upgrade/node/defensive_shield/upgrade_effect(obj/structure/infection/node/parentnode)
+	parentnode.shield_creation = TRUE
+	return
+
+/datum/infection_upgrade/node/range
+	name = "Expansion Range"
+	description = "Increases the expansion range of the node."
+	cost = 50
+	times = 3
+
+/datum/infection_upgrade/node/range/upgrade_effect(obj/structure/infection/node/parentnode)
+	parentnode.expansion_range += 2
+	return
+
+/datum/infection_upgrade/node/amount
+	name = "Expansion Increase"
+	description = "Makes the node expand more infecton whenever it fires."
+	cost = 50
+	times = 3
+
+/datum/infection_upgrade/node/amount/upgrade_effect(obj/structure/infection/node/parentnode)
+	parentnode.expansion_amount += 4
 	return
 
 //////////////////////
@@ -173,3 +238,9 @@
 //////////////////////
 
 /datum/infection_upgrade/factory
+
+//////////////////////////
+// Beam Turret Upgrades///
+//////////////////////////
+
+/datum/infection_upgrade/beamturret
