@@ -138,12 +138,12 @@
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
+	force = 5
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = IS_SHARP
-	force = 7
 	throwforce = 10
 	block_chance = 20
-	armour_penetration = 85
+	armour_penetration = 65
 	attack_verb = list("slashed", "stung", "prickled", "poked")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 
@@ -152,7 +152,7 @@
 	user.changeNext_move(CLICK_CD_RAPID)
 	if(iscarbon(target))
 		var/mob/living/carbon/H = target
-		H.reagents.add_reagent(/datum/reagent/toxin/histamine, 4)
+		H.reagents.add_reagent(/datum/reagent/toxin, 4)
 
 /obj/item/melee/beesword/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is stabbing [user.p_them()]self in the throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -385,9 +385,9 @@
 	item_flags = NONE
 	force = 5
 
-	cooldown = 30
-	stun_time_carbon = 85
-	affect_silicon = TRUE
+	cooldown = 20
+	stun_time_carbon = 85 
+	affect_silicon = TRUE 
 	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
 

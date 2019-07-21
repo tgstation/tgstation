@@ -257,6 +257,13 @@
 	..()
 	var/obj/item/card/id/agent_card = target
 	if(istype(agent_card))
+		var/obj/item/card/id/copied_card = picked_item
+		if(istype(copied_card))
+			agent_card.uses_overlays = copied_card.uses_overlays
+			agent_card.id_type_name = copied_card.id_type_name
+		else
+			agent_card.uses_overlays = FALSE
+			agent_card.id_type_name = copied_card.name
 		agent_card.update_label()
 
 /datum/action/item_action/chameleon/change/id/apply_job_data(datum/job/job_datum)

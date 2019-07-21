@@ -22444,7 +22444,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "bfP" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "bfY" = (
@@ -49001,7 +49001,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/science)
 "dmT" = (
-/obj/machinery/shieldwallgen/xenobiologyaccess,
+/obj/machinery/power/shieldwallgen/xenobiologyaccess,
 /obj/structure/sign/warning/electricshock{
 	pixel_x = 32
 	},
@@ -49201,7 +49201,7 @@
 /obj/structure/sign/warning{
 	pixel_y = -32
 	},
-/obj/machinery/shieldwallgen/xenobiologyaccess,
+/obj/machinery/power/shieldwallgen/xenobiologyaccess,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)

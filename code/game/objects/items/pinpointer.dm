@@ -17,6 +17,7 @@
 	var/active = FALSE
 	var/atom/movable/target //The thing we're searching for
 	var/minimum_range = 0 //at what range the pinpointer declares you to be at your destination
+	var/ignore_suit_sensor_level = FALSE // Do we find people even if their suit sensors are turned off
 	var/alert = FALSE // TRUE to display things more seriously
 
 /obj/item/pinpointer/Initialize()
@@ -81,6 +82,8 @@
 	desc = "A handheld tracking device that points to crew suit sensors."
 	icon_state = "pinpointer_crew"
 	custom_price = 150
+	var/has_owner = FALSE
+	var/pinpointer_owner = null
 
 /obj/item/pinpointer/crew/proc/trackable(mob/living/carbon/human/H)
 	var/turf/here = get_turf(src)
@@ -88,7 +91,7 @@
 		var/obj/item/clothing/under/U = H.w_uniform
 
 		// Suit sensors must be on maximum.
-		if(!U.has_sensor || U.sensor_mode < SENSOR_COORDS)
+		if(!U.has_sensor || (U.sensor_mode < SENSOR_COORDS && !ignore_suit_sensor_level))
 			return FALSE
 
 		var/turf/there = get_turf(H)
@@ -100,6 +103,13 @@
 	if(active)
 		toggle_on()
 		user.visible_message("<span class='notice'>[user] deactivates [user.p_their()] pinpointer.</span>", "<span class='notice'>You deactivate your pinpointer.</span>")
+		return
+
+	if (has_owner && !pinpointer_owner)
+		pinpointer_owner = user
+
+	if (pinpointer_owner && pinpointer_owner != user)
+		to_chat(user, "<span class='notice'>The pinpointer doesn't respond. It seems to only recognise its owner.</span>")
 		return
 
 	var/list/name_counts = list()

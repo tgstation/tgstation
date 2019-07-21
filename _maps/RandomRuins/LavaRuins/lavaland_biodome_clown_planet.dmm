@@ -966,8 +966,8 @@
 /turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
 "bT" = (
-/obj/item/slime_extract/rainbow,
 /obj/structure/table/glass,
+/obj/item/reagent_containers/spray/waterflower/superlube,
 /turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
 "bU" = (

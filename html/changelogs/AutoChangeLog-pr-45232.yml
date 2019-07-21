@@ -1,0 +1,5 @@
+author: "Dennok"
+delete-after: True
+changes: 
+  - bugfix: "lava rivers no more burn out to basalt."
+  - code_imp: "Now rivers generator can place a baseturf."
