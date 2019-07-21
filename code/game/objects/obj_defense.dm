@@ -54,8 +54,7 @@
 		return
 	..() //contents explosion
 	if(target == src)
-		obj_integrity = 0
-		qdel(src)
+		take_damage(INFINITY, BRUTE, "bomb", 0)
 		return
 	switch(severity)
 		if(1)
