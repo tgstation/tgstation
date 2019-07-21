@@ -27,7 +27,7 @@
 #define ROLE_BROTHER			"Blood Brother"
 #define ROLE_BRAINWASHED		"Brainwashed Victim"
 #define ROLE_OVERTHROW			"Syndicate Mutineer"
-#define ROLE_HIVE				"Hivemind Host"				//Role has been removed, this is kept for safety.
+#define ROLE_HIVE				"Hivemind Host"				////Role removed, left here for safety.
 #define ROLE_OBSESSED				"Obsessed"
 #define ROLE_SENTIENCE			"Sentience Potion Spawn"
 #define ROLE_MIND_TRANSFER		"Mind Transfer Potion"
