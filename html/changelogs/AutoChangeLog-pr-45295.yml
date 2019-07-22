@@ -1,0 +1,5 @@
+author: "Akrilla"
+delete-after: True
+changes: 
+  - rscadd: "Blood brothers have a HUD to see each other. They get little hearts, it's cute."
+  - code_imp: "Antag team HUD support."
