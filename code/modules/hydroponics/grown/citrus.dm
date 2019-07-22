@@ -36,7 +36,7 @@
 // Orange
 /obj/item/seeds/orange
 	name = "pack of orange seeds"
-	desc = "Sour seeds."
+	desc = "The seeds of a thousand nerfs."
 	icon_state = "seed-orange"
 	species = "orange"
 	plantname = "Orange Tree"
@@ -55,7 +55,7 @@
 /obj/item/reagent_containers/food/snacks/grown/citrus/orange
 	seed = /obj/item/seeds/orange
 	name = "orange"
-	desc = "It's a tangy fruit."
+	desc = "You can feel every object arround you getting weaker for some reason.."
 	icon_state = "orange"
 	filling_color = "#FFA500"
 	juice_results = list(/datum/reagent/consumable/orangejuice = 0)
