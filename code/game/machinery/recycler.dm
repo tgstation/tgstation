@@ -35,7 +35,7 @@
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.max_amount = mat_mod
 	amount_produced = min(50, amt_made) + 50
-	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering)
+	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering/recycler)
 	butchering.effectiveness = amount_produced
 	butchering.bonus_modifier = amount_produced/5
 
@@ -89,9 +89,6 @@
 	var/move_dir = get_dir(loc, AM.loc)
 	if(move_dir == eat_dir)
 		return TRUE
-
-/obj/machinery/recycler/Cross(atom/movable/AM)
-	. = ..()
 
 /obj/machinery/recycler/Crossed(atom/movable/AM)
 	eat(AM)

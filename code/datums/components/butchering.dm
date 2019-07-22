@@ -19,7 +19,7 @@
 		butchering_enabled = FALSE
 	if(_can_be_blunt)
 		can_be_blunt = _can_be_blunt
-	if(isitem(parent)) //Recyclers use butchering in really ugly ways.
+	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/onItemAttack)
 
 /datum/component/butchering/proc/onItemAttack(obj/item/source, mob/living/M, mob/living/user)
@@ -68,14 +68,22 @@
 /datum/component/butchering/proc/ButcherEffects(mob/living/meat) //extra effects called on butchering, override this via subtypes
 	return
 
+///Special snowflake component only used for the recycler.
 /datum/component/butchering/recycler
 
 /datum/component/butchering/recycler/Initialize(_speed, _effectiveness, _bonus_modifier, _butcher_sound, disabled, _can_be_blunt)
+	if(!istype(parent, /obj/machinery/recycler) //EWWW
+		return COMPONENT_INCOMPATABLE
 	. = ..()
+	if(. == COMPONENT_INCOMPATABLE)
+		return
 	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/onCrossed)
 
 /datum/component/butchering/recycler/proc/onCrossed(datum/source, mob/living/L)
 	if(!istype(L))
+		return
+	var/obj/machinery/recycler/eater = parent
+	if(eater.safetymode || (stat & (BROKEN|NOPOWER)))
 		return
 	if(L.stat == DEAD && (L.butcher_results || L.guaranteed_butcher_results))
 		Butcher(src, L)
