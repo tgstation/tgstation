@@ -142,6 +142,26 @@
 	desc = "A rapid way to get you out of a tight situation and fast! You'll feel rather drowsy, though."
 	list_reagents = list(/datum/reagent/medicine/morphine = 10)
 
+/obj/item/reagent_containers/hypospray/medipen/oxandrolone
+	name = "oxandrolone medipen"
+	desc = "A autoinjector containing oxandrolone, used to treat severe burns."
+	list_reagents = list(/datum/reagent/medicine/oxandrolone = 10)
+
+/obj/item/reagent_containers/hypospray/medipen/penacid
+	name = "pentetic acid medipen"
+	desc = "A autoinjector containing pentetic acid, used to reduce high levels of radiations and moderate toxins."
+	list_reagents = list(/datum/reagent/medicine/pen_acid = 10)
+
+/obj/item/reagent_containers/hypospray/medipen/salacid
+	name = "salicyclic acid medipen"
+	desc = "A autoinjector containing salicyclic acid, used to treat severe brute damage."
+	list_reagents = list(/datum/reagent/medicine/sal_acid = 10)
+
+/obj/item/reagent_containers/hypospray/medipen/salbutamol
+	name = "salbutamol medipen"
+	desc = "A autoinjector containing salbutamol, used to heal oxygen damage quickly."
+	list_reagents = list(/datum/reagent/medicine/salbutamol = 10)
+
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure
 	name = "BVAK autoinjector"
 	desc = "Bio Virus Antidote Kit autoinjector. Has a two use system for yourself, and someone else. Inject when infected."
