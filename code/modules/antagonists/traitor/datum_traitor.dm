@@ -446,7 +446,7 @@
 
 	if (contractor_hub.purchased_items.len)
 		result += contractor_item_icons
-		result += "<br>(Used [total_spent_rep] Rep)"
+		result += "<br>(used [total_spent_rep] Rep)"
 	result += "<br>"
 	if (completed_contracts > 0)
 		var/pluralCheck = "contract"
