@@ -28,7 +28,7 @@
 	if(M.flash_act(affect_silicon = 1))
 		M.Paralyze(max(200/max(1,distance), 60))
 //Bang
-	if(!distance || loc == M || loc == M.loc)	//Stop allahu akbarring rooms with this.
+	if(distance <= 1 || loc == M || loc == M.loc)	//Stop allahu akbarring rooms with this.
 		M.Paralyze(200)
 		M.soundbang_act(1, 200, 10, 15)
 
