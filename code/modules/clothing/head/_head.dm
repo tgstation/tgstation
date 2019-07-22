@@ -7,7 +7,6 @@
 	slot_flags = ITEM_SLOT_HEAD
 	var/blockTracking = 0 //For AI tracking
 	var/can_toggle = null
-	///Some hats have negative properties once equipped, having this set to TRUE means the hat will never successfully replace a hat or equip itself via hat-throwing.
 	dynamic_hair_suffix = "+generic"
 
 /obj/item/clothing/head/Initialize()
@@ -25,6 +24,9 @@
 	///ignore any hats with the tinfoil counter-measure enabled
 	if(clothing_flags & ANTI_TINFOIL_MANEUVER)
 		return
+	///if the hat happens to be capable of holding contents and has something in it. mostly to prevent super cheesy stuff like stuffing a mini-bomb in a hat and throwing it
+	if(LAZYLEN(contents))
+		return	
 	if(iscarbon(hit_atom))
 		var/mob/living/carbon/H = hit_atom
 		if(istype(H.head, /obj/item))
