@@ -83,7 +83,8 @@
 		msg += "<span class='nicegreen'>I don't have much of a reaction to anything right now.<span>\n"
 	to_chat(user || parent, msg)
 
-/datum/component/mood/proc/update_mood() //Called whenever a mood event is added or removed
+///Called after moodevent/s have been added/removed.
+/datum/component/mood/proc/update_mood()
 	mood = 0
 	shown_mood = 0
 	for(var/i in mood_events)
@@ -281,14 +282,14 @@
 	qdel(event)
 	update_mood()
 
-/datum/component/mood/proc/remove_temp_moods(var/admin) //Removes all temp moods
+/datum/component/mood/proc/remove_temp_moods() //Removes all temp moods
 	for(var/i in mood_events)
 		var/datum/mood_event/moodlet = mood_events[i]
 		if(!moodlet || !moodlet.timeout)
 			continue
 		mood_events -= moodlet.category
 		qdel(moodlet)
-		update_mood()
+	update_mood()
 
 
 /datum/component/mood/proc/modify_hud(datum/source)
@@ -357,7 +358,9 @@
 	else
 		clear_event(null, "area")
 
+///Called when parent is ahealed.
 /datum/component/mood/proc/on_revive(datum/source, full_heal)
+	remove_temp_moods()
 	if(!full_heal)
 		return
 	setSanity(initial(sanity))

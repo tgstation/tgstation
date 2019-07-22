@@ -562,9 +562,6 @@
 	stuttering = 0
 	slurring = 0
 	jitteriness = 0
-	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
-	if (mood)
-		mood.remove_temp_moods(admin_revive)
 	update_mobility()
 	stop_sound_channel(CHANNEL_HEARTBEAT)
 
