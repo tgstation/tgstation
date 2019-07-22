@@ -220,7 +220,6 @@
 
 		// Limbs? (And I have no other healing)
 		if (amInCoffinWhileTorpor)
-			message_admins("TXX: In Coffin In Torpor  [amInCoffinWhileTorpor]")
 
 			// Heal Missing
 			var/list/missing = owner.current.get_missing_limbs()
