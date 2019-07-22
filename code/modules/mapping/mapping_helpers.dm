@@ -18,7 +18,7 @@
 
 /obj/effect/baseturf_helper/LateInitialize()
 	if(!baseturf_to_replace)
-		baseturf_to_replace = typecacheof(list(/turf/open/space,/turf/baseturf_bottom)) 
+		baseturf_to_replace = typecacheof(list(/turf/open/space,/turf/baseturf_bottom))
 	else if(!length(baseturf_to_replace))
 		baseturf_to_replace = list(baseturf_to_replace = TRUE)
 	else if(baseturf_to_replace[baseturf_to_replace[1]] != TRUE) // It's not associative
@@ -230,3 +230,56 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 				qdel(part)
 		j.update_icon()
 	qdel(src)
+
+
+//On Ian's birthday, the hop's office is decorated.
+/obj/effect/mapping_helpers/ianbirthday
+	name = "Ian's Bday Helper"
+	late = TRUE
+	icon_state = "iansbdayhelper"
+	var/balloon_clusters = 2
+	var/delete_after = FALSE
+
+/obj/effect/mapping_helpers/ianbirthday/LateInitialize()
+	if(locate(/datum/holiday/ianbirthday) in SSevents.holidays)
+		birthday()
+	if(delete_after)
+		return
+	qdel(src)
+
+/obj/effect/mapping_helpers/ianbirthday/proc/birthday()
+	var/area/a = get_area(src)
+	var/list/tables = list()
+	var/list/openturfs = list()
+
+	for(var/thing in a.contents)
+		if(istype(thing, /obj/structure/table))
+			tables += thing
+		if(isopenturf(thing))
+			openturfs += thing
+
+	//cake!
+	var/obj/item/reagent_containers/food/snacks/store/cake/birthday/iancake = new(get_turf(pick(tables))
+	iancake.desc = "Happy birthday, Ian!"
+	//some balloons! this picks an open turf and pops a few balloons in and around that turf, yay.
+	for(var/i in 1 to balloon_clusters)
+		var/turf/clusterspot = pick_n_take(openturfs)
+		new /obj/item/toy/balloon(clusterspot)
+		var/balloons_left_to_give = 2 //the amount of balloons around the cluster
+		var/list/dirs_to_balloon = GLOB.alldirs.Copy()
+		while(balloons_left_to_give > 0)
+			if(!dirs_to_balloon.len)
+				for(var/ii in 1 to balloons_left_to_give)
+					new /obj/item/toy/balloon(clusterspot)
+			var/turf/balloonstep = get_step(clusterspot, pick_n_take(dirs_to_balloon))
+			if(isopenturf(balloonstep))
+				new /obj/item/toy/balloon(balloonstep)
+				balloons_left_to_give--
+	//remind me to add confetti and wall decor!
+	if(!delete_after)
+		qdel(src)
+
+/obj/effect/mapping_helpers/ianbirthday/admin//so they may birthday any room
+	name = "generic birthday setup"
+	icon_state = "bdayhelper"
+	delete_after = TRUE
