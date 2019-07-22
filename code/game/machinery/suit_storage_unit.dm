@@ -13,26 +13,37 @@
 	var/obj/item/storage = null
 								// if you add more storage slots, update cook() to clear their radiation too.
 
-	var/suit_type = null //! What type of spacesuit the unit starts with when spawned.
-	var/helmet_type = null //! What type of space helmet the unit starts with when spawned.
-	var/mask_type = null //! What type of breathmask the unit starts with when spawned.
-	var/storage_type = null //! What type of additional item the unit starts with when spawned.
+	/// What type of spacesuit the unit starts with when spawned.
+	var/suit_type = null
+	/// What type of space helmet the unit starts with when spawned.
+	var/helmet_type = null
+	/// What type of breathmask the unit starts with when spawned.
+	var/mask_type = null
+	/// What type of additional item the unit starts with when spawned.
+	var/storage_type = null
 
 	state_open = FALSE
-	var/locked = FALSE //! If the SSU's doors are locked closed. Can be toggled manually via the UI, but is also locked automatically when the UV decontamination sequence is running.
+	/// If the SSU's doors are locked closed. Can be toggled manually via the UI, but is also locked automatically when the UV decontamination sequence is running.
+	var/locked = FALSE
 	panel_open = FALSE
-	var/safeties = TRUE //! If safety wire is cut/pulsed, the SSU can run the decontamination sequence while occupied by a mob. The mob will be burned during every cycle of cook().
+	/// If the safety wire is cut/pulsed, the SSU can run the decontamination sequence while occupied by a mob. The mob will be burned during every cycle of cook().
+	var/safeties = TRUE
 
-	var/uv = FALSE //! If UV decontamination sequence is running. See cook()
-	var/uv_super = FALSE /*!
-							* If the SSU's hack wire is cut/pulsed.
-							* Modifies effects of cook()
-							* * If FALSE, decontamination sequence will clear radiation for all atoms (and their contents) contained inside the unit, and burn any mobs inside.
-							* * If TRUE, decontamination sequence will delete all items contained within, and if occupied by a mob, intensifies burn damage delt. All wires will be cut at the end.
-							*/
-	var/uv_cycles = 6 //! How many cycles remain for the decontamination sequence.
-	var/message_cooldown //! Cooldown for occupant breakout messages via relaymove()
-	var/breakout_time = 300 //! How long it takes to break out of the SSU.
+	/// If UV decontamination sequence is running. See cook()
+	var/uv = FALSE
+	/**
+	* If the hack wire is cut/pulsed.
+	* Modifies effects of cook()
+	* * If FALSE, decontamination sequence will clear radiation for all atoms (and their contents) contained inside the unit, and burn any mobs inside.
+	* * If TRUE, decontamination sequence will delete all items contained within, and if occupied by a mob, intensifies burn damage delt. All wires will be cut at the end.
+	*/
+	var/uv_super = FALSE
+	/// How many cycles remain for the decontamination sequence.
+	var/uv_cycles = 6
+	/// Cooldown for occupant breakout messages via relaymove()
+	var/message_cooldown
+	/// How long it takes to break out of the SSU.
+	var/breakout_time = 300
 
 /obj/machinery/suit_storage_unit/standard_unit
 	suit_type = /obj/item/clothing/suit/space/eva
