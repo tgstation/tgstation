@@ -110,13 +110,14 @@
 	else if(I == active_held)
 		user.put_in_active_hand(I)
 
-
 /// Proc specifically for inserting items, returns the amount of materials entered.
-/datum/component/material_container/proc/insert_item(obj/item/I, multiplier = 1, stack_amt)
+/datum/component/material_container/proc/insert_item(obj/item/I, var/multiplier = 1, stack_amt)
 	if(!I)
 		return FALSE
 	if(istype(I, /obj/item/stack))
 		return insert_stack(I, stack_amt, multiplier)
+
+	multiplier = CEILING(multiplier, 0.01)
 
 	var/material_amount = get_item_material_amount(I)
 	if(!material_amount || !has_space(material_amount))

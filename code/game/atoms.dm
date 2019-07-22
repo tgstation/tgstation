@@ -1098,7 +1098,7 @@
 	return FALSE
 
 ///Sets the custom materials for an item.
-/atom/proc/set_custom_materials(var/list/materials)
+/atom/proc/set_custom_materials(var/list/materials, multiplier = 1)
 	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
 		for(var/i in custom_materials)
 			var/datum/material/custom_material = i
@@ -1109,5 +1109,5 @@
 	for(var/x in materials)
 		var/datum/material/custom_material = x
 
-		custom_material.on_applied(src, materials[custom_material], material_flags)
-		custom_materials[custom_material] += materials[custom_material]
+		custom_material.on_applied(src, materials[custom_material] * multiplier, material_flags)
+		custom_materials[custom_material] += materials[custom_material] * multiplier

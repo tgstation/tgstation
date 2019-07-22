@@ -84,10 +84,12 @@
 	. = ..()
 	if(ismovableatom(source))
 		source.AddElement(/datum/element/firestacker)
+		source.AddComponent(/datum/component/explodable, 0, 0, amount / 1000, amount / 500)
 
 /datum/material/plasma/on_removed(atom/source, material_flags)
 	. = ..()
 	source.RemoveElement(/datum/element/firestacker)
+	qdel(source.GetComponent(/datum/component/explodable))
 
 ///Can cause bluespace effects on use. (Teleportation)
 /datum/material/bluespace
