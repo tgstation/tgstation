@@ -57,8 +57,8 @@
 // Or autotator someone
 
 // IMPORTANT, since /datum/dynamic_ruleset/midround may accept candidates from both living, dead, and even antag players, you need to manually check whether there are enough candidates
-// (see /datum/dynamic_ruleset/midround/autotraitor/ready(var/forced = 0) for example)
-/datum/dynamic_ruleset/midround/ready(forced = 0)
+// (see /datum/dynamic_ruleset/midround/autotraitor/ready(var/forced = FALSE) for example)
+/datum/dynamic_ruleset/midround/ready(forced = FALSE)
 	if (!forced)
 		var/job_check = 0
 		if (enemy_roles.len > 0)
@@ -105,7 +105,8 @@
 /// Here is where you can check if your ghost applicants are valid for the ruleset.
 /// Called by send_applications().
 /datum/dynamic_ruleset/midround/from_ghosts/proc/review_applications()
-	for (var/i = 1, i < required_candidates, i++)
+	for (var/i = 1, i <= required_candidates, i++)
+		message_admins("yesp")
 		if(applicants.len <= 0)
 			if(i == 1)
 				// We have found no candidates so far and we are out of applicants.
@@ -129,7 +130,7 @@
 			continue
 		message_admins("DEBUG: Selected [applicant] for rule.")
 
-		var/mob/living/carbon/human/new_character = applicant
+		var/mob/new_character = applicant
 
 		if (makeBody)
 			new_character = generate_ruleset_body(applicant)
@@ -193,7 +194,7 @@
 		if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
 			living_players -= player // We don't autotator people with roles already
 
-/datum/dynamic_ruleset/midround/autotraitor/ready(forced = 0)
+/datum/dynamic_ruleset/midround/autotraitor/ready(forced = FALSE)
 	if (required_candidates > living_players.len)
 		return FALSE
 	return ..()
@@ -277,7 +278,7 @@
 	high_population_requirement = 50
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = 0)
+/datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
 	if (required_candidates > (dead_players.len + list_observers.len))
 		return FALSE
 	if(GLOB.wizardstart.len == 0)
@@ -318,7 +319,7 @@
 	required_candidates = operative_cap[indice_pop]
 	return ..()
 
-/datum/dynamic_ruleset/midround/from_ghosts/nuclear/ready(forced = 0)
+/datum/dynamic_ruleset/midround/from_ghosts/nuclear/ready(forced = FALSE)
 	if (required_candidates > (dead_players.len + list_observers.len))
 		return FALSE
 	return ..()
@@ -332,3 +333,26 @@
 		new_character.mind.add_antag_datum(new_role)
 	else
 		return ..()
+
+//////////////////////////////////////////////
+//                                          //
+//              BLOB (GHOST)                //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/midround/from_ghosts/blob
+	name = "Blob"
+	antag_datum = /datum/antagonist/blob
+	antag_flag = ROLE_BLOB
+	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_candidates = 1
+	weight = 1
+	cost = 10
+	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	high_population_requirement = 50
+	repeatable = TRUE
+	makeBody = FALSE
+
+/datum/dynamic_ruleset/midround/from_ghosts/blob/finish_setup(mob/new_character, index)
+	new_character.become_overmind()
