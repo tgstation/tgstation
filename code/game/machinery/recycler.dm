@@ -19,7 +19,7 @@
 
 /obj/machinery/recycler/Initialize()
 	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE, MAT_PLASTIC), INFINITY, FALSE, null, null, null, TRUE)
-	AddComponent(/datum/component/butchering, 1, amount_produced,amount_produced/5)
+	AddComponent(/datum/component/butchering/recycler, 1, amount_produced,amount_produced/5)
 	. = ..()
 	update_icon()
 	req_one_access = get_all_accesses() + get_all_centcom_access()
@@ -82,20 +82,27 @@
 		is_powered = FALSE
 	icon_state = icon_name + "[is_powered]" + "[(blood ? "bld" : "")]" // add the blood tag at the end
 
-/obj/machinery/recycler/Bumped(atom/movable/AM)
-
-	if(stat & (BROKEN|NOPOWER))
-		return
+/obj/machinery/recycler/CanPass(atom/movable/AM)
+	. = ..()
 	if(!anchored)
+		return
+	var/move_dir = get_dir(loc, AM.loc)
+	if(move_dir == eat_dir)
+		return TRUE
+
+/obj/machinery/recycler/Cross(atom/movable/AM)
+	. = ..()
+
+/obj/machinery/recycler/Crossed(atom/movable/AM)
+	eat(AM)
+	. = ..()
+
+/obj/machinery/recycler/proc/eat(atom/AM0, sound=TRUE)
+	if(stat & (BROKEN|NOPOWER))
 		return
 	if(safety_mode)
 		return
 
-	var/move_dir = get_dir(loc, AM.loc)
-	if(move_dir == eat_dir)
-		eat(AM)
-
-/obj/machinery/recycler/proc/eat(atom/AM0, sound=TRUE)
 	var/list/to_eat
 	if(istype(AM0, /obj/item))
 		to_eat = AM0.GetAllContents()
@@ -188,9 +195,6 @@
 	// Instantly lie down, also go unconscious from the pain, before you die.
 	L.Unconscious(100)
 	L.adjustBruteLoss(crush_damage)
-	if(L.stat == DEAD && (L.butcher_results || L.guaranteed_butcher_results))
-		var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering)
-		butchering.Butcher(src,L)
 
 /obj/machinery/recycler/deathtrap
 	name = "dangerous old crusher"
