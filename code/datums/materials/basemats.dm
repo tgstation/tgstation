@@ -91,7 +91,7 @@
 	source.RemoveElement(/datum/element/firestacker)
 	qdel(source.GetComponent(/datum/component/explodable))
 
-///Can cause bluespace effects on use. (Teleportation)
+///Can cause bluespace effects on use. (Teleportation) (Not yet implemented)
 /datum/material/bluespace
 	name = "bluespace crystal"
 	id = "bluespace_crystal"
@@ -140,7 +140,7 @@
 	strength_modifier = 0.85
 	sheet_type = /obj/item/stack/sheet/plastic
 
-///Force decrease and mushy sound effect.
+///Force decrease and mushy sound effect. (Not yet implemented)
 /datum/material/biomass
 	name = "biomass"
 	id = "biomass"

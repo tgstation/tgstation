@@ -44,7 +44,7 @@
 		ore_pickup_rate_temp = 15 * M.rating
 
 	ore_pickup_rate = ore_pickup_rate_temp
-	sheet_per_ore = sheet_per_ore_temp
+	sheet_per_ore = round(sheet_per_ore_temp, 0.01)
 
 /obj/machinery/mineral/ore_redemption/examine(mob/user)
 	. = ..()
