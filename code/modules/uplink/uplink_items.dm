@@ -1677,7 +1677,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			are very sensitive. Now with our included lube defense mechanism which will protect you against any angry shitcurity! \
 			Premium features can be unlocked with a cryptographic sequencer!"
 	item = /obj/vehicle/sealed/car/clowncar
-	cost = 20
+	cost = 15
 	restricted_roles = list("Clown")
 
 /datum/uplink_item/role_restricted/concealed_weapon_bay
