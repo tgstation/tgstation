@@ -1,5 +1,0 @@
-author: "Chen Yakumo"
-delete-after: True
-changes: 
-  - balance: "The stealth implant box is now flimsier than it was before."
-  - bugfix: "You can no longer zoom around in a box by hugging walls."
