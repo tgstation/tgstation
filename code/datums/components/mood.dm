@@ -360,9 +360,9 @@
 
 ///Called when parent is ahealed.
 /datum/component/mood/proc/on_revive(datum/source, full_heal)
-	remove_temp_moods()
 	if(!full_heal)
 		return
+	remove_temp_moods()
 	setSanity(initial(sanity))
 
 #undef MINOR_INSANITY_PEN
