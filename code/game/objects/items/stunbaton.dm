@@ -187,7 +187,7 @@
 
 /// After the initial stun period, we check to see if the target needs to have the stun applied.
 /obj/item/melee/baton/proc/apply_stun_effect_end(mob/living/target)
-	if(target.reagents.has_reagent(resistance_chem, 3, TRUE))
+	if(target.reagents.has_reagent(resistance_chem, 5, TRUE))
 		return
 	target.Paralyze(stunforce)
 
