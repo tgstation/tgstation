@@ -1454,7 +1454,7 @@
 	. = 1
 
 /datum/reagent/medicine/frogenite/overdose_process(mob/living/M)
-	M.adjustOxyLoss(40,0)
+	M.adjustOxyLoss(15,0)
 	M.reagents.remove_reagent(type, metabolization_rate*10) // Reused code from syndicate nanites meant to purge the chem quickly.
 	to_chat(M, "<span class='notice'>You feel like you aren't getting any oxygen!</span>")
 	..()
@@ -1486,7 +1486,7 @@
 	. = 1
 
 /datum/reagent/medicine/ferveatium/overdose_process(mob/living/M)
-	M.adjustFireLoss(40,0)
+	M.adjustFireLoss(15,0)
 	M.reagents.remove_reagent(type, metabolization_rate*10) // Reused code from syndicate nanites meant to purge the chem quickly.
 	to_chat(M, "<span class='notice'>You feel like you are melting!</span>")
 	..()
