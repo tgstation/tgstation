@@ -55,7 +55,6 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	var/threat = 0 
 	/// Running information about the threat. Can store text or datum entries.
 	var/list/threat_log = list() 
-
 	/// List of roundstart rules used for selecting the rules.
 	var/list/roundstart_rules = list()
 	/// List of latejoin rules used for selecting the rules.
@@ -83,26 +82,24 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	var/list/executed_rules = list()
 	/// Associative list of current players, in order: living players, living antagonists, dead players and observers.
 	var/list/list/current_players = list(CURRENT_LIVING_PLAYERS, CURRENT_LIVING_ANTAGS, CURRENT_DEAD_PLAYERS, CURRENT_OBSERVERS)
-
 	/// When world.time is over this number the mode tries to inject a latejoin ruleset.
 	var/latejoin_injection_cooldown = 0
 	/// When world.time is over this number the mode tries to inject a midround ruleset.
 	var/midround_injection_cooldown = 0
 	/// When TRUE GetInjectionChance returns 100.
 	var/forced_injection = FALSE
-
 	/// Forced ruleset to be executed for the next latejoin.
 	var/datum/dynamic_ruleset/latejoin/forced_latejoin_rule = null
-
 	/// When current_players was updated last time.
 	var/pop_last_updated = 0
 	/// How many percent of the rounds are more peaceful.
 	var/peaceful_percentage = 50
 
-/datum/game_mode/dynamic/AdminPanel()
+/datum/game_mode/dynamic/admin_panel()
 	var/list/dat = list("<html><head><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
 	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</A><BR>"
 	dat += "Threat Level: <b>[threat_level]</b><br/>"
+
 	dat += "Threat to Spend: <b>[threat]</b> <a href='?src=\ref[src];[HrefToken()];adjustthreat=1'>\[Adjust\]</A> <a href='?src=\ref[src];[HrefToken()];threatlog=1'>\[View Log\]</a><br/>"
 	dat += "<br/>"
 	dat += "Parameters: centre = [GLOB.dynamic_curve_centre] ; width = [GLOB.dynamic_curve_width].<br/>"
@@ -119,7 +116,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			dat += "[DR.ruletype] - <b>[DR.name]</b><br>"
 	else
 		dat += "none.<br>"
-	dat += "<br>Injection Timers: (<b>[GetInjectionChance(TRUE)]%</b> chance)<BR>"
+	dat += "<br>Injection Timers: (<b>[get_injection_chance(TRUE)]%</b> chance)<BR>"
 	dat += "Latejoin: [latejoin_injection_cooldown>60*10 ? "[round(latejoin_injection_cooldown/60/10,0.1)] minutes" : "[latejoin_injection_cooldown] seconds"] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
 	dat += "Midround: [midround_injection_cooldown>60*10 ? "[round(midround_injection_cooldown/60/10,0.1)] minutes" : "[midround_injection_cooldown] seconds"] <a href='?src=\ref[src];[HrefToken()];injectmid=2'>\[Now!\]</a><BR>"
 	usr << browse(dat.Join(), "window=gamemode_panel;size=500x500")
@@ -156,7 +153,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	else if (href_list["stacking_limit"])
 		GLOB.dynamic_stacking_limit = input(usr,"Change the threat limit at which round-endings rulesets will start to stack.", "Change stacking limit", null) as num
 	
-	AdminPanel() // Refreshes the window
+	admin_panel() // Refreshes the window
 
 // Checks if there are HIGHLANDER_RULESETs and calls the rule's round_result() proc
 /datum/game_mode/dynamic/set_round_result()
@@ -246,7 +243,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 /// Generates the threat level using lorentz distribution and assigns peaceful_percentage.
 /datum/game_mode/dynamic/proc/generate_threat()
 	var/relative_threat = LORENTZ_DISTRIBUTION(GLOB.dynamic_curve_centre, GLOB.dynamic_curve_width)
-	threat_level = round(lorentz2threat(relative_threat), 0.1)
+	threat_level = round(lorentz_to_threat(relative_threat), 0.1)
 
 	peaceful_percentage = round(LORENTZ_CUMULATIVE_DISTRIBUTION(relative_threat, GLOB.dynamic_curve_centre, GLOB.dynamic_curve_width), 0.01)*100
 
@@ -513,7 +510,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 
 		update_playercounts()
 
-		if (prob(GetInjectionChance()))
+		if (prob(get_injection_chance()))
 			var/list/drafted_rules = list()
 			for (var/datum/dynamic_ruleset/midround/rule in midround_rules)
 				if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len,threat_level) && threat >= rule.cost)
@@ -557,7 +554,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			current_players[CURRENT_DEAD_PLAYERS].Add(M) // Players who actually died (and admins who ghosted, would be nice to avoid counting them somehow)
 
 /// Gets the chance for latejoin and midround injection, the dry_run argument is only used for forced injection.
-/datum/game_mode/dynamic/proc/GetInjectionChance(dry_run = FALSE)
+/datum/game_mode/dynamic/proc/get_injection_chance(dry_run = FALSE)
 	if(forced_injection)
 		forced_injection = !dry_run
 		return 100
@@ -604,7 +601,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			picking_latejoin_rule(list(forced_latejoin_rule))
 		forced_latejoin_rule = null
 
-	else if (latejoin_injection_cooldown < world.time && prob(GetInjectionChance()))
+	else if (latejoin_injection_cooldown < world.time && prob(get_injection_chance()))
 		var/list/drafted_rules = list()
 		for (var/datum/dynamic_ruleset/latejoin/rule in latejoin_rules)
 			if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len,threat_level) && threat >= rule.cost)
@@ -646,7 +643,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 			return TRUE
 
 /// Turns the value generated by lorentz distribution to threat value between 0 and 100.
-/datum/game_mode/dynamic/proc/lorentz2threat(x)
+/datum/game_mode/dynamic/proc/lorentz_to_threat(x)
 	switch (x)
 		if (-INFINITY to -20)
 			return rand(0, 10)

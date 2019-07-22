@@ -591,43 +591,6 @@
 
 //////////////////////////////////////////////
 //                                          //
-//               OVERTHROW                  //
-//                                          //
-//////////////////////////////////////////////
-
-/datum/dynamic_ruleset/roundstart/overthrow
-	name = "Overthrow"
-	antag_flag = ROLE_OVERTHROW
-	antag_datum = /datum/antagonist/overthrow
-	restricted_roles = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
-	required_candidates = 2
-	weight = 3
-	cost = 0
-	requirements = list(101,101,101,101,101,101,101,101,101,101)
-	high_population_requirement = 101
-	flags = HIGHLANDER_RULESET	
-	var/agent_cap = list(4,4,3,3,3,2,2,1,1,0)
-
-/datum/dynamic_ruleset/roundstart/overthrow/pre_execute()
-	var/sleeping_agents = agent_cap[round(mode.threat_level/10)] + round(num_players()*0.05)
-
-	for (var/i in 1 to sleeping_agents)
-		var/mob/sleeping_agent = pick(candidates)
-		candidates -= sleeping_agent
-		assigned += sleeping_agent.mind
-		sleeping_agent.mind.restricted_roles = restricted_roles
-		sleeping_agent.mind.special_role = ROLE_OVERTHROW
-	return TRUE
-
-/datum/dynamic_ruleset/roundstart/overthrow/execute()
-	for(var/i in assigned)
-		var/mob/agent = i
-		var/datum/antagonist/overthrow/O = agent.mind.add_antag_datum(antag_datum)
-		O.equip_initial_overthrow_agent()
-	return TRUE
-
-//////////////////////////////////////////////
-//                                          //
 //               CLOWN OPS                  //
 //                                          //
 //////////////////////////////////////////////
