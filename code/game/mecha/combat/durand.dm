@@ -18,12 +18,13 @@
 	shield.chassis = src
 	shield.layer = layer
 	RegisterSignal(src, COMSIG_MECHA_ACTION_ACTIVATE, .proc/relay)
-//	RegisterSignal(src, COMSIG_PROJECTILE_PREHIT, .proc/prehit)
+	RegisterSignal(src, COMSIG_PROJECTILE_PREHIT, .proc/prehit)
 	. = ..()
 
 /obj/mecha/combat/durand/Destroy()
 	. = ..()
-	qdel(shield)
+	if(shield)
+		qdel(shield)
 
 /obj/mecha/combat/durand/GrantActions(mob/living/user, human_occupant = 0)
 	..()
@@ -59,15 +60,15 @@
 		return
 	SEND_SIGNAL(shield, COMSIG_MECHA_ACTION_ACTIVATE, source, signal_args)
 
-///obj/mecha/combat/durand/proc/prehit(obj/item/projectile/source, list/signal_args)
-//	if(defence_check(source.loc))
-//		signal_args[2] = shield
+/obj/mecha/combat/durand/proc/prehit(obj/item/projectile/source, list/signal_args)
+	if(defence_check(source.loc) && shield)
+		signal_args[2] = shield
 
 
 /**Checks if defense mode is enabled, and if the attacker is standing in an area covered by the shield.
 Expects a turf. Returns true if the attack should be blocked, false if not.*/
 /obj/mecha/combat/durand/proc/defence_check(var/turf/aloc)
-	if (!defence_mode || shield.switching)
+	if (!defence_mode || !shield || shield.switching)
 		return FALSE
 	var/blocked = FALSE
 	switch(dir)
@@ -102,15 +103,6 @@ obj/mecha/combat/durand/attack_generic(mob/user, damage_amount = 0, damage_type 
 	else
 		. = ..()
 
-/obj/mecha/combat/durand/bullet_act(obj/item/projectile/Proj)
-	if(defence_check(Proj.loc))
-		log_message("Hit by projectile. Type: [Proj.name]([Proj.flag]).", LOG_MECHA, color="red")
-		log_message("Attack absorbed by defence field.", LOG_MECHA, color="orange")
-		Proj.hitsound = 'sound/mecha/mech_shield_deflect.ogg'
-		shield.bullet_act(Proj)
-	else
-		. = ..()
-
 /obj/mecha/combat/durand/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(defence_check(user.loc))
 		log_message("Attack absorbed by defence field. Attacker - [user], with [W]", LOG_MECHA, color="orange")
@@ -139,6 +131,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	name = "defence grid"
 	icon = 'icons/mecha/durand_shield.dmi'
 	icon_state = "shield_null"
+	invisibility = INVISIBILITY_MAXIMUM
 	pixel_y = 4
 	max_integrity = 10000
 	obj_integrity = 10000
@@ -165,15 +158,19 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	chassis.defense_action.UpdateButtonIcon()
 
 	if(chassis.defence_mode)
-		flick("shield_deploy", src)
+		invisibility = INVISIBILITY_MAXIMUM
+		flick("shield_raise", src)
+		playsound(src, 'sound/mecha/mech_shield_raise.ogg', 50, FALSE)
 		set_light(l_range = MINIMUM_USEFUL_LIGHT_RANGE	, l_power = 5, l_color = "#00FFFF")
 		sleep(3)
 		icon_state = "shield"
 	else
 		flick("shield_drop", src)
+		playsound(src, 'sound/mecha/mech_shield_drop.ogg', 50, FALSE)
 		sleep(5)
 		set_light(0)
 		icon_state = "shield_null"
+		invisibility = 26 //no showing on right-click
 	switching = FALSE
 
 /obj/durand_shield/take_damage()
@@ -181,6 +178,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 		qdel(src)
 		return
 	. = ..()
+	flick("shield_impact", src)
 	if(!chassis.use_power((max_integrity - obj_integrity) * 100))
 		chassis.cell?.charge = 0
 		chassis.defense_action.Activate(forced_state = TRUE)
@@ -188,6 +186,10 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 
 /obj/durand_shield/play_attack_sound()
 	playsound(src, 'sound/mecha/mech_shield_deflect.ogg', 100, 1)
+
+/obj/durand_shield/bullet_act()
+	play_attack_sound()
+	. = ..()
 
 /datum/action/innate/mecha/mech_defence_mode
 	name = "Toggle an energy shield that blocks all attacks from the faced direction at a heavy power cost."
