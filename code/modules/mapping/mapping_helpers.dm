@@ -251,10 +251,12 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/list/openturfs = list()
 	var/list/denseopenturfs = list()
 
+	//confetti! (and some list stuff for more decorations)
 	for(var/thing in a.contents)
 		if(istype(thing, /obj/structure/table/reinforced))
 			table += thing
 		if(isopenturf(thing))
+			new /obj/effect/decal/cleanable/confetti(thing)
 			openturfs += thing
 			for(var/i in thing)
 				if(anchored)//this is an atom movable var but we're searching in the turf so this should be alright
@@ -288,9 +290,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 			if(!placed)
 				new /obj/item/toy/balloon(clusterspot)
-	//remind me to add confetti and wall decor!
-	for(var/T in denseopenturfs)
-		new /obj/effect/decal/cleanable/confetti(T)
+	//remind me to add wall decor!
 
 /obj/effect/mapping_helpers/ianbirthday/admin//so admins may birthday any room
 	name = "generic birthday setup"

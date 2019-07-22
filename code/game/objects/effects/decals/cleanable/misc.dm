@@ -203,16 +203,7 @@
 
 /obj/effect/decal/cleanable/confetti
 	name = "confetti"
-	desc = "Tiny bits of colored paper thrown about for the janitor!"
-	smooth = SMOOTH_MORE
-	icon = 'icons/effects/confettidecor.dmi'
-	canSmoothWith = list(/turf/closed/wall, /obj/structure/falsewall)
-
-/obj/effect/decal/cleanable/confetti/Initialize()
-	. = ..()
-	queue_smooth(src)
-	queue_smooth_neighbors(src)
-
-/obj/effect/decal/cleanable/confetti/Destroy()
-	queue_smooth_neighbors(src)
-	return ..()
+	desc = "Tiny bits of colored paper thrown about for the janitor to enjoy!"
+	icon = 'icons/effects/confetti_and_decor.dmi'
+	icon_state = "confetti"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT //the confetti itself might be annoying enough
