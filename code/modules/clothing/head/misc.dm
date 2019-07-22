@@ -65,33 +65,33 @@
 	icon_state = "syndicate-helm-black-red"
 	item_state = "syndicate-helm-black-red"
 	desc = "A plastic replica of a Syndicate agent's space helmet. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
-	snug_fit = TRUE
+	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/head/cueball
 	name = "cueball helmet"
 	desc = "A large, featureless white orb meant to be worn on your head. How do you even see out of this thing?"
-	snug_fit = TRUE
 	icon_state = "cueball"
 	item_state="cueball"
+	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES|HEADCOVERSMOUTH
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/head/snowman
 	name = "Snowman Head"
 	desc = "A ball of white styrofoam. So festive."
-	snug_fit = TRUE
 	icon_state = "snowman_h"
 	item_state = "snowman_h"
+	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/head/justice
 	name = "justice hat"
 	desc = "Fight for what's righteous!"
-	snug_fit = TRUE
 	icon_state = "justicered"
 	item_state = "justicered"
+	clothing_flags = SNUG_FIT
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	flags_cover = HEADCOVERSEYES
 
@@ -180,17 +180,17 @@
 /obj/item/clothing/head/chicken
 	name = "chicken suit head"
 	desc = "Bkaw!"
-	snug_fit = TRUE
 	icon_state = "chickenhead"
 	item_state = "chickensuit"
+	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/head/griffin
 	name = "griffon head"
 	desc = "Why not 'eagle head'? Who knows."
-	snug_fit = TRUE
 	icon_state = "griffinhat"
 	item_state = "griffinhat"
+	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/head/bearpelt
@@ -204,7 +204,7 @@
 	icon_state = "xenos"
 	item_state = "xenos_helm"
 	desc = "A helmet made out of chitinous alien hide."
-	snug_fit = TRUE
+	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/head/fedora
@@ -325,8 +325,8 @@
 /obj/item/clothing/head/lobsterhat
 	name = "foam lobster head"
 	desc = "When everything's going to crab, protecting your head is the best choice."
-	snug_fit = TRUE
 	icon_state = "lobster_hat"
+	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/head/drfreezehat

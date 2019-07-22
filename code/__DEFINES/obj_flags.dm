@@ -40,3 +40,5 @@
 #define VOICEBOX_DISABLED (1<<7) // The voicebox is currently turned off.
 #define SCAN_REAGENTS (1<<9) // Allows helmets, masks and glasses to scan reagents.
 #define BLOCKS_SHOVE_KNOCKDOWN (1<<10) // Prevents shovies against a dense object from knocking the wearer down.
+#define SNUG_FIT               (1<<11) //Prevents knock-off from things like hat-throwing.
+#define ANTI_TINFOIL_MANEUVER   (1<<12) //Hats with negative effects when worn (i.e the tinfoil hat).

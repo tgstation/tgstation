@@ -13,12 +13,14 @@
 /obj/item/clothing/head/collectable/slime
 	name = "collectable slime cap!"
 	desc = "It just latches right in place!"
+	clothing_flags = SNUG_FIT
 	icon_state = "slime"
 	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/collectable/xenom
 	name = "collectable xenomorph helmet!"
 	desc = "Hiss hiss hiss!"
+	clothing_flags = SNUG_FIT
 	icon_state = "xenom"
 
 /obj/item/clothing/head/collectable/chef
@@ -71,14 +73,14 @@
 	desc = "A collectable welding helmet. Now with 80% less lead! Not for actual welding. Any welding done while wearing this helmet is done so at the owner's own risk!"
 	icon_state = "welding"
 	item_state = "welding"
-	snug_fit = TRUE
-	resistance_flags = NONE
+	clothing_flags = SNUG_FIT
 
 /obj/item/clothing/head/collectable/slime
 	name = "collectable slime hat"
 	desc = "Just like a real brain slug!"
 	icon_state = "headslime"
 	item_state = "headslime"
+	clothing_flags = SNUG_FIT
 
 /obj/item/clothing/head/collectable/flatcap
 	name = "collectable flat cap"
@@ -122,7 +124,7 @@
 /obj/item/clothing/head/collectable/hardhat
 	name = "collectable hard hat"
 	desc = "WARNING! Offers no real protection, or luminosity, but damn, is it fancy!"
-	snug_fit = TRUE
+	clothing_flags = SNUG_FIT
 	icon_state = "hardhat0_yellow"
 	item_state = "hardhat0_yellow"
 
@@ -143,17 +145,15 @@
 /obj/item/clothing/head/collectable/thunderdome
 	name = "collectable Thunderdome helmet"
 	desc = "Go Red! I mean Green! I mean Red! No Green!"
-	snug_fit = TRUE
 	icon_state = "thunderdome"
 	item_state = "thunderdome"
-	resistance_flags = NONE
+	clothing_flags = SNUG_FIT
 	flags_inv = HIDEHAIR
 
 /obj/item/clothing/head/collectable/swat
 	name = "collectable SWAT helmet"
 	desc = "That's not real blood. That's red paint." //Reference to the actual description
-	snug_fit = TRUE
 	icon_state = "swat"
 	item_state = "swat"
-	resistance_flags = NONE
+	clothing_flags = SNUG_FIT
 	flags_inv = HIDEHAIR

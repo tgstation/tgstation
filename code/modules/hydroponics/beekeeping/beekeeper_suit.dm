@@ -2,10 +2,9 @@
 /obj/item/clothing/head/beekeeper_head
 	name = "beekeeper hat"
 	desc = "Keeps the lil buzzing buggers out of your eyes."
-	snug_fit = TRUE
 	icon_state = "beekeeper"
 	item_state = "beekeeper"
-	clothing_flags = THICKMATERIAL
+	clothing_flags = THICKMATERIAL | SNUG_FIT
 
 
 /obj/item/clothing/suit/beekeeper_suit
