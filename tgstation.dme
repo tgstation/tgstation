@@ -1366,7 +1366,6 @@
 #include "code\modules\antagonists\fugitive\fugitive_outfits.dm"
 #include "code\modules\antagonists\fugitive\fugitive_ship.dm"
 #include "code\modules\antagonists\fugitive\hunter.dm"
-#include "code\modules\antagonists\fugitive\old_god.dm"
 #include "code\modules\antagonists\greentext\greentext.dm"
 #include "code\modules\antagonists\highlander\highlander.dm"
 #include "code\modules\antagonists\hivemind\hivemind.dm"
