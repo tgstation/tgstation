@@ -71,6 +71,7 @@
 	desc = "A collectable welding helmet. Now with 80% less lead! Not for actual welding. Any welding done while wearing this helmet is done so at the owner's own risk!"
 	icon_state = "welding"
 	item_state = "welding"
+	snug_fit = TRUE
 	resistance_flags = NONE
 
 /obj/item/clothing/head/collectable/slime
@@ -121,6 +122,7 @@
 /obj/item/clothing/head/collectable/hardhat
 	name = "collectable hard hat"
 	desc = "WARNING! Offers no real protection, or luminosity, but damn, is it fancy!"
+	snug_fit = TRUE
 	icon_state = "hardhat0_yellow"
 	item_state = "hardhat0_yellow"
 
@@ -141,6 +143,7 @@
 /obj/item/clothing/head/collectable/thunderdome
 	name = "collectable Thunderdome helmet"
 	desc = "Go Red! I mean Green! I mean Red! No Green!"
+	snug_fit = TRUE
 	icon_state = "thunderdome"
 	item_state = "thunderdome"
 	resistance_flags = NONE
@@ -149,6 +152,7 @@
 /obj/item/clothing/head/collectable/swat
 	name = "collectable SWAT helmet"
 	desc = "That's not real blood. That's red paint." //Reference to the actual description
+	snug_fit = TRUE
 	icon_state = "swat"
 	item_state = "swat"
 	resistance_flags = NONE

@@ -265,6 +265,7 @@
 	item_state = "foilhat"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = -5,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = -5, "fire" = 0, "acid" = 0)
 	equip_delay_other = 140
+	anti_tinfoil_maneuver = TRUE
 	var/datum/brain_trauma/mild/phobia/conspiracies/paranoia
 	var/warped = FALSE
 
