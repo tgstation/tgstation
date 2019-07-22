@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - bugfix: "Lavaland Syndicate ghost roles are now properly assigned gender after 2 years of uncertainty."
