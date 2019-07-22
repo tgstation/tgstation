@@ -14,3 +14,9 @@
 	name = "enchanted 7.62 bullet"
 	damage = 20
 	stamina = 80
+
+// Airgun Pellet
+
+/obj/item/projectile/bullet/airgun
+	name = "airgun pellet"
+	damage = 10

@@ -119,3 +119,15 @@ obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
 		user.put_in_hands(gun)
 	else
 		user.dropItemToGround(src, TRUE)
+
+// Airgun
+/obj/item/gun/ballistic/rifle/boltaction/airgun
+	name = "Improvised Airgun"
+	desc = "A bit of metal, wood and oxygen tanks turned into a bad weapon."
+	icon_state = "surplus"
+	item_state = "moistnugget"
+	slot_flags = 0 //no ITEM_SLOT_BACK sprite, alas
+	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/airgun
+	can_bayonet = FALSE
+	casing_ejector = FALSE
+	fire_sound_volume = 25
