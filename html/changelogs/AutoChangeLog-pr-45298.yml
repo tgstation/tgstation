@@ -1,0 +1,4 @@
+author: "Akrilla"
+delete-after: True
+changes: 
+  - tweak: "Security can access gulag equipment reclaim"
