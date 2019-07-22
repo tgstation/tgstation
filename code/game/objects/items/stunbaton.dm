@@ -18,6 +18,7 @@
 	var/hitcost = 1000
 	var/throw_hit_chance = 35
 	var/preload_cell_type //if not empty the baton starts with this type of cell
+	var/resistance_chem = /datum/reagent/medicine/epinephrine
 
 /obj/item/melee/baton/get_cell()
 	return cell
@@ -157,9 +158,8 @@
 		if(!deductcharge(hitcost))
 			return 0
 
-	L.Paralyze(stunforce)
-	L.apply_effect(EFFECT_STUTTER, stunforce)
-	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
+	stun_effect(L)
+
 	if(user)
 		L.lastattacker = user.real_name
 		L.lastattackerckey = user.ckey
@@ -173,8 +173,23 @@
 		var/mob/living/carbon/human/H = L
 		H.forcesay(GLOB.hit_appends)
 
-
 	return 1
+
+/// After a target is hit, we do a chunk of stamina damage, and apply a jitter and stutter.
+/// After a period of time, we then check to see if the target needs to have the stun applied.
+/obj/item/melee/baton/proc/stun_effect(mob/living/target)
+	target.Jitter(20)
+	target.apply_effect(EFFECT_STUTTER, stunforce)
+	target.adjustStaminaLoss(20)
+
+	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
+	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, target), 25)
+
+/// After the initial stun period, we check to see if the target needs to have the stun applied.
+/obj/item/melee/baton/proc/apply_stun_effect_end(mob/living/target)
+	if(target.reagents.has_reagent(resistance_chem, 3, TRUE))
+		return
+	target.Paralyze(stunforce)
 
 /obj/item/melee/baton/emp_act(severity)
 	. = ..()
