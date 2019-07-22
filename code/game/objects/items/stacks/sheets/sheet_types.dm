@@ -309,17 +309,6 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cloth
 
-/obj/item/stack/sheet/cloth/durathread
-	name = "durathread"
-	desc = "A fabric sown from incredibly durable threads, known for its usefulness in armor production."
-	singular_name = "durathread roll"
-	icon_state = "sheet-durathread"
-	merge_type = /obj/item/stack/sheet/cloth/durathread
-
-/obj/item/stack/sheet/cloth/durathread/Initialize(mapload, new_amount, merge = TRUE)
-	. = ..()
-	recipes = null //ree override
-
 /obj/item/stack/sheet/cloth/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.cloth_recipes
 	return ..()
@@ -330,18 +319,39 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 /obj/item/stack/sheet/cloth/five
 	amount = 5
 
+GLOBAL_LIST_INIT(durathread_recipes, list ( \
+	new/datum/stack_recipe("durathread jumpsuit", /obj/item/clothing/under/durathread, 4, time = 40),
+	new/datum/stack_recipe("durathread beret", /obj/item/clothing/head/beret/durathread, 2, time = 40), \
+	new/datum/stack_recipe("durathread beanie", /obj/item/clothing/head/beanie/durathread, 2, time = 40), \
+	new/datum/stack_recipe("durathread bandana", /obj/item/clothing/mask/bandana/durathread, 1, time = 25), \
+	))
+
+/obj/item/stack/sheet/durathread
+	name = "durathread"
+	desc = "A fabric sown from incredibly durable threads, known for its usefulness in armor production."
+	singular_name = "durathread roll"
+	icon_state = "sheet-durathread"
+	item_state = "sheet-cloth"
+	resistance_flags = FLAMMABLE
+	force = 0
+	throwforce = 0
+	merge_type = /obj/item/stack/sheet/durathread
+
+/obj/item/stack/sheet/durathread/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.durathread_recipes
+	return ..()
+
 /obj/item/stack/sheet/cotton
 	name = "raw cotton bundle"
 	desc = "A bundle of raw cotton ready to be spun on the loom."
 	singular_name = "raw cotton ball"
 	icon_state = "sheet-cotton"
-	is_fabric = TRUE
 	resistance_flags = FLAMMABLE
 	force = 0
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cotton
-	pull_effort = 30
-	loom_result = /obj/item/stack/sheet/cloth
+	var/pull_effort = 30
+	var/loom_result = /obj/item/stack/sheet/cloth
 
 /obj/item/stack/sheet/cotton/durathread
 	name = "raw durathread bundle"
@@ -350,7 +360,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	icon_state = "sheet-durathreadraw"
 	merge_type = /obj/item/stack/sheet/cotton/durathread
 	pull_effort = 70
-	loom_result = /obj/item/stack/sheet/cloth/durathread
+	loom_result = /obj/item/stack/sheet/durathread
 
 
 /*
