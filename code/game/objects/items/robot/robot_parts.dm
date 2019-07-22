@@ -38,6 +38,7 @@
 	chest = new(src)
 	chest.wired = TRUE
 	chest.cell = new /obj/item/stock_parts/cell/high/plus(chest)
+	update_icon()
 
 /obj/item/robot_suit/update_icon()
 	cut_overlays()
