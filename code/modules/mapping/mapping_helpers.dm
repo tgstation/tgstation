@@ -249,17 +249,17 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/mapping_helpers/ianbirthday/proc/birthday()
 	var/area/a = get_area(src)
-	var/list/tables = list()
+	var/list/table = list()//should only be one aka the front desk, but just in case...
 	var/list/openturfs = list()
 
 	for(var/thing in a.contents)
-		if(istype(thing, /obj/structure/table))
-			tables += thing
+		if(istype(thing, /obj/structure/table/reinforced))
+			table += thing
 		if(isopenturf(thing))
 			openturfs += thing
 
 	//cake!
-	var/obj/item/reagent_containers/food/snacks/store/cake/birthday/iancake = new(get_turf(pick(tables)))
+	var/obj/item/reagent_containers/food/snacks/store/cake/birthday/iancake = new(get_turf(pick(table)))
 	iancake.desc = "Happy birthday, Ian!"
 	//some balloons! this picks an open turf and pops a few balloons in and around that turf, yay.
 	for(var/i in 1 to balloon_clusters)
@@ -279,7 +279,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	if(!delete_after)
 		qdel(src)
 
-/obj/effect/mapping_helpers/ianbirthday/admin//so they may birthday any room
+/obj/effect/mapping_helpers/ianbirthday/admin//so admins may birthday any room
 	name = "generic birthday setup"
 	icon_state = "bdayhelper"
 	delete_after = TRUE
