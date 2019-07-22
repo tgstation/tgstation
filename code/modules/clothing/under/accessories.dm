@@ -192,6 +192,10 @@
 	name = "robust security award"
 	desc = "An award for distinguished combat and sacrifice in defence of Nanotrasen's commercial interests. Often awarded to security staff."
 
+/obj/item/clothing/accessory/medal/silver/excellence
+	name = "the head of personnel award for outstanding achievement in the field of excellence"
+	desc = "Nanotrasen's dictionary defines excellence as \"the quality or condition of being excellent\". This is awarded to those rare crewmembers who fit that definition."
+
 /obj/item/clothing/accessory/medal/gold
 	name = "gold medal"
 	desc = "A prestigious golden medal."
