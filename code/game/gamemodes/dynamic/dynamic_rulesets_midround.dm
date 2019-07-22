@@ -106,7 +106,6 @@
 /// Called by send_applications().
 /datum/dynamic_ruleset/midround/from_ghosts/proc/review_applications()
 	for (var/i = 1, i <= required_candidates, i++)
-		message_admins("yesp")
 		if(applicants.len <= 0)
 			if(i == 1)
 				// We have found no candidates so far and we are out of applicants.
