@@ -43,6 +43,7 @@
 
 /datum/component/extralasers/proc/attackby(datum/source, obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_CROWBAR)
+		user.visible_message("[user] has detached the lens.", "<span class='notice'>You detach the lens.</span>")
 		var/turf/T = get_turf(parent)
 		new lens_path(T)
 		qdel(src)

@@ -187,7 +187,7 @@
 		M.gib()
 
 /obj/item/projectile/beam/laser/shock
-	name = "\improper charged beam"
+	name = "charged beam"
 	icon_state = "spark"
 	damage = 10
 	jitter = 10
@@ -207,7 +207,7 @@
 			C.dropItemToGround(C.get_active_held_item())
 
 /obj/item/projectile/beam/laser/blinding
-	name = "\improper blinding beam"
+	name = "blinding beam"
 	icon_state = "blinding"
 	eyeblur = 5
 	damage = 8
@@ -225,7 +225,7 @@
 		H.emote("scream")
 
 /obj/item/projectile/beam/laser/incendiary
-	name = "\improper incendiary beam"
+	name = "incendiary beam"
 	icon_state = "lava"
 	damage = 8
 	var/fire_stacks = 2
@@ -235,18 +235,18 @@
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
-		M.adjust_bodytemperature(((100-blocked)/100)*(300 - M.bodytemperature))
+		M.adjust_bodytemperature(60)
 		if(prob(40))
 			M.adjust_fire_stacks(fire_stacks)
 			M.IgniteMob()
 
 /obj/item/projectile/beam/laser/lowenergy
-	name = "\improper small laser beam"
+	name = "small laser beam"
 	icon_state = "mini"
 	damage = 10
 
 /obj/item/projectile/beam/laser/rico
-	name = "\improper bouncing plasma ball"
+	name = "bouncing plasma ball"
 	icon_state = "pulse0"
 	ricochets_max = 100
 	ricochet_chance = 100
