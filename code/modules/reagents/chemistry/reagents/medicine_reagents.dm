@@ -1423,8 +1423,8 @@
 	. = 1
 
 /datum/reagent/medicine/sanguiose/overdose_process(mob/living/M)
-	M.adjustOxyLoss(5,0)
-	M.blood_volume -= 6 //I hope you like blood.
+	M.adjustOxyLoss(3,0)
+	M.blood_volume -= 2 //I hope you like blood.
 	..()
 	. = 1
 
