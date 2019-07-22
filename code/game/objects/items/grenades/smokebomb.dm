@@ -3,7 +3,6 @@
 	desc = "The word 'Dank' is scribbled on it in crayon."
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "smokewhite"
-	det_time = 20
 	item_state = "flashbang"
 	slot_flags = ITEM_SLOT_BELT
 	var/datum/effect_system/smoke_spread/bad/smoke

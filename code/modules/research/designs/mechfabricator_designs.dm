@@ -521,15 +521,6 @@
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
-/datum/design/mech_cable_layer
-	name = "Exosuit Engineering Equipment (Cable Layer)"
-	id = "mech_cable_layer"
-	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/cable_layer
-	materials = list(MAT_METAL=10000)
-	construction_time = 100
-	category = list("Exosuit Equipment")
-
 /datum/design/mech_generator
 	name = "Exosuit Equipment (Plasma Generator)"
 	id = "mech_generator"
@@ -595,15 +586,6 @@
 	build_path = /obj/item/borg/upgrade/restart
 	materials = list(MAT_METAL = 20000 , MAT_GLASS = 5000)
 	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
-
-/datum/design/borg_upgrade_vtec
-	name = "Cyborg Upgrade (VTEC Module)"
-	id = "borg_upgrade_vtec"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/vtec
-	materials = list(MAT_METAL= 35000 , MAT_GLASS = 12000 , MAT_URANIUM = 10000)
-	construction_time = 80
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_upgrade_thrusters

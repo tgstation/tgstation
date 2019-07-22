@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - code_imp: "pda.detonatable and uplink component checks removed in favor of a signal in detomatix cart handling"

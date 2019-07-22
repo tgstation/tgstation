@@ -53,7 +53,7 @@
 
 /obj/mecha/working/ripley/update_icon()
 	..()
-	GET_COMPONENT(C,/datum/component/armor_plate)
+	var/datum/component/armor_plate/C = GetComponent(/datum/component/armor_plate)
 	if (C.amount)
 		cut_overlays()
 		if(C.amount < 3)

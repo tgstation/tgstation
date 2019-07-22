@@ -73,6 +73,15 @@
 	variance = 25
 	materials = list(MAT_METAL=4000)
 
+/obj/item/ammo_casing/shotgun/incapacitate
+	name = "custom incapacitating shot"
+	desc = "A shotgun casing filled with... something. used to incapacitate targets."
+	icon_state = "bountyshell"
+	projectile_type = /obj/item/projectile/bullet/pellet/shotgun_incapacitate
+	pellets = 12//double the pellets, but half the stun power of each, which makes this best for just dumping right in someone's face.
+	variance = 25
+	materials = list(MAT_METAL=4000)
+
 /obj/item/ammo_casing/shotgun/improvised
 	name = "improvised shell"
 	desc = "An extremely weak shotgun shell with multiple small pellets made out of metal shards."
@@ -134,8 +143,8 @@
 
 /obj/item/ammo_casing/shotgun/dart/bioterror/Initialize()
 	. = ..()
-	reagents.add_reagent("neurotoxin", 6)
-	reagents.add_reagent("spore", 6)
-	reagents.add_reagent("mutetoxin", 6) //;HELP OPS IN MAINT
-	reagents.add_reagent("coniine", 6)
-	reagents.add_reagent("sodium_thiopental", 6)
+	reagents.add_reagent(/datum/reagent/consumable/ethanol/neurotoxin, 6)
+	reagents.add_reagent(/datum/reagent/toxin/spore, 6)
+	reagents.add_reagent(/datum/reagent/toxin/mutetoxin, 6) //;HELP OPS IN MAINT
+	reagents.add_reagent(/datum/reagent/toxin/coniine, 6)
+	reagents.add_reagent(/datum/reagent/toxin/sodium_thiopental, 6)
