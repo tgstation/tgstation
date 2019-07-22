@@ -442,7 +442,7 @@
 		/// Special case for reinforcements, we want to show their ckey and name on round end.
 		if (istype(contractor_purchase, /datum/contractor_item/contractor_partner))
 			var/datum/contractor_item/contractor_partner/partner = contractor_purchase
-			contractor_support_unit += "<b>[partner.partner_mind.key]</b> played <b>[partner.partner_mind.current.name]</b>, their contractor support unit."
+			contractor_support_unit += "<br><b>[partner.partner_mind.key]</b> played <b>[partner.partner_mind.current.name]</b>, their contractor support unit."
 
 	if (contractor_hub.purchased_items.len)
 		result += contractor_item_icons
@@ -453,8 +453,8 @@
 		if (completed_contracts > 1)
 			pluralCheck = "contracts"
 
-		result += "<br>Completed <span class='greentext'>[completed_contracts]</span> [pluralCheck] for a total of \
-					<span class='greentext'>[tc_total] TC</span>! <br><br>[contractor_support_unit]<br>"
+		result += "Completed <span class='greentext'>[completed_contracts]</span> [pluralCheck] for a total of \
+					<span class='greentext'>[tc_total] TC</span>![contractor_support_unit]<br>"
 
 	return result
 
