@@ -1,0 +1,4 @@
+author: "Qustinnus"
+delete-after: True
+changes: 
+  - bugfix: "Fixes sanity going up to 125 when mood is neutral"
