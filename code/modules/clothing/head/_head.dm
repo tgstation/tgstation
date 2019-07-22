@@ -42,13 +42,12 @@
 				if(WHH.clothing_flags & SNUG_FIT)
 					H.visible_message("<span class='warning'>[src] bounces off [H]'s [WHH.name]!", "<span class='warning'>[src] bounces off your [WHH.name], falling to the floor.</span>")
 					return
-			///attempt to unequip the current item on the head and equip the thrown hat		
-			if(H.dropItemToGround(WH) && H.equip_to_slot_if_possible(src, SLOT_HEAD, 0, 1, 1))
-				H.visible_message("<span class='warning'>[src] knocks [WH] off [H]'s head!</span>", "<span class='warning'>[WH] is suddenly knocked off your head, replaced by [src]!</span>")
-				return		
-			///H has nothing equipped in the head slot, so the thrown hat will attempt to equip itself		
-			if(!H.head && H.equip_to_slot_if_possible(src, SLOT_HEAD, 0, 1, 1))
-				H.visible_message("<span class='notice'>[src] lands neatly on [H]'s head!", "<span class='notice'>[src] lands perfectly onto your head!</span>")
+			///if the hat manages to knock something off	
+			if(H.dropItemToGround(WH))
+				H.visible_message("<span class='warning'>[src] knocks [WH] off [H]'s head!</span>", "<span class='warning'>[WH] is suddenly knocked off your head by [src]!</span>")		
+		H.equip_to_slot_if_possible(src, SLOT_HEAD, 0, 1, 1)
+		H.visible_message("<span class='notice'>[src] lands neatly on [H]'s head!", "<span class='notice'>[src] lands perfectly onto your head!</span>")
+		return
 	if(iscyborg(hit_atom))
 		var/mob/living/silicon/robot/R = hit_atom
 		///hats in the borg's blacklist bounce off

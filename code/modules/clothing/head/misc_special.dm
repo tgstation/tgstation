@@ -311,7 +311,7 @@
 	name = "scorched tinfoil hat"
 	desc = "A badly warped up hat. Quite unprobable this will still work against any of fictional and contemporary dangers it used to."
 	warped = TRUE
-	clothing_flags |= ANTI_TINFOIL_MANEUVER
+	clothing_flags &= ~ANTI_TINFOIL_MANEUVER
 	if(!isliving(loc) || !paranoia)
 		return
 	var/mob/living/target = loc
