@@ -200,3 +200,19 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "xfloor1"
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
+
+/obj/effect/decal/cleanable/confetti
+	name = "confetti"
+	desc = "Tiny bits of colored paper thrown about for the janitor!"
+	smooth = SMOOTH_MORE
+	icon = 'icons/effects/confettidecor.dmi'
+	canSmoothWith = list(/turf/closed/wall, /obj/structure/falsewall)
+
+/obj/effect/decal/cleanable/confetti/Initialize()
+	. = ..()
+	queue_smooth(src)
+	queue_smooth_neighbors(src)
+
+/obj/effect/decal/cleanable/confetti/Destroy()
+	queue_smooth_neighbors(src)
+	return ..()

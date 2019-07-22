@@ -243,21 +243,23 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/ianbirthday/LateInitialize()
 	if(locate(/datum/holiday/ianbirthday) in SSevents.holidays)
 		birthday()
-	if(delete_after)
-		return
 	qdel(src)
 
 /obj/effect/mapping_helpers/ianbirthday/proc/birthday()
 	var/area/a = get_area(src)
 	var/list/table = list()//should only be one aka the front desk, but just in case...
 	var/list/openturfs = list()
+	var/list/denseopenturfs = list()
 
 	for(var/thing in a.contents)
 		if(istype(thing, /obj/structure/table/reinforced))
 			table += thing
 		if(isopenturf(thing))
 			openturfs += thing
-
+			for(var/i in thing)
+				if(anchored)//this is an atom movable var but we're searching in the turf so this should be alright
+					denseopenturfs += thing
+					break
 	//cake!
 	var/obj/item/reagent_containers/food/snacks/store/cake/birthday/iancake = new(get_turf(pick(table)))
 	iancake.desc = "Happy birthday, Ian!"
@@ -266,20 +268,34 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		var/turf/clusterspot = pick_n_take(openturfs)
 		new /obj/item/toy/balloon(clusterspot)
 		var/balloons_left_to_give = 2 //the amount of balloons around the cluster
-		var/list/dirs_to_balloon = GLOB.alldirs.Copy()
+		var/list/dirs_to_balloon = GLOB.cardinals.Copy()
 		while(balloons_left_to_give > 0)
-			if(!dirs_to_balloon.len)
-				for(var/ii in 1 to balloons_left_to_give)
-					new /obj/item/toy/balloon(clusterspot)
-			var/turf/balloonstep = get_step(clusterspot, pick_n_take(dirs_to_balloon))
+			balloons_left_to_give--
+			var/chosen_dir = pick_n_take(dirs_to_balloon)
+			var/turf/balloonstep = get_step(clusterspot, chosen_dir)
+			var/placed = FALSE
 			if(isopenturf(balloonstep))
-				new /obj/item/toy/balloon(balloonstep)
-				balloons_left_to_give--
+				var/obj/item/toy/balloon/B = new(balloonstep)//this clumps the cluster together
+				placed = TRUE
+				if(chosen_dir == NORTH)
+					B.pixel_y -= 10
+				if(chosen_dir == SOUTH)
+					B.pixel_y += 10
+				if(chosen_dir == EAST)
+					B.pixel_x -= 10
+				if(chosen_dir == WEST)
+					B.pixel_x += 10
+
+			if(!placed)
+				new /obj/item/toy/balloon(clusterspot)
 	//remind me to add confetti and wall decor!
-	if(!delete_after)
-		qdel(src)
+	for(var/T in denseopenturfs)
+		new /obj/effect/decal/cleanable/confetti(T)
 
 /obj/effect/mapping_helpers/ianbirthday/admin//so admins may birthday any room
 	name = "generic birthday setup"
 	icon_state = "bdayhelper"
-	delete_after = TRUE
+
+/obj/effect/mapping_helpers/ianbirthday/admin/LateInitialize()
+	birthday()
+	qdel(src)
