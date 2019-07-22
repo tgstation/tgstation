@@ -78,3 +78,7 @@
 /code/__DEFINES/components.dm @Cyberboss @ninjanomnom
 /code/controllers/subsystem/air.dm @duncathan @MrStonedOne
 /code/datums/components/ @Cyberboss @ninjanomnom
+
+
+#SIC SEMPER TYRANNIS
+/code/modules/hydroponics/grown/citrus.dm @optimumtact
