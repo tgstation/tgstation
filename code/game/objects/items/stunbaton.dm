@@ -180,7 +180,7 @@
 /obj/item/melee/baton/proc/stun_effect(mob/living/target)
 	target.Jitter(20)
 	target.apply_effect(EFFECT_STUTTER, stunforce)
-	target.adjustStaminaLoss(100)
+	target.adjustStaminaLoss(50)
 
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, target), 25)
