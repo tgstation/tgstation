@@ -1,0 +1,4 @@
+author: "Qustinnus"
+delete-after: True
+changes: 
+  - bugfix: "To save costs, Nanotrasen has removed the emergency battery ejection systems in modular computers. We realized saving the batteries isn't really important."
