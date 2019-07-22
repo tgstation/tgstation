@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - bugfix: "Anti-magic items, such as nullrods, will now correctly protect their users from magic when they are worn in the suit storage slot."
