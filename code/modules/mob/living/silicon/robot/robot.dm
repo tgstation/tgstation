@@ -766,6 +766,10 @@
 		cell = null
 	qdel(src)
 
+///This is the subtype that gets created by robot suits. It's needed so that those kind of borgs don't have a useless cell in them
+/mob/living/silicon/robot/nocell
+	cell = null
+
 /mob/living/silicon/robot/modules
 	var/set_module = /obj/item/robot_module
 
@@ -1130,6 +1134,7 @@
 
 /mob/living/silicon/robot/shell
 	shell = TRUE
+	cell = null
 
 /mob/living/silicon/robot/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
