@@ -19,6 +19,9 @@
 /obj/structure/infection/turret/beam,
 /turf/open/space/basic,
 /area/space)
+"l" = (
+/turf/open/space/basic,
+/area/space)
 
 (1,1,1) = {"
 b
@@ -1587,7 +1590,7 @@ b
 b
 b
 b
-b
+l
 b
 b
 b

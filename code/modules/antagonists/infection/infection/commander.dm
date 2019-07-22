@@ -139,10 +139,9 @@ GLOBAL_VAR(infection_commander)
 				continue
 			if(!A.blob_allowed)
 				continue
-			A.color = infection_color
-			A.name = "infection"
-			A.icon = 'icons/mob/blob.dmi'
-			A.icon_state = "blob_shield"
+			A.name = "eye mass"
+			A.icon = 'icons/mob/infection/infection.dmi'
+			A.icon_state = "eyemass"
 			A.layer = BELOW_MOB_LAYER
 			A.invisibility = 0
 			A.blend_mode = 0

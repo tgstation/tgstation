@@ -54,6 +54,12 @@
 	action_type = /datum/action/cooldown/infection/creator/vacuum
 	cost = 1
 
+/datum/infection_upgrade/overmind/barrier
+	name = "Barrier Infection"
+	description = "Gives you the ability to create barrier infection. These allow infectious creatures to pull objects through them unlike normal walls."
+	action_type = /datum/action/cooldown/infection/creator/barrier
+	cost = 1
+
 /datum/infection_upgrade/overmind/freecam
 	name = "Full Vision"
 	description = "Allows you to see the entire station with no restrictions on the movement of your camera."

@@ -33,6 +33,8 @@
 
 /datum/action/cooldown/infection/coregrab/fire(mob/camera/commander/I, turf/T)
 	var/obj/structure/infection/S = locate(/obj/structure/infection) in T.contents
+	if(!I.can_buy(cost))
+		return
 	if(S)
 		StartCooldown()
 		playsound(T, 'sound/effects/seedling_chargeup.ogg', 100, FALSE, pressure_affected = FALSE)
@@ -40,11 +42,15 @@
 		sleep(9)
 		new /obj/effect/temp_visual/bluespace_fissure(T)
 		sleep(9)
+		new /obj/effect/temp_visual/bluespace_fissure(T)
+		sleep(9)
 		if(I.infection_core)
-			var/list/possible_turfs = orange(2, I.infection_core)
+			var/list/possible_turfs = RANGE_TURFS(2, I.infection_core) - RANGE_TURFS(1, I.infection_core)
 			for(var/atom/movable/M in T.contents - S)
 				if(M.anchored)
 					continue
+				if(ismob(M) && !isliving(M))
+					return
 				M.forceMove(pick(possible_turfs))
 		return
 	to_chat(I, "<span class='warning'>You must be above an infection to use this ability!</span>")
@@ -127,6 +133,14 @@
 	distance_from_similar = 8
 	needs_node = TRUE
 
+/datum/action/cooldown/infection/creator/barrier
+	name = "Create Barrier Infection"
+	desc = "Create a barrier that will function as a normal wall, but will allow infectious creatures to pull things through them."
+	cost = 15
+	button_icon_state = "door"
+	type_to_create = /obj/structure/infection/door
+	distance_from_similar = 3
+
 /datum/action/cooldown/infection/mininode
 	name = "Miniature Node"
 	desc = "Creates a miniature node on the infection you're standing on."
@@ -134,7 +148,7 @@
 	cooldown_time = 900
 
 /datum/action/cooldown/infection/mininode/fire(mob/infector, turf/T)
-	var/obj/structure/infection/I = locate(/obj/structure/infection) in T.contents
+	var/obj/structure/infection/I = locate(/obj/structure/infection/normal) in T.contents
 	if(I)
 		StartCooldown()
 		playsound(T, 'sound/effects/splat.ogg', 100, FALSE, pressure_affected = FALSE)

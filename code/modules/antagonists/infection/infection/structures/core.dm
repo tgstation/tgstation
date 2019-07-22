@@ -130,7 +130,7 @@
 	if(overmind)
 		overmind.update_health_hud()
 		Pulse_Area(overmind, 24, 40, TRUE)
-	for(var/mob/living/carbon/C in urange(2, src))
+	for(var/mob/living/carbon/C in urange(4, src))
 		if(C.stat != DEAD || isnull(C.mind) || converting.Find(C.mind))
 			continue
 		converting.Add(C.mind)
@@ -147,21 +147,25 @@
 	var/datum/beam/B = T.Beam(C, icon_state="drain_life", time=INFINITY, maxdistance=INFINITY)
 	while(timeleft > world.time)
 		sleep(10)
-		if(!C || get_dist(src, C) > 2)
+		if(!C || get_dist(src, C) > 4)
 			converting.Remove(stored_mind)
 			qdel(B)
 			return
-	converting.Remove(stored_mind)
 	qdel(B)
 	C.visible_message("<span class='notice'>[C] disintegrates as their energy begins to circle the core!</span>")
 	C.dust()
+	converting.Remove(stored_mind)
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as an evolving infection slime?", ROLE_INFECTION, null, ROLE_INFECTION, 50) //players must answer rapidly
 	if(LAZYLEN(candidates)) //if we got at least one candidate, they're a sentient spore now.
 		var/mob/dead/observer/O = pick(candidates)
 		var/datum/mind/spore_mind = O.mind
 		spore_mind.add_antag_datum(/datum/antagonist/infection/spore)
 		return
-
+	else
+		// get some points then everyone
+		for(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/S in overmind.infection_mobs)
+			S.add_points(100)
+			to_chat(S, "<span class='notice'>You feel the energy of a living being surge through you...</span>")
 
 /obj/structure/infection/core/proc/pulseNodes()
 	if(topulse.len)
@@ -173,6 +177,9 @@
 			N.Pulse_Area(overmind)
 			topulse -= N
 			sleep(sleeptime)
+
+/obj/structure/infection/core/change_to(type, controller, structure_build_time)
+	return FALSE
 
 /obj/structure/infection/core/ComponentInitialize()
 	. = ..()

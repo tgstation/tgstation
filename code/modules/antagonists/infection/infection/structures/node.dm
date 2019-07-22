@@ -30,6 +30,7 @@
 	var/mutable_appearance/infection_base = mutable_appearance('icons/mob/infection/infection.dmi', "normal")
 	infection_base.pixel_x = -pixel_x
 	infection_base.pixel_y = -pixel_y
+	infection_base.transform = matrix()
 	underlays += node_base
 	underlays += infection_base
 

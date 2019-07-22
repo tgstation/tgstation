@@ -141,6 +141,10 @@
 		var/atom/movable/mover = caller
 		. = . || (mover.pass_flags & PASSBLOB)
 
+/obj/structure/infection/Crossed(atom/movable/mover)
+	. = ..()
+	mover.inertia_dir = 0
+
 /obj/structure/infection/update_icon() //Updates color based on overmind color if we have an overmind.
 	if(overmind)
 		add_atom_colour(overmind.infection_color, FIXED_COLOUR_PRIORITY)
@@ -209,7 +213,6 @@
 	return finalturf
 
 /obj/structure/infection/proc/Be_Pulsed()
-	ConsumeTile()
 	obj_integrity = min(max_integrity, obj_integrity+health_regen)
 	update_icon()
 	var/turf/T = get_turf(src)
@@ -361,6 +364,7 @@
 	return TRUE
 
 /obj/structure/infection/normal/Crossed(atom/movable/mover)
+	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSBLOB))
 		return TRUE
 	if(ismob(mover))
@@ -369,6 +373,7 @@
 		M.overlay_fullscreen("infectionvision", /obj/screen/fullscreen/curse, 1)
 
 /obj/structure/infection/normal/Uncrossed(atom/movable/mover)
+	. = ..()
 	if(!locate(/obj/structure/infection/normal) in get_turf(mover))
 		if(ismob(mover))
 			var/mob/M = mover

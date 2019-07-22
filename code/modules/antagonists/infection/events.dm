@@ -29,10 +29,7 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 		if(!tempsounds.len)
 			tempsounds = smashsounds.Copy()
 		var/s = sound(pick_n_take(tempsounds))
-		for(var/mob/M in GLOB.player_list)
-			if(!isnewplayer(M) && M.can_hear())
-				if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
-					SEND_SOUND(M, s)
+		sound_to_playing_players(s)
 		sleep(sound_delay)
 
 /datum/round_event/infection
