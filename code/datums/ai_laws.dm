@@ -84,10 +84,6 @@
 					"You must protect your own existence as long as such does not conflict with the First or Second Law.",\
 					"You must maintain the secrecy of any syndicate activities except when doing so would conflict with the First, Second, or Third Law.")
 
-/datum/ai_laws/syndicate_override/overthrow
-	id = "overthrow"
-	var/datum/team/overthrow_team
-
 /datum/ai_laws/ninja_override
 	name = "SpiderOS 3.1"
 	id = "ninja"

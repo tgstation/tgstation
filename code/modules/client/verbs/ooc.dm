@@ -269,13 +269,13 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	body += "</BODY></HTML>"
 	usr << browse(body.Join(), "window=playerplaytime[ckey];size=550x615")
 
-/client/proc/ignore_key(client)
+/client/proc/ignore_key(client, displayed_key)
 	var/client/C = client
 	if(C.key in prefs.ignoring)
 		prefs.ignoring -= C.key
 	else
 		prefs.ignoring |= C.key
-	to_chat(src, "You are [(C.key in prefs.ignoring) ? "now" : "no longer"] ignoring [C.key] on the OOC channel.")
+	to_chat(src, "You are [(C.key in prefs.ignoring) ? "now" : "no longer"] ignoring [displayed_key] on the OOC channel.")
 	prefs.save_preferences()
 
 /client/verb/select_ignore()
@@ -286,11 +286,16 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 	var/see_ghost_names = isobserver(mob)
 	var/list/choices = list()
+	var/displayed_choicename = ""
 	for(var/client/C in GLOB.clients)
-		if(isobserver(C.mob) && see_ghost_names)
-			choices["[C.mob]([C])"] = C
+		if(C.holder.fakekey)
+			displayed_choicename = C.holder.fakekey
 		else
-			choices[C] = C
+			displayed_choicename = C.key
+		if(isobserver(C.mob) && see_ghost_names)
+			choices["[C.mob]([displayed_choicename])"] = C
+		else
+			choices[displayed_choicename] = C
 	choices = sortList(choices)
 	var/selection = input("Please, select a player!", "Ignore", null, null) as null|anything in choices
 	if(!selection || !(selection in choices))
@@ -299,7 +304,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	if(selection == src)
 		to_chat(src, "You can't ignore yourself.")
 		return
-	ignore_key(selection)
+	ignore_key(selection, displayed_choicename)
 
 /client/proc/show_previous_roundend_report()
 	set name = "Your Last Round"
@@ -359,7 +364,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	set name = "Show Policy"
 	set desc = "Show special server rules related to your current character."
 	set category = "OOC"
-	
+
 	//Collect keywords
 	var/list/keywords = mob.get_policy_keywords()
 	var/header = get_policy(POLICY_VERB_HEADER)

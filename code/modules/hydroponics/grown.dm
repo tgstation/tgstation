@@ -160,11 +160,21 @@
 		reagents.del_reagent(/datum/reagent/consumable/nutriment)
 		reagents.del_reagent(/datum/reagent/consumable/nutriment/vitamin)
 
-// For item-containing growns such as eggy or gatfruit
+/*
+ * Attack self for growns
+ *
+ * Spawns the trash item at the growns drop_location()
+ * 
+ * Then deletes the grown object
+ *
+ * Then puts trash item into the hand of user attack selfing, or drops it back on the ground
+ */
 /obj/item/reagent_containers/food/snacks/grown/shell/attack_self(mob/user)
 	var/obj/item/T
 	if(trash)
-		T = generate_trash()
+		T = generate_trash(drop_location())
+		//Delete grown so our hand is free
 		qdel(src)
-		user.putItemFromInventoryInHandIfPossible(T, user.active_hand_index, TRUE)
+		//put trash obj in hands or drop to ground
+		user.put_in_hands(T, user.active_hand_index, TRUE)
 		to_chat(user, "<span class='notice'>You open [src]\'s shell, revealing \a [T].</span>")
