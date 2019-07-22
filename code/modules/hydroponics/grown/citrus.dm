@@ -55,7 +55,7 @@
 /obj/item/reagent_containers/food/snacks/grown/citrus/orange
 	seed = /obj/item/seeds/orange
 	name = "orange"
-	desc = "You can feel every object arround you getting weaker for some reason.."
+	desc = "You can feel every object around you getting weaker for some reason.."
 	icon_state = "orange"
 	filling_color = "#FFA500"
 	juice_results = list(/datum/reagent/consumable/orangejuice = 0)
