@@ -1762,8 +1762,8 @@
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER)) //they can't puke
 		holder.del_reagent(type)
 
-#define PUKE_CYCLES 3 		// every X cycle is a puke
-#define PUKES_TO_STUN 3 	// hit this amount of pukes in a row to start stunning
+#define YUCK_PUKE_CYCLES 3 		// every X cycle is a puke
+#define YUCK_PUKES_TO_STUN 3 	// hit this amount of pukes in a row to start stunning
 /datum/reagent/yuck/on_mob_life(mob/living/carbon/C)
 	if(!yuck_cycle)
 		if(prob(8))
@@ -1774,13 +1774,13 @@
 			yuck_cycle = current_cycle
 	else
 		var/yuck_cycles = current_cycle - yuck_cycle
-		if(yuck_cycles % PUKE_CYCLES == 0)
+		if(yuck_cycles % YUCK_PUKE_CYCLES == 0)
 			holder.remove_reagent(type, 5)
-			C.vomit(rand(14, 26), stun = yuck_cycles >= PUKE_CYCLES * PUKES_TO_STUN)
+			C.vomit(rand(14, 26), stun = yuck_cycles >= YUCK_PUKE_CYCLES * YUCK_PUKES_TO_STUN)
 	if(holder)
 		return ..()
-#undef PUKE_CYCLES
-#undef PUKES_TO_STUN
+#undef YUCK_PUKE_CYCLES
+#undef YUCK_PUKES_TO_STUN
 
 /datum/reagent/yuck/on_mob_end_metabolize(mob/living/L)
 	yuck_cycle = 0 // reset vomiting
