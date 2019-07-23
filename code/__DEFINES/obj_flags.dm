@@ -40,3 +40,11 @@
 #define VOICEBOX_DISABLED (1<<7) // The voicebox is currently turned off.
 #define SCAN_REAGENTS (1<<9) // Allows helmets, masks and glasses to scan reagents.
 #define BLOCKS_SHOVE_KNOCKDOWN (1<<10) // Prevents shovies against a dense object from knocking the wearer down.
+
+//Flags for the clothing_flags var on /obj/item/robot/upgrade
+#define R_UPGRADE_WORKS_ON_DEAD	 (1<<0)
+#define R_UPGRADE_IS_HIGHLANDER	 (1<<1)
+#define R_UPGRADE_ONE_USE		 (1<<2)
+
+//Not a flag, but also used for /obj/item/robot/upgrade
+#define R_UPGRADE_SUCCESSFUL_INSERTION -1

@@ -74,7 +74,7 @@
 
 	var/sight_mode = 0
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD)
-
+	///This is a list of all inserted upgrades. They are stored in nullspace.
 	var/list/upgrades = list()
 
 	var/hasExpanded = FALSE
@@ -186,6 +186,7 @@
 	qdel(wires)
 	qdel(module)
 	qdel(eye_lights)
+	QDEL_LIST(upgrades)
 	wires = null
 	module = null
 	eye_lights = null
@@ -501,27 +502,19 @@
 				to_chat(user, "<span class='danger'>Access denied.</span>")
 
 	else if(istype(W, /obj/item/borg/upgrade/))
-		var/obj/item/borg/upgrade/U = W
 		if(!opened)
 			to_chat(user, "<span class='warning'>You must access the borg's internals!</span>")
-		else if(!src.module && U.require_module)
-			to_chat(user, "<span class='warning'>The borg must choose a module before it can be upgraded!</span>")
-		else if(U.locked)
-			to_chat(user, "<span class='warning'>The upgrade is locked and cannot be used yet!</span>")
+			return
+		if(!user.temporarilyRemoveItemFromInventory(W))
+			return
+		var/obj/item/borg/upgrade/U = W
+		var/insertion = U.Insert(src)
+		if(insertion == R_UPGRADE_SUCCESSFUL_INSERTION)
+			to_chat(user, "<span class='notice'>You successfully insert \the [U] into [src].</span>")
 		else
-			if(!user.temporarilyRemoveItemFromInventory(U))
-				return
-			if(U.action(src))
-				to_chat(user, "<span class='notice'>You apply the upgrade to [src].</span>")
-				if(U.one_use)
-					qdel(U)
-				else
-					U.forceMove(src)
-					upgrades += U
-			else
-				to_chat(user, "<span class='danger'>Upgrade error.</span>")
-				U.forceMove(drop_location())
-
+			U.forceMove(drop_location())
+			to_chat(user, insertion)
+		return
 	else if(istype(W, /obj/item/toner))
 		if(toner >= tonermax)
 			to_chat(user, "<span class='warning'>The toner level of [src] is at its highest level possible!</span>")
@@ -763,6 +756,9 @@
 	if (cell) //Sanity check.
 		cell.forceMove(T)
 		cell = null
+	for(var/i in upgrades)
+		var/atom/movable/AM = i
+		AM.forceMove(T)
 	qdel(src)
 
 /mob/living/silicon/robot/modules
@@ -993,9 +989,9 @@
 	module.transform_to(/obj/item/robot_module)
 
 	// Remove upgrades.
-	for(var/obj/item/borg/upgrade/I in upgrades)
-		I.deactivate(src)
-		I.forceMove(get_turf(src))
+	for(var/i in upgrades)
+		var/obj/item/borg/upgrade/I = i
+		I.Remove(src)
 
 	upgrades.Cut()
 
