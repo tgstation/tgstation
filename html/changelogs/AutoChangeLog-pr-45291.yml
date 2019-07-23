@@ -1,0 +1,8 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - tweak: "Only humans get shock damage increased by teslium."
+  - bugfix: "Ethereals get charge from shocks once again!"
+  - bugfix: "Ethereals now get their shock damage reduced properly!"
+  - bugfix: "Nanites now get removed by shocks properly!"
+  - code_imp: "Code for electrocute act has been cleaned up."
