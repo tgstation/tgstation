@@ -66,11 +66,11 @@
 		reagents.trans_to(M, amount_per_transfer_from_this, transfered_by = user, method = apply_type)
 	return
 
-/obj/item/reagent_containers/medigel/styptic
-	name = "medical gel (styptic powder)"
-	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains styptic powder, for treating cuts and bruises."
+/obj/item/reagent_containers/medigel/mitomidal
+	name = "medical gel (mitomidal)"
+	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains mitomidal, used for treating brute trauma."
 	icon_state = "brutegel"
-	list_reagents = list(/datum/reagent/medicine/styptic_powder = 60)
+	list_reagents = list(/datum/reagent/medicine/mitomidal = 60)
 
 /obj/item/reagent_containers/medigel/silver_sulf
 	name = "medical gel (silver sulfadiazine)"

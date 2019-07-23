@@ -27,10 +27,10 @@
 		return 0
 	return 1 // Masks were stopping people from "eating" patches. Thanks, inheritance.
 
-/obj/item/reagent_containers/pill/patch/styptic
-	name = "brute patch"
-	desc = "Helps with brute injuries."
-	list_reagents = list(/datum/reagent/medicine/styptic_powder = 20)
+/obj/item/reagent_containers/pill/patch/mitomidal
+	name = "emergency brute patch"
+	desc = "Helps with brute injuries while causing residual cellular damage."
+	list_reagents = list(/datum/reagent/medicine/mitomidal = 15)
 	icon_state = "bandaid_brute"
 
 /obj/item/reagent_containers/pill/patch/silver_sulf

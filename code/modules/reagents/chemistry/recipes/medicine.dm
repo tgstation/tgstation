@@ -66,14 +66,7 @@
 	name = "Synthflesh"
 	id = /datum/reagent/medicine/synthflesh
 	results = list(/datum/reagent/medicine/synthflesh = 3)
-	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/styptic_powder = 1)
-
-/datum/chemical_reaction/styptic_powder
-	name = "Styptic Powder"
-	id = /datum/reagent/medicine/styptic_powder
-	results = list(/datum/reagent/medicine/styptic_powder = 4)
-	required_reagents = list(/datum/reagent/aluminium = 1, /datum/reagent/hydrogen = 1, /datum/reagent/oxygen = 1, /datum/reagent/toxin/acid = 1)
-	mix_message = "The solution yields an astringent powder."
+	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/mitomidal = 1)
 
 /datum/chemical_reaction/calomel
 	name = "Calomel"

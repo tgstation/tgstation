@@ -129,7 +129,7 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/reagent_containers/pill/patch/styptic = 4,
+		/obj/item/reagent_containers/pill/patch/mitomidal = 4,
 		/obj/item/stack/medical/gauze = 2,
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
@@ -167,8 +167,8 @@
 	new /obj/item/stack/medical/gauze(src)
 	new /obj/item/defibrillator/compact/combat/loaded(src)
 	new /obj/item/reagent_containers/hypospray/combat(src)
-	new /obj/item/reagent_containers/pill/patch/styptic(src)
-	new /obj/item/reagent_containers/pill/patch/styptic(src)
+	new /obj/item/reagent_containers/pill/patch/mitomidal(src)
+	new /obj/item/reagent_containers/pill/patch/mitomidal(src)
 	new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
 	new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
 	new /obj/item/clothing/glasses/hud/health/night(src)
@@ -271,7 +271,7 @@
 /obj/item/storage/pill_bottle/mining/PopulateContents()
 	new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
 	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/pill/patch/styptic(src)
+		new /obj/item/reagent_containers/pill/patch/mitomidal(src)
 
 /obj/item/storage/pill_bottle/zoom
 	name = "suspicious pill bottle"
