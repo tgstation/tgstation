@@ -537,10 +537,10 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	var/list/parts = list()
 	parts += "The devil's true name is: [truename]"
 	parts += "The devil's bans were:"
-	parts += "[GLOB.TAB][GLOB.lawlorify[LORE][ban]]"
-	parts += "[GLOB.TAB][GLOB.lawlorify[LORE][bane]]"
-	parts += "[GLOB.TAB][GLOB.lawlorify[LORE][obligation]]"
-	parts += "[GLOB.TAB][GLOB.lawlorify[LORE][banish]]"
+	parts += "[FOURSPACES][GLOB.lawlorify[LORE][ban]]"
+	parts += "[FOURSPACES][GLOB.lawlorify[LORE][bane]]"
+	parts += "[FOURSPACES][GLOB.lawlorify[LORE][obligation]]"
+	parts += "[FOURSPACES][GLOB.lawlorify[LORE][banish]]"
 	return parts.Join("<br>")
 
 /datum/antagonist/devil/roundend_report()

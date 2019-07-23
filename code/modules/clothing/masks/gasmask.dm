@@ -197,3 +197,11 @@
 /obj/item/clothing/mask/gas/tiki_mask/yalp_elor
 	icon_state = "tiki_yalp"
 	actions_types = list()
+
+/obj/item/clothing/mask/gas/hunter
+	name = "bounty hunting mask"
+	desc = "A custom tactical mask with decals added."
+	icon_state = "hunter"
+	item_state = "hunter"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	flags_inv = HIDEFACIALHAIR|HIDEFACE|HIDEEYES|HIDEEARS|HIDEHAIR
