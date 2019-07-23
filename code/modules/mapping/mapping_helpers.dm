@@ -249,19 +249,17 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/area/a = get_area(src)
 	var/list/table = list()//should only be one aka the front desk, but just in case...
 	var/list/openturfs = list()
-	var/list/denseopenturfs = list()
 
-	//confetti! (and some list stuff for more decorations)
+	//confetti and a corgi balloon! (and some list stuff for more decorations)
 	for(var/thing in a.contents)
 		if(istype(thing, /obj/structure/table/reinforced))
 			table += thing
 		if(isopenturf(thing))
 			new /obj/effect/decal/cleanable/confetti(thing)
-			openturfs += thing
-			for(var/i in thing)
-				if(anchored)//this is an atom movable var but we're searching in the turf so this should be alright
-					denseopenturfs += thing
-					break
+			if(locate(/obj/structure/bed/dogbed/ian) in thing)
+				new /obj/item/toy/balloon/corgi(thing)
+			else
+				openturfs += thing
 	//cake!
 	var/obj/item/reagent_containers/food/snacks/store/cake/birthday/iancake = new(get_turf(pick(table)))
 	iancake.desc = "Happy birthday, Ian!"
@@ -269,7 +267,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	for(var/i in 1 to balloon_clusters)
 		var/turf/clusterspot = pick_n_take(openturfs)
 		new /obj/item/toy/balloon(clusterspot)
-		var/balloons_left_to_give = 2 //the amount of balloons around the cluster
+		var/balloons_left_to_give = 3 //the amount of balloons around the cluster
 		var/list/dirs_to_balloon = GLOB.cardinals.Copy()
 		while(balloons_left_to_give > 0)
 			balloons_left_to_give--
@@ -287,7 +285,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 					B.pixel_x -= 10
 				if(chosen_dir == WEST)
 					B.pixel_x += 10
-
 			if(!placed)
 				new /obj/item/toy/balloon(clusterspot)
 	//remind me to add wall decor!

@@ -119,11 +119,15 @@
 	item_state = "balloon"
 	lefthand_file = 'icons/mob/inhands/balloons_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/balloons_righthand.dmi'
+	w_class = WEIGHT_CLASS_BULKY
+	throwforce = 0
+	throw_speed = 3
+	throw_range = 7
+	force = 0
 	var/random_color = TRUE
 
 /obj/item/toy/balloon/Initialize(mapload)
 	. = ..()
-
 	if(random_color)
 		var/chosen_balloon_color = pick(BALLOON_COLORS)
 		name = "[chosen_balloon_color] [name]"
@@ -133,18 +137,15 @@
 /obj/item/toy/balloon/corgi
 	name = "corgi balloon"
 	desc = "A balloon with a corgi face on it. For the all year good boys."
+	icon_state = "corgi"
+	item_state = "corgi"
 	random_color = FALSE
 
 /obj/item/toy/balloon/syndicate
 	name = "syndicate balloon"
 	desc = "There is a tag on the back that reads \"FUK NT!11!\"."
-	throwforce = 0
-	throw_speed = 3
-	throw_range = 7
-	force = 0
 	icon_state = "syndballoon"
 	item_state = "syndballoon"
-	w_class = WEIGHT_CLASS_BULKY
 	random_color = FALSE
 
 /obj/item/toy/syndicateballoon/pickup(mob/user)
