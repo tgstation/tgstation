@@ -73,11 +73,12 @@
 		return ..()
 
 /obj/item/ammo_casing/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(heavy_metal)
-		bounce_away(FALSE, NONE)
+	bounce_away(FALSE, NONE)
 	. = ..()
 
 /obj/item/ammo_casing/proc/bounce_away(still_warm = FALSE, bounce_delay = 3)
+	if(!heavy_metal)
+		return
 	update_icon()
 	SpinAnimation(10, 1)
 	var/turf/T = get_turf(src)

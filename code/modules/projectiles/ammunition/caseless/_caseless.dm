@@ -11,12 +11,6 @@
 	else
 		return FALSE
 
-///It's caseless so it isn't going to be bouncing away after it's fired and qdelled
-/obj/item/ammo_casing/caseless/bounce_away(still_warm, bounce_delay)
-	if(QDELETED(src))
-		return
-	return ..()
-
 /obj/item/ammo_casing/caseless/update_icon()
 	..()
 	icon_state = "[initial(icon_state)]"
