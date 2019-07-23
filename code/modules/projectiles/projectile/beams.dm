@@ -185,3 +185,44 @@
 		var/mob/living/carbon/M = target
 		M.visible_message("<span class='danger'>[M] explodes into a shower of gibs!</span>")
 		M.gib()
+
+// a shrink ray that shrinks mobs, which grow back after a short while. shrunken mobs drop their stuff and move slower.
+/obj/item/projectile/beam/shrink
+	name = "shrink ray"
+	icon_state = "blue_laser"
+	hitsound = 'sound/weapons/shrink_hit.ogg'
+	damage = 35
+	damage_type = STAMINA
+	flag = "energy"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/shrink
+	light_color = LIGHT_COLOR_BLUE
+	var/shrink_time = 90
+
+/obj/item/projectile/beam/shrink/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(isopenturf(target))//shrunk floors wouldnt do anything except look weird
+		return
+	target.transform = target.transform.Scale(0.5,0.5)
+	addtimer(VARSET_CALLBACK(target, transform, target.transform.Scale(2,2)), shrink_time)
+	var/olddens = target.density
+	var/oldopac = target.opacity
+	target.density = 0
+	target.opacity = 0
+	addtimer(VARSET_CALLBACK(target, density, olddens), shrink_time)
+	addtimer(VARSET_CALLBACK(target, opacity, oldopac), shrink_time)
+	if(isliving(target))
+		var/mob/living/L = target
+//		L.resize = 0.25
+//		L.update_transform()
+//		addtimer(VARSET_CALLBACK(L, resize, 4), shrink_time)
+//		addtimer(CALLBACK(L, .mob/proc/update_transform), shrink_time)
+		L.add_movespeed_modifier(MOVESPEED_ID_SHRINK_RAY, update=TRUE, priority=100, multiplicative_slowdown=4, movetypes=GROUND)
+		addtimer(CALLBACK(L, .mob/proc/remove_movespeed_modifier, MOVESPEED_ID_SHRINK_RAY), shrink_time)
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			C.unequip_everything()
+			C.visible_message("<span class='warning'>[C]'s belongings fall off of [C.p_them()] as they shrink down!</span>",
+			"<span class='userdanger'>Your belonings fall away as everything grows bigger!</span>")
+	else
+		C.visible_message("<span class='warning'>[C] shrinks down to a tiny size!</span>",
+		"<span class='userdanger'>Everything grows bigger!</span>")

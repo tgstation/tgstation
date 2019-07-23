@@ -343,3 +343,13 @@
 	item_state = "gravity_gun"
 	icon_state = "gravity_gun"
 	var/power = 4
+
+/obj/item/gun/energy/shrink_ray
+	name = "shrink ray blaster"
+	desc = "This is a piece of frightening alien tech that enhances the magnetic pull of atoms in a localized space to temporarily make an object shrink. \
+			That, or it's just space magic. Either way, it shrinks."
+	ammo_type = list(/obj/item/ammo_casing/energy/shrink)
+	item_state = "shrink_ray"
+	icon_state = "shrink_ray"
+	fire_delay = 30
+	trigger_guard = TRIGGER_GUARD_ALLOW_ALL// variable-size trigger, get it?
