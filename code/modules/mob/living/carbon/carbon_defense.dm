@@ -220,16 +220,24 @@
 		var/mob/living/carbon/C = pulledby
 		C.electrocute_act(shock_damage*0.75, src, 1, 0, override, 0, illusion, stun)
 	//Stun
-	if((!tesla_shock || siemens_coeff > 0.5) && stun)
-		Paralyze(80)
+	var/should_stun = (!tesla_shock || siemens_coeff > 0.5) && stun
+	if(should_stun)
+		Paralyze(40)
 	//Jitter and other fluff.
-	jitteriness += 20
+	jitteriness += 1000
 	do_jitter_animation(jitteriness)
 	stuttering += 2
+	addtimer(CALLBACK(src, .proc/secondary_shock, should_stun), 20)
 	if(override)
 		return override
 	else
 		return shock_damage
+
+///Called slightly after electrocute act to reduce jittering and apply a secondary stun.
+/mob/living/carbon/proc/secondary_shock(should_stun)
+	jitteriness = max(jitteriness - 990, 10)
+	if(should_stun)
+		Paralyze(60)
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if(on_fire)
