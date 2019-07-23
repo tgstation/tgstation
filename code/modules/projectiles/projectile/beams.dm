@@ -220,5 +220,5 @@
 			C.visible_message("<span class='warning'>[C]'s belongings fall off of [C.p_them()] as they shrink down!</span>",
 			"<span class='userdanger'>Your belonings fall away as everything grows bigger!</span>")
 	else
-		C.visible_message("<span class='warning'>[C] shrinks down to a tiny size!</span>",
+		target.visible_message("<span class='warning'>[target] shrinks down to a tiny size!</span>",
 		"<span class='userdanger'>Everything grows bigger!</span>")
