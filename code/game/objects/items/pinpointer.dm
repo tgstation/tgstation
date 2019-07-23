@@ -19,6 +19,8 @@
 	var/minimum_range = 0 //at what range the pinpointer declares you to be at your destination
 	var/ignore_suit_sensor_level = FALSE // Do we find people even if their suit sensors are turned off
 	var/alert = FALSE // TRUE to display things more seriously
+	var/process_scan = TRUE // some pinpointers change target every time they scan, which means we can't have it change very process but instead when it turns on.
+	var/icon_suffix = "" // for special pinpointer icons
 
 /obj/item/pinpointer/Initialize()
 	. = ..()
@@ -31,6 +33,8 @@
 	return ..()
 
 /obj/item/pinpointer/attack_self(mob/living/user)
+	if(!process_scan) //since it's not scanning on process, it scans here.
+		scan_for_target()
 	toggle_on()
 	user.visible_message("<span class='notice'>[user] [active ? "" : "de"]activates [user.p_their()] pinpointer.</span>", "<span class='notice'>You [active ? "" : "de"]activate your pinpointer.</span>")
 
@@ -47,7 +51,8 @@
 /obj/item/pinpointer/process()
 	if(!active)
 		return PROCESS_KILL
-	scan_for_target()
+	if(process_scan)
+		scan_for_target()
 	update_icon()
 
 /obj/item/pinpointer/proc/scan_for_target()
@@ -58,24 +63,24 @@
 	if(!active)
 		return
 	if(!target)
-		add_overlay("pinon[alert ? "alert" : ""]null")
+		add_overlay("pinon[alert ? "alert" : ""]null[icon_suffix]")
 		return
 	var/turf/here = get_turf(src)
 	var/turf/there = get_turf(target)
 	if(here.z != there.z)
-		add_overlay("pinon[alert ? "alert" : ""]null")
+		add_overlay("pinon[alert ? "alert" : ""]null[icon_suffix]")
 		return
 	if(get_dist_euclidian(here,there) <= minimum_range)
-		add_overlay("pinon[alert ? "alert" : ""]direct")
+		add_overlay("pinon[alert ? "alert" : ""]direct[icon_suffix]")
 	else
 		setDir(get_dir(here, there))
 		switch(get_dist(here, there))
 			if(1 to 8)
-				add_overlay("pinon[alert ? "alert" : "close"]")
+				add_overlay("pinon[alert ? "alert" : "close"][icon_suffix]")
 			if(9 to 16)
-				add_overlay("pinon[alert ? "alert" : "medium"]")
+				add_overlay("pinon[alert ? "alert" : "medium"][icon_suffix]")
 			if(16 to INFINITY)
-				add_overlay("pinon[alert ? "alert" : "far"]")
+				add_overlay("pinon[alert ? "alert" : "far"][icon_suffix]")
 
 /obj/item/pinpointer/crew // A replacement for the old crew monitoring consoles
 	name = "crew pinpointer"
@@ -183,3 +188,21 @@
 
 	A.other_pair = B
 	B.other_pair = A
+
+/obj/item/pinpointer/shuttle
+	name = "fugitive pinpointer"
+	desc = "A handheld tracking device that locates the bounty hunter shuttle for quick escapes."
+	icon_state = "pinpointer_hunter"
+	icon_suffix = "_hunter"
+	var/obj/shuttleport
+
+/obj/item/pinpointer/shuttle/Initialize(mapload)
+	. = ..()
+	shuttleport = SSshuttle.getShuttle("huntership")
+
+/obj/item/pinpointer/shuttle/scan_for_target()
+	target = shuttleport
+
+/obj/item/pinpointer/shuttle/Destroy()
+	shuttleport = null
+	. = ..()

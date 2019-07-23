@@ -23,7 +23,8 @@
 	var/list/possible_backstories = list()
 	var/list/candidates = get_candidates(ROLE_TRAITOR, null, ROLE_TRAITOR)
 	if(candidates.len >= 1) //solo refugees
-		possible_backstories.Add("waldo")
+		if(prob(30))
+			possible_backstories.Add("waldo") //less common as it comes with magicks and is kind of immershun shattering
 	if(candidates.len >= 4)//group refugees
 		possible_backstories.Add("prisoner", "cultist", "synth")
 	if(!possible_backstories.len)
@@ -33,7 +34,7 @@
 	var/member_size = 3
 	var/leader
 	switch(backstory)
-		if("cultist" || "synth")
+		if("synth")
 			leader = pick_n_take(candidates)
 		if("waldo")
 			member_size = 0 //solo refugees have no leader so the member_size gets bumped to one a bit later
@@ -87,27 +88,22 @@
 /datum/round_event/ghost_role/fugitives/proc/gear_fugitive_leader(var/mob/dead/leader, var/turf/landing_turf, backstory)
 	var/datum/mind/player_mind = new /datum/mind(leader.key)
 	player_mind.active = TRUE
-	switch(backstory)
-		if("cultist")
-			var/mob/camera/yalp_elor/yalp = new(landing_turf)
-			player_mind.transfer_to(yalp)
-			player_mind.assigned_role = "Yalp Elor"
-			player_mind.special_role = "Old God"
-			player_mind.add_antag_datum(/datum/antagonist/fugitive)
-		if("synth")
-			var/mob/living/carbon/human/S = gear_fugitive(leader, landing_turf, backstory)
-			var/obj/item/choice_beacon/augments/A = new(S)
-			S.put_in_hands(A)
-			new /obj/item/autosurgeon(landing_turf)
+	//if you want to add a fugitive with a special leader in the future, make this switch with the backstory
+	var/mob/living/carbon/human/S = gear_fugitive(leader, landing_turf, backstory)
+	var/obj/item/choice_beacon/augments/A = new(S)
+	S.put_in_hands(A)
+	new /obj/item/autosurgeon(landing_turf)
 
 //security team gets called in after 10 minutes of prep to find the refugees
 /datum/round_event/ghost_role/fugitives/proc/spawn_hunters()
-	var/backstory = pick("space cop", "russian")
+	var/backstory = pick("space cop", "russian", "bounty hunter")
 	var/datum/map_template/shuttle/ship
 	if(backstory == "space cop")
 		ship = new /datum/map_template/shuttle/hunter/space_cop
-	else
+	else if (backstory == "russian")
 		ship = new /datum/map_template/shuttle/hunter/russian
+	else
+		ship = new /datum/map_template/shuttle/hunter/bounty
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
 	var/z = SSmapping.empty_space.z_value
@@ -115,5 +111,5 @@
 	if(!T)
 		CRASH("Fugitive Hunters (Created from fugitive event) found no turf to load in")
 	if(!ship.load(T))
-		CRASH("Loading hunter ship failed!")
-	priority_announce("Unidentified armed ship detected near the station.")
+		CRASH("Loading [backstory] ship failed!")
+	priority_announce("Unidentified ship detected near the station.")

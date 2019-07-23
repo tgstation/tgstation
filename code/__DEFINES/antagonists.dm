@@ -51,9 +51,6 @@
 #define HIJACK_HIJACKER 1 //Needs to be present for shuttle to be hijacked
 #define HIJACK_PREVENT 2 //Prevents hijacking same way as non-antags
 
-//Overthrow time to update heads obj
-#define OBJECTIVE_UPDATING_TIME 300
-
 //Assimilation
 #define TRACKER_DEFAULT_TIME 900
 #define TRACKER_MINDSHIELD_TIME 1200

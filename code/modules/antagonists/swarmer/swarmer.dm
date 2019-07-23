@@ -214,7 +214,7 @@
 /obj/item/clockwork/alloy_shards/small/IntegrateAmount()
 	return 1
 
-/turf/open/floor/swarmer_act()//ex_act() on turf calls it on its contents, this is to prevent attacking mobs by DisIntegrate()'ing the floor
+/turf/open/swarmer_act()//ex_act() on turf calls it on its contents, this is to prevent attacking mobs by DisIntegrate()'ing the floor
 	return FALSE
 
 /obj/structure/lattice/catwalk/swarmer_catwalk/swarmer_act()
@@ -416,7 +416,7 @@
 	to_chat(S, "<span class='warning'>This object does not contain solid matter. Aborting.</span>")
 	return FALSE
 
-/obj/machinery/shieldwallgen/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+/obj/machinery/power/shieldwallgen/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	to_chat(S, "<span class='warning'>Destroying this object would have an unpredictable effect on structure integrity. Aborting.</span>")
 	return FALSE
 
