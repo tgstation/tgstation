@@ -6,6 +6,9 @@
 	slot = ORGAN_SLOT_EARS
 	gender = PLURAL
 
+	healing_factor = STANDARD_ORGAN_HEALING
+	decay_factor = STANDARD_ORGAN_DECAY
+
 	low_threshold_passed = "<span class='info'>Your ears begin to resonate with an internal ring sometimes.</span>"
 	now_failing = "<span class='warning'>You are unable to hear at all!</span>"
 	now_fixed = "<span class='info'>Noise slowly begins filling your ears once more.</span>"

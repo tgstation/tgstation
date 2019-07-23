@@ -16,12 +16,13 @@
 	var/maxHealth = STANDARD_ORGAN_THRESHOLD
 	var/damage = 0		//total damage this organ has sustained
 	var/failing	= FALSE			//is this organ failing or not
-	var/healing_factor 	= STANDARD_ORGAN_HEALING				//fraction of maxhealth healed per on_life()
-	var/decay_factor 	= STANDARD_ORGAN_DECAY					//same as above but when without a living owner
+	///Healing factor and decay factor function on % of maxhealth, and do not work by applying a static number per tick
+	var/healing_factor 	= 0										//fraction of maxhealth healed per on_life(), set to 0 for generic organs
+	var/decay_factor 	= 0										//same as above but when without a living owner, set to 0 for generic organs
 	var/high_threshold	= STANDARD_ORGAN_THRESHOLD * 0.45		//when severe organ damage occurs
 	var/low_threshold	= STANDARD_ORGAN_THRESHOLD * 0.1		//when minor organ damage occurs
 
-	//variables for determining what we alert the owner with when they pass/clear the damage thresholds
+	///Organ variables for determining what we alert the owner with when they pass/clear the damage thresholds
 	var/prev_damage = 0
 	var/low_threshold_passed
 	var/high_threshold_passed
