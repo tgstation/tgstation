@@ -43,7 +43,7 @@
 		var/datum/asset/spritesheet/sheet = name
 		stylesheets["spritesheet_[sheet.name].css"] = "data/spritesheets/[sheet.name]"
 	else
-		var/asset_name = "[ckey(name)].css"
+		var/asset_name = "[name].css"
 		
 		stylesheets[asset_name] = file
 
