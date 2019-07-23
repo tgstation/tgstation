@@ -260,8 +260,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 				new /obj/item/toy/balloon/corgi(thing)
 			else
 				openturfs += thing
-	//cake!
-	var/obj/item/reagent_containers/food/snacks/store/cake/birthday/iancake = new(get_turf(pick(table)))
+	//cake + knife to cut it!
+	var/turf/food_turf = get_turf(pick(table))
+	new /obj/item/kitchen/knife(food_turf)
+	var/obj/item/reagent_containers/food/snacks/store/cake/birthday/iancake = new(food_turf)
 	iancake.desc = "Happy birthday, Ian!"
 	//some balloons! this picks an open turf and pops a few balloons in and around that turf, yay.
 	for(var/i in 1 to balloon_clusters)
