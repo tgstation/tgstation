@@ -114,6 +114,7 @@
 					/obj/item/clothing/mask/joy = 1,
 					/obj/item/clothing/head/cueball = 1,
 					/obj/item/clothing/under/scratch = 1,
+					/obj/item/clothing/mask/spacestation413/fake_horns = 2, //Another 413 override
 					/obj/item/clothing/under/sailor = 1,
 					/obj/item/clothing/ears/headphones = 2,
 					/obj/item/clothing/head/wig/random = 3)
