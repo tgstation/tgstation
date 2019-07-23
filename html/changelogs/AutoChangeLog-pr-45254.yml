@@ -1,5 +1,0 @@
-author: "wesoda25"
-delete-after: True
-changes: 
-  - bugfix: "Artificers can now only heal constructs that are the same type as them! This means holy artificers can no longer heal cult/wizard constructs, and vice versa."
-  - tweak: "Constructs can now damage constructs. Be careful not to friendly fire!"

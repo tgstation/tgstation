@@ -1,4 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - bugfix: "Swarmers can no longer attempt to deconstruct open turfs, like space or chasms."

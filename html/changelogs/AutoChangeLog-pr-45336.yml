@@ -1,4 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - bugfix: "Fixed an issue with a Lizardwine drink crafting, where a final product would contain unwated 100u of Ethanol."

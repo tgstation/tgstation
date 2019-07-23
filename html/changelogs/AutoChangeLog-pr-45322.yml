@@ -1,4 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - imageadd: "The detective baton sprites no longer clips through your hands/body when on your belt slot."

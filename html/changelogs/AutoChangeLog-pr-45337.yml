@@ -1,5 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - bugfix: "The bloodchiller and the ling tentacle no longer get stuck in your belt slot."
-  - imageadd: "Slightly tweaked the directional sprites of the bloodchiller."
