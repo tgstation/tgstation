@@ -508,12 +508,18 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if (midround_injection_cooldown < world.time)
 		if (GLOB.dynamic_forced_extended)
 			return
+		
+		// Somehow it manages to trigger midround multiple times so this was moved here.
+		// There is no way this should be able to trigger an injection twice now.
+		var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
+		midround_injection_cooldown = (round(CLAMP(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max)) + world.time)
+		
 		// Time to inject some threat into the round
 		if(EMERGENCY_ESCAPED_OR_ENDGAMED) // Unless the shuttle is gone
 			return
 
 		log_game("DYNAMIC: Checking state of the round.")
-
+			
 		update_playercounts()
 
 		if (prob(get_injection_chance()))
@@ -532,12 +538,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 					rule.trim_candidates()
 					if (rule.ready() && rule.candidates.len > 0)
 						drafted_rules[rule] = rule.get_weight()
-
 			if (drafted_rules.len > 0)
 				picking_midround_rule(drafted_rules)
-		var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
-		midround_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max)) + world.time
-
+	
 /// Updates current_players.
 /datum/game_mode/dynamic/proc/update_playercounts()
 	current_players[CURRENT_LIVING_PLAYERS] = list()
