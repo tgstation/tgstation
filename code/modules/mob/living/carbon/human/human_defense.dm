@@ -788,7 +788,7 @@
 	//Sets organs into their proper list
 	for(var/O in internal_organs)
 		var/obj/item/organ/organ = O
-		if(organ.failing)
+		if(organ.organ_flags & ORGAN_FAILING)
 			if(broken.len)
 				broken += ", "
 			broken += organ.name

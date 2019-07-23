@@ -265,7 +265,7 @@ GENE SCANNER
 		//Piece together the lists to be reported
 		for(var/O in H.internal_organs)
 			var/obj/item/organ/organ = O
-			if(organ.failing)
+			if(organ.organ_flags & ORGAN_FAILING)
 				report_organs = TRUE	//if we report one organ, we report all organs, even if the lists are empty, just for consistency
 				if(max_damage)
 					max_damage += ", "	//prelude the organ if we've already reported an organ

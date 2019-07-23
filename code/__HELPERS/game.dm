@@ -160,13 +160,13 @@
 		processing_list += A.contents
 
 /** recursive_organ_check
-  * inputs: O (object to start with), decompose (either 1 or 0, sets each organ found's can_decompose to this)
+  * inputs: O (object to start with)
   * outputs:
   * description: A pseudo-recursive loop based off of the recursive mob check, this check looks for any organs held
-  *				 within 'O', setting their can_decompose flag. This check excludes items held within other safe organ
+  *				 within 'O', toggling their frozen flag. This check excludes items held within other safe organ
   *				 storage units, so that only the lowest level of container dictates whether we do or don't decompose
   */
-/proc/recursive_organ_check(atom/O, var/decompose)
+/proc/recursive_organ_check(atom/O)
 
 	var/list/processing_list = list(O)
 	var/list/processed_list = list()
@@ -179,13 +179,13 @@
 
 		if(istype(A, /obj/item/organ))
 			found_organ = A
-			found_organ.can_decompose = decompose
+			found_organ.organ_flags ^= ORGAN_FROZEN
 
 		else if(istype(A, /mob/living/carbon))
 			var/mob/living/carbon/Q = A
 			for(var/organ in Q.internal_organs)
 				found_organ = organ
-				found_organ.can_decompose = decompose
+				found_organ.organ_flags ^= ORGAN_FROZEN
 
 		for(var/atom/B in A)	//objects held within other objects are added to the processing list, unless that object is something that can hold organs safely
 			if(!processed_list[B] && !istype(B, /obj/structure/closet/crate/freezer) && !istype(B, /obj/structure/closet/secure_closet/freezer))

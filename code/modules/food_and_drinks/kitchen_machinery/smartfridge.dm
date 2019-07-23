@@ -408,11 +408,11 @@
 /obj/machinery/smartfridge/organ/load(obj/item/O)
 	if(..())	//if the item loads, clear can_decompose
 		var/obj/item/organ/organ = O
-		organ.can_decompose = FALSE
+		organ.organ_flags |= ORGAN_FROZEN
 
 /obj/machinery/smartfridge/organ/dispense(obj/item/O, var/mob/M)
 	var/obj/item/organ/organ = O
-	organ.can_decompose = TRUE
+	organ.organ_flags &= ~ORGAN_FROZEN
 	..()
 
 /obj/machinery/smartfridge/organ/RefreshParts()
@@ -424,7 +424,7 @@
 	for(var/organ in src)
 		var/obj/item/organ/O = organ
 		if(O)
-			O.can_decompose = TRUE
+			O.organ_flags &= ~ORGAN_FROZEN
 	..()
 
 /obj/machinery/smartfridge/organ/process()
@@ -437,7 +437,7 @@
 	for(var/organ in src)
 		var/obj/item/organ/O = organ
 		if(O)
-			O.can_decompose = TRUE
+			O.organ_flags &= ~ORGAN_FROZEN
 	..()
 
 // -----------------------------

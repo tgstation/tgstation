@@ -390,11 +390,11 @@
 
 /obj/item/organ/lungs/on_life()
 	..()
-	if((!failed) && (failing))
+	if((!failed) && ((organ_flags & ORGAN_FAILING)))
 		if(owner.stat == CONSCIOUS)
 			owner.visible_message("<span class='userdanger'>[owner] grabs [owner.p_their()] throat, struggling for breath!</span>")
 		failed = TRUE
-	else if(!failing)
+	else if(!(organ_flags & ORGAN_FAILING))
 		failed = FALSE
 	return
 
@@ -428,7 +428,7 @@
 	name = "cybernetic lungs"
 	desc = "A cybernetic version of the lungs found in traditional humanoid entities. Allows for greater intakes of oxygen than organic lungs, requiring slightly less pressure."
 	icon_state = "lungs-c"
-	synthetic = TRUE
+	organ_flags = ORGAN_SYNTHETIC
 	maxHealth = 1.1 * STANDARD_ORGAN_THRESHOLD
 	safe_oxygen_min = 13
 

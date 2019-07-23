@@ -29,7 +29,7 @@
 	var/mob/living/carbon/C = owner
 	..()	//perform general on_life()
 	if(istype(C))
-		if(!failing)//can't process reagents with a failing liver
+		if(!(organ_flags & ORGAN_FAILING))//can't process reagents with a failing liver
 
 			var/provide_pain_message = HAS_NO_TOXIN
 			if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
@@ -92,7 +92,7 @@
 	name = "cybernetic liver"
 	icon_state = "liver-c"
 	desc = "An electronic device designed to mimic the functions of a human liver. Handles toxins slightly better than an organic liver."
-	synthetic = TRUE
+	organ_flags = ORGAN_SYNTHETIC
 	maxHealth = 1.1 * STANDARD_ORGAN_THRESHOLD
 	toxTolerance = 3.3
 	toxLethality = 0.009

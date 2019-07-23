@@ -8,14 +8,9 @@
 	var/zone = BODY_ZONE_CHEST
 	var/slot
 	// DO NOT add slots with matching names to different zones - it will break internal_organs_slot list!
-	var/vital = 0
-	//Was this organ implanted/inserted/etc, if true will not be removed during species change.
-	var/external = FALSE
-	var/synthetic = FALSE // To distinguish between organic and synthetic organs
-	var/can_decompose = TRUE	// Set false when we enter a freezer/morgue/etc
+	var/organ_flags = 0
 	var/maxHealth = STANDARD_ORGAN_THRESHOLD
 	var/damage = 0		//total damage this organ has sustained
-	var/failing	= FALSE			//is this organ failing or not
 	///Healing factor and decay factor function on % of maxhealth, and do not work by applying a static number per tick
 	var/healing_factor 	= 0										//fraction of maxhealth healed per on_life(), set to 0 for generic organs
 	var/decay_factor 	= 0										//same as above but when without a living owner, set to 0 for generic organs
@@ -58,7 +53,7 @@
 		M.internal_organs -= src
 		if(M.internal_organs_slot[slot] == src)
 			M.internal_organs_slot.Remove(slot)
-		if(vital && !special && !(M.status_flags & GODMODE))
+		if((organ_flags & ORGAN_VITAL) && !special && !(M.status_flags & GODMODE))
 			M.death()
 	for(var/X in actions)
 		var/datum/action/A = X
@@ -69,10 +64,10 @@
 	return
 
 /obj/item/organ/process()	//runs decay when outside of a person
-	if(synthetic || !can_decompose || istype(loc, /obj/item/mmi))
+	if((organ_flags & (ORGAN_SYNTHETIC | ORGAN_FROZEN)) || istype(loc, /obj/item/mmi))
 		return
 	if(damage >= maxHealth)
-		failing = TRUE
+		organ_flags |= ORGAN_FAILING
 		damage = maxHealth
 		return
 	else if(!owner)
@@ -84,7 +79,7 @@
 			return
 		if(C.stat == DEAD && !IS_IN_STASIS(C))
 			if(damage >= maxHealth)
-				failing = TRUE
+				organ_flags |= ORGAN_FAILING
 				damage = maxHealth
 				return
 			damage = min(maxHealth, damage + (maxHealth * decay_factor))
@@ -94,12 +89,12 @@
 	if(!C)
 		return
 	if(damage >= maxHealth)
-		failing = TRUE
+		organ_flags |= ORGAN_FAILING
 		damage = maxHealth
 		check_damage_thresholds(C)
 		prev_damage = damage
 		return
-	if((!failing) && (C.stat !=DEAD))
+	if((!(organ_flags & ORGAN_FAILING)) && (C.stat !=DEAD))
 		damage = max(0, damage - (maxHealth * healing_factor))
 		check_damage_thresholds(C)
 		prev_damage = damage
@@ -138,10 +133,10 @@
 
 /obj/item/organ/examine(mob/user)
 	. = ..()
-	if(status == ORGAN_ROBOTIC && failing)
+	if(status == ORGAN_ROBOTIC && (organ_flags & ORGAN_FAILING))
 		. += "<span class='warning'>[src] seems to be broken!</span>"
 
-	else if(failing)
+	else if(organ_flags & ORGAN_FAILING)
 		. += "<span class='warning'>[src] has decayed for too long, and has turned a sickly color! It doesn't look like it will work anymore!</span>"
 
 	else if(damage > high_threshold)
@@ -202,9 +197,9 @@
 /obj/item/organ/proc/setOrganDamage(var/d)	//use mostly for admin heals
 	damage = CLAMP(d, 0 ,maxHealth)
 	if(d >= maxHealth)
-		failing = TRUE
+		organ_flags |= ORGAN_FAILING
 	else
-		failing = FALSE
+		organ_flags &= ~ORGAN_FAILING
 
 //Looking for brains?
 //Try code/modules/mob/living/carbon/brain/brain_item.dm
