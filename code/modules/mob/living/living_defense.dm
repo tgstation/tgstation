@@ -342,11 +342,11 @@
 	for(var/obj/O in contents)
 		O.emp_act(severity)
 
+///Logs, gibs and returns point values of whatever mob is unfortunate enough to get eaten.
 /mob/living/singularity_act()
-	var/gain = 20
 	investigate_log("([key_name(src)]) has been consumed by the singularity.", INVESTIGATE_SINGULO) //Oh that's where the clown ended up!
 	gib()
-	return(gain)
+	return 20
 
 /mob/living/narsie_act()
 	if(status_flags & GODMODE || QDELETED(src))
