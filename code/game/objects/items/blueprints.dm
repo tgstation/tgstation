@@ -110,26 +110,18 @@
 
 	attack_self(usr) //this is not the proper way, but neither of the old update procs work! it's too ancient and I'm tired shush.
 
-/obj/item/areaeditor/blueprints/proc/get_images(mob/user, viewsize)
+/obj/item/areaeditor/blueprints/proc/get_images(turf/T, viewsize)
 	. = list()
-	for(var/obj/O in orange(viewsize, user))
-		if(O.level != 1)
-			continue
-
-		if(O.invisibility == INVISIBILITY_MAXIMUM || HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
-			var/image/I = new(loc = get_turf(O))
-			var/mutable_appearance/MA = new(O)
-			MA.alpha = 128
-			MA.dir = O.dir
-			I.appearance = MA
-			. += I
+	for(var/turf/TT in range(viewsize, T))
+		if(TT.blueprint_data)
+			. += TT.blueprint_data
 
 /obj/item/areaeditor/blueprints/proc/set_viewer(mob/user, message = "")
 	if(user && user.client)
 		if(viewing)
 			clear_viewer()
 		viewing = user.client
-		showing = get_images(user, viewing.view)
+		showing = get_images(get_turf(user), viewing.view)
 		viewing.images |= showing
 		if(message)
 			to_chat(user, message)
