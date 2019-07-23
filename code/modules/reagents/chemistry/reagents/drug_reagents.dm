@@ -452,7 +452,7 @@
 	..()
 	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
 
-/datum/reagent/drug/pumpup/on_mob_delete(mob/living/L)
+/datum/reagent/drug/pumpup/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
 	..()
 
