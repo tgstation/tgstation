@@ -70,12 +70,12 @@
 
 /**
   * Called when an atom is created in byond (built in engine proc)
-  * 
+  *
   * Not a lot happens here in SS13 code, as we offload most of the work to the
   * [Intialization](atom.html#proc/Initialize) proc, mostly we run the preloader
   * if the preloader is being used and then call InitAtom of which the ultimate
   * result is that the Intialize proc is called.
-  * 
+  *
   * We also generate a tag here if the DF_USE_TAG flag is set on the atom
   */
 /atom/New(loc, ...)
@@ -95,15 +95,15 @@
 
 /**
   * The primary method that objects are setup in SS13 with
-  * 
+  *
   * we don't use New as we have better control over when this is called and we can choose
   * to delay calls or hook other logic in and so forth
-  * 
+  *
   * During roundstart map parsing, atoms are queued for intialization in the base atom/New(),
   * After the map has loaded, then Initalize is called on all atoms one by one. NB: this
   * is also true for loading map templates as well, so they don't Initalize until all objects
   * in the map file are parsed and present in the world
-  * 
+  *
   * If you're creating an object at any point after SSInit has run then this proc will be
   * immediately be called from New.
   *
@@ -111,7 +111,7 @@
   * the Atom subsystem intialization, or if the atom is being loaded from the map template.
   * If the item is being created at runtime any time after the Atom subsystem is intialized then
   * it's false.
-  * 
+  *
   * You must always call the parent of this proc, otherwise failures will occur as the item
   * will not be seen as initalized (this can lead to all sorts of strange behaviour, like
   * the item being completely unclickable)
@@ -120,7 +120,7 @@
   *
   * Any parameters from new are passed through (excluding loc), naturally if you're loading from a map
   * there are no other arguments
-  * 
+  *
   * Must return an [initialization hint](code/__DEFINES/subsystems.html) or a runtime will occur.
   *
   * Note: the following functions don't call the base for optimization and must copypasta handling:
@@ -152,7 +152,7 @@
 
 /**
   * Late Intialization, for code that should run after all atoms have run Intialization
-  * 
+  *
   * To have your LateIntialize proc be called, your atoms [Initalization](atom.html#proc/Initialize)
   *  proc must return the hint
   * [INITIALIZE_HINT_LATELOAD](code/__DEFINES/subsystems.html#define/INITIALIZE_HINT_LATELOAD)
@@ -204,11 +204,11 @@
 /atom/proc/CanPass(atom/movable/mover, turf/target)
 	return !density
 
-/** 
+/**
   * Is this atom currently located on centcom
-  * 
+  *
   * Specifically, is it on the z level and within the centcom areas
-  * 
+  *
   * You can also be in a shuttleshuttle during endgame transit
   *
   * Used in gamemode to identify mobs who have escaped and for some other areas of the code
@@ -300,7 +300,7 @@
   * If the part is a moveable atom and the  previous location of the item was a mob/living,
   * it calls the inventory handler transferItemToLoc for that mob/living and transfers the part
   * to this atom
-  * 
+  *
   * Otherwise it simply forceMoves the atom into this atom
   */
 /atom/proc/CheckParts(list/parts_list)
@@ -385,7 +385,7 @@
   * React to an EMP of the given severity
   *
   * Default behaviour is to send the COMSIG_ATOM_EMP_ACT signal
-  * 
+  *
   * If the signal does not return protection, and there are attached wires then we call
   * emp_pulse() on the wires
   *
@@ -472,7 +472,7 @@
 
 /**
   * An atom we are buckled or is contained within us has tried to move
-  * 
+  *
   * Default behaviour is to send a warning that the user can't move while buckled as long
   * as the buckle_message_cooldown has expired (50 ticks)
   */
@@ -671,7 +671,7 @@
   *
   * This behaviour is usually to mass transfer, but this is no longer a used proc as it just
   * calls the underyling /datum/component/storage dump act if a component exists
-  * 
+  *
   * TODO these should be purely component items that intercept the atom clicks higher in the
   * call chain
   */
@@ -696,7 +696,7 @@
 	while (do_after(user, 10, TRUE, src, FALSE, CALLBACK(STR, /datum/component/storage.proc/handle_mass_item_insertion, things, src_object, user, progress)))
 		stoplag(1)
 	qdel(progress)
-	to_chat(user, "<span class='notice'>You dump as much of [src_object.parent]'s contents into [STR.insert_preposition]to [src] as you can.</span>")
+	to_chat(user, "<span class='notice'>You dump as much of [src_object.parent]'s contents [STR.insert_preposition]to [src] as you can.</span>")
 	STR.orient2hud(user)
 	src_object.orient2hud(user)
 	if(user.active_storage) //refresh the HUD to show the transfered contents
@@ -710,7 +710,7 @@
 
 /**
   * This proc is called when an atom in our contents has it's Destroy() called
-  * 
+  *
   * Default behaviour is to simply send COMSIG_ATOM_CONTENTS_DEL
   */
 /atom/proc/handle_atom_del(atom/A)
@@ -736,7 +736,7 @@
 
 /**
   * the sight changes to give to the mob whose perspective is set to that atom
-  * 
+  *
   * (e.g. A mob with nightvision loses its nightvision while looking through a normal camera)
   */
 /atom/proc/update_remote_sight(mob/living/user)
@@ -758,7 +758,7 @@
 
 /**
   * Called when the atom log's in or out
-  * 
+  *
   * Default behaviour is to call on_log on the location this atom is in
   */
 /atom/proc/on_log(login)
@@ -818,9 +818,9 @@
 
 /**
   * call back when a var is edited on this atom
-  * 
+  *
   * Can be used to implement special handling of vars
-  * 
+  *
   * At the atom level, if you edit a var named "color" it will add the atom colour with
   * admin level priority to the atom colours list
   *
@@ -893,9 +893,9 @@
 
 /**
   *Tool behavior procedure. Redirects to tool-specific procs by default.
-  * 
+  *
   * You can override it to catch all tool interactions, for use in complex deconstruction procs.
-  * 
+  *
   * Must return  parent proc ..() in the end if overridden
   */
 /atom/proc/tool_act(mob/living/user, obj/item/I, tool_type)

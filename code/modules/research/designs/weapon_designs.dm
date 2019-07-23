@@ -324,10 +324,10 @@
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/cryostatis_shotgun_dart
-	name = "Cryostatis Shotgun Dart"
-	desc = "A shotgun dart designed with similar internals to that of a cryostatis beaker, allowing reagents to not react when inside."
-	id = "shotgundartcryostatis"
+/datum/design/cryostasis_shotgun_dart
+	name = "Cryostasis Shotgun Dart"
+	desc = "A shotgun dart designed with similar internals to that of a cryostasis beaker, allowing reagents to not react when inside."
+	id = "shotgundartcryostasis"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3500)
 	build_path = /obj/item/ammo_casing/shotgun/dart/noreact

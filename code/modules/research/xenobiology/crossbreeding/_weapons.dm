@@ -76,6 +76,7 @@ Slimecrossing Weapons
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	item_flags = ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
+	slot_flags = NONE
 	force = 5
 	max_charges = 1 //Recharging costs blood.
 	recharge_rate = 1
