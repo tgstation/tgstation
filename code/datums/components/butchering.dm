@@ -72,10 +72,10 @@
 /datum/component/butchering/recycler
 
 /datum/component/butchering/recycler/Initialize(_speed, _effectiveness, _bonus_modifier, _butcher_sound, disabled, _can_be_blunt)
-	if(!istype(parent, /obj/machinery/recycler) //EWWW
-		return COMPONENT_INCOMPATABLE
+	if(!istype(parent, /obj/machinery/recycler)) //EWWW
+		return COMPONENT_INCOMPATIBLE
 	. = ..()
-	if(. == COMPONENT_INCOMPATABLE)
+	if(. == COMPONENT_INCOMPATIBLE)
 		return
 	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/onCrossed)
 
@@ -83,7 +83,7 @@
 	if(!istype(L))
 		return
 	var/obj/machinery/recycler/eater = parent
-	if(eater.safetymode || (stat & (BROKEN|NOPOWER)))
+	if(eater.safety_mode || (eater.stat & (BROKEN|NOPOWER))) //I'm so sorry.
 		return
 	if(L.stat == DEAD && (L.butcher_results || L.guaranteed_butcher_results))
 		Butcher(src, L)
