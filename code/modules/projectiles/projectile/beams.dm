@@ -191,7 +191,7 @@
 	name = "shrink ray"
 	icon_state = "blue_laser"
 	hitsound = 'sound/weapons/shrink_hit.ogg'
-	damage = 35
+	damage = 0
 	damage_type = STAMINA
 	flag = "energy"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/shrink
@@ -217,6 +217,10 @@
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
 			C.unequip_everything()
+			if(ishuman(C))
+				var/mob/living/carbon/human/H = C
+				H.physiology.damage_resistance -= 100//carbons take double damage while shrunk
+				addtimer(VARSET_CALLBACK(H, physiology.damage_resistance, H.physiology.damage_resistance + 100), shrink_time)
 			C.visible_message("<span class='warning'>[C]'s belongings fall off of [C.p_them()] as they shrink down!</span>",
 			"<span class='userdanger'>Your belonings fall away as everything grows bigger!</span>")
 	else
