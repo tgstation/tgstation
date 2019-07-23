@@ -49,7 +49,7 @@
 	antag_flag = ROLE_BROTHER
 	antag_datum = /datum/antagonist/brother/
 	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	restricted_roles = list("Cyborg")
+	restricted_roles = list("Cyborg", "AI")
 	required_candidates = 2
 	weight = 4
 	cost = 15
@@ -100,8 +100,8 @@
 	name = "Changelings"
 	antag_flag = ROLE_CHANGELING
 	antag_datum = /datum/antagonist/changeling
-	restricted_roles = list("AI", "Cyborg")
 	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	restricted_roles = list("AI", "Cyborg")
 	required_candidates = 1
 	weight = 3
 	cost = 30
@@ -366,7 +366,7 @@
 	if (!..())
 		return FALSE
 	var/head_check = 0
-	for (var/mob/player in GLOB.player_list)
+	for (var/mob/player in mode.current_players[CURRENT_LIVING_PLAYERS])
 		if (player.mind.assigned_role in GLOB.command_positions)
 			head_check++
 	return (head_check >= required_heads)

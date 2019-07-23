@@ -78,7 +78,10 @@
 	possible_candidates.Add(dead_players)
 	possible_candidates.Add(list_observers)
 	send_applications(possible_candidates)
-	return TRUE
+	if(applicants.len >= required_candidates)
+		return TRUE
+	else
+		return FALSE
 
 /// This sends a poll to ghosts if they want to be a ghost spawn from a ruleset.
 /datum/dynamic_ruleset/midround/from_ghosts/proc/send_applications(list/possible_volunteers = list())
