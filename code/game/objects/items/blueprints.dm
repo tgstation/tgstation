@@ -27,7 +27,7 @@
 /obj/item/areaeditor/Topic(href, href_list)
 	if(..())
 		return TRUE
-	if(!usr.canUseTopic(src))
+	if(!usr.canUseTopic(src) || usr != loc)
 		usr << browse(null, "window=blueprints")
 		return TRUE
 	if(href_list["create_area"])
@@ -110,18 +110,26 @@
 
 	attack_self(usr) //this is not the proper way, but neither of the old update procs work! it's too ancient and I'm tired shush.
 
-/obj/item/areaeditor/blueprints/proc/get_images(turf/T, viewsize)
+/obj/item/areaeditor/blueprints/proc/get_images(mob/user, viewsize)
 	. = list()
-	for(var/turf/TT in range(viewsize, T))
-		if(TT.blueprint_data)
-			. += TT.blueprint_data
+	for(var/obj/O in orange(viewsize, user))
+		if(O.level != 1)
+			continue
+
+		if(O.invisibility == INVISIBILITY_MAXIMUM || HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
+			var/image/I = new(loc = get_turf(O))
+			var/mutable_appearance/MA = new(O)
+			MA.alpha = 128
+			MA.dir = O.dir
+			I.appearance = MA
+			. += I
 
 /obj/item/areaeditor/blueprints/proc/set_viewer(mob/user, message = "")
 	if(user && user.client)
 		if(viewing)
 			clear_viewer()
 		viewing = user.client
-		showing = get_images(get_turf(user), viewing.view)
+		showing = get_images(user, viewing.view)
 		viewing.images |= showing
 		if(message)
 			to_chat(user, message)
