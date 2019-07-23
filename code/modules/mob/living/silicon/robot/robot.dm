@@ -77,7 +77,6 @@
 	///This is a list of all inserted upgrades. They are stored in nullspace.
 	var/list/upgrades = list()
 
-	var/hasExpanded = FALSE
 	var/obj/item/hat
 	var/hat_offset = -3
 	var/list/blacklisted_hats = list( //Hats that don't really work on borgos
@@ -982,10 +981,6 @@
 	if(hud_used)
 		hud_used.update_robot_modules_display()
 
-	if (hasExpanded)
-		resize = 0.5
-		hasExpanded = FALSE
-		update_transform()
 	module.transform_to(/obj/item/robot_module)
 
 	// Remove upgrades.

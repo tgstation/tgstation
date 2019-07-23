@@ -33,8 +33,9 @@
 	if(failure_message)
 		return failure_message
 	if(robot_upgrade_flags & R_UPGRADE_ONE_USE)
+		. = "<span class='notice'>You insert [src] into [R]. It got used up in the process.</span>"
 		qdel(src)
-		return "<span class='notice'>You insert [src] into [R]. It got used up in the process.</span>"
+		return
 	owner = R
 	R.upgrades.Add(src)
 	moveToNullspace()
@@ -253,8 +254,8 @@
 	if(.)
 		return
 	if(R.emagged)
-		return "ERROR"
-	R.SetEmagged(1)
+		return "<span class='warning'>This unit is already hacked!</span>"
+	R.SetEmagged(TRUE)
 
 /obj/item/borg/upgrade/syndicate/deactivate(mob/living/silicon/robot/R)
 	. = ..()
@@ -425,7 +426,7 @@
 		found_hypo = TRUE
 
 	if(!found_hypo)
-		return "BORG DOES NOT HAVE ANY HYPOSPRAYS" //TODO
+		return "<span class='warning'>This unit does not have any hyposprays.</span>"
 
 /obj/item/borg/upgrade/piercing_hypospray/deactivate(mob/living/silicon/robot/R)
 	for(var/obj/item/reagent_containers/borghypo/H in R.module.modules)
@@ -502,32 +503,20 @@
 	. = ..()
 	if(.)
 		return
-	if(R.hasExpanded) //TO-DO Fix this boolean by removing it.
-		return "<span class='notice'>This unit already has an expand module installed!</span>"
-	R.notransform = TRUE
 	var/prev_lockcharge = R.lockcharge
 	R.SetLockdown(1)
-	R.anchored = TRUE
+	R.resize = 2
+	R.update_transform()
 	var/datum/effect_system/smoke_spread/smoke = new
 	smoke.set_up(1, R.loc)
 	smoke.start()
-	sleep(2)
-	for(var/i in 1 to 4)
-		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, 1, -1)
-		sleep(12)
-	if(!prev_lockcharge)
-		R.SetLockdown(0)
-	R.anchored = FALSE
-	R.notransform = FALSE
-	R.resize = 2
-	R.hasExpanded = TRUE
-	R.update_transform()
+	for(var/i in 1 to 4) //This is where the fun begins
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, 1, -1), 2 + 12 * i)
+	addtimer(CALLBACK(R, /mob/living/silicon/robot/proc/SetLockdown, prev_lockcharge), 50)
 
 /obj/item/borg/upgrade/expand/deactivate(mob/living/silicon/robot/R)
-	if (R.hasExpanded)
-		R.hasExpanded = FALSE
-		R.resize = 0.5
-		R.update_transform()
+	R.resize = 0.5
+	R.update_transform()
 
 /obj/item/borg/upgrade/rped
 	name = "engineering cyborg RPED"
