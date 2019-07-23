@@ -745,7 +745,7 @@
 	name = "Caramel"
 	description = "Who would have guessed that heating sugar is so delicious?"
 	nutriment_factor = 10 * REAGENTS_METABOLISM
-	color = "#C65A00"
+	color = "#D98736"
 	taste_mult = 2
-	taste_description = "bitter sweetness"
+	taste_description = "caramel"
 	reagent_state = SOLID

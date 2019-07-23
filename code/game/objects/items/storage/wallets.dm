@@ -5,6 +5,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
 	slot_flags = ITEM_SLOT_ID
+	component_type = /datum/component/storage/concrete/wallet
 
 	var/obj/item/card/id/front_id = null
 	var/obj/item/card/id/cached_front_id = null
@@ -13,7 +14,7 @@
 
 /obj/item/storage/wallet/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage/concrete/wallet)
 	STR.max_items = 4
 	STR.set_holdable(list(
 		/obj/item/stack/spacecash,
@@ -58,6 +59,7 @@
 		if(H.wear_id == src)
 			H.sec_hud_set_ID()
 	update_icon()
+	update_label()
 
 /obj/item/storage/wallet/Entered(atom/movable/AM)
 	. = ..()
@@ -89,6 +91,17 @@
 		return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]" //displays all overlays in chat
 	return ..()
 
+/obj/item/storage/wallet/proc/update_label()
+	if(front_id)
+		name = "wallet displaying [front_id]"
+	else
+		name = "wallet"
+
+/obj/item/storage/wallet/examine()
+	. = ..()
+	if(front_id)
+		. += "<span class='notice'>Alt-click to remove the id.</span>"
+
 /obj/item/storage/wallet/GetID()
 	return front_id
 
@@ -103,4 +116,4 @@
 
 /obj/item/storage/wallet/random/PopulateContents()
 	new /obj/item/holochip(src, rand(5,30))
-	update_icon()
+	icon_state = "wallet"

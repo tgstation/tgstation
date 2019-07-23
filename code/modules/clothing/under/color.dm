@@ -252,3 +252,11 @@
 	item_state = "rainbow"
 	item_color = "rainbow"
 	can_adjust = FALSE
+
+/obj/item/clothing/under/skirt/color/rainbow
+	name = "rainbow jumpskirt"
+	desc = "A multi-colored jumpskirt!"
+	icon_state = "rainbow_skirt"
+	item_state = "rainbow"
+	item_color = "rainbow_skirt"
+	can_adjust = FALSE
