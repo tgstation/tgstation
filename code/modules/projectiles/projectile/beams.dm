@@ -212,10 +212,6 @@
 	addtimer(VARSET_CALLBACK(target, opacity, oldopac), shrink_time)
 	if(isliving(target))
 		var/mob/living/L = target
-//		L.resize = 0.25
-//		L.update_transform()
-//		addtimer(VARSET_CALLBACK(L, resize, 4), shrink_time)
-//		addtimer(CALLBACK(L, .mob/proc/update_transform), shrink_time)
 		L.add_movespeed_modifier(MOVESPEED_ID_SHRINK_RAY, update=TRUE, priority=100, multiplicative_slowdown=4, movetypes=GROUND)
 		addtimer(CALLBACK(L, .mob/proc/remove_movespeed_modifier, MOVESPEED_ID_SHRINK_RAY), shrink_time)
 		if(iscarbon(L))
