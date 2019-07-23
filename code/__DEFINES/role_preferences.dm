@@ -8,7 +8,6 @@
 //then you MUST update the database!
 #define ROLE_SYNDICATE			"Syndicate"
 #define ROLE_TRAITOR			"Traitor"
-#define ROLE_CONTRACTORSUPPORT	"Contractor Support Unit"
 #define ROLE_OPERATIVE			"Operative"
 #define ROLE_CHANGELING			"Changeling"
 #define ROLE_WIZARD				"Wizard"

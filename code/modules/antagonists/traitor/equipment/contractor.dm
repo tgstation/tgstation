@@ -1,8 +1,6 @@
 /// Support unit gets it's own very basic antag datum for admin logging.
 /datum/antagonist/traitor/contractor_support
 	name = "Contractor Support Unit"
-	job_rank = ROLE_CONTRACTORSUPPORT
-	special_role = ROLE_CONTRACTORSUPPORT
 	antag_moodlet = /datum/mood_event/focused
 
 	show_in_roundend = FALSE /// We're already adding them in to the contractor's roundend.
