@@ -211,7 +211,7 @@
 /obj/item/storage/backpack/satchel
 	name = "satchel"
 	desc = "A trendy looking satchel."
-	icon_state = "satchel-norm"
+	icon_state = "backpack"
 	species_exception = list(/datum/species/angel) //satchels can be equipped since they are on the side, not back
 
 /obj/item/storage/backpack/satchel/leather
@@ -241,32 +241,32 @@
 /obj/item/storage/backpack/satchel/vir
 	name = "virologist satchel"
 	desc = "A sterile satchel with virologist colours."
-	icon_state = "satchel-vir"
+	icon_state = "viropack"
 	item_state = "satchel-vir"
 
 /obj/item/storage/backpack/satchel/chem
 	name = "chemist satchel"
 	desc = "A sterile satchel with chemist colours."
 	icon_state = "satchel-chem"
-	item_state = "satchel-chem"
+	item_state = "chempack"
 
 /obj/item/storage/backpack/satchel/gen
 	name = "geneticist satchel"
 	desc = "A sterile satchel with geneticist colours."
 	icon_state = "satchel-gen"
-	item_state = "satchel-gen"
+	item_state = "genepack"
 
 /obj/item/storage/backpack/satchel/tox
 	name = "scientist satchel"
 	desc = "Useful for holding research materials."
 	icon_state = "satchel-tox"
-	item_state = "satchel-tox"
+	item_state = "toxpack"
 
 /obj/item/storage/backpack/satchel/hyd
 	name = "botanist satchel"
 	desc = "A satchel made of all natural fibers."
 	icon_state = "satchel-hyd"
-	item_state = "satchel-hyd"
+	item_state = "botpack"
 
 /obj/item/storage/backpack/satchel/sec
 	name = "security satchel"
@@ -278,7 +278,7 @@
 	name = "explorer satchel"
 	desc = "A robust satchel for stashing your loot."
 	icon_state = "satchel-explorer"
-	item_state = "securitypack"
+	item_state = "explorerpack"
 
 /obj/item/storage/backpack/satchel/cap
 	name = "captain's satchel"
