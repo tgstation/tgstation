@@ -5,7 +5,9 @@
 	var/datum/action/innate/shuttledocker_rotate/rotate_action = new
 	var/datum/action/innate/shuttledocker_place/place_action = new
 	var/shuttleId = ""
+	var/shuttleDestination_type = ""
 	var/shuttlePortId = ""
+	var/shuttlePortDestination_type = ""
 	var/shuttlePortName = "custom location"
 	var/list/jumpto_ports = list() //hashset of ports to jump to and ignore for collision purposes
 	var/obj/docking_port/stationary/my_port //the custom docking port placed by this console
@@ -20,13 +22,22 @@
 	var/turf/designating_target_loc
 	var/jammed = FALSE
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/Initialize()
+/obj/machinery/computer/camera_advanced/shuttle_docker/Initialize(mapload)
 	. = ..()
 	GLOB.navigation_computers += src
+
+	if(!mapload)
+		connect_to_shuttle(SSshuttle.get_containing_shuttle(src))
+
+		for(var/port in SSshuttle.stationary)
+			var/obj/docking_port/stationary/S = SSshuttle.stationary[port]
+			if(S.destination_type == shuttleDestination_type)
+				jumpto_ports[S.id] = TRUE
+
 	for(var/V in SSshuttle.stationary)
 		if(!V)
 			continue
-		var/obj/docking_port/stationary/S = V
+		var/obj/docking_port/stationary/S = SSshuttle.stationary[V]
 		if(jumpto_ports[S.id])
 			z_lock |= S.z
 	whitelist_turfs = typecacheof(whitelist_turfs)
@@ -135,10 +146,19 @@
 				to_chat(current_user, "<span class='warning'>Unknown object detected in landing zone. Please designate another location.</span>")
 		return
 
+	//Make one use port that deleted after fly off, to don't lose info that need on to properly fly off.
+	if(my_port && my_port.get_docked())
+		my_port.delete_after = TRUE
+		my_port.id = FALSE
+		my_port.destination_type = FALSE
+		my_port.name = "Old [my_port.name]"
+		my_port = FALSE
+
 	if(!my_port)
 		my_port = new()
 		my_port.name = shuttlePortName
-		my_port.id = shuttlePortId
+		my_port.destination_type = shuttlePortDestination_type
+		my_port.id = shuttlePortDestination_type
 		my_port.height = shuttle_port.height
 		my_port.width = shuttle_port.width
 		my_port.dheight = shuttle_port.dheight
@@ -258,7 +278,10 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	if(port && (shuttleId == initial(shuttleId) || override))
 		shuttleId = port.id
+		shuttleDestination_type = port.destination_type
 		shuttlePortId = "[port.id]_custom"
+		shuttlePortDestination_type = "[port.id]_custom"
+		shuttlePortName = "[shuttleId]_[shuttlePortName]"
 	if(dock)
 		jumpto_ports[dock.id] = TRUE
 
@@ -337,7 +360,7 @@
 		if(!V)
 			stack_trace("SSshuttle.beacons have null entry!")
 			continue
-		var/obj/machinery/spaceship_navigation_beacon/nav_beacon = V
+		var/obj/machinery/spaceship_navigation_beacon/nav_beacon = SSshuttle.stationary[V]
 		if(!nav_beacon.z || SSmapping.level_has_any_trait(nav_beacon.z, console.locked_traits))
 			break
 		if(!nav_beacon.locked)

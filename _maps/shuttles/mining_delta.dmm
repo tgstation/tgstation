@@ -84,7 +84,7 @@
 	dir = 4;
 	dwidth = 3;
 	height = 5;
-	id = "mining";
+	destination_type = "mining";
 	name = "mining shuttle";
 	port_direction = 8;
 	width = 7

@@ -1,6 +1,6 @@
 /obj/docking_port/mobile/assault_pod
 	name = "assault pod"
-	id = "steel_rain"
+	destination_type = "steel_rain"
 	dwidth = 3
 	width = 7
 	height = 7
@@ -47,6 +47,7 @@
 		return
 	var/obj/docking_port/stationary/landing_zone = new /obj/docking_port/stationary(T)
 	landing_zone.id = "assault_pod([REF(src)])"
+	landing_zone.destination_type = "assault_pod([REF(src)])"
 	landing_zone.name = "Landing Zone"
 	landing_zone.dwidth = dwidth
 	landing_zone.dheight = dheight
@@ -56,7 +57,7 @@
 
 	for(var/obj/machinery/computer/shuttle/S in GLOB.machines)
 		if(S.shuttleId == shuttle_id)
-			S.possible_destinations = "[landing_zone.id]"
+			S.possible_destinations = "[landing_zone.destination_type]"
 
 	to_chat(user, "Landing zone set.")
 

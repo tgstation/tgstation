@@ -10,6 +10,11 @@
 	var/admin_controlled
 	var/no_destination_swap = 0
 
+/obj/machinery/computer/shuttle/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		connect_to_shuttle(SSshuttle.get_containing_shuttle(src))
+
 /obj/machinery/computer/shuttle/ui_interact(mob/user)
 	. = ..()
 	var/list/options = params2list(possible_destinations)
@@ -17,8 +22,9 @@
 	var/dat = "Status: [M ? M.getStatusText() : "*Missing*"]<br><br>"
 	if(M)
 		var/destination_found
-		for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
-			if(!options.Find(S.id))
+		for(var/port in SSshuttle.stationary)
+			var/obj/docking_port/stationary/S = SSshuttle.stationary[port]
+			if(!options.Find(S.destination_type))
 				continue
 			if(!M.check_dock(S, silent=TRUE))
 				continue
@@ -75,3 +81,4 @@
 /obj/machinery/computer/shuttle/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	if(port && (shuttleId == initial(shuttleId) || override))
 		shuttleId = port.id
+		possible_destinations += ";[port.id]_custom"

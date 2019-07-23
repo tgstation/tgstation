@@ -91,14 +91,14 @@
 /area/science/robotics/lab)
 "aas" = (
 /obj/docking_port/stationary/random{
-	id = "pod_lavaland1";
+	destination_type = "pod_lavaland1";
 	name = "lavaland"
 	},
 /turf/open/space,
 /area/space/nearstation)
 "aat" = (
 /obj/docking_port/stationary/random{
-	id = "pod_lavaland2";
+	destination_type = "pod_lavaland2";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -554,7 +554,7 @@
 	dir = 2;
 	dwidth = 4;
 	height = 17;
-	id = "arrivals_stationary";
+	destination_type = "arrivals_stationary";
 	name = "delta arrivals";
 	roundstart_template = /datum/map_template/shuttle/arrival/delta;
 	width = 9
@@ -1561,7 +1561,7 @@
 	dir = 8;
 	dwidth = 12;
 	height = 17;
-	id = "syndicate_ne";
+	destination_type = "syndicate_ne";
 	name = "northeast of station";
 	width = 23
 	},
@@ -1572,7 +1572,7 @@
 	dir = 8;
 	dwidth = 11;
 	height = 22;
-	id = "whiteship_home";
+	destination_type = "whiteship_home";
 	name = "SS13: Auxiliary Dock, Station-Fore";
 	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
 	width = 35
@@ -1874,7 +1874,7 @@
 /obj/docking_port/stationary{
 	dwidth = 2;
 	height = 13;
-	id = "ferry_home";
+	destination_type = "ferry_home";
 	name = "port bay 2";
 	width = 5
 	},
@@ -12569,7 +12569,7 @@
 	dir = 4;
 	dwidth = 4;
 	height = 7;
-	id = "supply_home";
+	destination_type = "supply_home";
 	name = "Cargo Bay";
 	width = 12
 	},
@@ -26425,7 +26425,7 @@
 "bbz" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	id = "pod_lavaland4";
+	destination_type = "pod_lavaland4";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -29341,7 +29341,7 @@
 	dir = 4;
 	dwidth = 3;
 	height = 5;
-	id = "mining_home";
+	destination_type = "mining_home";
 	name = "mining shuttle bay";
 	roundstart_template = /datum/map_template/shuttle/mining/delta;
 	width = 7
@@ -40036,7 +40036,7 @@
 	dir = 8;
 	dwidth = 2;
 	height = 5;
-	id = "laborcamp_home";
+	destination_type = "laborcamp_home";
 	name = "fore bay 1";
 	roundstart_template = /datum/map_template/shuttle/labour/delta;
 	width = 9
@@ -110970,7 +110970,7 @@
 	dir = 4;
 	dwidth = 11;
 	height = 18;
-	id = "emergency_home";
+	destination_type = "emergency_home";
 	name = "DeltaStation emergency evac bay";
 	width = 30
 	},
@@ -115127,7 +115127,7 @@
 	dir = 4;
 	dwidth = 4;
 	height = 9;
-	id = "aux_base_zone";
+	destination_type = "aux_base_zone";
 	name = "aux base zone";
 	roundstart_template = /datum/map_template/shuttle/aux_base/default;
 	width = 9

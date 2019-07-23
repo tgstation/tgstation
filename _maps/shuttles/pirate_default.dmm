@@ -840,6 +840,7 @@
 /obj/docking_port/mobile/pirate{
 	dwidth = 11;
 	height = 16;
+	destination_type = "pirateship";
 	launch_status = 0;
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "Pirate Ship";
@@ -849,7 +850,7 @@
 /obj/docking_port/stationary{
 	dwidth = 11;
 	height = 16;
-	id = "pirateship_home";
+	destination_type = "pirateship_home";
 	name = "Deep Space";
 	width = 17
 	},

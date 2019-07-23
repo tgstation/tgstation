@@ -844,7 +844,7 @@
 	dir = 2;
 	dwidth = 14;
 	height = 13;
-	id = "caravanpirate";
+	destination_type = "caravanpirate";
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "Pirate Cutter";
 	port_direction = 8;

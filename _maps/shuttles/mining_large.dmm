@@ -452,7 +452,7 @@
 /obj/docking_port/mobile{
 	dwidth = 3;
 	height = 10;
-	id = "mining";
+	destination_type = "mining";
 	name = "mining shuttle";
 	port_direction = 2;
 	width = 7

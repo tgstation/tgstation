@@ -453,7 +453,7 @@
 	dwidth = 12;
 	height = 17;
 	hidden = 1;
-	id = "syndicate";
+	destination_type = "syndicate";
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "syndicate infiltrator";
 	port_direction = 4;

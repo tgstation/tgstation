@@ -3419,7 +3419,7 @@
 	dir = 2;
 	dwidth = 11;
 	height = 22;
-	id = "whiteship_z4";
+	destination_type = "whiteship_z4";
 	name = "KSS13: Derelict";
 	width = 35
 	},

@@ -68,7 +68,7 @@
 	dir = 8;
 	dwidth = 2;
 	height = 13;
-	id = "ferry";
+	destination_type = "ferry";
 	name = "ferry shuttle";
 	preferred_direction = 4;
 	width = 5
