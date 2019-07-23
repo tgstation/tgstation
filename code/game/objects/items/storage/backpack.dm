@@ -211,7 +211,7 @@
 /obj/item/storage/backpack/satchel
 	name = "satchel"
 	desc = "A trendy looking satchel."
-	icon_state = "backpack"
+	icon_state = "satchel-norm"
 	species_exception = list(/datum/species/angel) //satchels can be equipped since they are on the side, not back
 
 /obj/item/storage/backpack/satchel/leather
@@ -241,8 +241,8 @@
 /obj/item/storage/backpack/satchel/vir
 	name = "virologist satchel"
 	desc = "A sterile satchel with virologist colours."
-	icon_state = "viropack"
-	item_state = "satchel-vir"
+	icon_state = "satchel-vir"
+	item_state = "viropack"
 
 /obj/item/storage/backpack/satchel/chem
 	name = "chemist satchel"
