@@ -148,15 +148,17 @@
 			var/upgradepath = text2path(params["upgrade"])
 			var/obj/item/borg/upgrade/installedupgrade = locate(upgradepath) in borg
 			if (installedupgrade)
-				installedupgrade.deactivate(borg, user)
-				borg.upgrades -= installedupgrade
+				installedupgrade.Remove(borg, FALSE)
 				message_admins("[key_name_admin(user)] removed the [installedupgrade] upgrade from [ADMIN_LOOKUPFLW(borg)].")
 				log_admin("[key_name(user)] removed the [installedupgrade] upgrade from [key_name(borg)].")
 				qdel(installedupgrade)
 			else
 				var/obj/item/borg/upgrade/upgrade = new upgradepath(borg)
-				upgrade.action(borg, user)
-				borg.upgrades += upgrade
+				if(upgrade.Insert(borg, user) != R_UPGRADE_SUCCESSFUL_INSERTION)
+					message_admins("[key_name_admin(user)] tried to add the [upgrade] borg upgrade to [ADMIN_LOOKUPFLW(borg)] and failed.")
+					log_admin("[key_name(user)] tried to add the [upgrade] borg upgrade to [key_name(borg)] and failed.")
+					qdel(upgrade)
+					return
 				message_admins("[key_name_admin(user)] added the [upgrade] borg upgrade to [ADMIN_LOOKUPFLW(borg)].")
 				log_admin("[key_name(user)] added the [upgrade] borg upgrade to [key_name(borg)].")
 		if ("toggle_radio")
