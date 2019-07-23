@@ -122,8 +122,8 @@
 	STOP_PROCESSING(SSobj, src)
 	respawn_progress = 0
 	if(blade && special != HEART_SPECIAL_SHADOWIFY)
-		QDEL_NULL(blade)
 		M.visible_message("<span class='warning'>\The [blade] disintegrates!</span>")
+		QDEL_NULL(blade)
 	..()
 
 /obj/item/organ/heart/nightmare/Stop()
