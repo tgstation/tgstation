@@ -442,6 +442,20 @@
 	qdel(chain)
 	return ..()
 
+//just a nerfed version of the real thing for the bounty hunters.
+/obj/item/gun/magic/hook/bounty
+	name = "hook"
+	ammo_type = /obj/item/ammo_casing/magic/hook/bounty
+
+/obj/item/gun/magic/hook/bounty/shoot_with_empty_chamber(mob/living/user)
+	to_chat(user, "<span class='warning'>The [src] isn't ready to fire yet!</span>")
+
+/obj/item/ammo_casing/magic/hook/bounty
+	projectile_type = /obj/item/projectile/hook/bounty
+
+/obj/item/projectile/hook/bounty
+	damage = 0
+	paralyze = 20
 
 //Immortality Talisman
 /obj/item/immortality_talisman

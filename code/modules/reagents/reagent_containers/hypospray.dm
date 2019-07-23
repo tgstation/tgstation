@@ -41,7 +41,7 @@
 		to_chat(user, "<span class='notice'>You inject [M] with [src].</span>")
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
 		reagents.reaction(M, INJECT, fraction)
-		
+
 		if(M.reagents)
 			var/trans = 0
 			if(!infinite)
@@ -101,7 +101,7 @@
 	user.visible_message("<span class='suicide'>[user] begins to choke on \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return OXYLOSS//ironic. he could save others from oxyloss, but not himself.
 
-/obj/item/reagent_containers/hypospray/inject(mob/living/M, mob/user)
+/obj/item/reagent_containers/hypospray/medipen/inject(mob/living/M, mob/user)
 	. = ..()
 	if(.)
 		reagents.maximum_volume = 0 //Makes them useless afterwards
