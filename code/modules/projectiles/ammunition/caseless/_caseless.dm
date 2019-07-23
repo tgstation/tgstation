@@ -13,7 +13,9 @@
 
 ///It's caseless so it isn't going to be bouncing away
 /obj/item/ammo_casing/caseless/bounce_away(still_warm, bounce_delay)
-	return 	
+	if(QDELETED(src))
+		return
+	return ..()
 
 /obj/item/ammo_casing/caseless/update_icon()
 	..()
