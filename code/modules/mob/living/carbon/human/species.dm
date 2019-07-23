@@ -1156,9 +1156,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/spec_emag_act(mob/living/carbon/human/H, mob/user)
 	return
 
-/datum/species/proc/spec_electrocute_act(mob/living/carbon/human/H, shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	return
-
 /datum/species/proc/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(!((target.health < 0 || HAS_TRAIT(target, TRAIT_FAKEDEATH)) && !(target.mobility_flags & MOBILITY_STAND)))
 		target.help_shake_act(user)

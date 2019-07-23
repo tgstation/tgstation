@@ -1,7 +1,0 @@
-author: "traelezab with Dunham and Fikou for sprites, thanks fellas"
-delete-after: True
-changes: 
-  - rscadd: "There is a new fugitive hunter, the bounty hunters! They're barely better than space pirates!"
-  - rscadd: "The russian shuttle has undergone some changes, namely the removal of the ripley, and the addition of space suits."
-  - rscdel: "The cultists have lost their god, RIP yalp elor."
-  - tweak: "Other various improvements like different huds for the hunters and fugitives, a less threatening announcement message, and more."
