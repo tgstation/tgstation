@@ -40463,7 +40463,7 @@
 /turf/open/floor/plasteel/dark/telecomms,
 /area/tcommsat/server)
 "ccg" = (
-/obj/machinery/telecomms/message_server,
+/obj/machinery/telecomms/message_server/preset,
 /turf/open/floor/plasteel/dark/telecomms,
 /area/tcommsat/server)
 "cch" = (
@@ -52051,13 +52051,6 @@
 /obj/machinery/computer/med_data,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
-"ybI" = (
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/virology)
 "ydA" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -92339,7 +92332,7 @@ bOr
 bOt
 bOr
 bRQ
-ybI
+bOr
 bSQ
 bNj
 bNs
