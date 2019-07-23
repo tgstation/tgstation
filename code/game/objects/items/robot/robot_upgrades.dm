@@ -515,6 +515,7 @@
 	addtimer(CALLBACK(R, /mob/living/silicon/robot/proc/SetLockdown, prev_lockcharge), 50)
 
 /obj/item/borg/upgrade/expand/deactivate(mob/living/silicon/robot/R)
+	. = ..()
 	R.resize = 0.5
 	R.update_transform()
 
