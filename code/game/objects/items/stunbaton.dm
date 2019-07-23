@@ -18,7 +18,6 @@
 	var/hitcost = 1000
 	var/throw_hit_chance = 35
 	var/preload_cell_type //if not empty the baton starts with this type of cell
-	var/resistance_chem = /datum/reagent/medicine/epinephrine
 
 /obj/item/melee/baton/get_cell()
 	return cell
@@ -175,20 +174,28 @@
 
 	return 1
 
-/// After a target is hit, we do a chunk of stamina damage, and apply a jitter and stutter.
-/// After a period of time, we then check to see if the target needs to have the stun applied.
+/// After a target is hit, we do a chunk of stamina damage, along with other effects.
+/// After a period of time, we then check to see what stun duration we give.
 /obj/item/melee/baton/proc/stun_effect(mob/living/target)
 	target.Jitter(20)
+	target.confused = 10
 	target.apply_effect(EFFECT_STUTTER, stunforce)
 	target.adjustStaminaLoss(65)
 
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
-	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, target), 25)
+	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, target), 20)
 
 /// After the initial stun period, we check to see if the target needs to have the stun applied.
 /obj/item/melee/baton/proc/apply_stun_effect_end(mob/living/target)
-	if(target.reagents.has_reagent(resistance_chem, 5, TRUE))
+	if(HAS_TRAIT(target, TRAIT_STUNRESISTANCE))
+		if (!target.IsParalyzed())
+			to_chat(target, "<span class='warning'>You muscles cease, making you collapse, but your body quickly recovers...</span>")
+		
+		target.Paralyze(stunforce / 10)
 		return
+	if (!!target.IsParalyzed())
+		to_chat(target, "<span class='warning'>You muscles cease, making you collapse!</span>")
+	
 	target.Paralyze(stunforce)
 
 /obj/item/melee/baton/emp_act(severity)
