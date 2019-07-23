@@ -106,3 +106,9 @@
 			to_chat(H, "<span class='warning'>The mask suddenly slips off your face and... slides under the floor?</span>")
 			to_chat(H, "<i>...dneirf uoy ot gnoleb ton seod tahT</i>")
 			qdel(src)
+
+/obj/item/clothing/mask/spacestation413/fake_horns
+	name = "pair of fake horns"
+	desc = "A cheap pair of fake troll horns."
+	icon_state = "fake_horns"
+	item_state = "fake_horns"
