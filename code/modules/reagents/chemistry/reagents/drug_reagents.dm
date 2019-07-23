@@ -446,7 +446,7 @@
 	description = "Take on the world!"
 	reagent_state = LIQUID
 	color = "#e38e44"
-	overdose_threshold = 15
+	overdose_threshold = 10
 
 /datum/reagent/drug/pumpup/on_mob_metabolize(mob/living/L)
 	..()
@@ -474,7 +474,7 @@
 /datum/reagent/drug/pumpup/overdose_process(mob/living/M)
 	if(prob(20))
 		M.emote(pick("twitch","drool"))
-	if(prob(20))
+	if(prob(33))
 		M.drop_all_held_items()
-		M.adjustToxLoss(3, 0)
+		M.adjustToxLoss(5, 0)
 	..()
