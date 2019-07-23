@@ -64,13 +64,13 @@
 	net = ducts[num2text(dir)]
 	for(var/A in net.suppliers)
 		var/datum/component/plumbing/supplier = A
-		if(supplier.can_give(amount, reagent))
+		if(supplier.can_give(amount, reagent, dir))
 			valid_suppliers += supplier
 	for(var/A in valid_suppliers)
 		var/datum/component/plumbing/give = A
-		give.transfer_to(src, amount / valid_suppliers.len, reagent)
+		give.transfer_to(src, amount / valid_suppliers.len, reagent, dir)
 ///returns TRUE when they can give the specified amount and reagent. called by process request
-/datum/component/plumbing/proc/can_give(amount, reagent)
+/datum/component/plumbing/proc/can_give(amount, reagent, dir)
 	if(!reagents || amount <= 0)
 		return
 
@@ -80,7 +80,7 @@
 	else if(reagents.total_volume > 0) //take whatever
 		return TRUE
 ///this is where the reagent is actually transferred and is thus the finish point of our process()
-/datum/component/plumbing/proc/transfer_to(datum/component/plumbing/target, amount, reagent)
+/datum/component/plumbing/proc/transfer_to(datum/component/plumbing/target, amount, reagent, dir)
 	if(!reagents || !target || !target.reagents)
 		return FALSE
 	if(reagent)
@@ -178,6 +178,11 @@
 				new_supply_connects += turn(D, angle)
 		demand_connects = new_demand_connects
 		supply_connects = new_supply_connects
+///Give the direction of a pipe, and it'll return wich direction it originally was when it's object pointed SOUTH
+/datum/component/plumbing/proc/get_original_direction(dir)
+	var/atom/movable/AM = parent
+	return turn(dir, dir2angle(AM.dir - 180))
+
 ///has one pipe input that only takes, example is manual output pipe
 /datum/component/plumbing/simple_demand
 	demand_connects = NORTH
