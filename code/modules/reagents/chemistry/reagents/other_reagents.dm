@@ -1274,9 +1274,6 @@
 	color = "#FFFFFF" // white
 	random_color_list = list("#FFFFFF") //doesn't actually change appearance at all
 
-
-
-
 //////////////////////////////////Hydroponics stuff///////////////////////////////
 
 /datum/reagent/plantnutriment

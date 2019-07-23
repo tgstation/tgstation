@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Suit storage units can no longer have their maintenance panel opened while running a decontamination sequence, causing the machine to enter a broken state."
