@@ -3,6 +3,7 @@ SUBSYSTEM_DEF(chat)
 	flags = SS_TICKER|SS_NO_INIT
 	wait = 1
 	priority = FIRE_PRIORITY_CHAT
+	init_order = INIT_ORDER_CHAT
 
 	var/list/payload = list()
 
