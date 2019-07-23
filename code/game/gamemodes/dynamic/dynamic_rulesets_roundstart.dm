@@ -366,7 +366,7 @@
 	if (!..())
 		return FALSE
 	var/head_check = 0
-	for (var/mob/dead/new_player/player in GLOB.player_list)
+	for (var/mob/player in GLOB.player_list)
 		if (player.mind.assigned_role in GLOB.command_positions)
 			head_check++
 	return (head_check >= required_heads)

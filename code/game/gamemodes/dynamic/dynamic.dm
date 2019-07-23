@@ -37,6 +37,8 @@ GLOBAL_VAR_INIT(dynamic_forced_extended, FALSE)
 GLOBAL_VAR_INIT(dynamic_stacking_limit, 90)
 // List of forced roundstart rulesets.
 GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
+// Forced threat level, setting this to zero or higher forces threat to the value. 
+GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /datum/game_mode/dynamic
 	name = "dynamic mode"
@@ -256,7 +258,11 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 	log_game("DYNAMIC: Dynamic mode parameters for the round:")
 	log_game("DYNAMIC: Centre is [GLOB.dynamic_curve_centre], Width is [GLOB.dynamic_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].")
 	log_game("DYNAMIC: Stacking limit is [GLOB.dynamic_stacking_limit], Classic secret is [GLOB.dynamic_classic_secret ? "Enabled" : "Disabled"], High population limit is [GLOB.dynamic_high_pop_limit].")
-	generate_threat()
+	if(GLOB.dynamic_forced_threat_level >= 0)
+		threat_level = round(GLOB.dynamic_forced_threat_level, 0.1)
+		threat = threat_level
+	else
+		generate_threat()
 
 	var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
 	latejoin_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time

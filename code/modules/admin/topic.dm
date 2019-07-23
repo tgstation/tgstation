@@ -867,6 +867,25 @@
 
 		log_admin("[key_name(usr)] set 'high_pop_limit' to [GLOB.dynamic_high_pop_limit].")
 		message_admins("[key_name(usr)] set 'high_pop_limit' to [GLOB.dynamic_high_pop_limit].")
+		dynamic_mode_options(usr)		
+	
+	else if(href_list["f_dynamic_forced_threat"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		if(SSticker && SSticker.mode)
+			return alert(usr, "The game has already started.", null, null, null, null)
+
+		if(GLOB.master_mode != "dynamic")
+			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
+
+		var/new_value = input(usr, "Enter the forced threat level for dynamic mode.", "Forced threat level") as num
+		if (new_value > 100)
+			return alert(usr, "The value must be be under 100.", null, null, null, null)
+		GLOB.dynamic_forced_threat_level = new_value
+
+		log_admin("[key_name(usr)] set 'forced_threat_level' to [GLOB.dynamic_forced_threat_level].")
+		message_admins("[key_name(usr)] set 'forced_threat_level' to [GLOB.dynamic_forced_threat_level].")
 		dynamic_mode_options(usr)	
 
 	else if(href_list["c_mode2"])
