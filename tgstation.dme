@@ -448,6 +448,7 @@
 #include "code\datums\diseases\advance\symptoms\confusion.dm"
 #include "code\datums\diseases\advance\symptoms\cough.dm"
 #include "code\datums\diseases\advance\symptoms\deafness.dm"
+#include "code\datums\diseases\advance\symptoms\disfiguration.dm"
 #include "code\datums\diseases\advance\symptoms\dizzy.dm"
 #include "code\datums\diseases\advance\symptoms\fever.dm"
 #include "code\datums\diseases\advance\symptoms\fire.dm"
