@@ -1,6 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - rscadd: "You can now unfasten the loom."
-  - code_imp: "Various changes to the loom and its products."
-  - bugfix: "You can no longer get more cloth from the loom than you should be able to."
