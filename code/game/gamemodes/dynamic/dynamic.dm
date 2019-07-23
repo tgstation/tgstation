@@ -147,9 +147,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	else if (href_list["injectlate"])
 		latejoin_injection_cooldown = 0
 		forced_injection = TRUE
+		message_admins("[key_name(usr)] forced a latejoin injection.", 1)
 	else if (href_list["injectmid"])
 		midround_injection_cooldown = 0
 		forced_injection = TRUE
+		message_admins("[key_name(usr)] forced a midround injection.", 1)
 	else if (href_list["threatlog"])
 		show_threatlog(usr)
 	else if (href_list["stacking_limit"])
