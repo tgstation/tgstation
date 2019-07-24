@@ -48,7 +48,7 @@
 							)
 
 /obj/machinery/autolathe/Initialize()
-	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
+	AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass, /datum/material/gold, /datum/material/silver, /datum/material/diamond, /datum/material/uranium, /datum/material/plasma, /datum/material/bluespace, /datum/material/bananium, /datum/material/titanium), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 
 	wires = new /datum/wires/autolathe(src)
@@ -122,15 +122,16 @@
 
 	return ..()
 
+
 /obj/machinery/autolathe/proc/AfterMaterialInsert(type_inserted, id_inserted, amount_inserted)
 	if(ispath(type_inserted, /obj/item/stack/ore/bluespace_crystal))
 		use_power(MINERAL_MATERIAL_AMOUNT / 10)
 	else
 		switch(id_inserted)
-			if (MAT_METAL)
+			if (/datum/material/iron)
 				flick("autolathe_o",src)//plays metal insertion animation
-			if (MAT_GLASS)
-				flick("autolathe_r",src)//plays glass insertion animation
+			else
+				flick("autolathe_r",src)//plays glass insertion animation by default otherwise
 		use_power(min(1000, amount_inserted / 100))
 	updateUsrDialog()
 
@@ -161,18 +162,42 @@
 			/////////////////
 
 			var/coeff = (is_stack ? 1 : prod_coeff) //stacks are unaffected by production coefficient
-			var/metal_cost = being_built.materials[MAT_METAL]
-			var/glass_cost = being_built.materials[MAT_GLASS]
+			var/total_amount = 0
+			
+			for(var/MAT in being_built.materials)
+				total_amount += being_built.materials[MAT]
 
-			var/power = max(2000, (metal_cost+glass_cost)*multiplier/5)
+			var/power = max(2000, (total_amount)*multiplier/5) //Change this to use all materials
 
 			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-			if((materials.amount(MAT_METAL) >= metal_cost*multiplier*coeff) && (materials.amount(MAT_GLASS) >= glass_cost*multiplier*coeff))
+
+			var/list/materials_used = list()
+			var/list/custom_materials = list() //These will apply their material effect, This should usually only be one.
+
+			for(var/MAT in being_built.materials)
+				var/datum/material/used_material = MAT
+				var/amount_needed = being_built.materials[MAT] * coeff * multiplier
+				if(istext(used_material)) //This means its a category
+					var/list/list_to_show = list()
+					for(var/i in SSmaterials.materials_by_category[used_material])
+						if(materials.materials[i] > 0)
+							list_to_show += i
+
+					used_material = input("Choose [used_material]", "Custom Material") as null|anything in list_to_show
+					if(!used_material)
+						return //Didn't pick any material, so you can't build shit either.
+					custom_materials[used_material] += amount_needed
+
+				materials_used[used_material] = amount_needed
+
+			if(materials.has_materials(materials_used))
 				busy = TRUE
 				use_power(power)
 				icon_state = "autolathe_n"
 				var/time = is_stack ? 32 : (32 * coeff * multiplier) ** 0.8
-				addtimer(CALLBACK(src, .proc/make_item, power, metal_cost, glass_cost, multiplier, coeff, is_stack), time)
+				addtimer(CALLBACK(src, .proc/make_item, power, materials_used, custom_materials, multiplier, coeff, is_stack), time)
+			else
+				to_chat(usr, "<span class=\"alert\">Not enough materials for this operation.</span>")
 
 		if(href_list["search"])
 			matching_designs.Cut()
@@ -189,12 +214,12 @@
 
 	return
 
-/obj/machinery/autolathe/proc/make_item(power, metal_cost, glass_cost, multiplier, coeff, is_stack)
+/obj/machinery/autolathe/proc/make_item(power, var/list/materials_used, var/list/picked_materials, multiplier, coeff, is_stack)
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/atom/A = drop_location()
 	use_power(power)
-	var/list/materials_used = list(MAT_METAL=metal_cost*coeff*multiplier, MAT_GLASS=glass_cost*coeff*multiplier)
-	materials.use_amount(materials_used)
+
+	materials.use_materials(materials_used)
 
 	if(is_stack)
 		var/obj/item/stack/N = new being_built.build_path(A, multiplier)
@@ -207,6 +232,11 @@
 			for(var/mat in materials_used)
 				new_item.materials[mat] = materials_used[mat] / multiplier
 			new_item.autolathe_crafted(src)
+
+			if(length(picked_materials))
+				new_item.set_custom_materials(picked_materials, 1 / multiplier) //Ensure we get the non multiplied amount
+
+
 	icon_state = "autolathe"
 	busy = FALSE
 	updateDialog()
@@ -223,10 +253,10 @@
 	prod_coeff = min(1,max(0,T)) // Coeff going 1 -> 0,8 -> 0,6 -> 0,4
 
 /obj/machinery/autolathe/examine(mob/user)
-	..()
+	. += ..()
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Storing up to <b>[materials.max_amount]</b> material units.<br>Material consumption at <b>[prod_coeff*100]%</b>.<span>")
+		. += "<span class='notice'>The status display reads: Storing up to <b>[materials.max_amount]</b> material units.<br>Material consumption at <b>[prod_coeff*100]%</b>.</span>"
 
 /obj/machinery/autolathe/proc/main_win(mob/user)
 	var/dat = "<div class='statusDisplay'><h3>Autolathe Menu:</h3><br>"
@@ -271,7 +301,9 @@
 
 		if(ispath(D.build_path, /obj/item/stack))
 			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-			var/max_multiplier = min(D.maxstack, D.materials[MAT_METAL] ?round(materials.amount(MAT_METAL)/D.materials[MAT_METAL]):INFINITY,D.materials[MAT_GLASS]?round(materials.amount(MAT_GLASS)/D.materials[MAT_GLASS]):INFINITY)
+			var/max_multiplier
+			for(var/datum/material/mat in D.materials)
+				max_multiplier = min(D.maxstack, round(materials.get_material_amount(mat)/D.materials[mat]))
 			if (max_multiplier>10 && !disabled)
 				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=10'>x10</a>"
 			if (max_multiplier>25 && !disabled)
@@ -303,7 +335,9 @@
 
 		if(ispath(D.build_path, /obj/item/stack))
 			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-			var/max_multiplier = min(D.maxstack, D.materials[MAT_METAL] ?round(materials.amount(MAT_METAL)/D.materials[MAT_METAL]):INFINITY,D.materials[MAT_GLASS]?round(materials.amount(MAT_GLASS)/D.materials[MAT_GLASS]):INFINITY)
+			var/max_multiplier
+			for(var/datum/material/mat in D.materials)
+				max_multiplier = min(D.maxstack, round(materials.get_material_amount(mat)/D.materials[mat]))
 			if (max_multiplier>10 && !disabled)
 				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=10'>x10</a>"
 			if (max_multiplier>25 && !disabled)
@@ -320,8 +354,10 @@
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/dat = "<b>Total amount:</b> [materials.total_amount] / [materials.max_amount] cm<sup>3</sup><br>"
 	for(var/mat_id in materials.materials)
-		var/datum/material/M = materials.materials[mat_id]
-		dat += "<b>[M.name] amount:</b> [M.amount] cm<sup>3</sup><br>"
+		var/datum/material/M = mat_id
+		var/mineral_amount = materials.materials[mat_id]
+		if(mineral_amount > 0)
+			dat += "<b>[M.name] amount:</b> [mineral_amount] cm<sup>3</sup><br>"
 	return dat
 
 /obj/machinery/autolathe/proc/can_build(datum/design/D, amount = 1)
@@ -330,20 +366,25 @@
 
 	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)
 
+	var/list/required_materials = list()
+
+	for(var/i in D.materials)
+		required_materials[i] = D.materials[i] * coeff * amount
+
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	if(D.materials[MAT_METAL] && (materials.amount(MAT_METAL) < (D.materials[MAT_METAL] * coeff * amount)))
-		return FALSE
-	if(D.materials[MAT_GLASS] && (materials.amount(MAT_GLASS) < (D.materials[MAT_GLASS] * coeff * amount)))
-		return FALSE
-	return TRUE
+
+	return materials.has_materials(required_materials)
+
 
 /obj/machinery/autolathe/proc/get_design_cost(datum/design/D)
 	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)
 	var/dat
-	if(D.materials[MAT_METAL])
-		dat += "[D.materials[MAT_METAL] * coeff] metal "
-	if(D.materials[MAT_GLASS])
-		dat += "[D.materials[MAT_GLASS] * coeff] glass"
+	for(var/i in D.materials)
+		if(istext(i)) //Category handling
+			dat += "[D.materials[i] * coeff] [i]"
+		else
+			var/datum/material/M = i
+			dat += "[D.materials[i] * coeff] [M.name] "
 	return dat
 
 /obj/machinery/autolathe/proc/reset(wire)

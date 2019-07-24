@@ -83,7 +83,7 @@
 
 /datum/reagent/liquidgibs
 	name = "Liquid gibs"
-	color = "#FF9966"
+	color = "#CC4633"
 	description = "You don't even want to think about what's in here."
 	taste_description = "gross iron"
 	shot_glass_icon_state = "shotglassred"
@@ -184,12 +184,13 @@
 	glass_icon_state  = "glass_clear"
 	glass_name = "glass of holy water"
 	glass_desc = "A glass of holy water."
+	self_consuming = TRUE //divine intervention won't be limited by the lack of a liver
 
-/datum/reagent/water/holywater/on_mob_add(mob/living/L)
+/datum/reagent/water/holywater/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_HOLY, type)
 
-/datum/reagent/water/holywater/on_mob_delete(mob/living/L)
+/datum/reagent/water/holywater/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_HOLY, type)
 	..()
 
@@ -299,17 +300,25 @@
 	description = "Slowly heals all damage types. Has a rather high overdose threshold. Glows with mysterious power."
 	overdose_threshold = 150
 
+///Used for clownery
 /datum/reagent/lube
 	name = "Space Lube"
 	description = "Lubricant is a substance introduced between two moving surfaces to reduce the friction and wear between them. giggity."
 	color = "#009CA8" // rgb: 0, 156, 168
 	taste_description = "cherry" // by popular demand
+	var/lube_kind = TURF_WET_LUBE ///What kind of slipperiness gets added to turfs.
 
 /datum/reagent/lube/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T))
 		return
 	if(reac_volume >= 1)
-		T.MakeSlippery(TURF_WET_LUBE, 15 SECONDS, min(reac_volume * 2 SECONDS, 120))
+		T.MakeSlippery(lube_kind, 15 SECONDS, min(reac_volume * 2 SECONDS, 120))
+
+///Stronger kind of lube. Applies TURF_WET_SUPERLUBE.
+/datum/reagent/lube/superlube
+	name = "Super Duper Lube"
+	description = "This \[REDACTED\] has been outlawed after the incident on \[DATA EXPUNGED\]."
+	lube_kind = TURF_WET_SUPERLUBE
 
 /datum/reagent/spraytan
 	name = "Spray Tan"
@@ -955,7 +964,6 @@
 			var/mob/living/carbon/C = M
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
-				H.adjust_hygiene((30 * reac_volume) / (3 + reac_volume))
 				if(H.lip_style)
 					H.lip_style = null
 					H.update_body()
@@ -1166,12 +1174,12 @@
 	color = "E1A116"
 	taste_description = "sourness"
 
-/datum/reagent/stimulum/on_mob_add(mob/living/L)
+/datum/reagent/stimulum/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_STUNIMMUNE, type)
 	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
 
-/datum/reagent/stimulum/on_mob_delete(mob/living/L)
+/datum/reagent/stimulum/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_STUNIMMUNE, type)
 	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
 	..()
@@ -1188,11 +1196,11 @@
 	color = "90560B"
 	taste_description = "burning"
 
-/datum/reagent/nitryl/on_mob_add(mob/living/L)
+/datum/reagent/nitryl/on_mob_metabolize(mob/living/L)
 	..()
 	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
 
-/datum/reagent/nitryl/on_mob_delete(mob/living/L)
+/datum/reagent/nitryl/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(type)
 	..()
 
@@ -1240,7 +1248,7 @@
 	name = "Blue Crayon Powder"
 	colorname = "blue"
 	color = "#00B7EF" // blue
-	random_color_list = list("#00B7EF")
+	random_color_list = list("#71CAE5")
 
 /datum/reagent/colorful_reagent/crayonpowder/purple
 	name = "Purple Crayon Powder"
@@ -1258,16 +1266,13 @@
 	name = "Black Crayon Powder"
 	colorname = "black"
 	color = "#1C1C1C" // not quite black
-	random_color_list = list("#404040")
+	random_color_list = list("#8D8D8D")	//more grey than black, not enough to hide your true colors
 
 /datum/reagent/colorful_reagent/crayonpowder/white
 	name = "White Crayon Powder"
 	colorname = "white"
 	color = "#FFFFFF" // white
 	random_color_list = list("#FFFFFF") //doesn't actually change appearance at all
-
-
-
 
 //////////////////////////////////Hydroponics stuff///////////////////////////////
 
@@ -1601,7 +1606,7 @@
 	H.update_transform()
 	..()
 
-/datum/reagent/growthserum/on_mob_delete(mob/living/M)
+/datum/reagent/growthserum/on_mob_end_metabolize(mob/living/M)
 	M.resize = 1/current_size
 	M.update_transform()
 	..()
@@ -1649,11 +1654,11 @@
 	taste_description = "water"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
-/datum/reagent/pax/on_mob_add(mob/living/L)
+/datum/reagent/pax/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_PACIFISM, type)
 
-/datum/reagent/pax/on_mob_delete(mob/living/L)
+/datum/reagent/pax/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_PACIFISM, type)
 	..()
 
@@ -1664,11 +1669,11 @@
 	taste_description = "acrid cinnamon"
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 
-/datum/reagent/bz_metabolites/on_mob_add(mob/living/L)
+/datum/reagent/bz_metabolites/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, CHANGELING_HIVEMIND_MUTE, type)
 
-/datum/reagent/bz_metabolites/on_mob_delete(mob/living/L)
+/datum/reagent/bz_metabolites/on_mob_end_metabolize(mob/living/L)
 	..()
 	REMOVE_TRAIT(L, CHANGELING_HIVEMIND_MUTE, type)
 
@@ -1728,3 +1733,52 @@
 /datum/reagent/tranquility/reaction_mob(mob/living/L, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
 		L.ForceContractDisease(new /datum/disease/transformation/gondola(), FALSE, TRUE)
+
+
+/datum/reagent/spider_extract
+	name = "Spider Extract"
+	description = "A highly specialized extract coming from the Australicus sector, used to create broodmother spiders."
+	color = "#ED2939"
+	taste_description = "upside down"
+	can_synth = FALSE
+
+/// Improvised reagent that induces vomiting. Created by dipping a dead mouse in welder fluid.
+/datum/reagent/yuck
+	name = "Organic Slurry"
+	description = "A mixture of various colors of fluid. Induces vomiting."
+	glass_name = "glass of ...yuck!"
+	glass_desc = "It smells like a carcass, and doesn't look much better."
+	color = "#545000"
+	taste_description = "insides"
+	taste_mult = 4
+	can_synth = FALSE
+	metabolization_rate = 0.4 * REAGENTS_METABOLISM
+	var/yuck_cycle = 0 //! The `current_cycle` when puking starts.
+
+/datum/reagent/yuck/on_mob_add(mob/living/L)
+	if(HAS_TRAIT(src, TRAIT_NOHUNGER)) //they can't puke
+		holder.del_reagent(type)
+
+#define YUCK_PUKE_CYCLES 3 		// every X cycle is a puke
+#define YUCK_PUKES_TO_STUN 3 	// hit this amount of pukes in a row to start stunning
+/datum/reagent/yuck/on_mob_life(mob/living/carbon/C)
+	if(!yuck_cycle)
+		if(prob(8))
+			var/dread = pick("Something is moving in your stomach...", \
+				"A wet growl echoes from your stomach...", \
+				"For a moment you feel like your surroundings are moving, but it's your stomach...")
+			to_chat(C, "<span class='userdanger'>[dread]</span>")
+			yuck_cycle = current_cycle
+	else
+		var/yuck_cycles = current_cycle - yuck_cycle
+		if(yuck_cycles % YUCK_PUKE_CYCLES == 0)
+			holder.remove_reagent(type, 5)
+			C.vomit(rand(14, 26), stun = yuck_cycles >= YUCK_PUKE_CYCLES * YUCK_PUKES_TO_STUN)
+	if(holder)
+		return ..()
+#undef YUCK_PUKE_CYCLES
+#undef YUCK_PUKES_TO_STUN
+
+/datum/reagent/yuck/on_mob_end_metabolize(mob/living/L)
+	yuck_cycle = 0 // reset vomiting
+	return ..()

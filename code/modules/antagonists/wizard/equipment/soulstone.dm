@@ -25,12 +25,12 @@
 
 /obj/item/soulstone/anybody
 	usability = TRUE
-	
+
 /obj/item/soulstone/anybody/purified
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "purified_soulstone"
 	purified = TRUE
-	
+
 
 /obj/item/soulstone/anybody/chaplain
 	name = "mysterious old shard"
@@ -42,15 +42,15 @@
 		to_chat(user, "<span class='danger'>An overwhelming feeling of dread comes over you as you pick up the soulstone. It would be wise to be rid of this quickly.</span>")
 
 /obj/item/soulstone/examine(mob/user)
-	..()
+	. = ..()
 	if(usability || iscultist(user) || iswizard(user) || isobserver(user))
 		if (old_shard)
-			to_chat(user, "<span class='cult'>A soulstone, used to capture a soul, either from dead humans or from freed shades.</span>")
+			. += "<span class='cult'>A soulstone, used to capture a soul, either from dead humans or from freed shades.</span>"
 		else
-			to_chat(user, "<span class='cult'>A soulstone, used to capture souls, either from unconscious or sleeping humans or from freed shades.</span>")
-		to_chat(user, "<span class='cult'>The captured soul can be placed into a construct shell to produce a construct, or released from the stone as a shade.</span>")
+			. += "<span class='cult'>A soulstone, used to capture souls, either from unconscious or sleeping humans or from freed shades.</span>"
+		. += "<span class='cult'>The captured soul can be placed into a construct shell to produce a construct, or released from the stone as a shade.</span>"
 		if(spent)
-			to_chat(user, "<span class='cult'>This shard is spent; it is now just a creepy rock.</span>")
+			. += "<span class='cult'>This shard is spent; it is now just a creepy rock.</span>"
 
 /obj/item/soulstone/Destroy() //Stops the shade from being qdel'd immediately and their ghost being sent back to the arrival shuttle.
 	for(var/mob/living/simple_animal/shade/A in src)
@@ -73,6 +73,9 @@
 		if(iscultist(user))
 			to_chat(user, "<span class='cultlarge'>\"Come now, do not capture your bretheren's soul.\"</span>")
 			return
+	if(purified && iscultist(user))
+		to_chat(user, "<span class='warning'>Holy magic resides within the stone, you cannot use it.</span>")
+		return
 	log_combat(user, M, "captured [M.name]'s soul", src)
 	transfer_soul("VICTIM", M, user)
 
@@ -85,6 +88,9 @@
 		user.Unconscious(100)
 		to_chat(user, "<span class='userdanger'>Your body is wracked with debilitating pain!</span>")
 		return
+	if(purified && iscultist(user))
+		to_chat(user, "<span class='warning'>Holy magic resides within the stone, you cannot use it.</span>")
+		return
 	release_shades(user)
 
 /obj/item/soulstone/proc/release_shades(mob/user)
@@ -95,6 +101,8 @@
 		A.cancel_camera()
 		if(purified)
 			icon_state = "purified_soulstone"
+			A.icon_state = "ghost1"
+			A.name = "Purified [initial(A.name)]"
 		else
 			icon_state = "soulstone"
 		name = initial(name)
@@ -112,13 +120,13 @@
 	desc = "A wicked machine used by those skilled in magical arts. It is inactive."
 
 /obj/structure/constructshell/examine(mob/user)
-	..()
+	. = ..()
 	if(iscultist(user) || iswizard(user) || user.stat == DEAD)
-		to_chat(user, "<span class='cult'>A construct shell, used to house bound souls from a soulstone.</span>")
-		to_chat(user, "<span class='cult'>Placing a soulstone with a soul into this shell allows you to produce your choice of the following:</span>")
-		to_chat(user, "<span class='cult'>An <b>Artificer</b>, which can produce <b>more shells and soulstones</b>, as well as fortifications.</span>")
-		to_chat(user, "<span class='cult'>A <b>Wraith</b>, which does high damage and can jaunt through walls, though it is quite fragile.</span>")
-		to_chat(user, "<span class='cult'>A <b>Juggernaut</b>, which is very hard to kill and can produce temporary walls, but is slow.</span>")
+		. += {"<span class='cult'>A construct shell, used to house bound souls from a soulstone.\n
+		Placing a soulstone with a soul into this shell allows you to produce your choice of the following:\n
+		An <b>Artificer</b>, which can produce <b>more shells and soulstones</b>, as well as fortifications.\n
+		A <b>Wraith</b>, which does high damage and can jaunt through walls, though it is quite fragile.\n
+		A <b>Juggernaut</b>, which is very hard to kill and can produce temporary walls, but is slow.</span>"}
 
 /obj/structure/constructshell/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/soulstone))
@@ -126,6 +134,9 @@
 		if(!iscultist(user) && !iswizard(user) && !SS.purified)
 			to_chat(user, "<span class='danger'>An overwhelming feeling of dread comes over you as you attempt to place the soulstone into the shell. It would be wise to be rid of this quickly.</span>")
 			user.Dizzy(30)
+			return
+		if(SS.purified && iscultist(user))
+			to_chat(user, "<span class='warning'>Holy magic resides within the stone, you cannot use it.</span>")
 			return
 		SS.transfer_soul("CONSTRUCT",src,user)
 		SS.was_used()
@@ -221,7 +232,7 @@
 					if("Artificer")
 						if(iscultist(user) || iswizard(user))
 							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder, A, user, 0, T.loc)
-						else	
+						else
 							if(purified)
 								makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/angelic, A, user, 0, T.loc)
 							else

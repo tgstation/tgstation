@@ -7,7 +7,7 @@
 	throw_speed = 3
 	throw_range = 7
 	force = 4
-	materials = list(MAT_METAL=2000)
+	materials = list(/datum/material/iron=2000)
 	clumsy_check = 0
 	fire_sound = 'sound/items/syringeproj.ogg'
 	var/list/syringes = list()
@@ -35,8 +35,8 @@
 		recharge_newshot()
 
 /obj/item/gun/syringe/examine(mob/user)
-	..()
-	to_chat(user, "Can hold [max_syringes] syringe\s. Has [syringes.len] syringe\s remaining.")
+	. = ..()
+	. += "Can hold [max_syringes] syringe\s. Has [syringes.len] syringe\s remaining."
 
 /obj/item/gun/syringe/attack_self(mob/living/user)
 	if(!syringes.len)

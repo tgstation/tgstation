@@ -19,11 +19,15 @@
 	return attack_hand(user)
 
 /obj/item/reagent_containers/hypospray/attack(mob/living/M, mob/user)
+	inject(M, user)
+
+///Handles all injection checks, injection and logging.
+/obj/item/reagent_containers/hypospray/proc/inject(mob/living/M, mob/user)
 	if(!reagents.total_volume)
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
-		return
+		return FALSE
 	if(!iscarbon(M))
-		return
+		return FALSE
 
 	//Always log attemped injects for admins
 	var/list/injected = list()
@@ -35,20 +39,20 @@
 	if(reagents.total_volume && (ignore_flags || M.can_inject(user, 1))) // Ignore flag should be checked first or there will be an error message.
 		to_chat(M, "<span class='warning'>You feel a tiny prick!</span>")
 		to_chat(user, "<span class='notice'>You inject [M] with [src].</span>")
-
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
 		reagents.reaction(M, INJECT, fraction)
+
 		if(M.reagents)
 			var/trans = 0
 			if(!infinite)
 				trans = reagents.trans_to(M, amount_per_transfer_from_this, transfered_by = user)
 			else
 				trans = reagents.copy_to(M, amount_per_transfer_from_this)
-
 			to_chat(user, "<span class='notice'>[trans] unit\s injected.  [reagents.total_volume] unit\s remaining in [src].</span>")
-
-
 			log_combat(user, M, "injected", src, "([contained])")
+		return TRUE
+	return FALSE
+
 
 /obj/item/reagent_containers/hypospray/CMO
 	list_reagents = list(/datum/reagent/medicine/omnizine = 30)
@@ -97,23 +101,16 @@
 	user.visible_message("<span class='suicide'>[user] begins to choke on \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return OXYLOSS//ironic. he could save others from oxyloss, but not himself.
 
-/obj/item/reagent_containers/hypospray/medipen/attack(mob/M, mob/user)
-	if(!reagents.total_volume)
-		to_chat(user, "<span class='warning'>[src] is empty!</span>")
-		return
-	..()
-	if(!iscyborg(user))
+/obj/item/reagent_containers/hypospray/medipen/inject(mob/living/M, mob/user)
+	. = ..()
+	if(.)
 		reagents.maximum_volume = 0 //Makes them useless afterwards
 		reagents.flags = NONE
-	update_icon()
-	addtimer(CALLBACK(src, .proc/cyborg_recharge, user), 80)
+		update_icon()
 
-/obj/item/reagent_containers/hypospray/medipen/proc/cyborg_recharge(mob/living/silicon/robot/user)
-	if(!reagents.total_volume && iscyborg(user))
-		var/mob/living/silicon/robot/R = user
-		if(R.cell.use(100))
-			reagents.add_reagent_list(list_reagents)
-			update_icon()
+/obj/item/reagent_containers/hypospray/medipen/attack_self(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		inject(user, user)
 
 /obj/item/reagent_containers/hypospray/medipen/update_icon()
 	if(reagents.total_volume > 0)
@@ -122,11 +119,11 @@
 		icon_state = "[initial(icon_state)]0"
 
 /obj/item/reagent_containers/hypospray/medipen/examine()
-	..()
+	. = ..()
 	if(reagents && reagents.reagent_list.len)
-		to_chat(usr, "<span class='notice'>It is currently loaded.</span>")
+		. += "<span class='notice'>It is currently loaded.</span>"
 	else
-		to_chat(usr, "<span class='notice'>It is spent.</span>")
+		. += "<span class='notice'>It is spent.</span>"
 
 /obj/item/reagent_containers/hypospray/medipen/stimpack //goliath kiting
 	name = "stimpack medipen"
@@ -145,13 +142,33 @@
 	desc = "A rapid way to get you out of a tight situation and fast! You'll feel rather drowsy, though."
 	list_reagents = list(/datum/reagent/medicine/morphine = 10)
 
+/obj/item/reagent_containers/hypospray/medipen/oxandrolone
+	name = "oxandrolone medipen"
+	desc = "A autoinjector containing oxandrolone, used to treat severe burns."
+	list_reagents = list(/datum/reagent/medicine/oxandrolone = 10)
+
+/obj/item/reagent_containers/hypospray/medipen/penacid
+	name = "pentetic acid medipen"
+	desc = "A autoinjector containing pentetic acid, used to reduce high levels of radiations and moderate toxins."
+	list_reagents = list(/datum/reagent/medicine/pen_acid = 10)
+
+/obj/item/reagent_containers/hypospray/medipen/salacid
+	name = "salicyclic acid medipen"
+	desc = "A autoinjector containing salicyclic acid, used to treat severe brute damage."
+	list_reagents = list(/datum/reagent/medicine/sal_acid = 10)
+
+/obj/item/reagent_containers/hypospray/medipen/salbutamol
+	name = "salbutamol medipen"
+	desc = "A autoinjector containing salbutamol, used to heal oxygen damage quickly."
+	list_reagents = list(/datum/reagent/medicine/salbutamol = 10)
+
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure
 	name = "BVAK autoinjector"
 	desc = "Bio Virus Antidote Kit autoinjector. Has a two use system for yourself, and someone else. Inject when infected."
 	icon_state = "stimpen"
 	volume = 60
 	amount_per_transfer_from_this = 30
-	list_reagents = list(/datum/reagent/medicine/atropine = 10, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/salbutamol = 20, /datum/reagent/medicine/spaceacillin = 20)
+	list_reagents = list(/datum/reagent/medicine/atropine = 10, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/omnizine = 20, /datum/reagent/medicine/perfluorodecalin = 15, /datum/reagent/medicine/spaceacillin = 20)
 
 /obj/item/reagent_containers/hypospray/medipen/survival
 	name = "survival medipen"
@@ -159,15 +176,7 @@
 	icon_state = "stimpen"
 	volume = 57
 	amount_per_transfer_from_this = 57
-	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/leporazine = 15, /datum/reagent/medicine/tricordrazine = 15, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/lavaland_extract = 2, /datum/reagent/medicine/omnizine = 5)
-
-/obj/item/reagent_containers/hypospray/medipen/species_mutator
-	name = "species mutator medipen"
-	desc = "Embark on a whirlwind tour of racial insensitivity by \
-		literally appropriating other races."
-	volume = 1
-	amount_per_transfer_from_this = 1
-	list_reagents = list("unstablemutationtoxin" = 1)
+	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/leporazine = 15, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/lavaland_extract = 2, /datum/reagent/medicine/omnizine = 5)
 
 /obj/item/reagent_containers/hypospray/combat/heresypurge
 	name = "holy water autoinjector"

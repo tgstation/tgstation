@@ -424,8 +424,8 @@
 	name = "stuffed legion"
 	desc = "The former skull of a damned human, filled with goliath meat. It has a decorative lava pool made of ketchup and hotsauce."
 	icon_state = "stuffed_legion"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/consumable/capsaicin = 1, /datum/reagent/medicine/tricordrazine = 5)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/capsaicin = 2, /datum/reagent/medicine/tricordrazine = 10)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/consumable/capsaicin = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/capsaicin = 2)
 	tastes = list("death" = 2, "rock" = 1, "meat" = 1, "hot peppers" = 1)
 	foodtype = MEAT
 
@@ -450,9 +450,14 @@
 	desc = "A delicious lollipop. Makes for a great Valentine's present."
 	icon = 'icons/obj/lollipop.dmi'
 	icon_state = "lollipop_stick"
+	item_state = "lollipop_stick"
+	slot_flags = ITEM_SLOT_MASK
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/omnizine = 2)	//Honk
 	var/mutable_appearance/head
 	var/headcolor = rgb(0, 0, 0)
+	var/succ_dur = 180
+	var/succ_int = 100
+	var/next_succ = 0
 	tastes = list("candy" = 1)
 	foodtype = JUNKFOOD | SUGAR
 
@@ -460,6 +465,43 @@
 	. = ..()
 	head = mutable_appearance('icons/obj/lollipop.dmi', "lollipop_head")
 	change_head_color(rgb(rand(0, 255), rand(0, 255), rand(0, 255)))
+
+	//makes lollipops actually wearable as masks and still edible the old fashioned way.
+/obj/item/reagent_containers/food/snacks/lollipop/proc/handle_reagents()
+	if(reagents.total_volume)
+		if(iscarbon(loc))
+			var/mob/living/carbon/C = loc
+			if (src == C.wear_mask) // if it's in the human/monkey mouth, transfer reagents to the mob
+				var/fraction = min(REAGENTS_METABOLISM/reagents.total_volume, 1)
+				reagents.reaction(C, INGEST, fraction)
+				if(!reagents.trans_to(C, REAGENTS_METABOLISM))
+					reagents.remove_any(REAGENTS_METABOLISM)
+				return
+		reagents.remove_any(REAGENTS_METABOLISM)
+
+/obj/item/reagent_containers/food/snacks/lollipop/process()
+	if(iscarbon(loc))
+		if(succ_dur < 1)
+			qdel(src)
+			return
+		succ_dur--
+		if((reagents && reagents.total_volume) && (next_succ <= world.time))
+			handle_reagents()
+			next_succ = world.time + succ_int
+
+
+/obj/item/reagent_containers/food/snacks/lollipop/equipped(mob/user, slot)
+	. = ..()
+	if(slot == SLOT_WEAR_MASK)
+		START_PROCESSING(SSobj, src)
+	else
+		STOP_PROCESSING(SSobj, src)
+
+/obj/item/reagent_containers/food/snacks/lollipop/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
+
+
 
 /obj/item/reagent_containers/food/snacks/lollipop/proc/change_head_color(C)
 	headcolor = C
@@ -492,7 +534,7 @@
 	desc = "A colorful, sugary gumball."
 	icon = 'icons/obj/lollipop.dmi'
 	icon_state = "gumball"
-	list_reagents = list(/datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/bicaridine = 2, /datum/reagent/medicine/kelotane = 2)	//Kek
+	list_reagents = list(/datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/sal_acid = 2, /datum/reagent/medicine/oxandrolone = 2)	//Kek
 	tastes = list("candy")
 	foodtype = JUNKFOOD
 
@@ -540,7 +582,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/sodiumchloride = 5)
 	bonus_reagents = list(/datum/reagent/consumable/sodiumchloride = 10)
 	tastes = list("bran" = 4, "raisins" = 3, "salt" = 1)
-	foodtype = GRAIN | FRUIT
+	foodtype = GRAIN | FRUIT | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/butter
 	name = "stick of butter"

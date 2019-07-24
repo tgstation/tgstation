@@ -124,6 +124,10 @@
 	port_id = "mining"
 	can_be_bought = FALSE
 
+/datum/map_template/shuttle/mining_common
+	port_id = "mining_common"
+	can_be_bought = FALSE
+
 /datum/map_template/shuttle/cargo
 	port_id = "cargo"
 	can_be_bought = FALSE
@@ -171,16 +175,12 @@
 	name = "Backup Shuttle"
 	can_be_bought = FALSE
 
-/datum/map_template/shuttle/emergency/airless
-	suffix = "airless"
+/datum/map_template/shuttle/emergency/construction
+	suffix = "construction"
 	name = "Build your own shuttle kit"
-	description = "Save money by building your own shuttle! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Interior and atmosphere not included."
-	admin_notes = "No brig, no medical facilities, no air."
-	credit_cost = -7500
-
-/datum/map_template/shuttle/emergency/airless/prerequisites_met()
-	// first 10 minutes only
-	return world.time - SSticker.round_start_time < 6000
+	description = "For the enterprising shuttle engineer! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Comes stocked with construction materials."
+	admin_notes = "No brig, no medical facilities, no shuttle console."
+	credit_cost = 2500
 
 /datum/map_template/shuttle/emergency/airless/post_load()
 	. = ..()
@@ -247,7 +247,7 @@
 	credit_cost = 10000
 
 /datum/map_template/shuttle/emergency/arena/prerequisites_met()
-	if("bubblegum" in SSshuttle.shuttle_purchase_requirements_met)
+	if(SHUTTLE_UNLOCK_BUBBLEGUM in SSshuttle.shuttle_purchase_requirements_met)
 		return TRUE
 	return FALSE
 
@@ -430,6 +430,10 @@
 	suffix = "cere"
 	name = "NT Construction Vessel"
 
+/datum/map_template/shuttle/whiteship/donut
+	suffix = "donut"
+	name = "NT Long-Distance Bluespace Jumper"
+
 /datum/map_template/shuttle/whiteship/delta
 	suffix = "delta"
 	name = "NT Frigate"
@@ -469,6 +473,19 @@
 	This escape shuttle boasts shields and numerous anti-personnel turrets guarding its perimeter to fend off meteors and enemy boarding attempts."
 	admin_notes = "Comes with turrets that will target anything without the neutral faction (nuke ops, xenos etc, but not pets)."
 	credit_cost = 30000
+
+/datum/map_template/shuttle/emergency/zeta
+	suffix = "zeta"
+	name = "Tr%nPo2r& Z3TA"
+	description = "A glitch appears on your monitor, flickering in and out of the options laid before you. \
+	It seems strange and alien, you may need a special technology to access the signal.."
+	admin_notes = "Has an on-board experimental cloner that creates copies of its user, alien surgery tools, and a void core that provides unlimited power."
+	credit_cost = 8000
+
+/datum/map_template/shuttle/emergency/zeta/prerequisites_met()
+	if(SHUTTLE_UNLOCK_ALIENTECH in SSshuttle.shuttle_purchase_requirements_met)
+		return TRUE
+	return FALSE
 
 /datum/map_template/shuttle/arrival/box
 	suffix = "box"
@@ -522,6 +539,10 @@
 	suffix = "kilo"
 	name = "labour shuttle (Kilo)"
 
+/datum/map_template/shuttle/mining_common/meta
+	suffix = "meta"
+	name = "lavaland shuttle (Meta)"
+
 /datum/map_template/shuttle/arrival/delta
 	suffix = "delta"
 	name = "arrival shuttle (Delta)"
@@ -569,6 +590,10 @@
 /datum/map_template/shuttle/hunter/russian
 	suffix = "russian"
 	name = "Russian Cargo Ship"
+
+/datum/map_template/shuttle/hunter/bounty
+	suffix = "bounty"
+	name = "Bounty Hunter Ship"
 
 /datum/map_template/shuttle/ruin/caravan_victim
 	suffix = "caravan_victim"

@@ -7,7 +7,7 @@
 
 	w_class = WEIGHT_CLASS_SMALL
 
-	materials = list(MAT_METAL=50, MAT_GLASS=50)
+	materials = list(/datum/material/iron=50, /datum/material/glass=50)
 
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
@@ -91,9 +91,9 @@
 
 
 /obj/item/airlock_painter/examine(mob/user)
-	..()
+	. = ..()
 	if(!ink)
-		to_chat(user, "<span class='notice'>It doesn't have a toner cartridge installed.</span>")
+		. += "<span class='notice'>It doesn't have a toner cartridge installed.</span>"
 		return
 	var/ink_level = "high"
 	if(ink.charges < 1)
@@ -102,7 +102,7 @@
 		ink_level = "low"
 	else if((ink.charges/ink.max_charges) > 1) //Over 100% (admin var edit)
 		ink_level = "dangerously high"
-	to_chat(user, "<span class='notice'>Its ink levels look [ink_level].</span>")
+	. += "<span class='notice'>Its ink levels look [ink_level].</span>"
 
 
 /obj/item/airlock_painter/attackby(obj/item/W, mob/user, params)

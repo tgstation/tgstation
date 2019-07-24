@@ -6,7 +6,7 @@
 	item_flags = NOBLUDGEON
 	var/paint_color = "grey"
 
-	materials = list(MAT_METAL=5000, MAT_GLASS=2000)
+	materials = list(/datum/material/iron=5000, /datum/material/glass=2000)
 
 /obj/item/pipe_painter/afterattack(atom/A, mob/user, proximity_flag)
 	. = ..()
@@ -26,5 +26,5 @@
 	paint_color = input("Which colour do you want to use?","Pipe painter") in GLOB.pipe_paint_colors
 
 /obj/item/pipe_painter/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>It is set to [paint_color].</span>")
+	. = ..()
+	. += "<span class='notice'>It is set to [paint_color].</span>"

@@ -14,6 +14,7 @@
 	new /obj/item/pet_carrier(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/clothing/under/rank/captain(src)
+	new /obj/item/clothing/under/rank/captain/skirt(src)
 	new /obj/item/clothing/suit/armor/vest/capcarapace(src)
 	new /obj/item/clothing/head/caphat(src)
 	new /obj/item/clothing/under/captainparade(src)
@@ -33,6 +34,7 @@
 	new /obj/item/door_remote/captain(src)
 	new /obj/item/card/id/captains_spare(src)
 	new /obj/item/storage/photo_album/Captain(src)
+	new /obj/item/card/id/departmental_budget/civ(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "\proper head of personnel's locker"
@@ -42,7 +44,9 @@
 /obj/structure/closet/secure_closet/hop/PopulateContents()
 	..()
 	new /obj/item/clothing/neck/cloak/hop(src)
+	new /obj/item/storage/lockbox/medal/service(src)
 	new /obj/item/clothing/under/rank/head_of_personnel(src)
+	new /obj/item/clothing/under/rank/head_of_personnel/skirt(src)
 	new /obj/item/clothing/head/hopcap(src)
 	new /obj/item/cartridge/hop(src)
 	new /obj/item/radio/headset/heads/hop(src)
@@ -60,6 +64,7 @@
 	new /obj/item/door_remote/civillian(src)
 	new /obj/item/circuitboard/machine/techfab/department/service(src)
 	new /obj/item/storage/photo_album/HoP(src)
+	new /obj/item/card/id/departmental_budget/srv(src)
 
 /obj/structure/closet/secure_closet/hos
 	name = "\proper head of security's locker"
@@ -75,7 +80,9 @@
 	new /obj/item/clothing/under/hosparademale(src)
 	new /obj/item/clothing/suit/armor/vest/leather(src)
 	new /obj/item/clothing/suit/armor/hos(src)
+	new /obj/item/clothing/under/rank/head_of_security/skirt(src)
 	new /obj/item/clothing/under/rank/head_of_security/alt(src)
+	new /obj/item/clothing/under/rank/head_of_security/alt/skirt(src)
 	new /obj/item/clothing/head/HoS(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses/gars/supergars(src)
@@ -93,6 +100,7 @@
 	new /obj/item/pinpointer/nuke(src)
 	new /obj/item/circuitboard/machine/techfab/department/security(src)
 	new /obj/item/storage/photo_album/HoS(src)
+	new /obj/item/card/id/departmental_budget/sec(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "\proper warden's locker"
@@ -108,6 +116,7 @@
 	new /obj/item/clothing/head/beret/sec/navywarden(src)
 	new /obj/item/clothing/suit/armor/vest/warden/alt(src)
 	new /obj/item/clothing/under/rank/warden/navyblue(src)
+	new /obj/item/clothing/under/rank/warden/skirt(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/holosign_creator/security(src)
 	new /obj/item/clothing/mask/gas/sechailer(src)
@@ -177,10 +186,12 @@
 /obj/structure/closet/secure_closet/detective/PopulateContents()
 	..()
 	new /obj/item/clothing/under/rank/det(src)
+	new /obj/item/clothing/under/rank/det/skirt(src)
 	new /obj/item/clothing/suit/det_suit(src)
 	new /obj/item/clothing/head/fedora/det_hat(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/under/rank/det/grey(src)
+	new /obj/item/clothing/under/rank/det/grey/skirt(src)
 	new /obj/item/clothing/accessory/waistcoat(src)
 	new /obj/item/clothing/suit/det_suit/grey(src)
 	new /obj/item/clothing/suit/det_suit/noir(src)
@@ -221,6 +232,7 @@
 /obj/structure/closet/secure_closet/brig/PopulateContents()
 	..()
 	new /obj/item/clothing/under/rank/prisoner( src )
+	new /obj/item/clothing/under/rank/prisoner/skirt( src )
 	new /obj/item/clothing/shoes/sneakers/orange( src )
 
 /obj/structure/closet/secure_closet/courtroom
@@ -310,3 +322,17 @@
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/storage/box/lethalshot(src)
+
+/obj/structure/closet/secure_closet/labor_camp_security
+	name = "labor camp security locker"
+	req_access = list(ACCESS_SECURITY)
+	icon_state = "sec"
+
+/obj/structure/closet/secure_closet/labor_camp_security/PopulateContents()
+	..()
+	new /obj/item/clothing/suit/armor/vest(src)
+	new /obj/item/clothing/head/helmet/sec(src)
+	new /obj/item/clothing/under/rank/security(src)
+	new /obj/item/clothing/under/rank/security/skirt(src)
+	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
+	new /obj/item/flashlight/seclite(src)

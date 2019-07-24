@@ -164,13 +164,13 @@
 	flags_1 =  CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=10, MAT_GLASS=10)
+	materials = list(/datum/material/iron=10, /datum/material/glass=10)
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7
 
 /obj/item/toy/gun/examine(mob/user)
-	..()
-	to_chat(user, "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left.")
+	. = ..()
+	. += "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left."
 
 /obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A, mob/user, params)
 
@@ -218,15 +218,15 @@
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "357OLD-7"
 	w_class = WEIGHT_CLASS_TINY
-	materials = list(MAT_METAL=10, MAT_GLASS=10)
+	materials = list(/datum/material/iron=10, /datum/material/glass=10)
 	var/amount_left = 7
 
 /obj/item/toy/ammo/gun/update_icon()
 	src.icon_state = text("357OLD-[]", src.amount_left)
 
 /obj/item/toy/ammo/gun/examine(mob/user)
-	..()
-	to_chat(user, "There [amount_left == 1 ? "is" : "are"] [amount_left] cap\s left.")
+	. = ..()
+	. += "There [amount_left == 1 ? "is" : "are"] [amount_left] cap\s left."
 
 /*
  * Toy swords
@@ -234,7 +234,7 @@
 /obj/item/toy/sword
 	name = "toy sword"
 	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/transforming_energy.dmi'
 	icon_state = "sword0"
 	item_state = "sword0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -868,7 +868,7 @@
 
 /obj/item/toy/cards/singlecard
 	name = "card"
-	desc = "a card"
+	desc = "A playing card used to play card games like poker."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "singlecard_down_nanotrasen"
 	w_class = WEIGHT_CLASS_TINY
@@ -878,12 +878,13 @@
 
 
 /obj/item/toy/cards/singlecard/examine(mob/user)
+	. = ..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/cardUser = user
 		if(cardUser.is_holding(src))
 			cardUser.visible_message("[cardUser] checks [cardUser.p_their()] card.", "<span class='notice'>The card reads: [cardname].</span>")
 		else
-			to_chat(cardUser, "<span class='warning'>You need to have the card in your hand to check it!</span>")
+			. += "<span class='warning'>You need to have the card in your hand to check it!</span>"
 
 
 /obj/item/toy/cards/singlecard/verb/Flip()
@@ -992,7 +993,6 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "nuketoyidle"
 	w_class = WEIGHT_CLASS_SMALL
-	datum_outputs = list(/datum/outputs/alarm)
 	var/cooldown = 0
 
 /obj/item/toy/nuke/attack_self(mob/user)
@@ -1001,7 +1001,7 @@
 		user.visible_message("<span class='warning'>[user] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='italics'>You hear the click of a button.</span>")
 		sleep(5)
 		icon_state = "nuketoy"
-		playsound(src, datum_outputs[1], 100, 0)
+		playsound(src, 'sound/machines/alarm.ogg', 100, 0)
 		sleep(135)
 		icon_state = "nuketoycool"
 		sleep(cooldown - world.time)
@@ -1111,8 +1111,8 @@
 		to_chat(user, "<span class='alert'>The cogwheels are already turning!</span>")
 
 /obj/item/toy/clockwork_watch/examine(mob/user)
-	..()
-	to_chat(user, "<span class='info'>Station Time: [station_time_timestamp()]</span>")
+	. = ..()
+	. += "<span class='info'>Station Time: [station_time_timestamp()]</span>"
 
 /*
  * Toy Dagger
@@ -1407,3 +1407,18 @@
 
 /obj/item/toy/dummy/GetVoice()
 	return doll_name
+
+/obj/item/toy/seashell
+	name = "seashell"
+	desc = "May you always have a shell in your pocket and sand in your shoes. Whatever that's supposed to mean."
+	icon = 'icons/misc/beach.dmi'
+	icon_state = "shell1"
+	var/static/list/possible_colors = list("" =  2, COLOR_PURPLE_GRAY = 1, COLOR_OLIVE = 1, COLOR_PALE_BLUE_GRAY = 1, COLOR_RED_GRAY = 1)
+
+/obj/item/toy/seashell/Initialize()
+	. = ..()
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
+	icon_state = "shell[rand(1,3)]"
+	color = pickweight(possible_colors)
+	setDir(pick(GLOB.cardinals))

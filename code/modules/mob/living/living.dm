@@ -299,7 +299,7 @@
 				var/mob/living/carbon/C = L
 				if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER))
 					C.grippedby(src)
-			
+
 			update_pull_movespeed()
 
 		set_pull_offsets(M, state)
@@ -436,7 +436,7 @@
 	set category = "IC"
 
 	if(IsSleeping())
-		to_chat(src, "<span class='notice'>You are already sleeping.</span>")
+		to_chat(src, "<span class='warning'>You are already sleeping!</span>")
 		return
 	else
 		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
@@ -455,7 +455,7 @@
 		if(do_after(src, 10, target = src))
 			set_resting(FALSE, FALSE)
 		else
-			to_chat(src, "<span class='notice'>You fail to get up.</span>")
+			to_chat(src, "<span class='warning'>You fail to get up!</span>")
 
 /mob/living/proc/set_resting(rest, silent = TRUE)
 	if(!silent)
@@ -491,15 +491,6 @@
 /mob/living/is_drawable(mob/user, allowmobs = TRUE)
 	return (allowmobs && reagents && can_inject(user))
 
-/mob/living/proc/get_organ_target()
-	var/mob/shooter = src
-	var/t = shooter.zone_selected
-	if ((t in list( BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH )))
-		t = BODY_ZONE_HEAD
-	var/def_zone = ran_zone(t)
-	return def_zone
-
-
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
 		return
@@ -510,7 +501,8 @@
 	med_hud_set_status()
 
 //proc used to ressuscitate a mob
-/mob/living/proc/revive(full_heal = 0, admin_revive = 0)
+/mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE)
+	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 	if(full_heal)
 		fully_heal(admin_revive)
 	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
@@ -556,7 +548,7 @@
 	set_blindness(0)
 	set_blurriness(0)
 	set_dizziness(0)
-	set_eye_damage(0)
+
 	cure_nearsighted()
 	cure_blind()
 	cure_husk()
@@ -570,9 +562,6 @@
 	stuttering = 0
 	slurring = 0
 	jitteriness = 0
-	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
-	if (mood)
-		mood.remove_temp_moods(admin_revive)
 	update_mobility()
 	stop_sound_channel(CHANNEL_HEARTBEAT)
 
@@ -723,9 +712,9 @@
 
 /mob/living/resist_grab(moving_resist)
 	. = TRUE
-	if(pulledby.grab_state || resting)
+	if(pulledby.grab_state || resting || HAS_TRAIT(src, TRAIT_GRABWEAKNESS))
 		var/altered_grab_state = pulledby.grab_state
-		if(resting && pulledby.grab_state < GRAB_KILL) //If resting, resisting out of a grab is equivalent to 1 grab state higher. wont make the grab state exceed the normal max, however
+		if((resting || HAS_TRAIT(src, TRAIT_GRABWEAKNESS)) && pulledby.grab_state < GRAB_KILL) //If resting, resisting out of a grab is equivalent to 1 grab state higher. wont make the grab state exceed the normal max, however
 			altered_grab_state++
 		var/resist_chance = BASE_GRAB_RESIST_CHANCE // see defines/combat.dm
 		resist_chance = max(resist_chance/altered_grab_state-sqrt((getStaminaLoss()+getBruteLoss()/2)*(3-altered_grab_state)), 0) // https://i.imgur.com/6yAT90T.png for sample output values
@@ -1257,22 +1246,6 @@
 	mob_pickup(user)
 	return TRUE
 
-/mob/living/display_output(sound/S, mutable_appearance/vfx, text, turf/turf_source, vol as num)
-	. = ..()
-		//Process icon
-	if(vfx && audiolocation)
-		var/image/sound_icon = image(vfx)
-		sound_icon.loc = turf_source
-		if(vol && S)
-			sound_icon.alpha = sound_icon.alpha * (vol / 100)
-		client.images += sound_icon
-		addtimer(CALLBACK(src, .proc/remove_image, sound_icon), 7)
-
-/mob/living/proc/remove_image(sound_image)
-	if(sound_image && client)
-		client.images -= sound_image
-		qdel(sound_image)
-
 /mob/living/proc/get_static_viruses() //used when creating blood and other infective objects
 	if(!LAZYLEN(diseases))
 		return
@@ -1322,7 +1295,9 @@
 		if("eye_blind")
 			set_blindness(var_value)
 		if("eye_damage")
-			set_eye_damage(var_value)
+			var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
+			if(E)
+				E.setOrganDamage(var_value)
 		if("eye_blurry")
 			set_blurriness(var_value)
 		if("maxHealth")

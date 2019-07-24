@@ -90,19 +90,24 @@
 	active_power_usage = power_usage
 
 /obj/machinery/power/emitter/examine(mob/user)
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Emitting one beam each <b>[fire_delay*0.1]</b> seconds.<br>Power consumption at <b>[active_power_usage]W</b>.<span>")
+		. += "<span class='notice'>The status display reads: Emitting one beam each <b>[fire_delay*0.1]</b> seconds.<br>Power consumption at <b>[active_power_usage]W</b>.</span>"
 
 /obj/machinery/power/emitter/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_FLIP ,null,CALLBACK(src, .proc/can_be_rotated))
+	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
 
 /obj/machinery/power/emitter/proc/can_be_rotated(mob/user,rotation_type)
 	if (anchored)
 		to_chat(user, "<span class='warning'>It is fastened to the floor!</span>")
 		return FALSE
 	return TRUE
+
+/obj/machinery/power/emitter/should_have_node()
+	if(state == EMITTER_WELDED)
+		return TRUE
+	return FALSE
 
 /obj/machinery/power/emitter/Destroy()
 	if(SSticker.IsRoundInProgress())
@@ -264,20 +269,22 @@
 			user.visible_message("[user.name] starts to weld the [name] to the floor.", \
 				"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
 				"<span class='italics'>You hear welding.</span>")
-			if(I.use_tool(src, user, 20, volume=50))
+			if(I.use_tool(src, user, 20, volume=50) && state == EMITTER_WRENCHED)
 				state = EMITTER_WELDED
 				to_chat(user, "<span class='notice'>You weld \the [src] to the floor.</span>")
 				connect_to_network()
+				update_cable_icons_on_turf(get_turf(src))
 		if(EMITTER_WELDED)
 			if(!I.tool_start_check(user, amount=0))
 				return TRUE
 			user.visible_message("[user.name] starts to cut the [name] free from the floor.", \
 				"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
 				"<span class='italics'>You hear welding.</span>")
-			if(I.use_tool(src, user, 20, volume=50))
+			if(I.use_tool(src, user, 20, volume=50) && state == EMITTER_WELDED)
 				state = EMITTER_WRENCHED
 				to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
 				disconnect_from_network()
+				update_cable_icons_on_turf(get_turf(src))
 
 	return TRUE
 

@@ -2,7 +2,7 @@
 	name = "infrared emitter"
 	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted."
 	icon_state = "infrared"
-	materials = list(MAT_METAL=1000, MAT_GLASS=500)
+	materials = list(/datum/material/iron=1000, /datum/material/glass=500)
 	is_position_sensitive = TRUE
 
 	var/on = FALSE
@@ -38,8 +38,8 @@
 	. = ..()
 
 /obj/item/assembly/infra/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The infrared trigger is [on?"on":"off"].</span>")
+	. = ..()
+	. += "<span class='notice'>The infrared trigger is [on?"on":"off"].</span>"
 
 /obj/item/assembly/infra/activate()
 	if(!..())

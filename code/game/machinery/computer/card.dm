@@ -57,9 +57,9 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	return get_all_centcom_jobs()
 
 /obj/machinery/computer/card/examine(mob/user)
-	..()
+	. = ..()
 	if(scan || modify)
-		to_chat(user, "<span class='notice'>Alt-click to eject the ID card.</span>")
+		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
 
 /obj/machinery/computer/card/Initialize()
 	. = ..()
@@ -421,10 +421,12 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				if (modify)
 					modify.assignment = t1
 					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+					modify.update_label()
 		if ("demote")
 			if(modify.assignment in head_subordinates || modify.assignment == "Assistant")
 				modify.assignment = "Unassigned"
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+				modify.update_label()
 			else
 				to_chat(usr, "<span class='error'>You are not authorized to demote this position.</span>")
 		if ("reg")
@@ -435,6 +437,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 					if(newName)
 						modify.registered_name = newName
 						playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+						modify.update_label()
 					else
 						to_chat(usr, "<span class='error'>Invalid name entered.</span>")
 						updateUsrDialog()
@@ -515,8 +518,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				P.name = "paper- 'Crew Manifest'"
 				printing = null
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-	if (modify)
-		modify.update_label()
 	updateUsrDialog()
 
 /obj/machinery/computer/card/AltClick(mob/user)
@@ -549,7 +550,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 /obj/machinery/computer/card/proc/eject_id_modify(mob/user)
 	if(modify)
 		GLOB.data_core.manifest_modify(modify.registered_name, modify.assignment)
-		modify.update_label()
 		modify.forceMove(drop_location())
 		if(!issilicon(user) && Adjacent(user))
 			user.put_in_hands(modify)

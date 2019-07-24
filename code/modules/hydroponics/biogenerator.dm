@@ -53,9 +53,9 @@
 	max_items = max_storage
 
 /obj/machinery/biogenerator/examine(mob/user)
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Productivity at <b>[productivity*100]%</b>.<br>Matter consumption reduced by <b>[(efficiency*25)-25]</b>%.<br>Machine can hold up to <b>[max_items]</b> pieces of produce.<span>")
+		. += "<span class='notice'>The status display reads: Productivity at <b>[productivity*100]%</b>.<br>Matter consumption reduced by <b>[(efficiency*25)-25]</b>%.<br>Machine can hold up to <b>[max_items]</b> pieces of produce.</span>"
 
 /obj/machinery/biogenerator/on_reagent_change(changetype)			//When the reagents change, change the icon as well.
 	update_icon()
@@ -195,7 +195,7 @@
 						dat += "<A href='?src=[REF(src)];create=[D.id];amount=5'>x5</A>"
 					if(ispath(D.build_path, /obj/item/stack))
 						dat += "<A href='?src=[REF(src)];create=[D.id];amount=10'>x10</A>"
-					dat += "([D.materials[MAT_BIOMASS]/efficiency])<br>"
+					dat += "([D.materials[getmaterialref(/datum/material/biomass)]/efficiency])<br>"
 				dat += "</div>"
 		else
 			dat += "<div class='statusDisplay'>No container inside, please insert container.</div>"
@@ -231,15 +231,15 @@
 	else
 		menustat = "void"
 
-/obj/machinery/biogenerator/proc/check_cost(list/materials, multiplier = 1, remove_points = 1)
-	if(materials.len != 1 || materials[1] != MAT_BIOMASS)
+/obj/machinery/biogenerator/proc/check_cost(list/materials, multiplier = 1, remove_points = TRUE)
+	if(materials.len != 1 || materials[1] != getmaterialref(/datum/material/biomass))
 		return FALSE
-	if (materials[MAT_BIOMASS]*multiplier/efficiency > points)
+	if (materials[getmaterialref(/datum/material/biomass)]*multiplier/efficiency > points)
 		menustat = "nopoints"
 		return FALSE
 	else
 		if(remove_points)
-			points -= materials[MAT_BIOMASS]*multiplier/efficiency
+			points -= materials[getmaterialref(/datum/material/biomass)]*multiplier/efficiency
 		update_icon()
 		updateUsrDialog()
 		return TRUE

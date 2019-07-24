@@ -98,7 +98,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	singular_name = "metal sheet"
 	icon_state = "sheet-metal"
 	item_state = "sheet-metal"
-	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
 	throwforce = 10
 	flags_1 = CONDUCT_1
 	resistance_flags = FIRE_PROOF
@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	desc = "This sheet is an alloy of iron and plasma."
 	icon_state = "sheet-plasteel"
 	item_state = "sheet-metal"
-	materials = list(MAT_METAL=2000, MAT_PLASMA=2000)
+	materials = list(/datum/material/iron=2000, /datum/material/plasma=2000)
 	throwforce = 10
 	flags_1 = CONDUCT_1
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 80)
@@ -202,6 +202,8 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("apiary", /obj/structure/beebox, 40, time = 50),\
 	new/datum/stack_recipe("tiki mask", /obj/item/clothing/mask/gas/tiki_mask, 2), \
 	new/datum/stack_recipe("honey frame", /obj/item/honey_frame, 5, time = 10),\
+	new/datum/stack_recipe("wooden bucket", /obj/item/reagent_containers/glass/bucket/wooden, 3, time = 10),\
+	new/datum/stack_recipe("rake", /obj/item/cultivator/rake, 5, time = 10),\
 	new/datum/stack_recipe("ore box", /obj/structure/ore_box, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE),\
 	new/datum/stack_recipe("wooden crate", /obj/structure/closet/crate/wooden, 6, time = 50, one_per_turf = TRUE, on_floor = TRUE),\
 	new/datum/stack_recipe("baseball bat", /obj/item/melee/baseball_bat, 5, time = 15),\
@@ -269,6 +271,7 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
  * Cloth
  */
 GLOBAL_LIST_INIT(cloth_recipes, list ( \
+	new/datum/stack_recipe("white jumpskirt", /obj/item/clothing/under/skirt/color/white, 3), /*Ladies first*/ \
 	new/datum/stack_recipe("white jumpsuit", /obj/item/clothing/under/color/white, 3), \
 	new/datum/stack_recipe("white shoes", /obj/item/clothing/shoes/sneakers/white, 2), \
 	new/datum/stack_recipe("white scarf", /obj/item/clothing/neck/scarf, 1), \
@@ -306,17 +309,6 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cloth
 
-/obj/item/stack/sheet/cloth/durathread
-	name = "durathread"
-	desc = "A fabric sown from incredibly durable threads, known for its usefulness in armor production."
-	singular_name = "durathread roll"
-	icon_state = "sheet-durathread"
-	merge_type = /obj/item/stack/sheet/cloth/durathread
-
-/obj/item/stack/sheet/cloth/durathread/Initialize(mapload, new_amount, merge = TRUE)
-	. = ..()
-	recipes = null //ree override
-
 /obj/item/stack/sheet/cloth/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.cloth_recipes
 	return ..()
@@ -327,18 +319,39 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 /obj/item/stack/sheet/cloth/five
 	amount = 5
 
+GLOBAL_LIST_INIT(durathread_recipes, list ( \
+	new/datum/stack_recipe("durathread jumpsuit", /obj/item/clothing/under/durathread, 4, time = 40),
+	new/datum/stack_recipe("durathread beret", /obj/item/clothing/head/beret/durathread, 2, time = 40), \
+	new/datum/stack_recipe("durathread beanie", /obj/item/clothing/head/beanie/durathread, 2, time = 40), \
+	new/datum/stack_recipe("durathread bandana", /obj/item/clothing/mask/bandana/durathread, 1, time = 25), \
+	))
+
+/obj/item/stack/sheet/durathread
+	name = "durathread"
+	desc = "A fabric sown from incredibly durable threads, known for its usefulness in armor production."
+	singular_name = "durathread roll"
+	icon_state = "sheet-durathread"
+	item_state = "sheet-cloth"
+	resistance_flags = FLAMMABLE
+	force = 0
+	throwforce = 0
+	merge_type = /obj/item/stack/sheet/durathread
+
+/obj/item/stack/sheet/durathread/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.durathread_recipes
+	return ..()
+
 /obj/item/stack/sheet/cotton
 	name = "raw cotton bundle"
 	desc = "A bundle of raw cotton ready to be spun on the loom."
 	singular_name = "raw cotton ball"
 	icon_state = "sheet-cotton"
-	is_fabric = TRUE
 	resistance_flags = FLAMMABLE
 	force = 0
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cotton
-	pull_effort = 30
-	loom_result = /obj/item/stack/sheet/cloth
+	var/pull_effort = 30
+	var/loom_result = /obj/item/stack/sheet/cloth
 
 /obj/item/stack/sheet/cotton/durathread
 	name = "raw durathread bundle"
@@ -347,26 +360,59 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	icon_state = "sheet-durathreadraw"
 	merge_type = /obj/item/stack/sheet/cotton/durathread
 	pull_effort = 70
-	loom_result = /obj/item/stack/sheet/cloth/durathread
+	loom_result = /obj/item/stack/sheet/durathread
 
 
 /*
  * Cardboard
  */
-GLOBAL_LIST_INIT(cardboard_recipes, list ( \
-	new/datum/stack_recipe("box", /obj/item/storage/box), \
-	new/datum/stack_recipe("light tubes", /obj/item/storage/box/lights/tubes), \
-	new/datum/stack_recipe("light bulbs", /obj/item/storage/box/lights/bulbs), \
-	new/datum/stack_recipe("mouse traps", /obj/item/storage/box/mousetraps), \
-	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), \
-	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), \
-	new/datum/stack_recipe("pizza box", /obj/item/pizzabox), \
-	new/datum/stack_recipe("donut box", /obj/item/storage/fancy/donut_box), \
-	new/datum/stack_recipe("egg box", /obj/item/storage/fancy/egg_box), \
-	new/datum/stack_recipe("candle box", /obj/item/storage/fancy/candle_box), \
-	new/datum/stack_recipe("folder", /obj/item/folder), \
-	new/datum/stack_recipe("large box", /obj/structure/closet/cardboard, 4), \
-	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5), \
+GLOBAL_LIST_INIT(cardboard_recipes, list (														\
+	new/datum/stack_recipe("box", /obj/item/storage/box),										\
+	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3),				\
+	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg),				\
+	new/datum/stack_recipe("large box", /obj/structure/closet/cardboard, 4, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5),					\
+	null,																						\
+
+	new/datum/stack_recipe("pizza box", /obj/item/pizzabox),									\
+	new/datum/stack_recipe("folder", /obj/item/folder),											\
+	null,																						\
+	//TO-DO: Find a proper way to just change the illustration on the box. Code isn't the issue, input is.
+	new/datum/stack_recipe_list("fancy boxes", list(
+		new /datum/stack_recipe("donut box", /obj/item/storage/fancy/donut_box),				\
+		new /datum/stack_recipe("egg box", /obj/item/storage/fancy/egg_box),					\
+		new /datum/stack_recipe("donk-pockets box", /obj/item/storage/box/donkpockets),			\
+		new /datum/stack_recipe("monkey cube box", /obj/item/storage/box/monkeycubes),			\
+		null,																					\
+
+		new /datum/stack_recipe("lethal ammo box", /obj/item/storage/box/lethalshot),			\
+		new /datum/stack_recipe("rubber shot ammo box", /obj/item/storage/box/rubbershot),		\
+		new /datum/stack_recipe("bean bag ammo box", /obj/item/storage/box/beanbag),			\
+		new /datum/stack_recipe("flashbang box", /obj/item/storage/box/flashbangs),				\
+		new /datum/stack_recipe("flashes box", /obj/item/storage/box/flashes),					\
+		new /datum/stack_recipe("handcuffs box", /obj/item/storage/box/handcuffs),				\
+		new /datum/stack_recipe("ID card box", /obj/item/storage/box/ids),						\
+		new /datum/stack_recipe("PDA box", /obj/item/storage/box/PDAs),							\
+		null,																					\
+
+		new /datum/stack_recipe("pillbottle box", /obj/item/storage/box/pillbottles),			\
+		new /datum/stack_recipe("beaker box", /obj/item/storage/box/beakers),					\
+		new /datum/stack_recipe("syringe box", /obj/item/storage/box/syringes),					\
+		new /datum/stack_recipe("latex gloves box", /obj/item/storage/box/gloves),				\
+		new /datum/stack_recipe("sterile masks box", /obj/item/storage/box/masks),				\
+		new /datum/stack_recipe("body bag box", /obj/item/storage/box/bodybags),					\
+		new /datum/stack_recipe("perscription glasses box", /obj/item/storage/box/rxglasses),	\
+		null,																					\
+
+		new /datum/stack_recipe("disk box", /obj/item/storage/box/disks),						\
+		new /datum/stack_recipe("light tubes box", /obj/item/storage/box/lights/tubes),			\
+		new /datum/stack_recipe("light bulbs box", /obj/item/storage/box/lights/bulbs),			\
+		new /datum/stack_recipe("mixed lights box", /obj/item/storage/box/lights/mixed),		\
+		new /datum/stack_recipe("mouse traps box", /obj/item/storage/box/mousetraps),			\
+		new /datum/stack_recipe("candle box", /obj/item/storage/fancy/candle_box)
+		)),
+
+	null,																						\
 ))
 
 /obj/item/stack/sheet/cardboard	//BubbleWrap //it's cardboard you fuck
@@ -608,7 +654,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	singular_name = "plastic sheet"
 	icon_state = "sheet-plastic"
 	item_state = "sheet-plastic"
-	materials = list(MAT_PLASTIC=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/plastic=MINERAL_MATERIAL_AMOUNT)
 	throwforce = 7
 	merge_type = /obj/item/stack/sheet/plastic
 

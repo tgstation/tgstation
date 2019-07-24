@@ -24,13 +24,13 @@
 	. = ..()
 
 /obj/machinery/defibrillator_mount/examine(mob/user)
-	..()
+	. = ..()
 	if(defib)
-		to_chat(user, "<span class='notice'>There is a defib unit hooked up. Alt-click to remove it.<span>")
+		. += "<span class='notice'>There is a defib unit hooked up. Alt-click to remove it.</span>"
 		if(GLOB.security_level >= SEC_LEVEL_RED)
-			to_chat(user, "<span class='notice'>Due to a security situation, its locking clamps can be toggled by swiping any ID.</span>")
+			. += "<span class='notice'>Due to a security situation, its locking clamps can be toggled by swiping any ID.</span>"
 		else
-			to_chat(user, "<span class='notice'>Its locking clamps can be [clamps_locked ? "dis" : ""]engaged by swiping an ID with access.</span>")
+			. += "<span class='notice'>Its locking clamps can be [clamps_locked ? "dis" : ""]engaged by swiping an ID with access.</span>"
 
 /obj/machinery/defibrillator_mount/process()
 	if(defib && defib.cell && defib.cell.charge < defib.cell.maxcharge && is_operational())
@@ -138,7 +138,7 @@
 	desc = "A frame for a defibrillator mount. It can't be removed once it's placed."
 	icon = 'icons/obj/machines/defib_mount.dmi'
 	icon_state = "defibrillator_mount"
-	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
+	materials = list(/datum/material/iron = 300, /datum/material/glass = 100)
 	w_class = WEIGHT_CLASS_BULKY
 	result_path = /obj/machinery/defibrillator_mount
 	pixel_shift = -28

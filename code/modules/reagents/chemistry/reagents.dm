@@ -39,6 +39,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/overdosed = 0 // You fucked up and this is now triggering its overdose effects, purge that shit quick.
 	var/self_consuming = FALSE
 	var/reagent_weight = 1 //affects how far it travels when sprayed
+	var/metabolizing = FALSE
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
@@ -66,12 +67,24 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
 	return
 
+datum/reagent/proc/on_transfer(atom/A, method=TOUCH, volume) //Called after a reagent is transfered
+	return
+
+
 // Called when this reagent is first added to a mob
 /datum/reagent/proc/on_mob_add(mob/living/L)
 	return
 
 // Called when this reagent is removed while inside a mob
 /datum/reagent/proc/on_mob_delete(mob/living/L)
+	return
+
+// Called when this reagent first starts being metabolized by a liver
+/datum/reagent/proc/on_mob_metabolize(mob/living/L)
+	return
+
+// Called when this reagent stops being metabolized by a liver
+/datum/reagent/proc/on_mob_end_metabolize(mob/living/L)
 	return
 
 /datum/reagent/proc/on_move(mob/M)

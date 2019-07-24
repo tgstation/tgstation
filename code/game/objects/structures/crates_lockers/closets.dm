@@ -74,19 +74,19 @@
 			add_overlay("[icon_state]_open")
 
 /obj/structure/closet/examine(mob/user)
-	..()
+	. = ..()
 	if(welded)
-		to_chat(user, "<span class='notice'>It's welded shut.</span>")
+		. += "<span class='notice'>It's welded shut.</span>"
 	if(anchored)
-		to_chat(user, "<span class='notice'>It is <b>bolted</b> to the ground.</span>")
+		. += "<span class='notice'>It is <b>bolted</b> to the ground.</span>"
 	if(opened)
-		to_chat(user, "<span class='notice'>The parts are <b>welded</b> together.</span>")
+		. += "<span class='notice'>The parts are <b>welded</b> together.</span>"
 	else if(secure && !opened)
-		to_chat(user, "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>")
+		. += "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>"
 	if(isliving(user))
 		var/mob/living/L = user
 		if(HAS_TRAIT(L, TRAIT_SKITTISH))
-			to_chat(user, "<span class='notice'>Ctrl-Shift-click [src] to jump inside.</span>")
+			. += "<span class='notice'>Ctrl-Shift-click [src] to jump inside.</span>"
 
 /obj/structure/closet/CanPass(atom/movable/mover, turf/target)
 	if(wall_mounted)
@@ -347,15 +347,15 @@
 	return attack_hand(user)
 
 /obj/structure/closet/verb/verb_toggleopen()
-	set src in oview(1)
+	set src in view(1)
 	set category = "Object"
 	set name = "Toggle Open"
 
-	if(!usr.incapacitated())
+	if(!usr.canUseTopic(src, BE_CLOSE) || !isturf(loc))
 		return
 
 	if(iscarbon(usr) || issilicon(usr) || isdrone(usr))
-		return attack_hand(usr)
+		return toggle(usr)
 	else
 		to_chat(usr, "<span class='warning'>This mob type can't use this verb.</span>")
 

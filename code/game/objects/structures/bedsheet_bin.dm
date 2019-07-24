@@ -34,6 +34,8 @@ LINEN BINS
 	if(layer == initial(layer))
 		layer = ABOVE_MOB_LAYER
 		to_chat(user, "<span class='notice'>You cover yourself with [src].</span>")
+		pixel_x = 0
+		pixel_y = 0
 	else
 		layer = initial(layer)
 		to_chat(user, "<span class='notice'>You smooth [src] out beneath you.</span>")
@@ -295,13 +297,13 @@ LINEN BINS
 
 
 /obj/structure/bedsheetbin/examine(mob/user)
-	..()
+	. = ..()
 	if(amount < 1)
-		to_chat(user, "There are no bed sheets in the bin.")
+		. += "There are no bed sheets in the bin."
 	else if(amount == 1)
-		to_chat(user, "There is one bed sheet in the bin.")
+		. += "There is one bed sheet in the bin."
 	else
-		to_chat(user, "There are [amount] bed sheets in the bin.")
+		. += "There are [amount] bed sheets in the bin."
 
 
 /obj/structure/bedsheetbin/update_icon()

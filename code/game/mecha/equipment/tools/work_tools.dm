@@ -32,6 +32,19 @@
 		return
 	if(!cargo_holder)
 		return
+	if(ismecha(target))
+		var/obj/mecha/M = target
+		var/have_ammo
+		for(var/obj/item/mecha_ammo/box in cargo_holder.cargo)
+			if(istype(box, /obj/item/mecha_ammo) && box.rounds)
+				have_ammo = TRUE
+				if(M.ammo_resupply(box, chassis.occupant, TRUE))
+					return
+		if(have_ammo)
+			to_chat(chassis.occupant, "No further supplies can be provided to [M].")
+		else
+			to_chat(chassis.occupant, "No providable supplies found in cargo hold")
+		return
 	if(isobj(target))
 		var/obj/O = target
 		if(istype(O, /obj/machinery/door/firedoor))
@@ -331,144 +344,6 @@
 
 /obj/item/mecha_parts/mecha_equipment/rcd/get_equip_info()
 	return "[..()] \[<a href='?src=[REF(src)];mode=0'>D</a>|<a href='?src=[REF(src)];mode=1'>C</a>|<a href='?src=[REF(src)];mode=2'>A</a>\]"
-
-
-
-
-/obj/item/mecha_parts/mecha_equipment/cable_layer
-	name = "cable layer"
-	desc = "Equipment for engineering exosuits. Lays cable along the exosuit's path."
-	icon_state = "mecha_wire"
-	var/datum/callback/event
-	var/turf/old_turf
-	var/obj/structure/cable/last_piece
-	var/obj/item/stack/cable_coil/cable
-	var/max_cable = 1000
-
-/obj/item/mecha_parts/mecha_equipment/cable_layer/Initialize()
-	. = ..()
-	cable = new(src, 0)
-
-/obj/item/mecha_parts/mecha_equipment/cable_layer/can_attach(obj/mecha/working/M)
-	if(..())
-		if(istype(M))
-			return 1
-	return 0
-
-/obj/item/mecha_parts/mecha_equipment/cable_layer/attach()
-	..()
-	event = chassis.events.addEvent("onMove", CALLBACK(src, .proc/layCable))
-	return
-
-/obj/item/mecha_parts/mecha_equipment/cable_layer/detach()
-	chassis.events.clearEvent("onMove",event)
-	return ..()
-
-/obj/item/mecha_parts/mecha_equipment/cable_layer/Destroy()
-	if(chassis)
-		chassis.events.clearEvent("onMove",event)
-	return ..()
-
-/obj/item/mecha_parts/mecha_equipment/cable_layer/action(var/obj/item/stack/cable_coil/target)
-	if(!action_checks(target))
-		return
-	if(istype(target) && target.amount)
-		var/cur_amount = cable? cable.amount : 0
-		var/to_load = max(max_cable - cur_amount,0)
-		if(to_load)
-			to_load = min(target.amount, to_load)
-			if(!cable)
-				cable = new(src, 0)
-			cable.amount += to_load
-			target.use(to_load)
-			occupant_message("<span class='notice'>[to_load] meters of cable successfully loaded.</span>")
-			send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
-		else
-			occupant_message("<span class='warning'>Reel is full.</span>")
-	else
-		occupant_message("<span class='warning'>Unable to load [target] - no cable found.</span>")
-
-
-/obj/item/mecha_parts/mecha_equipment/cable_layer/Topic(href,href_list)
-	..()
-	if(href_list["toggle"])
-		set_ready_state(!equip_ready)
-		occupant_message("[src] [equip_ready?"dea":"a"]ctivated.")
-		log_message("[equip_ready?"Dea":"A"]ctivated.", LOG_MECHA)
-		return
-	if(href_list["cut"])
-		if(cable && cable.amount)
-			var/m = round(input(chassis.occupant,"Please specify the length of cable to cut","Cut cable",min(cable.amount,30)) as num, 1)
-			m = min(m, cable.amount)
-			if(m)
-				use_cable(m)
-				new /obj/item/stack/cable_coil(get_turf(chassis), m)
-		else
-			occupant_message("There's no more cable on the reel.")
-	return
-
-/obj/item/mecha_parts/mecha_equipment/cable_layer/get_equip_info()
-	var/output = ..()
-	if(output)
-		return "[output] \[Cable: [cable ? cable.amount : 0] m\][(cable && cable.amount) ? "- <a href='?src=[REF(src)];toggle=1'>[!equip_ready?"Dea":"A"]ctivate</a>|<a href='?src=[REF(src)];cut=1'>Cut</a>" : null]"
-	return
-
-/obj/item/mecha_parts/mecha_equipment/cable_layer/proc/use_cable(amount)
-	if(!cable || cable.amount<1)
-		set_ready_state(1)
-		occupant_message("Cable depleted, [src] deactivated.")
-		log_message("Cable depleted, [src] deactivated.", LOG_MECHA)
-		return
-	if(cable.amount < amount)
-		occupant_message("No enough cable to finish the task.")
-		return
-	cable.use(amount)
-	update_equip_info()
-	return 1
-
-/obj/item/mecha_parts/mecha_equipment/cable_layer/proc/reset()
-	last_piece = null
-
-/obj/item/mecha_parts/mecha_equipment/cable_layer/proc/dismantleFloor(var/turf/new_turf)
-	if(isfloorturf(new_turf))
-		var/turf/open/floor/T = new_turf
-		if(!isplatingturf(T))
-			if(!T.broken && !T.burnt)
-				new T.floor_tile(T)
-			T.make_plating()
-	return !new_turf.intact
-
-/obj/item/mecha_parts/mecha_equipment/cable_layer/proc/layCable(var/turf/new_turf)
-	if(equip_ready || !istype(new_turf) || !dismantleFloor(new_turf))
-		return reset()
-	var/fdirn = turn(chassis.dir,180)
-	for(var/obj/structure/cable/LC in new_turf)		// check to make sure there's not a cable there already
-		if(LC.d1 == fdirn || LC.d2 == fdirn)
-			return reset()
-	if(!use_cable(1))
-		return reset()
-	var/obj/structure/cable/NC = new(new_turf, "red")
-	NC.d1 = 0
-	NC.d2 = fdirn
-	NC.update_icon()
-
-	var/datum/powernet/PN
-	if(last_piece && last_piece.d2 != chassis.dir)
-		last_piece.d1 = min(last_piece.d2, chassis.dir)
-		last_piece.d2 = max(last_piece.d2, chassis.dir)
-		last_piece.update_icon()
-		PN = last_piece.powernet
-
-	if(!PN)
-		PN = new()
-		GLOB.powernets += PN
-	NC.powernet = PN
-	PN.cables += NC
-	NC.mergeConnectedNetworks(NC.d2)
-
-	//NC.mergeConnectedNetworksOnTurf()
-	last_piece = NC
-	return 1
 
 //Dunno where else to put this so shrug
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade

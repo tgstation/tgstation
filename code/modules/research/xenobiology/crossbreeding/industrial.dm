@@ -13,8 +13,8 @@ Industrial extracts:
 	var/itemamount = 1 //How many items to spawn
 
 /obj/item/slimecross/industrial/examine(mob/user)
-	..()
-	to_chat(user, "It currently has [plasmaabsorbed] units of plasma floating inside the outer shell, out of [plasmarequired] units.")
+	. = ..()
+	. += "It currently has [plasmaabsorbed] units of plasma floating inside the outer shell, out of [plasmarequired] units."
 
 /obj/item/slimecross/industrial/proc/do_after_spawn(obj/item/spawned)
 	return

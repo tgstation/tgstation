@@ -415,8 +415,6 @@
 			if(prob(20)) //stays in the system much longer than sprinkles/banana juice, so heals slower to partially compensate
 				H.heal_bodypart_damage(1,1, 0)
 				. = 1
-		else //chefs' robust space-Italian metabolism lets them eat garlic without producing allyl methyl sulfide
-			H.adjust_hygiene(-0.15 * volume)
 	..()
 
 /datum/reagent/consumable/sprinkles
@@ -426,7 +424,7 @@
 	taste_description = "childhood whimsy"
 
 /datum/reagent/consumable/sprinkles/on_mob_life(mob/living/carbon/M)
-	if(HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
+	if(M.mind && HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.heal_bodypart_damage(1,1, 0)
 		. = 1
 	..()
@@ -602,10 +600,10 @@
 				unprotected = TRUE
 	if(unprotected)
 		if(!M.getorganslot(ORGAN_SLOT_EYES))	//can't blind somebody with no eyes
-			to_chat(M, "<span class = 'notice'>Your eye sockets feel wet.</span>")
+			to_chat(M, "<span class='notice'>Your eye sockets feel wet.</span>")
 		else
 			if(!M.eye_blurry)
-				to_chat(M, "<span class = 'warning'>Tears well up in your eyes!</span>")
+				to_chat(M, "<span class='warning'>Tears well up in your eyes!</span>")
 			M.blind_eyes(2)
 			M.blur_eyes(5)
 	..()
@@ -615,7 +613,7 @@
 	if(M.eye_blurry)	//Don't worsen vision if it was otherwise fine
 		M.blur_eyes(4)
 		if(prob(10))
-			to_chat(M, "<span class = 'warning'>Your eyes sting!</span>")
+			to_chat(M, "<span class='warning'>Your eyes sting!</span>")
 			M.blind_eyes(2)
 
 
@@ -662,7 +660,7 @@
 /datum/reagent/consumable/tinlux/reaction_mob(mob/living/M)
 	M.set_light(2)
 
-/datum/reagent/consumable/tinlux/on_mob_delete(mob/living/M)
+/datum/reagent/consumable/tinlux/on_mob_end_metabolize(mob/living/M)
 	M.set_light(-2)
 
 /datum/reagent/consumable/vitfro
@@ -734,11 +732,20 @@
 	taste_mult = 100
 	can_synth = FALSE
 
+/datum/reagent/consumable/nutriment/peptides
+	name = "Peptides"
+	color = "#BBD4D9"
+	taste_description = "mint frosting"
+	description = "These restorative peptides not only speed up wound healing, but are nutrious as well!"
+	nutriment_factor = 10 * REAGENTS_METABOLISM // 33% less than nutriment to reduce weight gain
+	brute_heal = 3
+	burn_heal = 1
+
 /datum/reagent/consumable/caramel
 	name = "Caramel"
 	description = "Who would have guessed that heating sugar is so delicious?"
 	nutriment_factor = 10 * REAGENTS_METABOLISM
-	color = "#C65A00"
+	color = "#D98736"
 	taste_mult = 2
-	taste_description = "bitter sweetness"
+	taste_description = "caramel"
 	reagent_state = SOLID

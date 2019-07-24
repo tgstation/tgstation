@@ -1,7 +1,0 @@
-author: "4dplanner"
-delete-after: True
-changes: 
-  - balance: "HoS gun has ion mode to replace taser mode, which fires weak ion bolts (ion bolts with 0 heavy and light range)"
-  - tweak: "HoS gun now cycles disabler -> laser -> ion"
-  - bugfix: "spiral_range properly includes turf contents if dist = 0"
-  - bugfix: "weak ion bolts are no longer stronger than strong ion bolts"

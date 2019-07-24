@@ -124,7 +124,7 @@ Difficulty: Very Hard
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.mind)
-			if(H.mind.martial_art && prob(H.mind.martial_art.deflection_chance))
+			if(istype(H.mind.martial_art, /datum/martial_art/the_sleeping_carp))
 				. = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
@@ -412,8 +412,8 @@ Difficulty: Very Hard
 /obj/machinery/anomalous_crystal/examine(mob/user)
 	. = ..()
 	if(isobserver(user))
-		to_chat(user, observer_desc)
-		to_chat(user, "It is activated by [activation_method].")
+		. += observer_desc
+		. += "It is activated by [activation_method]."
 
 /obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
 	..()

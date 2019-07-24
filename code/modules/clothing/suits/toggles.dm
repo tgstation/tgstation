@@ -120,8 +120,8 @@
 		A.UpdateButtonIcon()
 
 /obj/item/clothing/suit/toggle/examine(mob/user)
-	..()
-	to_chat(user, "Alt-click on [src] to toggle the [togglename].")
+	. = ..()
+	. += "Alt-click on [src] to toggle the [togglename]."
 
 //Hardsuit toggle code
 /obj/item/clothing/suit/space/hardsuit/Initialize()

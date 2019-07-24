@@ -65,7 +65,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/equip_delay_other = 20 //In deciseconds, how long an item takes to put on another person
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
 	var/breakouttime = 0
-	var/list/materials
+	var/list/materials //materials in this object, and the amount
 
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
@@ -108,6 +108,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/Initialize()
 
 	materials =	typelist("materials", materials)
+
+	if(materials) //Otherwise, use the instances already provided.
+		var/list/temp_list = list() 
+		for(var/i in materials) //Go through all of our materials, get the subsystem instance, and then replace the list.
+			var/amount = materials[i]
+			var/datum/material/M = getmaterialref(i)
+			temp_list[M] = amount
+		materials = temp_list
 
 	if (attack_verb)
 		attack_verb = typelist("attack_verb", attack_verb)
@@ -183,14 +191,21 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	loc = T
 
 /obj/item/examine(mob/user) //This might be spammy. Remove?
-	..()
-	var/pronoun
-	if(src.gender == PLURAL)
-		pronoun = "They are"
+	. = ..()
+
+	. += "[gender == PLURAL ? "They are" : "It is"] a [weightclass2text(w_class)] item."
+
+	if(resistance_flags & INDESTRUCTIBLE)
+		. += "[src] seems extremely robust! It'll probably withstand anything that could happen to it!"
 	else
-		pronoun = "It is"
-	var/size = weightclass2text(src.w_class)
-	to_chat(user, "[pronoun] a [size] item." )
+		if(resistance_flags & LAVA_PROOF)
+			. += "[src] is made of an extremely heat-resistant material, it'd probably be able to withstand lava!"
+		if(resistance_flags & (ACID_PROOF | UNACIDABLE))
+			. += "[src] looks pretty robust! It'd probably be able to withstand acid!"
+		if(resistance_flags & FREEZE_PROOF)
+			. += "[src] is made of cold-resistant materials."
+		if(resistance_flags & FIRE_PROOF)
+			. += "[src] is made of fire-retardant materials."
 
 	if(!user.research_scanner)
 		return
@@ -227,7 +242,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else
 		research_msg += "None"
 	research_msg += "."
-	to_chat(user, research_msg.Join())
+	. += research_msg.Join()
 
 /obj/item/interact(mob/user)
 	add_fingerprint(user)
@@ -289,6 +304,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	//If the item is in a storage item, take it out
 	SEND_SIGNAL(loc, COMSIG_TRY_STORAGE_TAKE, src, user.loc, TRUE)
+	if(QDELETED(src)) //moving it out of the storage to the floor destroyed it.
+		return
 
 	if(throwing)
 		throwing.finalize(FALSE)
@@ -441,7 +458,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	if(M.is_eyes_covered())
 		// you can't stab someone in the eyes wearing a mask!
-		to_chat(user, "<span class='danger'>You're going to need to remove [M.p_their()] eye protection first!</span>")
+		to_chat(user, "<span class='warning'>You're going to need to remove [M.p_their()] eye protection first!</span>")
 		return
 
 	if(isalien(M))//Aliens don't have eyes./N     slimes also don't have eyes!
@@ -449,7 +466,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return
 
 	if(isbrain(M))
-		to_chat(user, "<span class='danger'>You cannot locate any organic eyes on this brain!</span>")
+		to_chat(user, "<span class='warning'>You cannot locate any organic eyes on this brain!</span>")
 		return
 
 	src.add_fingerprint(user)
@@ -477,12 +494,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	log_combat(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 
-	M.adjust_blurriness(3)
-	M.adjust_eye_damage(rand(2,4))
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return
-	if(eyes.eye_damage >= 10)
+	M.adjust_blurriness(3)
+	eyes.applyOrganDamage(rand(2,4))
+	if(eyes.damage >= 10)
 		M.adjust_blurriness(15)
 		if(M.stat != DEAD)
 			to_chat(M, "<span class='danger'>Your eyes start to bleed profusely!</span>")
@@ -496,7 +513,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			M.adjust_blurriness(10)
 			M.Unconscious(20)
 			M.Paralyze(40)
-		if (prob(eyes.eye_damage - 10 + 1))
+		if (prob(eyes.damage - 10 + 1))
 			M.become_blind(EYE_DAMAGE)
 			to_chat(M, "<span class='danger'>You go blind!</span>")
 
@@ -528,6 +545,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if (callback) //call the original callback
 		. = callback.Invoke()
 	item_flags &= ~IN_INVENTORY
+	if(!pixel_y && !pixel_x)
+		pixel_x = rand(-8,8)
+		pixel_y = rand(-8,8)
+
 
 /obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/storage
 	if(!newLoc)

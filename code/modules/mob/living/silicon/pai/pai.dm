@@ -13,6 +13,7 @@
 	maxHealth = 500
 	layer = BELOW_MOB_LAYER
 	can_be_held = TRUE
+	radio = /obj/item/radio/headset/silicon/pai
 	var/network = "ss13"
 	var/obj/machinery/camera/current = null
 
@@ -111,8 +112,6 @@
 	job = "Personal AI"
 	signaler = new(src)
 	hostscan = new /obj/item/healthanalyzer(src)
-	if(!radio)
-		radio = new /obj/item/radio/headset/silicon/pai(src)
 	newscaster = new /obj/machinery/newscaster(src)
 	if(!aicamera)
 		aicamera = new /obj/item/camera/siliconcam/ai_camera(src)
@@ -262,8 +261,8 @@
 	return TRUE
 
 /mob/living/silicon/pai/examine(mob/user)
-	..()
-	to_chat(user, "A personal AI in holochassis mode. Its master ID string seems to be [master].")
+	. = ..()
+	. += "A personal AI in holochassis mode. Its master ID string seems to be [master]."
 
 /mob/living/silicon/pai/Life()
 	if(stat == DEAD)
@@ -289,7 +288,7 @@
 /obj/item/paicard/attackby(obj/item/W, mob/user, params)
 	..()
 	user.set_machine(src)
-	if(pai.encryptmod == TRUE)
+	if(pai && pai.encryptmod == TRUE)
 		if(W.tool_behaviour == TOOL_SCREWDRIVER)
 			pai.radio.attackby(W, user, params)
 		else if(istype(W, /obj/item/encryptionkey))

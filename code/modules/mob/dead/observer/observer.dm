@@ -18,7 +18,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	hud_type = /datum/hud/ghost
 	movement_type = GROUND | FLYING
 	var/can_reenter_corpse
-	var/do_not_resuscitate //determines whether we can switch can_reenter_corpse back off
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
@@ -347,18 +346,15 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!client)
 		return
 	if(!can_reenter_corpse)
-		if(do_not_resuscitate)
-			to_chat(src, "You can now re-enter your corpse, and can be cloned.")
-			can_reenter_corpse = TRUE
-			do_not_resuscitate = FALSE
-			return TRUE
-		else
-			to_chat(usr, "<span class='warning'>You're already stuck out of your body!</span>")
-			return FALSE
+		to_chat(usr, "<span class='warning'>You're already stuck out of your body!</span>")
+		return FALSE
+
+	var/response = alert(src, "Are you sure you want to prevent (almost) all means of resuscitation? This cannot be undone. ","Are you sure you want to stay dead?","DNR","Save Me")
+	if(response != "DNR")
+		return 
 
 	can_reenter_corpse = FALSE
-	do_not_resuscitate = TRUE
-	to_chat(src, "You can now no longer be brought back into your body. You can undo this at any time by using the Do Not Resuscitate verb again.")
+	to_chat(src, "You can no longer be brought back into your body.")
 	return TRUE
 
 /mob/dead/observer/proc/notify_cloning(var/message, var/sound, var/atom/source, flashwindow = TRUE)
@@ -388,7 +384,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Teleport"
 	set desc= "Teleport to a location"
 	if(!isobserver(usr))
-		to_chat(usr, "Not when you're not dead!")
+		to_chat(usr, "<span class='warning'>Not when you're not dead!</span>")
 		return
 	var/list/filtered = list()
 	for(var/V in GLOB.sortedAreas)
@@ -405,7 +401,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		L+=T
 
 	if(!L || !L.len)
-		to_chat(usr, "No area available.")
+		to_chat(usr, "<span class='warning'>No area available.</span>")
 		return
 
 	usr.forceMove(pick(L))
@@ -829,16 +825,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(isobserver(src))
 		SSpai.recruitWindow(src)
 	else
-		to_chat(usr, "Can't become a pAI candidate while not dead!")
+		to_chat(usr, "<span class='warning'>Can't become a pAI candidate while not dead!</span>")
 
 /mob/dead/observer/CtrlShiftClick(mob/user)
 	if(isobserver(user) && check_rights(R_SPAWN))
 		change_mob_type( /mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
 
 /mob/dead/observer/examine(mob/user)
-	..()
+	. = ..()
 	if(!invisibility)
-		to_chat(user, "It seems extremely obvious.")
+		. += "It seems extremely obvious."
 
 /mob/dead/observer/proc/set_invisibility(value)
 	invisibility = value

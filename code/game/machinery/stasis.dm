@@ -19,9 +19,8 @@
 	var/obj/effect/overlay/vis/mattress_on
 
 /obj/machinery/stasis/examine(mob/user)
-	..()
-	var/turn_on_or_off = stasis_enabled ? "turn off" : "turn on"
-	to_chat(user, "<span class='notice'>Alt-click to [turn_on_or_off] the machine.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to [stasis_enabled ? "turn off" : "turn on"] the machine.</span>"
 
 /obj/machinery/stasis/proc/play_power_sound()
 	var/_running = stasis_running()
@@ -68,9 +67,6 @@
 		overlays_to_remove = managed_vis_overlays - mattress_on
 
 	SSvis_overlays.remove_vis_overlay(src, overlays_to_remove)
-
-	if(occupant)
-		SSvis_overlays.add_vis_overlay(src, 'icons/obj/machines/stasis.dmi', "tubes", LYING_MOB_LAYER + 0.1, plane, dir) //using vis_overlays instead of normal overlays for mouse_opacity here
 
 	if(stat & BROKEN)
 		icon_state = "stasis_broken"

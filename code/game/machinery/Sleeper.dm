@@ -17,12 +17,12 @@
 	var/list/available_chems
 	var/controls_inside = FALSE
 	var/list/possible_chems = list(
-		list(/datum/reagent/medicine/epinephrine, /datum/reagent/medicine/morphine, /datum/reagent/medicine/perfluorodecalin, /datum/reagent/medicine/bicaridine, /datum/reagent/medicine/kelotane),
+		list(/datum/reagent/medicine/epinephrine, /datum/reagent/medicine/morphine, /datum/reagent/medicine/perfluorodecalin, /datum/reagent/medicine/sanguiose, /datum/reagent/medicine/frogenite),
 		list(/datum/reagent/medicine/oculine,/datum/reagent/medicine/inacusiate),
-		list(/datum/reagent/medicine/antitoxin, /datum/reagent/medicine/mutadone, /datum/reagent/medicine/mannitol, /datum/reagent/medicine/salbutamol, /datum/reagent/medicine/pen_acid),
+		list(/datum/reagent/medicine/ferveatium, /datum/reagent/medicine/mutadone, /datum/reagent/medicine/mannitol, /datum/reagent/medicine/salbutamol, /datum/reagent/medicine/pen_acid),
 		list(/datum/reagent/medicine/omnizine)
 	)
-	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
+	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: mutadone -> morphine
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
 	var/enter_message = "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
 	payment_department = ACCOUNT_MED
@@ -150,8 +150,8 @@
 		open_machine()
 
 /obj/machinery/sleeper/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click [src] to [state_open ? "close" : "open"] it.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click [src] to [state_open ? "close" : "open"] it.</span>"
 
 /obj/machinery/sleeper/process()
 	..()
@@ -276,7 +276,7 @@
 	desc = "A large cryogenics unit built from brass. Its surface is pleasantly cool the touch."
 	icon_state = "sleeper_clockwork"
 	enter_message = "<span class='bold inathneq_small'>You hear the gentle hum and click of machinery, and are lulled into a sense of peace.</span>"
-	possible_chems = list(list(/datum/reagent/medicine/epinephrine, /datum/reagent/medicine/salbutamol, /datum/reagent/medicine/bicaridine, /datum/reagent/medicine/kelotane, /datum/reagent/medicine/oculine, /datum/reagent/medicine/inacusiate, /datum/reagent/medicine/mannitol))
+	possible_chems = list(list(/datum/reagent/medicine/epinephrine, /datum/reagent/medicine/salbutamol, /datum/reagent/medicine/sanguiose, /datum/reagent/medicine/frogenite, /datum/reagent/medicine/oculine, /datum/reagent/medicine/inacusiate, /datum/reagent/medicine/mannitol))
 
 /obj/machinery/sleeper/clockwork/process()
 	if(occupant && isliving(occupant))

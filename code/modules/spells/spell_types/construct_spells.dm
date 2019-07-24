@@ -102,7 +102,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult/purified
 	summon_type = list(/obj/item/soulstone/anybody/purified)
-	
+
 /obj/effect/proc_holder/spell/targeted/forcewall/cult
 	name = "Shield"
 	desc = "This spell creates a temporary forcefield to shield yourself and allies from incoming fire."
@@ -197,14 +197,14 @@
 
 /obj/effect/proc_holder/spell/targeted/abyssal_gaze/cast(list/targets, mob/user = usr)
 	if(!LAZYLEN(targets))
-		to_chat(user, "<span class='notice'>No target found in range.</span>")
+		to_chat(user, "<span class='warning'>No target found in range!</span>")
 		revert_cast()
 		return
 
 	var/mob/living/carbon/target = targets[1]
 
 	if(!(target in oview(range)))
-		to_chat(user, "<span class='notice'>[target] is too far away!</span>")
+		to_chat(user, "<span class='warning'>[target] is too far away!</span>")
 		revert_cast()
 		return
 
@@ -266,7 +266,7 @@
 		return
 
 	if(!(S in oview(range)))
-		to_chat(user, "<span class='notice'>[S] is too far away!</span>")
+		to_chat(user, "<span class='warning'>[S] is too far away!</span>")
 		revert_cast()
 		return
 

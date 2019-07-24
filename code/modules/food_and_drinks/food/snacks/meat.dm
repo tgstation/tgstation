@@ -267,7 +267,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/cooking_oil = 2)
 	filling_color = "#854817"
 	tastes = list("bacon" = 1)
-	foodtype = MEAT
+	foodtype = MEAT | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/meat/slab/gondola
 	name = "gondola meat"

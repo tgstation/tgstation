@@ -1,8 +1,8 @@
 /obj/item/storage/toolbox
 	name = "toolbox"
 	desc = "Danger. Very robust."
-	icon_state = "red"
-	item_state = "toolbox_red"
+	icon_state = "toolbox_default"
+	item_state = "toolbox_default"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -11,9 +11,10 @@
 	throw_speed = 2
 	throw_range = 7
 	w_class = WEIGHT_CLASS_BULKY
-	materials = list(MAT_METAL = 500)
+	materials = list(/datum/material/iron = 500)
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
+	custom_materials = list(/datum/material/iron = 500) //Toolboxes by default use iron as their core, custom material.
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 
@@ -41,6 +42,7 @@
 	name = "emergency toolbox"
 	icon_state = "red"
 	item_state = "toolbox_red"
+	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/storage/toolbox/emergency/PopulateContents()
 	new /obj/item/crowbar/red(src)
@@ -59,11 +61,13 @@
 	name = "rusty red toolbox"
 	icon_state = "toolbox_red_old"
 	has_latches = FALSE
+	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/storage/toolbox/mechanical
 	name = "mechanical toolbox"
 	icon_state = "blue"
 	item_state = "toolbox_blue"
+	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/storage/toolbox/mechanical/PopulateContents()
 	new /obj/item/screwdriver(src)
@@ -77,6 +81,7 @@
 	name = "rusty blue toolbox"
 	icon_state = "toolbox_blue_old"
 	has_latches = FALSE
+	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/storage/toolbox/mechanical/old/heirloom
 	name = "toolbox" //this will be named "X family toolbox"
@@ -124,6 +129,7 @@
 	name = "electrical toolbox"
 	icon_state = "yellow"
 	item_state = "toolbox_yellow"
+	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/storage/toolbox/electrical/PopulateContents()
 	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
@@ -131,12 +137,12 @@
 	new /obj/item/wirecutters(src)
 	new /obj/item/t_scanner(src)
 	new /obj/item/crowbar(src)
-	new /obj/item/stack/cable_coil(src,30,pickedcolor)
-	new /obj/item/stack/cable_coil(src,30,pickedcolor)
+	new /obj/item/stack/cable_coil(src,MAXCOIL,pickedcolor)
+	new /obj/item/stack/cable_coil(src,MAXCOIL,pickedcolor)
 	if(prob(5))
 		new /obj/item/clothing/gloves/color/yellow(src)
 	else
-		new /obj/item/stack/cable_coil(src,30,pickedcolor)
+		new /obj/item/stack/cable_coil(src,MAXCOIL,pickedcolor)
 
 /obj/item/storage/toolbox/syndicate
 	name = "suspicious looking toolbox"
@@ -144,6 +150,7 @@
 	item_state = "toolbox_syndi"
 	force = 15
 	throwforce = 18
+	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/storage/toolbox/syndicate/ComponentInitialize()
 	. = ..()
@@ -163,6 +170,7 @@
 	name = "mechanical toolbox"
 	icon_state = "blue"
 	item_state = "toolbox_blue"
+	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/storage/toolbox/drone/PopulateContents()
 	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
@@ -170,7 +178,7 @@
 	new /obj/item/wrench(src)
 	new /obj/item/weldingtool(src)
 	new /obj/item/crowbar(src)
-	new /obj/item/stack/cable_coil(src,30,pickedcolor)
+	new /obj/item/stack/cable_coil(src,MAXCOIL,pickedcolor)
 	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
 
@@ -183,6 +191,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	w_class = WEIGHT_CLASS_HUGE
 	attack_verb = list("robusted", "crushed", "smashed")
+	material_flags = MATERIAL_NO_COLOR
 	var/fabricator_type = /obj/item/clockwork/replica_fabricator/scarab
 
 /obj/item/storage/toolbox/brass/ComponentInitialize()
@@ -222,6 +231,7 @@
 	icon_state = "green"
 	item_state = "artistic_toolbox"
 	w_class = WEIGHT_CLASS_GIGANTIC //Holds more than a regular toolbox!
+	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/storage/toolbox/artistic/ComponentInitialize()
 	. = ..()
@@ -232,14 +242,14 @@
 /obj/item/storage/toolbox/artistic/PopulateContents()
 	new /obj/item/storage/crayons(src)
 	new /obj/item/crowbar(src)
-	new /obj/item/stack/cable_coil/red(src)
-	new /obj/item/stack/cable_coil/yellow(src)
-	new /obj/item/stack/cable_coil/blue(src)
-	new /obj/item/stack/cable_coil/green(src)
-	new /obj/item/stack/cable_coil/pink(src)
-	new /obj/item/stack/cable_coil/orange(src)
-	new /obj/item/stack/cable_coil/cyan(src)
-	new /obj/item/stack/cable_coil/white(src)
+	new /obj/item/stack/pipe_cleaner_coil/red(src)
+	new /obj/item/stack/pipe_cleaner_coil/yellow(src)
+	new /obj/item/stack/pipe_cleaner_coil/blue(src)
+	new /obj/item/stack/pipe_cleaner_coil/green(src)
+	new /obj/item/stack/pipe_cleaner_coil/pink(src)
+	new /obj/item/stack/pipe_cleaner_coil/orange(src)
+	new /obj/item/stack/pipe_cleaner_coil/cyan(src)
+	new /obj/item/stack/pipe_cleaner_coil/white(src)
 
 /obj/item/storage/toolbox/ammo
 	name = "ammo box"

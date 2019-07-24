@@ -123,10 +123,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		qdel(src) //If this ever happens, it's because you lost an arm
 
 /obj/item/claymore/highlander/examine(mob/user)
-	..()
-	to_chat(user, "It has [!notches ? "nothing" : "[notches] notches"] scratched into the blade.")
+	. = ..()
+	. += "It has [!notches ? "nothing" : "[notches] notches"] scratched into the blade."
 	if(nuke_disk)
-		to_chat(user, "<span class='boldwarning'>It's holding the nuke disk!</span>")
+		. += "<span class='boldwarning'>It's holding the nuke disk!</span>"
 
 /obj/item/claymore/highlander/attack(mob/living/target, mob/living/user)
 	. = ..()
@@ -239,7 +239,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 9
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=1150, MAT_GLASS=75)
+	materials = list(/datum/material/iron=1150, /datum/material/glass=75)
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 
 /obj/item/wirerod/attackby(obj/item/I, mob/user, params)
@@ -283,7 +283,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 100, "embedded_fall_chance" = 0)
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = IS_SHARP
-	materials = list(MAT_METAL=500, MAT_GLASS=500)
+	materials = list(/datum/material/iron=500, /datum/material/glass=500)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/throwing_star/magspear
@@ -309,7 +309,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 6
-	materials = list(MAT_METAL=12000)
+	materials = list(/datum/material/iron=12000)
 	hitsound = 'sound/weapons/genhit.ogg'
 	attack_verb = list("stubbed", "poked")
 	resistance_flags = FIRE_PROOF
@@ -370,7 +370,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 5
 	throwforce = 5
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=50)
+	materials = list(/datum/material/iron=50)
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
 /obj/item/staff
@@ -420,7 +420,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/ectoplasm/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the astral plane!</span>")
 	return (OXYLOSS)
-	
+
 /obj/item/ectoplasm/angelic
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "angelplasm"
@@ -468,25 +468,17 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_speed = 5
 	throw_range = 2
 	attack_verb = list("busted")
+	var/impressiveness = 45
+
+/obj/item/statuebust/Initialize()
+	. = ..()
+	AddComponent(/datum/component/art, impressiveness)
 
 /obj/item/statuebust/hippocratic
 	name = "hippocrates bust"
 	desc = "A bust of the famous Greek physician Hippocrates of Kos, often referred to as the father of western medicine."
 	icon_state = "hippocratic"
-
-/obj/item/statuebust/attack_self(mob/living/user)
-	add_fingerprint(user)
-	user.examinate(src)
-
-/obj/item/statuebust/examine(mob/living/user)
-	. = ..()
-	if(.)
-		return
-	if (!isliving(user))
-		return
-	user.visible_message("[user] stops to admire [src].", \
-						 "<span class='notice'>You take in [src], admiring its fine craftsmanship.</span>")
-	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artgood", /datum/mood_event/artgood)
+	impressiveness = 50
 
 /obj/item/tailclub
 	name = "tail club"
@@ -673,6 +665,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 0
 	throwforce = 5
 	reach = 2
+	var/min_reach = 2
 
 /obj/item/extendohand/acme
 	name = "\improper ACME Extendo-Hand"
@@ -680,7 +673,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/extendohand/attack(atom/M, mob/living/carbon/human/user)
 	var/dist = get_dist(M, user)
-	if(dist < reach)
+	if(dist < min_reach)
 		to_chat(user, "<span class='warning'>[M] is too close to use [src] on.</span>")
 		return
 	M.attack_hand(user)

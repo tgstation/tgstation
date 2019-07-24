@@ -9,7 +9,7 @@
 	item_state = "gun"
 	flags_1 =  CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
-	materials = list(MAT_METAL=2000)
+	materials = list(/datum/material/iron=2000)
 	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 5
 	throw_speed = 3
@@ -78,7 +78,7 @@
 	build_zooming()
 
 /obj/item/gun/Destroy()
-	if(pin)
+	if(isobj(pin)) //Can still be the initial path, then we skip
 		QDEL_NULL(pin)
 	if(gun_light)
 		QDEL_NULL(gun_light)
@@ -112,25 +112,25 @@
 		qdel(src)
 
 /obj/item/gun/examine(mob/user)
-	..()
+	. = ..()
 	if(pin)
-		to_chat(user, "It has \a [pin] installed.")
+		. += "It has \a [pin] installed."
 	else
-		to_chat(user, "It doesn't have a <b>firing pin</b> installed, and won't fire.")
+		. += "It doesn't have a <b>firing pin</b> installed, and won't fire."
 
 	if(gun_light)
-		to_chat(user, "It has \a [gun_light] [can_flashlight ? "" : "permanently "]mounted on it.")
+		. += "It has \a [gun_light] [can_flashlight ? "" : "permanently "]mounted on it."
 		if(can_flashlight) //if it has a light and this is false, the light is permanent.
-			to_chat(user, "<span class='info'>[gun_light] looks like it can be <b>unscrewed</b> from [src].</span>")
+			. += "<span class='info'>[gun_light] looks like it can be <b>unscrewed</b> from [src].</span>"
 	else if(can_flashlight)
-		to_chat(user, "It has a mounting point for a <b>seclite</b>.")
+		. += "It has a mounting point for a <b>seclite</b>."
 
 	if(bayonet)
-		to_chat(user, "It has \a [bayonet] [can_bayonet ? "" : "permanently "]affixed to it.")
+		. += "It has \a [bayonet] [can_bayonet ? "" : "permanently "]affixed to it."
 		if(can_bayonet) //if it has a bayonet and this is false, the bayonet is permanent.
-			to_chat(user, "<span class='info'>[bayonet] looks like it can be <b>unscrewed</b> from [src].</span>")
+			. += "<span class='info'>[bayonet] looks like it can be <b>unscrewed</b> from [src].</span>"
 	else if(can_bayonet)
-		to_chat(user, "It has a <b>bayonet</b> lug on it.")
+		. += "It has a <b>bayonet</b> lug on it."
 
 /obj/item/gun/equipped(mob/living/user, slot)
 	. = ..()
@@ -210,7 +210,7 @@
 				return
 
 	if(weapon_weight == WEAPON_HEAVY && user.get_inactive_held_item())
-		to_chat(user, "<span class='userdanger'>You need both hands free to fire \the [src]!</span>")
+		to_chat(user, "<span class='warning'>You need both hands free to fire \the [src]!</span>")
 		return
 
 	//DUAL (or more!) WIELDING
@@ -260,7 +260,7 @@
 	if(chambered && chambered.BB)
 		if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
 			if(chambered.harmful) // Is the bullet chambered harmful?
-				to_chat(user, "<span class='notice'> [src] is lethally chambered! You don't want to risk harming anyone...</span>")
+				to_chat(user, "<span class='warning'> [src] is lethally chambered! You don't want to risk harming anyone...</span>")
 				return
 		if(randomspread)
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
@@ -309,7 +309,7 @@
 		if(chambered)
 			if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
 				if(chambered.harmful) // Is the bullet chambered harmful?
-					to_chat(user, "<span class='notice'> [src] is lethally chambered! You don't want to risk harming anyone...</span>")
+					to_chat(user, "<span class='warning'> [src] is lethally chambered! You don't want to risk harming anyone...</span>")
 					return
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
 			before_firing(target,user)

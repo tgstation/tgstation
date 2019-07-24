@@ -40,6 +40,10 @@
 	if(!QDELETED(cell) && (cell.charge > shot.e_cost))
 		add_overlay("decloner_spin")
 
+/obj/item/gun/energy/decloner/unrestricted
+	pin = /obj/item/firing_pin
+	ammo_type = list(/obj/item/ammo_casing/energy/declone/weak)
+
 /obj/item/gun/energy/floragun
 	name = "floral somatoray"
 	desc = "A tool that discharges controlled radiation which induces mutation in plant cells."
@@ -85,7 +89,7 @@
 	icon_state = "crossbow"
 	item_state = "crossbow"
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=2000)
+	materials = list(/datum/material/iron=2000)
 	suppressed = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	weapon_weight = WEAPON_LIGHT
@@ -108,7 +112,7 @@
 	desc = "A reverse engineered weapon using syndicate technology."
 	icon_state = "crossbowlarge"
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=4000)
+	materials = list(/datum/material/iron=4000)
 	suppressed = null
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	pin = null
@@ -139,9 +143,9 @@
 	AddComponent(/datum/component/butchering, 25, 105, 0, 'sound/weapons/plasma_cutter.ogg')
 
 /obj/item/gun/energy/plasmacutter/examine(mob/user)
-	..()
+	. = ..()
 	if(cell)
-		to_chat(user, "<span class='notice'>[src] is [round(cell.percent())]% charged.</span>")
+		. += "<span class='notice'>[src] is [round(cell.percent())]% charged.</span>"
 
 /obj/item/gun/energy/plasmacutter/attackby(obj/item/I, mob/user)
 	var/charge_multiplier = 0 //2 = Refined stack, 1 = Ore
