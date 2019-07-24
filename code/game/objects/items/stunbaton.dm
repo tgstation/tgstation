@@ -189,12 +189,12 @@
 /obj/item/melee/baton/proc/apply_stun_effect_end(mob/living/target)
 	if(HAS_TRAIT(target, TRAIT_STUNRESISTANCE))
 		if (!target.IsParalyzed())
-			to_chat(target, "<span class='warning'>You muscles cease, making you collapse, but your body quickly recovers...</span>")
+			to_chat(target, "<span class='warning'>You muscles seize, making you collapse, but your body quickly recovers...</span>")
 		
 		target.Paralyze(stunforce / 10)
 		return
 	if (!target.IsParalyzed())
-		to_chat(target, "<span class='warning'>You muscles cease, making you collapse!</span>")
+		to_chat(target, "<span class='warning'>You muscles seize, making you collapse!</span>")
 	
 	target.Paralyze(stunforce)
 
