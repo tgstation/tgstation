@@ -317,6 +317,8 @@
 		else
 			traitor_mob.mind.store_memory(U.unlock_note)
 
+	current.faction |= ROLE_SYNDICATE
+
 //Link a new mobs mind to the creator of said mob. They will join any team they are currently on, and will only switch teams when their creator does.
 
 /datum/mind/proc/enslave_mind_to_creator(mob/living/creator)
