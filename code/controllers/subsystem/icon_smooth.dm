@@ -42,15 +42,12 @@ SUBSYSTEM_DEF(icon_smooth)
 		CHECK_TICK
 	queue = blueprint_queue
 	blueprint_queue = list()
+	var/atom/movable/AM
+	var/turf/T
 	for(var/item in queue)
-		var/atom/movable/AM = item
-		var/image/I = new
-		var/turf/T = AM.loc
-		I.appearance = AM.appearance
-		I.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
-		I.loc = AM.loc
-		I.setDir(AM.dir)
-		I.alpha = 128
-		LAZYADD(T.blueprint_data, I)
+		AM = item
+		T = AM.loc
+		if(T && AM)
+			T.add_blueprints(AM)
 
 	return ..()
