@@ -13,7 +13,7 @@
 	lens_path = _lens_path
 
 /datum/component/extralasers/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby)
+	RegisterSignal(parent, COMSIG_ATOM_SCREWDRIVER_ACT, .proc/screwdrive)
 	attach()
 
 /datum/component/extralasers/UnregisterFromParent()
@@ -41,12 +41,11 @@
 	L.recharge_newshot()
 	L.update_icon(TRUE)
 
-/datum/component/extralasers/proc/attackby(datum/source, obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_CROWBAR)
-		user.visible_message("[user] has detached the lens.", "<span class='notice'>You detach the lens.</span>")
-		var/turf/T = get_turf(parent)
-		new lens_path(T)
-		qdel(src)
+/datum/component/extralasers/proc/screwdrive(datum/source, mob/user, obj/item/I)
+	user.visible_message("[user] has detached the lens.", "<span class='notice'>You detach the lens.</span>")
+	var/turf/T = get_turf(parent)
+	new lens_path(T)
+	qdel(src)
 
 /datum/component/extralasers/InheritComponent(datum/newcomp, orig, list/arglist)
 	. = ..()
