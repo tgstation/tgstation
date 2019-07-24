@@ -16,7 +16,7 @@
 /datum/surgery/healing/New(surgery_target, surgery_location, surgery_bodypart)
 	..()
 	if(healing_step_type)
-		steps = list(/datum/surgery_step/clamp_bleeders,
+		steps = list(/datum/surgery_step/incise/nobleed,
 					healing_step_type, //hehe cheeky
 					/datum/surgery_step/close)
 
