@@ -9,8 +9,13 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/looping_sound/supermatter
-	mid_sounds = list('sound/machines/sm/supermatter1.ogg'=1,'sound/machines/sm/supermatter2.ogg'=1,'sound/machines/sm/supermatter3.ogg'=1)
-	mid_length = 10
+	mid_sounds = list('sound/machines/sm/loops/calm.ogg' = 1)
+	mid_length = 60
+	volume = 1
+
+/datum/looping_sound/supermatter_delam
+	mid_sounds = list('sound/machines/sm/loops/delamming.ogg' = 1)
+	mid_length = 60
 	volume = 1
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
