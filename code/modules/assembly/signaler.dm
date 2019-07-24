@@ -100,8 +100,7 @@ Code:
 			code = new_code
 
 	if(href_list["send"])
-		spawn( 0 )
-			signal()
+		INVOKE_ASYNC(src, .proc/signal)
 
 	if(usr)
 		attack_self(usr)
