@@ -36,9 +36,13 @@ GLOBAL_LIST_INIT(tendrils, list())
 	gps = new /obj/item/gps/internal(src)
 	GLOB.tendrils += src
 
-/obj/structure/spawner/lavaland/Destroy()
+/obj/structure/spawner/lavaland/deconstruct(disassembled)
 	new /obj/effect/collapse(loc)
 	new /obj/structure/closet/crate/necropolis/tendril(loc)
+	return ..()
+	
+	
+/obj/structure/spawner/lavaland/Destroy()
 	var/last_tendril = TRUE
 	if(GLOB.tendrils.len>1)
 		last_tendril = FALSE
