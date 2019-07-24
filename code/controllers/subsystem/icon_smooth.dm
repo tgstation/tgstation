@@ -5,6 +5,8 @@ SUBSYSTEM_DEF(icon_smooth)
 	priority = FIRE_PRIOTITY_SMOOTHING
 	flags = SS_TICKER
 
+	///Blueprints assemble an image of what pipes/manifolds/wires look like on initialization, and thus should be taken after everything's been smoothed
+	var/list/blueprint_queue = list()
 	var/list/smooth_queue = list()
 	var/list/deferred = list()
 
@@ -38,5 +40,17 @@ SUBSYSTEM_DEF(icon_smooth)
 			continue
 		smooth_icon(A)
 		CHECK_TICK
+	queue = blueprint_queue
+	blueprint_queue = list()
+	for(var/item in queue)
+		var/atom/movable/AM = item
+		var/image/I = new
+		var/turf/T = AM.loc
+		I.appearance = AM.appearance
+		I.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
+		I.loc = AM.loc
+		I.setDir(AM.dir)
+		I.alpha = 128
+		LAZYADD(T.blueprint_data, I)
 
 	return ..()

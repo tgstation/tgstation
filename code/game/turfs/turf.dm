@@ -20,7 +20,6 @@
 	flags_1 = CAN_BE_DIRTY_1
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
-	var/list/atom/movable/blueprint_queue
 
 	var/explosion_level = 0	//for preventing explosion dodging
 	var/explosion_id = 0
@@ -474,32 +473,9 @@
 	underlay_appearance.dir = adjacency_dir
 	return TRUE
 
-///Certain sprites don't load properly upon init, so by queueing our orders we can wait until they have properly loaded in
-/turf/proc/add_blueprints_queue(atom/movable/AM)
-	if(!blueprint_queue)
-		addtimer(CALLBACK(src, .proc/add_blueprints), 50)
-	LAZYADD(blueprint_queue, AM)
-
-/turf/proc/add_blueprints()
-	if(SSticker.current_state == GAME_STATE_STARTUP)
-		addtimer(CALLBACK(src, .proc/add_blueprints), 50)
-	for(var/item in blueprint_queue)
-		var/atom/movable/AM = item
-		var/image/I = new
-		I.appearance = AM.appearance
-		I.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
-		I.loc = src
-		I.setDir(AM.dir)
-		I.alpha = 128
-
-		LAZYADD(blueprint_data, I)
-
-	blueprint_queue.Cut()
-
-
 /turf/proc/add_blueprints_preround(atom/movable/AM)
 	if(!SSticker.HasRoundStarted())
-		add_blueprints_queue(AM)
+		SSicon_smooth.blueprint_queue += AM
 
 /turf/proc/is_transition_turf()
 	return
