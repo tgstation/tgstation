@@ -186,7 +186,7 @@
 		M.visible_message("<span class='danger'>[M] explodes into a shower of gibs!</span>")
 		M.gib()
 
-// a shrink ray that shrinks mobs, which grow back after a short while. shrunken mobs drop their stuff and move slower.
+//a shrink ray that shrinks stuff, which grows back after a short while.
 /obj/item/projectile/beam/shrink
 	name = "shrink ray"
 	icon_state = "blue_laser"
@@ -200,8 +200,21 @@
 
 /obj/item/projectile/beam/shrink/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if(isopenturf(target))//shrunk floors wouldnt do anything except look weird
+	if(target.GetComponent(/datum/component/shrink))
+		SEND_SIGNAL(src, COMSIG_SHRINK_TIME_RESET, shrink_time)
 		return
+	if(isopenturf(target) || istype(target, /turf/closed/indestructible))//shrunk floors wouldnt do anything except look weird, i-walls shouldnt be bypassable
+		return
+	target.AddComponent(/datum/component/shrink, shrink_time, "shrink_ray_beam")
+
+
+
+
+
+
+
+/*
+	ADD_TRAIT(target, TRAIT_SHRUNKEN, "shrink_ray_beam")
 	target.transform = target.transform.Scale(0.5,0.5)
 	addtimer(VARSET_CALLBACK(target, transform, target.transform.Scale(2,2)), shrink_time)
 	var/olddens = target.density
@@ -226,3 +239,4 @@
 	else
 		target.visible_message("<span class='warning'>[target] shrinks down to a tiny size!</span>",
 		"<span class='userdanger'>Everything grows bigger!</span>")
+*/

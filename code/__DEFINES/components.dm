@@ -310,6 +310,9 @@
 #define COMSIG_ACTION_TRIGGER "action_trigger"						//from base of datum/action/proc/Trigger(): (datum/action)
 	#define COMPONENT_ACTION_BLOCK_TRIGGER 1
 
+//shrink ray
+#define COMSIG_SHRINK_TIME_RESET "reset_shrink_time"			//(amount) Passes the amount of time to set the timer to as a number
+
 /*******Non-Signal Component Related Defines*******/
 
 //Redirection component init flags
