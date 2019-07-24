@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - rscadd: "Blackout, Machine Overload, Machine Override and Reactivate Camera Network abilities now dynamically show their remaining uses on the mouse hover over their respective action buttons."
