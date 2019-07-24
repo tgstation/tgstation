@@ -8680,10 +8680,12 @@
 /area/centcom/ferry)
 "te" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/pizzaslice/mushroom,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
+	},
+/obj/item/reagent_containers/food/snacks/syndicake{
+	pixel_y = 3
 	},
 /turf/open/floor/plasteel,
 /area/syndicate_mothership/control)

@@ -112,7 +112,7 @@
 	desc = "A bronze medal."
 	icon_state = "bronze"
 	item_color = "bronze"
-	materials = list(MAT_METAL=1000)
+	materials = list(/datum/material/iron=1000)
 	resistance_flags = FIRE_PROOF
 	var/medaltype = "medal" //Sprite used for medalbox
 	var/commended = FALSE
@@ -182,7 +182,7 @@
 	icon_state = "silver"
 	item_color = "silver"
 	medaltype = "medal-silver"
-	materials = list(MAT_SILVER=1000)
+	materials = list(/datum/material/silver=1000)
 
 /obj/item/clothing/accessory/medal/silver/valor
 	name = "medal of valor"
@@ -202,7 +202,7 @@
 	icon_state = "gold"
 	item_color = "gold"
 	medaltype = "medal-gold"
-	materials = list(MAT_GOLD=1000)
+	materials = list(/datum/material/gold=1000)
 
 /obj/item/clothing/accessory/medal/gold/captain
 	name = "medal of captaincy"
@@ -220,7 +220,7 @@
 	item_color = "plasma"
 	medaltype = "medal-plasma"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = -10, "acid" = 0) //It's made of plasma. Of course it's flammable.
-	materials = list(MAT_PLASMA=1000)
+	materials = list(/datum/material/plasma=1000)
 
 /obj/item/clothing/accessory/medal/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)

@@ -309,8 +309,8 @@
 	var/metal = 0
 	for(var/obj/item/O in ingredients)
 		O.microwave_act(src)
-		if(O.materials[MAT_METAL])
-			metal += O.materials[MAT_METAL]
+		if(O.materials[/datum/material/iron])
+			metal += O.materials[/datum/material/iron]
 
 	if(metal)
 		spark()
