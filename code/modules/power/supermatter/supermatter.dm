@@ -302,7 +302,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		return
 
 	if(power)
-		soundloop.volume = min(40, (round(power/100)/50)+1) // 5 +1 volume per 20 power. 2500 power is max
+		soundloop.volume = CLAMP((50 + (power / 50)), 50, 100)
+	if(damage >= 300)
+		soundloop.mid_sounds = list('sound/machines/sm/loops/delamming.ogg' = 1)
+	else
+		soundloop.mid_sounds = list('sound/machines/sm/loops/calm.ogg' = 1)
 
 	//Ok, get the air from the turf
 	var/datum/gas_mixture/env = T.return_air()
