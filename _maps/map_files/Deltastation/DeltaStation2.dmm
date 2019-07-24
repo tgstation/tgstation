@@ -54168,8 +54168,8 @@
 	dir = 8
 	},
 /obj/machinery/button/ticket_machine{
-	step_y = 31;
-	pixel_y = 8
+	pixel_y = 40;
+	step_y = 0
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hop)
