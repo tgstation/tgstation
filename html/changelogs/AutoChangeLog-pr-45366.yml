@@ -1,0 +1,6 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - bugfix: "You can no longer use twisted construction cult spell while already channeling it on another object."
+  - bugfix: "Twisted construction cult spell now properly deletes empty AI cyborg shell when it is transformed into construct shell."
+  - bugfix: "Objects that are destroyed while being transformed by twisted construction cult spell will no longer progress the spell further and waste a spell charge."

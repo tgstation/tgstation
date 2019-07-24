@@ -208,26 +208,24 @@
 // GLOBAL PROCS for powernets handling
 //////////////////////////////////////////
 
-//remove the old powernet and replace it with a new one throughout the network.
+///remove the old powernet and replace it with a new one throughout the network.
 /proc/propagate_network(obj/structure/cable/C, datum/powernet/PN, skip_assigned_powernets = FALSE)
 	var/list/found_machines = list()
 	var/list/cables = list()
 	var/index = 1
 	var/obj/structure/cable/working_cable
-	var/current_ignore_dir = 128 //Bullshit dir that will never exist in game, but still passes boolean checks
 
-	cables[C] = current_ignore_dir
+	cables[C] = TRUE //associated list for performance reasons
 
 	while(index <= length(cables))
 		working_cable = cables[index]
-		current_ignore_dir = cables[working_cable]
 		index++
 
 		var/list/connections = working_cable.get_cable_connections(skip_assigned_powernets)
 		
 		for(var/obj/structure/cable/cable_entry in connections)
 			if(!cables[cable_entry]) //Since it's an associated list, we can just do an access and check it's null before adding; prevents duplicate entries
-				cables[cable_entry] = connections[cable_entry]
+				cables[cable_entry] = TRUE
 
 	for(var/obj/structure/cable/cable_entry in cables)
 		PN.add_cable(cable_entry)

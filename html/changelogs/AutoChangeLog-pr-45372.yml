@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - bugfix: "A freshly spawned in prebuilt robot suit now has the correct icon."
