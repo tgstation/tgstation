@@ -5,7 +5,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "boris"
 	w_class = WEIGHT_CLASS_TINY
-	materials = list(MAT_METAL = 50, MAT_GLASS = 300)
+	materials = list(/datum/material/iron = 50, /datum/material/glass = 300)
 	var/recharging = FALSE
 	var/circuits = 5 //How many circuits the pseudocircuit has left
 	var/static/recycleable_circuits = typecacheof(list(/obj/item/electronics/firelock, /obj/item/electronics/airalarm, /obj/item/electronics/firealarm, \
