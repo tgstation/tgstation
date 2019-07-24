@@ -9,16 +9,14 @@
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_CHEST)
 	requires_bodypart_type = 0
-	var/healing_step_type
 	replaced_by = /datum/surgery
+	var/healing_step_type
+	var/antispam = FALSE
 
 /datum/surgery/healing/New(surgery_target, surgery_location, surgery_bodypart)
 	..()
 	if(healing_step_type)
-		steps = list(/datum/surgery_step/incise,
-					/datum/surgery_step/retract_skin,
-					/datum/surgery_step/incise,
-					/datum/surgery_step/clamp_bleeders,
+		steps = list(/datum/surgery_step/clamp_bleeders,
 					healing_step_type, //hehe cheeky
 					/datum/surgery_step/close)
 
@@ -38,7 +36,10 @@
 		woundtype = "bruises"
 	else //why are you trying to 0,0...?
 		woundtype = "burns"
-	user.visible_message("[user] attempts to patch some of [target]'s [woundtype].", "<span class='notice'>You attempt to patch some of [target]'s [woundtype].</span>")
+	if(istype(surgery,/datum/surgery/healing))
+		var/datum/surgery/healing/the_surgery = surgery
+		if(!the_surgery.antispam)
+			user.visible_message("[user] attempts to patch some of [target]'s [woundtype].", "<span class='notice'>You attempt to patch some of [target]'s [woundtype].</span>")
 
 /datum/surgery_step/heal/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	if(..())
@@ -49,6 +50,9 @@
 /datum/surgery_step/heal/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] fixes some of [target]'s wounds.", "<span class='notice'>You succeed in fixing some of [target]'s wounds.</span>")
 	target.heal_bodypart_damage(brutehealing,burnhealing)
+	if(istype(surgery, /datum/surgery/healing))
+		var/datum/surgery/healing/the_surgery = surgery
+		the_surgery.antispam = TRUE
 	return TRUE
 
 /datum/surgery_step/heal/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
