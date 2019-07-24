@@ -54,9 +54,8 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 		boss_spore.forceMove(GLOB.infection_core)
 		var/mob/living/simple_animal/boss = new boss_type(start)
 		boss.add_atom_colour(C.color, FIXED_COLOUR_PRIORITY)
-		boss.AddComponent(/datum/component/spore_controlled, boss_spore)
+		boss.AddComponent(/datum/component/mindcontroller, boss_spore, list(ROLE_INFECTION))
 		boss.loot = boss_drop_list
-		boss.faction += ROLE_INFECTION
 		boss.pass_flags |= PASSBLOB
 		GLOB.doom_event_mobs += boss
 	// everyone else gets minions
@@ -66,27 +65,12 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 			var/minion_type = pickweight(minion_types)
 			var/mob/living/simple_animal/minion = new minion_type(start)
 			minion.add_atom_colour(C.color, FIXED_COLOUR_PRIORITY)
-			minion.AddComponent(/datum/component/spore_controlled, spore)
+			minion.AddComponent(/datum/component/mindcontroller, spore, list(ROLE_INFECTION))
 			minion.loot = minion_drop_list
-			minion.faction += ROLE_INFECTION
 			minion.pass_flags |= PASSBLOB
 			GLOB.doom_event_mobs += minion
 	if(warning_message && warning_jingle)
 		priority_announce("[warning_message]","CentCom Biohazard Division", warning_jingle)
-
-/datum/component/spore_controlled
-	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/realmob
-
-/datum/component/spore_controlled/Initialize(mob/real, mob/parentmob = parent)
-	RegisterSignal(parent, COMSIG_MOB_DEATH, .proc/return_to_spore)
-	realmob = real
-	// transfer spore mind to temp body
-	parentmob.key = realmob.key
-
-/datum/component/spore_controlled/proc/return_to_spore(mob/parentmob = parent)
-	realmob.key = parentmob.key
-	realmob.death()
-	qdel(src)
 
 /*
 //
@@ -112,7 +96,7 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 
 /datum/round_event/infection/demon
 	boss_type = /mob/living/simple_animal/slaughter
-	boss_drop_list = list(/obj/item/infectionkiller/excaliju)
+	boss_drop_list = list(/obj/item/infectionkiller/drill)
 	minion_types = list(/mob/living/simple_animal/hostile/asteroid/goliath=1, /mob/living/simple_animal/hostile/asteroid/basilisk/watcher=2, /mob/living/simple_animal/hostile/asteroid/hivelord/legion=3)
 	minion_drop_list = list()
 	warning_message = "Demons From Lavaland are invading the station!"

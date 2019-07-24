@@ -69,6 +69,7 @@
 	block_chance = 50
 	sharpness = IS_SHARP
 	var/proctime = 0
+	var/before_was_alive
 
 /obj/item/infectionkiller/excaliju/proc/is_procced()
 	if(proctime > world.time)
@@ -88,12 +89,27 @@
 	playsound(src.loc, 'sound/weapons/emitter2.ogg', 300, 1, vary = FALSE, pressure_affected = FALSE)
 
 /obj/item/infectionkiller/excaliju/before_mob_attack(mob/living/M, mob/living/user)
+	before_was_alive = (M && M.stat != DEAD) // you gotta kill it to get the big power boost
 	if(is_procced())
 		src.force *= 5
 
 /obj/item/infectionkiller/excaliju/after_mob_attack(mob/living/M, mob/living/user)
 	src.force = initial(force)
-	if(!M || M.stat == DEAD)
+	if(!M || M.stat == DEAD && before_was_alive)
 		proc_start(M, user)
 	if(is_procced())
 		user.changeNext_move(CLICK_CD_MELEE * 0.25)
+
+/obj/item/infectionkiller/drill
+	name = "Drill of Legends"
+	desc = "A blessing given by bubblegum himself to powerful slaughter demons, making the holder almost unkillable due to the resistances it grants."
+	icon = 'icons/obj/changeling_items.dmi'
+	icon_state = "arm_blade"
+	item_state = "arm_blade"
+	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	force = 30
+	block_chance = 80
+	sharpness = IS_SHARP
+	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell

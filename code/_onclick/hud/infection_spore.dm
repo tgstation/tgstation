@@ -10,7 +10,7 @@
 /obj/screen/infection/Refund
 	icon_state = "revert_hud"
 	name = "Revert Evolutions"
-	desc = "Refund all currently purchased traits."
+	desc = "Refund all currently purchased traits. Refunds half the points you've spent, but refunds all of them if the infectious core has not landed."
 
 /obj/screen/infection/Refund/Click()
 	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/I = usr

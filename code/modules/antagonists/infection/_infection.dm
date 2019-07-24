@@ -1,4 +1,5 @@
 #define SAME_INFECTION_TYPE(check, typetocheck) (check.type == typetocheck || check.building == typetocheck)
+#define ISRESPAWNING(MOB) (istype(MOB.loc, /obj/structure/infection) || istype(MOB.loc, /mob/camera/commander))
 
 /datum/antagonist/infection
 	name = "Infection"
@@ -59,7 +60,8 @@
 		S.forceMove(get_turf(C.infection_core))
 	else
 		// roundstart boys get gifts
-		S.add_points(400)
+		S.add_points(1000)
+		to_chat(S, "<b>It costs no points to revert your form before the meteor has landed, explore your evolutions while you have time.</b>")
 	S.update_icons()
 	S.infection_help()
 	C.infection_mobs += S

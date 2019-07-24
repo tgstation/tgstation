@@ -78,7 +78,9 @@
 	for(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/I in contents)
 		I.cycle_node()
 	var/turf/T = get_turf(src)
-	var/list/stored_contents = T.contents
+	var/list/stored_contents = list()
+	if(T)
+		stored_contents = T.contents
 	. = ..()
 	for(var/atom/movable/M in stored_contents)
 		Uncrossed(M) // so the overlay and move speed effects don't stay after destruction
@@ -277,6 +279,11 @@
 
 /obj/structure/infection/attack_animal(mob/living/simple_animal/M)
 	if(ROLE_INFECTION in M.faction) //sorry, but you can't kill the infection as an infectious creature
+		return
+	..()
+
+/obj/structure/infection/attacked_by(obj/item/I, mob/living/user)
+	if(ROLE_INFECTION in user.faction) //sorry, but you can't kill the infection as an infectious creature
 		return
 	..()
 

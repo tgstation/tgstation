@@ -76,6 +76,7 @@
 	return
 
 /obj/structure/infection/core/bullet_act(obj/item/projectile/P)
+	// doesn't include infectionkiller for a reason, ranged weapons killing the core is just kind of lame (unless they smash it with the gun of course)
 	var/obj/effect/temp_visual/at_shield/AT = new /obj/effect/temp_visual/at_shield(loc, src)
 	var/random_x = rand(-32, 32)
 	AT.pixel_x += random_x
@@ -86,7 +87,7 @@
 	src.visible_message("<span class='notice'>[P] plinks off of [src]!</span>")
 
 /obj/structure/infection/core/attacked_by(obj/item/I, mob/living/user)
-	if(!istype(I, /obj/item/infectionkiller))
+	if(istype(I, /obj/item/infectionkiller))
 		var/obj/effect/temp_visual/at_shield/AT = new /obj/effect/temp_visual/at_shield(loc, src)
 		var/random_x = rand(-32, 32)
 		AT.pixel_x += random_x
@@ -102,8 +103,8 @@
 		log_combat(user, src, "attacked", I)
 	take_damage(I.force*5, I.damtype, "melee", 1, override = "infection_core")
 
-/obj/structure/infection/core/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir, var/override = "")
-	if(override != "infection_core")
+/obj/structure/infection/core/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir, override = "")
+	if(override != "infection_core") // we wanna be really really really sure that this doesn't die from other things
 		return
 	. = ..()
 	if(obj_integrity > 0)

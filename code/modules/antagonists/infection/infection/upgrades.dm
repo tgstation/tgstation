@@ -116,6 +116,24 @@
 // Infector Spore Upgrades//
 ////////////////////////////
 
+/datum/infection_upgrade/infector/mininode
+	name = "Miniature Node"
+	description = "Allows you to place down a miniature node that lasts a short time, but expands infection around it like a true node. Comes with normal construction time."
+	cost = 1000
+
+/datum/infection_upgrade/infector/mininode/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/infector/parentinfector)
+	var/datum/action/cooldown/infection/add_action = new /datum/action/cooldown/infection/mininode()
+	add_action.Grant(parentinfector)
+
+/datum/infection_upgrade/infector/reflective
+	name = "Reflective Shield"
+	description = "Somewhere being attacked? Grants you the ability to create a reflective shield. Comes with normal construction time."
+	cost = 600
+
+/datum/infection_upgrade/infector/reflective/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/infector/parentinfector)
+	var/datum/action/cooldown/infection/add_action = new /datum/action/cooldown/infection/reflective()
+	add_action.Grant(parentinfector)
+
 /datum/infection_upgrade/infector/suction
 	name = "Suction Cups"
 	description = "The amazing power of delta pressure allows you to grab and pull things around."
@@ -132,14 +150,15 @@
 /datum/infection_upgrade/infector/spacewalk/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/infector/parentinfector)
 	parentinfector.spacewalk = TRUE
 
-/datum/infection_upgrade/infector/mininode
-	name = "Miniature Node"
-	description = "Allows you to place down a miniature node that lasts a short time, but expands infection around it like a true node."
-	cost = 600
+/datum/infection_upgrade/infector/respawn_time
+	name = "Reduce Respawn Time"
+	description = "Slightly reduces respawn time."
+	cost = 50
+	increasing_cost = 25
+	times = 5
 
-/datum/infection_upgrade/infector/mininode/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/infector/parentinfector)
-	var/datum/action/cooldown/infection/add_action = new /datum/action/cooldown/infection/mininode()
-	add_action.Grant(parentinfector)
+/datum/infection_upgrade/infector/respawn_time/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/infector/parentinfector)
+	parentinfector.respawn_time -= 3
 
 //////////////////////////
 // Hunter Spore Upgrades//
@@ -148,10 +167,10 @@
 /datum/infection_upgrade/hunter/lifesteal
 	name = "Lifesteal"
 	description = "Does true damage to living targets by sapping health directly from them as well as healing you."
-	cost = 200
+	cost = 600
 
 /datum/infection_upgrade/hunter/lifesteal/upgrade_effect(atom/parent)
-	parent.AddComponent(/datum/component/lifesteal, 5)
+	parent.AddComponent(/datum/component/lifesteal, 10)
 
 /datum/infection_upgrade/hunter/napalm
 	name = "Burning Fists"
@@ -170,6 +189,16 @@
 	var/datum/action/cooldown/infection/add_action = new /datum/action/cooldown/infection/flash()
 	add_action.Grant(parenthunter)
 
+/datum/infection_upgrade/hunter/speed
+	name = "Speed Boost"
+	description = "Move faster than your foes can run away."
+	cost = 100
+	increasing_cost = 50
+	times = 4
+
+/datum/infection_upgrade/hunter/speed/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/hunter/parenthunter)
+	parenthunter.set_varspeed(-0.25 * bought)
+
 ///////////////////////////////
 // Destructive Spore Upgrades//
 ///////////////////////////////
@@ -177,7 +206,7 @@
 /datum/infection_upgrade/destructive/hydraulic_fists
 	name = "Hydraulic Fists"
 	description = "The compressed fluid in your arms allows you to deal much greater impacts which throw hit objects backward."
-	cost = 200
+	cost = 600
 
 /datum/infection_upgrade/destructive/hydraulic_fists/upgrade_effect(atom/parent)
 	parent.AddComponent(/datum/component/knockback, 4)
@@ -200,6 +229,47 @@
 /datum/infection_upgrade/destructive/voice/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/destructive/parentdestructive)
 	var/datum/action/cooldown/infection/add_action = new /datum/action/cooldown/infection/voice()
 	add_action.Grant(parentdestructive)
+
+/datum/infection_upgrade/destructive/damage
+	name = "Damage Increase"
+	description = "Gain the strength to take down your foes."
+	cost = 50
+	increasing_cost = 50
+	times = 6
+
+/datum/infection_upgrade/destructive/damage/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/destructive/parentdestructive)
+	parentdestructive.melee_damage_lower += 5
+	parentdestructive.melee_damage_upper += 5
+
+/datum/infection_upgrade/destructive/health
+	name = "Health Boost"
+	description = "Sustain more damage before having to reform."
+	cost = 50
+	increasing_cost = 50
+	times = 6
+
+/datum/infection_upgrade/destructive/health/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/destructive/parentdestructive)
+	parentdestructive.maxHealth += 10
+
+/datum/infection_upgrade/destructive/burn_protection
+	name = "Burn Protection"
+	description = "Take less burn damage."
+	cost = 50
+	increasing_cost = 50
+	times = 5
+
+/datum/infection_upgrade/destructive/burn_protection/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/destructive/parentdestructive)
+	parentdestructive.damage_coeff[BURN] -= 0.1
+
+/datum/infection_upgrade/destructive/brute_protection
+	name = "Brute Protection"
+	description = "Take less brute damage."
+	cost = 50
+	increasing_cost = 50
+	times = 5
+
+/datum/infection_upgrade/destructive/brute_protection/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/destructive/parentdestructive)
+	parentdestructive.damage_coeff[BRUTE] -= 0.1
 
 ////////////////////
 // Turret Upgrades//

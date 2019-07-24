@@ -32,7 +32,6 @@
 		if(!M.anchored && !M.pulledby)
 			M.experience_pressure_difference(MOVE_FORCE_STRONG, get_dir(M, src))
 	for(var/atom/A in get_turf(src)) // eating time
-		A.blob_act()
 		if(isliving(A))
 			var/mob/living/L = A
 			if(ROLE_INFECTION in L.faction)
@@ -42,6 +41,7 @@
 			L.adjustBruteLoss(15)
 			to_chat(L, "<span class='danger'>You feel a terrible pain as you slam into the vacuum!</span>")
 			playsound(src.loc, 'sound/effects/splat.ogg', 100, 1, pressure_affected = FALSE)
-
+		else
+			A.blob_act()
 
 

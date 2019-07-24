@@ -14,6 +14,7 @@
 	minbodytemp = 0
 	maxbodytemp = 360
 	unique_name = 1
+	light_range = 6
 	a_intent = INTENT_HARM
 	stat_attack = DEAD
 	var/can_cross_beacons = FALSE

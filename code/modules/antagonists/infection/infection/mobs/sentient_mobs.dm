@@ -1,15 +1,13 @@
-#define ISRESPAWNING (istype(loc, /obj/structure/infection) || istype(loc, /mob/camera/commander))
-
-//////////////////////
-// Player Controlled//
-//////////////////////
-
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient
 	name = "evolving slime"
 	desc = "An extremely strong slime in the early stages of life, what will it become next?"
 	hud_type = /datum/hud/infection_spore
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	health = 40
+	maxHealth = 40
 	obj_damage = 20
+	melee_damage_lower = 10
+	melee_damage_upper = 10
 	crystal_color = "#ff8c00"
 	var/respawn_time = 15
 	var/current_respawn_time = -1
@@ -38,6 +36,8 @@
 	..()
 	if(statpanel("Status"))
 		stat(null, "Upgrade Points: [upgrade_points]")
+	if(overmind && !overmind.placed)
+		stat(null, "Time Before Automatic Placement: [max(round((overmind.autoplace_time - world.time)*0.1, 0.1), 0)]")
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/Life()
 	. = ..()
@@ -55,18 +55,26 @@
 		if(overmind)
 			H.color = overmind.color
 
+/mob/living/simple_animal/hostile/infection/infectionspore/sentient/AttackingTarget()
+	if(isliving(target))
+		var/mob/living/L = target
+		if(ROLE_INFECTION in L.faction)
+			return FALSE
+	. = ..()
+
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/set_points(var/value)
 	add_points(value - upgrade_points)
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/add_points(var/value)
 	upgrade_points = CLAMP(upgrade_points + value, 0, max_upgrade_points)
-	hud_used.infectionpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(upgrade_points)]</font></div>"
+	if(hud_used)
+		hud_used.infectionpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(upgrade_points)]</font></div>"
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/get_point_generation_rate()
 	return 2
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/evolve_menu()
-	if(!ISRESPAWNING)
+	if(!ISRESPAWNING(src))
 		to_chat(src, "<span class='warning'>You cannot evolve unless you are reforming at a node or core!</span>")
 		return
 	menu_handler.ui_interact(src)
@@ -83,6 +91,7 @@
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/infection_help()
 	to_chat(src, "<b>You are an evolving slime!</b>")
 	to_chat(src, "You are an evolving creature that can select evolutions in order to become stronger \n<b>You will respawn as long as the core still exists.</b>")
+	to_chat(src, "<b>Attempt to help expand your army of infectious slimes by bringing sentient being's corpses near the infection core!</b>")
 	to_chat(src, "You can communicate with other infectious creatures via <b>:b</b>")
 	return
 
@@ -140,15 +149,16 @@
 	new_spore.upgrade_points = upgrade_points
 	new_spore.spent_upgrade_points = spent_upgrade_points
 	// check if we were respawning
-	if(ISRESPAWNING)
+	if(ISRESPAWNING(src))
 		// restart respawn for new spore
 		INVOKE_ASYNC(new_spore, .proc/respawn, current_respawn_time)
 	overmind.infection_mobs += new_spore
 	qdel(src)
 	new_spore.update_icons()
+	new_spore.evolve_menu() // re-update the menu since they changed type
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/refund_upgrades()
-	if(!ISRESPAWNING)
+	if(!ISRESPAWNING(src))
 		to_chat(src, "<span class='warning'>You cannot revert unless you are reforming at a node or core!</span>")
 		return
 	if(spent_upgrade_points == 0)
@@ -178,28 +188,27 @@
 		forceMove(overmind.infection_core)
 		to_chat(src, "<span class='warning'>Shifted spawn location to core.</span>")
 	else if(GLOB.infection_nodes.len)
-		forceMove(GLOB.infection_nodes[curr + 1])
-		to_chat(src, "<span class='warning'>Shifted spawn location to node [curr + 1].</span>")
-	cycle_cooldown = world.time + 5
+		var/obj/structure/infection/node/N = null
+		for(var/i in 1 to GLOB.infection_nodes.len)
+			N = GLOB.infection_nodes[curr + i]
+			if(N.loc != null) // very rare issue but a major one
+				break
+		if(N == null)
+			forceMove(overmind.infection_core) // failsafe
+		forceMove(N)
+		to_chat(src, "<span class='warning'>Shifted spawn location to node with position x:[N.x], y:[N.y].</span>")
+	cycle_cooldown = world.time + 2.5
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/infector
 	name = "infector slime"
 	desc = "A slime that oozes infective pus from all of it's pores."
-	health = 80
-	maxHealth = 80
-	melee_damage_lower = 20
-	melee_damage_upper = 20
 	crystal_color = "#228b22"
+	respawn_time = 30
 	upgrade_subtype = /datum/infection_upgrade/infector
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/hunter
 	name = "hunter slime"
 	desc = "A congealed but fast moving slime with the abilities to hunt down and consume intruders of the infection."
-	health = 60
-	maxHealth = 60
-	speed = -1
-	melee_damage_lower = 20
-	melee_damage_upper = 20
 	crystal_color = "#dc143c"
 	respawn_time = 30
 	upgrade_subtype = /datum/infection_upgrade/hunter
@@ -207,11 +216,9 @@
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/destructive
 	name = "destructive slime"
 	desc = "A slow moving but bulky and heavily damaging slime that is useful for taking out buildings and walls, as well as defending infection structures."
-	health = 100
-	maxHealth = 100
-	speed = 1
-	melee_damage_lower = 40
-	melee_damage_upper = 40
+	health = 60
+	maxHealth = 60
+	speed = 2
 	crystal_color = "#4169e1"
 	respawn_time = 30
 	transform = matrix(1.5, 0, 0, 0, 1.5, 0)
