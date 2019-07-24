@@ -111,7 +111,7 @@
 		return
 
 	if(storedpda)
-		if(stat & BROKEN)
+		if(stat & BROKEN)	//otherwise the PDA is stuck until repaired
 			ejectpda()
 			to_chat(user, "<span class='info'>You manage to eject the loaded PDA.</span>")
 		else
