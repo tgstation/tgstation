@@ -1256,6 +1256,16 @@
 			charging = 0
 			chargecount = 0
 
+		//if the cell is fully charged but there is too much excess power, the APC will produce a tesla shock
+		if(excess > (cell.maxcharge * 100))
+			if(cell.charge != cell.maxcharge)
+				return
+			if(cell_type == /obj/item/stock_parts/cell/high/slime)
+				return
+			if(prob(50))
+				playsound(src, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
+				tesla_zap(src, 5, avail() * 0.1, TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE | TESLA_MOB_STUN | TESLA_ALLOW_DUPLICATES)
+
 	else // no cell, switch everything off
 
 		charging = APC_NOT_CHARGING
