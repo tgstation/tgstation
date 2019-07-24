@@ -91,7 +91,7 @@
 	w_class = WEIGHT_CLASS_HUGE //the epitome of power(gamer)tools is CHUNCKY
 	usesound = 'sound/weapons/sonic_jackhammer.ogg'
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
-	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls. Specifically adjusted to that though, so you won't do much damage with it."
+	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls. Specifically adjusted to do that though, so you won't do much damage with it."
 	force = 10
 
 /obj/item/shovel
