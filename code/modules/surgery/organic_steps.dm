@@ -29,7 +29,7 @@
 
 /datum/surgery_step/incise/nobleed //silly friendly!
 
-/datum/surgery_step/incise/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/incise/nobleed/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	return TRUE
 
 //clamp bleeders
