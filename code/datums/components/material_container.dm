@@ -341,7 +341,7 @@
 	if(!istype(I))
 		return FALSE
 	var/material_amount = 0
-	for(var/MAT in I.materials)
+	for(var/MAT in materials)
 		material_amount += I.materials[MAT]
 	return material_amount
 
