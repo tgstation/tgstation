@@ -1,0 +1,8 @@
+author: "Hits"
+delete-after: True
+changes: 
+  - rscdel: "Removes trekchems entirely, save omnizine. That comes in a later PR."
+  - bugfix: "Medibots will now more accurately assess burn damage when using custom chems in beakers."
+  - tweak: "A special medibot and regen jelly recipie use omnizine instead of tricord."
+  - rscadd: "3 new catagory 2 chems, injectables. Sanguiose, Frogenite, and Ferveatium."
+  - tweak: "Sleepers, Medibots, and Mediborgs now come equipped with the new injectables."

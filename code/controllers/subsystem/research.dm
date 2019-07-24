@@ -155,6 +155,7 @@ SUBSYSTEM_DEF(research)
 			stack_trace("WARNING: Design ID clash with ID [initial(DN.id)] detected! Path: [path]")
 			errored_datums[DN] = initial(DN.id)
 			continue
+		DN.InitializeMaterials() //Initialize the materials in the design
 		returned[initial(DN.id)] = DN
 	techweb_designs = returned
 	verify_techweb_designs()
