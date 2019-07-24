@@ -118,6 +118,9 @@
 	if(brainmob) //if we aren't trying to heal the brain, pass the attack onto the brainmob.
 		O.attack(brainmob, user) //Oh noooeeeee
 
+        if((O.force == 0) || (O.item_flags & NOBLUDGEON))
+            return // it's okay, we're saved
+
 	damaged_brain = TRUE //brain was attacked, they're pretty fragile.
 
 /obj/item/organ/brain/examine(mob/user)
