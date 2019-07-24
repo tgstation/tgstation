@@ -38,33 +38,35 @@
 	switch(action)
 		if("add")
 			var/new_chem_name = ckey(input("Enter chemical to filter:", name) as text|null)
-			if(GLOB.chemical_reagents_list.Find(new_chem_name))
+			var/chem_id = get_chem_id(new_chem_name)
+			if(chem_id)
 				switch(params["which"])
 					if("left")
 						if(!english_left.Find(new_chem_name))
 							english_left += new_chem_name
-							left += GLOB.chemical_reagents_list[new_chem_name]
+							left += chem_id
 					if("right")
 						if(!english_right.Find(new_chem_name))
 							english_right += new_chem_name
-							right += GLOB.chemical_reagents_list[new_chem_name]
+							right += chem_id
 			else
 				to_chat(usr, "<span class='warning'>No such known reagent exists!</span>")
 
 		if("remove")
-			var/reagent = params["reagent"]
+			var/chem_name = params["reagent"] //ckey() isnt necessary here, since it picks from the already ckey'd english_list
+			var/chem_id = get_chem_id(chem_name)
 			switch(params["which"])
 				if("left")
-					if(english_left.Find(reagent))
-						english_left -= reagent
-						left -= GLOB.chemical_reagents_list[reagent]
+					if(english_left.Find(chem_name))
+						english_left -= chem_name
+						left -= chem_id
 				if("right")
-					if(english_right.Find(reagent))
-						english_right -= reagent
-						right -= GLOB.chemical_reagents_list[reagent]
+					if(english_right.Find(chem_name))
+						english_right -= chem_name
+						right -= chem_id
 
 /obj/machinery/plumbing/filter/proc/get_chem_id(chem_name)
 	for(var/A in GLOB.chemical_reagents_list)
-		var/datum/reagent/R = A
+		var/datum/reagent/R = GLOB.chemical_reagents_list[A]
 		if(chem_name == ckey(R.name))
 			return R.type

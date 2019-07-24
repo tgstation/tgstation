@@ -1,6 +1,6 @@
 <ui-display title='Left' button> 
 	<ui-section>
-		{{#each data.english_left}}
+		{{#each data.left}}
 			<ui-button action='remove' params='{"which":"left"}{"reagent":{{.}}'>{{.}}</ui-button>
 		{{/each}}
 	</ui-section>
@@ -10,7 +10,7 @@
 </ui-display>
 <ui-display title='Right' button> 
 	<ui-section>
-		{{#each data.english_left}}
+		{{#each data.right}}
 			<ui-button action='remove' params='{"which":"right"}{"reagent":{{.}}'>{{.}}</ui-button>
 		{{/each}}
 	</ui-section>
