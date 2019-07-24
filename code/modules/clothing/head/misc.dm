@@ -361,7 +361,7 @@
 
 /obj/item/clothing/head/delinquent
 	name = "delinquent hat"
-	desc = "The kind of hat used to deliver real justice."
+	desc = "Good grief."
 	icon_state = "delinquent"
 
 /obj/item/clothing/head/frenchberet
