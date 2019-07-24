@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - bugfix: "Arcane barrage-like spells no longer have a trigger guard restrictions. Beware cultist ashwalkers chasing you with a blood bolt barrage!"
