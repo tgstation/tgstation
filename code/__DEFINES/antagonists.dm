@@ -51,9 +51,6 @@
 #define HIJACK_HIJACKER 1 //Needs to be present for shuttle to be hijacked
 #define HIJACK_PREVENT 2 //Prevents hijacking same way as non-antags
 
-//Overthrow time to update heads obj
-#define OBJECTIVE_UPDATING_TIME 300
-
 //Assimilation
 #define TRACKER_DEFAULT_TIME 900
 #define TRACKER_MINDSHIELD_TIME 1200
@@ -72,3 +69,6 @@
 #define CONTRACT_PAYOUT_LARGE 1
 #define CONTRACT_PAYOUT_MEDIUM 2
 #define CONTRACT_PAYOUT_SMALL 3
+
+#define CONTRACT_UPLINK_PAGE_CONTRACTS "CONTRACTS"
+#define CONTRACT_UPLINK_PAGE_HUB "HUB"

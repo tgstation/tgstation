@@ -120,7 +120,7 @@
 			new /obj/item/card/emag(src) // 6 tc
 
 /obj/item/storage/box/syndicate/bundle_B/PopulateContents()
-	switch (pickweight(list( "bond" = 2, "ninja" = 1, "darklord" = 1, "white_whale_holy_grail" = 2, "mad_scientist" = 2, "bee" = 2, "mr_freeze" = 2)))
+	switch (pickweight(list( "bond" = 2, "ninja" = 1, "darklord" = 1, "white_whale_holy_grail" = 2, "mad_scientist" = 2, "bee" = 1, "mr_freeze" = 2)))
 		if("bond")
 			new /obj/item/gun/ballistic/automatic/pistol(src)
 			new /obj/item/suppressor(src)
@@ -158,7 +158,7 @@
 		if("mad_scientist")
 			new /obj/item/clothing/suit/toggle/labcoat/mad(src) // 0 tc
 			new /obj/item/clothing/shoes/jackboots(src) // 0 tc
-			new /obj/item/megaphone(src) // 0 tc (because how else are they to know you're mad?)
+			new /obj/item/megaphone(src) // 0 tc 
 			new /obj/item/grenade/clusterbuster/random(src) // 10 tc?
 			new /obj/item/grenade/clusterbuster/random(src) // 10 tc?
 			new /obj/item/grenade/chem_grenade/bioterrorfoam(src) // 5 tc
@@ -168,7 +168,7 @@
 			new /obj/item/assembly/signaler(src) // 0 tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
 			new /obj/item/pen/edagger(src)
-			new /obj/item/gun/energy/wormhole_projector(src) //mooorttyyyy
+			new /obj/item/gun/energy/wormhole_projector(src)
 			new /obj/item/gun/energy/decloner/unrestricted(src)
 
 		if("bee")
@@ -176,7 +176,8 @@
 			new /obj/item/clothing/suit/hooded/bee_costume(src) // 0 tc
 			new /obj/item/clothing/mask/rat/bee(src) // 0 tc
 			new /obj/item/storage/belt/fannypack/yellow(src) // 0 tc
-			new /obj/item/storage/box/syndie_kit/bee_grenades(src) // 15 tc
+			new /obj/item/grenade/spawnergrenade/buzzkill(src)
+			new /obj/item/grenade/spawnergrenade/buzzkill(src)
 			new /obj/item/reagent_containers/glass/bottle/beesease(src) // 10 tc?
 			new /obj/item/melee/beesword(src) //priceless
 
@@ -220,6 +221,9 @@
 
 			<p>Your standard issue contractor baton hits harder than the ones you might be used to, and likely be your go to weapon for kidnapping your 
 			targets. The three additional items have been randomly selected from what we had available. We hope they're useful to you for your mission.</p>
+
+			<p>The contractor hub, available at the top right of the uplink, will provide you unique items and abilities. These are bought using Contractor Rep,
+			with two Rep being provided each time you complete a contract.</p>
 
 			<h3>Using the tablet</h3>
 			<ol>
@@ -275,7 +279,6 @@
 		/obj/item/reagent_containers/syringe/mulligan,
 		/obj/item/clothing/shoes/chameleon/noslip,
 		/obj/item/storage/firstaid/tactical,
-		/obj/item/storage/backpack/duffelbag/syndie/surgery,
 		/obj/item/encryptionkey/syndicate,
 		/obj/item/clothing/glasses/thermal/syndi,
 		/obj/item/slimepotion/slime/sentience/nuclear,
@@ -284,7 +287,8 @@
 		/obj/item/clothing/gloves/krav_maga/combatglovesplus,
 		/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot,
 		/obj/item/reagent_containers/syringe/stimulants,
-		/obj/item/storage/box/syndie_kit/imp_freedom
+		/obj/item/storage/box/syndie_kit/imp_freedom,
+		/obj/item/toy/eightball/haunted
 	)
 
 	var/obj/item1 = pick_n_take(item_list)

@@ -142,6 +142,7 @@
 					/obj/item/clothing/gloves/fingerless = 2,
 					/obj/item/clothing/head/soft/black = 2,
 					/obj/item/clothing/mask/bandana/skull = 2)
+	contraband = list(/obj/item/clothing/suit/hooded/techpriest = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/robo_wardrobe
 	payment_department = ACCOUNT_SCI
 /obj/item/vending_refill/wardrobe/robo_wardrobe
@@ -298,14 +299,8 @@
 	icon_state = "lawdrobe"
 	product_ads = "OBJECTION! Get the rule of law for yourself!"
 	vend_reply = "Thank you for using the LawDrobe!"
-	products = list(/obj/item/clothing/under/lawyer/female = 1,
-					/obj/item/clothing/under/lawyer/black = 1,
-					/obj/item/clothing/under/lawyer/black/skirt = 1,
-					/obj/item/clothing/under/lawyer/red = 1,
-					/obj/item/clothing/under/lawyer/red/skirt = 1,
-					/obj/item/clothing/under/lawyer/bluesuit = 1,
+	products = list(/obj/item/clothing/under/lawyer/bluesuit = 1,
 					/obj/item/clothing/under/lawyer/bluesuit/skirt = 1,
-					/obj/item/clothing/under/lawyer/blue/skirt = 1,
 					/obj/item/clothing/suit/toggle/lawyer = 1,
 					/obj/item/clothing/under/lawyer/purpsuit = 1,
 					/obj/item/clothing/under/lawyer/purpsuit/skirt = 1,
@@ -313,6 +308,16 @@
 					/obj/item/clothing/under/lawyer/blacksuit = 1,
 					/obj/item/clothing/under/lawyer/blacksuit/skirt = 1,
 					/obj/item/clothing/suit/toggle/lawyer/black = 1,
+					/obj/item/clothing/under/lawyer/female = 1,
+					/obj/item/clothing/under/lawyer/female/skirt = 1,
+					/obj/item/clothing/under/lawyer/really_black = 1,
+					/obj/item/clothing/under/lawyer/really_black/skirt = 1,
+					/obj/item/clothing/under/lawyer/blue = 1,
+					/obj/item/clothing/under/lawyer/blue/skirt = 1,
+					/obj/item/clothing/under/lawyer/red = 1,
+					/obj/item/clothing/under/lawyer/red/skirt = 1,
+					/obj/item/clothing/under/lawyer/black = 1,
+					/obj/item/clothing/under/lawyer/black/skirt = 1,
 					/obj/item/clothing/shoes/laceup = 2,
 					/obj/item/clothing/accessory/lawyers_badge = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/law_wardrobe

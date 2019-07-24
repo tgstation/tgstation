@@ -588,14 +588,16 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 //LIVER//
 /////////
 
+///Decides if the liver is failing or not.
 /mob/living/carbon/proc/handle_liver()
+	if(!dna)
+		return
 	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
 	if(liver)
-		if(liver.damage >= liver.maxHealth)
-			liver.organ_flags |= ORGAN_FAILING
-			liver_failure()
-	else
-		liver_failure()
+		if(liver.damage < liver.maxHealth)
+			return
+		liver.organ_flags |= ORGAN_FAILING
+	liver_failure()
 
 /mob/living/carbon/proc/undergoing_liver_failure()
 	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
@@ -694,6 +696,13 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		return FALSE
 	return TRUE
 
+/*
+ * The mob is having a heart attack
+ *
+ * NOTE: this is true if the mob has no heart and needs one, which can be suprising,
+ * you are meant to use it in combination with can_heartattack for heart attack
+ * related situations (i.e not just cardiac arrest)
+ */
 /mob/living/carbon/proc/undergoing_cardiac_arrest()
 	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 	if(istype(heart) && heart.beating)

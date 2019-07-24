@@ -229,6 +229,15 @@
 /obj/item/reagent_containers/spray/waterflower/attack_self(mob/user) //Don't allow changing how much the flower sprays
 	return
 
+///Subtype used for the lavaland clown ruin.
+/obj/item/reagent_containers/spray/waterflower/superlube
+	name = "clown flower"
+	desc = "A delightly devilish flower... you got a feeling where this is going."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "clownflower"
+	volume = 30
+	list_reagents = list(/datum/reagent/lube/superlube = 30)
+
 /obj/item/reagent_containers/spray/waterflower/cyborg
 	reagent_flags = NONE
 	volume = 100
@@ -394,6 +403,12 @@
 		if("sprayer_med_blue")
 			item_state = "sprayer_med_blue"
 	M.update_inv_hands()
+
+/obj/item/reagent_containers/spray/rhigoxane
+	name = "medical spray (rhigoxane)"
+	desc = "A medical spray bottle.This one contains rhigoxane, it is used to treat burns and cool down temperature if applied with spray."
+	icon_state = "sprayer_large"
+	list_reagents = list(/datum/reagent/medicine/rhigoxane = 100)
 
 
 

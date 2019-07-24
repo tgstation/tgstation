@@ -100,7 +100,7 @@
 	brainmob.emp_damage = 0
 	brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
 	GLOB.alive_mob_list -= brainmob //Get outta here
-	GLOB.dead_mob_list += brainmob
+	GLOB.dead_mob_list |= brainmob
 	brain.brainmob = brainmob //Set the brain to use the brainmob
 	brainmob = null //Set mmi brainmob var to null
 	if(user)
