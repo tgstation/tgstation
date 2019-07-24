@@ -469,12 +469,16 @@
 	. = 1
 
 /datum/reagent/drug/pumpup/overdose_start(mob/living/M)
-	to_chat(M, "<span class='userdanger'>You can't stop shaking...!</span>")
+	to_chat(M, "<span class='userdanger'>You can't stop shaking, feeling your heart beat faster and faster!</span>")
 
 /datum/reagent/drug/pumpup/overdose_process(mob/living/M)
+	M.Jitter(5)
+	if(prob(5))
+		M.drop_all_held_items()
 	if(prob(20))
 		M.emote(pick("twitch","drool"))
-	if(prob(33))
-		M.drop_all_held_items()
-		M.adjustToxLoss(5, 0)
+	if(prob(35))
+		M.losebreath++
+		M.adjustStaminaLoss(2, 0)
+		M.adjustToxLoss(2, 0)
 	..()
