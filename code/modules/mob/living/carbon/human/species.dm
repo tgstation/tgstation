@@ -967,11 +967,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /**
  * Equip the outfit required for life. Replaces items currently worn.
- */ 
+ */
 /datum/species/proc/give_important_for_life(mob/living/carbon/human/human_to_equip)
 	if(!outfit_important_for_life)
 		return
-		
+
 	outfit_important_for_life= new()
 	outfit_important_for_life.equip(human_to_equip)
 
@@ -1156,9 +1156,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/spec_emag_act(mob/living/carbon/human/H, mob/user)
 	return
 
-/datum/species/proc/spec_electrocute_act(mob/living/carbon/human/H, shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	return
-
 /datum/species/proc/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(!((target.health < 0 || HAS_TRAIT(target, TRAIT_FAKEDEATH)) && !(target.mobility_flags & MOBILITY_STAND)))
 		target.help_shake_act(user)
@@ -1186,6 +1183,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		target.grabbedby(user)
 		return 1
 
+///This proc handles punching damage. IMPORTANT: Our owner is the TARGET and not the USER in this proc. For whatever reason...
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
@@ -1244,10 +1242,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.dismembering_strike(user, affecting.body_zone)
 
 		if(atk_verb == ATTACK_EFFECT_KICK)//kicks deal 1.5x raw damage
-			target.apply_damage(damage*1.5, attack_type, affecting, armor_block)
+			target.apply_damage(damage*1.5, user.dna.species.attack_type, affecting, armor_block)
 			log_combat(user, target, "kicked")
 		else//other attacks deal full raw damage + 1.5x in stamina damage
-			target.apply_damage(damage, attack_type, affecting, armor_block)
+			target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block)
 			target.apply_damage(damage*1.5, STAMINA, affecting, armor_block)
 			log_combat(user, target, "punched")
 
@@ -1508,7 +1506,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
 	if(!damage || (!forced && hit_percent <= 0))
 		return 0
-	
+
 	var/obj/item/bodypart/BP = null
 	if(!spread_damage)
 		if(isbodypart(def_zone))

@@ -81,8 +81,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		if(linked_dirs & check_dir)
 			var/TB = get_step(loc, check_dir)
 			var/obj/structure/cable/C = locate(/obj/structure/cable) in TB
-			C.linked_dirs &= ~inverse
-			C.update_icon()
+			if(C)
+				C.linked_dirs &= ~inverse
+				C.update_icon()
 
 	if(powernet)
 		cut_cable_from_powernet()				// update the powernets
@@ -283,16 +284,16 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 // Powernets handling helpers
 //////////////////////////////////////////////
 
-/obj/structure/cable/proc/get_cable_connections(powernetless_only, ignore_dir = null)
+/obj/structure/cable/proc/get_cable_connections(powernetless_only)
 	. = list()
 	var/turf/T
 	for(var/check_dir in GLOB.cardinals)
-		if((linked_dirs & check_dir) && check_dir != ignore_dir)
+		if(linked_dirs & check_dir)
 			T = get_step(src, check_dir)
 			if(T)
 				var/obj/structure/cable/C = locate(/obj/structure/cable) in T
 				if(C)
-					.[C] = check_dir
+					. += C
 
 /obj/structure/cable/proc/get_machine_connections(powernetless_only)
 	. = list()
@@ -330,7 +331,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	var/list/P_list = list()
 	for(var/dir_check in GLOB.cardinals)
 		if(linked_dirs & dir_check)
-			T1 = get_step(T1, dir_check)
+			T1 = get_step(loc, dir_check)
 			P_list += locate(/obj/structure/cable) in T1
 
 	// remove the cut cable from its turf and powernet, so that it doesn't get count in propagate_network worklist
@@ -338,7 +339,11 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		moveToNullspace()
 	powernet.remove_cable(src) //remove the cut cable from its powernet
 
+	var/first = TRUE
 	for(var/obj/O in P_list)
+		if(first)
+			first = FALSE
+			continue
 		addtimer(CALLBACK(O, .proc/auto_propogate_cut_cable, O), 0) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
 
 ///////////////////////////////////////////////

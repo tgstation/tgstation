@@ -558,6 +558,7 @@
 	desc = "Corrupts certain metalic objects on contact."
 	invocation = "Ethra p'ni dedol!"
 	color = "#000000" // black
+	var/channeling = FALSE
 
 /obj/item/melee/blood_magic/construction/examine(mob/user)
 	. = ..()
@@ -570,6 +571,9 @@
 
 /obj/item/melee/blood_magic/construction/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(proximity_flag && iscultist(user))
+		if(channeling)
+			to_chat(user, "<span class='cultitalic'>You are already invoking twisted construction!</span>")
+			return
 		var/turf/T = get_turf(target)
 		if(istype(target, /obj/item/stack/sheet/metal))
 			var/obj/item/stack/sheet/candidate = target
@@ -592,6 +596,7 @@
 		else if(istype(target,/mob/living/silicon/robot))
 			var/mob/living/silicon/robot/candidate = target
 			if(candidate.mmi)
+				channeling = TRUE
 				user.visible_message("<span class='danger'>A dark cloud emanates from [user]'s hand and swirls around [candidate]!</span>")
 				playsound(T, 'sound/machines/airlock_alien_prying.ogg', 80, 1)
 				var/prev_color = candidate.color
@@ -599,6 +604,9 @@
 				if(do_after(user, 90, target = candidate))
 					candidate.emp_act(EMP_HEAVY)
 					var/construct_class = alert(user, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
+					if(QDELETED(candidate))
+						channeling = FALSE
+						return
 					user.visible_message("<span class='danger'>The dark cloud receedes from what was formerly [candidate], revealing a\n [construct_class]!</span>")
 					switch(construct_class)
 						if("Juggernaut")
@@ -611,7 +619,9 @@
 					uses--
 					candidate.mmi = null
 					qdel(candidate)
+					channeling = FALSE
 				else
+					channeling = FALSE
 					candidate.color = prev_color
 					return
 			else
@@ -619,15 +629,22 @@
 				to_chat(user, "<span class='warning'>A dark cloud emanates from you hand and swirls around [candidate] - twisting it into a construct shell!</span>")
 				new /obj/structure/constructshell(T)
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+				qdel(candidate)
 		else if(istype(target,/obj/machinery/door/airlock))
+			channeling = TRUE
 			playsound(T, 'sound/machines/airlockforced.ogg', 50, 1)
 			do_sparks(5, TRUE, target)
 			if(do_after(user, 50, target = user))
+				if(QDELETED(target))
+					channeling = FALSE
+					return
 				target.narsie_act()
 				uses--
 				user.visible_message("<span class='warning'>Black ribbons suddenly emanate from [user]'s hand and cling to the airlock - twisting and corrupting it!</span>")
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+				channeling = FALSE
 			else
+				channeling = FALSE
 				return
 		else
 			to_chat(user, "<span class='warning'>The spell will not work on [target]!</span>")

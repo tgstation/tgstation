@@ -430,6 +430,10 @@
 	suffix = "cere"
 	name = "NT Construction Vessel"
 
+/datum/map_template/shuttle/whiteship/donut
+	suffix = "donut"
+	name = "NT Long-Distance Bluespace Jumper"
+
 /datum/map_template/shuttle/whiteship/delta
 	suffix = "delta"
 	name = "NT Frigate"
@@ -586,6 +590,10 @@
 /datum/map_template/shuttle/hunter/russian
 	suffix = "russian"
 	name = "Russian Cargo Ship"
+
+/datum/map_template/shuttle/hunter/bounty
+	suffix = "bounty"
+	name = "Bounty Hunter Ship"
 
 /datum/map_template/shuttle/ruin/caravan_victim
 	suffix = "caravan_victim"

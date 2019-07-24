@@ -627,8 +627,8 @@
 	id = "medical_weapons"
 	display_name = "Medical Weaponry"
 	description = "Weapons using medical technology."
-	prereq_ids = list("adv_biotech", "adv_weaponry")
-	design_ids = list("rapidsyringe", "shotgundartcryostatis")
+	prereq_ids = list("adv_biotech", "weaponry")
+	design_ids = list("rapidsyringe")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -672,8 +672,8 @@
 	id = "exotic_ammo"
 	display_name = "Exotic Ammunition"
 	description = "They won't know what hit em."
-	prereq_ids = list("adv_weaponry")
-	design_ids = list("techshotshell", "c38_hotshot", "c38_iceblox")
+	prereq_ids = list("adv_weaponry", "medical_weapons")
+	design_ids = list("techshotshell", "c38_hotshot", "c38_iceblox", "shotgundartcryostasis")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -1021,7 +1021,7 @@
 	display_name = "Illegal Technology"
 	description = "Dangerous research used to create dangerous objects."
 	prereq_ids = list("adv_engi", "adv_weaponry", "explosive_weapons")
-	design_ids = list("decloner", "borg_syndicate_module", "ai_cam_upgrade", "suppressor", "largecrossbow", "donksofttoyvendor", "donksoft_refill")
+	design_ids = list("decloner", "borg_syndicate_module", "ai_cam_upgrade", "suppressor", "largecrossbow", "donksofttoyvendor", "donksoft_refill", "advanced_camera")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	export_price = 5000
 	hidden = TRUE

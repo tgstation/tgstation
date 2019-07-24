@@ -1,0 +1,6 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - bugfix: "Refunding Bottle of Tickles back into the spellbook will now correctly increase buy limit of the Bottle of Tickles instead of increasing Bottle of Blood buy limit."
+  - bugfix: "Bottle of Blood now correctly refunds 2 spell points instead of 1."
+  - bugfix: "Apprentice contract now correctly refunds 2 spell points instead of 1."
