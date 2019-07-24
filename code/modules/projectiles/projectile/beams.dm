@@ -200,43 +200,6 @@
 
 /obj/item/projectile/beam/shrink/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if(target.GetComponent(/datum/component/shrink))
-		SEND_SIGNAL(src, COMSIG_SHRINK_TIME_RESET, shrink_time)
-		return
-	if(isopenturf(target) || istype(target, /turf/closed/indestructible))//shrunk floors wouldnt do anything except look weird, i-walls shouldnt be bypassable
+	if(isopenturf(target) || istype(target, /turf/closed/indestructible) || target.GetComponent(/datum/component/shrink))//shrunk floors wouldnt do anything except look weird, i-walls shouldnt be bypassable
 		return
 	target.AddComponent(/datum/component/shrink, shrink_time, "shrink_ray_beam")
-
-
-
-
-
-
-
-/*
-	ADD_TRAIT(target, TRAIT_SHRUNKEN, "shrink_ray_beam")
-	target.transform = target.transform.Scale(0.5,0.5)
-	addtimer(VARSET_CALLBACK(target, transform, target.transform.Scale(2,2)), shrink_time)
-	var/olddens = target.density
-	var/oldopac = target.opacity
-	target.density = 0
-	target.opacity = 0
-	addtimer(VARSET_CALLBACK(target, density, olddens), shrink_time)
-	addtimer(VARSET_CALLBACK(target, opacity, oldopac), shrink_time)
-	if(isliving(target))
-		var/mob/living/L = target
-		L.add_movespeed_modifier(MOVESPEED_ID_SHRINK_RAY, update=TRUE, priority=100, multiplicative_slowdown=4, movetypes=GROUND)
-		addtimer(CALLBACK(L, .mob/proc/remove_movespeed_modifier, MOVESPEED_ID_SHRINK_RAY), shrink_time)
-		if(iscarbon(L))
-			var/mob/living/carbon/C = L
-			C.unequip_everything()
-			if(ishuman(C))
-				var/mob/living/carbon/human/H = C
-				H.physiology.damage_resistance -= 100//carbons take double damage while shrunk
-				addtimer(VARSET_CALLBACK(H, physiology.damage_resistance, H.physiology.damage_resistance + 100), shrink_time)
-			C.visible_message("<span class='warning'>[C]'s belongings fall off of [C.p_them()] as they shrink down!</span>",
-			"<span class='userdanger'>Your belonings fall away as everything grows bigger!</span>")
-	else
-		target.visible_message("<span class='warning'>[target] shrinks down to a tiny size!</span>",
-		"<span class='userdanger'>Everything grows bigger!</span>")
-*/

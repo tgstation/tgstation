@@ -1,6 +1,5 @@
 /datum/component/shrink
 	var/atom/parent_atom
-	var/shrink_remaining_timer
 	var/olddens
 	var/oldopac
 
@@ -8,7 +7,6 @@
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	parent_atom = parent
-	RegisterSignal(parent_atom, COMSIG_SHRINK_TIME_RESET, .proc/reset_timer)
 	parent_atom.transform = parent_atom.transform.Scale(0.5,0.5)
 	olddens = parent_atom.density
 	oldopac = parent_atom.opacity
@@ -26,11 +24,11 @@
 				var/mob/living/carbon/human/H = C
 				H.physiology.damage_resistance -= 100//carbons take double damage while shrunk
 				addtimer(VARSET_CALLBACK(H, physiology.damage_resistance, H.physiology.damage_resistance + 100), shrink_time)
-		shrink_remaining_timer = addtimer(CALLBACK(src, .proc/grow_back_living, L), shrink_time, TIMER_STOPPABLE)
+		addtimer(CALLBACK(src, .proc/grow_back_living, L), shrink_time)
 	else
 		parent_atom.visible_message("<span class='warning'>[parent_atom] shrinks down to a tiny size!</span>",
 		"<span class='userdanger'>Everything grows bigger!</span>")
-		shrink_remaining_timer = addtimer(CALLBACK(src, .proc/grow_back), shrink_time, TIMER_STOPPABLE)
+		addtimer(CALLBACK(src, .proc/grow_back), shrink_time)
 
 /datum/component/shrink/proc/grow_back(var/del_after = TRUE)
 	parent_atom.transform = parent_atom.transform.Scale(2,2)
@@ -46,11 +44,3 @@
 		var/mob/living/carbon/human/H = L
 		H.physiology.damage_resistance += 100
 	qdel(src)
-
-/datum/component/shrink/proc/reset_timer(shrink_time)//if we get shrunk again while shrunken, just restart the timer on how long we should be shrunk for
-	deltimer(shrink_remaining_timer)
-	if(isliving(parent_atom))
-		var/mob/living/L = parent_atom
-		shrink_remaining_timer = addtimer(CALLBACK(src, .proc/grow_back_living, L), shrink_time, TIMER_STOPPABLE)
-	else
-		shrink_remaining_timer = addtimer(CALLBACK(src, .proc/grow_back), shrink_time, TIMER_STOPPABLE)
