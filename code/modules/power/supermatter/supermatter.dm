@@ -56,6 +56,9 @@
 
 #define SUPERMATTER_COUNTDOWN_TIME 30 SECONDS
 
+///to prevent accent sounds from layering
+#define SUPERMATTER_ACCENT_SOUND_MIN_COOLDOWN 2 SECONDS
+
 GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal
@@ -142,6 +145,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/datum/looping_sound/supermatter/soundloop
 
 	var/moveable = FALSE
+
+	/// cooldown tracker for accent sounds, 
+	var/last_accent_sound = 0
 
 /obj/machinery/power/supermatter_crystal/Initialize()
 	. = ..()
@@ -308,6 +314,15 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	else
 		soundloop.mid_sounds = list('sound/machines/sm/loops/calm.ogg' = 1)
 
+	if(last_accent_sound < world.time && prob(10))
+		var/aggression = min(((damage / 800) * (power / 2500)), 1.0) * 100
+		if(damage >= 300)
+			playsound(src, "smdelam", max(50, aggression), FALSE)
+		else
+			playsound(src, "smcalm", max(50, aggression), FALSE)
+		var/next_sound = round((100 - aggression) * 5)
+		last_accent_sound = world.time + max(SUPERMATTER_ACCENT_SOUND_MIN_COOLDOWN, nexT_sound)
+
 	//Ok, get the air from the turf
 	var/datum/gas_mixture/env = T.return_air()
 
@@ -337,8 +352,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 			//capping damage
 			damage = min(damage_archived + (DAMAGE_HARDCAP * explosion_point),damage)
-			if(damage > damage_archived && prob(10))
-				playsound(get_turf(src), 'sound/effects/empulse.ogg', 50, 1)
 
 		removed.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/nitrogen)
 		//calculating gas related values
