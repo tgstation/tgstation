@@ -1277,14 +1277,16 @@
 	. = 1
 
 /datum/reagent/medicine/trophazole/on_transfer(atom/A, method=INGEST, trans_volume)
-	if(method != INGEST || !iscarbon(A))
-		A.adjustFireLoss(0.5*trans_volume)
+	if(!iscarbon(A))
+		return
+	if(method != INGEST)
+		var/mob/living/carbon/C = A
+		C.adjustFireLoss(0.5*trans_volume)
 		return
 
 	A.reagents.remove_reagent(/datum/reagent/medicine/trophazole, trans_volume * 0.05)
 	A.reagents.add_reagent(/datum/reagent/medicine/metafactor, trans_volume * 0.25)
 	A.reagents.add_reagent(/datum/reagent/medicine/metafactor, trans_volume * 0.2)
-
 
 	..()
 
