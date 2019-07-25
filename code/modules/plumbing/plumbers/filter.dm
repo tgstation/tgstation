@@ -1,7 +1,7 @@
 ///chemical plumbing filter. If it's not filtered by left and right, it goes straight.
 /obj/machinery/plumbing/filter
 	name = "chemical filter"
-	desc = "A chemical filter for filtering chemicals."
+	desc = "A chemical filter for filtering chemicals. The left and right outputs appear to be from the perspective of the input port."
 	icon_state = "filter"
 	///whitelist of chems id's that go to the left side. Empty to disable port
 	var/list/left = list()
@@ -11,18 +11,20 @@
 	var/list/english_left = list()
 	///whitelist of chems but their name instead of path
 	var/list/english_right = list()
-	var/xen = 500
-	var/yen = 500
 
 
 /obj/machinery/plumbing/filter/Initialize()
 	. = ..()
 	AddComponent(/datum/component/plumbing/filter)
 
+/obj/machinery/plumbing/filter/wrench_act(mob/living/user, obj/item/I)
+	default_unfasten_wrench(user, I)
+	return TRUE
+
 /obj/machinery/plumbing/filter/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "chemical_filter", name, xen, yen, master_ui, state)
+		ui = new(user, src, ui_key, "chemical_filter", name, 500, 300, master_ui, state)
 		ui.open()
 
 /obj/machinery/plumbing/filter/ui_data(mob/user)
