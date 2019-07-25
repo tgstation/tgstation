@@ -1,4 +1,11 @@
-/// This is the main proc. It instantly moves our mobile port to stationary port `new_dock`.
+/**
+  * Instantly moves our mobile port to stationary port `new_dock`.
+  *
+  * Arguments:
+  * * obj/docking_port/stationary/new_dock The dock to move to
+  * * movement_direction Override the default `preferred_direction` of the shuttle
+  * * force Force the movement ignoring safeguards and limitations
+  */
 /obj/docking_port/mobile/proc/initiate_docking(obj/docking_port/stationary/new_dock, movement_direction, force=FALSE)
 	// Crashing this ship with NO SURVIVORS
 
@@ -102,6 +109,15 @@
 	remove_ripples()
 	return DOCKING_SUCCESS
 
+/**
+  * Checks that everything is in order for a movement to occur
+  *
+  * Arguments:
+  * * list/old_turfs The turfs moving away from
+  * * list/new_turfs The turfs moving to
+  * * list/areas_to_move List of areas to move, gets turned into a typecache
+  * * rotation The shuttle rotation done by this potential move
+  */
 /obj/docking_port/mobile/proc/preflight_check(list/old_turfs, list/new_turfs, list/areas_to_move, rotation)
 	for(var/i in 1 to old_turfs.len)
 		CHECK_TICK
@@ -131,6 +147,18 @@
 
 		old_turfs[oldT] = move_mode
 
+/**
+  * Moves the shuttle away from a place
+  *
+  * Arguments:
+  * * list/old_turfs Source turfs
+  * * list/new_turfs Destination turfs
+  * * list/moved_atoms Atoms moved, turns into an assoc list of previous atom location
+  * * rotation Any rotation to be applied
+  * * movement_direction Passed to `onShuttleMove()` calls
+  * * old_dock Passed to `atom/movable/onShuttleMove()` and `turf/onShuttleMove()` calls
+  * * area/underlying_old_area Passed to `area/onShuttleMove()` calls
+  */
 /obj/docking_port/mobile/proc/takeoff(list/old_turfs, list/new_turfs, list/moved_atoms, rotation, movement_direction, old_dock, area/underlying_old_area)
 	for(var/i in 1 to old_turfs.len)
 		var/turf/oldT = old_turfs[i]
@@ -151,6 +179,10 @@
 			var/area/shuttle_area = oldT.loc
 			shuttle_area.onShuttleMove(oldT, newT, underlying_old_area)										//areas
 
+/**
+  * Cleanup the area the shuttle departed
+  *
+  */
 /obj/docking_port/mobile/proc/cleanup_runway(obj/docking_port/stationary/new_dock, list/old_turfs, list/new_turfs, list/areas_to_move, list/moved_atoms, rotation, movement_direction, area/underlying_old_area)
 	underlying_old_area.afterShuttleMove()
 

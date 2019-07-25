@@ -8,7 +8,10 @@
 
 	SSshuttle.ui_interact(usr)
 
-
+/**
+  * Admin invoked proc to badmin the shuttle around
+  *
+  */
 /obj/docking_port/mobile/proc/admin_fly_shuttle(mob/user)
 	var/list/options = list()
 
