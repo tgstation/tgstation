@@ -10,7 +10,7 @@
 	force = 5
 	var/list/grenades = new/list()
 	var/max_grenades = 3
-	materials = list(MAT_METAL=2000)
+	materials = list(/datum/material/iron=2000)
 
 /obj/item/gun/grenadelauncher/examine(mob/user)
 	. = ..()
@@ -26,7 +26,7 @@
 			to_chat(user, "<span class='notice'>You put the grenade in the grenade launcher.</span>")
 			to_chat(user, "<span class='notice'>[grenades.len] / [max_grenades] Grenades.</span>")
 		else
-			to_chat(usr, "<span class='danger'>The grenade launcher cannot hold more grenades.</span>")
+			to_chat(usr, "<span class='warning'>The grenade launcher cannot hold more grenades!</span>")
 
 /obj/item/gun/grenadelauncher/can_shoot()
 	return grenades.len

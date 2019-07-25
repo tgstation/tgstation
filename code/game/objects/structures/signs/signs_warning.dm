@@ -36,6 +36,11 @@
 	desc = "A warning sign which reads 'DISPOSAL: LEADS TO SPACE'."
 	icon_state = "deathsposal"
 
+/obj/structure/sign/warning/bodysposal
+	name = "\improper DISPOSAL: LEADS TO MORGUE"
+	desc = "A warning sign which reads 'DISPOSAL: LEADS TO MORGUE'."
+	icon_state = "bodysposal"
+
 /obj/structure/sign/warning/pods
 	name = "\improper ESCAPE PODS"
 	desc = "A warning sign which reads 'ESCAPE PODS'."

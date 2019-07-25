@@ -122,6 +122,7 @@
 	icon_state = "flat_cap"
 	item_state = "detective"
 
+
 /obj/item/clothing/head/pirate
 	name = "pirate hat"
 	desc = "Yarr."
@@ -244,6 +245,20 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, SHAMEBRERO_TRAIT)
 
+/obj/item/clothing/head/flatcap
+	name = "flat cap"
+	desc = "A working man's cap."
+	icon_state = "flat_cap"
+	item_state = "detective"
+
+/obj/item/clothing/head/hunter
+	name = "bounty hunting hat"
+	desc = "Ain't nobody gonna cheat the hangman in my town."
+	icon_state = "hunter"
+	item_state = "hunter"
+	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
 /obj/item/clothing/head/cone
 	desc = "This cone is trying to warn you of something!"
 	name = "warning cone"
@@ -341,7 +356,6 @@
 /obj/item/clothing/head/nemes
 	name = "headdress of Nemes"
 	desc = "Lavish space tomb not included."
-	icon_state = "nemes_headdress"
 	icon_state = "nemes_headdress"
 
 /obj/item/clothing/head/frenchberet

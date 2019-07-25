@@ -81,17 +81,29 @@
 	trash = /obj/item/trash/plate
 	bitesize = 3
 	tastes = list("toast" = 1, "jelly" = 1)
-	foodtype = GRAIN
+	foodtype = GRAIN | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/jelliedtoast/cherry
 	bonus_reagents = list(/datum/reagent/consumable/cherryjelly = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/cherryjelly = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
-	foodtype = GRAIN | FRUIT | SUGAR
+	foodtype = GRAIN | FRUIT | SUGAR | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/jelliedtoast/slime
 	bonus_reagents = list(/datum/reagent/toxin/slimejelly = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/toxin/slimejelly = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
-	foodtype = GRAIN | TOXIC | SUGAR
+	foodtype = GRAIN | TOXIC | SUGAR | BREAKFAST
+
+/obj/item/reagent_containers/food/snacks/butteredtoast
+	name = "buttered toast"
+	desc = "Butter lightly spread over a piece of toast."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "butteredtoast"
+	bitesize = 3
+	filling_color = "#FFA500"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	tastes = list("butter" = 1, "toast" = 1)
+	foodtype = GRAIN | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/twobread
 	name = "two bread"

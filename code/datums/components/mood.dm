@@ -3,10 +3,10 @@
 
 /datum/component/mood
 	var/mood //Real happiness
-	var/sanity = 100 //Current sanity
+	var/sanity = SANITY_NEUTRAL //Current sanity
 	var/shown_mood //Shown happiness, this is what others can see when they try to examine you, prevents antag checking by noticing traitors are always very happy.
 	var/mood_level = 5 //To track what stage of moodies they're on
-	var/sanity_level = 5 //To track what stage of sanity they're on
+	var/sanity_level = 2 //To track what stage of sanity they're on
 	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
 	var/list/datum/mood_event/mood_events = list()
 	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
@@ -21,6 +21,8 @@
 
 	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
 	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
+	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/check_area_mood)
+	RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/on_revive)
 
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	var/mob/living/owner = parent
@@ -81,7 +83,8 @@
 		msg += "<span class='nicegreen'>I don't have much of a reaction to anything right now.<span>\n"
 	to_chat(user || parent, msg)
 
-/datum/component/mood/proc/update_mood() //Called whenever a mood event is added or removed
+///Called after moodevent/s have been added/removed.
+/datum/component/mood/proc/update_mood()
 	mood = 0
 	shown_mood = 0
 	for(var/i in mood_events)
@@ -173,39 +176,35 @@
 
 	switch(mood_level)
 		if(1)
-			setSanity(sanity-0.2)
+			setSanity(sanity-0.3)
 		if(2)
-			setSanity(sanity-0.125, minimum=SANITY_CRAZY)
+			setSanity(sanity-0.15)
 		if(3)
-			setSanity(sanity-0.075, minimum=SANITY_UNSTABLE)
+			setSanity(sanity-0.1)
 		if(4)
-			setSanity(sanity-0.025, minimum=SANITY_DISTURBED)
+			setSanity(sanity-0.05, minimum=SANITY_UNSTABLE)
 		if(5)
-			setSanity(sanity+0.1)
+			setSanity(sanity+0.1, maximum=SANITY_NEUTRAL)
 		if(6)
-			setSanity(sanity+0.15)
+			setSanity(sanity+0.2, maximum=SANITY_GREAT)
 		if(7)
-			setSanity(sanity+0.2)
+			setSanity(sanity+0.3, maximum=INFINITY)
 		if(8)
-			setSanity(sanity+0.25, maximum=SANITY_GREAT)
-		if(9)
 			setSanity(sanity+0.4, maximum=INFINITY)
+		if(9)
+			setSanity(sanity+0.6, maximum=INFINITY)
 
 	HandleNutrition(owner)
-	HandleHygiene(owner)
 
-/datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_NEUTRAL)
+/datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_GREAT)
 	var/mob/living/owner = parent
 
-	amount = CLAMP(amount, minimum, maximum)
 	if(amount == sanity)
 		return
 	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.5
 	// If the new amount would move towards the acceptable range faster then use it instead
 	if(sanity < minimum && amount < sanity + 0.5)
 		amount = sanity + 0.5
-	else if(sanity > maximum && amount > sanity - 0.5)
-		amount = sanity - 0.5
 
 	// Disturbed stops you from getting any more sane
 	if(HAS_TRAIT(owner, TRAIT_UNSTABLE))
@@ -217,15 +216,15 @@
 	switch(sanity)
 		if(SANITY_INSANE to SANITY_CRAZY)
 			setInsanityEffect(MAJOR_INSANITY_PEN)
-			master.add_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE, 100, override=TRUE, multiplicative_slowdown=1.5, movetypes=(~FLYING))
+			master.add_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE, 100, override=TRUE, multiplicative_slowdown=1, movetypes=(~FLYING))
 			sanity_level = 6
 		if(SANITY_CRAZY to SANITY_UNSTABLE)
 			setInsanityEffect(MINOR_INSANITY_PEN)
-			master.add_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE, 100, override=TRUE, multiplicative_slowdown=1, movetypes=(~FLYING))
+			master.add_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE, 100, override=TRUE, multiplicative_slowdown=0.5, movetypes=(~FLYING))
 			sanity_level = 5
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
 			setInsanityEffect(0)
-			master.add_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE, 100, override=TRUE, multiplicative_slowdown=0.5, movetypes=(~FLYING))
+			master.add_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE, 100, override=TRUE, multiplicative_slowdown=0.25, movetypes=(~FLYING))
 			sanity_level = 4
 		if(SANITY_DISTURBED to SANITY_NEUTRAL)
 			setInsanityEffect(0)
@@ -280,14 +279,14 @@
 	qdel(event)
 	update_mood()
 
-/datum/component/mood/proc/remove_temp_moods(var/admin) //Removes all temp moods
+/datum/component/mood/proc/remove_temp_moods() //Removes all temp moods
 	for(var/i in mood_events)
 		var/datum/mood_event/moodlet = mood_events[i]
 		if(!moodlet || !moodlet.timeout)
 			continue
 		mood_events -= moodlet.category
 		qdel(moodlet)
-		update_mood()
+	update_mood()
 
 
 /datum/component/mood/proc/modify_hud(datum/source)
@@ -297,7 +296,7 @@
 	screen_obj_sanity = new
 	hud.infodisplay += screen_obj
 	hud.infodisplay += screen_obj_sanity
-	RegisterSignal(hud, COMSIG_PARENT_QDELETED, .proc/unmodify_hud)
+	RegisterSignal(hud, COMSIG_PARENT_QDELETING, .proc/unmodify_hud)
 	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/hud_click)
 
 /datum/component/mood/proc/unmodify_hud(datum/source)
@@ -350,26 +349,18 @@
 		if(ETHEREAL_CHARGE_ALMOSTFULL to ETHEREAL_CHARGE_FULL)
 			add_event(null, "charge", /datum/mood_event/charged)
 
-/datum/component/mood/proc/HandleHygiene(mob/living/carbon/human/H)
-	if(H.hygiene <= HYGIENE_LEVEL_DIRTY)
-		HygieneMiasma(H)
+/datum/component/mood/proc/check_area_mood(datum/source, var/area/A)
+	if(A.mood_bonus)
+		add_event(null, "area", /datum/mood_event/area, list(A.mood_bonus, A.mood_message))
+	else
+		clear_event(null, "area")
 
-/datum/component/mood/proc/HygieneMiasma(mob/living/carbon/human/H)
-	// Properly stored humans shouldn't create miasma
-	if(istype(H.loc, /obj/structure/closet/crate/coffin)|| istype(H.loc, /obj/structure/closet/body_bag) || istype(H.loc, /obj/structure/bodycontainer))
+///Called when parent is ahealed.
+/datum/component/mood/proc/on_revive(datum/source, full_heal)
+	if(!full_heal)
 		return
-
-	var/turf/T = get_turf(H)
-
-	if(!istype(T) || T.return_air().return_pressure() > (WARNING_HIGH_PRESSURE - 10))
-		return
-
-	var/datum/gas_mixture/stank = new
-	ADD_GAS(/datum/gas/miasma, stank.gases)
-	stank.gases[/datum/gas/miasma][MOLES] = MIASMA_HYGIENE_MOLES
-	stank.temperature = BODYTEMP_NORMAL
-	T.assume_air(stank)
-	T.air_update_turf()
+	remove_temp_moods()
+	setSanity(initial(sanity))
 
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN
