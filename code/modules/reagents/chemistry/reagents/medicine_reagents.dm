@@ -1415,7 +1415,6 @@
 	overdose_threshold = 25
 	taste_description = "salty"
 	
-
 /datum/reagent/medicine/sanguiose/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-1, 0)
 	if(prob(1))
