@@ -34,7 +34,7 @@
 //Infection
 #define DOOM_CLOCK_EVENT_DELAY 6000 // 10 minutes per event
 #define CORE_CONVERSION_TIME 600 // time to convert corpses near the core to slimes
-#define CORE_AUTOPLACE_TIME 300 // 5 minutes
+#define CORE_AUTOPLACE_TIME 3000 // 5 minutes
 
 //ERT Types
 #define ERT_BLUE "Blue"

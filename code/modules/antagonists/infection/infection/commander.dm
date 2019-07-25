@@ -61,6 +61,8 @@ GLOBAL_VAR(infection_commander)
 	SSshuttle.registerHostileEnvironment(src)
 	addtimer(CALLBACK(src, .proc/generate_announcement), CORE_AUTOPLACE_TIME * 0.1)
 	addtimer(CALLBACK(src, .proc/place_beacons), CORE_AUTOPLACE_TIME * 0.3)
+	addtimer(CALLBACK(src, .proc/info_announcement), CORE_AUTOPLACE_TIME * 0.5)
+
 	for(var/type_action in default_actions)
 		var/datum/action/cooldown/infection/add_action = new type_action()
 		add_action.Grant(src)
@@ -79,6 +81,15 @@ GLOBAL_VAR(infection_commander)
 					   Our calculations estimate the meteor will impact in [(autoplace_time - world.time)/600] minutes.\n\n\
 					   We will be deploying beacons that will defend the majority of your station, provided that they are not destroyed.\n\n\
 					   Further updates will be given as we analyze the substance.",
+					  "CentCom Biohazard Division", 'sound/misc/notice1.ogg')
+
+/mob/camera/commander/proc/info_announcement()
+	priority_announce("[station_name()]: We have updated information regarding the biohazardous substance. \n\n\
+					   It appears to have a core that is virtually indestructible, we have been unable to affect it in any way, even with something as powerful as a singularity.\n\n\
+					   We advise that you do not attempt to attack the core, unless you find something that you think may damage it.\n\n\
+					   The meteor also appears to be heavily defended by many structures, that attack seemingly anything that gets close to it.\n\n\
+					   However some of these structures do not seem to naturally regenerate, and if they do, are not as strong as they once were.\n\n\
+					   Try to use this information to your advantage, we will report back again once the core has landed.",
 					  "CentCom Biohazard Division", 'sound/misc/notice1.ogg')
 
 

@@ -80,7 +80,11 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 	playsound(src.loc, 'sound/magic/repulse.ogg', 300, 1, 10, pressure_affected = FALSE)
 	var/mob/camera/commander/OM = GLOB.infection_commander
 	OM.playsound_local(OM, 'sound/magic/repulse.ogg', 300, 1)
-	explosion(src, 5, 10, 20, 20, FALSE, TRUE, 5, TRUE, FALSE)
+	explosion(src, 1, 2, 4, 10, FALSE, TRUE, 5, TRUE, FALSE)
+	for(var/obj/structure/infection/I in orange(10, src))
+		if(istype(I, /obj/structure/infection/core))
+			continue
+		qdel(I)
 	qdel(src)
 
 /obj/structure/beacon_generator/update_icon()

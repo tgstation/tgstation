@@ -31428,6 +31428,7 @@
 	dir = 5
 	},
 /obj/structure/cable,
+/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "bql" = (
@@ -38608,6 +38609,7 @@
 	dir = 6
 	},
 /obj/structure/cable,
+/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
 "bGK" = (
@@ -44907,6 +44909,7 @@
 	location = "7.5-Starboard-Aft-Corner"
 	},
 /obj/structure/cable,
+/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bVp" = (
@@ -45221,6 +45224,7 @@
 /area/maintenance/port)
 "bVU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -66548,6 +66552,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "cOu" = (
@@ -73825,6 +73830,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
+"hRh" = (
+/obj/structure/cable,
+/obj/effect/landmark/beacon_start/east,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "hSZ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -74362,6 +74372,16 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"nOY" = (
+/obj/effect/landmark/infection_start,
+/turf/open/space/basic,
+/area/space)
+"nQP" = (
+/obj/effect/landmark/beacon_start/east,
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
+	},
+/area/holodeck/rec_center)
 "nXA" = (
 /obj/structure/rack{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -74480,6 +74500,14 @@
 "pcn" = (
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
+"pdV" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/landmark/beacon_start/east,
+/turf/open/floor/plasteel,
+/area/hallway/primary/starboard)
 "pgY" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -74651,6 +74679,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/department/science)
+"qwC" = (
+/obj/structure/cable,
+/obj/effect/landmark/beacon_start/east,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "qBh" = (
 /obj/structure/table,
 /obj/item/paicard,
@@ -74950,6 +74983,14 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
+"ufe" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/landmark/beacon_start/east,
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
 "urv" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/security/prison)
@@ -90278,7 +90319,7 @@ aaa
 aaf
 aaf
 aqF
-doJ
+qwC
 atq
 aaf
 aaa
@@ -102624,7 +102665,7 @@ azF
 aBb
 aCk
 aDw
-aEN
+ufe
 aGk
 aHA
 aIJ
@@ -107528,7 +107569,7 @@ dCH
 bdP
 baG
 bhB
-aWf
+hRh
 bkR
 aWf
 aWf
@@ -113915,7 +113956,7 @@ afD
 afD
 afD
 afD
-afD
+nQP
 afD
 afD
 afD
@@ -113953,7 +113994,7 @@ aWw
 aWw
 aWw
 bhQ
-bjp
+pdV
 blf
 bmU
 alq
@@ -123401,7 +123442,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+nOY
 aaa
 aaa
 aaa

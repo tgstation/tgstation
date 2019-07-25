@@ -45143,6 +45143,20 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/department/security)
+"dhq" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/landmark/beacon_start/south,
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/fitness)
 "diw" = (
 /obj/item/radio/intercom{
 	pixel_y = -29
@@ -45231,6 +45245,20 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
+"dAc" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 9
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/structure/cable,
+/obj/effect/landmark/beacon_start/south,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "dCc" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -45379,6 +45407,11 @@
 /obj/effect/landmark/start/station_engineer,
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
+"elv" = (
+/obj/structure/cable,
+/obj/effect/landmark/beacon_start/south,
+/turf/open/floor/plating,
+/area/maintenance/starboard)
 "elZ" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -45527,6 +45560,20 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
+"eAM" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/structure/cable,
+/obj/effect/landmark/beacon_start/south,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "eBl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
@@ -47392,6 +47439,10 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"lOI" = (
+/obj/effect/landmark/infection_start,
+/turf/open/space/basic,
+/area/space)
 "lOW" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -48614,6 +48665,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/landmark/beacon_start/south,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "qoF" = (
@@ -48729,6 +48781,20 @@
 	},
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
+"qyM" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 5
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/structure/cable,
+/obj/effect/landmark/beacon_start/south,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "qBm" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil{
@@ -49990,6 +50056,14 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"vgF" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/obj/effect/landmark/beacon_start/south,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "viK" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
 	dir = 4
@@ -77223,7 +77297,7 @@ aet
 asd
 asT
 buW
-asT
+dhq
 blk
 bri
 bBS
@@ -77576,7 +77650,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+lOI
 aaa
 aaa
 aaa
@@ -80588,7 +80662,7 @@ hvP
 bBJ
 qYP
 qYP
-qYP
+vgF
 qYP
 ueN
 qYP
@@ -80863,7 +80937,7 @@ awn
 bRD
 bGM
 aXS
-iMs
+qyM
 aIn
 axM
 aTK
@@ -82368,7 +82442,7 @@ asP
 bli
 bfC
 abP
-hYI
+dAc
 axh
 bxA
 bxC
@@ -85704,7 +85778,7 @@ bym
 bxY
 byp
 qYP
-qYP
+vgF
 bAK
 awV
 aaT
@@ -92648,7 +92722,7 @@ afk
 aaZ
 aSl
 aSd
-bsO
+eAM
 bsw
 axe
 aMw
@@ -94227,7 +94301,7 @@ awO
 btG
 btm
 qYP
-qYP
+vgF
 bua
 aOn
 aWg
@@ -94466,7 +94540,7 @@ bHh
 qYP
 qYP
 qYP
-qYP
+vgF
 aAA
 cew
 btq
@@ -95727,7 +95801,7 @@ bAD
 bwD
 bSl
 bSm
-bAD
+elv
 bAD
 aNV
 asj

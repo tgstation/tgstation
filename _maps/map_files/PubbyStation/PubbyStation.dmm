@@ -9394,6 +9394,7 @@
 	codes_txt = "patrol;next_patrol=BrigP";
 	location = "BrigS1"
 	},
+/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "ayO" = (
@@ -12151,6 +12152,7 @@
 	dir = 6
 	},
 /obj/structure/cable,
+/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/restrooms)
 "aFI" = (
@@ -13293,6 +13295,7 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aJc" = (
@@ -23127,6 +23130,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bhL" = (
@@ -23155,6 +23159,7 @@
 /obj/effect/turf_decal/plaque{
 	icon_state = "L7"
 	},
+/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bhP" = (
@@ -49156,6 +49161,14 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/department/engine)
+"dIo" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/landmark/beacon_start/east,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "dJm" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Research Pit";
@@ -51439,6 +51452,10 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
+"jkp" = (
+/obj/effect/landmark/beacon_start/east,
+/turf/open/floor/plating,
+/area/maintenance/department/engine)
 "jlb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -51644,6 +51661,13 @@
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
+"jMQ" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 1
+	},
+/obj/effect/landmark/beacon_start/east,
+/turf/open/floor/plasteel/white,
+/area/science/explab)
 "jMS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/spawner/xmastree,
@@ -51901,6 +51925,10 @@
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
+"kvf" = (
+/obj/effect/landmark/beacon_start/east,
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
 "kvj" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -53619,6 +53647,10 @@
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"ouS" = (
+/obj/effect/landmark/infection_start,
+/turf/open/space/basic,
+/area/space)
 "ovM" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 4
@@ -81587,7 +81619,7 @@ bVu
 mzU
 rzp
 kpK
-bDi
+jkp
 bZt
 bva
 oAW
@@ -90069,7 +90101,7 @@ bWB
 mCe
 bYk
 bYM
-mMP
+dIo
 xsB
 xsB
 xsB
@@ -97747,7 +97779,7 @@ bnY
 bpg
 bqr
 bqs
-bti
+jMQ
 wBb
 bvT
 bxC
@@ -102102,7 +102134,7 @@ aEl
 aEj
 aEj
 aTx
-aFi
+kvf
 aFi
 aEj
 gfi
@@ -110819,7 +110851,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+ouS
 aaa
 aaa
 aaa

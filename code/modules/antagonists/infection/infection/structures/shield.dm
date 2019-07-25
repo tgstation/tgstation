@@ -98,6 +98,7 @@
 	desc = "A thin mesh barrier preventing entry of non infectious creatures."
 	icon = 'icons/mob/infection/infection.dmi'
 	icon_state = "door"
+	smooth = SMOOTH_FALSE
 	max_integrity = 150
 	brute_resist = 0.5
 	fire_resist = 0.25
