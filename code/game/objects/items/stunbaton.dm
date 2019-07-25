@@ -178,7 +178,7 @@
 /// After a period of time, we then check to see what stun duration we give.
 /obj/item/melee/baton/proc/stun_effect(mob/living/target)
 	target.Jitter(20)
-	target.confused = 10
+	target.confused = max(10, target.confused)
 	target.apply_effect(EFFECT_STUTTER, stunforce)
 	target.adjustStaminaLoss(65)
 
