@@ -21,7 +21,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	var/target_dept = 0 //Which department this computer has access to. 0=all departments
 	var/list/region_access
 	var/list/head_subordinates
-	var/obj/item/card/id/inserted_modify_id
 
 	//Cooldown for closing positions in seconds
 	//if set to -1: No cooldown... probably a bad idea

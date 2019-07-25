@@ -601,3 +601,10 @@
 	id = /datum/reagent/pax
 	results = list(/datum/reagent/pax = 3)
 	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/medicine/synaptizine = 1, /datum/reagent/water = 1)
+
+/datum/chemical_reaction/yuck
+	name = "Organic Fluid"
+	id = /datum/reagent/yuck
+	results = list(/datum/reagent/yuck = 4)
+	required_reagents = list(/datum/reagent/fuel = 3)
+	required_container = /obj/item/reagent_containers/food/snacks/deadmouse

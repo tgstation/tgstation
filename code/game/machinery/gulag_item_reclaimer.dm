@@ -79,7 +79,7 @@
 			if(inserted_prisoner_id)
 				id_eject(usr, I, inserted_prisoner_id)
 			else
-				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id/prisoner)
+				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id)
 				if(I)
 					id_insert(usr, I, inserted_prisoner_id)
 		if("release_items")
