@@ -179,7 +179,7 @@
 	if(istype(W, /obj/item/card/id))
 		var/obj/item/card/id/I = user.get_active_held_item()
 		if(istype(I))
-			id_insert_prisoner(user)
+			id_insert(user, I, inserted_prisoner_id)
 			interact(user)
 			return
 		return
@@ -257,12 +257,12 @@
 		if("Eject")
 			if(!inserted_scan_id)
 				return
-			id_eject_prisoner(usr)
+			id_eject(usr, I, inserted_prisoner_id)
 			return TRUE
 		if("Insert")
 			var/obj/item/card/id/I = usr.get_active_held_item()
 			if(istype(I))
-				id_insert_prisoner(usr)
+				id_insert(usr, I, inserted_prisoner_id)
 			else
 				to_chat(usr, "<span class='warning'>Not a valid ID!</span>")
 			return TRUE

@@ -25,7 +25,7 @@
 
 /obj/machinery/computer/gulag_teleporter_computer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/card/id))
-		id_insert_prisoner(user)
+		id_insert(user, I, inserted_prisoner_id)
 	else
 		return ..()
 
@@ -86,9 +86,9 @@
 			beacon = findbeacon()
 		if("handle_id")
 			if(inserted_prisoner_id)
-				id_eject_prisoner(usr)
+				id_eject(usr, I, inserted_prisoner_id)
 			else
-				id_insert_prisoner(usr)
+				id_insert(usr, I, inserted_prisoner_id)
 		if("set_goal")
 			var/new_goal = input("Set the amount of points:", "Points", inserted_prisoner_id.goal) as num|null
 			if(!isnum(new_goal))

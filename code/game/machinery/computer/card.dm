@@ -19,6 +19,9 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	var/mode = 0
 	var/printing = null
 	var/target_dept = 0 //Which department this computer has access to. 0=all departments
+	var/list/region_access
+	var/list/head_subordinates
+	var/obj/item/card/id/inserted_modify_id
 
 	//Cooldown for closing positions in seconds
 	//if set to -1: No cooldown... probably a bad idea
@@ -58,10 +61,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 /obj/machinery/computer/card/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/card/id))
 		if(!inserted_scan_id)
-			id_insert_scan(user)
+			id_insert(user, I, inserted_scan_id)
 			return
 		if(!inserted_modify_id)
-			id_insert_modify(user)
+			id_insert(user, I, inserted_modify_id)
 			return
 		else
 			to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
@@ -315,14 +318,20 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	switch(href_list["choice"])
 		if ("inserted_modify_id")
 			if (inserted_modify_id)
-				id_eject_modify(usr)
+				GLOB.data_core.manifest_modify(inserted_modify_id.registered_name, inserted_modify_id.assignment)
+				inserted_modify_id.update_label()
+				region_access = null
+				head_subordinates = null
+				id_eject(usr, I, inserted_modify_id)
+				authenticated = FALSE
 			else
-				id_insert_modify(usr)
+				id_insert(usr, I, inserted_modify_id)
 		if ("inserted_scan_id")
 			if (inserted_scan_id)
-				id_eject_scan(usr)
+				id_eject(usr, I, inserted_scan_id)
+				authenticated = FALSE
 			else
-				id_insert_scan(usr)
+				id_insert(usr, I, inserted_scan_id)
 		if ("auth")
 			if ((!( authenticated ) && (inserted_scan_id || issilicon(usr)) && (inserted_modify_id || mode)))
 				if (check_access(inserted_scan_id))

@@ -71,7 +71,7 @@
 /obj/machinery/computer/prisoner/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/card/id))
 		if(screen)
-			id_insert_prisoner(user)
+			id_insert(user, I, inserted_prisoner_id)
 		else
 			to_chat(user, "<span class='danger'>Unauthorized access.</span>")
 	else
@@ -90,11 +90,11 @@
 
 		if(href_list["id"])
 			if(href_list["id"] =="insert" && !inserted_prisoner_id)
-				id_insert_prisoner(usr)
+				id_insert(usr, I, inserted_prisoner_id)
 			else if(inserted_prisoner_id)
 				switch(href_list["id"])
 					if("eject")
-						id_eject_prisoner(usr)
+						id_eject(usr, I, inserted_prisoner_id)
 					if("reset")
 						inserted_prisoner_id.points = 0
 					if("setgoal")

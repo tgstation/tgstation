@@ -36,7 +36,7 @@
 
 /obj/machinery/computer/secure_data/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/card/id))
-		id_insert_scan(user)
+		id_insert(user, I, inserted_scan_id)
 	else
 		return ..()
 
@@ -324,10 +324,10 @@ What a mess.*/
 
 			if("Confirm Identity")
 				if(inserted_scan_id)
-					id_eject_scan(usr)
+					id_eject(usr, I, inserted_scan_id)
 					return
 				else
-					id_insert_scan(usr)
+					id_insert(usr, I, inserted_scan_id)
 
 			if("Log Out")
 				authenticated = null
