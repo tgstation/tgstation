@@ -1418,7 +1418,7 @@
 
 /datum/reagent/medicine/sanguiose/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-1, 0)
-	if(prob(33))
+	if(prob(1))
 		ADD_TRAIT(M, TRAIT_MUTE, MEDICINE_TRAIT)
 	//Removes blood
 	..()
@@ -1451,7 +1451,7 @@
 
 /datum/reagent/medicine/frogenite/on_mob_life(mob/living/carbon/M) //Reuses code done by cobby in Perflu to convert burn damage to oxygen, Meant to simunlate a chemical reaction to remove oxygen from the body.
 	M.adjustFireLoss(-1, 0)
-	if(prob(33))
+	if(prob(1))
 		//Adds blindness witha  33% chance
 		ADD_TRAIT(M, TRAIT_BLIND, MEDICINE_TRAIT)
 	..()
@@ -1486,7 +1486,7 @@
 
 /datum/reagent/medicine/ferveatium/on_mob_life(mob/living/carbon/M) //Reuses code done by cobby in Perflu to convert burn damage to oxygen, Meant to simunlate a chemical reaction to remove oxygen from the body.
 	M.adjustToxLoss(-1, 0)
-	if(prob(33))
+	if(prob(1))
 		//Adds fatness with a 33% chance probability.
 		ADD_TRAIT(M, TRAIT_FAT, MEDICINE_TRAIT)
 	..()
