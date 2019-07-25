@@ -1259,27 +1259,32 @@
 
 /datum/reagent/medicine/trophazole
 	name = "Trophazole"
-	description = "Orginally developed as fitness supplement, this chemical accelerates wound healing and if ingested turns nutriment into healing peptides"
+	description = "Orginally developed as fitness supplement, this chemical accelerates wound healing while causing toxin accumulation and if ingested turns nutriment into healing peptides."
 	reagent_state = LIQUID
 	color = "#FFFF6B"
 	overdose_threshold = 20
 
 /datum/reagent/medicine/trophazole/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-1.5*REM, 0.) // heals 3 brute & 0.5 burn if taken with food. compared to 2.5 brute from bicard + nutriment
+	M.adjustBruteLoss(-1.5*REM, 0) // heals 3 brute if taken with food. compared to 2.5 brute from bicard + nutriment
+	M.adjustToxLoss(0.5*REM, 0)
 	..()
 	. = 1
 
 /datum/reagent/medicine/trophazole/overdose_process(mob/living/M)
 	M.adjustBruteLoss(3*REM, 0)
+	M.adjustToxLoss(1*REM, 0)
 	..()
 	. = 1
 
 /datum/reagent/medicine/trophazole/on_transfer(atom/A, method=INGEST, trans_volume)
 	if(method != INGEST || !iscarbon(A))
+		M.adjustFireLoss(0.5*reac_volume)
 		return
 
 	A.reagents.remove_reagent(/datum/reagent/medicine/trophazole, trans_volume * 0.05)
 	A.reagents.add_reagent(/datum/reagent/medicine/metafactor, trans_volume * 0.25)
+	A.reagents.add_reagent(/datum/reagent/medicine/metafactor, trans_volume * 0.2)
+
 
 	..()
 
@@ -1289,14 +1294,16 @@
 	metabolization_rate = 0.0625  * REAGENTS_METABOLISM //slow metabolism rate so the patient can self heal with food even after the troph has metabolized away for amazing reagent efficency.
 	reagent_state = SOLID
 	color = "#DC605D"
-	overdose_threshold = 10
+	overdose_threshold = 5
 
 /datum/reagent/medicine/metafactor/overdose_start(mob/living/carbon/M)
 	metabolization_rate = 2  * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/metafactor/overdose_process(mob/living/carbon/M)
-	if(prob(25))
-		M.vomit()
+	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
+		M.adjustToxLoss(1*REM, 0)
+	M.adjust_nutrition(-3)
+	M.overeatduration = 0
 	..()
 
 /datum/reagent/medicine/rhigoxane
@@ -1308,13 +1315,14 @@
 	reagent_weight = 0.6
 
 /datum/reagent/medicine/rhigoxane/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss(-2*REM, 0.)
+	M.adjustFireLoss(-1.5*REM, 0)
 	M.adjust_bodytemperature(-20 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
 	. = 1
 
 /datum/reagent/medicine/rhigoxane/reaction_mob(mob/living/carbon/M, method=VAPOR, reac_volume)
 	if(method != VAPOR)
+		M.adjustToxLoss(0.5*reac_volume)
 		return
 
 	M.adjust_bodytemperature(-reac_volume * TEMPERATURE_DAMAGE_COEFFICIENT * 20, 200)
@@ -1325,7 +1333,7 @@
 	..()
 
 /datum/reagent/medicine/rhigoxane/overdose_process(mob/living/carbon/M)
-	M.adjustFireLoss(3*REM, 0.)
+	M.adjustFireLoss(3*REM, 0)
 	M.adjust_bodytemperature(-35 * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
 	..()
 
