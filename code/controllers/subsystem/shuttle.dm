@@ -272,7 +272,7 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/cancelEvac(mob/user)
 	if(!canRecall())
 		return
-	if(isai(user))
+	if(isAI(user))
 		minor_announce("The shuttle has been recalled at <span class='name'>[get_area_name(user, TRUE)]</span>. Have a secure day.")
 	emergency.cancel(get_area(user))
 	log_game("[key_name(user)] has recalled the shuttle.")
