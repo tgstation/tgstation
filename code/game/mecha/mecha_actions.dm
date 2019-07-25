@@ -164,6 +164,11 @@
 		chassis.log_message("Toggled thrusters.", LOG_MECHA)
 		chassis.occupant_message("<font color='[chassis.thrusters_active ?"blue":"red"]'>Thrusters [chassis.thrusters_active ?"en":"dis"]abled.")
 
+/datum/action/innate/mecha/mech_defence_mode
+	name = "Toggle an energy shield that blocks all attacks from the faced direction at a heavy power cost."
+	button_icon_state = "mech_defense_mode_off"
+	var/image/def_overlay
+
 /datum/action/innate/mecha/mech_defence_mode/Activate(forced_state = FALSE)
 	SEND_SIGNAL(chassis, COMSIG_MECHA_ACTION_ACTIVATE, args) ///Signal sent to the mech, to be handed to the shield. See durand.dm for more details
 

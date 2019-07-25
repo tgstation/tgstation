@@ -16,6 +16,7 @@
 /obj/mecha/combat/durand/Initialize()
 	shield = new/obj/durand_shield
 	shield.chassis = src
+	shield.dir = dir
 	shield.layer = layer
 	RegisterSignal(src, COMSIG_MECHA_ACTION_ACTIVATE, .proc/relay)
 	RegisterSignal(src, COMSIG_PROJECTILE_PREHIT, .proc/prehit)
@@ -36,9 +37,8 @@
 
 /obj/mecha/combat/durand/process()
 	. = ..()
-	if(defence_mode)
-		if(!use_power(100))
-			defense_action.Activate(forced_state = TRUE)
+	if(defence_mode && !use_power(100))
+		defense_action.Activate(forced_state = TRUE)
 
 /obj/mecha/combat/durand/domove(direction)
 	. = ..()
@@ -56,8 +56,11 @@
 	. = ..()
 
 /obj/mecha/combat/durand/proc/relay(datum/source, list/signal_args)
-	if(!shield)
-		return
+	if(!shield) //if the shield somehow got deleted
+		shield = new/obj/durand_shield
+		shield.chassis = src
+		shield.dir = dir
+		shield.layer = layer
 	SEND_SIGNAL(shield, COMSIG_MECHA_ACTION_ACTIVATE, source, signal_args)
 
 /obj/mecha/combat/durand/proc/prehit(obj/item/projectile/source, list/signal_args)
@@ -131,7 +134,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	name = "defence grid"
 	icon = 'icons/mecha/durand_shield.dmi'
 	icon_state = "shield_null"
-	invisibility = INVISIBILITY_MAXIMUM
+	invisibility = INVISIBILITY_MAXIMUM //no showing on right-click
 	pixel_y = 4
 	max_integrity = 10000
 	obj_integrity = 10000
@@ -141,6 +144,10 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 /obj/durand_shield/Initialize()
 	. = ..()
 	RegisterSignal(src, COMSIG_MECHA_ACTION_ACTIVATE, .proc/activate)
+
+/**Handles activating and deactivating the shield. This proc is called by a signal sent from the mech's action button
+and relayed by the mech itself. The "forced" variabe, signal_args[1], will skip the to-pilot text and is meant for when
+the shield is disabled by means other than the action button (like running out of power)*/
 
 /obj/durand_shield/proc/activate(datum/source, var/datum/action/innate/mecha/mech_defence_mode/button, list/signal_args)
 	if(!chassis || !chassis.occupant)
@@ -158,7 +165,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	chassis.defense_action.UpdateButtonIcon()
 
 	if(chassis.defence_mode)
-		invisibility = INVISIBILITY_MAXIMUM
+		invisibility = 0
 		flick("shield_raise", src)
 		playsound(src, 'sound/mecha/mech_shield_raise.ogg', 50, FALSE)
 		set_light(l_range = MINIMUM_USEFUL_LIGHT_RANGE	, l_power = 5, l_color = "#00FFFF")
@@ -170,7 +177,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 		sleep(5)
 		set_light(0)
 		icon_state = "shield_null"
-		invisibility = 26 //no showing on right-click
+		invisibility = INVISIBILITY_MAXIMUM //no showing on right-click
 	switching = FALSE
 
 /obj/durand_shield/take_damage()
@@ -190,8 +197,3 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 /obj/durand_shield/bullet_act()
 	play_attack_sound()
 	. = ..()
-
-/datum/action/innate/mecha/mech_defence_mode
-	name = "Toggle an energy shield that blocks all attacks from the faced direction at a heavy power cost."
-	button_icon_state = "mech_defense_mode_off"
-	var/image/def_overlay
