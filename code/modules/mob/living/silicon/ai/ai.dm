@@ -357,6 +357,7 @@
 
 /mob/living/silicon/ai/proc/ai_cancel_call()
 	set category = "Malfunction"
+	set name = "Cancel Shuttle Call"
 	if(control_disabled)
 		to_chat(src, "<span class='warning'>Wireless control is disabled!</span>")
 		return
