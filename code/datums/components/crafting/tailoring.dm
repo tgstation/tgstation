@@ -1,7 +1,7 @@
 /datum/crafting_recipe/durathread_vest
 	name = "Durathread Vest"
 	result = /obj/item/clothing/suit/armor/vest/durathread
-	reqs = list(/obj/item/stack/sheet/cloth/durathread = 5,
+	reqs = list(/obj/item/stack/sheet/durathread = 5,
 				/obj/item/stack/sheet/leather = 4)
 	time = 50
 	category = CAT_CLOTHING
@@ -9,7 +9,7 @@
 /datum/crafting_recipe/durathread_helmet
 	name = "Durathread Helmet"
 	result = /obj/item/clothing/head/helmet/durathread
-	reqs = list(/obj/item/stack/sheet/cloth/durathread = 4,
+	reqs = list(/obj/item/stack/sheet/durathread = 4,
 				/obj/item/stack/sheet/leather = 5)
 	time = 40
 	category = CAT_CLOTHING
@@ -17,28 +17,28 @@
 /datum/crafting_recipe/durathread_jumpsuit
 	name = "Durathread Jumpsuit"
 	result = /obj/item/clothing/under/durathread
-	reqs = list(/obj/item/stack/sheet/cloth/durathread = 4)
+	reqs = list(/obj/item/stack/sheet/durathread = 4)
 	time = 40
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/durathread_beret
 	name = "Durathread Beret"
 	result = /obj/item/clothing/head/beret/durathread
-	reqs = list(/obj/item/stack/sheet/cloth/durathread = 2)
+	reqs = list(/obj/item/stack/sheet/durathread = 2)
 	time = 40
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/durathread_beanie
 	name = "Durathread Beanie"
 	result = /obj/item/clothing/head/beanie/durathread
-	reqs = list(/obj/item/stack/sheet/cloth/durathread = 2)
+	reqs = list(/obj/item/stack/sheet/durathread = 2)
 	time = 40
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/durathread_bandana
 	name = "Durathread Bandana"
 	result = /obj/item/clothing/mask/bandana/durathread
-	reqs = list(/obj/item/stack/sheet/cloth/durathread = 1)
+	reqs = list(/obj/item/stack/sheet/durathread = 1)
 	time = 25
 	category = CAT_CLOTHING
 

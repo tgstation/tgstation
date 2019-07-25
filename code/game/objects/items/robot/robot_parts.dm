@@ -38,6 +38,7 @@
 	chest = new(src)
 	chest.wired = TRUE
 	chest.cell = new /obj/item/stock_parts/cell/high/plus(chest)
+	update_icon()
 
 /obj/item/robot_suit/update_icon()
 	cut_overlays()
@@ -270,7 +271,7 @@
 			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
 
-			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc))
+			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/nocell(get_turf(loc))
 			if(!O)
 				return
 
