@@ -85,9 +85,11 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 /datum/round_event/infection/space
 	boss_type = /mob/living/simple_animal/hostile/megafauna/dragon/space_dragon
 	boss_drop_list = list(/obj/item/infectionkiller/excaliju)
-	minion_types = list(/mob/living/simple_animal/hostile/pirate/melee/space, /mob/living/simple_animal/hostile/bear, /mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient)
+	minion_types = list(/mob/living/simple_animal/hostile/pirate/melee/space,
+						/mob/living/simple_animal/hostile/bear,
+						/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient)
 	minion_drop_list = list()
-	warning_message = "Space Creatures are invading the station!"
+	warning_message = "A space dragon and other space creatures have wandered into the station!"
 	warning_jingle = 'sound/weapons/bite.ogg'
 
 /datum/round_event_control/infection/demon
@@ -97,34 +99,28 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 /datum/round_event/infection/demon
 	boss_type = /mob/living/simple_animal/slaughter
 	boss_drop_list = list(/obj/item/infectionkiller/drill)
-	minion_types = list(/mob/living/simple_animal/hostile/asteroid/goliath=1, /mob/living/simple_animal/hostile/asteroid/basilisk/watcher=2, /mob/living/simple_animal/hostile/asteroid/hivelord/legion=3)
+	minion_types = list(/mob/living/simple_animal/hostile/asteroid/goliath=1,
+						/mob/living/simple_animal/hostile/asteroid/basilisk/watcher=2,
+						/mob/living/simple_animal/hostile/asteroid/hivelord/legion=3)
 	minion_drop_list = list()
-	warning_message = "Demons From Lavaland are invading the station!"
+	warning_message = "Lavaland monsters appear to be attacking the station!"
 	warning_jingle = 'sound/magic/enter_blood.ogg'
 
-/datum/round_event_control/infection/paperwizard
-	name = "Doom Event: Paper Wizard"
-	typepath = /datum/round_event/infection/paperwizard
+/datum/round_event_control/infection/clown
+	name = "Doom Event: Clowns"
+	typepath = /datum/round_event/infection/clown
 
-/datum/round_event/infection/paperwizard
-	boss_type = /mob/living/simple_animal/hostile/boss/paper_wizard
-	boss_drop_list = list(/obj/item/infectionkiller/excaliju)
-	minion_types = list(/mob/living/simple_animal/hostile/stickman, /mob/living/simple_animal/hostile/stickman/ranged, /mob/living/simple_animal/hostile/stickman/dog)
+/datum/round_event/infection/clown
+	boss_type = /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/destroyer
+	boss_drop_list = list(/obj/item/infectionkiller/staff)
+	minion_types = list(/mob/living/simple_animal/hostile/retaliate/clown/clownhulk=1,
+						/mob/living/simple_animal/hostile/retaliate/clown/mutant=1,
+						/mob/living/simple_animal/hostile/retaliate/clown/lube=2,
+						/mob/living/simple_animal/hostile/retaliate/clown/fleshclown=2,
+						/mob/living/simple_animal/hostile/retaliate/clown/banana=2)
 	minion_drop_list = list()
-	warning_message = "The Paper Wizard is invading the station!"
-	warning_jingle = 'sound/weapons/emitter.ogg'
-
-/datum/round_event_control/infection/syndicate
-	name = "Doom Event: The Syndicate"
-	typepath = /datum/round_event/infection/syndicate
-
-/datum/round_event/infection/syndicate
-	boss_type = /mob/living/simple_animal/hostile/syndicate/ranged/shotgun/space/stormtrooper
-	boss_drop_list = list(/obj/item/infectionkiller/excaliju)
-	minion_types = list(/mob/living/simple_animal/hostile/syndicate=1, /mob/living/simple_animal/hostile/viscerator=10)
-	minion_drop_list = list()
-	warning_message = "Syndicate Operatives are invading the station!"
-	warning_jingle = 'sound/machines/alarm.ogg'
+	warning_message = "Clowns... oh god the clowns..."
+	warning_jingle = 'sound/items/bikehorn.ogg'
 
 /datum/round_event_control/infection/jungle
 	name = "Doom Event: Jungle Madness"
@@ -132,8 +128,10 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 
 /datum/round_event/infection/jungle
 	boss_type = /mob/living/simple_animal/hostile/gorilla
-	boss_drop_list = list(/obj/item/infectionkiller/excaliju)
-	minion_types = list(/mob/living/simple_animal/hostile/poison/bees=2, /mob/living/simple_animal/hostile/killertomato=2, /mob/living/simple_animal/hostile/mushroom=2)
+	boss_drop_list = list(/obj/item/infectionkiller/tonic)
+	minion_types = list(/mob/living/simple_animal/hostile/poison/bees=2,
+						/mob/living/simple_animal/hostile/killertomato=2,
+						/mob/living/simple_animal/hostile/mushroom=2)
 	minion_drop_list = list()
 	warning_message = "Jungle Creatures are invading the station!"
 	warning_jingle = 'sound/creatures/gorilla.ogg'

@@ -12,6 +12,7 @@
 	build_time = 100
 	atmosblock = TRUE
 	var/list/crystal_colors = list("#3333aa" = 20, "#33aa33" = 15, "#aa3333" = 15, "#ffffff" = 8, "#822282" = 4, "#444444" = 1)
+	var/last_act = 0
 
 /obj/structure/infection/shield/Initialize(mapload)
 	canSmoothWith = typesof(/obj/structure/infection/shield)
@@ -27,6 +28,41 @@
 
 /obj/structure/infection/shield/evolve_menu(var/mob/camera/commander/C)
 	return
+
+/obj/structure/infection/shield/attackby(obj/item/I, mob/user, params)
+
+	if(I.tool_behaviour == TOOL_MINING)
+		var/turf/T = user.loc
+		if (!isturf(T))
+			return
+
+		if(last_act + (40 * I.toolspeed) > world.time)//prevents message spam
+			return
+		last_act = world.time
+		to_chat(user, "<span class='notice'>You start picking...</span>")
+
+		if(I.use_tool(src, user, 400, volume=50))
+			to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
+			change_to(/obj/structure/infection/normal, overmind)
+			SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
+		return
+	. = ..()
+
+/obj/structure/infection/shield/Bumped(atom/movable/AM)
+	..()
+	if(ishuman(AM))
+		var/mob/living/carbon/human/H = AM
+		var/obj/item/I = H.is_holding_tool_quality(TOOL_MINING)
+		if(I)
+			attackby(I, H)
+		return
+	else if(iscyborg(AM))
+		var/mob/living/silicon/robot/R = AM
+		if(R.module_active && R.module_active.tool_behaviour == TOOL_MINING)
+			attackby(R.module_active, R)
+			return
+	else
+		return
 
 /obj/structure/infection/shield/reflective
 	name = "reflective infection"
@@ -56,3 +92,30 @@
 /obj/structure/infection/shield/reflective/core
 	name = "core reflective infection"
 	point_return = 0
+
+/obj/structure/infection/shield/barrier
+	name = "infection barrier"
+	desc = "A thin mesh barrier preventing entry of non infectious creatures."
+	icon = 'icons/mob/infection/infection.dmi'
+	icon_state = "door"
+	max_integrity = 150
+	brute_resist = 0.5
+	fire_resist = 0.25
+	explosion_block = 3
+	point_return = 0
+	build_time = 100
+	atmosblock = TRUE
+
+/obj/structure/infection/shield/barrier/Initialize(mapload)
+	. = ..()
+	canSmoothWith = list()
+	vis_contents.Cut()
+
+/obj/structure/infection/shield/barrier/CanPass(atom/movable/mover, turf/target)
+	if(istype(mover) && (mover.pass_flags & PASSBLOB))
+		return TRUE
+	if(mover.pulledby && isliving(mover.pulledby)) // pulled through by other infection creatures
+		var/mob/living/L = mover.pulledby
+		if(L.pass_flags & PASSBLOB)
+			return TRUE
+	return FALSE

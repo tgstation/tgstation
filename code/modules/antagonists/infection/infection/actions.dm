@@ -138,7 +138,7 @@
 	desc = "Create a barrier that will function as a normal wall, but will allow infectious creatures to pull things through them."
 	cost = 15
 	button_icon_state = "door"
-	type_to_create = /obj/structure/infection/door
+	type_to_create = /obj/structure/infection/shield/barrier
 	distance_from_similar = 3
 
 /datum/action/cooldown/infection/mininode

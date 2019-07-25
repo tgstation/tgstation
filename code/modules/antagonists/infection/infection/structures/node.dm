@@ -73,4 +73,4 @@
 
 /obj/structure/infection/node/mini/proc/change_to_normal()
 	sleep(300)
-	src.change_to(/obj/structure/infection/normal, overmind)
+	change_to(/obj/structure/infection/normal, overmind)

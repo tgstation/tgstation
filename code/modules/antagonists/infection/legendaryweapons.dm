@@ -7,7 +7,7 @@
 
 /obj/item/infectionkiller/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/stationloving, FALSE, FALSE)
+	AddComponent(/datum/component/stationloving, FALSE, TRUE)
 	var/obj/item/gps/internal/legendary/L = new /obj/item/gps/internal/legendary(src)
 	L.gpstag = "Legendary [name] Signal"
 	var/obj/item/beacon/B = new /obj/item/beacon(src)
@@ -102,14 +102,59 @@
 
 /obj/item/infectionkiller/drill
 	name = "Drill of Legends"
-	desc = "A blessing given by bubblegum himself to powerful slaughter demons, making the holder almost unkillable due to the resistances it grants."
-	icon = 'icons/obj/changeling_items.dmi'
-	icon_state = "arm_blade"
-	item_state = "arm_blade"
-	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	desc = "A glowing golden drill, able to pierce through most material with ease."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "handdrill"
+	item_state = "jackhammer"
+	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
+	color = "#ffd700"
 	force = 30
-	block_chance = 80
-	sharpness = IS_SHARP
-	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell
+	armour_penetration = 100
+	tool_behaviour = TOOL_MINING
+	toolspeed = 0.01
+	usesound = list('sound/effects/picaxe1.ogg', 'sound/effects/picaxe2.ogg', 'sound/effects/picaxe3.ogg')
+	attack_verb = list("hit", "pierced", "sliced", "attacked")
+
+/obj/item/infectionkiller/staff
+	name = "Golden Staff of the Honkmother"
+	desc = "The golden staff of the honkmother, only given to those worthy of her greatest blessing."
+	icon = 'icons/obj/guns/magic.dmi'
+	icon_state = "honker"
+	item_state = "honker"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
+	color = "#ffd700"
+	force = 30
+	hitsound = list('sound/items/airhorn.ogg')
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+
+/obj/item/infectionkiller/tonic
+	name = "Spinel Tonic"
+	desc = "A glass filled with a highly illegal substance that improves the consumers body to almost godhood."
+	icon = 'icons/obj/drinks.dmi'
+	icon_state = "atomicbombglass"
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	color = "#000080"
+
+/obj/item/infectionkiller/tonic/attack(mob/living/M, mob/user)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		to_chat(H, "<span class='colossus'><b>YOU FEEL LIKE A GOD.</b></span>")
+		H.AddComponent(/datum/component/superpowers, -1, FALSE, FALSE, /obj/item/infectionkiller/tonicfists, /obj/item/infectionkiller/tonic)
+		qdel(src)
+		return
+	. = ..()
+
+/obj/item/infectionkiller/tonicfists
+	name = "Tonic Powered Fists"
+	desc = "They attack so fast!"
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "bloodhand_left"
+	force = 30
+	color = "#000080"
+
+/obj/item/infectionkiller/tonicfists/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	user.changeNext_move(CLICK_CD_MELEE * 0.25)

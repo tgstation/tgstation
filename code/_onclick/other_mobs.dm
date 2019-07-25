@@ -25,7 +25,8 @@
 	if(override)
 		return
 
-	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A)
+	if(SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A) & COMPONENT_HUMAN_MELEE_UNARMED_NO_ATTACK)
+		return
 	A.attack_hand(src)
 
 //Return TRUE to cancel other attack hand effects that respect it.
