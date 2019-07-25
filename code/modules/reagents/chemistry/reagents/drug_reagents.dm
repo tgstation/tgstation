@@ -476,9 +476,11 @@
 	M.Jitter(5)
 	if(prob(5))
 		M.drop_all_held_items()
-	if(prob(20))
+	if(prob(15))
 		M.emote(pick("twitch","drool"))
-	if(prob(25))
+	if(prob(20))
 		M.losebreath++
 		M.adjustStaminaLoss(4, 0)
+	if(prob(15))
+		M.adjustToxLoss(2, 0)
 	..()
