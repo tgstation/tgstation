@@ -84,8 +84,8 @@
 							continue
 				
 
-				M.transferItemToLoc(W)
-				victim_belongings.Add(W)
+					M.transferItemToLoc(W)
+					victim_belongings.Add(W)
 				
 			var/obj/structure/closet/supplypod/extractionpod/pod = source
 
