@@ -250,7 +250,7 @@
 
 /obj/item/reagent_containers/pill/trophazole
 	name = "trophazole pill"
-	desc = "Used to treat brute damage of minor and moderate severity.The carving in the pill says 'Eat before ingesting'."
+	desc = "Used to treat brute damage of minor and moderate severity. The carving in the pill says 'Eat before ingesting'."
 	icon_state = "pill9"
 	list_reagents = list(/datum/reagent/medicine/trophazole = 15)
 	rename_with_volume = TRUE
