@@ -1572,6 +1572,10 @@
 	},
 /turf/open/floor/plating,
 /area/mine/production)
+"ep" = (
+/obj/structure/ore_box,
+/turf/open/floor/plating,
+/area/mine/storage)
 "eq" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer3,
@@ -1957,6 +1961,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fi" = (
@@ -2054,6 +2059,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fu" = (
@@ -2763,6 +2769,10 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"jT" = (
+/obj/structure/closet/secure_closet/miner,
+/turf/open/floor/plating,
+/area/mine/storage)
 "jV" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -3510,6 +3520,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
+"nP" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/mine/storage)
 "oL" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -3546,12 +3560,30 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
+"pf" = (
+/obj/structure/closet/secure_closet/miner,
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Mining Station Port Wing APC";
+	pixel_x = 1;
+	pixel_y = 23
+	},
+/turf/open/floor/plating,
+/area/mine/storage)
 "po" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/mine/production)
+"pq" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
 "pV" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock{
@@ -3562,6 +3594,13 @@
 "qt" = (
 /obj/structure/table,
 /obj/item/cigbutt,
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"qL" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "rj" = (
@@ -3718,6 +3757,15 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
+"zA" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
+/turf/open/floor/plating,
+/area/mine/storage)
 "zX" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -3760,6 +3808,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
+"BZ" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
 "Co" = (
 /obj/machinery/computer/shuttle/mining/common{
 	dir = 4
@@ -3832,6 +3887,14 @@
 /obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+"GD" = (
+/obj/machinery/door/airlock/mining/glass{
+	name = "Mining Storange";
+	req_access_txt = "54"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/mine/storage)
 "GI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -3879,6 +3942,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
+"HK" = (
+/obj/machinery/mineral/equipment_vendor,
+/turf/open/floor/plating,
+/area/mine/storage)
 "HO" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
@@ -3899,6 +3966,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"IA" = (
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/freezer,
+/area/mine/living_quarters)
+"ID" = (
+/turf/open/floor/plasteel/freezer,
+/area/mine/living_quarters)
 "IK" = (
 /obj/structure/toilet{
 	dir = 8
@@ -3998,6 +4072,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
 /turf/open/floor/plasteel,
 /area/mine/eva)
+"Qw" = (
+/turf/open/floor/plating,
+/area/mine/storage)
 "QN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -4059,16 +4136,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
-"Tn" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/light/small,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 4
-	},
-/turf/open/floor/plasteel/freezer,
-/area/mine/living_quarters)
+"SR" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/mine/storage)
 "TC" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
@@ -4154,6 +4225,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "VY" = (
@@ -4238,6 +4310,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+"Yo" = (
+/turf/closed/wall,
+/area/mine/storage)
 "YA" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
@@ -12225,7 +12300,7 @@ fy
 dZ
 dZ
 cR
-aj
+ab
 aj
 aj
 aj
@@ -12482,8 +12557,8 @@ dZ
 dZ
 eM
 cM
-aj
-aj
+ai
+ab
 aj
 aj
 aj
@@ -12740,8 +12815,8 @@ fB
 ku
 cM
 ai
+ai
 ab
-aj
 aj
 aj
 aj
@@ -13255,9 +13330,9 @@ cM
 fe
 fr
 cM
+ai
 ab
-aj
-aj
+ab
 aj
 aj
 aj
@@ -13512,11 +13587,11 @@ cM
 ff
 fP
 cM
-aj
-aj
-aj
-aj
-aj
+Yo
+SR
+SR
+Yo
+ab
 aj
 aj
 aj
@@ -13769,11 +13844,11 @@ cM
 fO
 cM
 cM
-aj
-aj
-aj
-aj
-aj
+HK
+ep
+ep
+SR
+ab
 aj
 aj
 aj
@@ -14015,22 +14090,22 @@ dE
 dQ
 ec
 er
-dZ
-eL
+rj
+qL
 fh
 ft
-eL
+qL
 fh
 VP
-eL
+qL
 fh
-ec
-cR
-aj
-aj
-aj
-aj
-aj
+BZ
+cM
+zA
+Qw
+Qw
+SR
+ab
 aj
 aj
 aj
@@ -14281,13 +14356,13 @@ fi
 fN
 eN
 HO
-fp
-cR
+pq
+GD
+nP
+Qw
+Qw
+SR
 ab
-aj
-aj
-aj
-aj
 aj
 aj
 aj
@@ -14540,11 +14615,11 @@ cM
 Nj
 cM
 cM
-ai
+pf
+jT
+jT
+SR
 ab
-ab
-ab
-aj
 aj
 aj
 aj
@@ -14795,15 +14870,15 @@ fI
 cM
 vb
 hz
+ID
 cM
-ai
-ad
-ai
-ai
+Yo
+SR
+SR
+Yo
 ab
-ab
-ab
-ab
+aj
+aj
 aj
 aj
 aj
@@ -15051,11 +15126,11 @@ fC
 fk
 cM
 Es
-Tn
+hz
+IA
 cM
+ai
 ab
-ai
-ai
 ab
 ab
 ab
@@ -15310,9 +15385,9 @@ cM
 cM
 Zf
 cM
-aj
-aj
-aj
+cM
+ab
+ab
 aj
 aj
 aj
@@ -15567,12 +15642,12 @@ cM
 Fe
 ss
 cM
-aj
-aj
-aj
-aj
 ab
 ab
+aj
+aj
+aj
+aj
 aj
 aj
 aj
@@ -15824,12 +15899,12 @@ cM
 IK
 tI
 cM
-aj
-aj
-aj
-aj
-aj
 ab
+aj
+aj
+aj
+aj
+aj
 aj
 aj
 aj
@@ -16337,13 +16412,13 @@ cR
 cM
 ai
 ai
-ai
-aj
-ab
 aj
 aj
-ab
-ab
+aj
+aj
+aj
+aj
+aj
 aj
 ab
 ab
@@ -16593,13 +16668,13 @@ ab
 ab
 ai
 ai
-ai
-ab
 aj
 aj
 aj
 aj
-ab
+aj
+aj
+aj
 ab
 ab
 ai
@@ -17110,9 +17185,9 @@ aj
 aj
 aj
 aj
-ab
 aj
-ab
+aj
+aj
 ab
 ad
 ad
