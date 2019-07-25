@@ -191,7 +191,7 @@
 		if (!target.IsParalyzed())
 			to_chat(target, "<span class='warning'>You muscles seize, making you collapse, but your body quickly recovers...</span>")
 		
-		target.Paralyze(stunforce / 10)
+		target.Paralyze(stunforce *= 0.1)
 		return
 	if (!target.IsParalyzed())
 		to_chat(target, "<span class='warning'>You muscles seize, making you collapse!</span>")
