@@ -889,6 +889,7 @@
 	to_chat(src, "You are also capable of hacking APCs, which grants you more points to spend on your Malfunction powers. The drawback is that a hacked APC will give you away if spotted by the crew. Hacking an APC takes 60 seconds.")
 	view_core() //A BYOND bug requires you to be viewing your core before your verbs update
 	verbs += /mob/living/silicon/ai/proc/choose_modules
+	verbs += /mob/living/silicon/ai/proc/ai_cancel_call
 	malf_picker = new /datum/module_picker
 
 
