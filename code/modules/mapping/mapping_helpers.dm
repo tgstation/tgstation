@@ -238,7 +238,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	late = TRUE
 	icon_state = "iansbdayhelper"
 	var/balloon_clusters = 2
-	var/delete_after = FALSE
 
 /obj/effect/mapping_helpers/ianbirthday/LateInitialize()
 	if(locate(/datum/holiday/ianbirthday) in SSevents.holidays)

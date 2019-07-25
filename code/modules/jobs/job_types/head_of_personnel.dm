@@ -55,5 +55,4 @@
 /datum/outfit/job/hop/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(locate(/datum/holiday/ianbirthday) in SSevents.holidays)
-		H.undershirt = /datum/sprite_accessory/undershirt/ian
-		H.update_body()
+		undershirt = "Shirt (Ian)"
