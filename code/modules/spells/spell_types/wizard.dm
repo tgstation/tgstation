@@ -29,6 +29,11 @@
 	trail_lifespan = 5
 	trail_icon_state = "magicmd"
 
+/obj/item/projectile/magic/spell/magic_missile/on_hit(target)
+	. = ..()
+	if(proj_anti_magic_check(target))
+		return BULLET_ACT_BLOCK
+
 /obj/effect/proc_holder/spell/targeted/genetic/mutate
 	name = "Mutate"
 	desc = "This spell causes you to turn into a hulk and gain laser vision for a short while."
