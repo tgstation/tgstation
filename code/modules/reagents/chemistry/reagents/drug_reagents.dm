@@ -443,10 +443,11 @@
 
 /datum/reagent/drug/pumpup
 	name = "Pump-Up"
-	description = "Take on the world!"
+	description = "Take on the world! A fast acting, hard hitting drug that pushes the limit on what you can handle."
 	reagent_state = LIQUID
 	color = "#e38e44"
-	overdose_threshold = 10
+	metabolization_rate = 3 * REAGENTS_METABOLISM
+	overdose_threshold = 30
 
 /datum/reagent/drug/pumpup/on_mob_metabolize(mob/living/L)
 	..()
@@ -469,7 +470,7 @@
 	. = 1
 
 /datum/reagent/drug/pumpup/overdose_start(mob/living/M)
-	to_chat(M, "<span class='userdanger'>You can't stop shaking, feeling your heart beat faster and faster!</span>")
+	to_chat(M, "<span class='userdanger'>You can't stop shaking, your heart beat faster and faster...</span>")
 
 /datum/reagent/drug/pumpup/overdose_process(mob/living/M)
 	M.Jitter(5)
@@ -477,8 +478,7 @@
 		M.drop_all_held_items()
 	if(prob(20))
 		M.emote(pick("twitch","drool"))
-	if(prob(35))
+	if(prob(25))
 		M.losebreath++
-		M.adjustStaminaLoss(2, 0)
-		M.adjustToxLoss(2, 0)
+		M.adjustStaminaLoss(4, 0)
 	..()

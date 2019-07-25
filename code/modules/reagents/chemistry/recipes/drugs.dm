@@ -51,5 +51,5 @@
 /datum/chemical_reaction/pumpup
 	name = "Pump-Up"
 	id = /datum/reagent/drug/pumpup
-	results = list(/datum/reagent/drug/pumpup = 1)
+	results = list(/datum/reagent/drug/pumpup = 5)
 	required_reagents = list(/datum/reagent/medicine/epinephrine = 2, /datum/reagent/consumable/coffee = 5)
