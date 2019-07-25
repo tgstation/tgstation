@@ -270,12 +270,16 @@ SUBSYSTEM_DEF(shuttle)
 	src.emergency = src.backup_shuttle
 
 /datum/controller/subsystem/shuttle/proc/cancelEvac(mob/user)
-	if(canRecall())
-		emergency.cancel(get_area(user))
-		log_game("[key_name(user)] has recalled the shuttle.")
-		message_admins("[ADMIN_LOOKUPFLW(user)] has recalled the shuttle.")
-		deadchat_broadcast(" has recalled the shuttle from <span class='name'>[get_area_name(user, TRUE)]</span>.", "<span class='name'>[user.real_name]</span>", user)
-		return 1
+	if(!canRecall())
+		return
+	if(isai(user))
+		minor_announce("The shuttle has been recalled at <span class='name'>[get_area_name(user, TRUE)]</span>. Have a secure day.")
+	emergency.cancel(get_area(user))
+	log_game("[key_name(user)] has recalled the shuttle.")
+	message_admins("[ADMIN_LOOKUPFLW(user)] has recalled the shuttle.")
+	deadchat_broadcast(" has recalled the shuttle from <span class='name'>[get_area_name(user, TRUE)]</span>.", "<span class='name'>[user.real_name]</span>", user)
+	return TRUE
+	
 
 /datum/controller/subsystem/shuttle/proc/canRecall()
 	if(!emergency || emergency.mode != SHUTTLE_CALL || emergencyNoRecall || SSticker.mode.name == "meteor")
