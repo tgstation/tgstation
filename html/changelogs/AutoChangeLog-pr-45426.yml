@@ -1,0 +1,5 @@
+author: "Twaticus"
+delete-after: True
+changes: 
+  - imageadd: "inhand department banner sprites"
+  - bugfix: "banners use the correct inhand sprites"
