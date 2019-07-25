@@ -1,7 +1,0 @@
-author: "MMMiracles"
-delete-after: True
-changes: 
-  - rscadd: "Donutstation now has its own white shuttle with proper dock."
-  - rscdel: "Donutstation's maintenance bar is under renovation."
-  - tweak: "Due to above renovations, the goose is temporarily loose."
-  - tweak: "Donutstation now has significantly less annoying maintenance grilles"
