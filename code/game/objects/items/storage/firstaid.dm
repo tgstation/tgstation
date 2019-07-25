@@ -69,7 +69,8 @@
 		return
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/silver_sulf = 3,
-		/obj/item/reagent_containers/pill/oxandrolone = 2,
+		/obj/item/reagent_containers/spray/rhigoxane = 1,
+		/obj/item/reagent_containers/hypospray/medipen/oxandrolone = 1,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
@@ -86,14 +87,16 @@
 
 /obj/item/storage/firstaid/toxin/Initialize(mapload)
 	. = ..()
-	icon_state = pick("antitoxin","antitoxfirstaid","antitoxfirstaid2","antitoxfirstaid3")
+	icon_state = pick("antitoxin","antitoxfirstaid","antitoxfirstaid2")
 
 /obj/item/storage/firstaid/toxin/PopulateContents()
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/reagent_containers/syringe/charcoal = 4,
-		/obj/item/storage/pill_bottle/charcoal = 2,
+	    /obj/item/storage/pill_bottle/charcoal/less = 1,
+		/obj/item/reagent_containers/syringe/thializid = 3,
+		/obj/item/storage/pill_bottle/potassiodide = 1,
+		/obj/item/reagent_containers/hypospray/medipen/penacid = 1,
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
 
@@ -107,12 +110,18 @@
 	user.visible_message("<span class='suicide'>[user] begins hitting [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return OXYLOSS
 
+/obj/item/storage/firstaid/o2/Initialize(mapload)
+	. = ..()
+	icon_state = pick("o2","o2second")
+
 /obj/item/storage/firstaid/o2/PopulateContents()
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/reagent_containers/pill/salbutamol = 4,
-		/obj/item/reagent_containers/hypospray/medipen = 2,
+		/obj/item/reagent_containers/syringe/perfluorodecalin = 3,
+		/obj/item/reagent_containers/hypospray/medipen/salbutamol = 1,
+		/obj/item/reagent_containers/hypospray/medipen = 1,
+		/obj/item/storage/pill_bottle/iron = 1,
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
 
@@ -126,12 +135,18 @@
 	user.visible_message("<span class='suicide'>[user] begins beating [user.p_them()]self over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
+/obj/item/storage/firstaid/brute/Initialize(mapload)
+	. = ..()
+	icon_state = pick("brute","brute2")
+
 /obj/item/storage/firstaid/brute/PopulateContents()
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/reagent_containers/pill/patch/styptic = 4,
-		/obj/item/stack/medical/gauze = 2,
+		/obj/item/reagent_containers/pill/patch/styptic = 3,
+		/obj/item/stack/medical/gauze = 1,
+		/obj/item/storage/pill_bottle/trophazole = 1,
+		/obj/item/reagent_containers/hypospray/medipen/salacid = 1,
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
 
@@ -159,7 +174,7 @@
 
 /obj/item/storage/firstaid/tactical/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/storage/firstaid/tactical/PopulateContents()
@@ -216,10 +231,10 @@
 
 /obj/item/storage/pill_bottle/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.allow_quick_gather = TRUE
 	STR.click_gather = TRUE
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/pill, /obj/item/dice))
+	STR.set_holdable(list(/obj/item/reagent_containers/pill, /obj/item/dice))
 
 /obj/item/storage/pill_bottle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is trying to get the cap off [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -231,6 +246,12 @@
 
 /obj/item/storage/pill_bottle/charcoal/PopulateContents()
 	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/charcoal(src)
+
+/obj/item/storage/pill_bottle/charcoal/less
+
+/obj/item/storage/pill_bottle/charcoal/less/PopulateContents()
+	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/pill/charcoal(src)
 
 /obj/item/storage/pill_bottle/epinephrine
@@ -248,6 +269,30 @@
 /obj/item/storage/pill_bottle/mutadone/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/mutadone(src)
+
+/obj/item/storage/pill_bottle/potassiodide
+	name = "bottle of potassium iodide pills"
+	desc = "Contains pills used to reduce radiation damage."
+
+/obj/item/storage/pill_bottle/potassiodide/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/pill/potassiodide(src)
+
+/obj/item/storage/pill_bottle/trophazole
+	name = "bottle of trophazole pills"
+	desc = "Contains pills used to treat brute damage.The tag in the bottle states 'Eat before ingesting'."
+
+/obj/item/storage/pill_bottle/trophazole/PopulateContents()
+	for(var/i in 1 to 4)
+		new /obj/item/reagent_containers/pill/trophazole(src)
+
+/obj/item/storage/pill_bottle/iron
+	name = "bottle of iron pills"
+	desc = "Contains pills used to reduce blood loss slowly.The tag in the bottle states 'Only take one each five minutes'."
+
+/obj/item/storage/pill_bottle/iron/PopulateContents()
+	for(var/i in 1 to 4)
+		new /obj/item/reagent_containers/pill/iron(src)
 
 /obj/item/storage/pill_bottle/mannitol
 	name = "bottle of mannitol pills"
@@ -324,7 +369,7 @@
 
 /obj/item/storage/pill_bottle/penacid
 	name = "bottle of pentetic acid pills"
-	desc = "Contains pills to expunge radioation and toxins"
+	desc = "Contains pills to expunge radiation and toxins."
 
 /obj/item/storage/pill_bottle/penacid/PopulateContents()
 	for(var/i in 1 to 3)

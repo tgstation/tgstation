@@ -11,7 +11,7 @@
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 4
-	materials = list(MAT_METAL = 500)
+	materials = list(/datum/material/iron = 500)
 	actions_types = list(/datum/action/item_action/set_internals)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 30)
 	var/datum/gas_mixture/air_contents = null
@@ -73,15 +73,15 @@
 
 /obj/item/tank/examine(mob/user)
 	var/obj/icon = src
-	..()
+	. = ..()
 	if(istype(src.loc, /obj/item/assembly))
 		icon = src.loc
 	if(!in_range(src, user) && !isobserver(user))
 		if(icon == src)
-			to_chat(user, "<span class='notice'>If you want any more information you'll need to get closer.</span>")
+			. += "<span class='notice'>If you want any more information you'll need to get closer.</span>"
 		return
 
-	to_chat(user, "<span class='notice'>The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.</span>")
+	. += "<span class='notice'>The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.</span>"
 
 	var/celsius_temperature = src.air_contents.temperature-T0C
 	var/descriptive
@@ -99,7 +99,7 @@
 	else
 		descriptive = "furiously hot"
 
-	to_chat(user, "<span class='notice'>It feels [descriptive].</span>")
+	. += "<span class='notice'>It feels [descriptive].</span>"
 
 /obj/item/tank/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)

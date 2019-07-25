@@ -122,8 +122,8 @@
 	STOP_PROCESSING(SSobj, src)
 	respawn_progress = 0
 	if(blade && special != HEART_SPECIAL_SHADOWIFY)
-		QDEL_NULL(blade)
 		M.visible_message("<span class='warning'>\The [blade] disintegrates!</span>")
+		QDEL_NULL(blade)
 	..()
 
 /obj/item/organ/heart/nightmare/Stop()
@@ -160,6 +160,7 @@
 
 /obj/item/light_eater
 	name = "light eater" //as opposed to heavy eater
+	icon = 'icons/obj/changeling_items.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	force = 25

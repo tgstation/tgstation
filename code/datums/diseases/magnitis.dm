@@ -3,7 +3,7 @@
 	max_stages = 4
 	spread_text = "Airborne"
 	cure_text = "Iron"
-	cures = list("iron")
+	cures = list(/datum/reagent/iron)
 	agent = "Fukkos Miracos"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE

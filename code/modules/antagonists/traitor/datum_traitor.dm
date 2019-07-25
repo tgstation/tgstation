@@ -13,6 +13,12 @@
 	var/should_give_codewords = TRUE
 	var/should_equip = TRUE
 	var/traitor_kind = TRAITOR_HUMAN //Set on initial assignment
+	var/datum/syndicate_contract/current_contract
+	var/list/datum/syndicate_contract/assigned_contracts = list()
+	var/list/assigned_targets = list()
+	var/contract_TC_payed_out = 0
+	var/contract_TC_to_redeem = 0
+	var/datum/contractor_hub/contractor_hub
 	can_hijack = HIJACK_HIJACKER
 
 /datum/antagonist/traitor/on_gain()
@@ -24,7 +30,55 @@
 	if(give_objectives)
 		forge_traitor_objectives()
 	finalize_traitor()
+	RegisterSignal(owner.current, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
 	..()
+
+/datum/antagonist/traitor/proc/create_contracts()
+	// 6 contracts
+	var/list/to_generate = list(
+		CONTRACT_PAYOUT_LARGE,
+		CONTRACT_PAYOUT_MEDIUM,
+		CONTRACT_PAYOUT_SMALL,
+		CONTRACT_PAYOUT_SMALL,
+		CONTRACT_PAYOUT_SMALL,
+		CONTRACT_PAYOUT_SMALL
+	)
+
+	// We don't want the sum of all the payouts to be under this amount
+	var/lowest_TC_threshold = 30
+
+	var/total = 0
+	var/lowest_paying_sum = 0
+	var/datum/syndicate_contract/lowest_paying_contract
+
+	// Randomise order, so we don't have contracts always in payout order.
+	to_generate = shuffle(to_generate)
+
+	// Support contract generation happening multiple times
+	var/start_index = 1
+	if (assigned_contracts.len != 0)
+		start_index = assigned_contracts.len + 1
+
+	// Generate contracts, and find the lowest paying.
+	for (var/i = 1; i <= to_generate.len; i++)
+		var/datum/syndicate_contract/contract_to_add = new(owner, to_generate[i], assigned_targets)
+		var/contract_payout_total = contract_to_add.contract.payout + contract_to_add.contract.payout_bonus
+		
+		assigned_targets.Add(contract_to_add.contract.target)
+
+		if (!lowest_paying_contract || (contract_payout_total < lowest_paying_sum))
+			lowest_paying_sum = contract_payout_total
+			lowest_paying_contract = contract_to_add
+
+		total += contract_payout_total
+		contract_to_add.id = start_index
+		assigned_contracts.Add(contract_to_add)
+
+		start_index++
+
+	// If the threshold for TC payouts isn't reached, boost the lowest paying contract
+	if (total < lowest_TC_threshold)
+		lowest_paying_contract.contract.payout_bonus += (lowest_TC_threshold - total)
 
 /datum/antagonist/traitor/apply_innate_effects()
 	if(owner.assigned_role == "Clown")
@@ -48,12 +102,18 @@
 		A.verbs -= /mob/living/silicon/ai/proc/choose_modules
 		A.malf_picker.remove_malf_verbs(A)
 		qdel(A.malf_picker)
-
+	UnregisterSignal(owner.current, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
 	SSticker.mode.traitors -= owner
 	if(!silent && owner.current)
 		to_chat(owner.current,"<span class='userdanger'> You are no longer the [special_role]! </span>")
 	owner.special_role = null
 	..()
+
+/datum/antagonist/traitor/proc/handle_hearing(datum/source, list/hearing_args)
+	var/message = hearing_args[HEARING_MESSAGE]
+	message = GLOB.syndicate_code_phrase_regex.Replace(message, "<span class='blue'>$1</span>")
+	message = GLOB.syndicate_code_response_regex.Replace(message, "<span class='red'>$1</span>")
+	hearing_args[HEARING_MESSAGE] = message
 
 /datum/antagonist/traitor/proc/add_objective(datum/objective/O)
 	objectives += O
@@ -197,7 +257,7 @@
 			.=2
 
 /datum/antagonist/traitor/greet()
-	to_chat(owner.current, "<B><font size=3 color=red>You are the [owner.special_role].</font></B>")
+	to_chat(owner.current, "<span class='alertsyndie'>You are the [owner.special_role].</span>")
 	owner.announce_objectives()
 	if(should_give_codewords)
 		give_codewords()
@@ -242,14 +302,18 @@
 		return
 	var/mob/traitor_mob=owner.current
 
-	to_chat(traitor_mob, "<U><B>The Syndicate provided you with the following information on how to identify their agents:</B></U>")
-	to_chat(traitor_mob, "<B>Code Phrase</B>: <span class='danger'>[GLOB.syndicate_code_phrase]</span>")
-	to_chat(traitor_mob, "<B>Code Response</B>: <span class='danger'>[GLOB.syndicate_code_response]</span>")
+	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
+	var/responses = jointext(GLOB.syndicate_code_response, ", ")
 
-	antag_memory += "<b>Code Phrase</b>: [GLOB.syndicate_code_phrase]<br>"
-	antag_memory += "<b>Code Response</b>: [GLOB.syndicate_code_response]<br>"
+	to_chat(traitor_mob, "<U><B>The Syndicate have provided you with the following codewords to identify fellow agents:</B></U>")
+	to_chat(traitor_mob, "<B>Code Phrase</B>: <span class='blue'>[phrases]</span>")
+	to_chat(traitor_mob, "<B>Code Response</B>: <span class='red'>[responses]</span>")
 
-	to_chat(traitor_mob, "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
+	antag_memory += "<b>Code Phrase</b>: <span class='blue'>[phrases]</span><br>"
+	antag_memory += "<b>Code Response</b>: <span class='red'>[responses]</span><br>"
+
+	to_chat(traitor_mob, "Use the codewords during regular conversation to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
+	to_chat(traitor_mob, "<span class='alertwarning'>You memorize the codewords, allowing you to recognise them when heard.</span>")
 
 /datum/antagonist/traitor/proc/add_law_zero()
 	var/mob/living/silicon/ai/killer = owner.current
@@ -345,6 +409,8 @@
 
 	var/special_role_text = lowertext(name)
 
+	result += contractor_round_end()
+
 	if(traitorwin)
 		result += "<span class='greentext'>The [special_role_text] was successful!</span>"
 	else
@@ -353,9 +419,54 @@
 
 	return result.Join("<br>")
 
+/// Proc detailing contract kit buys/completed contracts/additional info
+/datum/antagonist/traitor/proc/contractor_round_end()
+	var result = ""
+	var total_spent_rep = 0
+
+	var/completed_contracts = 0
+	var/tc_total = contract_TC_payed_out + contract_TC_to_redeem
+	for (var/datum/syndicate_contract/contract in assigned_contracts)
+		if (contract.status == CONTRACT_STATUS_COMPLETE)
+			completed_contracts++
+
+	var/contractor_item_icons = "<br>" // Icons of purchases
+	var/contractor_support_unit = "" // Set if they had a support unit - and shows appended to their contracts completed
+
+	/// Get all the icons/total cost for all our items bought
+	for (var/datum/contractor_item/contractor_purchase in contractor_hub.purchased_items)
+		contractor_item_icons += "<span class='tooltip_container'>\[ <i class=\"fas [contractor_purchase.item_icon]\"></i><span class='tooltip_hover'><b>[contractor_purchase.name] - [contractor_purchase.cost] Rep</b><br><br>[contractor_purchase.desc]</span> \]</span>"
+		
+		total_spent_rep += contractor_purchase.cost
+
+		/// Special case for reinforcements, we want to show their ckey and name on round end.
+		if (istype(contractor_purchase, /datum/contractor_item/contractor_partner))
+			var/datum/contractor_item/contractor_partner/partner = contractor_purchase
+			contractor_support_unit += "<br><b>[partner.partner_mind.key]</b> played <b>[partner.partner_mind.current.name]</b>, their contractor support unit."
+
+	if (contractor_hub.purchased_items.len)
+		result += contractor_item_icons
+		result += "<br>(used [total_spent_rep] Rep)"
+	result += "<br>"
+	if (completed_contracts > 0)
+		var/pluralCheck = "contract"
+		if (completed_contracts > 1)
+			pluralCheck = "contracts"
+
+		result += "Completed <span class='greentext'>[completed_contracts]</span> [pluralCheck] for a total of \
+					<span class='greentext'>[tc_total] TC</span>![contractor_support_unit]<br>"
+
+	return result
+
 /datum/antagonist/traitor/roundend_report_footer()
-	return "<br><b>The code phrases were:</b> <span class='codephrase'>[GLOB.syndicate_code_phrase]</span><br>\
-		<b>The code responses were:</b> <span class='codephrase'>[GLOB.syndicate_code_response]</span><br>"
+	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
+	var/responses = jointext(GLOB.syndicate_code_response, ", ")
+
+	var message = "<br><b>The code phrases were:</b> <span class='bluetext'>[phrases]</span><br>\
+					<b>The code responses were:</b> <span class='redtext'>[responses]</span><br>"
+
+	return message
+
 
 /datum/antagonist/traitor/is_gamemode_hero()
 	return SSticker.mode.name == "traitor"

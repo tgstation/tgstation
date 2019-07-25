@@ -93,8 +93,8 @@
 
 /obj/screen/blob/ReadaptStrain
 	icon_state = "ui_chemswap"
-	name = "Readapt Chemical (40)"
-	desc = "Randomly rerolls your chemical for 40 resources."
+	name = "Readapt Strain (40)"
+	desc = "Allows you to choose a new strain from 4 random choices for 40 resources."
 
 /obj/screen/blob/ReadaptStrain/MouseEntered(location,control,params)
 	if(hud && hud.mymob && isovermind(hud.mymob))

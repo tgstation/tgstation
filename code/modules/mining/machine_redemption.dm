@@ -17,8 +17,7 @@
 	var/points = 0
 	var/ore_pickup_rate = 15
 	var/sheet_per_ore = 1
-	var/point_upgrade = 1
-	var/list/ore_values = list(MAT_GLASS = 1, MAT_METAL = 1, MAT_PLASMA = 15, MAT_SILVER = 16, MAT_GOLD = 18, MAT_TITANIUM = 30, MAT_URANIUM = 30, MAT_DIAMOND = 50, MAT_BLUESPACE = 50, MAT_BANANIUM = 60)
+	var/list/ore_values = list(/datum/material/iron = 1, /datum/material/glass = 1,  /datum/material/plasma = 15,  /datum/material/silver = 16, /datum/material/gold = 18, /datum/material/titanium = 30, /datum/material/uranium = 30, /datum/material/diamond = 50, /datum/material/bluespace = 50, /datum/material/bananium = 60)
 	var/message_sent = FALSE
 	var/list/ore_buffer = list()
 	var/datum/techweb/stored_research
@@ -36,35 +35,34 @@
 
 /obj/machinery/mineral/ore_redemption/RefreshParts()
 	var/ore_pickup_rate_temp = 15
-	var/point_upgrade_temp = 1
 	var/sheet_per_ore_temp = 1
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		sheet_per_ore_temp = 0.65 + (0.35 * B.rating)
+		sheet_per_ore_temp = 0.65 + (0.15 * B.rating)
+	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
+		sheet_per_ore_temp += (0.20 * L.rating)
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		ore_pickup_rate_temp = 15 * M.rating
-	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
-		point_upgrade_temp = 0.65 + (0.35 * L.rating)
+
 	ore_pickup_rate = ore_pickup_rate_temp
-	point_upgrade = point_upgrade_temp
-	sheet_per_ore = sheet_per_ore_temp
+	sheet_per_ore = round(sheet_per_ore_temp, 0.01)
 
 /obj/machinery/mineral/ore_redemption/examine(mob/user)
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Smelting <b>[sheet_per_ore]</b> sheet(s) per piece of ore.<br>Reward point generation at <b>[point_upgrade*100]%</b>.<br>Ore pickup speed at <b>[ore_pickup_rate]</b>.<span>")
+		. += "<span class='notice'>The status display reads: Smelting <b>[sheet_per_ore]</b> sheet(s) per piece of ore.<br>Ore pickup speed at <b>[ore_pickup_rate]</b>.</span>"
 
 /obj/machinery/mineral/ore_redemption/proc/smelt_ore(obj/item/stack/ore/O)
 	var/datum/component/material_container/mat_container = materials.mat_container
 	if (!mat_container)
 		return
-		
+
 	if(O.refined_type == null)
 		return
 
 	ore_buffer -= O
 
 	if(O && O.refined_type)
-		points += O.points * point_upgrade * O.amount
+		points += O.points * O.amount
 
 	var/material_amount = mat_container.get_item_material_amount(O)
 
@@ -91,14 +89,14 @@
 
 	var/build_amount = 0
 
-	for(var/mat_id in D.materials)
-		var/M = D.materials[mat_id]
-		var/datum/material/redemption_mat = mat_container.materials[mat_id]
+	for(var/mat in D.materials)
+		var/amount = D.materials[mat]
+		var/datum/material/redemption_mat_amount = mat_container.materials[mat]
 
-		if(!M || !redemption_mat)
+		if(!amount || !redemption_mat_amount)
 			return FALSE
 
-		var/smeltable_sheets = FLOOR(redemption_mat.amount / M, 1)
+		var/smeltable_sheets = FLOOR(redemption_mat_amount / amount, 1)
 
 		if(!smeltable_sheets)
 			return FALSE
@@ -128,9 +126,9 @@
 
 	var/has_minerals = FALSE
 
-	for(var/mat_id in mat_container.materials)
-		var/datum/material/M = mat_container.materials[mat_id]
-		var/mineral_amount = M.amount / MINERAL_MATERIAL_AMOUNT
+	for(var/mat in mat_container.materials)
+		var/datum/material/M = mat
+		var/mineral_amount = mat_container.materials[mat] / MINERAL_MATERIAL_AMOUNT
 		if(mineral_amount)
 			has_minerals = TRUE
 		msg += "[capitalize(M.name)]: [mineral_amount] sheets<br>"
@@ -138,9 +136,14 @@
 	if(!has_minerals)
 		return
 
-	for(var/obj/machinery/requests_console/D in GLOB.allConsoles)
-		if(D.receive_ore_updates)
-			D.createmessage("Ore Redemption Machine", "New minerals available!", msg, 1, 0)
+	var/datum/signal/subspace/messaging/rc/signal = new(src, list(
+		"ore_update" = TRUE,
+		"sender" = "Ore Redemption Machine",
+		"message" = msg,
+		"verified" = "<font color='green'><b>Verified by Ore Redemption Machine</b></font>",
+		"priority" = REQ_NORMAL_MESSAGE_PRIORITY
+	))
+	signal.send_to_receivers()
 
 /obj/machinery/mineral/ore_redemption/process()
 	if(!materials.mat_container || panel_open || !powered())
@@ -173,7 +176,7 @@
 		return
 
 	if(!powered())
-		return
+		return ..()
 	if(istype(W, /obj/item/card/id))
 		var/obj/item/card/id/I = user.get_active_held_item()
 		if(istype(I) && !istype(inserted_id))
@@ -187,13 +190,13 @@
 		if(user.transferItemToLoc(W, src))
 			inserted_disk = W
 			return TRUE
-			
+
 	var/obj/item/stack/ore/O = W
 	if(istype(O))
 		if(O.refined_type == null)
 			to_chat(user, "<span class='notice'>[O] has already been refined!</span>")
 			return
-		
+
 	return ..()
 
 /obj/machinery/mineral/ore_redemption/multitool_act(mob/living/user, obj/item/multitool/I)
@@ -214,15 +217,18 @@
 	data["unclaimedPoints"] = points
 	if(inserted_id)
 		data["hasID"] = TRUE
-		data["claimedPoints"] = inserted_id.mining_points
+		if (inserted_id.registered_account)
+			data["hasAccount"] = TRUE
 
 	data["materials"] = list()
 	var/datum/component/material_container/mat_container = materials.mat_container
 	if (mat_container)
-		for(var/mat_id in mat_container.materials)
-			var/datum/material/M = mat_container.materials[mat_id]
-			var/sheet_amount = M.amount ? M.amount / MINERAL_MATERIAL_AMOUNT : "0"
-			data["materials"] += list(list("name" = M.name, "id" = M.id, "amount" = sheet_amount, "value" = ore_values[M.id] * point_upgrade))
+		for(var/mat in mat_container.materials)
+			var/datum/material/M = mat
+			var/amount = mat_container.materials[M]
+			var/sheet_amount = amount / MINERAL_MATERIAL_AMOUNT
+			var/ref = REF(M)
+			data["materials"] += list(list("name" = M.name, "id" = ref, "amount" = sheet_amount, "value" = ore_values[M.type]))
 
 		data["alloys"] = list()
 		for(var/v in stored_research.researched_designs)
@@ -268,23 +274,25 @@
 				to_chat(usr, "<span class='warning'>Not a valid ID!</span>")
 			return TRUE
 		if("Claim")
-			if(inserted_id)
-				inserted_id.mining_points += points
+			if(inserted_id && inserted_id.registered_account.adjust_money(points))
 				points = 0
 			return TRUE
 		if("Release")
 			if(!mat_container)
 				return
+
 			if(materials.on_hold())
 				to_chat(usr, "<span class='warning'>Mineral access is on hold, please contact the quartermaster.</span>")
 			else if(!check_access(inserted_id) && !allowed(usr)) //Check the ID inside, otherwise check the user
 				to_chat(usr, "<span class='warning'>Required access not found.</span>")
 			else
-				var/mat_id = params["id"]
-				if(!mat_container.materials[mat_id])
+				var/datum/material/mat = locate(params["id"])
+
+				var/amount = mat_container.materials[mat]
+				if(!amount)
 					return
-				var/datum/material/mat = mat_container.materials[mat_id]
-				var/stored_amount = mat.amount / MINERAL_MATERIAL_AMOUNT
+
+				var/stored_amount = CEILING(amount / MINERAL_MATERIAL_AMOUNT, 0.1)
 
 				if(!stored_amount)
 					return
@@ -296,10 +304,12 @@
 					desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
 
 				var/sheets_to_remove = round(min(desired,50,stored_amount))
-				var/count = mat_container.retrieve_sheets(sheets_to_remove, mat_id, get_step(src, output_dir))
+				
+				var/count = mat_container.retrieve_sheets(sheets_to_remove, mat, get_step(src, output_dir))
 				var/list/mats = list()
-				mats[mat_id] = MINERAL_MATERIAL_AMOUNT
+				mats[mat] = MINERAL_MATERIAL_AMOUNT
 				materials.silo_log(src, "released", -count, "sheets", mats)
+				//Logging deleted for quick coding
 			return TRUE
 		if("diskInsert")
 			var/obj/item/disk/design_disk/disk = usr.get_active_held_item()
@@ -336,7 +346,7 @@
 				else
 					desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
 				var/amount = round(min(desired,50,smelt_amount))
-				mat_container.use_amount(alloy.materials, amount)
+				mat_container.use_materials(alloy.materials, amount)
 				materials.silo_log(src, "released", -amount, "sheets", alloy.materials)
 				var/output
 				if(ispath(alloy.build_path, /obj/item/stack/sheet))

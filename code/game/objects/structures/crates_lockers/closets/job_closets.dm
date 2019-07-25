@@ -60,7 +60,7 @@
 	new /obj/item/melee/flyswatter(src)
 	new /obj/item/flashlight(src)
 	for(var/i in 1 to 3)
-		new /obj/item/caution(src)
+		new /obj/item/clothing/suit/caution(src)
 	new /obj/item/holosign_creator/janibarrier(src)
 	new /obj/item/lightreplacer(src)
 	new /obj/item/soap(src)
@@ -103,7 +103,7 @@
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/suit/chaplainsuit/nun(src)
 	new /obj/item/clothing/head/nun_hood(src)
-	new /obj/item/clothing/suit/hooded/chaplainsuit/monkfrock
+	new /obj/item/clothing/suit/hooded/chaplainsuit/monkfrock(src)
 	new /obj/item/clothing/suit/chaplainsuit/holidaypriest(src)
 	new /obj/item/storage/backpack/cultpack(src)
 	new /obj/item/storage/fancy/candle_box(src)

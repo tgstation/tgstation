@@ -5,8 +5,8 @@
 
 /datum/crafting_recipe/food/candiedapple
 	name = "Candied apple"
-	reqs = list(/datum/reagent/water = 5,
-		/datum/reagent/consumable/sugar = 5,
+	reqs = list(
+		/datum/reagent/consumable/caramel = 5,
 		/obj/item/reagent_containers/food/snacks/grown/apple = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/candiedapple
@@ -123,6 +123,15 @@
 		/obj/item/reagent_containers/food/snacks/breadslice/plain = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/jelliedtoast/cherry
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/butteredtoast
+	name = "Buttered Toast"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/breadslice/plain = 1,
+		/obj/item/reagent_containers/food/snacks/butter = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/butteredtoast
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/twobread
@@ -282,7 +291,7 @@
 	subcategory = CAT_MISCFOOD
 
 
-/datum/crafting_recipe/food/lizardwine
+/datum/crafting_recipe/lizardwine
 	name = "Lizard wine"
 	time = 40
 	reqs = list(
@@ -290,6 +299,7 @@
 		/datum/reagent/consumable/ethanol = 100
 	)
 	result = /obj/item/reagent_containers/food/drinks/bottle/lizardwine
+	category = CAT_FOOD
 	subcategory = CAT_MISCFOOD
 
 

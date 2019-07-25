@@ -29,7 +29,6 @@
 
 /datum/reagent/blob/shifting_fragments
 	name = "Shifting Fragments"
-	id = "shifting_fragments"
 	color = "#C8963C"
 
 /datum/reagent/blob/shifting_fragments/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)

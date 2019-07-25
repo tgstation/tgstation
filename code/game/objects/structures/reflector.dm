@@ -5,7 +5,6 @@
 	desc = "A base for reflector assemblies."
 	anchored = FALSE
 	density = FALSE
-	layer = BELOW_OBJ_LAYER
 	var/deflector_icon_state
 	var/image/deflector_overlay
 	var/finished = FALSE
@@ -35,14 +34,14 @@
 		can_rotate = FALSE
 
 /obj/structure/reflector/examine(mob/user)
-	..()
+	. = ..()
 	if(finished)
-		to_chat(user, "It is set to [rotation_angle] degrees, and the rotation is [can_rotate ? "unlocked" : "locked"].")
+		. += "It is set to [rotation_angle] degrees, and the rotation is [can_rotate ? "unlocked" : "locked"]."
 		if(!admin)
 			if(can_rotate)
-				to_chat(user, "<span class='notice'>Alt-click to adjust its direction.</span>")
+				. += "<span class='notice'>Alt-click to adjust its direction.</span>"
 			else
-				to_chat(user, "<span class='notice'>Use screwdriver to unlock the rotation.</span>")
+				. += "<span class='notice'>Use screwdriver to unlock the rotation.</span>"
 
 /obj/structure/reflector/proc/setAngle(new_angle)
 	if(can_rotate)

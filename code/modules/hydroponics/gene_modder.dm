@@ -415,7 +415,7 @@
 	name = "plant data disk"
 	desc = "A disk for storing plant genetic data."
 	icon_state = "datadisk_hydro"
-	materials = list(MAT_METAL=30, MAT_GLASS=10)
+	materials = list(/datum/material/iron=30, /datum/material/glass=10)
 	var/datum/plant_gene/gene
 	var/read_only = 0 //Well, it's still a floppy disk
 	obj_flags = UNIQUE_RENAME
@@ -437,7 +437,7 @@
 	to_chat(user, "<span class='notice'>You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].</span>")
 
 /obj/item/disk/plantgene/examine(mob/user)
-	..()
+	. = ..()
 	if(gene && (istype(gene, /datum/plant_gene/core/potency)))
-		to_chat(user,"<span class='notice'>Percent is relative to potency, not maximum volume of the plant.</span>")
-	to_chat(user, "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"].")
+		. += "<span class='notice'>Percent is relative to potency, not maximum volume of the plant.</span>"
+	. += "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."

@@ -126,7 +126,7 @@
 			visible_message("<span class='danger'>[user] has pressed one of the colorful buttons on [src] and the clown car spews out a cloud of laughing gas.</span>")
 			var/datum/reagents/R = new/datum/reagents(300)
 			R.my_atom = src
-			R.add_reagent("superlaughter", 50)
+			R.add_reagent(/datum/reagent/consumable/superlaughter, 50)
 			var/datum/effect_system/smoke_spread/chem/smoke = new()
 			smoke.set_up(R, 4)
 			smoke.attach(src)
