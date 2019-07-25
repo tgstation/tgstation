@@ -139,17 +139,16 @@
 //TURRETS
 
 ///Attack proc. Creates up to three legion turrets on suitable turfs nearby.
-/mob/living/simple_animal/hostile/megafauna/legion/proc/create_legion_turrets(minimum = 1, maximum = size)
+/mob/living/simple_animal/hostile/megafauna/legion/proc/create_legion_turrets(minimum = 2, maximum = size * 2)
 	playsound(src, 'sound/magic/RATTLEMEBONES.ogg', 100, TRUE)
 	var/list/possiblelocations = list()
-	for(var/turf/T in oview(src, 3)) //Only place the turrets on open turfs
+	for(var/turf/T in oview(src, 4)) //Only place the turrets on open turfs
 		if(is_blocked_turf(T))
 			continue
 		possiblelocations += T
 	for(var/i in 1 to min(rand(minimum, maximum), LAZYLEN(possiblelocations))) //Makes sure aren't spawning in nullspace.
 		var/chosen = pick(possiblelocations)
-		var/turret = new /obj/structure/legionturret(chosen)
-		QDEL_IN(turret, 30 SECONDS) //They only stay around for half a minute
+		new /obj/structure/legionturret(chosen)
 		possiblelocations -= chosen
 
 /mob/living/simple_animal/hostile/megafauna/legion/GiveTarget(new_target)
