@@ -7,6 +7,14 @@
 	armour_penetration = 100
 	flag = "magic"
 
+/obj/item/projectile/magic/on_hit(target)
+	. = ..()
+	if(ismob(target))
+		var/mob/M = target
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return BULLET_ACT_BLOCK
+
 /obj/item/projectile/magic/death
 	name = "bolt of death"
 	icon_state = "pulse1_bl"
@@ -54,7 +62,7 @@
 	var/inner_tele_radius = 0
 	var/outer_tele_radius = 6
 
-/obj/item/projectile/magic/teleport/on_hit(mob/target)
+/obj/item/projectile/magic/teleport/on_hit(target)
 	. = ..()
 	if(ismob(target))
 		var/mob/M = target
@@ -80,7 +88,7 @@
 	damage_type = OXY
 	nodamage = TRUE
 
-/obj/item/projectile/magic/safety/on_hit(atom/target)
+/obj/item/projectile/magic/safety/on_hit(target)
 	. = ..()
 	if(ismob(target))
 		var/mob/M = target
@@ -107,7 +115,7 @@
 	nodamage = TRUE
 	var/list/door_types = list(/obj/structure/mineral_door/wood, /obj/structure/mineral_door/iron, /obj/structure/mineral_door/silver, /obj/structure/mineral_door/gold, /obj/structure/mineral_door/uranium, /obj/structure/mineral_door/sandstone, /obj/structure/mineral_door/transparent/plasma, /obj/structure/mineral_door/transparent/diamond)
 
-/obj/item/projectile/magic/door/on_hit(atom/target)
+/obj/item/projectile/magic/door/on_hit(target)
 	. = ..()
 	if(istype(target, /obj/machinery/door))
 		OpenDoor(target)
@@ -135,7 +143,7 @@
 	damage_type = BURN
 	nodamage = TRUE
 
-/obj/item/projectile/magic/change/on_hit(atom/change)
+/obj/item/projectile/magic/change/on_hit(change)
 	. = ..()
 	if(ismob(change))
 		var/mob/M = change
@@ -366,7 +374,7 @@
 		if(M.anti_magic_check())
 			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			qdel(src)
-			return
+			return BULLET_ACT_BLOCK
 	. = ..()
 
 
