@@ -107,14 +107,16 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	last_slogan = world.time + rand(0, slogan_delay)
 	power_change()
 	
-	if(!onstation_override) //overrides the checks if the variable is set to false. 
-		if(mapload) //check if it was initially created off station during mapload.
-			if(!is_station_level(z))
-				onstation = FALSE
-				if(circuit)
-					circuit.onstation = onstation //sync up the circuit so the pricing schema is carried over if it's reconstructed.
-		else if(circuit && (circuit.onstation != onstation)) //check if they're not the same to minimize the amount of edited values.
-			onstation = circuit.onstation //if it was constructed outside mapload, sync the vendor up with the circuit's var so you can't bypass price requirements by moving / reconstructing it off station.
+	if(onstation_override) //overrides the checks if true. 
+		onstation = TRUE
+		return
+	if(mapload) //check if it was initially created off station during mapload.
+		if(!is_station_level(z))
+			onstation = FALSE
+			if(circuit)
+				circuit.onstation = onstation //sync up the circuit so the pricing schema is carried over if it's reconstructed.
+	else if(circuit && (circuit.onstation != onstation)) //check if they're not the same to minimize the amount of edited values.
+		onstation = circuit.onstation //if it was constructed outside mapload, sync the vendor up with the circuit's var so you can't bypass price requirements by moving / reconstructing it off station.
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
