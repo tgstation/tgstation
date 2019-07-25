@@ -506,6 +506,7 @@
 		else
 			to_chat(owner, "<span class='warning'>Your hands are full!</span>")
 
+///MGS BOX!
 /datum/action/item_action/agent_box
 	name = "Deploy Box"
 	desc = "Find inner peace, here, in the box."
@@ -513,22 +514,30 @@
 	background_icon_state = "bg_agent"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "deploy_box"
+	///Cooldown between deploys. Uses world.time
 	var/cooldown = 0
-	var/obj/structure/closet/cardboard/agent/box
+	///The type of closet this action spawns.
+	var/boxtype = /obj/structure/closet/cardboard/agent
 
+///Handles opening and closing the box.
 /datum/action/item_action/agent_box/Trigger()
-	if(!..())
+	. = ..()
+	if(!.)
 		return FALSE
-	if(QDELETED(box))
-		if(cooldown < world.time - 100)
-			box = new(owner.drop_location())
-			owner.forceMove(box)
-			cooldown = world.time
-			owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
-	else
-		owner.forceMove(box.drop_location())
+	if(istype(owner.loc, /obj/structure/closet/cardboard/agent))
+		var/obj/structure/closet/cardboard/agent/box = owner.loc
 		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
-		QDEL_NULL(box)
+		box.open()
+		return
+	//Box closing from here on out.
+	if(!isturf(owner.loc)) //Don't let the player use this to escape mechs/welded closets.
+		to_chat(owner, "<span class = 'notice'>You need more space to activate this implant.</span>")
+		return
+	if(cooldown < world.time - 100)
+		var/box = new boxtype(owner.drop_location())
+		owner.forceMove(box)
+		cooldown = world.time
+		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
 
 //Preset for spells
 /datum/action/spell_action
