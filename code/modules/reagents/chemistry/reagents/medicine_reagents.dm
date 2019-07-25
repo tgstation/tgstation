@@ -1419,15 +1419,15 @@
 /datum/reagent/medicine/sanguiose/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-1, 0)
 	if(prob(1))
-		ADD_TRAIT(M, TRAIT_MUTE, MEDICINE_TRAIT)
-	//Removes blood
+		//Adds deafness with a 1% chance
+		ADD_TRAIT(M, TRAIT_DEAF, SANGUIOSE_TRAIT)
 	..()
 	. = 1
 
 /datum/reagent/medicine/sanguiose/on_mob_delete(mob/living/L)
 	. = ..()
 	//removes trait if it comes from the medicine trait.
-	REMOVE_TRAIT(L, TRAIT_MUTE, MEDICINE_TRAIT)
+	REMOVE_TRAIT(L, TRAIT_DEAF, SANGUIOSE_TRAIT)
 /datum/reagent/medicine/sanguiose/overdose_process(mob/living/M)
 	M.adjustOxyLoss(3,0)
 	M.blood_volume -= 2 //I hope you like blood.
@@ -1452,15 +1452,15 @@
 /datum/reagent/medicine/frogenite/on_mob_life(mob/living/carbon/M) //Reuses code done by cobby in Perflu to convert burn damage to oxygen, Meant to simunlate a chemical reaction to remove oxygen from the body.
 	M.adjustFireLoss(-1, 0)
 	if(prob(1))
-		//Adds blindness witha  33% chance
-		ADD_TRAIT(M, TRAIT_BLIND, MEDICINE_TRAIT)
+		//Adds blindness witha  1% chance
+		ADD_TRAIT(M, TRAIT_BLIND, FROGENITE_TRAIT)
 	..()
 	. = 1
 
 /datum/reagent/medicine/frogenite/on_mob_delete(mob/living/L)
 	. = ..()
 	//removes blindness if trait comes from the medicine
-	REMOVE_TRAIT(L, TRAIT_BLIND, MEDICINE_TRAIT)
+	REMOVE_TRAIT(L, TRAIT_BLIND, FROGENITE_TRAIT)
 
 /datum/reagent/medicine/frogenite/overdose_process(mob/living/M)
 	M.adjustOxyLoss(15,0)
@@ -1487,15 +1487,15 @@
 /datum/reagent/medicine/ferveatium/on_mob_life(mob/living/carbon/M) //Reuses code done by cobby in Perflu to convert burn damage to oxygen, Meant to simunlate a chemical reaction to remove oxygen from the body.
 	M.adjustToxLoss(-1, 0)
 	if(prob(1))
-		//Adds fatness with a 33% chance probability.
-		ADD_TRAIT(M, TRAIT_FAT, MEDICINE_TRAIT)
+		//Adds fatness with a 1% chance probability.
+		ADD_TRAIT(M, TRAIT_FAT, FERVEATIUM_TRAIT)
 	..()
 	. = 1
 
 /datum/reagent/medicine/ferveatium/on_mob_delete(mob/living/L)
 	. = ..()
 	//removes the fat trait.
-	REMOVE_TRAIT(L, TRAIT_FAT, MEDICINE_TRAIT)
+	REMOVE_TRAIT(L, TRAIT_FAT, FERVEATIUM_TRAIT)
 
 /datum/reagent/medicine/ferveatium/overdose_process(mob/living/M)
 	M.adjustFireLoss(15,0)
