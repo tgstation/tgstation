@@ -47,10 +47,14 @@
 
 	var/brute_heal = 1
 	var/burn_heal = 0
+	var/tox_heal = 0
+	var/oxy_heal = 0
 
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/carbon/M)
 	if(prob(50))
 		M.heal_bodypart_damage(brute_heal,burn_heal, 0)
+		M.adjustToxLoss(tox_heal*REM, 0)
+		M.adjustOxyLoss(oxy_heal*REM, 0)
 		. = 1
 	..()
 
@@ -739,7 +743,7 @@
 	description = "These restorative peptides not only speed up wound healing, but are nutrious as well!"
 	nutriment_factor = 10 * REAGENTS_METABOLISM // 33% less than nutriment to reduce weight gain
 	brute_heal = 3
-	burn_heal = 1
+	tox_heal = 1
 
 /datum/reagent/consumable/caramel
 	name = "Caramel"
