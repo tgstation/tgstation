@@ -458,11 +458,10 @@
 	..()
 
 /datum/reagent/drug/pumpup/on_mob_life(mob/living/carbon/M)
-	var/high_message = pick("Go! Go! GO!", "You feel ready...", "You feel invincible...")
 	M.Jitter(5)
 
 	if(prob(5))
-		to_chat(M, "<span class='notice'>[high_message]</span>")
+		to_chat(M, "<span class='notice'>[pick("Go! Go! GO!", "You feel ready...", "You feel invincible...")]</span>")
 	if(prob(15))
 		M.losebreath++
 		M.adjustToxLoss(2, 0)
