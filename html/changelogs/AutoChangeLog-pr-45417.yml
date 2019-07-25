@@ -1,5 +1,0 @@
-author: "RandolfTheMeh"
-delete-after: True
-changes: 
-  - bugfix: "Ticket Machine tickets now properly burn to ash"
-  - bugfix: "PDA-painter now doesn't work while broken"

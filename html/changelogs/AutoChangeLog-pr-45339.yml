@@ -1,4 +1,0 @@
-author: "floyd"
-delete-after: True
-changes: 
-  - bugfix: "Tendrils properly drop loot when hit by extreme explosions."
