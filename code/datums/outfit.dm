@@ -23,9 +23,8 @@
 	var/list/backpack_contents = null // In the list(path=count,otherpath=count) format
 	var/box // Internals box. Will be inserted at the start of backpack_contents
 	var/list/implants = null
+	var/datum/sprite_accessory/undershirt = null //while on a human this uses strings, here it uses paths like the rest of the vars.
 	var/accessory = null
-
-	var/undershirt = null //this uses strings NOT PATHS. one example of a working undershirt would be undershirt = "Shirt (Ian)"
 
 	var/can_be_admin_equipped = TRUE // Set to FALSE if your outfit requires runtime parameters
 	var/list/chameleon_extras //extra types for chameleon outfit changes, mostly guns
@@ -70,7 +69,7 @@
 		H.equip_to_slot_or_del(new suit_store(H),SLOT_S_STORE)
 
 	if(undershirt)
-		H.undershirt = undershirt
+		H.undershirt = initial(undershirt.name)
 
 	if(accessory)
 		var/obj/item/clothing/under/U = H.w_uniform
