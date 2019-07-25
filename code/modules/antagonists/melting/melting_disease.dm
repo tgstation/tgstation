@@ -19,7 +19,8 @@
 	process_dead = TRUE
 	var/mob/living/simple_animal/hostile/melting/creator
 	var/obj/item/slime_mask/mask
-	
+	var/attemped_add_mask = FALSE
+
 	//bantype = "Melting" antag ban! duh!
 
 /datum/disease/transformation/melting/New(mob_source)
@@ -44,9 +45,10 @@
 		if(3)
 			if(affected_mob.stat == DEAD)
 				do_disease_transformation(affected_mob)
-			if(isnull(mask))
+			if(attemped_add_mask)
+				attemped_add_mask = TRUE
 				mask = new(get_turf(affected_mob))
-
+				equip_to_slot_if_possible(mask, SLOT_WEAR_MASK, qdel_on_fail = TRUE)
 
 			if(prob(6))
 				to_chat(affected_mob, "<span class='danger'>You feel a burning pain in your chest.</span>")
