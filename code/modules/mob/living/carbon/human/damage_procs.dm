@@ -5,11 +5,11 @@
 	return dna.species.apply_damage(damage, damagetype, def_zone, blocked, src, forced, spread_damage)
 
 /mob/living/carbon/human/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(HAS_TRAIT(src, TRAIT_NOMETABOLISM))
+	if(!forced && HAS_TRAIT(src, TRAIT_NOMETABOLISM))
 		return FALSE
 	return ..()
 
 /mob/living/carbon/human/setCloneLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(HAS_TRAIT(src, TRAIT_NOMETABOLISM))
+	if(!forced && HAS_TRAIT(src, TRAIT_NOMETABOLISM))
 		return FALSE
 	return ..()
