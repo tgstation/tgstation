@@ -469,7 +469,7 @@
 	. = 1
 
 /datum/reagent/drug/pumpup/overdose_start(mob/living/M)
-	to_chat(M, "<span class='userdanger'>You can't stop shaking, your heart beat faster and faster...</span>")
+	to_chat(M, "<span class='userdanger'>You can't stop shaking, your heart beats faster and faster...</span>")
 
 /datum/reagent/drug/pumpup/overdose_process(mob/living/M)
 	M.Jitter(5)
