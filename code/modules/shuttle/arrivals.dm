@@ -1,3 +1,4 @@
+///Arrivals shuttle
 /obj/docking_port/mobile/arrivals
 	name = "arrivals shuttle"
 	id = "arrivals"
@@ -13,14 +14,22 @@
 
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 0)
 
+	///If the sound was played
 	var/sound_played
-	var/damaged	//too damaged to undock?
-	var/list/areas	//areas in our shuttle
-	var/list/queued_announces	//people coming in that we have to announce
+	///too damaged to undock?
+	var/damaged
+	///areas in our shuttle
+	var/list/areas
+	///people coming in that we have to announce
+	var/list/queued_announces
+	///Linked requests console
 	var/obj/machinery/requests_console/console
+	///Ignore lifeforms onboard and depart anyway
 	var/force_depart = FALSE
-	var/perma_docked = FALSE	//highlander with RESPAWN??? OH GOD!!!
-	var/obj/docking_port/stationary/target_dock  // for badminry
+	///highlander with RESPAWN??? OH GOD!!!
+	var/perma_docked = FALSE
+	/// for badminry
+	var/obj/docking_port/stationary/target_dock
 
 /obj/docking_port/mobile/arrivals/Initialize(mapload)
 	. = ..()
@@ -103,6 +112,7 @@
 	else if(!found_awake)
 		Launch(FALSE)
 
+///Simple safety check
 /obj/docking_port/mobile/arrivals/proc/CheckTurfsPressure()
 	for(var/I in SSjob.latejoin_trackers)
 		var/turf/open/T = get_turf(I)
@@ -111,6 +121,7 @@
 			return TRUE
 	return FALSE
 
+///Check for players on the shuttle
 /obj/docking_port/mobile/arrivals/proc/PersonCheck()
 	for(var/V in GLOB.player_list)
 		var/mob/M = V
@@ -122,12 +133,14 @@
 				return TRUE
 	return FALSE
 
+///Check for nuke disk
 /obj/docking_port/mobile/arrivals/proc/NukeDiskCheck()
 	for (var/obj/item/disk/nuclear/N in GLOB.poi_list)
 		if (get_area(N) in areas)
 			return TRUE
 	return FALSE
 
+///Send the shuttle to arrivals
 /obj/docking_port/mobile/arrivals/proc/SendToStation()
 	var/dockTime = CONFIG_GET(number/arrivals_shuttle_dock_window)
 	if(mode == SHUTTLE_CALL && timeLeft(1) > dockTime)
@@ -172,6 +185,12 @@
 	if(. == SHUTTLE_ALREADY_DOCKED)
 		. = SHUTTLE_CAN_DOCK
 
+/**
+  * Launch the shuttle from arrivals
+  *
+  * Arguments:
+  * * pickingup Is it leaving to pickup a spawned player
+  */
 /obj/docking_port/mobile/arrivals/proc/Launch(pickingup)
 	if(pickingup)
 		force_depart = TRUE
@@ -183,6 +202,7 @@
 			target = SSshuttle.getDock("arrivals_stationary")
 		request(target)		//we will intentionally never return SHUTTLE_ALREADY_DOCKED
 
+///Force a launch to pickup a new player
 /obj/docking_port/mobile/arrivals/proc/RequireUndocked(mob/user)
 	if(mode == SHUTTLE_CALL || damaged)
 		return
@@ -193,6 +213,7 @@
 	while(mode != SHUTTLE_CALL && !damaged)
 		stoplag()
 
+///Add an announcement about an arriving player
 /obj/docking_port/mobile/arrivals/proc/QueueAnnounce(mob, rank)
 	if(mode != SHUTTLE_CALL)
 		AnnounceArrival(mob, rank)

@@ -293,6 +293,8 @@
 	. = locate(/obj/docking_port/mobile) in loc
 
 /**
+  *# transit
+  *
   * A stationary port subtype for use on the transit level
   *
   */

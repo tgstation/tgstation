@@ -3,12 +3,15 @@
 #define ENGINES_STARTED (SSshuttle.emergency.mode == SHUTTLE_IGNITING)
 #define IS_DOCKED (SSshuttle.emergency.mode == SHUTTLE_DOCKED || (ENGINES_STARTED))
 
+///Emergency shuttle computer
 /obj/machinery/computer/emergency_shuttle
 	name = "emergency shuttle console"
 	desc = "For shuttle control."
 	icon_screen = "shuttle"
 	icon_keyboard = "tech_key"
+	///The number of players that need to swipe to force an early departure
 	var/auth_need = 3
+	///The list of players already authed
 	var/list/authorized = list()
 
 /obj/machinery/computer/emergency_shuttle/attackby(obj/item/I, mob/user,params)
@@ -92,6 +95,7 @@
 		if(repeal)
 			minor_announce("Early launch authorization revoked, [remaining] authorizations needed")
 
+///Attempt to authorise an early departure
 /obj/machinery/computer/emergency_shuttle/proc/authorize(mob/user, source)
 	var/obj/item/card/id/ID = user.get_idcard(TRUE)
 
@@ -173,6 +177,7 @@
 
 	. = ..()
 
+///The emergency shuttle
 /obj/docking_port/mobile/emergency
 	name = "emergency shuttle"
 	id = "emergency"
@@ -182,7 +187,8 @@
 	height = 11
 	dir = EAST
 	port_direction = WEST
-	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
+	///If the launch sound has been sent to all players on the shuttle itself
+	var/sound_played = 0
 
 /obj/docking_port/mobile/emergency/canDock(obj/docking_port/stationary/S)
 	return SHUTTLE_CAN_DOCK //If the emergency shuttle can't move, the whole game breaks, so it will force itself to land even if it has to crush a few departments in the process
@@ -244,6 +250,7 @@
 		SSshuttle.emergencyLastCallLoc = null
 	priority_announce("The emergency shuttle has been recalled.[SSshuttle.emergencyLastCallLoc ? " Recall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/ai/shuttlerecalled.ogg', "Priority")
 
+///Has the shuttle been hijacked
 /obj/docking_port/mobile/emergency/proc/is_hijacked()
 	var/has_people = FALSE
 	var/hijacker_present = FALSE
@@ -277,6 +284,7 @@
 
 	return has_people && hijacker_present
 
+///Internal database stuff
 /obj/docking_port/mobile/emergency/proc/ShuttleDBStuff()
 	set waitfor = FALSE
 	if(!SSdbcore.Connect())
@@ -419,7 +427,7 @@
 	setTimer(SSshuttle.emergencyEscapeTime)
 	priority_announce("The Emergency Shuttle preparing for direct jump. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
 
-
+///Escape pod
 /obj/docking_port/mobile/pod
 	name = "escape pod"
 	id = "pod"

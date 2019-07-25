@@ -29,6 +29,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/item/swapper
 	)))
 
+///Supply shuttle
 /obj/docking_port/mobile/supply
 	name = "supply shuttle"
 	id = "supply"
@@ -42,7 +43,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
 
 
-	//Export categories for this run, this is set by console sending the shuttle.
+	///Export categories for this run, this is set by console sending the shuttle.
 	var/export_categories = EXPORT_CARGO
 
 /obj/docking_port/mobile/supply/register()
@@ -54,6 +55,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		return check_blacklist(shuttle_areas)
 	return ..()
 
+///Check the contents for stuff on the blacklist
 /obj/docking_port/mobile/supply/proc/check_blacklist(areaInstances)
 	for(var/place in areaInstances)
 		var/area/shuttle/shuttle_area = place
@@ -78,6 +80,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	if(getDockedId() == "supply_away") // Sell when we get home
 		sell()
 
+///Buy stuff when away
 /obj/docking_port/mobile/supply/proc/buy()
 	var/list/obj/miscboxes = list() //miscboxes are combo boxes that contain all small_item orders grouped
 	var/list/misc_order_num = list() //list of strings of order numbers, so that the manifest can show all orders in a box
@@ -158,6 +161,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	var/datum/bank_account/cargo_budget = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	investigate_log("[purchases] orders in this shipment, worth [value] credits. [cargo_budget.account_balance] credits left.", INVESTIGATE_CARGO)
 
+///Sell stuff on away
 /obj/docking_port/mobile/supply/proc/sell()
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	var/presale_points = D.account_balance

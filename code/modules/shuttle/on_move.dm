@@ -87,13 +87,21 @@ All ShuttleMove procs go here
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-// Called on every atom in shuttle turf contents before anything has been moved
-// returns the new move_mode (based on the old)
-// WARNING: Do not leave turf contents in beforeShuttleMove or dock() will runtime
+/**
+  * Called on every atom in shuttle turf contents before anything has been moved
+  *
+  * returns the new move_mode (based on the old)
+  *
+  * WARNING: Do not leave turf contents in beforeShuttleMove or dock() will runtime
+  *
+  */
 /atom/movable/proc/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	return move_mode
 
-// Called on atoms to move the atom to the new location
+/**
+  * Called on atoms to move the atom to the new location
+  *
+  */
 /atom/movable/proc/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
 	if(newT == oldT) // In case of in place shuttle rotation shenanigans.
 		return
@@ -105,7 +113,10 @@ All ShuttleMove procs go here
 
 	return TRUE
 
-// Called on atoms after everything has been moved
+/**
+  * Called on atoms after everything has been moved
+  *
+  */
 /atom/movable/proc/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 
 	var/turf/newT = get_turf(src)
@@ -121,6 +132,7 @@ All ShuttleMove procs go here
 
 	return TRUE
 
+///Called after `afterShuttleMove`
 /atom/movable/proc/lateShuttleMove(turf/oldT, list/movement_force, move_dir)
 	if(!movement_force || anchored)
 		return
