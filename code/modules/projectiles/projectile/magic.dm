@@ -375,6 +375,7 @@
 /obj/item/projectile/magic/locker/prehit(atom/A)
 	if(isliving(A) && locker_suck)
 		var/mob/living/M = A
+		proj_anti_magic_check(M)
 		if(!locker_temp_instance.insertion_allowed(M))
 			return ..()
 		M.forceMove(src)
