@@ -16,7 +16,6 @@
 /obj/mecha/combat/durand/Initialize()
 	shield = new/obj/durand_shield
 	shield.chassis = src
-	shield.dir = dir
 	shield.layer = layer
 	RegisterSignal(src, COMSIG_MECHA_ACTION_ACTIVATE, .proc/relay)
 	RegisterSignal(src, COMSIG_PROJECTILE_PREHIT, .proc/prehit)
@@ -37,7 +36,7 @@
 
 /obj/mecha/combat/durand/process()
 	. = ..()
-	if(defence_mode && !use_power(100))
+	if(defense_mode && !use_power(100))
 		defense_action.Activate(forced_state = TRUE)
 
 /obj/mecha/combat/durand/domove(direction)
@@ -51,27 +50,30 @@
 	shield.forceMove(T)
 
 /obj/mecha/combat/durand/go_out(forced, atom/newloc = loc)
-	if(defence_mode)
+	if(defense_mode)
 		defense_action.Activate(forced_state = TRUE)
 	. = ..()
 
+///Relays the signal from the action button to the shield, and creates a new shield if the old one is MIA.
 /obj/mecha/combat/durand/proc/relay(datum/source, list/signal_args)
 	if(!shield) //if the shield somehow got deleted
 		shield = new/obj/durand_shield
 		shield.chassis = src
-		shield.dir = dir
 		shield.layer = layer
+		shield.forceMove(loc)
+	shield.dir = dir
 	SEND_SIGNAL(shield, COMSIG_MECHA_ACTION_ACTIVATE, source, signal_args)
 
+//Redirects projectiles to the shield if defense_check decides they should be blocked and returns true.
 /obj/mecha/combat/durand/proc/prehit(obj/item/projectile/source, list/signal_args)
-	if(defence_check(source.loc) && shield)
+	if(defense_check(source.loc) && shield)
 		signal_args[2] = shield
 
 
 /**Checks if defense mode is enabled, and if the attacker is standing in an area covered by the shield.
 Expects a turf. Returns true if the attack should be blocked, false if not.*/
-/obj/mecha/combat/durand/proc/defence_check(var/turf/aloc)
-	if (!defence_mode || !shield || shield.switching)
+/obj/mecha/combat/durand/proc/defense_check(var/turf/aloc)
+	if (!defense_mode || !shield || shield.switching)
 		return FALSE
 	var/blocked = FALSE
 	switch(dir)
@@ -92,30 +94,30 @@ Expects a turf. Returns true if the attack should be blocked, false if not.*/
 	return FALSE
 
 obj/mecha/combat/durand/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, armor_penetration = 0)
-	if(defence_check(user.loc))
-		log_message("Attack absorbed by defence field. Attacker - [user].", LOG_MECHA, color="orange")
+	if(defense_check(user.loc))
+		log_message("Attack absorbed by defense field. Attacker - [user].", LOG_MECHA, color="orange")
 		shield.attack_generic(user, damage_amount, damage_type, damage_flag, sound_effect, armor_penetration)
 	else
 		. = ..()
 
 /obj/mecha/combat/durand/blob_act(obj/structure/blob/B)
-	if(defence_check(B.loc))
+	if(defense_check(B.loc))
 		log_message("Attack by blob. Attacker - [B].", LOG_MECHA, color="red")
-		log_message("Attack absorbed by defence field.", LOG_MECHA, color="orange")
+		log_message("Attack absorbed by defense field.", LOG_MECHA, color="orange")
 		shield.blob_act(B)
 	else
 		. = ..()
 
 /obj/mecha/combat/durand/attackby(obj/item/W as obj, mob/user as mob, params)
-	if(defence_check(user.loc))
-		log_message("Attack absorbed by defence field. Attacker - [user], with [W]", LOG_MECHA, color="orange")
+	if(defense_check(user.loc))
+		log_message("Attack absorbed by defense field. Attacker - [user], with [W]", LOG_MECHA, color="orange")
 		shield.attackby(W, user, params)
 	else
 		. = ..()
 
 /obj/mecha/combat/durand/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	if(defence_check(AM.loc))
-		log_message("Impact with [AM] absorbed by defence field.", LOG_MECHA, color="orange")
+	if(defense_check(AM.loc))
+		log_message("Impact with [AM] absorbed by defense field.", LOG_MECHA, color="orange")
 		shield.hitby(AM, skipcatch, hitpush, blocked, throwingdatum)
 	else
 		. = ..()
@@ -130,8 +132,8 @@ Normally invisible, until defense mode is actvated. When the durand detects an a
 attack is passed to the shield. The shield takes the damage, uses it to calculate charge cost, and then sets its
 own integrity back to max. Shield is automatically dropped if we run out of power or the user gets out.*/
 
-/obj/durand_shield //projectiles get passed to this when defence mode is enabled
-	name = "defence grid"
+/obj/durand_shield //projectiles get passed to this when defense mode is enabled
+	name = "defense grid"
 	icon = 'icons/mecha/durand_shield.dmi'
 	icon_state = "shield_null"
 	invisibility = INVISIBILITY_MAXIMUM //no showing on right-click
@@ -145,26 +147,33 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	. = ..()
 	RegisterSignal(src, COMSIG_MECHA_ACTION_ACTIVATE, .proc/activate)
 
+/obj/durand_shield/Destroy()
+	if(chassis)
+		chassis.shield = null
+
 /**Handles activating and deactivating the shield. This proc is called by a signal sent from the mech's action button
 and relayed by the mech itself. The "forced" variabe, signal_args[1], will skip the to-pilot text and is meant for when
 the shield is disabled by means other than the action button (like running out of power)*/
 
-/obj/durand_shield/proc/activate(datum/source, var/datum/action/innate/mecha/mech_defence_mode/button, list/signal_args)
+/obj/durand_shield/proc/activate(datum/source, var/datum/action/innate/mecha/mech_defense_mode/button, list/signal_args)
 	if(!chassis || !chassis.occupant)
 		return
 	if(switching && !signal_args[1])
 		return
+	if(!chassis.defense_mode && (!chassis.cell || chassis.cell.charge < 100)) //If it's off, and we have less than 100 units of power
+		chassis.occupant_message("<span class='warn'>Insufficient power; cannot activate defense mode.</span>")
+		return
 	switching = TRUE
-	chassis.defence_mode = !chassis.defence_mode
-	chassis.defense_action.button_icon_state = "mech_defense_mode_[chassis.defence_mode ? "on" : "off"]" //This is backwards because we haven't changed the var yet
+	chassis.defense_mode = !chassis.defense_mode
+	chassis.defense_action.button_icon_state = "mech_defense_mode_[chassis.defense_mode ? "on" : "off"]" //This is backwards because we haven't changed the var yet
 	if(!signal_args[1])
-		chassis.occupant_message("<span class='notice'>You [chassis.defence_mode?"enable":"disable"] [chassis] defence mode.</span>")
-		chassis.log_message("User has toggled defence mode -- now [chassis.defence_mode?"enabled":"disabled"].", LOG_MECHA)
+		chassis.occupant_message("<span class='notice'>Defense mode [chassis.defense_mode?"enabled":"disabled"].</span>")
+		chassis.log_message("User has toggled defense mode -- now [chassis.defense_mode?"enabled":"disabled"].", LOG_MECHA)
 	else
-		chassis.log_message("Defence mode state changed -- now [chassis.defence_mode?"enabled":"disabled"].", LOG_MECHA)
+		chassis.log_message("defense mode state changed -- now [chassis.defense_mode?"enabled":"disabled"].", LOG_MECHA)
 	chassis.defense_action.UpdateButtonIcon()
 
-	if(chassis.defence_mode)
+	if(chassis.defense_mode)
 		invisibility = 0
 		flick("shield_raise", src)
 		playsound(src, 'sound/mecha/mech_shield_raise.ogg', 50, FALSE)
