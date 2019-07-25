@@ -128,7 +128,7 @@ obj/mecha/combat/durand/attack_generic(mob/user, damage_amount = 0, damage_type 
 
 /**An object to take the hit for us when using the Durand's defense mode.
 It is spawned in during the durand's initilization, and always stays on the same tile.
-Normally invisible, until defense mode is actvated. When the durand detects an attack that hsould be blocked, the
+Normally invisible, until defense mode is actvated. When the durand detects an attack that should be blocked, the
 attack is passed to the shield. The shield takes the damage, uses it to calculate charge cost, and then sets its
 own integrity back to max. Shield is automatically dropped if we run out of power or the user gets out.*/
 
@@ -193,6 +193,8 @@ the shield is disabled by means other than the action button (like running out o
 /obj/durand_shield/take_damage()
 	if(!chassis)
 		qdel(src)
+		return
+	if(!chassis.defense_mode) //if defense mode is disabled, we're taking damage that we shouldn't be taking
 		return
 	. = ..()
 	flick("shield_impact", src)
