@@ -157,7 +157,15 @@
 		if(!deductcharge(hitcost))
 			return 0
 
-	stun_effect(L)
+	/// After a target is hit, we do a chunk of stamina damage, along with other effects.
+	/// After a period of time, we then check to see what stun duration we give.
+	L.Jitter(20)
+	L.confused = max(10, L.confused)
+	L.apply_effect(EFFECT_STUTTER, stunforce)
+	L.adjustStaminaLoss(65)
+
+	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
+	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, L), 20)
 
 	if(user)
 		L.lastattacker = user.real_name
@@ -174,29 +182,15 @@
 
 	return 1
 
-/// After a target is hit, we do a chunk of stamina damage, along with other effects.
-/// After a period of time, we then check to see what stun duration we give.
-/obj/item/melee/baton/proc/stun_effect(mob/living/target)
-	target.Jitter(20)
-	target.confused = max(10, target.confused)
-	target.apply_effect(EFFECT_STUTTER, stunforce)
-	target.adjustStaminaLoss(65)
-
-	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
-	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, target), 20)
-
 /// After the initial stun period, we check to see if the target needs to have the stun applied.
 /obj/item/melee/baton/proc/apply_stun_effect_end(mob/living/target)
-	if(HAS_TRAIT(target, TRAIT_STUNRESISTANCE))
-		if (!target.IsParalyzed())
-			to_chat(target, "<span class='warning'>You muscles seize, making you collapse, but your body quickly recovers...</span>")
-		
+	var/trait_check = HAS_TRAIT(target, TRAIT_STUNRESISTANCE) //var since we check it in out to_chat as well as determine stun duration
+	if(trait_check)
 		target.Paralyze(stunforce * 0.1)
-		return
-	if (!target.IsParalyzed())
-		to_chat(target, "<span class='warning'>You muscles seize, making you collapse!</span>")
-	
-	target.Paralyze(stunforce)
+	else
+		target.Paralyze(stunforce)
+	if(!target.IsParalyzed())
+		to_chat(target, "<span class='warning'>You muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]</span>")
 
 /obj/item/melee/baton/emp_act(severity)
 	. = ..()
