@@ -315,7 +315,6 @@ RLD
 		"Medical" = get_airlock_image(/obj/machinery/door/airlock/medical),
 		"Research" = get_airlock_image(/obj/machinery/door/airlock/research),
 		"Freezer" = get_airlock_image(/obj/machinery/door/airlock/freezer),
-		"Science" = get_airlock_image(/obj/machinery/door/airlock/science),
 		"Virology" = get_airlock_image(/obj/machinery/door/airlock/virology),
 		"Mining" = get_airlock_image(/obj/machinery/door/airlock/mining),
 		"Maintenance" = get_airlock_image(/obj/machinery/door/airlock/maintenance),
@@ -334,7 +333,6 @@ RLD
 		"Command" = get_airlock_image(/obj/machinery/door/airlock/command/glass),
 		"Medical" = get_airlock_image(/obj/machinery/door/airlock/medical/glass),
 		"Research" = get_airlock_image(/obj/machinery/door/airlock/research/glass),
-		"Science" = get_airlock_image(/obj/machinery/door/airlock/science/glass),
 		"Virology" = get_airlock_image(/obj/machinery/door/airlock/virology/glass),
 		"Mining" = get_airlock_image(/obj/machinery/door/airlock/mining/glass),
 		"Maintenance" = get_airlock_image(/obj/machinery/door/airlock/maintenance/glass),
@@ -370,8 +368,6 @@ RLD
 						airlock_type = /obj/machinery/door/airlock/research
 					if("Freezer")
 						airlock_type = /obj/machinery/door/airlock/freezer
-					if("Science")
-						airlock_type = /obj/machinery/door/airlock/science
 					if("Virology")
 						airlock_type = /obj/machinery/door/airlock/virology
 					if("Mining")
@@ -413,8 +409,6 @@ RLD
 						airlock_type = /obj/machinery/door/airlock/medical/glass
 					if("Research")
 						airlock_type = /obj/machinery/door/airlock/research/glass
-					if("Science")
-						airlock_type = /obj/machinery/door/airlock/science/glass
 					if("Virology")
 						airlock_type = /obj/machinery/door/airlock/virology/glass
 					if("Mining")
