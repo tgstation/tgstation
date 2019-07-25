@@ -217,7 +217,7 @@
 	return cloneloss
 
 /mob/living/proc/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && (status_flags & GODMODE))
+	if(!forced && ((status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NOMETABOLISM)))
 		return FALSE
 	cloneloss = CLAMP((cloneloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
@@ -225,7 +225,7 @@
 	return amount
 
 /mob/living/proc/setCloneLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && (status_flags & GODMODE))
+	if(!forced && ((status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NOMETABOLISM)))
 		return FALSE
 	cloneloss = amount
 	if(updating_health)
