@@ -1,12 +1,12 @@
 //! Defines for subsystems and overlays
-//!   
+//!
 //! Lots of important stuff in here, make sure you have your brain switched on
 //! when editing this file
 
 //! ## DB defines
 /**
   * DB major schema version
-  * 
+  *
   * Update this whenever the db schema changes
   *
   * make sure you add an update to the schema_version stable in the db changelog
@@ -15,7 +15,7 @@
 
 /**
   * DB minor schema version
-  * 
+  *
   * Update this whenever the db schema changes
   *
   * make sure you add an update to the schema_version stable in the db changelog
@@ -132,7 +132,8 @@
 #define INIT_ORDER_MINOR_MAPPING	-40
 #define INIT_ORDER_PATH				-50
 #define INIT_ORDER_DISCORD			-60
-#define INIT_ORDER_PERSISTENCE		-100
+#define INIT_ORDER_PERSISTENCE		-95
+#define INIT_ORDER_CHAT				-100 //Should be last to ensure chat remains smooth during init.
 
 // Subsystem fire priority, from lowest to highest priority
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
@@ -161,6 +162,7 @@
 #define FIRE_PRIORITY_TGUI			110
 #define FIRE_PRIORITY_TICKER		200
 #define FIRE_PRIORITY_ATMOS_ADJACENCY	300
+#define FIRE_PRIORITY_CHAT			400
 #define FIRE_PRIORITY_OVERLAYS		500
 #define FIRE_PRIORITY_INPUT			1000 // This must always always be the max highest priority. Player input must never be lost.
 

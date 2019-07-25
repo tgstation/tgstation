@@ -357,7 +357,6 @@
 	name = "headdress of Nemes"
 	desc = "Lavish space tomb not included."
 	icon_state = "nemes_headdress"
-	icon_state = "nemes_headdress"
 
 /obj/item/clothing/head/frenchberet
 	name = "french beret"

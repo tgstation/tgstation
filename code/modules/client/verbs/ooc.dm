@@ -288,7 +288,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	var/list/choices = list()
 	var/displayed_choicename = ""
 	for(var/client/C in GLOB.clients)
-		if(C.holder.fakekey)
+		if(C.holder?.fakekey)
 			displayed_choicename = C.holder.fakekey
 		else
 			displayed_choicename = C.key
