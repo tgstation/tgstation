@@ -1419,15 +1419,15 @@
 /datum/reagent/medicine/sanguiose/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-1, 0)
 	if(prob(33))
-		ADD_TRAIT(M, TRAIT_MUTE)
+		ADD_TRAIT(M, TRAIT_MUTE, MEDICINE_TRAIT)
 	//Removes blood
 	..()
 	. = 1
 
 /datum/reagent/medicine/sanguiose/on_mob_delete(mob/living/L)
 	. = ..()
-	if(HAS_TRAIT_FROM(L, TRAIT_MUTE, src))
-		REMOVE_TRAIT(L, TRAIT_MUTE)
+	//removes trait if it comes from the medicine trait.
+	REMOVE_TRAIT(L, TRAIT_MUTE, MEDICINE_TRAIT)
 /datum/reagent/medicine/sanguiose/overdose_process(mob/living/M)
 	M.adjustOxyLoss(3,0)
 	M.blood_volume -= 2 //I hope you like blood.
@@ -1453,15 +1453,14 @@
 	M.adjustFireLoss(-1, 0)
 	if(prob(33))
 		//Adds blindness witha  33% chance
-		ADD_TRAIT(M, TRAIT_BLIND)
+		ADD_TRAIT(M, TRAIT_BLIND, MEDICINE_TRAIT)
 	..()
 	. = 1
 
 /datum/reagent/medicine/frogenite/on_mob_delete(mob/living/L)
 	. = ..()
-	if(HAS_TRAIT_FROM(L, TRAIT_BLIND, src))
-		//removes blindness if trait comes from the medicine
-		REMOVE_TRAIT(L, TRAIT_BLIND)
+	//removes blindness if trait comes from the medicine
+	REMOVE_TRAIT(L, TRAIT_BLIND, MEDICINE_TRAIT)
 
 /datum/reagent/medicine/frogenite/overdose_process(mob/living/M)
 	M.adjustOxyLoss(15,0)
@@ -1489,14 +1488,14 @@
 	M.adjustToxLoss(-1, 0)
 	if(prob(33))
 		//Adds fatness with a 33% chance probability.
-		ADD_TRAIT(M, TRAIT_FAT)
+		ADD_TRAIT(M, TRAIT_FAT, MEDICINE_TRAIT)
 	..()
 	. = 1
 
 /datum/reagent/medicine/ferveatium/on_mob_delete(mob/living/L)
 	. = ..()
-	if(HAS_TRAIT_FROM(L, TRAIT_FAT, src))
-		REMOVE_TRAIT(L, TRAIT_FAT)
+	//removes the fat trait.
+	REMOVE_TRAIT(L, TRAIT_FAT, MEDICINE_TRAIT)
 
 /datum/reagent/medicine/ferveatium/overdose_process(mob/living/M)
 	M.adjustFireLoss(15,0)

@@ -190,6 +190,7 @@
 #define ABSTRACT_ITEM_TRAIT "abstract-item"
 #define STATUS_EFFECT_TRAIT "status-effect"
 #define CLOTHING_TRAIT "clothing"
+#define MEDICINE_TRAIT "medicine" //Medical side effects.
 
 // unique trait sources, still defines
 #define CLONING_POD_TRAIT "cloning-pod"
