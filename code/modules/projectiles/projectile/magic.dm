@@ -62,7 +62,7 @@
 	var/inner_tele_radius = 0
 	var/outer_tele_radius = 6
 
-/obj/item/projectile/magic/teleport/on_hit(target)
+/obj/item/projectile/magic/teleport/on_hit(atom/target)
 	. = ..()
 	if(ismob(target))
 		var/mob/M = target
