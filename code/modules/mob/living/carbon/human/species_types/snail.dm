@@ -33,27 +33,16 @@
 	if(!istype(bag, /obj/item/storage/backpack/snail))
 		if(C.dropItemToGround(bag)) //returns TRUE even if its null
 			C.equip_to_slot_or_del(new /obj/item/storage/backpack/snail(C), SLOT_BACK)
-	RegisterSignal(C, COMSIG_MOVABLE_MOVED, .proc/lubricate)
+	C.AddElement(/datum/element/snailcrawl)
 
 /datum/species/snail/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	UnregisterSignal(C, COMSIG_MOVABLE_MOVED)
-	C.remove_movespeed_modifier(MOVESPEED_ID_SNAIL_CRAWL)
+	C.RemoveElement(/datum/element/snailcrawl)
 	var/obj/item/storage/backpack/bag = C.get_item_by_slot(SLOT_BACK)
 	if(istype(bag, /obj/item/storage/backpack/snail))
 		bag.emptyStorage()
 		C.doUnEquip(bag, TRUE, no_move = TRUE)
 		qdel(bag)
-
-///Makes stuff slippery. Triggers on moved signal
-/datum/species/snail/proc/lubricate(mob/living/carbon/snail)
-	if(snail.resting && !snail.buckled) //s l i d e
-		var/turf/open/OT = get_turf(snail)
-		if(isopenturf(OT))
-			OT.MakeSlippery(TURF_WET_LUBE, 20)
-		snail.add_movespeed_modifier(MOVESPEED_ID_SNAIL_CRAWL, update=TRUE, priority=100, multiplicative_slowdown=-7, movetypes=GROUND)
-	else
-		snail.remove_movespeed_modifier(MOVESPEED_ID_SNAIL_CRAWL)
 
 /obj/item/storage/backpack/snail
 	name = "snail shell"
