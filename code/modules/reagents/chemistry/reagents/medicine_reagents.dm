@@ -1408,7 +1408,7 @@
 
 /datum/reagent/medicine/sanguiose
 	name = "Sanguiose"
-	description = "A chemical developed to aid in the butchering proccess, it causes a chemical reaction which heals bruises and other similar injuries. Has a moderate chance of causing muteness in the user."
+	description = "A chemical developed to aid in the butchering proccess, it causes a chemical reaction which heals bruises and other similar injuries. Has a moderate chance of causing deafness in the user."
 	reagent_state = LIQUID
 	color = "#FF6464"
 	metabolization_rate = 0.5* REAGENTS_METABOLISM
