@@ -1008,11 +1008,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(H.satiety > MAX_SATIETY)
 			H.satiety = MAX_SATIETY
 		else if(H.satiety > 0)
-			H--
+			H.satiety--
 		else if(H.satiety < -MAX_SATIETY)
 			H.satiety = -MAX_SATIETY
 		else if(H.satiety < 0)
-			H++
+			H.satiety++
 			if(prob(round(-H.satiety/40)))
 				H.Jitter(5)
 			hunger_rate = 3 * HUNGER_FACTOR
