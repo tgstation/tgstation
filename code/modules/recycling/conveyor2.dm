@@ -373,7 +373,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/item/conveyor_switch_construct/attack_self(mob/user)
 	for(var/obj/item/conveyor_construct/C in view())
 		C.id = id
-	to_chat(user, "<span class='notice'>You have linked all nearby converyor belt assemblies to this switch.</span>")
+	to_chat(user, "<span class='notice'>You have linked all nearby conveyor belt assemblies to this switch.</span>")
 
 /obj/item/conveyor_switch_construct/afterattack(atom/A, mob/user, proximity)
 	. = ..()
