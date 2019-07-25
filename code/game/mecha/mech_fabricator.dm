@@ -36,7 +36,7 @@
 
 /obj/machinery/mecha_part_fabricator/Initialize()
     var/datum/component/material_container/materials = AddComponent(/datum/component/material_container,
-     list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE), 0,
+     list(/datum/material/iron, /datum/material/glass, /datum/material/silver, /datum/material/gold, /datum/material/diamond, /datum/material/plasma, /datum/material/uranium, /datum/material/bananium, /datum/material/titanium, /datum/material/bluespace), 0,
         TRUE, /obj/item/stack, CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
     materials.precise_insertion = TRUE
     stored_research = new
@@ -104,7 +104,8 @@
 	var/i = 0
 	var/output
 	for(var/c in D.materials)
-		output += "[i?" | ":null][get_resource_cost_w_coeff(D, c)] [material2name(c)]"
+		var/datum/material/M = c
+		output += "[i?" | ":null][get_resource_cost_w_coeff(D, M)] [M.name]"
 		i++
 	return output
 
@@ -112,20 +113,22 @@
 	var/output
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	for(var/mat_id in materials.materials)
-		var/datum/material/M = materials.materials[mat_id]
-		output += "<span class=\"res_name\">[M.name]: </span>[M.amount] cm&sup3;"
-		if(M.amount >= MINERAL_MATERIAL_AMOUNT)
-			output += "<span style='font-size:80%;'>- Remove \[<a href='?src=[REF(src)];remove_mat=1;material=[mat_id]'>1</a>\]"
-			if(M.amount >= (MINERAL_MATERIAL_AMOUNT * 10))
-				output += " | \[<a href='?src=[REF(src)];remove_mat=10;material=[mat_id]'>10</a>\]"
-			output += " | \[<a href='?src=[REF(src)];remove_mat=50;material=[mat_id]'>All</a>\]</span>"
+		var/datum/material/M = mat_id
+		var/amount = materials.materials[mat_id]
+		output += "<span class=\"res_name\">[M.name]: </span>[amount] cm&sup3;"
+		if(amount >= MINERAL_MATERIAL_AMOUNT)
+			output += "<span style='font-size:80%;'>- Remove \[<a href='?src=[REF(src)];remove_mat=1;material=[REF(mat_id)]'>1</a>\]"
+			if(amount >= (MINERAL_MATERIAL_AMOUNT * 10))
+				output += " | \[<a href='?src=[REF(src)];remove_mat=10;material=[REF(M)]'>10</a>\]"
+			output += " | \[<a href='?src=[REF(src)];remove_mat=50;material=[REF(M)]'>All</a>\]</span>"
 		output += "<br/>"
 	return output
 
 /obj/machinery/mecha_part_fabricator/proc/get_resources_w_coeff(datum/design/D)
 	var/list/resources = list()
 	for(var/R in D.materials)
-		resources[R] = get_resource_cost_w_coeff(D, R)
+		var/datum/material/M = R
+		resources[M] = get_resource_cost_w_coeff(D, M)
 	return resources
 
 /obj/machinery/mecha_part_fabricator/proc/check_resources(datum/design/D)
@@ -142,7 +145,7 @@
 	var/list/res_coef = get_resources_w_coeff(D)
 
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	materials.use_amount(res_coef)
+	materials.use_materials(res_coef)
 	add_overlay("fab-active")
 	use_power = ACTIVE_POWER_USE
 	updateUsrDialog()
@@ -246,7 +249,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(datum/design/D, resource, roundto = 1)
+/obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(datum/design/D, var/datum/material/resource, roundto = 1)
 	return round(D.materials[resource]*component_coeff, roundto)
 
 /obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(datum/design/D, roundto = 1) //aran
@@ -385,7 +388,8 @@
 
 	if(href_list["remove_mat"] && href_list["material"])
 		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-		materials.retrieve_sheets(text2num(href_list["remove_mat"]), href_list["material"])
+		var/datum/material/Mat = locate(href_list["material"])
+		materials.retrieve_sheets(text2num(href_list["remove_mat"]), Mat)
 
 	updateUsrDialog()
 	return
@@ -396,9 +400,9 @@
 	..()
 
 /obj/machinery/mecha_part_fabricator/proc/AfterMaterialInsert(type_inserted, id_inserted, amount_inserted)
-	var/stack_name = material2name(id_inserted)
-	add_overlay("fab-load-[stack_name]")
-	addtimer(CALLBACK(src, /atom/proc/cut_overlay, "fab-load-[stack_name]"), 10)
+	var/datum/material/M = id_inserted
+	add_overlay("fab-load-[M.name]")
+	addtimer(CALLBACK(src, /atom/proc/cut_overlay, "fab-load-[M.name]"), 10)
 	updateUsrDialog()
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/item/W, mob/user, params)
@@ -410,8 +414,6 @@
 
 	return ..()
 
-/obj/machinery/mecha_part_fabricator/proc/material2name(ID)
-	return copytext(ID,2)
 
 /obj/machinery/mecha_part_fabricator/proc/is_insertion_ready(mob/user)
 	if(panel_open)

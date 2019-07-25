@@ -27,8 +27,8 @@ new /datum/disease_ability/symptom/medium/nano_boost,
 new /datum/disease_ability/symptom/medium/nano_destroy,
 new /datum/disease_ability/symptom/medium/viraladaptation,
 new /datum/disease_ability/symptom/medium/viralevolution,
-new /datum/disease_ability/symptom/medium/vitiligo,
-new /datum/disease_ability/symptom/medium/revitiligo,
+new /datum/disease_ability/symptom/medium/disfiguration,
+new /datum/disease_ability/symptom/medium/polyvitiligo,
 new /datum/disease_ability/symptom/medium/itching,
 new /datum/disease_ability/symptom/medium/heal/weight_loss,
 new /datum/disease_ability/symptom/medium/heal/sensory_restoration,
@@ -373,11 +373,11 @@ new /datum/disease_ability/symptom/powerful/youth
 /datum/disease_ability/symptom/medium/viralevolution
 	symptoms = list(/datum/symptom/viralevolution)
 
-/datum/disease_ability/symptom/medium/vitiligo
-	symptoms = list(/datum/symptom/vitiligo)
+/datum/disease_ability/symptom/medium/polyvitiligo
+	symptoms = list(/datum/symptom/polyvitiligo)
 
-/datum/disease_ability/symptom/medium/revitiligo
-	symptoms = list(/datum/symptom/revitiligo)
+/datum/disease_ability/symptom/medium/disfiguration
+	symptoms = list(/datum/symptom/disfiguration)
 
 /datum/disease_ability/symptom/medium/itching
 	symptoms = list(/datum/symptom/itching)
