@@ -124,6 +124,11 @@
 	deactive_msg = "You extinguish your fireball... for now."
 	active = FALSE
 
+/obj/effect/proc_holder/spell/aimed/fireball/fire_projectile(list/targets, mob/living/user)
+	var/range = 6 + 2*spell_level
+	projectile_var_overrides = list("range" = range)
+	return ..()
+
 /obj/effect/proc_holder/spell/aimed/spell_cards
 	name = "Spell Cards"
 	desc = "Blazing hot rapid-fire homing cards. Send your foes to the shadow realm with their mystical power!"

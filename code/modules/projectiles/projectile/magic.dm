@@ -647,7 +647,6 @@
 	damage = 10
 	damage_type = BRUTE
 	nodamage = FALSE
-	range = 8
 
 	//explosion values
 	var/exp_heavy = 0
