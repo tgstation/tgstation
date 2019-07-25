@@ -31,8 +31,11 @@
 
 /obj/item/projectile/magic/spell/magic_missile/on_hit(target)
 	. = ..()
-	if(proj_anti_magic_check(target))
-		return BULLET_ACT_BLOCK
+	if(ismob(target))
+		var/mob/M = target
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return BULLET_ACT_BLOCK
 
 /obj/effect/proc_holder/spell/targeted/genetic/mutate
 	name = "Mutate"
