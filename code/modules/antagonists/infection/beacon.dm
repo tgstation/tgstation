@@ -25,6 +25,10 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 	name = "beaconstartsouth"
 	dir = SOUTH
 
+/*
+	Beacons, infectious creatures and structures are completely unable to cross the barriers that these generate
+*/
+
 /obj/structure/beacon_generator
 	name = "beacon generator"
 	icon = 'icons/mob/infection/infection.dmi'
@@ -37,6 +41,7 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 	CanAtmosPass = ATMOS_PASS_PROC
 	max_integrity = 1000
 	resistance_flags = INDESTRUCTIBLE
+	// Stores the walls that this beacon is generating, to be destroyed when the beacon is destroyed
 	var/list/walls = list()
 
 /obj/structure/beacon_generator/Initialize(mapload)
@@ -63,6 +68,9 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 		INVOKE_ASYNC(src, .proc/destroyed_announcement)
 	return ..()
 
+/*
+	Delayed announcement that occurs when the becaon has been destroyed
+*/
 /obj/structure/beacon_generator/proc/destroyed_announcement(beacons_left = GLOB.infection_beacons.len)
 	sleep(80)
 	priority_announce("A beacon has been consumed by the infection, only [beacons_left] remain.","CentCom Biohazard Division", 'sound/misc/notice1.ogg')
@@ -99,6 +107,11 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 	shield_overlay.transform = M
 	vis_contents += shield_overlay
 
+/*
+	Creates the walls for the beacon generator.
+	They are generated 5 spaces behind the beacon and then extend out on opposite sides to the ends of the z level.
+	Essentially cutting off any infection creatures from passing the beacon without destroying it.
+*/
 /obj/structure/beacon_generator/proc/generateWalls()
 	var/direction = dir
 	var/turf/from = get_ranged_target_turf(src, turn(direction, 180), 5)

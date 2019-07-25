@@ -1,3 +1,7 @@
+/*
+	A factory that creates spores used to defend the infection
+*/
+
 /obj/structure/infection/factory
 	name = "factory infection"
 	icon = 'icons/mob/infection/crystaline_infection_medium.dmi'
@@ -10,10 +14,14 @@
 	point_return = 5
 	build_time = 100
 	upgrade_subtype = /datum/infection_upgrade/factory
+	// spores the factory has spawned
 	var/list/spores = list()
+	// the maximum spores that can be spawned
 	var/max_spores = 3
+	// the delay in the spores spawning
 	var/spore_delay = 0
-	var/spore_cooldown = 80 //8 seconds between spores and after spore death
+	// the added delay to spore delay
+	var/spore_cooldown = 80
 
 /obj/structure/infection/factory/Initialize()
 	. = ..()

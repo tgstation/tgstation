@@ -1,6 +1,10 @@
 #define SAME_INFECTION_TYPE(check, typetocheck) (check.type == typetocheck || check.building == typetocheck)
 #define ISRESPAWNING(MOB) (istype(MOB.loc, /obj/structure/infection) || istype(MOB.loc, /mob/camera/commander))
 
+/*
+	The actual infection antagonist
+*/
+
 /datum/antagonist/infection
 	name = "Infection"
 	roundend_category = "infections"
@@ -30,11 +34,12 @@
 	owner.transfer_to(newmob, TRUE)
 	return ..()
 
-
+// Creates the mob for the infection commander and then returns the mob created
 /datum/antagonist/infection/proc/create_mob_type(var/turf/spawnturf)
 	var/mob/camera/commander/C = new /mob/camera/commander(spawnturf)
 	return C
 
+// Adds the objectives for the antagonist to the mob
 /datum/antagonist/infection/proc/create_objectives()
 	var/datum/objective/infection_takeover/main = new
 	main.owner = owner
@@ -53,6 +58,10 @@
 /datum/antagonist/infection/spore/roundend_report()
 	return
 
+/*
+	Creates the mob type for the infection spores, handles them specially if they're a roundstart spore
+	If the infection core exists they will instead be immediately moved there
+*/
 /datum/antagonist/infection/spore/create_mob_type(var/turf/spawnturf)
 	var/mob/camera/commander/C = GLOB.infection_commander
 	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/S = new /mob/living/simple_animal/hostile/infection/infectionspore/sentient(C, null, C)

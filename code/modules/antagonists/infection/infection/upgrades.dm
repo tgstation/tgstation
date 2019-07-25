@@ -1,14 +1,25 @@
+/*
+	Datums that store the things that upgrades do as well as the information on them
+*/
+
 /datum/infection_upgrade
-	// display stuff
+	// name of the upgrade
 	var/name = ""
+	// description of the upgrade
 	var/description = ""
 
-	// application
+	// cost of the upgrade
 	var/cost = 0
-	var/increasing_cost = 0 // the amount the cost increases every time the upgrade is purchased
-	var/times = 1 // times the upgrade can be bought
-	var/bought = 0 // how many times the upgrade has been bought
+	// cost that increases every time the upgrade is purchased
+	var/increasing_cost = 0
+	// the amount of times that this upgrade can actually be bought
+	var/times = 1
+	// the amount of times this upgrade has been bought already
+	var/bought = 0
 
+/*
+	Handles pre-upgrade incrementing
+*/
 /datum/infection_upgrade/proc/do_upgrade(atom/parent)
 	times--
 	bought++
@@ -16,6 +27,9 @@
 	upgrade_effect(parent)
 	return
 
+/*
+	Actual place to put your upgrade code
+*/
 /datum/infection_upgrade/proc/upgrade_effect(atom/parent)
 	return
 
@@ -24,7 +38,8 @@
 ///////////////////////
 
 /datum/infection_upgrade/overmind
-	var/action_type // action type to unlock and add to the commander (if there is one)
+	// action type to unlock and add to the commander (if there is one)
+	var/action_type
 
 /datum/infection_upgrade/overmind/upgrade_effect(mob/camera/commander/parentcommander)
 	var/datum/action/cooldown/infection/add_action = new action_type()
@@ -86,12 +101,13 @@
 	if(!parentcommander.create_spore())
 		times++
 
-///////////////////////////////
-// Spore Type Change Upgrades//
-///////////////////////////////
+/*
+	Type change spore upgrades, turns the upgrader into the mob type that corresponds to that upgrade
+*/
 
 /datum/infection_upgrade/spore_type_change
 	cost = 200
+	// the type that the spore will change into
 	var/new_type
 
 /datum/infection_upgrade/spore_type_change/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/parentspore)
@@ -112,9 +128,9 @@
 	description = "A generally slow, tanky, and damaging spore useful for destroying structures. Effective for defending and advancing infectious structures."
 	new_type = /mob/living/simple_animal/hostile/infection/infectionspore/sentient/destructive
 
-////////////////////////////
-// Infector Spore Upgrades//
-////////////////////////////
+/*
+	Upgrade exclusively for the infection spore type
+*/
 
 /datum/infection_upgrade/infector/mininode
 	name = "Miniature Node"
@@ -160,9 +176,9 @@
 /datum/infection_upgrade/infector/respawn_time/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/infector/parentinfector)
 	parentinfector.respawn_time -= 3
 
-//////////////////////////
-// Hunter Spore Upgrades//
-//////////////////////////
+/*
+	Upgrade exclusively for the hunter spore type
+*/
 
 /datum/infection_upgrade/hunter/lifesteal
 	name = "Lifesteal"
@@ -199,9 +215,9 @@
 /datum/infection_upgrade/hunter/speed/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/hunter/parenthunter)
 	parenthunter.set_varspeed(-0.25 * bought)
 
-///////////////////////////////
-// Destructive Spore Upgrades//
-///////////////////////////////
+/*
+	Upgrades exclusively for the destructive spore type
+*/
 
 /datum/infection_upgrade/destructive/hydraulic_fists
 	name = "Hydraulic Fists"
@@ -271,9 +287,9 @@
 /datum/infection_upgrade/destructive/brute_protection/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/destructive/parentdestructive)
 	parentdestructive.damage_coeff[BRUTE] -= 0.1
 
-////////////////////
-// Turret Upgrades//
-////////////////////
+/*
+	Upgrade types for the infection turrets
+*/
 
 /datum/infection_upgrade/turret/flak_bullets
 	name = "Flak Bullets"
@@ -283,9 +299,9 @@
 /datum/infection_upgrade/turret/flak_bullets/upgrade_effect(atom/parent)
 	parent.AddComponent(/datum/component/shrapnel, /obj/item/projectile/bullet/infection/flak, 2)
 
-//////////////////////
-// Resource Upgrades//
-//////////////////////
+/*
+	Upgrade types for the infection resource generators
+*/
 
 /datum/infection_upgrade/resource/storage_unit
 	name = "Storage Unit"
@@ -296,9 +312,9 @@
 	parentresource.point_return_gain += 0.25
 	return
 
-///////////////////
-// Node Upgrades///
-///////////////////
+/*
+	Upgrade types for the infection nodes
+*/
 
 /datum/infection_upgrade/node/defensive_shield
 	name = "Defensive Shield"
@@ -329,20 +345,20 @@
 	parentnode.expansion_amount += 4
 	return
 
-//////////////////////
-// Factory Upgrades///
-//////////////////////
+/*
+	Upgrade types for the infection factories
+*/
 
 /datum/infection_upgrade/factory
 
-//////////////////////////
-// Beam Turret Upgrades///
-//////////////////////////
+/*
+	Upgrade types for the infection beam turrets
+*/
 
 /datum/infection_upgrade/beamturret
 
-/////////////////////
-// Vacuum Upgrades///
-/////////////////////
+/*
+	Upgrade types for the infection vacuums
+*/
 
 /datum/infection_upgrade/vacuum

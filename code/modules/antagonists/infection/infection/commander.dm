@@ -4,6 +4,10 @@ GLOBAL_LIST_EMPTY(infection_nodes)
 GLOBAL_VAR(infection_core)
 GLOBAL_VAR(infection_commander)
 
+/*
+	The actual commander of the infection that places down all of the structures and commands every creature
+*/
+
 /mob/camera/commander
 	name = "Infection Commander"
 	real_name = "Infection Commander"
@@ -21,31 +25,48 @@ GLOBAL_VAR(infection_commander)
 	faction = list(ROLE_INFECTION)
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	hud_type = /datum/hud/infection_commander
-	var/obj/structure/infection/core/infection_core = null // The infection commanders's core
+	// The infection commanders physical core
+	var/obj/structure/infection/core/infection_core = null
+	// The amount of points that can be spent on structures and powers
 	var/infection_points = 0
+	// The maximum amount of points that can be attained
 	var/max_infection_points = 100
-	var/upgrade_points = 1 // obtained by destroying beacons
-	var/last_attack = 0
+	// Upgrade points used to buy evolutions in the evolution shop
+	var/upgrade_points = 1
+	// List of all the infection mobs this commander controls
 	var/list/infection_mobs = list()
+	// List of all the resource infection this commander controls
 	var/list/resource_infection = list()
-	var/nodes_required = FALSE //if the infection needs nodes to place resource and factory blobs
+	// If the infection requires nodes to place down some structures
+	var/nodes_required = FALSE
+	// If the core has been placed or not
 	var/placed = FALSE
+	// Are we placing the core of the infection? Used to prevent premature end of gamemode
 	var/placing = FALSE
+	// If this commander can move his camera wherever he wants with no limitations
 	var/freecam = FALSE
-	var/base_point_rate = 2 //for core placement
-	var/autoplace_time = CORE_AUTOPLACE_TIME // 5 minutes
+	// Points generated every life tick from the core
+	var/base_point_rate = 2
+	// The amount of time it takes for the core to be placed after this mob has been spawned
+	var/autoplace_time = CORE_AUTOPLACE_TIME
+	// If we're winning and don't want to lose after this moment
 	var/victory_in_progress = FALSE
+	// Color that all of the infection are tinted
 	var/infection_color = "#ffffff"
+	// The medical hud display for the commander
 	var/datum/atom_hud/medical_hud
 
+	// Actions that the infection commander starts with
 	var/list/default_actions = list(/datum/action/cooldown/infection/creator/shield,
 									/datum/action/cooldown/infection/creator/resource,
 									/datum/action/cooldown/infection/creator/node,
 									/datum/action/cooldown/infection/creator/factory,
 									/datum/action/cooldown/infection/coregrab)
 
+	// Actions that the infection commander can spend upgrade points to unlock
 	var/list/unlockable_actions = list()
 
+	// Menu handler for the evolution menu
 	var/datum/infection_menu/menu_handler
 
 /mob/camera/commander/Initialize(mapload, starting_points = max_infection_points)
@@ -55,7 +76,6 @@ GLOBAL_VAR(infection_commander)
 	GLOB.infection_commander = src
 	infection_points = starting_points
 	autoplace_time += world.time
-	last_attack = world.time
 	if(infection_core)
 		infection_core.update_icon()
 	SSshuttle.registerHostileEnvironment(src)
@@ -71,10 +91,16 @@ GLOBAL_VAR(infection_commander)
 	menu_handler = new /datum/infection_menu(src)
 	START_PROCESSING(SSobj, src)
 
+/*
+	Adds unlockables to the unlockable upgrades list so you don't have to manually
+*/
 /mob/camera/commander/proc/generate_unlockables()
 	for(var/upgrade_type in subtypesof(/datum/infection_upgrade/overmind))
 		unlockable_actions += new upgrade_type()
 
+/*
+	First info announcement when the infection has just been spotted
+*/
 /mob/camera/commander/proc/generate_announcement()
 	priority_announce("[station_name()]: An abnormal and biological meteor has been detected on a collision course with your station. \n\n\
 					   This substance appears to be self replicating, and will stop at nothing to consume all matter around it.\n\n\
@@ -83,6 +109,9 @@ GLOBAL_VAR(infection_commander)
 					   Further updates will be given as we analyze the substance.",
 					  "CentCom Biohazard Division", 'sound/misc/notice1.ogg')
 
+/*
+	Extra info announcement to hopefully avoid people running in and dying to an unkillable enemy
+*/
 /mob/camera/commander/proc/info_announcement()
 	priority_announce("[station_name()]: We have updated information regarding the biohazardous substance. \n\n\
 					   It appears to have a core that is virtually indestructible, we have been unable to affect it in any way, even with something as powerful as a singularity.\n\n\
@@ -92,11 +121,16 @@ GLOBAL_VAR(infection_commander)
 					   Try to use this information to your advantage, we will report back again once the core has landed.",
 					  "CentCom Biohazard Division", 'sound/misc/notice1.ogg')
 
-
+/*
+	Players win, infection is defeated
+*/
 /mob/camera/commander/proc/defeated_announcement()
 	priority_announce("Our scanners detect no trace of any sentient infectious substance, threat neutralized.",
 					  "CentCom Biohazard Division", 'sound/misc/notice2.ogg')
 
+/*
+	Places the beacons down at all of the landmarks in the map files, slightly delayed to make it look cool
+*/
 /mob/camera/commander/proc/place_beacons()
 	for(var/obj/effect/landmark/beacon_start/B in GLOB.beacon_spawns)
 		var/turf/T = get_turf(B)
@@ -121,6 +155,9 @@ GLOBAL_VAR(infection_commander)
 		infection_points = INFINITY
 		addtimer(CALLBACK(src, .proc/victory), 250)
 
+/*
+	Called when all of the beacons have been destroyed and the infection has won
+*/
 /mob/camera/commander/proc/victory()
 	sound_to_playing_players('sound/machines/alarm.ogg')
 	sleep(100)
@@ -202,6 +239,9 @@ GLOBAL_VAR(infection_commander)
 	if(infection_core)
 		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(infection_core.obj_integrity)]</font></div>"
 
+/*
+	Adds points to the infection commander, but not over or under the maximum or minimum
+*/
 /mob/camera/commander/proc/add_points(points)
 	infection_points = CLAMP(infection_points + points, 0, max_infection_points)
 	hud_used.infectionpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(infection_points)]</font></div>"
@@ -222,6 +262,9 @@ GLOBAL_VAR(infection_commander)
 
 	infection_talk(message)
 
+/*
+	Tries to talk to other fellow infectious creature with the message sent
+*/
 /mob/camera/commander/proc/infection_talk(message)
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
@@ -243,6 +286,9 @@ GLOBAL_VAR(infection_commander)
 /mob/camera/commander/blob_act(obj/structure/infection/I)
 	return
 
+/*
+	Toggles the medical heads up display
+*/
 /mob/camera/commander/proc/toggle_medical_hud()
 	if(medical_hud)
 		medical_hud.remove_hud_from(src)

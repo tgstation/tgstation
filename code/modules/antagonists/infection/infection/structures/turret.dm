@@ -1,3 +1,7 @@
+/*
+	A turret that fires at enemies that enter its radius
+*/
+
 /obj/structure/infection/turret
 	name = "infection turret"
 	desc = "A solid wall with a radiating material on the inside."
@@ -9,10 +13,15 @@
 	point_return = 10
 	build_time = 100
 	upgrade_subtype = /datum/infection_upgrade/turret
-	var/frequency = 1 // amount of times the turret will fire per process tick (1 second)
-	var/scan_range = 7 // range to search for targets
-	var/projectile_type = /obj/item/projectile/bullet/infection // the bullet fired for this turret
+	// the amount of times the turret will fire every time it finds a target
+	var/frequency = 1
+	// the range that this turret will search to find targets
+	var/scan_range = 7
+	// the projectile shot from this turret
+	var/projectile_type = /obj/item/projectile/bullet/infection
+	// the projectiles sound when it is fired
 	var/projectile_sound = 'sound/weapons/gunshot_smg.ogg'
+	// the sound when the projectile hits the person
 	var/hit_sound = 'sound/effects/meteorimpact.ogg'
 
 /obj/structure/infection/turret/Initialize()
@@ -78,11 +87,17 @@
 	if(targets.len)
 		tryToShootAt(targets)
 
+/*
+	Checks if they're in the infection faction and to ignore them as a target
+*/
 /obj/structure/infection/turret/proc/in_faction(mob/target)
 	if(ROLE_INFECTION in target.faction)
 		return TRUE
 	return FALSE
 
+/*
+	Tries to shoot at the target
+*/
 /obj/structure/infection/turret/proc/tryToShootAt(list/atom/movable/targets)
 	while(targets.len > 0)
 		var/atom/movable/M = pick(targets)
@@ -90,6 +105,9 @@
 		if(target(M))
 			return 1
 
+/*
+	If we can actually shoot them, queue up all of the shots that need to happen
+*/
 /obj/structure/infection/turret/proc/target(atom/movable/target)
 	if(target && frequency)
 		var/diffTime = SSprocessing.wait / frequency
@@ -101,6 +119,9 @@
 		return 1
 	return
 
+/*
+	Actually fire the projectile at the target now
+*/
 /obj/structure/infection/turret/proc/shootAt(atom/movable/target)
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(target)

@@ -1,3 +1,7 @@
+/*
+	Actions that the infection and their creatures can use
+*/
+
 /datum/action/cooldown/infection
 	name = "Infection Power"
 	desc = "New Infection Power"
@@ -20,6 +24,9 @@
 		return TRUE
 	return FALSE
 
+/*
+	Called when all basic requirements for the action to be used have been met
+*/
 /datum/action/cooldown/infection/proc/fire(mob/camera/commander/I, turf/T)
 	return TRUE
 
@@ -58,8 +65,11 @@
 /datum/action/cooldown/infection/creator
 	name = "Create"
 	desc = "New Creation Power"
+	// type of infection structure to create
 	var/type_to_create
+	// must be placed more than this distance away from another structure of the same type
 	var/distance_from_similar = 0
+	// whether or not this structure requires a node to be placed down
 	var/needs_node = FALSE
 
 /datum/action/cooldown/infection/creator/fire(mob/camera/commander/I, turf/T)

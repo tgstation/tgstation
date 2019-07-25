@@ -182,12 +182,19 @@ SUBSYSTEM_DEF(events)
 	message_admins("Summon Events has been [wizardmode ? "enabled, events will occur every [SSevents.frequency_lower / 600] to [SSevents.frequency_upper / 600] minutes" : "disabled"]!")
 	log_game("Summon Events was [wizardmode ? "enabled" : "disabled"]!")
 
+/*
+	Toggles the event system to only create events made for infection gamemode
+*/
+
 /datum/controller/subsystem/events/proc/toggleInfectionmode()
 	infectionmode = !infectionmode
 	message_admins("Doom Clock Events have been [infectionmode ? "enabled, events will occur every [SSevents.frequency_lower / 600] to [SSevents.frequency_upper / 600] minutes" : "disabled"]!")
 	log_game("Doom Clock Events Events are [infectionmode ? "enabled" : "disabled"]!")
 
-// gives the time to the next event formatted
+/*
+	Gives time until the next event, formatted like the shuttle call time
+	Only works below 1 hour and represents the time like MM:SS
+*/
 /datum/controller/subsystem/events/proc/timetonext()
 	var/timeleft = round((scheduled - world.time) / 10)
 	if(timeleft > 1 HOURS)

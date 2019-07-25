@@ -1,9 +1,8 @@
 
-////////////////
-// BASE TYPE ///
-////////////////
+/*
+	Base slime type not meant to be spawned
+*/
 
-//Do not spawn
 /mob/living/simple_animal/hostile/infection
 	icon = 'icons/mob/infection/slime_mob.dmi'
 	pass_flags = PASSBLOB
@@ -17,8 +16,11 @@
 	light_range = 6
 	a_intent = INTENT_HARM
 	stat_attack = DEAD
+	// if the spore can cross beacons
 	var/can_cross_beacons = FALSE
+	// the overmind of the spore
 	var/mob/camera/commander/overmind = null
+	// the factory the spore spawned from
 	var/obj/structure/infection/factory/factory = null
 
 /mob/living/simple_animal/hostile/infection/Initialize(mapload, owner_overmind)
@@ -67,6 +69,9 @@
 		return 1
 	return ..()
 
+/*
+	Attempts to talk using the message
+*/
 /mob/living/simple_animal/hostile/infection/proc/infection_chat(msg)
 	var/rendered = "<font color=\"#EE4000\"><b>\[Infection Telepathy\] [real_name]</b> [msg]</font>"
 	for(var/M in GLOB.mob_list)
@@ -76,9 +81,9 @@
 			var/link = FOLLOW_LINK(M, src)
 			to_chat(M, "[link] [rendered]")
 
-/////////////////////
-// INFECTION SPORE //
-/////////////////////
+/*
+	A normal infection slime created from factories
+*/
 
 /mob/living/simple_animal/hostile/infection/infectionspore
 	name = "infection slime"
@@ -100,6 +105,7 @@
 	movement_type = FLYING
 	del_on_death = 1
 	deathmessage = "dissapates in the atmosphere!"
+	// color of the crystal on top of the infection slime
 	var/crystal_color = "#ffffff"
 
 /mob/living/simple_animal/hostile/infection/infectionspore/Initialize(mapload, var/obj/structure/infection/factory/linked_node, commander)

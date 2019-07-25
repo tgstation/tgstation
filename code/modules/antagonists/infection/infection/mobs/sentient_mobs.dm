@@ -1,3 +1,7 @@
+/*
+	The actual player controlled slime type
+*/
+
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient
 	name = "evolving slime"
 	desc = "An extremely strong slime in the early stages of life, what will it become next?"
@@ -9,22 +13,36 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	crystal_color = "#ff8c00"
+	// respawn time for the slime
 	var/respawn_time = 15
+	// the time left to respawn
 	var/current_respawn_time = -1
+	// whether or not the spore can respawn
 	var/can_respawn = FALSE
+	// the upgrade points the spore has stored
 	var/upgrade_points = 0
+	// the spent upgrade points, half of these are given back when they refund the upgrades
 	var/spent_upgrade_points = 0
+	// the maximum number of upgrade points that the slime is allowed to have
 	var/max_upgrade_points = 1000
-	var/cycle_cooldown = 0 // cooldown before you can cycle nodes again
+	// the cooldown between being able to change spawn positions
+	var/cycle_cooldown = 0
+	// the upgrade types given to the slime
 	var/list/upgrade_types = list()
+	// the actual upgrades
 	var/list/upgrades = list()
+	// the upgrade subtype added to upgrade types
 	var/upgrade_subtype = /datum/infection_upgrade/spore_type_change
+	// handles the menu for upgrading
 	var/datum/infection_menu/menu_handler
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/Initialize(mapload, var/obj/structure/infection/factory/linked_node, commander)
 	. = ..()
 	generate_upgrades()
 
+/*
+	Generates the actual upgrade datums for this slime
+*/
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/generate_upgrades()
 	if(ispath(upgrade_subtype))
 		upgrade_types += subtypesof(upgrade_subtype)
@@ -62,23 +80,39 @@
 			return FALSE
 	. = ..()
 
+/*
+	Sets the point value for the slime
+*/
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/set_points(var/value)
 	add_points(value - upgrade_points)
 
+/*
+	Adds points to the infection slime
+	Does not go over or below the maximum and minimum values
+*/
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/add_points(var/value)
 	upgrade_points = CLAMP(upgrade_points + value, 0, max_upgrade_points)
 	if(hud_used)
 		hud_used.infectionpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(upgrade_points)]</font></div>"
 
+/*
+	The amount of points given to the slime every life tick
+*/
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/get_point_generation_rate()
 	return 2
 
+/*
+	Attempts to open the evolution menu of this slime
+*/
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/evolve_menu()
 	if(!ISRESPAWNING(src))
 		to_chat(src, "<span class='warning'>You cannot evolve unless you are reforming at a node or core!</span>")
 		return
 	menu_handler.ui_interact(src)
 
+/*
+	Attempts to upgrade something with this slimes points
+*/
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/can_upgrade(cost = 1)
 	var/diff = upgrade_points - cost
 	if(diff < 0)
@@ -88,6 +122,9 @@
 	spent_upgrade_points += cost
 	return TRUE
 
+/*
+	Help text for the infection slime
+*/
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/infection_help()
 	to_chat(src, "<b>You are an evolving slime!</b>")
 	to_chat(src, "You are an evolving creature that can select evolutions in order to become stronger \n<b>You will respawn as long as the core still exists.</b>")
@@ -114,6 +151,9 @@
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/dust()
 	death()
 
+/*
+	Starts the respawn timer for the infection slime
+*/
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/respawn(var/set_time = respawn_time)
 	current_respawn_time = set_time
 	var/did_decrement = FALSE // don't spam people who are changing types
@@ -135,6 +175,9 @@
 	current_respawn_time = -1
 	return
 
+/*
+	Actually respawn the slime when they request it
+*/
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/do_spawn()
 	if(!can_respawn)
 		to_chat(src, "<span class='warning'>You cannot respawn right now!</span>")
@@ -143,6 +186,9 @@
 	forceMove(get_turf(src))
 	can_respawn = FALSE
 
+/*
+	Try to transfer this slimes mind and data to a new slime type
+*/
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/transfer_to_type(var/new_type)
 	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/new_spore = new new_type(loc, null, overmind)
 	new_spore.key = key
@@ -157,6 +203,9 @@
 	new_spore.update_icons()
 	new_spore.evolve_menu() // re-update the menu since they changed type
 
+/*
+	Refund the upgrades this slime has purchased and transfer them to a base type
+*/
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/refund_upgrades()
 	if(!ISRESPAWNING(src))
 		to_chat(src, "<span class='warning'>You cannot revert unless you are reforming at a node or core!</span>")
@@ -173,6 +222,9 @@
 	// reset the spore to default
 	transfer_to_type(/mob/living/simple_animal/hostile/infection/infectionspore/sentient)
 
+/*
+	Cycles the possible respawn points for the slime
+*/
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/cycle_node()
 	if(cycle_cooldown > world.time)
 		return

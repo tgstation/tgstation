@@ -1,3 +1,7 @@
+/*
+	The actual core of the infection that handles many infection processes
+*/
+
 /obj/structure/infection/core
 	name = "infection core"
 	icon = 'icons/mob/infection/crystaline_infection_large.dmi'
@@ -9,11 +13,16 @@
 	max_integrity = 400
 	explosion_block = 6
 	point_return = -1
-	health_regen = 0 //we regen in Life() instead of when pulsed
+	health_regen = 0
+	// health regeneration
 	var/core_regen = 2
+	// the delay for the resource gain
 	var/resource_delay = 0
+	// the actual point rate given to the overmind
 	var/point_rate = 2
+	// the nodes that need to pulse their area
 	var/list/topulse = list()
+	// the bodies and minds that we are converting to slimes
 	var/list/converting = list()
 
 /obj/structure/infection/core/Initialize(mapload, client/new_overmind = null, new_rate = 2, placed = 0)
@@ -37,6 +46,9 @@
 	SSevents.reschedule()
 	START_PROCESSING(SSobj, src)
 
+/*
+	Info announcement when the core has landed
+*/
 /obj/structure/infection/core/proc/generate_announcement()
 	priority_announce("The substance has landed, all available crew members are now required by threat of execution to fight the infection in any way possible.\n\n\
 					   We've also analyzed the substance further, and deemed it to be a threat to continued operations in your solar system.\n\n\
@@ -68,9 +80,16 @@
 	SSevents.toggleInfectionmode()
 	. = ..()
 
+/*
+	Death explosion when the core has been destroyed
+*/
 /obj/structure/infection/core/proc/deathExplosion()
 	playsound(src.loc, 'sound/magic/repulse.ogg', 300, 1, 10, pressure_affected = FALSE)
-	return explosion(src, 10, 20, 30, 40, FALSE, TRUE, 5, TRUE, FALSE)
+	explosion(src, 10, 20, 30, 40, FALSE, TRUE, 5, TRUE, FALSE)
+	for(var/obj/structure/infection/I in orange(20, src))
+		if(istype(I, /obj/structure/infection/core))
+			continue
+		qdel(I)
 
 /obj/structure/infection/core/ex_act(severity, target)
 	return
@@ -140,6 +159,9 @@
 	playsound(src.loc, 'sound/effects/singlebeat.ogg', 600, 1, pressure_affected = FALSE)
 	..()
 
+/*
+	Attempts to convert the carbon mob into an infection slime
+*/
 /obj/structure/infection/core/proc/convert_carbon(mob/living/carbon/C)
 	var/timeleft = world.time + CORE_CONVERSION_TIME
 	C.visible_message("<span class='notice'>[C] begins to have their energy sucked as their corpse enters the cores radius!</span>")
@@ -168,6 +190,9 @@
 			S.add_points(100)
 			to_chat(S, "<span class='notice'>You feel the energy of a living being surge through you...</span>")
 
+/*
+	Pulses the nodes that have requested to expand, delays them so they don't all occur at once
+*/
 /obj/structure/infection/core/proc/pulseNodes()
 	if(topulse.len)
 		var/sleeptime = SSobj.wait / topulse.len // constant expansion till the next life tick

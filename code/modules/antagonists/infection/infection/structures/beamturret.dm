@@ -1,3 +1,7 @@
+/*
+	Beam turrets that lock on with hitscan projectiles and deal constant damage to their target
+*/
+
 /obj/structure/infection/turret/beam
 	name = "infection beam turret"
 	desc = "A solid wall with a radiating material on the inside."
@@ -12,6 +16,7 @@
 	projectile_type = /obj/item/projectile/bullet/infection/beam // the bullet fired for this turret
 	projectile_sound = null
 	hit_sound = 'sound/effects/hitscan_zap.ogg'
+	// the actual beam of the turret, deleted when not firing
 	var/datum/beam/B
 
 /obj/structure/infection/turret/beam/Destroy()

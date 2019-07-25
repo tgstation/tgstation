@@ -1,9 +1,17 @@
+/*
+	Prevents atoms from being able to move past the beacon barriers in infection gamemode
+*/
+
 /datum/component/no_beacon_crossing/Initialize()
 	if(!ismovableatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/check_passed)
 
 
+/*
+	Checks if the atom has passed the beacon barriers somehow (teleportation, etc)
+	Then disintegrates or kills them if they have
+*/
 /datum/component/no_beacon_crossing/proc/check_passed(atom/parentatom = parent)
 	if(isobj(parentatom.loc))
 		return
@@ -29,6 +37,9 @@
 	if(facingdir == WEST && edge.x <= parentatom.x)
 		kill_parent()
 
+/*
+	Kills or disintegrates the parent atom
+*/
 /datum/component/no_beacon_crossing/proc/kill_parent(atom/parentatom = parent)
 	// time to go
 	parentatom.visible_message("[parentatom] dissolves into nothing as the energy of the beacons destroys it!")

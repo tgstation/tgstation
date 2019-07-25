@@ -1,3 +1,7 @@
+/*
+	A main component of the infection that is used to expand it's territory
+*/
+
 /obj/structure/infection/node
 	name = "infection node"
 	desc = "A large, pulsating mass."
@@ -10,8 +14,11 @@
 	point_return = 5
 	build_time = 150
 	upgrade_subtype = /datum/infection_upgrade/node
+	// range of the expansion
 	var/expansion_range = 8
+	// amount of the node expands each pulse
 	var/expansion_amount = 12
+	// whether or not the node creates shields around it automatically
 	var/shield_creation = FALSE
 
 /obj/structure/infection/node/Initialize()
@@ -48,6 +55,9 @@
 	if(overmind && world.time >= next_pulse)
 		overmind.infection_core.topulse += src
 
+/*
+	The effect that occurs when the node pulses
+*/
 /obj/structure/infection/node/proc/pulse_effect()
 	playsound(src.loc, 'sound/effects/singlebeat.ogg', 600, 1, pressure_affected = FALSE)
 	var/state_chosen = prob(50) ? "right" : "left"
@@ -70,7 +80,9 @@
 	. = ..()
 	INVOKE_ASYNC(src, .proc/change_to_normal)
 
-
+/*
+	Changes the mini node to a normal infection after its life cycle has ended
+*/
 /obj/structure/infection/node/mini/proc/change_to_normal()
 	sleep(300)
 	change_to(/obj/structure/infection/normal, overmind)

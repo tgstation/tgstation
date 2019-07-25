@@ -1,3 +1,7 @@
+/*
+	Creates infectionm points for the overmind
+*/
+
 /obj/structure/infection/resource
 	name = "resource infection"
 	desc = "A thin spire of slightly swaying tendrils."
@@ -9,7 +13,9 @@
 	point_return = 5
 	build_time = 50
 	upgrade_subtype = /datum/infection_upgrade/resource
+	// delay in resource gain
 	var/resource_delay = 0
+	// the amount that this resource gains to its point return every time it pulses
 	var/point_return_gain = 0
 
 /obj/structure/infection/resource/Initialize()

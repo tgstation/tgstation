@@ -1,6 +1,9 @@
-// temporarily takes over a body, return on new body death
+/*
+	Temporarily takes over a body, and then returns the mind to the old body on death
+*/
 
 /datum/component/mindcontroller
+	// original mob stored
 	var/mob/original
 
 /datum/component/mindcontroller/Initialize(mob/original, list/new_mob_factions = list())
@@ -15,18 +18,27 @@
 	controlledmob.key = original.key
 	controlledmob.faction = new_mob_factions
 
+/*
+	Returns the mob to the original mob
+*/
 /datum/component/mindcontroller/proc/return_to_original(mob/controlledmob = parent)
 	if(!original)
 		controlledmob.ghostize()
 	else
 		original.key = controlledmob.key
 
+/*
+	Interrupts the controlled mob from attacking anything in its faction with an item
+*/
 /datum/component/mindcontroller/proc/preattack_intercept(obj/item/attackingitem, atom/target, mob/user, params)
 	if(isliving(target))
 		var/mob/living/L = target
 		if((L.faction & user.faction).len)
 			return COMPONENT_NO_ATTACK
 
+/*
+	Interrupts the controlled mob from attacking anything in its faction with its fists
+*/
 /datum/component/mindcontroller/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target)
 	if(isliving(target))
 		var/mob/living/L = target

@@ -1,3 +1,7 @@
+/*
+	Protects the infection from explosions, and is far stronger than a normal infection
+*/
+
 /obj/structure/infection/shield
 	name = "strong infection"
 	desc = "A solid wall of slightly twitching tendrils."
@@ -11,7 +15,9 @@
 	point_return = 0
 	build_time = 100
 	atmosblock = TRUE
+	// possible weighted crystal colors to display on the shield
 	var/list/crystal_colors = list("#3333aa" = 20, "#33aa33" = 15, "#aa3333" = 15, "#ffffff" = 8, "#822282" = 4, "#444444" = 1)
+	// the last time something tried to mine this to avoid message spam
 	var/last_act = 0
 
 /obj/structure/infection/shield/Initialize(mapload)
@@ -64,6 +70,10 @@
 	else
 		return
 
+/*
+	A reflective shield that reflects projectiles back at whatever shot them
+*/
+
 /obj/structure/infection/shield/reflective
 	name = "reflective infection"
 	desc = "A solid wall of slightly twitching tendrils with a reflective glow."
@@ -92,6 +102,10 @@
 /obj/structure/infection/shield/reflective/core
 	name = "core reflective infection"
 	point_return = 0
+
+/*
+	A barrier that prevents entry except from infectious creatures and things being pulled by them
+*/
 
 /obj/structure/infection/shield/barrier
 	name = "infection barrier"

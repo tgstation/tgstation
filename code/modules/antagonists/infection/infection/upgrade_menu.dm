@@ -1,5 +1,11 @@
+/*
+	Menu system that handles most upgrades for infection gamemode
+*/
+
 /datum/infection_menu
+	// Name that displays on the evolution shop
 	var/name = "Evolution Menu"
+	// The actual thing that we are trying to upgrade
 	var/atom/upgrading
 
 /datum/infection_menu/New(upgrading)
@@ -12,6 +18,9 @@
 		return ..()
 	return INITIALIZE_HINT_QDEL
 
+/*
+	Gets the evolution list for the different types of things that can upgrade
+*/
 /datum/infection_menu/proc/get_evolution_list()
 	if(istype(upgrading, /obj/structure/infection))
 		var/obj/structure/infection/I = upgrading
@@ -24,6 +33,9 @@
 		return C.unlockable_actions
 	return
 
+/*
+	Gets the points left that can be used to upgrade
+*/
 /datum/infection_menu/proc/get_points_left()
 	if(istype(upgrading, /obj/structure/infection))
 		var/obj/structure/infection/I = upgrading
@@ -36,6 +48,9 @@
 		return C.upgrade_points
 	return 0
 
+/*
+	Tries to purchase the upgrade with the points the user has
+*/
 /datum/infection_menu/proc/try_purchase(point_cost)
 	if(istype(upgrading, /obj/structure/infection))
 		var/obj/structure/infection/I = upgrading

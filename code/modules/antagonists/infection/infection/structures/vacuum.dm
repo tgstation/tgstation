@@ -1,3 +1,7 @@
+/*
+	A vacuum that pulls in movable objects around it
+*/
+
 /obj/structure/infection/vacuum
 	name = "infection vacuum"
 	desc = "A large mass with a pulsing void in the center."
@@ -8,6 +12,7 @@
 	point_return = 10
 	build_time = 100
 	upgrade_subtype = /datum/infection_upgrade/vacuum
+	// the range to pull objects from
 	var/suck_range = 7
 
 /obj/structure/infection/vacuum/Initialize()

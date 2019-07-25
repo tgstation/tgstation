@@ -15,10 +15,13 @@
 	<span class='danger'>Infection</span>: Destroy the defensive beacons to consume the station.\n\
 	<span class='notice'>Crew</span>: Defend long enough until you find a way to destroy the core."
 
+	// spores picked before setup to be antagonists
 	var/list/pre_spores = list()
 
+	// datum type for the infection commander
 	var/commander_datum_type = /datum/antagonist/infection
 
+	// datum type for a basic infection spore
 	var/spore_datum_type = /datum/antagonist/infection/spore
 
 /datum/game_mode/infection/pre_setup()

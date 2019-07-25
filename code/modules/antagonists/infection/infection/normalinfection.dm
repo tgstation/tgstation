@@ -1,3 +1,7 @@
+/*
+	Base infection structure type that is not meant to be spawned
+*/
+
 /obj/structure/infection
 	name = "infection"
 	icon = 'icons/mob/infection/infection.dmi'
@@ -9,23 +13,39 @@
 	anchored = TRUE
 	layer = TABLE_LAYER
 	CanAtmosPass = ATMOS_PASS_PROC
-	var/point_return = 0 //How many points the commander gets back when it removes an infection of that type. If less than 0, structure cannot be removed.
 	max_integrity = 30
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
-	var/health_regen = 5 //how much health this blob regens when pulsed
+	// How many points the commander gets back when it removes an infection of that type. If less than 0, structure cannot be removed.
+	var/point_return = 0
+	// how much health this blob regens when pulsed
+	var/health_regen = 5
+	// how much time needs to pass before the infection can be pulsed again
 	var/next_pulse = 0
+	// time added to next_pulse
 	var/pulse_cooldown = 20
-	var/brute_resist = 0.75 //multiplies brute damage by this
-	var/fire_resist = 0.5 //multiplies burn damage by this
-	var/atmosblock = FALSE //if the infection blocks atmos and heat spread
+	// multiplies incoming brute damage by this
+	var/brute_resist = 0.75
+	// multiplies incoming burn damage by this
+	var/fire_resist = 0.5
+	// if the infection blocks atmos and heat spread
+	var/atmosblock = FALSE
+	// the controlling overmind of this structure
 	var/mob/camera/commander/overmind
-	var/list/angles = list() // possible angles for the node to expand on
+	// the angles that the node will expand on first, used to give a uniform distribution
+	var/list/angles = list()
+	// the time this infection was created
 	var/timecreated
-	var/build_time = 0 // time it takes to build this type when created (in deciseconds)
-	var/building = FALSE // if the infection is being used to create another currently
-	var/list/upgrades = list() // the actual upgrade datums
-	var/list/upgrade_types = list() // the types of upgrades
-	var/upgrade_subtype = null // adds all subtypes of this to the upgrade list
+	// the actual build time it takes for this structure to be built in deciseconds
+	var/build_time = 0
+	// if the infection is currently being used to create another type
+	var/building = FALSE
+	// upgrades for the type
+	var/list/upgrades = list()
+	// the types of upgrades
+	var/list/upgrade_types = list()
+	// adds all upgrades of this subtype to upgrade_types
+	var/upgrade_subtype = null
+	// menu handler for the upgrade menus
 	var/datum/infection_menu/menu_handler
 
 /obj/structure/infection/Initialize(mapload, owner_overmind)
@@ -45,23 +65,35 @@
 	generate_upgrades()
 	menu_handler = new /datum/infection_menu(src)
 
+/*
+	Generates the upgrades for the infection from the types
+*/
 /obj/structure/infection/proc/generate_upgrades()
 	if(ispath(upgrade_subtype))
 		upgrade_types += subtypesof(upgrade_subtype)
 	for(var/upgrade_type in upgrade_types)
 		upgrades += new upgrade_type()
 
+/*
+	Opens the evolution menu for the commander that clicked on this
+*/
 /obj/structure/infection/proc/evolve_menu(var/mob/camera/commander/C)
 	if(C == overmind)
 		menu_handler.ui_interact(overmind)
 
+/*
+	Automatically purchases the highest levels of every upgrade on this infection for free
+*/
 /obj/structure/infection/proc/max_upgrade()
 	for(var/datum/infection_upgrade/U in upgrades)
 		var/times = U.times
 		for(var/i = 1 to times)
 			U.do_upgrade(src)
 
-/obj/structure/infection/proc/creation_action() //When it's created by the overmind, do this.
+/*
+	When this is first created, do this
+*/
+/obj/structure/infection/proc/creation_action()
 	return
 
 /obj/structure/infection/relaymove(mob/user)
@@ -97,6 +129,10 @@
 	. = ..()
 	return
 
+/*
+	Attempts to eat nearby singularities when acted on by them.
+	This is to prevent singularities making it essentially impossible to destroy the infection due to some person who thought it would work
+*/
 /obj/structure/infection/proc/eat_nearby_singularity()
 	var/list/contents_adjacent = urange(1, src)
 	var/obj/singularity/to_eat = locate(/obj/singularity) in contents_adjacent
@@ -156,12 +192,21 @@
 /obj/structure/infection/process()
 	Life()
 
+/*
+	Life, pretty much the same as process
+*/
 /obj/structure/infection/proc/Life()
 	return
 
+/*
+	Resets the angles to expand on because you can't use initial() on lists
+*/
 /obj/structure/infection/proc/reset_angles()
 	angles = list(0,15,30,45,60,75,90,105,120,135,150,165,180,195,210,225,240,255,270,285,300,315,330,345) // this is aids but you cant use initial() on lists so :shrug: i'd rather not loop
 
+/*
+	Expands normal infection in the area around this infection
+*/
 /obj/structure/infection/proc/Pulse_Area(mob/camera/commander/pulsing_overmind, claim_range = 6, count = 6, space_expand = FALSE)
 	if(QDELETED(pulsing_overmind))
 		pulsing_overmind = overmind
@@ -200,6 +245,10 @@
 			INF.Be_Pulsed()
 			previous = INF
 
+/*
+	Correct the infection expansion to only occur at cardinals after we actually reach the end
+	Done like this to save processing over the original blob which used rangeturfs (sucks for efficiency)
+*/
 /obj/structure/infection/proc/get_final_expand_turf(var/turf/lastturf, var/turf/finalturf, var/dir_to_next)
 	var/list/checkturfs = list()
 	if(dir_to_next in GLOB.diagonals)
@@ -214,6 +263,9 @@
 		return checkturf
 	return finalturf
 
+/*
+	What happens when this infection structure is passed over by an expanding nodes lines
+*/
 /obj/structure/infection/proc/Be_Pulsed()
 	obj_integrity = min(max_integrity, obj_integrity+health_regen)
 	update_icon()
@@ -221,6 +273,9 @@
 	if(istype(T, /turf/open/chasm))
 		T.ChangeTurf(/turf/open/space)
 
+/*
+	Consumes the contents of the tile this infection is on
+*/
 /obj/structure/infection/proc/ConsumeTile()
 	for(var/atom/A in loc)
 		if(isliving(A) || ismecha(A))
@@ -229,6 +284,9 @@
 	if(iswallturf(loc))
 		loc.blob_act(src) //don't ask how a wall got on top of the core, just eat it
 
+/*
+	Attack animation for infection expansion
+*/
 /obj/structure/infection/proc/infection_attack_animation(atom/A = null) //visually attacks an atom
 	var/obj/effect/temp_visual/infection/O = new /obj/effect/temp_visual/infection(src.loc)
 	O.setDir(dir)
@@ -238,6 +296,9 @@
 		O.do_attack_animation(A) //visually attack the whatever
 	return O //just in case you want to do something to the animation.
 
+/*
+	Check if we can expand on the tile, then create a normal infection there
+*/
 /obj/structure/infection/proc/expand(turf/T = null, controller = null, space_expand = FALSE)
 	infection_attack_animation(T)
 	// do not expand to areas that are space, unless we're very lucky or the core
@@ -320,6 +381,10 @@
 /obj/structure/infection/obj_destruction(damage_flag)
 	..()
 
+/*
+	Handles building times and animations
+	Used for changing types of infection into other types
+*/
 /obj/structure/infection/proc/change_to(type, controller, structure_build_time)
 	if(!ispath(type))
 		throw EXCEPTION("change_to(): invalid type for infection")
@@ -353,6 +418,9 @@
 	qdel(src)
 	return I
 
+/*
+	The actual standard infection that is created when things expand
+*/
 /obj/structure/infection/normal
 	name = "normal infection"
 	icon_state = "normal"
@@ -362,7 +430,8 @@
 	max_integrity = 25
 	health_regen = 3
 	brute_resist = 0.25
-	var/overlay_fade_time = 40 // time in deciseconds for overlay on entering and exiting to fade in and fade out
+	// time in deciseconds for overlay on entering and exiting to fade in and fade out
+	var/overlay_fade_time = 40
 
 /obj/structure/infection/normal/evolve_menu(var/mob/camera/commander/C)
 	return

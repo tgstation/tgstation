@@ -20,6 +20,10 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 	sleep(doom_delay - 90)
 	. = ..()
 
+/*
+	Plays sounds to playing players before the event actually occurs
+*/
+
 /datum/round_event_control/infection/proc/doom_smash_sounds(var/total_delay = 300)
 	var/sound_delay = 14
 	var/sounds_played = FLOOR(total_delay / sound_delay, 1)
@@ -33,12 +37,18 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 		sleep(sound_delay)
 
 /datum/round_event/infection
-	var/boss_type // boss mob type (one lucky spore)
-	var/list/boss_drop_list // overrides normal mob drops
-	var/list/minion_types // minion mob type (everyone else)
-	var/list/minion_drop_list // overrides normal mob drops
-	var/warning_message // announcement message when the event occurs
-	var/warning_jingle // jingle sound when the event occurs
+	// boss mob type, only one slime spawns as this, and they also drop the legendary weapon from boss_drop_list
+	var/boss_type
+	// overrides boss loot list, should always have at least one infectionkiller weapon, or the gamemode is obviously impossible to win
+	var/list/boss_drop_list
+	// list of minion types that can be a weighted list, picks from these to spawn in slime controlled mobs that are not the boss
+	var/list/minion_types
+	// overrides minion drop lists if you want to do something special
+	var/list/minion_drop_list
+	// announcement message sent to the whole station when the event occurs
+	var/warning_message
+	// sound that is sent when the event occurs
+	var/warning_jingle
 	fakeable = FALSE
 
 /datum/round_event/infection/start()

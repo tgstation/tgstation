@@ -1,3 +1,7 @@
+/*
+	Legendary weapons, the only weapons strong enough to actually damage the infection core, also come with some cool and unique boons to the player side
+*/
+
 /obj/item/infectionkiller
 	name = "infection killer"
 	desc = "This should not be seen, post an issue on github."
@@ -32,26 +36,37 @@
 /obj/item/infectionkiller/melee_attack_chain(mob/user, atom/target, params)
 	if(istype(target, /obj/structure/infection))
 		before_structure_attack(target, user)
-	else if(ismob(target))
+	else if(isinfectionmonster(target))
 		before_mob_attack(target, user)
 	. = ..()
 
 /obj/item/infectionkiller/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(istype(target, /obj/structure/infection))
 		after_structure_attack(target, user)
-	else if(ismob(target))
+	else if(isinfectionmonster(target))
 		after_mob_attack(target, user)
 	. = ..()
-
+/*
+	Is called before an infection mob is attacked
+*/
 /obj/item/infectionkiller/proc/before_mob_attack(mob/living/M, mob/living/user)
 	return
 
+/*
+	Is called before an infection structure is attacked
+*/
 /obj/item/infectionkiller/proc/before_structure_attack(obj/O, mob/living/user)
 	return
 
+/*
+	Is called after the infection structure has been attacked
+*/
 /obj/item/infectionkiller/proc/after_structure_attack(obj/O, mob/living/user)
 	return
 
+/*
+	Is called after the infection mob was attacked
+*/
 /obj/item/infectionkiller/proc/after_mob_attack(mob/living/M, mob/living/user)
 	return
 
@@ -68,14 +83,22 @@
 	armour_penetration = 50
 	block_chance = 50
 	sharpness = IS_SHARP
+	// time until the proc ends
 	var/proctime = 0
+	// variable that stores if the mob was alive before we attacked it
 	var/before_was_alive
 
+/*
+	Checks if the sword is procced, which allows it to do incredible amounts of damage
+*/
 /obj/item/infectionkiller/excaliju/proc/is_procced()
 	if(proctime > world.time)
 		return TRUE
 	return FALSE
 
+/*
+	Plays a sound and starts the proc when you kill an infection mob with this sword, only shows the text if the proc has ended and is starting again
+*/
 /obj/item/infectionkiller/excaliju/proc/proc_start(mob/living/M, mob/living/user)
 	playsound(src.loc, 'sound/weapons/wpnProc.ogg', 300, 1, vary = FALSE, pressure_affected = FALSE)
 	if(!is_procced() && prob(20))
@@ -83,6 +106,9 @@
 	proctime = world.time + 30 // 3 seconds of big ass damage to other infection mobs if you manage to kill one infection mob, chain procs
 	addtimer(CALLBACK(src, .proc/proc_end), 30)
 
+/*
+	Ends the proc and plays a sound to indicate so
+*/
 /obj/item/infectionkiller/excaliju/proc/proc_end()
 	if(is_procced())
 		return

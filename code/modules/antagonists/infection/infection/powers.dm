@@ -17,6 +17,9 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 // Overmind Abilities //
 ////////////////////////
 
+/*
+	Places the infection core but delayed and gives a tell with the shuttle ripples
+*/
 /mob/camera/commander/proc/place_infection_core()
 	if(placed || placing)
 		return
@@ -50,6 +53,9 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	placing = FALSE
 	placed = TRUE
 
+/*
+	If the commander can afford to buy this much with infection points
+*/
 /mob/camera/commander/proc/can_buy(cost = 0)
 	if(infection_points < cost)
 		to_chat(src, "<span class='warning'>You cannot afford this, you need at least [cost] resources!</span>")
@@ -57,6 +63,9 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	add_points(-cost)
 	return TRUE
 
+/*
+	If the commander can afford to buy this much with upgrade points
+*/
 /mob/camera/commander/proc/can_upgrade(cost = 1)
 	var/diff = upgrade_points - cost
 	if(diff < 0)
@@ -65,6 +74,9 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	upgrade_points = diff
 	return TRUE
 
+/*
+	Moves the camera to the core
+*/
 /mob/camera/commander/verb/transport_core()
 	set category = "Infection"
 	set name = "Jump to Core"
@@ -72,6 +84,9 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	if(infection_core)
 		forceMove(infection_core.drop_location())
 
+/*
+	Moves the camera to a selected node
+*/
 /mob/camera/commander/verb/jump_to_node()
 	set category = "Infection"
 	set name = "Jump to Node"
@@ -86,6 +101,9 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 		if(chosen_node)
 			forceMove(chosen_node.loc)
 
+/*
+	Handles the initial creation of a special type of infection
+*/
 /mob/camera/commander/proc/createSpecial(price, infectionType, nearEquals, needsNode, turf/T)
 	if(!T)
 		T = get_turf(src)
@@ -113,6 +131,9 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	var/obj/structure/infection/N = I.change_to(infectionType, src)
 	return N
 
+/*
+	Toggles the node requirement for the commander for types of infection to be placed
+*/
 /mob/camera/commander/verb/toggle_node_req()
 	set category = "Infection"
 	set name = "Toggle Node Requirement"
@@ -123,6 +144,9 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	else
 		to_chat(src, "<span class='warning'>You no longer require a nearby node or core to place factory and resource infections.</span>")
 
+/*
+	Attempts to create another spore for the infection commander
+*/
 /mob/camera/commander/proc/create_spore()
 	to_chat(src, "<span class='warning'>Attempting to create a sentient slime...</span>")
 
@@ -135,12 +159,18 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	to_chat(src, "<span class='warning'>You could not conjure a sentience for your slime. Try again later.</span>")
 	upgrade_points++
 
+/*
+	Opens the evolution menu
+*/
 /mob/camera/commander/verb/evolve_menu()
 	set category = "Infection"
 	set name = "Evolution"
 	set desc = "Improve yourself and your army to be unstoppable."
 	menu_handler.ui_interact(src)
 
+/*
+	Deletes an infection to give back resources
+*/
 /mob/camera/commander/verb/revert()
 	set category = "Infection"
 	set name = "Remove Infection"
@@ -148,6 +178,10 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	var/turf/T = get_turf(src)
 	remove_infection(T)
 
+/*
+	Actual proc handling removal of the infection structure
+	Fails if the structure has a negative point return
+*/
 /mob/camera/commander/proc/remove_infection(turf/T)
 	var/obj/structure/infection/I = locate() in T
 	if(!I)
@@ -161,6 +195,9 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 		to_chat(src, "<span class='notice'>Gained [I.point_return] resources from removing \the [I].</span>")
 	qdel(I)
 
+/*
+	Moves all spores the camera can see to the point middle clicked on
+*/
 /mob/camera/commander/verb/rally_spores_power()
 	set category = "Infection"
 	set name = "Rally Slimes"
@@ -168,6 +205,9 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	var/turf/T = get_turf(src)
 	rally_spores(T)
 
+/*
+	Actual proc handling moving of the spores to the point clicked
+*/
 /mob/camera/commander/proc/rally_spores(turf/T)
 	to_chat(src, "You direct the slimes you can see.")
 	var/list/surrounding_turfs = block(locate(T.x - 1, T.y - 1, T.z), locate(T.x + 1, T.y + 1, T.z))
@@ -178,6 +218,9 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 			IS.LoseTarget()
 			IS.Goto(pick(surrounding_turfs), IS.move_to_delay)
 
+/*
+	Uses all of the infection spores to say a message through them
+*/
 /mob/camera/commander/verb/infection_broadcast()
 	set category = "Infection"
 	set name = "Infection Broadcast"
@@ -192,6 +235,9 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 		if(IN.stat == CONSCIOUS)
 			IN.say(speak_text)
 
+/*
+	Help guide for playing the infection commander
+*/
 /mob/camera/commander/verb/infection_help()
 	set category = "Infection"
 	set name = "*Infection Help*"
