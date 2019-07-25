@@ -22,9 +22,9 @@
 	. = ..()
 
 /obj/mecha/combat/durand/Destroy()
-	. = ..()
 	if(shield)
 		qdel(shield)
+	. = ..()
 
 /obj/mecha/combat/durand/GrantActions(mob/living/user, human_occupant = 0)
 	..()
@@ -150,6 +150,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 /obj/durand_shield/Destroy()
 	if(chassis)
 		chassis.shield = null
+	. = ..()
 
 /**Handles activating and deactivating the shield. This proc is called by a signal sent from the mech's action button
 and relayed by the mech itself. The "forced" variabe, signal_args[1], will skip the to-pilot text and is meant for when
