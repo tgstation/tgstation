@@ -78,4 +78,4 @@
 	id = "ashlizard"
 	limbs_id = "lizard"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE)
-	inherent_traits = list(TRAIT_CHUNCKYFINGERS,TRAIT_NOBREATH)
+	inherent_traits = list(TRAIT_CHUNKYFINGERS,TRAIT_NOBREATH)
