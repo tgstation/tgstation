@@ -589,3 +589,11 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 
 /datum/holiday/easter/getStationPrefix()
 	return pick("Fluffy","Bunny","Easter","Egg")
+
+/datum/holiday/ianbirthday
+	name = "Ian's Birthday"
+	begin_day = 15
+	begin_month = MARCH
+
+/datum/holiday/ianbirthday/greet()
+	return "Happy birthday, Ian!"
