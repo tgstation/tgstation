@@ -1,0 +1,4 @@
+author: "AarontheIdiot"
+delete-after: True
+changes: 
+  - rscdel: "Plasma enviro helmets no longer have flash and welding protection."
