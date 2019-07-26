@@ -1,0 +1,5 @@
+author: "Returning Moonman"
+delete-after: True
+changes: 
+  - balance: "The recipie for aesthetic basalt tiles now relies upon sand (any type, beach sand or basalt) and costs 2 sand for 1 tile."
+  - bugfix: "You can no longer procure more sand from digging fake lavaland basalt tiles than you put in."
