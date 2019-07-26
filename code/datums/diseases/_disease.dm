@@ -35,8 +35,8 @@
 	var/copy_type = null //if this is null, copies will use the type of the instance being copied
 
 #ifdef EVENTMODE
-/datum/disease/Initialize()
-	return INITIALIZE_HINT_QDEL;
+/datum/disease/New()
+	QDEL_IN(src, 1)
 #endif
 /datum/disease/Destroy()
 	. = ..()

@@ -78,7 +78,7 @@
 
 /datum/disease/advance/New()
 	#ifdef EVENTMODE
-	QDELIN(src, 1)
+	QDEL_IN(src, 1)
 	return
 	#endif
 
