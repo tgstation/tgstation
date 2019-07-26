@@ -1285,7 +1285,6 @@
 		return
 
 	A.reagents.remove_reagent(/datum/reagent/medicine/trophazole, trans_volume * 0.05)
-	A.reagents.add_reagent(/datum/reagent/medicine/metafactor, trans_volume * 0.25)
 	A.reagents.add_reagent(/datum/reagent/medicine/metafactor, trans_volume * 0.2)
 
 	..()
