@@ -28,6 +28,9 @@
 	T.air_update_turf()
 
 /datum/component/rot/corpse
+	#ifdef EVENTMODE
+	return INITIALIZE_HINT_QDEL;
+	#endif
 	amount = MIASMA_CORPSE_MOLES
 
 /datum/component/rot/corpse/Initialize()
