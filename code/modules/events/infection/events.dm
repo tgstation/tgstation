@@ -59,7 +59,18 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 	if(boss_type)
 		boss_spore = locate(/mob/living/simple_animal/hostile/infection/infectionspore/sentient) in C.infection_mobs
 		if(!boss_spore)
-			message_admins("Error! Failed to get spore for infection event. Consider spawning spores or giving legendary weapons to make victory possible.")
+			message_admins("Error! Failed to get slime for infection event.")
+			// spawn a random legendary weapon so the game isn't unbeatable
+			var/list/legendaries = subtypesof(/obj/item/infectionkiller)
+			for(var/i in 1 to legendaries.len)
+				var/spawn_type = pick_n_take(legendaries)
+				// don't bother specifying a position, they're stationloving so they'll come back anyways
+				var/obj/item/infectionkiller/W = new spawn_type()
+				// whoops it's not stationloving get rid of it
+				if(!W.is_item)
+					qdel(W)
+					continue
+				break
 			return FALSE
 		boss_spore.forceMove(GLOB.infection_core)
 		var/mob/living/simple_animal/boss = new boss_type(start)
@@ -76,6 +87,7 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 			var/mob/living/simple_animal/minion = new minion_type(start)
 			minion.add_atom_colour(C.color, FIXED_COLOUR_PRIORITY)
 			minion.AddComponent(/datum/component/mindcontroller, spore, list(ROLE_INFECTION))
+			minion.AddComponent(/datum/component/no_beacon_crossing)
 			minion.loot = minion_drop_list
 			minion.pass_flags |= PASSBLOB
 			GLOB.doom_event_mobs += minion
@@ -95,23 +107,23 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 /datum/round_event/infection/space
 	boss_type = /mob/living/simple_animal/hostile/megafauna/dragon/space_dragon
 	boss_drop_list = list(/obj/item/infectionkiller/excaliju)
-	minion_types = list(/mob/living/simple_animal/hostile/pirate/melee/space,
-						/mob/living/simple_animal/hostile/bear,
-						/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient)
+	minion_types = list(/mob/living/simple_animal/hostile/hivebot/strong=1,
+						/mob/living/simple_animal/hostile/skeleton=2,
+						/mob/living/simple_animal/hostile/hivebot/range=3)
 	minion_drop_list = list()
 	warning_message = "A space dragon and other space creatures have wandered into the station!"
 	warning_jingle = 'sound/weapons/bite.ogg'
 
-/datum/round_event_control/infection/demon
-	name = "Doom Event: Demons From Lavaland"
-	typepath = /datum/round_event/infection/demon
+/datum/round_event_control/infection/lavaland
+	name = "Doom Event: Monsters From Lavaland"
+	typepath = /datum/round_event/infection/lavaland
 
-/datum/round_event/infection/demon
-	boss_type = /mob/living/simple_animal/slaughter
+/datum/round_event/infection/lavaland
+	boss_type = /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner
 	boss_drop_list = list(/obj/item/infectionkiller/drill)
-	minion_types = list(/mob/living/simple_animal/hostile/asteroid/goliath=1,
-						/mob/living/simple_animal/hostile/asteroid/basilisk/watcher=2,
-						/mob/living/simple_animal/hostile/asteroid/hivelord/legion=3)
+	minion_types = list(/mob/living/simple_animal/hostile/asteroid/basilisk/watcher=1,
+						/mob/living/simple_animal/hostile/skeleton/plasmaminer=3,
+						/mob/living/simple_animal/hostile/asteroid/hivelord/legion=1)
 	minion_drop_list = list()
 	warning_message = "Lavaland monsters appear to be attacking the station!"
 	warning_jingle = 'sound/magic/enter_blood.ogg'
@@ -139,9 +151,9 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 /datum/round_event/infection/jungle
 	boss_type = /mob/living/simple_animal/hostile/gorilla
 	boss_drop_list = list(/obj/item/infectionkiller/tonic)
-	minion_types = list(/mob/living/simple_animal/hostile/poison/bees=2,
-						/mob/living/simple_animal/hostile/killertomato=2,
-						/mob/living/simple_animal/hostile/mushroom=2)
+	minion_types = list(/mob/living/simple_animal/hostile/poison/bees=1,
+						/mob/living/simple_animal/hostile/killertomato=1,
+						/mob/living/simple_animal/hostile/mushroom=1)
 	minion_drop_list = list()
 	warning_message = "Jungle Creatures are invading the station!"
 	warning_jingle = 'sound/creatures/gorilla.ogg'

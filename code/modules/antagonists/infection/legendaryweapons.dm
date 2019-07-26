@@ -5,18 +5,22 @@
 /obj/item/infectionkiller
 	name = "infection killer"
 	desc = "This should not be seen, post an issue on github."
+	icon = 'icons/mob/infection/legendary_weapons.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	light = 6
 	resistance_flags = INDESTRUCTIBLE
+	// if the item should actually be treated as a real legendary, and not just a temporary item
+	var/is_item = TRUE
 
 /obj/item/infectionkiller/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/stationloving, FALSE, TRUE)
-	var/obj/item/gps/internal/legendary/L = new /obj/item/gps/internal/legendary(src)
-	L.gpstag = "Legendary [name] Signal"
-	var/obj/item/beacon/B = new /obj/item/beacon(src)
-	B.name = "Legendary [name] Beacon"
-	B.renamed = TRUE
+	if(is_item)
+		AddComponent(/datum/component/stationloving, FALSE, FALSE)
+		var/obj/item/gps/internal/legendary/L = new /obj/item/gps/internal/legendary(src)
+		L.gpstag = "Legendary [name] Signal"
+		var/obj/item/beacon/B = new /obj/item/beacon(src)
+		B.name = "Legendary [name] Beacon"
+		B.renamed = TRUE
 
 /obj/item/gps/internal/legendary
 	icon_state = null
@@ -36,15 +40,19 @@
 /obj/item/infectionkiller/melee_attack_chain(mob/user, atom/target, params)
 	if(istype(target, /obj/structure/infection))
 		before_structure_attack(target, user)
-	else if(isinfectionmonster(target))
-		before_mob_attack(target, user)
+	else if(isliving(target))
+		var/mob/living/L = target
+		if(L.faction.Find(ROLE_INFECTION))
+			before_mob_attack(target, user)
 	. = ..()
 
 /obj/item/infectionkiller/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(istype(target, /obj/structure/infection))
 		after_structure_attack(target, user)
-	else if(isinfectionmonster(target))
-		after_mob_attack(target, user)
+	else if(isliving(target))
+		var/mob/living/L = target
+		if(L.faction.Find(ROLE_INFECTION))
+			after_mob_attack(target, user)
 	. = ..()
 /*
 	Is called before an infection mob is attacked
@@ -190,6 +198,7 @@
 	icon_state = "bloodhand_left"
 	force = 30
 	color = "#000080"
+	is_item = FALSE
 
 /obj/item/infectionkiller/tonicfists/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
