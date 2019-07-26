@@ -1051,7 +1051,7 @@
 	fixed_mut_color = "ebfcfc"
 	armor = 45 //down from 55
 	burnmod = 3 //melts easily
-	info_text = "As a <span class='danger'>Snow Golem</span>, you are extremely vulnerable to burn damage but you can generate snow and shoot out cryokinetic beams. You will also turn to snow when dying, preventing any form of recovery."
+	info_text = "As a <span class='danger'>Snow Golem</span>, you are extremely vulnerable to burn damage but you can generate snow and shoot cryokinetic beams. You will also turn to snow when dying, preventing any form of recovery."
 	prefix = "Snow"
 	special_names = list("Flake", "Blizzard", "Storm")
 	
@@ -1059,11 +1059,12 @@
 	var/obj/effect/proc_holder/spell/aimed/cryo/cryo
 
 /datum/species/golem/snow/spec_death(gibbed, mob/living/carbon/human/H)
-	H.visible_message("<span class='danger'>[H] turns into a brick of snow!</span>")
+	H.visible_message("<span class='danger'>[H] turns into a pile of snow!</span>")
 	for(var/obj/item/W in H)
 		H.dropItemToGround(W)
 	for(var/i=1, i <= rand(3,5), i++)
 		new /obj/item/stack/sheet/mineral/snow(get_turf(H))
+	new /obj/item/reagent_containers/food/snacks/grown/carrot(get_turf(H))
 	qdel(H)
 
 /datum/species/golem/snow/on_species_gain(mob/living/carbon/C, datum/species/old_species)
