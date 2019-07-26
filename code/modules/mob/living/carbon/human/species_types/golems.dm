@@ -1069,9 +1069,13 @@
 
 /datum/species/golem/snow/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
+	snow = new
+	snow.charge_counter = 0
 	C.AddSpell(snow)
+	cryo = new
+	cryo.charge_counter = 0
 	C.AddSpell(cryo)
-		
+
 /datum/species/golem/snow/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	if(snow)
