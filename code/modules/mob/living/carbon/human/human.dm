@@ -1032,6 +1032,9 @@
 
 /mob/living/carbon/human/species/golem/durathread
 	race = /datum/species/golem/durathread
+	
+/mob/living/carbon/human/species/golem/snow
+	race = /datum/species/golem/snow
 
 /mob/living/carbon/human/species/golem/clockwork
 	race = /datum/species/golem/clockwork
