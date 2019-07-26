@@ -68,6 +68,7 @@
 #define TRAIT_HUSK				"husk"
 #define TRAIT_BADDNA			"baddna"
 #define TRAIT_CLUMSY			"clumsy"
+#define TRAIT_CHUNCKYFINGERS	"chunckyfingers" //means that you can't use weapons with normal trigger guard.
 #define TRAIT_DUMB				"dumb"
 #define TRAIT_MONKEYLIKE		"monkeylike" //sets IsAdvancedToolUser to FALSE
 #define TRAIT_PACIFISM			"pacifism"
@@ -229,3 +230,4 @@
 #define ANTI_DROP_IMPLANT_TRAIT "anti-drop-implant"
 #define HIVEMIND_ONE_MIND_TRAIT "one_mind"
 #define VR_ZONE_TRAIT "vr_zone_trait"
+#define SLEEPING_CARP_TRAIT "sleeping_carp"
