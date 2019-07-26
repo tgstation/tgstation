@@ -272,12 +272,19 @@ to the arm are passed onto a stored beaker, if one exists. */
 	. = ..()
 	stored = new /obj/item/reagent_containers/glass/beaker/large(src)
 	update_icon()
+	RegisterSignal(src, COMSIG_BORG_SAFE_DECONSTRUCT, .proc/safedecon)
 
 /obj/item/borg_beaker_holder/Destroy()
 	if(stored)
 		stored.SplashReagents(get_turf(src))
 		qdel(stored)
 	. = ..()
+
+///If we're safely deconstructed, we put the beaker neatly onto the ground, rather than spilling it everywhere.
+/obj/item/borg_beaker_holder/proc/safedecon()
+	if(stored)
+		stored.forceMove(get_turf(src))
+		stored = null
 
 /obj/item/borg_beaker_holder/examine()
 	. = ..()
@@ -316,6 +323,7 @@ to the arm are passed onto a stored beaker, if one exists. */
 	update_icon()
 	. = ..()
 
+///A right-click verb, for those not using hotkey mode.
 /obj/item/borg_beaker_holder/verb/verb_dropbeaker()
 	set category = "Object"
 	set name = "Drop Beaker"
@@ -336,6 +344,7 @@ to the arm are passed onto a stored beaker, if one exists. */
 		return
 	else
 		stored.SplashReagents(get_turf(user))
+		loc.visible_message("<span class='notice'>[user] spills the contents of the [stored] all over the floor.</span>")
 		update_icon()
 
 /obj/item/borg_beaker_holder/pre_attack(atom/A, mob/living/user, params)

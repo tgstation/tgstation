@@ -48,6 +48,7 @@
 		var/obj/item/I = new i(src)
 		ratvar_modules += I
 		ratvar_modules -= i
+	RegisterSignal(src, COMSIG_BORG_SAFE_DECONSTRUCT, .proc/safedecon)
 
 /obj/item/robot_module/Destroy()
 	basic_modules.Cut()
@@ -57,6 +58,11 @@
 	added_modules.Cut()
 	storages.Cut()
 	return ..()
+
+///Passes the safe decon signal to individual tools, in case any have special cases for such
+/obj/item/robot_module/proc/safedecon()
+	for(var/obj/i in basic_modules+emag_modules+ratvar_modules)
+		SEND_SIGNAL(i, COMSIG_BORG_SAFE_DECONSTRUCT, src)
 
 /obj/item/robot_module/emp_act(severity)
 	. = ..()
