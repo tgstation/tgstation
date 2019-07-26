@@ -2,6 +2,9 @@
 	var/amount = 1
 
 /datum/component/rot/Initialize(new_amount)
+	#ifdef EVENTMODE
+	return INITIALIZE_HINT_QDEL;
+	#endif
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
