@@ -273,6 +273,12 @@ to the arm are passed onto a stored beaker, if one exists. */
 	stored = new /obj/item/reagent_containers/glass/beaker/large(src)
 	update_icon()
 
+/obj/item/borg_beaker_holder/Destroy()
+	if(stored)
+		stored.SplashReagents(get_turf(src))
+		qdel(stored)
+	. = ..()
+
 /obj/item/borg_beaker_holder/examine()
 	. = ..()
 	if(stored)
