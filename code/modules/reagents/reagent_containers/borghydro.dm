@@ -263,19 +263,15 @@ to the arm are passed onto a stored beaker, if one exists. */
 
 /obj/item/borg_beaker_holder
 	name = "beaker storage apparatus"
-	desc = "A special apparatus for carrying beakers without spilling the contents."
+	desc = "A special apparatus for carrying beakers without spilling the contents. Alt-Z or right-click to drop the beaker."
 	icon = 'icons/mob/robot_items.dmi'
 	icon_state = "borg_beaker_apparatus"
 	var/obj/item/reagent_containers/stored
-	var/mob/living/silicon/robot/robot
 
 /obj/item/borg_beaker_holder/Initialize()
-	var/obj/item/robot_module/module = loc
-	robot = module.loc
-	stored = new /obj/item/reagent_containers/glass/beaker/large
-	stored.forceMove(src)
-	update_icon()
 	. = ..()
+	stored = new /obj/item/reagent_containers/glass/beaker/large(src)
+	update_icon()
 
 /obj/item/borg_beaker_holder/examine()
 	. = ..()
@@ -314,14 +310,22 @@ to the arm are passed onto a stored beaker, if one exists. */
 	update_icon()
 	. = ..()
 
+/obj/item/borg_beaker_holder/verb/verb_dropbeaker()
+	set category = "Object"
+	set name = "Drop Beaker"
+
+	if(usr != loc || !stored)
+		return
+	stored.forceMove(get_turf(usr))
+	return
+
 /obj/item/borg_beaker_holder/attack_self(mob/living/silicon/robot/user)
 	if(!stored)
-		. = ..()
-		return
-	if(robot.client.keys_held["Alt"])
+		return ..()
+	if(user.client?.keys_held["Alt"])
 		stored.forceMove(get_turf(user))
 		return
-	if(robot.a_intent == "help")
+	if(user.a_intent == "help")
 		stored.attack_self(user)
 		return
 	else
@@ -337,7 +341,7 @@ to the arm are passed onto a stored beaker, if one exists. */
 			update_icon()
 			return
 	if(stored)
-		stored.melee_attack_chain(robot, A, params)
+		stored.melee_attack_chain(user, A, params)
 		update_icon()
 		return
 	. = ..()
