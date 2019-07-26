@@ -1069,6 +1069,7 @@
 
 /datum/species/golem/snow/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
+	C.weather_immunities |= "snow"
 	snow = new
 	snow.charge_counter = 0
 	C.AddSpell(snow)
@@ -1078,6 +1079,7 @@
 
 /datum/species/golem/snow/on_species_loss(mob/living/carbon/C)
 	. = ..()
+	C.weather_immunities -= "snow"
 	if(snow)
 		C.RemoveSpell(snow)
 	if(cryo)
