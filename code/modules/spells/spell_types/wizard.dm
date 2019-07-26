@@ -142,6 +142,7 @@
 	range = -1
 	include_user = TRUE
 	cooldown_min = 200 //100 deciseconds reduction per rank
+	action_icon_state = "teleport"
 
 	smoke_spread = 1
 	smoke_amt = 2
@@ -355,6 +356,7 @@
 	clothes_req = TRUE
 	item_type = /obj/item/spellpacket/lightningbolt
 	charge_max = 10
+	action_icon_state = "thrownlightning"
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket/cast(list/targets, mob/user = usr)
 	..()

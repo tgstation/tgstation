@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - balance: "Sanity is no longer uncapped. It's now capped at 150, whatever that means."
