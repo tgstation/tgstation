@@ -122,7 +122,7 @@
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "rupee"
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_GLASS = 500)
+	materials = list(/datum/material/glass = 500)
 
 /obj/item/rupee/Initialize()
 	. = ..()
