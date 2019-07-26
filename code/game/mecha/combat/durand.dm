@@ -75,23 +75,21 @@ Expects a turf. Returns true if the attack should be blocked, false if not.*/
 /obj/mecha/combat/durand/proc/defense_check(var/turf/aloc)
 	if (!defense_mode || !shield || shield.switching)
 		return FALSE
-	var/blocked = FALSE
+	. = FALSE
 	switch(dir)
 		if (1)
 			if(abs(x - aloc.x) <= (y - aloc.y) * -2)
-				blocked = TRUE
+				. = TRUE
 		if (2)
 			if(abs(x - aloc.x) <= (y - aloc.y) * 2)
-				blocked = TRUE
+				. = TRUE
 		if (4)
 			if(abs(y - aloc.y) <= (x - aloc.x) * -2)
-				blocked = TRUE
+				. = TRUE
 		if (8)
 			if(abs(y - aloc.y) <= (x - aloc.x) * 2)
-				blocked = TRUE
-	if(blocked)
-		return TRUE
-	return FALSE
+				. = TRUE
+	return
 
 obj/mecha/combat/durand/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, armor_penetration = 0)
 	if(defense_check(user.loc))
@@ -204,7 +202,7 @@ the shield is disabled by means other than the action button (like running out o
 	obj_integrity = 10000
 
 /obj/durand_shield/play_attack_sound()
-	playsound(src, 'sound/mecha/mech_shield_deflect.ogg', 100, 1)
+	playsound(src, 'sound/mecha/mech_shield_deflect.ogg', 100, TRUE)
 
 /obj/durand_shield/bullet_act()
 	play_attack_sound()
