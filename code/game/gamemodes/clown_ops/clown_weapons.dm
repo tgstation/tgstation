@@ -7,7 +7,7 @@
 	amount_per_transfer_from_this = 3
 	spray_range = 1
 	stream_range = 1
-	volume = 30
+	reagents = list("volume" = 30, "flags" = OPENCONTAINER)
 	list_reagents = list(/datum/reagent/lube = 30)
 
 //COMBAT CLOWN SHOES

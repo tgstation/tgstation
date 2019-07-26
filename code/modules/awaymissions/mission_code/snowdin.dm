@@ -168,7 +168,7 @@
 
 /turf/open/lava/plasma/attackby(obj/item/I, mob/user, params)
 	var/obj/item/reagent_containers/glass/C = I
-	if(C.reagents.total_volume >= C.volume)
+	if(C.reagents.total_volume >= C.reagents.maximum_volume)
 		to_chat(user, "<span class='danger'>[C] is full.</span>")
 		return
 	C.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(5, 10))

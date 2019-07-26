@@ -3,8 +3,7 @@
 	desc = "A plastic pressure bag, or 'chem pack', for IV administration of drugs. It is fitted with a thermosealing strip."
 	icon = 'icons/obj/bloodpack.dmi'
 	icon_state = "chempack"
-	volume = 100
-	reagent_flags = OPENCONTAINER
+	reagents = list("volume" = 100, "flags" = OPENCONTAINER)
 	spillable = TRUE
 	obj_flags = UNIQUE_RENAME
 	resistance_flags = ACID_PROOF
@@ -15,8 +14,9 @@
 
 /obj/item/reagent_containers/chem_pack/update_icon()
 	cut_overlays()
-
-	var/v = min(round(reagents.total_volume / volume * 10), 10)
+	if(!reagents.maximum_volume)
+		return
+	var/v = min(round(reagents.total_volume / reagents.maximum_volume * 10), 10)
 	if(v > 0)
 		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "chempack1")
 		filling.icon_state = "chempack[v]"
@@ -30,9 +30,7 @@
 			SplashReagents(user)
 			return
 
-		reagents.flags = NONE
-		reagent_flags = DRAWABLE | INJECTABLE //To allow for sabotage or ghetto use.
-		reagents.flags = reagent_flags
+		reagents.flags = DRAWABLE | INJECTABLE //To allow for sabotage or ghetto use.
 		spillable = FALSE
 		sealed = TRUE
 		to_chat(user, "<span class='notice'>You seal the bag.</span>")

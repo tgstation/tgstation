@@ -90,7 +90,7 @@
 	name = "roburger"
 	desc = "This massive patty looks like poison. Beep."
 	icon_state = "roburger"
-	volume = 120
+	reagents = list("volume" = 120, "flags" = INJECTABLE)
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/nanomachines = 70, /datum/reagent/consumable/nutriment/vitamin = 10)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/nanomachines = 70, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("bun" = 4, "lettuce" = 2, "sludge" = 1)
@@ -248,7 +248,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 40, /datum/reagent/consumable/nutriment/vitamin = 5)
 	w_class = WEIGHT_CLASS_NORMAL
 	bitesize = 7
-	volume = 100
+	reagents = list("volume" = 100, "flags" = INJECTABLE)
 	tastes = list("bun" = 4, "type two diabetes" = 10)
 	foodtype = GRAIN | MEAT
 

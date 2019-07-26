@@ -339,7 +339,7 @@
 
 /obj/item/udder/proc/milkAnimal(obj/O, mob/user)
 	var/obj/item/reagent_containers/glass/G = O
-	if(G.reagents.total_volume >= G.volume)
+	if(G.reagents.total_volume >= G.reagents.maximum_volume)
 		to_chat(user, "<span class='danger'>[O] is full.</span>")
 		return
 	var/transfered = reagents.trans_to(O, rand(5,10))

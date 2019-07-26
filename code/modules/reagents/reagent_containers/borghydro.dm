@@ -17,7 +17,7 @@ Borg Hypospray
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "borghypo"
 	amount_per_transfer_from_this = 5
-	volume = 30
+	reagents = list("volume" = 30, "flags" = NONE)
 	possible_transfer_amounts = list()
 	var/mode = 1
 	var/charge_cost = 50

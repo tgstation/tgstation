@@ -5,8 +5,7 @@
 	icon_state = "dropper0"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(1, 2, 3, 4, 5)
-	volume = 5
-	reagent_flags = TRANSPARENT
+	reagents = list("volume" = 5, "flags" = TRANSPARENT)
 
 /obj/item/reagent_containers/dropper/afterattack(obj/target, mob/user , proximity)
 	. = ..()

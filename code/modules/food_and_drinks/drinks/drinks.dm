@@ -8,10 +8,9 @@
 	icon_state = null
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
-	reagent_flags = OPENCONTAINER
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
-	volume = 50
+	reagents = list("volume" = 50, "flags" = OPENCONTAINER)
 	resistance_flags = NONE
 	var/isGlass = TRUE //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 
@@ -152,7 +151,7 @@
 	amount_per_transfer_from_this = 5
 	materials = list(MAT_METAL=100)
 	possible_transfer_amounts = list()
-	volume = 5
+	reagents = list("volume" = 5, "flags" = OPENCONTAINER)
 	flags_1 = CONDUCT_1
 	spillable = TRUE
 	resistance_flags = FIRE_PROOF
@@ -167,7 +166,7 @@
 	throwforce = 10
 	amount_per_transfer_from_this = 20
 	materials = list(MAT_GOLD=1000)
-	volume = 150
+	reagents = list("volume" = 150, "flags" = OPENCONTAINER)
 
 /obj/item/reagent_containers/food/drinks/trophy/silver_cup
 	name = "silver cup"
@@ -178,7 +177,7 @@
 	throwforce = 8
 	amount_per_transfer_from_this = 15
 	materials = list(MAT_SILVER=800)
-	volume = 100
+	reagents = list("volume" = 100, "flags" = OPENCONTAINER)
 
 
 /obj/item/reagent_containers/food/drinks/trophy/bronze_cup
@@ -190,7 +189,7 @@
 	throwforce = 4
 	amount_per_transfer_from_this = 10
 	materials = list(MAT_METAL=400)
-	volume = 25
+	reagents = list("volume" = 25, "flags" = OPENCONTAINER)
 
 ///////////////////////////////////////////////Drinks
 //Notes by Darem: Drinks are simply containers that start preloaded. Unlike condiments, the contents can be ingested directly
@@ -282,7 +281,7 @@
 	desc = "A paper water cup."
 	icon_state = "water_cup_e"
 	possible_transfer_amounts = list()
-	volume = 10
+	reagents = list("volume" = 10, "flags" = OPENCONTAINER)
 	spillable = TRUE
 	isGlass = FALSE
 
@@ -296,7 +295,7 @@
 	name = "small carton"
 	desc = "A small carton, intended for holding drinks."
 	icon_state = "juicebox"
-	volume = 15 //I figure if you have to craft these it should at least be slightly better than something you can get for free from a watercooler
+	reagents = list("volume" = 15, "flags" = OPENCONTAINER) //I figure if you have to craft these it should at least be slightly better than something you can get for free from a watercooler
 
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton/smash(atom/target, mob/thrower, ranged = FALSE)
 	if(bartender_check(target) && ranged)
@@ -366,7 +365,7 @@
 	icon_state = "shaker"
 	materials = list(MAT_METAL=1500)
 	amount_per_transfer_from_this = 10
-	volume = 100
+	reagents = list("volume" = 100, "flags" = OPENCONTAINER)
 	isGlass = FALSE
 
 /obj/item/reagent_containers/food/drinks/flask
@@ -375,7 +374,7 @@
 	custom_price = 30
 	icon_state = "flask"
 	materials = list(MAT_METAL=250)
-	volume = 60
+	reagents = list("volume" = 60, "flags" = OPENCONTAINER)
 	isGlass = FALSE
 
 /obj/item/reagent_containers/food/drinks/flask/gold
@@ -394,7 +393,7 @@
 	name = "cup"
 	desc = "A cup with the british flag emblazoned on it."
 	icon_state = "britcup"
-	volume = 30
+	reagents = list("volume" = 30, "flags" = OPENCONTAINER)
 	spillable = TRUE
 
 //////////////////////////soda_cans//
@@ -404,7 +403,7 @@
 	name = "soda can"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
-	reagent_flags = NONE
+	reagents = list("volume" = 50, "flags" = NONE)
 	spillable = FALSE
 	isGlass = FALSE
 	custom_price = 10

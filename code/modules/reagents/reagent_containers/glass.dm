@@ -3,8 +3,7 @@
 	name = "glass"
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
-	volume = 50
-	reagent_flags = OPENCONTAINER
+	reagents = list("volume" = 50, "flags" = OPENCONTAINER)
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
 
@@ -129,10 +128,10 @@
 /obj/item/reagent_containers/glass/beaker/update_icon()
 	cut_overlays()
 
-	if(reagents.total_volume)
+	if(reagents.total_volume && reagents.maximum_volume)
 		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[icon_state]10")
 
-		var/percent = round((reagents.total_volume / volume) * 100)
+		var/percent = round((reagents.total_volume / reagents.maximum_volume) * 100)
 		switch(percent)
 			if(0 to 9)
 				filling.icon_state = "[icon_state]-10"
@@ -163,7 +162,7 @@
 	desc = "A large beaker. Can hold up to 100 units."
 	icon_state = "beakerlarge"
 	materials = list(MAT_GLASS=2500)
-	volume = 100
+	reagents = list("volume" = 100, "flags" = OPENCONTAINER)
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
 
@@ -172,7 +171,7 @@
 	desc = "An extra-large beaker. Can hold up to 120 units."
 	icon_state = "beakerwhite"
 	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000)
-	volume = 120
+	reagents = list("volume" = 120, "flags" = OPENCONTAINER)
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,60,120)
 
@@ -186,7 +185,7 @@
 	desc = "A large beaker. Can hold up to 180 units."
 	icon_state = "beakergold"
 	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000, MAT_GOLD=1000, MAT_TITANIUM=1000)
-	volume = 180
+	reagents = list("volume" = 180, "flags" = OPENCONTAINER)
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,60,120,180)
 
@@ -196,8 +195,7 @@
 		reactions. Can hold up to 50 units."
 	icon_state = "beakernoreact"
 	materials = list(MAT_METAL=3000)
-	reagent_flags = OPENCONTAINER | NO_REACT
-	volume = 50
+	reagents = list("volume" = 50, "flags" = OPENCONTAINER | NO_REACT)
 	amount_per_transfer_from_this = 10
 
 /obj/item/reagent_containers/glass/beaker/bluespace
@@ -207,7 +205,7 @@
 		300 units."
 	icon_state = "beakerbluespace"
 	materials = list(MAT_GLASS = 5000, MAT_PLASMA = 3000, MAT_DIAMOND = 1000, MAT_BLUESPACE = 1000)
-	volume = 300
+	reagents = list("volume" = 300, "flags" = OPENCONTAINER)
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
 
@@ -251,7 +249,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,70)
-	volume = 70
+	reagents = list("volume" = 70, "flags" = OPENCONTAINER)
 	flags_inv = HIDEHAIR
 	slot_flags = ITEM_SLOT_HEAD
 	resistance_flags = NONE
@@ -302,7 +300,7 @@
 
 /obj/item/reagent_containers/glass/bucket/dropped(mob/user)
 	. = ..()
-	reagents.flags = initial(reagent_flags)
+	reagents.flags = OPENCONTAINER
 
 /obj/item/reagent_containers/glass/bucket/equip_to_best_slot(var/mob/M)
 	if(reagents.total_volume) //If there is water in a bucket, don't quick equip it to the head
@@ -321,7 +319,7 @@
 	item_state = "bottle"
 	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)//see desc, don't think about it too hard
 	materials = list(MAT_GLASS=0)
-	volume = 50
+	reagents = list("volume" = 50, "flags" = OPENCONTAINER)
 	amount_per_transfer_from_this = 10
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/empty
@@ -332,7 +330,7 @@
 	icon_state = "largebottle"
 	materials = list(MAT_GLASS=0)
 	list_reagents = list(/datum/reagent/water = 100)
-	volume = 100
+	reagents = list("volume" = 100, "flags" = OPENCONTAINER)
 	amount_per_transfer_from_this = 20
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/large/empty
@@ -351,8 +349,7 @@
 	icon_state = "mortar"
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50, 100)
-	volume = 100
-	reagent_flags = OPENCONTAINER
+	reagents = list("volume" = 100, "flags" = OPENCONTAINER)
 	spillable = TRUE
 	var/obj/item/grinded
 
@@ -400,5 +397,5 @@
 
 /obj/item/reagent_containers/glass/saline
 	name = "saline canister"
-	volume = 5000
+	reagents = list("volume" = 5000, "flags" = OPENCONTAINER)
 	list_reagents = list(/datum/reagent/medicine/salglu_solution = 5000)

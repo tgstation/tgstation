@@ -190,7 +190,7 @@
 
 	if (beaker)
 		data["beakerCurrentVolume"] = beakerCurrentVolume
-		data["beakerMaxVolume"] = beaker.volume
+		data["beakerMaxVolume"] = beaker.reagents.maximum_volume
 		data["beakerTransferAmounts"] = beaker.possible_transfer_amounts
 	else
 		data["beakerCurrentVolume"] = null

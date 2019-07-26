@@ -6,7 +6,7 @@
 
 /obj/item/reagent_containers/food/drinks/bottle
 	amount_per_transfer_from_this = 10
-	volume = 100
+	reagents = list("volume" = 100, "flags" = OPENCONTAINER)
 	throwforce = 15
 	item_state = "broken_beer" //Generic held-item sprite until unique ones are made.
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
@@ -294,7 +294,7 @@
 	name = "Jian Hard Cider"
 	desc = "Apple juice for adults."
 	icon_state = "hcider"
-	volume = 50
+	reagents = list("volume" = 50, "flags" = OPENCONTAINER)
 	list_reagents = list(/datum/reagent/consumable/ethanol/hcider = 50)
 
 /obj/item/reagent_containers/food/drinks/bottle/grappa
@@ -424,7 +424,7 @@
 	desc = "Brewed in space-Belgium. Fancy!"
 	custom_premium_price = 50
 	icon_state = "trappistbottle"
-	volume = 50
+	reagents = list("volume" = 50, "flags" = OPENCONTAINER)
 	list_reagents = list(/datum/reagent/consumable/ethanol/trappist = 50)
 
 

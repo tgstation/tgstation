@@ -103,7 +103,7 @@
 
 	data["currentTemp"] = beaker ? beaker.reagents.chem_temp : null
 	data["beakerCurrentVolume"] = beaker ? beaker.reagents.total_volume : null
-	data["beakerMaxVolume"] = beaker ? beaker.volume : null
+	data["beakerMaxVolume"] = beaker ? beaker.reagents.maximum_volume : null
 
 	var beakerContents[0]
 	if(beaker)

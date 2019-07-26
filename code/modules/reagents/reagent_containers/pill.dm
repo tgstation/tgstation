@@ -7,7 +7,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	possible_transfer_amounts = list()
-	volume = 50
+	reagents = list("volume" = 50, "flags" = NONE)
 	grind_results = list()
 	var/apply_type = INGEST
 	var/apply_method = "swallow"

@@ -5,7 +5,7 @@
 	icon_state = "bandaid"
 	item_state = "bandaid"
 	possible_transfer_amounts = list()
-	volume = 40
+	reagents = list("volume" = 40, "flags" = NONE)
 	apply_type = PATCH
 	apply_method = "apply"
 	self_delay = 30		// three seconds

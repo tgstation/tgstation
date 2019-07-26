@@ -158,7 +158,7 @@
 	var/list/data = list()
 	data["isBeakerLoaded"] = beaker ? 1 : 0
 	data["beakerCurrentVolume"] = beaker ? beaker.reagents.total_volume : null
-	data["beakerMaxVolume"] = beaker ? beaker.volume : null
+	data["beakerMaxVolume"] = beaker ? beaker.reagents.maximum_volume : null
 	data["mode"] = mode
 	data["condi"] = condi
 	data["screen"] = screen
@@ -317,7 +317,7 @@
 				var/obj/item/reagent_containers/food/condiment/P = new(drop_location())
 				P.originalname = name
 				P.name = trim("[name] bottle")
-				reagents.trans_to(P, P.volume, transfered_by = usr)
+				reagents.trans_to(P, P.reagents.maximum_volume, transfered_by = usr)
 			else
 				var/amount_full = 0
 				var/vol_part = min(reagents.total_volume, 30)

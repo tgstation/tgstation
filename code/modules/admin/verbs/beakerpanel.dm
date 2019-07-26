@@ -10,7 +10,7 @@
 	. = list()
 	for(var/t in subtypesof(/obj/item/reagent_containers))
 		var/obj/item/reagent_containers/C = t
-		. += list(list("id" = t, "text" = initial(C.name), "volume" = initial(C.volume)))
+		. += list(list("id" = t, "text" = initial(C.name), "volume" = initial(C.reagents?.maximum_volume)))
 
 	. = json_encode(.)
 

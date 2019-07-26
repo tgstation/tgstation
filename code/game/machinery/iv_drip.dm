@@ -46,8 +46,9 @@
 			add_overlay("beakeridle")
 		if(beaker.reagents.total_volume)
 			var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/iv_drip.dmi', "reagent")
-
-			var/percent = round((beaker.reagents.total_volume / beaker.volume) * 100)
+			var/percent = 0
+			if(beaker.reagents.maximum_volume) //Make sure we don't divide by 0.
+				percent = round((beaker.reagents.total_volume / beaker.reagents.maximum_volume) * 100)
 			switch(percent)
 				if(0 to 9)
 					filling_overlay.icon_state = "reagent0"

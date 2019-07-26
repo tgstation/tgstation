@@ -3,7 +3,7 @@
 	icon = 'icons/obj/food/soupsalad.dmi'
 	trash = /obj/item/reagent_containers/glass/bowl
 	bitesize = 5
-	volume = 80
+	reagents = list("volume" = 80, "flags" = INJECTABLE)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("tasteless soup" = 1)
 	foodtype = VEGETABLES
@@ -207,7 +207,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/tomatojuice = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/medicine/oculine = 5, /datum/reagent/consumable/tomatojuice = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
 	bitesize = 7
-	volume = 100
+	reagents = list("volume" = 100, "flags" = INJECTABLE)
 	tastes = list("tomato" = 1, "carrot" = 1)
 	foodtype = VEGETABLES
 

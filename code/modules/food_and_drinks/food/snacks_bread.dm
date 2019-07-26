@@ -1,7 +1,7 @@
 
 /obj/item/reagent_containers/food/snacks/store/bread
 	icon = 'icons/obj/food/burgerbread.dmi'
-	volume = 80
+	reagents = list("volume" = 80, "flags" = INJECTABLE)
 	slices_num = 5
 	tastes = list("bread" = 10)
 	foodtype = GRAIN

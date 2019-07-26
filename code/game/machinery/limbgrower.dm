@@ -149,7 +149,7 @@
 /obj/machinery/limbgrower/RefreshParts()
 	reagents.maximum_volume = 0
 	for(var/obj/item/reagent_containers/glass/G in component_parts)
-		reagents.maximum_volume += G.volume
+		reagents.maximum_volume += G.reagents.maximum_volume
 		G.reagents.trans_to(src, G.reagents.total_volume)
 	var/T=1.2
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)

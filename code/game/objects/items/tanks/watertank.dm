@@ -111,7 +111,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(25,50,100)
-	volume = 500
+	reagents = list("volume" = 500, "flags" = OPENCONTAINER)
 	item_flags = NOBLUDGEON | ABSTRACT  // don't put in storage
 	slot_flags = 0
 
@@ -329,13 +329,11 @@
 	slot_flags = ITEM_SLOT_BACK
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/activate_injector)
-
+	reagents = list("volume" = 300, "flags" = OPENCONTAINER)
 	var/on = FALSE
-	volume = 300
 	var/usage_ratio = 5 //5 unit added per 1 removed
 	var/injection_amount = 1
 	amount_per_transfer_from_this = 5
-	reagent_flags = OPENCONTAINER
 	spillable = FALSE
 	possible_transfer_amounts = list(5,10,15)
 
@@ -362,10 +360,10 @@
 /obj/item/reagent_containers/chemtank/proc/update_filling()
 	cut_overlays()
 
-	if(reagents.total_volume)
+	if(reagents.total_volume && reagents.maximum_volume)
 		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "backpack-10")
 
-		var/percent = round((reagents.total_volume / volume) * 100)
+		var/percent = round((reagents.total_volume / reagents.maximum_volume) * 100)
 		switch(percent)
 			if(0 to 15)
 				filling.icon_state = "backpack-10"
@@ -380,10 +378,10 @@
 /obj/item/reagent_containers/chemtank/worn_overlays(var/isinhands = FALSE) //apply chemcolor and level
 	. = list()
 	//inhands + reagent_filling
-	if(!isinhands && reagents.total_volume)
+	if(!isinhands && reagents.total_volume && reagents.maximum_volume)
 		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "backpackmob-10")
 
-		var/percent = round((reagents.total_volume / volume) * 100)
+		var/percent = round((reagents.total_volume / reagents.maximum_volume) * 100)
 		switch(percent)
 			if(0 to 15)
 				filling.icon_state = "backpackmob-10"

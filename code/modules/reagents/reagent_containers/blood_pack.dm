@@ -3,7 +3,7 @@
 	desc = "Contains blood used for transfusion. Must be attached to an IV drip."
 	icon = 'icons/obj/bloodpack.dmi'
 	icon_state = "bloodpack"
-	volume = 200
+	reagents = list("volume" = 200, "flags" = NONE)
 	var/blood_type = null
 	var/unique_blood = null
 	var/labelled = 0
@@ -33,8 +33,9 @@
 
 /obj/item/reagent_containers/blood/update_icon()
 	cut_overlays()
-
-	var/v = min(round(reagents.total_volume / volume * 10), 10)
+	if(!reagents.maximum_volume) //Division by 0 bad.
+		return
+	var/v = min(round(reagents.total_volume / reagents.maximum_volume * 10), 10)
 	if(v > 0)
 		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "bloodpack1")
 		filling.icon_state = "bloodpack[v]"

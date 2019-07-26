@@ -7,7 +7,7 @@
 	possible_transfer_amounts = list()
 	spillable = FALSE
 	disease_amount = 0
-	volume = 10
+	reagents = list("volume" = 10, "flags" = NONE)
 	amount_per_transfer_from_this = 0
 	list_reagents = list(/datum/reagent/consumable/honey = 5)
 	grind_results = list()

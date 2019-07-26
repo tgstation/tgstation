@@ -7,10 +7,9 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "hypo"
 	amount_per_transfer_from_this = 5
-	volume = 30
+	reagents = list("volume" = 30, "flags" = OPENCONTAINER)
 	possible_transfer_amounts = list()
 	resistance_flags = ACID_PROOF
-	reagent_flags = OPENCONTAINER
 	slot_flags = ITEM_SLOT_BELT
 	var/ignore_flags = 0
 	var/infinite = FALSE
@@ -63,21 +62,20 @@
 	desc = "A modified air-needle autoinjector, used by support operatives to quickly heal injuries in combat."
 	amount_per_transfer_from_this = 10
 	icon_state = "combat_hypo"
-	volume = 90
+	reagents = list("volume" = 90, "flags" = OPENCONTAINER)
 	ignore_flags = 1 // So they can heal their comrades.
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 30, /datum/reagent/medicine/omnizine = 30, /datum/reagent/medicine/leporazine = 15, /datum/reagent/medicine/atropine = 15)
 
 /obj/item/reagent_containers/hypospray/combat/nanites
 	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with experimental medical compounds for rapid healing."
-	volume = 100
+	reagents = list("volume" = 100, "flags" = OPENCONTAINER)
 	list_reagents = list(/datum/reagent/medicine/adminordrazine/quantum_heal = 80, /datum/reagent/medicine/synaptizine = 20)
 
 /obj/item/reagent_containers/hypospray/magillitis
 	name = "experimental autoinjector"
 	desc = "A modified air-needle autoinjector with a small single-use reservoir. It contains an experimental serum."
 	icon_state = "combat_hypo"
-	volume = 5
-	reagent_flags = NONE
+	reagents = list("volume" = 5, "flags" = NONE)
 	list_reagents = list(/datum/reagent/magillitis = 5)
 
 //MediPens
@@ -90,9 +88,8 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	amount_per_transfer_from_this = 10
-	volume = 10
+	reagents = list("volume" = 10, "flags" = DRAWABLE)
 	ignore_flags = 1 //so you can medipen through hardsuits
-	reagent_flags = DRAWABLE
 	flags_1 = null
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 10)
 	custom_price = 40
@@ -129,7 +126,7 @@
 	name = "stimpack medipen"
 	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor."
 	icon_state = "stimpen"
-	volume = 20
+	reagents = list("volume" = 20, "flags" = DRAWABLE)
 	amount_per_transfer_from_this = 20
 	list_reagents = list(/datum/reagent/medicine/ephedrine = 10, /datum/reagent/consumable/coffee = 10)
 
@@ -166,7 +163,7 @@
 	name = "BVAK autoinjector"
 	desc = "Bio Virus Antidote Kit autoinjector. Has a two use system for yourself, and someone else. Inject when infected."
 	icon_state = "stimpen"
-	volume = 60
+	reagents = list("volume" = 60, "flags" = DRAWABLE)
 	amount_per_transfer_from_this = 30
 	list_reagents = list(/datum/reagent/medicine/atropine = 10, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/omnizine = 20, /datum/reagent/medicine/perfluorodecalin = 15, /datum/reagent/medicine/spaceacillin = 20)
 
@@ -174,14 +171,14 @@
 	name = "survival medipen"
 	desc = "A medipen for surviving in the harshest of environments, heals and protects from environmental hazards. WARNING: Do not inject more than one pen in quick succession."
 	icon_state = "stimpen"
-	volume = 57
+	reagents = list("volume" = 57, "flags" = DRAWABLE)
 	amount_per_transfer_from_this = 57
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/leporazine = 15, /datum/reagent/medicine/tricordrazine = 15, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/lavaland_extract = 2, /datum/reagent/medicine/omnizine = 5)
 
 /obj/item/reagent_containers/hypospray/combat/heresypurge
 	name = "holy water autoinjector"
 	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with 5 doses of a holy water mixture."
-	volume = 250
+	reagents = list("volume" = 250, "flags" = OPENCONTAINER)
 	list_reagents = list(/datum/reagent/water/holywater = 150, /datum/reagent/peaceborg/tire = 50, /datum/reagent/peaceborg/confuse = 50)
 	amount_per_transfer_from_this = 50
 

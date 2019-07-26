@@ -6,7 +6,7 @@
 	icon_state = "bottle"
 	item_state = "atoxinbottle"
 	possible_transfer_amounts = list(5,10,15,25,30)
-	volume = 30
+	reagents = list("volume" = 30, "flags" = OPENCONTAINER)
 
 
 /obj/item/reagent_containers/glass/bottle/Initialize()
@@ -20,10 +20,10 @@
 
 /obj/item/reagent_containers/glass/bottle/update_icon()
 	cut_overlays()
-	if(reagents.total_volume)
+	if(reagents.total_volume && reagents.maximum_volume)
 		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[icon_state]-10")
 
-		var/percent = round((reagents.total_volume / volume) * 100)
+		var/percent = round((reagents.total_volume / reagents.maximum_volume) * 100)
 		switch(percent)
 			if(0 to 9)
 				filling.icon_state = "[icon_state]-10"

@@ -5,7 +5,7 @@
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	slices_num = 6
-	volume = 80
+	reagents = list("volume" = 80, "flags" = INJECTABLE)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 30, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1)
 	foodtype = GRAIN | DAIRY | VEGETABLES

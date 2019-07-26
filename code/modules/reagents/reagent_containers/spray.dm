@@ -7,12 +7,12 @@
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	item_flags = NOBLUDGEON
-	reagent_flags = OPENCONTAINER
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 7
+	reagents = list("volume" = 250, "flags" = OPENCONTAINER)
 	var/stream_mode = 0 //whether we use the more focused mode
 	var/current_range = 3 //the range of tiles the sprayer will reach.
 	var/spray_range = 3 //the range of tiles the sprayer will reach when in spray mode.
@@ -20,7 +20,6 @@
 	var/stream_amount = 10 //the amount of reagents transfered when in stream mode.
 	var/can_fill_from_container = TRUE
 	amount_per_transfer_from_this = 5
-	volume = 250
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
 
 /obj/item/reagent_containers/spray/afterattack(atom/A, mob/user)
@@ -161,7 +160,7 @@
 	name = "space cleaner"
 	desc = "BLAM!-brand non-foaming space cleaner!"
 	icon_state = "cleaner"
-	volume = 100
+	reagents = list("volume" = 100, "flags" = OPENCONTAINER)
 	list_reagents = list(/datum/reagent/space_cleaner = 100)
 	amount_per_transfer_from_this = 2
 	stream_amount = 5
@@ -183,7 +182,7 @@
 //spray tan
 /obj/item/reagent_containers/spray/spraytan
 	name = "spray tan"
-	volume = 50
+	reagents = list("volume" = 50, "flags" = OPENCONTAINER)
 	desc = "Gyaro brand spray tan. Do not spray near eyes or other orifices."
 	list_reagents = list(/datum/reagent/spraytan = 50)
 
@@ -197,7 +196,7 @@
 	item_state = "pepperspray"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	volume = 40
+	reagents = list("volume" = 40, "flags" = OPENCONTAINER)
 	stream_range = 4
 	amount_per_transfer_from_this = 5
 	list_reagents = list(/datum/reagent/consumable/condensedcapsaicin = 40)
@@ -223,7 +222,7 @@
 	icon_state = "sunflower"
 	item_state = "sunflower"
 	amount_per_transfer_from_this = 1
-	volume = 10
+	reagents = list("volume" = 10, "flags" = OPENCONTAINER)
 	list_reagents = list(/datum/reagent/water = 10)
 
 /obj/item/reagent_containers/spray/waterflower/attack_self(mob/user) //Don't allow changing how much the flower sprays
@@ -235,12 +234,11 @@
 	desc = "A delightly devilish flower... you got a feeling where this is going."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "clownflower"
-	volume = 30
+	reagents = list("volume" = 30, "flags" = OPENCONTAINER)
 	list_reagents = list(/datum/reagent/lube/superlube = 30)
 
 /obj/item/reagent_containers/spray/waterflower/cyborg
-	reagent_flags = NONE
-	volume = 100
+	reagents = list("volume" = 100, "flags" = NONE)
 	list_reagents = list(/datum/reagent/water = 100)
 	var/generate_amount = 5
 	var/generate_type = /datum/reagent/water
@@ -252,7 +250,7 @@
 	name = "nova flower"
 	desc = "This doesn't look safe at all..."
 	list_reagents = list(/datum/reagent/clf3 = 3)
-	volume = 3
+	reagents = list("volume" = 3, "flags" = NONE)
 	generate_type = /datum/reagent/clf3
 	generate_amount = 1
 	generate_delay = 40		//deciseconds
@@ -294,7 +292,7 @@
 	spray_range = 4
 	stream_range = 7
 	amount_per_transfer_from_this = 10
-	volume = 600
+	reagents = list("volume" = 600, "flags" = OPENCONTAINER)
 
 /obj/item/reagent_containers/spray/chemsprayer/afterattack(atom/A as mob|obj, mob/user)
 	// Make it so the bioterror spray doesn't spray yourself when you click your inventory items
@@ -325,9 +323,8 @@
 	item_state = "chemsprayer_janitor"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	reagent_flags = NONE
 	list_reagents = list(/datum/reagent/space_cleaner = 1000)
-	volume = 1000
+	reagents = list("volume" = 1000, "flags" = NONE)
 	amount_per_transfer_from_this = 5
 	var/generate_amount = 50
 	var/generate_type = /datum/reagent/space_cleaner
@@ -357,7 +354,7 @@
 	item_state = "plantbgone"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
-	volume = 100
+	reagents = list("volume" = 100, "flags" = OPENCONTAINER)
 	list_reagents = list(/datum/reagent/toxin/plantbgone = 100)
 
 /obj/item/reagent_containers/spray/syndicate
@@ -370,7 +367,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	spray_range = 4
 	stream_range = 2
-	volume = 100
+	reagents = list("volume" = 100, "flags" = OPENCONTAINER)
 	custom_premium_price = 200
 
 /obj/item/reagent_containers/spray/syndicate/Initialize()
@@ -384,7 +381,7 @@
 	item_state = "sprayer_med_red"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	volume = 100
+	reagents = list("volume" = 100, "flags" = OPENCONTAINER)
 	unique_reskin = list("Red" = "sprayer_med_red",
 						"Yellow" = "sprayer_med_yellow",
 						"Blue" = "sprayer_med_blue")

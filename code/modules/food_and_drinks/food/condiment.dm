@@ -10,9 +10,8 @@
 	desc = "Just your average condiment container."
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "emptycondiment"
-	reagent_flags = OPENCONTAINER
+	reagents = list("volume" = 50, "flags" = OPENCONTAINER)
 	possible_transfer_amounts = list(1, 5, 10, 15, 20, 25, 30, 50)
-	volume = 50
 	//Possible_states has the reagent type as key and a list of, in order, the icon_state, the name and the desc as values. Used in the on_reagent_change(changetype) to change names, descs and sprites.
 	var/list/possible_states = list(
 	 /datum/reagent/consumable/ketchup = list("ketchup", "ketchup bottle", "You feel more American already."),
@@ -132,7 +131,7 @@
 	icon_state = "saltshakersmall"
 	possible_transfer_amounts = list(1,20) //for clown turning the lid off
 	amount_per_transfer_from_this = 1
-	volume = 20
+	reagents = list("volume" = 20, "flags" = OPENCONTAINER)
 	list_reagents = list(/datum/reagent/consumable/sodiumchloride = 20)
 	possible_states = list()
 
@@ -170,7 +169,7 @@
 	icon_state = "peppermillsmall"
 	possible_transfer_amounts = list(1,20) //for clown turning the lid off
 	amount_per_transfer_from_this = 1
-	volume = 20
+	reagents = list("volume" = 20, "flags" = OPENCONTAINER)
 	list_reagents = list(/datum/reagent/consumable/blackpepper = 20)
 	possible_states = list()
 
@@ -238,7 +237,7 @@
 	name = "condiment pack"
 	desc = "A small plastic pack with condiments to put on your food."
 	icon_state = "condi_empty"
-	volume = 10
+	reagents = list("volume" = 10, "flags" = OPENCONTAINER)
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list()
 	possible_states = list(

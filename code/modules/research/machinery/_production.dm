@@ -60,7 +60,7 @@
 	if(reagents)		//If reagents/materials aren't initialized, don't bother, we'll be doing this again after reagents init anyways.
 		reagents.maximum_volume = 0
 		for(var/obj/item/reagent_containers/glass/G in component_parts)
-			reagents.maximum_volume += G.volume
+			reagents.maximum_volume += G.reagents.maximum_volume
 			G.reagents.trans_to(src, G.reagents.total_volume)
 	if(materials)
 		var/total_storage = 0

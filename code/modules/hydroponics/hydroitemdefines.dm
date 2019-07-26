@@ -23,7 +23,7 @@
 	item_state = "spraycan"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
-	volume = 100
+	reagents = list("volume" = 100, "flags" = OPENCONTAINER)
 	list_reagents = list(/datum/reagent/toxin/plantbgone/weedkiller = 100)
 
 /obj/item/reagent_containers/spray/weedspray/suicide_act(mob/user)
@@ -38,7 +38,7 @@
 	item_state = "plantbgone"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
-	volume = 100
+	reagents = list("volume" = 100, "flags" = OPENCONTAINER)
 	list_reagents = list(/datum/reagent/toxin/pestkiller = 100)
 
 /obj/item/reagent_containers/spray/pestspray/suicide_act(mob/user)
@@ -163,7 +163,7 @@
 
 /obj/item/reagent_containers/glass/bottle/nutrient
 	name = "bottle of nutrient"
-	volume = 50
+	reagents = list("volume" = 50, "flags" = OPENCONTAINER)
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(1,2,5,10,15,25,50)
 
@@ -192,7 +192,7 @@
 	name = "bottle"
 
 /obj/item/reagent_containers/glass/bottle/killer
-	volume = 50
+	reagents = list("volume" = 50, "flags" = OPENCONTAINER)
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(1,2,5,10,15,25,50)
 

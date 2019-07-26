@@ -168,7 +168,7 @@
 	filling_color = rgb(20, 20, 20)
 	seed = /obj/item/seeds/cherry/bomb
 	bitesize_mod = 2
-	volume = 125 //Gives enough room for the black powder at max potency
+	reagents = list("volume" = 125, "flags" = NONE) //Gives enough room for the black powder at max potency
 	max_integrity = 40
 	wine_power = 80
 

@@ -120,5 +120,5 @@
 	name = "omega cannabis leaf"
 	desc = "You feel dizzy looking at it. What the fuck?"
 	icon_state = "ocannabis"
-	volume = 420
+	reagents = list("volume" = 420, "flags" = NONE)
 	wine_power = 90

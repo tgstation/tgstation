@@ -6,7 +6,7 @@
 	custom_price = 5
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 10
-	volume = 50
+	reagents = list("volume" = 50, "flags" = OPENCONTAINER)
 	materials = list(MAT_GLASS=500)
 	max_integrity = 20
 	spillable = TRUE
@@ -46,7 +46,7 @@
 	gulp_size = 15
 	amount_per_transfer_from_this = 15
 	possible_transfer_amounts = list()
-	volume = 15
+	reagents = list("volume" = 15, "flags" = OPENCONTAINER)
 	materials = list(MAT_GLASS=100)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/on_reagent_change(changetype)

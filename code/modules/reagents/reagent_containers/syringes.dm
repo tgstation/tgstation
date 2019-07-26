@@ -8,12 +8,11 @@
 	icon_state = "0"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list()
-	volume = 15
+	reagents = list("volume" = 15, "flags" = TRANSPARENT)
 	var/mode = SYRINGE_DRAW
 	var/busy = FALSE		// needed for delayed drawing of blood
 	var/proj_piercing = 0 //does it pierce through thick clothes when shot with syringe gun
 	materials = list(MAT_METAL=10, MAT_GLASS=20)
-	reagent_flags = TRANSPARENT
 
 /obj/item/reagent_containers/syringe/Initialize()
 	. = ..()
@@ -154,8 +153,8 @@
 /obj/item/reagent_containers/syringe/update_icon()
 	cut_overlays()
 	var/rounded_vol
-	if(reagents && reagents.total_volume)
-		rounded_vol = CLAMP(round((reagents.total_volume / volume * 15),5), 1, 15)
+	if(reagents && reagents.total_volume && reagents.maximum_volume)
+		rounded_vol = CLAMP(round((reagents.total_volume / reagents.maximum_volume * 15),5), 1, 15)
 		var/image/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "syringe[rounded_vol]")
 		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(filling_overlay)
@@ -203,7 +202,7 @@
 	name = "Stimpack"
 	desc = "Contains stimulants."
 	amount_per_transfer_from_this = 50
-	volume = 50
+	reagents = list("volume" = 50, "flags" = TRANSPARENT)
 	list_reagents = list(/datum/reagent/medicine/stimulants = 50)
 
 /obj/item/reagent_containers/syringe/calomel
@@ -220,7 +219,7 @@
 	name = "lethal injection syringe"
 	desc = "A syringe used for lethal injections. It can hold up to 50 units."
 	amount_per_transfer_from_this = 50
-	volume = 50
+	reagents = list("volume" = 50, "flags" = TRANSPARENT)
 
 /obj/item/reagent_containers/syringe/lethal/choral
 	list_reagents = list(/datum/reagent/toxin/chloralhydrate = 50)
@@ -232,32 +231,31 @@
 	name = "Mulligan"
 	desc = "A syringe used to completely change the users identity."
 	amount_per_transfer_from_this = 1
-	volume = 1
+	reagents = list("volume" = 1, "flags" = TRANSPARENT)
 	list_reagents = list(/datum/reagent/mulligan = 1)
 
 /obj/item/reagent_containers/syringe/gluttony
 	name = "Gluttony's Blessing"
 	desc = "A syringe recovered from a dread place. It probably isn't wise to use."
 	amount_per_transfer_from_this = 1
-	volume = 1
+	reagents = list("volume" = 1, "flags" = TRANSPARENT)
 	list_reagents = list(/datum/reagent/gluttonytoxin = 1)
 
 /obj/item/reagent_containers/syringe/bluespace
 	name = "bluespace syringe"
 	desc = "An advanced syringe that can hold 60 units of chemicals."
 	amount_per_transfer_from_this = 20
-	volume = 60
+	reagents = list("volume" = 60, "flags" = TRANSPARENT)
 
 /obj/item/reagent_containers/syringe/noreact
 	name = "cryo syringe"
 	desc = "An advanced syringe that stops reagents inside from reacting. It can hold up to 20 units."
-	volume = 20
-	reagent_flags = TRANSPARENT | NO_REACT
+	reagents = list("volume" = 20, "flags" = TRANSPARENT | NO_REACT)
 
 /obj/item/reagent_containers/syringe/piercing
 	name = "piercing syringe"
 	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
-	volume = 10
+	reagents = list("volume" = 10, "flags" = TRANSPARENT)
 	proj_piercing = 1
 
 /obj/item/reagent_containers/syringe/spider_extract

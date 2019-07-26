@@ -4,7 +4,7 @@
 	trash = /obj/item/trash/plate
 	bitesize = 3
 	w_class = WEIGHT_CLASS_NORMAL
-	volume = 80
+	reagents = list("volume" = 80, "flags" = INJECTABLE)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("pie" = 1)
 	foodtype = GRAIN

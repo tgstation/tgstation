@@ -14,7 +14,7 @@
 /obj/item/reagent_containers/food/snacks/customizable
 	bitesize = 4
 	w_class = WEIGHT_CLASS_SMALL
-	volume = 80
+	reagents = list("volume" = 80, "flags" = INJECTABLE)
 
 	var/ingMax = 12
 	var/list/ingredients = list()
@@ -40,7 +40,7 @@
 		var/obj/item/reagent_containers/food/snacks/S = I
 		if(I.w_class > WEIGHT_CLASS_SMALL)
 			to_chat(user, "<span class='warning'>The ingredient is too big for [src]!</span>")
-		else if((ingredients.len >= ingMax) || (reagents.total_volume >= volume))
+		else if((ingredients.len >= ingMax) || (reagents.total_volume >= reagents.maximum_volume))
 			to_chat(user, "<span class='warning'>You can't add more ingredients to [src]!</span>")
 		else if(istype(I, /obj/item/reagent_containers/food/snacks/pizzaslice/custom) || istype(I, /obj/item/reagent_containers/food/snacks/cakeslice/custom))
 			to_chat(user, "<span class='warning'>Adding [I.name] to [src] would make a mess.</span>")
@@ -290,7 +290,6 @@
 	desc = "A simple bowl, used for soups and salads."
 	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "bowl"
-	reagent_flags = OPENCONTAINER
 	materials = list(MAT_GLASS = 500)
 	w_class = WEIGHT_CLASS_NORMAL
 

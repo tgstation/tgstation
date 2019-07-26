@@ -4,10 +4,11 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = null
 	w_class = WEIGHT_CLASS_TINY
+	///This holds the reagents later. In initalize, if this is a list, it gets created as a reagents datum. list(volume, flags).
+	///Make sure this is a list, otherwise this runtimes. What are you doing here if you don't actually want to create a reagent container?
+	reagents = list("volume" = 30, "flags" = NONE)
 	var/amount_per_transfer_from_this = 5
 	var/list/possible_transfer_amounts = list(5,10,15,20,25,30)
-	var/volume = 30
-	var/reagent_flags
 	var/list/list_reagents = null
 	var/spawned_disease = null
 	var/disease_amount = 20
@@ -16,8 +17,8 @@
 /obj/item/reagent_containers/Initialize(mapload, vol)
 	. = ..()
 	if(isnum(vol) && vol > 0)
-		volume = vol
-	create_reagents(volume, reagent_flags)
+		reagents["volume"] = vol
+	create_reagents(reagents["volume"], reagents["flags"])
 	if(spawned_disease)
 		var/datum/disease/F = new spawned_disease()
 		var/list/data = list("viruses"= list(F))
