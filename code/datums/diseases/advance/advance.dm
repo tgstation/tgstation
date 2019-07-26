@@ -77,6 +77,11 @@
  */
 
 /datum/disease/advance/New()
+	#ifdef EVENTMODE
+	QDELIN(src, 1)
+	return
+	#endif
+
 	Refresh()
 
 /datum/disease/advance/Destroy()
