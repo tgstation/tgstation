@@ -3301,6 +3301,7 @@
 /turf/closed/wall/r_wall,
 /area/crew_quarters/heads/hop)
 "aiP" = (
+/obj/effect/mapping_helpers/ianbirthday,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "aiQ" = (

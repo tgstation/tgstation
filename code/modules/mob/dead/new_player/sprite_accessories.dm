@@ -24,9 +24,7 @@
 	if(!istype(female))
 		female = list()
 
-	for(var/path in typesof(prototype))
-		if(path == prototype)
-			continue
+	for(var/path in subtypesof(prototype))
 		if(roundstart)
 			var/datum/sprite_accessory/P = path
 			if(initial(P.locked))
