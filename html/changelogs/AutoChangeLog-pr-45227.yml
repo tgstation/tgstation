@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - rscadd: "The legion megafauna has been reworked. The fight should now be both slightly harder and faster."

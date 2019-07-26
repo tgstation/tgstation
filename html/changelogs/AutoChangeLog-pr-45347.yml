@@ -1,4 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes: 
-  - rscdel: "Removed duplicate science airlock from RCD."
