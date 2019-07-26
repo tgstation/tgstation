@@ -1473,6 +1473,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 7
 	limited_stock = 1
 
+/datum/uplink_item/devices_tools/syndiecash
+	name = "Syndicate Briefcase Full of Cash"
+	desc = "A secure briefcase containing 5000 space credits. Useful for bribing personnel, or purchasing goods \
+			and services at lucrative prices. The briefcase also feels a little heavier to hold; it has been \
+			manufactured to pack a little bit more of a punch if your client needs some convincing."
+	item = /obj/item/storage/secure/briefcase/syndie
+	cost = 2
+	restricted = TRUE
+
 // Implants
 /datum/uplink_item/implants
 	category = "Implants"
@@ -1585,7 +1594,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/race_restricted/syndilamp
 	name = "Extra-Bright Lantern"
 	desc = "We heard that moths such as yourself really like lamps, so we decided to grant you early access to a prototype \
-	Syndicate brand \"Extra-Bright Lanternâ„¢\". Enjoy."
+	Syndicate brand \"Extra-Bright Lantern™\". Enjoy."
 	cost = 2
 	item = /obj/item/flashlight/lantern/syndicate
 	restricted_species = list("moth")
@@ -1820,15 +1829,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 20
 	cant_discount = TRUE
 	illegal_tech = FALSE
-
-/datum/uplink_item/badass/syndiecash
-	name = "Syndicate Briefcase Full of Cash"
-	desc = "A secure briefcase containing 5000 space credits. Useful for bribing personnel, or purchasing goods \
-			and services at lucrative prices. The briefcase also feels a little heavier to hold; it has been \
-			manufactured to pack a little bit more of a punch if your client needs some convincing."
-	item = /obj/item/storage/secure/briefcase/syndie
-	cost = 1
-	restricted = TRUE
 
 /datum/uplink_item/badass/syndiecards
 	name = "Syndicate Playing Cards"
