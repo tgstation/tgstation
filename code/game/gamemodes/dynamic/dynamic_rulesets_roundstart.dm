@@ -335,6 +335,7 @@
 			SSticker.mode_result = "halfwin - interrupted"
 			SSticker.news_report = OPERATIVE_SKIRMISH
 
+/* Commented out because it can't reasonably check heads while being a roundstart ruleset.
 //////////////////////////////////////////////
 //                                          //
 //               REVS		                //
@@ -432,34 +433,7 @@
 	else if(finished == 2)
 		SSticker.mode_result = "loss - rev heads killed"
 		SSticker.news_report = REVS_LOSE
-
-//////////////////////////////////////////////
-//                                          //
-//               HIVEMIND                   //
-//                                          //
-//////////////////////////////////////////////
-
-/datum/dynamic_ruleset/roundstart/hivemind
-	name = "Hivemind"
-	antag_flag = ROLE_HIVE
-	antag_datum = /datum/antagonist/hivemind
-	restricted_roles = list("Cyborg", "AI", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	required_candidates = 3
-	weight = 3
-	cost = 30
-	requirements = list(101,101,70,40,30,20,10,10,10,10)
-	high_population_requirement = 10
-
-/datum/dynamic_ruleset/roundstart/hivemind/pre_execute()
-	var/num_hosts = max( 1 , rand(0,1) + min(8, round(num_players() / 8) ) )
-	for(var/i = 1 to num_hosts)
-		var/mob/M = pick(candidates)
-		candidates -= M
-		assigned += M.mind
-		M.mind.special_role = ROLE_HIVE
-		M.mind.restricted_roles = restricted_roles
-		log_game("[key_name(M)] has been selected as a hivemind host")
-	return TRUE
+*/
 
 // Admin only rulesets. The threat requirement is 101 so it is not possible to roll them.
 

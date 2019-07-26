@@ -78,7 +78,7 @@
 	possible_candidates.Add(dead_players)
 	possible_candidates.Add(list_observers)
 	send_applications(possible_candidates)
-	if(applicants.len >= required_candidates)
+	if(assigned.len > 0)
 		return TRUE
 	else
 		return FALSE
@@ -130,7 +130,6 @@
 			message_admins("[name]: Applicant was null. This may be caused if the mind changed bodies after applying.")
 			i--
 			continue
-		message_admins("DEBUG: Selected [applicant] for rule.")
 
 		var/mob/new_character = applicant
 
@@ -138,7 +137,8 @@
 			new_character = generate_ruleset_body(applicant)
 
 		finish_setup(new_character, i)
-
+		assigned += applicant
+		notify_ghosts("[new_character] has been picked for [src.name]!", source = new_character, action = NOTIFY_ORBIT, header="Something Interesting!")
 	applicants.Cut()
 
 /datum/dynamic_ruleset/midround/from_ghosts/proc/generate_ruleset_body(mob/applicant)

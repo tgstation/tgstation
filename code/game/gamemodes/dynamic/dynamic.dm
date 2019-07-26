@@ -119,8 +119,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	else
 		dat += "none.<br>"
 	dat += "<br>Injection Timers: (<b>[get_injection_chance(TRUE)]%</b> chance)<BR>"
-	dat += "Latejoin: [latejoin_injection_cooldown>60*10 ? "[round(latejoin_injection_cooldown/60/10,0.1)] minutes" : "[latejoin_injection_cooldown] seconds"] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
-	dat += "Midround: [midround_injection_cooldown>60*10 ? "[round(midround_injection_cooldown/60/10,0.1)] minutes" : "[midround_injection_cooldown] seconds"] <a href='?src=\ref[src];[HrefToken()];injectmid=2'>\[Now!\]</a><BR>"
+	dat += "Latejoin: [(latejoin_injection_cooldown-world.time)>60*10 ? "[round((latejoin_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(latejoin_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
+	dat += "Midround: [(midround_injection_cooldown-world.time)>60*10 ? "[round((midround_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(midround_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];injectmid=2'>\[Now!\]</a><BR>"
 	usr << browse(dat.Join(), "window=gamemode_panel;size=500x500")
 
 /datum/game_mode/dynamic/Topic(href, href_list)
@@ -381,6 +381,18 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /// Picks a random roundstart rule from the list given as an argument and executes it.
 /datum/game_mode/dynamic/proc/picking_roundstart_rule(list/drafted_rules = list())
 	var/datum/dynamic_ruleset/roundstart/starting_rule = pickweight(drafted_rules)
+	if(!starting_rule)
+		return FALSE
+
+	// Check if a blocking ruleset has been executed.
+	if(starting_rule.blocking_rules.len > 0)
+		for(var/blocking in starting_rule.blocking_rules)
+			for(var/datum/dynamic_ruleset/executed in executed_rules)
+				if(blocking == starting_rule.type)
+					drafted_rules -= starting_rule
+					if(drafted_rules.len <= 0)
+						return FALSE
+					starting_rule = pickweight(drafted_rules)
 
 	if (starting_rule)
 		message_admins("Picking a [istype(starting_rule, /datum/dynamic_ruleset/roundstart/delayed/) ? " delayed " : ""] ruleset [starting_rule.name]")
@@ -436,6 +448,19 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /// Picks a random latejoin rule from the list given as an argument and executes it.
 /datum/game_mode/dynamic/proc/picking_latejoin_rule(list/drafted_rules = list())
 	var/datum/dynamic_ruleset/latejoin/latejoin_rule = pickweight(drafted_rules)
+	if(!latejoin_rule)
+		return FALSE
+
+	// Check if a blocking ruleset has been executed.
+	if(latejoin_rule.blocking_rules.len > 0)
+		for(var/blocking in latejoin_rule.blocking_rules)
+			for(var/datum/dynamic_ruleset/executed in executed_rules)
+				if(blocking == executed.type)
+					drafted_rules -= latejoin_rule
+					if(drafted_rules.len <= 0)
+						return FALSE
+					latejoin_rule = pickweight(drafted_rules)
+	
 	if (latejoin_rule)
 		if (!latejoin_rule.repeatable)
 			latejoin_rules = remove_rule(latejoin_rules,latejoin_rule.type)
@@ -456,20 +481,30 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /// Picks a random midround rule from the list given as an argument and executes it.
 /datum/game_mode/dynamic/proc/picking_midround_rule(list/drafted_rules = list())
 	var/datum/dynamic_ruleset/midround/midround_rule = pickweight(drafted_rules)
-	if (midround_rule)
-		if (!midround_rule.repeatable)
-			midround_rules = remove_rule(midround_rules,midround_rule.type)
-		spend_threat(midround_rule.cost)
-		threat_log += "[worldtime2text()]: Midround [midround_rule.name] spent [midround_rule.cost]"
-		if (midround_rule.execute())
-			message_admins("Injecting midround rule [midround_rule.name]")
-			log_game("DYNAMIC: Injecting some threats...[midround_rule.name]!")
-			executed_rules += midround_rule
-			if (midround_rule.persistent)
-				current_rules += midround_rule
-			return TRUE
-		else
-			stack_trace("The midround rule \"[midround_rule.name]\" failed to execute.")
+	if(!midround_rule)
+		return FALSE
+	
+	// Check if a blocking ruleset has been executed.
+	if(midround_rule.blocking_rules.len > 0)
+		for(var/blocking in midround_rule.blocking_rules)
+			for(var/datum/dynamic_ruleset/executed in executed_rules)
+				if(blocking == executed.type)
+					drafted_rules -= midround_rule
+					if(drafted_rules.len <= 0)
+						return FALSE
+					midround_rule = pickweight(drafted_rules)
+	
+	if (!midround_rule.repeatable)
+		midround_rules = remove_rule(midround_rules,midround_rule.type)
+	spend_threat(midround_rule.cost)
+	threat_log += "[worldtime2text()]: Midround [midround_rule.name] spent [midround_rule.cost]"
+	if (midround_rule.execute())
+		message_admins("Injecting midround rule [midround_rule.name]")
+		log_game("DYNAMIC: Injecting some threats...[midround_rule.name]!")
+		executed_rules += midround_rule
+		if (midround_rule.persistent)
+			current_rules += midround_rule
+		return TRUE
 	return FALSE
 
 /// An experimental proc to allow admins to call rules on the fly or have rules call other rules.

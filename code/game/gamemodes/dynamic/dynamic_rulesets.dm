@@ -48,6 +48,8 @@
 	var/datum/game_mode/dynamic/mode = null
 	/// If a role is to be considered another for the purpose of banning.
 	var/antag_flag_override = null 
+	/// If a ruleset type which is in this list has been executed, then the ruleset will not be executed.
+	var/list/blocking_rules = list()
 
 /datum/dynamic_ruleset/New()
 	..()
