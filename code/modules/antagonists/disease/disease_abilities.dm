@@ -15,7 +15,6 @@ new /datum/disease_ability/symptom/medium/beard,
 new /datum/disease_ability/symptom/medium/hallucigen,
 new /datum/disease_ability/symptom/medium/choking,
 new /datum/disease_ability/symptom/medium/confusion,
-new /datum/disease_ability/symptom/medium/youth,
 new /datum/disease_ability/symptom/medium/vomit,
 new /datum/disease_ability/symptom/medium/voice_change,
 new /datum/disease_ability/symptom/medium/visionloss,
@@ -28,8 +27,8 @@ new /datum/disease_ability/symptom/medium/nano_boost,
 new /datum/disease_ability/symptom/medium/nano_destroy,
 new /datum/disease_ability/symptom/medium/viraladaptation,
 new /datum/disease_ability/symptom/medium/viralevolution,
-new /datum/disease_ability/symptom/medium/vitiligo,
-new /datum/disease_ability/symptom/medium/revitiligo,
+new /datum/disease_ability/symptom/medium/disfiguration,
+new /datum/disease_ability/symptom/medium/polyvitiligo,
 new /datum/disease_ability/symptom/medium/itching,
 new /datum/disease_ability/symptom/medium/heal/weight_loss,
 new /datum/disease_ability/symptom/medium/heal/sensory_restoration,
@@ -47,7 +46,7 @@ new /datum/disease_ability/symptom/powerful/heal/water,
 new /datum/disease_ability/symptom/powerful/heal/plasma,
 new /datum/disease_ability/symptom/powerful/heal/radiation,
 new /datum/disease_ability/symptom/powerful/heal/coma,
-new /datum/disease_ability/symptom/powerful/heal/youth
+new /datum/disease_ability/symptom/powerful/youth
 ))
 
 /datum/disease_ability
@@ -294,7 +293,6 @@ new /datum/disease_ability/symptom/powerful/heal/youth
 	cost = 8
 	category = "Symptom (Strong+)"
 
-
 /******MILD******/
 
 /datum/disease_ability/symptom/mild/cough
@@ -309,8 +307,8 @@ new /datum/disease_ability/symptom/powerful/heal/youth
 	short_desc = "Cause victims to sneeze intermittently."
 	long_desc = "Cause victims to sneeze intermittently, spreading your infection and also increasing transmissibility and resistance, at the cost of stealth."
 
-
 /******MEDIUM******/
+
 /datum/disease_ability/symptom/medium/shedding
 	symptoms = list(/datum/symptom/shedding)
 
@@ -324,36 +322,25 @@ new /datum/disease_ability/symptom/powerful/heal/youth
 	short_desc = "Cause victims to hallucinate."
 	long_desc = "Cause victims to hallucinate. Decreases stats, especially resistance."
 
-
 /datum/disease_ability/symptom/medium/choking
 	symptoms = list(/datum/symptom/choking)
 	short_desc = "Cause victims to choke."
 	long_desc = "Cause victims to choke, threatening asphyxiation. Decreases stats, especially transmissibility."
-
 
 /datum/disease_ability/symptom/medium/confusion
 	symptoms = list(/datum/symptom/confusion)
 	short_desc = "Cause victims to become confused."
 	long_desc = "Cause victims to become confused intermittently."
 
-
-/datum/disease_ability/symptom/medium/youth
-	symptoms = list(/datum/symptom/youth)
-	short_desc = "Cause victims to become eternally young."
-	long_desc = "Cause victims to become eternally young. Provides boosts to all stats except transmissibility."
-
-
 /datum/disease_ability/symptom/medium/vomit
 	symptoms = list(/datum/symptom/vomit)
 	short_desc = "Cause victims to vomit."
 	long_desc = "Cause victims to vomit. Slightly increases transmissibility. Vomiting also also causes the victims to lose nutrition and removes some toxin damage."
 
-
 /datum/disease_ability/symptom/medium/voice_change
 	symptoms = list(/datum/symptom/voice_change)
 	short_desc = "Change the voice of victims."
 	long_desc = "Change the voice of victims, causing confusion in communications."
-
 
 /datum/disease_ability/symptom/medium/visionloss
 	symptoms = list(/datum/symptom/visionloss)
@@ -378,7 +365,6 @@ new /datum/disease_ability/symptom/powerful/heal/youth
 /datum/disease_ability/symptom/medium/nano_destroy
 	symptoms = list(/datum/symptom/nano_destroy)
 
-
 /datum/disease_ability/symptom/medium/viraladaptation
 	symptoms = list(/datum/symptom/viraladaptation)
 	short_desc = "Cause your infection to become more resistant to detection and eradication."
@@ -387,18 +373,16 @@ new /datum/disease_ability/symptom/powerful/heal/youth
 /datum/disease_ability/symptom/medium/viralevolution
 	symptoms = list(/datum/symptom/viralevolution)
 
-/datum/disease_ability/symptom/medium/vitiligo
-	symptoms = list(/datum/symptom/vitiligo)
+/datum/disease_ability/symptom/medium/polyvitiligo
+	symptoms = list(/datum/symptom/polyvitiligo)
 
-/datum/disease_ability/symptom/medium/revitiligo
-	symptoms = list(/datum/symptom/revitiligo)
-
+/datum/disease_ability/symptom/medium/disfiguration
+	symptoms = list(/datum/symptom/disfiguration)
 
 /datum/disease_ability/symptom/medium/itching
 	symptoms = list(/datum/symptom/itching)
 	short_desc = "Cause victims to itch."
 	long_desc = "Cause victims to itch, increasing all stats except stealth."
-
 
 /datum/disease_ability/symptom/medium/heal/weight_loss
 	symptoms = list(/datum/symptom/weight_loss)
@@ -415,7 +399,6 @@ new /datum/disease_ability/symptom/powerful/heal/youth
 
 /******POWERFUL******/
 
-
 /datum/disease_ability/symptom/powerful/fire
 	symptoms = list(/datum/symptom/fire)
 
@@ -431,6 +414,11 @@ new /datum/disease_ability/symptom/powerful/heal/youth
 
 /datum/disease_ability/symptom/powerful/narcolepsy
 	symptoms = list(/datum/symptom/narcolepsy)
+
+/datum/disease_ability/symptom/powerful/youth
+	symptoms = list(/datum/symptom/youth)
+	short_desc = "Cause victims to become eternally young."
+	long_desc = "Cause victims to become eternally young. Provides boosts to all stats except transmissibility."
 
 /****HEALING SUBTYPE****/
 
@@ -464,6 +452,3 @@ new /datum/disease_ability/symptom/powerful/heal/youth
 	symptoms = list(/datum/symptom/heal/coma)
 	short_desc = "Cause victims to fall into a healing coma when hurt."
 	long_desc = "Cause victims to fall into a healing coma when hurt."
-
-/datum/disease_ability/symptom/powerful/heal/youth
-	symptoms = list(/datum/symptom/youth)
