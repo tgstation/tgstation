@@ -26609,6 +26609,7 @@
 /area/crew_quarters/heads/hop)
 "bqB" = (
 /obj/machinery/holopad,
+/obj/effect/mapping_helpers/ianbirthday,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "bqC" = (

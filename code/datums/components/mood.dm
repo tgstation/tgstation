@@ -190,9 +190,9 @@
 		if(7)
 			setSanity(sanity+0.3, maximum=INFINITY)
 		if(8)
-			setSanity(sanity+0.4, maximum=INFINITY)
+			setSanity(sanity+0.4, maximum=SANITY_MAXIMUM)
 		if(9)
-			setSanity(sanity+0.6, maximum=INFINITY)
+			setSanity(sanity+0.6, maximum=SANITY_MAXIMUM)
 
 	HandleNutrition(owner)
 
