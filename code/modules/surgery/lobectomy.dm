@@ -7,7 +7,7 @@
 /datum/surgery/lobectomy/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/lungs/L = target.getorganslot(ORGAN_SLOT_LUNGS)
 	if(L)
-		if(L.damage > 80 && !L.operated)
+		if(L.damage > 60 && !L.operated)
 			return TRUE
 	return FALSE
 
@@ -29,7 +29,7 @@
 		var/mob/living/carbon/human/H = target
 		var/obj/item/organ/lungs/L = H.getorganslot(ORGAN_SLOT_LUNGS)
 		L.operated = TRUE
-		H.setOrganLoss(ORGAN_SLOT_LUNGS, 80)
+		H.setOrganLoss(ORGAN_SLOT_LUNGS, 60)
 		display_results(user, target, "<span class='notice'>You successfully excise [H]'s most damaged lobe.</span>",
 			"Successfully removes a piece of [H]'s lungs.",
 			"")
