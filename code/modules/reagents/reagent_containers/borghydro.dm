@@ -252,3 +252,98 @@ Borg Shaker
 	desc = "An advanced chemical synthesizer and injection system, designed to stabilize patients."
 	reagent_ids = list(/datum/reagent/medicine/epinephrine)
 	accepts_reagent_upgrades = FALSE
+
+//////////////////////
+//borg beaker holder//
+//////////////////////
+
+/**An arm that only holds beakers. Can drop them, place them into machines, or onto tables. We emulate the arm
+being a beaker, so to avoid snowflake checks elsewhere with droppers and so on.*/
+
+/obj/item/borg_beaker_holder
+	name = "beaker storage apparatus"
+	desc = "A special apparatus for carrying beakers without spilling them."
+	icon = 'icons/mob/robot_items.dmi'
+	icon_state = "borg_beaker_apparatus"
+	var/obj/item/reagent_containers/stored
+	var/mob/living/silicon/robot/robot
+
+/obj/item/borg_beaker_holder/Initialize()
+	var/obj/item/robot_module/module = loc
+	robot = module.loc
+	stored = new /obj/item/reagent_containers/glass/beaker/large
+	stored.forceMove(src)
+	update_icon()
+	. = ..()
+
+/obj/item/borg_beaker_holder/examine()
+	. = ..()
+	if(stored)
+		. += "The apparatus currently has [stored] secured, which contains:"
+		if(length(stored.reagents.reagent_list))
+			for(var/datum/reagent/R in stored.reagents.reagent_list)
+				. += "[R.volume] units of [R.name]"
+		else
+			. += "Nothing."
+
+/obj/item/borg_beaker_holder/update_icon()
+	cut_overlays()
+	if(stored)
+		var/xx = stored.pixel_x
+		var/yy = stored.pixel_y
+		stored.pixel_x = 0
+		stored.pixel_y = 0
+		var/image/img = image("icon"=stored, "layer"=FLOAT_LAYER)
+		var/image/arm = image("icon"="borg_beaker_apparatus_arm", "layer"=FLOAT_LAYER)
+		if(istype(stored, /obj/item/reagent_containers/glass/beaker))
+			arm.pixel_y = arm.pixel_y - 3
+		img.plane = FLOAT_PLANE
+		stored.pixel_x = xx
+		stored.pixel_y = yy
+		add_overlay(img)
+		add_overlay(arm)
+	else
+		var/image/arm = image("icon"="borg_beaker_apparatus_arm", "layer"=FLOAT_LAYER)
+		arm.pixel_y = arm.pixel_y - 5
+		add_overlay(arm)
+
+/obj/item/borg_beaker_holder/Exited(atom/A)
+	if(A == stored) //sanity check
+		stored = null
+	update_icon()
+	. = ..()
+
+/obj/item/borg_beaker_holder/attack_self(mob/living/silicon/robot/user)
+	if(!stored)
+		. = ..()
+		return
+	if(robot.client.keys_held["Alt"])
+		stored.forceMove(get_turf(user))
+		return
+	if(robot.a_intent == "help")
+		stored.attack_self(user)
+		return
+	else
+		stored.SplashReagents(get_turf(user))
+		update_icon()
+
+/obj/item/borg_beaker_holder/pre_attack(atom/A, mob/living/user, params)
+	if(istype(A, /obj/item/reagent_containers/glass/beaker) || istype(A, /obj/item/reagent_containers/glass/bottle))
+		if(!stored)
+			var/obj/item/reagent_containers/container = A
+			container.forceMove(src)
+			stored = container
+			update_icon()
+			return
+	if(stored)
+		stored.melee_attack_chain(robot, A, params)
+		update_icon()
+		return
+	. = ..()
+
+/obj/item/borg_beaker_holder/attackby(obj/item/W, mob/user, params)
+	if(stored)
+		W.melee_attack_chain(user, stored, params)
+		update_icon()
+		return
+	. = ..()
