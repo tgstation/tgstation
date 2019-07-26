@@ -48808,17 +48808,13 @@
 /area/medical/medbay/central)
 "cdy" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/shower{
-	dir = 4;
-	name = "emergency shower"
-	},
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -22
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area)
 "cdz" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
@@ -49280,7 +49276,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
+/area)
 "ceF" = (
 /obj/structure/bed/roller,
 /obj/item/radio/intercom{
@@ -51718,10 +51714,6 @@
 "cjR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
-	},
-/obj/machinery/shower{
-	dir = 8;
-	name = "emergency shower"
 	},
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/plasteel/white,
