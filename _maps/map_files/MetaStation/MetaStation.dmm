@@ -32646,6 +32646,7 @@
 	pixel_x = -25;
 	pixel_y = 5
 	},
+/obj/effect/mapping_helpers/ianbirthday,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "bsN" = (

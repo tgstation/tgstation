@@ -42,12 +42,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/starboard/fore)
-"aah" = (
-/obj/machinery/button/ticket_machine{
-	pixel_y = 8
-	},
-/turf/closed/wall/r_wall,
-/area/crew_quarters/heads/hop)
 "aao" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
@@ -54173,6 +54167,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/button/ticket_machine{
+	pixel_y = 40
+	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hop)
 "bWR" = (
@@ -62771,6 +62768,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
+/obj/effect/mapping_helpers/ianbirthday,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "cmB" = (
@@ -152393,7 +152391,7 @@ bMp
 bOy
 bQz
 bSz
-aah
+bUB
 bWQ
 bYZ
 caN
