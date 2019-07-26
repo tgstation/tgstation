@@ -88,7 +88,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 	///String of slogans separated by semicolons, optional
 	var/product_slogans = ""
-	//String of small ad messages in the vending screen - random chance
+	///String of small ad messages in the vending screen - random chance
 	var/product_ads = ""
 
 	var/list/product_records = list()
