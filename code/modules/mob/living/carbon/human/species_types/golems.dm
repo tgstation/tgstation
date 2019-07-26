@@ -1045,6 +1045,39 @@
 		L.apply_status_effect(/datum/status_effect/bonechill)
 		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "spooked", /datum/mood_event/spooked)
 
+/datum/species/golem/snow
+	name = "Snow Golem"
+	id = "snow golem"
+	fixed_mut_color = "ebfcfc"
+	armor = 45 //down from 55
+	burnmod = 3 //melts easily
+	info_text = "As a <span class='danger'>Snow Golem</span>, you are extremely vulnerable to burn damage but you can generate snow and shoot out cryokinetic beams. You will also turn to snow when dying, preventing any form of recovery."
+	prefix = "Snow"
+	special_names = list("Flake", "Blizzard", "Storm")
+	
+	var/obj/effect/proc_holder/spell/targeted/conjure_item/snow/snow
+	var/obj/effect/proc_holder/spell/aimed/cryo/cryo
+
+/datum/species/golem/snow/spec_death(gibbed, mob/living/carbon/human/H)
+	H.visible_message("<span class='danger'>[H] turns into a brick of snow!</span>")
+	for(var/obj/item/W in H)
+		H.dropItemToGround(W)
+	for(var/i=1, i <= rand(3,5), i++)
+		new /obj/item/stack/sheet/mineral/snow(get_turf(H))
+	qdel(H)
+
+/datum/species/golem/snow/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	C.AddSpell(snow)
+	C.AddSpell(cryo)
+		
+/datum/species/golem/snow/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	if(snow)
+		C.RemoveSpell(snow)
+	if(cryo)
+		C.RemoveSpell(cryo)
+
 /datum/species/golem/capitalist
 	name = "Capitalist Golem"
 	id = "capitalist golem"
