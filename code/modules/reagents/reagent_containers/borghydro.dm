@@ -262,7 +262,7 @@ being a beaker, so to avoid snowflake checks elsewhere with droppers and so on.*
 
 /obj/item/borg_beaker_holder
 	name = "beaker storage apparatus"
-	desc = "A special apparatus for carrying beakers without spilling them."
+	desc = "A special apparatus for carrying beakers without spilling the contents."
 	icon = 'icons/mob/robot_items.dmi'
 	icon_state = "borg_beaker_apparatus"
 	var/obj/item/reagent_containers/stored
