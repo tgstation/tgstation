@@ -17,6 +17,11 @@
 				if (replace_decal(C))
 					return INITIALIZE_HINT_QDEL
 
+	#ifdef EVENTMODE
+	///AUTO CLEAN
+	QDEL_IN(src, 30)
+	return . //skip disease handling
+	#endif
 	if(LAZYLEN(diseases))
 		var/list/datum/disease/diseases_to_add = list()
 		for(var/datum/disease/D in diseases)
@@ -28,8 +33,14 @@
 	var/turf/T = get_turf(src)
 	if(T && is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_created", 1, name)
+	
+
 
 /obj/effect/decal/cleanable/Destroy()
+	#ifdef EVENTMODE
+	///NO TALLYS REEE
+	return ..()
+	#endif
 	var/turf/T = get_turf(src)
 	if(T && is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)
