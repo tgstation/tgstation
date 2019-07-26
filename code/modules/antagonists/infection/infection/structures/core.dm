@@ -106,7 +106,7 @@
 	src.visible_message("<span class='notice'>[P] plinks off of [src]!</span>")
 
 /obj/structure/infection/core/attacked_by(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/infectionkiller))
+	if(!istype(I, /obj/item/infectionkiller))
 		var/obj/effect/temp_visual/at_shield/AT = new /obj/effect/temp_visual/at_shield(loc, src)
 		var/random_x = rand(-32, 32)
 		AT.pixel_x += random_x

@@ -73,7 +73,7 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 */
 /obj/structure/beacon_generator/proc/destroyed_announcement(beacons_left = GLOB.infection_beacons.len)
 	sleep(80)
-	priority_announce("A beacon has been consumed by the infection, only [beacons_left] remain.","CentCom Biohazard Division", 'sound/misc/notice1.ogg')
+	priority_announce("A beacon has been consumed by the infection, only [num2text(beacons_left)] remain[beacons_left == 1 ? "s" : ""].","CentCom Biohazard Division", 'sound/misc/notice1.ogg')
 
 /obj/structure/beacon_generator/process()
 	obj_integrity = min(obj_integrity + 10, max_integrity)

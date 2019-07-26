@@ -142,14 +142,14 @@
 		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round((health / maxHealth) * 100, 0.5)]%</font></div>"
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/death(gibbed)
-	if(overmind.infection_core) // cant die as long as core is still alive
+	if(overmind && overmind.infection_core) // cant die as long as core is still alive
 		forceMove(overmind.infection_core)
 		INVOKE_ASYNC(src, .proc/respawn)
 		return
 	. = ..()
 
-/mob/living/simple_animal/hostile/infection/infectionspore/sentient/dust()
-	death()
+/mob/living/simple_animal/hostile/infection/infectionspore/sentient/dust(just_ash, drop_items, force)
+	return death()
 
 /*
 	Starts the respawn timer for the infection slime

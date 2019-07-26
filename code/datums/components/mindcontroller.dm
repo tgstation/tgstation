@@ -33,7 +33,8 @@
 /datum/component/mindcontroller/proc/preattack_intercept(obj/item/attackingitem, atom/target, mob/user, params)
 	if(isliving(target))
 		var/mob/living/L = target
-		if((L.faction & user.faction).len)
+		var/list/shared_factions = L.faction & user.faction
+		if(shared_factions.len)
 			return COMPONENT_NO_ATTACK
 
 /*
@@ -42,5 +43,6 @@
 /datum/component/mindcontroller/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target)
 	if(isliving(target))
 		var/mob/living/L = target
-		if((L.faction & attacker.faction).len)
+		var/list/shared_factions = L.faction & attacker.faction
+		if(shared_factions.len)
 			return COMPONENT_HOSTILE_NO_ATTACK

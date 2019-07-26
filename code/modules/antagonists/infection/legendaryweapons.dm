@@ -154,6 +154,16 @@
 	force = 30
 	hitsound = list('sound/items/airhorn.ogg')
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	// possible mobs to be spawned from the staff
+	var/list/possible_mobs = list(/mob/living/simple_animal/hostile/retaliate/clown/clownhulk=1,
+						/mob/living/simple_animal/hostile/retaliate/clown/mutant=1,
+						/mob/living/simple_animal/hostile/retaliate/clown/lube=2,
+						/mob/living/simple_animal/hostile/retaliate/clown/fleshclown=2,
+						/mob/living/simple_animal/hostile/retaliate/clown/banana=2)
+
+/obj/item/infectionkiller/staff/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/summoning, possible_mobs, 100, 5, 50, "pops out of [src]!", 'sound/items/bikehorn.ogg', list("neutral"))
 
 /obj/item/infectionkiller/tonic
 	name = "Spinel Tonic"
