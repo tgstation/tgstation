@@ -2,6 +2,7 @@
 Contains:
 Borg Hypospray
 Borg Shaker
+Borg Beaker Storage Apparatus
 Nothing to do with hydroponics in here. Sorry to dissapoint you.
 */
 
@@ -257,8 +258,8 @@ Borg Shaker
 //borg beaker holder//
 //////////////////////
 
-/**An arm that only holds beakers. Can drop them, place them into machines, or onto tables. We emulate the arm
-being a beaker, so to avoid snowflake checks elsewhere with droppers and so on.*/
+/**An arm that only holds beakers. Can drop them, place them into machines, or onto tables. Attacks made by the arm, or
+to the arm are passed onto a stored beaker, if one exists. */
 
 /obj/item/borg_beaker_holder
 	name = "beaker storage apparatus"
