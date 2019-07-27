@@ -48,7 +48,10 @@
 	density = FALSE
 	arms_required = 0
 	fall_off_if_missing_arms = FALSE
-	var/adjusted_speed = FALSE
+	var/datum/effect_system/spark_spread/sparks
+	var/board_icon = "skateboard"
+	var/instability = 10
+	var/grinding = FALSE
 
 /obj/vehicle/ridden/scooter/skateboard/Initialize()
 	. = ..()
@@ -58,6 +61,24 @@
 	D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
+	sparks = new
+	sparks.set_up(1, 0, src)
+	sparks.attach(src)
+
+/obj/vehicle/ridden/scooter/skateboard/Destroy()
+	if(sparks)
+		qdel(sparks)
+	sparks = null
+	. = ..()
+
+/obj/vehicle/ridden/scooter/skateboard/relaymove()
+	if (grinding)
+		return FALSE
+	return ..()
+
+/obj/vehicle/ridden/scooter/skateboard/generate_actions()
+	. = ..()
+	initialize_controller_action_type(/datum/action/vehicle/ridden/scooter/skateboard/Kickflip, VEHICLE_CONTROL_DRIVE)
 
 /obj/vehicle/ridden/scooter/skateboard/post_buckle_mob(mob/living/M)//allows skateboards to be non-dense but still allows 2 skateboarders to collide with each other
 	density = TRUE
@@ -72,17 +93,37 @@
 	. = ..()
 	if(A.density && has_buckled_mobs())
 		var/mob/living/H = buckled_mobs[1]
-		var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
-		unbuckle_mob(H)
-		H.throw_at(throw_target, 4, 3)
-		H.Paralyze(100)
-		H.adjustStaminaLoss(40)
-		var/head_slot = H.get_item_by_slot(SLOT_HEAD)
-		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
-			H.adjustBrainLoss(3)
-			H.updatehealth()
-		visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
+		H.adjustStaminaLoss(instability*5)
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+		if(H.getStaminaLoss() > 90 || grinding)
+			var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
+			unbuckle_mob(H)
+			H.throw_at(throw_target, 4, 3)
+			var/head_slot = H.get_item_by_slot(SLOT_HEAD)
+			if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
+				H.adjustBrainLoss(3)
+				H.updatehealth()
+			visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
+		else
+			var/backdir = turn(dir, 180)
+			vehicle_move(backdir)
+			H.spin(4, 1)
+
+///Moves the vehicle forward and if it lands on a table, repeats
+/obj/vehicle/ridden/scooter/skateboard/proc/grind()
+	visible_message("<span class='warning'>radical!</span>")
+	vehicle_move(dir)
+	playsound(src, 'sound/effects/roll.ogg', 50, 1) //need a better sound!
+	if(buckled_mobs.len && locate(/obj/structure/table) in loc.contents)
+		if (prob (25))
+			var/turf/location = get_turf(loc)
+			if(location)
+				location.hotspot_expose(1000,1000)
+			sparks.start() //the most radical way to start plasma fires
+		addtimer(CALLBACK(src, .proc/grind), 2)
+	else
+		grinding = FALSE
+		icon_state = board_icon
 
 /obj/vehicle/ridden/scooter/skateboard/MouseDrop(atom/over_object)
 	. = ..()
@@ -96,17 +137,6 @@
 		var/obj/item/melee/skateboard/board = new /obj/item/melee/skateboard()
 		M.put_in_hands(board)
 		qdel(src)
-
-/obj/vehicle/ridden/scooter/skateboard/AltClick(mob/user)
-	var/datum/component/riding/R = src.GetComponent(/datum/component/riding)
-	if (!adjusted_speed)
-		R.vehicle_move_delay = 0
-		to_chat(user, "<span class='notice'>You adjust the wheels on [src] to make it go faster.</span>")
-		adjusted_speed = TRUE
-	else
-		R.vehicle_move_delay = 1
-		to_chat(user, "<span class='notice'>You adjust the wheels on [src] to make it go slower.</span>")
-		adjusted_speed = FALSE
 
 //CONSTRUCTION
 /obj/item/scooter_frame

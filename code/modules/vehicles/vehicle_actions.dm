@@ -191,3 +191,30 @@
 			owner.say("Thank you for the fun ride, [clown.name]!")
 			last_thank_time = world.time
 			C.ThanksCounter()
+
+/datum/action/vehicle/ridden/scooter/skateboard/Kickflip
+	name = "Kickflip"
+	desc = "Do a sick kickflip!"
+	button_icon_state = "car_thanktheclown"
+	var/cooldown
+
+/datum/action/vehicle/ridden/scooter/skateboard/Kickflip/Trigger()
+	if(world.time - cooldown > 5)
+		var/obj/vehicle/ridden/scooter/skateboard/V = vehicle_target
+		if (V.grinding)
+			return
+		var/turf/landing_turf = get_step(V.loc, V.dir)
+		owner.pass_flags |= PASSTABLE
+		V.pass_flags |= PASSTABLE
+		owner.spin(4, 1)
+		playsound(V, 'sound/weapons/fwoosh.ogg', 50, 1)
+		animate(owner, pixel_y = -6, time = 4)
+		animate(V, pixel_y = -6, time = 3)
+		owner.Move(landing_turf, vehicle_target.dir)
+		owner.pass_flags &= ~PASSTABLE
+		V.pass_flags &= ~PASSTABLE
+		if(locate(/obj/structure/table) in V.loc.contents)
+			V.grinding = TRUE
+			V.icon_state = "[V.board_icon]-grind"
+			addtimer(CALLBACK(V, /obj/vehicle/ridden/scooter/skateboard/.proc/grind), 2)
+		cooldown = world.time
