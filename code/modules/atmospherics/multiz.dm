@@ -13,6 +13,7 @@
 	multiz_overlay_node.layer = HIGH_OBJ_LAYER
 	add_overlay(multiz_overlay_node)
 
+///Attempts to locate a multiz pipe that's above us, if it finds one it merges us into its pipenet
 /obj/machinery/atmospherics/pipe/simple/multiz/pipeline_expansion()
 	icon = 'icons/obj/atmos.dmi' //Just to refresh.
 	var/turf/T = get_turf(src)

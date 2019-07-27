@@ -34,6 +34,7 @@
 		icon_state = "cablerelay-off"
 		find_relays()
 
+///Allows you to scan the relay with a multitool to see stats.
 /obj/machinery/power/deck_relay/multitool_act(mob/user, obj/item/I)
 	if(powernet && (powernet.avail > 0))		// is it powered?
 		to_chat(user, "<span class='danger'>Total power: [DisplayPower(powernet.avail)]\nLoad: [DisplayPower(powernet.load)]\nExcess power: [DisplayPower(surplus())]</span>")
@@ -49,6 +50,7 @@
 	addtimer(CALLBACK(src, .proc/find_relays), 30)
 	addtimer(CALLBACK(src, .proc/refresh), 50) //Wait a bit so we can find the one below, then get powering
 
+///Handles re-acquiring + merging powernets found by find_relays()
 /obj/machinery/power/deck_relay/proc/refresh()
 	var/turf/ours = get_turf(src)
 	for(var/X in relays) //Typeless loops are apparently more efficient.
@@ -61,6 +63,7 @@
 		if(C && XR)
 			merge_powernets(XR.powernet,C.powernet)//Bridge the powernets.
 
+///Locates relays that are above and below this object
 /obj/machinery/power/deck_relay/proc/find_relays()
 	relays = list()
 	var/turf/T = get_turf(src)
