@@ -153,6 +153,7 @@
 	return ..()
 
 /obj/structure/checkoutmachine/proc/start_dumping()
+	QDEL_IN(src, 8 MINUTES) //Self destruct after 8 min
 	accounts_to_rob = SSeconomy.bank_accounts.Copy()
 	accounts_to_rob -= bogdanoff.get_bank_account()
 	for(var/i in accounts_to_rob)
@@ -172,7 +173,6 @@
 			account.transfer_money(B, amount)
 			B.bank_card_talk("You have lost [percentage_lost * 100]% of your funds! A spacecoin credit deposit machine is located at: [get_area(src)].")
 	addtimer(CALLBACK(src, .proc/dump), 150) //Drain every 15 seconds
-	QDEL_IN(src, 8 MINUTES) //Self destruct after 8 min
 
 /obj/structure/checkoutmachine/process()
 	var/anydir = pick(GLOB.cardinals)
