@@ -7580,6 +7580,11 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"asi" = (
+/obj/structure/cable,
+/obj/effect/landmark/beacon_start/east,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "ask" = (
 /obj/structure/dresser,
 /turf/open/floor/carpet,
@@ -15420,6 +15425,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aNi" = (
+/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/goonplaque,
 /area/hallway/secondary/entry)
 "aNj" = (
@@ -15485,6 +15491,7 @@
 /obj/effect/turf_decal/plaque{
 	icon_state = "L8"
 	},
+/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aNy" = (
@@ -30158,6 +30165,7 @@
 /area/hallway/primary/central)
 "bAf" = (
 /obj/machinery/holopad,
+/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bAg" = (
@@ -40628,6 +40636,7 @@
 	dir = 9
 	},
 /obj/structure/cable,
+/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "ccO" = (
@@ -50399,6 +50408,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"lmI" = (
+/obj/effect/landmark/beacon_start/east,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "lqJ" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lantern,
@@ -50457,6 +50470,14 @@
 /obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"lGl" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/landmark/beacon_start/east,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "lHR" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -51274,6 +51295,11 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
+"qCp" = (
+/obj/effect/landmark/event_spawn,
+/obj/effect/landmark/beacon_start/east,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "qGG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -51425,6 +51451,14 @@
 "sdX" = (
 /turf/closed/wall,
 /area/quartermaster/office)
+"seJ" = (
+/obj/effect/landmark/infection_start,
+/turf/open/space/basic,
+/area/space)
+"sgt" = (
+/obj/effect/landmark/beacon_start/east,
+/turf/open/floor/plasteel,
+/area/hallway/primary/starboard)
 "sjr" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/loading_area,
@@ -51555,6 +51589,13 @@
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
+"sTF" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/beacon_start/east,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "sXy" = (
 /obj/machinery/door/airlock/external{
 	name = "Security External Airlock";
@@ -67675,7 +67716,7 @@ aaf
 aaa
 ali
 aoX
-arI
+lGl
 asc
 atr
 atN
@@ -67707,7 +67748,7 @@ czK
 aPz
 aPz
 bdt
-aWv
+sTF
 aTu
 bjg
 bkD
@@ -77213,7 +77254,7 @@ aJq
 aJq
 aJq
 aJq
-bHt
+qCp
 aJq
 aLY
 beX
@@ -85437,7 +85478,7 @@ aJq
 aLY
 aJq
 bco
-aJq
+lmI
 beo
 aJq
 aJq
@@ -93633,7 +93674,7 @@ ane
 aqw
 arr
 arr
-arr
+asi
 arr
 apC
 awG
@@ -93661,7 +93702,7 @@ aYR
 ban
 aYV
 aYV
-aYV
+sgt
 bez
 bfP
 bfS
@@ -103122,7 +103163,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+seJ
 aaa
 aaa
 aaa
