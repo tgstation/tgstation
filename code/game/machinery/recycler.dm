@@ -18,8 +18,8 @@
 	var/item_recycle_sound = 'sound/items/welder.ogg'
 
 /obj/machinery/recycler/Initialize()
+	AddComponent(/datum/component/butchering/recycler, 1, amount_produced,amount_produced/5)
 	AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass, /datum/material/silver, /datum/material/plasma, /datum/material/gold, /datum/material/diamond, /datum/material/plastic, /datum/material/uranium, /datum/material/bananium, /datum/material/titanium, /datum/material/bluespace), INFINITY, FALSE, null, null, null, TRUE)
-	AddComponent(/datum/component/butchering, 1, amount_produced,amount_produced/5)
 	. = ..()
 	update_icon()
 	req_one_access = get_all_accesses() + get_all_centcom_access()
@@ -35,7 +35,7 @@
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.max_amount = mat_mod
 	amount_produced = min(50, amt_made) + 50
-	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering)
+	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering/recycler)
 	butchering.effectiveness = amount_produced
 	butchering.bonus_modifier = amount_produced/5
 
@@ -82,20 +82,24 @@
 		is_powered = FALSE
 	icon_state = icon_name + "[is_powered]" + "[(blood ? "bld" : "")]" // add the blood tag at the end
 
-/obj/machinery/recycler/Bumped(atom/movable/AM)
-
-	if(stat & (BROKEN|NOPOWER))
-		return
+/obj/machinery/recycler/CanPass(atom/movable/AM)
+	. = ..()
 	if(!anchored)
+		return
+	var/move_dir = get_dir(loc, AM.loc)
+	if(move_dir == eat_dir)
+		return TRUE
+
+/obj/machinery/recycler/Crossed(atom/movable/AM)
+	eat(AM)
+	. = ..()
+
+/obj/machinery/recycler/proc/eat(atom/AM0, sound=TRUE)
+	if(stat & (BROKEN|NOPOWER))
 		return
 	if(safety_mode)
 		return
 
-	var/move_dir = get_dir(loc, AM.loc)
-	if(move_dir == eat_dir)
-		eat(AM)
-
-/obj/machinery/recycler/proc/eat(atom/AM0, sound=TRUE)
 	var/list/to_eat
 	if(istype(AM0, /obj/item))
 		to_eat = AM0.GetAllContents()
@@ -188,9 +192,6 @@
 	// Instantly lie down, also go unconscious from the pain, before you die.
 	L.Unconscious(100)
 	L.adjustBruteLoss(crush_damage)
-	if(L.stat == DEAD && (L.butcher_results || L.guaranteed_butcher_results))
-		var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering)
-		butchering.Butcher(src,L)
 
 /obj/machinery/recycler/deathtrap
 	name = "dangerous old crusher"

@@ -98,7 +98,7 @@
 	var/datum/action/innate/mecha/mech_toggle_lights/lights_action = new
 	var/datum/action/innate/mecha/mech_view_stats/stats_action = new
 	var/datum/action/innate/mecha/mech_toggle_thrusters/thrusters_action = new
-	var/datum/action/innate/mecha/mech_defence_mode/defense_action = new
+	var/datum/action/innate/mecha/mech_defense_mode/defense_action = new
 	var/datum/action/innate/mecha/mech_overload_mode/overload_action = new
 	var/datum/effect_system/smoke_spread/smoke_system = new //not an action, but trigged by one
 	var/datum/action/innate/mecha/mech_smoke/smoke_action = new
@@ -109,8 +109,7 @@
 
 	//Action vars
 	var/thrusters_active = FALSE
-	var/defence_mode = FALSE
-	var/defence_mode_deflect_chance = 35
+	var/defense_mode = FALSE
 	var/leg_overload_mode = FALSE
 	var/leg_overload_coeff = 100
 	var/zoom_mode = FALSE
@@ -576,11 +575,6 @@
 	if(!Process_Spacemove(direction))
 		return 0
 	if(!has_charge(step_energy_drain))
-		return 0
-	if(defence_mode)
-		if(world.time - last_message > 20)
-			occupant_message("<span class='danger'>Unable to move while in defence mode</span>")
-			last_message = world.time
 		return 0
 	if(zoom_mode)
 		if(world.time - last_message > 20)
@@ -1100,8 +1094,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 		return max(0, cell.charge)
 
 /obj/mecha/proc/use_power(amount)
-	if(get_charge())
-		cell.use(amount)
+	if(get_charge() && cell.use(amount))
 		return 1
 	return 0
 
