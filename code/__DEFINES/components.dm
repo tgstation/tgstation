@@ -12,7 +12,7 @@
 
 // How multiple components of the exact same type are handled in the same datum
 
-#define COMPONENT_DUPE_HIGHLANDER		0		//old component is deleted (default)
+#define COMPONENT_DUPE_HIGHLANDER		0	//old component is deleted (default)
 #define COMPONENT_DUPE_ALLOWED			1	//duplicates allowed
 #define COMPONENT_DUPE_UNIQUE			2	//new component is deleted
 #define COMPONENT_DUPE_UNIQUE_PASSARGS	4	//old component is given the initialization args of the new
@@ -157,6 +157,7 @@
 #define COMSIG_MOB_HUD_CREATED "mob_hud_created"				//from base of mob/create_mob_hud(): ()
 #define COMSIG_MOB_ATTACK_HAND "mob_attack_hand"				//from base of
 #define COMSIG_MOB_ITEM_ATTACK "mob_item_attack"				//from base of /obj/item/attack(): (mob/M, mob/user)
+	#define COMPONENT_ITEM_NO_ATTACK 1
 #define COMSIG_MOB_APPLY_DAMGE	"mob_apply_damage"				//from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone)
 #define COMSIG_MOB_ITEM_AFTERATTACK "mob_item_afterattack"		//from base of obj/item/afterattack(): (atom/target, mob/user, proximity_flag, click_parameters)
 #define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"			//from base of mob/RangedAttack(): (atom/A, params)
