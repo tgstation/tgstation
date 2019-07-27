@@ -37,6 +37,22 @@
 	else
 		to_chat(user, "<span class='warning'>You cannot retrieve any bananium from the prototype shoes!</span>")
 
+/obj/item/clothing/shoes/clown_shoes/banana_shoes/attackby(obj/item/O, mob/user, params)
+	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
+	if(!bananium.get_item_material_amount(O))
+		to_chat(user, "<span class='notice'>This item has no bananium!</span>")
+		return
+	if(!user.dropItemToGround(O))
+		to_chat(user, "<span class='notice'>You can't drop [O]!</span>")
+		return
+
+	var/bananium_amount = bananium.insert_item(O)
+	if(bananium_amount)
+		to_chat(user, "<span class='notice'>You insert [O] into the prototype shoes.</span>")
+		qdel(O)
+	else
+		to_chat(user, "<span class='notice'>You are unable to insert more bananium!</span>")
+
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>The shoes are [on ? "enabled" : "disabled"].</span>"
