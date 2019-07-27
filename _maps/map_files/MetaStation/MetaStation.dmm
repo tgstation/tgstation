@@ -50947,6 +50947,9 @@
 "cih" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "cii" = (
@@ -50958,6 +50961,9 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "cij" = (
@@ -75282,6 +75288,20 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
+"yiH" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel/white,
+/area/medical/sleeper)
 
 (1,1,1) = {"
 aaa
@@ -97021,7 +97041,7 @@ cbI
 bXK
 cev
 cfJ
-cgQ
+yiH
 cih
 cjH
 clg
