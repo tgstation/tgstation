@@ -268,6 +268,19 @@
 	charge = 0
 	update_icon()
 
+/obj/item/stock_parts/cell/quantum
+	name = "quantum power cell"
+	desc = "A rechargeable, entangled power cell."
+	icon_state = "bscell"
+	maxcharge = 50000
+	materials = list(/datum/material/glass=600)
+	chargerate = 5000
+
+/obj/item/stock_parts/cell/quantum/empty/Initialize()
+	. = ..()
+	charge = 0
+	update_icon()
+
 /obj/item/stock_parts/cell/infinite
 	name = "infinite-capacity power cell!"
 	icon_state = "icell"

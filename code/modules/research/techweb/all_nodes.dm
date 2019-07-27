@@ -53,10 +53,13 @@
 //T5 PARTS
 /datum/techweb_node/quantum_tech
 	id = "quantum_tech"
-	starting_node = TRUE
+	starting_node = FALSE
 	display_name = "Quantum Tech"
 	description = "Strange modified bluespace stock parts, with a dash of quantum physics mixed in."
 	design_ids = list("quantumcap","quantumscan","quantummanip","quantumlaser","quantumbin")
+	prereq_ids = list("micro_bluespace")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	export_price = 5000
 	
 /////////////////////////Biotech/////////////////////////
 /datum/techweb_node/biotech
