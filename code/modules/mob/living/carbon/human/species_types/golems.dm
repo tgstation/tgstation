@@ -1056,7 +1056,7 @@
 	special_names = list("Flake", "Blizzard", "Storm")
 	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
 	
-	var/obj/effect/proc_holder/spell/targeted/conjure_item/snow/snow
+	var/obj/effect/proc_holder/spell/targeted/conjure_item/snowball/ball
 	var/obj/effect/proc_holder/spell/aimed/cryo/cryo
 
 /datum/species/golem/snow/spec_death(gibbed, mob/living/carbon/human/H)
@@ -1071,9 +1071,9 @@
 /datum/species/golem/snow/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
 	C.weather_immunities |= "snow"
-	snow = new
-	snow.charge_counter = 0
-	C.AddSpell(snow)
+	ball = new
+	ball.charge_counter = 0
+	C.AddSpell(ball)
 	cryo = new
 	cryo.charge_counter = 0
 	C.AddSpell(cryo)
@@ -1081,10 +1081,23 @@
 /datum/species/golem/snow/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	C.weather_immunities -= "snow"
-	if(snow)
-		C.RemoveSpell(snow)
+	if(ball)
+		C.RemoveSpell(ball)
 	if(cryo)
 		C.RemoveSpell(cryo)
+
+/obj/effect/proc_holder/spell/targeted/conjure_item/snowball
+	name = "Snowball"
+	desc = "Concentrates cryokinetic forces to create snowballs, useful for throwing at people."
+	item_type = /obj/item/toy/snowball
+	charge_max = 15
+	action_icon = 'icons/obj/toy.dmi'
+	action_icon_state = "snowball"
+	
+/obj/effect/proc_holder/spell/targeted/conjure_item/snowball/cast(list/targets, mob/user = usr)
+	..()
+	for(var/mob/living/carbon/C in targets)
+		C.throw_mode_on()
 
 /datum/species/golem/capitalist
 	name = "Capitalist Golem"
