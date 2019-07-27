@@ -1,4 +1,0 @@
-author: "imsxz"
-delete-after: True
-changes: 
-  - balance: "autolathe no longer prints .357 speedloaders, but instead prints individual .357 bullets."
