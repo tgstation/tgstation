@@ -1,0 +1,8 @@
+author: "zeroisthebiggay"
+delete-after: True
+changes: 
+  - tweak: "Nanotrasen is finally giving Box Station some love in the form of some minor tweaks to hopefully make a few aspects of the station more convenient after comparing it to some of the other models."
+  - rscadd: "(BOX) Gave the Cargo Lobby, Vacant Commissary, and Cloning Lab a slight makeover to make them slightly nicer."
+  - tweak: "(BOX) Moved and added some fire lockers, moved some other things around a tad, put some disposal bins in the central ring, and finally anchored that ONE oxygen locker in the AI sat. You know the one I am talking about."
+  - tweak: "(BOX) A couple of other unnoteworthy quality of life changes."
+  - rscdel: "(BOX) A singular metal chair in front of Cargo."
