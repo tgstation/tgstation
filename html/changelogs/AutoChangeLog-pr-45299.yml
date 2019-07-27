@@ -1,0 +1,5 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - refactor: "Butchering component refactored"
+  - balance: "Edaggers are now sharp if they get turned on."

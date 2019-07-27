@@ -24,6 +24,7 @@ handles linking back and forth.
 	src.allow_standalone = allow_standalone
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
+	RegisterSignal(parent, COMSIG_ATOM_MULTITOOL_ACT, .proc/OnMultitool)
 
 	var/turf/T = get_turf(parent)
 	if (force_connect || (mapload && is_station_level(T.z)))
@@ -74,30 +75,30 @@ handles linking back and forth.
 		_MakeLocal()
 
 /datum/component/remote_materials/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
-	if(I.tool_behaviour == TOOL_MULTITOOL)
-		if(!I.multitool_check_buffer(user, I))
-			return COMPONENT_NO_AFTERATTACK
-		var/obj/item/multitool/M = I
-		if (!QDELETED(M.buffer) && istype(M.buffer, /obj/machinery/ore_silo))
-			if (silo == M.buffer)
-				to_chat(user, "<span class='notice'>[parent] is already connected to [silo].</span>")
-				return COMPONENT_NO_AFTERATTACK
-			if (silo)
-				silo.connected -= src
-				silo.updateUsrDialog()
-			else if (mat_container)
-				mat_container.retrieve_all()
-				qdel(mat_container)
-			silo = M.buffer
-			silo.connected += src
-			silo.updateUsrDialog()
-			mat_container = silo.GetComponent(/datum/component/material_container)
-			to_chat(user, "<span class='notice'>You connect [parent] to [silo] from the multitool's buffer.</span>")
-			return COMPONENT_NO_AFTERATTACK
-
-	else if (silo && istype(I, /obj/item/stack))
+	if (silo && istype(I, /obj/item/stack))
 		if (silo.remote_attackby(parent, user, I))
 			return COMPONENT_NO_AFTERATTACK
+
+/datum/component/remote_materials/proc/OnMultitool(datum/source, mob/user, obj/item/I)
+	if(!I.multitool_check_buffer(user, I))
+		return COMPONENT_BLOCK_TOOL_ATTACK
+	var/obj/item/multitool/M = I
+	if (!QDELETED(M.buffer) && istype(M.buffer, /obj/machinery/ore_silo))
+		if (silo == M.buffer)
+			to_chat(user, "<span class='notice'>[parent] is already connected to [silo].</span>")
+			return COMPONENT_BLOCK_TOOL_ATTACK
+		if (silo)
+			silo.connected -= src
+			silo.updateUsrDialog()
+		else if (mat_container)
+			mat_container.retrieve_all()
+			qdel(mat_container)
+		silo = M.buffer
+		silo.connected += src
+		silo.updateUsrDialog()
+		mat_container = silo.GetComponent(/datum/component/material_container)
+		to_chat(user, "<span class='notice'>You connect [parent] to [silo] from the multitool's buffer.</span>")
+		return COMPONENT_BLOCK_TOOL_ATTACK
 
 /datum/component/remote_materials/proc/on_hold()
 	return silo && silo.holds["[get_area(parent)]/[category]"]
