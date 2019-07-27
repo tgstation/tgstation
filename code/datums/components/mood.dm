@@ -205,12 +205,11 @@
 	// If the new amount would move towards the acceptable range faster then use it instead
 	if(sanity < minimum && amount < sanity + 0.5)
 		amount = sanity + 0.5
-
-	// Disturbed stops you from getting any more sane
+	// Disturbed stops you from getting any more sane and we don't go above the maximum.
 	if(HAS_TRAIT(owner, TRAIT_UNSTABLE))
-		sanity = min(amount,sanity)
-	else
-		sanity = amount
+		maximum = sanity
+	//Don't go above the maximum
+	sanity = min(amount, maximum)
 
 	var/mob/living/master = parent
 	switch(sanity)
