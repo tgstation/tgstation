@@ -35,6 +35,27 @@
 	var/upgrade_subtype = /datum/infection_upgrade/spore_type_change
 	// handles the menu for upgrading
 	var/datum/infection_menu/menu_handler
+	// things that can drop after the slime dies a fake death
+	var/list/slime_drops = list(/obj/item/clothing/head/helmet/space=1,
+								/obj/item/clothing/suit/space=1,
+								/obj/item/clothing/suit/armor/bone=2,
+								/obj/item/clothing/suit/hooded/cloak/goliath=2,
+								/obj/item/twohanded/bonespear=2,
+								/obj/item/stack/ore/diamond=1,
+								/obj/item/stack/ore/plasma=1,
+								/obj/item/stack/spacecash/c500=1,
+								/obj/item/clothing/under/color/grey=2,
+								/obj/item/clothing/suit/hooded/explorer=1,
+								/obj/item/clothing/head/hardhat/cakehat=2,
+								/obj/item/tank/internals/oxygen=2,
+								/obj/item/clothing/mask/gas=2,
+								/obj/item/clothing/gloves/color/yellow=1,
+								/obj/item/stack/ore/plasma=3,
+								/obj/item/extinguisher=2,
+								/obj/item/pickaxe/drill/diamonddrill=1,
+								/obj/item/clothing/shoes/magboots=1,
+								/obj/item/tank/jetpack/suit=1,
+								/obj/item/clothing/head/helmet/space/hardsuit=1)
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/Initialize(mapload, var/obj/structure/infection/factory/linked_node, commander)
 	. = ..()
@@ -128,7 +149,7 @@
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/infection_help()
 	to_chat(src, "<b>You are an evolving slime!</b>")
 	to_chat(src, "You are an evolving creature that can select evolutions in order to become stronger \n<b>You will respawn as long as the core still exists.</b>")
-	to_chat(src, "<b>Attempt to help expand your army of infectious slimes by bringing sentient being's corpses near the infection core!</b>")
+	to_chat(src, "<b>Attempt to help expand your army of infectious slimes by bringing sentient human corpses near the infection core!</b>")
 	to_chat(src, "You can communicate with other infectious creatures via <b>:b</b>")
 	return
 
@@ -143,6 +164,14 @@
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/death(gibbed)
 	if(overmind && overmind.infection_core) // cant die as long as core is still alive
+		playsound(src.loc, 'sound/effects/splat.ogg', 100, FALSE, pressure_affected = FALSE)
+		visible_message("<span class='notice'>[src] fades into pure energy that races towards the core of the infection.</span>",
+			"<span class='notice'>You return to the core of the infection to reform your body.</span>")
+		if(prob(33))
+			var/type_of_drop = pickweight(slime_drops)
+			var/turf/T = get_turf(src)
+			if(type_of_drop && T)
+				new type_of_drop(T)
 		forceMove(overmind.infection_core)
 		INVOKE_ASYNC(src, .proc/respawn)
 		return
