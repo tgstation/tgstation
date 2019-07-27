@@ -1,0 +1,4 @@
+author: "Dennok"
+delete-after: True
+changes: 
+  - bugfix: "Now you can exit from mecha drifting in zero gravity."
