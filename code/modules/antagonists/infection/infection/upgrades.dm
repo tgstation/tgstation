@@ -166,7 +166,7 @@
 	times = 5
 
 /datum/infection_upgrade/infector/respawn_time/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/infector/parentinfector)
-	parentinfector.respawn_time -= 3
+	parentinfector.respawn_time -= 6
 
 /*
 	Upgrade exclusively for the hunter spore type
@@ -186,7 +186,7 @@
 	cost = 200
 
 /datum/infection_upgrade/hunter/napalm/upgrade_effect(atom/parent)
-	parent.AddComponent(/datum/component/igniter)
+	parent.AddComponent(/datum/component/igniter, 3)
 
 /datum/infection_upgrade/hunter/flash
 	name = "Bright Flash"
@@ -202,10 +202,21 @@
 	description = "Move faster than your foes can run away."
 	cost = 100
 	increasing_cost = 50
-	times = 4
+	times = 5
 
 /datum/infection_upgrade/hunter/speed/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/hunter/parenthunter)
-	parenthunter.set_varspeed(-0.25 * bought)
+	parenthunter.set_varspeed(-0.1 * bought)
+
+/datum/infection_upgrade/hunter/damage
+	name = "Damage Increase"
+	description = "Gain the strength to take down your foes."
+	cost = 50
+	increasing_cost = 50
+	times = 5
+
+/datum/infection_upgrade/hunter/damage/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/hunter/parenthunter)
+	parenthunter.melee_damage_lower += 4
+	parenthunter.melee_damage_upper += 4
 
 /*
 	Upgrades exclusively for the destructive spore type
@@ -237,17 +248,6 @@
 /datum/infection_upgrade/destructive/voice/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/destructive/parentdestructive)
 	var/datum/action/cooldown/infection/add_action = new /datum/action/cooldown/infection/voice()
 	add_action.Grant(parentdestructive)
-
-/datum/infection_upgrade/destructive/damage
-	name = "Damage Increase"
-	description = "Gain the strength to take down your foes."
-	cost = 50
-	increasing_cost = 50
-	times = 6
-
-/datum/infection_upgrade/destructive/damage/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/destructive/parentdestructive)
-	parentdestructive.melee_damage_lower += 5
-	parentdestructive.melee_damage_upper += 5
 
 /datum/infection_upgrade/destructive/health
 	name = "Health Boost"

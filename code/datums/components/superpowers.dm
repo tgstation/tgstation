@@ -12,7 +12,7 @@
 	// the item type that represents the unique weapon the mob uses to attack with their fists
 	var/attack_item_type
 	// the actual item that exists
-	var/stored_attack_item
+	var/obj/item/stored_attack_item
 	// an item type that is spawned when the mob dies, as well as takes away their super powers
 	var/stored_item_type
 

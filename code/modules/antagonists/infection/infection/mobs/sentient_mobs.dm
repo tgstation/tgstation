@@ -14,7 +14,7 @@
 	melee_damage_upper = 10
 	crystal_color = "#ff8c00"
 	// respawn time for the slime
-	var/respawn_time = 15
+	var/respawn_time = 45
 	// the time left to respawn
 	var/current_respawn_time = -1
 	// whether or not the spore can respawn
@@ -182,7 +182,7 @@
 	if(!can_respawn || iscommander(loc))
 		to_chat(src, "<span class='warning'>You cannot respawn right now!</span>")
 		return
-	adjustHealth(health * 0.8)
+	adjustHealth(-maxHealth)
 	forceMove(get_turf(src))
 	can_respawn = FALSE
 
@@ -255,14 +255,12 @@
 	name = "infector slime"
 	desc = "A slime that oozes infective pus from all of it's pores."
 	crystal_color = "#228b22"
-	respawn_time = 30
 	upgrade_subtype = /datum/infection_upgrade/infector
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/hunter
 	name = "hunter slime"
 	desc = "A congealed but fast moving slime with the abilities to hunt down and consume intruders of the infection."
 	crystal_color = "#dc143c"
-	respawn_time = 30
 	upgrade_subtype = /datum/infection_upgrade/hunter
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/destructive
@@ -270,9 +268,8 @@
 	desc = "A slow moving but bulky and heavily damaging slime that is useful for taking out buildings and walls, as well as defending infection structures."
 	health = 60
 	maxHealth = 60
-	speed = 2
+	speed = 5
 	crystal_color = "#4169e1"
-	respawn_time = 30
 	transform = matrix(1.5, 0, 0, 0, 1.5, 0)
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
 	upgrade_subtype = /datum/infection_upgrade/destructive
