@@ -701,6 +701,10 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
+<<<<<<< HEAD
+=======
+	dheight = 0;
+>>>>>>> Updated this old code to fork
 	dwidth = 15;
 	height = 20;
 	name = "Cere emergency shuttle";
@@ -1127,6 +1131,12 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "cu" = (
+<<<<<<< HEAD
+=======
+/obj/machinery/sleeper{
+	dir = 8
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/light{
 	dir = 4
 	},
@@ -1137,7 +1147,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/stasis,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "cv" = (
@@ -1240,11 +1253,20 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "cD" = (
+<<<<<<< HEAD
+=======
+/obj/machinery/sleeper{
+	dir = 8
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/stasis,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "cE" = (
@@ -1383,6 +1405,19 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
+<<<<<<< HEAD
+=======
+"cL" = (
+/obj/machinery/sleeper{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/shuttle/escape)
+>>>>>>> Updated this old code to fork
 "cM" = (
 /obj/item/radio/intercom{
 	name = "Station Intercom (General)";
@@ -1395,6 +1430,12 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "cN" = (
+<<<<<<< HEAD
+=======
+/obj/machinery/sleeper{
+	dir = 8
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -1402,7 +1443,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/machinery/stasis,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "cO" = (
@@ -1730,6 +1774,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
+<<<<<<< HEAD
 "pf" = (
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
@@ -1737,6 +1782,8 @@
 	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
+=======
+>>>>>>> Updated this old code to fork
 
 (1,1,1) = {"
 aa
@@ -2475,7 +2522,11 @@ cs
 cp
 cp
 cp
+<<<<<<< HEAD
 cw
+=======
+cL
+>>>>>>> Updated this old code to fork
 ab
 cR
 cY
@@ -2558,7 +2609,11 @@ ac
 ac
 ab
 ab
+<<<<<<< HEAD
 pf
+=======
+ad
+>>>>>>> Updated this old code to fork
 cu
 cy
 cD

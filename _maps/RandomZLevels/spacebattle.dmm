@@ -213,8 +213,13 @@
 "bc" = (
 /obj/machinery/porta_turret{
 	dir = 8;
+<<<<<<< HEAD
 	installation = /obj/item/gun/energy/lasercannon;
 	set_obj_flags = "EMAGGED"
+=======
+	set_obj_flags = "EMAGGED";
+	installation = /obj/item/gun/energy/lasercannon
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate2)
@@ -257,7 +262,12 @@
 /obj/machinery/door/poddoor{
 	icon_state = "pdoor1";
 	id = "spacebattlepod3";
+<<<<<<< HEAD
 	name = "Front Hull Door"
+=======
+	name = "Front Hull Door";
+	opacity = 1
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate2)
@@ -308,8 +318,13 @@
 "by" = (
 /obj/machinery/porta_turret{
 	dir = 8;
+<<<<<<< HEAD
 	installation = /obj/item/gun/energy/lasercannon;
 	set_obj_flags = "EMAGGED"
+=======
+	set_obj_flags = "EMAGGED";
+	installation = /obj/item/gun/energy/lasercannon
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate3)
@@ -326,8 +341,13 @@
 "bG" = (
 /obj/machinery/porta_turret{
 	dir = 8;
+<<<<<<< HEAD
 	installation = /obj/item/gun/energy/lasercannon;
 	set_obj_flags = "EMAGGED"
+=======
+	set_obj_flags = "EMAGGED";
+	installation = /obj/item/gun/energy/lasercannon
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate1)
@@ -537,21 +557,40 @@
 "cC" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/snacks/sausage,
+<<<<<<< HEAD
 /turf/open/floor/plasteel/cafeteria,
+=======
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /area/awaymission/spacebattle/cruiser)
 "cD" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/condiment/enzyme,
+<<<<<<< HEAD
 /turf/open/floor/plasteel/cafeteria,
+=======
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /area/awaymission/spacebattle/cruiser)
 "cE" = (
 /obj/structure/table/reinforced,
 /obj/item/kitchen/knife,
+<<<<<<< HEAD
 /turf/open/floor/plasteel/cafeteria,
+=======
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /area/awaymission/spacebattle/cruiser)
 "cF" = (
 /obj/structure/table/reinforced,
 /obj/item/kitchen/rollingpin,
+<<<<<<< HEAD
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/spacebattle/cruiser)
 "cG" = (
@@ -561,11 +600,34 @@
 "cH" = (
 /obj/structure/closet/secure_closet/freezer/fridge/open,
 /turf/open/floor/plasteel/cafeteria,
+=======
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
+/area/awaymission/spacebattle/cruiser)
+"cG" = (
+/obj/structure/closet/secure_closet/freezer/kitchen,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
+/area/awaymission/spacebattle/cruiser)
+"cH" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /area/awaymission/spacebattle/cruiser)
 "cI" = (
 /obj/structure/table/reinforced,
 /obj/machinery/microwave,
+<<<<<<< HEAD
 /turf/open/floor/plasteel/cafeteria,
+=======
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /area/awaymission/spacebattle/cruiser)
 "cJ" = (
 /obj/machinery/door/unpowered/shuttle,
@@ -593,7 +655,13 @@
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "cP" = (
+<<<<<<< HEAD
 /turf/open/floor/plasteel/cafeteria,
+=======
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /area/awaymission/spacebattle/cruiser)
 "cQ" = (
 /obj/item/stack/sheet/metal,
@@ -609,21 +677,45 @@
 /area/awaymission/spacebattle/cruiser)
 "cT" = (
 /obj/machinery/door/unpowered/shuttle,
+<<<<<<< HEAD
 /turf/open/floor/plasteel/cafeteria,
+=======
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /area/awaymission/spacebattle/cruiser)
 "cU" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/snacks/fries,
+<<<<<<< HEAD
 /turf/open/floor/plasteel/cafeteria,
+=======
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /area/awaymission/spacebattle/cruiser)
 "cV" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/snacks/soup/stew,
+<<<<<<< HEAD
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/spacebattle/cruiser)
 "cW" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/cafeteria,
+=======
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
+/area/awaymission/spacebattle/cruiser)
+"cW" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /area/awaymission/spacebattle/cruiser)
 "cY" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
@@ -924,8 +1016,13 @@
 "dZ" = (
 /obj/machinery/porta_turret{
 	dir = 8;
+<<<<<<< HEAD
 	installation = /obj/item/gun/energy/lasercannon;
 	set_obj_flags = "EMAGGED"
+=======
+	set_obj_flags = "EMAGGED";
+	installation = /obj/item/gun/energy/lasercannon
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
@@ -1276,6 +1373,10 @@
 /area/awaymission/spacebattle/cruiser)
 "ff" = (
 /obj/machinery/button/door{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	id = "spacebattlestorage";
 	name = "Secure Storage";
 	pixel_x = 32
@@ -1473,7 +1574,13 @@
 /area/awaymission/spacebattle/cruiser)
 "fI" = (
 /obj/effect/landmark/awaystart,
+<<<<<<< HEAD
 /turf/open/floor/plasteel/cafeteria,
+=======
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /area/awaymission/spacebattle/cruiser)
 "fJ" = (
 /obj/effect/turf_decal/tile/blue,
@@ -1706,6 +1813,10 @@
 /area/awaymission/spacebattle/cruiser)
 "gr" = (
 /obj/machinery/button/door{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	id = "spacebattlestorage";
 	name = "Secure Storage";
 	pixel_x = 24
@@ -1714,28 +1825,58 @@
 /area/awaymission/spacebattle/cruiser)
 "gs" = (
 /obj/machinery/computer/operating,
+<<<<<<< HEAD
 /turf/open/floor/plasteel/white/side,
+=======
+/turf/open/floor/plasteel/white/side{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /area/awaymission/spacebattle/cruiser)
 "gt" = (
 /obj/structure/table/reinforced,
 /obj/item/scalpel,
 /obj/item/circular_saw,
+<<<<<<< HEAD
 /turf/open/floor/plasteel/white/side,
+=======
+/turf/open/floor/plasteel/white/side{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /area/awaymission/spacebattle/cruiser)
 "gu" = (
 /obj/structure/table/reinforced,
 /obj/item/retractor,
+<<<<<<< HEAD
 /turf/open/floor/plasteel/white/side,
+=======
+/turf/open/floor/plasteel/white/side{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /area/awaymission/spacebattle/cruiser)
 "gv" = (
 /obj/structure/table/reinforced,
 /obj/item/hemostat,
+<<<<<<< HEAD
 /turf/open/floor/plasteel/white/side,
+=======
+/turf/open/floor/plasteel/white/side{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /area/awaymission/spacebattle/cruiser)
 "gw" = (
 /obj/structure/table/reinforced,
 /obj/item/scalpel,
+<<<<<<< HEAD
 /turf/open/floor/plasteel/white/side,
+=======
+/turf/open/floor/plasteel/white/side{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /area/awaymission/spacebattle/cruiser)
 "gx" = (
 /obj/machinery/vending/cigarette,
@@ -1834,8 +1975,13 @@
 "gP" = (
 /obj/machinery/porta_turret{
 	dir = 8;
+<<<<<<< HEAD
 	installation = /obj/item/gun/energy/lasercannon;
 	set_obj_flags = "EMAGGED"
+=======
+	set_obj_flags = "EMAGGED";
+	installation = /obj/item/gun/energy/lasercannon
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/syndicate7)
@@ -2433,7 +2579,11 @@
 /area/awaymission/spacebattle/cruiser)
 "jt" = (
 /obj/structure/rack,
+<<<<<<< HEAD
 /obj/item/gun/energy/disabler,
+=======
+/obj/item/gun/energy/e_gun/advtaser,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "ju" = (
@@ -2449,6 +2599,10 @@
 "jw" = (
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	id = "spacebattlearmory";
 	name = "Weapon Cache"
 	},
@@ -2463,6 +2617,10 @@
 "jx" = (
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	id = "spacebattlearmory2";
 	name = "Weapon Cache"
 	},
@@ -2477,6 +2635,10 @@
 "jy" = (
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	id = "spacebattlearmory1";
 	name = "Weapon Cache"
 	},
@@ -2501,7 +2663,11 @@
 "jB" = (
 /obj/structure/rack,
 /obj/structure/window/reinforced,
+<<<<<<< HEAD
 /obj/item/gun/energy/disabler,
+=======
+/obj/item/gun/energy/e_gun/advtaser,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "jC" = (
@@ -2732,8 +2898,13 @@
 "kq" = (
 /obj/machinery/porta_turret{
 	dir = 8;
+<<<<<<< HEAD
 	installation = /obj/item/gun/energy/lasercannon;
 	set_obj_flags = "EMAGGED"
+=======
+	set_obj_flags = "EMAGGED";
+	installation = /obj/item/gun/energy/lasercannon
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/engine/vacuum,
 /area/awaymission/spacebattle/cruiser)

@@ -13,7 +13,11 @@
 	ammo_type = /obj/item/ammo_casing/c38
 	max_ammo = 6
 	multiple_sprites = 1
+<<<<<<< HEAD
 	materials = list(/datum/material/iron = 20000)
+=======
+	materials = list(MAT_METAL = 20000)
+>>>>>>> Updated this old code to fork
 
 /obj/item/ammo_box/c38/trac
 	name = "speed loader (.38 TRAC)"
@@ -75,9 +79,17 @@
 	icon_state = "foambox"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
 	max_ammo = 40
+<<<<<<< HEAD
 	materials = list(/datum/material/iron = 500)
+=======
+	materials = list(MAT_METAL = 500)
+>>>>>>> Updated this old code to fork
 
 /obj/item/ammo_box/foambox/riot
 	icon_state = "foambox_riot"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
+<<<<<<< HEAD
 	materials = list(/datum/material/iron = 50000)
+=======
+	materials = list(MAT_METAL = 50000)
+>>>>>>> Updated this old code to fork

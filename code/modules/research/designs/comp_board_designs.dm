@@ -4,7 +4,11 @@
 	name = "Computer Design ( NULL ENTRY )"
 	desc = "I promise this doesn't give you syndicate goodies!"
 	build_type = IMPRINTER
+<<<<<<< HEAD
 	materials = list(/datum/material/glass = 1000)
+=======
+	materials = list(MAT_GLASS = 1000)
+>>>>>>> Updated this old code to fork
 
 /datum/design/board/arcade_battle
 	name = "Computer Design (Battle Arcade Machine)"
@@ -50,7 +54,11 @@
 	name = "Computer Design (AI Upload)"
 	desc = "Allows for the construction of circuit boards used to build an AI Upload Console."
 	id = "aiupload"
+<<<<<<< HEAD
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000)
+=======
+	materials = list(MAT_GLASS = 1000, MAT_GOLD = 2000)
+>>>>>>> Updated this old code to fork
 	build_path = /obj/item/circuitboard/computer/aiupload
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -59,7 +67,11 @@
 	name = "Computer Design (Cyborg Upload)"
 	desc = "Allows for the construction of circuit boards used to build a Cyborg Upload Console."
 	id = "borgupload"
+<<<<<<< HEAD
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000)
+=======
+	materials = list(MAT_GLASS = 1000, MAT_GOLD = 2000)
+>>>>>>> Updated this old code to fork
 	build_path = /obj/item/circuitboard/computer/borgupload
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -303,6 +315,7 @@
 	build_path = /obj/item/circuitboard/computer/nanite_cloud_controller
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+<<<<<<< HEAD
 	
 /datum/design/board/advanced_camera
 	name = "Computer Design (Advanced Camera Console)"
@@ -311,3 +324,5 @@
 	build_path = /obj/item/circuitboard/computer/advanced_camera
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+=======
+>>>>>>> Updated this old code to fork

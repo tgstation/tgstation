@@ -124,10 +124,13 @@
 	port_id = "mining"
 	can_be_bought = FALSE
 
+<<<<<<< HEAD
 /datum/map_template/shuttle/mining_common
 	port_id = "mining_common"
 	can_be_bought = FALSE
 
+=======
+>>>>>>> Updated this old code to fork
 /datum/map_template/shuttle/cargo
 	port_id = "cargo"
 	can_be_bought = FALSE
@@ -156,10 +159,13 @@
 	port_id = "pirate"
 	can_be_bought = FALSE
 
+<<<<<<< HEAD
 /datum/map_template/shuttle/hunter
 	port_id = "hunter"
 	can_be_bought = FALSE
 
+=======
+>>>>>>> Updated this old code to fork
 /datum/map_template/shuttle/ruin //For random shuttles in ruins
 	port_id = "ruin"
 	can_be_bought = FALSE
@@ -175,12 +181,25 @@
 	name = "Backup Shuttle"
 	can_be_bought = FALSE
 
+<<<<<<< HEAD
 /datum/map_template/shuttle/emergency/construction
 	suffix = "construction"
 	name = "Build your own shuttle kit"
 	description = "For the enterprising shuttle engineer! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Comes stocked with construction materials."
 	admin_notes = "No brig, no medical facilities, no shuttle console."
 	credit_cost = 2500
+=======
+/datum/map_template/shuttle/emergency/airless
+	suffix = "airless"
+	name = "Build your own shuttle kit"
+	description = "Save money by building your own shuttle! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Interior and atmosphere not included."
+	admin_notes = "No brig, no medical facilities, no air."
+	credit_cost = -7500
+
+/datum/map_template/shuttle/emergency/airless/prerequisites_met()
+	// first 10 minutes only
+	return world.time - SSticker.round_start_time < 6000
+>>>>>>> Updated this old code to fork
 
 /datum/map_template/shuttle/emergency/airless/post_load()
 	. = ..()
@@ -203,6 +222,7 @@
 	Has medical facilities."
 	credit_cost = 5000
 
+<<<<<<< HEAD
 /datum/map_template/shuttle/emergency/pod
 	suffix = "pod"
 	name = "Emergency Pods"
@@ -210,6 +230,8 @@
 	admin_notes = "For player punishment."
 	can_be_bought = FALSE
 
+=======
+>>>>>>> Updated this old code to fork
 /datum/map_template/shuttle/emergency/russiafightpit
 	suffix = "russiafightpit"
 	name = "Mother Russia Bleeds"
@@ -220,9 +242,15 @@
 /datum/map_template/shuttle/emergency/meteor
 	suffix = "meteor"
 	name = "Asteroid With Engines Strapped To It"
+<<<<<<< HEAD
 	description = "A hollowed out asteroid with engines strapped to it, the hollowing procedure makes it very difficult to hijack but is very expensive. Due to its size and difficulty in steering it, this shuttle may damage the docking area."
 	admin_notes = "This shuttle will likely crush escape, killing anyone there."
 	credit_cost = 15000
+=======
+	description = "A hollowed out asteroid with engines strapped to it. Due to its size and difficulty in steering it, this shuttle may damage the docking area."
+	admin_notes = "This shuttle will likely crush escape, killing anyone there."
+	credit_cost = -5000
+>>>>>>> Updated this old code to fork
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 
 /datum/map_template/shuttle/emergency/luxury
@@ -247,7 +275,11 @@
 	credit_cost = 10000
 
 /datum/map_template/shuttle/emergency/arena/prerequisites_met()
+<<<<<<< HEAD
 	if(SHUTTLE_UNLOCK_BUBBLEGUM in SSshuttle.shuttle_purchase_requirements_met)
+=======
+	if("bubblegum" in SSshuttle.shuttle_purchase_requirements_met)
+>>>>>>> Updated this old code to fork
 		return TRUE
 	return FALSE
 
@@ -296,12 +328,15 @@
 	credit_cost = 4000
 	description = "A fairly standard shuttle, though larger and slightly better equipped than the Box Station variant."
 
+<<<<<<< HEAD
 /datum/map_template/shuttle/emergency/kilo
 	suffix = "kilo"
 	name = "Kilo Station Emergency Shuttle"
 	credit_cost = 5000
 	description = "A fully functional shuttle including a complete infirmary, storage facilties and regular amenities."
 
+=======
+>>>>>>> Updated this old code to fork
 /datum/map_template/shuttle/emergency/mini
 	suffix = "mini"
 	name = "Ministation emergency shuttle"
@@ -358,7 +393,11 @@
 	description = "How was space work today? Oh, pretty good. We got a new space station and the company will make a lot of money. What space station? I cannot tell you; it's space confidential. \
 	Aw, come space on. Why not? No, I can't. Anyway, how is your space roleplay life?"
 	admin_notes = "Tiny, with a single airlock and wooden walls. What could go wrong?"
+<<<<<<< HEAD
 	can_be_bought = FALSE
+=======
+	credit_cost = -5000
+>>>>>>> Updated this old code to fork
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 
 /datum/map_template/shuttle/emergency/goon
@@ -409,11 +448,14 @@
 	name = "fancy transport ferry"
 	description = "At some point, someone upgraded the ferry to have fancier flooring... and fewer seats."
 
+<<<<<<< HEAD
 /datum/map_template/shuttle/ferry/kilo
 	suffix = "kilo"
 	name = "kilo transport ferry"
 	description = "Standard issue CentCom Ferry for Kilo pattern stations. Includes additional equipment and rechargers."
 
+=======
+>>>>>>> Updated this old code to fork
 /datum/map_template/shuttle/whiteship/box
 	suffix = "box"
 	name = "Hospital Ship"
@@ -430,10 +472,13 @@
 	suffix = "cere"
 	name = "NT Construction Vessel"
 
+<<<<<<< HEAD
 /datum/map_template/shuttle/whiteship/donut
 	suffix = "donut"
 	name = "NT Long-Distance Bluespace Jumper"
 
+=======
+>>>>>>> Updated this old code to fork
 /datum/map_template/shuttle/whiteship/delta
 	suffix = "delta"
 	name = "NT Frigate"
@@ -446,10 +491,13 @@
 	suffix = "box"
 	name = "supply shuttle (Box)"
 
+<<<<<<< HEAD
 /datum/map_template/shuttle/cargo/kilo
 	suffix = "kilo"
 	name = "supply shuttle (Kilo)"
 
+=======
+>>>>>>> Updated this old code to fork
 /datum/map_template/shuttle/cargo/birdboat
 	suffix = "birdboat"
 	name = "supply shuttle (Birdboat)"
@@ -474,6 +522,7 @@
 	admin_notes = "Comes with turrets that will target anything without the neutral faction (nuke ops, xenos etc, but not pets)."
 	credit_cost = 30000
 
+<<<<<<< HEAD
 /datum/map_template/shuttle/emergency/zeta
 	suffix = "zeta"
 	name = "Tr%nPo2r& Z3TA"
@@ -487,6 +536,8 @@
 		return TRUE
 	return FALSE
 
+=======
+>>>>>>> Updated this old code to fork
 /datum/map_template/shuttle/arrival/box
 	suffix = "box"
 	name = "arrival shuttle (Box)"
@@ -511,10 +562,13 @@
 	suffix = "basic"
 	name = "basic syndicate infiltrator"
 
+<<<<<<< HEAD
 /datum/map_template/shuttle/infiltrator/advanced
 	suffix = "basic"
 	name = "advanced syndicate infiltrator"
 
+=======
+>>>>>>> Updated this old code to fork
 /datum/map_template/shuttle/cargo/delta
 	suffix = "delta"
 	name = "cargo ferry (Delta)"
@@ -523,6 +577,7 @@
 	suffix = "delta"
 	name = "mining shuttle (Delta)"
 
+<<<<<<< HEAD
 /datum/map_template/shuttle/mining/kilo
 	suffix = "kilo"
 	name = "mining shuttle (Kilo)"
@@ -531,10 +586,13 @@
 	suffix = "large"
 	name = "mining shuttle (Large)"
 
+=======
+>>>>>>> Updated this old code to fork
 /datum/map_template/shuttle/labour/delta
 	suffix = "delta"
 	name = "labour shuttle (Delta)"
 
+<<<<<<< HEAD
 /datum/map_template/shuttle/labour/kilo
 	suffix = "kilo"
 	name = "labour shuttle (Kilo)"
@@ -543,14 +601,19 @@
 	suffix = "meta"
 	name = "lavaland shuttle (Meta)"
 
+=======
+>>>>>>> Updated this old code to fork
 /datum/map_template/shuttle/arrival/delta
 	suffix = "delta"
 	name = "arrival shuttle (Delta)"
 
+<<<<<<< HEAD
 /datum/map_template/shuttle/arrival/kilo
 	suffix = "kilo"
 	name = "arrival shuttle (Kilo)"
 
+=======
+>>>>>>> Updated this old code to fork
 /datum/map_template/shuttle/arrival/pubby
 	suffix = "pubby"
 	name = "arrival shuttle (Pubby)"
@@ -583,6 +646,7 @@
 	suffix = "default"
 	name = "pirate ship (Default)"
 
+<<<<<<< HEAD
 /datum/map_template/shuttle/hunter/space_cop
 	suffix = "space_cop"
 	name = "Police Spacevan"
@@ -595,6 +659,8 @@
 	suffix = "bounty"
 	name = "Bounty Hunter Ship"
 
+=======
+>>>>>>> Updated this old code to fork
 /datum/map_template/shuttle/ruin/caravan_victim
 	suffix = "caravan_victim"
 	name = "Small Freighter"

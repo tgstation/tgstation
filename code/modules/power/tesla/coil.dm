@@ -13,7 +13,10 @@
 
 	circuit = /obj/item/circuitboard/machine/tesla_coil
 
+<<<<<<< HEAD
 	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE
+=======
+>>>>>>> Updated this old code to fork
 	var/power_loss = 2
 	var/input_power_multiplier = 1
 	var/zap_cooldown = 100
@@ -29,9 +32,12 @@
 	wires = new /datum/wires/tesla_coil(src)
 	linked_techweb = SSresearch.science_tech
 
+<<<<<<< HEAD
 /obj/machinery/power/testla_coil/should_have_node()
 	return anchored
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/tesla_coil/RefreshParts()
 	var/power_multiplier = 0
 	zap_cooldown = 100
@@ -41,9 +47,15 @@
 	input_power_multiplier = power_multiplier
 
 /obj/machinery/power/tesla_coil/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: Power generation at <b>[input_power_multiplier*100]%</b>.<br>Shock interval at <b>[zap_cooldown*0.1]</b> seconds.</span>"
+=======
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Power generation at <b>[input_power_multiplier*100]%</b>.<br>Shock interval at <b>[zap_cooldown*0.1]</b> seconds.<span>")
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/power/tesla_coil/on_construction()
 	if(anchored)
@@ -60,7 +72,10 @@
 			connect_to_network()
 		else
 			disconnect_from_network()
+<<<<<<< HEAD
 		update_cable_icons_on_turf(get_turf(src))
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/power/tesla_coil/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "coil_open[anchored]", "coil[anchored]", W))
@@ -107,7 +122,11 @@
 	var/power = (powernet.avail/2)
 	add_load(power)
 	playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
+<<<<<<< HEAD
 	tesla_zap(src, 10, power/(coeff/2), tesla_flags)
+=======
+	tesla_zap(src, 10, power/(coeff/2))
+>>>>>>> Updated this old code to fork
 	tesla_buckle_check(power/(coeff/2))
 
 // Tesla R&D researcher
@@ -190,4 +209,8 @@
 		flick("grounding_rodhit", src)
 		tesla_buckle_check(power)
 	else
+<<<<<<< HEAD
 		..()
+=======
+		..()
+>>>>>>> Updated this old code to fork

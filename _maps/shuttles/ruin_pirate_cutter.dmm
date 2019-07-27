@@ -116,8 +116,15 @@
 /turf/open/floor/plasteel,
 /area/shuttle/caravan/pirate)
 "hI" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "hT" = (
@@ -179,6 +186,10 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/pirate)
 "jh" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable,
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
@@ -186,7 +197,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "jo" = (
@@ -224,13 +238,22 @@
 "ku" = (
 /obj/structure/rack,
 /obj/item/storage/bag/money/vault,
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+=======
+>>>>>>> Updated this old code to fork
 /mob/living/simple_animal/parrot{
 	faction = list("pirate");
 	name = "Pegwing"
 	},
+<<<<<<< HEAD
+=======
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/pirate)
 "kY" = (
@@ -415,6 +438,10 @@
 "pZ" = (
 /obj/structure/tank_dispenser/oxygen,
 /obj/machinery/firealarm{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	pixel_y = 24
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -500,10 +527,17 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/pirate)
 "tM" = (
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /mob/living/simple_animal/hostile/pirate/ranged{
 	environment_smash = 0
 	},
+=======
+/mob/living/simple_animal/hostile/pirate/ranged{
+	environment_smash = 0
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/caravan/pirate)
 "ul" = (
@@ -702,23 +736,41 @@
 "BL" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
+<<<<<<< HEAD
 /obj/item/stack/cable_coil,
+=======
+/obj/item/stack/cable_coil/yellow,
+>>>>>>> Updated this old code to fork
 /obj/item/stock_parts/cell/high,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "Cb" = (
+<<<<<<< HEAD
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Pirate Cutter APC";
 	pixel_x = -25
+=======
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Pirate Cutter APC";
+	pixel_x = -24;
+	req_access = null
+>>>>>>> Updated this old code to fork
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/airalarm/all_access{
 	dir = 8;
 	pixel_x = 24
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "DY" = (
@@ -729,7 +781,11 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/pirate)
 "EB" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 4
 	},
 /obj/machinery/turretid{
@@ -739,6 +795,12 @@
 	pixel_y = -30;
 	req_access = null
 	},
+<<<<<<< HEAD
+=======
+/mob/living/simple_animal/hostile/pirate/ranged{
+	environment_smash = 0
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -749,9 +811,12 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /mob/living/simple_animal/hostile/pirate/ranged{
 	environment_smash = 0
 	},
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/pirate)
 "EK" = (
@@ -764,6 +829,12 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/metal/twenty,
 /obj/item/stack/sheet/glass{
@@ -780,7 +851,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "Gh" = (
@@ -834,7 +908,13 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/caravan/pirate)
 "Jb" = (
+<<<<<<< HEAD
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+=======
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
 	id_tag = "caravanpirate_bolt_port"
@@ -868,7 +948,13 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/caravan/pirate)
 "Ku" = (
+<<<<<<< HEAD
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+=======
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
 	id_tag = "caravanpirate_bolt_starboard"
@@ -952,10 +1038,19 @@
 /obj/machinery/power/smes{
 	charge = 5e+006
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "Sd" = (
@@ -1052,7 +1147,11 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "ZY" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral{

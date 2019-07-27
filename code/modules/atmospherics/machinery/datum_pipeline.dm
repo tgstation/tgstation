@@ -55,10 +55,17 @@
 							if(item.parent)
 								var/static/pipenetwarnings = 10
 								if(pipenetwarnings > 0)
+<<<<<<< HEAD
 									log_mapping("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) around [AREACOORD(item)].")
 									pipenetwarnings--
 									if(pipenetwarnings == 0)
 										log_mapping("build_pipeline(): further messages about pipenets will be suppressed")
+=======
+									warning("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) around [AREACOORD(item)]")
+									pipenetwarnings--
+									if(pipenetwarnings == 0)
+										warning("build_pipeline(): further messages about pipenets will be suppressed")
+>>>>>>> Updated this old code to fork
 							members += item
 							possible_expansions += item
 
@@ -218,8 +225,12 @@
 		var/datum/pipeline/P = PL[i]
 		if(!P)
 			continue
+<<<<<<< HEAD
 		GL += P.other_airs
 		GL += P.air
+=======
+		GL += P.return_air()
+>>>>>>> Updated this old code to fork
 		for(var/atmosmch in P.other_atmosmch)
 			if (istype(atmosmch, /obj/machinery/atmospherics/components/binary/valve))
 				var/obj/machinery/atmospherics/components/binary/valve/V = atmosmch
@@ -229,18 +240,26 @@
 			else if (istype(atmosmch, /obj/machinery/atmospherics/components/unary/portables_connector))
 				var/obj/machinery/atmospherics/components/unary/portables_connector/C = atmosmch
 				if(C.connected_device)
+<<<<<<< HEAD
 					GL += C.connected_device.air_contents
+=======
+					GL += C.portableConnectorReturnAir()
+>>>>>>> Updated this old code to fork
 
 	var/total_thermal_energy = 0
 	var/total_heat_capacity = 0
 	var/datum/gas_mixture/total_gas_mixture = new(0)
 
+<<<<<<< HEAD
 	var/list/total_gases = total_gas_mixture.gases
 
+=======
+>>>>>>> Updated this old code to fork
 	for(var/i in GL)
 		var/datum/gas_mixture/G = i
 		total_gas_mixture.volume += G.volume
 
+<<<<<<< HEAD
 		// This is sort of a combined merge + heat_capacity calculation
 
 		var/list/giver_gases = G.gases
@@ -252,6 +271,12 @@
 			total_heat_capacity += giver_gas_data[MOLES] * giver_gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
 
 		total_thermal_energy += THERMAL_ENERGY(G)
+=======
+		total_gas_mixture.merge(G)
+
+		total_thermal_energy += THERMAL_ENERGY(G)
+		total_heat_capacity += G.heat_capacity()
+>>>>>>> Updated this old code to fork
 
 	total_gas_mixture.temperature = total_heat_capacity ? total_thermal_energy/total_heat_capacity : 0
 

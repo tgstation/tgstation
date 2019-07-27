@@ -12,7 +12,10 @@ Self-sustaining extracts:
 	name = "autoslime"
 	desc = "It resembles a normal slime extract, but seems filled with a strange, multi-colored fluid."
 	var/obj/item/slime_extract/extract
+<<<<<<< HEAD
 	var/effect_desc = "A self-sustaining slime extract. When used, lets you choose which reaction you want."
+=======
+>>>>>>> Updated this old code to fork
 
 //Just divides into the actual item.
 /obj/item/slimecross/selfsustaining/Initialize()
@@ -25,10 +28,17 @@ Self-sustaining extracts:
 		A.icon = icon
 		A.icon_state = icon_state
 		A.color = color
+<<<<<<< HEAD
 		A.name = "self-sustaining " + colour + " extract"
 	return INITIALIZE_HINT_QDEL
 
 /obj/item/autoslime/Initialize()
+=======
+	return INITIALIZE_HINT_QDEL
+
+/obj/item/autoslime/Initialize()
+	name = "self-sustaining " + extract.name
+>>>>>>> Updated this old code to fork
 	return ..()
 
 /obj/item/autoslime/attack_self(mob/user)
@@ -44,7 +54,11 @@ Self-sustaining extracts:
 		amount = 4
 		reagentselect = "plasma"
 	if(reagentselect == "holy water and uranium")
+<<<<<<< HEAD
 		reagentselect = /datum/reagent/water/holywater
+=======
+		reagentselect = "holywater"
+>>>>>>> Updated this old code to fork
 		secondary = "uranium"
 	extract.forceMove(user.drop_location())
 	qdel(src)
@@ -53,11 +67,14 @@ Self-sustaining extracts:
 	if(secondary)
 		extract.reagents.add_reagent(secondary,amount)
 
+<<<<<<< HEAD
 /obj/item/autoslime/examine(mob/user)
   . = ..()
   if(effect_desc)
     . += "<span class='notice'>[effect_desc]</span>"
 
+=======
+>>>>>>> Updated this old code to fork
 //Different types.
 
 /obj/item/slimecross/selfsustaining/grey
@@ -146,4 +163,8 @@ Self-sustaining extracts:
 
 /obj/item/slimecross/selfsustaining/rainbow
 	extract_type = /obj/item/slime_extract/rainbow
+<<<<<<< HEAD
 	colour = "rainbow"
+=======
+	colour = "rainbow"
+>>>>>>> Updated this old code to fork

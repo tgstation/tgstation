@@ -11,6 +11,10 @@
 	pixel_x = -24
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+<<<<<<< HEAD
+=======
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
@@ -90,6 +94,7 @@
 "aj" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
+<<<<<<< HEAD
 "ak" = (
 /obj/machinery/airalarm/all_access{
 	dir = 4;
@@ -124,6 +129,8 @@
 /obj/item/reagent_containers/food/condiment/milk,
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
+=======
+>>>>>>> Updated this old code to fork
 "al" = (
 /obj/machinery/loot_locator,
 /obj/effect/decal/cleanable/dirt,
@@ -366,8 +373,15 @@
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "aH" = (
@@ -444,13 +458,25 @@
 "aQ" = (
 /obj/machinery/porta_turret/syndicate/energy{
 	dir = 1;
+<<<<<<< HEAD
 	faction = list("pirate")
+=======
+	faction = list("pirate");
+	icon_state = "standard_lethal";
+	mode = 1
+>>>>>>> Updated this old code to fork
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "aR" = (
 /obj/machinery/porta_turret/syndicate/energy{
+<<<<<<< HEAD
 	faction = list("pirate")
+=======
+	faction = list("pirate");
+	icon_state = "standard_lethal";
+	mode = 1
+>>>>>>> Updated this old code to fork
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/pirate)
@@ -551,8 +577,13 @@
 /obj/machinery/power/smes/engineering{
 	charge = 1e+006
 	},
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bl" = (
@@ -649,6 +680,41 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
+<<<<<<< HEAD
+=======
+"bw" = (
+/obj/machinery/airalarm/all_access{
+	dir = 4;
+	pixel_x = -24
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/structure/closet/secure_closet/freezer{
+	locked = 0;
+	name = "fridge"
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/fancy/donut_box,
+/obj/item/reagent_containers/food/snacks/cookie,
+/obj/item/reagent_containers/food/snacks/cookie{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/reagent_containers/food/snacks/chocolatebar,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/pirate)
+>>>>>>> Updated this old code to fork
 "bx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -772,16 +838,30 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "bO" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/apc{
 	aidisabled = 1;
 	dir = 1;
 	name = "Pirate Corvette APC";
+<<<<<<< HEAD
 	pixel_y = 23
+=======
+	pixel_y = 24;
+	req_access = null
+>>>>>>> Updated this old code to fork
 	},
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bP" = (
@@ -792,8 +872,15 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bQ" = (
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bX" = (
@@ -801,6 +888,12 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical{
 	pixel_y = 4
@@ -817,7 +910,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bZ" = (
@@ -838,15 +934,32 @@
 	dir = 1
 	},
 /obj/docking_port/mobile/pirate{
+<<<<<<< HEAD
 	dwidth = 11;
 	height = 16;
+=======
+	callTime = 100;
+	dheight = 0;
+	dir = 1;
+	dwidth = 11;
+	height = 16;
+	id = "pirateship";
+>>>>>>> Updated this old code to fork
 	launch_status = 0;
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "Pirate Ship";
 	port_direction = 2;
+<<<<<<< HEAD
 	width = 17
 	},
 /obj/docking_port/stationary{
+=======
+	preferred_direction = 1;
+	width = 17
+	},
+/obj/docking_port/stationary{
+	dir = 1;
+>>>>>>> Updated this old code to fork
 	dwidth = 11;
 	height = 16;
 	id = "pirateship_home";
@@ -858,7 +971,13 @@
 "df" = (
 /obj/machinery/porta_turret/syndicate/energy{
 	dir = 4;
+<<<<<<< HEAD
 	faction = list("pirate")
+=======
+	faction = list("pirate");
+	icon_state = "standard_lethal";
+	mode = 1
+>>>>>>> Updated this old code to fork
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/pirate)
@@ -957,7 +1076,11 @@
 "ez" = (
 /obj/structure/window/reinforced,
 /obj/structure/frame/machine,
+<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
+=======
+/obj/item/stack/cable_coil/cut/red,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "eA" = (
@@ -1055,7 +1178,13 @@
 "wR" = (
 /obj/machinery/porta_turret/syndicate/energy{
 	dir = 8;
+<<<<<<< HEAD
 	faction = list("pirate")
+=======
+	faction = list("pirate");
+	icon_state = "standard_lethal";
+	mode = 1
+>>>>>>> Updated this old code to fork
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/pirate)
@@ -1188,7 +1317,11 @@ eA
 aa
 ap
 aw
+<<<<<<< HEAD
 ak
+=======
+bw
+>>>>>>> Updated this old code to fork
 bF
 aj
 aj

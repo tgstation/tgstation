@@ -20,8 +20,13 @@ RSF
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/rsf/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	. += "<span class='notice'>It currently holds [matter]/30 fabrication-units.</span>"
+=======
+	..()
+	to_chat(user, "<span class='notice'>It currently holds [matter]/30 fabrication-units.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/item/rsf/cyborg
 	matter = 30
@@ -120,8 +125,13 @@ RSF
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/cookiesynth/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	. += "<span class='notice'>It currently holds [matter]/10 cookie-units.</span>"
+=======
+	..()
+	to_chat(user, "<span class='notice'>It currently holds [matter]/10 cookie-units.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/item/cookiesynth/attackby()
 	return
@@ -173,7 +183,11 @@ RSF
 	to_chat(user, "Fabricating Cookie..")
 	var/obj/item/reagent_containers/food/snacks/cookie/S = new /obj/item/reagent_containers/food/snacks/cookie(T)
 	if(toxin)
+<<<<<<< HEAD
 		S.reagents.add_reagent(/datum/reagent/toxin/chloralhydrate, 10)
+=======
+		S.reagents.add_reagent("chloralhydratedelayed", 10)
+>>>>>>> Updated this old code to fork
 	if (iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		R.cell.charge -= 100

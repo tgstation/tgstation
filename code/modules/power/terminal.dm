@@ -24,9 +24,12 @@
 		master = null
 	return ..()
 
+<<<<<<< HEAD
 /obj/machinery/power/terminal/should_have_node()
 	return TRUE
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/terminal/hide(i)
 	if(i)
 		invisibility = INVISIBILITY_MAXIMUM
@@ -37,6 +40,7 @@
 
 
 /obj/machinery/power/proc/can_terminal_dismantle()
+<<<<<<< HEAD
 	. = FALSE
 
 /obj/machinery/power/apc/can_terminal_dismantle()
@@ -48,6 +52,19 @@
 	. = FALSE
 	if(panel_open)
 		. = TRUE
+=======
+	. = 0
+
+/obj/machinery/power/apc/can_terminal_dismantle()
+	. = 0
+	if(opened)
+		. = 1
+
+/obj/machinery/power/smes/can_terminal_dismantle()
+	. = 0
+	if(panel_open)
+		. = 1
+>>>>>>> Updated this old code to fork
 
 
 /obj/machinery/power/terminal/proc/dismantle(mob/living/user, obj/item/I)

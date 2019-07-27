@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /obj/item/projectile/bullet
 	name = "bullet"
 	icon_state = "bullet"
@@ -7,3 +8,14 @@
 	flag = "bullet"
 	hitsound_wall = "ricochet"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect
+=======
+/obj/item/projectile/bullet
+	name = "bullet"
+	icon_state = "bullet"
+	damage = 60
+	damage_type = BRUTE
+	nodamage = FALSE
+	flag = "bullet"
+	hitsound_wall = "ricochet"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect
+>>>>>>> Updated this old code to fork

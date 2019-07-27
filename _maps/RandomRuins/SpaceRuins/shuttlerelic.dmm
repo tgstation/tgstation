@@ -54,12 +54,20 @@
 /area/ruin/powered)
 "m" = (
 /obj/structure/chair/old{
+<<<<<<< HEAD
+=======
+	icon_state = "chairold";
+>>>>>>> Updated this old code to fork
 	dir = 1
 	},
 /turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "n" = (
 /obj/structure/chair/old{
+<<<<<<< HEAD
+=======
+	icon_state = "chairold";
+>>>>>>> Updated this old code to fork
 	dir = 1
 	},
 /obj/item/crowbar/large{
@@ -71,6 +79,10 @@
 /area/ruin/powered)
 "o" = (
 /obj/structure/chair/old{
+<<<<<<< HEAD
+=======
+	icon_state = "chairold";
+>>>>>>> Updated this old code to fork
 	dir = 1
 	},
 /mob/living/simple_animal/hostile/retaliate/spaceman,

@@ -9,6 +9,22 @@
 #define TEXT_EAST			"[EAST]"
 #define TEXT_WEST			"[WEST]"
 
+<<<<<<< HEAD
+=======
+//These get to go at the top, because they're special
+//You can use these defines to get the typepath of the currently running proc/verb (yes procs + verbs are objects)
+/* eg:
+/mob/living/carbon/human/death()
+	to_chat(world, THIS_PROC_TYPE_STR) //You can only output the string versions
+Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a string with () (eg: the _WITH_ARGS defines) to make it look nicer)
+*/
+#define THIS_PROC_TYPE .....
+#define THIS_PROC_TYPE_STR "[THIS_PROC_TYPE]" //Because you can only obtain a string of THIS_PROC_TYPE using "[]", and it's nice to just +/+= strings
+#define THIS_PROC_TYPE_STR_WITH_ARGS "[THIS_PROC_TYPE]([args.Join(",")])"
+#define THIS_PROC_TYPE_WEIRD ...... //This one is WEIRD, in some cases (When used in certain defines? (eg: ASSERT)) THIS_PROC_TYPE will fail to work, but THIS_PROC_TYPE_WEIRD will work instead
+//define THIS_PROC_TYPE_WEIRD_STR "[THIS_PROC_TYPE_WEIRD]" //Included for completeness
+//define THIS_PROC_TYPE_WEIRD_STR_WITH_ARGS "[THIS_PROC_TYPE_WEIRD]([args.Join(",")])" //Ditto
+>>>>>>> Updated this old code to fork
 
 //Human Overlays Indexes/////////
 #define MUTATIONS_LAYER			28		//mutations. Tk headglows, cold resistance glow, etc
@@ -37,7 +53,11 @@
 #define LEGCUFF_LAYER			5
 #define HANDS_LAYER				4
 #define BODY_FRONT_LAYER		3
+<<<<<<< HEAD
 #define HALO_LAYER				2		//blood cult ascended halo, because there's currently no better solution for adding/removing
+=======
+#define SMELL_LAYER				2
+>>>>>>> Updated this old code to fork
 #define FIRE_LAYER				1		//If you're on fire
 #define TOTAL_LAYERS			28		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 
@@ -148,12 +168,20 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define LOCKED_SENSORS 2
 
 //Wet floor type flags. Stronger ones should be higher in number.
+<<<<<<< HEAD
 #define TURF_DRY			(0)
 #define TURF_WET_WATER		(1<<0)
 #define TURF_WET_PERMAFROST	(1<<1)
 #define TURF_WET_ICE 		(1<<2)
 #define TURF_WET_LUBE		(1<<3)
 #define TURF_WET_SUPERLUBE	(1<<4)
+=======
+#define TURF_DRY		0
+#define TURF_WET_WATER	1
+#define TURF_WET_PERMAFROST	2
+#define TURF_WET_ICE 4
+#define TURF_WET_LUBE	8
+>>>>>>> Updated this old code to fork
 
 #define IS_WET_OPEN_TURF(O) O.GetComponent(/datum/component/wet_floor)
 
@@ -175,9 +203,12 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 //Gets the turf this atom inhabits
 #define get_turf(A) (get_step(A, 0))
 
+<<<<<<< HEAD
 //Same as above except gets the area instead
 #define get_area(A) (isarea(A) ? A : get_step(A, 0)?.loc)
 
+=======
+>>>>>>> Updated this old code to fork
 //Ghost orbit types:
 #define GHOST_ORBIT_CIRCLE		"circle"
 #define GHOST_ORBIT_TRIANGLE	"triangle"
@@ -222,6 +253,12 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 
+<<<<<<< HEAD
+=======
+//Color Defines
+#define OOC_COLOR  "#002eb8"
+
+>>>>>>> Updated this old code to fork
 /////////////////////////////////////
 // atom.appearence_flags shortcuts //
 /////////////////////////////////////
@@ -447,6 +484,7 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 #define DICE_NOT_RIGGED 1
 #define DICE_BASICALLY_RIGGED 2
 #define DICE_TOTALLY_RIGGED 3
+<<<<<<< HEAD
 
 #define VOMIT_TOXIC 1
 #define VOMIT_PURPLE 2
@@ -458,3 +496,5 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 
 //Misc text define. Does 4 spaces. Used as a makeshift tabulator.
 #define FOURSPACES "&nbsp;&nbsp;&nbsp;&nbsp;"
+=======
+>>>>>>> Updated this old code to fork

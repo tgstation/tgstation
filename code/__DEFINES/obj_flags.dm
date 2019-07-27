@@ -25,8 +25,11 @@
 #define NOBLUDGEON				(1<<7)		// when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
 #define ABSTRACT				(1<<9) 	// for all things that are technically items but used for various different stuff
 #define IMMUTABLE_SLOW			(1<<10) // When players should not be able to change the slowdown of the item (Speed potions, etc)
+<<<<<<< HEAD
 #define IN_STORAGE				(1<<11) //is this item in the storage item, such as backpack? used for tooltips
 #define SURGICAL_TOOL			(1<<12)	//Tool commonly used for surgery: won't attack targets in an active surgical operation on help intent (in case of mistakes)
+=======
+>>>>>>> Updated this old code to fork
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
@@ -38,7 +41,11 @@
 #define THICKMATERIAL				(1<<5)	//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body.
 #define VOICEBOX_TOGGLABLE (1<<6) // The voicebox in this clothing can be toggled.
 #define VOICEBOX_DISABLED (1<<7) // The voicebox is currently turned off.
+<<<<<<< HEAD
 #define SCAN_REAGENTS (1<<9) // Allows helmets, masks and glasses to scan reagents.
 #define BLOCKS_SHOVE_KNOCKDOWN (1<<10) // Prevents shovies against a dense object from knocking the wearer down.
 #define SNUG_FIT               (1<<11) //Prevents knock-off from things like hat-throwing.
 #define ANTI_TINFOIL_MANEUVER   (1<<12) //Hats with negative effects when worn (i.e the tinfoil hat).
+=======
+#define SHOWEROKAY				(1<<8)	//prevents you from being stupid if you shower in them
+>>>>>>> Updated this old code to fork

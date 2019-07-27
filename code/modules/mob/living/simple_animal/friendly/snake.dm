@@ -1,6 +1,10 @@
 /mob/living/simple_animal/hostile/retaliate/poison
     var/poison_per_bite = 0
+<<<<<<< HEAD
     var/poison_type = /datum/reagent/toxin
+=======
+    var/poison_type = "toxin"
+>>>>>>> Updated this old code to fork
 
 /mob/living/simple_animal/hostile/retaliate/poison/AttackingTarget()
     . = ..()

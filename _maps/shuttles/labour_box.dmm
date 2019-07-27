@@ -16,7 +16,11 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "d" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,

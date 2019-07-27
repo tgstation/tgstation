@@ -7,7 +7,11 @@
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
 	ttone = "honk"
 
+<<<<<<< HEAD
 /obj/item/pda/clown/ComponentInitialize()
+=======
+/obj/item/pda/clown/Initialize()
+>>>>>>> Updated this old code to fork
 	. = ..()
 	AddComponent(/datum/component/slippery, 120, NO_SLIP_WHEN_WALKING, CALLBACK(src, .proc/AfterSlip))
 
@@ -22,6 +26,10 @@
 	icon = null
 	ttone = "data"
 	fon = FALSE
+<<<<<<< HEAD
+=======
+	detonatable = FALSE
+>>>>>>> Updated this old code to fork
 
 /obj/item/pda/ai/attack_self(mob/user)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
@@ -32,9 +40,13 @@
 /obj/item/pda/ai/pai
 	ttone = "assist"
 
+<<<<<<< HEAD
 /obj/item/pda/ai/Initialize()
 	. = ..()
 	RegisterSignal(src, COMSIG_PDA_CHECK_DETONATE, .proc/pda_no_detonate)
+=======
+
+>>>>>>> Updated this old code to fork
 
 /obj/item/pda/medical
 	name = "medical PDA"
@@ -121,10 +133,14 @@
 	default_cartridge = /obj/item/cartridge/captain
 	inserted_item = /obj/item/pen/fountain/captain
 	icon_state = "pda-captain"
+<<<<<<< HEAD
 
 /obj/item/pda/captain/Initialize()
 	. = ..()
 	RegisterSignal(src, COMSIG_PDA_CHECK_DETONATE, .proc/pda_no_detonate)
+=======
+	detonatable = FALSE
+>>>>>>> Updated this old code to fork
 
 /obj/item/pda/cargo
 	name = "cargo technician PDA"

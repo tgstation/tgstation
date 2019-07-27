@@ -135,4 +135,8 @@ Recurring extracts:
 /obj/item/slimecross/recurring/rainbow
 	extract_type = /obj/item/slime_extract/rainbow
 	colour = "rainbow"
+<<<<<<< HEAD
 	max_cooldown = 20 //It's pretty powerful.
+=======
+	max_cooldown = 20 //It's pretty powerful.
+>>>>>>> Updated this old code to fork

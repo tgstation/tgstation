@@ -146,6 +146,10 @@
 "aM" = (
 /obj/structure/closet/emcloset,
 /obj/item/radio/intercom{
+<<<<<<< HEAD
+=======
+	broadcasting = 0;
+>>>>>>> Updated this old code to fork
 	name = "Station Intercom (General)";
 	pixel_y = 23
 	},
@@ -198,6 +202,10 @@
 /area/shuttle/escape)
 "aW" = (
 /obj/item/radio/intercom{
+<<<<<<< HEAD
+=======
+	broadcasting = 0;
+>>>>>>> Updated this old code to fork
 	name = "Station Intercom (General)";
 	pixel_y = 23
 	},
@@ -369,7 +377,13 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bz" = (
+<<<<<<< HEAD
 /obj/machinery/stasis,
+=======
+/obj/machinery/sleeper{
+	dir = 8
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bC" = (
@@ -447,6 +461,7 @@
 "Jx" = (
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
+<<<<<<< HEAD
 "JM" = (
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
@@ -454,6 +469,8 @@
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
+=======
+>>>>>>> Updated this old code to fork
 
 (1,1,1) = {"
 aa
@@ -840,7 +857,11 @@ aP
 ac
 bq
 ad
+<<<<<<< HEAD
 JM
+=======
+ac
+>>>>>>> Updated this old code to fork
 ac
 ac
 ac

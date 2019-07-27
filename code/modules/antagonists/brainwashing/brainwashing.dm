@@ -17,11 +17,19 @@
 			B.objectives += objective
 		M.add_antag_datum(B)
 
+<<<<<<< HEAD
 	var/begin_message = " has been brainwashed with the following objectives: "
 	var/obj_message = english_list(directives)
 	var/end_message = "."
 	var/rendered = begin_message + obj_message + end_message
 	deadchat_broadcast(rendered, "<b>[L]</b>", follow_target = L, turf_target = get_turf(L), message_type=DEADCHAT_REGULAR)
+=======
+	var/begin_message = "<span class='deadsay'><b>[L]</b> has been brainwashed with the following objectives: "
+	var/obj_message = english_list(directives)
+	var/end_message = "</b>.</span>"
+	var/rendered = begin_message + obj_message + end_message
+	deadchat_broadcast(rendered, follow_target = L, turf_target = get_turf(L), message_type=DEADCHAT_REGULAR)
+>>>>>>> Updated this old code to fork
 
 /datum/antagonist/brainwashed
 	name = "Brainwashed Victim"

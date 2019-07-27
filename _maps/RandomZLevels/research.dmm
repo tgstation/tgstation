@@ -292,6 +292,18 @@
 	},
 /turf/open/floor/plating/asteroid/airless,
 /area/space/nearstation)
+<<<<<<< HEAD
+=======
+"aY" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
+>>>>>>> Updated this old code to fork
 "aZ" = (
 /obj/machinery/light{
 	dir = 8
@@ -393,14 +405,29 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/research/interior/gateway)
 "bm" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/apc/highcap/ten_k{
 	auto_name = 1;
 	dir = 4;
 	name = "Engineering APC";
+<<<<<<< HEAD
 	pixel_x = 24;
 	pixel_y = 2
 	},
 /obj/structure/cable,
+=======
+	pixel_x = 27;
+	pixel_y = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "bn" = (
@@ -575,7 +602,13 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bD" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "bE" = (
@@ -730,7 +763,10 @@
 /obj/machinery/gateway/centeraway{
 	calibrated = 0
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bU" = (
@@ -797,7 +833,10 @@
 /obj/machinery/gateway,
 /obj/effect/landmark/awaystart,
 /obj/effect/turf_decal/stripes/line,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "ca" = (
@@ -815,9 +854,35 @@
 	name = "Gateway APC";
 	pixel_x = 24
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
+=======
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/research/interior/gateway)
+"cc" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
+"cd" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
+"ce" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
+>>>>>>> Updated this old code to fork
 "cf" = (
 /obj/item/ammo_casing/c46x30mm,
 /obj/effect/turf_decal/tile/yellow,
@@ -855,16 +920,24 @@
 /area/awaymission/research/interior/gateway)
 "ck" = (
 /obj/machinery/door/window/eastright{
+<<<<<<< HEAD
 	dir = 2
 	},
 /obj/effect/landmark/awaystart,
 /obj/structure/cable,
+=======
+	icon_state = "right";
+	dir = 2
+	},
+/obj/effect/landmark/awaystart,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "cl" = (
 /obj/machinery/light{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
@@ -872,6 +945,25 @@
 "cn" = (
 /obj/machinery/light/small,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel/dark,
+/area/awaymission/research/interior/gateway)
+"cm" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
+"cn" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/small,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "cp" = (
@@ -921,10 +1013,32 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
+<<<<<<< HEAD
 "cv" = (
 /obj/structure/table,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
+=======
+"cu" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/research/interior/gateway)
+"cv" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/table,
+/turf/open/floor/plasteel/dark,
+/area/awaymission/research/interior/gateway)
+"cw" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
+>>>>>>> Updated this old code to fork
 "cx" = (
 /turf/closed/wall/r_wall,
 /area/awaymission/research/interior/genetics)
@@ -936,7 +1050,13 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "cz" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
@@ -977,7 +1097,20 @@
 /obj/item/radio,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
+<<<<<<< HEAD
 "cF" = (
+=======
+"cE" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/research/interior/gateway)
+"cF" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/table,
 /obj/item/paper/pamphlet/gateway,
 /obj/item/paper/pamphlet/gateway,
@@ -1066,7 +1199,13 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/genetics)
 "cL" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /mob/living/simple_animal/hostile/syndicate/ranged,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
@@ -1113,24 +1252,49 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/research/interior/secure)
 "cR" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/door/airlock/highsecurity{
 	aiDisabledIdScanner = 1;
 	name = "Gateway Access";
 	req_access_txt = "205"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/gateway)
 "cS" = (
+=======
+/turf/open/floor/plating,
+/area/awaymission/research/interior/gateway)
+"cS" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "Genetics APC";
 	pixel_x = 24
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/genetics)
 "cT" = (
+=======
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/genetics)
+"cT" = (
+/mob/living/carbon/monkey,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -1141,7 +1305,10 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+<<<<<<< HEAD
 /mob/living/carbon/monkey,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/genetics)
 "cU" = (
@@ -1159,7 +1326,11 @@
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/genetics)
 "cV" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple{
@@ -1189,6 +1360,10 @@
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/genetics)
 "cX" = (
+<<<<<<< HEAD
+=======
+/mob/living/carbon/human,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -1199,12 +1374,22 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+<<<<<<< HEAD
 /mob/living/carbon/human,
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/genetics)
 "cY" = (
 /obj/item/ammo_casing/c9mm,
 /obj/structure/cable,
+=======
+/turf/open/floor/plasteel,
+/area/awaymission/research/interior/genetics)
+"cY" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/item/ammo_casing/c9mm,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "cZ" = (
@@ -1271,7 +1456,13 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "dg" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/research/interior)
 "dh" = (
@@ -1291,6 +1482,10 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+<<<<<<< HEAD
+=======
+/mob/living/carbon/monkey,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -1301,7 +1496,10 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+<<<<<<< HEAD
 /mob/living/carbon/monkey,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/genetics)
 "dj" = (
@@ -1320,8 +1518,15 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/genetics)
 "dk" = (
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/blood/drip,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/blood/drip,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "dl" = (
@@ -1347,13 +1552,20 @@
 /area/awaymission/research/interior)
 "dn" = (
 /obj/item/ammo_casing/c45,
+<<<<<<< HEAD
+=======
+/mob/living/simple_animal/hostile/syndicate,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+<<<<<<< HEAD
 /mob/living/simple_animal/hostile/syndicate,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "do" = (
@@ -1463,11 +1675,35 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/genetics)
+<<<<<<< HEAD
 "dy" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /obj/structure/cable,
+=======
+"dw" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
+"dx" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/item/ammo_casing/c9mm,
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
+"dy" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "dz" = (
@@ -1589,6 +1825,10 @@
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/security)
 "dI" = (
+<<<<<<< HEAD
+=======
+/mob/living/simple_animal/hostile/nanotrasen/ranged,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -1599,7 +1839,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+<<<<<<< HEAD
 /mob/living/simple_animal/hostile/nanotrasen/ranged,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/security)
 "dJ" = (
@@ -1695,6 +1938,10 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+<<<<<<< HEAD
+=======
+/mob/living/carbon/human,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -1705,12 +1952,31 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+<<<<<<< HEAD
 /mob/living/carbon/human,
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/genetics)
 "dR" = (
 /obj/item/ammo_casing/c45,
 /obj/structure/cable,
+=======
+/turf/open/floor/plasteel,
+/area/awaymission/research/interior/genetics)
+"dR" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/item/ammo_casing/c45,
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
+"dS" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "dT" = (
@@ -1786,10 +2052,19 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior)
 "dZ" = (
+<<<<<<< HEAD
 /obj/machinery/light/small{
 	dir = 8
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "ea" = (
@@ -1821,11 +2096,20 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "eg" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/blood/drip,
 /obj/machinery/light/small{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "eh" = (
@@ -1949,8 +2233,15 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_access_txt = "12"
 	},
+<<<<<<< HEAD
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "eu" = (
@@ -2041,13 +2332,20 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/cryo)
 "eB" = (
+<<<<<<< HEAD
+=======
+/mob/living/simple_animal/hostile/nanotrasen/ranged,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+<<<<<<< HEAD
 /mob/living/simple_animal/hostile/nanotrasen/ranged,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/cryo)
 "eC" = (
@@ -2083,15 +2381,30 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_access_txt = "12"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "eI" = (
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
+"eI" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "eJ" = (
@@ -2107,6 +2420,10 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "eL" = (
+<<<<<<< HEAD
+=======
+/mob/living/simple_animal/hostile/syndicate,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -2114,7 +2431,10 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+<<<<<<< HEAD
 /mob/living/simple_animal/hostile/syndicate,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "eM" = (
@@ -2170,6 +2490,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/security)
+<<<<<<< HEAD
+=======
+"eR" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/security)
+>>>>>>> Updated this old code to fork
 "eS" = (
 /obj/machinery/door/airlock/security/glass{
 	id_tag = "outerbrig";
@@ -2234,6 +2564,13 @@
 	name = "Cryostatis APC";
 	pixel_x = 24
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -2244,7 +2581,10 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/cryo)
 "fb" = (
@@ -2318,6 +2658,19 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/cryo)
+<<<<<<< HEAD
+=======
+"fj" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission/research/interior)
+>>>>>>> Updated this old code to fork
 "fk" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -2368,14 +2721,39 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "fr" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/turf/open/floor/plasteel/white,
+/area/awaymission/research/interior/security)
+"fs" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "ft" = (
+=======
+/turf/open/floor/plasteel/white,
+/area/awaymission/research/interior/security)
+"ft" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/light{
 	dir = 1
 	},
@@ -2383,7 +2761,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "fu" = (
@@ -2410,6 +2791,7 @@
 	capacity = 9e+006;
 	charge = 10000
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
@@ -2418,6 +2800,17 @@
 	dir = 1
 	},
 /obj/structure/cable,
+=======
+/turf/open/floor/plasteel/dark,
+/area/awaymission/research/interior/secure)
+"fx" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "fy" = (
@@ -2426,7 +2819,13 @@
 	name = "Vault APC";
 	pixel_x = 24
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "fz" = (
@@ -2459,6 +2858,12 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "fC" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -2469,7 +2874,10 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "fD" = (
@@ -2577,6 +2985,12 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "fN" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -2584,7 +2998,10 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "fO" = (
@@ -2682,6 +3099,12 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "fX" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -2692,10 +3115,17 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "fY" = (
+=======
+/turf/open/floor/plasteel/white,
+/area/awaymission/research/interior/security)
+"fY" = (
+/mob/living/simple_animal/hostile/nanotrasen/ranged/smg,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -2706,10 +3136,19 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+<<<<<<< HEAD
 /mob/living/simple_animal/hostile/nanotrasen/ranged/smg,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "fZ" = (
+=======
+/turf/open/floor/plasteel/white,
+/area/awaymission/research/interior/security)
+"fZ" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/chair{
 	dir = 4
 	},
@@ -2723,7 +3162,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "ga" = (
@@ -2773,11 +3215,36 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/machinery/power/terminal,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gf" = (
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/research/interior/secure)
+"ge" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/research/interior/secure)
+"gf" = (
+/obj/machinery/power/terminal,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gg" = (
@@ -2786,28 +3253,71 @@
 	name = "Power Storage";
 	req_access_txt = "205"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gj" = (
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/research/interior/secure)
+"gh" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/research/interior/secure)
+"gj" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /mob/living/simple_animal/hostile/nanotrasen/ranged/smg,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gk" = (
+<<<<<<< HEAD
 /obj/structure/barricade/security,
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gl" = (
 /obj/machinery/door/airlock/highsecurity{
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/barricade/security,
+/turf/open/floor/plasteel/dark,
+/area/awaymission/research/interior/secure)
+"gl" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/highsecurity{
+	aiDisabledIdScanner = 0;
+>>>>>>> Updated this old code to fork
 	name = "Vault Storage";
 	req_access_txt = "205"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/turf/open/floor/plasteel/dark,
+/area/awaymission/research/interior/secure)
+"gm" = (
+/obj/structure/barricade/security,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gn" = (
@@ -2815,6 +3325,7 @@
 	name = "Secure Storage";
 	req_access_txt = "9,63"
 	},
+<<<<<<< HEAD
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
@@ -2824,6 +3335,30 @@
 "gp" = (
 /obj/machinery/light/small,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/secure)
+"go" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior)
+"gp" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/small,
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/research/interior)
 "gq" = (
@@ -2831,12 +3366,61 @@
 	name = "Cryogenetics Research";
 	req_access_txt = "9"
 	},
+<<<<<<< HEAD
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior)
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior)
+"gr" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission/research/interior)
+"gs" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission/research/interior)
+>>>>>>> Updated this old code to fork
 "gt" = (
 /obj/machinery/door/airlock/research{
 	name = "Cryogenetics Research";
@@ -2871,6 +3455,10 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/cryo)
 "gv" = (
+<<<<<<< HEAD
+=======
+/mob/living/simple_animal/hostile/nanotrasen/ranged,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -2881,17 +3469,27 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+<<<<<<< HEAD
 /mob/living/simple_animal/hostile/nanotrasen/ranged,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/cryo)
 "gw" = (
 /obj/effect/mob_spawn/human/doctor{
 	brute_damage = 145;
 	id_job = "Geneticist";
+<<<<<<< HEAD
 	name = "Geneticist";
 	oxy_damage = 55;
 	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
 	uniform = /obj/item/clothing/under/rank/geneticist
+=======
+	oxy_damage = 55;
+	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
+	uniform = /obj/item/clothing/under/rank/geneticist;
+	name = "Geneticist"
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/tile/purple{
@@ -2975,6 +3573,12 @@
 /obj/machinery/light{
 	dir = 8
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -2985,7 +3589,10 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "gD" = (
@@ -3067,7 +3674,74 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
+<<<<<<< HEAD
 "gM" = (
+=======
+"gJ" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission/research/interior/security)
+"gK" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission/research/interior/security)
+"gL" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission/research/interior/security)
+"gM" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/table,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -3079,10 +3753,19 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "gN" = (
+=======
+/turf/open/floor/plasteel/white,
+/area/awaymission/research/interior/security)
+"gN" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/table,
 /obj/item/paper_bin,
 /obj/item/pen,
@@ -3096,10 +3779,19 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "gO" = (
+=======
+/turf/open/floor/plasteel/white,
+/area/awaymission/research/interior/security)
+"gO" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/chair{
 	dir = 8
 	},
@@ -3113,17 +3805,29 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "gP" = (
+=======
+/turf/open/floor/plasteel/white,
+/area/awaymission/research/interior/security)
+"gP" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "gQ" = (
@@ -3333,7 +4037,24 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
+<<<<<<< HEAD
 "hj" = (
+=======
+"hi" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission/research/interior/security)
+"hj" = (
+/mob/living/simple_animal/hostile/nanotrasen,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -3344,7 +4065,10 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+<<<<<<< HEAD
 /mob/living/simple_animal/hostile/nanotrasen,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/cryo)
 "hk" = (
@@ -3386,26 +4110,60 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "ho" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "hq" = (
+=======
+/turf/open/floor/plasteel/white,
+/area/awaymission/research/interior/security)
+"hp" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+<<<<<<< HEAD
 /mob/living/simple_animal/hostile/nanotrasen/ranged/smg,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "hr" = (
+=======
+/turf/open/floor/plasteel/white,
+/area/awaymission/research/interior/security)
+"hq" = (
+/mob/living/simple_animal/hostile/nanotrasen/ranged/smg,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission/research/interior/security)
+"hr" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/light{
 	dir = 4
 	},
@@ -3415,7 +4173,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "hs" = (
@@ -3457,13 +4218,32 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/cryo)
+<<<<<<< HEAD
 "hy" = (
+=======
+"hx" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
+"hy" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "hz" = (
@@ -3502,10 +4282,19 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "hD" = (
+<<<<<<< HEAD
 /obj/machinery/light/small{
 	dir = 1
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "hE" = (
@@ -3533,6 +4322,12 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "hH" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/vending/security,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -3540,7 +4335,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "hI" = (
@@ -3633,6 +4431,12 @@
 	},
 /area/awaymission/research/interior)
 "hR" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/table,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -3640,7 +4444,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "hS" = (
@@ -3711,6 +4518,10 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+<<<<<<< HEAD
+=======
+/mob/living/carbon/monkey,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -3721,7 +4532,10 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+<<<<<<< HEAD
 /mob/living/carbon/monkey,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/genetics)
 "hX" = (
@@ -3771,7 +4585,21 @@
 "id" = (
 /turf/closed/wall,
 /area/awaymission/research/interior/maint)
+<<<<<<< HEAD
 "if" = (
+=======
+"ie" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
+"if" = (
+/mob/living/simple_animal/hostile/syndicate/ranged/smg,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -3782,9 +4610,23 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+<<<<<<< HEAD
 /mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
+=======
+/turf/open/floor/plasteel/white,
+/area/awaymission/research/interior)
+"ig" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
+>>>>>>> Updated this old code to fork
 "ih" = (
 /obj/machinery/light/small,
 /obj/effect/turf_decal/tile/red{
@@ -3810,12 +4652,15 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "ij" = (
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+=======
+>>>>>>> Updated this old code to fork
 /mob/living/simple_animal/bot/secbot/beepsky{
 	desc = "A beefy variant of the standard securitron model.";
 	emagged = 1;
@@ -3824,16 +4669,34 @@
 	maxHealth = 50;
 	name = "Officer Genesky"
 	},
+<<<<<<< HEAD
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "ik" = (
+=======
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission/research/interior/security)
+"ik" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/light/small{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "il" = (
@@ -3867,10 +4730,17 @@
 /obj/effect/mob_spawn/human/doctor{
 	brute_damage = 145;
 	id_job = "Geneticist";
+<<<<<<< HEAD
 	name = "Geneticist";
 	oxy_damage = 55;
 	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
 	uniform = /obj/item/clothing/under/rank/geneticist
+=======
+	oxy_damage = 55;
+	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
+	uniform = /obj/item/clothing/under/rank/geneticist;
+	name = "Geneticist"
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/tile/purple{
@@ -3902,15 +4772,40 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/research/interior/bathroom)
+<<<<<<< HEAD
 "ir" = (
+=======
+"iq" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
+"ir" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "is" = (
+=======
+/turf/open/floor/plasteel/white,
+/area/awaymission/research/interior)
+"is" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -3921,27 +4816,72 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "it" = (
+=======
+/turf/open/floor/plasteel/white,
+/area/awaymission/research/interior)
+"it" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
+=======
+/turf/open/floor/plasteel/white,
+/area/awaymission/research/interior)
+"iu" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
+>>>>>>> Updated this old code to fork
 "iv" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Security Maintenance";
 	req_access_txt = "63"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
+"iw" = (
+/obj/machinery/power/apc/highcap/five_k{
+	dir = 4;
+	name = "Genetics APC";
+	pixel_x = 24
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/genetics)
+>>>>>>> Updated this old code to fork
 "ix" = (
 /obj/machinery/door/window/eastleft,
 /obj/effect/turf_decal/tile/purple{
@@ -3957,7 +4897,11 @@
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/genetics)
 "iy" = (
+<<<<<<< HEAD
 /obj/structure/chair/office,
+=======
+/obj/structure/chair/office/dark,
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -4023,9 +4967,20 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Security APC";
+<<<<<<< HEAD
 	pixel_y = 23
 	},
 /obj/structure/cable,
+=======
+	pixel_y = 24
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/research/interior/security)
 "iG" = (
@@ -4122,11 +5077,18 @@
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/research/interior/bathroom)
 "iQ" = (
+<<<<<<< HEAD
+=======
+/mob/living/simple_animal/hostile/syndicate,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+<<<<<<< HEAD
 /mob/living/simple_animal/hostile/syndicate,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "iR" = (
@@ -4138,10 +5100,34 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/maint)
+<<<<<<< HEAD
 "iU" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/maint)
+=======
+"iT" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/maintenance_hatch{
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
+"iU" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/research/interior/maint)
+"iV" = (
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
+>>>>>>> Updated this old code to fork
 "iW" = (
 /turf/closed/wall/r_wall,
 /area/awaymission/research/interior/medbay)
@@ -4261,11 +5247,19 @@
 "jp" = (
 /obj/structure/barricade/wooden{
 	desc = "A wooden table hastily flipped over for cover.";
+<<<<<<< HEAD
 	icon = 'icons/obj/smooth_structures/wood_table.dmi';
 	icon_state = "wood_table";
 	max_integrity = 55;
 	name = "flipped table";
 	obj_integrity = 55
+=======
+	obj_integrity = 55;
+	icon = 'icons/obj/smooth_structures/wood_table.dmi';
+	icon_state = "wood_table";
+	max_integrity = 55;
+	name = "flipped table"
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel/yellowsiding{
 	dir = 1
@@ -4297,6 +5291,10 @@
 	pixel_x = 32;
 	pixel_y = 26
 	},
+<<<<<<< HEAD
+=======
+/mob/living/simple_animal/hostile/syndicate/ranged/smg,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -4307,7 +5305,10 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+<<<<<<< HEAD
 /mob/living/simple_animal/hostile/syndicate/ranged/smg,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "js" = (
@@ -4440,11 +5441,19 @@
 "jG" = (
 /obj/structure/barricade/wooden{
 	desc = "A wooden table hastily flipped over for cover.";
+<<<<<<< HEAD
 	icon = 'icons/obj/smooth_structures/wood_table.dmi';
 	icon_state = "wood_table";
 	max_integrity = 55;
 	name = "flipped table";
 	obj_integrity = 55
+=======
+	obj_integrity = 55;
+	icon = 'icons/obj/smooth_structures/wood_table.dmi';
+	icon_state = "wood_table";
+	max_integrity = 55;
+	name = "flipped table"
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/dorm)
@@ -4535,6 +5544,10 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/medbay)
 "jP" = (
+<<<<<<< HEAD
+=======
+/mob/living/simple_animal/hostile/syndicate/ranged/smg,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -4545,7 +5558,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+<<<<<<< HEAD
 /mob/living/simple_animal/hostile/syndicate/ranged/smg,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/medbay)
 "jQ" = (
@@ -4631,11 +5647,19 @@
 "kb" = (
 /obj/structure/barricade/wooden{
 	desc = "A wooden table hastily flipped over for cover.";
+<<<<<<< HEAD
 	icon = 'icons/obj/smooth_structures/wood_table.dmi';
 	icon_state = "wood_table";
 	max_integrity = 55;
 	name = "flipped table";
 	obj_integrity = 55
+=======
+	obj_integrity = 55;
+	icon = 'icons/obj/smooth_structures/wood_table.dmi';
+	icon_state = "wood_table";
+	max_integrity = 55;
+	name = "flipped table"
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel/yellowsiding,
 /area/awaymission/research/interior/dorm)
@@ -4706,10 +5730,17 @@
 /obj/effect/mob_spawn/human/doctor{
 	brute_damage = 145;
 	id_job = "Geneticist";
+<<<<<<< HEAD
 	name = "Geneticist";
 	oxy_damage = 55;
 	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
 	uniform = /obj/item/clothing/under/rank/geneticist
+=======
+	oxy_damage = 55;
+	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
+	uniform = /obj/item/clothing/under/rank/geneticist;
+	name = "Geneticist"
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/tile/blue{
@@ -4779,7 +5810,16 @@
 	name = "Dorms APC";
 	pixel_x = 24
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/research/interior/dorm)
 "kq" = (
@@ -5167,6 +6207,10 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/medbay)
 "lr" = (
+<<<<<<< HEAD
+=======
+/mob/living/simple_animal/hostile/syndicate,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -5177,7 +6221,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+<<<<<<< HEAD
 /mob/living/simple_animal/hostile/syndicate,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/medbay)
 "ls" = (
@@ -5426,6 +6473,7 @@
 	dir = 4
 	},
 /area/awaymission/research/interior/dorm)
+<<<<<<< HEAD
 "lW" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -5433,6 +6481,26 @@
 	pixel_y = 23
 	},
 /obj/structure/cable,
+=======
+"lV" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
+"lW" = (
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Medbay APC";
+	pixel_y = 24
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/research/interior/medbay)
 "lX" = (
@@ -5447,12 +6515,26 @@
 	},
 /area/awaymission/research/interior/dorm)
 "lZ" = (
+<<<<<<< HEAD
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Escape APC";
 	pixel_y = 23
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Escape APC";
+	pixel_y = -24
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
 "ma" = (
@@ -5582,10 +6664,17 @@
 /obj/effect/mob_spawn/human/doctor{
 	brute_damage = 145;
 	id_job = "Geneticist";
+<<<<<<< HEAD
 	name = "Geneticist";
 	oxy_damage = 55;
 	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
 	uniform = /obj/item/clothing/under/rank/geneticist
+=======
+	oxy_damage = 55;
+	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
+	uniform = /obj/item/clothing/under/rank/geneticist;
+	name = "Geneticist"
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/research/exterior)
@@ -5898,10 +6987,13 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
+<<<<<<< HEAD
 "qS" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
+=======
+>>>>>>> Updated this old code to fork
 "su" = (
 /obj/machinery/door/airlock/medical{
 	name = "Medical"
@@ -5915,12 +7007,15 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
+<<<<<<< HEAD
 "sM" = (
 /obj/structure/window/reinforced,
 /obj/effect/landmark/awaystart,
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
+=======
+>>>>>>> Updated this old code to fork
 "tE" = (
 /obj/machinery/door/airlock/medical{
 	name = "Medical"
@@ -5976,10 +7071,19 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_access_txt = "12"
 	},
+<<<<<<< HEAD
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "Bx" = (
@@ -29895,7 +30999,11 @@ er
 cQ
 fw
 gd
+<<<<<<< HEAD
 fw
+=======
+dc
+>>>>>>> Updated this old code to fork
 cQ
 hs
 cQ
@@ -30151,8 +31259,13 @@ dW
 dc
 cQ
 fx
+<<<<<<< HEAD
 dc
 gf
+=======
+ge
+dc
+>>>>>>> Updated this old code to fork
 cQ
 dc
 hI
@@ -30409,7 +31522,11 @@ dc
 cQ
 fy
 gf
+<<<<<<< HEAD
 gf
+=======
+fw
+>>>>>>> Updated this old code to fork
 cQ
 dc
 cQ
@@ -30922,7 +32039,11 @@ cQ
 dc
 eT
 dK
+<<<<<<< HEAD
 gf
+=======
+gh
+>>>>>>> Updated this old code to fork
 dK
 dc
 dc
@@ -31179,7 +32300,11 @@ cQ
 dc
 eU
 dc
+<<<<<<< HEAD
 gf
+=======
+gh
+>>>>>>> Updated this old code to fork
 dc
 dc
 dc
@@ -31950,7 +33075,11 @@ cQ
 dc
 eW
 fz
+<<<<<<< HEAD
 gf
+=======
+gh
+>>>>>>> Updated this old code to fork
 fz
 eW
 dc
@@ -32464,7 +33593,11 @@ cQ
 dc
 dc
 fA
+<<<<<<< HEAD
 gf
+=======
+gh
+>>>>>>> Updated this old code to fork
 fA
 dc
 dc
@@ -32721,7 +33854,11 @@ cQ
 dc
 dc
 dc
+<<<<<<< HEAD
 gf
+=======
+gh
+>>>>>>> Updated this old code to fork
 dc
 dc
 dc
@@ -32978,7 +34115,11 @@ cQ
 dc
 dc
 dc
+<<<<<<< HEAD
 gk
+=======
+gm
+>>>>>>> Updated this old code to fork
 dc
 dc
 dc
@@ -33492,7 +34633,11 @@ ae
 ae
 ae
 dY
+<<<<<<< HEAD
 dg
+=======
+go
+>>>>>>> Updated this old code to fork
 dY
 ae
 ae
@@ -33749,7 +34894,11 @@ ae
 ae
 ae
 dY
+<<<<<<< HEAD
 dg
+=======
+go
+>>>>>>> Updated this old code to fork
 dY
 ae
 ae
@@ -34006,7 +35155,11 @@ ae
 ae
 ae
 dY
+<<<<<<< HEAD
 dg
+=======
+go
+>>>>>>> Updated this old code to fork
 dY
 ae
 ae
@@ -34263,7 +35416,11 @@ dY
 dY
 cp
 dY
+<<<<<<< HEAD
 dg
+=======
+go
+>>>>>>> Updated this old code to fork
 dY
 ae
 ae
@@ -34520,7 +35677,11 @@ dY
 es
 eX
 es
+<<<<<<< HEAD
 dg
+=======
+go
+>>>>>>> Updated this old code to fork
 dY
 ae
 ae
@@ -34767,8 +35928,13 @@ bB
 bT
 bZ
 ck
+<<<<<<< HEAD
 qS
 qS
+=======
+bz
+cu
+>>>>>>> Updated this old code to fork
 cR
 dg
 dg
@@ -35023,9 +36189,15 @@ bl
 bC
 bU
 ca
+<<<<<<< HEAD
 sM
 bz
 bz
+=======
+cj
+bz
+cE
+>>>>>>> Updated this old code to fork
 bl
 cp
 cp
@@ -35034,7 +36206,11 @@ dY
 es
 eY
 es
+<<<<<<< HEAD
 dg
+=======
+go
+>>>>>>> Updated this old code to fork
 dY
 ae
 ae
@@ -35280,8 +36456,13 @@ bl
 bz
 bR
 bR
+<<<<<<< HEAD
 sM
 bz
+=======
+cj
+cu
+>>>>>>> Updated this old code to fork
 cF
 bl
 ad
@@ -35291,7 +36472,11 @@ dY
 dY
 cp
 dY
+<<<<<<< HEAD
 dg
+=======
+go
+>>>>>>> Updated this old code to fork
 dY
 ae
 ae
@@ -35548,7 +36733,11 @@ ae
 ae
 ae
 dY
+<<<<<<< HEAD
 dg
+=======
+go
+>>>>>>> Updated this old code to fork
 dY
 ae
 ae
@@ -35805,7 +36994,11 @@ ae
 ae
 ae
 dY
+<<<<<<< HEAD
 dg
+=======
+go
+>>>>>>> Updated this old code to fork
 dY
 ae
 ae
@@ -36062,7 +37255,11 @@ ae
 ae
 ae
 dY
+<<<<<<< HEAD
 dg
+=======
+go
+>>>>>>> Updated this old code to fork
 dY
 ae
 ae
@@ -36576,7 +37773,11 @@ aH
 aH
 eZ
 fB
+<<<<<<< HEAD
 fC
+=======
+gr
+>>>>>>> Updated this old code to fork
 fB
 eZ
 aH
@@ -36828,17 +38029,29 @@ ad
 ad
 ad
 aH
+<<<<<<< HEAD
 bD
+=======
+cm
+>>>>>>> Updated this old code to fork
 dZ
 et
 fa
 fC
+<<<<<<< HEAD
 fC
+=======
+gs
+>>>>>>> Updated this old code to fork
 fC
 fC
 zn
 dZ
+<<<<<<< HEAD
 bD
+=======
+cc
+>>>>>>> Updated this old code to fork
 aH
 ad
 ad
@@ -37085,7 +38298,11 @@ ad
 ad
 ad
 aH
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 ea
 ea
 ea
@@ -37095,7 +38312,11 @@ ea
 ea
 ea
 ea
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 ad
@@ -37342,7 +38563,11 @@ aH
 aH
 aH
 aH
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 ea
 eu
 fb
@@ -37352,7 +38577,11 @@ eu
 fb
 fD
 ea
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 aH
 aH
@@ -37594,12 +38823,20 @@ ad
 ad
 ad
 aH
+<<<<<<< HEAD
 bD
+=======
+cm
+>>>>>>> Updated this old code to fork
 bD
 cS
 bD
 bD
+<<<<<<< HEAD
 bD
+=======
+cw
+>>>>>>> Updated this old code to fork
 ea
 ev
 fc
@@ -37609,12 +38846,21 @@ ev
 fc
 fE
 ea
+<<<<<<< HEAD
 bD
 bD
 bD
 cS
 bD
 bD
+=======
+ce
+bD
+bD
+iw
+bD
+cc
+>>>>>>> Updated this old code to fork
 aH
 ad
 ad
@@ -37851,7 +39097,11 @@ ad
 ad
 aH
 aH
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 cx
 cx
 cx
@@ -37871,7 +39121,11 @@ cx
 cx
 cx
 cx
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 aH
 ad
@@ -38107,8 +39361,13 @@ ad
 ad
 ad
 aH
+<<<<<<< HEAD
 bD
 bD
+=======
+cm
+cw
+>>>>>>> Updated this old code to fork
 cx
 cT
 dh
@@ -38128,8 +39387,13 @@ dq
 dh
 dh
 cx
+<<<<<<< HEAD
 bD
 bD
+=======
+ce
+cc
+>>>>>>> Updated this old code to fork
 aH
 aH
 aH
@@ -38364,7 +39628,11 @@ ad
 ad
 ad
 aH
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 cx
 cx
 cU
@@ -38386,17 +39654,27 @@ dh
 ix
 cx
 cx
+<<<<<<< HEAD
 bD
 id
 bD
+=======
+cd
+id
+cm
+>>>>>>> Updated this old code to fork
 bD
 bD
 bD
 bD
 kp
 bD
+<<<<<<< HEAD
 dy
 bD
+=======
+aY
+>>>>>>> Updated this old code to fork
 bD
 bD
 bD
@@ -38405,6 +39683,10 @@ bD
 bD
 bD
 bD
+<<<<<<< HEAD
+=======
+cc
+>>>>>>> Updated this old code to fork
 aH
 ae
 ae
@@ -38621,7 +39903,11 @@ ad
 ad
 ad
 aH
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 cx
 cG
 cK
@@ -38643,9 +39929,15 @@ dt
 cK
 cK
 cy
+<<<<<<< HEAD
 bD
 id
 bD
+=======
+cd
+id
+cd
+>>>>>>> Updated this old code to fork
 iX
 iX
 iX
@@ -38661,7 +39953,11 @@ iX
 iX
 iX
 iX
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ae
 ae
@@ -38878,7 +40174,11 @@ ad
 ad
 ad
 aH
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 cx
 cH
 cK
@@ -38902,7 +40202,11 @@ cJ
 cx
 hD
 id
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 iX
 jj
 jC
@@ -38918,7 +40222,11 @@ lO
 jC
 jj
 iX
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ae
 ae
@@ -39135,7 +40443,11 @@ ad
 ad
 ad
 aH
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 cx
 cI
 cV
@@ -39157,9 +40469,15 @@ cK
 iy
 iG
 cx
+<<<<<<< HEAD
 bD
 id
 bD
+=======
+cd
+id
+cd
+>>>>>>> Updated this old code to fork
 iX
 jk
 jD
@@ -39175,7 +40493,11 @@ jk
 jD
 jk
 iX
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ae
 ae
@@ -39392,7 +40714,11 @@ ad
 ad
 ad
 aH
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 cx
 cJ
 cK
@@ -39414,9 +40740,15 @@ in
 cK
 iH
 cx
+<<<<<<< HEAD
 bD
 id
 bD
+=======
+cd
+id
+cd
+>>>>>>> Updated this old code to fork
 iX
 jl
 jk
@@ -39432,7 +40764,11 @@ lP
 jk
 jl
 iX
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ae
 ae
@@ -39649,7 +40985,11 @@ ad
 ad
 ad
 aH
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 cy
 cK
 cK
@@ -39671,9 +41011,15 @@ cK
 cK
 iI
 cx
+<<<<<<< HEAD
 bD
 id
 bD
+=======
+cd
+id
+cd
+>>>>>>> Updated this old code to fork
 iX
 iX
 iX
@@ -39689,7 +41035,11 @@ iX
 iX
 iX
 iX
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ae
 ae
@@ -39928,9 +41278,15 @@ ib
 iz
 cx
 cx
+<<<<<<< HEAD
 bD
 id
 bD
+=======
+cd
+id
+cd
+>>>>>>> Updated this old code to fork
 iX
 jj
 jC
@@ -39946,7 +41302,11 @@ lQ
 jC
 jj
 iX
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 ma
 mb
 mu
@@ -40163,8 +41523,13 @@ ad
 ad
 ad
 aH
+<<<<<<< HEAD
 bD
 bD
+=======
+ce
+cc
+>>>>>>> Updated this old code to fork
 cx
 cX
 dh
@@ -40184,10 +41549,17 @@ dv
 dh
 cT
 cx
+<<<<<<< HEAD
 bD
 bD
 id
 bD
+=======
+cm
+cw
+id
+cd
+>>>>>>> Updated this old code to fork
 iX
 jk
 jD
@@ -40203,7 +41575,11 @@ jk
 jD
 jk
 iX
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 ma
 mg
 mv
@@ -40421,7 +41797,11 @@ ad
 ad
 aH
 aH
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 cx
 cx
 cx
@@ -40441,10 +41821,17 @@ cx
 cx
 cx
 cx
+<<<<<<< HEAD
 bD
 id
 id
 bD
+=======
+cd
+id
+id
+cd
+>>>>>>> Updated this old code to fork
 iX
 jl
 jk
@@ -40460,7 +41847,11 @@ lR
 jk
 jl
 iX
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 ma
 mb
 TE
@@ -40683,7 +42074,11 @@ bD
 bD
 bD
 bD
+<<<<<<< HEAD
 bD
+=======
+cc
+>>>>>>> Updated this old code to fork
 ea
 ev
 fh
@@ -40693,15 +42088,26 @@ ev
 fc
 fE
 ea
+<<<<<<< HEAD
+=======
+cm
+>>>>>>> Updated this old code to fork
 bD
 bD
 bD
 bD
+<<<<<<< HEAD
 bD
 bD
 id
 aO
 bD
+=======
+cw
+id
+aO
+cd
+>>>>>>> Updated this old code to fork
 iX
 iX
 iX
@@ -40717,7 +42123,11 @@ iX
 iX
 iX
 iX
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 mb
 mh
 mw
@@ -40950,7 +42360,11 @@ gU
 fi
 fF
 ea
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 id
 id
 id
@@ -40958,7 +42372,11 @@ id
 id
 id
 aO
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 iX
 jj
 jC
@@ -40974,7 +42392,11 @@ lS
 jC
 jj
 iX
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 mb
 mi
 mn
@@ -41207,7 +42629,11 @@ fK
 cp
 ea
 ea
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 id
 io
 io
@@ -41215,7 +42641,11 @@ iJ
 iA
 iM
 aO
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 iX
 jk
 jD
@@ -41231,7 +42661,11 @@ jk
 jD
 jk
 iX
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 mb
 mj
 mn
@@ -41462,9 +42896,15 @@ fL
 eZ
 gV
 cp
+<<<<<<< HEAD
 bD
 bD
 bD
+=======
+cm
+bD
+cw
+>>>>>>> Updated this old code to fork
 id
 ip
 iA
@@ -41472,7 +42912,11 @@ iK
 iA
 iM
 aO
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 iX
 jl
 jk
@@ -41488,7 +42932,11 @@ lT
 jk
 jl
 iX
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 mb
 mj
 mn
@@ -41711,7 +43159,11 @@ ad
 ad
 ad
 aH
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 ed
 eF
 cp
@@ -41719,7 +43171,11 @@ fL
 gz
 gV
 cp
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 eF
 hX
 id
@@ -41729,7 +43185,11 @@ iK
 iN
 iM
 id
+<<<<<<< HEAD
 eH
+=======
+iT
+>>>>>>> Updated this old code to fork
 iX
 iX
 iX
@@ -41745,7 +43205,11 @@ iX
 iX
 iX
 iX
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 mb
 mk
 mn
@@ -41968,7 +43432,11 @@ ad
 ad
 ad
 aH
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 ee
 ee
 cp
@@ -41976,7 +43444,11 @@ fM
 cp
 fM
 cp
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 ee
 ee
 id
@@ -42214,18 +43686,30 @@ ad
 ad
 aH
 aO
+<<<<<<< HEAD
 ch
 bm
 bD
 bD
 bD
-aH
-ad
-ad
-ad
-aH
-aH
+=======
+aY
+bm
 bD
+bD
+cc
+>>>>>>> Updated this old code to fork
+aH
+ad
+ad
+ad
+aH
+aH
+<<<<<<< HEAD
+bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 ef
 eG
 cp
@@ -42233,7 +43717,11 @@ fL
 gA
 gV
 cp
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aO
 hY
 id
@@ -42259,7 +43747,11 @@ jF
 jF
 lz
 iX
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 mb
 mi
 mn
@@ -42475,25 +43967,43 @@ ar
 ar
 ar
 ar
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 ad
 ad
 aH
+<<<<<<< HEAD
 dk
 bD
 eg
 bD
+=======
+dw
+dS
+eg
+cc
+>>>>>>> Updated this old code to fork
 cp
 fL
 eZ
 gV
 cp
+<<<<<<< HEAD
 bD
 dy
 bD
 bD
+=======
+hx
+aY
+bD
+cc
+>>>>>>> Updated this old code to fork
 id
 iB
 iM
@@ -42732,13 +44242,21 @@ aZ
 bn
 bE
 ar
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 ad
 ad
 aH
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 cp
 cp
 eH
@@ -42750,7 +44268,11 @@ cp
 eH
 cp
 cp
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 id
 iC
 iM
@@ -42773,7 +44295,11 @@ lU
 lU
 lY
 aP
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 mb
 mi
 mn
@@ -42989,12 +44515,17 @@ ba
 bh
 bF
 ar
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 aH
 aH
 aH
 aH
+<<<<<<< HEAD
 cY
 cp
 eh
@@ -43008,13 +44539,32 @@ hy
 hL
 cp
 bD
+=======
+dx
+cp
+eh
+eI
+fj
+fN
+gC
+fC
+fj
+hy
+hL
+cp
+cd
+>>>>>>> Updated this old code to fork
 id
 id
 id
 id
 id
 id
+<<<<<<< HEAD
 eH
+=======
+iT
+>>>>>>> Updated this old code to fork
 iX
 jp
 jG
@@ -43030,7 +44580,11 @@ iX
 iX
 iX
 iX
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aP
 mi
 mn
@@ -43246,7 +44800,11 @@ bb
 bo
 bG
 ar
+<<<<<<< HEAD
 bD
+=======
+ce
+>>>>>>> Updated this old code to fork
 bD
 bD
 cL
@@ -43264,19 +44822,32 @@ hk
 eJ
 hM
 cp
+<<<<<<< HEAD
 dy
 bD
+=======
+ie
+iq
+>>>>>>> Updated this old code to fork
 bD
 bD
 bD
 bD
 dZ
+<<<<<<< HEAD
 bD
+=======
+cw
+>>>>>>> Updated this old code to fork
 iX
 jn
 jF
 kc
 iX
+<<<<<<< HEAD
+=======
+cm
+>>>>>>> Updated this old code to fork
 bD
 bD
 bD
@@ -43286,8 +44857,12 @@ bD
 bD
 bD
 bD
+<<<<<<< HEAD
 bD
 bD
+=======
+cw
+>>>>>>> Updated this old code to fork
 mb
 ml
 mn
@@ -43534,7 +45109,11 @@ jq
 jH
 kd
 iD
+<<<<<<< HEAD
 eH
+=======
+iT
+>>>>>>> Updated this old code to fork
 iD
 iD
 iD
@@ -44562,7 +46141,11 @@ js
 jJ
 ke
 cp
+<<<<<<< HEAD
 eH
+=======
+iT
+>>>>>>> Updated this old code to fork
 iD
 iD
 iD
@@ -44806,6 +46389,7 @@ fo
 eJ
 hM
 cp
+<<<<<<< HEAD
 dZ
 bD
 aO
@@ -44814,12 +46398,26 @@ aO
 aO
 aO
 aO
+=======
+ig
+iu
+bD
+bD
+bD
+bD
+bD
+cc
+>>>>>>> Updated this old code to fork
 cp
 su
 jK
 tE
 cp
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 dC
 aO
 aO
@@ -45063,20 +46661,32 @@ eO
 eO
 hQ
 cp
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 aH
 aH
 aH
 aH
 aH
+<<<<<<< HEAD
 aO
+=======
+cd
+>>>>>>> Updated this old code to fork
 cp
 js
 jI
 ke
 cp
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 aH
 aH
@@ -45320,20 +46930,32 @@ cp
 cp
 cp
 cp
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 ad
 ad
 ad
 aH
+<<<<<<< HEAD
 aO
+=======
+cd
+>>>>>>> Updated this old code to fork
 cp
 js
 jJ
 ke
 cp
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 ad
@@ -45576,21 +47198,34 @@ hc
 cp
 aH
 aH
+<<<<<<< HEAD
 bD
 bD
+=======
+cm
+cw
+>>>>>>> Updated this old code to fork
 aH
 ad
 ad
 ad
 ad
 aH
+<<<<<<< HEAD
 aO
+=======
+cd
+>>>>>>> Updated this old code to fork
 cp
 wM
 cp
 Qd
 cp
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 ad
@@ -45831,9 +47466,15 @@ fT
 gG
 hc
 aP
+<<<<<<< HEAD
 bD
 bD
 bD
+=======
+cm
+bD
+cw
+>>>>>>> Updated this old code to fork
 aH
 aH
 ad
@@ -45841,13 +47482,21 @@ ad
 ad
 ad
 aH
+<<<<<<< HEAD
 aO
+=======
+cd
+>>>>>>> Updated this old code to fork
 cp
 js
 jM
 ke
 cp
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 ad
@@ -46098,13 +47747,21 @@ ad
 ad
 ad
 aH
+<<<<<<< HEAD
 aO
+=======
+cd
+>>>>>>> Updated this old code to fork
 cp
 js
 jI
 ke
 cp
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 ad
@@ -46345,7 +48002,11 @@ fT
 gH
 hc
 cp
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 ad
@@ -46355,13 +48016,21 @@ ad
 ad
 ad
 aH
+<<<<<<< HEAD
 aO
+=======
+cd
+>>>>>>> Updated this old code to fork
 cp
 jt
 cp
 kf
 cp
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 ad
@@ -46602,7 +48271,11 @@ fT
 gE
 hc
 cp
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 aH
 aH
@@ -46612,13 +48285,21 @@ aH
 ad
 aH
 aH
+<<<<<<< HEAD
 aO
+=======
+iV
+>>>>>>> Updated this old code to fork
 iW
 jh
 jN
 kg
 iW
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 aH
 aH
@@ -46859,12 +48540,20 @@ fS
 cp
 hb
 cp
+<<<<<<< HEAD
+=======
+ce
+>>>>>>> Updated this old code to fork
 bD
 bD
 bD
 bD
+<<<<<<< HEAD
 bD
 bD
+=======
+cc
+>>>>>>> Updated this old code to fork
 aH
 ad
 aH
@@ -46875,13 +48564,21 @@ jh
 jO
 kh
 iW
+<<<<<<< HEAD
+=======
+ce
+>>>>>>> Updated this old code to fork
 bD
 bD
 bD
 bD
 bD
+<<<<<<< HEAD
 bD
 bD
+=======
+cc
+>>>>>>> Updated this old code to fork
 aH
 ad
 ad
@@ -47121,7 +48818,11 @@ do
 do
 do
 do
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 aH
@@ -47138,7 +48839,11 @@ iW
 iW
 iW
 iW
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 ad
@@ -47378,7 +49083,11 @@ dH
 dH
 dD
 do
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 aH
@@ -47395,7 +49104,11 @@ ld
 lq
 lC
 iW
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 ad
@@ -47635,7 +49348,11 @@ dH
 dH
 ih
 do
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 aH
@@ -47652,7 +49369,11 @@ jw
 jw
 lD
 iW
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 ad
@@ -47881,7 +49602,11 @@ do
 dF
 dT
 eo
+<<<<<<< HEAD
 hF
+=======
+eR
+>>>>>>> Updated this old code to fork
 fr
 fW
 fW
@@ -47892,7 +49617,11 @@ eo
 dT
 dF
 do
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 aH
@@ -47909,7 +49638,11 @@ jw
 lr
 kg
 iW
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 ad
@@ -48139,17 +49872,29 @@ do
 do
 do
 do
+<<<<<<< HEAD
 fr
 fX
 fX
 fX
 ho
+=======
+fs
+fX
+gJ
+fX
+hp
+>>>>>>> Updated this old code to fork
 do
 do
 do
 do
 do
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 aH
@@ -48166,7 +49911,11 @@ le
 ls
 lE
 iW
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 ad
@@ -48398,7 +50147,11 @@ dH
 do
 fq
 fW
+<<<<<<< HEAD
 fX
+=======
+gK
+>>>>>>> Updated this old code to fork
 fW
 hq
 do
@@ -48406,7 +50159,11 @@ dH
 dH
 dD
 do
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 aH
@@ -48423,7 +50180,11 @@ jR
 jR
 jR
 iW
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 ad
@@ -48655,7 +50416,11 @@ dH
 eQ
 fq
 fW
+<<<<<<< HEAD
 fX
+=======
+gK
+>>>>>>> Updated this old code to fork
 fW
 hn
 hE
@@ -48663,7 +50428,11 @@ dH
 dH
 ih
 do
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 aH
@@ -48680,7 +50449,11 @@ lf
 jz
 lF
 iW
+<<<<<<< HEAD
 hD
+=======
+lV
+>>>>>>> Updated this old code to fork
 aH
 ad
 ad
@@ -48909,10 +50682,17 @@ do
 dF
 dT
 eo
+<<<<<<< HEAD
 hF
 fr
 fY
 fX
+=======
+eR
+fr
+fY
+gK
+>>>>>>> Updated this old code to fork
 fW
 ho
 hF
@@ -48920,7 +50700,11 @@ eo
 dT
 dF
 do
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 aH
@@ -48937,7 +50721,11 @@ lg
 lt
 kh
 aP
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 ad
@@ -49169,15 +50957,25 @@ do
 do
 ft
 fZ
+<<<<<<< HEAD
 fZ
 fX
 ho
+=======
+gL
+fX
+hp
+>>>>>>> Updated this old code to fork
 do
 do
 do
 do
 do
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 aH
@@ -49691,7 +51489,11 @@ fW
 fW
 hn
 do
+<<<<<<< HEAD
 bD
+=======
+cd
+>>>>>>> Updated this old code to fork
 aH
 ad
 aH
@@ -50198,14 +52000,22 @@ do
 fv
 gc
 gP
+<<<<<<< HEAD
 gP
+=======
+hi
+>>>>>>> Updated this old code to fork
 hr
 hH
 hR
 hR
 ik
 iv
+<<<<<<< HEAD
 bD
+=======
+cw
+>>>>>>> Updated this old code to fork
 aH
 ad
 aH

@@ -25,9 +25,13 @@
 			for(var/obj/item/item in hand_items)
 				if(item.item_flags & ABSTRACT)
 					continue
+<<<<<<< HEAD
 				if(SEND_SIGNAL(item, COMSIG_ITEM_MARK_RETRIEVAL) & COMPONENT_BLOCK_MARK_RETRIEVAL)
 					continue
 				if(HAS_TRAIT(item, TRAIT_NODROP))
+=======
+				if(item.has_trait(TRAIT_NODROP))
+>>>>>>> Updated this old code to fork
 					message += "Though it feels redundant, "
 				marked_item = 		item
 				message += "You mark [item] for recall.</span>"
@@ -80,6 +84,11 @@
 
 						if(iscarbon(M)) //Edge case housekeeping
 							var/mob/living/carbon/C = M
+<<<<<<< HEAD
+=======
+							if(C.stomach_contents && item_to_retrieve in C.stomach_contents)
+								C.stomach_contents -= item_to_retrieve
+>>>>>>> Updated this old code to fork
 							for(var/X in C.bodyparts)
 								var/obj/item/bodypart/part = X
 								if(item_to_retrieve in part.embedded_objects)

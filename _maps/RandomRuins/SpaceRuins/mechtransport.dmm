@@ -53,7 +53,11 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/powered/mechtransport)
 "n" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,

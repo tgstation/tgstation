@@ -43,7 +43,11 @@
 /atom/movable/proc/BlockSuperconductivity() // objects that block air and don't let superconductivity act. Only firelocks atm.
 	return FALSE
 
+<<<<<<< HEAD
 /turf/proc/ImmediateCalculateAdjacentTurfs()
+=======
+/turf/proc/CalculateAdjacentTurfs()
+>>>>>>> Updated this old code to fork
 	var/canpass = CANATMOSPASS(src, src) 
 	var/canvpass = CANVERTICALATMOSPASS(src, src)
 	for(var/direction in GLOB.cardinals_multiz)
@@ -107,7 +111,11 @@
 
 /turf/air_update_turf(command = 0)
 	if(command)
+<<<<<<< HEAD
 		ImmediateCalculateAdjacentTurfs()
+=======
+		CalculateAdjacentTurfs()
+>>>>>>> Updated this old code to fork
 	SSair.add_to_active(src,command)
 
 /atom/movable/proc/move_update_air(turf/T)

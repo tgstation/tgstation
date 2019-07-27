@@ -140,15 +140,29 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 /obj/item/mmi/posibrain/examine(mob/user)
 	. = ..()
+<<<<<<< HEAD
+=======
+	var/msg
+>>>>>>> Updated this old code to fork
 	if(brainmob && brainmob.key)
 		switch(brainmob.stat)
 			if(CONSCIOUS)
 				if(!brainmob.client)
+<<<<<<< HEAD
 					. += "It appears to be in stand-by mode." //afk
 			if(DEAD)
 				. += "<span class='deadsay'>It appears to be completely inactive.</span>"
 	else
 		. += "[dead_message]"
+=======
+					msg = "It appears to be in stand-by mode." //afk
+			if(DEAD)
+				msg = "<span class='deadsay'>It appears to be completely inactive.</span>"
+	else
+		msg = "[dead_message]"
+
+	to_chat(user, msg)
+>>>>>>> Updated this old code to fork
 
 /obj/item/mmi/posibrain/Initialize()
 	. = ..()

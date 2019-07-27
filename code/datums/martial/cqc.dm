@@ -10,8 +10,12 @@
 	help_verb = /mob/living/carbon/human/proc/CQC_help
 	block_chance = 75
 	var/just_a_cook = FALSE
+<<<<<<< HEAD
 	var/old_grab_state = null
 	
+=======
+
+>>>>>>> Updated this old code to fork
 /datum/martial_art/cqc/under_siege
 	name = "Close Quarters Cooking"
 	just_a_cook = TRUE
@@ -19,7 +23,11 @@
 /datum/martial_art/cqc/proc/drop_restraining()
 	restraining = FALSE
 
+<<<<<<< HEAD
 /datum/martial_art/cqc/can_use(mob/living/carbon/human/H) //this is used to make chef CQC only work in kitchen
+=======
+/datum/martial_art/cqc/can_use(mob/living/carbon/human/H)
+>>>>>>> Updated this old code to fork
 	var/area/A = get_area(H)
 	if(just_a_cook && !(istype(A, /area/crew_quarters/kitchen)))
 		return FALSE
@@ -73,7 +81,10 @@
 		D.apply_damage(10, A.dna.species.attack_type)
 		log_combat(A, D, "kicked (CQC)")
 	if(D.IsParalyzed() && !D.stat)
+<<<<<<< HEAD
 		log_combat(A, D, "knocked out (Head kick)(CQC)")
+=======
+>>>>>>> Updated this old code to fork
 		D.visible_message("<span class='warning'>[A] kicks [D]'s head, knocking [D.p_them()] out!</span>", \
 					  		"<span class='userdanger'>[A] kicks your head, knocking you out!</span>")
 		playsound(get_turf(A), 'sound/weapons/genhit1.ogg', 50, 1, -1)
@@ -84,8 +95,12 @@
 /datum/martial_art/cqc/proc/Pressure(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!can_use(A))
 		return FALSE
+<<<<<<< HEAD
 	log_combat(A, D, "pressured (CQC)")
 	D.visible_message("<span class='warning'>[A] punches [D]'s neck!</span>")
+=======
+	D.visible_message("<span class='warning'>[A] forces their arm on [D]'s neck!</span>")
+>>>>>>> Updated this old code to fork
 	D.adjustStaminaLoss(60)
 	playsound(get_turf(A), 'sound/weapons/cqchit1.ogg', 50, 1, -1)
 	return TRUE
@@ -96,7 +111,10 @@
 	if(!can_use(A))
 		return FALSE
 	if(!D.stat)
+<<<<<<< HEAD
 		log_combat(A, D, "restrained (CQC)")
+=======
+>>>>>>> Updated this old code to fork
 		D.visible_message("<span class='warning'>[A] locks [D] into a restraining position!</span>", \
 							"<span class='userdanger'>[A] locks you into a restraining position!</span>")
 		D.adjustStaminaLoss(20)
@@ -109,7 +127,10 @@
 	if(!can_use(A))
 		return FALSE
 	if(!D.stat)
+<<<<<<< HEAD
 		log_combat(A, D, "consecutive CQC'd (CQC)")
+=======
+>>>>>>> Updated this old code to fork
 		D.visible_message("<span class='warning'>[A] strikes [D]'s abdomen, neck and back consecutively</span>", \
 							"<span class='userdanger'>[A] strikes your abdomen, neck and back consecutively!</span>")
 		playsound(get_turf(D), 'sound/weapons/cqchit2.ogg', 50, 1, -1)
@@ -121,6 +142,7 @@
 	return TRUE
 
 /datum/martial_art/cqc/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+<<<<<<< HEAD
 	if(A.a_intent == INTENT_GRAB && A!=D && can_use(A)) // A!=D prevents grabbing yourself
 		add_to_streak("G",D)
 		if(check_streak(A,D)) //if a combo is made no grab upgrade is done
@@ -136,6 +158,23 @@
 		return TRUE
 	else
 		return FALSE
+=======
+	if(!can_use(A))
+		return FALSE
+	add_to_streak("G",D)
+	if(check_streak(A,D))
+		return TRUE
+	if(A.grab_state >= GRAB_AGGRESSIVE)
+		D.grabbedby(A, 1)
+	else
+		A.start_pulling(D, supress_message = TRUE)
+		if(A.pulling)
+			D.stop_pulling()
+			log_combat(A, D, "grabbed", addition="aggressively")
+			A.grab_state = GRAB_AGGRESSIVE //Instant aggressive grab
+
+	return TRUE
+>>>>>>> Updated this old code to fork
 
 /datum/martial_art/cqc/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!can_use(A))
@@ -190,7 +229,10 @@
 		playsound(D, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 	log_combat(A, D, "disarmed (CQC)", "[I ? " grabbing \the [I]" : ""]")
 	if(restraining && A.pulling == D)
+<<<<<<< HEAD
 		log_combat(A, D, "knocked out (Chokehold)(CQC)")
+=======
+>>>>>>> Updated this old code to fork
 		D.visible_message("<span class='danger'>[A] puts [D] into a chokehold!</span>", \
 							"<span class='userdanger'>[A] puts you into a chokehold!</span>")
 		D.SetSleeping(400)
@@ -209,8 +251,13 @@
 	to_chat(usr, "<b><i>You try to remember some of the basics of CQC.</i></b>")
 
 	to_chat(usr, "<span class='notice'>Slam</span>: Grab Harm. Slam opponent into the ground, knocking them down.")
+<<<<<<< HEAD
 	to_chat(usr, "<span class='notice'>CQC Kick</span>: Harm Harm. Knocks opponent away. Knocks out stunned or knocked down opponents.")
 	to_chat(usr, "<span class='notice'>Restrain</span>: Grab Grab. Locks opponents into a restraining position, disarm to knock them out with a chokehold.")
+=======
+	to_chat(usr, "<span class='notice'>CQC Kick</span>: Disarm Harm Harm. Knocks opponent away. Knocks out stunned or knocked down opponents.")
+	to_chat(usr, "<span class='notice'>Restrain</span>: Grab Grab. Locks opponents into a restraining position, disarm to knock them out with a choke hold.")
+>>>>>>> Updated this old code to fork
 	to_chat(usr, "<span class='notice'>Pressure</span>: Disarm Grab. Decent stamina damage.")
 	to_chat(usr, "<span class='notice'>Consecutive CQC</span>: Disarm Disarm Harm. Mainly offensive move, huge damage and decent stamina damage.")
 

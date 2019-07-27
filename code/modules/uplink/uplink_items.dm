@@ -29,6 +29,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 		if(I.limited_stock < 0 && !I.cant_discount && I.item && I.cost > 1)
 			sale_items += I
 	if(allow_sales)
+<<<<<<< HEAD
 		var/datum/team/nuclear/nuclear_team
 		if (gamemode == /datum/game_mode/nuclear) 					// uplink code kind of needs a redesign
 			nuclear_team = locate() in GLOB.antagonist_teams	// the team discounts could be a in a GLOB with this design but it would make sense for them to be team specific...
@@ -79,6 +80,29 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 		uplink_items[category_name][A.name] = A
 
+=======
+		for(var/i in 1 to 3)
+			var/datum/uplink_item/I = pick_n_take(sale_items)
+			var/datum/uplink_item/A = new I.type
+			var/discount = A.get_discount()
+			var/list/disclaimer = list("Void where prohibited.", "Not recommended for children.", "Contains small parts.", "Check local laws for legality in region.", "Do not taunt.", "Not responsible for direct, indirect, incidental or consequential damages resulting from any defect, error or failure to perform.", "Keep away from fire or flames.", "Product is provided \"as is\" without any implied or expressed warranties.", "As seen on TV.", "For recreational use only.", "Use only as directed.", "16% sales tax will be charged for orders originating within Space Nebraska.")
+			A.limited_stock = 1
+			I.refundable = FALSE //THIS MAN USES ONE WEIRD TRICK TO GAIN FREE TC, CODERS HATES HIM!
+			A.refundable = FALSE
+			if(A.cost >= 20) //Tough love for nuke ops
+				discount *= 0.5
+			A.cost = max(round(A.cost * discount),1)
+			A.category = "Discounted Gear"
+			A.name += " ([round(((initial(A.cost)-A.cost)/initial(A.cost))*100)]% off!)"
+			A.desc += " Normally costs [initial(A.cost)] TC. All sales final. [pick(disclaimer)]"
+			A.item = I.item
+
+			if(!filtered_uplink_items[A.category])
+				filtered_uplink_items[A.category] = list()
+			filtered_uplink_items[A.category][A.name] = A
+	return filtered_uplink_items
+
+>>>>>>> Updated this old code to fork
 
 /**
  * Uplink Items
@@ -95,6 +119,10 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	var/refund_amount = 0 // specified refund amount in case there needs to be a TC penalty for refunds.
 	var/refundable = FALSE
 	var/surplus = 100 // Chance of being included in the surplus crate.
+<<<<<<< HEAD
+=======
+	var/surplus_nullcrates //Chance of being included in null crates. null = pull from surplus
+>>>>>>> Updated this old code to fork
 	var/cant_discount = FALSE
 	var/limited_stock = -1 //Setting this above zero limits how many times this item can be bought by the same traitor in a round, -1 is unlimited
 	var/list/include_modes = list() // Game modes to allow this item in.
@@ -106,6 +134,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	var/list/restricted_species //Limits items to a specific species. Hopefully.
 	var/illegal_tech = TRUE // Can this item be deconstructed to unlock certain techweb research nodes?
 
+<<<<<<< HEAD
+=======
+/datum/uplink_item/New()
+	. = ..()
+	if(isnull(surplus_nullcrates))
+		surplus_nullcrates = surplus
+
+>>>>>>> Updated this old code to fork
 /datum/uplink_item/proc/get_discount()
 	return pick(4;0.75,2;0.5,1;0.25)
 
@@ -151,7 +187,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/bundles_TC/bulldog
 	name = "Bulldog bundle"
 	desc = "Lean and mean: Optimized for people that want to get up close and personal. Contains the popular \
+<<<<<<< HEAD
 			Bulldog shotgun, two 12g buckshot drums, and a pair of Thermal imaging goggles."
+=======
+			Bulldog shotgun, a 12g buckshot drum, a 12g taser slug drum and a pair of Thermal imaging goggles."
+>>>>>>> Updated this old code to fork
 	item = /obj/item/storage/backpack/duffelbag/syndie/bulldogbundle
 	cost = 13 // normally 16
 	include_modes = list(/datum/game_mode/nuclear)
@@ -196,6 +236,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 30
 	include_modes = list(/datum/game_mode/nuclear)
 
+<<<<<<< HEAD
 /datum/uplink_item/bundles_TC/contract_kit
 	name = "Contract Kit"
 	desc = "The Syndicate have offered you the chance to become a contractor, take on kidnapping contracts for TC and cash payouts. Upon purchase, \
@@ -221,6 +262,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "Syndicate Bundles, also known as Syndi-Kits, are specialized groups of items that arrive in a plain box. \
 			In Syndi-kit Special, you will recieve items used by famous syndicate agents of the past. Collectively worth more than 20 telecrystals, the syndicate loves a good throwback."
 	item = /obj/item/storage/box/syndicate/bundle_B
+=======
+/datum/uplink_item/bundles_TC/bundle
+	name = "Syndicate Bundle"
+	desc = "Syndicate Bundles are specialized groups of items that arrive in a plain box. \
+			These items are collectively worth more than 20 telecrystals, but you do not know which specialization \
+			you will receive. May contain discontinued and/or exotic items."
+	item = /obj/item/storage/box/syndicate
+>>>>>>> Updated this old code to fork
 	cost = 20
 	exclude_modes = list(/datum/game_mode/nuclear)
 
@@ -371,7 +420,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Bulldog Shotgun"
 	desc = "A fully-loaded semi-automatic drum-fed shotgun. Compatible with all 12g rounds. Designed for close \
 			quarter anti-personnel engagements."
+<<<<<<< HEAD
 	item = /obj/item/gun/ballistic/shotgun/bulldog
+=======
+	item = /obj/item/gun/ballistic/automatic/shotgun/bulldog
+>>>>>>> Updated this old code to fork
 	cost = 8
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
@@ -465,7 +518,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Using a wrench on the piston valve will allow you to tweak the amount of gas used per punch to \
 			deal extra damage and hit targets further. Use a screwdriver to take out any attached tanks."
 	item = /obj/item/melee/powerfist
+<<<<<<< HEAD
 	cost = 6
+=======
+	cost = 8
+>>>>>>> Updated this old code to fork
 
 /datum/uplink_item/dangerous/sniper
 	name = "Sniper Rifle"
@@ -486,8 +543,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/dangerous/bolt_action
 	name = "Surplus Rifle"
 	desc = "A horribly outdated bolt action weapon. You've got to be desperate to use this."
+<<<<<<< HEAD
 	item = /obj/item/gun/ballistic/rifle/boltaction
 	cost = 1
+=======
+	item = /obj/item/gun/ballistic/shotgun/boltaction
+	cost = 2
+>>>>>>> Updated this old code to fork
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/revolver
@@ -520,7 +582,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "An innocent-looking toy pistol designed to fire foam darts. Comes loaded with riot-grade \
 			darts effective at incapacitating a target."
 	item = /obj/item/gun/ballistic/automatic/toy/pistol/riot
+<<<<<<< HEAD
 	cost = 2
+=======
+	cost = 3
+>>>>>>> Updated this old code to fork
 	surplus = 10
 
 // Stealthy Weapons
@@ -576,6 +642,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/stealthy_weapons/crossbow
 	name = "Miniature Energy Crossbow"
+<<<<<<< HEAD
 	desc = "A short bow mounted across a tiller in miniature. \
 	Small enough to fit into a pocket or slip into a bag unnoticed. \
 	It will synthesize and fire bolts tipped with a debilitating \
@@ -584,6 +651,16 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	of bolts, but takes time to automatically recharge after each shot."
 	item = /obj/item/gun/energy/kinetic_accelerator/crossbow
 	cost = 10
+=======
+	desc = "A short bow mounted across a tiller in miniature. Small enough to \
+		fit into a pocket or slip into a bag unnoticed. It will synthesize \
+		and fire bolts tipped with a paralyzing toxin that will briefly stun \
+		targets and cause them to slur as if inebriated. It can produce an \
+		infinite number of bolts, but takes time to automatically recharge \
+		after each shot."
+	item = /obj/item/gun/energy/kinetic_accelerator/crossbow
+	cost = 12
+>>>>>>> Updated this old code to fork
 	surplus = 50
 	exclude_modes = list(/datum/game_mode/nuclear)
 
@@ -702,6 +779,16 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 3
 	item = /obj/item/ammo_box/magazine/m12g/slug
 
+<<<<<<< HEAD
+=======
+/datum/uplink_item/ammo/shotgun/stun
+	name = "12g Stun Slug Drum"
+	desc = "An alternative 8-round stun slug magazine for use with the Bulldog shotgun. \
+			Saying that they're completely non-lethal would be lying."
+	item = /obj/item/ammo_box/magazine/m12g/stun
+	include_modes = list(/datum/game_mode/nuclear)
+
+>>>>>>> Updated this old code to fork
 /datum/uplink_item/ammo/revolver
 	name = ".357 Speed Loader"
 	desc = "A speed loader that contains seven additional .357 Magnum rounds; usable with the Syndicate revolver. \
@@ -799,14 +886,22 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/ammo/rocket/basic
 	name = "84mm HE Rocket"
 	desc = "A low-yield anti-personnel HE rocket. Gonna take you out in style!"
+<<<<<<< HEAD
 	item = /obj/item/ammo_casing/caseless/rocket
+=======
+	item = /obj/item/ammo_box/magazine/rocket
+>>>>>>> Updated this old code to fork
 	cost = 4
 
 /datum/uplink_item/ammo/rocket/hedp
 	name = "84mm HEDP Rocket"
 	desc = "A high-yield HEDP rocket; extremely effective against armored targets, as well as surrounding personnel. \
 			Strike fear into the hearts of your enemies."
+<<<<<<< HEAD
 	item = /obj/item/ammo_casing/caseless/rocket/hedp
+=======
+	item = /obj/item/ammo_box/magazine/rocket/hedp
+>>>>>>> Updated this old code to fork
 	cost = 6
 
 /datum/uplink_item/ammo/pistolaps
@@ -839,6 +934,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 1
 	include_modes = list(/datum/game_mode/nuclear)
 
+<<<<<<< HEAD
 /datum/uplink_item/ammo/dark_gygax/bag
 	name = "Dark Gygax Ammo Bag"
 	desc = "A duffel bag containing ammo for three full reloads of the incendiary carbine and flash bang launcher that are equipped on a standard Dark Gygax exosuit."
@@ -853,6 +949,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 6
 	include_modes = list(/datum/game_mode/nuclear)
 
+=======
+>>>>>>> Updated this old code to fork
 //Grenades and Explosives
 /datum/uplink_item/explosives
 	category = "Grenades and Explosives"
@@ -897,7 +995,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Bag of C-4 explosives"
 	desc = "Because sometimes quantity is quality. Contains 10 C-4 plastic explosives."
 	item = /obj/item/storage/backpack/duffelbag/syndie/c4
+<<<<<<< HEAD
 	cost = 8 //20% discount!
+=======
+	cost = 9 //10% discount!
+>>>>>>> Updated this old code to fork
 	cant_discount = TRUE
 
 /datum/uplink_item/explosives/x4bag
@@ -968,7 +1070,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Slipocalypse Clusterbang"
 	desc = "A traditional clusterbang grenade with a payload consisting entirely of Syndicate soap. Useful in any scenario!"
 	item = /obj/item/grenade/clusterbuster/soap
+<<<<<<< HEAD
 	cost = 3
+=======
+	cost = 6
+>>>>>>> Updated this old code to fork
 
 /datum/uplink_item/explosives/syndicate_bomb
 	name = "Syndicate Bomb"
@@ -1152,7 +1258,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Useful for disrupting headsets, cameras, doors, lockers and borgs during stealth operations. \
 			Attacking a target with this flashlight will direct an EM pulse at it and consumes a charge."
 	item = /obj/item/flashlight/emp
+<<<<<<< HEAD
 	cost = 4
+=======
+	cost = 2
+>>>>>>> Updated this old code to fork
 	surplus = 30
 
 /datum/uplink_item/stealthy_tools/mulligan
@@ -1296,6 +1406,10 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A robust seven-slot set of webbing that is capable of holding all manner of tactical equipment."
 	item = /obj/item/storage/belt/military
 	cost = 1
+<<<<<<< HEAD
+=======
+	exclude_modes = list(/datum/game_mode/nuclear)
+>>>>>>> Updated this old code to fork
 
 /datum/uplink_item/device_tools/emag
 	name = "Cryptographic Sequencer"
@@ -1311,6 +1425,10 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/disk/nuclear/fake
 	cost = 1
 	surplus = 1
+<<<<<<< HEAD
+=======
+	surplus_nullcrates = 0
+>>>>>>> Updated this old code to fork
 
 /datum/uplink_item/device_tools/frame
 	name = "F.R.A.M.E. PDA Cartridge"
@@ -1376,7 +1494,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			in containment. Because of its size, it cannot be carried. Ordering this \
 			sends you a small beacon that will teleport the larger beacon to your location upon activation."
 	item = /obj/item/sbeacondrop
+<<<<<<< HEAD
 	cost = 10
+=======
+	cost = 14
+>>>>>>> Updated this old code to fork
 
 /datum/uplink_item/device_tools/powersink
 	name = "Power Sink"
@@ -1384,7 +1506,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			load on the grid, causing a station-wide blackout. The sink is large and cannot be stored in most \
 			traditional bags and boxes. Caution: Will explode if the powernet contains sufficient amounts of energy."
 	item = /obj/item/powersink
+<<<<<<< HEAD
 	cost = 10
+=======
+	cost = 6
+>>>>>>> Updated this old code to fork
 
 /datum/uplink_item/device_tools/rad_laser
 	name = "Radioactive Microlaser"
@@ -1443,7 +1569,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			of the originals, these inferior copies are still quite useful, being able to provide \
 			both weal and woe on the battlefield, even if they do occasionally bite off a finger."
 	item = /obj/item/storage/book/bible/syndicate
+<<<<<<< HEAD
 	cost = 5
+=======
+	cost = 9
+>>>>>>> Updated this old code to fork
 
 /datum/uplink_item/device_tools/thermal
 	name = "Thermal Imaging Glasses"
@@ -1463,6 +1593,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	restricted = TRUE
 
+<<<<<<< HEAD
 
 /datum/uplink_item/device_tools/suspiciousphone
 	name = "Protocol CRAB-17 Phone"
@@ -1473,6 +1604,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 7
 	limited_stock = 1
 
+=======
+>>>>>>> Updated this old code to fork
 // Implants
 /datum/uplink_item/implants
 	category = "Implants"
@@ -1603,7 +1736,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 20
 	restricted_roles = list("Assistant")
 	surplus = 0
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> Updated this old code to fork
 /datum/uplink_item/role_restricted/oldtoolboxclean
 	name = "Ancient Toolbox"
 	desc = "An iconic toolbox design notorious with Assistants everywhere, this design was especially made to become more robust the more telecrystals it has inside it! Tools and insulated gloves included."
@@ -1657,6 +1794,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 15
 	restricted_roles = list("Clown")
 
+<<<<<<< HEAD
 
 /datum/uplink_item/role_restricted/spider_injector
 	name = "Australicus Slime Mutator"
@@ -1668,6 +1806,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 10
 	restricted_roles = list("Research Director", "Scientist", "Roboticist")
 
+=======
+>>>>>>> Updated this old code to fork
 /datum/uplink_item/role_restricted/clowncar
 	name = "Clown Car"
 	desc = "The Clown Car is the ultimate transportation method for any worthy clown! \
@@ -1828,7 +1968,10 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			manufactured to pack a little bit more of a punch if your client needs some convincing."
 	item = /obj/item/storage/secure/briefcase/syndie
 	cost = 1
+<<<<<<< HEAD
 	restricted = TRUE
+=======
+>>>>>>> Updated this old code to fork
 
 /datum/uplink_item/badass/syndiecards
 	name = "Syndicate Playing Cards"

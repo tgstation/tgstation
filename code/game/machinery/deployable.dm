@@ -15,7 +15,11 @@
 	density = TRUE
 	max_integrity = 100
 	var/proj_pass_rate = 50 //How many projectiles will pass the cover. Lower means stronger cover
+<<<<<<< HEAD
 	var/bar_material = METAL
+=======
+	var/material = METAL
+>>>>>>> Updated this old code to fork
 
 /obj/structure/barricade/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -26,7 +30,11 @@
 	return
 
 /obj/structure/barricade/attackby(obj/item/I, mob/user, params)
+<<<<<<< HEAD
 	if(I.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM && bar_material == METAL)
+=======
+	if(I.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM && material == METAL)
+>>>>>>> Updated this old code to fork
 		if(obj_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount=0))
 				return
@@ -61,7 +69,11 @@
 	desc = "This space is blocked off by a wooden barricade."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "woodenbarricade"
+<<<<<<< HEAD
 	bar_material = WOOD
+=======
+	material = WOOD
+>>>>>>> Updated this old code to fork
 	var/drop_amount = 3
 
 /obj/structure/barricade/wooden/attackby(obj/item/I, mob/user)
@@ -105,7 +117,11 @@
 	max_integrity = 280
 	proj_pass_rate = 20
 	pass_flags = LETPASSTHROW
+<<<<<<< HEAD
 	bar_material = SAND
+=======
+	material = SAND
+>>>>>>> Updated this old code to fork
 	climbable = TRUE
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/barricade/sandbags, /turf/closed/wall, /turf/closed/wall/r_wall, /obj/structure/falsewall, /obj/structure/falsewall/reinforced, /turf/closed/wall/rust, /turf/closed/wall/r_wall/rust, /obj/structure/barricade/security)
@@ -148,8 +164,13 @@
 	var/mode = SINGLE
 
 /obj/item/grenade/barrier/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	. += "<span class='notice'>Alt-click to toggle modes.</span>"
+=======
+	..()
+	to_chat(user, "<span class='notice'>Alt-click to toggle modes.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/item/grenade/barrier/AltClick(mob/living/carbon/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))

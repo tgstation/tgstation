@@ -180,7 +180,11 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "w" = (
+<<<<<<< HEAD
 /obj/structure/chair{
+=======
+/obj/structure/chair/office{
+>>>>>>> Updated this old code to fork
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -201,7 +205,11 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "y" = (
+<<<<<<< HEAD
 /obj/structure/chair{
+=======
+/obj/structure/chair/office{
+>>>>>>> Updated this old code to fork
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -287,9 +295,15 @@
 /area/space/nearstation)
 "M" = (
 /obj/structure/fluff/broken_flooring{
+<<<<<<< HEAD
 	dir = 8;
 	icon_state = "plating";
 	name = "broken plating"
+=======
+	name = "broken plating";
+	icon_state = "plating";
+	dir = 8
+>>>>>>> Updated this old code to fork
 	},
 /turf/template_noop,
 /area/space/nearstation)

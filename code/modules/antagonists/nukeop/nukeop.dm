@@ -23,12 +23,20 @@
 /datum/antagonist/nukeop/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	update_synd_icons_added(M)
+<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_DISK_VERIFIER, NUKEOP_TRAIT)
+=======
+	owner.add_trait(TRAIT_DISK_VERIFIER, NUKEOP_TRAIT)
+>>>>>>> Updated this old code to fork
 
 /datum/antagonist/nukeop/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	update_synd_icons_removed(M)
+<<<<<<< HEAD
 	REMOVE_TRAIT(owner, TRAIT_DISK_VERIFIER, NUKEOP_TRAIT)
+=======
+	owner.remove_trait(TRAIT_DISK_VERIFIER, NUKEOP_TRAIT)
+>>>>>>> Updated this old code to fork
 
 /datum/antagonist/nukeop/proc/equip_op()
 	if(!ishuman(owner.current))
@@ -53,6 +61,7 @@
 	memorize_code()
 	if(send_to_spawnpoint)
 		move_to_spawnpoint()
+<<<<<<< HEAD
 		// grant extra TC for the people who start in the nukie base ie. not the lone op
 		var/extra_tc = CEILING(GLOB.joined_player_list.len/5, 5)
 		var/datum/component/uplink/U = owner.find_syndicate_uplink()
@@ -60,6 +69,8 @@
 			U.telecrystals += extra_tc
 
 
+=======
+>>>>>>> Updated this old code to fork
 
 /datum/antagonist/nukeop/get_team()
 	return nuke_team
@@ -82,6 +93,7 @@
 
 /datum/antagonist/nukeop/proc/give_alias()
 	if(nuke_team && nuke_team.syndicate_name)
+<<<<<<< HEAD
 		var/mob/living/carbon/human/H = owner.current
 		if(istype(H)) // Reinforcements get a real name
 			var/chosen_name = H.dna.species.random_name(H.gender,0,nuke_team.syndicate_name)
@@ -92,6 +104,11 @@
 			owner.current.real_name = "[nuke_team.syndicate_name] Operative #[number]"
 
 
+=======
+		var/number = 1
+		number = nuke_team.members.Find(owner)
+		owner.current.real_name = "[nuke_team.syndicate_name] Operative #[number]"
+>>>>>>> Updated this old code to fork
 
 /datum/antagonist/nukeop/proc/memorize_code()
 	if(nuke_team && nuke_team.tracked_nuke && nuke_team.memorized_code)
@@ -248,7 +265,10 @@
 	var/obj/machinery/nuclearbomb/tracked_nuke
 	var/core_objective = /datum/objective/nuclear
 	var/memorized_code
+<<<<<<< HEAD
 	var/list/team_discounts
+=======
+>>>>>>> Updated this old code to fork
 
 /datum/team/nuclear/New()
 	..()

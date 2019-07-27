@@ -44,7 +44,11 @@
 
 /mob/living/simple_animal/hostile/illusion/examine(mob/user)
 	if(parent_mob)
+<<<<<<< HEAD
 		return parent_mob.examine(user)
+=======
+		parent_mob.examine(user)
+>>>>>>> Updated this old code to fork
 	else
 		return ..()
 

@@ -4,14 +4,22 @@
 	slices_num = 5
 	bitesize = 3
 	volume = 80
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5)
+=======
+	list_reagents = list("nutriment" = 20, "vitamin" = 5)
+>>>>>>> Updated this old code to fork
 	tastes = list("cake" = 1)
 	foodtype = GRAIN | DAIRY
 
 /obj/item/reagent_containers/food/snacks/cakeslice
 	icon = 'icons/obj/food/piecake.dmi'
 	trash = /obj/item/trash/plate
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
+=======
+	list_reagents = list("nutriment" = 4, "vitamin" = 1)
+>>>>>>> Updated this old code to fork
 	customfoodfilling = 0 //to avoid infinite cake-ception
 	tastes = list("cake" = 1)
 	foodtype = GRAIN | DAIRY
@@ -21,7 +29,11 @@
 	desc = "A plain cake, not a lie."
 	icon_state = "plaincake"
 	custom_food_type = /obj/item/reagent_containers/food/snacks/customizable/cake
+<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 2)
+=======
+	bonus_reagents = list("nutriment" = 10, "vitamin" = 2)
+>>>>>>> Updated this old code to fork
 	tastes = list("vanilla" = 1, "sweetness" = 2,"cake" = 5)
 	foodtype = GRAIN | DAIRY | SUGAR
 
@@ -40,8 +52,13 @@
 	icon_state = "carrotcake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/carrot
 	slices_num = 5
+<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/medicine/oculine = 5, /datum/reagent/consumable/nutriment/vitamin = 10)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/medicine/oculine = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
+=======
+	bonus_reagents = list("nutriment" = 3, "oculine" = 5, "vitamin" = 10)
+	list_reagents = list("nutriment" = 20, "oculine" = 10, "vitamin" = 5)
+>>>>>>> Updated this old code to fork
 	tastes = list("cake" = 5, "sweetness" = 2, "carrot" = 1)
 	foodtype = GRAIN | DAIRY | VEGETABLES | SUGAR
 
@@ -50,7 +67,11 @@
 	desc = "Carrotty slice of Carrot Cake, carrots are good for your eyes! Also not a lie."
 	icon_state = "carrotcake_slice"
 	filling_color = "#FFA500"
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/medicine/oculine = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
+=======
+	list_reagents = list("nutriment" = 4, "oculine" = 2, "vitamin" = 1)
+>>>>>>> Updated this old code to fork
 	tastes = list("cake" = 5, "sweetness" = 2, "carrot" = 1)
 	foodtype = GRAIN | DAIRY | VEGETABLES | SUGAR
 
@@ -61,8 +82,13 @@
 	icon_state = "braincake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/brain
 	slices_num = 5
+<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/medicine/mannitol = 10, /datum/reagent/consumable/nutriment/vitamin = 10)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/medicine/mannitol = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
+=======
+	bonus_reagents = list("nutriment" = 5, "mannitol" = 10, "vitamin" = 10)
+	list_reagents = list("nutriment" = 20, "mannitol" = 10, "vitamin" = 5)
+>>>>>>> Updated this old code to fork
 	tastes = list("cake" = 5, "sweetness" = 2, "brains" = 1)
 	foodtype = GRAIN | DAIRY | MEAT | GROSS | SUGAR
 
@@ -72,7 +98,11 @@
 	desc = "Lemme tell you something about prions. THEY'RE DELICIOUS."
 	icon_state = "braincakeslice"
 	filling_color = "#FF69B4"
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/medicine/mannitol = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
+=======
+	list_reagents = list("nutriment" = 4, "mannitol" = 2, "vitamin" = 1)
+>>>>>>> Updated this old code to fork
 	tastes = list("cake" = 5, "sweetness" = 2, "brains" = 1)
 	foodtype = GRAIN | DAIRY | MEAT | GROSS | SUGAR
 
@@ -82,7 +112,11 @@
 	icon_state = "cheesecake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/cheese
 	slices_num = 5
+<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 10)
+=======
+	bonus_reagents = list("vitamin" = 10)
+>>>>>>> Updated this old code to fork
 	tastes = list("cake" = 4, "cream cheese" = 3)
 	foodtype = GRAIN | DAIRY
 
@@ -102,7 +136,11 @@
 	icon_state = "orangecake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/orange
 	slices_num = 5
+<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 10)
+=======
+	bonus_reagents = list("nutriment" = 3, "vitamin" = 10)
+>>>>>>> Updated this old code to fork
 	tastes = list("cake" = 5, "sweetness" = 2, "oranges" = 2)
 	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
 
@@ -120,7 +158,11 @@
 	icon_state = "limecake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/lime
 	slices_num = 5
+<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 10)
+=======
+	bonus_reagents = list("nutriment" = 3, "vitamin" = 10)
+>>>>>>> Updated this old code to fork
 	tastes = list("cake" = 5, "sweetness" = 2, "unbearable sourness" = 2)
 	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
 
@@ -139,7 +181,11 @@
 	icon_state = "lemoncake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/lemon
 	slices_num = 5
+<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 10)
+=======
+	bonus_reagents = list("nutriment" = 3, "vitamin" = 10)
+>>>>>>> Updated this old code to fork
 	tastes = list("cake" = 5, "sweetness" = 2, "sourness" = 2)
 	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
 
@@ -159,7 +205,11 @@
 	icon_state = "chocolatecake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/chocolate
 	slices_num = 5
+<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 10)
+=======
+	bonus_reagents = list("nutriment" = 3, "vitamin" = 10)
+>>>>>>> Updated this old code to fork
 	tastes = list("cake" = 5, "sweetness" = 1, "chocolate" = 4)
 	foodtype = GRAIN | DAIRY | JUNKFOOD | SUGAR
 
@@ -179,6 +229,7 @@
 	icon_state = "birthdaycake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/birthday
 	slices_num = 5
+<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/sprinkles = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/sprinkles = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("cake" = 5, "sweetness" = 1)
@@ -188,12 +239,23 @@
 	new /obj/item/clothing/head/hardhat/cakehat(get_turf(src))
 	qdel(src)
 
+=======
+	bonus_reagents = list("nutriment" = 7, "sprinkles" = 10, "vitamin" = 5)
+	list_reagents = list("nutriment" = 20, "sprinkles" = 10, "vitamin" = 5)
+	tastes = list("cake" = 5, "sweetness" = 1)
+	foodtype = GRAIN | DAIRY | JUNKFOOD | SUGAR
+
+>>>>>>> Updated this old code to fork
 /obj/item/reagent_containers/food/snacks/cakeslice/birthday
 	name = "birthday cake slice"
 	desc = "A slice of your birthday."
 	icon_state = "birthdaycakeslice"
 	filling_color = "#DC143C"
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sprinkles = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
+=======
+	list_reagents = list("nutriment" = 4, "sprinkles" = 2, "vitamin" = 1)
+>>>>>>> Updated this old code to fork
 	tastes = list("cake" = 5, "sweetness" = 1)
 	foodtype = GRAIN | DAIRY | JUNKFOOD | SUGAR
 
@@ -204,7 +266,11 @@
 	icon_state = "applecake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/apple
 	slices_num = 5
+<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 10)
+=======
+	bonus_reagents = list("nutriment" = 3, "vitamin" = 10)
+>>>>>>> Updated this old code to fork
 	tastes = list("cake" = 5, "sweetness" = 1, "apple" = 1)
 	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
 
@@ -227,7 +293,11 @@
 	desc = "A cake made of slimes. Probably not electrified."
 	icon_state = "slimecake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/slimecake
+<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 3)
+=======
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 3)
+>>>>>>> Updated this old code to fork
 	tastes = list("cake" = 5, "sweetness" = 1, "slime" = 1)
 	foodtype = GRAIN | DAIRY | SUGAR
 
@@ -244,7 +314,11 @@
 	desc = "A hollow cake with real pumpkin."
 	icon_state = "pumpkinspicecake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/pumpkinspice
+<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 5)
+=======
+	bonus_reagents = list("nutriment" = 3, "vitamin" = 5)
+>>>>>>> Updated this old code to fork
 	tastes = list("cake" = 5, "sweetness" = 1, "pumpkin" = 1)
 	foodtype = GRAIN | DAIRY | VEGETABLES | SUGAR
 

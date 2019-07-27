@@ -1,6 +1,10 @@
 /datum/component/decal
 	dupe_mode = COMPONENT_DUPE_ALLOWED
+<<<<<<< HEAD
 	can_transfer = TRUE
+=======
+
+>>>>>>> Updated this old code to fork
 	var/cleanable
 	var/description
 	var/mutable_appearance/pic
@@ -71,5 +75,10 @@
 	if(strength >= cleanable)
 		qdel(src)
 
+<<<<<<< HEAD
 /datum/component/decal/proc/examine(datum/source, mob/user, list/examine_list)
 	examine_list += description
+=======
+/datum/component/decal/proc/examine(datum/source, mob/user)
+	to_chat(user, description)
+>>>>>>> Updated this old code to fork

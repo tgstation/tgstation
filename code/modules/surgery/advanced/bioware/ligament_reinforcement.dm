@@ -18,6 +18,7 @@
 	time = 125
 
 /datum/surgery_step/reinforce_ligaments/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+<<<<<<< HEAD
 	display_results(user, target, "<span class='notice'>You start reinforcing [target]'s ligaments.</span>",
 		"[user] starts reinforce [target]'s ligaments.",
 		"[user] starts manipulating [target]'s ligaments.")
@@ -26,6 +27,12 @@
 	display_results(user, target, "<span class='notice'>You reinforce [target]'s ligaments!</span>",
 		"[user] reinforces [target]'s ligaments!",
 		"[user] finishes manipulating [target]'s ligaments.")
+=======
+	user.visible_message("[user] starts reinforce [target]'s ligaments.", "<span class='notice'>You start reinforcing [target]'s ligaments.</span>")
+
+/datum/surgery_step/reinforce_ligaments/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	user.visible_message("[user] reinforces [target]'s ligaments!", "<span class='notice'>You reinforce [target]'s ligaments!</span>")
+>>>>>>> Updated this old code to fork
 	new /datum/bioware/reinforced_ligaments(target)
 	return TRUE
 
@@ -36,6 +43,7 @@
 
 /datum/bioware/reinforced_ligaments/on_gain()
 	..()
+<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_NODISMEMBER, "reinforced_ligaments")
 	ADD_TRAIT(owner, TRAIT_EASYLIMBDISABLE, "reinforced_ligaments")
 
@@ -43,3 +51,12 @@
 	..()
 	REMOVE_TRAIT(owner, TRAIT_NODISMEMBER, "reinforced_ligaments")
 	REMOVE_TRAIT(owner, TRAIT_EASYLIMBDISABLE, "reinforced_ligaments")
+=======
+	owner.add_trait(TRAIT_NODISMEMBER, "reinforced_ligaments")
+	owner.add_trait(TRAIT_EASYLIMBDISABLE, "reinforced_ligaments")
+
+/datum/bioware/reinforced_ligaments/on_lose()
+	..()
+	owner.remove_trait(TRAIT_NODISMEMBER, "reinforced_ligaments")
+	owner.remove_trait(TRAIT_EASYLIMBDISABLE, "reinforced_ligaments")
+>>>>>>> Updated this old code to fork

@@ -3,16 +3,21 @@
 	name = "secway"
 	desc = "A brave security cyborg gave its life to help you look like a complete tool."
 	icon_state = "secway"
+<<<<<<< HEAD
 	max_integrity = 100
 	armor = list("melee" = 20, "bullet" = 15, "laser" = 10, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
 	key_type = /obj/item/key/security
 	integrity_failure = 50
+=======
+	key_type = /obj/item/key/security
+>>>>>>> Updated this old code to fork
 
 /obj/vehicle/ridden/secway/Initialize()
 	. = ..()
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 	D.vehicle_move_delay = 1.5
 	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(0, 4), TEXT_WEST = list( 0, 4)))
+<<<<<<< HEAD
 
 /obj/vehicle/ridden/secway/obj_break()
 	START_PROCESSING(SSobj, src)
@@ -52,3 +57,5 @@
 			M.bullet_act(P)
 		return TRUE
 	return ..()
+=======
+>>>>>>> Updated this old code to fork

@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> Updated this old code to fork
 /mob/living/simple_animal/hostile/carp/eyeball
 	name = "eyeball"
 	desc = "An odd looking creature, it won't stop staring..."
@@ -24,5 +29,9 @@
 	movement_type = FLYING
 
 	faction = list("spooky")
+<<<<<<< HEAD
 	del_on_death = 1
 	random_color = FALSE
+=======
+	del_on_death = 1
+>>>>>>> Updated this old code to fork

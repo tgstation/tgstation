@@ -31,7 +31,10 @@
 
 /obj/machinery/computer/camera_advanced/syndie
 	icon_keyboard = "syndie_key"
+<<<<<<< HEAD
 	circuit = /obj/item/circuitboard/computer/advanced_camera
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/computer/camera_advanced/proc/CreateEye()
 	eyeobj = new()
@@ -48,10 +51,14 @@
 		jump_action.Grant(user)
 		actions += jump_action
 
+<<<<<<< HEAD
 /obj/machinery/proc/remove_eye_control(mob/living/user)
 	CRASH("[type] does not implement ai eye handling")
 
 /obj/machinery/computer/camera_advanced/remove_eye_control(mob/living/user)
+=======
+/obj/machinery/computer/camera_advanced/proc/remove_eye_control(mob/living/user)
+>>>>>>> Updated this old code to fork
 	if(!user)
 		return
 	for(var/V in actions)
@@ -103,7 +110,11 @@
 	if(!is_operational()) //you cant use broken machine you chumbis
 		return
 	if(current_user)
+<<<<<<< HEAD
 		to_chat(user, "<span class='warning'>The console is already in use!</span>")
+=======
+		to_chat(user, "The console is already in use!")
+>>>>>>> Updated this old code to fork
 		return
 	var/mob/living/L = user
 
@@ -163,7 +174,11 @@
 	var/cooldown = 0
 	var/acceleration = 1
 	var/mob/living/eye_user = null
+<<<<<<< HEAD
 	var/obj/machinery/origin
+=======
+	var/obj/machinery/computer/camera_advanced/origin
+>>>>>>> Updated this old code to fork
 	var/eye_initialized = 0
 	var/visible_icon = 0
 	var/image/user_image = null
@@ -176,7 +191,11 @@
 
 /mob/camera/aiEye/remote/Destroy()
 	if(origin && eye_user)
+<<<<<<< HEAD
 		origin.remove_eye_control(eye_user,src)
+=======
+		origin.remove_eye_control(eye_user)
+>>>>>>> Updated this old code to fork
 	origin = null
 	. = ..()
 	eye_user = null

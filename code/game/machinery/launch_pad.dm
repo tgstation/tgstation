@@ -6,7 +6,10 @@
 	use_power = TRUE
 	idle_power_usage = 200
 	active_power_usage = 2500
+<<<<<<< HEAD
 	hud_possible = list(DIAG_LAUNCHPAD_HUD)
+=======
+>>>>>>> Updated this old code to fork
 	circuit = /obj/item/circuitboard/machine/launchpad
 	var/icon_teleport = "lpad-beam"
 	var/stationary = TRUE //to prevent briefcase pad deconstruction and such
@@ -17,6 +20,7 @@
 	var/power_efficiency = 1
 	var/x_offset = 0
 	var/y_offset = 0
+<<<<<<< HEAD
 	var/indicator_icon = "launchpad_target"
 
 /obj/machinery/launchpad/RefreshParts()
@@ -50,11 +54,28 @@
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: Maximum range: <b>[range]</b> units.</span>"
+=======
+
+/obj/machinery/launchpad/RefreshParts()
+	var/E = -1 //to make default parts have the base value
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
+		E += M.rating
+	range = initial(range)
+	range += E
+
+/obj/machinery/launchpad/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Maximum range: <b>[range]</b> units.<span>")
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/launchpad/attackby(obj/item/I, mob/user, params)
 	if(stationary)
 		if(default_deconstruction_screwdriver(user, "lpad-idle-o", "lpad-idle", I))
+<<<<<<< HEAD
 			update_indicator()
+=======
+>>>>>>> Updated this old code to fork
 			return
 
 		if(panel_open)
@@ -78,6 +99,7 @@
 		return FALSE
 	return TRUE
 
+<<<<<<< HEAD
 /obj/machinery/launchpad/proc/update_indicator()
 	var/image/holder = hud_list[DIAG_LAUNCHPAD_HUD]
 	var/turf/target_turf
@@ -89,6 +111,8 @@
 	else
 		holder.icon_state = null
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/machinery/launchpad/proc/doteleport(mob/user, sending)
 	if(teleporting)
 		to_chat(user, "<span class='warning'>ERROR: Launchpad busy.</span>")
@@ -106,6 +130,7 @@
 	var/area/A = get_area(target)
 
 	flick(icon_teleport, src)
+<<<<<<< HEAD
 
 	//Change the indicator's icon to show that we're teleporting
 	if(sending)
@@ -114,16 +139,21 @@
 		indicator_icon = "launchpad_pull"
 	update_indicator()
 
+=======
+>>>>>>> Updated this old code to fork
 	playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, 1)
 	teleporting = TRUE
 
 
 	sleep(teleport_speed)
 
+<<<<<<< HEAD
 	//Set the indicator icon back to normal
 	indicator_icon = "launchpad_target"
 	update_indicator()
 
+=======
+>>>>>>> Updated this old code to fork
 	if(QDELETED(src) || !isAvailable())
 		return
 
@@ -234,7 +264,10 @@
 			usr.put_in_hands(briefcase)
 			moveToNullspace() //hides it from suitcase contents
 			closed = TRUE
+<<<<<<< HEAD
 			update_indicator()
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/launchpad/briefcase/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/launchpad_remote))
@@ -270,7 +303,10 @@
 	user.visible_message("<span class='notice'>[user] starts setting down [src]...", "You start setting up [pad]...</span>")
 	if(do_after(user, 30, target = user))
 		pad.forceMove(get_turf(src))
+<<<<<<< HEAD
 		pad.update_indicator()
+=======
+>>>>>>> Updated this old code to fork
 		pad.closed = FALSE
 		user.transferItemToLoc(src, pad, TRUE)
 		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_HIDE_ALL)
@@ -341,6 +377,7 @@
 		return
 	switch(action)
 		if("right")
+<<<<<<< HEAD
 			if(!pad.teleporting)
 				if(pad.x_offset < pad.range)
 					pad.x_offset++
@@ -409,6 +446,58 @@
 				pad.y_offset = 0
 				pad.x_offset = 0
 				pad.update_indicator()
+=======
+			if(pad.x_offset < pad.range)
+				pad.x_offset++
+			. = TRUE
+
+		if("left")
+			if(pad.x_offset > (pad.range * -1))
+				pad.x_offset--
+			. = TRUE
+
+		if("up")
+			if(pad.y_offset < pad.range)
+				pad.y_offset++
+			. = TRUE
+
+		if("down")
+			if(pad.y_offset > (pad.range * -1))
+				pad.y_offset--
+			. = TRUE
+
+		if("up-right")
+			if(pad.y_offset < pad.range)
+				pad.y_offset++
+			if(pad.x_offset < pad.range)
+				pad.x_offset++
+			. = TRUE
+
+		if("up-left")
+			if(pad.y_offset < pad.range)
+				pad.y_offset++
+			if(pad.x_offset > (pad.range * -1))
+				pad.x_offset--
+			. = TRUE
+
+		if("down-right")
+			if(pad.y_offset > (pad.range * -1))
+				pad.y_offset--
+			if(pad.x_offset < pad.range)
+				pad.x_offset++
+			. = TRUE
+
+		if("down-left")
+			if(pad.y_offset > (pad.range * -1))
+				pad.y_offset--
+			if(pad.x_offset > (pad.range * -1))
+				pad.x_offset--
+			. = TRUE
+
+		if("reset")
+			pad.y_offset = 0
+			pad.x_offset = 0
+>>>>>>> Updated this old code to fork
 			. = TRUE
 
 		if("rename")

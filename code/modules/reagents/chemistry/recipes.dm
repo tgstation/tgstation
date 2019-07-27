@@ -20,7 +20,11 @@
 	return
 	//I recommend you set the result amount to the total volume of all components.
 
+<<<<<<< HEAD
 /datum/chemical_reaction/proc/chemical_mob_spawn(datum/reagents/holder, amount_to_spawn, reaction_name, mob_class = HOSTILE_SPAWN, mob_faction = "chemicalsummon", random = TRUE)
+=======
+/datum/chemical_reaction/proc/chemical_mob_spawn(datum/reagents/holder, amount_to_spawn, reaction_name, mob_class = HOSTILE_SPAWN, mob_faction = "chemicalsummon")
+>>>>>>> Updated this old code to fork
 	if(holder && holder.my_atom)
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
@@ -42,16 +46,21 @@
 			C.flash_act()
 
 		for(var/i in 1 to amount_to_spawn)
+<<<<<<< HEAD
 			var/mob/living/simple_animal/S
 			if(random)
 				S = create_random_mob(get_turf(holder.my_atom), mob_class)
 			else
 				S = new mob_class(get_turf(holder.my_atom))//Spawn our specific mob_class
+=======
+			var/mob/living/simple_animal/S = create_random_mob(get_turf(holder.my_atom), mob_class)
+>>>>>>> Updated this old code to fork
 			S.faction |= mob_faction
 			if(prob(50))
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(S, pick(NORTH,SOUTH,EAST,WEST))
 
+<<<<<<< HEAD
 ///Simulates a vortex that moves nearby movable atoms towards or away from the turf T. Range also determines the strength of the effect. High values cause nearby objects to be thrown.
 /proc/goonchem_vortex(turf/T, setting_type, range)
 	for(var/atom/movable/X in orange(range, T))
@@ -74,3 +83,30 @@
 			else
 				if(step_towards(X, T) && moving_power > 1)
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/_step_towards, X, T), 2)
+=======
+/datum/chemical_reaction/proc/goonchem_vortex(turf/T, setting_type, range)
+	for(var/atom/movable/X in orange(range, T))
+		if(iseffect(X))
+			continue
+		if(!X.anchored)
+			var/distance = get_dist(X, T)
+			var/moving_power = max(range - distance, 1)
+			if(moving_power > 2) //if the vortex is powerful and we're close, we get thrown
+				if(setting_type)
+					var/atom/throw_target = get_edge_target_turf(X, get_dir(X, get_step_away(X, T)))
+					X.throw_at(throw_target, moving_power, 1)
+				else
+					X.throw_at(T, moving_power, 1)
+			else
+				spawn(0) //so everything moves at the same time.
+					if(setting_type)
+						for(var/i = 0, i < moving_power, i++)
+							sleep(2)
+							if(!step_away(X, T))
+								break
+					else
+						for(var/i = 0, i < moving_power, i++)
+							sleep(2)
+							if(!step_towards(X, T))
+								break
+>>>>>>> Updated this old code to fork

@@ -31,7 +31,11 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor/inverted/Initialize(mapload)
 	. = ..()
 	if(mapload && !(dir in GLOB.diagonals))
+<<<<<<< HEAD
 		log_mapping("[src] at [AREACOORD(src)] spawned without using a diagonal dir. Please replace with a normal version.")
+=======
+		log_game("### MAPPING ERROR: [src] at [AREACOORD(src)] spawned without using a diagonal dir. Please replace with a normal version.")
+>>>>>>> Updated this old code to fork
 
 // Auto conveyour is always on unless unpowered
 
@@ -352,7 +356,11 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		return
 	var/cdir = get_dir(A, user)
 	if(A == user.loc)
+<<<<<<< HEAD
 		to_chat(user, "<span class='warning'>You cannot place a conveyor belt under yourself!</span>")
+=======
+		to_chat(user, "<span class='notice'>You cannot place a conveyor belt under yourself.</span>")
+>>>>>>> Updated this old code to fork
 		return
 	var/obj/machinery/conveyor/C = new/obj/machinery/conveyor(A, cdir, id)
 	transfer_fingerprints_to(C)
@@ -370,11 +378,14 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. = ..()
 	id = "[rand()]" //this couldn't possibly go wrong
 
+<<<<<<< HEAD
 /obj/item/conveyor_switch_construct/attack_self(mob/user)
 	for(var/obj/item/conveyor_construct/C in view())
 		C.id = id
 	to_chat(user, "<span class='notice'>You have linked all nearby conveyor belt assemblies to this switch.</span>")
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/item/conveyor_switch_construct/afterattack(atom/A, mob/user, proximity)
 	. = ..()
 	if(!proximity || user.stat || !isfloorturf(A) || istype(A, /area/shuttle))

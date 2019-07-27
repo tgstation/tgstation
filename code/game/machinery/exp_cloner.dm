@@ -42,6 +42,7 @@
 	icon_state = "pod_1"
 	//Get the clone body ready
 	maim_clone(H)
+<<<<<<< HEAD
 	ADD_TRAIT(H, TRAIT_STABLEHEART, CLONING_POD_TRAIT)
 	ADD_TRAIT(H, TRAIT_STABLELIVER, CLONING_POD_TRAIT)
 	ADD_TRAIT(H, TRAIT_EMOTEMUTE, CLONING_POD_TRAIT)
@@ -51,6 +52,16 @@
 	H.Unconscious(80)
 
 	var/list/candidates = pollCandidatesForMob("Do you want to play as [clonename]'s defective clone?", null, null, null, 100, H, POLL_IGNORE_DEFECTIVECLONE)
+=======
+	H.add_trait(TRAIT_STABLEHEART, "cloning")
+	H.add_trait(TRAIT_EMOTEMUTE, "cloning")
+	H.add_trait(TRAIT_MUTE, "cloning")
+	H.add_trait(TRAIT_NOBREATH, "cloning")
+	H.add_trait(TRAIT_NOCRITDAMAGE, "cloning")
+	H.Unconscious(80)
+
+	var/list/candidates = pollCandidatesForMob("Do you want to play as [clonename]'s defective clone?", null, null, null, 100, H)
+>>>>>>> Updated this old code to fork
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		H.key = C.key
@@ -271,11 +282,19 @@
 		scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
+<<<<<<< HEAD
 	if((HAS_TRAIT(mob_occupant, TRAIT_HUSK)) && (src.scanner.scan_level < 2))
 		scantemp = "<font class='bad'>Subject's body is too damaged to scan properly.</font>"
 		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 		return
 	if(HAS_TRAIT(mob_occupant, TRAIT_BADDNA))
+=======
+	if((mob_occupant.has_trait(TRAIT_HUSK)) && (src.scanner.scan_level < 2))
+		scantemp = "<font class='bad'>Subject's body is too damaged to scan properly.</font>"
+		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
+		return
+	if(mob_occupant.has_trait(TRAIT_BADDNA))
+>>>>>>> Updated this old code to fork
 		scantemp = "<font class='bad'>Subject's DNA is damaged beyond any hope of recovery.</font>"
 		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 		return

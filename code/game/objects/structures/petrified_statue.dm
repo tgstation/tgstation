@@ -17,7 +17,11 @@
 			L.buckled.unbuckle_mob(L,force=1)
 		L.visible_message("<span class='warning'>[L]'s skin rapidly turns to marble!</span>", "<span class='userdanger'>Your body freezes up! Can't... move... can't...  think...</span>")
 		L.forceMove(src)
+<<<<<<< HEAD
 		ADD_TRAIT(L, TRAIT_MUTE, STATUE_MUTE)
+=======
+		L.add_trait(TRAIT_MUTE, STATUE_MUTE)
+>>>>>>> Updated this old code to fork
 		L.faction += "mimic" //Stops mimics from instaqdeling people in statues
 		L.status_flags |= GODMODE
 		obj_integrity = L.health + 100 //stoning damaged mobs will result in easier to shatter statues
@@ -59,7 +63,11 @@
 	if(petrified_mob)
 		petrified_mob.status_flags &= ~GODMODE
 		petrified_mob.forceMove(loc)
+<<<<<<< HEAD
 		REMOVE_TRAIT(petrified_mob, TRAIT_MUTE, STATUE_MUTE)
+=======
+		petrified_mob.remove_trait(TRAIT_MUTE, STATUE_MUTE)
+>>>>>>> Updated this old code to fork
 		petrified_mob.take_overall_damage((petrified_mob.health - obj_integrity + 100)) //any new damage the statue incurred is transfered to the mob
 		petrified_mob.faction -= "mimic"
 		petrified_mob = null

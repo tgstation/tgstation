@@ -49,8 +49,11 @@
 		var/datum/track/T = new()
 		T.song_path = file("config/jukebox_music/sounds/[S]")
 		var/list/L = splittext(S,"+")
+<<<<<<< HEAD
 		if(L.len != 3)
 			continue
+=======
+>>>>>>> Updated this old code to fork
 		T.song_name = L[1]
 		T.song_length = text2num(L[2])
 		T.song_beat = text2num(L[3])

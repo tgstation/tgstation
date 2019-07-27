@@ -8,6 +8,7 @@
 	icon_state = "iv_drip"
 	anchored = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
+<<<<<<< HEAD
 	var/mob/living/carbon/attached
 	var/mode = IV_INJECTING
 	var/obj/item/reagent_containers/beaker
@@ -17,6 +18,16 @@
 									/obj/item/reagent_containers/chem_pack))
 
 /obj/machinery/iv_drip/Initialize(mapload)
+=======
+	var/mob/living/carbon/attached = null
+	var/mode = IV_INJECTING
+	var/obj/item/reagent_containers/beaker = null
+	var/static/list/drip_containers = typecacheof(list(/obj/item/reagent_containers/blood,
+									/obj/item/reagent_containers/food,
+									/obj/item/reagent_containers/glass))
+
+/obj/machinery/iv_drip/Initialize()
+>>>>>>> Updated this old code to fork
 	. = ..()
 	update_icon()
 
@@ -134,7 +145,13 @@
 				if(istype(beaker, /obj/item/reagent_containers/blood))
 					// speed up transfer on blood packs
 					transfer_amount = 10
+<<<<<<< HEAD
 				beaker.reagents.trans_to(attached, transfer_amount, method = INJECT, show_message = FALSE) //make reagents reacts, but don't spam messages
+=======
+				var/fraction = min(transfer_amount/beaker.reagents.total_volume, 1) //the fraction that is transfered of the total volume
+				beaker.reagents.reaction(attached, INJECT, fraction, FALSE) //make reagents reacts, but don't spam messages
+				beaker.reagents.trans_to(attached, transfer_amount)
+>>>>>>> Updated this old code to fork
 				update_icon()
 
 		// Take blood
@@ -150,7 +167,11 @@
 			// If the human is losing too much blood, beep.
 			if(attached.blood_volume < BLOOD_VOLUME_SAFE && prob(5))
 				visible_message("[src] beeps loudly.")
+<<<<<<< HEAD
 				playsound(loc, 'sound/machines/twobeep_high.ogg', 50, 1)
+=======
+				playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
+>>>>>>> Updated this old code to fork
 			attached.transfer_blood_to(beaker, amount)
 			update_icon()
 
@@ -181,6 +202,10 @@
 
 	if(usr.incapacitated())
 		return
+<<<<<<< HEAD
+=======
+
+>>>>>>> Updated this old code to fork
 	if(beaker)
 		beaker.forceMove(drop_location())
 		beaker = null
@@ -197,11 +222,16 @@
 
 	if(usr.incapacitated())
 		return
+<<<<<<< HEAD
+=======
+
+>>>>>>> Updated this old code to fork
 	mode = !mode
 	to_chat(usr, "The IV drip is now [mode ? "injecting" : "taking blood"].")
 	update_icon()
 
 /obj/machinery/iv_drip/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(get_dist(user, src) > 2)
 		return
@@ -238,3 +268,23 @@
 	return
 #undef IV_TAKING
 #undef IV_INJECTING
+=======
+	..()
+	if(get_dist(user, src) > 2)
+		return
+
+	to_chat(user, "The IV drip is [mode ? "injecting" : "taking blood"].")
+
+	if(beaker)
+		if(beaker.reagents && beaker.reagents.reagent_list.len)
+			to_chat(user, "<span class='notice'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>")
+		else
+			to_chat(user, "<span class='notice'>Attached is an empty [beaker.name].</span>")
+	else
+		to_chat(user, "<span class='notice'>No chemicals are attached.</span>")
+
+	to_chat(user, "<span class='notice'>[attached ? attached : "No one"] is attached.</span>")
+
+#undef IV_TAKING
+#undef IV_INJECTING
+>>>>>>> Updated this old code to fork

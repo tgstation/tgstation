@@ -59,7 +59,13 @@
 		return
 	var/area/AS = get_area(src)
 	if(istype(AS, /area/holodeck))
+<<<<<<< HEAD
 		log_mapping("Holodeck computer cannot be in a holodeck, This would cause circular power dependency.")
+=======
+		log_world("### MAPPING ERROR")
+		log_world("Holodeck computer cannot be in a holodeck.")
+		log_world("This would cause circular power dependency.")
+>>>>>>> Updated this old code to fork
 		qdel(src)
 		return
 	else
@@ -105,6 +111,7 @@
 			var/program_to_load = text2path(params["type"])
 			if(!ispath(program_to_load))
 				return FALSE
+<<<<<<< HEAD
 			var/valid = FALSE
 			var/list/checked = program_cache
 			if(obj_flags & EMAGGED)
@@ -117,6 +124,8 @@
 			if(!valid)
 				return FALSE
 
+=======
+>>>>>>> Updated this old code to fork
 			var/area/A = locate(program_to_load) in GLOB.sortedAreas
 			if(A)
 				load_program(A)

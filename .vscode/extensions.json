@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
     "recommendations": [
         "gbasood.byond-dm-language-support",
@@ -5,3 +6,12 @@
         "EditorConfig.EditorConfig"
     ]
 }
+=======
+{
+    "recommendations": [
+        "gbasood.byond-dm-language-support",
+        "platymuus.dm-langclient",
+        "EditorConfig.EditorConfig"
+    ]
+}
+>>>>>>> Updated this old code to fork

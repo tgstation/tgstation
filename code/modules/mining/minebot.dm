@@ -68,12 +68,17 @@
 	check_friendly_fire = 0
 
 /mob/living/simple_animal/hostile/mining_drone/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
+=======
+	..()
+>>>>>>> Updated this old code to fork
 	var/t_He = p_they(TRUE)
 	var/t_him = p_them()
 	var/t_s = p_s()
 	if(health < maxHealth)
 		if(health >= maxHealth * 0.5)
+<<<<<<< HEAD
 			. += "<span class='warning'>[t_He] look[t_s] slightly dented.</span>"
 		else
 			. += "<span class='boldwarning'>[t_He] look[t_s] severely dented!</span>"
@@ -84,11 +89,27 @@
 		for(var/A in stored_gun.get_modkits())
 			var/obj/item/borg/upgrade/modkit/M = A
 			. += "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>"
+=======
+			to_chat(user, "<span class='warning'>[t_He] look[t_s] slightly dented.</span>")
+		else
+			to_chat(user, "<span class='boldwarning'>[t_He] look[t_s] severely dented!</span>")
+	to_chat(user, "<span class='notice'>Using a mining scanner on [t_him] will instruct [t_him] to drop stored ore. <b>[max(0, LAZYLEN(contents) - 1)] Stored Ore</b>\n\
+	Field repairs can be done with a welder.")
+	if(stored_gun && stored_gun.max_mod_capacity)
+		to_chat(user, "<b>[stored_gun.get_remaining_mod_capacity()]%</b> mod capacity remaining.")
+		for(var/A in stored_gun.get_modkits())
+			var/obj/item/borg/upgrade/modkit/M = A
+			to_chat(user, "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>")
+>>>>>>> Updated this old code to fork
 
 /mob/living/simple_animal/hostile/mining_drone/welder_act(mob/living/user, obj/item/I)
 	. = TRUE
 	if(mode == MINEDRONE_ATTACK)
+<<<<<<< HEAD
 		to_chat(user, "<span class='warning'>[src] can't be repaired while in attack mode!</span>")
+=======
+		to_chat(user, "<span class='info'>[src] can't be repaired while in attack mode!</span>")
+>>>>>>> Updated this old code to fork
 		return
 
 	if(maxHealth == health)
@@ -184,7 +205,11 @@
 /mob/living/simple_animal/hostile/mining_drone/proc/DropOre(message = 1)
 	if(!contents.len)
 		if(message)
+<<<<<<< HEAD
 			to_chat(src, "<span class='warning'>You attempt to dump your stored ore, but you have none!</span>")
+=======
+			to_chat(src, "<span class='notice'>You attempt to dump your stored ore, but you have none.</span>")
+>>>>>>> Updated this old code to fork
 		return
 	if(message)
 		to_chat(src, "<span class='notice'>You dump your stored ore.</span>")
@@ -277,7 +302,11 @@
 
 /obj/item/mine_bot_upgrade/proc/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
 	if(M.melee_damage_upper != initial(M.melee_damage_upper))
+<<<<<<< HEAD
 		to_chat(user, "<span class='warning'>[src] already has a combat upgrade installed!</span>")
+=======
+		to_chat(user, "[src] already has a combat upgrade installed!")
+>>>>>>> Updated this old code to fork
 		return
 	M.melee_damage_lower += 7
 	M.melee_damage_upper += 7
@@ -290,7 +319,11 @@
 
 /obj/item/mine_bot_upgrade/health/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
 	if(M.maxHealth != initial(M.maxHealth))
+<<<<<<< HEAD
 		to_chat(user, "<span class='warning'>[src] already has reinforced armor!</span>")
+=======
+		to_chat(user, "[src] already has reinforced armor!")
+>>>>>>> Updated this old code to fork
 		return
 	M.maxHealth += 45
 	M.updatehealth()

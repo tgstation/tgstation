@@ -8,8 +8,11 @@ GLOBAL_PROTECT(exp_to_update)
 		return 0
 	if(!CONFIG_GET(flag/use_exp_tracking))
 		return 0
+<<<<<<< HEAD
 	if(!SSdbcore.Connect())
 		return 0
+=======
+>>>>>>> Updated this old code to fork
 	if(!exp_requirements || !exp_type)
 		return 0
 	if(!job_is_xp_locked(src.title))

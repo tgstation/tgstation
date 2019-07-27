@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // trait accessor defines
 #define ADD_TRAIT(target, trait, source) \
 	do { \
@@ -58,6 +59,8 @@
 
 
 
+=======
+>>>>>>> Updated this old code to fork
 //mob traits
 #define TRAIT_BLIND 			"blind"
 #define TRAIT_MUTE				"mute"
@@ -82,7 +85,10 @@
 #define TRAIT_PUSHIMMUNE		"push_immunity"
 #define TRAIT_SHOCKIMMUNE		"shock_immunity"
 #define TRAIT_STABLEHEART		"stable_heart"
+<<<<<<< HEAD
 #define TRAIT_STABLELIVER		"stable_liver"
+=======
+>>>>>>> Updated this old code to fork
 #define TRAIT_RESISTHEAT		"resist_heat"
 #define TRAIT_RESISTHEATHANDS	"resist_heat_handsonly" //For when you want to be able to touch hot things, but still want fire to be an issue.
 #define TRAIT_RESISTCOLD		"resist_cold"
@@ -95,8 +101,11 @@
 #define TRAIT_NOFIRE			"nonflammable"
 #define TRAIT_NOGUNS			"no_guns"
 #define TRAIT_NOHUNGER			"no_hunger"
+<<<<<<< HEAD
 #define TRAIT_NOMETABOLISM		"no_metabolism"
 #define TRAIT_TOXIMMUNE			"toxin_immune"
+=======
+>>>>>>> Updated this old code to fork
 #define TRAIT_EASYDISMEMBER		"easy_dismember"
 #define TRAIT_LIMBATTACHMENT 	"limb_attach"
 #define TRAIT_NOLIMBDISABLE		"no_limb_disable"
@@ -126,19 +135,29 @@
 #define TRAIT_DISK_VERIFIER     "disk-verifier"
 #define TRAIT_NOMOBSWAP         "no-mob-swap"
 #define TRAIT_XRAY_VISION       "xray_vision"
+<<<<<<< HEAD
 #define TRAIT_THERMAL_VISION    "thermal_vision"
+=======
+>>>>>>> Updated this old code to fork
 #define TRAIT_ABDUCTOR_TRAINING "abductor-training"
 #define TRAIT_ABDUCTOR_SCIENTIST_TRAINING "abductor-scientist-training"
 #define TRAIT_SURGEON           "surgeon"
 #define	TRAIT_STRONG_GRABBER	"strong_grabber"
+<<<<<<< HEAD
+=======
+#define	TRAIT_CALCIUM_HEALER	"calcium_healer"
+>>>>>>> Updated this old code to fork
 #define	TRAIT_MAGIC_CHOKE		"magic_choke"
 #define TRAIT_SOOTHED_THROAT    "soothed-throat"
 #define TRAIT_LAW_ENFORCEMENT_METABOLISM "law-enforcement-metabolism"
 #define TRAIT_ALWAYS_CLEAN      "always-clean"
 #define TRAIT_BOOZE_SLIDER      "booze-slider"
 #define TRAIT_UNINTELLIGIBLE_SPEECH "unintelligible-speech"
+<<<<<<< HEAD
 #define TRAIT_UNSTABLE			"unstable"
 #define TRAIT_OIL_FRIED			"oil_fried"
+=======
+>>>>>>> Updated this old code to fork
 
 //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
@@ -148,7 +167,10 @@
 #define TRAIT_T_RAY_VISIBLE     "t-ray-visible" // Visible on t-ray scanners if the atom/var/level == 1
 #define TRAIT_NO_TELEPORT		"no-teleport" //you just can't
 
+<<<<<<< HEAD
 //quirk traits
+=======
+>>>>>>> Updated this old code to fork
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
 #define TRAIT_AGEUSIA			"ageusia"
 #define TRAIT_HEAVY_SLEEPER		"heavy_sleeper"
@@ -161,14 +183,22 @@
 #define TRAIT_SKITTISH			"skittish"
 #define TRAIT_POOR_AIM			"poor_aim"
 #define TRAIT_PROSOPAGNOSIA		"prosopagnosia"
+<<<<<<< HEAD
+=======
+#define	TRAIT_NEET				"NEET"
+#define	TRAIT_NEAT				"neat"
+>>>>>>> Updated this old code to fork
 #define TRAIT_DRUNK_HEALING		"drunk_healing"
 #define TRAIT_TAGGER			"tagger"
 #define TRAIT_PHOTOGRAPHER		"photographer"
 #define TRAIT_MUSICIAN			"musician"
 #define TRAIT_LIGHT_DRINKER		"light_drinker"
+<<<<<<< HEAD
 #define TRAIT_EMPATH			"empath"
 #define TRAIT_FRIENDLY			"friendly"
 #define TRAIT_GRABWEAKNESS		"grab_weakness"
+=======
+>>>>>>> Updated this old code to fork
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
@@ -227,4 +257,7 @@
 #define LOCKED_HELMET_TRAIT "locked-helmet"
 #define NINJA_SUIT_TRAIT "ninja-suit"
 #define ANTI_DROP_IMPLANT_TRAIT "anti-drop-implant"
+<<<<<<< HEAD
 #define VR_ZONE_TRAIT "vr_zone_trait"
+=======
+>>>>>>> Updated this old code to fork

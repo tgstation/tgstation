@@ -487,14 +487,32 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bD" = (
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/stasis,
+=======
+/obj/machinery/sleeper{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"bE" = (
+/obj/machinery/sleeper{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bF" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/brute,
+<<<<<<< HEAD
 /obj/item/storage/firstaid/regular{
+=======
+/obj/item/storage/firstaid{
+>>>>>>> Updated this old code to fork
 	pixel_x = 2;
 	pixel_y = 3
 	},
@@ -575,6 +593,7 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
+<<<<<<< HEAD
 "iJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -587,6 +606,8 @@
 /obj/structure/table/optable,
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
+=======
+>>>>>>> Updated this old code to fork
 
 (1,1,1) = {"
 aa
@@ -799,7 +820,11 @@ ax
 ax
 ad
 bA
+<<<<<<< HEAD
 bD
+=======
+bE
+>>>>>>> Updated this old code to fork
 bA
 bK
 bL
@@ -848,7 +873,11 @@ ax
 bw
 bB
 bB
+<<<<<<< HEAD
 bF
+=======
+bB
+>>>>>>> Updated this old code to fork
 bK
 bL
 "}
@@ -895,7 +924,11 @@ ax
 ax
 ad
 bC
+<<<<<<< HEAD
 iJ
+=======
+bF
+>>>>>>> Updated this old code to fork
 ad
 ad
 aa
@@ -918,7 +951,11 @@ bk
 bP
 bt
 ab
+<<<<<<< HEAD
 wq
+=======
+bD
+>>>>>>> Updated this old code to fork
 ab
 ad
 aa

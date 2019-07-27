@@ -14,10 +14,17 @@
 	if(!isitem(O))
 		return 0
 	var/obj/item/I = O
+<<<<<<< HEAD
 	if(!(getmaterialref(material_id) in I.materials))
 		return 0
 
 	var/amount = I.materials[getmaterialref(material_id)]
+=======
+	if(!(material_id in I.materials))
+		return 0
+
+	var/amount = I.materials[material_id]
+>>>>>>> Updated this old code to fork
 
 	if(istype(I, /obj/item/stack))
 		var/obj/item/stack/S = I
@@ -31,49 +38,85 @@
 
 /datum/export/material/bananium
 	cost = 1000
+<<<<<<< HEAD
 	material_id = /datum/material/bananium
+=======
+	material_id = MAT_BANANIUM
+>>>>>>> Updated this old code to fork
 	message = "cm3 of bananium"
 
 /datum/export/material/diamond
 	cost = 500
+<<<<<<< HEAD
 	material_id = /datum/material/diamond
+=======
+	material_id = MAT_DIAMOND
+>>>>>>> Updated this old code to fork
 	message = "cm3 of diamonds"
 
 /datum/export/material/plasma
 	cost = 200
 	k_elasticity = 0
+<<<<<<< HEAD
 	material_id = /datum/material/plasma
+=======
+	material_id = MAT_PLASMA
+>>>>>>> Updated this old code to fork
 	message = "cm3 of plasma"
 
 /datum/export/material/uranium
 	cost = 100
+<<<<<<< HEAD
 	material_id = /datum/material/uranium
+=======
+	material_id = MAT_URANIUM
+>>>>>>> Updated this old code to fork
 	message = "cm3 of uranium"
 
 /datum/export/material/gold
 	cost = 125
+<<<<<<< HEAD
 	material_id = /datum/material/gold
+=======
+	material_id = MAT_GOLD
+>>>>>>> Updated this old code to fork
 	message = "cm3 of gold"
 
 /datum/export/material/silver
 	cost = 50
+<<<<<<< HEAD
 	material_id = /datum/material/silver
+=======
+	material_id = MAT_SILVER
+>>>>>>> Updated this old code to fork
 	message = "cm3 of silver"
 
 /datum/export/material/titanium
 	cost = 125
+<<<<<<< HEAD
 	material_id = /datum/material/titanium
+=======
+	material_id = MAT_TITANIUM
+>>>>>>> Updated this old code to fork
 	message = "cm3 of titanium"
 
 /datum/export/material/plastitanium
 	cost = 325 // plasma + titanium costs
+<<<<<<< HEAD
 	material_id = /datum/material/titanium // code can only check for one material_id; plastitanium is half plasma, half titanium
+=======
+	material_id = MAT_TITANIUM // code can only check for one material_id; plastitanium is half plasma, half titanium
+>>>>>>> Updated this old code to fork
 	message = "cm3 of plastitanium"
 
 /datum/export/material/metal
 	cost = 5
 	message = "cm3 of metal"
+<<<<<<< HEAD
 	material_id = /datum/material/iron
+=======
+	material_id = MAT_METAL
+>>>>>>> Updated this old code to fork
 	export_types = list(
 		/obj/item/stack/sheet/metal, /obj/item/stack/tile/plasteel,
 		/obj/item/stack/rods, /obj/item/stack/ore, /obj/item/coin)
@@ -81,6 +124,10 @@
 /datum/export/material/glass
 	cost = 5
 	message = "cm3 of glass"
+<<<<<<< HEAD
 	material_id = /datum/material/glass
+=======
+	material_id = MAT_GLASS
+>>>>>>> Updated this old code to fork
 	export_types = list(/obj/item/stack/sheet/glass, /obj/item/stack/ore,
 		/obj/item/shard)

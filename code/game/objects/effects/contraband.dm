@@ -408,6 +408,7 @@
 	desc = "A poster advertising a movie about some masked men."
 	icon_state = "poster44"
 
+<<<<<<< HEAD
 //annoyingly, poster45 is in another file.
 
 /obj/structure/sign/poster/contraband/free_key
@@ -420,6 +421,8 @@
 	desc = "A poster advertising bounty hunting services. \"I hear you got a problem.\""
 	icon_state = "poster47"
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/structure/sign/poster/official
 	poster_item_name = "motivational poster"
 	poster_item_desc = "An official Nanotrasen-issued poster to foster a compliant and obedient workforce. It comes with state-of-the-art adhesive backing, for easy pinning to any vertical surface."

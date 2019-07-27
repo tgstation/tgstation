@@ -172,6 +172,7 @@
 
 
 /obj/item/bodypart/chest/robot/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(cell)
 		. += {"It has a [cell] inserted.\n
@@ -183,6 +184,19 @@
 		"<span class='info'>You can use <b>wirecutters</b> to remove the wiring.</span>"
 	else
 		. += "<span class='info'>It has a couple spots that still need to be <b>wired</b>.</span>"
+=======
+	..()
+	if(cell)
+		to_chat(user, "It has a [cell] inserted.")
+		to_chat(user, "<span class='info'>You can use a <b>screwdriver</b> to remove [cell].</span>")
+	else
+		to_chat(user, "<span class='info'>It has an empty port for a <b>power cell</b>.</span>")
+	if(wired)
+		to_chat(user, "Its all wired up[cell ? " and ready for usage" : ""].")
+		to_chat(user, "<span class='info'>You can use <b>wirecutters</b> to remove the wiring.</span>")
+	else
+		to_chat(user, "<span class='info'>It has a couple spots that still need to be <b>wired</b>.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/item/bodypart/chest/robot/drop_organs(mob/user, violent_removal)
 	if(wired)
@@ -231,18 +245,32 @@
 	return ..()
 
 /obj/item/bodypart/head/robot/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(!flash1 && !flash2)
 		. += "<span class='info'>It has two empty eye sockets for <b>flashes</b>.</span>"
+=======
+	..()
+	if(!flash1 && !flash2)
+		to_chat(user, "<span class='info'>It has two empty eye sockets for <b>flashes</b>.</span>")
+>>>>>>> Updated this old code to fork
 	else
 		var/single_flash = FALSE
 		if(!flash1 || !flash2)
 			single_flash = TRUE
+<<<<<<< HEAD
 			. += {"One of its eye sockets is currently occupied by a flash.\n
 			<span class='info'>It has an empty eye socket for another <b>flash</b>.</span>"}
 		else
 			. += "It has two eye sockets occupied by flashes."
 		. += "<span class='notice'>You can remove the seated flash[single_flash ? "":"es"] with a <b>crowbar</b>.</span>"
+=======
+			to_chat(user, "One of it's eye sockets are currently occupied by a flash.")
+			to_chat(user, "<span class='info'>It has an empty eye socket for another <b>flash</b>.</span>")
+		else
+			to_chat(user, "It has two eye sockets occupied by flashes.")
+		to_chat(user, "<span class='notice'>You can remove the seated flash[single_flash ? "":"es"] with a <b>crowbar</b>.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/item/bodypart/head/robot/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/assembly/flash/handheld))
@@ -250,7 +278,11 @@
 		if(flash1 && flash2)
 			to_chat(user, "<span class='warning'>You have already inserted the eyes!</span>")
 			return
+<<<<<<< HEAD
 		else if(F.burnt_out)
+=======
+		else if(F.crit_fail)
+>>>>>>> Updated this old code to fork
 			to_chat(user, "<span class='warning'>You can't use a broken flash!</span>")
 			return
 		else

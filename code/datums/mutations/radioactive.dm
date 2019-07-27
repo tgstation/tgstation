@@ -6,6 +6,7 @@
 	time_coeff = 5
 	instability = 5
 	difficulty = 8
+<<<<<<< HEAD
 	power_coeff = 1
 
 
@@ -13,9 +14,20 @@
 	radiation_pulse(owner, 20 * GET_MUTATION_POWER(src))
 
 /datum/mutation/human/radioactive/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
+=======
+
+/datum/mutation/human/radioactive/on_life()
+	radiation_pulse(owner, 20)
+
+/datum/mutation/human/radioactive/New()
+>>>>>>> Updated this old code to fork
 	..()
 	if(!(type in visual_indicators))
 		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "radiation", -MUTATIONS_LAYER))
 
 /datum/mutation/human/radioactive/get_visual_indicator()
+<<<<<<< HEAD
 	return visual_indicators[type][1]
+=======
+	return visual_indicators[type][1]
+>>>>>>> Updated this old code to fork

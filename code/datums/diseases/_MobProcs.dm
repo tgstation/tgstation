@@ -8,7 +8,11 @@
 
 
 /mob/living/proc/CanContractDisease(datum/disease/D)
+<<<<<<< HEAD
 	if(stat == DEAD && !D.process_dead)
+=======
+	if(stat == DEAD)
+>>>>>>> Updated this old code to fork
 		return FALSE
 
 	if(D.GetDiseaseID() in disease_resistances)
@@ -117,7 +121,11 @@
 /mob/living/carbon/AirborneContractDisease(datum/disease/D, force_spread)
 	if(internal)
 		return
+<<<<<<< HEAD
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
+=======
+	if(has_trait(TRAIT_NOBREATH))
+>>>>>>> Updated this old code to fork
 		return
 	..()
 
@@ -137,7 +145,11 @@
 
 /mob/living/carbon/human/CanContractDisease(datum/disease/D)
 	if(dna)
+<<<<<<< HEAD
 		if(HAS_TRAIT(src, TRAIT_VIRUSIMMUNE) && !D.bypasses_immunity)
+=======
+		if(has_trait(TRAIT_VIRUSIMMUNE) && !D.bypasses_immunity)
+>>>>>>> Updated this old code to fork
 			return FALSE
 
 	for(var/thing in D.required_organs)

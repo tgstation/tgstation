@@ -1,0 +1,1586 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/template_noop,
+/area/template_noop)
+"ab" = (
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"ac" = (
+/turf/open/floor/grass{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/lavaland/surface/outdoors)
+"ad" = (
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/grass{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/lavaland/surface/outdoors)
+"ae" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/powered/animal_hospital)
+"af" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/ruin/powered/animal_hospital)
+"ag" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"ah" = (
+/obj/structure/toilet,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"ai" = (
+/obj/machinery/vending/coffee,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"aj" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"ak" = (
+/obj/structure/table/wood,
+/obj/item/taperecorder,
+/obj/item/pen/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"al" = (
+/obj/structure/table/wood,
+/obj/item/toy/plush/carpplushie,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"am" = (
+/obj/machinery/vending/snack,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"an" = (
+/obj/machinery/sleeper{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"ao" = (
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"ap" = (
+/obj/structure/table,
+/obj/item/circular_saw,
+/obj/item/scalpel{
+	pixel_y = 12
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"aq" = (
+/obj/structure/table,
+/obj/item/cautery{
+	pixel_x = 4
+	},
+/obj/item/surgicaldrill,
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"ar" = (
+/obj/structure/table,
+/obj/item/surgical_drapes,
+/obj/item/razor,
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"as" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"at" = (
+/obj/structure/chair/office/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"au" = (
+/obj/structure/chair/office/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"av" = (
+/obj/item/reagent_containers/glass/rag,
+/obj/item/reagent_containers/spray/cleaner,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"aw" = (
+/obj/structure/bed/roller,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"ax" = (
+/obj/structure/closet/crate/trashcart,
+/obj/item/storage/bag/trash,
+/obj/item/trash/cheesie,
+/obj/item/reagent_containers/syringe/antiviral,
+/obj/item/bodybag,
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/turf/open/floor/grass{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/lavaland/surface/outdoors)
+"ay" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12;
+	pixel_y = 2
+	},
+/obj/structure/mirror{
+	pixel_x = -28
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"az" = (
+/obj/structure/noticeboard{
+	dir = 1;
+	pixel_y = -27
+	},
+/obj/item/paper/fluff/stations/lavaland/surface/henderson_report,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"aA" = (
+/obj/structure/closet/secure_closet/medical2,
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"aB" = (
+/obj/machinery/computer/operating{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"aC" = (
+/obj/structure/table/optable,
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"aD" = (
+/obj/structure/table,
+/obj/item/retractor,
+/obj/item/hemostat,
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"aF" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Restroom"
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"aG" = (
+/obj/structure/extinguisher_cabinet,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/powered/animal_hospital)
+"aJ" = (
+/turf/open/floor/plasteel/grimy{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/lavaland/surface/outdoors)
+"aK" = (
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"aL" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"aN" = (
+/obj/structure/closet/crate/freezer,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"aO" = (
+/obj/machinery/iv_drip,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"aP" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"aQ" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"aR" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"aS" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"aT" = (
+/obj/structure/closet,
+/obj/effect/decal/cleanable/cobweb,
+/obj/item/ammo_casing/shotgun/dart,
+/obj/item/ammo_casing/shotgun/dart,
+/obj/item/gun/ballistic/revolver/doublebarrel{
+	desc = "For putting critters out to pasture."
+	},
+/obj/item/ammo_casing/shotgun/buckshot,
+/obj/item/storage/box/bodybags,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/animal_hospital)
+"aU" = (
+/turf/open/floor/plating,
+/area/ruin/powered/animal_hospital)
+"aV" = (
+/obj/structure/closet/secure_closet/medical1,
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"aW" = (
+/obj/machinery/vending/wallmed{
+	pixel_y = 28
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"aX" = (
+/obj/item/stack/cable_coil/random,
+/obj/item/stack/sheet/mineral/titanium{
+	amount = 30
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/animal_hospital)
+"aY" = (
+/obj/structure/bodycontainer/morgue,
+/turf/open/floor/plating,
+/area/ruin/powered/animal_hospital)
+"aZ" = (
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/plating,
+/area/ruin/powered/animal_hospital)
+"ba" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/glass/beaker,
+/obj/item/storage/backpack/duffelbag/med,
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"bb" = (
+/obj/structure/table/reinforced,
+/obj/item/laser_pointer,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"bc" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/firstaid/regular,
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"bd" = (
+/obj/structure/table/glass,
+/obj/item/storage/box/gloves,
+/obj/item/storage/box/masks{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"be" = (
+/obj/effect/decal/cleanable/oil,
+/obj/item/storage/toolbox/mechanical,
+/turf/open/floor/plating,
+/area/ruin/powered/animal_hospital)
+"bf" = (
+/obj/structure/table,
+/obj/item/storage/fancy/cigarettes/dromedaryco,
+/obj/item/storage/box/matches,
+/turf/open/floor/plating,
+/area/ruin/powered/animal_hospital)
+"bg" = (
+/mob/living/simple_animal/cockroach,
+/turf/open/floor/plating,
+/area/ruin/powered/animal_hospital)
+"bh" = (
+/obj/structure/table/glass,
+/obj/item/storage/firstaid/brute,
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"bi" = (
+/obj/item/toy/cattoy,
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"bj" = (
+/obj/structure/table/glass,
+/obj/item/lazarus_injector,
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"bk" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/item/flashlight/glowstick/blue,
+/obj/item/flashlight/glowstick/blue,
+/obj/item/flashlight/glowstick/blue,
+/turf/open/floor/plating,
+/area/ruin/powered/animal_hospital)
+"bl" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/snacks/cookie{
+	name = "doggie biscuit"
+	},
+/obj/item/reagent_containers/food/snacks/cookie{
+	name = "doggie biscuit"
+	},
+/obj/item/reagent_containers/food/snacks/cookie{
+	name = "doggie biscuit"
+	},
+/obj/item/reagent_containers/food/snacks/cookie{
+	name = "doggie biscuit"
+	},
+/obj/item/reagent_containers/food/snacks/cookie{
+	name = "doggie biscuit"
+	},
+/obj/item/reagent_containers/food/snacks/cookie{
+	name = "doggie biscuit"
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"bm" = (
+/obj/structure/chair/comfy/teal{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"bn" = (
+/obj/machinery/sleeper{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"bo" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"bp" = (
+/obj/structure/closet/crate/bin,
+/obj/item/trash/pistachios,
+/obj/item/lipstick/random,
+/obj/item/seeds/apple,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"bq" = (
+/obj/structure/filingcabinet/chestdrawer/wheeled,
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"br" = (
+/obj/structure/chair/office/dark,
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"bs" = (
+/obj/structure/table/reinforced,
+/obj/item/phone,
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"bt" = (
+/obj/item/twohanded/required/kirbyplants,
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"bu" = (
+/obj/structure/chair/comfy/teal{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"bv" = (
+/obj/effect/mob_spawn/human/doctor/alive/lavaland{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"bx" = (
+/obj/machinery/door/airlock/medical{
+	name = "Rejuvenation Pods"
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"by" = (
+/obj/structure/table/reinforced,
+/obj/item/flashlight/lamp,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"bz" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/glasses/regular,
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"bA" = (
+/obj/structure/table/reinforced,
+/obj/item/paper_bin,
+/obj/item/pen/fourcolor,
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"bB" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/box/hug,
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"bD" = (
+/mob/living/simple_animal/bot/medbot{
+	desc = "A little medical robot. It's programmed to only act in emergencies.";
+	heal_threshold = 40;
+	name = "emergency Medibot"
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"bE" = (
+/obj/structure/closet/crate/critter,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"bF" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"bG" = (
+/obj/structure/chair/comfy/teal{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"bH" = (
+/obj/structure/table,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"bI" = (
+/obj/structure/sign/departments/medbay/alt{
+	name = "animal hospital"
+	},
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/powered/animal_hospital)
+"bJ" = (
+/obj/machinery/door/airlock/glass_large{
+	name = "Ian's Pet Care"
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"bL" = (
+/obj/vehicle/ridden/scooter/skateboard{
+	dir = 4
+	},
+/turf/open/floor/grass{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/lavaland/surface/outdoors)
+"bM" = (
+/obj/structure/flora/ausbushes/sunnybush,
+/turf/open/floor/grass{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/lavaland/surface/outdoors)
+"bO" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/open/floor/grass{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/lavaland/surface/outdoors)
+"bP" = (
+/obj/structure/table/glass,
+/obj/item/storage/firstaid/fire,
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"bQ" = (
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"bR" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/melee/baton/cattleprod{
+	desc = "On-the-fly rabies treatment.";
+	name = "cattle prod"
+	},
+/obj/item/stock_parts/cell/high,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"bS" = (
+/obj/structure/closet,
+/obj/item/defibrillator/loaded,
+/obj/item/storage/belt/medical,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"bT" = (
+/obj/item/pickaxe,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"bU" = (
+/obj/effect/decal/remains/human,
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"bV" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"bW" = (
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"bX" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 6
+	},
+/turf/open/floor/grass{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/lavaland/surface/outdoors)
+"bY" = (
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 1
+	},
+/turf/open/floor/grass{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/lavaland/surface/outdoors)
+"bZ" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 10
+	},
+/turf/open/floor/grass{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/lavaland/surface/outdoors)
+"ca" = (
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 1
+	},
+/turf/open/floor/grass{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/lavaland/surface/outdoors)
+"cb" = (
+/obj/machinery/atmospherics/components/binary/valve,
+/turf/open/floor/grass{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/lavaland/surface/outdoors)
+"cc" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/powered/animal_hospital)
+"cd" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/mask/surgical,
+/obj/item/clothing/suit/apron/surgical,
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"ce" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/pump,
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"cf" = (
+/obj/structure/closet/l3closet,
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"cg" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Break Room"
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"ch" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Operating Theatre"
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"ci" = (
+/obj/structure/fans/tiny/invisible,
+/obj/machinery/door/airlock/shuttle{
+	desc = "There's a smudged note wedged into it that says something about pizza dropoffs.";
+	name = "Staff Entrance"
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/animal_hospital)
+"cj" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Morgue"
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/animal_hospital)
+"ck" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Medical Supplies"
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"cl" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Safety Supplies"
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"cm" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Storage"
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/animal_hospital)
+"cn" = (
+/obj/machinery/light,
+/turf/open/floor/grass{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/lavaland/surface/outdoors)
+"cp" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"cq" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"cr" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"cs" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"cv" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"cw" = (
+/obj/machinery/light/small,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"cx" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/grass{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/lavaland/surface/outdoors)
+"cy" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"cz" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"cC" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/grass{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/lavaland/surface/outdoors)
+"cD" = (
+/obj/structure/flora/ausbushes/sunnybush,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/grass{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/lavaland/surface/outdoors)
+"cE" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"cG" = (
+/obj/machinery/door/airlock/shuttle{
+	desc = "There's a smudged note wedged into it that says something about pizza dropoffs.";
+	name = "Staff Entrance"
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"cH" = (
+/mob/living/simple_animal/bot/cleanbot,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered/animal_hospital)
+"cI" = (
+/obj/structure/table/glass,
+/obj/item/storage/firstaid/toxin,
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+"cJ" = (
+/obj/machinery/sleeper{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/animal_hospital)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+aJ
+ab
+ab
+cx
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+bU
+bV
+ab
+ab
+"}
+(4,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+cp
+ax
+ac
+aJ
+ac
+ae
+ae
+ae
+ae
+ae
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+bT
+ab
+ab
+ab
+ab
+"}
+(5,1,1) = {"
+aa
+aa
+aa
+aa
+ae
+ae
+ae
+ae
+ae
+ci
+ae
+ae
+aT
+aY
+bf
+ae
+ae
+ae
+ae
+ae
+ae
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(6,1,1) = {"
+aa
+aa
+aa
+ab
+ae
+ag
+cq
+ay
+ae
+aK
+aK
+cj
+aU
+aZ
+bg
+cj
+aK
+bp
+by
+bF
+ae
+cC
+ac
+ab
+ab
+ab
+ab
+ab
+"}
+(7,1,1) = {"
+aa
+ab
+ab
+ab
+ae
+ah
+ag
+ag
+aF
+aK
+aK
+ae
+ae
+ae
+ae
+ae
+cz
+bq
+bz
+aP
+af
+ad
+ac
+ac
+ab
+ab
+ac
+ac
+"}
+(8,1,1) = {"
+aa
+ab
+ab
+cn
+ae
+ae
+ae
+ae
+aG
+aL
+cw
+ae
+aV
+ba
+cI
+aG
+aL
+br
+bA
+aP
+af
+bL
+ac
+ac
+ac
+ab
+ab
+ab
+"}
+(9,1,1) = {"
+ab
+ab
+ac
+ac
+ae
+ai
+cr
+as
+cg
+aK
+aP
+ae
+aW
+ao
+bi
+ae
+aL
+bs
+bB
+aP
+bI
+bM
+ac
+ab
+ab
+ab
+ab
+ab
+"}
+(10,1,1) = {"
+ab
+ab
+ab
+ac
+af
+aj
+at
+as
+ae
+aL
+aK
+ck
+ao
+bb
+ao
+ck
+aK
+aK
+aK
+aK
+bJ
+aJ
+aJ
+aJ
+ab
+ab
+ab
+ab
+"}
+(11,1,1) = {"
+ab
+ac
+ac
+ac
+af
+ak
+as
+az
+ae
+cv
+aP
+ae
+ae
+ae
+ae
+ae
+bl
+bt
+aK
+aK
+bW
+aJ
+aJ
+ab
+ab
+ac
+ab
+ab
+"}
+(12,1,1) = {"
+ab
+ac
+ac
+ad
+af
+al
+au
+as
+ae
+aL
+aK
+cl
+ao
+bc
+ao
+cl
+aK
+aK
+aK
+aP
+ae
+cD
+ac
+ac
+ab
+ab
+ab
+ab
+"}
+(13,1,1) = {"
+ab
+ab
+ac
+ac
+ae
+am
+cs
+as
+cG
+aK
+cH
+ae
+aW
+ao
+ao
+ae
+bm
+bu
+bu
+bG
+ae
+ac
+bO
+ac
+ab
+ab
+ab
+ab
+"}
+(14,1,1) = {"
+ab
+ac
+bX
+ca
+ae
+ae
+ae
+ae
+aG
+aL
+aP
+ae
+cf
+bd
+bj
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ab
+ab
+aa
+aa
+"}
+(15,1,1) = {"
+ab
+ab
+bY
+ca
+ae
+cd
+an
+aA
+ae
+cv
+aP
+ae
+ae
+ae
+ae
+ae
+bh
+bv
+bv
+cJ
+bn
+bv
+bP
+ae
+cE
+ab
+aa
+aa
+"}
+(16,1,1) = {"
+aa
+ab
+bZ
+cb
+cc
+ce
+ao
+ao
+ch
+aK
+aK
+cm
+aX
+be
+bk
+ae
+bo
+ao
+bD
+ao
+ao
+ao
+bQ
+ae
+ab
+aa
+aa
+aa
+"}
+(17,1,1) = {"
+aa
+ab
+ab
+cn
+ae
+ap
+ao
+aB
+ae
+aL
+aP
+ae
+ae
+ae
+ae
+ae
+af
+bx
+af
+ae
+af
+bx
+af
+ae
+aa
+aa
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+aa
+ab
+ac
+ae
+aq
+ao
+aC
+ae
+aN
+aQ
+aS
+aS
+aS
+aS
+aS
+av
+aK
+bE
+bH
+aS
+aK
+bR
+ae
+aa
+aa
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+aa
+ab
+ab
+ae
+ar
+aw
+aD
+ae
+aO
+aR
+aR
+cy
+aR
+aR
+aR
+cy
+aR
+aR
+aR
+cy
+aR
+bS
+ae
+aa
+aa
+aa
+aa
+"}
+(20,1,1) = {"
+aa
+aa
+aa
+ab
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+aa
+aa
+aa
+aa
+"}

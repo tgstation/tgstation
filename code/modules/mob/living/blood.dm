@@ -16,7 +16,11 @@
 
 
 /mob/living/carbon/monkey/handle_blood()
+<<<<<<< HEAD
 	if(bodytemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
+=======
+	if(bodytemperature >= TCRYO && !(has_trait(TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
+>>>>>>> Updated this old code to fork
 		//Blood regeneration if there is some space
 		if(blood_volume < BLOOD_VOLUME_NORMAL)
 			blood_volume += 0.1 // regenerate blood VERY slowly
@@ -30,10 +34,17 @@
 		bleed_rate = 0
 		return
 
+<<<<<<< HEAD
 	if(bodytemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
 
 		//Blood regeneration if there is some space
 		if(blood_volume < BLOOD_VOLUME_NORMAL && !HAS_TRAIT(src, TRAIT_NOHUNGER))
+=======
+	if(bodytemperature >= TCRYO && !(has_trait(TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
+
+		//Blood regeneration if there is some space
+		if(blood_volume < BLOOD_VOLUME_NORMAL && !has_trait(TRAIT_NOHUNGER))
+>>>>>>> Updated this old code to fork
 			var/nutrition_ratio = 0
 			switch(nutrition)
 				if(0 to NUTRITION_LEVEL_STARVING)
@@ -69,7 +80,11 @@
 					Unconscious(rand(20,60))
 					to_chat(src, "<span class='warning'>You feel extremely [word].</span>")
 			if(-INFINITY to BLOOD_VOLUME_SURVIVE)
+<<<<<<< HEAD
 				if(!HAS_TRAIT(src, TRAIT_NODEATH))
+=======
+				if(!has_trait(TRAIT_NODEATH))
+>>>>>>> Updated this old code to fork
 					death()
 
 		var/temp_bleed = 0
@@ -87,7 +102,11 @@
 
 		bleed_rate = max(bleed_rate - 0.5, temp_bleed)//if no wounds, other bleed effects (heparin) naturally decreases
 
+<<<<<<< HEAD
 		if(bleed_rate && !bleedsuppress && !(HAS_TRAIT(src, TRAIT_FAKEDEATH)))
+=======
+		if(bleed_rate && !bleedsuppress && !(has_trait(TRAIT_FAKEDEATH)))
+>>>>>>> Updated this old code to fork
 			bleed(bleed_rate)
 
 //Makes a blood drop, leaking amt units of blood from the mob
@@ -139,7 +158,11 @@
 	if(iscarbon(AM))
 		var/mob/living/carbon/C = AM
 		if(blood_id == C.get_blood_id())//both mobs have the same blood substance
+<<<<<<< HEAD
 			if(blood_id == /datum/reagent/blood) //normal blood
+=======
+			if(blood_id == "blood") //normal blood
+>>>>>>> Updated this old code to fork
 				if(blood_data["viruses"])
 					for(var/thing in blood_data["viruses"])
 						var/datum/disease/D = thing
@@ -147,7 +170,11 @@
 							continue
 						C.ForceContractDisease(D)
 				if(!(blood_data["blood_type"] in get_safe_blood(C.dna.blood_type)))
+<<<<<<< HEAD
 					C.reagents.add_reagent(/datum/reagent/toxin, amount * 0.5)
+=======
+					C.reagents.add_reagent("toxin", amount * 0.5)
+>>>>>>> Updated this old code to fork
 					return 1
 
 			C.blood_volume = min(C.blood_volume + round(amount, 0.1), BLOOD_VOLUME_MAXIMUM)
@@ -161,7 +188,11 @@
 	return
 
 /mob/living/carbon/get_blood_data(blood_id)
+<<<<<<< HEAD
 	if(blood_id == /datum/reagent/blood) //actual blood reagent
+=======
+	if(blood_id == "blood") //actual blood reagent
+>>>>>>> Updated this old code to fork
 		var/blood_data = list()
 		//set the blood data
 		blood_data["donor"] = src
@@ -176,7 +207,11 @@
 			blood_data["resistances"] = disease_resistances.Copy()
 		var/list/temp_chem = list()
 		for(var/datum/reagent/R in reagents.reagent_list)
+<<<<<<< HEAD
 			temp_chem[R.type] = R.volume
+=======
+			temp_chem[R.id] = R.volume
+>>>>>>> Updated this old code to fork
 		blood_data["trace_chem"] = list2params(temp_chem)
 		if(mind)
 			blood_data["mind"] = mind
@@ -206,6 +241,7 @@
 
 /mob/living/simple_animal/get_blood_id()
 	if(blood_volume)
+<<<<<<< HEAD
 		return /datum/reagent/blood
 
 /mob/living/carbon/monkey/get_blood_id()
@@ -214,12 +250,26 @@
 
 /mob/living/carbon/human/get_blood_id()
 	if(HAS_TRAIT(src, TRAIT_HUSK))
+=======
+		return "blood"
+
+/mob/living/carbon/monkey/get_blood_id()
+	if(!(has_trait(TRAIT_HUSK)))
+		return "blood"
+
+/mob/living/carbon/human/get_blood_id()
+	if(has_trait(TRAIT_HUSK))
+>>>>>>> Updated this old code to fork
 		return
 	if(dna.species.exotic_blood)
 		return dna.species.exotic_blood
 	else if((NOBLOOD in dna.species.species_traits))
 		return
+<<<<<<< HEAD
 	return /datum/reagent/blood
+=======
+	return "blood"
+>>>>>>> Updated this old code to fork
 
 // This is has more potential uses, and is probably faster than the old proc.
 /proc/get_safe_blood(bloodtype)
@@ -246,7 +296,11 @@
 
 //to add a splatter of blood or other mob liquid.
 /mob/living/proc/add_splatter_floor(turf/T, small_drip)
+<<<<<<< HEAD
 	if(get_blood_id() != /datum/reagent/blood)
+=======
+	if(get_blood_id() != "blood")
+>>>>>>> Updated this old code to fork
 		return
 	if(!T)
 		T = get_turf(src)

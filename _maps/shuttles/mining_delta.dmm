@@ -150,7 +150,13 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
+=======
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},

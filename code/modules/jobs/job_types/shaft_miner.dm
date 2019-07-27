@@ -13,7 +13,11 @@
 
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_MAILSORTING, ACCESS_CARGO, ACCESS_QM, ACCESS_MINING, ACCESS_MECH_MINING, ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM)
 	minimal_access = list(ACCESS_MINING, ACCESS_MECH_MINING, ACCESS_MINING_STATION, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM)
+<<<<<<< HEAD
 	paycheck = PAYCHECK_MINIMAL
+=======
+	paycheck = PAYCHECK_HARD
+>>>>>>> Updated this old code to fork
 	paycheck_department = ACCOUNT_CAR
 
 	display_order = JOB_DISPLAY_ORDER_SHAFT_MINER
@@ -28,9 +32,15 @@
 	gloves = /obj/item/clothing/gloves/color/black
 	uniform = /obj/item/clothing/under/rank/miner/lavaland
 	l_pocket = /obj/item/reagent_containers/hypospray/medipen/survival
+<<<<<<< HEAD
 	r_pocket = /obj/item/storage/bag/ore	//causes issues if spawned in backpack
 	backpack_contents = list(
 		/obj/item/flashlight/seclite=1,\
+=======
+	r_pocket = /obj/item/flashlight/seclite
+	backpack_contents = list(
+		/obj/item/storage/bag/ore=1,\
+>>>>>>> Updated this old code to fork
 		/obj/item/kitchen/knife/combat/survival=1,\
 		/obj/item/mining_voucher=1,\
 		/obj/item/stack/marker_beacon/ten=1)
@@ -50,7 +60,11 @@
 	suit_store = /obj/item/tank/internals/oxygen
 	internals_slot = SLOT_S_STORE
 	backpack_contents = list(
+<<<<<<< HEAD
 		/obj/item/flashlight/seclite=1,\
+=======
+		/obj/item/storage/bag/ore=1,
+>>>>>>> Updated this old code to fork
 		/obj/item/kitchen/knife/combat/survival=1,
 		/obj/item/mining_voucher=1,
 		/obj/item/t_scanner/adv_mining_scanner/lesser=1,
@@ -69,3 +83,7 @@
 	name = "Shaft Miner (Equipment + Hardsuit)"
 	suit = /obj/item/clothing/suit/space/hardsuit/mining
 	mask = /obj/item/clothing/mask/breath
+<<<<<<< HEAD
+=======
+
+>>>>>>> Updated this old code to fork

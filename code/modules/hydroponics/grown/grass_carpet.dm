@@ -16,7 +16,11 @@
 	icon_dead = "grass-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/grass/carpet)
+<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.02, /datum/reagent/hydrogen = 0.05)
+=======
+	reagents_add = list("nutriment" = 0.02, "hydrogen" = 0.05)
+>>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/snacks/grown/grass
 	seed = /obj/item/seeds/grass
@@ -45,7 +49,11 @@
 	name = "pack of carpet seeds"
 	desc = "These seeds grow into stylish carpet samples."
 	icon_state = "seed-carpet"
+<<<<<<< HEAD
 	species = /datum/reagent/carpet
+=======
+	species = "carpet"
+>>>>>>> Updated this old code to fork
 	plantname = "Carpet"
 	product = /obj/item/reagent_containers/food/snacks/grown/grass/carpet
 	mutatelist = list()

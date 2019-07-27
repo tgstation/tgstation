@@ -53,6 +53,10 @@
 	if(.)
 		. *= booster_damage_modifier
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> Updated this old code to fork
 /obj/mecha/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
@@ -66,6 +70,10 @@
 /obj/mecha/attack_paw(mob/user as mob)
 	return attack_hand(user)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> Updated this old code to fork
 /obj/mecha/attack_alien(mob/living/user)
 	log_message("Attack by alien. Attacker - [user].", LOG_MECHA, color="red")
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
@@ -85,8 +93,13 @@
 		if(user.obj_damage)
 			animal_damage = user.obj_damage
 		animal_damage = min(animal_damage, 20*user.environment_smash)
+<<<<<<< HEAD
 		log_combat(user, src, "attacked")
 		attack_generic(user, animal_damage, user.melee_damage_type, "melee", play_soundeffect)
+=======
+		attack_generic(user, animal_damage, user.melee_damage_type, "melee", play_soundeffect)
+		log_combat(user, src, "attacked")
+>>>>>>> Updated this old code to fork
 		return 1
 
 
@@ -100,7 +113,10 @@
 		log_combat(user, src, "punched", "hulk powers")
 
 /obj/mecha/blob_act(obj/structure/blob/B)
+<<<<<<< HEAD
 	log_message("Attack by blob. Attacker - [B].", LOG_MECHA, color="red")
+=======
+>>>>>>> Updated this old code to fork
 	take_damage(30, BRUTE, "melee", 0, get_dir(src, B))
 
 /obj/mecha/attack_tk()
@@ -110,10 +126,15 @@
 	log_message("Hit by [AM].", LOG_MECHA, color="red")
 	. = ..()
 
+<<<<<<< HEAD
 /obj/mecha/bullet_act(obj/item/projectile/Proj) //wrapper
 	if (!enclosed && occupant && !silicon_pilot && !Proj.force_hit && (Proj.def_zone == BODY_ZONE_HEAD || Proj.def_zone == BODY_ZONE_CHEST)) //allows bullets to hit the pilot of open-canopy mechs
 		occupant.bullet_act(Proj) //If the sides are open, the occupant can be hit
 		return BULLET_ACT_HIT
+=======
+
+/obj/mecha/bullet_act(obj/item/projectile/Proj) //wrapper
+>>>>>>> Updated this old code to fork
 	log_message("Hit by projectile. Type: [Proj.name]([Proj.flag]).", LOG_MECHA, color="red")
 	. = ..()
 
@@ -149,6 +170,7 @@
 		use_power((cell.charge/3)/(severity*2))
 		take_damage(30 / severity, BURN, "energy", 1)
 	log_message("EMP detected", LOG_MECHA, color="red")
+<<<<<<< HEAD
 
 	if(istype(src, /obj/mecha/combat))
 		mouse_pointer = 'icons/mecha/mecha_mouse-disable.dmi'
@@ -157,6 +179,9 @@
 		to_chat(occupant, "<span=danger>Error -- Connection to equipment control unit has been lost.</span>")
 	addtimer(CALLBACK(src, /obj/mecha/proc/restore_equipment), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 	equipment_disabled = 1
+=======
+	check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
+>>>>>>> Updated this old code to fork
 
 /obj/mecha/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature>max_temperature)
@@ -172,10 +197,13 @@
 			to_chat(user, "[src]-[W] interface initialization failed.")
 		return
 
+<<<<<<< HEAD
 	if(istype(W, /obj/item/mecha_ammo))
 		ammo_resupply(W, user)
 		return
 
+=======
+>>>>>>> Updated this old code to fork
 	if(W.GetID())
 		if(add_req_access || maint_access)
 			if(internals_access_allowed(user))
@@ -275,10 +303,17 @@
 /obj/mecha/proc/mech_toxin_damage(mob/living/target)
 	playsound(src, 'sound/effects/spray2.ogg', 50, 1)
 	if(target.reagents)
+<<<<<<< HEAD
 		if(target.reagents.get_reagent_amount(/datum/reagent/cryptobiolin) + force < force*2)
 			target.reagents.add_reagent(/datum/reagent/cryptobiolin, force/2)
 		if(target.reagents.get_reagent_amount(/datum/reagent/toxin) + force < force*2)
 			target.reagents.add_reagent(/datum/reagent/toxin, force/2.5)
+=======
+		if(target.reagents.get_reagent_amount("cryptobiolin") + force < force*2)
+			target.reagents.add_reagent("cryptobiolin", force/2)
+		if(target.reagents.get_reagent_amount("toxin") + force < force*2)
+			target.reagents.add_reagent("toxin", force/2.5)
+>>>>>>> Updated this old code to fork
 
 
 /obj/mecha/mech_melee_attack(obj/mecha/M)
@@ -305,7 +340,15 @@
 		clearInternalDamage(MECHA_INT_CONTROL_LOST)
 
 /obj/mecha/narsie_act()
+<<<<<<< HEAD
 	emp_act(EMP_HEAVY)
+=======
+	if(occupant)
+		var/mob/living/L = occupant
+		go_out(TRUE)
+		if(L)
+			L.narsie_act()
+>>>>>>> Updated this old code to fork
 
 /obj/mecha/ratvar_act()
 	if((GLOB.ratvar_awakens || GLOB.clockwork_gateway_activated) && occupant)

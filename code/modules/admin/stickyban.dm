@@ -7,7 +7,11 @@
 		if ("add")
 			var/list/ban = list()
 			var/ckey
+<<<<<<< HEAD
 			ban["admin"] = usr.ckey
+=======
+			ban["admin"] = usr.key
+>>>>>>> Updated this old code to fork
 			ban["type"] = list("sticky")
 			ban["reason"] = "(InGameBan)([usr.key])" //this will be displayed in dd only
 
@@ -22,7 +26,10 @@
 
 			if (get_stickyban_from_ckey(ckey))
 				to_chat(usr, "<span class='adminnotice'>Error: Can not add a stickyban: User already has a current sticky ban</span>")
+<<<<<<< HEAD
 				return
+=======
+>>>>>>> Updated this old code to fork
 
 			if (data["reason"])
 				ban["message"] = data["reason"]
@@ -32,6 +39,7 @@
 					return
 				ban["message"] = "[reason]"
 
+<<<<<<< HEAD
 			if(SSdbcore.Connect())
 				var/datum/DBQuery/query_create_stickyban = SSdbcore.NewQuery("INSERT INTO [format_table_name("stickyban")] (ckey, reason, banning_admin) VALUES ('[sanitizeSQL(ckey)]', '[sanitizeSQL(ban["message"])]', '[sanitizeSQL(usr.ckey)]')")
 				if (query_create_stickyban.warn_execute())
@@ -45,6 +53,9 @@
 			ban["admin_matches_this_round"] = list()
 			ban["pending_matches_this_round"] = list()
 			SSstickyban.cache[ckey] = ban
+=======
+			world.SetConfig("ban",ckey,list2stickyban(ban))
+>>>>>>> Updated this old code to fork
 
 			log_admin_private("[key_name(usr)] has stickybanned [ckey].\nReason: [ban["message"]]")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has stickybanned [ckey].\nReason: [ban["message"]]</span>")
@@ -64,6 +75,7 @@
 				to_chat(usr, "<span class='adminnotice'>Error: The ban disappeared.</span>")
 				return
 			world.SetConfig("ban",ckey, null)
+<<<<<<< HEAD
 			SSstickyban.cache -= ckey
 
 			if (SSdbcore.Connect())
@@ -74,6 +86,8 @@
 					SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_ip")] WHERE stickyban = '[sanitizeSQL(ckey)]'")
 				), warn = TRUE, qdel = TRUE)
 
+=======
+>>>>>>> Updated this old code to fork
 
 			log_admin_private("[key_name(usr)] removed [ckey]'s stickyban")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] removed [ckey]'s stickyban</span>")
@@ -90,12 +104,27 @@
 				to_chat(usr, "<span class='adminnotice'>Error: No sticky ban for [ckey] found!</span>")
 				return
 
+<<<<<<< HEAD
 			var/key = LAZYACCESS(ban["keys"], alt)
 			if (!key)
 				to_chat(usr, "<span class='adminnotice'>Error: [alt] is not linked to [ckey]'s sticky ban!</span>")
 				return
 
 			if (alert("Are you sure you want to disassociate [alt] from [ckey]'s sticky ban? \nNote: Nothing stops byond from re-linking them, Use \[E] to exempt them","Are you sure","Yes","No") == "No")
+=======
+			var/found = 0
+			//we have to do it this way because byond keeps the case in its sticky ban matches WHY!!!
+			for (var/key in ban["keys"])
+				if (ckey(key) == alt)
+					found = 1
+					break
+
+			if (!found)
+				to_chat(usr, "<span class='adminnotice'>Error: [alt] is not linked to [ckey]'s sticky ban!</span>")
+				return
+
+			if (alert("Are you sure you want to disassociate [alt] from [ckey]'s sticky ban? \nNote: Nothing stops byond from re-linking them","Are you sure","Yes","No") == "No")
+>>>>>>> Updated this old code to fork
 				return
 
 			//we have to do this again incase something changes
@@ -104,6 +133,7 @@
 				to_chat(usr, "<span class='adminnotice'>Error: The ban disappeared.</span>")
 				return
 
+<<<<<<< HEAD
 			key = LAZYACCESS(ban["keys"], alt)
 
 			if (!key)
@@ -120,6 +150,21 @@
 				query_remove_stickyban_alt.warn_execute()
 				qdel(query_remove_stickyban_alt)
 
+=======
+			found = 0
+			for (var/key in ban["keys"])
+				if (ckey(key) == alt)
+					ban["keys"] -= key
+					found = 1
+					break
+
+			if (!found)
+				to_chat(usr, "<span class='adminnotice'>Error: [alt] link to [ckey]'s sticky ban disappeared.</span>")
+				return
+
+			world.SetConfig("ban",ckey,list2stickyban(ban))
+
+>>>>>>> Updated this old code to fork
 			log_admin_private("[key_name(usr)] has disassociated [alt] from [ckey]'s sticky ban")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has disassociated [alt] from [ckey]'s sticky ban</span>")
 
@@ -144,6 +189,7 @@
 
 			world.SetConfig("ban",ckey,list2stickyban(ban))
 
+<<<<<<< HEAD
 			SSstickyban.cache[ckey] = ban
 
 			if (SSdbcore.Connect())
@@ -304,11 +350,20 @@
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has taken [ckey]'s sticky ban off of timeout.</span>")
 
 
+=======
+			log_admin_private("[key_name(usr)] has edited [ckey]'s sticky ban reason from [oldreason] to [reason]")
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has edited [ckey]'s sticky ban reason from [oldreason] to [reason]</span>")
+
+>>>>>>> Updated this old code to fork
 		if ("revert")
 			if (!data["ckey"])
 				return
 			var/ckey = data["ckey"]
+<<<<<<< HEAD
 			if (alert("Are you sure you want to revert the sticky ban on [ckey] to its state at round start (or last edit)?","Are you sure","Yes","No") == "No")
+=======
+			if (alert("Are you sure you want to revert the sticky ban on [ckey] to its state at round start?","Are you sure","Yes","No") == "No")
+>>>>>>> Updated this old code to fork
 				return
 			var/ban = get_stickyban_from_ckey(ckey)
 			if (!ban)
@@ -327,6 +382,7 @@
 			world.SetConfig("ban",ckey,list2stickyban(cached_ban))
 
 
+<<<<<<< HEAD
 /datum/admins/proc/stickyban_gethtml(ckey)
 	var/ban = get_stickyban_from_ckey(ckey)
 	if (!ban)
@@ -343,6 +399,16 @@
 		<br />"
 		[ban["message"]] <b><a href='?_src_=holder;[HrefToken()];stickyban=edit&ckey=[ckey]'>\[Edit\]</a></b><br />
 	"})
+=======
+/datum/admins/proc/stickyban_gethtml(ckey, ban)
+	. = {"
+		<a href='?_src_=holder;[HrefToken()];stickyban=remove&ckey=[ckey]'>\[-\]</a>
+		<a href='?_src_=holder;[HrefToken()];stickyban=revert&ckey=[ckey]'>\[revert\]</a>
+		<b>[ckey]</b>
+		<br />"
+		[ban["message"]] <b><a href='?_src_=holder;[HrefToken()];stickyban=edit&ckey=[ckey]'>\[Edit\]</a></b><br />
+	"}
+>>>>>>> Updated this old code to fork
 	if (ban["admin"])
 		. += "[ban["admin"]]<br />"
 	else
@@ -351,6 +417,7 @@
 	for (var/key in ban["keys"])
 		if (ckey(key) == ckey)
 			continue
+<<<<<<< HEAD
 		. += "<li><a href='?_src_=holder;[HrefToken()];stickyban=remove_alt&ckey=[ckey]&alt=[ckey(key)]'>\[-\]</a>[key]<a href='?_src_=holder;[HrefToken()];stickyban=exempt&ckey=[ckey]&alt=[ckey(key)]'>\[E\]</a></li>"
 
 	for (var/key in ban["whitelist"])
@@ -358,17 +425,30 @@
 			continue
 		. += "<li><a href='?_src_=holder;[HrefToken()];stickyban=remove_alt&ckey=[ckey]&alt=[ckey(key)]'>\[-\]</a>[key]<a href='?_src_=holder;[HrefToken()];stickyban=unexempt&ckey=[ckey]&alt=[ckey(key)]'>\[UE\]</a></li>"
 
+=======
+		. += "<li><a href='?_src_=holder;[HrefToken()];stickyban=remove_alt&ckey=[ckey]&alt=[ckey(key)]'>\[-\]</a>[key]</li>"
+>>>>>>> Updated this old code to fork
 	. += "</ol>\n"
 
 /datum/admins/proc/stickyban_show()
 	if(!check_rights(R_BAN))
 		return
+<<<<<<< HEAD
 	var/list/bans = sticky_banned_ckeys()
 	var/list/banhtml = list()
 	for(var/key in bans)
 		var/ckey = ckey(key)
 		banhtml += "<br /><hr />\n"
 		banhtml += stickyban_gethtml(ckey)
+=======
+	var/list/bans = sortList(world.GetConfig("ban"))
+	var/banhtml = ""
+	for(var/key in bans)
+		var/ckey = ckey(key)
+		var/ban = stickyban2list(world.GetConfig("ban",key))
+		banhtml += "<br /><hr />\n"
+		banhtml += stickyban_gethtml(ckey,ban)
+>>>>>>> Updated this old code to fork
 
 	var/html = {"
 	<head>
@@ -376,11 +456,16 @@
 	</head>
 	<body>
 		<h2>All Sticky Bans:</h2> <a href='?_src_=holder;[HrefToken()];stickyban=add'>\[+\]</a><br>
+<<<<<<< HEAD
 		[banhtml.Join("")]
+=======
+		[banhtml]
+>>>>>>> Updated this old code to fork
 	</body>
 	"}
 	usr << browse(html,"window=stickybans;size=700x400")
 
+<<<<<<< HEAD
 /proc/sticky_banned_ckeys()
 	if (SSdbcore.Connect() || length(SSstickyban.dbcache))
 		if (SSstickyban.dbcacheexpire < world.time)
@@ -419,6 +504,19 @@
 		return null
 
 /proc/stickyban2list(ban, strictdb = TRUE)
+=======
+/proc/get_stickyban_from_ckey(var/ckey)
+	if (!ckey)
+		return null
+	ckey = ckey(ckey)
+	. = null
+	for (var/key in world.GetConfig("ban"))
+		if (ckey(key) == ckey)
+			. = stickyban2list(world.GetConfig("ban",key))
+			break
+
+/proc/stickyban2list(var/ban)
+>>>>>>> Updated this old code to fork
 	if (!ban)
 		return null
 	. = params2list(ban)
@@ -429,6 +527,7 @@
 			var/ckey = ckey(key)
 			ckeys[ckey] = ckey //to make searching faster.
 		.["keys"] = ckeys
+<<<<<<< HEAD
 	if (.["whitelist"])
 		var/keys = splittext(.["whitelist"], ",")
 		var/ckeys = list()
@@ -443,11 +542,20 @@
 
 
 /proc/list2stickyban(list/ban)
+=======
+	.["type"] = splittext(.["type"], ",")
+	.["IP"] = splittext(.["IP"], ",")
+	.["computer_id"] = splittext(.["computer_id"], ",")
+
+
+/proc/list2stickyban(var/list/ban)
+>>>>>>> Updated this old code to fork
 	if (!ban || !islist(ban))
 		return null
 	. = ban.Copy()
 	if (.["keys"])
 		.["keys"] = jointext(.["keys"], ",")
+<<<<<<< HEAD
 	if (.["IP"])
 		.["IP"] = jointext(.["IP"], ",")
 	if (.["computer_id"])
@@ -463,6 +571,21 @@
 	. -= "admin_matches_this_round"
 	. -= "pending_matches_this_round"
 
+=======
+	if (.["type"])
+		.["type"] = jointext(.["type"], ",")
+
+	//internal tracking only, shouldn't be stored
+	. -= "existing_user_matches_this_round"
+	. -= "admin_matches_this_round"
+	. -= "matches_this_round"
+	. -= "reverting"
+
+	//storing these can sometimes cause sticky bans to start matching everybody
+	//	and isn't even needed for sticky ban matching, as the hub tracks these separately
+	. -= "IP"
+	. -= "computer_id"
+>>>>>>> Updated this old code to fork
 
 	. = list2params(.)
 

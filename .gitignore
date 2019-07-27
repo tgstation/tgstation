@@ -202,6 +202,7 @@ tools/MapAtmosFixer/MapAtmosFixer/bin/*
 #GitHub Atom
 .atom-build.json
 
+<<<<<<< HEAD
 #KDevelop and Kate
 *.kdev4*
 *.kate-swp
@@ -217,3 +218,8 @@ tools/MapAtmosFixer/MapAtmosFixer/bin/*
 !/config/title_music/sounds/exclude
 /config/title_screens/images/*
 !/config/title_screens/images/exclude
+=======
+#extra map stuff
+/_maps/**/backup/
+/_maps/templates.dm
+>>>>>>> Updated this old code to fork

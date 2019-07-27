@@ -81,10 +81,13 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 
 		if("setMusicVolume")
 			data = setMusicVolume(arglist(params))
+<<<<<<< HEAD
 		if("swaptodarkmode")
 			swaptodarkmode()
 		if("swaptolightmode")
 			swaptolightmode()
+=======
+>>>>>>> Updated this old code to fork
 
 	if(data)
 		ehjax_send(data = data)
@@ -107,8 +110,11 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 	messageQueue = null
 	sendClientData()
 
+<<<<<<< HEAD
 	syncRegex()
 
+=======
+>>>>>>> Updated this old code to fork
 	//do not convert to to_chat()
 	SEND_TEXT(owner, "<span class=\"userdanger\">Failed to load fancy chat, reverting to old chat. Certain features won't work.</span>")
 
@@ -116,6 +122,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 	winset(owner, "output", "is-visible=false")
 	winset(owner, "browseroutput", "is-disabled=false;is-visible=true")
 
+<<<<<<< HEAD
 /proc/syncChatRegexes()
 	for (var/user in GLOB.clients)
 		var/client/C = user
@@ -136,11 +143,14 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 	if (regexes.len)
 		ehjax_send(data = list("syncRegex" = regexes))
 
+=======
+>>>>>>> Updated this old code to fork
 /datum/chatOutput/proc/ehjax_send(client/C = owner, window = "browseroutput", data)
 	if(islist(data))
 		data = json_encode(data)
 	C << output("[data]", "[window]:ehjaxCallback")
 
+<<<<<<< HEAD
 /datum/chatOutput/proc/sendMusic(music, list/extra_data)
 	if(!findtext(music, GLOB.is_http_protocol))
 		return
@@ -151,6 +161,14 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 		music_data["musicSeek"] = extra_data["start"]
 		music_data["musicHalt"] = extra_data["end"]
 
+=======
+/datum/chatOutput/proc/sendMusic(music, pitch)
+	if(!findtext(music, GLOB.is_http_protocol))
+		return
+	var/list/music_data = list("adminMusic" = url_encode(url_encode(music)))
+	if(pitch)
+		music_data["musicRate"] = pitch
+>>>>>>> Updated this old code to fork
 	ehjax_send(data = music_data)
 
 /datum/chatOutput/proc/stopMusic()
@@ -184,7 +202,11 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 				var/list/row = src.connectionHistory[i]
 				if (!row || row.len < 3 || (!row["ckey"] || !row["compid"] || !row["ip"])) //Passed malformed history object
 					return
+<<<<<<< HEAD
 				if (world.IsBanned(row["ckey"], row["ip"], row["compid"], real_bans_only=TRUE))
+=======
+				if (world.IsBanned(row["ckey"], row["compid"], row["ip"], real_bans_only=TRUE))
+>>>>>>> Updated this old code to fork
 					found = row
 					break
 
@@ -205,17 +227,41 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 	log_world("\[[time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]\] Client: [(src.owner.key ? src.owner.key : src.owner)] triggered JS error: [error]")
 
 //Global chat procs
+<<<<<<< HEAD
 /proc/to_chat_immediate(target, message, handle_whitespace = TRUE)
 	if(!target || !message)
+=======
+/proc/to_chat(target, message, handle_whitespace=TRUE)
+	if(!target)
+		return
+
+	//Ok so I did my best but I accept that some calls to this will be for shit like sound and images
+	//It stands that we PROBABLY don't want to output those to the browser output so just handle them here
+	if (istype(target, /savefile))
+		CRASH("Invalid message! [message]")
+
+	if(!istext(message))
+		if (istype(message, /image) || istype(message, /sound))
+			CRASH("Invalid message! [message]")
+>>>>>>> Updated this old code to fork
 		return
 
 	if(target == world)
 		target = GLOB.clients
 
 	var/original_message = message
+<<<<<<< HEAD
 	if(handle_whitespace)
 		message = replacetext(message, "\n", "<br>")
 		message = replacetext(message, "\t", "[FOURSPACES][FOURSPACES]") //EIGHT SPACES IN TOTAL!!
+=======
+	//Some macros remain in the string even after parsing and fuck up the eventual output
+	message = replacetext(message, "\improper", "")
+	message = replacetext(message, "\proper", "")
+	if(handle_whitespace)
+		message = replacetext(message, "\n", "<br>")
+		message = replacetext(message, "\t", "[GLOB.TAB][GLOB.TAB]")
+>>>>>>> Updated this old code to fork
 
 	if(islist(target))
 		// Do the double-encoding outside the loop to save nanoseconds
@@ -257,6 +303,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 
 		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
 		C << output(url_encode(url_encode(message)), "browseroutput:output")
+<<<<<<< HEAD
 
 /proc/to_chat(target, message, handle_whitespace = TRUE)
 	if(Master.current_runlevel == RUNLEVEL_INIT || !SSchat?.initialized)
@@ -269,3 +316,5 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 
 /datum/chatOutput/proc/swaptodarkmode()
 	owner.force_dark_theme()
+=======
+>>>>>>> Updated this old code to fork

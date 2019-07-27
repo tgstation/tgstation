@@ -22,9 +22,15 @@
 	var/slowdown_open = TRUE
 
 /obj/item/modular_computer/laptop/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(screen_on)
 		. += "<span class='notice'>Alt-click to close it.</span>"
+=======
+	..()
+	if(screen_on)
+		to_chat(user, "<span class='notice'>Alt-click to close it.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/item/modular_computer/laptop/Initialize()
 	. = ..()
@@ -77,7 +83,11 @@
 		return
 	if(!isturf(loc) && !ismob(loc)) // No opening it in backpack.
 		return
+<<<<<<< HEAD
 	if(!user.canUseTopic(src, BE_CLOSE))
+=======
+	if(!user.canUseTopic(src))
+>>>>>>> Updated this old code to fork
 		return
 
 	toggle_open(user)

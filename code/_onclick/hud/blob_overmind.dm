@@ -48,7 +48,11 @@
 	if(isovermind(usr))
 		var/mob/camera/blob/B = usr
 		if(!B.placed)
+<<<<<<< HEAD
 			B.place_blob_core(0)
+=======
+			B.place_blob_core(B.base_point_rate, 0)
+>>>>>>> Updated this old code to fork
 		B.transport_core()
 
 /obj/screen/blob/Blobbernaut
@@ -91,6 +95,7 @@
 		var/mob/camera/blob/B = usr
 		B.create_factory()
 
+<<<<<<< HEAD
 /obj/screen/blob/ReadaptStrain
 	icon_state = "ui_chemswap"
 	name = "Readapt Strain (40)"
@@ -102,15 +107,35 @@
 		if(B.free_strain_rerolls)
 			name = "Readapt Strain (FREE)"
 			desc = "Randomly rerolls your strain for free."
+=======
+/obj/screen/blob/ReadaptChemical
+	icon_state = "ui_chemswap"
+	name = "Readapt Chemical (40)"
+	desc = "Randomly rerolls your chemical for 40 resources."
+
+/obj/screen/blob/ReadaptChemical/MouseEntered(location,control,params)
+	if(hud && hud.mymob && isovermind(hud.mymob))
+		var/mob/camera/blob/B = hud.mymob
+		if(B.free_chem_rerolls)
+			name = "Readapt Chemical (FREE)"
+			desc = "Randomly rerolls your chemical for free."
+>>>>>>> Updated this old code to fork
 		else
 			name = initial(name)
 			desc = initial(desc)
 	..()
 
+<<<<<<< HEAD
 /obj/screen/blob/ReadaptStrain/Click()
 	if(isovermind(usr))
 		var/mob/camera/blob/B = usr
 		B.strain_reroll()
+=======
+/obj/screen/blob/ReadaptChemical/Click()
+	if(isovermind(usr))
+		var/mob/camera/blob/B = usr
+		B.chemical_reroll()
+>>>>>>> Updated this old code to fork
 
 /obj/screen/blob/RelocateCore
 	icon_state = "ui_swap"
@@ -167,7 +192,11 @@
 	using.screen_loc = ui_hand_position(1)
 	static_inventory += using
 
+<<<<<<< HEAD
 	using = new /obj/screen/blob/ReadaptStrain()
+=======
+	using = new /obj/screen/blob/ReadaptChemical()
+>>>>>>> Updated this old code to fork
 	using.screen_loc = ui_storage1
 	using.hud = src
 	static_inventory += using

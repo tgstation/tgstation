@@ -35,6 +35,7 @@
 	objective = stripped_input(user, "Choose the objective to imprint on your victim's brain.", "Brainwashing", null, MAX_MESSAGE_LEN)
 	if(!objective)
 		return -1
+<<<<<<< HEAD
 	display_results(user, target, "<span class='notice'>You begin to brainwash [target]...</span>",
 		"[user] begins to fix [target]'s brain.",
 		"[user] begins to perform surgery on [target]'s brain.")
@@ -49,6 +50,18 @@
 	display_results(user, target, "<span class='notice'>You succeed in brainwashing [target].</span>",
 		"[user] successfully fixes [target]'s brain!",
 		"[user] completes the surgery on [target]'s brain.")
+=======
+	user.visible_message("[user] begins to tinker with [target]'s brain.", "<span class='notice'>You begin to brainwash [target]...</span>")
+
+/datum/surgery_step/brainwash/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if(!target.mind)
+		user.visible_message("[target] doesn't respond to the brainwashing, as if [target.p_they()] lacked a mind...")
+		return FALSE
+	if(target.has_trait(TRAIT_MINDSHIELD))
+		user.visible_message("You hear a faint buzzing from a device inside [target]'s brain, and the brainwashing is erased.")
+		return FALSE
+	user.visible_message("[user] successfully brainwashes [target]!", "<span class='notice'>You succeed in brainwashing [target].</span>")
+>>>>>>> Updated this old code to fork
 	to_chat(target, "<span class='userdanger'>A new compulsion fills your mind... you feel forced to obey it!</span>")
 	brainwash(target, objective)
 	message_admins("[ADMIN_LOOKUPFLW(user)] surgically brainwashed [ADMIN_LOOKUPFLW(target)] with the objective '[objective]'.")
@@ -57,9 +70,13 @@
 
 /datum/surgery_step/brainwash/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(target.getorganslot(ORGAN_SLOT_BRAIN))
+<<<<<<< HEAD
 		display_results(user, target, "<span class='warning'>You screw up, bruising the brain tissue!</span>",
 			"<span class='warning'>[user] screws up, causing brain damage!</span>",
 			"[user] completes the surgery on [target]'s brain.")
+=======
+		user.visible_message("<span class='warning'>[user] damages some brain tissue!</span>", "<span class='warning'>You bruise some brain tissue!</span>")
+>>>>>>> Updated this old code to fork
 		target.adjustBrainLoss(40)
 	else
 		user.visible_message("<span class='warning'>[user] suddenly notices that the brain [user.p_they()] [user.p_were()] working on is not there anymore.", "<span class='warning'>You suddenly notice that the brain you were working on is not there anymore.</span>")

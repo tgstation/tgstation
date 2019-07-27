@@ -44,6 +44,10 @@
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
+<<<<<<< HEAD
+=======
+/obj/item/clothing/mask/facehugger/impregnated,
+>>>>>>> Updated this old code to fork
 /obj/item/gun/ballistic/automatic/pistol,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
@@ -53,6 +57,14 @@
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
+<<<<<<< HEAD
+=======
+"s" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/egg,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+>>>>>>> Updated this old code to fork
 "t" = (
 /obj/structure/alien/weeds,
 /mob/living/simple_animal/hostile/alien/sentinel,
@@ -83,6 +95,10 @@
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
+<<<<<<< HEAD
+=======
+/obj/item/clothing/mask/facehugger/impregnated,
+>>>>>>> Updated this old code to fork
 /obj/item/clothing/under/rank/security,
 /obj/item/clothing/suit/armor/vest,
 /obj/item/melee/baton/loaded,
@@ -131,6 +147,10 @@
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/effect/decal/cleanable/blood,
+<<<<<<< HEAD
+=======
+/obj/item/clothing/mask/facehugger/impregnated,
+>>>>>>> Updated this old code to fork
 /obj/item/clothing/under/syndicate,
 /obj/item/clothing/glasses/night,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -155,6 +175,10 @@
 /obj/item/clothing/suit/space/syndicate/orange,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/helmet/space/syndicate/orange,
+<<<<<<< HEAD
+=======
+/obj/item/clothing/mask/facehugger/impregnated,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "O" = (
@@ -375,7 +399,11 @@ e
 t
 g
 g
+<<<<<<< HEAD
 g
+=======
+s
+>>>>>>> Updated this old code to fork
 H
 u
 g
@@ -406,9 +434,15 @@ b
 i
 u
 b
+<<<<<<< HEAD
 g
 l
 g
+=======
+s
+l
+s
+>>>>>>> Updated this old code to fork
 t
 e
 b
@@ -439,7 +473,11 @@ o
 v
 g
 b
+<<<<<<< HEAD
 g
+=======
+s
+>>>>>>> Updated this old code to fork
 g
 e
 b
@@ -803,7 +841,11 @@ b
 b
 g
 g
+<<<<<<< HEAD
 f
+=======
+g
+>>>>>>> Updated this old code to fork
 b
 b
 a

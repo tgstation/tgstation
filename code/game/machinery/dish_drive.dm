@@ -10,7 +10,11 @@
 	density = FALSE
 	circuit = /obj/item/circuitboard/machine/dish_drive
 	pass_flags = PASSTABLE
+<<<<<<< HEAD
 	var/static/list/collectable_items = list(/obj/item/trash/waffles,
+=======
+	var/static/list/item_types = list(/obj/item/trash/waffles,
+>>>>>>> Updated this old code to fork
 		/obj/item/trash/plate,
 		/obj/item/trash/tray,
 		/obj/item/reagent_containers/glass/bowl,
@@ -18,11 +22,14 @@
 		/obj/item/kitchen/fork,
 		/obj/item/shard,
 		/obj/item/broken_bottle)
+<<<<<<< HEAD
 	var/static/list/disposable_items = list(/obj/item/trash/waffles,
 		/obj/item/trash/plate,
 		/obj/item/trash/tray,
 		/obj/item/shard,
 		/obj/item/broken_bottle)
+=======
+>>>>>>> Updated this old code to fork
 	var/time_since_dishes = 0
 	var/suction_enabled = TRUE
 	var/transmit_enabled = TRUE
@@ -32,9 +39,15 @@
 	RefreshParts()
 
 /obj/machinery/dish_drive/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(user.Adjacent(src))
 		. += "<span class='notice'>Alt-click it to beam its contents to any nearby disposal bins.</span>"
+=======
+	..()
+	if(user.Adjacent(src))
+		to_chat(user, "<span class='notice'>Alt-click it to beam its contents to any nearby disposal bins.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/dish_drive/attack_hand(mob/living/user)
 	if(!contents.len)
@@ -47,7 +60,11 @@
 	flick("synthesizer_beam", src)
 
 /obj/machinery/dish_drive/attackby(obj/item/I, mob/living/user, params)
+<<<<<<< HEAD
 	if(is_type_in_list(I, collectable_items) && user.a_intent != INTENT_HARM)
+=======
+	if(is_type_in_list(I, item_types) && user.a_intent != INTENT_HARM)
+>>>>>>> Updated this old code to fork
 		if(!user.transferItemToLoc(I, src))
 			return
 		to_chat(user, "<span class='notice'>You put [I] in [src], and it's beamed into energy!</span>")
@@ -86,7 +103,11 @@
 	if(!suction_enabled)
 		return
 	for(var/obj/item/I in view(4, src))
+<<<<<<< HEAD
 		if(is_type_in_list(I, collectable_items) && I.loc != src && (!I.reagents || !I.reagents.total_volume))
+=======
+		if(is_type_in_list(I, item_types) && I.loc != src && (!I.reagents || !I.reagents.total_volume))
+>>>>>>> Updated this old code to fork
 			if(I.Adjacent(src))
 				visible_message("<span class='notice'>[src] beams up [I]!</span>")
 				I.forceMove(src)
@@ -114,6 +135,7 @@
 			visible_message("<span class='warning'>[src] buzzes. There are no disposal bins in range!</span>")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 		return
+<<<<<<< HEAD
 	var/disposed = 0
 	for(var/obj/item/I in contents)
 		if(is_type_in_list(I, disposable_items))
@@ -127,4 +149,15 @@
 		Beam(bin, icon_state = "rped_upgrade", time = 5)
 		bin.update_icon()
 		flick("synthesizer_beam", src)
+=======
+	for(var/obj/item/I in contents)
+		I.forceMove(bin)
+		use_power(active_power_usage)
+	visible_message("<span class='notice'>[src] [pick("whooshes", "bwooms", "fwooms", "pshooms")] and beams its stored dishes into the nearby [bin.name].</span>")
+	playsound(src, 'sound/items/pshoom.ogg', 50, TRUE)
+	playsound(bin, 'sound/items/pshoom.ogg', 50, TRUE)
+	Beam(bin, icon_state = "rped_upgrade", time = 5)
+	bin.update_icon()
+	flick("synthesizer_beam", src)
+>>>>>>> Updated this old code to fork
 	time_since_dishes = world.time + 600

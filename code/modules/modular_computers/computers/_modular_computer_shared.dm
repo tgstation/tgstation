@@ -26,7 +26,10 @@
 
 
 /obj/proc/get_modular_computer_parts_examine(mob/user)
+<<<<<<< HEAD
 	. = list()
+=======
+>>>>>>> Updated this old code to fork
 	if(!is_modular_computer())
 		return
 
@@ -36,12 +39,21 @@
 	if(ai_slot)
 		if(ai_slot.stored_card)
 			if(user_is_adjacent)
+<<<<<<< HEAD
 				. += "It has a slot installed for an intelliCard which contains: [ai_slot.stored_card.name]"
 			else
 				. += "It has a slot installed for an intelliCard, which appears to be occupied."
 			. += "<span class='info'>Alt-click to eject the intelliCard.</span>"
 		else
 			. += "It has a slot installed for an intelliCard."
+=======
+				to_chat(user, "It has a slot installed for an intelliCard which contains: [ai_slot.stored_card.name]")
+			else
+				to_chat(user, "It has a slot installed for an intelliCard, which appears to be occupied.")
+			to_chat(user, "<span class='info'>Alt-click to eject the intelliCard.</span>")
+		else
+			to_chat(user, "It has a slot installed for an intelliCard.")
+>>>>>>> Updated this old code to fork
 
 	var/obj/item/computer_hardware/card_slot/card_slot = get_modular_computer_part(MC_CARD)
 	if(card_slot)
@@ -50,6 +62,7 @@
 			var/obj/item/card/id/second_ID = card_slot.stored_card2
 			var/multiple_cards = istype(first_ID) && istype(second_ID)
 			if(user_is_adjacent)
+<<<<<<< HEAD
 				. += "It has two slots for identification cards installed[multiple_cards ? " which contain [first_ID] and [second_ID]" : ", one of which contains [first_ID ? first_ID : second_ID]"]."
 			else
 				. += "It has two slots for identification cards installed, [multiple_cards ? "both of which appear" : "and one of them appears"] to be occupied."
@@ -62,3 +75,17 @@
 		. += "It has a printer installed."
 		if(user_is_adjacent)
 			. += "The printer's paper levels are at: [printer_slot.stored_paper]/[printer_slot.max_paper].</span>]"
+=======
+				to_chat(user, "It has two slots for identification cards installed[multiple_cards ? " which contain [first_ID] and [second_ID]" : ", one of which contains [first_ID ? first_ID : second_ID]"].")
+			else
+				to_chat(user, "It has two slots for identification cards installed, [multiple_cards ? "both of which appear" : "and one of them appears"] to be occupied.")
+			to_chat(user, "<span class='info'>Alt-click [src] to eject the identification card[multiple_cards ? "s":""].</span>")
+		else
+			to_chat(user, "It has two slots installed for identification cards.")
+
+	var/obj/item/computer_hardware/printer/printer_slot = get_modular_computer_part(MC_PRINT)
+	if(printer_slot)
+		to_chat(user, "It has a printer installed.")
+		if(user_is_adjacent)
+			to_chat(user, "The printer's paper levels are at: [printer_slot.stored_paper]/[printer_slot.max_paper].</span>]")
+>>>>>>> Updated this old code to fork

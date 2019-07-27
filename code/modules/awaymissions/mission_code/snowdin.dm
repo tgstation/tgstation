@@ -171,7 +171,11 @@
 	if(C.reagents.total_volume >= C.volume)
 		to_chat(user, "<span class='danger'>[C] is full.</span>")
 		return
+<<<<<<< HEAD
 	C.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(5, 10))
+=======
+	C.reagents.add_reagent("plasma", rand(5, 10))
+>>>>>>> Updated this old code to fork
 	user.visible_message("[user] scoops some plasma from the [src] with \the [C].", "<span class='notice'>You scoop out some plasma from the [src] using \the [C].</span>")
 
 /turf/open/lava/plasma/burn_stuff(AM)
@@ -510,6 +514,10 @@
 				/obj/item/stack/sheet/mineral/gold{amount = 15} = 10,
 				/obj/item/book/granter/spell/barnyard = 4,
 				/obj/item/pickaxe/drill/diamonddrill = 6,
+<<<<<<< HEAD
+=======
+				/obj/item/borg/upgrade/vtec = 7,
+>>>>>>> Updated this old code to fork
 				/obj/item/borg/upgrade/disablercooler = 7)
 
 
@@ -602,6 +610,17 @@
 	id = /obj/item/card/id/syndicate
 	implants = list(/obj/item/implant/exile)
 
+<<<<<<< HEAD
+=======
+/datum/outfit/vr/snowtide
+	name = "Snowdin Outfit"
+	shoes = /obj/item/clothing/shoes/winterboots
+	suit = /obj/item/clothing/suit/hooded/wintercoat
+	back = /obj/item/storage/backpack
+	mask = /obj/item/clothing/mask/breath
+	r_pocket = /obj/item/tank/internals/emergency_oxygen/engi
+	internals_slot = SLOT_R_STORE
+>>>>>>> Updated this old code to fork
 
 /obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive/female
 	mob_gender = FEMALE
@@ -662,3 +681,9 @@
 
 /obj/effect/turf_decal/snowdin_station_sign/up/seven
 	icon_state = "AOPU7"
+<<<<<<< HEAD
+=======
+
+/obj/effect/landmark/vr_spawn/snowdin
+	vr_outfit = /datum/outfit/vr/snowtide
+>>>>>>> Updated this old code to fork

@@ -20,5 +20,9 @@
 /obj/item/clockwork/examine(mob/user)
 	if((is_servant_of_ratvar(user) || isobserver(user)) && clockwork_desc)
 		desc = clockwork_desc
+<<<<<<< HEAD
 	. = ..()
+=======
+	..()
+>>>>>>> Updated this old code to fork
 	desc = initial(desc)

@@ -14,8 +14,13 @@
 
 
 /turf/open/floor/light/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	. += "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>"
+=======
+	..()
+	to_chat(user, "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>")
+>>>>>>> Updated this old code to fork
 
 /turf/open/floor/light/Initialize()
 	. = ..()

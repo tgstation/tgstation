@@ -36,11 +36,17 @@
 	var/combine
 	var/radduration = 2
 	var/radstrength = 1
+<<<<<<< HEAD
 	var/max_chromosomes = 6
 
 	var/list/buffer[NUMBER_OF_BUFFERS]
 	var/list/stored_mutations = list()
 	var/list/stored_chromosomes = list()
+=======
+
+	var/list/buffer[NUMBER_OF_BUFFERS]
+	var/list/stored_mutations = list()
+>>>>>>> Updated this old code to fork
 
 	var/injectorready = 0	//world timer cooldown var
 	var/jokerready = 0
@@ -61,6 +67,7 @@
 			to_chat(user, "<span class='notice'>You insert [I].</span>")
 			src.updateUsrDialog()
 			return
+<<<<<<< HEAD
 	if (istype(I, /obj/item/chromosome))
 		if(LAZYLEN(stored_chromosomes) < max_chromosomes)
 			I.forceMove(src)
@@ -84,6 +91,8 @@
 			qdel(I)
 			return
 
+=======
+>>>>>>> Updated this old code to fork
 	else
 		return ..()
 
@@ -100,11 +109,19 @@
 	stored_research = SSresearch.science_tech
 
 /obj/machinery/computer/scan_consolenew/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(jokerready < world.time)
 		. += "<span class='notice'>JOKER algorithm available.</span>"
 	else
 		. += "<span class='notice'>JOKER algorithm available in about [round(0.00166666667 * (jokerready - world.time))] minutes.</span>"
+=======
+	..()
+	if(jokerready < world.time)
+		to_chat(user, "<span class='notice'>JOKER algorithm available.</span>")
+	else
+		to_chat(user, "<span class='notice'>JOKER algorithm available in about [round(0.00166666667 * (jokerready - world.time))] minutes.")
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/computer/scan_consolenew/ui_interact(mob/user, last_change)
 	. = ..()
@@ -126,7 +143,11 @@
 	if(connected && connected.is_operational())
 		if(connected.occupant)	//set occupant_status message
 			viable_occupant = connected.occupant
+<<<<<<< HEAD
 			if(viable_occupant.has_dna() && !HAS_TRAIT(viable_occupant, TRAIT_RADIMMUNE) && !HAS_TRAIT(viable_occupant, TRAIT_BADDNA) || (connected.scan_level == 3)) //occupant is viable for dna modification
+=======
+			if(viable_occupant.has_dna() && !viable_occupant.has_trait(TRAIT_RADIMMUNE) && !viable_occupant.has_trait(TRAIT_BADDNA) || (connected.scan_level == 3)) //occupant is viable for dna modification
+>>>>>>> Updated this old code to fork
 				occupant_status += "[viable_occupant.name] => "
 				switch(viable_occupant.stat)
 					if(CONSCIOUS)
@@ -241,7 +262,11 @@
 						temp_html += "<div class='dnaBlockNumber'>[(i / DNA_BLOCK_SIZE) + 1]</div>"
 			else
 				temp_html += "---------"
+<<<<<<< HEAD
 			temp_html += "</div></div><br><h1>Buffer Menu</h1>"
+=======
+			temp_html += "</div></div><h1>Buffer Menu</h1>"
+>>>>>>> Updated this old code to fork
 
 			if(istype(buffer))
 				for(var/i=1, i<=buffer.len, i++)
@@ -354,21 +379,28 @@
 			for(var/datum/mutation/human/HM in stored_mutations)
 				var/i = stored_mutations.Find(HM)
 				temp_html += "<tr><td><a href='?src=[REF(src)];task=inspectstorage;num=[i]'>[HM.name]</a></td>"
+<<<<<<< HEAD
 				if(diskette)
 					temp_html += "<td><a href='?src=[REF(src)];task=exportdiskmut;path=[HM.type]'>Export</a></td>"
 				else
 					temp_html += "<td><td><span class='linkOff'>Export</span></td>"
+=======
+				temp_html += "<td><a href='?src=[REF(src)];task=exportdiskmut;path=[HM.type]'>Export</a></td>"
+>>>>>>> Updated this old code to fork
 				temp_html += "<td><a href='?src=[REF(src)];task=deletemut;num=[i]'>Delete</a></td>"
 				if(combine == HM.type)
 					temp_html += "<td><span class='linkOff'>Combine</span></td></tr>"
 				else
 					temp_html += "<td><a href='?src=[REF(src)];task=combine;num=[i]'>Combine</a></td></tr>"
+<<<<<<< HEAD
 			temp_html += "</table><br>"
 			temp_html += "<h3>Chromosome Storage:<br></h3>"
 			temp_html += "<table>"
 			for(var/i in 1 to stored_chromosomes.len)
 				var/obj/item/chromosome/CM = stored_chromosomes[i]
 				temp_html += "<td><a href='?src=[REF(src)];task=ejectchromosome;num=[i]'>[CM.name]</a></td><br>"
+=======
+>>>>>>> Updated this old code to fork
 			temp_html += "</table>"
 		else
 			temp_html += status
@@ -424,6 +456,7 @@
 	var/discovered = FALSE
 	var/active = FALSE
 	var/scrambled = FALSE
+<<<<<<< HEAD
 	var/instability
 	var/mob/living/carbon/viable_occupant = get_viable_occupant()
 	var/datum/mutation/human/HM = get_valid_mutation(mutation)
@@ -434,6 +467,17 @@
 			scrambled = M.scrambled
 			active = TRUE
 	var/datum/mutation/human/A = GET_INITIALIZED_MUTATION(mutation)
+=======
+	var/mob/living/carbon/viable_occupant = get_viable_occupant()
+
+	if(viable_occupant)
+		var/datum/mutation/human/HM = viable_occupant.dna.get_mutation(mutation)
+		if(HM)
+			if(HM.scrambled)
+				scrambled = TRUE
+			active = TRUE
+	var/datum/mutation/human/A = get_initialized_mutation(mutation)
+>>>>>>> Updated this old code to fork
 	alias = A.alias
 	if(active && !scrambled)
 		discover(mutation)
@@ -441,10 +485,18 @@
 		mut_name = A.name
 		mut_desc = A.desc
 		discovered = TRUE
+<<<<<<< HEAD
 		instability = A.instability
 	var/extra
 	if(viable_occupant && !(storage_slot || viable_occupant.dna.mutation_in_sequence(mutation)))
 		extra = TRUE
+=======
+	var/extra
+	if(viable_occupant && !(storage_slot || mutation_in_sequence(mutation, viable_occupant.dna)))
+		extra = TRUE
+	var/datum/mutation/human/HM = get_initialized_mutation(mutation)
+
+>>>>>>> Updated this old code to fork
 	if(discovered && !scrambled)
 		var/mutcolor
 		switch(A.quality)
@@ -454,6 +506,7 @@
 				mutcolor = "average"
 			if(NEGATIVE)
 				mutcolor = "bad"
+<<<<<<< HEAD
 		if(HM)
 			instability *= GET_MUTATION_STABILIZER(HM)
 		temp_html += "<div class='statusDisplay'><div class='statusLine'><span class='[mutcolor]'><b>[mut_name]</b></span><small> ([alias])</small><br>"
@@ -471,13 +524,26 @@
 	temp_html += "<div class='statusLine'>Sequence:<br><br></div>"
 	if(!scrambled)
 		for(var/block in 1 to A.blocks)
+=======
+		temp_html += "<div class='statusDisplay'><div class='statusLine'><span class='[mutcolor]'><b>[mut_name]</b></span><small> ([alias])</small><br>"
+	else
+		temp_html += "<div class='statusDisplay'><div class='statusLine'><b>[alias]</b><br>"
+	temp_html += "<div class='statusLine'>[mut_desc]<br></div>"
+	temp_html += "<div class='statusLine'>Sequence:<br><br></div>"
+	if(!scrambled)
+		for(var/block in 1 to HM.blocks)
+>>>>>>> Updated this old code to fork
 			var/whole_sequence = get_valid_gene_string(mutation)
 			var/sequence = copytext(whole_sequence, 1+(block-1)*(DNA_SEQUENCE_LENGTH*2),(DNA_SEQUENCE_LENGTH*2*block+1))
 			temp_html += "<div class='statusLine'><table class='statusDisplay'><tr>"
 			for(var/i in 1 to DNA_SEQUENCE_LENGTH)
 				var/num = 1+(i-1)*2
 				var/genenum = num+(DNA_SEQUENCE_LENGTH*2*(block-1))
+<<<<<<< HEAD
 				temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
+=======
+				temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];path=[mutation];'>[sequence[num]]</span></a></div></td>"
+>>>>>>> Updated this old code to fork
 			temp_html += "</tr><tr>"
 			for(var/i in 1 to DNA_SEQUENCE_LENGTH)
 				temp_html += "<td><div class='statusLine'>|</div></td>"
@@ -485,7 +551,11 @@
 			for(var/i in 1 to DNA_SEQUENCE_LENGTH)
 				var/num = i*2
 				var/genenum = num+(DNA_SEQUENCE_LENGTH*2*(block-1))
+<<<<<<< HEAD
 				temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
+=======
+				temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];path=[mutation];'>[sequence[num]]</span></a></div></td>"
+>>>>>>> Updated this old code to fork
 			temp_html += "</tr></table></div>"
 		temp_html += "<br><br><br><br><br>"
 	else
@@ -695,7 +765,11 @@
 							var/datum/mutation/human/A = new HM.type()
 							A.copy_mutation(HM)
 							succes = TRUE
+<<<<<<< HEAD
 							stored_mutations += A
+=======
+							stored_mutations[A] = get_sequence(mutation) //We only store active mutations and all active mutations have the full sequence.
+>>>>>>> Updated this old code to fork
 							to_chat(usr,"<span class='notice'>Mutation succesfully stored.</span>")
 				if(!succes) //we can exactly return here
 					to_chat(usr,"<span class='warning'>Mutation storage is full.</span>")
@@ -712,6 +786,7 @@
 					var/datum/mutation/human/HM = get_valid_mutation(mutation)
 					if(HM)
 						var/obj/item/dnainjector/activator/I = new /obj/item/dnainjector/activator(loc)
+<<<<<<< HEAD
 						I.add_mutations += new HM.type (copymut = HM)
 						I.name = "[HM.name] activator"
 						I.research = TRUE
@@ -720,6 +795,12 @@
 							injectorready = world.time + INJECTOR_TIMEOUT * (1 - 0.1 * connected.precision_coeff) //precision_coeff being the manipulator rating
 						else
 							injectorready = world.time + INJECTOR_TIMEOUT
+=======
+						I.add_mutations += HM.type
+						I.name = "[HM.name] activator"
+						I.damage_coeff = connected.damage_coeff*4
+						injectorready = world.time + INJECTOR_TIMEOUT
+>>>>>>> Updated this old code to fork
 		if("mutator")
 			if(injectorready < world.time)
 				var/mutation = text2path(href_list["path"])
@@ -727,6 +808,7 @@
 					var/datum/mutation/human/HM = get_valid_mutation(mutation)
 					if(HM)
 						var/obj/item/dnainjector/activator/I = new /obj/item/dnainjector/activator(loc)
+<<<<<<< HEAD
 						I.add_mutations += new HM.type (copymut = HM)
 						I.doitanyway = TRUE
 						I.name = "[HM.name] injector"
@@ -740,23 +822,48 @@
 				var/datum/mutation/human/A = viable_occupant.dna.get_mutation(current_mutation)
 				if(A && (!viable_occupant.dna.mutation_in_sequence(current_mutation) || A.scrambled))
 					viable_occupant.dna.remove_mutation(current_mutation)
+=======
+						I.add_mutations += HM.type
+						I.doitanyway = TRUE
+						I.name = "[HM.name] injector"
+						I.damage_coeff = connected.damage_coeff
+						injectorready = world.time + INJECTOR_TIMEOUT*5
+		if("nullify")
+			if(viable_occupant)
+				var/datum/mutation/human/A = viable_occupant.dna.get_mutation(current_mutation)
+				if(A && (!mutation_in_sequence(current_mutation, viable_occupant.dna) || A.scrambled))
+					viable_occupant.dna.remove_mutation(current_mutation)
+					viable_occupant.dna.update_instability()
+>>>>>>> Updated this old code to fork
 					current_screen = "mainmenu"
 					current_mutation = null
 		if("pulsegene")
 			if(current_screen != "info")
+<<<<<<< HEAD
 				var/path = GET_MUTATION_TYPE_FROM_ALIAS(href_list["alias"])
+=======
+				var/path = text2path(href_list["path"])
+>>>>>>> Updated this old code to fork
 				if(viable_occupant && num && (path in viable_occupant.dna.mutation_index))
 					var/list/genes = list("A","T","G","C","X")
 					if(jokerready < world.time)
 						genes += "JOKER"
+<<<<<<< HEAD
 					var/sequence = GET_GENE_STRING(path, viable_occupant.dna)
+=======
+					var/sequence = get_gene_string(path, viable_occupant.dna)
+>>>>>>> Updated this old code to fork
 					var/original = sequence[num]
 					var/new_gene = input("From [original] to-", "New block", original) as null|anything in genes
 					if(!new_gene)
 						new_gene = original
 					if(viable_occupant == get_viable_occupant()) //No cheesing
 						if((new_gene == "JOKER") && (jokerready < world.time))
+<<<<<<< HEAD
 							var/true_genes = GET_SEQUENCE(current_mutation)
+=======
+							var/true_genes = get_sequence(current_mutation)
+>>>>>>> Updated this old code to fork
 							new_gene = true_genes[num]
 							jokerready = world.time + JOKER_TIMEOUT - (JOKER_UPGRADE * (connected.precision_coeff-1))
 						sequence = copytext(sequence, 1, num) + new_gene + copytext(sequence, num+1, length(sequence)+1)
@@ -785,7 +892,11 @@
 					var/datum/mutation/human/A = diskette.mutations[num]
 					var/datum/mutation/human/HM = new A.type()
 					HM.copy_mutation(A)
+<<<<<<< HEAD
 					stored_mutations += HM
+=======
+					stored_mutations[HM] = get_sequence(HM.type)
+>>>>>>> Updated this old code to fork
 					to_chat(usr,"<span class='notice'>Successfully wrote [A.name] to storage.")
 		if("combine")
 			if(num && (LAZYLEN(stored_mutations) >= num))
@@ -795,7 +906,11 @@
 					if(combine)
 						var/result_path = get_mixed_mutation(combine, path)
 						if(result_path)
+<<<<<<< HEAD
 							stored_mutations += new result_path()
+=======
+							stored_mutations[new result_path()] = get_sequence(result_path)
+>>>>>>> Updated this old code to fork
 							to_chat(usr, "<span class='boldnotice'>Succes! New mutation has been added to storage</span>")
 							discover(result_path)
 							combine = null
@@ -807,6 +922,7 @@
 						to_chat(usr,"<span class='notice'>Selected [A.name] for combining</span>")
 				else
 					to_chat(usr, "<span class='warning'>Not enough space to store potential mutation.</span>")
+<<<<<<< HEAD
 		if("ejectchromosome")
 			if(LAZYLEN(stored_chromosomes) <= num)
 				var/obj/item/chromosome/CM = stored_chromosomes[num]
@@ -830,6 +946,11 @@
 	ui_interact(usr,last_change)
 
 /obj/machinery/computer/scan_consolenew/proc/scramble(input,rs,rd) //hexadecimal genetics. dont confuse with scramble button
+=======
+	ui_interact(usr,last_change)
+
+/obj/machinery/computer/scan_consolenew/proc/scramble(input,rs,rd)
+>>>>>>> Updated this old code to fork
 	var/length = length(input)
 	var/ran = gaussian(0, rs*RADIATION_STRENGTH_MULTIPLIER)
 	if(ran == 0)
@@ -848,7 +969,11 @@
 	var/mob/living/carbon/viable_occupant = null
 	if(connected)
 		viable_occupant = connected.occupant
+<<<<<<< HEAD
 		if(!istype(viable_occupant) || !viable_occupant.dna || HAS_TRAIT(viable_occupant, TRAIT_RADIMMUNE) || HAS_TRAIT(viable_occupant, TRAIT_BADDNA))
+=======
+		if(!istype(viable_occupant) || !viable_occupant.dna || viable_occupant.has_trait(TRAIT_RADIMMUNE) || viable_occupant.has_trait(TRAIT_BADDNA))
+>>>>>>> Updated this old code to fork
 			viable_occupant = null
 	return viable_occupant
 
@@ -889,6 +1014,7 @@
 		delayed_action = null //or make it stick + reset button ?
 
 /obj/machinery/computer/scan_consolenew/proc/get_valid_mutation(mutation)
+<<<<<<< HEAD
 	var/mob/living/carbon/C = get_viable_occupant()
 	if(C)
 		var/datum/mutation/human/HM = C.dna.get_mutation(mutation)
@@ -897,6 +1023,14 @@
 	for(var/datum/mutation/human/A in stored_mutations)
 		if(A.type == mutation)
 			return A
+=======
+	for(var/datum/mutation/human/A in stored_mutations)
+		if(A.type == mutation)
+			return A
+	var/mob/living/carbon/C = get_viable_occupant()
+	if(C)
+		return C.dna.get_mutation(mutation)
+>>>>>>> Updated this old code to fork
 
 
 /obj/machinery/computer/scan_consolenew/proc/get_mutation_list(include_storage) //Returns a list of the mutation index types and any extra mutations
@@ -916,6 +1050,7 @@
 /obj/machinery/computer/scan_consolenew/proc/get_valid_gene_string(mutation)
 	var/mob/living/carbon/C = get_viable_occupant()
 	if(C && (mutation in C.dna.mutation_index))
+<<<<<<< HEAD
 		return GET_GENE_STRING(mutation, C.dna)
 	else if(C && (LAZYLEN(C.dna.mutations)))
 		for(var/datum/mutation/human/A in C.dna.mutations)
@@ -924,6 +1059,16 @@
 	for(var/datum/mutation/human/A in stored_mutations)
 		if(A.type == mutation)
 			return GET_SEQUENCE(mutation)
+=======
+		return get_gene_string(mutation, C.dna)
+	else if(C && (LAZYLEN(C.dna.mutations)))
+		for(var/datum/mutation/human/A in C.dna.mutations)
+			if(A.type == mutation)
+				return get_sequence(mutation)
+	for(var/datum/mutation/human/A in stored_mutations)
+		if(A.type == mutation)
+			return stored_mutations[A]
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/computer/scan_consolenew/proc/discover(mutation)
 	if(stored_research && !(mutation in stored_research.discovered_mutations))

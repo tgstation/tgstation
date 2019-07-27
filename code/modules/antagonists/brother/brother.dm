@@ -31,12 +31,24 @@
 	owner.special_role = null
 	return ..()
 
+<<<<<<< HEAD
 /datum/antagonist/brother/antag_panel_data()
 	return "Conspirators : [get_brother_names()]]"
 
 /datum/antagonist/brother/proc/get_brother_names()
 	var/list/brothers = team.members - owner
 	var/brother_text = ""
+=======
+/datum/antagonist/brother/proc/give_meeting_area()
+	if(!owner.current || !team || !team.meeting_area)
+		return
+	to_chat(owner.current, "<B>Your designated meeting area:</B> [team.meeting_area]")
+	antag_memory += "<b>Meeting Area</b>: [team.meeting_area]<br>"
+
+/datum/antagonist/brother/greet()
+	var/brother_text = ""
+	var/list/brothers = team.members - owner
+>>>>>>> Updated this old code to fork
 	for(var/i = 1 to brothers.len)
 		var/datum/mind/M = brothers[i]
 		brother_text += M.name
@@ -44,6 +56,7 @@
 			brother_text += " and "
 		else if(i != brothers.len)
 			brother_text += ", "
+<<<<<<< HEAD
 	return brother_text
 
 /datum/antagonist/brother/proc/give_meeting_area()
@@ -55,13 +68,19 @@
 /datum/antagonist/brother/greet()
 	var/brother_text = get_brother_names()
 	to_chat(owner.current, "<span class='alertsyndie'>You are the [owner.special_role] of [brother_text].</span>")
+=======
+	to_chat(owner.current, "<B><font size=3 color=red>You are the [owner.special_role] of [brother_text].</font></B>")
+>>>>>>> Updated this old code to fork
 	to_chat(owner.current, "The Syndicate only accepts those that have proven themselves. Prove yourself and prove your [team.member_name]s by completing your objectives together!")
 	owner.announce_objectives()
 	give_meeting_area()
 
 /datum/antagonist/brother/proc/finalize_brother()
 	SSticker.mode.update_brother_icons_added(owner)
+<<<<<<< HEAD
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE)
+=======
+>>>>>>> Updated this old code to fork
 
 /datum/antagonist/brother/admin_add(datum/mind/new_owner,mob/admin)
 	//show list of possible brothers
@@ -89,9 +108,12 @@
 /datum/team/brother_team
 	name = "brotherhood"
 	member_name = "blood brother"
+<<<<<<< HEAD
 	has_hud = TRUE
 	hud_icon_state = "brother"
 
+=======
+>>>>>>> Updated this old code to fork
 	var/meeting_area
 	var/static/meeting_areas = list("The Bar", "Dorms", "Escape Dock", "Arrivals", "Holodeck", "Primary Tool Storage", "Recreation Area", "Chapel", "Library")
 
@@ -120,7 +142,11 @@
 	var/objective_count = 1
 	for(var/datum/objective/objective in objectives)
 		if(objective.check_completion())
+<<<<<<< HEAD
 			parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='greentext'>Success!</span>"
+=======
+			parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</span>"
+>>>>>>> Updated this old code to fork
 		else
 			parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 			win = FALSE

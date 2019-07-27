@@ -27,7 +27,11 @@
 	visible_message("<span class='notice'>[src] swells up!</span>")
 
 	//Animation
+<<<<<<< HEAD
 	icon = 'icons/mob/carp.dmi'
+=======
+	icon = 'icons/mob/animal.dmi'
+>>>>>>> Updated this old code to fork
 	flick("carp_swell", src)
 	//Wait for animation to end
 	sleep(6)
@@ -47,6 +51,7 @@
 	else
 		visible_message("<span class='notice'>The newly grown [M.name] looks up at you with friendly eyes.</span>")
 	qdel(src)
+<<<<<<< HEAD
 	
 /obj/item/toy/plush/carpplushie/dehy_carp/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -72,3 +77,5 @@
 			M.faction = list("neutral")
 			qdel(src)
 	return BRUTELOSS
+=======
+>>>>>>> Updated this old code to fork

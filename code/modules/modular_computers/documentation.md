@@ -1,7 +1,10 @@
 # Modular computer programs
 
+<<<<<<< HEAD
 How module computer programs work
 
+=======
+>>>>>>> Updated this old code to fork
 Ok. so a quick rundown on how to make a program. This is kind of a shitty documentation, but oh well I was asked to.
 
 ## Base setup

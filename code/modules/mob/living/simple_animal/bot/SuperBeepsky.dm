@@ -5,7 +5,11 @@
 	icon_state = "grievous"
 	health = 150
 	maxHealth = 150
+<<<<<<< HEAD
 	baton_type = /obj/item/melee/transforming/energy/sword/saber
+=======
+	baton_type = /obj/item/melee/transforming/energy/sword
+>>>>>>> Updated this old code to fork
 	base_speed = 4 //he's a fast fucker
 	var/obj/item/weapon
 	var/block_chance = 50

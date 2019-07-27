@@ -100,9 +100,14 @@
 	var/outfit_type = outfit_options[selected]
 	if(!outfit_type)
 		return FALSE
+<<<<<<< HEAD
 	var/datum/outfit/job/O = new outfit_type()
 	var/list/outfit_types = O.get_chameleon_disguise_info()
 	var/datum/job/job_datum = SSjob.GetJobType(O.jobtype)
+=======
+	var/datum/outfit/O = new outfit_type()
+	var/list/outfit_types = O.get_chameleon_disguise_info()
+>>>>>>> Updated this old code to fork
 
 	for(var/V in user.chameleon_item_actions)
 		var/datum/action/item_action/chameleon/change/A = V
@@ -110,14 +115,20 @@
 		for(var/T in outfit_types)
 			for(var/name in A.chameleon_list)
 				if(A.chameleon_list[name] == T)
+<<<<<<< HEAD
 					A.apply_job_data(job_datum)
+=======
+>>>>>>> Updated this old code to fork
 					A.update_look(user, T)
 					outfit_types -= T
 					done = TRUE
 					break
 			if(done)
 				break
+<<<<<<< HEAD
 
+=======
+>>>>>>> Updated this old code to fork
 	//hardsuit helmets/suit hoods
 	if(O.toggle_helmet && (ispath(O.suit, /obj/item/clothing/suit/space/hardsuit) || ispath(O.suit, /obj/item/clothing/suit/hooded)) && ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -250,6 +261,7 @@
 		return
 	random_look(owner)
 
+<<<<<<< HEAD
 /datum/action/item_action/chameleon/change/proc/apply_job_data(datum/job/job_datum)
 	return
 
@@ -286,6 +298,8 @@
 		agent_pda.ownjob = job_datum.title
 
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/item/clothing/under/chameleon
 //starts off as black
 	name = "black jumpsuit"
@@ -449,7 +463,11 @@
 
 /obj/item/clothing/head/chameleon/drone/Initialize()
 	. = ..()
+<<<<<<< HEAD
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+=======
+	add_trait(TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+>>>>>>> Updated this old code to fork
 	chameleon_action.random_look()
 	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
 	togglehatmask_action.UpdateButtonIcon()
@@ -504,7 +522,11 @@
 
 /obj/item/clothing/mask/chameleon/drone/Initialize()
 	. = ..()
+<<<<<<< HEAD
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+=======
+	add_trait(TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+>>>>>>> Updated this old code to fork
 	chameleon_action.random_look()
 	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
 	togglehatmask_action.UpdateButtonIcon()
@@ -588,7 +610,11 @@
 
 /obj/item/storage/belt/chameleon/ComponentInitialize()
 	. = ..()
+<<<<<<< HEAD
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+=======
+	GET_COMPONENT(STR, /datum/component/storage)
+>>>>>>> Updated this old code to fork
 	STR.silent = TRUE
 
 /obj/item/storage/belt/chameleon/emp_act(severity)
@@ -624,7 +650,11 @@
 
 /obj/item/pda/chameleon
 	name = "PDA"
+<<<<<<< HEAD
 	var/datum/action/item_action/chameleon/change/pda/chameleon_action
+=======
+	var/datum/action/item_action/chameleon/change/chameleon_action
+>>>>>>> Updated this old code to fork
 
 /obj/item/pda/chameleon/Initialize()
 	. = ..()

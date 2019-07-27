@@ -27,6 +27,7 @@
 	install_component(new /obj/item/computer_hardware/hard_drive/small)
 	install_component(new /obj/item/computer_hardware/network_card)
 	install_component(new /obj/item/computer_hardware/printer/mini)
+<<<<<<< HEAD
 
 // Given by the syndicate as part of the contract uplink bundle
 /obj/item/modular_computer/tablet/syndicate_contract_uplink/preset/uplink/Initialize()
@@ -40,3 +41,5 @@
 	install_component(new /obj/item/computer_hardware/network_card)
 	install_component(new /obj/item/computer_hardware/card_slot)
 	install_component(new /obj/item/computer_hardware/printer/mini)
+=======
+>>>>>>> Updated this old code to fork

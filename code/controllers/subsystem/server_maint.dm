@@ -8,10 +8,13 @@ SUBSYSTEM_DEF(server_maint)
 	init_order = INIT_ORDER_SERVER_MAINT
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	var/list/currentrun
+<<<<<<< HEAD
 	var/cleanup_ticker = 0
 
 /datum/controller/subsystem/server_maint/PreInit()
 	world.hub_password = "" //quickly! before the hubbies see us.
+=======
+>>>>>>> Updated this old code to fork
 
 /datum/controller/subsystem/server_maint/Initialize(timeofday)
 	if (CONFIG_GET(flag/hub))
@@ -24,6 +27,7 @@ SUBSYSTEM_DEF(server_maint)
 			log_world("Found a null in clients list!")
 		src.currentrun = GLOB.clients.Copy()
 
+<<<<<<< HEAD
 		switch (cleanup_ticker) // do only one of these at a time, once per 5 fires
 			if (0)
 				if(listclearnulls(GLOB.player_list))
@@ -50,6 +54,8 @@ SUBSYSTEM_DEF(server_maint)
 			else
 				cleanup_ticker++
 
+=======
+>>>>>>> Updated this old code to fork
 	var/list/currentrun = src.currentrun
 	var/round_started = SSticker.HasRoundStarted()
 
@@ -60,6 +66,7 @@ SUBSYSTEM_DEF(server_maint)
 	for(var/I in currentrun)
 		var/client/C = I
 		//handle kicking inactive players
+<<<<<<< HEAD
 		if(round_started && kick_inactive && !C.holder && C.is_afk(afk_period))
 			var/cmob = C.mob
 			if (!isnewplayer(cmob) || !SSticker.queued_players.Find(cmob))
@@ -67,6 +74,14 @@ SUBSYSTEM_DEF(server_maint)
 				to_chat(C, "<span class='userdanger'>You have been inactive for more than [DisplayTimeText(afk_period)] and have been disconnected.</span><br><span class='danger'>You may reconnect via the button in the file menu or by <b><u><a href='byond://winset?command=.reconnect'>clicking here to reconnect</a></u></b>.</span>")
 				QDEL_IN(C, 1) //to ensure they get our message before getting disconnected
 				continue
+=======
+		if(round_started && kick_inactive && C.is_afk(afk_period))
+			var/cmob = C.mob
+			if(!(isobserver(cmob) || (isdead(cmob) && C.holder)))
+				log_access("AFK: [key_name(C)]")
+				to_chat(C, "<span class='danger'>You have been inactive for more than [DisplayTimeText(afk_period)] and have been disconnected.</span>")
+				qdel(C)
+>>>>>>> Updated this old code to fork
 
 		if (!(!C || world.time - C.connection_time < PING_BUFFER_TIME || C.inactivity >= (wait-1)))
 			winset(C, null, "command=.update_ping+[world.time+world.tick_lag*TICK_USAGE_REAL/100]")

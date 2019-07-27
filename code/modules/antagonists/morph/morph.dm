@@ -52,11 +52,20 @@
 
 /mob/living/simple_animal/hostile/morph/examine(mob/user)
 	if(morphed)
+<<<<<<< HEAD
 		. = form.examine(user)
 		if(get_dist(user,src)<=3)
 			. += "<span class='warning'>It doesn't look quite right...</span>"
 	else
 		. = ..()
+=======
+		form.examine(user) // Refactor examine to return desc so it's static? Not sure if worth it
+		if(get_dist(user,src)<=3)
+			to_chat(user, "<span class='warning'>It doesn't look quite right...</span>")
+	else
+		..()
+	return
+>>>>>>> Updated this old code to fork
 
 /mob/living/simple_animal/hostile/morph/med_hud_set_health()
 	if(morphed && !isliving(form))

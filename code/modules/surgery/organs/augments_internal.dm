@@ -60,7 +60,11 @@
 		else
 			for(var/obj/item/I in stored_items)
 				to_chat(owner, "<span class='notice'>Your [owner.get_held_index_name(owner.get_held_index_of_item(I))]'s grip tightens.</span>")
+<<<<<<< HEAD
 				ADD_TRAIT(I, TRAIT_NODROP, ANTI_DROP_IMPLANT_TRAIT)
+=======
+				I.add_trait(TRAIT_NODROP, ANTI_DROP_IMPLANT_TRAIT)
+>>>>>>> Updated this old code to fork
 
 	else
 		release_items()
@@ -84,7 +88,11 @@
 
 /obj/item/organ/cyberimp/brain/anti_drop/proc/release_items()
 	for(var/obj/item/I in stored_items)
+<<<<<<< HEAD
 		REMOVE_TRAIT(I, TRAIT_NODROP, ANTI_DROP_IMPLANT_TRAIT)
+=======
+		I.remove_trait(TRAIT_NODROP, ANTI_DROP_IMPLANT_TRAIT)
+>>>>>>> Updated this old code to fork
 	stored_items = list()
 
 
@@ -98,6 +106,7 @@
 	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
 	implant_color = "#FFFF00"
 	slot = ORGAN_SLOT_BRAIN_ANTISTUN
+<<<<<<< HEAD
 
 	var/static/list/signalCache = list(
 		COMSIG_LIVING_STATUS_STUN,
@@ -136,6 +145,60 @@
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
 	broken_cyber_organ = FALSE
+=======
+	var/datum/component/redirect/listener
+	var/datum/callback/CB
+	var/stun_cap_amount = 40
+	var/working = FALSE
+
+/obj/item/organ/cyberimp/brain/anti_stun/Initialize()
+	. = ..()
+	initialize_callback()
+
+/obj/item/organ/cyberimp/brain/anti_stun/proc/initialize_callback()
+	if(CB)
+		return
+	CB = CALLBACK(src, .proc/on_signal)
+
+/obj/item/organ/cyberimp/brain/anti_stun/Remove()
+	. = ..()
+	QDEL_NULL(listener)
+
+/obj/item/organ/cyberimp/brain/anti_stun/Insert()
+	. = ..()
+	if(listener)
+		qdel(listener)
+	listener = owner.AddComponent(/datum/component/redirect, list(
+	COMSIG_LIVING_STATUS_STUN = CB,
+	COMSIG_LIVING_STATUS_KNOCKDOWN = CB,
+	COMSIG_LIVING_STATUS_IMMOBILIZE = CB,
+	COMSIG_LIVING_STATUS_PARALYZE = CB
+	))
+
+/obj/item/organ/cyberimp/brain/anti_stun/proc/on_signal()
+	if(crit_fail || working)
+		return
+	working = TRUE
+	if(owner.AmountStun() > stun_cap_amount)
+		owner.SetStun(stun_cap_amount)
+	if(owner.AmountKnockdown() > stun_cap_amount)
+		owner.SetKnockdown(stun_cap_amount)
+	if(owner.AmountImmobilized() > stun_cap_amount)
+		owner.SetImmobilized(stun_cap_amount)
+	if(owner.AmountParalyzed() > stun_cap_amount)
+		owner.SetParalyzed(stun_cap_amount)
+	working = FALSE
+
+/obj/item/organ/cyberimp/brain/anti_stun/emp_act(severity)
+	. = ..()
+	if(crit_fail || . & EMP_PROTECT_SELF)
+		return
+	crit_fail = TRUE
+	addtimer(CALLBACK(src, .proc/reboot), 90 / severity)
+
+/obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
+	crit_fail = FALSE
+>>>>>>> Updated this old code to fork
 
 //[[[[MOUTH]]]]
 /obj/item/organ/cyberimp/mouth

@@ -69,7 +69,11 @@ effective or pretty fucking useless.
 */
 
 /obj/item/healthanalyzer/rad_laser
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=400)
+=======
+	materials = list(MAT_METAL=400)
+>>>>>>> Updated this old code to fork
 	var/irradiate = 1
 	var/intensity = 10 // how much damage the radiation does
 	var/wavelength = 10 // time it takes for the radiation to kick in, in seconds

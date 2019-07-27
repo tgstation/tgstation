@@ -13,8 +13,13 @@ Industrial extracts:
 	var/itemamount = 1 //How many items to spawn
 
 /obj/item/slimecross/industrial/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	. += "It currently has [plasmaabsorbed] units of plasma floating inside the outer shell, out of [plasmarequired] units."
+=======
+	..()
+	to_chat(user, "It currently has [plasmaabsorbed] units of plasma floating inside the outer shell, out of [plasmarequired] units.")
+>>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/industrial/proc/do_after_spawn(obj/item/spawned)
 	return
@@ -30,6 +35,7 @@ Industrial extracts:
 
 /obj/item/slimecross/industrial/process()
 	var/IsWorking = FALSE
+<<<<<<< HEAD
 	if(reagents.has_reagent(/datum/reagent/toxin/plasma,amount = 2) && plasmarequired > 1) //Can absorb as much as 2
 		IsWorking = TRUE
 		reagents.remove_reagent(/datum/reagent/toxin/plasma,2)
@@ -37,6 +43,15 @@ Industrial extracts:
 	else if(reagents.has_reagent(/datum/reagent/toxin/plasma,amount = 1)) //Can absorb as little as 1
 		IsWorking = TRUE
 		reagents.remove_reagent(/datum/reagent/toxin/plasma,1)
+=======
+	if(reagents.has_reagent("plasma",amount = 2) && plasmarequired > 1) //Can absorb as much as 2
+		IsWorking = TRUE
+		reagents.remove_reagent("plasma",2)
+		plasmaabsorbed += 2
+	else if(reagents.has_reagent("plasma",amount = 1)) //Can absorb as little as 1
+		IsWorking = TRUE
+		reagents.remove_reagent("plasma",1)
+>>>>>>> Updated this old code to fork
 		plasmaabsorbed += 1
 
 	if(plasmaabsorbed >= plasmarequired)
@@ -53,37 +68,55 @@ Industrial extracts:
 
 /obj/item/slimecross/industrial/grey
 	colour = "grey"
+<<<<<<< HEAD
 	effect_desc = "Produces monkey cubes."
+=======
+>>>>>>> Updated this old code to fork
 	itempath = /obj/item/reagent_containers/food/snacks/monkeycube
 	itemamount = 5
 
 /obj/item/slimecross/industrial/orange
 	colour = "orange"
+<<<<<<< HEAD
 	effect_desc = "Produces slime zippo lighters."
+=======
+>>>>>>> Updated this old code to fork
 	plasmarequired = 6
 	itempath = /obj/item/lighter/slime
 
 /obj/item/slimecross/industrial/purple
 	colour = "purple"
+<<<<<<< HEAD
 	effect_desc = "Produces autoinjectors with regen jelly inside."
+=======
+>>>>>>> Updated this old code to fork
 	plasmarequired = 5
 	itempath = /obj/item/slimecrossbeaker/autoinjector/regenpack
 
 /obj/item/slimecross/industrial/blue
 	colour = "blue"
+<<<<<<< HEAD
 	effect_desc = "Produces full fire extinguishers."
+=======
+>>>>>>> Updated this old code to fork
 	plasmarequired = 10
 	itempath = /obj/item/extinguisher
 
 /obj/item/slimecross/industrial/metal
 	colour = "metal"
+<<<<<<< HEAD
 	effect_desc = "Produces metal sheets."
+=======
+>>>>>>> Updated this old code to fork
 	plasmarequired = 3
 	itempath = /obj/item/stack/sheet/metal/ten
 
 /obj/item/slimecross/industrial/yellow
 	colour = "yellow"
+<<<<<<< HEAD
 	effect_desc = "Produces high capacity power cells, which are not fully charged on creation."
+=======
+>>>>>>> Updated this old code to fork
 	plasmarequired = 5
 	itempath = /obj/item/stock_parts/cell/high
 
@@ -94,13 +127,19 @@ Industrial extracts:
 
 /obj/item/slimecross/industrial/darkpurple
 	colour = "dark purple"
+<<<<<<< HEAD
 	effect_desc = "Produces plasma... for plasma."
+=======
+>>>>>>> Updated this old code to fork
 	plasmarequired = 10
 	itempath = /obj/item/stack/sheet/mineral/plasma
 
 /obj/item/slimecross/industrial/darkblue
 	colour = "dark blue"
+<<<<<<< HEAD
 	effect_desc = "Produces one-use fireproofing potions."
+=======
+>>>>>>> Updated this old code to fork
 	plasmarequired = 6
 	itempath = /obj/item/slimepotion/fireproof
 
@@ -111,7 +150,10 @@ Industrial extracts:
 
 /obj/item/slimecross/industrial/silver
 	colour = "silver"
+<<<<<<< HEAD
 	effect_desc = "Produces random food and drink items."
+=======
+>>>>>>> Updated this old code to fork
 	plasmarequired = 1
 	//Item picked below.
 
@@ -121,49 +163,73 @@ Industrial extracts:
 
 /obj/item/slimecross/industrial/bluespace
 	colour = "bluespace"
+<<<<<<< HEAD
 	effect_desc = "Produces synthetic bluespace crystals."
+=======
+>>>>>>> Updated this old code to fork
 	plasmarequired = 7
 	itempath = /obj/item/stack/ore/bluespace_crystal/artificial
 
 /obj/item/slimecross/industrial/sepia
 	colour = "sepia"
+<<<<<<< HEAD
 	effect_desc = "Produces cameras."
+=======
+>>>>>>> Updated this old code to fork
 	plasmarequired = 2
 	itempath = /obj/item/camera
 
 /obj/item/slimecross/industrial/cerulean
 	colour = "cerulean"
+<<<<<<< HEAD
 	effect_desc = "Produces normal slime extract enhancers."
+=======
+>>>>>>> Updated this old code to fork
 	plasmarequired = 5
 	itempath = /obj/item/slimepotion/enhancer
 
 /obj/item/slimecross/industrial/pyrite
 	colour = "pyrite"
+<<<<<<< HEAD
 	effect_desc = "Produces cans of spraypaint."
+=======
+>>>>>>> Updated this old code to fork
 	plasmarequired = 2
 	itempath = /obj/item/toy/crayon/spraycan
 
 /obj/item/slimecross/industrial/red
 	colour = "red"
+<<<<<<< HEAD
 	effect_desc = "Produces blood orbs."
+=======
+>>>>>>> Updated this old code to fork
 	plasmarequired = 5
 	itempath = /obj/item/slimecrossbeaker/bloodpack
 
 /obj/item/slimecross/industrial/green
 	colour = "green"
+<<<<<<< HEAD
 	effect_desc = "Produces self-use-only slime jelly autoinjectors."
+=======
+>>>>>>> Updated this old code to fork
 	plasmarequired = 7
 	itempath = /obj/item/slimecrossbeaker/autoinjector/slimejelly
 
 /obj/item/slimecross/industrial/pink
 	colour = "pink"
+<<<<<<< HEAD
 	effect_desc = "Produces synthpax and space drug autoinjectors."
+=======
+>>>>>>> Updated this old code to fork
 	plasmarequired = 6
 	itempath = /obj/item/slimecrossbeaker/autoinjector/peaceandlove
 
 /obj/item/slimecross/industrial/gold
 	colour = "gold"
+<<<<<<< HEAD
 	effect_desc = "Produces random coins."
+=======
+>>>>>>> Updated this old code to fork
 	plasmarequired = 10
 
 /obj/item/slimecross/industrial/gold/process()
@@ -172,31 +238,46 @@ Industrial extracts:
 
 /obj/item/slimecross/industrial/oil
 	colour = "oil"
+<<<<<<< HEAD
 	effect_desc = "Produces IEDs."
+=======
+>>>>>>> Updated this old code to fork
 	plasmarequired = 4
 	itempath = /obj/item/grenade/iedcasing
 
 /obj/item/slimecross/industrial/black //What does this have to do with black slimes? No clue! Fun, though
 	colour = "black"
+<<<<<<< HEAD
 	effect_desc = "Produces slime brand regenerative cigarettes."
+=======
+>>>>>>> Updated this old code to fork
 	plasmarequired = 6
 	itempath = /obj/item/storage/fancy/cigarettes/cigpack_xeno
 
 /obj/item/slimecross/industrial/lightpink
 	colour = "light pink"
+<<<<<<< HEAD
 	effect_desc = "Produces heart shaped boxes that have candies in them."
+=======
+>>>>>>> Updated this old code to fork
 	plasmarequired = 3
 	itempath = /obj/item/storage/fancy/heart_box
 
 /obj/item/slimecross/industrial/adamantine
 	colour = "adamantine"
+<<<<<<< HEAD
 	effect_desc = "Produces sheets of adamantine."
+=======
+>>>>>>> Updated this old code to fork
 	plasmarequired = 10
 	itempath = /obj/item/stack/sheet/mineral/adamantine
 
 /obj/item/slimecross/industrial/rainbow
 	colour = "rainbow"
+<<<<<<< HEAD
 	effect_desc = "Produces random slime extracts."
+=======
+>>>>>>> Updated this old code to fork
 	plasmarequired = 5
 	//Item picked below.
 

@@ -4,7 +4,10 @@
 	icon_state = "repairbot"
 	mouse_opacity = MOUSE_OPACITY_ICON
 	density = FALSE
+<<<<<<< HEAD
 	hud_type = /datum/hud/pai
+=======
+>>>>>>> Updated this old code to fork
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	desc = "A generic pAI mobile hard-light holographics emitter. It seems to be deactivated."
@@ -13,7 +16,10 @@
 	maxHealth = 500
 	layer = BELOW_MOB_LAYER
 	can_be_held = TRUE
+<<<<<<< HEAD
 	radio = /obj/item/radio/headset/silicon/pai
+=======
+>>>>>>> Updated this old code to fork
 	var/network = "ss13"
 	var/obj/machinery/camera/current = null
 
@@ -39,6 +45,11 @@
 	var/screen				// Which screen our main window displays
 	var/subscreen			// Which specific function of the main screen is being displayed
 
+<<<<<<< HEAD
+=======
+	var/obj/item/pda/ai/pai/pda = null
+
+>>>>>>> Updated this old code to fork
 	var/secHUD = 0			// Toggles whether the Security HUD is active or not
 	var/medHUD = 0			// Toggles whether the Medical  HUD is active or not
 
@@ -53,6 +64,7 @@
 
 	var/obj/item/integrated_signaler/signaler // AI's signaller
 
+<<<<<<< HEAD
 	var/obj/item/instrument/piano_synth/internal_instrument
 	var/obj/machinery/newscaster			//pAI Newscaster
 	var/obj/item/healthanalyzer/hostscan				//pAI healthanalyzer
@@ -62,6 +74,12 @@
 	var/canholo = TRUE
 	var/can_transmit = TRUE
 	var/can_receive = TRUE
+=======
+	var/obj/item/instrument/recorder/internal_instrument
+
+	var/holoform = FALSE
+	var/canholo = TRUE
+>>>>>>> Updated this old code to fork
 	var/obj/item/card/id/access_card = null
 	var/chassis = "repairbot"
 	var/list/possible_chassis = list("cat" = TRUE, "mouse" = TRUE, "monkey" = TRUE, "corgi" = FALSE, "fox" = FALSE, "repairbot" = TRUE, "rabbit" = TRUE)		//assoc value is whether it can be picked up.
@@ -109,6 +127,7 @@
 		P.setPersonality(src)
 	forceMove(P)
 	card = P
+<<<<<<< HEAD
 	job = "Personal AI"
 	signaler = new(src)
 	hostscan = new /obj/item/healthanalyzer(src)
@@ -125,6 +144,34 @@
 
 	. = ..()
 
+=======
+	signaler = new(src)
+	if(!radio)
+		radio = new /obj/item/radio(src)
+
+	//PDA
+	pda = new(src)
+	spawn(5)
+		pda.ownjob = "pAI Messenger"
+		pda.owner = text("[]", src)
+		pda.name = pda.owner + " (" + pda.ownjob + ")"
+
+	. = ..()
+
+	var/datum/action/innate/pai/software/SW = new
+	var/datum/action/innate/pai/shell/AS = new /datum/action/innate/pai/shell
+	var/datum/action/innate/pai/chassis/AC = new /datum/action/innate/pai/chassis
+	var/datum/action/innate/pai/rest/AR = new /datum/action/innate/pai/rest
+	var/datum/action/innate/pai/light/AL = new /datum/action/innate/pai/light
+
+	var/datum/action/language_menu/ALM = new
+	SW.Grant(src)
+	AS.Grant(src)
+	AC.Grant(src)
+	AR.Grant(src)
+	AL.Grant(src)
+	ALM.Grant(src)
+>>>>>>> Updated this old code to fork
 	emittersemicd = TRUE
 	addtimer(CALLBACK(src, .proc/emittercool), 600)
 
@@ -261,8 +308,13 @@
 	return TRUE
 
 /mob/living/silicon/pai/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	. += "A personal AI in holochassis mode. Its master ID string seems to be [master]."
+=======
+	..()
+	to_chat(user, "A personal AI in holochassis mode. Its master ID string seems to be [master].")
+>>>>>>> Updated this old code to fork
 
 /mob/living/silicon/pai/Life()
 	if(stat == DEAD)
@@ -284,6 +336,7 @@
 
 /mob/living/silicon/pai/process()
 	emitterhealth = CLAMP((emitterhealth + emitterregen), -50, emittermaxhealth)
+<<<<<<< HEAD
 
 /obj/item/paicard/attackby(obj/item/W, mob/user, params)
 	..()
@@ -295,3 +348,5 @@
 			pai.radio.attackby(W, user, params)
 	else
 		to_chat(user, "Encryption Key ports not configured.")
+=======
+>>>>>>> Updated this old code to fork

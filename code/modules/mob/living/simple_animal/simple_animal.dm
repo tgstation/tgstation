@@ -10,7 +10,10 @@
 	var/icon_living = ""
 	var/icon_dead = "" //icon when the animal is dead. Don't use animated icons for this.
 	var/icon_gib = null	//We only try to show a gibbing animation if this exists.
+<<<<<<< HEAD
 	var/flip_on_death = FALSE //Flip the sprite upside down on death. Mostly here for things lacking custom dead sprites.
+=======
+>>>>>>> Updated this old code to fork
 
 	var/list/speak = list()
 	var/list/speak_emote = list()//	Emotes while speaking IE: Ian [emote], [text] -- Ian barks, "WOOF!". Spoken text is generated from the speak variable.
@@ -80,9 +83,15 @@
 
 	var/dextrous = FALSE //If the creature has, and can use, hands
 	var/dextrous_hud_type = /datum/hud/dextrous
+<<<<<<< HEAD
 
 	var/AIStatus = AI_ON //The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever), AI_Z_OFF (Temporarily off due to nonpresence of players)
 	var/can_have_ai = TRUE //once we have become sentient, we can never go back
+=======
+	var/datum/personal_crafting/handcrafting
+
+	var/AIStatus = AI_ON //The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever), AI_Z_OFF (Temporarily off due to nonpresence of players)
+>>>>>>> Updated this old code to fork
 
 	var/shouldwakeup = FALSE //convenience var for forcibly waking up an idling AI on next check.
 
@@ -96,6 +105,10 @@
 /mob/living/simple_animal/Initialize()
 	. = ..()
 	GLOB.simple_animals[AIStatus] += src
+<<<<<<< HEAD
+=======
+	handcrafting = new()
+>>>>>>> Updated this old code to fork
 	if(gender == PLURAL)
 		gender = pick(MALE,FEMALE)
 	if(!real_name)
@@ -103,8 +116,11 @@
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
 	update_simplemob_varspeed()
+<<<<<<< HEAD
 	if(dextrous)
 		AddComponent(/datum/component/personal_crafting)
+=======
+>>>>>>> Updated this old code to fork
 
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
@@ -121,11 +137,14 @@
 
 	return ..()
 
+<<<<<<< HEAD
 /mob/living/simple_animal/examine(mob/user)
 	. = ..()
 	if(stat == DEAD)
 		. += "<span class='deadsay'>Upon closer examination, [p_they()] appear[p_s()] to be dead.</span>"
 
+=======
+>>>>>>> Updated this old code to fork
 /mob/living/simple_animal/initialize_footstep()
 	if(do_footstep)
 		..()
@@ -286,7 +305,14 @@
 /mob/living/simple_animal/emote(act, m_type=1, message = null, intentional = FALSE)
 	if(stat)
 		return
+<<<<<<< HEAD
 	. = ..()
+=======
+	if(act == "scream")
+		message = "makes a loud and pained whimper." //ugly hack to stop animals screaming when crushed :P
+		act = "me"
+	..(act, m_type, message)
+>>>>>>> Updated this old code to fork
 
 /mob/living/simple_animal/proc/set_varspeed(var_value)
 	speed = var_value
@@ -316,8 +342,13 @@
 	drop_loot()
 	if(dextrous)
 		drop_all_held_items()
+<<<<<<< HEAD
 	if(!gibbed)
 		if(deathsound || deathmessage || !del_on_death)
+=======
+	if(!gibbed && !del_on_death)
+		if(deathsound || deathmessage)
+>>>>>>> Updated this old code to fork
 			emote("deathgasp")
 	if(del_on_death)
 		..()
@@ -328,8 +359,11 @@
 	else
 		health = 0
 		icon_state = icon_dead
+<<<<<<< HEAD
 		if(flip_on_death)
 			transform = transform.Turn(180)
+=======
+>>>>>>> Updated this old code to fork
 		density = FALSE
 		..()
 
@@ -431,18 +465,28 @@
 			mobility_flags = MOBILITY_FLAGS_DEFAULT
 		else
 			mobility_flags = NONE
+<<<<<<< HEAD
 	if(!(mobility_flags & MOBILITY_MOVE))
 		walk(src, 0) //stop mid walk
 
+=======
+>>>>>>> Updated this old code to fork
 	update_transform()
 	update_action_buttons_icon()
 
 /mob/living/simple_animal/update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
+<<<<<<< HEAD
 	var/changed = FALSE
 
 	if(resize != RESIZE_DEFAULT_SIZE)
 		changed = TRUE
+=======
+	var/changed = 0
+
+	if(resize != RESIZE_DEFAULT_SIZE)
+		changed++
+>>>>>>> Updated this old code to fork
 		ntransform.Scale(resize)
 		resize = RESIZE_DEFAULT_SIZE
 
@@ -451,7 +495,10 @@
 
 /mob/living/simple_animal/proc/sentience_act() //Called when a simple animal gains sentience via gold slime potion
 	toggle_ai(AI_OFF) // To prevent any weirdness.
+<<<<<<< HEAD
 	can_have_ai = FALSE
+=======
+>>>>>>> Updated this old code to fork
 
 /mob/living/simple_animal/update_sight()
 	if(!client)
@@ -475,6 +522,13 @@
 /mob/living/simple_animal/get_idcard(hand_first)
 	return access_card
 
+<<<<<<< HEAD
+=======
+/mob/living/simple_animal/OpenCraftingMenu()
+	if(dextrous)
+		handcrafting.ui_interact(src)
+
+>>>>>>> Updated this old code to fork
 /mob/living/simple_animal/can_hold_items()
 	return dextrous
 
@@ -507,7 +561,11 @@
 		if(istype(held_item, /obj/item/twohanded))
 			var/obj/item/twohanded/T = held_item
 			if(T.wielded == 1)
+<<<<<<< HEAD
 				to_chat(usr, "<span class='warning'>Your other hand is too busy holding [T].</span>")
+=======
+				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [T.name].</span>")
+>>>>>>> Updated this old code to fork
 				return
 	var/oindex = active_hand_index
 	active_hand_index = hand_index
@@ -542,7 +600,11 @@
 //ANIMAL RIDING
 
 /mob/living/simple_animal/user_buckle_mob(mob/living/M, mob/user)
+<<<<<<< HEAD
 	var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
+=======
+	GET_COMPONENT(riding_datum, /datum/component/riding)
+>>>>>>> Updated this old code to fork
 	if(riding_datum)
 		if(user.incapacitated())
 			return
@@ -553,7 +615,11 @@
 		return ..()
 
 /mob/living/simple_animal/relaymove(mob/user, direction)
+<<<<<<< HEAD
 	var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
+=======
+	GET_COMPONENT(riding_datum, /datum/component/riding)
+>>>>>>> Updated this old code to fork
 	if(tame && riding_datum)
 		riding_datum.handle_ride(user, direction)
 
@@ -562,8 +628,11 @@
 	LoadComponent(/datum/component/riding)
 
 /mob/living/simple_animal/proc/toggle_ai(togglestatus)
+<<<<<<< HEAD
 	if(!can_have_ai && (togglestatus != AI_OFF))
 		return
+=======
+>>>>>>> Updated this old code to fork
 	if (AIStatus != togglestatus)
 		if (togglestatus > 0 && togglestatus < 5)
 			if (togglestatus == AI_Z_OFF || AIStatus == AI_Z_OFF)

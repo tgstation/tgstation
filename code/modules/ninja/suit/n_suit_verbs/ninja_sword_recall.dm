@@ -23,6 +23,12 @@
 			var/mob/living/carbon/C = energyKatana.loc
 			C.transferItemToLoc(energyKatana, get_turf(energyKatana), TRUE)
 
+<<<<<<< HEAD
+=======
+			//Somebody swollowed my sword, probably the clown doing a circus act.
+			if(energyKatana in C.stomach_contents)
+				C.stomach_contents -= energyKatana
+>>>>>>> Updated this old code to fork
 		else
 			energyKatana.forceMove(get_turf(energyKatana))
 

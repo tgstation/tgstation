@@ -36,7 +36,11 @@
 	suffix = "asteroid4.dmm"
 	name = "Asteroid 4"
 	description = "Nanotrasen Escape Pods have a 100%* success rate, and a 99%* customer satisfaction rate. \
+<<<<<<< HEAD
 	*Please note that these statistics are taken from pods that have successfully docked with a recovery vessel."
+=======
+	*Please note that these statistics, are taken from pods that have successfully docked with a recovery vessel."
+>>>>>>> Updated this old code to fork
 
 /datum/map_template/ruin/space/asteroid5
 	id = "asteroid5"
@@ -48,7 +52,11 @@
 	id = "deep-storage"
 	suffix = "deepstorage.dmm"
 	name = "Survivalist Bunker"
+<<<<<<< HEAD
 	description = "Assume the best, prepare for the worst. Generally, you should do so by digging a three-man heavily fortified bunker into a giant unused asteroid. \
+=======
+	description = "Assume the best, prepare for the worst. Generally, you should do so by digging a three man heavily fortified bunker into a giant unused asteroid. \
+>>>>>>> Updated this old code to fork
 	Then make it self sufficient, mask any evidence of construction, hook it covertly into the telecommunications network and hope for the best."
 
 /datum/map_template/ruin/space/bigderelict1
@@ -103,7 +111,11 @@
 	id = "empty-shell"
 	suffix = "emptyshell.dmm"
 	name = "Empty Shell"
+<<<<<<< HEAD
 	description = "Cosy, rural property available for young professional couple. Only twelve parsecs from the nearest hyperspace lane!"
+=======
+	description = "Cosy, rural property availible for young professional couple. Only twelve parsecs from the nearest hyperspace lane!"
+>>>>>>> Updated this old code to fork
 
 /datum/map_template/ruin/space/gas_the_lizards
 	id = "gas-the-lizards"
@@ -186,28 +198,45 @@
 	suffix = "abandonedteleporter.dmm"
 	name = "Abandoned Teleporter"
 	description = "In space construction the teleporter is often the first system brought online. \
+<<<<<<< HEAD
 	This lonely, half-built teleporter is a sign of a proposed structure that for one reason or another just never got built."
+=======
+	This lonely half built teleporter is a sign of a proposed structure that for one reason or another just never got built."
+>>>>>>> Updated this old code to fork
 
 /datum/map_template/ruin/space/crashedclownship
 	id = "crashedclownship"
 	suffix = "crashedclownship.dmm"
 	name = "Crashed Clown Ship"
 	description = "For centuries the promise of a new clown homeworld has been the siren call for countless clown vessels. \
+<<<<<<< HEAD
 	Alas, the clown's lust for shenanigans means that successful voyages are almost unheard of, with most vessels falling to hilarious consequences almost immediately."
+=======
+	Alas the clown's lust for shinanagans means that successful voyages are almost unheard of, with most vessels falling to hilarious consequences almost immediately."
+>>>>>>> Updated this old code to fork
 
 /datum/map_template/ruin/space/crashedship
 	id = "crashedship"
 	suffix = "crashedship.dmm"
 	name = "Crashed Ship"
 	description = "Among civilian vessels the most common cause of tragedy is lack of food. \
+<<<<<<< HEAD
 	This ship was outfitted with a multitude of food-generating features, then summarily ran into an asteroid shortly after takeoff."
+=======
+	This ship was outfited with a multitude of food generating features, then summarily ran into an asteroid shortly after takeoff."
+>>>>>>> Updated this old code to fork
 
 /datum/map_template/ruin/space/listeningstation
 	id = "listeningstation"
 	suffix = "listeningstation.dmm"
 	name = "Syndicate Listening Station"
+<<<<<<< HEAD
 	description = "Listening stations form the backbone of the syndicate's information-gathering operations. \
 	Assignment to these stations is dreaded by most agents, as it entails long and lonely shifts listening to nearby stations chatter incessantly about the most meaningless things."
+=======
+	description = "Listening stations form the backbone of the syndicate's information gathering operations. \
+	Assignment to these stations is dreaded by most agents, as it entails long and lonely shifts listening to nearby stations chatter incessently about the most meaningless things."
+>>>>>>> Updated this old code to fork
 
 /datum/map_template/ruin/space/oldAIsat
 	id = "oldAIsat"
@@ -234,7 +263,11 @@
 	id = "bus"
 	suffix = "bus.dmm"
 	name = "Waylaid Buses"
+<<<<<<< HEAD
 	description = "There seems to be a pair of buses that pulled over for repairs. What were they doing...? Their shipment sure  seems to be filled with a strange mix. \
+=======
+	description = "There seems to be a pair of buses that pulled over for repairs. What were they doing..? Their shipment sure  seems to be filled with a strange mix. \
+>>>>>>> Updated this old code to fork
 	Anyway, it looks like some people tried to fix it up for a long time but didn't really get anywhere..."
 
 /datum/map_template/ruin/space/oldstation
@@ -248,7 +281,11 @@
 	id = "miracle"
 	suffix = "miracle.dmm"
 	name = "Ordinary Space Tile"
+<<<<<<< HEAD
 	description = "Absolutely nothing strange going on here, please move along, plenty more space to see right this way!"
+=======
+	description = "Absolutely nothing strange going on here please move along, plenty more space to see right this way!"
+>>>>>>> Updated this old code to fork
 
 /datum/map_template/ruin/space/gondoland
 	id = "gondolaasteroid"

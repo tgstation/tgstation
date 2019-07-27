@@ -21,6 +21,7 @@
 
 	var/process_type //Determines what to do when process_scan() receives a target. See process_scan() for details.
 	var/targetdirection
+<<<<<<< HEAD
 	var/replacetiles = FALSE
 	var/placetiles = FALSE
 	var/specialtiles = 0
@@ -28,11 +29,23 @@
 	var/obj/item/stack/tile/tiletype
 	var/fixfloors = TRUE
 	var/autotile = FALSE
+=======
+	var/replacetiles = 0
+	var/placetiles = 0
+	var/specialtiles = 0
+	var/maxtiles = 100
+	var/obj/item/stack/tile/tiletype
+	var/fixfloors = 0
+	var/autotile = 0
+>>>>>>> Updated this old code to fork
 	var/max_targets = 50
 	var/turf/target
 	var/oldloc = null
 	var/toolbox = /obj/item/storage/toolbox/mechanical
+<<<<<<< HEAD
 	var/toolbox_color = ""
+=======
+>>>>>>> Updated this old code to fork
 
 	#define HULL_BREACH		1
 	#define LINE_SPACE_MODE		2
@@ -42,16 +55,24 @@
 	#define REPLACE_TILE		6
 	#define TILE_EMAG		7
 
+<<<<<<< HEAD
 /mob/living/simple_animal/bot/floorbot/Initialize(mapload, new_toolbox_color)
 	. = ..()
 	toolbox_color = new_toolbox_color
+=======
+/mob/living/simple_animal/bot/floorbot/Initialize()
+	. = ..()
+>>>>>>> Updated this old code to fork
 	update_icon()
 	var/datum/job/engineer/J = new/datum/job/engineer
 	access_card.access += J.get_access()
 	prev_access = access_card.access
+<<<<<<< HEAD
 	if(toolbox_color == "s")
 		health = 100
 		maxHealth = 100
+=======
+>>>>>>> Updated this old code to fork
 
 /mob/living/simple_animal/bot/floorbot/turn_on()
 	. = ..()
@@ -136,7 +157,11 @@
 
 /mob/living/simple_animal/bot/floorbot/Topic(href, href_list)
 	if(..())
+<<<<<<< HEAD
 		return TRUE
+=======
+		return 1
+>>>>>>> Updated this old code to fork
 
 	switch(href_list["operation"])
 		if("replace")
@@ -269,9 +294,15 @@
 /mob/living/simple_animal/bot/floorbot/proc/is_hull_breach(turf/t) //Ignore space tiles not considered part of a structure, also ignores shuttle docking areas.
 	var/area/t_area = get_area(t)
 	if(t_area && (t_area.name == "Space" || findtext(t_area.name, "huttle")))
+<<<<<<< HEAD
 		return FALSE
 	else
 		return TRUE
+=======
+		return 0
+	else
+		return 1
+>>>>>>> Updated this old code to fork
 
 //Floorbots, having several functions, need sort out special conditions here.
 /mob/living/simple_animal/bot/floorbot/process_scan(scan_target)
@@ -317,7 +348,11 @@
 		return
 	if(isspaceturf(target_turf)) //If we are fixing an area not part of pure space, it is
 		anchored = TRUE
+<<<<<<< HEAD
 		icon_state = "[toolbox_color]floorbot-c"
+=======
+		icon_state = "floorbot-c"
+>>>>>>> Updated this old code to fork
 		visible_message("<span class='notice'>[targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] </span>")
 		mode = BOT_REPAIRING
 		sleep(50)
@@ -332,24 +367,42 @@
 
 		if(F.type != initial(tiletype.turf_type) && (F.broken || F.burnt || isplatingturf(F)) || F.type == (initial(tiletype.turf_type) && (F.broken || F.burnt)))
 			anchored = TRUE
+<<<<<<< HEAD
 			icon_state = "[toolbox_color]floorbot-c"
+=======
+			icon_state = "floorbot-c"
+>>>>>>> Updated this old code to fork
 			mode = BOT_REPAIRING
 			visible_message("<span class='notice'>[src] begins repairing the floor.</span>")
 			sleep(50)
 			if(mode == BOT_REPAIRING && F && src.loc == F)
+<<<<<<< HEAD
 				F.broken = FALSE 
 				F.burnt = FALSE
+=======
+				F.broken = 0
+				F.burnt = 0
+>>>>>>> Updated this old code to fork
 				F.PlaceOnTop(/turf/open/floor/plasteel)
 
 		if(replacetiles && F.type != initial(tiletype.turf_type) && specialtiles && !isplatingturf(F))
 			anchored = TRUE
+<<<<<<< HEAD
 			icon_state = "[toolbox_color]floorbot-c"
+=======
+			icon_state = "floorbot-c"
+>>>>>>> Updated this old code to fork
 			mode = BOT_REPAIRING
 			visible_message("<span class='notice'>[src] begins replacing the floor tiles.</span>")
 			sleep(50)
 			if(mode == BOT_REPAIRING && F && src.loc == F)
+<<<<<<< HEAD
 				F.broken = FALSE
 				F.burnt = FALSE
+=======
+				F.broken = 0
+				F.burnt = 0
+>>>>>>> Updated this old code to fork
 				F.PlaceOnTop(initial(tiletype.turf_type))
 				specialtiles -= 1
 				if(specialtiles == 0)
@@ -360,7 +413,11 @@
 	target = null
 
 /mob/living/simple_animal/bot/floorbot/update_icon()
+<<<<<<< HEAD
 	icon_state = "[toolbox_color]floorbot[on]"
+=======
+	icon_state = "floorbot[on]"
+>>>>>>> Updated this old code to fork
 
 
 /mob/living/simple_animal/bot/floorbot/explode()

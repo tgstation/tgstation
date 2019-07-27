@@ -72,18 +72,26 @@
 		air.copy_from(copy)
 
 /turf/return_air()
+<<<<<<< HEAD
 	RETURN_TYPE(/datum/gas_mixture)
+=======
+>>>>>>> Updated this old code to fork
 	var/datum/gas_mixture/GM = new
 	GM.copy_from_turf(src)
 	return GM
 
 /turf/open/return_air()
+<<<<<<< HEAD
 	RETURN_TYPE(/datum/gas_mixture)
 	return air
 
 /turf/open/return_analyzable_air()
 	return return_air()
 
+=======
+	return air
+
+>>>>>>> Updated this old code to fork
 /turf/temperature_expose()
 	if(temperature > heat_capacity)
 		to_be_destroyed = TRUE
@@ -98,6 +106,7 @@
 
 /////////////////////////GAS OVERLAYS//////////////////////////////
 
+<<<<<<< HEAD
 
 /turf/open/proc/update_visuals()
 
@@ -122,6 +131,11 @@
 		var/gas_overlay = gas_meta[META_GAS_OVERLAY]
 		if(gas_overlay && gas[MOLES] > gas_meta[META_GAS_MOLES_VISIBLE])
 			new_overlay_types += gas_overlay[min(FACTOR_GAS_VISIBLE_MAX, CEILING(gas[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))]
+=======
+/turf/open/proc/update_visuals()
+	var/list/new_overlay_types = tile_graphic()
+	var/list/atmos_overlay_types = src.atmos_overlay_types // Cache for free performance
+>>>>>>> Updated this old code to fork
 
 	if (atmos_overlay_types)
 		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
@@ -136,6 +150,24 @@
 	UNSETEMPTY(new_overlay_types)
 	src.atmos_overlay_types = new_overlay_types
 
+<<<<<<< HEAD
+=======
+/turf/open/proc/tile_graphic()
+	var/static/list/nonoverlaying_gases = typecache_of_gases_with_no_overlays()
+	if(!air)
+		return
+	. = new /list
+	var/list/gases = air.gases
+	for(var/id in gases)
+		if (nonoverlaying_gases[id])
+			continue
+		var/gas = gases[id]
+		var/gas_meta = gas[GAS_META]
+		var/gas_overlay = gas_meta[META_GAS_OVERLAY]
+		if(gas_overlay && gas[MOLES] > gas_meta[META_GAS_MOLES_VISIBLE])
+			. += gas_overlay[min(FACTOR_GAS_VISIBLE_MAX, CEILING(gas[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))]
+
+>>>>>>> Updated this old code to fork
 /proc/typecache_of_gases_with_no_overlays()
 	. = list()
 	for (var/gastype in subtypesof(/datum/gas))

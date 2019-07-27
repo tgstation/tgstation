@@ -43,9 +43,13 @@
 	no_den_usage = 1
 	var/allowed_projectile_types = list(/obj/item/projectile/magic/change, /obj/item/projectile/magic/animate, /obj/item/projectile/magic/resurrection,
 	/obj/item/projectile/magic/death, /obj/item/projectile/magic/teleport, /obj/item/projectile/magic/door, /obj/item/projectile/magic/aoe/fireball,
+<<<<<<< HEAD
 	/obj/item/projectile/magic/spellblade, /obj/item/projectile/magic/arcane_barrage, /obj/item/projectile/magic/locker, /obj/item/projectile/magic/flying,
 	/obj/item/projectile/magic/bounty, /obj/item/projectile/magic/antimagic, /obj/item/projectile/magic/fetch, /obj/item/projectile/magic/sapping,
 	/obj/item/projectile/magic/necropotence, /obj/item/projectile/magic, /obj/item/projectile/temp/chill, /obj/item/projectile/magic/wipe)
+=======
+	/obj/item/projectile/magic/spellblade, /obj/item/projectile/magic/arcane_barrage, /obj/item/projectile/magic/locker)
+>>>>>>> Updated this old code to fork
 
 /obj/item/gun/magic/staff/chaos/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	chambered.projectile_type = pick(allowed_projectile_types)
@@ -107,6 +111,7 @@
 	max_charges = 6
 	recharge_rate = 4
 
+<<<<<<< HEAD
 //yes, they don't have sounds. they're admin staves, and their projectiles will play the chaos bolt sound anyway so why bother?
 
 /obj/item/gun/magic/staff/flying
@@ -140,3 +145,6 @@
 	ammo_type = /obj/item/ammo_casing/magic/wipe
 	icon_state = "staffofwipe"
 	item_state = "staffofwipe"
+=======
+
+>>>>>>> Updated this old code to fork

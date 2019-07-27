@@ -130,6 +130,25 @@
 	category = list("Teleportation Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
+<<<<<<< HEAD
+=======
+/datum/design/board/sleeper
+	name = "Machine Design (Sleeper Board)"
+	desc = "The circuit board for a sleeper."
+	id = "sleeper"
+	build_path = /obj/item/circuitboard/machine/sleeper
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
+	category = list ("Medical Machinery")
+
+/datum/design/board/vr_sleeper
+	name = "Machine Design (VR Sleeper Board)"
+	desc = "The circuit board for a VR sleeper."
+	id = "vr_sleeper"
+	build_path = /obj/item/circuitboard/machine/vr_sleeper
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+	category = list ("Medical Machinery")
+
+>>>>>>> Updated this old code to fork
 /datum/design/board/cryotube
 	name = "Machine Design (Cryotube Board)"
 	desc = "The circuit board for a cryotube."
@@ -400,8 +419,13 @@
 	id = "scanner_gate"
 	build_path = /obj/item/circuitboard/machine/scanner_gate
 	category = list ("Misc. Machinery")
+<<<<<<< HEAD
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
+=======
+	departmental_flags = DEPARTMENTAL_FLAG_ALL	
+	
+>>>>>>> Updated this old code to fork
 /datum/design/board/holopad
 	name = "Machine Design (AI Holopad Board)"
 	desc = "The circuit board for a holopad."
@@ -422,7 +446,11 @@
 	name = "Machine Design (Weapon Recharger Board)"
 	desc = "The circuit board for a Weapon Recharger."
 	id = "recharger"
+<<<<<<< HEAD
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000)
+=======
+	materials = list(MAT_GLASS = 1000, MAT_GOLD = 2000)
+>>>>>>> Updated this old code to fork
 	build_path = /obj/item/circuitboard/machine/recharger
 	category = list("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
@@ -570,6 +598,7 @@
 	build_path = /obj/item/circuitboard/machine/paystand
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
+<<<<<<< HEAD
 
 /datum/design/board/fat_sucker
 	name = "Machine Design (Lipid Extractor)"
@@ -594,3 +623,5 @@
 	build_path = /obj/item/circuitboard/machine/spaceship_navigation_beacon
 	category = list ("Teleportation Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+=======
+>>>>>>> Updated this old code to fork

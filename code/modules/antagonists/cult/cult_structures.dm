@@ -29,10 +29,17 @@
 
 
 /obj/structure/destructible/cult/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	. += "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>"
 	if((iscultist(user) || isobserver(user)) && cooldowntime > world.time)
 		. += "<span class='cult italic'>The magic in [src] is too weak, [p_they()] will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>"
+=======
+	..()
+	to_chat(user, "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>")
+	if((iscultist(user) || isobserver(user)) && cooldowntime > world.time)
+		to_chat(user, "<span class='cult italic'>The magic in [src] is too weak, [p_they()] will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/structure/destructible/cult/examine_status(mob/user)
 	if(iscultist(user) || isobserver(user))
@@ -66,7 +73,11 @@
 		return ..()
 
 /obj/structure/destructible/cult/ratvar_act()
+<<<<<<< HEAD
 	if(take_damage(rand(25, 50), BURN) && !QDELETED(src)) //if we still exist
+=======
+	if(take_damage(rand(25, 50), BURN) && src) //if we still exist
+>>>>>>> Updated this old code to fork
 		var/previouscolor = color
 		color = "#FAE48C"
 		animate(src, color = previouscolor, time = 8)

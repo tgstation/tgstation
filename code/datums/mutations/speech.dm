@@ -19,6 +19,7 @@
 	text_gain_indication = "<span class='sans'>You feel an off sensation in your voicebox.</span>"
 	text_lose_indication = "<span class='notice'>The off sensation passes.</span>"
 
+<<<<<<< HEAD
 /datum/mutation/human/wacky/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
@@ -31,6 +32,11 @@
 
 /datum/mutation/human/wacky/proc/handle_speech(datum/source, list/speech_args)
 	speech_args[SPEECH_SPANS] |= SPAN_SANS
+=======
+/datum/mutation/human/wacky/get_spans()
+	return list(SPAN_SANS)
+
+>>>>>>> Updated this old code to fork
 
 /datum/mutation/human/mute
 	name = "Mute"
@@ -42,12 +48,20 @@
 /datum/mutation/human/mute/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
+<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_MUTE, GENETIC_MUTATION)
+=======
+	owner.add_trait(TRAIT_MUTE, GENETIC_MUTATION)
+>>>>>>> Updated this old code to fork
 
 /datum/mutation/human/mute/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
+<<<<<<< HEAD
 	REMOVE_TRAIT(owner, TRAIT_MUTE, GENETIC_MUTATION)
+=======
+	owner.remove_trait(TRAIT_MUTE, GENETIC_MUTATION)
+>>>>>>> Updated this old code to fork
 
 
 /datum/mutation/human/smile
@@ -57,6 +71,7 @@
 	text_gain_indication = "<span class='notice'>You feel so happy. Nothing can be wrong with anything. :)</span>"
 	text_lose_indication = "<span class='notice'>Everything is terrible again. :(</span>"
 
+<<<<<<< HEAD
 /datum/mutation/human/smile/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
@@ -69,6 +84,9 @@
 
 /datum/mutation/human/smile/proc/handle_speech(datum/source, list/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]
+=======
+/datum/mutation/human/smile/say_mod(message)
+>>>>>>> Updated this old code to fork
 	if(message)
 		message = " [message] "
 		//Time for a friendly game of SS13
@@ -92,7 +110,10 @@
 		message = replacetext(message," murder "," tease ")
 		message = replacetext(message," ugly "," beautiful ")
 		message = replacetext(message," douchbag "," nice guy ")
+<<<<<<< HEAD
 		message = replacetext(message," douchebag "," nice guy ")
+=======
+>>>>>>> Updated this old code to fork
 		message = replacetext(message," whore "," lady ")
 		message = replacetext(message," nerd "," smart guy ")
 		message = replacetext(message," moron "," fun person ")
@@ -116,7 +137,11 @@
 		message = replacetext(message," cunt "," privates ")
 		message = replacetext(message," dick "," jerk ")
 		message = replacetext(message," vagina "," privates ")
+<<<<<<< HEAD
 		speech_args[SPEECH_MESSAGE] = trim(message)
+=======
+	return trim(message)
+>>>>>>> Updated this old code to fork
 
 
 /datum/mutation/human/unintelligible
@@ -129,12 +154,20 @@
 /datum/mutation/human/unintelligible/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
+<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, GENETIC_MUTATION)
+=======
+	owner.add_trait(TRAIT_UNINTELLIGIBLE_SPEECH, GENETIC_MUTATION)
+>>>>>>> Updated this old code to fork
 
 /datum/mutation/human/unintelligible/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
+<<<<<<< HEAD
 	REMOVE_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, GENETIC_MUTATION)
+=======
+	owner.remove_trait(TRAIT_UNINTELLIGIBLE_SPEECH, GENETIC_MUTATION)
+>>>>>>> Updated this old code to fork
 
 /datum/mutation/human/swedish
 	name = "Swedish"
@@ -143,6 +176,7 @@
 	text_gain_indication = "<span class='notice'>You feel Swedish, however that works.</span>"
 	text_lose_indication = "<span class='notice'>The feeling of Swedishness passes.</span>"
 
+<<<<<<< HEAD
 /datum/mutation/human/swedish/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
@@ -155,6 +189,9 @@
 
 /datum/mutation/human/swedish/proc/handle_speech(datum/source, list/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]
+=======
+/datum/mutation/human/swedish/say_mod(message)
+>>>>>>> Updated this old code to fork
 	if(message)
 		message = replacetext(message,"w","v")
 		message = replacetext(message,"j","y")
@@ -163,7 +200,12 @@
 		message = replacetext(message,"o",pick("ö","ø","o"))
 		if(prob(30))
 			message += " Bork[pick("",", bork",", bork, bork")]!"
+<<<<<<< HEAD
 		speech_args[SPEECH_MESSAGE] = trim(message)
+=======
+	return message
+
+>>>>>>> Updated this old code to fork
 
 /datum/mutation/human/chav
 	name = "Chav"
@@ -172,6 +214,7 @@
 	text_gain_indication = "<span class='notice'>Ye feel like a reet prat like, innit?</span>"
 	text_lose_indication = "<span class='notice'>You no longer feel like being rude and sassy.</span>"
 
+<<<<<<< HEAD
 /datum/mutation/human/chav/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
@@ -184,6 +227,9 @@
 
 /datum/mutation/human/chav/proc/handle_speech(datum/source, list/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]
+=======
+/datum/mutation/human/chav/say_mod(message)
+>>>>>>> Updated this old code to fork
 	if(message)
 		message = " [message] "
 		message = replacetext(message," looking at  ","  gawpin' at ")
@@ -207,7 +253,11 @@
 		message = replacetext(message," break "," do ")
 		message = replacetext(message," your "," yer ")
 		message = replacetext(message," security "," coppers ")
+<<<<<<< HEAD
 		speech_args[SPEECH_MESSAGE] = trim(message)
+=======
+	return trim(message)
+>>>>>>> Updated this old code to fork
 
 
 /datum/mutation/human/elvis
@@ -229,6 +279,7 @@
 			if(prob(15))
 				owner.visible_message("<b>[owner]</b> [pick("jiggles their hips", "rotates their hips", "gyrates their hips", "taps their foot", "dances to an imaginary song", "jiggles their legs", "snaps their fingers")]!")
 
+<<<<<<< HEAD
 /datum/mutation/human/elvis/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
@@ -241,6 +292,9 @@
 
 /datum/mutation/human/elvis/proc/handle_speech(datum/source, list/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]
+=======
+/datum/mutation/human/elvis/say_mod(message)
+>>>>>>> Updated this old code to fork
 	if(message)
 		message = " [message] "
 		message = replacetext(message," i'm not "," I aint ")
@@ -248,12 +302,20 @@
 		message = replacetext(message," man ",pick(" son "," buddy "," brother"," pal "," friendo "))
 		message = replacetext(message," out of "," outta ")
 		message = replacetext(message," thank you "," thank you, thank you very much ")
+<<<<<<< HEAD
 		message = replacetext(message," thanks "," thank you, thank you very much ")
 		message = replacetext(message," what are you "," whatcha ")
 		message = replacetext(message," yes ",pick(" sure", "yea "))
 		message = replacetext(message," faggot "," square ")
 		message = replacetext(message," muh valids "," my kicks ")
 		speech_args[SPEECH_MESSAGE] = trim(message)
+=======
+		message = replacetext(message," what are you "," whatcha ")
+		message = replacetext(message," yes ",pick(" sure", "yea "))
+		message = replacetext(message," faggot "," square ")
+		message = replacetext(message," muh valids "," getting my kicks ")
+	return trim(message)
+>>>>>>> Updated this old code to fork
 
 
 /datum/mutation/human/stoner
@@ -273,3 +335,19 @@
 	..()
 	owner.grant_language(/datum/language/common)
 	owner.remove_language(/datum/language/beachbum)
+<<<<<<< HEAD
+=======
+
+/datum/mutation/human/yelling
+	name = "Yelling"
+	desc = "A mutation that forces the host to constantly yell their sentences out."
+	quality = MINOR_NEGATIVE
+	locked = TRUE
+	text_gain_indication = "<span class='danger'>You feel really angry.</span>"
+	text_lose_indication = "<span class='notice'>You feel calmer.</span>"
+
+/datum/mutation/human/yelling/say_mod(message)
+	if(message)
+		message = "[uppertext(replacetext(message, ".", "!"))]!"
+	return (message)
+>>>>>>> Updated this old code to fork

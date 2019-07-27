@@ -20,6 +20,7 @@
 	var/attachment_holes = TRUE
 
 /turf/open/floor/plating/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(broken || burnt)
 		. += "<span class='notice'>It looks like the dents could be <i>welded</i> smooth.</span>"
@@ -28,6 +29,16 @@
 		. += "<span class='notice'>There are a few attachment holes for a new <i>tile</i> or reinforcement <i>rods</i>.</span>"
 	else
 		. += "<span class='notice'>You might be able to build ontop of it with some <i>tiles</i>...</span>"
+=======
+	..()
+	if(broken || burnt)
+		to_chat(user, "<span class='notice'>It looks like the dents could be <i>welded</i> smooth.</span>")
+		return
+	if(attachment_holes)
+		to_chat(user, "<span class='notice'>There are a few attachment holes for a new <i>tile</i> or reinforcement <i>rods</i>.</span>")
+	else
+		to_chat(user, "<span class='notice'>You might be able to build ontop of it with some <i>tiles</i>...</span>")
+>>>>>>> Updated this old code to fork
 
 /turf/open/floor/plating/Initialize()
 	if (!broken_states)
@@ -129,6 +140,7 @@
 		else
 			to_chat(user, "<span class='danger'>You hit [src], to no effect!</span>")
 
+<<<<<<< HEAD
 /turf/open/floor/plating/foam/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_FLOORWALL)
 		return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 1)
@@ -140,9 +152,15 @@
 		return TRUE
 	return FALSE
 
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating/foam/ex_act()
 	..()
 	ScrapeAway()
 
+<<<<<<< HEAD
 /turf/open/floor/plating/foam/tool_act(mob/living/user, obj/item/I, tool_type)
+=======
+/turf/open/floor/plating/foam/tool_act(mob/living/user, obj/tool/I, tool_type)
+>>>>>>> Updated this old code to fork
 	return

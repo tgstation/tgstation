@@ -52,7 +52,11 @@
 	dir = 8
 	},
 /turf/open/floor/plating{
+<<<<<<< HEAD
 	initial_gas_mix = "LAVALAND_ATMOS"
+=======
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+>>>>>>> Updated this old code to fork
 	},
 /area/ruin/powered/golem_ship)
 "i" = (
@@ -60,7 +64,11 @@
 	dir = 8
 	},
 /turf/open/floor/plating{
+<<<<<<< HEAD
 	initial_gas_mix = "LAVALAND_ATMOS"
+=======
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+>>>>>>> Updated this old code to fork
 	},
 /area/ruin/powered/golem_ship)
 "j" = (

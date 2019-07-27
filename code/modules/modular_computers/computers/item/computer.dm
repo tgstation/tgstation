@@ -97,7 +97,11 @@
 	if(issilicon(usr))
 		return
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+<<<<<<< HEAD
 	if(usr.canUseTopic(src, BE_CLOSE))
+=======
+	if(usr.canUseTopic(src))
+>>>>>>> Updated this old code to fork
 		card_slot.try_eject(null, usr)
 
 // Eject ID card from computer, if it has ID slot with card inside.
@@ -108,7 +112,11 @@
 	if(issilicon(usr))
 		return
 	var/obj/item/computer_hardware/ai_slot/ai_slot = all_components[MC_AI]
+<<<<<<< HEAD
 	if(usr.canUseTopic(src, BE_CLOSE))
+=======
+	if(usr.canUseTopic(src))
+>>>>>>> Updated this old code to fork
 		ai_slot.try_eject(null, usr,1)
 
 
@@ -120,7 +128,11 @@
 	if(issilicon(usr))
 		return
 
+<<<<<<< HEAD
 	if(usr.canUseTopic(src, BE_CLOSE))
+=======
+	if(usr.canUseTopic(src))
+>>>>>>> Updated this old code to fork
 		var/obj/item/computer_hardware/hard_drive/portable/portable_drive = all_components[MC_SDD]
 		if(uninstall_component(portable_drive, usr))
 			portable_drive.verb_pickup()
@@ -130,7 +142,11 @@
 	if(issilicon(user))
 		return
 
+<<<<<<< HEAD
 	if(user.canUseTopic(src, BE_CLOSE))
+=======
+	if(user.canUseTopic(src))
+>>>>>>> Updated this old code to fork
 		var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 		var/obj/item/computer_hardware/ai_slot/ai_slot = all_components[MC_AI]
 		var/obj/item/computer_hardware/hard_drive/portable/portable_drive = all_components[MC_SDD]
@@ -159,7 +175,11 @@
 
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
+<<<<<<< HEAD
 	if((!istype(over_object, /obj/screen)) && usr.canUseTopic(src, BE_CLOSE))
+=======
+	if((!istype(over_object, /obj/screen)) && usr.canUseTopic(src))
+>>>>>>> Updated this old code to fork
 		return attack_self(M)
 	return ..()
 
@@ -187,6 +207,7 @@
 		return 1
 
 /obj/item/modular_computer/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(obj_integrity <= integrity_failure)
 		. += "<span class='danger'>It is heavily damaged!</span>"
@@ -194,6 +215,15 @@
 		. += "<span class='warning'>It is damaged.</span>"
 
 	. += get_modular_computer_parts_examine(user)
+=======
+	..()
+	if(obj_integrity <= integrity_failure)
+		to_chat(user, "<span class='danger'>It is heavily damaged!</span>")
+	else if(obj_integrity < max_integrity)
+		to_chat(user, "<span class='warning'>It is damaged.</span>")
+
+	get_modular_computer_parts_examine(user)
+>>>>>>> Updated this old code to fork
 
 /obj/item/modular_computer/update_icon()
 	cut_overlays()

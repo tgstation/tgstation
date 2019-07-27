@@ -17,8 +17,11 @@
 	icon_state = "knight_templar"
 	item_state = "knight_templar"
 	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+<<<<<<< HEAD
 	slowdown = 0
 	clothing_flags = NONE
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/choice_beacon/holy
 	name = "armaments beacon"
@@ -42,11 +45,19 @@
 	return holy_item_list
 
 /obj/item/choice_beacon/holy/spawn_option(obj/choice,mob/living/M)
+<<<<<<< HEAD
 	if(!GLOB.holy_armor_type)
 		..()
 		playsound(src, 'sound/effects/pray_chaplain.ogg', 40, 1)
 		SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
 		GLOB.holy_armor_type = choice
+=======
+	if(!SSreligion.holy_armor_type)
+		..()
+		playsound(src, 'sound/effects/pray_chaplain.ogg', 40, 1)
+		SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
+		SSreligion.holy_armor_type = choice
+>>>>>>> Updated this old code to fork
 	else
 		to_chat(M, "<span class='warning'>A selection has already been made. Self-Destructing...</span>")
 		return
@@ -183,7 +194,11 @@
 
 /obj/item/nullrod/Initialize()
 	. = ..()
+<<<<<<< HEAD
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
+=======
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+>>>>>>> Updated this old code to fork
 
 /obj/item/nullrod/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!</span>")
@@ -194,7 +209,11 @@
 		reskin_holy_weapon(user)
 
 /obj/item/nullrod/proc/reskin_holy_weapon(mob/M)
+<<<<<<< HEAD
 	if(GLOB.holy_weapon_type)
+=======
+	if(SSreligion.holy_weapon_type)
+>>>>>>> Updated this old code to fork
 		return
 	var/obj/item/nullrod/holy_weapon
 	var/list/holy_weapons_list = typesof(/obj/item/nullrod)
@@ -211,7 +230,11 @@
 	var/A = display_names[choice] // This needs to be on a separate var as list member access is not allowed for new
 	holy_weapon = new A
 
+<<<<<<< HEAD
 	GLOB.holy_weapon_type = holy_weapon.type
+=======
+	SSreligion.holy_weapon_type = holy_weapon.type
+>>>>>>> Updated this old code to fork
 
 	SSblackbox.record_feedback("tally", "chaplain_weapon", 1, "[choice]")
 
@@ -223,8 +246,13 @@
 /obj/item/nullrod/godhand
 	icon_state = "disintegrate"
 	item_state = "disintegrate"
+<<<<<<< HEAD
 	lefthand_file = 'icons/mob/inhands/misc/touchspell_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/touchspell_righthand.dmi'
+=======
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+>>>>>>> Updated this old code to fork
 	name = "god hand"
 	desc = "This hand of yours glows with an awesome power!"
 	item_flags = ABSTRACT | DROPDEL
@@ -235,7 +263,11 @@
 
 /obj/item/nullrod/godhand/Initialize()
 	. = ..()
+<<<<<<< HEAD
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+=======
+	add_trait(TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+>>>>>>> Updated this old code to fork
 
 /obj/item/nullrod/staff
 	icon_state = "godstaff-red"
@@ -329,7 +361,10 @@
 /obj/item/nullrod/claymore/saber
 	name = "light energy sword"
 	hitsound = 'sound/weapons/blade1.ogg'
+<<<<<<< HEAD
 	icon = 'icons/obj/transforming_energy.dmi'
+=======
+>>>>>>> Updated this old code to fork
 	icon_state = "swordblue"
 	item_state = "swordblue"
 	desc = "If you strike me down, I shall become more robust than you can possibly imagine."
@@ -387,6 +422,7 @@
 	attack_verb = list("chopped", "sliced", "cut", "zandatsu'd")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 
+<<<<<<< HEAD
 /obj/item/nullrod/Hypertool
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hypertool"
@@ -400,6 +436,8 @@
 	damtype = BRAIN
 	attack_verb = list("pulsed", "mended", "cut")
 	hitsound = 'sound/effects/sparks4.ogg'
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/nullrod/scythe/spellblade
 	icon_state = "spellblade"
@@ -495,7 +533,11 @@
 
 /obj/item/nullrod/chainsaw/Initialize()
 	. = ..()
+<<<<<<< HEAD
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+=======
+	add_trait(TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+>>>>>>> Updated this old code to fork
 	AddComponent(/datum/component/butchering, 30, 100, 0, hitsound)
 
 /obj/item/nullrod/clown
@@ -557,7 +599,10 @@
 /obj/item/nullrod/armblade
 	name = "dark blessing"
 	desc = "Particularly twisted deities grant gifts of dubious value."
+<<<<<<< HEAD
 	icon = 'icons/obj/changeling_items.dmi'
+=======
+>>>>>>> Updated this old code to fork
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
@@ -568,7 +613,11 @@
 
 /obj/item/nullrod/armblade/Initialize()
 	. = ..()
+<<<<<<< HEAD
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+=======
+	add_trait(TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+>>>>>>> Updated this old code to fork
 	AddComponent(/datum/component/butchering, 80, 70)
 
 /obj/item/nullrod/armblade/tentacle

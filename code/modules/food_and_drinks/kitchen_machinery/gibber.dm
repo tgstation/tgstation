@@ -31,12 +31,21 @@
 			ignore_clothing = TRUE
 
 /obj/machinery/gibber/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: Outputting <b>[meat_produced]</b> meat slab(s) after <b>[gibtime*0.1]</b> seconds of processing.</span>"
 		for(var/obj/item/stock_parts/manipulator/M in component_parts)
 			if(M.rating >= 2)
 				. += "<span class='notice'>Gibber has been upgraded to process inorganic materials.</span>"
+=======
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Outputting <b>[meat_produced]</b> meat slab(s) after <b>[gibtime*0.1]</b> seconds of processing.<span>")
+		for(var/obj/item/stock_parts/manipulator/M in component_parts)
+			if(M.rating >= 2)
+				to_chat(user, "<span class='notice'>Gibber has been upgraded to process inorganic materials.<span>")
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/gibber/update_icon()
 	cut_overlays()
@@ -71,13 +80,21 @@
 		return
 
 	if(!anchored)
+<<<<<<< HEAD
 		to_chat(user, "<span class='warning'>[src] cannot be used unless bolted to the ground!</span>")
+=======
+		to_chat(user, "<span class='notice'>[src] cannot be used unless bolted to the ground.</span>")
+>>>>>>> Updated this old code to fork
 		return
 
 	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(!iscarbon(L))
+<<<<<<< HEAD
 			to_chat(user, "<span class='warning'>This item is not suitable for the gibber!</span>")
+=======
+			to_chat(user, "<span class='danger'>This item is not suitable for the gibber!</span>")
+>>>>>>> Updated this old code to fork
 			return
 		var/mob/living/carbon/C = L
 		if(C.buckled ||C.has_buckled_mobs())
@@ -86,8 +103,13 @@
 
 		if(!ignore_clothing)
 			for(var/obj/item/I in C.held_items + C.get_equipped_items())
+<<<<<<< HEAD
 				if(!HAS_TRAIT(I, TRAIT_NODROP))
 					to_chat(user, "<span class='warning'>Subject may not have abiotic items on!</span>")
+=======
+				if(!I.has_trait(TRAIT_NODROP))
+					to_chat(user, "<span class='danger'>Subject may not have abiotic items on.</span>")
+>>>>>>> Updated this old code to fork
 					return
 
 		user.visible_message("<span class='danger'>[user] starts to put [C] into the gibber!</span>")
@@ -139,10 +161,17 @@
 	if(src.operating)
 		return
 	if(!src.occupant)
+<<<<<<< HEAD
 		audible_message("<span class='italics'>You hear a loud metallic grinding sound.</span>")
 		return
 	use_power(1000)
 	audible_message("<span class='italics'>You hear a loud squelchy grinding sound.</span>")
+=======
+		visible_message("<span class='italics'>You hear a loud metallic grinding sound.</span>")
+		return
+	use_power(1000)
+	visible_message("<span class='italics'>You hear a loud squelchy grinding sound.</span>")
+>>>>>>> Updated this old code to fork
 	playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
 	operating = TRUE
 	update_icon()
@@ -186,7 +215,11 @@
 		newmeat.name = "[sourcename] [newmeat.name]"
 		if(istype(newmeat))
 			newmeat.subjectname = sourcename
+<<<<<<< HEAD
 			newmeat.reagents.add_reagent (/datum/reagent/consumable/nutriment, sourcenutriment / meat_produced) // Thehehe. Fat guys go first
+=======
+			newmeat.reagents.add_reagent ("nutriment", sourcenutriment / meat_produced) // Thehehe. Fat guys go first
+>>>>>>> Updated this old code to fork
 			if(occupant_volume)
 				occupant.reagents.trans_to(newmeat, occupant_volume / meat_produced, remove_blacklisted = TRUE)
 			if(sourcejob)

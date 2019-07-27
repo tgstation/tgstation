@@ -15,8 +15,13 @@
 		for(var/i in parent)
 			RegisterSignal(i, COMSIG_MOVABLE_PRE_THROW, .proc/throw_react)
 
+<<<<<<< HEAD
 /datum/component/magnetic_catch/proc/examine(datum/source, mob/user, list/examine_list)
 	examine_list += "It has been installed with inertia dampening to prevent coffee spills."
+=======
+/datum/component/magnetic_catch/proc/examine(datum/source, mob/user)
+	to_chat(user, "It has been installed with inertia dampening to prevent coffee spills.")
+>>>>>>> Updated this old code to fork
 
 /datum/component/magnetic_catch/proc/crossed_react(datum/source, atom/movable/thing)
 	RegisterSignal(thing, COMSIG_MOVABLE_PRE_THROW, .proc/throw_react, TRUE)
@@ -31,4 +36,8 @@
 	UnregisterSignal(thing, COMSIG_MOVABLE_PRE_THROW)
 
 /datum/component/magnetic_catch/proc/throw_react(datum/source, list/arguments)
+<<<<<<< HEAD
 	return COMPONENT_CANCEL_THROW
+=======
+	return COMPONENT_CANCEL_THROW
+>>>>>>> Updated this old code to fork

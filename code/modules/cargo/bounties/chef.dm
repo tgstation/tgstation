@@ -36,7 +36,11 @@
 	name = "Bread"
 	description = "Problems with central planning have led to bread prices skyrocketing. Ship some bread to ease tensions."
 	reward = 1000
+<<<<<<< HEAD
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/store/bread, /obj/item/reagent_containers/food/snacks/breadslice, /obj/item/reagent_containers/food/snacks/bun, /obj/item/reagent_containers/food/snacks/pizzabread, /obj/item/reagent_containers/food/snacks/rawpastrybase)
+=======
+	wanted_types = list(/obj/item/reagent_containers/food/snacks/store/bread, /obj/item/reagent_containers/food/snacks/breadslice, /obj/item/reagent_containers/food/snacks/bun, /obj/item/reagent_containers/food/snacks/pizzabread, /obj/item/reagent_containers/food/snacks/rawpastrybase) 
+>>>>>>> Updated this old code to fork
 
 /datum/bounty/item/chef/pie
 	name = "Pie"
@@ -120,7 +124,11 @@
 	description = "Here at Nanotrasen we consider employees to be family. And you know what families love? Pancakes. Ship a baker's dozen."
 	reward = 5000
 	required_count = 13
+<<<<<<< HEAD
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/pancakes)
+=======
+	wanted_types = list(/datum/crafting_recipe/food/pancakes)
+>>>>>>> Updated this old code to fork
 
 /datum/bounty/item/chef/nuggies
 	name = "Chicken Nuggets"

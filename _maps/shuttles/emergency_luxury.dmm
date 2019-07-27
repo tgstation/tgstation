@@ -301,7 +301,13 @@
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape/luxury)
 "bf" = (
+<<<<<<< HEAD
 /obj/machinery/stasis,
+=======
+/obj/machinery/sleeper{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape/luxury)
 "bg" = (
@@ -349,6 +355,7 @@
 /obj/machinery/light,
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape/luxury)
+<<<<<<< HEAD
 "hA" = (
 /obj/structure/table/optable,
 /obj/item/surgical_drapes,
@@ -368,6 +375,8 @@
 /obj/structure/table/wood/fancy,
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape/luxury)
+=======
+>>>>>>> Updated this old code to fork
 
 (1,1,1) = {"
 aa
@@ -397,7 +406,11 @@ as
 as
 ab
 bf
+<<<<<<< HEAD
 hA
+=======
+bf
+>>>>>>> Updated this old code to fork
 ab
 ab
 "}
@@ -411,10 +424,17 @@ ab
 ab
 ab
 ab
+<<<<<<< HEAD
 zg
 aj
 aj
 zg
+=======
+ab
+aj
+aj
+ab
+>>>>>>> Updated this old code to fork
 ab
 "}
 (4,1,1) = {"
@@ -430,7 +450,11 @@ aj
 bj
 aj
 aj
+<<<<<<< HEAD
 OL
+=======
+ak
+>>>>>>> Updated this old code to fork
 ab
 "}
 (5,1,1) = {"

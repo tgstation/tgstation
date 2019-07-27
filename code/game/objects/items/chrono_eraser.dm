@@ -50,7 +50,11 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	item_flags = DROPDEL
 	ammo_type = list(/obj/item/ammo_casing/energy/chrono_beam)
+<<<<<<< HEAD
 	can_charge = FALSE
+=======
+	can_charge = 0
+>>>>>>> Updated this old code to fork
 	fire_delay = 50
 	var/obj/item/chrono_eraser/TED = null
 	var/obj/structure/chrono_field/field = null
@@ -58,7 +62,11 @@
 
 /obj/item/gun/energy/chrono_gun/Initialize()
 	. = ..()
+<<<<<<< HEAD
 	ADD_TRAIT(src, TRAIT_NODROP, CHRONO_GUN_TRAIT)
+=======
+	add_trait(TRAIT_NODROP, CHRONO_GUN_TRAIT)
+>>>>>>> Updated this old code to fork
 	if(istype(loc, /obj/item/chrono_eraser))
 		TED = loc
 	else //admin must have spawned it
@@ -124,7 +132,11 @@
 	name = "eradication beam"
 	icon_state = "chronobolt"
 	range = CHRONO_BEAM_RANGE
+<<<<<<< HEAD
 	nodamage = TRUE
+=======
+	nodamage = 1
+>>>>>>> Updated this old code to fork
 	var/obj/item/gun/energy/chrono_gun/gun = null
 
 /obj/item/projectile/energy/chrono_beam/Initialize()

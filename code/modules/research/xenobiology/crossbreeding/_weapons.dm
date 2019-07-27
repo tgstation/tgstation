@@ -76,7 +76,10 @@ Slimecrossing Weapons
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	item_flags = ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
+<<<<<<< HEAD
 	slot_flags = NONE
+=======
+>>>>>>> Updated this old code to fork
 	force = 5
 	max_charges = 1 //Recharging costs blood.
 	recharge_rate = 1
@@ -85,7 +88,11 @@ Slimecrossing Weapons
 
 /obj/item/gun/magic/bloodchill/Initialize()
 	. = ..()
+<<<<<<< HEAD
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+=======
+	add_trait(TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+>>>>>>> Updated this old code to fork
 
 /obj/item/gun/magic/bloodchill/process()
 	charge_tick++
@@ -108,7 +115,11 @@ Slimecrossing Weapons
 	icon_state = "pulse0_bl"
 	damage = 0
 	damage_type = OXY
+<<<<<<< HEAD
 	nodamage = TRUE
+=======
+	nodamage = 1
+>>>>>>> Updated this old code to fork
 	hitsound = 'sound/effects/splat.ogg'
 
 /obj/item/projectile/magic/bloodchill/on_hit(mob/living/target)

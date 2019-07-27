@@ -81,7 +81,11 @@
 	if(istype(our_target, /datum/cellular_emporium))
 		cellular_emporium = our_target
 	else
+<<<<<<< HEAD
 		CRASH("cellular_emporium action created with non emporium")
+=======
+		throw EXCEPTION("cellular_emporium action created with non emporium")
+>>>>>>> Updated this old code to fork
 
 /datum/action/innate/cellular_emporium/Activate()
 	cellular_emporium.ui_interact(owner)

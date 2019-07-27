@@ -31,17 +31,29 @@
 	decksize = 50
 	card_text_file = "strings/cas_black.txt"
 
+<<<<<<< HEAD
 /obj/item/toy/cards/deck/cas/populate_deck()
+=======
+/obj/item/toy/cards/deck/cas/Initialize()
+	. = ..()
+>>>>>>> Updated this old code to fork
 	var/static/list/cards_against_space = list("cas_white" = world.file2list("strings/cas_white.txt"),"cas_black" = world.file2list("strings/cas_black.txt"))
 	allcards = cards_against_space[card_face]
 	var/list/possiblecards = allcards.Copy()
 	if(possiblecards.len < decksize) // sanity check
 		decksize = (possiblecards.len - 1)
 	var/list/randomcards = list()
+<<<<<<< HEAD
 	for(var/x in 1 to decksize)
 		randomcards += pick_n_take(possiblecards)
 	for(var/x in 1 to randomcards.len)
 		var/cardtext = randomcards[x]
+=======
+	while (randomcards.len < decksize)
+		randomcards += pick_n_take(possiblecards)
+	for(var/i=1 to randomcards.len)
+		var/cardtext = randomcards[i]
+>>>>>>> Updated this old code to fork
 		var/datum/playingcard/P
 		P = new()
 		P.name = "[cardtext]"
@@ -49,7 +61,11 @@
 		cards += P
 	if(!blanks)
 		return
+<<<<<<< HEAD
 	for(var/x in 1 to blanks)
+=======
+	for(var/x=1 to blanks)
+>>>>>>> Updated this old code to fork
 		var/datum/playingcard/P
 		P = new()
 		P.name = "Blank Card"
@@ -57,7 +73,14 @@
 		cards += P
 	shuffle_inplace(cards) // distribute blank cards throughout deck
 
+<<<<<<< HEAD
 /obj/item/toy/cards/deck/cas/draw_card(mob/user)
+=======
+/obj/item/toy/cards/deck/cas/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+>>>>>>> Updated this old code to fork
 	if(isliving(user))
 		var/mob/living/L = user
 		if(!(L.mobility_flags & MOBILITY_PICKUP))
@@ -109,6 +132,7 @@
 	var/buffertext = "A funny bit of text."
 
 /obj/item/toy/cards/singlecard/cas/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if (flipped)
 		. += "<span class='notice'>The card is face down.</span>"
@@ -117,6 +141,16 @@
 	else
 		. += "<span class='notice'>The card reads: [name]</span>"
 	. += "<span class='notice'>Alt-click to flip it.</span>"
+=======
+	..()
+	if (flipped)
+		to_chat(user, "<span class='notice'>The card is face down.</span>")
+	else if (blank)
+		to_chat(user, "<span class='notice'>The card is blank. Write on it with a pen.</span>")
+	else
+		to_chat(user, "<span class='notice'>The card reads: [name]</span>")
+	to_chat(user, "<span class='notice'>Alt-click to flip it.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/item/toy/cards/singlecard/cas/Flip()
 	set name = "Flip Card"
@@ -148,7 +182,11 @@
 			to_chat(user, "<span class='notice'>You scribble illegibly on [src]!</span>")
 			return
 		if(!blank)
+<<<<<<< HEAD
 			to_chat(user, "<span class='warning'>You cannot write on that card!</span>")
+=======
+			to_chat(user, "You cannot write on that card.")
+>>>>>>> Updated this old code to fork
 			return
 		var/cardtext = stripped_input(user, "What do you wish to write on the card?", "Card Writing", "", 50)
 		if(!cardtext || !user.canUseTopic(src, BE_CLOSE))

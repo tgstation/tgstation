@@ -1,6 +1,7 @@
 /datum/mood_event/hug
 	description = "<span class='nicegreen'>Hugs are nice.</span>\n"
 	mood_change = 1
+<<<<<<< HEAD
 	timeout = 2 MINUTES
 
 /datum/mood_event/betterhug
@@ -18,15 +19,23 @@
 
 /datum/mood_event/besthug/add_effects(mob/friend)
 	description = "<span class='nicegreen'>[friend.name] is great to be around, [friend.p_they()] makes me feel so happy!</span>\n"
+=======
+	timeout = 1200
+>>>>>>> Updated this old code to fork
 
 /datum/mood_event/arcade
 	description = "<span class='nicegreen'>I beat the arcade game!</span>\n"
 	mood_change = 3
+<<<<<<< HEAD
 	timeout = 8 MINUTES
+=======
+	timeout = 3000
+>>>>>>> Updated this old code to fork
 
 /datum/mood_event/blessing
 	description = "<span class='nicegreen'>I've been blessed.</span>\n"
 	mood_change = 3
+<<<<<<< HEAD
 	timeout = 8 MINUTES
 
 /datum/mood_event/book_nerd
@@ -53,11 +62,41 @@
 	timeout = 4 MINUTES
 	special_screen_obj = "honked_nose"
 	special_screen_replace = FALSE
+=======
+	timeout = 3000
+
+/datum/mood_event/book_nerd
+	description = "<span class='nicegreen'>I have recently read a book.</span>\n"
+	mood_change = 3
+	timeout = 3000
+
+/datum/mood_event/exercise
+	description = "<span class='nicegreen'>Working out releases those endorphins!</span>\n"
+	mood_change = 3
+	timeout = 3000
+
+/datum/mood_event/pet_animal
+	description = "<span class='nicegreen'>Animals are adorable! I can't stop petting them!</span>\n"
+	mood_change = 3
+	timeout = 3000
+
+/datum/mood_event/pet_animal/add_effects(name)
+	description = "<span class='nicegreen'>\The [name] is adorable! I can't stop petting \him!</span>\n"
+
+/datum/mood_event/honk
+	description = "<span class='nicegreen'>Maybe clowns aren't so bad after all. Honk!</span>\n"
+	mood_change = 2
+	timeout = 2400
+>>>>>>> Updated this old code to fork
 
 /datum/mood_event/perform_cpr
 	description = "<span class='nicegreen'>It feels good to save a life.</span>\n"
 	mood_change = 6
+<<<<<<< HEAD
 	timeout = 8 MINUTES
+=======
+	timeout = 3000
+>>>>>>> Updated this old code to fork
 
 /datum/mood_event/oblivious
 	description = "<span class='nicegreen'>What a lovely day.</span>\n"
@@ -66,25 +105,49 @@
 /datum/mood_event/jolly
 	description = "<span class='nicegreen'>I feel happy for no particular reason.</span>\n"
 	mood_change = 6
+<<<<<<< HEAD
 	timeout = 2 MINUTES
 
 /datum/mood_event/focused
 	description = "<span class='nicegreen'>I have a goal, and I will reach it, whatever it takes!</span>\n" //Used for syndies, nukeops etc so they can focus on their goals
 	mood_change = 4
+=======
+	timeout = 1200
+
+/datum/mood_event/focused
+	description = "<span class='nicegreen'>I have a goal, and I will reach it, whatever it takes!</span>\n" //Used for syndies, nukeops etc so they can focus on their goals
+	mood_change = 12
+>>>>>>> Updated this old code to fork
 	hidden = TRUE
 
 /datum/mood_event/badass_antag
 	description = "I'm a fucking badass and everyone around me knows it. Just look at them; they're all fucking shaking at the mere thought of me around."
+<<<<<<< HEAD
 	mood_change = 7
+=======
+	mood_change = 15
+>>>>>>> Updated this old code to fork
 	hidden = TRUE
 	special_screen_obj = "badass_sun"
 	special_screen_replace = FALSE
 
 /datum/mood_event/creeping
+<<<<<<< HEAD
 	description = "<span class='greentext'>The voices have released their hooks on my mind! I feel free again!</span>\n" //creeps get it when they are around their obsession
 	mood_change = 18
 	timeout = 3 SECONDS
 	hidden = TRUE
+=======
+	description = "<span class='greentext'>I'm so close to my obsession and I never want this to end.</span>\n" //creeps get it when they are around their obsession
+	mood_change = 18
+	timeout = 30
+	hidden = TRUE
+	special_screen_obj = "creep_inlove"
+	special_screen_replace = FALSE
+
+/datum/mood_event/creeping/add_effects(name)
+	description = "<span class='greentext'>I'm so close to [name] and I NEVER want this to end.</span>\n"
+>>>>>>> Updated this old code to fork
 
 /datum/mood_event/revolution
 	description = "<span class='nicegreen'>VIVA LA REVOLUTION!</span>\n"
@@ -93,7 +156,11 @@
 
 /datum/mood_event/cult
 	description = "<span class='nicegreen'>I have seen the truth, praise the almighty one!</span>\n"
+<<<<<<< HEAD
 	mood_change = 10 //maybe being a cultist isnt that bad after all
+=======
+	mood_change = 40 //maybe being a cultist isnt that bad after all
+>>>>>>> Updated this old code to fork
 	hidden = TRUE
 
 /datum/mood_event/family_heirloom
@@ -103,7 +170,11 @@
 /datum/mood_event/goodmusic
 	description = "<span class='nicegreen'>There is something soothing about this music.</span>\n"
 	mood_change = 3
+<<<<<<< HEAD
 	timeout = 60 SECONDS
+=======
+	timeout = 600
+>>>>>>> Updated this old code to fork
 
 /datum/mood_event/chemical_euphoria
 	description = "<span class='nicegreen'>Heh...hehehe...hehe...</span>\n"
@@ -112,11 +183,16 @@
 /datum/mood_event/chemical_laughter
 	description = "<span class='nicegreen'>Laughter really is the best medicine! Or is it?</span>\n"
 	mood_change = 4
+<<<<<<< HEAD
 	timeout = 3 MINUTES
+=======
+	timeout = 1800
+>>>>>>> Updated this old code to fork
 
 /datum/mood_event/chemical_superlaughter
 	description = "<span class='nicegreen'>*WHEEZE*</span>\n"
 	mood_change = 12
+<<<<<<< HEAD
 	timeout = 3 MINUTES
 
 /datum/mood_event/religiously_comforted
@@ -155,3 +231,10 @@
 /datum/mood_event/area/add_effects(list/param)
 	mood_change = param[1]
 	description = param[2]
+=======
+	timeout = 1800
+
+/datum/mood_event/religiously_comforted
+	description = "<span class='nicegreen'>You are comforted by the presence of a holy person.</span>"
+	mood_change = 3
+>>>>>>> Updated this old code to fork

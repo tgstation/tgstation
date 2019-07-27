@@ -1,5 +1,8 @@
 /datum/component/mirage_border
+<<<<<<< HEAD
 	can_transfer = TRUE
+=======
+>>>>>>> Updated this old code to fork
 	var/obj/effect/abstract/mirage_holder/holder
 
 /datum/component/mirage_border/Initialize(turf/target, direction, range=world.view)

@@ -45,6 +45,7 @@ Stabilized extracts:
 		S.linked_extract = src
 		STOP_PROCESSING(SSobj,src)
 
+<<<<<<< HEAD
 
 
 //Colors and subtypes:
@@ -115,6 +116,59 @@ Stabilized extracts:
 /obj/item/slimecross/stabilized/gold
 	colour = "gold"
 	effect_desc = "Creates a pet when held."
+=======
+//Colors and subtypes:
+/obj/item/slimecross/stabilized/grey
+	colour = "grey"
+
+/obj/item/slimecross/stabilized/orange
+	colour = "orange"
+
+/obj/item/slimecross/stabilized/purple
+	colour = "purple"
+
+/obj/item/slimecross/stabilized/blue
+	colour = "blue"
+
+/obj/item/slimecross/stabilized/metal
+	colour = "metal"
+
+/obj/item/slimecross/stabilized/yellow
+	colour = "yellow"
+
+/obj/item/slimecross/stabilized/darkpurple
+	colour = "dark purple"
+
+/obj/item/slimecross/stabilized/darkblue
+	colour = "dark blue"
+
+/obj/item/slimecross/stabilized/silver
+	colour = "silver"
+
+/obj/item/slimecross/stabilized/bluespace
+	colour = "bluespace"
+
+/obj/item/slimecross/stabilized/sepia
+	colour = "sepia"
+
+/obj/item/slimecross/stabilized/cerulean
+	colour = "cerulean"
+
+/obj/item/slimecross/stabilized/pyrite
+	colour = "pyrite"
+
+/obj/item/slimecross/stabilized/red
+	colour = "red"
+
+/obj/item/slimecross/stabilized/green
+	colour = "green"
+
+/obj/item/slimecross/stabilized/pink
+	colour = "pink"
+
+/obj/item/slimecross/stabilized/gold
+	colour = "gold"
+>>>>>>> Updated this old code to fork
 	var/mob_type
 	var/datum/mind/saved_mind
 	var/mob_name = "Familiar"
@@ -161,6 +215,7 @@ Stabilized extracts:
 
 /obj/item/slimecross/stabilized/oil
 	colour = "oil"
+<<<<<<< HEAD
 	effect_desc = "The owner will violently explode when they die while holding this extract."
 
 /obj/item/slimecross/stabilized/black
@@ -178,6 +233,20 @@ Stabilized extracts:
 /obj/item/slimecross/stabilized/rainbow
 	colour = "rainbow"
 	effect_desc = "Accepts a regenerative extract and automatically uses it if the owner enters a critical condition."
+=======
+
+/obj/item/slimecross/stabilized/black
+	colour = "black"
+
+/obj/item/slimecross/stabilized/lightpink
+	colour = "light pink"
+
+/obj/item/slimecross/stabilized/adamantine
+	colour = "adamantine"
+
+/obj/item/slimecross/stabilized/rainbow
+	colour = "rainbow"
+>>>>>>> Updated this old code to fork
 	var/obj/item/slimecross/regenerative/regencore
 
 /obj/item/slimecross/stabilized/rainbow/attackby(obj/item/O, mob/user)

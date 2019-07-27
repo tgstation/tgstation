@@ -81,14 +81,21 @@
 	throw_message = "falls right through the strange body of the"
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
+<<<<<<< HEAD
 	pass_flags = PASSTABLE | PASSMOB
 	density = FALSE
+=======
+	pass_flags = PASSTABLE
+>>>>>>> Updated this old code to fork
 	del_on_death = 1
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/Initialize()
 	. = ..()
 	addtimer(CALLBACK(src, .proc/death), 100)
+<<<<<<< HEAD
 	AddComponent(/datum/component/swarming)
+=======
+>>>>>>> Updated this old code to fork
 
 //Legion
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion
@@ -176,6 +183,10 @@
 	speak_emote = list("echoes")
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "is shrugged off by"
+<<<<<<< HEAD
+=======
+	pass_flags = PASSTABLE
+>>>>>>> Updated this old code to fork
 	del_on_death = TRUE
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1

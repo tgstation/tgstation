@@ -82,6 +82,7 @@
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
 
+<<<<<<< HEAD
 //STASIS
 /datum/status_effect/incapacitating/stasis
         id = "stasis"
@@ -120,6 +121,8 @@
         name = "Stasis"
         desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
         icon_state = "stasis"
+=======
+>>>>>>> Updated this old code to fork
 
 //GOLEM GANG
 
@@ -130,11 +133,19 @@
 	alert_type = /obj/screen/alert/status_effect/strandling
 
 /datum/status_effect/strandling/on_apply()
+<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_MAGIC_CHOKE, "dumbmoron")
 	return ..()
 
 /datum/status_effect/strandling/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_MAGIC_CHOKE, "dumbmoron")
+=======
+	owner.add_trait(TRAIT_MAGIC_CHOKE, "dumbmoron")
+	return ..()
+
+/datum/status_effect/strandling/on_remove()
+	owner.remove_trait(TRAIT_MAGIC_CHOKE, "dumbmoron")
+>>>>>>> Updated this old code to fork
 	return ..()
 
 /obj/screen/alert/status_effect/strandling
@@ -156,6 +167,7 @@
 /datum/status_effect/pacify/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
 		duration = set_duration
+<<<<<<< HEAD
 	. = ..()
 
 /datum/status_effect/pacify/on_apply()
@@ -165,6 +177,17 @@
 /datum/status_effect/pacify/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
 
+=======
+	. = ..()	
+
+/datum/status_effect/pacify/on_apply()
+	owner.add_trait(TRAIT_PACIFISM, "status_effect")
+	return ..()
+
+/datum/status_effect/pacify/on_remove()
+	owner.remove_trait(TRAIT_PACIFISM, "status_effect")
+	
+>>>>>>> Updated this old code to fork
 //OTHER DEBUFFS
 /datum/status_effect/pacify
 	id = "pacify"
@@ -172,6 +195,7 @@
 	tick_interval = 1
 	duration = 100
 	alert_type = null
+<<<<<<< HEAD
 
 /datum/status_effect/pacify/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
@@ -184,6 +208,20 @@
 
 /datum/status_effect/pacify/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
+=======
+	
+/datum/status_effect/pacify/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()	
+
+/datum/status_effect/pacify/on_apply()
+	owner.add_trait(TRAIT_PACIFISM, "status_effect")
+	return ..()
+
+/datum/status_effect/pacify/on_remove()
+	owner.remove_trait(TRAIT_PACIFISM, "status_effect")
+>>>>>>> Updated this old code to fork
 
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace
 	id = "his_wrath"
@@ -229,7 +267,11 @@
 
 /datum/status_effect/belligerent/proc/do_movement_toggle(force_damage)
 	var/number_legs = owner.get_num_legs(FALSE)
+<<<<<<< HEAD
 	if(iscarbon(owner) && !is_servant_of_ratvar(owner) && !owner.anti_magic_check(chargecost = 0) && number_legs)
+=======
+	if(iscarbon(owner) && !is_servant_of_ratvar(owner) && !owner.anti_magic_check(major = FALSE) && number_legs)
+>>>>>>> Updated this old code to fork
 		if(force_damage || owner.m_intent != MOVE_INTENT_WALK)
 			if(GLOB.ratvar_awakens)
 				owner.Paralyze(20)
@@ -322,7 +364,11 @@
 		if(owner.confused)
 			owner.confused = 0
 		severity = 0
+<<<<<<< HEAD
 	else if(!owner.anti_magic_check(chargecost = 0) && owner.stat != DEAD && severity)
+=======
+	else if(!owner.anti_magic_check(major = FALSE) && owner.stat != DEAD && severity)
+>>>>>>> Updated this old code to fork
 		var/static/hum = get_sfx('sound/effects/screech.ogg') //same sound for every proc call
 		if(owner.getToxLoss() > MANIA_DAMAGE_TO_CONVERT)
 			if(is_eligible_servant(owner))
@@ -355,7 +401,11 @@
 
 /datum/status_effect/cultghost/tick()
 	if(owner.reagents)
+<<<<<<< HEAD
 		owner.reagents.del_reagent(/datum/reagent/water/holywater) //can't be deconverted
+=======
+		owner.reagents.del_reagent("holywater") //can't be deconverted
+>>>>>>> Updated this old code to fork
 
 /datum/status_effect/crusher_mark
 	id = "crusher_mark"
@@ -363,9 +413,15 @@
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 	var/mutable_appearance/marked_underlay
+<<<<<<< HEAD
 	var/obj/item/twohanded/kinetic_crusher/hammer_synced
 
 /datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/twohanded/kinetic_crusher/new_hammer_synced)
+=======
+	var/obj/item/twohanded/required/kinetic_crusher/hammer_synced
+
+/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/twohanded/required/kinetic_crusher/new_hammer_synced)
+>>>>>>> Updated this old code to fork
 	. = ..()
 	if(.)
 		hammer_synced = new_hammer_synced
@@ -390,6 +446,7 @@
 	owner.underlays -= marked_underlay //if this is being called, we should have an owner at this point.
 	..()
 
+<<<<<<< HEAD
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
 	tick_interval = 6
@@ -413,6 +470,80 @@
 		new /obj/effect/temp_visual/dir_setting/bloodsplatter(T, d)
 	playsound(T, "desceration", 100, TRUE, -1)
 	
+=======
+/datum/status_effect/saw_bleed
+	id = "saw_bleed"
+	duration = -1 //removed under specific conditions
+	tick_interval = 6
+	alert_type = null
+	var/mutable_appearance/bleed_overlay
+	var/mutable_appearance/bleed_underlay
+	var/bleed_amount = 3
+	var/bleed_buildup = 3
+	var/delay_before_decay = 5
+	var/bleed_damage = 200
+	var/needs_to_bleed = FALSE
+
+/datum/status_effect/saw_bleed/Destroy()
+	if(owner)
+		owner.cut_overlay(bleed_overlay)
+		owner.underlays -= bleed_underlay
+	QDEL_NULL(bleed_overlay)
+	return ..()
+
+/datum/status_effect/saw_bleed/on_apply()
+	if(owner.stat == DEAD)
+		return FALSE
+	bleed_overlay = mutable_appearance('icons/effects/bleed.dmi', "bleed[bleed_amount]")
+	bleed_underlay = mutable_appearance('icons/effects/bleed.dmi', "bleed[bleed_amount]")
+	var/icon/I = icon(owner.icon, owner.icon_state, owner.dir)
+	var/icon_height = I.Height()
+	bleed_overlay.pixel_x = -owner.pixel_x
+	bleed_overlay.pixel_y = FLOOR(icon_height * 0.25, 1)
+	bleed_overlay.transform = matrix() * (icon_height/world.icon_size) //scale the bleed overlay's size based on the target's icon size
+	bleed_underlay.pixel_x = -owner.pixel_x
+	bleed_underlay.transform = matrix() * (icon_height/world.icon_size) * 3
+	bleed_underlay.alpha = 40
+	owner.add_overlay(bleed_overlay)
+	owner.underlays += bleed_underlay
+	return ..()
+
+/datum/status_effect/saw_bleed/tick()
+	if(owner.stat == DEAD)
+		qdel(src)
+	else
+		add_bleed(-1)
+
+/datum/status_effect/saw_bleed/proc/add_bleed(amount)
+	owner.cut_overlay(bleed_overlay)
+	owner.underlays -= bleed_underlay
+	bleed_amount += amount
+	if(bleed_amount)
+		if(bleed_amount >= 10)
+			needs_to_bleed = TRUE
+			qdel(src)
+		else
+			if(amount > 0)
+				tick_interval += delay_before_decay
+			bleed_overlay.icon_state = "bleed[bleed_amount]"
+			bleed_underlay.icon_state = "bleed[bleed_amount]"
+			owner.add_overlay(bleed_overlay)
+			owner.underlays += bleed_underlay
+	else
+		qdel(src)
+
+/datum/status_effect/saw_bleed/on_remove()
+	if(needs_to_bleed)
+		var/turf/T = get_turf(owner)
+		new /obj/effect/temp_visual/bleed/explode(T)
+		for(var/d in GLOB.alldirs)
+			new /obj/effect/temp_visual/dir_setting/bloodsplatter(T, d)
+		playsound(T, "desceration", 200, 1, -1)
+		owner.adjustBruteLoss(bleed_damage)
+	else
+		new /obj/effect/temp_visual/bleed(get_turf(owner))
+
+>>>>>>> Updated this old code to fork
 /mob/living/proc/apply_necropolis_curse(set_curse)
 	var/datum/status_effect/necropolis_curse/C = has_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE)
 	if(!set_curse)
@@ -421,7 +552,11 @@
 		apply_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE, set_curse)
 	else
 		C.apply_curse(set_curse)
+<<<<<<< HEAD
 		C.duration += 3000 //time added by additional curses
+=======
+		C.duration += 3000 //additional curses add 5 minutes
+>>>>>>> Updated this old code to fork
 
 /datum/status_effect/necropolis_curse
 	id = "necrocurse"
@@ -432,10 +567,13 @@
 	var/effect_last_activation = 0
 	var/effect_cooldown = 100
 	var/obj/effect/temp_visual/curse/wasting_effect = new
+<<<<<<< HEAD
 	
 /datum/status_effect/necropolis_curse/hivemind
 	id = "hivecurse"
 	duration = 600
+=======
+>>>>>>> Updated this old code to fork
 
 /datum/status_effect/necropolis_curse/on_creation(mob/living/new_owner, set_curse)
 	. = ..()
@@ -574,16 +712,28 @@
 	alert_type = null
 
 /datum/status_effect/gonbolaPacify/on_apply()
+<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_PACIFISM, "gonbolaPacify")
 	ADD_TRAIT(owner, TRAIT_MUTE, "gonbolaMute")
 	ADD_TRAIT(owner, TRAIT_JOLLY, "gonbolaJolly")
+=======
+	owner.add_trait(TRAIT_PACIFISM, "gonbolaPacify")
+	owner.add_trait(TRAIT_MUTE, "gonbolaMute")
+	owner.add_trait(TRAIT_JOLLY, "gonbolaJolly")
+>>>>>>> Updated this old code to fork
 	to_chat(owner, "<span class='notice'>You suddenly feel at peace and feel no need to make any sudden or rash actions...</span>")
 	return ..()
 
 /datum/status_effect/gonbolaPacify/on_remove()
+<<<<<<< HEAD
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "gonbolaPacify")
 	REMOVE_TRAIT(owner, TRAIT_MUTE, "gonbolaMute")
 	REMOVE_TRAIT(owner, TRAIT_JOLLY, "gonbolaJolly")
+=======
+	owner.remove_trait(TRAIT_PACIFISM, "gonbolaPacify")
+	owner.remove_trait(TRAIT_MUTE, "gonbolaMute")
+	owner.remove_trait(TRAIT_JOLLY, "gonbolaJolly")
+>>>>>>> Updated this old code to fork
 
 /datum/status_effect/trance
 	id = "trance"
@@ -593,7 +743,11 @@
 	examine_text = "<span class='warning'>SUBJECTPRONOUN seems slow and unfocused.</span>"
 	var/stun = TRUE
 	alert_type = /obj/screen/alert/status_effect/trance
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> Updated this old code to fork
 /obj/screen/alert/status_effect/trance
 	name = "Trance"
 	desc = "Everything feels so distant, and you can feel your thoughts forming loops inside your head..."
@@ -608,7 +762,11 @@
 	if(!iscarbon(owner))
 		return FALSE
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/hypnotize)
+<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_MUTE, "trance")
+=======
+	owner.add_trait(TRAIT_MUTE, "trance")
+>>>>>>> Updated this old code to fork
 	if(!owner.has_quirk(/datum/quirk/monochromatic))
 		owner.add_client_colour(/datum/client_colour/monochrome)
 	owner.visible_message("[stun ? "<span class='warning'>[owner] stands still as [owner.p_their()] eyes seem to focus on a distant point.</span>" : ""]", \
@@ -622,12 +780,17 @@
 
 /datum/status_effect/trance/on_remove()
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
+<<<<<<< HEAD
 	REMOVE_TRAIT(owner, TRAIT_MUTE, "trance")
+=======
+	owner.remove_trait(TRAIT_MUTE, "trance")
+>>>>>>> Updated this old code to fork
 	owner.dizziness = 0
 	if(!owner.has_quirk(/datum/quirk/monochromatic))
 		owner.remove_client_colour(/datum/client_colour/monochrome)
 	to_chat(owner, "<span class='warning'>You snap out of your trance!</span>")
 
+<<<<<<< HEAD
 /datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
 	if(!owner.can_hear())
 		return
@@ -740,3 +903,15 @@
 	name = "TO THE STARS AND BEYOND!"
 	desc = "I must go, my people need me!"
 	icon_state = "high"
+=======
+/datum/status_effect/trance/proc/hypnotize(datum/source, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	if(!owner.can_hear())
+		return
+	if(speaker == owner)
+		return
+	var/mob/living/carbon/C = owner
+	C.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY) //clear previous hypnosis
+	addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, raw_message), 10)
+	addtimer(CALLBACK(C, /mob/living.proc/Stun, 60, TRUE, TRUE), 15) //Take some time to think about it
+	qdel(src)
+>>>>>>> Updated this old code to fork

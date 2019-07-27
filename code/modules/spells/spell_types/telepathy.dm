@@ -12,7 +12,10 @@
 	var/boldnotice = "boldnotice"
 	var/magic_check = FALSE
 	var/holy_check = FALSE
+<<<<<<< HEAD
 	var/tinfoil_check = TRUE
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/effect/proc_holder/spell/targeted/telepathy/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	for(var/mob/living/M in targets)
@@ -22,7 +25,11 @@
 			return
 		log_directed_talk(user, M, msg, LOG_SAY, "[name]")
 		to_chat(user, "<span class='[boldnotice]'>You transmit to [M]:</span> <span class='[notice]'>[msg]</span>")
+<<<<<<< HEAD
 		if(!M.anti_magic_check(magic_check, holy_check, tinfoil_check, 0)) //hear no evil
+=======
+		if(!M.anti_magic_check(magic_check, holy_check)) //hear no evil
+>>>>>>> Updated this old code to fork
 			to_chat(M, "<span class='[boldnotice]'>You hear something behind you talking...</span> <span class='[notice]'>[msg]</span>")
 		for(var/ded in GLOB.dead_mob_list)
 			if(!isobserver(ded))

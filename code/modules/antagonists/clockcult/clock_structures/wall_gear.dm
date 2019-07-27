@@ -5,6 +5,10 @@
 	unanchored_icon = "wall_gear"
 	climbable = TRUE
 	max_integrity = 100
+<<<<<<< HEAD
+=======
+	layer = BELOW_OBJ_LAYER
+>>>>>>> Updated this old code to fork
 	construction_value = 3
 	desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, or just climb over it."
 	break_message = "<span class='warning'>The gear breaks apart into shards of alloy!</span>"

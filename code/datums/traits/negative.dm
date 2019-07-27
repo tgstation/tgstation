@@ -1,5 +1,6 @@
 //predominantly negative traits
 
+<<<<<<< HEAD
 /datum/quirk/badback
 	name = "Bad Back"
 	desc = "Thanks to your poor posture, backpacks and other bags never sit right on your back. More evently weighted objects are fine, though."
@@ -18,6 +19,10 @@
 
 /datum/quirk/blooddeficiency
 	name = "Blood Deficiency"
+=======
+/datum/quirk/blooddeficiency
+	name = "Acute Blood Deficiency"
+>>>>>>> Updated this old code to fork
 	desc = "Your body can't produce enough blood to sustain itself."
 	value = -2
 	gain_text = "<span class='danger'>You feel your vigor slowly fading away.</span>"
@@ -29,8 +34,12 @@
 	if(NOBLOOD in H.dna.species.species_traits) //can't lose blood if your species doesn't have any
 		return
 	else
+<<<<<<< HEAD
 		if (H.blood_volume > (BLOOD_VOLUME_SAFE - 25)) // just barely survivable without treatment
 			H.blood_volume -= 0.275
+=======
+		quirk_holder.blood_volume -= 0.275
+>>>>>>> Updated this old code to fork
 
 /datum/quirk/blindness
 	name = "Blind"
@@ -38,7 +47,11 @@
 	value = -4
 	gain_text = "<span class='danger'>You can't see anything.</span>"
 	lose_text = "<span class='notice'>You miraculously gain back your vision.</span>"
+<<<<<<< HEAD
 	medical_record_text = "Patient has permanent blindness."
+=======
+	medical_record_text = "Subject has permanent blindness."
+>>>>>>> Updated this old code to fork
 
 /datum/quirk/blindness/add()
 	quirk_holder.become_blind(ROUNDSTART_TRAIT)
@@ -68,7 +81,11 @@
 	mob_trait = TRAIT_DEAF
 	gain_text = "<span class='danger'>You can't hear anything.</span>"
 	lose_text = "<span class='notice'>You're able to hear again!</span>"
+<<<<<<< HEAD
 	medical_record_text = "Patient's cochlear nerve is incurably damaged."
+=======
+	medical_record_text = "Subject's cochlear nerve is incurably damaged."
+>>>>>>> Updated this old code to fork
 
 /datum/quirk/depression
 	name = "Depression"
@@ -77,6 +94,7 @@
 	value = -1
 	gain_text = "<span class='danger'>You start feeling depressed.</span>"
 	lose_text = "<span class='notice'>You no longer feel depressed.</span>" //if only it were that easy!
+<<<<<<< HEAD
 	medical_record_text = "Patient has a severe mood disorder, causing them to experience acute episodes of depression."
 	mood_quirk = TRUE
 
@@ -84,6 +102,11 @@
 	if(prob(0.05))
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "depression", /datum/mood_event/depression)
 
+=======
+	medical_record_text = "Patient has a severe mood disorder causing them to experience sudden moments of sadness."
+	mood_quirk = TRUE
+
+>>>>>>> Updated this old code to fork
 /datum/quirk/family_heirloom
 	name = "Family Heirloom"
 	desc = "You are the current owner of an heirloom, passed down for generations. You have to keep it safe!"
@@ -91,7 +114,10 @@
 	mood_quirk = TRUE
 	var/obj/item/heirloom
 	var/where
+<<<<<<< HEAD
 	medical_record_text = "Patient demonstrates an unnatural attachment to a family heirloom."
+=======
+>>>>>>> Updated this old code to fork
 
 /datum/quirk/family_heirloom/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -107,11 +133,19 @@
 			if("Mime")
 				heirloom_type = /obj/item/reagent_containers/food/snacks/baguette
 			if("Janitor")
+<<<<<<< HEAD
 				heirloom_type = pick(/obj/item/mop, /obj/item/clothing/suit/caution, /obj/item/reagent_containers/glass/bucket)
 			if("Cook")
 				heirloom_type = pick(/obj/item/reagent_containers/food/condiment/saltshaker, /obj/item/kitchen/rollingpin, /obj/item/clothing/head/chefhat)
 			if("Botanist")
 				heirloom_type = pick(/obj/item/cultivator, /obj/item/reagent_containers/glass/bucket, /obj/item/storage/bag/plants, /obj/item/toy/plush/beeplushie)
+=======
+				heirloom_type = pick(/obj/item/mop, /obj/item/caution, /obj/item/reagent_containers/glass/bucket)
+			if("Cook")
+				heirloom_type = pick(/obj/item/reagent_containers/food/condiment/saltshaker, /obj/item/kitchen/rollingpin, /obj/item/clothing/head/chefhat)
+			if("Botanist")
+				heirloom_type = pick(/obj/item/cultivator, /obj/item/reagent_containers/glass/bucket, /obj/item/storage/bag/plants)
+>>>>>>> Updated this old code to fork
 			if("Bartender")
 				heirloom_type = pick(/obj/item/reagent_containers/glass/rag, /obj/item/clothing/head/that, /obj/item/reagent_containers/food/drinks/shaker)
 			if("Curator")
@@ -201,6 +235,7 @@
 /datum/quirk/family_heirloom/on_clone(data)
 	heirloom = data
 
+<<<<<<< HEAD
 /datum/quirk/frail
 	name = "Frail"
 	desc = "Your bones might as well be made of glass! Your limbs can take less damage before they become disabled."
@@ -210,6 +245,8 @@
 	lose_text = "<span class='notice'>You feel sturdy again.</span>"
 	medical_record_text = "Patient has unusually frail bones, recommend calcium-rich diet."
 
+=======
+>>>>>>> Updated this old code to fork
 /datum/quirk/heavy_sleeper
 	name = "Heavy Sleeper"
 	desc = "You sleep like a rock! Whenever you're put to sleep or knocked unconscious, you take a little bit longer to wake up."
@@ -225,16 +262,26 @@
 	value = -1
 	gain_text = "<span class='danger'>You seem to make a big deal out of everything.</span>"
 	lose_text = "<span class='notice'>You don't seem to make a big deal out of everything anymore.</span>"
+<<<<<<< HEAD
 	medical_record_text = "Patient demonstrates a high level of emotional volatility."
 
 /datum/quirk/hypersensitive/add()
 	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
+=======
+
+/datum/quirk/hypersensitive/add()
+	GET_COMPONENT_FROM(mood, /datum/component/mood, quirk_holder)
+>>>>>>> Updated this old code to fork
 	if(mood)
 		mood.mood_modifier += 0.5
 
 /datum/quirk/hypersensitive/remove()
 	if(quirk_holder)
+<<<<<<< HEAD
 		var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
+=======
+		GET_COMPONENT_FROM(mood, /datum/component/mood, quirk_holder)
+>>>>>>> Updated this old code to fork
 		if(mood)
 			mood.mood_modifier -= 0.5
 
@@ -245,7 +292,10 @@
 	mob_trait = TRAIT_LIGHT_DRINKER
 	gain_text = "<span class='notice'>Just the thought of drinking alcohol makes your head spin.</span>"
 	lose_text = "<span class='danger'>You're no longer severely affected by alcohol.</span>"
+<<<<<<< HEAD
 	medical_record_text = "Patient demonstrates a low tolerance for alcohol. (Wimp)"
+=======
+>>>>>>> Updated this old code to fork
 
 /datum/quirk/nearsighted //t. errorage
 	name = "Nearsighted"
@@ -269,7 +319,10 @@
 	name = "Nyctophobia"
 	desc = "As far as you can remember, you've always been afraid of the dark. While in the dark without a light source, you instinctually act careful, and constantly feel a sense of dread."
 	value = -1
+<<<<<<< HEAD
 	medical_record_text = "Patient demonstrates a fear of the dark. (Seriously?)"
+=======
+>>>>>>> Updated this old code to fork
 
 /datum/quirk/nyctophobia/on_process()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -294,6 +347,14 @@
 	lose_text = "<span class='notice'>You think you can defend yourself again.</span>"
 	medical_record_text = "Patient is unusually pacifistic and cannot bring themselves to cause physical harm."
 
+<<<<<<< HEAD
+=======
+/datum/quirk/nonviolent/on_process()
+	if(quirk_holder.mind && LAZYLEN(quirk_holder.mind.antag_datums))
+		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused you to renounce your pacifism.</span>")
+		qdel(src)
+
+>>>>>>> Updated this old code to fork
 /datum/quirk/paraplegic
 	name = "Paraplegic"
 	desc = "Your legs do not function. Nothing will ever fix this. But hey, free wheelchair!"
@@ -328,6 +389,10 @@
 		if(I.fingerprintslast == quirk_holder.ckey)
 			quirk_holder.put_in_hands(I)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> Updated this old code to fork
 /datum/quirk/poor_aim
 	name = "Poor Aim"
 	desc = "You're terrible with guns and can't line up a straight shot to save your life. Dual-wielding is right out."
@@ -347,7 +412,10 @@
 	desc = "An accident caused you to lose one of your limbs. Because of this, you now have a random prosthetic!"
 	value = -1
 	var/slot_string = "limb"
+<<<<<<< HEAD
 	medical_record_text = "During physical examination, patient was found to have a prosthetic limb."
+=======
+>>>>>>> Updated this old code to fork
 
 /datum/quirk/prosthetic_limb/on_spawn()
 	var/limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
@@ -375,6 +443,7 @@
 	to_chat(quirk_holder, "<span class='boldannounce'>Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
 	you need to use a welding tool and cables to repair it, instead of bruise packs and ointment.</span>")
 
+<<<<<<< HEAD
 /datum/quirk/pushover
 	name = "Pushover"
 	desc = "Your first instinct is always to let people push you around. Resisting out of grabs will take conscious effort."
@@ -384,6 +453,8 @@
 	lose_text = "<span class='notice'>You feel like standing up for yourself.</span>"
 	medical_record_text = "Patient presents a notably unassertive personality and is easy to manipulate."
 
+=======
+>>>>>>> Updated this old code to fork
 /datum/quirk/insanity
 	name = "Reality Dissociation Syndrome"
 	desc = "You suffer from a severe disorder that causes very vivid hallucinations. Mindbreaker toxin can suppress its effects, and you are immune to mindbreaker's hallucinogenic properties. <b>This is not a license to grief.</b>"
@@ -394,7 +465,11 @@
 	medical_record_text = "Patient suffers from acute Reality Dissociation Syndrome and experiences vivid hallucinations."
 
 /datum/quirk/insanity/on_process()
+<<<<<<< HEAD
 	if(quirk_holder.reagents.has_reagent(/datum/reagent/toxin/mindbreaker, needs_metabolizing = TRUE))
+=======
+	if(quirk_holder.reagents.has_reagent("mindbreaker"))
+>>>>>>> Updated this old code to fork
 		quirk_holder.hallucination = 0
 		return
 	if(prob(2)) //we'll all be mad soon enough
@@ -409,6 +484,17 @@
 	to_chat(quirk_holder, "<span class='big bold info'>Please note that your dissociation syndrome does NOT give you the right to attack people or otherwise cause any interference to \
 	the round. You are not an antagonist, and the rules will treat you the same as other crewmembers.</span>")
 
+<<<<<<< HEAD
+=======
+/datum/quirk/obstructive
+	name = "Physically Obstructive"
+	desc = "You somehow manage to always be in the way. You can't swap places with other people."
+	value = -1
+	mob_trait = TRAIT_NOMOBSWAP
+	gain_text = "<span class='danger'>You feel like you're in the way.</span>"
+	lose_text = "<span class='notice'>You feel less like you're in the way.</span>"
+
+>>>>>>> Updated this old code to fork
 /datum/quirk/social_anxiety
 	name = "Social Anxiety"
 	desc = "Talking to people is very difficult for you, and you often stutter or even lock up."
@@ -435,6 +521,10 @@
 		if(prob(1))
 			new/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato(get_turf(H)) //now that's what I call spaghetti code
 
+<<<<<<< HEAD
+=======
+//If you want to make some kind of junkie variant, just extend this quirk.
+>>>>>>> Updated this old code to fork
 /datum/quirk/junkie
 	name = "Junkie"
 	desc = "You can't get enough of hard drugs."
@@ -442,6 +532,7 @@
 	gain_text = "<span class='danger'>You suddenly feel the craving for drugs.</span>"
 	lose_text = "<span class='notice'>You feel like you should kick your drug habit.</span>"
 	medical_record_text = "Patient has a history of hard drugs."
+<<<<<<< HEAD
 	var/drug_list = list(/datum/reagent/drug/crank, /datum/reagent/drug/krokodil, /datum/reagent/medicine/morphine, /datum/reagent/drug/happiness, /datum/reagent/drug/methamphetamine) //List of possible IDs
 	var/datum/reagent/reagent_type //!If this is defined, reagent_id will be unused and the defined reagent type will be instead.
 	var/datum/reagent/reagent_instance //! actual instanced version of the reagent
@@ -458,6 +549,26 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	if (!reagent_type)
 		reagent_type = pick(drug_list)
+=======
+	var/drug_list = list("crank", "krokodil", "morphine", "happiness", "methamphetamine") //List of possible IDs
+	var/reagent_id //ID picked from list
+	var/datum/reagent/reagent_type //If this is defined, reagent_id will be unused and the defined reagent type will be instead.
+	var/datum/reagent/reagent_instance
+	var/where_drug
+	var/obj/item/drug_container_type //If this is defined before pill generation, pill generation will be skipped. This is the type of the pill bottle.
+	var/obj/item/drug_instance
+	var/where_accessory
+	var/obj/item/accessory_type //If this is null, it won't be spawned.
+	var/obj/item/accessory_instance
+	var/tick_counter = 0
+
+/datum/quirk/junkie/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	reagent_id = pick(drug_list)
+	if (!reagent_type)
+		var/datum/reagent/prot_holder = GLOB.chemical_reagents_list[reagent_id]
+		reagent_type = prot_holder.type
+>>>>>>> Updated this old code to fork
 	reagent_instance = new reagent_type()
 	H.reagents.addiction_list.Add(reagent_instance)
 	var/current_turf = get_turf(quirk_holder)
@@ -469,7 +580,11 @@
 		for(var/i in 1 to 7)
 			var/obj/item/reagent_containers/pill/P = new(drug_instance)
 			P.icon_state = pill_state
+<<<<<<< HEAD
 			P.reagents.add_reagent(reagent_type, 1)
+=======
+			P.list_reagents = list("[reagent_id]" = 1)
+>>>>>>> Updated this old code to fork
 
 	if (accessory_type)
 		accessory_instance = new accessory_type(current_turf)
@@ -493,6 +608,7 @@
 
 /datum/quirk/junkie/on_process()
 	var/mob/living/carbon/human/H = quirk_holder
+<<<<<<< HEAD
 	if(world.time > next_process)
 		next_process = world.time + process_interval
 		if(!H.reagents.addiction_list.Find(reagent_instance))
@@ -502,6 +618,21 @@
 				reagent_instance.addiction_stage = 0
 			H.reagents.addiction_list += reagent_instance
 			to_chat(quirk_holder, "<span class='danger'>You thought you kicked it, but you suddenly feel like you need [reagent_instance.name] again...</span>")
+=======
+	if (tick_counter == 60) //Halfassed optimization, increase this if there's slowdown due to this quirk
+		var/in_list = FALSE
+		for (var/datum/reagent/entry in H.reagents.addiction_list)
+			if(istype(entry, reagent_type))
+				in_list = TRUE
+				break
+		if(!in_list)
+			H.reagents.addiction_list += reagent_instance
+			reagent_instance.addiction_stage = 0
+			to_chat(quirk_holder, "<span class='danger'>You thought you kicked it, but you suddenly feel like you need [reagent_instance.name] again...")
+		tick_counter = 0
+	else
+		++tick_counter
+>>>>>>> Updated this old code to fork
 
 /datum/quirk/junkie/smoker
 	name = "Smoker"
@@ -523,11 +654,19 @@
 		/obj/item/storage/fancy/cigarettes/cigars,
 		/obj/item/storage/fancy/cigarettes/cigars/cohiba,
 		/obj/item/storage/fancy/cigarettes/cigars/havana)
+<<<<<<< HEAD
 	. = ..()
 
 /datum/quirk/junkie/smoker/announce_drugs()
 	to_chat(quirk_holder, "<span class='boldnotice'>There is a [drug_instance.name] [where_drug], and a lighter [where_accessory]. Make sure you get your favorite brand when you run out.</span>")
 
+=======
+	. = ..()	
+
+/datum/quirk/junkie/smoker/announce_drugs()
+	to_chat(quirk_holder, "<span class='boldnotice'>There is a [drug_instance.name] [where_drug], and a lighter [where_accessory]. Make sure you get your favorite brand when you run out.</span>")
+	
+>>>>>>> Updated this old code to fork
 
 /datum/quirk/junkie/smoker/on_process()
 	. = ..()
@@ -535,6 +674,7 @@
 	var/obj/item/I = H.get_item_by_slot(SLOT_WEAR_MASK)
 	if (istype(I, /obj/item/clothing/mask/cigarette))
 		var/obj/item/storage/fancy/cigarettes/C = drug_instance
+<<<<<<< HEAD
 		if(istype(I, C.spawn_type))
 			SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "wrong_cigs")
 			return
@@ -548,3 +688,9 @@
 	gain_text = "<span class='danger'>There's a lot on your mind right now.</span>"
 	lose_text = "<span class='notice'>Your mind finally feels calm.</span>"
 	medical_record_text = "Patient's mind is in a vulnerable state, and cannot recover from traumatic events."
+=======
+		if(istype(I, C.spawn_type))	
+			SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "wrong_cigs")
+			return
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "wrong_cigs", /datum/mood_event/wrong_brand)
+>>>>>>> Updated this old code to fork

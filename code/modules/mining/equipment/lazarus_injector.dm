@@ -59,8 +59,16 @@
 		malfunctioning = 1
 
 /obj/item/lazarus_injector/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(!loaded)
 		. += "<span class='info'>[src] is empty.</span>"
 	if(malfunctioning)
 		. += "<span class='info'>The display on [src] seems to be flickering.</span>"
+=======
+	..()
+	if(!loaded)
+		to_chat(user, "<span class='info'>[src] is empty.</span>")
+	if(malfunctioning)
+		to_chat(user, "<span class='info'>The display on [src] seems to be flickering.</span>")
+>>>>>>> Updated this old code to fork

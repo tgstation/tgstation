@@ -34,8 +34,13 @@
 
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
+<<<<<<< HEAD
 	if(. && !(movement_type & FLOATING)) //floating is easy
 		if(HAS_TRAIT(src, TRAIT_NOHUNGER))
+=======
+	if(. && (movement_type & FLOATING)) //floating is easy
+		if(has_trait(TRAIT_NOHUNGER))
+>>>>>>> Updated this old code to fork
 			set_nutrition(NUTRITION_LEVEL_FED - 1)	//just less than feeling vigorous
 		else if(nutrition && stat != DEAD)
 			adjust_nutrition(-(HUNGER_FACTOR/10))

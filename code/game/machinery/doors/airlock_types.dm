@@ -562,14 +562,22 @@
 	return ..()
 
 /obj/machinery/door/airlock/clockwork/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
+=======
+	..()
+>>>>>>> Updated this old code to fork
 	var/gear_text = "The cogwheel is flickering and twisting wildly. Report this to a coder."
 	switch(construction_state)
 		if(GEAR_SECURE)
 			gear_text = "<span class='brass'>The cogwheel is solidly <b>wrenched</b> to the brass around it.</span>"
 		if(GEAR_LOOSE)
 			gear_text = "<span class='alloy'>The cogwheel has been <i>loosened</i>, but remains <b>connected loosely</b> to the door!</span>"
+<<<<<<< HEAD
 	. += gear_text
+=======
+	to_chat(user, gear_text)
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/door/airlock/clockwork/emp_act(severity)
 	if(prob(80/severity))

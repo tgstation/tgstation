@@ -16,7 +16,11 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 /obj/machinery/ore_silo/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/material_container,
+<<<<<<< HEAD
 		list(/datum/material/iron, /datum/material/glass, /datum/material/silver, /datum/material/gold, /datum/material/diamond, /datum/material/plasma, /datum/material/uranium, /datum/material/bananium, /datum/material/titanium, /datum/material/bluespace, /datum/material/plastic),
+=======
+		list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE, MAT_PLASTIC),
+>>>>>>> Updated this old code to fork
 		INFINITY,
 		FALSE,
 		/obj/item/stack,
@@ -34,13 +38,21 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		var/datum/component/remote_materials/mats = C
 		mats.disconnect_from(src)
 
+<<<<<<< HEAD
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+=======
+	GET_COMPONENT(materials, /datum/component/material_container)
+>>>>>>> Updated this old code to fork
 	materials.retrieve_all()
 
 	return ..()
 
 /obj/machinery/ore_silo/proc/remote_attackby(obj/machinery/M, mob/user, obj/item/stack/I)
+<<<<<<< HEAD
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+=======
+	GET_COMPONENT(materials, /datum/component/material_container)
+>>>>>>> Updated this old code to fork
 	// stolen from /datum/component/material_container/proc/OnAttackBy
 	if(user.a_intent != INTENT_HELP)
 		return
@@ -71,6 +83,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	popup.open()
 
 /obj/machinery/ore_silo/proc/generate_ui()
+<<<<<<< HEAD
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/list/ui = list("<head><title>Ore Silo</title></head><body><div class='statusDisplay'><h2>Stored Material:</h2>")
 	var/any = FALSE
@@ -86,6 +99,21 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 				ui += "<span class='linkOff'>Eject</span>"
 			if (sheets >= 20)
 				ui += "<a href='?src=[REF(src)];ejectsheet=[ref];eject_amt=20'>20x</a>"
+=======
+	GET_COMPONENT(materials, /datum/component/material_container)
+	var/list/ui = list("<head><title>Ore Silo</title></head><body><div class='statusDisplay'><h2>Stored Material:</h2>")
+	var/any = FALSE
+	for(var/M in materials.materials)
+		var/datum/material/mat = materials.materials[M]
+		var/sheets = round(mat.amount) / MINERAL_MATERIAL_AMOUNT
+		if (sheets)
+			if (sheets >= 1)
+				ui += "<a href='?src=[REF(src)];ejectsheet=[mat.id];eject_amt=1'>Eject</a>"
+			else
+				ui += "<span class='linkOff'>Eject</span>"
+			if (sheets >= 20)
+				ui += "<a href='?src=[REF(src)];ejectsheet=[mat.id];eject_amt=20'>20x</a>"
+>>>>>>> Updated this old code to fork
 			else
 				ui += "<span class='linkOff'>20x</span>"
 			ui += "<b>[mat.name]</b>: [sheets] sheets<br>"
@@ -150,8 +178,13 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		updateUsrDialog()
 		return TRUE
 	else if(href_list["ejectsheet"])
+<<<<<<< HEAD
 		var/datum/material/eject_sheet = locate(href_list["ejectsheet"])
 		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+=======
+		var/eject_sheet = href_list["ejectsheet"]
+		GET_COMPONENT(materials, /datum/component/material_container)
+>>>>>>> Updated this old code to fork
 		var/count = materials.retrieve_sheets(text2num(href_list["eject_amt"]), eject_sheet, drop_location())
 		var/list/matlist = list()
 		matlist[eject_sheet] = MINERAL_MATERIAL_AMOUNT
@@ -173,7 +206,11 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		return
 	var/datum/ore_silo_log/entry = new(M, action, amount, noun, mats)
 
+<<<<<<< HEAD
 	var/list/datum/ore_silo_log/logs = GLOB.silo_access_logs[REF(src)]
+=======
+	var/list/logs = GLOB.silo_access_logs[REF(src)]
+>>>>>>> Updated this old code to fork
 	if(!LAZYLEN(logs))
 		GLOB.silo_access_logs[REF(src)] = logs = list(entry)
 	else if(!logs[1].merge(entry))
@@ -183,8 +220,13 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	flick("silo_active", src)
 
 /obj/machinery/ore_silo/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	. += "<span class='notice'>[src] can be linked to techfabs, circuit printers and protolathes with a multitool.</span>"
+=======
+	..()
+	to_chat(user, "<span class='notice'>[src] can be linked to techfabs, circuit printers and protolathes with a multitool.</span>")
+>>>>>>> Updated this old code to fork
 
 /datum/ore_silo_log
 	var/name  // for VV

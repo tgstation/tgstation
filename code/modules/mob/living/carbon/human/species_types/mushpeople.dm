@@ -10,7 +10,11 @@
 	nojumpsuit = TRUE
 
 	say_mod = "poofs" //what does a mushroom sound like
+<<<<<<< HEAD
 	species_traits = list(MUTCOLORS, NOEYESPRITES,NOFLASH, NO_UNDERWEAR)
+=======
+	species_traits = list(MUTCOLORS, NOEYES, NO_UNDERWEAR)
+>>>>>>> Updated this old code to fork
 	inherent_traits = list(TRAIT_NOBREATH)
 	speedmod = 1.5 //faster than golems but not by much
 
@@ -51,9 +55,15 @@
 	QDEL_NULL(mush)
 
 /datum/species/mush/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+<<<<<<< HEAD
 	if(chem.type == /datum/reagent/toxin/plantbgone/weedkiller)
 		H.adjustToxLoss(3)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
+=======
+	if(chem.id == "weedkiller")
+		H.adjustToxLoss(3)
+		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
+>>>>>>> Updated this old code to fork
 		return TRUE
 
 /datum/species/mush/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)

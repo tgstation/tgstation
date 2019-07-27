@@ -17,6 +17,7 @@
 	user.say("AAAAAAAAAAAARGHHHHH", forced="megaphone suicide")//he must have died while coding this
 	return OXYLOSS
 
+<<<<<<< HEAD
 /obj/item/megaphone/equipped(mob/M, slot)
 	. = ..()
 	if (slot == SLOT_HANDS)
@@ -36,6 +37,15 @@
 			playsound(loc, 'sound/items/megaphone.ogg', 100, 0, 1)
 			spamcheck = world.time + 50
 			speech_args[SPEECH_SPANS] |= voicespan
+=======
+/obj/item/megaphone/get_held_item_speechspans(mob/living/carbon/user)
+	if(spamcheck > world.time)
+		to_chat(user, "<span class='warning'>\The [src] needs to recharge!</span>")
+	else
+		playsound(loc, 'sound/items/megaphone.ogg', 100, 0, 1)
+		spamcheck = world.time + 50
+		return voicespan
+>>>>>>> Updated this old code to fork
 
 /obj/item/megaphone/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -60,4 +70,8 @@
 	name = "clown's megaphone"
 	desc = "Something that should not exist."
 	icon_state = "megaphone-clown"
+<<<<<<< HEAD
 	voicespan = list(SPAN_CLOWN)
+=======
+	voicespan = list(SPAN_CLOWN)
+>>>>>>> Updated this old code to fork

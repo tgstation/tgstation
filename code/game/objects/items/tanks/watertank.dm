@@ -149,7 +149,11 @@
 
 /obj/item/watertank/janitor/Initialize()
 	. = ..()
+<<<<<<< HEAD
 	reagents.add_reagent(/datum/reagent/space_cleaner, 500)
+=======
+	reagents.add_reagent("cleaner", 500)
+>>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/spray/mister/janitor
 	name = "janitor spray nozzle"
@@ -185,7 +189,11 @@
 
 /obj/item/watertank/atmos/Initialize()
 	. = ..()
+<<<<<<< HEAD
 	reagents.add_reagent(/datum/reagent/water, 200)
+=======
+	reagents.add_reagent("water", 200)
+>>>>>>> Updated this old code to fork
 
 /obj/item/watertank/atmos/make_noz()
 	return new /obj/item/extinguisher/mini/nozzle(src)
@@ -437,6 +445,7 @@
 
 /obj/item/watertank/op/Initialize()
 	. = ..()
+<<<<<<< HEAD
 	reagents.add_reagent(/datum/reagent/toxin/mutagen,350)
 	reagents.add_reagent(/datum/reagent/napalm,125)
 	reagents.add_reagent(/datum/reagent/fuel,125)
@@ -444,6 +453,15 @@
 	reagents.add_reagent(/datum/reagent/cryptobiolin,350)
 	reagents.add_reagent(/datum/reagent/toxin/plasma,250)
 	reagents.add_reagent(/datum/reagent/consumable/condensedcapsaicin,500)
+=======
+	reagents.add_reagent("mutagen",350)
+	reagents.add_reagent("napalm",125)
+	reagents.add_reagent("welding_fuel",125)
+	reagents.add_reagent("clf3",300)
+	reagents.add_reagent("cryptobiolin",350)
+	reagents.add_reagent("plasma",250)
+	reagents.add_reagent("condensedcapsaicin",500)
+>>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/spray/mister/op
 	desc = "A mister nozzle attached to several extended water tanks. It suspiciously has a compressor in the system and is labelled entirely in New Cyrillic."

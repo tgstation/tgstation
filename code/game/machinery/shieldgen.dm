@@ -214,7 +214,11 @@
 
 #define ACTIVE_SETUPFIELDS 1
 #define ACTIVE_HASFIELDS 2
+<<<<<<< HEAD
 /obj/machinery/power/shieldwallgen
+=======
+/obj/machinery/shieldwallgen
+>>>>>>> Updated this old code to fork
 	name = "shield wall generator"
 	desc = "A shield generator."
 	icon = 'icons/obj/stationobjs.dmi'
@@ -224,8 +228,11 @@
 	req_access = list(ACCESS_TELEPORTER)
 	flags_1 = CONDUCT_1
 	use_power = NO_POWER_USE
+<<<<<<< HEAD
 	idle_power_usage = 10
 	active_power_usage = 50
+=======
+>>>>>>> Updated this old code to fork
 	max_integrity = 300
 	var/active = FALSE
 	var/power = 0
@@ -234,22 +241,31 @@
 	var/shield_range = 8
 	var/obj/structure/cable/attached // the attached cable
 
+<<<<<<< HEAD
 /obj/machinery/power/shieldwallgen/xenobiologyaccess		//use in xenobiology containment
+=======
+/obj/machinery/shieldwallgen/xenobiologyaccess		//use in xenobiology containment
+>>>>>>> Updated this old code to fork
 	name = "xenobiology shield wall generator"
 	desc = "A shield generator meant for use in xenobiology."
 	icon_state = "Shield_Gen"
 	req_access = list(ACCESS_XENOBIOLOGY)
 
+<<<<<<< HEAD
 /obj/machinery/power/shieldwallgen/Initialize()
 	. = ..()
 	if(anchored)
 		connect_to_network()
 
 /obj/machinery/power/shieldwallgen/Destroy()
+=======
+/obj/machinery/shieldwallgen/Destroy()
+>>>>>>> Updated this old code to fork
 	for(var/d in GLOB.cardinals)
 		cleanup_field(d)
 	return ..()
 
+<<<<<<< HEAD
 /obj/machinery/power/shieldwallgen/should_have_node()
 	return anchored
 
@@ -261,6 +277,39 @@
 /obj/machinery/power/shieldwallgen/process()
 	if(active)
 		icon_state = "shield_wall_gen_on"
+=======
+/obj/machinery/shieldwallgen/proc/power()
+	if(!anchored)
+		power = 0
+		return
+	var/turf/T = get_turf(src)
+
+	var/obj/structure/cable/C = T.get_cable_node()
+	var/datum/powernet/PN
+	if(C)
+		PN = C.powernet //find the powernet of the connected cable
+
+	if(!PN)
+		return
+
+	var/surplus = max(PN.avail - PN.load, 0)
+	var/avail_power = min(rand(50,200), surplus)
+	if(avail_power)
+		power += avail_power
+		PN.load += avail_power //uses powernet power.
+
+/obj/machinery/shieldwallgen/process()
+	power()
+	use_stored_power(50)
+
+/obj/machinery/shieldwallgen/proc/use_stored_power(amount)
+	power = CLAMP(power - amount, 0, maximum_stored_power)
+	update_activity()
+
+/obj/machinery/shieldwallgen/proc/update_activity()
+	if(active)
+		icon_state = "Shield_Gen +a"
+>>>>>>> Updated this old code to fork
 		if(active == ACTIVE_SETUPFIELDS)
 			var/fields = 0
 			for(var/d in GLOB.cardinals)
@@ -268,6 +317,7 @@
 					fields++
 			if(fields)
 				active = ACTIVE_HASFIELDS
+<<<<<<< HEAD
 		if(!active_power_usage || surplus() >= active_power_usage)
 			add_load(active_power_usage)
 		else
@@ -275,27 +325,49 @@
 				"If this message is ever seen, something is wrong.",
 				"<span class='italics'>You hear heavy droning fade out.</span>")
 			icon_state = "shield_wall_gen"
+=======
+		if(!power)
+			visible_message("<span class='danger'>The [src.name] shuts down due to lack of power!</span>", \
+				"<span class='italics'>You hear heavy droning fade out.</span>")
+			icon_state = "Shield_Gen"
+>>>>>>> Updated this old code to fork
 			active = FALSE
 			for(var/d in GLOB.cardinals)
 				cleanup_field(d)
 	else
+<<<<<<< HEAD
 		icon_state = "shield_wall_gen"
 		for(var/d in GLOB.cardinals)
 			cleanup_field(d)
 
 /// Constructs the actual field walls in the specified direction, cleans up old/stuck shields before doing so
 /obj/machinery/power/shieldwallgen/proc/setup_field(direction)
+=======
+		icon_state = "Shield_Gen"
+		for(var/d in GLOB.cardinals)
+			cleanup_field(d)
+
+/obj/machinery/shieldwallgen/proc/setup_field(direction)
+>>>>>>> Updated this old code to fork
 	if(!direction)
 		return
 
 	var/turf/T = loc
+<<<<<<< HEAD
 	var/obj/machinery/power/shieldwallgen/G
+=======
+	var/obj/machinery/shieldwallgen/G
+>>>>>>> Updated this old code to fork
 	var/steps = 0
 	var/opposite_direction = turn(direction, 180)
 
 	for(var/i in 1 to shield_range) //checks out to 8 tiles away for another generator
 		T = get_step(T, direction)
+<<<<<<< HEAD
 		G = locate(/obj/machinery/power/shieldwallgen) in T
+=======
+		G = (locate(/obj/machinery/shieldwallgen) in T)
+>>>>>>> Updated this old code to fork
 		if(G)
 			if(!G.active)
 				return
@@ -312,16 +384,26 @@
 		new/obj/machinery/shieldwall(T, src, G)
 	return TRUE
 
+<<<<<<< HEAD
 /// cleans up fields in the specified direction if they belong to this generator
 /obj/machinery/power/shieldwallgen/proc/cleanup_field(direction)
 	var/obj/machinery/shieldwall/F
 	var/obj/machinery/power/shieldwallgen/G
+=======
+/obj/machinery/shieldwallgen/proc/cleanup_field(direction)
+	var/obj/machinery/shieldwall/F
+	var/obj/machinery/shieldwallgen/G
+>>>>>>> Updated this old code to fork
 	var/turf/T = loc
 
 	for(var/i in 1 to shield_range)
 		T = get_step(T, direction)
 
+<<<<<<< HEAD
 		G = (locate(/obj/machinery/power/shieldwallgen) in T)
+=======
+		G = (locate(/obj/machinery/shieldwallgen) in T)
+>>>>>>> Updated this old code to fork
 		if(G && !G.active)
 			break
 
@@ -329,13 +411,18 @@
 		if(F && (F.gen_primary == src || F.gen_secondary == src)) //it's ours, kill it.
 			qdel(F)
 
+<<<<<<< HEAD
 /obj/machinery/power/shieldwallgen/can_be_unfasten_wrench(mob/user, silent)
+=======
+/obj/machinery/shieldwallgen/can_be_unfasten_wrench(mob/user, silent)
+>>>>>>> Updated this old code to fork
 	if(active)
 		if(!silent)
 			to_chat(user, "<span class='warning'>Turn off the shield generator first!</span>")
 		return FAILED_UNFASTEN
 	return ..()
 
+<<<<<<< HEAD
 
 /obj/machinery/power/shieldwallgen/wrench_act(mob/living/user, obj/item/I)
 	. = default_unfasten_wrench(user, I, 0)
@@ -348,6 +435,13 @@
 
 /obj/machinery/power/shieldwallgen/attackby(obj/item/W, mob/user, params)
 	if(W.GetID())
+=======
+/obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour == TOOL_WRENCH)
+		default_unfasten_wrench(user, W, 0)
+
+	else if(W.GetID())
+>>>>>>> Updated this old code to fork
 		if(allowed(user) && !(obj_flags & EMAGGED))
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>")
@@ -360,7 +454,11 @@
 		add_fingerprint(user)
 		return ..()
 
+<<<<<<< HEAD
 /obj/machinery/power/shieldwallgen/interact(mob/user)
+=======
+/obj/machinery/shieldwallgen/interact(mob/user)
+>>>>>>> Updated this old code to fork
 	. = ..()
 	if(.)
 		return
@@ -370,7 +468,11 @@
 	if(locked && !issilicon(user))
 		to_chat(user, "<span class='warning'>The controls are locked!</span>")
 		return
+<<<<<<< HEAD
 	if(!powernet)
+=======
+	if(!power)
+>>>>>>> Updated this old code to fork
 		to_chat(user, "<span class='warning'>\The [src] needs to be powered by a wire!</span>")
 		return
 
@@ -379,14 +481,25 @@
 			"<span class='notice'>You turn off \the [src].</span>", \
 			"<span class='italics'>You hear heavy droning fade out.</span>")
 		active = FALSE
+<<<<<<< HEAD
+=======
+		update_activity()
+>>>>>>> Updated this old code to fork
 	else
 		user.visible_message("[user] turned \the [src] on.", \
 			"<span class='notice'>You turn on \the [src].</span>", \
 			"<span class='italics'>You hear heavy droning.</span>")
 		active = ACTIVE_SETUPFIELDS
+<<<<<<< HEAD
 	add_fingerprint(user)
 
 /obj/machinery/power/shieldwallgen/emag_act(mob/user)
+=======
+		update_activity()
+	add_fingerprint(user)
+
+/obj/machinery/shieldwallgen/emag_act(mob/user)
+>>>>>>> Updated this old code to fork
 	if(obj_flags & EMAGGED)
 		to_chat(user, "<span class='warning'>The access controller is damaged!</span>")
 		return
@@ -405,10 +518,17 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	light_range = 3
 	var/needs_power = FALSE
+<<<<<<< HEAD
 	var/obj/machinery/power/shieldwallgen/gen_primary
 	var/obj/machinery/power/shieldwallgen/gen_secondary
 
 /obj/machinery/shieldwall/Initialize(mapload, obj/machinery/power/shieldwallgen/first_gen, obj/machinery/power/shieldwallgen/second_gen)
+=======
+	var/obj/machinery/shieldwallgen/gen_primary
+	var/obj/machinery/shieldwallgen/gen_secondary
+
+/obj/machinery/shieldwall/Initialize(mapload, obj/machinery/shieldwallgen/first_gen, obj/machinery/shieldwallgen/second_gen)
+>>>>>>> Updated this old code to fork
 	. = ..()
 	gen_primary = first_gen
 	gen_secondary = second_gen
@@ -445,12 +565,20 @@
 	if(damage_type == BRUTE || damage_type == BURN)
 		drain_power(damage_amount)
 
+<<<<<<< HEAD
 /// succs power from the connected shield wall generator
 /obj/machinery/shieldwall/proc/drain_power(drain_amount)
 	if(needs_power && gen_primary)
 		gen_primary.add_load(drain_amount * 0.5)
 		if(gen_secondary) //using power may cause us to be destroyed
 			gen_secondary.add_load(drain_amount * 0.5)
+=======
+/obj/machinery/shieldwall/proc/drain_power(drain_amount)
+	if(needs_power && gen_primary)
+		gen_primary.use_stored_power(drain_amount*0.5)
+		if(gen_secondary) //using power may cause us to be destroyed
+			gen_secondary.use_stored_power(drain_amount*0.5)
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))

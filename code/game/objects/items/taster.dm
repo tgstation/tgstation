@@ -6,10 +6,18 @@
 
 	w_class = WEIGHT_CLASS_TINY
 
+<<<<<<< HEAD
 	speech_span = null
 
 	var/taste_sensitivity = 15
 
+=======
+	var/taste_sensitivity = 15
+
+/obj/item/taster/get_spans()
+	return list()
+
+>>>>>>> Updated this old code to fork
 /obj/item/taster/afterattack(atom/O, mob/user, proximity)
 	. = ..()
 	if(!proximity)

@@ -110,7 +110,11 @@
 	name = "\"Phazon\" Central Control module"
 	desc = "Allows for the construction of a \"Phazon\" Central Control module."
 	id = "phazon_main"
+<<<<<<< HEAD
 	materials = list(/datum/material/glass = 1000, /datum/material/bluespace = 100)
+=======
+	materials = list(MAT_GLASS = 1000, MAT_BLUESPACE = 100)
+>>>>>>> Updated this old code to fork
 	build_path = /obj/item/circuitboard/mecha/phazon/main
 	category = list("Exosuit Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -119,7 +123,11 @@
 	name = "\"Phazon\" Peripherals Control module"
 	desc = "Allows for the construction of a \"Phazon\" Peripheral Control module."
 	id = "phazon_peri"
+<<<<<<< HEAD
 	materials = list(/datum/material/glass = 1000, /datum/material/bluespace = 100)
+=======
+	materials = list(MAT_GLASS = 1000, MAT_BLUESPACE = 100)
+>>>>>>> Updated this old code to fork
 	build_path = /obj/item/circuitboard/mecha/phazon/peripherals
 	category = list("Exosuit Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -128,7 +136,11 @@
 	name = "\"Phazon\" Weapons & Targeting Control module"
 	desc = "Allows for the construction of a \"Phazon\" Weapons & Targeting Control module."
 	id = "phazon_targ"
+<<<<<<< HEAD
 	materials = list(/datum/material/glass = 1000, /datum/material/bluespace = 100)
+=======
+	materials = list(MAT_GLASS = 1000, MAT_BLUESPACE = 100)
+>>>>>>> Updated this old code to fork
 	build_path = /obj/item/circuitboard/mecha/phazon/targeting
 	category = list("Exosuit Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -143,6 +155,7 @@
 	id = "mech_scattershot"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
@@ -158,12 +171,19 @@
 	category = list("Exosuit Ammunition", "Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+=======
+	materials = list(MAT_METAL=10000)
+	construction_time = 100
+	category = list("Exosuit Equipment")
+
+>>>>>>> Updated this old code to fork
 /datum/design/mech_carbine
 	name = "Exosuit Weapon (FNX-99 \"Hades\" Carbine)"
 	desc = "Allows for the construction of FNX-99 \"Hades\" Carbine."
 	id = "mech_carbine"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
@@ -179,13 +199,23 @@
 	category = list("Exosuit Ammunition", "Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+=======
+	materials = list(MAT_METAL=10000)
+	construction_time = 100
+	category = list("Exosuit Equipment")
+
+>>>>>>> Updated this old code to fork
 /datum/design/mech_ion
 	name = "Exosuit Weapon (MKIV Ion Heavy Cannon)"
 	desc = "Allows for the construction of MKIV Ion Heavy Cannon."
 	id = "mech_ion"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=20000,/datum/material/silver=6000,/datum/material/uranium=2000)
+=======
+	materials = list(MAT_METAL=20000,MAT_SILVER=6000,MAT_URANIUM=2000)
+>>>>>>> Updated this old code to fork
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -195,7 +225,11 @@
 	id = "mech_tesla"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/tesla
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=20000,/datum/material/silver=8000)
+=======
+	materials = list(MAT_METAL=20000,MAT_SILVER=8000)
+>>>>>>> Updated this old code to fork
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -205,7 +239,11 @@
 	id = "mech_laser"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=10000)
+=======
+	materials = list(MAT_METAL=10000)
+>>>>>>> Updated this old code to fork
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -215,6 +253,7 @@
 	id = "mech_laser_heavy"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
@@ -226,6 +265,9 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/disabler
 	materials = list(/datum/material/iron=10000)
+=======
+	materials = list(MAT_METAL=10000)
+>>>>>>> Updated this old code to fork
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -235,6 +277,7 @@
 	id = "mech_grenade_launcher"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=22000,/datum/material/gold=6000,/datum/material/silver=8000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
@@ -271,12 +314,29 @@
 	category = list("Exosuit Ammunition", "Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+=======
+	materials = list(MAT_METAL=22000,MAT_GOLD=6000,MAT_SILVER=8000)
+	construction_time = 100
+	category = list("Exosuit Equipment")
+
+/datum/design/mech_missile_rack
+	name = "Exosuit Weapon (SRM-8 Missile Rack)"
+	desc = "Allows for the construction of an SRM-8 Missile Rack."
+	id = "mech_missile_rack"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
+	materials = list(MAT_METAL=22000,MAT_GOLD=6000,MAT_SILVER=8000)
+	construction_time = 100
+	category = list("Exosuit Equipment")
+
+>>>>>>> Updated this old code to fork
 /datum/design/clusterbang_launcher
 	name = "Exosuit Module (SOB-3 Clusterbang Launcher)"
 	desc = "A weapon that violates the Geneva Convention at 3 rounds per minute"
 	id = "clusterbang_launcher"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/clusterbang
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=20000,/datum/material/gold=10000,/datum/material/uranium=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
@@ -292,13 +352,23 @@
 	category = list("Exosuit Ammunition", "Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+=======
+	materials = list(MAT_METAL=20000,MAT_GOLD=10000,MAT_URANIUM=10000)
+	construction_time = 100
+	category = list("Exosuit Equipment")
+
+>>>>>>> Updated this old code to fork
 /datum/design/mech_wormhole_gen
 	name = "Exosuit Module (Localized Wormhole Generator)"
 	desc = "An exosuit module that allows generating of small quasi-stable wormholes."
 	id = "mech_wormhole_gen"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/wormhole_generator
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=10000)
+=======
+	materials = list(MAT_METAL=10000)
+>>>>>>> Updated this old code to fork
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -308,7 +378,11 @@
 	id = "mech_teleporter"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/teleporter
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=10000,/datum/material/diamond=10000)
+=======
+	materials = list(MAT_METAL=10000,MAT_DIAMOND=10000)
+>>>>>>> Updated this old code to fork
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -318,7 +392,11 @@
 	id = "mech_rcd"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/rcd
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=30000,/datum/material/gold=20000,/datum/material/plasma=25000,/datum/material/silver=20000)
+=======
+	materials = list(MAT_METAL=30000,MAT_GOLD=20000,MAT_PLASMA=25000,MAT_SILVER=20000)
+>>>>>>> Updated this old code to fork
 	construction_time = 1200
 	category = list("Exosuit Equipment")
 
@@ -328,7 +406,11 @@
 	id = "mech_gravcatapult"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/gravcatapult
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=10000)
+=======
+	materials = list(MAT_METAL=10000)
+>>>>>>> Updated this old code to fork
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -338,7 +420,11 @@
 	id = "mech_repair_droid"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/repair_droid
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=10000,/datum/material/glass = 5000,/datum/material/gold=1000,/datum/material/silver=2000)
+=======
+	materials = list(MAT_METAL=10000,MAT_GLASS=5000,MAT_GOLD=1000,MAT_SILVER=2000)
+>>>>>>> Updated this old code to fork
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -348,7 +434,11 @@
 	id = "mech_energy_relay"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=10000,/datum/material/glass =  2000,/datum/material/gold=2000,/datum/material/silver=3000)
+=======
+	materials = list(MAT_METAL=10000,MAT_GLASS=2000,MAT_GOLD=2000,MAT_SILVER=3000)
+>>>>>>> Updated this old code to fork
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -358,7 +448,11 @@
 	id = "mech_ccw_armor"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=20000,/datum/material/silver=5000)
+=======
+	materials = list(MAT_METAL=20000,MAT_SILVER=5000)
+>>>>>>> Updated this old code to fork
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -368,7 +462,11 @@
 	id = "mech_proj_armor"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=20000,/datum/material/gold=5000)
+=======
+	materials = list(MAT_METAL=20000,MAT_GOLD=5000)
+>>>>>>> Updated this old code to fork
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -378,7 +476,11 @@
 	id = "mech_diamond_drill"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=10000,/datum/material/diamond=6500)
+=======
+	materials = list(MAT_METAL=10000,MAT_DIAMOND=6500)
+>>>>>>> Updated this old code to fork
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -388,7 +490,11 @@
 	id = "mech_generator_nuclear"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/generator/nuclear
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=10000,/datum/material/glass =  1000,/datum/material/silver=500)
+=======
+	materials = list(MAT_METAL=10000,MAT_GLASS=1000,MAT_SILVER=500)
+>>>>>>> Updated this old code to fork
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -398,7 +504,21 @@
 	id = "mech_plasma_cutter"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma
+<<<<<<< HEAD
 	materials = list(/datum/material/iron = 8000, /datum/material/glass = 1000, /datum/material/plasma = 2000)
+=======
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 1000, MAT_PLASMA = 2000)
+	construction_time = 100
+	category = list("Exosuit Equipment")
+
+/datum/design/mech_taser
+	name = "Exosuit Weapon (PBT \"Pacifier\" Mounted Taser)"
+	desc = "A weapon for combat exosuits. Shoots non-lethal stunning electrodes."
+	id = "mech_taser"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
+	materials = list(MAT_METAL=10000)
+>>>>>>> Updated this old code to fork
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -408,6 +528,7 @@
 	id = "mech_lmg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
@@ -423,13 +544,23 @@
 	category = list("Exosuit Ammunition", "Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+=======
+	materials = list(MAT_METAL=10000)
+	construction_time = 100
+	category = list("Exosuit Equipment")
+
+>>>>>>> Updated this old code to fork
 /datum/design/mech_sleeper
 	name = "Exosuit Medical Equipment (Mounted Sleeper)"
 	desc = "Equipment for medical exosuits. A mounted sleeper that stabilizes patients and can inject reagents in the exosuit's reserves."
 	id = "mech_sleeper"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/medical/sleeper
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=5000, /datum/material/glass =  10000)
+=======
+	materials = list(MAT_METAL=5000,MAT_GLASS=10000)
+>>>>>>> Updated this old code to fork
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -439,7 +570,11 @@
 	id = "mech_syringe_gun"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=3000, /datum/material/glass = 2000)
+=======
+	materials = list(MAT_METAL=3000,MAT_GLASS=2000)
+>>>>>>> Updated this old code to fork
 	construction_time = 200
 	category = list("Exosuit Equipment")
 
@@ -448,7 +583,11 @@
 	desc = "Equipment for medical exosuits. A mounted medical nanite projector which will treat patients with a focused beam."
 	id = "mech_medi_beam"
 	build_type = MECHFAB
+<<<<<<< HEAD
 	materials = list(/datum/material/iron = 15000, /datum/material/glass = 8000, /datum/material/plasma = 3000, /datum/material/gold = 8000, /datum/material/diamond = 2000)
+=======
+	materials = list(MAT_METAL = 15000, MAT_GLASS = 8000, MAT_PLASMA = 3000, MAT_GOLD = 8000, MAT_DIAMOND = 2000)
+>>>>>>> Updated this old code to fork
 	construction_time = 250
 	build_path = /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam
 	category = list("Exosuit Equipment")

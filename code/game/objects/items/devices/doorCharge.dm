@@ -12,7 +12,11 @@
 	item_flags = NOBLUDGEON
 	force = 3
 	attack_verb = list("blown up", "exploded", "detonated")
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=50, /datum/material/glass=30)
+=======
+	materials = list(MAT_METAL=50, MAT_GLASS=30)
+>>>>>>> Updated this old code to fork
 
 /obj/item/doorCharge/ex_act(severity, target)
 	switch(severity)
@@ -35,8 +39,16 @@
 	return ..()
 
 /obj/item/doorCharge/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/traitor)) //No nuke ops because the device is excluded from nuclear
 		. += "A small explosive device that can be used to sabotage airlocks to cause an explosion upon opening. To apply, remove the airlock's maintenance panel and place it within."
 	else
 		. += "A small, suspicious object that feels lukewarm when held."
+=======
+	..()
+	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/traitor)) //No nuke ops because the device is excluded from nuclear
+		to_chat(user, "A small explosive device that can be used to sabotage airlocks to cause an explosion upon opening. To apply, remove the airlock's maintenance panel and place it within.")
+	else
+		to_chat(user, "A small, suspicious object that feels lukewarm when held.")
+>>>>>>> Updated this old code to fork

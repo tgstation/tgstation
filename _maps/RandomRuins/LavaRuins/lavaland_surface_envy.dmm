@@ -13,10 +13,17 @@
 /area/ruin/unpowered)
 "e" = (
 /obj/structure/mirror{
+<<<<<<< HEAD
 	broken = 1;
 	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
 	icon_state = "mirror_broke";
 	pixel_x = -28
+=======
+	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
+	icon_state = "mirror_broke";
+	pixel_x = -28;
+	broken = 1
+>>>>>>> Updated this old code to fork
 	},
 /obj/item/clothing/suit/hooded/bloated_human,
 /obj/effect/decal/cleanable/blood,
@@ -24,10 +31,17 @@
 /area/ruin/unpowered)
 "f" = (
 /obj/structure/mirror{
+<<<<<<< HEAD
 	broken = 1;
 	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
 	icon_state = "mirror_broke";
 	pixel_x = 28
+=======
+	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
+	icon_state = "mirror_broke";
+	pixel_x = 28;
+	broken = 1
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
@@ -36,10 +50,17 @@
 "g" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/structure/mirror{
+<<<<<<< HEAD
 	broken = 1;
 	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
 	icon_state = "mirror_broke";
 	pixel_x = -28
+=======
+	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
+	icon_state = "mirror_broke";
+	pixel_x = -28;
+	broken = 1
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating,
 /area/ruin/unpowered)
@@ -56,29 +77,50 @@
 /area/ruin/unpowered)
 "k" = (
 /obj/structure/mirror{
+<<<<<<< HEAD
 	broken = 1;
 	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
 	icon_state = "mirror_broke";
 	pixel_y = 28
+=======
+	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
+	icon_state = "mirror_broke";
+	pixel_y = 28;
+	broken = 1
+>>>>>>> Updated this old code to fork
 	},
 /obj/item/kitchen/knife/envy,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "l" = (
 /obj/structure/mirror{
+<<<<<<< HEAD
 	broken = 1;
 	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
 	icon_state = "mirror_broke";
 	pixel_x = 28
+=======
+	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
+	icon_state = "mirror_broke";
+	pixel_x = 28;
+	broken = 1
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "m" = (
 /obj/structure/mirror{
+<<<<<<< HEAD
 	broken = 1;
 	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
 	icon_state = "mirror_broke";
 	pixel_x = -28
+=======
+	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
+	icon_state = "mirror_broke";
+	pixel_x = -28;
+	broken = 1
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating,
 /area/ruin/unpowered)
@@ -89,10 +131,17 @@
 /area/ruin/unpowered)
 "o" = (
 /obj/structure/mirror{
+<<<<<<< HEAD
 	broken = 1;
 	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
 	icon_state = "mirror_broke";
 	pixel_x = -28
+=======
+	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
+	icon_state = "mirror_broke";
+	pixel_x = -28;
+	broken = 1
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"

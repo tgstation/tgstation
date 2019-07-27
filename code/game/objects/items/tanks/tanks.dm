@@ -11,7 +11,11 @@
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 4
+<<<<<<< HEAD
 	materials = list(/datum/material/iron = 500)
+=======
+	materials = list(MAT_METAL = 500)
+>>>>>>> Updated this old code to fork
 	actions_types = list(/datum/action/item_action/set_internals)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 30)
 	var/datum/gas_mixture/air_contents = null
@@ -73,15 +77,26 @@
 
 /obj/item/tank/examine(mob/user)
 	var/obj/icon = src
+<<<<<<< HEAD
 	. = ..()
+=======
+	..()
+>>>>>>> Updated this old code to fork
 	if(istype(src.loc, /obj/item/assembly))
 		icon = src.loc
 	if(!in_range(src, user) && !isobserver(user))
 		if(icon == src)
+<<<<<<< HEAD
 			. += "<span class='notice'>If you want any more information you'll need to get closer.</span>"
 		return
 
 	. += "<span class='notice'>The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.</span>"
+=======
+			to_chat(user, "<span class='notice'>If you want any more information you'll need to get closer.</span>")
+		return
+
+	to_chat(user, "<span class='notice'>The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.</span>")
+>>>>>>> Updated this old code to fork
 
 	var/celsius_temperature = src.air_contents.temperature-T0C
 	var/descriptive
@@ -99,7 +114,11 @@
 	else
 		descriptive = "furiously hot"
 
+<<<<<<< HEAD
 	. += "<span class='notice'>It feels [descriptive].</span>"
+=======
+	to_chat(user, "<span class='notice'>It feels [descriptive].</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/item/tank/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
@@ -112,6 +131,12 @@
 
 		qdel(src)
 
+<<<<<<< HEAD
+=======
+/obj/item/tank/analyzer_act(mob/living/user, obj/item/I)
+	atmosanalyzer_scan(air_contents, user, src)
+
+>>>>>>> Updated this old code to fork
 /obj/item/tank/deconstruct(disassembled = TRUE)
 	if(!disassembled)
 		var/turf/T = get_turf(src)
@@ -130,7 +155,11 @@
 			H.dropItemToGround(W)
 			if(prob(50))
 				step(W, pick(GLOB.alldirs))
+<<<<<<< HEAD
 		ADD_TRAIT(H, TRAIT_DISFIGURED, TRAIT_GENERIC)
+=======
+		H.add_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
+>>>>>>> Updated this old code to fork
 		H.bleed_rate = 5
 		H.gib_animation()
 		sleep(3)
@@ -205,9 +234,12 @@
 /obj/item/tank/return_air()
 	return air_contents
 
+<<<<<<< HEAD
 /obj/item/tank/return_analyzable_air()
 	return air_contents
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/item/tank/assume_air(datum/gas_mixture/giver)
 	air_contents.merge(giver)
 
@@ -245,6 +277,11 @@
 			log_bomber(get_mob_by_key(fingerprintslast), "was last key to touch", src, "which ruptured explosively")
 		//Give the gas a chance to build up more pressure through reacting
 		air_contents.react(src)
+<<<<<<< HEAD
+=======
+		air_contents.react(src)
+		air_contents.react(src)
+>>>>>>> Updated this old code to fork
 		pressure = air_contents.return_pressure()
 		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
 		var/turf/epicenter = get_turf(loc)

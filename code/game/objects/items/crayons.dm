@@ -36,6 +36,12 @@
 	var/text_buffer = ""
 
 	var/static/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","star","poseur tag","prolizard","antilizard")
+<<<<<<< HEAD
+=======
+	var/static/list/letters = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
+	var/static/list/punctuation = list("!","?",".",",","/","+","-","=","%","#","&")
+	var/static/list/numerals = list("0","1","2","3","4","5","6","7","8","9")
+>>>>>>> Updated this old code to fork
 	var/static/list/symbols = list("danger","firedanger","electricdanger","biohazard","radiation","safe","evac","space","med","trade","shop","food","peace","like","skull","nay","heart","credit")
 	var/static/list/drawings = list("smallbrush","brush","largebrush","splatter","snake","stickman","carp","ghost","clown","taser","disk","fireaxe","toolbox","corgi","cat","toilet","blueprint","beepsky","scroll","bottle","shotgun")
 	var/static/list/oriented = list("arrow","line","thinline","shortline","body","chevron","footprint","clawprint","pawprint") // These turn to face the same way as the drawer
@@ -44,7 +50,11 @@
 		RANDOM_NUMBER, RANDOM_GRAFFITI, RANDOM_LETTER, RANDOM_SYMBOL, RANDOM_PUNCTUATION, RANDOM_DRAWING)
 	var/static/list/graffiti_large_h = list("yiffhell", "secborg", "paint")
 
+<<<<<<< HEAD
 	var/static/list/all_drawables = graffiti + symbols + drawings + oriented + runes + graffiti_large_h
+=======
+	var/static/list/all_drawables = graffiti + letters + punctuation + numerals + symbols + drawings + oriented + runes + graffiti_large_h
+>>>>>>> Updated this old code to fork
 
 	var/paint_mode = PAINT_NORMAL
 
@@ -59,7 +69,11 @@
 
 	var/edible = TRUE // That doesn't mean eating it is a good idea
 
+<<<<<<< HEAD
 	var/list/reagent_contents = list(/datum/reagent/consumable/nutriment = 1)
+=======
+	var/list/reagent_contents = list("nutriment" = 1)
+>>>>>>> Updated this old code to fork
 	// If the user can toggle the colour, a la vanilla spraycan
 	var/can_change_colour = FALSE
 
@@ -167,6 +181,24 @@
 	for(var/glh in graffiti_large_h)
 		glh_items += list(list("item" = glh))
 
+<<<<<<< HEAD
+=======
+	var/list/L_items = list()
+	. += list(list("name" = "Letters", "items" = L_items))
+	for(var/L in letters)
+		L_items += list(list("item" = L))
+
+	var/list/P_items = list()
+	. += list(list("name" = "Punctuation", "items" = P_items))
+	for(var/P in punctuation)
+		P_items += list(list("item" = P))
+
+	var/list/N_items = list()
+	. += list(list(name = "Numerals", "items" = N_items))
+	for(var/N in numerals)
+		N_items += list(list("item" = N))
+
+>>>>>>> Updated this old code to fork
 	var/list/S_items = list()
 	. += list(list("name" = "Symbols", "items" = S_items))
 	for(var/S in symbols)
@@ -223,7 +255,10 @@
 			if(stencil in all_drawables + randoms)
 				drawtype = stencil
 				. = TRUE
+<<<<<<< HEAD
 				text_buffer = ""
+=======
+>>>>>>> Updated this old code to fork
 			if(stencil in graffiti_large_h)
 				paint_mode = PAINT_LARGE_HORIZONTAL
 				text_buffer = ""
@@ -243,24 +278,41 @@
 	update_icon()
 
 /obj/item/toy/crayon/proc/crayon_text_strip(text)
+<<<<<<< HEAD
 	var/static/regex/crayon_r = new /regex(@"[^\w!?,.=%#&+\/\-]")
 	return replacetext(lowertext(text), crayon_r, "")
+=======
+	var/list/base = string2charlist(lowertext(text))
+	var/list/out = list()
+	for(var/a in base)
+		if(a in (letters|numerals|punctuation))
+			out += a
+	return jointext(out,"")
+>>>>>>> Updated this old code to fork
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity, params)
 	. = ..()
 	if(!proximity || !check_allowed_items(target))
 		return
 
+<<<<<<< HEAD
 	var/static/list/punctuation = list("!","?",".",",","/","+","-","=","%","#","&")
 	var/istagger = HAS_TRAIT(user, TRAIT_TAGGER)
 
+=======
+>>>>>>> Updated this old code to fork
 	var/cost = 1
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
 		cost = 5
 	if(istype(target, /obj/item/canvas))
 		cost = 0
 	if(ishuman(user))
+<<<<<<< HEAD
 		if (istagger)
+=======
+		var/mob/living/carbon/human/H = user
+		if (H.has_trait(TRAIT_TAGGER))
+>>>>>>> Updated this old code to fork
 			cost *= 0.5
 	var/charges_used = use_charges(user, cost)
 	if(!charges_used)
@@ -276,7 +328,11 @@
 	var/drawing = drawtype
 	switch(drawtype)
 		if(RANDOM_LETTER)
+<<<<<<< HEAD
 			drawing = ascii2text(rand(97, 122)) // a-z
+=======
+			drawing = pick(letters)
+>>>>>>> Updated this old code to fork
 		if(RANDOM_PUNCTUATION)
 			drawing = pick(punctuation)
 		if(RANDOM_SYMBOL)
@@ -290,6 +346,7 @@
 		if(RANDOM_ORIENTED)
 			drawing = pick(oriented)
 		if(RANDOM_NUMBER)
+<<<<<<< HEAD
 			drawing = ascii2text(rand(48, 57)) // 0-9
 		if(RANDOM_ANY)
 			drawing = pick(all_drawables)
@@ -300,6 +357,15 @@
 		temp = "letter"
 	else if(is_digit(drawing))
 		temp = "number"
+=======
+			drawing = pick(numerals)
+		if(RANDOM_ANY)
+			drawing = pick(all_drawables)
+
+	var/temp = "rune"
+	if(drawing in letters)
+		temp = "letter"
+>>>>>>> Updated this old code to fork
 	else if(drawing in punctuation)
 		temp = "punctuation mark"
 	else if(drawing in symbols)
@@ -308,6 +374,11 @@
 		temp = "drawing"
 	else if(drawing in graffiti|oriented)
 		temp = "graffiti"
+<<<<<<< HEAD
+=======
+	else if(drawing in numerals)
+		temp = "number"
+>>>>>>> Updated this old code to fork
 
 
 	var/graf_rot
@@ -346,16 +417,27 @@
 			return
 
 	if(length(text_buffer))
+<<<<<<< HEAD
 		drawing = text_buffer[1]
+=======
+		drawing = copytext(text_buffer,1,2)
+>>>>>>> Updated this old code to fork
 
 
 	var/list/turf/affected_turfs = list()
 
 	if(actually_paints)
+<<<<<<< HEAD
 		var/obj/effect/decal/cleanable/crayon/C
 		switch(paint_mode)
 			if(PAINT_NORMAL)
 				C = new(target, paint_color, drawing, temp, graf_rot)
+=======
+		switch(paint_mode)
+			if(PAINT_NORMAL)
+				var/obj/effect/decal/cleanable/crayon/C = new(target, paint_color, drawing, temp, graf_rot)
+				C.add_hiddenprint(user)
+>>>>>>> Updated this old code to fork
 				C.pixel_x = clickx
 				C.pixel_y = clicky
 				affected_turfs += target
@@ -363,25 +445,38 @@
 				var/turf/left = locate(target.x-1,target.y,target.z)
 				var/turf/right = locate(target.x+1,target.y,target.z)
 				if(isValidSurface(left) && isValidSurface(right))
+<<<<<<< HEAD
 					C = new(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
+=======
+					var/obj/effect/decal/cleanable/crayon/C = new(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
+					C.add_hiddenprint(user)
+>>>>>>> Updated this old code to fork
 					affected_turfs += left
 					affected_turfs += right
 					affected_turfs += target
 				else
 					to_chat(user, "<span class='warning'>There isn't enough space to paint!</span>")
 					return
+<<<<<<< HEAD
 		C.add_hiddenprint(user)
 		if(istagger)
 			C.AddComponent(/datum/component/art, 30)
+=======
+>>>>>>> Updated this old code to fork
 
 	if(!instant)
 		to_chat(user, "<span class='notice'>You finish drawing \the [temp].</span>")
 	else
 		to_chat(user, "<span class='notice'>You spray a [temp] on \the [target.name]</span>")
 
+<<<<<<< HEAD
 	if(length(text_buffer) > 1)
 		text_buffer = copytext(text_buffer,2)
 		SStgui.update_uis(src)
+=======
+	if(length(text_buffer))
+		text_buffer = copytext(text_buffer,2)
+>>>>>>> Updated this old code to fork
 
 	if(post_noise)
 		audible_message("<span class='notice'>You hear spraying.</span>")
@@ -412,68 +507,112 @@
 	icon_state = "crayonred"
 	paint_color = "#DA0000"
 	item_color = "red"
+<<<<<<< HEAD
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/red = 1)
+=======
+	reagent_contents = list("nutriment" = 1, "redcrayonpowder" = 1)
+>>>>>>> Updated this old code to fork
 
 /obj/item/toy/crayon/orange
 	icon_state = "crayonorange"
 	paint_color = "#FF9300"
 	item_color = "orange"
+<<<<<<< HEAD
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/orange = 1)
+=======
+	reagent_contents = list("nutriment" = 1, "orangecrayonpowder" = 1)
+>>>>>>> Updated this old code to fork
 
 /obj/item/toy/crayon/yellow
 	icon_state = "crayonyellow"
 	paint_color = "#FFF200"
 	item_color = "yellow"
+<<<<<<< HEAD
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/yellow = 1)
+=======
+	reagent_contents = list("nutriment" = 1, "yellowcrayonpowder" = 1)
+>>>>>>> Updated this old code to fork
 
 /obj/item/toy/crayon/green
 	icon_state = "crayongreen"
 	paint_color = "#A8E61D"
 	item_color = "green"
+<<<<<<< HEAD
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/green = 1)
+=======
+	reagent_contents = list("nutriment" = 1, "greencrayonpowder" = 1)
+>>>>>>> Updated this old code to fork
 
 /obj/item/toy/crayon/blue
 	icon_state = "crayonblue"
 	paint_color = "#00B7EF"
 	item_color = "blue"
+<<<<<<< HEAD
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/blue = 1)
+=======
+	reagent_contents = list("nutriment" = 1, "bluecrayonpowder" = 1)
+>>>>>>> Updated this old code to fork
 
 /obj/item/toy/crayon/purple
 	icon_state = "crayonpurple"
 	paint_color = "#DA00FF"
 	item_color = "purple"
+<<<<<<< HEAD
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/purple = 1)
+=======
+	reagent_contents = list("nutriment" = 1, "purplecrayonpowder" = 1)
+>>>>>>> Updated this old code to fork
 
 /obj/item/toy/crayon/black
 	icon_state = "crayonblack"
 	paint_color = "#1C1C1C" //Not completely black because total black looks bad. So Mostly Black.
 	item_color = "black"
+<<<<<<< HEAD
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/black = 1)
+=======
+	reagent_contents = list("nutriment" = 1, "blackcrayonpowder" = 1)
+>>>>>>> Updated this old code to fork
 
 /obj/item/toy/crayon/white
 	icon_state = "crayonwhite"
 	paint_color = "#FFFFFF"
 	item_color = "white"
+<<<<<<< HEAD
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/white = 1)
+=======
+	reagent_contents = list("nutriment" = 1, "whitecrayonpowder" = 1)
+>>>>>>> Updated this old code to fork
 
 /obj/item/toy/crayon/mime
 	icon_state = "crayonmime"
 	desc = "A very sad-looking crayon."
 	paint_color = "#FFFFFF"
 	item_color = "mime"
+<<<<<<< HEAD
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/invisible = 1)
+=======
+	reagent_contents = list("nutriment" = 1, "invisiblecrayonpowder" = 1)
+>>>>>>> Updated this old code to fork
 	charges = -1
 
 /obj/item/toy/crayon/rainbow
 	icon_state = "crayonrainbow"
 	paint_color = "#FFF000"
 	item_color = "rainbow"
+<<<<<<< HEAD
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent = 1)
+=======
+	reagent_contents = list("nutriment" = 1, "colorful_reagent" = 1)
+>>>>>>> Updated this old code to fork
 	drawtype = RANDOM_ANY // just the default starter.
 
 	charges = -1
 
+<<<<<<< HEAD
 /obj/item/toy/crayon/rainbow/afterattack(atom/target, mob/user, proximity, params)
+=======
+/obj/item/toy/crayon/rainbow/afterattack(atom/target, mob/user, proximity)
+>>>>>>> Updated this old code to fork
 	paint_color = rgb(rand(0,255), rand(0,255), rand(0,255))
 	. = ..()
 
@@ -490,9 +629,15 @@
 
 /obj/item/storage/crayons/Initialize()
 	. = ..()
+<<<<<<< HEAD
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 7
 	STR.set_holdable(list(/obj/item/toy/crayon))
+=======
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 7
+	STR.can_hold = typecacheof(list(/obj/item/toy/crayon))
+>>>>>>> Updated this old code to fork
 
 /obj/item/storage/crayons/PopulateContents()
 	new /obj/item/toy/crayon/red(src)
@@ -547,7 +692,11 @@
 	self_contained = FALSE // Don't disappear when they're empty
 	can_change_colour = TRUE
 
+<<<<<<< HEAD
 	reagent_contents = list(/datum/reagent/fuel = 1, /datum/reagent/consumable/ethanol = 1)
+=======
+	reagent_contents = list("welding_fuel" = 1, "ethanol" = 1)
+>>>>>>> Updated this old code to fork
 
 	pre_noise = TRUE
 	post_noise = FALSE
@@ -594,12 +743,21 @@
 /obj/item/toy/crayon/spraycan/examine(mob/user)
 	. = ..()
 	if(charges_left)
+<<<<<<< HEAD
 		. += "It has [charges_left] use\s left."
 	else
 		. += "It is empty."
 	. += "<span class='notice'>Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"].</span>"
 
 /obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity, params)
+=======
+		to_chat(user, "It has [charges_left] use\s left.")
+	else
+		to_chat(user, "It is empty.")
+	to_chat(user, "<span class='notice'>Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"].</span>")
+
+/obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity)
+>>>>>>> Updated this old code to fork
 	if(!proximity)
 		return
 
@@ -621,9 +779,15 @@
 		if(C.client)
 			C.blur_eyes(3)
 			C.blind_eyes(1)
+<<<<<<< HEAD
 		if(C.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS. Warning: don't add a stun here. It's a roundstart item with some quirks.
 			C.apply_effects(eyeblur = 5, jitter = 10)
 			flash_color(C, flash_color=paint_color, flash_time=40)
+=======
+		if(C.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS.
+			C.confused = max(C.confused, 3)
+			C.Paralyze(60)
+>>>>>>> Updated this old code to fork
 		if(ishuman(C) && actually_paints)
 			var/mob/living/carbon/human/H = C
 			H.lip_style = "spray_face"
@@ -639,11 +803,18 @@
 	if(isobj(target))
 		if(actually_paints)
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
+<<<<<<< HEAD
 			if(istype(target, /obj/structure/window))
 				if(color_hex2num(paint_color) < 255)
 					target.set_opacity(255)
 				else
 					target.set_opacity(initial(target.opacity))
+=======
+			if(color_hex2num(paint_color) < 255 && istype(target, /obj/structure/window))
+				target.set_opacity(255)
+			else
+				target.set_opacity(initial(target.opacity))
+>>>>>>> Updated this old code to fork
 		. = use_charges(user, 2)
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.reaction(target, TOUCH, fraction * volume_multiplier)
@@ -669,7 +840,11 @@
 	desc = "A metallic container containing shiny synthesised paint."
 	charges = -1
 
+<<<<<<< HEAD
 /obj/item/toy/crayon/spraycan/borg/afterattack(atom/target,mob/user,proximity, params)
+=======
+/obj/item/toy/crayon/spraycan/borg/afterattack(atom/target,mob/user,proximity)
+>>>>>>> Updated this old code to fork
 	var/diff = ..()
 	if(!iscyborg(user))
 		to_chat(user, "<span class='notice'>How did you get this?</span>")
@@ -698,7 +873,11 @@
 
 	volume_multiplier = 25
 	charges = 100
+<<<<<<< HEAD
 	reagent_contents = list(/datum/reagent/clf3 = 1)
+=======
+	reagent_contents = list("clf3" = 1)
+>>>>>>> Updated this old code to fork
 	actually_paints = FALSE
 	paint_color = "#000000"
 
@@ -710,7 +889,11 @@
 	icon_uncapped = "clowncan2"
 	use_overlays = FALSE
 
+<<<<<<< HEAD
 	reagent_contents = list(/datum/reagent/lube = 1, /datum/reagent/consumable/banana = 1)
+=======
+	reagent_contents = list("lube" = 1, "banana" = 1)
+>>>>>>> Updated this old code to fork
 	volume_multiplier = 5
 
 /obj/item/toy/crayon/spraycan/lubecan/isValidSurface(surface)
@@ -729,7 +912,11 @@
 
 	pre_noise = FALSE
 	post_noise = FALSE
+<<<<<<< HEAD
 	reagent_contents = list(/datum/reagent/consumable/nothing = 1, /datum/reagent/toxin/mutetoxin = 1)
+=======
+	reagent_contents = list("nothing" = 1, "mutetoxin" = 1)
+>>>>>>> Updated this old code to fork
 
 #undef RANDOM_GRAFFITI
 #undef RANDOM_LETTER

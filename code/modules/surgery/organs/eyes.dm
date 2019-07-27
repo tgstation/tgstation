@@ -8,13 +8,20 @@
 
 	var/sight_flags = 0
 	var/see_in_dark = 2
+<<<<<<< HEAD
 	var/tint = 0
 	var/eye_color = "" //set to a hex code to override a mob's eye color
 	var/eye_icon_state = "eyes"
+=======
+	var/eye_damage = 0
+	var/tint = 0
+	var/eye_color = "" //set to a hex code to override a mob's eye color
+>>>>>>> Updated this old code to fork
 	var/old_eye_color = "fff"
 	var/flash_protect = 0
 	var/see_invisible = SEE_INVISIBLE_LIVING
 	var/lighting_alpha
+<<<<<<< HEAD
 	var/no_glasses
 	var/damaged	= FALSE	//damaged indicates that our eyes are undergoing some level of negative effect
 	maxHealth = 50		//half the normal health max since we go blind at 30, a permanent blindness at 50 therefore makes sense unless medicine is administered
@@ -23,6 +30,11 @@
 
 /obj/item/organ/eyes/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE, initialising)
 	. = ..()
+=======
+
+/obj/item/organ/eyes/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE)
+	..()
+>>>>>>> Updated this old code to fork
 	if(ishuman(owner))
 		var/mob/living/carbon/human/HMN = owner
 		old_eye_color = HMN.eye_color
@@ -31,12 +43,19 @@
 			HMN.regenerate_icons()
 		else
 			eye_color = HMN.eye_color
+<<<<<<< HEAD
 		if(HAS_TRAIT(HMN, TRAIT_NIGHT_VISION) && !lighting_alpha)
 			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
 	M.update_tint()
 	owner.update_sight()
 	if(M.has_dna() && ishuman(M))
 		M.dna.species.handle_body(M) //updates eye icon
+=======
+		if(HMN.has_trait(TRAIT_NIGHT_VISION) && !lighting_alpha)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
+	M.update_tint()
+	owner.update_sight()
+>>>>>>> Updated this old code to fork
 
 /obj/item/organ/eyes/Remove(mob/living/carbon/M, special = 0)
 	..()
@@ -44,6 +63,7 @@
 		var/mob/living/carbon/human/HMN = M
 		HMN.eye_color = old_eye_color
 		HMN.regenerate_icons()
+<<<<<<< HEAD
 	M.cure_blind(EYE_DAMAGE)
 	M.cure_nearsighted(EYE_DAMAGE)
 	M.set_blindness(0)
@@ -74,6 +94,10 @@
 		C.clear_fullscreen("eye_damage")
 	return
 
+=======
+	M.update_tint()
+	M.update_sight()
+>>>>>>> Updated this old code to fork
 
 /obj/item/organ/eyes/night_vision
 	name = "shadow eyes"
@@ -213,7 +237,11 @@
 	terminate_effects()
 	. = ..()
 
+<<<<<<< HEAD
 /obj/item/organ/eyes/robotic/glow/Remove(mob/living/carbon/M, special = FALSE)
+=======
+/obj/item/organ/eyes/robotic/glow/Remove()
+>>>>>>> Updated this old code to fork
 	terminate_effects()
 	. = ..()
 
@@ -274,11 +302,22 @@
 
 /obj/item/organ/eyes/robotic/glow/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE)
 	. = ..()
+<<<<<<< HEAD
 	RegisterSignal(M, COMSIG_ATOM_DIR_CHANGE, .proc/update_visuals)
 
 /obj/item/organ/eyes/robotic/glow/Remove(mob/living/carbon/M, special = FALSE)
 	. = ..()
 	UnregisterSignal(M, COMSIG_ATOM_DIR_CHANGE)
+=======
+	if (mobhook && mobhook.parent != M)
+		QDEL_NULL(mobhook)
+	if (!mobhook)
+		mobhook = M.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_DIR_CHANGE = CALLBACK(src, .proc/update_visuals)))
+
+/obj/item/organ/eyes/robotic/glow/Remove(mob/living/carbon/M)
+	. = ..()
+	QDEL_NULL(mobhook)
+>>>>>>> Updated this old code to fork
 
 /obj/item/organ/eyes/robotic/glow/Destroy()
 	QDEL_NULL(mobhook) // mobhook is not our component
@@ -370,6 +409,7 @@
 	name = "moth eyes"
 	desc = "These eyes seem to have increased sensitivity to bright light, with no improvement to low light vision."
 	flash_protect = -1
+<<<<<<< HEAD
 
 /obj/item/organ/eyes/snail
 	name = "snail eyes"
@@ -377,3 +417,5 @@
 	eye_icon_state = "snail_eyes"
 	icon_state = "snail_eyeballs"
 
+=======
+>>>>>>> Updated this old code to fork

@@ -2,6 +2,7 @@
 //A bunch of helpers to make genetics less of a headache//
 //////////////////////////////////////////////////////////
 
+<<<<<<< HEAD
 #define GET_INITIALIZED_MUTATION(A) GLOB.all_mutations[A]
 #define GET_GENE_STRING(A, B) (B.mutation_index[A])
 #define GET_SEQUENCE(A) (GLOB.full_sequences[A])
@@ -11,3 +12,9 @@
 #define GET_MUTATION_SYNCHRONIZER(A) ((A.synchronizer_coeff < 0) ? 1 : A.synchronizer_coeff)
 #define GET_MUTATION_POWER(A) ((A.power_coeff < 0) ? 1 : A.power_coeff)
 #define GET_MUTATION_ENERGY(A) ((A.energy_coeff < 0) ? 1 : A.energy_coeff)
+=======
+#define get_initialized_mutation(A) GLOB.all_mutations[A]
+#define mutation_in_sequence(A, B) ((A) in B.mutation_index)
+#define get_gene_string(A, B) (B.mutation_index[A])
+#define get_sequence(A) (GLOB.full_sequences[A])
+>>>>>>> Updated this old code to fork

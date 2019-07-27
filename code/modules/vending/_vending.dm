@@ -16,6 +16,7 @@
 IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY CANISTER CHARGES in vending_items.dm
 */
 
+<<<<<<< HEAD
 #define MAX_VENDING_INPUT_AMOUNT 30
 /**
   * # vending record datum
@@ -40,6 +41,17 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
   *
   * Captalism in the year 2525, everything in a vending machine, even love
   */
+=======
+/datum/data/vending_product
+	name = "generic"
+	var/product_path = null
+	var/amount = 0
+	var/max_amount = 0
+	var/display_color = "blue"
+	var/custom_price
+	var/custom_premium_price
+
+>>>>>>> Updated this old code to fork
 /obj/machinery/vending
 	name = "\improper Vendomat"
 	desc = "A generic vending machine."
@@ -55,6 +67,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	armor = list("melee" = 20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
 	circuit = /obj/item/circuitboard/machine/vendor
 	payment_department = ACCOUNT_SRV
+<<<<<<< HEAD
 	/// Is the machine active (No sales pitches if off)!
 	var/active = 1
 	///Are we ready to vend?? Is it time??
@@ -91,10 +104,23 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	///String of small ad messages in the vending screen - random chance
 	var/product_ads = ""
 
+=======
+	var/active = 1		//No sales pitches if off!
+	var/vend_ready = 1	//Are we ready to vend?? Is it time??
+
+	// To be filled out at compile time
+	var/list/products	= list()	//For each, use the following pattern:
+	var/list/contraband	= list()	//list(/type/path = amount, /type/path2 = amount2)
+	var/list/premium 	= list()	//No specified amount = only one in stock
+
+	var/product_slogans = ""	//String of slogans separated by semicolons, optional
+	var/product_ads = ""		//String of small ad messages in the vending screen - random chance
+>>>>>>> Updated this old code to fork
 	var/list/product_records = list()
 	var/list/hidden_records = list()
 	var/list/coin_records = list()
 	var/list/slogan_list = list()
+<<<<<<< HEAD
 	///Small ad messages in the vending screen - random chance of popping up whenever you open it
 	var/list/small_ads = list()
 	///Message sent post vend (Thank you for shopping!)
@@ -159,6 +185,35 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
   * * FALSE - if the machine was maploaded on a zlevel that doesn't pass the is_station_level check
   * * TRUE - all other cases
   */
+=======
+	var/list/small_ads = list()	//Small ad messages in the vending screen - random chance of popping up whenever you open it
+	var/vend_reply				//Thank you for shopping!
+	var/last_reply = 0
+	var/last_slogan = 0			//When did we last pitch?
+	var/slogan_delay = 6000		//How long until we can pitch again?
+	var/icon_vend				//Icon_state when vending!
+	var/icon_deny				//Icon_state when vending!
+	var/seconds_electrified = MACHINE_NOT_ELECTRIFIED	//Shock customers like an airlock.
+	var/shoot_inventory = 0		//Fire items at customers! We're broken!
+	var/shoot_inventory_chance = 2
+	var/shut_up = 0				//Stop spouting those godawful pitches!
+	var/extended_inventory = 0	//can we access the hidden inventory?
+	var/scan_id = 1
+	var/obj/item/coin/coin
+	var/obj/item/stack/spacecash/bill
+	var/chef_price = 10
+	var/default_price = 25
+	var/extra_price = 50
+	var/onstation = TRUE //if it doesn't originate from off-station during mapload, everything is free
+
+	var/dish_quants = list()  //used by the snack machine's custom compartment to count dishes.
+
+	var/obj/item/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
+
+/obj/item/circuitboard
+	var/onstation = TRUE //if the circuit board originated from a vendor off station or not.
+
+>>>>>>> Updated this old code to fork
 /obj/machinery/vending/Initialize(mapload)
 	var/build_inv = FALSE
 	if(!refill_canister)
@@ -244,6 +299,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 				if (dump_amount >= 16)
 					return
 
+<<<<<<< HEAD
 GLOBAL_LIST_EMPTY(vending_products)
 /**
   * Build the inventory of the vending machine from it's product and record lists
@@ -254,6 +310,8 @@ GLOBAL_LIST_EMPTY(vending_products)
   * * recordlist - the list containing /datum/data/vending_product datums
   * * startempty - should we set vending_product record amount from the product list (so it's prefilled at roundstart)
   */
+=======
+>>>>>>> Updated this old code to fork
 /obj/machinery/vending/proc/build_inventory(list/productlist, list/recordlist, start_empty = FALSE)
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
@@ -262,12 +320,16 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 		var/atom/temp = typepath
 		var/datum/data/vending_product/R = new /datum/data/vending_product()
+<<<<<<< HEAD
 		GLOB.vending_products[typepath] = 1
+=======
+>>>>>>> Updated this old code to fork
 		R.name = initial(temp.name)
 		R.product_path = typepath
 		if(!start_empty)
 			R.amount = amount
 		R.max_amount = amount
+<<<<<<< HEAD
 		R.custom_price = initial(temp.custom_price)
 		R.custom_premium_price = initial(temp.custom_premium_price)
 		recordlist += R
@@ -279,6 +341,13 @@ GLOBAL_LIST_EMPTY(vending_products)
   * Arguments:
   * * canister - the vending canister we are refilling from
   */
+=======
+		R.display_color = pick("#ff8080","#80ff80","#8080ff")
+		R.custom_price = initial(temp.custom_price)
+		R.custom_premium_price = initial(temp.custom_premium_price)
+		recordlist += R
+
+>>>>>>> Updated this old code to fork
 /obj/machinery/vending/proc/restock(obj/item/vending_refill/canister)
 	if (!canister.products)
 		canister.products = products.Copy()
@@ -290,6 +359,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	. += refill_inventory(canister.products, product_records)
 	. += refill_inventory(canister.contraband, hidden_records)
 	. += refill_inventory(canister.premium, coin_records)
+<<<<<<< HEAD
 /**
   * Refill our inventory from the passed in product list into the record list
   *
@@ -297,6 +367,9 @@ GLOBAL_LIST_EMPTY(vending_products)
   * * productlist - list of types -> amount
   * * recordlist - existing record datums
   */
+=======
+
+>>>>>>> Updated this old code to fork
 /obj/machinery/vending/proc/refill_inventory(list/productlist, list/recordlist)
 	. = 0
 	for(var/R in recordlist)
@@ -306,11 +379,15 @@ GLOBAL_LIST_EMPTY(vending_products)
 			productlist[record.product_path] -= diff
 			record.amount += diff
 			. += diff
+<<<<<<< HEAD
 /**
   * Set up a refill canister that matches this machines products
   *
   * This is used when the machine is deconstructed, so the items aren't "lost"
   */
+=======
+
+>>>>>>> Updated this old code to fork
 /obj/machinery/vending/proc/update_canister()
 	if (!component_parts)
 		return
@@ -324,9 +401,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 	R.contraband = unbuild_inventory(hidden_records)
 	R.premium = unbuild_inventory(coin_records)
 
+<<<<<<< HEAD
 /**
   * Given a record list, go through and and return a list of type -> amount
   */
+=======
+>>>>>>> Updated this old code to fork
 /obj/machinery/vending/proc/unbuild_inventory(list/recordlist)
 	. = list()
 	for(var/R in recordlist)
@@ -363,20 +443,29 @@ GLOBAL_LIST_EMPTY(vending_products)
 		return
 	if(refill_canister && istype(I, refill_canister))
 		if (!panel_open)
+<<<<<<< HEAD
 			to_chat(user, "<span class='warning'>You should probably unscrew the service panel first!</span>")
+=======
+			to_chat(user, "<span class='notice'>You should probably unscrew the service panel first.</span>")
+>>>>>>> Updated this old code to fork
 		else if (stat & (BROKEN|NOPOWER))
 			to_chat(user, "<span class='notice'>[src] does not respond.</span>")
 		else
 			//if the panel is open we attempt to refill the machine
 			var/obj/item/vending_refill/canister = I
 			if(canister.get_part_rating() == 0)
+<<<<<<< HEAD
 				to_chat(user, "<span class='warning'>[canister] is empty!</span>")
+=======
+				to_chat(user, "<span class='notice'>[canister] is empty!</span>")
+>>>>>>> Updated this old code to fork
 			else
 				// instantiate canister if needed
 				var/transferred = restock(canister)
 				if(transferred)
 					to_chat(user, "<span class='notice'>You loaded [transferred] items in [src].</span>")
 				else
+<<<<<<< HEAD
 					to_chat(user, "<span class='warning'>There's nothing to restock!</span>")
 			return
 	if(compartmentLoadAccessCheck(user))
@@ -415,6 +504,12 @@ GLOBAL_LIST_EMPTY(vending_products)
     vending_machine_input[I.name] = 1
   to_chat(user, "<span class='notice'>You insert [I] into [src]'s input compartment.</span>")
 
+=======
+					to_chat(user, "<span class='notice'>There's nothing to restock!</span>")
+			return
+	else
+		return ..()
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/vending/exchange_parts(mob/user, obj/item/storage/part_replacer/W)
 	if(!istype(W))
@@ -455,7 +550,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 	return ..()
 
 /obj/machinery/vending/ui_interact(mob/user)
+<<<<<<< HEAD
 	var/list/dat = list()
+=======
+	var/dat = ""
+>>>>>>> Updated this old code to fork
 	var/datum/bank_account/account
 	var/mob/living/carbon/human/H
 	var/obj/item/card/id/C
@@ -469,6 +568,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		dat += "<font color = 'red'><h3>No account on registered ID card!</h3></font>"
 	if(onstation && C && C.registered_account)
 		account = C.registered_account
+<<<<<<< HEAD
 	if(vending_machine_input.len)
 		dat += "<h3>[input_display_header]</h3>"
 		dat += "<div class='statusDisplay'>"
@@ -482,13 +582,21 @@ GLOBAL_LIST_EMPTY(vending_products)
 	dat += {"<h3>Select an item</h3>
 					<div class='statusDisplay'>"}
 
+=======
+	dat += "<h3>Select an item</h3>"
+	dat += "<div class='statusDisplay'>"
+>>>>>>> Updated this old code to fork
 	if(!product_records.len)
 		dat += "<font color = 'red'>No product loaded!</font>"
 	else
 		var/list/display_records = product_records + coin_records
 		if(extended_inventory)
 			display_records = product_records + coin_records + hidden_records
+<<<<<<< HEAD
 		dat += "<table>"
+=======
+		dat += "<ul>"
+>>>>>>> Updated this old code to fork
 		for (var/datum/data/vending_product/R in display_records)
 			var/price_listed = "$[default_price]"
 			var/is_hidden = hidden_records.Find(R)
@@ -500,6 +608,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 				price_listed = "FREE"
 			if(coin_records.Find(R) || is_hidden)
 				price_listed = "$[R.custom_premium_price ? R.custom_premium_price : extra_price]"
+<<<<<<< HEAD
 			dat += {"<tr><td><span class="vending32x32 [replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-")]"></td>
 							<td style=\"width: 100%\"><b>[sanitize(R.name)]  ([price_listed])</b></td>"}
 			if(R.amount > 0 && ((C && C.registered_account && onstation) || (!onstation && isliving(user))))
@@ -515,6 +624,32 @@ GLOBAL_LIST_EMPTY(vending_products)
 	var/datum/browser/popup = new(user, "vending", (name))
 	popup.add_stylesheet(get_asset_datum(/datum/asset/spritesheet/vending))
 	popup.set_content(dat.Join(""))
+=======
+			dat += "<li>"
+			if(R.amount > 0 && ((C && C.registered_account && onstation) || (!onstation && isliving(user))))
+				dat += "<a href='byond://?src=[REF(src)];vend=[REF(R)]'>Vend</a> "
+			else
+				dat += "<span class='linkOff'>Not Available</span> "
+			dat += "<font color = '[R.display_color]'><b>[sanitize(R.name)] ([price_listed])</b>:</font>"
+			dat += " <b>[R.amount]</b>"
+			dat += "</li>"
+		dat += "</ul>"
+	dat += "</div>"
+	if(onstation && C && C.registered_account)
+		dat += "<b>Balance: $[account.account_balance]</b>"
+	if(istype(src, /obj/machinery/vending/snack))
+		dat += "<h3>Chef's Food Selection</h3>"
+		dat += "<div class='statusDisplay'>"
+		for (var/O in dish_quants)
+			if(dish_quants[O] > 0)
+				var/N = dish_quants[O]
+				dat += "<a href='byond://?src=[REF(src)];dispense=[sanitize(O)]'>Dispense</A> "
+				dat += "<B>[capitalize(O)] ($[default_price]): [N]</B><br>"
+		dat += "</div>"
+
+	var/datum/browser/popup = new(user, "vending", (name))
+	popup.set_content(dat)
+>>>>>>> Updated this old code to fork
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
@@ -526,7 +661,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	if((href_list["dispense"]) && (vend_ready))
 		var/N = href_list["dispense"]
+<<<<<<< HEAD
 		if(vending_machine_input[N] <= 0) // Sanity check, there are probably ways to press the button when it shouldn't be possible.
+=======
+		if(dish_quants[N] <= 0) // Sanity check, there are probably ways to press the button when it shouldn't be possible.
+>>>>>>> Updated this old code to fork
 			return
 		vend_ready = 0
 		if(ishuman(usr) && onstation)
@@ -551,10 +690,17 @@ GLOBAL_LIST_EMPTY(vending_products)
 			D.adjust_money(chef_price)
 		use_power(5)
 
+<<<<<<< HEAD
 		vending_machine_input[N] = max(vending_machine_input[N] - 1, 0)
 		for(var/obj/O in contents)
 			if(O.name == N)
 				say("Thank you for buying local and purchasing [O]!")
+=======
+		dish_quants[N] = max(dish_quants[N] - 1, 0)
+		for(var/obj/O in contents)
+			if(O.name == N)
+				say("Thank you for supporting your local kitchen and purchasing [O]!")
+>>>>>>> Updated this old code to fork
 				O.forceMove(drop_location())
 				break
 		vend_ready = 1
@@ -563,7 +709,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	if((href_list["vend"]) && (vend_ready))
 		if(panel_open)
+<<<<<<< HEAD
 			to_chat(usr, "<span class='warning'>The vending machine cannot dispense products while its service panel is open!</span>")
+=======
+			to_chat(usr, "<span class='notice'>The vending machine cannot dispense products while its service panel is open!</span>")
+>>>>>>> Updated this old code to fork
 			return
 
 		vend_ready = 0 //One thing at a time!!
@@ -619,10 +769,14 @@ GLOBAL_LIST_EMPTY(vending_products)
 			var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
 			if(D)
 				D.adjust_money(price_to_use)
+<<<<<<< HEAD
 		if(last_shopper != usr || purchase_message_cooldown < world.time)
 			say("Thank you for shopping with [src]!")
 			purchase_message_cooldown = world.time + 5 SECONDS
 			last_shopper = usr
+=======
+		say("Thank you for shopping with [src]!")
+>>>>>>> Updated this old code to fork
 		use_power(5)
 		if(icon_vend) //Show the vending animation if needed
 			flick(icon_vend,src)
@@ -654,6 +808,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	if(shoot_inventory && prob(shoot_inventory_chance))
 		throw_item()
+<<<<<<< HEAD
 /**
   * Speak the given message verbally
   *
@@ -662,6 +817,9 @@ GLOBAL_LIST_EMPTY(vending_products)
   * Arguments:
   * * message - the message to speak
   */
+=======
+
+>>>>>>> Updated this old code to fork
 /obj/machinery/vending/proc/speak(message)
 	if(stat & (BROKEN|NOPOWER))
 		return
@@ -683,12 +841,15 @@ GLOBAL_LIST_EMPTY(vending_products)
 			stat |= NOPOWER
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
+<<<<<<< HEAD
 /**
   * Throw an item from our internal inventory out in front of us
   *
   * This is called when we are hacked, it selects a random product from the records that has an amount > 0
   * This item is then created and tossed out in front of us with a visible message
   */
+=======
+>>>>>>> Updated this old code to fork
 /obj/machinery/vending/proc/throw_item()
 	var/obj/throw_item = null
 	var/mob/living/target = locate() in view(7,src)
@@ -713,6 +874,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	throw_item.throw_at(target, 16, 3)
 	visible_message("<span class='danger'>[src] launches [throw_item] at [target]!</span>")
 	return 1
+<<<<<<< HEAD
 /**
   * A callback called before an item is tossed out
   *
@@ -733,6 +895,12 @@ GLOBAL_LIST_EMPTY(vending_products)
   * * user - the user to shock
   * * prb - probability the shock happens
   */
+=======
+
+/obj/machinery/vending/proc/pre_throw(obj/item/I)
+	return
+
+>>>>>>> Updated this old code to fork
 /obj/machinery/vending/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
 		return FALSE
@@ -744,6 +912,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		return TRUE
 	else
 		return FALSE
+<<<<<<< HEAD
 /**
   * Are we able to load the item passed in
   *
@@ -778,6 +947,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 		else
 			to_chat(user, "<span class='warning'>[src]'s input compartment blinks red: Access denied.</span>")
 			return FALSE
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/vending/onTransitZ()
 	return

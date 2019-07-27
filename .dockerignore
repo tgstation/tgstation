@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .dockerignore
 .editorconfig
 .travis.yml
@@ -28,3 +29,35 @@ rust_g.dll
 BSQL.dll
 appveyor.yml
 Dockerfile
+=======
+.dockerignore
+.editorconfig
+.travis.yml
+GPLv3.txt
+LICENSE
+README.md
+TGS3.json
+.github
+.gitignore
+.gitattributes
+.git/hooks
+.git/info
+.git/modules
+.git/objects
+.git/refs
+.vs*
+cfg
+data
+SQL
+tgui/node_modules
+tgstation.dmb
+tgstation.int
+tgstation.rsc
+tgstation.lk
+tgstation.dyn.rsc
+libmariadb.dll
+rust_g.dll
+BSQL.dll
+appveyor.yml
+Dockerfile
+>>>>>>> Updated this old code to fork

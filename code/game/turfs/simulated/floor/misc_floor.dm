@@ -260,6 +260,7 @@
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "clockwork_floor"
 	floor_tile = /obj/item/stack/tile/bronze
+<<<<<<< HEAD
 
 /turf/open/floor/white
 	name = "white floor"
@@ -269,3 +270,5 @@
 /turf/open/floor/black
 	name = "black floor"
 	icon_state = "black"
+=======
+>>>>>>> Updated this old code to fork

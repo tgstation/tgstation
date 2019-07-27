@@ -17,6 +17,7 @@
 /turf/closed/wall/r_wall/deconstruction_hints(mob/user)
 	switch(d_state)
 		if(INTACT)
+<<<<<<< HEAD
 			return "<span class='notice'>The outer <b>grille</b> is fully intact.</span>"
 		if(SUPPORT_LINES)
 			return "<span class='notice'>The outer <i>grille</i> has been cut, and the support lines are <b>screwed</b> securely to the outer cover.</span>"
@@ -30,6 +31,21 @@
 			return "<span class='notice'>The bolts anchoring the support rods have been <i>loosened</i>, but are still <b>welded</b> firmly to the girder.</span>"
 		if(SHEATH)
 			return "<span class='notice'>The support rods have been <i>sliced through</i>, and the outer sheath is <b>connected loosely</b> to the girder.</span>"
+=======
+			to_chat(user, "<span class='notice'>The outer <b>grille</b> is fully intact.</span>")
+		if(SUPPORT_LINES)
+			to_chat(user, "<span class='notice'>The outer <i>grille</i> has been cut, and the support lines are <b>screwed</b> securely to the outer cover.</span>")
+		if(COVER)
+			to_chat(user, "<span class='notice'>The support lines have been <i>unscrewed</i>, and the metal cover is <b>welded</b> firmly in place.</span>")
+		if(CUT_COVER)
+			to_chat(user, "<span class='notice'>The metal cover has been <i>sliced through</i>, and is <b>connected loosely</b> to the girder.</span>")
+		if(ANCHOR_BOLTS)
+			to_chat(user, "<span class='notice'>The outer cover has been <i>pried away</i>, and the bolts anchoring the support rods are <b>wrenched</b> in place.</span>")
+		if(SUPPORT_RODS)
+			to_chat(user, "<span class='notice'>The bolts anchoring the support rods have been <i>loosened</i>, but are still <b>welded</b> firmly to the girder.</span>")
+		if(SHEATH)
+			to_chat(user, "<span class='notice'>The support rods have been <i>sliced through</i>, and the outer sheath is <b>connected loosely</b> to the girder.</span>")
+>>>>>>> Updated this old code to fork
 
 /turf/closed/wall/r_wall/devastate_wall()
 	new sheet_type(src, sheet_amount)
@@ -253,3 +269,7 @@
 /turf/closed/wall/r_wall/syndicate/overspace
 	icon_state = "map-overspace"
 	fixed_underlay = list("space"=1)
+<<<<<<< HEAD
+=======
+
+>>>>>>> Updated this old code to fork

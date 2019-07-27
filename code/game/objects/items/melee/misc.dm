@@ -23,7 +23,11 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 	hitsound = 'sound/weapons/chainhit.ogg'
+<<<<<<< HEAD
 	materials = list(/datum/material/iron = 1000)
+=======
+	materials = list(MAT_METAL = 1000)
+>>>>>>> Updated this old code to fork
 
 /obj/item/melee/chainofcommand/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -32,7 +36,11 @@
 /obj/item/melee/synthetic_arm_blade
 	name = "synthetic arm blade"
 	desc = "A grotesque blade that on closer inspection seems made of synthetic flesh, it still feels like it would hurt very badly as a weapon."
+<<<<<<< HEAD
 	icon = 'icons/obj/changeling_items.dmi'
+=======
+	icon = 'icons/obj/items_and_weapons.dmi'
+>>>>>>> Updated this old code to fork
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
@@ -65,7 +73,11 @@
 	sharpness = IS_SHARP
 	attack_verb = list("slashed", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
+<<<<<<< HEAD
 	materials = list(/datum/material/iron = 1000)
+=======
+	materials = list(MAT_METAL = 1000)
+>>>>>>> Updated this old code to fork
 
 /obj/item/melee/sabre/Initialize()
 	. = ..()
@@ -76,6 +88,7 @@
 		final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()
 
+<<<<<<< HEAD
 /obj/item/melee/sabre/on_exit_storage(datum/component/storage/concrete/S)
 	var/obj/item/storage/belt/sabre/B = S.real_location()
 	if(istype(B))
@@ -85,11 +98,28 @@
 	var/obj/item/storage/belt/sabre/B = S.real_location()
 	if(istype(B))
 		playsound(B, 'sound/items/sheath.ogg', 25, TRUE)
+=======
+/obj/item/melee/sabre/on_exit_storage(obj/item/storage/S)
+	..()
+	var/obj/item/storage/belt/sabre/B = S
+	if(istype(B))
+		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
+
+/obj/item/melee/sabre/on_enter_storage(obj/item/storage/S)
+	..()
+	var/obj/item/storage/belt/sabre/B = S
+	if(istype(B))
+		playsound(B, 'sound/items/sheath.ogg', 25, 1)
+>>>>>>> Updated this old code to fork
 
 /obj/item/melee/sabre/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is trying to cut off all [user.p_their()] limbs with [src]! it looks like [user.p_theyre()] trying to commit suicide!</span>")
 	var/i = 0
+<<<<<<< HEAD
 	ADD_TRAIT(src, TRAIT_NODROP, SABRE_SUICIDE_TRAIT)
+=======
+	add_trait(TRAIT_NODROP, SABRE_SUICIDE_TRAIT)
+>>>>>>> Updated this old code to fork
 	if(iscarbon(user))
 		var/mob/living/carbon/Cuser = user
 		var/obj/item/bodypart/holding_bodypart = Cuser.get_holding_bodypart_of_item(src)
@@ -127,6 +157,7 @@
 	if(!QDELETED(user))
 		user.adjustBruteLoss(200)
 		user.death(FALSE)
+<<<<<<< HEAD
 	REMOVE_TRAIT(src, TRAIT_NODROP, SABRE_SUICIDE_TRAIT)
 
 /obj/item/melee/beesword
@@ -158,6 +189,9 @@
 	user.visible_message("<span class='suicide'>[user] is stabbing [user.p_them()]self in the throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(get_turf(src), hitsound, 75, 1, -1)
 	return TOXLOSS
+=======
+	remove_trait(TRAIT_NODROP, SABRE_SUICIDE_TRAIT)
+>>>>>>> Updated this old code to fork
 
 /obj/item/melee/classic_baton
 	name = "police baton"
@@ -170,6 +204,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 12 //9 hit crit
 	w_class = WEIGHT_CLASS_NORMAL
+<<<<<<< HEAD
 
 	var/cooldown_check = 0 // Used interally, you don't want to modify
 
@@ -233,16 +268,26 @@
 // Are we applying any special effects when we stun to silicon
 /obj/item/melee/classic_baton/proc/additional_effects_silicon(mob/living/target, mob/living/user)
 	return
+=======
+	var/cooldown = 0
+	var/on = TRUE
+>>>>>>> Updated this old code to fork
 
 /obj/item/melee/classic_baton/attack(mob/living/target, mob/living/user)
 	if(!on)
 		return ..()
 
 	add_fingerprint(user)
+<<<<<<< HEAD
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, "<span class ='danger'>You hit yourself over the head.</span>")
 		user.Paralyze(stun_time_carbon * force)
 		additional_effects_carbon(user) // user is the target here
+=======
+	if((user.has_trait(TRAIT_CLUMSY)) && prob(50))
+		to_chat(user, "<span class ='danger'>You club yourself over the head.</span>")
+		user.Paralyze(60 * force)
+>>>>>>> Updated this old code to fork
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
@@ -250,6 +295,7 @@
 			user.take_bodypart_damage(2*force)
 		return
 	if(iscyborg(target))
+<<<<<<< HEAD
 		// We don't stun if we're on harm.
 		if (user.a_intent != INTENT_HARM)
 			if (affect_silicon)
@@ -268,6 +314,9 @@
 				..()
 		else
 			..()
+=======
+		..()
+>>>>>>> Updated this old code to fork
 		return
 	if(!isliving(target))
 		return
@@ -277,13 +326,18 @@
 		if(!iscyborg(target))
 			return
 	else
+<<<<<<< HEAD
 		if(cooldown_check <= world.time)
+=======
+		if(cooldown <= world.time)
+>>>>>>> Updated this old code to fork
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
 				if (H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
 					return
 				if(check_martial_counter(H, user))
 					return
+<<<<<<< HEAD
 
 			var/list/desc = get_stun_description(target, user)
 
@@ -299,15 +353,27 @@
 
 			target.visible_message(desc["visible"], desc["local"])
 
+=======
+			playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
+			target.Paralyze(60)
+			log_combat(user, target, "stunned", src)
+			src.add_fingerprint(user)
+			target.visible_message("<span class ='danger'>[user] has knocked down [target] with [src]!</span>", \
+				"<span class ='userdanger'>[user] has knocked down [target] with [src]!</span>")
+>>>>>>> Updated this old code to fork
 			if(!iscarbon(user))
 				target.LAssailant = null
 			else
 				target.LAssailant = user
+<<<<<<< HEAD
 			cooldown_check = world.time + cooldown
 		else
 			var/wait_desc = get_wait_description()
 			if (wait_desc)
 				to_chat(user, wait_desc)
+=======
+			cooldown = world.time + 40
+>>>>>>> Updated this old code to fork
 
 /obj/item/melee/classic_baton/telescopic
 	name = "telescopic baton"
@@ -322,6 +388,7 @@
 	item_flags = NONE
 	force = 0
 	on = FALSE
+<<<<<<< HEAD
 	on_sound = 'sound/weapons/batonextend.ogg'
 
 	on_icon_state = "telebaton_1"
@@ -330,6 +397,8 @@
 	force_on = 10
 	force_off = 0
 	weight_class_on = WEIGHT_CLASS_BULKY
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/melee/classic_baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -339,7 +408,11 @@
 	if(!on)
 		src.attack_self(user)
 	else
+<<<<<<< HEAD
 		playsound(src, on_sound, 50, 1)
+=======
+		playsound(src, 'sound/weapons/batonextend.ogg', 50, 1)
+>>>>>>> Updated this old code to fork
 		add_fingerprint(user)
 	sleep(3)
 	if (!QDELETED(H))
@@ -351,6 +424,7 @@
 
 /obj/item/melee/classic_baton/telescopic/attack_self(mob/user)
 	on = !on
+<<<<<<< HEAD
 	var/list/desc = get_on_description()
 
 	if(on)
@@ -405,6 +479,27 @@
 	target.Jitter(20)
 	target.stuttering += 20
 
+=======
+	if(on)
+		to_chat(user, "<span class ='warning'>You extend the baton.</span>")
+		icon_state = "telebaton_1"
+		item_state = "nullrod"
+		w_class = WEIGHT_CLASS_BULKY //doesnt fit in backpack when its on for balance
+		force = 10 //stunbaton damage
+		attack_verb = list("smacked", "struck", "cracked", "beaten")
+	else
+		to_chat(user, "<span class ='notice'>You collapse the baton.</span>")
+		icon_state = "telebaton_0"
+		item_state = null //no sprite for concealment even when in hand
+		slot_flags = ITEM_SLOT_BELT
+		w_class = WEIGHT_CLASS_SMALL
+		force = 0 //not so robust now
+		attack_verb = list("hit", "poked")
+
+	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	add_fingerprint(user)
+
+>>>>>>> Updated this old code to fork
 /obj/item/melee/supermatter_sword
 	name = "supermatter sword"
 	desc = "In a station full of bad ideas, this might just be the worst."
@@ -498,7 +593,11 @@
 	T.visible_message("<span class='danger'>[T] smacks into [src] and rapidly flashes to ash.</span>",\
 	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
 	shard.Consume()
+<<<<<<< HEAD
 	CALCULATE_ADJACENT_TURFS(T)
+=======
+	T.CalculateAdjacentTurfs()
+>>>>>>> Updated this old code to fork
 
 /obj/item/melee/supermatter_sword/add_blood_DNA(list/blood_dna)
 	return FALSE
@@ -586,13 +685,21 @@
 		add_overlay(sausage)
 
 /obj/item/melee/roastingstick/proc/extend(user)
+<<<<<<< HEAD
 	to_chat(user, "<span class='warning'>You extend [src].</span>")
+=======
+	to_chat(user, "<span class ='warning'>You extend [src].</span>")
+>>>>>>> Updated this old code to fork
 	icon_state = "roastingstick_1"
 	item_state = "nullrod"
 	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/melee/roastingstick/proc/retract(user)
+<<<<<<< HEAD
 	to_chat(user, "<span class='notice'>You collapse [src].</span>")
+=======
+	to_chat(user, "<span class ='notice'>You collapse [src].</span>")
+>>>>>>> Updated this old code to fork
 	icon_state = "roastingstick_0"
 	item_state = null
 	w_class = WEIGHT_CLASS_SMALL

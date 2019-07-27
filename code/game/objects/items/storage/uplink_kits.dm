@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 /obj/item/storage/box/syndicate
 
@@ -14,6 +15,13 @@
 			new /obj/item/flashlight/emp(src)
 
 		if("bloodyspai")
+=======
+/obj/item/storage/box/syndicate
+
+/obj/item/storage/box/syndicate/PopulateContents()
+	switch (pickweight(list("bloodyspai" = 3, "stealth" = 2, "bond" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "implant" = 1, "hacker" = 3, "darklord" = 1, "sniper" = 1, "metaops" = 1, "ninja" = 1, "white_whale_holy_grail" = 2, "mad_scientist" = 2, "bee" = 1)))
+		if("bloodyspai") // 27 tc now this is more right
+>>>>>>> Updated this old code to fork
 			new /obj/item/clothing/under/chameleon(src) // 2 tc since it's not the full set
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
 			new /obj/item/card/id/syndicate(src) // 2 tc
@@ -27,17 +35,43 @@
 			new /obj/item/flashlight/emp(src) // 2 tc
 			new /obj/item/chameleon(src) // 7 tc
 
+<<<<<<< HEAD
 		if("stealth")
+=======
+		if("stealth") // 31 tc
+>>>>>>> Updated this old code to fork
 			new /obj/item/gun/energy/kinetic_accelerator/crossbow(src)
 			new /obj/item/pen/sleepy(src)
 			new /obj/item/healthanalyzer/rad_laser(src)
 			new /obj/item/chameleon(src)
 			new /obj/item/soap/syndie(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
+<<<<<<< HEAD
 			new /obj/item/flashlight/emp(src)
 			new /obj/item/jammer(src)
 
 		if("guns")
+=======
+
+		if("bond") // 29 tc
+			new /obj/item/gun/ballistic/automatic/pistol(src)
+			new /obj/item/suppressor(src)
+			new /obj/item/ammo_box/magazine/m10mm(src)
+			new /obj/item/ammo_box/magazine/m10mm(src)
+			new /obj/item/clothing/under/chameleon(src)
+			new /obj/item/card/id/syndicate(src)
+			new /obj/item/reagent_containers/syringe/stimulants(src)
+
+		if("screwed") // 29 tc
+			new /obj/item/sbeacondrop/bomb(src)
+			new /obj/item/grenade/syndieminibomb(src)
+			new /obj/item/sbeacondrop/powersink(src)
+			new /obj/item/clothing/suit/space/syndicate/black/red(src)
+			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
+			new /obj/item/encryptionkey/syndicate(src)
+
+		if("guns") // 28 tc now
+>>>>>>> Updated this old code to fork
 			new /obj/item/gun/ballistic/revolver(src)
 			new /obj/item/ammo_box/a357(src)
 			new /obj/item/ammo_box/a357(src)
@@ -47,6 +81,7 @@
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/clothing/under/suit_jacket/really_black(src)
 
+<<<<<<< HEAD
 		if("screwed")
 			new /obj/item/sbeacondrop/bomb(src)
 			new /obj/item/grenade/syndieminibomb(src)
@@ -56,6 +91,9 @@
 			new /obj/item/encryptionkey/syndicate(src)
 
 		if("murder")
+=======
+		if("murder") // 28 tc now
+>>>>>>> Updated this old code to fork
 			new /obj/item/melee/transforming/energy/sword/saber(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/card/emag(src)
@@ -63,7 +101,11 @@
 			new /obj/item/encryptionkey/syndicate(src)
 			new /obj/item/grenade/syndieminibomb(src)
 
+<<<<<<< HEAD
 		if("implant")
+=======
+		if("implant") // 55+ tc holy shit what the fuck this is a lottery disguised as fun boxes isn't it?
+>>>>>>> Updated this old code to fork
 			new /obj/item/implanter/freedom(src)
 			new /obj/item/implanter/uplink/precharged(src)
 			new /obj/item/implanter/emp(src)
@@ -71,25 +113,39 @@
 			new /obj/item/implanter/explosive(src)
 			new /obj/item/implanter/storage(src)
 
+<<<<<<< HEAD
 		if("hacker")
+=======
+		if("hacker") // 26 tc
+>>>>>>> Updated this old code to fork
 			new /obj/item/aiModule/syndicate(src)
 			new /obj/item/card/emag(src)
 			new /obj/item/encryptionkey/binary(src)
 			new /obj/item/aiModule/toyAI(src)
 			new /obj/item/multitool/ai_detect(src)
+<<<<<<< HEAD
 			new /obj/item/storage/toolbox/syndicate(src)
 			new /obj/item/camera_bug(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/card/id/syndicate(src)
 
 		if("lordsingulo")
+=======
+
+		if("lordsingulo") // 24 tc
+>>>>>>> Updated this old code to fork
 			new /obj/item/sbeacondrop(src)
 			new /obj/item/clothing/suit/space/syndicate/black/red(src)
 			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
 			new /obj/item/card/emag(src)
+<<<<<<< HEAD
 			new /obj/item/storage/toolbox/syndicate(src)
 
 		if("sabotage")
+=======
+
+		if("sabotage") // 26 tc now
+>>>>>>> Updated this old code to fork
 			new /obj/item/grenade/plastic/c4 (src)
 			new /obj/item/grenade/plastic/c4 (src)
 			new /obj/item/doorCharge(src)
@@ -99,7 +155,18 @@
 			new /obj/item/cartridge/virus/syndicate(src)
 			new /obj/item/storage/toolbox/syndicate(src) //To actually get to those places
 			new /obj/item/pizzabox/bomb(src)
+<<<<<<< HEAD
 			new /obj/item/storage/box/syndie_kit/emp(src)
+=======
+
+		if("darklord") //20 tc + tk + summon item close enough for now
+			new /obj/item/twohanded/dualsaber(src)
+			new /obj/item/dnainjector/telemut/darkbundle(src)
+			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
+			new /obj/item/card/id/syndicate(src)
+			new /obj/item/clothing/shoes/chameleon/noslip(src) //because slipping while being a dark lord sucks
+			new /obj/item/book/granter/spell/summonitem(src)
+>>>>>>> Updated this old code to fork
 
 		if("sniper") //This shit is unique so can't really balance it around tc, also no silencer because getting killed without ANY indicator on what killed you sucks
 			new /obj/item/gun/ballistic/automatic/sniper_rifle(src) // 12 tc
@@ -109,9 +176,15 @@
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/clothing/under/suit_jacket/really_black(src)
 
+<<<<<<< HEAD
 		if("metaops")
 			new /obj/item/clothing/suit/space/hardsuit/syndi(src) // 8 tc
 			new /obj/item/gun/ballistic/shotgun/bulldog/unrestricted(src) // 8 tc
+=======
+		if("metaops") // 30 tc
+			new /obj/item/clothing/suit/space/hardsuit/syndi(src) // 8 tc
+			new /obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted(src) // 8 tc
+>>>>>>> Updated this old code to fork
 			new /obj/item/implanter/explosive(src) // 2 tc
 			new /obj/item/ammo_box/magazine/m12g(src) // 2 tc
 			new /obj/item/ammo_box/magazine/m12g(src) // 2 tc
@@ -119,6 +192,7 @@
 			new /obj/item/grenade/plastic/c4 (src) // 1 tc
 			new /obj/item/card/emag(src) // 6 tc
 
+<<<<<<< HEAD
 /obj/item/storage/box/syndicate/bundle_B/PopulateContents()
 	switch (pickweight(list( "bond" = 2, "ninja" = 1, "darklord" = 1, "white_whale_holy_grail" = 2, "mad_scientist" = 2, "bee" = 1, "mr_freeze" = 2)))
 		if("bond")
@@ -132,6 +206,9 @@
 			new /obj/item/reagent_containers/glass/rag(src)
 
 		if("ninja")
+=======
+		if("ninja") // 33 tc worth
+>>>>>>> Updated this old code to fork
 			new /obj/item/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
 			new /obj/item/implanter/adrenalin(src) // 8 tc
 			for(var/i in 1 to 6)
@@ -140,6 +217,7 @@
 			new /obj/item/card/id/syndicate(src) // 2 tc
 			new /obj/item/chameleon(src) // 7 tc
 
+<<<<<<< HEAD
 		if("darklord")
 			new /obj/item/twohanded/dualsaber(src)
 			new /obj/item/dnainjector/telemut/darkbundle(src)
@@ -148,17 +226,27 @@
 			new /obj/item/clothing/shoes/chameleon/noslip(src) //because slipping while being a dark lord sucks
 			new /obj/item/book/granter/spell/summonitem(src)
 
+=======
+>>>>>>> Updated this old code to fork
 		if("white_whale_holy_grail") //Unique items that don't appear anywhere else
 			new /obj/item/pneumatic_cannon/speargun(src)
 			new /obj/item/storage/backpack/magspear_quiver(src)
 			new /obj/item/clothing/suit/space/hardsuit/carp(src)
 			new /obj/item/clothing/mask/gas/carp(src)
 			new /obj/item/grenade/spawnergrenade/spesscarp(src)
+<<<<<<< HEAD
 
 		if("mad_scientist")
 			new /obj/item/clothing/suit/toggle/labcoat/mad(src) // 0 tc
 			new /obj/item/clothing/shoes/jackboots(src) // 0 tc
 			new /obj/item/megaphone(src) // 0 tc 
+=======
+			
+		if("mad_scientist") // ~26 tc
+			new /obj/item/clothing/suit/toggle/labcoat/mad(src) // 0 tc
+			new /obj/item/clothing/shoes/jackboots(src) // 0 tc
+			new /obj/item/megaphone(src) // 0 tc (because how else are they to know you're mad?)
+>>>>>>> Updated this old code to fork
 			new /obj/item/grenade/clusterbuster/random(src) // 10 tc?
 			new /obj/item/grenade/clusterbuster/random(src) // 10 tc?
 			new /obj/item/grenade/chem_grenade/bioterrorfoam(src) // 5 tc
@@ -167,15 +255,21 @@
 			new /obj/item/assembly/signaler(src) // 0 tc
 			new /obj/item/assembly/signaler(src) // 0 tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
+<<<<<<< HEAD
 			new /obj/item/pen/edagger(src)
 			new /obj/item/gun/energy/wormhole_projector(src)
 			new /obj/item/gun/energy/decloner/unrestricted(src)
 
 		if("bee")
+=======
+			
+		if("bee") // ~25 tc
+>>>>>>> Updated this old code to fork
 			new /obj/item/paper/fluff/bee_objectives(src) // 0 tc (motivation)
 			new /obj/item/clothing/suit/hooded/bee_costume(src) // 0 tc
 			new /obj/item/clothing/mask/rat/bee(src) // 0 tc
 			new /obj/item/storage/belt/fannypack/yellow(src) // 0 tc
+<<<<<<< HEAD
 			new /obj/item/grenade/spawnergrenade/buzzkill(src)
 			new /obj/item/grenade/spawnergrenade/buzzkill(src)
 			new /obj/item/reagent_containers/glass/bottle/beesease(src) // 10 tc?
@@ -302,6 +396,10 @@
 
 	// Paper guide
 	new /obj/item/paper/contractor_guide(src)
+=======
+			new /obj/item/storage/box/syndie_kit/bee_grenades(src) // 15 tc
+			new /obj/item/reagent_containers/glass/bottle/beesease(src) // 10 tc?		
+>>>>>>> Updated this old code to fork
 
 /obj/item/storage/box/syndie_kit
 	name = "box"
@@ -378,19 +476,33 @@
 
 /obj/item/storage/box/syndie_kit/space/ComponentInitialize()
 	. = ..()
+<<<<<<< HEAD
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate))
+=======
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.can_hold = typecacheof(list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate))
+>>>>>>> Updated this old code to fork
 
 /obj/item/storage/box/syndie_kit/space/PopulateContents()
 	if(prob(50))
 		new /obj/item/clothing/suit/space/syndicate/black/red(src) // Black and red is so in right now
 		new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
+<<<<<<< HEAD
 
 	else
 		new /obj/item/clothing/head/helmet/space/syndicate(src)
 		new /obj/item/clothing/suit/space/syndicate(src)
 
+=======
+		
+	else
+		new /obj/item/clothing/head/helmet/space/syndicate(src)
+		new /obj/item/clothing/suit/space/syndicate(src)
+		
+>>>>>>> Updated this old code to fork
 /obj/item/storage/box/syndie_kit/emp
 	name = "EMP kit"
 
@@ -404,7 +516,11 @@
 
 /obj/item/storage/box/syndie_kit/chemical/ComponentInitialize()
 	. = ..()
+<<<<<<< HEAD
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+=======
+	GET_COMPONENT(STR, /datum/component/storage)
+>>>>>>> Updated this old code to fork
 	STR.max_items = 14
 
 /obj/item/storage/box/syndie_kit/chemical/PopulateContents()

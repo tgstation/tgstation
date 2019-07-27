@@ -30,23 +30,36 @@ Difficulty: Very Hard
 	attack_sound = 'sound/magic/clockwork/ratvar_attack.ogg'
 	icon_state = "eva"
 	icon_living = "eva"
+<<<<<<< HEAD
 	icon_dead = ""
+=======
+	icon_dead = "dragon_dead"
+>>>>>>> Updated this old code to fork
 	friendly = "stares down"
 	icon = 'icons/mob/lavaland/96x96megafauna.dmi'
 	speak_emote = list("roars")
 	armour_penetration = 40
 	melee_damage_lower = 40
 	melee_damage_upper = 40
+<<<<<<< HEAD
 	speed = 10
 	move_to_delay = 10
 	ranged = TRUE
 	pixel_x = -32
 	del_on_death = TRUE
 	internal_type = /obj/item/gps/internal/colossus
+=======
+	speed = 1
+	move_to_delay = 10
+	ranged = 1
+	pixel_x = -32
+	del_on_death = 1
+>>>>>>> Updated this old code to fork
 	medal_type = BOSS_MEDAL_COLOSSUS
 	score_type = COLOSSUS_SCORE
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/colossus/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/colossus)
+<<<<<<< HEAD
 	deathmessage = "disintegrates, leaving a glowing core in its wake."
 	deathsound = 'sound/magic/demon_dies.ogg'
 	attack_action_types = list(/datum/action/innate/megafauna_attack/spiral_attack,
@@ -82,11 +95,21 @@ Difficulty: Very Hard
 	button_icon_state = "pistol"
 	chosen_message = "<span class='colossus'>You are now firing in alternating cardinal directions.</span>"
 	chosen_attack_num = 4
+=======
+	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
+	deathmessage = "disintegrates, leaving a glowing core in its wake."
+	deathsound = 'sound/magic/demon_dies.ogg'
+
+/mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/L)
+	visible_message("<span class='colossus'>[src] disintegrates [L]!</span>")
+	L.dust()
+>>>>>>> Updated this old code to fork
 
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
 	anger_modifier = CLAMP(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + 120
 
+<<<<<<< HEAD
 	if(client)
 		switch(chosen_attack)
 			if(1)
@@ -99,6 +122,8 @@ Difficulty: Very Hard
 				alternating_dir_shots()
 		return
 
+=======
+>>>>>>> Updated this old code to fork
 	if(enrage(target))
 		if(move_to_delay == initial(move_to_delay))
 			visible_message("<span class='colossus'>\"<b>You can't dodge.</b>\"</span>")
@@ -111,6 +136,7 @@ Difficulty: Very Hard
 		move_to_delay = initial(move_to_delay)
 
 	if(prob(20+anger_modifier)) //Major attack
+<<<<<<< HEAD
 		select_spiral_attack()
 	else if(prob(20))
 		random_shots()
@@ -119,11 +145,62 @@ Difficulty: Very Hard
 			blast()
 		else
 			alternating_dir_shots()
+=======
+		telegraph()
+
+		if(health < maxHealth/3)
+			double_spiral()
+		else
+			visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
+			INVOKE_ASYNC(src, .proc/spiral_shoot, pick(TRUE, FALSE))
+
+	else if(prob(20))
+		ranged_cooldown = world.time + 30
+		random_shots()
+	else
+		if(prob(70))
+			ranged_cooldown = world.time + 20
+			blast()
+		else
+			ranged_cooldown = world.time + 40
+			INVOKE_ASYNC(src, .proc/alternating_dir_shots)
+
+
+/mob/living/simple_animal/hostile/megafauna/colossus/Initialize()
+	. = ..()
+	internal = new/obj/item/gps/internal/colossus(src)
+
+/obj/effect/temp_visual/at_shield
+	name = "anti-toolbox field"
+	desc = "A shimmering forcefield protecting the colossus."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "at_shield2"
+	layer = FLY_LAYER
+	light_range = 2
+	duration = 8
+	var/target
+
+/obj/effect/temp_visual/at_shield/Initialize(mapload, new_target)
+	. = ..()
+	target = new_target
+	INVOKE_ASYNC(src, /atom/movable/proc/orbit, target, 0, FALSE, 0, 0, FALSE, TRUE)
+
+/mob/living/simple_animal/hostile/megafauna/colossus/bullet_act(obj/item/projectile/P)
+	if(!stat)
+		var/obj/effect/temp_visual/at_shield/AT = new /obj/effect/temp_visual/at_shield(loc, src)
+		var/random_x = rand(-32, 32)
+		AT.pixel_x += random_x
+
+		var/random_y = rand(0, 72)
+		AT.pixel_y += random_y
+	return ..()
+>>>>>>> Updated this old code to fork
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/enrage(mob/living/L)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.mind)
+<<<<<<< HEAD
 			if(istype(H.mind.martial_art, /datum/martial_art/the_sleeping_carp))
 				. = TRUE
 
@@ -152,6 +229,28 @@ Difficulty: Very Hard
 	INVOKE_ASYNC(src, .proc/spiral_shoot, TRUE)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/spiral_shoot(negative = pick(TRUE, FALSE), counter_start = 8)
+=======
+			if(H.mind.martial_art && prob(H.mind.martial_art.deflection_chance))
+				. = TRUE
+
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
+	dir_shots(GLOB.diagonals)
+	sleep(10)
+	dir_shots(GLOB.cardinals)
+	sleep(10)
+	dir_shots(GLOB.diagonals)
+	sleep(10)
+	dir_shots(GLOB.cardinals)
+
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/double_spiral()
+	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
+
+	sleep(10)
+	INVOKE_ASYNC(src, .proc/spiral_shoot)
+	INVOKE_ASYNC(src, .proc/spiral_shoot, TRUE)
+
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/spiral_shoot(negative = FALSE, counter_start = 8)
+>>>>>>> Updated this old code to fork
 	var/turf/start_turf = get_step(src, pick(GLOB.alldirs))
 	var/counter = counter_start
 	for(var/i in 1 to 80)
@@ -165,7 +264,11 @@ Difficulty: Very Hard
 			counter = 16
 		shoot_projectile(start_turf, counter * 22.5)
 		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, 1)
+<<<<<<< HEAD
 		SLEEP_CHECK_DEATH(1)
+=======
+		sleep(1)
+>>>>>>> Updated this old code to fork
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/shoot_projectile(turf/marker, set_angle)
 	if(!isnum(set_angle) && (!marker || marker == loc))
@@ -179,7 +282,10 @@ Difficulty: Very Hard
 	P.fire(set_angle)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/random_shots()
+<<<<<<< HEAD
 	ranged_cooldown = world.time + 30
+=======
+>>>>>>> Updated this old code to fork
 	var/turf/U = get_turf(src)
 	playsound(U, 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
 	for(var/T in RANGE_TURFS(12, U) - U)
@@ -187,7 +293,10 @@ Difficulty: Very Hard
 			shoot_projectile(T)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/blast(set_angle)
+<<<<<<< HEAD
 	ranged_cooldown = world.time + 20
+=======
+>>>>>>> Updated this old code to fork
 	var/turf/target_turf = get_turf(target)
 	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
 	newtonian_move(get_dir(target_turf, src))
@@ -214,6 +323,7 @@ Difficulty: Very Hard
 	playsound(src, 'sound/magic/clockwork/narsie_attack.ogg', 200, 1)
 
 
+<<<<<<< HEAD
 /mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/L)
 	visible_message("<span class='colossus'>[src] disintegrates [L]!</span>")
 	L.dust()
@@ -242,6 +352,8 @@ Difficulty: Very Hard
 		var/random_y = rand(0, 72)
 		AT.pixel_y += random_y
 	return ..()
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/projectile/colossus
 	name ="death bolt"
@@ -412,8 +524,13 @@ Difficulty: Very Hard
 /obj/machinery/anomalous_crystal/examine(mob/user)
 	. = ..()
 	if(isobserver(user))
+<<<<<<< HEAD
 		. += observer_desc
 		. += "It is activated by [activation_method]."
+=======
+		to_chat(user, observer_desc)
+		to_chat(user, "It is activated by [activation_method].")
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
 	..()
@@ -597,7 +714,11 @@ Difficulty: Very Hard
 					H.regenerate_limbs()
 					H.regenerate_organs()
 					H.revive(1,0)
+<<<<<<< HEAD
 					ADD_TRAIT(H, TRAIT_BADDNA, MAGIC_TRAIT) //Free revives, but significantly limits your options for reviving except via the crystal
+=======
+					H.add_trait(TRAIT_BADDNA, MAGIC_TRAIT) //Free revives, but significantly limits your options for reviving except via the crystal
+>>>>>>> Updated this old code to fork
 					H.grab_ghost(force = TRUE)
 
 /obj/machinery/anomalous_crystal/helpers //Lets ghost spawn as helpful creatures that can only heal people slightly. Incredibly fragile and they can't converse with humans
@@ -670,7 +791,11 @@ Difficulty: Very Hard
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	AIStatus = AI_OFF
+<<<<<<< HEAD
 	stop_automated_movement = TRUE
+=======
+	stop_automated_movement = 1
+>>>>>>> Updated this old code to fork
 	var/heal_power = 5
 
 /mob/living/simple_animal/hostile/lightgeist/Initialize()
@@ -723,13 +848,21 @@ Difficulty: Very Hard
 /obj/machinery/anomalous_crystal/possessor/ActivationReaction(mob/user, method)
 	if(..())
 		if(ishuman(user))
+<<<<<<< HEAD
 			var/mobcheck = FALSE
+=======
+			var/mobcheck = 0
+>>>>>>> Updated this old code to fork
 			for(var/mob/living/simple_animal/A in range(1, src))
 				if(A.melee_damage_upper > 5 || A.mob_size >= MOB_SIZE_LARGE || A.ckey || A.stat)
 					break
 				var/obj/structure/closet/stasis/S = new /obj/structure/closet/stasis(A)
 				user.forceMove(S)
+<<<<<<< HEAD
 				mobcheck = TRUE
+=======
+				mobcheck = 1
+>>>>>>> Updated this old code to fork
 				break
 			if(!mobcheck)
 				new /mob/living/simple_animal/cockroach(get_step(src,dir)) //Just in case there aren't any animals on the station, this will leave you with a terrible option to possess if you feel like it
@@ -760,7 +893,11 @@ Difficulty: Very Hard
 	if(isliving(A) && holder_animal)
 		var/mob/living/L = A
 		L.notransform = 1
+<<<<<<< HEAD
 		ADD_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
+=======
+		L.add_trait(TRAIT_MUTE, STASIS_MUTE)
+>>>>>>> Updated this old code to fork
 		L.status_flags |= GODMODE
 		L.mind.transfer_to(holder_animal)
 		var/obj/effect/proc_holder/spell/targeted/exit_possession/P = new /obj/effect/proc_holder/spell/targeted/exit_possession
@@ -770,7 +907,11 @@ Difficulty: Very Hard
 /obj/structure/closet/stasis/dump_contents(var/kill = 1)
 	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/L in src)
+<<<<<<< HEAD
 		REMOVE_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
+=======
+		L.remove_trait(TRAIT_MUTE, STASIS_MUTE)
+>>>>>>> Updated this old code to fork
 		L.status_flags &= ~GODMODE
 		L.notransform = 0
 		if(holder_animal)
@@ -794,7 +935,11 @@ Difficulty: Very Hard
 	invocation_type = "none"
 	max_targets = 1
 	range = -1
+<<<<<<< HEAD
 	include_user = TRUE
+=======
+	include_user = 1
+>>>>>>> Updated this old code to fork
 	selection_type = "view"
 	action_icon = 'icons/mob/actions/actions_spells.dmi'
 	action_icon_state = "exit_possession"

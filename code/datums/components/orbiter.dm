@@ -1,7 +1,14 @@
 /datum/component/orbiter
+<<<<<<< HEAD
 	can_transfer = TRUE
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/list/orbiters
+=======
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
+	var/list/orbiters
+	var/datum/callback/orbiter_spy
+	var/datum/callback/orbited_spy
+>>>>>>> Updated this old code to fork
 
 //radius: range to orbit at, radius of the circle formed by orbiting (in pixels)
 //clockwise: whether you orbit clockwise or anti clockwise
@@ -13,6 +20,11 @@
 		return COMPONENT_INCOMPATIBLE
 
 	orbiters = list()
+<<<<<<< HEAD
+=======
+	orbiter_spy = CALLBACK(src, .proc/orbiter_move_react)
+	orbited_spy = CALLBACK(src, .proc/move_react)
+>>>>>>> Updated this old code to fork
 
 	var/atom/master = parent
 	master.orbiters = src
@@ -22,7 +34,11 @@
 /datum/component/orbiter/RegisterWithParent()
 	var/atom/target = parent
 	while(ismovableatom(target))
+<<<<<<< HEAD
 		RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/move_react)
+=======
+		RegisterSignal(target, COMSIG_MOVABLE_MOVED, orbited_spy)
+>>>>>>> Updated this old code to fork
 		target = target.loc
 
 /datum/component/orbiter/UnregisterFromParent()
@@ -37,6 +53,11 @@
 	for(var/i in orbiters)
 		end_orbit(i)
 	orbiters = null
+<<<<<<< HEAD
+=======
+	QDEL_NULL(orbiter_spy)
+	QDEL_NULL(orbited_spy)
+>>>>>>> Updated this old code to fork
 	return ..()
 
 /datum/component/orbiter/InheritComponent(datum/component/orbiter/newcomp, original, list/arguments)
@@ -59,7 +80,11 @@
 			orbiter.orbiting.end_orbit(orbiter)
 	orbiters[orbiter] = TRUE
 	orbiter.orbiting = src
+<<<<<<< HEAD
 	RegisterSignal(orbiter, COMSIG_MOVABLE_MOVED, .proc/orbiter_move_react)
+=======
+	RegisterSignal(orbiter, COMSIG_MOVABLE_MOVED, orbiter_spy)
+>>>>>>> Updated this old code to fork
 	var/matrix/initial_transform = matrix(orbiter.transform)
 
 	// Head first!
@@ -75,7 +100,11 @@
 	shift.Translate(0, radius)
 	orbiter.transform = shift
 
+<<<<<<< HEAD
 	orbiter.SpinAnimation(rotation_speed, -1, clockwise, rotation_segments, parallel = FALSE)
+=======
+	orbiter.SpinAnimation(rotation_speed, -1, clockwise, rotation_segments)
+>>>>>>> Updated this old code to fork
 
 	//we stack the orbits up client side, so we can assign this back to normal server side without it breaking the orbit
 	orbiter.transform = initial_transform
@@ -115,7 +144,11 @@
 	if(orbited?.loc && orbited.loc != newturf) // We want to know when anything holding us moves too
 		var/atom/target = orbited.loc
 		while(ismovableatom(target))
+<<<<<<< HEAD
 			RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/move_react, TRUE)
+=======
+			RegisterSignal(target, COMSIG_MOVABLE_MOVED, orbited_spy, TRUE)
+>>>>>>> Updated this old code to fork
 			target = target.loc
 
 	var/atom/curloc = master.loc
@@ -148,4 +181,8 @@
 /atom/proc/transfer_observers_to(atom/target)
 	if(!orbiters || !istype(target) || !get_turf(target) || target == src)
 		return
+<<<<<<< HEAD
 	target.TakeComponent(orbiters)
+=======
+	target.TakeComponent(orbiters)
+>>>>>>> Updated this old code to fork

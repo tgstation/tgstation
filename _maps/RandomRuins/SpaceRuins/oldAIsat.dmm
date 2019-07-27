@@ -47,16 +47,30 @@
 	dir = 1;
 	name = "Worn-out APC";
 	pixel_x = 1;
+<<<<<<< HEAD
 	pixel_y = 23
 	},
 /obj/structure/cable,
+=======
+	pixel_y = 26
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/tcommsat/oldaisat)
 "al" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/tcommsat/oldaisat)
 "am" = (
@@ -99,7 +113,13 @@
 /turf/template_noop,
 /area/space/nearstation)
 "au" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/tcommsat/oldaisat)
 "av" = (
@@ -175,7 +195,13 @@
 /turf/open/floor/plating/airless,
 /area/tcommsat/oldaisat)
 "aJ" = (
+<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
+=======
+/obj/item/stack/cable_coil/cut/red{
+	amount = 1
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/tcommsat/oldaisat)
 "aK" = (
@@ -871,7 +897,13 @@
 /turf/open/floor/plasteel,
 /area/tcommsat/oldaisat)
 "cW" = (
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
+=======
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/tcommsat/oldaisat)
 "cX" = (

@@ -34,7 +34,10 @@
 	backpack = /obj/item/storage/backpack/science
 	satchel = /obj/item/storage/backpack/satchel/tox
 
+<<<<<<< HEAD
 /datum/outfit/job/scientist/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(prob(0.4))
 		neck = /obj/item/clothing/neck/tie/horrible
+=======
+>>>>>>> Updated this old code to fork

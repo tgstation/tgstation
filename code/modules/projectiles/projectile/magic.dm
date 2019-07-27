@@ -3,7 +3,11 @@
 	icon_state = "energy"
 	damage = 0
 	damage_type = OXY
+<<<<<<< HEAD
 	nodamage = TRUE
+=======
+	nodamage = 1
+>>>>>>> Updated this old code to fork
 	armour_penetration = 100
 	flag = "magic"
 
@@ -25,7 +29,11 @@
 	icon_state = "ion"
 	damage = 0
 	damage_type = OXY
+<<<<<<< HEAD
 	nodamage = TRUE
+=======
+	nodamage = 1
+>>>>>>> Updated this old code to fork
 
 /obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
 	. = ..()
@@ -66,7 +74,11 @@
 	if(!isturf(target))
 		teleloc = target.loc
 	for(var/atom/movable/stuff in teleloc)
+<<<<<<< HEAD
 		if(!stuff.anchored && stuff.loc && !isobserver(stuff))
+=======
+		if(!stuff.anchored && stuff.loc)
+>>>>>>> Updated this old code to fork
 			if(do_teleport(stuff, stuff, 10, channel = TELEPORT_CHANNEL_MAGIC))
 				teleammount++
 				var/datum/effect_system/smoke_spread/smoke = new
@@ -104,7 +116,11 @@
 	icon_state = "energy"
 	damage = 0
 	damage_type = OXY
+<<<<<<< HEAD
 	nodamage = TRUE
+=======
+	nodamage = 1
+>>>>>>> Updated this old code to fork
 	var/list/door_types = list(/obj/structure/mineral_door/wood, /obj/structure/mineral_door/iron, /obj/structure/mineral_door/silver, /obj/structure/mineral_door/gold, /obj/structure/mineral_door/uranium, /obj/structure/mineral_door/sandstone, /obj/structure/mineral_door/transparent/plasma, /obj/structure/mineral_door/transparent/diamond)
 
 /obj/item/projectile/magic/door/on_hit(atom/target)
@@ -133,7 +149,11 @@
 	icon_state = "ice_1"
 	damage = 0
 	damage_type = BURN
+<<<<<<< HEAD
 	nodamage = TRUE
+=======
+	nodamage = 1
+>>>>>>> Updated this old code to fork
 
 /obj/item/projectile/magic/change/on_hit(atom/change)
 	. = ..()
@@ -241,17 +261,29 @@
 			new_mob = new path(M.loc)
 
 		if("humanoid")
+<<<<<<< HEAD
 			new_mob = new /mob/living/carbon/human(M.loc)
 
 			if(prob(50))
 				var/list/chooseable_races = list()
+=======
+			if(prob(50))
+				new_mob = new /mob/living/carbon/human(M.loc)
+			else
+				var/chooseable_races = list()
+>>>>>>> Updated this old code to fork
 				for(var/speciestype in subtypesof(/datum/species))
 					var/datum/species/S = speciestype
 					if(initial(S.changesource_flags) & WABBAJACK)
 						chooseable_races += speciestype
 
+<<<<<<< HEAD
 				if(chooseable_races.len)
 					new_mob.set_species(pick(chooseable_races))
+=======
+				var/hooman = pick(chooseable_races)
+				new_mob =new hooman(M.loc)
+>>>>>>> Updated this old code to fork
 
 			var/datum/preferences/A = new()	//Randomize appearance for the human
 			A.copy_to(new_mob, icon_updates=0)
@@ -278,7 +310,11 @@
 
 	to_chat(new_mob, "<span class='warning'>Your form morphs into that of a [randomize].</span>")
 
+<<<<<<< HEAD
 	var/poly_msg = get_policy(POLICY_POLYMORPH)
+=======
+	var/poly_msg = CONFIG_GET(keyed_list/policy)["polymorph"]
+>>>>>>> Updated this old code to fork
 	if(poly_msg)
 		to_chat(new_mob, poly_msg)
 
@@ -292,7 +328,11 @@
 	icon_state = "red_1"
 	damage = 0
 	damage_type = BURN
+<<<<<<< HEAD
 	nodamage = TRUE
+=======
+	nodamage = 1
+>>>>>>> Updated this old code to fork
 
 /obj/item/projectile/magic/animate/on_hit(atom/target, blocked = FALSE)
 	target.animate_atom_living(firer)
@@ -339,7 +379,11 @@
 	damage_type = BURN
 	flag = "magic"
 	dismemberment = 50
+<<<<<<< HEAD
 	nodamage = FALSE
+=======
+	nodamage = 0
+>>>>>>> Updated this old code to fork
 
 /obj/item/projectile/magic/spellblade/on_hit(target)
 	if(ismob(target))
@@ -355,7 +399,11 @@
 	icon_state = "arcane_barrage"
 	damage = 20
 	damage_type = BURN
+<<<<<<< HEAD
 	nodamage = FALSE
+=======
+	nodamage = 0
+>>>>>>> Updated this old code to fork
 	armour_penetration = 0
 	flag = "magic"
 	hitsound = 'sound/weapons/barragespellhit.ogg'
@@ -378,6 +426,7 @@
 	var/weld = TRUE
 	var/created = FALSE //prevents creation of more then one locker if it has multiple hits
 	var/locker_suck = TRUE
+<<<<<<< HEAD
 	var/obj/structure/closet/locker_temp_instance = /obj/structure/closet/decay
 
 /obj/item/projectile/magic/locker/Initialize()
@@ -395,12 +444,30 @@
 			return ..()
 		M.forceMove(src)
 		return FALSE
+=======
+
+/obj/item/projectile/magic/locker/prehit(atom/A)
+	if(ismob(A) && locker_suck)
+		var/mob/M = A
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] vanishes on contact with [A]!</span>")
+			qdel(src)
+			return BULLET_ACT_BLOCK
+		if(M.anchored)
+			return ..()
+		M.forceMove(src)
+		return BULLET_ACT_HIT
+>>>>>>> Updated this old code to fork
 	return ..()
 
 /obj/item/projectile/magic/locker/on_hit(target)
 	if(created)
 		return ..()
+<<<<<<< HEAD
 	var/obj/structure/closet/C = new locker_temp_instance(get_turf(src))
+=======
+	var/obj/structure/closet/decay/C = new(get_turf(src))
+>>>>>>> Updated this old code to fork
 	if(LAZYLEN(contents))
 		for(var/atom/movable/AM in contents)
 			C.insert(AM)
@@ -456,6 +523,7 @@
 	addtimer(CALLBACK(src, .proc/decay), 15 SECONDS)
 	icon_welded = "welded"
 
+<<<<<<< HEAD
 /obj/item/projectile/magic/flying
 	name = "bolt of flying"
 	icon_state = "flight"
@@ -592,6 +660,8 @@
 		to_chat(M, "<span class='notice'>Your mind has managed to go unnoticed in the spirit world.</span>")
 		qdel(trauma)
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/item/projectile/magic/aoe
 	name = "Area Bolt"
 	desc = "What the fuck does this do?!"
@@ -611,7 +681,11 @@
 	icon_state = "tesla_projectile"	//Better sprites are REALLY needed and appreciated!~
 	damage = 15
 	damage_type = BURN
+<<<<<<< HEAD
 	nodamage = FALSE
+=======
+	nodamage = 0
+>>>>>>> Updated this old code to fork
 	speed = 0.3
 	flag = "magic"
 
@@ -646,7 +720,11 @@
 	icon_state = "fireball"
 	damage = 10
 	damage_type = BRUTE
+<<<<<<< HEAD
 	nodamage = FALSE
+=======
+	nodamage = 0
+>>>>>>> Updated this old code to fork
 
 	//explosion values
 	var/exp_heavy = 0
@@ -681,6 +759,7 @@
 	var/turf/T = get_turf(target)
 	for(var/i=0, i<50, i+=10)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, T, -1, exp_heavy, exp_light, exp_flash, FALSE, FALSE, exp_fire), i)
+<<<<<<< HEAD
 
 //still magic related, but a different path
 
@@ -693,3 +772,5 @@
 	armour_penetration = 100
 	temperature = 50
 	flag = "magic"
+=======
+>>>>>>> Updated this old code to fork

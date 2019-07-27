@@ -5,12 +5,21 @@ SUBSYSTEM_DEF(vis_overlays)
 	init_order = INIT_ORDER_VIS
 
 	var/list/vis_overlay_cache
+<<<<<<< HEAD
 	var/list/unique_vis_overlays
 	var/list/currentrun
 
 /datum/controller/subsystem/vis_overlays/Initialize()
 	vis_overlay_cache = list()
 	unique_vis_overlays = list()
+=======
+	var/list/currentrun
+	var/datum/callback/rotate_cb
+
+/datum/controller/subsystem/vis_overlays/Initialize()
+	vis_overlay_cache = list()
+	rotate_cb = CALLBACK(src, .proc/rotate_vis_overlay)
+>>>>>>> Updated this old code to fork
 	return ..()
 
 /datum/controller/subsystem/vis_overlays/fire(resumed = FALSE)
@@ -31,6 +40,7 @@ SUBSYSTEM_DEF(vis_overlays)
 			return
 
 //the "thing" var can be anything with vis_contents which includes images
+<<<<<<< HEAD
 /datum/controller/subsystem/vis_overlays/proc/add_vis_overlay(atom/movable/thing, icon, iconstate, layer, plane, dir, alpha = 255, add_appearance_flags = NONE, unique = FALSE)
 	var/obj/effect/overlay/vis/overlay
 	if(!unique)
@@ -48,6 +58,23 @@ SUBSYSTEM_DEF(vis_overlays)
 		unique_vis_overlays += overlay
 		vis_overlay_cache[cache_id] = overlay
 		. = overlay
+=======
+/datum/controller/subsystem/vis_overlays/proc/add_vis_overlay(atom/movable/thing, icon, iconstate, layer, plane, dir, alpha = 255, add_appearance_flags = NONE)
+	. = "[icon]|[iconstate]|[layer]|[plane]|[dir]|[alpha]|[add_appearance_flags]"
+	var/obj/effect/overlay/vis/overlay = vis_overlay_cache[.]
+	if(!overlay)
+		overlay = new
+		overlay.icon = icon
+		overlay.icon_state = iconstate
+		overlay.layer = layer
+		overlay.plane = plane
+		overlay.dir = dir
+		overlay.alpha = alpha
+		overlay.appearance_flags |= add_appearance_flags
+		vis_overlay_cache[.] = overlay
+	else
+		overlay.unused = 0
+>>>>>>> Updated this old code to fork
 	thing.vis_contents += overlay
 
 	if(!isatom(thing)) // Automatic rotation is not supported on non atoms
@@ -55,6 +82,7 @@ SUBSYSTEM_DEF(vis_overlays)
 
 	if(!thing.managed_vis_overlays)
 		thing.managed_vis_overlays = list(overlay)
+<<<<<<< HEAD
 		RegisterSignal(thing, COMSIG_ATOM_DIR_CHANGE, .proc/rotate_vis_overlay)
 	else
 		thing.managed_vis_overlays += overlay
@@ -71,6 +99,12 @@ SUBSYSTEM_DEF(vis_overlays)
 	return overlay
 
 
+=======
+		RegisterSignal(thing, COMSIG_ATOM_DIR_CHANGE, rotate_cb)
+	else
+		thing.managed_vis_overlays += overlay
+
+>>>>>>> Updated this old code to fork
 /datum/controller/subsystem/vis_overlays/proc/remove_vis_overlay(atom/movable/thing, list/overlays)
 	thing.vis_contents -= overlays
 	if(!isatom(thing))
@@ -81,6 +115,7 @@ SUBSYSTEM_DEF(vis_overlays)
 		UnregisterSignal(thing, COMSIG_ATOM_DIR_CHANGE)
 
 /datum/controller/subsystem/vis_overlays/proc/rotate_vis_overlay(atom/thing, old_dir, new_dir)
+<<<<<<< HEAD
 	if(old_dir == new_dir)
 		return
 	var/rotation = dir2angle(old_dir) - dir2angle(new_dir)
@@ -92,4 +127,12 @@ SUBSYSTEM_DEF(vis_overlays)
 	for(var/i in thing.managed_vis_overlays & unique_vis_overlays)
 		var/obj/effect/overlay/vis/overlay = i
 		overlay.dir = turn(overlay.dir, rotation)
+=======
+	var/rotation = dir2angle(old_dir) - dir2angle(new_dir)
+	var/list/overlays_to_remove = list()
+	for(var/i in thing.managed_vis_overlays)
+		var/obj/effect/overlay/vis/overlay = i
+		add_vis_overlay(thing, overlay.icon, overlay.icon_state, overlay.layer, overlay.plane, turn(overlay.dir, rotation))
+		overlays_to_remove += overlay
+>>>>>>> Updated this old code to fork
 	remove_vis_overlay(thing, overlays_to_remove)

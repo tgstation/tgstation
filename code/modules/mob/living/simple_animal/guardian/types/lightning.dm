@@ -47,7 +47,11 @@
 				successfulshocks = 0
 			if(shockallchains())
 				successfulshocks++
+<<<<<<< HEAD
 			SLEEP_CHECK_DEATH(3)
+=======
+			sleep(3)
+>>>>>>> Updated this old code to fork
 
 /mob/living/simple_animal/hostile/guardian/beam/Recall()
 	. = ..()

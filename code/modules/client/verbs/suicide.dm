@@ -39,7 +39,11 @@
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
+<<<<<<< HEAD
 		set_suicide(TRUE) //need to be called before calling suicide_act as fuck knows what suicide_act will do with your suicider
+=======
+		set_suicide(TRUE)
+>>>>>>> Updated this old code to fork
 		var/obj/item/held_item = get_active_held_item()
 		if(held_item)
 			var/damagetype = held_item.suicide_act(src)
@@ -50,10 +54,13 @@
 					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "shameful_suicide", /datum/mood_event/shameful_suicide)
 					return
 
+<<<<<<< HEAD
 				if(damagetype & MANUAL_SUICIDE_NONLETHAL) //Make sure to call the necessary procs if it does kill later
 					set_suicide(FALSE)
 					return
 
+=======
+>>>>>>> Updated this old code to fork
 				suicide_log()
 
 				var/damage_mod = 0
@@ -241,17 +248,29 @@
 		if(CONSCIOUS)
 			return TRUE
 		if(SOFT_CRIT)
+<<<<<<< HEAD
 			to_chat(src, "<span class='warning'>You can't commit suicide while in a critical condition!</span>")
 		if(UNCONSCIOUS)
 			to_chat(src, "<span class='warning'>You need to be conscious to commit suicide!</span>")
 		if(DEAD)
 			to_chat(src, "<span class='warning'>You're already dead!</span>")
+=======
+			to_chat(src, "You can't commit suicide while in a critical condition!")
+		if(UNCONSCIOUS)
+			to_chat(src, "You need to be conscious to commit suicide!")
+		if(DEAD)
+			to_chat(src, "You're already dead!")
+>>>>>>> Updated this old code to fork
 	return
 
 /mob/living/carbon/canSuicide()
 	if(!..())
 		return
 	if(!(mobility_flags & MOBILITY_USE))	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
+<<<<<<< HEAD
 		to_chat(src, "<span class='warning'>You can't commit suicide whilst immobile! ((You can type Ghost instead however.))</span>")
+=======
+		to_chat(src, "You can't commit suicide whilst immobile! ((You can type Ghost instead however.))")
+>>>>>>> Updated this old code to fork
 		return
 	return TRUE

@@ -20,11 +20,18 @@
 
 	explosion(get_turf(user), 0, 0, 2, 0, TRUE)
 	for(var/mob/living/carbon/human/H in range(2,user))
+<<<<<<< HEAD
 		var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
 		to_chat(H, "<span class='userdanger'>You are blinded by a shower of blood!</span>")
 		H.Stun(20)
 		H.blur_eyes(20)
 		eyes?.applyOrganDamage(5)
+=======
+		to_chat(H, "<span class='userdanger'>You are blinded by a shower of blood!</span>")
+		H.Stun(20)
+		H.blur_eyes(20)
+		H.adjust_eye_damage(5)
+>>>>>>> Updated this old code to fork
 		H.confused += 3
 	for(var/mob/living/silicon/S in range(2,user))
 		to_chat(S, "<span class='userdanger'>Your sensors are disabled by a shower of blood!</span>")

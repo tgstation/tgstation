@@ -1,7 +1,10 @@
 /datum/job/officer
 	title = "Security Officer"
 	flag = OFFICER
+<<<<<<< HEAD
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
+=======
+>>>>>>> Updated this old code to fork
 	department_head = list("Head of Security")
 	department_flag = ENGSEC
 	faction = "Station"
@@ -122,7 +125,11 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 	shoes = /obj/item/clothing/shoes/jackboots
 	l_pocket = /obj/item/restraints/handcuffs
 	r_pocket = /obj/item/assembly/flash/handheld
+<<<<<<< HEAD
 	suit_store = /obj/item/gun/energy/disabler
+=======
+	suit_store = /obj/item/gun/energy/e_gun/advtaser
+>>>>>>> Updated this old code to fork
 	backpack_contents = list(/obj/item/melee/baton/loaded=1)
 
 	backpack = /obj/item/storage/backpack/security
@@ -132,7 +139,11 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 
 	implants = list(/obj/item/implant/mindshield)
 
+<<<<<<< HEAD
 	chameleon_extras = list(/obj/item/gun/energy/disabler, /obj/item/clothing/glasses/hud/security/sunglasses, /obj/item/clothing/head/helmet)
+=======
+	chameleon_extras = list(/obj/item/gun/energy/e_gun/advtaser, /obj/item/clothing/glasses/hud/security/sunglasses, /obj/item/clothing/head/helmet)
+>>>>>>> Updated this old code to fork
 	//The helmet is necessary because /obj/item/clothing/head/helmet/sec is overwritten in the chameleon list by the standard helmet, which has the same name and icon state
 
 

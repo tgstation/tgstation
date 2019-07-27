@@ -134,12 +134,15 @@ LOG_MANIFEST
 ## log mecha actions
 # LOG_MECHA
 
+<<<<<<< HEAD
 ## log virus and actions
 LOG_VIRUS
 
 ## log cloning actions
 LOG_CLONING
 
+=======
+>>>>>>> Updated this old code to fork
 ##Log camera pictures - Must have picture logging enabled
 PICTURE_LOGGING_CAMERA
 
@@ -164,12 +167,18 @@ ID_CONSOLE_JOBSLOT_DELAY 30
 ## allow players to initiate a restart vote
 #ALLOW_VOTE_RESTART
 
+<<<<<<< HEAD
 ## allow players to initiate a mode-change vote
 #ALLOW_VOTE_MODE
 
 ## allow players to initiate a map-change vote
 #ALLOW_VOTE_MAP
 
+=======
+## allow players to initate a mode-change start
+#ALLOW_VOTE_MODE
+
+>>>>>>> Updated this old code to fork
 ## min delay (deciseconds) between voting sessions (default 10 minutes)
 VOTE_DELAY 6000
 
@@ -328,9 +337,12 @@ HARD_POPCAP_MESSAGE The server is currently serving a high number of users, You 
 ## Message for extreme cap
 EXTREME_POPCAP_MESSAGE The server is currently serving a high number of users, find alternative servers.
 
+<<<<<<< HEAD
 ## Uncomment to allow BYOND subscribers to bypassing server connection population cap. (Living player population cap still applies.)
 BYOND_MEMBER_BYPASS_POPCAP
 
+=======
+>>>>>>> Updated this old code to fork
 ## Notify admins when a new player connects for the first x days a player's been around. (0 for first connection only, -1 for never)
 ##	Requres database
 NOTIFY_NEW_PLAYER_AGE 0
@@ -347,9 +359,12 @@ NOTIFY_NEW_PLAYER_ACCOUNT_AGE 1
 ##	Requires database
 #PANIC_BUNKER
 
+<<<<<<< HEAD
 ## The message the Panic Bunker gives when someone is rejected by it
 #PANIC_BUNKER_MESSAGE Sorry, but the server is currently not accepting connections from never before seen players.
 
+=======
+>>>>>>> Updated this old code to fork
 ## If panic bunker is on and a player is rejected (see above), attempt to send them to this connected server (see below) instead.
 ##	You probably want this to be the same as CROSS_SERVER_ADDRESS
 #PANIC_SERVER_ADDRESS byond://address:port
@@ -374,9 +389,15 @@ ANNOUNCE_ADMIN_LOGOUT
 MAPROTATION
 
 ## Map voting
+<<<<<<< HEAD
 ## Allows players to vote with their preffered map setting
 ## When it's set to zero, the map will be randomly picked each round
 PREFERENCE_MAP_VOTING 1
+=======
+## Allows players to vote for their preffered map
+## When it's set to zero, the map will be randomly picked each round
+ALLOW_MAP_VOTING 1
+>>>>>>> Updated this old code to fork
 
 ## Map rotate chance delta
 ## This is the chance of map rotation factored to the round length.
@@ -391,6 +412,7 @@ AUTOADMIN_RANK Game Master
 ## Uncomment to automatically give that admin rank to all players
 #AUTOADMIN
 
+<<<<<<< HEAD
 
 ## Uncomment to automatically deadmin players when the game starts.
 #AUTO_DEADMIN_PLAYERS
@@ -404,6 +426,8 @@ AUTOADMIN_RANK Game Master
 #AUTO_DEADMIN_SILICONS
 
 
+=======
+>>>>>>> Updated this old code to fork
 ## CLIENT VERSION CONTROL
 ## This allows you to configure the minimum required client version, as well as a warning version, and message for both.
 ## These trigger for any version below (non-inclusive) the given version, so 510 triggers on 509 or lower.
@@ -454,7 +478,11 @@ MINUTE_CLICK_LIMIT 400
 ## If using TGS4, the string option can be set as a chat channel tag to limit the message to channels of that tag type (case-sensitive)
 ## i.e. CHAT_ANNOUNCE_NEW_GAME chat_channel_tag
 
+<<<<<<< HEAD
 ## Send a message with the station name starting a new game. Also required for the notify function
+=======
+## Send a message with the station name starting a new game
+>>>>>>> Updated this old code to fork
 #CHAT_ANNOUNCE_NEW_GAME
 
 
@@ -488,6 +516,7 @@ DISABLE_HIGH_POP_MC_MODE_AMOUNT 60
 #ROUNDS_UNTIL_HARD_RESTART 10
 
 
+<<<<<<< HEAD
 ##Default view size, in tiles.
 ##	By default, this is 15x15, which gets simplified to 7 by byond
 ##  15x15 would be the standard square view. 21x15 is what goonstation uses for widescreen.
@@ -499,3 +528,10 @@ DEFAULT_VIEW 15x15
 ## The alternative square viewport size if you're using a widescreen view size
 ## You probably shouldn't ever be changing this, but it's here if you want to.
 DEFAULT_VIEW_SQUARE 15x15
+=======
+##Default screen resolution, in tiles.
+##	By default, this is 15x15, which gets simplified to 7 by BYOND, as it is a 1:1 screen ratio.
+##	For reference, Goonstation uses a resolution of 21x15 for it's widescreen mode.
+##	Do note that changing this value will affect the title screen. The title screen will have to be updated manually if this is changed.
+DEFAULT_VIEW 15x15
+>>>>>>> Updated this old code to fork

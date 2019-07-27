@@ -61,7 +61,11 @@
 /datum/nanite_program/purging/active_effect()
 	host_mob.adjustToxLoss(-1)
 	for(var/datum/reagent/R in host_mob.reagents.reagent_list)
+<<<<<<< HEAD
 		host_mob.reagents.remove_reagent(R.type,1)
+=======
+		host_mob.reagents.remove_reagent(R.id,1)
+>>>>>>> Updated this old code to fork
 
 /datum/nanite_program/brain_heal
 	name = "Neural Regeneration"
@@ -70,6 +74,7 @@
 	rogue_types = list(/datum/nanite_program/brain_decay)
 
 /datum/nanite_program/brain_heal/check_conditions()
+<<<<<<< HEAD
 	var/problems = FALSE
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
@@ -78,6 +83,11 @@
 	if(host_mob.getBrainLoss())
 		problems = TRUE
 	return problems ? ..() : FALSE
+=======
+	if(!host_mob.getBrainLoss())
+		return FALSE
+	return ..()
+>>>>>>> Updated this old code to fork
 
 /datum/nanite_program/brain_heal/active_effect()
 	host_mob.adjustBrainLoss(-1, TRUE)
@@ -160,7 +170,11 @@
 /datum/nanite_program/purging_advanced/active_effect()
 	host_mob.adjustToxLoss(-1)
 	for(var/datum/reagent/toxin/R in host_mob.reagents.reagent_list)
+<<<<<<< HEAD
 		host_mob.reagents.remove_reagent(R.type,1)
+=======
+		host_mob.reagents.remove_reagent(R.id,1)
+>>>>>>> Updated this old code to fork
 
 /datum/nanite_program/regenerative_advanced
 	name = "Bio-Reconstruction"
@@ -192,6 +206,7 @@
 	rogue_types = list(/datum/nanite_program/brain_decay, /datum/nanite_program/brain_misfire)
 
 /datum/nanite_program/brain_heal_advanced/check_conditions()
+<<<<<<< HEAD
 	var/problems = FALSE
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
@@ -200,6 +215,11 @@
 	if(host_mob.getBrainLoss())
 		problems = TRUE
 	return problems ? ..() : FALSE
+=======
+	if(!host_mob.getBrainLoss())
+		return FALSE
+	return ..()
+>>>>>>> Updated this old code to fork
 
 /datum/nanite_program/brain_heal_advanced/active_effect()
 	host_mob.adjustBrainLoss(-2, TRUE)
@@ -225,7 +245,11 @@
 	if(!iscarbon(host_mob)) //nonstandard biology
 		return FALSE
 	var/mob/living/carbon/C = host_mob
+<<<<<<< HEAD
 	if(C.suiciding || C.hellbound || HAS_TRAIT(C, TRAIT_HUSK)) //can't revive
+=======
+	if(C.suiciding || C.hellbound || C.has_trait(TRAIT_HUSK)) //can't revive
+>>>>>>> Updated this old code to fork
 		return FALSE
 	if((world.time - C.timeofdeath) > 1800) //too late
 		return FALSE

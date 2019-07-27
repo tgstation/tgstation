@@ -89,7 +89,10 @@
 		say("Processing hub calibration to target...")
 
 		calibrating = 1
+<<<<<<< HEAD
 		power_station.update_icon()
+=======
+>>>>>>> Updated this old code to fork
 		spawn(50 * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
 			calibrating = 0
 			if(check_hub_connection())
@@ -97,7 +100,10 @@
 				say("Calibration complete.")
 			else
 				say("Error: Unable to detect hub.")
+<<<<<<< HEAD
 			power_station.update_icon()
+=======
+>>>>>>> Updated this old code to fork
 			updateDialog()
 
 	updateDialog()

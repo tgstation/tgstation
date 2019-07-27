@@ -57,7 +57,11 @@
 	return automatic
 
 /obj/item/pneumatic_cannon/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
+=======
+	..()
+>>>>>>> Updated this old code to fork
 	var/list/out = list()
 	if(!in_range(user, src))
 		out += "<span class='notice'>You'll need to get closer to see any more.</span>"
@@ -67,7 +71,11 @@
 		CHECK_TICK
 	if(tank)
 		out += "<span class='notice'>[icon2html(tank, user)] It has \a [tank] mounted onto it.</span>"
+<<<<<<< HEAD
 	. += out.Join("\n")
+=======
+	to_chat(user, out.Join("<br>"))
+>>>>>>> Updated this old code to fork
 
 /obj/item/pneumatic_cannon/attackby(obj/item/W, mob/user, params)
 	if(user.a_intent == INTENT_HARM)
@@ -152,7 +160,11 @@
 	if(tank && !tank.air_contents.remove(gasPerThrow * pressureSetting))
 		to_chat(user, "<span class='warning'>\The [src] lets out a weak hiss and doesn't react!</span>")
 		return
+<<<<<<< HEAD
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(75) && clumsyCheck && iscarbon(user))
+=======
+	if(user.has_trait(TRAIT_CLUMSY) && prob(75) && clumsyCheck && iscarbon(user))
+>>>>>>> Updated this old code to fork
 		var/mob/living/carbon/C = user
 		C.visible_message("<span class='warning'>[C] loses [C.p_their()] grip on [src], causing it to go off!</span>", "<span class='userdanger'>[src] slips out of your hands and goes off!</span>")
 		C.dropItemToGround(src, TRUE)
@@ -217,12 +229,22 @@
 		loadedWeightClass -= I.w_class
 	else if (A == tank)
 		tank = null
+<<<<<<< HEAD
 		update_icon()
 
 /obj/item/pneumatic_cannon/ghetto //Obtainable by improvised methods; more gas per use, less capacity
 	name = "improvised pneumatic cannon"
 	desc = "A gas-powered, object-firing cannon made out of common parts."
 	force = 5
+=======
+		update_icons()
+
+/obj/item/pneumatic_cannon/ghetto //Obtainable by improvised methods; more gas per use, less capacity, but smaller
+	name = "improvised pneumatic cannon"
+	desc = "A gas-powered, object-firing cannon made out of common parts."
+	force = 5
+	w_class = WEIGHT_CLASS_NORMAL
+>>>>>>> Updated this old code to fork
 	maxWeightClass = 7
 	gasPerThrow = 5
 
@@ -242,13 +264,23 @@
 			return
 		to_chat(user, "<span class='notice'>You hook \the [thetank] up to \the [src].</span>")
 		tank = thetank
+<<<<<<< HEAD
 	update_icon()
 
 /obj/item/pneumatic_cannon/update_icon()
+=======
+	update_icons()
+
+/obj/item/pneumatic_cannon/proc/update_icons()
+>>>>>>> Updated this old code to fork
 	cut_overlays()
 	if(!tank)
 		return
 	add_overlay(tank.icon_state)
+<<<<<<< HEAD
+=======
+	update_icon()
+>>>>>>> Updated this old code to fork
 
 /obj/item/pneumatic_cannon/proc/fill_with_type(type, amount)
 	if(!ispath(type, /obj) && !ispath(type, /mob))
@@ -322,11 +354,19 @@
 
 /obj/item/storage/backpack/magspear_quiver/ComponentInitialize()
 	. = ..()
+<<<<<<< HEAD
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 20
 	STR.max_combined_w_class = 40
 	STR.display_numerical_stacking = TRUE
 	STR.set_holdable(list(
+=======
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 20
+	STR.max_combined_w_class = 40
+	STR.display_numerical_stacking = TRUE
+	STR.can_hold = typecacheof(list(
+>>>>>>> Updated this old code to fork
 		/obj/item/throwing_star/magspear
 		))
 

@@ -15,8 +15,13 @@
 
 /obj/item/holochip/examine(mob/user)
 	. = ..()
+<<<<<<< HEAD
 	. += {"<span class='notice'>It's loaded with [credits] credit[( credits > 1 ) ? "s" : ""]</span>\n
 	<span class='notice'>Alt-Click to split.</span>"}
+=======
+	to_chat(user, "<span class='notice'>It's loaded with [credits] credit[( credits > 1 ) ? "s" : ""]</span>")
+	to_chat(user, "<span class='notice'>Alt-Click to split.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/item/holochip/get_item_credit_value()
 	return credits
@@ -104,4 +109,8 @@
 	var/wipe_chance = 60 / severity
 	if(prob(wipe_chance))
 		visible_message("<span class='warning'>[src] fizzles and disappears!</span>")
+<<<<<<< HEAD
 		qdel(src) //rip cash
+=======
+		qdel(src) //rip cash
+>>>>>>> Updated this old code to fork

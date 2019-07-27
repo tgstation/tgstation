@@ -17,7 +17,11 @@
 	return TRUE
 
 /obj/item/onetankbomb/examine(mob/user)
+<<<<<<< HEAD
 	return bombtank.examine(user)
+=======
+	bombtank.examine(user)
+>>>>>>> Updated this old code to fork
 
 /obj/item/onetankbomb/update_icon()
 	cut_overlays()
@@ -56,6 +60,13 @@
 		add_fingerprint(user)
 		return TRUE
 
+<<<<<<< HEAD
+=======
+
+/obj/item/onetankbomb/analyzer_act(mob/living/user, obj/item/I)
+	bombtank.analyzer_act(user, I)
+
+>>>>>>> Updated this old code to fork
 /obj/item/onetankbomb/attack_self(mob/user) //pressing the bomb accesses its assembly
 	bombassembly.attack_self(user, TRUE)
 	add_fingerprint(user)
@@ -196,9 +207,12 @@
 		return
 	T.assume_air(removed)
 	air_update_turf()
+<<<<<<< HEAD
 
 /obj/item/onetankbomb/return_analyzable_air()
 	if(bombtank)
 		return bombtank.return_analyzable_air()
 	else
 		return null
+=======
+>>>>>>> Updated this old code to fork

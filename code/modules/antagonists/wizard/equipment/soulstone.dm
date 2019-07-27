@@ -13,7 +13,10 @@
 
 	var/old_shard = FALSE
 	var/spent = FALSE
+<<<<<<< HEAD
 	var/purified = FALSE
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/soulstone/proc/was_used()
 	if(old_shard)
@@ -26,12 +29,15 @@
 /obj/item/soulstone/anybody
 	usability = TRUE
 
+<<<<<<< HEAD
 /obj/item/soulstone/anybody/purified
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "purified_soulstone"
 	purified = TRUE
 
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/item/soulstone/anybody/chaplain
 	name = "mysterious old shard"
 	old_shard = TRUE
@@ -42,6 +48,7 @@
 		to_chat(user, "<span class='danger'>An overwhelming feeling of dread comes over you as you pick up the soulstone. It would be wise to be rid of this quickly.</span>")
 
 /obj/item/soulstone/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(usability || iscultist(user) || iswizard(user) || isobserver(user))
 		if (old_shard)
@@ -51,6 +58,17 @@
 		. += "<span class='cult'>The captured soul can be placed into a construct shell to produce a construct, or released from the stone as a shade.</span>"
 		if(spent)
 			. += "<span class='cult'>This shard is spent; it is now just a creepy rock.</span>"
+=======
+	..()
+	if(usability || iscultist(user) || iswizard(user) || isobserver(user))
+		if (old_shard)
+			to_chat(user, "<span class='cult'>A soulstone, used to capture a soul, either from dead humans or from freed shades.</span>")
+		else
+			to_chat(user, "<span class='cult'>A soulstone, used to capture souls, either from unconscious or sleeping humans or from freed shades.</span>")
+		to_chat(user, "<span class='cult'>The captured soul can be placed into a construct shell to produce a construct, or released from the stone as a shade.</span>")
+		if(spent)
+			to_chat(user, "<span class='cult'>This shard is spent; it is now just a creepy rock.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/item/soulstone/Destroy() //Stops the shade from being qdel'd immediately and their ghost being sent back to the arrival shuttle.
 	for(var/mob/living/simple_animal/shade/A in src)
@@ -73,9 +91,12 @@
 		if(iscultist(user))
 			to_chat(user, "<span class='cultlarge'>\"Come now, do not capture your bretheren's soul.\"</span>")
 			return
+<<<<<<< HEAD
 	if(purified && iscultist(user))
 		to_chat(user, "<span class='warning'>Holy magic resides within the stone, you cannot use it.</span>")
 		return
+=======
+>>>>>>> Updated this old code to fork
 	log_combat(user, M, "captured [M.name]'s soul", src)
 	transfer_soul("VICTIM", M, user)
 
@@ -88,9 +109,12 @@
 		user.Unconscious(100)
 		to_chat(user, "<span class='userdanger'>Your body is wracked with debilitating pain!</span>")
 		return
+<<<<<<< HEAD
 	if(purified && iscultist(user))
 		to_chat(user, "<span class='warning'>Holy magic resides within the stone, you cannot use it.</span>")
 		return
+=======
+>>>>>>> Updated this old code to fork
 	release_shades(user)
 
 /obj/item/soulstone/proc/release_shades(mob/user)
@@ -99,12 +123,16 @@
 		A.mobility_flags = MOBILITY_FLAGS_DEFAULT
 		A.forceMove(get_turf(user))
 		A.cancel_camera()
+<<<<<<< HEAD
 		if(purified)
 			icon_state = "purified_soulstone"
 			A.icon_state = "ghost1"
 			A.name = "Purified [initial(A.name)]"
 		else
 			icon_state = "soulstone"
+=======
+		icon_state = "soulstone"
+>>>>>>> Updated this old code to fork
 		name = initial(name)
 		if(iswizard(user) || usability)
 			to_chat(A, "<b>You have been released from your prison, but you are still bound to [user.real_name]'s will. Help [user.p_them()] succeed in [user.p_their()] goals at all costs.</b>")
@@ -120,6 +148,7 @@
 	desc = "A wicked machine used by those skilled in magical arts. It is inactive."
 
 /obj/structure/constructshell/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(iscultist(user) || iswizard(user) || user.stat == DEAD)
 		. += {"<span class='cult'>A construct shell, used to house bound souls from a soulstone.\n
@@ -127,10 +156,20 @@
 		An <b>Artificer</b>, which can produce <b>more shells and soulstones</b>, as well as fortifications.\n
 		A <b>Wraith</b>, which does high damage and can jaunt through walls, though it is quite fragile.\n
 		A <b>Juggernaut</b>, which is very hard to kill and can produce temporary walls, but is slow.</span>"}
+=======
+	..()
+	if(iscultist(user) || iswizard(user) || user.stat == DEAD)
+		to_chat(user, "<span class='cult'>A construct shell, used to house bound souls from a soulstone.</span>")
+		to_chat(user, "<span class='cult'>Placing a soulstone with a soul into this shell allows you to produce your choice of the following:</span>")
+		to_chat(user, "<span class='cult'>An <b>Artificer</b>, which can produce <b>more shells and soulstones</b>, as well as fortifications.</span>")
+		to_chat(user, "<span class='cult'>A <b>Wraith</b>, which does high damage and can jaunt through walls, though it is quite fragile.</span>")
+		to_chat(user, "<span class='cult'>A <b>Juggernaut</b>, which is very hard to kill and can produce temporary walls, but is slow.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/structure/constructshell/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/soulstone))
 		var/obj/item/soulstone/SS = O
+<<<<<<< HEAD
 		if(!iscultist(user) && !iswizard(user) && !SS.purified)
 			to_chat(user, "<span class='danger'>An overwhelming feeling of dread comes over you as you attempt to place the soulstone into the shell. It would be wise to be rid of this quickly.</span>")
 			user.Dizzy(30)
@@ -138,6 +177,12 @@
 		if(SS.purified && iscultist(user))
 			to_chat(user, "<span class='warning'>Holy magic resides within the stone, you cannot use it.</span>")
 			return
+=======
+		if(!iscultist(user) && !iswizard(user) && !SS.usability)
+			to_chat(user, "<span class='danger'>An overwhelming feeling of dread comes over you as you attempt to place the soulstone into the shell. It would be wise to be rid of this quickly.</span>")
+			user.Dizzy(30)
+			return
+>>>>>>> Updated this old code to fork
 		SS.transfer_soul("CONSTRUCT",src,user)
 		SS.was_used()
 	else
@@ -196,10 +241,14 @@
 				T.status_flags |= GODMODE
 				T.mobility_flags = NONE
 				T.health = T.maxHealth
+<<<<<<< HEAD
 				if(purified)
 					icon_state = "purified_soulstone2"
 				else
 					icon_state = "soulstone2"
+=======
+				icon_state = "soulstone2"
+>>>>>>> Updated this old code to fork
 				name = "soulstone: Shade of [T.real_name]"
 				to_chat(T, "<span class='notice'>Your soul has been captured by the soulstone. Its arcane energies are reknitting your ethereal form.</span>")
 				if(user != T)
@@ -214,6 +263,7 @@
 					return
 				switch(construct_class)
 					if("Juggernaut")
+<<<<<<< HEAD
 						if(iscultist(user) || iswizard(user))
 							makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored, A, user, 0, T.loc)
 						else
@@ -237,6 +287,19 @@
 								makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/angelic, A, user, 0, T.loc)
 							else
 								makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/noncult, A, user, 0, T.loc)
+=======
+						makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored, A, user, 0, T.loc)
+
+					if("Wraith")
+						makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, A, user, 0, T.loc)
+
+					if("Artificer")
+						if(iscultist(user) || iswizard(user))
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder, A, user, 0, T.loc)
+
+						else
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/noncult, A, user, 0, T.loc)
+>>>>>>> Updated this old code to fork
 				for(var/datum/mind/B in SSticker.mode.cult)
 					if(B == A.mind)
 						SSticker.mode.cult -= A.mind
@@ -248,8 +311,11 @@
 
 
 /proc/makeNewConstruct(mob/living/simple_animal/hostile/construct/ctype, mob/target, mob/stoner = null, cultoverride = 0, loc_override = null)
+<<<<<<< HEAD
 	if(QDELETED(target))
 		return
+=======
+>>>>>>> Updated this old code to fork
 	var/mob/living/simple_animal/hostile/construct/newstruct = new ctype((loc_override) ? (loc_override) : (get_turf(target)))
 	if(stoner)
 		newstruct.faction |= "[REF(stoner)]"
@@ -289,10 +355,14 @@
 		SSticker.mode.add_cultist(S.mind, 0)
 	S.cancel_camera()
 	name = "soulstone: Shade of [T.real_name]"
+<<<<<<< HEAD
 	if(purified)
 		icon_state = "purified_soulstone2"
 	else
 		icon_state = "soulstone2"
+=======
+	icon_state = "soulstone2"
+>>>>>>> Updated this old code to fork
 	if(U && (iswizard(U) || usability))
 		to_chat(S, "Your soul has been captured! You are now bound to [U.real_name]'s will. Help [U.p_them()] succeed in [U.p_their()] goals at all costs.")
 	else if(U && iscultist(U))
@@ -310,7 +380,11 @@
 			break
 
 	if(!chosen_ghost)	//Failing that, we grab a ghost
+<<<<<<< HEAD
 		var/list/consenting_candidates = pollGhostCandidates("Would you like to play as a Shade?", "Cultist", null, ROLE_CULTIST, 50, POLL_IGNORE_SHADE)
+=======
+		var/list/consenting_candidates = pollGhostCandidates("Would you like to play as a Shade?", "Cultist", null, ROLE_CULTIST, poll_time = 50)
+>>>>>>> Updated this old code to fork
 		if(consenting_candidates.len)
 			chosen_ghost = pick(consenting_candidates)
 	if(!T)

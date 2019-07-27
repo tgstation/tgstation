@@ -3,8 +3,12 @@
 /obj/mecha/proc/GrantActions(mob/living/user, human_occupant = 0)
 	if(human_occupant)
 		eject_action.Grant(user, src)
+<<<<<<< HEAD
 	if(enclosed)
 		internals_action.Grant(user, src)
+=======
+	internals_action.Grant(user, src)
+>>>>>>> Updated this old code to fork
 	cycle_action.Grant(user, src)
 	lights_action.Grant(user, src)
 	stats_action.Grant(user, src)
@@ -44,7 +48,12 @@
 		return
 	if(!chassis || chassis.occupant != owner)
 		return
+<<<<<<< HEAD
 	chassis.container_resist(chassis.occupant)
+=======
+	chassis.go_out()
+
+>>>>>>> Updated this old code to fork
 
 /datum/action/innate/mecha/mech_toggle_internals
 	name = "Toggle Internal Airtank Usage"
@@ -164,6 +173,7 @@
 		chassis.log_message("Toggled thrusters.", LOG_MECHA)
 		chassis.occupant_message("<font color='[chassis.thrusters_active ?"blue":"red"]'>Thrusters [chassis.thrusters_active ?"en":"dis"]abled.")
 
+<<<<<<< HEAD
 /datum/action/innate/mecha/mech_defense_mode
 	name = "Toggle an energy shield that blocks all attacks from the faced direction at a heavy power cost."
 	button_icon_state = "mech_defense_mode_off"
@@ -171,6 +181,29 @@
 
 /datum/action/innate/mecha/mech_defense_mode/Activate(forced_state = FALSE)
 	SEND_SIGNAL(chassis, COMSIG_MECHA_ACTION_ACTIVATE, args) ///Signal sent to the mech, to be handed to the shield. See durand.dm for more details
+=======
+
+/datum/action/innate/mecha/mech_defence_mode
+	name = "Toggle Defence Mode"
+	button_icon_state = "mech_defense_mode_off"
+
+/datum/action/innate/mecha/mech_defence_mode/Activate(forced_state = null)
+	if(!owner || !chassis || chassis.occupant != owner)
+		return
+	if(!isnull(forced_state))
+		chassis.defence_mode = forced_state
+	else
+		chassis.defence_mode = !chassis.defence_mode
+	button_icon_state = "mech_defense_mode_[chassis.defence_mode ? "on" : "off"]"
+	if(chassis.defence_mode)
+		chassis.deflect_chance = chassis.defence_mode_deflect_chance
+		chassis.occupant_message("<span class='notice'>You enable [chassis] defence mode.</span>")
+	else
+		chassis.deflect_chance = initial(chassis.deflect_chance)
+		chassis.occupant_message("<span class='danger'>You disable [chassis] defence mode.</span>")
+	chassis.log_message("Toggled defence mode.", LOG_MECHA)
+	UpdateButtonIcon()
+>>>>>>> Updated this old code to fork
 
 /datum/action/innate/mecha/mech_overload_mode
 	name = "Toggle leg actuators overload"

@@ -13,12 +13,15 @@
 	var/should_give_codewords = TRUE
 	var/should_equip = TRUE
 	var/traitor_kind = TRAITOR_HUMAN //Set on initial assignment
+<<<<<<< HEAD
 	var/datum/syndicate_contract/current_contract
 	var/list/datum/syndicate_contract/assigned_contracts = list()
 	var/list/assigned_targets = list()
 	var/contract_TC_payed_out = 0
 	var/contract_TC_to_redeem = 0
 	var/datum/contractor_hub/contractor_hub
+=======
+>>>>>>> Updated this old code to fork
 	can_hijack = HIJACK_HIJACKER
 
 /datum/antagonist/traitor/on_gain()
@@ -30,6 +33,7 @@
 	if(give_objectives)
 		forge_traitor_objectives()
 	finalize_traitor()
+<<<<<<< HEAD
 	RegisterSignal(owner.current, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
 	..()
 
@@ -80,6 +84,10 @@
 	if (total < lowest_TC_threshold)
 		lowest_paying_contract.contract.payout_bonus += (lowest_TC_threshold - total)
 
+=======
+	..()
+
+>>>>>>> Updated this old code to fork
 /datum/antagonist/traitor/apply_innate_effects()
 	if(owner.assigned_role == "Clown")
 		var/mob/living/carbon/human/traitor_mob = owner.current
@@ -102,19 +110,26 @@
 		A.verbs -= /mob/living/silicon/ai/proc/choose_modules
 		A.malf_picker.remove_malf_verbs(A)
 		qdel(A.malf_picker)
+<<<<<<< HEAD
 	UnregisterSignal(owner.current, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
+=======
+
+>>>>>>> Updated this old code to fork
 	SSticker.mode.traitors -= owner
 	if(!silent && owner.current)
 		to_chat(owner.current,"<span class='userdanger'> You are no longer the [special_role]! </span>")
 	owner.special_role = null
 	..()
 
+<<<<<<< HEAD
 /datum/antagonist/traitor/proc/handle_hearing(datum/source, list/hearing_args)
 	var/message = hearing_args[HEARING_MESSAGE]
 	message = GLOB.syndicate_code_phrase_regex.Replace(message, "<span class='blue'>$1</span>")
 	message = GLOB.syndicate_code_response_regex.Replace(message, "<span class='red'>$1</span>")
 	hearing_args[HEARING_MESSAGE] = message
 
+=======
+>>>>>>> Updated this old code to fork
 /datum/antagonist/traitor/proc/add_objective(datum/objective/O)
 	objectives += O
 
@@ -257,7 +272,11 @@
 			.=2
 
 /datum/antagonist/traitor/greet()
+<<<<<<< HEAD
 	to_chat(owner.current, "<span class='alertsyndie'>You are the [owner.special_role].</span>")
+=======
+	to_chat(owner.current, "<B><font size=3 color=red>You are the [owner.special_role].</font></B>")
+>>>>>>> Updated this old code to fork
 	owner.announce_objectives()
 	if(should_give_codewords)
 		give_codewords()
@@ -302,6 +321,7 @@
 		return
 	var/mob/traitor_mob=owner.current
 
+<<<<<<< HEAD
 	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
 	var/responses = jointext(GLOB.syndicate_code_response, ", ")
 
@@ -314,6 +334,16 @@
 
 	to_chat(traitor_mob, "Use the codewords during regular conversation to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
 	to_chat(traitor_mob, "<span class='alertwarning'>You memorize the codewords, allowing you to recognise them when heard.</span>")
+=======
+	to_chat(traitor_mob, "<U><B>The Syndicate provided you with the following information on how to identify their agents:</B></U>")
+	to_chat(traitor_mob, "<B>Code Phrase</B>: <span class='danger'>[GLOB.syndicate_code_phrase]</span>")
+	to_chat(traitor_mob, "<B>Code Response</B>: <span class='danger'>[GLOB.syndicate_code_response]</span>")
+
+	antag_memory += "<b>Code Phrase</b>: [GLOB.syndicate_code_phrase]<br>"
+	antag_memory += "<b>Code Response</b>: [GLOB.syndicate_code_response]<br>"
+
+	to_chat(traitor_mob, "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
+>>>>>>> Updated this old code to fork
 
 /datum/antagonist/traitor/proc/add_law_zero()
 	var/mob/living/silicon/ai/killer = owner.current
@@ -409,8 +439,11 @@
 
 	var/special_role_text = lowertext(name)
 
+<<<<<<< HEAD
 	result += contractor_round_end()
 
+=======
+>>>>>>> Updated this old code to fork
 	if(traitorwin)
 		result += "<span class='greentext'>The [special_role_text] was successful!</span>"
 	else
@@ -419,6 +452,7 @@
 
 	return result.Join("<br>")
 
+<<<<<<< HEAD
 /// Proc detailing contract kit buys/completed contracts/additional info
 /datum/antagonist/traitor/proc/contractor_round_end()
 	var result = ""
@@ -467,6 +501,11 @@
 
 	return message
 
+=======
+/datum/antagonist/traitor/roundend_report_footer()
+	return "<br><b>The code phrases were:</b> <span class='codephrase'>[GLOB.syndicate_code_phrase]</span><br>\
+		<b>The code responses were:</b> <span class='codephrase'>[GLOB.syndicate_code_response]</span><br>"
+>>>>>>> Updated this old code to fork
 
 /datum/antagonist/traitor/is_gamemode_hero()
 	return SSticker.mode.name == "traitor"

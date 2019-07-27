@@ -6,7 +6,10 @@ RPD
 #define ATMOS_CATEGORY 0
 #define DISPOSALS_CATEGORY 1
 #define TRANSIT_CATEGORY 2
+<<<<<<< HEAD
 #define PLUMBING_CATEGORY 3
+=======
+>>>>>>> Updated this old code to fork
 
 #define BUILD_MODE 1
 #define WRENCH_MODE 2
@@ -73,6 +76,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	)
 ))
 
+<<<<<<< HEAD
 GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 	"Fluid Ducts" = list(
 		new /datum/pipe_info/plumbing("Duct",				/obj/machinery/duct, PIPE_ONEDIR),
@@ -80,6 +84,8 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 	)
 ))
 
+=======
+>>>>>>> Updated this old code to fork
 /datum/pipe_info
 	var/name
 	var/icon_state
@@ -180,6 +186,7 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 	if(dt == PIPE_UNARY_FLIPPABLE)
 		icon_state = "[icon_state]_preview"
 
+<<<<<<< HEAD
 /datum/pipe_info/plumbing/New(label, obj/path, dt=PIPE_UNARY)
 	name = label
 	id = path
@@ -189,6 +196,8 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 /datum/pipe_info/plumbing/multilayer //exists as identifier so we can see the difference between multi_layer and just ducts properly later on
 
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/item/pipe_dispenser
 	name = "Rapid Piping Device (RPD)"
 	desc = "A device used to rapidly pipe things."
@@ -200,7 +209,11 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 	throw_speed = 1
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=75000, /datum/material/glass=37500)
+=======
+	materials = list(MAT_METAL=75000, MAT_GLASS=37500)
+>>>>>>> Updated this old code to fork
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 	var/datum/effect_system/spark_spread/spark_system
@@ -211,19 +224,29 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 	var/atmos_build_speed = 5 //deciseconds (500ms)
 	var/disposal_build_speed = 5
 	var/transit_build_speed = 5
+<<<<<<< HEAD
 	var/plumbing_build_speed = 5
+=======
+>>>>>>> Updated this old code to fork
 	var/destroy_speed = 5
 	var/paint_speed = 5
 	var/category = ATMOS_CATEGORY
 	var/piping_layer = PIPING_LAYER_DEFAULT
+<<<<<<< HEAD
 	var/ducting_layer = DUCT_LAYER_DEFAULT
+=======
+>>>>>>> Updated this old code to fork
 	var/datum/pipe_info/recipe
 	var/static/datum/pipe_info/first_atmos
 	var/static/datum/pipe_info/first_disposal
 	var/static/datum/pipe_info/first_transit
+<<<<<<< HEAD
 	var/static/datum/pipe_info/first_plumbing
 	var/mode = BUILD_MODE | PAINT_MODE | DESTROY_MODE | WRENCH_MODE
 	var/locked = FALSE //wheter we can change categories. Useful for the plumber
+=======
+	var/mode = BUILD_MODE | PAINT_MODE | DESTROY_MODE | WRENCH_MODE
+>>>>>>> Updated this old code to fork
 
 /obj/item/pipe_dispenser/Initialize()
 	. = ..()
@@ -253,10 +276,13 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 	playsound(get_turf(user), 'sound/items/deconstruct.ogg', 50, 1)
 	return(BRUTELOSS)
 
+<<<<<<< HEAD
 /obj/item/pipe_dispenser/ui_base_html(html)
 	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/pipes)
 	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/item/pipe_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -271,13 +297,20 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 	var/list/data = list(
 		"category" = category,
 		"piping_layer" = piping_layer,
+<<<<<<< HEAD
 		"ducting_layer" = ducting_layer,
+=======
+>>>>>>> Updated this old code to fork
 		"preview_rows" = recipe.get_preview(p_dir),
 		"categories" = list(),
 		"selected_color" = paint_color,
 		"paint_colors" = GLOB.pipe_paint_colors,
+<<<<<<< HEAD
 		"mode" = mode,
 		"locked" = locked
+=======
+		"mode" = mode
+>>>>>>> Updated this old code to fork
 	)
 
 	var/list/recipes
@@ -288,8 +321,11 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 			recipes = GLOB.disposal_pipe_recipes
 		if(TRANSIT_CATEGORY)
 			recipes = GLOB.transit_tube_recipes
+<<<<<<< HEAD
 		if(PLUMBING_CATEGORY)
 			recipes = GLOB.fluid_duct_recipes
+=======
+>>>>>>> Updated this old code to fork
 	for(var/c in recipes)
 		var/list/cat = recipes[c]
 		var/list/r = list()
@@ -303,7 +339,11 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 /obj/item/pipe_dispenser/ui_act(action, params)
 	if(..())
 		return
+<<<<<<< HEAD
 	if(!usr.canUseTopic(src, BE_CLOSE))
+=======
+	if(!usr.canUseTopic(src))
+>>>>>>> Updated this old code to fork
 		return
 	var/playeffect = TRUE
 	switch(action)
@@ -318,13 +358,17 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 					recipe = first_atmos
 				if(TRANSIT_CATEGORY)
 					recipe = first_transit
+<<<<<<< HEAD
 				if(PLUMBING_CATEGORY)
 					recipe = first_plumbing
+=======
+>>>>>>> Updated this old code to fork
 			p_dir = NORTH
 			playeffect = FALSE
 		if("piping_layer")
 			piping_layer = text2num(params["piping_layer"])
 			playeffect = FALSE
+<<<<<<< HEAD
 		if("ducting_layer")
 			ducting_layer = text2num(params["ducting_layer"])
 			playeffect = FALSE
@@ -332,6 +376,12 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 			var/static/list/recipes
 			if(!recipes)
 				recipes = GLOB.disposal_pipe_recipes + GLOB.atmos_pipe_recipes + GLOB.transit_tube_recipes + GLOB.fluid_duct_recipes
+=======
+		if("pipe_type")
+			var/static/list/recipes
+			if(!recipes)
+				recipes = GLOB.disposal_pipe_recipes + GLOB.atmos_pipe_recipes + GLOB.transit_tube_recipes
+>>>>>>> Updated this old code to fork
 			recipe = recipes[params["category"]][text2num(params["pipe_type"])]
 			p_dir = NORTH
 		if("setdir")
@@ -363,7 +413,11 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 	//make sure what we're clicking is valid for the current category
 	var/static/list/make_pipe_whitelist
 	if(!make_pipe_whitelist)
+<<<<<<< HEAD
 		make_pipe_whitelist = typecacheof(list(/obj/structure/lattice, /obj/structure/girder, /obj/item/pipe, /obj/structure/window, /obj/structure/grille))
+=======
+		make_pipe_whitelist = typecacheof(list(/obj/structure/lattice, /obj/structure/girder, /obj/item/pipe))
+>>>>>>> Updated this old code to fork
 	var/can_make_pipe = (isturf(A) || is_type_in_typecache(A, make_pipe_whitelist))
 
 	. = FALSE
@@ -482,6 +536,7 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 						if(mode&WRENCH_MODE)
 							tube.wrench_act(user, src)
 					return
+<<<<<<< HEAD
 			if(PLUMBING_CATEGORY) //Making pancakes
 				if(!can_make_pipe)
 					return ..()
@@ -503,6 +558,8 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 					D.add_fingerprint(usr)
 					if(mode & WRENCH_MODE)
 						D.wrench_act(user, src)
+=======
+>>>>>>> Updated this old code to fork
 
 			else
 				return ..()
@@ -510,6 +567,7 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 /obj/item/pipe_dispenser/proc/activate()
 	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
 
+<<<<<<< HEAD
 /obj/item/pipe_dispenser/plumbing
 	name = "Plumberinator"
 	desc = "A crude device to rapidly plumb things."
@@ -531,6 +589,11 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 #undef DISPOSALS_CATEGORY
 #undef TRANSIT_CATEGORY
 #undef PLUMBING_CATEGORY
+=======
+#undef ATMOS_CATEGORY
+#undef DISPOSALS_CATEGORY
+#undef TRANSIT_CATEGORY
+>>>>>>> Updated this old code to fork
 
 #undef BUILD_MODE
 #undef DESTROY_MODE

@@ -42,7 +42,11 @@
 	..()
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
+<<<<<<< HEAD
 		C.reagents.add_reagent(/datum/reagent/toxin/leaper_venom, 5)
+=======
+		C.reagents.add_reagent("leaper_venom", 5)
+>>>>>>> Updated this old code to fork
 		return
 	if(isanimal(target))
 		var/mob/living/simple_animal/L = target
@@ -96,7 +100,11 @@
 			L.Paralyze(50)
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
+<<<<<<< HEAD
 				C.reagents.add_reagent(/datum/reagent/toxin/leaper_venom, 5)
+=======
+				C.reagents.add_reagent("leaper_venom", 5)
+>>>>>>> Updated this old code to fork
 			if(isanimal(L))
 				var/mob/living/simple_animal/A = L
 				A.adjustHealth(25)
@@ -105,6 +113,10 @@
 
 /datum/reagent/toxin/leaper_venom
 	name = "Leaper venom"
+<<<<<<< HEAD
+=======
+	id = "leaper_venom"
+>>>>>>> Updated this old code to fork
 	description = "A toxin spat out by leapers that, while harmless in small doses, quickly creates a toxic reaction if too much is in the body."
 	color = "#801E28" // rgb: 128, 30, 40
 	toxpwr = 0

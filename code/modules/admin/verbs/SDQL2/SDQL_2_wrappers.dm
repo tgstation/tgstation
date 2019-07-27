@@ -214,6 +214,7 @@
 /proc/_step_away(ref, trg, max)
 	step_away(ref, trg, max)
 
+<<<<<<< HEAD
 /proc/_has_trait(datum/thing,trait)
 	return HAS_TRAIT(thing,trait)
 
@@ -222,4 +223,6 @@
 
 /proc/_remove_trait(datum/thing,trait,source)
 	REMOVE_TRAIT(thing,trait,source)
+=======
+>>>>>>> Updated this old code to fork
 

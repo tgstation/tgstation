@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 /mob/living/silicon/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE)
 	var/hit_percent = (100-blocked)/100
 	if((!damage || (!forced && hit_percent <= 0)))
@@ -12,6 +13,20 @@
 		if(OXY)
 			if(damage < 0 || forced) //we shouldn't be taking oxygen damage through this proc, but we'll let it heal.
 				adjustOxyLoss(damage_amount, forced = forced)
+=======
+/mob/living/silicon/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE)
+	var/hit_percent = (100-blocked)/100
+	if(!damage || (hit_percent <= 0))
+		return 0
+	switch(damagetype)
+		if(BRUTE)
+			adjustBruteLoss(damage * hit_percent)
+		if(BURN)
+			adjustFireLoss(damage * hit_percent)
+		if(OXY)
+			if(damage < 0) //we shouldn't be taking oxygen damage through this proc, but we'll let it heal.
+				adjustOxyLoss(damage * hit_percent)
+>>>>>>> Updated this old code to fork
 	return 1
 
 
@@ -30,10 +45,17 @@
 /mob/living/silicon/setCloneLoss(amount, updating_health = TRUE, forced = FALSE)
 	return FALSE
 
+<<<<<<< HEAD
 /mob/living/silicon/adjustStaminaLoss(amount, updating_health = TRUE, forced = FALSE)//immune to stamina damage.
 	return FALSE
 
 /mob/living/silicon/setStaminaLoss(amount, updating_health = TRUE)
+=======
+/mob/living/silicon/adjustStaminaLoss(amount, updating_stamina = 1)//immune to stamina damage.
+	return FALSE
+
+/mob/living/silicon/setStaminaLoss(amount, updating_stamina = 1)
+>>>>>>> Updated this old code to fork
 	return FALSE
 
 /mob/living/silicon/adjustBrainLoss(amount)

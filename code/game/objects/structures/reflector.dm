@@ -5,6 +5,10 @@
 	desc = "A base for reflector assemblies."
 	anchored = FALSE
 	density = FALSE
+<<<<<<< HEAD
+=======
+	layer = BELOW_OBJ_LAYER
+>>>>>>> Updated this old code to fork
 	var/deflector_icon_state
 	var/image/deflector_overlay
 	var/finished = FALSE
@@ -34,6 +38,7 @@
 		can_rotate = FALSE
 
 /obj/structure/reflector/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(finished)
 		. += "It is set to [rotation_angle] degrees, and the rotation is [can_rotate ? "unlocked" : "locked"]."
@@ -42,6 +47,16 @@
 				. += "<span class='notice'>Alt-click to adjust its direction.</span>"
 			else
 				. += "<span class='notice'>Use screwdriver to unlock the rotation.</span>"
+=======
+	..()
+	if(finished)
+		to_chat(user, "It is set to [rotation_angle] degrees, and the rotation is [can_rotate ? "unlocked" : "locked"].")
+		if(!admin)
+			if(can_rotate)
+				to_chat(user, "<span class='notice'>Alt-click to adjust its direction.</span>")
+			else
+				to_chat(user, "<span class='notice'>Use screwdriver to unlock the rotation.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/structure/reflector/proc/setAngle(new_angle)
 	if(can_rotate)

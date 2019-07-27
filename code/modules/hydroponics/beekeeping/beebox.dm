@@ -65,7 +65,11 @@
 	var/datum/reagent/R = null
 	if(random_reagent)
 		R = pick(subtypesof(/datum/reagent))
+<<<<<<< HEAD
 		R = GLOB.chemical_reagents_list[R]
+=======
+		R = GLOB.chemical_reagents_list[initial(R.id)]
+>>>>>>> Updated this old code to fork
 
 	queen_bee = new(src)
 	queen_bee.beehome = src
@@ -95,7 +99,11 @@
 				bee_resources = max(bee_resources-BEE_RESOURCE_HONEYCOMB_COST, 0)
 				var/obj/item/reagent_containers/honeycomb/HC = new(src)
 				if(queen_bee.beegent)
+<<<<<<< HEAD
 					HC.set_reagent(queen_bee.beegent.type)
+=======
+					HC.set_reagent(queen_bee.beegent.id)
+>>>>>>> Updated this old code to fork
 				honeycombs += HC
 
 		if(bees.len < get_max_bees())
@@ -123,6 +131,7 @@
 
 
 /obj/structure/beebox/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 
 	if(!queen_bee)
@@ -142,6 +151,27 @@
 
 	if(honeycombs.len >= get_max_honeycomb())
 		. += "<span class='warning'>There's no room for more honeycomb!</span>"
+=======
+	..()
+
+	if(!queen_bee)
+		to_chat(user, "<span class='warning'>There is no queen bee! There won't bee any honeycomb without a queen!</span>")
+
+	var/half_bee = get_max_bees()*0.5
+	if(half_bee && (bees.len >= half_bee))
+		to_chat(user, "<span class='notice'>This place is aBUZZ with activity... there are lots of bees!</span>")
+
+	to_chat(user, "<span class='notice'>[bee_resources]/100 resource supply.</span>")
+	to_chat(user, "<span class='notice'>[bee_resources]% towards a new honeycomb.</span>")
+	to_chat(user, "<span class='notice'>[bee_resources*2]% towards a new bee.</span>")
+
+	if(honeycombs.len)
+		var/plural = honeycombs.len > 1
+		to_chat(user, "<span class='notice'>There [plural? "are" : "is"] [honeycombs.len] uncollected honeycomb[plural ? "s":""] in the apiary.</span>")
+
+	if(honeycombs.len >= get_max_honeycomb())
+		to_chat(user, "<span class='warning'>There's no room for more honeycomb!</span>")
+>>>>>>> Updated this old code to fork
 
 
 /obj/structure/beebox/attackby(obj/item/I, mob/user, params)

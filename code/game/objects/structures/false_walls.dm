@@ -7,7 +7,11 @@
 	anchored = TRUE
 	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall"
+<<<<<<< HEAD
 	layer = LOW_OBJ_LAYER
+=======
+	layer = CLOSED_TURF_LAYER
+>>>>>>> Updated this old code to fork
 	density = TRUE
 	opacity = 1
 	max_integrity = 100

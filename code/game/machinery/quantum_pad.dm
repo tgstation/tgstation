@@ -30,12 +30,21 @@
 	return ..()
 
 /obj/machinery/quantumpad/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	. += "<span class='notice'>It is [ linked_pad ? "currently" : "not"] linked to another pad.</span>"
 	if(!panel_open)
 		. += "<span class='notice'>The panel is <i>screwed</i> in, obstructing the linking device.</span>"
 	else
 		. += "<span class='notice'>The <i>linking</i> device is now able to be <i>scanned<i> with a multitool.</span>"
+=======
+	..()
+	to_chat(user, "<span class='notice'>It is [ linked_pad ? "currently" : "not"] linked to another pad.</span>")
+	if(!panel_open)
+		to_chat(user, "<span class='notice'>The panel is <i>screwed</i> in, obstructing the linking device.</span>")
+	else
+		to_chat(user, "<span class='notice'>The <i>linking</i> device is now able to be <i>scanned<i> with a multitool.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/quantumpad/RefreshParts()
 	var/E = 0
@@ -77,7 +86,11 @@
 		else
 			to_chat(user, "<span class='warning'>There is no quantum pad data saved in [I]'s buffer!</span>")
 			return TRUE
+<<<<<<< HEAD
 
+=======
+			
+>>>>>>> Updated this old code to fork
 	else if(istype(I, /obj/item/quantum_keycard))
 		var/obj/item/quantum_keycard/K = I
 		if(K.qpad)
@@ -119,7 +132,11 @@
 	doteleport(user, target_pad)
 
 /obj/machinery/quantumpad/proc/sparks()
+<<<<<<< HEAD
 	var/datum/effect_system/spark_spread/quantum/s = new /datum/effect_system/spark_spread/quantum
+=======
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+>>>>>>> Updated this old code to fork
 	s.set_up(5, 1, get_turf(src))
 	s.start()
 
@@ -165,7 +182,11 @@
 			for(var/atom/movable/ROI in get_turf(src))
 				if(QDELETED(ROI))
 					continue //sleeps in CHECK_TICK
+<<<<<<< HEAD
 
+=======
+				   
+>>>>>>> Updated this old code to fork
 				// if is anchored, don't let through
 				if(ROI.anchored)
 					if(isliving(ROI))

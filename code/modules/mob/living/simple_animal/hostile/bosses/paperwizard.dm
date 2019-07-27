@@ -130,7 +130,11 @@
 			qdel(copy)
 
 /mob/living/simple_animal/hostile/boss/paper_wizard/copy/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
+=======
+	..()
+>>>>>>> Updated this old code to fork
 	qdel(src) //I see through your ruse!
 
 //fancy effects
@@ -169,3 +173,12 @@
 	new /obj/item/clothing/suit/wizrobe/paper(T)
 	new /obj/item/clothing/head/collectable/paper(T)
 	return ..()
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+>>>>>>> Updated this old code to fork

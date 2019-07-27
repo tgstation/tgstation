@@ -40,8 +40,13 @@ GLOBAL_LIST_INIT(tendrils, list())
 	new /obj/effect/collapse(loc)
 	new /obj/structure/closet/crate/necropolis/tendril(loc)
 	return ..()
+<<<<<<< HEAD
 	
 	
+=======
+
+
+>>>>>>> Updated this old code to fork
 /obj/structure/spawner/lavaland/Destroy()
 	var/last_tendril = TRUE
 	if(GLOB.tendrils.len>1)

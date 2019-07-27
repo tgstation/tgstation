@@ -16,9 +16,12 @@
 			handle_feeding()
 		if(!stat) // Slimes in stasis don't lose nutrition, don't change mood and don't respond to speech
 			handle_nutrition()
+<<<<<<< HEAD
 			if(QDELETED(src)) // Stop if the slime split during handle_nutrition()
 				return
 			reagents.remove_all(0.5 * REAGENTS_METABOLISM * reagents.reagent_list.len) //Slimes are such snowflakes
+=======
+>>>>>>> Updated this old code to fork
 			handle_targets()
 			if (!ckey)
 				handle_mood()
@@ -44,7 +47,11 @@
 	AIproc = 1
 
 	while(AIproc && stat != DEAD && (attacked || hungry || rabid || buckled))
+<<<<<<< HEAD
 		if(!(mobility_flags & MOBILITY_MOVE)) //also covers buckling. Not sure why buckled is in the while condition if we're going to immediately break, honestly
+=======
+		if(buckled) // can't eat AND have this little process at the same time
+>>>>>>> Updated this old code to fork
 			break
 
 		if(!Target || client)
@@ -64,7 +71,11 @@
 				break
 
 			if(Target in view(1,src))
+<<<<<<< HEAD
 				if(!CanFeedon(Target)) //If they're not able to be fed upon, ignore them.
+=======
+				if(issilicon(Target))
+>>>>>>> Updated this old code to fork
 					if(!Atkcool)
 						Atkcool = 1
 						spawn(45)
@@ -72,7 +83,11 @@
 
 						if(Target.Adjacent(src))
 							Target.attack_slime(src)
+<<<<<<< HEAD
 					break
+=======
+					return
+>>>>>>> Updated this old code to fork
 				if((Target.mobility_flags & MOBILITY_STAND) && prob(80))
 
 					if(Target.client && Target.health >= 20)
@@ -279,10 +294,18 @@
 
 
 /mob/living/simple_animal/slime/proc/handle_targets()
+<<<<<<< HEAD
 	update_mobility()
 	if(Tempstun)
 		if(!buckled) // not while they're eating!
 			mobility_flags &= ~MOBILITY_MOVE
+=======
+	if(Tempstun)
+		if(!buckled) // not while they're eating!
+			mobility_flags &= ~MOBILITY_MOVE
+	else
+		mobility_flags |= MOBILITY_MOVE
+>>>>>>> Updated this old code to fork
 
 	if(attacked > 50)
 		attacked = 50
@@ -602,8 +625,12 @@
 				phrases += "[M]... friend..."
 				if (nutrition < get_hunger_nutrition())
 					phrases += "[M]... feed me..."
+<<<<<<< HEAD
 			if(!stat)
 				say (pick(phrases))
+=======
+			say (pick(phrases))
+>>>>>>> Updated this old code to fork
 
 /mob/living/simple_animal/slime/proc/get_max_nutrition() // Can't go above it
 	if (is_adult)

@@ -95,6 +95,7 @@ Doesn't work on other aliens/AI.*/
 	var/mob/living/M = input("Select who to whisper to:","Whisper to?",null) as null|mob in options
 	if(!M)
 		return 0
+<<<<<<< HEAD
 	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
 		to_chat(user, "<span class='noticealien'>As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled.</span>")
 		return FALSE
@@ -103,6 +104,10 @@ Doesn't work on other aliens/AI.*/
 		if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
 			to_chat(user, "<span class='notice'>As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled.</span>")
 			return
+=======
+	var/msg = sanitize(input("Message:", "Alien Whisper") as text|null)
+	if(msg)
+>>>>>>> Updated this old code to fork
 		log_directed_talk(user, M, msg, LOG_SAY, tag="alien whisper")
 		to_chat(M, "<span class='noticealien'>You hear a strange, alien voice in your head...</span>[msg]")
 		to_chat(user, "<span class='noticealien'>You said: \"[msg]\" to [M]</span>")
@@ -285,6 +290,26 @@ Doesn't work on other aliens/AI.*/
 	new choice(user.loc)
 	return TRUE
 
+<<<<<<< HEAD
+=======
+/obj/effect/proc_holder/alien/regurgitate
+	name = "Regurgitate"
+	desc = "Empties the contents of your stomach."
+	plasma_cost = 0
+	action_icon_state = "alien_barf"
+
+/obj/effect/proc_holder/alien/regurgitate/fire(mob/living/carbon/user)
+	if(user.stomach_contents.len)
+		for(var/atom/movable/A in user.stomach_contents)
+			user.stomach_contents.Remove(A)
+			A.forceMove(user.drop_location())
+			if(isliving(A))
+				var/mob/M = A
+				M.reset_perspective()
+		user.visible_message("<span class='alertealien'>[user] hurls out the contents of their stomach!</span>")
+	return
+
+>>>>>>> Updated this old code to fork
 /obj/effect/proc_holder/alien/sneak
 	name = "Sneak"
 	desc = "Blend into the shadows to stalk your prey."

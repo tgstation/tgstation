@@ -14,7 +14,11 @@
 	icon = 'icons/obj/objects.dmi'
 	anchored = TRUE
 	can_buckle = TRUE
+<<<<<<< HEAD
 	buckle_lying = 90
+=======
+	buckle_lying = TRUE
+>>>>>>> Updated this old code to fork
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	integrity_failure = 30
@@ -23,9 +27,15 @@
 	var/bolts = TRUE
 
 /obj/structure/bed/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(bolts)
 		. += "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>"
+=======
+	..()
+	if(bolts)
+		to_chat(user, "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/structure/bed/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -148,8 +158,13 @@
 	loaded = new(src)
 
 /obj/item/roller/robo/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	. += "The dock is [loaded ? "loaded" : "empty"]."
+=======
+	..()
+	to_chat(user, "The dock is [loaded ? "loaded" : "empty"].")
+>>>>>>> Updated this old code to fork
 
 /obj/item/roller/robo/deploy_roller(mob/user, atom/location)
 	if(loaded)

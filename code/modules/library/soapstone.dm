@@ -16,7 +16,11 @@
 /obj/item/soapstone/examine(mob/user)
 	. = ..()
 	if(remaining_uses != -1)
+<<<<<<< HEAD
 		. += "It has [remaining_uses] uses left."
+=======
+		to_chat(user, "It has [remaining_uses] uses left.")
+>>>>>>> Updated this old code to fork
 
 /obj/item/soapstone/afterattack(atom/target, mob/user, proximity)
 	. = ..()
@@ -193,7 +197,11 @@
 	update_icon()
 
 /obj/structure/chisel_message/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
+=======
+	..()
+>>>>>>> Updated this old code to fork
 	ui_interact(user)
 
 /obj/structure/chisel_message/Destroy()

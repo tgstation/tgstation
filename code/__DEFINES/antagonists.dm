@@ -8,6 +8,7 @@
 #define NUKE_RESULT_WRONG_STATION 7
 #define NUKE_RESULT_WRONG_STATION_DEAD 8
 
+<<<<<<< HEAD
 //fugitive end results
 #define FUGITIVE_RESULT_BADASS_HUNTER 0
 #define FUGITIVE_RESULT_POSTMORTEM_HUNTER 1
@@ -19,6 +20,8 @@
 #define FUGITIVE_RESULT_FUGITIVE_VICTORY 7
 #define FUGITIVE_RESULT_MAJOR_FUGITIVE 8
 
+=======
+>>>>>>> Updated this old code to fork
 #define APPRENTICE_DESTRUCTION "destruction"
 #define APPRENTICE_BLUESPACE "bluespace"
 #define APPRENTICE_ROBELESS "robeless"
@@ -51,6 +54,7 @@
 #define HIJACK_HIJACKER 1 //Needs to be present for shuttle to be hijacked
 #define HIJACK_PREVENT 2 //Prevents hijacking same way as non-antags
 
+<<<<<<< HEAD
 //Syndicate Contracts
 #define CONTRACT_STATUS_INACTIVE 1
 #define CONTRACT_STATUS_ACTIVE 2
@@ -65,3 +69,7 @@
 
 #define CONTRACT_UPLINK_PAGE_CONTRACTS "CONTRACTS"
 #define CONTRACT_UPLINK_PAGE_HUB "HUB"
+=======
+//Overthrow time to update heads obj
+#define OBJECTIVE_UPDATING_TIME 300
+>>>>>>> Updated this old code to fork

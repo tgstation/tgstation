@@ -31,13 +31,21 @@
 	stop_automated_movement_when_pulled = TRUE
 	stat_exclusive = TRUE
 	robust_searching = TRUE
+<<<<<<< HEAD
 	search_objects = 3 //Ancient simplemob AI shitcode. This makes them ignore all other mobs.
+=======
+	search_objects = TRUE
+>>>>>>> Updated this old code to fork
 	del_on_death = TRUE
 	loot = list(/obj/effect/decal/cleanable/blood/gibs)
 	deathmessage = "is pulped into bugmash."
 
 	animal_species = /mob/living/simple_animal/hostile/asteroid/gutlunch
+<<<<<<< HEAD
 	childtype = list(/mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch = 100)
+=======
+	childtype = list(/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck = 45, /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen = 55)
+>>>>>>> Updated this old code to fork
 
 	wanted_objects = list(/obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/gibs/, /obj/item/organ)
 	var/obj/item/udder/gutlunch/udder = null
@@ -120,6 +128,7 @@
 		udder.reagents.clear_reagents()
 		regenerate_icons()
 
+<<<<<<< HEAD
 /mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch
 	name = "grublunch"
 	wanted_objects = list() //They don't eat.
@@ -152,6 +161,8 @@
 	visible_message("<span class='notice'>[src] grows up into [L].</span>")
 	Destroy()
 
+=======
+>>>>>>> Updated this old code to fork
 //Gutlunch udder
 /obj/item/udder/gutlunch
 	name = "nutrient sac"
@@ -163,6 +174,13 @@
 
 /obj/item/udder/gutlunch/generateMilk()
 	if(prob(60))
+<<<<<<< HEAD
 		reagents.add_reagent(/datum/reagent/consumable/cream, rand(2, 5))
 	if(prob(45))
 		reagents.add_reagent(/datum/reagent/medicine/salglu_solution, rand(2,5))
+=======
+		reagents.add_reagent("cream", rand(2, 5))
+	if(prob(45))
+		reagents.add_reagent("salglu_solution", rand(2,5))
+
+>>>>>>> Updated this old code to fork

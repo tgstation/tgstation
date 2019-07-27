@@ -2,9 +2,14 @@
 #define ICECREAM_CHOCOLATE 2
 #define ICECREAM_STRAWBERRY 3
 #define ICECREAM_BLUE 4
+<<<<<<< HEAD
 #define ICECREAM_CUSTOM 5
 #define CONE_WAFFLE 6
 #define CONE_CHOC 7
+=======
+#define CONE_WAFFLE 5
+#define CONE_CHOC 6
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/icecream_vat
 	name = "ice cream vat"
@@ -19,6 +24,7 @@
 	var/list/product_types = list()
 	var/dispense_flavour = ICECREAM_VANILLA
 	var/flavour_name = "vanilla"
+<<<<<<< HEAD
 	var/obj/item/reagent_containers/beaker = null
 	var/static/list/icecream_vat_reagents = list(
 		/datum/reagent/consumable/milk = 6,
@@ -29,10 +35,22 @@
 		/datum/reagent/consumable/vanilla = 6,
 		/datum/reagent/consumable/berryjuice = 6,
 		/datum/reagent/consumable/ethanol/singulo = 6)
+=======
+	var/static/list/icecream_vat_reagents = list(
+		"milk" = 5,
+		"flour" = 5,
+		"sugar" = 5,
+		"ice" = 5,
+		"cocoa" = 5,
+		"vanilla" = 5,
+		"berryjuice" = 5,
+		"singulo" = 5)
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/icecream_vat/proc/get_ingredient_list(type)
 	switch(type)
 		if(ICECREAM_CHOCOLATE)
+<<<<<<< HEAD
 			return list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/coco)
 		if(ICECREAM_STRAWBERRY)
 			return list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/berryjuice)
@@ -46,6 +64,19 @@
 			return list(/datum/reagent/consumable/flour, /datum/reagent/consumable/sugar, /datum/reagent/consumable/coco)
 		else //ICECREAM_VANILLA
 			return list(/datum/reagent/consumable/milk, /datum/reagent/consumable/ice, /datum/reagent/consumable/vanilla)
+=======
+			return list("milk", "ice", "cocoa")
+		if(ICECREAM_STRAWBERRY)
+			return list("milk", "ice", "berryjuice")
+		if(ICECREAM_BLUE)
+			return list("milk", "ice", "singulo")
+		if(CONE_WAFFLE)
+			return list("flour", "sugar")
+		if(CONE_CHOC)
+			return list("flour", "sugar", "cocoa")
+		else //ICECREAM_VANILLA
+			return list("milk", "ice", "vanilla")
+>>>>>>> Updated this old code to fork
 
 
 /obj/machinery/icecream_vat/proc/get_flavour_name(flavour_type)
@@ -56,8 +87,11 @@
 			return "strawberry"
 		if(ICECREAM_BLUE)
 			return "blue"
+<<<<<<< HEAD
 		if(ICECREAM_CUSTOM)
 			return "custom"
+=======
+>>>>>>> Updated this old code to fork
 		if(CONE_WAFFLE)
 			return "waffle"
 		if(CONE_CHOC)
@@ -68,7 +102,11 @@
 
 /obj/machinery/icecream_vat/Initialize()
 	. = ..()
+<<<<<<< HEAD
 	while(product_types.len < 7)
+=======
+	while(product_types.len < 6)
+>>>>>>> Updated this old code to fork
 		product_types.Add(5)
 	create_reagents(100, NO_REACT | OPENCONTAINER)
 	for(var/reagent in icecream_vat_reagents)
@@ -79,15 +117,23 @@
 	var/dat
 	dat += "<b>ICE CREAM</b><br><div class='statusDisplay'>"
 	dat += "<b>Dispensing: [flavour_name] icecream </b> <br><br>"
+<<<<<<< HEAD
 	dat += "<b>Vanilla ice cream:</b> <a href='?src=[REF(src)];select=[ICECREAM_VANILLA]'><b>Select</b></a> <a href='?src=[REF(src)];make=[ICECREAM_VANILLA];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[ICECREAM_VANILLA];amount=5'><b>x5</b></a> [product_types[ICECREAM_VANILLA]] scoops left. (Ingredients: milk, ice, vanilla)<br>"
 	dat += "<b>Strawberry ice cream:</b> <a href='?src=[REF(src)];select=[ICECREAM_STRAWBERRY]'><b>Select</b></a> <a href='?src=[REF(src)];make=[ICECREAM_STRAWBERRY];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[ICECREAM_STRAWBERRY];amount=5'><b>x5</b></a> [product_types[ICECREAM_STRAWBERRY]] dollops left. (Ingredients: milk, ice, berry juice)<br>"
 	dat += "<b>Chocolate ice cream:</b> <a href='?src=[REF(src)];select=[ICECREAM_CHOCOLATE]'><b>Select</b></a> <a href='?src=[REF(src)];make=[ICECREAM_CHOCOLATE];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[ICECREAM_CHOCOLATE];amount=5'><b>x5</b></a> [product_types[ICECREAM_CHOCOLATE]] dollops left. (Ingredients: milk, ice, coco powder)<br>"
 	dat += "<b>Blue ice cream:</b> <a href='?src=[REF(src)];select=[ICECREAM_BLUE]'><b>Select</b></a> <a href='?src=[REF(src)];make=[ICECREAM_BLUE];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[ICECREAM_BLUE];amount=5'><b>x5</b></a> [product_types[ICECREAM_BLUE]] dollops left. (Ingredients: milk, ice, singulo)<br>"
 	dat += "<b>Custom ice cream:</b> <a href='?src=[REF(src)];select=[ICECREAM_CUSTOM]'><b>Select</b></a> <a href='?src=[REF(src)];make=[ICECREAM_CUSTOM];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[ICECREAM_CUSTOM];amount=5'><b>x5</b></a> [product_types[ICECREAM_CUSTOM]] dollops left. (Ingredients: milk, ice, optional flavoring)<br></div>"
+=======
+	dat += "<b>Vanilla ice cream:</b> <a href='?src=[REF(src)];select=[ICECREAM_VANILLA]'><b>Select</b></a> <a href='?src=[REF(src)];make=[ICECREAM_VANILLA];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[ICECREAM_VANILLA];amount=5'><b>x5</b></a> [product_types[ICECREAM_VANILLA]] scoops left. (Ingredients: milk, ice)<br>"
+	dat += "<b>Strawberry ice cream:</b> <a href='?src=[REF(src)];select=[ICECREAM_STRAWBERRY]'><b>Select</b></a> <a href='?src=[REF(src)];make=[ICECREAM_STRAWBERRY];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[ICECREAM_STRAWBERRY];amount=5'><b>x5</b></a> [product_types[ICECREAM_STRAWBERRY]] dollops left. (Ingredients: milk, ice, berry juice)<br>"
+	dat += "<b>Chocolate ice cream:</b> <a href='?src=[REF(src)];select=[ICECREAM_CHOCOLATE]'><b>Select</b></a> <a href='?src=[REF(src)];make=[ICECREAM_CHOCOLATE];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[ICECREAM_CHOCOLATE];amount=5'><b>x5</b></a> [product_types[ICECREAM_CHOCOLATE]] dollops left. (Ingredients: milk, ice, coco powder)<br>"
+	dat += "<b>Blue ice cream:</b> <a href='?src=[REF(src)];select=[ICECREAM_BLUE]'><b>Select</b></a> <a href='?src=[REF(src)];make=[ICECREAM_BLUE];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[ICECREAM_BLUE];amount=5'><b>x5</b></a> [product_types[ICECREAM_BLUE]] dollops left. (Ingredients: milk, ice, singulo)<br></div>"
+>>>>>>> Updated this old code to fork
 	dat += "<br><b>CONES</b><br><div class='statusDisplay'>"
 	dat += "<b>Waffle cones:</b> <a href='?src=[REF(src)];cone=[CONE_WAFFLE]'><b>Dispense</b></a> <a href='?src=[REF(src)];make=[CONE_WAFFLE];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[CONE_WAFFLE];amount=5'><b>x5</b></a> [product_types[CONE_WAFFLE]] cones left. (Ingredients: flour, sugar)<br>"
 	dat += "<b>Chocolate cones:</b> <a href='?src=[REF(src)];cone=[CONE_CHOC]'><b>Dispense</b></a> <a href='?src=[REF(src)];make=[CONE_CHOC];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[CONE_CHOC];amount=5'><b>x5</b></a> [product_types[CONE_CHOC]] cones left. (Ingredients: flour, sugar, coco powder)<br></div>"
 	dat += "<br>"
+<<<<<<< HEAD
 	if(beaker)
 		dat += "<b>BEAKER CONTENT</b><br><div class='statusDisplay'>"
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
@@ -98,6 +144,12 @@
 	for(var/datum/reagent/R in reagents.reagent_list)
 		dat += "[R.name]: [R.volume]"
 		dat += "<A href='?src=[REF(src)];disposeI=[R.type]'>Purge</A><BR>"
+=======
+	dat += "<b>VAT CONTENT</b><br>"
+	for(var/datum/reagent/R in reagents.reagent_list)
+		dat += "[R.name]: [R.volume]"
+		dat += "<A href='?src=[REF(src)];disposeI=[R.id]'>Purge</A><BR>"
+>>>>>>> Updated this old code to fork
 	dat += "<a href='?src=[REF(src)];refresh=1'>Refresh</a> <a href='?src=[REF(src)];close=1'>Close</a>"
 
 	var/datum/browser/popup = new(user, "icecreamvat","Icecream Vat", 700, 500, src)
@@ -111,6 +163,7 @@
 			if(product_types[dispense_flavour] > 0)
 				visible_message("[icon2html(src, viewers(src))] <span class='info'>[user] scoops delicious [flavour_name] ice cream into [I].</span>")
 				product_types[dispense_flavour] -= 1
+<<<<<<< HEAD
 				if(beaker && beaker.reagents.total_volume)
 					I.add_ice_cream(flavour_name, beaker.reagents)
 				else
@@ -118,11 +171,17 @@
 				if(I.reagents.total_volume < 10)
 					I.reagents.add_reagent(/datum/reagent/consumable/sugar, 10 - I.reagents.total_volume)
 				updateDialog()
+=======
+				I.add_ice_cream(flavour_name)
+				if(I.reagents.total_volume < 10)
+					I.reagents.add_reagent("sugar", 10 - I.reagents.total_volume)
+>>>>>>> Updated this old code to fork
 			else
 				to_chat(user, "<span class='warning'>There is not enough ice cream left!</span>")
 		else
 			to_chat(user, "<span class='notice'>[O] already has ice cream in it.</span>")
 		return 1
+<<<<<<< HEAD
 	if(istype(O, /obj/item/reagent_containers) && !(O.item_flags & ABSTRACT) && O.is_open_container())
 		. = TRUE //no afterattack
 		var/obj/item/reagent_containers/B = O
@@ -133,11 +192,14 @@
 		updateUsrDialog()
 		update_icon()
 		return
+=======
+>>>>>>> Updated this old code to fork
 	else if(O.is_drainable())
 		return
 	else
 		return ..()
 
+<<<<<<< HEAD
 /obj/machinery/icecream_vat/proc/RefillFromBeaker()
 	if(!beaker || !beaker.reagents)
 		return
@@ -154,15 +216,27 @@
 	var/recipe_amount = amount * 3 //prevents reagent duping by requring roughly the amount of reagenst you gain back by grinding.
 	for(var/R in get_ingredient_list(make_type))
 		if(reagents.has_reagent(R, recipe_amount))
+=======
+/obj/machinery/icecream_vat/proc/make(mob/user, make_type, amount)
+	for(var/R in get_ingredient_list(make_type))
+		if(reagents.has_reagent(R, amount))
+>>>>>>> Updated this old code to fork
 			continue
 		amount = 0
 		break
 	if(amount)
 		for(var/R in get_ingredient_list(make_type))
+<<<<<<< HEAD
 			reagents.remove_reagent(R, recipe_amount)
 		product_types[make_type] += amount
 		var/flavour = get_flavour_name(make_type)
 		if(make_type > 5)
+=======
+			reagents.remove_reagent(R, amount)
+		product_types[make_type] += amount
+		var/flavour = get_flavour_name(make_type)
+		if(make_type > 4)
+>>>>>>> Updated this old code to fork
 			src.visible_message("<span class='info'>[user] cooks up some [flavour] cones.</span>")
 		else
 			src.visible_message("<span class='info'>[user] whips up some [flavour] icecream.</span>")
@@ -194,10 +268,14 @@
 		make(usr, C, amount)
 
 	if(href_list["disposeI"])
+<<<<<<< HEAD
 		reagents.del_reagent(text2path(href_list["disposeI"]))
 
 	if(href_list["refill"])
 		RefillFromBeaker()
+=======
+		reagents.del_reagent(href_list["disposeI"])
+>>>>>>> Updated this old code to fork
 
 	updateDialog()
 
@@ -214,6 +292,7 @@
 	desc = "Delicious waffle cone, but no ice cream."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "icecream_cone_waffle" //default for admin-spawned cones, href_list["cone"] should overwrite this all the time
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4)
 	tastes = list("cream" = 2, "waffle" = 1)
 	var/ice_creamed = 0
@@ -224,19 +303,37 @@
 /obj/item/reagent_containers/food/snacks/icecream/Initialize()
 	. = ..()
 	reagents.maximum_volume = 20
+=======
+	var/ice_creamed = 0
+	var/cone_type
+	bitesize = 3
+	foodtype = DAIRY
+
+/obj/item/reagent_containers/food/snacks/icecream/Initialize()
+	. = ..()
+	create_reagents(20)
+	reagents.add_reagent("nutriment", 4)
+>>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/snacks/icecream/proc/set_cone_type(var/cone_name)
 	cone_type = cone_name
 	icon_state = "icecream_cone_[cone_name]"
 	switch (cone_type)
 		if ("waffle")
+<<<<<<< HEAD
 			reagents.add_reagent(/datum/reagent/consumable/nutriment, 1)
 		if ("chocolate")
 			reagents.add_reagent(/datum/reagent/consumable/coco, 1) // chocolate ain't as nutritious kids
+=======
+			reagents.add_reagent("nutriment", 1)
+		if ("chocolate")
+			reagents.add_reagent("cocoa", 1) // chocolate ain't as nutritious kids
+>>>>>>> Updated this old code to fork
 
 	desc = "Delicious [cone_name] cone, but no ice cream."
 
 
+<<<<<<< HEAD
 /obj/item/reagent_containers/food/snacks/icecream/proc/add_ice_cream(var/flavour_name, var/datum/reagents/R = null)
 	name = "[flavour_name] icecream"
 	switch (flavour_name) // adding the actual reagents advertised in the ingredient list
@@ -276,6 +373,26 @@
 				add_overlay("icecream_custom")
 	if(flavour_name != "custom")
 		src.add_overlay("icecream_[flavour_name]")
+=======
+/obj/item/reagent_containers/food/snacks/icecream/proc/add_ice_cream(var/flavour_name)
+	name = "[flavour_name] icecream"
+	src.add_overlay("icecream_[flavour_name]")
+	switch (flavour_name) // adding the actual reagents advertised in the ingredient list
+		if ("vanilla")
+			desc = "A delicious [cone_type] cone filled with vanilla ice cream. All the other ice creams take content from it."
+		if ("chocolate")
+			desc = "A delicious [cone_type] cone filled with chocolate ice cream. Surprisingly, made with real cocoa."
+			reagents.add_reagent("cocoa", 2)
+		if ("strawberry")
+			desc = "A delicious [cone_type] cone filled with strawberry ice cream. Definitely not made with real strawberries."
+			reagents.add_reagent("berryjuice", 2)
+		if ("blue")
+			desc = "A delicious [cone_type] cone filled with blue ice cream. Made with real... blue?"
+			reagents.add_reagent("singulo", 2)
+		if ("mob")
+			desc = "A suspicious [cone_type] cone filled with bright red ice cream. That's probably not strawberry..."
+			reagents.add_reagent("liquidgibs", 2)
+>>>>>>> Updated this old code to fork
 	ice_creamed = 1
 
 /obj/item/reagent_containers/food/snacks/icecream/proc/add_mob_flavor(var/mob/M)
@@ -287,6 +404,7 @@
 		new /obj/item/stack/sheet/metal(loc, 4)
 	qdel(src)
 
+<<<<<<< HEAD
 /obj/machinery/icecream_vat/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
@@ -303,11 +421,16 @@
 		beaker = null
 		updateDialog()
 	return TRUE
+=======
+>>>>>>> Updated this old code to fork
 
 #undef ICECREAM_VANILLA
 #undef ICECREAM_CHOCOLATE
 #undef ICECREAM_STRAWBERRY
 #undef ICECREAM_BLUE
+<<<<<<< HEAD
 #undef ICECREAM_CUSTOM
+=======
+>>>>>>> Updated this old code to fork
 #undef CONE_WAFFLE
 #undef CONE_CHOC

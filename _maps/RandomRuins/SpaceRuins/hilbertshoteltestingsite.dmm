@@ -77,7 +77,11 @@
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "p" = (
 /obj/structure/table/glass,
+<<<<<<< HEAD
 /obj/item/stack/cable_coil,
+=======
+/obj/item/stack/cable_coil/blue,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/grimy{
 	icon_state = "engine"
 	},
@@ -169,7 +173,11 @@
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "E" = (
+<<<<<<< HEAD
 /obj/structure/chair/office,
+=======
+/obj/structure/chair/office/dark,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "F" = (

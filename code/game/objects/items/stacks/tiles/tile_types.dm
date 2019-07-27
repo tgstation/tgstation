@@ -204,7 +204,11 @@
 	desc = "Those could work as a pretty decent throwing weapon."
 	icon_state = "tile"
 	force = 6
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=500)
+=======
+	materials = list(MAT_METAL=500)
+>>>>>>> Updated this old code to fork
 	throwforce = 10
 	flags_1 = CONDUCT_1
 	turf_type = /turf/open/floor/plasteel

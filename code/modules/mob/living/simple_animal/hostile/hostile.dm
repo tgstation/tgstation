@@ -100,7 +100,11 @@
 	if(!target || !isturf(target.loc) || !isturf(loc) || stat == DEAD)
 		return
 	var/target_dir = get_dir(src,target)
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> Updated this old code to fork
 	var/static/list/cardinal_sidestep_directions = list(-90,-45,0,45,90)
 	var/static/list/diagonal_sidestep_directions = list(-45,0,45)
 	var/chosen_dir = 0
@@ -296,7 +300,11 @@
 		if(target)
 			if(targets_from && isturf(targets_from.loc) && target.Adjacent(targets_from)) //If they're next to us, attack
 				MeleeAction()
+<<<<<<< HEAD
 			else
+=======
+			else 
+>>>>>>> Updated this old code to fork
 				if(rapid_melee > 1 && target_distance <= melee_queue_distance)
 					MeleeAction(FALSE)
 				in_melee = FALSE //If we're just preparing to strike do not enter sidestep mode
@@ -337,7 +345,10 @@
 
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
+<<<<<<< HEAD
 	SEND_SIGNAL(src, COMSIG_HOSTILE_ATTACKINGTARGET, target)
+=======
+>>>>>>> Updated this old code to fork
 	in_melee = TRUE
 	return target.attack_animal(src)
 
@@ -407,13 +418,20 @@
 	if(casingtype)
 		var/obj/item/ammo_casing/casing = new casingtype(startloc)
 		playsound(src, projectilesound, 100, 1)
+<<<<<<< HEAD
 		casing.fire_casing(targeted_atom, src, null, null, null, ran_zone(), 0,  src)
+=======
+		casing.fire_casing(targeted_atom, src, null, null, null, ran_zone())
+>>>>>>> Updated this old code to fork
 	else if(projectiletype)
 		var/obj/item/projectile/P = new projectiletype(startloc)
 		playsound(src, projectilesound, 100, 1)
 		P.starting = startloc
 		P.firer = src
+<<<<<<< HEAD
 		P.fired_from = src
+=======
+>>>>>>> Updated this old code to fork
 		P.yo = targeted_atom.y - startloc.y
 		P.xo = targeted_atom.x - startloc.x
 		if(AIStatus != AI_ON)//Don't want mindless mobs to have their movement screwed up firing in space
@@ -446,6 +464,7 @@
 
 /mob/living/simple_animal/hostile/proc/DestroyObjectsInDirection(direction)
 	var/turf/T = get_step(targets_from, direction)
+<<<<<<< HEAD
 	if(QDELETED(T))
 		return
 	if(T.Adjacent(targets_from))
@@ -458,6 +477,16 @@
 		if((ismachinery(O) || isstructure(O)) && O.density && environment_smash >= ENVIRONMENT_SMASH_STRUCTURES && !O.IsObscured())
 			O.attack_animal(src)
 			return
+=======
+	if(T && T.Adjacent(targets_from))
+		if(CanSmashTurfs(T))
+			T.attack_animal(src)
+		for(var/obj/O in T)
+			if(O.density && environment_smash >= ENVIRONMENT_SMASH_STRUCTURES && !O.IsObscured())
+				O.attack_animal(src)
+				return
+
+>>>>>>> Updated this old code to fork
 
 /mob/living/simple_animal/hostile/proc/DestroyPathToTarget()
 	if(environment_smash)

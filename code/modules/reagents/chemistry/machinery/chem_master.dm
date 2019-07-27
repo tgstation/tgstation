@@ -20,6 +20,7 @@
 	var/screen = "home"
 	var/analyzeVars[0]
 	var/useramount = 30 // Last used amount
+<<<<<<< HEAD
 	var/list/pillStyles = null
 
 /obj/machinery/chem_master/Initialize()
@@ -34,6 +35,11 @@
 		SL["htmltag"] = assets.icon_tag("pill[x]")
 		pillStyles += list(SL)
 
+=======
+
+/obj/machinery/chem_master/Initialize()
+	create_reagents(100)
+>>>>>>> Updated this old code to fork
 	. = ..()
 
 /obj/machinery/chem_master/Destroy()
@@ -143,16 +149,23 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
+<<<<<<< HEAD
 		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
+=======
+		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/pills)
+>>>>>>> Updated this old code to fork
 		assets.send(user)
 
 		ui = new(user, src, ui_key, "chem_master", name, 500, 550, master_ui, state)
 		ui.open()
 
+<<<<<<< HEAD
 //Insert our custom spritesheet css link into the html
 /obj/machinery/chem_master/ui_base_html(html)
 	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
 	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/chem_master/ui_data(mob/user)
 	var/list/data = list()
@@ -166,23 +179,41 @@
 	data["chosenPillStyle"] = chosenPillStyle
 	data["isPillBottleLoaded"] = bottle ? 1 : 0
 	if(bottle)
+<<<<<<< HEAD
 		var/datum/component/storage/STRB = bottle.GetComponent(/datum/component/storage)
+=======
+		GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
+>>>>>>> Updated this old code to fork
 		data["pillBotContent"] = bottle.contents.len
 		data["pillBotMaxContent"] = STRB.max_items
 
 	var/beakerContents[0]
 	if(beaker)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
+<<<<<<< HEAD
 			beakerContents.Add(list(list("name" = R.name, "id" = ckey(R.name), "volume" = R.volume))) // list in a list because Byond merges the first list...
+=======
+			beakerContents.Add(list(list("name" = R.name, "id" = R.id, "volume" = R.volume))) // list in a list because Byond merges the first list...
+>>>>>>> Updated this old code to fork
 		data["beakerContents"] = beakerContents
 
 	var/bufferContents[0]
 	if(reagents.total_volume)
 		for(var/datum/reagent/N in reagents.reagent_list)
+<<<<<<< HEAD
 			bufferContents.Add(list(list("name" = N.name, "id" = ckey(N.name), "volume" = N.volume))) // ^
 		data["bufferContents"] = bufferContents
 
 	//Calculated at init time as it never changes
+=======
+			bufferContents.Add(list(list("name" = N.name, "id" = N.id, "volume" = N.volume))) // ^
+		data["bufferContents"] = bufferContents
+	var/list/pillStyles = list()
+	for (var/x in 1 to PILL_STYLE_COUNT)
+		var/list/SL = list()
+		SL["id"] = x
+		pillStyles += list(SL)
+>>>>>>> Updated this old code to fork
 	data["pillStyles"] = pillStyles
 	return data
 
@@ -203,14 +234,22 @@
 
 		if("transferToBuffer")
 			if(beaker)
+<<<<<<< HEAD
 				var/reagent = GLOB.name2reagent[params["id"]]
 				var/amount = text2num(params["amount"])
 				if (amount > 0)
 					beaker.reagents.trans_id_to(src, reagent, amount)
+=======
+				var/id = params["id"]
+				var/amount = text2num(params["amount"])
+				if (amount > 0)
+					beaker.reagents.trans_id_to(src, id, amount)
+>>>>>>> Updated this old code to fork
 					. = TRUE
 				else if (amount == -1) // -1 means custom amount
 					useramount = input("Enter the Amount you want to transfer:", name, useramount) as num|null
 					if (useramount > 0)
+<<<<<<< HEAD
 						beaker.reagents.trans_id_to(src, reagent, useramount)
 						. = TRUE
 
@@ -223,6 +262,20 @@
 					. = TRUE
 				else
 					reagents.remove_reagent(reagent, amount)
+=======
+						beaker.reagents.trans_id_to(src, id, useramount)
+						. = TRUE
+
+		if("transferFromBuffer")
+			var/id = params["id"]
+			var/amount = text2num(params["amount"])
+			if (amount > 0)
+				if(mode)
+					reagents.trans_id_to(beaker, id, amount)
+					. = TRUE
+				else
+					reagents.remove_reagent(id, amount)
+>>>>>>> Updated this old code to fork
 					. = TRUE
 
 		if("toggleMode")
@@ -248,7 +301,11 @@
 				var/target_loc = drop_location()
 				var/drop_threshold = INFINITY
 				if(bottle)
+<<<<<<< HEAD
 					var/datum/component/storage/STRB = bottle.GetComponent(/datum/component/storage)
+=======
+					GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
+>>>>>>> Updated this old code to fork
 					if(STRB)
 						drop_threshold = STRB.max_items - bottle.contents.len
 
@@ -343,7 +400,11 @@
 			. = TRUE
 
 		if("analyze")
+<<<<<<< HEAD
 			var/datum/reagent/R = GLOB.name2reagent[params["id"]]
+=======
+			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]
+>>>>>>> Updated this old code to fork
 			if(R)
 				var/state = "Unknown"
 				if(initial(R.reagent_state) == 1)

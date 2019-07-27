@@ -34,6 +34,7 @@
 	owner.cure_blind(GENETIC_MUTATION)
 
 
+<<<<<<< HEAD
 /datum/mutation/human/thermal
 	name = "Thermal Vision"
 	desc = "The user of this genome can visually percieve the unique human thermal signature."
@@ -65,6 +66,31 @@
 	instability = 35
 	locked = TRUE
 	visionflag = TRAIT_XRAY_VISION
+=======
+//X-ray Vision lets you see through walls.
+/datum/mutation/human/x_ray
+	name = "X Ray Vision"
+	desc = "A strange genome that allows the user to see between the spaces of walls." //actual x-ray would mean you'd constantly be blasting rads, wich might be fun for later //hmb
+	quality = POSITIVE
+	difficulty = 18
+	text_gain_indication = "<span class='notice'>The walls suddenly disappear!</span>"
+	time_coeff = 2
+	instability = 25
+
+/datum/mutation/human/x_ray/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+
+	owner.add_trait(TRAIT_XRAY_VISION, GENETIC_MUTATION)
+	owner.update_sight()
+
+/datum/mutation/human/x_ray/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	owner.remove_trait(TRAIT_XRAY_VISION, GENETIC_MUTATION)
+	owner.update_sight()
+
+>>>>>>> Updated this old code to fork
 
 //Laser Eyes lets you shoot lasers from your eyes!
 /datum/mutation/human/laser_eyes
@@ -77,6 +103,7 @@
 	layer_used = FRONT_MUTATIONS_LAYER
 	limb_req = BODY_ZONE_HEAD
 
+<<<<<<< HEAD
 /datum/mutation/human/laser_eyes/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	..()
 	if(!(type in visual_indicators))
@@ -84,6 +111,14 @@
 
 /datum/mutation/human/laser_eyes/get_visual_indicator()
 	return visual_indicators[type][1]
+=======
+/datum/mutation/human/laser_eyes/New()
+	..()
+	visual_indicators |= mutable_appearance('icons/effects/genetics.dmi', "lasereyes", -FRONT_MUTATIONS_LAYER)
+
+/datum/mutation/human/laser_eyes/get_visual_indicator()
+	return visual_indicators[1]
+>>>>>>> Updated this old code to fork
 
 /datum/mutation/human/laser_eyes/on_ranged_attack(atom/target, mouseparams)
 	if(owner.a_intent == INTENT_HARM)

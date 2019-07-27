@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /mob/living/carbon/true_devil/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE)
+=======
+/mob/living/carbon/true_devil/doUnEquip(obj/item/I, force)
+>>>>>>> Updated this old code to fork
 	if(..())
 		update_inv_hands()
 		return 1

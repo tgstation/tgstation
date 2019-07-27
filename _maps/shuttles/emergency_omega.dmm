@@ -262,7 +262,13 @@
 	name = "Cockpit";
 	req_access_txt = "19"
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
+=======
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -273,7 +279,13 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
+<<<<<<< HEAD
 	dwidth = 5;
+=======
+	dheight = 0;
+	dwidth = 5;
+	height = 11;
+>>>>>>> Updated this old code to fork
 	name = "Omega emergency shuttle";
 	width = 19
 	},
@@ -538,7 +550,13 @@
 /obj/machinery/door/airlock/shuttle{
 	name = "Emergency Shuttle Cargo"
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
+=======
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -552,7 +570,13 @@
 /obj/machinery/door/airlock/medical/glass{
 	name = "Escape Shuttle Infirmary"
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
+=======
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -571,7 +595,13 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aY" = (
+<<<<<<< HEAD
 /obj/structure/closet/crate/medical,
+=======
+/obj/structure/closet/crate/medical{
+	name = "medical crate"
+	},
+>>>>>>> Updated this old code to fork
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/o2{
 	pixel_x = 3;
@@ -599,6 +629,12 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "ba" = (
+<<<<<<< HEAD
+=======
+/obj/machinery/sleeper{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
 	pixel_x = -26;
@@ -610,7 +646,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/machinery/stasis,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "bb" = (
@@ -623,6 +662,12 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "bc" = (
+<<<<<<< HEAD
+=======
+/obj/machinery/sleeper{
+	dir = 8
+	},
+>>>>>>> Updated this old code to fork
 /obj/item/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = 26
@@ -633,7 +678,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/machinery/stasis,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "bd" = (

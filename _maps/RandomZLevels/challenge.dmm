@@ -158,7 +158,13 @@
 /turf/open/floor/plasteel/airless,
 /area/awaymission/challenge/main)
 "aI" = (
+<<<<<<< HEAD
 /obj/machinery/power/emitter/ctf,
+=======
+/obj/machinery/power/emitter/ctf{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "aJ" = (
@@ -187,7 +193,13 @@
 /area/awaymission/challenge/main)
 "aO" = (
 /obj/structure/window/reinforced,
+<<<<<<< HEAD
 /obj/machinery/power/emitter/ctf,
+=======
+/obj/machinery/power/emitter/ctf{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "aP" = (
@@ -236,8 +248,13 @@
 "aX" = (
 /obj/machinery/porta_turret{
 	dir = 8;
+<<<<<<< HEAD
 	installation = /obj/item/gun/energy/lasercannon;
 	set_obj_flags = "EMAGGED"
+=======
+	set_obj_flags = "EMAGGED";
+	installation = /obj/item/gun/energy/lasercannon
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
@@ -358,7 +375,13 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/awaymission/challenge/main)
 "bo" = (
+<<<<<<< HEAD
 /obj/machinery/power/emitter/ctf,
+=======
+/obj/machinery/power/emitter/ctf{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -376,8 +399,13 @@
 "bq" = (
 /obj/machinery/porta_turret{
 	dir = 8;
+<<<<<<< HEAD
 	installation = /obj/item/gun/energy/lasercannon;
 	set_obj_flags = "EMAGGED"
+=======
+	set_obj_flags = "EMAGGED";
+	installation = /obj/item/gun/energy/lasercannon
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating,
 /area/awaymission/challenge/main)
@@ -413,7 +441,13 @@
 /area/awaymission/challenge/main)
 "bv" = (
 /obj/structure/window/reinforced,
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
+=======
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/challenge/main)
 "bw" = (
@@ -483,10 +517,21 @@
 /turf/open/floor/plasteel/airless,
 /area/awaymission/challenge/main)
 "bF" = (
+<<<<<<< HEAD
 /turf/open/floor/plasteel/white/corner,
 /area/awaymission/challenge/main)
 "bG" = (
 /turf/open/floor/plasteel/white/side,
+=======
+/turf/open/floor/plasteel/white/corner{
+	dir = 2
+	},
+/area/awaymission/challenge/main)
+"bG" = (
+/turf/open/floor/plasteel/white/side{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /area/awaymission/challenge/main)
 "bH" = (
 /turf/open/floor/plasteel/white/corner{
@@ -557,7 +602,13 @@
 /area/awaymission/challenge/end)
 "bQ" = (
 /obj/item/gun/ballistic/revolver/russian,
+<<<<<<< HEAD
 /turf/open/floor/plasteel/white/side,
+=======
+/turf/open/floor/plasteel/white/side{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /area/awaymission/challenge/main)
 "bR" = (
 /obj/structure/table/reinforced,
@@ -587,7 +638,13 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "bU" = (
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
+=======
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/awaymission/challenge/main)
 "bV" = (
@@ -653,6 +710,10 @@
 "cf" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Airlock";
+<<<<<<< HEAD
+=======
+	opacity = 1;
+>>>>>>> Updated this old code to fork
 	req_access_txt = "109"
 	},
 /turf/open/floor/plating,
@@ -761,6 +822,10 @@
 "cx" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Security";
+<<<<<<< HEAD
+=======
+	opacity = 1;
+>>>>>>> Updated this old code to fork
 	req_access_txt = "109"
 	},
 /turf/open/floor/plasteel/dark,
@@ -788,6 +853,10 @@
 "cB" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Administrator";
+<<<<<<< HEAD
+=======
+	opacity = 1;
+>>>>>>> Updated this old code to fork
 	req_access_txt = "109"
 	},
 /turf/open/floor/plasteel/dark,
@@ -986,6 +1055,12 @@
 /area/awaymission/challenge/end)
 "cZ" = (
 /obj/machinery/gateway,
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -996,7 +1071,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "da" = (
@@ -1020,7 +1098,13 @@
 /turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "dc" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "dd" = (
@@ -1075,6 +1159,10 @@
 "dk" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Gateway Access";
+<<<<<<< HEAD
+=======
+	opacity = 1;
+>>>>>>> Updated this old code to fork
 	req_access_txt = "109"
 	},
 /turf/open/floor/plasteel/dark,
@@ -1086,12 +1174,30 @@
 /turf/open/floor/plating,
 /area/awaymission/challenge/end)
 "dm" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+>>>>>>> Updated this old code to fork
 /mob/living/simple_animal/hostile/syndicate{
 	name = "Syndicate Technician"
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
+<<<<<<< HEAD
+=======
+"dn" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/challenge/end)
+>>>>>>> Updated this old code to fork
 "do" = (
 /obj/machinery/light,
 /turf/open/floor/circuit,
@@ -1101,14 +1207,23 @@
 /turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "dq" = (
+<<<<<<< HEAD
 /obj/machinery/power/smes/magical,
 /obj/structure/cable,
+=======
+/obj/structure/cable,
+/obj/machinery/power/smes/magical,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "dr" = (
 /obj/machinery/power/terminal{
 	dir = 8
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "ds" = (
@@ -29555,7 +29670,11 @@ da
 db
 dh
 cd
+<<<<<<< HEAD
 cd
+=======
+dn
+>>>>>>> Updated this old code to fork
 dr
 bP
 aa

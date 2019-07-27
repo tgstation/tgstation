@@ -71,7 +71,11 @@
 	if(!channeling)
 		channeling = TRUE
 	else
+<<<<<<< HEAD
 		to_chat(owner, "<span class='cultitalic'>You are already invoking blood magic!</span>")
+=======
+		to_chat(owner, "<span class='cultitalic'>You are already invoking blood magic!")
+>>>>>>> Updated this old code to fork
 		return
 	if(do_after(owner, 100 - rune*60, target = owner))
 		if(ishuman(owner))
@@ -176,7 +180,11 @@
 
 /datum/action/innate/cult/blood_spell/construction
 	name = "Twisted Construction"
+<<<<<<< HEAD
 	desc = "Empowers your hand to corrupt certain metalic objects.<br><u>Converts:</u><br>Plasteel into runed metal<br>50 metal into a construct shell<br>Living cyborgs into constructs after a delay<br>Cyborg shells into construct shells<br>Airlocks into brittle runed airlocks after a delay (harm intent)"
+=======
+	desc = "Empowers your hand to corrupt certain metalic objects.<br><u>Converts:</u><br>Plasteel into runed metal<br>50 metal into a construct shell<br>Living cyborgs into constructs after a delay<br>Cyborg shells into construct shells<br>Airlocks into brittle runed airlocks after a delay (harm intent)"	
+>>>>>>> Updated this old code to fork
 	button_icon_state = "transmute"
 	magic_path = "/obj/item/melee/blood_magic/construction"
 	health_cost = 12
@@ -335,12 +343,19 @@
 // The "magic hand" items
 /obj/item/melee/blood_magic
 	name = "\improper magical aura"
+<<<<<<< HEAD
 	desc = "A sinister looking aura that distorts the flow of reality around it."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	lefthand_file = 'icons/mob/inhands/misc/touchspell_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/touchspell_righthand.dmi'
 	icon_state = "disintegrate"
 	item_state = "disintegrate"
+=======
+	desc = "Sinister looking aura that distorts the flow of reality around it."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "disintegrate"
+	item_state = null
+>>>>>>> Updated this old code to fork
 	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL
 
 	w_class = WEIGHT_CLASS_HUGE
@@ -360,7 +375,11 @@
 
 /obj/item/melee/blood_magic/Initialize()
 	. = ..()
+<<<<<<< HEAD
 	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
+=======
+	add_trait(TRAIT_NODROP, CULT_TRAIT)
+>>>>>>> Updated this old code to fork
 
 /obj/item/melee/blood_magic/Destroy()
 	if(!QDELETED(source))
@@ -558,6 +577,7 @@
 	desc = "Corrupts certain metalic objects on contact."
 	invocation = "Ethra p'ni dedol!"
 	color = "#000000" // black
+<<<<<<< HEAD
 	var/channeling = FALSE
 
 /obj/item/melee/blood_magic/construction/examine(mob/user)
@@ -574,6 +594,15 @@
 		if(channeling)
 			to_chat(user, "<span class='cultitalic'>You are already invoking twisted construction!</span>")
 			return
+=======
+	
+/obj/item/melee/blood_magic/construction/examine(mob/user)
+	..()
+	to_chat(user,"<u>A sinister spell used to convert:</u><br>Plasteel into runed metal<br>[METAL_TO_CONSTRUCT_SHELL_CONVERSION] metal into a construct shell<br>Living cyborgs into constructs after a delay<br>Cyborg shells into construct shells<br>Airlocks into brittle runed airlocks after a delay (harm intent)")
+
+/obj/item/melee/blood_magic/construction/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	if(proximity_flag && iscultist(user))
+>>>>>>> Updated this old code to fork
 		var/turf/T = get_turf(target)
 		if(istype(target, /obj/item/stack/sheet/metal))
 			var/obj/item/stack/sheet/candidate = target
@@ -596,7 +625,10 @@
 		else if(istype(target,/mob/living/silicon/robot))
 			var/mob/living/silicon/robot/candidate = target
 			if(candidate.mmi)
+<<<<<<< HEAD
 				channeling = TRUE
+=======
+>>>>>>> Updated this old code to fork
 				user.visible_message("<span class='danger'>A dark cloud emanates from [user]'s hand and swirls around [candidate]!</span>")
 				playsound(T, 'sound/machines/airlock_alien_prying.ogg', 80, 1)
 				var/prev_color = candidate.color
@@ -604,9 +636,12 @@
 				if(do_after(user, 90, target = candidate))
 					candidate.emp_act(EMP_HEAVY)
 					var/construct_class = alert(user, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
+<<<<<<< HEAD
 					if(QDELETED(candidate))
 						channeling = FALSE
 						return
+=======
+>>>>>>> Updated this old code to fork
 					user.visible_message("<span class='danger'>The dark cloud receedes from what was formerly [candidate], revealing a\n [construct_class]!</span>")
 					switch(construct_class)
 						if("Juggernaut")
@@ -619,9 +654,13 @@
 					uses--
 					candidate.mmi = null
 					qdel(candidate)
+<<<<<<< HEAD
 					channeling = FALSE
 				else
 					channeling = FALSE
+=======
+				else
+>>>>>>> Updated this old code to fork
 					candidate.color = prev_color
 					return
 			else
@@ -629,6 +668,7 @@
 				to_chat(user, "<span class='warning'>A dark cloud emanates from you hand and swirls around [candidate] - twisting it into a construct shell!</span>")
 				new /obj/structure/constructshell(T)
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+<<<<<<< HEAD
 				qdel(candidate)
 		else if(istype(target,/obj/machinery/door/airlock))
 			channeling = TRUE
@@ -638,13 +678,23 @@
 				if(QDELETED(target))
 					channeling = FALSE
 					return
+=======
+		else if(istype(target,/obj/machinery/door/airlock))
+			playsound(T, 'sound/machines/airlockforced.ogg', 50, 1)
+			do_sparks(5, TRUE, target)
+			if(do_after(user, 50, target = user))
+>>>>>>> Updated this old code to fork
 				target.narsie_act()
 				uses--
 				user.visible_message("<span class='warning'>Black ribbons suddenly emanate from [user]'s hand and cling to the airlock - twisting and corrupting it!</span>")
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+<<<<<<< HEAD
 				channeling = FALSE
 			else
 				channeling = FALSE
+=======
+			else
+>>>>>>> Updated this old code to fork
 				return
 		else
 			to_chat(user, "<span class='warning'>The spell will not work on [target]!</span>")
@@ -679,8 +729,12 @@
 	color = "#7D1717"
 
 /obj/item/melee/blood_magic/manipulator/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	. += "Blood spear, blood bolt barrage, and blood beam cost [BLOOD_SPEAR_COST], [BLOOD_BARRAGE_COST], and [BLOOD_BEAM_COST] charges respectively."
+=======
+	to_chat(user,"Blood spear, blood bolt barrage, and blood beam cost [BLOOD_SPEAR_COST], [BLOOD_BARRAGE_COST], and [BLOOD_BEAM_COST] charges respectively.")
+>>>>>>> Updated this old code to fork
 
 /obj/item/melee/blood_magic/manipulator/afterattack(atom/target, mob/living/carbon/human/user, proximity)
 	if(proximity)
@@ -745,7 +799,11 @@
 					to_chat(user,"<span class='cultitalic'>Your blood rite gains 50 charges from draining [H]'s blood.</span>")
 					new /obj/effect/temp_visual/cult/sparks(get_turf(H))
 				else
+<<<<<<< HEAD
 					to_chat(user,"<span class='warning'>[H.p_theyre(TRUE)] missing too much blood - you cannot drain [H.p_them()] further!</span>")
+=======
+					to_chat(user,"<span class='danger'>[H.p_theyre(TRUE)] missing too much blood - you cannot drain [H.p_them()] further!</span>")
+>>>>>>> Updated this old code to fork
 					return
 		if(isconstruct(target))
 			var/mob/living/simple_animal/M = target
@@ -770,7 +828,11 @@
 	var/turf/T = get_turf(target)
 	if(T)
 		for(var/obj/effect/decal/cleanable/blood/B in view(T, 2))
+<<<<<<< HEAD
 			if(B.blood_state == BLOOD_STATE_HUMAN)
+=======
+			if(B.blood_state == "blood")
+>>>>>>> Updated this old code to fork
 				if(B.bloodiness == 100) //Bonus for "pristine" bloodpools, also to prevent cheese with footprint spam
 					temp += 30
 				else
@@ -780,9 +842,15 @@
 		for(var/obj/effect/decal/cleanable/trail_holder/TH in view(T, 2))
 			qdel(TH)
 		var/obj/item/clothing/shoes/shoecheck = user.shoes
+<<<<<<< HEAD
 		if(shoecheck && shoecheck.bloody_shoes[/datum/reagent/blood])
 			temp += shoecheck.bloody_shoes[/datum/reagent/blood]/20
 			shoecheck.bloody_shoes[/datum/reagent/blood] = 0
+=======
+		if(shoecheck && shoecheck.bloody_shoes["blood"])
+			temp += shoecheck.bloody_shoes["blood"]/20
+			shoecheck.bloody_shoes["blood"] = 0
+>>>>>>> Updated this old code to fork
 		if(temp)
 			user.Beam(T,icon_state="drainbeam",time=15)
 			new /obj/effect/temp_visual/cult/sparks(get_turf(user))
@@ -818,7 +886,11 @@
 				if(uses < BLOOD_BARRAGE_COST)
 					to_chat(user, "<span class='cultitalic'>You need [BLOOD_BARRAGE_COST] charges to perform this rite.</span>")
 				else
+<<<<<<< HEAD
 					var/obj/rite = new /obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage/blood()
+=======
+					var/obj/rite = new /obj/item/gun/ballistic/shotgun/boltaction/enchanted/arcane_barrage/blood()
+>>>>>>> Updated this old code to fork
 					uses -= BLOOD_BARRAGE_COST
 					qdel(src)
 					if(user.put_in_hands(rite))
@@ -838,3 +910,7 @@
 					else
 						to_chat(user, "<span class='cultitalic'>You need a free hand for this rite!</span>")
 						qdel(rite)
+<<<<<<< HEAD
+=======
+						
+>>>>>>> Updated this old code to fork

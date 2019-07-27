@@ -23,9 +23,14 @@
 #define AI_DETECT_HUD	"19"
 #define NANITE_HUD "20"
 #define DIAG_NANITE_FULL_HUD "21"
+<<<<<<< HEAD
 #define DIAG_LAUNCHPAD_HUD "22" //Displays launchpads' targeting reticle
 //for antag huds. these are used at the /mob level
 #define ANTAG_HUD		"23"
+=======
+//for antag huds. these are used at the /mob level
+#define ANTAG_HUD		"22"
+>>>>>>> Updated this old code to fork
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior
@@ -58,8 +63,13 @@
 #define ANTAG_HUD_SOULLESS		21
 #define ANTAG_HUD_CLOCKWORK		22
 #define ANTAG_HUD_BROTHER		23
+<<<<<<< HEAD
 #define ANTAG_HUD_OBSESSED	24
 #define ANTAG_HUD_FUGITIVE	25
+=======
+#define ANTAG_HUD_HIVE			24
+#define ANTAG_HUD_CREEP			25
+>>>>>>> Updated this old code to fork
 
 // Notification action types
 #define NOTIFY_JUMP "jump"

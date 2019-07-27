@@ -168,7 +168,11 @@
 
 /mob/living/simple_animal/hostile/alien/maid/Initialize(mapload)
 	. = ..()
+<<<<<<< HEAD
 	AddElement(/datum/element/cleaning)
+=======
+	AddComponent(/datum/component/cleaning)
+>>>>>>> Updated this old code to fork
 
 /mob/living/simple_animal/hostile/alien/maid/AttackingTarget()
 	if(ismovableatom(target))

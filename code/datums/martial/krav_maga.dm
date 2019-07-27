@@ -58,14 +58,23 @@
 
 /datum/martial_art/krav_maga/teach(mob/living/carbon/human/H,make_temporary=0)
 	if(..())
+<<<<<<< HEAD
 		to_chat(H, "<span class='userdanger'>You know the arts of [name]!</span>")
 		to_chat(H, "<span class='danger'>Place your cursor over a move at the top of the screen to see what it does.</span>")
+=======
+		to_chat(H, "<span class = 'userdanger'>You know the arts of [name]!</span>")
+		to_chat(H, "<span class = 'danger'>Place your cursor over a move at the top of the screen to see what it does.</span>")
+>>>>>>> Updated this old code to fork
 		neckchop.Grant(H)
 		legsweep.Grant(H)
 		lungpunch.Grant(H)
 
 /datum/martial_art/krav_maga/on_remove(mob/living/carbon/human/H)
+<<<<<<< HEAD
 	to_chat(H, "<span class='userdanger'>You suddenly forget the arts of [name]...</span>")
+=======
+	to_chat(H, "<span class = 'userdanger'>You suddenly forget the arts of [name]...</span>")
+>>>>>>> Updated this old code to fork
 	neckchop.Remove(H)
 	legsweep.Remove(H)
 	lungpunch.Remove(H)

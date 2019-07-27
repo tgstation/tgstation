@@ -47,6 +47,7 @@
 	icon_state = "supplypod_loading"
 
 /area/centcom/supplypod/loading/one
+<<<<<<< HEAD
 	name = "Bay #1"
 
 /area/centcom/supplypod/loading/two
@@ -60,6 +61,18 @@
 
 /area/centcom/supplypod/loading/ert
 	name = "ERT Bay"
+=======
+	name = "Supplypod Loading Bay #1"
+
+/area/centcom/supplypod/loading/two
+	name = "Supplypod Loading Bay #2"
+
+/area/centcom/supplypod/loading/three
+	name = "Supplypod Loading Bay #3"
+
+/area/centcom/supplypod/loading/four
+	name = "Supplypod Loading Bay #4"
+>>>>>>> Updated this old code to fork
 //THUNDERDOME
 
 /area/tdome
@@ -138,6 +151,17 @@
 	name = "Syndicate Elite Squad"
 	icon_state = "syndie-elite"
 
+<<<<<<< HEAD
+=======
+/area/fabric_of_reality
+	name = "Tear in the Fabric of Reality"
+	requires_power = FALSE
+	has_gravity = TRUE
+	noteleport = TRUE
+	blob_allowed = FALSE
+	var/turf/origin
+
+>>>>>>> Updated this old code to fork
 //CAPTURE THE FLAG
 
 /area/ctf

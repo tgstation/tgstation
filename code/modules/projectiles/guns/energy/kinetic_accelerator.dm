@@ -26,6 +26,7 @@
 	var/recharge_timerid
 
 /obj/item/gun/energy/kinetic_accelerator/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(max_mod_capacity)
 		. += "<b>[get_remaining_mod_capacity()]%</b> mod capacity remaining."
@@ -33,6 +34,14 @@
 		for(var/A in get_modkits())
 			var/obj/item/borg/upgrade/modkit/M = A
 			. += "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>"
+=======
+	..()
+	if(max_mod_capacity)
+		to_chat(user, "<b>[get_remaining_mod_capacity()]%</b> mod capacity remaining.")
+		for(var/A in get_modkits())
+			var/obj/item/borg/upgrade/modkit/M = A
+			to_chat(user, "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/item/gun/energy/kinetic_accelerator/crowbar_act(mob/living/user, obj/item/I)
 	. = TRUE
@@ -236,8 +245,13 @@
 	var/minebot_exclusive = FALSE
 
 /obj/item/borg/upgrade/modkit/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	. += "<span class='notice'>Occupies <b>[cost]%</b> of mod capacity.</span>"
+=======
+	..()
+	to_chat(user, "<span class='notice'>Occupies <b>[cost]%</b> of mod capacity.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/item/borg/upgrade/modkit/attackby(obj/item/A, mob/user)
 	if(istype(A, /obj/item/gun/energy/kinetic_accelerator) && !issilicon(user))

@@ -163,7 +163,12 @@
 	set waitfor = FALSE
 
 	to_chat(world, "<BR><BR><BR><span class='big bold'>The round has ended.</span>")
+<<<<<<< HEAD
 	log_game("The round has ended.")
+=======
+	if(LAZYLEN(GLOB.round_end_notifiees))
+		send2irc("Notice", "[GLOB.round_end_notifiees.Join(", ")] the round has ended.")
+>>>>>>> Updated this old code to fork
 
 	for(var/I in round_end_events)
 		var/datum/callback/cb = I
@@ -273,6 +278,7 @@
 	if(GLOB.round_id)
 		var/statspage = CONFIG_GET(string/roundstatsurl)
 		var/info = statspage ? "<a href='?action=openLink&link=[url_encode(statspage)][GLOB.round_id]'>[GLOB.round_id]</a>" : GLOB.round_id
+<<<<<<< HEAD
 		parts += "[FOURSPACES]Round ID: <b>[info]</b>"
 	parts += "[FOURSPACES]Shift Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B>"
 	parts += "[FOURSPACES]Station Integrity: <B>[mode.station_was_nuked ? "<span class='redtext'>Destroyed</span>" : "[popcount["station_integrity"]]%"]</B>"
@@ -290,6 +296,25 @@
 			//ignore this comment, it fixes the broken sytax parsing caused by the " above
 			else
 				parts += "[FOURSPACES]<i>Nobody died this shift!</i>"
+=======
+		parts += "[GLOB.TAB]Round ID: <b>[info]</b>"
+	parts += "[GLOB.TAB]Shift Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B>"
+	parts += "[GLOB.TAB]Station Integrity: <B>[mode.station_was_nuked ? "<span class='redtext'>Destroyed</span>" : "[popcount["station_integrity"]]%"]</B>"
+	var/total_players = GLOB.joined_player_list.len
+	if(total_players)
+		parts+= "[GLOB.TAB]Total Population: <B>[total_players]</B>"
+		if(station_evacuated)
+			parts += "<BR>[GLOB.TAB]Evacuation Rate: <B>[popcount[POPCOUNT_ESCAPEES]] ([PERCENT(popcount[POPCOUNT_ESCAPEES]/total_players)]%)</B>"
+			parts += "[GLOB.TAB](on emergency shuttle): <B>[popcount[POPCOUNT_SHUTTLE_ESCAPEES]] ([PERCENT(popcount[POPCOUNT_SHUTTLE_ESCAPEES]/total_players)]%)</B>"
+		parts += "[GLOB.TAB]Survival Rate: <B>[popcount[POPCOUNT_SURVIVORS]] ([PERCENT(popcount[POPCOUNT_SURVIVORS]/total_players)]%)</B>"
+		if(SSblackbox.first_death)
+			var/list/ded = SSblackbox.first_death
+			if(ded.len)
+				parts += "[GLOB.TAB]First Death: <b>[ded["name"]], [ded["role"]], at [ded["area"]]. Damage taken: [ded["damage"]].[ded["last_words"] ? " Their last words were: \"[ded["last_words"]]\"" : ""]</b>"
+			//ignore this comment, it fixes the broken sytax parsing caused by the " above
+			else
+				parts += "[GLOB.TAB]<i>Nobody died this shift!</i>"
+>>>>>>> Updated this old code to fork
 	return parts.Join("<br>")
 
 /client/proc/roundend_report_file()
@@ -312,7 +337,10 @@
 	roundend_report.set_content(content)
 	roundend_report.stylesheets = list()
 	roundend_report.add_stylesheet("roundend", 'html/browser/roundend.css')
+<<<<<<< HEAD
 	roundend_report.add_stylesheet("font-awesome", 'html/font-awesome/css/all.min.css')
+=======
+>>>>>>> Updated this old code to fork
 	roundend_report.open(FALSE)
 
 /datum/controller/subsystem/ticker/proc/personal_report(client/C, popcount)
@@ -364,11 +392,20 @@
 
 		if (aiPlayer.connected_robots.len)
 			var/borg_num = aiPlayer.connected_robots.len
+<<<<<<< HEAD
 			parts += "<br><b>[aiPlayer.real_name]</b>'s minions were:"
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
 				borg_num--
 				if(robo.mind)
 					parts += "<b>[robo.name]</b> (Played by: <b>[robo.mind.key]</b>)[robo.stat == DEAD ? " <span class='redtext'>(Deactivated)</span>" : ""][borg_num ?", ":""]"
+=======
+			var/robolist = "<br><b>[aiPlayer.real_name]</b>'s minions were: "
+			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
+				borg_num--
+				if(robo.mind)
+					robolist += "<b>[robo.name]</b> (Played by: <b>[robo.mind.key]</b>)[robo.stat == DEAD ? " <span class='redtext'>(Deactivated)</span>" : ""][borg_num ?", ":""]<br>"
+			parts += "[robolist]"
+>>>>>>> Updated this old code to fork
 		if(!borg_spacer)
 			borg_spacer = TRUE
 
@@ -413,7 +450,11 @@
 		if(!A.members)
 			continue
 		all_teams |= A
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> Updated this old code to fork
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		if(!A.owner)
 			continue

@@ -8,6 +8,11 @@
 /area/shuttle/escape)
 "c" = (
 /obj/docking_port/mobile/emergency{
+<<<<<<< HEAD
+=======
+	dheight = 0;
+	dir = 4;
+>>>>>>> Updated this old code to fork
 	dwidth = 1;
 	height = 10;
 	name = "Oh Hi Mark";
@@ -131,7 +136,11 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "v" = (
+<<<<<<< HEAD
 /obj/structure/chair/office,
+=======
+/obj/structure/chair/office/dark,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "w" = (

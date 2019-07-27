@@ -14,6 +14,7 @@
 	var/activationCost = 300
 	var/activationUpkeep = 50
 	var/disguise = "engineer"
+<<<<<<< HEAD
 	var/mob/listeningTo
 	var/static/list/signalCache = list( // list here all signals that should break the camouflage
 			COMSIG_PARENT_ATTACKBY,
@@ -26,13 +27,21 @@
 			)
 	var/mob/living/silicon/robot/user // needed for process()
 	var/animation_playing = FALSE
+=======
+	var/datum/component/mobhook // need this to deal with unregistration properly
+	var/mob/living/silicon/robot/user // needed for process()
+>>>>>>> Updated this old code to fork
 
 /obj/item/borg_chameleon/Initialize()
 	. = ..()
 	friendlyName = pick(GLOB.ai_names)
 
 /obj/item/borg_chameleon/Destroy()
+<<<<<<< HEAD
 	listeningTo = null
+=======
+	QDEL_NULL(mobhook)
+>>>>>>> Updated this old code to fork
 	return ..()
 
 /obj/item/borg_chameleon/dropped(mob/user)
@@ -58,10 +67,13 @@
 		to_chat(user, "<span class='notice'>You deactivate \the [src].</span>")
 		deactivate(user)
 	else
+<<<<<<< HEAD
 		if(animation_playing)
 			to_chat(user, "<span class='notice'>\the [src] is recharging.</span>")
 			return
 		animation_playing = TRUE
+=======
+>>>>>>> Updated this old code to fork
 		to_chat(user, "<span class='notice'>You activate \the [src].</span>")
 		playsound(src, 'sound/effects/seedling_chargeup.ogg', 100, 1, -6)
 		var/start = user.filters.len
@@ -88,7 +100,10 @@
 				f = user.filters[start+i]
 				animate(f)
 		user.filters = null
+<<<<<<< HEAD
 		animation_playing = FALSE
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/borg_chameleon/process()
 	if (user)
@@ -104,6 +119,7 @@
 	user.name = friendlyName
 	user.module.cyborg_base_icon = disguise
 	active = TRUE
+<<<<<<< HEAD
 	user.update_icons()
 	
 	if(listeningTo == user)
@@ -118,6 +134,26 @@
 	if(listeningTo)
 		UnregisterSignal(listeningTo, signalCache)
 		listeningTo = null
+=======
+	if (mobhook && mobhook.parent != user)
+		QDEL_NULL(mobhook)
+	if (!mobhook)
+		var/callback = CALLBACK(src, .proc/disrupt, user) // push user into the callback so that it's guaranteed to be the first arg
+		mobhook = user.AddComponent(/datum/component/redirect, list( // list here all signals that should break the camouflage
+			COMSIG_PARENT_ATTACKBY = callback,
+			COMSIG_ATOM_ATTACK_HAND = callback,
+			COMSIG_MOVABLE_IMPACT_ZONE = callback,
+			COMSIG_ATOM_BULLET_ACT = callback,
+			COMSIG_ATOM_EX_ACT = callback,
+			COMSIG_ATOM_FIRE_ACT = callback,
+			COMSIG_ATOM_EMP_ACT = callback,
+			))
+	user.update_icons()
+
+/obj/item/borg_chameleon/proc/deactivate(mob/living/silicon/robot/user)
+	STOP_PROCESSING(SSobj, src)
+	QDEL_NULL(mobhook)
+>>>>>>> Updated this old code to fork
 	do_sparks(5, FALSE, user)
 	user.name = savedName
 	user.module.cyborg_base_icon = initial(user.module.cyborg_base_icon)

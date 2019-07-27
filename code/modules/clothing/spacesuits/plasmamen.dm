@@ -15,8 +15,13 @@
 
 
 /obj/item/clothing/suit/space/eva/plasmaman/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	. += "<span class='notice'>There [extinguishes_left == 1 ? "is" : "are"] [extinguishes_left] extinguisher charge\s left in this suit.</span>"
+=======
+	..()
+	to_chat(user, "<span class='notice'>There [extinguishes_left == 1 ? "is" : "are"] [extinguishes_left] extinguisher charge\s left in this suit.</span>")
+>>>>>>> Updated this old code to fork
 
 
 /obj/item/clothing/suit/space/eva/plasmaman/proc/Extinguish(mob/living/carbon/human/H)
@@ -41,7 +46,10 @@
 	icon_state = "plasmaman-helm"
 	item_state = "plasmaman-helm"
 	strip_delay = 80
+<<<<<<< HEAD
 	flash_protect = 0
+=======
+>>>>>>> Updated this old code to fork
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 75)
 	resistance_flags = FIRE_PROOF
 	var/brightness_on = 4 //luminosity when the light is on
@@ -62,6 +70,7 @@
 	for(var/X in actions)
 		var/datum/action/A=X
 		A.UpdateButtonIcon()
+<<<<<<< HEAD
 
 /obj/item/clothing/head/helmet/space/plasmaman/security
 	name = "security plasma envirosuit helmet"
@@ -179,3 +188,5 @@
 	desc = "The make-up is painted on, it's a miracle it doesn't chip. <i>'HONK!'</i>"
 	icon_state = "clown_envirohelm"
 	item_state = "clown_envirohelm"
+=======
+>>>>>>> Updated this old code to fork

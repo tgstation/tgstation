@@ -1,0 +1,4 @@
+author: "actioninja"
+delete-after: True
+changes: 
+  - balance: "Bone Hurting Juice now metabolizes at a standard rate for toxins."

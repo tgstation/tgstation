@@ -81,6 +81,7 @@
 	cost = 100
 	unit_name = "bomb suit"
 	export_types = list(/obj/item/clothing/suit/bomb_suit)
+<<<<<<< HEAD
 
 /datum/export/gear/lizardboots
 	cost = 350
@@ -97,3 +98,5 @@
 	cost = 2500
 	unit_name = "bilton wrangler boots"
 	export_types = list(/obj/item/clothing/shoes/cowboy/fancy)
+=======
+>>>>>>> Updated this old code to fork

@@ -97,16 +97,28 @@
 	<div class='inputbox'></div></label>
 	<input type='text' name='keytext' size='26' value='[player_key]'>
 	<label class='inputlabel checkbox'>IP:
+<<<<<<< HEAD
 	<input type='checkbox' id='ipcheck' name='ipcheck' value='1'[isnull(duration) ? " checked" : ""]>
 	<div class='inputbox'></div></label>
 	<input type='text' name='iptext' size='18' value='[player_ip]'>
 	<label class='inputlabel checkbox'>CID:
 	<input type='checkbox' id='cidcheck' name='cidcheck' value='1' checked>
+=======
+	<input type='checkbox' id='ipcheck' name='ipcheck' value='1'[player_ip ? " checked": ""]>
+	<div class='inputbox'></div></label>
+	<input type='text' name='iptext' size='18' value='[player_ip]'>
+	<label class='inputlabel checkbox'>CID:
+	<input type='checkbox' id='cidcheck' name='cidcheck' value='1'[player_cid ? " checked": ""]>
+>>>>>>> Updated this old code to fork
 	<div class='inputbox'></div></label>
 	<input type='text' name='cidtext' size='14' value='[player_cid]'>
 	<br>
 	<label class='inputlabel checkbox'>Use IP and CID from last connection of key
+<<<<<<< HEAD
 	<input type='checkbox' id='lastconn' name='lastconn' value='1' [(isnull(duration) && !player_ip) || (!player_cid) ? " checked": ""]>
+=======
+	<input type='checkbox' id='lastconn' name='lastconn' value='1'>
+>>>>>>> Updated this old code to fork
 	<div class='inputbox'></div></label>
 	<label class='inputlabel checkbox'>Applies to Admins
 	<input type='checkbox' id='applyadmins' name='applyadmins' value='1'[applies_to_admins ? " checked": ""]>
@@ -260,7 +272,11 @@
 									ROLE_MONKEY, ROLE_NINJA, ROLE_OPERATIVE,
 									ROLE_OVERTHROW, ROLE_REV, ROLE_REVENANT,
 									ROLE_REV_HEAD, ROLE_SERVANT_OF_RATVAR, ROLE_SYNDICATE,
+<<<<<<< HEAD
 									ROLE_TRAITOR, ROLE_WIZARD, ROLE_HIVE)) //ROLE_REV_HEAD is excluded from this because rev jobbans are handled by ROLE_REV
+=======
+									ROLE_TRAITOR, ROLE_WIZARD)) //ROLE_REV_HEAD is excluded from this because rev jobbans are handled by ROLE_REV
+>>>>>>> Updated this old code to fork
 		for(var/department in long_job_lists)
 			output += "<div class='column'><label class='rolegroup long [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' [usr.client.prefs.tgui_fancy ? " onClick='toggle_checkboxes(this, \"_com\")'" : ""]>[department]</label><div class='content'>"
 			break_counter = 0
@@ -286,9 +302,13 @@
 		return
 	var/list/error_state = list()
 	var/player_key
+<<<<<<< HEAD
 	var/ip_check = FALSE
 	var/player_ip
 	var/cid_check = FALSE
+=======
+	var/player_ip
+>>>>>>> Updated this old code to fork
 	var/player_cid
 	var/use_last_connection = FALSE
 	var/applies_to_admins = FALSE
@@ -310,6 +330,7 @@
 		player_key = href_list["keytext"]
 		if(!player_key)
 			error_state += "Key was ticked but none was provided."
+<<<<<<< HEAD
 	if(href_list["ipcheck"])
 		ip_check = TRUE
 	if(href_list["cidcheck"])
@@ -330,6 +351,23 @@
 		error_state += "At least a key, IP or CID must be provided."
 	if(use_last_connection && !ip_check && !cid_check)
 		error_state += "Use last connection was ticked, but neither IP nor CID was."
+=======
+	if(href_list["lastconn"])
+		use_last_connection = TRUE
+		if(!player_key)
+			error_state += "A key must be provided to use IP and CID from last connection."
+	else
+		if(href_list["ipcheck"])
+			player_ip = href_list["iptext"]
+			if(!player_ip)
+				error_state += "IP was ticked but none was provided."
+		if(href_list["cidcheck"])
+			player_cid = href_list["cidtext"]
+			if(!player_cid)
+				error_state += "CID was ticked but none was provided."
+	if(!use_last_connection && !player_ip && !player_cid && !player_key)
+		error_state += "At least a key, IP or CID must be provided."
+>>>>>>> Updated this old code to fork
 	if(href_list["applyadmins"])
 		applies_to_admins = TRUE
 	switch(href_list["radioduration"])
@@ -391,11 +429,19 @@
 		to_chat(usr, "<span class='danger'>Ban not [edit_id ? "edited" : "created"] because the following errors were present:\n[error_state.Join("\n")]</span>")
 		return
 	if(edit_id)
+<<<<<<< HEAD
 		edit_ban(edit_id, player_key, ip_check, player_ip, cid_check, player_cid, use_last_connection, applies_to_admins, duration, interval, reason, mirror_edit, old_key, old_ip, old_cid, old_applies, page, admin_key, changes)
 	else
 		create_ban(player_key, ip_check, player_ip, cid_check, player_cid, use_last_connection, applies_to_admins, duration, interval, severity, reason, roles_to_ban)
 
 /datum/admins/proc/create_ban(player_key, ip_check, player_ip, cid_check, player_cid, use_last_connection, applies_to_admins, duration, interval, severity, reason, list/roles_to_ban)
+=======
+		edit_ban(edit_id, player_key, player_ip, player_cid, use_last_connection, applies_to_admins, duration, interval, reason, mirror_edit, old_key, old_ip, old_cid, old_applies, page, admin_key, changes)
+	else
+		create_ban(player_key, player_ip, player_cid, use_last_connection, applies_to_admins, duration, interval, severity, reason, roles_to_ban)
+
+/datum/admins/proc/create_ban(player_key, player_ip, player_cid, use_last_connection, applies_to_admins, duration, interval, severity, reason, list/roles_to_ban)
+>>>>>>> Updated this old code to fork
 	if(!check_rights(R_BAN))
 		return
 	if(!SSdbcore.Connect())
@@ -412,6 +458,7 @@
 		if(query_create_ban_get_player.NextRow())
 			player_key = query_create_ban_get_player.item[1]
 			if(use_last_connection)
+<<<<<<< HEAD
 				if(ip_check)
 					player_ip = query_create_ban_get_player.item[2]
 				if(cid_check)
@@ -421,6 +468,15 @@
 				if(alert(usr, "[player_key]/([player_ckey]) has not been seen before, unable to use IP and CID from last connection. Are you sure you want to create a ban for them?", "Unknown key", "Yes", "No", "Cancel") != "Yes")
 					qdel(query_create_ban_get_player)
 					return
+=======
+				player_ip = query_create_ban_get_player.item[2]
+				player_cid = query_create_ban_get_player.item[3]
+		else
+			if(use_last_connection)
+				to_chat(usr, "<span class='danger'>Ban not created. [player_key]/([player_ckey]) hasn't been seen before, unable to use IP and CID from last connection.</span>")
+				qdel(query_create_ban_get_player)
+				return
+>>>>>>> Updated this old code to fork
 			else
 				if(alert(usr, "[player_key]/([player_ckey]) has not been seen before, are you sure you want to create a ban for them?", "Unknown key", "Yes", "No", "Cancel") != "Yes")
 					qdel(query_create_ban_get_player)
@@ -635,6 +691,7 @@
 	var/client/C = GLOB.directory[player_key]
 	if(C)
 		build_ban_cache(C)
+<<<<<<< HEAD
 		to_chat(C, "<span class='boldannounce'>[usr.client.key] has removed a ban from [role] for your key.</span>")
 	for(var/client/i in GLOB.clients - C)
 		if(i.address == player_ip || i.computer_id == player_cid)
@@ -643,6 +700,16 @@
 	unban_panel(player_key, admin_key, player_ip, player_cid, page)
 
 /datum/admins/proc/edit_ban(ban_id, player_key, ip_check, player_ip, cid_check, player_cid, use_last_connection, applies_to_admins, duration, interval, reason, mirror_edit, old_key, old_ip, old_cid, old_applies, admin_key, page, list/changes)
+=======
+		to_chat(C, "<span class='boldannounce'>[usr.client.key] has removed a ban from [role] for your key.")
+	for(var/client/i in GLOB.clients - C)
+		if(i.address == player_ip || i.computer_id == player_cid)
+			build_ban_cache(i)
+			to_chat(i, "<span class='boldannounce'>[usr.client.key] has removed a ban from [role] for your IP or CID.")
+	unban_panel(player_key, admin_key, player_ip, player_cid, page)
+
+/datum/admins/proc/edit_ban(ban_id, player_key, player_ip, player_cid, use_last_connection, applies_to_admins, duration, interval, reason, mirror_edit, old_key, old_ip, old_cid, old_applies, admin_key, page, list/changes)
+>>>>>>> Updated this old code to fork
 	if(!check_rights(R_BAN))
 		return
 	if(!SSdbcore.Connect())
@@ -662,6 +729,7 @@
 			player_key = query_edit_ban_get_player.item[1]
 			bantime = query_edit_ban_get_player.item[2]
 			if(use_last_connection)
+<<<<<<< HEAD
 				if(ip_check)
 					player_ip = query_edit_ban_get_player.item[3]
 				if(cid_check)
@@ -675,6 +743,15 @@
 				if(alert(usr, "[player_key]/([player_ckey]) has not been seen before, are you sure you want to edit a ban for them?", "Unknown key", "Yes", "No", "Cancel") != "Yes")
 					qdel(query_edit_ban_get_player)
 					return
+=======
+				player_ip = query_edit_ban_get_player.item[3]
+				player_cid = query_edit_ban_get_player.item[4]
+		else
+			if(use_last_connection)
+				to_chat(usr, "<span class='danger'>Ban not edited. [player_key]/([player_ckey]) hasn't been seen before, unable to use IP and CID from last connection.</span>")
+				qdel(query_edit_ban_get_player)
+				return
+>>>>>>> Updated this old code to fork
 		qdel(query_edit_ban_get_player)
 	if(applies_to_admins && (applies_to_admins != old_applies))
 		var/admin_ckey = sanitizeSQL(usr.client.ckey)
@@ -730,7 +807,11 @@
 	var/client/C = GLOB.directory[old_key]
 	if(C)
 		build_ban_cache(C)
+<<<<<<< HEAD
 		to_chat(C, "<span class='boldannounce'>[usr.client.key] has edited the [changes_keys_text] of a ban for your key.</span>")
+=======
+		to_chat(C, "<span class='boldannounce'>[usr.client.key] has edited the [changes_keys_text] of a ban for your key.")
+>>>>>>> Updated this old code to fork
 	for(var/client/i in GLOB.clients - C)
 		if(i.address == old_ip || i.computer_id == old_cid)
 			build_ban_cache(i)
@@ -768,4 +849,8 @@
 			. += player_cid
 		else
 			. += "NULL"
+<<<<<<< HEAD
 	. = jointext(., "/")
+=======
+	. = jointext(., "/")
+>>>>>>> Updated this old code to fork

@@ -11,7 +11,11 @@
 	growthstages = 5
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy)
 	mutatelist = list(/obj/item/seeds/nettle/death)
+<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/toxin/acid = 0.5)
+=======
+	reagents_add = list("sacid" = 0.5)
+>>>>>>> Updated this old code to fork
 
 /obj/item/seeds/nettle/death
 	name = "pack of death-nettle seeds"
@@ -25,7 +29,11 @@
 	yield = 2
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/stinging)
 	mutatelist = list()
+<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/toxin/acid/fluacid = 0.5, /datum/reagent/toxin/acid = 0.5)
+=======
+	reagents_add = list("facid" = 0.5, "sacid" = 0.5)
+>>>>>>> Updated this old code to fork
 	rarity = 20
 
 /obj/item/reagent_containers/food/snacks/grown/nettle // "snack"
@@ -56,7 +64,11 @@
 	var/mob/living/carbon/C = user
 	if(C.gloves)
 		return FALSE
+<<<<<<< HEAD
 	if(HAS_TRAIT(C, TRAIT_PIERCEIMMUNE))
+=======
+	if(C.has_trait(TRAIT_PIERCEIMMUNE))
+>>>>>>> Updated this old code to fork
 		return FALSE
 	var/hit_zone = (C.held_index_to_dir(C.active_hand_index) == "l" ? "l_":"r_") + "arm"
 	var/obj/item/bodypart/affecting = C.get_bodypart(hit_zone)

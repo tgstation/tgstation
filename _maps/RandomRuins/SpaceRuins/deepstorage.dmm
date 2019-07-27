@@ -19,7 +19,11 @@
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "ai" = (
+<<<<<<< HEAD
 /obj/structure/closet/secure_closet/freezer/meat/open,
+=======
+/obj/structure/closet/secure_closet/freezer/meat,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "ak" = (
@@ -49,6 +53,10 @@
 /area/ruin/space/has_grav/deepstorage/crusher)
 "an" = (
 /obj/machinery/conveyor{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	id = "bunkerrecycle"
 	},
 /turf/open/floor/plating,
@@ -125,6 +133,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aC" = (
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
@@ -134,6 +143,28 @@
 	pixel_y = -23
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/crusher)
+"aD" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/crusher)
+"aE" = (
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/away{
+	dir = 2;
+	name = "Recycling APC";
+	pixel_y = -24
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aG" = (
@@ -259,8 +290,15 @@
 	name = "Recycling Room";
 	req_access_txt = "200"
 	},
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aP" = (
@@ -421,11 +459,20 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "be" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "bf" = (
@@ -571,11 +618,20 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "by" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/light{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "bz" = (
@@ -629,7 +685,11 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/storage)
 "bI" = (
+<<<<<<< HEAD
 /obj/structure/closet/secure_closet/freezer/fridge/open,
+=======
+/obj/structure/closet/secure_closet/freezer/fridge,
+>>>>>>> Updated this old code to fork
 /obj/item/storage/box/ingredients/wildcard,
 /obj/item/storage/box/ingredients/wildcard,
 /obj/item/storage/box/ingredients/wildcard,
@@ -637,27 +697,46 @@
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bJ" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
@@ -667,6 +746,22 @@
 	pixel_y = -23
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/ruin/space/has_grav/deepstorage/kitchen)
+"bN" = (
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/away{
+	dir = 2;
+	name = "Kitchen APC";
+	pixel_y = -24
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bO" = (
@@ -675,19 +770,31 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bP" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "bQ" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Hydroponics"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "bR" = (
@@ -784,11 +891,20 @@
 /area/ruin/space/has_grav/deepstorage/storage)
 "bY" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
 	name = "Kitchen"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bZ" = (
@@ -797,6 +913,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "ca" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -812,12 +929,67 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "cg" = (
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/deepstorage)
+"cb" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/deepstorage)
+"cc" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/hydroponics)
+"cd" = (
+/obj/structure/table,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/deepstorage/hydroponics)
+"ce" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/deepstorage/hydroponics)
+"cf" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/deepstorage/hydroponics)
+"cg" = (
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "Hydroponics APC";
 	pixel_x = 24
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "ch" = (
@@ -894,11 +1066,20 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "co" = (
@@ -936,11 +1117,20 @@
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/has_grav/deepstorage)
 "ct" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "cu" = (
@@ -1035,8 +1225,15 @@
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 5
 	},
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/storage)
 "cD" = (
@@ -1047,8 +1244,15 @@
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/storage)
 "cE" = (
@@ -1056,14 +1260,24 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "cF" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "cG" = (
@@ -1071,7 +1285,10 @@
 	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "cH" = (
@@ -1103,11 +1320,20 @@
 /area/ruin/space/has_grav/deepstorage)
 "cK" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "cL" = (
@@ -1142,22 +1368,42 @@
 /area/ruin/space/has_grav/deepstorage)
 "cP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "cQ" = (
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/deepstorage)
+"cQ" = (
+/obj/structure/cable/yellow,
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "Storage APC";
 	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/storage)
 "cR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/computer/arcade,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -1191,11 +1437,20 @@
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "cW" = (
@@ -1227,9 +1482,17 @@
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/has_grav/deepstorage)
 "da" = (
+<<<<<<< HEAD
 /obj/machinery/door/firedoor,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/spawner/structure/window/reinforced,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/armory)
 "db" = (
@@ -1279,6 +1542,12 @@
 /area/ruin/space/has_grav/deepstorage/storage)
 "dh" = (
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/computer/arcade,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -1287,6 +1556,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/chair/stool,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -1296,14 +1571,58 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "dk" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/deepstorage)
+"dl" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/deepstorage)
+"dm" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/deepstorage)
+"dn" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
@@ -1318,6 +1637,31 @@
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/has_grav/deepstorage)
+<<<<<<< HEAD
+=======
+"dr" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/deepstorage)
+"ds" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/armory)
+>>>>>>> Updated this old code to fork
 "dt" = (
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
@@ -1445,11 +1789,20 @@
 /area/ruin/space/has_grav/deepstorage/dorm)
 "dC" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/light{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "dD" = (
@@ -1459,6 +1812,19 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
+<<<<<<< HEAD
+=======
+"dE" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/deepstorage)
+>>>>>>> Updated this old code to fork
 "dF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -1471,8 +1837,15 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "dH" = (
@@ -1505,8 +1878,15 @@
 /area/ruin/space/has_grav/deepstorage)
 "dL" = (
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "dM" = (
@@ -1517,7 +1897,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "dN" = (
@@ -1555,34 +1938,64 @@
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 6
 	},
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "dS" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
 	name = "Dorms"
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/dorm)
+=======
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/deepstorage/dorm)
+"dT" = (
+/obj/machinery/atmospherics/pipe/manifold/supplymain/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/deepstorage)
+>>>>>>> Updated this old code to fork
 "dU" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "dV" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/power/apc/away{
 	name = "Main Area APC";
 	pixel_y = -23
@@ -1590,36 +2003,125 @@
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow,
+/obj/machinery/power/apc/away{
+	dir = 2;
+	name = "Main Area APC";
+	pixel_y = -24
+	},
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "dW" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden,
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/deepstorage)
+"dX" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "dY" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/deepstorage)
+"dZ" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/deepstorage)
+"ea" = (
+/obj/machinery/atmospherics/pipe/manifold/supplymain/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "eb" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/deepstorage)
+"ec" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "ed" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supplymain/hidden,
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "ee" = (
@@ -1630,14 +2132,32 @@
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "ef" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 10
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/deepstorage/armory)
+"eg" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "eh" = (
@@ -1645,12 +2165,21 @@
 /obj/item/storage/backpack/duffelbag/sec/surgery{
 	pixel_y = 5
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "Armory APC";
 	pixel_x = 24
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "ei" = (
@@ -1681,8 +2210,15 @@
 /area/ruin/space/has_grav/deepstorage/dorm)
 "em" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "en" = (
@@ -1718,8 +2254,15 @@
 	req_access_txt = "200"
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "es" = (
@@ -1728,13 +2271,38 @@
 /area/ruin/space/has_grav/deepstorage/airlock)
 "et" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/light{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
+=======
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/deepstorage)
+"eu" = (
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/armory)
+>>>>>>> Updated this old code to fork
 "ev" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 5
@@ -1791,8 +2359,15 @@
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "eD" = (
@@ -1872,8 +2447,18 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "eK" = (
@@ -1881,17 +2466,27 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "eL" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 10
 	},
+<<<<<<< HEAD
 /obj/machinery/power/apc/away{
 	dir = 1;
 	name = "Airlock Control APC";
@@ -1901,6 +2496,25 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/airlock)
+=======
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/away{
+	dir = 1;
+	name = "Airlock Control APC";
+	pixel_y = 24
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/deepstorage/airlock)
+"eM" = (
+/obj/structure/cable/yellow,
+/obj/machinery/door/firedoor,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/armory)
+>>>>>>> Updated this old code to fork
 "eN" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/toxin{
@@ -1948,11 +2562,20 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "eQ" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "eR" = (
@@ -1964,25 +2587,52 @@
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "bunkershutter"
 	},
+<<<<<<< HEAD
 /obj/machinery/door/firedoor,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/spawner/structure/window/reinforced,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "eU" = (
 /obj/structure/chair{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "eV" = (
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/deepstorage/airlock)
+"eV" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "eW" = (
@@ -2007,8 +2657,15 @@
 	req_access_txt = "200"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/power)
 "eZ" = (
@@ -2047,12 +2704,21 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "fe" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
 	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "ff" = (
@@ -2065,6 +2731,18 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/airlock)
+<<<<<<< HEAD
+=======
+"fh" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "bunkershutter"
+	},
+/obj/structure/cable/yellow,
+/obj/machinery/door/firedoor,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/airlock)
+>>>>>>> Updated this old code to fork
 "fi" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -2085,8 +2763,15 @@
 /area/ruin/space/has_grav/deepstorage/airlock)
 "fl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/power)
 "fm" = (
@@ -2178,6 +2863,15 @@
 /area/ruin/space/has_grav/deepstorage/airlock)
 "fx" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/apc/away{
 	dir = 8;
 	name = "Power and Atmospherics APC";
@@ -2185,7 +2879,10 @@
 	pixel_y = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/power)
 "fy" = (
@@ -2231,13 +2928,20 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "fE" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow,
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "Dormitory APC";
 	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "fF" = (
@@ -2373,6 +3077,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "fW" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
@@ -2380,12 +3085,27 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "fX" = (
+=======
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/power)
+"fX" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
 /obj/structure/sign/warning/electricshock{
 	pixel_y = 32
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
@@ -2397,14 +3117,35 @@
 	dir = 4
 	},
 /obj/structure/cable,
+=======
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/power)
+"fY" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "fZ" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/power)
 "ga" = (
@@ -2465,6 +3206,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "gh" = (
+<<<<<<< HEAD
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -2473,10 +3215,39 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/power)
+"gi" = (
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "gj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/power)
@@ -2513,6 +3284,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "gq" = (
+<<<<<<< HEAD
 /obj/machinery/power/terminal{
 	dir = 1
 	},
@@ -2522,13 +3294,40 @@
 "gr" = (
 /obj/machinery/power/terminal{
 	dir = 1
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/power)
+"gr" = (
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+>>>>>>> Updated this old code to fork
 	},
 /obj/structure/sign/warning/electricshock{
 	pixel_y = -32
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
+=======
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/power)
+"gt" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/deepstorage/power)
+>>>>>>> Updated this old code to fork
 "gu" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/visible{
 	dir = 5
@@ -2581,8 +3380,15 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/power)
 "gB" = (
@@ -2640,11 +3446,26 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "gK" = (
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/power)
+"gK" = (
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "gL" = (
@@ -2652,9 +3473,25 @@
 	name = "RTG Observation";
 	req_access_txt = "200"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/power)
+"gM" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/deepstorage/power)
+>>>>>>> Updated this old code to fork
 "gN" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -2687,7 +3524,13 @@
 /area/ruin/space/has_grav/deepstorage)
 "gR" = (
 /obj/structure/grille,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "gT" = (
@@ -2731,6 +3574,17 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/power)
+<<<<<<< HEAD
+=======
+"gX" = (
+/obj/machinery/power/rtg/advanced,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/power)
+>>>>>>> Updated this old code to fork
 "gY" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Telecomms";
@@ -2740,13 +3594,21 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "gZ" = (
 /obj/machinery/power/rtg/advanced,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "ha" = (
 /obj/machinery/power/rtg/advanced,
 /obj/machinery/light/small,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "hb" = (
@@ -2796,30 +3658,51 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "hi" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "hj" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "hk" = (
@@ -2830,12 +3713,21 @@
 /area/ruin/space/has_grav/deepstorage/airlock)
 "hl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/power)
 "hm" = (
@@ -2859,6 +3751,16 @@
 	},
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/power)
+<<<<<<< HEAD
+=======
+"hp" = (
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/power)
+>>>>>>> Updated this old code to fork
 "hq" = (
 /obj/machinery/door/firedoor,
 /obj/effect/spawner/structure/window/reinforced,
@@ -2902,6 +3804,7 @@
 /obj/effect/baseturf_helper/asteroid/airless,
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/power)
+<<<<<<< HEAD
 "po" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
@@ -2912,6 +3815,8 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
+=======
+>>>>>>> Updated this old code to fork
 "rz" = (
 /obj/machinery/conveyor{
 	dir = 6;
@@ -2919,10 +3824,13 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
+<<<<<<< HEAD
 "sL" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
+=======
+>>>>>>> Updated this old code to fork
 "Bb" = (
 /obj/machinery/conveyor{
 	dir = 10;
@@ -2930,6 +3838,7 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
+<<<<<<< HEAD
 "Ik" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -2937,6 +3846,8 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
+=======
+>>>>>>> Updated this old code to fork
 "Rs" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
 /obj/effect/decal/cleanable/dirt,
@@ -3849,10 +4760,17 @@ bG
 hU
 cj
 cG
+<<<<<<< HEAD
 qh
 dj
 dC
 cF
+=======
+bz
+dj
+dC
+dT
+>>>>>>> Updated this old code to fork
 en
 eD
 eD
@@ -3954,8 +4872,13 @@ af
 cl
 cI
 cT
+<<<<<<< HEAD
 fT
 dF
+=======
+dl
+dE
+>>>>>>> Updated this old code to fork
 dV
 cp
 cp
@@ -4006,7 +4929,11 @@ af
 cm
 cJ
 cU
+<<<<<<< HEAD
 fT
+=======
+dm
+>>>>>>> Updated this old code to fork
 dF
 hh
 eo
@@ -4058,7 +4985,11 @@ bY
 cn
 cK
 cV
+<<<<<<< HEAD
 qh
+=======
+dn
+>>>>>>> Updated this old code to fork
 dG
 dW
 ep
@@ -4116,7 +5047,11 @@ hi
 eq
 eH
 eT
+<<<<<<< HEAD
 eT
+=======
+fh
+>>>>>>> Updated this old code to fork
 fs
 eq
 fU
@@ -4164,7 +5099,11 @@ cp
 cp
 hT
 dI
+<<<<<<< HEAD
 dU
+=======
+dX
+>>>>>>> Updated this old code to fork
 eq
 eI
 eU
@@ -4268,7 +5207,11 @@ cN
 cY
 dp
 dJ
+<<<<<<< HEAD
 cE
+=======
+dZ
+>>>>>>> Updated this old code to fork
 es
 eK
 eW
@@ -4281,7 +5224,11 @@ gq
 fp
 gJ
 gR
+<<<<<<< HEAD
 gZ
+=======
+gX
+>>>>>>> Updated this old code to fork
 gZ
 fp
 ab
@@ -4320,7 +5267,11 @@ cO
 cZ
 dq
 cu
+<<<<<<< HEAD
 cF
+=======
+ea
+>>>>>>> Updated this old code to fork
 eq
 eL
 eX
@@ -4328,12 +5279,20 @@ fk
 fw
 eq
 fX
+<<<<<<< HEAD
 gh
+=======
+hp
+>>>>>>> Updated this old code to fork
 gr
 fp
 gK
 gR
+<<<<<<< HEAD
 gZ
+=======
+gX
+>>>>>>> Updated this old code to fork
 ha
 fp
 ab
@@ -4381,7 +5340,11 @@ eq
 eq
 fY
 gi
+<<<<<<< HEAD
 Ik
+=======
+gi
+>>>>>>> Updated this old code to fork
 fp
 gL
 fp
@@ -4422,9 +5385,15 @@ ca
 ct
 cP
 cP
+<<<<<<< HEAD
 cP
 dL
 cE
+=======
+dr
+dL
+ec
+>>>>>>> Updated this old code to fork
 et
 cP
 eY
@@ -4433,9 +5402,15 @@ fx
 hl
 fZ
 gj
+<<<<<<< HEAD
 fl
 gA
 fl
+=======
+gt
+gA
+gM
+>>>>>>> Updated this old code to fork
 gT
 fp
 hb
@@ -4465,6 +5440,7 @@ ab
 ag
 al
 au
+<<<<<<< HEAD
 aC
 aP
 bf
@@ -4478,6 +5454,21 @@ bz
 cu
 ed
 bz
+=======
+aD
+aP
+bf
+bz
+bz
+cb
+cu
+bz
+bz
+cb
+cu
+ed
+cb
+>>>>>>> Updated this old code to fork
 bz
 eZ
 fm
@@ -4522,6 +5513,7 @@ aQ
 bg
 bA
 bQ
+<<<<<<< HEAD
 bA
 cv
 aQ
@@ -4531,6 +5523,17 @@ dM
 ee
 da
 da
+=======
+cc
+cv
+aQ
+da
+ds
+dM
+ee
+eu
+eM
+>>>>>>> Updated this old code to fork
 fa
 fn
 fz
@@ -4573,7 +5576,11 @@ Bb
 aQ
 bh
 bB
+<<<<<<< HEAD
 sL
+=======
+bC
+>>>>>>> Updated this old code to fork
 cd
 cw
 aQ
@@ -4625,14 +5632,23 @@ ag
 aQ
 bi
 bC
+<<<<<<< HEAD
 sL
 sL
+=======
+bC
+ce
+>>>>>>> Updated this old code to fork
 cx
 aQ
 dc
 du
 dO
+<<<<<<< HEAD
 po
+=======
+eg
+>>>>>>> Updated this old code to fork
 ew
 eO
 fb
@@ -4678,7 +5694,11 @@ aQ
 bj
 bC
 bR
+<<<<<<< HEAD
 sL
+=======
+ce
+>>>>>>> Updated this old code to fork
 cy
 aQ
 dd
@@ -4730,7 +5750,11 @@ aQ
 hf
 bC
 bS
+<<<<<<< HEAD
 sL
+=======
+ce
+>>>>>>> Updated this old code to fork
 cz
 aQ
 de

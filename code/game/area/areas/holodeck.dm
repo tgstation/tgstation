@@ -99,9 +99,12 @@
 /area/holodeck/rec_center/winterwonderland
 	name = "Holodeck - Winter Wonderland"
 
+<<<<<<< HEAD
 /area/holodeck/rec_center/photobooth
 	name = "Holodeck - Photobooth"
 
+=======
+>>>>>>> Updated this old code to fork
 // Bad programs
 
 /area/holodeck/rec_center/burn

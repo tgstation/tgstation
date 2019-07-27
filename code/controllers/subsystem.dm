@@ -63,7 +63,11 @@
 //Sleeping in here prevents future fires until returned.
 /datum/controller/subsystem/proc/fire(resumed = 0)
 	flags |= SS_NO_FIRE
+<<<<<<< HEAD
 	CRASH("Subsystem [src]([type]) does not fire() but did not set the SS_NO_FIRE flag. Please add the SS_NO_FIRE flag to any subsystem that doesn't fire so it doesn't get added to the processing list and waste cpu.")
+=======
+	throw EXCEPTION("Subsystem [src]([type]) does not fire() but did not set the SS_NO_FIRE flag. Please add the SS_NO_FIRE flag to any subsystem that doesn't fire so it doesn't get added to the processing list and waste cpu.")
+>>>>>>> Updated this old code to fork
 
 /datum/controller/subsystem/Destroy()
 	dequeue()
@@ -215,4 +219,7 @@
 		if ("queued_priority") //editing this breaks things.
 			return 0
 	. = ..()
+<<<<<<< HEAD
 
+=======
+>>>>>>> Updated this old code to fork

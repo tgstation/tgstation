@@ -7,6 +7,7 @@
 	. = ..()
 	quit_action = new()
 	quit_action.Grant(src)
+<<<<<<< HEAD
 	check_area()
 
 /mob/living/carbon/human/virtual_reality/Moved()
@@ -16,6 +17,12 @@
 /mob/living/carbon/human/virtual_reality/death()
 	revert_to_reality()
 	. = ..()
+=======
+
+/mob/living/carbon/human/virtual_reality/death()
+	revert_to_reality()
+	..()
+>>>>>>> Updated this old code to fork
 
 /mob/living/carbon/human/virtual_reality/Destroy()
 	revert_to_reality()
@@ -30,8 +37,11 @@
 		revert_to_reality(FALSE)
 
 /mob/living/carbon/human/virtual_reality/ghostize()
+<<<<<<< HEAD
 	if(!real_mind && !vr_sleeper)
 		return ..()
+=======
+>>>>>>> Updated this old code to fork
 	stack_trace("Ghostize was called on a virtual reality mob")
 
 /mob/living/carbon/human/virtual_reality/ghost()
@@ -40,6 +50,7 @@
 	set desc = "Relinquish your life and enter the land of the dead."
 	revert_to_reality(FALSE)
 
+<<<<<<< HEAD
 /mob/living/carbon/human/virtual_reality/proc/check_area()
 	var/area/check = get_area(src)
 	if(!check || !istype(check, /area/awaymission/vr))
@@ -57,6 +68,8 @@
 		REMOVE_TRAIT(src, TRAIT_PACIFISM, VR_ZONE_TRAIT)
 		to_chat(src, "<span class='notice'>You feel that your ability to fight is no longer being suppressed.</span>")
 
+=======
+>>>>>>> Updated this old code to fork
 /mob/living/carbon/human/virtual_reality/proc/revert_to_reality(deathchecks = TRUE)
 	if(real_mind && mind)
 		real_mind.current.ckey = ckey
@@ -68,8 +81,11 @@
 	if(deathchecks && vr_sleeper)
 		vr_sleeper.vr_human = null
 		vr_sleeper = null
+<<<<<<< HEAD
 	if(!real_mind && !vr_sleeper)
 		ghostize()
+=======
+>>>>>>> Updated this old code to fork
 	real_mind = null
 
 /datum/action/quit_vr

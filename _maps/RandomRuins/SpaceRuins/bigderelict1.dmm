@@ -58,17 +58,34 @@
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "an" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "ao" = (
 /obj/machinery/power/apc{
+<<<<<<< HEAD
 	dir = 4;
 	name = "Cargo Bay APC";
 	pixel_x = 24;
 	start_charge = 0
 	},
 /obj/structure/cable,
+=======
+	start_charge = 0;
+	dir = 4;
+	name = "Cargo Bay APC";
+	pixel_x = 24
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "ap" = (
@@ -97,6 +114,15 @@
 "at" = (
 /turf/closed/wall/mineral/titanium,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
+<<<<<<< HEAD
+=======
+"au" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/derelictoutpost/cargobay)
+>>>>>>> Updated this old code to fork
 "av" = (
 /obj/structure/table,
 /obj/machinery/light{
@@ -285,13 +311,35 @@
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "bb" = (
 /obj/machinery/power/smes,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "bc" = (
 /obj/structure/table,
 /obj/item/stock_parts/cell/hyper,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/derelictoutpost/powerstorage)
+"bd" = (
+/obj/machinery/power/smes,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "be" = (
@@ -361,9 +409,15 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 9;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 9
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -374,9 +428,15 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 4;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 4
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -391,9 +451,15 @@
 	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 4;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 4
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -404,9 +470,15 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 5;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 5
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -431,7 +503,13 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "bs" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "bt" = (
@@ -453,9 +531,15 @@
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "bw" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 5;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 5
+>>>>>>> Updated this old code to fork
 	},
 /obj/structure/alien/weeds{
 	color = "#4BAE56";
@@ -557,6 +641,10 @@
 /obj/structure/alien/resin/wall{
 	color = "#8EC127";
 	desc = "Thick material shaped into a wall. Eugh.";
+<<<<<<< HEAD
+=======
+	icon_state = "smooth";
+>>>>>>> Updated this old code to fork
 	name = "gelatinous wall"
 	},
 /turf/open/floor/plasteel,
@@ -569,9 +657,15 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 1;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 1
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -579,6 +673,10 @@
 /obj/item/ammo_casing/c45{
 	caliber = null;
 	desc = "A .45 bullet casing. This one is spent.";
+<<<<<<< HEAD
+=======
+	icon_state = "s-casing";
+>>>>>>> Updated this old code to fork
 	name = "spent bullet casing"
 	},
 /obj/machinery/light{
@@ -725,9 +823,15 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "bU" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 4;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 4
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating{
 	icon_state = "wall_thermite";
@@ -736,17 +840,29 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "bV" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 4;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 4
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "bW" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 6;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 6
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -757,9 +873,15 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 1;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 1
+>>>>>>> Updated this old code to fork
 	},
 /obj/machinery/light{
 	dir = 4
@@ -772,6 +894,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
+<<<<<<< HEAD
 "ca" = (
 /obj/machinery/power/apc{
 	dir = 4;
@@ -781,6 +904,28 @@
 	start_charge = 0
 	},
 /obj/structure/cable,
+=======
+"bZ" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/derelictoutpost/powerstorage)
+"ca" = (
+/obj/machinery/power/apc{
+	start_charge = 0;
+	dir = 4;
+	name = "Power Storage APC";
+	pixel_x = 23;
+	pixel_y = 2
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "cb" = (
@@ -811,7 +956,13 @@
 	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
 	name = "gelatinous floor"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cf" = (
@@ -874,16 +1025,33 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "cj" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "ck" = (
 /obj/machinery/power/apc{
+<<<<<<< HEAD
 	name = "Tradepost APC";
 	pixel_y = -23;
 	start_charge = 0
 	},
 /obj/structure/cable,
+=======
+	start_charge = 0;
+	dir = 2;
+	name = "Tradepost APC";
+	pixel_y = -24
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "cl" = (
@@ -894,9 +1062,15 @@
 	},
 /obj/structure/glowshroom/single,
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 1;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 1
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -904,6 +1078,10 @@
 /obj/structure/alien/resin/wall{
 	color = "#8EC127";
 	desc = "Thick material shaped into a wall. Eugh.";
+<<<<<<< HEAD
+=======
+	icon_state = "smooth";
+>>>>>>> Updated this old code to fork
 	name = "gelatinous wall"
 	},
 /turf/open/floor/plating/asteroid,
@@ -919,9 +1097,23 @@
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
+<<<<<<< HEAD
 "cq" = (
 /obj/structure/barricade/wooden,
 /obj/structure/cable,
+=======
+"cp" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/derelictoutpost/powerstorage)
+"cq" = (
+/obj/structure/barricade/wooden,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "cr" = (
@@ -930,9 +1122,29 @@
 	req_access_txt = "10"
 	},
 /obj/structure/barricade/wooden,
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/derelictoutpost/powerstorage)
+"cs" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/derelictoutpost/cargobay)
+"ct" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/derelictoutpost/cargobay)
+>>>>>>> Updated this old code to fork
 "cu" = (
 /obj/effect/decal/cleanable/blood/old{
 	icon_state = "trails_1";
@@ -953,14 +1165,55 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
+<<<<<<< HEAD
+=======
+"cw" = (
+/obj/structure/alien/weeds{
+	color = "#4BAE56";
+	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
+	name = "gelatinous floor"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/derelictoutpost/cargobay)
+"cx" = (
+/obj/structure/alien/weeds{
+	color = "#4BAE56";
+	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
+	name = "gelatinous floor"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/derelictoutpost/cargobay)
+>>>>>>> Updated this old code to fork
 "cy" = (
 /obj/machinery/door/airlock/public/glass,
 /obj/machinery/door/poddoor{
 	id = "bigderelictcheckpoint";
 	name = "checkpoint security doors"
 	},
+<<<<<<< HEAD
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/derelictoutpost)
+"cz" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "cA" = (
@@ -969,7 +1222,19 @@
 	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
 	name = "gelatinous floor"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/derelictoutpost)
+"cB" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "cC" = (
@@ -994,9 +1259,15 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 10;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 10
+>>>>>>> Updated this old code to fork
 	},
 /mob/living/simple_animal/hostile/netherworld{
 	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
@@ -1014,9 +1285,15 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 4;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 4
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -1027,9 +1304,15 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 5;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 5
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -1044,12 +1327,25 @@
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cI" = (
 /obj/structure/janitorialcart,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/derelictoutpost/cargobay)
+"cI" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/janitorialcart,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cJ" = (
@@ -1058,36 +1354,67 @@
 	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
 	name = "gelatinous floor"
 	},
+<<<<<<< HEAD
 /obj/item/mop,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/item/mop,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cK" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 10;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 10
+>>>>>>> Updated this old code to fork
 	},
 /obj/structure/alien/weeds{
 	color = "#4BAE56";
 	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
 	name = "gelatinous floor"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cL" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 5;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 5
+>>>>>>> Updated this old code to fork
 	},
 /obj/structure/alien/weeds{
 	color = "#4BAE56";
 	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
 	name = "gelatinous floor"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cM" = (
@@ -1097,7 +1424,27 @@
 	name = "gelatinous floor"
 	},
 /obj/structure/glowshroom/single,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/derelictoutpost/cargobay)
+"cN" = (
+/obj/structure/alien/weeds{
+	color = "#4BAE56";
+	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
+	name = "gelatinous floor"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cO" = (
@@ -1130,9 +1477,15 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 1;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 1
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -1140,6 +1493,10 @@
 /obj/item/ammo_casing/c45{
 	caliber = null;
 	desc = "A .45 bullet casing. This one is spent.";
+<<<<<<< HEAD
+=======
+	icon_state = "s-casing";
+>>>>>>> Updated this old code to fork
 	name = "spent bullet casing"
 	},
 /turf/open/floor/plasteel,
@@ -1158,9 +1515,15 @@
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cX" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 1;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 1
+>>>>>>> Updated this old code to fork
 	},
 /obj/structure/alien/weeds{
 	color = "#4BAE56";
@@ -1186,9 +1549,15 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 1;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 1
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -1206,6 +1575,10 @@
 /obj/item/ammo_casing/c45{
 	caliber = null;
 	desc = "A .45 bullet casing. This one is spent.";
+<<<<<<< HEAD
+=======
+	icon_state = "s-casing";
+>>>>>>> Updated this old code to fork
 	name = "spent bullet casing"
 	},
 /obj/structure/alien/weeds{
@@ -1226,25 +1599,43 @@
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "dd" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 10;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 10
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "de" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 4;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 4
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "df" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 4;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 4
+>>>>>>> Updated this old code to fork
 	},
 /obj/structure/alien/weeds{
 	color = "#4BAE56";
@@ -1252,28 +1643,52 @@
 	name = "gelatinous floor"
 	},
 /obj/machinery/light,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "dg" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 4;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 4
+>>>>>>> Updated this old code to fork
 	},
 /obj/structure/alien/weeds{
 	color = "#4BAE56";
 	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
 	name = "gelatinous floor"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "dh" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 4;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 4
+>>>>>>> Updated this old code to fork
 	},
 /obj/structure/alien/weeds{
 	color = "#4BAE56";
@@ -1285,14 +1700,26 @@
 	desc = "A pried-open airlock. Scratch marks mark the sidings of the door.";
 	name = "pried-open airlock"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "di" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 5;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 5
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/alien/weeds{
@@ -1300,7 +1727,13 @@
 	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
 	name = "gelatinous floor"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost)
 "dj" = (
@@ -1349,9 +1782,15 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 8;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 8
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -1362,9 +1801,15 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 6;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 6
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -1393,7 +1838,13 @@
 	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
 	name = "gelatinous floor"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost)
 "ds" = (
@@ -1422,9 +1873,15 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "dv" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 9;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 9
+>>>>>>> Updated this old code to fork
 	},
 /obj/structure/alien/weeds{
 	color = "#4BAE56";
@@ -1435,9 +1892,15 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "dw" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 4;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 4
+>>>>>>> Updated this old code to fork
 	},
 /obj/structure/alien/weeds{
 	color = "#4BAE56";
@@ -1453,9 +1916,15 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "dx" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 4;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 4
+>>>>>>> Updated this old code to fork
 	},
 /obj/structure/alien/weeds{
 	color = "#4BAE56";
@@ -1466,9 +1935,15 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "dy" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 4;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 4
+>>>>>>> Updated this old code to fork
 	},
 /obj/structure/alien/weeds{
 	color = "#4BAE56";
@@ -1480,9 +1955,15 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "dz" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 5;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 5
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/alien/weeds{
@@ -1494,24 +1975,42 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "dA" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 4;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 4
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "dB" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 6;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 6
+>>>>>>> Updated this old code to fork
 	},
 /obj/structure/alien/weeds{
 	color = "#4BAE56";
 	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
 	name = "gelatinous floor"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost)
 "dC" = (
@@ -1550,9 +2049,15 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "dF" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 10;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 10
+>>>>>>> Updated this old code to fork
 	},
 /obj/structure/alien/weeds{
 	color = "#4BAE56";
@@ -1563,9 +2068,15 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "dG" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 8;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 8
+>>>>>>> Updated this old code to fork
 	},
 /obj/structure/alien/weeds{
 	color = "#4BAE56";
@@ -1576,9 +2087,15 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "dH" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 6;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 6
+>>>>>>> Updated this old code to fork
 	},
 /obj/structure/alien/weeds{
 	color = "#4BAE56";
@@ -1593,7 +2110,13 @@
 	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
 	name = "gelatinous floor"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost)
 "dJ" = (
@@ -1612,6 +2135,10 @@
 /obj/item/ammo_casing/c45{
 	caliber = null;
 	desc = "A .45 bullet casing. This one is spent.";
+<<<<<<< HEAD
+=======
+	icon_state = "s-casing";
+>>>>>>> Updated this old code to fork
 	name = "spent bullet casing"
 	},
 /obj/structure/alien/weeds{
@@ -1620,9 +2147,15 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 5;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 5
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
@@ -1636,18 +2169,34 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 9;
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
 /obj/structure/cable,
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 9
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost)
 "dN" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 8;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 8
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating{
 	icon_state = "wall_thermite";
@@ -1658,12 +2207,22 @@
 /obj/structure/alien/resin/membrane{
 	color = "#4BAE56";
 	desc = "A strange combination of thin, gelatinous material.";
+<<<<<<< HEAD
 	name = "gelatinous membrane"
 	},
 /obj/effect/decal/cleanable/blood/old{
 	dir = 8;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	icon_state = "smooth";
+	name = "gelatinous membrane"
+	},
+/obj/effect/decal/cleanable/blood/old{
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 8
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating{
 	icon_state = "wall_thermite";
@@ -1678,9 +2237,15 @@
 	},
 /obj/structure/glowshroom/single,
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 8;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 8
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -1691,9 +2256,15 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 6;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 6
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -1701,6 +2272,10 @@
 /obj/structure/alien/resin/membrane{
 	color = "#4BAE56";
 	desc = "A strange combination of thin, gelatinous material.";
+<<<<<<< HEAD
+=======
+	icon_state = "smooth";
+>>>>>>> Updated this old code to fork
 	name = "gelatinous membrane"
 	},
 /turf/open/floor/plating/asteroid,
@@ -1801,13 +2376,23 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost)
 "ef" = (
 /obj/structure/alien/resin/membrane{
 	color = "#4BAE56";
 	desc = "A strange combination of thin, gelatinous material.";
+<<<<<<< HEAD
+=======
+	icon_state = "smooth";
+>>>>>>> Updated this old code to fork
 	name = "gelatinous membrane"
 	},
 /turf/open/floor/plating/asteroid/airless,
@@ -1855,12 +2440,23 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "el" = (
 /obj/machinery/power/apc{
+<<<<<<< HEAD
 	dir = 4;
 	name = "Cargo Storage APC";
 	pixel_x = 24;
 	start_charge = 0
 	},
 /obj/structure/cable,
+=======
+	start_charge = 0;
+	dir = 4;
+	name = "Cargo Storage APC";
+	pixel_x = 24
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "em" = (
@@ -1870,6 +2466,10 @@
 /obj/structure/alien/resin/wall{
 	color = "#8EC127";
 	desc = "Thick material shaped into a wall. Eugh.";
+<<<<<<< HEAD
+=======
+	icon_state = "smooth";
+>>>>>>> Updated this old code to fork
 	name = "gelatinous wall"
 	},
 /turf/open/floor/plating/asteroid,
@@ -1914,7 +2514,13 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eu" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "ev" = (
@@ -1928,37 +2534,65 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "ew" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 8;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 8
+>>>>>>> Updated this old code to fork
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "ex" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 8;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 8
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "ey" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 8;
 	icon_state = "trails_1";
 	name = "dried blood trail"
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 8
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "ez" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 5;
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
 /obj/structure/cable,
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 5
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eA" = (
@@ -2015,11 +2649,21 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eI" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 10;
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
 /obj/structure/cable,
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 10
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eJ" = (
@@ -2029,20 +2673,40 @@
 	name = "pried-open airlock"
 	},
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 4;
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
 /obj/structure/cable,
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eK" = (
 /obj/effect/decal/cleanable/blood/old{
+<<<<<<< HEAD
 	dir = 6;
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
 /obj/structure/cable,
+=======
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 6
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost)
 "eL" = (
@@ -2222,8 +2886,13 @@ aA
 bc
 bs
 bs
+<<<<<<< HEAD
 bs
 bJ
+=======
+bZ
+cp
+>>>>>>> Updated this old code to fork
 aS
 cT
 ak
@@ -2255,7 +2924,11 @@ ad
 aC
 aC
 aA
+<<<<<<< HEAD
 bb
+=======
+bd
+>>>>>>> Updated this old code to fork
 br
 bJ
 ca
@@ -2331,7 +3004,11 @@ aJ
 az
 bK
 cb
+<<<<<<< HEAD
 an
+=======
+cs
+>>>>>>> Updated this old code to fork
 cG
 ak
 db
@@ -2367,7 +3044,11 @@ ak
 ak
 ak
 ak
+<<<<<<< HEAD
 an
+=======
+ct
+>>>>>>> Updated this old code to fork
 cH
 cV
 dc
@@ -2404,7 +3085,11 @@ ae
 ae
 ae
 ae
+<<<<<<< HEAD
 an
+=======
+cs
+>>>>>>> Updated this old code to fork
 bx
 bx
 ab
@@ -2512,7 +3197,11 @@ be
 bL
 cc
 ae
+<<<<<<< HEAD
 ce
+=======
+cx
+>>>>>>> Updated this old code to fork
 aX
 cW
 ab
@@ -2548,7 +3237,11 @@ bv
 bM
 cc
 ae
+<<<<<<< HEAD
 ce
+=======
+cx
+>>>>>>> Updated this old code to fork
 cW
 aN
 ab
@@ -2692,7 +3385,11 @@ ae
 ae
 ae
 cv
+<<<<<<< HEAD
 ce
+=======
+cx
+>>>>>>> Updated this old code to fork
 bx
 de
 ab
@@ -2718,6 +3415,7 @@ ab
 ab
 aj
 an
+<<<<<<< HEAD
 an
 an
 an
@@ -2729,6 +3427,19 @@ an
 ce
 ce
 ce
+=======
+au
+au
+au
+au
+au
+au
+au
+au
+ce
+cw
+cN
+>>>>>>> Updated this old code to fork
 ce
 df
 ab
@@ -2763,7 +3474,11 @@ av
 bx
 bP
 bx
+<<<<<<< HEAD
 ce
+=======
+cx
+>>>>>>> Updated this old code to fork
 ak
 ak
 dg
@@ -2799,7 +3514,11 @@ ab
 bx
 bx
 ak
+<<<<<<< HEAD
 an
+=======
+cs
+>>>>>>> Updated this old code to fork
 ak
 ab
 dh
@@ -2871,7 +3590,11 @@ aK
 bz
 bQ
 bC
+<<<<<<< HEAD
 cj
+=======
+cz
+>>>>>>> Updated this old code to fork
 cO
 aZ
 aZ
@@ -2907,7 +3630,11 @@ aK
 bz
 bR
 cf
+<<<<<<< HEAD
 cj
+=======
+cz
+>>>>>>> Updated this old code to fork
 cP
 aK
 cR
@@ -2979,7 +3706,11 @@ aK
 bB
 bT
 bC
+<<<<<<< HEAD
 cj
+=======
+cz
+>>>>>>> Updated this old code to fork
 cQ
 aK
 cR
@@ -3087,7 +3818,11 @@ bi
 bj
 bn
 bj
+<<<<<<< HEAD
 cj
+=======
+cz
+>>>>>>> Updated this old code to fork
 bF
 ci
 bl
@@ -3159,7 +3894,11 @@ bk
 bl
 bn
 cj
+<<<<<<< HEAD
 cj
+=======
+cB
+>>>>>>> Updated this old code to fork
 bF
 bl
 dl

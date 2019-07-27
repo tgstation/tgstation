@@ -2,7 +2,10 @@
 	name = "valentine"
 	roundend_category = "valentines" //there's going to be a ton of them so put them in separate category
 	show_in_antagpanel = FALSE
+<<<<<<< HEAD
 	prevent_roundtype_conversion = FALSE
+=======
+>>>>>>> Updated this old code to fork
 	var/datum/mind/date
 
 /datum/antagonist/valentine/proc/forge_objectives()
@@ -42,4 +45,8 @@
 	if(objectives_complete)
 		return "<span class='greentext big'>[owner.name] protected [owner.p_their()] date</span>"
 	else
+<<<<<<< HEAD
 		return "<span class='redtext big'>[owner.name] date failed!</span>"
+=======
+		return "<span class='redtext big'>[owner.name] date failed!</span>"
+>>>>>>> Updated this old code to fork

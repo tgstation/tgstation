@@ -36,7 +36,11 @@
 
 	if(M == user)
 		user.visible_message("<span class='notice'>[user] swallows a gulp of [src].</span>", "<span class='notice'>You swallow a gulp of [src].</span>")
+<<<<<<< HEAD
 		if(HAS_TRAIT(M, TRAIT_VORACIOUS))
+=======
+		if(M.has_trait(TRAIT_VORACIOUS))
+>>>>>>> Updated this old code to fork
 			M.changeNext_move(CLICK_CD_MELEE * 0.5) //chug! chug! chug!
 
 	else
@@ -128,12 +132,15 @@
 	qdel(src)
 	target.Bumped(B)
 
+<<<<<<< HEAD
 /obj/item/reagent_containers/food/drinks/bullet_act(obj/item/projectile/P)
 	. = ..()
 	if(!(P.nodamage) && P.damage_type == BRUTE && !QDELETED(src))
 		var/atom/T = get_turf(src)
 		smash(T)
 		return
+=======
+>>>>>>> Updated this old code to fork
 
 
 
@@ -150,7 +157,11 @@
 	force = 1
 	throwforce = 1
 	amount_per_transfer_from_this = 5
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=100)
+=======
+	materials = list(MAT_METAL=100)
+>>>>>>> Updated this old code to fork
 	possible_transfer_amounts = list()
 	volume = 5
 	flags_1 = CONDUCT_1
@@ -166,7 +177,11 @@
 	force = 14
 	throwforce = 10
 	amount_per_transfer_from_this = 20
+<<<<<<< HEAD
 	materials = list(/datum/material/gold=1000)
+=======
+	materials = list(MAT_GOLD=1000)
+>>>>>>> Updated this old code to fork
 	volume = 150
 
 /obj/item/reagent_containers/food/drinks/trophy/silver_cup
@@ -177,7 +192,11 @@
 	force = 10
 	throwforce = 8
 	amount_per_transfer_from_this = 15
+<<<<<<< HEAD
 	materials = list(/datum/material/silver=800)
+=======
+	materials = list(MAT_SILVER=800)
+>>>>>>> Updated this old code to fork
 	volume = 100
 
 
@@ -189,7 +208,11 @@
 	force = 5
 	throwforce = 4
 	amount_per_transfer_from_this = 10
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=400)
+=======
+	materials = list(MAT_METAL=400)
+>>>>>>> Updated this old code to fork
 	volume = 25
 
 ///////////////////////////////////////////////Drinks
@@ -201,25 +224,40 @@
 	name = "robust coffee"
 	desc = "Careful, the beverage you're about to enjoy is extremely hot."
 	icon_state = "coffee"
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/coffee = 30)
 	spillable = TRUE
 	resistance_flags = FREEZE_PROOF
 	isGlass = FALSE
 	foodtype = BREAKFAST
+=======
+	list_reagents = list("coffee" = 30)
+	spillable = TRUE
+	resistance_flags = FREEZE_PROOF
+	isGlass = FALSE
+>>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/drinks/ice
 	name = "ice cup"
 	desc = "Careful, cold ice, do not chew."
 	custom_price = 5
 	icon_state = "coffee"
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/ice = 30)
+=======
+	list_reagents = list("ice" = 30)
+>>>>>>> Updated this old code to fork
 	spillable = TRUE
 	isGlass = FALSE
 
 /obj/item/reagent_containers/food/drinks/ice/prison
 	name = "dirty ice cup"
 	desc = "Either Nanotrasen's water supply is contaminated, or this machine actually vends lemon, chocolate, and cherry snow cones."
+<<<<<<< HEAD
 	list_reagents  = list(/datum/reagent/consumable/ice = 25, /datum/reagent/liquidgibs = 5)
+=======
+	list_reagents  = list("ice" = 25, "liquidgibs" = 5)
+>>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/drinks/mug/ // parent type is literally just so empty mug sprites are a thing
 	name = "mug"
@@ -237,12 +275,20 @@
 /obj/item/reagent_containers/food/drinks/mug/tea
 	name = "Duke Purple tea"
 	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/tea = 30)
+=======
+	list_reagents = list("tea" = 30)
+>>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/drinks/mug/coco
 	name = "Dutch hot coco"
 	desc = "Made in Space South America."
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/hot_coco = 15, /datum/reagent/consumable/sugar = 5)
+=======
+	list_reagents = list("hot_coco" = 15, "sugar" = 5)
+>>>>>>> Updated this old code to fork
 	foodtype = SUGAR
 	resistance_flags = FREEZE_PROOF
 	custom_price = 42
@@ -250,9 +296,15 @@
 
 /obj/item/reagent_containers/food/drinks/dry_ramen
 	name = "cup ramen"
+<<<<<<< HEAD
 	desc = "Just add 5ml of water, self heats! A taste that reminds you of your school years. Now new with salty flavour!"
 	icon_state = "ramen"
 	list_reagents = list(/datum/reagent/consumable/dry_ramen = 15, /datum/reagent/consumable/sodiumchloride = 3)
+=======
+	desc = "Just add 5ml of water, self heats! A taste that reminds you of your school years."
+	icon_state = "ramen"
+	list_reagents = list("dry_ramen" = 15)
+>>>>>>> Updated this old code to fork
 	foodtype = GRAIN
 	isGlass = FALSE
 	custom_price = 38
@@ -261,20 +313,32 @@
 	name = "space beer"
 	desc = "Beer. In space."
 	icon_state = "beer"
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 30)
+=======
+	list_reagents = list("beer" = 30)
+>>>>>>> Updated this old code to fork
 	foodtype = GRAIN | ALCOHOL
 
 /obj/item/reagent_containers/food/drinks/beer/light
 	name = "Carp Lite"
 	desc = "Brewed with \"Pure Ice Asteroid Spring Water\"."
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer/light = 30)
+=======
+	list_reagents = list("light_beer" = 30)
+>>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/drinks/ale
 	name = "Magm-Ale"
 	desc = "A true dorf's drink of choice."
 	icon_state = "alebottle"
 	item_state = "beer"
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/ethanol/ale = 30)
+=======
+	list_reagents = list("ale" = 30)
+>>>>>>> Updated this old code to fork
 	foodtype = GRAIN | ALCOHOL
 
 /obj/item/reagent_containers/food/drinks/sillycup
@@ -318,6 +382,7 @@
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton/on_reagent_change(changetype)
 	if (reagents.reagent_list.len)
 		switch(reagents.get_master_reagent_id())
+<<<<<<< HEAD
 			if(/datum/reagent/consumable/orangejuice)
 				icon_state = "orangebox"
 				name = "orange juice box"
@@ -329,21 +394,46 @@
 				desc = "An excellent source of calcium for growing space explorers."
 				foodtype = DAIRY | BREAKFAST
 			if(/datum/reagent/consumable/applejuice)
+=======
+			if("orangejuice")
+				icon_state = "orangebox"
+				name = "orange juice box"
+				desc = "A great source of vitamins. Stay healthy!"
+				foodtype = FRUIT
+			if("milk")
+				icon_state = "milkbox"
+				name = "carton of milk"
+				desc = "An excellent source of calcium for growing space explorers."
+				foodtype = DAIRY
+			if("applejuice")
+>>>>>>> Updated this old code to fork
 				icon_state = "juicebox"
 				name = "apple juice box"
 				desc = "Sweet apple juice. Don't be late for school!"
 				foodtype = FRUIT
+<<<<<<< HEAD
 			if(/datum/reagent/consumable/grapejuice)
+=======
+			if("grapejuice")
+>>>>>>> Updated this old code to fork
 				icon_state = "grapebox"
 				name = "grape juice box"
 				desc = "Tasty grape juice in a fun little container. Non-alcoholic!"
 				foodtype = FRUIT
+<<<<<<< HEAD
 			if(/datum/reagent/consumable/milk/chocolate_milk)
+=======
+			if("chocolate_milk")
+>>>>>>> Updated this old code to fork
 				icon_state = "chocolatebox"
 				name = "carton of chocolate milk"
 				desc = "Milk for cool kids!"
 				foodtype = SUGAR
+<<<<<<< HEAD
 			if(/datum/reagent/consumable/ethanol/eggnog)
+=======
+			if("eggnog")
+>>>>>>> Updated this old code to fork
 				icon_state = "nog2"
 				name = "carton of eggnog"
 				desc = "For enjoying the most wonderful time of the year."
@@ -364,7 +454,11 @@
 	name = "shaker"
 	desc = "A metal shaker to mix drinks in."
 	icon_state = "shaker"
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=1500)
+=======
+	materials = list(MAT_METAL=1500)
+>>>>>>> Updated this old code to fork
 	amount_per_transfer_from_this = 10
 	volume = 100
 	isGlass = FALSE
@@ -374,7 +468,11 @@
 	desc = "Every good spaceman knows it's a good idea to bring along a couple of pints of whiskey wherever they go."
 	custom_price = 30
 	icon_state = "flask"
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=250)
+=======
+	materials = list(MAT_METAL=250)
+>>>>>>> Updated this old code to fork
 	volume = 60
 	isGlass = FALSE
 
@@ -382,13 +480,21 @@
 	name = "captain's flask"
 	desc = "A gold flask belonging to the captain."
 	icon_state = "flask_gold"
+<<<<<<< HEAD
 	materials = list(/datum/material/gold=500)
+=======
+	materials = list(MAT_GOLD=500)
+>>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/drinks/flask/det
 	name = "detective's flask"
 	desc = "The detective's only true friend."
 	icon_state = "detflask"
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 30)
+=======
+	list_reagents = list("whiskey" = 30)
+>>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/drinks/britcup
 	name = "cup"
@@ -426,7 +532,11 @@
 		sleep(50)
 		playsound(H,'sound/items/drink.ogg', 80, 1)
 		H.say(pick("Another day, another dollar.", "I wonder if I should hold?", "Diversifying is for young'ns.", "Yeap, times were good back then."))
+<<<<<<< HEAD
 		return MANUAL_SUICIDE_NONLETHAL
+=======
+		return MANUAL_SUICIDE
+>>>>>>> Updated this old code to fork
 	sleep(20) //dramatic pause
 	return TOXLOSS
 
@@ -439,6 +549,7 @@
 		qdel(src)
 	..()
 
+<<<<<<< HEAD
 /obj/item/reagent_containers/food/drinks/soda_cans/bullet_act(obj/item/projectile/P)
 	. = ..()
 	if(!(P.nodamage) && P.damage_type == BRUTE && !QDELETED(src))
@@ -449,6 +560,8 @@
 		qdel(src)
 		return
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/item/reagent_containers/food/drinks/soda_cans/proc/open_soda(mob/user)
 	to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.") //Ahhhhhhhh
 	ENABLE_BITFIELD(reagents.flags, OPENCONTAINER)
@@ -457,34 +570,54 @@
 
 /obj/item/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
 	if(!is_drainable())
+<<<<<<< HEAD
 		open_soda(user)
+=======
+		open_soda()
+>>>>>>> Updated this old code to fork
 	return ..()
 
 /obj/item/reagent_containers/food/drinks/soda_cans/cola
 	name = "Space Cola"
 	desc = "Cola. in space."
 	icon_state = "cola"
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/space_cola = 30)
+=======
+	list_reagents = list("cola" = 30)
+>>>>>>> Updated this old code to fork
 	foodtype = SUGAR
 
 /obj/item/reagent_containers/food/drinks/soda_cans/tonic
 	name = "T-Borg's tonic water"
 	desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
 	icon_state = "tonic"
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/tonic = 50)
+=======
+	list_reagents = list("tonic" = 50)
+>>>>>>> Updated this old code to fork
 	foodtype = ALCOHOL
 
 /obj/item/reagent_containers/food/drinks/soda_cans/sodawater
 	name = "soda water"
 	desc = "A can of soda water. Why not make a scotch and soda?"
 	icon_state = "sodawater"
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/sodawater = 50)
+=======
+	list_reagents = list("sodawater" = 50)
+>>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime
 	name = "orange soda"
 	desc = "You wanted ORANGE. It gave you Lemon Lime."
 	icon_state = "lemon-lime"
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/lemon_lime = 30)
+=======
+	list_reagents = list("lemon_lime" = 30)
+>>>>>>> Updated this old code to fork
 	foodtype = FRUIT
 
 /obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime/Initialize()
@@ -495,59 +628,95 @@
 	name = "Space-Up!"
 	desc = "Tastes like a hull breach in your mouth."
 	icon_state = "space-up"
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/space_up = 30)
+=======
+	list_reagents = list("space_up" = 30)
+>>>>>>> Updated this old code to fork
 	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/starkist
 	name = "Star-kist"
 	desc = "The taste of a star in liquid form. And, a bit of tuna...?"
 	icon_state = "starkist"
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/space_cola = 15, /datum/reagent/consumable/orangejuice = 15)
+=======
+	list_reagents = list("cola" = 15, "orangejuice" = 15)
+>>>>>>> Updated this old code to fork
 	foodtype = SUGAR | FRUIT | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind
 	name = "Space Mountain Wind"
 	desc = "Blows right through you like a space wind."
 	icon_state = "space_mountain_wind"
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/spacemountainwind = 30)
+=======
+	list_reagents = list("spacemountainwind" = 30)
+>>>>>>> Updated this old code to fork
 	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko
 	name = "Thirteen Loko"
 	desc = "The CMO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkenness, or even death. Please Drink Responsibly."
 	icon_state = "thirteen_loko"
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko = 30)
+=======
+	list_reagents = list("thirteenloko" = 30)
+>>>>>>> Updated this old code to fork
 	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb
 	name = "Dr. Gibb"
 	desc = "A delicious mixture of 42 different flavors."
 	icon_state = "dr_gibb"
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/dr_gibb = 30)
+=======
+	list_reagents = list("dr_gibb" = 30)
+>>>>>>> Updated this old code to fork
 	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/pwr_game
 	name = "Pwr Game"
 	desc = "The only drink with the PWR that true gamers crave."
 	icon_state = "purple_can"
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/pwr_game = 30)
+=======
+	list_reagents = list("pwr_game" = 30)
+>>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/drinks/soda_cans/shamblers
 	name = "Shambler's juice"
 	desc = "~Shake me up some of that Shambler's Juice!~"
 	icon_state = "shamblers"
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/shamblers = 30)
+=======
+	list_reagents = list("shamblers" = 30)
+>>>>>>> Updated this old code to fork
 	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/grey_bull
 	name = "Grey Bull"
 	desc = "Grey Bull, it gives you gloves!"
 	icon_state = "energy_drink"
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/grey_bull = 20)
+=======
+	list_reagents = list("grey_bull" = 20)
+>>>>>>> Updated this old code to fork
 	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/air
 	name = "canned air"
 	desc = "There is no air shortage. Do not drink."
 	icon_state = "air"
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/nitrogen = 24, /datum/reagent/oxygen = 6)
+=======
+	list_reagents = list("nitrogen" = 24, "oxygen" = 6)
+>>>>>>> Updated this old code to fork

@@ -12,16 +12,82 @@
 /area/space/nearstation)
 "ad" = (
 /obj/machinery/power/solar,
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "af" = (
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"ae" = (
+/obj/machinery/power/solar,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"af" = (
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"ag" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"ah" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "ai" = (
 /obj/machinery/power/tracker,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"aj" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"ak" = (
+/obj/machinery/power/solar,
+/obj/structure/cable/yellow,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"al" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "am" = (
@@ -222,6 +288,14 @@
 /obj/structure/dresser,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom/room_6)
+<<<<<<< HEAD
+=======
+"bd" = (
+/obj/machinery/power/solar,
+/obj/structure/cable/yellow,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+>>>>>>> Updated this old code to fork
 "be" = (
 /obj/structure/window{
 	dir = 8
@@ -422,6 +496,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_3)
 "bN" = (
 /obj/machinery/power/apc/highcap/five_k{
+<<<<<<< HEAD
 	name = "Guest Room APC";
 	pixel_y = -23
 	},
@@ -431,6 +506,22 @@
 "bO" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+	dir = 2;
+	name = "Guest Room APC";
+	pixel_y = -24
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/hotel/guestroom/room_3)
+"bO" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom/room_3)
 "bP" = (
@@ -465,6 +556,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "bT" = (
 /obj/machinery/power/apc/highcap/five_k{
+<<<<<<< HEAD
 	name = "Guest Room APC";
 	pixel_y = -23
 	},
@@ -474,6 +566,22 @@
 "bU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+	dir = 2;
+	name = "Guest Room APC";
+	pixel_y = -24
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/hotel/guestroom/room_4)
+"bU" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "bV" = (
@@ -508,6 +616,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
 "bZ" = (
 /obj/machinery/power/apc/highcap/five_k{
+<<<<<<< HEAD
 	name = "Guest Room APC";
 	pixel_y = -23
 	},
@@ -517,6 +626,22 @@
 "ca" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+	dir = 2;
+	name = "Guest Room APC";
+	pixel_y = -24
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/hotel/guestroom/room_5)
+"ca" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
 "cb" = (
@@ -551,6 +676,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_6)
 "cf" = (
 /obj/machinery/power/apc/highcap/five_k{
+<<<<<<< HEAD
 	name = "Guest Room APC";
 	pixel_y = -23
 	},
@@ -560,6 +686,22 @@
 "cg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+	dir = 2;
+	name = "Guest Room APC";
+	pixel_y = -24
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/hotel/guestroom/room_6)
+"cg" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom/room_6)
 "ch" = (
@@ -590,8 +732,15 @@
 	id_tag = "a3";
 	name = "Guest Room A3"
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom/room_3)
 "cm" = (
@@ -603,8 +752,15 @@
 	id_tag = "a4";
 	name = "Guest Room A4"
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "co" = (
@@ -616,8 +772,15 @@
 	id_tag = "a5";
 	name = "Guest Room A5"
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
 "cq" = (
@@ -629,8 +792,15 @@
 	id_tag = "a6";
 	name = "Guest Room A6"
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom/room_6)
 "cs" = (
@@ -669,11 +839,20 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel)
 "cy" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel)
 "cz" = (
@@ -750,6 +929,7 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel)
 "cI" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
@@ -761,6 +941,23 @@
 	dir = 4
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hotel)
+"cJ" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "cK" = (
@@ -768,6 +965,7 @@
 	name = "Hotel Maintenance";
 	req_access_txt = "201"
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -787,10 +985,47 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel)
 "cN" = (
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hotel)
+"cL" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/hotel)
+"cM" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/hotel)
+"cN" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel)
@@ -811,6 +1046,33 @@
 "cQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/hotel)
+"cO" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/hotel)
+"cP" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/hotel)
+"cQ" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "cR" = (
@@ -818,8 +1080,15 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel)
 "cS" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel)
 "cT" = (
@@ -870,8 +1139,15 @@
 	id_tag = "a2";
 	name = "Guest Room A2"
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom/room_2)
 "db" = (
@@ -886,8 +1162,15 @@
 	id_tag = "a1";
 	name = "Guest Room A1"
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom/room_1)
 "de" = (
@@ -916,9 +1199,17 @@
 /obj/machinery/door/airlock/grunge{
 	name = "Hotel Staff Storage"
 	},
+<<<<<<< HEAD
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/workroom)
 "dk" = (
@@ -949,6 +1240,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Guest Room APC";
+<<<<<<< HEAD
 	pixel_y = 23
 	},
 /obj/structure/cable,
@@ -957,6 +1249,20 @@
 "do" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+	pixel_y = 25
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/hotel/guestroom/room_2)
+"do" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom/room_2)
 "dp" = (
@@ -1006,6 +1312,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Guest Room APC";
+<<<<<<< HEAD
 	pixel_y = 23
 	},
 /obj/structure/cable,
@@ -1014,6 +1321,20 @@
 "dw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+	pixel_y = 25
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/hotel/guestroom/room_1)
+"dw" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom/room_1)
 "dx" = (
@@ -1042,8 +1363,15 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/hotel/workroom)
 "dB" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/hotel/workroom)
 "dC" = (
@@ -1137,6 +1465,7 @@
 "dV" = (
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/hotel/workroom)
+<<<<<<< HEAD
 "dX" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -1149,6 +1478,40 @@
 	dir = 4
 	},
 /obj/structure/cable,
+=======
+"dW" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/has_grav/hotel/workroom)
+"dX" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/space/has_grav/hotel/workroom)
+"dY" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/space/has_grav/hotel/workroom)
+"dZ" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/hotel/workroom)
 "ea" = (
@@ -1250,10 +1613,19 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/hotel/workroom)
 "eq" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/hotel/workroom)
 "er" = (
@@ -1305,8 +1677,14 @@
 /area/ruin/space/has_grav/hotel/workroom)
 "eA" = (
 /obj/machinery/power/apc/highcap/five_k{
+<<<<<<< HEAD
 	name = "Laundry APC";
 	pixel_y = -23
+=======
+	dir = 2;
+	name = "Laundry APC";
+	pixel_y = -24
+>>>>>>> Updated this old code to fork
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
@@ -1347,8 +1725,31 @@
 	},
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel)
+<<<<<<< HEAD
 "eJ" = (
 /obj/structure/cable,
+=======
+"eI" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hotel)
+"eJ" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hotel)
+"eK" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "eL" = (
@@ -1451,6 +1852,7 @@
 /area/ruin/space/has_grav/hotel/dock)
 "fd" = (
 /obj/effect/decal/cleanable/cobweb,
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
@@ -1462,6 +1864,23 @@
 	dir = 9
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hotel)
+"fe" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "ff" = (
@@ -1475,8 +1894,14 @@
 /area/ruin/space/has_grav/hotel)
 "fh" = (
 /obj/machinery/power/apc/highcap/five_k{
+<<<<<<< HEAD
 	name = "Kitchen APC";
 	pixel_y = -23
+=======
+	dir = 2;
+	name = "Kitchen APC";
+	pixel_y = -24
+>>>>>>> Updated this old code to fork
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -1846,8 +2271,15 @@
 /area/ruin/space/has_grav/hotel/dock)
 "gj" = (
 /obj/effect/decal/cleanable/oil,
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "gk" = (
@@ -2154,11 +2586,20 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel)
 "hf" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "hg" = (
@@ -2311,10 +2752,20 @@
 /area/ruin/space/has_grav/hotel/bar)
 "hA" = (
 /obj/machinery/power/apc/highcap/five_k{
+<<<<<<< HEAD
 	name = "Staff Room APC";
 	pixel_y = -23
 	},
 /obj/structure/cable,
+=======
+	dir = 2;
+	name = "Staff Room APC";
+	pixel_y = -24
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+>>>>>>> Updated this old code to fork
 /mob/living/simple_animal/bot/medbot{
 	name = "Accidents Happen"
 	},
@@ -2354,6 +2805,10 @@
 /area/ruin/space/has_grav/hotel/workroom)
 "hG" = (
 /obj/effect/mob_spawn/human/hotel_staff{
+<<<<<<< HEAD
+=======
+	icon_state = "sleeper_s";
+>>>>>>> Updated this old code to fork
 	dir = 1
 	},
 /obj/machinery/light,
@@ -2361,6 +2816,10 @@
 /area/ruin/space/has_grav/hotel/workroom)
 "hH" = (
 /obj/effect/mob_spawn/human/hotel_staff{
+<<<<<<< HEAD
+=======
+	icon_state = "sleeper_s";
+>>>>>>> Updated this old code to fork
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
@@ -2409,6 +2868,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/dock)
 "hP" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
@@ -2425,14 +2885,50 @@
 "hR" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hotel)
+"hQ" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hotel)
+"hR" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "hS" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "hT" = (
@@ -2507,11 +3003,20 @@
 	name = "Power Storage";
 	req_access_txt = "200,201"
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
 "ie" = (
@@ -2544,12 +3049,30 @@
 	},
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel)
+<<<<<<< HEAD
 "il" = (
 /obj/machinery/door/airlock/public/glass,
+=======
+"ik" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/hotel)
+"il" = (
+/obj/machinery/door/airlock/public/glass,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel/dock)
@@ -2558,6 +3081,17 @@
 	dir = 4
 	},
 /obj/structure/cable,
+=======
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/hotel/dock)
+"im" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel/dock)
 "in" = (
@@ -2572,21 +3106,41 @@
 	},
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel/dock)
+<<<<<<< HEAD
+=======
+"ip" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"iq" = (
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+>>>>>>> Updated this old code to fork
 "ir" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel/power)
 "is" = (
+<<<<<<< HEAD
 /obj/structure/table,
 /obj/item/storage/toolbox/electrical,
 /obj/item/clothing/gloves/color/yellow,
 /obj/machinery/light{
 	dir = 8
 	},
+=======
+/obj/structure/reagent_dispensers/fueltank,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
+<<<<<<< HEAD
 	dir = 8
 	},
 /obj/structure/cable,
@@ -2604,6 +3158,35 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/power)
 "iu" = (
+=======
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/hotel/power)
+"it" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/hotel/power)
+"iu" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/sign/warning/fire{
 	desc = "A poster designed to remind the reader to wear appropriate insulation and head protection when working with material.";
 	icon_state = "safety";
@@ -2616,10 +3199,19 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/power)
 "iv" = (
+=======
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/hotel/power)
+"iv" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/airalarm{
 	pixel_y = 24
 	},
@@ -2629,14 +3221,24 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/power)
 "iw" = (
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Power Storage APC";
+<<<<<<< HEAD
 	pixel_y = 23
+=======
+	pixel_y = 25
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -2644,7 +3246,10 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/power)
 "ix" = (
@@ -2693,6 +3298,7 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel)
 "iE" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
@@ -2701,6 +3307,20 @@
 /area/ruin/space/has_grav/hotel)
 "iF" = (
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/hotel)
+"iF" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel/dock)
 "iG" = (
@@ -2709,18 +3329,35 @@
 /area/ruin/space/has_grav/hotel/dock)
 "iH" = (
 /obj/structure/table,
+<<<<<<< HEAD
 /obj/item/storage/toolbox/mechanical,
 /obj/item/clothing/head/welding,
+=======
+/obj/item/storage/toolbox/electrical,
+/obj/item/clothing/gloves/color/yellow,
+/obj/machinery/light{
+	dir = 8
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/power)
 "iI" = (
+=======
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/hotel/power)
+"iI" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/power)
@@ -2748,8 +3385,15 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel)
 "iN" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel)
 "iO" = (
@@ -2757,7 +3401,13 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel)
 "iP" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/dock)
 "iQ" = (
@@ -2766,16 +3416,24 @@
 /area/ruin/space/has_grav/hotel/dock)
 "iR" = (
 /obj/structure/table,
+<<<<<<< HEAD
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/high,
 /obj/item/stock_parts/cell/high,
+=======
+/obj/item/storage/toolbox/mechanical,
+/obj/item/clothing/head/welding,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/power)
 "iS" = (
@@ -2796,12 +3454,25 @@
 /area/ruin/space/has_grav/hotel/power)
 "iU" = (
 /obj/machinery/power/apc/highcap/five_k{
+<<<<<<< HEAD
 	name = "Security APC";
 	pixel_y = -23
+=======
+	dir = 2;
+	name = "Security APC";
+	pixel_y = -24
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+>>>>>>> Updated this old code to fork
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/security)
@@ -2811,14 +3482,38 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "iW" = (
+=======
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hotel/security)
+"iV" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hotel)
+"iW" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "iY" = (
+=======
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hotel)
+"iY" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -24
@@ -2826,17 +3521,33 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/pool)
 "iZ" = (
 /obj/machinery/power/apc/highcap/five_k{
+<<<<<<< HEAD
 	name = "Pool APC";
 	pixel_y = -23
+=======
+	dir = 2;
+	name = "Pool APC";
+	pixel_y = -24
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+>>>>>>> Updated this old code to fork
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/pool)
@@ -2857,6 +3568,33 @@
 "jc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable,
+=======
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hotel/pool)
+"ja" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/hotel)
+"jb" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/hotel)
+"jc" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel)
 "jd" = (
@@ -2868,8 +3606,14 @@
 	dir = 8
 	},
 /obj/machinery/power/apc/highcap/five_k{
+<<<<<<< HEAD
 	name = "Dock APC";
 	pixel_y = -23
+=======
+	dir = 2;
+	name = "Dock APC";
+	pixel_y = -24
+>>>>>>> Updated this old code to fork
 	},
 /obj/structure/cable,
 /turf/open/floor/wood,
@@ -2891,7 +3635,27 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/dock)
+<<<<<<< HEAD
 "jj" = (
+=======
+"ji" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/hotel/power)
+"jj" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
@@ -3008,13 +3772,23 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel/dock)
 "jA" = (
+<<<<<<< HEAD
 /obj/machinery/power/smes/engineering,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
+=======
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
+/obj/structure/cable{
+	icon_state = "2-4"
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/power)
@@ -3023,6 +3797,17 @@
 	dir = 8
 	},
 /obj/structure/cable,
+=======
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/hotel/power)
+"jB" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/power)
 "jC" = (
@@ -3220,7 +4005,46 @@
 	},
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel/power)
+<<<<<<< HEAD
 "kf" = (
+=======
+"kc" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/hotel/power)
+"kd" = (
+/obj/machinery/power/terminal,
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/hotel/power)
+"ke" = (
+/obj/machinery/power/terminal,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/hotel/power)
+"kf" = (
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/components/binary/valve/on{
 	name = "Air Release Valve"
 	},
@@ -3294,13 +4118,20 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/pool)
 "kq" = (
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
+=======
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/structure/cable{
+	icon_state = "1-4"
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow,
+<<<<<<< HEAD
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/power)
@@ -3313,26 +4144,86 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/power)
 "kt" = (
+=======
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/hotel/power)
+"kr" = (
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/structure/sign/warning/electricshock{
+	pixel_y = -32
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/hotel/power)
+"ks" = (
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/hotel/power)
+"kt" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/power)
 "ku" = (
 /obj/machinery/power/solar_control{
 	dir = 1
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/power)
 "kv" = (
+=======
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/hotel/power)
+"kv" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/sign/warning/vacuum{
 	pixel_y = -32
 	},
@@ -3340,11 +4231,20 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/power)
 "kw" = (
+=======
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/hotel/power)
+"kw" = (
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -3352,7 +4252,10 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/power)
 "kx" = (
@@ -3388,6 +4291,10 @@
 	dir = 4;
 	icon_state = "rightsecure";
 	name = "Cell Door";
+<<<<<<< HEAD
+=======
+	req_access = null;
+>>>>>>> Updated this old code to fork
 	req_access_txt = "203"
 	},
 /obj/effect/turf_decal/tile/red{
@@ -3468,8 +4375,15 @@
 /area/ruin/space/has_grav/hotel/power)
 "kJ" = (
 /obj/machinery/door/airlock/external/glass,
+<<<<<<< HEAD
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
 "kK" = (
@@ -3620,7 +4534,13 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
 "lb" = (
@@ -3789,7 +4709,13 @@
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/has_grav/hotel/pool)
 "lv" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/components/unary/outlet_injector/on,
+=======
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "lw" = (
@@ -3854,6 +4780,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "lD" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -3865,6 +4792,23 @@
 	dir = 9
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"lE" = (
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "lF" = (
@@ -3913,6 +4857,18 @@
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/hotel/pool)
+<<<<<<< HEAD
+=======
+"lJ" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+>>>>>>> Updated this old code to fork
 "lK" = (
 /obj/effect/mob_spawn/human/hotel_staff/security,
 /obj/effect/turf_decal/tile/red{
@@ -4034,6 +4990,55 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/security)
+<<<<<<< HEAD
+=======
+"lV" = (
+/obj/machinery/power/solar,
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"lW" = (
+/obj/machinery/power/solar,
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"lX" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"lY" = (
+/obj/machinery/power/solar,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"lZ" = (
+/obj/machinery/power/solar,
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+>>>>>>> Updated this old code to fork
 "ma" = (
 /obj/structure/closet,
 /turf/open/floor/plating,
@@ -4056,6 +5061,10 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel/custodial)
 "me" = (
+<<<<<<< HEAD
+=======
+/mob/living/simple_animal/bot/cleanbot,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -4066,7 +5075,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /mob/living/simple_animal/bot/cleanbot,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/custodial)
 "mf" = (
@@ -4286,6 +5298,12 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/custodial)
 "mw" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -4299,7 +5317,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/custodial)
 "mx" = (
@@ -4307,12 +5328,30 @@
 	name = "Custodial Closet";
 	req_access_txt = "200,201"
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/custodial)
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hotel/custodial)
+"my" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hotel)
+>>>>>>> Updated this old code to fork
 "mz" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -4440,9 +5479,17 @@
 /area/ruin/space/has_grav/hotel/custodial)
 "mJ" = (
 /obj/machinery/power/apc/highcap/five_k{
+<<<<<<< HEAD
 	name = "Custodial APC";
 	pixel_y = -23
 	},
+=======
+	dir = 2;
+	name = "Custodial APC";
+	pixel_y = -24
+	},
+/obj/structure/cable,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -4453,7 +5500,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/custodial)
 "mK" = (
@@ -4477,8 +5527,20 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/pool)
+<<<<<<< HEAD
 "mP" = (
 /obj/structure/cable,
+=======
+"mO" = (
+/obj/machinery/power/tracker,
+/obj/structure/cable/yellow,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"mP" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "mQ" = (
@@ -4486,11 +5548,53 @@
 	name = "Hotel Staff Room";
 	req_access_txt = "200"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "mR" = (
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/hotel/workroom)
+"mR" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/hotel)
+"mS" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/hotel)
+"mT" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/hotel)
+"mU" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/hotel)
+"mV" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel)
 "mW" = (
@@ -4499,10 +5603,19 @@
 /area/ruin/space/has_grav/hotel/pool)
 "sN" = (
 /obj/machinery/door/airlock/external/glass,
+<<<<<<< HEAD
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
 
@@ -4702,6 +5815,7 @@ aa
 ac
 aa
 aa
+<<<<<<< HEAD
 ad
 aa
 aa
@@ -4712,6 +5826,18 @@ ad
 aa
 aa
 ad
+=======
+lV
+aa
+aa
+lV
+aa
+aa
+lV
+aa
+aa
+lV
+>>>>>>> Updated this old code to fork
 aa
 ab
 aa
@@ -4772,6 +5898,7 @@ aa
 ac
 aa
 aa
+<<<<<<< HEAD
 ad
 aa
 aa
@@ -4782,6 +5909,18 @@ ad
 aa
 aa
 ad
+=======
+lW
+aa
+aa
+lW
+aa
+aa
+lW
+aa
+aa
+lW
+>>>>>>> Updated this old code to fork
 aa
 ab
 aa
@@ -4842,6 +5981,7 @@ lB
 ac
 aa
 aa
+<<<<<<< HEAD
 ad
 aa
 aa
@@ -4852,6 +5992,18 @@ ad
 aa
 aa
 ad
+=======
+lW
+aa
+aa
+lW
+aa
+aa
+lW
+aa
+aa
+lW
+>>>>>>> Updated this old code to fork
 aa
 ab
 aa
@@ -4884,6 +6036,7 @@ ab
 ab
 aa
 af
+<<<<<<< HEAD
 af
 af
 af
@@ -4898,6 +6051,22 @@ af
 af
 af
 af
+=======
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ip
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -4912,6 +6081,7 @@ lC
 ac
 aa
 aa
+<<<<<<< HEAD
 ad
 aa
 aa
@@ -4922,6 +6092,18 @@ ad
 aa
 aa
 ad
+=======
+lW
+aa
+aa
+lW
+aa
+aa
+lW
+aa
+aa
+lW
+>>>>>>> Updated this old code to fork
 aa
 ab
 aa
@@ -4953,7 +6135,11 @@ aa
 aa
 ac
 ac
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 ct
 cH
 cH
@@ -4967,6 +6153,7 @@ cH
 cH
 cH
 ia
+<<<<<<< HEAD
 af
 af
 af
@@ -4978,10 +6165,24 @@ af
 af
 af
 af
+=======
+iq
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 lD
 ac
 aa
 aa
+<<<<<<< HEAD
 ad
 aa
 aa
@@ -4992,6 +6193,18 @@ ad
 aa
 aa
 ad
+=======
+lW
+aa
+aa
+lW
+aa
+aa
+lW
+aa
+aa
+lW
+>>>>>>> Updated this old code to fork
 aa
 aa
 ab
@@ -5009,6 +6222,7 @@ aa
 ab
 aa
 af
+<<<<<<< HEAD
 af
 af
 af
@@ -5024,6 +6238,23 @@ af
 af
 af
 af
+=======
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+al
+>>>>>>> Updated this old code to fork
 cw
 fd
 cQ
@@ -5049,6 +6280,7 @@ ir
 ir
 ir
 lE
+<<<<<<< HEAD
 af
 af
 af
@@ -5063,6 +6295,22 @@ af
 af
 af
 ai
+=======
+lJ
+aj
+aj
+lX
+aj
+aj
+lX
+aj
+aj
+lX
+aj
+aj
+aj
+mO
+>>>>>>> Updated this old code to fork
 ac
 ab
 "}
@@ -5078,7 +6326,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 am
 am
 am
@@ -5110,15 +6362,22 @@ ic
 is
 iH
 iR
+<<<<<<< HEAD
 iR
 jA
 jA
+=======
+ji
+jA
+kc
+>>>>>>> Updated this old code to fork
 kq
 kH
 kV
 lp
 kH
 aa
+<<<<<<< HEAD
 af
 aa
 aa
@@ -5132,6 +6391,21 @@ ad
 aa
 aa
 ad
+=======
+ag
+aa
+aa
+lY
+aa
+aa
+lY
+aa
+aa
+lY
+aa
+aa
+lY
+>>>>>>> Updated this old code to fork
 aa
 aa
 ab
@@ -5148,7 +6422,11 @@ aa
 aa
 ab
 ac
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 am
 av
 aw
@@ -5164,7 +6442,11 @@ cQ
 cQ
 cQ
 cQ
+<<<<<<< HEAD
 cQ
+=======
+eI
+>>>>>>> Updated this old code to fork
 fe
 fi
 fP
@@ -5182,13 +6464,18 @@ iI
 iI
 jj
 jB
+<<<<<<< HEAD
 jB
+=======
+kd
+>>>>>>> Updated this old code to fork
 kr
 kH
 kW
 lp
 kH
 aa
+<<<<<<< HEAD
 af
 aa
 aa
@@ -5202,6 +6489,21 @@ ad
 aa
 aa
 ad
+=======
+ag
+aa
+aa
+lY
+aa
+aa
+lY
+aa
+aa
+lY
+aa
+aa
+lY
+>>>>>>> Updated this old code to fork
 aa
 ab
 aa
@@ -5218,7 +6520,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 am
 aw
 aw
@@ -5252,13 +6558,19 @@ iJ
 iS
 jk
 iK
+<<<<<<< HEAD
 iK
 kr
+=======
+ke
+ks
+>>>>>>> Updated this old code to fork
 kH
 kX
 lq
 kH
 aa
+<<<<<<< HEAD
 af
 aa
 aa
@@ -5272,6 +6584,21 @@ ad
 aa
 aa
 ad
+=======
+ag
+aa
+aa
+lY
+aa
+aa
+lY
+aa
+aa
+lY
+aa
+aa
+lY
+>>>>>>> Updated this old code to fork
 aa
 ab
 aa
@@ -5288,7 +6615,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 an
 an
 an
@@ -5329,6 +6660,7 @@ kY
 lp
 kH
 aa
+<<<<<<< HEAD
 af
 aa
 aa
@@ -5342,6 +6674,21 @@ ad
 aa
 aa
 ad
+=======
+ag
+aa
+aa
+lY
+aa
+aa
+lY
+aa
+aa
+lY
+aa
+aa
+lY
+>>>>>>> Updated this old code to fork
 aa
 ab
 aa
@@ -5358,7 +6705,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 an
 ax
 az
@@ -5399,6 +6750,7 @@ kZ
 lp
 kH
 aa
+<<<<<<< HEAD
 af
 aa
 aa
@@ -5412,6 +6764,21 @@ ad
 aa
 aa
 ad
+=======
+ag
+aa
+aa
+lZ
+aa
+aa
+lZ
+aa
+aa
+lZ
+aa
+aa
+lZ
+>>>>>>> Updated this old code to fork
 aa
 ab
 aa
@@ -5428,7 +6795,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 an
 ay
 be
@@ -5469,7 +6840,11 @@ kH
 kH
 kH
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 aa
 aa
 ac
@@ -5498,7 +6873,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 an
 az
 bf
@@ -5537,9 +6916,15 @@ kw
 kJ
 la
 sN
+<<<<<<< HEAD
 af
 af
 af
+=======
+aj
+aj
+al
+>>>>>>> Updated this old code to fork
 aa
 aa
 ac
@@ -5568,7 +6953,11 @@ aa
 aa
 ab
 ac
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 an
 aA
 an
@@ -5584,7 +6973,11 @@ cZ
 cZ
 es
 cZ
+<<<<<<< HEAD
 eJ
+=======
+eK
+>>>>>>> Updated this old code to fork
 fh
 fi
 fQ
@@ -5638,7 +7031,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 an
 aB
 bg
@@ -5708,7 +7105,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 ao
 aB
 bh
@@ -5778,7 +7179,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 ao
 aC
 bi
@@ -5848,7 +7253,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 ao
 aD
 aB
@@ -5918,7 +7327,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 an
 aE
 bj
@@ -5988,7 +7401,11 @@ aa
 aa
 ab
 ac
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 an
 an
 an
@@ -6058,7 +7475,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 ap
 aF
 aH
@@ -6128,7 +7549,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 ap
 aG
 bk
@@ -6198,7 +7623,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 ap
 aH
 bl
@@ -6268,7 +7697,11 @@ aa
 aa
 ab
 ac
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 ap
 aI
 ap
@@ -6338,7 +7771,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 ap
 aJ
 bm
@@ -6385,7 +7822,11 @@ cI
 cQ
 cQ
 hf
+<<<<<<< HEAD
 hR
+=======
+my
+>>>>>>> Updated this old code to fork
 aw
 aw
 am
@@ -6408,7 +7849,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 aq
 aJ
 bn
@@ -6478,7 +7923,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 aq
 aK
 bo
@@ -6548,7 +7997,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 aq
 aL
 aJ
@@ -6618,7 +8071,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 ap
 aM
 bp
@@ -6688,7 +8145,11 @@ aa
 aa
 ab
 ac
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 ap
 ap
 ap
@@ -6758,7 +8219,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 ar
 aN
 aP
@@ -6828,7 +8293,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 ar
 aO
 bq
@@ -6898,7 +8367,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 ar
 aP
 br
@@ -6968,7 +8441,11 @@ aa
 aa
 ab
 ac
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 ar
 aQ
 ar
@@ -6995,7 +8472,11 @@ gG
 gG
 hB
 di
+<<<<<<< HEAD
 mR
+=======
+mS
+>>>>>>> Updated this old code to fork
 cF
 eT
 am
@@ -7038,7 +8519,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 ar
 aR
 bs
@@ -7065,7 +8550,11 @@ gG
 gG
 hC
 di
+<<<<<<< HEAD
 mR
+=======
+mS
+>>>>>>> Updated this old code to fork
 cF
 eT
 am
@@ -7108,7 +8597,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 as
 aR
 bt
@@ -7120,7 +8613,11 @@ cM
 cS
 dj
 dB
+<<<<<<< HEAD
 dB
+=======
+dW
+>>>>>>> Updated this old code to fork
 eo
 ey
 di
@@ -7135,7 +8632,11 @@ gG
 gG
 hD
 di
+<<<<<<< HEAD
 mR
+=======
+mS
+>>>>>>> Updated this old code to fork
 cF
 eT
 iM
@@ -7178,7 +8679,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 as
 aS
 bu
@@ -7205,11 +8710,19 @@ gG
 gG
 hE
 di
+<<<<<<< HEAD
 mR
 mR
 mR
 mR
 cL
+=======
+mT
+mU
+mU
+mU
+mV
+>>>>>>> Updated this old code to fork
 ju
 jW
 jW
@@ -7248,7 +8761,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 as
 aT
 aR
@@ -7318,7 +8835,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 ar
 aU
 bv
@@ -7330,7 +8851,11 @@ cL
 cF
 di
 dE
+<<<<<<< HEAD
 dY
+=======
+dZ
+>>>>>>> Updated this old code to fork
 eq
 eA
 di
@@ -7388,7 +8913,11 @@ aa
 aa
 ab
 ac
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 ar
 ar
 ar
@@ -7416,7 +8945,11 @@ gG
 hH
 di
 hZ
+<<<<<<< HEAD
 cL
+=======
+ik
+>>>>>>> Updated this old code to fork
 iE
 iN
 jc
@@ -7458,7 +8991,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 at
 aV
 aX
@@ -7528,7 +9065,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 at
 aW
 bw
@@ -7598,7 +9139,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 at
 aX
 bx
@@ -7668,7 +9213,11 @@ aa
 aa
 ab
 ac
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 at
 aY
 at
@@ -7738,7 +9287,11 @@ aa
 aa
 ab
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 at
 aZ
 by
@@ -7808,7 +9361,11 @@ aa
 ab
 aa
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 au
 aZ
 bz
@@ -7878,7 +9435,11 @@ aa
 ab
 ac
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 au
 ba
 bA
@@ -7948,7 +9509,11 @@ ab
 aa
 ac
 ac
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 au
 bb
 aZ
@@ -8018,7 +9583,11 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 at
 bc
 bB
@@ -8086,9 +9655,15 @@ ac
 aa
 aa
 af
+<<<<<<< HEAD
 af
 af
 af
+=======
+aj
+aj
+al
+>>>>>>> Updated this old code to fork
 at
 at
 at
@@ -8155,7 +9730,11 @@ aa
 ac
 aa
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -8221,6 +9800,7 @@ ab
 ac
 ac
 ad
+<<<<<<< HEAD
 ad
 ad
 ad
@@ -8231,6 +9811,18 @@ ad
 ad
 ad
 ad
+=======
+ae
+ae
+ae
+ae
+ah
+ak
+ak
+ak
+ak
+bd
+>>>>>>> Updated this old code to fork
 aa
 aa
 ac
@@ -8295,7 +9887,11 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -8365,7 +9961,11 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -8431,6 +10031,7 @@ ab
 ac
 ac
 ad
+<<<<<<< HEAD
 ad
 ad
 ad
@@ -8441,6 +10042,18 @@ ad
 ad
 ad
 ad
+=======
+ae
+ae
+ae
+ae
+ah
+ak
+ak
+ak
+ak
+bd
+>>>>>>> Updated this old code to fork
 ac
 ac
 ab
@@ -8505,7 +10118,11 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -8575,7 +10192,11 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -8641,6 +10262,7 @@ ab
 ac
 ac
 ad
+<<<<<<< HEAD
 ad
 ad
 ad
@@ -8651,6 +10273,18 @@ ad
 ad
 ad
 ad
+=======
+ae
+ae
+ae
+ae
+ah
+ak
+ak
+ak
+ak
+bd
+>>>>>>> Updated this old code to fork
 ac
 ac
 ab
@@ -8715,7 +10349,11 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -8785,7 +10423,11 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 af
+=======
+ag
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -8851,6 +10493,7 @@ ab
 ac
 ac
 ad
+<<<<<<< HEAD
 ad
 ad
 ad
@@ -8861,6 +10504,18 @@ ad
 ad
 ad
 ad
+=======
+ae
+ae
+ae
+ae
+ah
+ak
+ak
+ak
+ak
+bd
+>>>>>>> Updated this old code to fork
 ac
 ac
 ab

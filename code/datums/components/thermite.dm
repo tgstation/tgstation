@@ -1,7 +1,10 @@
 /datum/component/thermite
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/amount
+<<<<<<< HEAD
 	var/burn_coeff
+=======
+>>>>>>> Updated this old code to fork
 	var/overlay
 
 	var/static/list/blacklist = typecacheof(list(
@@ -16,7 +19,11 @@
 		/turf/closed/indestructible,
 		/turf/open/indestructible)
 		)
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> Updated this old code to fork
 	var/static/list/resistlist = typecacheof(
 		/turf/closed/wall/r_wall
 		)
@@ -24,6 +31,7 @@
 /datum/component/thermite/Initialize(_amount)
 	if(!istype(parent, /turf) || blacklist[parent.type])
 		return COMPONENT_INCOMPATIBLE
+<<<<<<< HEAD
 
 	if(immunelist[parent.type])
 		burn_coeff = 0 //Yeah the overlay can still go on it and be cleaned but you arent burning down a diamond wall
@@ -31,6 +39,12 @@
 		burn_coeff = 0.25
 	else
 		burn_coeff = 1
+=======
+	if(immunelist[parent.type])
+		_amount*=0 //Yeah the overlay can still go on it and be cleaned but you arent burning down a diamond wall
+	if(resistlist[parent.type])
+		_amount*=0.25
+>>>>>>> Updated this old code to fork
 
 	amount = _amount*10
 
@@ -62,13 +76,24 @@
 
 	playsound(master, 'sound/items/welder.ogg', 100, 1)
 
+<<<<<<< HEAD
 	if(amount * burn_coeff >= 50)
+=======
+	if(amount >= 50)
+		var/burning_time = max(100, 100-amount)
+>>>>>>> Updated this old code to fork
 		master = master.Melt()
 		master.burn_tile()
 		if(user)
 			master.add_hiddenprint(user)
+<<<<<<< HEAD
 	QDEL_IN(fakefire, 10 SECONDS)
 	qdel(src)
+=======
+		QDEL_IN(fakefire, burning_time)
+	else
+		QDEL_IN(fakefire, 50)
+>>>>>>> Updated this old code to fork
 
 /datum/component/thermite/proc/clean_react(datum/source, strength)
 	//Thermite is just some loose powder, you could probably clean it with your hands. << todo?
@@ -80,4 +105,8 @@
 
 /datum/component/thermite/proc/attackby_react(datum/source, obj/item/thing, mob/user, params)
 	if(thing.is_hot())
+<<<<<<< HEAD
 		thermite_melt(user)
+=======
+		thermite_melt(user)
+>>>>>>> Updated this old code to fork

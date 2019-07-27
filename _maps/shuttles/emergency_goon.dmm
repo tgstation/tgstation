@@ -35,7 +35,13 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
+<<<<<<< HEAD
 	dir = 2;
+=======
+	dheight = 0;
+	dir = 2;
+	dwidth = 9;
+>>>>>>> Updated this old code to fork
 	name = "NES Port";
 	width = 19
 	},
@@ -65,7 +71,13 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "q" = (
+<<<<<<< HEAD
 /obj/machinery/stasis,
+=======
+/obj/machinery/sleeper{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "r" = (
@@ -287,7 +299,11 @@ d
 T
 J
 H
+<<<<<<< HEAD
 l
+=======
+d
+>>>>>>> Updated this old code to fork
 d
 "}
 (5,1,1) = {"
@@ -296,7 +312,11 @@ d
 d
 w
 f
+<<<<<<< HEAD
 l
+=======
+d
+>>>>>>> Updated this old code to fork
 f
 K
 d

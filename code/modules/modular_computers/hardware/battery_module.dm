@@ -12,10 +12,13 @@
 		battery = new battery_type(src)
 	..()
 
+<<<<<<< HEAD
 /obj/item/computer_hardware/battery/Destroy()
 	. = ..()
 	QDEL_NULL(battery)
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/item/computer_hardware/battery/handle_atom_del(atom/A)
 	if(A == battery)
 		try_eject(0, null, TRUE)

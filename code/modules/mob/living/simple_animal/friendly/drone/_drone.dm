@@ -37,7 +37,10 @@
 	gender = NEUTER
 	mob_biotypes = list(MOB_ROBOTIC)
 	speak_emote = list("chirps")
+<<<<<<< HEAD
 	speech_span = SPAN_ROBOT
+=======
+>>>>>>> Updated this old code to fork
 	bubble_icon = "machine"
 	initial_language_holder = /datum/language_holder/drone
 	mob_size = MOB_SIZE_SMALL
@@ -93,7 +96,11 @@
 		var/obj/item/I = new default_hatmask(src)
 		equip_to_slot_or_del(I, SLOT_HEAD)
 
+<<<<<<< HEAD
 	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+=======
+	access_card.add_trait(TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+>>>>>>> Updated this old code to fork
 
 	alert_drones(DRONE_NET_CONNECT)
 
@@ -133,12 +140,15 @@
 	if(!picked)
 		pickVisualAppearence()
 
+<<<<<<< HEAD
 /mob/living/simple_animal/drone/auto_deadmin_on_login()
 	if(!client?.holder)
 		return TRUE
 	if(CONFIG_GET(flag/auto_deadmin_silicons) || (client.prefs?.toggles & DEADMIN_POSITION_SILICON))
 		return client.holder.auto_deadmin()
 	return ..()
+=======
+>>>>>>> Updated this old code to fork
 
 /mob/living/simple_animal/drone/death(gibbed)
 	..(gibbed)
@@ -171,11 +181,16 @@
 
 
 /mob/living/simple_animal/drone/examine(mob/user)
+<<<<<<< HEAD
 	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!")
+=======
+	var/msg = "<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!\n"
+>>>>>>> Updated this old code to fork
 
 	//Hands
 	for(var/obj/item/I in held_items)
 		if(!(I.item_flags & ABSTRACT))
+<<<<<<< HEAD
 			. += "It has [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))]."
 
 	//Internal storage
@@ -193,21 +208,54 @@
 	//Hacked
 	if(hacked)
 		. += "<span class='warning'>Its display is glowing red!</span>"
+=======
+			msg += "It has [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))].\n"
+
+	//Internal storage
+	if(internal_storage && !(internal_storage.item_flags & ABSTRACT))
+		msg += "It is holding [internal_storage.get_examine_string(user)] in its internal storage.\n"
+
+	//Cosmetic hat - provides no function other than looks
+	if(head && !(head.item_flags & ABSTRACT))
+		msg += "It is wearing [head.get_examine_string(user)] on its head.\n"
+
+	//Braindead
+	if(!client && stat != DEAD)
+		msg += "Its status LED is blinking at a steady rate.\n"
+
+	//Hacked
+	if(hacked)
+		msg += "<span class='warning'>Its display is glowing red!</span>\n"
+>>>>>>> Updated this old code to fork
 
 	//Damaged
 	if(health != maxHealth)
 		if(health > maxHealth * 0.33) //Between maxHealth and about a third of maxHealth, between 30 and 10 for normal drones
+<<<<<<< HEAD
 			. += "<span class='warning'>Its screws are slightly loose.</span>"
 		else //otherwise, below about 33%
 			. += "<span class='boldwarning'>Its screws are very loose!</span>"
+=======
+			msg += "<span class='warning'>Its screws are slightly loose.</span>\n"
+		else //otherwise, below about 33%
+			msg += "<span class='boldwarning'>Its screws are very loose!</span>\n"
+>>>>>>> Updated this old code to fork
 
 	//Dead
 	if(stat == DEAD)
 		if(client)
+<<<<<<< HEAD
 			. += "<span class='deadsay'>A message repeatedly flashes on its display: \"REBOOT -- REQUIRED\".</span>"
 		else
 			. += "<span class='deadsay'>A message repeatedly flashes on its display: \"ERROR -- OFFLINE\".</span>"
 	. += "*---------*</span>"
+=======
+			msg += "<span class='deadsay'>A message repeatedly flashes on its display: \"REBOOT -- REQUIRED\".</span>\n"
+		else
+			msg += "<span class='deadsay'>A message repeatedly flashes on its display: \"ERROR -- OFFLINE\".</span>\n"
+	msg += "*---------*</span>"
+	to_chat(user, msg)
+>>>>>>> Updated this old code to fork
 
 
 /mob/living/simple_animal/drone/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt maintenance drones.
@@ -277,5 +325,9 @@
 	// Why would bees pay attention to drones?
 	return 1
 
+<<<<<<< HEAD
 /mob/living/simple_animal/drone/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+=======
+/mob/living/simple_animal/drone/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+>>>>>>> Updated this old code to fork
 	return 0 //So they don't die trying to fix wiring

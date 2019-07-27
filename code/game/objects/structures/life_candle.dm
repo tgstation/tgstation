@@ -55,9 +55,15 @@
 /obj/structure/life_candle/examine(mob/user)
 	. = ..()
 	if(linked_minds.len)
+<<<<<<< HEAD
 		. += "[src] is active, and linked to [linked_minds.len] souls."
 	else
 		. += "It is static, still, unmoving."
+=======
+		to_chat(user, "[src] is active, and linked to [linked_minds.len] souls.")
+	else
+		to_chat(user, "It is static, still, unmoving.")
+>>>>>>> Updated this old code to fork
 
 /obj/structure/life_candle/process()
 	if(!linked_minds.len)

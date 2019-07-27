@@ -30,6 +30,11 @@
 	var/datum/action/innate/feed_potion/potion_action
 	var/datum/action/innate/hotkey_help/hotkey_help
 
+<<<<<<< HEAD
+=======
+	var/datum/component/redirect/listener
+
+>>>>>>> Updated this old code to fork
 	var/obj/machinery/monkey_recycler/connected_recycler
 	var/list/stored_slimes
 	var/obj/item/slimepotion/slime/current_potion
@@ -51,7 +56,11 @@
 	potion_action = new
 	hotkey_help = new
 	stored_slimes = list()
+<<<<<<< HEAD
 	RegisterSignal(src, COMSIG_ATOM_CONTENTS_DEL, .proc/on_contents_del)
+=======
+	listener = AddComponent(/datum/component/redirect, list(COMSIG_ATOM_CONTENTS_DEL = CALLBACK(src, .proc/on_contents_del)))
+>>>>>>> Updated this old code to fork
 	for(var/obj/machinery/monkey_recycler/recycler in GLOB.monkey_recyclers)
 		if(get_area(recycler.loc) == get_area(loc))
 			connected_recycler = recycler
@@ -105,12 +114,17 @@
 		potion_action.target = src
 		potion_action.Grant(user)
 		actions += potion_action
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> Updated this old code to fork
 	if(hotkey_help)
 		hotkey_help.target = src
 		hotkey_help.Grant(user)
 		actions += hotkey_help
 
+<<<<<<< HEAD
 	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL, .proc/XenoSlimeClickCtrl)
 	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_ALT, .proc/XenoSlimeClickAlt)
 	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT, .proc/XenoSlimeClickShift)
@@ -119,6 +133,16 @@
 	RegisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL, .proc/XenoMonkeyClickCtrl)
 
 	//Checks for recycler on every interact, prevents issues with load order on certain maps.
+=======
+	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL, .proc/XenoSlimeClickCtrl)	
+	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_ALT, .proc/XenoSlimeClickAlt)	
+	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT, .proc/XenoSlimeClickShift)	
+	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT, .proc/XenoTurfClickShift)	
+	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL, .proc/XenoTurfClickCtrl)	
+	RegisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL, .proc/XenoMonkeyClickCtrl)
+
+	//Checks for recycler on every interact, prevents issues with load order on certain maps. 
+>>>>>>> Updated this old code to fork
 	if(!connected_recycler)
 		for(var/obj/machinery/monkey_recycler/recycler in GLOB.monkey_recyclers)
 			if(get_area(recycler.loc) == get_area(loc))
@@ -126,6 +150,7 @@
 				connected_recycler.connected += src
 
 /obj/machinery/computer/camera_advanced/xenobio/remove_eye_control(mob/living/user)
+<<<<<<< HEAD
 	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL)
 	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_ALT)
 	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT)
@@ -133,6 +158,15 @@
 	UnregisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL)
 	UnregisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL)
 	..()
+=======
+	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL)	
+	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_ALT)	
+	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT)	
+	UnregisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT)	
+	UnregisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL)	
+	UnregisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL)	
+	..() 
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/computer/camera_advanced/xenobio/proc/on_contents_del(datum/source, atom/deleted)
 	if(current_potion == deleted)
@@ -244,8 +278,13 @@
 				to_chat(owner, "[X] now has [X.monkeys] monkeys stored.")
 		else
 			to_chat(owner, "[X] needs to have at least 1 monkey stored. Currently has [X.monkeys] monkeys stored.")
+<<<<<<< HEAD
 	else
 		to_chat(owner, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
+=======
+	else 
+		to_chat(owner, "<span class='notice'>Target is not near a camera. Cannot proceed.</span>")
+>>>>>>> Updated this old code to fork
 
 
 /datum/action/innate/monkey_recycle
@@ -270,7 +309,11 @@
 				M.visible_message("[M] vanishes as [M.p_theyre()] reclaimed for recycling!")
 				recycler.use_power(500)
 				X.monkeys += recycler.cube_production
+<<<<<<< HEAD
 				X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors
+=======
+				X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors	
+>>>>>>> Updated this old code to fork
 				qdel(M)
 				to_chat(owner, "[X] now has [X.monkeys] monkeys available.")
 	else
@@ -465,6 +508,10 @@
 		M.visible_message("[M] vanishes as [p_theyre()] reclaimed for recycling!")
 		X.connected_recycler.use_power(500)
 		X.monkeys += connected_recycler.cube_production
+<<<<<<< HEAD
 		X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors
+=======
+		X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors	
+>>>>>>> Updated this old code to fork
 		qdel(M)
 		to_chat(C, "[X] now has [X.monkeys] monkeys available.")

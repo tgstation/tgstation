@@ -1,20 +1,33 @@
 language: generic
+<<<<<<< HEAD
 dist: xenial
 sudo: false
 
+=======
+sudo: false
+>>>>>>> Updated this old code to fork
 branches:
   except:
   - ___TGS3TempBranch
   - ___TGSTempBranch
+<<<<<<< HEAD
 
 matrix:
   include:
     - name: "Run Linters"
+=======
+matrix:
+  include:
+    - env:
+      - BUILD_TOOLS=true
+      name: "Build Tools"
+>>>>>>> Updated this old code to fork
       addons:
         apt:
           packages:
             - python3
             - python3-pip
+<<<<<<< HEAD
             - python3-setuptools
       install:
         - tools/travis/install_build_tools.sh
@@ -29,6 +42,15 @@ matrix:
         - ~/dreamchecker
 
     - name: "Compile All Maps"
+=======
+      cache:
+        directories:
+          - tgui/node_modules
+    - env:
+      - BUILD_TESTING=true
+      - BUILD_TOOLS=false
+      name: "Build All Maps"
+>>>>>>> Updated this old code to fork
       addons:
         apt:
           packages:
@@ -36,6 +58,7 @@ matrix:
       cache:
         directories:
           - $HOME/BYOND
+<<<<<<< HEAD
       install:
         - tools/travis/install_byond.sh
         - source $HOME/BYOND/byond/bin/byondsetup
@@ -45,6 +68,12 @@ matrix:
         - tools/travis/dm.sh -DTRAVISBUILDING -DTRAVISTESTING -DALL_MAPS tgstation.dme
 
     - name: "Compile and Run Tests"
+=======
+    - env:
+      - BUILD_TESTING=false
+      - BUILD_TOOLS=false
+      name: "Build and Run Unit Tests"
+>>>>>>> Updated this old code to fork
       addons:
         mariadb: '10.2'
         apt:
@@ -52,6 +81,7 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - libstdc++6:i386
+<<<<<<< HEAD
             - gcc-multilib
             - g++-7
             - g++-7-multilib
@@ -93,3 +123,34 @@ matrix:
         local_dir: dmdoc
         github_token: $DMDOC_GITHUB_TOKEN
         fqdn: codedocs.tgstation13.org
+=======
+            - libssl-dev:i386
+            - gcc-multilib
+            - g++-7
+            - g++-7-multilib
+            - libmariadbclient-dev:i386
+      cache:
+        directories:
+          - $HOME/.cargo
+          - $HOME/BYOND
+          - $HOME/MariaDB
+          - $HOME/.rustup
+
+install:
+  - tools/travis/install_build_tools.sh
+  - if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then mysql -u root -e 'CREATE DATABASE tg_travis;'; fi
+  - if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then mysql -u root tg_travis < SQL/tgstation_schema.sql; fi
+  - if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then mysql -u root -e 'CREATE DATABASE tg_travis_prefixed;'; fi
+  - if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then mysql -u root tg_travis_prefixed < SQL/tgstation_schema_prefixed.sql; fi
+
+before_script:
+  - tools/travis/before_build_tools.sh
+  - tools/travis/before_build_byond.sh
+
+script:
+  - tools/travis/check_filedirs.sh tgstation.dme
+  - tools/travis/build_tools.sh || travis_terminate 1
+  - tools/travis/build_dependencies.sh || travis_terminate 1
+  - tools/travis/build_byond.sh
+
+>>>>>>> Updated this old code to fork

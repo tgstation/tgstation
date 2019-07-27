@@ -26,16 +26,30 @@ SUBSYSTEM_DEF(mobs)
 	var/seconds = wait * 0.1
 	if (!resumed)
 		src.currentrun = GLOB.mob_living_list.Copy()
+<<<<<<< HEAD
+=======
+		if (GLOB.living_cameras.len)
+			src.currentrun += GLOB.living_cameras
+>>>>>>> Updated this old code to fork
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 	var/times_fired = src.times_fired
 	while(currentrun.len)
+<<<<<<< HEAD
 		var/mob/living/L = currentrun[currentrun.len]
 		currentrun.len--
 		if(L)
 			L.Life(seconds, times_fired)
 		else
 			GLOB.mob_living_list.Remove(L)
+=======
+		var/mob/M = currentrun[currentrun.len]
+		currentrun.len--
+		if(M)
+			M.Life(seconds, times_fired)
+		else
+			GLOB.mob_living_list.Remove(M)
+>>>>>>> Updated this old code to fork
 		if (MC_TICK_CHECK)
 			return

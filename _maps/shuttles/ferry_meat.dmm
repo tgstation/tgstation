@@ -27,7 +27,11 @@
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
 "h" = (
+<<<<<<< HEAD
 /obj/structure/closet/secure_closet/freezer/meat/open{
+=======
+/obj/structure/closet/secure_closet/freezer/meat{
+>>>>>>> Updated this old code to fork
 	name = "\"meat\" fridge"
 	},
 /obj/item/reagent_containers/food/snacks/meat/slab/bear,

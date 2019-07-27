@@ -29,11 +29,19 @@
 	if(beaker)
 		var/is_close
 		if(Adjacent(user)) //don't reveal exactly what's inside unless they're close enough to see the UI anyway.
+<<<<<<< HEAD
 			. += "It contains \a [beaker]."
 			is_close = TRUE
 		else
 			. += "It has a beaker inside it."
 		. += "<span class='info'>Alt-click to eject [is_close ? beaker : "the beaker"].</span>"
+=======
+			to_chat(user, "It contains \a [beaker].")
+			is_close = TRUE
+		else
+			to_chat(user, "It has a beaker inside it.")
+		to_chat(user, "<span class='info'>Alt-click to eject [is_close ? beaker : "the beaker"].</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/computer/pandemic/AltClick(mob/user)
 	. = ..()
@@ -166,9 +174,15 @@
 				var/datum/reagent/blood/B = locate() in beaker.reagents.reagent_list
 				if(B)
 					data["has_blood"] = TRUE
+<<<<<<< HEAD
 					data[/datum/reagent/blood] = list()
 					data[/datum/reagent/blood]["dna"] = B.data["blood_DNA"] || "none"
 					data[/datum/reagent/blood]["type"] = B.data["blood_type"] || "none"
+=======
+					data["blood"] = list()
+					data["blood"]["dna"] = B.data["blood_DNA"] || "none"
+					data["blood"]["type"] = B.data["blood_type"] || "none"
+>>>>>>> Updated this old code to fork
 					data["viruses"] = get_viruses_data(B)
 					data["resistances"] = get_resistance_data(B)
 		if(SYMPTOM_DETAILS)
@@ -204,8 +218,11 @@
 				A.AssignName(new_name)
 				. = TRUE
 		if("create_culture_bottle")
+<<<<<<< HEAD
 			if (wait)
 				return
+=======
+>>>>>>> Updated this old code to fork
 			var/id = get_virus_id_by_index(text2num(params["index"]))
 			var/datum/disease/advance/A = SSdisease.archive_diseases[id]
 			if(!istype(A) || !A.mutable)
@@ -216,6 +233,7 @@
 			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
 			B.name = "[A.name] culture bottle"
 			B.desc = "A small bottle. Contains [A.agent] culture in synthblood medium."
+<<<<<<< HEAD
 			B.reagents.add_reagent(/datum/reagent/blood, 20, data)
 			wait = TRUE
 			update_icon()
@@ -226,11 +244,23 @@
 		if("create_vaccine_bottle")
 			if (wait)
 				return
+=======
+			B.reagents.add_reagent("blood", 20, data)
+			wait = TRUE
+			update_icon()
+			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 50)
+			. = TRUE
+		if("create_vaccine_bottle")
+>>>>>>> Updated this old code to fork
 			var/id = params["index"]
 			var/datum/disease/D = SSdisease.archive_diseases[id]
 			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
 			B.name = "[D.name] vaccine bottle"
+<<<<<<< HEAD
 			B.reagents.add_reagent(/datum/reagent/vaccine, 15, list(id))
+=======
+			B.reagents.add_reagent("vaccine", 15, list(id))
+>>>>>>> Updated this old code to fork
 			wait = TRUE
 			update_icon()
 			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 200)

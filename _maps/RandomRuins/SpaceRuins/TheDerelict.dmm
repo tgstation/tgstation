@@ -12,20 +12,121 @@
 /area/ruin/unpowered/no_grav)
 "ad" = (
 /obj/machinery/power/tracker,
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
 /area/solar/derelict_starboard)
+=======
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plasteel/airless,
+/area/solar/derelict_starboard)
+"ae" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/template_noop,
+/area/solar/derelict_starboard)
+>>>>>>> Updated this old code to fork
 "af" = (
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
 /area/solar/derelict_starboard)
 "ag" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged5"
 	},
 /area/solar/derelict_starboard)
+<<<<<<< HEAD
+=======
+"ah" = (
+/obj/machinery/power/solar{
+	id = "derelictsolar";
+	name = "Derelict Solar Array"
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plasteel/airless,
+/area/solar/derelict_starboard)
+"ai" = (
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/solar/derelict_starboard)
+"aj" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/template_noop,
+/area/solar/derelict_starboard)
+"ak" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/template_noop,
+/area/solar/derelict_starboard)
+"al" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/template_noop,
+/area/solar/derelict_starboard)
+"am" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/template_noop,
+/area/solar/derelict_starboard)
+"an" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/template_noop,
+/area/solar/derelict_starboard)
+"ao" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/template_noop,
+/area/solar/derelict_starboard)
+>>>>>>> Updated this old code to fork
 "ap" = (
 /obj/machinery/power/solar{
 	id = "derelictsolar";
@@ -39,6 +140,16 @@
 /obj/structure/cable,
 /turf/template_noop,
 /area/solar/derelict_starboard)
+<<<<<<< HEAD
+=======
+"ar" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/template_noop,
+/area/solar/derelict_starboard)
+>>>>>>> Updated this old code to fork
 "as" = (
 /turf/closed/wall,
 /area/ruin/space/derelict/solar_control)
@@ -50,7 +161,27 @@
 /obj/machinery/door/airlock/external{
 	name = "External Engineering"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict/solar_control)
+"av" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict/solar_control)
+"aw" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/derelict/solar_control)
 "ax" = (
@@ -69,11 +200,34 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/solar_control)
 "aB" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/solar_control)
 "aC" = (
 /obj/machinery/power/smes,
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/solar_control)
+"aD" = (
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/solar_control{
+	id = "derelictsolar";
+	name = "Primary Solar Control";
+	track = 0
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/solar_control)
@@ -84,6 +238,42 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/derelict/solar_control)
+<<<<<<< HEAD
+=======
+"aG" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/solar_control)
+"aH" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/solar_control)
+"aI" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/solar_control)
+"aJ" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/solar_control)
+>>>>>>> Updated this old code to fork
 "aK" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -102,6 +292,15 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict/solar_control)
+<<<<<<< HEAD
+=======
+"aN" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/solar_control)
+>>>>>>> Updated this old code to fork
 "aO" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -115,7 +314,10 @@
 /area/ruin/space/derelict/solar_control)
 "aQ" = (
 /obj/machinery/door/window,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/solar_control)
 "aR" = (
@@ -131,9 +333,24 @@
 	equipment = 0;
 	lighting = 0;
 	name = "Starboard Solar APC";
+<<<<<<< HEAD
 	pixel_x = -25
 	},
 /obj/structure/cable,
+=======
+	pixel_x = -24
+	},
+/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/solar_control)
+"aU" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/solar_control)
 "aV" = (
@@ -157,12 +374,34 @@
 /obj/machinery/computer/monitor/secret{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/solar_control)
 "ba" = (
 /obj/machinery/light/small,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/solar_control)
+"ba" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/small,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/solar_control)
+"bb" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/solar_control)
 "bc" = (
@@ -195,7 +434,13 @@
 	name = "Starboard Solar Access";
 	req_access_txt = "10"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/solar_control)
 "bi" = (
@@ -214,6 +459,16 @@
 "bl" = (
 /turf/closed/wall,
 /area/ruin/space/derelict/bridge/ai_upload)
+<<<<<<< HEAD
+=======
+"bm" = (
+/obj/machinery/door/window,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/solar_control)
+>>>>>>> Updated this old code to fork
 "bn" = (
 /obj/machinery/computer/atmos_alert,
 /turf/open/floor/plasteel,
@@ -239,7 +494,13 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/solar_control)
 "br" = (
+<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
+=======
+/obj/item/stack/cable_coil/cut/red{
+	amount = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/solar_control)
 "bs" = (
@@ -293,7 +554,13 @@
 	},
 /area/ruin/space/derelict/solar_control)
 "bC" = (
+<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
+=======
+/obj/item/stack/cable_coil/cut/red{
+	amount = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	icon_state = "damaged3"
 	},
@@ -399,6 +666,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Worn-out APC";
+<<<<<<< HEAD
 	pixel_x = -25
 	},
 /obj/structure/cable,
@@ -406,6 +674,19 @@
 /area/ruin/space/derelict/bridge/ai_upload)
 "bX" = (
 /obj/structure/cable,
+=======
+	pixel_x = -24
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
+"bX" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bY" = (
@@ -431,12 +712,39 @@
 	icon_state = "damaged4"
 	},
 /area/space/nearstation)
+<<<<<<< HEAD
+=======
+"cc" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
+>>>>>>> Updated this old code to fork
 "cd" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "ce" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/space/derelict/bridge/ai_upload)
+"cf" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/space/derelict/bridge/ai_upload)
+"cg" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/bridge/ai_upload)
 "ch" = (
@@ -445,6 +753,21 @@
 "ci" = (
 /turf/closed/wall/r_wall,
 /area/template_noop)
+<<<<<<< HEAD
+=======
+"cj" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/space/derelict/bridge/ai_upload)
+"ck" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/solar_control)
+>>>>>>> Updated this old code to fork
 "cl" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/gravity_generator)
@@ -478,7 +801,13 @@
 	},
 /area/ruin/space/derelict/gravity_generator)
 "cr" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/closed/wall,
 /area/ruin/space/derelict/bridge/access)
 "cs" = (
@@ -486,7 +815,13 @@
 /area/ruin/space/derelict/bridge/access)
 "ct" = (
 /obj/machinery/door/airlock/maintenance,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/access)
 "cu" = (
@@ -548,7 +883,13 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/access)
 "cF" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/access)
 "cG" = (
@@ -567,21 +908,62 @@
 /obj/item/stack/ore/slag,
 /turf/template_noop,
 /area/template_noop)
+<<<<<<< HEAD
+=======
+"cJ" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/closed/wall,
+/area/ruin/space/derelict/bridge/access)
+"cK" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/bridge/access)
+"cM" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/bridge/access)
+"cN" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/bridge/access)
+>>>>>>> Updated this old code to fork
 "cO" = (
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/gravity_generator)
 "cP" = (
+<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
+=======
+/obj/item/stack/cable_coil/cut/red,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged4"
 	},
 /area/ruin/space/derelict/gravity_generator)
 "cQ" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable,
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/access)
 "cR" = (
@@ -599,8 +981,13 @@
 	dir = 4
 	},
 /obj/structure/rack,
+<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
 /obj/item/stack/cable_coil/cut,
+=======
+/obj/item/stack/cable_coil/cut/red,
+/obj/item/stack/cable_coil/cut/red,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/access)
 "cT" = (
@@ -618,7 +1005,13 @@
 	name = "E.V.A.";
 	req_access_txt = "18"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/access)
 "cW" = (
@@ -630,7 +1023,13 @@
 /area/ruin/space/derelict/bridge/access)
 "cX" = (
 /obj/machinery/door/firedoor,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/access)
 "cY" = (
@@ -672,13 +1071,40 @@
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/space/nearstation)
 "df" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/item/wallframe/apc,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/gravity_generator)
 "dg" = (
+<<<<<<< HEAD
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/gravity_generator)
 "di" = (
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict/gravity_generator)
+"dh" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict/gravity_generator)
+"di" = (
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/frame/machine,
 /obj/item/stack/sheet/glass,
 /turf/open/floor/plating/airless,
@@ -687,7 +1113,11 @@
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/space/nearstation)
 "dk" = (
+<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
+=======
+/obj/item/stack/cable_coil/cut/red,
+>>>>>>> Updated this old code to fork
 /turf/template_noop,
 /area/template_noop)
 "dl" = (
@@ -697,17 +1127,52 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/access)
 "dm" = (
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/derelict/bridge/access)
 "dp" = (
 /obj/machinery/door/airlock/public/glass,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict/bridge/access)
+"dn" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/bridge/access)
+"do" = (
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/bridge/access)
+"dp" = (
+/obj/machinery/door/airlock/public/glass,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/access)
 "dq" = (
 /obj/item/reagent_containers/food/drinks/beer,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/access)
 "dr" = (
@@ -721,6 +1186,15 @@
 /obj/item/paper/fluff/ruins/thederelict/equipment,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/gravity_generator)
+<<<<<<< HEAD
+=======
+"dt" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict/gravity_generator)
+>>>>>>> Updated this old code to fork
 "du" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -750,7 +1224,13 @@
 /area/ruin/space/derelict/bridge/access)
 "dy" = (
 /obj/structure/window/reinforced,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/access)
 "dz" = (
@@ -769,6 +1249,12 @@
 	name = "Engineering Access";
 	req_access_txt = "10"
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
@@ -794,6 +1280,16 @@
 /obj/structure/frame/computer,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge)
+<<<<<<< HEAD
+=======
+"dH" = (
+/obj/structure/frame/computer,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/bridge)
+>>>>>>> Updated this old code to fork
 "dI" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -854,12 +1350,43 @@
 	},
 /area/ruin/space/derelict/singularity_engine)
 "dR" = (
+<<<<<<< HEAD
 /obj/machinery/light/small{
 	dir = 1
 	},
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
+=======
+/obj/item/stack/cable_coil/cut/red,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict/singularity_engine)
+"dS" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict/singularity_engine)
+"dT" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Engineering Access";
+	req_access_txt = "10"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/gravity_generator)
+"dU" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/gravity_generator)
+>>>>>>> Updated this old code to fork
 "dV" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -874,6 +1401,15 @@
 	icon_state = "damaged5"
 	},
 /area/ruin/space/derelict/singularity_engine)
+<<<<<<< HEAD
+=======
+"dY" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict/bridge/access)
+>>>>>>> Updated this old code to fork
 "dZ" = (
 /obj/item/reagent_containers/food/drinks/beer,
 /turf/open/floor/plasteel,
@@ -959,6 +1495,16 @@
 /obj/machinery/field/generator,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
+<<<<<<< HEAD
+=======
+"ep" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/bridge/access)
+>>>>>>> Updated this old code to fork
 "eq" = (
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plasteel,
@@ -1033,26 +1579,69 @@
 	},
 /area/ruin/space/derelict/singularity_engine)
 "eG" = (
+<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
+=======
+/obj/item/stack/cable_coil/cut/red,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged4"
 	},
 /area/ruin/space/derelict/singularity_engine)
+<<<<<<< HEAD
+=======
+"eH" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/bridge/access)
+"eI" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict/bridge/access)
+>>>>>>> Updated this old code to fork
 "eJ" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/access)
 "eK" = (
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/bridge/access)
+"eK" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge)
 "eL" = (
 /obj/structure/lattice,
 /turf/template_noop,
 /area/ruin/space/derelict/singularity_engine)
+<<<<<<< HEAD
+=======
+"eM" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/bridge)
+>>>>>>> Updated this old code to fork
 "eN" = (
 /obj/item/paper/fluff/ruins/thederelict/nukie_objectives,
 /turf/open/floor/plasteel/airless{
@@ -1074,6 +1663,15 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge)
+<<<<<<< HEAD
+=======
+"eR" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/bridge)
+>>>>>>> Updated this old code to fork
 "eS" = (
 /obj/structure/chair,
 /turf/open/floor/plasteel,
@@ -1157,8 +1755,13 @@
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
+<<<<<<< HEAD
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/cable,
+=======
+/obj/structure/cable,
+/obj/effect/spawner/lootdrop/maintenance,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge)
 "fh" = (
@@ -1212,6 +1815,10 @@
 /area/ruin/space/derelict/bridge)
 "fp" = (
 /obj/machinery/door/window{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	name = "Captain's Quarters";
 	req_access_txt = "20"
 	},
@@ -1251,7 +1858,11 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "fu" = (
+<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
+=======
+/obj/item/stack/cable_coil/cut/red,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged5"
 	},
@@ -1318,7 +1929,11 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/access)
 "fG" = (
+<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
+=======
+/obj/item/stack/cable_coil/cut/red,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
@@ -1341,7 +1956,13 @@
 /area/ruin/space/derelict/singularity_engine)
 "fK" = (
 /obj/machinery/door/window,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/access)
 "fL" = (
@@ -1391,7 +2012,13 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/bridge/access)
 "fT" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/access)
 "fU" = (
@@ -1416,7 +2043,11 @@
 /obj/item/shard{
 	icon_state = "medium"
 	},
+<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
+=======
+/obj/item/stack/cable_coil/cut/red,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "fY" = (
@@ -1433,18 +2064,31 @@
 /turf/closed/wall,
 /area/ruin/space/derelict/hallway/primary)
 "ga" = (
+<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
+=======
+/obj/item/stack/cable_coil/cut/red{
+	amount = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
 /area/ruin/space/derelict/hallway/primary)
 "gb" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
 /area/ruin/space/derelict/hallway/primary)
 "gc" = (
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary)
@@ -1452,6 +2096,34 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/bridge/access)
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/hallway/primary)
+"gd" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict/bridge/access)
+"ge" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/bridge/access)
+"gf" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/bridge/access)
+>>>>>>> Updated this old code to fork
 "gg" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -1476,7 +2148,13 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/hallway/primary)
 "gl" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary)
 "gm" = (
@@ -1525,6 +2203,21 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
+<<<<<<< HEAD
+=======
+"gx" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict/hallway/primary)
+"gy" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict/hallway/primary)
+>>>>>>> Updated this old code to fork
 "gz" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "floorscorched2"
@@ -1535,11 +2228,18 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary)
 "gB" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable,
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/access)
 "gC" = (
@@ -1632,6 +2332,15 @@
 /obj/effect/spawner/structure/window/hollow/reinforced/end,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
+<<<<<<< HEAD
+=======
+"gU" = (
+/obj/item/stack/cable_coil/cut/red{
+	amount = 2
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict/hallway/primary)
+>>>>>>> Updated this old code to fork
 "gV" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/arrival)
@@ -1650,6 +2359,15 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
+<<<<<<< HEAD
+=======
+"ha" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict/hallway/primary)
+>>>>>>> Updated this old code to fork
 "hb" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/airless{
@@ -1794,9 +2512,15 @@
 "hF" = (
 /obj/structure/table,
 /obj/machinery/computer/pod/old{
+<<<<<<< HEAD
 	id = "derelict_gun";
 	name = "ProComp IIe";
 	pixel_y = 7
+=======
+	name = "ProComp IIe";
+	pixel_y = 7;
+	id = "derelict_gun"
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel/chapel,
 /area/ruin/space/derelict/medical/chapel)
@@ -1919,7 +2643,11 @@
 	},
 /area/space/nearstation)
 "ib" = (
+<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
+=======
+/obj/item/stack/cable_coil/cut/red,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "ic" = (
@@ -1990,7 +2718,13 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "ip" = (
+<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
+=======
+/obj/item/stack/cable_coil/cut/red{
+	amount = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
@@ -2075,6 +2809,17 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/airless/white,
 /area/ruin/unpowered/no_grav)
+<<<<<<< HEAD
+=======
+"iF" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/airless{
+	icon_state = "damaged2"
+	},
+/area/ruin/space/derelict/hallway/primary)
+>>>>>>> Updated this old code to fork
 "iG" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -2097,6 +2842,10 @@
 "iK" = (
 /obj/machinery/mass_driver{
 	dir = 8;
+<<<<<<< HEAD
+=======
+	icon_state = "mass_driver";
+>>>>>>> Updated this old code to fork
 	id = "derelict_gun"
 	},
 /obj/machinery/door/window{
@@ -2220,11 +2969,21 @@
 /obj/structure/table,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
+<<<<<<< HEAD
+=======
+"jc" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/hallway/primary)
+>>>>>>> Updated this old code to fork
 "jd" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/arrival)
 "jf" = (
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless/white,
 /area/ruin/space/derelict/medical)
@@ -2241,6 +3000,38 @@
 /area/ruin/space/derelict/medical)
 "jj" = (
 /obj/item/stack/cable_coil/cut,
+=======
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel/airless/white,
+/area/ruin/space/derelict/medical)
+"jg" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/airless/white,
+/area/ruin/space/derelict/medical)
+"jh" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/airless/white,
+/area/ruin/space/derelict/medical)
+"ji" = (
+/obj/item/stack/cable_coil/cut/red{
+	amount = 2
+	},
+/turf/open/floor/plasteel/airless/white,
+/area/ruin/space/derelict/medical)
+"jj" = (
+/obj/item/stack/cable_coil/cut/red{
+	amount = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
@@ -2324,7 +3115,13 @@
 	name = "Worn-out APC";
 	pixel_x = 24
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/medical/chapel)
 "jz" = (
@@ -2351,7 +3148,13 @@
 /turf/open/floor/plasteel/airless/white,
 /area/ruin/space/derelict/medical)
 "jD" = (
+<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
+=======
+/obj/item/stack/cable_coil/cut/red{
+	amount = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
@@ -2399,23 +3202,52 @@
 /area/ruin/space/derelict/medical/chapel)
 "jM" = (
 /obj/machinery/door/window,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/medical/chapel)
 "jN" = (
 /obj/machinery/door/window/southleft,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless/white,
 /area/ruin/space/derelict/medical)
 "jO" = (
 /obj/machinery/door/window/southright,
 /turf/open/floor/plasteel/airless/white,
 /area/ruin/space/derelict/medical)
+<<<<<<< HEAD
 "jQ" = (
+=======
+"jP" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/hallway/primary)
+"jQ" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/door/airlock/research{
 	name = "Toxins Research";
 	req_access_txt = "7"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary)
@@ -2425,6 +3257,20 @@
 /area/ruin/unpowered/no_grav)
 "jS" = (
 /obj/structure/cable,
+=======
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/hallway/primary)
+"jR" = (
+/obj/item/stack/cable_coil/cut/red{
+	amount = 2
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"jS" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "jT" = (
@@ -2458,7 +3304,13 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary)
 "jX" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless{
 	icon_state = "floorscorched1"
 	},
@@ -2479,7 +3331,19 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary)
 "kb" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/unpowered/no_grav)
+"kc" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered/no_grav)
 "kd" = (
@@ -2496,6 +3360,7 @@
 /area/ruin/unpowered/no_grav)
 "kf" = (
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered/no_grav)
@@ -2505,10 +3370,29 @@
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "kh" = (
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/unpowered/no_grav)
+"kg" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/window/fulltile,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"kh" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/door/airlock/research{
 	name = "Toxins Research";
 	req_access_txt = "7"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/arrival)
@@ -2520,6 +3404,28 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/derelict/arrival)
+=======
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/arrival)
+"ki" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/arrival)
+"kj" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict/arrival)
+"kk" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/arrival)
+>>>>>>> Updated this old code to fork
 "kl" = (
 /obj/machinery/door/airlock/command{
 	name = "Teleporter Room"
@@ -2527,7 +3433,11 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/medical/chapel)
 "km" = (
+<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
+=======
+/obj/item/stack/cable_coil/cut/red,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless{
 	icon_state = "floorscorched1"
 	},
@@ -2550,24 +3460,78 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary)
 "kr" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable,
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/arrival)
 "ks" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/arrival)
+<<<<<<< HEAD
+=======
+"ku" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/space/derelict/hallway/primary)
+>>>>>>> Updated this old code to fork
 "kw" = (
 /obj/machinery/door/window{
 	base_state = "right";
 	dir = 4;
 	icon_state = "right"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/hallway/primary)
+"kx" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/hallway/primary)
+"ky" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/hallway/primary)
+"kz" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/hallway/primary)
+"kA" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary)
 "kB" = (
@@ -2582,6 +3546,33 @@
 /obj/machinery/door/window,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary)
+<<<<<<< HEAD
+=======
+"kE" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/hallway/primary)
+"kG" = (
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/hallway/primary)
+"kH" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/hallway/primary)
+>>>>>>> Updated this old code to fork
 "kI" = (
 /obj/machinery/vending/hydronutrients,
 /turf/open/floor/plasteel/airless,
@@ -2627,7 +3618,13 @@
 	name = "Security";
 	req_access_txt = "1"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary)
 "kS" = (
@@ -2667,11 +3664,18 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary)
 "la" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable,
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary)
 "lb" = (
@@ -2683,12 +3687,20 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
+=======
+/obj/item/stack/cable_coil/cut/red,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary/port)
 "ld" = (
 /obj/structure/lattice,
+<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
+=======
+/obj/item/stack/cable_coil/cut/red,
+>>>>>>> Updated this old code to fork
 /turf/template_noop,
 /area/space/nearstation)
 "le" = (
@@ -2718,7 +3730,13 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary/port)
 "lj" = (
+<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
+=======
+/obj/item/stack/cable_coil/cut/red{
+	amount = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary/port)
 "lk" = (
@@ -2768,7 +3786,11 @@
 "lq" = (
 /obj/structure/table,
 /obj/item/reagent_containers/glass/beaker{
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/toxin/acid = 50)
+=======
+	list_reagents = list("sacid" = 50)
+>>>>>>> Updated this old code to fork
 	},
 /obj/item/paper/crumpled/bloody/ruins/thederelict/unfinished,
 /obj/item/pen,
@@ -2812,8 +3834,15 @@
 /turf/template_noop,
 /area/ruin/space/derelict/hallway/primary/port)
 "lB" = (
+<<<<<<< HEAD
 /obj/structure/window/reinforced,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/window/reinforced,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary/port)
 "lC" = (
@@ -2894,7 +3923,13 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/atmospherics)
 "lQ" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary/port)
 "lS" = (
@@ -2953,7 +3988,11 @@
 /area/ruin/space/derelict/atmospherics)
 "mb" = (
 /obj/structure/lattice,
+<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
+=======
+/obj/item/stack/cable_coil/cut/red,
+>>>>>>> Updated this old code to fork
 /turf/template_noop,
 /area/ruin/space/derelict/hallway/primary/port)
 "mc" = (
@@ -3088,7 +4127,11 @@
 /turf/template_noop,
 /area/ruin/space/derelict/atmospherics)
 "mA" = (
+<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
+=======
+/obj/item/stack/cable_coil/cut/red,
+>>>>>>> Updated this old code to fork
 /turf/template_noop,
 /area/ruin/space/derelict/hallway/primary/port)
 "mB" = (
@@ -3099,7 +4142,13 @@
 /area/ruin/space/derelict/hallway/secondary)
 "mC" = (
 /obj/item/wirecutters,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "mD" = (
@@ -3126,11 +4175,21 @@
 	},
 /area/ruin/space/derelict/hallway/primary/port)
 "mI" = (
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "mJ" = (
 /obj/item/stack/cable_coil/cut,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/hallway/secondary)
+"mJ" = (
+/obj/item/stack/cable_coil/cut/red,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary)
 "mL" = (
@@ -3189,12 +4248,24 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "mX" = (
+<<<<<<< HEAD
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Worn-out APC";
 	pixel_x = -25
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Worn-out APC";
+	pixel_x = -24
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "mY" = (
@@ -3217,6 +4288,7 @@
 	areastring = "/area/ruin/space/derelict/atmospherics";
 	dir = 1;
 	name = "Worn-out APC";
+<<<<<<< HEAD
 	pixel_y = 23
 	},
 /obj/structure/cable,
@@ -3227,12 +4299,35 @@
 	icon_state = "derelict9"
 	},
 /obj/structure/cable,
+=======
+	pixel_y = 24
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/hallway/secondary)
+"nd" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/hallway/secondary)
+"ne" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict9"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "nf" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/plaque{
 	icon_state = "derelict10"
 	},
@@ -3272,16 +4367,93 @@
 	icon_state = "derelict15"
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict10"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/hallway/secondary)
+"ng" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict11"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/hallway/secondary)
+"nh" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict12"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/hallway/secondary)
+"ni" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict13"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/hallway/secondary)
+"nj" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict14"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/hallway/secondary)
+"nk" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict15"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "nl" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/plaque{
 	icon_state = "derelict16"
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/plaque{
+	icon_state = "derelict16"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/hallway/secondary)
+"nm" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/hallway/secondary)
+"nn" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "no" = (
@@ -3348,11 +4520,20 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/se_solar)
 "nC" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/door/airlock/engineering{
 	name = "Aft Solar Access";
 	req_access_txt = "10"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/se_solar)
 "nD" = (
@@ -3367,8 +4548,15 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "nF" = (
+<<<<<<< HEAD
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/se_solar)
 "nG" = (
@@ -3386,9 +4574,36 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/se_solar)
 "nJ" = (
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/se_solar)
+=======
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/space/derelict/se_solar)
+"nK" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/space/derelict/se_solar)
+"nL" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/door/airlock/engineering{
+	name = "Aft Solar Access";
+	req_access_txt = "10"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/se_solar)
+>>>>>>> Updated this old code to fork
 "nM" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating/airless,
@@ -3402,6 +4617,15 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/se_solar)
+<<<<<<< HEAD
+=======
+"nP" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/se_solar)
+>>>>>>> Updated this old code to fork
 "nQ" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged4"
@@ -3416,6 +4640,10 @@
 /area/ruin/space/derelict/se_solar)
 "nT" = (
 /obj/docking_port/stationary{
+<<<<<<< HEAD
+=======
+	dheight = 0;
+>>>>>>> Updated this old code to fork
 	dir = 2;
 	dwidth = 11;
 	height = 22;
@@ -3429,8 +4657,15 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/item/drone_shell/dusty,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/item/drone_shell/dusty,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/se_solar)
 "nV" = (
@@ -3441,6 +4676,7 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/se_solar)
 "nY" = (
+<<<<<<< HEAD
 /obj/machinery/power/solar_control{
 	dir = 1;
 	id = "derelictsolar";
@@ -3450,15 +4686,36 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/se_solar)
 "nZ" = (
+=======
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/structure/cable,
+/obj/machinery/power/solar_control{
+	dir = 1;
+	id = "derelictsolar";
+	name = "Primary Solar Control";
+	track = 0
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/se_solar)
+"nZ" = (
+/obj/structure/cable,
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/apc/unlocked{
 	dir = 8;
 	environ = 0;
 	equipment = 0;
 	lighting = 0;
 	name = "Worn-out APC";
+<<<<<<< HEAD
 	pixel_x = -25
 	},
 /obj/structure/cable,
+=======
+	pixel_x = -24
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/se_solar)
 "oa" = (
@@ -3488,7 +4745,13 @@
 	dir = 4;
 	icon_state = "right"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/se_solar)
 "og" = (
@@ -3511,6 +4774,7 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/se_solar)
 "ok" = (
+<<<<<<< HEAD
 /obj/machinery/door/airlock/external,
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
@@ -3521,19 +4785,62 @@
 /turf/template_noop,
 /area/solar/derelict_aft)
 "on" = (
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/external,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/se_solar)
+"ol" = (
+/obj/structure/cable,
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/solar/derelict_aft)
+"om" = (
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/solar/derelict_aft)
+"on" = (
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/solar{
 	id = "derelictsolar";
 	name = "Derelict Solar Array"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
 /area/solar/derelict_aft)
 "op" = (
+=======
+/turf/open/floor/plasteel/airless,
+/area/solar/derelict_aft)
+"oo" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/solar/derelict_aft)
+"op" = (
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/solar{
 	id = "derelictsolar";
 	name = "Derelict Solar Array"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
@@ -3543,6 +4850,83 @@
 	icon_state = "platingdmg2"
 	},
 /area/solar/derelict_aft)
+<<<<<<< HEAD
+=======
+"or" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/template_noop,
+/area/solar/derelict_aft)
+"os" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/template_noop,
+/area/solar/derelict_aft)
+"ot" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/template_noop,
+/area/solar/derelict_aft)
+"ou" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/solar/derelict_aft)
+"ov" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/template_noop,
+/area/solar/derelict_aft)
+"ow" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/template_noop,
+/area/solar/derelict_aft)
+"ox" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "derelictsolar";
+	name = "Derelict Solar Array"
+	},
+/turf/open/floor/plasteel/airless,
+/area/solar/derelict_aft)
+>>>>>>> Updated this old code to fork
 "oy" = (
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
@@ -3552,6 +4936,36 @@
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
 /area/solar/derelict_aft)
+<<<<<<< HEAD
+=======
+"oA" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/template_noop,
+/area/solar/derelict_aft)
+"oB" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/solar/derelict_aft)
+"oC" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/template_noop,
+/area/solar/derelict_aft)
+>>>>>>> Updated this old code to fork
 "oD" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable,
@@ -3635,7 +5049,13 @@
 /turf/closed/wall,
 /area/ruin/space/derelict/hallway/primary/port)
 "KT" = (
+<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
+=======
+/obj/item/stack/cable_coil/cut/red{
+	amount = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary/port)
 "Le" = (
@@ -3650,16 +5070,20 @@
 "Lv" = (
 /turf/closed/wall,
 /area/space/nearstation)
+<<<<<<< HEAD
 "MQ" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/se_solar)
+=======
+>>>>>>> Updated this old code to fork
 "Oj" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/bridge/access)
 "OT" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/hallway/primary/port)
+<<<<<<< HEAD
 "Pi" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -3669,6 +5093,10 @@
 /area/ruin/space/derelict/solar_control)
 "Rd" = (
 /obj/item/stack/cable_coil,
+=======
+"Rd" = (
+/obj/item/stack/cable_coil/red,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged4"
 	},
@@ -3694,7 +5122,11 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary/port)
 "Xq" = (
+<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
+=======
+/obj/item/stack/cable_coil/cut/red,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
@@ -5468,7 +6900,11 @@ jw
 gX
 jW
 gL
+<<<<<<< HEAD
 mJ
+=======
+gU
+>>>>>>> Updated this old code to fork
 gn
 gL
 ZB
@@ -5694,7 +7130,11 @@ gX
 gX
 jY
 km
+<<<<<<< HEAD
 gl
+=======
+gy
+>>>>>>> Updated this old code to fork
 fZ
 fZ
 fZ
@@ -5807,7 +7247,11 @@ iA
 fZ
 go
 go
+<<<<<<< HEAD
 jX
+=======
+ku
+>>>>>>> Updated this old code to fork
 fZ
 kN
 kW
@@ -6480,7 +7924,11 @@ hX
 iC
 hI
 hI
+<<<<<<< HEAD
 jf
+=======
+jh
+>>>>>>> Updated this old code to fork
 jB
 fZ
 go
@@ -6706,7 +8154,11 @@ il
 hY
 hX
 hI
+<<<<<<< HEAD
 jf
+=======
+jh
+>>>>>>> Updated this old code to fork
 hI
 fZ
 ka
@@ -6935,10 +8387,17 @@ hX
 hX
 jD
 jN
+<<<<<<< HEAD
 gc
 gc
 gc
 gc
+=======
+jc
+jc
+kx
+kE
+>>>>>>> Updated this old code to fork
 kO
 kZ
 lf
@@ -7584,7 +9043,11 @@ cY
 df
 ds
 dB
+<<<<<<< HEAD
 dW
+=======
+dS
+>>>>>>> Updated this old code to fork
 ei
 ex
 dO
@@ -7697,7 +9160,11 @@ cZ
 dg
 cO
 cl
+<<<<<<< HEAD
 da
+=======
+dT
+>>>>>>> Updated this old code to fork
 da
 dr
 eG
@@ -7729,8 +9196,13 @@ fZ
 go
 go
 go
+<<<<<<< HEAD
 gc
 gc
+=======
+kG
+jc
+>>>>>>> Updated this old code to fork
 la
 fZ
 lu
@@ -7748,7 +9220,11 @@ ma
 ls
 lx
 md
+<<<<<<< HEAD
 mI
+=======
+nd
+>>>>>>> Updated this old code to fork
 mU
 nz
 ac
@@ -7807,10 +9283,17 @@ cH
 cO
 cO
 RF
+<<<<<<< HEAD
 dg
 dg
 dC
 ej
+=======
+dh
+dt
+dC
+dU
+>>>>>>> Updated this old code to fork
 ej
 dr
 ez
@@ -8519,8 +10002,13 @@ ay
 jp
 fZ
 go
+<<<<<<< HEAD
 gc
 gc
+=======
+ky
+kH
+>>>>>>> Updated this old code to fork
 go
 go
 fZ
@@ -8765,7 +10253,11 @@ lz
 lA
 lz
 md
+<<<<<<< HEAD
 mI
+=======
+nd
+>>>>>>> Updated this old code to fork
 mU
 nz
 eu
@@ -8878,7 +10370,11 @@ lz
 lA
 lz
 md
+<<<<<<< HEAD
 mI
+=======
+nd
+>>>>>>> Updated this old code to fork
 mU
 nz
 eu
@@ -8991,7 +10487,11 @@ lA
 KN
 lz
 md
+<<<<<<< HEAD
 mI
+=======
+nd
+>>>>>>> Updated this old code to fork
 mU
 nz
 ac
@@ -9074,7 +10574,11 @@ tS
 tS
 tS
 gL
+<<<<<<< HEAD
 mJ
+=======
+gU
+>>>>>>> Updated this old code to fork
 gm
 gn
 fZ
@@ -9104,7 +10608,11 @@ KN
 KN
 KN
 md
+<<<<<<< HEAD
 mI
+=======
+nd
+>>>>>>> Updated this old code to fork
 mU
 nz
 ac
@@ -9189,6 +10697,7 @@ gl
 gl
 gm
 gm
+<<<<<<< HEAD
 gb
 ip
 gc
@@ -9198,6 +10707,17 @@ gc
 gc
 gc
 gc
+=======
+iF
+ip
+jc
+jc
+jc
+jP
+jc
+jc
+kz
+>>>>>>> Updated this old code to fork
 go
 gk
 Vz
@@ -9217,7 +10737,11 @@ lz
 lA
 lz
 md
+<<<<<<< HEAD
 mI
+=======
+nd
+>>>>>>> Updated this old code to fork
 mU
 nz
 ac
@@ -9295,8 +10819,13 @@ gk
 gk
 gk
 GM
+<<<<<<< HEAD
 gl
 gl
+=======
+gx
+ha
+>>>>>>> Updated this old code to fork
 gL
 gm
 gm
@@ -9310,8 +10839,13 @@ go
 gc
 go
 go
+<<<<<<< HEAD
 gc
 gc
+=======
+kA
+jc
+>>>>>>> Updated this old code to fork
 kR
 lc
 li
@@ -9330,7 +10864,11 @@ lz
 lA
 lz
 md
+<<<<<<< HEAD
 mI
+=======
+nd
+>>>>>>> Updated this old code to fork
 mU
 md
 aY
@@ -9345,12 +10883,21 @@ nB
 aa
 aa
 on
+<<<<<<< HEAD
 ol
 on
 aa
 on
 ol
 on
+=======
+or
+ox
+aa
+on
+oz
+ox
+>>>>>>> Updated this old code to fork
 aa
 vf
 "}
@@ -9405,10 +10952,17 @@ ZB
 dr
 dr
 gk
+<<<<<<< HEAD
 gl
 gl
 gl
 mJ
+=======
+gx
+gl
+gl
+gU
+>>>>>>> Updated this old code to fork
 gm
 gm
 gn
@@ -9443,7 +10997,11 @@ lz
 lA
 lz
 md
+<<<<<<< HEAD
 mI
+=======
+nd
+>>>>>>> Updated this old code to fork
 mU
 nz
 ac
@@ -9458,12 +11016,21 @@ aa
 aa
 aa
 on
+<<<<<<< HEAD
 ol
 on
 aa
 on
 ol
 on
+=======
+os
+ox
+aa
+on
+oA
+ox
+>>>>>>> Updated this old code to fork
 aa
 vf
 "}
@@ -9518,7 +11085,11 @@ cs
 cs
 fZ
 fZ
+<<<<<<< HEAD
 gl
+=======
+gy
+>>>>>>> Updated this old code to fork
 fZ
 fZ
 fZ
@@ -9556,7 +11127,11 @@ lA
 lA
 Tm
 md
+<<<<<<< HEAD
 mI
+=======
+nd
+>>>>>>> Updated this old code to fork
 mU
 nz
 ac
@@ -9571,12 +11146,21 @@ nB
 aa
 aa
 on
+<<<<<<< HEAD
 ol
 on
 aa
 on
 ol
 on
+=======
+os
+ox
+aa
+on
+os
+ox
+>>>>>>> Updated this old code to fork
 aa
 vf
 "}
@@ -9669,7 +11253,11 @@ lz
 Tm
 Vz
 md
+<<<<<<< HEAD
 mI
+=======
+nd
+>>>>>>> Updated this old code to fork
 mU
 nz
 ac
@@ -9684,11 +11272,19 @@ nB
 ZB
 aa
 aa
+<<<<<<< HEAD
 ol
 aa
 aa
 aa
 ol
+=======
+ot
+aa
+aa
+aa
+oB
+>>>>>>> Updated this old code to fork
 aa
 aa
 vf
@@ -9782,7 +11378,11 @@ lz
 Tm
 Vz
 md
+<<<<<<< HEAD
 mI
+=======
+nd
+>>>>>>> Updated this old code to fork
 mU
 nz
 ac
@@ -9792,6 +11392,7 @@ nO
 nU
 nY
 of
+<<<<<<< HEAD
 MQ
 ok
 ol
@@ -9803,6 +11404,19 @@ oz
 ol
 ol
 ol
+=======
+nP
+ok
+ol
+om
+oo
+ou
+oo
+oz
+oo
+ou
+oo
+>>>>>>> Updated this old code to fork
 oD
 vf
 "}
@@ -9830,7 +11444,11 @@ bz
 bK
 bO
 bX
+<<<<<<< HEAD
 bX
+=======
+cc
+>>>>>>> Updated this old code to fork
 ce
 aa
 aa
@@ -9895,12 +11513,20 @@ Tm
 Vz
 Vz
 md
+<<<<<<< HEAD
 mI
+=======
+nd
+>>>>>>> Updated this old code to fork
 mU
 md
 nB
 nB
+<<<<<<< HEAD
 nJ
+=======
+nK
+>>>>>>> Updated this old code to fork
 nB
 nV
 nB
@@ -9910,11 +11536,19 @@ nB
 ZB
 aa
 aa
+<<<<<<< HEAD
 ol
 aa
 aa
 aa
 ol
+=======
+ot
+aa
+aa
+aa
+oB
+>>>>>>> Updated this old code to fork
 aa
 aa
 ZB
@@ -9944,7 +11578,11 @@ bE
 bK
 bY
 cd
+<<<<<<< HEAD
 ce
+=======
+cf
+>>>>>>> Updated this old code to fork
 ci
 ci
 ci
@@ -10008,14 +11646,24 @@ Vz
 Vz
 Vz
 md
+<<<<<<< HEAD
 mI
+=======
+nm
+>>>>>>> Updated this old code to fork
 mI
 mI
 nC
 nF
+<<<<<<< HEAD
 nC
 MQ
 MQ
+=======
+nL
+nP
+nP
+>>>>>>> Updated this old code to fork
 nZ
 nR
 nR
@@ -10023,12 +11671,21 @@ nB
 aa
 aa
 on
+<<<<<<< HEAD
 ol
 on
 aa
 on
 ol
 on
+=======
+ov
+ox
+aa
+on
+ov
+ox
+>>>>>>> Updated this old code to fork
 aa
 vf
 "}
@@ -10057,7 +11714,11 @@ bE
 bQ
 bK
 bO
+<<<<<<< HEAD
 ce
+=======
+cf
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -10121,7 +11782,11 @@ md
 md
 md
 md
+<<<<<<< HEAD
 mI
+=======
+nd
+>>>>>>> Updated this old code to fork
 mU
 mZ
 nB
@@ -10136,12 +11801,21 @@ nB
 aa
 aa
 op
+<<<<<<< HEAD
 ol
 oy
 aa
 on
 ol
 on
+=======
+ow
+oy
+aa
+on
+ov
+ox
+>>>>>>> Updated this old code to fork
 aa
 vf
 "}
@@ -10170,7 +11844,11 @@ bL
 bR
 bF
 bE
+<<<<<<< HEAD
 ce
+=======
+cf
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -10234,7 +11912,11 @@ mI
 mI
 mI
 mX
+<<<<<<< HEAD
 mI
+=======
+nn
+>>>>>>> Updated this old code to fork
 mU
 mZ
 mZ
@@ -10253,8 +11935,13 @@ dk
 aa
 dk
 on
+<<<<<<< HEAD
 ol
 on
+=======
+oC
+ox
+>>>>>>> Updated this old code to fork
 aa
 ZB
 "}
@@ -10283,7 +11970,11 @@ bM
 bL
 bE
 bO
+<<<<<<< HEAD
 ce
+=======
+cf
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -10396,6 +12087,7 @@ bK
 bK
 bZ
 bz
+<<<<<<< HEAD
 ce
 ce
 ce
@@ -10403,6 +12095,15 @@ ce
 cr
 cr
 cr
+=======
+cg
+cj
+cj
+cj
+cr
+cr
+cJ
+>>>>>>> Updated this old code to fork
 cs
 cs
 cs
@@ -10515,7 +12216,11 @@ bj
 bj
 cs
 cx
+<<<<<<< HEAD
 cF
+=======
+cK
+>>>>>>> Updated this old code to fork
 cx
 cT
 cx
@@ -10533,7 +12238,11 @@ cs
 cs
 cs
 fx
+<<<<<<< HEAD
 fT
+=======
+ge
+>>>>>>> Updated this old code to fork
 gq
 fx
 fZ
@@ -10628,7 +12337,11 @@ bj
 bj
 cs
 cx
+<<<<<<< HEAD
 cF
+=======
+cK
+>>>>>>> Updated this old code to fork
 cx
 cT
 cx
@@ -10646,7 +12359,11 @@ cx
 cx
 cs
 fx
+<<<<<<< HEAD
 fT
+=======
+ge
+>>>>>>> Updated this old code to fork
 fx
 fx
 fZ
@@ -10714,7 +12431,11 @@ aa
 ZB
 aa
 af
+<<<<<<< HEAD
 aq
+=======
+ai
+>>>>>>> Updated this old code to fork
 ap
 ZB
 ZB
@@ -10741,17 +12462,28 @@ bj
 bj
 cs
 cy
+<<<<<<< HEAD
 cF
+=======
+cK
+>>>>>>> Updated this old code to fork
 cx
 cT
 cx
 dm
 dy
 cF
+<<<<<<< HEAD
 dm
 dy
 cF
 cF
+=======
+dY
+ep
+cF
+eH
+>>>>>>> Updated this old code to fork
 cF
 cF
 cF
@@ -10759,7 +12491,11 @@ cF
 cF
 fK
 fT
+<<<<<<< HEAD
 fT
+=======
+gf
+>>>>>>> Updated this old code to fork
 fT
 gB
 cs
@@ -10827,7 +12563,11 @@ aa
 vf
 aa
 ag
+<<<<<<< HEAD
 aq
+=======
+ai
+>>>>>>> Updated this old code to fork
 ap
 aa
 aa
@@ -10854,17 +12594,29 @@ bj
 bj
 cs
 cz
+<<<<<<< HEAD
 cF
 cx
 cU
 cx
 cF
+=======
+cK
+cx
+cU
+cx
+cK
+>>>>>>> Updated this old code to fork
 dw
 cx
 cx
 dw
 cx
+<<<<<<< HEAD
 cF
+=======
+cK
+>>>>>>> Updated this old code to fork
 cx
 cs
 cs
@@ -10939,8 +12691,13 @@ aa
 (65,1,1) = {"
 vf
 aa
+<<<<<<< HEAD
 ap
 aq
+=======
+ah
+aj
+>>>>>>> Updated this old code to fork
 ap
 aa
 aa
@@ -10967,17 +12724,29 @@ bj
 bj
 cs
 cA
+<<<<<<< HEAD
 cF
 cF
 cV
 cF
 cF
+=======
+cM
+cF
+cV
+cF
+dn
+>>>>>>> Updated this old code to fork
 dw
 cx
 cx
 dw
 cx
+<<<<<<< HEAD
 dm
+=======
+eI
+>>>>>>> Updated this old code to fork
 cx
 cx
 cs
@@ -11003,7 +12772,11 @@ aa
 Uz
 aa
 jG
+<<<<<<< HEAD
 kb
+=======
+kc
+>>>>>>> Updated this old code to fork
 jG
 aa
 aa
@@ -11053,7 +12826,11 @@ aa
 vf
 aa
 aa
+<<<<<<< HEAD
 aq
+=======
+ak
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -11080,11 +12857,19 @@ bj
 bj
 cs
 cB
+<<<<<<< HEAD
 cx
 cQ
 cs
 cs
 cX
+=======
+cN
+cQ
+cs
+cs
+do
+>>>>>>> Updated this old code to fork
 cs
 dF
 dF
@@ -11165,8 +12950,13 @@ aa
 (67,1,1) = {"
 vf
 aa
+<<<<<<< HEAD
 ap
 aq
+=======
+ah
+al
+>>>>>>> Updated this old code to fork
 ap
 aa
 aa
@@ -11278,15 +13068,25 @@ aa
 (68,1,1) = {"
 vf
 aa
+<<<<<<< HEAD
 ap
 aq
+=======
+ah
+al
+>>>>>>> Updated this old code to fork
 ap
 aa
 aa
 at
 az
+<<<<<<< HEAD
 az
 az
+=======
+aB
+aN
+>>>>>>> Updated this old code to fork
 aT
 aZ
 as
@@ -11310,9 +13110,15 @@ cx
 cR
 cT
 dd
+<<<<<<< HEAD
 cF
 cs
 dG
+=======
+cK
+cs
+dH
+>>>>>>> Updated this old code to fork
 ea
 ea
 ea
@@ -11391,16 +13197,28 @@ aa
 (69,1,1) = {"
 aa
 aa
+<<<<<<< HEAD
 ap
 aq
+=======
+ah
+al
+>>>>>>> Updated this old code to fork
 ap
 aa
 aa
 at
+<<<<<<< HEAD
 Pi
 aA
 aO
 az
+=======
+aA
+aG
+aO
+aU
+>>>>>>> Updated this old code to fork
 ba
 as
 bj
@@ -11423,7 +13241,11 @@ cx
 cx
 cW
 cx
+<<<<<<< HEAD
 cF
+=======
+cK
+>>>>>>> Updated this old code to fork
 cs
 dI
 eb
@@ -11503,6 +13325,7 @@ aa
 "}
 (70,1,1) = {"
 ad
+<<<<<<< HEAD
 aq
 aq
 aq
@@ -11515,6 +13338,20 @@ az
 aP
 az
 aB
+=======
+ae
+ae
+am
+aq
+ar
+ae
+au
+aB
+aH
+aP
+az
+bb
+>>>>>>> Updated this old code to fork
 as
 as
 as
@@ -11536,14 +13373,23 @@ cx
 cS
 cT
 cx
+<<<<<<< HEAD
 cF
+=======
+cK
+>>>>>>> Updated this old code to fork
 cs
 dJ
 ea
 ea
 ea
+<<<<<<< HEAD
 eK
 eK
+=======
+eM
+eR
+>>>>>>> Updated this old code to fork
 fg
 fo
 ay
@@ -11568,7 +13414,11 @@ aa
 ZB
 aa
 ch
+<<<<<<< HEAD
 kb
+=======
+kc
+>>>>>>> Updated this old code to fork
 jG
 aa
 aa
@@ -11617,6 +13467,7 @@ aa
 (71,1,1) = {"
 aa
 aa
+<<<<<<< HEAD
 ap
 aq
 ap
@@ -11628,6 +13479,19 @@ az
 aP
 az
 aB
+=======
+ah
+an
+ap
+aa
+aa
+av
+aC
+aI
+aP
+az
+bb
+>>>>>>> Updated this old code to fork
 as
 bk
 as
@@ -11649,7 +13513,11 @@ cs
 cs
 cs
 cx
+<<<<<<< HEAD
 cF
+=======
+cK
+>>>>>>> Updated this old code to fork
 cs
 dK
 ea
@@ -11730,6 +13598,7 @@ aa
 (72,1,1) = {"
 ZB
 aa
+<<<<<<< HEAD
 ap
 aq
 ap
@@ -11744,16 +13613,41 @@ aB
 bh
 aB
 aQ
+=======
+ah
+an
+ap
+aa
+aa
+aw
+aD
+aJ
+aQ
+az
+aU
+bh
+aN
+bm
+>>>>>>> Updated this old code to fork
 br
 bu
 bB
 br
+<<<<<<< HEAD
 aB
 aB
 aB
 aB
 aB
 aB
+=======
+aN
+aN
+aN
+aN
+aN
+ck
+>>>>>>> Updated this old code to fork
 az
 cm
 cs
@@ -11762,7 +13656,11 @@ cs
 cx
 cs
 cx
+<<<<<<< HEAD
 cF
+=======
+cK
+>>>>>>> Updated this old code to fork
 cs
 dL
 ea
@@ -11794,7 +13692,11 @@ gV
 Uz
 aa
 ch
+<<<<<<< HEAD
 kb
+=======
+kc
+>>>>>>> Updated this old code to fork
 jG
 aa
 aa
@@ -11843,8 +13745,13 @@ aa
 (73,1,1) = {"
 ZB
 aa
+<<<<<<< HEAD
 ap
 aq
+=======
+ah
+an
+>>>>>>> Updated this old code to fork
 ap
 aa
 aa
@@ -11866,9 +13773,15 @@ bS
 az
 az
 az
+<<<<<<< HEAD
 aB
 aB
 aB
+=======
+aU
+aN
+aN
+>>>>>>> Updated this old code to fork
 ct
 cF
 ct
@@ -11907,7 +13820,11 @@ gV
 Uz
 ZB
 hc
+<<<<<<< HEAD
 kb
+=======
+kc
+>>>>>>> Updated this old code to fork
 jG
 aa
 kL
@@ -11957,7 +13874,11 @@ aa
 vf
 aa
 aa
+<<<<<<< HEAD
 aq
+=======
+ak
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -12069,8 +13990,13 @@ aa
 (75,1,1) = {"
 vf
 aa
+<<<<<<< HEAD
 ap
 aq
+=======
+ah
+an
+>>>>>>> Updated this old code to fork
 ap
 aa
 aa
@@ -12182,8 +14108,13 @@ aa
 (76,1,1) = {"
 vf
 aa
+<<<<<<< HEAD
 ap
 aq
+=======
+ah
+an
+>>>>>>> Updated this old code to fork
 ap
 aa
 aa
@@ -12295,8 +14226,13 @@ aa
 (77,1,1) = {"
 vf
 aa
+<<<<<<< HEAD
 ap
 aq
+=======
+ah
+ao
+>>>>>>> Updated this old code to fork
 ap
 ZB
 ZB
@@ -12359,7 +14295,11 @@ gW
 hf
 hf
 hf
+<<<<<<< HEAD
 ki
+=======
+kk
+>>>>>>> Updated this old code to fork
 kr
 gW
 gW

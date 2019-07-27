@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 GLOBAL_VAR_INIT(OOC_COLOR, null)//If this is null, use the CSS for OOC. Otherwise, use a custom colour.
 GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
+=======
+>>>>>>> Updated this old code to fork
 /client/verb/ooc(msg as text)
 	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set category = "OOC"
@@ -69,6 +72,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 					else
 						to_chat(C, "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message linkify'>[msg]</span></span>")
 				else
+<<<<<<< HEAD
 					if(GLOB.OOC_COLOR)
 						to_chat(C, "<font color='[GLOB.OOC_COLOR]'><b><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message linkify'>[msg]</span></b></font>")
 					else
@@ -79,6 +83,11 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 					to_chat(C, "<font color='[GLOB.OOC_COLOR]'><b><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message linkify'>[msg]</span></b></font>")
 				else
 					to_chat(C, "<span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message linkify'>[msg]</span></span>")
+=======
+					to_chat(C, "<font color='[GLOB.normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message linkify'>[msg]</span></span></font>")
+			else if(!(key in C.prefs.ignoring))
+				to_chat(C, "<font color='[GLOB.normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message linkify'>[msg]</span></span></font>")
+>>>>>>> Updated this old code to fork
 
 /proc/toggle_ooc(toggle = null)
 	if(toggle != null) //if we're specifically en/disabling ooc
@@ -99,17 +108,30 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	else
 		GLOB.dooc_allowed = !GLOB.dooc_allowed
 
+<<<<<<< HEAD
+=======
+GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
+
+>>>>>>> Updated this old code to fork
 /client/proc/set_ooc(newColor as color)
 	set name = "Set Player OOC Color"
 	set desc = "Modifies player OOC Color"
 	set category = "Fun"
+<<<<<<< HEAD
 	GLOB.OOC_COLOR = sanitize_ooccolor(newColor)
+=======
+	GLOB.normal_ooc_colour = sanitize_ooccolor(newColor)
+>>>>>>> Updated this old code to fork
 
 /client/proc/reset_ooc()
 	set name = "Reset Player OOC Color"
 	set desc = "Returns player OOC Color to default"
 	set category = "Fun"
+<<<<<<< HEAD
 	GLOB.OOC_COLOR = null
+=======
+	GLOB.normal_ooc_colour = OOC_COLOR
+>>>>>>> Updated this old code to fork
 
 /client/verb/colorooc()
 	set name = "Set Your OOC Color"
@@ -269,13 +291,21 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	body += "</BODY></HTML>"
 	usr << browse(body.Join(), "window=playerplaytime[ckey];size=550x615")
 
+<<<<<<< HEAD
 /client/proc/ignore_key(client, displayed_key)
+=======
+/client/proc/ignore_key(client)
+>>>>>>> Updated this old code to fork
 	var/client/C = client
 	if(C.key in prefs.ignoring)
 		prefs.ignoring -= C.key
 	else
 		prefs.ignoring |= C.key
+<<<<<<< HEAD
 	to_chat(src, "You are [(C.key in prefs.ignoring) ? "now" : "no longer"] ignoring [displayed_key] on the OOC channel.")
+=======
+	to_chat(src, "You are [(C.key in prefs.ignoring) ? "now" : "no longer"] ignoring [C.key] on the OOC channel.")
+>>>>>>> Updated this old code to fork
 	prefs.save_preferences()
 
 /client/verb/select_ignore()
@@ -286,6 +316,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 	var/see_ghost_names = isobserver(mob)
 	var/list/choices = list()
+<<<<<<< HEAD
 	var/displayed_choicename = ""
 	for(var/client/C in GLOB.clients)
 		if(C.holder?.fakekey)
@@ -296,6 +327,13 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 			choices["[C.mob]([displayed_choicename])"] = C
 		else
 			choices[displayed_choicename] = C
+=======
+	for(var/client/C in GLOB.clients)
+		if(isobserver(C.mob) && see_ghost_names)
+			choices["[C.mob]([C])"] = C
+		else
+			choices[C] = C
+>>>>>>> Updated this old code to fork
 	choices = sortList(choices)
 	var/selection = input("Please, select a player!", "Ignore", null, null) as null|anything in choices
 	if(!selection || !(selection in choices))
@@ -304,7 +342,11 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	if(selection == src)
 		to_chat(src, "You can't ignore yourself.")
 		return
+<<<<<<< HEAD
 	ignore_key(selection, displayed_choicename)
+=======
+	ignore_key(selection)
+>>>>>>> Updated this old code to fork
 
 /client/proc/show_previous_roundend_report()
 	set name = "Your Last Round"
@@ -358,6 +400,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 		pct += delta
 		winset(src, "mainwindow.split", "splitter=[pct]")
+<<<<<<< HEAD
 
 
 /client/verb/policy()
@@ -380,3 +423,5 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		policytext += "No related rules found."
 
 	usr << browse(policytext.Join(""),"window=policy")
+=======
+>>>>>>> Updated this old code to fork

@@ -28,5 +28,9 @@
 /obj/item/organ/appendix/prepare_eat()
 	var/obj/S = ..()
 	if(inflamed)
+<<<<<<< HEAD
 		S.reagents.add_reagent(/datum/reagent/toxin/bad_food, 5)
+=======
+		S.reagents.add_reagent("bad_food", 5)
+>>>>>>> Updated this old code to fork
 	return S

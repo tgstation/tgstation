@@ -31,7 +31,10 @@ SUBSYSTEM_DEF(air)
 
 	//atmos singletons
 	var/list/gas_reactions = list()
+<<<<<<< HEAD
 	var/list/atmos_gen
+=======
+>>>>>>> Updated this old code to fork
 
 	//Special functions lists
 	var/list/turf/active_super_conductivity = list()
@@ -304,7 +307,11 @@ SUBSYSTEM_DEF(air)
 		var/starting_ats = active_turfs.len
 		sleep(world.tick_lag)
 		var/timer = world.timeofday
+<<<<<<< HEAD
 		log_mapping("There are [starting_ats] active turfs at roundstart caused by a difference of the air between the adjacent turfs. You can see its coordinates using \"Mapping -> Show roundstart AT list\" verb (debug verbs required).")
+=======
+		warning("There are [starting_ats] active turfs at roundstart, this is a mapping error caused by a difference of the air between the adjacent turfs. You can see its coordinates using \"Mapping -> Show roundstart AT list\" verb (debug verbs required)")
+>>>>>>> Updated this old code to fork
 		for(var/turf/T in active_turfs)
 			GLOB.active_turfs_startlist += T
 
@@ -392,6 +399,7 @@ SUBSYSTEM_DEF(air)
 
 	return pipe_init_dirs_cache[type]["[dir]"]
 
+<<<<<<< HEAD
 /datum/controller/subsystem/air/proc/generate_atmos()
 	atmos_gen = list()
 	for(var/T in subtypesof(/datum/atmosphere))
@@ -406,6 +414,8 @@ SUBSYSTEM_DEF(air)
 	var/datum/atmosphere/mix = atmos_gen[gas_string]
 	return mix.gas_string
 
+=======
+>>>>>>> Updated this old code to fork
 #undef SSAIR_PIPENETS
 #undef SSAIR_ATMOSMACHINERY
 #undef SSAIR_ACTIVETURFS

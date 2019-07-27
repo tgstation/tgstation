@@ -25,7 +25,11 @@
 	icon_dead = "ambrosia-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/ambrosia/deus)
+<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/medicine/frogenite = 0.1, /datum/reagent/medicine/sanguiose = 0.1 ,/datum/reagent/drug/space_drugs = 0.15, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05, /datum/reagent/toxin = 0.1)
+=======
+	reagents_add = list("space_drugs" = 0.15, "bicaridine" = 0.1, "kelotane" = 0.1, "vitamin" = 0.04, "nutriment" = 0.05, "toxin" = 0.1)
+>>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/snacks/grown/ambrosia/vulgaris
 	seed = /obj/item/seeds/ambrosia
@@ -42,7 +46,11 @@
 	plantname = "Ambrosia Deus"
 	product = /obj/item/reagent_containers/food/snacks/grown/ambrosia/deus
 	mutatelist = list(/obj/item/seeds/ambrosia/gaia)
+<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/medicine/omnizine = 0.15, /datum/reagent/medicine/synaptizine = 0.15, /datum/reagent/drug/space_drugs = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
+=======
+	reagents_add = list("omnizine" = 0.15, "synaptizine" = 0.15, "space_drugs" = 0.1, "vitamin" = 0.04, "nutriment" = 0.05)
+>>>>>>> Updated this old code to fork
 	rarity = 40
 
 /obj/item/reagent_containers/food/snacks/grown/ambrosia/deus
@@ -62,7 +70,11 @@
 	plantname = "Ambrosia Gaia"
 	product = /obj/item/reagent_containers/food/snacks/grown/ambrosia/gaia
 	mutatelist = list(/obj/item/seeds/ambrosia/deus)
+<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/medicine/earthsblood = 0.05, /datum/reagent/consumable/nutriment = 0.06, /datum/reagent/consumable/nutriment/vitamin = 0.05)
+=======
+	reagents_add = list("earthsblood" = 0.05, "nutriment" = 0.06, "vitamin" = 0.05)
+>>>>>>> Updated this old code to fork
 	rarity = 30 //These are some pretty good plants right here
 	genes = list()
 	weed_rate = 4

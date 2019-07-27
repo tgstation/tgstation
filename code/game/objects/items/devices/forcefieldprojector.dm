@@ -9,7 +9,11 @@
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=250, /datum/material/glass=500)
+=======
+	materials = list(MAT_METAL=250, MAT_GLASS=500)
+>>>>>>> Updated this old code to fork
 	var/max_shield_integrity = 250
 	var/shield_integrity = 250
 	var/max_fields = 3
@@ -36,7 +40,11 @@
 	if(get_dist(T,src) > field_distance_limit)
 		return
 	if(LAZYLEN(current_fields) >= max_fields)
+<<<<<<< HEAD
 		to_chat(user, "<span class='warning'>[src] cannot sustain any more forcefields!</span>")
+=======
+		to_chat(user, "<span class='notice'>[src] cannot sustain any more forcefields!</span>")
+>>>>>>> Updated this old code to fork
 		return
 
 	playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
@@ -52,8 +60,14 @@
 			qdel(F)
 
 /obj/item/forcefield_projector/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	. += "<span class='notice'>It is currently sustaining [LAZYLEN(current_fields)]/[max_fields] fields, and it's [round((shield_integrity/max_shield_integrity)*100)]% charged.</span>"
+=======
+	..()
+	var/percent_charge = round((shield_integrity/max_shield_integrity)*100)
+	to_chat(user, "<span class='notice'>It is currently sustaining [LAZYLEN(current_fields)]/[max_fields] fields, and it's [percent_charge]% charged.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/item/forcefield_projector/Initialize(mapload)
 	. = ..()

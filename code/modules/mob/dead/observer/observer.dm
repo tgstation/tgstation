@@ -13,11 +13,18 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	density = FALSE
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
+<<<<<<< HEAD
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+=======
+>>>>>>> Updated this old code to fork
 	invisibility = INVISIBILITY_OBSERVER
 	hud_type = /datum/hud/ghost
 	movement_type = GROUND | FLYING
 	var/can_reenter_corpse
+<<<<<<< HEAD
+=======
+	var/do_not_resuscitate //determines whether we can switch can_reenter_corpse back off
+>>>>>>> Updated this old code to fork
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
@@ -32,7 +39,10 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/ghost_hud_enabled = 1 //did this ghost disable the on-screen HUD?
 	var/data_huds_on = 0 //Are data HUDs currently enabled?
 	var/health_scan = FALSE //Are health scans currently enabled?
+<<<<<<< HEAD
 	var/gas_scan = FALSE //Are gas scans currently enabled?
+=======
+>>>>>>> Updated this old code to fork
 	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED) //list of data HUDs shown to ghosts.
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
@@ -62,6 +72,10 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	verbs += list(
 		/mob/dead/observer/proc/dead_tele,
 		/mob/dead/observer/proc/open_spawners_menu,
+<<<<<<< HEAD
+=======
+		/mob/dead/observer/proc/view_gas,
+>>>>>>> Updated this old code to fork
 		/mob/dead/observer/proc/tray_view)
 
 	if(icon_state in GLOB.ghost_forms_with_directions_list)
@@ -136,8 +150,11 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	. = ..()
 
 	grant_all_languages()
+<<<<<<< HEAD
 	show_data_huds()
 	data_huds_on = 1
+=======
+>>>>>>> Updated this old code to fork
 
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
 	if(!invisibility || camera.see_ghosts)
@@ -338,7 +355,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	client.change_view(CONFIG_GET(string/default_view))
 	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
 	mind.current.key = key
+<<<<<<< HEAD
 	return TRUE
+=======
+	return 1
+>>>>>>> Updated this old code to fork
 
 /mob/dead/observer/verb/stay_dead()
 	set category = "Ghost"
@@ -346,6 +367,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!client)
 		return
 	if(!can_reenter_corpse)
+<<<<<<< HEAD
 		to_chat(usr, "<span class='warning'>You're already stuck out of your body!</span>")
 		return FALSE
 
@@ -355,6 +377,20 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	can_reenter_corpse = FALSE
 	to_chat(src, "You can no longer be brought back into your body.")
+=======
+		if(do_not_resuscitate)
+			to_chat(src, "You can now re-enter your corpse, and can be cloned.")
+			can_reenter_corpse = TRUE
+			do_not_resuscitate = FALSE
+			return TRUE
+		else
+			to_chat(usr, "<span class='warning'>You're already stuck out of your body!</span>")
+			return FALSE
+
+	can_reenter_corpse = FALSE
+	do_not_resuscitate = TRUE
+	to_chat(src, "You can now no longer be brought back into your body. You can undo this at any time by using the Do Not Resuscitate verb again.")
+>>>>>>> Updated this old code to fork
 	return TRUE
 
 /mob/dead/observer/proc/notify_cloning(var/message, var/sound, var/atom/source, flashwindow = TRUE)
@@ -384,7 +420,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Teleport"
 	set desc= "Teleport to a location"
 	if(!isobserver(usr))
+<<<<<<< HEAD
 		to_chat(usr, "<span class='warning'>Not when you're not dead!</span>")
+=======
+		to_chat(usr, "Not when you're not dead!")
+>>>>>>> Updated this old code to fork
 		return
 	var/list/filtered = list()
 	for(var/V in GLOB.sortedAreas)
@@ -401,12 +441,27 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		L+=T
 
 	if(!L || !L.len)
+<<<<<<< HEAD
 		to_chat(usr, "<span class='warning'>No area available.</span>")
+=======
+		to_chat(usr, "No area available.")
+>>>>>>> Updated this old code to fork
 		return
 
 	usr.forceMove(pick(L))
 	update_parallax_contents()
 
+<<<<<<< HEAD
+=======
+/mob/dead/observer/proc/view_gas()
+	set category = "Ghost"
+	set name = "View Gases"
+	set desc= "View the atmospheric conditions in a location"
+
+	var/turf/loc = get_turf(src)
+	show_air_status_to(loc, usr)
+
+>>>>>>> Updated this old code to fork
 /mob/dead/observer/verb/follow()
 	set category = "Ghost"
 	set name = "Orbit" // "Haunt"
@@ -712,6 +767,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='notice'>Health scan enabled.</span>")
 		health_scan = TRUE
 
+<<<<<<< HEAD
 /mob/dead/observer/verb/toggle_gas_scan()
 	set name = "Toggle Gas Scan"
 	set desc = "Toggles whether you analyze gas contents on click"
@@ -724,6 +780,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='notice'>Gas scan enabled.</span>")
 		gas_scan = TRUE
 
+=======
+>>>>>>> Updated this old code to fork
 /mob/dead/observer/verb/restore_ghost_appearance()
 	set name = "Restore Ghost Character"
 	set desc = "Sets your deadchat name and ghost appearance to your \
@@ -825,16 +883,26 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(isobserver(src))
 		SSpai.recruitWindow(src)
 	else
+<<<<<<< HEAD
 		to_chat(usr, "<span class='warning'>Can't become a pAI candidate while not dead!</span>")
+=======
+		to_chat(usr, "Can't become a pAI candidate while not dead!")
+>>>>>>> Updated this old code to fork
 
 /mob/dead/observer/CtrlShiftClick(mob/user)
 	if(isobserver(user) && check_rights(R_SPAWN))
 		change_mob_type( /mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
 
 /mob/dead/observer/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(!invisibility)
 		. += "It seems extremely obvious."
+=======
+	..()
+	if(!invisibility)
+		to_chat(user, "It seems extremely obvious.")
+>>>>>>> Updated this old code to fork
 
 /mob/dead/observer/proc/set_invisibility(value)
 	invisibility = value

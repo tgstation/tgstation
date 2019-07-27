@@ -127,7 +127,13 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "z" = (
+<<<<<<< HEAD
 /obj/structure/chair/comfy/brown,
+=======
+/obj/structure/chair/comfy/brown{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "A" = (

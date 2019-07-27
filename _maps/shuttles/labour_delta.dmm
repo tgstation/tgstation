@@ -16,7 +16,11 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "d" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -29,7 +33,13 @@
 /area/shuttle/labor)
 "f" = (
 /obj/structure/grille,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/labor)
@@ -72,7 +82,13 @@
 	name = "Labor Shuttle Airlock";
 	req_access_txt = "2"
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
+=======
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/shuttle/labor)
 "l" = (
@@ -83,7 +99,13 @@
 	input_dir = 2;
 	output_dir = 1
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
+=======
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/shuttle/labor)
 "n" = (

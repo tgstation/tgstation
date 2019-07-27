@@ -9,7 +9,13 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/listeningstation)
 "ad" = (
+<<<<<<< HEAD
 /obj/machinery/computer/message_monitor,
+=======
+/obj/machinery/computer/message_monitor{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/airalarm/syndicate{
 	pixel_y = 24
 	},
@@ -21,6 +27,10 @@
 "ae" = (
 /obj/structure/table/reinforced,
 /obj/machinery/firealarm{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -58,7 +68,11 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/listeningstation)
 "ai" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -120,7 +134,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/listeningstation)
 "an" = (
@@ -131,7 +148,10 @@
 	id_tag = "syndie_listeningpost_external";
 	req_access_txt = "150"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "ao" = (
@@ -140,7 +160,10 @@
 	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "ap" = (
@@ -151,7 +174,10 @@
 	id_tag = "syndie_listeningpost_external";
 	req_access_txt = "150"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "aq" = (
@@ -286,7 +312,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/listeningstation)
 "ay" = (
@@ -513,7 +542,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/listeningstation)
 "aN" = (
@@ -545,6 +577,12 @@
 	amount = 10
 	},
 /obj/item/stack/rods/ten,
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/box/lights/bulbs,
@@ -552,7 +590,10 @@
 	amount = 30
 	},
 /obj/item/stock_parts/cell/high/plus,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "aP" = (
@@ -609,6 +650,10 @@
 "aT" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	piping_layer = 3;
 	pixel_x = 5;
 	pixel_y = 5
@@ -642,7 +687,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/listeningstation)
 "aV" = (
@@ -661,7 +709,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/listeningstation)
 "aW" = (
@@ -669,6 +720,10 @@
 	dir = 1
 	},
 /obj/machinery/firealarm{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -686,7 +741,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/listeningstation)
 "aX" = (
@@ -706,7 +764,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/listeningstation)
 "aY" = (
@@ -795,7 +856,10 @@
 "bd" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/listeningstation)
 "be" = (
@@ -881,19 +945,33 @@
 /obj/machinery/syndicatebomb/self_destruct{
 	anchored = 1
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'DANGER: SELF DESTRUCT DEVICE'.";
+	name = "DANGER: SELF DESTRUCT DEVICE";
+	pixel_x = 32
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
 	req_access_txt = "150"
 	},
+<<<<<<< HEAD
 /obj/structure/sign/warning/explosives/alt{
 	pixel_x = 32
 	},
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/circuit/red,
 /area/ruin/space/has_grav/listeningstation)
 "bm" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "bn" = (
@@ -930,6 +1008,12 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/listeningstation)
 "bq" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/smes{
 	charge = 5e+006
 	},
@@ -939,10 +1023,19 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "br" = (
+=======
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/listeningstation)
+"br" = (
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/power/apc/syndicate{
 	dir = 4;
@@ -950,7 +1043,10 @@
 	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "bs" = (
@@ -1034,7 +1130,12 @@
 "bx" = (
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms/space{
 	assignedrole = "Space Syndicate";
+<<<<<<< HEAD
 	dir = 8
+=======
+	dir = 8;
+	flavour_text = "<span class='big bold'>You are a syndicate agent,</span><b> assigned to a small listening post station situated near your hated enemy's top secret research facility: Space Station 13. <b>Monitor enemy activity as best you can, and try to keep a low profile. <font size=6>DON'T</font> abandon the base without good cause.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
+>>>>>>> Updated this old code to fork
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8;
@@ -1048,11 +1149,20 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/reagent_dispensers/fueltank,
 /obj/item/clothing/head/welding,
 /obj/item/weldingtool/largetank,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "bz" = (
@@ -1089,6 +1199,10 @@
 	},
 /area/ruin/space/has_grav/listeningstation)
 "bC" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable,
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
@@ -1096,7 +1210,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/wrench,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "bD" = (
@@ -1139,7 +1256,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/listeningstation)
 "bJ" = (

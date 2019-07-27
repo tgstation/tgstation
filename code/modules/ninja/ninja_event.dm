@@ -69,7 +69,11 @@ Contents:
 	Mind.add_antag_datum(ninjadatum)
 
 	if(Ninja.mind != Mind)			//something has gone wrong!
+<<<<<<< HEAD
 		CRASH("Ninja created with incorrect mind")
+=======
+		throw EXCEPTION("Ninja created with incorrect mind")
+>>>>>>> Updated this old code to fork
 
 	spawned_mobs += Ninja
 	message_admins("[ADMIN_LOOKUPFLW(Ninja)] has been made into a ninja by an event.")
@@ -86,4 +90,8 @@ Contents:
 	A.real_name = "[pick(GLOB.ninja_titles)] [pick(GLOB.ninja_names)]"
 	A.copy_to(new_ninja)
 	new_ninja.dna.update_dna_identity()
+<<<<<<< HEAD
 	return new_ninja
+=======
+	return new_ninja
+>>>>>>> Updated this old code to fork

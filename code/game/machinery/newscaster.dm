@@ -174,7 +174,11 @@ GLOBAL_LIST_EMPTY(allCasters)
 	name = "newscaster frame"
 	desc = "Used to build newscasters, just secure to the wall."
 	icon_state = "newscaster"
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=14000, /datum/material/glass=8000)
+=======
+	materials = list(MAT_METAL=14000, MAT_GLASS=8000)
+>>>>>>> Updated this old code to fork
 	result_path = /obj/machinery/newscaster
 
 
@@ -791,9 +795,12 @@ GLOBAL_LIST_EMPTY(allCasters)
 		if(isAI(user))
 			var/mob/living/silicon/ai/R = user
 			targetcam = R.aicamera
+<<<<<<< HEAD
 		else if(ispAI(user))
 			var/mob/living/silicon/pai/R = user
 			targetcam = R.aicamera
+=======
+>>>>>>> Updated this old code to fork
 		else if(iscyborg(user))
 			var/mob/living/silicon/robot/R = user
 			if(R.connected_ai)
@@ -830,7 +837,11 @@ GLOBAL_LIST_EMPTY(allCasters)
 		var/mob/living/silicon/ai_user = user
 		scanned_user = "[ai_user.name] ([ai_user.job])"
 	else
+<<<<<<< HEAD
 		CRASH("Invalid user for this proc")
+=======
+		throw EXCEPTION("Invalid user for this proc")
+>>>>>>> Updated this old code to fork
 		return
 
 /obj/machinery/newscaster/proc/print_paper()
@@ -859,7 +870,11 @@ GLOBAL_LIST_EMPTY(allCasters)
 		alert = TRUE
 		update_icon()
 		addtimer(CALLBACK(src,.proc/remove_alert),alert_delay,TIMER_UNIQUE|TIMER_OVERRIDE)
+<<<<<<< HEAD
 		playsound(loc, 'sound/machines/twobeep_high.ogg', 75, 1)
+=======
+		playsound(loc, 'sound/machines/twobeep.ogg', 75, 1)
+>>>>>>> Updated this old code to fork
 	else
 		say("Attention! Wanted issue distributed!")
 		playsound(loc, 'sound/machines/warning-buzzer.ogg', 75, 1)

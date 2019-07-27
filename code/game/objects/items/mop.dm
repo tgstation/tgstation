@@ -25,7 +25,11 @@
 
 
 /obj/item/mop/proc/clean(turf/A)
+<<<<<<< HEAD
 	if(reagents.has_reagent(/datum/reagent/water, 1) || reagents.has_reagent(/datum/reagent/water/holywater, 1) || reagents.has_reagent(/datum/reagent/consumable/ethanol/vodka, 1) || reagents.has_reagent(/datum/reagent/space_cleaner, 1))
+=======
+	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1) || reagents.has_reagent("vodka", 1) || reagents.has_reagent("cleaner", 1))
+>>>>>>> Updated this old code to fork
 		SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
 		for(var/obj/effect/O in A)
 			if(is_cleanable(O))
@@ -89,7 +93,11 @@
 	mopspeed = 8
 	var/refill_enabled = TRUE //Self-refill toggle for when a janitor decides to mop with something other than water.
 	var/refill_rate = 1 //Rate per process() tick mop refills itself
+<<<<<<< HEAD
 	var/refill_reagent = /datum/reagent/water //Determins what reagent to use for refilling, just in case someone wanted to make a HOLY MOP OF PURGING
+=======
+	var/refill_reagent = "water" //Determins what reagent to use for refilling, just in case someone wanted to make a HOLY MOP OF PURGING
+>>>>>>> Updated this old code to fork
 
 /obj/item/mop/advanced/New()
 	..()
@@ -110,8 +118,13 @@
 		reagents.add_reagent(refill_reagent, refill_rate)
 
 /obj/item/mop/advanced/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	. += "<span class='notice'>The condenser switch is set to <b>[refill_enabled ? "ON" : "OFF"]</b>.</span>"
+=======
+	..()
+	to_chat(user, "<span class='notice'>The condenser switch is set to <b>[refill_enabled ? "ON" : "OFF"]</b>.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/item/mop/advanced/Destroy()
 	if(refill_enabled)
@@ -119,4 +132,8 @@
 	return ..()
 
 /obj/item/mop/advanced/cyborg
+<<<<<<< HEAD
 	insertable = FALSE
+=======
+	insertable = FALSE
+>>>>>>> Updated this old code to fork

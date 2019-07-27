@@ -224,6 +224,12 @@
 			special_role = TRAITOR_AGENT_ROLE
 			syndicate = TRUE
 			forge_single_objective()
+<<<<<<< HEAD
+=======
+	else
+		..() // Give them standard objectives.
+	return
+>>>>>>> Updated this old code to fork
 
 /datum/antagonist/traitor/internal_affairs/forge_traitor_objectives()
 	forge_iaa_objectives()

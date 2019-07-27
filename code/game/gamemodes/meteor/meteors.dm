@@ -165,9 +165,15 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	return
 
 /obj/effect/meteor/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(!(flags_1 & ADMIN_SPAWNED_1) && isliving(user))
 		SSmedals.UnlockMedal(MEDAL_METEOR, user.client)
+=======
+	if(!(flags_1 & ADMIN_SPAWNED_1) && isliving(user))
+		SSmedals.UnlockMedal(MEDAL_METEOR, user.client)
+	..()
+>>>>>>> Updated this old code to fork
 
 /obj/effect/meteor/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_MINING)

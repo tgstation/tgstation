@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /datum/antagonist/obsessed
 	name = "Obsessed"
 	show_in_antagpanel = TRUE
@@ -9,6 +10,19 @@
 	var/datum/brain_trauma/special/obsessed/trauma
 
 /datum/antagonist/obsessed/admin_add(datum/mind/new_owner,mob/admin)
+=======
+/datum/antagonist/creep
+	name = "Creep"
+	show_in_antagpanel = TRUE
+	antagpanel_category = "Other"
+	job_rank = ROLE_CREEP
+	show_name_in_check_antagonists = TRUE
+	roundend_category = "creeps"
+	silent = TRUE //not actually silent, because greet will be called by the trauma anyway.
+	var/datum/brain_trauma/special/creep/trauma
+
+/datum/antagonist/creep/admin_add(datum/mind/new_owner,mob/admin)
+>>>>>>> Updated this old code to fork
 	var/mob/living/carbon/C = new_owner.current
 	if(!istype(C))
 		to_chat(admin, "[roundend_category] come from a brain trauma, so they need to at least be a carbon!")
@@ -19,6 +33,7 @@
 	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] into [name].")
 	log_admin("[key_name(admin)] made [key_name(new_owner)] into [name].")
 	//PRESTO FUCKIN MAJESTO
+<<<<<<< HEAD
 	C.gain_trauma(/datum/brain_trauma/special/obsessed)//ZAP
 
 /datum/antagonist/obsessed/greet()
@@ -31,10 +46,24 @@
 	owner.announce_objectives()
 
 /datum/antagonist/obsessed/Destroy()
+=======
+	C.gain_trauma(/datum/brain_trauma/special/creep)//ZAP
+
+/datum/antagonist/creep/greet()
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/creepalert.ogg', 100, FALSE, pressure_affected = FALSE)
+	to_chat(owner, "<span class='boldannounce'>You are the Creep!</span>")
+	to_chat(owner, "<B>They would call it an obsession. They would call you crazy, because they don't understand your unrequited love.<br>All you know is that you love [trauma.obsession]. And you. will. show them.</B>")
+	to_chat(owner, "<B>I will surely go insane if I don't spend enough time around [trauma.obsession], but when i'm near them too long it gets too difficult to speak properly, making me look like a CREEP!</B>")
+	to_chat(owner, "<span class='boldannounce'>The gods would like to remind you that this role, as with all other antags, does not allow you to break ANY server rules, especially Rule 8 (These rules being listed from the \"Rules\" button at the top right of your mind's screen). Feel free to murder and pillage just like any other antag, though.</span>")
+	owner.announce_objectives()
+
+/datum/antagonist/creep/Destroy()
+>>>>>>> Updated this old code to fork
 	if(trauma)
 		qdel(trauma)
 	. = ..()
 
+<<<<<<< HEAD
 /datum/antagonist/obsessed/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	update_obsession_icons_added(M)
@@ -46,6 +75,19 @@
 /datum/antagonist/obsessed/proc/forge_objectives(var/datum/mind/obsessionmind)
 	var/list/objectives_left = list("spendtime", "polaroid", "hug")
 	var/datum/objective/assassinate/obsessed/kill = new
+=======
+/datum/antagonist/creep/apply_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	update_creep_icons_added(M)
+
+/datum/antagonist/creep/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	update_creep_icons_removed(M)
+
+/datum/antagonist/creep/proc/forge_objectives(var/datum/mind/obsessionmind)
+	var/list/objectives_left = list("spendtime", "polaroid", "hug")
+	var/datum/objective/assassinate/creep/kill = new
+>>>>>>> Updated this old code to fork
 	kill.owner = owner
 	kill.target = obsessionmind
 	var/datum/quirk/family_heirloom/family_heirloom
@@ -95,10 +137,17 @@
 	for(var/datum/objective/O in objectives)
 		O.update_explanation_text()
 
+<<<<<<< HEAD
 /datum/antagonist/obsessed/roundend_report_header()
 	return 	"<span class='header'>Someone became obsessed!</span><br>"
 
 /datum/antagonist/obsessed/roundend_report()
+=======
+/datum/antagonist/creep/roundend_report_header()
+	return 	"<span class='header'>Someone became a creep!</span><br>"
+
+/datum/antagonist/creep/roundend_report()
+>>>>>>> Updated this old code to fork
 	var/list/report = list()
 
 	if(!owner)
@@ -117,7 +166,11 @@
 		if(trauma.total_time_creeping > 0)
 			report += "<span class='greentext'>The [name] spent a total of [DisplayTimeText(trauma.total_time_creeping)] being near [trauma.obsession]!</span>"
 		else
+<<<<<<< HEAD
 			report += "<span class='redtext'>The [name] did not go near their obsession the entire round! That's extremely impressive!</span>"
+=======
+			report += "<span class='redtext'>The [name] did not go near their obsession the entire round! That's extremely impressive, but you are a shit [name]!</span>"
+>>>>>>> Updated this old code to fork
 	else
 		report += "<span class='redtext'>The [name] had no trauma attached to their antagonist ways! Either it bugged out or an admin incorrectly gave this good samaritan antag and it broke! You might as well show yourself!!</span>"
 
@@ -132,14 +185,24 @@
 ///CREEPY objectives (few chosen per obsession)///
 //////////////////////////////////////////////////
 
+<<<<<<< HEAD
 /datum/objective/assassinate/obsessed //just a creepy version of assassinate
 
 /datum/objective/assassinate/obsessed/update_explanation_text()
+=======
+/datum/objective/assassinate/creep //just a creepy version of assassinate
+
+/datum/objective/assassinate/creep/update_explanation_text()
+>>>>>>> Updated this old code to fork
 	..()
 	if(target && target.current)
 		explanation_text = "Murder [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
 	else
+<<<<<<< HEAD
 		message_admins("WARNING! [ADMIN_LOOKUPFLW(owner)] obsessed objectives forged without an obsession!")
+=======
+		message_admins("WARNING! [ADMIN_LOOKUPFLW(owner)] creep objectives forged without an obsession!")
+>>>>>>> Updated this old code to fork
 		explanation_text = "Free Objective"
 
 /datum/objective/assassinate/jealous //assassinate, but it changes the target to someone else in the previous target's department. cool, right?
@@ -176,8 +239,13 @@
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(!H.mind)
 			continue
+<<<<<<< HEAD
 		if(!SSjob.GetJob(H.mind.assigned_role) || H == oldmind.current || H.mind.has_antag_datum(/datum/antagonist/obsessed))
 			continue //the jealousy target has to have a job, and not be the obsession or obsessed.
+=======
+		if(!SSjob.GetJob(H.mind.assigned_role) || H == oldmind.current || H.mind.has_antag_datum(/datum/antagonist/creep))
+			continue //the jealousy target has to have a job, and not be the obsession or creep.
+>>>>>>> Updated this old code to fork
 		all_coworkers += H.mind
 		//this won't be called often thankfully.
 		if(H.mind.assigned_role in GLOB.security_positions)
@@ -202,16 +270,26 @@
 		target = pick(all_coworkers)
 	return oldmind
 
+<<<<<<< HEAD
 /datum/objective/spendtime //spend some time around someone, handled by the obsessed trauma since that ticks
+=======
+/datum/objective/spendtime //spend some time around someone, handled by the creep trauma since that ticks
+>>>>>>> Updated this old code to fork
 	name = "spendtime"
 	var/timer = 1800 //5 minutes
 
 /datum/objective/spendtime/update_explanation_text()
 	if(timer == initial(timer))//just so admins can mess with it
 		timer += pick(-600, 0)
+<<<<<<< HEAD
 	var/datum/antagonist/obsessed/creeper = owner.has_antag_datum(/datum/antagonist/obsessed)
 	if(target && target.current && creeper)
 		creeper.trauma.attachedobsessedobj = src
+=======
+	var/datum/antagonist/creep/creeper = owner.has_antag_datum(/datum/antagonist/creep)
+	if(target && target.current && creeper)
+		creeper.trauma.attachedcreepobj = src
+>>>>>>> Updated this old code to fork
 		explanation_text = "Spend [DisplayTimeText(timer)] around [target.name] while they're alive."
 	else
 		explanation_text = "Free Objective"
@@ -228,14 +306,22 @@
 	..()
 	if(!hugs_needed)//just so admins can mess with it
 		hugs_needed = rand(4,6)
+<<<<<<< HEAD
 	var/datum/antagonist/obsessed/creeper = owner.has_antag_datum(/datum/antagonist/obsessed)
+=======
+	var/datum/antagonist/creep/creeper = owner.has_antag_datum(/datum/antagonist/creep)
+>>>>>>> Updated this old code to fork
 	if(target && target.current && creeper)
 		explanation_text = "Hug [target.name] [hugs_needed] times while they're alive."
 	else
 		explanation_text = "Free Objective"
 
 /datum/objective/hug/check_completion()
+<<<<<<< HEAD
 	var/datum/antagonist/obsessed/creeper = owner.has_antag_datum(/datum/antagonist/obsessed)
+=======
+	var/datum/antagonist/creep/creeper = owner.has_antag_datum(/datum/antagonist/creep)
+>>>>>>> Updated this old code to fork
 	if(!creeper || !creeper.trauma || !hugs_needed)
 		return TRUE//free objective
 	return creeper.trauma.obsession_hug_count >= hugs_needed
@@ -274,6 +360,7 @@
 	else
 		explanation_text = "Free Objective"
 
+<<<<<<< HEAD
 /datum/antagonist/obsessed/proc/update_obsession_icons_added(var/mob/living/carbon/human/obsessed)
 	var/datum/atom_hud/antag/creephud = GLOB.huds[ANTAG_HUD_OBSESSED]
 	creephud.join_hud(obsessed)
@@ -283,3 +370,14 @@
 	var/datum/atom_hud/antag/creephud = GLOB.huds[ANTAG_HUD_OBSESSED]
 	creephud.leave_hud(obsessed)
 	set_antag_hud(obsessed, null)
+=======
+/datum/antagonist/creep/proc/update_creep_icons_added(var/mob/living/carbon/human/creep)
+	var/datum/atom_hud/antag/creephud = GLOB.huds[ANTAG_HUD_CREEP]
+	creephud.join_hud(creep)
+	set_antag_hud(creep, "creep")
+
+/datum/antagonist/creep/proc/update_creep_icons_removed(var/mob/living/carbon/human/creep)
+	var/datum/atom_hud/antag/creephud = GLOB.huds[ANTAG_HUD_CREEP]
+	creephud.leave_hud(creep)
+	set_antag_hud(creep, null)
+>>>>>>> Updated this old code to fork

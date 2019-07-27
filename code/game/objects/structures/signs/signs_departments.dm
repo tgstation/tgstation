@@ -30,11 +30,14 @@
 	desc = "A sign labelling an area where evacuation procedures take place."
 	icon_state = "evac"
 
+<<<<<<< HEAD
 /obj/structure/sign/departments/drop
 	name = "\improper DROP PODS"
 	desc = "A sign labelling an area where drop pod loading procedures take place."
 	icon_state = "drop"
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/structure/sign/departments/custodian
 	name = "\improper CUSTODIAN"
 	desc = "A sign labelling an area where the custodian works."

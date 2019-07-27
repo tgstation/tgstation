@@ -69,6 +69,7 @@
 	open_sound = 'sound/machines/click.ogg'
 	material_drop = /obj/item/stack/sheet/plasteel
 #undef SNAKE_SPAM_TICKS
+<<<<<<< HEAD
 
 /obj/structure/closet/cardboard/relaymove(mob/living/user, direction)
 	if(!istype(user) || opened || move_delay || user.incapacitated() || !isturf(loc) || !has_gravity(loc))
@@ -80,3 +81,5 @@
 		addtimer(CALLBACK(src, .proc/ResetMoveDelay), CONFIG_GET(number/movedelay/walk_delay) * move_speed_multiplier)
 	else
 		move_delay = FALSE
+=======
+>>>>>>> Updated this old code to fork

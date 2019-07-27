@@ -3,7 +3,11 @@
 	desc = "Tools for tools."
 	icon_state = "tool"
 	icon_deny = "tool-deny"
+<<<<<<< HEAD
 	products = list(/obj/item/stack/cable_coil = 10,
+=======
+	products = list(/obj/item/stack/cable_coil/random = 10,
+>>>>>>> Updated this old code to fork
 		            /obj/item/crowbar = 5,
 		            /obj/item/weldingtool = 3,
 		            /obj/item/wirecutters = 5,
@@ -24,4 +28,8 @@
 	resistance_flags = FIRE_PROOF
 	default_price = 20
 	extra_price = 80
+<<<<<<< HEAD
 	payment_department = ACCOUNT_ENG
+=======
+	payment_department = ACCOUNT_ENG
+>>>>>>> Updated this old code to fork

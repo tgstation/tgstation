@@ -20,14 +20,23 @@
 	//Sorting Variables
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
+<<<<<<< HEAD
 	var/maxFine = 1000
+=======
+>>>>>>> Updated this old code to fork
 
 	light_color = LIGHT_COLOR_RED
 
 /obj/machinery/computer/secure_data/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(scan)
 		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
+=======
+	..()
+	if(scan)
+		to_chat(user, "<span class='notice'>Alt-click to eject the ID card.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/computer/secure_data/syndie
 	icon_keyboard = "syndie_key"
@@ -191,7 +200,11 @@
 						dat += {"<table><tr><td><table>
 						<tr><td>Name:</td><td><A href='?src=[REF(src)];choice=Edit Field;field=name'>&nbsp;[active1.fields["name"]]&nbsp;</A></td></tr>
 						<tr><td>ID:</td><td><A href='?src=[REF(src)];choice=Edit Field;field=id'>&nbsp;[active1.fields["id"]]&nbsp;</A></td></tr>
+<<<<<<< HEAD
 						<tr><td>Gender:</td><td><A href='?src=[REF(src)];choice=Edit Field;field=gender'>&nbsp;[active1.fields["gender"]]&nbsp;</A></td></tr>
+=======
+						<tr><td>Sex:</td><td><A href='?src=[REF(src)];choice=Edit Field;field=sex'>&nbsp;[active1.fields["sex"]]&nbsp;</A></td></tr>
+>>>>>>> Updated this old code to fork
 						<tr><td>Age:</td><td><A href='?src=[REF(src)];choice=Edit Field;field=age'>&nbsp;[active1.fields["age"]]&nbsp;</A></td></tr>"}
 						dat += "<tr><td>Species:</td><td><A href ='?src=[REF(src)];choice=Edit Field;field=species'>&nbsp;[active1.fields["species"]]&nbsp;</A></td></tr>"
 						dat += {"<tr><td>Rank:</td><td><A href='?src=[REF(src)];choice=Edit Field;field=rank'>&nbsp;[active1.fields["rank"]]&nbsp;</A></td></tr>
@@ -211,6 +224,7 @@
 					if((istype(active2, /datum/data/record) && GLOB.data_core.security.Find(active2)))
 						dat += "<font size='4'><b>Security Data</b></font>"
 						dat += "<br>Criminal Status: <A href='?src=[REF(src)];choice=Edit Field;field=criminal'>[active2.fields["criminal"]]</A>"
+<<<<<<< HEAD
 						dat += "<br><br>Citations: <A href='?src=[REF(src)];choice=Edit Field;field=citation_add'>Add New</A>"
 
 						dat +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
@@ -237,6 +251,8 @@
 							</tr>"}
 						dat += "</table>"
 
+=======
+>>>>>>> Updated this old code to fork
 						dat += "<br><br>Minor Crimes: <A href='?src=[REF(src)];choice=Edit Field;field=mi_crim_add'>Add New</A>"
 
 
@@ -290,7 +306,11 @@
 					else
 						dat += "Security Record Lost!<br>"
 						dat += "<A href='?src=[REF(src)];choice=New Record (Security)'>New Security Record</A><br><br>"
+<<<<<<< HEAD
 					dat += "<A href='?src=[REF(src)];choice=Delete Record (ALL)'>Delete Record (ALL)</A><br><A href='?src=[REF(src)];choice=Print Record'>Print Record</A><BR><A href='?src=[REF(src)];choice=Print Poster'>Print Wanted Poster</A><BR><A href='?src=[REF(src)];choice=Print Missing'>Print Missing Persons Poster</A><BR><A href='?src=[REF(src)];choice=Return'>Back</A><BR><BR>"
+=======
+					dat += "<A href='?src=[REF(src)];choice=Delete Record (ALL)'>Delete Record (ALL)</A><br><A href='?src=[REF(src)];choice=Print Record'>Print Record</A><BR><A href='?src=[REF(src)];choice=Print Poster'>Print Wanted Poster</A><BR><A href='?src=[REF(src)];choice=Return'>Back</A><BR><BR>"
+>>>>>>> Updated this old code to fork
 					dat += "<A href='?src=[REF(src)];choice=Log Out'>{Log Out}</A>"
 				else
 		else
@@ -383,6 +403,7 @@ What a mess.*/
 							active2 = E
 					screen = 3
 
+<<<<<<< HEAD
 			if("Pay")
 				for(var/datum/data/crime/p in active2.fields["citation"])
 					if(p.dataId == text2num(href_list["cdataid"]))
@@ -402,6 +423,8 @@ What a mess.*/
 								playsound(src, "terminal_type", 25, 0)
 						else
 							to_chat(usr, "<span class='warning'>Fines can only be paid with holochips</span>")
+=======
+>>>>>>> Updated this old code to fork
 
 			if("Print Record")
 				if(!( printing ))
@@ -412,7 +435,11 @@ What a mess.*/
 					var/obj/item/paper/P = new /obj/item/paper( loc )
 					P.info = "<CENTER><B>Security Record - (SR-[GLOB.data_core.securityPrintCount])</B></CENTER><BR>"
 					if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))
+<<<<<<< HEAD
 						P.info += text("Name: [] ID: []<BR>\nGender: []<BR>\nAge: []<BR>", active1.fields["name"], active1.fields["id"], active1.fields["gender"], active1.fields["age"])
+=======
+						P.info += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>", active1.fields["name"], active1.fields["id"], active1.fields["sex"], active1.fields["age"])
+>>>>>>> Updated this old code to fork
 						P.info += "\nSpecies: [active1.fields["species"]]<BR>"
 						P.info += text("\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", active1.fields["fingerprint"], active1.fields["p_stat"], active1.fields["m_stat"])
 					else
@@ -463,7 +490,10 @@ What a mess.*/
 						P.info += "<B>Security Record Lost!</B><BR>"
 						P.name = text("SR-[] '[]'", GLOB.data_core.securityPrintCount, "Record Lost")
 					P.info += "</TT>"
+<<<<<<< HEAD
 					P.update_icon()
+=======
+>>>>>>> Updated this old code to fork
 					printing = null
 			if("Print Poster")
 				if(!( printing ))
@@ -485,8 +515,11 @@ What a mess.*/
 								default_description += "\n[c.crimeName]\n"
 								default_description += "[c.crimeDetails]\n"
 
+<<<<<<< HEAD
 						var/headerText = stripped_input(usr, "Please enter Poster Heading (Max 7 Chars):", "Print Wanted Poster", "WANTED", 8)
 
+=======
+>>>>>>> Updated this old code to fork
 						var/info = stripped_multiline_input(usr, "Please input a description for the poster:", "Print Wanted Poster", default_description, null)
 						if(info)
 							playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
@@ -494,6 +527,7 @@ What a mess.*/
 							sleep(30)
 							if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))//make sure the record still exists.
 								var/obj/item/photo/photo = active1.fields["photo_front"]
+<<<<<<< HEAD
 								new /obj/item/poster/wanted(loc, photo.picture.picture_image, wanted_name, info, headerText)
 							printing = 0
 			if("Print Missing")
@@ -512,6 +546,9 @@ What a mess.*/
 							if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))//make sure the record still exists.
 								var/obj/item/photo/photo = active1.fields["photo_front"]
 								new /obj/item/poster/wanted/missing(loc, photo.picture.picture_image, missing_name, info, headerText)
+=======
+								new /obj/item/poster/wanted(loc, photo.picture.picture_image, wanted_name, info)
+>>>>>>> Updated this old code to fork
 							printing = 0
 
 //RECORD DELETE
@@ -576,7 +613,11 @@ What a mess.*/
 				G.fields["name"] = "New Record"
 				G.fields["id"] = "[num2hex(rand(1, 1.6777215E7), 6)]"
 				G.fields["rank"] = "Unassigned"
+<<<<<<< HEAD
 				G.fields["gender"] = "Male"
+=======
+				G.fields["sex"] = "Male"
+>>>>>>> Updated this old code to fork
 				G.fields["age"] = "Unknown"
 				G.fields["species"] = "Human"
 				G.fields["photo_front"] = new /icon()
@@ -648,6 +689,7 @@ What a mess.*/
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							active1.fields["fingerprint"] = t1
+<<<<<<< HEAD
 					if("gender")
 						if(istype(active1, /datum/data/record))
 							if(active1.fields["gender"] == "Male")
@@ -656,6 +698,14 @@ What a mess.*/
 								active1.fields["gender"] = "Other"
 							else
 								active1.fields["gender"] = "Male"
+=======
+					if("sex")
+						if(istype(active1, /datum/data/record))
+							if(active1.fields["sex"] == "Male")
+								active1.fields["sex"] = "Female"
+							else
+								active1.fields["sex"] = "Male"
+>>>>>>> Updated this old code to fork
 					if("age")
 						if(istype(active1, /datum/data/record))
 							var/t1 = input("Please input age:", "Secure. records", active1.fields["age"], null) as num
@@ -742,6 +792,7 @@ What a mess.*/
 								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
 									return
 								GLOB.data_core.removeMajorCrime(active1.fields["id"], href_list["cdataid"])
+<<<<<<< HEAD
 					if("citation_add")
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input citation crime:", "Secure. records", "", null)
@@ -773,6 +824,8 @@ What a mess.*/
 								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
 									return
 								GLOB.data_core.removeCitation(active1.fields["id"], href_list["cdataid"])
+=======
+>>>>>>> Updated this old code to fork
 					if("notes")
 						if(istype(active2, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please summarize notes:", "Secure. records", active2.fields["notes"], null)
@@ -864,14 +917,28 @@ What a mess.*/
 		P = user.get_active_held_item()
 	return P
 
+<<<<<<< HEAD
 /obj/machinery/computer/secure_data/proc/print_photo(icon/temp, person_name)
+=======
+/obj/machinery/computer/secure_data/proc/print_photo(icon/temp, name)
+>>>>>>> Updated this old code to fork
 	if (printing)
 		return
 	printing = TRUE
 	sleep(20)
 	var/obj/item/photo/P = new/obj/item/photo(drop_location())
+<<<<<<< HEAD
 	var/datum/picture/toEmbed = new(name = person_name, desc = "The photo on file for [person_name].", image = temp)
 	P.set_picture(toEmbed, TRUE, TRUE)
+=======
+	var/icon/small_img = icon(temp)
+	var/icon/ic = icon('icons/obj/items_and_weapons.dmi',"photo")
+	small_img.Scale(8, 8)
+	ic.Blend(small_img,ICON_OVERLAY, 13, 13)
+	P.icon = ic
+	P.picture.picture_image = temp
+	P.desc = "The photo on file for [name]."
+>>>>>>> Updated this old code to fork
 	P.pixel_x = rand(-10, 10)
 	P.pixel_y = rand(-10, 10)
 	printing = FALSE
@@ -891,7 +958,11 @@ What a mess.*/
 					else
 						R.fields["name"] = "[pick(pick(GLOB.first_names_male), pick(GLOB.first_names_female))] [pick(GLOB.last_names)]"
 				if(2)
+<<<<<<< HEAD
 					R.fields["gender"] = pick("Male", "Female", "Other")
+=======
+					R.fields["sex"] = pick("Male", "Female")
+>>>>>>> Updated this old code to fork
 				if(3)
 					R.fields["age"] = rand(5, 85)
 				if(4)
@@ -915,7 +986,11 @@ What a mess.*/
 /obj/machinery/computer/secure_data/proc/canUseSecurityRecordsConsole(mob/user, message1 = 0, record1, record2)
 	if(user)
 		if(authenticated)
+<<<<<<< HEAD
 			if(user.canUseTopic(src, BE_CLOSE))
+=======
+			if(user.canUseTopic(src))
+>>>>>>> Updated this old code to fork
 				if(!trim(message1))
 					return 0
 				if(!record1 || record1 == active1)
@@ -924,7 +999,11 @@ What a mess.*/
 	return 0
 
 /obj/machinery/computer/secure_data/AltClick(mob/user)
+<<<<<<< HEAD
 	if(user.canUseTopic(src, !issilicon(user)))
+=======
+	if(user.canUseTopic(src))
+>>>>>>> Updated this old code to fork
 		eject_id(user)
 
 /obj/machinery/computer/secure_data/proc/eject_id(mob/user)

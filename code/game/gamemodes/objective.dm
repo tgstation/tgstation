@@ -51,8 +51,11 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/proc/considered_escaped(datum/mind/M)
 	if(!considered_alive(M))
 		return FALSE
+<<<<<<< HEAD
 	if(considered_exiled(M))
 		return FALSE
+=======
+>>>>>>> Updated this old code to fork
 	if(M.force_escaped)
 		return TRUE
 	if(SSticker.force_ending || SSticker.mode.station_was_nuked) // Just let them win.
@@ -100,7 +103,11 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 			. += M
 
 //dupe_search_range is a list of antag datums / minds / teams
+<<<<<<< HEAD
 /datum/objective/proc/find_target(dupe_search_range, blacklist)
+=======
+/datum/objective/proc/find_target(dupe_search_range)
+>>>>>>> Updated this old code to fork
 	var/list/datum/mind/owners = get_owners()
 	if(!dupe_search_range)
 		dupe_search_range = get_owners()
@@ -112,8 +119,12 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 			try_target_late_joiners = TRUE
 	for(var/datum/mind/possible_target in get_crewmember_minds())
 		if(!(possible_target in owners) && ishuman(possible_target.current) && (possible_target.current.stat != DEAD) && is_unique_objective(possible_target,dupe_search_range))
+<<<<<<< HEAD
 			if (!(possible_target in blacklist))
 				possible_targets += possible_target
+=======
+			possible_targets += possible_target
+>>>>>>> Updated this old code to fork
 	if(try_target_late_joiners)
 		var/list/all_possible_targets = possible_targets.Copy()
 		for(var/I in all_possible_targets)
@@ -178,7 +189,11 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	..()
 
 /datum/objective/assassinate/check_completion()
+<<<<<<< HEAD
 	return completed || (!considered_alive(target) || considered_afk(target) || considered_exiled(target))
+=======
+	return completed || (!considered_alive(target) || considered_afk(target))
+>>>>>>> Updated this old code to fork
 
 /datum/objective/assassinate/update_explanation_text()
 	..()
@@ -209,7 +224,11 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	..()
 
 /datum/objective/mutiny/check_completion()
+<<<<<<< HEAD
 	if(!target || !considered_alive(target) || considered_afk(target) || considered_exiled(target))
+=======
+	if(!target || !considered_alive(target) || considered_afk(target))
+>>>>>>> Updated this old code to fork
 		return TRUE
 	var/turf/T = get_turf(target.current)
 	return !T || !is_station_level(T.z)
@@ -679,6 +698,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		target_amount = count
 	update_explanation_text()
 
+<<<<<<< HEAD
 /datum/objective/protect_object
 	name = "protect object"
 	var/obj/protect_target
@@ -697,6 +717,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/protect_object/check_completion()
 	return !QDELETED(protect_target)
 
+=======
+>>>>>>> Updated this old code to fork
 //Changeling Objectives
 
 /datum/objective/absorb
@@ -1075,6 +1097,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	for(var/T in allowed_types)
 		var/datum/objective/X = T
 		GLOB.admin_objective_list[initial(X.name)] = T
+<<<<<<< HEAD
 
 /datum/objective/contract
 	var/payout = 0
@@ -1096,3 +1119,5 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	var/area/target_area = get_area(target)
 
 	return (istype(user_area, dropoff) && istype(target_area, dropoff))
+=======
+>>>>>>> Updated this old code to fork

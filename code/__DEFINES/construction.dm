@@ -59,6 +59,22 @@
 //let's just pretend fulltile windows being children of border windows is fine
 #define FULLTILE_WINDOW_DIR NORTHEAST
 
+<<<<<<< HEAD
+=======
+//Material defines, for determining how much of a given material an item contains
+#define MAT_METAL		"$metal"
+#define MAT_GLASS		"$glass"
+#define MAT_SILVER		"$silver"
+#define MAT_GOLD		"$gold"
+#define MAT_DIAMOND		"$diamond"
+#define MAT_URANIUM		"$uranium"
+#define MAT_PLASMA		"$plasma"
+#define MAT_BLUESPACE	"$bluespace"
+#define MAT_BANANIUM	"$bananium"
+#define MAT_TITANIUM	"$titanium"
+#define MAT_BIOMASS		"$biomass"
+#define MAT_PLASTIC	"$plastic"
+>>>>>>> Updated this old code to fork
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
 #define MINERAL_MATERIAL_AMOUNT 2000
 //The maximum size of a stack object.
@@ -95,7 +111,11 @@
 #define RCD_DECONSTRUCT 3
 #define RCD_WINDOWGRILLE 4
 #define RCD_MACHINE 8
+<<<<<<< HEAD
 #define RCD_COMPUTER 16
 
 #define RCD_UPGRADE_FRAMES	1
 #define RCD_UPGRADE_SIMPLE_CIRCUITS	2
+=======
+#define RCD_COMPUTER 16
+>>>>>>> Updated this old code to fork

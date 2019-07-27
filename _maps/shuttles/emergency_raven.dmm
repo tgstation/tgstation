@@ -79,7 +79,11 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
@@ -125,7 +129,11 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -150,7 +158,11 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue,
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
@@ -249,6 +261,10 @@
 /obj/item/storage/toolbox/emergency,
 /obj/item/wrench,
 /obj/item/radio/intercom{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	name = "Station Intercom (General)";
 	pixel_y = -31
 	},
@@ -460,7 +476,13 @@
 /area/shuttle/escape)
 "bh" = (
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/machinery/stasis,
+=======
+/obj/machinery/sleeper{
+	dir = 8
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white/side{
 	dir = 5
 	},
@@ -583,7 +605,13 @@
 /obj/item/radio/intercom{
 	pixel_x = 28
 	},
+<<<<<<< HEAD
 /obj/machinery/stasis,
+=======
+/obj/machinery/sleeper{
+	dir = 8
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -857,6 +885,10 @@
 /obj/structure/closet/emcloset,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	name = "Station Intercom (General)";
 	pixel_y = 23
 	},
@@ -1542,7 +1574,13 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "db" = (
+<<<<<<< HEAD
 /obj/structure/closet/crate/medical,
+=======
+/obj/structure/closet/crate/medical{
+	name = "medical crate"
+	},
+>>>>>>> Updated this old code to fork
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/o2{
 	pixel_x = 3;
@@ -1771,6 +1809,10 @@
 	},
 /obj/machinery/light,
 /obj/item/radio/intercom{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	name = "Station Intercom (General)";
 	pixel_y = -28
 	},
@@ -1876,6 +1918,7 @@
 "dC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/smes/engineering,
+<<<<<<< HEAD
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -1890,11 +1933,52 @@
 	pixel_y = 22
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"dD" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"dE" = (
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/item/radio/intercom{
+	dir = 2;
+	name = "Station Intercom (General)";
+	pixel_y = 22
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dF" = (
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"dG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/effect/turf_decal/bot,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dH" = (
@@ -1927,22 +2011,48 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dM" = (
+<<<<<<< HEAD
 /obj/machinery/power/terminal{
 	dir = 1
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dN" = (
 /obj/item/cigbutt,
 /turf/open/floor/plating,
 /area/shuttle/escape)
+<<<<<<< HEAD
 "dP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/terminal{
 	dir = 1
 	},
 /obj/structure/cable,
+=======
+"dO" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"dP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dQ" = (
@@ -1970,6 +2080,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/shuttle/escape)
+<<<<<<< HEAD
+=======
+"dU" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+>>>>>>> Updated this old code to fork
 "dV" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -2038,17 +2157,30 @@
 "ec" = (
 /obj/structure/window/reinforced,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/machinery/power/port_gen/pacman,
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ed" = (
+=======
+/obj/structure/cable,
+/obj/machinery/power/port_gen/pacman,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"ed" = (
+/obj/structure/cable/yellow,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/bot,
 /obj/machinery/computer/monitor{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ee" = (
@@ -2447,7 +2579,11 @@ bP
 ax
 dC
 dM
+<<<<<<< HEAD
 dD
+=======
+dU
+>>>>>>> Updated this old code to fork
 ec
 ek
 el
@@ -2514,8 +2650,13 @@ bP
 ds
 ax
 dE
+<<<<<<< HEAD
 dD
 dD
+=======
+dO
+dO
+>>>>>>> Updated this old code to fork
 ed
 ax
 ax
@@ -2581,9 +2722,15 @@ dd
 dm
 bQ
 ax
+<<<<<<< HEAD
 dC
 dP
 dD
+=======
+dG
+dP
+dU
+>>>>>>> Updated this old code to fork
 ec
 ek
 el

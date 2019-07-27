@@ -72,6 +72,10 @@
 /obj/docking_port/mobile/pod{
 	dwidth = 2;
 	height = 6;
+<<<<<<< HEAD
+=======
+	launch_status = 0;
+>>>>>>> Updated this old code to fork
 	port_direction = 2;
 	width = 5
 	},

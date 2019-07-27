@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 #define ALCOHOL_THRESHOLD_MODIFIER 1 //Greater numbers mean that less alcohol has greater intoxication potential
 #define ALCOHOL_RATE 0.005 //The rate at which alcohol affects you
 #define ALCOHOL_EXPONENT 1.6 //The exponent applied to boozepwr to make higher volume alcohol at least a little bit damaging to the liver
+=======
+#define ALCOHOL_THRESHOLD_MODIFIER 0.05 //Greater numbers mean that less alcohol has greater intoxication potential
+#define ALCOHOL_RATE 0.005 //The rate at which alcohol affects you
+#define ALCOHOL_EXPONENT 1.6 //The exponent applied to boozepwr to make higher volume alcohol atleast a little bit damaging.
+>>>>>>> Updated this old code to fork
 
 ////////////// I don't know who made this header before I refactored alcohols but I'm going to fucking strangle them because it was so ugly, holy Christ
 // ALCOHOLS //
@@ -8,11 +14,18 @@
 
 /datum/reagent/consumable/ethanol
 	name = "Ethanol"
+<<<<<<< HEAD
+=======
+	id = "ethanol"
+>>>>>>> Updated this old code to fork
 	description = "A well-known alcohol with a variety of applications."
 	color = "#404030" // rgb: 64, 64, 48
 	nutriment_factor = 0
 	taste_description = "alcohol"
+<<<<<<< HEAD
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+=======
+>>>>>>> Updated this old code to fork
 	var/boozepwr = 65 //Higher numbers equal higher hardness, higher hardness equals more intense alcohol poisoning
 
 /*
@@ -37,14 +50,24 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/C)
 	if(C.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER)
 		var/booze_power = boozepwr
+<<<<<<< HEAD
 		if(HAS_TRAIT(C, TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
 			booze_power *= 0.7
 		if(HAS_TRAIT(C, TRAIT_LIGHT_DRINKER))
+=======
+		if(C.has_trait(TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
+			booze_power *= 0.7
+		if(C.has_trait(TRAIT_LIGHT_DRINKER))
+>>>>>>> Updated this old code to fork
 			booze_power *= 2
 		C.drunkenness = max((C.drunkenness + (sqrt(volume) * booze_power * ALCOHOL_RATE)), 0) //Volume, power, and server alcohol rate effect how quickly one gets drunk
 		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
 		if (istype(L))
+<<<<<<< HEAD
 			L.applyOrganDamage(((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * L.alcohol_tolerance, 0))/150))
+=======
+			C.applyLiverDamage((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * L.alcohol_tolerance, 0))/150)
+>>>>>>> Updated this old code to fork
 	return ..()
 
 /datum/reagent/consumable/ethanol/reaction_obj(obj/O, reac_volume)
@@ -80,6 +103,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"
+<<<<<<< HEAD
+=======
+	id = "beer"
+>>>>>>> Updated this old code to fork
 	description = "An alcoholic beverage brewed since ancient times on Old Earth. Still popular today."
 	color = "#664300" // rgb: 102, 67, 0
 	nutriment_factor = 1 * REAGENTS_METABOLISM
@@ -90,6 +117,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/beer/light
 	name = "Light Beer"
+<<<<<<< HEAD
+=======
+	id = "light_beer"
+>>>>>>> Updated this old code to fork
 	description = "An alcoholic beverage brewed since ancient times on Old Earth. This variety has reduced calorie and alcohol content."
 	boozepwr = 5 //Space Europeans hate it
 	taste_description = "dish water"
@@ -98,6 +129,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/beer/green
 	name = "Green Beer"
+<<<<<<< HEAD
+=======
+	id = "greenbeer"
+>>>>>>> Updated this old code to fork
 	description = "An alcoholic beverage brewed since ancient times on Old Earth. This variety is dyed a festive green."
 	color = "#A8E61D"
 	taste_description = "green piss water"
@@ -110,11 +145,19 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		M.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
 	return ..()
 
+<<<<<<< HEAD
 /datum/reagent/consumable/ethanol/beer/green/on_mob_end_metabolize(mob/living/M)
+=======
+/datum/reagent/consumable/ethanol/beer/green/on_mob_delete(mob/living/M)
+>>>>>>> Updated this old code to fork
 	M.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, color)
 
 /datum/reagent/consumable/ethanol/kahlua
 	name = "Kahlua"
+<<<<<<< HEAD
+=======
+	id = "kahlua"
+>>>>>>> Updated this old code to fork
 	description = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936!"
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 45
@@ -127,13 +170,21 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.AdjustSleeping(-40, FALSE)
+<<<<<<< HEAD
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
+=======
+	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+>>>>>>> Updated this old code to fork
 		M.Jitter(5)
 	..()
 	. = 1
 
 /datum/reagent/consumable/ethanol/whiskey
 	name = "Whiskey"
+<<<<<<< HEAD
+=======
+	id = "whiskey"
+>>>>>>> Updated this old code to fork
 	description = "A superb and well-aged single-malt whiskey. Damn."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 75
@@ -145,6 +196,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/thirteenloko
 	name = "Thirteen Loko"
+<<<<<<< HEAD
+=======
+	id = "thirteenloko"
+>>>>>>> Updated this old code to fork
 	description = "A potent mixture of caffeine and alcohol."
 	color = "#102000" // rgb: 16, 32, 0
 	nutriment_factor = 1 * REAGENTS_METABOLISM
@@ -161,7 +216,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	M.drowsyness = max(0,M.drowsyness-7)
 	M.AdjustSleeping(-40)
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+<<<<<<< HEAD
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
+=======
+	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+>>>>>>> Updated this old code to fork
 		M.Jitter(5)
 	return ..()
 
@@ -175,24 +234,40 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		var/obj/item/I = M.get_active_held_item()
 		if(I)
 			M.dropItemToGround(I)
+<<<<<<< HEAD
 			to_chat(M, "<span class='notice'>Your hands jitter and you drop what you were holding!</span>")
+=======
+			to_chat(M, "<span class ='notice'>Your hands jitter and you drop what you were holding!</span>")
+>>>>>>> Updated this old code to fork
 			M.Jitter(10)
 
 	if(prob(7))
 		to_chat(M, "<span class='notice'>[pick("You have a really bad headache.", "Your eyes hurt.", "You find it hard to stay still.", "You feel your heart practically beating out of your chest.")]</span>")
 
 	if(prob(5) && iscarbon(M))
+<<<<<<< HEAD
 		var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 		if(HAS_TRAIT(M, TRAIT_BLIND))
 			if(istype(eyes))
 				eyes.Remove(M)
 				eyes.forceMove(get_turf(M))
+=======
+		if(M.has_trait(TRAIT_BLIND))
+			var/obj/item/organ/eyes/eye = M.getorganslot(ORGAN_SLOT_EYES)
+			if(istype(eye))
+				eye.Remove(M)
+				eye.forceMove(get_turf(M))
+>>>>>>> Updated this old code to fork
 				to_chat(M, "<span class='userdanger'>You double over in pain as you feel your eyeballs liquify in your head!</span>")
 				M.emote("scream")
 				M.adjustBruteLoss(15)
 		else
 			to_chat(M, "<span class='userdanger'>You scream in terror as you go blind!</span>")
+<<<<<<< HEAD
 			eyes.applyOrganDamage(eyes.maxHealth)
+=======
+			M.become_blind(EYE_DAMAGE)
+>>>>>>> Updated this old code to fork
 			M.emote("scream")
 
 	if(prob(3) && iscarbon(M))
@@ -208,6 +283,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/vodka
 	name = "Vodka"
+<<<<<<< HEAD
+=======
+	id = "vodka"
+>>>>>>> Updated this old code to fork
 	description = "Number one drink AND fueling choice for Russians worldwide."
 	color = "#0064C8" // rgb: 0, 100, 200
 	boozepwr = 65
@@ -223,6 +302,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/bilk
 	name = "Bilk"
+<<<<<<< HEAD
+=======
+	id = "bilk"
+>>>>>>> Updated this old code to fork
 	description = "This appears to be beer mixed with milk. Disgusting."
 	color = "#895C4C" // rgb: 137, 92, 76
 	nutriment_factor = 2 * REAGENTS_METABOLISM
@@ -240,6 +323,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/threemileisland
 	name = "Three Mile Island Iced Tea"
+<<<<<<< HEAD
+=======
+	id = "threemileisland"
+>>>>>>> Updated this old code to fork
 	description = "Made for a woman, strong enough for a man."
 	color = "#666340" // rgb: 102, 99, 64
 	boozepwr = 10
@@ -255,6 +342,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/gin
 	name = "Gin"
+<<<<<<< HEAD
+=======
+	id = "gin"
+>>>>>>> Updated this old code to fork
 	description = "It's gin. In space. I say, good sir."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 45
@@ -265,6 +356,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/rum
 	name = "Rum"
+<<<<<<< HEAD
+=======
+	id = "rum"
+>>>>>>> Updated this old code to fork
 	description = "Yohoho and all that."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 60
@@ -276,6 +371,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/tequila
 	name = "Tequila"
+<<<<<<< HEAD
+=======
+	id = "tequila"
+>>>>>>> Updated this old code to fork
 	description = "A strong and mildly flavoured, Mexican produced spirit. Feeling thirsty, hombre?"
 	color = "#FFFF91" // rgb: 255, 255, 145
 	boozepwr = 70
@@ -287,6 +386,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/vermouth
 	name = "Vermouth"
+<<<<<<< HEAD
+=======
+	id = "vermouth"
+>>>>>>> Updated this old code to fork
 	description = "You suddenly feel a craving for a martini..."
 	color = "#91FF91" // rgb: 145, 255, 145
 	boozepwr = 45
@@ -298,6 +401,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/wine
 	name = "Wine"
+<<<<<<< HEAD
+=======
+	id = "wine"
+>>>>>>> Updated this old code to fork
 	description = "A premium alcoholic beverage made from distilled grape juice."
 	color = "#7E4043" // rgb: 126, 64, 67
 	boozepwr = 35
@@ -309,6 +416,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/lizardwine
 	name = "Lizard wine"
+<<<<<<< HEAD
+=======
+	id = "lizardwine"
+>>>>>>> Updated this old code to fork
 	description = "An alcoholic beverage from Space China, made by infusing lizard tails in ethanol."
 	color = "#7E4043" // rgb: 126, 64, 67
 	boozepwr = 45
@@ -317,6 +428,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/grappa
 	name = "Grappa"
+<<<<<<< HEAD
+=======
+	id = "grappa"
+>>>>>>> Updated this old code to fork
 	description = "A fine Italian brandy, for when regular wine just isn't alcoholic enough for you."
 	color = "#F8EBF1"
 	boozepwr = 60
@@ -327,6 +442,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/cognac
 	name = "Cognac"
+<<<<<<< HEAD
+=======
+	id = "cognac"
+>>>>>>> Updated this old code to fork
 	description = "A sweet and strongly alcoholic drink, made after numerous distillations and years of maturing. Classy as fornication."
 	color = "#AB3C05" // rgb: 171, 60, 5
 	boozepwr = 75
@@ -338,6 +457,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/absinthe
 	name = "Absinthe"
+<<<<<<< HEAD
+=======
+	id = "absinthe"
+>>>>>>> Updated this old code to fork
 	description = "A powerful alcoholic drink. Rumored to cause hallucinations but does not."
 	color = rgb(10, 206, 0)
 	boozepwr = 80 //Very strong even by default
@@ -348,12 +471,20 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	shot_glass_icon_state = "shotglassgreen"
 
 /datum/reagent/consumable/ethanol/absinthe/on_mob_life(mob/living/carbon/M)
+<<<<<<< HEAD
 	if(prob(10) && !HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
+=======
+	if(prob(10) && !M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+>>>>>>> Updated this old code to fork
 		M.hallucination += 4 //Reference to the urban myth
 	..()
 
 /datum/reagent/consumable/ethanol/hooch
 	name = "Hooch"
+<<<<<<< HEAD
+=======
+	id = "hooch"
+>>>>>>> Updated this old code to fork
 	description = "Either someone's failure at cocktail making or attempt in alcohol production. In any case, do you really want to drink that?"
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 100
@@ -370,6 +501,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/ale
 	name = "Ale"
+<<<<<<< HEAD
+=======
+	id = "ale"
+>>>>>>> Updated this old code to fork
 	description = "A dark alcoholic beverage made with malted barley and yeast."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 65
@@ -380,6 +515,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/goldschlager
 	name = "Goldschlager"
+<<<<<<< HEAD
+=======
+	id = "goldschlager"
+>>>>>>> Updated this old code to fork
 	description = "100 proof cinnamon schnapps, made for alcoholic teen girls on spring break."
 	color = "#FFFF91" // rgb: 255, 255, 145
 	boozepwr = 25
@@ -392,6 +531,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/patron
 	name = "Patron"
+<<<<<<< HEAD
+=======
+	id = "patron"
+>>>>>>> Updated this old code to fork
 	description = "Tequila with silver in it, a favorite of alcoholic women in the club scene."
 	color = "#585840" // rgb: 88, 88, 64
 	boozepwr = 60
@@ -404,6 +547,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/gintonic
 	name = "Gin and Tonic"
+<<<<<<< HEAD
+=======
+	id = "gintonic"
+>>>>>>> Updated this old code to fork
 	description = "An all time classic, mild cocktail."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 25
@@ -415,6 +562,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/rum_coke
 	name = "Rum and Coke"
+<<<<<<< HEAD
+=======
+	id = "rumcoke"
+>>>>>>> Updated this old code to fork
 	description = "Rum, mixed with cola."
 	taste_description = "cola"
 	boozepwr = 40
@@ -426,6 +577,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/cuba_libre
 	name = "Cuba Libre"
+<<<<<<< HEAD
+=======
+	id = "cubalibre"
+>>>>>>> Updated this old code to fork
 	description = "Viva la Revolucion! Viva Cuba Libre!"
 	color = "#3E1B00" // rgb: 62, 27, 0
 	boozepwr = 50
@@ -446,6 +601,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/whiskey_cola
 	name = "Whiskey Cola"
+<<<<<<< HEAD
+=======
+	id = "whiskeycola"
+>>>>>>> Updated this old code to fork
 	description = "Whiskey, mixed with cola. Surprisingly refreshing."
 	color = "#3E1B00" // rgb: 62, 27, 0
 	boozepwr = 70
@@ -458,6 +617,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/martini
 	name = "Classic Martini"
+<<<<<<< HEAD
+=======
+	id = "martini"
+>>>>>>> Updated this old code to fork
 	description = "Vermouth with Gin. Not quite how 007 enjoyed it, but still delicious."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 60
@@ -469,6 +632,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/vodkamartini
 	name = "Vodka Martini"
+<<<<<<< HEAD
+=======
+	id = "vodkamartini"
+>>>>>>> Updated this old code to fork
 	description = "Vodka with Gin. Not quite how 007 enjoyed it, but still delicious."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 65
@@ -480,6 +647,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/white_russian
 	name = "White Russian"
+<<<<<<< HEAD
+=======
+	id = "whiterussian"
+>>>>>>> Updated this old code to fork
 	description = "That's just, like, your opinion, man..."
 	color = "#A68340" // rgb: 166, 131, 64
 	boozepwr = 50
@@ -491,6 +662,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/screwdrivercocktail
 	name = "Screwdriver"
+<<<<<<< HEAD
+=======
+	id = "screwdrivercocktail"
+>>>>>>> Updated this old code to fork
 	description = "Vodka, mixed with plain ol' orange juice. The result is surprisingly delicious."
 	color = "#A68310" // rgb: 166, 131, 16
 	boozepwr = 55
@@ -507,6 +682,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/booger
 	name = "Booger"
+<<<<<<< HEAD
+=======
+	id = "booger"
+>>>>>>> Updated this old code to fork
 	description = "Ewww..."
 	color = "#8CFF8C" // rgb: 140, 255, 140
 	boozepwr = 45
@@ -517,6 +696,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/bloody_mary
 	name = "Bloody Mary"
+<<<<<<< HEAD
+=======
+	id = "bloodymary"
+>>>>>>> Updated this old code to fork
 	description = "A strange yet pleasurable mixture made of vodka, tomato and lime juice. Or at least you THINK the red stuff is tomato juice."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 55
@@ -533,6 +716,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/brave_bull
 	name = "Brave Bull"
+<<<<<<< HEAD
+=======
+	id = "bravebull"
+>>>>>>> Updated this old code to fork
 	description = "It's just as effective as Dutch-Courage!"
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 80
@@ -543,19 +730,31 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Tequila and Coffee liqueur, brought together in a mouthwatering mixture. Drink up."
 	var/tough_text
 
+<<<<<<< HEAD
 /datum/reagent/consumable/ethanol/brave_bull/on_mob_metabolize(mob/living/M)
+=======
+/datum/reagent/consumable/ethanol/brave_bull/on_mob_add(mob/living/M)
+>>>>>>> Updated this old code to fork
 	tough_text = pick("brawny", "tenacious", "tough", "hardy", "sturdy") //Tuff stuff
 	to_chat(M, "<span class='notice'>You feel [tough_text]!</span>")
 	M.maxHealth += 10 //Brave Bull makes you sturdier, and thus capable of withstanding a tiny bit more punishment.
 	M.health += 10
 
+<<<<<<< HEAD
 /datum/reagent/consumable/ethanol/brave_bull/on_mob_end_metabolize(mob/living/M)
+=======
+/datum/reagent/consumable/ethanol/brave_bull/on_mob_delete(mob/living/M)
+>>>>>>> Updated this old code to fork
 	to_chat(M, "<span class='notice'>You no longer feel [tough_text].</span>")
 	M.maxHealth -= 10
 	M.health = min(M.health - 10, M.maxHealth) //This can indeed crit you if you're alive solely based on alchol ingestion
 
 /datum/reagent/consumable/ethanol/tequila_sunrise
 	name = "Tequila Sunrise"
+<<<<<<< HEAD
+=======
+	id = "tequilasunrise"
+>>>>>>> Updated this old code to fork
 	description = "Tequila, Grenadine, and Orange Juice."
 	color = "#FFE48C" // rgb: 255, 228, 140
 	boozepwr = 45
@@ -566,24 +765,40 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Oh great, now you feel nostalgic about sunrises back on Terra..."
 	var/obj/effect/light_holder
 
+<<<<<<< HEAD
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_metabolize(mob/living/M)
+=======
+/datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_add(mob/living/M)
+>>>>>>> Updated this old code to fork
 	to_chat(M, "<span class='notice'>You feel gentle warmth spread through your body!</span>")
 	light_holder = new(M)
 	light_holder.set_light(3, 0.7, "#FFCC00") //Tequila Sunrise makes you radiate dim light, like a sunrise!
 
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_life(mob/living/carbon/M)
 	if(QDELETED(light_holder))
+<<<<<<< HEAD
 		M.reagents.del_reagent(/datum/reagent/consumable/ethanol/tequila_sunrise) //If we lost our light object somehow, remove the reagent
+=======
+		M.reagents.del_reagent("tequilasunrise") //If we lost our light object somehow, remove the reagent
+>>>>>>> Updated this old code to fork
 	else if(light_holder.loc != M)
 		light_holder.forceMove(M)
 	return ..()
 
+<<<<<<< HEAD
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_end_metabolize(mob/living/M)
+=======
+/datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_delete(mob/living/M)
+>>>>>>> Updated this old code to fork
 	to_chat(M, "<span class='notice'>The warmth in your body fades.</span>")
 	QDEL_NULL(light_holder)
 
 /datum/reagent/consumable/ethanol/toxins_special
 	name = "Toxins Special"
+<<<<<<< HEAD
+=======
+	id = "toxinsspecial"
+>>>>>>> Updated this old code to fork
 	description = "This thing is ON FIRE! CALL THE DAMN SHUTTLE!"
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 25
@@ -600,15 +815,24 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/beepsky_smash
 	name = "Beepsky Smash"
+<<<<<<< HEAD
+=======
+	id = "beepskysmash"
+>>>>>>> Updated this old code to fork
 	description = "Drink this and prepare for the LAW."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 90 //THE FIST OF THE LAW IS STRONG AND HARD
 	quality = DRINK_GOOD
+<<<<<<< HEAD
 	metabolization_rate = 0.5
+=======
+	metabolization_rate = 0.8
+>>>>>>> Updated this old code to fork
 	taste_description = "JUSTICE"
 	glass_icon_state = "beepskysmashglass"
 	glass_name = "Beepsky Smash"
 	glass_desc = "Heavy, hot and strong. Just like the Iron fist of the LAW."
+<<<<<<< HEAD
 	overdose_threshold = 40
 	var/datum/brain_trauma/special/beepsky/B
 
@@ -642,6 +866,19 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/irish_cream
 	name = "Irish Cream"
+=======
+
+/datum/reagent/consumable/ethanol/beepsky_smash/on_mob_life(mob/living/carbon/M)
+	if(M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		M.Stun(30, 0) //this realistically does nothing to prevent chainstunning but will cause them to recover faster once it's out of their system
+	else
+		M.Stun(40, 0)
+	return ..()
+
+/datum/reagent/consumable/ethanol/irish_cream
+	name = "Irish Cream"
+	id = "irishcream"
+>>>>>>> Updated this old code to fork
 	description = "Whiskey-imbued cream, what else would you expect from the Irish?"
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 50
@@ -653,6 +890,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/manly_dorf
 	name = "The Manly Dorf"
+<<<<<<< HEAD
+=======
+	id = "manlydorf"
+>>>>>>> Updated this old code to fork
 	description = "Beer and Ale, brought together in a delicious mix. Intended for true men only."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 100 //For the manly only
@@ -663,10 +904,17 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A manly concoction made from Ale and Beer. Intended for true men only."
 	var/dorf_mode
 
+<<<<<<< HEAD
 /datum/reagent/consumable/ethanol/manly_dorf/on_mob_metabolize(mob/living/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.dna.check_mutation(DWARFISM) || HAS_TRAIT(H, TRAIT_ALCOHOL_TOLERANCE))
+=======
+/datum/reagent/consumable/ethanol/manly_dorf/on_mob_add(mob/living/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.dna.check_mutation(DWARFISM) || H.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+>>>>>>> Updated this old code to fork
 			to_chat(H, "<span class='notice'>Now THAT is MANLY!</span>")
 			boozepwr = 5 //We've had worse in the mines
 			dorf_mode = TRUE
@@ -679,6 +927,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/longislandicedtea
 	name = "Long Island Iced Tea"
+<<<<<<< HEAD
+=======
+	id = "longislandicedtea"
+>>>>>>> Updated this old code to fork
 	description = "The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women only."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 35
@@ -691,6 +943,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/moonshine
 	name = "Moonshine"
+<<<<<<< HEAD
+=======
+	id = "moonshine"
+>>>>>>> Updated this old code to fork
 	description = "You've really hit rock bottom now... your liver packed its bags and left last night."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 95
@@ -701,6 +957,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/b52
 	name = "B-52"
+<<<<<<< HEAD
+=======
+	id = "b52"
+>>>>>>> Updated this old code to fork
 	description = "Coffee, Irish Cream, and cognac. You will get bombed."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 85
@@ -711,11 +971,19 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Kahlua, Irish Cream, and cognac. You will get bombed."
 	shot_glass_icon_state = "b52glass"
 
+<<<<<<< HEAD
 /datum/reagent/consumable/ethanol/b52/on_mob_metabolize(mob/living/M)
+=======
+/datum/reagent/consumable/ethanol/b52/on_mob_add(mob/living/M)
+>>>>>>> Updated this old code to fork
 	playsound(M, 'sound/effects/explosion_distant.ogg', 100, FALSE)
 
 /datum/reagent/consumable/ethanol/irishcoffee
 	name = "Irish Coffee"
+<<<<<<< HEAD
+=======
+	id = "irishcoffee"
+>>>>>>> Updated this old code to fork
 	description = "Coffee, and alcohol. More fun than a Mimosa to drink in the morning."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 35
@@ -727,6 +995,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/margarita
 	name = "Margarita"
+<<<<<<< HEAD
+=======
+	id = "margarita"
+>>>>>>> Updated this old code to fork
 	description = "On the rocks with salt on the rim. Arriba~!"
 	color = "#8CFF8C" // rgb: 140, 255, 140
 	boozepwr = 35
@@ -738,6 +1010,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/black_russian
 	name = "Black Russian"
+<<<<<<< HEAD
+=======
+	id = "blackrussian"
+>>>>>>> Updated this old code to fork
 	description = "For the lactose-intolerant. Still as classy as a White Russian."
 	color = "#360000" // rgb: 54, 0, 0
 	boozepwr = 70
@@ -750,6 +1026,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/manhattan
 	name = "Manhattan"
+<<<<<<< HEAD
+=======
+	id = "manhattan"
+>>>>>>> Updated this old code to fork
 	description = "The Detective's undercover drink of choice. He never could stomach gin..."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 30
@@ -762,6 +1042,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/manhattan_proj
 	name = "Manhattan Project"
+<<<<<<< HEAD
+=======
+	id = "manhattan_proj"
+>>>>>>> Updated this old code to fork
 	description = "A scientist's drink of choice, for pondering ways to blow up the station."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 45
@@ -778,6 +1062,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/whiskeysoda
 	name = "Whiskey Soda"
+<<<<<<< HEAD
+=======
+	id = "whiskeysoda"
+>>>>>>> Updated this old code to fork
 	description = "For the more refined griffon."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 70
@@ -789,6 +1077,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/antifreeze
 	name = "Anti-freeze"
+<<<<<<< HEAD
+=======
+	id = "antifreeze"
+>>>>>>> Updated this old code to fork
 	description = "The ultimate refreshment. Not what it sounds like."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 35
@@ -804,6 +1096,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/barefoot
 	name = "Barefoot"
+<<<<<<< HEAD
+=======
+	id = "barefoot"
+>>>>>>> Updated this old code to fork
 	description = "Barefoot and pregnant."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 45
@@ -823,6 +1119,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/snowwhite
 	name = "Snow White"
+<<<<<<< HEAD
+=======
+	id = "snowwhite"
+>>>>>>> Updated this old code to fork
 	description = "A cold refreshment."
 	color = "#FFFFFF" // rgb: 255, 255, 255
 	boozepwr = 35
@@ -834,6 +1134,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/demonsblood //Prevents the imbiber from being dragged into a pool of blood by a slaughter demon.
 	name = "Demon's Blood"
+<<<<<<< HEAD
+=======
+	id = "demonsblood"
+>>>>>>> Updated this old code to fork
 	description = "AHHHH!!!!"
 	color = "#820000" // rgb: 130, 0, 0
 	boozepwr = 75
@@ -845,6 +1149,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/devilskiss //If eaten by a slaughter demon, the demon will regret it.
 	name = "Devil's Kiss"
+<<<<<<< HEAD
+=======
+	id = "devilskiss"
+>>>>>>> Updated this old code to fork
 	description = "Creepy time!"
 	color = "#A68310" // rgb: 166, 131, 16
 	boozepwr = 70
@@ -856,6 +1164,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/vodkatonic
 	name = "Vodka and Tonic"
+<<<<<<< HEAD
+=======
+	id = "vodkatonic"
+>>>>>>> Updated this old code to fork
 	description = "For when a gin and tonic isn't Russian enough."
 	color = "#0064C8" // rgb: 0, 100, 200
 	boozepwr = 70
@@ -868,6 +1180,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/ginfizz
 	name = "Gin Fizz"
+<<<<<<< HEAD
+=======
+	id = "ginfizz"
+>>>>>>> Updated this old code to fork
 	description = "Refreshingly lemony, deliciously dry."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 45
@@ -880,6 +1196,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/bahama_mama
 	name = "Bahama Mama"
+<<<<<<< HEAD
+=======
+	id = "bahama_mama"
+>>>>>>> Updated this old code to fork
 	description = "Tropical cocktail."
 	color = "#FF7F3B" // rgb: 255, 127, 59
 	boozepwr = 35
@@ -891,6 +1211,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/singulo
 	name = "Singulo"
+<<<<<<< HEAD
+=======
+	id = "singulo"
+>>>>>>> Updated this old code to fork
 	description = "A blue-space beverage!"
 	color = "#2E6671" // rgb: 46, 102, 113
 	boozepwr = 35
@@ -902,6 +1226,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/sbiten
 	name = "Sbiten"
+<<<<<<< HEAD
+=======
+	id = "sbiten"
+>>>>>>> Updated this old code to fork
 	description = "A spicy Vodka! Might be a little hot for the little guys!"
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 70
@@ -917,6 +1245,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/red_mead
 	name = "Red Mead"
+<<<<<<< HEAD
+=======
+	id = "red_mead"
+>>>>>>> Updated this old code to fork
 	description = "The true Viking drink! Even though it has a strange red color."
 	color = "#C73C00" // rgb: 199, 60, 0
 	boozepwr = 31 //Red drinks are stronger
@@ -928,6 +1260,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/mead
 	name = "Mead"
+<<<<<<< HEAD
+=======
+	id = "mead"
+>>>>>>> Updated this old code to fork
 	description = "A Viking drink, though a cheap one."
 	color = "#664300" // rgb: 102, 67, 0
 	nutriment_factor = 1 * REAGENTS_METABOLISM
@@ -940,6 +1276,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/iced_beer
 	name = "Iced Beer"
+<<<<<<< HEAD
+=======
+	id = "iced_beer"
+>>>>>>> Updated this old code to fork
 	description = "A beer which is so cold the air around it freezes."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 15
@@ -954,6 +1294,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/grog
 	name = "Grog"
+<<<<<<< HEAD
+=======
+	id = "grog"
+>>>>>>> Updated this old code to fork
 	description = "Watered down rum, Nanotrasen approves!"
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 1 //Basically nothing
@@ -965,6 +1309,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/aloe
 	name = "Aloe"
+<<<<<<< HEAD
+=======
+	id = "aloe"
+>>>>>>> Updated this old code to fork
 	description = "So very, very, very good."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 35
@@ -976,6 +1324,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/andalusia
 	name = "Andalusia"
+<<<<<<< HEAD
+=======
+	id = "andalusia"
+>>>>>>> Updated this old code to fork
 	description = "A nice, strangely named drink."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 40
@@ -987,6 +1339,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/alliescocktail
 	name = "Allies Cocktail"
+<<<<<<< HEAD
+=======
+	id = "alliescocktail"
+>>>>>>> Updated this old code to fork
 	description = "A drink made from your allies. Not as sweet as those made from your enemies."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 45
@@ -998,6 +1354,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/acid_spit
 	name = "Acid Spit"
+<<<<<<< HEAD
+=======
+	id = "acidspit"
+>>>>>>> Updated this old code to fork
 	description = "A drink for the daring, can be deadly if incorrectly prepared!"
 	color = "#365000" // rgb: 54, 80, 0
 	boozepwr = 80
@@ -1009,6 +1369,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/amasec
 	name = "Amasec"
+<<<<<<< HEAD
+=======
+	id = "amasec"
+>>>>>>> Updated this old code to fork
 	description = "Official drink of the Nanotrasen Gun-Club!"
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 35
@@ -1020,6 +1384,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/changelingsting
 	name = "Changeling Sting"
+<<<<<<< HEAD
+=======
+	id = "changelingsting"
+>>>>>>> Updated this old code to fork
 	description = "You take a tiny sip and feel a burning sensation..."
 	color = "#2E6671" // rgb: 46, 102, 113
 	boozepwr = 95
@@ -1039,6 +1407,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/irishcarbomb
 	name = "Irish Car Bomb"
+<<<<<<< HEAD
+=======
+	id = "irishcarbomb"
+>>>>>>> Updated this old code to fork
 	description = "Mmm, tastes like chocolate cake..."
 	color = "#2E6671" // rgb: 46, 102, 113
 	boozepwr = 25
@@ -1050,6 +1422,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/syndicatebomb
 	name = "Syndicate Bomb"
+<<<<<<< HEAD
+=======
+	id = "syndicatebomb"
+>>>>>>> Updated this old code to fork
 	description = "Tastes like terrorism!"
 	color = "#2E6671" // rgb: 46, 102, 113
 	boozepwr = 90
@@ -1066,6 +1442,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/erikasurprise
 	name = "Erika Surprise"
+<<<<<<< HEAD
+=======
+	id = "erikasurprise"
+>>>>>>> Updated this old code to fork
 	description = "The surprise is, it's green!"
 	color = "#2E6671" // rgb: 46, 102, 113
 	boozepwr = 35
@@ -1077,6 +1457,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/driestmartini
 	name = "Driest Martini"
+<<<<<<< HEAD
+=======
+	id = "driestmartini"
+>>>>>>> Updated this old code to fork
 	description = "Only for the experienced. You think you see sand floating in the glass."
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	color = "#2E6671" // rgb: 46, 102, 113
@@ -1089,6 +1473,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/bananahonk
 	name = "Banana Honk"
+<<<<<<< HEAD
+=======
+	id = "bananahonk"
+>>>>>>> Updated this old code to fork
 	description = "A drink from Clown Heaven."
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	color = "#FFFF91" // rgb: 255, 255, 140
@@ -1107,6 +1495,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/silencer
 	name = "Silencer"
+<<<<<<< HEAD
+=======
+	id = "silencer"
+>>>>>>> Updated this old code to fork
 	description = "A drink from Mime Heaven."
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	color = "#664300" // rgb: 102, 67, 0
@@ -1126,6 +1518,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/drunkenblumpkin
 	name = "Drunken Blumpkin"
+<<<<<<< HEAD
+=======
+	id = "drunkenblumpkin"
+>>>>>>> Updated this old code to fork
 	description = "A weird mix of whiskey and blumpkin juice."
 	color = "#1EA0FF" // rgb: 102, 67, 0
 	boozepwr = 50
@@ -1137,6 +1533,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/whiskey_sour //Requested since we had whiskey cola and soda but not sour.
 	name = "Whiskey Sour"
+<<<<<<< HEAD
+=======
+	id = "whiskey_sour"
+>>>>>>> Updated this old code to fork
 	description = "Lemon juice/whiskey/sugar mixture. Moderate alcohol content."
 	color = rgb(255, 201, 49)
 	boozepwr = 35
@@ -1148,6 +1548,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/hcider
 	name = "Hard Cider"
+<<<<<<< HEAD
+=======
+	id = "hcider"
+>>>>>>> Updated this old code to fork
 	description = "Apple juice, for adults."
 	color = "#CD6839"
 	nutriment_factor = 1 * REAGENTS_METABOLISM
@@ -1161,6 +1565,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/fetching_fizz //A reference to one of my favorite games of all time. Pulls nearby ores to the imbiber!
 	name = "Fetching Fizz"
+<<<<<<< HEAD
+=======
+	id = "fetching_fizz"
+>>>>>>> Updated this old code to fork
 	description = "Whiskey sour/iron/uranium mixture resulting in a highly magnetic slurry. Mild alcohol content." //Requires no alcohol to make but has alcohol anyway because ~magic~
 	color = rgb(255, 91, 15)
 	boozepwr = 10
@@ -1180,6 +1588,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 //Another reference. Heals those in critical condition extremely quickly.
 /datum/reagent/consumable/ethanol/hearty_punch
 	name = "Hearty Punch"
+<<<<<<< HEAD
+=======
+	id = "hearty_punch"
+>>>>>>> Updated this old code to fork
 	description = "Brave bull/syndicate bomb/absinthe mixture resulting in an energizing beverage. Mild alcohol content."
 	color = rgb(140, 0, 0)
 	boozepwr = 90
@@ -1202,6 +1614,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/bacchus_blessing //An EXTREMELY powerful drink. Smashed in seconds, dead in minutes.
 	name = "Bacchus' Blessing"
+<<<<<<< HEAD
+=======
+	id = "bacchus_blessing"
+>>>>>>> Updated this old code to fork
 	description = "Unidentifiable mixture. Unmeasurably high alcohol content."
 	color = rgb(51, 19, 3) //Sickly brown
 	boozepwr = 300 //I warned you
@@ -1214,6 +1630,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/atomicbomb
 	name = "Atomic Bomb"
+<<<<<<< HEAD
+=======
+	id = "atomicbomb"
+>>>>>>> Updated this old code to fork
 	description = "Nuclear proliferation never tasted so good."
 	color = "#666300" // rgb: 102, 99, 0
 	boozepwr = 0 //custom drunk effect
@@ -1225,7 +1645,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/atomicbomb/on_mob_life(mob/living/carbon/M)
 	M.set_drugginess(50)
+<<<<<<< HEAD
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
+=======
+	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+>>>>>>> Updated this old code to fork
 		M.confused = max(M.confused+2,0)
 		M.Dizzy(10)
 	if (!M.slurring)
@@ -1243,6 +1667,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/gargle_blaster
 	name = "Pan-Galactic Gargle Blaster"
+<<<<<<< HEAD
+=======
+	id = "gargleblaster"
+>>>>>>> Updated this old code to fork
 	description = "Whoah, this stuff looks volatile!"
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 0 //custom drunk effect
@@ -1271,16 +1699,26 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/neurotoxin
 	name = "Neurotoxin"
+<<<<<<< HEAD
 	description = "A strong neurotoxin that puts the subject into a death-like state."
 	color = "#2E2E61" // rgb: 46, 46, 97
 	boozepwr = 50
 	quality = DRINK_VERYGOOD
 	taste_description = "a numbing sensation"
 	metabolization_rate = 1 * REAGENTS_METABOLISM
+=======
+	id = "neurotoxin"
+	description = "A strong neurotoxin that puts the subject into a death-like state."
+	color = "#2E2E61" // rgb: 46, 46, 97
+	boozepwr = 0 //custom drunk effect
+	quality = DRINK_VERYGOOD
+	taste_description = "a numbing sensation"
+>>>>>>> Updated this old code to fork
 	glass_icon_state = "neurotoxinglass"
 	glass_name = "Neurotoxin"
 	glass_desc = "A drink that is guaranteed to knock you silly."
 
+<<<<<<< HEAD
 /datum/reagent/consumable/ethanol/neurotoxin/proc/pickt()
 	return (pick(TRAIT_PARALYSIS_L_ARM,TRAIT_PARALYSIS_R_ARM,TRAIT_PARALYSIS_R_LEG,TRAIT_PARALYSIS_L_LEG))
 
@@ -1317,6 +1755,29 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/hippies_delight
 	name = "Hippie's Delight"
+=======
+/datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/M)
+	M.Paralyze(60, 1, 0)
+	M.dizziness +=2
+	switch(current_cycle)
+		if(15 to 45)
+			if(!M.slurring)
+				M.slurring = 1
+			M.slurring += 3
+		if(45 to 55)
+			if(prob(50))
+				M.confused = max(M.confused+3,0)
+		if(55 to 200)
+			M.set_drugginess(55)
+		if(200 to INFINITY)
+			M.adjustToxLoss(2, 0)
+	..()
+	. = 1
+
+/datum/reagent/consumable/ethanol/hippies_delight
+	name = "Hippie's Delight"
+	id = "hippiesdelight"
+>>>>>>> Updated this old code to fork
 	description = "You just don't get it maaaan."
 	color = "#664300" // rgb: 102, 67, 0
 	nutriment_factor = 0
@@ -1362,6 +1823,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/eggnog
 	name = "Eggnog"
+<<<<<<< HEAD
+=======
+	id = "eggnog"
+>>>>>>> Updated this old code to fork
 	description = "For enjoying the most wonderful time of the year."
 	color = "#fcfdc6" // rgb: 252, 253, 198
 	nutriment_factor = 2 * REAGENTS_METABOLISM
@@ -1375,6 +1840,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/narsour
 	name = "Nar'Sour"
+<<<<<<< HEAD
+=======
+	id = "narsour"
+>>>>>>> Updated this old code to fork
 	description = "Side effects include self-mutilation and hoarding plasteel."
 	color = RUNE_COLOR_DARKRED
 	boozepwr = 10
@@ -1391,6 +1860,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/triple_sec
 	name = "Triple Sec"
+<<<<<<< HEAD
+=======
+	id = "triple_sec"
+>>>>>>> Updated this old code to fork
 	description = "A sweet and vibrant orange liqueur."
 	color = "#ffcc66"
 	boozepwr = 30
@@ -1401,6 +1874,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/creme_de_menthe
 	name = "Creme de Menthe"
+<<<<<<< HEAD
+=======
+	id = "creme_de_menthe"
+>>>>>>> Updated this old code to fork
 	description = "A minty liqueur excellent for refreshing, cool drinks."
 	color = "#00cc00"
 	boozepwr = 20
@@ -1411,6 +1888,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/creme_de_cacao
 	name = "Creme de Cacao"
+<<<<<<< HEAD
+=======
+	id = "creme_de_cacao"
+>>>>>>> Updated this old code to fork
 	description = "A chocolatey liqueur excellent for adding dessert notes to beverages and bribing sororities."
 	color = "#996633"
 	boozepwr = 20
@@ -1421,6 +1902,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/quadruple_sec
 	name = "Quadruple Sec"
+<<<<<<< HEAD
+=======
+	id = "quadruple_sec"
+>>>>>>> Updated this old code to fork
 	description = "Kicks just as hard as licking the powercell on a baton, but tastier."
 	color = "#cc0000"
 	boozepwr = 35
@@ -1432,7 +1917,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/quadruple_sec/on_mob_life(mob/living/carbon/M)
 	//Securidrink in line with the Screwdriver for engineers or Nothing for mimes
+<<<<<<< HEAD
 	if(HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
+=======
+	if(M.has_trait(TRAIT_LAW_ENFORCEMENT_METABOLISM))
+>>>>>>> Updated this old code to fork
 		M.heal_bodypart_damage(1, 1)
 		M.adjustBruteLoss(-2,0)
 		. = 1
@@ -1440,6 +1929,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/quintuple_sec
 	name = "Quintuple Sec"
+<<<<<<< HEAD
+=======
+	id = "quintuple_sec"
+>>>>>>> Updated this old code to fork
 	description = "Law, Order, Alcohol, and Police Brutality distilled into one single elixir of JUSTICE."
 	color = "#ff3300"
 	boozepwr = 80
@@ -1451,7 +1944,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/quintuple_sec/on_mob_life(mob/living/carbon/M)
 	//Securidrink in line with the Screwdriver for engineers or Nothing for mimes but STRONG..
+<<<<<<< HEAD
 	if(HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
+=======
+	if(M.has_trait(TRAIT_LAW_ENFORCEMENT_METABOLISM))
+>>>>>>> Updated this old code to fork
 		M.heal_bodypart_damage(2,2,2)
 		M.adjustBruteLoss(-5,0)
 		M.adjustOxyLoss(-5,0)
@@ -1462,6 +1959,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/grasshopper
 	name = "Grasshopper"
+<<<<<<< HEAD
+=======
+	id = "grasshopper"
+>>>>>>> Updated this old code to fork
 	description = "A fresh and sweet dessert shooter. Difficult to look manly while drinking this."
 	color = "00ff00"
 	boozepwr = 25
@@ -1473,6 +1974,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/stinger
 	name = "Stinger"
+<<<<<<< HEAD
+=======
+	id = "stinger"
+>>>>>>> Updated this old code to fork
 	description = "A snappy way to end the day."
 	color = "ccff99"
 	boozepwr = 25
@@ -1484,6 +1989,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/bastion_bourbon
 	name = "Bastion Bourbon"
+<<<<<<< HEAD
+=======
+	id = "bastion_bourbon"
+>>>>>>> Updated this old code to fork
 	description = "Soothing hot herbal brew with restorative properties. Hints of citrus and berry flavors."
 	color = "#00FFFF"
 	boozepwr = 30
@@ -1495,7 +2004,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "If you're feeling low, count on the buttery flavor of our own bastion bourbon."
 	shot_glass_icon_state = "shotglassgreen"
 
+<<<<<<< HEAD
 /datum/reagent/consumable/ethanol/bastion_bourbon/on_mob_metabolize(mob/living/L)
+=======
+/datum/reagent/consumable/ethanol/bastion_bourbon/on_mob_add(mob/living/L)
+>>>>>>> Updated this old code to fork
 	var/heal_points = 10
 	if(L.health <= 0)
 		heal_points = 20 //heal more if we're in softcrit
@@ -1521,6 +2034,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/squirt_cider
 	name = "Squirt Cider"
+<<<<<<< HEAD
+=======
+	id = "squirt_cider"
+>>>>>>> Updated this old code to fork
 	description = "Fermented squirt extract with a nose of stale bread and ocean water. Whatever a squirt is."
 	color = "#FF0000"
 	boozepwr = 40
@@ -1538,6 +2055,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/fringe_weaver
 	name = "Fringe Weaver"
+<<<<<<< HEAD
+=======
+	id = "fringe_weaver"
+>>>>>>> Updated this old code to fork
 	description = "Bubbly, classy, and undoubtedly strong - a Glitch City classic."
 	color = "#FFEAC4"
 	boozepwr = 90 //classy hooch, essentially, but lower pwr to make up for slightly easier access
@@ -1549,6 +2070,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/sugar_rush
 	name = "Sugar Rush"
+<<<<<<< HEAD
+=======
+	id = "sugar_rush"
+>>>>>>> Updated this old code to fork
 	description = "Sweet, light, and fruity - as girly as it gets."
 	color = "#FF226C"
 	boozepwr = 10
@@ -1566,6 +2091,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/crevice_spike
 	name = "Crevice Spike"
+<<<<<<< HEAD
+=======
+	id = "crevice_spike"
+>>>>>>> Updated this old code to fork
 	description = "Sour, bitter, and smashingly sobering."
 	color = "#5BD231"
 	boozepwr = -10 //sobers you up - ideally, one would drink to get hit with brute damage now to avoid alcohol problems later
@@ -1575,11 +2104,19 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Crevice Spike"
 	glass_desc = "It'll either knock the drunkenness out of you or knock you out cold. Both, probably."
 
+<<<<<<< HEAD
 /datum/reagent/consumable/ethanol/crevice_spike/on_mob_metabolize(mob/living/L) //damage only applies when drink first enters system and won't again until drink metabolizes out
+=======
+/datum/reagent/consumable/ethanol/crevice_spike/on_mob_add(mob/living/L) //damage only applies when drink first enters system and won't again until drink metabolizes out
+>>>>>>> Updated this old code to fork
 	L.adjustBruteLoss(3 * min(5,volume)) //minimum 3 brute damage on ingestion to limit non-drink means of injury - a full 5 unit gulp of the drink trucks you for the full 15
 
 /datum/reagent/consumable/ethanol/sake
 	name = "Sake"
+<<<<<<< HEAD
+=======
+	id = "sake"
+>>>>>>> Updated this old code to fork
 	description = "A sweet rice wine of questionable legality and extreme potency."
 	color = "#DDDDDD"
 	boozepwr = 70
@@ -1590,6 +2127,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/peppermint_patty
 	name = "Peppermint Patty"
+<<<<<<< HEAD
+=======
+	id = "peppermint_patty"
+>>>>>>> Updated this old code to fork
 	description = "This lightly alcoholic drink combines the benefits of menthol and cocoa."
 	color = "#45ca7a"
 	taste_description = "mint and chocolate"
@@ -1606,6 +2147,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/alexander
 	name = "Alexander"
+<<<<<<< HEAD
+=======
+	id = "alexander"
+>>>>>>> Updated this old code to fork
 	description = "Named after a Greek hero, this mix is said to embolden a user's shield as if they were in a phalanx."
 	color = "#F5E9D3"
 	boozepwr = 80
@@ -1616,7 +2161,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A creamy, indulgent delight that is stronger than it seems."
 	var/obj/item/shield/mighty_shield
 
+<<<<<<< HEAD
 /datum/reagent/consumable/ethanol/alexander/on_mob_metabolize(mob/living/L)
+=======
+/datum/reagent/consumable/ethanol/alexander/on_mob_add(mob/living/L)
+>>>>>>> Updated this old code to fork
 	if(ishuman(L))
 		var/mob/living/carbon/human/thehuman = L
 		for(var/obj/item/shield/theshield in thehuman.contents)
@@ -1628,9 +2177,15 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/alexander/on_mob_life(mob/living/L)
 	..()
 	if(mighty_shield && !(mighty_shield in L.contents)) //If you had a shield and lose it, you lose the reagent as well. Otherwise this is just a normal drink.
+<<<<<<< HEAD
 		L.reagents.del_reagent(/datum/reagent/consumable/ethanol/alexander)
 
 /datum/reagent/consumable/ethanol/alexander/on_mob_end_metabolize(mob/living/L)
+=======
+		L.reagents.del_reagent("alexander")
+
+/datum/reagent/consumable/ethanol/alexander/on_mob_delete(mob/living/L)
+>>>>>>> Updated this old code to fork
 	if(mighty_shield)
 		mighty_shield.block_chance -= 10
 		to_chat(L,"<span class='notice'>You notice [mighty_shield] looks worn again. Weird.</span>")
@@ -1638,6 +2193,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/sidecar
 	name = "Sidecar"
+<<<<<<< HEAD
+=======
+	id = "sidecar"
+>>>>>>> Updated this old code to fork
 	description = "The one ride you'll gladly give up the wheel for."
 	color = "#FFC55B"
 	boozepwr = 80
@@ -1649,6 +2208,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/between_the_sheets
 	name = "Between the Sheets"
+<<<<<<< HEAD
+=======
+	id = "between_the_sheets"
+>>>>>>> Updated this old code to fork
 	description = "A provocatively named classic. Funny enough, doctors recommend drinking it before taking a nap."
 	color = "#F4C35A"
 	boozepwr = 80
@@ -1661,18 +2224,32 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/between_the_sheets/on_mob_life(mob/living/L)
 	..()
 	if(L.IsSleeping())
+<<<<<<< HEAD
 		if(L.getBruteLoss() && L.getFireLoss()) //If you are damaged by both types, slightly increased healing but it only heals one. The more the merrier wink wink.
+=======
+		if(L.bruteloss && L.fireloss) //If you are damaged by both types, slightly increased healing but it only heals one. The more the merrier wink wink.
+>>>>>>> Updated this old code to fork
 			if(prob(50))
 				L.adjustBruteLoss(-0.25)
 			else
 				L.adjustFireLoss(-0.25)
+<<<<<<< HEAD
 		else if(L.getBruteLoss()) //If you have only one, it still heals but not as well.
 			L.adjustBruteLoss(-0.2)
 		else if(L.getFireLoss())
+=======
+		else if(L.bruteloss && !L.fireloss) //If you have only one, it still heals but not as well.
+			L.adjustBruteLoss(-0.2)
+		else if(!L.bruteloss && L.fireloss)
+>>>>>>> Updated this old code to fork
 			L.adjustFireLoss(-0.2)
 
 /datum/reagent/consumable/ethanol/kamikaze
 	name = "Kamikaze"
+<<<<<<< HEAD
+=======
+	id = "kamikaze"
+>>>>>>> Updated this old code to fork
 	description = "Divinely windy."
 	color = "#EEF191"
 	boozepwr = 60
@@ -1684,6 +2261,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/mojito
 	name = "Mojito"
+<<<<<<< HEAD
+=======
+	id = "mojito"
+>>>>>>> Updated this old code to fork
 	description = "A drink that looks as refreshing as it tastes."
 	color = "#DFFAD9"
 	boozepwr = 30
@@ -1695,6 +2276,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/fernet
 	name = "Fernet"
+<<<<<<< HEAD
+=======
+	id = "fernet"
+>>>>>>> Updated this old code to fork
 	description = "An incredibly bitter herbal liqueur used as a digestif."
 	color = "#1B2E24" // rgb: 27, 46, 36
 	boozepwr = 80
@@ -1711,8 +2296,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/fernet_cola
 	name = "Fernet Cola"
+<<<<<<< HEAD
 	description = "A very popular and bittersweet digestif, ideal after a heavy meal. Best served on a sawed-off cola bottle as per tradition."
 	color = "#390600" // rgb: 57, 6,
+=======
+	id = "fernet_cola"
+	description = "A very popular and bittersweet digestif, ideal after a heavy meal. Best served on a sawed-off cola bottle as per tradition."
+	color = "#390600" // rgb: 57, 6, 0
+>>>>>>> Updated this old code to fork
 	boozepwr = 25
 	quality = DRINK_NICE
 	taste_description = "sweet relief"
@@ -1730,6 +2321,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/fanciulli
 
 	name = "Fanciulli"
+<<<<<<< HEAD
+=======
+	id = "fanciulli"
+>>>>>>> Updated this old code to fork
 	description = "What if the Manhattan coctail ACTUALLY used a bitter herb liquour? Helps you sobers up." //also causes a bit of stamina damage to symbolize the afterdrink lazyness
 	color = "#CA933F" // rgb: 202, 147, 63
 	boozepwr = -10
@@ -1744,7 +2339,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	M.overeatduration = 0
 	return ..()
 
+<<<<<<< HEAD
 /datum/reagent/consumable/ethanol/fanciulli/on_mob_metabolize(mob/living/M)
+=======
+/datum/reagent/consumable/ethanol/fanciulli/on_mob_add(mob/living/M)
+>>>>>>> Updated this old code to fork
 	if(M.health > 0)
 		M.adjustStaminaLoss(20)
 		. = TRUE
@@ -1753,6 +2352,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/branca_menta
 	name = "Branca Menta"
+<<<<<<< HEAD
+=======
+	id = "branca_menta"
+>>>>>>> Updated this old code to fork
 	description = "A refreshing mixture of bitter Fernet with mint creme liquour."
 	color = "#4B5746" // rgb: 75, 87, 70
 	boozepwr = 35
@@ -1767,7 +2370,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	M.adjust_bodytemperature(-20 * TEMPERATURE_DAMAGE_COEFFICIENT, T0C)
 	return ..()
 
+<<<<<<< HEAD
 /datum/reagent/consumable/ethanol/branca_menta/on_mob_metabolize(mob/living/M)
+=======
+/datum/reagent/consumable/ethanol/branca_menta/on_mob_add(mob/living/M)
+>>>>>>> Updated this old code to fork
 	if(M.health > 0)
 		M.adjustStaminaLoss(35)
 		. = TRUE
@@ -1775,6 +2382,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/blank_paper
 	name = "Blank Paper"
+<<<<<<< HEAD
+=======
+	id = "blank_paper"
+>>>>>>> Updated this old code to fork
 	description = "A bubbling glass of blank paper. Just looking at it makes you feel fresh."
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	color = "#DCDCDC" // rgb: 220, 220, 220
@@ -1794,6 +2405,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/fruit_wine
 	name = "Fruit Wine"
+<<<<<<< HEAD
+=======
+	id = "fruit_wine"
+>>>>>>> Updated this old code to fork
 	description = "A wine made from grown plants."
 	color = "#FFFFFF"
 	boozepwr = 35
@@ -1895,6 +2510,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = flavor
 	if(holder.my_atom)
 		holder.my_atom.on_reagent_change()
+<<<<<<< HEAD
 
 
 /datum/reagent/consumable/ethanol/champagne //How the hell did we not have champagne already!?
@@ -2092,3 +2708,5 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "planet_cracker"
 	glass_name = "Planet Cracker"
 	glass_desc = "Although historians believe the drink was originally created to commemorate the end of an important conflict in man's past, its origins have largely been forgotten and it is today seen more as a general symbol of human supremacy."
+=======
+>>>>>>> Updated this old code to fork

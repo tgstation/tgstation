@@ -9,7 +9,11 @@
 
 #_maps/RandomZLevels/blackmarketpackers.dmm
 #_maps/RandomZLevels/spacebattle.dmm
+<<<<<<< HEAD
 #_maps/RandomZLevels/TheBeach.dmm
+=======
+#_maps/RandomZLevels/beach.dmm
+>>>>>>> Updated this old code to fork
 #_maps/RandomZLevels/Academy.dmm
 #_maps/RandomZLevels/wildwest.dmm
 #_maps/RandomZLevels/challenge.dmm
@@ -20,4 +24,11 @@
 #_maps/RandomZLevels/snowdin.dmm
 #_maps/RandomZLevels/research.dmm
 #_maps/RandomZLevels/Cabin.dmm
+<<<<<<< HEAD
 _maps/RandomZLevels/VR/snowdin_VR.dmm
+=======
+#_maps/RandomZLevels/beach2.dmm
+_maps/RandomZLevels/VR/murderdome.dmm
+_maps/RandomZLevels/VR/snowdin_VR.dmm
+_maps/RandomZLevels/VR/syndicate_trainer.dmm
+>>>>>>> Updated this old code to fork

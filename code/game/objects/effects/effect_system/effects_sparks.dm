@@ -25,17 +25,26 @@
 	light_color = LIGHT_COLOR_FIRE
 
 /obj/effect/particle_effect/sparks/Initialize()
+<<<<<<< HEAD
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/particle_effect/sparks/LateInitialize()
 	flick(icon_state, src) // replay the animation
+=======
+	. = ..()
+	flick("sparks", src) // replay the animation
+>>>>>>> Updated this old code to fork
 	playsound(src, "sparks", 100, TRUE)
 	var/turf/T = loc
 	if(isturf(T))
 		T.hotspot_expose(1000,100)
+<<<<<<< HEAD
 	sleep(20)
 	qdel(src)
+=======
+	QDEL_IN(src, 20)
+>>>>>>> Updated this old code to fork
 
 /obj/effect/particle_effect/sparks/Destroy()
 	var/turf/T = loc
@@ -52,9 +61,12 @@
 /datum/effect_system/spark_spread
 	effect_type = /obj/effect/particle_effect/sparks
 
+<<<<<<< HEAD
 /datum/effect_system/spark_spread/quantum
 	effect_type = /obj/effect/particle_effect/sparks/quantum
 
+=======
+>>>>>>> Updated this old code to fork
 
 //electricity
 
@@ -62,9 +74,12 @@
 	name = "lightning"
 	icon_state = "electricity"
 
+<<<<<<< HEAD
 /obj/effect/particle_effect/sparks/quantum
 	name = "quantum sparks"
 	icon_state = "quantum_sparks"
 
+=======
+>>>>>>> Updated this old code to fork
 /datum/effect_system/lightning_spread
 	effect_type = /obj/effect/particle_effect/sparks/electricity

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
     "map_name": "Runtime Station",
     "map_path": "map_files/debug",
@@ -6,3 +7,13 @@
 	    "cargo": "cargo_delta"
     }
 }
+=======
+{
+    "map_name": "Runtime Station",
+    "map_path": "map_files/debug",
+    "map_file": "runtimestation.dmm",
+	"shuttles": {
+	    "cargo": "cargo_delta"
+    }
+}
+>>>>>>> Updated this old code to fork

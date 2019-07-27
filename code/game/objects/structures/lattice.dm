@@ -18,11 +18,19 @@
 	//	flags = CONDUCT_1
 
 /obj/structure/lattice/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	. += deconstruction_hints(user)
 
 /obj/structure/lattice/proc/deconstruction_hints(mob/user)
 	return "<span class='notice'>The rods look like they could be <b>cut</b>. There's space for more <i>rods</i> or a <i>tile</i>.</span>"
+=======
+	..()
+	deconstruction_hints(user)
+
+/obj/structure/lattice/proc/deconstruction_hints(mob/user)
+	to_chat(user, "<span class='notice'>The rods look like they could be <b>cut</b>. There's space for more <i>rods</i> or a <i>tile</i>.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/structure/lattice/Initialize(mapload)
 	. = ..()
@@ -51,6 +59,7 @@
 		new /obj/item/stack/rods(get_turf(src), number_of_rods)
 	qdel(src)
 
+<<<<<<< HEAD
 /obj/structure/lattice/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_FLOORWALL)
 		return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 2)
@@ -65,6 +74,8 @@
 			return TRUE
 	return FALSE
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/structure/lattice/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FOUR)
 		deconstruct()
@@ -102,7 +113,11 @@
 	canSmoothWith = null
 
 /obj/structure/lattice/catwalk/deconstruction_hints(mob/user)
+<<<<<<< HEAD
 	return "<span class='notice'>The supporting rods look like they could be <b>cut</b>.</span>"
+=======
+	to_chat(user, "<span class='notice'>The supporting rods look like they could be <b>cut</b>.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/structure/lattice/catwalk/ratvar_act()
 	new /obj/structure/lattice/catwalk/clockwork(loc)

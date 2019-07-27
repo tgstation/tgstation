@@ -33,7 +33,11 @@
 	if(!wielded || !user)
 		return
 	wielded = 0
+<<<<<<< HEAD
 	if(!isnull(force_unwielded))
+=======
+	if(force_unwielded)
+>>>>>>> Updated this old code to fork
 		force = force_unwielded
 	var/sf = findtext(name," (Wielded)")
 	if(sf)
@@ -263,7 +267,10 @@
  * Double-Bladed Energy Swords - Cheridan
  */
 /obj/item/twohanded/dualsaber
+<<<<<<< HEAD
 	icon = 'icons/obj/transforming_energy.dmi'
+=======
+>>>>>>> Updated this old code to fork
 	icon_state = "dualsaber0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -349,7 +356,11 @@
 			unwield()
 			return
 	..()
+<<<<<<< HEAD
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && (wielded) && prob(40))
+=======
+	if(user.has_trait(TRAIT_CLUMSY) && (wielded) && prob(40))
+>>>>>>> Updated this old code to fork
 		impale(user)
 		return
 	if((wielded) && prob(50))
@@ -467,7 +478,11 @@
 	throw_speed = 4
 	embedding = list("embedded_impact_pain_multiplier" = 3)
 	armour_penetration = 10
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
+=======
+	materials = list(MAT_METAL=1150, MAT_GLASS=2075)
+>>>>>>> Updated this old code to fork
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 	sharpness = IS_SHARP
@@ -510,7 +525,11 @@
 		parts_list -= G
 		qdel(src)
 	..()
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> Updated this old code to fork
 
 /obj/item/twohanded/spear/explosive
 	name = "explosive lance"
@@ -522,6 +541,10 @@
 		G = new /obj/item/grenade/iedcasing() //For admin-spawned explosive lances
 	G.forceMove(src)
 	explosive = G
+<<<<<<< HEAD
+=======
+
+>>>>>>> Updated this old code to fork
 	desc = "A makeshift spear with [G] attached to it"
 	update_icon()
 
@@ -535,12 +558,29 @@
 	return BRUTELOSS
 
 /obj/item/twohanded/spear/explosive/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	. += "<span class='notice'>Alt-click to set your war cry.</span>"
 
 /obj/item/twohanded/spear/explosive/update_icon()
 	icon_state = "spearbomb[wielded]"
 
+=======
+	..()
+	to_chat(user, "<span class='notice'>Alt-click to set your war cry.</span>")
+
+/obj/item/twohanded/spear/explosive/update_icon()	
+	icon_state = "spearbomb[wielded]"
+
+ //THIS MIGHT BE UNBALANCED SO I DUNNO // it totally is.
+/obj/item/twohanded/spear/explosive/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(!.) //not caught
+		explosive.forceMove(get_turf(src))
+		explosive.prime()
+		qdel(src)
+
+>>>>>>> Updated this old code to fork
 /obj/item/twohanded/spear/explosive/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE))
 		..()
@@ -551,8 +591,11 @@
 
 /obj/item/twohanded/spear/explosive/afterattack(atom/movable/AM, mob/user, proximity)
 	. = ..()
+<<<<<<< HEAD
 	if(!proximity)
 		return
+=======
+>>>>>>> Updated this old code to fork
 	if(wielded)
 		user.say("[war_cry]", forced="spear warcry")
 		explosive.forceMove(AM)
@@ -573,7 +616,11 @@
 	throwforce = 13
 	throw_speed = 2
 	throw_range = 4
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=13000)
+=======
+	materials = list(MAT_METAL=13000)
+>>>>>>> Updated this old code to fork
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = "swing_hit"
 	sharpness = IS_SHARP
@@ -602,7 +649,11 @@
 	force = on ? force_on : initial(force)
 	throwforce = on ? force_on : initial(force)
 	icon_state = "chainsaw_[on ? "on" : "off"]"
+<<<<<<< HEAD
 	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
+=======
+	GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
+>>>>>>> Updated this old code to fork
 	butchering.butchering_enabled = on
 
 	if(on)
@@ -721,7 +772,11 @@
 
 /obj/item/twohanded/pitchfork/demonic/attack(mob/target, mob/living/carbon/human/user)
 	if(user.mind && user.owns_soul() && !is_devil(user))
+<<<<<<< HEAD
 		to_chat(user, "<span class='warning'>[src] burns in your hands.</span>")
+=======
+		to_chat(user, "<span class ='warning'>[src] burns in your hands.</span>")
+>>>>>>> Updated this old code to fork
 		user.apply_damage(rand(force/2, force), BURN, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 	..()
 
@@ -824,6 +879,7 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
+<<<<<<< HEAD
 	var/mob/listeningTo
 	var/zoom_out_amt = 6
 	var/zoom_amt = 10
@@ -832,12 +888,25 @@
 	listeningTo = null
 	return ..()
 
+=======
+	var/datum/component/mobhook
+	var/zoom_out_amt = 6
+	var/zoom_amt = 10
+
+>>>>>>> Updated this old code to fork
 /obj/item/twohanded/binoculars/wield(mob/user)
 	. = ..()
 	if(!wielded)
 		return
+<<<<<<< HEAD
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/unwield)
 	listeningTo = user
+=======
+	if(QDELETED(mobhook))
+		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/unwield)))
+	else
+		user.TakeComponent(mobhook)
+>>>>>>> Updated this old code to fork
 	user.visible_message("[user] holds [src] up to [user.p_their()] eyes.","You hold [src] up to your eyes.")
 	item_state = "binoculars_wielded"
 	user.regenerate_icons()
@@ -861,8 +930,12 @@
 
 /obj/item/twohanded/binoculars/unwield(mob/user)
 	. = ..()
+<<<<<<< HEAD
 	UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 	listeningTo = null
+=======
+	mobhook.RemoveComponent()
+>>>>>>> Updated this old code to fork
 	user.visible_message("[user] lowers [src].","You lower [src].")
 	item_state = "binoculars"
 	user.regenerate_icons()

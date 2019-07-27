@@ -85,6 +85,10 @@
 	name = "Shuttle Airlock"
 	},
 /obj/docking_port/mobile{
+<<<<<<< HEAD
+=======
+	dheight = 0;
+>>>>>>> Updated this old code to fork
 	dir = 8;
 	dwidth = 4;
 	height = 9;
@@ -92,6 +96,10 @@
 	launch_status = 0;
 	name = "White Ship";
 	port_direction = 4;
+<<<<<<< HEAD
+=======
+	preferred_direction = 1;
+>>>>>>> Updated this old code to fork
 	width = 9
 	},
 /turf/open/floor/plasteel/dark,

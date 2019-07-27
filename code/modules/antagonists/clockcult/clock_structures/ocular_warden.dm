@@ -25,8 +25,13 @@
 	return ..()
 
 /obj/structure/destructible/clockwork/ocular_warden/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	. += "<span class='brass'>[target ? "<b>It's fixated on [target]!</b>" : "Its gaze is wandering aimlessly."]</span>"
+=======
+	..()
+	to_chat(user, "<span class='brass'>[target ? "<b>It's fixated on [target]!</b>" : "Its gaze is wandering aimlessly."]</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/structure/destructible/clockwork/ocular_warden/hulk_damage()
 	return 25
@@ -60,7 +65,11 @@
 		else
 			if(isliving(target))
 				var/mob/living/L = target
+<<<<<<< HEAD
 				if(!L.anti_magic_check(chargecost = 0))
+=======
+				if(!L.anti_magic_check(major = FALSE))
+>>>>>>> Updated this old code to fork
 					if(isrevenant(L))
 						var/mob/living/simple_animal/revenant/R = L
 						if(R.revealed)
@@ -110,7 +119,11 @@
 				if(!(BI.resistance_flags & ON_FIRE))
 					BI.fire_act()
 			continue
+<<<<<<< HEAD
 		if(is_servant_of_ratvar(L) || (HAS_TRAIT(L, TRAIT_BLIND)) || L.anti_magic_check(TRUE, TRUE))
+=======
+		if(is_servant_of_ratvar(L) || (L.has_trait(TRAIT_BLIND)) || L.anti_magic_check(TRUE, TRUE))
+>>>>>>> Updated this old code to fork
 			continue
 		if(L.stat || !(L.mobility_flags & MOBILITY_STAND))
 			continue

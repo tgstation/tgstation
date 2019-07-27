@@ -10,6 +10,7 @@
 	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SHOW, imp_in, TRUE)
 
 /obj/item/implant/storage/removed(source, silent = FALSE, special = 0)
+<<<<<<< HEAD
 	if(!special)
 		var/datum/component/storage/lostimplant = GetComponent(/datum/component/storage/concrete/implant)
 		var/mob/living/implantee = source
@@ -20,12 +21,22 @@
 		implantee.apply_damage(20, BRUTE, BODY_ZONE_CHEST)
 		qdel(lostimplant)
 	return ..()
+=======
+	. = ..()
+	if(.)
+		if(!special)
+			qdel(GetComponent(/datum/component/storage/concrete/implant))
+>>>>>>> Updated this old code to fork
 
 /obj/item/implant/storage/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	for(var/X in target.implants)
 		if(istype(X, type))
 			var/obj/item/implant/storage/imp_e = X
+<<<<<<< HEAD
 			var/datum/component/storage/STR = imp_e.GetComponent(/datum/component/storage)
+=======
+			GET_COMPONENT_FROM(STR, /datum/component/storage, imp_e)
+>>>>>>> Updated this old code to fork
 			if(!STR || (STR && STR.max_items < max_slot_stacking))
 				imp_e.AddComponent(/datum/component/storage/concrete/implant)
 				qdel(src)

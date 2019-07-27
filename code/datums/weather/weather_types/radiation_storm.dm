@@ -33,7 +33,11 @@
 	if(prob(40))
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
+<<<<<<< HEAD
 			if(H.dna && !HAS_TRAIT(H, TRAIT_RADIMMUNE))
+=======
+			if(H.dna && !H.has_trait(TRAIT_RADIMMUNE))
+>>>>>>> Updated this old code to fork
 				if(prob(max(0,100-resist)))
 					H.randmuti()
 					if(prob(50))

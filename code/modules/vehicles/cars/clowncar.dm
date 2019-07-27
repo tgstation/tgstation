@@ -42,10 +42,13 @@
 			var/mob/voreman = i
 			SSmedals.UnlockMedal(MEDAL_CLOWNCARKING,voreman.client)
 
+<<<<<<< HEAD
 /obj/vehicle/sealed/car/clowncar/attack_animal(mob/living/simple_animal/M)
 	if((M.loc != src) || M.environment_smash & (ENVIRONMENT_SMASH_WALLS|ENVIRONMENT_SMASH_RWALLS))
 		return ..()
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/vehicle/sealed/car/clowncar/mob_exit(mob/M, silent = FALSE, randomstep = FALSE)
 	. = ..()
 	UnregisterSignal(M, COMSIG_MOB_CLICKON)
@@ -126,7 +129,11 @@
 			visible_message("<span class='danger'>[user] has pressed one of the colorful buttons on [src] and the clown car spews out a cloud of laughing gas.</span>")
 			var/datum/reagents/R = new/datum/reagents(300)
 			R.my_atom = src
+<<<<<<< HEAD
 			R.add_reagent(/datum/reagent/consumable/superlaughter, 50)
+=======
+			R.add_reagent("superlaughter", 50)
+>>>>>>> Updated this old code to fork
 			var/datum/effect_system/smoke_spread/chem/smoke = new()
 			smoke.set_up(R, 4)
 			smoke.attach(src)

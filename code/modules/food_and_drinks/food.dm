@@ -1,12 +1,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// Food.
 ////////////////////////////////////////////////////////////////////////////////
+<<<<<<< HEAD
 /// Note: When adding food items with dummy parents, make sure to add
 /// the parent to the exclusion list in code/__HELPERS/unsorted.dm's
 /// get_random_food proc.
 ////////////////////////////////////////////////////////////////////////////////
 #define STOP_SERVING_BREAKFAST (15 MINUTES)
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/item/reagent_containers/food
 	possible_transfer_amounts = list()
 	volume = 50	//Sets the default container amount for all food items.
@@ -25,7 +28,11 @@
 	if(last_check_time + 50 < world.time)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
+<<<<<<< HEAD
 			if(!HAS_TRAIT(H, TRAIT_AGEUSIA))
+=======
+			if(!H.has_trait(TRAIT_AGEUSIA))
+>>>>>>> Updated this old code to fork
 				if(foodtype & H.dna.species.toxic_food)
 					to_chat(H,"<span class='warning'>What the hell was that thing?!</span>")
 					H.adjust_disgust(25 + 30 * fraction)
@@ -42,8 +49,12 @@
 				if(foodtype & H.dna.species.toxic_food)
 					to_chat(H, "<span class='warning'>You don't feel so good...</span>")
 					H.adjust_disgust(25 + 30 * fraction)
+<<<<<<< HEAD
 			if((foodtype & BREAKFAST) && world.time - SSticker.round_start_time < STOP_SERVING_BREAKFAST)
 				SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "breakfast", /datum/mood_event/breakfast)
 			last_check_time = world.time
 
 #undef STOP_SERVING_BREAKFAST
+=======
+			last_check_time = world.time
+>>>>>>> Updated this old code to fork

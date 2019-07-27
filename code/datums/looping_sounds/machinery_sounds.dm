@@ -42,4 +42,8 @@
 	mid_sounds = list('sound/machines/microwave/microwave-mid1.ogg'=10, 'sound/machines/microwave/microwave-mid2.ogg'=1)
 	mid_length = 10
 	end_sound = 'sound/machines/microwave/microwave-end.ogg'
+<<<<<<< HEAD
 	volume = 90
+=======
+	volume = 90
+>>>>>>> Updated this old code to fork

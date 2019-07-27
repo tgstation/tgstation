@@ -20,7 +20,11 @@
 
 /obj/effect/countdown/examine(mob/user)
 	. = ..()
+<<<<<<< HEAD
 	. += "This countdown is displaying: [displayed_text]."
+=======
+	to_chat(user, "This countdown is displaying: [displayed_text].")
+>>>>>>> Updated this old code to fork
 
 /obj/effect/countdown/proc/attach(atom/A)
 	attached_to = A
@@ -63,12 +67,15 @@
 /obj/effect/countdown/ex_act(severity, target) //immune to explosions
 	return
 
+<<<<<<< HEAD
 /obj/effect/countdown/singularity_pull()
 	return
 
 /obj/effect/countdown/singularity_act()
 	return
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/effect/countdown/syndicatebomb
 	name = "syndicate bomb countdown"
 
@@ -160,6 +167,7 @@
 		var/time_left = max(0, (A.death_time - world.time) / 10)
 		return round(time_left)
 
+<<<<<<< HEAD
 /obj/effect/countdown/hourglass
 	name = "hourglass countdown"
 
@@ -170,3 +178,10 @@
 	else
 		var/time_left = max(0, (H.finish_time - world.time) / 10)
 		return round(time_left)
+=======
+/obj/effect/countdown/singularity_pull()
+	return
+
+/obj/effect/countdown/singularity_act()
+	return
+>>>>>>> Updated this old code to fork

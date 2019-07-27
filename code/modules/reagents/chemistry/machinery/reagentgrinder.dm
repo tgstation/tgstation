@@ -52,6 +52,7 @@
 		speed = M.rating
 
 /obj/machinery/reagentgrinder/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
 		. += "<span class='warning'>You're too far away to examine [src]'s contents and display!</span>"
@@ -75,6 +76,30 @@
 		if(beaker)
 			for(var/datum/reagent/R in beaker.reagents.reagent_list)
 				. += "<span class='notice'>- [R.volume] units of [R.name].</span>"
+=======
+	..()
+	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
+		to_chat(user, "<span class='warning'>You're too far away to examine [src]'s contents and display!</span>")
+		return
+
+	if(operating)
+		to_chat(user, "<span class='warning'>\The [src] is operating.</span>")
+		return
+
+	if(beaker || length(holdingitems))
+		to_chat(user, "<span class='notice'>\The [src] contains:</span>")
+		if(beaker)
+			to_chat(user, "<span class='notice'>- \A [beaker].</span>")
+		for(var/i in holdingitems)
+			var/obj/item/O = i
+			to_chat(user, "<span class='notice'>- \A [O.name].</span>")
+
+	if(!(stat & (NOPOWER|BROKEN)))
+		to_chat(user, "<span class='notice'>The status display reads:</span>")
+		to_chat(user, "<span class='notice'>- Grinding reagents at <b>[speed*100]%</b>.<span>")
+		for(var/datum/reagent/R in beaker.reagents.reagent_list)
+			to_chat(user, "<span class='notice'>- [R.volume] units of [R.name].</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/reagentgrinder/handle_atom_del(atom/A)
 	. = ..()
@@ -166,7 +191,11 @@
 /obj/machinery/reagentgrinder/ui_interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave
 	. = ..()
 
+<<<<<<< HEAD
 	if(operating || !user.canUseTopic(src, !issilicon(user)))
+=======
+	if(operating || !user.canUseTopic(src))
+>>>>>>> Updated this old code to fork
 		return
 
 	var/list/options = list()
@@ -197,7 +226,11 @@
 		choice = show_radial_menu(user, src, options, require_near = !issilicon(user))
 
 	// post choice verification
+<<<<<<< HEAD
 	if(operating || (isAI(user) && stat & NOPOWER) || !user.canUseTopic(src, !issilicon(user)))
+=======
+	if(operating || (isAI(user) && stat & NOPOWER) || !user.canUseTopic(src))
+>>>>>>> Updated this old code to fork
 		return
 
 	switch(choice)
@@ -256,7 +289,10 @@
 		if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
 		var/obj/item/I = i
+<<<<<<< HEAD
 		check_trash(I)
+=======
+>>>>>>> Updated this old code to fork
 		if(I.juice_results)
 			juice_item(I)
 
@@ -276,7 +312,10 @@
 		if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
 		var/obj/item/I = i
+<<<<<<< HEAD
 		check_trash(I)
+=======
+>>>>>>> Updated this old code to fork
 		if(I.grind_results)
 			grind_item(i, user)
 
@@ -289,12 +328,15 @@
 		I.reagents.trans_to(beaker, I.reagents.total_volume, transfered_by = user)
 	remove_object(I)
 
+<<<<<<< HEAD
 /obj/machinery/reagentgrinder/proc/check_trash(obj/item/I)
 	if (istype(I, /obj/item/reagent_containers/food/snacks))
 		var/obj/item/reagent_containers/food/snacks/R = I
 		if (R.trash)
 			R.generate_trash(get_turf(src))
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/machinery/reagentgrinder/proc/mix(mob/user)
 	//For butter and other things that would change upon shaking or mixing
 	power_change()
@@ -306,6 +348,7 @@
 /obj/machinery/reagentgrinder/proc/mix_complete()
 	if(beaker?.reagents.total_volume)
 		//Recipe to make Butter
+<<<<<<< HEAD
 		var/butter_amt = FLOOR(beaker.reagents.get_reagent_amount(/datum/reagent/consumable/milk) / MILK_TO_BUTTER_COEFF, 1)
 		beaker.reagents.remove_reagent(/datum/reagent/consumable/milk, MILK_TO_BUTTER_COEFF * butter_amt)
 		for(var/i in 1 to butter_amt)
@@ -315,3 +358,14 @@
 			var/amount = beaker.reagents.get_reagent_amount(/datum/reagent/consumable/eggyolk)
 			beaker.reagents.remove_reagent(/datum/reagent/consumable/eggyolk, amount)
 			beaker.reagents.add_reagent(/datum/reagent/consumable/mayonnaise, amount)
+=======
+		var/butter_amt = FLOOR(beaker.reagents.get_reagent_amount("milk") / MILK_TO_BUTTER_COEFF, 1)
+		beaker.reagents.remove_reagent("milk", MILK_TO_BUTTER_COEFF * butter_amt)
+		for(var/i in 1 to butter_amt)
+			new /obj/item/reagent_containers/food/snacks/butter(drop_location())
+		//Recipe to make Mayonnaise
+		if (beaker.reagents.has_reagent("eggyolk"))
+			var/amount = beaker.reagents.get_reagent_amount("eggyolk")
+			beaker.reagents.remove_reagent("eggyolk", amount)
+			beaker.reagents.add_reagent("mayonnaise", amount)
+>>>>>>> Updated this old code to fork

@@ -68,7 +68,12 @@
 		for(var/mob/living/carbon/monkey/M in view(7,src))
 			M.next_battle_screech = world.time + battle_screech_cooldown
 
+<<<<<<< HEAD
 /mob/living/carbon/monkey/proc/equip_item(obj/item/I)
+=======
+/mob/living/carbon/monkey/proc/equip_item(var/obj/item/I)
+
+>>>>>>> Updated this old code to fork
 	if(I.loc == src)
 		return TRUE
 
@@ -118,7 +123,11 @@
 		cuff_resist(I)
 
 /mob/living/carbon/monkey/proc/should_target(var/mob/living/L)
+<<<<<<< HEAD
 	if(HAS_TRAIT(src, TRAIT_PACIFISM))
+=======
+	if(has_trait(TRAIT_PACIFISM))
+>>>>>>> Updated this old code to fork
 		return FALSE
 
 	if(enemies[L])
@@ -132,7 +141,11 @@
 
 /mob/living/carbon/monkey/proc/handle_combat()
 	if(pickupTarget)
+<<<<<<< HEAD
 		if(IsDeadOrIncap() || restrained() || blacklistItems[pickupTarget] || HAS_TRAIT(pickupTarget, TRAIT_NODROP))
+=======
+		if(restrained() || blacklistItems[pickupTarget] || pickupTarget.has_trait(TRAIT_NODROP))
+>>>>>>> Updated this old code to fork
 			pickupTarget = null
 		else
 			pickupTimer++
@@ -309,9 +322,14 @@
 		for(var/obj/item/I in M.held_items)
 			if(I == pickupTarget)
 				M.visible_message("<span class='danger'>[src] snatches [pickupTarget] from [M].</span>", "<span class='userdanger'>[src] snatched [pickupTarget]!</span>")
+<<<<<<< HEAD
 				if(M.temporarilyRemoveItemFromInventory(pickupTarget))
 					if(!QDELETED(pickupTarget) && !equip_item(pickupTarget))
 						pickupTarget.forceMove(drop_location())
+=======
+				if(M.temporarilyRemoveItemFromInventory(pickupTarget) && !QDELETED(pickupTarget))
+					equip_item(pickupTarget)
+>>>>>>> Updated this old code to fork
 				else
 					M.visible_message("<span class='danger'>[src] tried to snatch [pickupTarget] from [M], but failed!</span>", "<span class='userdanger'>[src] tried to grab [pickupTarget]!</span>")
 	pickpocketing = FALSE

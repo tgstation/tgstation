@@ -18,15 +18,23 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/effect/clockwork/spatial_gateway,
 		/obj/structure/destructible/clockwork/powered/clockwork_obelisk,
 		/obj/item/warp_cube,
+<<<<<<< HEAD
 		/obj/machinery/rnd/production, //print tracking beacons, send shuttle
+=======
+		/obj/machinery/rnd/production/protolathe, //print tracking beacons, send shuttle
+>>>>>>> Updated this old code to fork
 		/obj/machinery/autolathe, //same
 		/obj/item/projectile/beam/wormhole,
 		/obj/effect/portal,
 		/obj/item/shared_storage,
 		/obj/structure/extraction_point,
 		/obj/machinery/syndicatebomb,
+<<<<<<< HEAD
 		/obj/item/hilbertshotel,
 		/obj/item/swapper
+=======
+		/obj/item/hilbertshotel
+>>>>>>> Updated this old code to fork
 	)))
 
 /obj/docking_port/mobile/supply
@@ -79,9 +87,12 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		sell()
 
 /obj/docking_port/mobile/supply/proc/buy()
+<<<<<<< HEAD
 	var/list/obj/miscboxes = list() //miscboxes are combo boxes that contain all small_item orders grouped
 	var/list/misc_order_num = list() //list of strings of order numbers, so that the manifest can show all orders in a box
 	var/list/misc_contents = list() //list of lists of items that each box will contain
+=======
+>>>>>>> Updated this old code to fork
 	if(!SSshuttle.shoppinglist.len)
 		return
 
@@ -119,6 +130,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		SSshuttle.shoppinglist -= SO
 		SSshuttle.orderhistory += SO
 
+<<<<<<< HEAD
 		if(SO.pack.small_item) //small_item means it gets piled in the miscbox
 			if(SO.paying_account)
 				if(!miscboxes.len || !miscboxes[D.account_holder]) //if there's no miscbox for this person
@@ -143,18 +155,24 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		else
 			SO.generate(pick_n_take(empty_turfs))
 
+=======
+		SO.generate(pick_n_take(empty_turfs))
+>>>>>>> Updated this old code to fork
 		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[SO.pack.cost]", "[SO.pack.name]"))
 		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]), paid by [D.account_holder] has shipped.", INVESTIGATE_CARGO)
 		if(SO.pack.dangerous)
 			message_admins("\A [SO.pack.name] ordered by [ADMIN_LOOKUPFLW(SO.orderer_ckey)], paid by [D.account_holder] has shipped.")
 		purchases++
 
+<<<<<<< HEAD
 	for(var/I in miscboxes)
 		var/datum/supply_order/SO = new/datum/supply_order()
 		SO.id = misc_order_num[I]
 		SO.generateCombo(miscboxes[I], I, misc_contents[I])
 		qdel(SO)
 
+=======
+>>>>>>> Updated this old code to fork
 	var/datum/bank_account/cargo_budget = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	investigate_log("[purchases] orders in this shipment, worth [value] credits. [cargo_budget.account_balance] credits left.", INVESTIGATE_CARGO)
 

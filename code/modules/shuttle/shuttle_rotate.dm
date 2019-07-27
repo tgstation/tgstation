@@ -46,6 +46,24 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 
 /************************************Structure rotate procs************************************/
 
+<<<<<<< HEAD
+=======
+/obj/structure/cable/shuttleRotate(rotation, params)
+	params &= ~ROTATE_DIR
+	. = ..()
+	if(d1)
+		d1 = angle2dir(rotation+dir2angle(d1))
+	if(d2)
+		d2 = angle2dir(rotation+dir2angle(d2))
+
+	//d1 should be less than d2 for cable icons to work
+	if(d1 > d2)
+		var/temp = d1
+		d1 = d2
+		d2 = temp
+	update_icon()
+
+>>>>>>> Updated this old code to fork
 //Fixes dpdir on shuttle rotation
 /obj/structure/disposalpipe/shuttleRotate(rotation, params)
 	. = ..()
@@ -100,4 +118,8 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 /obj/machinery/porta_turret/shuttleRotate(rotation, params)
 	. = ..()
 	if(wall_turret_direction && (params & ROTATE_DIR))
+<<<<<<< HEAD
 		wall_turret_direction = turn(wall_turret_direction,rotation)
+=======
+		wall_turret_direction = turn(wall_turret_direction,rotation)
+>>>>>>> Updated this old code to fork

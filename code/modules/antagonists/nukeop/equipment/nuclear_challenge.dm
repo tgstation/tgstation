@@ -61,6 +61,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	for(var/obj/machinery/computer/camera_advanced/shuttle_docker/D in GLOB.jam_on_wardec)
 		D.jammed = TRUE
 
+<<<<<<< HEAD
 	var/list/orphans = list()
 	var/list/uplinks = list()
 
@@ -94,6 +95,9 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 				C.visible_message("<span class='notice'>[C] coughs up a half-digested telecrystal</span>","<span class='usernotice'>You cough up a half-digested telecrystal!</span>")
 				break
 
+=======
+	new uplink_type(get_turf(user), user.key, CHALLENGE_TELECRYSTALS)
+>>>>>>> Updated this old code to fork
 	CONFIG_SET(number/shuttle_refuel_delay, max(CONFIG_GET(number/shuttle_refuel_delay), CHALLENGE_SHUTTLE_DELAY))
 	SSblackbox.record_feedback("amount", "nuclear_challenge_mode", 1)
 

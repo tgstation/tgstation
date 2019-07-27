@@ -82,6 +82,7 @@
 		return
 	. = ..()
 
+<<<<<<< HEAD
 /obj/machinery/computer/shuttle/mining/common
 	name = "lavaland shuttle console"
 	desc = "Used to call and send the lavaland shuttle."
@@ -90,6 +91,8 @@
 	possible_destinations = "whiteship_home;lavaland_common_away;landing_zone_dock;mining_public"
 
 
+=======
+>>>>>>> Updated this old code to fork
 /**********************Mining car (Crate like thing, not the rail car)**************************/
 
 /obj/structure/closet/crate/miningcar

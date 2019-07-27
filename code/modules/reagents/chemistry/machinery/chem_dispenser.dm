@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /proc/translate_legacy_chem_id(id)
 	switch (id)
 		if ("sacid")
@@ -11,6 +12,8 @@
 		else
 			return ckey(id)
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
 	desc = "Creates and dispenses chemicals."
@@ -22,6 +25,10 @@
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_dispenser
+<<<<<<< HEAD
+=======
+	var/cell_type = /obj/item/stock_parts/cell/high
+>>>>>>> Updated this old code to fork
 	var/obj/item/stock_parts/cell/cell
 	var/powerefficiency = 0.1
 	var/amount = 30
@@ -33,6 +40,7 @@
 	var/has_panel_overlay = TRUE
 	var/macroresolution = 1
 	var/obj/item/reagent_containers/beaker = null
+<<<<<<< HEAD
 	//dispensable_reagents is copypasted in plumbing synthesizers. Please update accordingly. (I didn't make it global because that would limit custom chem dispensers)
 	var/list/dispensable_reagents = list(
 		/datum/reagent/aluminium,
@@ -77,17 +85,67 @@
 		/datum/reagent/medicine/morphine,
 		/datum/reagent/drug/space_drugs,
 		/datum/reagent/toxin
+=======
+	var/list/dispensable_reagents = list(
+		"hydrogen",
+		"lithium",
+		"carbon",
+		"nitrogen",
+		"oxygen",
+		"fluorine",
+		"sodium",
+		"aluminium",
+		"silicon",
+		"phosphorus",
+		"sulfur",
+		"chlorine",
+		"potassium",
+		"iron",
+		"copper",
+		"mercury",
+		"radium",
+		"water",
+		"ethanol",
+		"sugar",
+		"sacid",
+		"welding_fuel",
+		"silver",
+		"iodine",
+		"bromine",
+		"stable_plasma"
+	)
+	//these become available once the manipulator has been upgraded to tier 4 (femto)
+	var/list/upgrade_reagents = list(
+		"oil",
+		"ash",
+		"acetone",
+		"saltpetre",
+		"ammonia",
+		"diethylamine"
+	)
+	var/list/emagged_reagents = list(
+		"space_drugs",
+		"morphine",
+		"carpotoxin",
+		"mine_salve",
+		"toxin"
+>>>>>>> Updated this old code to fork
 	)
 
 	var/list/saved_recipes = list()
 
 /obj/machinery/chem_dispenser/Initialize()
 	. = ..()
+<<<<<<< HEAD
 	dispensable_reagents = sortList(dispensable_reagents, /proc/cmp_reagents_asc)
 	if(emagged_reagents)
 		emagged_reagents = sortList(emagged_reagents, /proc/cmp_reagents_asc)
 	if(upgrade_reagents)
 		upgrade_reagents = sortList(upgrade_reagents, /proc/cmp_reagents_asc)
+=======
+	cell = new cell_type
+	dispensable_reagents = sortList(dispensable_reagents)
+>>>>>>> Updated this old code to fork
 	update_icon()
 
 /obj/machinery/chem_dispenser/Destroy()
@@ -96,6 +154,7 @@
 	return ..()
 
 /obj/machinery/chem_dispenser/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(panel_open)
 		. += "<span class='notice'>[src]'s maintenance hatch is open!</span>"
@@ -104,6 +163,13 @@
 		"Recharging <b>[recharge_amount]</b> power units per interval.\n"+\
 		"Power efficiency increased by <b>[round((powerefficiency*1000)-100, 1)]%</b>.\n"+\
 		"Macro granularity at <b>[macroresolution]u</b>.</span>"
+=======
+	..()
+	if(panel_open)
+		to_chat(user, "<span class='notice'>[src]'s maintenance hatch is open!</span>")
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: <br>Recharging <b>[recharge_amount]</b> power units per interval.<br>Power efficiency increased by <b>[round((powerefficiency*1000)-100, 1)]%</b>.<br>Macro granularity at <b>[macroresolution]u</b>.<span>")
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/chem_dispenser/process()
 	if (recharge_counter >= 4)
@@ -117,6 +183,10 @@
 	recharge_counter++
 
 /obj/machinery/chem_dispenser/proc/display_beaker()
+<<<<<<< HEAD
+=======
+	..()
+>>>>>>> Updated this old code to fork
 	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
 	b_o.pixel_y = -4
 	b_o.pixel_x = -7
@@ -208,7 +278,11 @@
 			var/chemname = temp.name
 			if(is_hallucinating && prob(5))
 				chemname = "[pick_list_replacements("hallucination.json", "chemicals")]"
+<<<<<<< HEAD
 			chemicals.Add(list(list("title" = chemname, "id" = ckey(temp.name))))
+=======
+			chemicals.Add(list(list("title" = chemname, "id" = temp.id)))
+>>>>>>> Updated this old code to fork
 	for(var/recipe in saved_recipes)
 		recipes.Add(list(recipe))
 	data["chemicals"] = chemicals
@@ -230,7 +304,11 @@
 		if("dispense")
 			if(!is_operational() || QDELETED(cell))
 				return
+<<<<<<< HEAD
 			var/reagent = GLOB.name2reagent[params["reagent"]]
+=======
+			var/reagent = params["reagent"]
+>>>>>>> Updated this old code to fork
 			if(beaker && dispensable_reagents.Find(reagent))
 				var/datum/reagents/R = beaker.reagents
 				var/free = R.maximum_volume - R.total_volume
@@ -262,7 +340,11 @@
 			var/res = macroresolution
 			for(var/key in chemicals_to_dispense) // i suppose you could edit the list locally before passing it
 				var/list/keysplit = splittext(key," ")
+<<<<<<< HEAD
 				var/r_id = GLOB.name2reagent[translate_legacy_chem_id(keysplit[1])]
+=======
+				var/r_id = keysplit[1]
+>>>>>>> Updated this old code to fork
 				if(beaker && dispensable_reagents.Find(r_id)) // but since we verify we have the reagent, it'll be fine
 					var/datum/reagents/R = beaker.reagents
 					var/free = R.maximum_volume - R.total_volume
@@ -294,8 +376,12 @@
 				var/resmismatch = FALSE
 				for(var/reagents in first_process)
 					var/list/reagent = splittext(reagents, "=")
+<<<<<<< HEAD
 					var/reagent_id = GLOB.name2reagent[translate_legacy_chem_id(reagent[1])]
 					if(dispensable_reagents.Find(reagent_id))
+=======
+					if(dispensable_reagents.Find(reagent[1]))
+>>>>>>> Updated this old code to fork
 						if (!resmismatch && !check_macro_part(reagents, res))
 							resmismatch = TRUE
 						continue
@@ -414,9 +500,16 @@
 	return final_list
 
 /obj/machinery/chem_dispenser/AltClick(mob/living/user)
+<<<<<<< HEAD
 	..()
 	if(istype(user) && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		replace_beaker(user)
+=======
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	replace_beaker(user)
+	return
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/chem_dispenser/drinks/Initialize()
 	. = ..()
@@ -459,6 +552,7 @@
 	nopower_state = null
 	pass_flags = PASSTABLE
 	dispensable_reagents = list(
+<<<<<<< HEAD
 		/datum/reagent/water,
 		/datum/reagent/consumable/ice,
 		/datum/reagent/consumable/coffee,
@@ -488,6 +582,37 @@
 		/datum/reagent/consumable/ethanol/whiskey_cola,
 		/datum/reagent/toxin/mindbreaker,
 		/datum/reagent/toxin/staminatoxin
+=======
+		"water",
+		"ice",
+		"coffee",
+		"cream",
+		"tea",
+		"icetea",
+		"cola",
+		"spacemountainwind",
+		"dr_gibb",
+		"space_up",
+		"tonic",
+		"sodawater",
+		"lemon_lime",
+		"pwr_game",
+		"shamblers",
+		"sugar",
+		"orangejuice",
+		"grenadine",
+		"limejuice",
+		"tomatojuice",
+		"lemonjuice",
+		"menthol"
+	)
+	upgrade_reagents = null
+	emagged_reagents = list(
+		"thirteenloko",
+		"whiskeycola",
+		"mindbreaker",
+		"tirizene"
+>>>>>>> Updated this old code to fork
 	)
 
 /obj/machinery/chem_dispenser/drinks/fullupgrade //fully ugpraded stock parts, emagged
@@ -515,6 +640,7 @@
 	icon_state = "booze_dispenser"
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks/beer
 	dispensable_reagents = list(
+<<<<<<< HEAD
 		/datum/reagent/consumable/ethanol/beer,
 		/datum/reagent/consumable/ethanol/kahlua,
 		/datum/reagent/consumable/ethanol/whiskey,
@@ -541,6 +667,33 @@
 		/datum/reagent/toxin/minttoxin,
 		/datum/reagent/consumable/ethanol/atomicbomb,
 		/datum/reagent/consumable/ethanol/fernet
+=======
+		"beer",
+		"kahlua",
+		"whiskey",
+		"wine",
+		"vodka",
+		"gin",
+		"rum",
+		"tequila",
+		"vermouth",
+		"cognac",
+		"ale",
+		"absinthe",
+		"hcider",
+		"creme_de_menthe",
+		"creme_de_cacao",
+		"triple_sec",
+		"sake"
+	)
+	upgrade_reagents = null
+	emagged_reagents = list(
+		"ethanol",
+		"iron",
+		"minttoxin",
+		"atomicbomb",
+		"fernet"
+>>>>>>> Updated this old code to fork
 	)
 
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade //fully ugpraded stock parts, emagged
@@ -564,9 +717,15 @@
 /obj/machinery/chem_dispenser/mutagen
 	name = "mutagen dispenser"
 	desc = "Creates and dispenses mutagen."
+<<<<<<< HEAD
 	dispensable_reagents = list(/datum/reagent/toxin/mutagen)
 	upgrade_reagents = null
 	emagged_reagents = list(/datum/reagent/toxin/plasma)
+=======
+	dispensable_reagents = list("mutagen")
+	upgrade_reagents = null
+	emagged_reagents = list("plasma")
+>>>>>>> Updated this old code to fork
 
 
 /obj/machinery/chem_dispenser/mutagensaltpeter
@@ -575,6 +734,7 @@
 	flags_1 = NODECONSTRUCT_1
 
 	dispensable_reagents = list(
+<<<<<<< HEAD
 		/datum/reagent/toxin/mutagen,
 		/datum/reagent/saltpetre,
 		/datum/reagent/plantnutriment/eznutriment,
@@ -588,6 +748,21 @@
 		/datum/reagent/ammonia,
 		/datum/reagent/ash,
 		/datum/reagent/diethylamine)
+=======
+		"mutagen",
+		"saltpetre",
+		"eznutriment",
+		"left4zednutriment",
+		"robustharvestnutriment",
+		"water",
+		"plantbgone",
+		"weedkiller",
+		"pestkiller",
+		"cryoxadone",
+		"ammonia",
+		"ash",
+		"diethylamine")
+>>>>>>> Updated this old code to fork
 	upgrade_reagents = null
 
 /obj/machinery/chem_dispenser/mutagensaltpeter/Initialize()
@@ -619,6 +794,7 @@
 	component_parts += new /obj/item/stack/sheet/glass(null)
 	component_parts += new /obj/item/stock_parts/cell/bluespace(null)
 	RefreshParts()
+<<<<<<< HEAD
 
 /obj/machinery/chem_dispenser/abductor
 	name = "reagent synthesizer"
@@ -681,3 +857,5 @@
 	component_parts += new /obj/item/stack/sheet/glass(null)
 	component_parts += new /obj/item/stock_parts/cell/bluespace(null)
 	RefreshParts()
+=======
+>>>>>>> Updated this old code to fork

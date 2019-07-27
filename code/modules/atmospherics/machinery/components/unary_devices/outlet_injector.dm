@@ -3,7 +3,11 @@
 
 	name = "air injector"
 	desc = "Has a valve and pump attached to it."
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> Updated this old code to fork
 	use_power = IDLE_POWER_USE
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
@@ -192,8 +196,13 @@
 	icon_state = "inje_map-1"
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/layer3
+<<<<<<< HEAD
 	piping_layer = 3
 	icon_state = "inje_map-3"
+=======
+	piping_layer = 2
+	icon_state = "inje_map-2"
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/on
 	on = TRUE
@@ -203,8 +212,13 @@
 	icon_state = "inje_map-1"
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer3
+<<<<<<< HEAD
 	piping_layer = 3
 	icon_state = "inje_map-3"
+=======
+	piping_layer = 2
+	icon_state = "inje_map-2"
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos
 	frequency = FREQ_ATMOS_STORAGE

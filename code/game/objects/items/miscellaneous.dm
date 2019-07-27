@@ -18,7 +18,10 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gangtool-blue"
 	item_state = "radio"
+<<<<<<< HEAD
 	var/uses = 1
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/choice_beacon/attack_self(mob/user)
 	if(canUseBeacon(user))
@@ -43,11 +46,15 @@
 		return
 
 	spawn_option(display_names[choice],M)
+<<<<<<< HEAD
 	uses--
 	if(!uses)
 		qdel(src)
 	else
 		to_chat(M, "<span class='notice'>[uses] use[uses > 1 ? "s" : ""] remaining on the [src].</span>")
+=======
+	qdel(src)
+>>>>>>> Updated this old code to fork
 
 /obj/item/choice_beacon/proc/spawn_option(obj/choice,mob/living/M)
 	var/obj/new_item = new choice()
@@ -106,6 +113,7 @@
 	new /obj/item/toy/crayon/spraycan(src)
 	new /obj/item/clothing/shoes/sandal(src)
 
+<<<<<<< HEAD
 /obj/item/choice_beacon/augments
 	name = "augment beacon"
 	desc = "Summons augmentations. Can be used 3 times!"
@@ -131,6 +139,8 @@
 	new choice(get_turf(M))
 	to_chat(M, "You hear something crackle from the beacon for a moment before a voice speaks.  \"Please stand by for a message from S.E.L.F. Message as follows: <span class='bold'>Item request received. Your package has been transported, use the autosurgeon supplied to apply the upgrade.</span> Message ends.\"")
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/item/skub
 	desc = "It's skub."
 	name = "skub"
@@ -144,4 +154,8 @@
 
 	user.gib()
 	playsound(src, 'sound/items/eatfood.ogg', 50, 1, -1)
+<<<<<<< HEAD
 	return MANUAL_SUICIDE
+=======
+	return MANUAL_SUICIDE
+>>>>>>> Updated this old code to fork

@@ -42,7 +42,11 @@
 	icon_state = "blueshift"
 	item_state = "blueshift"
 	custom_premium_price = 600
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> Updated this old code to fork
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"
 	desc = "A greatcoat enhanced with a special alloy for some extra protection and style for those with a commanding presence."
@@ -112,17 +116,26 @@
 
 /obj/item/clothing/suit/armor/riot
 	name = "riot suit"
+<<<<<<< HEAD
 	desc = "A suit of semi-flexible polycarbonate body armor with heavy padding to protect against melee attacks. Helps the wearer resist shoving in close quarters."
+=======
+	desc = "A suit of semi-flexible polycarbonate body armor with heavy padding to protect against melee attacks."
+>>>>>>> Updated this old code to fork
 	icon_state = "riot"
 	item_state = "swat_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor = list("melee" = 50, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
+<<<<<<< HEAD
 	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 	strip_delay = 80
 	equip_delay_other = 60
 	slowdown = 0.5
+=======
+	strip_delay = 80
+	equip_delay_other = 60
+>>>>>>> Updated this old code to fork
 
 /obj/item/clothing/suit/armor/bone
 	name = "bone armor"
@@ -241,7 +254,11 @@
 	item_state = "knight_red"
 
 /obj/item/clothing/suit/armor/vest/durathread
+<<<<<<< HEAD
 	name = "durathread vest"
+=======
+	name = "makeshift vest"
+>>>>>>> Updated this old code to fork
 	desc = "A vest made of durathread with strips of leather acting as trauma plates."
 	icon_state = "durathread"
 	item_state = "durathread"
@@ -250,6 +267,7 @@
 	max_integrity = 200
 	resistance_flags = FLAMMABLE
 	armor = list("melee" = 20, "bullet" = 10, "laser" = 30, "energy" = 5, "bomb" = 15, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 50)
+<<<<<<< HEAD
 
 /obj/item/clothing/suit/armor/vest/russian
 	name = "russian vest"
@@ -267,3 +285,5 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	armor = list("melee" = 25, "bullet" = 20, "laser" = 20, "energy" = 10, "bomb" = 20, "bio" = 50, "rad" = 20, "fire" = -10, "acid" = 50)
+=======
+>>>>>>> Updated this old code to fork

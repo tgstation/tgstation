@@ -50,7 +50,13 @@
 /turf/open/floor/circuit/off,
 /area/awaymission/wildwest/vault)
 "an" = (
+<<<<<<< HEAD
 /turf/open/floor/plasteel/cult,
+=======
+/turf/open/floor/plasteel/cult{
+	name = "engraved floor"
+	},
+>>>>>>> Updated this old code to fork
 /area/awaymission/wildwest/vault)
 "ao" = (
 /turf/open/floor/circuit/green/off,
@@ -160,7 +166,13 @@
 /area/awaymission/wildwest/vault)
 "aL" = (
 /obj/item/paper/fluff/awaymissions/wildwest/grinder,
+<<<<<<< HEAD
 /turf/open/floor/plasteel/cult,
+=======
+/turf/open/floor/plasteel/cult{
+	name = "engraved floor"
+	},
+>>>>>>> Updated this old code to fork
 /area/awaymission/wildwest/vault)
 "aM" = (
 /turf/closed/mineral/silver,
@@ -170,7 +182,13 @@
 /area/awaymission/wildwest/mines)
 "aO" = (
 /obj/effect/mob_spawn/human/corpse/syndicatecommando,
+<<<<<<< HEAD
 /turf/open/floor/plasteel/cult,
+=======
+/turf/open/floor/plasteel/cult{
+	name = "engraved floor"
+	},
+>>>>>>> Updated this old code to fork
 /area/awaymission/wildwest/vault)
 "aP" = (
 /obj/effect/decal/cleanable/blood/splatter,
@@ -311,7 +329,11 @@
 /turf/open/space,
 /area/space/nearstation)
 "bx" = (
+<<<<<<< HEAD
 /obj/structure/closet/secure_closet/freezer/fridge/open,
+=======
+/obj/structure/closet/secure_closet/freezer/fridge,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -394,7 +416,11 @@
 	},
 /area/awaymission/wildwest/mines)
 "bN" = (
+<<<<<<< HEAD
 /obj/structure/closet/secure_closet/freezer/meat/open,
+=======
+/obj/structure/closet/secure_closet/freezer/meat,
+>>>>>>> Updated this old code to fork
 /obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
 /obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
 /obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
@@ -615,7 +641,11 @@
 	},
 /area/awaymission/wildwest/gov)
 "cs" = (
+<<<<<<< HEAD
 /obj/structure/closet/secure_closet/freezer/fridge/open,
+=======
+/obj/structure/closet/secure_closet/freezer/fridge,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -1668,13 +1698,21 @@
 	},
 /area/awaymission/wildwest/mines)
 "fE" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 8
 	},
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "fF" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 4
 	},
 /turf/open/floor/wood,

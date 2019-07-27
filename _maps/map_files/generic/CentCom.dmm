@@ -63,21 +63,36 @@
 	pixel_y = 4
 	},
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	dir = 9;
 	icon_state = "wood"
+=======
+	icon_state = "wood";
+	dir = 9
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/lounge)
 "am" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	dir = 9;
 	icon_state = "wood"
+=======
+	icon_state = "wood";
+	dir = 9
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/lounge)
 "an" = (
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	dir = 9;
 	icon_state = "wood"
+=======
+	icon_state = "wood";
+	dir = 9
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/lounge)
 "ao" = (
@@ -86,8 +101,13 @@
 	layer = 3.3
 	},
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	dir = 9;
 	icon_state = "wood"
+=======
+	icon_state = "wood";
+	dir = 9
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/lounge)
 "ap" = (
@@ -166,15 +186,25 @@
 	pixel_y = 8
 	},
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	dir = 9;
 	icon_state = "wood"
+=======
+	icon_state = "wood";
+	dir = 9
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/lounge)
 "aA" = (
 /obj/structure/chair/wood/normal,
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	dir = 9;
 	icon_state = "wood"
+=======
+	icon_state = "wood";
+	dir = 9
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/lounge)
 "aB" = (
@@ -218,16 +248,26 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	dir = 9;
 	icon_state = "wood"
+=======
+	icon_state = "wood";
+	dir = 9
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/lounge)
 "aJ" = (
 /obj/structure/table/wood/poker,
 /obj/item/clothing/mask/cigarette/pipe,
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	dir = 9;
 	icon_state = "wood"
+=======
+	icon_state = "wood";
+	dir = 9
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/lounge)
 "aK" = (
@@ -235,8 +275,13 @@
 /obj/structure/table/wood/poker,
 /obj/effect/holodeck_effect/cards,
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	dir = 9;
 	icon_state = "wood"
+=======
+	icon_state = "wood";
+	dir = 9
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/lounge)
 "aL" = (
@@ -244,8 +289,13 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	dir = 9;
 	icon_state = "wood"
+=======
+	icon_state = "wood";
+	dir = 9
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/lounge)
 "aM" = (
@@ -259,8 +309,13 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	dir = 9;
 	icon_state = "wood"
+=======
+	icon_state = "wood";
+	dir = 9
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/lounge)
 "aO" = (
@@ -272,15 +327,25 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	dir = 9;
 	icon_state = "wood"
+=======
+	icon_state = "wood";
+	dir = 9
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/lounge)
 "aQ" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	dir = 9;
 	icon_state = "wood"
+=======
+	icon_state = "wood";
+	dir = 9
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/lounge)
 "aR" = (
@@ -299,8 +364,13 @@
 	pixel_y = 10
 	},
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	dir = 9;
 	icon_state = "wood"
+=======
+	icon_state = "wood";
+	dir = 9
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/lounge)
 "aU" = (
@@ -1118,7 +1188,13 @@
 /obj/structure/window{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/machinery/stasis,
+=======
+/obj/machinery/sleeper{
+	dir = 1
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -1130,7 +1206,13 @@
 	},
 /area/holodeck/rec_center/medical)
 "dd" = (
+<<<<<<< HEAD
 /obj/machinery/stasis,
+=======
+/obj/machinery/sleeper{
+	dir = 1
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -1260,9 +1342,15 @@
 /area/holodeck/rec_center/chapelcourt)
 "dw" = (
 /obj/structure/table/wood/fancy,
+<<<<<<< HEAD
 /obj/item/clothing/suit/chaplainsuit/nun,
 /obj/item/clothing/head/nun_hood,
 /obj/item/clothing/suit/chaplainsuit/holidaypriest,
+=======
+/obj/item/clothing/suit/nun,
+/obj/item/clothing/head/nun_hood,
+/obj/item/clothing/suit/holidaypriest,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "dark"
@@ -1399,6 +1487,10 @@
 /obj/structure/window/reinforced,
 /obj/machinery/mass_driver{
 	dir = 1;
+<<<<<<< HEAD
+=======
+	icon_state = "mass_driver";
+>>>>>>> Updated this old code to fork
 	id = "trektorpedo1";
 	name = "photon torpedo tube"
 	},
@@ -1446,6 +1538,10 @@
 /obj/structure/window/reinforced,
 /obj/machinery/mass_driver{
 	dir = 1;
+<<<<<<< HEAD
+=======
+	icon_state = "mass_driver";
+>>>>>>> Updated this old code to fork
 	id = "trektorpedo2";
 	name = "photon torpedo tube"
 	},
@@ -1462,14 +1558,24 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	dir = 1;
 	icon_state = "chapel"
+=======
+	icon_state = "chapel";
+	dir = 1
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/chapelcourt)
 "dT" = (
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	dir = 4;
 	icon_state = "chapel"
+=======
+	icon_state = "chapel";
+	dir = 4
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/chapelcourt)
 "dU" = (
@@ -1481,8 +1587,13 @@
 /area/holodeck/rec_center/chapelcourt)
 "dV" = (
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	dir = 1;
 	icon_state = "chapel"
+=======
+	icon_state = "chapel";
+	dir = 1
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/chapelcourt)
 "dW" = (
@@ -1490,8 +1601,13 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	dir = 4;
 	icon_state = "chapel"
+=======
+	icon_state = "chapel";
+	dir = 4
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/chapelcourt)
 "dX" = (
@@ -1515,8 +1631,13 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	dir = 8;
 	icon_state = "white"
+=======
+	icon_state = "white";
+	dir = 8
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/firingrange)
 "eb" = (
@@ -1531,8 +1652,13 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	dir = 4;
 	icon_state = "white"
+=======
+	icon_state = "white";
+	dir = 4
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/firingrange)
 "ed" = (
@@ -1603,7 +1729,12 @@
 /area/holodeck/rec_center/chapelcourt)
 "en" = (
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	icon_state = "chapel"
+=======
+	icon_state = "chapel";
+	dir = 2
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/chapelcourt)
 "eo" = (
@@ -1626,7 +1757,12 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	icon_state = "chapel"
+=======
+	icon_state = "chapel";
+	dir = 2
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/chapelcourt)
 "er" = (
@@ -1634,8 +1770,13 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	dir = 10;
 	icon_state = "white"
+=======
+	icon_state = "white";
+	dir = 10
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/firingrange)
 "es" = (
@@ -1648,8 +1789,13 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	dir = 6;
 	icon_state = "white"
+=======
+	icon_state = "white";
+	dir = 6
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/firingrange)
 "eu" = (
@@ -1669,8 +1815,13 @@
 /area/holodeck/rec_center/spacechess)
 "ex" = (
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	dir = 8;
 	icon_state = "stairs-old"
+=======
+	icon_state = "stairs-old";
+	dir = 8
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/thunderdome1218)
 "ey" = (
@@ -1748,13 +1899,21 @@
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/kobayashi)
 "eJ" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 8
 	},
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/kobayashi)
 "eK" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 4
 	},
 /turf/open/floor/holofloor/plating,
@@ -1770,8 +1929,13 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	dir = 1;
 	icon_state = "chapel"
+=======
+	icon_state = "chapel";
+	dir = 1
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/chapelcourt)
 "eN" = (
@@ -1779,8 +1943,13 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	dir = 4;
 	icon_state = "chapel"
+=======
+	icon_state = "chapel";
+	dir = 4
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/chapelcourt)
 "eO" = (
@@ -1817,7 +1986,12 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
+<<<<<<< HEAD
 	icon_state = "chapel"
+=======
+	icon_state = "chapel";
+	dir = 2
+>>>>>>> Updated this old code to fork
 	},
 /area/holodeck/rec_center/chapelcourt)
 "eT" = (
@@ -2513,9 +2687,15 @@
 /area/ctf)
 "gB" = (
 /obj/structure/window/reinforced/fulltile{
+<<<<<<< HEAD
 	max_integrity = 5000;
 	name = "hardened window";
 	obj_integrity = 5000
+=======
+	obj_integrity = 5000;
+	max_integrity = 5000;
+	name = "hardened window"
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating,
 /area/ctf)
@@ -3470,7 +3650,12 @@
 "ja" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
+<<<<<<< HEAD
 	name = "CentCom"
+=======
+	name = "CentCom";
+	opacity = 1
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -3563,6 +3748,10 @@
 /area/centcom/control)
 "jk" = (
 /obj/machinery/door/poddoor{
+<<<<<<< HEAD
+=======
+	density = 1;
+>>>>>>> Updated this old code to fork
 	id = "XCCQMLoaddoor2";
 	name = "Supply Dock Loading Door"
 	},
@@ -3577,7 +3766,13 @@
 /area/centcom/supply)
 "jl" = (
 /obj/structure/plasticflaps,
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
+=======
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "XCCQMLoad2"
@@ -3586,10 +3781,20 @@
 /area/centcom/supply)
 "jm" = (
 /obj/machinery/door/poddoor{
+<<<<<<< HEAD
 	id = "XCCQMLoaddoor2";
 	name = "Supply Dock Loading Door"
 	},
 /obj/effect/turf_decal/stripes/line,
+=======
+	density = 1;
+	id = "XCCQMLoaddoor2";
+	name = "Supply Dock Loading Door"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "XCCQMLoad2"
@@ -3675,6 +3880,10 @@
 	pixel_y = -5
 	},
 /obj/machinery/button/door/indestructible{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	id = "XCCQMLoaddoor2";
 	layer = 4;
 	name = "Loading Doors";
@@ -3755,6 +3964,10 @@
 /area/centcom/control)
 "jI" = (
 /obj/machinery/door/poddoor{
+<<<<<<< HEAD
+=======
+	density = 1;
+>>>>>>> Updated this old code to fork
 	id = "XCCQMLoaddoor";
 	name = "Supply Dock Loading Door"
 	},
@@ -3773,11 +3986,21 @@
 	dir = 8;
 	id = "XCCQMLoad"
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
+=======
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "jK" = (
 /obj/machinery/door/poddoor{
+<<<<<<< HEAD
+=======
+	density = 1;
+>>>>>>> Updated this old code to fork
 	id = "XCCQMLoaddoor";
 	name = "Supply Dock Loading Door"
 	},
@@ -3785,7 +4008,13 @@
 	dir = 8;
 	id = "XCCQMLoad"
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
+=======
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "jL" = (
@@ -4087,6 +4316,11 @@
 /area/centcom/control)
 "ki" = (
 /obj/docking_port/stationary{
+<<<<<<< HEAD
+=======
+	area_type = /area/syndicate_mothership;
+	dir = 1;
+>>>>>>> Updated this old code to fork
 	dwidth = 25;
 	height = 50;
 	id = "emergency_syndicate";
@@ -4175,6 +4409,7 @@
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "ku" = (
+<<<<<<< HEAD
 /obj/docking_port/stationary{
 	area_type = /area/syndicate_mothership;
 	dheight = 1;
@@ -4188,6 +4423,10 @@
 	},
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
+=======
+/turf/closed/indestructible/riveted,
+/area/syndicate_mothership/control)
+>>>>>>> Updated this old code to fork
 "kv" = (
 /obj/machinery/door/poddoor/shuttledock{
 	checkdir = 1;
@@ -4284,7 +4523,12 @@
 /area/centcom/control)
 "kG" = (
 /obj/structure/chair/comfy/brown{
+<<<<<<< HEAD
 	color = "#596479"
+=======
+	color = "#596479";
+	dir = 2
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel/grimy,
 /area/centcom/control)
@@ -4438,14 +4682,28 @@
 "kZ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
+<<<<<<< HEAD
 	req_access_txt = "101"
 	},
 /obj/effect/turf_decal/stripes/line,
+=======
+	opacity = 1;
+	req_access_txt = "101"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "la" = (
 /obj/machinery/door/window/brigdoor{
 	base_state = "rightsecure";
+<<<<<<< HEAD
+=======
+	dir = 2;
+	icon_state = "leftsecure";
+>>>>>>> Updated this old code to fork
 	name = "CentCom Stand";
 	req_access_txt = "109"
 	},
@@ -4481,6 +4739,11 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	base_state = "rightsecure";
+<<<<<<< HEAD
+=======
+	dir = 2;
+	icon_state = "leftsecure";
+>>>>>>> Updated this old code to fork
 	name = "CentCom Stand";
 	req_access_txt = "109"
 	},
@@ -4498,6 +4761,11 @@
 "lf" = (
 /obj/machinery/door/window/brigdoor{
 	base_state = "rightsecure";
+<<<<<<< HEAD
+=======
+	dir = 2;
+	icon_state = "leftsecure";
+>>>>>>> Updated this old code to fork
 	name = "CentCom Stand";
 	req_access_txt = "109"
 	},
@@ -4710,9 +4978,18 @@
 "lJ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Shuttle Control Office";
+<<<<<<< HEAD
 	req_access_txt = "109"
 	},
 /obj/effect/turf_decal/stripes/line,
+=======
+	opacity = 1;
+	req_access_txt = "109"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "lK" = (
@@ -4720,7 +4997,13 @@
 	name = "CentCom Supply";
 	req_access_txt = "106"
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
+=======
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "lL" = (
@@ -4803,6 +5086,10 @@
 "lT" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
+<<<<<<< HEAD
+=======
+	opacity = 1;
+>>>>>>> Updated this old code to fork
 	req_access_txt = "101"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -5148,7 +5435,11 @@
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "mH" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/brown{
@@ -5163,7 +5454,11 @@
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "mI" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/brown{
@@ -5192,7 +5487,11 @@
 /obj/structure/table,
 /obj/item/clipboard,
 /obj/item/stack/packageWrap,
+<<<<<<< HEAD
 /obj/item/stack/cable_coil,
+=======
+/obj/item/stack/cable_coil/white,
+>>>>>>> Updated this old code to fork
 /obj/item/hand_labeler,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -5272,7 +5571,13 @@
 /area/centcom/control)
 "mR" = (
 /obj/machinery/door/firedoor,
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
+=======
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "mS" = (
@@ -5418,7 +5723,12 @@
 	},
 /area/abductor_ship)
 "ng" = (
+<<<<<<< HEAD
 /turf/closed/indestructible/syndicate,
+=======
+/obj/effect/baseturf_helper/asteroid/snow,
+/turf/closed/indestructible/riveted,
+>>>>>>> Updated this old code to fork
 /area/syndicate_mothership/control)
 "nh" = (
 /obj/item/toy/figure/syndie,
@@ -5476,7 +5786,11 @@
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "nn" = (
+<<<<<<< HEAD
 /obj/structure/chair/office,
+=======
+/obj/structure/chair/office/dark,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -5606,7 +5920,11 @@
 /turf/open/floor/plating,
 /area/syndicate_mothership/control)
 "nz" = (
+<<<<<<< HEAD
 /turf/closed/indestructible/opsglass,
+=======
+/turf/closed/indestructible/fakeglass,
+>>>>>>> Updated this old code to fork
 /area/syndicate_mothership/control)
 "nA" = (
 /obj/structure/sign/warning/nosmoking,
@@ -5657,7 +5975,11 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/stack/packageWrap,
+<<<<<<< HEAD
 /obj/item/stack/cable_coil,
+=======
+/obj/item/stack/cable_coil/white,
+>>>>>>> Updated this old code to fork
 /obj/item/hand_labeler,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -5767,7 +6089,11 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "nN" = (
+<<<<<<< HEAD
 /obj/structure/chair/office,
+=======
+/obj/structure/chair/office/dark,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/grimy,
 /area/centcom/control)
 "nO" = (
@@ -5803,6 +6129,11 @@
 "nQ" = (
 /obj/machinery/door/window/brigdoor{
 	base_state = "rightsecure";
+<<<<<<< HEAD
+=======
+	dir = 2;
+	icon_state = "leftsecure";
+>>>>>>> Updated this old code to fork
 	name = "CentCom Stand";
 	req_access_txt = "109"
 	},
@@ -5825,6 +6156,11 @@
 "nR" = (
 /obj/machinery/door/window/brigdoor{
 	base_state = "rightsecure";
+<<<<<<< HEAD
+=======
+	dir = 2;
+	icon_state = "leftsecure";
+>>>>>>> Updated this old code to fork
 	name = "CentCom Stand";
 	req_access_txt = "109"
 	},
@@ -6083,6 +6419,10 @@
 /area/centcom/ferry)
 "om" = (
 /obj/machinery/computer/card/centcom,
+<<<<<<< HEAD
+=======
+/obj/item/card/id/centcom,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "on" = (
@@ -6324,6 +6664,10 @@
 "oJ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Administrative Office";
+<<<<<<< HEAD
+=======
+	opacity = 1;
+>>>>>>> Updated this old code to fork
 	req_access_txt = "109"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -6467,6 +6811,7 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/tdome/tdomeobserve)
+<<<<<<< HEAD
 "oU" = (
 /obj/structure/closet/emcloset,
 /obj/item/tank/internals/emergency_oxygen/engi,
@@ -6480,6 +6825,12 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "oV" = (
+=======
+"oV" = (
+/obj/machinery/vr_sleeper{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/light{
 	dir = 8
 	},
@@ -6614,7 +6965,11 @@
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "pj" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/brown{
@@ -6626,7 +6981,11 @@
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "pk" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -6645,11 +7004,19 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/brigdoor{
+<<<<<<< HEAD
 	base_state = "rightsecure";
 	dir = 4;
 	icon_state = "rightsecure";
 	name = "CentCom Customs";
 	req_access_txt = "109"
+=======
+	name = "CentCom Customs";
+	icon_state = "rightsecure";
+	dir = 4;
+	req_access_txt = "109";
+	base_state = "rightsecure"
+>>>>>>> Updated this old code to fork
 	},
 /obj/item/clipboard,
 /obj/item/folder/yellow,
@@ -6835,6 +7202,7 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
+<<<<<<< HEAD
 "px" = (
 /obj/structure/chair{
 	dir = 8
@@ -6851,6 +7219,8 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
+=======
+>>>>>>> Updated this old code to fork
 "py" = (
 /obj/machinery/smartfridge,
 /turf/closed/indestructible{
@@ -6859,6 +7229,7 @@
 	smooth = 1
 	},
 /area/centcom/holding)
+<<<<<<< HEAD
 "pz" = (
 /turf/open/space/basic,
 /area/centcom/ferry)
@@ -6892,6 +7263,8 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/ert)
+=======
+>>>>>>> Updated this old code to fork
 "pE" = (
 /obj/machinery/plantgenes/seedvault,
 /obj/effect/turf_decal/tile/green{
@@ -6909,6 +7282,10 @@
 "pF" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Auxillary Dock";
+<<<<<<< HEAD
+=======
+	opacity = 1;
+>>>>>>> Updated this old code to fork
 	req_access_txt = ""
 	},
 /turf/open/floor/plating,
@@ -7058,6 +7435,7 @@
 /obj/item/stack/packageWrap,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
+<<<<<<< HEAD
 "pT" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -7077,6 +7455,8 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/ert)
+=======
+>>>>>>> Updated this old code to fork
 "pV" = (
 /obj/machinery/light{
 	dir = 4
@@ -7087,6 +7467,7 @@
 /obj/effect/landmark/ai_multicam_room,
 /turf/open/ai_visible,
 /area/ai_multicam_room)
+<<<<<<< HEAD
 "pX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -7096,6 +7477,13 @@
 "pY" = (
 /obj/machinery/washing_machine,
 /turf/open/floor/plasteel/freezer,
+=======
+"pY" = (
+/obj/machinery/washing_machine,
+/turf/open/floor/plasteel/freezer{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /area/syndicate_mothership/control)
 "pZ" = (
 /obj/effect/turf_decal/tile/bar,
@@ -7192,6 +7580,7 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
+<<<<<<< HEAD
 "qh" = (
 /obj/item/storage/briefcase{
 	pixel_x = -3;
@@ -7208,6 +7597,8 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
+=======
+>>>>>>> Updated this old code to fork
 "qi" = (
 /obj/structure/table/wood,
 /obj/item/storage/secure/briefcase{
@@ -7406,8 +7797,13 @@
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/fernybush,
 /turf/open/floor/plasteel{
+<<<<<<< HEAD
 	icon_state = "asteroid5";
 	name = "plating"
+=======
+	name = "plating";
+	icon_state = "asteroid5"
+>>>>>>> Updated this old code to fork
 	},
 /area/centcom/control)
 "qx" = (
@@ -7464,6 +7860,7 @@
 "qE" = (
 /turf/closed/indestructible/riveted/uranium,
 /area/wizard_station)
+<<<<<<< HEAD
 "qF" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -7474,6 +7871,8 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/ert)
+=======
+>>>>>>> Updated this old code to fork
 "qH" = (
 /obj/structure/urinal{
 	pixel_y = 28
@@ -7511,11 +7910,20 @@
 /turf/open/floor/plasteel,
 /area/syndicate_mothership/control)
 "qM" = (
+<<<<<<< HEAD
 /obj/effect/light_emitter{
 	set_cap = 1;
 	set_luminosity = 4
 	},
 /turf/open/floor/plating/asteroid/snow/airless,
+=======
+/obj/machinery/vending/cigarette/syndicate,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+>>>>>>> Updated this old code to fork
 /area/syndicate_mothership/control)
 "qN" = (
 /obj/structure/urinal{
@@ -7529,22 +7937,44 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+<<<<<<< HEAD
 /turf/open/floor/plasteel/freezer,
+=======
+/turf/open/floor/plasteel/freezer{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /area/syndicate_mothership/control)
 "qP" = (
 /obj/structure/mirror{
 	pixel_x = 28
 	},
 /obj/item/mop,
+<<<<<<< HEAD
 /turf/open/floor/plasteel/freezer,
+=======
+/turf/open/floor/plasteel/freezer{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /area/syndicate_mothership/control)
 "qQ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Administrative Office";
+<<<<<<< HEAD
 	req_access_txt = "109"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line,
+=======
+	opacity = 1;
+	req_access_txt = "109"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "qR" = (
@@ -7554,17 +7984,35 @@
 "qS" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
+<<<<<<< HEAD
 	req_access_txt = "101"
 	},
 /obj/effect/turf_decal/stripes/line,
+=======
+	opacity = 1;
+	req_access_txt = "101"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "qT" = (
 /obj/machinery/door/airlock/centcom{
+<<<<<<< HEAD
 	name = "CentCom"
 	},
 /obj/effect/turf_decal/stripes/line,
+=======
+	name = "CentCom";
+	opacity = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/centcom/control)
@@ -7601,6 +8049,7 @@
 /obj/machinery/computer/shuttle,
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+<<<<<<< HEAD
 "rb" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -7620,6 +8069,8 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
+=======
+>>>>>>> Updated this old code to fork
 "rd" = (
 /obj/structure/flora/grass/brown,
 /obj/effect/light_emitter{
@@ -7658,6 +8109,10 @@
 "rh" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Restroom";
+<<<<<<< HEAD
+=======
+	opacity = 1;
+>>>>>>> Updated this old code to fork
 	req_access_txt = "150"
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -7666,6 +8121,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/syndicate_mothership/control)
+<<<<<<< HEAD
+=======
+"ri" = (
+/turf/open/floor/plasteel/freezer{
+	dir = 2
+	},
+/area/syndicate_mothership/control)
+>>>>>>> Updated this old code to fork
 "rj" = (
 /obj/structure/mirror{
 	pixel_x = 28
@@ -7674,7 +8137,13 @@
 	dir = 4;
 	pixel_x = 11
 	},
+<<<<<<< HEAD
 /turf/open/floor/plasteel/freezer,
+=======
+/turf/open/floor/plasteel/freezer{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /area/syndicate_mothership/control)
 "rk" = (
 /obj/structure/table/reinforced,
@@ -7798,7 +8267,11 @@
 	pixel_y = -2
 	},
 /obj/item/stack/rods/fifty,
+<<<<<<< HEAD
 /obj/item/stack/cable_coil,
+=======
+/obj/item/stack/cable_coil/white,
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -7858,6 +8331,10 @@
 /area/centcom/ferry)
 "ry" = (
 /obj/machinery/computer/card/centcom,
+<<<<<<< HEAD
+=======
+/obj/item/card/id/centcom,
+>>>>>>> Updated this old code to fork
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the RD's goons and the AI's satellite from the safety of his office.";
 	name = "Research Monitor";
@@ -7872,6 +8349,7 @@
 /area/centcom/ferry)
 "rA" = (
 /obj/machinery/power/smes/magical,
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -7888,6 +8366,46 @@
 	},
 /obj/structure/reagent_dispensers/fueltank,
 /obj/item/weldingtool/experimental,
+=======
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/white{
+	icon_state = "0-4"
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/centcom/ferry)
+"rB" = (
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Commander's Office APC";
+	pixel_x = 26
+	},
+/obj/structure/table/reinforced,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/plasteel{
+	amount = 15
+	},
+/obj/item/stack/sheet/rglass{
+	amount = 50;
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/item/stack/rods/fifty,
+/obj/item/stack/cable_coil/white,
+/obj/item/screwdriver/power,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/white{
+	icon_state = "0-2"
+	},
+/obj/structure/cable/white{
+	icon_state = "0-8"
+	},
+/obj/effect/turf_decal/stripes/line,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "rC" = (
@@ -7955,8 +8473,13 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel{
+<<<<<<< HEAD
 	icon_state = "asteroid5";
 	name = "plating"
+=======
+	name = "plating";
+	icon_state = "asteroid5"
+>>>>>>> Updated this old code to fork
 	},
 /area/centcom/control)
 "rI" = (
@@ -8145,6 +8668,7 @@
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+<<<<<<< HEAD
 "rY" = (
 /obj/item/clipboard,
 /obj/item/folder/red,
@@ -8162,6 +8686,8 @@
 /obj/item/taperecorder,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
+=======
+>>>>>>> Updated this old code to fork
 "sa" = (
 /obj/structure/table/wood,
 /obj/item/lighter,
@@ -8172,6 +8698,7 @@
 /obj/machinery/vending/snack,
 /turf/open/floor/plasteel,
 /area/centcom/supplypod)
+<<<<<<< HEAD
 "sc" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -8189,6 +8716,8 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
+=======
+>>>>>>> Updated this old code to fork
 "se" = (
 /obj/machinery/light{
 	dir = 8
@@ -8235,12 +8764,20 @@
 /turf/open/floor/plasteel,
 /area/syndicate_mothership/control)
 "si" = (
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
 /obj/machinery/vending/cigarette/syndicate,
 /turf/open/floor/plasteel,
+=======
+/obj/machinery/computer/telecrystals/uplinker,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/mineral/plastitanium/red,
+>>>>>>> Updated this old code to fork
 /area/syndicate_mothership/control)
 "sj" = (
 /obj/structure/toilet{
@@ -8250,12 +8787,23 @@
 	dir = 1
 	},
 /obj/machinery/door/window{
+<<<<<<< HEAD
 	dir = 8;
 	icon_state = "right";
 	name = "Tactical Toilet";
 	opacity = 1
 	},
 /turf/open/floor/plasteel/freezer,
+=======
+	name = "Tactical Toilet";
+	icon_state = "right";
+	dir = 8;
+	opacity = 1
+	},
+/turf/open/floor/plasteel/freezer{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /area/syndicate_mothership/control)
 "sk" = (
 /turf/open/floor/plating/airless,
@@ -8264,8 +8812,21 @@
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
+<<<<<<< HEAD
 "sn" = (
 /obj/effect/turf_decal/stripes/line,
+=======
+"sm" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/plating/airless,
+/area/syndicate_mothership/control)
+"sn" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/light{
 	dir = 1
 	},
@@ -8291,7 +8852,11 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "sr" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/green{
@@ -8312,7 +8877,11 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "st" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/green{
@@ -8372,13 +8941,23 @@
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "sz" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/white{
+	icon_state = "2-4"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/centcom/ferry)
 "sA" = (
@@ -8388,6 +8967,12 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -8398,6 +8983,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /obj/item/storage/box/ids{
 	pixel_x = 6;
@@ -8411,13 +8997,31 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /obj/structure/cable,
+=======
+/turf/open/floor/plasteel/dark,
+/area/centcom/ferry)
+"sB" = (
+/obj/structure/chair/office/dark{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "sC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "sD" = (
@@ -8428,6 +9032,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -8487,16 +9092,112 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "sH" = (
+=======
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/centcom/ferry)
+"sE" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/visible{
+	dir = 1
+	},
+/obj/machinery/meter,
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/white{
+	icon_state = "2-8"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/centcom/ferry)
+"sF" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/visible{
+	dir = 1
+	},
+/obj/structure/cable/white{
+	icon_state = "0-8"
+	},
+/obj/structure/cable/white{
+	icon_state = "0-4"
+	},
+/obj/structure/cable/white{
+	icon_state = "0-2"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/centcom/ferry)
+"sG" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/visible{
+	dir = 1
+	},
+/obj/machinery/meter,
+/obj/structure/cable/white{
+	icon_state = "1-8"
+	},
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/white{
+	icon_state = "2-8"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/centcom/ferry)
+"sH" = (
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/vault{
+	name = "Vault Door";
+	req_access_txt = "53"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/machinery/door/airlock/vault{
 	req_access_txt = "109"
 	},
 /obj/machinery/door/poddoor/shutters/indestructible,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "sI" = (
@@ -8543,6 +9244,10 @@
 "sL" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
+<<<<<<< HEAD
+=======
+	opacity = 1;
+>>>>>>> Updated this old code to fork
 	req_access_txt = "101"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -8649,6 +9354,7 @@
 /area/wizard_station)
 "sY" = (
 /obj/machinery/door/airlock/centcom{
+<<<<<<< HEAD
 	name = "CentCom Supplypod Loading";
 	req_access_txt = "106"
 	},
@@ -8657,10 +9363,14 @@
 "sZ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Supplypod Loading";
+=======
+	name = "CentCom Supply";
+>>>>>>> Updated this old code to fork
 	req_access_txt = "106"
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/supplypod)
+<<<<<<< HEAD
 "ta" = (
 /obj/machinery/light/floor,
 /obj/effect/spawner/structure/window/reinforced,
@@ -8680,13 +9390,21 @@
 /area/centcom/ferry)
 "te" = (
 /obj/structure/table/wood,
+=======
+"te" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/snacks/pizzaslice/mushroom,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/item/reagent_containers/food/snacks/syndicake{
 	pixel_y = 3
 	},
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/syndicate_mothership/control)
 "tf" = (
@@ -8706,7 +9424,15 @@
 /turf/open/floor/plasteel,
 /area/syndicate_mothership/control)
 "tg" = (
+<<<<<<< HEAD
 /turf/closed/indestructible/rock/snow,
+=======
+/obj/machinery/computer/telecrystals/uplinker,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+>>>>>>> Updated this old code to fork
 /area/syndicate_mothership/control)
 "th" = (
 /obj/structure/closet/cardboard,
@@ -8719,6 +9445,7 @@
 	},
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
+<<<<<<< HEAD
 "tj" = (
 /obj/structure/falsewall/wood,
 /obj/structure/mirror,
@@ -8746,6 +9473,8 @@
 /obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/syndicate_mothership/control)
+=======
+>>>>>>> Updated this old code to fork
 "tn" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -8772,7 +9501,11 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "tq" = (
+<<<<<<< HEAD
 /obj/structure/chair/office,
+=======
+/obj/structure/chair/office/dark,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
@@ -8808,6 +9541,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
+<<<<<<< HEAD
 "tv" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/shaker,
@@ -8817,6 +9551,8 @@
 /obj/machinery/vending/boozeomat,
 /turf/open/floor/wood,
 /area/syndicate_mothership/control)
+=======
+>>>>>>> Updated this old code to fork
 "tx" = (
 /obj/structure/table/wood,
 /obj/item/storage/pill_bottle/dice,
@@ -8835,10 +9571,19 @@
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "tz" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
 	dir = 4
 	},
 /obj/structure/cable,
+=======
+/obj/structure/chair/office/dark{
+	dir = 4
+	},
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/centcom/ferry)
 "tA" = (
@@ -8897,14 +9642,21 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "tD" = (
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+=======
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
 	},
@@ -8930,6 +9682,39 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+=======
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/structure/cable/white{
+	icon_state = "1-4"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/centcom/ferry)
+"tE" = (
+/obj/machinery/computer/monitor/secret{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/white{
+	icon_state = "1-8"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/centcom/ferry)
+"tF" = (
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 1
 	},
@@ -8937,6 +9722,16 @@
 	dir = 1;
 	pixel_y = -24
 	},
+<<<<<<< HEAD
+=======
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/white{
+	icon_state = "1-8"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "tG" = (
@@ -9038,6 +9833,7 @@
 /obj/structure/sign/warning/securearea,
 /turf/closed/indestructible/riveted,
 /area/centcom/control)
+<<<<<<< HEAD
 "tQ" = (
 /obj/structure/sign/map/left{
 	pixel_y = -32
@@ -9048,6 +9844,8 @@
 	},
 /turf/open/floor/wood,
 /area/syndicate_mothership/control)
+=======
+>>>>>>> Updated this old code to fork
 "tR" = (
 /obj/machinery/status_display/ai,
 /turf/closed/indestructible/riveted,
@@ -9094,6 +9892,7 @@
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+<<<<<<< HEAD
 "tY" = (
 /obj/effect/baseturf_helper/asteroid/snow,
 /turf/closed/indestructible/syndicate,
@@ -9119,6 +9918,8 @@
 	},
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
+=======
+>>>>>>> Updated this old code to fork
 "ud" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "nukeop_ready";
@@ -9255,7 +10056,13 @@
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "ur" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/centcom/ferry)
 "us" = (
@@ -9312,7 +10119,11 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
 "uw" = (
+<<<<<<< HEAD
 /obj/structure/chair/office,
+=======
+/obj/structure/chair/office/dark,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -9400,7 +10211,14 @@
 /area/wizard_station)
 "uD" = (
 /obj/structure/table/wood/fancy,
+<<<<<<< HEAD
 /obj/item/radio/headset,
+=======
+/obj/item/radio/intercom{
+	desc = "Talk smack through this.";
+	syndie = 1
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/wizard_station)
 "uE" = (
@@ -9429,12 +10247,31 @@
 	},
 /turf/open/floor/plasteel,
 /area/syndicate_mothership/control)
+<<<<<<< HEAD
 "uO" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Shuttle Control Office";
 	req_access_txt = "109"
 	},
 /obj/effect/turf_decal/stripes/line,
+=======
+"uM" = (
+/obj/machinery/computer/telecrystals/uplinker,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/syndicate_mothership/control)
+"uO" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Shuttle Control Office";
+	opacity = 1;
+	req_access_txt = "109"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "uP" = (
@@ -9506,6 +10343,10 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "uU" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable/white,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -9516,7 +10357,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "uV" = (
@@ -9660,9 +10504,15 @@
 	dwidth = 25;
 	height = 50;
 	id = "emergency_away";
+<<<<<<< HEAD
 	json_key = "emergency";
 	name = "CentCom Emergency Shuttle Dock";
 	width = 50
+=======
+	name = "CentCom Emergency Shuttle Dock";
+	width = 50;
+	json_key = "emergency"
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/space,
 /area/space)
@@ -9798,10 +10648,19 @@
 "vF" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Administrative Office";
+<<<<<<< HEAD
 	req_access_txt = "109"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
+=======
+	opacity = 1;
+	req_access_txt = "109"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "vG" = (
@@ -9847,7 +10706,11 @@
 	name = "Hanger Bay Shutters";
 	pixel_x = -8;
 	pixel_y = 24;
+<<<<<<< HEAD
 	req_access_txt = "101"
+=======
+	req_access_txt = "2"
+>>>>>>> Updated this old code to fork
 	},
 /obj/machinery/button/door/indestructible{
 	id = "XCCsec3";
@@ -10183,6 +11046,10 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
+<<<<<<< HEAD
+=======
+	opacity = 1;
+>>>>>>> Updated this old code to fork
 	req_access_txt = "101"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -10208,7 +11075,11 @@
 	id = "XCCFerry";
 	name = "Hanger Bay Shutters";
 	pixel_y = 24;
+<<<<<<< HEAD
 	req_access_txt = "101"
+=======
+	req_access_txt = "2"
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -10223,7 +11094,10 @@
 /area/centcom/ferry)
 "wy" = (
 /obj/effect/turf_decal/delivery,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "wz" = (
@@ -10250,6 +11124,10 @@
 "wC" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Customs";
+<<<<<<< HEAD
+=======
+	opacity = 1;
+>>>>>>> Updated this old code to fork
 	req_access_txt = "109"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -10282,7 +11160,12 @@
 /area/centcom/control)
 "wE" = (
 /obj/structure/chair/comfy/brown{
+<<<<<<< HEAD
 	color = "#596479"
+=======
+	color = "#596479";
+	dir = 2
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -10334,7 +11217,12 @@
 "wJ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
+<<<<<<< HEAD
 	name = "CentCom"
+=======
+	name = "CentCom";
+	opacity = 1
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -10389,9 +11277,49 @@
 /obj/item/toy/cards/deck,
 /turf/open/floor/carpet,
 /area/wizard_station)
+<<<<<<< HEAD
 "wY" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Equipment Room";
+=======
+"wV" = (
+/obj/machinery/computer/telecrystals/boss{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/syndicate_mothership/control)
+"wW" = (
+/obj/structure/sign/map/left{
+	pixel_y = -32
+	},
+/obj/structure/rack{
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "minibar_left";
+	name = "skeletal minibar"
+	},
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/turf/open/floor/wood,
+/area/syndicate_mothership/control)
+"wX" = (
+/obj/structure/sign/map/right{
+	pixel_y = -32
+	},
+/obj/structure/rack{
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "minibar_right";
+	name = "skeletal minibar"
+	},
+/obj/item/reagent_containers/food/drinks/bottle/gin,
+/turf/open/floor/wood,
+/area/syndicate_mothership/control)
+"wY" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Equipment Room";
+	opacity = 1;
+>>>>>>> Updated this old code to fork
 	req_access_txt = "150"
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -10400,6 +11328,21 @@
 	},
 /turf/open/floor/plasteel,
 /area/syndicate_mothership/control)
+<<<<<<< HEAD
+=======
+"xb" = (
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 2;
+	height = 13;
+	id = "ferry_away";
+	json_key = "ferry";
+	name = "CentCom Ferry Dock";
+	width = 5
+	},
+/turf/open/space,
+/area/space)
+>>>>>>> Updated this old code to fork
 "xc" = (
 /obj/machinery/door/airlock/external{
 	name = "Ferry Airlock"
@@ -10650,6 +11593,21 @@
 	},
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
+<<<<<<< HEAD
+=======
+"xN" = (
+/obj/docking_port/stationary{
+	area_type = /area/syndicate_mothership/control;
+	dir = 1;
+	dwidth = 3;
+	height = 7;
+	name = "escape pod loader";
+	roundstart_template = /datum/map_template/shuttle/assault_pod/default;
+	width = 7
+	},
+/turf/open/floor/plating/airless,
+/area/syndicate_mothership/control)
+>>>>>>> Updated this old code to fork
 "xO" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -10671,7 +11629,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "xS" = (
@@ -10708,13 +11669,21 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
 "xV" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 8
 	},
 /turf/open/floor/wood,
 /area/centcom/control)
 "xW" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -10792,6 +11761,10 @@
 "yj" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
+<<<<<<< HEAD
+=======
+	opacity = 1;
+>>>>>>> Updated this old code to fork
 	req_access_txt = "101"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -10826,16 +11799,53 @@
 /obj/structure/sign/warning/vacuum,
 /turf/open/floor/plating,
 /area/centcom/ferry)
+<<<<<<< HEAD
+=======
+"yo" = (
+/obj/machinery/light,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/centcom/ferry)
+>>>>>>> Updated this old code to fork
 "yp" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
+<<<<<<< HEAD
 "yr" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Briefing Room";
 	req_access_txt = "101"
 	},
 /obj/effect/turf_decal/stripes/line,
+=======
+"yq" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_y = -28
+	},
+/obj/structure/sign/warning/securearea{
+	pixel_x = 32
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/centcom/ferry)
+"yr" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Briefing Room";
+	opacity = 1;
+	req_access_txt = "101"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "ys" = (
@@ -11033,7 +12043,12 @@
 "yU" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
+<<<<<<< HEAD
 	name = "CentCom"
+=======
+	name = "CentCom";
+	opacity = 1
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -11223,6 +12238,10 @@
 "zj" = (
 /obj/structure/closet/secure_closet/ertCom,
 /obj/structure/sign/directions/command{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	pixel_y = 24
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -11232,7 +12251,13 @@
 /obj/machinery/door/airlock/medical/glass{
 	name = "Infirmary"
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
+=======
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "zl" = (
@@ -11290,7 +12315,13 @@
 /area/syndicate_mothership/control)
 "zy" = (
 /obj/structure/table,
+<<<<<<< HEAD
 /obj/item/gun/energy/ionrifle,
+=======
+/obj/item/gun/energy/ionrifle{
+	pin = /obj/item/firing_pin
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -11318,12 +12349,20 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "zB" = (
+<<<<<<< HEAD
 /obj/structure/chair/office,
+=======
+/obj/structure/chair/office/dark,
+>>>>>>> Updated this old code to fork
 /obj/effect/landmark/ert_spawn,
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "zC" = (
+<<<<<<< HEAD
 /obj/structure/chair/office,
+=======
+/obj/structure/chair/office/dark,
+>>>>>>> Updated this old code to fork
 /obj/effect/landmark/ert_spawn,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -11335,7 +12374,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "zD" = (
@@ -11485,7 +12527,13 @@
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/basketball)
 "zV" = (
+<<<<<<< HEAD
 /obj/structure/closet/secure_closet/freezer/meat/open,
+=======
+/obj/structure/closet/secure_closet/freezer/meat{
+	locked = 0
+	},
+>>>>>>> Updated this old code to fork
 /obj/item/reagent_containers/food/snacks/carpmeat,
 /obj/item/reagent_containers/food/snacks/carpmeat,
 /obj/item/reagent_containers/food/snacks/carpmeat,
@@ -11589,11 +12637,18 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "Ah" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
 	dir = 8
 	},
 /obj/effect/landmark/ert_spawn,
 /obj/structure/cable,
+=======
+/obj/structure/chair/office/dark{
+	dir = 8
+	},
+/obj/effect/landmark/ert_spawn,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "Ai" = (
@@ -11744,9 +12799,37 @@
 /obj/effect/decal/remains/xeno,
 /turf/open/floor/grass,
 /area/wizard_station)
+<<<<<<< HEAD
 "AH" = (
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/one)
+=======
+"AG" = (
+/obj/structure/ladder/unbreakable/binary/space,
+/turf/open/indestructible/airblock,
+/area/fabric_of_reality)
+"AH" = (
+/turf/open/floor/plasteel,
+/area/centcom/supplypod/loading/one)
+"AJ" = (
+/obj/structure/chair/comfy/brown{
+	color = "#596479";
+	dir = 4
+	},
+/turf/open/floor/plasteel/grimy,
+/area/centcom/ferry)
+"AK" = (
+/obj/item/clipboard,
+/obj/item/folder/red,
+/obj/item/stamp/denied{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/stamp,
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel/grimy,
+/area/centcom/ferry)
+>>>>>>> Updated this old code to fork
 "AL" = (
 /obj/structure/table/reinforced,
 /obj/item/flashlight/seclite,
@@ -11787,7 +12870,11 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "AP" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 8
 	},
 /obj/effect/landmark/ert_spawn,
@@ -11801,7 +12888,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "AQ" = (
@@ -11826,7 +12916,11 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Briefing Area APC";
+<<<<<<< HEAD
 	pixel_x = 24
+=======
+	pixel_x = 26
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -11838,7 +12932,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "AT" = (
@@ -11983,6 +13080,15 @@
 	},
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
+<<<<<<< HEAD
+=======
+"Bw" = (
+/obj/structure/table/reinforced,
+/obj/item/book/manual/wiki/security_space_law,
+/obj/item/taperecorder,
+/turf/open/floor/plasteel/grimy,
+/area/centcom/ferry)
+>>>>>>> Updated this old code to fork
 "Bx" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/fancy/donut_box,
@@ -12206,9 +13312,18 @@
 "BM" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
+<<<<<<< HEAD
 	req_access_txt = "101"
 	},
 /obj/effect/turf_decal/stripes/line,
+=======
+	opacity = 1;
+	req_access_txt = "101"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/centcom/evac)
 "BN" = (
@@ -12297,6 +13412,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "Ca" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
 	dir = 1
 	},
@@ -12306,6 +13422,16 @@
 /area/centcom/ferry)
 "Cb" = (
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+	dir = 1
+	},
+/obj/effect/landmark/ert_spawn,
+/turf/open/floor/plasteel/dark,
+/area/centcom/ferry)
+"Cb" = (
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 1
 	},
 /obj/effect/landmark/ert_spawn,
@@ -12319,7 +13445,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "Cc" = (
@@ -12523,8 +13652,14 @@
 	icon_state = "plant-22"
 	},
 /obj/machinery/power/apc{
+<<<<<<< HEAD
 	name = "Briefing Room APC";
 	pixel_y = -23
+=======
+	dir = 2;
+	name = "Briefing Room APC";
+	pixel_y = -26
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -12536,7 +13671,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "Cx" = (
@@ -12837,6 +13975,12 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/evac)
 "CT" = (
+<<<<<<< HEAD
+=======
+/obj/machinery/vr_sleeper{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/centcom/holding)
 "CV" = (
@@ -13031,6 +14175,15 @@
 "Di" = (
 /turf/closed/indestructible/riveted,
 /area/ai_multicam_room)
+<<<<<<< HEAD
+=======
+"Dj" = (
+/obj/machinery/vr_sleeper{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+>>>>>>> Updated this old code to fork
 "Dq" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/turf_decal/stripes/line{
@@ -13203,7 +14356,11 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
 "DG" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
@@ -13218,11 +14375,19 @@
 /obj/item/folder/red,
 /obj/item/pen/red,
 /obj/machinery/door/window/brigdoor{
+<<<<<<< HEAD
 	base_state = "rightsecure";
 	dir = 4;
 	icon_state = "rightsecure";
 	name = "CentCom Customs";
 	req_access_txt = "109"
+=======
+	name = "CentCom Customs";
+	icon_state = "rightsecure";
+	dir = 4;
+	req_access_txt = "109";
+	base_state = "rightsecure"
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -13233,17 +14398,29 @@
 /obj/item/folder/white,
 /obj/item/pen/blue,
 /obj/machinery/door/window/brigdoor{
+<<<<<<< HEAD
 	base_state = "rightsecure";
 	dir = 8;
 	icon_state = "rightsecure";
 	name = "CentCom Customs";
 	req_access_txt = "109"
+=======
+	name = "CentCom Customs";
+	icon_state = "rightsecure";
+	dir = 8;
+	req_access_txt = "109";
+	base_state = "rightsecure"
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "DJ" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -13254,6 +14431,16 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
+<<<<<<< HEAD
+=======
+"DK" = (
+/obj/machinery/door/airlock/centcom{
+	name = "CentCom Supply";
+	req_access_txt = "106"
+	},
+/turf/open/floor/plasteel/dark,
+/area/centcom/evac)
+>>>>>>> Updated this old code to fork
 "DL" = (
 /obj/item/clothing/suit/wizrobe/black,
 /obj/item/clothing/head/wizard/black,
@@ -13438,9 +14625,18 @@
 /area/wizard_station)
 "Eg" = (
 /obj/machinery/door/airlock/centcom{
+<<<<<<< HEAD
 	name = "Thunderdome Booth"
 	},
 /obj/effect/turf_decal/stripes/line,
+=======
+	name = "Thunderdome Booth";
+	opacity = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "Eh" = (
@@ -13455,6 +14651,10 @@
 /area/wizard_station)
 "Ej" = (
 /obj/vehicle/ridden/scooter/skateboard{
+<<<<<<< HEAD
+=======
+	icon_state = "skateboard";
+>>>>>>> Updated this old code to fork
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -13494,7 +14694,13 @@
 /area/tdome/tdomeobserve)
 "Eq" = (
 /obj/machinery/door/airlock/external,
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
+=======
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Er" = (
@@ -13594,9 +14800,18 @@
 "EB" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
+<<<<<<< HEAD
 	req_access_txt = "101"
 	},
 /obj/effect/turf_decal/stripes/line,
+=======
+	opacity = 1;
+	req_access_txt = "101"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
@@ -13609,7 +14824,13 @@
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "ED" = (
+<<<<<<< HEAD
 /obj/machinery/vending/boozeomat,
+=======
+/obj/machinery/vending/boozeomat{
+	req_access_txt = "0"
+	},
+>>>>>>> Updated this old code to fork
 /turf/closed/indestructible{
 	icon = 'icons/turf/walls/wood_wall.dmi';
 	icon_state = "wood";
@@ -13649,8 +14870,13 @@
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/fernybush,
 /turf/open/floor/plasteel{
+<<<<<<< HEAD
 	icon_state = "asteroid5";
 	name = "plating"
+=======
+	name = "plating";
+	icon_state = "asteroid5"
+>>>>>>> Updated this old code to fork
 	},
 /area/tdome/tdomeobserve)
 "EH" = (
@@ -13926,6 +15152,10 @@
 "Fr" = (
 /obj/machinery/door/window/brigdoor{
 	base_state = "rightsecure";
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	icon_state = "rightsecure";
 	name = "Thunderdome Booth";
 	req_access_txt = "109"
@@ -14065,7 +15295,12 @@
 /area/tdome/tdomeobserve)
 "FK" = (
 /obj/machinery/door/airlock/centcom{
+<<<<<<< HEAD
 	name = "Thunderdome Backstage"
+=======
+	name = "Thunderdome Backstage";
+	opacity = 1
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -14302,9 +15537,15 @@
 /area/tdome/tdomeobserve)
 "Gr" = (
 /obj/structure/window/reinforced{
+<<<<<<< HEAD
 	color = "#008000";
 	dir = 1;
 	resistance_flags = 3
+=======
+	resistance_flags = 3;
+	color = "#008000";
+	dir = 1
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/lava,
 /area/wizard_station)
@@ -14322,7 +15563,13 @@
 /area/tdome/tdomeobserve)
 "Gv" = (
 /obj/machinery/door/firedoor,
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
+=======
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Gw" = (
@@ -14332,9 +15579,18 @@
 "Gx" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome";
+<<<<<<< HEAD
 	req_access_txt = "101"
 	},
 /obj/effect/turf_decal/stripes/line,
+=======
+	opacity = 1;
+	req_access_txt = "101"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Gy" = (
@@ -14346,9 +15602,15 @@
 	resistance_flags = 3
 	},
 /obj/structure/window/reinforced{
+<<<<<<< HEAD
 	color = "#008000";
 	dir = 1;
 	resistance_flags = 3
+=======
+	resistance_flags = 3;
+	color = "#008000";
+	dir = 1
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/lava/airless,
 /area/wizard_station)
@@ -14387,7 +15649,11 @@
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "GF" = (
+<<<<<<< HEAD
 /obj/structure/closet/secure_closet/freezer/meat/open,
+=======
+/obj/structure/closet/secure_closet/freezer/meat,
+>>>>>>> Updated this old code to fork
 /obj/item/reagent_containers/food/snacks/meat/rawbacon,
 /obj/item/reagent_containers/food/snacks/meat/rawbacon,
 /obj/item/reagent_containers/food/snacks/meat/rawbacon,
@@ -14422,7 +15688,11 @@
 /turf/open/floor/plasteel/dark,
 /area/tdome/tdomeobserve)
 "GG" = (
+<<<<<<< HEAD
 /obj/structure/closet/secure_closet/freezer/fridge/open,
+=======
+/obj/structure/closet/secure_closet/freezer/fridge,
+>>>>>>> Updated this old code to fork
 /obj/item/reagent_containers/food/snacks/grown/potato,
 /obj/item/reagent_containers/food/snacks/grown/potato,
 /obj/item/reagent_containers/food/snacks/grown/whitebeet,
@@ -14490,7 +15760,11 @@
 /turf/open/floor/plasteel/dark,
 /area/tdome/tdomeobserve)
 "GJ" = (
+<<<<<<< HEAD
 /obj/structure/closet/secure_closet/freezer/meat/open,
+=======
+/obj/structure/closet/secure_closet/freezer/meat,
+>>>>>>> Updated this old code to fork
 /obj/item/reagent_containers/food/snacks/meat/slab/bear,
 /obj/item/reagent_containers/food/snacks/meat/slab/bear,
 /obj/item/reagent_containers/food/snacks/meat/slab/bear,
@@ -14592,7 +15866,11 @@
 "GR" = (
 /obj/structure/table/wood,
 /obj/item/storage/box/beanbag,
+<<<<<<< HEAD
 /obj/item/gun/ballistic/shotgun/doublebarrel,
+=======
+/obj/item/gun/ballistic/revolver/doublebarrel,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -14681,6 +15959,7 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
+<<<<<<< HEAD
 "GZ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -14695,6 +15974,8 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
+=======
+>>>>>>> Updated this old code to fork
 "Hb" = (
 /obj/structure/sink{
 	dir = 8;
@@ -15135,9 +16416,18 @@
 "HS" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome Locker Room";
+<<<<<<< HEAD
 	req_access_txt = "101"
 	},
 /obj/effect/turf_decal/stripes/line,
+=======
+	opacity = 1;
+	req_access_txt = "101"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "HT" = (
@@ -15485,9 +16775,18 @@
 "Ix" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome Administration";
+<<<<<<< HEAD
 	req_access_txt = "102"
 	},
 /obj/effect/turf_decal/stripes/line,
+=======
+	opacity = 1;
+	req_access_txt = "102"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/tdome/tdomeadmin)
@@ -15647,7 +16946,13 @@
 /area/tdome/tdomeadmin)
 "IS" = (
 /obj/machinery/door/firedoor,
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
+=======
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/tdome/tdomeadmin)
 "IT" = (
@@ -15739,8 +17044,13 @@
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/fernybush,
 /turf/open/floor/plasteel{
+<<<<<<< HEAD
 	icon_state = "asteroid5";
 	name = "plating"
+=======
+	name = "plating";
+	icon_state = "asteroid5"
+>>>>>>> Updated this old code to fork
 	},
 /area/tdome/tdomeadmin)
 "Je" = (
@@ -16174,6 +17484,10 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome Administration";
+<<<<<<< HEAD
+=======
+	opacity = 1;
+>>>>>>> Updated this old code to fork
 	req_access_txt = "102"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -16494,6 +17808,10 @@
 /area/centcom/evac)
 "KL" = (
 /obj/docking_port/stationary{
+<<<<<<< HEAD
+=======
+	dir = 1;
+>>>>>>> Updated this old code to fork
 	dwidth = 1;
 	height = 4;
 	id = "pod4_away";
@@ -16504,6 +17822,10 @@
 /area/space)
 "KM" = (
 /obj/docking_port/stationary{
+<<<<<<< HEAD
+=======
+	dir = 1;
+>>>>>>> Updated this old code to fork
 	dwidth = 1;
 	height = 4;
 	id = "pod3_away";
@@ -16679,7 +18001,13 @@
 /area/centcom/evac)
 "Lr" = (
 /obj/machinery/door/window/northright{
+<<<<<<< HEAD
 	dir = 4;
+=======
+	base_state = "right";
+	dir = 4;
+	icon_state = "right";
+>>>>>>> Updated this old code to fork
 	name = "Security Desk";
 	req_access_txt = "103"
 	},
@@ -17030,6 +18358,26 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
+<<<<<<< HEAD
+=======
+"My" = (
+/obj/docking_port/stationary{
+	area_type = /area/syndicate_mothership;
+	dheight = 1;
+	dir = 8;
+	dwidth = 12;
+	height = 17;
+	id = "syndicate_away";
+	name = "syndicate recon outpost";
+	roundstart_template = /datum/map_template/shuttle/infiltrator/basic;
+	width = 23
+	},
+/turf/open/floor/plating/asteroid/snow/airless,
+/area/syndicate_mothership)
+"MB" = (
+/turf/open/indestructible/binary,
+/area/fabric_of_reality)
+>>>>>>> Updated this old code to fork
 "MD" = (
 /obj/effect/light_emitter{
 	set_cap = 1;
@@ -17058,6 +18406,13 @@
 	},
 /turf/open/floor/grass,
 /area/centcom/holding)
+<<<<<<< HEAD
+=======
+"MH" = (
+/obj/structure/ladder/unbreakable/binary/unlinked,
+/turf/open/indestructible/airblock,
+/area/fabric_of_reality)
+>>>>>>> Updated this old code to fork
 "MI" = (
 /obj/machinery/light{
 	dir = 1
@@ -17102,9 +18457,18 @@
 "Nk" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome";
+<<<<<<< HEAD
 	req_access_txt = "101"
 	},
 /obj/effect/turf_decal/stripes/line,
+=======
+	opacity = 1;
+	req_access_txt = "101"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
@@ -17139,7 +18503,13 @@
 /area/centcom/holding)
 "Nv" = (
 /obj/structure/table,
+<<<<<<< HEAD
 /turf/open/floor/plasteel/cafeteria,
+=======
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /area/centcom/holding)
 "Nw" = (
 /obj/machinery/recharge_station,
@@ -17155,12 +18525,28 @@
 "NE" = (
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/podStorage)
+<<<<<<< HEAD
 "NG" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
 	req_access_txt = "101"
 	},
 /obj/effect/turf_decal/stripes/line,
+=======
+"NF" = (
+/obj/structure/ladder/unbreakable/binary,
+/turf/open/indestructible/airblock,
+/area/fabric_of_reality)
+"NG" = (
+/obj/machinery/door/airlock/centcom{
+	name = "CentCom Security";
+	opacity = 1;
+	req_access_txt = "101"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
@@ -17194,9 +18580,18 @@
 /area/centcom/holding)
 "NU" = (
 /obj/machinery/door/airlock/centcom{
+<<<<<<< HEAD
 	name = "CentCom"
 	},
 /obj/effect/turf_decal/stripes/line,
+=======
+	name = "CentCom";
+	opacity = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
@@ -17205,7 +18600,12 @@
 "Oj" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
+<<<<<<< HEAD
 	name = "CentCom"
+=======
+	name = "CentCom";
+	opacity = 1
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -17241,12 +18641,15 @@
 "OA" = (
 /turf/open/floor/plasteel/freezer,
 /area/syndicate_mothership/control)
+<<<<<<< HEAD
 "OC" = (
 /obj/machinery/door/poddoor/ert,
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
+=======
+>>>>>>> Updated this old code to fork
 "OD" = (
 /obj/machinery/microwave{
 	desc = "Cooks and boils stuff, somehow.";
@@ -17267,6 +18670,7 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/one)
+<<<<<<< HEAD
 "OQ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Briefing Room";
@@ -17276,6 +18680,8 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
+=======
+>>>>>>> Updated this old code to fork
 "OU" = (
 /obj/item/clothing/under/jabroni,
 /obj/item/clothing/under/geisha,
@@ -17292,6 +18698,7 @@
 /obj/structure/closet/crate/bin,
 /turf/open/floor/wood,
 /area/centcom/holding)
+<<<<<<< HEAD
 "Pj" = (
 /obj/structure/chair/comfy/brown{
 	color = "#596479";
@@ -17299,6 +18706,8 @@
 	},
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
+=======
+>>>>>>> Updated this old code to fork
 "Pl" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -17330,6 +18739,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/four)
+<<<<<<< HEAD
+=======
+"Px" = (
+/obj/machinery/vr_sleeper,
+/turf/open/floor/wood,
+/area/centcom/holding)
+>>>>>>> Updated this old code to fork
 "Pz" = (
 /obj/structure/table/reinforced,
 /obj/item/paper/pamphlet/centcom/visitor_info,
@@ -17341,6 +18757,15 @@
 	},
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
+<<<<<<< HEAD
+=======
+"PF" = (
+/obj/machinery/vr_sleeper{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+>>>>>>> Updated this old code to fork
 "PI" = (
 /obj/machinery/biogenerator,
 /obj/effect/turf_decal/tile/green{
@@ -17424,9 +18849,15 @@
 /obj/machinery/iv_drip,
 /obj/item/roller,
 /obj/item/storage/firstaid/regular,
+<<<<<<< HEAD
 /obj/item/reagent_containers/medigel/synthflesh,
 /obj/item/reagent_containers/medigel/synthflesh,
 /obj/item/reagent_containers/medigel/synthflesh,
+=======
+/obj/item/reagent_containers/medspray/synthflesh,
+/obj/item/reagent_containers/medspray/synthflesh,
+/obj/item/reagent_containers/medspray/synthflesh,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Qj" = (
@@ -17441,11 +18872,22 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
 /area/centcom/holding)
+<<<<<<< HEAD
 "Qq" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "Qu" = (
+=======
+"Qm" = (
+/obj/singularity/wizard/mapped,
+/turf/open/indestructible/binary,
+/area/fabric_of_reality)
+"Qu" = (
+/obj/machinery/vr_sleeper{
+	dir = 8
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/light{
 	dir = 4
 	},
@@ -17624,12 +19066,15 @@
 "Si" = (
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/two)
+<<<<<<< HEAD
 "Sq" = (
 /obj/structure/table/wood,
 /obj/item/camera,
 /obj/item/camera,
 /turf/open/floor/holofloor/carpet,
 /area/holodeck/rec_center/photobooth)
+=======
+>>>>>>> Updated this old code to fork
 "Su" = (
 /turf/open/floor/plasteel,
 /area/centcom/supplypod)
@@ -17695,7 +19140,13 @@
 	pixel_x = -3;
 	pixel_y = 6
 	},
+<<<<<<< HEAD
 /turf/open/floor/plasteel/cafeteria,
+=======
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /area/centcom/holding)
 "SH" = (
 /obj/structure/closet/secure_closet/personal,
@@ -17770,6 +19221,12 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
+<<<<<<< HEAD
+=======
+"To" = (
+/turf/open/indestructible/airblock,
+/area/fabric_of_reality)
+>>>>>>> Updated this old code to fork
 "Tq" = (
 /obj/structure/table/wood/bar,
 /obj/item/stack/sheet/glass/fifty,
@@ -17826,6 +19283,7 @@
 /obj/effect/landmark/holding_facility,
 /turf/open/floor/wood,
 /area/centcom/holding)
+<<<<<<< HEAD
 "Ue" = (
 /obj/structure/chair/office,
 /obj/effect/landmark/ert_spawn,
@@ -17857,6 +19315,8 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
+=======
+>>>>>>> Updated this old code to fork
 "Uh" = (
 /obj/machinery/light{
 	dir = 4
@@ -17892,9 +19352,18 @@
 "Un" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome";
+<<<<<<< HEAD
 	req_access_txt = "101"
 	},
 /obj/effect/turf_decal/stripes/line,
+=======
+	opacity = 1;
+	req_access_txt = "101"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
@@ -17933,6 +19402,10 @@
 "UO" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
+<<<<<<< HEAD
+=======
+	opacity = 1;
+>>>>>>> Updated this old code to fork
 	req_access_txt = "101"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -18043,6 +19516,10 @@
 "Wc" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
+<<<<<<< HEAD
+=======
+	opacity = 1;
+>>>>>>> Updated this old code to fork
 	req_access_txt = "101"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -18058,7 +19535,13 @@
 	brightness = 3;
 	dir = 8
 	},
+<<<<<<< HEAD
 /turf/open/floor/plasteel/freezer,
+=======
+/turf/open/floor/plasteel/freezer{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /area/syndicate_mothership/control)
 "Wm" = (
 /obj/structure/window/reinforced{
@@ -18076,9 +19559,18 @@
 "WJ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome Administration";
+<<<<<<< HEAD
 	req_access_txt = "102"
 	},
 /obj/effect/turf_decal/stripes/line,
+=======
+	opacity = 1;
+	req_access_txt = "102"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
@@ -18093,6 +19585,10 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
+<<<<<<< HEAD
+=======
+	opacity = 1;
+>>>>>>> Updated this old code to fork
 	req_access_txt = "101"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -18117,7 +19613,13 @@
 /turf/open/floor/grass,
 /area/centcom/holding)
 "Xe" = (
+<<<<<<< HEAD
 /obj/machinery/vending/autodrobe,
+=======
+/obj/machinery/vending/autodrobe{
+	req_access_txt = "0"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Xf" = (
@@ -18135,6 +19637,18 @@
 "Xh" = (
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/four)
+<<<<<<< HEAD
+=======
+"Xk" = (
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Xn" = (
+/obj/machinery/door/airlock/wood{
+	req_one_access_txt = "0"
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+>>>>>>> Updated this old code to fork
 "Xo" = (
 /obj/machinery/vending/dinnerware,
 /turf/open/floor/plasteel/cafeteria,
@@ -18152,12 +19666,30 @@
 "Xt" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
+<<<<<<< HEAD
 	req_access_txt = "101"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/centcom/control)
+=======
+	opacity = 1;
+	req_access_txt = "101"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plasteel,
+/area/centcom/control)
+"Xx" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+>>>>>>> Updated this old code to fork
 "Xy" = (
 /obj/machinery/door/airlock/external{
 	name = "Ferry Airlock"
@@ -18217,6 +19749,15 @@
 "Yn" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/supplypod)
+<<<<<<< HEAD
+=======
+"Yo" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+>>>>>>> Updated this old code to fork
 "Yq" = (
 /obj/structure/chair/wood/wings{
 	dir = 8
@@ -18229,16 +19770,31 @@
 "Yt" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
+<<<<<<< HEAD
 	req_access_txt = "101"
 	},
 /obj/effect/turf_decal/stripes/line,
+=======
+	opacity = 1;
+	req_access_txt = "101"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Yu" = (
+<<<<<<< HEAD
 /obj/structure/closet/secure_closet/freezer/fridge/open,
+=======
+/obj/structure/closet/secure_closet/freezer/fridge{
+	locked = 0
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "Yv" = (
@@ -18250,6 +19806,16 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/supplypod)
+<<<<<<< HEAD
+=======
+"YA" = (
+/obj/machinery/door/airlock/centcom{
+	name = "CentCom Supply";
+	req_access_txt = "106"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/supplypod)
+>>>>>>> Updated this old code to fork
 "YJ" = (
 /obj/item/reagent_containers/food/condiment/enzyme,
 /obj/item/reagent_containers/food/drinks/shaker,
@@ -18296,6 +19862,12 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
+<<<<<<< HEAD
+=======
+"Zc" = (
+/turf/open/indestructible/binary,
+/area/space)
+>>>>>>> Updated this old code to fork
 "Zh" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -18321,6 +19893,16 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
+<<<<<<< HEAD
+=======
+"Zt" = (
+/obj/machinery/vr_sleeper{
+	dir = 1
+	},
+/obj/machinery/light,
+/turf/open/floor/wood,
+/area/centcom/holding)
+>>>>>>> Updated this old code to fork
 "Zx" = (
 /mob/living/simple_animal/bot/medbot{
 	desc = "A little medical robot. You can make out the word \"sincerity\" on its chassis.";
@@ -18333,6 +19915,10 @@
 "ZJ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
+<<<<<<< HEAD
+=======
+	opacity = 1;
+>>>>>>> Updated this old code to fork
 	req_access_txt = "101"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -18343,6 +19929,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/evac)
+<<<<<<< HEAD
 "ZN" = (
 /obj/structure/table/wood,
 /obj/item/toy/crayon/spraycan{
@@ -18355,6 +19942,8 @@
 	},
 /turf/open/floor/holofloor/carpet,
 /area/holodeck/rec_center/photobooth)
+=======
+>>>>>>> Updated this old code to fork
 "ZQ" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -18382,9 +19971,18 @@
 "ZX" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
+<<<<<<< HEAD
 	req_access_txt = "101"
 	},
 /obj/effect/turf_decal/stripes/line,
+=======
+	opacity = 1;
+	req_access_txt = "101"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
@@ -23257,6 +24855,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 jA
 jA
 jA
@@ -23272,6 +24871,23 @@ jA
 jA
 jA
 jA
+=======
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+>>>>>>> Updated this old code to fork
 aa
 "}
 (20,1,1) = {"
@@ -23514,7 +25130,10 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 jA
+=======
+>>>>>>> Updated this old code to fork
 hH
 hH
 hH
@@ -23528,7 +25147,12 @@ hH
 hH
 hH
 hH
+<<<<<<< HEAD
 jA
+=======
+hH
+hH
+>>>>>>> Updated this old code to fork
 aa
 "}
 (21,1,1) = {"
@@ -23771,7 +25395,10 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 jA
+=======
+>>>>>>> Updated this old code to fork
 hH
 hH
 hH
@@ -23785,7 +25412,12 @@ hH
 hH
 hH
 hH
+<<<<<<< HEAD
 jA
+=======
+hH
+hH
+>>>>>>> Updated this old code to fork
 aa
 "}
 (22,1,1) = {"
@@ -24028,7 +25660,10 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 jA
+=======
+>>>>>>> Updated this old code to fork
 hH
 hH
 hH
@@ -24042,7 +25677,12 @@ hH
 hH
 hH
 hH
+<<<<<<< HEAD
 jA
+=======
+hH
+hH
+>>>>>>> Updated this old code to fork
 aa
 "}
 (23,1,1) = {"
@@ -24285,7 +25925,10 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 jA
+=======
+>>>>>>> Updated this old code to fork
 hH
 hH
 hH
@@ -24299,7 +25942,12 @@ hH
 hH
 hH
 hH
+<<<<<<< HEAD
 jA
+=======
+hH
+hH
+>>>>>>> Updated this old code to fork
 aa
 "}
 (24,1,1) = {"
@@ -24542,7 +26190,10 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 jA
+=======
+>>>>>>> Updated this old code to fork
 hH
 hH
 hH
@@ -24556,7 +26207,12 @@ hH
 hH
 hH
 hH
+<<<<<<< HEAD
 jA
+=======
+hH
+hH
+>>>>>>> Updated this old code to fork
 aa
 "}
 (25,1,1) = {"
@@ -24799,21 +26455,29 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 jA
+=======
 hH
-hH
-hH
-hH
-jA
-jA
-jA
-jA
-jA
+>>>>>>> Updated this old code to fork
 hH
 hH
 hH
 hH
 jA
+jA
+jA
+jA
+jA
+hH
+hH
+hH
+hH
+<<<<<<< HEAD
+jA
+=======
+hH
+>>>>>>> Updated this old code to fork
 aa
 "}
 (26,1,1) = {"
@@ -25056,7 +26720,11 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 jA
+=======
+hH
+>>>>>>> Updated this old code to fork
 hH
 hH
 hH
@@ -25070,7 +26738,11 @@ hH
 hH
 hH
 hH
+<<<<<<< HEAD
 jA
+=======
+hH
+>>>>>>> Updated this old code to fork
 aa
 "}
 (27,1,1) = {"
@@ -25313,7 +26985,11 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 jA
+=======
+hH
+>>>>>>> Updated this old code to fork
 hH
 hH
 hH
@@ -25327,7 +27003,11 @@ hH
 hH
 hH
 hH
+<<<<<<< HEAD
 jA
+=======
+hH
+>>>>>>> Updated this old code to fork
 aa
 "}
 (28,1,1) = {"
@@ -25570,7 +27250,11 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 jA
+=======
+hH
+>>>>>>> Updated this old code to fork
 hH
 hH
 hH
@@ -25584,7 +27268,11 @@ hH
 hH
 hH
 hH
+<<<<<<< HEAD
 jA
+=======
+hH
+>>>>>>> Updated this old code to fork
 aa
 "}
 (29,1,1) = {"
@@ -25827,21 +27515,29 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 jA
+=======
 hH
-hH
-hH
-hH
-jA
-jA
-jA
-jA
-jA
+>>>>>>> Updated this old code to fork
 hH
 hH
 hH
 hH
 jA
+jA
+jA
+jA
+jA
+hH
+hH
+hH
+hH
+<<<<<<< HEAD
+jA
+=======
+hH
+>>>>>>> Updated this old code to fork
 aa
 "}
 (30,1,1) = {"
@@ -26084,7 +27780,10 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 jA
+=======
+>>>>>>> Updated this old code to fork
 hH
 hH
 hH
@@ -26098,7 +27797,12 @@ hH
 hH
 hH
 hH
+<<<<<<< HEAD
 jA
+=======
+hH
+hH
+>>>>>>> Updated this old code to fork
 aa
 "}
 (31,1,1) = {"
@@ -26341,7 +28045,10 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 jA
+=======
+>>>>>>> Updated this old code to fork
 hH
 hH
 hH
@@ -26355,7 +28062,12 @@ hH
 hH
 hH
 hH
+<<<<<<< HEAD
 jA
+=======
+hH
+hH
+>>>>>>> Updated this old code to fork
 aa
 "}
 (32,1,1) = {"
@@ -26566,6 +28278,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -26599,6 +28312,40 @@ aa
 aa
 aa
 jA
+=======
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+aa
+>>>>>>> Updated this old code to fork
 hH
 hH
 hH
@@ -26612,7 +28359,12 @@ hH
 hH
 hH
 hH
+<<<<<<< HEAD
 jA
+=======
+hH
+hH
+>>>>>>> Updated this old code to fork
 aa
 "}
 (33,1,1) = {"
@@ -26823,6 +28575,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -26873,6 +28626,58 @@ jA
 aa
 "}
 (34,1,1) = {"
+=======
+lI
+lI
+lI
+Zc
+Zc
+Zc
+Zc
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+aa
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+aa
+"}
+(34,1,1) = {"
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -27080,6 +28885,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -27113,6 +28919,40 @@ aa
 aa
 aa
 jA
+=======
+lI
+lI
+lI
+lI
+lI
+Zc
+Zc
+Zc
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+Zc
+lI
+Zc
+Zc
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+aa
+>>>>>>> Updated this old code to fork
 hH
 hH
 hH
@@ -27126,7 +28966,12 @@ hH
 hH
 hH
 hH
+<<<<<<< HEAD
 jA
+=======
+hH
+hH
+>>>>>>> Updated this old code to fork
 aa
 "}
 (35,1,1) = {"
@@ -27337,6 +29182,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -27384,6 +29230,55 @@ jA
 jA
 jA
 jA
+=======
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+Zc
+Zc
+Zc
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+aa
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+>>>>>>> Updated this old code to fork
 aa
 "}
 (36,1,1) = {"
@@ -27498,6 +29393,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -27642,6 +29538,152 @@ aa
 aa
 aa
 aa
+=======
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+qE
+qE
+qE
+qE
+qE
+qE
+qE
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+Zc
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+Zc
+Zc
+Zc
+lI
+lI
+lI
+lI
+lI
+lI
+Zc
+Zc
+lI
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+>>>>>>> Updated this old code to fork
 "}
 (37,1,1) = {"
 aa
@@ -27851,6 +29893,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -27882,6 +29925,39 @@ aa
 aa
 aa
 aa
+=======
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+Zc
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+Zc
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+Zc
+lI
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -28108,6 +30184,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -28139,6 +30216,39 @@ aa
 aa
 aa
 aa
+=======
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+Zc
+lI
+lI
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -28365,6 +30475,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -28396,6 +30507,39 @@ aa
 aa
 aa
 aa
+=======
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+MB
+MB
+MB
+To
+To
+To
+To
+To
+MH
+To
+To
+To
+MB
+To
+To
+To
+To
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -28622,6 +30766,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -28653,6 +30798,39 @@ aa
 aa
 aa
 aa
+=======
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+To
+To
+MB
+MB
+To
+To
+To
+To
+To
+To
+To
+MB
+MB
+To
+To
+To
+To
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -28879,6 +31057,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -28910,6 +31089,39 @@ aa
 aa
 aa
 aa
+=======
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+To
+To
+To
+MB
+MB
+To
+To
+To
+To
+To
+To
+MB
+To
+To
+To
+To
+To
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -29136,6 +31348,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -29167,6 +31380,39 @@ aa
 aa
 aa
 aa
+=======
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+To
+To
+To
+To
+MB
+MB
+To
+To
+To
+To
+To
+MB
+To
+To
+To
+MB
+MB
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -29282,6 +31528,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 hh
 hl
 hl
@@ -29370,6 +31617,65 @@ aa
 aa
 aa
 aa
+=======
+hh
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hh
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -29424,6 +31730,40 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
+=======
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+To
+To
+To
+To
+To
+MB
+MB
+To
+To
+MB
+MB
+MB
+To
+To
+MB
+MB
+To
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -29650,6 +31990,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -29681,6 +32022,39 @@ aa
 aa
 aa
 aa
+=======
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+To
+To
+To
+To
+To
+To
+MB
+MB
+To
+MB
+MB
+MB
+MB
+MB
+MB
+To
+To
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -29907,6 +32281,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -29938,6 +32313,39 @@ aa
 aa
 aa
 aa
+=======
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+MB
+MB
+To
+To
+To
+To
+To
+MB
+To
+To
+MB
+To
+To
+To
+To
+To
+To
+lI
+lI
+lI
+Zc
+Zc
+lI
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -30164,6 +32572,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -30195,6 +32604,39 @@ aa
 aa
 aa
 aa
+=======
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+To
+MB
+To
+To
+To
+To
+To
+MB
+MB
+MB
+To
+To
+To
+To
+To
+To
+To
+lI
+lI
+Zc
+Zc
+Zc
+lI
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -30421,6 +32863,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -30452,6 +32895,39 @@ aa
 aa
 aa
 aa
+=======
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+NF
+To
+To
+To
+To
+To
+To
+MB
+Qm
+MB
+To
+To
+To
+To
+To
+To
+AG
+lI
+lI
+lI
+Zc
+Zc
+lI
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -30678,6 +33154,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -30709,6 +33186,39 @@ aa
 aa
 aa
 aa
+=======
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+To
+To
+To
+To
+MB
+MB
+MB
+MB
+To
+MB
+MB
+To
+To
+To
+To
+To
+To
+lI
+lI
+lI
+Zc
+Zc
+lI
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -30935,6 +33445,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -30966,6 +33477,39 @@ aa
 aa
 aa
 aa
+=======
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+To
+To
+To
+MB
+MB
+MB
+MB
+To
+To
+To
+MB
+To
+To
+To
+To
+To
+To
+lI
+lI
+lI
+lI
+Zc
+Zc
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -31192,6 +33736,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -31223,6 +33768,39 @@ aa
 aa
 aa
 aa
+=======
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+To
+To
+MB
+MB
+MB
+To
+To
+To
+To
+To
+MB
+MB
+To
+To
+To
+To
+To
+lI
+lI
+lI
+lI
+lI
+Zc
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -31449,6 +34027,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -31480,6 +34059,39 @@ aa
 aa
 aa
 aa
+=======
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+To
+MB
+MB
+To
+MB
+To
+To
+To
+To
+To
+To
+MB
+MB
+MB
+To
+To
+To
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -31706,6 +34318,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -31737,6 +34350,39 @@ aa
 aa
 aa
 aa
+=======
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+MB
+MB
+To
+To
+MB
+MB
+To
+To
+To
+To
+To
+To
+To
+MB
+MB
+To
+To
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -31963,6 +34609,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -31994,6 +34641,39 @@ aa
 aa
 aa
 aa
+=======
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+To
+To
+To
+MB
+MB
+MB
+To
+To
+To
+To
+To
+To
+To
+To
+MB
+MB
+To
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -32220,6 +34900,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -32251,6 +34932,39 @@ aa
 aa
 aa
 aa
+=======
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+To
+To
+To
+MB
+To
+To
+To
+To
+To
+To
+To
+To
+To
+To
+To
+MB
+MB
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -32477,6 +35191,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -32508,6 +35223,39 @@ aa
 aa
 aa
 aa
+=======
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+To
+To
+To
+MB
+To
+To
+To
+To
+To
+MB
+To
+To
+To
+To
+To
+To
+MB
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -32734,6 +35482,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -32765,6 +35514,39 @@ aa
 aa
 aa
 aa
+=======
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -32991,6 +35773,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -33022,6 +35805,39 @@ aa
 aa
 aa
 aa
+=======
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -33248,6 +36064,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -33279,6 +36096,39 @@ aa
 aa
 aa
 aa
+=======
+lI
+lI
+lI
+lI
+Zc
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -33505,6 +36355,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -33536,6 +36387,39 @@ aa
 aa
 aa
 aa
+=======
+lI
+lI
+lI
+Zc
+Zc
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+Zc
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+Zc
+Zc
+Zc
+lI
+lI
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -33762,6 +36646,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -33793,6 +36678,39 @@ aa
 aa
 aa
 aa
+=======
+lI
+lI
+lI
+Zc
+Zc
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+Zc
+lI
+lI
+lI
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -34019,6 +36937,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -34050,6 +36969,39 @@ aa
 aa
 aa
 aa
+=======
+lI
+lI
+lI
+lI
+Zc
+lI
+lI
+lI
+lI
+lI
+lI
+Zc
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -34276,6 +37228,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -34307,6 +37260,39 @@ aa
 aa
 aa
 aa
+=======
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -34495,7 +37481,11 @@ kt
 hl
 hl
 hl
+<<<<<<< HEAD
 ku
+=======
+My
+>>>>>>> Updated this old code to fork
 hl
 hl
 hl
@@ -34991,10 +37981,17 @@ hl
 hl
 hl
 hl
+<<<<<<< HEAD
 ng
 ng
 ng
 ng
+=======
+ku
+ku
+ku
+ku
+>>>>>>> Updated this old code to fork
 kt
 hl
 hl
@@ -35251,7 +38248,11 @@ hl
 kv
 kR
 ll
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 kt
 hl
 hl
@@ -35508,7 +38509,11 @@ hl
 kv
 kR
 ll
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 kt
 hl
 hl
@@ -35518,6 +38523,7 @@ hl
 hl
 kt
 kt
+<<<<<<< HEAD
 ng
 ng
 ng
@@ -35528,6 +38534,18 @@ ng
 ng
 ng
 ng
+=======
+ku
+ku
+ku
+ku
+ku
+ud
+ku
+ku
+ku
+ku
+>>>>>>> Updated this old code to fork
 kt
 kt
 hl
@@ -35765,7 +38783,11 @@ hl
 kv
 kR
 ll
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 kt
 mz
 hl
@@ -35774,8 +38796,13 @@ my
 hl
 hl
 oW
+<<<<<<< HEAD
 ng
 tY
+=======
+ku
+ng
+>>>>>>> Updated this old code to fork
 qJ
 re
 se
@@ -35784,8 +38811,13 @@ pZ
 uL
 vu
 wl
+<<<<<<< HEAD
 ng
 ng
+=======
+ku
+ku
+>>>>>>> Updated this old code to fork
 kt
 hl
 hl
@@ -36022,7 +39054,11 @@ ki
 kv
 kR
 lm
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 kt
 hl
 hl
@@ -36032,17 +39068,30 @@ hl
 hl
 kt
 nz
+<<<<<<< HEAD
 si
 pZ
 pZ
 sh
 sh
+=======
+pZ
+pZ
+pZ
+rf
+rf
+>>>>>>> Updated this old code to fork
 pZ
 rf
 vv
 wm
+<<<<<<< HEAD
 tv
 ng
+=======
+si
+ku
+>>>>>>> Updated this old code to fork
 kt
 my
 nx
@@ -36279,7 +39328,11 @@ hl
 kv
 kR
 ll
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 kt
 kt
 kt
@@ -36298,8 +39351,13 @@ pZ
 rf
 vw
 wn
+<<<<<<< HEAD
 tw
 ng
+=======
+wV
+ku
+>>>>>>> Updated this old code to fork
 kt
 hl
 mz
@@ -36536,6 +39594,7 @@ hl
 kv
 kR
 ll
+<<<<<<< HEAD
 ng
 ng
 ng
@@ -36546,6 +39605,18 @@ ng
 ng
 ng
 ng
+=======
+ku
+ku
+ku
+ku
+ku
+ku
+ku
+ku
+ku
+ku
+>>>>>>> Updated this old code to fork
 pZ
 pZ
 rf
@@ -36555,8 +39626,13 @@ pZ
 rf
 vv
 wn
+<<<<<<< HEAD
 tQ
 ng
+=======
+wW
+ku
+>>>>>>> Updated this old code to fork
 oW
 hl
 my
@@ -36806,14 +39882,24 @@ pF
 qa
 pZ
 rg
+<<<<<<< HEAD
 sh
 sh
+=======
+rf
+rf
+>>>>>>> Updated this old code to fork
 pZ
 pZ
 vx
 wo
+<<<<<<< HEAD
 tZ
 ng
+=======
+wX
+ku
+>>>>>>> Updated this old code to fork
 kt
 ma
 oW
@@ -37050,6 +40136,7 @@ hl
 kv
 kR
 ll
+<<<<<<< HEAD
 ng
 ng
 nz
@@ -37061,6 +40148,19 @@ ng
 ng
 ng
 ng
+=======
+ku
+ku
+nz
+nz
+nz
+ku
+ku
+ku
+ku
+ku
+ku
+>>>>>>> Updated this old code to fork
 qK
 pZ
 pZ
@@ -37069,12 +40169,21 @@ pZ
 pZ
 pZ
 pZ
+<<<<<<< HEAD
 ng
 ng
 ng
 nz
 ng
 ng
+=======
+ku
+ku
+ku
+nz
+ku
+ku
+>>>>>>> Updated this old code to fork
 hh
 hh
 hh
@@ -37307,7 +40416,11 @@ hl
 kv
 kR
 ll
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 kt
 mC
 nh
@@ -37317,6 +40430,7 @@ ma
 ma
 kt
 kt
+<<<<<<< HEAD
 ng
 qL
 pZ
@@ -37324,6 +40438,15 @@ pZ
 pZ
 pZ
 pZ
+=======
+ku
+qL
+pZ
+sh
+sh
+sh
+sh
+>>>>>>> Updated this old code to fork
 pZ
 pZ
 wY
@@ -37331,7 +40454,11 @@ xG
 xG
 xG
 zx
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -37564,7 +40691,11 @@ hl
 kv
 kR
 lm
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 kt
 mz
 hl
@@ -37574,6 +40705,7 @@ hl
 hl
 mz
 ma
+<<<<<<< HEAD
 ng
 ng
 ng
@@ -37584,11 +40716,27 @@ tm
 pZ
 wp
 ng
+=======
+ku
+qM
+pZ
+si
+tg
+tg
+uM
+pZ
+wp
+ku
+>>>>>>> Updated this old code to fork
 xG
 xG
 xG
 zx
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -37821,7 +40969,11 @@ hl
 kv
 kR
 ll
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 kt
 hl
 hl
@@ -37830,6 +40982,7 @@ hl
 mz
 hl
 kt
+<<<<<<< HEAD
 kt
 ng
 ng
@@ -37841,11 +40994,28 @@ nz
 uJ
 nz
 ng
+=======
+pG
+ku
+ku
+rh
+ku
+ku
+ku
+nz
+uJ
+nz
+ku
+>>>>>>> Updated this old code to fork
 xH
 xG
 xG
 zx
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -38078,7 +41248,11 @@ hl
 kv
 kR
 ll
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 kt
 hl
 mz
@@ -38087,6 +41261,7 @@ mA
 hl
 hl
 pG
+<<<<<<< HEAD
 qM
 ng
 qO
@@ -38098,11 +41273,28 @@ nz
 ll
 nz
 ng
+=======
+ku
+ku
+qN
+ri
+Wj
+ku
+ku
+nz
+ll
+nz
+ku
+>>>>>>> Updated this old code to fork
 xI
 xG
 xG
 zx
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -38335,7 +41527,11 @@ hl
 kv
 kR
 ll
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 ma
 hl
 hl
@@ -38344,6 +41540,7 @@ mz
 hl
 hl
 pG
+<<<<<<< HEAD
 qM
 nz
 pY
@@ -38355,11 +41552,28 @@ nz
 ll
 nz
 ng
+=======
+ku
+qO
+OA
+ri
+sj
+ku
+ku
+nz
+ll
+nz
+ku
+>>>>>>> Updated this old code to fork
 xJ
 xG
 xG
 zx
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -38589,10 +41803,17 @@ hl
 hl
 hl
 hl
+<<<<<<< HEAD
 ng
 ng
 ng
 ng
+=======
+ku
+ku
+ku
+ku
+>>>>>>> Updated this old code to fork
 kt
 hl
 mz
@@ -38601,6 +41822,7 @@ hl
 hl
 mA
 kt
+<<<<<<< HEAD
 qM
 ng
 ng
@@ -38612,11 +41834,28 @@ nz
 ll
 nz
 ng
+=======
+nz
+pY
+qP
+rj
+ku
+ku
+ku
+nz
+ll
+nz
+ku
+>>>>>>> Updated this old code to fork
 xK
 xG
 yX
 zy
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -38857,6 +42096,7 @@ hl
 mA
 mz
 hl
+<<<<<<< HEAD
 hl
 qM
 tg
@@ -38874,6 +42114,25 @@ ng
 ng
 ng
 ng
+=======
+ma
+ku
+ku
+ku
+ku
+ku
+ku
+ku
+nz
+ll
+nz
+ku
+ku
+ku
+ku
+ku
+ku
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -39115,10 +42374,17 @@ hl
 hl
 hl
 pG
+<<<<<<< HEAD
 hl
 hh
 aa
 ng
+=======
+ma
+hh
+aa
+ku
+>>>>>>> Updated this old code to fork
 sk
 sk
 sk
@@ -39128,7 +42394,11 @@ nz
 sk
 sk
 sk
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -39375,7 +42645,11 @@ mA
 hl
 hh
 aa
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 sk
 th
 ue
@@ -39385,7 +42659,11 @@ nz
 ue
 xL
 sk
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -39632,7 +42910,11 @@ hl
 mz
 hh
 aa
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 sl
 ti
 sk
@@ -39642,7 +42924,11 @@ sk
 sk
 xM
 xP
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -39889,8 +43175,13 @@ hl
 hl
 hh
 aa
+<<<<<<< HEAD
 ng
 so
+=======
+ku
+sm
+>>>>>>> Updated this old code to fork
 sk
 sk
 sk
@@ -39899,7 +43190,11 @@ sk
 sk
 sk
 yl
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -40146,7 +43441,11 @@ hl
 hl
 hh
 aa
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 sn
 sk
 sk
@@ -40156,7 +43455,11 @@ sk
 sk
 sk
 ym
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -40403,17 +43706,28 @@ hl
 hl
 hh
 aa
+<<<<<<< HEAD
 ng
 so
+=======
+ku
+sm
+>>>>>>> Updated this old code to fork
 sk
 sk
 sk
 sk
 sk
 sk
+<<<<<<< HEAD
 ua
 yl
 ng
+=======
+xN
+yl
+ku
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -40660,8 +43974,13 @@ hl
 hl
 hh
 aa
+<<<<<<< HEAD
 ng
 so
+=======
+ku
+sm
+>>>>>>> Updated this old code to fork
 sk
 sk
 sk
@@ -40670,7 +43989,11 @@ sk
 sk
 sk
 yl
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -40917,7 +44240,11 @@ hl
 hl
 hh
 aa
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 so
 sk
 sk
@@ -40927,7 +44254,11 @@ sk
 sk
 sk
 yl
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -41174,7 +44505,11 @@ hl
 hl
 hh
 aa
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 yk
 tn
 sk
@@ -41184,7 +44519,11 @@ sk
 sk
 xO
 sp
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -41431,7 +44770,11 @@ hl
 hl
 hh
 aa
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 sk
 yk
 ui
@@ -41441,7 +44784,11 @@ ui
 ui
 sp
 sk
+<<<<<<< HEAD
 ng
+=======
+ku
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -41688,6 +45035,7 @@ hl
 hl
 hh
 aa
+<<<<<<< HEAD
 ng
 ng
 ng
@@ -41699,6 +45047,19 @@ ng
 ng
 ng
 ng
+=======
+ku
+ku
+ku
+ku
+ku
+ku
+ku
+ku
+ku
+ku
+ku
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -42747,13 +46108,22 @@ Rm
 Tn
 UT
 yd
+<<<<<<< HEAD
 CT
 CT
+=======
+Xk
+Xk
+>>>>>>> Updated this old code to fork
 XM
 NT
 UV
 CV
+<<<<<<< HEAD
 CT
+=======
+Xk
+>>>>>>> Updated this old code to fork
 NT
 CT
 oV
@@ -43000,6 +46370,7 @@ qH
 ZW
 ZW
 Za
+<<<<<<< HEAD
 CT
 CT
 CT
@@ -43018,6 +46389,26 @@ CT
 CT
 CT
 CT
+=======
+Xk
+Xk
+Xk
+Tu
+Xk
+Xk
+Tn
+NT
+Zs
+Xk
+Xk
+NT
+Xk
+Xk
+Xk
+Xk
+Xk
+Xk
+>>>>>>> Updated this old code to fork
 Nd
 aa
 aa
@@ -43257,16 +46648,26 @@ Pa
 ZW
 ZW
 Nd
+<<<<<<< HEAD
 CT
 CT
 CT
 CT
 CT
 CT
+=======
+Xk
+Xk
+Xk
+Xk
+Xk
+Xk
+>>>>>>> Updated this old code to fork
 GY
 NT
 UV
 CV
+<<<<<<< HEAD
 CT
 NT
 CT
@@ -43275,6 +46676,16 @@ CT
 CT
 CT
 HH
+=======
+Xk
+NT
+Xk
+PF
+Xk
+Px
+Xk
+Zt
+>>>>>>> Updated this old code to fork
 Nd
 aa
 aa
@@ -43514,15 +46925,24 @@ SB
 ZW
 Nw
 Nd
+<<<<<<< HEAD
 CT
 CT
 CT
 Ph
 CT
+=======
+Xk
+Xk
+Xk
+Ph
+Xk
+>>>>>>> Updated this old code to fork
 Tu
 Vu
 Nd
 Gs
+<<<<<<< HEAD
 CT
 CT
 WY
@@ -43532,6 +46952,17 @@ CT
 CT
 CT
 CT
+=======
+Xk
+Xk
+WY
+Xk
+PF
+Xk
+Px
+Xk
+PF
+>>>>>>> Updated this old code to fork
 Nd
 aa
 aa
@@ -43771,16 +47202,26 @@ Nd
 Nd
 Nd
 Nd
+<<<<<<< HEAD
 CT
 CT
 XM
 QL
 CT
 CT
+=======
+Xk
+Xk
+XM
+QL
+Xk
+Xk
+>>>>>>> Updated this old code to fork
 XM
 NT
 PX
 CV
+<<<<<<< HEAD
 CT
 NT
 CT
@@ -43789,6 +47230,16 @@ CT
 CT
 CT
 HH
+=======
+Xk
+NT
+Xk
+PF
+Xk
+Px
+Xk
+Zt
+>>>>>>> Updated this old code to fork
 Nd
 aa
 aa
@@ -44024,6 +47475,7 @@ Nd
 Nd
 py
 Nd
+<<<<<<< HEAD
 CT
 oV
 CT
@@ -44046,6 +47498,30 @@ CT
 CT
 CT
 CT
+=======
+Xk
+Yo
+Xk
+Xn
+Xk
+Xk
+Tn
+Tu
+Xk
+Xk
+Tn
+NT
+Ms
+Xk
+Xk
+NT
+Xk
+Xk
+Xk
+Xk
+Xk
+Xk
+>>>>>>> Updated this old code to fork
 Nd
 aa
 aa
@@ -44274,6 +47750,7 @@ aa
 aa
 Nd
 PL
+<<<<<<< HEAD
 CT
 oV
 CT
@@ -44282,19 +47759,38 @@ CT
 CT
 Yh
 CT
+=======
+Xk
+Yo
+Xk
+Xk
+Xk
+Xk
+Yh
+Xk
+>>>>>>> Updated this old code to fork
 Nd
 Nd
 Nd
 Gs
+<<<<<<< HEAD
 CT
 GY
 Tu
 CT
 CT
+=======
+Xk
+GY
+Tu
+Xk
+Xk
+>>>>>>> Updated this old code to fork
 GY
 NT
 Ym
 CV
+<<<<<<< HEAD
 CT
 NT
 CT
@@ -44303,6 +47799,16 @@ CT
 CT
 Qu
 CT
+=======
+Xk
+NT
+Dj
+Qu
+Dj
+Dj
+Qu
+Dj
+>>>>>>> Updated this old code to fork
 Nd
 aa
 aa
@@ -44531,7 +48037,11 @@ aa
 aa
 Nd
 Tq
+<<<<<<< HEAD
 CT
+=======
+Xk
+>>>>>>> Updated this old code to fork
 MG
 YN
 Nd
@@ -44542,6 +48052,7 @@ Nd
 Nd
 Fa
 KT
+<<<<<<< HEAD
 CT
 CT
 CT
@@ -44553,6 +48064,19 @@ Nd
 CT
 CT
 CT
+=======
+Xk
+Xk
+Xk
+Xk
+Xk
+Xk
+HH
+Nd
+Xk
+Xk
+Xk
+>>>>>>> Updated this old code to fork
 Nd
 Nd
 Nd
@@ -44787,8 +48311,13 @@ aa
 aa
 aa
 Nd
+<<<<<<< HEAD
 CT
 CT
+=======
+Xk
+Xk
+>>>>>>> Updated this old code to fork
 Rh
 Mm
 Nd
@@ -44799,17 +48328,28 @@ Nd
 Fb
 Sd
 KT
+<<<<<<< HEAD
 CT
 CT
+=======
+Xk
+Xk
+>>>>>>> Updated this old code to fork
 Sd
 Sd
 Sd
 Sd
 Sd
 Re
+<<<<<<< HEAD
 CT
 CT
 CT
+=======
+Xk
+Xk
+Xk
+>>>>>>> Updated this old code to fork
 NT
 vt
 YV
@@ -45044,8 +48584,13 @@ aa
 aa
 aa
 Nd
+<<<<<<< HEAD
 CT
 CT
+=======
+Xk
+Xk
+>>>>>>> Updated this old code to fork
 Rh
 ZT
 Nd
@@ -45056,8 +48601,13 @@ Nd
 Fc
 Sd
 KT
+<<<<<<< HEAD
 CT
 CT
+=======
+Xk
+Xk
+>>>>>>> Updated this old code to fork
 Sd
 Sd
 Sd
@@ -45066,6 +48616,7 @@ Sd
 Nd
 Gs
 Zx
+<<<<<<< HEAD
 CT
 MK
 CT
@@ -45074,6 +48625,16 @@ CT
 CT
 CT
 CT
+=======
+Xk
+MK
+Xk
+Xk
+Xk
+Xk
+Xk
+Xk
+>>>>>>> Updated this old code to fork
 Nd
 aa
 aa
@@ -45313,14 +48874,20 @@ Nd
 MR
 Sd
 FW
+<<<<<<< HEAD
 CT
 CT
+=======
+Xk
+Xk
+>>>>>>> Updated this old code to fork
 Sd
 Sd
 Sd
 Sd
 Sd
 Re
+<<<<<<< HEAD
 CT
 CT
 CT
@@ -45331,6 +48898,18 @@ CT
 XM
 XM
 CT
+=======
+Xk
+Xk
+Xk
+NT
+PQ
+XM
+Xk
+XM
+XM
+Xk
+>>>>>>> Updated this old code to fork
 Nd
 aa
 aa
@@ -45559,9 +49138,15 @@ aa
 aa
 Nd
 yM
+<<<<<<< HEAD
 CT
 oV
 CT
+=======
+Xk
+Yo
+Xk
+>>>>>>> Updated this old code to fork
 Nd
 SG
 Fh
@@ -45570,12 +49155,21 @@ Nd
 Nd
 Sd
 FX
+<<<<<<< HEAD
 CT
 CT
 CT
 CT
 CT
 CT
+=======
+Xk
+Xk
+Xk
+Xk
+Xk
+Xk
+>>>>>>> Updated this old code to fork
 HH
 Nd
 UJ
@@ -45587,7 +49181,11 @@ Po
 Rw
 Po
 ZU
+<<<<<<< HEAD
 CT
+=======
+Xk
+>>>>>>> Updated this old code to fork
 Nd
 aa
 aa
@@ -45816,9 +49414,15 @@ aa
 aa
 Nd
 OG
+<<<<<<< HEAD
 CT
 CT
 CT
+=======
+Xk
+Xk
+Xk
+>>>>>>> Updated this old code to fork
 Nd
 zX
 Fh
@@ -45828,6 +49432,7 @@ Nd
 Nd
 Nd
 Gs
+<<<<<<< HEAD
 CT
 XM
 Tu
@@ -45836,6 +49441,16 @@ CT
 XM
 NT
 CT
+=======
+Xk
+XM
+Tu
+Xk
+Xk
+XM
+NT
+Xk
+>>>>>>> Updated this old code to fork
 Ud
 Ud
 NT
@@ -45844,7 +49459,11 @@ Sd
 Sd
 Sd
 MM
+<<<<<<< HEAD
 CT
+=======
+Xk
+>>>>>>> Updated this old code to fork
 Nd
 aa
 aa
@@ -46073,14 +49692,21 @@ aa
 aa
 Nd
 TK
+<<<<<<< HEAD
 CT
 CT
 CT
+=======
+Xk
+Xk
+Xk
+>>>>>>> Updated this old code to fork
 Nd
 QA
 Fh
 Nv
 ED
+<<<<<<< HEAD
 oV
 Yf
 UE
@@ -46090,6 +49716,17 @@ Tn
 Xd
 CT
 CT
+=======
+Yo
+Yf
+UE
+Xk
+Xk
+Tn
+Xd
+Xk
+Xk
+>>>>>>> Updated this old code to fork
 Tn
 NT
 yV
@@ -46330,14 +49967,21 @@ aa
 aa
 Nd
 YL
+<<<<<<< HEAD
 CT
 CT
 CT
+=======
+Xk
+Xk
+Xk
+>>>>>>> Updated this old code to fork
 Nd
 Xo
 Fh
 Fh
 py
+<<<<<<< HEAD
 CT
 Ya
 UE
@@ -46347,6 +49991,17 @@ GY
 Tu
 CT
 CT
+=======
+Xk
+Ya
+UE
+Xk
+Xk
+GY
+Tu
+Xk
+Xk
+>>>>>>> Updated this old code to fork
 GY
 NT
 wf
@@ -46358,7 +50013,11 @@ Sd
 Sd
 Sd
 MM
+<<<<<<< HEAD
 CT
+=======
+Xk
+>>>>>>> Updated this old code to fork
 Nd
 aa
 aa
@@ -46587,14 +50246,21 @@ aa
 aa
 Nd
 Xe
+<<<<<<< HEAD
 CT
 CT
 CT
+=======
+Xk
+Xk
+Xk
+>>>>>>> Updated this old code to fork
 Nd
 TB
 Fh
 Fh
 BV
+<<<<<<< HEAD
 CT
 Fe
 UE
@@ -46603,6 +50269,16 @@ CT
 CT
 Ph
 CT
+=======
+Xk
+Fe
+UE
+Xk
+Xk
+Xk
+Ph
+Xk
+>>>>>>> Updated this old code to fork
 Qk
 Vu
 Nd
@@ -46615,7 +50291,11 @@ PA
 TC
 PA
 Pl
+<<<<<<< HEAD
 CT
+=======
+Xk
+>>>>>>> Updated this old code to fork
 Nd
 aa
 aa
@@ -46844,14 +50524,21 @@ aa
 aa
 Nd
 Ny
+<<<<<<< HEAD
 CT
 CT
 CT
+=======
+Xk
+Xk
+Xk
+>>>>>>> Updated this old code to fork
 Nd
 Vz
 Fh
 YJ
 QT
+<<<<<<< HEAD
 CT
 Ya
 UE
@@ -46873,6 +50560,29 @@ CT
 GY
 GY
 CT
+=======
+Xk
+Ya
+UE
+Xk
+Xk
+Xk
+Xk
+Xk
+Xk
+XM
+NT
+Xk
+Xk
+Xk
+NT
+Yq
+GY
+Xk
+GY
+GY
+Xk
+>>>>>>> Updated this old code to fork
 Nd
 aa
 aa
@@ -47102,13 +50812,19 @@ aa
 Nd
 Bs
 Ri
+<<<<<<< HEAD
 CT
 CT
+=======
+Xk
+Xk
+>>>>>>> Updated this old code to fork
 XL
 Fh
 Fh
 Fh
 XL
+<<<<<<< HEAD
 CT
 Qj
 UE
@@ -47130,6 +50846,29 @@ CT
 CT
 CT
 CT
+=======
+Xk
+Qj
+UE
+Xk
+Xk
+Xk
+Tu
+Xk
+Xk
+Tn
+NT
+Xk
+Xk
+Xk
+MK
+Xk
+Xk
+Xk
+Xk
+Xk
+Xk
+>>>>>>> Updated this old code to fork
 Nd
 aa
 aa
@@ -47358,8 +51097,13 @@ aa
 aa
 Nd
 SU
+<<<<<<< HEAD
 CT
 Qu
+=======
+Xk
+Xx
+>>>>>>> Updated this old code to fork
 Nm
 Nd
 SN
@@ -47373,6 +51117,7 @@ Fi
 Tn
 UT
 Hm
+<<<<<<< HEAD
 CT
 CT
 GY
@@ -47380,6 +51125,15 @@ NT
 CT
 CT
 CT
+=======
+Xk
+Xk
+GY
+NT
+Xk
+Xk
+Xk
+>>>>>>> Updated this old code to fork
 NT
 vt
 Mx
@@ -52738,6 +56492,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 oe
 rk
 sq
@@ -52765,6 +56520,35 @@ aa
 aa
 aa
 aa
+=======
+oe
+rk
+sq
+to
+uj
+oe
+aa
+aa
+xb
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -53001,12 +56785,21 @@ sr
 tp
 uk
 mD
+<<<<<<< HEAD
 pz
 oe
 xc
 oe
 pz
 aa
+=======
+aa
+oe
+xc
+oe
+aa
+mD
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -53519,6 +57312,7 @@ vB
 oe
 Xy
 oe
+<<<<<<< HEAD
 oU
 nU
 ta
@@ -53526,6 +57320,9 @@ oe
 td
 oe
 ta
+=======
+vB
+>>>>>>> Updated this old code to fork
 mD
 aa
 aa
@@ -53599,6 +57396,15 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
+=======
+aa
+aa
+aa
+aa
+aa
+aa
+>>>>>>> Updated this old code to fork
 "}
 (138,1,1) = {"
 aa
@@ -53776,6 +57582,7 @@ vC
 wr
 xe
 wr
+<<<<<<< HEAD
 wx
 mD
 pB
@@ -53784,6 +57591,16 @@ pT
 pT
 qF
 oe
+=======
+yo
+nU
+aa
+aa
+aa
+aa
+aa
+aa
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -54034,12 +57851,15 @@ ws
 xf
 ws
 yp
+<<<<<<< HEAD
 sd
 pC
 pU
 pU
 pU
 qG
+=======
+>>>>>>> Updated this old code to fork
 oe
 aa
 aa
@@ -54113,6 +57933,15 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
+=======
+aa
+aa
+aa
+aa
+aa
+aa
+>>>>>>> Updated this old code to fork
 "}
 (140,1,1) = {"
 aa
@@ -54290,6 +58119,7 @@ vE
 wt
 xg
 wt
+<<<<<<< HEAD
 px
 mD
 pD
@@ -54298,6 +58128,16 @@ pX
 pX
 rb
 oe
+=======
+yq
+mD
+aa
+aa
+aa
+aa
+aa
+aa
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -54549,11 +58389,19 @@ xh
 wu
 mD
 mD
+<<<<<<< HEAD
 tc
 oe
 nU
 oe
 tc
+=======
+oe
+oe
+nU
+oe
+oe
+>>>>>>> Updated this old code to fork
 mD
 mD
 aa
@@ -54807,8 +58655,13 @@ wv
 mD
 yY
 zz
+<<<<<<< HEAD
 qh
 rc
+=======
+oA
+uV
+>>>>>>> Updated this old code to fork
 Bu
 BZ
 Cq
@@ -55322,7 +59175,11 @@ qR
 za
 pg
 Ab
+<<<<<<< HEAD
 Pj
+=======
+AJ
+>>>>>>> Updated this old code to fork
 Bv
 pg
 Cs
@@ -55579,8 +59436,13 @@ nU
 zb
 pg
 Ac
+<<<<<<< HEAD
 rY
 rZ
+=======
+AK
+Bw
+>>>>>>> Updated this old code to fork
 pg
 Ct
 nT
@@ -55837,7 +59699,11 @@ uV
 zA
 sw
 zA
+<<<<<<< HEAD
 sc
+=======
+sw
+>>>>>>> Updated this old code to fork
 zA
 Cu
 nU
@@ -56344,7 +60210,11 @@ ur
 uU
 vF
 wy
+<<<<<<< HEAD
 GZ
+=======
+ws
+>>>>>>> Updated this old code to fork
 xQ
 nT
 sw
@@ -56601,10 +60471,17 @@ oB
 uV
 rz
 wz
+<<<<<<< HEAD
 GZ
 xR
 OQ
 uU
+=======
+ws
+xR
+yr
+sw
+>>>>>>> Updated this old code to fork
 zC
 Af
 AN
@@ -56862,7 +60739,11 @@ ws
 ts
 rz
 zd
+<<<<<<< HEAD
 Ue
+=======
+zB
+>>>>>>> Updated this old code to fork
 Ag
 AO
 BA
@@ -57119,11 +61000,19 @@ ws
 ts
 mD
 uV
+<<<<<<< HEAD
 uU
 Ah
 AP
 Ah
 uU
+=======
+sw
+Ah
+AP
+Ah
+sw
+>>>>>>> Updated this old code to fork
 Cz
 mD
 aa
@@ -57365,7 +61254,11 @@ mD
 mD
 mD
 mD
+<<<<<<< HEAD
 mD
+=======
+rz
+>>>>>>> Updated this old code to fork
 sD
 mD
 nU
@@ -57378,7 +61271,11 @@ qR
 pH
 zA
 sw
+<<<<<<< HEAD
 Qq
+=======
+zA
+>>>>>>> Updated this old code to fork
 sw
 zA
 CA
@@ -57622,7 +61519,11 @@ pf
 pN
 qj
 nU
+<<<<<<< HEAD
 Uf
+=======
+rr
+>>>>>>> Updated this old code to fork
 sE
 tD
 mD
@@ -57635,7 +61536,11 @@ mD
 nT
 rz
 Ai
+<<<<<<< HEAD
 OC
+=======
+Ai
+>>>>>>> Updated this old code to fork
 Ai
 rz
 nU
@@ -57892,7 +61797,11 @@ mD
 ze
 zD
 sw
+<<<<<<< HEAD
 uU
+=======
+sw
+>>>>>>> Updated this old code to fork
 sw
 zD
 CB
@@ -58147,9 +62056,15 @@ xf
 ts
 mD
 zf
+<<<<<<< HEAD
 uU
 uU
 uU
+=======
+sw
+sw
+sw
+>>>>>>> Updated this old code to fork
 sw
 sw
 CC
@@ -58404,7 +62319,11 @@ ws
 ts
 mD
 zg
+<<<<<<< HEAD
 uU
+=======
+sw
+>>>>>>> Updated this old code to fork
 Aj
 AQ
 BB
@@ -58661,7 +62580,11 @@ ws
 ts
 mD
 zh
+<<<<<<< HEAD
 uU
+=======
+sw
+>>>>>>> Updated this old code to fork
 Ak
 AR
 BC
@@ -58918,9 +62841,15 @@ xk
 ts
 mD
 zi
+<<<<<<< HEAD
 uU
 uU
 uU
+=======
+sw
+sw
+sw
+>>>>>>> Updated this old code to fork
 sw
 sw
 CF
@@ -66379,7 +70308,11 @@ Cc
 CO
 Cc
 Cc
+<<<<<<< HEAD
 sY
+=======
+DK
+>>>>>>> Updated this old code to fork
 NO
 NO
 NO
@@ -66638,7 +70571,11 @@ qx
 Wc
 qx
 Yn
+<<<<<<< HEAD
 sZ
+=======
+sY
+>>>>>>> Updated this old code to fork
 Yn
 Ep
 Ep
@@ -66896,7 +70833,11 @@ Cc
 Yn
 Pz
 Su
+<<<<<<< HEAD
 qI
+=======
+NO
+>>>>>>> Updated this old code to fork
 NO
 PV
 PV
@@ -66905,7 +70846,11 @@ NO
 NO
 Uw
 NO
+<<<<<<< HEAD
 ly
+=======
+NO
+>>>>>>> Updated this old code to fork
 WM
 Yn
 ET
@@ -67153,7 +71098,11 @@ Cc
 Yn
 Ty
 Su
+<<<<<<< HEAD
 qI
+=======
+NO
+>>>>>>> Updated this old code to fork
 ly
 sb
 jO
@@ -67162,7 +71111,11 @@ NO
 NO
 NO
 NO
+<<<<<<< HEAD
 ly
+=======
+NO
+>>>>>>> Updated this old code to fork
 TT
 Yn
 Yn
@@ -67410,8 +71363,13 @@ Dx
 Yn
 Yn
 Yn
+<<<<<<< HEAD
 sZ
 sZ
+=======
+YA
+YA
+>>>>>>> Updated this old code to fork
 Yn
 Yn
 Yn
@@ -68185,10 +72143,17 @@ AH
 AH
 OP
 PK
+<<<<<<< HEAD
 sZ
 UM
 UM
 sZ
+=======
+YA
+UM
+UM
+YA
+>>>>>>> Updated this old code to fork
 Vn
 PW
 Vn
@@ -68442,10 +72407,17 @@ OP
 OP
 OP
 PK
+<<<<<<< HEAD
 sZ
 QO
 QO
 sZ
+=======
+YA
+QO
+QO
+YA
+>>>>>>> Updated this old code to fork
 Vn
 PW
 Vn
@@ -69214,8 +73186,13 @@ Yn
 Yn
 Yn
 Yn
+<<<<<<< HEAD
 wk
 wk
+=======
+NO
+NO
+>>>>>>> Updated this old code to fork
 Yn
 Yn
 Yn
@@ -69471,8 +73448,13 @@ zM
 zM
 zs
 Yn
+<<<<<<< HEAD
 aa
 aa
+=======
+NO
+NO
+>>>>>>> Updated this old code to fork
 Yn
 Pv
 Pv
@@ -69728,8 +73710,13 @@ Se
 Se
 Tc
 Yn
+<<<<<<< HEAD
 aa
 aa
+=======
+Yv
+yf
+>>>>>>> Updated this old code to fork
 Yn
 Pm
 Pm
@@ -69977,17 +73964,28 @@ Cd
 qx
 MI
 NO
+<<<<<<< HEAD
 Yn
+=======
+YA
+>>>>>>> Updated this old code to fork
 Se
 Si
 Se
 Si
 Se
 Tc
+<<<<<<< HEAD
 Yn
 aa
 aa
 Yn
+=======
+YA
+UM
+UM
+YA
+>>>>>>> Updated this old code to fork
 Xh
 Xh
 Pm
@@ -70234,17 +74232,28 @@ qy
 qx
 OD
 NO
+<<<<<<< HEAD
 Yn
+=======
+YA
+>>>>>>> Updated this old code to fork
 Se
 Si
 Se
 Si
 Se
 Tc
+<<<<<<< HEAD
 Yn
 aa
 aa
 Yn
+=======
+YA
+QO
+QO
+YA
+>>>>>>> Updated this old code to fork
 Xh
 Xh
 Pm
@@ -70499,8 +74508,13 @@ Si
 Se
 Tc
 Yn
+<<<<<<< HEAD
 aa
 aa
+=======
+Sv
+Ru
+>>>>>>> Updated this old code to fork
 Yn
 Pm
 Pm
@@ -70756,8 +74770,13 @@ Vk
 Vk
 Oq
 Yn
+<<<<<<< HEAD
 aa
 aa
+=======
+Su
+Su
+>>>>>>> Updated this old code to fork
 Yn
 Co
 Co
@@ -71013,8 +75032,13 @@ Yn
 Yn
 Yn
 Yn
+<<<<<<< HEAD
 aa
 aa
+=======
+wk
+wk
+>>>>>>> Updated this old code to fork
 Yn
 Yn
 Yn
@@ -71334,6 +75358,7 @@ aa
 aa
 "}
 (207,1,1) = {"
+<<<<<<< HEAD
 ab
 ae
 ae
@@ -71346,6 +75371,20 @@ ae
 ae
 ae
 ab
+=======
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -71591,6 +75630,7 @@ aa
 aa
 "}
 (208,1,1) = {"
+<<<<<<< HEAD
 ac
 tj
 tb
@@ -71603,6 +75643,20 @@ tb
 tb
 tb
 fx
+=======
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -71848,6 +75902,7 @@ aa
 aa
 "}
 (209,1,1) = {"
+<<<<<<< HEAD
 ac
 tk
 tb
@@ -71860,6 +75915,20 @@ tb
 tb
 tb
 fx
+=======
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -72105,6 +76174,7 @@ aa
 aa
 "}
 (210,1,1) = {"
+<<<<<<< HEAD
 ac
 Sq
 tb
@@ -72117,6 +76187,20 @@ tb
 tb
 tb
 fx
+=======
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -72362,6 +76446,7 @@ aa
 aa
 "}
 (211,1,1) = {"
+<<<<<<< HEAD
 ac
 ZN
 tb
@@ -72374,6 +76459,20 @@ tb
 tb
 tb
 fx
+=======
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -72619,6 +76718,7 @@ aa
 aa
 "}
 (212,1,1) = {"
+<<<<<<< HEAD
 ac
 tl
 tb
@@ -72631,6 +76731,20 @@ tb
 tb
 tb
 fx
+=======
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+>>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -72877,6 +76991,7 @@ aa
 "}
 (213,1,1) = {"
 ab
+<<<<<<< HEAD
 ag
 ag
 ag
@@ -72887,6 +77002,18 @@ ag
 ag
 ag
 ag
+=======
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+>>>>>>> Updated this old code to fork
 ab
 ae
 ae

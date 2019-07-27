@@ -167,6 +167,7 @@
 
 	switch(tdir)
 		if(NORTH)
+<<<<<<< HEAD
 			if((pixel_y != initial(pixel_y)) && (pixel_y != 23))
 				log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([tdir] | [uppertext(dir2text(tdir))]) has pixel_y value ([pixel_y] - should be 23.)")
 			pixel_y = 23
@@ -181,6 +182,14 @@
 		if(WEST)
 			if((pixel_y != initial(pixel_x)) && (pixel_x != -25))
 				log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([tdir] | [uppertext(dir2text(tdir))]) has pixel_x value ([pixel_x] - should be -25.)")
+=======
+			pixel_y = 23
+		if(SOUTH)
+			pixel_y = -23
+		if(EAST)
+			pixel_x = 24
+		if(WEST)
+>>>>>>> Updated this old code to fork
 			pixel_x = -25
 	if (building)
 		area = get_area(src)
@@ -254,11 +263,16 @@
 	addtimer(CALLBACK(src, .proc/update), 5)
 
 /obj/machinery/power/apc/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
+=======
+	..()
+>>>>>>> Updated this old code to fork
 	if(stat & BROKEN)
 		return
 	if(opened)
 		if(has_electronics && terminal)
+<<<<<<< HEAD
 			. += "The cover is [opened==APC_COVER_REMOVED?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"]."
 		else
 			. += {"It's [ !terminal ? "not" : "" ] wired up.\n
@@ -281,6 +295,30 @@
 
 	if(issilicon(user))
 		. += "<span class='notice'>Ctrl-Click the APC to switch the breaker [ operating ? "off" : "on"].</span>"
+=======
+			to_chat(user, "The cover is [opened==APC_COVER_REMOVED?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"].")
+		else
+			to_chat(user, "It's [ !terminal ? "not" : "" ] wired up.")
+			to_chat(user, "The electronics are[!has_electronics?"n't":""] installed.")
+		if(user.Adjacent(src) && integration_cog)
+			to_chat(user, "<span class='warning'>[src]'s innards have been replaced by strange brass machinery!</span>")
+
+	else
+		if (stat & MAINT)
+			to_chat(user, "The cover is closed. Something is wrong with it. It doesn't work.")
+		else if (malfhack)
+			to_chat(user, "The cover is broken. It may be hard to force it open.")
+		else
+			to_chat(user, "The cover is closed.")
+
+	if(integration_cog && is_servant_of_ratvar(user))
+		to_chat(user, "<span class='brass'>There is an integration cog installed!</span>")
+
+	to_chat(user, "<span class='notice'>Alt-Click the APC to [ locked ? "unlock" : "lock"] the interface.</span>")
+
+	if(issilicon(user))
+		to_chat(user, "<span class='notice'>Ctrl-Click the APC to switch the breaker [ operating ? "off" : "on"].</span>")
+>>>>>>> Updated this old code to fork
 
 // update the APC icon to show the three base states
 // also add overlays for indicator lights
@@ -577,7 +615,11 @@
 	else if (istype(W, /obj/item/stack/cable_coil) && opened)
 		var/turf/host_turf = get_turf(src)
 		if(!host_turf)
+<<<<<<< HEAD
 			CRASH("attackby on APC when it's not on a turf")
+=======
+			throw EXCEPTION("attackby on APC when it's not on a turf")
+>>>>>>> Updated this old code to fork
 			return
 		if (host_turf.intact)
 			to_chat(user, "<span class='warning'>You must remove the floor plating in front of the APC first!</span>")
@@ -712,6 +754,7 @@
 	else
 		return ..()
 
+<<<<<<< HEAD
 /obj/machinery/power/apc/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS)
 		if(!has_electronics)
@@ -758,6 +801,8 @@
 				return FALSE
 	return FALSE
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/apc/AltClick(mob/user)
 	..()
 	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))

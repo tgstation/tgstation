@@ -15,10 +15,17 @@ Charged extracts:
 	create_reagents(10, INJECTABLE | DRAWABLE)
 
 /obj/item/slimecross/charged/attack_self(mob/user)
+<<<<<<< HEAD
 	if(!reagents.has_reagent(/datum/reagent/toxin/plasma,10))
 		to_chat(user, "<span class='warning'>This extract needs to be full of plasma to activate!</span>")
 		return
 	reagents.remove_reagent(/datum/reagent/toxin/plasma,10)
+=======
+	if(!reagents.has_reagent("plasma",10))
+		to_chat(user, "<span class='warning'>This extract needs to be full of plasma to activate!</span>")
+		return
+	reagents.remove_reagent("plasma",10)
+>>>>>>> Updated this old code to fork
 	to_chat(user, "<span class='notice'>You squeeze the extract, and it absorbs the plasma!</span>")
 	playsound(src, 'sound/effects/bubbles.ogg', 50, 1)
 	playsound(src, 'sound/effects/light_flicker.ogg', 50, 1)
@@ -30,7 +37,10 @@ Charged extracts:
 
 /obj/item/slimecross/charged/grey
 	colour = "grey"
+<<<<<<< HEAD
 	effect_desc = "Produces a slime reviver potion, which revives dead slimes."
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/charged/grey/do_effect(mob/user)
 	new /obj/item/slimepotion/slime_reviver(get_turf(user))
@@ -39,7 +49,10 @@ Charged extracts:
 
 /obj/item/slimecross/charged/orange
 	colour = "orange"
+<<<<<<< HEAD
 	effect_desc = "Instantly makes a large burst of flame for a moment."
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/charged/orange/do_effect(mob/user)
 	for(var/turf/turf in range(5,get_turf(user)))
@@ -49,7 +62,10 @@ Charged extracts:
 
 /obj/item/slimecross/charged/purple
 	colour = "purple"
+<<<<<<< HEAD
 	effect_desc = "Creates a packet of omnizine."
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/charged/purple/do_effect(mob/user)
 	new /obj/item/slimecrossbeaker/omnizine(get_turf(user))
@@ -58,7 +74,10 @@ Charged extracts:
 
 /obj/item/slimecross/charged/blue
 	colour = "blue"
+<<<<<<< HEAD
 	effect_desc = "Creates a potion that neuters the mutation chance of a slime, which passes on to new generations."
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/charged/blue/do_effect(mob/user)
 	new /obj/item/slimepotion/slime/chargedstabilizer(get_turf(user))
@@ -67,7 +86,10 @@ Charged extracts:
 
 /obj/item/slimecross/charged/metal
 	colour = "metal"
+<<<<<<< HEAD
 	effect_desc = "Produces a bunch of metal and plasteel."
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/charged/metal/do_effect(mob/user)
 	new /obj/item/stack/sheet/metal(get_turf(user), 25)
@@ -77,7 +99,10 @@ Charged extracts:
 
 /obj/item/slimecross/charged/yellow
 	colour = "yellow"
+<<<<<<< HEAD
 	effect_desc = "Creates a hypercharged slime cell battery, which has high capacity and recharges constantly at a very fast rate."
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/charged/yellow/do_effect(mob/user)
 	new /obj/item/stock_parts/cell/high/slime/hypercharged(get_turf(user))
@@ -86,7 +111,10 @@ Charged extracts:
 
 /obj/item/slimecross/charged/darkpurple
 	colour = "dark purple"
+<<<<<<< HEAD
 	effect_desc = "Creates several sheets of plasma."
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/charged/darkpurple/do_effect(mob/user)
 	new /obj/item/stack/sheet/mineral/plasma(get_turf(user), 10)
@@ -95,7 +123,10 @@ Charged extracts:
 
 /obj/item/slimecross/charged/darkblue
 	colour = "dark blue"
+<<<<<<< HEAD
 	effect_desc = "Produces a pressure proofing potion."
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/charged/darkblue/do_effect(mob/user)
 	new /obj/item/slimepotion/spaceproof(get_turf(user))
@@ -104,7 +135,10 @@ Charged extracts:
 
 /obj/item/slimecross/charged/silver
 	colour = "silver"
+<<<<<<< HEAD
 	effect_desc = "Creates a slime cake and some drinks."
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/charged/silver/do_effect(mob/user)
 	new /obj/item/reagent_containers/food/snacks/store/cake/slimecake(get_turf(user))
@@ -116,7 +150,10 @@ Charged extracts:
 
 /obj/item/slimecross/charged/bluespace
 	colour = "bluespace"
+<<<<<<< HEAD
 	effect_desc = "Makes a bluespace polycrystal."
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/charged/bluespace/do_effect(mob/user)
 	new /obj/item/stack/sheet/bluespace_crystal(get_turf(user), 10)
@@ -125,7 +162,10 @@ Charged extracts:
 
 /obj/item/slimecross/charged/sepia
 	colour = "sepia"
+<<<<<<< HEAD
 	effect_desc = "Creates a camera obscura."
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/charged/sepia/do_effect(mob/user)
 	new /obj/item/camera/spooky(get_turf(user))
@@ -134,7 +174,10 @@ Charged extracts:
 
 /obj/item/slimecross/charged/cerulean
 	colour = "cerulean"
+<<<<<<< HEAD
 	effect_desc = "Creates an extract enhancer, giving whatever it's used on five more uses."
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/charged/cerulean/do_effect(mob/user)
 	new /obj/item/slimepotion/enhancer/max(get_turf(user))
@@ -143,7 +186,10 @@ Charged extracts:
 
 /obj/item/slimecross/charged/pyrite
 	colour = "pyrite"
+<<<<<<< HEAD
 	effect_desc = "Creates bananium. Oh no."
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/charged/pyrite/do_effect(mob/user)
 	new /obj/item/stack/sheet/mineral/bananium(get_turf(user), 10)
@@ -152,7 +198,10 @@ Charged extracts:
 
 /obj/item/slimecross/charged/red
 	colour = "red"
+<<<<<<< HEAD
 	effect_desc = "Produces a lavaproofing potion"
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/charged/red/do_effect(mob/user)
 	new /obj/item/slimepotion/lavaproof(get_turf(user))
@@ -161,7 +210,10 @@ Charged extracts:
 
 /obj/item/slimecross/charged/green
 	colour = "green"
+<<<<<<< HEAD
 	effect_desc = "Lets you choose what slime species you want to be."
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/charged/green/do_effect(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -180,7 +232,10 @@ Charged extracts:
 
 /obj/item/slimecross/charged/pink
 	colour = "pink"
+<<<<<<< HEAD
 	effect_desc = "Produces a... lovepotion... no ERP."
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/charged/pink/do_effect(mob/user)
 	new /obj/item/slimepotion/lovepotion(get_turf(user))
@@ -189,7 +244,10 @@ Charged extracts:
 
 /obj/item/slimecross/charged/gold
 	colour = "gold"
+<<<<<<< HEAD
 	effect_desc = "Slowly spawns 10 hostile monsters."
+=======
+>>>>>>> Updated this old code to fork
 	var/max_spawn = 10
 	var/spawned = 0
 
@@ -216,19 +274,29 @@ Charged extracts:
 
 /obj/item/slimecross/charged/oil
 	colour = "oil"
+<<<<<<< HEAD
 	effect_desc = "Creates an explosion after a few seconds."
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/charged/oil/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] begins to shake with rapidly increasing force!</span>")
 	addtimer(CALLBACK(src, .proc/boom), 50)
 
 /obj/item/slimecross/charged/oil/proc/boom()
+<<<<<<< HEAD
 	explosion(get_turf(src), 2, 3, 4) //Much smaller effect than normal oils, but devastatingly strong where it does hit.
+=======
+	explosion(get_turf(src), 3, 2, 1) //Much smaller effect than normal oils, but devastatingly strong where it does hit.
+>>>>>>> Updated this old code to fork
 	qdel(src)
 
 /obj/item/slimecross/charged/black
 	colour = "black"
+<<<<<<< HEAD
 	effect_desc = "Randomizes the user's species."
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/charged/black/do_effect(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -249,7 +317,10 @@ Charged extracts:
 
 /obj/item/slimecross/charged/lightpink
 	colour = "light pink"
+<<<<<<< HEAD
 	effect_desc = "Produces a pacification potion, which works on monsters and humanoids."
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/charged/lightpink/do_effect(mob/user)
 	new /obj/item/slimepotion/peacepotion(get_turf(user))
@@ -258,7 +329,10 @@ Charged extracts:
 
 /obj/item/slimecross/charged/adamantine
 	colour = "adamantine"
+<<<<<<< HEAD
 	effect_desc = "Creates a completed golem shell."
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/charged/adamantine/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] produces a fully formed golem shell!</span>")
@@ -267,7 +341,10 @@ Charged extracts:
 
 /obj/item/slimecross/charged/rainbow
 	colour = "rainbow"
+<<<<<<< HEAD
 	effect_desc = "Produces three living slimes of random colors."
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/charged/rainbow/do_effect(mob/user)
 	user.visible_message("<span class='warning'>[src] swells and splits into three new slimes!</span>")

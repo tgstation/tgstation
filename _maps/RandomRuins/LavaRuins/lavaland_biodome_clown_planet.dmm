@@ -823,7 +823,11 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
+<<<<<<< HEAD
 	wet = 16
+=======
+	wet = 8
+>>>>>>> Updated this old code to fork
 	},
 /area/ruin/powered/clownplanet)
 "bC" = (
@@ -868,7 +872,11 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
+<<<<<<< HEAD
 	wet = 16
+=======
+	wet = 8
+>>>>>>> Updated this old code to fork
 	},
 /area/ruin/powered/clownplanet)
 "bH" = (
@@ -877,7 +885,11 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
+<<<<<<< HEAD
 	wet = 16
+=======
+	wet = 8
+>>>>>>> Updated this old code to fork
 	},
 /area/ruin/powered/clownplanet)
 "bI" = (
@@ -938,7 +950,11 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
+<<<<<<< HEAD
 	wet = 16
+=======
+	wet = 8
+>>>>>>> Updated this old code to fork
 	},
 /area/ruin/powered/clownplanet)
 "bP" = (
@@ -966,8 +982,13 @@
 /turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
 "bT" = (
+<<<<<<< HEAD
 /obj/structure/table/glass,
 /obj/item/reagent_containers/spray/waterflower/superlube,
+=======
+/obj/item/slime_extract/rainbow,
+/obj/structure/table/glass,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
 "bU" = (
@@ -985,7 +1006,11 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
+<<<<<<< HEAD
 	wet = 16
+=======
+	wet = 8
+>>>>>>> Updated this old code to fork
 	},
 /area/ruin/powered/clownplanet)
 "bY" = (
@@ -995,7 +1020,11 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
+<<<<<<< HEAD
 	wet = 16
+=======
+	wet = 8
+>>>>>>> Updated this old code to fork
 	},
 /area/ruin/powered/clownplanet)
 "bZ" = (
@@ -1004,7 +1033,11 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
+<<<<<<< HEAD
 	wet = 16
+=======
+	wet = 8
+>>>>>>> Updated this old code to fork
 	},
 /area/ruin/powered/clownplanet)
 "ca" = (
@@ -1014,7 +1047,11 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
+<<<<<<< HEAD
 	wet = 16
+=======
+	wet = 8
+>>>>>>> Updated this old code to fork
 	},
 /area/ruin/powered/clownplanet)
 "cc" = (
@@ -1198,7 +1235,11 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
+<<<<<<< HEAD
 	wet = 16
+=======
+	wet = 8
+>>>>>>> Updated this old code to fork
 	},
 /area/ruin/powered/clownplanet)
 "dO" = (
@@ -1207,13 +1248,21 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
+<<<<<<< HEAD
 	wet = 16
+=======
+	wet = 8
+>>>>>>> Updated this old code to fork
 	},
 /area/ruin/powered/clownplanet)
 "eX" = (
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip{
+<<<<<<< HEAD
 	initial_gas_mix = "LAVALAND_ATMOS"
+=======
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+>>>>>>> Updated this old code to fork
 	},
 /area/lavaland/surface/outdoors/explored)
 "gX" = (
@@ -1239,7 +1288,11 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip{
+<<<<<<< HEAD
 	initial_gas_mix = "LAVALAND_ATMOS"
+=======
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+>>>>>>> Updated this old code to fork
 	},
 /area/lavaland/surface/outdoors/explored)
 "Hj" = (
@@ -1276,7 +1329,11 @@
 /obj/structure/disposalpipe/trunk,
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip{
+<<<<<<< HEAD
 	initial_gas_mix = "LAVALAND_ATMOS"
+=======
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+>>>>>>> Updated this old code to fork
 	},
 /area/ruin/powered/clownplanet)
 "Mv" = (
@@ -1298,14 +1355,22 @@
 	},
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip{
+<<<<<<< HEAD
 	initial_gas_mix = "LAVALAND_ATMOS"
+=======
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+>>>>>>> Updated this old code to fork
 	},
 /area/ruin/powered/clownplanet)
 "Xm" = (
 /obj/item/clothing/head/cone,
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip{
+<<<<<<< HEAD
 	initial_gas_mix = "LAVALAND_ATMOS"
+=======
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+>>>>>>> Updated this old code to fork
 	},
 /area/lavaland/surface/outdoors/explored)
 "XO" = (
@@ -1323,7 +1388,11 @@
 /obj/machinery/light/small,
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip{
+<<<<<<< HEAD
 	initial_gas_mix = "LAVALAND_ATMOS"
+=======
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+>>>>>>> Updated this old code to fork
 	},
 /area/ruin/powered/clownplanet)
 

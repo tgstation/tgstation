@@ -2,7 +2,11 @@
 	mob_type_allowed_typecache = list(/mob/living/brain)
 	mob_type_blacklist_typecache = list()
 
+<<<<<<< HEAD
 /datum/emote/brain/can_run_emote(mob/user, status_check = TRUE, intentional)
+=======
+/datum/emote/brain/can_run_emote(mob/user, status_check = TRUE)
+>>>>>>> Updated this old code to fork
 	. = ..()
 	var/mob/living/brain/B = user
 	if(!istype(B) || (!(B.container && istype(B.container, /obj/item/mmi))))

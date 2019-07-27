@@ -43,7 +43,11 @@
 
 /datum/brain_trauma/special/imaginary_friend/proc/get_ghost()
 	set waitfor = FALSE
+<<<<<<< HEAD
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s imaginary friend?", ROLE_PAI, null, null, 75, friend, POLL_IGNORE_IMAGINARYFRIEND)
+=======
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s imaginary friend?", ROLE_PAI, null, null, 75, friend)
+>>>>>>> Updated this old code to fork
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		friend.key = C.key
@@ -74,6 +78,7 @@
 
 /mob/camera/imaginary_friend/Login()
 	..()
+<<<<<<< HEAD
 	greet()
 	Show()
 
@@ -90,18 +95,37 @@
 	copy_known_languages_from(owner, TRUE)
 
 	setup_friend()
+=======
+	to_chat(src, "<span class='notice'><b>You are the imaginary friend of [owner]!</b></span>")
+	to_chat(src, "<span class='notice'>You are absolutely loyal to your friend, no matter what.</span>")
+	to_chat(src, "<span class='notice'>You cannot directly influence the world around you, but you can see what [owner] cannot.</span>")
+	Show()
+
+/mob/camera/imaginary_friend/Initialize(mapload, _trauma)
+	. = ..()
+	var/gender = pick(MALE, FEMALE)
+	real_name = random_unique_name(gender)
+	name = real_name
+	trauma = _trauma
+	owner = trauma.owner
+	copy_known_languages_from(owner, TRUE)
+	human_image = get_flat_human_icon(null, pick(SSjob.occupations))
+>>>>>>> Updated this old code to fork
 
 	join = new
 	join.Grant(src)
 	hide = new
 	hide.Grant(src)
 
+<<<<<<< HEAD
 /mob/camera/imaginary_friend/proc/setup_friend()
 	var/gender = pick(MALE, FEMALE)
 	real_name = random_unique_name(gender)
 	name = real_name
 	human_image = get_flat_human_icon(null, pick(SSjob.occupations))
 
+=======
+>>>>>>> Updated this old code to fork
 /mob/camera/imaginary_friend/proc/Show()
 	if(!client) //nobody home
 		return
@@ -227,6 +251,7 @@
 	I.hidden = !I.hidden
 	I.Show()
 	update_status()
+<<<<<<< HEAD
 
 //down here is the trapped mind
 //like imaginary friend but a lot less imagination and more like mind prison//
@@ -265,3 +290,5 @@
 	real_name = "[owner.real_name]?"
 	name = real_name
 	human_image = icon('icons/mob/lavaland/lavaland_monsters.dmi', icon_state = "curseblob")
+=======
+>>>>>>> Updated this old code to fork

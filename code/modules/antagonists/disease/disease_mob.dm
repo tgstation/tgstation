@@ -31,6 +31,10 @@ the new instance inside the host to be updated to the template's stats.
 	var/browser_open = FALSE
 
 	var/mob/living/following_host
+<<<<<<< HEAD
+=======
+	var/datum/component/redirect/move_listener
+>>>>>>> Updated this old code to fork
 	var/list/disease_instances
 	var/list/hosts //this list is associative, affected_mob -> disease_instance
 	var/datum/disease/advance/sentient_disease/disease_template
@@ -97,12 +101,23 @@ the new instance inside the host to be updated to the template's stats.
 
 
 /mob/camera/disease/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(isobserver(user))
 		. += {"<span class='notice'>[src] has [points]/[total_points] adaptation points.</span>
 		<span class='notice'>[src] has the following unlocked:</span>"}
 		for(var/datum/disease_ability/ability in purchased_abilities)
 			. += "<span class='notice'>[ability.name]</span>"
+=======
+	..()
+	if(isobserver(user))
+		to_chat(user, "<span class='notice'>[src] has [points]/[total_points] adaptation points.</span>")
+		to_chat(user, "<span class='notice'>[src] has the following unlocked:</span>")
+		for(var/A in purchased_abilities)
+			var/datum/disease_ability/B = A
+			if(istype(B))
+				to_chat(user, "<span class='notice'>[B.name]</span>")
+>>>>>>> Updated this old code to fork
 
 /mob/camera/disease/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	return
@@ -135,8 +150,11 @@ the new instance inside the host to be updated to the template's stats.
 	. = ..()
 	if(!mind.has_antag_datum(/datum/antagonist/disease))
 		mind.add_antag_datum(/datum/antagonist/disease)
+<<<<<<< HEAD
 	var/datum/atom_hud/medsensor = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medsensor.add_hud_to(src)
+=======
+>>>>>>> Updated this old code to fork
 
 /mob/camera/disease/proc/pick_name()
 	var/static/list/taken_names
@@ -152,7 +170,11 @@ the new instance inside the host to be updated to the template's stats.
 			set_name = "Sentient Virus"
 			break
 		if(taken_names[input])
+<<<<<<< HEAD
 			to_chat(src, "<span class='warning'>You cannot use the name of such a well-known disease!</span>")
+=======
+			to_chat(src, "<span class='notice'>You cannot use the name of such a well-known disease!</span>")
+>>>>>>> Updated this old code to fork
 		else
 			set_name = input
 	real_name = "[set_name] (Sentient Disease)"
@@ -258,10 +280,20 @@ the new instance inside the host to be updated to the template's stats.
 		refresh_adaptation_menu()
 
 /mob/camera/disease/proc/set_following(mob/living/L)
+<<<<<<< HEAD
 	if(following_host)
 		UnregisterSignal(following_host, COMSIG_MOVABLE_MOVED)
 	RegisterSignal(L, COMSIG_MOVABLE_MOVED, .proc/follow_mob)
 	following_host = L
+=======
+	following_host = L
+	if(!move_listener)
+		move_listener = L.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/follow_mob)))
+	else
+		L.TakeComponent(move_listener)
+		if(QDELING(move_listener))
+			move_listener = null
+>>>>>>> Updated this old code to fork
 	follow_mob()
 
 /mob/camera/disease/proc/follow_next(reverse = FALSE)

@@ -417,7 +417,13 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "br" = (
+<<<<<<< HEAD
 /obj/machinery/stasis,
+=======
+/obj/machinery/sleeper{
+	dir = 8
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bs" = (
@@ -657,6 +663,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "cb" = (
+<<<<<<< HEAD
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -670,6 +677,16 @@
 	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
+=======
+/obj/machinery/sleeper{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+>>>>>>> Updated this old code to fork
 
 (1,1,1) = {"
 aa
@@ -832,7 +849,11 @@ aN
 aN
 aE
 ca
+<<<<<<< HEAD
 Yn
+=======
+ae
+>>>>>>> Updated this old code to fork
 ab
 ab
 ab

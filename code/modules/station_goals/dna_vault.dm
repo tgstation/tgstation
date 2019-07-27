@@ -259,6 +259,7 @@
 				var/obj/item/organ/lungs/L = H.internal_organs_slot[ORGAN_SLOT_LUNGS]
 				L.tox_breath_dam_min = 0
 				L.tox_breath_dam_max = 0
+<<<<<<< HEAD
 			ADD_TRAIT(H, TRAIT_VIRUSIMMUNE, "dna_vault")
 		if(VAULT_NOBREATH)
 			to_chat(H, "<span class='notice'>Your lungs feel great.</span>")
@@ -268,13 +269,28 @@
 			S.burnmod = 0.5
 			ADD_TRAIT(H, TRAIT_RESISTHEAT, "dna_vault")
 			ADD_TRAIT(H, TRAIT_NOFIRE, "dna_vault")
+=======
+			H.add_trait(TRAIT_VIRUSIMMUNE, "dna_vault")
+		if(VAULT_NOBREATH)
+			to_chat(H, "<span class='notice'>Your lungs feel great.</span>")
+			H.add_trait(TRAIT_NOBREATH, "dna_vault")
+		if(VAULT_FIREPROOF)
+			to_chat(H, "<span class='notice'>You feel fireproof.</span>")
+			S.burnmod = 0.5
+			H.add_trait(TRAIT_RESISTHEAT, "dna_vault")
+			H.add_trait(TRAIT_NOFIRE, "dna_vault")
+>>>>>>> Updated this old code to fork
 		if(VAULT_STUNTIME)
 			to_chat(H, "<span class='notice'>Nothing can keep you down for long.</span>")
 			S.stunmod = 0.5
 		if(VAULT_ARMOUR)
 			to_chat(H, "<span class='notice'>You feel tough.</span>")
 			S.armor = 30
+<<<<<<< HEAD
 			ADD_TRAIT(H, TRAIT_PIERCEIMMUNE, "dna_vault")
+=======
+			H.add_trait(TRAIT_PIERCEIMMUNE, "dna_vault")
+>>>>>>> Updated this old code to fork
 		if(VAULT_SPEED)
 			to_chat(H, "<span class='notice'>Your legs feel faster.</span>")
 			H.add_movespeed_modifier(MOVESPEED_ID_DNA_VAULT, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))

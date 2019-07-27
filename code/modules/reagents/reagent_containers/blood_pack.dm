@@ -11,12 +11,20 @@
 /obj/item/reagent_containers/blood/Initialize()
 	. = ..()
 	if(blood_type != null)
+<<<<<<< HEAD
 		reagents.add_reagent(unique_blood ? unique_blood : /datum/reagent/blood, 200, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
+=======
+		reagents.add_reagent(unique_blood ? unique_blood : "blood", 200, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
+>>>>>>> Updated this old code to fork
 		update_icon()
 
 /obj/item/reagent_containers/blood/on_reagent_change(changetype)
 	if(reagents)
+<<<<<<< HEAD
 		var/datum/reagent/blood/B = reagents.has_reagent(/datum/reagent/blood)
+=======
+		var/datum/reagent/blood/B = reagents.has_reagent("blood")
+>>>>>>> Updated this old code to fork
 		if(B && B.data && B.data["blood_type"])
 			blood_type = B.data["blood_type"]
 		else
@@ -72,7 +80,11 @@
 
 /obj/item/reagent_containers/blood/ethereal
 	blood_type = "LE"
+<<<<<<< HEAD
 	unique_blood = /datum/reagent/consumable/liquidelectricity
+=======
+	unique_blood = "liquidelectricity"
+>>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/blood/universal
 	blood_type = "U"
@@ -94,4 +106,8 @@
 			labelled = 0
 			update_pack_name()
 	else
+<<<<<<< HEAD
 		return ..()
+=======
+		return ..()
+>>>>>>> Updated this old code to fork

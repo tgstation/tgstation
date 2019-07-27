@@ -5,7 +5,10 @@
 	text_gain_indication = "<span class='notice'>Your hand feels cold.</span>"
 	instability = 10
 	difficulty = 10
+<<<<<<< HEAD
 	synchronizer_coeff = 1
+=======
+>>>>>>> Updated this old code to fork
 	power = /obj/effect/proc_holder/spell/targeted/conjure_item/snow
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/snow
@@ -24,7 +27,10 @@
 	text_gain_indication = "<span class='notice'>Your hand feels cold.</span>"
 	instability = 20
 	difficulty = 12
+<<<<<<< HEAD
 	synchronizer_coeff = 1
+=======
+>>>>>>> Updated this old code to fork
 	power = /obj/effect/proc_holder/spell/aimed/cryo
 
 /obj/effect/proc_holder/spell/aimed/cryo

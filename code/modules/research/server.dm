@@ -2,15 +2,24 @@
 	name = "\improper R&D Server"
 	desc = "A computer system running a deep neural network that processes arbitrary information to produce data useable in the development of new technologies. In layman's terms, it makes research points."
 	icon = 'icons/obj/machines/research.dmi'
+<<<<<<< HEAD
 	icon_state = "RD-server-on"
+=======
+	icon_state = "server"
+>>>>>>> Updated this old code to fork
 	var/datum/techweb/stored_research
 	var/heat_health = 100
 	//Code for point mining here.
 	var/working = TRUE			//temperature should break it.
+<<<<<<< HEAD
 	var/research_disabled = FALSE
 	var/server_id = 0
 	var/base_mining_income = 2
 	var/current_temp = 0
+=======
+	var/server_id = 0
+	var/base_mining_income = 2
+>>>>>>> Updated this old code to fork
 	var/heat_gen = 100
 	var/heating_power = 40000
 	var/delay = 5
@@ -21,12 +30,18 @@
 
 /obj/machinery/rnd/server/Initialize()
 	. = ..()
+<<<<<<< HEAD
 	name += " [num2hex(rand(1,65535), -1)]" //gives us a random four-digit hex number as part of the name. Y'know, for fluff.
+=======
+>>>>>>> Updated this old code to fork
 	SSresearch.servers |= src
 	stored_research = SSresearch.science_tech
 	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/rdserver(null)
 	B.apply_default_parts(src)
+<<<<<<< HEAD
 	current_temp = get_env_temp()
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/rnd/server/Destroy()
 	SSresearch.servers -= src
@@ -38,6 +53,7 @@
 		tot_rating += SP.rating
 	heat_gen /= max(1, tot_rating)
 
+<<<<<<< HEAD
 /obj/machinery/rnd/server/update_icon()
 	if (stat & EMPED || stat & NOPOWER)
 		icon_state = "RD-server-off"
@@ -58,6 +74,13 @@
 	else
 		working = TRUE
 	update_icon()
+=======
+/obj/machinery/rnd/server/proc/refresh_working()
+	if(stat & EMPED)
+		working = FALSE
+	else
+		working = TRUE
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/rnd/server/emp_act()
 	. = ..()
@@ -71,6 +94,7 @@
 	stat &= ~EMPED
 	refresh_working()
 
+<<<<<<< HEAD
 /obj/machinery/rnd/server/proc/toggle_disable()
 	research_disabled = !research_disabled
 	refresh_working()
@@ -86,6 +110,16 @@
 	if(isturf(L))
 		return L.temperature
 	return 0
+=======
+/obj/machinery/rnd/server/proc/mine()
+	. = base_mining_income
+	var/penalty = max((get_env_temp() - temp_tolerance_high), 0) * temp_penalty_coefficient
+	. = max(. - penalty, 0)
+
+/obj/machinery/rnd/server/proc/get_env_temp()
+	var/datum/gas_mixture/environment = loc.return_air()
+	return environment.temperature
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/rnd/server/proc/produce_heat(heat_amt)
 	if(!(stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
@@ -140,7 +174,10 @@
 	var/obj/machinery/rnd/server/temp_server
 	var/list/servers = list()
 	var/list/consoles = list()
+<<<<<<< HEAD
 	req_access = list(ACCESS_RD)
+=======
+>>>>>>> Updated this old code to fork
 	var/badmin = 0
 	circuit = /obj/item/circuitboard/computer/rdservercontrol
 
@@ -149,18 +186,29 @@
 		return
 
 	add_fingerprint(usr)
+<<<<<<< HEAD
 	if (href_list["toggle"])
 		if(allowed(usr) || obj_flags & EMAGGED)
 			var/obj/machinery/rnd/server/S = locate(href_list["toggle"]) in SSresearch.servers
 			S.toggle_disable()
 		else
 			to_chat(usr, "<span class='danger'>Access Denied.</span>")
+=======
+	usr.set_machine(src)
+	if(!src.allowed(usr) && !(obj_flags & EMAGGED))
+		to_chat(usr, "<span class='danger'>You do not have the required access level.</span>")
+		return
+
+	if(href_list["main"])
+		screen = 0
+>>>>>>> Updated this old code to fork
 
 	updateUsrDialog()
 	return
 
 /obj/machinery/computer/rdservercontrol/ui_interact(mob/user)
 	. = ..()
+<<<<<<< HEAD
 	var/list/dat = list()
 
 	dat += "<b>Connected Servers:</b>"
@@ -189,6 +237,22 @@
 	popup.set_content(dat.Join())
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
+=======
+	var/dat = ""
+
+	switch(screen)
+		if(0) //Main Menu
+			dat += "Connected Servers:<BR><BR>"
+
+			for(var/obj/machinery/rnd/server/S in GLOB.machines)
+				dat += "[S.name]<BR>"
+
+		//Mining status here
+
+	user << browse("<TITLE>R&D Server Control</TITLE><HR>[dat]", "window=server_control;size=575x400")
+	onclose(user, "server_control")
+	return
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/computer/rdservercontrol/attackby(obj/item/D, mob/user, params)
 	. = ..()

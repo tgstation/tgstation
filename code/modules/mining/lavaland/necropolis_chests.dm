@@ -1,7 +1,10 @@
 //The chests dropped by mob spawner tendrils. Also contains associated loot.
 
+<<<<<<< HEAD
 #define HIEROPHANT_CLUB_CARDINAL_DAMAGE 30
 
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/structure/closet/crate/necropolis
 	name = "necropolis chest"
@@ -116,29 +119,46 @@
 	name = "Kinetic Accelerator Offensive Mining Explosion Mod"
 	desc = "A device which causes kinetic accelerators to fire AoE blasts that destroy rock and damage creatures."
 	id = "hyperaoemod"
+<<<<<<< HEAD
 	materials = list(/datum/material/iron = 7000, /datum/material/glass = 3000, /datum/material/silver = 3000, /datum/material/gold = 3000, /datum/material/diamond = 4000)
+=======
+	materials = list(MAT_METAL = 7000, MAT_GLASS = 3000, MAT_SILVER = 3000, MAT_GOLD = 3000, MAT_DIAMOND = 4000)
+>>>>>>> Updated this old code to fork
 	build_path = /obj/item/borg/upgrade/modkit/aoe/turfs/andmobs
 
 /datum/design/unique_modkit/rapid_repeater
 	name = "Kinetic Accelerator Rapid Repeater Mod"
 	desc = "A device which greatly reduces a kinetic accelerator's cooldown on striking a living target or rock, but greatly increases its base cooldown."
 	id = "repeatermod"
+<<<<<<< HEAD
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 5000, /datum/material/uranium = 8000, /datum/material/bluespace = 2000)
+=======
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_URANIUM = 8000, MAT_BLUESPACE = 2000)
+>>>>>>> Updated this old code to fork
 	build_path = /obj/item/borg/upgrade/modkit/cooldown/repeater
 
 /datum/design/unique_modkit/resonator_blast
 	name = "Kinetic Accelerator Resonator Blast Mod"
 	desc = "A device which causes kinetic accelerators to fire shots that leave and detonate resonator blasts."
 	id = "resonatormod"
+<<<<<<< HEAD
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 5000, /datum/material/silver = 5000, /datum/material/uranium = 5000)
+=======
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_SILVER = 5000, MAT_URANIUM = 5000)
+>>>>>>> Updated this old code to fork
 	build_path = /obj/item/borg/upgrade/modkit/resonator_blasts
 
 /datum/design/unique_modkit/bounty
 	name = "Kinetic Accelerator Death Syphon Mod"
 	desc = "A device which causes kinetic accelerators to permanently gain damage against creature types killed with it."
 	id = "bountymod"
+<<<<<<< HEAD
 	materials = list(/datum/material/iron = 4000, /datum/material/silver = 4000, /datum/material/gold = 4000, /datum/material/bluespace = 4000)
 	reagents_list = list(/datum/reagent/blood = 40)
+=======
+	materials = list(MAT_METAL = 4000, MAT_SILVER = 4000, MAT_GOLD = 4000, MAT_BLUESPACE = 4000)
+	reagents_list = list("blood" = 40)
+>>>>>>> Updated this old code to fork
 	build_path = /obj/item/borg/upgrade/modkit/bounty
 
 //Spooky special loot
@@ -192,7 +212,11 @@
 
 /obj/item/rod_of_asclepius/proc/activated()
 	item_flags = DROPDEL
+<<<<<<< HEAD
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+=======
+	add_trait(TRAIT_NODROP, CURSED_ITEM_TRAIT)
+>>>>>>> Updated this old code to fork
 	desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
 	icon_state = "asclepius_active"
 	activated = TRUE
@@ -225,9 +249,15 @@
 	to_chat(user, "<span class='warning'>You feel your life being drained by the pendant...</span>")
 	if(do_after(user, 40, target = user))
 		to_chat(user, "<span class='notice'>Your lifeforce is now linked to the pendant! You feel like removing it would kill you, and yet you instinctively know that until then, you won't die.</span>")
+<<<<<<< HEAD
 		ADD_TRAIT(user, TRAIT_NODEATH, "memento_mori")
 		ADD_TRAIT(user, TRAIT_NOHARDCRIT, "memento_mori")
 		ADD_TRAIT(user, TRAIT_NOCRITDAMAGE, "memento_mori")
+=======
+		user.add_trait(TRAIT_NODEATH, "memento_mori")
+		user.add_trait(TRAIT_NOHARDCRIT, "memento_mori")
+		user.add_trait(TRAIT_NOCRITDAMAGE, "memento_mori")
+>>>>>>> Updated this old code to fork
 		icon_state = "memento_mori_active"
 		active_owner = user
 
@@ -442,6 +472,7 @@
 	qdel(chain)
 	return ..()
 
+<<<<<<< HEAD
 //just a nerfed version of the real thing for the bounty hunters.
 /obj/item/gun/magic/hook/bounty
 	name = "hook"
@@ -456,6 +487,8 @@
 /obj/item/projectile/hook/bounty
 	damage = 0
 	paralyze = 20
+=======
+>>>>>>> Updated this old code to fork
 
 //Immortality Talisman
 /obj/item/immortality_talisman
@@ -469,7 +502,11 @@
 
 /obj/item/immortality_talisman/Initialize()
 	. = ..()
+<<<<<<< HEAD
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, TRUE)
+=======
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+>>>>>>> Updated this old code to fork
 
 /datum/action/item_action/immortality
 	name = "Immortality"
@@ -534,7 +571,11 @@
 		. = ..()
 
 /obj/effect/immortality_talisman/void
+<<<<<<< HEAD
 	vanish_description = "is dragged into the void"
+=======
+	vanish_description = "dragged into the void"
+>>>>>>> Updated this old code to fork
 
 //Shared Bag
 
@@ -593,7 +634,11 @@
 /obj/item/reagent_containers/glass/bottle/potion/flight
 	name = "strange elixir"
 	desc = "A flask with an almost-holy aura emitting from it. The label on the bottle says: 'erqo'hyy tvi'rf lbh jv'atf'."
+<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/flightpotion = 5)
+=======
+	list_reagents = list("flightpotion" = 5)
+>>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/glass/bottle/potion/update_icon()
 	if(reagents.total_volume)
@@ -603,6 +648,10 @@
 
 /datum/reagent/flightpotion
 	name = "Flight Potion"
+<<<<<<< HEAD
+=======
+	id = "flightpotion"
+>>>>>>> Updated this old code to fork
 	description = "Strange mutagenic compound of unknown origins."
 	reagent_state = LIQUID
 	color = "#FFEBEB"
@@ -675,6 +724,7 @@
 	nemesis_factions = list("mining", "boss")
 	var/transform_cooldown
 	var/swiping = FALSE
+<<<<<<< HEAD
 	var/bleed_stacks_per_hit = 3
 
 /obj/item/melee/transforming/cleaving_saw/examine(mob/user)
@@ -682,6 +732,14 @@
 	. += "<span class='notice'>It is [active ? "open, will cleave enemies in a wide arc and deal additional damage to fauna":"closed, and can be used for rapid consecutive attacks that cause fauna to bleed"].\n"+\
 	"Both modes will build up existing bleed effects, doing a burst of high damage if the bleed is built up high enough.\n"+\
 	"Transforming it immediately after an attack causes the next attack to come out faster.</span>"
+=======
+
+/obj/item/melee/transforming/cleaving_saw/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>It is [active ? "open, will cleave enemies in a wide arc and deal additional damage to fauna":"closed, and can be used for rapid consecutive attacks that cause fauna to bleed"].<br>\
+	Both modes will build up existing bleed effects, doing a burst of high damage if the bleed is built up high enough.<br>\
+	Transforming it immediately after an attack causes the next attack to come out faster.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/item/melee/transforming/cleaving_saw/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is [active ? "closing [src] on [user.p_their()] neck" : "opening [src] into [user.p_their()] chest"]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -706,7 +764,11 @@
 	playsound(user, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
 
 /obj/item/melee/transforming/cleaving_saw/clumsy_transform_effect(mob/living/user)
+<<<<<<< HEAD
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
+=======
+	if(user.has_trait(TRAIT_CLUMSY) && prob(50))
+>>>>>>> Updated this old code to fork
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_bodypart_damage(10)
 
@@ -716,11 +778,20 @@
 		user.changeNext_move(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly
 
 /obj/item/melee/transforming/cleaving_saw/nemesis_effects(mob/living/user, mob/living/target)
+<<<<<<< HEAD
 	var/datum/status_effect/stacking/saw_bleed/B = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
 	if(!B)
 		target.apply_status_effect(STATUS_EFFECT_SAWBLEED,bleed_stacks_per_hit)
 	else
 		B.add_stacks(bleed_stacks_per_hit)
+=======
+	var/datum/status_effect/saw_bleed/B = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
+	if(!B)
+		if(!active) //This isn't in the above if-check so that the else doesn't care about active
+			target.apply_status_effect(STATUS_EFFECT_SAWBLEED)
+	else
+		B.add_bleed(B.bleed_buildup)
+>>>>>>> Updated this old code to fork
 
 /obj/item/melee/transforming/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!active || swiping || !target.density || get_turf(target) == get_turf(user))
@@ -800,9 +871,15 @@
 
 /obj/item/melee/ghost_sword/attack_self(mob/user)
 	if(summon_cooldown > world.time)
+<<<<<<< HEAD
 		to_chat(user, "<span class='warning'>You just recently called out for aid. You don't want to annoy the spirits!</span>")
 		return
 	to_chat(user, "<span class='notice'>You call out for aid, attempting to summon spirits to your side.</span>")
+=======
+		to_chat(user, "You just recently called out for aid. You don't want to annoy the spirits.")
+		return
+	to_chat(user, "You call out for aid, attempting to summon spirits to your side.")
+>>>>>>> Updated this old code to fork
 
 	notify_ghosts("[user] is raising [user.p_their()] [src], calling for your help!",
 		enter_link="<a href=?src=[REF(src)];orbit=1>(Click to help)</a>",
@@ -896,7 +973,11 @@
 /datum/disease/transformation/dragon
 	name = "dragon transformation"
 	cure_text = "nothing"
+<<<<<<< HEAD
 	cures = list(/datum/reagent/medicine/adminordrazine)
+=======
+	cures = list("adminordrazine")
+>>>>>>> Updated this old code to fork
 	agent = "dragon's blood"
 	desc = "What do dragons have to do with Space Station 13?"
 	stage_prob = 20
@@ -1064,11 +1145,14 @@
 /obj/structure/closet/crate/necropolis/colossus
 	name = "colossus chest"
 
+<<<<<<< HEAD
 /obj/structure/closet/crate/necropolis/colossus/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/colossus))
 		return BULLET_ACT_FORCE_PIERCE
 	return ..()
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/structure/closet/crate/necropolis/colossus/PopulateContents()
 	var/list/choices = subtypesof(/obj/machinery/anomalous_crystal)
 	var/random_crystal = pick(choices)
@@ -1110,8 +1194,13 @@
 	var/friendly_fire_check = FALSE //if the blasts we make will consider our faction against the faction of hit targets
 
 /obj/item/hierophant_club/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	. += "<span class='hierophant_warning'>The[beacon ? " beacon is not currently":"re is a beacon"] attached.</span>"
+=======
+	..()
+	to_chat(user, "<span class='hierophant_warning'>The[beacon ? " beacon is not currently":"re is a beacon"] attached.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/item/hierophant_club/suicide_act(mob/living/user)
 	say("Xverwpsgexmrk...", forced = "hierophant club suicide")
@@ -1319,9 +1408,13 @@
 	new /obj/effect/temp_visual/hierophant/telegraph/cardinal(T, user)
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
+<<<<<<< HEAD
 	var/obj/effect/temp_visual/hierophant/blast/B = new(T, user, friendly_fire_check)
 	B.damage = HIEROPHANT_CLUB_CARDINAL_DAMAGE
 	B.monster_damage_boost = FALSE
+=======
+	new /obj/effect/temp_visual/hierophant/blast(T, user, friendly_fire_check)
+>>>>>>> Updated this old code to fork
 	for(var/d in GLOB.cardinals)
 		INVOKE_ASYNC(src, .proc/blast_wall, T, d, user)
 
@@ -1335,7 +1428,11 @@
 		if(!J)
 			return
 		var/obj/effect/temp_visual/hierophant/blast/B = new(J, user, friendly_fire_check)
+<<<<<<< HEAD
 		B.damage = HIEROPHANT_CLUB_CARDINAL_DAMAGE
+=======
+		B.damage = 30
+>>>>>>> Updated this old code to fork
 		B.monster_damage_boost = FALSE
 		previousturf = J
 		J = get_step(previousturf, dir)

@@ -53,6 +53,7 @@
 	rename_team = "Inquisition"
 	mission = "Destroy any traces of paranormal activity aboard the station."
 	polldesc = "a Nanotrasen paranormal response team"
+<<<<<<< HEAD
 
 /datum/ert/janitor
 	roles = list(/datum/antagonist/ert/janitor, /datum/antagonist/ert/janitor/heavy)
@@ -62,3 +63,5 @@
 	rename_team = "Janitor"
 	mission = "Clean up EVERYTHING."
 	polldesc = "a Nanotrasen Janitorial Response Team"
+=======
+>>>>>>> Updated this old code to fork

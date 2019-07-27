@@ -9,8 +9,11 @@ SUBSYSTEM_DEF(mapping)
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
 
+<<<<<<< HEAD
 	var/map_voted = FALSE
 
+=======
+>>>>>>> Updated this old code to fork
 	var/list/map_templates = list()
 
 	var/list/ruins_templates = list()
@@ -69,16 +72,24 @@ SUBSYSTEM_DEF(mapping)
 	for (var/i in 1 to config.space_empty_levels)
 		++space_levels_so_far
 		empty_space = add_new_zlevel("Empty Area [space_levels_so_far]", list(ZTRAIT_LINKAGE = CROSSLINKED))
+<<<<<<< HEAD
+=======
+	// and the transit level
+	transit = add_new_zlevel("Transit/Reserved", list(ZTRAIT_RESERVED = TRUE))
+>>>>>>> Updated this old code to fork
 
 	// Pick a random away mission.
 	if(CONFIG_GET(flag/roundstart_away))
 		createRandomZlevel()
 
+<<<<<<< HEAD
 	// Load the virtual reality hub
 	if(CONFIG_GET(flag/virtual_reality))
 		to_chat(world, "<span class='boldannounce'>Loading virtual reality...</span>")
 		load_new_z_level("_maps/RandomZLevels/VR/vrhub.dmm", "Virtual Reality Hub")
 		to_chat(world, "<span class='boldannounce'>Virtual reality loaded.</span>")
+=======
+>>>>>>> Updated this old code to fork
 
 	// Generate mining ruins
 	loading_ruins = TRUE
@@ -94,8 +105,11 @@ SUBSYSTEM_DEF(mapping)
 		seedRuins(space_ruins, CONFIG_GET(number/space_budget), /area/space, space_ruins_templates)
 	loading_ruins = FALSE
 #endif
+<<<<<<< HEAD
 	// Add the transit level
 	transit = add_new_zlevel("Transit/Reserved", list(ZTRAIT_RESERVED = TRUE))
+=======
+>>>>>>> Updated this old code to fork
 	repopulate_sorted_areas()
 	// Set up Z-level transitions.
 	setup_map_transitions()
@@ -264,6 +278,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /datum/controller/subsystem/mapping/proc/generate_station_area_list()
 	var/list/station_areas_blacklist = typecacheof(list(/area/space, /area/mine, /area/ruin, /area/asteroid/nearstation))
 	for(var/area/A in world)
+<<<<<<< HEAD
 		if (is_type_in_typecache(A, station_areas_blacklist))
 			continue
 		if (!A.contents.len || !A.unique)
@@ -271,11 +286,18 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		var/turf/picked = A.contents[1]
 		if (is_station_level(picked.z))
 			GLOB.the_station_areas += A.type
+=======
+		var/turf/picked = safepick(get_area_turfs(A.type))
+		if(picked && is_station_level(picked.z))
+			if(!(A.type in GLOB.the_station_areas) && !is_type_in_typecache(A, station_areas_blacklist))
+				GLOB.the_station_areas.Add(A.type)
+>>>>>>> Updated this old code to fork
 
 	if(!GLOB.the_station_areas.len)
 		log_world("ERROR: Station areas list failed to generate!")
 
 /datum/controller/subsystem/mapping/proc/maprotate()
+<<<<<<< HEAD
 	if(map_voted)
 		map_voted = FALSE
 		return
@@ -285,6 +307,13 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	//count votes
 	var/pmv = CONFIG_GET(flag/preference_map_voting)
 	if(pmv)
+=======
+	var/players = GLOB.clients.len
+	var/list/mapvotes = list()
+	//count votes
+	var/amv = CONFIG_GET(flag/allow_map_voting)
+	if(amv)
+>>>>>>> Updated this old code to fork
 		for (var/client/c in GLOB.clients)
 			var/vote = c.prefs.preferred_map
 			if (!vote)
@@ -317,7 +346,11 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 			mapvotes.Remove(map)
 			continue
 
+<<<<<<< HEAD
 		if(pmv)
+=======
+		if(amv)
+>>>>>>> Updated this old code to fork
 			mapvotes[map] = mapvotes[map]*VM.voteweight
 
 	var/pickedmap = pickweight(mapvotes)

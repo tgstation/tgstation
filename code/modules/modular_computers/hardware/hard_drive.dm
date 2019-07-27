@@ -19,8 +19,13 @@
 	store_file(new/datum/computer_file/program/filemanager(src))		// File manager, allows text editor functions and basic file manipulation.
 
 /obj/item/computer_hardware/hard_drive/examine(user)
+<<<<<<< HEAD
 	. = ..()
 	. += "<span class='notice'>It has [max_capacity] GQ of storage capacity.</span>"
+=======
+	..()
+	to_chat(user, "<span class='notice'>It has [max_capacity] GQ of storage capacity.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/item/computer_hardware/hard_drive/diagnostics(var/mob/user)
 	..()
@@ -121,7 +126,11 @@
 	return ..()
 
 /obj/item/computer_hardware/hard_drive/Initialize()
+<<<<<<< HEAD
 	. = ..()
+=======
+	. = ..()	
+>>>>>>> Updated this old code to fork
 	install_default_programs()
 
 
@@ -157,6 +166,7 @@
 	max_capacity = 64
 	icon_state = "ssd_mini"
 	w_class = WEIGHT_CLASS_TINY
+<<<<<<< HEAD
 	custom_price = 15
 
 // Syndicate variant - very slight better
@@ -165,6 +175,8 @@
 	power_usage = 8
 	max_capacity = 70
 	var/datum/antagonist/traitor/traitor_data // Syndicate hard drive has the user's data baked directly into it on creation
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/computer_hardware/hard_drive/micro
 	name = "micro solid state drive"
@@ -172,4 +184,8 @@
 	power_usage = 2
 	max_capacity = 32
 	icon_state = "ssd_micro"
+<<<<<<< HEAD
 	w_class = WEIGHT_CLASS_TINY
+=======
+	w_class = WEIGHT_CLASS_TINY
+>>>>>>> Updated this old code to fork

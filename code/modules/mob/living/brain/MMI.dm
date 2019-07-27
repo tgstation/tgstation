@@ -100,7 +100,11 @@
 	brainmob.emp_damage = 0
 	brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
 	GLOB.alive_mob_list -= brainmob //Get outta here
+<<<<<<< HEAD
 	GLOB.dead_mob_list |= brainmob
+=======
+	GLOB.dead_mob_list += brainmob
+>>>>>>> Updated this old code to fork
 	brain.brainmob = brainmob //Set the brain to use the brainmob
 	brainmob = null //Set mmi brainmob var to null
 	if(user)
@@ -193,6 +197,7 @@
 	qdel(src)
 
 /obj/item/mmi/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	. += "<span class='notice'>There is a switch to toggle the radio system [radio.on ? "off" : "on"].[brain ? " It is currently being covered by [brain]." : null]</span>"
 	if(brainmob)
@@ -205,6 +210,20 @@
 
 		else
 			. += "<span class='notice'>The MMI indicates the brain is active.</span>"
+=======
+	..()
+	to_chat(user, "<span class='notice'>There is a switch to toggle the radio system [radio.on ? "off" : "on"].[brain ? " It is currently being covered by [brain]." : null]</span>")
+	if(brainmob)
+		var/mob/living/brain/B = brainmob
+		if(!B.key || !B.mind || B.stat == DEAD)
+			to_chat(user, "<span class='warning'>The MMI indicates the brain is completely unresponsive.</span>")
+
+		else if(!B.client)
+			to_chat(user, "<span class='warning'>The MMI indicates the brain is currently inactive; it might change.</span>")
+
+		else
+			to_chat(user, "<span class='notice'>The MMI indicates the brain is active.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/item/mmi/relaymove(mob/user)
 	return //so that the MMI won't get a warning about not being able to move if it tries to move

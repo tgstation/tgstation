@@ -12,7 +12,10 @@
 	name = "Xenomorph"
 	job_rank = ROLE_ALIEN
 	show_in_antagpanel = FALSE
+<<<<<<< HEAD
 	prevent_roundtype_conversion = FALSE
+=======
+>>>>>>> Updated this old code to fork
 	var/datum/team/xeno/xeno_team
 
 /datum/antagonist/xeno/create_team(datum/team/xeno/new_team)
@@ -35,4 +38,8 @@
 /mob/living/carbon/alien/mind_initialize()
 	..()
 	if(!mind.has_antag_datum(/datum/antagonist/xeno))
+<<<<<<< HEAD
 		mind.add_antag_datum(/datum/antagonist/xeno)
+=======
+		mind.add_antag_datum(/datum/antagonist/xeno)
+>>>>>>> Updated this old code to fork

@@ -330,7 +330,11 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bf" = (
+<<<<<<< HEAD
 /obj/machinery/stasis,
+=======
+/obj/machinery/sleeper,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bg" = (
@@ -376,7 +380,13 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bl" = (
+<<<<<<< HEAD
 /obj/structure/closet/crate/medical,
+=======
+/obj/structure/closet/crate/medical{
+	name = "medical crate"
+	},
+>>>>>>> Updated this old code to fork
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/o2{
 	pixel_x = 3;
@@ -484,6 +494,7 @@
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
+<<<<<<< HEAD
 "bS" = (
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/item/clothing/suit/apron/surgical,
@@ -491,6 +502,8 @@
 /obj/structure/table/optable,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+=======
+>>>>>>> Updated this old code to fork
 
 (1,1,1) = {"
 aa
@@ -665,7 +678,11 @@ aW
 aX
 aY
 ab
+<<<<<<< HEAD
 bS
+=======
+bf
+>>>>>>> Updated this old code to fork
 bj
 bn
 ab

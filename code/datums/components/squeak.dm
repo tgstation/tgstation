@@ -1,7 +1,10 @@
 /datum/component/squeak
 	var/static/list/default_squeak_sounds = list('sound/items/toysqueak1.ogg'=1, 'sound/items/toysqueak2.ogg'=1, 'sound/items/toysqueak3.ogg'=1)
 	var/list/override_squeak_sounds
+<<<<<<< HEAD
 
+=======
+>>>>>>> Updated this old code to fork
 	var/squeak_chance = 100
 	var/volume = 30
 
@@ -53,7 +56,11 @@
 	else
 		steps++
 
+<<<<<<< HEAD
 /datum/component/squeak/proc/play_squeak_crossed(datum/source, atom/movable/AM)
+=======
+/datum/component/squeak/proc/play_squeak_crossed(atom/movable/AM)
+>>>>>>> Updated this old code to fork
 	if(isitem(AM))
 		var/obj/item/I = AM
 		if(I.item_flags & ABSTRACT)
@@ -62,8 +69,11 @@
 			var/obj/item/projectile/P = AM
 			if(P.original != parent)
 				return
+<<<<<<< HEAD
 	if(istype(AM, /obj/effect/dummy/phased_mob)) //don't squeek if they're in a phased/jaunting container.
 		return
+=======
+>>>>>>> Updated this old code to fork
 	var/atom/current_parent = parent
 	if(isturf(current_parent.loc))
 		play_squeak()

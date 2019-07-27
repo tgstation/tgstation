@@ -19,7 +19,14 @@
 	name = "Escape Pod Airlock"
 	},
 /obj/docking_port/mobile/pod{
+<<<<<<< HEAD
 	port_direction = 2
+=======
+	port_direction = 2;
+	dwidth = 1;
+	width = 3;
+	height = 4
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)

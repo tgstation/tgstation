@@ -22,8 +22,13 @@
 	else
 		if(attack_verb_off.len)
 			attack_verb = attack_verb_off
+<<<<<<< HEAD
 	if(sharpness)
 		AddComponent(/datum/component/butchering, 50, 100, 0, hitsound)
+=======
+	if(is_sharp())
+		AddComponent(/datum/component/butchering, 50, 100, 0, hitsound, !active)
+>>>>>>> Updated this old code to fork
 
 /obj/item/melee/transforming/attack_self(mob/living/carbon/user)
 	if(transform_weapon(user))
@@ -62,6 +67,16 @@
 			attack_verb = attack_verb_off
 		icon_state = initial(icon_state)
 		w_class = initial(w_class)
+<<<<<<< HEAD
+=======
+	if(is_sharp())
+		var/datum/component/butchering/BT = LoadComponent(/datum/component/butchering)
+		BT.butchering_enabled = TRUE
+	else
+		GET_COMPONENT(BT, /datum/component/butchering)
+		if(BT)
+			BT.butchering_enabled = FALSE
+>>>>>>> Updated this old code to fork
 	transform_messages(user, supress_message_text)
 	add_fingerprint(user)
 	return TRUE
@@ -75,6 +90,10 @@
 		to_chat(user, "<span class='notice'>[src] [active ? "is now active":"can now be concealed"].</span>")
 
 /obj/item/melee/transforming/proc/clumsy_transform_effect(mob/living/user)
+<<<<<<< HEAD
 	if(clumsy_check && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
+=======
+	if(clumsy_check && user.has_trait(TRAIT_CLUMSY) && prob(50))
+>>>>>>> Updated this old code to fork
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_bodypart_damage(5,5)

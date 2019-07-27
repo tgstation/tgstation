@@ -22,15 +22,26 @@
 	/turf/open/space/transit,
 	/turf/open/chasm,
 	/turf/open/lava))
+<<<<<<< HEAD
 	var/slippery_foam = TRUE
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/effect/particle_effect/foam/firefighting
 	name = "firefighting foam"
 	lifetime = 20 //doesn't last as long as normal foam
 	amount = 0 //no spread
+<<<<<<< HEAD
 	slippery_foam = FALSE
 	var/absorbed_plasma = 0
 
+=======
+	var/absorbed_plasma = 0
+
+/obj/effect/particle_effect/foam/firefighting/MakeSlippery()
+	return
+
+>>>>>>> Updated this old code to fork
 /obj/effect/particle_effect/foam/firefighting/process()
 	..()
 
@@ -54,7 +65,11 @@
 		var/obj/effect/decal/cleanable/plasma/P = (locate(/obj/effect/decal/cleanable/plasma) in get_turf(src))
 		if(!P)
 			P = new(loc)
+<<<<<<< HEAD
 		P.reagents.add_reagent(/datum/reagent/stable_plasma, absorbed_plasma)
+=======
+		P.reagents.add_reagent("stable_plasma", absorbed_plasma)
+>>>>>>> Updated this old code to fork
 
 	flick("[icon_state]-disolve", src)
 	QDEL_IN(src, 5)
@@ -72,7 +87,13 @@
 	name = "aluminium foam"
 	metal = ALUMINUM_FOAM
 	icon_state = "mfoam"
+<<<<<<< HEAD
 	slippery_foam = FALSE
+=======
+
+/obj/effect/particle_effect/foam/metal/MakeSlippery()
+	return
+>>>>>>> Updated this old code to fork
 
 /obj/effect/particle_effect/foam/metal/smart
 	name = "smart foam"
@@ -90,14 +111,23 @@
 
 /obj/effect/particle_effect/foam/Initialize()
 	. = ..()
+<<<<<<< HEAD
+=======
+	MakeSlippery()
+>>>>>>> Updated this old code to fork
 	create_reagents(1000) //limited by the size of the reagent holder anyway.
 	START_PROCESSING(SSfastprocess, src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
 
+<<<<<<< HEAD
 /obj/effect/particle_effect/foam/ComponentInitialize()
 	. = ..()
 	if(slippery_foam)
 		AddComponent(/datum/component/slippery, 100)
+=======
+/obj/effect/particle_effect/foam/proc/MakeSlippery()
+	AddComponent(/datum/component/slippery, 100)
+>>>>>>> Updated this old code to fork
 
 /obj/effect/particle_effect/foam/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)

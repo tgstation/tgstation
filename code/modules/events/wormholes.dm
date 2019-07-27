@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 
+=======
+>>>>>>> Updated this old code to fork
 /datum/round_event_control/wormholes
 	name = "Wormholes"
 	typepath = /datum/round_event/wormholes
@@ -51,6 +54,7 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 	icon_state = "anom"
 	mech_sized = TRUE
 
+<<<<<<< HEAD
 
 /obj/effect/portal/wormhole/Initialize(mapload, _creator, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
 	. = ..()
@@ -60,6 +64,8 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 	. = ..()
 	GLOB.all_wormholes -= src
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/effect/portal/wormhole/teleport(atom/movable/M)
 	if(iseffect(M))	//sparks don't teleport
 		return
@@ -68,8 +74,13 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 			return
 
 	if(ismovableatom(M))
+<<<<<<< HEAD
 		if(GLOB.all_wormholes.len)
 			var/obj/effect/portal/wormhole/P = pick(GLOB.all_wormholes)
+=======
+		if(GLOB.portals.len)
+			var/obj/effect/portal/P = pick(GLOB.portals)
+>>>>>>> Updated this old code to fork
 			if(P && isturf(P.loc))
 				hard_target = P.loc
 		if(!hard_target)

@@ -1,6 +1,10 @@
 /obj/item/wallframe
 	icon = 'icons/obj/wallframe.dmi'
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT*2)
+=======
+	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT*2)
+>>>>>>> Updated this old code to fork
 	flags_1 = CONDUCT_1
 	item_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -66,8 +70,13 @@
 		if(iswallturf(T))
 			T.attackby(src, user, params)
 
+<<<<<<< HEAD
 	var/metal_amt = round(materials[/datum/material/iron]/MINERAL_MATERIAL_AMOUNT) //Replace this shit later
 	var/glass_amt = round(materials[/datum/material/glass]/MINERAL_MATERIAL_AMOUNT) //Replace this shit later
+=======
+	var/metal_amt = round(materials[MAT_METAL]/MINERAL_MATERIAL_AMOUNT)
+	var/glass_amt = round(materials[MAT_GLASS]/MINERAL_MATERIAL_AMOUNT)
+>>>>>>> Updated this old code to fork
 
 	if(W.tool_behaviour == TOOL_WRENCH && (metal_amt || glass_amt))
 		to_chat(user, "<span class='notice'>You dismantle [src].</span>")
@@ -119,5 +128,10 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_SMALL
+<<<<<<< HEAD
 	materials = list(/datum/material/iron=50, /datum/material/glass=50)
 	grind_results = list(/datum/reagent/iron = 10, /datum/reagent/silicon = 10)
+=======
+	materials = list(MAT_METAL=50, MAT_GLASS=50)
+	grind_results = list("iron" = 10, "silicon" = 10)
+>>>>>>> Updated this old code to fork

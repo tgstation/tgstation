@@ -77,7 +77,11 @@
 	item_color = "clown"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes/clown
 	var/datum/component/waddle
+<<<<<<< HEAD
 	var/enabled_waddle = TRUE
+=======
+	var/enabled_waddle = FALSE
+>>>>>>> Updated this old code to fork
 
 /obj/item/clothing/shoes/clown_shoes/Initialize()
 	. = ..()
@@ -85,23 +89,38 @@
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
 	. = ..()
+<<<<<<< HEAD
 	if(slot == SLOT_SHOES)
 		if(enabled_waddle)
 			waddle = user.AddComponent(/datum/component/waddling)
 		if(user.mind && user.mind.assigned_role == "Clown")
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "clownshoes", /datum/mood_event/clownshoes)
+=======
+	if(slot == SLOT_SHOES && enabled_waddle)
+		waddle = user.AddComponent(/datum/component/waddling)
+	if(user.mind && user.mind.assigned_role == "Clown")
+		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "noshoes")
+>>>>>>> Updated this old code to fork
 
 /obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
 	. = ..()
 	QDEL_NULL(waddle)
 	if(user.mind && user.mind.assigned_role == "Clown")
+<<<<<<< HEAD
 		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "clownshoes")
+=======
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "noshoes", /datum/mood_event/noshoes)
+>>>>>>> Updated this old code to fork
 
 /obj/item/clothing/shoes/clown_shoes/CtrlClick(mob/living/user)
 	if(!isliving(user))
 		return
 	if(user.get_active_held_item() != src)
+<<<<<<< HEAD
 		to_chat(user, "<span class='warning'>You must hold the [src] in your hand to do this!</span>")
+=======
+		to_chat(user, "You must hold the [src] in your hand to do this.")
+>>>>>>> Updated this old code to fork
 		return
 	if (!enabled_waddle)
 		to_chat(user, "<span class='notice'>You switch off the waddle dampeners!</span>")
@@ -182,7 +201,11 @@
 
 /obj/item/clothing/shoes/cult/alt/ghost/Initialize()
 	. = ..()
+<<<<<<< HEAD
 	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
+=======
+	add_trait(TRAIT_NODROP, CULT_TRAIT)
+>>>>>>> Updated this old code to fork
 
 /obj/item/clothing/shoes/cyborg
 	name = "cyborg boots"
@@ -225,17 +248,28 @@
 	var/jumpspeed = 3
 	var/recharging_rate = 60 //default 6 seconds between each dash
 	var/recharging_time = 0 //time until next dash
+<<<<<<< HEAD
+=======
+	var/jumping = FALSE //are we mid-jump?
+>>>>>>> Updated this old code to fork
 
 /obj/item/clothing/shoes/bhop/ui_action_click(mob/user, action)
 	if(!isliving(user))
 		return
 
+<<<<<<< HEAD
+=======
+	if(jumping)
+		return
+
+>>>>>>> Updated this old code to fork
 	if(recharging_time > world.time)
 		to_chat(user, "<span class='warning'>The boot's internal propulsion needs to recharge still!</span>")
 		return
 
 	var/atom/target = get_edge_target_turf(user, user.dir) //gets the user's direction
 
+<<<<<<< HEAD
 	if (user.throw_at(target, jumpdistance, jumpspeed, spin = FALSE, diagonals_first = TRUE))
 		playsound(src, 'sound/effects/stealthoff.ogg', 50, 1, 1)
 		user.visible_message("<span class='warning'>[usr] dashes forward into the air!</span>")
@@ -243,6 +277,19 @@
 	else
 		to_chat(user, "<span class='warning'>Something prevents you from dashing forward!</span>")
 
+=======
+	if (user.throw_at(target, jumpdistance, jumpspeed, spin = FALSE, diagonals_first = TRUE, callback = CALLBACK(src, .proc/hop_end)))
+		jumping = TRUE
+		playsound(src, 'sound/effects/stealthoff.ogg', 50, 1, 1)
+		user.visible_message("<span class='warning'>[usr] dashes forward into the air!</span>")
+	else
+		to_chat(user, "<span class='warning'>Something prevents you from dashing forward!</span>")
+
+/obj/item/clothing/shoes/bhop/proc/hop_end()
+	jumping = FALSE
+	recharging_time = world.time + recharging_rate
+
+>>>>>>> Updated this old code to fork
 /obj/item/clothing/shoes/singery
 	name = "yellow performer's boots"
 	desc = "These boots were made for dancing."
@@ -329,6 +376,7 @@
 		set_light(0)
 		lightCycle = 0
 		active = FALSE
+<<<<<<< HEAD
 
 /obj/item/clothing/shoes/russian
 	name = "russian boots"
@@ -418,3 +466,5 @@
 	loot = list(
 		/obj/item/clothing/shoes/cowboy/lizard = 7,
 		/obj/item/clothing/shoes/cowboy/lizard/masterwork = 1)
+=======
+>>>>>>> Updated this old code to fork

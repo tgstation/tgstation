@@ -12,7 +12,11 @@
 
 /obj/structure/spirit_board/examine()
 	desc = "[initial(desc)] The planchette is sitting at \"[planchette]\"."
+<<<<<<< HEAD
 	. = ..()
+=======
+	..()
+>>>>>>> Updated this old code to fork
 
 /obj/structure/spirit_board/attack_hand(mob/user)
 	. = ..()
@@ -76,4 +80,8 @@
 		to_chat(M, "<span class='warning'>There aren't enough people to use the [src.name]!</span>")
 		return 0
 
+<<<<<<< HEAD
 	return 1
+=======
+	return 1
+>>>>>>> Updated this old code to fork

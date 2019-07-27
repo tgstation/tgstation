@@ -15,7 +15,11 @@
 	w_class = WEIGHT_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 3
+<<<<<<< HEAD
 	materials = list(/datum/material/iron = 7500, /datum/material/glass = 100)
+=======
+	materials = list(MAT_METAL = 7500, MAT_GLASS = 100)
+>>>>>>> Updated this old code to fork
 	var/open = TRUE
 	var/locked = FALSE
 	var/list/occupants = list()
@@ -43,6 +47,7 @@
 	..()
 
 /obj/item/pet_carrier/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(occupants.len)
 		for(var/V in occupants)
@@ -54,6 +59,19 @@
 		. += "<span class='notice'>Activate it in your hand to [open ? "close" : "open"] its door.</span>"
 		if(!open)
 			. += "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"] its door.</span>"
+=======
+	..()
+	if(occupants.len)
+		for(var/V in occupants)
+			var/mob/living/L = V
+			to_chat(user, "<span class='notice'>It has [L] inside.</span>")
+	else
+		to_chat(user, "<span class='notice'>It has nothing inside.</span>")
+	if(user.canUseTopic(src))
+		to_chat(user, "<span class='notice'>Activate it in your hand to [open ? "close" : "open"] its door.</span>")
+		if(!open)
+			to_chat(user, "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"] its door.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/item/pet_carrier/attack_self(mob/living/user)
 	if(open)

@@ -50,7 +50,11 @@
 	/obj/item/reagent_containers/food/snacks/grown/wheat))
 
 /obj/item/grown/log/attackby(obj/item/W, mob/user, params)
+<<<<<<< HEAD
 	if(W.is_sharp())
+=======
+	if(W.sharpness)
+>>>>>>> Updated this old code to fork
 		user.show_message("<span class='notice'>You make [plank_name] out of \the [src]!</span>", 1)
 		var/seed_modifier = 0
 		if(seed)
@@ -75,7 +79,11 @@
 			qdel(src)
 			return
 		else
+<<<<<<< HEAD
 			to_chat(usr, "<span class='warning'>You must dry this first!</span>")
+=======
+			to_chat(usr, "<span class ='warning'>You must dry this first!</span>")
+>>>>>>> Updated this old code to fork
 	else
 		return ..()
 
@@ -98,6 +106,7 @@
 /obj/item/grown/log/steel/CheckAccepted(obj/item/I)
 	return FALSE
 
+<<<<<<< HEAD
 /obj/item/seeds/bamboo
 	name = "pack of bamboo seeds"
 	desc = "Plant known for their flexible and resistant logs."
@@ -141,6 +150,8 @@
 	. = ..()
 	AddComponent(/datum/component/caltrop, 20, 30, 100, CALTROP_BYPASS_SHOES)
 
+=======
+>>>>>>> Updated this old code to fork
 /////////BONFIRES//////////
 
 /obj/structure/bonfire
@@ -180,14 +191,22 @@
 				R.use(1)
 				can_buckle = TRUE
 				buckle_requires_restraints = TRUE
+<<<<<<< HEAD
 				to_chat(user, "<span class='italics'>You add a rod to \the [src].</span>")
+=======
+				to_chat(user, "<span class='italics'>You add a rod to \the [src].")
+>>>>>>> Updated this old code to fork
 				var/mutable_appearance/rod_underlay = mutable_appearance('icons/obj/hydroponics/equipment.dmi', "bonfire_rod")
 				rod_underlay.pixel_y = 16
 				underlays += rod_underlay
 			if("Grill")
 				R.use(1)
 				grill = TRUE
+<<<<<<< HEAD
 				to_chat(user, "<span class='italics'>You add a grill to \the [src].</span>")
+=======
+				to_chat(user, "<span class='italics'>You add a grill to \the [src].")
+>>>>>>> Updated this old code to fork
 				add_overlay("bonfire_grill")
 			else
 				return ..()
@@ -230,7 +249,11 @@
 		var/turf/open/O = loc
 		if(O.air)
 			var/loc_gases = O.air.gases
+<<<<<<< HEAD
 			if(loc_gases[/datum/gas/oxygen][MOLES] >= 5)
+=======
+			if(loc_gases[/datum/gas/oxygen][MOLES] > 13)
+>>>>>>> Updated this old code to fork
 				return TRUE
 	return FALSE
 

@@ -6,8 +6,16 @@
 	return FALSE
 
 //aliens are immune to stamina damage.
+<<<<<<< HEAD
 /mob/living/carbon/alien/adjustStaminaLoss(amount, updating_health = 1, forced = FALSE)
 	return
 
 /mob/living/carbon/alien/setStaminaLoss(amount, updating_health = 1)
 	return
+=======
+/mob/living/carbon/alien/adjustStaminaLoss(amount, updating_stamina = 1)
+	return
+
+/mob/living/carbon/alien/setStaminaLoss(amount, updating_stamina = 1)
+	return
+>>>>>>> Updated this old code to fork

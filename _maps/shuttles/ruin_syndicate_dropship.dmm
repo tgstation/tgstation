@@ -36,9 +36,17 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/caravan/syndicate3)
 "cB" = (
@@ -84,12 +92,19 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable,
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
 /obj/item/wrench,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/caravan/syndicate3)
 "hF" = (
@@ -97,6 +112,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/machinery/power/apc/syndicate{
 	dir = 8;
 	name = "Syndicate Drop Ship APC";
@@ -104,6 +120,17 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/syndicate{
+	dir = 8;
+	name = "Syndicate Drop Ship APC";
+	pixel_x = -24
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/pod/dark,
 /area/shuttle/caravan/syndicate3)
 "ka" = (
@@ -380,6 +407,10 @@
 "Ij" = (
 /obj/machinery/turretid{
 	ailock = 1;
+<<<<<<< HEAD
+=======
+	control_area = null;
+>>>>>>> Updated this old code to fork
 	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
 	icon_state = "control_kill";
 	lethal = 1;
@@ -469,6 +500,12 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/item/stack/sheet/metal/twenty,
 /obj/item/stack/sheet/glass{
 	amount = 10
@@ -481,16 +518,33 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 20
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/caravan/syndicate3)
 "PL" = (
 /obj/machinery/porta_turret/syndicate/energy,
+=======
+/turf/open/floor/plating,
+/area/shuttle/caravan/syndicate3)
+"PL" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 2;
+	icon_state = "standard_lethal";
+	mode = 1
+	},
+>>>>>>> Updated this old code to fork
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/caravan/syndicate3)
 "Rj" = (
 /obj/machinery/porta_turret/syndicate/energy{
+<<<<<<< HEAD
 	dir = 1
+=======
+	dir = 1;
+	icon_state = "standard_lethal";
+	mode = 1
+>>>>>>> Updated this old code to fork
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/caravan/syndicate3)
@@ -526,6 +580,12 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/syndicate3)
 "US" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -533,7 +593,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/syndicate3)
 "Vf" = (

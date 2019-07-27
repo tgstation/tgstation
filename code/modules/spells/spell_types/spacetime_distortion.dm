@@ -10,7 +10,10 @@
 	sound = 'sound/effects/magic.ogg'
 	cooldown_min = 300
 	level_max = 0
+<<<<<<< HEAD
 	action_icon_state = "spacetime"
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/effect/proc_holder/spell/spacetime_dist/can_cast(mob/user = usr)
 	if(ready)
@@ -87,7 +90,11 @@
 /obj/effect/cross_action/spacetime_dist/proc/walk_link(atom/movable/AM)
 	if(ismob(AM))
 		var/mob/M = AM
+<<<<<<< HEAD
 		if(M.anti_magic_check(chargecost = 0))
+=======
+		if(M.anti_magic_check(major = FALSE))
+>>>>>>> Updated this old code to fork
 			return
 	if(linked_dist && walks_left > 0)
 		flick("purplesparkles", src)

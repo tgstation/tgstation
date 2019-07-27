@@ -28,7 +28,11 @@
 	. = ..()
 	START_PROCESSING(SSprocessing, src)
 	GLOB.poi_list += src
+<<<<<<< HEAD
 	RegisterSignal(src, COMSIG_MOVABLE_POST_THROW, .proc/move_gracefully)
+=======
+	AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_POST_THROW = CALLBACK(src, .proc/move_gracefully)))
+>>>>>>> Updated this old code to fork
 
 /obj/item/his_grace/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
@@ -51,6 +55,7 @@
 	return
 
 /obj/item/his_grace/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(awakened)
 		switch(bloodthirst)
@@ -68,6 +73,25 @@
 				. += "<span class='his_grace bold'>[src] is shaking violently and staring directly at you.</span>"
 	else
 		. += "<span class='his_grace'>[src] is latched closed.</span>"
+=======
+	..()
+	if(awakened)
+		switch(bloodthirst)
+			if(HIS_GRACE_SATIATED to HIS_GRACE_PECKISH)
+				to_chat(user, "<span class='his_grace'>[src] isn't very hungry. Not yet.</span>")
+			if(HIS_GRACE_PECKISH to HIS_GRACE_HUNGRY)
+				to_chat(user, "<span class='his_grace'>[src] would like a snack.</span>")
+			if(HIS_GRACE_HUNGRY to HIS_GRACE_FAMISHED)
+				to_chat(user, "<span class='his_grace'>[src] is quite hungry now.</span>")
+			if(HIS_GRACE_FAMISHED to HIS_GRACE_STARVING)
+				to_chat(user, "<span class='his_grace'>[src] is openly salivating at the sight of you. Be careful.</span>")
+			if(HIS_GRACE_STARVING to HIS_GRACE_CONSUME_OWNER)
+				to_chat(user, "<span class='his_grace bold'>You walk a fine line. [src] is very close to devouring you.</span>")
+			if(HIS_GRACE_CONSUME_OWNER to HIS_GRACE_FALL_ASLEEP)
+				to_chat(user, "<span class='his_grace bold'>[src] is shaking violently and staring directly at you.</span>")
+	else
+		to_chat(user, "<span class='his_grace'>[src] is latched closed.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/item/his_grace/relaymove(mob/living/user) //Allows changelings, etc. to climb out of Him after they revive, provided He isn't active
 	if(!awakened)
@@ -90,7 +114,11 @@
 				do_attack_animation(master, null, src)
 				master.emote("scream")
 				master.remove_status_effect(STATUS_EFFECT_HISGRACE)
+<<<<<<< HEAD
 				REMOVE_TRAIT(src, TRAIT_NODROP, HIS_GRACE_TRAIT)
+=======
+				remove_trait(TRAIT_NODROP, HIS_GRACE_TRAIT)
+>>>>>>> Updated this old code to fork
 				master.Paralyze(60)
 				master.adjustBruteLoss(master.maxHealth)
 				playsound(master, 'sound/effects/splat.ogg', 100, 0)
@@ -202,20 +230,32 @@
 	update_stats()
 
 /obj/item/his_grace/proc/update_stats()
+<<<<<<< HEAD
 	REMOVE_TRAIT(src, TRAIT_NODROP, HIS_GRACE_TRAIT)
+=======
+	remove_trait(TRAIT_NODROP, HIS_GRACE_TRAIT)
+>>>>>>> Updated this old code to fork
 	var/mob/living/master = get_atom_on_turf(src, /mob/living)
 	switch(bloodthirst)
 		if(HIS_GRACE_CONSUME_OWNER to HIS_GRACE_FALL_ASLEEP)
 			if(HIS_GRACE_CONSUME_OWNER > prev_bloodthirst)
 				master.visible_message("<span class='userdanger'>[src] enters a frenzy!</span>")
 		if(HIS_GRACE_STARVING to HIS_GRACE_CONSUME_OWNER)
+<<<<<<< HEAD
 			ADD_TRAIT(src, TRAIT_NODROP, HIS_GRACE_TRAIT)
+=======
+			add_trait(TRAIT_NODROP, HIS_GRACE_TRAIT)
+>>>>>>> Updated this old code to fork
 			if(HIS_GRACE_STARVING > prev_bloodthirst)
 				master.visible_message("<span class='boldwarning'>[src] is starving!</span>", "<span class='his_grace big'>[src]'s bloodlust overcomes you. [src] must be fed, or you will become His meal.\
 				[force_bonus < 15 ? " And still, His power grows.":""]</span>")
 				force_bonus = max(force_bonus, 15)
 		if(HIS_GRACE_FAMISHED to HIS_GRACE_STARVING)
+<<<<<<< HEAD
 			ADD_TRAIT(src, TRAIT_NODROP, HIS_GRACE_TRAIT)
+=======
+			add_trait(TRAIT_NODROP, HIS_GRACE_TRAIT)
+>>>>>>> Updated this old code to fork
 			if(HIS_GRACE_FAMISHED > prev_bloodthirst)
 				master.visible_message("<span class='warning'>[src] is very hungry!</span>", "<span class='his_grace big'>Spines sink into your hand. [src] must feed immediately.\
 				[force_bonus < 10 ? " His power grows.":""]</span>")

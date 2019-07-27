@@ -18,6 +18,7 @@
 
 /datum/surgery_step/bionecrosis
 	name = "start bionecrosis"
+<<<<<<< HEAD
 	implements = list(/obj/item/reagent_containers/syringe = 100, /obj/item/pen = 30)
 	time = 50
 	chems_needed = list(/datum/reagent/toxin/zombiepowder, /datum/reagent/medicine/rezadone)
@@ -32,6 +33,18 @@
 	display_results(user, target, "<span class='notice'>You succeed in growing a romerol tumor on [target]'s brain.</span>",
 		"[user] successfully grows a romerol tumor on [target]'s brain!",
 		"[user] completes the surgery on [target]'s brain.")
+=======
+	implements = list(/obj/item/hemostat = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
+	time = 50
+	chems_needed = list("zombiepowder", "rezadone")
+	require_all_chems = FALSE
+
+/datum/surgery_step/bionecrosis/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	user.visible_message("[user] begins to stimulate [target]'s brain.", "<span class='notice'>You begin to stimulate [target]'s brain...</span>")
+
+/datum/surgery_step/bionecrosis/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	user.visible_message("[user] successfully grows a necrotic tumor on [target]'s brain!", "<span class='notice'>You succeed in growing a necrotic tumor on [target]'s brain.</span>")
+>>>>>>> Updated this old code to fork
 	if(!target.getorganslot(ORGAN_SLOT_ZOMBIE))
 		var/obj/item/organ/zombie_infection/ZI = new()
 		ZI.Insert(target)

@@ -70,7 +70,10 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define ishumanbasic(A) (is_species(A, /datum/species/human))
 #define iscatperson(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/felinid) )
 #define isethereal(A) (is_species(A, /datum/species/ethereal))
+<<<<<<< HEAD
 #define isvampire(A) (is_species(A,/datum/species/vampire))
+=======
+>>>>>>> Updated this old code to fork
 
 //more carbon mobs
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
@@ -113,8 +116,11 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define ismouse(A) (istype(A, /mob/living/simple_animal/mouse))
 
+<<<<<<< HEAD
 #define iscow(A) (istype(A, /mob/living/simple_animal/cow))
 
+=======
+>>>>>>> Updated this old code to fork
 #define isslime(A) (istype(A, /mob/living/simple_animal/slime))
 
 #define isdrone(A) (istype(A, /mob/living/simple_animal/drone))
@@ -217,10 +223,13 @@ GLOBAL_LIST_INIT(heavyfootmob, typecacheof(list(
 
 #define isorgan(A) (istype(A, /obj/item/organ))
 
+<<<<<<< HEAD
 #define isclothing(A) (istype(A, /obj/item/clothing))
 
 #define iscash(A) (istype(A, /obj/item/coin) || istype(A, /obj/item/stack/spacecash) || istype(A, /obj/item/holochip))
 
+=======
+>>>>>>> Updated this old code to fork
 GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
 	/obj/item/pen,
 	/obj/item/screwdriver,
@@ -231,10 +240,13 @@ GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
 
 #define isbodypart(A) (istype(A, /obj/item/bodypart))
 
+<<<<<<< HEAD
 #define isprojectile(A) (istype(A, /obj/item/projectile))
 
 #define isgun(A) (istype(A, /obj/item/gun))
 
+=======
+>>>>>>> Updated this old code to fork
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/assembly))
 
@@ -258,4 +270,8 @@ GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 
 #define isblobmonster(O) (istype(O, /mob/living/simple_animal/hostile/blob))
 
+<<<<<<< HEAD
 #define isshuttleturf(T) (length(T.baseturfs) && (/turf/baseturf_skipover/shuttle in T.baseturfs))
+=======
+#define isshuttleturf(T) (length(T.baseturfs) && (/turf/baseturf_skipover/shuttle in T.baseturfs))
+>>>>>>> Updated this old code to fork

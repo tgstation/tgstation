@@ -51,9 +51,12 @@
 /obj/machinery/atmospherics/pipe/return_air()
 	return parent.air
 
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/return_analyzable_air()
 	return parent.air
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/remove_air(amount)
 	return parent.air.remove(amount)
 
@@ -65,6 +68,12 @@
 	else
 		return ..()
 
+<<<<<<< HEAD
+=======
+/obj/machinery/atmospherics/pipe/analyzer_act(mob/living/user, obj/item/I)
+	atmosanalyzer_scan(parent.air, user, src)
+
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/returnPipenet()
 	return parent
 

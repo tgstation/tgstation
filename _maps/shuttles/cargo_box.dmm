@@ -25,6 +25,10 @@
 /area/shuttle/supply)
 "h" = (
 /obj/machinery/button/door{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	id = "QMLoaddoor2";
 	name = "Loading Doors";
 	pixel_x = 24;
@@ -46,7 +50,14 @@
 	name = "Supply Shuttle Airlock";
 	req_access_txt = "31"
 	},
+<<<<<<< HEAD
 /obj/docking_port/mobile/supply,
+=======
+/obj/docking_port/mobile/supply{
+	dwidth = 5;
+	width = 12
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "j" = (

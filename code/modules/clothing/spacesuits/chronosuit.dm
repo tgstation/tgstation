@@ -98,7 +98,11 @@
 		user.anchored = FALSE
 		teleporting = 0
 		for(var/obj/item/I in user.held_items)
+<<<<<<< HEAD
 			REMOVE_TRAIT(I, TRAIT_NODROP, CHRONOSUIT_TRAIT)
+=======
+			I.remove_trait(TRAIT_NODROP, CHRONOSUIT_TRAIT)
+>>>>>>> Updated this old code to fork
 		if(camera)
 			camera.remove_target_ui()
 			camera.forceMove(user)
@@ -133,7 +137,11 @@
 		user.ExtinguishMob()
 
 		for(var/obj/item/I in user.held_items)
+<<<<<<< HEAD
 			ADD_TRAIT(I, TRAIT_NODROP, CHRONOSUIT_TRAIT)
+=======
+			I.add_trait(TRAIT_NODROP, CHRONOSUIT_TRAIT)
+>>>>>>> Updated this old code to fork
 		user.animate_movement = NO_STEPS
 		user.changeNext_move(8 + phase_in_ds)
 		user.notransform = 1
@@ -192,9 +200,15 @@
 			if(user.head && istype(user.head, /obj/item/clothing/head/helmet/space/chronos))
 				to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Mounting /dev/helm")
 				helmet = user.head
+<<<<<<< HEAD
 				ADD_TRAIT(helmet, TRAIT_NODROP, CHRONOSUIT_TRAIT)
 				helmet.suit = src
 				ADD_TRAIT(src, TRAIT_NODROP, CHRONOSUIT_TRAIT)
+=======
+				helmet.add_trait(TRAIT_NODROP, CHRONOSUIT_TRAIT)
+				helmet.suit = src
+				add_trait(TRAIT_NODROP, CHRONOSUIT_TRAIT)
+>>>>>>> Updated this old code to fork
 				to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Starting brainwave scanner")
 				to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Starting ui display driver")
 				to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Initializing chronowalk4-view")
@@ -213,7 +227,11 @@
 		activating = 1
 		var/mob/living/carbon/human/user = src.loc
 		var/hard_landing = teleporting && force
+<<<<<<< HEAD
 		REMOVE_TRAIT(src, TRAIT_NODROP, CHRONOSUIT_TRAIT)
+=======
+		remove_trait(TRAIT_NODROP, CHRONOSUIT_TRAIT)
+>>>>>>> Updated this old code to fork
 		cooldown = world.time + cooldowntime * 1.5
 		activated = 0
 		activating = 0
@@ -234,7 +252,11 @@
 						to_chat(user, "\[ <span style='color: #ff5500;'>ok</span> \] Unmounting /dev/helmet")
 					to_chat(user, "logout")
 		if(helmet)
+<<<<<<< HEAD
 			REMOVE_TRAIT(helmet, TRAIT_NODROP, CHRONOSUIT_TRAIT)
+=======
+			helmet.remove_trait(TRAIT_NODROP, CHRONOSUIT_TRAIT)
+>>>>>>> Updated this old code to fork
 			helmet.suit = null
 			helmet = null
 		if(camera)

@@ -26,7 +26,11 @@
 
 /obj/item/organ/alien/prepare_eat()
 	var/obj/S = ..()
+<<<<<<< HEAD
 	S.reagents.add_reagent(/datum/reagent/toxin/acid, 10)
+=======
+	S.reagents.add_reagent("sacid", 10)
+>>>>>>> Updated this old code to fork
 	return S
 
 
@@ -45,7 +49,11 @@
 
 /obj/item/organ/alien/plasmavessel/prepare_eat()
 	var/obj/S = ..()
+<<<<<<< HEAD
 	S.reagents.add_reagent(/datum/reagent/toxin/plasma, storedPlasma/10)
+=======
+	S.reagents.add_reagent("plasma", storedPlasma/10)
+>>>>>>> Updated this old code to fork
 	return S
 
 /obj/item/organ/alien/plasmavessel/large

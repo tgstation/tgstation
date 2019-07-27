@@ -26,7 +26,13 @@
 /area/lavaland/surface/outdoors)
 "af" = (
 /obj/structure/necropolis_gate/legion_gate,
+<<<<<<< HEAD
 /obj/structure/necropolis_arch,
+=======
+/obj/structure/necropolis_arch{
+	pixel_y = -40
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/stone_tile/slab,
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
@@ -76,6 +82,10 @@
 /area/lavaland/surface/outdoors)
 "ao" = (
 /obj/machinery/computer/shuttle/labor/one_way{
+<<<<<<< HEAD
+=======
+	icon_state = "computer";
+>>>>>>> Updated this old code to fork
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -170,6 +180,10 @@
 "aE" = (
 /obj/item/radio/intercom{
 	desc = "Talk through this. It looks like it has been modified to not broadcast.";
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	name = "Prison Intercom (General)";
 	pixel_y = 24;
 	prison_radio = 1
@@ -281,12 +295,20 @@
 	dir = 4
 	},
 /obj/machinery/computer/mech_bay_power_console{
+<<<<<<< HEAD
+=======
+	icon_state = "computer";
+>>>>>>> Updated this old code to fork
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "aW" = (
 /obj/machinery/conveyor{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	id = "gulag"
 	},
 /turf/open/floor/plating,
@@ -329,9 +351,12 @@
 	c_tag = "Labor Camp Central";
 	network = list("labor")
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 6
 	},
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "bc" = (
@@ -341,12 +366,24 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "bd" = (
+<<<<<<< HEAD
 /obj/machinery/mineral/processing_unit_console,
+=======
+/obj/machinery/mineral/processing_unit_console{
+	dir = 2;
+	machinedir = 4
+	},
+>>>>>>> Updated this old code to fork
 /turf/closed/wall,
 /area/mine/laborcamp)
 "be" = (
 /obj/machinery/mineral/processing_unit{
+<<<<<<< HEAD
 	dir = 1
+=======
+	dir = 1;
+	output_dir = 2
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating,
 /area/mine/laborcamp)
@@ -358,6 +395,13 @@
 /turf/open/floor/plating,
 /area/mine/eva)
 "bh" = (
+<<<<<<< HEAD
+=======
+/obj/machinery/computer/secure_data{
+	icon_state = "computer";
+	dir = 1
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "bi" = (
@@ -482,8 +526,15 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/mine/eva)
 "bw" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+=======
+/obj/machinery/computer/security/labor{
+	icon_state = "computer";
+	dir = 1
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "bx" = (
@@ -496,6 +547,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "by" = (
+<<<<<<< HEAD
 /obj/structure/cable,
 /obj/machinery/power/apc{
 	dir = 1;
@@ -513,6 +565,43 @@
 	},
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
+=======
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"bz" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"bA" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Labor Camp Backroom";
+	req_access_txt = "2"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"bB" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Labor Camp APC";
+	pixel_y = 24
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+>>>>>>> Updated this old code to fork
 "bC" = (
 /obj/machinery/airalarm{
 	pixel_y = 23
@@ -541,6 +630,12 @@
 /area/mine/production)
 "bE" = (
 /obj/structure/reagent_dispensers/watertank,
+<<<<<<< HEAD
+=======
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/purple,
 /turf/open/floor/plasteel,
 /area/mine/production)
@@ -554,6 +649,12 @@
 /obj/item/stack/packageWrap,
 /obj/item/stack/packageWrap,
 /obj/item/hand_labeler,
+<<<<<<< HEAD
+=======
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
@@ -589,6 +690,7 @@
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "bL" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/door/airlock/highsecurity{
@@ -601,6 +703,27 @@
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
+=======
+/obj/machinery/door/airlock/security/glass{
+	name = "Labor Camp Monitoring";
+	req_access_txt = "2"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"bM" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Labor Camp Maintenance";
+	req_access_txt = "2"
+	},
+/obj/structure/cable{
+	icon_state = "1-10"
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp)
+>>>>>>> Updated this old code to fork
 "bN" = (
 /obj/structure/sign/warning/docking,
 /obj/effect/spawner/structure/window/reinforced,
@@ -617,6 +740,7 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "bQ" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
@@ -624,16 +748,34 @@
 	dir = 1
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/production)
 "bR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 1
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
@@ -641,6 +783,14 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "bS" = (
+=======
+/turf/open/floor/plasteel,
+/area/mine/production)
+"bS" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mining Station EVA";
 	req_access_txt = "54"
@@ -648,6 +798,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
@@ -658,24 +809,46 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+=======
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"bT" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "bU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 9
+=======
+/obj/structure/cable{
+	icon_state = "2-8"
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel,
 /area/mine/eva)
@@ -720,6 +893,7 @@
 /turf/closed/wall,
 /area/mine/laborcamp/security)
 "cb" = (
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -735,6 +909,19 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
+=======
+/obj/structure/table,
+/obj/machinery/recharger,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"cc" = (
+/obj/structure/chair/office/dark,
+/obj/structure/cable{
+	icon_state = "1-4"
+>>>>>>> Updated this old code to fork
 	},
 /mob/living/simple_animal/bot/secbot/beepsky{
 	desc = "Powered by the tears and sweat of laborers.";
@@ -743,6 +930,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "cd" = (
+<<<<<<< HEAD
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Labor Camp Security APC";
@@ -777,6 +965,58 @@
 /area/mine/laborcamp/security)
 "ch" = (
 /obj/structure/cable,
+=======
+/obj/structure/table,
+/obj/item/paper_bin{
+	pixel_x = 1;
+	pixel_y = 9
+	},
+/obj/item/pen,
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Labor Camp Security APC";
+	pixel_x = 24
+	},
+/obj/machinery/camera{
+	c_tag = "Labor Camp Monitoring";
+	network = list("labor")
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"ce" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "5-6"
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp)
+"cf" = (
+/obj/machinery/power/terminal,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp)
+"cg" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp)
+"ch" = (
+/turf/open/floor/plating,
+/area/mine/laborcamp)
+"ci" = (
+/obj/machinery/computer/prisoner{
+	icon_state = "computer";
+	dir = 1
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "cj" = (
@@ -806,9 +1046,18 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "cm" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/production)
 "cn" = (
@@ -819,15 +1068,26 @@
 /area/mine/production)
 "co" = (
 /obj/machinery/power/apc{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	name = "Mining EVA APC";
 	pixel_x = 1;
 	pixel_y = -23
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable,
+>>>>>>> Updated this old code to fork
 /obj/machinery/recharge_station,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "cp" = (
@@ -860,6 +1120,7 @@
 /obj/structure/ore_box,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+<<<<<<< HEAD
 "cB" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -873,6 +1134,35 @@
 /obj/item/pen,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
+=======
+"cz" = (
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/mine/laborcamp)
+"cA" = (
+/obj/machinery/power/smes{
+	charge = 5e+006
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	icon_state = "0-9"
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp)
+"cB" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating,
+/area/mine/laborcamp)
+"cC" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating,
+/area/mine/laborcamp)
+>>>>>>> Updated this old code to fork
 "cD" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -880,11 +1170,18 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "cE" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
+=======
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/production)
 "cF" = (
@@ -895,6 +1192,7 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "cG" = (
+<<<<<<< HEAD
 /obj/machinery/light{
 	dir = 8
 	},
@@ -906,6 +1204,10 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
+=======
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+>>>>>>> Updated this old code to fork
 /area/mine/laborcamp/security)
 "cH" = (
 /obj/effect/turf_decal/tile/purple{
@@ -914,6 +1216,12 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "cI" = (
+<<<<<<< HEAD
+=======
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -957,6 +1265,12 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 30
 	},
+<<<<<<< HEAD
+=======
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 1
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -974,10 +1288,22 @@
 /obj/machinery/power/smes{
 	charge = 5e+006
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "cT" = (
+=======
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plating,
+/area/mine/living_quarters)
+"cT" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -985,12 +1311,21 @@
 /obj/structure/sign/warning/electricshock{
 	pixel_y = 32
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "cU" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "cV" = (
@@ -1004,9 +1339,18 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Mining Station Starboard Wing APC";
+<<<<<<< HEAD
 	pixel_x = -25;
 	pixel_y = 2
 	},
+=======
+	pixel_x = -27;
+	pixel_y = 2
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/light{
 	dir = 8
 	},
@@ -1016,7 +1360,20 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/turf/open/floor/plasteel,
+/area/mine/production)
+"cY" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/production)
 "cZ" = (
@@ -1075,14 +1432,26 @@
 /turf/open/floor/circuit,
 /area/mine/maintenance)
 "dh" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Mining Communications APC";
 	pixel_x = 1;
+<<<<<<< HEAD
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
 /obj/structure/cable,
+=======
+	pixel_y = 25
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/mine/maintenance)
 "di" = (
@@ -1129,13 +1498,20 @@
 /turf/open/floor/plasteel/white,
 /area/mine/living_quarters)
 "dm" = (
+<<<<<<< HEAD
+=======
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/mine/living_quarters)
 "dn" = (
@@ -1157,18 +1533,32 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
+=======
+/obj/structure/cable{
+	icon_state = "0-2"
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "dp" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
 /obj/machinery/meter,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "dq" = (
@@ -1189,7 +1579,10 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/production)
 "du" = (
@@ -1210,6 +1603,7 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "dx" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 5
 	},
@@ -1225,6 +1619,23 @@
 	},
 /obj/structure/cable,
 /obj/machinery/bluespace_beacon,
+=======
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 1
+	},
+/turf/open/floor/circuit,
+/area/mine/maintenance)
+"dy" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/mine/maintenance)
 "dz" = (
@@ -1276,16 +1687,24 @@
 /turf/open/floor/plasteel/white,
 /area/mine/living_quarters)
 "dC" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 5
+=======
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 1
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel/white,
 /area/mine/living_quarters)
 "dD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 10
 	},
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/mine/living_quarters)
 "dE" = (
@@ -1298,6 +1717,7 @@
 /turf/open/floor/plasteel/white,
 /area/mine/living_quarters)
 "dF" = (
+<<<<<<< HEAD
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
@@ -1307,6 +1727,31 @@
 "dH" = (
 /obj/machinery/atmospherics/components/binary/pump/on,
 /obj/structure/cable,
+=======
+/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1
+	},
+/turf/open/floor/plating,
+/area/mine/living_quarters)
+"dG" = (
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating,
+/area/mine/living_quarters)
+"dH" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/components/binary/pump/on,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "dI" = (
@@ -1316,6 +1761,12 @@
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "dJ" = (
+<<<<<<< HEAD
+=======
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -1388,9 +1839,16 @@
 	name = "Mining Station Communications";
 	req_access_txt = "48"
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/maintenance)
 "dQ" = (
@@ -1402,16 +1860,32 @@
 	name = "Infirmary"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/white,
 /area/mine/living_quarters)
 "dS" = (
+=======
+/turf/open/floor/plasteel/white,
+/area/mine/living_quarters)
+"dS" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/door/airlock/maintenance{
 	name = "Mining Station Maintenance";
 	req_access_txt = "48"
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "dT" = (
@@ -1445,6 +1919,10 @@
 /area/mine/production)
 "dY" = (
 /obj/machinery/conveyor{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	id = "mining_internal"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -1463,14 +1941,23 @@
 /area/mine/living_quarters)
 "eb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ec" = (
@@ -1484,7 +1971,11 @@
 	c_tag = "Crew Area Hallway West";
 	network = list("mine")
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
+=======
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ee" = (
@@ -1501,7 +1992,10 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "eg" = (
@@ -1509,9 +2003,17 @@
 	dir = 1;
 	name = "Mining Station Port Wing APC";
 	pixel_x = 1;
+<<<<<<< HEAD
 	pixel_y = 23
 	},
 /obj/structure/cable,
+=======
+	pixel_y = 25
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "eh" = (
@@ -1522,6 +2024,12 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ei" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -1529,7 +2037,10 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ej" = (
@@ -1546,17 +2057,39 @@
 /obj/effect/turf_decal/tile/purple,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+<<<<<<< HEAD
+=======
+"el" = (
+/obj/machinery/door/airlock/mining/glass{
+	name = "Processing Area";
+	req_access_txt = "48"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/production)
+>>>>>>> Updated this old code to fork
 "em" = (
 /obj/machinery/light{
 	dir = 4
 	},
+<<<<<<< HEAD
+=======
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 8
 	},
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/production)
 "en" = (
@@ -1565,39 +2098,73 @@
 /area/mine/production)
 "eo" = (
 /obj/machinery/mineral/processing_unit{
+<<<<<<< HEAD
 	dir = 1
+=======
+	dir = 1;
+	output_dir = 2
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /turf/open/floor/plating,
 /area/mine/production)
+<<<<<<< HEAD
 "eq" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+=======
+"ep" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"eq" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "er" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "es" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "et" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
 	dir = 1
 	},
@@ -1636,16 +2203,87 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/glass{
 	name = "Mining Station Bridge"
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"eu" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"ev" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"ew" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"ex" = (
+/obj/machinery/door/airlock/mining/glass{
+	name = "Mining Station Bridge";
+	req_access_txt = "48"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ey" = (
+<<<<<<< HEAD
+=======
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -1675,16 +2313,58 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/glass{
 	name = "Mining Station Bridge"
+=======
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"ez" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/mine/production)
+"eA" = (
+/obj/machinery/door/airlock/mining/glass{
+	name = "Mining Station Bridge";
+	req_access_txt = "48"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
 "eB" = (
+<<<<<<< HEAD
+=======
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -1692,30 +2372,47 @@
 	dir = 4
 	},
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/production)
 "eC" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/production)
 "eD" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/production)
 "eE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+=======
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+>>>>>>> Updated this old code to fork
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
+<<<<<<< HEAD
 "eH" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -1724,6 +2421,35 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+=======
+"eF" = (
+/obj/machinery/door/airlock/mining/glass{
+	name = "Processing Area";
+	req_access_txt = "48"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/production)
+"eG" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/production)
+"eH" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/production)
 "eI" = (
@@ -1734,9 +2460,12 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 9
 	},
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/production)
 "eJ" = (
@@ -1751,14 +2480,29 @@
 /area/mine/production)
 "eK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+<<<<<<< HEAD
+=======
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "eL" = (
+=======
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"eL" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
@@ -1766,15 +2510,31 @@
 /area/mine/living_quarters)
 "eM" = (
 /obj/machinery/light,
+<<<<<<< HEAD
+=======
+/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "eN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+=======
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "eO" = (
 /obj/machinery/light/small,
+<<<<<<< HEAD
+=======
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
@@ -1787,17 +2547,28 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "eQ" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/door/airlock/glass,
+=======
+/obj/machinery/door/airlock/mining{
+	name = "Mining Station Storage";
+	req_access_txt = "48"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "eR" = (
 /obj/machinery/door/airlock/glass{
 	name = "Break Room"
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "eS" = (
@@ -1805,7 +2576,17 @@
 	dir = 1;
 	pixel_y = -22
 	},
+<<<<<<< HEAD
 /obj/machinery/mineral/equipment_vendor,
+=======
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/production)
 "eT" = (
@@ -1827,6 +2608,22 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
+<<<<<<< HEAD
+=======
+"eV" = (
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/production)
+>>>>>>> Updated this old code to fork
 "eW" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 8
@@ -1868,6 +2665,7 @@
 /turf/open/floor/plating,
 /area/mine/production)
 "fa" = (
+<<<<<<< HEAD
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
@@ -1875,6 +2673,24 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fb" = (
+=======
+/obj/machinery/mineral/equipment_vendor,
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"fb" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -5;
 	pixel_y = 30
@@ -1882,10 +2698,13 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/light{
 	dir = 1
 	},
 /obj/structure/chair,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fc" = (
@@ -1899,9 +2718,18 @@
 /area/mine/living_quarters)
 "fd" = (
 /obj/machinery/camera{
+<<<<<<< HEAD
 	c_tag = "Public Shuttle Lobby";
 	network = list("mine")
 	},
+=======
+	c_tag = "Storage";
+	dir = 2;
+	network = list("mine")
+	},
+/obj/structure/reagent_dispensers/watertank,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
@@ -1909,9 +2737,12 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/table,
 /obj/item/gps/mining,
 /obj/item/gps/mining,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fe" = (
@@ -1926,9 +2757,12 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 6
 	},
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/mine/living_quarters)
 "fg" = (
@@ -1939,33 +2773,46 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
+=======
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fi" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
 	dir = 4
 	},
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fj" = (
@@ -2005,6 +2852,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+<<<<<<< HEAD
+=======
+"fo" = (
+/obj/structure/ore_box,
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+>>>>>>> Updated this old code to fork
 "fp" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -2017,16 +2877,32 @@
 	name = "Station Intercom (General)";
 	pixel_x = 28
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 8
 	},
+=======
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fr" = (
 /obj/structure/table,
+<<<<<<< HEAD
+=======
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/mine/living_quarters)
 "fs" = (
@@ -2040,8 +2916,13 @@
 	pixel_x = 25;
 	specialfunctions = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 1
+=======
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/carpet,
 /area/mine/living_quarters)
@@ -2051,6 +2932,12 @@
 	dir = 4;
 	network = list("mine")
 	},
+<<<<<<< HEAD
+=======
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -2062,8 +2949,11 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fv" = (
@@ -2075,6 +2965,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+<<<<<<< HEAD
 "fy" = (
 /obj/structure/table,
 /obj/item/clothing/glasses/meson,
@@ -2086,19 +2977,74 @@
 /area/mine/living_quarters)
 "fB" = (
 /obj/structure/displaycase,
+=======
+"fx" = (
+/obj/structure/ore_box,
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"fy" = (
+/obj/machinery/recharge_station,
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"fz" = (
+/obj/structure/closet/secure_closet/miner,
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"fA" = (
+/obj/structure/closet/secure_closet/miner,
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"fB" = (
+/obj/structure/closet/secure_closet/miner,
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fC" = (
 /obj/structure/chair{
 	dir = 4
 	},
+<<<<<<< HEAD
+=======
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fD" = (
@@ -2118,35 +3064,56 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 5
 	},
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fE" = (
 /obj/structure/chair{
 	dir = 8
 	},
+<<<<<<< HEAD
+=======
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fF" = (
+=======
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"fF" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 8
 	},
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fG" = (
@@ -2166,9 +3133,12 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fI" = (
@@ -2232,8 +3202,13 @@
 	pixel_x = 25;
 	specialfunctions = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 1
+=======
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/carpet,
 /area/mine/living_quarters)
@@ -2242,8 +3217,13 @@
 /obj/machinery/light{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
 	dir = 4
+=======
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
@@ -2255,9 +3235,12 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fP" = (
@@ -2271,8 +3254,13 @@
 	pixel_x = 25;
 	specialfunctions = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 1
+=======
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/carpet,
 /area/mine/living_quarters)
@@ -2294,19 +3282,37 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+<<<<<<< HEAD
 "fV" = (
 /turf/closed/indestructible/riveted/boss/see_through,
 /area/lavaland/surface/outdoors)
 "fW" = (
+=======
+"fU" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"fV" = (
+/turf/closed/indestructible/riveted/boss/see_through,
+/area/lavaland/surface/outdoors)
+"fW" = (
+>>>>>>> Updated this old code to fork
 /obj/structure/necropolis_gate/locked,
 /obj/structure/stone_tile/slab,
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "gd" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
+=======
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/production)
 "gj" = (
@@ -2333,6 +3339,7 @@
 /obj/structure/stone_tile/center,
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
+<<<<<<< HEAD
 "gn" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -2343,6 +3350,8 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+=======
+>>>>>>> Updated this old code to fork
 "go" = (
 /obj/structure/stone_tile/block,
 /turf/open/lava/smooth/lava_land_surface,
@@ -2373,6 +3382,19 @@
 /obj/structure/stone_tile,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+<<<<<<< HEAD
+=======
+"gu" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+>>>>>>> Updated this old code to fork
 "gy" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile{
@@ -2447,6 +3469,7 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+<<<<<<< HEAD
 "gW" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
@@ -2455,6 +3478,11 @@
 /area/mine/living_quarters)
 "gY" = (
 /obj/docking_port/stationary{
+=======
+"gY" = (
+/obj/docking_port/stationary{
+	area_type = /area/lavaland/surface/outdoors;
+>>>>>>> Updated this old code to fork
 	dir = 8;
 	dwidth = 2;
 	height = 5;
@@ -2480,9 +3508,12 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
 "hH" = (
@@ -2505,6 +3536,7 @@
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
+<<<<<<< HEAD
 "hN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -2517,6 +3549,8 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/mine/production)
+=======
+>>>>>>> Updated this old code to fork
 "id" = (
 /obj/structure/stone_tile{
 	dir = 4
@@ -2530,12 +3564,15 @@
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
+<<<<<<< HEAD
 "ip" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+=======
+>>>>>>> Updated this old code to fork
 "ir" = (
 /obj/structure/stone_tile/slab/cracked{
 	dir = 5
@@ -2586,6 +3623,7 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+<<<<<<< HEAD
 "iM" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
@@ -2596,6 +3634,8 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
+=======
+>>>>>>> Updated this old code to fork
 "iX" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
@@ -2613,6 +3653,18 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+<<<<<<< HEAD
+=======
+"iZ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+>>>>>>> Updated this old code to fork
 "ja" = (
 /obj/structure/stone_tile{
 	dir = 8
@@ -2625,6 +3677,19 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+<<<<<<< HEAD
+=======
+"jd" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/production)
+>>>>>>> Updated this old code to fork
 "jg" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile/cracked{
@@ -2685,6 +3750,7 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+<<<<<<< HEAD
 "ju" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -2695,6 +3761,8 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+=======
+>>>>>>> Updated this old code to fork
 "jx" = (
 /obj/structure/stone_tile{
 	dir = 4
@@ -2763,6 +3831,7 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+<<<<<<< HEAD
 "jV" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -2772,6 +3841,8 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
+=======
+>>>>>>> Updated this old code to fork
 "kg" = (
 /obj/structure/fluff/drake_statue,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -2799,6 +3870,7 @@
 /obj/structure/stone_tile,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+<<<<<<< HEAD
 "ku" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -2811,12 +3883,21 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "kv" = (
+=======
+"kv" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ky" = (
@@ -2863,6 +3944,7 @@
 /obj/structure/stone_tile/center/cracked,
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
+<<<<<<< HEAD
 "kI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
@@ -2873,6 +3955,8 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
+=======
+>>>>>>> Updated this old code to fork
 "kJ" = (
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 4
@@ -2898,12 +3982,15 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+<<<<<<< HEAD
 "kO" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+=======
+>>>>>>> Updated this old code to fork
 "kR" = (
 /obj/structure/stone_tile/slab/cracked,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -2946,6 +4033,16 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+<<<<<<< HEAD
+=======
+"lo" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+>>>>>>> Updated this old code to fork
 "lp" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
@@ -3059,6 +4156,7 @@
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
+<<<<<<< HEAD
 "lO" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -3068,6 +4166,8 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
+=======
+>>>>>>> Updated this old code to fork
 "lP" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
@@ -3505,6 +4605,7 @@
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
+<<<<<<< HEAD
 "nI" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -3581,6 +4682,57 @@
 /obj/effect/turf_decal/tile/brown,
 /turf/open/floor/plasteel,
 /area/mine/production)
+=======
+"on" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"ot" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"pa" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"qY" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/production)
+"rE" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/production)
+"rP" = (
+/obj/machinery/atmospherics/pipe/layer_manifold{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"rV" = (
+/obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+>>>>>>> Updated this old code to fork
 "ss" = (
 /obj/machinery/button/door{
 	id = "miningbathroom";
@@ -3592,6 +4744,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
@@ -3617,10 +4770,21 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
+=======
+/turf/open/floor/plasteel/freezer,
+/area/mine/living_quarters)
+"sL" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+>>>>>>> Updated this old code to fork
 "tI" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 8
 	},
@@ -3649,11 +4813,19 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
+=======
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel/freezer,
+/area/mine/living_quarters)
+>>>>>>> Updated this old code to fork
 "vb" = (
 /obj/machinery/door/window/southleft,
 /obj/machinery/shower{
 	pixel_y = 22
 	},
+<<<<<<< HEAD
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
 "vq" = (
@@ -3783,11 +4955,117 @@
 /obj/effect/turf_decal/tile/brown,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+=======
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/freezer,
+/area/mine/living_quarters)
+"vq" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"vZ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"xA" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/production)
+"xT" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
+/obj/effect/turf_decal/tile/purple,
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"yR" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"zu" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/production)
+"zV" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/production)
+"AB" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/production)
+"BD" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/mine/living_quarters)
+"BT" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"Cl" = (
+/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"Eg" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"Ej" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple,
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"El" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/mine/living_quarters)
+>>>>>>> Updated this old code to fork
 "Es" = (
 /obj/machinery/door/window/southright,
 /obj/machinery/shower{
 	pixel_y = 22
 	},
+<<<<<<< HEAD
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
 "EG" = (
@@ -3813,6 +5091,22 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
+=======
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/freezer,
+/area/mine/living_quarters)
+"EG" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+>>>>>>> Updated this old code to fork
 "Fe" = (
 /obj/structure/sink{
 	dir = 8;
@@ -3821,6 +5115,7 @@
 /obj/structure/mirror{
 	pixel_x = -28
 	},
+<<<<<<< HEAD
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
 "FF" = (
@@ -3861,6 +5156,13 @@
 "Hd" = (
 /turf/closed/wall/r_wall,
 /area/mine/laborcamp/security)
+=======
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/freezer,
+/area/mine/living_quarters)
+>>>>>>> Updated this old code to fork
 "Ho" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -3870,6 +5172,7 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/mine/living_quarters)
+<<<<<<< HEAD
 "Hx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -3899,10 +5202,26 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+=======
+"HO" = (
+/obj/machinery/atmospherics/pipe/manifold4w/supply,
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"IG" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+>>>>>>> Updated this old code to fork
 "IK" = (
 /obj/structure/toilet{
 	dir = 8
 	},
+<<<<<<< HEAD
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
 "Kb" = (
@@ -3939,6 +5258,60 @@
 "LL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel,
+=======
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel/freezer,
+/area/mine/living_quarters)
+"Jh" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"Jl" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/mine/living_quarters)
+"JJ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/production)
+"JZ" = (
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Kb" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"LO" = (
+/obj/effect/spawner/structure/window,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+>>>>>>> Updated this old code to fork
 /area/mine/eva)
 "Nj" = (
 /obj/machinery/door/airlock{
@@ -3947,6 +5320,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
@@ -3984,6 +5358,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+=======
+/turf/open/floor/plasteel/freezer,
+/area/mine/living_quarters)
+"OT" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/production)
+>>>>>>> Updated this old code to fork
 "Pt" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -3994,6 +5381,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+<<<<<<< HEAD
 "PL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
 /turf/open/floor/plasteel,
@@ -4058,12 +5446,27 @@
 	name = "goliath"
 	},
 /turf/open/floor/plasteel,
+=======
+"PQ" = (
+/obj/effect/spawner/structure/window,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/mine/living_quarters)
+"RO" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 4;
+	name = "scrubber outlet"
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+>>>>>>> Updated this old code to fork
 /area/mine/living_quarters)
 "Tn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/light/small,
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
@@ -4087,10 +5490,41 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/cable,
+=======
+/turf/open/floor/plasteel/freezer,
+/area/mine/living_quarters)
+"Tp" = (
+/obj/machinery/atmospherics/pipe/layer_manifold{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/mine/production)
+"TN" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 1
+	},
+/turf/closed/wall/r_wall,
+/area/mine/maintenance)
+"Uh" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/mine/production)
 "Uq" = (
 /obj/docking_port/stationary{
+<<<<<<< HEAD
+=======
+	area_type = /area/lavaland/surface/outdoors;
+>>>>>>> Updated this old code to fork
 	dir = 2;
 	dwidth = 11;
 	height = 22;
@@ -4100,6 +5534,7 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+<<<<<<< HEAD
 "UA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
@@ -4125,10 +5560,23 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "UQ" = (
+=======
+"UQ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -4169,6 +5617,33 @@
 	dir = 8;
 	dwidth = 3;
 	height = 10;
+=======
+/turf/open/floor/plasteel,
+/area/mine/production)
+"VD" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/production)
+"VP" = (
+/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"Wp" = (
+/obj/docking_port/stationary{
+	area_type = /area/lavaland/surface/outdoors;
+	dir = 8;
+	dwidth = 3;
+	height = 5;
+>>>>>>> Updated this old code to fork
 	id = "mining_away";
 	name = "lavaland mine";
 	width = 7
@@ -4221,6 +5696,7 @@
 	},
 /obj/machinery/door/airlock/external{
 	glass = 1;
+<<<<<<< HEAD
 	name = "Mining Shuttle Airlock";
 	opacity = 0
 	},
@@ -4255,6 +5731,26 @@
 	network = list("mine")
 	},
 /turf/open/floor/plasteel,
+=======
+	name = "Mining Shuttle Airlock";
+	opacity = 0
+	},
+/turf/open/floor/plasteel,
+/area/mine/production)
+"WO" = (
+/obj/effect/spawner/structure/window,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/mine/living_quarters)
+"YA" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+>>>>>>> Updated this old code to fork
 /area/mine/living_quarters)
 "Zf" = (
 /obj/machinery/door/airlock{
@@ -4264,6 +5760,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
@@ -4275,6 +5772,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+=======
+/turf/open/floor/plasteel/freezer,
+/area/mine/living_quarters)
+>>>>>>> Updated this old code to fork
 
 (1,1,1) = {"
 aa
@@ -8365,10 +9866,17 @@ aj
 aj
 aj
 aj
+<<<<<<< HEAD
 ab
 ab
 ab
 ab
+=======
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -8621,6 +10129,7 @@ aj
 aj
 aj
 aj
+<<<<<<< HEAD
 ab
 ab
 ab
@@ -8629,6 +10138,16 @@ ab
 ab
 ab
 ab
+=======
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -8872,6 +10391,7 @@ aj
 aj
 aj
 aj
+<<<<<<< HEAD
 ab
 ai
 aj
@@ -8887,6 +10407,23 @@ ab
 ab
 ab
 ab
+=======
+ai
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -9126,14 +10663,21 @@ aD
 bZ
 aj
 aj
+<<<<<<< HEAD
 GJ
 aj
 ab
 ab
+=======
+aD
+aj
+ab
+>>>>>>> Updated this old code to fork
 ai
 ai
 aj
 aj
+<<<<<<< HEAD
 ab
 ab
 ab
@@ -9146,6 +10690,21 @@ ab
 ab
 ab
 ab
+=======
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -9385,6 +10944,7 @@ bZ
 aj
 aj
 aj
+<<<<<<< HEAD
 ab
 ab
 ai
@@ -9402,6 +10962,25 @@ ab
 ab
 ab
 ab
+=======
+ai
+ai
+ai
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -9635,6 +11214,7 @@ aq
 bj
 az
 az
+<<<<<<< HEAD
 yr
 Hd
 Hd
@@ -9659,6 +11239,32 @@ ab
 ab
 ab
 ab
+=======
+aq
+ca
+ca
+ca
+aj
+aj
+aj
+ai
+ad
+ai
+ai
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -9889,6 +11495,7 @@ az
 az
 az
 az
+<<<<<<< HEAD
 su
 az
 az
@@ -9913,6 +11520,20 @@ ab
 ab
 ab
 ab
+=======
+az
+az
+az
+aq
+cb
+bh
+cG
+aj
+aj
+aj
+aj
+ai
+>>>>>>> Updated this old code to fork
 ab
 ab
 aj
@@ -9929,6 +11550,21 @@ aj
 aj
 aj
 aj
+<<<<<<< HEAD
+=======
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 "}
 (23,1,1) = {"
 aa
@@ -10145,6 +11781,7 @@ az
 az
 aU
 bb
+<<<<<<< HEAD
 tZ
 hN
 Iv
@@ -10170,6 +11807,21 @@ ab
 ab
 ab
 ab
+=======
+az
+az
+az
+by
+bL
+cc
+bw
+cG
+aj
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 ab
 ab
 aj
@@ -10186,6 +11838,21 @@ aj
 aj
 aj
 aj
+<<<<<<< HEAD
+=======
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 "}
 (24,1,1) = {"
 aa
@@ -10398,6 +12065,7 @@ ay
 aq
 aE
 az
+<<<<<<< HEAD
 Kv
 tZ
 tZ
@@ -10427,6 +12095,24 @@ ab
 NC
 ab
 ab
+=======
+az
+az
+az
+az
+aQ
+bk
+az
+bz
+aq
+cd
+ci
+cG
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 ab
 ab
 aj
@@ -10443,6 +12129,22 @@ aj
 aj
 aj
 aj
+<<<<<<< HEAD
+=======
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 "}
 (25,1,1) = {"
 aa
@@ -10661,6 +12363,7 @@ az
 bc
 aq
 bl
+<<<<<<< HEAD
 yr
 yr
 yr
@@ -10683,6 +12386,17 @@ ab
 cR
 US
 cR
+=======
+aq
+bA
+aq
+aq
+aq
+aq
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 ab
 ab
 ab
@@ -10700,6 +12414,22 @@ aj
 aj
 aj
 aj
+<<<<<<< HEAD
+=======
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 "}
 (26,1,1) = {"
 aa
@@ -10918,6 +12648,7 @@ aq
 bd
 aq
 bl
+<<<<<<< HEAD
 yr
 by
 pV
@@ -10940,11 +12671,38 @@ ab
 cR
 dZ
 cR
+=======
+aq
+bz
+aq
+ce
+cz
+aq
+aj
+aj
+aj
+ab
+ab
+ab
+RO
+>>>>>>> Updated this old code to fork
 ab
 ab
 aj
 aj
 aj
+<<<<<<< HEAD
+=======
+ai
+ai
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -11175,6 +12933,7 @@ aW
 be
 aW
 bm
+<<<<<<< HEAD
 yr
 bB
 ca
@@ -11197,6 +12956,30 @@ cM
 cR
 oL
 cR
+=======
+aq
+bB
+bM
+cf
+cA
+aq
+aj
+aj
+ab
+ad
+ai
+JZ
+YA
+JZ
+ai
+ab
+ab
+ab
+ad
+ai
+ai
+ai
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -11432,6 +13215,7 @@ aq
 aq
 aq
 aq
+<<<<<<< HEAD
 yr
 yr
 Hd
@@ -11439,10 +13223,20 @@ cg
 cB
 bh
 uG
+=======
+aq
+aq
+aq
+cg
+cB
+aq
+aj
+>>>>>>> Updated this old code to fork
 cQ
 cQ
 cQ
 cQ
+<<<<<<< HEAD
 ip
 YA
 dZ
@@ -11454,6 +13248,19 @@ kO
 eL
 Pl
 cR
+=======
+cR
+Jl
+cR
+cM
+cR
+cR
+cR
+cM
+ai
+ai
+aj
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -11690,17 +13497,27 @@ aX
 aD
 aD
 aD
+<<<<<<< HEAD
 aw
 FF
 zo
 cC
 Pa
 zX
+=======
+aD
+aq
+ch
+cC
+aq
+aj
+>>>>>>> Updated this old code to fork
 cQ
 dg
 dg
 cQ
 dZ
+<<<<<<< HEAD
 Cw
 dZ
 cM
@@ -11711,6 +13528,18 @@ dZ
 dZ
 dZ
 cR
+=======
+yR
+dZ
+cM
+fa
+fo
+fx
+cM
+ab
+aj
+aj
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -11947,6 +13776,7 @@ aD
 aD
 aD
 aD
+<<<<<<< HEAD
 aw
 FF
 FF
@@ -11960,14 +13790,36 @@ cQ
 ea
 Cw
 ek
+=======
+aD
+aq
+aq
+aq
+aq
+aj
+cQ
+dh
+dx
+TN
+Jh
+ep
+xT
+>>>>>>> Updated this old code to fork
 cM
 fb
 dZ
 fy
+<<<<<<< HEAD
 fy
 dZ
 SJ
 cR
+=======
+cR
+ab
+aj
+aj
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -12219,12 +14071,21 @@ eq
 eK
 eQ
 ef
+<<<<<<< HEAD
 Aw
 fy
 fy
 dZ
 dZ
 cR
+=======
+fp
+fz
+cR
+ab
+aj
+aj
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -12476,12 +14337,21 @@ er
 eL
 cM
 fc
+<<<<<<< HEAD
 gW
 dZ
 dZ
 dZ
 eM
 cM
+=======
+dZ
+fA
+cR
+ab
+ai
+ai
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -12731,6 +14601,7 @@ cQ
 ed
 Kb
 eM
+<<<<<<< HEAD
 cM
 fd
 fq
@@ -12740,6 +14611,17 @@ fB
 ku
 cM
 ai
+=======
+El
+fd
+fq
+fB
+cM
+ai
+ad
+ai
+ai
+>>>>>>> Updated this old code to fork
 ab
 aj
 aj
@@ -12987,7 +14869,11 @@ cQ
 cQ
 ee
 er
+<<<<<<< HEAD
 dZ
+=======
+vZ
+>>>>>>> Updated this old code to fork
 cM
 cM
 cM
@@ -13244,7 +15130,11 @@ dB
 cM
 dZ
 EG
+<<<<<<< HEAD
 fp
+=======
+on
+>>>>>>> Updated this old code to fork
 cM
 fe
 fr
@@ -13498,10 +15388,17 @@ ab
 cR
 dm
 dC
+<<<<<<< HEAD
 dQ
 ea
 er
 dZ
+=======
+WO
+Jh
+Kb
+Eg
+>>>>>>> Updated this old code to fork
 cM
 ff
 fs
@@ -13746,7 +15643,11 @@ aD
 aT
 an
 aD
+<<<<<<< HEAD
 tY
+=======
+aD
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -13758,6 +15659,7 @@ dD
 dR
 ef
 es
+<<<<<<< HEAD
 dZ
 cM
 fg
@@ -13768,6 +15670,18 @@ cM
 cM
 fO
 cM
+=======
+vZ
+cM
+fg
+BD
+cM
+fH
+BD
+cM
+fO
+BD
+>>>>>>> Updated this old code to fork
 cM
 aj
 aj
@@ -14002,9 +15916,15 @@ an
 an
 an
 an
+<<<<<<< HEAD
 tY
 tY
 tY
+=======
+aD
+aD
+aD
+>>>>>>> Updated this old code to fork
 aj
 aj
 ai
@@ -14015,6 +15935,7 @@ dE
 dQ
 ec
 er
+<<<<<<< HEAD
 dZ
 eL
 fh
@@ -14025,6 +15946,18 @@ VP
 eL
 fh
 ec
+=======
+sL
+fU
+fh
+ft
+fU
+fh
+VP
+IG
+fh
+iZ
+>>>>>>> Updated this old code to fork
 cR
 aj
 aj
@@ -14273,6 +16206,7 @@ cM
 eg
 et
 eN
+<<<<<<< HEAD
 eN
 fi
 eN
@@ -14280,6 +16214,15 @@ eN
 fi
 fN
 eN
+=======
+ot
+fi
+ot
+ot
+fi
+fN
+lo
+>>>>>>> Updated this old code to fork
 HO
 fp
 cR
@@ -14518,8 +16461,13 @@ an
 an
 an
 an
+<<<<<<< HEAD
 aj
 aw
+=======
+an
+aD
+>>>>>>> Updated this old code to fork
 aj
 aj
 cM
@@ -14529,14 +16477,22 @@ dF
 cM
 eh
 EG
+<<<<<<< HEAD
 fp
+=======
+on
+>>>>>>> Updated this old code to fork
 cM
 cM
 dQ
 dQ
 cM
 cM
+<<<<<<< HEAD
 cM
+=======
+BD
+>>>>>>> Updated this old code to fork
 Nj
 cM
 cM
@@ -14773,20 +16729,35 @@ an
 an
 an
 an
+<<<<<<< HEAD
 aj
 aj
 aw
 aw
+=======
+an
+an
+aD
+aD
+>>>>>>> Updated this old code to fork
 aj
 aj
 cM
 cT
 cV
+<<<<<<< HEAD
 cV
 cM
 ea
 er
 eM
+=======
+dG
+cM
+ea
+er
+rV
+>>>>>>> Updated this old code to fork
 cM
 fj
 fk
@@ -15028,12 +16999,21 @@ an
 an
 an
 an
+<<<<<<< HEAD
 ab
 aj
 aj
 aj
 aw
 aw
+=======
+an
+an
+an
+an
+aD
+aD
+>>>>>>> Updated this old code to fork
 aj
 aj
 cM
@@ -15043,10 +17023,17 @@ dH
 dS
 ei
 eu
+<<<<<<< HEAD
 ek
 dQ
 fk
 fk
+=======
+Ej
+PQ
+pa
+pa
+>>>>>>> Updated this old code to fork
 fC
 fk
 cM
@@ -15284,11 +17271,19 @@ an
 an
 an
 an
+<<<<<<< HEAD
 ab
 aj
 aj
 aj
 aj
+=======
+an
+an
+an
+an
+an
+>>>>>>> Updated this old code to fork
 aD
 aD
 aj
@@ -15299,15 +17294,26 @@ dq
 dI
 cM
 ej
+<<<<<<< HEAD
 et
 kv
 eR
 TP
+=======
+ev
+kv
+eR
+fk
+>>>>>>> Updated this old code to fork
 fu
 fD
 fJ
 cM
+<<<<<<< HEAD
 cM
+=======
+BD
+>>>>>>> Updated this old code to fork
 Zf
 cM
 aj
@@ -15541,6 +17547,7 @@ an
 an
 an
 an
+<<<<<<< HEAD
 aj
 aj
 aj
@@ -15549,6 +17556,16 @@ aD
 aD
 ab
 ab
+=======
+an
+an
+an
+an
+aD
+aD
+aj
+aj
+>>>>>>> Updated this old code to fork
 ab
 cM
 cW
@@ -15557,10 +17574,17 @@ dr
 cM
 vq
 Kb
+<<<<<<< HEAD
 eL
 dQ
 fk
 fk
+=======
+Cl
+WO
+gu
+gu
+>>>>>>> Updated this old code to fork
 fE
 fK
 cM
@@ -15797,6 +17821,7 @@ aj
 an
 an
 an
+<<<<<<< HEAD
 aj
 aj
 aw
@@ -15807,6 +17832,18 @@ ab
 ab
 ab
 ab
+=======
+an
+an
+aD
+aD
+aD
+aD
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 cM
 cM
 cM
@@ -15814,7 +17851,11 @@ cM
 cM
 dZ
 er
+<<<<<<< HEAD
 dZ
+=======
+vZ
+>>>>>>> Updated this old code to fork
 cM
 fm
 fk
@@ -16052,6 +18093,7 @@ aj
 aj
 aj
 aj
+<<<<<<< HEAD
 ab
 ab
 aw
@@ -16072,6 +18114,28 @@ cR
 dZ
 er
 dZ
+=======
+aj
+aj
+aD
+aD
+aD
+aD
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+ab
+cR
+dZ
+rP
+vZ
+>>>>>>> Updated this old code to fork
 cM
 fn
 fv
@@ -16314,6 +18378,7 @@ aj
 aj
 aj
 aj
+<<<<<<< HEAD
 ab
 ab
 ab
@@ -16325,6 +18390,19 @@ ab
 ab
 ab
 aj
+=======
+aj
+aj
+aj
+ab
+aj
+aj
+aj
+aj
+aj
+aj
+ab
+>>>>>>> Updated this old code to fork
 cR
 ek
 ew
@@ -16570,6 +18648,7 @@ aj
 aj
 aj
 aj
+<<<<<<< HEAD
 ab
 ab
 ab
@@ -16581,6 +18660,19 @@ ab
 ab
 ab
 ab
+=======
+aj
+aj
+aj
+aj
+ab
+aj
+ab
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 aj
 cR
 cR
@@ -16827,10 +18919,15 @@ aj
 aj
 aj
 aj
+<<<<<<< HEAD
 ab
 ab
 ab
 ab
+=======
+aj
+aj
+>>>>>>> Updated this old code to fork
 ab
 ab
 ab
@@ -16839,7 +18936,13 @@ ab
 ab
 ab
 aj
+<<<<<<< HEAD
 ab
+=======
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 cR
 ey
 cR
@@ -17098,7 +19201,11 @@ aj
 aj
 aj
 cR
+<<<<<<< HEAD
 er
+=======
+BT
+>>>>>>> Updated this old code to fork
 cR
 ab
 aj
@@ -17355,9 +19462,15 @@ aj
 aj
 aj
 cR
+<<<<<<< HEAD
 er
 cR
 aj
+=======
+BT
+cR
+ab
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -17612,9 +19725,15 @@ ab
 aj
 aj
 cR
+<<<<<<< HEAD
 er
 cR
 aj
+=======
+BT
+cR
+ab
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -17867,11 +19986,19 @@ ab
 ab
 ab
 aj
+<<<<<<< HEAD
 aj
 br
 ez
 br
 aj
+=======
+ab
+br
+ez
+br
+ab
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -18124,11 +20251,19 @@ ab
 ab
 aj
 aj
+<<<<<<< HEAD
 aj
 br
 ez
 br
 aj
+=======
+ab
+br
+ez
+br
+ab
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -18385,7 +20520,11 @@ ab
 br
 ez
 br
+<<<<<<< HEAD
 aj
+=======
+ab
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -18643,7 +20782,11 @@ br
 UQ
 br
 ab
+<<<<<<< HEAD
 aj
+=======
+ab
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -19152,8 +21295,13 @@ bq
 bq
 bq
 bq
+<<<<<<< HEAD
 ia
 cH
+=======
+br
+JJ
+>>>>>>> Updated this old code to fork
 eB
 cD
 br
@@ -19401,23 +21549,41 @@ aj
 ab
 bq
 bC
+<<<<<<< HEAD
 Lu
 bP
 cl
 cH
+=======
+bP
+cl
+bP
+OT
+>>>>>>> Updated this old code to fork
 cO
 cX
 ck
 dJ
+<<<<<<< HEAD
 ia
 cn
 ez
+=======
+dT
+rE
+Tp
+>>>>>>> Updated this old code to fork
 bP
 eS
 bq
 ab
+<<<<<<< HEAD
 ab
 ab
+=======
+aj
+aj
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -19662,20 +21828,35 @@ bQ
 cm
 cE
 Uh
+<<<<<<< HEAD
 Uh
 Uh
 Uh
 Uh
 kI
 Be
+=======
+cE
+cY
+cE
+Uh
+cE
+Uh
+>>>>>>> Updated this old code to fork
 eC
 eP
 eT
 bq
 ab
+<<<<<<< HEAD
 ab
 ab
 ab
+=======
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -19916,6 +22097,7 @@ ab
 br
 bE
 bR
+<<<<<<< HEAD
 cn
 cF
 cI
@@ -19924,16 +22106,30 @@ cn
 Rx
 bP
 ia
+=======
+zV
+VD
+cI
+cP
+zV
+qY
+zu
+qY
+>>>>>>> Updated this old code to fork
 gd
 eD
 bP
 eU
+<<<<<<< HEAD
 bq
 bq
 bq
 bq
 po
 ab
+=======
+br
+>>>>>>> Updated this old code to fork
 ab
 aj
 aj
@@ -19952,6 +22148,14 @@ aj
 aj
 aj
 aj
+<<<<<<< HEAD
+=======
+aj
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 "}
 (62,1,1) = {"
 aa
@@ -20171,7 +22375,11 @@ ab
 bf
 bf
 bf
+<<<<<<< HEAD
 bF
+=======
+LO
+>>>>>>> Updated this old code to fork
 bS
 bF
 bf
@@ -20180,6 +22388,7 @@ bq
 cZ
 ds
 dK
+<<<<<<< HEAD
 ia
 bP
 eE
@@ -20192,6 +22401,20 @@ br
 ab
 ab
 ai
+=======
+dU
+jd
+eE
+cn
+eV
+br
+ab
+aj
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -20435,6 +22658,7 @@ bf
 cK
 bq
 bq
+<<<<<<< HEAD
 ia
 bq
 ia
@@ -20450,6 +22674,23 @@ ab
 ab
 ai
 ai
+=======
+br
+bq
+dV
+el
+eF
+dV
+bq
+bq
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -20684,8 +22925,13 @@ ab
 ab
 bg
 bo
+<<<<<<< HEAD
 PL
 LL
+=======
+bt
+bt
+>>>>>>> Updated this old code to fork
 bU
 cp
 bf
@@ -20695,6 +22941,7 @@ da
 du
 dL
 cH
+<<<<<<< HEAD
 dT
 eE
 bP
@@ -20707,6 +22954,20 @@ ab
 ab
 ab
 ai
+=======
+xA
+eG
+cD
+bP
+br
+ab
+ab
+aj
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -20952,16 +23213,23 @@ db
 bP
 bP
 bP
+<<<<<<< HEAD
 bP
+=======
+rE
+>>>>>>> Updated this old code to fork
 eH
 cF
 eW
 bq
+<<<<<<< HEAD
 bq
 bq
 bq
 po
 ab
+=======
+>>>>>>> Updated this old code to fork
 ab
 ab
 aj
@@ -20980,6 +23248,14 @@ aj
 aj
 aj
 aj
+<<<<<<< HEAD
+=======
+aj
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 "}
 (66,1,1) = {"
 aa
@@ -21216,11 +23492,19 @@ eX
 bq
 ab
 ab
+<<<<<<< HEAD
 ab
 ab
 ab
 ab
 ab
+=======
+aj
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -21473,11 +23757,19 @@ eY
 bq
 ab
 ab
+<<<<<<< HEAD
 ab
 ab
 ab
 ab
 ab
+=======
+aj
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -21730,10 +24022,17 @@ eY
 bq
 ab
 ab
+<<<<<<< HEAD
 ab
 ab
 ab
 ab
+=======
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -21988,10 +24287,17 @@ bq
 ab
 ab
 ab
+<<<<<<< HEAD
 ab
 ab
 ab
 ab
+=======
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -22245,10 +24551,17 @@ bq
 ab
 ab
 ab
+<<<<<<< HEAD
 ab
 ab
 ab
 ab
+=======
+aj
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 ab
 aj
 aj
@@ -22502,10 +24815,17 @@ ab
 ab
 ab
 ab
+<<<<<<< HEAD
 ab
 ab
 ab
 ab
+=======
+aj
+aj
+ab
+aj
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -22759,9 +25079,15 @@ ab
 ab
 ab
 ab
+<<<<<<< HEAD
 ab
 ab
 ab
+=======
+aj
+aj
+aj
+>>>>>>> Updated this old code to fork
 aj
 aj
 aj
@@ -23016,8 +25342,13 @@ ab
 ab
 ab
 ab
+<<<<<<< HEAD
 ab
 ab
+=======
+aj
+aj
+>>>>>>> Updated this old code to fork
 ab
 aj
 aj
@@ -23273,8 +25604,13 @@ aj
 ab
 ab
 ab
+<<<<<<< HEAD
 ab
 ab
+=======
+aj
+aj
+>>>>>>> Updated this old code to fork
 ab
 aj
 aj
@@ -23530,7 +25866,11 @@ ai
 ab
 ab
 ab
+<<<<<<< HEAD
 ab
+=======
+aj
+>>>>>>> Updated this old code to fork
 ab
 ab
 ab
@@ -23787,7 +26127,11 @@ ai
 ai
 ab
 ab
+<<<<<<< HEAD
 ab
+=======
+aj
+>>>>>>> Updated this old code to fork
 ab
 ab
 ab
@@ -24044,7 +26388,11 @@ ai
 ai
 ai
 ab
+<<<<<<< HEAD
 ab
+=======
+aj
+>>>>>>> Updated this old code to fork
 ab
 ab
 ab

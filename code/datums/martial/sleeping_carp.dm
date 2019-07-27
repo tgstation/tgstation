@@ -7,15 +7,23 @@
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
 	id = MARTIALART_SLEEPINGCARP
+<<<<<<< HEAD
 	no_guns = TRUE
 	allow_temp_override = FALSE
 	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
 	var/old_grab_state = null
+=======
+	deflection_chance = 100
+	no_guns = TRUE
+	allow_temp_override = FALSE
+	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
+>>>>>>> Updated this old code to fork
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,WRIST_WRENCH_COMBO))
 		streak = ""
 		wristWrench(A,D)
+<<<<<<< HEAD
 		return TRUE
 	if(findtext(streak,BACK_KICK_COMBO))
 		streak = ""
@@ -38,6 +46,29 @@
 /datum/martial_art/the_sleeping_carp/proc/wristWrench(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.IsStun() && !D.IsParalyzed())
 		log_combat(A, D, "wrist wrenched (Sleeping Carp)")
+=======
+		return 1
+	if(findtext(streak,BACK_KICK_COMBO))
+		streak = ""
+		backKick(A,D)
+		return 1
+	if(findtext(streak,STOMACH_KNEE_COMBO))
+		streak = ""
+		kneeStomach(A,D)
+		return 1
+	if(findtext(streak,HEAD_KICK_COMBO))
+		streak = ""
+		headKick(A,D)
+		return 1
+	if(findtext(streak,ELBOW_DROP_COMBO))
+		streak = ""
+		elbowDrop(A,D)
+		return 1
+	return 0
+
+/datum/martial_art/the_sleeping_carp/proc/wristWrench(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if(!D.stat && !D.IsStun() && !D.IsParalyzed())
+>>>>>>> Updated this old code to fork
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='warning'>[A] grabs [D]'s wrist and wrenches it sideways!</span>", \
 						  "<span class='userdanger'>[A] grabs your wrist and violently wrenches it to the side!</span>")
@@ -46,6 +77,7 @@
 		D.dropItemToGround(D.get_active_held_item())
 		D.apply_damage(5, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 		D.Stun(60)
+<<<<<<< HEAD
 		return TRUE
 
 	return basic_hit(A,D)
@@ -65,11 +97,30 @@
 			log_combat(A, D, "missed a back-kick (Sleeping Carp) on")
 			D.visible_message("<span class='warning'>[A] tries to kick [D] in the back, but misses!</span>", \
 								"<span class='userdanger'>[A] tries to kick you in the back, but misses!</span>")
+=======
+		return 1
+	log_combat(A, D, "wrist wrenched (Sleeping Carp)")
+	return basic_hit(A,D)
+
+/datum/martial_art/the_sleeping_carp/proc/backKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if(A.dir == D.dir && !D.stat && !D.IsParalyzed())
+		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+		D.visible_message("<span class='warning'>[A] kicks [D] in the back!</span>", \
+						  "<span class='userdanger'>[A] kicks you in the back, making you stumble and fall!</span>")
+		step_to(D,get_step(D,D.dir),1)
+		D.Paralyze(80)
+		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
+		return 1
+	log_combat(A, D, "back-kicked (Sleeping Carp)")
+>>>>>>> Updated this old code to fork
 	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/proc/kneeStomach(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.IsParalyzed())
+<<<<<<< HEAD
 		log_combat(A, D, "stomach kneed (Sleeping Carp)")
+=======
+>>>>>>> Updated this old code to fork
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		D.visible_message("<span class='warning'>[A] knees [D] in the stomach!</span>", \
 						  "<span class='userdanger'>[A] winds you with a knee in the stomach!</span>")
@@ -77,12 +128,20 @@
 		D.losebreath += 3
 		D.Stun(40)
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
+<<<<<<< HEAD
 		return TRUE
+=======
+		return 1
+	log_combat(A, D, "stomach kneed (Sleeping Carp)")
+>>>>>>> Updated this old code to fork
 	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/proc/headKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.IsParalyzed())
+<<<<<<< HEAD
 		log_combat(A, D, "head kicked (Sleeping Carp)")
+=======
+>>>>>>> Updated this old code to fork
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head!</span>", \
 						  "<span class='userdanger'>[A] kicks you in the jaw!</span>")
@@ -90,19 +149,31 @@
 		D.drop_all_held_items()
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
 		D.Stun(80)
+<<<<<<< HEAD
 		return TRUE
+=======
+		return 1
+	log_combat(A, D, "head kicked (Sleeping Carp)")
+>>>>>>> Updated this old code to fork
 	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/proc/elbowDrop(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!(D.mobility_flags & MOBILITY_STAND))
+<<<<<<< HEAD
 		log_combat(A, D, "elbow dropped (Sleeping Carp)")
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='warning'>[A] elbow drops [D]!</span>", \
 							"<span class='userdanger'>[A] piledrives you with their elbow!</span>")
+=======
+		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+		D.visible_message("<span class='warning'>[A] elbow drops [D]!</span>", \
+						  "<span class='userdanger'>[A] piledrives you with their elbow!</span>")
+>>>>>>> Updated this old code to fork
 		if(D.stat)
 			D.death() //FINISH HIM!
 		D.apply_damage(50, A.dna.species.attack_type, BODY_ZONE_CHEST)
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 75, 1, -1)
+<<<<<<< HEAD
 		return TRUE
 	return basic_hit(A,D)
 
@@ -122,11 +193,41 @@
 		return TRUE
 	else
 		return FALSE
+=======
+		return 1
+	log_combat(A, D, "elbow dropped (Sleeping Carp)")
+	return basic_hit(A,D)
+
+/datum/martial_art/the_sleeping_carp/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	add_to_streak("G",D)
+	if(check_streak(A,D))
+		return 1
+	if(A.grab_state >= GRAB_AGGRESSIVE)
+		D.grabbedby(A, 1)
+	else
+		A.start_pulling(D, supress_message = TRUE)
+		if(A.pulling)
+			D.drop_all_held_items()
+			D.stop_pulling()
+			if(A.a_intent == INTENT_GRAB)
+				log_combat(A, D, "grabbed", addition="aggressively")
+				D.visible_message("<span class='warning'>[A] violently grabs [D]!</span>", \
+				  "<span class='userdanger'>[A] violently grabs you!</span>")
+				A.grab_state = GRAB_AGGRESSIVE //Instant aggressive grab
+			else
+				log_combat(A, D, "grabbed", addition="passively")
+				A.grab_state = GRAB_PASSIVE
+	return 1
+>>>>>>> Updated this old code to fork
 
 /datum/martial_art/the_sleeping_carp/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("H",D)
 	if(check_streak(A,D))
+<<<<<<< HEAD
 		return TRUE
+=======
+		return 1
+>>>>>>> Updated this old code to fork
 	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 	var/atk_verb = pick("punches", "kicks", "chops", "hits", "slams")
 	D.visible_message("<span class='danger'>[A] [atk_verb] [D]!</span>", \
@@ -137,12 +238,17 @@
 		D.visible_message("<span class='warning'>[D] stumbles and falls!</span>", "<span class='userdanger'>The blow sends you to the ground!</span>")
 		D.Paralyze(80)
 	log_combat(A, D, "[atk_verb] (Sleeping Carp)")
+<<<<<<< HEAD
 	return TRUE
+=======
+	return 1
+>>>>>>> Updated this old code to fork
 
 
 /datum/martial_art/the_sleeping_carp/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("D",D)
 	if(check_streak(A,D))
+<<<<<<< HEAD
 		return TRUE
 	return ..()
 
@@ -163,6 +269,11 @@
 	return BULLET_ACT_FORCE_PIERCE
 
 
+=======
+		return 1
+	return ..()
+
+>>>>>>> Updated this old code to fork
 /mob/living/carbon/human/proc/sleeping_carp_help()
 	set name = "Recall Teachings"
 	set desc = "Remember the martial techniques of the Sleeping Carp clan."
@@ -199,8 +310,13 @@
 
 /obj/item/twohanded/bostaff/attack(mob/target, mob/living/user)
 	add_fingerprint(user)
+<<<<<<< HEAD
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, "<span class='warning'>You club yourself over the head with [src].</span>")
+=======
+	if((user.has_trait(TRAIT_CLUMSY)) && prob(50))
+		to_chat(user, "<span class ='warning'>You club yourself over the head with [src].</span>")
+>>>>>>> Updated this old code to fork
 		user.Paralyze(60)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -249,4 +365,8 @@
 /obj/item/twohanded/bostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)
 		return ..()
+<<<<<<< HEAD
 	return FALSE
+=======
+	return 0
+>>>>>>> Updated this old code to fork

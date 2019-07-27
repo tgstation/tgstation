@@ -43,9 +43,15 @@
 	imp_in.set_resting(FALSE)
 	imp_in.update_mobility()
 
+<<<<<<< HEAD
 	imp_in.reagents.add_reagent(/datum/reagent/medicine/synaptizine, 10)
 	imp_in.reagents.add_reagent(/datum/reagent/medicine/omnizine, 10)
 	imp_in.reagents.add_reagent(/datum/reagent/medicine/stimulants, 10)
+=======
+	imp_in.reagents.add_reagent("synaptizine", 10)
+	imp_in.reagents.add_reagent("omnizine", 10)
+	imp_in.reagents.add_reagent("stimulants", 10)
+>>>>>>> Updated this old code to fork
 	if(!uses)
 		qdel(src)
 

@@ -11,7 +11,11 @@
 	potency = 15
 	icon_dead = "wheat-dead"
 	mutatelist = list(/obj/item/seeds/wheat/oat, /obj/item/seeds/wheat/meat)
+<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.04)
+=======
+	reagents_add = list("nutriment" = 0.04)
+>>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/snacks/grown/wheat
 	seed = /obj/item/seeds/wheat
@@ -22,9 +26,15 @@
 	filling_color = "#F0E68C"
 	bitesize_mod = 2
 	foodtype = GRAIN
+<<<<<<< HEAD
 	grind_results = list(/datum/reagent/consumable/flour = 0)
 	tastes = list("wheat" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/beer
+=======
+	grind_results = list("flour" = 0)
+	tastes = list("wheat" = 1)
+	distill_reagent = "beer"
+>>>>>>> Updated this old code to fork
 
 // Oat
 /obj/item/seeds/wheat/oat
@@ -45,16 +55,26 @@
 	filling_color = "#556B2F"
 	bitesize_mod = 2
 	foodtype = GRAIN
+<<<<<<< HEAD
 	grind_results = list(/datum/reagent/consumable/flour = 0)
 	tastes = list("oat" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/ale
+=======
+	grind_results = list("flour" = 0)
+	tastes = list("oat" = 1)
+	distill_reagent = "ale"
+>>>>>>> Updated this old code to fork
 
 // Rice
 /obj/item/seeds/wheat/rice
 	name = "pack of rice seeds"
 	desc = "These may, or may not, grow into rice."
 	icon_state = "seed-rice"
+<<<<<<< HEAD
 	species = /datum/reagent/consumable/rice
+=======
+	species = "rice"
+>>>>>>> Updated this old code to fork
 	plantname = "Rice Stalks"
 	product = /obj/item/reagent_containers/food/snacks/grown/rice
 	mutatelist = list()
@@ -69,9 +89,15 @@
 	filling_color = "#FAFAD2"
 	bitesize_mod = 2
 	foodtype = GRAIN
+<<<<<<< HEAD
 	grind_results = list(/datum/reagent/consumable/rice = 0)
 	tastes = list("rice" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/sake
+=======
+	grind_results = list("rice" = 0)
+	tastes = list("rice" = 1)
+	distill_reagent = "sake"
+>>>>>>> Updated this old code to fork
 
 //Meatwheat - grows into synthetic meat
 /obj/item/seeds/wheat/meat
@@ -92,7 +118,11 @@
 	bitesize_mod = 2
 	seed = /obj/item/seeds/wheat/meat
 	foodtype = MEAT | GRAIN
+<<<<<<< HEAD
 	grind_results = list(/datum/reagent/consumable/flour = 0, /datum/reagent/blood = 0)
+=======
+	grind_results = list("flour" = 0, "blood" = 0)
+>>>>>>> Updated this old code to fork
 	tastes = list("meatwheat" = 1)
 	can_distill = FALSE
 

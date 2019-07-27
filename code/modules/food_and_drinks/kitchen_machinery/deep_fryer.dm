@@ -53,7 +53,11 @@ God bless America.
 /obj/machinery/deepfryer/Initialize()
 	. = ..()
 	create_reagents(50, OPENCONTAINER)
+<<<<<<< HEAD
 	reagents.add_reagent(/datum/reagent/consumable/cooking_oil, 25)
+=======
+	reagents.add_reagent("cooking_oil", 25)
+>>>>>>> Updated this old code to fork
 	component_parts = list()
 	component_parts += new /obj/item/circuitboard/machine/deep_fryer(null)
 	component_parts += new /obj/item/stock_parts/micro_laser(null)
@@ -68,11 +72,19 @@ God bless America.
 	fry_speed = oil_efficiency
 
 /obj/machinery/deepfryer/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(frying)
 		. += "You can make out \a [frying] in the oil."
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: Frying at <b>[fry_speed*100]%</b> speed.<br>Using <b>[oil_use*10]</b> units of oil per second.</span>"
+=======
+	..()
+	if(frying)
+		to_chat(usr, "You can make out \a [frying] in the oil.")
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Frying at <b>[fry_speed*100]%</b> speed.<br>Using <b>[oil_use*10]</b> units of oil per second.<span>")
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/reagent_containers/pill))
@@ -83,7 +95,11 @@ God bless America.
 		I.reagents.trans_to(src, I.reagents.total_volume, transfered_by = user)
 		qdel(I)
 		return
+<<<<<<< HEAD
 	if(!reagents.has_reagent(/datum/reagent/consumable/cooking_oil))
+=======
+	if(!reagents.has_reagent("cooking_oil"))
+>>>>>>> Updated this old code to fork
 		to_chat(user, "<span class='warning'>[src] has no cooking oil to fry with!</span>")
 		return
 	if(I.resistance_flags & INDESTRUCTIBLE)
@@ -97,7 +113,11 @@ God bless America.
 	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I))	//where's the open maint panel icon?!
 		return
 	else
+<<<<<<< HEAD
 		if(is_type_in_typecache(I, deepfry_blacklisted_items) || HAS_TRAIT(I, TRAIT_NODROP) || (I.item_flags & (ABSTRACT | DROPDEL)))
+=======
+		if(is_type_in_typecache(I, deepfry_blacklisted_items) || I.has_trait(TRAIT_NODROP) || (I.item_flags & (ABSTRACT | DROPDEL)))
+>>>>>>> Updated this old code to fork
 			return ..()
 		else if(!frying && user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
@@ -107,7 +127,11 @@ God bless America.
 
 /obj/machinery/deepfryer/process()
 	..()
+<<<<<<< HEAD
 	var/datum/reagent/consumable/cooking_oil/C = reagents.has_reagent(/datum/reagent/consumable/cooking_oil)
+=======
+	var/datum/reagent/consumable/cooking_oil/C = reagents.has_reagent("cooking_oil")
+>>>>>>> Updated this old code to fork
 	if(!C)
 		return
 	reagents.chem_temp = C.fry_temperature
@@ -146,10 +170,16 @@ God bless America.
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
 		var/mob/living/carbon/C = user.pulling
+<<<<<<< HEAD
 		user.visible_message("<span class='danger'>[user] dunks [C]'s face in [src]!</span>")
 		reagents.reaction(C, TOUCH)
 		var/permeability = 1 - C.get_permeability_protection(list(HEAD))
 		C.apply_damage(min(30 * permeability, reagents.total_volume), BURN, BODY_ZONE_HEAD)
+=======
+		user.visible_message("<span class = 'danger'>[user] dunks [C]'s face in [src]!</span>")
+		reagents.reaction(C, TOUCH)
+		C.apply_damage(min(30, reagents.total_volume), BURN, BODY_ZONE_HEAD)
+>>>>>>> Updated this old code to fork
 		reagents.remove_any((reagents.total_volume/2))
 		C.Paralyze(60)
 		user.changeNext_move(CLICK_CD_MELEE)

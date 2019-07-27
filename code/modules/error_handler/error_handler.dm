@@ -18,6 +18,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		//if we got to here without silently ending, the byond bug has been fixed.
 		log_world("The bug with recursion runtimes has been fixed. Please remove the snowflake check from world/Error in [__FILE__]:[__LINE__]")
 		return //this will never happen.
+<<<<<<< HEAD
 	
 	else if(copytext(E.name,1,18) == "Out of resources!")
 		log_world("BYOND out of memory. Restarting")
@@ -26,6 +27,9 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		Reboot(reason = 1)
 		return ..()
 	
+=======
+
+>>>>>>> Updated this old code to fork
 	if (islist(stack_trace_storage))
 		for (var/line in splittext(E.desc, "\n"))
 			if (text2ascii(line) != 32)

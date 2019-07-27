@@ -11,7 +11,11 @@
 
 /datum/status_effect/rainbow_protection/on_apply()
 	owner.status_flags |= GODMODE
+<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_PACIFISM, /datum/status_effect/rainbow_protection)
+=======
+	owner.add_trait(TRAIT_PACIFISM, "slimestatus")
+>>>>>>> Updated this old code to fork
 	owner.visible_message("<span class='warning'>[owner] shines with a brilliant rainbow light.</span>",
 		"<span class='notice'>You feel protected by an unknown force!</span>")
 	originalcolor = owner.color
@@ -24,7 +28,11 @@
 /datum/status_effect/rainbow_protection/on_remove()
 	owner.status_flags &= ~GODMODE
 	owner.color = originalcolor
+<<<<<<< HEAD
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, /datum/status_effect/rainbow_protection)
+=======
+	owner.remove_trait(TRAIT_PACIFISM, "slimestatus")
+>>>>>>> Updated this old code to fork
 	owner.visible_message("<span class='notice'>[owner] stops glowing, the rainbow light fading away.</span>",
 		"<span class='warning'>You no longer feel protected...</span>")
 
@@ -64,9 +72,16 @@
 	var/interrupted = FALSE
 	var/mob/target
 	var/icon/bluespace
+<<<<<<< HEAD
 
 /datum/status_effect/slimerecall/on_apply()
 	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/resistField)
+=======
+	var/datum/weakref/redirect_component
+
+/datum/status_effect/slimerecall/on_apply()
+	redirect_component = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/resistField))))
+>>>>>>> Updated this old code to fork
 	to_chat(owner, "<span class='danger'>You feel a sudden tug from an unknown force, and feel a pull to bluespace!</span>")
 	to_chat(owner, "<span class='notice'>Resist if you wish avoid the force!</span>")
 	bluespace = icon('icons/effects/effects.dmi',"chronofield")
@@ -77,7 +92,12 @@
 	interrupted = TRUE
 	owner.remove_status_effect(src)
 /datum/status_effect/slimerecall/on_remove()
+<<<<<<< HEAD
 	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
+=======
+	qdel(redirect_component.resolve())
+	redirect_component = null
+>>>>>>> Updated this old code to fork
 	owner.cut_overlay(bluespace)
 	if(interrupted || !ismob(target))
 		to_chat(owner, "<span class='warning'>The bluespace tug fades away, and you feel that the force has passed you by.</span>")
@@ -96,9 +116,16 @@
 	duration = -1 //Will remove self when block breaks.
 	alert_type = /obj/screen/alert/status_effect/freon/stasis
 	var/obj/structure/ice_stasis/cube
+<<<<<<< HEAD
 
 /datum/status_effect/frozenstasis/on_apply()
 	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/breakCube)
+=======
+	var/datum/weakref/redirect_component
+
+/datum/status_effect/frozenstasis/on_apply()
+	redirect_component = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/breakCube))))
+>>>>>>> Updated this old code to fork
 	cube = new /obj/structure/ice_stasis(get_turf(owner))
 	owner.forceMove(cube)
 	owner.status_flags |= GODMODE
@@ -115,7 +142,12 @@
 	if(cube)
 		qdel(cube)
 	owner.status_flags &= ~GODMODE
+<<<<<<< HEAD
 	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
+=======
+	qdel(redirect_component.resolve())
+	redirect_component = null
+>>>>>>> Updated this old code to fork
 
 /datum/status_effect/slime_clone
 	id = "slime_cloned"
@@ -202,7 +234,11 @@
 
 /datum/status_effect/bonechill
 	id = "bonechill"
+<<<<<<< HEAD
 	duration = 80
+=======
+	duration = 60
+>>>>>>> Updated this old code to fork
 	alert_type = /obj/screen/alert/status_effect/bonechill
 
 /datum/status_effect/bonechill/on_apply()
@@ -213,7 +249,10 @@
 	if(prob(50))
 		owner.adjustFireLoss(1)
 		owner.Jitter(3)
+<<<<<<< HEAD
 		owner.adjust_bodytemperature(-10)
+=======
+>>>>>>> Updated this old code to fork
 
 /datum/status_effect/bonechill/on_remove()
 	owner.remove_movespeed_modifier("bonechilled")
@@ -242,12 +281,20 @@ datum/status_effect/rebreathing/tick()
 	duration = 100
 
 /datum/status_effect/firecookie/on_apply()
+<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_RESISTCOLD,"firecookie")
+=======
+	owner.add_trait(TRAIT_RESISTCOLD,"firecookie")
+>>>>>>> Updated this old code to fork
 	owner.adjust_bodytemperature(110)
 	return ..()
 
 /datum/status_effect/firecookie/on_remove()
+<<<<<<< HEAD
 	REMOVE_TRAIT(owner, TRAIT_RESISTCOLD,"firecookie")
+=======
+	owner.remove_trait(TRAIT_RESISTCOLD,"firecookie")
+>>>>>>> Updated this old code to fork
 
 /datum/status_effect/watercookie
 	id = "watercookie"
@@ -256,7 +303,11 @@ datum/status_effect/rebreathing/tick()
 	duration = 100
 
 /datum/status_effect/watercookie/on_apply()
+<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_NOSLIPWATER,"watercookie")
+=======
+	owner.add_trait(TRAIT_NOSLIPWATER,"watercookie")
+>>>>>>> Updated this old code to fork
 	return ..()
 
 /datum/status_effect/watercookie/tick()
@@ -264,7 +315,11 @@ datum/status_effect/rebreathing/tick()
 		T.MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = 5)
 
 /datum/status_effect/watercookie/on_remove()
+<<<<<<< HEAD
 	REMOVE_TRAIT(owner, TRAIT_NOSLIPWATER,"watercookie")
+=======
+	owner.remove_trait(TRAIT_NOSLIPWATER,"watercookie")
+>>>>>>> Updated this old code to fork
 
 /datum/status_effect/metalcookie
 	id = "metalcookie"
@@ -309,11 +364,19 @@ datum/status_effect/rebreathing/tick()
 	duration = 600
 
 /datum/status_effect/toxincookie/on_apply()
+<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_TOXINLOVER,"toxincookie")
 	return ..()
 
 /datum/status_effect/toxincookie/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_TOXINLOVER,"toxincookie")
+=======
+	owner.add_trait(TRAIT_TOXINLOVER,"toxincookie")
+	return ..()
+
+/datum/status_effect/toxincookie/on_remove()
+	owner.remove_trait(TRAIT_TOXINLOVER,"toxincookie")
+>>>>>>> Updated this old code to fork
 
 /datum/status_effect/timecookie
 	id = "timecookie"
@@ -409,11 +472,19 @@ datum/status_effect/rebreathing/tick()
 	duration = 30
 
 /datum/status_effect/plur/on_apply()
+<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_PACIFISM, "peacecookie")
 	return ..()
 
 /datum/status_effect/plur/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "peacecookie")
+=======
+	owner.add_trait(TRAIT_PACIFISM, "peacecookie")
+	return ..()
+
+/datum/status_effect/plur/on_remove()
+	owner.remove_trait(TRAIT_PACIFISM, "peacecookie")
+>>>>>>> Updated this old code to fork
 
 /datum/status_effect/adamantinecookie
 	id = "adamantinecookie"
@@ -507,11 +578,19 @@ datum/status_effect/rebreathing/tick()
 	colour = "blue"
 
 /datum/status_effect/stabilized/blue/on_apply()
+<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_NOSLIPWATER, "slimestatus")
 	return ..()
 
 datum/status_effect/stabilized/blue/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_NOSLIPWATER, "slimestatus")
+=======
+	owner.add_trait(TRAIT_NOSLIPWATER, "slimestatus")
+	return ..()
+
+datum/status_effect/stabilized/blue/on_remove()
+	owner.remove_trait(TRAIT_NOSLIPWATER, "slimestatus")
+>>>>>>> Updated this old code to fork
 
 /datum/status_effect/stabilized/metal
 	id = "stabilizedmetal"
@@ -572,7 +651,11 @@ datum/status_effect/stabilized/blue/on_remove()
 	examine_text = "<span class='notice'>Their fingertips burn brightly!</span>"
 
 /datum/status_effect/stabilized/darkpurple/on_apply()
+<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_RESISTHEATHANDS, "slimestatus")
+=======
+	owner.add_trait(TRAIT_RESISTHEATHANDS, "slimestatus")
+>>>>>>> Updated this old code to fork
 	fire = new(owner)
 	return ..()
 
@@ -590,7 +673,11 @@ datum/status_effect/stabilized/blue/on_remove()
 	return ..()
 
 /datum/status_effect/stabilized/darkpurple/on_remove()
+<<<<<<< HEAD
 	REMOVE_TRAIT(owner, TRAIT_RESISTHEATHANDS, "slimestatus")
+=======
+	owner.remove_trait(TRAIT_RESISTHEATHANDS, "slimestatus")
+>>>>>>> Updated this old code to fork
 	qdel(fire)
 
 /datum/status_effect/stabilized/darkblue
@@ -689,11 +776,19 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/sepia/tick()
 	if(prob(50) && mod > -1)
 		mod--
+<<<<<<< HEAD
 		owner.add_movespeed_modifier(MOVESPEED_ID_SEPIA, override = TRUE, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
 	else if(mod < 1)
 		mod++
 		// yeah a value of 0 does nothing but replacing the trait in place is cheaper than removing and adding repeatedly
 		owner.add_movespeed_modifier(MOVESPEED_ID_SEPIA, override = TRUE, update=TRUE, priority=100, multiplicative_slowdown=0, blacklisted_movetypes=(FLYING|FLOATING))
+=======
+		owner.add_movespeed_modifier(MOVESPEED_ID_SEPIA, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+	else if(mod < 1)
+		mod++
+		// yeah a value of 0 does nothing but replacing the trait in place is cheaper than removing and adding repeatedly
+		owner.add_movespeed_modifier(MOVESPEED_ID_SEPIA, update=TRUE, priority=100, multiplicative_slowdown=0, blacklisted_movetypes=(FLYING|FLOATING))
+>>>>>>> Updated this old code to fork
 	return ..()
 
 /datum/status_effect/stabilized/sepia/on_remove()
@@ -910,9 +1005,15 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/lightpink/tick()
 	for(var/mob/living/carbon/human/H in range(1, get_turf(owner)))
+<<<<<<< HEAD
 		if(H != owner && H.stat != DEAD && H.health <= 0 && !H.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
 			to_chat(owner, "[linked_extract] pulses in sync with [H]'s heartbeat, trying to keep [H.p_them()] alive.")
 			H.reagents.add_reagent(/datum/reagent/medicine/epinephrine,5)
+=======
+		if(H != owner && H.stat != DEAD && H.health <= 0 && !H.reagents.has_reagent("epinephrine"))
+			to_chat(owner, "[linked_extract] pulses in sync with [H]'s heartbeat, trying to keep [H.p_them()] alive.")
+			H.reagents.add_reagent("epinephrine",5)
+>>>>>>> Updated this old code to fork
 	return ..()
 
 /datum/status_effect/stabilized/lightpink/on_remove()

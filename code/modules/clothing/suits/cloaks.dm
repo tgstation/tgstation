@@ -32,7 +32,10 @@
 	name = "chief engineer's cloak"
 	desc = "Worn by Engitopia, wielders of an unlimited power."
 	icon_state = "cecloak"
+<<<<<<< HEAD
 	resistance_flags = FIRE_PROOF
+=======
+>>>>>>> Updated this old code to fork
 
 /obj/item/clothing/neck/cloak/rd
 	name = "research director's cloak"
@@ -63,7 +66,10 @@
 	icon_state = "golhood"
 	desc = "A protective & concealing hood."
 	armor = list("melee" = 35, "bullet" = 10, "laser" = 25, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
+<<<<<<< HEAD
 	clothing_flags = SNUG_FIT
+=======
+>>>>>>> Updated this old code to fork
 	flags_inv = HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
 	transparent_protection = HIDEMASK
 
@@ -85,7 +91,10 @@
 	icon_state = "dragon"
 	desc = "The skull of a dragon."
 	armor = list("melee" = 70, "bullet" = 30, "laser" = 50, "energy" = 40, "bomb" = 70, "bio" = 60, "rad" = 50, "fire" = 100, "acid" = 100)
+<<<<<<< HEAD
 	clothing_flags = SNUG_FIT
+=======
+>>>>>>> Updated this old code to fork
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF

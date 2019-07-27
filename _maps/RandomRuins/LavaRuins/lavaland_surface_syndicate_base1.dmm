@@ -23,10 +23,19 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/ruin/unpowered/syndicate_lava_base/virology)
 "ae" = (
@@ -59,7 +68,12 @@
 	},
 /obj/structure/sign/barsign{
 	pixel_y = -32;
+<<<<<<< HEAD
 	req_access = null
+=======
+	req_access = null;
+	req_access_txt = "0"
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/wood,
 /area/ruin/unpowered/syndicate_lava_base/bar)
@@ -126,11 +140,14 @@
 /obj/machinery/chem_dispenser/fullupgrade,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
+<<<<<<< HEAD
 "aQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
+=======
+>>>>>>> Updated this old code to fork
 "aW" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -162,6 +179,7 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
+<<<<<<< HEAD
 "cP" = (
 /obj/machinery/atmospherics/miner/toxins,
 /obj/machinery/light/small{
@@ -169,6 +187,8 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
+=======
+>>>>>>> Updated this old code to fork
 "dc" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -240,13 +260,23 @@
 /obj/machinery/power/apc/syndicate{
 	dir = 8;
 	name = "Chemistry APC";
+<<<<<<< HEAD
 	pixel_x = -25
+=======
+	pixel_x = -24
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+>>>>>>> Updated this old code to fork
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white/side{
 	dir = 8
 	},
@@ -428,11 +458,20 @@
 	dir = 8;
 	pixel_x = -26
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white/side{
 	dir = 8
 	},
@@ -540,6 +579,12 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "ed" = (
+<<<<<<< HEAD
+=======
+/obj/structure/table,
+/obj/item/paper_bin,
+/obj/item/pen,
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
@@ -552,7 +597,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/machinery/power/rad_collector,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "ee" = (
@@ -575,10 +623,20 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/machinery/power/apc/syndicate{
 	dir = 1;
 	name = "Cargo Bay APC";
 	pixel_y = 23
+=======
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/syndicate{
+	dir = 1;
+	name = "Cargo Bay APC";
+	pixel_y = 24
+>>>>>>> Updated this old code to fork
 	},
 /obj/structure/closet/emcloset/anchored,
 /obj/effect/decal/cleanable/dirt,
@@ -588,7 +646,10 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "eg" = (
@@ -695,12 +756,15 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/item/paper/crumpled{
 	info = "Explosive testing on site is STRICTLY forbidden, as this outpost's walls are lined with explosives intended for intentional self-destruct purposes that may be set off prematurely through careless experiments.";
 	name = "Explosives Testing Warning";
 	pixel_x = -6;
 	pixel_y = -3
 	},
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/testlab)
 "ep" = (
@@ -747,9 +811,17 @@
 	pixel_x = -27;
 	pixel_y = 1
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white/side{
 	dir = 8
 	},
@@ -795,6 +867,12 @@
 	dir = 8;
 	pixel_x = -26
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
@@ -811,10 +889,19 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "ey" = (
+=======
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/syndicate_lava_base/cargo)
+"ey" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -832,10 +919,19 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "ez" = (
+=======
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/syndicate_lava_base/cargo)
+"ez" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -852,11 +948,20 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "eA" = (
 /obj/machinery/door/firedoor,
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -878,10 +983,19 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "eB" = (
+=======
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/syndicate_lava_base/cargo)
+"eB" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -889,10 +1003,19 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "eC" = (
+=======
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/cargo)
+"eC" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -900,7 +1023,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 10
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "eD" = (
@@ -1092,9 +1218,17 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/testlab)
 "eR" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white/side{
 	dir = 10
 	},
@@ -1129,6 +1263,12 @@
 	},
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "eW" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/effect/turf_decal/tile/neutral{
@@ -1141,7 +1281,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "eX" = (
@@ -1181,6 +1324,17 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "eZ" = (
+<<<<<<< HEAD
+=======
+/obj/structure/rack{
+	dir = 8
+	},
+/obj/item/stack/sheet/cardboard{
+	amount = 3
+	},
+/obj/item/stack/rods/twentyfive,
+/obj/item/stock_parts/cell/high/plus,
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -1192,7 +1346,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/machinery/power/rad_collector,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "fa" = (
@@ -1268,10 +1425,19 @@
 /obj/machinery/power/apc/syndicate{
 	dir = 1;
 	name = "Virology APC";
+<<<<<<< HEAD
 	pixel_y = 23
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+	pixel_y = 24
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white/side{
 	dir = 9
 	},
@@ -1296,8 +1462,17 @@
 /area/ruin/unpowered/syndicate_lava_base/virology)
 "fk" = (
 /obj/machinery/power/apc/syndicate{
+<<<<<<< HEAD
 	name = "Experimentation Lab APC";
 	pixel_y = -23
+=======
+	dir = 2;
+	name = "Experimentation Lab APC";
+	pixel_y = -24
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
@@ -1310,7 +1485,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/testlab)
 "fl" = (
@@ -1319,6 +1497,12 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 25
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -1329,7 +1513,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/testlab)
 "fm" = (
@@ -1338,9 +1525,17 @@
 	name = "Chemistry Lab";
 	req_access_txt = "150"
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "fn" = (
@@ -1353,10 +1548,22 @@
 /obj/machinery/door/firedoor,
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/southleft{
+<<<<<<< HEAD
 	name = "Chemistry"
 	},
 /obj/machinery/door/window/southleft{
 	dir = 1;
+=======
+	base_state = "left";
+	dir = 2;
+	icon_state = "left";
+	name = "Chemistry"
+	},
+/obj/machinery/door/window/southleft{
+	base_state = "left";
+	dir = 1;
+	icon_state = "left";
+>>>>>>> Updated this old code to fork
 	name = "Chemistry";
 	req_access_txt = "150"
 	},
@@ -1386,6 +1593,12 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "fr" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/effect/decal/cleanable/dirt,
@@ -1399,7 +1612,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "fs" = (
@@ -1516,7 +1732,13 @@
 /obj/item/reagent_containers/syringe/antiviral,
 /obj/item/reagent_containers/dropper,
 /obj/item/reagent_containers/spray/cleaner,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white/side{
 	dir = 8
 	},
@@ -1567,6 +1789,12 @@
 	name = "Experimentation Lab";
 	req_access_txt = "150"
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -1577,7 +1805,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/testlab)
 "fH" = (
@@ -1588,9 +1819,17 @@
 /area/ruin/unpowered/syndicate_lava_base/main)
 "fI" = (
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
@@ -1602,6 +1841,12 @@
 /area/ruin/unpowered/syndicate_lava_base/main)
 "fW" = (
 /obj/machinery/door/firedoor,
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/door/airlock/mining/glass{
@@ -1618,7 +1863,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "fY" = (
@@ -1741,7 +1989,13 @@
 /area/ruin/unpowered/syndicate_lava_base/virology)
 "gs" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
+=======
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/light/small,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white,
@@ -1764,7 +2018,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white/corner{
 	dir = 1
 	},
@@ -1777,7 +2037,13 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/virology)
 "gw" = (
@@ -1787,7 +2053,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -1802,8 +2074,15 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "gz" = (
@@ -1816,7 +2095,13 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "gA" = (
@@ -1840,10 +2125,19 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "gB" = (
@@ -1853,26 +2147,55 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "gE" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer3,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer3,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "gF" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -1880,16 +2203,26 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "gG" = (
+=======
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/main)
+"gG" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
@@ -1900,6 +2233,27 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "gI" = (
+=======
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/main)
+"gH" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
+	dir = 2
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/main)
+"gI" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -1907,11 +2261,20 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "gJ" = (
 /obj/machinery/door/firedoor,
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -1919,13 +2282,22 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "gK" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -1935,10 +2307,19 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "gL" = (
+=======
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/main)
+"gL" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
@@ -1951,7 +2332,10 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "gM" = (
@@ -2125,10 +2509,19 @@
 "hc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "hd" = (
@@ -2310,6 +2703,12 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -2317,7 +2716,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "hy" = (
@@ -2434,13 +2836,22 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "hM" = (
@@ -2511,12 +2922,19 @@
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "hU" = (
 /obj/machinery/light/small,
+<<<<<<< HEAD
+=======
+/obj/structure/filingcabinet/chestdrawer,
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/tank_dispenser/plasma,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "hV" = (
@@ -2561,6 +2979,12 @@
 	pixel_x = -26
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
 	dir = 8
@@ -2571,7 +2995,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "ia" = (
@@ -2586,6 +3013,10 @@
 /area/ruin/unpowered/syndicate_lava_base/main)
 "ib" = (
 /obj/effect/mob_spawn/human/lavaland_syndicate{
+<<<<<<< HEAD
+=======
+	icon_state = "sleeper_s";
+>>>>>>> Updated this old code to fork
 	dir = 4
 	},
 /turf/open/floor/plasteel/grimy,
@@ -2625,7 +3056,12 @@
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
 "ie" = (
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms{
+<<<<<<< HEAD
 	dir = 8
+=======
+	dir = 8;
+	icon_state = "sleeper_s"
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel/grimy,
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
@@ -2640,7 +3076,11 @@
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
+<<<<<<< HEAD
 	initial_gas_mix = "LAVALAND_ATMOS"
+=======
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+>>>>>>> Updated this old code to fork
 	},
 /area/lavaland/surface/outdoors)
 "ih" = (
@@ -2650,7 +3090,11 @@
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
+<<<<<<< HEAD
 	initial_gas_mix = "LAVALAND_ATMOS"
+=======
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+>>>>>>> Updated this old code to fork
 	},
 /area/lavaland/surface/outdoors)
 "ii" = (
@@ -2672,10 +3116,19 @@
 "ij" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "ik" = (
@@ -2747,10 +3200,17 @@
 	dir = 1
 	},
 /obj/machinery/turretid{
+<<<<<<< HEAD
 	ailock = 1;
 	control_area = "/area/ruin/unpowered/syndicate_lava_base/main";
 	dir = 1;
 	icon_state = "control_kill";
+=======
+	control_area = "/area/ruin/unpowered/syndicate_lava_base/main";
+	dir = 1;
+	icon_state = "control_kill";
+	ailock = 1;
+>>>>>>> Updated this old code to fork
 	lethal = 1;
 	name = "Base turret controls";
 	pixel_y = 30;
@@ -2785,7 +3245,11 @@
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
+<<<<<<< HEAD
 	initial_gas_mix = "LAVALAND_ATMOS"
+=======
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+>>>>>>> Updated this old code to fork
 	},
 /area/lavaland/surface/outdoors)
 "iv" = (
@@ -2793,7 +3257,11 @@
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
+<<<<<<< HEAD
 	initial_gas_mix = "LAVALAND_ATMOS"
+=======
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+>>>>>>> Updated this old code to fork
 	},
 /area/lavaland/surface/outdoors)
 "iw" = (
@@ -2816,8 +3284,15 @@
 "ix" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "iy" = (
@@ -2865,6 +3340,10 @@
 	dir = 1
 	},
 /obj/machinery/firealarm{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	pixel_y = 24
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
@@ -2955,7 +3434,11 @@
 	},
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
+<<<<<<< HEAD
 	initial_gas_mix = "LAVALAND_ATMOS"
+=======
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+>>>>>>> Updated this old code to fork
 	},
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "iN" = (
@@ -2977,11 +3460,33 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "iP" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 5
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/main)
+"iQ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "iR" = (
@@ -2995,8 +3500,15 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
 "iS" = (
@@ -3006,22 +3518,43 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
 	dir = 1
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
 "iT" = (
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /obj/structure/cable,
+=======
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
+	dir = 2
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -3031,8 +3564,18 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
 "iV" = (
@@ -3043,11 +3586,22 @@
 	dir = 4
 	},
 /obj/machinery/power/apc/syndicate{
+<<<<<<< HEAD
 	name = "Dormitories APC";
 	pixel_y = -23
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/structure/cable,
+=======
+	dir = 2;
+	name = "Dormitories APC";
+	pixel_y = -24
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/effect/turf_decal/tile/neutral,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
 "iW" = (
@@ -3169,7 +3723,11 @@
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
+<<<<<<< HEAD
 	initial_gas_mix = "LAVALAND_ATMOS"
+=======
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+>>>>>>> Updated this old code to fork
 	},
 /area/lavaland/surface/outdoors)
 "jf" = (
@@ -3185,8 +3743,15 @@
 /obj/machinery/door/airlock/maintenance,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
 "jh" = (
@@ -3198,10 +3763,20 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
 "ji" = (
+<<<<<<< HEAD
 /obj/machinery/power/apc/syndicate{
 	dir = 8;
 	name = "Primary Hallway APC";
 	pixel_x = -25
+=======
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/syndicate{
+	dir = 8;
+	name = "Primary Hallway APC";
+	pixel_x = -24
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -3209,7 +3784,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "jj" = (
@@ -3219,7 +3797,11 @@
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
+<<<<<<< HEAD
 	initial_gas_mix = "LAVALAND_ATMOS"
+=======
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+>>>>>>> Updated this old code to fork
 	},
 /area/lavaland/surface/outdoors)
 "jl" = (
@@ -3245,6 +3827,10 @@
 /area/ruin/unpowered/syndicate_lava_base/main)
 "jn" = (
 /obj/effect/mob_spawn/human/lavaland_syndicate{
+<<<<<<< HEAD
+=======
+	icon_state = "sleeper_s";
+>>>>>>> Updated this old code to fork
 	dir = 4
 	},
 /obj/machinery/airalarm/syndicate{
@@ -3262,13 +3848,25 @@
 "jp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "jq" = (
 /obj/effect/mob_spawn/human/lavaland_syndicate{
+<<<<<<< HEAD
 	dir = 8
+=======
+	dir = 8;
+	icon_state = "sleeper_s"
+>>>>>>> Updated this old code to fork
 	},
 /obj/machinery/airalarm/syndicate{
 	pixel_y = 24
@@ -3293,11 +3891,20 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "js" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "jt" = (
@@ -3308,7 +3915,11 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+<<<<<<< HEAD
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
+=======
+/turf/open/floor/plasteel,
+>>>>>>> Updated this old code to fork
 /area/ruin/unpowered/syndicate_lava_base/main)
 "ju" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -3316,7 +3927,11 @@
 "jv" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/machinery/suit_storage_unit/syndicate,
+=======
+/obj/machinery/suit_storage_unit/radsuit,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "jw" = (
@@ -3386,16 +4001,34 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "jE" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 6
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "jF" = (
+=======
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/main)
+"jF" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -3406,6 +4039,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering";
@@ -3416,30 +4050,58 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "jG" = (
+=======
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/main)
+"jG" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/firedoor,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
+=======
+/obj/machinery/door/airlock/engineering{
+	name = "Engineering";
+	req_access_txt = "150"
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "jH" = (
+<<<<<<< HEAD
+=======
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes{
 	icon_state = "warningline";
 	dir = 1
 	},
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "jI" = (
@@ -3453,15 +4115,39 @@
 	dir = 8;
 	pixel_x = 24
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
+=======
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/engineering)
+"jJ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible/layer3{
+	dir = 6
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/unpowered/syndicate_lava_base/engineering)
+"jK" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer3{
+	dir = 8;
+	volume_rate = 200
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/syndicate_lava_base/engineering)
+>>>>>>> Updated this old code to fork
 "jL" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -3525,7 +4211,13 @@
 "jQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "jR" = (
@@ -3538,17 +4230,32 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "jS" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "jT" = (
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
+=======
+/obj/structure/closet/firecloset/full{
+	anchored = 1
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/sign/departments/engineering,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/main)
@@ -3565,26 +4272,58 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "jV" = (
+=======
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/main)
+"jU" = (
+/obj/structure/sign/departments/engineering,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/unpowered/syndicate_lava_base/engineering)
+"jV" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/sign/warning/radiation/rad_area{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/stripes,
 /obj/structure/closet/radiation,
+=======
+/obj/machinery/shower{
+	desc = "The HS-452. Installed recently by the DonkCo Hygiene Division.";
+	dir = 4;
+	name = "emergency shower"
+	},
+/obj/structure/sign/warning/radiation/rad_area{
+	pixel_y = -32
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "jW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "jY" = (
@@ -3624,15 +4363,35 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 6
 	},
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "kd" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
+	dir = 2
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "ke" = (
@@ -3642,8 +4401,18 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "kf" = (
@@ -3653,7 +4422,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "kg" = (
@@ -3663,8 +4438,15 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "kh" = (
@@ -3675,6 +4457,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/main)
@@ -3684,6 +4467,23 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered/syndicate_lava_base/main)
+"ki" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "kj" = (
@@ -3698,13 +4498,22 @@
 "kk" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor,
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering";
 	req_access_txt = "150"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "kl" = (
@@ -3712,6 +4521,7 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "km" = (
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -3720,6 +4530,15 @@
 	icon_state = "pipe11-2";
 	dir = 6
 	},
+=======
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/computer/monitor/secret,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "kn" = (
@@ -3786,8 +4605,15 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "ks" = (
@@ -3833,25 +4659,44 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /obj/machinery/computer/monitor/secret{
 	icon_state = "computer";
 	dir = 4
 	},
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "ky" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
@@ -3860,6 +4705,20 @@
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/visible/layer3,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/turf/open/floor/plating,
+/area/ruin/unpowered/syndicate_lava_base/engineering)
+"kz" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/visible,
+/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/visible/layer3,
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "kA" = (
@@ -3869,13 +4728,24 @@
 /obj/machinery/power/apc/syndicate{
 	dir = 1;
 	name = "Engineering APC";
+<<<<<<< HEAD
 	pixel_y = 23
+=======
+	pixel_y = 24
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+>>>>>>> Updated this old code to fork
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible/layer3{
 	dir = 9
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
@@ -3887,6 +4757,26 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "kC" = (
+=======
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/engineering)
+"kB" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/engineering)
+"kC" = (
+/obj/machinery/computer/atmos_control/tank{
+	dir = 8;
+	frequency = 1442;
+	name = "Nitrogen Supply Control";
+	output_tag = "syndie_lavaland_n2_out";
+	sensors = list("syndie_lavaland_n2_sensor" = "Tank")
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -4007,8 +4897,15 @@
 "kO" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "kP" = (
@@ -4052,12 +4949,19 @@
 	dir = 8
 	},
 /obj/machinery/power/smes/engineering,
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow,
+>>>>>>> Updated this old code to fork
 /obj/structure/sign/warning/electricshock{
 	pixel_x = -32
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "kW" = (
@@ -4065,8 +4969,13 @@
 	dir = 4
 	},
 /obj/machinery/power/smes/engineering,
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow,
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "kX" = (
@@ -4078,6 +4987,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "kY" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/manifold/supply/visible{
 	icon_state = "manifold-2";
 	dir = 4
@@ -4093,11 +5003,30 @@
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "la" = (
 /obj/effect/turf_decal/bot,
+=======
+/obj/machinery/atmospherics/pipe/manifold4w/supply/visible,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/engineering)
+"kZ" = (
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/engineering)
+"la" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/visible{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot,
+/obj/machinery/portable_atmospherics/scrubber,
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supplymain/visible{
 	icon_state = "pipe11-2";
 	dir = 6
@@ -4106,6 +5035,8 @@
 	icon_state = "computer";
 	dir = 8
 	},
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "lb" = (
@@ -4135,7 +5066,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
+<<<<<<< HEAD
 	initial_gas_mix = "LAVALAND_ATMOS"
+=======
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+>>>>>>> Updated this old code to fork
 	},
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "lf" = (
@@ -4215,8 +5150,15 @@
 "ll" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+<<<<<<< HEAD
 /obj/structure/reagent_dispensers/beerkeg,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/reagent_dispensers/beerkeg,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "lm" = (
@@ -4254,8 +5196,15 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "lq" = (
@@ -4265,11 +5214,21 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "lr" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible/layer3,
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
@@ -4279,6 +5238,12 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+=======
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/engineering)
+"ls" = (
+/obj/machinery/atmospherics/pipe/simple/supply/visible,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "lt" = (
@@ -4289,12 +5254,18 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supplymain/visible{
 	icon_state = "pipe11-2";
 	dir = 9
 	},
+=======
+/obj/machinery/portable_atmospherics/scrubber,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "lv" = (
@@ -4304,7 +5275,11 @@
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
+<<<<<<< HEAD
 	initial_gas_mix = "LAVALAND_ATMOS"
+=======
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+>>>>>>> Updated this old code to fork
 	},
 /area/lavaland/surface/outdoors)
 "lw" = (
@@ -4312,7 +5287,11 @@
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
+<<<<<<< HEAD
 	initial_gas_mix = "LAVALAND_ATMOS"
+=======
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+>>>>>>> Updated this old code to fork
 	},
 /area/lavaland/surface/outdoors)
 "lx" = (
@@ -4387,8 +5366,15 @@
 /obj/item/vending_refill/cola,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "lG" = (
@@ -4444,6 +5430,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/item/clothing/head/welding,
 /obj/item/weldingtool/largetank,
 /obj/item/analyzer,
@@ -4455,6 +5442,17 @@
 	},
 /obj/structure/cable,
 /obj/machinery/portable_atmospherics/pump,
+=======
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/engineering)
+"lM" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "lN" = (
@@ -4544,12 +5542,25 @@
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "lW" = (
 /obj/structure/table/wood,
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "lX" = (
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered/syndicate_lava_base/bar)
+"lX" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "lY" = (
@@ -4559,7 +5570,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 5
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "lZ" = (
@@ -4569,7 +5586,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "ma" = (
@@ -4583,7 +5606,13 @@
 	name = "Bar Storage";
 	req_access_txt = "150"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "mb" = (
@@ -4593,7 +5622,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "mc" = (
@@ -4613,11 +5648,20 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 9
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/secure_closet/freezer/kitchen/maintenance{
 	req_access = null
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "md" = (
@@ -4660,7 +5704,13 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "mh" = (
+<<<<<<< HEAD
 /obj/machinery/portable_atmospherics/scrubber,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "mi" = (
@@ -4671,12 +5721,22 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "mj" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/visible,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/binary/pump{
 	icon_state = "pump_map-2";
 	dir = 8
 	},
+=======
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 8;
+	name = "O2 to Incinerator";
+	target_pressure = 4500
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/visible,
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "mk" = (
@@ -4758,11 +5818,20 @@
 "mv" = (
 /obj/structure/table/wood,
 /obj/machinery/light/small,
+<<<<<<< HEAD
 /obj/machinery/power/apc/syndicate{
 	name = "Bar APC";
 	pixel_y = -23
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow,
+/obj/machinery/power/apc/syndicate{
+	dir = 2;
+	name = "Bar APC";
+	pixel_y = -24
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "mw" = (
@@ -4775,7 +5844,11 @@
 /turf/open/floor/wood,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "my" = (
+<<<<<<< HEAD
 /obj/structure/closet/secure_closet/freezer/fridge/open,
+=======
+/obj/structure/closet/secure_closet/freezer/fridge,
+>>>>>>> Updated this old code to fork
 /obj/item/reagent_containers/food/condiment/enzyme,
 /obj/item/reagent_containers/food/snacks/chocolatebar,
 /obj/effect/decal/cleanable/dirt,
@@ -4785,8 +5858,15 @@
 /obj/machinery/door/airlock/maintenance,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "mA" = (
@@ -4840,13 +5920,28 @@
 	},
 /area/ruin/unpowered/syndicate_lava_base/medbay)
 "mF" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/components/unary/portables_connector,
+=======
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27;
+	pixel_y = 1
+	},
+/obj/structure/chair/stool,
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "mG" = (
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "mH" = (
@@ -4859,6 +5954,7 @@
 "mI" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/machinery/light/small,
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/visible,
 /obj/effect/decal/cleanable/dirt,
@@ -4872,15 +5968,48 @@
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 10
 	},
+=======
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 8
+	},
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/head/welding,
+/obj/item/weldingtool/largetank,
+/obj/machinery/atmospherics/pipe/simple/supply/visible,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/engineering)
+"mJ" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 10
+	},
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "mK" = (
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/atmos_control/tank/toxin_tank{
 	icon_state = "computer";
 	dir = 8
 	},
+=======
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/computer/atmos_control/tank{
+	dir = 1;
+	frequency = 1442;
+	name = "Toxins Supply Control";
+	output_tag = "syndie_lavaland_tox_out";
+	sensors = list("syndie_lavaland_tox_sensor" = "Tank")
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "mM" = (
@@ -4933,7 +6062,11 @@
 	dir = 8
 	},
 /obj/item/storage/toolbox/mechanical,
+<<<<<<< HEAD
 /obj/item/stack/cable_coil{
+=======
+/obj/item/stack/cable_coil/yellow{
+>>>>>>> Updated this old code to fork
 	pixel_x = 2;
 	pixel_y = -3
 	},
@@ -4950,9 +6083,17 @@
 "mY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -4979,17 +6120,42 @@
 	},
 /area/ruin/unpowered/syndicate_lava_base/medbay)
 "nc" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/yellow,
+=======
+>>>>>>> Updated this old code to fork
 /obj/machinery/computer/turbine_computer{
 	dir = 1;
 	id = "syndie_lavaland_incineratorturbine"
 	},
+<<<<<<< HEAD
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "nd" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/machinery/button/door/incinerator_vent_syndicatelava_main{
+	pixel_x = 6;
+	pixel_y = -24
+	},
+/obj/machinery/button/door/incinerator_vent_syndicatelava_aux{
+	pixel_x = -6;
+	pixel_y = -24
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/engineering)
+"nd" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "ne" = (
@@ -5013,11 +6179,18 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "ng" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	icon_state = "pipe11-2";
 	dir = 5
 	},
 /turf/open/floor/plasteel,
+=======
+/obj/structure/grille,
+/obj/structure/window/plastitanium,
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/turf/open/floor/plating,
+>>>>>>> Updated this old code to fork
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "nh" = (
 /obj/machinery/telecomms/relay/preset/ruskie{
@@ -5178,6 +6351,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 6
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -5188,7 +6367,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "nt" = (
@@ -5198,11 +6380,24 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc/syndicate{
 	dir = 1;
 	name = "Arrival Hallway APC";
+<<<<<<< HEAD
 	pixel_y = 23
+=======
+	pixel_y = 24
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -5210,7 +6405,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "nu" = (
@@ -5220,16 +6418,31 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "nv" = (
+=======
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/arrivals)
+"nv" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -5239,13 +6452,28 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "nw" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
 /obj/structure/cable,
+=======
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
+	dir = 2
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -5258,10 +6486,19 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/door/airlock/medical/glass{
 	name = "Medbay"
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/ruin/unpowered/syndicate_lava_base/medbay)
 "ny" = (
@@ -5271,7 +6508,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white/side{
 	dir = 8
 	},
@@ -5283,11 +6526,23 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 9
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/medbay)
 "nA" = (
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/medbay)
+"nA" = (
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white/corner,
 /area/ruin/unpowered/syndicate_lava_base/medbay)
 "nB" = (
@@ -5307,16 +6562,44 @@
 	},
 /area/ruin/unpowered/syndicate_lava_base/medbay)
 "nD" = (
+<<<<<<< HEAD
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/glass/incinerator/syndicatelava_interior,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/glass/incinerator/syndicatelava_interior,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/engine,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "nE" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
+<<<<<<< HEAD
+=======
+"nF" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+	dir = 1;
+	frequency = 1442;
+	id_tag = "syndie_lavaland_tox_out";
+	name = "toxin out"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/syndicate_lava_base/engineering)
+"nG" = (
+/obj/machinery/air_sensor{
+	frequency = 1442;
+	id_tag = "syndie_lavaland_tox_sensor"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/syndicate_lava_base/engineering)
+>>>>>>> Updated this old code to fork
 "nH" = (
 /obj/machinery/airalarm/syndicate{
 	dir = 4;
@@ -5372,6 +6655,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 5
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -5382,7 +6671,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/telecomms)
 "nL" = (
@@ -5396,6 +6688,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -5406,7 +6704,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/telecomms)
 "nM" = (
@@ -5417,9 +6718,17 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "nN" = (
@@ -5429,7 +6738,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "nO" = (
@@ -5440,8 +6755,15 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "nP" = (
@@ -5455,7 +6777,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "nQ" = (
@@ -5469,7 +6797,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "nR" = (
@@ -5479,10 +6813,19 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "nS" = (
@@ -5493,15 +6836,27 @@
 	dir = 4
 	},
 /obj/machinery/firealarm{
+<<<<<<< HEAD
 	pixel_y = 24
 	},
+=======
+	dir = 2;
+	pixel_y = 24
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "nT" = (
@@ -5511,13 +6866,22 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
 	dir = 1
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "nU" = (
@@ -5533,6 +6897,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -5540,7 +6910,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "nV" = (
@@ -5550,10 +6923,19 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 9
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "nW" = (
@@ -5582,13 +6964,20 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -29
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable/yellow,
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/apc/syndicate{
 	dir = 4;
 	name = "Medbay APC";
 	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white/side{
 	dir = 6
 	},
@@ -5600,6 +6989,7 @@
 /obj/machinery/atmospherics/pipe/layer_manifold{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/components/binary/pump{
 	icon_state = "pump_map-2";
 	dir = 1
@@ -5611,6 +7001,17 @@
 	dir = 8
 	},
 /obj/structure/cable,
+=======
+/turf/open/floor/engine,
+/area/ruin/unpowered/syndicate_lava_base/engineering)
+"oe" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_syndicatelava{
+	dir = 8
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/engine,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "of" = (
@@ -5629,11 +7030,17 @@
 /turf/open/floor/engine,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "og" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	icon_state = "freezer";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
+=======
+/obj/machinery/atmospherics/miner/toxins,
+/obj/machinery/light/small,
+/turf/open/floor/plating/airless,
+>>>>>>> Updated this old code to fork
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "oh" = (
 /obj/machinery/firealarm{
@@ -5653,7 +7060,11 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/telecomms)
 "oi" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -5690,9 +7101,17 @@
 /obj/structure/chair{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/machinery/power/apc/syndicate{
 	name = "Telecommunications APC";
 	pixel_y = -23
+=======
+/obj/structure/cable/yellow,
+/obj/machinery/power/apc/syndicate{
+	dir = 2;
+	name = "Telecommunications APC";
+	pixel_y = -24
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -5704,7 +7123,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/telecomms)
 "ol" = (
@@ -5772,12 +7194,21 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/unpowered/syndicate_lava_base/medbay)
 "ot" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/glass/incinerator/syndicatelava_exterior,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/engine,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "ou" = (
@@ -5803,6 +7234,7 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "oz" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	icon_state = "scrub_map-2";
 	dir = 1
@@ -5812,6 +7244,15 @@
 "oA" = (
 /obj/machinery/igniter/incinerator_syndicatelava,
 /obj/structure/cable,
+=======
+/turf/open/floor/engine/vacuum,
+/area/ruin/unpowered/syndicate_lava_base/engineering)
+"oA" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/igniter/incinerator_syndicatelava,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/engine/vacuum,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "oB" = (
@@ -5838,12 +7279,22 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "oE" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/compressor{
 	comp_id = "syndie_lavaland_incineratorturbine";
 	dir = 1;
 	luminosity = 2
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/engine/vacuum,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "oF" = (
@@ -5851,10 +7302,18 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "oG" = (
+<<<<<<< HEAD
 /obj/machinery/power/turbine{
 	luminosity = 2
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable,
+/obj/machinery/power/turbine{
+	dir = 2;
+	luminosity = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/engine/vacuum,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "oH" = (
@@ -5874,6 +7333,7 @@
 /obj/structure/sign/departments/chemistry,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/testlab)
+<<<<<<< HEAD
 "pQ" = (
 /obj/structure/sign/warning/explosives/alt{
 	pixel_x = 32
@@ -5886,6 +7346,8 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/unpowered/syndicate_lava_base/testlab)
+=======
+>>>>>>> Updated this old code to fork
 "tW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -5901,6 +7363,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/engine,
 /area/ruin/unpowered/syndicate_lava_base/testlab)
+<<<<<<< HEAD
 "vX" = (
 /obj/machinery/atmospherics/pipe/simple/orange{
 	icon_state = "pipe11-2";
@@ -5921,6 +7384,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
+=======
+>>>>>>> Updated this old code to fork
 "BF" = (
 /obj/structure/grille,
 /obj/structure/window/plastitanium,
@@ -5951,6 +7416,7 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/unpowered/syndicate_lava_base/testlab)
+<<<<<<< HEAD
 "DF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible/layer3,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -5980,6 +7446,8 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
+=======
+>>>>>>> Updated this old code to fork
 "EZ" = (
 /obj/machinery/door/airlock/external{
 	req_access_txt = "150"
@@ -5988,6 +7456,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
+<<<<<<< HEAD
 "IG" = (
 /obj/machinery/atmospherics/pipe/simple/dark/visible,
 /obj/structure/grille,
@@ -5999,12 +7468,15 @@
 /obj/structure/window/plastitanium,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
+=======
+>>>>>>> Updated this old code to fork
 "IJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 1
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
+<<<<<<< HEAD
 "JB" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	icon_state = "pipe11-2";
@@ -6013,21 +7485,27 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
+=======
+>>>>>>> Updated this old code to fork
 "Lg" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 4
 	},
 /turf/open/floor/engine,
 /area/ruin/unpowered/syndicate_lava_base/testlab)
+<<<<<<< HEAD
 "Lp" = (
 /obj/machinery/atmospherics/pipe/simple/yellow,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
+=======
+>>>>>>> Updated this old code to fork
 "LQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/engine,
 /area/ruin/unpowered/syndicate_lava_base/testlab)
+<<<<<<< HEAD
 "Ng" = (
 /obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped{
 	dir = 4
@@ -6040,6 +7518,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
+=======
+"Pa" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white/corner{
+	dir = 4
+	},
+/area/ruin/unpowered/syndicate_lava_base/arrivals)
+>>>>>>> Updated this old code to fork
 "RE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -6079,6 +7568,7 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/unpowered/syndicate_lava_base/testlab)
+<<<<<<< HEAD
 "Wt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible/layer3{
 	dir = 6
@@ -6096,6 +7586,8 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
+=======
+>>>>>>> Updated this old code to fork
 
 (1,1,1) = {"
 aa
@@ -6956,7 +8448,11 @@ ae
 ae
 aq
 aq
+<<<<<<< HEAD
 qG
+=======
+aq
+>>>>>>> Updated this old code to fork
 dc
 aq
 dQ
@@ -7206,7 +8702,11 @@ ae
 ae
 aq
 aq
+<<<<<<< HEAD
 DL
+=======
+aq
+>>>>>>> Updated this old code to fork
 di
 aq
 dS
@@ -7221,7 +8721,11 @@ hy
 ia
 ik
 if
+<<<<<<< HEAD
 gI
+=======
+iQ
+>>>>>>> Updated this old code to fork
 hz
 hz
 jy
@@ -7336,8 +8840,13 @@ my
 jy
 nt
 nW
+<<<<<<< HEAD
 aW
 mT
+=======
+oo
+ox
+>>>>>>> Updated this old code to fork
 ab
 ab
 ab
@@ -7387,7 +8896,11 @@ jy
 nu
 nX
 oo
+<<<<<<< HEAD
 mT
+=======
+ox
+>>>>>>> Updated this old code to fork
 ab
 ab
 ab
@@ -7435,8 +8948,13 @@ jy
 jy
 mX
 nv
+<<<<<<< HEAD
 aQ
 mT
+=======
+nX
+aW
+>>>>>>> Updated this old code to fork
 mT
 ab
 ab
@@ -7486,6 +9004,10 @@ mz
 mY
 nw
 nZ
+<<<<<<< HEAD
+=======
+Pa
+>>>>>>> Updated this old code to fork
 mT
 ab
 ab
@@ -7494,7 +9016,10 @@ ab
 ab
 ab
 ab
+<<<<<<< HEAD
 ab
+=======
+>>>>>>> Updated this old code to fork
 aa
 "}
 (29,1,1) = {"
@@ -7676,7 +9201,11 @@ hz
 jr
 jD
 jR
+<<<<<<< HEAD
 gI
+=======
+iQ
+>>>>>>> Updated this old code to fork
 ku
 kR
 ln
@@ -7775,7 +9304,11 @@ ja
 jj
 jj
 gI
+<<<<<<< HEAD
 Qv
+=======
+if
+>>>>>>> Updated this old code to fork
 kj
 kw
 kT
@@ -7873,7 +9406,11 @@ ir
 iJ
 jb
 ha
+<<<<<<< HEAD
 Xd
+=======
+ju
+>>>>>>> Updated this old code to fork
 jG
 jU
 ju
@@ -7884,9 +9421,15 @@ lL
 mg
 mF
 nc
+<<<<<<< HEAD
 Lp
 od
 Lp
+=======
+ju
+od
+ju
+>>>>>>> Updated this old code to fork
 oz
 ju
 ju
@@ -7970,7 +9513,11 @@ hl
 hU
 ha
 it
+<<<<<<< HEAD
 pQ
+=======
+iJ
+>>>>>>> Updated this old code to fork
 jd
 ha
 jw
@@ -8019,12 +9566,21 @@ hn
 gQ
 hV
 ha
+<<<<<<< HEAD
 Wt
 DF
 DF
 DF
 kl
 kl
+=======
+ha
+ha
+ha
+ha
+ju
+jJ
+>>>>>>> Updated this old code to fork
 kl
 kl
 kA
@@ -8069,6 +9625,7 @@ ho
 hD
 dy
 dy
+<<<<<<< HEAD
 wi
 ac
 ac
@@ -8080,12 +9637,30 @@ km
 kB
 kZ
 Ng
+=======
+ac
+ab
+ab
+ab
+ac
+jK
+ju
+km
+kB
+kZ
+lt
+>>>>>>> Updated this old code to fork
 lt
 mk
 mJ
 ng
+<<<<<<< HEAD
 mF
 Ec
+=======
+nF
+ld
+>>>>>>> Updated this old code to fork
 ju
 ab
 ab
@@ -8122,19 +9697,32 @@ ab
 ab
 ab
 ab
+<<<<<<< HEAD
 ju
 ZN
 BC
 IG
 Ed
+=======
+ab
+ab
+ab
+ju
+ju
+>>>>>>> Updated this old code to fork
 kC
 la
 lu
 lP
 ml
 mK
+<<<<<<< HEAD
 JB
 mF
+=======
+kD
+nG
+>>>>>>> Updated this old code to fork
 og
 ju
 ab
@@ -8172,10 +9760,17 @@ ab
 ab
 ab
 ab
+<<<<<<< HEAD
 ju
 ju
 ju
 ju
+=======
+ab
+ab
+ab
+ab
+>>>>>>> Updated this old code to fork
 ju
 kD
 lb
@@ -8183,8 +9778,13 @@ ju
 kD
 lb
 ju
+<<<<<<< HEAD
 vX
 IH
+=======
+ju
+ju
+>>>>>>> Updated this old code to fork
 ju
 ju
 ab
@@ -8233,9 +9833,15 @@ ju
 lQ
 mm
 ju
+<<<<<<< HEAD
 mm
 ld
 ju
+=======
+ab
+ab
+ab
+>>>>>>> Updated this old code to fork
 ab
 ab
 ab
@@ -8283,9 +9889,15 @@ ju
 lR
 ld
 ju
+<<<<<<< HEAD
 cP
 ld
 ju
+=======
+ab
+ab
+ab
+>>>>>>> Updated this old code to fork
 ab
 ab
 ab
@@ -8333,9 +9945,15 @@ ju
 ju
 ju
 ju
+<<<<<<< HEAD
 ju
 ju
 ju
+=======
+ab
+ab
+ab
+>>>>>>> Updated this old code to fork
 ab
 ab
 ab

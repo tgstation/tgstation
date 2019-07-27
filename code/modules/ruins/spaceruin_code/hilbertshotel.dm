@@ -140,7 +140,11 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
                         if(ismob(A))
                             var/mob/M = A
                             if(M.mind)
+<<<<<<< HEAD
                                 to_chat(M, "<span class='warning'>As the sphere breaks apart, you're suddenly ejected into the depths of space!</span>")
+=======
+                                to_chat(M, "<span class='warning'>As the sphere breaks apart, you're suddenly ejected into the depths of space!")
+>>>>>>> Updated this old code to fork
                         var/max = world.maxx-TRANSITIONEDGE
                         var/min = 1+TRANSITIONEDGE
                         var/list/possible_transtitons = list()
@@ -319,6 +323,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     var/datum/turf_reservation/reservation
     var/turf/storageTurf
 
+<<<<<<< HEAD
 /area/hilbertshotel/Entered(atom/movable/AM)
     . = ..()
     if(istype(AM, /obj/item/hilbertshotel))
@@ -346,6 +351,8 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
         to_chat(M, "<span class='danger'>[H] almost implodes in upon itself, but quickly rebounds, shooting off into a random point in space!</span>")
     H.forceMove(targetturf)
 
+=======
+>>>>>>> Updated this old code to fork
 /area/hilbertshotel/Exited(atom/movable/AM)
     . = ..()
     if(ismob(AM))
@@ -528,3 +535,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     Lay your head to rest, it soon becomes clear<br>
     There's always more room around every bend<br>
     Not all that's countable has an end...<i>"}
+<<<<<<< HEAD
+=======
+
+>>>>>>> Updated this old code to fork

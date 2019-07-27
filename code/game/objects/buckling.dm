@@ -54,12 +54,17 @@
 		M.buckling = null
 		return FALSE
 
+<<<<<<< HEAD
 	if(M.pulledby)
 		if(buckle_prevents_pull)
 			M.pulledby.stop_pulling()
 		else if(isliving(M.pulledby))
 			var/mob/living/L = M.pulledby
 			L.reset_pull_offsets(M, TRUE)
+=======
+	if(M.pulledby && buckle_prevents_pull)
+		M.pulledby.stop_pulling()
+>>>>>>> Updated this old code to fork
 
 	if(!check_loc && M.loc != loc)
 		M.forceMove(loc)
@@ -140,7 +145,10 @@
 				"<span class='notice'>You unbuckle yourself from [src].</span>",\
 				"<span class='italics'>You hear metal clanking.</span>")
 		add_fingerprint(user)
+<<<<<<< HEAD
 		if(isliving(M.pulledby))
 			var/mob/living/L = M.pulledby
 			L.set_pull_offsets(M, L.grab_state)
+=======
+>>>>>>> Updated this old code to fork
 	return M

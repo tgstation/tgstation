@@ -35,10 +35,17 @@
 	name_source = GLOB.commando_names
 
 /datum/antagonist/ert/deathsquad/apply_innate_effects(mob/living/mob_override)
+<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_DISK_VERIFIER, DEATHSQUAD_TRAIT)
 
 /datum/antagonist/ert/deathsquad/remove_innate_effects(mob/living/mob_override)
 	REMOVE_TRAIT(owner, TRAIT_DISK_VERIFIER, DEATHSQUAD_TRAIT)
+=======
+	owner.add_trait(TRAIT_DISK_VERIFIER, DEATHSQUAD_TRAIT)
+
+/datum/antagonist/ert/deathsquad/remove_innate_effects(mob/living/mob_override)
+	owner.remove_trait(TRAIT_DISK_VERIFIER, DEATHSQUAD_TRAIT)
+>>>>>>> Updated this old code to fork
 
 /datum/antagonist/ert/security // kinda handled by the base template but here for completion
 
@@ -95,6 +102,7 @@
 	. = ..()
 	owner.isholy = TRUE
 
+<<<<<<< HEAD
 /datum/antagonist/ert/janitor
 	role = "Janitor"
 	outfit = /datum/outfit/ert/janitor
@@ -103,6 +111,8 @@
 	role = "Heavy Duty Janitor"
 	outfit = /datum/outfit/ert/janitor/heavy
 
+=======
+>>>>>>> Updated this old code to fork
 /datum/antagonist/ert/deathsquad/leader
 	name = "Deathsquad Officer"
 	outfit = /datum/outfit/death_commando

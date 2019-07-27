@@ -132,6 +132,7 @@
 	icon_state = "sandwater_t"
 	baseturfs = /turf/open/floor/plating/beach/coastline_t
 
+<<<<<<< HEAD
 /turf/open/floor/plating/beach/coastline_b //need to make this water subtype.
 	name = "coastline"
 	icon_state = "sandwater_b"
@@ -140,6 +141,12 @@
 	barefootstep = FOOTSTEP_LAVA
 	clawfootstep = FOOTSTEP_LAVA
 	heavyfootstep = FOOTSTEP_LAVA
+=======
+/turf/open/floor/plating/beach/coastline_b
+	name = "coastline"
+	icon_state = "sandwater_b"
+	baseturfs = /turf/open/floor/plating/beach/coastline_b
+>>>>>>> Updated this old code to fork
 
 /turf/open/floor/plating/beach/water
 	gender = PLURAL
@@ -147,10 +154,13 @@
 	desc = "You get the feeling that nobody's bothered to actually make this water functional..."
 	icon_state = "water"
 	baseturfs = /turf/open/floor/plating/beach/water
+<<<<<<< HEAD
 	footstep = FOOTSTEP_LAVA //placeholder, kinda.
 	barefootstep = FOOTSTEP_LAVA
 	clawfootstep = FOOTSTEP_LAVA
 	heavyfootstep = FOOTSTEP_LAVA
+=======
+>>>>>>> Updated this old code to fork
 
 /turf/open/floor/plating/beach/coastline_t/sandwater_inner
 	icon_state = "sandwater_inner"
@@ -248,6 +258,7 @@
 /turf/open/floor/plating/snowed/temperatre
 	temperature = 255.37
 
+<<<<<<< HEAD
 /turf/open/floor/plating/grass
 	name = "grass"
 	desc = "A patch of grass."
@@ -258,3 +269,6 @@
 	barefootstep = FOOTSTEP_GRASS
 	clawfootstep = FOOTSTEP_GRASS
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+=======
+
+>>>>>>> Updated this old code to fork

@@ -10,12 +10,21 @@
 	var/obj/machinery/quantumpad/qpad
 
 /obj/item/quantum_keycard/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(qpad)
 		. += "It's currently linked to a quantum pad."
 		. += "<span class='notice'>Alt-click to unlink the keycard.</span>"
 	else
 		. += "<span class='notice'>Insert [src] into an active quantum pad to link it.</span>"
+=======
+	..()
+	if(qpad)
+		to_chat(user, "It's currently linked to a quantum pad.")
+		to_chat(user, "<span class='notice'>Alt-click to unlink the keycard.</span>")
+	else
+		to_chat(user, "<span class='notice'>Insert [src] into an active quantum pad to link it.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/item/quantum_keycard/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
@@ -29,4 +38,8 @@
 	if(qpad)
 		icon_state = "quantum_keycard_on"
 	else
+<<<<<<< HEAD
 		icon_state = initial(icon_state)
+=======
+		icon_state = initial(icon_state)
+>>>>>>> Updated this old code to fork

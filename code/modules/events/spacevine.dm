@@ -292,7 +292,11 @@
 	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
 
 /obj/structure/spacevine/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
+=======
+	..()
+>>>>>>> Updated this old code to fork
 	var/text = "This one is a"
 	if(mutations.len)
 		for(var/A in mutations)
@@ -301,7 +305,11 @@
 	else
 		text += " normal"
 	text += " vine."
+<<<<<<< HEAD
 	. += text
+=======
+	to_chat(user, text)
+>>>>>>> Updated this old code to fork
 
 /obj/structure/spacevine/Destroy()
 	for(var/datum/spacevine_mutation/SM in mutations)

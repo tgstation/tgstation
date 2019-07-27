@@ -49,7 +49,11 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(C.get_item_by_slot(SLOT_HEAD) == src)
+<<<<<<< HEAD
 			if(HAS_TRAIT_FROM(src, TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT) && !struggling)
+=======
+			if(has_trait(TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT) && !struggling)
+>>>>>>> Updated this old code to fork
 				struggling = TRUE
 				var/fear_string
 				switch(time_left)
@@ -74,7 +78,11 @@
 				else
 					user.visible_message("<span class='warning'>The lock on [user]'s [name] pops open!</span>", \
 					"<span class='userdanger'>You force open the padlock!</span>", "<i>You hear a single, pronounced click!</i>")
+<<<<<<< HEAD
 					REMOVE_TRAIT(src, TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT)
+=======
+					remove_trait(TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT)
+>>>>>>> Updated this old code to fork
 				struggling = FALSE
 			else
 				..()
@@ -116,7 +124,11 @@
 
 /obj/item/reverse_bear_trap/proc/reset()
 	ticking = FALSE
+<<<<<<< HEAD
 	REMOVE_TRAIT(src, TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT)
+=======
+	remove_trait(TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT)
+>>>>>>> Updated this old code to fork
 	soundloop.stop()
 	soundloop2.stop()
 	STOP_PROCESSING(SSprocessing, src)
@@ -125,7 +137,11 @@
 	ticking = TRUE
 	escape_chance = initial(escape_chance) //we keep these vars until re-arm, for tracking purposes
 	time_left = initial(time_left)
+<<<<<<< HEAD
 	ADD_TRAIT(src, TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT)
+=======
+	add_trait(TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT)
+>>>>>>> Updated this old code to fork
 	soundloop.start()
 	soundloop2.mid_length = initial(soundloop2.mid_length)
 	soundloop2.start()

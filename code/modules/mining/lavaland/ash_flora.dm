@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 //*******************Contains everything related to the flora on lavaland.*******************************
 //This includes: The structures, their produce, their seeds and the crafting recipe for the mushroom bowl
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/structure/flora/ash
 	gender = PLURAL
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER //sporangiums up don't shoot
@@ -58,7 +61,11 @@
 	harvested = FALSE
 
 /obj/structure/flora/ash/attackby(obj/item/W, mob/user, params)
+<<<<<<< HEAD
 	if(!harvested && needs_sharp_harvest && W.is_sharp())
+=======
+	if(!harvested && needs_sharp_harvest && W.sharpness)
+>>>>>>> Updated this old code to fork
 		user.visible_message("<span class='notice'>[user] starts to harvest from [src] with [W].</span>","<span class='notice'>You begin to harvest from [src] with [W].</span>")
 		if(do_after(user, harvest_time, target = src))
 			harvest(user)
@@ -146,13 +153,20 @@
 	// min dmg 3, max dmg 6, prob(70)
 	AddComponent(/datum/component/caltrop, 3, 6, 70)
 
+<<<<<<< HEAD
 //SNACKS
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/item/reagent_containers/food/snacks/grown/ash_flora
 	name = "mushroom shavings"
 	desc = "Some shavings from a tall mushroom. With enough, might serve as a bowl."
 	icon = 'icons/obj/lavaland/ash_flora.dmi'
 	icon_state = "mushroom_shavings"
+<<<<<<< HEAD
+=======
+	list_reagents = list("sugar" = 3, "ethanol" = 2, "stabilizing_agent" = 3, "minttoxin" = 2)
+>>>>>>> Updated this old code to fork
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
@@ -164,11 +178,20 @@
 	pixel_x = rand(-4, 4)
 	pixel_y = rand(-4, 4)
 
+<<<<<<< HEAD
 /obj/item/reagent_containers/food/snacks/grown/ash_flora/shavings //So we can't craft bowls from everything.
+=======
+
+/obj/item/reagent_containers/food/snacks/grown/ash_flora/shavings //for actual crafting
+>>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_leaf
 	name = "mushroom leaf"
 	desc = "A leaf, from a mushroom."
+<<<<<<< HEAD
+=======
+	list_reagents = list("nutriment" = 3, "vitfro" = 2, "nicotine" = 2)
+>>>>>>> Updated this old code to fork
 	icon_state = "mushroom_leaf"
 	seed = /obj/item/seeds/lavaland/porcini
 	wine_power = 40
@@ -176,6 +199,10 @@
 /obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_cap
 	name = "mushroom cap"
 	desc = "The cap of a large mushroom."
+<<<<<<< HEAD
+=======
+	list_reagents = list("mindbreaker" = 2, "entpoly" = 4, "mushroomhallucinogen" = 2)
+>>>>>>> Updated this old code to fork
 	icon_state = "mushroom_cap"
 	seed = /obj/item/seeds/lavaland/inocybe
 	wine_power = 70
@@ -183,17 +210,26 @@
 /obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_stem
 	name = "mushroom stem"
 	desc = "A long mushroom stem. It's slightly glowing."
+<<<<<<< HEAD
+=======
+	list_reagents = list("tinlux" = 2, "vitamin" = 1, "space_drugs" = 1)
+>>>>>>> Updated this old code to fork
 	icon_state = "mushroom_stem"
 	seed = /obj/item/seeds/lavaland/ember
 	wine_power = 60
 
 /obj/item/reagent_containers/food/snacks/grown/ash_flora/cactus_fruit
 	name = "cactus fruit"
+<<<<<<< HEAD
+=======
+	list_reagents = list("vitamin" = 2, "nutriment" = 2, "vitfro" = 4)
+>>>>>>> Updated this old code to fork
 	desc = "A cactus fruit covered in a thick, reddish skin. And some ash."
 	icon_state = "cactus_fruit"
 	seed = /obj/item/seeds/lavaland/cactus
 	wine_power = 50
 
+<<<<<<< HEAD
 //SEEDS
 
 /obj/item/seeds/lavaland
@@ -288,6 +324,8 @@
 	icon = 'icons/obj/lavaland/ash_flora.dmi'
 	icon_state = "mushroom_soup"
 
+=======
+>>>>>>> Updated this old code to fork
 /obj/item/reagent_containers/glass/bowl/mushroom_bowl
 	name = "mushroom bowl"
 	desc = "A bowl made out of mushrooms. Not food, though it might have contained some at some point."
@@ -311,7 +349,11 @@
 		else if(contents.len >= 20)
 			to_chat(user, "<span class='warning'>You can't add more ingredients to [src]!</span>")
 		else
+<<<<<<< HEAD
 			if(reagents.has_reagent(/datum/reagent/water, 10)) //are we starting a soup or a salad?
+=======
+			if(reagents.has_reagent("water", 10)) //are we starting a soup or a salad?
+>>>>>>> Updated this old code to fork
 				var/obj/item/reagent_containers/food/snacks/customizable/A = new/obj/item/reagent_containers/food/snacks/customizable/soup/ashsoup(get_turf(src))
 				A.initialize_custom_food(src, S, user)
 			else
@@ -319,3 +361,26 @@
 				A.initialize_custom_food(src, S, user)
 	else
 		. = ..()
+<<<<<<< HEAD
+=======
+
+//what you can craft with these things
+/datum/crafting_recipe/mushroom_bowl
+	name = "Mushroom Bowl"
+	result = /obj/item/reagent_containers/glass/bowl/mushroom_bowl
+	reqs = list(/obj/item/reagent_containers/food/snacks/grown/ash_flora/shavings = 5)
+	time = 30
+	category = CAT_PRIMAL
+
+/obj/item/reagent_containers/food/snacks/customizable/salad/ashsalad
+	desc = "Very ashy."
+	trash = /obj/item/reagent_containers/glass/bowl/mushroom_bowl
+	icon = 'icons/obj/lavaland/ash_flora.dmi'
+	icon_state = "mushroom_bowl"
+
+/obj/item/reagent_containers/food/snacks/customizable/soup/ashsoup
+	desc = "A bowl with ash and... stuff in it."
+	trash = /obj/item/reagent_containers/glass/bowl/mushroom_bowl
+	icon = 'icons/obj/lavaland/ash_flora.dmi'
+	icon_state = "mushroom_soup"
+>>>>>>> Updated this old code to fork

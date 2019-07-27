@@ -12,7 +12,11 @@
 
 /obj/item/gun/energy/e_gun/mini
 	name = "miniature energy gun"
+<<<<<<< HEAD
 	desc = "A small, pistol-sized energy gun with a built-in flashlight. It has two settings: disable and kill."
+=======
+	desc = "A small, pistol-sized energy gun with a built-in flashlight. It has two settings: stun and kill."
+>>>>>>> Updated this old code to fork
 	icon_state = "mini"
 	item_state = "gun"
 	w_class = WEIGHT_CLASS_SMALL
@@ -53,10 +57,16 @@
 /obj/item/gun/energy/e_gun/hos
 	name = "\improper X-01 MultiPhase Energy Gun"
 	desc = "This is an expensive, modern recreation of an antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
+<<<<<<< HEAD
 	cell_type = /obj/item/stock_parts/cell{charge = 1200; maxcharge = 1200}
 	icon_state = "hoslaser"
 	force = 10
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/ion/hos)
+=======
+	icon_state = "hoslaser"
+	force = 10
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/disabler)
+>>>>>>> Updated this old code to fork
 	ammo_x_offset = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
@@ -96,11 +106,18 @@
 	item_state = "nucgun"
 	charge_delay = 5
 	pin = null
+<<<<<<< HEAD
 	can_charge = FALSE
 	ammo_x_offset = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)
 	selfcharge = 1
 	var/reactor_overloaded
+=======
+	can_charge = 0
+	ammo_x_offset = 1
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)
+	selfcharge = 1
+>>>>>>> Updated this old code to fork
 	var/fail_tick = 0
 	var/fail_chance = 0
 
@@ -125,7 +142,11 @@
 			if(201 to INFINITY)
 				SSobj.processing.Remove(src)
 				M.rad_act(80)
+<<<<<<< HEAD
 				reactor_overloaded = TRUE
+=======
+				crit_fail = 1
+>>>>>>> Updated this old code to fork
 				to_chat(M, "<span class='userdanger'>Your [name]'s reactor overloads!</span>")
 
 /obj/item/gun/energy/e_gun/nuclear/emp_act(severity)
@@ -136,7 +157,11 @@
 
 /obj/item/gun/energy/e_gun/nuclear/update_icon()
 	..()
+<<<<<<< HEAD
 	if(reactor_overloaded)
+=======
+	if(crit_fail)
+>>>>>>> Updated this old code to fork
 		add_overlay("[icon_state]_fail_3")
 	else
 		switch(fail_tick)

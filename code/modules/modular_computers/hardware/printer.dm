@@ -13,8 +13,13 @@
 	to_chat(user, "Paper level: [stored_paper]/[max_paper].")
 
 /obj/item/computer_hardware/printer/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	. += "<span class='notice'>Paper level: [stored_paper]/[max_paper].</span>"
+=======
+	..()
+	to_chat(user, "<span class='notice'>Paper level: [stored_paper]/[max_paper].</span>")
+>>>>>>> Updated this old code to fork
 
 
 /obj/item/computer_hardware/printer/proc/print_text(var/text_to_print, var/paper_title = "")
@@ -59,4 +64,8 @@
 	icon_state = "printer_mini"
 	w_class = WEIGHT_CLASS_TINY
 	stored_paper = 5
+<<<<<<< HEAD
 	max_paper = 15
+=======
+	max_paper = 15
+>>>>>>> Updated this old code to fork

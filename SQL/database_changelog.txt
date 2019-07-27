@@ -1,15 +1,24 @@
 Any time you make a change to the schema files, remember to increment the database schema version. Generally increment the minor number, major should be reserved for significant changes to the schema. Both values go up to 255.
 
+<<<<<<< HEAD
 The latest database version is 5.3; The query to update the schema revision table is:
 
 INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 3);
 or
 INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 3);
+=======
+The latest database version is 4.7; The query to update the schema revision table is:
+
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 0);
+or
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 0);
+>>>>>>> Updated this old code to fork
 
 In any query remember to add a prefix to the table names if you use one.
 
 ----------------------------------------------------
 
+<<<<<<< HEAD
 Version 5.3, 6 July 2019, by Atlanta-Ned
 Added a `feedback` column to the admin table, used for linking to individual admin feedback threads. Currently this is only used for statistics tracking tools such as Statbus and isn't used by the game.
 
@@ -62,6 +71,8 @@ CREATE TABLE `stickyban_matched_cid` (
 
 ----------------------------------------------------
 
+=======
+>>>>>>> Updated this old code to fork
 Version 5.0, 28 October 2018, by Jordie0608
 Modified ban table to remove the need for the `bantype` column, a python script is used to migrate data to this new format.
 
@@ -140,7 +151,12 @@ Added table `role_time_log` and triggers `role_timeTlogupdate`, `role_timeTlogin
 
 CREATE TABLE `role_time_log` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `ckey` VARCHAR(32) NOT NULL , `job` VARCHAR(128) NOT NULL , `delta` INT NOT NULL , `datetime` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`), INDEX (`ckey`), INDEX (`job`), INDEX (`datetime`)) ENGINE = InnoDB;
 
+<<<<<<< HEAD
 DELIMITER $$
+=======
+DELIMITER
+$$
+>>>>>>> Updated this old code to fork
 CREATE TRIGGER `role_timeTlogupdate` AFTER UPDATE ON `role_time` FOR EACH ROW BEGIN INSERT into role_time_log (ckey, job, delta) VALUES (NEW.CKEY, NEW.job, NEW.minutes-OLD.minutes);
 END
 $$
@@ -150,7 +166,11 @@ $$
 CREATE TRIGGER `role_timeTlogdelete` AFTER DELETE  ON `role_time` FOR EACH ROW BEGIN INSERT into role_time_log (ckey, job, delta) VALUES (OLD.ckey, OLD.job, 0-OLD.minutes);
 END
 $$
+<<<<<<< HEAD
 DELIMITER ;
+=======
+
+>>>>>>> Updated this old code to fork
 ----------------------------------------------------
 
 Version 4.2, 17 April 2018, by Jordie0608

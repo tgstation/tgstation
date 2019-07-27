@@ -43,10 +43,17 @@
 	var/can_see_clockwork = is_servant_of_ratvar(user) || isobserver(user)
 	if(can_see_clockwork && clockwork_desc)
 		desc = clockwork_desc
+<<<<<<< HEAD
 	. = ..()
 	desc = initial(desc)
 	if(unanchored_icon)
 		. += "<span class='notice'>[src] is [anchored ? "":"not "]secured to the floor.</span>"
+=======
+	..()
+	desc = initial(desc)
+	if(unanchored_icon)
+		to_chat(user, "<span class='notice'>[src] is [anchored ? "":"not "]secured to the floor.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/structure/destructible/clockwork/examine_status(mob/user)
 	if(is_servant_of_ratvar(user) || isobserver(user))
@@ -155,12 +162,21 @@
 	var/inactive_icon = null //icon_state while process() isn't being called
 
 /obj/structure/destructible/clockwork/powered/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		if(!can_access_clockwork_power(src))
 			. += "<span class='alloy'>It has no access to the power network! Create a sigil of transmission nearby.</span>"
 		else
 			. += "<span class='brass'>It has access to <b>[DisplayPower(get_clockwork_power())]</b> of power.</span>"
+=======
+	..()
+	if(is_servant_of_ratvar(user) || isobserver(user))
+		if(!can_access_clockwork_power(src))
+			to_chat(user, "<span class='alloy'>It has no access to the power network! Create a sigil of transmission nearby.</span>")
+		else
+			to_chat(user, "<span class='brass'>It has access to <b>[DisplayPower(get_clockwork_power())]</b> of power.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/structure/destructible/clockwork/powered/Destroy()
 	SSfastprocess.processing -= src

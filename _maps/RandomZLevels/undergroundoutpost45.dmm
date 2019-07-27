@@ -252,7 +252,13 @@
 /area/awaymission/undergroundoutpost45/central)
 "aO" = (
 /obj/machinery/door/firedoor,
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/neutral,
+=======
+/obj/effect/turf_decal/tile/neutral{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -406,6 +412,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/secure_closet{
 	icon_state = "sec";
+<<<<<<< HEAD
+=======
+	locked = 1;
+>>>>>>> Updated this old code to fork
 	name = "security officer's locker";
 	req_access_txt = "201"
 	},
@@ -608,7 +618,12 @@
 /area/awaymission/undergroundoutpost45/central)
 "bB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+<<<<<<< HEAD
 	dir = 5
+=======
+	dir = 5;
+	level = 1
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -633,7 +648,12 @@
 /area/awaymission/undergroundoutpost45/central)
 "bD" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+<<<<<<< HEAD
 	dir = 10
+=======
+	dir = 10;
+	level = 1
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -791,23 +811,38 @@
 /area/awaymission/undergroundoutpost45/central)
 "bV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+<<<<<<< HEAD
 	dir = 10
+=======
+	dir = 10;
+	level = 1
+>>>>>>> Updated this old code to fork
 	},
 /turf/closed/wall,
 /area/awaymission/undergroundoutpost45/central)
 "bW" = (
 /obj/structure/glowshroom/single,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "bX" = (
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 351.9
 	},
@@ -1268,7 +1303,12 @@
 /area/awaymission/undergroundoutpost45/central)
 "cV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+<<<<<<< HEAD
 	dir = 10
+=======
+	dir = 10;
+	level = 1
+>>>>>>> Updated this old code to fork
 	},
 /turf/closed/wall/rust,
 /area/awaymission/undergroundoutpost45/central)
@@ -1404,6 +1444,10 @@
 /area/awaymission/undergroundoutpost45/central)
 "dm" = (
 /obj/machinery/firealarm{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel{
@@ -1423,7 +1467,13 @@
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/green,
+=======
+/obj/effect/turf_decal/tile/green{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -1702,6 +1752,10 @@
 	dir = 4
 	},
 /obj/machinery/firealarm{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	pixel_y = 24
 	},
 /obj/effect/turf_decal/tile/green{
@@ -1749,7 +1803,12 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/monkey,
 /obj/item/reagent_containers/food/snacks/meat/slab/monkey,
 /obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+<<<<<<< HEAD
 /obj/structure/closet/secure_closet/freezer{
+=======
+/obj/structure/closet/secure_closet{
+	icon_state = "freezer";
+>>>>>>> Updated this old code to fork
 	locked = 0;
 	name = "meat fridge";
 	req_access_txt = "201"
@@ -1772,7 +1831,12 @@
 /obj/item/reagent_containers/food/condiment/milk,
 /obj/item/storage/fancy/egg_box,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/closet/secure_closet/freezer{
+=======
+/obj/structure/closet/secure_closet{
+	icon_state = "freezer";
+>>>>>>> Updated this old code to fork
 	locked = 0;
 	name = "refrigerator";
 	req_access_txt = "201"
@@ -1828,7 +1892,13 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/neutral,
+=======
+/obj/effect/turf_decal/tile/neutral{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -1929,11 +1999,20 @@
 /area/awaymission/undergroundoutpost45/central)
 "ed" = (
 /obj/machinery/door/firedoor,
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/door/airlock/command{
 	name = "Gateway Chamber";
 	req_access_txt = "201"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -2093,10 +2172,17 @@
 /area/awaymission/undergroundoutpost45/central)
 "eu" = (
 /turf/open/floor/plating{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	icon_plating = "asteroidplating";
 	icon_state = "asteroidplating";
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+	icon_plating = "asteroidplating";
+	icon_state = "asteroidplating";
+>>>>>>> Updated this old code to fork
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
@@ -2151,7 +2237,11 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "ez" = (
+<<<<<<< HEAD
 /obj/structure/chair{
+=======
+/obj/structure/chair/office{
+>>>>>>> Updated this old code to fork
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral,
@@ -2175,7 +2265,11 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "eC" = (
+<<<<<<< HEAD
 /obj/structure/chair{
+=======
+/obj/structure/chair/office{
+>>>>>>> Updated this old code to fork
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -2248,8 +2342,13 @@
 /area/awaymission/undergroundoutpost45/central)
 "eJ" = (
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -2275,7 +2374,11 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "eL" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
@@ -2291,7 +2394,13 @@
 /obj/machinery/door/firedoor,
 /obj/item/folder/red,
 /obj/machinery/door/window/southleft{
+<<<<<<< HEAD
 	dir = 8;
+=======
+	base_state = "left";
+	dir = 8;
+	icon_state = "left";
+>>>>>>> Updated this old code to fork
 	name = "Security Checkpoint";
 	req_access_txt = "201"
 	},
@@ -2300,7 +2409,11 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "eN" = (
+<<<<<<< HEAD
 /obj/structure/chair{
+=======
+/obj/structure/chair/office{
+>>>>>>> Updated this old code to fork
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2330,7 +2443,13 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/southleft{
+<<<<<<< HEAD
 	dir = 4;
+=======
+	base_state = "left";
+	dir = 4;
+	icon_state = "left";
+>>>>>>> Updated this old code to fork
 	name = "Hydroponics Desk";
 	req_access_txt = "201"
 	},
@@ -2467,7 +2586,13 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fb" = (
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/green,
+=======
+/obj/effect/turf_decal/tile/green{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -2525,21 +2650,43 @@
 	network = list("uo45")
 	},
 /obj/machinery/power/apc/highcap/fifteen_k{
+<<<<<<< HEAD
 	locked = 0;
 	name = "Hydroponics APC";
 	pixel_y = -23;
 	start_charge = 100
 	},
+=======
+	dir = 2;
+	locked = 0;
+	name = "Hydroponics APC";
+	pixel_y = -25;
+	req_access = null;
+	start_charge = 100
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fh" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -28
 	},
@@ -2547,44 +2694,80 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fi" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fj" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fk" = (
 /obj/structure/disposalpipe/segment,
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fl" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -2592,7 +2775,10 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -2606,8 +2792,13 @@
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -2699,12 +2890,24 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fx" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -2712,27 +2915,48 @@
 	name = "Hydroponics Maintenance";
 	req_access_txt = "201"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fy" = (
+<<<<<<< HEAD
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fz" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
@@ -2834,8 +3058,13 @@
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -2866,9 +3095,17 @@
 /turf/closed/wall,
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "fP" = (
+<<<<<<< HEAD
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2"
@@ -2977,22 +3214,40 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "gb" = (
+<<<<<<< HEAD
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "gc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+<<<<<<< HEAD
 	dir = 5
+=======
+	dir = 5;
+	level = 1
+>>>>>>> Updated this old code to fork
 	},
 /turf/closed/wall/r_wall,
 /area/awaymission/undergroundoutpost45/central)
 "gd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+<<<<<<< HEAD
 	dir = 10
+=======
+	dir = 10;
+	level = 1
+>>>>>>> Updated this old code to fork
 	},
 /turf/closed/wall/r_wall,
 /area/awaymission/undergroundoutpost45/central)
@@ -3009,8 +3264,13 @@
 "gf" = (
 /obj/structure/glowshroom/single,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -3036,11 +3296,20 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "gj" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3080,21 +3349,39 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "gp" = (
+<<<<<<< HEAD
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
 /area/awaymission/undergroundoutpost45/central)
 "gq" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3151,8 +3438,13 @@
 "gB" = (
 /obj/machinery/light/small,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -3204,10 +3496,19 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "gH" = (
+<<<<<<< HEAD
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3240,6 +3541,10 @@
 	amount = 23
 	},
 /turf/open/floor/plasteel/white/side{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -3247,6 +3552,10 @@
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plasteel/white/side{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -3268,9 +3577,17 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "gQ" = (
+<<<<<<< HEAD
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
@@ -3369,6 +3686,10 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Research Lab";
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	network = list("uo45","uo45r")
 	},
 /turf/open/floor/plasteel/white{
@@ -3377,6 +3698,10 @@
 /area/awaymission/undergroundoutpost45/research)
 "gZ" = (
 /obj/machinery/firealarm{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel/white{
@@ -3415,8 +3740,13 @@
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -3426,8 +3756,13 @@
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -3458,8 +3793,13 @@
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -3529,7 +3869,13 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "ho" = (
+<<<<<<< HEAD
 /obj/machinery/vending/boozeomat,
+=======
+/obj/machinery/vending/boozeomat{
+	req_access_txt = "0"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -3608,7 +3954,10 @@
 /obj/machinery/gateway/centeraway{
 	calibrated = 0
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -3893,11 +4242,20 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "hW" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3929,6 +4287,12 @@
 /area/awaymission/undergroundoutpost45/gateway)
 "hZ" = (
 /obj/machinery/gateway,
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -3939,7 +4303,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -4131,11 +4498,20 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "iu" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/door/window{
 	name = "Gateway Chamber";
 	req_access_txt = "201"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -4335,9 +4711,17 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "iM" = (
+<<<<<<< HEAD
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
@@ -4365,7 +4749,13 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "iP" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -4435,7 +4825,12 @@
 /area/awaymission/undergroundoutpost45/gateway)
 "iX" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+<<<<<<< HEAD
 	dir = 10
+=======
+	dir = 10;
+	level = 1
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
@@ -4529,6 +4924,10 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "jf" = (
 /obj/structure/closet/secure_closet{
+<<<<<<< HEAD
+=======
+	icon_state = "secure";
+>>>>>>> Updated this old code to fork
 	locked = 0;
 	name = "kitchen Cabinet";
 	req_access_txt = "201"
@@ -4567,10 +4966,19 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "ji" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -4775,12 +5183,21 @@
 /turf/closed/wall/rust,
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "jD" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2"
@@ -4840,8 +5257,13 @@
 "jL" = (
 /obj/machinery/light/small,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -4874,8 +5296,13 @@
 "jP" = (
 /obj/machinery/light/small,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -4926,23 +5353,43 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "jV" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 1;
 	locked = 0;
 	name = "UO45 Bar APC";
+<<<<<<< HEAD
 	pixel_y = 23;
+=======
+	pixel_y = 25;
+	req_access = null;
+>>>>>>> Updated this old code to fork
 	start_charge = 100
 	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "jW" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -4954,12 +5401,24 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "jX" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/junction/flip{
 	dir = 2
 	},
@@ -4971,12 +5430,21 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "jY" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -4984,24 +5452,42 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "jZ" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "ka" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -5009,25 +5495,43 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "kb" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
 /area/awaymission/undergroundoutpost45/central)
 "kc" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
@@ -5035,7 +5539,10 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -5047,6 +5554,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/secure_closet{
 	icon_state = "rd";
+<<<<<<< HEAD
+=======
+	locked = 1;
+>>>>>>> Updated this old code to fork
 	name = "research director's locker";
 	req_access_txt = "201"
 	},
@@ -5125,6 +5636,12 @@
 /area/awaymission/undergroundoutpost45/research)
 "kl" = (
 /obj/machinery/door/firedoor,
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -5132,7 +5649,10 @@
 	name = "Gateway EVA";
 	req_access_txt = "201"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -5222,6 +5742,12 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "ku" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
@@ -5235,7 +5761,10 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -5734,13 +6263,22 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "lm" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/junction,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -5768,16 +6306,43 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
+<<<<<<< HEAD
 "lq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
 /obj/structure/cable,
+=======
+"lp" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/gateway)
+"lq" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "lr" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/airalarm/all_access{
 	pixel_y = 23
 	},
@@ -5786,19 +6351,45 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Gateway Ready Room";
+<<<<<<< HEAD
 	network = list("uo45","uo45r")
 	},
 /obj/structure/cable,
+=======
+	dir = 2;
+	network = list("uo45","uo45r")
+	},
+/turf/open/floor/plasteel{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/gateway)
+"ls" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "lt" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -5810,6 +6401,10 @@
 /obj/item/reagent_containers/spray/pepper,
 /obj/structure/closet/secure_closet{
 	icon_state = "sec";
+<<<<<<< HEAD
+=======
+	locked = 1;
+>>>>>>> Updated this old code to fork
 	name = "security officer's locker";
 	req_access_txt = "201"
 	},
@@ -5825,23 +6420,45 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "lv" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "lw" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "lx" = (
 /obj/machinery/door/firedoor,
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -5849,30 +6466,61 @@
 	name = "Research Division Access";
 	req_access_txt = "201"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "ly" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "lz" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/effect/turf_decal/tile/purple{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "lA" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
@@ -5885,38 +6533,74 @@
 	dir = 1;
 	network = list("uo45","uo45r")
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
+=======
+/obj/effect/turf_decal/tile/purple{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "lB" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
+=======
+/obj/effect/turf_decal/tile/purple{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "lC" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
+=======
+/obj/effect/turf_decal/tile/purple{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "lD" = (
 /obj/machinery/door/firedoor,
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -5924,24 +6608,51 @@
 	name = "Research Division Access";
 	req_access_txt = "201"
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
+=======
+/obj/effect/turf_decal/tile/purple{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "lE" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
+=======
+/obj/effect/turf_decal/tile/purple{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "lF" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
@@ -5949,13 +6660,25 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
+=======
+/obj/effect/turf_decal/tile/purple{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "lG" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/light,
 /obj/structure/disposalpipe/junction{
 	dir = 8
@@ -5965,17 +6688,35 @@
 	pixel_y = -24
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
+=======
+/obj/effect/turf_decal/tile/purple{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "lH" = (
+<<<<<<< HEAD
 /obj/machinery/power/apc/highcap/fifteen_k{
 	locked = 0;
 	name = "UO45 Research Division APC";
 	pixel_y = -23;
+=======
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/highcap/fifteen_k{
+	dir = 2;
+	locked = 0;
+	name = "UO45 Research Division APC";
+	pixel_y = -25;
+	req_access = null;
+>>>>>>> Updated this old code to fork
 	start_charge = 100
 	},
 /obj/structure/disposalpipe/segment{
@@ -5984,8 +6725,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
+=======
+/obj/effect/turf_decal/tile/purple{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -5998,7 +6745,13 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/purple,
+=======
+/obj/effect/turf_decal/tile/purple{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -6019,7 +6772,13 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/purple,
+=======
+/obj/effect/turf_decal/tile/purple{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -6028,13 +6787,25 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/purple,
+=======
+/obj/effect/turf_decal/tile/purple{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "lM" = (
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/purple,
+=======
+/obj/effect/turf_decal/tile/purple{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -6049,7 +6820,13 @@
 	dir = 1;
 	network = list("uo45","uo45r")
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/purple,
+=======
+/obj/effect/turf_decal/tile/purple{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -6149,12 +6926,21 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "lW" = (
 /obj/machinery/door/firedoor,
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock/public/glass{
 	name = "Diner"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -6183,6 +6969,10 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Engineering Secure Storage";
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	network = list("uo45")
 	},
 /turf/open/floor/plating{
@@ -6254,9 +7044,17 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "mg" = (
+<<<<<<< HEAD
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -6318,7 +7116,13 @@
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
+=======
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -6450,9 +7254,17 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "my" = (
+<<<<<<< HEAD
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -6507,10 +7319,20 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "mE" = (
+<<<<<<< HEAD
 /obj/machinery/power/apc/highcap/fifteen_k{
 	locked = 0;
 	name = "UO45 Gateway APC";
 	pixel_y = -23;
+=======
+/obj/structure/cable,
+/obj/machinery/power/apc/highcap/fifteen_k{
+	dir = 2;
+	locked = 0;
+	name = "UO45 Gateway APC";
+	pixel_y = -25;
+	req_access = null;
+>>>>>>> Updated this old code to fork
 	start_charge = 100
 	},
 /obj/machinery/light/small,
@@ -6519,7 +7341,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -6561,8 +7386,13 @@
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -6572,19 +7402,37 @@
 /turf/closed/wall/r_wall/rust,
 /area/awaymission/undergroundoutpost45/research)
 "mK" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/maintenance{
 	name = "Research Maintenance";
 	req_access_txt = "201"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "mL" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -6842,10 +7690,19 @@
 /turf/closed/wall/r_wall/rust,
 /area/awaymission/undergroundoutpost45/engineering)
 "nj" = (
+<<<<<<< HEAD
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -6903,7 +7760,11 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "np" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 1
 	},
 /turf/open/floor/plasteel{
@@ -6939,43 +7800,76 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "ns" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "nt" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
 /area/awaymission/undergroundoutpost45/research)
 "nu" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "nv" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -6983,12 +7877,21 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "nw" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -7004,12 +7907,21 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "nx" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
@@ -7022,7 +7934,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -7119,34 +8034,74 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "nI" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "nJ" = (
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/effect/turf_decal/stripes/corner,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "nK" = (
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "nL" = (
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -7156,9 +8111,17 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/undergroundoutpost45/research)
 "nN" = (
+<<<<<<< HEAD
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -7217,6 +8180,10 @@
 	},
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for monitoring the research division and the labs within.";
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	name = "research monitor";
 	network = list("uo45r")
 	},
@@ -7322,6 +8289,12 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "oa" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
@@ -7329,12 +8302,21 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "ob" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -7348,12 +8330,21 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "oc" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -7366,13 +8357,22 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "od" = (
 /obj/machinery/door/firedoor,
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -7385,29 +8385,51 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "oe" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/machinery/camera{
 	c_tag = "Dormitories";
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	network = list("uo45")
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "of" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -7415,12 +8437,21 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "og" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -7434,12 +8465,21 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "oh" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/airalarm/all_access{
 	pixel_y = 23
 	},
@@ -7456,12 +8496,21 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "oi" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -7469,12 +8518,21 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "oj" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -7485,12 +8543,21 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "ok" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -7506,12 +8573,21 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "ol" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -7521,12 +8597,21 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "om" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -7535,24 +8620,42 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "on" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "oo" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/junction/yjunction{
 	dir = 2
 	},
@@ -7563,13 +8666,22 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "op" = (
 /obj/machinery/door/firedoor,
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -7579,80 +8691,150 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Dormitories"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "oq" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "or" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/junction/yjunction{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "os" = (
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "ot" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable,
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/smes{
 	charge = 1.5e+006;
 	input_level = 10000;
 	inputting = 0;
+<<<<<<< HEAD
 	output_level = 7000
 	},
 /obj/structure/cable,
+=======
+	output_level = 7000;
+	outputting = 1
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "ou" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable,
+>>>>>>> Updated this old code to fork
 /obj/machinery/power/smes{
 	charge = 1.5e+006;
 	input_level = 30000;
 	inputting = 0;
+<<<<<<< HEAD
 	output_level = 7000
 	},
 /obj/structure/cable,
+=======
+	output_level = 7000;
+	outputting = 1
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "ov" = (
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "ow" = (
+<<<<<<< HEAD
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
@@ -7764,7 +8946,13 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/neutral,
+=======
+/obj/effect/turf_decal/tile/neutral{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -7792,7 +8980,13 @@
 "oJ" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/neutral,
+=======
+/obj/effect/turf_decal/tile/neutral{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -7833,7 +9027,13 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "oM" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/neutral,
+=======
+/obj/effect/turf_decal/tile/neutral{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -7909,6 +9109,12 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "oT" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/airalarm/all_access{
 	dir = 8;
 	pixel_x = 23
@@ -7921,12 +9127,21 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "oU" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -7934,7 +9149,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -7944,8 +9162,17 @@
 	dir = 1
 	},
 /obj/machinery/power/port_gen/pacman{
+<<<<<<< HEAD
 	name = "P.A.C.M.A.N.-type portable generator"
 	},
+=======
+	desc = "A portable generator for emergency backup power.";
+	name = "P.A.C.M.A.N.-type portable generator"
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -7955,21 +9182,58 @@
 	dir = 1
 	},
 /obj/machinery/power/port_gen/pacman/super{
+<<<<<<< HEAD
 	name = "S.U.P.E.R.P.A.C.M.A.N.-type portable generator"
 	},
 /obj/item/wrench,
+=======
+	desc = "A portable generator for emergency backup power.";
+	name = "S.U.P.E.R.P.A.C.M.A.N.-type portable generator"
+	},
+/obj/item/wrench,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plating{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/engineering)
+"oX" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/machinery/power/port_gen/pacman{
+	desc = "A portable generator for emergency backup power.";
+	name = "P.A.C.M.A.N.-type portable generator"
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "oY" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/light/small{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -7985,22 +9249,40 @@
 /turf/open/floor/engine/air,
 /area/awaymission/undergroundoutpost45/engineering)
 "pb" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "pc" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
@@ -8090,10 +9372,19 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "pk" = (
+<<<<<<< HEAD
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
@@ -8194,8 +9485,13 @@
 	dir = 6
 	},
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -8205,8 +9501,13 @@
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -8217,8 +9518,13 @@
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -8236,6 +9542,12 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/undergroundoutpost45/engineering)
 "pz" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
@@ -8243,75 +9555,139 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "pA" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "pB" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 10
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "pC" = (
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "pD" = (
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "pE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	icon_state = "in";
 	id_tag = "UO45_air_out";
 	name = "air out"
 	},
 /turf/open/floor/engine{
+<<<<<<< HEAD
 	initial_gas_mix = "n2=10580;o2=2644";
 	name = "air floor"
+=======
+	name = "air floor";
+	initial_gas_mix = "n2=10580;o2=2644"
+>>>>>>> Updated this old code to fork
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "pF" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	id = "UO45_air_in"
 	},
 /turf/open/floor/engine/air,
 /area/awaymission/undergroundoutpost45/engineering)
 "pG" = (
+<<<<<<< HEAD
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -8493,8 +9869,13 @@
 "qa" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -8506,12 +9887,21 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "qc" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "SMES Room";
 	req_access_txt = "201"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -8539,9 +9929,17 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "qf" = (
+<<<<<<< HEAD
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
@@ -8564,8 +9962,13 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/dark{
+<<<<<<< HEAD
 	initial_gas_mix = "n2=500,TEMP=80";
 	name = "Server Walkway"
+=======
+	name = "Server Walkway";
+	initial_gas_mix = "n2=500,TEMP=80"
+>>>>>>> Updated this old code to fork
 	},
 /area/awaymission/undergroundoutpost45/research)
 "qj" = (
@@ -8620,6 +10023,10 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white/corner{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -8632,6 +10039,10 @@
 /obj/item/hand_labeler,
 /obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel/white/side{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
@@ -8721,8 +10132,13 @@
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -8732,8 +10148,13 @@
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -8743,8 +10164,13 @@
 	dir = 9
 	},
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -8762,6 +10188,12 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "qE" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/computer/monitor/secret{
 	name = "primary power monitoring console"
 	},
@@ -8774,12 +10206,24 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "qF" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -8787,26 +10231,47 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "qG" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 5
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 5
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "qH" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/visible{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -8843,6 +10308,10 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Atmospherics";
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	network = list("uo45")
 	},
 /obj/structure/table,
@@ -8851,6 +10320,10 @@
 	pixel_y = 5
 	},
 /obj/machinery/firealarm{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	pixel_y = 24
 	},
 /obj/item/multitool,
@@ -8896,22 +10369,46 @@
 	dir = 10
 	},
 /obj/machinery/portable_atmospherics/scrubber,
+<<<<<<< HEAD
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel{
+=======
+/obj/effect/turf_decal/bot{
+	dir = 2
+	},
+/turf/open/floor/plasteel{
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "qN" = (
 /obj/machinery/portable_atmospherics/canister/air,
+<<<<<<< HEAD
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel{
+=======
+/obj/effect/turf_decal/bot{
+	dir = 2
+	},
+/turf/open/floor/plasteel{
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "qO" = (
+<<<<<<< HEAD
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -8934,8 +10431,13 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark{
+<<<<<<< HEAD
 	initial_gas_mix = "n2=500,TEMP=80";
 	name = "Server Walkway"
+=======
+	name = "Server Walkway";
+	initial_gas_mix = "n2=500,TEMP=80"
+>>>>>>> Updated this old code to fork
 	},
 /area/awaymission/undergroundoutpost45/research)
 "qR" = (
@@ -9005,9 +10507,17 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "qX" = (
+<<<<<<< HEAD
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
@@ -9079,13 +10589,22 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "rf" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/light/small{
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -9141,6 +10660,10 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "rl" = (
 /obj/machinery/firealarm{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	pixel_y = 24
 	},
 /obj/structure/tank_dispenser{
@@ -9218,17 +10741,32 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/undergroundoutpost45/engineering)
 "rp" = (
+<<<<<<< HEAD
 /obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 8;
 	name = "UO45 Engineering APC";
 	pixel_x = -25;
+=======
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/highcap/fifteen_k{
+	dir = 8;
+	locked = 1;
+	name = "UO45 Engineering APC";
+	pixel_x = -25;
+	req_access = null;
+>>>>>>> Updated this old code to fork
 	req_access_txt = "201";
 	start_charge = 100
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -9259,6 +10797,10 @@
 /obj/item/clothing/head/helmet,
 /obj/structure/closet/secure_closet{
 	icon_state = "sec";
+<<<<<<< HEAD
+=======
+	locked = 1;
+>>>>>>> Updated this old code to fork
 	name = "security officer's locker";
 	req_access_txt = "201"
 	},
@@ -9322,15 +10864,31 @@
 "rx" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /obj/machinery/portable_atmospherics/scrubber,
+<<<<<<< HEAD
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel{
+=======
+/obj/effect/turf_decal/bot{
+	dir = 2
+	},
+/turf/open/floor/plasteel{
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "ry" = (
+<<<<<<< HEAD
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2"
@@ -9341,8 +10899,13 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/dark{
+<<<<<<< HEAD
 	initial_gas_mix = "n2=500,TEMP=80";
 	name = "Server Walkway"
+=======
+	name = "Server Walkway";
+	initial_gas_mix = "n2=500,TEMP=80"
+>>>>>>> Updated this old code to fork
 	},
 /area/awaymission/undergroundoutpost45/research)
 "rA" = (
@@ -9447,10 +11010,19 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "rK" = (
+<<<<<<< HEAD
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
@@ -9485,6 +11057,15 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "rO" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
@@ -9492,7 +11073,10 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -9504,13 +11088,26 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/firedoor,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "rQ" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -9520,12 +11117,21 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "rR" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -9535,12 +11141,21 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "rS" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -9551,12 +11166,21 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "rT" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/airalarm/all_access{
 	pixel_y = 23
 	},
@@ -9569,12 +11193,21 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "rU" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -9585,12 +11218,21 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "rV" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -9604,12 +11246,21 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "rW" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -9623,13 +11274,22 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "rX" = (
 /obj/machinery/door/firedoor,
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -9640,41 +11300,71 @@
 	name = "Engineering Reception"
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "rY" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "rZ" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "sa" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -9703,7 +11393,13 @@
 	name = "Privacy Shutters"
 	},
 /obj/machinery/door/window/southleft{
+<<<<<<< HEAD
 	dir = 4;
+=======
+	base_state = "left";
+	dir = 4;
+	icon_state = "left";
+>>>>>>> Updated this old code to fork
 	name = "Engineering Reception";
 	req_access_txt = "201"
 	},
@@ -9789,10 +11485,20 @@
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "sj" = (
+<<<<<<< HEAD
 /obj/machinery/power/apc/highcap/fifteen_k{
 	locked = 0;
 	name = "UO45 Mining APC";
 	pixel_y = -23;
+=======
+/obj/structure/cable,
+/obj/machinery/power/apc/highcap/fifteen_k{
+	dir = 2;
+	locked = 0;
+	name = "UO45 Mining APC";
+	pixel_y = -25;
+	req_access = null;
+>>>>>>> Updated this old code to fork
 	start_charge = 100
 	},
 /obj/machinery/light/small,
@@ -9808,8 +11514,14 @@
 	},
 /obj/item/storage/backpack/satchel/eng,
 /obj/item/clothing/gloves/fingerless,
+<<<<<<< HEAD
 /obj/effect/turf_decal/tile/brown,
 /obj/structure/cable,
+=======
+/obj/effect/turf_decal/tile/brown{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -9817,7 +11529,12 @@
 "sk" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
+<<<<<<< HEAD
 	name = "Mix to Distro"
+=======
+	name = "Mix to Distro";
+	on = 0
+>>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -9995,10 +11712,19 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "sD" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -10112,11 +11838,20 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "sN" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -10159,7 +11894,11 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -10223,10 +11962,19 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "sV" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	dir = 1
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
+	dir = 1
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -10327,41 +12075,74 @@
 /turf/open/floor/engine/vacuum,
 /area/awaymission/undergroundoutpost45/engineering)
 "tg" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "th" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "ti" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
 	},
 /area/awaymission/undergroundoutpost45/research)
 "tj" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
@@ -10369,7 +12150,10 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -10424,11 +12208,20 @@
 /turf/closed/wall/r_wall/rust,
 /area/awaymission/undergroundoutpost45/research)
 "tr" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -10451,19 +12244,34 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "tu" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/light/small{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "tv" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
+=======
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/portable_atmospherics/pump,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -10475,7 +12283,13 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "tw" = (
 /obj/machinery/light/small,
+<<<<<<< HEAD
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
+=======
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
@@ -10490,13 +12304,22 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "tx" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -10576,10 +12399,19 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "tD" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	dir = 4
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -10645,7 +12477,12 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "tK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+<<<<<<< HEAD
 	dir = 5
+=======
+	dir = 5;
+	level = 1
+>>>>>>> Updated this old code to fork
 	},
 /turf/closed/wall/rust,
 /area/awaymission/undergroundoutpost45/research)
@@ -10675,6 +12512,12 @@
 /turf/closed/wall/rust,
 /area/awaymission/undergroundoutpost45/research)
 "tO" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
@@ -10682,24 +12525,42 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/scrubber,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "tP" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "tQ" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/junction/flip{
 	dir = 4
 	},
@@ -10707,37 +12568,64 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
 	},
 /area/awaymission/undergroundoutpost45/research)
 "tR" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "tS" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2"
 	},
 /area/awaymission/undergroundoutpost45/research)
 "tT" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -10745,13 +12633,22 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
 /area/awaymission/undergroundoutpost45/research)
 "tU" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -10759,12 +12656,21 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "tV" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
@@ -10772,7 +12678,10 @@
 	dir = 1
 	},
 /obj/item/stack/rods,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -10811,11 +12720,20 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "ua" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -10825,8 +12743,13 @@
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -10843,13 +12766,22 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "ue" = (
 /obj/machinery/door/firedoor,
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering Foyer";
 	req_access_txt = "201"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -10883,17 +12815,34 @@
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/air,
+<<<<<<< HEAD
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel{
+=======
+/obj/effect/turf_decal/bot{
+	dir = 2
+	},
+/turf/open/floor/plasteel{
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "uj" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
 	name = "External to Filter"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11104,11 +13053,20 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "uC" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11137,12 +13095,21 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "uG" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering";
 	req_access_txt = "201"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11186,13 +13153,25 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "uL" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/components/binary/valve,
+=======
+/obj/machinery/atmospherics/components/binary/valve{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
 "uM" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/components/binary/valve,
+=======
+/obj/machinery/atmospherics/components/binary/valve{
+	dir = 2
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -11279,9 +13258,16 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "uV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+<<<<<<< HEAD
 	dir = 5
 	},
 /obj/structure/chair/office{
+=======
+	dir = 5;
+	level = 1
+	},
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 8
 	},
 /turf/open/floor/plasteel{
@@ -11289,13 +13275,22 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "uW" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11356,6 +13351,12 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "vb" = (
 /obj/machinery/door/firedoor,
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/door/poddoor/preopen{
 	id = "UO45_Engineering";
 	name = "engineering security door"
@@ -11364,7 +13365,10 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/delivery,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11459,8 +13463,13 @@
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -11514,6 +13523,12 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "vr" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -11522,7 +13537,10 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11541,74 +13559,156 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "vt" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "vu" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "vv" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "vw" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "vx" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "vy" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "vz" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering";
 	req_access_txt = "201"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/turf/open/floor/plasteel{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/engineering)
+"vA" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/engineering)
+"vB" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11650,8 +13750,13 @@
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -11690,12 +13795,21 @@
 /area/awaymission/undergroundoutpost45/mining)
 "vO" = (
 /obj/machinery/door/firedoor,
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mining Foyer";
 	req_access_txt = "201"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11746,13 +13860,22 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "vT" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11764,7 +13887,13 @@
 /obj/structure/sign/warning/electricshock{
 	pixel_y = -32
 	},
+<<<<<<< HEAD
 /obj/machinery/vending/engivend,
+=======
+/obj/machinery/vending/engivend{
+	req_access_txt = "0"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/camera{
 	c_tag = "Engineering Foyer";
 	dir = 1;
@@ -11822,8 +13951,16 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel{
+=======
+/obj/effect/turf_decal/bot{
+	dir = 2
+	},
+/turf/open/floor/plasteel{
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11832,8 +13969,16 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel{
+=======
+/obj/effect/turf_decal/bot{
+	dir = 2
+	},
+/turf/open/floor/plasteel{
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11842,8 +13987,16 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel{
+=======
+/obj/effect/turf_decal/bot{
+	dir = 2
+	},
+/turf/open/floor/plasteel{
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11917,10 +14070,19 @@
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "wi" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11930,8 +14092,13 @@
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -11939,20 +14106,45 @@
 "wk" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "wl" = (
 /obj/effect/spawner/structure/window/reinforced,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "wm" = (
+<<<<<<< HEAD
 /obj/structure/disposalpipe/segment,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/door/airlock/command/glass{
 	name = "Chief Engineer";
 	req_access_txt = "201"
@@ -11968,7 +14160,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12037,8 +14232,15 @@
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "wv" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12115,6 +14317,12 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "wA" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
@@ -12129,7 +14337,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12154,23 +14365,48 @@
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "wD" = (
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "wE" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "wF" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12192,7 +14428,11 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "wH" = (
+<<<<<<< HEAD
 /obj/structure/chair,
+=======
+/obj/structure/chair/office,
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -12224,6 +14464,12 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "wJ" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -12235,7 +14481,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12295,10 +14544,29 @@
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "wP" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/mining)
+"wQ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12364,6 +14632,12 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "wU" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -12382,7 +14656,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12430,11 +14707,20 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12481,6 +14767,12 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "xd" = (
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -12491,7 +14783,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12503,6 +14798,12 @@
 /obj/machinery/newscaster{
 	pixel_y = -28
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+>>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -12514,7 +14815,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12554,7 +14858,13 @@
 	req_access_txt = "201"
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12617,6 +14927,10 @@
 	dir = 1;
 	name = "primary power monitoring console"
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable,
+>>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -12627,13 +14941,20 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "xl" = (
 /obj/machinery/conveyor{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	id = "UO45_mining"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -12677,14 +14998,25 @@
 	dir = 8;
 	pixel_x = 23
 	},
+<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "xq" = (
 /obj/machinery/conveyor{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	id = "UO45_mining"
 	},
 /obj/structure/sign/warning/nosmoking{
@@ -12712,6 +15044,18 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
+<<<<<<< HEAD
+=======
+"xt" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/mining)
+>>>>>>> Updated this old code to fork
 "xu" = (
 /obj/machinery/suit_storage_unit/mining,
 /obj/effect/decal/cleanable/dirt,
@@ -12730,7 +15074,12 @@
 /area/awaymission/undergroundoutpost45/mining)
 "xw" = (
 /obj/machinery/mineral/processing_unit{
+<<<<<<< HEAD
 	dir = 1
+=======
+	dir = 1;
+	output_dir = 2
+>>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -12766,7 +15115,13 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12812,6 +15167,10 @@
 /area/awaymission/undergroundoutpost45/mining)
 "xE" = (
 /obj/machinery/conveyor{
+<<<<<<< HEAD
+=======
+	dir = 2;
+>>>>>>> Updated this old code to fork
 	id = "UO45_mining"
 	},
 /obj/machinery/light/small{
@@ -12843,7 +15202,13 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12856,7 +15221,13 @@
 	name = "Mining EVA";
 	req_access_txt = "201"
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12866,7 +15237,13 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12875,6 +15252,12 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -12920,20 +15303,41 @@
 /obj/machinery/computer/mech_bay_power_console{
 	dir = 1
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "xR" = (
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/mech_bay_recharge_floor,
 /area/awaymission/undergroundoutpost45/mining)
 "xS" = (
 /obj/machinery/mech_bay_recharge_port{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/structure/cable,
+=======
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+>>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/mining)
 "xT" = (
@@ -13069,8 +15473,13 @@
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -13078,8 +15487,13 @@
 "yh" = (
 /obj/structure/ore_box,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -13087,8 +15501,13 @@
 "yi" = (
 /obj/structure/closet/crate,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -13098,8 +15517,13 @@
 /obj/structure/bed/nest,
 /obj/effect/mob_spawn/human,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -13108,8 +15532,13 @@
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -13119,8 +15548,13 @@
 /obj/structure/glowshroom/single,
 /obj/effect/decal/cleanable/blood/gibs/down,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -13129,8 +15563,13 @@
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs/core,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -13138,8 +15577,13 @@
 "yn" = (
 /obj/structure/alien/weeds,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -13148,8 +15592,13 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -13158,8 +15607,13 @@
 /obj/structure/alien/weeds,
 /obj/effect/mob_spawn/human,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -13167,8 +15621,13 @@
 "yq" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -13176,8 +15635,13 @@
 "yr" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -13186,8 +15650,13 @@
 /obj/structure/alien/weeds,
 /obj/structure/glowshroom/single,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -13196,8 +15665,13 @@
 /obj/structure/alien/resin/wall,
 /obj/structure/alien/weeds,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -13206,8 +15680,13 @@
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -13215,8 +15694,13 @@
 "yz" = (
 /obj/structure/alien/resin/membrane,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -13225,8 +15709,13 @@
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs/down,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -13234,8 +15723,13 @@
 "yB" = (
 /obj/effect/decal/cleanable/blood/gibs/limb,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -13244,8 +15738,13 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/mob_spawn/human,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -13255,8 +15754,13 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/mob_spawn/human,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
@@ -13266,12 +15770,18 @@
 /obj/effect/decal/cleanable/blood/gibs/down,
 /obj/effect/mob_spawn/human,
 /turf/open/floor/plating/asteroid{
+<<<<<<< HEAD
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+=======
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	heat_capacity = 1e+006;
+>>>>>>> Updated this old code to fork
 	name = "Cave Floor";
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
+<<<<<<< HEAD
 "DJ" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -13279,12 +15789,18 @@
 	},
 /turf/open/floor/plating/airless,
 /area/awaymission/undergroundoutpost45/caves)
+=======
+"zi" = (
+/turf/open/space,
+/area/space/nearstation)
+>>>>>>> Updated this old code to fork
 "KE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
 /turf/open/floor/circuit/telecomms/server,
 /area/awaymission/undergroundoutpost45/research)
+<<<<<<< HEAD
 "OF" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/line,
@@ -13297,6 +15813,8 @@
 	},
 /turf/open/floor/plating/airless,
 /area/awaymission/undergroundoutpost45/caves)
+=======
+>>>>>>> Updated this old code to fork
 
 (1,1,1) = {"
 aa
@@ -13553,7 +16071,11 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
+=======
+zi
+>>>>>>> Updated this old code to fork
 "}
 (2,1,1) = {"
 aa
@@ -32957,7 +35479,11 @@ ji
 iP
 ed
 iP
+<<<<<<< HEAD
 iP
+=======
+lp
+>>>>>>> Updated this old code to fork
 jI
 mC
 gL
@@ -33728,7 +36254,11 @@ jl
 gv
 gv
 kA
+<<<<<<< HEAD
 ji
+=======
+ls
+>>>>>>> Updated this old code to fork
 mb
 mF
 gv
@@ -34242,7 +36772,11 @@ jn
 gL
 ke
 kC
+<<<<<<< HEAD
 ji
+=======
+ls
+>>>>>>> Updated this old code to fork
 mc
 mH
 gw
@@ -48154,7 +50688,11 @@ ww
 xZ
 yc
 ww
+<<<<<<< HEAD
 UM
+=======
+eu
+>>>>>>> Updated this old code to fork
 eJ
 eJ
 eJ
@@ -48411,7 +50949,11 @@ xX
 ya
 yd
 yf
+<<<<<<< HEAD
 OF
+=======
+eu
+>>>>>>> Updated this old code to fork
 eJ
 eJ
 eJ
@@ -48655,11 +51197,19 @@ vO
 wi
 wv
 wF
+<<<<<<< HEAD
 wF
 xa
 xh
 xp
 wv
+=======
+wQ
+xa
+xh
+xp
+xt
+>>>>>>> Updated this old code to fork
 xz
 xH
 xP
@@ -48668,7 +51218,11 @@ xY
 yb
 ye
 ww
+<<<<<<< HEAD
 DJ
+=======
+eu
+>>>>>>> Updated this old code to fork
 eJ
 eJ
 eJ
@@ -53790,7 +56344,11 @@ tC
 ui
 ln
 va
+<<<<<<< HEAD
 mL
+=======
+vA
+>>>>>>> Updated this old code to fork
 vY
 ln
 ad
@@ -54047,7 +56605,11 @@ tD
 uj
 uG
 vb
+<<<<<<< HEAD
 mL
+=======
+vB
+>>>>>>> Updated this old code to fork
 vZ
 ln
 ad
@@ -54550,7 +57112,11 @@ lZ
 ni
 nK
 ot
+<<<<<<< HEAD
 oV
+=======
+oX
+>>>>>>> Updated this old code to fork
 pC
 qb
 mw

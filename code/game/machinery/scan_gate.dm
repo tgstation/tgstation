@@ -5,6 +5,10 @@
 #define SCANGATE_GUNS 			"Guns"
 #define SCANGATE_WANTED			"Wanted"
 #define SCANGATE_SPECIES		"Species"
+<<<<<<< HEAD
+=======
+#define SCANGATE_HYGIENE		"Hygiene"
+>>>>>>> Updated this old code to fork
 #define SCANGATE_NUTRITION		"Nutrition"
 
 /obj/machinery/scanner_gate
@@ -24,6 +28,10 @@
 	var/nanite_cloud = 0
 	var/datum/species/detect_species = /datum/species/human
 	var/reverse = FALSE //If true, signals if the scan returns false
+<<<<<<< HEAD
+=======
+	var/detect_hygiene = HYGIENE_LEVEL_DIRTY
+>>>>>>> Updated this old code to fork
 	var/detect_nutrition = NUTRITION_LEVEL_FAT
 
 /obj/machinery/scanner_gate/Initialize()
@@ -31,11 +39,19 @@
 	set_scanline("passive")
 
 /obj/machinery/scanner_gate/examine(mob/user)
+<<<<<<< HEAD
 	. = ..()
 	if(locked)
 		. += "<span class='notice'>The control panel is ID-locked. Swipe a valid ID to unlock it.</span>"
 	else
 		. += "<span class='notice'>The control panel is unlocked. Swipe an ID to lock it.</span>"
+=======
+	..()
+	if(locked)
+		to_chat(user, "<span class='notice'>The control panel is ID-locked. Swipe a valid ID to unlock it.</span>")
+	else
+		to_chat(user, "<span class='notice'>The control panel is unlocked. Swipe an ID to lock it.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/machinery/scanner_gate/Crossed(atom/movable/AM)
 	..()
@@ -88,12 +104,20 @@
 				if(!R || (R.fields["criminal"] == "*Arrest*"))
 					beep = TRUE
 		if(SCANGATE_MINDSHIELD)
+<<<<<<< HEAD
 			if(HAS_TRAIT(M, TRAIT_MINDSHIELD))
+=======
+			if(M.has_trait(TRAIT_MINDSHIELD))
+>>>>>>> Updated this old code to fork
 				beep = TRUE
 		if(SCANGATE_NANITES)
 			if(SEND_SIGNAL(M, COMSIG_HAS_NANITES))
 				if(nanite_cloud)
+<<<<<<< HEAD
 					var/datum/component/nanites/nanites = M.GetComponent(/datum/component/nanites)
+=======
+					GET_COMPONENT_FROM(nanites, /datum/component/nanites, M)
+>>>>>>> Updated this old code to fork
 					if(nanites && nanites.cloud_id == nanite_cloud)
 						beep = TRUE
 				else
@@ -116,6 +140,16 @@
 				if(istype(I, /obj/item/gun))
 					beep = TRUE
 					break
+<<<<<<< HEAD
+=======
+		if(SCANGATE_HYGIENE)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H.hygiene >= detect_hygiene && detect_hygiene == HYGIENE_LEVEL_CLEAN)
+					beep = TRUE
+				if(H.hygiene <= detect_hygiene && detect_hygiene == HYGIENE_LEVEL_DIRTY)
+					beep = TRUE
+>>>>>>> Updated this old code to fork
 		if(SCANGATE_NUTRITION)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
@@ -157,6 +191,10 @@
 	data["nanite_cloud"] = nanite_cloud
 	data["disease_threshold"] = disease_threshold
 	data["target_species"] = initial(detect_species.name)
+<<<<<<< HEAD
+=======
+	data["target_hygiene"] = detect_hygiene
+>>>>>>> Updated this old code to fork
 	data["target_nutrition"] = detect_nutrition
 	return data
 
@@ -172,6 +210,10 @@
 																								SCANGATE_GUNS,
 																								SCANGATE_WANTED,
 																								SCANGATE_SPECIES,
+<<<<<<< HEAD
+=======
+																								SCANGATE_HYGIENE,
+>>>>>>> Updated this old code to fork
 																								SCANGATE_NUTRITION)
 			if(new_mode)
 				scangate_mode = new_mode
@@ -227,6 +269,19 @@
 					if("Zombie")
 						detect_species = /datum/species/zombie
 			. = TRUE
+<<<<<<< HEAD
+=======
+		if("set_target_hygiene")
+			var/new_hygiene = input("Set target hygiene level","Scan Mode") as null|anything in list("Clean",
+																									"Filthy")
+			if(new_hygiene)
+				switch(new_hygiene)
+					if("Clean")
+						detect_hygiene = HYGIENE_LEVEL_CLEAN
+					if("Filthy")
+						detect_hygiene = HYGIENE_LEVEL_DIRTY
+			. = TRUE
+>>>>>>> Updated this old code to fork
 		if("set_target_nutrition")
 			var/new_nutrition = input("Set target nutrition level","Scan Mode") as null|anything in list("Starving",
 																											"Obese")
@@ -245,4 +300,8 @@
 #undef SCANGATE_GUNS
 #undef SCANGATE_WANTED
 #undef SCANGATE_SPECIES
+<<<<<<< HEAD
+=======
+#undef SCANGATE_HYGIENE
+>>>>>>> Updated this old code to fork
 #undef SCANGATE_NUTRITION

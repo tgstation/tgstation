@@ -1,7 +1,12 @@
 //admin verb groups - They can overlap if you so wish. Only one of each verb will exist in the verbs list regardless
 //the procs are cause you can't put the comments in the GLOB var define
+<<<<<<< HEAD
 GLOBAL_LIST_INIT(admin_verbs_default, world.AVerbsDefault())
 GLOBAL_PROTECT(admin_verbs_default)
+=======
+GLOBAL_PROTECT(admin_verbs_default)
+GLOBAL_LIST_INIT(admin_verbs_default, world.AVerbsDefault())
+>>>>>>> Updated this old code to fork
 /world/proc/AVerbsDefault()
 	return list(
 	/client/proc/deadmin,				/*destroys our own admin datum so we can play as a regular player*/
@@ -19,8 +24,13 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
 	/client/proc/stop_sounds
 	)
+<<<<<<< HEAD
 GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 GLOBAL_PROTECT(admin_verbs_admin)
+=======
+GLOBAL_PROTECT(admin_verbs_admin)
+GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
+>>>>>>> Updated this old code to fork
 /world/proc/AVerbsAdmin()
 	return list(
 	/client/proc/invisimin,				/*allows our mob to go invisible/visible*/
@@ -64,7 +74,11 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/cmd_admin_check_player_exp, /* shows players by playtime */
 	/client/proc/toggle_combo_hud, // toggle display of the combination pizza antag and taco sci/med/eng hud
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
+<<<<<<< HEAD
 	/datum/admins/proc/open_shuttlepanel, /* Opens shuttle manipulator UI */
+=======
+	/client/proc/open_shuttle_manipulator, /* Opens shuttle manipulator UI */
+>>>>>>> Updated this old code to fork
 	/client/proc/deadchat,
 	/client/proc/toggleprayers,
 	/client/proc/toggle_prayer_sound,
@@ -72,6 +86,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/resetasaycolor,
 	/client/proc/toggleadminhelpsound,
 	/client/proc/respawn_character,
+<<<<<<< HEAD
 	/client/proc/discord_id_manipulation,
 	/datum/admins/proc/open_borgopanel
 	)
@@ -79,6 +94,15 @@ GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ba
 GLOBAL_PROTECT(admin_verbs_ban)
 GLOBAL_LIST_INIT(admin_verbs_sounds, list(/client/proc/play_local_sound, /client/proc/play_sound, /client/proc/set_round_end_sound))
 GLOBAL_PROTECT(admin_verbs_sounds)
+=======
+	/datum/admins/proc/open_borgopanel
+	)
+GLOBAL_PROTECT(admin_verbs_ban)
+GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
+GLOBAL_PROTECT(admin_verbs_sounds)
+GLOBAL_LIST_INIT(admin_verbs_sounds, list(/client/proc/play_local_sound, /client/proc/play_sound, /client/proc/set_round_end_sound))
+GLOBAL_PROTECT(admin_verbs_fun)
+>>>>>>> Updated this old code to fork
 GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
@@ -103,11 +127,18 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/smite,
 	/client/proc/admin_away
 	))
+<<<<<<< HEAD
 GLOBAL_PROTECT(admin_verbs_fun)
 GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom, /datum/admins/proc/podspawn_atom, /datum/admins/proc/spawn_cargo, /datum/admins/proc/spawn_objasmob, /client/proc/respawn_character, /datum/admins/proc/beaker_panel))
 GLOBAL_PROTECT(admin_verbs_spawn)
 GLOBAL_LIST_INIT(admin_verbs_server, world.AVerbsServer())
 GLOBAL_PROTECT(admin_verbs_server)
+=======
+GLOBAL_PROTECT(admin_verbs_spawn)
+GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom, /datum/admins/proc/podspawn_atom, /datum/admins/proc/spawn_cargo, /datum/admins/proc/spawn_objasmob, /client/proc/respawn_character))
+GLOBAL_PROTECT(admin_verbs_server)
+GLOBAL_LIST_INIT(admin_verbs_server, world.AVerbsServer())
+>>>>>>> Updated this old code to fork
 /world/proc/AVerbsServer()
 	return list(
 	/datum/admins/proc/startnow,
@@ -125,8 +156,13 @@ GLOBAL_PROTECT(admin_verbs_server)
 	/client/proc/panicbunker,
 	/client/proc/toggle_hub
 	)
+<<<<<<< HEAD
 GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
 GLOBAL_PROTECT(admin_verbs_debug)
+=======
+GLOBAL_PROTECT(admin_verbs_debug)
+GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
+>>>>>>> Updated this old code to fork
 /world/proc/AVerbsDebug()
 	return list(
 	/client/proc/restart_controller,
@@ -151,7 +187,11 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/get_dynex_range,		//*debug verbs for dynex explosions.
 	/client/proc/set_dynex_scale,
 	/client/proc/cmd_display_del_log,
+<<<<<<< HEAD
 	/client/proc/outfit_manager,
+=======
+	/client/proc/create_outfits,
+>>>>>>> Updated this old code to fork
 	/client/proc/modify_goals,
 	/client/proc/debug_huds,
 	/client/proc/map_template_load,
@@ -166,6 +206,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/reload_configuration,
 	/datum/admins/proc/create_or_modify_area,
 	)
+<<<<<<< HEAD
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_possess)
 GLOBAL_LIST_INIT(admin_verbs_permissions, list(/client/proc/edit_admin_permissions))
@@ -174,6 +215,17 @@ GLOBAL_LIST_INIT(admin_verbs_poll, list(/client/proc/create_poll))
 GLOBAL_PROTECT(admin_verbs_poll)
 
 //verbs which can be hidden - needs work
+=======
+GLOBAL_PROTECT(admin_verbs_possess)
+GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
+GLOBAL_PROTECT(admin_verbs_permissions)
+GLOBAL_LIST_INIT(admin_verbs_permissions, list(/client/proc/edit_admin_permissions))
+GLOBAL_PROTECT(admin_verbs_poll)
+GLOBAL_LIST_INIT(admin_verbs_poll, list(/client/proc/create_poll))
+
+//verbs which can be hidden - needs work
+GLOBAL_PROTECT(admin_verbs_hideable)
+>>>>>>> Updated this old code to fork
 GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/client/proc/set_ooc,
 	/client/proc/reset_ooc,
@@ -237,7 +289,10 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/client/proc/toggle_combo_hud,
 	/client/proc/debug_huds
 	))
+<<<<<<< HEAD
 GLOBAL_PROTECT(admin_verbs_hideable)
+=======
+>>>>>>> Updated this old code to fork
 
 /client/proc/add_admin_verbs()
 	if(holder)
@@ -334,12 +389,19 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set name = "Aghost"
 	if(!holder)
 		return
+<<<<<<< HEAD
 	. = TRUE
+=======
+>>>>>>> Updated this old code to fork
 	if(isobserver(mob))
 		//re-enter
 		var/mob/dead/observer/ghost = mob
 		if(!ghost.mind || !ghost.mind.current) //won't do anything if there is no body
+<<<<<<< HEAD
 			return FALSE
+=======
+			return
+>>>>>>> Updated this old code to fork
 		if(!ghost.can_reenter_corpse)
 			log_admin("[key_name(usr)] re-entered corpse")
 			message_admins("[key_name_admin(usr)] re-entered corpse")
@@ -348,7 +410,10 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin Reenter") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else if(isnewplayer(mob))
 		to_chat(src, "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>")
+<<<<<<< HEAD
 		return FALSE
+=======
+>>>>>>> Updated this old code to fork
 	else
 		//ghostize
 		log_admin("[key_name(usr)] admin ghosted.")

@@ -1,0 +1,4 @@
+author: "fizzle7"
+delete-after: True
+changes: 
+  - bugfix: "Tourettes bug fix. You can now swear and get stunned yet again."

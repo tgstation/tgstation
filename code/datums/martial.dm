@@ -5,6 +5,10 @@
 	var/max_streak_length = 6
 	var/current_target
 	var/datum/martial_art/base // The permanent style. This will be null unless the martial art is temporary
+<<<<<<< HEAD
+=======
+	var/deflection_chance = 0 //Chance to deflect projectiles
+>>>>>>> Updated this old code to fork
 	var/block_chance = 0 //Chance to block melee attacks using items while on throw mode.
 	var/restraining = 0 //used in cqc's disarm_act to check if the disarmed is being restrained and so whether they should be put in a chokehold or not
 	var/help_verb
@@ -116,7 +120,10 @@
 	if(help_verb)
 		H.verbs -= help_verb
 	return
+<<<<<<< HEAD
 
 ///Gets called when a projectile hits the owner. Returning anything other than BULLET_ACT_HIT will stop the projectile from hitting the mob.
 /datum/martial_art/proc/on_projectile_hit(mob/living/carbon/human/A, obj/item/projectile/P, def_zone)
 	return BULLET_ACT_HIT
+=======
+>>>>>>> Updated this old code to fork

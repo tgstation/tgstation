@@ -4,6 +4,10 @@
 	desc = "A large structural assembly made out of metal; It requires a layer of metal before it can be considered a wall."
 	anchored = TRUE
 	density = TRUE
+<<<<<<< HEAD
+=======
+	layer = BELOW_OBJ_LAYER
+>>>>>>> Updated this old code to fork
 	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
@@ -15,6 +19,7 @@
 	. = ..()
 	switch(state)
 		if(GIRDER_REINF)
+<<<<<<< HEAD
 			. += "<span class='notice'>The support struts are <b>screwed</b> in place.</span>"
 		if(GIRDER_REINF_STRUTS)
 			. += "<span class='notice'>The support struts are <i>unscrewed</i> and the inner <b>grille</b> is intact.</span>"
@@ -25,6 +30,18 @@
 			. += "<span class='notice'>The bolts are <i>loosened</i>, but the <b>screws</b> are holding [src] together.</span>"
 		if(GIRDER_DISASSEMBLED)
 			. += "<span class='notice'>[src] is disassembled! You probably shouldn't be able to see this examine message.</span>"
+=======
+			to_chat(user, "<span class='notice'>The support struts are <b>screwed</b> in place.</span>")
+		if(GIRDER_REINF_STRUTS)
+			to_chat(user, "<span class='notice'>The support struts are <i>unscrewed</i> and the inner <b>grille</b> is intact.</span>")
+		if(GIRDER_NORMAL)
+			if(can_displace)
+				to_chat(user, "<span class='notice'>The bolts are <b>wrenched</b> in place.</span>")
+		if(GIRDER_DISPLACED)
+			to_chat(user, "<span class='notice'>The bolts are <i>loosened</i>, but the <b>screws</b> are holding [src] together.</span>")
+		if(GIRDER_DISASSEMBLED)
+			to_chat(user, "<span class='notice'>[src] is disassembled! You probably shouldn't be able to see this examine message.</span>")
+>>>>>>> Updated this old code to fork
 
 /obj/structure/girder/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)

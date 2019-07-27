@@ -174,7 +174,11 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aR" = (
+<<<<<<< HEAD
 /obj/structure/chair/office{
+=======
+/obj/structure/chair/office/dark{
+>>>>>>> Updated this old code to fork
 	dir = 4
 	},
 /turf/open/floor/wood,
