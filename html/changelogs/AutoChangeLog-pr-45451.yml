@@ -1,0 +1,4 @@
+author: "Cephur sprites, Tralezab code"
+delete-after: True
+changes: 
+  - rscadd: "Added a new hat to the costume vendor"
