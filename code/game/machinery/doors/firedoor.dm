@@ -451,6 +451,21 @@
 				return
 	return ..()
 
+/obj/structure/firelock_frame/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	if((constructionStep == CONSTRUCTION_NOCIRCUIT) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
+		return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 20, "cost" = 1)	
+	return FALSE
+
+/obj/structure/firelock_frame/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
+		if(RCD_UPGRADE_SIMPLE_CIRCUITS)
+			user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
+			"<span class='notice'>You adapt a firelock circuit and slot it into the assembly.</span>")
+			constructionStep = CONSTRUCTION_GUTTED
+			update_icon()
+			return TRUE
+	return FALSE
+
 /obj/structure/firelock_frame/heavy
 	name = "heavy firelock frame"
 	reinforced = TRUE
