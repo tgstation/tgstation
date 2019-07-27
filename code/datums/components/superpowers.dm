@@ -11,8 +11,6 @@
 	var/pushable
 	// the item type that represents the unique weapon the mob uses to attack with their fists
 	var/attack_item_type
-	// the actual item that exists
-	var/obj/item/stored_attack_item
 	// an item type that is spawned when the mob dies, as well as takes away their super powers
 	var/stored_item_type
 
@@ -26,9 +24,6 @@
 	src.pushable = pushable
 	src.attack_item_type = attack_item_type
 	src.stored_item_type = stored_item_type
-
-	if(attack_item_type)
-		stored_attack_item = new attack_item_type(H)
 
 	if(!stuns)
 		ADD_TRAIT(H, TRAIT_STUNIMMUNE, COMPONENT_SUPERPOWERS_TRAIT)
@@ -55,7 +50,9 @@
 	if(attacker.a_intent == INTENT_HARM)
 		if(isobj(attacked) && !isitem(attacked) || ismob(attacked))
 			// generate an item to attack the thing with our parameters and cancel the attack
-			stored_attack_item.melee_attack_chain(attacker, attacked)
+			var/obj/item/I = new attack_item_type(attacker)
+			I.melee_attack_chain(attacker, attacked)
+			qdel(I)
 			return COMPONENT_HUMAN_MELEE_UNARMED_NO_ATTACK
 
 /*
@@ -67,5 +64,4 @@
 		REMOVE_TRAIT(H, TRAIT_STUNIMMUNE, TRAIT_HULK)
 		REMOVE_TRAIT(H, TRAIT_PUSHIMMUNE, TRAIT_HULK)
 		H.remove_movespeed_modifier(MOVESPEED_ID_SUPERPOWER_COMPONENT, update = TRUE)
-		qdel(stored_attack_item)
 		_RemoveFromParent()
