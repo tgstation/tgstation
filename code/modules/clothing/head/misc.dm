@@ -366,6 +366,11 @@
 	desc = "Lavish space tomb not included."
 	icon_state = "nemes_headdress"
 
+/obj/item/clothing/head/delinquent
+	name = "delinquent hat"
+	desc = "Good grief."
+	icon_state = "delinquent"
+
 /obj/item/clothing/head/frenchberet
 	name = "french beret"
 	desc = "A quality beret, infused with the aroma of chain-smoking, wine-swilling Parisians. You feel less inclined to engage military conflict, for some reason."
