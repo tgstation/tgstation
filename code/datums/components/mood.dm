@@ -198,13 +198,13 @@
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_GREAT)
 	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.5
 	// If the new amount would move towards the acceptable range faster then use it instead
-	if(sanity < minimum)
-		amount = sanity + CLAMP(minimum - sanity, 0, 0.7)
+	if(amount < minimum)
+		amount += CLAMP(minimum - sanity, 0, 0.7)
 	else
 		if(HAS_TRAIT(parent, TRAIT_UNSTABLE))
 			maximum = sanity
-		if(sanity > maximum)
-			amount = sanity + CLAMP(maximum - sanity, -0.5, 0)
+		if(amount > maximum)
+			amount += CLAMP(maximum - sanity, -0.5, 0)
 	if(amount == sanity) //Prevents stuff from flicking around.
 		return
 	sanity = amount
