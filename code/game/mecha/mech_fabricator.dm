@@ -104,7 +104,8 @@
 	var/i = 0
 	var/output
 	for(var/c in D.materials)
-		output += "[i?" | ":null][get_resource_cost_w_coeff(D, c)] [material2name(c)]"
+		var/datum/material/M = c
+		output += "[i?" | ":null][get_resource_cost_w_coeff(D, M)] [M.name]"
 		i++
 	return output
 
@@ -399,9 +400,9 @@
 	..()
 
 /obj/machinery/mecha_part_fabricator/proc/AfterMaterialInsert(type_inserted, id_inserted, amount_inserted)
-	var/stack_name = material2name(id_inserted)
-	add_overlay("fab-load-[stack_name]")
-	addtimer(CALLBACK(src, /atom/proc/cut_overlay, "fab-load-[stack_name]"), 10)
+	var/datum/material/M = id_inserted
+	add_overlay("fab-load-[M.name]")
+	addtimer(CALLBACK(src, /atom/proc/cut_overlay, "fab-load-[M.name]"), 10)
 	updateUsrDialog()
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/item/W, mob/user, params)
@@ -413,8 +414,6 @@
 
 	return ..()
 
-/obj/machinery/mecha_part_fabricator/proc/material2name(ID)
-	return copytext(ID,2)
 
 /obj/machinery/mecha_part_fabricator/proc/is_insertion_ready(mob/user)
 	if(panel_open)

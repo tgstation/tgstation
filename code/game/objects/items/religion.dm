@@ -78,6 +78,9 @@
 	name = "securistan banner"
 	desc = "The banner of Securistan, ruling the station with an iron fist."
 	icon_state = "banner_security"
+	item_state = "banner_security"
+	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	job_loyalties = list("Security Officer", "Warden", "Detective", "Head of Security")
 	warcry = "EVERYONE DOWN ON THE GROUND!!"
 
@@ -96,6 +99,9 @@
 	name = "meditopia banner"
 	desc = "The banner of Meditopia, generous benefactors that cure wounds and shelter the weak."
 	icon_state = "banner_medical"
+	item_state = "banner_medical"
+	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	job_loyalties = list("Medical Doctor", "Chemist", "Geneticist", "Virologist", "Chief Medical Officer")
 	warcry = "No wounds cannot be healed!"
 
@@ -122,6 +128,9 @@
 	name = "sciencia banner"
 	desc = "The banner of Sciencia, bold and daring thaumaturges and researchers that take the path less traveled."
 	icon_state = "banner_science"
+	item_state = "banner_science"
+	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	job_loyalties = list("Scientist", "Roboticist", "Research Director")
 	warcry = "For Cuban Pete!"
 
@@ -143,6 +152,9 @@
 	name = "cargonia banner"
 	desc = "The banner of the eternal Cargonia, with the mystical power of conjuring any object into existence."
 	icon_state = "banner_cargo"
+	item_state = "banner_cargo"
+	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	job_loyalties = list("Cargo Technician", "Shaft Miner", "Quartermaster")
 	warcry = "Hail Cargonia!"
 
@@ -161,6 +173,9 @@
 	name = "engitopia banner"
 	desc = "The banner of Engitopia, wielders of limitless power."
 	icon_state = "banner_engineering"
+	item_state = "banner_engineering"
+	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	job_loyalties = list("Station Engineer", "Atmospheric Technician", "Chief Engineer")
 	warcry = "All hail lord Singuloth!!"
 
