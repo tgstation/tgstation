@@ -385,14 +385,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		return FALSE
 
 	// Check if a blocking ruleset has been executed.
-	if(starting_rule.blocking_rules.len > 0)
-		for(var/blocking in starting_rule.blocking_rules)
-			for(var/datum/dynamic_ruleset/executed in executed_rules)
-				if(blocking == starting_rule.type)
-					drafted_rules -= starting_rule
-					if(drafted_rules.len <= 0)
-						return FALSE
-					starting_rule = pickweight(drafted_rules)
+	if(check_blocking(starting_rule.blocking_rules, executed_rules))
+		drafted_rules -= starting_rule
+		if(drafted_rules.len <= 0)
+			return FALSE
+		starting_rule = pickweight(drafted_rules)
 
 	if (starting_rule)
 		message_admins("Picking a [istype(starting_rule, /datum/dynamic_ruleset/roundstart/delayed/) ? " delayed " : ""] ruleset [starting_rule.name]")
@@ -452,18 +449,15 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		return FALSE
 
 	// Check if a blocking ruleset has been executed.
-	if(latejoin_rule.blocking_rules.len > 0)
-		for(var/blocking in latejoin_rule.blocking_rules)
-			for(var/datum/dynamic_ruleset/executed in executed_rules)
-				if(blocking == executed.type)
-					drafted_rules -= latejoin_rule
-					if(drafted_rules.len <= 0)
-						return FALSE
-					latejoin_rule = pickweight(drafted_rules)
+	if(check_blocking(latejoin_rule.blocking_rules, executed_rules))
+		drafted_rules -= latejoin_rule
+		if(drafted_rules.len <= 0)
+			return FALSE
+		latejoin_rule = pickweight(drafted_rules)
 	
 	if (latejoin_rule)
 		if (!latejoin_rule.repeatable)
-			latejoin_rules = remove_rule(latejoin_rules,latejoin_rule.type)
+			latejoin_rules = remove_from_list(latejoin_rules,latejoin_rule.type)
 		spend_threat(latejoin_rule.cost)
 		threat_log += "[worldtime2text()]: Latejoin [latejoin_rule.name] spent [latejoin_rule.cost]"
 		if (latejoin_rule.execute())
@@ -485,17 +479,14 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		return FALSE
 	
 	// Check if a blocking ruleset has been executed.
-	if(midround_rule.blocking_rules.len > 0)
-		for(var/blocking in midround_rule.blocking_rules)
-			for(var/datum/dynamic_ruleset/executed in executed_rules)
-				if(blocking == executed.type)
-					drafted_rules -= midround_rule
-					if(drafted_rules.len <= 0)
-						return FALSE
-					midround_rule = pickweight(drafted_rules)
-	
+	if(check_blocking(midround_rule.blocking_rules, executed_rules))
+		drafted_rules -= midround_rule
+		if(drafted_rules.len <= 0)
+			return FALSE
+		midround_rule = pickweight(drafted_rules)
+
 	if (!midround_rule.repeatable)
-		midround_rules = remove_rule(midround_rules,midround_rule.type)
+		midround_rules = remove_from_list(midround_rules,midround_rule.type)
 	spend_threat(midround_rule.cost)
 	threat_log += "[worldtime2text()]: Midround [midround_rule.name] spent [midround_rule.cost]"
 	if (midround_rule.execute())
@@ -624,12 +615,30 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		chance -= 15
 	return round(max(0,chance))
 
-/// Removes the rule_type from rule_list
-/datum/game_mode/dynamic/proc/remove_rule(list/rule_list, rule_type)
-	for(var/datum/dynamic_ruleset/DR in rule_list)
-		if(istype(DR,rule_type))
-			rule_list -= DR
-	return rule_list
+/// Removes type from the list
+/datum/game_mode/dynamic/proc/remove_from_list(list/type_list, type)
+	for(var/I in type_list)
+		if(istype(I, type))
+			type_list -= I
+	return type_list
+
+/// Checks if a type in blocking_list is in rule_list.
+/datum/game_mode/dynamic/proc/check_blocking(list/blocking_list, list/rule_list)
+	if(blocking_list.len > 0)
+		for(var/blocking in blocking_list)
+			for(var/datum/executed in rule_list)
+				if(blocking == executed.type)
+					return TRUE
+	return FALSE
+
+/// Checks if client age is age or older.
+/datum/game_mode/dynamic/proc/check_age(client/C, age)
+	enemy_minimum_age = age
+	if(get_remaining_days(C) == 0)
+		enemy_minimum_age = initial(enemy_minimum_age)
+		return TRUE // Available in 0 days = available right now = player is old enough to play.
+	enemy_minimum_age = initial(enemy_minimum_age)
+	return FALSE
 
 /datum/game_mode/dynamic/make_antag_chance(mob/living/carbon/human/newPlayer)
 	if (GLOB.dynamic_forced_extended)

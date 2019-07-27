@@ -9,7 +9,7 @@
 		if (!P.client || !P.mind || !P.mind.assigned_role) // Are they connected?
 			candidates.Remove(P)
 			continue
-		if(!mode.age_check(P.client))
+		if(!mode.check_age(P.client, minimum_required_age))
 			candidates.Remove(P)
 			continue
 		if (!(antag_flag in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag, ROLE_SYNDICATE)) || (antag_flag_override && is_banned_from(P.ckey, list(antag_flag_override))))//are they willing and not antag-banned?

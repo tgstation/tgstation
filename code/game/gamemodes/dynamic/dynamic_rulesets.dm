@@ -17,6 +17,8 @@
 	var/antag_flag = null 
 	/// The antagonist datum that is assigned to the mobs mind on ruleset execution.
 	var/datum/antagonist/antag_datum = null
+	/// The required minimum account age for this ruleset.
+	var/minimum_required_age = 7
 	/// If set, and config flag protect_roles_from_antagonist is false, then the rule will not pick players from these roles.
 	var/list/protected_roles = list()
 	/// If set, rule will deny candidates from those roles always.
@@ -160,7 +162,7 @@
 		if (!P.client || !P.mind) // Are they connected?
 			candidates.Remove(P)
 			continue
-		if(!mode.age_check(P.client))
+		if(!mode.check_age(P.client, minimum_required_age))
 			candidates.Remove(P)
 			continue
 		if(P.mind.special_role) // We really don't want to give antag to an antag.
@@ -177,7 +179,7 @@
 		if (!istype(P, required_type))
 			candidates.Remove(P) // Can be a new_player, etc.
 			continue
-		if(!mode.age_check(P.client))
+		if(!mode.check_age(P.client, minimum_required_age))
 			candidates.Remove(P)
 			continue
 		if (!P.client || !P.mind || !P.mind.assigned_role) // Are they connected?

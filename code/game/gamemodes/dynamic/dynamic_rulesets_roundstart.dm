@@ -10,6 +10,7 @@
 	persistent = TRUE
 	antag_flag = ROLE_TRAITOR
 	antag_datum = /datum/antagonist/traitor/
+	minimum_required_age = 0
 	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_roles = list("Cyborg")
 	required_candidates = 1
@@ -148,6 +149,7 @@
 	name = "Wizard"
 	antag_flag = ROLE_WIZARD
 	antag_datum = /datum/antagonist/wizard
+	minimum_required_age = 14
 	restricted_roles = list("Head of Security", "Captain") // Just to be sure that a wizard getting picked won't ever imply a Captain or HoS not getting drafted
 	required_candidates = 1
 	weight = 3
@@ -192,6 +194,7 @@
 	name = "Blood Cult"
 	antag_flag = ROLE_CULTIST
 	antag_datum = /datum/antagonist/cult
+	minimum_required_age = 14
 	restricted_roles = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Chaplain", "Head of Personnel")
 	required_candidates = 4
 	weight = 3
@@ -251,6 +254,7 @@
 	antag_flag = ROLE_OPERATIVE
 	antag_datum = /datum/antagonist/nukeop
 	var/datum/antagonist/antag_leader_datum = /datum/antagonist/nukeop/leader
+	minimum_required_age = 14
 	restricted_roles = list("Head of Security", "Captain") // Just to be sure that a nukie getting picked won't ever imply a Captain or HoS not getting drafted
 	required_candidates = 5
 	weight = 3
@@ -348,6 +352,7 @@
 	antag_flag = ROLE_REV_HEAD
 	antag_flag_override = ROLE_REV
 	antag_datum = /datum/antagonist/rev/head
+	minimum_required_age = 14
 	restricted_roles = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director")
 	required_candidates = 3
 	weight = 2
