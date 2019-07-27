@@ -70,6 +70,38 @@
 	required_other = TRUE
 	required_container = /obj/item/slime_extract/green
 
+/datum/chemical_reaction/slime/slimefelinid
+	name = "Felinid Mutation Toxin"
+	id = "felinidmuttoxin"
+	results = list(/datum/reagent/mutationtoxin/felinid = 1)
+	required_reagents = list(/datum/reagent/consumable/sodiumchloride = 1, /datum/reagent/drug/happiness = 1)
+	required_other = TRUE
+	required_container = /obj/item/slime_extract/green
+
+/datum/chemical_reaction/slime/slimemoth
+	name = "Moth Mutation Toxin"
+	id = "mothmuttoxin"
+	results = list(/datum/reagent/mutationtoxin/moth = 1)
+	required_reagents = list(/datum/reagent/pax = 1)
+	required_other = TRUE
+	required_container = /obj/item/slime_extract/green
+
+/datum/chemical_reaction/slime/slimeethereal
+	name = "Ethereal Mutation Toxin"
+	id = "etherealmuttoxin"
+	results = list(/datum/reagent/mutationtoxin/ethereal = 1)
+	required_reagents = list(/datum/reagent/teslium = 1)
+	required_other = TRUE
+	required_container = /obj/item/slime_extract/green
+
+/datum/chemical_reaction/slime/slimefly
+	name = "Fly Mutation Toxin"
+	id = "flymuttoxin"
+	results = list(/datum/reagent/mutationtoxin/fly = 1)
+	required_reagents = list(/datum/reagent/toxin/bad_food = 1)
+	required_other = TRUE
+	required_container = /obj/item/slime_extract/green
+
 //Metal
 /datum/chemical_reaction/slime/slimemetal
 	name = "Slime Metal"

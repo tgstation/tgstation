@@ -514,6 +514,12 @@
 	race = /datum/species/android
 	mutationtext = "<span class='danger'>The pain subsides. You feel... artificial.</span>"
 
+/datum/reagent/mutationtoxin/ethereal
+	name = "Ethereal Mutation Toxin"
+	description = "An etherealizing toxin."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/ethereal
+	mutationtext = "<span class='danger'>The pain subsides. You feel... charged.</span>"
 
 //BLACKLISTED RACES
 /datum/reagent/mutationtoxin/skeleton
