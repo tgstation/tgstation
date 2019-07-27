@@ -150,14 +150,6 @@
 	var/datum/action/cooldown/infection/add_action = new /datum/action/cooldown/infection/reflective()
 	add_action.Grant(parentinfector)
 
-/datum/infection_upgrade/infector/suction
-	name = "Suction Cups"
-	description = "The amazing power of delta pressure allows you to grab and pull things around."
-	cost = 200
-
-/datum/infection_upgrade/infector/suction/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/infector/parentinfector)
-	parentinfector.verbs += /mob/living/verb/pulled
-
 /datum/infection_upgrade/infector/spacewalk
 	name = "Compressed Air Storage"
 	description = "The stored air in your body allows you to move anywhere, including space, with ease."

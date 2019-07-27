@@ -85,7 +85,7 @@
 	item_state = "excaliju"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	hitsound = list('sound/weapons/wpnHit1.ogg', 'sound/weapons/wpnHit2.ogg')
+	hitsound = 'sound/weapons/wpnHit1.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	force = 30
 	armour_penetration = 50

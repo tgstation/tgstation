@@ -25,7 +25,6 @@
 
 /mob/living/simple_animal/hostile/infection/Initialize(mapload, owner_overmind)
 	. = ..()
-	verbs -= /mob/living/verb/pulled
 	if(!can_cross_beacons)
 		AddComponent(/datum/component/no_beacon_crossing)
 
@@ -68,6 +67,19 @@
 	for(var/obj/structure/infection/I in range(1, src))
 		return 1
 	return ..()
+
+/mob/living/simple_animal/hostile/infection/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	if (!message)
+		return
+
+	if (src.client)
+		if(client.prefs.muted & MUTE_IC)
+			to_chat(src, "You cannot send IC messages (muted).")
+			return
+		if (src.client.handle_spam_prevention(message,MUTE_IC))
+			return
+
+	infection_chat(message)
 
 /*
 	Attempts to talk using the message

@@ -179,7 +179,7 @@
 	Actually respawn the slime when they request it
 */
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/do_spawn()
-	if(!can_respawn)
+	if(!can_respawn || iscommander(loc))
 		to_chat(src, "<span class='warning'>You cannot respawn right now!</span>")
 		return
 	adjustHealth(health * 0.8)

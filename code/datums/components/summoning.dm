@@ -1,13 +1,22 @@
 /datum/component/summoning
+	// mob types that can spawn
 	var/list/mob_types = list()
-	var/spawn_chance // chance for the mob to spawn on hit in percent
+	// chance for the mob to spawn when the effect is procced
+	var/spawn_chance
+	// maximum mobs that can be alive
 	var/max_mobs
-	var/spawn_delay // delay in spawning between mobs (deciseconds)
+	// delay between possible mob spawns
+	var/spawn_delay
+	// text displayed when the mob is spawned
 	var/spawn_text
+	// sound played when the mob is spawned
 	var/spawn_sound
+	// factions the mob is given
 	var/list/faction
 
+	// last spawned time for delay
 	var/last_spawned_time = 0
+	// spawned mobs list
 	var/list/spawned_mobs = list()
 
 /datum/component/summoning/Initialize(mob_types, spawn_chance=100, max_mobs=3, spawn_delay=100, spawn_text="appears out of nowhere", spawn_sound='sound/magic/summon_magic.ogg', faction)
