@@ -6,9 +6,9 @@
 	name = "infection killer"
 	desc = "This should not be seen, post an issue on github."
 	icon = 'icons/mob/infection/legendary_weapons.dmi'
-	w_class = WEIGHT_CLASS_BULKY
-	light = 6
+	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = INDESTRUCTIBLE
+	light_range = 4
 	// if the item should actually be treated as a real legendary, and not just a temporary item
 	var/is_item = TRUE
 
