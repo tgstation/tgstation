@@ -1,0 +1,5 @@
+author: "soapstain22"
+delete-after: True
+changes: 
+  - tweak: "makes the Mohawk, reverse Mohawk, commando, and hitop look like their real world counterparts"
+  - bugfix: "fixed bald hair not reaching around the back, making it look like sideburns"
