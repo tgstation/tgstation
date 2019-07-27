@@ -30,15 +30,9 @@
 		scan_level += P.rating
 
 /obj/machinery/nanite_chamber/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: Scanning module has been upgraded to level <b>[scan_level]</b>.</span>"
-=======
-	..()
-	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Scanning module has been upgraded to level <b>[scan_level]</b>.<span>")
->>>>>>> Updated this old code to fork
 
 /obj/machinery/nanite_chamber/proc/set_busy(status, message, working_icon)
 	busy = status

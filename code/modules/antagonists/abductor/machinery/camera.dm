@@ -56,11 +56,7 @@
 		actions += set_droppoint_action
 
 /obj/machinery/computer/camera_advanced/abductor/proc/IsScientist(mob/living/carbon/human/H)
-<<<<<<< HEAD
 	return HAS_TRAIT(H, TRAIT_ABDUCTOR_SCIENTIST_TRAINING)
-=======
-	return H.has_trait(TRAIT_ABDUCTOR_SCIENTIST_TRAINING)
->>>>>>> Updated this old code to fork
 
 /datum/action/innate/teleport_in
 	name = "Send To"

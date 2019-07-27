@@ -5,11 +5,7 @@
     "shuttles": {
 	    "cargo": "cargo_box",
 	    "ferry": "ferry_fancy",
-<<<<<<< HEAD
 	    "whiteship": "whiteship_donut",
-=======
-	    "whiteship": "whiteship_box",
->>>>>>> Updated this old code to fork
 	    "emergency": "emergency_donut"
     }
 }

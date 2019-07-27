@@ -27,11 +27,7 @@
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/survivalpod)
 "g" = (
-<<<<<<< HEAD
 /obj/machinery/stasis/survival_pod,
-=======
-/obj/machinery/sleeper/survival_pod,
->>>>>>> Updated this old code to fork
 /turf/open/floor/pod,
 /area/survivalpod)
 "h" = (

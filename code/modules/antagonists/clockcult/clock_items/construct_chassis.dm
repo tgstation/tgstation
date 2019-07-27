@@ -27,11 +27,7 @@
 
 /obj/item/clockwork/construct_chassis/examine(mob/user)
 	clockwork_desc = "[clockwork_desc]<br>[construct_desc]"
-<<<<<<< HEAD
 	. = ..()
-=======
-	..()
->>>>>>> Updated this old code to fork
 	clockwork_desc = initial(clockwork_desc)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE

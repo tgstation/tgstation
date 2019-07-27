@@ -26,11 +26,7 @@
 	key = "moodnone"
 	var/mood = null
 
-<<<<<<< HEAD
 /datum/emote/slime/mood/run_emote(mob/user, params, type_override, intentional)
-=======
-/datum/emote/slime/mood/run_emote(mob/user, params)
->>>>>>> Updated this old code to fork
 	. = ..()
 	var/mob/living/simple_animal/slime/S = user
 	S.mood = mood

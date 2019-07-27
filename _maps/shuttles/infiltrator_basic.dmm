@@ -87,11 +87,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/bridge)
 "ao" = (
-<<<<<<< HEAD
 /obj/structure/chair/office{
-=======
-/obj/structure/chair/office/dark{
->>>>>>> Updated this old code to fork
 	dir = 8;
 	name = "tactical swivel chair"
 	},
@@ -101,11 +97,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/bridge)
 "aq" = (
-<<<<<<< HEAD
 /obj/structure/chair/office{
-=======
-/obj/structure/chair/office/dark{
->>>>>>> Updated this old code to fork
 	dir = 1;
 	name = "tactical swivel chair"
 	},
@@ -119,11 +111,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/bridge)
 "ar" = (
-<<<<<<< HEAD
 /obj/structure/chair/office{
-=======
-/obj/structure/chair/office/dark{
->>>>>>> Updated this old code to fork
 	dir = 4;
 	name = "tactical swivel chair"
 	},
@@ -189,13 +177,8 @@
 /area/shuttle/syndicate/eva)
 "ay" = (
 /obj/structure/table/reinforced,
-<<<<<<< HEAD
 /obj/item/stack/cable_coil,
 /obj/item/stack/cable_coil,
-=======
-/obj/item/stack/cable_coil/white,
-/obj/item/stack/cable_coil/white,
->>>>>>> Updated this old code to fork
 /obj/item/crowbar/red,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -522,13 +505,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/airlock)
 "bd" = (
-<<<<<<< HEAD
 /obj/structure/sign/warning/vacuum/external,
-=======
-/obj/structure/sign/warning/vacuum/external{
-	layer = 4
-	},
->>>>>>> Updated this old code to fork
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/airlock)
 "be" = (

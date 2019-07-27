@@ -12,13 +12,8 @@
 			grabbedby(M)
 
 		if("harm", "disarm")
-<<<<<<< HEAD
 			if(HAS_TRAIT(M, TRAIT_PACIFISM))
 				to_chat(M, "<span class='warning'>You don't want to hurt [src]!</span>")
-=======
-			if(M.has_trait(TRAIT_PACIFISM))
-				to_chat(M, "<span class='notice'>You don't want to hurt [src]!</span>")
->>>>>>> Updated this old code to fork
 				return
 			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>",\
@@ -31,13 +26,8 @@
 
 /mob/living/simple_animal/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == INTENT_HARM)
-<<<<<<< HEAD
 		if(HAS_TRAIT(user, TRAIT_PACIFISM))
 			to_chat(user, "<span class='warning'>You don't want to hurt [src]!</span>")
-=======
-		if(user.has_trait(TRAIT_PACIFISM))
-			to_chat(user, "<span class='notice'>You don't want to hurt [src]!</span>")
->>>>>>> Updated this old code to fork
 			return FALSE
 		..(user, 1)
 		playsound(loc, "punch", 25, 1, -1)

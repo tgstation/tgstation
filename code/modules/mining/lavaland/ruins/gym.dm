@@ -34,11 +34,7 @@
 	if(.)
 		return
 	if(obj_flags & IN_USE)
-<<<<<<< HEAD
 		to_chat(user, "<span class='warning'>It's already in use - wait a bit!</span>")
-=======
-		to_chat(user, "It's already in use - wait a bit.")
->>>>>>> Updated this old code to fork
 		return
 	else
 		obj_flags |= IN_USE

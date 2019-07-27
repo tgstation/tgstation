@@ -60,7 +60,6 @@
 	requires_power = TRUE
 	canSmoothWithAreas = /area/shuttle/pirate
 
-<<<<<<< HEAD
 ////////////////////////////Bounty Hunter Shuttles////////////////////////////
 
 /area/shuttle/hunter
@@ -69,8 +68,6 @@
 	blob_allowed = FALSE
 	canSmoothWithAreas = /area/shuttle/hunter
 
-=======
->>>>>>> Updated this old code to fork
 ////////////////////////////White Ship////////////////////////////
 
 /area/shuttle/abandoned
@@ -130,14 +127,11 @@
 	name = "Mining Shuttle"
 	blob_allowed = FALSE
 
-<<<<<<< HEAD
 /area/shuttle/mining/large
 	name = "Mining Shuttle"
 	blob_allowed = FALSE
 	requires_power = TRUE
 
-=======
->>>>>>> Updated this old code to fork
 /area/shuttle/labor
 	name = "Labor Camp Shuttle"
 	blob_allowed = FALSE
@@ -215,8 +209,4 @@
 	name = "Tiny Freighter"
 
 /area/shuttle/caravan/freighter3
-<<<<<<< HEAD
 	name = "Tiny Freighter"
-=======
-	name = "Tiny Freighter"
->>>>>>> Updated this old code to fork

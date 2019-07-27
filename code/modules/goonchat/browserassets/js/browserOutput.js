@@ -6,10 +6,6 @@
 ******************************************/
 
 //DEBUG STUFF
-<<<<<<< HEAD
-=======
-var triggerError = attachErrorHandler('chatDebug', true);
->>>>>>> Updated this old code to fork
 var escaper = encodeURIComponent || escape;
 var decoder = decodeURIComponent || unescape;
 window.onerror = function(msg, url, line, col, error) {
@@ -38,10 +34,7 @@ var opts = {
 	'wasd': false, //Is the user in wasd mode?
 	'priorChatHeight': 0, //Thing for height-resizing detection
 	'restarting': false, //Is the round restarting?
-<<<<<<< HEAD
 	'darkmode':false, //Are we using darkmode? If not WHY ARE YOU LIVING IN 2009???
-=======
->>>>>>> Updated this old code to fork
 
 	//Options menu
 	'selectedSubLoop': null, //Contains the interval loop for closing the selected sub menu
@@ -72,21 +65,15 @@ var opts = {
 	'volumeUpdateDelay': 5000, //Time from when the volume updates to data being sent to the server
 	'volumeUpdating': false, //True if volume update function set to fire
 	'updatedVolume': 0, //The volume level that is sent to the server
-<<<<<<< HEAD
 	'musicStartAt': 0, //The position the music starts playing
 	'musicEndAt': 0, //The position the music... stops playing... if null, doesn't apply (so the music runs through)
-=======
->>>>>>> Updated this old code to fork
 	
 	'defaultMusicVolume': 25,
 
 	'messageCombining': true,
 
 };
-<<<<<<< HEAD
 var replaceRegexes = {};
-=======
->>>>>>> Updated this old code to fork
 
 function clamp(val, min, max) {
 	return Math.max(min, Math.min(val, max))
@@ -187,7 +174,6 @@ function byondDecode(message) {
 	return message;
 }
 
-<<<<<<< HEAD
 function replaceRegex() {
 	var selectedRegex = replaceRegexes[$(this).attr('replaceRegex')];
 	if (selectedRegex) {
@@ -197,8 +183,6 @@ function replaceRegex() {
 	$(this).removeAttr('replaceRegex');
 }
 
-=======
->>>>>>> Updated this old code to fork
 //Actually turns the highlight term match into appropriate html
 function addHighlightMarkup(match) {
 	var extra = '';
@@ -392,10 +376,7 @@ function output(message, flag) {
 				badge = $('<span/>', {'class': 'r', 'text': 2});
 			}
 			lastmessages.html(message);
-<<<<<<< HEAD
 			lastmessages.find('[replaceRegex]').each(replaceRegex);
-=======
->>>>>>> Updated this old code to fork
 			lastmessages.append(badge);
 			badge.animate({
 				"font-size": "0.9em"
@@ -418,11 +399,8 @@ function output(message, flag) {
 			entry.setAttribute('data-filter', filteredOut);
 		}
 
-<<<<<<< HEAD
 		$(entry).find('[replaceRegex]').each(replaceRegex);
 
-=======
->>>>>>> Updated this old code to fork
 		$last_message = trimmed_message;
 		$messages[0].appendChild(entry);
 		$(entry).find("img.icon").error(iconError);
@@ -467,11 +445,7 @@ function setCookie(cname, cvalue, exdays) {
 	var d = new Date();
 	d.setTime(d.getTime() + (exdays*24*60*60*1000));
 	var expires = 'expires='+d.toUTCString();
-<<<<<<< HEAD
 	document.cookie = cname + '=' + cvalue + '; ' + expires + "; path=/";
-=======
-	document.cookie = cname + '=' + cvalue + '; ' + expires;
->>>>>>> Updated this old code to fork
 }
 
 function getCookie(cname) {
@@ -495,7 +469,6 @@ function toHex(n) {
 	return "0123456789ABCDEF".charAt((n-n%16)/16) + "0123456789ABCDEF".charAt(n%16);
 }
 
-<<<<<<< HEAD
 function swap() { //Swap to darkmode
 	if (opts.darkmode){
 		document.getElementById("sheetofstyles").href = "browserOutput_white.css";
@@ -509,8 +482,6 @@ function swap() { //Swap to darkmode
 	setCookie('darkmode', (opts.darkmode ? 'true' : 'false'), 365);
 }
 
-=======
->>>>>>> Updated this old code to fork
 function handleClientData(ckey, ip, compid) {
 	//byond sends player info to here
 	var currentData = {'ckey': ckey, 'ip': ip, 'compid': compid};
@@ -588,25 +559,10 @@ function ehjaxCallback(data) {
 				handleClientData(data.clientData.ckey, data.clientData.ip, data.clientData.compid);
 			}
 			sendVolumeUpdate();
-<<<<<<< HEAD
 		} else if (data.adminMusic) {
 			if (typeof data.adminMusic === 'string') {
 				var adminMusic = byondDecode(data.adminMusic);
 				var bindLoadedData = false;
-=======
-		} else if (data.firebug) {
-			if (data.trigger) {
-				internalOutput('<span class="internal boldnshit">Loading firebug console, triggered by '+data.trigger+'...</span>', 'internal');
-			} else {
-				internalOutput('<span class="internal boldnshit">Loading firebug console...</span>', 'internal');
-			}
-			var firebugEl = document.createElement('script');
-			firebugEl.src = 'https://getfirebug.com/firebug-lite-debug.js';
-			document.body.appendChild(firebugEl);
-		} else if (data.adminMusic) {
-			if (typeof data.adminMusic === 'string') {
-				var adminMusic = byondDecode(data.adminMusic);
->>>>>>> Updated this old code to fork
 				adminMusic = adminMusic.match(/https?:\/\/\S+/) || '';
 				if (data.musicRate) {
 					var newRate = Number(data.musicRate);
@@ -616,7 +572,6 @@ function ehjaxCallback(data) {
 				} else {
 					$('#adminMusic').prop('defaultPlaybackRate', 1.0);
 				}
-<<<<<<< HEAD
 				if (data.musicSeek) {
 					opts.musicStartAt = Number(data.musicSeek) || 0;
 					bindLoadedData = true;
@@ -643,11 +598,6 @@ function ehjaxCallback(data) {
 
 				replaceRegexes[i] = [new RegExp(regexName, regexFlags), regexReplaced];
 			}
-=======
-				$('#adminMusic').prop('src', adminMusic);
-				$('#adminMusic').trigger("play");
-			}
->>>>>>> Updated this old code to fork
 		}
 	}
 }
@@ -678,7 +628,6 @@ function sendVolumeUpdate() {
 	}
 }
 
-<<<<<<< HEAD
 function adminMusicEndCheck(event) {
 	if (opts.musicEndAt) {
 		if ($('#adminMusic').prop('currentTime') >= opts.musicEndAt) {
@@ -700,8 +649,6 @@ function adminMusicLoadedData(event) {
 	}
 }
 
-=======
->>>>>>> Updated this old code to fork
 function subSlideUp() {
 	$(this).removeClass('scroll');
 	$(this).css('height', '');
@@ -787,10 +734,7 @@ $(function() {
 		'shighlightColor': getCookie('highlightcolor'),
 		'smusicVolume': getCookie('musicVolume'),
 		'smessagecombining': getCookie('messagecombining'),
-<<<<<<< HEAD
 		'sdarkmode': getCookie('darkmode'),
-=======
->>>>>>> Updated this old code to fork
 	};
 
 	if (savedConfig.sfontSize) {
@@ -801,12 +745,9 @@ $(function() {
 		$("body").css('line-height', savedConfig.slineHeight);
 		internalOutput('<span class="internal boldnshit">Loaded line height setting of: '+savedConfig.slineHeight+'</span>', 'internal');
 	}
-<<<<<<< HEAD
 	if(savedConfig.sdarkmode == 'true'){
 		swap();
 	}
-=======
->>>>>>> Updated this old code to fork
 	if (savedConfig.spingDisabled) {
 		if (savedConfig.spingDisabled == 'true') {
 			opts.pingDisabled = true;
@@ -851,11 +792,6 @@ $(function() {
 			opts.messageCombining = true;
 		}
 	}
-<<<<<<< HEAD
-=======
-
-
->>>>>>> Updated this old code to fork
 	(function() {
 		var dataCookie = getCookie('connData');
 		if (dataCookie) {
@@ -1022,13 +958,9 @@ $(function() {
 	$('#toggleOptions').click(function(e) {
 		handleToggleClick($subOptions, $(this));
 	});
-<<<<<<< HEAD
 	$('#darkmodetoggle').click(function(e) {
 		swap();
 	});
-=======
-
->>>>>>> Updated this old code to fork
 	$('#toggleAudio').click(function(e) {
 		handleToggleClick($subAudio, $(this));
 	});
@@ -1100,11 +1032,7 @@ $(function() {
 
 		$.ajax({
 			type: 'GET',
-<<<<<<< HEAD
 			url: 'browserOutput_white.css',
-=======
-			url: 'browserOutput.css',
->>>>>>> Updated this old code to fork
 			success: function(styleData) {
 				var blob = new Blob(['<head><title>Chat Log</title><style>', styleData, '</style></head><body>', $messages.html(), '</body>']);
 

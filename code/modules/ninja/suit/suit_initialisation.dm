@@ -1,10 +1,6 @@
 /obj/item/clothing/suit/space/space_ninja/proc/toggle_on_off()
 	if(s_busy)
-<<<<<<< HEAD
 		to_chat(loc, "<span class='warning'>ERROR</span>: You cannot use this function at this time.")
-=======
-		to_chat(loc, "<span class='userdanger'>ERROR</span>: You cannot use this function at this time.")
->>>>>>> Updated this old code to fork
 		return FALSE
 	if(s_initialized)
 		deinitialize()

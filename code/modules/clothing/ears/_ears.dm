@@ -19,11 +19,7 @@
 
 /obj/item/clothing/ears/earmuffs/ComponentInitialize()
 	. = ..()
-<<<<<<< HEAD
 	AddElement(/datum/element/earhealing)
-=======
-	AddComponent(/datum/component/earhealing)
->>>>>>> Updated this old code to fork
 	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
 
 /obj/item/clothing/ears/headphones

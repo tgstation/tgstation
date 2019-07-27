@@ -105,12 +105,6 @@
 	},
 /area/shuttle/caravan/freighter1)
 "ec" = (
-<<<<<<< HEAD
-=======
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating/airless,
@@ -205,7 +199,6 @@
 	},
 /area/shuttle/caravan/freighter1)
 "lt" = (
-<<<<<<< HEAD
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/metal/twenty,
 /obj/item/stack/sheet/glass{
@@ -214,13 +207,6 @@
 /obj/item/stack/rods/ten,
 /obj/item/storage/box/lights/bulbs,
 /obj/effect/decal/cleanable/dirt,
-=======
-/obj/structure/cable,
-/obj/machinery/power/port_gen/pacman{
-	anchored = 1
-	},
-/obj/item/wrench,
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -235,28 +221,15 @@
 	},
 /area/shuttle/caravan/freighter1)
 "lC" = (
-<<<<<<< HEAD
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
 /obj/item/wrench,
 /obj/machinery/power/terminal,
-=======
-/obj/machinery/power/smes{
-	charge = 0
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
-<<<<<<< HEAD
-=======
-/obj/effect/decal/cleanable/dirt,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter1)
 "lM" = (
@@ -463,10 +436,6 @@
 /turf/open/floor/plasteel/dark/airless,
 /area/shuttle/caravan/freighter1)
 "uS" = (
-<<<<<<< HEAD
-=======
-/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -477,10 +446,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-<<<<<<< HEAD
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark/airless,
 /area/shuttle/caravan/freighter1)
 "vt" = (
@@ -675,17 +641,10 @@
 /area/shuttle/caravan/freighter1)
 "EI" = (
 /obj/effect/decal/cleanable/blood,
-<<<<<<< HEAD
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /mob/living/simple_animal/hostile/syndicate/melee/sword/space/stormtrooper,
-=======
-/mob/living/simple_animal/hostile/syndicate/melee/sword/space/stormtrooper,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark{
 	initial_gas_mix = "TEMP=2.7"
 	},
@@ -702,17 +661,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-<<<<<<< HEAD
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
-=======
-/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	initial_gas_mix = "TEMP=2.7"
 	},
@@ -759,10 +711,6 @@
 /area/shuttle/caravan/freighter1)
 "GJ" = (
 /obj/machinery/firealarm{
-<<<<<<< HEAD
-=======
-	dir = 2;
->>>>>>> Updated this old code to fork
 	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -998,42 +946,24 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-<<<<<<< HEAD
-=======
-/obj/structure/cable/yellow,
->>>>>>> Updated this old code to fork
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Small Freighter APC";
 	pixel_x = 24;
-<<<<<<< HEAD
-=======
-	req_access = null;
->>>>>>> Updated this old code to fork
 	start_charge = 0
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter1)
 "QY" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/machinery/firealarm{
-<<<<<<< HEAD
 	pixel_y = 24
 	},
 /obj/item/stack/cable_coil{
-=======
-	dir = 2;
-	pixel_y = 24
-	},
-/obj/item/stack/cable_coil/yellow{
->>>>>>> Updated this old code to fork
 	pixel_x = 12;
 	pixel_y = 4
 	},
@@ -1106,13 +1036,7 @@
 	},
 /area/shuttle/caravan/freighter1)
 "VD" = (
-<<<<<<< HEAD
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-=======
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 2
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
 	id_tag = "caravantrade1_bolt"
@@ -1189,30 +1113,11 @@
 	},
 /area/shuttle/caravan/freighter1)
 "WZ" = (
-<<<<<<< HEAD
 /obj/machinery/power/smes,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/structure/cable,
-=======
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/structure/closet/crate,
-/obj/item/stack/sheet/metal/twenty,
-/obj/item/stack/sheet/glass{
-	amount = 10
-	},
-/obj/item/stack/rods/ten,
-/obj/item/storage/box/lights/bulbs,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter1)

@@ -23,12 +23,9 @@
 		return
 	next_click = world.time + 1
 
-<<<<<<< HEAD
 	if(!can_interact_with(A))
 		return
 
-=======
->>>>>>> Updated this old code to fork
 	if(multicam_on)
 		var/turf/T = get_turf(A)
 		if(T)
@@ -65,11 +62,6 @@
 		if(controlled_mech) //Are we piloting a mech? Placed here so the modifiers are not overridden.
 			controlled_mech.click_action(A, src, params) //Override AI normal click behavior.
 		return
-<<<<<<< HEAD
-=======
-
-		return
->>>>>>> Updated this old code to fork
 	if(modifiers["shift"])
 		ShiftClickOn(A)
 		return

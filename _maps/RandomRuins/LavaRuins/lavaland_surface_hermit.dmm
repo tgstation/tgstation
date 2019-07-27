@@ -8,14 +8,6 @@
 "c" = (
 /turf/closed/wall/mineral/iron,
 /area/ruin/powered)
-<<<<<<< HEAD
-=======
-"d" = (
-/obj/item/clothing/head/helmet/space/orange,
-/obj/item/clothing/mask/breath,
-/turf/open/floor/plating/asteroid/basalt,
-/area/ruin/powered)
->>>>>>> Updated this old code to fork
 "e" = (
 /obj/item/clothing/suit/space/orange,
 /turf/open/floor/plating/asteroid/basalt,
@@ -64,10 +56,7 @@
 /obj/item/seeds/plump,
 /obj/item/seeds/plump,
 /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom,
-<<<<<<< HEAD
 /obj/item/seeds/tower,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating/asteroid/basalt,
 /area/ruin/powered)
 "n" = (
@@ -177,7 +166,6 @@
 "J" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating{
-<<<<<<< HEAD
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/ruin/powered)
@@ -197,14 +185,10 @@
 /obj/item/clothing/head/helmet/space/orange,
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
-=======
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
->>>>>>> Updated this old code to fork
 	},
 /area/ruin/powered)
 
 (1,1,1) = {"
-<<<<<<< HEAD
 P
 P
 P
@@ -246,30 +230,6 @@ P
 P
 P
 P
-=======
-a
-a
-a
-a
-a
-a
-a
-a
-s
-s
-s
-s
-s
-s
-s
-s
-"}
-(2,1,1) = {"
-a
-a
-a
-a
-a
 a
 a
 a
@@ -280,40 +240,12 @@ s
 s
 s
 s
-s
-"}
-(3,1,1) = {"
-a
-a
-a
-a
-a
->>>>>>> Updated this old code to fork
-a
-a
-a
-a
-a
-s
-s
-s
-s
-s
-<<<<<<< HEAD
 P
 "}
 (4,1,1) = {"
 P
 P
 P
-=======
-s
-"}
-(4,1,1) = {"
-a
-a
-a
->>>>>>> Updated this old code to fork
 a
 a
 a
@@ -326,19 +258,11 @@ s
 s
 s
 s
-<<<<<<< HEAD
 P
 "}
 (5,1,1) = {"
 P
 P
-=======
-s
-"}
-(5,1,1) = {"
-a
-a
->>>>>>> Updated this old code to fork
 a
 a
 a
@@ -355,21 +279,13 @@ s
 s
 "}
 (6,1,1) = {"
-<<<<<<< HEAD
 P
-=======
-a
->>>>>>> Updated this old code to fork
 a
 a
 a
 b
 b
-<<<<<<< HEAD
 L
-=======
-n
->>>>>>> Updated this old code to fork
 n
 t
 v
@@ -384,11 +300,7 @@ s
 a
 a
 a
-<<<<<<< HEAD
 a
-=======
-b
->>>>>>> Updated this old code to fork
 b
 m
 o
@@ -421,11 +333,7 @@ s
 s
 "}
 (9,1,1) = {"
-<<<<<<< HEAD
 a
-=======
-b
->>>>>>> Updated this old code to fork
 b
 f
 i
@@ -443,15 +351,9 @@ s
 s
 "}
 (10,1,1) = {"
-<<<<<<< HEAD
 a
 b
 S
-=======
-b
-d
-g
->>>>>>> Updated this old code to fork
 j
 g
 g
@@ -461,27 +363,16 @@ u
 o
 A
 b
-<<<<<<< HEAD
 P
-=======
-a
->>>>>>> Updated this old code to fork
 s
 s
 s
 "}
 (11,1,1) = {"
-<<<<<<< HEAD
 a
 c
 e
 h
-=======
-c
-e
-h
-g
->>>>>>> Updated this old code to fork
 l
 c
 p
@@ -490,74 +381,43 @@ c
 c
 c
 b
-<<<<<<< HEAD
 P
 P
-=======
-a
-a
->>>>>>> Updated this old code to fork
 s
 s
 "}
 (12,1,1) = {"
-<<<<<<< HEAD
 a
 b
 b
 k
 M
-=======
-b
-b
-f
-k
-f
->>>>>>> Updated this old code to fork
 b
 b
 b
 b
 a
 a
-<<<<<<< HEAD
 P
 P
-=======
-a
-a
->>>>>>> Updated this old code to fork
 E
 H
 E
 "}
 (13,1,1) = {"
 a
-<<<<<<< HEAD
 a
-=======
->>>>>>> Updated this old code to fork
 b
 b
 b
 b
-<<<<<<< HEAD
-=======
-b
-a
-a
-a
->>>>>>> Updated this old code to fork
 a
 a
 a
 a
-<<<<<<< HEAD
 P
 P
 P
-=======
->>>>>>> Updated this old code to fork
 F
 I
 F
@@ -572,23 +432,15 @@ a
 a
 a
 a
-<<<<<<< HEAD
 P
 P
 P
 P
-=======
-a
-a
-a
-a
->>>>>>> Updated this old code to fork
 F
 I
 F
 "}
 (15,1,1) = {"
-<<<<<<< HEAD
 P
 P
 a
@@ -602,27 +454,11 @@ P
 P
 P
 P
-=======
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
->>>>>>> Updated this old code to fork
 G
 J
 G
 "}
 (16,1,1) = {"
-<<<<<<< HEAD
 P
 P
 P
@@ -639,22 +475,4 @@ P
 P
 P
 P
-=======
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
->>>>>>> Updated this old code to fork
 "}

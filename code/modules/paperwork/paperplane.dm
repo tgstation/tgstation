@@ -46,7 +46,6 @@
 			qdel(src)
 
 /obj/item/paperplane/Destroy()
-<<<<<<< HEAD
 	internalPaper = null
 	return ..()
 
@@ -57,16 +56,6 @@
 	user.adjust_blurriness(6)
 	if(eyes)
 		eyes.applyOrganDamage(rand(6,8))
-=======
-	QDEL_NULL(internalPaper)
-	return ..()
-
-/obj/item/paperplane/suicide_act(mob/living/user)
-	user.Stun(200)
-	user.visible_message("<span class='suicide'>[user] jams [src] in [user.p_their()] nose. It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	user.adjust_blurriness(6)
-	user.adjust_eye_damage(rand(6,8))
->>>>>>> Updated this old code to fork
 	sleep(10)
 	return (BRUTELOSS)
 
@@ -88,11 +77,7 @@
 /obj/item/paperplane/attackby(obj/item/P, mob/living/carbon/human/user, params)
 	..()
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
-<<<<<<< HEAD
 		to_chat(user, "<span class='warning'>You should unfold [src] before changing it!</span>")
-=======
-		to_chat(user, "<span class='notice'>You should unfold [src] before changing it.</span>")
->>>>>>> Updated this old code to fork
 		return
 
 	else if(istype(P, /obj/item/stamp)) 	//we don't randomize stamps on a paperplane
@@ -100,11 +85,7 @@
 		update_icon()
 
 	else if(P.is_hot())
-<<<<<<< HEAD
 		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10))
-=======
-		if(user.has_trait(TRAIT_CLUMSY) && prob(10))
->>>>>>> Updated this old code to fork
 			user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
 				"<span class='userdanger'>You miss [src] and accidentally light yourself on fire!</span>")
 			user.dropItemToGround(P)
@@ -135,7 +116,6 @@
 	if(..() || !ishuman(hit_atom))//if the plane is caught or it hits a nonhuman
 		return
 	var/mob/living/carbon/human/H = hit_atom
-<<<<<<< HEAD
 	var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
 	if(prob(hit_probability))
 		if(H.is_eyes_covered())
@@ -143,25 +123,12 @@
 		visible_message("<span class='danger'>\The [src] hits [H] in the eye[eyes ? "" : " socket"]!</span>")
 		H.adjust_blurriness(6)
 		eyes?.applyOrganDamage(rand(6,8))
-=======
-	if(prob(hit_probability))
-		if(H.is_eyes_covered())
-			return
-		visible_message("<span class='danger'>\The [src] hits [H] in the eye!</span>")
-		H.adjust_blurriness(6)
-		H.adjust_eye_damage(rand(6,8))
->>>>>>> Updated this old code to fork
 		H.Paralyze(40)
 		H.emote("scream")
 
 /obj/item/paper/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	. += "<span class='notice'>Alt-click [src] to fold it into a paper plane.</span>"
-=======
-	..()
-	to_chat(user, "<span class='notice'>Alt-click [src] to fold it into a paper plane.</span>")
->>>>>>> Updated this old code to fork
 
 /obj/item/paper/AltClick(mob/living/carbon/user, obj/item/I)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))

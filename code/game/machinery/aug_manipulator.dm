@@ -11,15 +11,9 @@
 	var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi', "engineer" = 'icons/mob/augmentation/augments_engineer.dmi', "security" = 'icons/mob/augmentation/augments_security.dmi', "mining" = 'icons/mob/augmentation/augments_mining.dmi')
 
 /obj/machinery/aug_manipulator/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	if(storedpart)
 		. += "<span class='notice'>Alt-click to eject the limb.</span>"
-=======
-	..()
-	if(storedpart)
-		to_chat(user, "<span class='notice'>Alt-click to eject the limb.</span>")
->>>>>>> Updated this old code to fork
 
 /obj/machinery/aug_manipulator/Initialize()
     initial_icon_state = initial(icon_state)
@@ -124,11 +118,7 @@
 		eject_part(user)
 
 	else
-<<<<<<< HEAD
 		to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
-=======
-		to_chat(user, "<span class='notice'>\The [src] is empty.</span>")
->>>>>>> Updated this old code to fork
 
 /obj/machinery/aug_manipulator/proc/eject_part(mob/living/user)
 	if(storedpart)
@@ -136,19 +126,11 @@
 		storedpart = null
 		update_icon()
 	else
-<<<<<<< HEAD
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
 /obj/machinery/aug_manipulator/AltClick(mob/living/user)
 	..()
 	if(!user.canUseTopic(src, !issilicon(user)))
-=======
-		to_chat(user, "<span class='notice'>[src] is empty.</span>")
-
-/obj/machinery/aug_manipulator/AltClick(mob/living/user)
-	..()
-	if(!user.canUseTopic(src))
->>>>>>> Updated this old code to fork
 		return
 	else
 		eject_part(user)

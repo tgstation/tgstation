@@ -69,11 +69,7 @@
 		to_chat(user, "<span class='info'>Access denied.</span>")
 		return
 	if(broken)
-<<<<<<< HEAD
 		to_chat(user, "<span class='danger'>The controls seem unresponsive.</span>")
-=======
-		to_chat(user, "<span class ='danger'>The controls seem unresponsive.</span>")
->>>>>>> Updated this old code to fork
 		return
 	pick_sign(user)
 

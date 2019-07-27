@@ -9,13 +9,9 @@
 	var/can_contaminate
 
 /datum/radiation_wave/New(atom/_source, dir, _intensity=0, _range_modifier=RAD_DISTANCE_COEFFICIENT, _can_contaminate=TRUE)
-<<<<<<< HEAD
 
 	source = "[_source] \[[REF(_source)]\]"
 
-=======
-	source = _source
->>>>>>> Updated this old code to fork
 	master_turf = get_turf(_source)
 
 	move_dir = dir
@@ -72,11 +68,8 @@
 		place = cmaster_turf
 		for(var/i in 1 to distance)
 			place = get_step(place, dir)
-<<<<<<< HEAD
 			if(!place)
 				break
-=======
->>>>>>> Updated this old code to fork
 			atoms += get_rad_contents(place)
 
 	return atoms

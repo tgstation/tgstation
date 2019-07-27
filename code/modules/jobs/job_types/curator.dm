@@ -11,33 +11,20 @@
 
 	outfit = /datum/outfit/job/curator
 
-<<<<<<< HEAD
 	access = list(ACCESS_LIBRARY, ACCESS_CONSTRUCTION, ACCESS_MINING_STATION)
 	minimal_access = list(ACCESS_LIBRARY, ACCESS_CONSTRUCTION, ACCESS_MINING_STATION)
-=======
-	access = list(ACCESS_LIBRARY)
-	minimal_access = list(ACCESS_LIBRARY, ACCESS_CONSTRUCTION,ACCESS_MINING_STATION)
->>>>>>> Updated this old code to fork
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_CIV
 
 	display_order = JOB_DISPLAY_ORDER_CURATOR
 
-<<<<<<< HEAD
-=======
-
->>>>>>> Updated this old code to fork
 /datum/outfit/job/curator
 	name = "Curator"
 	jobtype = /datum/job/curator
 
-<<<<<<< HEAD
 	shoes = /obj/item/clothing/shoes/laceup
 	belt = /obj/item/pda/curator
 	ears = /obj/item/radio/headset/headset_srv
-=======
-	belt = /obj/item/pda/curator
->>>>>>> Updated this old code to fork
 	uniform = /obj/item/clothing/under/rank/curator
 	l_hand = /obj/item/storage/bag/books
 	r_pocket = /obj/item/key/displaycase
@@ -49,10 +36,6 @@
 		/obj/item/barcodescanner = 1
 	)
 
-<<<<<<< HEAD
-=======
-
->>>>>>> Updated this old code to fork
 /datum/outfit/job/curator/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 

@@ -91,12 +91,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/docking_port/mobile/supply{
 	dir = 4;
-<<<<<<< HEAD
 	dwidth = 4
-=======
-	dwidth = 4;
-	width = 12
->>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
@@ -108,10 +103,6 @@
 /area/shuttle/supply)
 "p" = (
 /obj/machinery/button/door{
-<<<<<<< HEAD
-=======
-	dir = 2;
->>>>>>> Updated this old code to fork
 	id = "cargounload";
 	name = "Loading Doors";
 	pixel_x = -24;

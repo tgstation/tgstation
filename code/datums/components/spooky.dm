@@ -27,11 +27,7 @@
 		C.stuttering = 20
 		if((!istype(H.dna.species, /datum/species/skeleton)) && (!istype(H.dna.species, /datum/species/golem)) && (!istype(H.dna.species, /datum/species/android)) && (!istype(H.dna.species, /datum/species/jelly)))
 			C.adjustStaminaLoss(25) //boneless humanoids don't lose the will to live
-<<<<<<< HEAD
 		to_chat(C, "<font color='red' size='4'><B>DOOT</B></font>")
-=======
-		to_chat(C, "<font color='red' size='4'><B>DOOT</B></span>")
->>>>>>> Updated this old code to fork
 		spectral_change(H)
 
 	else //the sound will spook monkeys.

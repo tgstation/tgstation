@@ -7,23 +7,17 @@
 	resilience = TRAUMA_RESILIENCE_SURGERY
 
 	var/hypnotic_phrase = ""
-<<<<<<< HEAD
 	var/regex/target_phrase
-=======
->>>>>>> Updated this old code to fork
 
 /datum/brain_trauma/hypnosis/New(phrase)
 	if(!phrase)
 		qdel(src)
 	hypnotic_phrase = phrase
-<<<<<<< HEAD
 	try
 		target_phrase = new("(\\b[hypnotic_phrase]\\b)","ig")
 	catch(var/exception/e)
 		stack_trace("[e] on [e.file]:[e.line]")
 		qdel(src)
-=======
->>>>>>> Updated this old code to fork
 	..()
 
 /datum/brain_trauma/hypnosis/on_gain()
@@ -37,21 +31,15 @@
 												"These words keep echoing in your mind. You find yourself completely fascinated by them.")]</span>")
 	to_chat(owner, "<span class='boldwarning'>You've been hypnotized by this sentence. You must follow these words. If it isn't a clear order, you can freely interpret how to do so,\
 										as long as you act like the words are your highest priority.</span>")
-<<<<<<< HEAD
 	var/obj/screen/alert/hypnosis/hypno_alert = owner.throw_alert("hypnosis", /obj/screen/alert/hypnosis)
 	hypno_alert.desc = "\"[hypnotic_phrase]\"... your mind seems to be fixated on this concept."
-=======
->>>>>>> Updated this old code to fork
 	..()
 
 /datum/brain_trauma/hypnosis/on_lose()
 	message_admins("[ADMIN_LOOKUPFLW(owner)] is no longer hypnotized with the phrase '[hypnotic_phrase]'.")
 	log_game("[key_name(owner)] is no longer hypnotized with the phrase '[hypnotic_phrase]'.")
 	to_chat(owner, "<span class='userdanger'>You suddenly snap out of your hypnosis. The phrase '[hypnotic_phrase]' no longer feels important to you.</span>")
-<<<<<<< HEAD
 	owner.clear_alert("hypnosis")
-=======
->>>>>>> Updated this old code to fork
 	..()
 
 /datum/brain_trauma/hypnosis/on_life()
@@ -63,12 +51,5 @@
 			if(2)
 				new /datum/hallucination/chat(owner, TRUE, FALSE, "<span class='hypnophrase'>[hypnotic_phrase]</span>")
 
-<<<<<<< HEAD
 /datum/brain_trauma/hypnosis/handle_hearing(datum/source, list/hearing_args)
 	hearing_args[HEARING_MESSAGE] = target_phrase.Replace(hearing_args[HEARING_MESSAGE], "<span class='hypnophrase'>$1</span>")
-=======
-/datum/brain_trauma/hypnosis/on_hear(message, speaker, message_language, raw_message, radio_freq)
-	var/regex/target_phrase = new("(\\b[hypnotic_phrase]\\b)","ig")
-	message = target_phrase.Replace(message, "<span class='hypnophrase'>$1</span>")
-	return message
->>>>>>> Updated this old code to fork

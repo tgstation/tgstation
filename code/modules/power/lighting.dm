@@ -9,13 +9,8 @@
 #define LIGHT_BROKEN 2
 #define LIGHT_BURNED 3
 
-<<<<<<< HEAD
 #define BROKEN_SPARKS_MIN (30 SECONDS)
 #define BROKEN_SPARKS_MAX (90 SECONDS)
-=======
-#define BROKEN_SPARKS_MIN 15 SECONDS
-#define BROKEN_SPARKS_MAX 30 SECONDS
->>>>>>> Updated this old code to fork
 
 /obj/item/wallframe/light_fixture
 	name = "light fixture frame"
@@ -29,11 +24,7 @@
 	name = "small light fixture frame"
 	icon_state = "bulb-construct-item"
 	result_path = /obj/structure/light_construct/small
-<<<<<<< HEAD
 	materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
-=======
-	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
->>>>>>> Updated this old code to fork
 
 /obj/item/wallframe/light_fixture/try_build(turf/on_wall, user)
 	if(!..())
@@ -76,7 +67,6 @@
 	return cell
 
 /obj/structure/light_construct/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	switch(stage)
 		if(1)
@@ -92,24 +82,6 @@
 			. += "The casing has no power cell for backup power."
 	else
 		. += "<span class='danger'>This casing doesn't support power cells for backup power.</span>"
-=======
-	..()
-	switch(src.stage)
-		if(1)
-			to_chat(user, "It's an empty frame.")
-		if(2)
-			to_chat(user, "It's wired.")
-		if(3)
-			to_chat(user, "The casing is closed.")
-	if(cell_connectors)
-		if(cell)
-			to_chat(user, "You see [cell] inside the casing.")
-		else
-			to_chat(user, "The casing has no power cell for backup power.")
-	else
-		to_chat(user, "<span class='danger'>This casing doesn't support power cells for backup power.</span>")
-		return
->>>>>>> Updated this old code to fork
 
 /obj/structure/light_construct/attack_hand(mob/user)
 	if(cell)
@@ -132,11 +104,7 @@
 		if(!cell_connectors)
 			to_chat(user, "<span class='warning'>This [name] can't support a power cell!</span>")
 			return
-<<<<<<< HEAD
 		if(HAS_TRAIT(W, TRAIT_NODROP))
-=======
-		if(W.has_trait(TRAIT_NODROP))
->>>>>>> Updated this old code to fork
 			to_chat(user, "<span class='warning'>[W] is stuck to your hand!</span>")
 			return
 		if(cell)
@@ -376,23 +344,16 @@
 		var/BR = brightness
 		var/PO = bulb_power
 		var/CO = bulb_colour
-<<<<<<< HEAD
 		if(color)
 			CO = color
-=======
->>>>>>> Updated this old code to fork
 		var/area/A = get_area(src)
 		if (A && A.fire)
 			CO = bulb_emergency_colour
 		else if (nightshift_enabled)
 			BR = nightshift_brightness
 			PO = nightshift_light_power
-<<<<<<< HEAD
 			if(!color)
 				CO = nightshift_light_color
-=======
-			CO = nightshift_light_color
->>>>>>> Updated this old code to fork
 		var/matching = light && BR == light.light_range && PO == light.light_power && CO == light.light_color
 		if(!matching)
 			switchcount++
@@ -425,13 +386,10 @@
 
 	broken_sparks(start_only=TRUE)
 
-<<<<<<< HEAD
 /obj/machinery/light/update_atom_colour()
 	..()
 	update()
 
-=======
->>>>>>> Updated this old code to fork
 /obj/machinery/light/proc/broken_sparks(start_only=FALSE)
 	if(status == LIGHT_BROKEN && has_power())
 		if(!start_only)
@@ -467,7 +425,6 @@
 
 // examine verb
 /obj/machinery/light/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	switch(status)
 		if(LIGHT_OK)
@@ -480,20 +437,6 @@
 			. += "The [fitting] has been smashed."
 	if(cell)
 		. += "Its backup power charge meter reads [round((cell.charge / cell.maxcharge) * 100, 0.1)]%."
-=======
-	..()
-	switch(status)
-		if(LIGHT_OK)
-			to_chat(user, "It is turned [on? "on" : "off"].")
-		if(LIGHT_EMPTY)
-			to_chat(user, "The [fitting] has been removed.")
-		if(LIGHT_BURNED)
-			to_chat(user, "The [fitting] is burnt out.")
-		if(LIGHT_BROKEN)
-			to_chat(user, "The [fitting] has been smashed.")
-	if(cell)
-		to_chat(user, "Its backup power charge meter reads [round((cell.charge / cell.maxcharge) * 100, 0.1)]%.")
->>>>>>> Updated this old code to fork
 
 
 
@@ -693,18 +636,12 @@
 			if(istype(eth_species))
 				to_chat(H, "<span class='notice'>You start channeling some power through the [fitting] into your body.</span>")
 				if(do_after(user, 50, target = src))
-<<<<<<< HEAD
 					var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
 					if(istype(stomach))
 						to_chat(H, "<span class='notice'>You receive some charge from the [fitting].</span>")
 						stomach.adjust_charge(5)
 					else
 						to_chat(H, "<span class='warning'>You can't receive charge from the [fitting]!</span>")
-=======
-					to_chat(H, "<span class='notice'>You receive some charge from the [fitting].</span>")
-					eth_species.adjust_charge(5)
-					return
->>>>>>> Updated this old code to fork
 				return
 
 			if(H.gloves)
@@ -714,11 +651,7 @@
 		else
 			prot = 1
 
-<<<<<<< HEAD
 		if(prot > 0 || HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
-=======
-		if(prot > 0 || user.has_trait(TRAIT_RESISTHEAT) || user.has_trait(TRAIT_RESISTHEATHANDS))
->>>>>>> Updated this old code to fork
 			to_chat(user, "<span class='notice'>You remove the light [fitting].</span>")
 		else if(istype(user) && user.dna.check_mutation(TK))
 			to_chat(user, "<span class='notice'>You telekinetically remove the light [fitting].</span>")
@@ -829,13 +762,8 @@
 	var/status = LIGHT_OK		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/switchcount = 0	// number of times switched
-<<<<<<< HEAD
 	materials = list(/datum/material/glass=100)
 	grind_results = list(/datum/reagent/silicon = 5, /datum/reagent/nitrogen = 10) //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
-=======
-	materials = list(MAT_GLASS=100)
-	grind_results = list("silicon" = 5, "nitrogen" = 10) //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
->>>>>>> Updated this old code to fork
 	var/rigged = FALSE		// true if rigged to explode
 	var/brightness = 2 //how much light it gives off
 
@@ -901,11 +829,7 @@
 /obj/item/light/Crossed(mob/living/L)
 	. = ..()
 	if(istype(L) && has_gravity(loc))
-<<<<<<< HEAD
 		if(HAS_TRAIT(L, TRAIT_LIGHT_STEP))
-=======
-		if(L.has_trait(TRAIT_LIGHT_STEP))
->>>>>>> Updated this old code to fork
 			playsound(loc, 'sound/effects/glass_step.ogg', 30, 1)
 		else
 			playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
@@ -921,11 +845,7 @@
 
 		to_chat(user, "<span class='notice'>You inject the solution into \the [src].</span>")
 
-<<<<<<< HEAD
 		if(S.reagents.has_reagent(/datum/reagent/toxin/plasma, 5))
-=======
-		if(S.reagents.has_reagent("plasma", 5))
->>>>>>> Updated this old code to fork
 
 			rigged = TRUE
 

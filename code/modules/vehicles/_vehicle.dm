@@ -22,10 +22,7 @@
 	var/list/autogrant_actions_controller	//assoc list "[bitflag]" = list(typepaths)
 	var/list/mob/occupant_actions			//assoc list mob = list(type = action datum assigned to mob)
 	var/obj/vehicle/trailer
-<<<<<<< HEAD
 	var/are_legs_exposed = FALSE
-=======
->>>>>>> Updated this old code to fork
 
 /obj/vehicle/Initialize(mapload)
 	. = ..()
@@ -36,7 +33,6 @@
 	generate_actions()
 
 /obj/vehicle/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	if(resistance_flags & ON_FIRE)
 		. += "<span class='warning'>It's on fire!</span>"
@@ -48,19 +44,6 @@
 			. += "It appears heavily damaged."
 		if(0 to 25)
 			. += "<span class='warning'>It's falling apart!</span>"
-=======
-	..()
-	if(resistance_flags & ON_FIRE)
-		to_chat(user, "<span class='warning'>It's on fire!</span>")
-	var/healthpercent = obj_integrity/max_integrity * 100
-	switch(healthpercent)
-		if(50 to 99)
-			to_chat(user,  "It looks slightly damaged.")
-		if(25 to 50)
-			to_chat(user,  "It appears heavily damaged.")
-		if(0 to 25)
-			to_chat(user,  "<span class='warning'>It's falling apart!</span>")
->>>>>>> Updated this old code to fork
 
 /obj/vehicle/proc/is_key(obj/item/I)
 	return I? (key_type_exact? (I.type == key_type) : istype(I, key_type)) : FALSE
@@ -78,10 +61,7 @@
 			.++
 
 /obj/vehicle/proc/return_controllers_with_flag(flag)
-<<<<<<< HEAD
 	RETURN_TYPE(/list/mob)
-=======
->>>>>>> Updated this old code to fork
 	. = list()
 	for(var/i in occupants)
 		if(occupants[i] & flag)
@@ -141,10 +121,7 @@
 	if(!canmove)
 		return
 	vehicle_move(direction)
-<<<<<<< HEAD
 	return TRUE
-=======
->>>>>>> Updated this old code to fork
 
 /obj/vehicle/proc/vehicle_move(direction)
 	if(lastmove + movedelay > world.time)

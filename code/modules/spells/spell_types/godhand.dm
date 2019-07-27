@@ -19,11 +19,7 @@
 
 /obj/item/melee/touch_attack/Initialize()
 	. = ..()
-<<<<<<< HEAD
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
-=======
-	add_trait(TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
->>>>>>> Updated this old code to fork
 
 /obj/item/melee/touch_attack/attack(mob/target, mob/living/carbon/user)
 	if(!iscarbon(user)) //Look ma, no hands
@@ -58,11 +54,7 @@
 	if(!proximity || target == user || !ismob(target) || !iscarbon(user) || !(user.mobility_flags & MOBILITY_USE)) //exploding after touching yourself would be bad
 		return
 	if(!user.can_speak_vocal())
-<<<<<<< HEAD
 		to_chat(user, "<span class='warning'>You can't get the words out!</span>")
-=======
-		to_chat(user, "<span class='notice'>You can't get the words out!</span>")
->>>>>>> Updated this old code to fork
 		return
 	var/mob/M = target
 	do_sparks(4, FALSE, M.loc)
@@ -104,11 +96,7 @@
 		to_chat(user, "<span class='warning'>You can't reach out!</span>")
 		return
 	if(!user.can_speak_vocal())
-<<<<<<< HEAD
 		to_chat(user, "<span class='warning'>You can't get the words out!</span>")
-=======
-		to_chat(user, "<span class='notice'>You can't get the words out!</span>")
->>>>>>> Updated this old code to fork
 		return
 	var/mob/living/M = target
 	if(M.anti_magic_check())

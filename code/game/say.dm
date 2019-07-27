@@ -23,21 +23,13 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		return
 	if(message == "" || !message)
 		return
-<<<<<<< HEAD
 	spans |= speech_span
-=======
-	spans |= get_spans()
->>>>>>> Updated this old code to fork
 	if(!language)
 		language = get_default_language()
 	send_speech(message, 7, src, , spans, message_language=language)
 
 /atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
-<<<<<<< HEAD
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
-=======
-	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, message, speaker, message_language, raw_message, radio_freq, spans, message_mode)
->>>>>>> Updated this old code to fork
 
 /atom/movable/proc/can_speak()
 	return 1
@@ -48,13 +40,6 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		var/atom/movable/AM = _AM
 		AM.Hear(rendered, src, message_language, message, , spans, message_mode)
 
-<<<<<<< HEAD
-=======
-//To get robot span classes, stuff like that.
-/atom/movable/proc/get_spans()
-	return list()
-
->>>>>>> Updated this old code to fork
 /atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode, face_name = FALSE)
 	//This proc uses text() because it is faster than appending strings. Thanks BYOND.
 	//Basic span
@@ -98,11 +83,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	else
 		return verb_say
 
-<<<<<<< HEAD
 /atom/movable/proc/say_quote(input, list/spans=list(speech_span), message_mode)
-=======
-/atom/movable/proc/say_quote(input, list/spans=list(), message_mode)
->>>>>>> Updated this old code to fork
 	if(!input)
 		input = "..."
 

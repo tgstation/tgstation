@@ -50,11 +50,7 @@
 
 /obj/item/projectile/mega_arachnid
 	name = "flesh snare"
-<<<<<<< HEAD
 	nodamage = TRUE
-=======
-	nodamage = 1
->>>>>>> Updated this old code to fork
 	damage = 0
 	icon_state = "tentacle_end"
 

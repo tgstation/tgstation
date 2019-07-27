@@ -199,23 +199,16 @@
 /datum/action/item_action/toggle_firemode
 	name = "Toggle Firemode"
 
-<<<<<<< HEAD
 /datum/action/item_action/rcl_col
-=======
-/datum/action/item_action/rcl
->>>>>>> Updated this old code to fork
 	name = "Change Cable Color"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "rcl_rainbow"
 
-<<<<<<< HEAD
 /datum/action/item_action/rcl_gui
 	name = "Toggle Fast Wiring Gui"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "rcl_gui"
 
-=======
->>>>>>> Updated this old code to fork
 /datum/action/item_action/startchainsaw
 	name = "Pull The Starting Cord"
 
@@ -301,14 +294,7 @@
 /datum/action/item_action/synthswitch/Trigger()
 	if(istype(target, /obj/item/instrument/piano_synth))
 		var/obj/item/instrument/piano_synth/synth = target
-<<<<<<< HEAD
 		return synth.selectInstrument()
-=======
-		var/chosen = input("Choose the type of instrument you want to use", "Instrument Selection", "piano") as null|anything in synth.insTypes
-		if(!synth.insTypes[chosen])
-			return
-		return synth.changeInstrument(chosen)
->>>>>>> Updated this old code to fork
 	return ..()
 
 /datum/action/item_action/vortex_recall
@@ -520,10 +506,7 @@
 		else
 			to_chat(owner, "<span class='warning'>Your hands are full!</span>")
 
-<<<<<<< HEAD
 ///MGS BOX!
-=======
->>>>>>> Updated this old code to fork
 /datum/action/item_action/agent_box
 	name = "Deploy Box"
 	desc = "Find inner peace, here, in the box."
@@ -531,7 +514,6 @@
 	background_icon_state = "bg_agent"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "deploy_box"
-<<<<<<< HEAD
 	///Cooldown between deploys. Uses world.time
 	var/cooldown = 0
 	///The type of closet this action spawns.
@@ -556,24 +538,6 @@
 		owner.forceMove(box)
 		cooldown = world.time
 		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
-=======
-	var/cooldown = 0
-	var/obj/structure/closet/cardboard/agent/box
-
-/datum/action/item_action/agent_box/Trigger()
-	if(!..())
-		return FALSE
-	if(QDELETED(box))
-		if(cooldown < world.time - 100)
-			box = new(owner.drop_location())
-			owner.forceMove(box)
-			cooldown = world.time
-			owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
-	else
-		owner.forceMove(box.drop_location())
-		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
-		QDEL_NULL(box)
->>>>>>> Updated this old code to fork
 
 //Preset for spells
 /datum/action/spell_action
@@ -751,7 +715,6 @@
 	small_icon = 'icons/mob/alien.dmi'
 	small_icon_state = "alienq"
 
-<<<<<<< HEAD
 /datum/action/small_sprite/megafauna
 	icon_icon = 'icons/mob/actions/actions_xeno.dmi'
 	button_icon_state = "smallqueen"
@@ -774,12 +737,6 @@
 	small_icon = 'icons/mob/carp.dmi'
 	small_icon_state = "carp"
 
-=======
-/datum/action/small_sprite/drake
-	small_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
-	small_icon_state = "ash_whelp"
-
->>>>>>> Updated this old code to fork
 /datum/action/small_sprite/Trigger()
 	..()
 	if(!small)

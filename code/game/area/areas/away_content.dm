@@ -25,12 +25,8 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 
 /area/awaymission/vr
 	name = "Virtual Reality"
-<<<<<<< HEAD
 	icon_state = "awaycontent1"
 	requires_power = FALSE
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	var/pacifist = TRUE // if when you enter this zone, you become a pacifist or not
 	var/death = FALSE // if when you enter this zone, you die
-=======
-	icon_state = "awaycontent1"
->>>>>>> Updated this old code to fork

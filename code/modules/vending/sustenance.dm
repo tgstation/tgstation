@@ -11,7 +11,6 @@
 					  /obj/item/reagent_containers/food/drinks/coffee = 12,
 					  /obj/item/tank/internals/emergency_oxygen = 6,
 					  /obj/item/clothing/mask/breath = 6)
-<<<<<<< HEAD
 	refill_canister = /obj/item/vending_refill/sustenance
 	default_price = 0
 	extra_price = 0
@@ -20,10 +19,3 @@
 /obj/item/vending_refill/sustenance
 	machine_name = "Sustenance Vendor"
 	icon_state = "refill_snack"
-=======
-	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
-	resistance_flags = FIRE_PROOF
-	default_price = 0
-	extra_price = 0
-	payment_department = NO_FREEBIES
->>>>>>> Updated this old code to fork

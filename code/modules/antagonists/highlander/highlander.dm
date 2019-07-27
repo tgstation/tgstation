@@ -7,19 +7,11 @@
 
 /datum/antagonist/highlander/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/L = owner.current || mob_override
-<<<<<<< HEAD
 	ADD_TRAIT(L, TRAIT_NOGUNS, "highlander")
 
 /datum/antagonist/highlander/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/L = owner.current || mob_override
 	REMOVE_TRAIT(L, TRAIT_NOGUNS, "highlander")
-=======
-	L.add_trait(TRAIT_NOGUNS, "highlander")
-
-/datum/antagonist/highlander/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/L = owner.current || mob_override
-	L.remove_trait(TRAIT_NOGUNS, "highlander")
->>>>>>> Updated this old code to fork
 
 /datum/antagonist/highlander/proc/forge_objectives()
 	var/datum/objective/steal/steal_objective = new
@@ -60,23 +52,13 @@
 	H.equip_to_slot_or_del(new /obj/item/pinpointer/nuke(H), SLOT_L_STORE)
 	for(var/obj/item/pinpointer/nuke/P in H)
 		P.attack_self(H)
-<<<<<<< HEAD
 	var/obj/item/card/id/centcom/W = new(H)
-=======
-	var/obj/item/card/id/W = new(H)
-	W.icon_state = "centcom"
->>>>>>> Updated this old code to fork
 	W.access = get_all_accesses()
 	W.access += get_all_centcom_access()
 	W.assignment = "Highlander"
 	W.registered_name = H.real_name
-<<<<<<< HEAD
 	ADD_TRAIT(W, TRAIT_NODROP, HIGHLANDER)
 	W.update_label()
-=======
-	W.add_trait(TRAIT_NODROP, HIGHLANDER)
-	W.update_label(H.real_name)
->>>>>>> Updated this old code to fork
 	H.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
 	sword = new(H)

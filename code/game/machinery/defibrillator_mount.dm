@@ -24,7 +24,6 @@
 	. = ..()
 
 /obj/machinery/defibrillator_mount/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	if(defib)
 		. += "<span class='notice'>There is a defib unit hooked up. Alt-click to remove it.</span>"
@@ -32,15 +31,6 @@
 			. += "<span class='notice'>Due to a security situation, its locking clamps can be toggled by swiping any ID.</span>"
 		else
 			. += "<span class='notice'>Its locking clamps can be [clamps_locked ? "dis" : ""]engaged by swiping an ID with access.</span>"
-=======
-	..()
-	if(defib)
-		to_chat(user, "<span class='notice'>There is a defib unit hooked up. Alt-click to remove it.<span>")
-		if(GLOB.security_level >= SEC_LEVEL_RED)
-			to_chat(user, "<span class='notice'>Due to a security situation, its locking clamps can be toggled by swiping any ID.</span>")
-		else
-			to_chat(user, "<span class='notice'>Its locking clamps can be [clamps_locked ? "dis" : ""]engaged by swiping an ID with access.</span>")
->>>>>>> Updated this old code to fork
 
 /obj/machinery/defibrillator_mount/process()
 	if(defib && defib.cell && defib.cell.charge < defib.cell.maxcharge && is_operational())
@@ -79,11 +69,7 @@
 		if(defib)
 			to_chat(user, "<span class='warning'>There's already a defibrillator in [src]!</span>")
 			return
-<<<<<<< HEAD
 		if(HAS_TRAIT(I, TRAIT_NODROP) || !user.transferItemToLoc(I, src))
-=======
-		if(I.has_trait(TRAIT_NODROP) || !user.transferItemToLoc(I, src))
->>>>>>> Updated this old code to fork
 			to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
 			return
 		user.visible_message("<span class='notice'>[user] hooks up [I] to [src]!</span>", \
@@ -92,11 +78,7 @@
 		defib = I
 		update_icon()
 		return
-<<<<<<< HEAD
 	else if(defib && I == defib.paddles)
-=======
-	else if(I == defib.paddles)
->>>>>>> Updated this old code to fork
 		defib.paddles.snap_back()
 		return
 	var/obj/item/card/id = I.GetID()
@@ -156,11 +138,7 @@
 	desc = "A frame for a defibrillator mount. It can't be removed once it's placed."
 	icon = 'icons/obj/machines/defib_mount.dmi'
 	icon_state = "defibrillator_mount"
-<<<<<<< HEAD
 	materials = list(/datum/material/iron = 300, /datum/material/glass = 100)
-=======
-	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
->>>>>>> Updated this old code to fork
 	w_class = WEIGHT_CLASS_BULKY
 	result_path = /obj/machinery/defibrillator_mount
 	pixel_shift = -28

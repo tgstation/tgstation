@@ -10,11 +10,8 @@
 	has_limbs = 1
 	hud_type = /datum/hud/robot
 
-<<<<<<< HEAD
 	radio = /obj/item/radio/borg
 
-=======
->>>>>>> Updated this old code to fork
 	var/custom_name = ""
 	var/braintype = "Cyborg"
 	var/obj/item/robot_suit/robot_suit = null //Used for deconstruction to remember what the borg was constructed out of..
@@ -45,11 +42,7 @@
 	var/mutable_appearance/eye_lights
 
 	var/mob/living/silicon/ai/connected_ai = null
-<<<<<<< HEAD
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high ///If this is a path, this gets created as an object in Initialize.
-=======
-	var/obj/item/stock_parts/cell/cell = null
->>>>>>> Updated this old code to fork
 
 	var/opened = 0
 	var/emagged = FALSE
@@ -62,10 +55,6 @@
 
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 
-<<<<<<< HEAD
-=======
-	var/speed = 0 // VTEC speed boost.
->>>>>>> Updated this old code to fork
 	var/magpulse = FALSE // Magboot-like effect.
 	var/ionpulse = FALSE // Jetpack-like effect.
 	var/ionpulse_on = FALSE // Jetpack-like effect.
@@ -93,29 +82,6 @@
 	var/hasExpanded = FALSE
 	var/obj/item/hat
 	var/hat_offset = -3
-<<<<<<< HEAD
-=======
-	var/list/equippable_hats = list(/obj/item/clothing/head/caphat,
-	/obj/item/clothing/head/hardhat,
-	/obj/item/clothing/head/centhat,
-	/obj/item/clothing/head/HoS,
-	/obj/item/clothing/head/beret,
-	/obj/item/clothing/head/kitty,
-	/obj/item/clothing/head/hopcap,
-	/obj/item/clothing/head/wizard,
-	/obj/item/clothing/head/nursehat,
-	/obj/item/clothing/head/sombrero,
-	/obj/item/clothing/head/helmet/chaplain/witchunter_hat,
-	/obj/item/clothing/head/soft/, //All baseball caps
-	/obj/item/clothing/head/that, //top hat
-	/obj/item/clothing/head/collectable/tophat, //Not sure where this one is found, but it looks the same so might as well include
-	/obj/item/clothing/mask/bandana/, //All bandanas (which only work in hat mode)
-	/obj/item/clothing/head/fedora,
-	/obj/item/clothing/head/beanie/, //All beanies
-	/obj/item/clothing/ears/headphones,
-	/obj/item/clothing/head/helmet/skull,
-	/obj/item/clothing/head/crown/fancy)
->>>>>>> Updated this old code to fork
 
 	can_buckle = TRUE
 	buckle_lying = FALSE
@@ -132,11 +98,8 @@
 	wires = new /datum/wires/robot(src)
 	AddComponent(/datum/component/empprotection, EMP_PROTECT_WIRES)
 
-<<<<<<< HEAD
 	RegisterSignal(src, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/charge)
 
-=======
->>>>>>> Updated this old code to fork
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
 	robot_modules_background.layer = HUD_LAYER	//Objects that appear on screen are on layer ABOVE_HUD_LAYER, UI should be just below it.
@@ -144,23 +107,14 @@
 
 	ident = rand(1, 999)
 
-<<<<<<< HEAD
 	if(ispath(cell))
 		cell = new cell(src)
-=======
-	if(!cell)
-		cell = new /obj/item/stock_parts/cell/high(src)
->>>>>>> Updated this old code to fork
 
 	if(lawupdate)
 		make_laws()
 		if(!TryConnectToAI())
 			lawupdate = FALSE
 
-<<<<<<< HEAD
-=======
-	radio = new /obj/item/radio/borg(src)
->>>>>>> Updated this old code to fork
 	if(!scrambledcodes && !builtInCamera)
 		builtInCamera = new (src)
 		builtInCamera.c_tag = real_name
@@ -191,11 +145,6 @@
 
 	updatename()
 
-<<<<<<< HEAD
-=======
-	equippable_hats = typecacheof(equippable_hats)
-
->>>>>>> Updated this old code to fork
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 	aicamera = new/obj/item/camera/siliconcam/robot_camera(src)
 	toner = tonermax
@@ -484,11 +433,7 @@
 
 	else if(W.tool_behaviour == TOOL_SCREWDRIVER && opened && cell)	// radio
 		if(shell)
-<<<<<<< HEAD
 			to_chat(user, "<span class='warning'>You cannot seem to open the radio compartment!</span>")	//Prevent AI radio key theft
-=======
-			to_chat(user, "You cannot seem to open the radio compartment")	//Prevent AI radio key theft
->>>>>>> Updated this old code to fork
 		else if(radio)
 			radio.attackby(W,user)//Push it to the radio to let it handle everything
 		else
@@ -497,11 +442,7 @@
 
 	else if(W.tool_behaviour == TOOL_WRENCH && opened && !cell) //Deconstruction. The flashes break from the fall, to prevent this from being a ghetto reset module.
 		if(!lockcharge)
-<<<<<<< HEAD
 			to_chat(user, "<span class='warning'>[src]'s bolts spark! Maybe you should lock them down first!</span>")
-=======
-			to_chat(user, "<span class='boldannounce'>[src]'s bolts spark! Maybe you should lock them down first!</span>")
->>>>>>> Updated this old code to fork
 			spark_system.start()
 			return
 		else
@@ -817,17 +758,12 @@
 		cell = null
 	qdel(src)
 
-<<<<<<< HEAD
 ///This is the subtype that gets created by robot suits. It's needed so that those kind of borgs don't have a useless cell in them
 /mob/living/silicon/robot/nocell
 	cell = null
 
 /mob/living/silicon/robot/modules
 	var/set_module = /obj/item/robot_module
-=======
-/mob/living/silicon/robot/modules
-	var/set_module = null
->>>>>>> Updated this old code to fork
 
 /mob/living/silicon/robot/modules/Initialize()
 	. = ..()
@@ -838,7 +774,6 @@
 
 /mob/living/silicon/robot/modules/medical
 	set_module = /obj/item/robot_module/medical
-<<<<<<< HEAD
 	icon_state = "medical"
 
 /mob/living/silicon/robot/modules/engineering
@@ -864,26 +799,6 @@
 /mob/living/silicon/robot/modules/janitor
 	set_module = /obj/item/robot_module/janitor
 	icon_state = "janitor"
-=======
-
-/mob/living/silicon/robot/modules/engineering
-	set_module = /obj/item/robot_module/engineering
-
-/mob/living/silicon/robot/modules/security
-	set_module = /obj/item/robot_module/security
-
-/mob/living/silicon/robot/modules/clown
-	set_module = /obj/item/robot_module/clown
-
-/mob/living/silicon/robot/modules/peacekeeper
-	set_module = /obj/item/robot_module/peacekeeper
-
-/mob/living/silicon/robot/modules/miner
-	set_module = /obj/item/robot_module/miner
-
-/mob/living/silicon/robot/modules/janitor
-	set_module = /obj/item/robot_module/janitor
->>>>>>> Updated this old code to fork
 
 /mob/living/silicon/robot/modules/syndicate
 	icon_state = "synd_sec"
@@ -898,19 +813,11 @@
 							Your cyborg LMG will slowly produce ammunition from your power supply, and your operative pinpointer will find and locate fellow nuclear operatives. \
 							<i>Help the operatives secure the disk at all costs!</i></b>"
 	set_module = /obj/item/robot_module/syndicate
-<<<<<<< HEAD
 	cell = /obj/item/stock_parts/cell/hyper
 	radio = /obj/item/radio/borg/syndicate
 
 /mob/living/silicon/robot/modules/syndicate/Initialize()
 	. = ..()
-=======
-
-/mob/living/silicon/robot/modules/syndicate/Initialize()
-	. = ..()
-	cell = new /obj/item/stock_parts/cell/hyper(src, 25000)
-	radio = new /obj/item/radio/borg/syndicate(src)
->>>>>>> Updated this old code to fork
 	laws = new /datum/ai_laws/syndicate_override()
 	addtimer(CALLBACK(src, .proc/show_playstyle), 5)
 
@@ -1089,10 +996,6 @@
 
 	upgrades.Cut()
 
-<<<<<<< HEAD
-=======
-	speed = 0
->>>>>>> Updated this old code to fork
 	ionpulse = FALSE
 	revert_shell()
 
@@ -1114,15 +1017,9 @@
 		status_flags &= ~CANPUSH
 
 	if(module.clean_on_move)
-<<<<<<< HEAD
 		AddElement(/datum/element/cleaning)
 	else
 		RemoveElement(/datum/element/cleaning)
-=======
-		AddComponent(/datum/component/cleaning)
-	else
-		qdel(GetComponent(/datum/component/cleaning))
->>>>>>> Updated this old code to fork
 
 	hat_offset = module.hat_offset
 
@@ -1229,10 +1126,7 @@
 
 /mob/living/silicon/robot/shell
 	shell = TRUE
-<<<<<<< HEAD
 	cell = null
-=======
->>>>>>> Updated this old code to fork
 
 /mob/living/silicon/robot/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
@@ -1253,22 +1147,12 @@
 		return
 	if(incapacitated())
 		return
-<<<<<<< HEAD
-=======
-	if(M.incapacitated())
-		return
->>>>>>> Updated this old code to fork
 	if(module)
 		if(!module.allow_riding)
 			M.visible_message("<span class='boldwarning'>Unfortunately, [M] just can't seem to hold onto [src]!</span>")
 			return
-<<<<<<< HEAD
 	if(iscarbon(M) && !M.incapacitated() && !riding_datum.equip_buckle_inhands(M, 1))
 		if(M.get_num_arms() <= 0)
-=======
-	if(iscarbon(M) && (!riding_datum.equip_buckle_inhands(M, 1)))
-		if (M.get_num_arms() <= 0)
->>>>>>> Updated this old code to fork
 			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_they()] don't have any usable arms!</span>")
 		else
 			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
@@ -1277,11 +1161,7 @@
 
 /mob/living/silicon/robot/unbuckle_mob(mob/user, force=FALSE)
 	if(iscarbon(user))
-<<<<<<< HEAD
 		var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
-=======
-		GET_COMPONENT(riding_datum, /datum/component/riding)
->>>>>>> Updated this old code to fork
 		if(istype(riding_datum))
 			riding_datum.unequip_buckle_inhands(user)
 			riding_datum.restore_position(user)
@@ -1303,7 +1183,6 @@
 			connected_ai.aicamera.stored[i] = TRUE
 		for(var/i in connected_ai.aicamera.stored)
 			aicamera.stored[i] = TRUE
-<<<<<<< HEAD
 
 /mob/living/silicon/robot/proc/charge(datum/source, amount, repairs)
 	if(module)
@@ -1312,5 +1191,3 @@
 		cell.charge = min(cell.charge + amount, cell.maxcharge)
 	if(repairs)
 		heal_bodypart_damage(repairs, repairs - 1)
-=======
->>>>>>> Updated this old code to fork

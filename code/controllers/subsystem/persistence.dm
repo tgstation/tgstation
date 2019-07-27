@@ -23,10 +23,7 @@ SUBSYSTEM_DEF(persistence)
 	LoadPhotoPersistence()
 	if(CONFIG_GET(flag/use_antag_rep))
 		LoadAntagReputation()
-<<<<<<< HEAD
 	LoadRandomizedRecipes()
-=======
->>>>>>> Updated this old code to fork
 	return ..()
 
 /datum/controller/subsystem/persistence/proc/LoadPoly()
@@ -150,10 +147,7 @@ SUBSYSTEM_DEF(persistence)
 	SavePhotoPersistence()						//THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
 	if(CONFIG_GET(flag/use_antag_rep))
 		CollectAntagReputation()
-<<<<<<< HEAD
 	SaveRandomizedRecipes()
-=======
->>>>>>> Updated this old code to fork
 
 /datum/controller/subsystem/persistence/proc/GetPhotoAlbums()
 	var/album_path = file("data/photo_albums.json")
@@ -290,7 +284,6 @@ SUBSYSTEM_DEF(persistence)
 	fdel(FILE_ANTAG_REP)
 	text2file(json_encode(antag_rep), FILE_ANTAG_REP)
 
-<<<<<<< HEAD
 
 /datum/controller/subsystem/persistence/proc/LoadRandomizedRecipes()
 	var/json_file = file("data/RandomizedChemRecipes.json")
@@ -333,5 +326,3 @@ SUBSYSTEM_DEF(persistence)
 	
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
-=======
->>>>>>> Updated this old code to fork

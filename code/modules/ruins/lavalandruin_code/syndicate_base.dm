@@ -4,11 +4,7 @@
 	name = "\improper SyndiChem"
 	desc = "A vending machine full of grenades and grenade accessories. Sponsored by DonkCo(tm)."
 	req_access = list(ACCESS_SYNDICATE)
-<<<<<<< HEAD
 	products = list(/obj/item/stack/cable_coil = 5,
-=======
-	products = list(/obj/item/stack/cable_coil/random = 5,
->>>>>>> Updated this old code to fork
 					/obj/item/assembly/igniter = 20,
 					/obj/item/assembly/prox_sensor = 5,
 					/obj/item/assembly/signaler = 5,

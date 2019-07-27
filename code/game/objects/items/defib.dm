@@ -4,11 +4,7 @@
 /obj/item/defibrillator
 	name = "defibrillator"
 	desc = "A device that delivers powerful shocks to detachable paddles that resuscitate incapacitated patients."
-<<<<<<< HEAD
 	icon = 'icons/obj/defib.dmi'
-=======
-	icon = 'icons/obj/items_and_weapons.dmi'
->>>>>>> Updated this old code to fork
 	icon_state = "defibunit"
 	item_state = "defibunit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -44,7 +40,6 @@
 	update_icon()
 	return
 
-<<<<<<< HEAD
 /obj/item/defibrillator/fire_act(exposed_temperature, exposed_volume)
 	. = ..()
 	if(paddles?.loc == src)
@@ -55,8 +50,6 @@
 	if(paddles?.loc == src)
 		paddles.extinguish()
 
-=======
->>>>>>> Updated this old code to fork
 /obj/item/defibrillator/update_icon()
 	update_power()
 	update_overlays()
@@ -293,11 +286,7 @@
 /obj/item/twohanded/shockpaddles
 	name = "defibrillator paddles"
 	desc = "A pair of plastic-gripped paddles with flat metal surfaces that are used to deliver powerful electric shocks."
-<<<<<<< HEAD
 	icon = 'icons/obj/defib.dmi'
-=======
-	icon = 'icons/obj/items_and_weapons.dmi'
->>>>>>> Updated this old code to fork
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -306,10 +295,7 @@
 	force = 0
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
-<<<<<<< HEAD
 	resistance_flags = INDESTRUCTIBLE
-=======
->>>>>>> Updated this old code to fork
 
 	var/revivecost = 1000
 	var/cooldown = FALSE
@@ -320,7 +306,6 @@
 	var/grab_ghost = FALSE
 	var/tlimit = DEFIB_TIME_LIMIT * 10
 
-<<<<<<< HEAD
 	var/mob/listeningTo
 
 /obj/item/twohanded/shockpaddles/equipped(mob/user, slot)
@@ -331,31 +316,17 @@
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/check_range)
 	listeningTo = user
-=======
-	var/datum/component/mobhook
-
-/obj/item/twohanded/shockpaddles/equipped(mob/user, slot)
-	. = ..()
-	if(req_defib)
-		if (mobhook && mobhook.parent != user)
-			QDEL_NULL(mobhook)
-		if (!mobhook)
-			mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/check_range)))
->>>>>>> Updated this old code to fork
 
 /obj/item/twohanded/shockpaddles/Moved()
 	. = ..()
 	check_range()
 
-<<<<<<< HEAD
 
 /obj/item/twohanded/shockpaddles/fire_act(exposed_temperature, exposed_volume)
 	. = ..()
 	if((req_defib && defib) && loc != defib)
 		defib.fire_act(exposed_temperature, exposed_volume)
 
-=======
->>>>>>> Updated this old code to fork
 /obj/item/twohanded/shockpaddles/proc/check_range()
 	if(!req_defib)
 		return
@@ -407,13 +378,8 @@
 /obj/item/twohanded/shockpaddles/dropped(mob/user)
 	if(!req_defib)
 		return ..()
-<<<<<<< HEAD
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-=======
-	if (mobhook)
-		QDEL_NULL(mobhook)
->>>>>>> Updated this old code to fork
 	if(user)
 		var/obj/item/twohanded/offhand/O = user.get_inactive_held_item()
 		if(istype(O))
@@ -489,11 +455,7 @@
 	do_help(H, user)
 
 /obj/item/twohanded/shockpaddles/proc/can_defib(mob/living/carbon/H)
-<<<<<<< HEAD
 	if(H.suiciding || H.hellbound || HAS_TRAIT(H, TRAIT_HUSK))
-=======
-	if(H.suiciding || H.hellbound || H.has_trait(TRAIT_HUSK))
->>>>>>> Updated this old code to fork
 		return
 	if((world.time - H.timeofdeath) > tlimit)
 		return
@@ -509,11 +471,7 @@
 /obj/item/twohanded/shockpaddles/proc/shock_touching(dmg, mob/H)
 	if(isliving(H.pulledby))		//CLEAR!
 		var/mob/living/M = H.pulledby
-<<<<<<< HEAD
 		if(M.electrocute_act(30, H))
-=======
-		if(M.electrocute_act(30, src))
->>>>>>> Updated this old code to fork
 			M.visible_message("<span class='danger'>[M] is electrocuted by [M.p_their()] contact with [H]!</span>")
 			M.emote("scream")
 
@@ -527,11 +485,7 @@
 			"<span class='userdanger'>[user] has touched [M] with [src]!</span>")
 	M.adjustStaminaLoss(50)
 	M.Paralyze(100)
-<<<<<<< HEAD
 	M.updatehealth() //forces health update before next life tick //isn't this done by adjustStaminaLoss anyway?
-=======
-	M.updatehealth() //forces health update before next life tick
->>>>>>> Updated this old code to fork
 	playsound(src,  'sound/machines/defib_zap.ogg', 50, 1, -1)
 	M.emote("gasp")
 	log_combat(user, M, "stunned", src)
@@ -641,11 +595,7 @@
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Body has decayed for too long. Further attempts futile.</span>"
 				else if (!H.getorgan(/obj/item/organ/heart))
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's heart is missing.</span>"
-<<<<<<< HEAD
 				else if(total_burn >= MAX_REVIVE_FIRE_DAMAGE || total_brute >= MAX_REVIVE_BRUTE_DAMAGE || HAS_TRAIT(H, TRAIT_HUSK))
-=======
-				else if(total_burn >= MAX_REVIVE_FIRE_DAMAGE || total_brute >= MAX_REVIVE_BRUTE_DAMAGE || H.has_trait(TRAIT_HUSK))
->>>>>>> Updated this old code to fork
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Severe tissue damage makes recovery of patient impossible via defibrillator. Further attempts futile.</span>"
 				else if(H.get_ghost())
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - No activity in patient's brain. Further attempts may be successful.</span>"
@@ -711,11 +661,7 @@
 
 /obj/item/twohanded/shockpaddles/cyborg
 	name = "cyborg defibrillator paddles"
-<<<<<<< HEAD
 	icon = 'icons/obj/defib.dmi'
-=======
-	icon = 'icons/obj/items_and_weapons.dmi'
->>>>>>> Updated this old code to fork
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
 	req_defib = FALSE
@@ -736,11 +682,7 @@
 	name = "syndicate defibrillator paddles"
 	desc = "A pair of paddles used to revive deceased operatives. It possesses both the ability to penetrate armor and to deliver powerful shocks offensively."
 	combat = TRUE
-<<<<<<< HEAD
 	icon = 'icons/obj/defib.dmi'
-=======
-	icon = 'icons/obj/items_and_weapons.dmi'
->>>>>>> Updated this old code to fork
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
 	req_defib = FALSE

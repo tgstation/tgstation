@@ -29,16 +29,11 @@
 	var/obj/item/typecast = upgrade_item
 	upgrade_name = initial(typecast.name)
 
-<<<<<<< HEAD
 /datum/component/armor_plate/proc/examine(datum/source, mob/user, list/examine_list)
-=======
-/datum/component/armor_plate/proc/examine(datum/source, mob/user)
->>>>>>> Updated this old code to fork
 	//upgrade_item could also be typecast here instead
 	if(ismecha(parent))
 		if(amount)
 			if(amount < maxamount)
-<<<<<<< HEAD
 				examine_list += "<span class='notice'>Its armor is enhanced with [amount] [upgrade_name].</span>"
 			else
 				examine_list += "<span class='notice'>It's wearing a fearsome carapace entirely composed of [upgrade_name] - its pilot must be an experienced monster hunter.</span>"
@@ -49,18 +44,6 @@
 			examine_list += "<span class='notice'>It has been strengthened with [amount]/[maxamount] [upgrade_name].</span>"
 		else
 			examine_list += "<span class='notice'>It can be strengthened with up to [maxamount] [upgrade_name].</span>"
-=======
-				to_chat(user, "<span class='notice'>Its armor is enhanced with [amount] [upgrade_name].</span>")
-			else
-				to_chat(user, "<span class='notice'>It's wearing a fearsome carapace entirely composed of [upgrade_name] - its pilot must be an experienced monster hunter.</span>")
-		else
-			to_chat(user, "<span class='notice'>It has attachment points for strapping monster hide on for added protection.</span>")
-	else
-		if(amount)
-			to_chat(user, "<span class='notice'>It has been strengthened with [amount]/[maxamount] [upgrade_name].</span>")
-		else
-			to_chat(user, "<span class='notice'>It can be strengthened with up to [maxamount] [upgrade_name].</span>")
->>>>>>> Updated this old code to fork
 
 /datum/component/armor_plate/proc/applyplate(datum/source, obj/item/I, mob/user, params)
 	if(!istype(I,upgrade_item))
@@ -92,8 +75,4 @@
 /datum/component/armor_plate/proc/dropplates(datum/source, force)
 	if(ismecha(parent)) //items didn't drop the plates before and it causes erroneous behavior for the time being with collapsible helmets
 		for(var/i in 1 to amount)
-<<<<<<< HEAD
 			new upgrade_item(get_turf(parent))
-=======
-			new upgrade_item(get_turf(parent))
->>>>>>> Updated this old code to fork

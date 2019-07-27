@@ -36,11 +36,7 @@
 
 /obj/structure/glowshroom/examine(mob/user)
 	. = ..()
-<<<<<<< HEAD
 	. += "This is a [generation]\th generation [name]!"
-=======
-	to_chat(user, "This is a [generation]\th generation [name]!")
->>>>>>> Updated this old code to fork
 
 /obj/structure/glowshroom/Destroy()
 	if(myseed)

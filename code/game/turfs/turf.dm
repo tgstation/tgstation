@@ -62,11 +62,7 @@
 		add_overlay(/obj/effect/fullbright)
 
 	if(requires_activation)
-<<<<<<< HEAD
 		CALCULATE_ADJACENT_TURFS(src)
-=======
-		CalculateAdjacentTurfs()
->>>>>>> Updated this old code to fork
 		SSair.add_to_active(src)
 
 	if (light_power && light_range)
@@ -89,11 +85,7 @@
 	return INITIALIZE_HINT_NORMAL
 
 /turf/proc/Initalize_Atmos(times_fired)
-<<<<<<< HEAD
 	CALCULATE_ADJACENT_TURFS(src)
-=======
-	CalculateAdjacentTurfs()
->>>>>>> Updated this old code to fork
 
 /turf/Destroy(force)
 	. = QDEL_HINT_IWILLGC
@@ -178,20 +170,13 @@
 
 /turf/proc/handleRCL(obj/item/twohanded/rcl/C, mob/user)
 	if(C.loaded)
-<<<<<<< HEAD
 		for(var/obj/structure/pipe_cleaner/LC in src)
-=======
-		for(var/obj/structure/cable/LC in src)
->>>>>>> Updated this old code to fork
 			if(!LC.d1 || !LC.d2)
 				LC.handlecable(C, user)
 				return
 		C.loaded.place_turf(src, user)
-<<<<<<< HEAD
 		if(C.wiring_gui_menu)
 			C.wiringGuiUpdate(user)
-=======
->>>>>>> Updated this old code to fork
 		C.is_empty(user)
 
 /turf/attackby(obj/item/C, mob/user, params)
@@ -200,7 +185,6 @@
 	if(can_lay_cable() && istype(C, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = C
 		for(var/obj/structure/cable/LC in src)
-<<<<<<< HEAD
 			return
 		coil.place_turf(src, user)
 		return TRUE
@@ -209,10 +193,6 @@
 		for(var/obj/structure/pipe_cleaner/LC in src)
 			if(!LC.d1 || !LC.d2)
 				LC.attackby(C, user)
-=======
-			if(!LC.d1 || !LC.d2)
-				LC.attackby(C,user)
->>>>>>> Updated this old code to fork
 				return
 		coil.place_turf(src, user)
 		return TRUE
@@ -533,12 +513,6 @@
 	return
 
 /turf/handle_fall(mob/faller, forced)
-<<<<<<< HEAD
-=======
-	if(isliving(faller))
-		var/mob/living/L = faller
-		L.lying = pick(90, 270)
->>>>>>> Updated this old code to fork
 	if(!forced)
 		return
 	if(has_gravity(src))
@@ -562,7 +536,6 @@
 /turf/AllowDrop()
 	return TRUE
 
-<<<<<<< HEAD
 /turf/proc/add_vomit_floor(mob/living/M, toxvomit = NONE)
 
 	var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src, M.get_static_viruses())
@@ -581,18 +554,6 @@
 		var/mob/living/carbon/C = M
 		if(C.reagents)
 			clear_reagents_to_vomit_pool(C,V)
-=======
-/turf/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
-	var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src, M.get_static_viruses())
-	// If the vomit combined, apply toxicity and reagents to the old vomit
-	if (QDELETED(V))
-		V = locate() in src
-	// Make toxins vomit look different
-	if(toxvomit)
-		V.icon_state = "vomittox_[pick(1,4)]"
-	if(M.reagents)
-		clear_reagents_to_vomit_pool(M,V)
->>>>>>> Updated this old code to fork
 
 /proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V)
 	M.reagents.trans_to(V, M.reagents.total_volume / 10, transfered_by = M)
@@ -600,11 +561,7 @@
 		if(istype(R, /datum/reagent/consumable))
 			var/datum/reagent/consumable/nutri_check = R
 			if(nutri_check.nutriment_factor >0)
-<<<<<<< HEAD
 				M.reagents.remove_reagent(R.type,R.volume)
-=======
-				M.reagents.remove_reagent(R.id,R.volume)
->>>>>>> Updated this old code to fork
 
 //Whatever happens after high temperature fire dies out or thermite reaction works.
 //Should return new turf

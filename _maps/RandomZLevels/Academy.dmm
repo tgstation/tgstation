@@ -41,24 +41,11 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "aj" = (
-<<<<<<< HEAD
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
 	pixel_y = 23
 	},
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/unlocked{
-	dir = 1;
-	environ = 3;
-	equipment = 3;
-	pixel_y = 32;
-	req_access = null
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "ak" = (
@@ -66,43 +53,12 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "al" = (
-<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "am" = (
 /obj/machinery/light/small,
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/headmaster)
-"am" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/light/small,
-/turf/open/floor/carpet,
-/area/awaymission/academy/headmaster)
-"an" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/headmaster)
-"ao" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/headmaster)
-"ap" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "aq" = (
@@ -119,34 +75,10 @@
 /turf/closed/wall,
 /area/awaymission/academy/headmaster)
 "at" = (
-<<<<<<< HEAD
 /obj/machinery/door/airlock/wood{
 	name = "Headmaster Room"
 	},
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/wood{
-	name = "Headmaster Room"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/headmaster)
-"au" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/headmaster)
-"av" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "aw" = (
@@ -166,7 +98,6 @@
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "az" = (
-<<<<<<< HEAD
 /obj/item/stack/sheet/animalhide/monkey,
 /obj/structure/cable,
 /turf/open/floor/wood,
@@ -176,21 +107,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/item/stack/sheet/animalhide/monkey,
-/turf/open/floor/wood,
-/area/awaymission/academy/headmaster)
-"aA" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "aB" = (
@@ -220,19 +136,10 @@
 /turf/closed/indestructible/rock,
 /area/space/nearstation)
 "aH" = (
-<<<<<<< HEAD
 /obj/machinery/light{
 	dir = 8
 	},
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/light{
-	dir = 8
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "aI" = (
@@ -282,13 +189,7 @@
 "aR" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/gold,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "aS" = (
@@ -299,21 +200,11 @@
 /turf/closed/wall,
 /area/awaymission/academy/headmaster)
 "aU" = (
-<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "aV" = (
 /obj/structure/chair/office,
-=======
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/wood,
-/area/awaymission/academy/headmaster)
-"aV" = (
-/obj/structure/chair/office/dark,
->>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "aW" = (
@@ -336,15 +227,8 @@
 /area/awaymission/academy/headmaster)
 "ba" = (
 /obj/structure/table/wood,
-<<<<<<< HEAD
 /obj/item/pen/red,
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/item/pen/red,
->>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "bb" = (
@@ -363,11 +247,7 @@
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "be" = (
-<<<<<<< HEAD
 /obj/structure/chair/office{
-=======
-/obj/structure/chair/office/dark{
->>>>>>> Updated this old code to fork
 	dir = 4
 	},
 /turf/open/floor/carpet,
@@ -383,15 +263,8 @@
 /area/awaymission/academy/headmaster)
 "bh" = (
 /obj/structure/table/wood,
-<<<<<<< HEAD
 /obj/item/dice/d20,
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/item/dice/d20,
->>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "bi" = (
@@ -405,7 +278,6 @@
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "bk" = (
-<<<<<<< HEAD
 /obj/structure/chair/office{
 	dir = 1
 	},
@@ -414,18 +286,6 @@
 /area/awaymission/academy/headmaster)
 "bl" = (
 /obj/structure/chair/office{
-=======
-/obj/structure/chair/office/dark{
-	dir = 1
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/headmaster)
-"bl" = (
-/obj/structure/chair/office/dark{
->>>>>>> Updated this old code to fork
 	dir = 1
 	},
 /turf/open/floor/carpet,
@@ -449,13 +309,7 @@
 /area/awaymission/academy/headmaster)
 "bq" = (
 /obj/machinery/door/airlock/gold,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "br" = (
@@ -574,44 +428,8 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
-<<<<<<< HEAD
 "bQ" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-=======
-"bN" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/academy/headmaster)
-"bO" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/academy/headmaster)
-"bP" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/academy/headmaster)
-"bQ" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -625,18 +443,8 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
 "bR" = (
-<<<<<<< HEAD
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/effect/spawner/structure/window/reinforced,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/academy/headmaster)
 "bS" = (
@@ -648,12 +456,6 @@
 /area/awaymission/academy/headmaster)
 "bU" = (
 /obj/machinery/autolathe,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "bV" = (
@@ -689,12 +491,6 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
 "ce" = (
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -705,22 +501,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
-=======
-/turf/open/floor/plasteel/dark,
-/area/awaymission/academy/headmaster)
-"cf" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/academy/headmaster)
->>>>>>> Updated this old code to fork
 "cg" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/open/floor/plasteel/showroomfloor,
@@ -734,12 +517,6 @@
 /area/awaymission/academy/headmaster)
 "ci" = (
 /obj/structure/table,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
@@ -764,15 +541,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
-<<<<<<< HEAD
-=======
-"cm" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/academy/headmaster)
->>>>>>> Updated this old code to fork
 "co" = (
 /obj/machinery/portable_atmospherics/scrubber/huge,
 /turf/open/floor/plating,
@@ -781,17 +549,6 @@
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/showroomfloor,
 /area/awaymission/academy/headmaster)
-<<<<<<< HEAD
-=======
-"cq" = (
-/obj/structure/table,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/item/pen/red,
-/turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
->>>>>>> Updated this old code to fork
 "cr" = (
 /obj/machinery/light{
 	dir = 4
@@ -811,30 +568,18 @@
 /obj/machinery/door/window{
 	dir = 8
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/academy/headmaster)
 "cw" = (
 /obj/structure/cable,
-=======
-/turf/open/floor/plating,
-/area/awaymission/academy/headmaster)
-"cw" = (
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/academy/headmaster)
 "cx" = (
 /obj/machinery/door/window{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/academy/headmaster)
 "cy" = (
@@ -843,14 +588,7 @@
 /area/awaymission/academy/headmaster)
 "cz" = (
 /obj/structure/table,
-<<<<<<< HEAD
 /obj/item/stack/cable_coil,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/item/stack/cable_coil/random,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "cA" = (
@@ -877,36 +615,11 @@
 /obj/structure/table,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/headmaster)
-<<<<<<< HEAD
 "cF" = (
 /obj/machinery/door/airlock/plasma,
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
-=======
-"cE" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/headmaster)
-"cF" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/plasma,
-/turf/open/floor/carpet,
-/area/awaymission/academy/headmaster)
-"cG" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/academy/headmaster)
->>>>>>> Updated this old code to fork
 "cH" = (
 /obj/structure/sign/warning/nosmoking/circle,
 /turf/closed/wall,
@@ -931,15 +644,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/academy/headmaster)
-<<<<<<< HEAD
-=======
-"cM" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
->>>>>>> Updated this old code to fork
 "cN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -1017,39 +721,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
-<<<<<<< HEAD
-=======
-"cW" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/academy/headmaster)
-"cX" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
-"cY" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
-"cZ" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
-"da" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
->>>>>>> Updated this old code to fork
 "db" = (
 /obj/machinery/light{
 	dir = 8
@@ -1139,16 +810,6 @@
 /obj/machinery/gibber,
 /turf/open/floor/plasteel/white,
 /area/awaymission/academy/classrooms)
-<<<<<<< HEAD
-=======
-"do" = (
-/obj/machinery/mech_bay_recharge_port,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/classrooms)
->>>>>>> Updated this old code to fork
 "dp" = (
 /turf/open/floor/mech_bay_recharge_floor,
 /area/awaymission/academy/classrooms)
@@ -1156,13 +817,7 @@
 /obj/machinery/computer/mech_bay_power_console{
 	dir = 1
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/circuit/green,
 /area/awaymission/academy/classrooms)
 "dr" = (
@@ -1212,41 +867,10 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/headmaster)
 "dz" = (
-<<<<<<< HEAD
 /obj/structure/reagent_dispensers/fueltank,
 /obj/structure/cable,
 /turf/open/floor/circuit/green,
 /area/awaymission/academy/classrooms)
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/circuit/green,
-/area/awaymission/academy/classrooms)
-"dA" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/circuit/green,
-/area/awaymission/academy/classrooms)
-"dB" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
->>>>>>> Updated this old code to fork
 "dC" = (
 /turf/open/floor/grass,
 /area/awaymission/academy/headmaster)
@@ -1299,44 +923,6 @@
 /obj/item/seeds/tomato/blue/bluespace,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
-<<<<<<< HEAD
-=======
-"dN" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
-"dO" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
-"dP" = (
-/obj/machinery/door/airlock/freezer,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/white,
-/area/awaymission/academy/classrooms)
-"dQ" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/white,
-/area/awaymission/academy/classrooms)
-"dR" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel/white,
-/area/awaymission/academy/classrooms)
->>>>>>> Updated this old code to fork
 "dS" = (
 /obj/structure/kitchenspike,
 /turf/open/floor/plasteel/white,
@@ -1347,13 +933,7 @@
 /area/awaymission/academy/classrooms)
 "dU" = (
 /obj/structure/mineral_door/iron,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "dV" = (
@@ -1372,15 +952,6 @@
 /obj/structure/closet/crate/freezer,
 /turf/open/floor/plasteel/white,
 /area/awaymission/academy/classrooms)
-<<<<<<< HEAD
-=======
-"dZ" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel/white,
-/area/awaymission/academy/classrooms)
->>>>>>> Updated this old code to fork
 "ea" = (
 /obj/machinery/igniter/on,
 /turf/open/floor/plating,
@@ -1413,20 +984,11 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "ef" = (
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "eg" = (
@@ -1453,37 +1015,18 @@
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/academy/classrooms)
 "ek" = (
-<<<<<<< HEAD
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
 	pixel_y = 23
 	},
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/unlocked{
-	dir = 1;
-	environ = 3;
-	equipment = 3;
-	pixel_y = 32;
-	req_access = null
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/academy/classrooms)
 "el" = (
 /turf/open/floor/carpet,
 /area/awaymission/academy/classrooms)
 "em" = (
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/awaymission/academy/classrooms)
 "en" = (
@@ -1521,11 +1064,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "er" = (
-<<<<<<< HEAD
 /obj/structure/closet/secure_closet/freezer/fridge/open,
-=======
-/obj/structure/closet/secure_closet/freezer/fridge,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/awaymission/academy/classrooms)
 "es" = (
@@ -1563,29 +1102,13 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "ew" = (
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/academy/classrooms)
 "ex" = (
 /obj/structure/mineral_door/wood,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
-<<<<<<< HEAD
-=======
-"ey" = (
-/obj/machinery/door/airlock/freezer,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel/white,
-/area/awaymission/academy/classrooms)
->>>>>>> Updated this old code to fork
 "ez" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -1663,21 +1186,6 @@
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/classrooms)
-<<<<<<< HEAD
-=======
-"eI" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/awaymission/academy/classrooms)
->>>>>>> Updated this old code to fork
 "eJ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1714,13 +1222,7 @@
 	},
 /area/awaymission/academy/classrooms)
 "eO" = (
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/chapel{
 	dir = 1
 	},
@@ -1788,13 +1290,7 @@
 /turf/open/floor/plasteel/chapel,
 /area/awaymission/academy/classrooms)
 "eX" = (
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/chapel{
 	dir = 8
 	},
@@ -1843,109 +1339,6 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
-<<<<<<< HEAD
-=======
-"fd" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/classrooms)
-"fe" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/classrooms)
-"ff" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/classrooms)
-"fg" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/grimy,
-/area/awaymission/academy/classrooms)
-"fh" = (
-/obj/structure/mineral_door/wood,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
-"fi" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white/corner,
-/area/awaymission/academy/classrooms)
-"fj" = (
-/obj/structure/table,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white/corner,
-/area/awaymission/academy/classrooms)
-"fk" = (
-/obj/structure/table/reinforced,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/awaymission/academy/classrooms)
-"fl" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/awaymission/academy/classrooms)
-"fm" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/awaymission/academy/classrooms)
->>>>>>> Updated this old code to fork
 "fn" = (
 /obj/structure/table,
 /obj/machinery/microwave,
@@ -2055,60 +1448,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
-<<<<<<< HEAD
 "fy" = (
-=======
-"fx" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
-"fy" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/structure/noticeboard{
 	pixel_y = -32
 	},
 /obj/item/paper/fluff/awaymissions/academy/class/biology,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/academy/classrooms)
-<<<<<<< HEAD
-=======
-"fz" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel/grimy,
-/area/awaymission/academy/classrooms)
-"fA" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/plasteel/grimy,
-/area/awaymission/academy/classrooms)
-"fB" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/classrooms)
->>>>>>> Updated this old code to fork
 "fC" = (
 /obj/machinery/light,
 /obj/effect/turf_decal/tile/red{
@@ -2122,7 +1468,6 @@
 "fD" = (
 /turf/closed/wall,
 /area/awaymission/academy/academyaft)
-<<<<<<< HEAD
 "fF" = (
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
@@ -2136,49 +1481,6 @@
 /area/awaymission/academy/classrooms)
 "fI" = (
 /obj/structure/cable,
-=======
-"fE" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/academyaft)
-"fF" = (
-/turf/open/floor/carpet,
-/area/awaymission/academy/academyaft)
-"fG" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/academy/classrooms)
-"fH" = (
-/obj/machinery/shieldwallgen,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
-"fI" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/white/side{
-	dir = 1
-	},
-/area/awaymission/academy/classrooms)
-"fJ" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
@@ -2216,25 +1518,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/academy/classrooms)
-<<<<<<< HEAD
-=======
-"fQ" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/academy/classrooms)
->>>>>>> Updated this old code to fork
 "fR" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -2275,30 +1558,13 @@
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "fY" = (
-<<<<<<< HEAD
-=======
-/mob/living/simple_animal/hostile/wizard,
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-<<<<<<< HEAD
 /mob/living/simple_animal/hostile/wizard,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
-=======
-/turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
-"fZ" = (
-/obj/structure/cable,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/academy/classrooms)
->>>>>>> Updated this old code to fork
 "ga" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -2329,40 +1595,11 @@
 /obj/structure/holohoop,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
-<<<<<<< HEAD
 "gh" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/academy/academyaft)
 "gk" = (
-=======
-"gg" = (
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/academy/classrooms)
-"gh" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/grimy,
-/area/awaymission/academy/academyaft)
-"gi" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/academyaft)
-"gk" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /obj/machinery/recharger,
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral{
@@ -2426,12 +1663,6 @@
 /obj/machinery/door/window{
 	dir = 8
 	},
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "gq" = (
@@ -2443,33 +1674,6 @@
 	dir = 4
 	},
 /area/awaymission/academy/classrooms)
-<<<<<<< HEAD
-=======
-"gs" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/academy/classrooms)
-"gt" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/academy/classrooms)
->>>>>>> Updated this old code to fork
 "gu" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -2533,29 +1737,6 @@
 /obj/item/scalpel,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
-<<<<<<< HEAD
-=======
-"gE" = (
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/academy/classrooms)
-"gF" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/academyaft)
-"gG" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/academyaft)
->>>>>>> Updated this old code to fork
 "gH" = (
 /obj/structure/table,
 /obj/item/paper/fluff/awaymissions/academy/grade/aplus,
@@ -2651,63 +1832,11 @@
 /obj/structure/mineral_door/iron,
 /turf/open/floor/carpet,
 /area/awaymission/academy/classrooms)
-<<<<<<< HEAD
 "gT" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/gold,
 /turf/open/floor/carpet,
 /area/awaymission/academy/classrooms)
-=======
-"gS" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/academyaft)
-"gT" = (
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/gold,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/classrooms)
-"gU" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/academy/classrooms)
-"gV" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/academy/classrooms)
->>>>>>> Updated this old code to fork
 "gW" = (
 /obj/structure/table,
 /obj/item/gun/energy/floragun,
@@ -2731,56 +1860,19 @@
 /obj/item/target,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
-<<<<<<< HEAD
 "ha" = (
 /turf/open/floor/plasteel/white/side,
 /area/awaymission/academy/classrooms)
 "hb" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/white/side,
-=======
-"gY" = (
-/obj/structure/cable,
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/academy/classrooms)
-"gZ" = (
-/obj/machinery/shieldwallgen,
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
-"ha" = (
-/turf/open/floor/plasteel/white/side{
-	dir = 2
-	},
-/area/awaymission/academy/classrooms)
-"hb" = (
-/obj/structure/chair/stool,
-/turf/open/floor/plasteel/white/side{
-	dir = 2
-	},
->>>>>>> Updated this old code to fork
 /area/awaymission/academy/classrooms)
 "hc" = (
 /turf/closed/wall/r_wall,
 /area/awaymission/academy/academyaft)
 "hd" = (
 /obj/structure/mineral_door/wood,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
 "he" = (
@@ -2790,63 +1882,16 @@
 "hf" = (
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
-<<<<<<< HEAD
 "hl" = (
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
 	pixel_y = 23
 	},
 /obj/structure/cable,
-=======
-"hg" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
-"hh" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
-"hi" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/academyaft)
-"hk" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/academyaft)
-"hl" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/unlocked{
-	dir = 1;
-	environ = 3;
-	equipment = 3;
-	pixel_y = 32;
-	req_access = null
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "hm" = (
 /obj/structure/grille,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "hn" = (
@@ -2882,40 +1927,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
-<<<<<<< HEAD
-=======
-"ht" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/academyaft)
-"hv" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/academyaft)
-"hx" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
-"hy" = (
-/obj/machinery/power/smes/magical,
-/obj/structure/cable,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
->>>>>>> Updated this old code to fork
 "hz" = (
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-<<<<<<< HEAD
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "hB" = (
@@ -2927,117 +1942,26 @@
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "hF" = (
-=======
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
-"hA" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/academyaft)
-"hB" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/academyaft)
-"hC" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/academyaft)
-"hD" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/maintenance_hatch,
-/turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
-"hE" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
-"hF" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "hH" = (
-=======
-/turf/open/floor/plasteel,
-/area/awaymission/academy/academyaft)
-"hH" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "hK" = (
 /obj/structure/cable,
 /obj/item/clothing/suit/caution,
-=======
-/turf/open/floor/plasteel,
-/area/awaymission/academy/academyaft)
-"hI" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/academyaft)
-"hJ" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/academyaft)
-"hK" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/item/caution,
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -3048,28 +1972,10 @@
 /obj/structure/mecha_wreckage/durand,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
-<<<<<<< HEAD
-=======
-"hM" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/academyaft)
->>>>>>> Updated this old code to fork
 "hN" = (
 /obj/structure/frame/machine,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
-<<<<<<< HEAD
-=======
-"hO" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
->>>>>>> Updated this old code to fork
 "hQ" = (
 /obj/machinery/light{
 	dir = 4
@@ -3157,18 +2063,6 @@
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
-<<<<<<< HEAD
-=======
-"if" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/academyaft)
->>>>>>> Updated this old code to fork
 "ih" = (
 /obj/structure/rack,
 /obj/item/stack/sheet/mineral/plasma{
@@ -3186,43 +2080,18 @@
 /obj/item/circuitboard/machine/telecomms/relay,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
-<<<<<<< HEAD
 "il" = (
 /turf/open/floor/plasteel/cafeteria,
-=======
-"ik" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/academyaft)
-"il" = (
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
->>>>>>> Updated this old code to fork
 /area/awaymission/academy/academyaft)
 "im" = (
 /obj/structure/mirror{
 	pixel_y = 28
 	},
-<<<<<<< HEAD
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "in" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plasteel/cafeteria,
-=======
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
-/area/awaymission/academy/academyaft)
-"in" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
->>>>>>> Updated this old code to fork
 /area/awaymission/academy/academyaft)
 "io" = (
 /obj/structure/rack,
@@ -3246,13 +2115,7 @@
 /area/awaymission/academy/academyaft)
 "ir" = (
 /obj/structure/mineral_door/iron,
-<<<<<<< HEAD
 /turf/open/floor/plasteel/cafeteria,
-=======
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
->>>>>>> Updated this old code to fork
 /area/awaymission/academy/academyaft)
 "is" = (
 /obj/structure/rack,
@@ -3277,25 +2140,13 @@
 	pixel_x = -12;
 	pixel_y = 2
 	},
-<<<<<<< HEAD
 /turf/open/floor/plasteel/cafeteria,
-=======
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
->>>>>>> Updated this old code to fork
 /area/awaymission/academy/academyaft)
 "iw" = (
 /obj/machinery/light{
 	dir = 4
 	},
-<<<<<<< HEAD
 /turf/open/floor/plasteel/cafeteria,
-=======
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
->>>>>>> Updated this old code to fork
 /area/awaymission/academy/academyaft)
 "ix" = (
 /obj/machinery/light{
@@ -3313,26 +2164,14 @@
 /obj/machinery/light{
 	dir = 8
 	},
-<<<<<<< HEAD
 /turf/open/floor/plasteel/cafeteria,
-=======
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
->>>>>>> Updated this old code to fork
 /area/awaymission/academy/academyaft)
 "iA" = (
 /obj/structure/sink{
 	dir = 4;
 	pixel_x = 11
 	},
-<<<<<<< HEAD
 /turf/open/floor/plasteel/cafeteria,
-=======
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
->>>>>>> Updated this old code to fork
 /area/awaymission/academy/academyaft)
 "iB" = (
 /obj/structure/rack,
@@ -3351,13 +2190,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-<<<<<<< HEAD
 /turf/open/floor/plasteel/cafeteria,
-=======
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
->>>>>>> Updated this old code to fork
 /area/awaymission/academy/academyaft)
 "iE" = (
 /obj/machinery/light{
@@ -3378,24 +2211,14 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-<<<<<<< HEAD
 /turf/open/floor/plasteel/cafeteria,
-=======
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
->>>>>>> Updated this old code to fork
 /area/awaymission/academy/academyaft)
 "iH" = (
 /obj/item/paper,
 /turf/open/floor/wood,
 /area/awaymission/academy/academyaft)
 "iI" = (
-<<<<<<< HEAD
 /obj/item/stack/cable_coil,
-=======
-/obj/item/stack/cable_coil/random,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "iJ" = (
@@ -3423,21 +2246,10 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/vomit,
-<<<<<<< HEAD
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "iO" = (
 /obj/structure/cable,
-=======
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
-/area/awaymission/academy/academyaft)
-"iO" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/awaymission/academy/academyaft)
 "iP" = (
@@ -3469,12 +2281,6 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -3485,47 +2291,14 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "iT" = (
-<<<<<<< HEAD
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
-"iU" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/academyaft)
-"iV" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "iW" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless/white{
 	dir = 4
 	},
@@ -3554,103 +2327,34 @@
 /obj/structure/shuttle/engine/propulsion/right,
 /turf/open/space,
 /area/awaymission/academy/academyaft)
-<<<<<<< HEAD
 "jc" = (
-=======
-"jb" = (
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
-"jc" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "jf" = (
 /obj/structure/cable,
-=======
-/turf/open/floor/plasteel,
-/area/awaymission/academy/academyaft)
-"jd" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
-"je" = (
-/obj/structure/cable,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
-"jf" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless/white{
 	dir = 4
 	},
 /area/awaymission/academy/academyaft)
 "jg" = (
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
-<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless/white,
 /area/awaymission/academy/academyaft)
-=======
-/turf/open/floor/plasteel/airless/white,
-/area/awaymission/academy/academyaft)
-"jh" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
->>>>>>> Updated this old code to fork
 "ji" = (
 /obj/structure/table,
 /obj/item/clothing/glasses/meson/truesight,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "jj" = (
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -3658,19 +2362,10 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "jk" = (
-<<<<<<< HEAD
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/light{
-	dir = 4
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
 "jl" = (
@@ -3684,12 +2379,6 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
 "jn" = (
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless/white{
 	dir = 4
 	},
@@ -3706,18 +2395,8 @@
 /turf/open/floor/plasteel/airless/white,
 /area/awaymission/academy/academyaft)
 "jp" = (
-<<<<<<< HEAD
 /obj/item/weldingtool,
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/item/weldingtool,
->>>>>>> Updated this old code to fork
 /turf/open/floor/circuit/green,
 /area/awaymission/academy/classrooms)
 "jq" = (
@@ -3736,27 +2415,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
-<<<<<<< HEAD
 "jt" = (
 /obj/structure/grille,
 /obj/item/shard,
 /obj/structure/cable,
-=======
-"js" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/plasteel/airless/white{
-	dir = 4
-	},
-/area/awaymission/academy/academyaft)
-"jt" = (
-/obj/structure/grille,
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/item/shard,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/awaymission/academy/academyaft)
 "ju" = (
@@ -3839,26 +2501,11 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
-<<<<<<< HEAD
 "jF" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/structure/cable,
-=======
-"jE" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
-"jF" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
 "jG" = (
@@ -3873,27 +2520,11 @@
 	},
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
-<<<<<<< HEAD
 "jJ" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/cable,
-=======
-"jI" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/academyaft)
-"jJ" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
 "jK" = (
@@ -3954,13 +2585,7 @@
 /area/awaymission/academy/academyaft)
 "jQ" = (
 /obj/machinery/door/airlock/hatch,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
 "jR" = (
@@ -3977,13 +2602,7 @@
 /turf/open/floor/grass,
 /area/awaymission/academy/academygate)
 "jU" = (
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/awaymission/academy/academygate)
 "jV" = (
@@ -4001,45 +2620,14 @@
 /turf/open/floor/grass,
 /area/awaymission/academy/academygate)
 "jZ" = (
-<<<<<<< HEAD
 /obj/machinery/door/window,
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/window,
->>>>>>> Updated this old code to fork
 /turf/open/floor/carpet,
 /area/awaymission/academy/academygate)
 "ka" = (
 /obj/machinery/door/window,
 /turf/open/floor/carpet,
 /area/awaymission/academy/academygate)
-<<<<<<< HEAD
-=======
-"kb" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/academygate)
-"kc" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/academygate)
-"kd" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/academygate)
->>>>>>> Updated this old code to fork
 "ke" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -4050,7 +2638,6 @@
 "kh" = (
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
-<<<<<<< HEAD
 	pixel_y = 23
 	},
 /obj/structure/cable,
@@ -4061,62 +2648,16 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
-=======
-	environ = 3;
-	equipment = 3;
-	pixel_y = 32;
-	req_access = null
-	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/academygate)
-"ki" = (
-/obj/item/stack/cable_coil/random,
-/turf/open/floor/plating,
-/area/awaymission/academy/academygate)
-"kj" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academygate)
-"kk" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academygate)
-"kl" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/academygate)
->>>>>>> Updated this old code to fork
 "km" = (
 /obj/machinery/gateway{
 	dir = 9
 	},
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
 "kn" = (
 /obj/machinery/gateway{
 	dir = 1
 	},
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
 "ko" = (
@@ -4132,20 +2673,13 @@
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
 "kq" = (
-<<<<<<< HEAD
-=======
-/mob/living/simple_animal/hostile/wizard,
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-<<<<<<< HEAD
 /mob/living/simple_animal/hostile/wizard,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "kr" = (
@@ -4162,10 +2696,7 @@
 /area/awaymission/academy/academygate)
 "kt" = (
 /obj/machinery/gateway,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
 "ku" = (
@@ -4180,13 +2711,8 @@
 /area/awaymission/academy/academygate)
 "kw" = (
 /turf/closed/indestructible/fakeglass{
-<<<<<<< HEAD
 	dir = 8;
 	icon_state = "fakewindows"
-=======
-	icon_state = "fakewindows";
-	dir = 8
->>>>>>> Updated this old code to fork
 	},
 /area/awaymission/academy/headmaster)
 "kx" = (
@@ -4198,13 +2724,7 @@
 /obj/machinery/door/poddoor/shutters{
 	id = "AcademyGate"
 	},
-<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
-=======
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
 "kz" = (
@@ -4212,28 +2732,17 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/classrooms)
 "kA" = (
-<<<<<<< HEAD
-=======
-/mob/living/simple_animal/hostile/wizard,
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-<<<<<<< HEAD
 /mob/living/simple_animal/hostile/wizard,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white/corner,
 /area/awaymission/academy/classrooms)
 "kB" = (
 /obj/structure/chair,
-<<<<<<< HEAD
-=======
-/mob/living/simple_animal/hostile/wizard,
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -4244,10 +2753,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-<<<<<<< HEAD
 /mob/living/simple_animal/hostile/wizard,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/awaymission/academy/classrooms)
 "kC" = (
@@ -4260,44 +2766,17 @@
 /area/awaymission/academy/academyaft)
 "kF" = (
 /turf/closed/indestructible/fakeglass{
-<<<<<<< HEAD
 	dir = 8;
 	icon_state = "fakewindows2"
-=======
-	icon_state = "fakewindows2";
-	dir = 8
->>>>>>> Updated this old code to fork
 	},
 /area/awaymission/academy/headmaster)
 "kG" = (
 /mob/living/simple_animal/hostile/wizard,
-<<<<<<< HEAD
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "kI" = (
 /obj/machinery/gateway/centeraway,
 /obj/structure/cable,
-=======
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
-/area/awaymission/academy/academyaft)
-"kH" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/academyaft)
-"kI" = (
-/obj/structure/cable,
-/obj/machinery/gateway/centeraway{
-	calibrated = 1
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
 "kJ" = (
@@ -4306,12 +2785,6 @@
 /area/awaymission/academy/classrooms)
 "kK" = (
 /obj/structure/table,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /obj/item/book/manual/ripley_build_and_repair,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
@@ -4320,18 +2793,6 @@
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "kM" = (
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
->>>>>>> Updated this old code to fork
 /obj/structure/trap/chill,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
@@ -4451,53 +2912,20 @@
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "ln" = (
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/turf/open/floor/vault,
-/area/awaymission/academy/academyengine)
-"lo" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/vault,
 /area/awaymission/academy/academyengine)
 "lp" = (
 /obj/machinery/power/apc{
 	dir = 1;
-<<<<<<< HEAD
 	pixel_y = 23
 	},
 /obj/structure/cable,
-=======
-	pixel_y = 32
-	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/vault,
 /area/awaymission/academy/academyengine)
 "lq" = (
 /turf/closed/wall/rust,
 /area/awaymission/academy/academyengine)
-<<<<<<< HEAD
-=======
-"lr" = (
-/obj/machinery/power/terminal{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/open/floor/vault,
-/area/awaymission/academy/academyengine)
->>>>>>> Updated this old code to fork
 "ls" = (
 /obj/machinery/power/smes/magical,
 /obj/structure/cable,
@@ -4560,21 +2988,6 @@
 "lF" = (
 /turf/closed/indestructible/fakeglass,
 /area/awaymission/academy/academyengine)
-<<<<<<< HEAD
-=======
-"lG" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academyengine)
-"lH" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academyengine)
->>>>>>> Updated this old code to fork
 "lI" = (
 /obj/structure/ladder/unbreakable/rune{
 	id = "academy_engine"
@@ -4589,13 +3002,6 @@
 /obj/effect/immovablerod{
 	dir = 4
 	},
-<<<<<<< HEAD
-=======
-/obj/structure/cable,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
 "lL" = (
@@ -4613,21 +3019,6 @@
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
-<<<<<<< HEAD
-=======
-"lO" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academyengine)
-"lP" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academyengine)
->>>>>>> Updated this old code to fork
 "lQ" = (
 /obj/structure/table,
 /obj/item/gun/magic/wand/polymorph,
@@ -4906,13 +3297,8 @@
 /area/awaymission/academy/academycellar)
 "mW" = (
 /turf/closed/indestructible/fakeglass{
-<<<<<<< HEAD
 	dir = 4;
 	icon_state = "fakewindows"
-=======
-	icon_state = "fakewindows";
-	dir = 4
->>>>>>> Updated this old code to fork
 	},
 /area/awaymission/academy/headmaster)
 "mX" = (
@@ -4925,24 +3311,14 @@
 /area/space/nearstation)
 "mZ" = (
 /turf/closed/indestructible/fakeglass{
-<<<<<<< HEAD
 	dir = 1;
 	icon_state = "fakewindows"
-=======
-	icon_state = "fakewindows";
-	dir = 1
->>>>>>> Updated this old code to fork
 	},
 /area/awaymission/academy/headmaster)
 "na" = (
 /turf/closed/indestructible/fakeglass{
-<<<<<<< HEAD
 	dir = 1;
 	icon_state = "fakewindows2"
-=======
-	icon_state = "fakewindows2";
-	dir = 1
->>>>>>> Updated this old code to fork
 	},
 /area/awaymission/academy/headmaster)
 "nb" = (
@@ -4961,68 +3337,38 @@
 /area/awaymission/academy/headmaster)
 "nd" = (
 /turf/closed/indestructible/fakeglass{
-<<<<<<< HEAD
 	dir = 1;
 	icon_state = "fakewindows"
-=======
-	icon_state = "fakewindows";
-	dir = 1
->>>>>>> Updated this old code to fork
 	},
 /area/awaymission/academy/academyengine)
 "ne" = (
 /turf/closed/indestructible/fakeglass{
-<<<<<<< HEAD
 	dir = 1;
 	icon_state = "fakewindows2"
-=======
-	icon_state = "fakewindows2";
-	dir = 1
->>>>>>> Updated this old code to fork
 	},
 /area/awaymission/academy/academyengine)
 "nf" = (
 /turf/closed/indestructible/fakeglass{
-<<<<<<< HEAD
 	dir = 6;
 	icon_state = "fakewindows2"
-=======
-	icon_state = "fakewindows2";
-	dir = 6
->>>>>>> Updated this old code to fork
 	},
 /area/awaymission/academy/headmaster)
 "ng" = (
 /turf/closed/indestructible/fakeglass{
-<<<<<<< HEAD
 	dir = 8;
 	icon_state = "fakewindows"
-=======
-	icon_state = "fakewindows";
-	dir = 8
->>>>>>> Updated this old code to fork
 	},
 /area/awaymission/academy/academyengine)
 "nh" = (
 /turf/closed/indestructible/fakeglass{
-<<<<<<< HEAD
 	dir = 8;
 	icon_state = "fakewindows2"
-=======
-	icon_state = "fakewindows2";
-	dir = 8
->>>>>>> Updated this old code to fork
 	},
 /area/awaymission/academy/academyengine)
 "ni" = (
 /turf/closed/indestructible/fakeglass{
-<<<<<<< HEAD
 	dir = 4;
 	icon_state = "fakewindows"
-=======
-	icon_state = "fakewindows";
-	dir = 4
->>>>>>> Updated this old code to fork
 	},
 /area/awaymission/academy/academyengine)
 "nj" = (
@@ -5057,7 +3403,6 @@
 	},
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
-<<<<<<< HEAD
 "np" = (
 /obj/item/stack/cable_coil,
 /obj/structure/cable,
@@ -5094,37 +3439,19 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "LW" = (
-=======
-"LW" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "Tk" = (
-=======
-/turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
-"Tk" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 
@@ -11023,7 +9350,6 @@ bs
 bs
 bU
 ci
-<<<<<<< HEAD
 gb
 cz
 kK
@@ -11031,15 +9357,6 @@ bz
 bz
 de
 dH
-=======
-cq
-cz
-kK
-cM
-cX
-de
-do
->>>>>>> Updated this old code to fork
 jp
 dH
 de
@@ -11167,11 +9484,7 @@ bV
 bz
 bz
 bz
-<<<<<<< HEAD
 bz
-=======
-cY
->>>>>>> Updated this old code to fork
 de
 dp
 dz
@@ -11196,7 +9509,6 @@ gL
 bB
 bB
 hc
-<<<<<<< HEAD
 hf
 ip
 hE
@@ -11205,16 +9517,6 @@ hE
 ip
 hE
 hB
-=======
-hg
-hy
-hO
-hy
-hO
-ip
-hf
-ho
->>>>>>> Updated this old code to fork
 hc
 hc
 aa
@@ -11312,17 +9614,10 @@ bB
 kJ
 kL
 cN
-<<<<<<< HEAD
 bV
 de
 dq
 dz
-=======
-cZ
-de
-dq
-dA
->>>>>>> Updated this old code to fork
 dI
 de
 bE
@@ -11344,22 +9639,14 @@ bB
 bB
 gL
 hc
-<<<<<<< HEAD
 hf
-=======
-hh
->>>>>>> Updated this old code to fork
 hz
 hf
 hz
 hf
 hz
 hf
-<<<<<<< HEAD
 hB
-=======
-ho
->>>>>>> Updated this old code to fork
 ho
 hc
 hc
@@ -11457,17 +9744,10 @@ bB
 bB
 bB
 bB
-<<<<<<< HEAD
 bV
 bV
 bV
 dX
-=======
-cZ
-bV
-bV
-cY
->>>>>>> Updated this old code to fork
 bV
 bz
 bE
@@ -11480,7 +9760,6 @@ fc
 eu
 fv
 bs
-<<<<<<< HEAD
 CD
 CD
 gp
@@ -11498,25 +9777,6 @@ hf
 hf
 hf
 np
-=======
-fG
-fZ
-gp
-fZ
-fZ
-gp
-fZ
-gY
-hc
-hh
-hh
-hf
-hh
-hf
-hh
-hf
-iI
->>>>>>> Updated this old code to fork
 ho
 ho
 hc
@@ -11614,17 +9874,10 @@ bB
 lW
 cJ
 bB
-<<<<<<< HEAD
 bV
 bV
 bz
 dX
-=======
-cZ
-bV
-bz
-cY
->>>>>>> Updated this old code to fork
 bz
 bV
 bE
@@ -11640,7 +9893,6 @@ bE
 fH
 ga
 ga
-<<<<<<< HEAD
 In
 ga
 ga
@@ -11655,22 +9907,6 @@ ho
 ho
 kD
 hB
-=======
-ga
-ga
-ga
-ga
-gZ
-hc
-hi
-hA
-ik
-if
-ik
-hM
-kD
-ho
->>>>>>> Updated this old code to fork
 mb
 ho
 hc
@@ -11768,17 +10004,10 @@ bB
 bB
 bB
 cO
-<<<<<<< HEAD
 bV
 bz
 bz
 dX
-=======
-cZ
-bz
-bz
-cY
->>>>>>> Updated this old code to fork
 bz
 bz
 dT
@@ -11792,7 +10021,6 @@ ee
 ee
 dT
 fI
-<<<<<<< HEAD
 dX
 dX
 dX
@@ -11802,28 +10030,13 @@ dX
 DX
 hc
 ho
-=======
-bz
-bz
-bz
-bz
-bz
-bz
-ha
-hc
-hv
->>>>>>> Updated this old code to fork
 ho
 ho
 iI
 ho
 ho
 ho
-<<<<<<< HEAD
 hB
-=======
-ho
->>>>>>> Updated this old code to fork
 ho
 ho
 hc
@@ -11921,21 +10134,12 @@ bz
 bz
 bz
 bz
-<<<<<<< HEAD
 bz
 bz
 bz
 dX
 dX
 dX
-=======
-da
-cM
-cM
-dB
-cM
-cM
->>>>>>> Updated this old code to fork
 dU
 ef
 ef
@@ -11944,15 +10148,9 @@ ef
 ef
 ef
 ef
-<<<<<<< HEAD
 ef
 dU
 fI
-=======
-fx
-dU
-fJ
->>>>>>> Updated this old code to fork
 bz
 gq
 du
@@ -11961,7 +10159,6 @@ du
 gq
 hb
 hc
-<<<<<<< HEAD
 ho
 hB
 hB
@@ -11972,18 +10169,6 @@ hB
 hB
 ho
 ho
-=======
-hk
-hB
-ho
-ho
-ho
-ho
-ho
-ho
-ho
-ho
->>>>>>> Updated this old code to fork
 iJ
 iM
 kN
@@ -12091,11 +10276,7 @@ ej
 ej
 ej
 ej
-<<<<<<< HEAD
 ew
-=======
-ej
->>>>>>> Updated this old code to fork
 ej
 fy
 bE
@@ -12109,11 +10290,7 @@ bz
 ha
 hc
 hl
-<<<<<<< HEAD
 hB
-=======
-hC
->>>>>>> Updated this old code to fork
 hQ
 ih
 ih
@@ -12229,15 +10406,9 @@ ej
 el
 el
 el
-<<<<<<< HEAD
 em
 ej
 ej
-=======
-el
-ej
-fg
->>>>>>> Updated this old code to fork
 bE
 fK
 gb
@@ -12365,15 +10536,9 @@ ej
 el
 eM
 eV
-<<<<<<< HEAD
 em
 ej
 ej
-=======
-el
-ej
-fg
->>>>>>> Updated this old code to fork
 bE
 fL
 gc
@@ -12384,11 +10549,7 @@ gr
 gr
 dm
 hc
-<<<<<<< HEAD
 hR
-=======
-hm
->>>>>>> Updated this old code to fork
 hE
 hR
 hc
@@ -12505,15 +10666,9 @@ ej
 el
 eN
 eW
-<<<<<<< HEAD
 em
 ej
 ej
-=======
-el
-ej
-fg
->>>>>>> Updated this old code to fork
 bE
 bE
 bE
@@ -12641,15 +10796,9 @@ ej
 el
 el
 kz
-<<<<<<< HEAD
 em
 ej
 ej
-=======
-el
-ej
-fg
->>>>>>> Updated this old code to fork
 bE
 fM
 dc
@@ -12777,17 +10926,10 @@ ej
 el
 eM
 eV
-<<<<<<< HEAD
 em
 ej
 ej
 CD
-=======
-el
-ej
-fz
-es
->>>>>>> Updated this old code to fork
 dc
 gd
 df
@@ -12798,11 +10940,7 @@ ds
 dc
 fD
 ho
-<<<<<<< HEAD
 hB
-=======
-hv
->>>>>>> Updated this old code to fork
 hS
 fD
 il
@@ -12815,15 +10953,9 @@ il
 il
 hc
 hc
-<<<<<<< HEAD
 iT
 hc
 iT
-=======
-jb
-hc
-jb
->>>>>>> Updated this old code to fork
 hc
 hc
 aa
@@ -12924,17 +11056,10 @@ ej
 el
 eN
 eW
-<<<<<<< HEAD
 em
 ej
 ej
 CD
-=======
-el
-ej
-ej
-es
->>>>>>> Updated this old code to fork
 dc
 dc
 dc
@@ -12945,11 +11070,7 @@ dc
 dc
 fD
 ho
-<<<<<<< HEAD
 hB
-=======
-hv
->>>>>>> Updated this old code to fork
 hT
 fD
 il
@@ -12962,15 +11083,9 @@ kG
 il
 fD
 iR
-<<<<<<< HEAD
 hB
 ji
 hB
-=======
-hv
-ji
-hv
->>>>>>> Updated this old code to fork
 ju
 hc
 hc
@@ -13071,17 +11186,10 @@ ej
 el
 el
 el
-<<<<<<< HEAD
 em
 ew
 ew
 CD
-=======
-el
-ej
-ej
-es
->>>>>>> Updated this old code to fork
 dc
 lZ
 dc
@@ -13092,11 +11200,7 @@ dc
 dc
 fD
 hp
-<<<<<<< HEAD
 hB
-=======
-hv
->>>>>>> Updated this old code to fork
 hU
 fD
 im
@@ -13111,11 +11215,7 @@ fD
 iS
 jc
 jj
-<<<<<<< HEAD
 jc
-=======
-kH
->>>>>>> Updated this old code to fork
 jv
 jC
 hc
@@ -13217,15 +11317,9 @@ em
 eO
 eX
 em
-<<<<<<< HEAD
 ej
 ej
 CD
-=======
-ew
-fA
-es
->>>>>>> Updated this old code to fork
 dc
 lZ
 dc
@@ -13236,11 +11330,7 @@ dc
 dc
 fD
 ho
-<<<<<<< HEAD
 hB
-=======
-hv
->>>>>>> Updated this old code to fork
 hV
 fD
 il
@@ -13253,21 +11343,12 @@ fD
 ir
 fD
 iT
-<<<<<<< HEAD
 iT
 iT
 iT
 iT
 iT
 iT
-=======
-jd
-jd
-jd
-jd
-jd
-jE
->>>>>>> Updated this old code to fork
 hc
 hc
 hc
@@ -13365,15 +11446,9 @@ ej
 el
 eN
 eW
-<<<<<<< HEAD
 em
 ej
 ej
-=======
-el
-ej
-fg
->>>>>>> Updated this old code to fork
 bE
 dc
 dc
@@ -13385,11 +11460,7 @@ dc
 dc
 fD
 ho
-<<<<<<< HEAD
 hB
-=======
-hv
->>>>>>> Updated this old code to fork
 hW
 fD
 in
@@ -13505,7 +11576,6 @@ ej
 el
 el
 el
-<<<<<<< HEAD
 em
 ej
 ej
@@ -13515,17 +11585,6 @@ CD
 CD
 CD
 CD
-=======
-el
-ej
-fg
-bE
-bE
-gg
-gs
-gs
-gE
->>>>>>> Updated this old code to fork
 bE
 gR
 bE
@@ -13543,7 +11602,6 @@ fD
 fD
 fD
 fD
-<<<<<<< HEAD
 AA
 AA
 jk
@@ -13552,16 +11610,6 @@ AA
 AA
 jF
 AA
-=======
-iU
-fE
-jk
-fE
-fE
-fE
-jF
-jI
->>>>>>> Updated this old code to fork
 fN
 jL
 hc
@@ -13658,21 +11706,12 @@ ej
 el
 eM
 eV
-<<<<<<< HEAD
 em
 ej
 ej
 fD
 fN
 fN
-=======
-el
-ej
-fg
-fD
-fN
-gh
->>>>>>> Updated this old code to fork
 fN
 fN
 gh
@@ -13681,11 +11720,7 @@ fF
 fN
 fD
 fF
-<<<<<<< HEAD
 AA
-=======
-gF
->>>>>>> Updated this old code to fork
 hX
 hX
 hX
@@ -13697,11 +11732,7 @@ iH
 hX
 hX
 fD
-<<<<<<< HEAD
 AA
-=======
-gF
->>>>>>> Updated this old code to fork
 fF
 fD
 fF
@@ -13805,7 +11836,6 @@ ej
 el
 eN
 eW
-<<<<<<< HEAD
 em
 ej
 el
@@ -13815,27 +11845,12 @@ fF
 fF
 fF
 AA
-=======
-fd
-ew
-fB
-fE
-fE
-gi
-fF
-fF
-gF
->>>>>>> Updated this old code to fork
 fF
 fF
 fF
 fD
 kC
-<<<<<<< HEAD
 AA
-=======
-gF
->>>>>>> Updated this old code to fork
 hX
 ii
 ii
@@ -13847,22 +11862,14 @@ ii
 ii
 hX
 fD
-<<<<<<< HEAD
 AA
-=======
-gF
->>>>>>> Updated this old code to fork
 fF
 fD
 jq
 jw
 fF
 jG
-<<<<<<< HEAD
 AA
-=======
-gF
->>>>>>> Updated this old code to fork
 fN
 fN
 hc
@@ -13873,17 +11880,10 @@ jY
 jW
 jW
 ki
-<<<<<<< HEAD
 ke
 ke
 ke
 jU
-=======
-kf
-kf
-kf
-jW
->>>>>>> Updated this old code to fork
 kx
 jS
 mE
@@ -13966,7 +11966,6 @@ ej
 el
 kz
 el
-<<<<<<< HEAD
 em
 ew
 em
@@ -13982,23 +11981,6 @@ AA
 hd
 AA
 AA
-=======
-fe
-ej
-el
-fF
-fF
-fF
-fF
-fF
-gG
-fE
-gS
-fE
-hd
-fE
-hI
->>>>>>> Updated this old code to fork
 hX
 hX
 hX
@@ -14010,32 +11992,21 @@ hX
 hX
 iO
 hd
-<<<<<<< HEAD
 AA
-=======
-hI
->>>>>>> Updated this old code to fork
 fF
 jl
 kD
 jx
 fF
 fF
-<<<<<<< HEAD
 AA
 AA
 AA
-=======
-gG
-fE
-fE
->>>>>>> Updated this old code to fork
 jQ
 jU
 jU
 jU
 jZ
-<<<<<<< HEAD
 jU
 ke
 ke
@@ -14043,15 +12014,6 @@ km
 kp
 ks
 ke
-=======
-kb
-ke
-kj
-km
-kp
-ks
-kf
->>>>>>> Updated this old code to fork
 kf
 ky
 kf
@@ -14134,11 +12096,7 @@ ej
 el
 eM
 eV
-<<<<<<< HEAD
 em
-=======
-fe
->>>>>>> Updated this old code to fork
 ej
 ej
 fD
@@ -14148,7 +12106,6 @@ fN
 fN
 fN
 fN
-<<<<<<< HEAD
 fN
 fN
 fD
@@ -14166,25 +12123,6 @@ AA
 AA
 fD
 AA
-=======
-gh
-fN
-fD
-fF
-hJ
-fE
-fE
-fE
-fE
-fE
-fE
-fE
-fE
-fE
-gi
-fD
-gF
->>>>>>> Updated this old code to fork
 fF
 fD
 ho
@@ -14199,21 +12137,13 @@ jV
 jV
 jV
 jY
-<<<<<<< HEAD
 jU
-=======
-kc
->>>>>>> Updated this old code to fork
 jW
 kf
 kn
 kI
 kt
-<<<<<<< HEAD
 ke
-=======
-kf
->>>>>>> Updated this old code to fork
 kf
 ky
 mF
@@ -14296,11 +12226,7 @@ ej
 el
 eN
 eW
-<<<<<<< HEAD
 em
-=======
-fe
->>>>>>> Updated this old code to fork
 ej
 ej
 fD
@@ -14310,19 +12236,11 @@ fN
 fN
 fN
 fN
-<<<<<<< HEAD
 fN
 fN
 fD
 fF
 fF
-=======
-gh
-fN
-fD
-fF
-gF
->>>>>>> Updated this old code to fork
 fF
 fF
 kC
@@ -14334,11 +12252,7 @@ fF
 fF
 fF
 fD
-<<<<<<< HEAD
 AA
-=======
-gF
->>>>>>> Updated this old code to fork
 fF
 fD
 ho
@@ -14353,11 +12267,7 @@ jV
 jV
 jV
 jY
-<<<<<<< HEAD
 jU
-=======
-kc
->>>>>>> Updated this old code to fork
 jW
 kf
 ko
@@ -14419,7 +12329,6 @@ ah
 ab
 aF
 aU
-<<<<<<< HEAD
 al
 ba
 bh
@@ -14442,41 +12351,12 @@ al
 al
 al
 al
-=======
-ap
-ba
-bh
-bk
-ap
-bq
-ap
-ap
-ap
-ap
-ap
-ap
-cE
-ap
-ap
-ap
-ap
-ap
-ap
-ap
-ap
-ap
->>>>>>> Updated this old code to fork
 em
 ew
 em
 em
-<<<<<<< HEAD
 el
 em
-=======
-em
-ff
->>>>>>> Updated this old code to fork
 ej
 el
 fF
@@ -14486,19 +12366,11 @@ fF
 fF
 fF
 fF
-<<<<<<< HEAD
 fF
 fF
 he
 fF
 fF
-=======
-gF
-fF
-he
-fF
-gF
->>>>>>> Updated this old code to fork
 hX
 hX
 hX
@@ -14510,11 +12382,7 @@ hX
 hX
 hX
 he
-<<<<<<< HEAD
 AA
-=======
-gF
->>>>>>> Updated this old code to fork
 kC
 jl
 ho
@@ -14529,11 +12397,7 @@ jW
 jW
 jW
 ka
-<<<<<<< HEAD
 jU
-=======
-kc
->>>>>>> Updated this old code to fork
 kf
 kf
 kf
@@ -14584,28 +12448,17 @@ aa
 kF
 ag
 ai
-<<<<<<< HEAD
 al
-=======
-an
->>>>>>> Updated this old code to fork
 as
 aB
 lk
 lm
 as
 al
-<<<<<<< HEAD
 al
 aR
 al
 al
-=======
-ap
-aR
-ap
-av
->>>>>>> Updated this old code to fork
 ah
 bb
 bi
@@ -14618,11 +12471,7 @@ br
 br
 ah
 cu
-<<<<<<< HEAD
 al
-=======
-an
->>>>>>> Updated this old code to fork
 br
 br
 br
@@ -14637,11 +12486,7 @@ ej
 el
 eM
 eV
-<<<<<<< HEAD
 el
-=======
-fe
->>>>>>> Updated this old code to fork
 ej
 el
 fF
@@ -14651,19 +12496,11 @@ fF
 fF
 fF
 fF
-<<<<<<< HEAD
 fF
 fF
 fD
 fF
 fF
-=======
-gF
-fF
-fD
-fF
-gF
->>>>>>> Updated this old code to fork
 hX
 ii
 ii
@@ -14675,11 +12512,7 @@ ii
 ii
 hX
 fD
-<<<<<<< HEAD
 AA
-=======
-gF
->>>>>>> Updated this old code to fork
 fF
 fD
 jr
@@ -14694,15 +12527,9 @@ jT
 jV
 jV
 jY
-<<<<<<< HEAD
 jU
 jU
 kf
-=======
-kd
-jU
-kk
->>>>>>> Updated this old code to fork
 kf
 kf
 kf
@@ -14751,21 +12578,13 @@ aa
 kF
 ae
 ah
-<<<<<<< HEAD
 al
-=======
-an
->>>>>>> Updated this old code to fork
 as
 as
 as
 as
 as
-<<<<<<< HEAD
 al
-=======
-an
->>>>>>> Updated this old code to fork
 ah
 ab
 aF
@@ -14782,11 +12601,7 @@ bJ
 dy
 ah
 ah
-<<<<<<< HEAD
 al
-=======
-an
->>>>>>> Updated this old code to fork
 dy
 bx
 bJ
@@ -14801,11 +12616,7 @@ ej
 el
 eN
 eW
-<<<<<<< HEAD
 el
-=======
-fe
->>>>>>> Updated this old code to fork
 ej
 ej
 fD
@@ -14815,19 +12626,11 @@ fN
 gy
 fN
 fN
-<<<<<<< HEAD
 fF
 fN
 fD
 fF
 fF
-=======
-gF
-fN
-fD
-fF
-gF
->>>>>>> Updated this old code to fork
 hX
 hX
 hX
@@ -14839,11 +12642,7 @@ hX
 hX
 hX
 fD
-<<<<<<< HEAD
 AA
-=======
-gF
->>>>>>> Updated this old code to fork
 fF
 fD
 fF
@@ -14860,11 +12659,7 @@ jX
 jX
 jS
 kh
-<<<<<<< HEAD
 jW
-=======
-kl
->>>>>>> Updated this old code to fork
 kf
 kf
 jW
@@ -14913,7 +12708,6 @@ aa
 mW
 ah
 ah
-<<<<<<< HEAD
 al
 al
 al
@@ -14921,15 +12715,6 @@ aH
 al
 al
 al
-=======
-ao
-au
-ap
-aH
-ap
-ap
-av
->>>>>>> Updated this old code to fork
 ah
 ab
 aF
@@ -14946,11 +12731,7 @@ bK
 br
 ah
 cu
-<<<<<<< HEAD
 al
-=======
-an
->>>>>>> Updated this old code to fork
 br
 by
 bK
@@ -14965,11 +12746,7 @@ ej
 el
 el
 el
-<<<<<<< HEAD
 el
-=======
-fe
->>>>>>> Updated this old code to fork
 ej
 ej
 bE
@@ -14983,11 +12760,7 @@ gT
 bE
 fD
 hn
-<<<<<<< HEAD
 hn
-=======
-hF
->>>>>>> Updated this old code to fork
 fD
 fD
 fD
@@ -14999,11 +12772,7 @@ fD
 fD
 fD
 fD
-<<<<<<< HEAD
 AA
-=======
-gF
->>>>>>> Updated this old code to fork
 fF
 jm
 fF
@@ -15069,13 +12838,8 @@ aa
 ab
 ab
 aj
-<<<<<<< HEAD
 al
 ah
-=======
-ap
-av
->>>>>>> Updated this old code to fork
 ax
 ah
 ax
@@ -15097,11 +12861,7 @@ bL
 br
 ah
 ah
-<<<<<<< HEAD
 al
-=======
-an
->>>>>>> Updated this old code to fork
 br
 bL
 br
@@ -15116,11 +12876,7 @@ ej
 ej
 eP
 ej
-<<<<<<< HEAD
 ej
-=======
-fg
->>>>>>> Updated this old code to fork
 ej
 ej
 bE
@@ -15130,19 +12886,11 @@ fP
 gz
 fP
 fP
-<<<<<<< HEAD
 fP
 fP
 fD
 ho
 ho
-=======
-gU
-fP
-fD
-ho
-hv
->>>>>>> Updated this old code to fork
 hY
 fD
 il
@@ -15258,7 +13006,6 @@ bE
 bE
 bE
 eY
-<<<<<<< HEAD
 eY
 bE
 bE
@@ -15274,23 +13021,6 @@ fP
 fD
 ho
 ho
-=======
-fh
-bE
-bE
-bE
-fQ
-gk
-gt
-gt
-gt
-gt
-gV
-fP
-fD
-ho
-hv
->>>>>>> Updated this old code to fork
 hZ
 fD
 il
@@ -15302,7 +13032,6 @@ ir
 fD
 ir
 fD
-<<<<<<< HEAD
 iT
 iT
 iT
@@ -15310,15 +13039,6 @@ iT
 iT
 iT
 iT
-=======
-iV
-je
-je
-je
-je
-je
-jE
->>>>>>> Updated this old code to fork
 hc
 hc
 hc
@@ -15401,11 +13121,7 @@ bM
 cd
 cl
 cd
-<<<<<<< HEAD
 ce
-=======
-bO
->>>>>>> Updated this old code to fork
 cd
 cT
 as
@@ -15420,11 +13136,7 @@ bE
 eD
 eD
 eD
-<<<<<<< HEAD
 eD
-=======
-fi
->>>>>>> Updated this old code to fork
 eD
 eD
 bE
@@ -15438,11 +13150,7 @@ gJ
 gO
 fD
 hp
-<<<<<<< HEAD
 ho
-=======
-hv
->>>>>>> Updated this old code to fork
 ia
 fD
 im
@@ -15457,11 +13165,7 @@ fD
 iW
 jf
 jn
-<<<<<<< HEAD
 jf
-=======
-js
->>>>>>> Updated this old code to fork
 jz
 jC
 hc
@@ -15543,19 +13247,11 @@ aP
 aa
 aa
 ab
-<<<<<<< HEAD
 cd
 cl
 cd
 ce
 Dy
-=======
-bN
-ce
-cm
-ce
-cG
->>>>>>> Updated this old code to fork
 cl
 cd
 as
@@ -15570,11 +13266,7 @@ bE
 eD
 eD
 eD
-<<<<<<< HEAD
 eD
-=======
-fi
->>>>>>> Updated this old code to fork
 fq
 eD
 bE
@@ -15588,11 +13280,7 @@ gJ
 gO
 fD
 ho
-<<<<<<< HEAD
 ho
-=======
-hv
->>>>>>> Updated this old code to fork
 ib
 fD
 il
@@ -15689,17 +13377,10 @@ ab
 aP
 aP
 ab
-<<<<<<< HEAD
 cl
 cd
 cl
 Dy
-=======
-bO
-cd
-cl
-cd
->>>>>>> Updated this old code to fork
 cl
 cd
 cl
@@ -15715,11 +13396,7 @@ bE
 eD
 eD
 eD
-<<<<<<< HEAD
 eD
-=======
-fi
->>>>>>> Updated this old code to fork
 fr
 eD
 bE
@@ -15733,11 +13410,7 @@ gW
 gO
 fD
 ho
-<<<<<<< HEAD
 ho
-=======
-hv
->>>>>>> Updated this old code to fork
 ic
 fD
 il
@@ -15750,11 +13423,7 @@ kG
 il
 hc
 hc
-<<<<<<< HEAD
 iT
-=======
-jh
->>>>>>> Updated this old code to fork
 hc
 jt
 hc
@@ -15838,11 +13507,7 @@ aP
 aP
 aa
 ab
-<<<<<<< HEAD
 cd
-=======
-bP
->>>>>>> Updated this old code to fork
 as
 as
 cv
@@ -15861,11 +13526,7 @@ bE
 eE
 eQ
 eZ
-<<<<<<< HEAD
 eD
-=======
-fi
->>>>>>> Updated this old code to fork
 fs
 eD
 bE
@@ -15995,11 +13656,7 @@ bE
 eF
 eD
 eD
-<<<<<<< HEAD
 eD
-=======
-fi
->>>>>>> Updated this old code to fork
 eD
 fC
 bE
@@ -16013,11 +13670,7 @@ gX
 bs
 hc
 hc
-<<<<<<< HEAD
 iJ
-=======
-hD
->>>>>>> Updated this old code to fork
 hc
 hc
 hc
@@ -16115,21 +13768,12 @@ aa
 aP
 ab
 bR
-<<<<<<< HEAD
 bR
 bR
 cx
 bR
 bR
 bR
-=======
-cf
-cf
-cx
-cf
-cf
-cW
->>>>>>> Updated this old code to fork
 as
 di
 dw
@@ -16142,11 +13786,7 @@ bE
 eD
 kA
 eE
-<<<<<<< HEAD
 eQ
-=======
-fj
->>>>>>> Updated this old code to fork
 eZ
 eD
 bE
@@ -16161,11 +13801,7 @@ bs
 hc
 hm
 kM
-<<<<<<< HEAD
 hm
-=======
-hR
->>>>>>> Updated this old code to fork
 hc
 aa
 aa
@@ -16280,11 +13916,7 @@ ex
 eD
 eD
 eD
-<<<<<<< HEAD
 eD
-=======
-fi
->>>>>>> Updated this old code to fork
 eD
 eD
 bE
@@ -16298,11 +13930,7 @@ bs
 aP
 hc
 hc
-<<<<<<< HEAD
 iJ
-=======
-hD
->>>>>>> Updated this old code to fork
 hc
 hc
 hc
@@ -16418,11 +14046,7 @@ ex
 eD
 eD
 eD
-<<<<<<< HEAD
 eD
-=======
-fi
->>>>>>> Updated this old code to fork
 kA
 eD
 bE
@@ -16436,11 +14060,7 @@ aP
 aa
 hc
 ho
-<<<<<<< HEAD
 ho
-=======
-hv
->>>>>>> Updated this old code to fork
 id
 ij
 io
@@ -16549,23 +14169,14 @@ di
 bz
 dE
 dL
-<<<<<<< HEAD
 bz
 bz
-=======
-dN
-dX
->>>>>>> Updated this old code to fork
 ep
 bE
 eD
 eD
 eD
-<<<<<<< HEAD
 eD
-=======
-fi
->>>>>>> Updated this old code to fork
 eD
 eD
 bE
@@ -16578,13 +14189,8 @@ aP
 aa
 aa
 hc
-<<<<<<< HEAD
 ho
 ho
-=======
-ht
-hM
->>>>>>> Updated this old code to fork
 ie
 ho
 ho
@@ -16693,22 +14299,14 @@ dl
 dx
 dx
 dx
-<<<<<<< HEAD
 dx
-=======
-dO
->>>>>>> Updated this old code to fork
 dx
 eq
 bE
 eG
 eR
 eG
-<<<<<<< HEAD
 eG
-=======
-fk
->>>>>>> Updated this old code to fork
 eG
 eG
 bE
@@ -16721,11 +14319,7 @@ aa
 aa
 aa
 hc
-<<<<<<< HEAD
 ho
-=======
-hv
->>>>>>> Updated this old code to fork
 ho
 ho
 ho
@@ -16835,22 +14429,14 @@ bE
 bE
 dF
 bE
-<<<<<<< HEAD
 dF
-=======
-dP
->>>>>>> Updated this old code to fork
 bE
 bE
 bE
 eH
 eH
 eH
-<<<<<<< HEAD
 eH
-=======
-fl
->>>>>>> Updated this old code to fork
 eH
 eH
 bE
@@ -16863,11 +14449,7 @@ aa
 aa
 aa
 hc
-<<<<<<< HEAD
 ho
-=======
-hv
->>>>>>> Updated this old code to fork
 ho
 ho
 ho
@@ -16977,22 +14559,14 @@ lX
 dm
 dm
 dm
-<<<<<<< HEAD
 dm
-=======
-dQ
->>>>>>> Updated this old code to fork
 dY
 dY
 bE
 eH
 eH
 eH
-<<<<<<< HEAD
 eH
-=======
-fl
->>>>>>> Updated this old code to fork
 eH
 eH
 bE
@@ -17005,11 +14579,7 @@ aa
 aa
 aa
 hc
-<<<<<<< HEAD
 hf
-=======
-hh
->>>>>>> Updated this old code to fork
 hf
 hf
 hf
@@ -17119,7 +14689,6 @@ dm
 dm
 dm
 dm
-<<<<<<< HEAD
 dm
 dm
 dm
@@ -17128,16 +14697,6 @@ eH
 eH
 eH
 eH
-=======
-dR
-dZ
-dZ
-ey
-eI
-eI
-eI
-fm
->>>>>>> Updated this old code to fork
 eH
 eH
 bs
@@ -17150,11 +14709,7 @@ aa
 aa
 aa
 hc
-<<<<<<< HEAD
 hf
-=======
-hx
->>>>>>> Updated this old code to fork
 hf
 hf
 hf
@@ -21657,21 +19212,12 @@ aG
 aG
 aG
 ll
-<<<<<<< HEAD
 ls
 sw
 ll
 lv
 lv
 lv
-=======
-lo
-ls
-ll
-lH
-lv
-lP
->>>>>>> Updated this old code to fork
 ll
 aG
 aG
@@ -21797,19 +19343,11 @@ aG
 aG
 ll
 ln
-<<<<<<< HEAD
 lt
 ll
 lv
 lK
 lv
-=======
-lr
-ll
-lG
-lK
-lO
->>>>>>> Updated this old code to fork
 ll
 aG
 aG

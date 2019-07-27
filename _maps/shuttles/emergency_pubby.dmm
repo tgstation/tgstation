@@ -53,11 +53,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "al" = (
-<<<<<<< HEAD
 /obj/structure/chair/office{
-=======
-/obj/structure/chair/office/dark{
->>>>>>> Updated this old code to fork
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -79,11 +75,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aq" = (
-<<<<<<< HEAD
 /obj/structure/chair/office{
-=======
-/obj/structure/chair/office/dark{
->>>>>>> Updated this old code to fork
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -427,20 +419,13 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/shuttle/escape)
 "aX" = (
-<<<<<<< HEAD
-=======
-/obj/machinery/sleeper,
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-<<<<<<< HEAD
 /obj/machinery/stasis,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "aY" = (
@@ -470,12 +455,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-<<<<<<< HEAD
 /obj/machinery/vending/wallmed/pubby{
 	pixel_y = 30
 	},
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "ba" = (
@@ -595,11 +577,7 @@
 /area/shuttle/escape)
 "br" = (
 /obj/machinery/light,
-<<<<<<< HEAD
 /obj/structure/chair/office{
-=======
-/obj/structure/chair/office/dark{
->>>>>>> Updated this old code to fork
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -609,11 +587,7 @@
 /area/shuttle/escape)
 "bt" = (
 /obj/machinery/light,
-<<<<<<< HEAD
 /obj/structure/chair/office{
-=======
-/obj/structure/chair/office/dark{
->>>>>>> Updated this old code to fork
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -714,10 +688,6 @@
 	height = 8;
 	name = "PubbyStation emergency shuttle";
 	port_direction = 4;
-<<<<<<< HEAD
-=======
-	preferred_direction = 1;
->>>>>>> Updated this old code to fork
 	width = 46
 	},
 /turf/open/floor/plating,

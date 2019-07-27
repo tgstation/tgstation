@@ -71,11 +71,8 @@
 #define HUMAN_MAX_OXYLOSS 3
 #define HUMAN_CRIT_MAX_OXYLOSS (SSmobs.wait/30)
 
-<<<<<<< HEAD
 #define STAMINA_REGEN_BLOCK_TIME (10 SECONDS)
 
-=======
->>>>>>> Updated this old code to fork
 #define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
 #define HEAT_DAMAGE_LEVEL_2 3 //Amount of damage applied when your body temperature passes the 400K point
 #define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
@@ -137,20 +134,12 @@
 #define MOOD_LEVEL_HAPPY1 2
 #define MOOD_LEVEL_NEUTRAL 0
 #define MOOD_LEVEL_SAD1 -3
-<<<<<<< HEAD
 #define MOOD_LEVEL_SAD2 -7
 #define MOOD_LEVEL_SAD3 -15
 #define MOOD_LEVEL_SAD4 -20
 
 //Sanity levels for humans
 #define SANITY_MAXIMUM 150
-=======
-#define MOOD_LEVEL_SAD2 -12
-#define MOOD_LEVEL_SAD3 -18
-#define MOOD_LEVEL_SAD4 -25
-
-//Sanity levels for humans
->>>>>>> Updated this old code to fork
 #define SANITY_GREAT 125
 #define SANITY_NEUTRAL 100
 #define SANITY_DISTURBED 75
@@ -158,14 +147,6 @@
 #define SANITY_CRAZY 25
 #define SANITY_INSANE 0
 
-<<<<<<< HEAD
-=======
-//Hygiene levels for humans
-#define HYGIENE_LEVEL_CLEAN 250
-#define HYGIENE_LEVEL_NORMAL 200
-#define HYGIENE_LEVEL_DIRTY 75
-
->>>>>>> Updated this old code to fork
 //Nutrition levels for humans
 #define NUTRITION_LEVEL_FAT 600
 #define NUTRITION_LEVEL_FULL 550
@@ -234,18 +215,10 @@
 #define SLIDE					(1<<1)
 #define GALOSHES_DONT_HELP		(1<<2)
 #define SLIDE_ICE				(1<<3)
-<<<<<<< HEAD
 #define SLIP_WHEN_CRAWLING		(1<<4) //clown planet ruin
 
 #define MAX_CHICKENS 50
 
-=======
-
-#define MAX_CHICKENS 50
-
-#define UNHEALING_EAR_DAMAGE 100
-
->>>>>>> Updated this old code to fork
 
 #define INCORPOREAL_MOVE_BASIC 1
 #define INCORPOREAL_MOVE_SHADOW 2 // leaves a trail of shadows
@@ -291,10 +264,6 @@
 
 #define	HUNGER_FACTOR		0.1	//factor at which mob nutrition decreases
 #define	ETHEREAL_CHARGE_FACTOR	0.12 //factor at which ethereal's charge decreases
-<<<<<<< HEAD
-=======
-#define	HYGIENE_FACTOR  0.1	//factor at which mob hygiene decreases
->>>>>>> Updated this old code to fork
 #define	REAGENTS_METABOLISM 0.4	//How many units of reagent are consumed per tick, by default.
 #define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4)	// By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
 
@@ -318,12 +287,9 @@
 #define GRAB_PIXEL_SHIFT_AGGRESSIVE 12
 #define GRAB_PIXEL_SHIFT_NECK 16
 
-<<<<<<< HEAD
 #define PULL_PRONE_SLOWDOWN 1.5
 #define HUMAN_CARRY_SLOWDOWN 0.35
 
-=======
->>>>>>> Updated this old code to fork
 //Flags that control what things can spawn species (whitelist)
 //Badmin magic mirror
 #define MIRROR_BADMIN (1<<0)
@@ -339,8 +305,5 @@
 #define SLIME_EXTRACT (1<<5)
 //Wabbacjack staff projectiles
 #define WABBAJACK     (1<<6)
-<<<<<<< HEAD
 
 #define SLEEP_CHECK_DEATH(X) sleep(X); if(QDELETED(src) || stat == DEAD) return;
-=======
->>>>>>> Updated this old code to fork

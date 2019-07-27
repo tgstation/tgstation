@@ -197,10 +197,7 @@
 			if(computer && ((id_card.assignment in head_subordinates) || id_card.assignment == "Assistant"))
 				id_card.assignment = "Unassigned"
 				remove_nt_access(id_card)
-<<<<<<< HEAD
 				id_card.update_label()
-=======
->>>>>>> Updated this old code to fork
 
 		if("PRG_edit")
 			if(computer && authorized())
@@ -208,10 +205,7 @@
 					var/temp_name = reject_bad_name(input("Enter name.", "Name", id_card.registered_name))
 					if(temp_name)
 						id_card.registered_name = temp_name
-<<<<<<< HEAD
 						id_card.update_label()
-=======
->>>>>>> Updated this old code to fork
 					else
 						computer.visible_message("<span class='notice'>[computer] buzzes rudely.</span>")
 				//else if(params["account"])
@@ -245,10 +239,7 @@
 					remove_nt_access(id_card)
 					apply_access(id_card, access)
 					id_card.assignment = t1
-<<<<<<< HEAD
 					id_card.update_label()
-=======
->>>>>>> Updated this old code to fork
 
 		if("PRG_access")
 			if(params["allowed"] && computer && authorized())
@@ -290,12 +281,6 @@
 			else
 				reg_ids += regsel
 
-<<<<<<< HEAD
-=======
-	if(id_card)
-		id_card.name = text("[id_card.registered_name]'s ID Card ([id_card.assignment])")
-
->>>>>>> Updated this old code to fork
 	return 1
 
 /datum/computer_file/program/card_mod/proc/remove_nt_access(obj/item/card/id/id_card)

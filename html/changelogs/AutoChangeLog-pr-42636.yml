@@ -1,5 +1,0 @@
-author: "As334 and Unit2E"
-delete-after: True
-changes: 
-  - tweak: "Miasma and BZ no longer affect the energy level of the BZ generation reaction."
-  - balance: "Tweaked how BZ generation's research points work to reward higher efficiency setups."

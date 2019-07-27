@@ -1,6 +1,5 @@
 #define REM REAGENTS_EFFECT_MULTIPLIER
 
-<<<<<<< HEAD
 GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 /proc/build_name2reagent()
@@ -11,18 +10,12 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 			.[ckey(initial(R.name))] = t
 
 
-=======
->>>>>>> Updated this old code to fork
 //Various reagents
 //Toxin & acid reagents
 //Hydroponics stuff
 
 /datum/reagent
 	var/name = "Reagent"
-<<<<<<< HEAD
-=======
-	var/id = "reagent"
->>>>>>> Updated this old code to fork
 	var/description = ""
 	var/specific_heat = SPECIFIC_HEAT_DEFAULT		//J/(K*mol)
 	var/taste_description = "metaphorical salt"
@@ -46,10 +39,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/overdosed = 0 // You fucked up and this is now triggering its overdose effects, purge that shit quick.
 	var/self_consuming = FALSE
 	var/reagent_weight = 1 //affects how far it travels when sprayed
-<<<<<<< HEAD
 	var/metabolizing = FALSE
-=======
->>>>>>> Updated this old code to fork
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
@@ -63,11 +53,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 			var/modifier = CLAMP((1 - touch_protection), 0, 1)
 			var/amount = round(reac_volume*modifier, 0.1)
 			if(amount >= 0.5)
-<<<<<<< HEAD
 				M.reagents.add_reagent(type, amount)
-=======
-				M.reagents.add_reagent(id, amount)
->>>>>>> Updated this old code to fork
 	return 1
 
 /datum/reagent/proc/reaction_obj(obj/O, volume)
@@ -78,7 +64,6 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 /datum/reagent/proc/on_mob_life(mob/living/carbon/M)
 	current_cycle++
-<<<<<<< HEAD
 	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
 	return
 
@@ -86,11 +71,6 @@ datum/reagent/proc/on_transfer(atom/A, method=TOUCH, volume) //Called after a re
 	return
 
 
-=======
-	holder.remove_reagent(src.id, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
-	return
-
->>>>>>> Updated this old code to fork
 // Called when this reagent is first added to a mob
 /datum/reagent/proc/on_mob_add(mob/living/L)
 	return
@@ -99,7 +79,6 @@ datum/reagent/proc/on_transfer(atom/A, method=TOUCH, volume) //Called after a re
 /datum/reagent/proc/on_mob_delete(mob/living/L)
 	return
 
-<<<<<<< HEAD
 // Called when this reagent first starts being metabolized by a liver
 /datum/reagent/proc/on_mob_metabolize(mob/living/L)
 	return
@@ -108,8 +87,6 @@ datum/reagent/proc/on_transfer(atom/A, method=TOUCH, volume) //Called after a re
 /datum/reagent/proc/on_mob_end_metabolize(mob/living/L)
 	return
 
-=======
->>>>>>> Updated this old code to fork
 /datum/reagent/proc/on_move(mob/M)
 	return
 
@@ -134,49 +111,29 @@ datum/reagent/proc/on_transfer(atom/A, method=TOUCH, volume) //Called after a re
 
 /datum/reagent/proc/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You feel like you took too much of [name]!</span>")
-<<<<<<< HEAD
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/overdose, name)
 	return
 
 /datum/reagent/proc/addiction_act_stage1(mob/living/M)
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/withdrawal_light, name)
-=======
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/overdose, name)
-	return
-
-/datum/reagent/proc/addiction_act_stage1(mob/living/M)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/withdrawal_light, name)
->>>>>>> Updated this old code to fork
 	if(prob(30))
 		to_chat(M, "<span class='notice'>You feel like having some [name] right about now.</span>")
 	return
 
 /datum/reagent/proc/addiction_act_stage2(mob/living/M)
-<<<<<<< HEAD
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/withdrawal_medium, name)
-=======
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/withdrawal_medium, name)
->>>>>>> Updated this old code to fork
 	if(prob(30))
 		to_chat(M, "<span class='notice'>You feel like you need [name]. You just can't get enough.</span>")
 	return
 
 /datum/reagent/proc/addiction_act_stage3(mob/living/M)
-<<<<<<< HEAD
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/withdrawal_severe, name)
-=======
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/withdrawal_severe, name)
->>>>>>> Updated this old code to fork
 	if(prob(30))
 		to_chat(M, "<span class='danger'>You have an intense craving for [name].</span>")
 	return
 
 /datum/reagent/proc/addiction_act_stage4(mob/living/M)
-<<<<<<< HEAD
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/withdrawal_critical, name)
-=======
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/withdrawal_critical, name)
->>>>>>> Updated this old code to fork
 	if(prob(30))
 		to_chat(M, "<span class='boldannounce'>You're not feeling good at all! You really need some [name].</span>")
 	return

@@ -293,20 +293,12 @@
 	if(equip_ready) //disabled
 		return
 	var/area/A = get_area(chassis)
-<<<<<<< HEAD
 	var/pow_chan = GET_MUTATION_POWER_channel(A)
-=======
-	var/pow_chan = get_power_channel(A)
->>>>>>> Updated this old code to fork
 	if(pow_chan)
 		return 1000 //making magic
 
 
-<<<<<<< HEAD
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/proc/GET_MUTATION_POWER_channel(var/area/A)
-=======
-/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/proc/get_power_channel(var/area/A)
->>>>>>> Updated this old code to fork
 	var/pow_chan
 	if(A)
 		for(var/c in use_channels)
@@ -432,28 +424,6 @@
 /obj/item/mecha_parts/mecha_equipment/generator/attackby(weapon,mob/user, params)
 	load_fuel(weapon)
 
-<<<<<<< HEAD
-=======
-/obj/item/mecha_parts/mecha_equipment/generator/critfail()
-	..()
-	var/turf/open/T = get_turf(src)
-	if(!istype(T))
-		return
-	var/datum/gas_mixture/GM = new
-	GM.add_gas(/datum/gas/plasma)
-	if(prob(10))
-		GM.gases[/datum/gas/plasma][MOLES] += 100
-		GM.temperature = 1500+T0C //should be enough to start a fire
-		T.visible_message("[src] suddenly disgorges a cloud of heated plasma.")
-		qdel(src)
-	else
-		GM.gases[/datum/gas/plasma][MOLES] += 5
-		GM.temperature = istype(T) ? T.air.return_temperature() : T20C
-		T.visible_message("[src] suddenly disgorges a cloud of plasma.")
-	T.assume_air(GM)
-	return
-
->>>>>>> Updated this old code to fork
 /obj/item/mecha_parts/mecha_equipment/generator/process()
 	if(!chassis)
 		STOP_PROCESSING(SSobj, src)
@@ -493,12 +463,6 @@
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/generator_init()
 	fuel = new /obj/item/stack/sheet/mineral/uranium(src, 0)
 
-<<<<<<< HEAD
-=======
-/obj/item/mecha_parts/mecha_equipment/generator/nuclear/critfail()
-	return
-
->>>>>>> Updated this old code to fork
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/process()
 	if(..())
 		radiation_pulse(get_turf(src), rad_per_cycle)

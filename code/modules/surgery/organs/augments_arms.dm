@@ -38,13 +38,8 @@
 		transform = matrix(-1, 0, 0, 0, 1, 0)
 
 /obj/item/organ/cyberimp/arm/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	. += "<span class='info'>[src] is assembled in the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm configuration. You can use a screwdriver to reassemble it.</span>"
-=======
-	..()
-	to_chat(user, "<span class='info'>[src] is assembled in the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm configuration. You can use a screwdriver to reassemble it.</span>")
->>>>>>> Updated this old code to fork
 
 /obj/item/organ/cyberimp/arm/screwdriver_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -94,11 +89,7 @@
 
 	holder = item
 
-<<<<<<< HEAD
 	ADD_TRAIT(holder, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
-=======
-	holder.add_trait(TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
->>>>>>> Updated this old code to fork
 	holder.resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	holder.slot_flags = null
 	holder.materials = null
@@ -130,11 +121,7 @@
 	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, 1)
 
 /obj/item/organ/cyberimp/arm/ui_action_click()
-<<<<<<< HEAD
 	if(broken_cyber_organ || (!holder && !contents.len))
-=======
-	if(crit_fail || (!holder && !contents.len))
->>>>>>> Updated this old code to fork
 		to_chat(owner, "<span class='warning'>The implant doesn't respond. It seems to be broken...</span>")
 		return
 
@@ -145,11 +132,7 @@
 		else
 			var/list/choice_list = list()
 			for(var/obj/item/I in items_list)
-<<<<<<< HEAD
 				choice_list[I] = image(I)
-=======
-				choice_list[I] = getFlatIcon(I)
->>>>>>> Updated this old code to fork
 			var/obj/item/choice = show_radial_menu(owner, owner, choice_list)
 			if(owner && owner == usr && owner.stat != DEAD && (src in owner.internal_organs) && !holder && (choice in contents))
 				// This monster sanity check is a nice example of how bad input is.
@@ -162,11 +145,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-<<<<<<< HEAD
 	if(prob(30/severity) && owner && !broken_cyber_organ)
-=======
-	if(prob(30/severity) && owner && !crit_fail)
->>>>>>> Updated this old code to fork
 		Retract()
 		owner.visible_message("<span class='danger'>A loud bang comes from [owner]\'s [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm!</span>")
 		playsound(get_turf(owner), 'sound/weapons/flashbang.ogg', 100, 1)
@@ -174,11 +153,7 @@
 		owner.adjust_fire_stacks(20)
 		owner.IgniteMob()
 		owner.adjustFireLoss(25)
-<<<<<<< HEAD
 		broken_cyber_organ = TRUE
-=======
-		crit_fail = 1
->>>>>>> Updated this old code to fork
 
 
 /obj/item/organ/cyberimp/arm/gun/laser

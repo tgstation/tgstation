@@ -43,10 +43,6 @@
 	. = ..()
 	temperature = initial_temperature
 
-<<<<<<< HEAD
-=======
-
->>>>>>> Updated this old code to fork
 //used by space tiles
 /datum/gas_mixture/immutable/space
 	initial_temperature = TCMB

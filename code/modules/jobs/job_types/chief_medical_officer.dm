@@ -3,10 +3,7 @@
 	flag = CMO_JF
 	department_head = list("Captain")
 	department_flag = MEDSCI
-<<<<<<< HEAD
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
-=======
->>>>>>> Updated this old code to fork
 	head_announce = list(RADIO_CHANNEL_MEDICAL)
 	faction = "Station"
 	total_positions = 1
@@ -45,11 +42,7 @@
 	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
 	l_hand = /obj/item/storage/firstaid/regular
 	suit_store = /obj/item/flashlight/pen
-<<<<<<< HEAD
 	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1)
-=======
-	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/card/id/departmental_budget/med=1)
->>>>>>> Updated this old code to fork
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med

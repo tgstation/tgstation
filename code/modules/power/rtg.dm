@@ -37,15 +37,9 @@
 	power_gen = initial(power_gen) * part_level
 
 /obj/machinery/power/rtg/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: Power generation now at <b>[power_gen*0.001]</b>kW.</span>"
-=======
-	..()
-	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Power generation now at <b>[power_gen*0.001]</b>kW.<span>")
->>>>>>> Updated this old code to fork
 
 /obj/machinery/power/rtg/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-open", initial(icon_state), I))

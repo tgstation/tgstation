@@ -28,11 +28,7 @@
 /obj/machinery/transformer/examine(mob/user)
 	. = ..()
 	if(cooldown && (issilicon(user) || isobserver(user)))
-<<<<<<< HEAD
 		. += "It will be ready in [DisplayTimeText(cooldown_timer - world.time)]."
-=======
-		to_chat(user, "It will be ready in [DisplayTimeText(cooldown_timer - world.time)].")
->>>>>>> Updated this old code to fork
 
 /obj/machinery/transformer/Destroy()
 	QDEL_NULL(countdown)

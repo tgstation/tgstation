@@ -76,8 +76,4 @@
 			slime_mutation[2] = colour
 			slime_mutation[3] = colour
 			slime_mutation[4] = colour
-<<<<<<< HEAD
 	return(slime_mutation)
-=======
-	return(slime_mutation)
->>>>>>> Updated this old code to fork

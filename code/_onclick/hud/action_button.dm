@@ -20,7 +20,6 @@
 	else
 		return TRUE
 
-<<<<<<< HEAD
 /obj/screen/movable/action_button/MouseDrop(over_object)
 	if(!can_use(usr))
 		return
@@ -38,12 +37,6 @@
 		usr.update_action_buttons()
 	else
 		return ..()
-=======
-/obj/screen/movable/action_button/MouseDrop()
-	if (!can_use(usr))
-		return
-	return ..()
->>>>>>> Updated this old code to fork
 
 /obj/screen/movable/action_button/Click(location,control,params)
 	if (!can_use(usr))
@@ -120,11 +113,7 @@
 		name = "Show Buttons"
 	else
 		name = "Hide Buttons"
-<<<<<<< HEAD
 	update_icon()
-=======
-	UpdateIcon()
->>>>>>> Updated this old code to fork
 	usr.update_action_buttons()
 
 /obj/screen/movable/action_button/hide_toggle/AltClick(mob/user)
@@ -145,15 +134,9 @@
 	hide_icon = settings["toggle_icon"]
 	hide_state = settings["toggle_hide"]
 	show_state = settings["toggle_show"]
-<<<<<<< HEAD
 	update_icon()
 
 /obj/screen/movable/action_button/hide_toggle/update_icon()
-=======
-	UpdateIcon()
-
-/obj/screen/movable/action_button/hide_toggle/proc/UpdateIcon()
->>>>>>> Updated this old code to fork
 	cut_overlays()
 	add_overlay(mutable_appearance(hide_icon, hidden ? show_state : hide_state))
 

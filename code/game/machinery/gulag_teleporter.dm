@@ -136,7 +136,6 @@ The console is located at computer/gulag_teleporter.dm
 		linked_reclaimer.stored_items[occupant] = list()
 	var/mob/living/mob_occupant = occupant
 	for(var/obj/item/W in mob_occupant)
-<<<<<<< HEAD
 		if(!is_type_in_typecache(W, telegulag_required_items))
 			if(mob_occupant.temporarilyRemoveItemFromInventory(W))
 				if(istype(W, /obj/item/restraints/handcuffs))
@@ -148,18 +147,6 @@ The console is located at computer/gulag_teleporter.dm
 					W.forceMove(linked_reclaimer)
 				else
 					W.forceMove(src)
-=======
-		if(!is_type_in_typecache(W, telegulag_required_items) && mob_occupant.temporarilyRemoveItemFromInventory(W))
-			if(istype(W, /obj/item/restraints/handcuffs))
-				W.forceMove(get_turf(src))
-				continue
-			if(linked_reclaimer)
-				linked_reclaimer.stored_items[mob_occupant] += W
-				linked_reclaimer.contents += W
-				W.forceMove(linked_reclaimer)
-			else
-				W.forceMove(src)
->>>>>>> Updated this old code to fork
 
 /obj/machinery/gulag_teleporter/proc/handle_prisoner(obj/item/id, datum/data/record/R)
 	if(!ishuman(occupant))
@@ -191,7 +178,4 @@ The console is located at computer/gulag_teleporter.dm
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "light_on-w"
 	resistance_flags = INDESTRUCTIBLE
-<<<<<<< HEAD
 	anchored = TRUE
-=======
->>>>>>> Updated this old code to fork

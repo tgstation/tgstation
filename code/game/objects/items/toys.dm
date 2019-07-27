@@ -35,11 +35,7 @@
 /*
  * Balloons
  */
-<<<<<<< HEAD
 /obj/item/toy/waterballoon
-=======
-/obj/item/toy/balloon
->>>>>>> Updated this old code to fork
 	name = "water balloon"
 	desc = "A translucent balloon. There's nothing in it."
 	icon = 'icons/obj/toy.dmi'
@@ -47,7 +43,6 @@
 	item_state = "balloon-empty"
 
 
-<<<<<<< HEAD
 /obj/item/toy/waterballoon/Initialize()
 	. = ..()
 	create_reagents(10)
@@ -56,16 +51,6 @@
 	return
 
 /obj/item/toy/waterballoon/afterattack(atom/A as mob|obj, mob/user, proximity)
-=======
-/obj/item/toy/balloon/Initialize()
-	. = ..()
-	create_reagents(10)
-
-/obj/item/toy/balloon/attack(mob/living/carbon/human/M, mob/user)
-	return
-
-/obj/item/toy/balloon/afterattack(atom/A as mob|obj, mob/user, proximity)
->>>>>>> Updated this old code to fork
 	. = ..()
 	if(!proximity)
 		return
@@ -81,11 +66,7 @@
 			desc = "A translucent balloon with some form of liquid sloshing around in it."
 			update_icon()
 
-<<<<<<< HEAD
 /obj/item/toy/waterballoon/attackby(obj/item/I, mob/user, params)
-=======
-/obj/item/toy/balloon/attackby(obj/item/I, mob/user, params)
->>>>>>> Updated this old code to fork
 	if(istype(I, /obj/item/reagent_containers/glass))
 		if(I.reagents)
 			if(I.reagents.total_volume <= 0)
@@ -102,19 +83,11 @@
 	else
 		return ..()
 
-<<<<<<< HEAD
 /obj/item/toy/waterballoon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) //was it caught by a mob?
 		balloon_burst(hit_atom)
 
 /obj/item/toy/waterballoon/proc/balloon_burst(atom/AT)
-=======
-/obj/item/toy/balloon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(!..()) //was it caught by a mob?
-		balloon_burst(hit_atom)
-
-/obj/item/toy/balloon/proc/balloon_burst(atom/AT)
->>>>>>> Updated this old code to fork
 	if(reagents.total_volume >= 1)
 		var/turf/T
 		if(AT)
@@ -128,11 +101,7 @@
 		icon_state = "burst"
 		qdel(src)
 
-<<<<<<< HEAD
 /obj/item/toy/waterballoon/update_icon()
-=======
-/obj/item/toy/balloon/update_icon()
->>>>>>> Updated this old code to fork
 	if(src.reagents.total_volume >= 1)
 		icon_state = "waterballoon"
 		item_state = "balloon"
@@ -140,7 +109,6 @@
 		icon_state = "waterballoon-e"
 		item_state = "balloon-empty"
 
-<<<<<<< HEAD
 #define BALLOON_COLORS list("red", "blue", "green", "yellow")
 
 /obj/item/toy/balloon
@@ -152,16 +120,10 @@
 	lefthand_file = 'icons/mob/inhands/balloons_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/balloons_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
-=======
-/obj/item/toy/syndicateballoon
-	name = "syndicate balloon"
-	desc = "There is a tag on the back that reads \"FUK NT!11!\"."
->>>>>>> Updated this old code to fork
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
 	force = 0
-<<<<<<< HEAD
 	var/random_color = TRUE
 
 /obj/item/toy/balloon/Initialize(mapload)
@@ -185,14 +147,6 @@
 	icon_state = "syndballoon"
 	item_state = "syndballoon"
 	random_color = FALSE
-=======
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "syndballoon"
-	item_state = "syndballoon"
-	lefthand_file = 'icons/mob/inhands/antag/balloons_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/antag/balloons_righthand.dmi'
-	w_class = WEIGHT_CLASS_BULKY
->>>>>>> Updated this old code to fork
 
 /obj/item/toy/syndicateballoon/pickup(mob/user)
 	. = ..()
@@ -211,10 +165,6 @@
 		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
 	. = ..()
 
-<<<<<<< HEAD
-=======
-
->>>>>>> Updated this old code to fork
 /*
  * Fake singularity
  */
@@ -238,22 +188,13 @@
 	flags_1 =  CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-<<<<<<< HEAD
 	materials = list(/datum/material/iron=10, /datum/material/glass=10)
-=======
-	materials = list(MAT_METAL=10, MAT_GLASS=10)
->>>>>>> Updated this old code to fork
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7
 
 /obj/item/toy/gun/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	. += "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left."
-=======
-	..()
-	to_chat(user, "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left.")
->>>>>>> Updated this old code to fork
 
 /obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A, mob/user, params)
 
@@ -301,24 +242,15 @@
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "357OLD-7"
 	w_class = WEIGHT_CLASS_TINY
-<<<<<<< HEAD
 	materials = list(/datum/material/iron=10, /datum/material/glass=10)
-=======
-	materials = list(MAT_METAL=10, MAT_GLASS=10)
->>>>>>> Updated this old code to fork
 	var/amount_left = 7
 
 /obj/item/toy/ammo/gun/update_icon()
 	src.icon_state = text("357OLD-[]", src.amount_left)
 
 /obj/item/toy/ammo/gun/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	. += "There [amount_left == 1 ? "is" : "are"] [amount_left] cap\s left."
-=======
-	..()
-	to_chat(user, "There [amount_left == 1 ? "is" : "are"] [amount_left] cap\s left.")
->>>>>>> Updated this old code to fork
 
 /*
  * Toy swords
@@ -326,11 +258,7 @@
 /obj/item/toy/sword
 	name = "toy sword"
 	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
-<<<<<<< HEAD
 	icon = 'icons/obj/transforming_energy.dmi'
-=======
-	icon = 'icons/obj/items_and_weapons.dmi'
->>>>>>> Updated this old code to fork
 	icon_state = "sword0"
 	item_state = "sword0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -363,13 +291,8 @@
 // Copied from /obj/item/melee/transforming/energy/sword/attackby
 /obj/item/toy/sword/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/toy/sword))
-<<<<<<< HEAD
 		if(HAS_TRAIT(W, TRAIT_NODROP) || HAS_TRAIT(src, TRAIT_NODROP))
 			to_chat(user, "<span class='warning'>\the [HAS_TRAIT(src, TRAIT_NODROP) ? src : W] is stuck to your hand, you can't attach it to \the [HAS_TRAIT(src, TRAIT_NODROP) ? W : src]!</span>")
-=======
-		if(W.has_trait(TRAIT_NODROP) || has_trait(TRAIT_NODROP))
-			to_chat(user, "<span class='warning'>\the [has_trait(TRAIT_NODROP) ? src : W] is stuck to your hand, you can't attach it to \the [has_trait(TRAIT_NODROP) ? W : src]!</span>")
->>>>>>> Updated this old code to fork
 			return
 		else
 			to_chat(user, "<span class='notice'>You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool.</span>")
@@ -752,12 +675,9 @@
 
 /obj/item/toy/cards/deck/Initialize()
 	. = ..()
-<<<<<<< HEAD
 	populate_deck()
 
 /obj/item/toy/cards/deck/proc/populate_deck()
-=======
->>>>>>> Updated this old code to fork
 	icon_state = "deck_[deckstyle]_full"
 	for(var/i in 2 to 10)
 		cards += "[i] of Hearts"
@@ -784,12 +704,9 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 //ATTACK HAND NOT CALLING PARENT
 /obj/item/toy/cards/deck/attack_hand(mob/user)
-<<<<<<< HEAD
 	draw_card(user)
 
 /obj/item/toy/cards/deck/proc/draw_card(mob/user)
-=======
->>>>>>> Updated this old code to fork
 	if(isliving(user))
 		var/mob/living/L = user
 		if(!(L.mobility_flags & MOBILITY_PICKUP))
@@ -975,11 +892,7 @@
 
 /obj/item/toy/cards/singlecard
 	name = "card"
-<<<<<<< HEAD
 	desc = "A playing card used to play card games like poker."
-=======
-	desc = "a card"
->>>>>>> Updated this old code to fork
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "singlecard_down_nanotrasen"
 	w_class = WEIGHT_CLASS_TINY
@@ -989,20 +902,13 @@
 
 
 /obj/item/toy/cards/singlecard/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
-=======
->>>>>>> Updated this old code to fork
 	if(ishuman(user))
 		var/mob/living/carbon/human/cardUser = user
 		if(cardUser.is_holding(src))
 			cardUser.visible_message("[cardUser] checks [cardUser.p_their()] card.", "<span class='notice'>The card reads: [cardname].</span>")
 		else
-<<<<<<< HEAD
 			. += "<span class='warning'>You need to have the card in your hand to check it!</span>"
-=======
-			to_chat(cardUser, "<span class='warning'>You need to have the card in your hand to check it!</span>")
->>>>>>> Updated this old code to fork
 
 
 /obj/item/toy/cards/singlecard/verb/Flip()
@@ -1229,13 +1135,8 @@
 		to_chat(user, "<span class='alert'>The cogwheels are already turning!</span>")
 
 /obj/item/toy/clockwork_watch/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	. += "<span class='info'>Station Time: [station_time_timestamp()]</span>"
-=======
-	..()
-	to_chat(user, "<span class='info'>Station Time: [station_time_timestamp()]")
->>>>>>> Updated this old code to fork
 
 /*
  * Toy Dagger
@@ -1530,7 +1431,6 @@
 
 /obj/item/toy/dummy/GetVoice()
 	return doll_name
-<<<<<<< HEAD
 
 /obj/item/toy/seashell
 	name = "seashell"
@@ -1546,5 +1446,3 @@
 	icon_state = "shell[rand(1,3)]"
 	color = pickweight(possible_colors)
 	setDir(pick(GLOB.cardinals))
-=======
->>>>>>> Updated this old code to fork

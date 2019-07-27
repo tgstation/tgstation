@@ -8,7 +8,6 @@
 	burst_size = 1
 	fire_delay = 0
 	actions_types = list()
-<<<<<<< HEAD
 	bolt_type = BOLT_TYPE_LOCKING
 	fire_sound = "sound/weapons/gunshot.ogg"
 	vary_fire_sound = FALSE
@@ -16,19 +15,10 @@
 	rack_sound = "sound/weapons/pistolrack.ogg"
 	bolt_drop_sound = "sound/weapons/pistolslidedrop.ogg"
 	bolt_wording = "slide"
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/gun/ballistic/automatic/pistol/no_mag
 	spawnwithmagazine = FALSE
 
-<<<<<<< HEAD
-=======
-/obj/item/gun/ballistic/automatic/pistol/update_icon()
-	..()
-	icon_state = "[initial(icon_state)][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
-
->>>>>>> Updated this old code to fork
 /obj/item/gun/ballistic/automatic/pistol/suppressed/Initialize(mapload)
 	. = ..()
 	var/obj/item/suppressor/S = new(src)
@@ -52,19 +42,7 @@
 	force = 14
 	mag_type = /obj/item/ammo_box/magazine/m50
 	can_suppress = FALSE
-<<<<<<< HEAD
 	mag_display = TRUE
-=======
-
-/obj/item/gun/ballistic/automatic/pistol/deagle/update_icon()
-	..()
-	if(magazine)
-		cut_overlays()
-		add_overlay("deagle_magazine")
-	else
-		cut_overlays()
-	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
->>>>>>> Updated this old code to fork
 
 /obj/item/gun/ballistic/automatic/pistol/deagle/gold
 	desc = "A gold plated Desert Eagle folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."

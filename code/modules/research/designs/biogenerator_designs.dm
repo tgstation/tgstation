@@ -6,37 +6,23 @@
 	name = "10 Milk"
 	id = "milk"
 	build_type = BIOGENERATOR
-<<<<<<< HEAD
 	materials = list(/datum/material/biomass= 20)
 	make_reagents = list(/datum/reagent/consumable/milk = 10)
-=======
-	materials = list(MAT_BIOMASS = 20)
-	make_reagents = list("milk" = 10)
->>>>>>> Updated this old code to fork
 	category = list("initial","Food")
 
 /datum/design/cream
 	name = "10 Cream"
 	id = "cream"
 	build_type = BIOGENERATOR
-<<<<<<< HEAD
 	materials = list(/datum/material/biomass= 30)
 	make_reagents = list(/datum/reagent/consumable/cream = 10)
-=======
-	materials = list(MAT_BIOMASS = 30)
-	make_reagents = list("cream" = 10)
->>>>>>> Updated this old code to fork
 	category = list("initial","Food")
 
 /datum/design/milk_carton
 	name = "Milk Carton"
 	id = "milk_carton"
 	build_type = BIOGENERATOR
-<<<<<<< HEAD
 	materials = list(/datum/material/biomass= 100)
-=======
-	materials = list(MAT_BIOMASS = 100)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/reagent_containers/food/condiment/milk
 	category = list("initial","Food")
 
@@ -44,11 +30,7 @@
 	name = "Cream Carton"
 	id = "cream_carton"
 	build_type = BIOGENERATOR
-<<<<<<< HEAD
 	materials = list(/datum/material/biomass= 300)
-=======
-	materials = list(MAT_BIOMASS = 300)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/reagent_containers/food/drinks/bottle/cream
 	category = list("initial","Food")
 
@@ -56,24 +38,15 @@
 	name = "10u Black Pepper"
 	id = "black_pepper"
 	build_type = BIOGENERATOR
-<<<<<<< HEAD
 	materials = list(/datum/material/biomass= 25)
 	make_reagents = list(/datum/reagent/consumable/blackpepper = 10)
-=======
-	materials = list(MAT_BIOMASS = 25)
-	make_reagents = list("blackpepper" = 10)
->>>>>>> Updated this old code to fork
 	category = list("initial","Food")
 
 /datum/design/pepper_mill
 	name = "Pepper Mill"
 	id = "pepper_mill"
 	build_type = BIOGENERATOR
-<<<<<<< HEAD
 	materials = list(/datum/material/biomass= 50)
-=======
-	materials = list(MAT_BIOMASS = 50)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/reagent_containers/food/condiment/peppermill
 	make_reagents = list()
 	category = list("initial","Food")
@@ -82,24 +55,15 @@
 	name = "10u Universal Enzyme"
 	id = "enzyme"
 	build_type = BIOGENERATOR
-<<<<<<< HEAD
 	materials = list(/datum/material/biomass= 30)
 	make_reagents = list(/datum/reagent/consumable/enzyme = 10)
-=======
-	materials = list(MAT_BIOMASS = 30)
-	make_reagents = list("enzyme" = 10)
->>>>>>> Updated this old code to fork
 	category = list("initial","Food")
 
 /datum/design/flour_sack
 	name = "Flour Sack"
 	id = "flour_sack"
 	build_type = BIOGENERATOR
-<<<<<<< HEAD
 	materials = list(/datum/material/biomass= 150)
-=======
-	materials = list(MAT_BIOMASS = 150)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/reagent_containers/food/condiment/flour
 	category = list("initial","Food")
 
@@ -107,11 +71,7 @@
 	name = "Monkey Cube"
 	id = "mcube"
 	build_type = BIOGENERATOR
-<<<<<<< HEAD
 	materials = list(/datum/material/biomass= 250)
-=======
-	materials = list(MAT_BIOMASS = 250)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/reagent_containers/food/snacks/monkeycube
 	category = list("initial", "Food")
 
@@ -119,11 +79,7 @@
 	name = "E-Z Nutrient"
 	id = "ez_nut"
 	build_type = BIOGENERATOR
-<<<<<<< HEAD
 	materials = list(/datum/material/biomass= 10)
-=======
-	materials = list(MAT_BIOMASS = 10)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/reagent_containers/glass/bottle/nutrient/ez
 	category = list("initial","Botany Chemicals")
 
@@ -131,11 +87,7 @@
 	name = "Left 4 Zed"
 	id = "l4z_nut"
 	build_type = BIOGENERATOR
-<<<<<<< HEAD
 	materials = list(/datum/material/biomass= 20)
-=======
-	materials = list(MAT_BIOMASS = 20)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/reagent_containers/glass/bottle/nutrient/l4z
 	category = list("initial","Botany Chemicals")
 
@@ -143,11 +95,7 @@
 	name = "Robust Harvest"
 	id = "rh_nut"
 	build_type = BIOGENERATOR
-<<<<<<< HEAD
 	materials = list(/datum/material/biomass= 25)
-=======
-	materials = list(MAT_BIOMASS = 25)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/reagent_containers/glass/bottle/nutrient/rh
 	category = list("initial","Botany Chemicals")
 
@@ -155,11 +103,7 @@
 	name = "Weed Killer"
 	id = "weed_killer"
 	build_type = BIOGENERATOR
-<<<<<<< HEAD
 	materials = list(/datum/material/biomass= 50)
-=======
-	materials = list(MAT_BIOMASS = 50)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/reagent_containers/glass/bottle/killer/weedkiller
 	category = list("initial","Botany Chemicals")
 
@@ -167,11 +111,7 @@
 	name = "Pest Killer"
 	id = "pest_spray"
 	build_type = BIOGENERATOR
-<<<<<<< HEAD
 	materials = list(/datum/material/biomass= 50)
-=======
-	materials = list(MAT_BIOMASS = 50)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/reagent_containers/glass/bottle/killer/pestkiller
 	category = list("initial","Botany Chemicals")
 
@@ -179,11 +119,7 @@
 	name = "Empty Bottle"
 	id = "botany_bottle"
 	build_type = BIOGENERATOR
-<<<<<<< HEAD
 	materials = list(/datum/material/biomass= 5)
-=======
-	materials = list(MAT_BIOMASS = 5)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/reagent_containers/glass/bottle/nutrient/empty
 	category = list("initial", "Botany Chemicals")
 
@@ -191,11 +127,7 @@
 	name = "Roll of Cloth"
 	id = "cloth"
 	build_type = BIOGENERATOR
-<<<<<<< HEAD
 	materials = list(/datum/material/biomass= 50)
-=======
-	materials = list(MAT_BIOMASS = 50)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/stack/sheet/cloth
 	category = list("initial","Organic Materials")
 
@@ -203,11 +135,7 @@
 	name = "Sheet of Cardboard"
 	id = "cardboard"
 	build_type = BIOGENERATOR
-<<<<<<< HEAD
 	materials = list(/datum/material/biomass= 25)
-=======
-	materials = list(MAT_BIOMASS = 25)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/stack/sheet/cardboard
 	category = list("initial","Organic Materials")
 
@@ -215,11 +143,7 @@
 	name = "Sheet of Leather"
 	id = "leather"
 	build_type = BIOGENERATOR
-<<<<<<< HEAD
 	materials = list(/datum/material/biomass= 150)
-=======
-	materials = list(MAT_BIOMASS = 150)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/stack/sheet/leather
 	category = list("initial","Organic Materials")
 
@@ -227,11 +151,7 @@
 	name = "Security Belt"
 	id = "secbelt"
 	build_type = BIOGENERATOR
-<<<<<<< HEAD
 	materials = list(/datum/material/biomass= 300)
-=======
-	materials = list(MAT_BIOMASS = 300)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/storage/belt/security
 	category = list("initial","Organic Materials")
 
@@ -239,11 +159,7 @@
 	name = "Medical Belt"
 	id = "medbel"
 	build_type = BIOGENERATOR
-<<<<<<< HEAD
 	materials = list(/datum/material/biomass= 300)
-=======
-	materials = list(MAT_BIOMASS = 300)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/storage/belt/medical
 	category = list("initial","Organic Materials")
 
@@ -251,11 +167,7 @@
 	name = "Janitorial Belt"
 	id = "janibelt"
 	build_type = BIOGENERATOR
-<<<<<<< HEAD
 	materials = list(/datum/material/biomass= 300)
-=======
-	materials = list(MAT_BIOMASS = 300)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/storage/belt/janitor
 	category = list("initial","Organic Materials")
 
@@ -263,11 +175,7 @@
 	name = "Shoulder Holster"
 	id = "s_holster"
 	build_type = BIOGENERATOR
-<<<<<<< HEAD
 	materials = list(/datum/material/biomass= 400)
-=======
-	materials = list(MAT_BIOMASS = 400)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/storage/belt/holster
 	category = list("initial","Organic Materials")
 
@@ -275,10 +183,6 @@
 	name = "Rice Hat"
 	id = "rice_hat"
 	build_type = BIOGENERATOR
-<<<<<<< HEAD
 	materials = list(/datum/material/biomass= 300)
-=======
-	materials = list(MAT_BIOMASS = 300)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/clothing/head/rice_hat
 	category = list("initial","Organic Materials")

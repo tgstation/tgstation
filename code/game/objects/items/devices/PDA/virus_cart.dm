@@ -71,12 +71,7 @@
 				difficulty++ //if cartridge has manifest access it has extra snowflake difficulty
 			else
 				difficulty += 2
-<<<<<<< HEAD
 		if(SEND_SIGNAL(target, COMSIG_PDA_CHECK_DETONATE) & COMPONENT_PDA_NO_DETONATE || prob(difficulty * 15))
-=======
-		GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, target)
-		if(!target.detonatable || prob(difficulty * 15) || (hidden_uplink))
->>>>>>> Updated this old code to fork
 			U.show_message("<span class='danger'>An error flashes on your [src].</span>", 1)
 		else
 			log_bomber(U, "triggered a PDA explosion on", target, "[!is_special_character(U) ? "(TRIGGED BY NON-ANTAG)" : ""]")
@@ -98,11 +93,7 @@
 		charges--
 		var/lock_code = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
 		to_chat(U, "<span class='notice'>Virus Sent!  The unlock code to the target is: [lock_code]</span>")
-<<<<<<< HEAD
 		var/datum/component/uplink/hidden_uplink = target.GetComponent(/datum/component/uplink)
-=======
-		GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, target)
->>>>>>> Updated this old code to fork
 		if(!hidden_uplink)
 			hidden_uplink = target.AddComponent(/datum/component/uplink)
 			hidden_uplink.unlock_code = lock_code

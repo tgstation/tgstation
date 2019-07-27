@@ -6,10 +6,7 @@ Prismatic extracts:
 	name = "prismatic extract"
 	desc = "It's constantly wet with a semi-transparent, colored goo."
 	effect = "prismatic"
-<<<<<<< HEAD
 	effect_desc = "When used it paints whatever it hits."
-=======
->>>>>>> Updated this old code to fork
 	icon_state = "prismatic"
 	var/paintcolor = "#FFFFFF"
 

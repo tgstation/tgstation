@@ -84,10 +84,6 @@
 "p" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-<<<<<<< HEAD
-=======
-	icon_state = "mass_driver";
->>>>>>> Updated this old code to fork
 	id = "oldship_ruin_gun"
 	},
 /turf/open/floor/plating,

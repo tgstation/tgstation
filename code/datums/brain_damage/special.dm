@@ -23,7 +23,6 @@
 			speak("neutral", prob(25))
 
 /datum/brain_trauma/special/godwoken/on_gain()
-<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_HOLY, TRAUMA_TRAIT)
 	..()
 
@@ -31,15 +30,6 @@
 	REMOVE_TRAIT(owner, TRAIT_HOLY, TRAUMA_TRAIT)
 	..()
 
-=======
-	owner.add_trait(TRAIT_HOLY, TRAUMA_TRAIT)
-	..()
-
-/datum/brain_trauma/special/godwoken/on_lose()
-	owner.remove_trait(TRAIT_HOLY, TRAUMA_TRAIT)
-	..()			
-			
->>>>>>> Updated this old code to fork
 /datum/brain_trauma/special/godwoken/proc/speak(type, include_owner = FALSE)
 	var/message
 	switch(type)
@@ -152,12 +142,8 @@
 
 /datum/brain_trauma/special/psychotic_brawling/bath_salts
 	name = "Chemical Violent Psychosis"
-<<<<<<< HEAD
 	clonable = FALSE
 
-=======
-	
->>>>>>> Updated this old code to fork
 /datum/brain_trauma/special/tenacity
 	name = "Tenacity"
 	desc = "Patient is psychologically unaffected by pain and injuries, and can remain standing far longer than a normal person."
@@ -166,7 +152,6 @@
 	lose_text = "<span class='warning'>You realize you can feel pain again.</span>"
 
 /datum/brain_trauma/special/tenacity/on_gain()
-<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, TRAUMA_TRAIT)
 	ADD_TRAIT(owner, TRAIT_NOHARDCRIT, TRAUMA_TRAIT)
 	..()
@@ -176,17 +161,6 @@
 	REMOVE_TRAIT(owner, TRAIT_NOHARDCRIT, TRAUMA_TRAIT)
 	..()
 
-=======
-	owner.add_trait(TRAIT_NOSOFTCRIT, TRAUMA_TRAIT)
-	owner.add_trait(TRAIT_NOHARDCRIT, TRAUMA_TRAIT)
-	..()
-
-/datum/brain_trauma/special/tenacity/on_lose()
-	owner.remove_trait(TRAIT_NOSOFTCRIT, TRAUMA_TRAIT)
-	owner.remove_trait(TRAIT_NOHARDCRIT, TRAUMA_TRAIT)
-	..()
-	
->>>>>>> Updated this old code to fork
 /datum/brain_trauma/special/death_whispers
 	name = "Functional Cerebral Necrosis"
 	desc = "Patient's brain is stuck in a functional near-death state, causing occasional moments of lucid hallucinations, which are often interpreted as the voices of the dead."
@@ -199,18 +173,13 @@
 	..()
 	if(!active && prob(2))
 		whispering()
-<<<<<<< HEAD
 
-=======
-		
->>>>>>> Updated this old code to fork
 /datum/brain_trauma/special/death_whispers/on_lose()
 	if(active)
 		cease_whispering()
 	..()
 
 /datum/brain_trauma/special/death_whispers/proc/whispering()
-<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
 	active = TRUE
 	addtimer(CALLBACK(src, .proc/cease_whispering), rand(50, 300))
@@ -336,13 +305,3 @@
 /obj/effect/hallucination/simple/securitron/Destroy()
 	STOP_PROCESSING(SSfastprocess,src)
 	return ..()
-=======
-	owner.add_trait(TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
-	active = TRUE
-	addtimer(CALLBACK(src, .proc/cease_whispering), rand(50, 300))
-	
-/datum/brain_trauma/special/death_whispers/proc/cease_whispering()
-	owner.remove_trait(TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
-	active = FALSE
-
->>>>>>> Updated this old code to fork

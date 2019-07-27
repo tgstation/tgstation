@@ -20,7 +20,6 @@
 		finish_color = pick("red","blue","brown","green","black")
 	icon_state = "tablet-[finish_color]"
 	icon_state_unpowered = "tablet-[finish_color]"
-<<<<<<< HEAD
 	icon_state_powered = "tablet-[finish_color]"
 
 /obj/item/modular_computer/tablet/syndicate_contract_uplink
@@ -34,6 +33,3 @@
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
 	comp_light_luminosity = 4.3
 	finish_color = "red"
-=======
-	icon_state_powered = "tablet-[finish_color]"
->>>>>>> Updated this old code to fork

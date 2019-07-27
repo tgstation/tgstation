@@ -19,53 +19,19 @@
 /obj/item/implant/mindshield/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	if(..())
 		if(!target.mind)
-<<<<<<< HEAD
 			ADD_TRAIT(target, TRAIT_MINDSHIELD, "implant")
-=======
-			target.add_trait(TRAIT_MINDSHIELD, "implant")
->>>>>>> Updated this old code to fork
 			target.sec_hud_set_implants()
 			return TRUE
 
 		if(target.mind.has_antag_datum(/datum/antagonist/brainwashed))
 			target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
 
-<<<<<<< HEAD
 		if(target.mind.has_antag_datum(/datum/antagonist/rev/head)|| target.mind.unconvertable)
-=======
-		var/datum/antagonist/hivemind/host = target.mind.has_antag_datum(/datum/antagonist/hivemind) //Releases the target from mind control beforehand
-		if(host)
-			var/datum/mind/M = host.owner
-			if(M)
-				var/obj/effect/proc_holder/spell/target_hive/hive_control/the_spell = locate(/obj/effect/proc_holder/spell/target_hive/hive_control) in M.spell_list
-				if(the_spell && the_spell.active)
-					the_spell.release_control()
-
-		if(target.mind.has_antag_datum(/datum/antagonist/rev/head) || target.mind.has_antag_datum(/datum/antagonist/hivemind) || target.mind.unconvertable)
->>>>>>> Updated this old code to fork
 			if(!silent)
 				target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 			removed(target, 1)
 			qdel(src)
-<<<<<<< HEAD
 			return TRUE //the implant is still used
-=======
-			return FALSE
-
-		if(is_hivemember(target))
-			for(var/datum/antagonist/hivemind/hive in GLOB.antagonists)
-				if(hive.hivemembers.Find(target))
-					var/mob/living/carbon/C = hive.owner.current.get_real_hivehost()
-					if(C)
-						C.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, target)
-						target.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, C)
-						if(C.mind) //If you were using mind control, too bad
-							C.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
-							to_chat(C, "<span class='userdanger'>We detect a surge of psionic energy from a far away vessel before they disappear from the hive. Whatever happened, there's a good chance they're after us now.</span>")
-			to_chat(target, "<span class='assimilator'>You hear supernatural wailing echo throughout your mind as you are finally set free. Deep down, you can feel the lingering presence of those who enslaved you... as can they!</span>")
-			target.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
-			remove_hivemember(target)
->>>>>>> Updated this old code to fork
 
 		var/datum/antagonist/rev/rev = target.mind.has_antag_datum(/datum/antagonist/rev)
 		if(rev)
@@ -75,11 +41,7 @@
 				to_chat(target, "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 			else
 				to_chat(target, "<span class='notice'>You feel a sense of peace and security. You are now protected from brainwashing.</span>")
-<<<<<<< HEAD
 		ADD_TRAIT(target, TRAIT_MINDSHIELD, "implant")
-=======
-		target.add_trait(TRAIT_MINDSHIELD, "implant")
->>>>>>> Updated this old code to fork
 		target.sec_hud_set_implants()
 		return TRUE
 	return FALSE
@@ -88,11 +50,7 @@
 	if(..())
 		if(isliving(target))
 			var/mob/living/L = target
-<<<<<<< HEAD
 			REMOVE_TRAIT(L, TRAIT_MINDSHIELD, "implant")
-=======
-			L.remove_trait(TRAIT_MINDSHIELD, "implant")
->>>>>>> Updated this old code to fork
 			L.sec_hud_set_implants()
 		if(target.stat != DEAD && !silent)
 			to_chat(target, "<span class='boldnotice'>Your mind suddenly feels terribly vulnerable. You are no longer safe from brainwashing.</span>")

@@ -77,14 +77,11 @@
 	icon_state = "riveted"
 	smooth = SMOOTH_TRUE
 
-<<<<<<< HEAD
 /turf/closed/indestructible/syndicate
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "map-shuttle"
 	smooth = SMOOTH_MORE
 
-=======
->>>>>>> Updated this old code to fork
 /turf/closed/indestructible/riveted/uranium
 	icon = 'icons/turf/walls/uranium_wall.dmi'
 	icon_state = "uranium"
@@ -108,7 +105,6 @@
 	underlays += mutable_appearance('icons/obj/structures.dmi', "grille") //add a grille underlay
 	underlays += mutable_appearance('icons/turf/floors.dmi', "plating") //add the plating underlay, below the grille
 
-<<<<<<< HEAD
 /turf/closed/indestructible/opsglass
 	name = "window"
 	icon_state = "plastitanium_window"
@@ -122,8 +118,6 @@
 	underlays += mutable_appearance('icons/obj/structures.dmi', "grille")
 	underlays += mutable_appearance('icons/turf/floors.dmi', "plating")
 
-=======
->>>>>>> Updated this old code to fork
 /turf/closed/indestructible/fakedoor
 	name = "CentCom Access"
 	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'

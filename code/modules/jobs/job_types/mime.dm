@@ -26,20 +26,13 @@
 	jobtype = /datum/job/mime
 
 	belt = /obj/item/pda/mime
-<<<<<<< HEAD
 	ears = /obj/item/radio/headset/headset_srv
-=======
->>>>>>> Updated this old code to fork
 	uniform = /obj/item/clothing/under/rank/mime
 	mask = /obj/item/clothing/mask/gas/mime
 	gloves = /obj/item/clothing/gloves/color/white
 	head = /obj/item/clothing/head/frenchberet
 	suit = /obj/item/clothing/suit/suspenders
-<<<<<<< HEAD
 	backpack_contents = list(/obj/item/book/mimery=1, /obj/item/reagent_containers/food/drinks/bottle/bottleofnothing=1)
-=======
-	backpack_contents = list(/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing=1)
->>>>>>> Updated this old code to fork
 
 	backpack = /obj/item/storage/backpack/mime
 	satchel = /obj/item/storage/backpack/mime
@@ -52,7 +45,6 @@
 		return
 
 	if(H.mind)
-<<<<<<< HEAD
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak(null))
 		H.mind.miming = 1
 
@@ -89,9 +81,3 @@
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_box(null))
 	to_chat(usr, "<span class='notice'>The book disappears into thin air.</span>")
 	qdel(src)
-=======
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall(null))
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak(null))
-		H.mind.miming = 1
-
->>>>>>> Updated this old code to fork

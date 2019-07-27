@@ -402,13 +402,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "O" = (
-<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
-=======
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
->>>>>>> Updated this old code to fork
 /obj/machinery/door/airlock/shuttle{
 	name = "Arrival Shuttle Airlock"
 	},
@@ -434,11 +428,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "R" = (
-<<<<<<< HEAD
 /obj/structure/chair/office,
-=======
-/obj/structure/chair/office/dark,
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},

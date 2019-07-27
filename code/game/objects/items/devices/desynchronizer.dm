@@ -8,11 +8,7 @@
 	item_flags = NOBLUDGEON
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-<<<<<<< HEAD
 	materials = list(/datum/material/iron=250, /datum/material/glass=500)
-=======
-	materials = list(MAT_METAL=250, MAT_GLASS=500)
->>>>>>> Updated this old code to fork
 	var/max_duration = 3000
 	var/duration = 300
 	var/last_use = 0
@@ -29,19 +25,11 @@
 		resync()
 
 /obj/item/desynchronizer/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	if(world.time < next_use)
 		. += "<span class='warning'>Time left to recharge: [DisplayTimeText(next_use - world.time)]</span>"
 	. += "<span class='notice'>Alt-click to customize the duration. Current duration: [DisplayTimeText(duration)].</span>"
 	. += "<span class='notice'>Can be used again to interrupt the effect early. The recharge time is the same as the time spent in desync.</span>"
-=======
-	..()
-	if(world.time < next_use)
-		to_chat(user, "<span class='warning'>Time left to recharge: [DisplayTimeText(next_use - world.time)]</span>")
-	to_chat(user, "<span class='notice'>Alt-click to customize the duration. Current duration: [DisplayTimeText(duration)].</span>")
-	to_chat(user, "<span class='notice'>Can be used again to interrupt the effect early. The recharge time is the same as the time spent in desync.</span>")
->>>>>>> Updated this old code to fork
 
 /obj/item/desynchronizer/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))

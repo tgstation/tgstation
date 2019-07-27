@@ -29,10 +29,7 @@
 /area/engine/atmos)
 "ai" = (
 /obj/machinery/power/rtg/advanced,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "aj" = (
@@ -56,26 +53,11 @@
 /area/engine/atmos)
 "an" = (
 /obj/structure/lattice/catwalk,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/space,
 /area/space/nearstation)
 "ao" = (
 /obj/structure/lattice/catwalk,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/space,
 /area/space/nearstation)
 "ap" = (
@@ -84,29 +66,12 @@
 	locked = 0;
 	pixel_y = 23
 	},
-<<<<<<< HEAD
 /obj/structure/closet/secure_closet/engineering_electrical,
-=======
-/obj/machinery/power/apc{
-	dir = 8;
-	pixel_x = -24
-	},
-/obj/structure/closet/secure_closet/engineering_electrical,
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aq" = (
 /obj/machinery/computer/monitor,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ar" = (
@@ -122,7 +87,6 @@
 	locked = 0;
 	pixel_y = 23
 	},
-<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -136,31 +100,6 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-=======
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/turf/open/floor/plasteel,
-/area/engine/gravity_generator)
-"at" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Gravity Generator APC";
-	pixel_y = 25
-	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "au" = (
@@ -192,80 +131,23 @@
 /obj/machinery/meter,
 /turf/open/floor/plating,
 /area/engine/atmos)
-<<<<<<< HEAD
-=======
-"aA" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/space,
-/area/space/nearstation)
-"aB" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/space,
-/area/space/nearstation)
->>>>>>> Updated this old code to fork
 "aC" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/openspace,
 /area/security)
 "aD" = (
-<<<<<<< HEAD
 /obj/structure/fans/tiny,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aG" = (
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
-"aE" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
-"aG" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
->>>>>>> Updated this old code to fork
 /obj/machinery/light{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/turf/open/floor/plasteel,
-/area/engine/gravity_generator)
-"aH" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "aI" = (
@@ -316,26 +198,6 @@
 	},
 /turf/open/floor/plating,
 /area/engine/atmos)
-<<<<<<< HEAD
-=======
-"aQ" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/space,
-/area/space/nearstation)
-"aR" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/space,
-/area/space/nearstation)
->>>>>>> Updated this old code to fork
 "aS" = (
 /obj/structure/table,
 /obj/item/flashlight{
@@ -344,7 +206,6 @@
 /obj/item/airlock_painter,
 /turf/open/floor/plating,
 /area/engine/engineering)
-<<<<<<< HEAD
 "aU" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -354,39 +215,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-=======
-"aT" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
-"aU" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/engine/gravity_generator)
-"aV" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/engine/gravity_generator)
-"aW" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "aX" = (
@@ -431,7 +259,6 @@
 "bd" = (
 /obj/structure/table,
 /obj/item/weldingtool/experimental,
-<<<<<<< HEAD
 /obj/machinery/power/apc{
 	dir = 8;
 	pixel_x = -25
@@ -439,16 +266,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/engineering)
-=======
-/turf/open/floor/plating,
-/area/engine/engineering)
-"be" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
->>>>>>> Updated this old code to fork
 "bf" = (
 /obj/structure/closet/secure_closet/engineering_chief,
 /turf/open/floor/plating,
@@ -457,15 +274,12 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Gravity Generator APC";
 	pixel_x = -25
 	},
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "bh" = (
@@ -483,33 +297,20 @@
 "bj" = (
 /obj/machinery/power/apc{
 	dir = 8;
-<<<<<<< HEAD
 	pixel_x = -25
-=======
-	pixel_x = -24
-	},
-/obj/structure/cable{
-	icon_state = "0-2"
->>>>>>> Updated this old code to fork
 	},
 /obj/machinery/light,
 /obj/structure/table,
 /obj/item/analyzer,
 /obj/item/wrench,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bk" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bl" = (
@@ -558,22 +359,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
-<<<<<<< HEAD
 "bt" = (
 /obj/machinery/door/airlock,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-=======
-"bs" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/closed/wall/r_wall,
-/area/hallway/primary/central)
-"bt" = (
-/obj/machinery/door/airlock,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bu" = (
@@ -589,13 +378,7 @@
 /area/engine/engineering)
 "bx" = (
 /obj/machinery/door/airlock,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/engine/engineering)
 "by" = (
@@ -613,15 +396,7 @@
 "bB" = (
 /obj/machinery/power/apc{
 	dir = 8;
-<<<<<<< HEAD
 	pixel_x = -25
-=======
-	pixel_x = -24
-	},
-/obj/structure/cable,
-/obj/structure/cable{
-	icon_state = "0-2"
->>>>>>> Updated this old code to fork
 	},
 /obj/machinery/airalarm{
 	frequency = 1439;
@@ -629,10 +404,7 @@
 	pixel_y = 23
 	},
 /obj/structure/closet/jcloset,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bC" = (
@@ -645,10 +417,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bE" = (
@@ -666,19 +435,10 @@
 	},
 /obj/machinery/power/apc{
 	dir = 8;
-<<<<<<< HEAD
 	pixel_x = -25
 	},
 /obj/structure/closet/secure_closet/captains,
 /obj/structure/cable,
-=======
-	pixel_x = -24
-	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/structure/closet/secure_closet/captains,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	dir = 8
 	},
@@ -722,13 +482,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bO" = (
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bP" = (
@@ -759,19 +513,10 @@
 	},
 /obj/machinery/power/apc{
 	dir = 8;
-<<<<<<< HEAD
 	pixel_x = -25
 	},
 /obj/structure/closet/firecloset/full,
 /obj/structure/cable,
-=======
-	pixel_x = -24
-	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/structure/closet/firecloset/full,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	dir = 9
 	},
@@ -805,109 +550,18 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/primary/central)
-<<<<<<< HEAD
 "ce" = (
 /obj/structure/cable,
-=======
-"ca" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"cb" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"cc" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"cd" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/bridge)
-"ce" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	dir = 8
 	},
 /area/bridge)
 "cf" = (
-<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/bridge)
 "cl" = (
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/bridge)
-"cg" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel{
-	dir = 4
-	},
-/area/bridge)
-"ch" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/plating,
-/area/bridge)
-"ci" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"cj" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"ck" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/closed/wall/r_wall,
-/area/hallway/secondary/entry)
-"cl" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	dir = 8
 	},
@@ -935,15 +589,6 @@
 	dir = 6
 	},
 /area/bridge)
-<<<<<<< HEAD
-=======
-"cs" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/closed/wall/r_wall,
-/area/bridge)
->>>>>>> Updated this old code to fork
 "ct" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/light{
@@ -957,18 +602,12 @@
 /area/bridge)
 "cw" = (
 /obj/machinery/door/airlock,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/bridge)
 "cx" = (
 /obj/machinery/door/airlock/glass,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "cy" = (
@@ -992,20 +631,14 @@
 /obj/machinery/light{
 	dir = 1
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	dir = 4
 	},
 /area/hallway/primary/central)
 "cC" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	dir = 1
 	},
@@ -1014,41 +647,26 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	dir = 1
 	},
 /area/hallway/primary/central)
 "cE" = (
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/light{
 	dir = 1
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel{
 	dir = 1
 	},
 /area/hallway/primary/central)
 "cF" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "cG" = (
@@ -1104,15 +722,6 @@
 "cN" = (
 /turf/closed/wall/r_wall,
 /area/construction)
-<<<<<<< HEAD
-=======
-"cO" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/closed/wall/r_wall,
-/area/construction)
->>>>>>> Updated this old code to fork
 "cP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
@@ -1128,15 +737,6 @@
 "cS" = (
 /turf/closed/wall/r_wall,
 /area/storage/primary)
-<<<<<<< HEAD
-=======
-"cT" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/closed/wall/r_wall,
-/area/storage/primary)
->>>>>>> Updated this old code to fork
 "cU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
@@ -1151,21 +751,12 @@
 	locked = 0;
 	pixel_y = 23
 	},
-<<<<<<< HEAD
 /obj/machinery/power/apc{
 	dir = 8;
 	pixel_x = -25
 	},
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/cable,
-=======
-/obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 8;
-	pixel_x = -24
-	},
-/obj/effect/turf_decal/stripes/corner,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/construction)
 "cX" = (
@@ -1173,10 +764,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/construction)
 "cY" = (
@@ -1198,31 +786,19 @@
 	},
 /obj/machinery/power/apc{
 	dir = 8;
-<<<<<<< HEAD
 	pixel_x = -25
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/structure/cable,
-=======
-	pixel_x = -24
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "db" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "dc" = (
@@ -1474,20 +1050,11 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "dZ" = (
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/machinery/door/airlock/external/glass,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ea" = (
@@ -1607,17 +1174,10 @@
 /turf/open/floor/plating,
 /area/storage/primary)
 "ey" = (
-<<<<<<< HEAD
 /obj/structure/ladder,
 /obj/effect/turf_decal/stripes/asteroid/corner{
 	dir = 8
 	},
-=======
-/obj/effect/turf_decal/stripes/asteroid/corner{
-	dir = 1
-	},
-/obj/structure/ladder,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/construction)
 "ez" = (
@@ -1673,15 +1233,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/construction)
-<<<<<<< HEAD
-=======
-"eK" = (
-/obj/effect/turf_decal/stripes/asteroid/corner{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/construction)
->>>>>>> Updated this old code to fork
 "eL" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
@@ -1724,17 +1275,10 @@
 /area/hallway/primary/central)
 "eR" = (
 /obj/effect/turf_decal/stripes/asteroid/corner{
-<<<<<<< HEAD
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/asteroid/corner{
 	dir = 1
-=======
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/asteroid/corner{
-	dir = 4
->>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -1801,7 +1345,6 @@
 /obj/structure/fans/tiny,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-<<<<<<< HEAD
 "gY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -1816,8 +1359,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/storage/primary)
-=======
->>>>>>> Updated this old code to fork
 "og" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/ladder,
@@ -1849,7 +1390,6 @@
 /obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
-<<<<<<< HEAD
 "rN" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -1857,21 +1397,16 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-=======
->>>>>>> Updated this old code to fork
 "ux" = (
 /obj/structure/ladder,
 /turf/open/floor/plasteel,
 /area/security)
-<<<<<<< HEAD
 "va" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/construction)
-=======
->>>>>>> Updated this old code to fork
 "vF" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -1879,7 +1414,6 @@
 /turf/open/floor/plasteel,
 /area/construction)
 "yl" = (
-<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -1888,13 +1422,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/construction)
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
->>>>>>> Updated this old code to fork
 "Bm" = (
 /obj/machinery/light{
 	dir = 4
@@ -1905,20 +1432,11 @@
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "CA" = (
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/machinery/door/airlock/external/glass,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "Dm" = (
@@ -1939,13 +1457,10 @@
 /obj/structure/ladder,
 /turf/open/floor/plasteel,
 /area/construction)
-<<<<<<< HEAD
 "Hp" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/storage/primary)
-=======
->>>>>>> Updated this old code to fork
 "Jz" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
@@ -1998,14 +1513,11 @@
 /obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/plasteel,
 /area/security)
-<<<<<<< HEAD
 "RQ" = (
 /obj/machinery/door/airlock/glass,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/storage/primary)
-=======
->>>>>>> Updated this old code to fork
 "Uc" = (
 /obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/plasteel,
@@ -2744,7 +2256,6 @@ aw
 aM
 aZ
 bj
-<<<<<<< HEAD
 bA
 bB
 bE
@@ -2754,17 +2265,6 @@ bE
 bE
 bE
 cN
-=======
-bs
-bB
-ca
-bO
-bO
-bO
-bO
-bO
-cO
->>>>>>> Updated this old code to fork
 cW
 dm
 dy
@@ -2811,13 +2311,8 @@ aw
 ba
 bk
 bt
-<<<<<<< HEAD
 rN
 bN
-=======
-bC
-cb
->>>>>>> Updated this old code to fork
 bN
 bN
 bC
@@ -2871,7 +2366,6 @@ bb
 bl
 ah
 bD
-<<<<<<< HEAD
 bO
 bO
 bO
@@ -2880,16 +2374,6 @@ bO
 bO
 yt
 va
-=======
-cc
-bE
-bE
-cA
-bE
-bE
-cQ
-cY
->>>>>>> Updated this old code to fork
 dn
 dn
 dn
@@ -2936,17 +2420,10 @@ bc
 bm
 ah
 bE
-<<<<<<< HEAD
 bE
 bE
 bE
 gY
-=======
-cc
-bE
-bE
-cA
->>>>>>> Updated this old code to fork
 bE
 bE
 cQ
@@ -2997,17 +2474,10 @@ aP
 bn
 ah
 bF
-<<<<<<< HEAD
 bE
 co
 bE
 gY
-=======
-cc
-co
-bE
-cA
->>>>>>> Updated this old code to fork
 bE
 bE
 cN
@@ -3058,11 +2528,7 @@ ah
 ah
 bu
 bu
-<<<<<<< HEAD
 bv
-=======
-cd
->>>>>>> Updated this old code to fork
 bu
 bu
 cB
@@ -3165,11 +2631,7 @@ ag
 ai
 an
 ai
-<<<<<<< HEAD
 an
-=======
-aQ
->>>>>>> Updated this old code to fork
 ai
 ag
 bv
@@ -3222,13 +2684,8 @@ ae
 ag
 ai
 ao
-<<<<<<< HEAD
 ao
 ao
-=======
-aA
-aR
->>>>>>> Updated this old code to fork
 ai
 ag
 bv
@@ -3281,22 +2738,14 @@ ae
 ag
 ag
 ag
-<<<<<<< HEAD
 ao
-=======
-aB
->>>>>>> Updated this old code to fork
 ag
 ag
 ag
 bv
 bJ
 cf
-<<<<<<< HEAD
 cf
-=======
-eb
->>>>>>> Updated this old code to fork
 cw
 cD
 bE
@@ -3343,21 +2792,13 @@ ae
 ac
 ac
 ag
-<<<<<<< HEAD
 ao
-=======
-aB
->>>>>>> Updated this old code to fork
 ag
 ac
 ac
 bv
 bK
-<<<<<<< HEAD
 eb
-=======
-cf
->>>>>>> Updated this old code to fork
 eb
 bu
 cD
@@ -3411,11 +2852,7 @@ ac
 ac
 bv
 bL
-<<<<<<< HEAD
 eb
-=======
-cf
->>>>>>> Updated this old code to fork
 eb
 bv
 cD
@@ -3469,11 +2906,7 @@ ac
 ac
 bu
 bM
-<<<<<<< HEAD
 ec
-=======
-cg
->>>>>>> Updated this old code to fork
 cr
 bu
 cD
@@ -3527,7 +2960,6 @@ aj
 aj
 bu
 bu
-<<<<<<< HEAD
 bv
 bu
 bu
@@ -3535,15 +2967,6 @@ cE
 bE
 bE
 cS
-=======
-ch
-cs
-cs
-cE
-bO
-bO
-cT
->>>>>>> Updated this old code to fork
 da
 on
 dA
@@ -3591,11 +3014,7 @@ bd
 bo
 bw
 bN
-<<<<<<< HEAD
 bN
-=======
-ci
->>>>>>> Updated this old code to fork
 ct
 bN
 cF
@@ -3643,7 +3062,6 @@ ad
 af
 aj
 aq
-<<<<<<< HEAD
 yl
 yl
 yl
@@ -3658,22 +3076,6 @@ bE
 bE
 cS
 Hp
-=======
-aE
-aT
-be
-be
-bx
-bO
-cj
-bE
-bE
-cA
-bE
-bE
-cS
-dJ
->>>>>>> Updated this old code to fork
 dJ
 dB
 dl
@@ -3720,24 +3122,14 @@ bf
 bp
 aj
 bP
-<<<<<<< HEAD
 bE
 bE
 bO
-=======
-cc
-bE
-bE
->>>>>>> Updated this old code to fork
 cA
 bE
 bE
 cS
-<<<<<<< HEAD
 Hp
-=======
-dJ
->>>>>>> Updated this old code to fork
 dJ
 dB
 dl
@@ -3784,24 +3176,14 @@ ak
 ak
 ak
 bQ
-<<<<<<< HEAD
 bE
 bE
 bO
-=======
-cc
-bE
-bE
->>>>>>> Updated this old code to fork
 cA
 bE
 bE
 cS
-<<<<<<< HEAD
 lm
-=======
-de
->>>>>>> Updated this old code to fork
 dJ
 dB
 dl
@@ -3848,7 +3230,6 @@ bg
 bq
 ak
 bR
-<<<<<<< HEAD
 bE
 bE
 bO
@@ -3857,16 +3238,6 @@ bO
 bO
 RQ
 Hp
-=======
-cc
-bE
-bE
-cA
-bE
-bE
-cV
-dJ
->>>>>>> Updated this old code to fork
 dJ
 dB
 dl
@@ -3907,26 +3278,15 @@ ad
 af
 ak
 at
-<<<<<<< HEAD
 bh
 bh
-=======
-aH
-aW
->>>>>>> Updated this old code to fork
 bh
 br
 ak
 bS
-<<<<<<< HEAD
 bE
 bE
 bO
-=======
-cc
-bE
-bE
->>>>>>> Updated this old code to fork
 cA
 bE
 bE
@@ -3978,15 +3338,9 @@ aI
 aI
 ak
 bT
-<<<<<<< HEAD
 bE
 co
 bO
-=======
-cc
-co
-bE
->>>>>>> Updated this old code to fork
 cA
 bE
 bE
@@ -4038,11 +3392,7 @@ dV
 dV
 by
 by
-<<<<<<< HEAD
 by
-=======
-ck
->>>>>>> Updated this old code to fork
 by
 cx
 cG
@@ -4097,13 +3447,8 @@ dV
 by
 bU
 cl
-<<<<<<< HEAD
 cl
 cl
-=======
-cy
-cy
->>>>>>> Updated this old code to fork
 cH
 cI
 cJ
@@ -5740,11 +5085,7 @@ eI
 eI
 eI
 eI
-<<<<<<< HEAD
 eM
-=======
-eK
->>>>>>> Updated this old code to fork
 cN
 ME
 ad

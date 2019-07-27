@@ -64,16 +64,11 @@
 
 
 /mob/living/carbon/true_devil/examine(mob/user)
-<<<<<<< HEAD
 	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] <b>[src]</b>!")
-=======
-	var/msg = "<span class='info'>*---------*\nThis is [icon2html(src, user)] <b>[src]</b>!\n"
->>>>>>> Updated this old code to fork
 
 	//Left hand items
 	for(var/obj/item/I in held_items)
 		if(!(I.item_flags & ABSTRACT))
-<<<<<<< HEAD
 			. += "It is holding [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))]."
 
 	//Braindead
@@ -88,23 +83,6 @@
 	else if(health < (maxHealth/2))
 		. += "<span class='warning'>You can see hellfire inside its wounds.</span>"
 	. += "*---------*</span>"
-=======
-			msg += "It is holding [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))].\n"
-
-	//Braindead
-	if(!client && stat != DEAD)
-		msg += "The devil seems to be in deep contemplation.\n"
-
-	//Damaged
-	if(stat == DEAD)
-		msg += "<span class='deadsay'>The hellfire seems to have been extinguished, for now at least.</span>\n"
-	else if(health < (maxHealth/10))
-		msg += "<span class='warning'>You can see hellfire inside its gaping wounds.</span>\n"
-	else if(health < (maxHealth/2))
-		msg += "<span class='warning'>You can see hellfire inside its wounds.</span>\n"
-	msg += "*---------*</span>"
-	to_chat(user, msg)
->>>>>>> Updated this old code to fork
 
 /mob/living/carbon/true_devil/IsAdvancedToolUser()
 	return 1
@@ -127,11 +105,7 @@
 /mob/living/carbon/true_devil/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
 	return 666
 
-<<<<<<< HEAD
 /mob/living/carbon/true_devil/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
-=======
-/mob/living/carbon/true_devil/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
->>>>>>> Updated this old code to fork
 	if(mind && has_bane(BANE_LIGHT))
 		mind.disrupt_spells(-500)
 		return ..() //flashes don't stop devils UNLESS it's their bane.

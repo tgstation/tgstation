@@ -30,11 +30,7 @@
 	obj_flags |= EMAGGED
 
 /obj/machinery/gulag_item_reclaimer/attackby(obj/item/I, mob/user)
-<<<<<<< HEAD
 	if(istype(I, /obj/item/card/id))
-=======
-	if(istype(I, /obj/item/card/id/prisoner))
->>>>>>> Updated this old code to fork
 		if(!inserted_id)
 			if(!user.transferItemToLoc(I, src))
 				return
@@ -91,18 +87,13 @@
 				usr.put_in_hands(inserted_id)
 				inserted_id = null
 			else
-<<<<<<< HEAD
 				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id)
-=======
-				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id/prisoner)
->>>>>>> Updated this old code to fork
 				if(I)
 					if(!usr.transferItemToLoc(I, src))
 						return
 					inserted_id = I
 
 		if("release_items")
-<<<<<<< HEAD
 			var/mob/living/carbon/human/H = locate(params["mobref"]) in stored_items
 			if ((H == usr || allowed(usr)) && inserted_id)
 				var/obj/item/card/id/target_id
@@ -127,31 +118,15 @@
 					new /obj/item/holochip(drop_location(), inserted_id.points)
 					to_chat(usr, "An ID with your bank account registration was not located amongst your items, a sum of [inserted_id.points] has been dispensed as holochips.")
 				drop_items(H)
-=======
-			var/mob/M = locate(params["mobref"]) in stored_items
-			if(M == usr || allowed(usr))
-				if(inserted_id)
-					var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SEC)
-					if(D)
-						D.adjust_money(inserted_id.points * 1.5)
-				drop_items(M)
->>>>>>> Updated this old code to fork
 			else
 				to_chat(usr, "Access denied.")
 
 /obj/machinery/gulag_item_reclaimer/proc/drop_items(mob/user)
 	if(!stored_items[user])
 		return
-<<<<<<< HEAD
 	var/drop_location = drop_location()
 	for(var/i in stored_items[user])
 		var/obj/item/W = i
 		stored_items[user] -= W
 		W.forceMove(drop_location)
-=======
-	for(var/i in stored_items[user])
-		var/obj/item/W = i
-		stored_items[user] -= W
-		W.forceMove(get_turf(src))
->>>>>>> Updated this old code to fork
 	stored_items -= user

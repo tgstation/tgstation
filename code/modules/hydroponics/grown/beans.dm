@@ -15,11 +15,7 @@
 	icon_dead = "soybean-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/soya/koi)
-<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05, /datum/reagent/consumable/cooking_oil = 0.03) //Vegetable oil!
-=======
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05, "cooking_oil" = 0.03) //Vegetable oil!
->>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/snacks/grown/soybeans
 	seed = /obj/item/seeds/soya
@@ -30,11 +26,7 @@
 	filling_color = "#F0E68C"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
-<<<<<<< HEAD
 	grind_results = list(/datum/reagent/consumable/soymilk = 0)
-=======
-	grind_results = list("soymilk" = 0)
->>>>>>> Updated this old code to fork
 	tastes = list("soy" = 1)
 	wine_power = 20
 
@@ -48,11 +40,7 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/koibeans
 	potency = 10
 	mutatelist = list()
-<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/toxin/carpotoxin = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
-=======
-	reagents_add = list("carpotoxin" = 0.1, "vitamin" = 0.04, "nutriment" = 0.05)
->>>>>>> Updated this old code to fork
 	rarity = 20
 
 /obj/item/reagent_containers/food/snacks/grown/koibeans

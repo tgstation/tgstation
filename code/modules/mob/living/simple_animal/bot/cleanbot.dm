@@ -14,11 +14,7 @@
 	model = "Cleanbot"
 	bot_core_type = /obj/machinery/bot_core/cleanbot
 	window_id = "autoclean"
-<<<<<<< HEAD
 	window_name = "Automatic Station Cleaner v1.3"
-=======
-	window_name = "Automatic Station Cleaner v1.2"
->>>>>>> Updated this old code to fork
 	pass_flags = PASSMOB
 	path_image_color = "#993299"
 
@@ -204,19 +200,14 @@
 		target_types += /obj/effect/decal/cleanable/crayon
 
 	if(trash)
-<<<<<<< HEAD
 		target_types = list(
 		/obj/item/trash,
 		/obj/item/reagent_containers/food/snacks/deadmouse
 		)
-=======
-		target_types += /obj/item/trash
->>>>>>> Updated this old code to fork
 
 	target_types = typecacheof(target_types)
 
 /mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
-<<<<<<< HEAD
 	if(is_cleanable(A))
 		icon_state = "cleanbot-c"
 		mode = BOT_CLEANING
@@ -233,25 +224,6 @@
 
 		mode = BOT_IDLE
 		icon_state = "cleanbot[on]"
-=======
-	if(istype(A, /obj/effect/decal/cleanable))
-		anchored = TRUE
-		icon_state = "cleanbot-c"
-		visible_message("<span class='notice'>[src] begins to clean up [A].</span>")
-		mode = BOT_CLEANING
-		spawn(50)
-			if(mode == BOT_CLEANING)
-				if(A && isturf(A.loc))
-					var/atom/movable/AM = A
-					if(istype(AM, /obj/effect/decal/cleanable))
-						for(var/obj/effect/decal/cleanable/C in A.loc)
-							qdel(C)
-
-				anchored = FALSE
-				target = null
-			mode = BOT_IDLE
-			icon_state = "cleanbot[on]"
->>>>>>> Updated this old code to fork
 	else if(istype(A, /obj/item) || istype(A, /obj/effect/decal/remains))
 		visible_message("<span class='danger'>[src] sprays hydrofluoric acid at [A]!</span>")
 		playsound(src, 'sound/effects/spray2.ogg', 50, 1, -6)

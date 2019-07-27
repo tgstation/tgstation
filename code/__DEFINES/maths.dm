@@ -74,11 +74,7 @@
 #define ISINRANGE(val, min, max) (min <= val && val <= max)
 
 // Same as above, exclusive.
-<<<<<<< HEAD
 #define ISINRANGE_EX(val, min, max) (min < val && val < max)
-=======
-#define ISINRANGE_EX(val, min, max) (min < val && val > max)
->>>>>>> Updated this old code to fork
 
 #define ISINTEGER(x) (round(x) == x)
 

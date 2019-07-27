@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 .job {
   display: block;
   width: 173px;
@@ -15,27 +14,4 @@
 
 .nopositions {
   font-style: italic;
-=======
-.jobs
-{
-	width: 400px;
-	margin: 0 auto;
-}
-
-.jobsColumn
-{
-	float: left;
-	width: 200px;
-	text-align: center;
-}
-
-.commandPosition
-{
-	font-weight: bold;
-}
-
-.otherPosition
-{
-	
->>>>>>> Updated this old code to fork
 }

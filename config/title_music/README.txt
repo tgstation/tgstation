@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 The enclosed /sounds folder holds the sound files used as the title music for the game. OGG and WAV are supported.
-=======
-The enclosed sounds folder holds the sound files used as the title music for the game. OGG and WAV are supported.
->>>>>>> Updated this old code to fork
 
 Using unnecessarily huge sounds can cause client side lag and should be avoided.
 

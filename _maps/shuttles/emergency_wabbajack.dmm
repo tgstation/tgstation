@@ -244,13 +244,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aK" = (
-<<<<<<< HEAD
 /obj/machinery/stasis,
-=======
-/obj/machinery/sleeper{
-	dir = 4
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "aL" = (

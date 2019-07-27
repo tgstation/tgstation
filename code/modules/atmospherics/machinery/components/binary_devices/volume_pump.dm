@@ -19,10 +19,7 @@
 	shift_underlay_only = FALSE
 
 	var/transfer_rate = MAX_TRANSFER_RATE
-<<<<<<< HEAD
 	var/overclocked = FALSE
-=======
->>>>>>> Updated this old code to fork
 
 	var/frequency = 0
 	var/id = null
@@ -31,7 +28,6 @@
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "volumepump"
 
-<<<<<<< HEAD
 /obj/machinery/atmospherics/components/binary/volume_pump/CtrlClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		on = !on
@@ -44,8 +40,6 @@
 		update_icon()
 	return ..()
 
-=======
->>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/components/binary/volume_pump/Destroy()
 	SSradio.remove_object(src,frequency)
 	return ..()
@@ -61,16 +55,11 @@
 	var/datum/gas_mixture/air1 = airs[1]
 	var/datum/gas_mixture/air2 = airs[2]
 
-<<<<<<< HEAD
 // Pump mechanism just won't do anything if the pressure is too high/too low unless you overclock it.
-=======
-// Pump mechanism just won't do anything if the pressure is too high/too low
->>>>>>> Updated this old code to fork
 
 	var/input_starting_pressure = air1.return_pressure()
 	var/output_starting_pressure = air2.return_pressure()
 
-<<<<<<< HEAD
 	if((input_starting_pressure < 0.01) || ((output_starting_pressure > 9000))&&!overclocked)
 		return
 
@@ -78,16 +67,10 @@
 		return
 
 
-=======
-	if((input_starting_pressure < 0.01) || (output_starting_pressure > 9000))
-		return
-
->>>>>>> Updated this old code to fork
 	var/transfer_ratio = transfer_rate/air1.volume
 
 	var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
 
-<<<<<<< HEAD
 	if(overclocked)//Some of the gas from the mixture leaks to the environment when overclocked
 		var/turf/open/T = loc
 		if(istype(T))
@@ -95,20 +78,15 @@
 			T.assume_air(leaked)
 			T.air_update_turf()
 
-=======
->>>>>>> Updated this old code to fork
 	air2.merge(removed)
 
 	update_parents()
 
-<<<<<<< HEAD
 /obj/machinery/atmospherics/components/binary/volume_pump/examine(mob/user)
 	. = ..()
 	if(overclocked)
 		. += "Its warning light is on[on ? " and it's spewing gas!" : "."]"
 
-=======
->>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/components/binary/volume_pump/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
@@ -208,7 +186,6 @@
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
 
-<<<<<<< HEAD
 /obj/machinery/atmospherics/components/binary/volume_pump/multitool_act(mob/living/user, obj/item/I)
 	if(!overclocked)
 		overclocked = TRUE
@@ -218,8 +195,6 @@
 		to_chat(user, "The pump quiets down as you turn its limiters back on.")
 	return TRUE
 
-=======
->>>>>>> Updated this old code to fork
 // mapping
 
 /obj/machinery/atmospherics/components/binary/volume_pump/layer1

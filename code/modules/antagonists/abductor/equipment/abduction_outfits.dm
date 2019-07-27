@@ -17,11 +17,7 @@
 		var/obj/item/clothing/suit/armor/abductor/vest/V = locate() in H
 		if(V)
 			console.AddVest(V)
-<<<<<<< HEAD
 			ADD_TRAIT(V, TRAIT_NODROP, ABDUCTOR_VEST_TRAIT)
-=======
-			V.add_trait(TRAIT_NODROP, ABDUCTOR_VEST_TRAIT)
->>>>>>> Updated this old code to fork
 
 		var/obj/item/storage/backpack/B = locate() in H
 		if(B)

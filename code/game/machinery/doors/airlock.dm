@@ -175,11 +175,7 @@
 		limit--
 	while(!FoundDoor && limit)
 	if (!FoundDoor)
-<<<<<<< HEAD
 		log_mapping("[src] at [AREACOORD(src)] failed to find a valid airlock to cyclelink with!")
-=======
-		log_world("### MAP WARNING, [src] at [AREACOORD(src)] failed to find a valid airlock to cyclelink with!")
->>>>>>> Updated this old code to fork
 		return
 	FoundDoor.cyclelinkedairlock = src
 	cyclelinkedairlock = FoundDoor
@@ -630,7 +626,6 @@
 				update_icon(AIRLOCK_CLOSED)
 
 /obj/machinery/door/airlock/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	if(obj_flags & EMAGGED)
 		. += "<span class='warning'>Its access panel is smoking slightly.</span>"
@@ -644,26 +639,10 @@
 		else
 			. += "There's a [note.name] pinned to the front..."
 			. += note.examine(user)
-=======
-	..()
-	if(obj_flags & EMAGGED)
-		to_chat(user, "<span class='warning'>Its access panel is smoking slightly.</span>")
-	if(charge && !panel_open && in_range(user, src))
-		to_chat(user, "<span class='warning'>The maintenance panel seems haphazardly fastened.</span>")
-	if(charge && panel_open)
-		to_chat(user, "<span class='warning'>Something is wired up to the airlock's electronics!</span>")
-	if(note)
-		if(!in_range(user, src))
-			to_chat(user, "There's a [note.name] pinned to the front. You can't read it from here.")
-		else
-			to_chat(user, "There's a [note.name] pinned to the front...")
-			note.examine(user)
->>>>>>> Updated this old code to fork
 
 	if(panel_open)
 		switch(security_level)
 			if(AIRLOCK_SECURITY_NONE)
-<<<<<<< HEAD
 				. += "Its wires are exposed!"
 			if(AIRLOCK_SECURITY_METAL)
 				. += "Its wires are hidden behind a welded metal cover."
@@ -688,32 +667,6 @@
 		. += "<span class='notice'>Ctrl-click [src] to [ locked ? "raise" : "drop"] its bolts.</span>"
 		. += "<span class='notice'>Alt-click [src] to [ secondsElectrified ? "un-electrify" : "permanently electrify"] it.</span>"
 		. += "<span class='notice'>Ctrl-Shift-click [src] to [ emergency ? "disable" : "enable"] emergency access.</span>"
-=======
-				to_chat(user, "Its wires are exposed!")
-			if(AIRLOCK_SECURITY_METAL)
-				to_chat(user, "Its wires are hidden behind a welded metal cover.")
-			if(AIRLOCK_SECURITY_PLASTEEL_I_S)
-				to_chat(user, "There is some shredded plasteel inside.")
-			if(AIRLOCK_SECURITY_PLASTEEL_I)
-				to_chat(user, "Its wires are behind an inner layer of plasteel.")
-			if(AIRLOCK_SECURITY_PLASTEEL_O_S)
-				to_chat(user, "There is some shredded plasteel inside.")
-			if(AIRLOCK_SECURITY_PLASTEEL_O)
-				to_chat(user, "There is a welded plasteel cover hiding its wires.")
-			if(AIRLOCK_SECURITY_PLASTEEL)
-				to_chat(user, "There is a protective grille over its panel.")
-	else if(security_level)
-		if(security_level == AIRLOCK_SECURITY_METAL)
-			to_chat(user, "It looks a bit stronger.")
-		else
-			to_chat(user, "It looks very robust.")
-
-	if(issilicon(user) && (!stat & BROKEN))
-		to_chat(user, "<span class='notice'>Shift-click [src] to [ density ? "open" : "close"] it.</span>")
-		to_chat(user, "<span class='notice'>Ctrl-click [src] to [ locked ? "raise" : "drop"] its bolts.</span>")
-		to_chat(user, "<span class='notice'>Alt-click [src] to [ secondsElectrified ? "un-electrify" : "permanently electrify"] it.</span>")
-		to_chat(user, "<span class='notice'>Ctrl-Shift-click [src] to [ emergency ? "disable" : "enable"] emergency access.</span>")
->>>>>>> Updated this old code to fork
 
 /obj/machinery/door/airlock/attack_ai(mob/user)
 	if(!canAIControl(user))
@@ -797,11 +750,7 @@
 
 	if(ishuman(user) && prob(40) && density)
 		var/mob/living/carbon/human/H = user
-<<<<<<< HEAD
 		if((HAS_TRAIT(H, TRAIT_DUMB)) && Adjacent(user))
-=======
-		if((H.has_trait(TRAIT_DUMB)) && Adjacent(user))
->>>>>>> Updated this old code to fork
 			playsound(src, 'sound/effects/bang.ogg', 25, TRUE)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				H.visible_message("<span class='danger'>[user] headbutts the airlock.</span>", \
@@ -1088,23 +1037,12 @@
 	else if(locked)
 		to_chat(user, "<span class='warning'>The airlock's bolts prevent it from being forced!</span>")
 	else if( !welded && !operating)
-<<<<<<< HEAD
 		if(istype(I, /obj/item/twohanded/fireaxe)) //being fireaxe'd
 			var/obj/item/twohanded/fireaxe/F = I
 			if(!F.wielded)
 				to_chat(user, "<span class='warning'>You need to be wielding the fire axe to do that!</span>")
 				return
 		INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
-=======
-		if(!beingcrowbarred) //being fireaxe'd
-			var/obj/item/twohanded/fireaxe/F = I
-			if(F.wielded)
-				INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
-			else
-				to_chat(user, "<span class='warning'>You need to be wielding the fire axe to do that!</span>")
-		else
-			INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
->>>>>>> Updated this old code to fork
 
 	if(istype(I, /obj/item/crowbar/power))
 		if(isElectrified())
@@ -1464,12 +1402,9 @@
 /obj/machinery/door/airlock/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
-<<<<<<< HEAD
 			if(security_level != AIRLOCK_SECURITY_NONE)
 				to_chat(user, "<span class='notice'>[src]'s reinforcement needs to be removed first.</span>")
 				return FALSE
-=======
->>>>>>> Updated this old code to fork
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 32)
 	return FALSE
 
@@ -1715,15 +1650,9 @@
 	if(!user_allowed(user))
 		return
 	if(welded)
-<<<<<<< HEAD
 		to_chat(user, text("<span class='warning'>The airlock has been welded shut!</span>"))
 	else if(locked)
 		to_chat(user, text("<span class='warning'>The door bolts are down!</span>"))
-=======
-		to_chat(user, text("The airlock has been welded shut!"))
-	else if(locked)
-		to_chat(user, text("The door bolts are down!"))
->>>>>>> Updated this old code to fork
 	else if(!density)
 		close()
 	else

@@ -28,7 +28,6 @@
 		// Handle power damage (oxy)
 		if(aiRestorePowerRoutine)
 			// Lost power
-<<<<<<< HEAD
 			if (!battery)
 				to_chat(src, "<span class='warning'>Your backup battery's output drops below usable levels. It takes only a moment longer for your systems to fail, corrupted and unusable.</span>")
 				adjustOxyLoss(200)
@@ -38,13 +37,6 @@
 			// Gain Power
 			if (battery < 200)
 				battery ++
-=======
-			adjustOxyLoss(1)
-		else
-			// Gain Power
-			if(getOxyLoss())
-				adjustOxyLoss(-1)
->>>>>>> Updated this old code to fork
 
 		if(!lacks_power())
 			var/area/home = get_area(src)

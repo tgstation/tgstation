@@ -44,7 +44,6 @@
 	if(src.rotation_flags & ROTATION_CLOCKWISE)
 		default_rotation_direction = ROTATION_CLOCKWISE
 
-<<<<<<< HEAD
 /datum/component/simple_rotation/proc/add_signals()
 	if(rotation_flags & ROTATION_ALTCLICK)
 		RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/HandRot)
@@ -56,17 +55,6 @@
 	if(rotation_flags & ROTATION_VERBS)
 		var/atom/movable/AM = parent
 		if(rotation_flags & ROTATION_FLIP)
-=======
-	if(src.rotation_flags & ROTATION_ALTCLICK)
-		RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/HandRot)
-		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
-	if(src.rotation_flags & ROTATION_WRENCH)
-		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/WrenchRot)
-
-	if(src.rotation_flags & ROTATION_VERBS)
-		var/atom/movable/AM = parent
-		if(src.rotation_flags & ROTATION_FLIP)
->>>>>>> Updated this old code to fork
 			AM.verbs += /atom/movable/proc/simple_rotate_flip
 		if(src.rotation_flags & ROTATION_CLOCKWISE)
 			AM.verbs += /atom/movable/proc/simple_rotate_clockwise
@@ -80,7 +68,6 @@
 		AM.verbs -= /atom/movable/proc/simple_rotate_clockwise
 		AM.verbs -= /atom/movable/proc/simple_rotate_counterclockwise
 
-<<<<<<< HEAD
 /datum/component/simple_rotation/proc/remove_signals()
 	UnregisterSignal(parent, list(COMSIG_CLICK_ALT, COMSIG_PARENT_EXAMINE, COMSIG_PARENT_ATTACKBY))
 
@@ -105,28 +92,15 @@
 	QDEL_NULL(can_be_rotated)
 	QDEL_NULL(after_rotation)
 	//Signals + verbs removed via UnRegister
-=======
-/datum/component/simple_rotation/Destroy()
-	remove_verbs()
-	QDEL_NULL(can_user_rotate)
-	QDEL_NULL(can_be_rotated)
-	QDEL_NULL(after_rotation)
->>>>>>> Updated this old code to fork
 	. = ..()
 
 /datum/component/simple_rotation/RemoveComponent()
 	remove_verbs()
 	. = ..()
 
-<<<<<<< HEAD
 /datum/component/simple_rotation/proc/ExamineMessage(datum/source, mob/user, list/examine_list)
 	if(rotation_flags & ROTATION_ALTCLICK)
 		examine_list += "<span class='notice'>Alt-click to rotate it clockwise.</span>"
-=======
-/datum/component/simple_rotation/proc/ExamineMessage(datum/source, mob/user)
-	if(rotation_flags & ROTATION_ALTCLICK)
-		to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
->>>>>>> Updated this old code to fork
 
 /datum/component/simple_rotation/proc/HandRot(datum/source, mob/user, rotation = default_rotation_direction)
 	if(!can_be_rotated.Invoke(user, rotation) || !can_user_rotate.Invoke(user, rotation))
@@ -136,14 +110,8 @@
 /datum/component/simple_rotation/proc/WrenchRot(datum/source, obj/item/I, mob/living/user)
 	if(!can_be_rotated.Invoke(user,default_rotation_direction) || !can_user_rotate.Invoke(user,default_rotation_direction))
 		return
-<<<<<<< HEAD
 	BaseRot(user,default_rotation_direction)
 	return COMPONENT_BLOCK_TOOL_ATTACK
-=======
-	if(I.tool_behaviour == TOOL_WRENCH)
-		BaseRot(user,default_rotation_direction)
-		return COMPONENT_NO_AFTERATTACK
->>>>>>> Updated this old code to fork
 
 /datum/component/simple_rotation/proc/BaseRot(mob/user,rotation_type)
 	var/atom/movable/AM = parent
@@ -174,11 +142,7 @@
 	set name = "Rotate Clockwise"
 	set category = "Object"
 	set src in oview(1)
-<<<<<<< HEAD
 	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
-=======
-	GET_COMPONENT(rotcomp,/datum/component/simple_rotation)
->>>>>>> Updated this old code to fork
 	if(rotcomp)
 		rotcomp.HandRot(null,usr,ROTATION_CLOCKWISE)
 
@@ -186,11 +150,7 @@
 	set name = "Rotate Counter-Clockwise"
 	set category = "Object"
 	set src in oview(1)
-<<<<<<< HEAD
 	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
-=======
-	GET_COMPONENT(rotcomp,/datum/component/simple_rotation)
->>>>>>> Updated this old code to fork
 	if(rotcomp)
 		rotcomp.HandRot(null,usr,ROTATION_COUNTERCLOCKWISE)
 
@@ -198,10 +158,6 @@
 	set name = "Flip"
 	set category = "Object"
 	set src in oview(1)
-<<<<<<< HEAD
 	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
-=======
-	GET_COMPONENT(rotcomp,/datum/component/simple_rotation)
->>>>>>> Updated this old code to fork
 	if(rotcomp)
 		rotcomp.HandRot(null,usr,ROTATION_FLIP)

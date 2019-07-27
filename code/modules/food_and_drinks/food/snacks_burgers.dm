@@ -3,22 +3,14 @@
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "hburger"
 	bitesize = 3
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
-=======
-	list_reagents = list("nutriment" = 6, "vitamin" = 1)
->>>>>>> Updated this old code to fork
 	tastes = list("bun" = 4)
 	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/burger/plain
 	name = "burger"
 	desc = "The cornerstone of every nutritious breakfast."
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 1)
-=======
-	bonus_reagents = list("vitamin" = 1)
->>>>>>> Updated this old code to fork
 	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/burger/plain/Initialize()
@@ -39,11 +31,7 @@
 	var/subjectjob = null
 	name = "human burger"
 	desc = "A bloody burger."
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 4)
-=======
-	bonus_reagents = list("vitamin" = 4)
->>>>>>> Updated this old code to fork
 	foodtype = MEAT | GRAIN | GROSS
 
 /obj/item/reagent_containers/food/snacks/burger/human/CheckParts(list/parts_list)
@@ -62,21 +50,13 @@
 /obj/item/reagent_containers/food/snacks/burger/corgi
 	name = "corgi burger"
 	desc = "You monster."
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 1)
-=======
-	bonus_reagents = list("vitamin" = 1)
->>>>>>> Updated this old code to fork
 	foodtype = GRAIN | MEAT | GROSS
 
 /obj/item/reagent_containers/food/snacks/burger/appendix
 	name = "appendix burger"
 	desc = "Tastes like appendicitis."
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
-=======
-	bonus_reagents = list("nutriment" = 6, "vitamin" = 6)
->>>>>>> Updated this old code to fork
 	icon_state = "appendixburger"
 	tastes = list("bun" = 4, "grass" = 2)
 	foodtype = GRAIN | MEAT | GROSS
@@ -85,11 +65,7 @@
 	name = "fillet -o- carp sandwich"
 	desc = "Almost like a carp is yelling somewhere... Give me back that fillet -o- carp, give me that carp."
 	icon_state = "fishburger"
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
-=======
-	bonus_reagents = list("nutriment" = 2, "vitamin" = 3)
->>>>>>> Updated this old code to fork
 	tastes = list("bun" = 4, "fish" = 4)
 	foodtype = GRAIN | MEAT
 
@@ -97,11 +73,7 @@
 	name = "tofu burger"
 	desc = "What.. is that meat?"
 	icon_state = "tofuburger"
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
-=======
-	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
->>>>>>> Updated this old code to fork
 	tastes = list("bun" = 4, "tofu" = 4)
 	foodtype = GRAIN | VEGETABLES
 
@@ -109,13 +81,8 @@
 	name = "roburger"
 	desc = "The lettuce is the only organic component. Beep."
 	icon_state = "roburger"
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/nanomachines = 2, /datum/reagent/consumable/nutriment/vitamin = 5)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/nanomachines = 5, /datum/reagent/consumable/nutriment/vitamin = 1)
-=======
-	bonus_reagents = list("nutriment" = 2, "nanomachines" = 2, "vitamin" = 5)
-	list_reagents = list("nutriment" = 6, "nanomachines" = 5, "vitamin" = 1)
->>>>>>> Updated this old code to fork
 	tastes = list("bun" = 4, "lettuce" = 2, "sludge" = 1)
 	foodtype = GRAIN | TOXIC
 
@@ -124,13 +91,8 @@
 	desc = "This massive patty looks like poison. Beep."
 	icon_state = "roburger"
 	volume = 120
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/nanomachines = 70, /datum/reagent/consumable/nutriment/vitamin = 10)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/nanomachines = 70, /datum/reagent/consumable/nutriment/vitamin = 5)
-=======
-	bonus_reagents = list("nutriment" = 5, "nanomachines" = 70, "vitamin" = 10)
-	list_reagents = list("nutriment" = 6, "nanomachines" = 70, "vitamin" = 5)
->>>>>>> Updated this old code to fork
 	tastes = list("bun" = 4, "lettuce" = 2, "sludge" = 1)
 	foodtype = GRAIN | TOXIC
 
@@ -138,11 +100,7 @@
 	name = "xenoburger"
 	desc = "Smells caustic. Tastes like heresy."
 	icon_state = "xburger"
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 6)
-=======
-	bonus_reagents = list("nutriment" = 2, "vitamin" = 6)
->>>>>>> Updated this old code to fork
 	tastes = list("bun" = 4, "acid" = 4)
 	foodtype = GRAIN | MEAT
 
@@ -150,46 +108,29 @@
 	name = "bearger"
 	desc = "Best served rawr."
 	icon_state = "bearger"
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 6)
-=======
-	bonus_reagents = list("nutriment" = 3, "vitamin" = 6)
->>>>>>> Updated this old code to fork
 	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/burger/clown
 	name = "clown burger"
 	desc = "This tastes funny..."
 	icon_state = "clownburger"
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/consumable/banana = 6)
-=======
-	bonus_reagents = list("nutriment" = 4, "vitamin" = 6, "banana" = 6)
->>>>>>> Updated this old code to fork
 	foodtype = GRAIN | FRUIT
 
 /obj/item/reagent_containers/food/snacks/burger/mime
 	name = "mime burger"
 	desc = "Its taste defies language."
 	icon_state = "mimeburger"
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/consumable/nothing = 6)
-=======
-	bonus_reagents = list("nutriment" = 4, "vitamin" = 6, "nothing" = 6)
->>>>>>> Updated this old code to fork
 	foodtype = GRAIN
 
 /obj/item/reagent_containers/food/snacks/burger/brain
 	name = "brainburger"
 	desc = "A strange looking burger. It looks almost sentient."
 	icon_state = "brainburger"
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/medicine/mannitol = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/medicine/mannitol = 5, /datum/reagent/consumable/nutriment/vitamin = 1)
-=======
-	bonus_reagents = list("nutriment" = 6, "mannitol" = 6, "vitamin" = 5)
-	list_reagents = list("nutriment" = 6, "mannitol" = 5, "vitamin" = 1)
->>>>>>> Updated this old code to fork
 	tastes = list("bun" = 4, "brains" = 2)
 	foodtype = GRAIN | MEAT | GROSS
 
@@ -197,11 +138,7 @@
 	name = "ghost burger"
 	desc = "Too Spooky!"
 	alpha = 125
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 12)
-=======
-	bonus_reagents = list("nutriment" = 5, "vitamin" = 12)
->>>>>>> Updated this old code to fork
 	tastes = list("bun" = 4, "ectoplasm" = 2)
 	foodtype = GRAIN
 
@@ -210,11 +147,7 @@
 	desc = "Perfect for hiding the fact it's burnt to a crisp."
 	icon_state = "cburger"
 	color = "#DA0000FF"
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/red = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
-=======
-	bonus_reagents = list("redcrayonpowder" = 10, "vitamin" = 5)
->>>>>>> Updated this old code to fork
 	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/burger/orange
@@ -222,11 +155,7 @@
 	desc = "Contains 0% juice."
 	icon_state = "cburger"
 	color = "#FF9300FF"
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/orange = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
-=======
-	bonus_reagents = list("orangecrayonpowder" = 10, "vitamin" = 5)
->>>>>>> Updated this old code to fork
 	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/burger/yellow
@@ -234,11 +163,7 @@
 	desc = "Bright to the last bite."
 	icon_state = "cburger"
 	color = "#FFF200FF"
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/yellow = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
-=======
-	bonus_reagents = list("yellowcrayonpowder" = 10, "vitamin" = 5)
->>>>>>> Updated this old code to fork
 	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/burger/green
@@ -246,11 +171,7 @@
 	desc = "It's not tainted meat, it's painted meat!"
 	icon_state = "cburger"
 	color = "#A8E61DFF"
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/green = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
-=======
-	bonus_reagents = list("greencrayonpowder" = 10, "vitamin" = 5)
->>>>>>> Updated this old code to fork
 	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/burger/blue
@@ -258,11 +179,7 @@
 	desc = "Is this blue rare?"
 	icon_state = "cburger"
 	color = "#00B7EFFF"
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/blue = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
-=======
-	bonus_reagents = list("bluecrayonpowder" = 10, "vitamin" = 5)
->>>>>>> Updated this old code to fork
 	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/burger/purple
@@ -270,11 +187,7 @@
 	desc = "Regal and low class at the same time."
 	icon_state = "cburger"
 	color = "#DA00FFFF"
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/purple = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
-=======
-	bonus_reagents = list("purplecrayonpowder" = 10, "vitamin" = 5)
->>>>>>> Updated this old code to fork
 	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/burger/black
@@ -282,11 +195,7 @@
 	desc = "This is overcooked."
 	icon_state = "cburger"
 	color = "#1C1C1C"
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/black = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
-=======
-	bonus_reagents = list("blackcrayonpowder" = 10, "vitamin" = 5)
->>>>>>> Updated this old code to fork
 	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/burger/white
@@ -294,22 +203,14 @@
 	desc = "Delicous Titanium!"
 	icon_state = "cburger"
 	color = "#FFFFFF"
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/white = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
-=======
-	bonus_reagents = list("whitecrayonpowder" = 10, "vitamin" = 5)
->>>>>>> Updated this old code to fork
 	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/burger/spell
 	name = "spell burger"
 	desc = "This is absolutely Ei Nath."
 	icon_state = "spellburger"
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 10)
-=======
-	bonus_reagents = list("nutriment" = 6, "vitamin" = 10)
->>>>>>> Updated this old code to fork
 	tastes = list("bun" = 4, "magic" = 2)
 	foodtype = GRAIN | MEAT
 
@@ -317,13 +218,8 @@
 	name = "big bite burger"
 	desc = "Forget the Big Mac. THIS is the future!"
 	icon_state = "bigbiteburger"
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 6)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 2)
-=======
-	bonus_reagents = list("vitamin" = 6)
-	list_reagents = list("nutriment" = 10, "vitamin" = 2)
->>>>>>> Updated this old code to fork
 	w_class = WEIGHT_CLASS_NORMAL
 	foodtype = GRAIN | MEAT
 
@@ -335,7 +231,6 @@
 	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/burger/jelly/slime
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/toxin/slimejelly = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/toxin/slimejelly = 5, /datum/reagent/consumable/nutriment/vitamin = 1)
 	foodtype = GRAIN | TOXIC
@@ -343,28 +238,14 @@
 /obj/item/reagent_containers/food/snacks/burger/jelly/cherry
 	bonus_reagents = list(/datum/reagent/consumable/cherryjelly = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/cherryjelly = 5, /datum/reagent/consumable/nutriment/vitamin = 1)
-=======
-	bonus_reagents = list("slimejelly" = 5, "vitamin" = 5)
-	list_reagents = list("nutriment" = 6, "slimejelly" = 5, "vitamin" = 1)
-	foodtype = GRAIN | TOXIC
-
-/obj/item/reagent_containers/food/snacks/burger/jelly/cherry
-	bonus_reagents = list("cherryjelly" = 5, "vitamin" = 5)
-	list_reagents = list("nutriment" = 6, "cherryjelly" = 5, "vitamin" = 1)
->>>>>>> Updated this old code to fork
 	foodtype = GRAIN | FRUIT
 
 /obj/item/reagent_containers/food/snacks/burger/superbite
 	name = "super bite burger"
 	desc = "This is a mountain of a burger. FOOD!"
 	icon_state = "superbiteburger"
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 10)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 40, /datum/reagent/consumable/nutriment/vitamin = 5)
-=======
-	bonus_reagents = list("vitamin" = 10)
-	list_reagents = list("nutriment" = 40, "vitamin" = 5)
->>>>>>> Updated this old code to fork
 	w_class = WEIGHT_CLASS_NORMAL
 	bitesize = 7
 	volume = 100
@@ -375,46 +256,29 @@
 	name = "five alarm burger"
 	desc = "HOT! HOT!"
 	icon_state = "fivealarmburger"
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 5)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/capsaicin = 5, /datum/reagent/consumable/condensedcapsaicin = 5, /datum/reagent/consumable/nutriment/vitamin = 1)
-=======
-	bonus_reagents = list("nutriment" = 2, "vitamin" = 5)
-	list_reagents = list("nutriment" = 6, "capsaicin" = 5, "condensedcapsaicin" = 5, "vitamin" = 1)
->>>>>>> Updated this old code to fork
 	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/burger/rat
 	name = "rat burger"
 	desc = "Pretty much what you'd expect..."
 	icon_state = "ratburger"
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
-=======
-	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
->>>>>>> Updated this old code to fork
 	foodtype = GRAIN | MEAT | GROSS
 
 /obj/item/reagent_containers/food/snacks/burger/baseball
 	name = "home run baseball burger"
 	desc = "It's still warm. The steam coming off of it looks like baseball."
 	icon_state = "baseball"
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
-=======
-	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
->>>>>>> Updated this old code to fork
 	foodtype = GRAIN | GROSS
 
 /obj/item/reagent_containers/food/snacks/burger/baconburger
 	name = "bacon burger"
 	desc = "The perfect combination of all things American."
 	icon_state = "baconburger"
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 1)
-=======
-	bonus_reagents = list("nutriment" = 8, "vitamin" = 1)
->>>>>>> Updated this old code to fork
 	tastes = list("bun" = 4, "bacon" = 2)
 	foodtype = GRAIN | MEAT
 
@@ -422,10 +286,6 @@
 	name = "empowered burger"
 	desc = "It's shockingly good, if you live off of electricity that is."
 	icon_state = "empoweredburger"
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/liquidelectricity = 5)
-=======
-	list_reagents = list("nutriment" = 8, "liquidelectricity" = 5)
->>>>>>> Updated this old code to fork
 	tastes = list("bun" = 2, "pure electricity" = 4)
 	foodtype = GRAIN | TOXIC

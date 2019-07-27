@@ -19,11 +19,7 @@
 
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
-<<<<<<< HEAD
 	W.update_label()
-=======
-	W.update_label(W.registered_name, W.assignment)
->>>>>>> Updated this old code to fork
 
 /datum/outfit/ert/commander
 	name = "ERT Commander"
@@ -177,11 +173,7 @@
 	back = /obj/item/storage/backpack/satchel
 	r_pocket = /obj/item/pda/heads
 	l_hand = /obj/item/clipboard
-<<<<<<< HEAD
 	id = /obj/item/card/id/centcom
-=======
-	id = /obj/item/card/id
->>>>>>> Updated this old code to fork
 
 /datum/outfit/centcom_official/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
@@ -193,10 +185,6 @@
 	pda.update_label()
 
 	var/obj/item/card/id/W = H.wear_id
-<<<<<<< HEAD
-=======
-	W.icon_state = "centcom"
->>>>>>> Updated this old code to fork
 	W.access = get_centcom_access("CentCom Official")
 	W.access += ACCESS_WEAPONS
 	W.assignment = "CentCom Official"
@@ -272,7 +260,6 @@
 		/obj/item/clothing/mask/gas/sechailer=1,
 		/obj/item/gun/energy/e_gun=1,
 		)
-<<<<<<< HEAD
 
 /datum/outfit/ert/janitor
 	name = "ERT Janitor"
@@ -312,5 +299,3 @@
 		/obj/item/clothing/mask/gas/sechailer=1,\
 		/obj/item/grenade/clusterbuster/cleaner=3)
 
-=======
->>>>>>> Updated this old code to fork

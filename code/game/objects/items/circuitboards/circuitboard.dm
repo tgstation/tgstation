@@ -10,15 +10,9 @@
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-<<<<<<< HEAD
 	materials = list(/datum/material/glass=1000)
 	w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/silicon = 20)
-=======
-	materials = list(MAT_GLASS=1000)
-	w_class = WEIGHT_CLASS_SMALL
-	grind_results = list("silicon" = 20)
->>>>>>> Updated this old code to fork
 	var/build_path = null
 
 /obj/item/circuitboard/proc/apply_default_parts(obj/machinery/M)
@@ -62,11 +56,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 	M.RefreshParts()
 
 /obj/item/circuitboard/machine/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
-=======
-	..()
->>>>>>> Updated this old code to fork
 	if(LAZYLEN(req_components))
 		var/list/nice_list = list()
 		for(var/B in req_components)
@@ -74,8 +64,4 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 			if(!ispath(A))
 				continue
 			nice_list += list("[req_components[A]] [initial(A.name)]")
-<<<<<<< HEAD
 		. += "<span class='notice'>Required components: [english_list(nice_list)].</span>"
-=======
-		to_chat(user,"<span class='notice'>Required components: [english_list(nice_list)].</span>")
->>>>>>> Updated this old code to fork

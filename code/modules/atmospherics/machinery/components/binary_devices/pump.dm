@@ -27,7 +27,6 @@
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "pump"
 
-<<<<<<< HEAD
 /obj/machinery/atmospherics/components/binary/pump/CtrlClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		on = !on
@@ -40,8 +39,6 @@
 		update_icon()
 	return ..()
 
-=======
->>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/components/binary/pump/Destroy()
 	SSradio.remove_object(src,frequency)
 	if(radio_connection)

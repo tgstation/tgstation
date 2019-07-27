@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 PROCESSING_SUBSYSTEM_DEF(dcs)
 	name = "Datum Component System"
 	flags = SS_NO_INIT
@@ -15,11 +14,3 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 	if(!ispath(eletype, /datum/element))
 		CRASH("Attempted to instantiate [eletype] as a /datum/element")
 	. = elements_by_type[eletype] = new eletype
-=======
-SUBSYSTEM_DEF(dcs)
-	name = "Datum Component System"
-	flags = SS_NO_INIT | SS_NO_FIRE
-
-/datum/controller/subsystem/dcs/Recover()
-	comp_lookup = SSdcs.comp_lookup
->>>>>>> Updated this old code to fork

@@ -18,11 +18,7 @@
 
 /obj/effect/baseturf_helper/LateInitialize()
 	if(!baseturf_to_replace)
-<<<<<<< HEAD
 		baseturf_to_replace = typecacheof(list(/turf/open/space,/turf/baseturf_bottom))
-=======
-		baseturf_to_replace = typecacheof(/turf/open/space)
->>>>>>> Updated this old code to fork
 	else if(!length(baseturf_to_replace))
 		baseturf_to_replace = list(baseturf_to_replace = TRUE)
 	else if(baseturf_to_replace[baseturf_to_replace[1]] != TRUE) // It's not associative
@@ -108,19 +104,11 @@
 /obj/effect/mapping_helpers/airlock/Initialize(mapload)
 	. = ..()
 	if(!mapload)
-<<<<<<< HEAD
 		log_mapping("[src] spawned outside of mapload!")
 		return
 	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
 	if(!airlock)
 		log_mapping("[src] failed to find an airlock at [AREACOORD(src)]")
-=======
-		log_world("### MAP WARNING, [src] spawned outside of mapload!")
-		return
-	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
-	if(!airlock)
-		log_world("### MAP WARNING, [src] failed to find an airlock at [AREACOORD(src)]")
->>>>>>> Updated this old code to fork
 	else
 		payload(airlock)
 
@@ -133,11 +121,7 @@
 
 /obj/effect/mapping_helpers/airlock/cyclelink_helper/payload(obj/machinery/door/airlock/airlock)
 	if(airlock.cyclelinkeddir)
-<<<<<<< HEAD
 		log_mapping("[src] at [AREACOORD(src)] tried to set [airlock] cyclelinkeddir, but it's already set!")
-=======
-		log_world("### MAP WARNING, [src] at [AREACOORD(src)] tried to set [airlock] cyclelinkeddir, but it's already set!")
->>>>>>> Updated this old code to fork
 	else
 		airlock.cyclelinkeddir = dir
 
@@ -148,11 +132,7 @@
 
 /obj/effect/mapping_helpers/airlock/locked/payload(obj/machinery/door/airlock/airlock)
 	if(airlock.locked)
-<<<<<<< HEAD
 		log_mapping("[src] at [AREACOORD(src)] tried to bolt [airlock] but it's already locked!")
-=======
-		log_world("### MAP WARNING, [src] at [AREACOORD(src)] tried to bolt [airlock] but it's already locked!")
->>>>>>> Updated this old code to fork
 	else
 		airlock.locked = TRUE
 
@@ -170,11 +150,7 @@
 
 /obj/effect/mapping_helpers/airlock/abandoned/payload(obj/machinery/door/airlock/airlock)
 	if(airlock.abandoned)
-<<<<<<< HEAD
 		log_mapping("[src] at [AREACOORD(src)] tried to make [airlock] abandoned but it's already abandoned!")
-=======
-		log_world("### MAP WARNING, [src] at [AREACOORD(src)] tried to make [airlock] abandoned but it's already abandoned!")
->>>>>>> Updated this old code to fork
 	else
 		airlock.abandoned = TRUE
 
@@ -228,7 +204,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	if(!ispath(disease_type,/datum/disease))
 		CRASH("Wrong disease type passed in.")
 	var/datum/disease/D = new disease_type()
-<<<<<<< HEAD
 	return list(component_type,D)
 
 /obj/effect/mapping_helpers/dead_body_placer
@@ -322,6 +297,3 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/ianbirthday/admin/LateInitialize()
 	birthday()
 	qdel(src)
-=======
-	return list(component_type,D)
->>>>>>> Updated this old code to fork

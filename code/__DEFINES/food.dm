@@ -11,17 +11,11 @@
 #define GROSS 		(1<<10)
 #define TOXIC 		(1<<11)
 #define PINEAPPLE	(1<<12)
-<<<<<<< HEAD
 #define BREAKFAST	(1<<13)
 #define CLOTH 		(1<<14)
-=======
->>>>>>> Updated this old code to fork
 
 #define DRINK_NICE	1
 #define DRINK_GOOD	2
 #define DRINK_VERYGOOD	3
 #define DRINK_FANTASTIC	4
-<<<<<<< HEAD
 #define FOOD_AMAZING 5
-=======
->>>>>>> Updated this old code to fork

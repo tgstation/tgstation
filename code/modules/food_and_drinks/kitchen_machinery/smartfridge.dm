@@ -15,10 +15,7 @@
 	var/max_n_of_items = 1500
 	var/allow_ai_retrieve = FALSE
 	var/list/initial_contents
-<<<<<<< HEAD
 	var/visible_contents = TRUE
-=======
->>>>>>> Updated this old code to fork
 
 /obj/machinery/smartfridge/Initialize()
 	. = ..()
@@ -37,22 +34,15 @@
 		max_n_of_items = 1500 * B.rating
 
 /obj/machinery/smartfridge/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.</span>"
-=======
-	..()
-	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.<span>")
->>>>>>> Updated this old code to fork
 
 /obj/machinery/smartfridge/power_change()
 	..()
 	update_icon()
 
 /obj/machinery/smartfridge/update_icon()
-<<<<<<< HEAD
 	if(!stat)
 		if (visible_contents)
 			switch(contents.len)
@@ -68,13 +58,6 @@
 			icon_state = "[initial(icon_state)]"
 	else
 		icon_state = "[initial(icon_state)]-off"
-=======
-	var/startstate = initial(icon_state)
-	if(!stat)
-		icon_state = startstate
-	else
-		icon_state = "[startstate]-off"
->>>>>>> Updated this old code to fork
 
 
 
@@ -83,15 +66,11 @@
 ********************/
 
 /obj/machinery/smartfridge/attackby(obj/item/O, mob/user, params)
-<<<<<<< HEAD
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, O))
 		cut_overlays()
 		if(panel_open)
 			add_overlay("[initial(icon_state)]-panel")
 		updateUsrDialog()
-=======
-	if(default_deconstruction_screwdriver(user, "smartfridge_open", "smartfridge", O))
->>>>>>> Updated this old code to fork
 		return
 
 	if(default_pry_open(O))
@@ -115,11 +94,8 @@
 			load(O)
 			user.visible_message("[user] has added \the [O] to \the [src].", "<span class='notice'>You add \the [O] to \the [src].</span>")
 			updateUsrDialog()
-<<<<<<< HEAD
 			if (visible_contents)
 				update_icon()
-=======
->>>>>>> Updated this old code to fork
 			return TRUE
 
 		if(istype(O, /obj/item/storage/bag))
@@ -142,11 +118,8 @@
 										 "<span class='notice'>You load \the [src] with \the [O].</span>")
 				if(O.contents.len > 0)
 					to_chat(user, "<span class='warning'>Some items are refused.</span>")
-<<<<<<< HEAD
 				if (visible_contents)
 					update_icon()
-=======
->>>>>>> Updated this old code to fork
 				return TRUE
 			else
 				to_chat(user, "<span class='warning'>There is nothing in [O] to put in [src]!</span>")
@@ -237,11 +210,8 @@
 							O.forceMove(drop_location())
 							adjust_item_drop_location(O)
 						break
-<<<<<<< HEAD
 				if (visible_contents)
 					update_icon()
-=======
->>>>>>> Updated this old code to fork
 				return TRUE
 
 			for(var/obj/item/O in src)
@@ -251,11 +221,8 @@
 					O.forceMove(drop_location())
 					adjust_item_drop_location(O)
 					desired--
-<<<<<<< HEAD
 			if (visible_contents)
 				update_icon()
-=======
->>>>>>> Updated this old code to fork
 			return TRUE
 	return FALSE
 
@@ -271,10 +238,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 200
-<<<<<<< HEAD
 	visible_contents = FALSE
-=======
->>>>>>> Updated this old code to fork
 	var/drying = FALSE
 
 /obj/machinery/smartfridge/drying_rack/Initialize()
@@ -431,7 +395,6 @@
 	desc = "A refrigerated storage unit for medicine storage."
 
 /obj/machinery/smartfridge/chemistry/accept_check(obj/item/O)
-<<<<<<< HEAD
 	var/static/list/chemfridge_typecache = typecacheof(list(
 					/obj/item/reagent_containers/syringe,
 					/obj/item/reagent_containers/glass/bottle,
@@ -441,8 +404,6 @@
 					/obj/item/reagent_containers/chem_pack
 	))
 
-=======
->>>>>>> Updated this old code to fork
 	if(istype(O, /obj/item/storage/pill_bottle))
 		if(O.contents.len)
 			for(var/obj/item/I in O)
@@ -456,11 +417,7 @@
 		return TRUE
 	if(!O.reagents || !O.reagents.reagent_list.len) // other empty containers not accepted
 		return FALSE
-<<<<<<< HEAD
 	if(is_type_in_typecache(O, chemfridge_typecache))
-=======
-	if(istype(O, /obj/item/reagent_containers/syringe) || istype(O, /obj/item/reagent_containers/glass/bottle) || istype(O, /obj/item/reagent_containers/glass/beaker) || istype(O, /obj/item/reagent_containers/spray) || istype(O, /obj/item/reagent_containers/medspray))
->>>>>>> Updated this old code to fork
 		return TRUE
 	return FALSE
 
@@ -496,10 +453,7 @@
 	desc = "A machine capable of storing a variety of disks. Denoted by most as the DSU (disk storage unit)."
 	icon_state = "disktoaster"
 	pass_flags = PASSTABLE
-<<<<<<< HEAD
 	visible_contents = FALSE
-=======
->>>>>>> Updated this old code to fork
 
 /obj/machinery/smartfridge/disks/accept_check(obj/item/O)
 	if(istype(O, /obj/item/disk/))

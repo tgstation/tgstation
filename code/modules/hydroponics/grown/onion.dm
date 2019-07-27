@@ -13,11 +13,7 @@
 	growthstages = 3
 	weed_chance = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
-<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
-=======
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
->>>>>>> Updated this old code to fork
 	mutatelist = list(/obj/item/seeds/onion/red)
 
 /obj/item/reagent_containers/food/snacks/grown/onion
@@ -40,11 +36,7 @@
 	plantname = "Red Onion Sprouts"
 	weed_chance = 1
 	product = /obj/item/reagent_containers/food/snacks/grown/onion/red
-<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/tearjuice = 0.05)
-=======
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1, "tearjuice" = 0.05)
->>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/snacks/grown/onion/red
 	seed = /obj/item/seeds/onion/red
@@ -69,11 +61,7 @@
 	name = "onion slices"
 	desc = "Rings, not for wearing."
 	icon_state = "onionslice"
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
-=======
-	list_reagents = list("nutriment" = 5, "vitamin" = 2)
->>>>>>> Updated this old code to fork
 	filling_color = "#C0C9A0"
 	gender = PLURAL
 	cooked_type = /obj/item/reagent_containers/food/snacks/onionrings
@@ -83,8 +71,4 @@
 	desc = "They shine like exceptionally low quality amethyst."
 	icon_state = "onionslice_red"
 	filling_color = "#C29ACF"
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/tearjuice = 2.5)
-=======
-	list_reagents = list("nutriment" = 5, "vitamin" = 2, "tearjuice" = 2.5)
->>>>>>> Updated this old code to fork

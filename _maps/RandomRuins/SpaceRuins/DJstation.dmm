@@ -54,17 +54,10 @@
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "an" = (
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
->>>>>>> Updated this old code to fork
 /obj/machinery/power/smes/magical{
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit.";
 	name = "power storage unit"
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
@@ -73,51 +66,19 @@
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "ap" = (
-=======
-/turf/open/floor/plating,
-/area/ruin/space/djstation)
-"ao" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating,
-/area/ruin/space/djstation)
-"ap" = (
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
->>>>>>> Updated this old code to fork
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "aq" = (
-=======
-/turf/open/floor/plating,
-/area/ruin/space/djstation)
-"aq" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/item/storage/box/lights/mixed,
 /obj/structure/sign/warning/electricshock{
 	pixel_y = -32
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/turf/open/floor/plating,
-/area/ruin/space/djstation)
-"ar" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "as" = (
@@ -213,15 +174,8 @@
 "aH" = (
 /obj/structure/table,
 /obj/item/radio/intercom{
-<<<<<<< HEAD
 	dir = 8;
 	freerange = 1;
-=======
-	broadcasting = 0;
-	dir = 8;
-	freerange = 1;
-	listening = 1;
->>>>>>> Updated this old code to fork
 	name = "Pirate Radio Listening Channel"
 	},
 /turf/open/floor/plasteel/cafeteria,
@@ -624,11 +578,7 @@ ah
 aj
 an
 ao
-<<<<<<< HEAD
 ao
-=======
-ar
->>>>>>> Updated this old code to fork
 at
 aw
 aw

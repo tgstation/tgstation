@@ -3,11 +3,7 @@
 	var/minimum_temperature_difference = 20
 	var/thermal_conductivity = WINDOW_HEAT_TRANSFER_COEFFICIENT
 	color = "#404040"
-<<<<<<< HEAD
 	buckle_lying = -1
-=======
-	buckle_lying = 1
->>>>>>> Updated this old code to fork
 	var/icon_temperature = T20C //stop small changes in temperature causing icon refresh
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 

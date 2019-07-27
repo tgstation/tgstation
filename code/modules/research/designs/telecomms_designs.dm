@@ -49,7 +49,6 @@
 	build_path = /obj/item/circuitboard/machine/telecomms/server
 	category = list("Subspace Telecomms")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
-<<<<<<< HEAD
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/board/telecomms_messaging
@@ -59,8 +58,6 @@
 	build_path = /obj/item/circuitboard/machine/telecomms/message_server
 	category = list("Subspace Telecomms")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
-=======
->>>>>>> Updated this old code to fork
 
 /datum/design/board/subspace_broadcaster
 	name = "Machine Design (Subspace Broadcaster)"

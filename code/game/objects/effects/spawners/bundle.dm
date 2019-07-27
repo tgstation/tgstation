@@ -133,11 +133,7 @@
 /obj/effect/spawner/bundle/costume/holiday_priest
 	name = "holiday priest costume spawner"
 	items = list(
-<<<<<<< HEAD
 		/obj/item/clothing/suit/chaplainsuit/holidaypriest)
-=======
-		/obj/item/clothing/suit/holidaypriest)
->>>>>>> Updated this old code to fork
 
 /obj/effect/spawner/bundle/costume/marisawizard
 	name = "marisa wizard costume spawner"

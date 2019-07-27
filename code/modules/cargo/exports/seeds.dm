@@ -14,15 +14,9 @@
 		return 0
 	return ..() * S.rarity // That's right, no bonus for potency. Send a crappy sample first to "show improvement" later.
 
-<<<<<<< HEAD
 /datum/export/seed/sell_object(obj/O, datum/export_report/report, dry_run, allowed_categories, apply_elastic)
 	. = ..()
 	if(. && !dry_run)
-=======
-/datum/export/seed/sell_object(obj/O)
-	. = ..()
-	if(.)
->>>>>>> Updated this old code to fork
 		var/obj/item/seeds/S = O
 		discoveredPlants[S.type] = S.potency
 

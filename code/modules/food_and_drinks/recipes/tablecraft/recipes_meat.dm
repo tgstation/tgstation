@@ -156,10 +156,7 @@
 	name = "Raw Khinkali"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/doughslice = 1,
-<<<<<<< HEAD
 		/obj/item/reagent_containers/food/snacks/grown/garlic = 1,
-=======
->>>>>>> Updated this old code to fork
 		/obj/item/reagent_containers/food/snacks/faggot = 1
 	)
 	result =  /obj/item/reagent_containers/food/snacks/rawkhinkali

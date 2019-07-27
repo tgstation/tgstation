@@ -2,28 +2,17 @@
 	name = "health sensor"
 	desc = "Used for scanning and monitoring health."
 	icon_state = "health"
-<<<<<<< HEAD
 	materials = list(/datum/material/iron=800, /datum/material/glass=200)
 	attachable = TRUE
-=======
-	materials = list(MAT_METAL=800, MAT_GLASS=200)
-	attachable = TRUE
-	secured = FALSE
->>>>>>> Updated this old code to fork
 
 	var/scanning = FALSE
 	var/health_scan
 	var/alarm_health = HEALTH_THRESHOLD_CRIT
 
 /obj/item/assembly/health/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	. += "Use it in hand to turn it off/on and Alt-click to swap between \"detect death\" mode and \"detect critical state\" mode."
 	. += "[src.scanning ? "The sensor is on and you can see [health_scan] displayed on the screen" : "The sensor is off"]."
-=======
-	..()
-	to_chat(user, "<span class='notice'>Use a multitool to swap between \"detect death\" mode and \"detect critical state\" mode.</span>")
->>>>>>> Updated this old code to fork
 
 /obj/item/assembly/health/activate()
 	if(!..())
@@ -41,21 +30,13 @@
 	update_icon()
 	return secured
 
-<<<<<<< HEAD
 /obj/item/assembly/health/AltClick(mob/living/user)
-=======
-/obj/item/assembly/health/multitool_act(mob/living/user, obj/item/I)
->>>>>>> Updated this old code to fork
 	if(alarm_health == HEALTH_THRESHOLD_CRIT)
 		alarm_health = HEALTH_THRESHOLD_DEAD
 		to_chat(user, "<span class='notice'>You toggle [src] to \"detect death\" mode.</span>")
 	else
 		alarm_health = HEALTH_THRESHOLD_CRIT
 		to_chat(user, "<span class='notice'>You toggle [src] to \"detect critical state\" mode.</span>")
-<<<<<<< HEAD
-=======
-	return TRUE
->>>>>>> Updated this old code to fork
 
 /obj/item/assembly/health/process()
 	if(!scanning || !secured)
@@ -64,10 +45,6 @@
 	var/atom/A = src
 	if(connected && connected.holder)
 		A = connected.holder
-<<<<<<< HEAD
-=======
-
->>>>>>> Updated this old code to fork
 	for(A, A && !ismob(A), A=A.loc);
 	// like get_turf(), but for mobs.
 	var/mob/living/M = A
@@ -92,43 +69,7 @@
 		STOP_PROCESSING(SSobj, src)
 	return
 
-<<<<<<< HEAD
 /obj/item/assembly/health/attack_self(mob/user)
 	. = ..()
 	to_chat(user, "<span class='notice'>You toggle [src] [src.scanning ? "off" : "on"].</span>")
 	toggle_scan()
-=======
-/obj/item/assembly/health/ui_interact(mob/user as mob)//TODO: Change this to the wires thingy
-	. = ..()
-	if(!secured)
-		user.show_message("<span class='warning'>The [name] is unsecured!</span>")
-		return FALSE
-	var/dat = "<TT><B>Health Sensor</B></TT>"
-	dat += "<BR><A href='?src=[REF(src)];scanning=1'>[scanning?"On":"Off"]</A>"
-	if(scanning && health_scan)
-		dat += "<BR>Health: [health_scan]"
-	user << browse(dat, "window=hscan")
-	onclose(user, "hscan")
-
-/obj/item/assembly/health/Topic(href, href_list)
-	..()
-	if(!ismob(usr))
-		return
-
-	var/mob/user = usr
-
-	if(!user.canUseTopic(src))
-		usr << browse(null, "window=hscan")
-		onclose(usr, "hscan")
-		return
-
-	if(href_list["scanning"])
-		toggle_scan()
-
-	if(href_list["close"])
-		usr << browse(null, "window=hscan")
-		return
-
-	attack_self(user)
-	return
->>>>>>> Updated this old code to fork

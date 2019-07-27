@@ -49,7 +49,6 @@
 	if(!ui || ui.status != UI_INTERACTIVE)
 		return 1 // If UI is not interactive or usr calling Topic is not the UI user, bail.
 
-<<<<<<< HEAD
  /**
   * public
   *
@@ -64,8 +63,6 @@
  **/
 /datum/proc/ui_base_html(html)
 	return html
-=======
->>>>>>> Updated this old code to fork
 
  /**
   * private

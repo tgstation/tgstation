@@ -32,11 +32,7 @@
 
 	//Vars that control when the pilot uses their mecha's abilities (if the mecha has that ability)
 	var/threat_use_mecha_smoke = 5 //5 mobs is enough to engage crowd control
-<<<<<<< HEAD
 	var/defense_mode_chance = 35 //Chance to engage Defense mode when damaged
-=======
-	var/defence_mode_chance = 35 //Chance to engage Defence mode when damaged
->>>>>>> Updated this old code to fork
 	var/smoke_chance = 20 //Chance to deploy smoke for crowd control
 	var/retreat_chance = 40 //Chance to run away
 
@@ -230,7 +226,6 @@
 				if(mecha.smoke_action && mecha.smoke_action.owner && mecha.smoke)
 					mecha.smoke_action.Activate()
 
-<<<<<<< HEAD
 			//Heavy damage - Defense Power or Retreat
 			if(mecha.obj_integrity < mecha.max_integrity*0.25)
 				if(prob(defense_mode_chance))
@@ -238,25 +233,12 @@
 						mecha.leg_overload_mode = 0
 						mecha.defense_action.Activate(TRUE)
 						addtimer(CALLBACK(mecha.defense_action, /datum/action/innate/mecha/mech_defense_mode.proc/Activate, FALSE), 100) //10 seconds of defense, then toggle off
-=======
-			//Heavy damage - Defence Power or Retreat
-			if(mecha.obj_integrity < mecha.max_integrity*0.25)
-				if(prob(defence_mode_chance))
-					if(mecha.defense_action && mecha.defense_action.owner && !mecha.defence_mode)
-						mecha.leg_overload_mode = 0
-						mecha.defense_action.Activate(TRUE)
-						addtimer(CALLBACK(mecha.defense_action, /datum/action/innate/mecha/mech_defence_mode.proc/Activate, FALSE), 100) //10 seconds of defence, then toggle off
->>>>>>> Updated this old code to fork
 
 				else if(prob(retreat_chance))
 					//Speed boost if possible
 					if(mecha.overload_action && mecha.overload_action.owner && !mecha.leg_overload_mode)
 						mecha.overload_action.Activate(TRUE)
-<<<<<<< HEAD
 						addtimer(CALLBACK(mecha.overload_action, /datum/action/innate/mecha/mech_defense_mode.proc/Activate, FALSE), 100) //10 seconds of speeeeed, then toggle off
-=======
-						addtimer(CALLBACK(mecha.overload_action, /datum/action/innate/mecha/mech_defence_mode.proc/Activate, FALSE), 100) //10 seconds of speeeeed, then toggle off
->>>>>>> Updated this old code to fork
 
 					retreat_distance = 50
 					spawn(100)

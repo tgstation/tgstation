@@ -35,10 +35,6 @@
 		return TRUE
 	if(ismob(mover))
 		var/mob/M = mover
-<<<<<<< HEAD
 		if(M.anti_magic_check(chargecost = 0))
-=======
-		if(M.anti_magic_check(major = FALSE))
->>>>>>> Updated this old code to fork
 			return TRUE
 	return FALSE

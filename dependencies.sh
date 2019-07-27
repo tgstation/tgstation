@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 #!/bin/bash
-=======
-#!/bin/sh
->>>>>>> Updated this old code to fork
 
 #Project dependencies file
 #Final authority on what's required to fully build the project
@@ -22,12 +18,9 @@ export BSQL_VERSION=v1.4.0.0
 
 #node version
 export NODE_VERSION=8
-<<<<<<< HEAD
 
 # PHP version
 export PHP_VERSION=5.6
 
 # SpacemanDMM git tag
 export SPACEMAN_DMM_VERSION=suite-1.0
-=======
->>>>>>> Updated this old code to fork

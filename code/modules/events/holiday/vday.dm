@@ -78,10 +78,7 @@
 			name = "valentine - To: [recipient] From: [sender]"
 
 /obj/item/valentine/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
-=======
->>>>>>> Updated this old code to fork
 	if(in_range(user, src) || isobserver(user))
 		if( !(ishuman(user) || isobserver(user) || issilicon(user)) )
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(message)]</BODY></HTML>", "window=[name]")
@@ -90,11 +87,7 @@
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[message]</BODY></HTML>", "window=[name]")
 			onclose(user, "[name]")
 	else
-<<<<<<< HEAD
 		. += "<span class='notice'>It is too far away.</span>"
-=======
-		to_chat(user, "<span class='notice'>It is too far away.</span>")
->>>>>>> Updated this old code to fork
 
 /obj/item/valentine/attack_self(mob/user)
 	user.examinate(src)
@@ -104,11 +97,7 @@
 	icon = 'icons/obj/holiday_misc.dmi'
 	icon_state = "candyheart"
 	desc = "A heart-shaped candy that reads: "
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/sugar = 2)
-=======
-	list_reagents = list("sugar" = 2)
->>>>>>> Updated this old code to fork
 	junkiness = 5
 
 /obj/item/reagent_containers/food/snacks/candyheart/Initialize()

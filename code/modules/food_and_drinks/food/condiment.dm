@@ -13,7 +13,6 @@
 	reagent_flags = OPENCONTAINER
 	possible_transfer_amounts = list(1, 5, 10, 15, 20, 25, 30, 50)
 	volume = 50
-<<<<<<< HEAD
 	//Possible_states has the reagent type as key and a list of, in order, the icon_state, the name and the desc as values. Used in the on_reagent_change(changetype) to change names, descs and sprites.
 	var/list/possible_states = list(
 	 /datum/reagent/consumable/ketchup = list("ketchup", "ketchup bottle", "You feel more American already."),
@@ -33,22 +32,6 @@
 	. = ..()
 	possible_states = typelist("possible_states", possible_states)
 
-=======
-	//Possible_states has the reagent id as key and a list of, in order, the icon_state, the name and the desc as values. Used in the on_reagent_change(changetype) to change names, descs and sprites.
-	var/list/possible_states = list(
-	 "ketchup" = list("ketchup", "ketchup bottle", "You feel more American already."),
-	 "capsaicin" = list("hotsauce", "hotsauce bottle", "You can almost TASTE the stomach ulcers now!"),
-	 "enzyme" = list("enzyme", "universal enzyme bottle", "Used in cooking various dishes"),
-	 "soysauce" = list("soysauce", "soy sauce bottle", "A salty soy-based flavoring"),
-	 "frostoil" = list("coldsauce", "coldsauce bottle", "Leaves the tongue numb in its passage"),
-	 "sodiumchloride" = list("saltshakersmall", "salt shaker", "Salt. From space oceans, presumably"),
-	 "blackpepper" = list("peppermillsmall", "pepper mill", "Often used to flavor food or make people sneeze"),
-	 "cornoil" = list("oliveoil", "corn oil bottle", "A delicious oil used in cooking. Made from corn"),
-	 "sugar" = list("emptycondiment", "sugar bottle", "Tasty spacey sugar!"),
-	 "mayonnaise" = list("mayonnaise", "mayonnaise jar", "An oily condiment made from egg yolks."))
-	var/originalname = "condiment" //Can't use initial(name) for this. This stores the name set by condimasters.
-
->>>>>>> Updated this old code to fork
 /obj/item/reagent_containers/food/condiment/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is trying to eat the entire [src]! It looks like [user.p_they()] forgot how food works!</span>")
 	return OXYLOSS
@@ -136,20 +119,12 @@
 	name = "universal enzyme"
 	desc = "Used in cooking various dishes."
 	icon_state = "enzyme"
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/enzyme = 50)
-=======
-	list_reagents = list("enzyme" = 50)
->>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/condiment/sugar
 	name = "sugar bottle"
 	desc = "Tasty spacey sugar!"
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/sugar = 50)
-=======
-	list_reagents = list("sugar" = 50)
->>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/condiment/saltshaker		//Separate from above since it's a small shaker rather then
 	name = "salt shaker"											//	a large one.
@@ -158,11 +133,7 @@
 	possible_transfer_amounts = list(1,20) //for clown turning the lid off
 	amount_per_transfer_from_this = 1
 	volume = 20
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/sodiumchloride = 20)
-=======
-	list_reagents = list("sodiumchloride" = 20)
->>>>>>> Updated this old code to fork
 	possible_states = list()
 
 /obj/item/reagent_containers/food/condiment/saltshaker/on_reagent_change(changetype)
@@ -185,19 +156,11 @@
 	if(!proximity)
 		return
 	if(isturf(target))
-<<<<<<< HEAD
 		if(!reagents.has_reagent(/datum/reagent/consumable/sodiumchloride, 2))
 			to_chat(user, "<span class='warning'>You don't have enough salt to make a pile!</span>")
 			return
 		user.visible_message("<span class='notice'>[user] shakes some salt onto [target].</span>", "<span class='notice'>You shake some salt onto [target].</span>")
 		reagents.remove_reagent(/datum/reagent/consumable/sodiumchloride, 2)
-=======
-		if(!reagents.has_reagent("sodiumchloride", 2))
-			to_chat(user, "<span class='warning'>You don't have enough salt to make a pile!</span>")
-			return
-		user.visible_message("<span class='notice'>[user] shakes some salt onto [target].</span>", "<span class='notice'>You shake some salt onto [target].</span>")
-		reagents.remove_reagent("sodiumchloride", 2)
->>>>>>> Updated this old code to fork
 		new/obj/effect/decal/cleanable/food/salt(target)
 		return
 
@@ -208,11 +171,7 @@
 	possible_transfer_amounts = list(1,20) //for clown turning the lid off
 	amount_per_transfer_from_this = 1
 	volume = 20
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/blackpepper = 20)
-=======
-	list_reagents = list("blackpepper" = 20)
->>>>>>> Updated this old code to fork
 	possible_states = list()
 
 /obj/item/reagent_containers/food/condiment/peppermill/on_reagent_change(changetype)
@@ -228,11 +187,7 @@
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/milk = 50)
-=======
-	list_reagents = list("milk" = 50)
->>>>>>> Updated this old code to fork
 	possible_states = list()
 
 /obj/item/reagent_containers/food/condiment/flour
@@ -240,11 +195,7 @@
 	desc = "A big bag of flour. Good for baking!"
 	icon_state = "flour"
 	item_state = "flour"
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/flour = 30)
-=======
-	list_reagents = list("flour" = 30)
->>>>>>> Updated this old code to fork
 	possible_states = list()
 
 /obj/item/reagent_containers/food/condiment/soymilk
@@ -254,11 +205,7 @@
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/soymilk = 50)
-=======
-	list_reagents = list("soymilk" = 50)
->>>>>>> Updated this old code to fork
 	possible_states = list()
 
 /obj/item/reagent_containers/food/condiment/rice
@@ -266,33 +213,21 @@
 	desc = "A big bag of rice. Good for cooking!"
 	icon_state = "rice"
 	item_state = "flour"
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/rice = 30)
-=======
-	list_reagents = list("rice" = 30)
->>>>>>> Updated this old code to fork
 	possible_states = list()
 
 /obj/item/reagent_containers/food/condiment/soysauce
 	name = "soy sauce"
 	desc = "A salty soy-based flavoring."
 	icon_state = "soysauce"
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/soysauce = 50)
-=======
-	list_reagents = list("soysauce" = 50)
->>>>>>> Updated this old code to fork
 	possible_states = list()
 
 /obj/item/reagent_containers/food/condiment/mayonnaise
 	name = "mayonnaise"
 	desc = "An oily condiment made from egg yolks."
 	icon_state = "mayonnaise"
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/mayonnaise = 50)
-=======
-	list_reagents = list("mayonnaise" = 50)
->>>>>>> Updated this old code to fork
 	possible_states = list()
 
 
@@ -306,7 +241,6 @@
 	volume = 10
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list()
-<<<<<<< HEAD
 	possible_states = list(
 		/datum/reagent/consumable/ketchup = list("condi_ketchup", "Ketchup", "You feel more American already."),
 		/datum/reagent/consumable/capsaicin = list("condi_hotsauce", "Hotsauce", "You can almost TASTE the stomach ulcers now!"),
@@ -318,9 +252,6 @@
 		/datum/reagent/consumable/sugar = list("condi_sugar", "Sugar", "Tasty spacey sugar!"),
 		/datum/reagent/consumable/astrotame = list("condi_astrotame", "Astrotame", "The sweetness of a thousand sugars but none of the calories."),
 		)
-=======
-	possible_states = list("ketchup" = list("condi_ketchup", "Ketchup", "You feel more American already."), "capsaicin" = list("condi_hotsauce", "Hotsauce", "You can almost TASTE the stomach ulcers now!"), "soysauce" = list("condi_soysauce", "Soy Sauce", "A salty soy-based flavoring"), "frostoil" = list("condi_frostoil", "Coldsauce", "Leaves the tongue numb in it's passage"), "sodiumchloride" = list("condi_salt", "Salt Shaker", "Salt. From space oceans, presumably"), "blackpepper" = list("condi_pepper", "Pepper Mill", "Often used to flavor food or make people sneeze"), "cornoil" = list("condi_cornoil", "Corn Oil", "A delicious oil used in cooking. Made from corn"), "sugar" = list("condi_sugar", "Sugar", "Tasty spacey sugar!"))
->>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/condiment/pack/attack(mob/M, mob/user, def_zone) //Can't feed these to people directly.
 	return
@@ -363,23 +294,15 @@
 /obj/item/reagent_containers/food/condiment/pack/ketchup
 	name = "ketchup pack"
 	originalname = "ketchup"
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/ketchup = 10)
-=======
-	list_reagents = list("ketchup" = 10)
->>>>>>> Updated this old code to fork
 
 //Hot sauce
 /obj/item/reagent_containers/food/condiment/pack/hotsauce
 	name = "hotsauce pack"
 	originalname = "hotsauce"
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/capsaicin = 10)
 
 /obj/item/reagent_containers/food/condiment/pack/astrotame
 	name = "astrotame pack"
 	originalname = "astrotame"
 	list_reagents = list(/datum/reagent/consumable/astrotame = 5)
-=======
-	list_reagents = list("capsaicin" = 10)
->>>>>>> Updated this old code to fork

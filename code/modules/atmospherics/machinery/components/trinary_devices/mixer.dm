@@ -16,7 +16,6 @@
 
 	//node 3 is the outlet, nodes 1 & 2 are intakes
 
-<<<<<<< HEAD
 /obj/machinery/atmospherics/components/trinary/mixer/CtrlClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		on = !on
@@ -29,8 +28,6 @@
 		update_icon()
 	return ..()
 
-=======
->>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon()
 	cut_overlays()
 	for(var/direction in GLOB.cardinals)
@@ -95,20 +92,12 @@
 
 	if(!node2_concentration)
 		if(air1.temperature <= 0)
-<<<<<<< HEAD
 			return
-=======
-			return	
->>>>>>> Updated this old code to fork
 		transfer_moles1 = min(transfer_moles1, air1_moles)
 		transfer_moles2 = 0
 	else if(!node1_concentration)
 		if(air2.temperature <= 0)
-<<<<<<< HEAD
 			return
-=======
-			return	
->>>>>>> Updated this old code to fork
 		transfer_moles2 = min(transfer_moles2, air2_moles)
 		transfer_moles1 = 0
 	else

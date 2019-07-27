@@ -50,11 +50,7 @@
 				var/obj/item/I = new J //dumb but required because of byond throwing a fit anytime new gets too close to a list
 				H.dropItemToGround(H.get_item_by_slot(i), TRUE)
 				H.equip_to_slot_or_del(I, i)
-<<<<<<< HEAD
 				ADD_TRAIT(I, TRAIT_NODROP, CURSED_ITEM_TRAIT)
-=======
-				I.add_trait(TRAIT_NODROP, CURSED_ITEM_TRAIT)
->>>>>>> Updated this old code to fork
 				I.item_flags |= DROPDEL
 				I.name = "cursed " + I.name
 

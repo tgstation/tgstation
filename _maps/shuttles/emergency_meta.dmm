@@ -182,11 +182,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ax" = (
-<<<<<<< HEAD
 /obj/structure/chair/office{
-=======
-/obj/structure/chair/office/dark{
->>>>>>> Updated this old code to fork
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -220,11 +216,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aC" = (
-<<<<<<< HEAD
 /obj/structure/chair/office,
-=======
-/obj/structure/chair/office/dark,
->>>>>>> Updated this old code to fork
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aE" = (
@@ -240,11 +232,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aG" = (
-<<<<<<< HEAD
 /obj/structure/chair/office{
-=======
-/obj/structure/chair/office/dark{
->>>>>>> Updated this old code to fork
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -305,10 +293,6 @@
 	pixel_y = 8
 	},
 /obj/item/radio/intercom{
-<<<<<<< HEAD
-=======
-	dir = 2;
->>>>>>> Updated this old code to fork
 	name = "Station Intercom (General)";
 	pixel_y = -31
 	},
@@ -325,10 +309,6 @@
 /area/shuttle/escape)
 "aS" = (
 /obj/item/radio/intercom{
-<<<<<<< HEAD
-=======
-	dir = 2;
->>>>>>> Updated this old code to fork
 	name = "Station Intercom (General)";
 	pixel_y = -31
 	},
@@ -418,13 +398,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bl" = (
-<<<<<<< HEAD
 /obj/machinery/stasis,
-=======
-/obj/machinery/sleeper{
-	dir = 8
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bm" = (
@@ -562,10 +536,6 @@
 	pixel_y = 2
 	},
 /obj/item/radio/intercom{
-<<<<<<< HEAD
-=======
-	dir = 2;
->>>>>>> Updated this old code to fork
 	name = "Station Intercom (General)";
 	pixel_y = -31
 	},
@@ -614,10 +584,6 @@
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/radio/intercom{
-<<<<<<< HEAD
-=======
-	dir = 2;
->>>>>>> Updated this old code to fork
 	name = "Station Intercom (General)";
 	pixel_x = -27
 	},
@@ -692,13 +658,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bP" = (
-<<<<<<< HEAD
 /obj/structure/closet/crate/medical,
-=======
-/obj/structure/closet/crate/medical{
-	name = "medical crate"
-	},
->>>>>>> Updated this old code to fork
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/o2{
 	pixel_x = 3;
@@ -723,10 +683,6 @@
 /area/shuttle/escape)
 "bQ" = (
 /obj/item/radio/intercom{
-<<<<<<< HEAD
-=======
-	dir = 2;
->>>>>>> Updated this old code to fork
 	name = "Station Intercom (General)";
 	pixel_y = -31
 	},

@@ -43,10 +43,7 @@ SUBSYSTEM_DEF(throwing)
 	var/atom/movable/thrownthing
 	var/atom/target
 	var/turf/target_turf
-<<<<<<< HEAD
 	var/target_zone
-=======
->>>>>>> Updated this old code to fork
 	var/init_dir
 	var/maxrange
 	var/speed
@@ -159,11 +156,7 @@ SUBSYSTEM_DEF(throwing)
 /datum/thrownthing/proc/hitcheck()
 	for (var/thing in get_turf(thrownthing))
 		var/atom/movable/AM = thing
-<<<<<<< HEAD
 		if (AM == thrownthing || (AM == thrower && !ismob(thrownthing)))
-=======
-		if (AM == thrownthing)
->>>>>>> Updated this old code to fork
 			continue
 		if (AM.density && !(AM.pass_flags & LETPASSTHROW) && !(AM.flags_1 & ON_BORDER_1))
 			finalize(hit=TRUE, target=AM)

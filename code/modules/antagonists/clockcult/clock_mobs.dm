@@ -19,10 +19,7 @@
 	bubble_icon = "clock"
 	light_color = "#E42742"
 	deathsound = 'sound/magic/clockwork/anima_fragment_death.ogg'
-<<<<<<< HEAD
 	speech_span = SPAN_ROBOT
-=======
->>>>>>> Updated this old code to fork
 	var/playstyle_string = "<span class='heavy_brass'>You are a bug, yell at whoever spawned you!</span>"
 	var/empower_string = "<span class='heavy_brass'>You have nothing to empower, yell at the coders!</span>" //Shown to the mob when the herald beacon activates
 
@@ -30,12 +27,6 @@
 	. = ..()
 	update_values()
 
-<<<<<<< HEAD
-=======
-/mob/living/simple_animal/hostile/clockwork/get_spans()
-	return ..() | SPAN_ROBOT
-
->>>>>>> Updated this old code to fork
 /mob/living/simple_animal/hostile/clockwork/Login()
 	..()
 	add_servant_of_ratvar(src, TRUE)
@@ -46,11 +37,7 @@
 /mob/living/simple_animal/hostile/clockwork/ratvar_act()
 	fully_heal(TRUE)
 
-<<<<<<< HEAD
 /mob/living/simple_animal/hostile/clockwork/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-=======
-/mob/living/simple_animal/hostile/clockwork/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
->>>>>>> Updated this old code to fork
 	return 0 //ouch, my metal-unlikely-to-be-damaged-by-electricity-body
 
 /mob/living/simple_animal/hostile/clockwork/examine(mob/user)
@@ -70,11 +57,7 @@
 		msg += "[addendum]\n"
 	msg += "*---------*</span>"
 
-<<<<<<< HEAD
 	return list(msg)
-=======
-	to_chat(user, msg)
->>>>>>> Updated this old code to fork
 
 /mob/living/simple_animal/hostile/clockwork/proc/examine_info() //Override this on a by-mob basis to have unique examine info
 	return

@@ -9,11 +9,7 @@
 
 /mob/living/carbon/get_taste_sensitivity()
 	var/obj/item/organ/tongue/tongue = getorganslot(ORGAN_SLOT_TONGUE)
-<<<<<<< HEAD
 	if(istype(tongue) && !HAS_TRAIT(src, TRAIT_AGEUSIA))
-=======
-	if(istype(tongue) && !has_trait(TRAIT_AGEUSIA))
->>>>>>> Updated this old code to fork
 		. = tongue.taste_sensitivity
 	else
 		. = 101 // can't taste anything without a tongue

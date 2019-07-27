@@ -90,11 +90,7 @@
 /obj/machinery/computer/apc_control/Topic(href, href_list)
 	if(..())
 		return
-<<<<<<< HEAD
 	if(!usr || !usr.canUseTopic(src, !issilicon(usr)) || stat || QDELETED(src))
-=======
-	if(!usr || !usr.canUseTopic(src) || stat || QDELETED(src))
->>>>>>> Updated this old code to fork
 		return
 	if(href_list["authenticate"])
 		var/obj/item/card/id/ID = usr.get_idcard(TRUE)
@@ -143,11 +139,7 @@
 	if(href_list["name_filter"])
 		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 		var/new_filter = stripped_input(usr, "What name are you looking for?", name)
-<<<<<<< HEAD
 		if(!src || !usr || !usr.canUseTopic(src, !issilicon(usr)) || stat || QDELETED(src))
-=======
-		if(!src || !usr || !usr.canUseTopic(src) || stat || QDELETED(src))
->>>>>>> Updated this old code to fork
 			return
 		log_activity("changed name filter to \"[new_filter]\"")
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
@@ -155,11 +147,7 @@
 	if(href_list["above_filter"])
 		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 		var/new_filter = input(usr, "Enter a percentage from 1-100 to sort by (greater than).", name) as null|num
-<<<<<<< HEAD
 		if(!src || !usr || !usr.canUseTopic(src, !issilicon(usr)) || stat || QDELETED(src))
-=======
-		if(!src || !usr || !usr.canUseTopic(src) || stat || QDELETED(src))
->>>>>>> Updated this old code to fork
 			return
 		log_activity("changed greater than charge filter to \"[new_filter]\"")
 		if(new_filter)
@@ -169,11 +157,7 @@
 	if(href_list["below_filter"])
 		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 		var/new_filter = input(usr, "Enter a percentage from 1-100 to sort by (lesser than).", name) as null|num
-<<<<<<< HEAD
 		if(!src || !usr || !usr.canUseTopic(src, !issilicon(usr)) || stat || QDELETED(src))
-=======
-		if(!src || !usr || !usr.canUseTopic(src) || stat || QDELETED(src))
->>>>>>> Updated this old code to fork
 			return
 		log_activity("changed lesser than charge filter to \"[new_filter]\"")
 		if(new_filter)

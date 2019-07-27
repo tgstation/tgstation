@@ -11,11 +11,8 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	/mob/living/simple_animal/hostile/carp/cayenne,
 	/mob/living/simple_animal/butterfly,
 	/mob/living/simple_animal/hostile/retaliate/poison/snake,
-<<<<<<< HEAD
 	/mob/living/simple_animal/hostile/retaliate/goose/vomit,
 	/mob/living/simple_animal/bot/mulebot,
-=======
->>>>>>> Updated this old code to fork
 	/mob/living/simple_animal/bot/secbot/beepsky
 )))
 
@@ -48,11 +45,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	candidates = get_candidates(ROLE_ALIEN, null, ROLE_ALIEN)
 
 	// find our chosen mob to breathe life into
-<<<<<<< HEAD
 	// Mobs have to be simple animals, mindless, on station, and NOT holograms.
-=======
-	// Mobs have to be simple animals, mindless and on station
->>>>>>> Updated this old code to fork
 	// prioritize starter animals that people will recognise
 
 
@@ -65,11 +58,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 		var/turf/T = get_turf(L)
 		if(!T || !is_station_level(T.z))
 			continue
-<<<<<<< HEAD
 		if((L in GLOB.player_list) || L.mind || (L.flags_1 & HOLOGRAM_1))
-=======
-		if((L in GLOB.player_list) || L.mind)
->>>>>>> Updated this old code to fork
 			continue
 		if(is_type_in_typecache(L, GLOB.high_priority_sentience))
 			hi_pri += L

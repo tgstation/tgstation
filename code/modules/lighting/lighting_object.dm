@@ -28,19 +28,11 @@
 		S.update_starlight()
 
 	needs_update = TRUE
-<<<<<<< HEAD
 	SSlighting.objects_queue += src
 
 /atom/movable/lighting_object/Destroy(var/force)
 	if (force)
 		SSlighting.objects_queue -= src
-=======
-	GLOB.lighting_update_objects += src
-
-/atom/movable/lighting_object/Destroy(var/force)
-	if (force)
-		GLOB.lighting_update_objects     -= src
->>>>>>> Updated this old code to fork
 		if (loc != myturf)
 			var/turf/oldturf = get_turf(myturf)
 			var/turf/newturf = get_turf(loc)

@@ -1,9 +1,5 @@
 /datum/surgery/organ_extraction
-<<<<<<< HEAD
 	name = "Experimental organ replacement"
-=======
-	name = "experimental organ replacement"
->>>>>>> Updated this old code to fork
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/incise, /datum/surgery_step/extract_organ, /datum/surgery_step/gland_insert)
 	possible_locs = list(BODY_ZONE_CHEST)
 	ignore_clothes = 1
@@ -49,7 +45,6 @@
 	time = 32
 
 /datum/surgery_step/gland_insert/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-<<<<<<< HEAD
 	user.visible_message("[user] starts to insert [tool] into [target].", "<span class='notice'>You start to insert [tool] into [target]...</span>")
 
 /datum/surgery_step/gland_insert/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -58,13 +53,3 @@
 	var/obj/item/organ/heart/gland/gland = tool
 	gland.Insert(target, 2)
 	return 1
-=======
-	user.visible_message("[user] starts to insert [tool] into [target].", "<span class ='notice'>You start to insert [tool] into [target]...</span>")
-
-/datum/surgery_step/gland_insert/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] inserts [tool] into [target].", "<span class ='notice'>You insert [tool] into [target].</span>")
-	user.temporarilyRemoveItemFromInventory(tool, TRUE)
-	var/obj/item/organ/heart/gland/gland = tool
-	gland.Insert(target, 2)
-	return 1
->>>>>>> Updated this old code to fork

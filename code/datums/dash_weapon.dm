@@ -32,11 +32,7 @@
 	if(!IsAvailable())
 		return
 	var/turf/T = get_turf(target)
-<<<<<<< HEAD
 	if(target in view(user.client.view, user))
-=======
-	if(target in view(user.client.view, get_turf(user)))
->>>>>>> Updated this old code to fork
 		var/obj/spot1 = new phaseout(get_turf(user), user.dir)
 		user.forceMove(T)
 		playsound(T, dash_sound, 25, 1)
@@ -51,8 +47,4 @@
 	holder.update_action_buttons_icon()
 	if(recharge_sound)
 		playsound(dashing_item, recharge_sound, 50, 1)
-<<<<<<< HEAD
 	to_chat(holder, "<span class='notice'>[src] now has [current_charges]/[max_charges] charges.</span>")
-=======
-	to_chat(holder, "<span class='notice'>[src] now has [current_charges]/[max_charges] charges.</span>")
->>>>>>> Updated this old code to fork

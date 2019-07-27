@@ -2,11 +2,8 @@
 	name = "scooter"
 	desc = "A fun way to get around."
 	icon_state = "scooter"
-<<<<<<< HEAD
 	are_legs_exposed = TRUE
 	fall_off_if_missing_arms = TRUE
-=======
->>>>>>> Updated this old code to fork
 
 /obj/vehicle/ridden/scooter/Initialize()
 	. = ..()
@@ -36,7 +33,6 @@
 		else
 			buckled_mob.pixel_y = -4
 
-<<<<<<< HEAD
 /obj/vehicle/ridden/scooter/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!istype(M))
 		return FALSE
@@ -44,26 +40,14 @@
 		to_chat(M, "<span class='warning'>You don't think it'd be a good idea trying to ride \the [src]...</span>")
 		return FALSE
 	return ..()
-=======
-/obj/vehicle/ridden/scooter/buckle_mob(mob/living/M, force = 0, check_loc = 1)
-	if(!istype(M))
-		return 0
-	if(M.get_num_legs() < 2 && M.get_num_arms() <= 0)
-		to_chat(M, "<span class='warning'>Your limbless body can't ride \the [src].</span>")
-		return 0
-	. = ..()
->>>>>>> Updated this old code to fork
 
 /obj/vehicle/ridden/scooter/skateboard
 	name = "skateboard"
 	desc = "An unfinished scooter which can only barely be called a skateboard. It's still rideable, but probably unsafe. Looks like you'll need to add a few rods to make handlebars. Alt-click to adjust speed."
 	icon_state = "skateboard"
 	density = FALSE
-<<<<<<< HEAD
 	arms_required = 0
 	fall_off_if_missing_arms = FALSE
-=======
->>>>>>> Updated this old code to fork
 	var/adjusted_speed = FALSE
 
 /obj/vehicle/ridden/scooter/skateboard/Initialize()
@@ -202,20 +186,12 @@
 
 /obj/vehicle/ridden/scooter/wheelys/post_unbuckle_mob(mob/living/M)
 	if(!has_buckled_mobs())
-<<<<<<< HEAD
 		to_chat(M, "<span class='notice'>You pop the Wheely-Heels' wheels back into place.</span>")
-=======
-		to_chat(M, "<span class='notice'>You pop the Wheely-Heel's wheels back into place.</span>")
->>>>>>> Updated this old code to fork
 		moveToNullspace()
 	return ..()
 
 /obj/vehicle/ridden/scooter/wheelys/post_buckle_mob(mob/living/M)
-<<<<<<< HEAD
 	to_chat(M, "<span class='notice'>You pop out the Wheely-Heels' wheels.</span>")
-=======
-	to_chat(M, "<span class='notice'>You pop out the Wheely-Heel's wheels.</span>")
->>>>>>> Updated this old code to fork
 	return ..()
 
 /obj/vehicle/ridden/scooter/wheelys/Bump(atom/A)

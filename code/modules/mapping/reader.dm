@@ -307,11 +307,7 @@
 	index = members.len
 	if(members[index] != /area/template_noop)		
 		var/atype = members[index]
-<<<<<<< HEAD
 		world.preloader_setup(members_attributes[index], atype)//preloader for assigning  set variables on atom creation
-=======
-		GLOB._preloader.setup(members_attributes[index], atype)//preloader for assigning  set variables on atom creation
->>>>>>> Updated this old code to fork
 		var/atom/instance = areaCache[atype]
 		if (!instance)
 			instance = GLOB.areas_by_type[atype]
@@ -322,11 +318,7 @@
 			instance.contents.Add(crds)
 
 		if(GLOB.use_preloader && instance)
-<<<<<<< HEAD
 			world.preloader_load(instance)
-=======
-			GLOB._preloader.load(instance)
->>>>>>> Updated this old code to fork
 
 	//then instance the /turf and, if multiple tiles are presents, simulates the DMM underlays piling effect
 
@@ -362,11 +354,7 @@
 
 //Instance an atom at (x,y,z) and gives it the variables in attributes
 /datum/parsed_map/proc/instance_atom(path,list/attributes, turf/crds, no_changeturf, placeOnTop)
-<<<<<<< HEAD
 	world.preloader_setup(attributes, path)
-=======
-	GLOB._preloader.setup(attributes, path)
->>>>>>> Updated this old code to fork
 
 	if(crds)
 		if(ispath(path, /turf))
@@ -380,11 +368,7 @@
 			. = create_atom(path, crds)//first preloader pass
 
 	if(GLOB.use_preloader && .)//second preloader pass, for those atoms that don't ..() in New()
-<<<<<<< HEAD
 		world.preloader_load(.)
-=======
-		GLOB._preloader.load(.)
->>>>>>> Updated this old code to fork
 
 	//custom CHECK_TICK here because we don't want things created while we're sleeping to not initialize
 	if(TICK_CHECK)

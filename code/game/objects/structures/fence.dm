@@ -29,7 +29,6 @@
 	update_cut_status()
 
 /obj/structure/fence/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 
 	switch(hole_size)
@@ -37,15 +36,6 @@
 			. += "There is a large hole in \the [src]."
 		if(LARGE_HOLE)
 			. += "\The [src] has been completely cut through."
-=======
-	.=..()
-
-	switch(hole_size)
-		if(MEDIUM_HOLE)
-			user.show_message("There is a large hole in \the [src].")
-		if(LARGE_HOLE)
-			user.show_message("\The [src] has been completely cut through.")
->>>>>>> Updated this old code to fork
 
 /obj/structure/fence/end
 	icon_state = "end"
@@ -70,11 +60,7 @@
 /obj/structure/fence/attackby(obj/item/W, mob/user)
 	if(W.tool_behaviour == TOOL_WIRECUTTER)
 		if(!cuttable)
-<<<<<<< HEAD
 			to_chat(user, "<span class='warning'>This section of the fence can't be cut!</span>")
-=======
-			to_chat(user, "<span class='notice'>This section of the fence can't be cut.</span>")
->>>>>>> Updated this old code to fork
 			return
 		if(invulnerable)
 			to_chat(user, "<span class='notice'>This fence is too strong to cut through.</span>")
@@ -171,8 +157,4 @@
 #undef NO_HOLE
 #undef MEDIUM_HOLE
 #undef LARGE_HOLE
-<<<<<<< HEAD
 #undef MAX_HOLE_SIZE
-=======
-#undef MAX_HOLE_SIZE
->>>>>>> Updated this old code to fork

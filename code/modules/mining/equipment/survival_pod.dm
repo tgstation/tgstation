@@ -23,11 +23,7 @@
 		return
 	template = SSmapping.shelter_templates[template_id]
 	if(!template)
-<<<<<<< HEAD
 		WARNING("Shelter template ([template_id]) not found!")
-=======
-		throw EXCEPTION("Shelter template ([template_id]) not found!")
->>>>>>> Updated this old code to fork
 		qdel(src)
 
 /obj/item/survivalcapsule/Destroy()
@@ -37,13 +33,8 @@
 /obj/item/survivalcapsule/examine(mob/user)
 	. = ..()
 	get_template()
-<<<<<<< HEAD
 	. += "This capsule has the [template.name] stored."
 	. += template.description
-=======
-	to_chat(user, "This capsule has the [template.name] stored.")
-	to_chat(user, template.description)
->>>>>>> Updated this old code to fork
 
 /obj/item/survivalcapsule/attack_self()
 	//Can't grab when capsule is New() because templates aren't loaded then
@@ -147,7 +138,6 @@
 	else
 		add_overlay("sleeper_cover")
 
-<<<<<<< HEAD
 //Lifeform Stasis Unit
 /obj/machinery/stasis/survival_pod
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
@@ -161,8 +151,6 @@
 /obj/machinery/stasis/survival_pod/update_icon()
 	return
 
-=======
->>>>>>> Updated this old code to fork
 //Computer
 /obj/item/gps/computer
 	name = "pod computer"
@@ -332,8 +320,4 @@
 	icon = initial(I.icon)
 	desc = initial(I.desc)
 	icon_state = initial(I.icon_state)
-<<<<<<< HEAD
 	item_state = initial(I.item_state)
-=======
-	item_state = initial(I.item_state)
->>>>>>> Updated this old code to fork

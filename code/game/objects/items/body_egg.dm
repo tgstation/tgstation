@@ -3,11 +3,7 @@
 	desc = "All slimy and yuck."
 	icon_state = "innards"
 	zone = BODY_ZONE_CHEST
-<<<<<<< HEAD
 	slot = ORGAN_SLOT_PARASITE_EGG
-=======
-	slot = "parasite_egg"
->>>>>>> Updated this old code to fork
 
 /obj/item/organ/body_egg/on_find(mob/living/finder)
 	..()
@@ -20,11 +16,7 @@
 
 /obj/item/organ/body_egg/Insert(var/mob/living/carbon/M, special = 0)
 	..()
-<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_XENO_HOST, TRAIT_GENERIC)
-=======
-	owner.add_trait(TRAIT_XENO_HOST, TRAIT_GENERIC)
->>>>>>> Updated this old code to fork
 	START_PROCESSING(SSobj, src)
 	owner.med_hud_set_status()
 	INVOKE_ASYNC(src, .proc/AddInfectionImages, owner)
@@ -32,11 +24,7 @@
 /obj/item/organ/body_egg/Remove(var/mob/living/carbon/M, special = 0)
 	STOP_PROCESSING(SSobj, src)
 	if(owner)
-<<<<<<< HEAD
 		REMOVE_TRAIT(owner, TRAIT_XENO_HOST, TRAIT_GENERIC)
-=======
-		owner.remove_trait(TRAIT_XENO_HOST, TRAIT_GENERIC)
->>>>>>> Updated this old code to fork
 		owner.med_hud_set_status()
 		INVOKE_ASYNC(src, .proc/RemoveInfectionImages, owner)
 	..()

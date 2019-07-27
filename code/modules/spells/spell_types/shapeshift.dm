@@ -104,16 +104,11 @@
 	stored.forceMove(src)
 	stored.notransform = TRUE
 	if(source.convert_damage)
-<<<<<<< HEAD
 		var/damage_percent = (stored.maxHealth - stored.health)/stored.maxHealth;
 		var/damapply = damage_percent * shape.maxHealth;
 
 		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE);
 
-=======
-		var/damapply = (stored.maxHealth - (stored.health + stored.maxHealth)/2) //Carbons go from -100 to 100 naturally, while simplemobs only go from 0 to 100. Can't do a direct conversion.
-		shape.apply_damage(damapply, source.convert_damage_type)
->>>>>>> Updated this old code to fork
 	slink = soullink(/datum/soullink/shapeshift, stored , shape)
 	slink.source = src
 
@@ -163,16 +158,11 @@
 		stored.death()
 	else if(source.convert_damage)
 		stored.revive(full_heal = TRUE)
-<<<<<<< HEAD
 
 		var/damage_percent = (shape.maxHealth - shape.health)/shape.maxHealth;
 		var/damapply = stored.maxHealth * damage_percent
 
 		stored.apply_damage(damapply, source.convert_damage_type, forced = TRUE)
-=======
-		var/damapply = (shape.maxHealth - 2*shape.health) //Since we halved incoming damage, double outgoing.
-		stored.apply_damage(damapply, source.convert_damage_type)
->>>>>>> Updated this old code to fork
 	qdel(shape)
 	qdel(src)
 
@@ -185,8 +175,4 @@
 
 /datum/soullink/shapeshift/sharerDies(gibbed, mob/living/sharer)
 	if(source)
-<<<<<<< HEAD
 		source.shapeDeath(gibbed)
-=======
-		source.shapeDeath(gibbed)
->>>>>>> Updated this old code to fork

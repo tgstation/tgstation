@@ -9,7 +9,6 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 	if(!ventcrawler || !Adjacent(A))
 		return
 	if(stat)
-<<<<<<< HEAD
 		to_chat(src, "<span class='warning'>You must be conscious to do this!</span>")
 		return
 	if(IsStun() || IsParalyzed())
@@ -23,21 +22,6 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 		return
 	if(buckled)
 		to_chat(src, "<span class='warning'>You can't vent crawl while buckled!</span>")
-=======
-		to_chat(src, "You must be conscious to do this!")
-		return
-	if(IsStun() || IsParalyzed())
-		to_chat(src, "You can't vent crawl while you're stunned!")
-		return
-	if(restrained())
-		to_chat(src, "You can't vent crawl while you're restrained!")
-		return
-	if(has_buckled_mobs())
-		to_chat(src, "You can't vent crawl with other creatures on you!")
-		return
-	if(buckled)
-		to_chat(src, "You can't vent crawl while buckled!")
->>>>>>> Updated this old code to fork
 		return
 
 	var/obj/machinery/atmospherics/components/unary/vent_found
@@ -139,7 +123,3 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 		. = new_loc
 	remove_ventcrawl()
 	add_ventcrawl(.)
-<<<<<<< HEAD
-=======
-
->>>>>>> Updated this old code to fork

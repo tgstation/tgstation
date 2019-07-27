@@ -5,10 +5,6 @@
 	},
 /obj/machinery/turretid{
 	ailock = 1;
-<<<<<<< HEAD
-=======
-	control_area = null;
->>>>>>> Updated this old code to fork
 	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
 	icon_state = "control_kill";
 	lethal = 1;
@@ -18,13 +14,7 @@
 	req_access = null;
 	req_access_txt = "150"
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
->>>>>>> Updated this old code to fork
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/pilot{
 	environment_smash = 0
 	},
@@ -65,13 +55,7 @@
 /area/shuttle/caravan/syndicate1)
 "vD" = (
 /obj/machinery/porta_turret/syndicate/energy{
-<<<<<<< HEAD
 	dir = 4
-=======
-	dir = 4;
-	icon_state = "standard_lethal";
-	mode = 1
->>>>>>> Updated this old code to fork
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/caravan/syndicate1)
@@ -79,23 +63,14 @@
 /obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 8;
 	name = "Syndicate Fighter APC";
-<<<<<<< HEAD
 	pixel_x = -25;
-=======
-	pixel_x = -24;
-	req_access = null;
->>>>>>> Updated this old code to fork
 	req_access_txt = "150"
 	},
 /obj/machinery/computer/security{
 	dir = 1;
 	network = list("caravansyndicate1")
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable/yellow,
->>>>>>> Updated this old code to fork
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/caravan/syndicate1)
 "wV" = (
@@ -119,10 +94,7 @@
 	preferred_direction = 4;
 	width = 9
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/caravan/syndicate1)
 "Jv" = (

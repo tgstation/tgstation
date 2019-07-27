@@ -137,10 +137,7 @@
 	command_radio = TRUE
 
 /datum/outfit/syndicate/no_crystals
-<<<<<<< HEAD
 	name = "Syndicate Operative - Reinforcement"
-=======
->>>>>>> Updated this old code to fork
 	tc = 0
 
 /datum/outfit/syndicate/post_equip(mob/living/carbon/human/H)
@@ -150,11 +147,7 @@
 	if(command_radio)
 		R.command = TRUE
 
-<<<<<<< HEAD
 	if(ispath(uplink_type, /obj/item/uplink/nuclear) || tc) // /obj/item/uplink/nuclear understands 0 tc
-=======
-	if(tc)
->>>>>>> Updated this old code to fork
 		var/obj/item/U = new uplink_type(H, H.key, tc)
 		H.equip_to_slot_or_del(U, SLOT_IN_BACKPACK)
 
@@ -174,11 +167,7 @@
 	r_pocket = /obj/item/tank/internals/emergency_oxygen/engi
 	internals_slot = SLOT_R_STORE
 	belt = /obj/item/storage/belt/military
-<<<<<<< HEAD
 	r_hand = /obj/item/gun/ballistic/shotgun/bulldog
-=======
-	r_hand = /obj/item/gun/ballistic/automatic/shotgun/bulldog
->>>>>>> Updated this old code to fork
 	backpack_contents = list(/obj/item/storage/box/syndie=1,\
 		/obj/item/tank/jetpack/oxygen/harness=1,\
 		/obj/item/gun/ballistic/automatic/pistol=1,\

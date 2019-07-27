@@ -29,17 +29,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 /client/proc/callproc()
 	set category = "Debug"
 	set name = "Advanced ProcCall"
-<<<<<<< HEAD
 	set waitfor = FALSE
-=======
-	set waitfor = 0
->>>>>>> Updated this old code to fork
 
 	if(!check_rights(R_DEBUG))
 		return
 
 	var/datum/target = null
-<<<<<<< HEAD
 	var/targetselected = FALSE
 	var/returnval = null
 
@@ -72,51 +67,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			to_chat(usr, "<span class='warning'>Error: callproc(): [procpath] does not exist.</span>")
 			return
 
-=======
-	var/targetselected = 0
-	var/returnval = null
-
-	switch(alert("Proc owned by something?",,"Yes","No"))
-		if("Yes")
-			targetselected = 1
-			var/list/value = vv_get_value(default_class = VV_ATOM_REFERENCE, classes = list(VV_ATOM_REFERENCE, VV_DATUM_REFERENCE, VV_MOB_REFERENCE, VV_CLIENT))
-			if (!value["class"] || !value["value"])
-				return
-			target = value["value"]
-		if("No")
-			target = null
-			targetselected = 0
-
-	var/procname = input("Proc path, eg: /proc/fake_blood","Path:", null) as text|null
-	if(!procname)
-		return
-	
-	//strip away everything but the proc name
-	var/list/proclist = splittext(procname, "/")
-	if (!length(proclist))
-		return
-	procname = proclist[proclist.len]
-	
-	var/proctype = "proc"
-	if ("verb" in proclist)
-		proctype = "verb"
-	
-	if(targetselected && !hascall(target, procname))
-		to_chat(usr, "<font color='red'>Error: callproc(): type [target.type] has no [proctype] named [procname].</font>")
-		return
-	else
-		var/procpath = text2path("[proctype]/[procname]")
-		if (!procpath)
-			to_chat(usr, "<font color='red'>Error: callproc(): proc [procname] does not exist. (Did you forget the /proc/ part?)</font>")
-			return
->>>>>>> Updated this old code to fork
 	var/list/lst = get_callproc_args()
 	if(!lst)
 		return
 
 	if(targetselected)
 		if(!target)
-<<<<<<< HEAD
 			to_chat(usr, "<span class='warning'>Error: callproc(): owner of proc no longer exists.</span>")
 			return
 		var/msg = "[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no argument"]."
@@ -129,20 +85,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		log_admin(msg)
 		message_admins(msg)
 		returnval = WrapAdminProcCall(GLOBAL_PROC, procpath, lst) //calling globals needs full qualified name (e.g /proc/foo)
-=======
-			to_chat(usr, "<font color='red'>Error: callproc(): owner of proc no longer exists.</font>")
-			return
-		var/msg = "[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"]."
-		log_admin(msg)
-		message_admins(msg)
-		admin_ticket_log(target, msg)
-		returnval = WrapAdminProcCall(target, procname, lst) // Pass the lst as an argument list to the proc
-	else
-		//this currently has no hascall protection. wasn't able to get it working.
-		log_admin("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
-		message_admins("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
-		returnval = WrapAdminProcCall(GLOBAL_PROC, procname, lst) // Pass the lst as an argument list to the proc
->>>>>>> Updated this old code to fork
 	. = get_callproc_returnval(returnval, procname)
 	if(.)
 		to_chat(usr, .)
@@ -162,13 +104,8 @@ GLOBAL_LIST_EMPTY(AdminProcCallSpamPrevention)
 GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 
 /proc/WrapAdminProcCall(datum/target, procname, list/arguments)
-<<<<<<< HEAD
 	if(target != GLOBAL_PROC && procname == "Del")
 		to_chat(usr, "<span class='warning'>Calling Del() is not allowed</span>")
-=======
-	if(target && procname == "Del")
-		to_chat(usr, "Calling Del() is not allowed")
->>>>>>> Updated this old code to fork
 		return
 
 	if(target != GLOBAL_PROC && !target.CanProcCall(procname))
@@ -215,11 +152,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 /client/proc/callproc_datum(datum/A as null|area|mob|obj|turf)
 	set category = "Debug"
 	set name = "Atom ProcCall"
-<<<<<<< HEAD
 	set waitfor = FALSE
-=======
-	set waitfor = 0
->>>>>>> Updated this old code to fork
 
 	if(!check_rights(R_DEBUG))
 		return
@@ -228,11 +161,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	if(!procname)
 		return
 	if(!hascall(A,procname))
-<<<<<<< HEAD
 		to_chat(usr, "<span class='warning'>Error: callproc_datum(): type [A.type] has no proc named [procname].</span>")
-=======
-		to_chat(usr, "<font color='red'>Error: callproc_datum(): type [A.type] has no proc named [procname].</font>")
->>>>>>> Updated this old code to fork
 		return
 	var/list/lst = get_callproc_args()
 	if(!lst)
@@ -241,13 +170,8 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	if(!A || !IsValidSrc(A))
 		to_chat(usr, "<span class='warning'>Error: callproc_datum(): owner of proc no longer exists.</span>")
 		return
-<<<<<<< HEAD
 	var/msg = "[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"]."
 	log_admin(msg)
-=======
-	log_admin("[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
-	var/msg = "[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"]."
->>>>>>> Updated this old code to fork
 	message_admins(msg)
 	admin_ticket_log(A, msg)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Atom ProcCall") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -257,11 +181,6 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	if(.)
 		to_chat(usr, .)
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> Updated this old code to fork
 /client/proc/get_callproc_args()
 	var/argnum = input("Number of arguments","Number:",0) as num|null
 	if(isnull(argnum))
@@ -285,11 +204,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	. = ""
 	if(islist(returnval))
 		var/list/returnedlist = returnval
-<<<<<<< HEAD
 		. = "<span class='notice'>"
-=======
-		. = "<font color='blue'>"
->>>>>>> Updated this old code to fork
 		if(returnedlist.len)
 			var/assoc_check = returnedlist[1]
 			if(istext(assoc_check) && (returnedlist[assoc_check] != null))
@@ -303,17 +218,10 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 					. += "\n[elem]"
 		else
 			. = "[procname] returned an empty list"
-<<<<<<< HEAD
 		. += "</span>"
 
 	else
 		. = "<span class='notice'>[procname] returned: [!isnull(returnval) ? returnval : "null"]</span>"
-=======
-		. += "</font>"
-
-	else
-		. = "<font color='blue'>[procname] returned: [!isnull(returnval) ? returnval : "null"]</font>"
->>>>>>> Updated this old code to fork
 
 
 /client/proc/Cell()
@@ -324,11 +232,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	var/turf/T = get_turf(mob)
 	if(!isturf(T))
 		return
-<<<<<<< HEAD
 	atmosanalyzer_scan(usr, T, TRUE)
-=======
-	show_air_status_to(T, usr)
->>>>>>> Updated this old code to fork
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Air Status In Location") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_robotize(mob/M in GLOB.mob_list)

@@ -12,7 +12,6 @@
 	material_drop = /obj/item/stack/sheet/cloth
 	delivery_icon = null //unwrappable
 	anchorable = FALSE
-<<<<<<< HEAD
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/foldedbag_path = /obj/item/bodybag
 	var/obj/item/bodybag/foldedbag_instance = null
@@ -24,11 +23,6 @@
 		QDEL_NULL(foldedbag_instance)
 	return ..()
 
-=======
-	var/foldedbag_path = /obj/item/bodybag
-	var/tagged = 0 // so closet code knows to put the tag overlay back
-
->>>>>>> Updated this old code to fork
 /obj/structure/closet/body_bag/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/pen) || istype(I, /obj/item/toy/crayon))
 		if(!user.is_literate())
@@ -57,7 +51,6 @@
 	if (tagged)
 		add_overlay("bodybag_label")
 
-<<<<<<< HEAD
 /obj/structure/closet/body_bag/open(mob/living/user)
 	. = ..()
 	if(.)
@@ -68,19 +61,11 @@
 	if(.)
 		density = FALSE
 		mouse_drag_pointer = MOUSE_ACTIVE_POINTER
-=======
-/obj/structure/closet/body_bag/close()
-	if(..())
-		density = FALSE
-		return 1
-	return 0
->>>>>>> Updated this old code to fork
 
 /obj/structure/closet/body_bag/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr && Adjacent(usr) && (in_range(src, usr) || usr.contents.Find(src)))
 		if(!ishuman(usr))
-<<<<<<< HEAD
 			return
 		if(opened)
 			to_chat(usr, "<span class='warning'>You wrestle with [src], but it won't fold while unzipped.</span>")
@@ -90,15 +75,6 @@
 			return
 		visible_message("<span class='notice'>[usr] folds up [src].</span>")
 		var/obj/item/bodybag/B = foldedbag_instance || new foldedbag_path
-=======
-			return 0
-		if(opened)
-			return 0
-		if(contents.len)
-			return 0
-		visible_message("<span class='notice'>[usr] folds up [src].</span>")
-		var/obj/item/bodybag/B = new foldedbag_path(get_turf(src))
->>>>>>> Updated this old code to fork
 		usr.put_in_hands(B)
 		qdel(src)
 
@@ -116,7 +92,6 @@
 	. = ..()
 	if(over_object == usr && Adjacent(usr) && (in_range(src, usr) || usr.contents.Find(src)))
 		if(!ishuman(usr))
-<<<<<<< HEAD
 			return
 		if(opened)
 			to_chat(usr, "<span class='warning'>You wrestle with [src], but it won't fold while unzipped.</span>")
@@ -129,19 +104,6 @@
 			return
 		visible_message("<span class='notice'>[usr] folds up [src].</span>")
 		var/obj/item/bodybag/B = foldedbag_instance || new foldedbag_path
-=======
-			return 0
-		if(opened)
-			return 0
-		if(contents.len >= mob_storage_capacity / 2)
-			to_chat(usr, "<span class='warning'>There are too many things inside of [src] to fold it up!</span>")
-			return 0
-		for(var/obj/item/bodybag/bluespace/B in src)
-			to_chat(usr, "<span class='warning'>You can't recursively fold bluespace body bags!</span>" )
-			return 0
-		visible_message("<span class='notice'>[usr] folds up [src].</span>")
-		var/obj/item/bodybag/B = new foldedbag_path(get_turf(src))
->>>>>>> Updated this old code to fork
 		usr.put_in_hands(B)
 		for(var/atom/movable/A in contents)
 			A.forceMove(B)

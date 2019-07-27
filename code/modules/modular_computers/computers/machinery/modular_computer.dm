@@ -37,13 +37,8 @@
 	return ..()
 
 /obj/machinery/modular_computer/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	. += get_modular_computer_parts_examine(user)
-=======
-	..()
-	get_modular_computer_parts_examine(user)
->>>>>>> Updated this old code to fork
 
 /obj/machinery/modular_computer/attack_ghost(mob/dead/observer/user)
 	. = ..()

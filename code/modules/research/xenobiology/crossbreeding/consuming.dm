@@ -18,15 +18,9 @@ Consuming extracts:
 /obj/item/slimecross/consuming/attackby(obj/item/O, mob/user)
 	if(istype(O,/obj/item/reagent_containers/food/snacks))
 		if(last_produced + cooldown > world.time)
-<<<<<<< HEAD
 			to_chat(user, "<span class='warning'>[src] is still digesting after its last meal!</span>")
 			return
 		var/datum/reagent/N = O.reagents.has_reagent(/datum/reagent/consumable/nutriment)
-=======
-			to_chat(user, "<span class='warning'>[src] is still digesting after its last meal!<span>")
-			return
-		var/datum/reagent/N = O.reagents.has_reagent("nutriment")
->>>>>>> Updated this old code to fork
 		if(N)
 			nutriment_eaten += N.volume
 			to_chat(user, "<span class='notice'>[src] opens up and swallows [O] whole!</span>")
@@ -78,19 +72,11 @@ Consuming extracts:
 	if(fed)
 		var/mob/living/carbon/human/H = M
 
-<<<<<<< HEAD
 		if(!istype(H) || !HAS_TRAIT(H, TRAIT_AGEUSIA))
 			to_chat(M, "Tastes like [taste].")
 		playsound(get_turf(M), 'sound/items/eatfood.ogg', 20, 1)
 		if(nutrition)
 			M.reagents.add_reagent(/datum/reagent/consumable/nutriment,nutrition)
-=======
-		if(!istype(H) || !H.has_trait(TRAIT_AGEUSIA))
-			to_chat(M, "Tastes like [taste].")
-		playsound(get_turf(M), 'sound/items/eatfood.ogg', 20, 1)
-		if(nutrition)
-			M.reagents.add_reagent("nutriment",nutrition)
->>>>>>> Updated this old code to fork
 		do_effect(M, user)
 		qdel(src)
 		return
@@ -98,10 +84,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/grey
 	colour = "grey"
-<<<<<<< HEAD
 	effect_desc = "Creates a slime cookie."
-=======
->>>>>>> Updated this old code to fork
 	cookietype = /obj/item/slime_cookie/grey
 
 /obj/item/slime_cookie/grey
@@ -113,10 +96,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/orange
 	colour = "orange"
-<<<<<<< HEAD
 	effect_desc = "Creates a slime cookie that heats the target up and grants cold immunity for a short time."
-=======
->>>>>>> Updated this old code to fork
 	cookietype = /obj/item/slime_cookie/orange
 
 /obj/item/slime_cookie/orange
@@ -130,10 +110,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/purple
 	colour = "purple"
-<<<<<<< HEAD
 	effect_desc = "Creates a slime cookie that heals the target from every type of damage."
-=======
->>>>>>> Updated this old code to fork
 	cookietype = /obj/item/slime_cookie/purple
 
 /obj/item/slime_cookie/purple
@@ -152,52 +129,35 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/blue
 	colour = "blue"
-<<<<<<< HEAD
 	effect_desc = "Creates a slime cookie that wets the floor around you and makes you immune to water based slipping for a short time."
-=======
->>>>>>> Updated this old code to fork
 	cookietype = /obj/item/slime_cookie/blue
 
 /obj/item/slime_cookie/blue
 	name = "water cookie"
 	desc = "A transparent blue cookie. Constantly dripping wet."
 	icon_state = "blue"
-<<<<<<< HEAD
 	taste = /datum/reagent/water
-=======
-	taste = "water"
->>>>>>> Updated this old code to fork
 
 /obj/item/slime_cookie/blue/do_effect(mob/living/M, mob/user)
 	M.apply_status_effect(/datum/status_effect/watercookie)
 
 /obj/item/slimecross/consuming/metal
 	colour = "metal"
-<<<<<<< HEAD
 	effect_desc = "Creates a slime cookie that increases the target's resistance to brute damage."
-=======
->>>>>>> Updated this old code to fork
 	cookietype = /obj/item/slime_cookie/metal
 
 /obj/item/slime_cookie/metal
 	name = "metallic cookie"
 	desc = "A shiny grey cookie. Hard to the touch."
 	icon_state = "metal"
-<<<<<<< HEAD
 	taste = /datum/reagent/copper
-=======
-	taste = "copper"
->>>>>>> Updated this old code to fork
 
 /obj/item/slime_cookie/metal/do_effect(mob/living/M, mob/user)
 	M.apply_status_effect(/datum/status_effect/metalcookie)
 
 /obj/item/slimecross/consuming/yellow
 	colour = "yellow"
-<<<<<<< HEAD
 	effect_desc = "Creates a slime cookie that makes the target immune to electricity for a short time."
-=======
->>>>>>> Updated this old code to fork
 	cookietype = /obj/item/slime_cookie/yellow
 
 /obj/item/slime_cookie/yellow
@@ -211,10 +171,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/darkpurple
 	colour = "dark purple"
-<<<<<<< HEAD
 	effect_desc = "Creates a slime cookie that reverses how the target's body treats toxins."
-=======
->>>>>>> Updated this old code to fork
 	cookietype = /obj/item/slime_cookie/darkpurple
 
 /obj/item/slime_cookie/darkpurple
@@ -228,10 +185,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/darkblue
 	colour = "dark blue"
-<<<<<<< HEAD
 	effect_desc = "Creates a slime cookie that chills the target and extinguishes them."
-=======
->>>>>>> Updated this old code to fork
 	cookietype = /obj/item/slime_cookie/darkblue
 
 /obj/item/slime_cookie/darkblue
@@ -246,10 +200,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/silver
 	colour = "silver"
-<<<<<<< HEAD
 	effect_desc = "Creates a slime cookie that never gets the target fat."
-=======
->>>>>>> Updated this old code to fork
 	cookietype = /obj/item/slime_cookie/silver
 
 /obj/item/slime_cookie/silver
@@ -260,18 +211,11 @@ Consuming extracts:
 	nutrition = 0 //We don't want normal nutriment
 
 /obj/item/slime_cookie/silver/do_effect(mob/living/M, mob/user)
-<<<<<<< HEAD
 	M.reagents.add_reagent(/datum/reagent/consumable/nutriment/stabilized,10)
 
 /obj/item/slimecross/consuming/bluespace
 	colour = "bluespace"
 	effect_desc = "Creates a slime cookie that teleports the target to a random place in the area."
-=======
-	M.reagents.add_reagent("stabilizednutriment",10)
-
-/obj/item/slimecross/consuming/bluespace
-	colour = "bluespace"
->>>>>>> Updated this old code to fork
 	cookietype = /obj/item/slime_cookie/bluespace
 
 /obj/item/slime_cookie/bluespace
@@ -307,10 +251,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/sepia
 	colour = "sepia"
-<<<<<<< HEAD
 	effect_desc = "Creates a slime cookie that makes the target do things slightly faster."
-=======
->>>>>>> Updated this old code to fork
 	cookietype = /obj/item/slime_cookie/sepia
 
 /obj/item/slime_cookie/sepia
@@ -324,10 +265,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/cerulean
 	colour = "cerulean"
-<<<<<<< HEAD
 	effect_desc = "Creates a slime cookie that has a chance to make another once you eat it."
-=======
->>>>>>> Updated this old code to fork
 	cookietype = /obj/item/slime_cookie/cerulean
 	cookies = 3 //You're gonna get more.
 
@@ -345,10 +283,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/pyrite
 	colour = "pyrite"
-<<<<<<< HEAD
 	effect_desc = "Creates a slime cookie that randomly colors the target."
-=======
->>>>>>> Updated this old code to fork
 	cookietype = /obj/item/slime_cookie/pyrite
 
 /obj/item/slime_cookie/pyrite
@@ -390,10 +325,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/red
 	colour = "red"
-<<<<<<< HEAD
 	effect_desc = "Creates a slime cookie that creates a spatter of blood on the floor, while also restoring some of the target's blood."
-=======
->>>>>>> Updated this old code to fork
 	cookietype = /obj/item/slime_cookie/red
 
 /obj/item/slime_cookie/red
@@ -411,10 +343,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/green
 	colour = "green"
-<<<<<<< HEAD
 	effect_desc = "Creates a slime cookie that is absolutely disgusting, makes the target vomit, however all reagent in their body are also removed."
-=======
->>>>>>> Updated this old code to fork
 	cookietype = /obj/item/slime_cookie/green
 
 /obj/item/slime_cookie/green
@@ -431,10 +360,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/pink
 	colour = "pink"
-<<<<<<< HEAD
 	effect_desc = "Creates a slime cookie that makes the target want to spread the love."
-=======
->>>>>>> Updated this old code to fork
 	cookietype = /obj/item/slime_cookie/pink
 
 /obj/item/slime_cookie/pink
@@ -448,10 +374,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/gold
 	colour = "gold"
-<<<<<<< HEAD
 	effect_desc = "Creates a slime cookie that has a gold coin inside."
-=======
->>>>>>> Updated this old code to fork
 	cookietype = /obj/item/slime_cookie/gold
 
 /obj/item/slime_cookie/gold
@@ -470,10 +393,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/oil
 	colour = "oil"
-<<<<<<< HEAD
 	effect_desc = "Creates a slime cookie that slows anyone next to the user."
-=======
->>>>>>> Updated this old code to fork
 	cookietype = /obj/item/slime_cookie/oil
 
 /obj/item/slime_cookie/oil
@@ -487,10 +407,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/black
 	colour = "black"
-<<<<<<< HEAD
 	effect_desc = "Creates a slime cookie that makes the target look like a spooky skeleton for a little bit."
-=======
->>>>>>> Updated this old code to fork
 	cookietype = /obj/item/slime_cookie/black
 
 /obj/item/slime_cookie/black
@@ -504,10 +421,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/lightpink
 	colour = "light pink"
-<<<<<<< HEAD
 	effect_desc = "Creates a slime cookie that makes the target, and anyone next to the target, pacifistic for a small amount of time."
-=======
->>>>>>> Updated this old code to fork
 	cookietype = /obj/item/slime_cookie/lightpink
 
 /obj/item/slime_cookie/lightpink
@@ -521,10 +435,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/adamantine
 	colour = "adamantine"
-<<<<<<< HEAD
 	effect_desc = "Creates a slime cookie that increases the target's resistance to burn damage."
-=======
->>>>>>> Updated this old code to fork
 	cookietype = /obj/item/slime_cookie/adamantine
 
 /obj/item/slime_cookie/adamantine
@@ -538,10 +449,7 @@ Consuming extracts:
 
 /obj/item/slimecross/consuming/rainbow
 	colour = "rainbow"
-<<<<<<< HEAD
 	effect_desc = "Creates a slime cookie that has the effect of a random cookie."
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/consuming/rainbow/spawncookie()
 	var/cookie_type = pick(subtypesof(/obj/item/slime_cookie))

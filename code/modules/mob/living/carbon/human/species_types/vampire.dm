@@ -53,23 +53,16 @@
 		C.dust()
 	var/area/A = get_area(C)
 	if(istype(A, /area/chapel))
-<<<<<<< HEAD
 		to_chat(C, "<span class='warning'>You don't belong here!</span>")
-=======
-		to_chat(C, "<span class='danger'>You don't belong here!</span>")
->>>>>>> Updated this old code to fork
 		C.adjustFireLoss(20)
 		C.adjust_fire_stacks(6)
 		C.IgniteMob()
 
-<<<<<<< HEAD
 /datum/species/vampire/check_species_weakness(obj/item/weapon, mob/living/attacker)
 	if(istype(weapon, /obj/item/nullrod/whip))
 		return 1 //Whips deal 2x damage to vampires. Vampire killer.
 	return 0
 
-=======
->>>>>>> Updated this old code to fork
 /obj/item/organ/tongue/vampire
 	name = "vampire tongue"
 	actions_types = list(/datum/action/item_action/organ_action/vampire)
@@ -88,16 +81,11 @@
 		var/mob/living/carbon/H = owner
 		var/obj/item/organ/tongue/vampire/V = target
 		if(V.drain_cooldown >= world.time)
-<<<<<<< HEAD
 			to_chat(H, "<span class='warning'>You just drained blood, wait a few seconds!</span>")
-=======
-			to_chat(H, "<span class='notice'>You just drained blood, wait a few seconds.</span>")
->>>>>>> Updated this old code to fork
 			return
 		if(H.pulling && iscarbon(H.pulling))
 			var/mob/living/carbon/victim = H.pulling
 			if(H.blood_volume >= BLOOD_VOLUME_MAXIMUM)
-<<<<<<< HEAD
 				to_chat(H, "<span class='warning'>You're already full!</span>")
 				return
 			if(victim.stat == DEAD)
@@ -115,21 +103,6 @@
 				to_chat(victim, "<span class='warning'>[H] tries to bite you, but recoils in disgust!</span>")
 				to_chat(H, "<span class='warning'>[victim] reeks of garlic! you can't bring yourself to drain such tainted blood.</span>")
 				return
-=======
-				to_chat(H, "<span class='notice'>You're already full!</span>")
-				return
-			if(victim.stat == DEAD)
-				to_chat(H, "<span class='notice'>You need a living victim!</span>")
-				return
-			if(!victim.blood_volume || (victim.dna && ((NOBLOOD in victim.dna.species.species_traits) || victim.dna.species.exotic_blood)))
-				to_chat(H, "<span class='notice'>[victim] doesn't have blood!</span>")
-				return
-			V.drain_cooldown = world.time + 30
-			if(victim.anti_magic_check(FALSE, TRUE, FALSE))
-				to_chat(victim, "<span class='warning'>[H] tries to bite you, but stops before touching you!</span>")
-				to_chat(H, "<span class='warning'>[victim] is blessed! You stop just in time to avoid catching fire.</span>")
-				return
->>>>>>> Updated this old code to fork
 			if(!do_after(H, 30, target = victim))
 				return
 			var/blood_volume_difference = BLOOD_VOLUME_MAXIMUM - H.blood_volume //How much capacity we have left to absorb blood
@@ -140,11 +113,7 @@
 			victim.blood_volume = CLAMP(victim.blood_volume - drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
 			H.blood_volume = CLAMP(H.blood_volume + drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
 			if(!victim.blood_volume)
-<<<<<<< HEAD
 				to_chat(H, "<span class='notice'>You finish off [victim]'s blood supply.</span>")
-=======
-				to_chat(H, "<span class='warning'>You finish off [victim]'s blood supply!</span>")
->>>>>>> Updated this old code to fork
 
 #undef VAMP_DRAIN_AMOUNT
 

@@ -7,11 +7,7 @@
 #define WRITE_LOG(log, text) rustg_log_write(log, text)
 
 //print a warning message to world.log
-<<<<<<< HEAD
 #define WARNING(MSG) warning("[MSG] in [__FILE__] at line [__LINE__] src: [UNLINT(src)] usr: [usr].")
-=======
-#define WARNING(MSG) warning("[MSG] in [__FILE__] at line [__LINE__] src: [src] usr: [usr].")
->>>>>>> Updated this old code to fork
 /proc/warning(msg)
 	msg = "## WARNING: [msg]"
 	log_world(msg)
@@ -66,7 +62,6 @@
 	if (CONFIG_GET(flag/log_mecha))
 		WRITE_LOG(GLOB.world_mecha_log, "MECHA: [text]")
 
-<<<<<<< HEAD
 /proc/log_virus(text)
 	if (CONFIG_GET(flag/log_virus))
 		WRITE_LOG(GLOB.world_virus_log, "VIRUS: [text]")
@@ -81,8 +76,6 @@
 /proc/log_asset(text)
 	WRITE_LOG(GLOB.world_asset_log, "ASSET: [text]")
 
-=======
->>>>>>> Updated this old code to fork
 /proc/log_access(text)
 	if (CONFIG_GET(flag/log_access))
 		WRITE_LOG(GLOB.world_game_log, "ACCESS: [text]")
@@ -191,11 +184,8 @@
 	WRITE_LOG(GLOB.config_error_log, text)
 	SEND_TEXT(world.log, text)
 
-<<<<<<< HEAD
 /proc/log_mapping(text)
 	WRITE_LOG(GLOB.world_map_error_log, text)
-=======
->>>>>>> Updated this old code to fork
 
 /* For logging round startup. */
 /proc/start_log(log)

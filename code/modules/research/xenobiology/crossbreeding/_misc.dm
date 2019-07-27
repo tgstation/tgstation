@@ -4,7 +4,6 @@ Slimecrossing Items
 	Collected here for clarity.
 */
 
-<<<<<<< HEAD
 #define DEJAVU_REWIND_INTERVAL (10 SECONDS)
 
 //Rewind camera - I'm already Burning Sepia
@@ -151,42 +150,22 @@ Slimecrossing Items
 		
 	
 //Timefreeze camera - Old Burning Sepia result. Kept in case admins want to spawn it
-=======
-//Timefreeze camera - Burning Sepia
->>>>>>> Updated this old code to fork
 /obj/item/camera/timefreeze
 	name = "sepia-tinted camera"
 	desc = "They say a picture is like a moment stopped in time."
 	pictures_left = 1
 	pictures_max = 1
-<<<<<<< HEAD
 	var/used = FALSE
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/camera/timefreeze/afterattack(atom/target, mob/user, flag)
 	if(!on || !pictures_left || !isturf(target.loc))
 		return
-<<<<<<< HEAD
 	if(!used) //refilling the film does not refill the timestop
 		new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
 		used = TRUE
 		desc = "This camera has seen better days."
 	. = ..()
 
-=======
-	new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
-	. = ..()
-	var/text = "The camera fades away"
-	if(disk)
-		text += ", leaving the disk behind!"
-		if(!user.put_in_hands(disk))
-			disk.forceMove(user.drop_location())
-	else
-		text += "!"
-	to_chat(user,"<span class='notice'>[text]</span>")
-	qdel(src)
->>>>>>> Updated this old code to fork
 
 //Hypercharged slime cell - Charged Yellow
 /obj/item/stock_parts/cell/high/slime/hypercharged
@@ -248,25 +227,15 @@ Slimecrossing Items
 	filling_color = "#964B00"
 	tastes = list("cardboard" = 3, "sadness" = 3)
 	foodtype = null //Don't ask what went into them. You're better off not knowing.
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/nutriment/stabilized = 10, /datum/reagent/consumable/nutriment = 2) //Won't make you fat. Will make you question your sanity.
-=======
-	list_reagents = list("stabilizednutriment" = 10, "nutriment" = 2) //Won't make you fat. Will make you question your sanity.
->>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/snacks/rationpack/checkLiked(fraction, mob/M)	//Nobody likes rationpacks. Nobody.
 	if(last_check_time + 50 < world.time)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-<<<<<<< HEAD
 			if(H.mind && !HAS_TRAIT(H, TRAIT_AGEUSIA))
 				to_chat(H,"<span class='notice'>That didn't taste very good...</span>") //No disgust, though. It's just not good tasting.
 				var/datum/component/mood/mood = H.GetComponent(/datum/component/mood)
-=======
-			if(H.mind && !H.has_trait(TRAIT_AGEUSIA))
-				to_chat(H,"<span class='notice'>That didn't taste very good...</span>") //No disgust, though. It's just not good tasting.
-				GET_COMPONENT_FROM(mood, /datum/component/mood, H)
->>>>>>> Updated this old code to fork
 				if(mood)
 					mood.add_event(null,"gross_food", /datum/mood_event/gross_food)
 				last_check_time = world.time

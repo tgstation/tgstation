@@ -222,19 +222,11 @@
 	. = ..()
 	switch(buildstage)
 		if(0)
-<<<<<<< HEAD
 			. += "<span class='notice'>It is missing air alarm electronics.</span>"
 		if(1)
 			. += "<span class='notice'>It is missing wiring.</span>"
 		if(2)
 			. += "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"] the interface.</span>"
-=======
-			to_chat(user, "<span class='notice'>It is missing air alarm electronics.</span>")
-		if(1)
-			to_chat(user, "<span class='notice'>It is missing wiring.</span>")
-		if(2)
-			to_chat(user, "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"] the interface.</span>")
->>>>>>> Updated this old code to fork
 
 /obj/machinery/airalarm/ui_status(mob/user)
 	if(user.has_unlimited_silicon_privilege && aidisabled)
@@ -425,11 +417,7 @@
 		if("mode")
 			mode = text2num(params["mode"])
 			investigate_log("was turned to [get_mode_name(mode)] mode by [key_name(usr)]",INVESTIGATE_ATMOS)
-<<<<<<< HEAD
 			apply_mode(usr)
-=======
-			apply_mode()
->>>>>>> Updated this old code to fork
 			. = TRUE
 		if("alarm")
 			var/area/A = get_area(src)
@@ -468,32 +456,12 @@
 	else
 		return 0
 
-<<<<<<< HEAD
-=======
-/obj/machinery/airalarm/proc/refresh_all()
-	var/area/A = get_area(src)
-	for(var/id_tag in A.air_vent_names)
-		var/list/I = A.air_vent_info[id_tag]
-		if(I && I["timestamp"] + AALARM_REPORT_TIMEOUT / 2 > world.time)
-			continue
-		send_signal(id_tag, list("status"))
-	for(var/id_tag in A.air_scrub_names)
-		var/list/I = A.air_scrub_info[id_tag]
-		if(I && I["timestamp"] + AALARM_REPORT_TIMEOUT / 2 > world.time)
-			continue
-		send_signal(id_tag, list("status"))
-
->>>>>>> Updated this old code to fork
 /obj/machinery/airalarm/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = SSradio.add_object(src, frequency, RADIO_TO_AIRALARM)
 
-<<<<<<< HEAD
 /obj/machinery/airalarm/proc/send_signal(target, list/command, atom/user)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
-=======
-/obj/machinery/airalarm/proc/send_signal(target, list/command, mob/user)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
->>>>>>> Updated this old code to fork
 	if(!radio_connection)
 		return 0
 
@@ -526,11 +494,7 @@
 		if(AALARM_MODE_FLOOD)
 			return "Flood"
 
-<<<<<<< HEAD
 /obj/machinery/airalarm/proc/apply_mode(atom/signal_source)
-=======
-/obj/machinery/airalarm/proc/apply_mode()
->>>>>>> Updated this old code to fork
 	var/area/A = get_area(src)
 	switch(mode)
 		if(AALARM_MODE_SCRUBBING)
@@ -539,23 +503,14 @@
 					"power" = 1,
 					"set_filters" = list(/datum/gas/carbon_dioxide),
 					"scrubbing" = 1,
-<<<<<<< HEAD
 					"widenet" = 0
 				), signal_source)
-=======
-					"widenet" = 0,
-				))
->>>>>>> Updated this old code to fork
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
 					"set_external_pressure" = ONE_ATMOSPHERE
-<<<<<<< HEAD
 				), signal_source)
-=======
-				))
->>>>>>> Updated this old code to fork
 		if(AALARM_MODE_CONTAMINATED)
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
@@ -574,67 +529,41 @@
 						/datum/gas/pluoxium
 					),
 					"scrubbing" = 1,
-<<<<<<< HEAD
 					"widenet" = 1
 				), signal_source)
-=======
-					"widenet" = 1,
-				))
->>>>>>> Updated this old code to fork
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
 					"set_external_pressure" = ONE_ATMOSPHERE
-<<<<<<< HEAD
 				), signal_source)
-=======
-				))
->>>>>>> Updated this old code to fork
 		if(AALARM_MODE_VENTING)
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
 					"widenet" = 0,
 					"scrubbing" = 0
-<<<<<<< HEAD
 				), signal_source)
-=======
-				))
->>>>>>> Updated this old code to fork
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
 					"set_external_pressure" = ONE_ATMOSPHERE*2
-<<<<<<< HEAD
 				), signal_source)
-=======
-				))
->>>>>>> Updated this old code to fork
 		if(AALARM_MODE_REFILL)
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
 					"set_filters" = list(/datum/gas/carbon_dioxide),
 					"scrubbing" = 1,
-<<<<<<< HEAD
 					"widenet" = 0
 				), signal_source)
-=======
-					"widenet" = 0,
-				))
->>>>>>> Updated this old code to fork
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
 					"set_external_pressure" = ONE_ATMOSPHERE * 3
-<<<<<<< HEAD
 				), signal_source)
-=======
-				))
->>>>>>> Updated this old code to fork
 		if(AALARM_MODE_PANIC,
 			AALARM_MODE_REPLACEMENT)
 			for(var/device_id in A.air_scrub_names)
@@ -642,75 +571,43 @@
 					"power" = 1,
 					"widenet" = 1,
 					"scrubbing" = 0
-<<<<<<< HEAD
 				), signal_source)
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
-=======
-				))
-			for(var/device_id in A.air_vent_names)
-				send_signal(device_id, list(
-					"power" = 0
-				))
->>>>>>> Updated this old code to fork
 		if(AALARM_MODE_SIPHON)
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
 					"widenet" = 0,
 					"scrubbing" = 0
-<<<<<<< HEAD
 				), signal_source)
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
-=======
-				))
-			for(var/device_id in A.air_vent_names)
-				send_signal(device_id, list(
-					"power" = 0
-				))
->>>>>>> Updated this old code to fork
 
 		if(AALARM_MODE_OFF)
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 0
-<<<<<<< HEAD
 				), signal_source)
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
-=======
-				))
-			for(var/device_id in A.air_vent_names)
-				send_signal(device_id, list(
-					"power" = 0
-				))
->>>>>>> Updated this old code to fork
 		if(AALARM_MODE_FLOOD)
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 0
-<<<<<<< HEAD
 				), signal_source)
-=======
-				))
->>>>>>> Updated this old code to fork
 			for(var/device_id in A.air_vent_names)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 2,
 					"set_internal_pressure" = 0
-<<<<<<< HEAD
 				), signal_source)
-=======
-				))
->>>>>>> Updated this old code to fork
 
 /obj/machinery/airalarm/update_icon()
 	if(panel_open)
@@ -773,11 +670,7 @@
 		apply_danger_level()
 	if(mode == AALARM_MODE_REPLACEMENT && environment_pressure < ONE_ATMOSPHERE * 0.05)
 		mode = AALARM_MODE_SCRUBBING
-<<<<<<< HEAD
 		apply_mode(src)
-=======
-		apply_mode()
->>>>>>> Updated this old code to fork
 
 
 /obj/machinery/airalarm/proc/post_alert(alert_level)
@@ -829,10 +722,7 @@
 				return
 			else if(istype(W, /obj/item/card/id) || istype(W, /obj/item/pda))// trying to unlock the interface with an ID card
 				togglelock(user)
-<<<<<<< HEAD
 				return
-=======
->>>>>>> Updated this old code to fork
 			else if(panel_open && is_wire_tool(W))
 				wires.interact(user)
 				return
@@ -898,7 +788,6 @@
 
 	return ..()
 
-<<<<<<< HEAD
 /obj/machinery/airalarm/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if((buildstage == 0) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
 		return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 20, "cost" = 1)	
@@ -914,8 +803,6 @@
 			return TRUE
 	return FALSE
 
-=======
->>>>>>> Updated this old code to fork
 /obj/machinery/airalarm/AltClick(mob/user)
 	..()
 	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))

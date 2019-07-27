@@ -18,15 +18,9 @@
 	var/recurring = FALSE
 
 /obj/item/slime_extract/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	if(Uses > 1)
 		. += "It has [Uses] uses remaining."
-=======
-	..()
-	if(Uses > 1)
-		to_chat(user,"It has [Uses] uses remaining.")
->>>>>>> Updated this old code to fork
 
 /obj/item/slime_extract/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/slimepotion/enhancer))
@@ -48,19 +42,11 @@
 
 /obj/item/slime_extract/on_grind()
 	if(Uses)
-<<<<<<< HEAD
 		grind_results[/datum/reagent/toxin/slimejelly] = 20
 
 //Effect when activated by a Luminescent. Separated into a minor and major effect. Returns cooldown in deciseconds.
 /obj/item/slime_extract/proc/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	to_chat(user, "<span class='warning'>Nothing happened... This slime extract cannot be activated this way.</span>")
-=======
-		grind_results["slimejelly"] = 20
-
-//Effect when activated by a Luminescent. Separated into a minor and major effect. Returns cooldown in deciseconds.
-/obj/item/slime_extract/proc/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
-	to_chat(user, "<span class='notice'>Nothing happened... This slime extract cannot be activated this way.</span>")
->>>>>>> Updated this old code to fork
 	return 0
 
 //Core-crossing: Feeding adult slimes extracts to obtain a much more powerful, single extract.
@@ -92,11 +78,7 @@
 	name = "grey slime extract"
 	icon_state = "grey slime extract"
 	effectmod = "reproductive"
-<<<<<<< HEAD
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
-=======
-	activate_reagents = list("blood","plasma","water")
->>>>>>> Updated this old code to fork
 
 /obj/item/slime_extract/grey/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -121,11 +103,7 @@
 	name = "gold slime extract"
 	icon_state = "gold slime extract"
 	effectmod = "symbiont"
-<<<<<<< HEAD
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
-=======
-	activate_reagents = list("blood","plasma","water")
->>>>>>> Updated this old code to fork
 
 /obj/item/slime_extract/gold/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -154,11 +132,7 @@
 	name = "silver slime extract"
 	icon_state = "silver slime extract"
 	effectmod = "consuming"
-<<<<<<< HEAD
 	activate_reagents = list(/datum/reagent/toxin/plasma,/datum/reagent/water)
-=======
-	activate_reagents = list("plasma","water")
->>>>>>> Updated this old code to fork
 
 /obj/item/slime_extract/silver/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -183,11 +157,7 @@
 	name = "metal slime extract"
 	icon_state = "metal slime extract"
 	effectmod = "industrial"
-<<<<<<< HEAD
 	activate_reagents = list(/datum/reagent/toxin/plasma,/datum/reagent/water)
-=======
-	activate_reagents = list("plasma","water")
->>>>>>> Updated this old code to fork
 
 /obj/item/slime_extract/metal/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -211,11 +181,7 @@
 	name = "purple slime extract"
 	icon_state = "purple slime extract"
 	effectmod = "regenerative"
-<<<<<<< HEAD
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma)
-=======
-	activate_reagents = list("blood","plasma")
->>>>>>> Updated this old code to fork
 
 /obj/item/slime_extract/purple/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -227,22 +193,14 @@
 
 		if(SLIME_ACTIVATE_MAJOR)
 			to_chat(user, "<span class='notice'>You activate [src], and it releases regenerative chemicals!</span>")
-<<<<<<< HEAD
 			user.reagents.add_reagent(/datum/reagent/medicine/regen_jelly,10)
-=======
-			user.reagents.add_reagent("regen_jelly",10)
->>>>>>> Updated this old code to fork
 			return 600
 
 /obj/item/slime_extract/darkpurple
 	name = "dark purple slime extract"
 	icon_state = "dark purple slime extract"
 	effectmod = "self-sustaining"
-<<<<<<< HEAD
 	activate_reagents = list(/datum/reagent/toxin/plasma)
-=======
-	activate_reagents = list("plasma")
->>>>>>> Updated this old code to fork
 
 /obj/item/slime_extract/darkpurple/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -265,17 +223,12 @@
 	name = "orange slime extract"
 	icon_state = "orange slime extract"
 	effectmod = "burning"
-<<<<<<< HEAD
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
-=======
-	activate_reagents = list("blood","plasma","water")
->>>>>>> Updated this old code to fork
 
 /obj/item/slime_extract/orange/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			to_chat(user, "<span class='notice'>You activate [src]. You start feeling hot!</span>")
-<<<<<<< HEAD
 			user.reagents.add_reagent(/datum/reagent/consumable/capsaicin,10)
 			return 150
 
@@ -283,15 +236,6 @@
 			user.reagents.add_reagent(/datum/reagent/phosphorus,5)//
 			user.reagents.add_reagent(/datum/reagent/potassium,5) // = smoke, along with any reagents inside mr. slime
 			user.reagents.add_reagent(/datum/reagent/consumable/sugar,5)     //
-=======
-			user.reagents.add_reagent("capsaicin",10)
-			return 150
-
-		if(SLIME_ACTIVATE_MAJOR)
-			user.reagents.add_reagent("phosphorus",5)//
-			user.reagents.add_reagent("potassium",5) // = smoke, along with any reagents inside mr. slime
-			user.reagents.add_reagent("sugar",5)     //
->>>>>>> Updated this old code to fork
 			to_chat(user, "<span class='warning'>You activate [src], and a cloud of smoke bursts out of your skin!</span>")
 			return 450
 
@@ -299,11 +243,7 @@
 	name = "yellow slime extract"
 	icon_state = "yellow slime extract"
 	effectmod = "charged"
-<<<<<<< HEAD
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
-=======
-	activate_reagents = list("blood","plasma","water")
->>>>>>> Updated this old code to fork
 
 /obj/item/slime_extract/yellow/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -326,21 +266,13 @@
 	name = "red slime extract"
 	icon_state = "red slime extract"
 	effectmod = "sanguine"
-<<<<<<< HEAD
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
-=======
-	activate_reagents = list("blood","plasma","water")
->>>>>>> Updated this old code to fork
 
 /obj/item/slime_extract/red/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			to_chat(user, "<span class='notice'>You activate [src]. You start feeling fast!</span>")
-<<<<<<< HEAD
 			user.reagents.add_reagent(/datum/reagent/medicine/ephedrine,5)
-=======
-			user.reagents.add_reagent("ephedrine",5)
->>>>>>> Updated this old code to fork
 			return 450
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -354,24 +286,15 @@
 	name = "blue slime extract"
 	icon_state = "blue slime extract"
 	effectmod = "stabilized"
-<<<<<<< HEAD
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
-=======
-	activate_reagents = list("blood","plasma","water")
->>>>>>> Updated this old code to fork
 
 /obj/item/slime_extract/blue/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			to_chat(user, "<span class='notice'>You activate [src]. Your genome feels more stable!</span>")
 			user.adjustCloneLoss(-15)
-<<<<<<< HEAD
 			user.reagents.add_reagent(/datum/reagent/medicine/mutadone, 10)
 			user.reagents.add_reagent(/datum/reagent/medicine/potass_iodide, 10)
-=======
-			user.reagents.add_reagent("mutadone", 10)
-			user.reagents.add_reagent("potass_iodide", 10)
->>>>>>> Updated this old code to fork
 			return 250
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -387,11 +310,7 @@
 	name = "dark blue slime extract"
 	icon_state = "dark blue slime extract"
 	effectmod = "chilling"
-<<<<<<< HEAD
 	activate_reagents = list(/datum/reagent/toxin/plasma,/datum/reagent/water)
-=======
-	activate_reagents = list("plasma","water")
->>>>>>> Updated this old code to fork
 
 /obj/item/slime_extract/darkblue/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -399,13 +318,8 @@
 			to_chat(user, "<span class='notice'>You activate [src]. You start feeling colder!</span>")
 			user.ExtinguishMob()
 			user.adjust_fire_stacks(-20)
-<<<<<<< HEAD
 			user.reagents.add_reagent(/datum/reagent/consumable/frostoil,4)
 			user.reagents.add_reagent(/datum/reagent/medicine/cryoxadone,5)
-=======
-			user.reagents.add_reagent("frostoil",4)
-			user.reagents.add_reagent("cryoxadone",5)
->>>>>>> Updated this old code to fork
 			return 100
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -419,11 +333,7 @@
 	name = "pink slime extract"
 	icon_state = "pink slime extract"
 	effectmod = "gentle"
-<<<<<<< HEAD
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma)
-=======
-	activate_reagents = list("blood","plasma")
->>>>>>> Updated this old code to fork
 
 /obj/item/slime_extract/pink/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -444,22 +354,14 @@
 			user.visible_message("<span class='warning'>[user]'s skin starts flashing hypnotically...</span>", "<span class='notice'>Your skin starts forming odd patterns, pacifying creatures around you.</span>")
 			for(var/mob/living/carbon/C in viewers(user, null))
 				if(C != user)
-<<<<<<< HEAD
 					C.reagents.add_reagent(/datum/reagent/pax,2)
-=======
-					C.reagents.add_reagent("pax",2)
->>>>>>> Updated this old code to fork
 			return 600
 
 /obj/item/slime_extract/green
 	name = "green slime extract"
 	icon_state = "green slime extract"
 	effectmod = "mutative"
-<<<<<<< HEAD
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/uranium/radium)
-=======
-	activate_reagents = list("blood","plasma","radium")
->>>>>>> Updated this old code to fork
 
 /obj/item/slime_extract/green/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -483,11 +385,7 @@
 	name = "light pink slime extract"
 	icon_state = "light pink slime extract"
 	effectmod = "loyal"
-<<<<<<< HEAD
 	activate_reagents = list(/datum/reagent/toxin/plasma)
-=======
-	activate_reagents = list("plasma")
->>>>>>> Updated this old code to fork
 
 /obj/item/slime_extract/lightpink/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -511,11 +409,7 @@
 	name = "black slime extract"
 	icon_state = "black slime extract"
 	effectmod = "transformative"
-<<<<<<< HEAD
 	activate_reagents = list(/datum/reagent/toxin/plasma)
-=======
-	activate_reagents = list("plasma")
->>>>>>> Updated this old code to fork
 
 /obj/item/slime_extract/black/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -536,11 +430,7 @@
 	name = "oil slime extract"
 	icon_state = "oil slime extract"
 	effectmod = "detonating"
-<<<<<<< HEAD
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma)
-=======
-	activate_reagents = list("blood","plasma")
->>>>>>> Updated this old code to fork
 
 /obj/item/slime_extract/oil/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -563,11 +453,7 @@
 	name = "adamantine slime extract"
 	icon_state = "adamantine slime extract"
 	effectmod = "crystalline"
-<<<<<<< HEAD
 	activate_reagents = list(/datum/reagent/toxin/plasma)
-=======
-	activate_reagents = list("plasma")
->>>>>>> Updated this old code to fork
 
 /obj/item/slime_extract/adamantine/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -596,11 +482,7 @@
 	name = "bluespace slime extract"
 	icon_state = "bluespace slime extract"
 	effectmod = "warping"
-<<<<<<< HEAD
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma)
-=======
-	activate_reagents = list("blood","plasma")
->>>>>>> Updated this old code to fork
 	var/teleport_ready = FALSE
 	var/teleport_x = 0
 	var/teleport_y = 0
@@ -636,11 +518,7 @@
 	name = "pyrite slime extract"
 	icon_state = "pyrite slime extract"
 	effectmod = "prismatic"
-<<<<<<< HEAD
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma)
-=======
-	activate_reagents = list("blood","plasma")
->>>>>>> Updated this old code to fork
 
 /obj/item/slime_extract/pyrite/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -666,20 +544,12 @@
 	name = "cerulean slime extract"
 	icon_state = "cerulean slime extract"
 	effectmod = "recurring"
-<<<<<<< HEAD
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma)
-=======
-	activate_reagents = list("blood","plasma")
->>>>>>> Updated this old code to fork
 
 /obj/item/slime_extract/cerulean/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-<<<<<<< HEAD
 			user.reagents.add_reagent(/datum/reagent/medicine/salbutamol,15)
-=======
-			user.reagents.add_reagent("salbutamol",15)
->>>>>>> Updated this old code to fork
 			to_chat(user, "<span class='notice'>You feel like you don't need to breathe!</span>")
 			return 150
 
@@ -694,11 +564,7 @@
 	name = "sepia slime extract"
 	icon_state = "sepia slime extract"
 	effectmod = "lengthened"
-<<<<<<< HEAD
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
-=======
-	activate_reagents = list("blood","plasma","water")
->>>>>>> Updated this old code to fork
 
 /obj/item/slime_extract/sepia/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -720,11 +586,7 @@
 	name = "rainbow slime extract"
 	icon_state = "rainbow slime extract"
 	effectmod = "hyperchromatic"
-<<<<<<< HEAD
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,"lesser plasma",/datum/reagent/toxin/slimejelly,"holy water and uranium") //Curse this snowflake reagent list.
-=======
-	activate_reagents = list("blood","plasma","lesser plasma","slimejelly","holy water and uranium") //Curse this snowflake reagent list.
->>>>>>> Updated this old code to fork
 
 /obj/item/slime_extract/rainbow/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -754,11 +616,7 @@
 /obj/item/slimepotion/afterattack(obj/item/reagent_containers/target, mob/user , proximity)
 	. = ..()
 	if (istype(target))
-<<<<<<< HEAD
 		to_chat(user, "<span class='warning'>You cannot transfer [src] to [target]! It appears the potion must be given directly to a slime to absorb.</span>" )
-=======
-		to_chat(user, "<span class='notice'>You cannot transfer [src] to [target]! It appears the potion must be given directly to a slime to absorb.</span>" )
->>>>>>> Updated this old code to fork
 		return
 
 /obj/item/slimepotion/slime/docility
@@ -774,16 +632,12 @@
 	if(M.stat)
 		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return
-<<<<<<< HEAD
 	if(M.rabid) //Stops being rabid, but doesn't become truly docile.
 		to_chat(M, "<span class='warning'>You absorb the potion, and your rabid hunger finally settles to a normal desire to feed.</span>")
 		to_chat(user, "<span class='notice'>You feed the slime the potion, calming its rabid rage.</span>")
 		M.rabid = FALSE
 		qdel(src)
 		return
-=======
-
->>>>>>> Updated this old code to fork
 	M.docile = 1
 	M.set_nutrition(700)
 	to_chat(M, "<span class='warning'>You absorb the potion and feel your intense desire to feed melt away.</span>")
@@ -853,11 +707,7 @@
 	imp.implant(SM, user)
 
 	SM.access_card = new /obj/item/card/id/syndicate(SM)
-<<<<<<< HEAD
 	ADD_TRAIT(SM.access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
-=======
-	SM.access_card.add_trait(TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
->>>>>>> Updated this old code to fork
 
 /obj/item/slimepotion/transference
 	name = "consciousness transference potion"
@@ -1130,11 +980,7 @@
 	icon_state = "tile-bluespace"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
-<<<<<<< HEAD
 	materials = list(/datum/material/iron=500)
-=======
-	materials = list(MAT_METAL=500)
->>>>>>> Updated this old code to fork
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
@@ -1150,11 +996,7 @@
 	icon_state = "tile-sepia"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
-<<<<<<< HEAD
 	materials = list(/datum/material/iron=500)
-=======
-	materials = list(MAT_METAL=500)
->>>>>>> Updated this old code to fork
 	throwforce = 10
 	throw_speed = 0.1
 	throw_range = 28

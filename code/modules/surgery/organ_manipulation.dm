@@ -1,9 +1,5 @@
 /datum/surgery/organ_manipulation
-<<<<<<< HEAD
 	name = "Organ manipulation"
-=======
-	name = "organ manipulation"
->>>>>>> Updated this old code to fork
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
 	requires_real_bodypart = 1
@@ -30,11 +26,7 @@
 		)
 
 /datum/surgery/organ_manipulation/alien
-<<<<<<< HEAD
 	name = "Alien organ manipulation"
-=======
-	name = "alien organ manipulation"
->>>>>>> Updated this old code to fork
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
 	target_mobtypes = list(/mob/living/carbon/alien/humanoid)
 	steps = list(
@@ -47,11 +39,7 @@
 		)
 
 /datum/surgery/organ_manipulation/mechanic
-<<<<<<< HEAD
 	name = "Prosthesis organ manipulation"
-=======
-	name = "prosthesis organ manipulation"
->>>>>>> Updated this old code to fork
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
 	requires_bodypart_type = BODYPART_ROBOTIC
 	lying_required = FALSE
@@ -93,49 +81,29 @@
 	I = null
 	if(istype(tool, /obj/item/organ_storage))
 		if(!tool.contents.len)
-<<<<<<< HEAD
 			to_chat(user, "<span class='warning'>There is nothing inside [tool]!</span>")
 			return -1
 		I = tool.contents[1]
 		if(!isorgan(I))
 			to_chat(user, "<span class='warning'>You cannot put [I] into [target]'s [parse_zone(target_zone)]!</span>")
-=======
-			to_chat(user, "<span class='notice'>There is nothing inside [tool]!</span>")
-			return -1
-		I = tool.contents[1]
-		if(!isorgan(I))
-			to_chat(user, "<span class='notice'>You cannot put [I] into [target]'s [parse_zone(target_zone)]!</span>")
->>>>>>> Updated this old code to fork
 			return -1
 		tool = I
 	if(isorgan(tool))
 		current_type = "insert"
 		I = tool
 		if(target_zone != I.zone || target.getorganslot(I.slot))
-<<<<<<< HEAD
 			to_chat(user, "<span class='warning'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>")
 			return -1
 
 		display_results(user, target, "<span class='notice'>You begin to insert [tool] into [target]'s [parse_zone(target_zone)]...</span>",
 			"[user] begins to insert [tool] into [target]'s [parse_zone(target_zone)].",
 			"[user] begins to insert something into [target]'s [parse_zone(target_zone)].")
-=======
-			to_chat(user, "<span class='notice'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>")
-			return -1
-
-		user.visible_message("[user] begins to insert [tool] into [target]'s [parse_zone(target_zone)].",
-			"<span class='notice'>You begin to insert [tool] into [target]'s [parse_zone(target_zone)]...</span>")
->>>>>>> Updated this old code to fork
 
 	else if(implement_type in implements_extract)
 		current_type = "extract"
 		var/list/organs = target.getorganszone(target_zone)
 		if(!organs.len)
-<<<<<<< HEAD
 			to_chat(user, "<span class='warning'>There are no removable organs in [target]'s [parse_zone(target_zone)]!</span>")
-=======
-			to_chat(user, "<span class='notice'>There are no removable organs in [target]'s [parse_zone(target_zone)]!</span>")
->>>>>>> Updated this old code to fork
 			return -1
 		else
 			for(var/obj/item/organ/O in organs)
@@ -148,14 +116,9 @@
 				I = organs[I]
 				if(!I)
 					return -1
-<<<<<<< HEAD
 				display_results(user, target, "<span class='notice'>You begin to extract [I] from [target]'s [parse_zone(target_zone)]...</span>",
 					"[user] begins to extract [I] from [target]'s [parse_zone(target_zone)].",
 					"[user] begins to extract something from [target]'s [parse_zone(target_zone)].")
-=======
-				user.visible_message("[user] begins to extract [I] from [target]'s [parse_zone(target_zone)].",
-					"<span class='notice'>You begin to extract [I] from [target]'s [parse_zone(target_zone)]...</span>")
->>>>>>> Updated this old code to fork
 			else
 				return -1
 
@@ -175,7 +138,6 @@
 			I = tool
 		user.temporarilyRemoveItemFromInventory(I, TRUE)
 		I.Insert(target)
-<<<<<<< HEAD
 		display_results(user, target, "<span class='notice'>You insert [tool] into [target]'s [parse_zone(target_zone)].</span>",
 			"[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!",
 			"[user] inserts something into [target]'s [parse_zone(target_zone)]!")
@@ -185,25 +147,11 @@
 			display_results(user, target, "<span class='notice'>You successfully extract [I] from [target]'s [parse_zone(target_zone)].</span>",
 				"[user] successfully extracts [I] from [target]'s [parse_zone(target_zone)]!",
 				"[user] successfully extracts something from [target]'s [parse_zone(target_zone)]!")
-=======
-		user.visible_message("[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!",
-			"<span class='notice'>You insert [tool] into [target]'s [parse_zone(target_zone)].</span>")
-
-	else if(current_type == "extract")
-		if(I && I.owner == target)
-			user.visible_message("[user] successfully extracts [I] from [target]'s [parse_zone(target_zone)]!",
-				"<span class='notice'>You successfully extract [I] from [target]'s [parse_zone(target_zone)].</span>")
->>>>>>> Updated this old code to fork
 			log_combat(user, target, "surgically removed [I.name] from", addition="INTENT: [uppertext(user.a_intent)]")
 			I.Remove(target)
 			I.forceMove(get_turf(target))
 		else
-<<<<<<< HEAD
 			display_results(user, target, "<span class='warning'>You can't extract anything from [target]'s [parse_zone(target_zone)]!</span>",
 				"[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!",
 				"[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!")
-=======
-			user.visible_message("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!",
-				"<span class='notice'>You can't extract anything from [target]'s [parse_zone(target_zone)]!</span>")
->>>>>>> Updated this old code to fork
 	return 0

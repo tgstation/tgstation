@@ -11,10 +11,7 @@
 	density = FALSE
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-<<<<<<< HEAD
 	speed_process = TRUE
-=======
->>>>>>> Updated this old code to fork
 
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_OFFLINE
 
@@ -26,10 +23,6 @@
 
 	var/open_panel = FALSE 	//are the wires exposed?
 	var/active = FALSE		//is the bomb counting down?
-<<<<<<< HEAD
-=======
-	var/defused = FALSE		//is the bomb capable of exploding?
->>>>>>> Updated this old code to fork
 	var/obj/item/bombcore/payload = /obj/item/bombcore
 	var/beepsound = 'sound/items/timer.ogg'
 	var/delayedbig = FALSE	//delay wire pulsed?
@@ -41,11 +34,7 @@
 	var/explode_now = FALSE
 
 /obj/machinery/syndicatebomb/proc/try_detonate(ignore_active = FALSE)
-<<<<<<< HEAD
 	. = (payload in src) && (active || ignore_active)
-=======
-	. = (payload in src) && (active || ignore_active) && !defused
->>>>>>> Updated this old code to fork
 	if(.)
 		payload.detonate()
 
@@ -63,11 +52,8 @@
 		detonation_timer = null
 		next_beep = null
 		countdown.stop()
-<<<<<<< HEAD
 		if(payload in src)
 			payload.defuse()
-=======
->>>>>>> Updated this old code to fork
 		return
 
 	if(!isnull(next_beep) && (next_beep <= world.time))
@@ -88,24 +74,11 @@
 		playsound(loc, beepsound, volume, 0)
 		next_beep = world.time + 10
 
-<<<<<<< HEAD
 	if(active && ((detonation_timer <= world.time) || explode_now))
-=======
-	if(active && !defused && ((detonation_timer <= world.time) || explode_now))
->>>>>>> Updated this old code to fork
 		active = FALSE
 		timer_set = initial(timer_set)
 		update_icon()
 		try_detonate(TRUE)
-<<<<<<< HEAD
-=======
-	//Counter terrorists win
-	else if(!active || defused)
-		if(defused && payload in src)
-			payload.defuse()
-			countdown.stop()
-			STOP_PROCESSING(SSfastprocess, src)
->>>>>>> Updated this old code to fork
 
 /obj/machinery/syndicatebomb/Initialize()
 	. = ..()
@@ -114,10 +87,7 @@
 		payload = new payload(src)
 	update_icon()
 	countdown = new(src)
-<<<<<<< HEAD
 	STOP_PROCESSING(SSfastprocess, src)
-=======
->>>>>>> Updated this old code to fork
 
 /obj/machinery/syndicatebomb/Destroy()
 	QDEL_NULL(wires)
@@ -126,13 +96,8 @@
 	return ..()
 
 /obj/machinery/syndicatebomb/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	. += {"A digital display on it reads "[seconds_remaining()]"."}
-=======
-	..()
-	to_chat(user, "A digital display on it reads \"[seconds_remaining()]\".")
->>>>>>> Updated this old code to fork
 
 /obj/machinery/syndicatebomb/update_icon()
 	icon_state = "[initial(icon_state)][active ? "-active" : "-inactive"][open_panel ? "-wires" : ""]"
@@ -205,11 +170,7 @@
 	else
 		var/old_integ = obj_integrity
 		. = ..()
-<<<<<<< HEAD
 		if((old_integ > obj_integrity) && active  && (payload in src))
-=======
-		if((old_integ > obj_integrity) && active && !defused && (payload in src))
->>>>>>> Updated this old code to fork
 			to_chat(user, "<span class='warning'>That seems like a really bad idea...</span>")
 
 /obj/machinery/syndicatebomb/interact(mob/user)
@@ -235,15 +196,7 @@
 		timer_set = CLAMP(new_timer, minimum_timer, maximum_timer)
 		loc.visible_message("<span class='notice'>[icon2html(src, viewers(src))] timer set for [timer_set] seconds.</span>")
 	if(alert(user,"Would you like to start the countdown now?",,"Yes","No") == "Yes" && in_range(src, user) && isliving(user))
-<<<<<<< HEAD
 		if(!active)
-=======
-		if(defused || active)
-			if(defused)
-				visible_message("<span class='warning'>[icon2html(src, viewers(src))] Device error: User intervention required.</span>")
-			return
-		else
->>>>>>> Updated this old code to fork
 			visible_message("<span class='danger'>[icon2html(src, viewers(loc))] [timer_set] seconds until detonation, please clear the area.</span>")
 			activate()
 			update_icon()
@@ -327,12 +280,7 @@
 	qdel(src)
 
 /obj/item/bombcore/proc/defuse()
-<<<<<<< HEAD
 //Note: 	the machine's defusal is mostly done from the wires code, this is here if you want the core itself to do anything.
-=======
-//Note: 	Because of how var/defused is used you shouldn't override this UNLESS you intend to set the var to 0 or
-//			otherwise remove the core/reset the wires before the end of defuse(). It will repeatedly be called otherwise.
->>>>>>> Updated this old code to fork
 
 ///Bomb Core Subtypes///
 
@@ -348,21 +296,12 @@
 		if(holder.wires)
 			holder.wires.repair()
 			holder.wires.shuffle_wires()
-<<<<<<< HEAD
 		holder.delayedbig = FALSE
 		holder.delayedlittle = FALSE
 		holder.explode_now = FALSE
 		holder.update_icon()
 		holder.updateDialog()
 		STOP_PROCESSING(SSfastprocess, holder)
-=======
-		holder.defused = 0
-		holder.open_panel = 0
-		holder.delayedbig = FALSE
-		holder.delayedlittle = FALSE
-		holder.update_icon()
-		holder.updateDialog()
->>>>>>> Updated this old code to fork
 
 /obj/item/bombcore/training/detonate()
 	var/obj/machinery/syndicatebomb/holder = loc

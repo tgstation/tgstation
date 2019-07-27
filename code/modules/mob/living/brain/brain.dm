@@ -6,10 +6,7 @@
 	stat = DEAD //we start dead by default
 	see_invisible = SEE_INVISIBLE_LIVING
 	possible_a_intents = list(INTENT_HELP, INTENT_HARM) //for mechas
-<<<<<<< HEAD
 	speech_span = SPAN_ROBOT
-=======
->>>>>>> Updated this old code to fork
 
 /mob/living/brain/Initialize()
 	. = ..()
@@ -106,12 +103,9 @@
 	if(istype(loc, /obj/item/organ/brain))
 		var/obj/item/organ/brain/B = loc
 		. = B.traumas
-<<<<<<< HEAD
 
 /mob/living/brain/get_policy_keywords()
 	. = ..()
 
 	if(container)
 		. += "[container.type]"
-=======
->>>>>>> Updated this old code to fork

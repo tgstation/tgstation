@@ -12,26 +12,17 @@
 	range = 7
 	cooldown_min = 30
 	selection_type = "range"
-<<<<<<< HEAD
 	var/static/list/compatible_mobs_typecache = typecacheof(list(/mob/living/carbon/human, /mob/living/carbon/monkey))
-=======
-	var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
->>>>>>> Updated this old code to fork
 
 	action_icon_state = "barn"
 
 /obj/effect/proc_holder/spell/targeted/barnyardcurse/cast(list/targets, mob/user = usr)
 	if(!targets.len)
-<<<<<<< HEAD
 		to_chat(user, "<span class='warning'>No target found in range!</span>")
-=======
-		to_chat(user, "<span class='notice'>No target found in range.</span>")
->>>>>>> Updated this old code to fork
 		return
 
 	var/mob/living/carbon/target = targets[1]
 
-<<<<<<< HEAD
 
 	if(!is_type_in_typecache(target, compatible_mobs_typecache))
 		to_chat(user, "<span class='warning'>You are unable to curse [target]'s head!</span>")
@@ -39,14 +30,6 @@
 
 	if(!(target in oview(range)))
 		to_chat(user, "<span class='warning'>[target.p_theyre(TRUE)] too far away!</span>")
-=======
-	if(!(target.type in compatible_mobs))
-		to_chat(user, "<span class='notice'>You are unable to curse [target]'s head!</span>")
-		return
-
-	if(!(target in oview(range)))
-		to_chat(user, "<span class='notice'>[target.p_theyre(TRUE)] too far away!</span>")
->>>>>>> Updated this old code to fork
 		return
 
 	if(target.anti_magic_check())

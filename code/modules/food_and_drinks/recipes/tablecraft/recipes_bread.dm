@@ -75,7 +75,6 @@
 	result = /obj/item/reagent_containers/food/snacks/store/bread/mimana
 	subcategory = CAT_BREAD
 
-<<<<<<< HEAD
 /datum/crafting_recipe/food/garlicbread
 	name = "Garlic Bread"
 	time = 40
@@ -84,15 +83,6 @@
 				/obj/item/reagent_containers/food/snacks/butter = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/garlicbread
-=======
-/datum/crafting_recipe/food/butteredtoast
-	name = "Buttered Toast"
-	reqs = list(
-		/obj/item/reagent_containers/food/snacks/breadslice/plain = 1,
-		/obj/item/reagent_containers/food/snacks/butter = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/butteredtoast
->>>>>>> Updated this old code to fork
 	subcategory = CAT_BREAD
 
 /datum/crafting_recipe/food/butterbiscuit

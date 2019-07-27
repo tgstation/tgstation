@@ -262,10 +262,6 @@
 /area/ruin/unpowered/ash_walkers)
 "aO" = (
 /obj/structure/stone_tile/surrounding/cracked{
-<<<<<<< HEAD
-=======
-	icon_state = "cracked_surrounding1";
->>>>>>> Updated this old code to fork
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -995,10 +991,6 @@
 /area/ruin/unpowered/ash_walkers)
 "cA" = (
 /obj/structure/stone_tile/slab/cracked{
-<<<<<<< HEAD
-=======
-	icon_state = "cracked_slab1";
->>>>>>> Updated this old code to fork
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -1064,10 +1056,7 @@
 /obj/structure/stone_tile/block/cracked{
 	dir = 1
 	},
-<<<<<<< HEAD
 /obj/item/cultivator/rake,
-=======
->>>>>>> Updated this old code to fork
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -1261,17 +1250,10 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "do" = (
-<<<<<<< HEAD
 /obj/structure/sink/puddle{
 	pixel_x = -3;
 	pixel_y = 1
 	},
-=======
-/obj/structure/stone_tile{
-	dir = 8
-	},
-/obj/structure/reagent_dispensers/watertank,
->>>>>>> Updated this old code to fork
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -1317,10 +1299,7 @@
 	dir = 8
 	},
 /obj/structure/stone_tile/center,
-<<<<<<< HEAD
 /obj/item/hatchet/wooden,
-=======
->>>>>>> Updated this old code to fork
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -1342,17 +1321,10 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "dw" = (
-<<<<<<< HEAD
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
 	},
 /obj/item/reagent_containers/glass/bucket/wooden,
-=======
-/obj/item/reagent_containers/glass/bucket,
-/obj/structure/stone_tile/block/cracked{
-	dir = 4
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)

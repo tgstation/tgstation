@@ -1,11 +1,7 @@
 /obj/item/banner
 	name = "banner"
 	desc = "A banner with Nanotrasen's logo on it."
-<<<<<<< HEAD
 	icon = 'icons/obj/banner.dmi'
-=======
-	icon = 'icons/obj/items_and_weapons.dmi'
->>>>>>> Updated this old code to fork
 	icon_state = "banner"
 	item_state = "banner"
 	force = 8
@@ -20,15 +16,9 @@
 	var/warcry
 
 /obj/item/banner/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	if(inspiration_available)
 		. += "<span class='notice'>Activate it in your hand to inspire nearby allies of this banner's allegiance!</span>"
-=======
-	..()
-	if(inspiration_available)
-		to_chat(user, "<span class='notice'>Activate it in your hand to inspire nearby allies of this banner's allegiance!</span>")
->>>>>>> Updated this old code to fork
 
 /obj/item/banner/attack_self(mob/living/carbon/human/user)
 	if(!inspiration_available)
@@ -88,12 +78,9 @@
 	name = "securistan banner"
 	desc = "The banner of Securistan, ruling the station with an iron fist."
 	icon_state = "banner_security"
-<<<<<<< HEAD
 	item_state = "banner_security"
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
-=======
->>>>>>> Updated this old code to fork
 	job_loyalties = list("Security Officer", "Warden", "Detective", "Head of Security")
 	warcry = "EVERYONE DOWN ON THE GROUND!!"
 
@@ -112,12 +99,9 @@
 	name = "meditopia banner"
 	desc = "The banner of Meditopia, generous benefactors that cure wounds and shelter the weak."
 	icon_state = "banner_medical"
-<<<<<<< HEAD
 	item_state = "banner_medical"
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
-=======
->>>>>>> Updated this old code to fork
 	job_loyalties = list("Medical Doctor", "Chemist", "Geneticist", "Virologist", "Chief Medical Officer")
 	warcry = "No wounds cannot be healed!"
 
@@ -138,22 +122,15 @@
 /obj/item/banner/medical/special_inspiration(mob/living/carbon/human/H)
 	H.adjustToxLoss(-15)
 	H.setOxyLoss(0)
-<<<<<<< HEAD
 	H.reagents.add_reagent(/datum/reagent/medicine/inaprovaline, 5)
-=======
-	H.reagents.add_reagent("inaprovaline", 5)
->>>>>>> Updated this old code to fork
 
 /obj/item/banner/science
 	name = "sciencia banner"
 	desc = "The banner of Sciencia, bold and daring thaumaturges and researchers that take the path less traveled."
 	icon_state = "banner_science"
-<<<<<<< HEAD
 	item_state = "banner_science"
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
-=======
->>>>>>> Updated this old code to fork
 	job_loyalties = list("Scientist", "Roboticist", "Research Director")
 	warcry = "For Cuban Pete!"
 
@@ -175,12 +152,9 @@
 	name = "cargonia banner"
 	desc = "The banner of the eternal Cargonia, with the mystical power of conjuring any object into existence."
 	icon_state = "banner_cargo"
-<<<<<<< HEAD
 	item_state = "banner_cargo"
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
-=======
->>>>>>> Updated this old code to fork
 	job_loyalties = list("Cargo Technician", "Shaft Miner", "Quartermaster")
 	warcry = "Hail Cargonia!"
 
@@ -199,12 +173,9 @@
 	name = "engitopia banner"
 	desc = "The banner of Engitopia, wielders of limitless power."
 	icon_state = "banner_engineering"
-<<<<<<< HEAD
 	item_state = "banner_engineering"
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
-=======
->>>>>>> Updated this old code to fork
 	job_loyalties = list("Station Engineer", "Atmospheric Technician", "Chief Engineer")
 	warcry = "All hail lord Singuloth!!"
 
@@ -233,11 +204,7 @@
 	inspiration_available = FALSE
 
 /obj/item/banner/command/check_inspiration(mob/living/carbon/human/H)
-<<<<<<< HEAD
 	return HAS_TRAIT(H, TRAIT_MINDSHIELD) //Command is stalwart but rewards their allies.
-=======
-	return H.has_trait(TRAIT_MINDSHIELD) //Command is stalwart but rewards their allies.
->>>>>>> Updated this old code to fork
 
 /datum/crafting_recipe/command_banner
 	name = "Command Banner"
@@ -266,11 +233,7 @@
 
 /obj/item/storage/backpack/bannerpack/Initialize()
 	. = ..()
-<<<<<<< HEAD
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-=======
-	GET_COMPONENT(STR, /datum/component/storage)
->>>>>>> Updated this old code to fork
 	STR.max_combined_w_class = 27 //6 more then normal, for the tradeoff of declaring yourself an antag at all times.
 
 /obj/item/storage/backpack/bannerpack/red
@@ -417,11 +380,7 @@
 	desc = "This one is rusted."
 	force = 30
 	armour_penetration = 15
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> Updated this old code to fork
 /obj/item/claymore/weak/ceremonial
 	desc = "A rusted claymore, once at the heart of a powerful scottish clan struck down and oppressed by tyrants, it has been passed down the ages as a symbol of defiance."
 	force = 15

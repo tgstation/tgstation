@@ -18,13 +18,9 @@
 	var/mob/living/LM = parent
 	var/v = volume
 	var/e = e_range
-<<<<<<< HEAD
 	if(!T.footstep || LM.buckled || LM.lying || !CHECK_MULTIPLE_BITFIELDS(LM.mobility_flags, MOBILITY_STAND | MOBILITY_MOVE) || LM.throwing || LM.movement_type & (VENTCRAWLING | FLYING))
 		if (LM.lying && !LM.buckled && !(!T.footstep || LM.movement_type & (VENTCRAWLING | FLYING))) //play crawling sound if we're lying
 			playsound(T, 'sound/effects/footstep/crawl1.ogg', 15 * v)
-=======
-	if(!T.footstep || LM.buckled || !CHECK_MULTIPLE_BITFIELDS(LM.mobility_flags, MOBILITY_STAND | MOBILITY_MOVE) || LM.throwing || LM.movement_type & (VENTCRAWLING | FLYING))
->>>>>>> Updated this old code to fork
 		return
 	
 	if(iscarbon(LM))
@@ -98,19 +94,11 @@
 					TRUE,
 					GLOB.footstep[T.footstep][3] + e)
 			
-<<<<<<< HEAD
 			if((!H.shoes && !feetCover)) //are we NOT wearing shoes
-=======
-			if((!H.shoes && !feetCover) || !(H.mobility_flags & MOBILITY_STAND)) //are we NOT wearing shoes or are we lying/crawling (using hands to move around)?
->>>>>>> Updated this old code to fork
 				if(H.dna.species.special_step_sounds)
 					playsound(T, pick(H.dna.species.special_step_sounds), 50, TRUE)
 				else
 					playsound(T, pick(GLOB.barefootstep[T.barefootstep][1]),
 						GLOB.barefootstep[T.barefootstep][2] * v,
 						TRUE,
-<<<<<<< HEAD
 						GLOB.barefootstep[T.barefootstep][3] + e)
-=======
-						GLOB.barefootstep[T.barefootstep][3] + e)
->>>>>>> Updated this old code to fork

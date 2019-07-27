@@ -51,11 +51,7 @@
 
 /datum/nanite_program/aggressive_replication/active_effect()
 	var/extra_regen = round(nanites.nanite_volume / 200, 0.1)
-<<<<<<< HEAD
 	nanites.adjust_nanites(null, extra_regen)
-=======
-	nanites.adjust_nanites(extra_regen)
->>>>>>> Updated this old code to fork
 	host_mob.adjustBruteLoss(extra_regen / 2, TRUE)
 
 /datum/nanite_program/meltdown
@@ -201,8 +197,4 @@
 	if(host_mob.mind && host_mob.mind.has_antag_datum(/datum/antagonist/brainwashed))
 		host_mob.mind.remove_antag_datum(/datum/antagonist/brainwashed)
 	log_game("[key_name(host_mob)] is no longer brainwashed by nanites.")
-<<<<<<< HEAD
 	cooldown = world.time + 450
-=======
-	cooldown = world.time + 450
->>>>>>> Updated this old code to fork

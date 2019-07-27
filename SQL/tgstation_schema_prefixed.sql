@@ -19,10 +19,7 @@ DROP TABLE IF EXISTS `SS13_admin`;
 CREATE TABLE `SS13_admin` (
   `ckey` varchar(32) NOT NULL,
   `rank` varchar(32) NOT NULL,
-<<<<<<< HEAD
   `feedback` varchar(255) DEFAULT NULL,
-=======
->>>>>>> Updated this old code to fork
   PRIMARY KEY (`ckey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -324,10 +321,7 @@ CREATE TABLE `SS13_player` (
   `lastadminrank` varchar(32) NOT NULL DEFAULT 'Player',
   `accountjoindate` DATE DEFAULT NULL,
   `flags` smallint(5) unsigned DEFAULT '0' NOT NULL,
-<<<<<<< HEAD
   `discord_id` BIGINT(20) NULL DEFAULT NULL,
-=======
->>>>>>> Updated this old code to fork
   PRIMARY KEY (`ckey`),
   KEY `idx_player_cid_ckey` (`computerid`,`ckey`),
   KEY `idx_player_ip_ckey` (`ip`,`ckey`)
@@ -470,7 +464,6 @@ $$
 CREATE TRIGGER `SS13_role_timeTlogdelete` AFTER DELETE ON `SS13_role_time` FOR EACH ROW BEGIN INSERT into SS13_role_time_log (ckey, job, delta) VALUES (OLD.ckey, OLD.job, 0-OLD.minutes);
 END
 $$
-<<<<<<< HEAD
 DELIMITER ;
 
 --
@@ -521,8 +514,6 @@ CREATE TABLE `SS13_stickyban_matched_cid` (
 	`last_matched` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	PRIMARY KEY (`stickyban`, `matched_cid`)
 ) ENGINE=InnoDB;
-=======
->>>>>>> Updated this old code to fork
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

@@ -126,10 +126,6 @@ CONTINUOUS CLOCKWORK_CULT
 CONTINUOUS CHANGELING
 CONTINUOUS WIZARD
 #CONTINUOUS MONKEY
-<<<<<<< HEAD
-=======
-CONTINUOUS HIVEMIND
->>>>>>> Updated this old code to fork
 
 ##Note: do not toggle continuous off for these modes, as they have no antagonists and would thus end immediately!
 
@@ -289,12 +285,9 @@ ALLOW_AI_MULTICAM
 
 ## AWAY MISSIONS ###
 
-<<<<<<< HEAD
 ## Uncomment to load the virtual reality hub map
 #VIRTUAL_REALITY
 
-=======
->>>>>>> Updated this old code to fork
 ## Uncomment to load one of the missions from awaymissionconfig.txt at roundstart.
 #ROUNDSTART_AWAY
 
@@ -426,7 +419,6 @@ LAW_WEIGHT buildawall,0
 ## Attempting to upload laws past this point will fail unless the AI is reset
 SILICON_MAX_LAW_AMOUNT 12
 
-<<<<<<< HEAD
 ##------------------------------------------------
 
 ## SILICON LAW MAX LENGTH ###
@@ -436,8 +428,6 @@ SILICON_MAX_LAW_AMOUNT 12
 
 ##------------------------------------------------
 
-=======
->>>>>>> Updated this old code to fork
 ## Roundstart Races
 ##-------------------------------------------------------------------------------------------
 ## Uncommenting races will allow them to be choosen at roundstart while join_with_muntant_race is on. You'll need at least one.

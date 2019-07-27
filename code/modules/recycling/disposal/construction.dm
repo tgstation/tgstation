@@ -29,11 +29,7 @@
 	pipename = initial(pipe_type.name)
 
 	if(flip)
-<<<<<<< HEAD
 		var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
-=======
-		GET_COMPONENT(rotcomp,/datum/component/simple_rotation)
->>>>>>> Updated this old code to fork
 		rotcomp.BaseRot(null,ROTATION_FLIP)
 
 	update_icon()

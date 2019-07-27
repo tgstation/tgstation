@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /**
   * # Outfit datums
   *
@@ -125,43 +124,10 @@
   *
   * If visualsOnly is true, you can omit any work that doesn't visually appear on the character sprite
   */
-=======
-/datum/outfit
-	var/name = "Naked"
-
-	var/uniform = null
-	var/suit = null
-	var/toggle_helmet = TRUE
-	var/back = null
-	var/belt = null
-	var/gloves = null
-	var/shoes = null
-	var/head = null
-	var/mask = null
-	var/neck = null
-	var/ears = null
-	var/glasses = null
-	var/id = null
-	var/l_pocket = null
-	var/r_pocket = null
-	var/suit_store = null
-	var/r_hand = null
-	var/l_hand = null
-	var/internals_slot = null //ID of slot containing a gas tank
-	var/list/backpack_contents = null // In the list(path=count,otherpath=count) format
-	var/box // Internals box. Will be inserted at the start of backpack_contents
-	var/list/implants = null
-	var/accessory = null
-
-	var/can_be_admin_equipped = TRUE // Set to FALSE if your outfit requires runtime parameters
-	var/list/chameleon_extras //extra types for chameleon outfit changes, mostly guns
-
->>>>>>> Updated this old code to fork
 /datum/outfit/proc/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	//to be overridden for customization depending on client prefs,species etc
 	return
 
-<<<<<<< HEAD
 /**
   * Called after the equip proc has finished
   *
@@ -173,13 +139,10 @@
   *
   * If visualsOnly is true, you can omit any work that doesn't visually appear on the character sprite
   */
-=======
->>>>>>> Updated this old code to fork
 /datum/outfit/proc/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	//to be overridden for toggling internals, id binding, access etc
 	return
 
-<<<<<<< HEAD
 /**
   * Equips all defined types and paths to the mob passed in
   *
@@ -188,8 +151,6 @@
   *
   * If visualsOnly is true, you can omit any work that doesn't visually appear on the character sprite
   */
-=======
->>>>>>> Updated this old code to fork
 /datum/outfit/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	pre_equip(H, visualsOnly)
 
@@ -221,12 +182,9 @@
 	if(suit_store)
 		H.equip_to_slot_or_del(new suit_store(H),SLOT_S_STORE)
 
-<<<<<<< HEAD
 	if(undershirt)
 		H.undershirt = initial(undershirt.name)
 
-=======
->>>>>>> Updated this old code to fork
 	if(accessory)
 		var/obj/item/clothing/under/U = H.w_uniform
 		if(U)
@@ -278,7 +236,6 @@
 	H.update_body()
 	return TRUE
 
-<<<<<<< HEAD
 /**
   * Apply a fingerprint from the passed in human to all items in the outfit
   *
@@ -286,8 +243,6 @@
   * essentially calls add_fingerprint to every defined item on the human
   *
   */
-=======
->>>>>>> Updated this old code to fork
 /datum/outfit/proc/apply_fingerprints(mob/living/carbon/human/H)
 	if(!istype(H))
 		return
@@ -329,16 +284,12 @@
 		I.add_fingerprint(H,1)
 	return 1
 
-<<<<<<< HEAD
 /// Return a list of all the types that are required to disguise as this outfit type
-=======
->>>>>>> Updated this old code to fork
 /datum/outfit/proc/get_chameleon_disguise_info()
 	var/list/types = list(uniform, suit, back, belt, gloves, shoes, head, mask, neck, ears, glasses, id, l_pocket, r_pocket, suit_store, r_hand, l_hand)
 	types += chameleon_extras
 	listclearnulls(types)
 	return types
-<<<<<<< HEAD
 
 /// Return a json list of this outfit
 /datum/outfit/proc/get_json_data()
@@ -417,5 +368,3 @@
 			implants += imptype
 	accessory = text2path(outfit_data["accessory"])
 	return TRUE
-=======
->>>>>>> Updated this old code to fork

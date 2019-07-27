@@ -7,10 +7,7 @@
 	difficulty = 12
 	power = /obj/effect/proc_holder/spell/targeted/telepathy
 	instability = 10
-<<<<<<< HEAD
 	energy_coeff = 1
-=======
->>>>>>> Updated this old code to fork
 
 
 /datum/mutation/human/olfaction
@@ -22,7 +19,6 @@
 	text_lose_indication = "<span class='notice'>Your sense of smell goes back to normal.</span>"
 	power = /obj/effect/proc_holder/spell/targeted/olfaction
 	instability = 30
-<<<<<<< HEAD
 	synchronizer_coeff = 1
 	var/reek = 200
 
@@ -30,28 +26,6 @@
 	if(power)
 		var/obj/effect/proc_holder/spell/targeted/olfaction/S = power
 		S.sensitivity = GET_MUTATION_SYNCHRONIZER(src)
-=======
-	var/reek = 200
-
-/datum/mutation/human/olfaction/on_life()
-	var/hygiene_now = owner.hygiene
-
-	if(hygiene_now < 100 && prob(5))
-		owner.adjust_disgust(rand(3,5))
-	if(hygiene_now < HYGIENE_LEVEL_DIRTY && prob(50))
-		to_chat(owner,"<span class='danger'>You get a whiff of your stench and feel sick!</span>")
-		owner.adjust_disgust(rand(5,10))
-
-	if(hygiene_now < HYGIENE_LEVEL_NORMAL && reek >= HYGIENE_LEVEL_NORMAL)
-		to_chat(owner,"<span class='warning'>Your inhumanly strong nose picks up a faint odor. Maybe you should shower soon.</span>")
-	if(hygiene_now < 150 && reek >= 150)
-		to_chat(owner,"<span class='warning'>Your odor is getting bad, what with you having a super-nose and all.</span>")
-	if(hygiene_now < 100 && reek >= 100)
-		to_chat(owner,"<span class='danger'>Your odor begins to make you gag. You silently curse your godly nose. You should really get clean!</span>")
-	if(hygiene_now < HYGIENE_LEVEL_DIRTY && reek >= HYGIENE_LEVEL_DIRTY)
-		to_chat(owner,"<span class='userdanger'>Your super-nose is 100% fed up with your stench. You absolutely must get clean.</span>")
-	reek = hygiene_now
->>>>>>> Updated this old code to fork
 
 /obj/effect/proc_holder/spell/targeted/olfaction
 	name = "Remember the Scent"
@@ -63,7 +37,6 @@
 	action_icon_state = "nose"
 	var/mob/living/carbon/tracking_target
 	var/list/mob/living/carbon/possible = list()
-<<<<<<< HEAD
 	var/sensitivity = 1
 
 /obj/effect/proc_holder/spell/targeted/olfaction/cast(list/targets, mob/living/user = usr)
@@ -76,10 +49,6 @@
 		to_chat(user, "<span class='warning'>With your overly sensitive nose, you get a whiff of stench and feel sick! Try moving to a cleaner area!</span>")
 		return
 
-=======
-
-/obj/effect/proc_holder/spell/targeted/olfaction/cast(list/targets, mob/living/user = usr)
->>>>>>> Updated this old code to fork
 	var/atom/sniffed = user.get_active_held_item()
 	if(sniffed)
 		var/old_target = tracking_target
@@ -104,11 +73,7 @@
 		return
 
 	if(!tracking_target)
-<<<<<<< HEAD
 		to_chat(user,"<span class='warning'>You're not holding anything to smell, and you haven't smelled anything you can track. You smell your skin instead; it's kinda salty.</span>")
-=======
-		to_chat(user,"<span class='warning'>You're not holding anything to smell, and you haven't smelled anything you can track. You smell your palm instead; it's kinda salty.</span>")
->>>>>>> Updated this old code to fork
 		return
 
 	on_the_trail(user)
@@ -140,7 +105,6 @@
 	text_lose_indication = "<span class='notice'>Your throat is cooling down.</span>"
 	power = /obj/effect/proc_holder/spell/aimed/firebreath
 	instability = 30
-<<<<<<< HEAD
 	energy_coeff = 1
 	power_coeff = 1
 
@@ -148,8 +112,6 @@
 	if(power)
 		var/obj/effect/proc_holder/spell/aimed/firebreath/S = power
 		S.strength = GET_MUTATION_POWER(src)
-=======
->>>>>>> Updated this old code to fork
 
 /obj/effect/proc_holder/spell/aimed/firebreath
 	name = "Fire Breath"
@@ -164,10 +126,7 @@
 	sound = 'sound/magic/demon_dies.ogg' //horrifying lizard noises
 	active_msg = "You built up heat in your mouth."
 	deactive_msg = "You swallow the flame."
-<<<<<<< HEAD
 	var/strength = 1
-=======
->>>>>>> Updated this old code to fork
 
 /obj/effect/proc_holder/spell/aimed/firebreath/before_cast(list/targets)
 	. = ..()
@@ -179,7 +138,6 @@
 			to_chat(C,"<span class='warning'>Something in front of your mouth caught fire!</span>")
 			return FALSE
 
-<<<<<<< HEAD
 /obj/effect/proc_holder/spell/aimed/firebreath/ready_projectile(obj/item/projectile/P, atom/target, mob/user, iteration)
 	if(!istype(P, /obj/item/projectile/magic/aoe/fireball))
 		return
@@ -191,8 +149,6 @@
 			F.exp_heavy = strength-3
 	F.exp_fire += strength
 
-=======
->>>>>>> Updated this old code to fork
 /obj/item/projectile/magic/aoe/fireball/firebreath
 	name = "fire breath"
 	exp_heavy = 0
@@ -207,20 +163,13 @@
 	text_gain_indication = "<span class='notice'>You feel a heavy, dull force just beyond the walls watching you.</span>"
 	instability = 30
 	power = /obj/effect/proc_holder/spell/self/void
-<<<<<<< HEAD
 	energy_coeff = 1
 	synchronizer_coeff = 1
-=======
->>>>>>> Updated this old code to fork
 
 /datum/mutation/human/void/on_life()
 	if(!isturf(owner.loc))
 		return
-<<<<<<< HEAD
 	if(prob((0.5+((100-dna.stability)/20))) * GET_MUTATION_SYNCHRONIZER(src)) //very rare, but enough to annoy you hopefully. +0.5 probability for every 10 points lost in stability
-=======
-	if(prob(0.5+((100-dna.stability)/20))) //very rare, but enough to annoy you hopefully. +0.5 probability for every 10 points lost in stability
->>>>>>> Updated this old code to fork
 		new /obj/effect/immortality_talisman/void(get_turf(owner), owner)
 
 /obj/effect/proc_holder/spell/self/void

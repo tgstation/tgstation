@@ -6,7 +6,6 @@
 	desc = "A genetic defect that sporadically causes seizures."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You get a headache.</span>"
-<<<<<<< HEAD
 	synchronizer_coeff = 1
 	power_coeff = 1
 
@@ -15,14 +14,6 @@
 		owner.visible_message("<span class='danger'>[owner] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		owner.Unconscious(200 * GET_MUTATION_POWER(src))
 		owner.Jitter(1000 * GET_MUTATION_POWER(src))
-=======
-
-/datum/mutation/human/epilepsy/on_life()
-	if(prob(1) && owner.stat == CONSCIOUS)
-		owner.visible_message("<span class='danger'>[owner] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
-		owner.Unconscious(200)
-		owner.Jitter(1000)
->>>>>>> Updated this old code to fork
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "epilepsy", /datum/mood_event/epilepsy)
 		addtimer(CALLBACK(src, .proc/jitter_less), 90)
 
@@ -63,7 +54,6 @@
 	desc = "A chronic cough."
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You start coughing.</span>"
-<<<<<<< HEAD
 	synchronizer_coeff = 1
 	power_coeff = 1
 
@@ -88,14 +78,6 @@
 		owner.emote("scream")
 		if(prob(25))
 			owner.hallucination += 20
-=======
-
-/datum/mutation/human/cough/on_life()
-	if(prob(5) && owner.stat == CONSCIOUS)
-		owner.drop_all_held_items()
-		owner.emote("cough")
-
->>>>>>> Updated this old code to fork
 
 //Dwarfism shrinks your body and lets you pass tables.
 /datum/mutation/human/dwarfism
@@ -104,33 +86,20 @@
 	quality = POSITIVE
 	difficulty = 16
 	instability = 5
-<<<<<<< HEAD
 	conflicts = list(GIGANTISM)
-=======
->>>>>>> Updated this old code to fork
 	locked = TRUE    // Default intert species for now, so locked from regular pool.
 
 /datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-<<<<<<< HEAD
 	owner.transform = owner.transform.Scale(1, 0.8)
-=======
-	owner.resize = 0.8
-	owner.update_transform()
->>>>>>> Updated this old code to fork
 	owner.pass_flags |= PASSTABLE
 	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>", "<span class='notice'>Everything around you seems to grow..</span>")
 
 /datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-<<<<<<< HEAD
 	owner.transform = owner.transform.Scale(1, 1.25)
-=======
-	owner.resize = 1.25
-	owner.update_transform()
->>>>>>> Updated this old code to fork
 	owner.pass_flags &= ~PASSTABLE
 	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>", "<span class='notice'>Everything around you seems to shrink..</span>")
 
@@ -138,31 +107,19 @@
 //Clumsiness has a very large amount of small drawbacks depending on item.
 /datum/mutation/human/clumsy
 	name = "Clumsiness"
-<<<<<<< HEAD
 	desc = "A genome that inhibits certain brain functions, causing the holder to appear clumsy. Honk!"
-=======
-	desc = "A genome that inhibits certain brain functions, causing the holder to appear clumsy. Honk"
->>>>>>> Updated this old code to fork
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel lightheaded.</span>"
 
 /datum/mutation/human/clumsy/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_CLUMSY, GENETIC_MUTATION)
-=======
-	owner.add_trait(TRAIT_CLUMSY, GENETIC_MUTATION)
->>>>>>> Updated this old code to fork
 
 /datum/mutation/human/clumsy/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-<<<<<<< HEAD
 	REMOVE_TRAIT(owner, TRAIT_CLUMSY, GENETIC_MUTATION)
-=======
-	owner.remove_trait(TRAIT_CLUMSY, GENETIC_MUTATION)
->>>>>>> Updated this old code to fork
 
 
 //Tourettes causes you to randomly stand in place and shout.
@@ -171,16 +128,10 @@
 	desc = "A chronic twitch that forces the user to scream bad words." //definitely needs rewriting
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You twitch.</span>"
-<<<<<<< HEAD
 	synchronizer_coeff = 1
 
 /datum/mutation/human/tourettes/on_life()
 	if(prob(10 * GET_MUTATION_SYNCHRONIZER(src)) && owner.stat == CONSCIOUS && !owner.IsStun())
-=======
-
-/datum/mutation/human/tourettes/on_life()
-	if(prob(10) && owner.stat == CONSCIOUS && !owner.IsStun())
->>>>>>> Updated this old code to fork
 		owner.Stun(200)
 		switch(rand(1, 3))
 			if(1)
@@ -205,20 +156,12 @@
 /datum/mutation/human/deaf/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_DEAF, GENETIC_MUTATION)
-=======
-	owner.add_trait(TRAIT_DEAF, GENETIC_MUTATION)
->>>>>>> Updated this old code to fork
 
 /datum/mutation/human/deaf/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-<<<<<<< HEAD
 	REMOVE_TRAIT(owner, TRAIT_DEAF, GENETIC_MUTATION)
-=======
-	owner.remove_trait(TRAIT_DEAF, GENETIC_MUTATION)
->>>>>>> Updated this old code to fork
 
 
 //Monified turns you into a monkey.
@@ -232,19 +175,11 @@
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-<<<<<<< HEAD
 	. = owner.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
 
 /datum/mutation/human/race/on_losing(mob/living/carbon/monkey/owner)
 	if(owner && istype(owner) && owner.stat != DEAD && (owner.dna.mutations.Remove(src)))
 		. = owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
-=======
-	. = owner.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
-
-/datum/mutation/human/race/on_losing(mob/living/carbon/monkey/owner)
-	if(owner && istype(owner) && owner.stat != DEAD && (owner.dna.mutations.Remove(src)))
-		. = owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
->>>>>>> Updated this old code to fork
 
 /datum/mutation/human/glow
 	name = "Glowy"
@@ -254,10 +189,7 @@
 	instability = 5
 	var/obj/effect/dummy/luminescent_glow/glowth //shamelessly copied from luminescents
 	var/glow = 1.5
-<<<<<<< HEAD
 	power_coeff = 1
-=======
->>>>>>> Updated this old code to fork
 
 /datum/mutation/human/glow/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -265,13 +197,10 @@
 	glowth = new(owner)
 	glowth.set_light(glow, glow, dna.features["mcolor"])
 
-<<<<<<< HEAD
 /datum/mutation/human/glow/modify(mob/living/carbon/human/owner)
 	if(glowth)
 		glowth.set_light(glow + GET_MUTATION_POWER(src) , glow + GET_MUTATION_POWER(src), dna.features["mcolor"])
 
-=======
->>>>>>> Updated this old code to fork
 /datum/mutation/human/glow/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
@@ -296,45 +225,26 @@
 /datum/mutation/human/insulated/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, "genetics")
-=======
-	owner.add_trait(TRAIT_SHOCKIMMUNE, "genetics")
->>>>>>> Updated this old code to fork
 
 /datum/mutation/human/insulated/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-<<<<<<< HEAD
 	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, "genetics")
 
 /datum/mutation/human/fire
 	name = "Fiery Sweat"
 	desc = "The user's skin will randomly combust, but is generally a lot more resilient to burning."
-=======
-	owner.remove_trait(TRAIT_SHOCKIMMUNE, "genetics")
-
-/datum/mutation/human/fire
-	name = "Fiery Sweat"
-	desc = "The user's skin will randomly combust, but is generally alot more resilient to burning."
->>>>>>> Updated this old code to fork
 	quality = NEGATIVE
 	text_gain_indication = "<span class='warning'>You feel hot.</span>"
 	text_lose_indication = "<span class'notice'>You feel a lot cooler.</span>"
 	difficulty = 14
-<<<<<<< HEAD
 	synchronizer_coeff = 1
 	power_coeff = 1
 
 /datum/mutation/human/fire/on_life()
 	if(prob((1+(100-dna.stability)/10)) * GET_MUTATION_SYNCHRONIZER(src))
 		owner.adjust_fire_stacks(2 * GET_MUTATION_POWER(src))
-=======
-
-/datum/mutation/human/fire/on_life()
-	if(prob(1+(100-dna.stability)/10))
-		owner.adjust_fire_stacks(2)
->>>>>>> Updated this old code to fork
 		owner.IgniteMob()
 
 /datum/mutation/human/fire/on_acquiring(mob/living/carbon/human/owner)
@@ -347,7 +257,6 @@
 		return
 	owner.physiology.burn_mod *= 2
 
-<<<<<<< HEAD
 /datum/mutation/human/badblink
 	name = "Spatial Instability"
 	desc = "The victim of the mutation has a very weak link to spatial reality, and may be displaced. Often causes extreme nausea."
@@ -452,8 +361,3 @@
 			owner.SetStun(owner.AmountStun()*2)
 			owner.visible_message("<span class='danger'>[owner] tries to stand up, but trips!</span>", "<span class='userdanger'>You trip over your own feet!</span>")
 			stun_cooldown = world.time + 300
-=======
-
-
-
->>>>>>> Updated this old code to fork

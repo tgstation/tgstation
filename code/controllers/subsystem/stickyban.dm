@@ -1,14 +1,9 @@
 SUBSYSTEM_DEF(stickyban)
-<<<<<<< HEAD
 	name = "PRISM"
-=======
-	name = "Sticky Ban"
->>>>>>> Updated this old code to fork
 	init_order = INIT_ORDER_STICKY_BAN
 	flags = SS_NO_FIRE
 
 	var/list/cache = list()
-<<<<<<< HEAD
 	var/list/dbcache = list()
 	var/list/confirmed_exempt = list()
 	var/dbcacheexpire = 0
@@ -42,24 +37,10 @@ SUBSYSTEM_DEF(stickyban)
 		//byond stores sticky bans by key, that's lame
 		if (ckey != bannedkey)
 			world.SetConfig("ban", bannedkey, null)
-=======
-
-/datum/controller/subsystem/stickyban/Initialize(timeofday)
-	var/list/bannedkeys = world.GetConfig("ban")
-	//sanitize the sticky ban list
-	for (var/bannedkey in bannedkeys)
-		var/ckey = ckey(bannedkey)
-		var/list/ban = stickyban2list(world.GetConfig("ban", bannedkey))
-
-		//byond stores sticky bans by key, that can end up confusing things
-		//i also remove it here so that if any stickybans cause a runtime, they just stop existing
-		world.SetConfig("ban", bannedkey, null)
->>>>>>> Updated this old code to fork
 
 		if (!ban["ckey"])
 			ban["ckey"] = ckey
 
-<<<<<<< HEAD
 		ban["matches_this_round"] = list()
 		ban["existing_user_matches_this_round"] = list()
 		ban["admin_matches_this_round"] = list()
@@ -224,18 +205,3 @@ SUBSYSTEM_DEF(stickyban)
 
 
 	return TRUE
-=======
-		//storing these can break things and isn't needed for sticky ban tracking
-		ban -= "IP"
-		ban -= "computer_id"
-
-		ban["matches_this_round"] = list()
-		ban["existing_user_matches_this_round"] = list()
-		ban["admin_matches_this_round"] = list()
-		cache[ckey] = ban
-	
-	for (var/bannedckey in cache)
-		world.SetConfig("ban", bannedckey, list2stickyban(cache[bannedckey]))
-
-	return ..()
->>>>>>> Updated this old code to fork

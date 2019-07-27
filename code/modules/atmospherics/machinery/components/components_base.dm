@@ -145,11 +145,7 @@
 	for(var/i in 1 to device_type)
 		var/datum/pipeline/parent = parents[i]
 		if(!parent)
-<<<<<<< HEAD
 			WARNING("Component is missing a pipenet! Rebuilding...")
-=======
-			throw EXCEPTION("Component is missing a pipenet! Rebuilding...")
->>>>>>> Updated this old code to fork
 			build_network()
 		parent.update = 1
 
@@ -168,10 +164,5 @@
 
 // Tool acts
 
-<<<<<<< HEAD
 /obj/machinery/atmospherics/components/return_analyzable_air()
 	return airs
-=======
-/obj/machinery/atmospherics/components/analyzer_act(mob/living/user, obj/item/I)
-	atmosanalyzer_scan(airs, user, src)
->>>>>>> Updated this old code to fork

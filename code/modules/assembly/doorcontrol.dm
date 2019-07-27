@@ -9,7 +9,6 @@
 	var/sync_doors = TRUE
 
 /obj/item/assembly/control/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	if(id)
 		. += "<span class='notice'>Its channel ID is '[id]'.</span>"
@@ -19,15 +18,6 @@
 	if(cooldown)
 		return
 	cooldown = TRUE
-=======
-	..()
-	if(id)
-		to_chat(user, "<span class='notice'>Its channel ID is '[id]'.</span>")
-
-/obj/item/assembly/control/activate()
-	cooldown = TRUE
-	var/openclose
->>>>>>> Updated this old code to fork
 	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
 		if(M.id == src.id)
 			if(openclose == null || !sync_doors)
@@ -50,11 +40,8 @@
 	*/
 
 /obj/item/assembly/control/airlock/activate()
-<<<<<<< HEAD
 	if(cooldown)
 		return
-=======
->>>>>>> Updated this old code to fork
 	cooldown = TRUE
 	var/doors_need_closing = FALSE
 	var/list/obj/machinery/door/airlock/open_or_close = list()
@@ -89,11 +76,8 @@
 	desc = "A small electronic device able to control a mass driver."
 
 /obj/item/assembly/control/massdriver/activate()
-<<<<<<< HEAD
 	if(cooldown)
 		return
-=======
->>>>>>> Updated this old code to fork
 	cooldown = TRUE
 	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
 		if (M.id == src.id)
@@ -119,11 +103,8 @@
 	desc = "A remote controller for a mounted igniter."
 
 /obj/item/assembly/control/igniter/activate()
-<<<<<<< HEAD
 	if(cooldown)
 		return
-=======
->>>>>>> Updated this old code to fork
 	cooldown = TRUE
 	for(var/obj/machinery/sparker/M in GLOB.machines)
 		if (M.id == src.id)
@@ -142,11 +123,8 @@
 	desc = "A remote controller for a mounted flasher."
 
 /obj/item/assembly/control/flasher/activate()
-<<<<<<< HEAD
 	if(cooldown)
 		return
-=======
->>>>>>> Updated this old code to fork
 	cooldown = TRUE
 	for(var/obj/machinery/flasher/M in GLOB.machines)
 		if(M.id == src.id)
@@ -160,11 +138,8 @@
 	desc = "An evil-looking remote controller for a crematorium."
 
 /obj/item/assembly/control/crematorium/activate()
-<<<<<<< HEAD
 	if(cooldown)
 		return
-=======
->>>>>>> Updated this old code to fork
 	cooldown = TRUE
 	for (var/obj/structure/bodycontainer/crematorium/C in GLOB.crematoriums)
 		if (C.id == id)

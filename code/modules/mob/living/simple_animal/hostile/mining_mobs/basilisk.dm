@@ -40,11 +40,7 @@
 	icon_state = "ice_2"
 	damage = 0
 	damage_type = BURN
-<<<<<<< HEAD
 	nodamage = TRUE
-=======
-	nodamage = 1
->>>>>>> Updated this old code to fork
 	flag = "energy"
 	temperature = 50
 
@@ -150,12 +146,8 @@
 	. = ..()
 	if(.)
 		var/mob/living/L = target
-<<<<<<< HEAD
 		if(istype(L))
 			L.apply_status_effect(/datum/status_effect/freon/watcher)
-=======
-		L.apply_status_effect(/datum/status_effect/freon/watcher)
->>>>>>> Updated this old code to fork
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/tendril
 	fromtendril = TRUE

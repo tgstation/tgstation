@@ -5,18 +5,14 @@
 	var/list/swarm_members = list()
 
 /datum/component/swarming/Initialize(max_x = 24, max_y = 24)
-<<<<<<< HEAD
 	if(!ismovableatom(parent))
 		return COMPONENT_INCOMPATIBLE
-=======
->>>>>>> Updated this old code to fork
 	offset_x = rand(-max_x, max_x)
 	offset_y = rand(-max_y, max_y)
 
 	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/join_swarm)
 	RegisterSignal(parent, COMSIG_MOVABLE_UNCROSSED, .proc/leave_swarm)
 
-<<<<<<< HEAD
 /datum/component/swarming/Destroy()
 	for(var/other in swarm_members)
 		var/datum/component/swarming/other_swarm = other
@@ -28,10 +24,6 @@
 
 /datum/component/swarming/proc/join_swarm(datum/source, atom/movable/AM)
 	var/datum/component/swarming/other_swarm = AM.GetComponent(/datum/component/swarming)
-=======
-/datum/component/swarming/proc/join_swarm(datum/source, atom/movable/AM)
-	GET_COMPONENT_FROM(other_swarm, /datum/component/swarming, AM)
->>>>>>> Updated this old code to fork
 	if(!other_swarm)
 		return
 	swarm()
@@ -40,11 +32,7 @@
 	other_swarm.swarm_members |= src
 
 /datum/component/swarming/proc/leave_swarm(datum/source, atom/movable/AM)
-<<<<<<< HEAD
 	var/datum/component/swarming/other_swarm = AM.GetComponent(/datum/component/swarming)
-=======
-	GET_COMPONENT_FROM(other_swarm, /datum/component/swarming, AM)
->>>>>>> Updated this old code to fork
 	if(!other_swarm || !(other_swarm in swarm_members))
 		return
 	swarm_members -= other_swarm
@@ -64,8 +52,4 @@
 	var/atom/movable/owner = parent
 	if(is_swarming)
 		animate(owner, pixel_x = owner.pixel_x - offset_x, pixel_y = owner.pixel_y - offset_y, time = 2)
-<<<<<<< HEAD
 		is_swarming = FALSE
-=======
-		is_swarming = FALSE
->>>>>>> Updated this old code to fork

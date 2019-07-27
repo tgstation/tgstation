@@ -13,20 +13,15 @@
 /obj/item/book/granter/proc/turn_page(mob/user)
 	playsound(user, pick('sound/effects/pageturn1.ogg','sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg'), 30, 1)
 	if(do_after(user,50, user))
-<<<<<<< HEAD
 		if(remarks.len)
 			to_chat(user, "<span class='notice'>[pick(remarks)]</span>")
 		else
 			to_chat(user, "<span class='notice'>You keep reading...</span>")
-=======
-		to_chat(user, "<span class='notice'>[pick(remarks)]</span>")
->>>>>>> Updated this old code to fork
 		return TRUE
 	return FALSE
 
 /obj/item/book/granter/proc/recoil(mob/user) //nothing so some books can just return
 
-<<<<<<< HEAD
 /obj/item/book/granter/proc/already_known(mob/user)
 	return FALSE
 
@@ -43,18 +38,12 @@
 	used = TRUE
 
 
-=======
-/obj/item/book/granter/proc/onlearned(mob/user)
-	used = TRUE
-
->>>>>>> Updated this old code to fork
 /obj/item/book/granter/attack_self(mob/user)
 	if(reading)
 		to_chat(user, "<span class='warning'>You're already reading this!</span>")
 		return FALSE
 	if(!user.can_read(src))
 		return FALSE
-<<<<<<< HEAD
 	if(already_known(user))
 		return FALSE
 	if(used && oneuse)
@@ -70,8 +59,6 @@
 		if(do_after(user,50, user))
 			on_reading_finished(user)
 		reading = FALSE
-=======
->>>>>>> Updated this old code to fork
 	return TRUE
 
 ///ACTION BUTTONS///
@@ -80,7 +67,6 @@
 	var/granted_action
 	var/actionname = "catching bugs" //might not seem needed but this makes it so you can safely name action buttons toggle this or that without it fucking up the granter, also caps
 
-<<<<<<< HEAD
 /obj/item/book/granter/action/already_known(mob/user)
 	if(!granted_action)
 		return TRUE
@@ -98,35 +84,6 @@
 	var/datum/action/G = new granted_action
 	G.Grant(user)
 	onlearned(user)
-=======
-/obj/item/book/granter/action/attack_self(mob/user)
-	. = ..()
-	if(!.)
-		return
-	if(!granted_action)
-		return
-	var/datum/action/G = new granted_action
-	for(var/datum/action/A in user.actions)
-		if(A.type == G.type)
-			to_chat(user, "<span class='notice'>You already know all about [actionname].</span>")
-			qdel(G)
-			return
-	if(used == TRUE && oneuse == TRUE)
-		recoil(user)
-	else
-		to_chat(user, "<span class='notice'>You start reading about [actionname]...</span>")
-		reading = TRUE
-		for(var/i=1, i<=pages_to_mastery, i++)
-			if(!turn_page(user))
-				to_chat(user, "<span class='notice'>You stop reading...</span>")
-				reading = FALSE
-				qdel(G)
-				return
-		if(do_after(user,50, user))
-			to_chat(user, "<span class='notice'>You feel like you've got a good handle on [actionname]!</span>")
-			G.Grant(user)
-		reading = FALSE
->>>>>>> Updated this old code to fork
 
 /obj/item/book/granter/action/origami
 	granted_action = /datum/action/innate/origami
@@ -161,29 +118,16 @@
 	var/spell
 	var/spellname = "conjure bugs"
 
-<<<<<<< HEAD
 /obj/item/book/granter/spell/already_known(mob/user)
 	if(!spell)
 		return TRUE
 	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
 		if(knownspell.type == spell)
-=======
-/obj/item/book/granter/spell/attack_self(mob/user)
-	. = ..()
-	if(!.)
-		return
-	if(!spell)
-		return
-	var/obj/effect/proc_holder/spell/S = new spell
-	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
-		if(knownspell.type == S.type)
->>>>>>> Updated this old code to fork
 			if(user.mind)
 				if(iswizard(user))
 					to_chat(user,"<span class='notice'>You're already far more versed in this spell than this flimsy how-to book can provide.</span>")
 				else
 					to_chat(user,"<span class='notice'>You've already read this one.</span>")
-<<<<<<< HEAD
 			return TRUE
 	return FALSE
 
@@ -196,26 +140,6 @@
 	user.mind.AddSpell(S)
 	user.log_message("learned the spell [spellname] ([S])", LOG_ATTACK, color="orange")
 	onlearned(user)
-=======
-			return FALSE
-	if(used == TRUE && oneuse == TRUE)
-		recoil(user)
-	else
-		to_chat(user, "<span class='notice'>You start reading about casting [spellname]...</span>")
-		reading = TRUE
-		for(var/i=1, i<=pages_to_mastery, i++)
-			if(!turn_page(user))
-				to_chat(user, "<span class='notice'>You stop reading...</span>")
-				reading = FALSE
-				qdel(S)
-				return FALSE
-		if(do_after(user,50, user))
-			to_chat(user, "<span class='notice'>You feel like you've experienced enough to cast [spellname]!</span>")
-			user.mind.AddSpell(S)
-			user.log_message("learned the spell [spellname] ([S])", LOG_ATTACK, color="orange")
-			onlearned(user)
-		reading = FALSE
->>>>>>> Updated this old code to fork
 
 /obj/item/book/granter/spell/recoil(mob/user)
 	user.visible_message("<span class='warning'>[src] glows in a black light!</span>")
@@ -392,7 +316,6 @@
 	var/martialname = "bug jitsu"
 	var/greet = "You feel like you have mastered the art in breaking code. Nice work, jackass."
 
-<<<<<<< HEAD
 
 /obj/item/book/granter/martial/already_known(mob/user)
 	if(!martial)
@@ -412,35 +335,6 @@
 	MA.teach(user)
 	user.log_message("learned the martial art [martialname] ([MA])", LOG_ATTACK, color="orange")
 	onlearned(user)
-=======
-/obj/item/book/granter/martial/attack_self(mob/user)
-	. = ..()
-	if(!.)
-		return
-	if(!martial)
-		return
-	var/datum/martial_art/MA = new martial
-	if(user.mind.has_martialart(MA.id))
-		to_chat(user,"<span class='warning'>You already know [martialname]!</span>")
-		return
-	if(used == TRUE && oneuse == TRUE)
-		recoil(user)
-	else
-		to_chat(user, "<span class='notice'>You start reading about [martialname]...</span>")
-		reading = TRUE
-		for(var/i=1, i<=pages_to_mastery, i++)
-			if(!turn_page(user))
-				to_chat(user, "<span class='notice'>You stop reading...</span>")
-				reading = FALSE
-				qdel(MA)
-				return
-		if(do_after(user,50, user))
-			to_chat(user, "[greet]")
-			MA.teach(user)
-			user.log_message("learned the martial art [martialname] ([MA])", LOG_ATTACK, color="orange")
-			onlearned(user)
-		reading = FALSE
->>>>>>> Updated this old code to fork
 
 /obj/item/book/granter/martial/cqc
 	martial = /datum/martial_art/cqc
@@ -501,7 +395,6 @@
 		icon_state = "blankscroll"
 
 // I did not include mushpunch's grant, it is not a book and the item does it just fine.
-<<<<<<< HEAD
 
 
 //Crafting Recipe books
@@ -517,5 +410,3 @@
 		var/datum/crafting_recipe/R = crafting_recipe_type
 		user.mind.teach_crafting_recipe(crafting_recipe_type)
 		to_chat(user,"<span class='notice'>You learned how to make [initial(R.name)].</span>")
-=======
->>>>>>> Updated this old code to fork

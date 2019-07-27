@@ -57,10 +57,7 @@
 			deactivate()
 		if(passive_enabled)
 			disable_passive_effect()
-<<<<<<< HEAD
 		on_mob_remove()
-=======
->>>>>>> Updated this old code to fork
 	if(nanites)
 		nanites.programs -= src
 	return ..()
@@ -90,12 +87,8 @@
 	target.deactivation_code = deactivation_code
 	target.kill_code = kill_code
 	target.trigger_code = trigger_code
-<<<<<<< HEAD
 	if(istype(target,src))
 		copy_extra_settings_to(target)
-=======
-	copy_extra_settings_to(target)
->>>>>>> Updated this old code to fork
 
 /datum/nanite_program/proc/set_extra_setting(user, setting)
 	return
@@ -116,12 +109,9 @@
 	if(activated) //apply activation effects if it starts active
 		activate()
 
-<<<<<<< HEAD
 /datum/nanite_program/proc/on_mob_remove()
 	return
 
-=======
->>>>>>> Updated this old code to fork
 /datum/nanite_program/proc/toggle()
 	if(!activated)
 		activate()
@@ -151,15 +141,10 @@
 	if(timer && timer_counter > timer)
 		if(timer_type == NANITE_TIMER_DEACTIVATE)
 			deactivate()
-<<<<<<< HEAD
 			return
 		else if(timer_type == NANITE_TIMER_SELFDELETE)
 			qdel(src)
 			return
-=======
-		else if(timer_type == NANITE_TIMER_SELFDELETE)
-			qdel(src)
->>>>>>> Updated this old code to fork
 		else if(can_trigger && timer_type == NANITE_TIMER_TRIGGER)
 			trigger()
 			timer_counter = activation_delay
@@ -224,12 +209,6 @@
 /datum/nanite_program/proc/on_death()
 	return
 
-<<<<<<< HEAD
-=======
-/datum/nanite_program/proc/on_hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
-	return
-
->>>>>>> Updated this old code to fork
 /datum/nanite_program/proc/software_error(type)
 	if(!type)
 		type = rand(1,5)
@@ -277,7 +256,3 @@
 			return "Trigger"
 		if(NANITE_TIMER_RESET)
 			return "Reset Activation Timer"
-<<<<<<< HEAD
-=======
-
->>>>>>> Updated this old code to fork

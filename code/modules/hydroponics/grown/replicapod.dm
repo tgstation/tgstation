@@ -31,11 +31,7 @@
 
 /obj/item/seeds/replicapod/on_reagent_change(changetype)
 	if(changetype == ADD_REAGENT)
-<<<<<<< HEAD
 		var/datum/reagent/blood/B = reagents.has_reagent(/datum/reagent/blood)
-=======
-		var/datum/reagent/blood/B = reagents.has_reagent("blood")
->>>>>>> Updated this old code to fork
 		if(B)
 			if(B.data["mind"] && B.data["cloneable"])
 				mind = B.data["mind"]
@@ -45,7 +41,6 @@
 				blood_type = B.data["blood_type"]
 				features = B.data["features"]
 				factions = B.data["factions"]
-<<<<<<< HEAD
 				quirks = B.data["quirks"]
 				contains_sample = TRUE
 				visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
@@ -54,15 +49,6 @@
 				visible_message("<span class='warning'>The [src] rejects the sample!</span>")
 
 	if(!reagents.has_reagent(/datum/reagent/blood))
-=======
-				factions = B.data["quirks"]
-				contains_sample = TRUE
-				visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
-			else
-				visible_message("<span class='warning'>The [src] rejects the sample!</span>")
-
-	if(!reagents.has_reagent("blood"))
->>>>>>> Updated this old code to fork
 		mind = null
 		ckey = null
 		realName = null
@@ -132,10 +118,7 @@
 			new V(podman)
 		podman.hardset_dna(null,null,podman.real_name,blood_type, new /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 		podman.set_cloned_appearance()
-<<<<<<< HEAD
 		log_cloning("[key_name(mind)] cloned as a podman via [src] in [parent] at [AREACOORD(parent)].")
-=======
->>>>>>> Updated this old code to fork
 
 	else //else, one packet of seeds. maybe two
 		var/seed_count = 1

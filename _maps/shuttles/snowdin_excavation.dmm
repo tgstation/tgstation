@@ -31,10 +31,6 @@
 /area/shuttle/snowdin/elevator1)
 "f" = (
 /obj/machinery/computer/shuttle/snowdin/mining{
-<<<<<<< HEAD
-=======
-	dir = 2;
->>>>>>> Updated this old code to fork
 	name = "Excavation Elevator Console";
 	possible_destinations = "snowdin_excavation_top;snowdin_excavation_down";
 	shuttleId = "snowdin_excavation"

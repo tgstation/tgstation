@@ -16,11 +16,7 @@
 /datum/chemical_reaction/slime/slimespawn
 	name = "Slime Spawn"
 	id = "m_spawn"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
-=======
-	required_reagents = list("plasma" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/grey
 	required_other = TRUE
 
@@ -32,24 +28,15 @@
 /datum/chemical_reaction/slime/slimeinaprov
 	name = "Slime epinephrine"
 	id = "m_inaprov"
-<<<<<<< HEAD
 	results = list(/datum/reagent/medicine/epinephrine = 3)
 	required_reagents = list(/datum/reagent/water = 5)
-=======
-	results = list("epinephrine" = 3)
-	required_reagents = list("water" = 5)
->>>>>>> Updated this old code to fork
 	required_other = TRUE
 	required_container = /obj/item/slime_extract/grey
 
 /datum/chemical_reaction/slime/slimemonkey
 	name = "Slime Monkey"
 	id = "m_monkey"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/blood = 1)
-=======
-	required_reagents = list("blood" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/grey
 	required_other = TRUE
 
@@ -62,39 +49,24 @@
 /datum/chemical_reaction/slime/slimemutate
 	name = "Mutation Toxin"
 	id = "slimetoxin"
-<<<<<<< HEAD
 	results = list(/datum/reagent/slime_toxin = 1)
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
-=======
-	results = list("slime_toxin" = 1)
-	required_reagents = list("plasma" = 1)
->>>>>>> Updated this old code to fork
 	required_other = TRUE
 	required_container = /obj/item/slime_extract/green
 
 /datum/chemical_reaction/slime/slimehuman
 	name = "Human Mutation Toxin"
 	id = "humanmuttoxin"
-<<<<<<< HEAD
 	results = list(/datum/reagent/mutationtoxin = 1)
 	required_reagents = list(/datum/reagent/blood = 1)
-=======
-	results = list("stablemutationtoxin" = 1)
-	required_reagents = list("blood" = 1)
->>>>>>> Updated this old code to fork
 	required_other = TRUE
 	required_container = /obj/item/slime_extract/green
 
 /datum/chemical_reaction/slime/slimelizard
 	name = "Lizard Mutation Toxin"
 	id = "lizardmuttoxin"
-<<<<<<< HEAD
 	results = list(/datum/reagent/mutationtoxin/lizard = 1)
 	required_reagents = list(/datum/reagent/uranium/radium = 1)
-=======
-	results = list("lizardmutationtoxin" = 1)
-	required_reagents = list("radium" = 1)
->>>>>>> Updated this old code to fork
 	required_other = TRUE
 	required_container = /obj/item/slime_extract/green
 
@@ -102,11 +74,7 @@
 /datum/chemical_reaction/slime/slimemetal
 	name = "Slime Metal"
 	id = "m_metal"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
-=======
-	required_reagents = list("plasma" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/metal
 	required_other = TRUE
 
@@ -119,11 +87,7 @@
 /datum/chemical_reaction/slime/slimeglass
 	name = "Slime Glass"
 	id = "m_glass"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/water = 1)
-=======
-	required_reagents = list("water" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/metal
 	required_other = TRUE
 
@@ -137,11 +101,7 @@
 /datum/chemical_reaction/slime/slimemobspawn
 	name = "Slime Crit"
 	id = "m_tele"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
-=======
-	required_reagents = list("plasma" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/gold
 	required_other = TRUE
 	deletes_extract = FALSE //we do delete, but we don't do so instantly
@@ -161,11 +121,7 @@
 /datum/chemical_reaction/slime/slimemobspawn/lesser
 	name = "Slime Crit Lesser"
 	id = "m_tele3"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/blood = 1)
-=======
-	required_reagents = list("blood" = 1)
->>>>>>> Updated this old code to fork
 
 /datum/chemical_reaction/slime/slimemobspawn/lesser/summon_mobs(datum/reagents/holder, turf/T)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently!</span>")
@@ -174,17 +130,12 @@
 /datum/chemical_reaction/slime/slimemobspawn/friendly
 	name = "Slime Crit Friendly"
 	id = "m_tele5"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/water = 1)
-=======
-	required_reagents = list("water" = 1)
->>>>>>> Updated this old code to fork
 
 /datum/chemical_reaction/slime/slimemobspawn/friendly/summon_mobs(datum/reagents/holder, turf/T)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
 	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 1, "Friendly Gold Slime", FRIENDLY_SPAWN, "neutral"), 50)
 
-<<<<<<< HEAD
 /datum/chemical_reaction/slime/slimemobspawn/spider
 	name = "Slime Crit Traitor Spider"
 	id = "m_tele6"
@@ -195,17 +146,11 @@
 	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 3, "Traitor Spider Slime", /mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife, "neutral", FALSE), 50)
 
 
-=======
->>>>>>> Updated this old code to fork
 //Silver
 /datum/chemical_reaction/slime/slimebork
 	name = "Slime Bork"
 	id = "m_tele2"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
-=======
-	required_reagents = list("plasma" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/silver
 	required_other = TRUE
 
@@ -237,11 +182,7 @@
 /datum/chemical_reaction/slime/slimebork/drinks
 	name = "Slime Bork 2"
 	id = "m_tele4"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/water = 1)
-=======
-	required_reagents = list("water" = 1)
->>>>>>> Updated this old code to fork
 
 /datum/chemical_reaction/slime/slimebork/drinks/getbork()
 	return get_random_drink()
@@ -250,24 +191,15 @@
 /datum/chemical_reaction/slime/slimefrost
 	name = "Slime Frost Oil"
 	id = "m_frostoil"
-<<<<<<< HEAD
 	results = list(/datum/reagent/consumable/frostoil = 10)
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
-=======
-	results = list("frostoil" = 10)
-	required_reagents = list("plasma" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/blue
 	required_other = TRUE
 
 /datum/chemical_reaction/slime/slimestabilizer
 	name = "Slime Stabilizer"
 	id = "m_slimestabilizer"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/blood = 1)
-=======
-	required_reagents = list("blood" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/blue
 	required_other = TRUE
 
@@ -278,13 +210,8 @@
 /datum/chemical_reaction/slime/slimefoam
 	name = "Slime Foam"
 	id = "m_foam"
-<<<<<<< HEAD
 	results = list(/datum/reagent/fluorosurfactant = 20, /datum/reagent/water = 20)
 	required_reagents = list(/datum/reagent/water = 5)
-=======
-	results = list("fluorosurfactant" = 20, "water" = 20)
-	required_reagents = list("water" = 5)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/blue
 	required_other = TRUE
 
@@ -292,22 +219,14 @@
 /datum/chemical_reaction/slime/slimefreeze
 	name = "Slime Freeze"
 	id = "m_freeze"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
-=======
-	required_reagents = list("plasma" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/darkblue
 	required_other = TRUE
 	deletes_extract = FALSE
 
 /datum/chemical_reaction/slime/slimefreeze/on_reaction(datum/reagents/holder)
 	var/turf/T = get_turf(holder.my_atom)
-<<<<<<< HEAD
 	T.visible_message("<span class='danger'>The slime extract starts to feel extremely cold!</span>")
-=======
-	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
->>>>>>> Updated this old code to fork
 	addtimer(CALLBACK(src, .proc/freeze, holder), 50)
 	var/obj/item/slime_extract/M = holder.my_atom
 	deltimer(M.qdel_timer)
@@ -318,21 +237,13 @@
 	if(holder && holder.my_atom)
 		var/turf/open/T = get_turf(holder.my_atom)
 		if(istype(T))
-<<<<<<< HEAD
 			var/datum/gas/gastype = /datum/gas/nitrogen
 			T.atmos_spawn_air("[initial(gastype.id)]=50;TEMP=2.7")
-=======
-			T.atmos_spawn_air("nitrogen=50;TEMP=2.7")
->>>>>>> Updated this old code to fork
 
 /datum/chemical_reaction/slime/slimefireproof
 	name = "Slime Fireproof"
 	id = "m_fireproof"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/water = 1)
-=======
-	required_reagents = list("water" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/darkblue
 	required_other = TRUE
 
@@ -344,24 +255,15 @@
 /datum/chemical_reaction/slime/slimecasp
 	name = "Slime Capsaicin Oil"
 	id = "m_capsaicinoil"
-<<<<<<< HEAD
 	results = list(/datum/reagent/consumable/capsaicin = 10)
 	required_reagents = list(/datum/reagent/blood = 1)
-=======
-	results = list("capsaicin" = 10)
-	required_reagents = list("blood" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/orange
 	required_other = TRUE
 
 /datum/chemical_reaction/slime/slimefire
 	name = "Slime fire"
 	id = "m_fire"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
-=======
-	required_reagents = list("plasma" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/orange
 	required_other = TRUE
 	deletes_extract = FALSE
@@ -385,13 +287,8 @@
 /datum/chemical_reaction/slime/slimesmoke
 	name = "Slime Smoke"
 	id = "m_smoke"
-<<<<<<< HEAD
 	results = list(/datum/reagent/phosphorus = 10, /datum/reagent/potassium = 10, /datum/reagent/consumable/sugar = 10)
 	required_reagents = list(/datum/reagent/water = 5)
-=======
-	results = list("phosphorus" = 10, "potassium" = 10, "sugar" = 10)
-	required_reagents = list("water" = 5)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/orange
 	required_other = TRUE
 
@@ -399,11 +296,7 @@
 /datum/chemical_reaction/slime/slimeoverload
 	name = "Slime EMP"
 	id = "m_emp"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/blood = 1)
-=======
-	required_reagents = list("blood" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/yellow
 	required_other = TRUE
 
@@ -414,11 +307,7 @@
 /datum/chemical_reaction/slime/slimecell
 	name = "Slime Powercell"
 	id = "m_cell"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
-=======
-	required_reagents = list("plasma" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/yellow
 	required_other = TRUE
 
@@ -429,11 +318,7 @@
 /datum/chemical_reaction/slime/slimeglow
 	name = "Slime Glow"
 	id = "m_glow"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/water = 1)
-=======
-	required_reagents = list("water" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/yellow
 	required_other = TRUE
 
@@ -447,11 +332,7 @@
 /datum/chemical_reaction/slime/slimepsteroid
 	name = "Slime Steroid"
 	id = "m_steroid"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
-=======
-	required_reagents = list("plasma" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/purple
 	required_other = TRUE
 
@@ -462,13 +343,8 @@
 /datum/chemical_reaction/slime/slimeregen
 	name = "Slime Regen"
 	id = "m_regen"
-<<<<<<< HEAD
 	results = list(/datum/reagent/medicine/regen_jelly = 5)
 	required_reagents = list(/datum/reagent/blood = 1)
-=======
-	results = list("regen_jelly" = 5)
-	required_reagents = list("blood" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/purple
 	required_other = TRUE
 
@@ -476,11 +352,7 @@
 /datum/chemical_reaction/slime/slimeplasma
 	name = "Slime Plasma"
 	id = "m_plasma"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
-=======
-	required_reagents = list("plasma" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/darkpurple
 	required_other = TRUE
 
@@ -492,11 +364,7 @@
 /datum/chemical_reaction/slime/slimemutator
 	name = "Slime Mutator"
 	id = "m_slimemutator"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
-=======
-	required_reagents = list("plasma" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/red
 	required_other = TRUE
 
@@ -507,24 +375,17 @@
 /datum/chemical_reaction/slime/slimebloodlust
 	name = "Bloodlust"
 	id = "m_bloodlust"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/blood = 1)
-=======
-	required_reagents = list("blood" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/red
 	required_other = TRUE
 
 /datum/chemical_reaction/slime/slimebloodlust/on_reaction(datum/reagents/holder)
 	for(var/mob/living/simple_animal/slime/slime in viewers(get_turf(holder.my_atom), null))
-<<<<<<< HEAD
 		if(slime.docile) //Undoes docility, but doesn't make rabid.
 			slime.visible_message("<span class='danger'>[slime] forgets its training, becoming wild once again!</span>")
 			slime.docile = FALSE
 			slime.update_name()
 			continue
-=======
->>>>>>> Updated this old code to fork
 		slime.rabid = 1
 		slime.visible_message("<span class='danger'>The [slime] is driven into a frenzy!</span>")
 	..()
@@ -532,11 +393,7 @@
 /datum/chemical_reaction/slime/slimespeed
 	name = "Slime Speed"
 	id = "m_speed"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/water = 1)
-=======
-	required_reagents = list("water" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/red
 	required_other = TRUE
 
@@ -548,11 +405,7 @@
 /datum/chemical_reaction/slime/docility
 	name = "Docility Potion"
 	id = "m_potion"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
-=======
-	required_reagents = list("plasma" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/pink
 	required_other = TRUE
 
@@ -563,11 +416,7 @@
 /datum/chemical_reaction/slime/gender
 	name = "Gender Potion"
 	id = "m_gender"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/blood = 1)
-=======
-	required_reagents = list("blood" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/pink
 	required_other = TRUE
 
@@ -579,13 +428,8 @@
 /datum/chemical_reaction/slime/slimemutate2
 	name = "Advanced Mutation Toxin"
 	id = "mutationtoxin2"
-<<<<<<< HEAD
 	results = list(/datum/reagent/aslimetoxin = 1)
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
-=======
-	results = list("amutationtoxin" = 1)
-	required_reagents = list("plasma" = 1)
->>>>>>> Updated this old code to fork
 	required_other = TRUE
 	required_container = /obj/item/slime_extract/black
 
@@ -593,11 +437,7 @@
 /datum/chemical_reaction/slime/slimeexplosion
 	name = "Slime Explosion"
 	id = "m_explosion"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
-=======
-	required_reagents = list("plasma" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/oil
 	required_other = TRUE
 	deletes_extract = FALSE
@@ -626,13 +466,8 @@
 /datum/chemical_reaction/slime/slimecornoil
 	name = "Slime Corn Oil"
 	id = "m_cornoil"
-<<<<<<< HEAD
 	results = list(/datum/reagent/consumable/cornoil = 10)
 	required_reagents = list(/datum/reagent/blood = 1)
-=======
-	results = list("cornoil" = 10)
-	required_reagents = list("blood" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/oil
 	required_other = TRUE
 
@@ -641,11 +476,7 @@
 	name = "Slime Potion 2"
 	id = "m_potion2"
 	required_container = /obj/item/slime_extract/lightpink
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
-=======
-	required_reagents = list("plasma" = 1)
->>>>>>> Updated this old code to fork
 	required_other = TRUE
 
 /datum/chemical_reaction/slime/slimepotion2/on_reaction(datum/reagents/holder)
@@ -656,11 +487,7 @@
 	name = "Renaming Potion"
 	id = "m_renaming_potion"
 	required_container = /obj/item/slime_extract/lightpink
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/water = 1)
-=======
-	required_reagents = list("water" = 1)
->>>>>>> Updated this old code to fork
 	required_other = TRUE
 
 /datum/chemical_reaction/slime/renaming/on_reaction(datum/reagents/holder)
@@ -672,11 +499,7 @@
 /datum/chemical_reaction/slime/adamantine
 	name = "Adamantine"
 	id = "adamantine"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
-=======
-	required_reagents = list("plasma" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/adamantine
 	required_other = TRUE
 
@@ -688,11 +511,7 @@
 /datum/chemical_reaction/slime/slimefloor2
 	name = "Bluespace Floor"
 	id = "m_floor2"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/blood = 1)
-=======
-	required_reagents = list("blood" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/bluespace
 	required_other = TRUE
 
@@ -704,11 +523,7 @@
 /datum/chemical_reaction/slime/slimecrystal
 	name = "Slime Crystal"
 	id = "m_crystal"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
-=======
-	required_reagents = list("plasma" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/bluespace
 	required_other = TRUE
 
@@ -720,11 +535,7 @@
 /datum/chemical_reaction/slime/slimeradio
 	name = "Slime Radio"
 	id = "m_radio"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/water = 1)
-=======
-	required_reagents = list("water" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/bluespace
 	required_other = TRUE
 
@@ -736,11 +547,7 @@
 /datum/chemical_reaction/slime/slimepsteroid2
 	name = "Slime Steroid 2"
 	id = "m_steroid2"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
-=======
-	required_reagents = list("plasma" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/cerulean
 	required_other = TRUE
 
@@ -751,11 +558,7 @@
 /datum/chemical_reaction/slime/slime_territory
 	name = "Slime Territory"
 	id = "s_territory"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/blood = 1)
-=======
-	required_reagents = list("blood" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/cerulean
 	required_other = TRUE
 
@@ -767,16 +570,11 @@
 /datum/chemical_reaction/slime/slimestop
 	name = "Slime Stop"
 	id = "m_stop"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
-=======
-	required_reagents = list("plasma" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/sepia
 	required_other = TRUE
 
 /datum/chemical_reaction/slime/slimestop/on_reaction(datum/reagents/holder)
-<<<<<<< HEAD
 	sleep(50)
 	var/obj/item/slime_extract/sepia/extract = holder.my_atom
 	var/turf/T = get_turf(holder.my_atom)
@@ -787,21 +585,12 @@
 			if(lastheld && !lastheld.equip_to_slot_if_possible(extract, SLOT_HANDS, disable_warning = TRUE))
 				extract.forceMove(get_turf(lastheld))
 
-=======
-	var/turf/T = get_turf(holder.my_atom)
-	var/list/M = list(get_mob_by_key(holder.my_atom.fingerprintslast))
-	new /obj/effect/timestop(T, null, null, M)
->>>>>>> Updated this old code to fork
 	..()
 
 /datum/chemical_reaction/slime/slimecamera
 	name = "Slime Camera"
 	id = "m_camera"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/water = 1)
-=======
-	required_reagents = list("water" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/sepia
 	required_other = TRUE
 
@@ -813,11 +602,7 @@
 /datum/chemical_reaction/slime/slimefloor
 	name = "Sepia Floor"
 	id = "m_floor"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/blood = 1)
-=======
-	required_reagents = list("blood" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/sepia
 	required_other = TRUE
 
@@ -829,11 +614,7 @@
 /datum/chemical_reaction/slime/slimepaint
 	name = "Slime Paint"
 	id = "s_paint"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
-=======
-	required_reagents = list("plasma" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/pyrite
 	required_other = TRUE
 
@@ -845,11 +626,7 @@
 /datum/chemical_reaction/slime/slimecrayon
 	name = "Slime Crayon"
 	id = "s_crayon"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/blood = 1)
-=======
-	required_reagents = list("blood" = 1)
->>>>>>> Updated this old code to fork
 	required_container = /obj/item/slime_extract/pyrite
 	required_other = TRUE
 
@@ -862,11 +639,7 @@
 /datum/chemical_reaction/slime/slimeRNG
 	name = "Random Core"
 	id = "slimerng"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
-=======
-	required_reagents = list("plasma" = 1)
->>>>>>> Updated this old code to fork
 	required_other = TRUE
 	required_container = /obj/item/slime_extract/rainbow
 
@@ -886,11 +659,7 @@
 /datum/chemical_reaction/slime/slimebomb
 	name = "Clusterblorble"
 	id = "slimebomb"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/toxin/slimejelly = 1)
-=======
-	required_reagents = list("slimejelly" = 1)
->>>>>>> Updated this old code to fork
 	required_other = TRUE
 	required_container = /obj/item/slime_extract/rainbow
 
@@ -906,11 +675,7 @@
 /datum/chemical_reaction/slime/slime_transfer
 	name = "Transfer Potion"
 	id = "slimetransfer"
-<<<<<<< HEAD
 	required_reagents = list(/datum/reagent/blood = 1)
-=======
-	required_reagents = list("blood" = 1)
->>>>>>> Updated this old code to fork
 	required_other = TRUE
 	required_container = /obj/item/slime_extract/rainbow
 
@@ -920,13 +685,8 @@
 
 /datum/chemical_reaction/slime/flight_potion
 	name = "Flight Potion"
-<<<<<<< HEAD
 	id = /datum/reagent/flightpotion
 	required_reagents = list(/datum/reagent/water/holywater = 5, /datum/reagent/uranium = 5)
-=======
-	id = "flightpotion"
-	required_reagents = list("holywater" = 5, "uranium" = 5)
->>>>>>> Updated this old code to fork
 	required_other = TRUE
 	required_container = /obj/item/slime_extract/rainbow
 

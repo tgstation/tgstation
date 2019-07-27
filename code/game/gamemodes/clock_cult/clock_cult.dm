@@ -63,11 +63,7 @@ Credit where due:
 		return FALSE
 	if(isliving(M))
 		var/mob/living/L = M
-<<<<<<< HEAD
 		if(HAS_TRAIT(L, TRAIT_MINDSHIELD))
-=======
-		if(L.has_trait(TRAIT_MINDSHIELD))
->>>>>>> Updated this old code to fork
 			return FALSE
 	if(ishuman(M) || isbrain(M) || isguardian(M) || issilicon(M) || isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab) || istype(M, /mob/camera/eminence))
 		return TRUE
@@ -355,12 +351,6 @@ Credit where due:
 	info = replacetext(info, "CLOCKCULTCHANGELOG", changelog_contents)
 
 /obj/item/paper/servant_primer/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	if(!is_servant_of_ratvar(user) && !isobserver(user))
 		. += "<span class='danger'>You can't understand any of the words on [src].</span>"
-=======
-	if(!is_servant_of_ratvar(user) && !isobserver(user))
-		to_chat(user, "<span class='danger'>You can't understand any of the words on [src].</span>")
-	..()
->>>>>>> Updated this old code to fork

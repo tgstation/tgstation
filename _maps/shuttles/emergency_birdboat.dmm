@@ -112,7 +112,6 @@
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-<<<<<<< HEAD
 "w" = (
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
@@ -120,8 +119,6 @@
 	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
-=======
->>>>>>> Updated this old code to fork
 "x" = (
 /obj/structure/table,
 /obj/machinery/recharger{
@@ -199,22 +196,12 @@
 "K" = (
 /obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile/emergency{
-<<<<<<< HEAD
 	dir = 8;
 	dwidth = 6;
 	height = 18;
 	name = "Birdboat emergency escape shuttle";
 	port_direction = 4;
 	width = 14
-=======
-	dheight = 0;
-	dir = 8;
-	dwidth = 6;
-	height = 18;
-	port_direction = 4;
-	width = 14;
-	name = "Birdboat emergency escape shuttle"
->>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -303,13 +290,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "X" = (
-<<<<<<< HEAD
 /obj/machinery/stasis,
-=======
-/obj/machinery/sleeper{
-	dir = 1
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "Y" = (
@@ -519,11 +500,7 @@ b
 h
 C
 C
-<<<<<<< HEAD
 w
-=======
-h
->>>>>>> Updated this old code to fork
 b
 A
 c

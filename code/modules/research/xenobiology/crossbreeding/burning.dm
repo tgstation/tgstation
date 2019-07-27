@@ -14,17 +14,10 @@ Burning extracts:
 	create_reagents(10, INJECTABLE | DRAWABLE)
 
 /obj/item/slimecross/burning/attack_self(mob/user)
-<<<<<<< HEAD
 	if(!reagents.has_reagent(/datum/reagent/toxin/plasma,10))
 		to_chat(user, "<span class='warning'>This extract needs to be full of plasma to activate!</span>")
 		return
 	reagents.remove_reagent(/datum/reagent/toxin/plasma,10)
-=======
-	if(!reagents.has_reagent("plasma",10))
-		to_chat(user, "<span class='warning'>This extract needs to be full of plasma to activate!</span>")
-		return
-	reagents.remove_reagent("plasma",10)
->>>>>>> Updated this old code to fork
 	to_chat(user, "<span class='notice'>You squeeze the extract, and it absorbs the plasma!</span>")
 	playsound(src, 'sound/effects/bubbles.ogg', 50, 1)
 	playsound(src, 'sound/magic/fireball.ogg', 50, 1)
@@ -36,10 +29,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/grey
 	colour = "grey"
-<<<<<<< HEAD
 	effect_desc = "Creates a hungry and speedy slime that will love you forever."
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/burning/grey/do_effect(mob/user)
 	var/mob/living/simple_animal/slime/S = new(get_turf(user),"grey")
@@ -51,19 +41,12 @@ Burning extracts:
 
 /obj/item/slimecross/burning/orange
 	colour = "orange"
-<<<<<<< HEAD
 	effect_desc = "Expels pepperspray in a radius when activated."
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/burning/orange/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] boils over with a caustic gas!</span>")
 	var/datum/reagents/R = new/datum/reagents(100)
-<<<<<<< HEAD
 	R.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 100)
-=======
-	R.add_reagent("condensedcapsaicin", 100)
->>>>>>> Updated this old code to fork
 
 	var/datum/effect_system/smoke_spread/chem/smoke = new
 	smoke.set_up(R, 7, get_turf(user))
@@ -72,10 +55,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/purple
 	colour = "purple"
-<<<<<<< HEAD
 	effect_desc = "Creates a clump of invigorating gel, it has healing properties and makes you feel good."
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/burning/purple/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] fills with a bubbling liquid!</span>")
@@ -84,10 +64,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/blue
 	colour = "blue"
-<<<<<<< HEAD
 	effect_desc = "Freezes the floor around you and chills nearby people."
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/burning/blue/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] flash-freezes the area!</span>")
@@ -101,10 +78,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/metal
 	colour = "metal"
-<<<<<<< HEAD
 	effect_desc = "Instantly destroys walls around you."
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/burning/metal/do_effect(mob/user)
 	for(var/turf/closed/wall/W in range(1,get_turf(user)))
@@ -115,10 +89,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/yellow
 	colour = "yellow"
-<<<<<<< HEAD
 	effect_desc = "Electrocutes people near you."
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/burning/yellow/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] explodes into an electrical field!</span>")
@@ -135,10 +106,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/darkpurple
 	colour = "dark purple"
-<<<<<<< HEAD
 	effect_desc = "Creates a cloud of plasma."
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/burning/darkpurple/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] sublimates into a cloud of plasma!</span>")
@@ -148,21 +116,13 @@ Burning extracts:
 
 /obj/item/slimecross/burning/darkblue
 	colour = "dark blue"
-<<<<<<< HEAD
 	effect_desc = "Expels a burst of chilling smoke while also filling you with cryoxadone."
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/burning/darkblue/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] releases a burst of chilling smoke!</span>")
 	var/datum/reagents/R = new/datum/reagents(100)
-<<<<<<< HEAD
 	R.add_reagent(/datum/reagent/consumable/frostoil, 40)
 	user.reagents.add_reagent(/datum/reagent/medicine/cryoxadone,10)
-=======
-	R.add_reagent("frostoil", 40)
-	user.reagents.add_reagent("cryoxadone",10)
->>>>>>> Updated this old code to fork
 	var/datum/effect_system/smoke_spread/chem/smoke = new
 	smoke.set_up(R, 7, get_turf(user))
 	smoke.start()
@@ -170,10 +130,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/silver
 	colour = "silver"
-<<<<<<< HEAD
 	effect_desc = "Creates a few pieces of slime jelly laced food."
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/burning/silver/do_effect(mob/user)
 	var/amount = rand(3,6)
@@ -183,11 +140,7 @@ Burning extracts:
 	for(var/i = 0, i < amount, i++)
 		var/path = get_random_food()
 		var/obj/item/O = new path(pick(turfs))
-<<<<<<< HEAD
 		O.reagents.add_reagent(/datum/reagent/toxin/slimejelly,5) //Oh god it burns
-=======
-		O.reagents.add_reagent("slimejelly",5) //Oh god it burns
->>>>>>> Updated this old code to fork
 		if(prob(50))
 			O.desc += " It smells strange..."
 	user.visible_message("<span class='danger'>[src] produces a few pieces of food!</span>")
@@ -195,10 +148,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/bluespace
 	colour = "bluespace"
-<<<<<<< HEAD
 	effect_desc = "Teleports anyone directly next to you."
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/burning/bluespace/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] sparks, and lets off a shockwave of bluespace energy!</span>")
@@ -211,26 +161,16 @@ Burning extracts:
 
 /obj/item/slimecross/burning/sepia
 	colour = "sepia"
-<<<<<<< HEAD
 	effect_desc = "Turns into a special camera that rewinds time when used."
 
 /obj/item/slimecross/burning/sepia/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] shapes itself into a camera!</span>")
 	new /obj/item/camera/rewind(get_turf(user))
-=======
-
-/obj/item/slimecross/burning/sepia/do_effect(mob/user)
-	user.visible_message("<span class='notice'>[src] shapes itself into a camera!</span>")
-	new /obj/item/camera/timefreeze(get_turf(user))
->>>>>>> Updated this old code to fork
 	..()
 
 /obj/item/slimecross/burning/cerulean
 	colour = "cerulean"
-<<<<<<< HEAD
 	effect_desc = "Produces an extract cloning potion, which copies an extract, as well as its extra uses."
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/burning/cerulean/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] produces a potion!</span>")
@@ -239,10 +179,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/pyrite
 	colour = "pyrite"
-<<<<<<< HEAD
 	effect_desc = "Shatters all lights in the current room."
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/burning/pyrite/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] releases a colorful wave of energy, which shatters the lights!</span>")
@@ -256,10 +193,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/red
 	colour = "red"
-<<<<<<< HEAD
 	effect_desc = "Makes nearby slimes rabid, and they'll also attack their friends."
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/burning/red/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] pulses a hazy red aura for a moment, which wraps around [user]!</span>")
@@ -276,10 +210,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/green
 	colour = "green"
-<<<<<<< HEAD
 	effect_desc = "The user gets a dull arm blade in the hand it is used in."
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/burning/green/do_effect(mob/user)
 	var/which_hand = "l_hand"
@@ -302,10 +233,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/pink
 	colour = "pink"
-<<<<<<< HEAD
 	effect_desc = "Creates a beaker of synthpax."
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/burning/pink/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] shrinks into a small, gel-filled pellet!</span>")
@@ -314,10 +242,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/gold
 	colour = "gold"
-<<<<<<< HEAD
 	effect_desc = "Creates a gank squad of monsters that are friendly to the user."
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/burning/gold/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] shudders violently, and summons an army for [user]!</span>")
@@ -331,7 +256,6 @@ Burning extracts:
 
 /obj/item/slimecross/burning/oil
 	colour = "oil"
-<<<<<<< HEAD
 	effect_desc = "Creates an explosion after a few seconds."
 
 /obj/item/slimecross/burning/oil/do_effect(mob/user)
@@ -344,23 +268,11 @@ Burning extracts:
 	for(var/mob/living/M in range(2, T))
 		new /obj/effect/temp_visual/explosion(get_turf(M))
 		M.ex_act(EXPLODE_HEAVY)
-=======
-
-/obj/item/slimecross/burning/oil/do_effect(mob/user)
-	user.visible_message("<span class='danger'>[src] begins to shake with rapidly increasing force!</span>")
-	addtimer(CALLBACK(src, .proc/boom), 50)
-
-/obj/item/slimecross/burning/oil/proc/boom()
-	explosion(get_turf(src), 2, 4, 4) //Same area as normal oils, but increased high-impact values by one each, then decreased light by 2.
->>>>>>> Updated this old code to fork
 	qdel(src)
 
 /obj/item/slimecross/burning/black
 	colour = "black"
-<<<<<<< HEAD
 	effect_desc = "Transforms the user into a slime. They can transform back at will and do not lose any items."
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/burning/black/do_effect(mob/user)
 	var/mob/living/L = user
@@ -375,27 +287,17 @@ Burning extracts:
 
 /obj/item/slimecross/burning/lightpink
 	colour = "light pink"
-<<<<<<< HEAD
 	effect_desc = "Paxes everyone in sight."
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/burning/lightpink/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] lets off a hypnotizing pink glow!</span>")
 	for(var/mob/living/carbon/C in view(7, get_turf(user)))
-<<<<<<< HEAD
 		C.reagents.add_reagent(/datum/reagent/pax,5)
-=======
-		C.reagents.add_reagent("pax",5)
->>>>>>> Updated this old code to fork
 	..()
 
 /obj/item/slimecross/burning/adamantine
 	colour = "adamantine"
-<<<<<<< HEAD
 	effect_desc = "Creates a mighty adamantine shield."
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/burning/adamantine/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] crystallizes into a large shield!</span>")
@@ -404,10 +306,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/rainbow
 	colour = "rainbow"
-<<<<<<< HEAD
 	effect_desc = "Creates the Rainbow Knife, a kitchen knife that deals random types of damage."
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/slimecross/burning/rainbow/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] flattens into a glowing rainbow blade.</span>")

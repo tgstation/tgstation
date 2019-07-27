@@ -424,15 +424,8 @@
 	var/off_station = 0
 	var/turf/bomb_location = get_turf(src)
 	var/area/A = get_area(bomb_location)
-<<<<<<< HEAD
 
 	if(bomb_location && is_station_level(bomb_location.z))
-=======
-	if(istype(A, /area/fabric_of_reality))
-		var/area/fabric_of_reality/fabric = A
-		new /obj/singularity(fabric.origin, 2000) // Stage five singulo back on the station, as a gift
-	else if(bomb_location && is_station_level(bomb_location.z))
->>>>>>> Updated this old code to fork
 		if(istype(A, /area/space))
 			off_station = NUKE_NEAR_MISS
 		if((bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)))
@@ -453,17 +446,7 @@
 
 /obj/machinery/nuclearbomb/proc/really_actually_explode(off_station)
 	Cinematic(get_cinematic_type(off_station),world,CALLBACK(SSticker,/datum/controller/subsystem/ticker/proc/station_explosion_detonation,src))
-<<<<<<< HEAD
 	INVOKE_ASYNC(GLOBAL_PROC,.proc/KillEveryoneOnZLevel, z)
-=======
-	var/area/A = get_area(src)
-	if(istype(A, /area/fabric_of_reality))
-		var/area/fabric_of_reality/fabric = A
-		var/turf/T = fabric.origin
-		INVOKE_ASYNC(GLOBAL_PROC,.proc/KillEveryoneOnZLevel, T.z)
-	else
-		INVOKE_ASYNC(GLOBAL_PROC,.proc/KillEveryoneOnZLevel, z)
->>>>>>> Updated this old code to fork
 
 /obj/machinery/nuclearbomb/proc/get_cinematic_type(off_station)
 	if(off_station < 2)
@@ -499,11 +482,8 @@
 	return ..()
 
 /obj/machinery/nuclearbomb/beer/actually_explode()
-<<<<<<< HEAD
 	//Unblock roundend, we're not actually exploding.
 	SSticker.roundend_check_paused = FALSE
-=======
->>>>>>> Updated this old code to fork
 	var/turf/bomb_location = get_turf(src)
 	if(!bomb_location)
 		disarm()
@@ -531,11 +511,7 @@
 /obj/machinery/nuclearbomb/beer/proc/fizzbuzz()
 	var/datum/reagents/R = new/datum/reagents(1000)
 	R.my_atom = src
-<<<<<<< HEAD
 	R.add_reagent(/datum/reagent/consumable/ethanol/beer, 100)
-=======
-	R.add_reagent("beer", 100)
->>>>>>> Updated this old code to fork
 
 	var/datum/effect_system/foam_spread/foam = new
 	foam.set_up(200, get_turf(src), R)
@@ -634,13 +610,8 @@ This is here to make the tiles around the station mininuke change when it's arme
 	if(!fake)
 		return
 
-<<<<<<< HEAD
 	if(isobserver(user) || HAS_TRAIT(user.mind, TRAIT_DISK_VERIFIER))
 		. += "<span class='warning'>The serial numbers on [src] are incorrect.</span>"
-=======
-	if(isobserver(user) || user.has_trait(TRAIT_DISK_VERIFIER))
-		to_chat(user, "<span class='warning'>The serial numbers on [src] are incorrect.</span>")
->>>>>>> Updated this old code to fork
 
 /obj/item/disk/nuclear/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/claymore/highlander) && !fake)

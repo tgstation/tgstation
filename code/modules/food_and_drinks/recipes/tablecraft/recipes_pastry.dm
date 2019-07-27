@@ -22,11 +22,7 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut
 	subcategory = CAT_PASTRY
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> Updated this old code to fork
 datum/crafting_recipe/food/donut/meat
 	time = 15
 	name = "Meat donut"
@@ -98,11 +94,7 @@ datum/crafting_recipe/food/donut/meat
 /datum/crafting_recipe/food/rofflewaffles
 	name = "Roffle waffles"
 	reqs = list(
-<<<<<<< HEAD
 		/datum/reagent/drug/mushroomhallucinogen = 5,
-=======
-		/datum/reagent/mushroomhallucinogen = 5,
->>>>>>> Updated this old code to fork
 		/obj/item/reagent_containers/food/snacks/pastrybase = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/rofflewaffles

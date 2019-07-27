@@ -12,11 +12,7 @@
 	bitesize = 2
 	custom_food_type = /obj/item/reagent_containers/food/snacks/customizable/sandwich
 	filling_color = "#FFA500"
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2)
-=======
-	list_reagents = list("nutriment" = 2)
->>>>>>> Updated this old code to fork
 	slot_flags = ITEM_SLOT_HEAD
 	customfoodfilling = 0 //to avoid infinite bread-ception
 	foodtype = GRAIN
@@ -25,13 +21,8 @@
 	name = "bread"
 	desc = "Some plain old earthen bread."
 	icon_state = "bread"
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 7)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 10)
-=======
-	bonus_reagents = list("nutriment" = 7)
-	list_reagents = list("nutriment" = 10)
->>>>>>> Updated this old code to fork
 	custom_food_type = /obj/item/reagent_containers/food/snacks/customizable/bread
 	slice_path = /obj/item/reagent_containers/food/snacks/breadslice/plain
 	tastes = list("bread" = 10)
@@ -49,13 +40,8 @@
 	desc = "The culinary base of every self-respecting eloquen/tg/entleman."
 	icon_state = "meatbread"
 	slice_path = /obj/item/reagent_containers/food/snacks/breadslice/meat
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 10)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 30, /datum/reagent/consumable/nutriment/vitamin = 5)
-=======
-	bonus_reagents = list("nutriment" = 5, "vitamin" = 10)
-	list_reagents = list("nutriment" = 30, "vitamin" = 5)
->>>>>>> Updated this old code to fork
 	tastes = list("bread" = 10, "meat" = 10)
 	foodtype = GRAIN | MEAT
 
@@ -70,13 +56,8 @@
 	desc = "The culinary base of every self-respecting eloquen/tg/entleman. Extra Heretical."
 	icon_state = "xenomeatbread"
 	slice_path = /obj/item/reagent_containers/food/snacks/breadslice/xenomeat
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 10)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 30, /datum/reagent/consumable/nutriment/vitamin = 5)
-=======
-	bonus_reagents = list("nutriment" = 5, "vitamin" = 10)
-	list_reagents = list("nutriment" = 30, "vitamin" = 5)
->>>>>>> Updated this old code to fork
 	tastes = list("bread" = 10, "acid" = 10)
 	foodtype = GRAIN | MEAT
 
@@ -85,11 +66,7 @@
 	desc = "A slice of delicious meatbread. Extra Heretical."
 	icon_state = "xenobreadslice"
 	filling_color = "#32CD32"
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
-=======
-	list_reagents = list("nutriment" = 6, "vitamin" = 1)
->>>>>>> Updated this old code to fork
 	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/store/bread/spidermeat
@@ -97,13 +74,8 @@
 	desc = "Reassuringly green meatloaf made from spider meat."
 	icon_state = "spidermeatbread"
 	slice_path = /obj/item/reagent_containers/food/snacks/breadslice/spidermeat
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 10)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 30, /datum/reagent/toxin = 15, /datum/reagent/consumable/nutriment/vitamin = 5)
-=======
-	bonus_reagents = list("nutriment" = 5, "vitamin" = 10)
-	list_reagents = list("nutriment" = 30, "toxin" = 15, "vitamin" = 5)
->>>>>>> Updated this old code to fork
 	tastes = list("bread" = 10, "cobwebs" = 5)
 	foodtype = GRAIN | MEAT | TOXIC
 
@@ -112,11 +84,7 @@
 	desc = "A slice of meatloaf made from an animal that most likely still wants you dead."
 	icon_state = "xenobreadslice"
 	filling_color = "#7CFC00"
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/toxin = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
-=======
-	list_reagents = list("nutriment" = 6, "toxin" = 3, "vitamin" = 1)
->>>>>>> Updated this old code to fork
 	foodtype = GRAIN | MEAT | TOXIC
 
 /obj/item/reagent_containers/food/snacks/store/bread/banana
@@ -124,13 +92,8 @@
 	desc = "A heavenly and filling treat."
 	icon_state = "bananabread"
 	slice_path = /obj/item/reagent_containers/food/snacks/breadslice/banana
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/banana = 20)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/banana = 20)
-=======
-	bonus_reagents = list("nutriment" = 5, "banana" = 20)
-	list_reagents = list("nutriment" = 20, "banana" = 20)
->>>>>>> Updated this old code to fork
 	tastes = list("bread" = 10) // bananjuice will also flavour
 	foodtype = GRAIN | FRUIT
 
@@ -140,11 +103,7 @@
 	desc = "A slice of delicious banana bread."
 	icon_state = "bananabreadslice"
 	filling_color = "#FFD700"
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/banana = 4)
-=======
-	list_reagents = list("nutriment" = 4, "banana" = 4)
->>>>>>> Updated this old code to fork
 	foodtype = GRAIN | FRUIT
 
 /obj/item/reagent_containers/food/snacks/store/bread/tofu
@@ -152,13 +111,8 @@
 	desc = "Like meatbread but for vegetarians. Not guaranteed to give superpowers."
 	icon_state = "tofubread"
 	slice_path = /obj/item/reagent_containers/food/snacks/breadslice/tofu
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 10)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5)
-=======
-	bonus_reagents = list("nutriment" = 5, "vitamin" = 10)
-	list_reagents = list("nutriment" = 20, "vitamin" = 5)
->>>>>>> Updated this old code to fork
 	tastes = list("bread" = 10, "tofu" = 10)
 	foodtype = GRAIN | VEGETABLES
 
@@ -167,11 +121,7 @@
 	desc = "A slice of delicious tofubread."
 	icon_state = "tofubreadslice"
 	filling_color = "#FF8C00"
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
-=======
-	list_reagents = list("nutriment" = 4, "vitamin" = 1)
->>>>>>> Updated this old code to fork
 	foodtype = GRAIN | VEGETABLES
 
 /obj/item/reagent_containers/food/snacks/store/bread/creamcheese
@@ -179,13 +129,8 @@
 	desc = "Yum yum yum!"
 	icon_state = "creamcheesebread"
 	slice_path = /obj/item/reagent_containers/food/snacks/breadslice/creamcheese
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5)
-=======
-	bonus_reagents = list("nutriment" = 5, "vitamin" = 5)
-	list_reagents = list("nutriment" = 20, "vitamin" = 5)
->>>>>>> Updated this old code to fork
 	tastes = list("bread" = 10, "cheese" = 10)
 	foodtype = GRAIN | DAIRY
 
@@ -194,11 +139,7 @@
 	desc = "A slice of yum!"
 	icon_state = "creamcheesebreadslice"
 	filling_color = "#FF8C00"
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
-=======
-	list_reagents = list("nutriment" = 4, "vitamin" = 1)
->>>>>>> Updated this old code to fork
 	foodtype = GRAIN | DAIRY
 
 /obj/item/reagent_containers/food/snacks/store/bread/mimana
@@ -206,13 +147,8 @@
 	desc = "Best eaten in silence."
 	icon_state = "mimanabread"
 	slice_path = /obj/item/reagent_containers/food/snacks/breadslice/mimana
-<<<<<<< HEAD
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/toxin/mutetoxin = 5, /datum/reagent/consumable/nothing = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
-=======
-	bonus_reagents = list("nutriment" = 5, "vitamin" = 5)
-	list_reagents = list("nutriment" = 20, "mutetoxin" = 5, "nothing" = 5, "vitamin" = 5)
->>>>>>> Updated this old code to fork
 	tastes = list("bread" = 10, "silence" = 10)
 	foodtype = GRAIN | FRUIT
 
@@ -221,11 +157,7 @@
 	desc = "A slice of silence!"
 	icon_state = "mimanabreadslice"
 	filling_color = "#C0C0C0"
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/toxin/mutetoxin = 1, /datum/reagent/consumable/nothing = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
-=======
-	list_reagents = list("nutriment" = 2, "mutetoxin" = 1, "nothing" = 1, "vitamin" = 1)
->>>>>>> Updated this old code to fork
 	foodtype = GRAIN | FRUIT
 
 /obj/item/reagent_containers/food/snacks/breadslice/custom
@@ -239,7 +171,6 @@
 	desc = "Bon appetit!"
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "baguette"
-<<<<<<< HEAD
 	item_state = "baguette"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
@@ -261,15 +192,6 @@
 	tastes = list("bread" = 1, "garlic" = 1, "butter" = 1)
 	foodtype = GRAIN
 
-=======
-	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
-	list_reagents = list("nutriment" = 6, "vitamin" = 1)
-	bitesize = 3
-	w_class = WEIGHT_CLASS_NORMAL
-	tastes = list("bread" = 1)
-	foodtype = GRAIN
-
->>>>>>> Updated this old code to fork
 /obj/item/reagent_containers/food/snacks/deepfryholder
 	name = "Deep Fried Foods Holder Obj"
 	desc = "If you can see this description the code for the deep fryer fucked up."
@@ -334,36 +256,16 @@
 	filling_color = color
 	foodtype |= FRIED
 
-<<<<<<< HEAD
-=======
-/obj/item/reagent_containers/food/snacks/butteredtoast
-	name = "buttered toast"
-	desc = "Butter lightly spread over a piece of toast."
-	icon = 'icons/obj/food/food.dmi'
-	icon_state = "butteredtoast"
-	bitesize = 3
-	filling_color = "#FFA500"
-	list_reagents = list("nutriment" = 4)
-	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
-	tastes = list("butter" = 1, "toast" = 1)
-
->>>>>>> Updated this old code to fork
 /obj/item/reagent_containers/food/snacks/butterbiscuit
 	name = "butter biscuit"
 	desc = "Well butter my biscuit!"
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "butterbiscuit"
 	filling_color = "#F0E68C"
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("butter" = 1, "biscuit" = 1)
 	foodtype = GRAIN | BREAKFAST
-=======
-	list_reagents = list("nutriment" = 5)
-	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
-	tastes = list("butter" = 1, "biscuit" = 1)
->>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/snacks/butterdog
 	name = "butterdog"
@@ -372,13 +274,8 @@
 	icon_state = "butterdog"
 	bitesize = 1
 	filling_color = "#F1F49A"
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
-=======
-	list_reagents = list("nutriment" = 5)
-	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
->>>>>>> Updated this old code to fork
 	tastes = list("butter", "exotic butter")
 
 /obj/item/reagent_containers/food/snacks/butterdog/ComponentInitialize()

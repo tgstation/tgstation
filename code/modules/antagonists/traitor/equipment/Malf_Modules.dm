@@ -185,11 +185,8 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 							A.playsound_local(A, AM.unlock_sound, 50, 0)
 					else //Adding uses to an existing module
 						action.uses += initial(action.uses)
-<<<<<<< HEAD
 						action.desc = "[initial(action.desc)] It has [action.uses] use\s remaining."
 						action.UpdateButtonIcon()
-=======
->>>>>>> Updated this old code to fork
 						temp = "Additional use[action.uses > 1 ? "s" : ""] added to [action.name]!"
 			processing_time -= AM.cost
 
@@ -213,11 +210,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	var/unlock_text = "<span class='notice'>Hello World!</span>" //Text shown when an ability is unlocked
 	var/unlock_sound //Sound played when an ability is unlocked
 
-<<<<<<< HEAD
 /datum/AI_Module/proc/upgrade(mob/living/silicon/ai/AI) //Apply upgrades!
-=======
-/datum/AI_Module/proc/upgrade(mob/living/silicon/AI/AI) //Apply upgrades!
->>>>>>> Updated this old code to fork
 	return
 
 /datum/AI_Module/large //Big, powerful stuff that can only be used once.
@@ -408,11 +401,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	unlock_text = "<span class='notice'>You establish a power diversion to your turrets, upgrading their health and damage.</span>"
 	unlock_sound = 'sound/items/rped.ogg'
 
-<<<<<<< HEAD
 /datum/AI_Module/large/upgrade_turrets/upgrade(mob/living/silicon/ai/AI)
-=======
-/datum/AI_Module/large/upgrade_turrets/upgrade(mob/living/silicon/AI/AI)
->>>>>>> Updated this old code to fork
 	for(var/obj/machinery/porta_turret/ai/turret in GLOB.machines)
 		turret.obj_integrity += 30
 		turret.lethal_projectile = /obj/item/projectile/beam/laser/heavylaser //Once you see it, you will know what it means to FEAR.
@@ -519,10 +508,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		if(!is_station_level(F.z))
 			continue
 		F.obj_flags |= EMAGGED
-<<<<<<< HEAD
 		F.update_icon()
-=======
->>>>>>> Updated this old code to fork
 	to_chat(owner, "<span class='notice'>All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized.</span>")
 	owner.playsound_local(owner, 'sound/machines/terminal_off.ogg', 50, 0)
 
@@ -571,14 +557,11 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	uses = 2
 	linked_ability_type = /obj/effect/proc_holder/ranged_ai/overload_machine
 
-<<<<<<< HEAD
 /datum/action/innate/ai/ranged/overload_machine/New()
 	..()
 	desc = "[desc] It has [uses] use\s remaining."
 	button.desc = desc
 
-=======
->>>>>>> Updated this old code to fork
 /datum/action/innate/ai/ranged/overload_machine/proc/detonate_machine(obj/machinery/M)
 	if(M && !QDELETED(M))
 		var/turf/T = get_turf(M)
@@ -608,12 +591,9 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		return
 	ranged_ability_user.playsound_local(ranged_ability_user, "sparks", 50, 0)
 	attached_action.adjust_uses(-1)
-<<<<<<< HEAD
 	if(attached_action && attached_action.uses)
 		attached_action.desc = "[initial(attached_action.desc)] It has [attached_action.uses] use\s remaining."
 		attached_action.UpdateButtonIcon()
-=======
->>>>>>> Updated this old code to fork
 	target.audible_message("<span class='userdanger'>You hear a loud electrical buzzing sound coming from [target]!</span>")
 	addtimer(CALLBACK(attached_action, /datum/action/innate/ai/ranged/overload_machine.proc/detonate_machine, target), 50) //kaboom!
 	remove_ranged_ability("<span class='danger'>Overcharging machine...</span>")
@@ -637,14 +617,11 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	uses = 4
 	linked_ability_type = /obj/effect/proc_holder/ranged_ai/override_machine
 
-<<<<<<< HEAD
 /datum/action/innate/ai/ranged/override_machine/New()
 	..()
 	desc = "[desc] It has [uses] use\s remaining."
 	button.desc = desc
 
-=======
->>>>>>> Updated this old code to fork
 /datum/action/innate/ai/ranged/override_machine/proc/animate_machine(obj/machinery/M)
 	if(M && !QDELETED(M))
 		new/mob/living/simple_animal/hostile/mimic/copy/machine(get_turf(M), M, owner, 1)
@@ -669,12 +646,9 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		return
 	ranged_ability_user.playsound_local(ranged_ability_user, 'sound/misc/interference.ogg', 50, 0)
 	attached_action.adjust_uses(-1)
-<<<<<<< HEAD
 	if(attached_action && attached_action.uses)
 		attached_action.desc = "[initial(attached_action.desc)] It has [attached_action.uses] use\s remaining."
 		attached_action.UpdateButtonIcon()
-=======
->>>>>>> Updated this old code to fork
 	target.audible_message("<span class='userdanger'>You hear a loud electrical buzzing sound coming from [target]!</span>")
 	addtimer(CALLBACK(attached_action, /datum/action/innate/ai/ranged/override_machine.proc/animate_machine, target), 50) //kabeep!
 	remove_ranged_ability("<span class='danger'>Sending override signal...</span>")
@@ -769,7 +743,6 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /datum/action/innate/ai/blackout
 	name = "Blackout"
-<<<<<<< HEAD
 	desc = "Overloads random lights across the station."
 	button_icon_state = "blackout"
 	uses = 3
@@ -779,11 +752,6 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	..()
 	desc = "[desc] It has [uses] use\s remaining."
 	button.desc = desc
-=======
-	desc = "Overloads lights across the station."
-	button_icon_state = "blackout"
-	uses = 3
->>>>>>> Updated this old code to fork
 
 /datum/action/innate/ai/blackout/Activate()
 	for(var/obj/machinery/power/apc/apc in GLOB.apcs_list)
@@ -793,13 +761,10 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 			apc.overload++
 	to_chat(owner, "<span class='notice'>Overcurrent applied to the powernet.</span>")
 	owner.playsound_local(owner, "sparks", 50, 0)
-<<<<<<< HEAD
 	adjust_uses(-1)
 	if(src && uses) //Not sure if not having src here would cause a runtime, so it's here to be safe
 		desc = "[initial(desc)] It has [uses] use\s remaining."
 		UpdateButtonIcon()
-=======
->>>>>>> Updated this old code to fork
 
 
 //Disable Emergency Lights
@@ -850,11 +815,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /datum/action/innate/ai/reactivate_cameras/New()
 	..()
-<<<<<<< HEAD
 	desc = "[desc] It has [uses] use\s remaining."
-=======
-	desc = "[desc] There are 30 reactivations remaining."
->>>>>>> Updated this old code to fork
 	button.desc = desc
 
 /datum/action/innate/ai/reactivate_cameras/Activate()
@@ -872,13 +833,8 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	owner.playsound_local(owner, 'sound/items/wirecutter.ogg', 50, 0)
 	adjust_uses(0, TRUE) //Checks the uses remaining
 	if(src && uses) //Not sure if not having src here would cause a runtime, so it's here to be safe
-<<<<<<< HEAD
 		desc = "[initial(desc)] It has [uses] use\s remaining."
 		UpdateButtonIcon()
-=======
-		desc = "[initial(desc)] There are [uses] reactivations remaining."
-
->>>>>>> Updated this old code to fork
 
 //Upgrade Camera Network: EMP-proofs all cameras, in addition to giving them X-ray vision.
 /datum/AI_Module/large/upgrade_cameras

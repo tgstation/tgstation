@@ -4,10 +4,6 @@
 /area/shuttle/supply)
 "e" = (
 /obj/machinery/conveyor{
-<<<<<<< HEAD
-=======
-	dir = 2;
->>>>>>> Updated this old code to fork
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
@@ -85,10 +81,6 @@
 /area/shuttle/supply)
 "p" = (
 /obj/machinery/button/door{
-<<<<<<< HEAD
-=======
-	dir = 2;
->>>>>>> Updated this old code to fork
 	id = "QMLoaddoor2";
 	name = "Loading Doors";
 	pixel_x = 24;
@@ -188,10 +180,6 @@
 /area/shuttle/supply)
 "R" = (
 /obj/machinery/conveyor{
-<<<<<<< HEAD
-=======
-	dir = 2;
->>>>>>> Updated this old code to fork
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},

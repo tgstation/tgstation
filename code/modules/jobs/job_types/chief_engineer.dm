@@ -1,10 +1,7 @@
 /datum/job/chief_engineer
 	title = "Chief Engineer"
 	flag = CHIEF
-<<<<<<< HEAD
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
-=======
->>>>>>> Updated this old code to fork
 	department_head = list("Captain")
 	department_flag = ENGSEC
 	head_announce = list("Engineering")
@@ -46,11 +43,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	head = /obj/item/clothing/head/hardhat/white
 	gloves = /obj/item/clothing/gloves/color/black/ce
-<<<<<<< HEAD
 	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced=1)
-=======
-	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced=1, /obj/item/card/id/departmental_budget/eng=1)
->>>>>>> Updated this old code to fork
 
 	backpack = /obj/item/storage/backpack/industrial
 	satchel = /obj/item/storage/backpack/satchel/eng

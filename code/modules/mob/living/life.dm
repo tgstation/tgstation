@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 /mob/living/proc/Life(seconds, times_fired)
 	set waitfor = FALSE
-=======
-/mob/living/Life(seconds, times_fired)
->>>>>>> Updated this old code to fork
 	set invisibility = 0
 
 	if(digitalinvis)
@@ -38,7 +34,6 @@
 		return
 	if(!loc)
 		return
-<<<<<<< HEAD
 
 	if(!IS_IN_STASIS(src))
 
@@ -71,50 +66,11 @@
 			handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 
 	handle_fire()
-=======
-	var/datum/gas_mixture/environment = loc.return_air()
-
-	if(stat != DEAD)
-		//Mutations and radiation
-		handle_mutations_and_radiation()
-
-	if(stat != DEAD)
-		//Breathing, if applicable
-		handle_breathing(times_fired)
-
-	handle_diseases()// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
-
-	if (QDELETED(src)) // diseases can qdel the mob via transformations
-		return
-
-	if(stat != DEAD)
-		//Random events (vomiting etc)
-		handle_random_events()
-
-	//Handle temperature/pressure differences between body and environment
-	if(environment)
-		handle_environment(environment)
-
-	handle_fire()
-
-	//stuff in the stomach
-	handle_stomach()
-
-	handle_gravity()
->>>>>>> Updated this old code to fork
 
 	if(machine)
 		machine.check_eye(src)
 
 	if(stat != DEAD)
-<<<<<<< HEAD
-=======
-		handle_traits() // eye, ear, brain damages
-	if(stat != DEAD)
-		handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
-
-	if(stat != DEAD)
->>>>>>> Updated this old code to fork
 		return 1
 
 /mob/living/proc/handle_breathing(times_fired)
@@ -158,12 +114,6 @@
 	var/turf/location = get_turf(src)
 	location.hotspot_expose(700, 50, 1)
 
-<<<<<<< HEAD
-=======
-/mob/living/proc/handle_stomach()
-	return
-
->>>>>>> Updated this old code to fork
 //this updates all special effects: knockdown, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
 	if(confused)
@@ -172,11 +122,7 @@
 /mob/living/proc/handle_traits()
 	//Eyes
 	if(eye_blind)			//blindness, heals slowly over time
-<<<<<<< HEAD
 		if(!stat && !(HAS_TRAIT(src, TRAIT_BLIND)))
-=======
-		if(!stat && !(has_trait(TRAIT_BLIND)))
->>>>>>> Updated this old code to fork
 			eye_blind = max(eye_blind-1,0)
 			if(client && !eye_blind)
 				clear_alert("blind")

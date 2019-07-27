@@ -26,11 +26,8 @@
 /turf/open/space/Initialize()
 	icon_state = SPACE_ICON_STATE
 	air = space_gas
-<<<<<<< HEAD
 	vis_contents.Cut() //removes inherited overlays
 	visibilityChanged()
-=======
->>>>>>> Updated this old code to fork
 
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")

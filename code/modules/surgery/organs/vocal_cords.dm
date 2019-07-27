@@ -137,11 +137,7 @@
 	user.say(message, spans = span_list, sanitize = FALSE)
 
 	message = lowertext(message)
-<<<<<<< HEAD
 	var/list/mob/living/listeners = list()
-=======
-	var/mob/living/list/listeners = list()
->>>>>>> Updated this old code to fork
 	for(var/mob/living/L in get_hearers_in_view(8, user))
 		if(L.can_hear() && !L.anti_magic_check(FALSE, TRUE) && L.stat != DEAD)
 			if(L == user && !include_speaker)

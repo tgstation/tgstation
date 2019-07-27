@@ -5,7 +5,6 @@
 
 
 
-<<<<<<< HEAD
 ///Set the jitter of a mob
 /mob/proc/Jitter(amount)
 	jitteriness = max(jitteriness,amount,0)
@@ -23,31 +22,6 @@
 	dizziness = max(amount, 0)
 
 ///Blind a mobs eyes by amount
-=======
-/////////////////////////////////// JITTERINESS ////////////////////////////////////
-
-/mob/proc/Jitter(amount)
-	jitteriness = max(jitteriness,amount,0)
-
-/////////////////////////////////// DIZZINESS ////////////////////////////////////
-
-/mob/proc/Dizzy(amount)
-	dizziness = max(dizziness,amount,0)
-
-/////////////////////////////////// EYE DAMAGE ////////////////////////////////////
-
-/mob/proc/damage_eyes(amount)
-	return
-
-/mob/proc/adjust_eye_damage(amount)
-	return
-
-/mob/proc/set_eye_damage(amount)
-	return
-
-/////////////////////////////////// EYE_BLIND ////////////////////////////////////
-
->>>>>>> Updated this old code to fork
 /mob/proc/blind_eyes(amount)
 	if(amount>0)
 		var/old_eye_blind = eye_blind
@@ -57,14 +31,11 @@
 				throw_alert("blind", /obj/screen/alert/blind)
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 
-<<<<<<< HEAD
 /**
   * Adjust a mobs blindness by an amount
   *
   * Will apply the blind alerts if needed
   */
-=======
->>>>>>> Updated this old code to fork
 /mob/proc/adjust_blindness(amount)
 	if(amount>0)
 		var/old_eye_blind = eye_blind
@@ -79,23 +50,15 @@
 			blind_minimum = 1
 		if(isliving(src))
 			var/mob/living/L = src
-<<<<<<< HEAD
 			if(HAS_TRAIT(L, TRAIT_BLIND))
-=======
-			if(L.has_trait(TRAIT_BLIND))
->>>>>>> Updated this old code to fork
 				blind_minimum = 1
 		eye_blind = max(eye_blind+amount, blind_minimum)
 		if(!eye_blind)
 			clear_alert("blind")
 			clear_fullscreen("blind")
-<<<<<<< HEAD
 /**
   * Force set the blindness of a mob to some level
   */
-=======
-
->>>>>>> Updated this old code to fork
 /mob/proc/set_blindness(amount)
 	if(amount>0)
 		var/old_eye_blind = eye_blind
@@ -110,52 +73,34 @@
 			blind_minimum = 1
 		if(isliving(src))
 			var/mob/living/L = src
-<<<<<<< HEAD
 			if(HAS_TRAIT(L, TRAIT_BLIND))
-=======
-			if(L.has_trait(TRAIT_BLIND))
->>>>>>> Updated this old code to fork
 				blind_minimum = 1
 		eye_blind = blind_minimum
 		if(!eye_blind)
 			clear_alert("blind")
 			clear_fullscreen("blind")
 
-<<<<<<< HEAD
 /**
   * Make the mobs vision blurry
   */
-=======
-/////////////////////////////////// EYE_BLURRY ////////////////////////////////////
-
->>>>>>> Updated this old code to fork
 /mob/proc/blur_eyes(amount)
 	if(amount>0)
 		eye_blurry = max(amount, eye_blurry)
 	update_eye_blur()
 
-<<<<<<< HEAD
 /**
   * Adjust the current blurriness of the mobs vision by amount
   */
-=======
->>>>>>> Updated this old code to fork
 /mob/proc/adjust_blurriness(amount)
 	eye_blurry = max(eye_blurry+amount, 0)
 	update_eye_blur()
 
-<<<<<<< HEAD
 ///Set the mobs blurriness of vision to an amount
-=======
->>>>>>> Updated this old code to fork
 /mob/proc/set_blurriness(amount)
 	eye_blurry = max(amount, 0)
 	update_eye_blur()
 
-<<<<<<< HEAD
 ///Apply the blurry overlays to a mobs clients screen
-=======
->>>>>>> Updated this old code to fork
 /mob/proc/update_eye_blur()
 	if(!client)
 		return
@@ -164,7 +109,6 @@
 	GW.backdrop(src)
 	OT.backdrop(src)
 
-<<<<<<< HEAD
 ///Adjust the drugginess of a mob
 /mob/proc/adjust_drugginess(amount)
 	return
@@ -182,26 +126,6 @@
 	return
 
 ///Adjust the body temperature of a mob, with min/max settings
-=======
-/////////////////////////////////// DRUGGY ////////////////////////////////////
-
-/mob/proc/adjust_drugginess(amount)
-	return
-
-/mob/proc/set_drugginess(amount)
-	return
-
-/////////////////////////////////// GROSSED OUT ////////////////////////////////////
-
-/mob/proc/adjust_disgust(amount)
-	return
-
-/mob/proc/set_disgust(amount)
-	return
-
-/////////////////////////////////// TEMPERATURE ////////////////////////////////////
-
->>>>>>> Updated this old code to fork
 /mob/proc/adjust_bodytemperature(amount,min_temp=0,max_temp=INFINITY)
 	if(bodytemperature >= min_temp && bodytemperature <= max_temp)
 		bodytemperature = CLAMP(bodytemperature + amount,min_temp,max_temp)

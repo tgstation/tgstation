@@ -155,41 +155,21 @@
 						build_step++
 
 		if(7)
-<<<<<<< HEAD
-=======
-			var/newname = ""
->>>>>>> Updated this old code to fork
 			switch(lasercolor)
 				if("b")
 					if(!istype(W, /obj/item/gun/energy/laser/bluetag))
 						return
-<<<<<<< HEAD
 				if("r")
 					if(!istype(W, /obj/item/gun/energy/laser/redtag))
 						return
 				if("")
 					if(!istype(W, /obj/item/gun/energy/e_gun/dragnet))
 						return
-=======
-					newname = "bluetag ED-209 assembly"
-				if("r")
-					if(!istype(W, /obj/item/gun/energy/laser/redtag))
-						return
-					newname = "redtag ED-209 assembly"
-				if("")
-					if(!istype(W, /obj/item/gun/energy/e_gun/advtaser))
-						return
-					newname = "taser ED-209 assembly"
->>>>>>> Updated this old code to fork
 				else
 					return
 			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
-<<<<<<< HEAD
 			name = "[W.name] ED-209 assembly"
-=======
-			name = newname
->>>>>>> Updated this old code to fork
 			to_chat(user, "<span class='notice'>You add [W] to [src].</span>")
 			item_state = "[lasercolor]ed209_taser"
 			icon_state = "[lasercolor]ed209_taser"
@@ -201,11 +181,7 @@
 				to_chat(user, "<span class='notice'>You start attaching the gun to the frame...</span>")
 				if(W.use_tool(src, user, 40, volume=100))
 					name = "armed [name]"
-<<<<<<< HEAD
 					to_chat(user, "<span class='notice'>The gun is now securely fastened to the frame.</span>")
-=======
-					to_chat(user, "<span class='notice'>Taser gun attached.</span>")
->>>>>>> Updated this old code to fork
 					build_step++
 
 		if(9)
@@ -228,10 +204,7 @@
 	throwforce = 10
 	created_name = "Floorbot"
 	var/toolbox = /obj/item/storage/toolbox/mechanical
-<<<<<<< HEAD
 	var/toolbox_color = "" //Blank for blue, r for red, y for yellow, etc.
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/bot_assembly/floorbot/Initialize()
 	. = ..()
@@ -243,37 +216,12 @@
 		if(ASSEMBLY_FIRST_STEP)
 			desc = initial(desc)
 			name = initial(name)
-<<<<<<< HEAD
 			icon_state = "[toolbox_color]toolbox_tiles"
-=======
-			icon_state = initial(icon_state)
->>>>>>> Updated this old code to fork
 
 		if(ASSEMBLY_SECOND_STEP)
 			desc = "It's a toolbox with tiles sticking out the top and a sensor attached."
 			name = "incomplete floorbot assembly"
-<<<<<<< HEAD
 			icon_state = "[toolbox_color]toolbox_tiles_sensor"
-=======
-			icon_state = "toolbox_tiles_sensor"
-
-/obj/item/storage/toolbox/mechanical/attackby(obj/item/stack/tile/plasteel/T, mob/user, params)
-	if(!istype(T, /obj/item/stack/tile/plasteel))
-		..()
-		return
-	if(contents.len >= 1)
-		to_chat(user, "<span class='warning'>They won't fit in, as there is already stuff inside!</span>")
-		return
-	if(T.use(10))
-		var/obj/item/bot_assembly/floorbot/B = new
-		B.toolbox = type
-		user.put_in_hands(B)
-		to_chat(user, "<span class='notice'>You add the tiles into the empty [src.name]. They protrude from the top.</span>")
-		qdel(src)
-	else
-		to_chat(user, "<span class='warning'>You need 10 floor tiles to start building a floorbot!</span>")
-		return
->>>>>>> Updated this old code to fork
 
 /obj/item/bot_assembly/floorbot/attackby(obj/item/W, mob/user, params)
 	..()
@@ -291,11 +239,7 @@
 			if(istype(W, /obj/item/bodypart/l_arm/robot) || istype(W, /obj/item/bodypart/r_arm/robot))
 				if(!can_finish_build(W, user))
 					return
-<<<<<<< HEAD
 				var/mob/living/simple_animal/bot/floorbot/A = new(drop_location(), toolbox_color)
-=======
-				var/mob/living/simple_animal/bot/floorbot/A = new(drop_location())
->>>>>>> Updated this old code to fork
 				A.name = created_name
 				A.robot_arm = W.type
 				A.toolbox = toolbox
@@ -320,35 +264,6 @@
 		if(skin)
 			add_overlay("kit_skin_[skin]")
 
-<<<<<<< HEAD
-=======
-/obj/item/storage/firstaid/attackby(obj/item/bodypart/S, mob/user, params)
-
-	if((!istype(S, /obj/item/bodypart/l_arm/robot)) && (!istype(S, /obj/item/bodypart/r_arm/robot)))
-		return ..()
-
-	//Making a medibot!
-	if(contents.len >= 1)
-		to_chat(user, "<span class='warning'>You need to empty [src] out first!</span>")
-		return
-
-	var/obj/item/bot_assembly/medbot/A = new
-	if(istype(src, /obj/item/storage/firstaid/fire))
-		A.skin = "ointment"
-	else if(istype(src, /obj/item/storage/firstaid/toxin))
-		A.skin = "tox"
-	else if(istype(src, /obj/item/storage/firstaid/o2))
-		A.skin = "o2"
-	else if(istype(src, /obj/item/storage/firstaid/brute))
-		A.skin = "brute"
-	user.put_in_hands(A)
-	to_chat(user, "<span class='notice'>You add [S] to [src].</span>")
-	A.robot_arm = S.type
-	A.firstaid = type
-	qdel(S)
-	qdel(src)
-
->>>>>>> Updated this old code to fork
 /obj/item/bot_assembly/medbot/attackby(obj/item/W, mob/user, params)
 	..()
 	switch(build_step)
@@ -544,7 +459,6 @@
 				to_chat(user, "<span class='notice'>You unbolt [src]'s energy swords</span>")
 				for(var/IS in 1 to swordamt)
 					new /obj/item/melee/transforming/energy/sword/saber(Tsec)
-<<<<<<< HEAD
 
 
 //Firebot Assembly
@@ -576,5 +490,3 @@
 				F.name = created_name
 				qdel(I)
 				qdel(src)
-=======
->>>>>>> Updated this old code to fork

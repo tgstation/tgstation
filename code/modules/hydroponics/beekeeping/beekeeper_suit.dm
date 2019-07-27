@@ -4,11 +4,7 @@
 	desc = "Keeps the lil buzzing buggers out of your eyes."
 	icon_state = "beekeeper"
 	item_state = "beekeeper"
-<<<<<<< HEAD
 	clothing_flags = THICKMATERIAL | SNUG_FIT
-=======
-	clothing_flags = THICKMATERIAL
->>>>>>> Updated this old code to fork
 
 
 /obj/item/clothing/suit/beekeeper_suit

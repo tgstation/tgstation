@@ -58,11 +58,7 @@
 /obj/item/projectile/energy/trap
 	name = "energy snare"
 	icon_state = "e_snare"
-<<<<<<< HEAD
 	nodamage = TRUE
-=======
-	nodamage = 1
->>>>>>> Updated this old code to fork
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 4
 
@@ -81,11 +77,7 @@
 /obj/item/projectile/energy/trap/cyborg
 	name = "Energy Bola"
 	icon_state = "e_snare"
-<<<<<<< HEAD
 	nodamage = TRUE
-=======
-	nodamage = 1
->>>>>>> Updated this old code to fork
 	paralyze = 0
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 10

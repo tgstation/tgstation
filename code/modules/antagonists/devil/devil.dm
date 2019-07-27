@@ -89,11 +89,6 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	roundend_category = "devils"
 	antagpanel_category = "Devil"
 	job_rank = ROLE_DEVIL
-<<<<<<< HEAD
-=======
-	//Don't delete upon mind destruction, otherwise soul re-selling will break.
-	delete_on_mind_deletion = FALSE
->>>>>>> Updated this old code to fork
 	var/obligation
 	var/ban
 	var/bane
@@ -387,22 +382,14 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		if(BANISH_WATER)
 			if(iscarbon(body))
 				var/mob/living/carbon/H = body
-<<<<<<< HEAD
 				return H.reagents.has_reagent(/datum/reagent/water/holywater)
-=======
-				return H.reagents.has_reagent("holy water")
->>>>>>> Updated this old code to fork
 			return 0
 		if(BANISH_COFFIN)
 			return (body && istype(body.loc, /obj/structure/closet/crate/coffin))
 		if(BANISH_FORMALDYHIDE)
 			if(iscarbon(body))
 				var/mob/living/carbon/H = body
-<<<<<<< HEAD
 				return H.reagents.has_reagent(/datum/reagent/toxin/formaldehyde)
-=======
-				return H.reagents.has_reagent("formaldehyde")
->>>>>>> Updated this old code to fork
 			return 0
 		if(BANISH_RUNES)
 			if(body)
@@ -488,11 +475,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 				if(SOULVALUE >= ARCH_THRESHOLD && ascendable)
 					A.convert_to_archdevil()
 	else
-<<<<<<< HEAD
 		CRASH("Unable to find a blobstart landmark for hellish resurrection")
-=======
-		throw EXCEPTION("Unable to find a blobstart landmark for hellish resurrection")
->>>>>>> Updated this old code to fork
 
 
 /datum/antagonist/devil/proc/update_hud()
@@ -554,17 +537,10 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	var/list/parts = list()
 	parts += "The devil's true name is: [truename]"
 	parts += "The devil's bans were:"
-<<<<<<< HEAD
 	parts += "[FOURSPACES][GLOB.lawlorify[LORE][ban]]"
 	parts += "[FOURSPACES][GLOB.lawlorify[LORE][bane]]"
 	parts += "[FOURSPACES][GLOB.lawlorify[LORE][obligation]]"
 	parts += "[FOURSPACES][GLOB.lawlorify[LORE][banish]]"
-=======
-	parts += "[GLOB.TAB][GLOB.lawlorify[LORE][ban]]"
-	parts += "[GLOB.TAB][GLOB.lawlorify[LORE][bane]]"
-	parts += "[GLOB.TAB][GLOB.lawlorify[LORE][obligation]]"
-	parts += "[GLOB.TAB][GLOB.lawlorify[LORE][banish]]"
->>>>>>> Updated this old code to fork
 	return parts.Join("<br>")
 
 /datum/antagonist/devil/roundend_report()

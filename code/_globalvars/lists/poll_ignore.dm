@@ -13,7 +13,6 @@
 #define POLL_IGNORE_GOLEM "golem"
 #define POLL_IGNORE_SWARMER "swarmer"
 #define POLL_IGNORE_DRONE "drone"
-<<<<<<< HEAD
 #define POLL_IGNORE_FUGITIVE "fugitive"
 #define POLL_IGNORE_DEFECTIVECLONE "defective_clone"
 #define POLL_IGNORE_PYROSLIME "slime"
@@ -22,8 +21,6 @@
 #define POLL_IGNORE_SPLITPERSONALITY "split_personality"
 #define POLL_IGNORE_CONTRACTOR_SUPPORT "contractor_support"
 
-=======
->>>>>>> Updated this old code to fork
 
 GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_SENTIENCE_POTION = "Sentience potion",
@@ -39,7 +36,6 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_GOLEM = "Golems",
 	POLL_IGNORE_SWARMER = "Swarmer shells",
 	POLL_IGNORE_DRONE = "Drone shells",
-<<<<<<< HEAD
 	POLL_IGNORE_FUGITIVE = "Fugitive Hunter",
 	POLL_IGNORE_DEFECTIVECLONE = "Defective clone",
 	POLL_IGNORE_PYROSLIME = "Slime",
@@ -47,8 +43,6 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_IMAGINARYFRIEND = "Imaginary Friend",
 	POLL_IGNORE_SPLITPERSONALITY = "Split Personality",
 	POLL_IGNORE_CONTRACTOR_SUPPORT = "Contractor Support Unit"
-=======
->>>>>>> Updated this old code to fork
 ))
 GLOBAL_LIST_INIT(poll_ignore, init_poll_ignore())
 

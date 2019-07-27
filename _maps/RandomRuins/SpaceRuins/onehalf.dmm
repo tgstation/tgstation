@@ -3,49 +3,16 @@
 /turf/template_noop,
 /area/template_noop)
 "ab" = (
-<<<<<<< HEAD
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/template_noop,
 /area/space/nearstation)
 "ad" = (
-=======
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/lattice/catwalk,
-/turf/template_noop,
-/area/space/nearstation)
-"ac" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/lattice/catwalk,
-/turf/template_noop,
-/area/space/nearstation)
-"ad" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
 /area/space/nearstation)
 "ae" = (
-<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
-=======
-/obj/item/stack/cable_coil/cut/red{
-	amount = 2
-	},
-/obj/structure/lattice/catwalk,
-/turf/template_noop,
-/area/space/nearstation)
-"af" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
 /area/space/nearstation)
@@ -56,16 +23,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/dorms_med)
-<<<<<<< HEAD
-=======
-"ai" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/lattice/catwalk,
-/turf/template_noop,
-/area/space/nearstation)
->>>>>>> Updated this old code to fork
 "aj" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -100,13 +57,7 @@
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aq" = (
 /obj/machinery/door/airlock/external,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "ar" = (
@@ -193,19 +144,10 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aD" = (
-<<<<<<< HEAD
 /obj/machinery/light/small{
 	dir = 8
 	},
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/light/small{
-	dir = 8
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "aE" = (
@@ -242,22 +184,10 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aL" = (
-<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aM" = (
-=======
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/plasteel/white,
-/area/ruin/space/has_grav/onehalf/dorms_med)
-"aM" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/structure/closet/crate/medical,
 /obj/item/clothing/neck/stethoscope,
 /obj/item/healthanalyzer,
@@ -266,14 +196,9 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Crew Quarters APC";
-<<<<<<< HEAD
 	pixel_x = 24
 	},
 /obj/structure/cable,
-=======
-	pixel_x = 26
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aN" = (
@@ -321,13 +246,7 @@
 /turf/template_noop,
 /area/space/nearstation)
 "aT" = (
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
@@ -339,13 +258,7 @@
 /area/ruin/space/has_grav/onehalf/hallway)
 "aV" = (
 /obj/machinery/door/airlock/medical/glass,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aW" = (
@@ -353,7 +266,6 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aX" = (
-<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -365,35 +277,11 @@
 	dir = 1;
 	name = "Mining Drone Bay APC";
 	pixel_y = 23
-=======
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/turf/open/floor/plasteel,
-/area/ruin/space/has_grav/onehalf/drone_bay)
-"aY" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Mining Drone Bay APC";
-	pixel_y = 24
->>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "aZ" = (
@@ -490,13 +378,7 @@
 /obj/structure/disposalpipe/broken{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
-=======
-/obj/item/stack/cable_coil/cut/red{
-	amount = 2
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
@@ -505,16 +387,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
@@ -523,13 +396,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged5"
 	},
@@ -538,59 +405,23 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bk" = (
 /obj/structure/disposalpipe/junction{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged1"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
-<<<<<<< HEAD
-=======
-"bl" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel/airless,
-/area/ruin/space/has_grav/onehalf/hallway)
->>>>>>> Updated this old code to fork
 "bm" = (
 /obj/structure/disposalpipe/junction{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bn" = (
@@ -598,26 +429,14 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/public/glass,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bo" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bp" = (
@@ -699,20 +518,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/machinery/power/apc{
 	name = "Hallway APC";
 	pixel_y = -23
 	},
 /obj/structure/cable,
-=======
-/obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "Hallway APC";
-	pixel_y = -24
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bA" = (
@@ -769,11 +579,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bJ" = (
-<<<<<<< HEAD
 /obj/structure/chair{
-=======
-/obj/structure/chair/office{
->>>>>>> Updated this old code to fork
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -887,7 +693,6 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cf" = (
-<<<<<<< HEAD
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Bridge APC";
@@ -897,22 +702,6 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cg" = (
-=======
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Bridge APC";
-	pixel_y = 24
-	},
-/turf/open/floor/plasteel,
-/area/ruin/space/has_grav/onehalf/bridge)
-"cg" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/structure/table/reinforced,
 /obj/item/stack/spacecash/c500{
 	pixel_y = 8
@@ -972,11 +761,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cm" = (
-<<<<<<< HEAD
 /obj/structure/chair{
-=======
-/obj/structure/chair/office{
->>>>>>> Updated this old code to fork
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -985,51 +770,23 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "co" = (
-<<<<<<< HEAD
 /obj/structure/chair{
-=======
-/obj/structure/chair/office{
->>>>>>> Updated this old code to fork
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cp" = (
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
->>>>>>> Updated this old code to fork
 /obj/structure/table/reinforced,
 /obj/item/lighter,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cq" = (
 /obj/effect/spawner/structure/window/reinforced,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge_onehalf";
 	name = "bridge blast door"
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cr" = (
@@ -1073,26 +830,8 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "cy" = (
 /obj/machinery/power/solar_control,
-<<<<<<< HEAD
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
-=======
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/ruin/space/has_grav/onehalf/bridge)
-"cz" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "bridge_onehalf";
-	name = "bridge blast door"
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/onehalf/bridge)
->>>>>>> Updated this old code to fork
 "cA" = (
 /obj/item/stack/tile/wood,
 /turf/template_noop,
@@ -1114,18 +853,12 @@
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge"
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cF" = (
 /obj/machinery/light/small,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cG" = (
@@ -1136,19 +869,9 @@
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge"
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
-=======
-/turf/open/floor/plasteel,
-/area/ruin/space/has_grav/onehalf/bridge)
-"cH" = (
-/obj/item/crowbar/red,
-/obj/item/multitool,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/onehalf/bridge)
->>>>>>> Updated this old code to fork
 "cI" = (
 /obj/structure/safe/floor,
 /obj/item/tank/internals/oxygen/red,
@@ -1163,21 +886,12 @@
 /obj/structure/chair/comfy/black{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cK" = (
 /obj/structure/lattice,
-<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
-=======
-/obj/item/stack/cable_coil/cut/red{
-	amount = 2
-	},
->>>>>>> Updated this old code to fork
 /turf/template_noop,
 /area/ruin/space/has_grav/onehalf/hallway)
 "cL" = (
@@ -1212,10 +926,7 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "cS" = (
 /obj/structure/chair/office,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cT" = (
@@ -1231,39 +942,6 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
-<<<<<<< HEAD
-=======
-"cV" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/structure/cable,
-/obj/machinery/door/poddoor/preopen{
-	id = "bridge_onehalf";
-	name = "bridge blast door"
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/onehalf/bridge)
-"cW" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/lattice/catwalk,
-/turf/template_noop,
-/area/space/nearstation)
-"cX" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel/airless{
-	icon_state = "damaged5"
-	},
-/area/ruin/space/has_grav/onehalf/hallway)
->>>>>>> Updated this old code to fork
 "cY" = (
 /obj/structure/table/reinforced,
 /obj/item/flashlight,
@@ -1287,12 +965,6 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "dc" = (
 /obj/structure/grille/broken,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
@@ -1304,63 +976,12 @@
 	icon_state = "platingdmg3"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
-<<<<<<< HEAD
-=======
-"de" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "bridge_onehalf";
-	name = "bridge blast door"
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/onehalf/bridge)
-"df" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "bridge_onehalf";
-	name = "bridge blast door"
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/onehalf/bridge)
-"dg" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "bridge_onehalf";
-	name = "bridge blast door"
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/onehalf/bridge)
->>>>>>> Updated this old code to fork
 "dh" = (
 /obj/item/stack/sheet/plasteel,
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
 /area/space/nearstation)
 "di" = (
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/item/shard{
 	icon_state = "medium"
 	},
@@ -1368,20 +989,10 @@
 /turf/template_noop,
 /area/space/nearstation)
 "dj" = (
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
->>>>>>> Updated this old code to fork
 /obj/item/stack/rods,
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
 /area/space/nearstation)
-<<<<<<< HEAD
 "dl" = (
 /obj/item/stack/cable_coil/cut,
 /turf/template_noop,
@@ -1405,38 +1016,14 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
-=======
-"dk" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/lattice/catwalk,
-/turf/template_noop,
-/area/space/nearstation)
-"dl" = (
-/obj/item/stack/cable_coil/cut/red{
-	amount = 2
-	},
-/turf/template_noop,
-/area/template_noop)
-"Ky" = (
-/turf/template_noop,
-/area/space/nearstation)
->>>>>>> Updated this old code to fork
 "Me" = (
 /obj/structure/lattice,
 /turf/template_noop,
 /area/space/nearstation)
-<<<<<<< HEAD
 "Vh" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
-=======
->>>>>>> Updated this old code to fork
 
 (1,1,1) = {"
 aa
@@ -1507,11 +1094,7 @@ aa
 (4,1,1) = {"
 aa
 aa
-<<<<<<< HEAD
 ab
-=======
-ac
->>>>>>> Updated this old code to fork
 ak
 ay
 ax
@@ -1533,11 +1116,7 @@ aa
 (5,1,1) = {"
 aa
 ab
-<<<<<<< HEAD
 ab
-=======
-af
->>>>>>> Updated this old code to fork
 ak
 az
 aJ
@@ -1558,11 +1137,7 @@ aa
 "}
 (6,1,1) = {"
 aa
-<<<<<<< HEAD
 ab
-=======
-ac
->>>>>>> Updated this old code to fork
 ag
 ag
 ag
@@ -1584,11 +1159,7 @@ aa
 "}
 (7,1,1) = {"
 aa
-<<<<<<< HEAD
 ab
-=======
-ac
->>>>>>> Updated this old code to fork
 ag
 al
 aA
@@ -1610,11 +1181,7 @@ aa
 "}
 (8,1,1) = {"
 aa
-<<<<<<< HEAD
 ab
-=======
-ac
->>>>>>> Updated this old code to fork
 ag
 am
 am
@@ -1636,11 +1203,7 @@ aa
 "}
 (9,1,1) = {"
 aa
-<<<<<<< HEAD
 ab
-=======
-ac
->>>>>>> Updated this old code to fork
 ag
 an
 aB
@@ -1662,11 +1225,7 @@ dl
 "}
 (10,1,1) = {"
 aa
-<<<<<<< HEAD
 ab
-=======
-ac
->>>>>>> Updated this old code to fork
 ag
 ag
 ag
@@ -1688,21 +1247,13 @@ aa
 "}
 (11,1,1) = {"
 aa
-<<<<<<< HEAD
 ab
-=======
-ac
->>>>>>> Updated this old code to fork
 ag
 ao
 aC
 ao
 ag
-<<<<<<< HEAD
 bj
-=======
-bl
->>>>>>> Updated this old code to fork
 bz
 bR
 bR
@@ -1718,11 +1269,7 @@ aa
 "}
 (12,1,1) = {"
 aa
-<<<<<<< HEAD
 ab
-=======
-ac
->>>>>>> Updated this old code to fork
 ah
 ap
 ap
@@ -1737,22 +1284,14 @@ ct
 cK
 cK
 cK
-<<<<<<< HEAD
 aJ
-=======
-cX
->>>>>>> Updated this old code to fork
 dc
 dj
 aa
 "}
 (13,1,1) = {"
 aa
-<<<<<<< HEAD
 ab
-=======
-ac
->>>>>>> Updated this old code to fork
 ag
 ao
 ao
@@ -1769,20 +1308,12 @@ cL
 cP
 aJ
 dd
-<<<<<<< HEAD
 ad
-=======
-ac
->>>>>>> Updated this old code to fork
 aa
 "}
 (14,1,1) = {"
 aa
-<<<<<<< HEAD
 ab
-=======
-ac
->>>>>>> Updated this old code to fork
 ag
 ag
 ag
@@ -1799,22 +1330,13 @@ bU
 cQ
 cQ
 bU
-<<<<<<< HEAD
 ad
-=======
-ac
->>>>>>> Updated this old code to fork
 aa
 "}
 (15,1,1) = {"
 aa
-<<<<<<< HEAD
 ab
 ab
-=======
-ad
-ai
->>>>>>> Updated this old code to fork
 aq
 aD
 aq
@@ -1830,11 +1352,7 @@ bU
 Me
 Ky
 bU
-<<<<<<< HEAD
 ad
-=======
-ac
->>>>>>> Updated this old code to fork
 aa
 "}
 (16,1,1) = {"
@@ -1856,11 +1374,7 @@ bU
 bZ
 bZ
 bU
-<<<<<<< HEAD
 ad
-=======
-ac
->>>>>>> Updated this old code to fork
 aa
 "}
 (17,1,1) = {"
@@ -1877,20 +1391,12 @@ bU
 ca
 cl
 cw
-<<<<<<< HEAD
 Vh
-=======
-cn
->>>>>>> Updated this old code to fork
 cM
 cR
 cY
 bU
-<<<<<<< HEAD
 ad
-=======
-ac
->>>>>>> Updated this old code to fork
 aa
 "}
 (18,1,1) = {"
@@ -1907,21 +1413,12 @@ bU
 cb
 cm
 cn
-<<<<<<< HEAD
 Vh
 cn
 cm
 cZ
 cq
 ad
-=======
-cx
-cn
-cm
-cZ
-de
-dk
->>>>>>> Updated this old code to fork
 aa
 "}
 (19,1,1) = {"
@@ -1937,7 +1434,6 @@ bD
 bU
 cc
 cn
-<<<<<<< HEAD
 cn
 Vh
 cx
@@ -1945,15 +1441,6 @@ cn
 da
 cq
 ad
-=======
-cx
-cH
-cn
-cn
-da
-df
-ac
->>>>>>> Updated this old code to fork
 aa
 "}
 (20,1,1) = {"
@@ -1970,21 +1457,12 @@ bU
 cd
 co
 cn
-<<<<<<< HEAD
 ms
 nu
 cS
 KC
 cq
 ad
-=======
-cI
-cn
-cS
-ce
-df
-ac
->>>>>>> Updated this old code to fork
 aa
 "}
 (21,1,1) = {"
@@ -2001,21 +1479,12 @@ bU
 ce
 cn
 cn
-<<<<<<< HEAD
 Vh
 cI
 cn
 ce
 cq
 ad
-=======
-cn
-cn
-cn
-ce
-df
-ac
->>>>>>> Updated this old code to fork
 aa
 "}
 (22,1,1) = {"
@@ -2030,24 +1499,14 @@ bp
 bE
 bU
 cf
-<<<<<<< HEAD
 Vh
 Vh
-=======
-cn
-cn
->>>>>>> Updated this old code to fork
 cJ
 cn
 cT
 cn
-<<<<<<< HEAD
 cq
 ad
-=======
-dg
-dk
->>>>>>> Updated this old code to fork
 aa
 "}
 (23,1,1) = {"
@@ -2064,20 +1523,12 @@ bU
 cg
 cp
 cy
-<<<<<<< HEAD
 KC
-=======
-ce
->>>>>>> Updated this old code to fork
 ce
 cU
 db
 bU
-<<<<<<< HEAD
 ad
-=======
-ac
->>>>>>> Updated this old code to fork
 aa
 "}
 (24,1,1) = {"
@@ -2093,7 +1544,6 @@ bG
 bU
 bU
 cq
-<<<<<<< HEAD
 cq
 cq
 cq
@@ -2101,15 +1551,6 @@ cq
 bU
 bU
 ad
-=======
-cz
-cz
-cz
-cV
-bU
-bU
-ac
->>>>>>> Updated this old code to fork
 aa
 "}
 (25,1,1) = {"
@@ -2125,7 +1566,6 @@ ar
 ar
 Me
 ad
-<<<<<<< HEAD
 ad
 ad
 ad
@@ -2133,15 +1573,6 @@ ad
 ad
 ad
 ad
-=======
-ai
-ai
-ai
-cW
-ai
-ai
-af
->>>>>>> Updated this old code to fork
 aa
 "}
 (26,1,1) = {"

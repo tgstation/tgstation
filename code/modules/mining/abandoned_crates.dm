@@ -169,10 +169,7 @@
 				locked = FALSE
 				cut_overlays()
 				add_overlay("securecrateg")
-<<<<<<< HEAD
 				tamperproof = 0 // set explosion chance to zero, so we dont accidently hit it with a multitool and instantly die
-=======
->>>>>>> Updated this old code to fork
 			else if (input == null || sanitycheck == null || length(input) != codelen)
 				to_chat(user, "<span class='notice'>You leave the crate alone.</span>")
 			else

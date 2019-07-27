@@ -182,11 +182,7 @@
 	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 		return
 
-<<<<<<< HEAD
 	var/atom/signal_sender = signal.data["user"]
-=======
-	var/mob/signal_sender = signal.data["user"]
->>>>>>> Updated this old code to fork
 
 	if("purge" in signal.data)
 		pressure_checks &= ~EXT_BOUND
@@ -264,11 +260,8 @@
 		update_icon()
 		pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
 		pipe_vision_img.plane = ABOVE_HUD_PLANE
-<<<<<<< HEAD
 		investigate_log("was [welded ? "welded shut" : "unwelded"] by [key_name(user)]", INVESTIGATE_ATMOS)
 		add_fingerprint(user)
-=======
->>>>>>> Updated this old code to fork
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/vent_pump/can_unwrench(mob/user)
@@ -278,15 +271,9 @@
 		return FALSE
 
 /obj/machinery/atmospherics/components/unary/vent_pump/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	if(welded)
 		. += "It seems welded shut."
-=======
-	..()
-	if(welded)
-		to_chat(user, "It seems welded shut.")
->>>>>>> Updated this old code to fork
 
 /obj/machinery/atmospherics/components/unary/vent_pump/power_change()
 	..()

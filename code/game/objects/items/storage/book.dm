@@ -11,29 +11,17 @@
 
 /obj/item/storage/book/ComponentInitialize()
 	. = ..()
-<<<<<<< HEAD
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-=======
-	GET_COMPONENT(STR, /datum/component/storage)
->>>>>>> Updated this old code to fork
 	STR.max_items = 1
 
 /obj/item/storage/book/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
 
-<<<<<<< HEAD
 GLOBAL_LIST_INIT(biblenames, list("Bible", "Quran", "Scrapbook", "Burning Bible", "Clown Bible", "Banana Bible", "Creeper Bible", "White Bible", "Holy Light",  "The God Delusion", "Tome",        "The King in Yellow", "Ithaqua", "Scientology", "Melted Bible", "Necronomicon","Insulationism"))
 //If you get these two lists not matching in size, there will be runtimes and I will hurt you in ways you couldn't even begin to imagine
 // if your bible has no custom itemstate, use one of the existing ones
 GLOBAL_LIST_INIT(biblestates, list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon","insuls"))
 GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon", "kingyellow"))
-=======
-GLOBAL_LIST_INIT(biblenames, list("Bible", "Quran", "Scrapbook", "Burning Bible", "Clown Bible", "Banana Bible", "Creeper Bible", "White Bible", "Holy Light",  "The God Delusion", "Tome",        "The King in Yellow", "Ithaqua", "Scientology", "Melted Bible", "Necronomicon"))
-//If you get these two lists not matching in size, there will be runtimes and I will hurt you in ways you couldn't even begin to imagine
-// if your bible has no custom itemstate, use one of the existing ones
-GLOBAL_LIST_INIT(biblestates, list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon"))
-GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon"))
->>>>>>> Updated this old code to fork
 
 /mob/proc/bible_check() //The bible, if held, might protect against certain things
 	var/obj/item/storage/book/bible/B = locate() in src
@@ -67,11 +55,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	if(!H.can_read(src))
 		return FALSE
 	// If H is the Chaplain, we can set the icon_state of the bible (but only once!)
-<<<<<<< HEAD
 	if(!GLOB.bible_icon_state && H.job == "Chaplain")
-=======
-	if(!SSreligion.bible_icon_state && H.job == "Chaplain")
->>>>>>> Updated this old code to fork
 		var/dat = "<html><head><title>Pick Bible Style</title></head><body><center><h2>Pick a bible style</h2></center><table>"
 		for(var/i in 1 to GLOB.biblestates.len)
 			var/icon/bibleicon = icon('icons/obj/storage.dmi', GLOB.biblestates[i])
@@ -82,15 +66,9 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		H << browse(dat, "window=editicon;can_close=0;can_minimize=0;size=250x650")
 
 /obj/item/storage/book/bible/Topic(href, href_list)
-<<<<<<< HEAD
 	if(!usr.canUseTopic(src, BE_CLOSE))
 		return
 	if(href_list["seticon"] && !GLOB.bible_icon_state)
-=======
-	if(!usr.canUseTopic(src))
-		return
-	if(href_list["seticon"] && SSreligion && !SSreligion.bible_icon_state)
->>>>>>> Updated this old code to fork
 		var/iconi = text2num(href_list["seticon"])
 		var/biblename = GLOB.biblenames[iconi]
 		icon_state = GLOB.biblestates[iconi]
@@ -100,7 +78,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			var/mob/living/carbon/human/H = usr
 			H.dna.add_mutation(CLOWNMUT)
 			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), SLOT_WEAR_MASK)
-<<<<<<< HEAD
 		if(icon_state == "insuls")
 			var/mob/living/carbon/human/H =usr
 			var/obj/item/clothing/gloves/color/fyellow/insuls = new
@@ -110,11 +87,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			H.equip_to_slot(insuls, ITEM_SLOT_GLOVES)
 		GLOB.bible_icon_state = icon_state
 		GLOB.bible_item_state = item_state
-=======
-
-		SSreligion.bible_icon_state = icon_state
-		SSreligion.bible_item_state = item_state
->>>>>>> Updated this old code to fork
 
 		SSblackbox.record_feedback("text", "religion_book", 1, "[biblename]")
 		usr << browse(null, "window=editicon")
@@ -146,11 +118,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
-<<<<<<< HEAD
 	if (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
-=======
-	if (user.has_trait(TRAIT_CLUMSY) && prob(50))
->>>>>>> Updated this old code to fork
 		to_chat(user, "<span class='danger'>[src] slips out of your hand and hits your head.</span>")
 		user.take_bodypart_damage(10)
 		user.Unconscious(400)
@@ -203,7 +171,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			for(var/obj/effect/rune/R in orange(2,user))
 				R.invisibility = 0
 	if(user.mind && (user.mind.isholy))
-<<<<<<< HEAD
 		if(A.reagents && A.reagents.has_reagent(/datum/reagent/water)) // blesses all the water in the holder
 			to_chat(user, "<span class='notice'>You bless [A].</span>")
 			var/water2holy = A.reagents.get_reagent_amount(/datum/reagent/water)
@@ -214,18 +181,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			var/unholy2clean = A.reagents.get_reagent_amount(/datum/reagent/fuel/unholywater)
 			A.reagents.del_reagent(/datum/reagent/fuel/unholywater)
 			A.reagents.add_reagent(/datum/reagent/water/holywater,unholy2clean)
-=======
-		if(A.reagents && A.reagents.has_reagent("water")) // blesses all the water in the holder
-			to_chat(user, "<span class='notice'>You bless [A].</span>")
-			var/water2holy = A.reagents.get_reagent_amount("water")
-			A.reagents.del_reagent("water")
-			A.reagents.add_reagent("holywater",water2holy)
-		if(A.reagents && A.reagents.has_reagent("unholywater")) // yeah yeah, copy pasted code - sue me
-			to_chat(user, "<span class='notice'>You purify [A].</span>")
-			var/unholy2clean = A.reagents.get_reagent_amount("unholywater")
-			A.reagents.del_reagent("unholywater")
-			A.reagents.add_reagent("holywater",unholy2clean)
->>>>>>> Updated this old code to fork
 		if(istype(A, /obj/item/storage/book/bible) && !istype(A, /obj/item/storage/book/bible/syndicate))
 			to_chat(user, "<span class='notice'>You purify [A], conforming it to your belief.</span>")
 			var/obj/item/storage/book/bible/B = A
@@ -247,26 +202,18 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 				SS.release_shades(user)
 				qdel(SS)
 			new /obj/item/nullrod/claymore(get_turf(sword))
-<<<<<<< HEAD
 			user.visible_message("<span class='notice'>[user] has purified [sword]!</span>")
-=======
-			user.visible_message("<span class='notice'>[user] has purified the [sword]!</span>")
->>>>>>> Updated this old code to fork
 			qdel(sword)
 
 	else if(istype(A, /obj/item/soulstone) && !iscultist(user))
 		var/obj/item/soulstone/SS = A
-<<<<<<< HEAD
 		if(SS.purified)
 			return
-=======
->>>>>>> Updated this old code to fork
 		to_chat(user, "<span class='notice'>You begin to exorcise [SS].</span>")
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,1)
 		if(do_after(user, 40, target = SS))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
 			SS.usability = TRUE
-<<<<<<< HEAD
 			SS.purified = TRUE
 			SS.icon_state = "purified_soulstone"
 			for(var/mob/M in SS.contents)
@@ -277,16 +224,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 				EX.name = "Purified [initial(EX.name)]"				
 			user.visible_message("<span class='notice'>[user] has purified [SS]!</span>")
 			
-=======
-			for(var/mob/living/simple_animal/shade/EX in SS)
-				SSticker.mode.remove_cultist(EX.mind, 1, 0)
-				EX.icon_state = "ghost1"
-				EX.name = "Purified [EX.name]"
-				SS.release_shades(user)
-			user.visible_message("<span class='notice'>[user] has purified the [SS]!</span>")
-			qdel(SS)
-
->>>>>>> Updated this old code to fork
 /obj/item/storage/book/bible/booze
 	desc = "To be applied to the head repeatedly."
 

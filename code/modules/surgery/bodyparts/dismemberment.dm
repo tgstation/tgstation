@@ -12,11 +12,7 @@
 		return FALSE
 	if(C.status_flags & GODMODE)
 		return FALSE
-<<<<<<< HEAD
 	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
-=======
-	if(C.has_trait(TRAIT_NODISMEMBER))
->>>>>>> Updated this old code to fork
 		return FALSE
 
 	var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
@@ -53,11 +49,7 @@
 	var/mob/living/carbon/C = owner
 	if(!dismemberable)
 		return FALSE
-<<<<<<< HEAD
 	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
-=======
-	if(C.has_trait(TRAIT_NODISMEMBER))
->>>>>>> Updated this old code to fork
 		return FALSE
 	. = list()
 	var/organ_spilled = 0

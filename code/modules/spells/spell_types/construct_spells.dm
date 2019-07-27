@@ -100,12 +100,9 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult
 	summon_type = list(/obj/item/soulstone/anybody)
 
-<<<<<<< HEAD
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult/purified
 	summon_type = list(/obj/item/soulstone/anybody/purified)
 
-=======
->>>>>>> Updated this old code to fork
 /obj/effect/proc_holder/spell/targeted/forcewall/cult
 	name = "Shield"
 	desc = "This spell creates a temporary forcefield to shield yourself and allies from incoming fire."
@@ -152,7 +149,6 @@
 	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
-<<<<<<< HEAD
 	max_targets = 6
 	action_icon_state = "magicm"
 	action_background_icon_state = "bg_demon"
@@ -161,13 +157,6 @@
 /obj/item/projectile/magic/spell/magic_missile/lesser
 	color = "red" //Looks more culty this way
 	range = 10
-=======
-	proj_lifespan = 10
-	max_targets = 6
-	action_icon_state = "magicm"
-	action_background_icon_state = "bg_demon"
-
->>>>>>> Updated this old code to fork
 
 /obj/effect/proc_holder/spell/targeted/smoke/disable
 	name = "Paralysing Smoke"
@@ -208,22 +197,14 @@
 
 /obj/effect/proc_holder/spell/targeted/abyssal_gaze/cast(list/targets, mob/user = usr)
 	if(!LAZYLEN(targets))
-<<<<<<< HEAD
 		to_chat(user, "<span class='warning'>No target found in range!</span>")
-=======
-		to_chat(user, "<span class='notice'>No target found in range.</span>")
->>>>>>> Updated this old code to fork
 		revert_cast()
 		return
 
 	var/mob/living/carbon/target = targets[1]
 
 	if(!(target in oview(range)))
-<<<<<<< HEAD
 		to_chat(user, "<span class='warning'>[target] is too far away!</span>")
-=======
-		to_chat(user, "<span class='notice'>[target] is too far away!</span>")
->>>>>>> Updated this old code to fork
 		revert_cast()
 		return
 
@@ -285,11 +266,7 @@
 		return
 
 	if(!(S in oview(range)))
-<<<<<<< HEAD
 		to_chat(user, "<span class='warning'>[S] is too far away!</span>")
-=======
-		to_chat(user, "<span class='notice'>[S] is too far away!</span>")
->>>>>>> Updated this old code to fork
 		revert_cast()
 		return
 
@@ -311,28 +288,16 @@
 	jaunt_out_type = /obj/effect/temp_visual/dir_setting/cult/phase/out
 
 
-<<<<<<< HEAD
 /obj/effect/proc_holder/spell/targeted/projectile/dumbfire/juggernaut
 	name = "Gauntlet Echo"
 	desc = "Channels energy into your gauntlet - firing its essence forward in a slow moving, yet devastating, attack."
 	proj_type = /obj/item/projectile/magic/spell/juggernaut
-=======
-/obj/effect/proc_holder/spell/dumbfire/juggernaut
-	name = "Gauntlet Echo"
-	desc = "Channels energy into your gauntlet - firing its essence forward in a slow moving, yet devastating, attack."
-	proj_icon_state = "cultfist"
-	proj_name = "gauntlet echo"
-	proj_type = "/obj/effect/proc_holder/spell/targeted/inflict_handler/juggernaut" //IMPORTANT use only subtypes of this
-	proj_lifespan = 15
-	proj_step_delay = 7
->>>>>>> Updated this old code to fork
 	charge_max = 350
 	clothes_req = FALSE
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "cultfist"
 	action_background_icon_state = "bg_demon"
 	sound = 'sound/weapons/resonator_blast.ogg'
-<<<<<<< HEAD
 
 /obj/item/projectile/magic/spell/juggernaut
 	name = "Gauntlet Echo"
@@ -350,29 +315,10 @@
 
 /obj/item/projectile/magic/spell/juggernaut/on_hit(atom/target, blocked)
 	. = ..()
-=======
-	proj_trigger_range = 0
-	ignore_factions = list("cult")
-	check_holy = TRUE
-
-/obj/effect/proc_holder/spell/targeted/inflict_handler/juggernaut
-	name = "Gauntlet Echo"
-	alpha = 180
-	amt_dam_brute = 30
-	amt_knockdown = 50
-	sound = 'sound/weapons/punch3.ogg'
-
-/obj/effect/proc_holder/spell/targeted/inflict_handler/juggernaut/cast(list/targets,mob/user = usr)
->>>>>>> Updated this old code to fork
 	var/turf/T = get_turf(src)
 	playsound(T, 'sound/weapons/resonator_blast.ogg', 100, FALSE)
 	new /obj/effect/temp_visual/cult/sac(T)
 	for(var/obj/O in range(src,1))
 		if(O.density && !istype(O, /obj/structure/destructible/cult))
 			O.take_damage(90, BRUTE, "melee", 0)
-<<<<<<< HEAD
 			new /obj/effect/temp_visual/cult/turf/floor(get_turf(O))
-=======
-			new /obj/effect/temp_visual/cult/turf/floor
-	..()
->>>>>>> Updated this old code to fork

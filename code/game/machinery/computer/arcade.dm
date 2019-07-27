@@ -65,16 +65,11 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	// If it's a generic arcade machine, pick a random arcade
 	// circuit board for it and make the new machine
 	if(!circuit)
-<<<<<<< HEAD
 		var/list/gameodds = list(/obj/item/circuitboard/computer/arcade/battle = 49,
 							/obj/item/circuitboard/computer/arcade/orion_trail = 49,
 							/obj/item/circuitboard/computer/arcade/amputation = 2)
 		var/thegame = pickweight(gameodds)
 		var/obj/item/circuitboard/CB = new thegame()
-=======
-		var/choice = pick(subtypesof(/obj/item/circuitboard/computer/arcade))
-		var/obj/item/circuitboard/CB = new choice()
->>>>>>> Updated this old code to fork
 		new CB.build_path(loc, CB)
 		return INITIALIZE_HINT_QDEL
 	Reset()
@@ -1090,7 +1085,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	var/active = 0 //if the ship is on
 
 /obj/item/orion_ship/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	if(!(in_range(user, src)))
 		return
@@ -1098,15 +1092,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		. += "<span class='notice'>There's a little switch on the bottom. It's flipped down.</span>"
 	else
 		. += "<span class='notice'>There's a little switch on the bottom. It's flipped up.</span>"
-=======
-	..()
-	if(!(in_range(user, src)))
-		return
-	if(!active)
-		to_chat(user, "<span class='notice'>There's a little switch on the bottom. It's flipped down.</span>")
-	else
-		to_chat(user, "<span class='notice'>There's a little switch on the bottom. It's flipped up.</span>")
->>>>>>> Updated this old code to fork
 
 /obj/item/orion_ship/attack_self(mob/user) //Minibomb-level explosion. Should probably be more because of how hard it is to survive the machine! Also, just over a 5-second fuse
 	if(active)
@@ -1130,7 +1115,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	explosion(loc, 2,4,8, flame_range = 16)
 	qdel(src)
 
-<<<<<<< HEAD
 // ** AMPUTATION ** //
 
 /obj/machinery/computer/arcade/amputation
@@ -1160,8 +1144,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			prizevend(user)
 	else
 		to_chat(c_user, "<span class='notice'>You (wisely) decide against putting your hand in the machine.</span>")
-=======
->>>>>>> Updated this old code to fork
 
 #undef ORION_TRAIL_WINTURN
 #undef ORION_TRAIL_RAIDERS

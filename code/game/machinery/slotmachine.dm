@@ -11,11 +11,8 @@
 #define SPIN_TIME 65 //As always, deciseconds.
 #define REEL_DEACTIVATE_DELAY 7
 #define SEVEN "<font color='red'>7</font>"
-<<<<<<< HEAD
 #define HOLOCHIP 1
 #define COIN 2
-=======
->>>>>>> Updated this old code to fork
 
 /obj/machinery/computer/slot_machine
 	name = "slot machine"
@@ -31,11 +28,8 @@
 	var/working = 0
 	var/balance = 0 //How much money is in the machine, ready to be CONSUMED.
 	var/jackpots = 0
-<<<<<<< HEAD
 	var/paymode = HOLOCHIP //toggles between HOLOCHIP/COIN, defined above
 	var/cointype = /obj/item/coin/iron //default cointype
-=======
->>>>>>> Updated this old code to fork
 	var/list/coinvalues = list()
 	var/list/reels = list(list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0)
 	var/list/symbols = list(SEVEN = 1, "<font color='orange'>&</font>" = 2, "<font color='yellow'>@</font>" = 2, "<font color='green'>$</font>" = 2, "<font color='blue'>?</font>" = 2, "<font color='grey'>#</font>" = 2, "<font color='white'>!</font>" = 2, "<font color='fuchsia'>%</font>" = 2) //if people are winning too much, multiply every number in this list by 2 and see if they are still winning too much.
@@ -55,21 +49,13 @@
 
 	toggle_reel_spin(0)
 
-<<<<<<< HEAD
 	for(cointype in typesof(/obj/item/coin))
-=======
-	for(var/cointype in typesof(/obj/item/coin))
->>>>>>> Updated this old code to fork
 		var/obj/item/coin/C = cointype
 		coinvalues["[cointype]"] = initial(C.value)
 
 /obj/machinery/computer/slot_machine/Destroy()
 	if(balance)
-<<<<<<< HEAD
 		give_payout(balance)
-=======
-		give_coins(balance)
->>>>>>> Updated this old code to fork
 	return ..()
 
 /obj/machinery/computer/slot_machine/process()
@@ -99,7 +85,6 @@
 /obj/machinery/computer/slot_machine/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/coin))
 		var/obj/item/coin/C = I
-<<<<<<< HEAD
 		if(paymode == COIN)
 			if(prob(2))
 				if(!user.transferItemToLoc(C, drop_location()))
@@ -137,22 +122,6 @@
 			else
 				paymode = HOLOCHIP
 				visible_message("<b>[src]</b> says, 'This machine now works with HOLOCHIPS!'")
-=======
-		if(prob(2))
-			if(!user.transferItemToLoc(C, drop_location()))
-				return
-			C.throw_at(user, 3, 10)
-			if(prob(10))
-				balance = max(balance - SPIN_PRICE, 0)
-			to_chat(user, "<span class='warning'>[src] spits your coin back out!</span>")
-
-		else
-			if(!user.temporarilyRemoveItemFromInventory(C))
-				return
-			to_chat(user, "<span class='notice'>You insert a [C.cmineral] coin into [src]'s slot!</span>")
-			balance += C.value
-			qdel(C)
->>>>>>> Updated this old code to fork
 	else
 		return ..()
 
@@ -188,14 +157,9 @@
 		<A href='?src=[REF(src)];spin=1'>Play!</A><BR>
 		<BR>
 		[reeltext]
-<<<<<<< HEAD
 		<BR>"}
 		if(balance > 0)
 			dat+="<font size='1'><A href='?src=[REF(src)];refund=1'>Refund balance</A><BR>"
-=======
-		<BR>
-		<font size='1'><A href='?src=[REF(src)];refund=1'>Refund balance</A><BR>"}
->>>>>>> Updated this old code to fork
 
 	var/datum/browser/popup = new(user, "slotmachine", "Slot Machine")
 	popup.set_content(dat)
@@ -211,14 +175,9 @@
 		spin(usr)
 
 	else if(href_list["refund"])
-<<<<<<< HEAD
 		if(balance > 0)
 			give_payout(balance)
 			balance = 0
-=======
-		give_coins(balance)
-		balance = 0
->>>>>>> Updated this old code to fork
 
 /obj/machinery/computer/slot_machine/emp_act(severity)
 	. = ..()
@@ -231,11 +190,7 @@
 	var/severity_ascending = 4 - severity
 	money = max(rand(money - (200 * severity_ascending), money + (200 * severity_ascending)), 0)
 	balance = max(rand(balance - (50 * severity_ascending), balance + (50 * severity_ascending)), 0)
-<<<<<<< HEAD
 	money -= max(0, give_payout(min(rand(-50, 100 * severity_ascending)), money)) //This starts at -50 because it shouldn't always dispense coins yo
-=======
-	money -= max(0, give_coins(min(rand(-50, 100 * severity_ascending)), money)) //This starts at -50 because it shouldn't always dispense coins yo
->>>>>>> Updated this old code to fork
 	spin()
 
 /obj/machinery/computer/slot_machine/proc/spin(mob/user)
@@ -301,7 +256,6 @@
 	var/linelength = get_lines()
 
 	if(reels[1][2] + reels[2][2] + reels[3][2] + reels[4][2] + reels[5][2] == "[SEVEN][SEVEN][SEVEN][SEVEN][SEVEN]")
-<<<<<<< HEAD
 		visible_message("<b>[src]</b> says, 'JACKPOT! You win [money] credits!'")
 		priority_announce("Congratulations to [user ? user.real_name : usrname] for winning the jackpot at the slot machine in [get_area(src)]!")
 		jackpots += 1
@@ -321,25 +275,6 @@
 
 	else if(linelength == 4)
 		visible_message("<b>[src]</b> says, 'Winner! You win four hundred credits!'")
-=======
-		visible_message("<b>[src]</b> says, 'JACKPOT! You win [money] credits worth of coins!'")
-		priority_announce("Congratulations to [user ? user.real_name : usrname] for winning the jackpot at the slot machine in [get_area(src)]!")
-		jackpots += 1
-		balance += money - give_coins(JACKPOT)
-		money = 0
-
-		for(var/i = 0, i < 5, i++)
-			var/cointype = pick(subtypesof(/obj/item/coin))
-			var/obj/item/coin/C = new cointype(loc)
-			random_step(C, 2, 50)
-
-	else if(linelength == 5)
-		visible_message("<b>[src]</b> says, 'Big Winner! You win a thousand credits worth of coins!'")
-		give_money(BIG_PRIZE)
-
-	else if(linelength == 4)
-		visible_message("<b>[src]</b> says, 'Winner! You win four hundred credits worth of coins!'")
->>>>>>> Updated this old code to fork
 		give_money(SMALL_PRIZE)
 
 	else if(linelength == 3)
@@ -371,7 +306,6 @@
 
 /obj/machinery/computer/slot_machine/proc/give_money(amount)
 	var/amount_to_give = money >= amount ? amount : money
-<<<<<<< HEAD
 	var/surplus = amount_to_give - give_payout(amount_to_give)
 	money = max(0, money - amount)
 	balance += surplus
@@ -381,14 +315,6 @@
 		cointype = /obj/item/holochip
 	else
 		cointype = obj_flags & EMAGGED ? /obj/item/coin/iron : /obj/item/coin/silver
-=======
-	var/surplus = amount_to_give - give_coins(amount_to_give)
-	money = max(0, money - amount)
-	balance += surplus
-
-/obj/machinery/computer/slot_machine/proc/give_coins(amount)
-	var/cointype = obj_flags & EMAGGED ? /obj/item/coin/iron : /obj/item/coin/silver
->>>>>>> Updated this old code to fork
 
 	if(!(obj_flags & EMAGGED))
 		amount = dispense(amount, cointype, null, 0)
@@ -401,7 +327,6 @@
 	return amount
 
 /obj/machinery/computer/slot_machine/proc/dispense(amount = 0, cointype = /obj/item/coin/silver, mob/living/target, throwit = 0)
-<<<<<<< HEAD
 	if(paymode == HOLOCHIP)
 		var/obj/item/holochip/H = new /obj/item/holochip(loc,amount)
 
@@ -417,18 +342,6 @@
 				C.throw_at(target, 3, 10)
 			else
 				random_step(C, 2, 40)
-=======
-	var/value = coinvalues["[cointype]"]
-
-
-	while(amount >= value)
-		var/obj/item/coin/C = new cointype(loc) //DOUBLE THE PAIN
-		amount -= value
-		if(throwit && target)
-			C.throw_at(target, 3, 10)
-		else
-			random_step(C, 2, 40)
->>>>>>> Updated this old code to fork
 
 	return amount
 
@@ -438,8 +351,5 @@
 #undef BIG_PRIZE
 #undef SMALL_PRIZE
 #undef SPIN_PRICE
-<<<<<<< HEAD
 #undef HOLOCHIP
 #undef COIN
-=======
->>>>>>> Updated this old code to fork

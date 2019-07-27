@@ -13,18 +13,11 @@
 	var/mob_types = list(/mob/living/simple_animal/hostile/carp)
 	var/spawn_text = "emerges from"
 	var/faction = list("hostile")
-<<<<<<< HEAD
 	var/spawner_type = /datum/component/spawner
 
 /obj/structure/spawner/Initialize()
 	. = ..()
 	AddComponent(spawner_type, mob_types, spawn_time, faction, spawn_text, max_mobs)
-=======
-
-/obj/structure/spawner/Initialize()
-	. = ..()
-	AddComponent(/datum/component/spawner, mob_types, spawn_time, faction, spawn_text, max_mobs)
->>>>>>> Updated this old code to fork
 
 /obj/structure/spawner/attack_animal(mob/living/simple_animal/M)
 	if(faction_check(faction, M.faction, FALSE)&&!M.client)
@@ -52,7 +45,6 @@
 	spawn_text = "climbs out of"
 	faction = list("skeleton")
 
-<<<<<<< HEAD
 /obj/structure/spawner/clown
 	name = "Laughing Larry"
 	desc = "A laughing, jovial figure. Something seems stuck in his throat."
@@ -65,8 +57,6 @@
 	spawn_text = "climbs out of"
 	faction = list("clown")
 
-=======
->>>>>>> Updated this old code to fork
 /obj/structure/spawner/mining
 	name = "monster den"
 	desc = "A hole dug into the ground, harboring all kinds of monsters found within most caves or mining asteroids."

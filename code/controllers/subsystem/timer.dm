@@ -268,11 +268,7 @@ SUBSYSTEM_DEF(timer)
 	var/new_bucket_count
 	var/i = 1
 	for (i in 1 to length(alltimers))
-<<<<<<< HEAD
 		var/datum/timedevent/timer = alltimers[i]
-=======
-		var/datum/timedevent/timer = alltimers[1]
->>>>>>> Updated this old code to fork
 		if (!timer)
 			continue
 

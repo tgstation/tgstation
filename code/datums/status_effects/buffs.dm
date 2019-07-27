@@ -292,10 +292,7 @@
 			var/mob/living/carbon/C = owner
 			for(var/X in C.bodyparts)
 				var/obj/item/bodypart/BP = X
-<<<<<<< HEAD
 				BP.max_damage *= 10
-=======
->>>>>>> Updated this old code to fork
 				BP.brute_dam *= 10
 				BP.burn_dam *= 10
 		owner.toxloss *= 10
@@ -312,10 +309,7 @@
 		last_staminaloss = owner.getStaminaLoss()
 		owner.log_message("gained blood-drunk stun immunity", LOG_ATTACK)
 		owner.add_stun_absorption("blooddrunk", INFINITY, 4)
-<<<<<<< HEAD
 		ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "blooddrunk");
-=======
->>>>>>> Updated this old code to fork
 		owner.playsound_local(get_turf(owner), 'sound/effects/singlebeat.ogg', 40, 1)
 
 /datum/status_effect/blooddrunk/tick() //multiply the effect of healing by 10
@@ -385,20 +379,14 @@
 			var/obj/item/bodypart/BP = X
 			BP.brute_dam *= 0.1
 			BP.burn_dam *= 0.1
-<<<<<<< HEAD
 			BP.max_damage /= 10
-=======
->>>>>>> Updated this old code to fork
 	owner.toxloss *= 0.1
 	owner.oxyloss *= 0.1
 	owner.cloneloss *= 0.1
 	owner.staminaloss *= 0.1
 	owner.updatehealth()
 	owner.log_message("lost blood-drunk stun immunity", LOG_ATTACK)
-<<<<<<< HEAD
 	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "blooddrunk");
-=======
->>>>>>> Updated this old code to fork
 	if(islist(owner.stun_absorption) && owner.stun_absorption["blooddrunk"])
 		owner.stun_absorption -= "blooddrunk"
 
@@ -417,20 +405,12 @@
 	owner.spin(duration,1)
 	animate(owner, color = oldcolor, time = duration, easing = EASE_IN)
 	addtimer(CALLBACK(owner, /atom/proc/update_atom_colour), duration)
-<<<<<<< HEAD
 	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, 0)
-=======
-	playsound(owner, 'sound/weapons/fwoosh.wav', 75, 0)
->>>>>>> Updated this old code to fork
 	return ..()
 
 
 /datum/status_effect/sword_spin/tick()
-<<<<<<< HEAD
 	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, 0)
-=======
-	playsound(owner, 'sound/weapons/fwoosh.wav', 75, 0)
->>>>>>> Updated this old code to fork
 	var/obj/item/slashy
 	slashy = owner.get_active_held_item()
 	for(var/mob/living/M in orange(1,owner))
@@ -490,21 +470,13 @@
 
 /datum/status_effect/hippocraticOath/on_apply()
 	//Makes the user passive, it's in their oath not to harm!
-<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_PACIFISM, "hippocraticOath")
-=======
-	owner.add_trait(TRAIT_PACIFISM, "hippocraticOath")
->>>>>>> Updated this old code to fork
 	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	H.add_hud_to(owner)
 	return ..()
 
 /datum/status_effect/hippocraticOath/on_remove()
-<<<<<<< HEAD
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "hippocraticOath")
-=======
-	owner.remove_trait(TRAIT_PACIFISM, "hippocraticOath")
->>>>>>> Updated this old code to fork
 	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	H.remove_hud_from(owner)
 
@@ -515,11 +487,7 @@
 		else
 			owner.visible_message("[owner]'s soul is absorbed into the rod, relieving the previous snake of its duty.")
 			var/mob/living/simple_animal/hostile/retaliate/poison/snake/healSnake = new(owner.loc)
-<<<<<<< HEAD
 			var/list/chems = list(/datum/reagent/medicine/sal_acid, /datum/reagent/medicine/perfluorodecalin, /datum/reagent/medicine/oxandrolone)
-=======
-			var/list/chems = list("bicaridine", "salbutamol", "kelotane", "antitoxin")
->>>>>>> Updated this old code to fork
 			healSnake.poison_type = pick(chems)
 			healSnake.name = "Asclepius's Snake"
 			healSnake.real_name = "Asclepius's Snake"
@@ -604,22 +572,14 @@
 	alert_type = /obj/screen/alert/status_effect/regenerative_core
 
 /datum/status_effect/regenerative_core/on_apply()
-<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, id)
 	owner.adjustBruteLoss(-25)
 	owner.adjustFireLoss(-25)
 	owner.remove_CC()
-=======
-	owner.add_trait(TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
-	owner.adjustBruteLoss(-25)
-	owner.adjustFireLoss(-25)
-	owner.remove_CC()	
->>>>>>> Updated this old code to fork
 	owner.bodytemperature = BODYTEMP_NORMAL
 	return TRUE
 
 /datum/status_effect/regenerative_core/on_remove()
-<<<<<<< HEAD
 	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, id)
 
 /datum/status_effect/antimagic
@@ -637,6 +597,3 @@
 /datum/status_effect/antimagic/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
 	owner.visible_message("<span class='warning'>[owner]'s dull aura fades away...</span>")
-=======
-	owner.remove_trait(TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
->>>>>>> Updated this old code to fork

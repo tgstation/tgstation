@@ -70,11 +70,7 @@
 						contract = new /obj/item/paper/contract/infernal/friend(C.loc, C.mind, user.mind)
 				C.put_in_hands(contract)
 		else
-<<<<<<< HEAD
 			to_chat(user, "<span class='warning'>[C] seems to not be sentient. You cannot summon a contract for [C.p_them()].</span>")
-=======
-			to_chat(user, "<span class='notice'>[C] seems to not be sentient.  You cannot summon a contract for [C.p_them()].</span>")
->>>>>>> Updated this old code to fork
 
 
 /obj/effect/proc_holder/spell/aimed/fireball/hellish

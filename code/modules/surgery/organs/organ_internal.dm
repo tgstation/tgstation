@@ -1,9 +1,6 @@
-<<<<<<< HEAD
 #define STANDARD_ORGAN_THRESHOLD 100
 #define STANDARD_ORGAN_HEALING 0.001
 
-=======
->>>>>>> Updated this old code to fork
 /obj/item/organ
 	name = "organ"
 	icon = 'icons/obj/surgery.dmi'
@@ -11,10 +8,7 @@
 	var/status = ORGAN_ORGANIC
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
-<<<<<<< HEAD
 	var/broken_cyber_organ = FALSE //if the organ stopped working.
-=======
->>>>>>> Updated this old code to fork
 	var/zone = BODY_ZONE_CHEST
 	var/slot
 	// DO NOT add slots with matching names to different zones - it will break internal_organs_slot list!
@@ -22,7 +16,6 @@
 	//Was this organ implanted/inserted/etc, if true will not be removed during species change.
 	var/external = FALSE
 	var/synthetic = FALSE // To distinguish between organic and synthetic organs
-<<<<<<< HEAD
 	var/maxHealth = STANDARD_ORGAN_THRESHOLD
 	var/damage = 0		//total damage this organ has sustained
 	var/failing	= FALSE			//is this organ failing or not
@@ -41,9 +34,6 @@
 		else
 			Unique_Failure_Msg = "<span class='danger'>Subject's [name] is too damaged to function, and needs to be replaced or fixed!</span>"
 	return Unique_Failure_Msg
-=======
-
->>>>>>> Updated this old code to fork
 
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	if(!iscarbon(M) || owner == M)
@@ -66,11 +56,7 @@
 		A.Grant(M)
 
 //Special is for instant replacement like autosurgeons
-<<<<<<< HEAD
 /obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE)
-=======
-/obj/item/organ/proc/Remove(mob/living/carbon/M, special = 0)
->>>>>>> Updated this old code to fork
 	owner = null
 	if(M)
 		M.internal_organs -= src
@@ -87,7 +73,6 @@
 	return
 
 /obj/item/organ/proc/on_life()
-<<<<<<< HEAD
 	var/mob/living/carbon/C = owner
 	//if we start to fail, cap our damage and fail the organ
 	if(damage > maxHealth)
@@ -102,14 +87,6 @@
 	. = ..()
 	if(status == ORGAN_ROBOTIC && broken_cyber_organ)
 		. += "<span class='warning'>[src] seems to be broken!</span>"
-=======
-	return
-
-/obj/item/organ/examine(mob/user)
-	..()
-	if(status == ORGAN_ROBOTIC && crit_fail)
-		to_chat(user, "<span class='warning'>[src] seems to be broken!</span>")
->>>>>>> Updated this old code to fork
 
 
 /obj/item/organ/proc/prepare_eat()
@@ -126,11 +103,7 @@
 	name = "appendix"
 	icon_state = "appendix"
 	icon = 'icons/obj/surgery.dmi'
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5)
-=======
-	list_reagents = list("nutriment" = 5)
->>>>>>> Updated this old code to fork
 	foodtype = RAW | MEAT | GROSS
 
 
@@ -145,11 +118,7 @@
 	if(M == user && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(status == ORGAN_ORGANIC)
-<<<<<<< HEAD
 			var/obj/item/reagent_containers/food/snacks/S = prepare_eat(H)
-=======
-			var/obj/item/reagent_containers/food/snacks/S = prepare_eat()
->>>>>>> Updated this old code to fork
 			if(S)
 				qdel(src)
 				if(H.put_in_active_hand(S))
@@ -160,7 +129,6 @@
 /obj/item/organ/item_action_slot_check(slot,mob/user)
 	return //so we don't grant the organ's action to mobs who pick up the organ.
 
-<<<<<<< HEAD
 /obj/item/organ/proc/applyOrganDamage(var/d)	//use for damaging effects
 	damage = max(0, damage + d)
 
@@ -171,8 +139,6 @@
 	else
 		failing = FALSE
 
-=======
->>>>>>> Updated this old code to fork
 //Looking for brains?
 //Try code/modules/mob/living/carbon/brain/brain_item.dm
 
@@ -203,8 +169,4 @@
 
 		if(!getorganslot(ORGAN_SLOT_EARS))
 			var/obj/item/organ/ears/ears = new()
-<<<<<<< HEAD
 			ears.Insert(src)
-=======
-			ears.Insert(src)
->>>>>>> Updated this old code to fork

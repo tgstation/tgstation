@@ -54,26 +54,14 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "am" = (
-<<<<<<< HEAD
 /obj/structure/fluff/bus/passable/seat,
-=======
-/obj/structure/fluff/bus/passable/seat{
-	icon_state = "backseat"
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/airless/dark{
 	icon_state = "bus"
 	},
 /area/ruin/unpowered/no_grav)
 "an" = (
-<<<<<<< HEAD
 /obj/structure/fluff/bus/passable/seat,
-=======
-/obj/structure/fluff/bus/passable/seat{
-	icon_state = "backseat"
-	},
->>>>>>> Updated this old code to fork
 /obj/item/reagent_containers/food/snacks/faggot,
 /turf/open/floor/plasteel/airless/dark{
 	icon_state = "bus"
@@ -87,10 +75,6 @@
 /area/ruin/unpowered/no_grav)
 "ap" = (
 /obj/structure/fluff/bus/passable/seat{
-<<<<<<< HEAD
-=======
-	icon_state = "backseat";
->>>>>>> Updated this old code to fork
 	pixel_y = 15
 	},
 /turf/open/floor/plasteel/airless/dark{
@@ -98,13 +82,7 @@
 	},
 /area/ruin/unpowered/no_grav)
 "aq" = (
-<<<<<<< HEAD
 /obj/structure/fluff/bus/passable/seat,
-=======
-/obj/structure/fluff/bus/passable/seat{
-	icon_state = "backseat"
-	},
->>>>>>> Updated this old code to fork
 /obj/item/reagent_containers/food/snacks/faggot,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/airless/dark{
@@ -112,32 +90,16 @@
 	},
 /area/ruin/unpowered/no_grav)
 "ar" = (
-<<<<<<< HEAD
 /obj/structure/fluff/bus/passable/seat,
 /obj/item/reagent_containers/food/snacks/grown/cherry_bomb,
-=======
-/obj/structure/fluff/bus/passable/seat{
-	icon_state = "backseat"
-	},
-/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless/dark{
 	icon_state = "bus"
 	},
 /area/ruin/unpowered/no_grav)
 "as" = (
-<<<<<<< HEAD
 /obj/structure/fluff/bus/passable/seat/driver,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/reagent_containers/food/snacks/grown/citrus/orange,
-=======
-/obj/structure/fluff/bus/passable/seat/driver{
-	icon_state = "driverseat";
-	pixel_y = 17
-	},
-/obj/item/reagent_containers/food/snacks/grown/cherry_bomb,
-/obj/effect/decal/cleanable/dirt,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/airless/dark{
 	icon_state = "bus"
 	},
@@ -229,13 +191,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "aG" = (
-<<<<<<< HEAD
 /obj/structure/fluff/bus/passable/seat,
-=======
-/obj/structure/fluff/bus/passable/seat{
-	icon_state = "backseat"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "aH" = (
@@ -308,13 +264,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "aU" = (
-<<<<<<< HEAD
 /obj/structure/fluff/bus/passable/seat,
-=======
-/obj/structure/fluff/bus/passable/seat{
-	icon_state = "backseat"
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/item/reagent_containers/food/snacks/faggot,
 /turf/open/floor/plasteel/airless/dark{
@@ -322,27 +272,14 @@
 	},
 /area/ruin/unpowered/no_grav)
 "aV" = (
-<<<<<<< HEAD
 /obj/structure/fluff/bus/passable/seat,
-=======
-/obj/structure/fluff/bus/passable/seat{
-	icon_state = "backseat"
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/decal/remains/human,
 /turf/open/floor/plasteel/airless/dark{
 	icon_state = "bus"
 	},
 /area/ruin/unpowered/no_grav)
 "aW" = (
-<<<<<<< HEAD
 /obj/structure/fluff/bus/passable/seat/driver,
-=======
-/obj/structure/fluff/bus/passable/seat/driver{
-	icon_state = "driverseat";
-	pixel_y = 17
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/airless/dark{
 	icon_state = "bus"
@@ -377,13 +314,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "XA" = (
-<<<<<<< HEAD
 /obj/structure/fluff/bus/passable/seat,
-=======
-/obj/structure/fluff/bus/passable/seat{
-	icon_state = "backseat"
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/item/toy/plush/awakenedplushie,
 /turf/open/floor/plasteel/airless/dark{

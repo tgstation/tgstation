@@ -22,10 +22,6 @@
 	ventcrawler = VENTCRAWLER_ALWAYS
 	var/datum/mind/origin
 	var/egg_lain = 0
-<<<<<<< HEAD
-=======
-	gold_core_spawnable = HOSTILE_SPAWN //are you sure about this??
->>>>>>> Updated this old code to fork
 
 /mob/living/simple_animal/hostile/headcrab/proc/Infect(mob/living/carbon/victim)
 	var/obj/item/organ/body_egg/changeling_egg/egg = new(victim)
@@ -46,11 +42,7 @@
 		// Changeling egg can survive in aliens!
 		var/mob/living/carbon/C = target
 		if(C.stat == DEAD)
-<<<<<<< HEAD
 			if(HAS_TRAIT(C, TRAIT_XENO_HOST))
-=======
-			if(C.has_trait(TRAIT_XENO_HOST))
->>>>>>> Updated this old code to fork
 				to_chat(src, "<span class='userdanger'>A foreign presence repels us from this body. Perhaps we should try to infest another?</span>")
 				return
 			Infect(target)
@@ -73,10 +65,6 @@
 
 /obj/item/organ/body_egg/changeling_egg/proc/Pop()
 	var/mob/living/carbon/monkey/M = new(owner)
-<<<<<<< HEAD
-=======
-	owner.stomach_contents += M
->>>>>>> Updated this old code to fork
 
 	for(var/obj/item/organ/I in src)
 		I.Insert(M, 1)

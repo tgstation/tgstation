@@ -203,11 +203,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/loop = 1
 	var/safety = 0
 
-<<<<<<< HEAD
 	var/banned = C ? is_banned_from(C.ckey, "Appearance") : null
-=======
-	var/banned = is_banned_from(C.ckey, "Appearance")
->>>>>>> Updated this old code to fork
 
 	while(loop && safety < 5)
 		if(C && C.prefs.custom_names[role] && !safety && !banned)
@@ -371,16 +367,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return "[round((powerused * 0.000000001),0.0001)] GW"
 
 // Format an energy value in J, kJ, MJ, or GJ. 1W = 1J/s.
-<<<<<<< HEAD
 /proc/DisplayJoules(units)
-=======
-/proc/DisplayEnergy(units)
-	// APCs process every (SSmachines.wait * 0.1) seconds, and turn 1 W of
-	// excess power into GLOB.CELLRATE energy units when charging cells.
-	// With the current configuration of wait=20 and CELLRATE=0.002, this
-	// means that one unit is 1 kJ.
-	units *= SSmachines.wait * 0.1 / GLOB.CELLRATE
->>>>>>> Updated this old code to fork
 	if (units < 1000) // Less than a kJ
 		return "[round(units, 0.1)] J"
 	else if (units < 1000000) // Less than a MJ
@@ -389,7 +376,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 		return "[round(units * 0.000001, 0.001)] MJ"
 	return "[round(units * 0.000000001, 0.0001)] GJ"
 
-<<<<<<< HEAD
 // Format an energy value measured in Power Cell units.
 /proc/DisplayEnergy(units)
 	// APCs process every (SSmachines.wait * 0.1) seconds, and turn 1 W of
@@ -398,8 +384,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 	// means that one unit is 1 kJ.
 	return DisplayJoules(units * SSmachines.wait * 0.1 / GLOB.CELLRATE)
 
-=======
->>>>>>> Updated this old code to fork
 /proc/get_mob_by_ckey(key)
 	if(!key)
 		return
@@ -1017,21 +1001,11 @@ B --><-- A
 
 //similar function to range(), but with no limitations on the distance; will search spiralling outwards from the center
 /proc/spiral_range(dist=0, center=usr, orange=0)
-<<<<<<< HEAD
 	var/list/L = list()
-=======
-	if(!dist)
-		if(!orange)
-			return list(center)
-		else
-			return list()
-
->>>>>>> Updated this old code to fork
 	var/turf/t_center = get_turf(center)
 	if(!t_center)
 		return list()
 
-<<<<<<< HEAD
 	if(!orange)
 		L += t_center
 		L += t_center.contents
@@ -1040,20 +1014,11 @@ B --><-- A
 		return L
 
 
-=======
-	var/list/L = list()
->>>>>>> Updated this old code to fork
 	var/turf/T
 	var/y
 	var/x
 	var/c_dist = 1
 
-<<<<<<< HEAD
-=======
-	if(!orange)
-		L += t_center
-		L += t_center.contents
->>>>>>> Updated this old code to fork
 
 	while( c_dist <= dist )
 		y = t_center.y + c_dist
@@ -1163,7 +1128,6 @@ B --><-- A
 /proc/get_random_station_turf()
 	return safepick(get_area_turfs(pick(GLOB.the_station_areas)))
 
-<<<<<<< HEAD
 /proc/get_safe_random_station_turf()
 	for (var/i in 1 to 5)
 		var/list/L = get_area_turfs(pick(GLOB.the_station_areas))
@@ -1185,8 +1149,6 @@ B --><-- A
 			return target
 
 
-=======
->>>>>>> Updated this old code to fork
 /proc/get_closest_atom(type, list, source)
 	var/closest_atom
 	var/closest_distance
@@ -1380,11 +1342,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 #define UNTIL(X) while(!(X)) stoplag()
 
-<<<<<<< HEAD
 /proc/pass(...)
-=======
-/proc/pass()
->>>>>>> Updated this old code to fork
 	return
 
 /proc/get_mob_or_brainmob(occupant)
@@ -1532,17 +1490,11 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		/obj/item/reagent_containers/food/snacks/soup,
 		/obj/item/reagent_containers/food/snacks/grown,
 		/obj/item/reagent_containers/food/snacks/grown/mushroom,
-<<<<<<< HEAD
 		/obj/item/reagent_containers/food/snacks/deepfryholder,
 		/obj/item/reagent_containers/food/snacks/clothing,
 		/obj/item/reagent_containers/food/snacks/grown/shell, //base types
 		/obj/item/reagent_containers/food/snacks/store/bread,
 		/obj/item/reagent_containers/food/snacks/grown/nettle
-=======
-		/obj/item/reagent_containers/food/snacks/grown/nettle, // base type
-		/obj/item/reagent_containers/food/snacks/deepfryholder,
-		/obj/item/reagent_containers/food/snacks/clothing
->>>>>>> Updated this old code to fork
 		)
 	blocked |= typesof(/obj/item/reagent_containers/food/snacks/customizable)
 
@@ -1639,12 +1591,9 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		return -1
 	else
 		return 0
-<<<<<<< HEAD
 
 /proc/CallAsync(datum/source, proctype, list/arguments)
 	set waitfor = FALSE
 	return call(source, proctype)(arglist(arguments))
 
 #define TURF_FROM_COORDS_LIST(List) (locate(List[1], List[2], List[3]))
-=======
->>>>>>> Updated this old code to fork

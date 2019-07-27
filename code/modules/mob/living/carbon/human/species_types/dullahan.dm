@@ -68,28 +68,17 @@
 
 /obj/item/organ/tongue/dullahan
 	zone = "abstract"
-<<<<<<< HEAD
 	modifies_speech = TRUE
 
 /obj/item/organ/tongue/dullahan/handle_speech(datum/source, list/speech_args)
-=======
-
-/obj/item/organ/tongue/dullahan/TongueSpeech(var/message)
->>>>>>> Updated this old code to fork
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		if(H.dna.species.id == "dullahan")
 			var/datum/species/dullahan/D = H.dna.species
 			if(isobj(D.myhead.loc))
 				var/obj/O = D.myhead.loc
-<<<<<<< HEAD
 				O.say(speech_args[SPEECH_MESSAGE])
 	speech_args[SPEECH_MESSAGE] = ""
-=======
-				O.say(message)
-	message = ""
-	return message
->>>>>>> Updated this old code to fork
 
 /obj/item/organ/ears/dullahan
 	zone = "abstract"
@@ -149,8 +138,4 @@
 			D.myhead = null
 			owner.gib()
 	owner = null
-<<<<<<< HEAD
 	..()
-=======
-	..()
->>>>>>> Updated this old code to fork

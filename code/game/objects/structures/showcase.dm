@@ -131,7 +131,6 @@
 //Feedback is given in examine because showcases can basically have any sprite assigned to them
 
 /obj/structure/showcase/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 
 	switch(deconstruction_state)
@@ -141,14 +140,3 @@
 			. += "The showcase has its screws loosened."
 		else
 			. += "If you see this, something is wrong."
-=======
-	..()
-
-	switch(deconstruction_state)
-		if(SHOWCASE_CONSTRUCTED)
-			to_chat(user, "The showcase is fully constructed.")
-		if(SHOWCASE_SCREWDRIVERED)
-			to_chat(user, "The showcase has its screws loosened.")
-		else
-			to_chat(user, "If you see this, something is wrong.")
->>>>>>> Updated this old code to fork

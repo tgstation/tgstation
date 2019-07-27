@@ -43,12 +43,9 @@ Slimecrossing Potions
 	if(!isliving(M) || M.stat == DEAD)
 		to_chat(user, "<span class='warning'>The pacification potion only works on the living.</span>")
 		return ..()
-<<<<<<< HEAD
 	if(istype(M, /mob/living/simple_animal/hostile/megafauna))
 		to_chat(user, "<span class='warning'>The pacification potion does not work on beings of pure evil!</span>")
 		return ..()
-=======
->>>>>>> Updated this old code to fork
 	if(M != user)
 		M.visible_message("<span class='danger'>[user] starts to feed [M] a pacification potion!</span>",
 			"<span class='userdanger'>[user] starts to feed you a pacification!</span>")
@@ -63,11 +60,7 @@ Slimecrossing Potions
 	else
 		to_chat(user, "<span class='warning'>You drink the pacification potion!</span>")
 	if(isanimal(M))
-<<<<<<< HEAD
 		ADD_TRAIT(M, TRAIT_PACIFISM, MAGIC_TRAIT)
-=======
-		M.add_trait(TRAIT_PACIFISM, MAGIC_TRAIT)
->>>>>>> Updated this old code to fork
 	else if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		C.gain_trauma(/datum/brain_trauma/severe/pacifism, TRAUMA_RESILIENCE_SURGERY)
@@ -84,12 +77,9 @@ Slimecrossing Potions
 	if(!isliving(M) || M.stat == DEAD)
 		to_chat(user, "<span class='warning'>The love potion only works on living things, sicko!</span>")
 		return ..()
-<<<<<<< HEAD
 	if(istype(M, /mob/living/simple_animal/hostile/megafauna))
 		to_chat(user, "<span class='warning'>The love potion does not work on beings of pure evil!</span>")
 		return ..()
-=======
->>>>>>> Updated this old code to fork
 	if(user == M)
 		to_chat(user, "<span class='warning'>You can't drink the love potion. What are you, a narcissist?</span>")
 		return ..()

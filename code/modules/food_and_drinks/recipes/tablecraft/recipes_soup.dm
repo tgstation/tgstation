@@ -236,7 +236,6 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/soup/beet/red
 	subcategory = CAT_SOUP
-<<<<<<< HEAD
 
 /datum/crafting_recipe/food/onionsoup
 	name = "French onion soup"
@@ -248,5 +247,3 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/soup/onion
 	subcategory = CAT_SOUP
-=======
->>>>>>> Updated this old code to fork

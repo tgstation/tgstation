@@ -18,11 +18,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
-<<<<<<< HEAD
 	materials = list(/datum/material/iron = 150, /datum/material/glass = 150)
-=======
-	materials = list(MAT_METAL = 150, MAT_GLASS = 150)
->>>>>>> Updated this old code to fork
 
 	var/grace = RAD_GRACE_PERIOD
 	var/datum/looping_sound/geiger/soundloop
@@ -67,7 +63,6 @@
 	current_tick_amount = 0
 
 /obj/item/geiger_counter/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	if(!scanning)
 		return
@@ -90,30 +85,6 @@
 			. += "<span class='boldannounce'>Ambient radiation levels above critical level!</span>"
 
 	. += "<span class='notice'>The last radiation amount detected was [last_tick_amount]</span>"
-=======
-	..()
-	if(!scanning)
-		return 1
-	to_chat(user, "<span class='info'>Alt-click it to clear stored radiation levels.</span>")
-	if(obj_flags & EMAGGED)
-		to_chat(user, "<span class='warning'>The display seems to be incomprehensible.</span>")
-		return 1
-	switch(radiation_count)
-		if(-INFINITY to RAD_LEVEL_NORMAL)
-			to_chat(user, "<span class='notice'>Ambient radiation level count reports that all is well.</span>")
-		if(RAD_LEVEL_NORMAL + 1 to RAD_LEVEL_MODERATE)
-			to_chat(user, "<span class='disarm'>Ambient radiation levels slightly above average.</span>")
-		if(RAD_LEVEL_MODERATE + 1 to RAD_LEVEL_HIGH)
-			to_chat(user, "<span class='warning'>Ambient radiation levels above average.</span>")
-		if(RAD_LEVEL_HIGH + 1 to RAD_LEVEL_VERY_HIGH)
-			to_chat(user, "<span class='danger'>Ambient radiation levels highly above average.</span>")
-		if(RAD_LEVEL_VERY_HIGH + 1 to RAD_LEVEL_CRITICAL)
-			to_chat(user, "<span class='suicide'>Ambient radiation levels nearing critical level.</span>")
-		if(RAD_LEVEL_CRITICAL + 1 to INFINITY)
-			to_chat(user, "<span class='boldannounce'>Ambient radiation levels above critical level!</span>")
-
-	to_chat(user, "<span class='notice'>The last radiation amount detected was [last_tick_amount]</span>")
->>>>>>> Updated this old code to fork
 
 /obj/item/geiger_counter/update_icon()
 	if(!scanning)
@@ -232,11 +203,7 @@
 
 
 /obj/item/geiger_counter/cyborg
-<<<<<<< HEAD
 	var/mob/listeningTo
-=======
-	var/datum/component/mobhook
->>>>>>> Updated this old code to fork
 
 /obj/item/geiger_counter/cyborg/cyborg_unequip(mob/user)
 	if(!scanning)
@@ -246,31 +213,20 @@
 
 /obj/item/geiger_counter/cyborg/equipped(mob/user)
 	. = ..()
-<<<<<<< HEAD
 	if(listeningTo == user)
 		return
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_ATOM_RAD_ACT)
 	RegisterSignal(user, COMSIG_ATOM_RAD_ACT, .proc/redirect_rad_act)
 	listeningTo = user
-=======
-	if (mobhook && mobhook.parent != user)
-		QDEL_NULL(mobhook)
-	if (!mobhook)
-		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_RAD_ACT = CALLBACK(src, .proc/redirect_rad_act)))
->>>>>>> Updated this old code to fork
 
 /obj/item/geiger_counter/cyborg/proc/redirect_rad_act(datum/source, amount)
 	rad_act(amount)
 
 /obj/item/geiger_counter/cyborg/dropped()
 	. = ..()
-<<<<<<< HEAD
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_ATOM_RAD_ACT)
-=======
-	QDEL_NULL(mobhook)
->>>>>>> Updated this old code to fork
 
 #undef RAD_LEVEL_NORMAL
 #undef RAD_LEVEL_MODERATE

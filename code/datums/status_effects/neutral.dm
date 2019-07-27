@@ -79,7 +79,6 @@
 
 /datum/status_effect/throat_soothed/on_apply()
 	. = ..()
-<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_SOOTHED_THROAT, "[STATUS_EFFECT_TRAIT]_[id]")
 
 /datum/status_effect/throat_soothed/on_remove()
@@ -144,10 +143,3 @@
 	. = ..()
 	if(.)
 		listening_in = tracker
-=======
-	owner.add_trait(TRAIT_SOOTHED_THROAT, "[STATUS_EFFECT_TRAIT]_[id]")
-
-/datum/status_effect/throat_soothed/on_remove()
-	. = ..()
-	owner.remove_trait(TRAIT_SOOTHED_THROAT, "[STATUS_EFFECT_TRAIT]_[id]")
->>>>>>> Updated this old code to fork

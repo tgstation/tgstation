@@ -7,11 +7,7 @@
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 10
 	volume = 50
-<<<<<<< HEAD
 	materials = list(/datum/material/glass=500)
-=======
-	materials = list(MAT_GLASS=500)
->>>>>>> Updated this old code to fork
 	max_integrity = 20
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
@@ -28,10 +24,7 @@
 			icon_state = R.glass_icon_state
 		else
 			var/mutable_appearance/reagent_overlay = mutable_appearance(icon, "glassoverlay")
-<<<<<<< HEAD
 			icon_state = "glass_empty"
-=======
->>>>>>> Updated this old code to fork
 			reagent_overlay.color = mix_color_from_reagents(reagents.reagent_list)
 			add_overlay(reagent_overlay)
 	else
@@ -54,11 +47,7 @@
 	amount_per_transfer_from_this = 15
 	possible_transfer_amounts = list()
 	volume = 15
-<<<<<<< HEAD
 	materials = list(/datum/material/glass=100)
-=======
-	materials = list(MAT_GLASS=100)
->>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/on_reagent_change(changetype)
 	cut_overlays()
@@ -94,7 +83,6 @@
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/filled/soda
 	name = "Soda Water"
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/sodawater = 50)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/filled/cola
@@ -105,18 +93,6 @@
 	name = "Nuka Cola"
 	list_reagents = list(/datum/reagent/consumable/nuka_cola = 50)
 
-=======
-	list_reagents = list("sodawater" = 50)
-
-/obj/item/reagent_containers/food/drinks/drinkingglass/filled/cola
-	name = "Space Cola"
-	list_reagents = list("cola" = 50)
-
-/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola
-	name = "Nuka Cola"
-	list_reagents = list("nuka_cola" = 50)
-	
->>>>>>> Updated this old code to fork
 /obj/item/reagent_containers/food/drinks/drinkingglass/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/food/snacks/egg)) //breaking eggs
 		var/obj/item/reagent_containers/food/snacks/egg/E = I
@@ -125,11 +101,7 @@
 				to_chat(user, "<span class='notice'>[src] is full.</span>")
 			else
 				to_chat(user, "<span class='notice'>You break [E] in [src].</span>")
-<<<<<<< HEAD
 				reagents.add_reagent(/datum/reagent/consumable/eggyolk, 5)
-=======
-				reagents.add_reagent("eggyolk", 5)
->>>>>>> Updated this old code to fork
 				qdel(E)
 			return
 	else

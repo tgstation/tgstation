@@ -39,15 +39,9 @@
 	var/obj/machinery/power/terminal/terminal = null
 
 /obj/machinery/power/smes/examine(user)
-<<<<<<< HEAD
 	. = ..()
 	if(!terminal)
 		. += "<span class='warning'>This SMES has no power terminal!</span>"
-=======
-	..()
-	if(!terminal)
-		to_chat(user, "<span class='warning'>This SMES has no power terminal!</span>")
->>>>>>> Updated this old code to fork
 
 /obj/machinery/power/smes/Initialize()
 	. = ..()
@@ -80,12 +74,9 @@
 	if(!initial(charge) && !charge)
 		charge = C / 15000 * 1e6
 
-<<<<<<< HEAD
 /obj/machinery/power/smes/should_have_node()
 	return TRUE
 
-=======
->>>>>>> Updated this old code to fork
 /obj/machinery/power/smes/attackby(obj/item/I, mob/user, params)
 	//opening using screwdriver
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
@@ -137,18 +128,13 @@
 		to_chat(user, "<span class='notice'>You start building the power terminal...</span>")
 		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 
-<<<<<<< HEAD
 		if(do_after(user, 20, target = src))
-=======
-		if(do_after(user, 20, target = src) && C.get_amount() >= 10)
->>>>>>> Updated this old code to fork
 			if(C.get_amount() < 10 || !C)
 				return
 			var/obj/structure/cable/N = T.get_cable_node() //get the connecting node cable, if there's one
 			if (prob(50) && electrocute_mob(usr, N, N, 1, TRUE)) //animate the electrocution if uncautious and unlucky
 				do_sparks(5, TRUE, src)
 				return
-<<<<<<< HEAD
 			if(!terminal)
 				C.use(10)
 				user.visible_message(\
@@ -159,18 +145,6 @@
 				make_terminal(T)
 				terminal.connect_to_network()
 				connect_to_network()
-=======
-
-			C.use(10)
-			user.visible_message(\
-				"[user.name] has built a power terminal.",\
-				"<span class='notice'>You build the power terminal.</span>")
-
-			//build the terminal and link it to the network
-			make_terminal(T)
-			terminal.connect_to_network()
-			connect_to_network()
->>>>>>> Updated this old code to fork
 		return
 
 	//crowbarring it !

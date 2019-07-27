@@ -118,12 +118,6 @@
 		return
 
 /obj/item/computer_hardware/card_slot/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	if(stored_card || stored_card2)
 		. += "There appears to be something loaded in the card slots."
-=======
-	..()
-	if(stored_card || stored_card2)
-		to_chat(user, "There appears to be something loaded in the card slots.")
->>>>>>> Updated this old code to fork

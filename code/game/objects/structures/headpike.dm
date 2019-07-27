@@ -13,10 +13,6 @@
 	icon_state = "headpike-bone"
 	bonespear = TRUE
 
-<<<<<<< HEAD
-=======
-
->>>>>>> Updated this old code to fork
 /obj/structure/headpike/CheckParts(list/parts_list)
 	..()
 	victim = locate(/obj/item/bodypart/head) in parts_list

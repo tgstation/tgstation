@@ -59,11 +59,7 @@
 /obj/item/areaeditor/blueprints/attack_self(mob/user)
 	. = ..()
 	if(!legend)
-<<<<<<< HEAD
 		var/area/A = get_area(user)
-=======
-		var/area/A = get_area()
->>>>>>> Updated this old code to fork
 		if(get_area_type() == AREA_STATION)
 			. += "<p>According to \the [src], you are now in <b>\"[html_encode(A.name)]\"</b>.</p>"
 			. += "<p><a href='?src=[REF(src)];edit_area=1'>Change area name</a></p>"
@@ -144,18 +140,9 @@
 	legend = FALSE
 
 
-<<<<<<< HEAD
 /obj/item/areaeditor/proc/get_area_type(area/A)
 	if (!A)
 		A = get_area(usr)
-=======
-/obj/item/areaeditor/proc/get_area()
-	var/turf/T = get_turf(usr)
-	var/area/A = T.loc
-	return A
-
-/obj/item/areaeditor/proc/get_area_type(area/A = get_area())
->>>>>>> Updated this old code to fork
 	if(A.outdoors)
 		return AREA_SPACE
 	var/list/SPECIALS = list(
@@ -193,11 +180,7 @@
 	return ""
 
 /obj/item/areaeditor/proc/edit_area()
-<<<<<<< HEAD
 	var/area/A = get_area(usr)
-=======
-	var/area/A = get_area()
->>>>>>> Updated this old code to fork
 	var/prevname = "[A.name]"
 	var/str = stripped_input(usr,"New area name:", "Area Creation", "", MAX_NAME_LEN)
 	if(!str || !length(str) || str==prevname) //cancel

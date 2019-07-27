@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /**
   * Delete a mob
   *
@@ -23,8 +22,6 @@
   *
   * Returns QDEL_HINT_HARDDEL (don't change this)
   */
-=======
->>>>>>> Updated this old code to fork
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	GLOB.mob_list -= src
 	GLOB.dead_mob_list -= src
@@ -46,7 +43,6 @@
 	..()
 	return QDEL_HINT_HARDDEL
 
-<<<<<<< HEAD
 /**
   * Intialize a mob
   *
@@ -65,8 +61,6 @@
   * * set a random nutrition level
   * * Intialize the movespeed of the mob
   */
-=======
->>>>>>> Updated this old code to fork
 /mob/Initialize()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_CREATED, src)
 	GLOB.mob_list += src
@@ -87,7 +81,6 @@
 	update_config_movespeed()
 	update_movespeed(TRUE)
 
-<<<<<<< HEAD
 /**
   * Generate the tag for this mob
   *
@@ -102,11 +95,6 @@
   * Goes through hud_possible list and adds the images to the hud_list variable (if not already
   * cached)
   */
-=======
-/mob/GenerateTag()
-	tag = "mob_[next_mob_id++]"
-
->>>>>>> Updated this old code to fork
 /atom/proc/prepare_huds()
 	hud_list = list()
 	for(var/hud in hud_possible)
@@ -119,12 +107,9 @@
 				I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
 				hud_list[hud] = I
 
-<<<<<<< HEAD
 /**
   * Some kind of debug verb that gives atmosphere environment details
   */
-=======
->>>>>>> Updated this old code to fork
 /mob/proc/Cell()
 	set category = "Admin"
 	set hidden = 1
@@ -143,7 +128,6 @@
 
 	to_chat(usr, t)
 
-<<<<<<< HEAD
 /**
   * Return the desc of this mob for a photo
   */
@@ -153,11 +137,6 @@
 /** 
   * Show a message to this mob (visual)
   */
-=======
-/mob/proc/get_photo_description(obj/item/camera/camera)
-	return "a ... thing?"
-
->>>>>>> Updated this old code to fork
 /mob/proc/show_message(msg, type, alt_msg, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
 
 	if(!client)
@@ -188,7 +167,6 @@
 	else
 		to_chat(src, msg)
 
-<<<<<<< HEAD
 /**
   * Generate a visible message from this atom
   * 
@@ -212,32 +190,13 @@
 		return
 	if(!islist(ignored_mobs))
 		ignored_mobs = list(ignored_mobs)
-=======
-// Show a message to all player mobs who sees this atom
-// Show a message to the src mob (if the src is a mob)
-// Use for atoms performing visible actions
-// message is output to anyone who can see, e.g. "The [src] does something!"
-// self_message (optional) is what the src mob sees e.g. "You do something!"
-// blind_message (optional) is what blind people will hear e.g. "You hear something!"
-// vision_distance (optional) define how many tiles away the message can be seen.
-// ignored_mob (optional) doesn't show any message to a given mob if TRUE.
-
-/atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mob)
-	var/turf/T = get_turf(src)
-	if(!T)
-		return
->>>>>>> Updated this old code to fork
 	var/range = 7
 	if(vision_distance)
 		range = vision_distance
 	for(var/mob/M in get_hearers_in_view(range, src))
 		if(!M.client)
 			continue
-<<<<<<< HEAD
 		if(M in ignored_mobs)
-=======
-		if(M == ignored_mob)
->>>>>>> Updated this old code to fork
 			continue
 		var/msg = message
 		if(M == src) //the src always see the main message or self message
@@ -259,7 +218,6 @@
 
 		M.show_message(msg,1,blind_message,2)
 
-<<<<<<< HEAD
 /**
   * Show a message to all mobs in earshot of this one
   *
@@ -271,15 +229,6 @@
   * * deaf_message (optional) is what deaf people will see.
   * * hearing_distance (optional) is the range, how many tiles away the message can be heard.
   */
-=======
-// Show a message to all mobs in earshot of this one
-// This would be for audible actions by the src mob
-// message is the message output to anyone who can hear.
-// self_message (optional) is what the src mob hears.
-// deaf_message (optional) is what deaf people will see.
-// hearing_distance (optional) is the range, how many tiles away the message can be heard.
-
->>>>>>> Updated this old code to fork
 /mob/audible_message(message, deaf_message, hearing_distance, self_message)
 	var/range = 7
 	if(hearing_distance)
@@ -290,7 +239,6 @@
 			msg = self_message
 		M.show_message( msg, 2, deaf_message, 1)
 
-<<<<<<< HEAD
 /**
   * Show a message to all mobs in earshot of this atom
   *
@@ -301,14 +249,6 @@
   * * deaf_message (optional) is what deaf people will see.
   * * hearing_distance (optional) is the range, how many tiles away the message can be heard.
   */
-=======
-// Show a message to all mobs in earshot of this atom
-// Use for objects performing audible actions
-// message is the message output to anyone who can hear.
-// deaf_message (optional) is what deaf people will see.
-// hearing_distance (optional) is the range, how many tiles away the message can be heard.
-
->>>>>>> Updated this old code to fork
 /atom/proc/audible_message(message, deaf_message, hearing_distance)
 	var/range = 7
 	if(hearing_distance)
@@ -316,7 +256,6 @@
 	for(var/mob/M in get_hearers_in_view(range, src))
 		M.show_message( message, 2, deaf_message, 1)
 
-<<<<<<< HEAD
 ///Get the item on the mob in the storage slot identified by the id passed in
 /mob/proc/get_item_by_slot(slot_id)
 	return null
@@ -335,21 +274,6 @@
   * Mostly tries to put the item into the slot if possible, or call attack hand
   * on the item in the slot if the users active hand is empty
   */
-=======
-/mob/proc/Life()
-	set waitfor = FALSE
-
-/mob/proc/get_item_by_slot(slot_id)
-	return null
-
-/mob/proc/restrained(ignore_grab)
-	return
-
-/mob/proc/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, check_immobilized = FALSE)
-	return
-
-//This proc is called whenever someone clicks an inventory ui slot.
->>>>>>> Updated this old code to fork
 /mob/proc/attack_ui(slot)
 	var/obj/item/W = get_active_held_item()
 
@@ -365,7 +289,6 @@
 
 	return 0
 
-<<<<<<< HEAD
 /**
   * Try to equip an item to a slot on the mob
   *
@@ -377,12 +300,6 @@
   *
   * unset redraw_mob to prevent the mob icons from being redrawn at the end.
   */
-=======
-//This is a SAFE proc. Use this instead of equip_to_slot()!
-//set qdel_on_fail to have it delete W if it fails to equip
-//set disable_warning to disable the 'you are unable to equip that' warning.
-//unset redraw_mob to prevent the mob from being redrawn at the end.
->>>>>>> Updated this old code to fork
 /mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE)
 	if(!istype(W))
 		return FALSE
@@ -396,7 +313,6 @@
 	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
 	return TRUE
 
-<<<<<<< HEAD
 /**
   * Actually equips an item to a slot (UNSAFE)
   *
@@ -426,20 +342,6 @@
   *
   * returns 0 if it cannot, 1 if successful
   */
-=======
-//This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on whether you can or can't equip need to be done before! Use mob_can_equip() for that task.
-//In most cases you will want to use equip_to_slot_if_possible()
-/mob/proc/equip_to_slot(obj/item/W, slot)
-	return
-
-//This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the round starts and when events happen and such.
-//Also bypasses equip delay checks, since the mob isn't actually putting it on.
-/mob/proc/equip_to_slot_or_del(obj/item/W, slot)
-	return equip_to_slot_if_possible(W, slot, TRUE, TRUE, FALSE, TRUE)
-
-//puts the item "W" into an appropriate slot in a human's inventory
-//returns 0 if it cannot, 1 if successful
->>>>>>> Updated this old code to fork
 /mob/proc/equip_to_appropriate_slot(obj/item/W)
 	if(!istype(W))
 		return 0
@@ -462,18 +364,12 @@
 			return 1
 
 	return 0
-<<<<<<< HEAD
 /**
   * Reset the attached clients perspective (viewpoint)
   *
   * reset_perspective() set eye to common default : mob on turf, loc otherwise
   * reset_perspective(thing) set the eye to the thing (if it's equal to current default reset to mob perspective)
   */
-=======
-
-// reset_perspective(thing) set the eye to the thing (if it's equal to current default reset to mob perspective)
-// reset_perspective() set eye to common default : mob on turf, loc otherwise
->>>>>>> Updated this old code to fork
 /mob/proc/reset_perspective(atom/A)
 	if(client)
 		if(A)
@@ -505,7 +401,6 @@
 				client.eye = loc
 		return 1
 
-<<<<<<< HEAD
 /// Show the mob's inventory to another mob
 /mob/proc/show_inv(mob/user)
 	return
@@ -517,12 +412,6 @@
   * [this byond forum post](https://secure.byond.com/forum/?post=1326139&page=2#comment8198716)
   * for why this isn't atom/verb/examine()
   */
-=======
-/mob/proc/show_inv(mob/user)
-	return
-
-//mob verbs are faster than object verbs. See https://secure.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
->>>>>>> Updated this old code to fork
 /mob/verb/examinate(atom/A as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
 	set name = "Examine"
 	set category = "IC"
@@ -532,7 +421,6 @@
 		return
 
 	if(is_blind(src))
-<<<<<<< HEAD
 		to_chat(src, "<span class='warning'>Something is there but you can't see it!</span>")
 		return
 
@@ -554,18 +442,6 @@
   *
   * overridden here and in /mob/dead/observer for different point span classes and sanity checks
   */
-=======
-		to_chat(src, "<span class='notice'>Something is there but you can't see it.</span>")
-		return
-
-	face_atom(A)
-	A.examine(src)
-
-//same as above
-//note: ghosts can point, this is intended
-//visible_message will handle invisibility properly
-//overridden here and in /mob/dead/observer for different point span classes and sanity checks
->>>>>>> Updated this old code to fork
 /mob/verb/pointed(atom/A as mob|obj|turf in view())
 	set name = "Point To"
 	set category = "Object"
@@ -583,17 +459,11 @@
 
 	return TRUE
 
-<<<<<<< HEAD
 ///Can this mob resist (default FALSE)
 /mob/proc/can_resist()
 	return FALSE		//overridden in living.dm
 
 ///Spin this mob around it's central axis
-=======
-/mob/proc/can_resist()
-	return FALSE		//overridden in living.dm
-
->>>>>>> Updated this old code to fork
 /mob/proc/spin(spintime, speed)
 	set waitfor = 0
 	var/D = dir
@@ -613,32 +483,23 @@
 		setDir(D)
 		spintime -= speed
 
-<<<<<<< HEAD
 ///Update the pulling hud icon
-=======
->>>>>>> Updated this old code to fork
 /mob/proc/update_pull_hud_icon()
 	if(hud_used)
 		if(hud_used.pull_icon)
 			hud_used.pull_icon.update_icon(src)
 
-<<<<<<< HEAD
 ///Update the resting hud icon
-=======
->>>>>>> Updated this old code to fork
 /mob/proc/update_rest_hud_icon()
 	if(hud_used)
 		if(hud_used.rest_icon)
 			hud_used.rest_icon.update_icon(src)
 
-<<<<<<< HEAD
 /**
   * Verb to activate the object in your held hand
   *
   * Calls attack self on the item and updates the inventory hud for hands
   */
-=======
->>>>>>> Updated this old code to fork
 /mob/verb/mode()
 	set name = "Activate Held Object"
 	set category = "Object"
@@ -655,14 +516,11 @@
 		I.attack_self(src)
 		update_inv_hands()
 
-<<<<<<< HEAD
 /**
   * Get the notes of this mob
   *
   * This actually gets the mind datums notes
   */
-=======
->>>>>>> Updated this old code to fork
 /mob/verb/memory()
 	set name = "Notes"
 	set category = "IC"
@@ -672,12 +530,9 @@
 	else
 		to_chat(src, "You don't have a mind datum for some reason, so you can't look at your notes, if you had any.")
 
-<<<<<<< HEAD
 /**
   * Add a note to the mind datum
   */
-=======
->>>>>>> Updated this old code to fork
 /mob/verb/add_memory(msg as message)
 	set name = "Add Note"
 	set category = "IC"
@@ -690,7 +545,6 @@
 	else
 		to_chat(src, "You don't have a mind datum for some reason, so you can't add a note to it.")
 
-<<<<<<< HEAD
 /**
   * Allows you to respawn, abandoning your current mob
   *
@@ -698,8 +552,6 @@
   *
   * Only works if flag/norespawn is allowed in config
   */
-=======
->>>>>>> Updated this old code to fork
 /mob/verb/abandon_mob()
 	set name = "Respawn"
 	set category = "OOC"
@@ -734,13 +586,9 @@
 	return
 
 
-<<<<<<< HEAD
 /**
   * Sometimes helps if the user is stuck in another perspective or camera
   */
-=======
-
->>>>>>> Updated this old code to fork
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
 	set category = "OOC"
@@ -759,7 +607,6 @@
 	set hidden = TRUE
 	set category = null
 	return
-<<<<<<< HEAD
 /**
   * Topic call back for any mob
   *
@@ -767,9 +614,6 @@
   * * refresh the inventory of machines in range if "refresh" sent
   * * handles the strip panel equip and unequip as well if "item" sent
   */
-=======
-
->>>>>>> Updated this old code to fork
 /mob/Topic(href, href_list)
 	if(href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")
@@ -812,12 +656,9 @@
 /mob/proc/stripPanelEquip(obj/item/what, mob/who)
 	return
 
-<<<<<<< HEAD
 /**
   * Controls if a mouse drop succeeds (return null if it doesnt)
   */
-=======
->>>>>>> Updated this old code to fork
 /mob/MouseDrop(mob/M)
 	. = ..()
 	if(M != usr)
@@ -828,7 +669,6 @@
 		return
 	if(isAI(M))
 		return
-<<<<<<< HEAD
 /** 
   * Handle the result of a click drag onto this mob
   *
@@ -850,13 +690,6 @@
   * calculates client ping, round id, server time, time dilation and other data about the round
   * and puts it in the mob status panel on a regular loop
   */
-=======
-	show_inv(usr)
-
-/mob/proc/is_muzzled()
-	return 0
-
->>>>>>> Updated this old code to fork
 /mob/Stat()
 	..()
 
@@ -934,14 +767,11 @@
 		add_spells_to_statpanel(mind.spell_list)
 	add_spells_to_statpanel(mob_spell_list)
 
-<<<<<<< HEAD
 /**
   * Convert a list of spells into a displyable list for the statpanel
   *
   * Shows charge and other important info
   */
-=======
->>>>>>> Updated this old code to fork
 /mob/proc/add_spells_to_statpanel(list/spells)
 	for(var/obj/effect/proc_holder/spell/S in spells)
 		if(S.can_be_cast_by(src))
@@ -956,7 +786,6 @@
 #define MOB_FACE_DIRECTION_DELAY 1
 
 // facing verbs
-<<<<<<< HEAD
 /**
   * Returns true if a mob can turn to face things
   *
@@ -967,8 +796,6 @@
   * * no transform not set
   * * we are not restrained
   */
-=======
->>>>>>> Updated this old code to fork
 /mob/proc/canface()
 	if(world.time < client.last_turn)
 		return FALSE
@@ -982,19 +809,13 @@
 		return FALSE
 	return TRUE
 
-<<<<<<< HEAD
 ///Checks mobility move as well as parent checks
-=======
->>>>>>> Updated this old code to fork
 /mob/living/canface()
 	if(!(mobility_flags & MOBILITY_MOVE))
 		return FALSE
 	return ..()
 
-<<<<<<< HEAD
 ///Hidden verb to turn east
-=======
->>>>>>> Updated this old code to fork
 /mob/verb/eastface()
 	set hidden = TRUE
 	if(!canface())
@@ -1003,10 +824,7 @@
 	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
 	return TRUE
 
-<<<<<<< HEAD
 ///Hidden verb to turn west
-=======
->>>>>>> Updated this old code to fork
 /mob/verb/westface()
 	set hidden = TRUE
 	if(!canface())
@@ -1015,10 +833,7 @@
 	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
 	return TRUE
 
-<<<<<<< HEAD
 ///Hidden verb to turn north
-=======
->>>>>>> Updated this old code to fork
 /mob/verb/northface()
 	set hidden = TRUE
 	if(!canface())
@@ -1027,10 +842,7 @@
 	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
 	return TRUE
 
-<<<<<<< HEAD
 ///Hidden verb to turn south
-=======
->>>>>>> Updated this old code to fork
 /mob/verb/southface()
 	set hidden = TRUE
 	if(!canface())
@@ -1039,12 +851,8 @@
 	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
 	return TRUE
 
-<<<<<<< HEAD
 ///This might need a rename but it should replace the can this mob use things check
 /mob/proc/IsAdvancedToolUser()
-=======
-/mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
->>>>>>> Updated this old code to fork
 	return FALSE
 
 /mob/proc/swap_hand()
@@ -1056,44 +864,29 @@
 /mob/proc/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //For sec bot threat assessment
 	return 0
 
-<<<<<<< HEAD
 ///Get the ghost of this mob (from the mind)
-=======
->>>>>>> Updated this old code to fork
 /mob/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
 	if(mind)
 		return mind.get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
 
-<<<<<<< HEAD
 ///Force get the ghost from the mind
-=======
->>>>>>> Updated this old code to fork
 /mob/proc/grab_ghost(force)
 	if(mind)
 		return mind.grab_ghost(force = force)
 
-<<<<<<< HEAD
 ///Notify a ghost that it's body is being cloned
-=======
->>>>>>> Updated this old code to fork
 /mob/proc/notify_ghost_cloning(var/message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", var/sound = 'sound/effects/genetics.ogg', var/atom/source = null, flashwindow)
 	var/mob/dead/observer/ghost = get_ghost()
 	if(ghost)
 		ghost.notify_cloning(message, sound, source, flashwindow)
 		return ghost
 
-<<<<<<< HEAD
 ///Add a spell to the mobs spell list
-=======
->>>>>>> Updated this old code to fork
 /mob/proc/AddSpell(obj/effect/proc_holder/spell/S)
 	mob_spell_list += S
 	S.action.Grant(src)
 
-<<<<<<< HEAD
 ///Remove a spell from the mobs spell list
-=======
->>>>>>> Updated this old code to fork
 /mob/proc/RemoveSpell(obj/effect/proc_holder/spell/spell)
 	if(!spell)
 		return
@@ -1103,25 +896,16 @@
 			mob_spell_list -= S
 			qdel(S)
 
-<<<<<<< HEAD
 ///Return any anti magic atom on this mob that matches the magic type
 /mob/proc/anti_magic_check(magic = TRUE, holy = FALSE, tinfoil = FALSE, chargecost = 1, self = FALSE)
 	if(!magic && !holy && !tinfoil)
 		return
 	var/list/protection_sources = list()
 	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, src, magic, holy, tinfoil, chargecost, self, protection_sources) & COMPONENT_BLOCK_MAGIC)
-=======
-/mob/proc/anti_magic_check(magic = TRUE, holy = FALSE, major = TRUE, self = FALSE)
-	if(!magic && !holy)
-		return
-	var/list/protection_sources = list()
-	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, src, magic, holy, major, self, protection_sources) & COMPONENT_BLOCK_MAGIC)
->>>>>>> Updated this old code to fork
 		if(protection_sources.len)
 			return pick(protection_sources)
 		else
 			return src
-<<<<<<< HEAD
 	if((magic && HAS_TRAIT(src, TRAIT_ANTIMAGIC)) || (holy && HAS_TRAIT(src, TRAIT_HOLY)))
 		return src
 
@@ -1132,12 +916,6 @@
   *
   * Turns you to face the other mob too
   */
-=======
-	if((magic && has_trait(TRAIT_ANTIMAGIC)) || (holy && has_trait(TRAIT_HOLY)))
-		return src
-
-//You can buckle on mobs if you're next to them since most are dense
->>>>>>> Updated this old code to fork
 /mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(M.buckled)
 		return 0
@@ -1151,30 +929,18 @@
 			return 0
 	return ..()
 
-<<<<<<< HEAD
 ///Call back post buckle to a mob to offset your visual height
-=======
-//Default buckling shift visual for mobs
->>>>>>> Updated this old code to fork
 /mob/post_buckle_mob(mob/living/M)
 	var/height = M.get_mob_buckling_height(src)
 	M.pixel_y = initial(M.pixel_y) + height
 	if(M.layer < layer)
 		M.layer = layer + 0.1
-<<<<<<< HEAD
 ///Call back post unbuckle from a mob, (reset your visual height here)
-=======
-
->>>>>>> Updated this old code to fork
 /mob/post_unbuckle_mob(mob/living/M)
 	M.layer = initial(M.layer)
 	M.pixel_y = initial(M.pixel_y)
 
-<<<<<<< HEAD
 ///returns the height in pixel the mob should have when buckled to another mob.
-=======
-//returns the height in pixel the mob should have when buckled to another mob.
->>>>>>> Updated this old code to fork
 /mob/proc/get_mob_buckling_height(mob/seat)
 	if(isliving(seat))
 		var/mob/living/L = seat
@@ -1182,7 +948,6 @@
 			return 0
 	return 9
 
-<<<<<<< HEAD
 ///can the mob be buckled to something by default?
 /mob/proc/can_buckle()
 	return 1
@@ -1207,47 +972,6 @@
   *
   * If exact match is set, then all our factions must match exactly
   */
-=======
-//can the mob be buckled to something by default?
-/mob/proc/can_buckle()
-	return 1
-
-//can the mob be unbuckled from something by default?
-/mob/proc/can_unbuckle()
-	return 1
-
-//Can the mob interact() with an atom?
-/mob/proc/can_interact_with(atom/A)
-	return IsAdminGhost(src) || Adjacent(A)
-
-//Can the mob see reagents inside of containers?
-/mob/proc/can_see_reagents()
-	if(stat == DEAD) //Ghosts and such can always see reagents
-		return 1
-	if(has_unlimited_silicon_privilege) //Silicons can automatically view reagents
-		return 1
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if(H.head && istype(H.head, /obj/item/clothing))
-			var/obj/item/clothing/CL = H.head
-			if(CL.scan_reagents)
-				return 1
-		if(H.wear_mask && H.wear_mask.scan_reagents)
-			return 1
-		if(H.glasses && istype(H.glasses, /obj/item/clothing))
-			var/obj/item/clothing/CL = H.glasses
-			if(CL.scan_reagents)
-				return 1
-	return 0
-
-//Can the mob use Topic to interact with machines
-/mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
-	return
-
-/mob/proc/canUseStorage()
-	return FALSE
-
->>>>>>> Updated this old code to fork
 /mob/proc/faction_check_mob(mob/target, exact_match)
 	if(exact_match) //if we need an exact match, we need to do some bullfuckery.
 		var/list/faction_src = faction.Copy()
@@ -1258,15 +982,11 @@
 			faction_target -= "[REF(target)]" //same thing here.
 		return faction_check(faction_src, faction_target, TRUE)
 	return faction_check(faction, target.faction, FALSE)
-<<<<<<< HEAD
 /*
  * Compare two lists of factions, returning true if any match
  *
  * If exact match is passed through we only return true if both faction lists match equally
  */
-=======
-
->>>>>>> Updated this old code to fork
 /proc/faction_check(list/faction_A, list/faction_B, exact_match)
 	var/list/match_list
 	if(exact_match)
@@ -1280,7 +1000,6 @@
 	return FALSE
 
 
-<<<<<<< HEAD
 /**
   * Fully update the name of a mob
   *
@@ -1288,10 +1007,6 @@
   * 
   * Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
   */
-=======
-//This will update a mob's name, real_name, mind.name, GLOB.data_core records, pda, id and traitor text
-//Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
->>>>>>> Updated this old code to fork
 /mob/proc/fully_replace_character_name(oldname,newname)
 	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
 	if(!newname)
@@ -1320,18 +1035,11 @@
 					obj.update_explanation_text()
 	return 1
 
-<<<<<<< HEAD
 ///Updates GLOB.data_core records with new name , see mob/living/carbon/human
 /mob/proc/replace_records_name(oldname,newname)
 	return
 
 ///update the ID name of this mob
-=======
-//Updates GLOB.data_core records with new name , see mob/living/carbon/human
-/mob/proc/replace_records_name(oldname,newname)
-	return
-
->>>>>>> Updated this old code to fork
 /mob/proc/replace_identification_name(oldname,newname)
 	var/list/searching = GetAllContents()
 	var/search_id = 1
@@ -1364,28 +1072,19 @@
 /mob/proc/update_health_hud()
 	return
 
-<<<<<<< HEAD
 ///Update the lighting plane and sight of this mob (sends COMSIG_MOB_UPDATE_SIGHT)
-=======
->>>>>>> Updated this old code to fork
 /mob/proc/update_sight()
 	SEND_SIGNAL(src, COMSIG_MOB_UPDATE_SIGHT)
 	sync_lighting_plane_alpha()
 
-<<<<<<< HEAD
 ///Set the lighting plane hud alpha to the mobs lighting_alpha var
-=======
->>>>>>> Updated this old code to fork
 /mob/proc/sync_lighting_plane_alpha()
 	if(hud_used)
 		var/obj/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
 		if (L)
 			L.alpha = lighting_alpha
 
-<<<<<<< HEAD
 ///Update the mouse pointer of the attached client in this mob
-=======
->>>>>>> Updated this old code to fork
 /mob/proc/update_mouse_pointer()
 	if (!client)
 		return
@@ -1400,18 +1099,11 @@
 			client.mouse_pointer_icon = E.mouse_pointer
 
 
-<<<<<<< HEAD
 ///This mob is abile to read books
 /mob/proc/is_literate()
 	return FALSE
 
 ///Can this mob read (is literate and not blind)
-=======
-
-/mob/proc/is_literate()
-	return FALSE
-
->>>>>>> Updated this old code to fork
 /mob/proc/can_read(obj/O)
 	if(is_blind(src))
 		to_chat(src, "<span class='warning'>As you are trying to read [O], you suddenly feel very stupid!</span>")
@@ -1421,7 +1113,6 @@
 		return
 	return TRUE
 
-<<<<<<< HEAD
 ///Can this mob hold items
 /mob/proc/can_hold_items()
 	return FALSE
@@ -1433,14 +1124,6 @@
 /**
   * Get the mob VV dropdown extras
   */
-=======
-/mob/proc/can_hold_items()
-	return FALSE
-
-/mob/proc/get_idcard(hand_first)
-	return
-
->>>>>>> Updated this old code to fork
 /mob/vv_get_dropdown()
 	. = ..()
 	. += "---"
@@ -1456,22 +1139,16 @@
 	.["Assume Direct Control"] = "?_src_=vars;[HrefToken()];direct_control=[REF(src)]"
 	.["Offer Control to Ghosts"] = "?_src_=vars;[HrefToken()];offer_control=[REF(src)]"
 
-<<<<<<< HEAD
 /**
   * extra var handling for the logging var
   */
-=======
->>>>>>> Updated this old code to fork
 /mob/vv_get_var(var_name)
 	switch(var_name)
 		if("logging")
 			return debug_variable(var_name, logging, 0, src, FALSE)
 	. = ..()
 
-<<<<<<< HEAD
 ///Show the language menu for this mob
-=======
->>>>>>> Updated this old code to fork
 /mob/verb/open_language_menu()
 	set name = "Open Language Menu"
 	set category = "IC"
@@ -1479,7 +1156,6 @@
 	var/datum/language_holder/H = get_language_holder()
 	H.open_language_menu(usr)
 
-<<<<<<< HEAD
 ///Adjust the nutrition of a mob
 /mob/proc/adjust_nutrition(var/change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
 	nutrition = max(0, nutrition + change)
@@ -1489,14 +1165,6 @@
 	nutrition = max(0, change)
 
 ///Set the movement type of the mob and update it's movespeed
-=======
-/mob/proc/adjust_nutrition(var/change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
-	nutrition = max(0, nutrition + change)
-
-/mob/proc/set_nutrition(var/change) //Seriously fuck you oldcoders.
-	nutrition = max(0, change)
-
->>>>>>> Updated this old code to fork
 /mob/setMovetype(newval)
 	. = ..()
 	update_movespeed(FALSE)

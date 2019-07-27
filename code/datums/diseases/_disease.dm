@@ -55,7 +55,6 @@
 	D.after_add()
 	infectee.med_hud_set_status()
 
-<<<<<<< HEAD
 	var/turf/source_turf = get_turf(infectee)
 	log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
 
@@ -63,8 +62,6 @@
 /datum/disease/proc/admin_details()
 	return "[src.name] : [src.type]"
 
-=======
->>>>>>> Updated this old code to fork
 /datum/disease/proc/stage_act()
 	var/cure = has_cure()
 
@@ -106,11 +103,7 @@
 	if(!(spread_flags & DISEASE_SPREAD_AIRBORNE) && !force_spread)
 		return
 
-<<<<<<< HEAD
 	if(affected_mob.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)))
-=======
-	if(affected_mob.reagents.has_reagent("spaceacillin") || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)))
->>>>>>> Updated this old code to fork
 		return
 
 	var/spread_range = 2

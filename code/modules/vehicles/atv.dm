@@ -3,14 +3,10 @@
 	name = "all-terrain vehicle"
 	desc = "An all-terrain vehicle built for traversing rough terrain with ease. One of the few old-Earth technologies that are still relevant on most planet-bound outposts."
 	icon_state = "atv"
-<<<<<<< HEAD
 	max_integrity = 150
 	armor = list("melee" = 50, "bullet" = 25, "laser" = 20, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
 	key_type = /obj/item/key
 	integrity_failure = 70
-=======
-	key_type = /obj/item/key
->>>>>>> Updated this old code to fork
 	var/static/mutable_appearance/atvcover
 
 /obj/vehicle/ridden/atv/Initialize()
@@ -67,7 +63,6 @@
 				turret.pixel_x = 12
 				turret.pixel_y = 4
 				turret.layer = OBJ_LAYER
-<<<<<<< HEAD
 
 /obj/vehicle/ridden/atv/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(W.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
@@ -107,5 +102,3 @@
 /obj/vehicle/ridden/atv/Destroy()
 	STOP_PROCESSING(SSobj,src)
 	return ..()
-=======
->>>>>>> Updated this old code to fork

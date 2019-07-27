@@ -35,10 +35,6 @@ Difficulty: Medium
 	desc = "Guardians of the necropolis."
 	health = 2500
 	maxHealth = 2500
-<<<<<<< HEAD
-=======
-	spacewalk = TRUE
->>>>>>> Updated this old code to fork
 	attacktext = "chomps"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
@@ -50,15 +46,9 @@ Difficulty: Medium
 	armour_penetration = 40
 	melee_damage_lower = 40
 	melee_damage_upper = 40
-<<<<<<< HEAD
 	speed = 5
 	move_to_delay = 5
 	ranged = TRUE
-=======
-	speed = 1
-	move_to_delay = 5
-	ranged = 1
->>>>>>> Updated this old code to fork
 	pixel_x = -16
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/dragon/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/dragon)
@@ -66,15 +56,11 @@ Difficulty: Medium
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/ashdrake = 10)
 	var/swooping = NONE
 	var/player_cooldown = 0
-<<<<<<< HEAD
 	internal_type = /obj/item/gps/internal/dragon
-=======
->>>>>>> Updated this old code to fork
 	medal_type = BOSS_MEDAL_DRAKE
 	score_type = DRAKE_SCORE
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	deathsound = 'sound/magic/demon_dies.ogg'
-<<<<<<< HEAD
 	do_footstep = TRUE
 	attack_action_types = list(/datum/action/innate/megafauna_attack/fire_cone,
 							   /datum/action/innate/megafauna_attack/fire_cone_meteors,
@@ -150,85 +136,17 @@ Difficulty: Medium
 	for(var/turf/turf in range(9,get_turf(target)))
 		if(prob(11))
 			new /obj/effect/temp_visual/target(turf)
-=======
-	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite/drake()
-
-	do_footstep = TRUE
-
-/mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
-	smallsprite.Grant(src)
-	. = ..()
-	internal = new/obj/item/gps/internal/dragon(src)
-
-/mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
-	if(severity == 3)
-		return
-	..()
-
-/mob/living/simple_animal/hostile/megafauna/dragon/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && (swooping & SWOOP_INVULNERABLE))
-		return FALSE
-	return ..()
-
-/mob/living/simple_animal/hostile/megafauna/dragon/visible_message()
-	if(swooping & SWOOP_INVULNERABLE) //to suppress attack messages without overriding every single proc that could send a message saying we got hit
-		return
-	return ..()
-
-/mob/living/simple_animal/hostile/megafauna/dragon/AttackingTarget()
-	if(!swooping)
-		return ..()
-
-/mob/living/simple_animal/hostile/megafauna/dragon/DestroySurroundings()
-	if(!swooping)
-		..()
-
-/mob/living/simple_animal/hostile/megafauna/dragon/Move()
-	if(!swooping)
-		..()
-
-/mob/living/simple_animal/hostile/megafauna/dragon/Goto(target, delay, minimum_distance)
-	if(!swooping)
-		..()
-
-/mob/living/simple_animal/hostile/megafauna/dragon/OpenFire()
-	if(swooping)
-		return
-	anger_modifier = CLAMP(((maxHealth - health)/50),0,20)
-	ranged_cooldown = world.time + ranged_cooldown_time
-
-	if(prob(15 + anger_modifier) && !client)
-		if(health < maxHealth*0.5)
-			swoop_attack(lava_arena = TRUE)
-		else
-			lava_swoop()
-
-	else if(prob(10+anger_modifier) && !client)
-		if(health < maxHealth*0.5)
-			mass_fire()
-		else
-			fire_cone()
-	else
-		if(prob(50) && !client)
-			INVOKE_ASYNC(src, .proc/lava_pools, 10, 2)
-		fire_cone()
->>>>>>> Updated this old code to fork
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_pools(var/amount, var/delay = 0.8)
 	if(!target)
 		return
 	target.visible_message("<span class='boldwarning'>Lava starts to pool up around you!</span>")
 	while(amount > 0)
-<<<<<<< HEAD
 		if(QDELETED(target))
-=======
-		if(!target)
->>>>>>> Updated this old code to fork
 			break
 		var/turf/T = pick(RANGE_TURFS(1, target))
 		new /obj/effect/temp_visual/lava_warning(T, 60) // longer reset time for the lava
 		amount--
-<<<<<<< HEAD
 		SLEEP_CHECK_DEATH(delay)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_swoop(var/amount = 30)
@@ -242,26 +160,11 @@ Difficulty: Medium
 		SLEEP_CHECK_DEATH(10)
 		fire_cone()
 		SLEEP_CHECK_DEATH(10)
-=======
-		sleep(delay)
-
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_swoop(var/amount = 30)
-	INVOKE_ASYNC(src, .proc/lava_pools, amount)
-	swoop_attack(FALSE, target, 1000) // longer cooldown until it gets reset below
-	fire_cone()
-	if(health < maxHealth*0.5)
-		sleep(10)
-		fire_cone()
-		sleep(10)
->>>>>>> Updated this old code to fork
 		fire_cone()
 	SetRecoveryTime(40)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/mass_fire(var/spiral_count = 12, var/range = 15, var/times = 3)
-<<<<<<< HEAD
 	SLEEP_CHECK_DEATH(0)
-=======
->>>>>>> Updated this old code to fork
 	for(var/i = 1 to times)
 		SetRecoveryTime(50)
 		playsound(get_turf(src),'sound/magic/fireball.ogg', 200, 1)
@@ -269,11 +172,7 @@ Difficulty: Medium
 		for(var/j = 1 to spiral_count)
 			var/list/turfs = line_target(j * increment + i * increment / 2, range, src)
 			INVOKE_ASYNC(src, .proc/fire_line, turfs)
-<<<<<<< HEAD
 		SLEEP_CHECK_DEATH(25)
-=======
-		sleep(25)
->>>>>>> Updated this old code to fork
 	SetRecoveryTime(30)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_arena()
@@ -294,11 +193,7 @@ Difficulty: Medium
 			T.ChangeTurf(/turf/open/floor/plating/asteroid/basalt/lava_land_surface)
 		else
 			indestructible_turfs += T
-<<<<<<< HEAD
 	SLEEP_CHECK_DEATH(10) // give them a bit of time to realize what attack is actually happening
-=======
-	sleep(10) // give them a bit of time to realize what attack is actually happening
->>>>>>> Updated this old code to fork
 
 	var/list/turfs = RANGE_TURFS(2, center)
 	while(amount > 0)
@@ -322,25 +217,17 @@ Difficulty: Medium
 			else if(!istype(T, /turf/closed/indestructible))
 				new /obj/effect/temp_visual/lava_safe(T)
 		amount--
-<<<<<<< HEAD
 		SLEEP_CHECK_DEATH(24)
 	return 1 // attack finished completely
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/arena_escape_enrage() // you ran somehow / teleported away from my arena attack now i'm mad fucker
 	SLEEP_CHECK_DEATH(0)
-=======
-		sleep(24)
-	return 1 // attack finished completely
-
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/arena_escape_enrage() // you ran somehow / teleported away from my arena attack now i'm mad fucker
->>>>>>> Updated this old code to fork
 	SetRecoveryTime(80)
 	visible_message("<span class='boldwarning'>[src] starts to glow vibrantly as its wounds close up!</span>")
 	adjustBruteLoss(-250) // yeah you're gonna pay for that, don't run nerd
 	add_atom_colour(rgb(255, 255, 0), TEMPORARY_COLOUR_PRIORITY)
 	move_to_delay = move_to_delay / 2
 	light_range = 10
-<<<<<<< HEAD
 	SLEEP_CHECK_DEATH(10) // run.
 	mass_fire(20, 15, 3)
 	move_to_delay = initial(move_to_delay)
@@ -352,18 +239,6 @@ Difficulty: Medium
 	SLEEP_CHECK_DEATH(0)
 	if(prob(50) && meteors)
 		INVOKE_ASYNC(src, .proc/fire_rain)
-=======
-	sleep(10) // run.
-	mass_fire(20, 15, 3)
-	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
-	move_to_delay = initial(move_to_delay)
-	light_range = initial(light_range)
-
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_cone(var/atom/at = target)
-	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, 1)
-	if(QDELETED(src) || stat == DEAD) // we dead no fire
-		return
->>>>>>> Updated this old code to fork
 	var/range = 15
 	var/list/turfs = list()
 	turfs = line_target(-40, range, at)
@@ -386,14 +261,11 @@ Difficulty: Medium
 	return (getline(src, T) - get_turf(src))
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_line(var/list/turfs)
-<<<<<<< HEAD
 	SLEEP_CHECK_DEATH(0)
 	dragon_fire_line(src, turfs)
 
 //fire line keeps going even if dragon is deleted
 /proc/dragon_fire_line(var/source, var/list/turfs)
-=======
->>>>>>> Updated this old code to fork
 	var/list/hit_list = list()
 	for(var/turf/T in turfs)
 		if(istype(T, /turf/closed))
@@ -401,19 +273,11 @@ Difficulty: Medium
 		new /obj/effect/hotspot(T)
 		T.hotspot_expose(700,50,1)
 		for(var/mob/living/L in T.contents)
-<<<<<<< HEAD
 			if(L in hit_list || L == source)
 				continue
 			hit_list += L
 			L.adjustFireLoss(20)
 			to_chat(L, "<span class='userdanger'>You're hit by [source]'s fire breath!</span>")
-=======
-			if(L in hit_list || L == src)
-				continue
-			hit_list += L
-			L.adjustFireLoss(20)
-			to_chat(L, "<span class='userdanger'>You're hit by [src]'s fire breath!</span>")
->>>>>>> Updated this old code to fork
 
 		// deals damage to mechs
 		for(var/obj/mecha/M in T.contents)
@@ -462,7 +326,6 @@ Difficulty: Medium
 	animate(src, alpha = 100, transform = matrix()*0.7, time = 7)
 	swooping |= SWOOP_INVULNERABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-<<<<<<< HEAD
 	SLEEP_CHECK_DEATH(7)
 
 	while(target && loc != get_turf(target))
@@ -472,17 +335,6 @@ Difficulty: Medium
 	// Ash drake flies onto its target and rains fire down upon them
 	var/descentTime = 10
 	var/lava_success = TRUE
-=======
-	sleep(7)
-
-	while(target && loc != get_turf(target))
-		forceMove(get_step(src, get_dir(src, target)))
-		sleep(0.5)
-
-	// Ash drake flies onto its target and rains fire down upon them
-	var/descentTime = 10;
-	var/lava_success = 1
->>>>>>> Updated this old code to fork
 	if(lava_arena)
 		lava_success = lava_arena()
 
@@ -497,11 +349,7 @@ Difficulty: Medium
 	new /obj/effect/temp_visual/dragon_flight/end(loc, negative)
 	new /obj/effect/temp_visual/dragon_swoop(loc)
 	animate(src, alpha = 255, transform = oldtransform, descentTime)
-<<<<<<< HEAD
 	SLEEP_CHECK_DEATH(descentTime)
-=======
-	sleep(descentTime)
->>>>>>> Updated this old code to fork
 	swooping &= ~SWOOP_INVULNERABLE
 	mouse_opacity = initial(mouse_opacity)
 	icon_state = "dragon"
@@ -526,17 +374,12 @@ Difficulty: Medium
 		shake_camera(M, 15, 1)
 
 	density = TRUE
-<<<<<<< HEAD
 	SLEEP_CHECK_DEATH(1)
-=======
-	sleep(1)
->>>>>>> Updated this old code to fork
 	swooping &= ~SWOOP_DAMAGEABLE
 	SetRecoveryTime(swoop_cooldown)
 	if(!lava_success)
 		arena_escape_enrage()
 
-<<<<<<< HEAD
 /mob/living/simple_animal/hostile/megafauna/dragon/death()
 	QDEL_NULL(internal) // so drake corpses don't have a gps signal
 	. = ..()
@@ -571,17 +414,6 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon/Goto(target, delay, minimum_distance)
 	if(!swooping)
 		..()
-=======
-/mob/living/simple_animal/hostile/megafauna/dragon/AltClickOn(atom/movable/A)
-	if(!istype(A))
-		return
-	if(player_cooldown >= world.time)
-		to_chat(src, "<span class='warning'>You need to wait [(player_cooldown - world.time) / 10] seconds before swooping again!</span>")
-		return
-	swoop_attack(FALSE, A)
-	lava_pools(10, 2) // less pools but longer delay before spawns
-	player_cooldown = world.time + 200 // needs seperate cooldown or cant use fire attacks
->>>>>>> Updated this old code to fork
 
 /obj/item/gps/internal/dragon
 	icon_state = null
@@ -694,7 +526,6 @@ Difficulty: Medium
 	else
 		animate(src, pixel_x = -16, pixel_z = 0, time = 5)
 
-<<<<<<< HEAD
 obj/effect/temp_visual/fireball
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "fireball"
@@ -744,8 +575,6 @@ obj/effect/temp_visual/fireball
 		else
 			L.adjustFireLoss(10) //if we've already hit them, do way less damage
 
-=======
->>>>>>> Updated this old code to fork
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser
 	name = "lesser ash drake"
 	maxHealth = 200
@@ -759,7 +588,6 @@ obj/effect/temp_visual/fireball
 	loot = list()
 	crusher_loot = list()
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
-<<<<<<< HEAD
 	attack_action_types = list()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser/AltClickOn(atom/movable/A)
@@ -847,8 +675,4 @@ obj/effect/temp_visual/fireball
 	..(targets, user, 60)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/AltClickOn(atom/movable/A)
-=======
-
-/mob/living/simple_animal/hostile/megafauna/dragon/lesser/grant_achievement(medaltype,scoretype)
->>>>>>> Updated this old code to fork
 	return

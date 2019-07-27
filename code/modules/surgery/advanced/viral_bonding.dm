@@ -22,11 +22,7 @@
 	name = "viral bond"
 	implements = list(/obj/item/cautery = 100, TOOL_WELDER = 50, /obj/item = 30) // 30% success with any hot item.
 	time = 100
-<<<<<<< HEAD
 	chems_needed = list(/datum/reagent/medicine/spaceacillin,/datum/reagent/consumable/virus_food,/datum/reagent/toxin/formaldehyde)
-=======
-	chems_needed = list("spaceacillin","virusfood","formaldehyde")
->>>>>>> Updated this old code to fork
 
 /datum/surgery_step/viral_bond/tool_check(mob/user, obj/item/tool)
 	if(implement_type == TOOL_WELDER || implement_type == /obj/item)
@@ -35,7 +31,6 @@
 	return TRUE
 
 /datum/surgery_step/viral_bond/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-<<<<<<< HEAD
 	display_results(user, target, "<span class='notice'>You start heating [target]'s bone marrow with [tool]...</span>",
 		"[user] starts heating [target]'s bone marrow with [tool]...",
 		"[user] starts heating something in [target]'s chest with [tool]...")
@@ -44,12 +39,6 @@
 	display_results(user, target, "<span class='notice'>[target]'s bone marrow begins pulsing slowly. The viral bonding is complete.</span>",
 		"[target]'s bone marrow begins pulsing slowly.",
 		"[user] finishes the operation.")
-=======
-	user.visible_message("[user] starts heating [target]'s bone marrow with [tool]...", "<span class='notice'>You start heating [target]'s bone marrow with [tool]...</span>")
-
-/datum/surgery_step/viral_bond/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[target]'s bone marrow begins pulsing slowly.", "<span class='notice'>[target]'s bone marrow begins pulsing slowly. The viral bonding is complete.</span>")
->>>>>>> Updated this old code to fork
 	for(var/X in target.diseases)
 		var/datum/disease/D = X
 		D.carrier = TRUE

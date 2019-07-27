@@ -36,14 +36,11 @@
 	desc = "A warning sign which reads 'DISPOSAL: LEADS TO SPACE'."
 	icon_state = "deathsposal"
 
-<<<<<<< HEAD
 /obj/structure/sign/warning/bodysposal
 	name = "\improper DISPOSAL: LEADS TO MORGUE"
 	desc = "A warning sign which reads 'DISPOSAL: LEADS TO MORGUE'."
 	icon_state = "bodysposal"
 
-=======
->>>>>>> Updated this old code to fork
 /obj/structure/sign/warning/pods
 	name = "\improper ESCAPE PODS"
 	desc = "A warning sign which reads 'ESCAPE PODS'."
@@ -83,7 +80,6 @@
 	name = "\improper ENGINEERING SAFETY"
 	desc = "A sign detailing the various safety protocols when working on-site to ensure a safe shift."
 	icon_state = "safety"
-<<<<<<< HEAD
 
 /obj/structure/sign/warning/explosives
 	name = "\improper HIGH EXPLOSIVES"
@@ -94,5 +90,3 @@
 	name = "\improper HIGH EXPLOSIVES"
 	desc = "A warning sign which reads 'HIGH EXPLOSIVES'."
 	icon_state = "explosives2"
-=======
->>>>>>> Updated this old code to fork

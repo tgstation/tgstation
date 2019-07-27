@@ -17,11 +17,7 @@
 						/obj/item/seeds/cannabis/death,
 						/obj/item/seeds/cannabis/white,
 						/obj/item/seeds/cannabis/ultimate)
-<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/drug/space_drugs = 0.15, /datum/reagent/toxin/lipolicide = 0.35) // gives u the munchies
-=======
-	reagents_add = list("space_drugs" = 0.15, "lipolicide" = 0.35) // gives u the munchies
->>>>>>> Updated this old code to fork
 
 
 /obj/item/seeds/cannabis/rainbow
@@ -32,11 +28,7 @@
 	plantname = "Rainbow Weed"
 	product = /obj/item/reagent_containers/food/snacks/grown/cannabis/rainbow
 	mutatelist = list()
-<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/toxin/mindbreaker = 0.15, /datum/reagent/toxin/lipolicide = 0.35)
-=======
-	reagents_add = list("mindbreaker" = 0.15, "lipolicide" = 0.35)
->>>>>>> Updated this old code to fork
 	rarity = 40
 
 /obj/item/seeds/cannabis/death
@@ -47,11 +39,7 @@
 	plantname = "Deathweed"
 	product = /obj/item/reagent_containers/food/snacks/grown/cannabis/death
 	mutatelist = list()
-<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/toxin/cyanide = 0.35, /datum/reagent/drug/space_drugs = 0.15, /datum/reagent/toxin/lipolicide = 0.15)
-=======
-	reagents_add = list("cyanide" = 0.35, "space_drugs" = 0.15, "lipolicide" = 0.15)
->>>>>>> Updated this old code to fork
 	rarity = 40
 
 /obj/item/seeds/cannabis/white
@@ -62,11 +50,7 @@
 	plantname = "Lifeweed"
 	product = /obj/item/reagent_containers/food/snacks/grown/cannabis/white
 	mutatelist = list()
-<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/medicine/omnizine = 0.35, /datum/reagent/drug/space_drugs = 0.15, /datum/reagent/toxin/lipolicide = 0.15)
-=======
-	reagents_add = list("omnizine" = 0.35, "space_drugs" = 0.15, "lipolicide" = 0.15)
->>>>>>> Updated this old code to fork
 	rarity = 40
 
 
@@ -78,7 +62,6 @@
 	plantname = "Omega Weed"
 	product = /obj/item/reagent_containers/food/snacks/grown/cannabis/ultimate
 	mutatelist = list()
-<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/drug/space_drugs = 0.3,
 						/datum/reagent/toxin/mindbreaker = 0.3,
 						/datum/reagent/mercury = 0.15,
@@ -94,23 +77,6 @@
 						/datum/reagent/drug/krokodil = 0.15,
 						/datum/reagent/toxin/histamine = 0.15,
 						/datum/reagent/toxin/lipolicide = 0.15)
-=======
-	reagents_add = list("space_drugs" = 0.3,
-						"mindbreaker" = 0.3,
-						"mercury" = 0.15,
-						"lithium" = 0.15,
-						"atropine" = 0.15,
-						"haloperidol" = 0.15,
-						"methamphetamine" = 0.15,
-						"capsaicin" = 0.15,
-						"barbers_aid" = 0.15,
-						"bath_salts" = 0.15,
-						"itching_powder" = 0.15,
-						"crank" = 0.15,
-						"krokodil" = 0.15,
-						"histamine" = 0.15,
-						"lipolicide" = 0.15)
->>>>>>> Updated this old code to fork
 	rarity = 69
 
 

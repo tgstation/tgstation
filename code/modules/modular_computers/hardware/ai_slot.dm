@@ -15,15 +15,9 @@
 	. = ..()
 
 /obj/item/computer_hardware/ai_slot/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	if(stored_card)
 		. += "There appears to be an intelliCard loaded. There appears to be a pinhole protecting a manual eject button. A screwdriver could probably press it."
-=======
-	..()
-	if(stored_card)
-		to_chat(user, "There appears to be an intelliCard loaded. There appears to be a pinhole protecting a manual eject button. A screwdriver could probably press it.")
->>>>>>> Updated this old code to fork
 
 /obj/item/computer_hardware/ai_slot/on_install(obj/item/modular_computer/M, mob/living/user = null)
 	M.add_verb(device_type)
@@ -77,8 +71,4 @@
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		to_chat(user, "<span class='notice'>You press down on the manual eject button with \the [I].</span>")
 		try_eject(,user,1)
-<<<<<<< HEAD
 		return
-=======
-		return
->>>>>>> Updated this old code to fork

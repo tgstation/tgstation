@@ -30,10 +30,7 @@
 		return
 	last_enginesound_time = world.time
 	playsound(src, engine_sound, 100, TRUE)
-<<<<<<< HEAD
 	return TRUE
-=======
->>>>>>> Updated this old code to fork
 
 /obj/vehicle/sealed/car/MouseDrop_T(atom/dropping, mob/M)
 	if(M.stat || M.restrained())
@@ -82,22 +79,15 @@
 		return FALSE
 	if(occupant_amount() >= max_occupants)
 		return FALSE
-<<<<<<< HEAD
 	var/atom/old_loc = loc
 	if(do_mob(forcer, M, get_enter_delay(M), extra_checks=CALLBACK(src, /obj/vehicle/sealed/car/proc/is_car_stationary, old_loc)))
-=======
-	if(do_mob(forcer, get_enter_delay(M), target = src))
->>>>>>> Updated this old code to fork
 		mob_forced_enter(M, silent)
 		return TRUE
 	return FALSE
 
-<<<<<<< HEAD
 /obj/vehicle/sealed/car/proc/is_car_stationary(atom/old_loc)
 	return (old_loc == loc)
 
-=======
->>>>>>> Updated this old code to fork
 /obj/vehicle/sealed/car/proc/mob_forced_enter(mob/M, silent = FALSE)
 	if(!silent)
 		M.visible_message("<span class='warning'>[M] is forced into \the [src]!</span>")

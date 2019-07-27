@@ -7,16 +7,9 @@ SUBSYSTEM_DEF(shuttle)
 	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
 	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
 
-<<<<<<< HEAD
 	var/list/mobile = list()
 	var/list/stationary = list()
 	var/list/beacons = list()
-=======
-	var/obj/machinery/shuttle_manipulator/manipulator
-
-	var/list/mobile = list()
-	var/list/stationary = list()
->>>>>>> Updated this old code to fork
 	var/list/transit = list()
 
 	var/list/transit_requesters = list()
@@ -59,7 +52,6 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
 
-<<<<<<< HEAD
 	var/datum/map_template/shuttle/selected
 
 	var/obj/docking_port/mobile/existing_shuttle
@@ -69,8 +61,6 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/datum/turf_reservation/preview_reservation
 
-=======
->>>>>>> Updated this old code to fork
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	ordernum = rand(1, 9000)
 
@@ -93,12 +83,6 @@ SUBSYSTEM_DEF(shuttle)
 	return ..()
 
 /datum/controller/subsystem/shuttle/proc/initial_load()
-<<<<<<< HEAD
-=======
-	if(!istype(manipulator))
-		CRASH("No shuttle manipulator found.")
-
->>>>>>> Updated this old code to fork
 	for(var/s in stationary)
 		var/obj/docking_port/stationary/S = s
 		S.load_roundstart()
@@ -156,11 +140,8 @@ SUBSYSTEM_DEF(shuttle)
 			++alive
 
 	var/total = GLOB.joined_player_list.len
-<<<<<<< HEAD
 	if(total <= 0)
 		return //no players no autoevac
-=======
->>>>>>> Updated this old code to fork
 
 	if(alive / total <= threshold)
 		var/msg = "Automatically dispatching shuttle due to crew death."
@@ -195,11 +176,7 @@ SUBSYSTEM_DEF(shuttle)
 		WARNING("requestEvac(): There is no emergency shuttle, but the \
 			shuttle was called. Using the backup shuttle instead.")
 		if(!backup_shuttle)
-<<<<<<< HEAD
 			CRASH("requestEvac(): There is no emergency shuttle, \
-=======
-			throw EXCEPTION("requestEvac(): There is no emergency shuttle, \
->>>>>>> Updated this old code to fork
 			or backup shuttle! The game will be unresolvable. This is \
 			possibly a mapping error, more likely a bug with the shuttle \
 			manipulation system, or badminry. It is possible to manually \
@@ -259,11 +236,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/area/A = get_area(user)
 
 	log_game("[key_name(user)] has called the shuttle.")
-<<<<<<< HEAD
 	deadchat_broadcast(" has called the shuttle at <span class='name'>[A.name]</span>.", "<span class='name'>[user.real_name]</span>", user)
-=======
-	deadchat_broadcast("<span class='deadsay'><span class='name'>[user.real_name]</span> has called the shuttle at <span class='name'>[A.name]</span>.</span>", user)
->>>>>>> Updated this old code to fork
 	if(call_reason)
 		SSblackbox.record_feedback("text", "shuttle_reason", 1, "[call_reason]")
 		log_game("Shuttle call reason: [call_reason]")
@@ -301,11 +274,7 @@ SUBSYSTEM_DEF(shuttle)
 		emergency.cancel(get_area(user))
 		log_game("[key_name(user)] has recalled the shuttle.")
 		message_admins("[ADMIN_LOOKUPFLW(user)] has recalled the shuttle.")
-<<<<<<< HEAD
 		deadchat_broadcast(" has recalled the shuttle from <span class='name'>[get_area_name(user, TRUE)]</span>.", "<span class='name'>[user.real_name]</span>", user)
-=======
-		deadchat_broadcast("<span class='deadsay'><span class='name'>[user.real_name]</span> has recalled the shuttle from <span class='name'>[get_area_name(user, TRUE)]</span>.</span>", user)
->>>>>>> Updated this old code to fork
 		return 1
 
 /datum/controller/subsystem/shuttle/proc/canRecall()
@@ -439,11 +408,7 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/controller/subsystem/shuttle/proc/request_transit_dock(obj/docking_port/mobile/M)
 	if(!istype(M))
-<<<<<<< HEAD
 		CRASH("[M] is not a mobile docking port")
-=======
-		throw EXCEPTION("[M] is not a mobile docking port")
->>>>>>> Updated this old code to fork
 
 	if(M.assigned_transit)
 		return
@@ -588,7 +553,6 @@ SUBSYSTEM_DEF(shuttle)
 	shuttle_purchased = SSshuttle.shuttle_purchased
 	lockdown = SSshuttle.lockdown
 
-<<<<<<< HEAD
 	selected = SSshuttle.selected
 
 	existing_shuttle = SSshuttle.existing_shuttle
@@ -597,8 +561,6 @@ SUBSYSTEM_DEF(shuttle)
 	preview_template = SSshuttle.preview_template
 
 	preview_reservation = SSshuttle.preview_reservation
-=======
->>>>>>> Updated this old code to fork
 
 /datum/controller/subsystem/shuttle/proc/is_in_shuttle_bounds(atom/A)
 	var/area/current = get_area(A)
@@ -672,7 +634,6 @@ SUBSYSTEM_DEF(shuttle)
 		C.update_hidden_docking_ports(remove_images, add_images)
 
 	QDEL_LIST(remove_images)
-<<<<<<< HEAD
 
 
 /datum/controller/subsystem/shuttle/proc/action_load(datum/map_template/shuttle/loading_template, obj/docking_port/stationary/destination_port)
@@ -944,5 +905,3 @@ SUBSYSTEM_DEF(shuttle)
 					message_admins("[key_name_admin(usr)] loaded [mdp] with the shuttle manipulator.")
 					log_admin("[key_name(usr)] loaded [mdp] with the shuttle manipulator.</span>")
 					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[mdp.name]")
-=======
->>>>>>> Updated this old code to fork

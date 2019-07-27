@@ -14,11 +14,7 @@
 	name = "Module Design (Safeguard)"
 	desc = "Allows for the construction of a Safeguard AI Module."
 	id = "safeguard_module"
-<<<<<<< HEAD
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000)
-=======
-	materials = list(MAT_GLASS = 1000, MAT_GOLD = 2000)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/aiModule/supplied/safeguard
 	category = list("AI Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -27,11 +23,7 @@
 	name = "Module Design (OneHuman)"
 	desc = "Allows for the construction of a OneHuman AI Module."
 	id = "onehuman_module"
-<<<<<<< HEAD
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 6000)
-=======
-	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 6000)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/aiModule/zeroth/oneHuman
 	category = list("AI Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -40,11 +32,7 @@
 	name = "Module Design (ProtectStation)"
 	desc = "Allows for the construction of a ProtectStation AI Module."
 	id = "protectstation_module"
-<<<<<<< HEAD
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000)
-=======
-	materials = list(MAT_GLASS = 1000, MAT_GOLD = 2000)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/aiModule/supplied/protectStation
 	category = list("AI Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -53,11 +41,7 @@
 	name = "Module Design (Quarantine)"
 	desc = "Allows for the construction of a Quarantine AI Module."
 	id = "quarantine_module"
-<<<<<<< HEAD
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000)
-=======
-	materials = list(MAT_GLASS = 1000, MAT_GOLD = 2000)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/aiModule/supplied/quarantine
 	category = list("AI Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -66,11 +50,7 @@
 	name = "Module Design (OxygenIsToxicToHumans)"
 	desc = "Allows for the construction of a Safeguard AI Module."
 	id = "oxygen_module"
-<<<<<<< HEAD
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000)
-=======
-	materials = list(MAT_GLASS = 1000, MAT_GOLD = 2000)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/aiModule/supplied/oxygen
 	category = list("AI Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -79,11 +59,7 @@
 	name = "Module Design (Freeform)"
 	desc = "Allows for the construction of a Freeform AI Module."
 	id = "freeform_module"
-<<<<<<< HEAD
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 10000)//Custom inputs should be more expensive to get
-=======
-	materials = list(MAT_GLASS = 1000, MAT_GOLD = 10000)//Custom inputs should be more expensive to get
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/aiModule/supplied/freeform
 	category = list("AI Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -92,11 +68,7 @@
 	name = "Module Design (Reset)"
 	desc = "Allows for the construction of a Reset AI Module."
 	id = "reset_module"
-<<<<<<< HEAD
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000)
-=======
-	materials = list(MAT_GLASS = 1000, MAT_GOLD = 2000)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/aiModule/reset
 	category = list("AI Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -105,11 +77,7 @@
 	name = "Module Design (Purge)"
 	desc = "Allows for the construction of a Purge AI Module."
 	id = "purge_module"
-<<<<<<< HEAD
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000)
-=======
-	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 2000)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/aiModule/reset/purge
 	category = list("AI Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -118,11 +86,7 @@
 	name = "Module Design (Law Removal)"
 	desc = "Allows for the construction of a Law Removal AI Core Module."
 	id = "remove_module"
-<<<<<<< HEAD
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000)
-=======
-	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 2000)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/aiModule/remove
 	category = list("AI Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -131,11 +95,7 @@
 	name = "AI Core Module (Freeform)"
 	desc = "Allows for the construction of a Freeform AI Core Module."
 	id = "freeformcore_module"
-<<<<<<< HEAD
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 10000)//Ditto
-=======
-	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 10000)//Ditto
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/aiModule/core/freeformcore
 	category = list("AI Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -144,11 +104,7 @@
 	name = "Core Module Design (Asimov)"
 	desc = "Allows for the construction of an Asimov AI Core Module."
 	id = "asimov_module"
-<<<<<<< HEAD
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000)
-=======
-	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 2000)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/aiModule/core/full/asimov
 	category = list("AI Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -158,11 +114,7 @@
 	desc = "Allows for the construction of a P.A.L.A.D.I.N. AI Core Module."
 	id = "paladin_module"
 	build_type = IMPRINTER
-<<<<<<< HEAD
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000)
-=======
-	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 2000)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/aiModule/core/full/paladin
 	category = list("AI Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -171,11 +123,7 @@
 	name = "Core Module Design (T.Y.R.A.N.T.)"
 	desc = "Allows for the construction of a T.Y.R.A.N.T. AI Module."
 	id = "tyrant_module"
-<<<<<<< HEAD
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000)
-=======
-	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 2000)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/aiModule/core/full/tyrant
 	category = list("AI Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -184,11 +132,7 @@
 	name = "Core Module Design (Overlord)"
 	desc = "Allows for the construction of an Overlord AI Module."
 	id = "overlord_module"
-<<<<<<< HEAD
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000)
-=======
-	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 2000)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/aiModule/core/full/overlord
 	category = list("AI Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -197,11 +141,7 @@
 	name = "Core Module Design (Corporate)"
 	desc = "Allows for the construction of a Corporate AI Core Module."
 	id = "corporate_module"
-<<<<<<< HEAD
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000)
-=======
-	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 2000)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/aiModule/core/full/corp
 	category = list("AI Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -210,11 +150,7 @@
 	name = "Core Module Design (Default)"
 	desc = "Allows for the construction of a Default AI Core Module."
 	id = "default_module"
-<<<<<<< HEAD
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000)
-=======
-	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 2000)
->>>>>>> Updated this old code to fork
 	build_path = /obj/item/aiModule/core/full/custom
 	category = list("AI Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE

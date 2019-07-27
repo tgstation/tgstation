@@ -8,7 +8,6 @@
 	},
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/survivalpod)
-<<<<<<< HEAD
 "c" = (
 /obj/machinery/shower,
 /obj/item/soap/deluxe,
@@ -20,8 +19,6 @@
 	},
 /turf/open/floor/pod,
 /area/survivalpod)
-=======
->>>>>>> Updated this old code to fork
 "d" = (
 /obj/structure/sign/mining/survival{
 	dir = 8
@@ -40,20 +37,6 @@
 /obj/item/gps/computer,
 /turf/open/floor/pod,
 /area/survivalpod)
-<<<<<<< HEAD
-=======
-"h" = (
-/obj/machinery/shower,
-/obj/item/soap/deluxe,
-/obj/structure/curtain{
-	alpha = 240;
-	color = "#454545";
-	icon_state = "closed";
-	open = 0
-	},
-/turf/open/floor/pod,
-/area/survivalpod)
->>>>>>> Updated this old code to fork
 "i" = (
 /obj/structure/toilet/secret{
 	secret_type = /obj/item/kitchen/knife/combat/survival
@@ -67,11 +50,7 @@
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/survivalpod)
 "k" = (
-<<<<<<< HEAD
 /obj/machinery/stasis/survival_pod,
-=======
-/obj/machinery/sleeper/survival_pod,
->>>>>>> Updated this old code to fork
 /turf/open/floor/pod,
 /area/survivalpod)
 "l" = (
@@ -88,12 +67,7 @@
 	layer = 3
 	},
 /obj/machinery/door/window/survival_pod{
-<<<<<<< HEAD
 	dir = 1
-=======
-	dir = 1;
-	icon_state = "windoor"
->>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/carpet/black,
 /area/survivalpod)
@@ -158,10 +132,6 @@
 /area/survivalpod)
 "u" = (
 /obj/machinery/door/window/survival_pod{
-<<<<<<< HEAD
-=======
-	icon_state = "windoor";
->>>>>>> Updated this old code to fork
 	dir = 1
 	},
 /turf/open/floor/carpet/black,
@@ -197,10 +167,6 @@
 /area/survivalpod)
 "y" = (
 /obj/structure/sink/kitchen{
-<<<<<<< HEAD
-=======
-	icon_state = "sink_alt";
->>>>>>> Updated this old code to fork
 	dir = 4;
 	pixel_x = -13
 	},
@@ -271,11 +237,7 @@ D
 "}
 (5,1,1) = {"
 a
-<<<<<<< HEAD
 c
-=======
-h
->>>>>>> Updated this old code to fork
 n
 r
 w

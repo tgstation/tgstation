@@ -10,21 +10,11 @@
 
 		..()
 
-<<<<<<< HEAD
-=======
-/mob/living/brain/get_spans()
-	return ..() | SPAN_ROBOT
-
->>>>>>> Updated this old code to fork
 /mob/living/brain/radio(message, message_mode, list/spans, language)
 	if(message_mode == MODE_HEADSET && istype(container, /obj/item/mmi))
 		var/obj/item/mmi/R = container
 		if(R.radio)
-<<<<<<< HEAD
 			R.radio.talk_into(src, message, language = language)
-=======
-			R.radio.talk_into(src, message, , get_spans(), language)
->>>>>>> Updated this old code to fork
 			return ITALICS | REDUCE_RANGE
 	else
 		return ..()

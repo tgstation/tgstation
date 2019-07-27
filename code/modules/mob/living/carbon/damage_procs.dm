@@ -1,6 +1,5 @@
 
 
-<<<<<<< HEAD
 /mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE)
 	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
 	var/hit_percent = (100-blocked)/100
@@ -46,50 +45,6 @@
 				adjustStaminaLoss(damage_amount, forced = forced)
 		if(BRAIN)
 			adjustBrainLoss(damage_amount)
-=======
-/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE)
-	var/hit_percent = (100-blocked)/100
-	if(!damage || hit_percent <= 0)
-		return 0
-
-	var/obj/item/bodypart/BP = null
-	if(isbodypart(def_zone)) //we specified a bodypart object
-		BP = def_zone
-	else
-		if(!def_zone)
-			def_zone = ran_zone(def_zone)
-		BP = get_bodypart(check_zone(def_zone))
-		if(!BP)
-			BP = bodyparts[1]
-
-	switch(damagetype)
-		if(BRUTE)
-			if(BP)
-				if(BP.receive_damage(damage * hit_percent, 0))
-					update_damage_overlays()
-			else //no bodypart, we deal damage with a more general method.
-				adjustBruteLoss(damage * hit_percent)
-		if(BURN)
-			if(BP)
-				if(BP.receive_damage(0, damage * hit_percent))
-					update_damage_overlays()
-			else
-				adjustFireLoss(damage * hit_percent)
-		if(TOX)
-			adjustToxLoss(damage * hit_percent)
-		if(OXY)
-			adjustOxyLoss(damage * hit_percent)
-		if(CLONE)
-			adjustCloneLoss(damage * hit_percent)
-		if(STAMINA)
-			if(BP)
-				if(BP.receive_damage(0, 0, damage * hit_percent))
-					update_damage_overlays()
-			else
-				adjustStaminaLoss(damage * hit_percent)
-		if(BRAIN)
-			adjustBrainLoss(damage * hit_percent)
->>>>>>> Updated this old code to fork
 	return TRUE
 
 
@@ -128,21 +83,14 @@
 	return amount
 
 /mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
-<<<<<<< HEAD
 	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage
-=======
-	if(!forced && has_trait(TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage
->>>>>>> Updated this old code to fork
 		amount = -amount
 		if(amount > 0)
 			blood_volume -= 5*amount
 		else
 			blood_volume -= amount
-<<<<<<< HEAD
 	if(HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
 		amount = min(amount, 0)
-=======
->>>>>>> Updated this old code to fork
 	return ..()
 
 /mob/living/carbon/getStaminaLoss()
@@ -160,20 +108,12 @@
 		heal_overall_damage(0, 0, abs(amount), null, updating_health)
 	return amount
 
-<<<<<<< HEAD
 /mob/living/carbon/setStaminaLoss(amount, updating_health = TRUE, forced = FALSE)
-=======
-/mob/living/carbon/setStaminaLoss(amount, updating = TRUE, forced = FALSE)
->>>>>>> Updated this old code to fork
 	var/current = getStaminaLoss()
 	var/diff = amount - current
 	if(!diff)
 		return
-<<<<<<< HEAD
 	adjustStaminaLoss(diff, updating_health, forced)
-=======
-	adjustStaminaLoss(diff, updating, forced)
->>>>>>> Updated this old code to fork
 
 ////////////////////////////////////////////
 
@@ -296,23 +236,15 @@
 		return
 	var/brainloss = getBrainLoss()
 	if(brainloss > BRAIN_DAMAGE_MILD)
-<<<<<<< HEAD
 		if(prob(amount * (1 + max(0, (brainloss - BRAIN_DAMAGE_MILD)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1% //learn how to do your bloody math properly goddamnit
 			gain_trauma_type(BRAIN_TRAUMA_MILD)
 	if(brainloss > BRAIN_DAMAGE_SEVERE)
 		if(prob(amount * (1 + max(0, (brainloss - BRAIN_DAMAGE_SEVERE)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1%
-=======
-		if(prob(amount * ((2 * (100 + brainloss - BRAIN_DAMAGE_MILD)) / 100))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 2%
-			gain_trauma_type(BRAIN_TRAUMA_MILD)
-	if(brainloss > BRAIN_DAMAGE_SEVERE)
-		if(prob(amount * ((2 * (100 + brainloss - BRAIN_DAMAGE_SEVERE)) / 100))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 2%
->>>>>>> Updated this old code to fork
 			if(prob(20))
 				gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
 			else
 				gain_trauma_type(BRAIN_TRAUMA_SEVERE)
 
-<<<<<<< HEAD
 	if (stat < UNCONSCIOUS) // conscious or soft-crit
 		if(prev_brainloss < BRAIN_DAMAGE_MILD && brainloss >= BRAIN_DAMAGE_MILD)
 			to_chat(src, "<span class='warning'>You feel lightheaded.</span>")
@@ -320,21 +252,12 @@
 			to_chat(src, "<span class='warning'>You feel less in control of your thoughts.</span>")
 		else if(prev_brainloss < (BRAIN_DAMAGE_DEATH - 20) && brainloss >= (BRAIN_DAMAGE_DEATH - 20))
 			to_chat(src, "<span class='warning'>You can feel your mind flickering on and off...</span>")
-=======
-	if(prev_brainloss < BRAIN_DAMAGE_MILD && brainloss >= BRAIN_DAMAGE_MILD)
-		to_chat(src, "<span class='warning'>You feel lightheaded.</span>")
-	else if(prev_brainloss < BRAIN_DAMAGE_SEVERE && brainloss >= BRAIN_DAMAGE_SEVERE)
-		to_chat(src, "<span class='warning'>You feel less in control of your thoughts.</span>")
-	else if(prev_brainloss < (BRAIN_DAMAGE_DEATH - 20) && brainloss >= (BRAIN_DAMAGE_DEATH - 20))
-		to_chat(src, "<span class='warning'>You can feel your mind flickering on and off...</span>")
->>>>>>> Updated this old code to fork
 
 /mob/living/carbon/setBrainLoss(amount)
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 	if(B)
 		var/adjusted_amount = amount - B.get_brain_damage()
 		B.adjust_brain_damage(adjusted_amount, null)
-<<<<<<< HEAD
 
 /mob/living/carbon/proc/getLiverLoss()
 	. = 0
@@ -360,5 +283,3 @@
 	L.damage += adjusted_amount
 
 	return adjusted_amount
-=======
->>>>>>> Updated this old code to fork

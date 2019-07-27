@@ -4,14 +4,9 @@
 	var/bonus_modifier = 0 //percentage increase to bonus item chance
 	var/butcher_sound = 'sound/weapons/slice.ogg' //sound played when butchering
 	var/butchering_enabled = TRUE
-<<<<<<< HEAD
 	var/can_be_blunt = FALSE
 
 /datum/component/butchering/Initialize(_speed, _effectiveness, _bonus_modifier, _butcher_sound, disabled, _can_be_blunt)
-=======
-
-/datum/component/butchering/Initialize(_speed, _effectiveness, _bonus_modifier, _butcher_sound, disabled)
->>>>>>> Updated this old code to fork
 	if(_speed)
 		speed = _speed
 	if(_effectiveness)
@@ -22,7 +17,6 @@
 		butcher_sound = _butcher_sound
 	if(disabled)
 		butchering_enabled = FALSE
-<<<<<<< HEAD
 	if(_can_be_blunt)
 		can_be_blunt = _can_be_blunt
 	if(isitem(parent))
@@ -39,8 +33,6 @@
 	playsound(M.loc, butcher_sound, 50, TRUE, -1)
 	if(do_mob(user, M, speed) && M.Adjacent(source))
 		Butcher(user, M)
-=======
->>>>>>> Updated this old code to fork
 
 /datum/component/butchering/proc/Butcher(mob/living/butcher, mob/living/meat)
 	var/turf/T = meat.drop_location()
@@ -75,7 +67,6 @@
 
 /datum/component/butchering/proc/ButcherEffects(mob/living/meat) //extra effects called on butchering, override this via subtypes
 	return
-<<<<<<< HEAD
 
 ///Special snowflake component only used for the recycler.
 /datum/component/butchering/recycler
@@ -96,5 +87,3 @@
 		return
 	if(L.stat == DEAD && (L.butcher_results || L.guaranteed_butcher_results))
 		Butcher(src, L)
-=======
->>>>>>> Updated this old code to fork

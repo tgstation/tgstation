@@ -155,11 +155,6 @@
 /obj/docking_port/stationary
 	name = "dock"
 
-<<<<<<< HEAD
-=======
-	area_type = SHUTTLE_DEFAULT_UNDERLYING_AREA
-
->>>>>>> Updated this old code to fork
 	var/last_dock_time
 
 	var/datum/map_template/shuttle/roundstart_template
@@ -172,12 +167,9 @@
 		id = "[SSshuttle.stationary.len]"
 	if(name == "dock")
 		name = "dock[SSshuttle.stationary.len]"
-<<<<<<< HEAD
 	if(!area_type)
 		var/area/place = get_area(src)
 		area_type = place?.type // We might be created in nullspace
-=======
->>>>>>> Updated this old code to fork
 
 	if(mapload)
 		for(var/turf/T in return_turfs())
@@ -192,7 +184,6 @@
 		SSshuttle.stationary -= src
 	. = ..()
 
-<<<<<<< HEAD
 /obj/docking_port/stationary/Moved(atom/oldloc, dir, forced)
 	. = ..()
 	if(area_type) // We already have one
@@ -200,8 +191,6 @@
 	var/area/newarea = get_area(src)
 	area_type = newarea?.type
 
-=======
->>>>>>> Updated this old code to fork
 /obj/docking_port/stationary/proc/load_roundstart()
 	if(json_key)
 		var/sid = SSmapping.config.shuttles[json_key]
@@ -213,17 +202,10 @@
 
 		roundstart_template = SSmapping.shuttle_templates[sid]
 		if(!roundstart_template)
-<<<<<<< HEAD
 			CRASH("Invalid path ([sid]/[roundstart_template]) passed to docking port.")
 
 	if(roundstart_template)
 		SSshuttle.action_load(roundstart_template, src)
-=======
-			CRASH("Invalid path ([roundstart_template]) passed to docking port.")
-
-	if(roundstart_template)
-		SSshuttle.manipulator.action_load(roundstart_template, src)
->>>>>>> Updated this old code to fork
 
 //returns first-found touching shuttleport
 /obj/docking_port/stationary/get_docked()
@@ -267,11 +249,8 @@
 	var/mode = SHUTTLE_IDLE			//current shuttle mode
 	var/callTime = 100				//time spent in transit (deciseconds). Should not be lower then 10 seconds without editing the animation of the hyperspace ripples.
 	var/ignitionTime = 55			// time spent "starting the engines". Also rate limits how often we try to reserve transit space if its ever full of transiting shuttles.
-<<<<<<< HEAD
 	var/rechargeTime = 0		// time spent after arrival before being able to begin ignition
 	var/prearrivalTime = 0		// time spent after transit 'landing' before actually arriving
-=======
->>>>>>> Updated this old code to fork
 
 	// The direction the shuttle prefers to travel in
 	var/preferred_direction = NORTH
@@ -291,10 +270,7 @@
 	var/engine_coeff = 1 //current engine coeff
 	var/current_engines = 0 //current engine power
 	var/initial_engines = 0 //initial engine power
-<<<<<<< HEAD
 	var/list/engine_list = list()
-=======
->>>>>>> Updated this old code to fork
 	var/can_move_docking_ports = FALSE //if this shuttle can move docking ports other than the one it is docked at
 	var/list/hidden_turfs = list()
 
@@ -569,15 +545,11 @@
 	// If we can't dock or we don't have a transit slot, wait for 20 ds,
 	// then try again
 	switch(mode)
-<<<<<<< HEAD
 		if(SHUTTLE_CALL, SHUTTLE_PREARRIVAL)
 			if(prearrivalTime && mode != SHUTTLE_PREARRIVAL)
 				mode = SHUTTLE_PREARRIVAL
 				setTimer(prearrivalTime)
 				return
-=======
-		if(SHUTTLE_CALL)
->>>>>>> Updated this old code to fork
 			var/error = initiate_docking(destination, preferred_direction)
 			if(error && error & (DOCKING_NULL_DESTINATION | DOCKING_NULL_SOURCE))
 				var/msg = "A mobile dock in transit exited initiate_docking() with an error. This is most likely a mapping problem: Error: [error],  ([src]) ([previous][ADMIN_JMP(previous)] -> [destination][ADMIN_JMP(destination)])"
@@ -588,13 +560,10 @@
 			else if(error)
 				setTimer(20)
 				return
-<<<<<<< HEAD
 			if(rechargeTime)
 				mode = SHUTTLE_RECHARGING
 				setTimer(rechargeTime)
 				return
-=======
->>>>>>> Updated this old code to fork
 		if(SHUTTLE_RECALL)
 			if(initiate_docking(previous) != DOCKING_SUCCESS)
 				setTimer(20)
@@ -697,13 +666,10 @@
 			return "ESC"
 		if(SHUTTLE_STRANDED)
 			return "ERR"
-<<<<<<< HEAD
 		if(SHUTTLE_RECHARGING)
 			return "RCH"
 		if(SHUTTLE_PREARRIVAL)
 			return "LDN"
-=======
->>>>>>> Updated this old code to fork
 	return ""
 
 // returns 5-letter timer string, used by status screens and mob status panel
@@ -722,11 +688,7 @@
 
 /obj/docking_port/mobile/proc/getStatusText()
 	var/obj/docking_port/stationary/dockedAt = get_docked()
-<<<<<<< HEAD
 	var/docked_at = dockedAt?.name || "unknown"
-=======
-
->>>>>>> Updated this old code to fork
 	if(istype(dockedAt, /obj/docking_port/stationary/transit))
 		if (timeLeft() > 1 HOURS)
 			return "hyperspace"
@@ -737,15 +699,10 @@
 			else
 				dst = destination
 			. = "transit towards [dst?.name || "unknown location"] ([getTimerStr()])"
-<<<<<<< HEAD
 	else if(mode == SHUTTLE_RECHARGING)
 		return "[docked_at], recharging [getTimerStr()]"
 	else
 		return docked_at
-=======
-	else
-		return dockedAt?.name || "unknown"
->>>>>>> Updated this old code to fork
 
 
 /obj/docking_port/mobile/proc/getDbgStatusText()
@@ -777,7 +734,6 @@
 	return null
 
 /obj/docking_port/mobile/proc/hyperspace_sound(phase, list/areas)
-<<<<<<< HEAD
 	var/selected_sound
 	switch(phase)
 		if(HYPERSPACE_WARMUP)
@@ -819,21 +775,6 @@
 							source = O
 							closest_dist = dist_near
 				M.playsound_local(source, "sound/effects/[selected_sound].ogg", 100, falloff = range / 2)
-=======
-	var/s
-	switch(phase)
-		if(HYPERSPACE_WARMUP)
-			s = 'sound/effects/hyperspace_begin.ogg'
-		if(HYPERSPACE_LAUNCH)
-			s = 'sound/effects/hyperspace_progress.ogg'
-		if(HYPERSPACE_END)
-			s = 'sound/effects/hyperspace_end.ogg'
-		else
-			CRASH("Invalid hyperspace sound phase: [phase]")
-	for(var/A in areas)
-		for(var/obj/machinery/door/E in A)	//dumb, I know, but playing it on the engines doesn't do it justice
-			playsound(E, s, 100, FALSE, max(width, height) - world.view)
->>>>>>> Updated this old code to fork
 
 // Losing all initial engines should get you 2
 // Adding another set of engines at 0.5 time
@@ -853,10 +794,7 @@
 		var/area/shuttle/areaInstance = thing
 		for(var/obj/structure/shuttle/engine/E in areaInstance.contents)
 			if(!QDELETED(E))
-<<<<<<< HEAD
 				engine_list += E
-=======
->>>>>>> Updated this old code to fork
 				. += E.engine_power
 
 // Double initial engines to get to 0.5 minimum
@@ -882,11 +820,7 @@
 
 /obj/docking_port/mobile/proc/in_flight()
 	switch(mode)
-<<<<<<< HEAD
 		if(SHUTTLE_CALL,SHUTTLE_RECALL,SHUTTLE_PREARRIVAL)
-=======
-		if(SHUTTLE_CALL,SHUTTLE_RECALL)
->>>>>>> Updated this old code to fork
 			return TRUE
 		if(SHUTTLE_IDLE,SHUTTLE_IGNITING)
 			return FALSE

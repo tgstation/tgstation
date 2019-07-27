@@ -19,11 +19,7 @@
 		to_chat(user, "<span class='warning'>There doesn't seem to be anywhere to put [src]...</span>")
 
 /obj/item/clothing/accessory/proc/attach(obj/item/clothing/under/U, user)
-<<<<<<< HEAD
 	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
-=======
-	GET_COMPONENT(storage, /datum/component/storage)
->>>>>>> Updated this old code to fork
 	if(storage)
 		if(SEND_SIGNAL(U, COMSIG_CONTAINS_STORAGE))
 			return FALSE
@@ -84,17 +80,10 @@
 			to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")
 
 /obj/item/clothing/accessory/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	. += "<span class='notice'>\The [src] can be attached to a uniform. Alt-click to remove it once attached.</span>"
 	if(initial(above_suit))
 		. += "<span class='notice'>\The [src] can be worn above or below your suit. Alt-click to toggle.</span>"
-=======
-	..()
-	to_chat(user, "<span class='notice'>\The [src] can be attached to a uniform. Alt-click to remove it once attached.</span>")
-	if(initial(above_suit))
-		to_chat(user, "<span class='notice'>\The [src] can be worn above or below your suit. Alt-click to toggle.</span>")
->>>>>>> Updated this old code to fork
 
 /obj/item/clothing/accessory/waistcoat
 	name = "waistcoat"
@@ -123,11 +112,7 @@
 	desc = "A bronze medal."
 	icon_state = "bronze"
 	item_color = "bronze"
-<<<<<<< HEAD
 	materials = list(/datum/material/iron=1000)
-=======
-	materials = list(MAT_METAL=1000)
->>>>>>> Updated this old code to fork
 	resistance_flags = FIRE_PROOF
 	var/medaltype = "medal" //Sprite used for medalbox
 	var/commended = FALSE
@@ -197,11 +182,7 @@
 	icon_state = "silver"
 	item_color = "silver"
 	medaltype = "medal-silver"
-<<<<<<< HEAD
 	materials = list(/datum/material/silver=1000)
-=======
-	materials = list(MAT_SILVER=1000)
->>>>>>> Updated this old code to fork
 
 /obj/item/clothing/accessory/medal/silver/valor
 	name = "medal of valor"
@@ -211,24 +192,17 @@
 	name = "robust security award"
 	desc = "An award for distinguished combat and sacrifice in defence of Nanotrasen's commercial interests. Often awarded to security staff."
 
-<<<<<<< HEAD
 /obj/item/clothing/accessory/medal/silver/excellence
 	name = "the head of personnel award for outstanding achievement in the field of excellence"
 	desc = "Nanotrasen's dictionary defines excellence as \"the quality or condition of being excellent\". This is awarded to those rare crewmembers who fit that definition."
 
-=======
->>>>>>> Updated this old code to fork
 /obj/item/clothing/accessory/medal/gold
 	name = "gold medal"
 	desc = "A prestigious golden medal."
 	icon_state = "gold"
 	item_color = "gold"
 	medaltype = "medal-gold"
-<<<<<<< HEAD
 	materials = list(/datum/material/gold=1000)
-=======
-	materials = list(MAT_GOLD=1000)
->>>>>>> Updated this old code to fork
 
 /obj/item/clothing/accessory/medal/gold/captain
 	name = "medal of captaincy"
@@ -246,11 +220,7 @@
 	item_color = "plasma"
 	medaltype = "medal-plasma"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = -10, "acid" = 0) //It's made of plasma. Of course it's flammable.
-<<<<<<< HEAD
 	materials = list(/datum/material/plasma=1000)
-=======
-	materials = list(MAT_PLASMA=1000)
->>>>>>> Updated this old code to fork
 
 /obj/item/clothing/accessory/medal/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)

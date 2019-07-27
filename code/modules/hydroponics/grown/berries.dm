@@ -15,11 +15,7 @@
 	icon_dead = "berry-dead" // Same for the dead icon
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/berry/glow, /obj/item/seeds/berry/poison)
-<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
-=======
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
->>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/snacks/grown/berries
 	seed = /obj/item/seeds/berry
@@ -30,15 +26,9 @@
 	filling_color = "#FF00FF"
 	bitesize_mod = 2
 	foodtype = FRUIT
-<<<<<<< HEAD
 	juice_results = list(/datum/reagent/consumable/berryjuice = 0)
 	tastes = list("berry" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/gin
-=======
-	juice_results = list("berryjuice" = 0)
-	tastes = list("berry" = 1)
-	distill_reagent = "gin"
->>>>>>> Updated this old code to fork
 
 // Poison Berries
 /obj/item/seeds/berry/poison
@@ -49,11 +39,7 @@
 	plantname = "Poison-Berry Bush"
 	product = /obj/item/reagent_containers/food/snacks/grown/berries/poison
 	mutatelist = list(/obj/item/seeds/berry/death)
-<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/toxin/cyanide = 0.15, /datum/reagent/toxin/staminatoxin = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
-=======
-	reagents_add = list("cyanide" = 0.15, "tirizene" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
->>>>>>> Updated this old code to fork
 	rarity = 10 // Mildly poisonous berries are common in reality
 
 /obj/item/reagent_containers/food/snacks/grown/berries/poison
@@ -63,11 +49,7 @@
 	icon_state = "poisonberrypile"
 	filling_color = "#C71585"
 	foodtype = FRUIT | TOXIC
-<<<<<<< HEAD
 	juice_results = list(/datum/reagent/consumable/poisonberryjuice = 0)
-=======
-	juice_results = list("poisonberryjuice" = 0)
->>>>>>> Updated this old code to fork
 	tastes = list("poison-berry" = 1)
 	distill_reagent = null
 	wine_power = 35
@@ -83,11 +65,7 @@
 	lifespan = 30
 	potency = 50
 	mutatelist = list()
-<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/toxin/coniine = 0.08, /datum/reagent/toxin/staminatoxin = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
-=======
-	reagents_add = list("coniine" = 0.08, "tirizene" = 0.1, "vitamin" = 0.04, "nutriment" = 0.1)
->>>>>>> Updated this old code to fork
 	rarity = 30
 
 /obj/item/reagent_containers/food/snacks/grown/berries/death
@@ -113,11 +91,7 @@
 	endurance = 25
 	mutatelist = list()
 	genes = list(/datum/plant_gene/trait/glow/berry, /datum/plant_gene/trait/repeated_harvest)
-<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/uranium = 0.25, /datum/reagent/iodine = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
-=======
-	reagents_add = list("uranium" = 0.25, "iodine" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
->>>>>>> Updated this old code to fork
 	rarity = 20
 
 /obj/item/reagent_containers/food/snacks/grown/berries/glow
@@ -149,11 +123,7 @@
 	icon_dead = "cherry-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/cherry/blue)
-<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.07, /datum/reagent/consumable/sugar = 0.07)
-=======
-	reagents_add = list("nutriment" = 0.07, "sugar" = 0.07)
->>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/snacks/grown/cherries
 	seed = /obj/item/seeds/cherry
@@ -164,11 +134,7 @@
 	filling_color = "#FF0000"
 	bitesize_mod = 2
 	foodtype = FRUIT
-<<<<<<< HEAD
 	grind_results = list(/datum/reagent/consumable/cherryjelly = 0)
-=======
-	grind_results = list("cherryjelly" = 0)
->>>>>>> Updated this old code to fork
 	tastes = list("cherry" = 1)
 	wine_power = 30
 
@@ -181,11 +147,7 @@
 	plantname = "Blue Cherry Tree"
 	product = /obj/item/reagent_containers/food/snacks/grown/bluecherries
 	mutatelist = list()
-<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.07, /datum/reagent/consumable/sugar = 0.07)
-=======
-	reagents_add = list("nutriment" = 0.07, "sugar" = 0.07)
->>>>>>> Updated this old code to fork
 	rarity = 10
 
 /obj/item/reagent_containers/food/snacks/grown/bluecherries
@@ -196,11 +158,7 @@
 	filling_color = "#6495ED"
 	bitesize_mod = 2
 	foodtype = FRUIT
-<<<<<<< HEAD
 	grind_results = list(/datum/reagent/consumable/bluecherryjelly = 0)
-=======
-	grind_results = list("bluecherryjelly" = 0)
->>>>>>> Updated this old code to fork
 	tastes = list("blue cherry" = 1)
 	wine_power = 50
 
@@ -223,11 +181,7 @@
 	icon_dead = "grape-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/grape/green)
-<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/sugar = 0.1)
-=======
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1, "sugar" = 0.1)
->>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/snacks/grown/grapes
 	seed = /obj/item/seeds/grape
@@ -238,15 +192,9 @@
 	filling_color = "#FF1493"
 	bitesize_mod = 2
 	foodtype = FRUIT
-<<<<<<< HEAD
 	juice_results = list(/datum/reagent/consumable/grapejuice = 0)
 	tastes = list("grape" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/wine
-=======
-	juice_results = list("grapejuice" = 0)
-	tastes = list("grape" = 1)
-	distill_reagent = "wine"
->>>>>>> Updated this old code to fork
 
 // Green Grapes
 /obj/item/seeds/grape/green
@@ -256,13 +204,7 @@
 	species = "greengrape"
 	plantname = "Green-Grape Vine"
 	product = /obj/item/reagent_containers/food/snacks/grown/grapes/green
-<<<<<<< HEAD
 	reagents_add = list( /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/sugar = 0.1, /datum/reagent/medicine/frogenite = 0.2)
-=======
-	reagents_add = list("kelotane" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1, "sugar" = 0.1)
-	// No rarity: technically it's a beneficial mutant, but it's not exactly "new"...
-	mutatelist = list()
->>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/snacks/grown/grapes/green
 	seed = /obj/item/seeds/grape/green
@@ -270,8 +212,4 @@
 	icon_state = "greengrapes"
 	filling_color = "#7FFF00"
 	tastes = list("green grape" = 1)
-<<<<<<< HEAD
 	distill_reagent = /datum/reagent/consumable/ethanol/cognac
-=======
-	distill_reagent = "cognac"
->>>>>>> Updated this old code to fork

@@ -76,11 +76,7 @@
 			break
 
 	if(!our_statue)
-<<<<<<< HEAD
 		name = "inert [initial(name)]"
-=======
-		name = "inert [name]"
->>>>>>> Updated this old code to fork
 		return
 	else
 		name = initial(name)
@@ -169,11 +165,7 @@
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
 	access_card.access |= ACCESS_CENT_BAR
-<<<<<<< HEAD
 	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
-=======
-	access_card.add_trait(TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
->>>>>>> Updated this old code to fork
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Destroy()
 	qdel(access_card)
@@ -214,11 +206,7 @@
 //Luxury Shuttle Blockers
 
 /obj/effect/forcefield/luxury_shuttle
-<<<<<<< HEAD
 	name = "luxury shuttle ticket booth"
-=======
-	name = "Luxury shuttle ticket booth"
->>>>>>> Updated this old code to fork
 	desc = "A forceful money collector."
 	timeleft = 0
 	var/threshold = 500
@@ -241,7 +229,6 @@
 	if(!isliving(AM))
 		return ..()
 
-<<<<<<< HEAD
 	var/datum/bank_account/account
 	if(istype(AM.pulling, /obj/item/card/id))
 		var/obj/item/card/id/I = AM.pulling
@@ -264,8 +251,6 @@
 			account.adjust_money(-money_owed)
 			payees[AM] += money_owed
 
-=======
->>>>>>> Updated this old code to fork
 	var/list/counted_money = list()
 
 	for(var/obj/item/coin/C in AM.GetAllContents())
@@ -299,7 +284,6 @@
 		payees[AM] += H.credits
 		counted_money += H
 
-<<<<<<< HEAD
 	if(payees[AM] < threshold)
 		var/armless
 		if(!ishuman(AM) && !istype(AM, /mob/living/simple_animal/slime))
@@ -314,26 +298,11 @@
 				if(!check_times[AM] || check_times[AM] < world.time) //Let's not spam the message
 					to_chat(AM, "<span class='notice'>Try pulling a valid ID, space cash, holochip or coin into \the [src]!</span>")
 					check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
-=======
-	if(ishuman(AM))
-		var/mob/living/carbon/human/H = AM
-		if(H.get_bank_account())
-			var/datum/bank_account/account = H.get_bank_account()
-
-			if(account.account_balance < threshold)
-				payees[AM] += account.account_balance
-				account.adjust_money(-account.account_balance)
-			else
-				var/money_owed = threshold - payees[AM]
-				payees[AM] += money_owed
-				account.adjust_money(-money_owed)
->>>>>>> Updated this old code to fork
 
 	if(payees[AM] >= threshold)
 		for(var/obj/I in counted_money)
 			qdel(I)
 		payees[AM] -= threshold
-<<<<<<< HEAD
 
 		var/change = FALSE
 		if(payees[AM] > 0)
@@ -352,29 +321,13 @@
 		say("<span class='robot'>Welcome aboard, [AM]![change ? " Here is your change." : ""]</span>")
 		approved_passengers += AM
 
-=======
-		say("<span class='robot'>Welcome aboard, [AM]!</span>")
-		approved_passengers += AM
-
-		if(payees[AM] > 0 && ishuman(AM))
-			var/mob/living/carbon/human/H = AM
-			if(H.get_bank_account())
-				var/datum/bank_account/account = H.get_bank_account()
-				account.adjust_money(payees[AM])
-				payees[AM] -= payees[AM]
-
->>>>>>> Updated this old code to fork
 		check_times -= AM
 		return
 	else if (payees[AM] > 0)
 		for(var/obj/I in counted_money)
 			qdel(I)
 		if(!check_times[AM] || check_times[AM] < world.time) //Let's not spam the message
-<<<<<<< HEAD
 			to_chat(AM, "<span class='notice'>$[payees[AM]] received. You need $[threshold-payees[AM]] more.</span>")
-=======
-			say("<span class='robot'>$[payees[AM]] received, [AM]. You need $[threshold-payees[AM]] more.</span>")
->>>>>>> Updated this old code to fork
 			check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
 		return ..()
 	else

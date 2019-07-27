@@ -25,11 +25,7 @@
 	jobtype = /datum/job/lawyer
 
 	belt = /obj/item/pda/lawyer
-<<<<<<< HEAD
 	ears = /obj/item/radio/headset/headset_srvsec
-=======
-	ears = /obj/item/radio/headset/headset_sec
->>>>>>> Updated this old code to fork
 	uniform = /obj/item/clothing/under/lawyer/bluesuit
 	suit = /obj/item/clothing/suit/toggle/lawyer
 	shoes = /obj/item/clothing/shoes/laceup

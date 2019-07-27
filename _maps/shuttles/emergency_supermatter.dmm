@@ -209,13 +209,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aY" = (
-<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
-=======
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aZ" = (

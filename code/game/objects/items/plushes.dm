@@ -107,13 +107,6 @@
 	if(stuffed || grenade)
 		to_chat(user, "<span class='notice'>You pet [src]. D'awww.</span>")
 		if(grenade && !grenade.active)
-<<<<<<< HEAD
-=======
-			if(istype(grenade, /obj/item/grenade/chem_grenade))
-				var/obj/item/grenade/chem_grenade/G = grenade
-				if(G.nadeassembly) //We're activated through different methods
-					return
->>>>>>> Updated this old code to fork
 			log_game("[key_name(user)] activated a hidden grenade in [src].")
 			grenade.preprime(user, msg = FALSE, volume = 10)
 	else
@@ -472,10 +465,6 @@
 	desc = "A small stuffed doll of the elder goddess Nar'Sie. Who thought this was a good children's toy?"
 	icon_state = "narplush"
 	var/clashing
-<<<<<<< HEAD
-=======
-	var/is_invoker = TRUE
->>>>>>> Updated this old code to fork
 	gender = FEMALE	//it's canon if the toy is
 
 /obj/item/toy/plush/narplush/Moved()
@@ -484,13 +473,6 @@
 	if(P && istype(P.loc, /turf/open) && !P.clash_target && !clashing)
 		P.clash_of_the_plushies(src)
 
-<<<<<<< HEAD
-=======
-/obj/item/toy/plush/narplush/hugbox
-	desc = "A small stuffed doll of the elder goddess Nar'Sie. Who thought this was a good children's toy? <b>It looks sad.</b>"
-	is_invoker = FALSE
-
->>>>>>> Updated this old code to fork
 /obj/item/toy/plush/lizardplushie
 	name = "lizard plushie"
 	desc = "An adorable stuffed toy that resembles a lizardperson."
@@ -523,10 +505,7 @@
 	attack_verb = list("blorbled", "slimed", "absorbed")
 	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 	gender = FEMALE	//given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
-<<<<<<< HEAD
 	squeak_override = list('sound/effects/blobattack.ogg' = 1)
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/toy/plush/awakenedplushie
 	name = "awakened plushie"
@@ -537,7 +516,6 @@
 /obj/item/toy/plush/awakenedplushie/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/edit_complainer)
-<<<<<<< HEAD
 
 /obj/item/toy/plush/beeplushie
 	name = "bee plushie"
@@ -547,5 +525,3 @@
 	attack_verb = list("stung")
 	gender = FEMALE
 	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
-=======
->>>>>>> Updated this old code to fork

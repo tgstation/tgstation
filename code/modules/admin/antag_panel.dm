@@ -80,11 +80,7 @@ GLOBAL_VAR(antag_prototypes)
 	var/list/result = list()
 	if(!current)
 		result += "<span class='bad'>No body!</span>"
-<<<<<<< HEAD
 	if(current && HAS_TRAIT(current, TRAIT_MINDSHIELD))
-=======
-	if(current && current.has_trait(TRAIT_MINDSHIELD))
->>>>>>> Updated this old code to fork
 		result += "<span class='good'>Mindshielded</span>"
 	//Move these to mob
 	if(iscyborg(current))

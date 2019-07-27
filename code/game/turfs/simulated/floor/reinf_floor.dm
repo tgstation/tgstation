@@ -13,13 +13,8 @@
 	tiled_dirt = FALSE
 
 /turf/open/floor/engine/examine(mob/user)
-<<<<<<< HEAD
 	. += ..()
 	. += "<span class='notice'>The reinforcement rods are <b>wrenched</b> firmly in place.</span>"
-=======
-	..()
-	to_chat(user, "<span class='notice'>The reinforcement rods are <b>wrenched</b> firmly in place.</span>")
->>>>>>> Updated this old code to fork
 
 /turf/open/floor/engine/airless
 	initial_gas_mix = AIRLESS_ATMOS

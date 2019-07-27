@@ -33,7 +33,6 @@
 	LAZYINITLIST(buckled_mobs)
 	. = ..()
 
-<<<<<<< HEAD
 /obj/structure/guillotine/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/sheet/plasteel))
 		to_chat(user, "<span class='notice'>You start repairing the guillotine with the plasteel.</span>")
@@ -51,14 +50,6 @@
 	. = ..()
 
 	var/msg = "It is [anchored ? "wrenched to the floor." : "unsecured. A wrench should fix that."]<br/>"
-=======
-/obj/structure/guillotine/examine(mob/user)
-	..()
-
-	var/msg = ""
-
-	msg += "It is [anchored ? "wrenched to the floor." : "unsecured. A wrench should fix that."]<br/>"
->>>>>>> Updated this old code to fork
 
 	if (blade_status == GUILLOTINE_BLADE_RAISED)
 		msg += "The blade is raised, ready to fall, and"
@@ -70,20 +61,10 @@
 	else
 		msg += "The blade is hidden inside the stocks."
 
-<<<<<<< HEAD
 	. += msg
 
 	if (LAZYLEN(buckled_mobs))
 		. += "Someone appears to be strapped in. You can help them out, or you can harm them by activating the guillotine."
-=======
-	if (LAZYLEN(buckled_mobs))
-		msg += "<br/>"
-		msg += "Someone appears to be strapped in. You can help them out, or you can harm them by activating the guillotine."
-
-	to_chat(user, msg)
-
-	return msg
->>>>>>> Updated this old code to fork
 
 /obj/structure/guillotine/attack_hand(mob/user)
 	add_fingerprint(user)
@@ -290,8 +271,4 @@
 #undef GUILLOTINE_ACTIVATE_DELAY
 #undef GUILLOTINE_WRENCH_DELAY
 #undef GUILLOTINE_ACTION_INUSE
-<<<<<<< HEAD
 #undef GUILLOTINE_ACTION_WRENCH
-=======
-#undef GUILLOTINE_ACTION_WRENCH
->>>>>>> Updated this old code to fork

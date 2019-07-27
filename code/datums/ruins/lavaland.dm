@@ -70,21 +70,12 @@
 	suffix = "lavaland_surface_golem_ship.dmm"
 	allow_duplicates = FALSE
 
-<<<<<<< HEAD
 /datum/map_template/ruin/lavaland/gaia
 	name = "Patch of Eden"
 	id = "gaia"
 	description = "Who would have thought that such a peaceful place could be on such a horrific planet"
 	cost = 5
 	suffix = "lavaland_surface_gaia.dmm"
-=======
-/datum/map_template/ruin/lavaland/animal_hospital
-	name = "Animal Hospital"
-	id = "animal-hospital"
-	description = "Rats with cancer do not live very long. And the ones that wake up from cryostasis seem to commit suicide out of boredom."
-	cost = 5
-	suffix = "lavaland_surface_animal_hospital.dmm"
->>>>>>> Updated this old code to fork
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/sin
@@ -113,11 +104,7 @@
 /datum/map_template/ruin/lavaland/sin/pride
 	name = "Ruin of Pride"
 	id = "pride"
-<<<<<<< HEAD
 	description = "Wormhole lifebelts are for LOSERS, whom you are better than."
-=======
-	description = "Wormhole lifebelts are for LOSERS, who you are better than."
->>>>>>> Updated this old code to fork
 	suffix = "lavaland_surface_pride.dmm"
 
 /datum/map_template/ruin/lavaland/sin/sloth
@@ -131,11 +118,7 @@
 /datum/map_template/ruin/lavaland/ratvar
 	name = "Dead God"
 	id = "ratvar"
-<<<<<<< HEAD
 	description = "Ratvar's final resting place."
-=======
-	description = "Ratvars final resting place."
->>>>>>> Updated this old code to fork
 	suffix = "lavaland_surface_dead_ratvar.dmm"
 	cost = 0
 	allow_duplicates = FALSE
@@ -196,11 +179,7 @@
 /datum/map_template/ruin/lavaland/pizza
 	name = "Ruined Pizza Party"
 	id = "pizza"
-<<<<<<< HEAD
 	description = "Little Timmy's birthday pizza bash took a turn for the worse when a bluespace anomaly passed by."
-=======
-	description = "Little Timmy's birthday pizza-bash took a turn for the worse when a bluespace anomaly passed by."
->>>>>>> Updated this old code to fork
 	suffix = "lavaland_surface_pizzaparty.dmm"
 	allow_duplicates = FALSE
 	cost = 5
@@ -208,11 +187,7 @@
 /datum/map_template/ruin/lavaland/cultaltar
 	name = "Summoning Ritual"
 	id = "cultaltar"
-<<<<<<< HEAD
 	description = "A place of vile worship, the scrawling of blood in the middle glowing eerily. A demonic laugh echoes throughout the caverns."
-=======
-	description = "A place of vile worship, the scrawling of blood in the middle glowing eerily. A demonic laugh echoes throughout the caverns"
->>>>>>> Updated this old code to fork
 	suffix = "lavaland_surface_cultaltar.dmm"
 	allow_duplicates = FALSE
 	cost = 10

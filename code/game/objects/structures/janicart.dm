@@ -70,11 +70,7 @@
 			l.janicart_insert(user,src)
 		else
 			to_chat(user, fail_msg)
-<<<<<<< HEAD
 	else if(istype(I, /obj/item/clothing/suit/caution))
-=======
-	else if(istype(I, /obj/item/caution))
->>>>>>> Updated this old code to fork
 		if(signs < max_signs)
 			put_in_cart(I, user)
 			signs++
@@ -141,11 +137,7 @@
 			myreplacer = null
 	if(href_list["sign"])
 		if(signs)
-<<<<<<< HEAD
 			var/obj/item/clothing/suit/caution/Sign = locate() in src
-=======
-			var/obj/item/caution/Sign = locate() in src
->>>>>>> Updated this old code to fork
 			if(Sign)
 				user.put_in_hands(Sign)
 				to_chat(user, "<span class='notice'>You take \a [Sign] from [src].</span>")

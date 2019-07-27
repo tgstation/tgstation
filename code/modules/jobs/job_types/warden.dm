@@ -1,10 +1,7 @@
 /datum/job/warden
 	title = "Warden"
 	flag = WARDEN
-<<<<<<< HEAD
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
-=======
->>>>>>> Updated this old code to fork
 	department_head = list("Head of Security")
 	department_flag = ENGSEC
 	faction = "Station"
@@ -45,11 +42,7 @@
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	r_pocket = /obj/item/assembly/flash/handheld
 	l_pocket = /obj/item/restraints/handcuffs
-<<<<<<< HEAD
 	suit_store = /obj/item/gun/energy/disabler
-=======
-	suit_store = /obj/item/gun/energy/e_gun/advtaser
->>>>>>> Updated this old code to fork
 	backpack_contents = list(/obj/item/melee/baton/loaded=1)
 
 	backpack = /obj/item/storage/backpack/security

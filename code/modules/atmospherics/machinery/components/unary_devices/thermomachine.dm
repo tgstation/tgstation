@@ -49,7 +49,6 @@
 	if(showpipe)
 		add_overlay(getpipeimage(icon, "scrub_cap", initialize_directions))
 
-<<<<<<< HEAD
 /obj/machinery/atmospherics/components/unary/thermomachine/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>The thermostat is set to [target_temperature]K ([(T0C-target_temperature)*-1]C).</span>"
@@ -57,8 +56,6 @@
 		. += "<span class='notice'>The status display reads: Efficiency <b>[(heat_capacity/5000)*100]%</b>.</span>"
 		. += "<span class='notice'>Temperature range <b>[min_temperature]K - [max_temperature]K ([(T0C-min_temperature)*-1]C - [(T0C-max_temperature)*-1]C)</b>.</span>"
 
-=======
->>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/components/unary/thermomachine/process_atmos()
 	..()
 	if(!on || !nodes[1])
@@ -169,15 +166,12 @@
 
 	update_icon()
 
-<<<<<<< HEAD
 /obj/machinery/atmospherics/components/unary/thermomachine/CtrlClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	on = !on
 	update_icon()
 
-=======
->>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer
 	name = "freezer"
 	icon_state = "freezer"
@@ -211,14 +205,11 @@
 		L += M.rating
 	min_temperature = max(T0C - (initial(min_temperature) + L * 15), TCMB) //73.15K with T1 stock parts
 
-<<<<<<< HEAD
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	target_temperature = min_temperature
 
-=======
->>>>>>> Updated this old code to fork
 /obj/machinery/atmospherics/components/unary/thermomachine/heater
 	name = "heater"
 	icon_state = "heater"
@@ -239,11 +230,8 @@
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		L += M.rating
 	max_temperature = T20C + (initial(max_temperature) * L) //573.15K with T1 stock parts
-<<<<<<< HEAD
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	target_temperature = max_temperature
-=======
->>>>>>> Updated this old code to fork

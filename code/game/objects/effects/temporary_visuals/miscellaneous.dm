@@ -141,7 +141,6 @@
 	. = ..()
 	update_icon()
 
-<<<<<<< HEAD
 /obj/effect/temp_visual/bsa_splash
 	name = "\improper Bluespace energy wave"
 	desc = "A massive, rippling wave of bluepace energy, all rapidly exhausting itself the moment it leaves the concentrated beam of light."
@@ -159,8 +158,6 @@
 		if(EAST)
 			icon_state = "beam_splash_e"
 
-=======
->>>>>>> Updated this old code to fork
 /obj/item/projectile/curse_hand/update_icon()
 	icon_state = "[icon_state][handedness]"
 
@@ -460,7 +457,4 @@
 			animate(src, alpha = 0, transform = skew, time = duration)
 	else
 		return INITIALIZE_HINT_QDEL
-<<<<<<< HEAD
 
-=======
->>>>>>> Updated this old code to fork

@@ -202,11 +202,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	// Sort subsystems by display setting for easy access.
 	sortTim(subsystems, /proc/cmp_subsystem_display)
 	// Set world options.
-<<<<<<< HEAD
 	world.change_fps(CONFIG_GET(number/fps))
-=======
-	world.fps = CONFIG_GET(number/fps)
->>>>>>> Updated this old code to fork
 	var/initialized_tod = REALTIMEOFDAY
 
 	if(sleep_offline_after_initializations)

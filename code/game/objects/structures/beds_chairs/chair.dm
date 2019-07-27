@@ -15,17 +15,10 @@
 	layer = OBJ_LAYER
 
 /obj/structure/chair/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	. += "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>"
 	if(!has_buckled_mobs())
 		. += "<span class='notice'>Drag your sprite to sit in it.</span>"
-=======
-	..()
-	to_chat(user, "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>")
-	if(!has_buckled_mobs())
-		to_chat(user, "<span class='notice'>Drag your sprite to sit in it.</span>")
->>>>>>> Updated this old code to fork
 
 /obj/structure/chair/Initialize()
 	. = ..()
@@ -211,10 +204,7 @@
 	anchored = FALSE
 	buildstackamount = 5
 	item_chair = null
-<<<<<<< HEAD
 	icon_state = "officechair_dark"
-=======
->>>>>>> Updated this old code to fork
 
 
 /obj/structure/chair/office/Moved()
@@ -225,12 +215,6 @@
 /obj/structure/chair/office/light
 	icon_state = "officechair_white"
 
-<<<<<<< HEAD
-=======
-/obj/structure/chair/office/dark
-	icon_state = "officechair_dark"
-
->>>>>>> Updated this old code to fork
 //Stool
 
 /obj/structure/chair/stool
@@ -277,11 +261,7 @@
 	throw_range = 3
 	hitsound = 'sound/items/trayhit1.ogg'
 	hit_reaction_chance = 50
-<<<<<<< HEAD
 	materials = list(/datum/material/iron = 2000)
-=======
-	materials = list(MAT_METAL = 2000)
->>>>>>> Updated this old code to fork
 	var/break_chance = 5 //Likely hood of smashing the chair.
 	var/obj/structure/chair/origin_type = /obj/structure/chair
 
@@ -322,11 +302,7 @@
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
-<<<<<<< HEAD
 	else if(materials[/datum/material/iron])
-=======
-	else if(materials[MAT_METAL])
->>>>>>> Updated this old code to fork
 		new /obj/item/stack/rods(get_turf(loc), 2)
 	qdel(src)
 
@@ -442,7 +418,6 @@
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
-<<<<<<< HEAD
 
 /obj/structure/chair/mime
 	name = "invisible chair"
@@ -458,5 +433,3 @@
 
 /obj/structure/chair/mime/post_unbuckle_mob(mob/living/M)
 	M.pixel_y -= 5
-=======
->>>>>>> Updated this old code to fork

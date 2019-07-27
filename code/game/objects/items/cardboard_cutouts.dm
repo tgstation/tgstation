@@ -88,11 +88,7 @@
 		to_chat(user, "<span class='warning'>Take the cap off first!</span>")
 		return
 	var/new_appearance = input(user, "Choose a new appearance for [src].", "26th Century Deception") as null|anything in possible_appearances
-<<<<<<< HEAD
 	if(!new_appearance || !crayon || !user.canUseTopic(src, BE_CLOSE))
-=======
-	if(!new_appearance || !crayon || !user.canUseTopic(src))
->>>>>>> Updated this old code to fork
 		return
 	if(!do_after(user, 10, FALSE, src, TRUE))
 		return

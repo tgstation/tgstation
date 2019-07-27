@@ -5,13 +5,8 @@
 	burnt_states = list("floorscorched1", "floorscorched2")
 
 /turf/open/floor/plasteel/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	. += "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>"
-=======
-	..()
-	to_chat(user, "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>")
->>>>>>> Updated this old code to fork
 
 /turf/open/floor/plasteel/update_icon()
 	if(!..())
@@ -57,12 +52,9 @@
 /turf/open/floor/plasteel/white/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
 
-<<<<<<< HEAD
 /turf/open/floor/plasteel/airless/showroomfloor
 	icon_state = "showroomfloor"
 
-=======
->>>>>>> Updated this old code to fork
 
 /turf/open/floor/plasteel/yellowsiding
 	icon_state = "yellowsiding"

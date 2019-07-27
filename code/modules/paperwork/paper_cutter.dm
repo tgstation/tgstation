@@ -72,11 +72,7 @@
 		return
 	add_fingerprint(user)
 	if(!storedcutter)
-<<<<<<< HEAD
 		to_chat(user, "<span class='warning'>The cutting blade is gone! You can't use [src] now.</span>")
-=======
-		to_chat(user, "<span class='notice'>The cutting blade is gone! You can't use [src] now.</span>")
->>>>>>> Updated this old code to fork
 		return
 
 	if(!cuttersecured)

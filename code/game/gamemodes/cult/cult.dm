@@ -16,11 +16,7 @@
 	if(!istype(M))
 		return FALSE
 	if(M.mind)
-<<<<<<< HEAD
 		if(ishuman(M) && (M.mind.isholy))
-=======
-		if(ishuman(M) && (M.mind.assigned_role in list("Captain", "Chaplain")))
->>>>>>> Updated this old code to fork
 			return FALSE
 		if(specific_cult && specific_cult.is_sacrifice_target(M.mind))
 			return FALSE
@@ -30,11 +26,7 @@
 			return FALSE
 	else
 		return FALSE
-<<<<<<< HEAD
 	if(HAS_TRAIT(M, TRAIT_MINDSHIELD) || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M) || !M.client)
-=======
-	if(M.has_trait(TRAIT_MINDSHIELD) || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M) || !M.client)
->>>>>>> Updated this old code to fork
 		return FALSE //can't convert machines, shielded, braindead, or ratvar's dogs
 	return TRUE
 

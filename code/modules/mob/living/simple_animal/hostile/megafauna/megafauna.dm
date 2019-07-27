@@ -3,10 +3,7 @@
 	desc = "Attack the weak point for massive damage."
 	health = 1000
 	maxHealth = 1000
-<<<<<<< HEAD
 	spacewalk = TRUE
-=======
->>>>>>> Updated this old code to fork
 	a_intent = INTENT_HARM
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
@@ -16,11 +13,7 @@
 	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
 	movement_type = FLYING
-<<<<<<< HEAD
 	robust_searching = TRUE
-=======
-	robust_searching = 1
->>>>>>> Updated this old code to fork
 	ranged_ignores_vision = TRUE
 	stat_attack = DEAD
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -41,7 +34,6 @@
 	var/elimination = 0
 	var/anger_modifier = 0
 	var/obj/item/gps/internal
-<<<<<<< HEAD
 	var/internal_type
 	var/recovery_time = 0
 	var/true_spawn = TRUE // if this is a megafauna that should grant achievements, or have a gps signal
@@ -62,20 +54,11 @@
 	if(small_sprite_type)
 		var/datum/action/small_sprite/small_action = new small_sprite_type()
 		small_action.Grant(src)
-=======
-	var/recovery_time = 0
-
-/mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
-	. = ..()
-	apply_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
-	add_trait(TRAIT_NO_TELEPORT, MEGAFAUNA_TRAIT)
->>>>>>> Updated this old code to fork
 
 /mob/living/simple_animal/hostile/megafauna/Destroy()
 	QDEL_NULL(internal)
 	. = ..()
 
-<<<<<<< HEAD
 /mob/living/simple_animal/hostile/megafauna/Moved()
 	if(nest && nest.parent && get_dist(nest.parent, src) > nest_range)
 		var/turf/closest = get_turf(nest.parent)
@@ -90,12 +73,6 @@
 	return TRUE
 
 /mob/living/simple_animal/hostile/megafauna/death(gibbed, var/list/force_grant)
-=======
-/mob/living/simple_animal/hostile/megafauna/prevent_content_explosion()
-	return TRUE
-
-/mob/living/simple_animal/hostile/megafauna/death(gibbed)
->>>>>>> Updated this old code to fork
 	if(health > 0)
 		return
 	else
@@ -104,20 +81,12 @@
 		if(C && crusher_loot && C.total_damage >= maxHealth * 0.6)
 			spawn_crusher_loot()
 			crusher_kill = TRUE
-<<<<<<< HEAD
 		if(true_spawn && !(flags_1 & ADMIN_SPAWNED_1))
-=======
-		if(!(flags_1 & ADMIN_SPAWNED_1))
->>>>>>> Updated this old code to fork
 			var/tab = "megafauna_kills"
 			if(crusher_kill)
 				tab = "megafauna_kills_crusher"
 			if(!elimination)	//used so the achievment only occurs for the last legion to die.
-<<<<<<< HEAD
 				grant_achievement(medal_type, score_type, crusher_kill, force_grant)
-=======
-				grant_achievement(medal_type, score_type, crusher_kill)
->>>>>>> Updated this old code to fork
 				SSblackbox.record_feedback("tally", tab, 1, "[initial(name)]")
 		..()
 
@@ -150,21 +119,14 @@
 
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
 	if(!L)
-<<<<<<< HEAD
 		return FALSE
-=======
-		return
->>>>>>> Updated this old code to fork
 	visible_message(
 		"<span class='danger'>[src] devours [L]!</span>",
 		"<span class='userdanger'>You feast on [L], restoring your health!</span>")
 	if(!is_station_level(z) || client) //NPC monsters won't heal while on station
 		adjustBruteLoss(-L.maxHealth/2)
 	L.gib()
-<<<<<<< HEAD
 	return TRUE
-=======
->>>>>>> Updated this old code to fork
 
 /mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
 	switch (severity)
@@ -181,7 +143,6 @@
 	recovery_time = world.time + buffer_time
 	ranged_cooldown = world.time + buffer_time
 
-<<<<<<< HEAD
 /mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype, scoretype, crusher_kill, var/list/grant_achievement = list())
 	if(!medal_type || (flags_1 & ADMIN_SPAWNED_1) || !SSmedals.hub_enabled) //Don't award medals if the medal type isn't set
 		return FALSE
@@ -189,28 +150,16 @@
 		for(var/mob/living/L in view(7,src))
 			grant_achievement += L
 	for(var/mob/living/L in grant_achievement)
-=======
-/mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype, scoretype, crusher_kill)
-	if(!medal_type || (flags_1 & ADMIN_SPAWNED_1) || !SSmedals.hub_enabled) //Don't award medals if the medal type isn't set
-		return FALSE
-
-	for(var/mob/living/L in view(7,src))
->>>>>>> Updated this old code to fork
 		if(L.stat || !L.client)
 			continue
 		var/client/C = L.client
 		SSmedals.UnlockMedal("Boss [BOSS_KILL_MEDAL]", C)
 		SSmedals.UnlockMedal("[medaltype] [BOSS_KILL_MEDAL]", C)
-<<<<<<< HEAD
 		if(crusher_kill && istype(L.get_active_held_item(), /obj/item/twohanded/kinetic_crusher))
-=======
-		if(crusher_kill && istype(L.get_active_held_item(), /obj/item/twohanded/required/kinetic_crusher))
->>>>>>> Updated this old code to fork
 			SSmedals.UnlockMedal("[medaltype] [BOSS_KILL_MEDAL_CRUSHER]", C)
 		SSmedals.SetScore(BOSS_SCORE, C, 1)
 		SSmedals.SetScore(score_type, C, 1)
 	return TRUE
-<<<<<<< HEAD
 
 /datum/action/innate/megafauna_attack
 	name = "Megafauna Attack"
@@ -229,5 +178,3 @@
 /datum/action/innate/megafauna_attack/Activate()
 	M.chosen_attack = chosen_attack_num
 	to_chat(M, chosen_message)
-=======
->>>>>>> Updated this old code to fork

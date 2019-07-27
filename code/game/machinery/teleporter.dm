@@ -32,15 +32,9 @@
 	accuracy = A
 
 /obj/machinery/teleport/hub/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: Probability of malfunction decreased by <b>[(accuracy*25)-25]%</b>.</span>"
-=======
-	..()
-	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Probability of malfunction decreased by <b>[(accuracy*25)-25]%</b>.<span>")
->>>>>>> Updated this old code to fork
 
 /obj/machinery/teleport/hub/proc/link_power_station()
 	if(power_station)
@@ -53,11 +47,7 @@
 
 /obj/machinery/teleport/hub/Bumped(atom/movable/AM)
 	if(is_centcom_level(z))
-<<<<<<< HEAD
 		to_chat(AM, "<span class='warning'>You can't use this here!</span>")
-=======
-		to_chat(AM, "You can't use this here.")
->>>>>>> Updated this old code to fork
 		return
 	if(is_ready())
 		teleport(AM)
@@ -141,7 +131,6 @@
 	efficiency = E - 1
 
 /obj/machinery/teleport/station/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	if(!panel_open)
 		. += "<span class='notice'>The panel is <i>screwed</i> in, obstructing the linking device and wiring panel.</span>"
@@ -149,15 +138,6 @@
 		. += "<span class='notice'>The <i>linking</i> device is now able to be <i>scanned</i> with a multitool.<br>The <i>wiring</i> can be <i>connected<i> to a nearby console and hub with a pair of wirecutters.</span>"
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: This station can be linked to <b>[efficiency]</b> other station(s).</span>"
-=======
-	..()
-	if(!panel_open)
-		to_chat(user, "<span class='notice'>The panel is <i>screwed</i> in, obstructing the linking device and wiring panel.</span>")
-	else
-		to_chat(user, "<span class='notice'>The <i>linking</i> device is now able to be <i>scanned</i> with a multitool.<br>The <i>wiring</i> can be <i>connected<i> to a nearby console and hub with a pair of wirecutters.</span>")
-	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: This station can be linked to <b>[efficiency]</b> other station(s).<span>")
->>>>>>> Updated this old code to fork
 
 /obj/machinery/teleport/station/proc/link_console_and_hub()
 	for(var/direction in GLOB.cardinals)
@@ -245,10 +225,7 @@
 		icon_state = "controller-o"
 	else if(stat & (BROKEN|NOPOWER))
 		icon_state = "controller-p"
-<<<<<<< HEAD
 	else if(teleporter_console && teleporter_console.calibrating)
 		icon_state = "controller-c"
-=======
->>>>>>> Updated this old code to fork
 	else
 		icon_state = "controller"

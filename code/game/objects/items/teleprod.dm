@@ -2,21 +2,13 @@
 	name = "teleprod"
 	desc = "A prod with a bluespace crystal on the end. The crystal doesn't look too fun to touch."
 	w_class = WEIGHT_CLASS_NORMAL
-<<<<<<< HEAD
 	icon_state = "teleprod"
-=======
-	icon_state = "teleprod_nocell"
->>>>>>> Updated this old code to fork
 	item_state = "teleprod"
 	slot_flags = null
 
 /obj/item/melee/baton/cattleprod/teleprod/attack(mob/living/carbon/M, mob/living/carbon/user)//handles making things teleport when hit
 	..()
-<<<<<<< HEAD
 	if(status && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
-=======
-	if(status && user.has_trait(TRAIT_CLUMSY) && prob(50))
->>>>>>> Updated this old code to fork
 		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 		if(do_teleport(user, get_turf(user), 50, channel = TELEPORT_CHANNEL_BLUESPACE))//honk honk

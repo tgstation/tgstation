@@ -49,10 +49,5 @@
 /client/keyLoop()
 	if(holder)
 		holder.keyLoop(src)
-<<<<<<< HEAD
 	if(mob?.focus)
 		mob.focus.keyLoop(src)
-=======
-	if(mob.focus)
-		mob.focus.keyLoop(src)
->>>>>>> Updated this old code to fork

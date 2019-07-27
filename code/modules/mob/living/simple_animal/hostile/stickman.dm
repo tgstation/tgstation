@@ -39,11 +39,7 @@
 	minimum_distance = 5
 	icon_state = "stickmanranged"
 	icon_living = "stickmanranged"
-<<<<<<< HEAD
 	casingtype = /obj/item/ammo_casing/c45
-=======
-	casingtype = /obj/item/ammo_casing/c45/nostamina
->>>>>>> Updated this old code to fork
 	projectilesound = 'sound/misc/bang.ogg'
 	loot = list(/obj/item/gun/ballistic/automatic/pistol/stickman)
 

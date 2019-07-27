@@ -6,22 +6,14 @@
 //spooky recipes
 
 /datum/recipe/sugarcookie/spookyskull
-<<<<<<< HEAD
 	reagents = list(/datum/reagent/consumable/flour = 5, /datum/reagent/consumable/sugar = 5, /datum/reagent/consumable/milk = 5)
-=======
-	reagents = list("flour" = 5, "sugar" = 5, "milk" = 5)
->>>>>>> Updated this old code to fork
 	items = list(
 		/obj/item/reagent_containers/food/snacks/egg,
 	)
 	result = /obj/item/reagent_containers/food/snacks/sugarcookie/spookyskull
 
 /datum/recipe/sugarcookie/spookycoffin
-<<<<<<< HEAD
 	reagents = list(/datum/reagent/consumable/flour = 5, /datum/reagent/consumable/sugar = 5, /datum/reagent/consumable/coffee = 5)
-=======
-	reagents = list("flour" = 5, "sugar" = 5, "coffee" = 5)
->>>>>>> Updated this old code to fork
 	items = list(
 		/obj/item/reagent_containers/food/snacks/egg,
 	)

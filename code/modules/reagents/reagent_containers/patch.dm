@@ -30,29 +30,17 @@
 /obj/item/reagent_containers/pill/patch/styptic
 	name = "brute patch"
 	desc = "Helps with brute injuries."
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/medicine/styptic_powder = 20)
-=======
-	list_reagents = list("styptic_powder" = 20)
->>>>>>> Updated this old code to fork
 	icon_state = "bandaid_brute"
 
 /obj/item/reagent_containers/pill/patch/silver_sulf
 	name = "burn patch"
 	desc = "Helps with burn injuries."
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/medicine/silver_sulfadiazine = 20)
-=======
-	list_reagents = list("silver_sulfadiazine" = 20)
->>>>>>> Updated this old code to fork
 	icon_state = "bandaid_burn"
 
 /obj/item/reagent_containers/pill/patch/synthflesh
 	name = "synthflesh patch"
 	desc = "Helps with brute and burn injuries."
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/medicine/synthflesh = 20)
-=======
-	list_reagents = list("synthflesh" = 20)
->>>>>>> Updated this old code to fork
 	icon_state = "bandaid_both"

@@ -5,13 +5,8 @@
 "ab" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-<<<<<<< HEAD
 	dir = 1;
 	icon_state = "singular"
-=======
-	icon_state = "singular";
-	dir = 1
->>>>>>> Updated this old code to fork
 	},
 /turf/template_noop,
 /area/space/nearstation)
@@ -32,13 +27,8 @@
 /area/space/nearstation)
 "af" = (
 /obj/structure/fluff/broken_flooring{
-<<<<<<< HEAD
 	dir = 8;
 	icon_state = "pile"
-=======
-	icon_state = "pile";
-	dir = 8
->>>>>>> Updated this old code to fork
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -55,13 +45,8 @@
 /area/ruin/unpowered)
 "aj" = (
 /obj/structure/fluff/broken_flooring{
-<<<<<<< HEAD
 	dir = 4;
 	icon_state = "pile"
-=======
-	icon_state = "pile";
-	dir = 4
->>>>>>> Updated this old code to fork
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -73,13 +58,8 @@
 /area/ruin/unpowered)
 "al" = (
 /obj/structure/fluff/broken_flooring{
-<<<<<<< HEAD
 	dir = 4;
 	icon_state = "singular"
-=======
-	icon_state = "singular";
-	dir = 4
->>>>>>> Updated this old code to fork
 	},
 /obj/structure/lattice,
 /turf/template_noop,
@@ -151,28 +131,17 @@
 /area/ruin/unpowered)
 "az" = (
 /obj/structure/fluff/broken_flooring{
-<<<<<<< HEAD
 	dir = 8;
 	icon_state = "plating";
 	name = "broken plating"
-=======
-	name = "broken plating";
-	icon_state = "plating";
-	dir = 8
->>>>>>> Updated this old code to fork
 	},
 /obj/structure/lattice,
 /turf/template_noop,
 /area/ruin/unpowered)
 "aA" = (
 /obj/structure/fluff/broken_flooring{
-<<<<<<< HEAD
 	dir = 1;
 	icon_state = "pile"
-=======
-	icon_state = "pile";
-	dir = 1
->>>>>>> Updated this old code to fork
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -234,11 +203,7 @@
 /turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "aK" = (
-<<<<<<< HEAD
 /obj/structure/closet/secure_closet/freezer/fridge/open,
-=======
-/obj/structure/closet/secure_closet/freezer/fridge,
->>>>>>> Updated this old code to fork
 /obj/machinery/light/broken{
 	dir = 1
 	},
@@ -429,13 +394,8 @@
 /area/ruin/unpowered)
 "bt" = (
 /obj/structure/fluff/broken_flooring{
-<<<<<<< HEAD
 	dir = 1;
 	icon_state = "side"
-=======
-	icon_state = "side";
-	dir = 1
->>>>>>> Updated this old code to fork
 	},
 /obj/structure/lattice,
 /turf/template_noop,
@@ -453,57 +413,34 @@
 "bw" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-<<<<<<< HEAD
 	dir = 1;
 	icon_state = "plating";
 	name = "broken plating"
-=======
-	name = "broken plating";
-	icon_state = "plating";
-	dir = 1
->>>>>>> Updated this old code to fork
 	},
 /turf/template_noop,
 /area/ruin/unpowered)
 "bx" = (
 /obj/structure/fluff/broken_flooring{
-<<<<<<< HEAD
 	dir = 4;
 	icon_state = "plating";
 	name = "broken plating"
-=======
-	name = "broken plating";
-	icon_state = "plating";
-	dir = 4
->>>>>>> Updated this old code to fork
 	},
 /obj/structure/lattice,
 /turf/template_noop,
 /area/ruin/unpowered)
 "by" = (
 /obj/structure/fluff/broken_flooring{
-<<<<<<< HEAD
 	dir = 4;
 	icon_state = "pile"
-=======
-	icon_state = "pile";
-	dir = 4
->>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
 "bz" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-<<<<<<< HEAD
 	dir = 4;
 	icon_state = "plating";
 	name = "broken plating"
-=======
-	name = "broken plating";
-	icon_state = "plating";
-	dir = 4
->>>>>>> Updated this old code to fork
 	},
 /turf/template_noop,
 /area/ruin/unpowered)
@@ -522,13 +459,8 @@
 /area/ruin/unpowered)
 "bD" = (
 /obj/structure/fluff/broken_flooring{
-<<<<<<< HEAD
 	dir = 4;
 	icon_state = "singular"
-=======
-	icon_state = "singular";
-	dir = 4
->>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
@@ -542,25 +474,15 @@
 "bF" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-<<<<<<< HEAD
 	dir = 4;
 	icon_state = "side"
-=======
-	icon_state = "side";
-	dir = 4
->>>>>>> Updated this old code to fork
 	},
 /turf/template_noop,
 /area/ruin/unpowered)
 "bG" = (
 /obj/structure/fluff/broken_flooring{
-<<<<<<< HEAD
 	dir = 4;
 	icon_state = "singular"
-=======
-	icon_state = "singular";
-	dir = 4
->>>>>>> Updated this old code to fork
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -575,15 +497,9 @@
 "bI" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-<<<<<<< HEAD
 	dir = 8;
 	icon_state = "plating";
 	name = "broken plating"
-=======
-	name = "broken plating";
-	icon_state = "plating";
-	dir = 8
->>>>>>> Updated this old code to fork
 	},
 /turf/template_noop,
 /area/ruin/unpowered)

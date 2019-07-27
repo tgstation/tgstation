@@ -33,15 +33,9 @@
 	set_active(active)				//Force overlay update.
 
 /obj/machinery/atmospherics/miner/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	if(broken)
 		. += {"Its debug output is printing "[broken_message]"."}
-=======
-	..()
-	if(broken)
-		to_chat(user, "Its debug output is printing \"[broken_message]\".")
->>>>>>> Updated this old code to fork
 
 /obj/machinery/atmospherics/miner/proc/check_operation()
 	if(!active)

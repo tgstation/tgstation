@@ -15,7 +15,6 @@ This file contains the cult dagger and rune list code
 			GLOB.rune_types[initial(R.cultist_name)] = R //Uses the cultist name for displaying purposes
 
 /obj/item/melee/cultblade/dagger/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	if(iscultist(user) || isobserver(user))
 		. += {"<span class='cult'>The scriptures of the Geometer. Allows the scribing of runes and access to the knowledge archives of the cult of Nar'Sie.\n
@@ -30,22 +29,6 @@ This file contains the cult dagger and rune list code
 			var/holy2unholy = M.reagents.get_reagent_amount(/datum/reagent/water/holywater)
 			M.reagents.del_reagent(/datum/reagent/water/holywater)
 			M.reagents.add_reagent(/datum/reagent/fuel/unholywater,holy2unholy)
-=======
-	..()
-	if(iscultist(user) || isobserver(user))
-		to_chat(user, "<span class='cult'>The scriptures of the Geometer. Allows the scribing of runes and access to the knowledge archives of the cult of Nar'Sie.</span>")
-		to_chat(user, "<span class='cult'>Striking a cult structure will unanchor or reanchor it.</span>")
-		to_chat(user, "<span class='cult'>Striking another cultist with it will purge holy water from them.</span>")
-		to_chat(user, "<span class='cult'>Striking a noncultist, however, will tear their flesh.</span>")
-
-/obj/item/melee/cultblade/dagger/attack(mob/living/M, mob/living/user)
-	if(iscultist(M))
-		if(M.reagents && M.reagents.has_reagent("holywater")) //allows cultists to be rescued from the clutches of ordained religion
-			to_chat(user, "<span class='cult'>You remove the taint from [M].</span>" )
-			var/holy2unholy = M.reagents.get_reagent_amount("holywater")
-			M.reagents.del_reagent("holywater")
-			M.reagents.add_reagent("unholywater",holy2unholy)
->>>>>>> Updated this old code to fork
 			log_combat(user, M, "smacked", src, " removing the holy water from them")
 		return FALSE
 	. = ..()
@@ -133,11 +116,7 @@ This file contains the cult dagger and rune list code
 	if(user.blood_volume)
 		user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 	var/scribe_mod = initial(rune_to_scribe.scribe_delay)
-<<<<<<< HEAD
 	if(istype(get_turf(user), /turf/open/floor/engine/cult) && !(ispath(rune_to_scribe, /obj/effect/rune/narsie)))
-=======
-	if(istype(get_turf(user), /turf/open/floor/engine/cult))
->>>>>>> Updated this old code to fork
 		scribe_mod *= 0.5
 	if(!do_after(user, scribe_mod, target = get_turf(user)))
 		for(var/V in shields)

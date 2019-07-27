@@ -154,12 +154,7 @@
 /area/ruin/powered/beach)
 "aF" = (
 /obj/machinery/vending/boozeomat{
-<<<<<<< HEAD
 	set_obj_flags = "EMAGGED"
-=======
-	set_obj_flags = "EMAGGED";
-	req_access_txt = "0"
->>>>>>> Updated this old code to fork
 	},
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
@@ -246,11 +241,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/powered/beach)
 "aX" = (
-<<<<<<< HEAD
 /obj/structure/closet/secure_closet/freezer/meat/open,
-=======
-/obj/structure/closet/secure_closet/freezer/meat,
->>>>>>> Updated this old code to fork
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "aY" = (
@@ -311,11 +302,7 @@
 	},
 /obj/item/bikehorn/airhorn,
 /obj/structure/table/wood,
-<<<<<<< HEAD
 /obj/item/storage/firstaid/regular,
-=======
-/obj/item/storage/firstaid,
->>>>>>> Updated this old code to fork
 /obj/item/storage/firstaid/brute,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
@@ -492,23 +479,16 @@
 /obj/effect/turf_decal/sand,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
-<<<<<<< HEAD
 "jP" = (
 /obj/item/toy/seashell,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
-=======
->>>>>>> Updated this old code to fork
 "lF" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/pod/dark{
-<<<<<<< HEAD
 	initial_gas_mix = "LAVALAND_ATMOS"
-=======
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
->>>>>>> Updated this old code to fork
 	},
 /area/ruin/powered/beach)
 "lM" = (
@@ -587,14 +567,11 @@
 /obj/effect/turf_decal/sand,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
-<<<<<<< HEAD
 "zO" = (
 /obj/structure/flora/ausbushes/leafybush,
 /obj/item/toy/seashell,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
-=======
->>>>>>> Updated this old code to fork
 "Bl" = (
 /obj/effect/turf_decal/sand,
 /obj/machinery/light{
@@ -627,13 +604,10 @@
 /obj/effect/turf_decal/sand,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
-<<<<<<< HEAD
 "Ml" = (
 /obj/item/toy/seashell,
 /turf/open/floor/plating/beach/coastline_t,
 /area/ruin/powered/beach)
-=======
->>>>>>> Updated this old code to fork
 "QS" = (
 /obj/effect/turf_decal/sand,
 /obj/machinery/light{
@@ -646,11 +620,7 @@
 	dir = 8
 	},
 /turf/open/floor/pod/dark{
-<<<<<<< HEAD
 	initial_gas_mix = "LAVALAND_ATMOS"
-=======
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
->>>>>>> Updated this old code to fork
 	},
 /area/ruin/powered/beach)
 "VO" = (
@@ -750,11 +720,7 @@ wY
 VO
 lM
 bW
-<<<<<<< HEAD
 zO
-=======
-ad
->>>>>>> Updated this old code to fork
 bQ
 bT
 bW
@@ -787,11 +753,7 @@ mh
 mh
 bW
 ap
-<<<<<<< HEAD
 Ml
-=======
-bR
->>>>>>> Updated this old code to fork
 bT
 bU
 ct
@@ -1143,11 +1105,7 @@ ar
 bE
 ar
 ar
-<<<<<<< HEAD
 Ml
-=======
-bR
->>>>>>> Updated this old code to fork
 bT
 bU
 bU
@@ -1417,11 +1375,7 @@ aa
 aa
 bW
 bW
-<<<<<<< HEAD
 jP
-=======
-ar
->>>>>>> Updated this old code to fork
 ap
 ar
 ar
@@ -1470,11 +1424,7 @@ ar
 ar
 ar
 ar
-<<<<<<< HEAD
 jP
-=======
-ar
->>>>>>> Updated this old code to fork
 bS
 bT
 bU

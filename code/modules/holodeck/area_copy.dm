@@ -5,10 +5,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 	))
 
 /proc/DuplicateObject(atom/original, perfectcopy = TRUE, sameloc, atom/newloc = null, nerf, holoitem)
-<<<<<<< HEAD
 	RETURN_TYPE(original.type)
-=======
->>>>>>> Updated this old code to fork
 	if(!original)
 		return
 	var/atom/O
@@ -134,11 +131,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 
 	if(toupdate.len)
 		for(var/turf/T1 in toupdate)
-<<<<<<< HEAD
 			CALCULATE_ADJACENT_TURFS(T1)
-=======
-			T1.CalculateAdjacentTurfs()
->>>>>>> Updated this old code to fork
 			SSair.add_to_active(T1,1)
 
 

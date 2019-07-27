@@ -49,14 +49,11 @@
 /obj/machinery/telecomms/relay/preset
 	network = "tcommsat"
 
-<<<<<<< HEAD
 /obj/machinery/telecomms/relay/Initialize(mapload)
 	. = ..()
 	if(autolinkers.len) //We want lateloaded presets to autolink (lateloaded aways/ruins/shuttles)
 		return INITIALIZE_HINT_LATELOAD
 
-=======
->>>>>>> Updated this old code to fork
 /obj/machinery/telecomms/relay/preset/station
 	id = "Station Relay"
 	autolinkers = list("s_relay")
@@ -82,11 +79,8 @@
 	icon = 'icons/obj/clockwork_objects.dmi'
 	hide = TRUE
 	autolinkers = list("h_relay")
-<<<<<<< HEAD
 
 //Generic preset relay
 /obj/machinery/telecomms/relay/preset/auto
 	hide = TRUE
 	autolinkers = list("autorelay")
-=======
->>>>>>> Updated this old code to fork

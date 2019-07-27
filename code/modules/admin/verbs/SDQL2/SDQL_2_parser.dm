@@ -19,18 +19,12 @@
 //
 //	from_item			:	'world' | expression
 //
-<<<<<<< HEAD
 //	call_function		:	<function name> '(' [expression_list] ')'
-=======
-//	call_function		:	<function name> '(' [arguments] ')'
-//	arguments			:	expression [',' arguments]
->>>>>>> Updated this old code to fork
 //
 //	object_type			:	<type path>
 //
 //	assignments			:	assignment [',' assignments]
 //	assignment			:	<variable name> '=' expression
-<<<<<<< HEAD
 //	variable			:	<variable name> | variable '.' variable | variable '[' <list index> ']' | '{' <ref as hex number> '}' | '(' expression ')' | call_function
 //
 //	bool_expression		:	expression comparitor expression  [bool_operator bool_expression]
@@ -40,25 +34,13 @@
 //
 //	comparitor			:	'=' | '==' | '!=' | '<>' | '<' | '<=' | '>' | '>='
 //	value				:	variable | string | number | 'null' | object_type | array | selectors_array
-=======
-//	variable			:	<variable name> | <variable name> '.' variable | '[' <hex number> ']' | '[' <hex number> ']' '.' variable
-//
-//	bool_expression		:	expression comparitor expression  [bool_operator bool_expression]
-//	expression			:	( unary_expression | '(' expression ')' | value ) [binary_operator expression]
-//	unary_expression	:	unary_operator ( unary_expression | value | '(' expression ')' )
-//	comparitor			:	'=' | '==' | '!=' | '<>' | '<' | '<=' | '>' | '>='
-//	value				:	variable | string | number | 'null' | object_type
->>>>>>> Updated this old code to fork
 //	unary_operator		:	'!' | '-' | '~'
 //	binary_operator		:	comparitor | '+' | '-' | '/' | '*' | '&' | '|' | '^' | '%'
 //	bool_operator		:	'AND' | '&&' | 'OR' | '||'
 //
-<<<<<<< HEAD
 //	array				:	'[' expression_list ']'
 //	selectors_array		:	'@[' object_selectors ']'
 //
-=======
->>>>>>> Updated this old code to fork
 //	string				:	''' <some text> ''' | '"' <some text > '"'
 //	number				:	<some digits>
 //
@@ -358,11 +340,7 @@
 	return i
 
 
-<<<<<<< HEAD
 //variable:	<variable name> | variable '.' variable | variable '[' <list index> ']' | '{' <ref as hex number> '}' | '(' expression ')' | call_function
-=======
-//variable:	<variable name> | <variable name> '.' variable | '[' <hex number> ']' | '[' <hex number> ']' '.' variable
->>>>>>> Updated this old code to fork
 /datum/SDQL_parser/proc/variable(i, list/node)
 	var/list/L = list(token(i))
 	node[++node.len] = L
@@ -374,7 +352,6 @@
 		if(token(i) != "}")
 			parse_error("Missing } at end of pointer.")
 
-<<<<<<< HEAD
 	else if(token(i) == "(") // not a proc but an expression
 		var/list/sub_expression = list()
 
@@ -385,8 +362,6 @@
 
 		L[++L.len] = sub_expression
 
-=======
->>>>>>> Updated this old code to fork
 	if(token(i + 1) == ".")
 		L += "."
 		i = variable(i + 2, L)
@@ -463,11 +438,7 @@
 
 	return i + 1
 
-<<<<<<< HEAD
 //array:	'[' expression_list ']'
-=======
-//array:	'[' expression, expression, ... ']'
->>>>>>> Updated this old code to fork
 /datum/SDQL_parser/proc/array(var/i, var/list/node)
 	// Arrays get turned into this: list("[", list(exp_1a = exp_1b, ...), ...), "[" is to mark the next node as an array.
 	if(copytext(token(i), 1, 2) != "\[")
@@ -511,7 +482,6 @@
 			temp_expression_list = list()
 			i = expression(i, temp_expression_list)
 
-<<<<<<< HEAD
 #if MIN_COMPILER_VERSION > 512
 #warn Remove this outdated workaround
 #elif DM_BUILD < 1467
@@ -519,20 +489,6 @@
 			var/dummy = src.type
 			dummy = dummy
 #endif
-=======
-			// Ok, what the fuck BYOND?
-			// Not having these lines here causes the parser to die
-			// on an error saying that list/token() doesn't exist as a proc.
-			// These lines prevent that.
-			// I assume the compiler/VM is shitting itself and swapping out some variables internally?
-			// While throwing in debug logging it disappeared
-			// And these 3 lines prevent it from happening while being quiet.
-			// So.. it works.
-			// Don't touch it.
-			var/whatthefuck = i
-			whatthefuck = src.type
-			whatthefuck = whatthefuck
->>>>>>> Updated this old code to fork
 
 		while(token(i) && token(i) != "]")
 
@@ -543,7 +499,6 @@
 
 	return i + 1
 
-<<<<<<< HEAD
 //selectors_array:	'@[' object_selectors ']'
 /datum/SDQL_parser/proc/selectors_array(var/i, var/list/node)
 	if(token(i) == "@\[")
@@ -561,8 +516,6 @@
 
 	return i + 1
 
-=======
->>>>>>> Updated this old code to fork
 //call_function:	<function name> ['(' [arguments] ')']
 /datum/SDQL_parser/proc/call_function(i, list/node, list/arguments)
 	if(length(tokenl(i)))
@@ -593,32 +546,12 @@
 	return i + 1
 
 
-<<<<<<< HEAD
 //expression:	( unary_expression | value ) [binary_operator expression]
-=======
-//expression:	( unary_expression | '(' expression ')' | value ) [binary_operator expression]
->>>>>>> Updated this old code to fork
 /datum/SDQL_parser/proc/expression(i, list/node)
 
 	if(token(i) in unary_operators)
 		i = unary_expression(i, node)
 
-<<<<<<< HEAD
-=======
-	else if(token(i) == "(")
-		var/list/expr = list()
-
-		i = expression(i + 1, expr)
-
-		if(token(i) != ")")
-			parse_error("Missing ) at end of expression.")
-
-		else
-			i++
-
-		node[++node.len] = expr
-
->>>>>>> Updated this old code to fork
 	else
 		i = value(i, node)
 
@@ -638,11 +571,7 @@
 	return i
 
 
-<<<<<<< HEAD
 //unary_expression:	unary_operator ( unary_expression | value )
-=======
-//unary_expression:	unary_operator ( unary_expression | value | '(' expression ')' )
->>>>>>> Updated this old code to fork
 /datum/SDQL_parser/proc/unary_expression(i, list/node)
 
 	if(token(i) in unary_operators)
@@ -654,22 +583,6 @@
 		if(token(i) in unary_operators)
 			i = unary_expression(i, unary_exp)
 
-<<<<<<< HEAD
-=======
-		else if(token(i) == "(")
-			var/list/expr = list()
-
-			i = expression(i + 1, expr)
-
-			if(token(i) != ")")
-				parse_error("Missing ) at end of expression.")
-
-			else
-				i++
-
-			unary_exp[++unary_exp.len] = expr
-
->>>>>>> Updated this old code to fork
 		else
 			i = value(i, unary_exp)
 
@@ -694,11 +607,7 @@
 	return i + 1
 
 
-<<<<<<< HEAD
 //value:	variable | string | number | 'null' | object_type | array | selectors_array
-=======
-//value:	variable | string | number | 'null' | object_type
->>>>>>> Updated this old code to fork
 /datum/SDQL_parser/proc/value(i, list/node)
 	if(token(i) == "null")
 		node += "null"
@@ -717,7 +626,6 @@
 
 	else if(copytext(token(i), 1, 2) == "\[") // Start a list.
 		i = array(i, node)
-<<<<<<< HEAD
 
 	else if(copytext(token(i), 1, 3) == "@\[")
 		i = selectors_array(i, node)
@@ -725,10 +633,6 @@
 	else if(copytext(token(i), 1, 2) == "/")
 		i = object_type(i, node)
 
-=======
-	else if(copytext(token(i), 1, 2) == "/")
-		i = object_type(i, node)
->>>>>>> Updated this old code to fork
 	else
 		i = variable(i, node)
 

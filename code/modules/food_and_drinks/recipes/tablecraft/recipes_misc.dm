@@ -5,13 +5,8 @@
 
 /datum/crafting_recipe/food/candiedapple
 	name = "Candied apple"
-<<<<<<< HEAD
 	reqs = list(
 		/datum/reagent/consumable/caramel = 5,
-=======
-	reqs = list(/datum/reagent/water = 5,
-		/datum/reagent/consumable/sugar = 5,
->>>>>>> Updated this old code to fork
 		/obj/item/reagent_containers/food/snacks/grown/apple = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/candiedapple
@@ -130,7 +125,6 @@
 	result = /obj/item/reagent_containers/food/snacks/jelliedtoast/cherry
 	subcategory = CAT_MISCFOOD
 
-<<<<<<< HEAD
 /datum/crafting_recipe/food/butteredtoast
 	name = "Buttered Toast"
 	reqs = list(
@@ -140,8 +134,6 @@
 	result = /obj/item/reagent_containers/food/snacks/butteredtoast
 	subcategory = CAT_MISCFOOD
 
-=======
->>>>>>> Updated this old code to fork
 /datum/crafting_recipe/food/twobread
 	name = "Two bread"
 	reqs = list(
@@ -299,11 +291,7 @@
 	subcategory = CAT_MISCFOOD
 
 
-<<<<<<< HEAD
 /datum/crafting_recipe/lizardwine
-=======
-/datum/crafting_recipe/food/lizardwine
->>>>>>> Updated this old code to fork
 	name = "Lizard wine"
 	time = 40
 	reqs = list(
@@ -311,10 +299,7 @@
 		/datum/reagent/consumable/ethanol = 100
 	)
 	result = /obj/item/reagent_containers/food/drinks/bottle/lizardwine
-<<<<<<< HEAD
 	category = CAT_FOOD
-=======
->>>>>>> Updated this old code to fork
 	subcategory = CAT_MISCFOOD
 
 

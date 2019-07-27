@@ -48,7 +48,6 @@
 	var/mob/living/simple_animal/slime/S = owner
 	S.Feed()
 
-<<<<<<< HEAD
 /mob/living/simple_animal/slime/proc/CanFeedon(mob/living/M, silent = FALSE)
 	if(!Adjacent(M))
 		return FALSE
@@ -101,36 +100,6 @@
 		to_chat(src, "<span class='warning'><i>Another slime is already feeding on this subject...</i></span>")
 		return FALSE
 	return TRUE
-=======
-/mob/living/simple_animal/slime/proc/CanFeedon(mob/living/M)
-	if(!Adjacent(M))
-		return 0
-
-	if(buckled)
-		Feedstop()
-		return 0
-
-	if(isslime(M))
-		to_chat(src, "<span class='warning'><i>I can't latch onto another slime...</i></span>")
-		return 0
-
-	if(docile)
-		to_chat(src, "<span class='notice'><i>I'm not hungry anymore...</i></span>")
-		return 0
-
-	if(stat)
-		to_chat(src, "<span class='warning'><i>I must be conscious to do this...</i></span>")
-		return 0
-
-	if(M.stat == DEAD)
-		to_chat(src, "<span class='warning'><i>This subject does not have a strong enough life energy...</i></span>")
-		return 0
-
-	if(locate(/mob/living/simple_animal/slime) in M.buckled_mobs)
-		to_chat(src, "<span class='warning'><i>Another slime is already feeding on this subject...</i></span>")
-		return 0
-	return 1
->>>>>>> Updated this old code to fork
 
 /mob/living/simple_animal/slime/proc/Feedon(mob/living/M)
 	M.unbuckle_all_mobs(force=1) //Slimes rip other mobs (eg: shoulder parrots) off (Slimes Vs Slimes is already handled in CanFeedon())

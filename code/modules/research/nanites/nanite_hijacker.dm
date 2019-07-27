@@ -18,11 +18,7 @@
 /obj/item/nanite_hijacker/examine(mob/user)
 	. = ..()
 	if(disk)
-<<<<<<< HEAD
 		. += "<span class='notice'>Alt-click [src] to eject the disk.</span>"
-=======
-		to_chat(user, "<span class='notice'>Alt-click [src] to eject the disk.</span>")
->>>>>>> Updated this old code to fork
 
 /obj/item/nanite_hijacker/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/disk/nanite_program))
@@ -157,8 +153,4 @@
 						program.timer_type = NANITE_TIMER_TRIGGER
 					if("Reset Activation Timer")
 						program.timer_type = NANITE_TIMER_RESET
-<<<<<<< HEAD
 			. = TRUE
-=======
-			. = TRUE
->>>>>>> Updated this old code to fork

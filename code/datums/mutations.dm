@@ -27,16 +27,12 @@
 	var/alias           //'Mutation #49', decided every round to get some form of distinction between undiscovered mutations
 	var/scrambled = FALSE //Wheter we can read it if it's active. To avoid cheesing with mutagen
 	var/class           //Decides player accesibility, sorta
-<<<<<<< HEAD
 	var/list/conflicts //any mutations that might conflict. put mutation typepath defines in here. make sure to enter it both ways (so that A conflicts with B, and B with A)
 	var/allow_transfer  //Do we transfer upon cloning?
-=======
->>>>>>> Updated this old code to fork
 	//MUT_NORMAL - A mutation that can be activated and deactived by completing a sequence
 	//MUT_EXTRA - A mutation that is in the mutations tab, and can be given and taken away through though the DNA console. Has a 0 before it's name in the mutation section of the dna console
 	//MUT_OTHER Cannot be interacted with by players through normal means. I.E. wizards mutate
 
-<<<<<<< HEAD
 
 	var/can_chromosome = CHROMOSOME_NONE //can we take chromosomes? 0: CHROMOSOME_NEVER never,  1:CHROMOSOME_NONE yeah, 2: CHROMOSOME_USED no, already have one
 	var/chromosome_name   //purely cosmetic
@@ -50,19 +46,13 @@
 	var/energy_coeff = -1 //lowers mutation cooldown
 
 /datum/mutation/human/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
-=======
-/datum/mutation/human/New(class_ = MUT_OTHER, timer)
->>>>>>> Updated this old code to fork
 	. = ..()
 	class = class_
 	if(timer)
 		addtimer(CALLBACK(src, .proc/remove), timer)
 		timed = TRUE
-<<<<<<< HEAD
 	if(copymut && istype(copymut, /datum/mutation/human))
 		copy_mutation(copymut)
-=======
->>>>>>> Updated this old code to fork
 
 /datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/H)
 	if(!H || !istype(H) || H.stat == DEAD || (src in H.dna.mutations))
@@ -73,7 +63,6 @@
 		return TRUE
 	if(limb_req && !H.get_bodypart(limb_req))
 		return TRUE
-<<<<<<< HEAD
 	for(var/M in H.dna.mutations)//check for conflicting powers
 		var/datum/mutation/human/mewtayshun = M
 		if(LAZYLEN(mewtayshun.conflicts))
@@ -82,8 +71,6 @@
 				if(conflicter == type)
 					to_chat(H, "<span class='warning'>You feel your genes resisting something.</span>")
 					return TRUE
-=======
->>>>>>> Updated this old code to fork
 	owner = H
 	dna = H.dna
 	dna.mutations += src
@@ -97,17 +84,9 @@
 		owner.remove_overlay(layer_used)
 		owner.overlays_standing[layer_used] = mut_overlay
 		owner.apply_overlay(layer_used)
-<<<<<<< HEAD
 	grant_spell() //we do checks here so nothing about hulk getting magic
 	if(!modified)
 		addtimer(CALLBACK(src, .proc/modify, 5)) //gonna want children calling ..() to run first
-=======
-	if(power)
-		power = new power()
-		power.action_background_icon_state = "bg_tech_blue_on"
-		power.panel = "Genetic"
-		owner.AddSpell(power)
->>>>>>> Updated this old code to fork
 
 /datum/mutation/human/proc/get_visual_indicator()
 	return
@@ -118,12 +97,6 @@
 /datum/mutation/human/proc/on_ranged_attack(atom/target)
 	return
 
-<<<<<<< HEAD
-=======
-/datum/mutation/human/proc/on_move(new_loc)
-	return
-
->>>>>>> Updated this old code to fork
 /datum/mutation/human/proc/on_life()
 	return
 
@@ -145,16 +118,6 @@
 		return 0
 	return 1
 
-<<<<<<< HEAD
-=======
-/datum/mutation/human/proc/say_mod(message)
-	if(message)
-		return message
-
-/datum/mutation/human/proc/get_spans()
-	return list()
-
->>>>>>> Updated this old code to fork
 /mob/living/carbon/proc/update_mutations_overlay()
 	return
 
@@ -176,7 +139,6 @@
 				overlays_standing[CM.layer_used] = mut_overlay
 				apply_overlay(CM.layer_used)
 
-<<<<<<< HEAD
 /datum/mutation/human/proc/modify() //called when a genome is applied so we can properly update some stats without having to remove and reapply the mutation from someone
 	if(modified || !power || !owner)
 		return
@@ -203,9 +165,6 @@
 	mutadone_proof = initial(mutadone_proof)
 	can_chromosome = initial(can_chromosome)
 	chromosome_name = null
-=======
-/datum/mutation/human/proc/copy_mutation(datum/mutation/human/HM) //Not yet implemented, useful for when assigning specific stats.
->>>>>>> Updated this old code to fork
 
 /datum/mutation/human/proc/remove()
 	if(dna)
@@ -213,7 +172,6 @@
 	else
 		qdel(src)
 
-<<<<<<< HEAD
 /datum/mutation/human/proc/grant_spell()
 	if(!ispath(power) || !owner)
 		return FALSE
@@ -223,5 +181,3 @@
 	power.panel = "Genetic"
 	owner.AddSpell(power)
 	return TRUE
-=======
->>>>>>> Updated this old code to fork

@@ -57,15 +57,12 @@
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape/meteor)
-<<<<<<< HEAD
 "u" = (
 /obj/machinery/power/terminal{
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid,
 /area/shuttle/escape/meteor)
-=======
->>>>>>> Updated this old code to fork
 "L" = (
 /obj/docking_port/mobile/emergency{
 	dwidth = 20;
@@ -1407,11 +1404,7 @@ b
 b
 b
 l
-<<<<<<< HEAD
 u
-=======
-d
->>>>>>> Updated this old code to fork
 d
 d
 d
@@ -1453,11 +1446,7 @@ b
 b
 b
 l
-<<<<<<< HEAD
 u
-=======
-d
->>>>>>> Updated this old code to fork
 d
 d
 d
@@ -1499,11 +1488,7 @@ b
 b
 b
 l
-<<<<<<< HEAD
 u
-=======
-d
->>>>>>> Updated this old code to fork
 d
 d
 d
@@ -1545,11 +1530,7 @@ b
 b
 b
 l
-<<<<<<< HEAD
 u
-=======
-d
->>>>>>> Updated this old code to fork
 d
 d
 d
@@ -1591,11 +1572,7 @@ b
 b
 b
 l
-<<<<<<< HEAD
 u
-=======
-d
->>>>>>> Updated this old code to fork
 d
 d
 d
@@ -1637,11 +1614,7 @@ b
 b
 b
 l
-<<<<<<< HEAD
 u
-=======
-d
->>>>>>> Updated this old code to fork
 d
 d
 d

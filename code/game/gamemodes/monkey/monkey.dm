@@ -15,12 +15,9 @@
 
 	restricted_jobs = list("Cyborg", "AI")
 
-<<<<<<< HEAD
 	announce_span = "Monkey"
 	announce_text = "One or more crewmembers have been infected with Jungle Fever! Crew: Contain the outbreak. None of the infected monkeys may escape alive to CentCom. Monkeys: Ensure that your kind lives on! Rise up against your captors!"
 
-=======
->>>>>>> Updated this old code to fork
 	var/carriers_to_make = 1
 	var/list/carriers = list()
 
@@ -51,14 +48,6 @@
 		return FALSE
 	return TRUE
 
-<<<<<<< HEAD
-=======
-
-/datum/game_mode/monkey/announce()
-	to_chat(world, "<B>The current game mode is - Monkey!</B>")
-	to_chat(world, "<B>One or more crewmembers have been infected with Jungle Fever! Crew: Contain the outbreak. None of the infected monkeys may escape alive to CentCom. Monkeys: Ensure that your kind lives on! Rise up against your captors!</B>")
-
->>>>>>> Updated this old code to fork
 /datum/game_mode/monkey/post_setup()
 	for(var/datum/mind/carriermind in carriers)
 		var/datum/antagonist/monkey/M = add_monkey_leader(carriermind, monkey_team)
@@ -109,15 +98,9 @@
 
 /datum/game_mode/monkey/special_report()
 	if(check_monkey_victory())
-<<<<<<< HEAD
 		return "<div class='panel redborder'><span class='redtext big'>The monkeys have overthrown their captors! Eeek eeeek!!</span></div>"
 	else
 		return "<div class='panel redborder'><span class='redtext big'>The staff managed to contain the monkey infestation!</span></div>"
-=======
-		return "<span class='redtext big'>The monkeys have overthrown their captors! Eeek eeeek!!</span>"
-	else
-		return "<span class='redtext big'>The staff managed to contain the monkey infestation!</span>"
->>>>>>> Updated this old code to fork
 
 /datum/game_mode/monkey/generate_report()
 	return "Reports of an ancient [pick("retrovirus", "flesh eating bacteria", "disease", "magical curse blamed on viruses", "banana blight")] outbreak that turn humans into monkeys has been reported in your quadrant.  Any such infections may be treated with banana juice.  If an outbreak occurs, ensure the station is quarantined to prevent a largescale outbreak at CentCom."

@@ -20,21 +20,12 @@
 
 
 /obj/item/melee/powerfist/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	if(!in_range(user, src))
 		. += "<span class='notice'>You'll need to get closer to see any more.</span>"
 		return
 	if(tank)
 		. += "<span class='notice'>[icon2html(tank, user)] It has \a [tank] mounted onto it.</span>"
-=======
-	..()
-	if(!in_range(user, src))
-		to_chat(user, "<span class='notice'>You'll need to get closer to see any more.</span>")
-		return
-	if(tank)
-		to_chat(user, "<span class='notice'>[icon2html(tank, user)] It has \a [tank] mounted onto it.</span>")
->>>>>>> Updated this old code to fork
 
 
 /obj/item/melee/powerfist/attackby(obj/item/W, mob/user, params)
@@ -59,10 +50,6 @@
 		if(tank)
 			updateTank(tank, 1, user)
 
-<<<<<<< HEAD
-=======
-
->>>>>>> Updated this old code to fork
 /obj/item/melee/powerfist/proc/updateTank(obj/item/tank/internals/thetank, removing = 0, mob/living/carbon/human/user)
 	if(removing)
 		if(!tank)
@@ -83,7 +70,6 @@
 
 
 /obj/item/melee/powerfist/attack(mob/living/target, mob/living/user)
-<<<<<<< HEAD
     if(!tank)
         to_chat(user, "<span class='warning'>\The [src] can't operate without a source of gas!</span>")
         return
@@ -123,28 +109,3 @@
     user.changeNext_move(CLICK_CD_MELEE * click_delay)
 
     return
-=======
-	if(!tank)
-		to_chat(user, "<span class='warning'>\The [src] can't operate without a source of gas!</span>")
-		return
-	if(tank && !tank.air_contents.remove(gasperfist * fisto_setting))
-		to_chat(user, "<span class='warning'>\The [src]'s piston-ram lets out a weak hiss, it needs more gas!</span>")
-		playsound(loc, 'sound/effects/refill.ogg', 50, 1)
-		return
-	target.apply_damage(force * fisto_setting, BRUTE)
-	target.visible_message("<span class='danger'>[user]'s powerfist lets out a loud hiss as [user.p_they()] punch[user.p_es()] [target.name]!</span>", \
-		"<span class='userdanger'>You cry out in pain as [user]'s punch flings you backwards!</span>")
-	new /obj/effect/temp_visual/kinetic_blast(target.loc)
-	playsound(loc, 'sound/weapons/resonator_blast.ogg', 50, 1)
-	playsound(loc, 'sound/weapons/genhit2.ogg', 50, 1)
-
-	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
-
-	target.throw_at(throw_target, 5 * fisto_setting, 0.2)
-
-	log_combat(user, target, "power fisted", src)
-
-	user.changeNext_move(CLICK_CD_MELEE * click_delay)
-
-	return
->>>>>>> Updated this old code to fork

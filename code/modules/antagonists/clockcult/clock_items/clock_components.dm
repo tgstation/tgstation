@@ -12,11 +12,7 @@
 /obj/item/clockwork/component/examine(mob/user)
 	. = ..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-<<<<<<< HEAD
 		. += "<span class='[get_component_span(component_id)]'>You can activate this in your hand to break it down for power.</span>"
-=======
-		to_chat(user, "<span class='[get_component_span(component_id)]'>You can activate this in your hand to break it down for power.</span>")
->>>>>>> Updated this old code to fork
 
 /obj/item/clockwork/component/attack_self(mob/living/user)
 	if(is_servant_of_ratvar(user))
@@ -185,15 +181,9 @@
 		pixel_y = rand(-sprite_shift, sprite_shift)
 
 /obj/item/clockwork/alloy_shards/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		. += "<span class='brass'>Can be consumed by a replica fabricator as a source of power.</span>"
-=======
-	..()
-	if(is_servant_of_ratvar(user) || isobserver(user))
-		to_chat(user, "<span class='brass'>Can be consumed by a replica fabricator as a source of power.</span>")
->>>>>>> Updated this old code to fork
 
 /obj/item/clockwork/alloy_shards/proc/replace_name_desc()
 	name = "replicant alloy shard"

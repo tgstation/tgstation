@@ -3,7 +3,6 @@
 #define COLOR_INPUT_DISABLED "#F0F0F0"
 #define COLOR_INPUT_ENABLED "#D3B5B5"
 
-<<<<<<< HEAD
 #define COLOR_DARKMODE_BACKGROUND "#202020"
 #define COLOR_DARKMODE_DARKBACKGROUND "#171717"
 #define COLOR_DARKMODE_TEXT "#a4bad6"
@@ -28,28 +27,6 @@
 #define COLOR_NAVY             "#000080"
 #define COLOR_PINK             "#FFC0CB"
 #define COLOR_MAGENTA          "#FF00FF"
-=======
-//#define COLOR_WHITE            "#EEEEEE"
-//#define COLOR_SILVER           "#C0C0C0"
-//#define COLOR_GRAY             "#808080"
-#define COLOR_FLOORTILE_GRAY   "#8D8B8B"
-#define COLOR_ALMOST_BLACK	   "#333333"
-//#define COLOR_BLACK            "#000000"
-#define COLOR_RED              "#FF0000"
-//#define COLOR_RED_LIGHT        "#FF3333"
-//#define COLOR_MAROON           "#800000"
-#define COLOR_YELLOW           "#FFFF00"
-//#define COLOR_OLIVE            "#808000"
-//#define COLOR_LIME             "#32CD32"
-#define COLOR_GREEN            "#008000"
-#define COLOR_CYAN             "#00FFFF"
-//#define COLOR_TEAL             "#008080"
-#define COLOR_BLUE             "#0000FF"
-//#define COLOR_BLUE_LIGHT       "#33CCFF"
-//#define COLOR_NAVY             "#000080"
-#define COLOR_PINK             "#FFC0CB"
-//#define COLOR_MAGENTA          "#FF00FF"
->>>>>>> Updated this old code to fork
 #define COLOR_PURPLE           "#800080"
 #define COLOR_ORANGE           "#FF9900"
 #define COLOR_BEIGE            "#CEB689"
@@ -80,8 +57,4 @@
 #define COLOR_ASSEMBLY_GREEN   "#44843C"
 #define COLOR_ASSEMBLY_LBLUE   "#5D99BE"
 #define COLOR_ASSEMBLY_BLUE    "#38559E"
-<<<<<<< HEAD
 #define COLOR_ASSEMBLY_PURPLE  "#6F6192"
-=======
-#define COLOR_ASSEMBLY_PURPLE  "#6F6192"
->>>>>>> Updated this old code to fork

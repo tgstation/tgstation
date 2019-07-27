@@ -41,8 +41,4 @@
 #define BANISH_FUNERAL_GARB "funeral"
 
 #define LORE 1
-<<<<<<< HEAD
 #define LAW 2
-=======
-#define LAW 2
->>>>>>> Updated this old code to fork

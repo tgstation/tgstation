@@ -12,23 +12,15 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-<<<<<<< HEAD
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 250)
-=======
-	materials = list(MAT_METAL = 500, MAT_GLASS = 250)
->>>>>>> Updated this old code to fork
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/active = FALSE
 	var/atom/movable/target //The thing we're searching for
 	var/minimum_range = 0 //at what range the pinpointer declares you to be at your destination
-<<<<<<< HEAD
 	var/ignore_suit_sensor_level = FALSE // Do we find people even if their suit sensors are turned off
 	var/alert = FALSE // TRUE to display things more seriously
 	var/process_scan = TRUE // some pinpointers change target every time they scan, which means we can't have it change very process but instead when it turns on.
 	var/icon_suffix = "" // for special pinpointer icons
-=======
-	var/alert = FALSE // TRUE to display things more seriously
->>>>>>> Updated this old code to fork
 
 /obj/item/pinpointer/Initialize()
 	. = ..()
@@ -41,11 +33,8 @@
 	return ..()
 
 /obj/item/pinpointer/attack_self(mob/living/user)
-<<<<<<< HEAD
 	if(!process_scan) //since it's not scanning on process, it scans here.
 		scan_for_target()
-=======
->>>>>>> Updated this old code to fork
 	toggle_on()
 	user.visible_message("<span class='notice'>[user] [active ? "" : "de"]activates [user.p_their()] pinpointer.</span>", "<span class='notice'>You [active ? "" : "de"]activate your pinpointer.</span>")
 
@@ -62,12 +51,8 @@
 /obj/item/pinpointer/process()
 	if(!active)
 		return PROCESS_KILL
-<<<<<<< HEAD
 	if(process_scan)
 		scan_for_target()
-=======
-	scan_for_target()
->>>>>>> Updated this old code to fork
 	update_icon()
 
 /obj/item/pinpointer/proc/scan_for_target()
@@ -78,54 +63,32 @@
 	if(!active)
 		return
 	if(!target)
-<<<<<<< HEAD
 		add_overlay("pinon[alert ? "alert" : ""]null[icon_suffix]")
-=======
-		add_overlay("pinon[alert ? "alert" : ""]null")
->>>>>>> Updated this old code to fork
 		return
 	var/turf/here = get_turf(src)
 	var/turf/there = get_turf(target)
 	if(here.z != there.z)
-<<<<<<< HEAD
 		add_overlay("pinon[alert ? "alert" : ""]null[icon_suffix]")
 		return
 	if(get_dist_euclidian(here,there) <= minimum_range)
 		add_overlay("pinon[alert ? "alert" : ""]direct[icon_suffix]")
-=======
-		add_overlay("pinon[alert ? "alert" : ""]null")
-		return
-	if(get_dist_euclidian(here,there) <= minimum_range)
-		add_overlay("pinon[alert ? "alert" : ""]direct")
->>>>>>> Updated this old code to fork
 	else
 		setDir(get_dir(here, there))
 		switch(get_dist(here, there))
 			if(1 to 8)
-<<<<<<< HEAD
 				add_overlay("pinon[alert ? "alert" : "close"][icon_suffix]")
 			if(9 to 16)
 				add_overlay("pinon[alert ? "alert" : "medium"][icon_suffix]")
 			if(16 to INFINITY)
 				add_overlay("pinon[alert ? "alert" : "far"][icon_suffix]")
-=======
-				add_overlay("pinon[alert ? "alert" : "close"]")
-			if(9 to 16)
-				add_overlay("pinon[alert ? "alert" : "medium"]")
-			if(16 to INFINITY)
-				add_overlay("pinon[alert ? "alert" : "far"]")
->>>>>>> Updated this old code to fork
 
 /obj/item/pinpointer/crew // A replacement for the old crew monitoring consoles
 	name = "crew pinpointer"
 	desc = "A handheld tracking device that points to crew suit sensors."
 	icon_state = "pinpointer_crew"
 	custom_price = 150
-<<<<<<< HEAD
 	var/has_owner = FALSE
 	var/pinpointer_owner = null
-=======
->>>>>>> Updated this old code to fork
 
 /obj/item/pinpointer/crew/proc/trackable(mob/living/carbon/human/H)
 	var/turf/here = get_turf(src)
@@ -133,11 +96,7 @@
 		var/obj/item/clothing/under/U = H.w_uniform
 
 		// Suit sensors must be on maximum.
-<<<<<<< HEAD
 		if(!U.has_sensor || (U.sensor_mode < SENSOR_COORDS && !ignore_suit_sensor_level))
-=======
-		if(!U.has_sensor || U.sensor_mode < SENSOR_COORDS)
->>>>>>> Updated this old code to fork
 			return FALSE
 
 		var/turf/there = get_turf(H)
@@ -151,7 +110,6 @@
 		user.visible_message("<span class='notice'>[user] deactivates [user.p_their()] pinpointer.</span>", "<span class='notice'>You deactivate your pinpointer.</span>")
 		return
 
-<<<<<<< HEAD
 	if (has_owner && !pinpointer_owner)
 		pinpointer_owner = user
 
@@ -159,8 +117,6 @@
 		to_chat(user, "<span class='notice'>The pinpointer doesn't respond. It seems to only recognise its owner.</span>")
 		return
 
-=======
->>>>>>> Updated this old code to fork
 	var/list/name_counts = list()
 	var/list/names = list()
 
@@ -220,11 +176,7 @@
 		return
 	var/mob/mob_holder = get(target, /mob)
 	if(istype(mob_holder))
-<<<<<<< HEAD
 		. += "Its pair is being held by [mob_holder]."
-=======
-		to_chat(user, "Its pair is being held by [mob_holder].")
->>>>>>> Updated this old code to fork
 		return
 
 /obj/item/storage/box/pinpointer_pairs
@@ -236,7 +188,6 @@
 
 	A.other_pair = B
 	B.other_pair = A
-<<<<<<< HEAD
 
 /obj/item/pinpointer/shuttle
 	name = "fugitive pinpointer"
@@ -255,5 +206,3 @@
 /obj/item/pinpointer/shuttle/Destroy()
 	shuttleport = null
 	. = ..()
-=======
->>>>>>> Updated this old code to fork

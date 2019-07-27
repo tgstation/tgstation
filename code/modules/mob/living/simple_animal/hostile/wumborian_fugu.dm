@@ -71,7 +71,6 @@
 /datum/action/innate/fugu/expand/Activate()
 	var/mob/living/simple_animal/hostile/asteroid/fugu/F = owner
 	if(F.wumbo)
-<<<<<<< HEAD
 		to_chat(F, "<span class='warning'>YOU'RE ALREADY WUMBO!</span>")
 		return
 	if(F.inflate_cooldown)
@@ -79,15 +78,6 @@
 		return
 	if(F.buffed)
 		to_chat(F, "<span class='warning'>Something is interfering with your growth!</span>")
-=======
-		to_chat(F, "<span class='notice'>YOU'RE ALREADY WUMBO!</span>")
-		return
-	if(F.inflate_cooldown)
-		to_chat(F, "<span class='notice'>You need time to gather your strength.</span>")
-		return
-	if(F.buffed)
-		to_chat(F, "<span class='notice'>Something is interfering with your growth.</span>")
->>>>>>> Updated this old code to fork
 		return
 	F.wumbo = 1
 	F.icon_state = "Fugu1"

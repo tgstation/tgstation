@@ -3,76 +3,19 @@
 /turf/template_noop,
 /area/template_noop)
 "ab" = (
-<<<<<<< HEAD
 /obj/machinery/power/shieldwallgen{
-=======
-/obj/machinery/shieldwallgen{
->>>>>>> Updated this old code to fork
 	active = 2;
 	anchored = 1;
 	power = 1
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
 "ac" = (
 /obj/effect/spawner/structure/window/reinforced,
-<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/abandonedzoo)
-"ad" = (
-/obj/machinery/shieldwallgen{
-	active = 2;
-	anchored = 1;
-	power = 1
-	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/abandonedzoo)
-"ae" = (
-/obj/machinery/shieldwallgen{
-	active = 2;
-	anchored = 1;
-	power = 1
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/abandonedzoo)
-"af" = (
-/obj/machinery/shieldwallgen{
-	active = 2;
-	anchored = 1;
-	power = 1
-	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/abandonedzoo)
->>>>>>> Updated this old code to fork
 "ag" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -87,16 +30,6 @@
 /obj/structure/flora/rock,
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/abandonedzoo)
-<<<<<<< HEAD
-=======
-"ak" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/abandonedzoo)
->>>>>>> Updated this old code to fork
 "al" = (
 /obj/structure/flora/ausbushes/genericbush,
 /turf/open/floor/grass,
@@ -202,17 +135,10 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/abandonedzoo)
 "aD" = (
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/machinery/door/airlock/highsecurity{
 	name = "Bio Containment";
 	req_one_access_txt = "47"
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -228,17 +154,10 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aE" = (
 /obj/machinery/power/shieldwallgen{
-=======
-/turf/open/floor/plasteel/dark/side,
-/area/ruin/space/has_grav/abandonedzoo)
-"aE" = (
-/obj/machinery/shieldwallgen{
->>>>>>> Updated this old code to fork
 	active = 2;
 	anchored = 1;
 	power = 1
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
@@ -247,85 +166,14 @@
 /obj/item/gun/energy/floragun,
 /turf/open/floor/plasteel/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
-=======
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/abandonedzoo)
-"aF" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/closed/wall/r_wall,
-/area/ruin/space/has_grav/abandonedzoo)
-"aG" = (
-/obj/structure/table/reinforced,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/item/gun/energy/floragun,
-/turf/open/floor/plasteel/dark/side,
-/area/ruin/space/has_grav/abandonedzoo)
-"aH" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/ruin/space/has_grav/abandonedzoo)
->>>>>>> Updated this old code to fork
 "aI" = (
 /obj/structure/table/reinforced,
 /obj/machinery/computer/med_data/laptop{
 	dir = 8;
 	pixel_y = 1
 	},
-<<<<<<< HEAD
 /turf/open/floor/plasteel/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/dark/side,
-/area/ruin/space/has_grav/abandonedzoo)
-"aJ" = (
-/obj/machinery/shieldwallgen{
-	active = 2;
-	anchored = 1;
-	power = 1
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/abandonedzoo)
->>>>>>> Updated this old code to fork
 "aK" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -333,7 +181,6 @@
 /turf/template_noop,
 /area/space/nearstation)
 "aL" = (
-<<<<<<< HEAD
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -346,15 +193,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-=======
-/turf/open/floor/plasteel/dark/side,
-/area/ruin/space/has_grav/abandonedzoo)
-"aM" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/closed/wall/r_wall,
->>>>>>> Updated this old code to fork
 /area/ruin/space/has_grav/abandonedzoo)
 "aN" = (
 /obj/structure/table/reinforced,
@@ -393,7 +231,6 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -406,9 +243,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-=======
-/turf/open/floor/plasteel/dark/side,
->>>>>>> Updated this old code to fork
 /area/ruin/space/has_grav/abandonedzoo)
 "aS" = (
 /obj/machinery/power/apc/unlocked{
@@ -417,34 +251,15 @@
 	equipment = 0;
 	lighting = 0;
 	name = "Worn-out APC";
-<<<<<<< HEAD
 	pixel_x = -25
-=======
-	pixel_x = -24
-	},
-/obj/structure/cable{
-	icon_state = "0-4"
->>>>>>> Updated this old code to fork
 	},
 /obj/structure/rack,
 /obj/item/melee/baton/cattleprod,
 /obj/effect/spawner/lootdrop/maintenance,
-<<<<<<< HEAD
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "aT" = (
-=======
-/turf/open/floor/plasteel/dark/side,
-/area/ruin/space/has_grav/abandonedzoo)
-"aT" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /obj/structure/rack,
 /obj/item/clothing/suit/space/hardsuit/medical,
 /obj/item/tank/internals/emergency_oxygen/double,
@@ -503,7 +318,6 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -513,35 +327,13 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
-=======
-/turf/open/floor/plasteel/dark/side,
-/area/ruin/space/has_grav/abandonedzoo)
-"bb" = (
-/obj/machinery/door/airlock/hatch{
-	name = "Bio-Research Station"
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
->>>>>>> Updated this old code to fork
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/abandonedzoo)
-<<<<<<< HEAD
 "bb" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Bio-Research Station"
-=======
-"bc" = (
-/obj/structure/cable{
-	icon_state = "1-2"
->>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -557,12 +349,6 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "bd" = (
 /obj/machinery/power/terminal,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -577,10 +363,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "be" = (
 /obj/structure/reagent_dispensers/fueltank,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "bf" = (
@@ -589,21 +372,12 @@
 	name = "power storage unit"
 	},
 /obj/structure/cable,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "bg" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/machinery/light,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "bh" = (
@@ -649,34 +423,12 @@
 /obj/item/reagent_containers/food/snacks/carrotfries,
 /turf/open/floor/plasteel/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
-<<<<<<< HEAD
-=======
-"bo" = (
-/obj/machinery/shieldwallgen{
-	active = 2;
-	anchored = 1;
-	power = 1
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable,
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/abandonedzoo)
->>>>>>> Updated this old code to fork
 "bp" = (
 /obj/structure/bed,
 /obj/item/bedsheet/green,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
-<<<<<<< HEAD
 "br" = (
 /obj/structure/table/reinforced,
 /obj/machinery/microwave,
@@ -690,43 +442,6 @@
 "bt" = (
 /obj/machinery/power/shieldwallgen,
 /obj/structure/cable,
-=======
-"bq" = (
-/obj/item/stack/cable_coil/cut/red,
-/obj/item/stack/tile/plasteel{
-	pixel_x = 3;
-	pixel_y = -4
-	},
-/obj/item/wirecutters,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/abandonedzoo)
-"br" = (
-/obj/structure/table/reinforced,
-/obj/machinery/microwave,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/dark/side,
-/area/ruin/space/has_grav/abandonedzoo)
-"bs" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/shieldwallgen,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/abandonedzoo)
-"bt" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/shieldwallgen,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
 "bu" = (
@@ -858,10 +573,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "bN" = (
 /obj/structure/grille/broken,
-<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
-=======
->>>>>>> Updated this old code to fork
 /obj/item/shard{
 	icon_state = "small"
 	},
@@ -875,21 +587,6 @@
 /obj/structure/lattice,
 /turf/template_noop,
 /area/space/nearstation)
-<<<<<<< HEAD
-=======
-"bQ" = (
-/obj/machinery/shieldwallgen{
-	active = 2;
-	anchored = 1;
-	power = 1
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/abandonedzoo)
->>>>>>> Updated this old code to fork
 "bR" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -897,17 +594,6 @@
 /obj/structure/disposaloutlet,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
-<<<<<<< HEAD
-=======
-"bS" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable,
-/obj/machinery/shieldwallgen,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/abandonedzoo)
->>>>>>> Updated this old code to fork
 "bT" = (
 /obj/structure/grille,
 /obj/item/shard{
@@ -920,11 +606,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
 "bV" = (
-<<<<<<< HEAD
 /obj/machinery/power/shieldwallgen,
-=======
-/obj/machinery/shieldwallgen,
->>>>>>> Updated this old code to fork
 /turf/template_noop,
 /area/template_noop)
 "bW" = (
@@ -951,7 +633,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/abandonedzoo)
-<<<<<<< HEAD
 "rY" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -1006,25 +687,16 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/abandonedzoo)
-=======
->>>>>>> Updated this old code to fork
 "KN" = (
 /turf/template_noop,
 /area/space/nearstation)
 
 (1,1,1) = {"
 ab
-<<<<<<< HEAD
 ac
 ac
 ac
 ac
-=======
-ag
-ag
-ag
-ag
->>>>>>> Updated this old code to fork
 ab
 aa
 aa
@@ -1033,17 +705,10 @@ aa
 aa
 aa
 ab
-<<<<<<< HEAD
 ac
 ac
 ac
 ac
-=======
-ag
-ag
-ag
-ag
->>>>>>> Updated this old code to fork
 ab
 aa
 "}
@@ -1099,11 +764,7 @@ ac
 at
 at
 bb
-<<<<<<< HEAD
 wF
-=======
-bb
->>>>>>> Updated this old code to fork
 at
 at
 ac
@@ -1123,13 +784,8 @@ ar
 ac
 at
 aS
-<<<<<<< HEAD
 Ck
 Ck
-=======
-ay
-ay
->>>>>>> Updated this old code to fork
 be
 at
 ac
@@ -1141,7 +797,6 @@ ac
 aa
 "}
 (6,1,1) = {"
-<<<<<<< HEAD
 ab
 ac
 ac
@@ -1160,26 +815,6 @@ ac
 ac
 ac
 ab
-=======
-ad
-ak
-ak
-ak
-ak
-aE
-aM
-aT
-bc
-bd
-bf
-aM
-bo
-ak
-ak
-ak
-ak
-bQ
->>>>>>> Updated this old code to fork
 aa
 "}
 (7,1,1) = {"
@@ -1188,7 +823,6 @@ aa
 aa
 at
 at
-<<<<<<< HEAD
 at
 at
 aU
@@ -1197,16 +831,6 @@ Ck
 bg
 at
 at
-=======
-aF
-at
-aU
-ay
-ay
-bg
-at
-aF
->>>>>>> Updated this old code to fork
 by
 bF
 bK
@@ -1224,11 +848,7 @@ aG
 aN
 aV
 ay
-<<<<<<< HEAD
 Ck
-=======
-ay
->>>>>>> Updated this old code to fork
 bh
 bm
 bp
@@ -1245,7 +865,6 @@ aa
 aa
 ag
 ay
-<<<<<<< HEAD
 ay
 aO
 ay
@@ -1254,16 +873,6 @@ Ck
 ay
 ay
 ay
-=======
-aH
-aO
-ay
-ay
-ay
-ay
-ay
-aH
->>>>>>> Updated this old code to fork
 ay
 bG
 bL
@@ -1277,24 +886,14 @@ aa
 aa
 ag
 ay
-<<<<<<< HEAD
-=======
-aH
->>>>>>> Updated this old code to fork
 ay
 ay
 ay
 ay
-<<<<<<< HEAD
 Ck
 ay
 ay
 ay
-=======
-ay
-ay
-bq
->>>>>>> Updated this old code to fork
 ay
 bG
 bM
@@ -1312,11 +911,7 @@ aI
 aP
 aW
 ay
-<<<<<<< HEAD
 Ck
-=======
-ay
->>>>>>> Updated this old code to fork
 bi
 bn
 br
@@ -1333,7 +928,6 @@ aa
 aa
 at
 at
-<<<<<<< HEAD
 at
 at
 aX
@@ -1342,16 +936,6 @@ Ck
 bj
 at
 at
-=======
-aF
-at
-aX
-ay
-ay
-bj
-at
-aF
->>>>>>> Updated this old code to fork
 at
 at
 aa
@@ -1360,7 +944,6 @@ aa
 aa
 "}
 (13,1,1) = {"
-<<<<<<< HEAD
 ab
 ac
 ac
@@ -1379,26 +962,6 @@ ac
 ac
 ac
 bt
-=======
-ae
-ak
-ak
-ak
-ak
-aJ
-at
-aY
-ay
-ay
-bk
-at
-bs
-ak
-ak
-ak
-ak
-bS
->>>>>>> Updated this old code to fork
 aa
 "}
 (14,1,1) = {"
@@ -1411,11 +974,7 @@ ac
 at
 aZ
 ay
-<<<<<<< HEAD
 Ck
-=======
-ay
->>>>>>> Updated this old code to fork
 bl
 at
 ac
@@ -1436,11 +995,7 @@ ac
 at
 at
 bb
-<<<<<<< HEAD
 wF
-=======
-bb
->>>>>>> Updated this old code to fork
 at
 at
 ac
@@ -1462,11 +1017,7 @@ aL
 ba
 aL
 aL
-<<<<<<< HEAD
 rY
-=======
-ba
->>>>>>> Updated this old code to fork
 aL
 aD
 bD
@@ -1498,21 +1049,12 @@ bP
 aa
 "}
 (18,1,1) = {"
-<<<<<<< HEAD
 ab
 ac
 ac
 ac
 ac
 ab
-=======
-af
-ak
-ak
-ak
-ak
-af
->>>>>>> Updated this old code to fork
 aa
 aa
 aa
@@ -1520,13 +1062,8 @@ aa
 aa
 aa
 bt
-<<<<<<< HEAD
 ac
 ac
-=======
-ag
-ag
->>>>>>> Updated this old code to fork
 bN
 bP
 KN

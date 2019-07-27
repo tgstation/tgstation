@@ -19,10 +19,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/docking_port/mobile{
 	callTime = 250;
-<<<<<<< HEAD
-=======
-	dheight = 0;
->>>>>>> Updated this old code to fork
 	dir = 2;
 	dwidth = 11;
 	height = 17;
@@ -180,31 +176,17 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Frigate Bar APC";
 	pixel_x = -25
-=======
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Frigate Bar APC";
-	pixel_x = -24;
-	req_access = null
->>>>>>> Updated this old code to fork
 	},
 /obj/structure/spider/stickyweb,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "au" = (
@@ -365,22 +347,13 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/machinery/door/airlock/external/glass{
 	name = "E.V.A Access"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "aK" = (
@@ -413,86 +386,37 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "aQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
-/area/shuttle/abandoned/crew)
-"aR" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
-	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "aS" = (
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "aT" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/machinery/airalarm/all_access{
 	pixel_y = 24
 	},
@@ -507,35 +431,15 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "aU" = (
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Frigate Crew Quarters APC";
 	pixel_y = 23
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Frigate Crew Quarters APC";
-	pixel_y = 24;
-	req_access = null
->>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -543,29 +447,17 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "aV" = (
 /obj/machinery/light/small/built,
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "aW" = (
@@ -573,12 +465,6 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/machinery/door/airlock/external/glass{
 	name = "E.V.A Access"
 	},
@@ -586,10 +472,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "aX" = (
@@ -600,19 +483,10 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark{
 	dir = 8
 	},
@@ -622,19 +496,10 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/crew)
 "aZ" = (
@@ -645,29 +510,14 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/crew)
 "ba" = (
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -675,10 +525,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "bb" = (
@@ -780,11 +627,7 @@
 /obj/structure/girder/displaced,
 /obj/item/stack/sheet/mineral/titanium,
 /obj/item/stack/rods,
-<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
-=======
-/obj/item/stack/cable_coil/cut/red,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/bar)
 "bi" = (
@@ -807,19 +650,10 @@
 	dir = 4;
 	pixel_x = -24
 	},
-<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "bl" = (
@@ -844,22 +678,13 @@
 /obj/machinery/light/small/built{
 	dir = 8
 	},
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /obj/structure/spider/stickyweb,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "bo" = (
@@ -894,20 +719,11 @@
 "bq" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/door/firedoor,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /obj/machinery/door/airlock/public/glass{
 	name = "Crew Quarters"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "br" = (
@@ -988,15 +804,8 @@
 /area/shuttle/abandoned/engine)
 "bz" = (
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "bA" = (
@@ -1028,15 +837,8 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/door/firedoor,
-<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bridge)
 "bD" = (
@@ -1058,17 +860,9 @@
 /area/shuttle/abandoned/crew)
 "bG" = (
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "bH" = (
@@ -1177,20 +971,11 @@
 /area/shuttle/abandoned/engine)
 "bQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /obj/structure/spider/stickyweb,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "bR" = (
@@ -1202,15 +987,8 @@
 	req_access = null
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bridge)
 "bS" = (
@@ -1244,12 +1022,6 @@
 "bU" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /obj/machinery/airalarm/all_access{
 	dir = 8;
 	pixel_x = 24
@@ -1259,10 +1031,7 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "bV" = (
@@ -1306,15 +1075,8 @@
 /area/shuttle/abandoned/bridge)
 "bX" = (
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bridge)
 "bY" = (
@@ -1356,19 +1118,10 @@
 /area/shuttle/abandoned/crew)
 "cb" = (
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
 /obj/structure/spider/stickyweb,
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/spider/stickyweb,
-/obj/effect/turf_decal/tile/blue,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "cc" = (
@@ -1380,15 +1133,8 @@
 	name = "Engineering"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "ce" = (
@@ -1402,21 +1148,10 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-<<<<<<< HEAD
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Frigate Bridge APC";
 	pixel_x = -25
-=======
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Frigate Bridge APC";
-	pixel_x = -24;
-	req_access = null
->>>>>>> Updated this old code to fork
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -1424,31 +1159,16 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bridge)
 "cf" = (
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/item/gun/energy/laser/retro,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /mob/living/simple_animal/hostile/poison/giant_spider/tarantula{
 	desc = "Furry and black, it makes you shudder to look at it. This one has abyssal red eyes, and looks abnormally thin and frail.";
 	environment_smash = 0;
@@ -1486,20 +1206,11 @@
 /area/shuttle/abandoned/bridge)
 "cj" = (
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /obj/structure/spider/stickyweb,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "ck" = (
@@ -1513,18 +1224,11 @@
 /obj/machinery/power/smes/engineering{
 	charge = 1e+006
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "cl" = (
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Frigate Engineering APC";
@@ -1532,24 +1236,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Frigate Engineering APC";
-	pixel_x = 24;
-	req_access = null
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "cm" = (
@@ -1590,15 +1276,8 @@
 	pixel_x = 2;
 	pixel_y = 2
 	},
-<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bridge)
 "co" = (
@@ -1636,20 +1315,11 @@
 /area/shuttle/abandoned/crew)
 "cr" = (
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "cs" = (
@@ -1660,27 +1330,14 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-<<<<<<< HEAD
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
 /obj/item/wrench,
-=======
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/space_heater,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "ct" = (
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /obj/machinery/button/door{
 	id = "whiteship_windows";
 	name = "Windows Blast Door Control";
@@ -1694,10 +1351,7 @@
 	pixel_y = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bridge)
 "cu" = (
@@ -1722,12 +1376,6 @@
 "cv" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -1740,10 +1388,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "cw" = (
@@ -1773,30 +1418,14 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
 /obj/machinery/space_heater,
-=======
-/obj/machinery/power/port_gen/pacman{
-	anchored = 1
-	},
-/obj/structure/cable,
-/obj/item/wrench,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "cC" = (
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
 /obj/effect/decal/cleanable/oil,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/effect/decal/cleanable/oil,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "cD" = (
@@ -1807,11 +1436,7 @@
 	},
 /obj/structure/table,
 /obj/machinery/cell_charger,
-<<<<<<< HEAD
 /obj/item/stack/cable_coil,
-=======
-/obj/item/stack/cable_coil/red,
->>>>>>> Updated this old code to fork
 /obj/item/stock_parts/cell/high,
 /obj/item/multitool{
 	pixel_y = -13
@@ -1949,20 +1574,11 @@
 	dir = 4;
 	pixel_x = -24
 	},
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /obj/structure/spider/stickyweb,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "cO" = (
@@ -1977,12 +1593,6 @@
 /obj/machinery/light/small/built{
 	dir = 8
 	},
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -1990,10 +1600,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/medbay)
 "cQ" = (
@@ -2027,15 +1634,8 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/door/firedoor,
-<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/medbay)
 "cU" = (
@@ -2153,37 +1753,19 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
->>>>>>> Updated this old code to fork
 /obj/structure/spider/stickyweb,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "dd" = (
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "de" = (
@@ -2191,50 +1773,23 @@
 	name = "Engineering"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "df" = (
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/medbay)
 "dg" = (
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/medbay)
 "dh" = (
@@ -2242,19 +1797,10 @@
 /obj/machinery/door/airlock/medical{
 	name = "Medbay Storage"
 	},
-<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/medbay)
 "di" = (
@@ -2270,12 +1816,6 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/structure/spider/stickyweb,
 /obj/machinery/firealarm{
 	pixel_y = 24
@@ -2283,50 +1823,25 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white/side{
 	dir = 9
 	},
 /area/shuttle/abandoned/medbay)
 "dk" = (
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
 /area/shuttle/abandoned/medbay)
 "dl" = (
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
@@ -2336,19 +1851,10 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white/side{
 	dir = 5
 	},
@@ -2359,37 +1865,19 @@
 	},
 /obj/machinery/light/small/built,
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/medbay)
 "do" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/medbay)
 "dp" = (
@@ -2398,29 +1886,15 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small,
-<<<<<<< HEAD
 /obj/structure/spider/stickyweb,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/spider/stickyweb,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/medbay)
 "dq" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/machinery/door/airlock/external/glass{
 	name = "E.V.A Access"
 	},
@@ -2429,10 +1903,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/medbay)
 "dr" = (
@@ -2440,22 +1911,13 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/machinery/door/airlock/external/glass{
 	name = "E.V.A Access"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/cargo)
 "ds" = (
@@ -2467,20 +1929,11 @@
 /area/shuttle/abandoned/cargo)
 "dt" = (
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/cargo)
 "du" = (
@@ -2527,11 +1980,7 @@
 /obj/item/shard,
 /obj/effect/turf_decal/bot_white,
 /obj/item/stack/rods,
-<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
-=======
-/obj/item/stack/cable_coil/cut/red,
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -2563,11 +2012,7 @@
 	amount = 3
 	},
 /obj/item/shard,
-<<<<<<< HEAD
 /obj/item/stack/cable_coil/cut,
-=======
-/obj/item/stack/cable_coil/cut/red,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/cargo)
 "dA" = (
@@ -2632,13 +2077,7 @@
 /area/shuttle/abandoned/medbay)
 "dG" = (
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
->>>>>>> Updated this old code to fork
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter{
 	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes, and looks abnormally thin and frail.";
 	environment_smash = 0;
@@ -2669,22 +2108,12 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Frigate Cargo APC";
 	pixel_x = -25
 	},
 /obj/structure/cable,
-=======
-/obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Frigate Cargo APC";
-	pixel_x = -24;
-	req_access = null
-	},
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/cargo)
 "dK" = (
@@ -2770,22 +2199,12 @@
 /obj/machinery/iv_drip,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/bot,
-<<<<<<< HEAD
 /obj/machinery/power/apc{
 	name = "Frigate Medbay APC";
 	pixel_y = -24
 	},
 /obj/structure/spider/stickyweb,
 /obj/structure/cable,
-=======
-/obj/structure/cable,
-/obj/machinery/power/apc{
-	name = "Frigate Medbay APC";
-	pixel_y = -24;
-	req_access = null
-	},
-/obj/structure/spider/stickyweb,
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel/white,
 /area/shuttle/abandoned/medbay)
 "dR" = (
@@ -2937,20 +2356,11 @@
 /area/shuttle/abandoned/medbay)
 "oo" = (
 /obj/effect/decal/cleanable/dirt/dust,
-<<<<<<< HEAD
-=======
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
->>>>>>> Updated this old code to fork
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-<<<<<<< HEAD
 /obj/structure/cable,
-=======
->>>>>>> Updated this old code to fork
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "vm" = (
@@ -3107,11 +2517,7 @@ iM
 ac
 aj
 aC
-<<<<<<< HEAD
 aQ
-=======
-aR
->>>>>>> Updated this old code to fork
 bo
 bD
 bS

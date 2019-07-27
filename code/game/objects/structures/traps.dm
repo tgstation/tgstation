@@ -6,33 +6,21 @@
 	density = FALSE
 	anchored = TRUE
 	alpha = 30 //initially quite hidden when not "recharging"
-<<<<<<< HEAD
 	var/flare_message = "<span class='warning'>the trap flares brightly!</span>"
 	var/last_trigger = 0
 	var/time_between_triggers = 600 //takes a minute to recharge
 	var/charges = INFINITY
 	var/checks_antimagic = TRUE
-=======
-	var/last_trigger = 0
-	var/time_between_triggers = 600 //takes a minute to recharge
-	var/charges = INFINITY
->>>>>>> Updated this old code to fork
 
 	var/list/static/ignore_typecache
 	var/list/mob/immune_minds = list()
 
-<<<<<<< HEAD
 	var/sparks = TRUE
-=======
->>>>>>> Updated this old code to fork
 	var/datum/effect_system/spark_spread/spark_system
 
 /obj/structure/trap/Initialize(mapload)
 	. = ..()
-<<<<<<< HEAD
 	flare_message = "<span class='warning'>[src] flares brightly!</span>"
-=======
->>>>>>> Updated this old code to fork
 	spark_system = new
 	spark_system.set_up(4,1,src)
 	spark_system.attach(src)
@@ -54,24 +42,15 @@
 	if(user.mind && user.mind in immune_minds)
 		return
 	if(get_dist(user, src) <= 1)
-<<<<<<< HEAD
 		. += "<span class='notice'>You reveal [src]!</span>"
-=======
-		to_chat(user, "<span class='notice'>You reveal [src]!</span>")
->>>>>>> Updated this old code to fork
 		flare()
 
 /obj/structure/trap/proc/flare()
 	// Makes the trap visible, and starts the cooldown until it's
 	// able to be triggered again.
-<<<<<<< HEAD
 	visible_message(flare_message)
 	if(sparks)
 		spark_system.start()
-=======
-	visible_message("<span class='warning'>[src] flares brightly!</span>")
-	spark_system.start()
->>>>>>> Updated this old code to fork
 	alpha = 200
 	last_trigger = world.time
 	charges--
@@ -91,11 +70,7 @@
 		var/mob/M = AM
 		if(M.mind in immune_minds)
 			return
-<<<<<<< HEAD
 		if(checks_antimagic && M.anti_magic_check())
-=======
-		if(M.anti_magic_check())
->>>>>>> Updated this old code to fork
 			flare()
 			return
 	if(charges <= 0)
@@ -111,7 +86,6 @@
 	name = "shock trap"
 	desc = "A trap that will shock and render you immobile. You'd better avoid it."
 	icon_state = "trap-shock"
-<<<<<<< HEAD
 	var/stun_time = 100
 
 /obj/structure/trap/stun/trap_effect(mob/living/L)
@@ -191,12 +165,6 @@
 	QDEL_NULL(radio)
 	QDEL_NULL(spark_system)
 	. = ..()
-=======
-
-/obj/structure/trap/stun/trap_effect(mob/living/L)
-	L.electrocute_act(30, src, safety=1) // electrocute act does a message.
-	L.Paralyze(100)
->>>>>>> Updated this old code to fork
 
 /obj/structure/trap/fire
 	name = "flame trap"

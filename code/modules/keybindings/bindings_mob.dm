@@ -6,11 +6,7 @@
 	switch(_key)
 		if("Delete", "H")
 			if(!pulling)
-<<<<<<< HEAD
 				to_chat(src, "<span class='warning'>You are not pulling anything!</span>")
-=======
-				to_chat(src, "<span class='notice'>You are not pulling anything.</span>")
->>>>>>> Updated this old code to fork
 			else
 				stop_pulling()
 			return
@@ -83,8 +79,4 @@
 		if("Alt")
 			toggle_move_intent()
 			return
-<<<<<<< HEAD
 	return ..()
-=======
-	return ..()
->>>>>>> Updated this old code to fork

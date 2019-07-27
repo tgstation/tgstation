@@ -17,7 +17,6 @@
 	time = 125
 
 /datum/surgery_step/thread_veins/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-<<<<<<< HEAD
 	display_results(user, target, "<span class='notice'>You start weaving [target]'s circulatory system.</span>",
 		"[user] starts weaving [target]'s circulatory system.",
 		"[user] starts manipulating [target]'s circulatory system.")
@@ -26,12 +25,6 @@
 	display_results(user, target, "<span class='notice'>You weave [target]'s circulatory system into a resistant mesh!</span>",
 		"[user] weaves [target]'s circulatory system into a resistant mesh!",
 		"[user] finishes manipulating [target]'s circulatory system.")
-=======
-	user.visible_message("[user] starts weaving [target]'s circulatory system.", "<span class='notice'>You start weaving [target]'s circulatory system.</span>")
-
-/datum/surgery_step/thread_veins/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] weaves [target]'s circulatory system into a resistant mesh!", "<span class='notice'>You weave [target]'s circulatory system into a resistant mesh!</span>")
->>>>>>> Updated this old code to fork
 	new /datum/bioware/threaded_veins(target)
 	return TRUE
 

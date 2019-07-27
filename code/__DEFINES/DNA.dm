@@ -4,11 +4,7 @@
 
 //Defines copying names of mutations in all cases, make sure to change this if you change mutation's type
 #define HULK		/datum/mutation/human/hulk
-<<<<<<< HEAD
 #define XRAY		/datum/mutation/human/thermal/x_ray
-=======
-#define XRAY		/datum/mutation/human/x_ray
->>>>>>> Updated this old code to fork
 #define SPACEMUT	/datum/mutation/human/space_adaptation
 #define TK			/datum/mutation/human/telekinesis
 #define NERVOUS		/datum/mutation/human/nervousness
@@ -16,10 +12,7 @@
 #define MUTATE		/datum/mutation/human/bad_dna
 #define COUGH		/datum/mutation/human/cough
 #define DWARFISM	/datum/mutation/human/dwarfism
-<<<<<<< HEAD
 #define GIGANTISM	/datum/mutation/human/gigantism
-=======
->>>>>>> Updated this old code to fork
 #define CLOWNMUT	/datum/mutation/human/clumsy
 #define TOURETTES	/datum/mutation/human/tourettes
 #define DEAFMUT		/datum/mutation/human/deaf
@@ -38,16 +31,11 @@
 #define ELVIS		/datum/mutation/human/elvis
 #define RADIOACTIVE	/datum/mutation/human/radioactive
 #define GLOWY		/datum/mutation/human/glow
-<<<<<<< HEAD
 #define TELEPATHY	/datum/mutation/human/telepathy
-=======
-#define TELEPATHY	/datum/mutation/human/telepath
->>>>>>> Updated this old code to fork
 #define FIREBREATH	/datum/mutation/human/firebreath
 #define VOID		/datum/mutation/human/void
 #define STRONG    	/datum/mutation/human/strong
 #define FIRESWEAT	/datum/mutation/human/fire
-<<<<<<< HEAD
 #define THERMAL		/datum/mutation/human/thermal
 #define ANTENNA		/datum/mutation/human/antenna
 #define PARANOIA	/datum/mutation/human/paranoia
@@ -61,12 +49,6 @@
 #define EXTRASTUN	/datum/mutation/human/extrastun
 #define GELADIKINESIS		/datum/mutation/human/geladikinesis
 #define CRYOKINESIS /datum/mutation/human/cryokinesis
-=======
-#define INSULATED	/datum/mutation/human/insulated
-#define SHOCKTOUCH	/datum/mutation/human/shock
-#define OLFACTION	/datum/mutation/human/olfaction
-#define YELLING		/datum/mutation/human/yelling
->>>>>>> Updated this old code to fork
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"
@@ -111,11 +93,8 @@
 #define TR_KEEPSE		(1<<5)	// changelings shouldn't edit the DNA's SE when turning into a monkey
 #define TR_DEFAULTMSG	(1<<6)
 #define TR_KEEPORGANS	(1<<8)
-<<<<<<< HEAD
 #define TR_KEEPSTUNS	(1<<9)
 #define TR_KEEPREAGENTS	(1<<10)
-=======
->>>>>>> Updated this old code to fork
 
 
 #define CLONER_FRESH_CLONE "fresh"
@@ -133,7 +112,6 @@
 #define NOZOMBIE		9
 #define DIGITIGRADE		10	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
 #define NO_UNDERWEAR	11
-<<<<<<< HEAD
 #define NOSTOMACH		12
 #define NO_DNA_COPY     13
 #define DRINKSBLOOD		14
@@ -141,15 +119,6 @@
 #define DYNCOLORS		16 //Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
 #define AGENDER			17
 #define NOEYESPRITES	18 //Do not draw eyes or eyeless overlay
-=======
-#define NOLIVER			12
-#define NOSTOMACH		13
-#define NO_DNA_COPY     14
-#define DRINKSBLOOD		15
-#define NOEYES			16
-#define DYNCOLORS		17 //Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
-#define AGENDER			18
->>>>>>> Updated this old code to fork
 
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_APPENDIX "appendix"
@@ -173,7 +142,6 @@
 #define ORGAN_SLOT_BRAIN_ANTIDROP "brain_antidrop"
 #define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
 #define ORGAN_SLOT_TAIL "tail"
-<<<<<<< HEAD
 #define ORGAN_SLOT_PARASITE_EGG "parasite_egg"
 
 
@@ -185,5 +153,3 @@
 #define G_MALE 1
 #define G_FEMALE 2
 #define G_PLURAL 3
-=======
->>>>>>> Updated this old code to fork

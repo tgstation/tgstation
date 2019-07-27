@@ -70,11 +70,7 @@
 	//initialize things that are normally initialized after map load
 	parsed.initTemplateBounds()
 	smooth_zlevel(world.maxz)
-<<<<<<< HEAD
 	log_game("Z-level [name] loaded at [x],[y],[world.maxz]")
-=======
-	log_game("Z-level [name] loaded at at [x],[y],[world.maxz]")
->>>>>>> Updated this old code to fork
 
 	return level
 
@@ -88,7 +84,6 @@
 	if(T.y+height > world.maxy)
 		return
 
-<<<<<<< HEAD
 	var/list/border = block(locate(max(T.x-1, 1),			max(T.y-1, 1),			 T.z),
 							locate(min(T.x+width+1, world.maxx),	min(T.y+height+1, world.maxy), T.z))
 	for(var/L in border)
@@ -96,8 +91,6 @@
 		SSair.remove_from_active(turf_to_disable) //stop processing turfs along the border to prevent runtimes, we return it in initTemplateBounds()
 		turf_to_disable.atmos_adjacent_turfs?.Cut()
 
-=======
->>>>>>> Updated this old code to fork
 	// Accept cached maps, but don't save them automatically - we don't want
 	// ruins clogging up memory for the whole round.
 	var/datum/parsed_map/parsed = cached_map || new(file(mappath))
@@ -114,11 +107,7 @@
 	//initialize things that are normally initialized after map load
 	parsed.initTemplateBounds()
 
-<<<<<<< HEAD
 	log_game("[name] loaded at [T.x],[T.y],[T.z]")
-=======
-	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
->>>>>>> Updated this old code to fork
 	return bounds
 
 /datum/map_template/proc/get_affected_turfs(turf/T, centered = FALSE)

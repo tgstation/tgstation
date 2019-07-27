@@ -912,13 +912,10 @@
 	},
 /turf/open/indestructible/paper,
 /area/ruin/powered)
-<<<<<<< HEAD
 "Ns" = (
 /obj/item/paper/secretrecipe,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
-=======
->>>>>>> Updated this old code to fork
 
 (1,1,1) = {"
 aa
@@ -2253,11 +2250,7 @@ ap
 az
 af
 al
-<<<<<<< HEAD
 Ns
-=======
-aA
->>>>>>> Updated this old code to fork
 bW
 ca
 af

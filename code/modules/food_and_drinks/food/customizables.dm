@@ -22,11 +22,7 @@
 	var/customname = "custom"
 
 /obj/item/reagent_containers/food/snacks/customizable/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
-=======
-	..()
->>>>>>> Updated this old code to fork
 	var/ingredients_listed = ""
 	for(var/obj/item/reagent_containers/food/snacks/ING in ingredients)
 		ingredients_listed += "[ING.name], "
@@ -37,11 +33,7 @@
 		size = "big"
 	if(ingredients.len>8)
 		size = "monster"
-<<<<<<< HEAD
 	. += "It contains [ingredients.len?"[ingredients_listed]":"no ingredient, "]making a [size]-sized [initial(name)]."
-=======
-	to_chat(user, "It contains [ingredients.len?"[ingredients_listed]":"no ingredient, "]making a [size]-sized [initial(name)].")
->>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/snacks/customizable/attackby(obj/item/I, mob/user, params)
 	if(!istype(I, /obj/item/reagent_containers/food/snacks/customizable) && istype(I, /obj/item/reagent_containers/food/snacks))
@@ -195,11 +187,7 @@
 	desc = "Delicious food on a stick."
 	ingredients_placement = INGREDIENTS_LINE
 	trash = /obj/item/stack/rods
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
-=======
-	list_reagents = list("nutriment" = 1)
->>>>>>> Updated this old code to fork
 	ingMax = 6
 	icon_state = "rod"
 
@@ -303,11 +291,7 @@
 	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "bowl"
 	reagent_flags = OPENCONTAINER
-<<<<<<< HEAD
 	materials = list(/datum/material/glass = 500)
-=======
-	materials = list(MAT_GLASS = 500)
->>>>>>> Updated this old code to fork
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/reagent_containers/glass/bowl/attackby(obj/item/I,mob/user, params)
@@ -318,11 +302,7 @@
 		else if(contents.len >= 20)
 			to_chat(user, "<span class='warning'>You can't add more ingredients to [src]!</span>")
 		else
-<<<<<<< HEAD
 			if(reagents.has_reagent(/datum/reagent/water, 10)) //are we starting a soup or a salad?
-=======
-			if(reagents.has_reagent("water", 10)) //are we starting a soup or a salad?
->>>>>>> Updated this old code to fork
 				var/obj/item/reagent_containers/food/snacks/customizable/A = new/obj/item/reagent_containers/food/snacks/customizable/soup(get_turf(src))
 				A.initialize_custom_food(src, S, user)
 			else

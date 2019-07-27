@@ -7,10 +7,6 @@
 	break_message = "<span class='warning'>The vent snaps and collapses!</span>"
 	max_integrity = 100
 	density = FALSE
-<<<<<<< HEAD
-=======
-	layer = BELOW_OBJ_LAYER
->>>>>>> Updated this old code to fork
 
 /obj/structure/destructible/clockwork/trap/steam_vent/activate()
 	opacity = !opacity

@@ -166,11 +166,7 @@
 		add_overlay("glass_raised")
 
 /obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
-<<<<<<< HEAD
 	to_chat(user, "<span class='caution'> Resetting circuitry...</span>")
-=======
-	to_chat(user, "<span class = 'caution'> Resetting circuitry...</span>")
->>>>>>> Updated this old code to fork
 	playsound(src, 'sound/machines/locktoggle.ogg', 50, 1)
 	if(do_after(user, 20, target = src))
 		to_chat(user, "<span class='caution'>You [locked ? "disable" : "re-enable"] the locking modules.</span>")

@@ -42,11 +42,7 @@
 	lose_text = "<span class='notice'>You feel smart again.</span>"
 
 /datum/brain_trauma/mild/dumbness/on_gain()
-<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_DUMB, TRAUMA_TRAIT)
-=======
-	owner.add_trait(TRAIT_DUMB, TRAUMA_TRAIT)
->>>>>>> Updated this old code to fork
 	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "dumb", /datum/mood_event/oblivious)
 	..()
 
@@ -59,11 +55,7 @@
 	..()
 
 /datum/brain_trauma/mild/dumbness/on_lose()
-<<<<<<< HEAD
 	REMOVE_TRAIT(owner, TRAIT_DUMB, TRAUMA_TRAIT)
-=======
-	owner.remove_trait(TRAIT_DUMB, TRAUMA_TRAIT)
->>>>>>> Updated this old code to fork
 	owner.derpspeech = 0
 	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "dumb")
 	..()
@@ -76,19 +68,11 @@
 	lose_text = "<span class='danger'>Your mind feels more clear.</span>"
 
 /datum/brain_trauma/mild/speech_impediment/on_gain()
-<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/mild/speech_impediment/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, TRAUMA_TRAIT)
-=======
-	owner.add_trait(TRAIT_UNINTELLIGIBLE_SPEECH, TRAUMA_TRAIT)
-	..()
-
-/datum/brain_trauma/mild/speech_impediment/on_lose()
-	owner.remove_trait(TRAIT_UNINTELLIGIBLE_SPEECH, TRAUMA_TRAIT)
->>>>>>> Updated this old code to fork
 	..()
 
 /datum/brain_trauma/mild/concussion
@@ -173,65 +157,12 @@
 	gain_text = "<span class='warning'>Your muscles feel oddly faint.</span>"
 	lose_text = "<span class='notice'>You feel in control of your muscles again.</span>"
 
-<<<<<<< HEAD
 /datum/brain_trauma/mild/muscle_spasms/on_gain()
 	owner.apply_status_effect(STATUS_EFFECT_SPASMS)
 	..()
 
 /datum/brain_trauma/mild/muscle_spasms/on_lose()
 	owner.remove_status_effect(STATUS_EFFECT_SPASMS)
-=======
-/datum/brain_trauma/mild/muscle_spasms/on_life()
-	if(prob(7))
-		switch(rand(1,5))
-			if(1)
-				if((owner.mobility_flags & MOBILITY_MOVE) && !isspaceturf(owner.loc))
-					to_chat(owner, "<span class='warning'>Your leg spasms!</span>")
-					step(owner, pick(GLOB.cardinals))
-			if(2)
-				if(owner.incapacitated())
-					return
-				var/obj/item/I = owner.get_active_held_item()
-				if(I)
-					to_chat(owner, "<span class='warning'>Your fingers spasm!</span>")
-					owner.log_message("used [I] due to a Muscle Spasm", LOG_ATTACK)
-					I.attack_self(owner)
-			if(3)
-				var/prev_intent = owner.a_intent
-				owner.a_intent = INTENT_HARM
-
-				var/range = 1
-				if(istype(owner.get_active_held_item(), /obj/item/gun)) //get targets to shoot at
-					range = 7
-
-				var/list/mob/living/targets = list()
-				for(var/mob/M in oview(owner, range))
-					if(isliving(M))
-						targets += M
-				if(LAZYLEN(targets))
-					to_chat(owner, "<span class='warning'>Your arm spasms!</span>")
-					owner.log_message(" attacked someone due to a Muscle Spasm", LOG_ATTACK) //the following attack will log itself
-					owner.ClickOn(pick(targets))
-				owner.a_intent = prev_intent
-			if(4)
-				var/prev_intent = owner.a_intent
-				owner.a_intent = INTENT_HARM
-				to_chat(owner, "<span class='warning'>Your arm spasms!</span>")
-				owner.log_message("attacked [owner.p_them()]self to a Muscle Spasm", LOG_ATTACK)
-				owner.ClickOn(owner)
-				owner.a_intent = prev_intent
-			if(5)
-				if(owner.incapacitated())
-					return
-				var/obj/item/I = owner.get_active_held_item()
-				var/list/turf/targets = list()
-				for(var/turf/T in oview(owner, 3))
-					targets += T
-				if(LAZYLEN(targets) && I)
-					to_chat(owner, "<span class='warning'>Your arm spasms!</span>")
-					owner.log_message("threw [I] due to a Muscle Spasm", LOG_ATTACK)
-					owner.throw_item(pick(targets))
->>>>>>> Updated this old code to fork
 	..()
 
 /datum/brain_trauma/mild/nervous_cough
@@ -242,11 +173,7 @@
 	lose_text = "<span class='notice'>Your throat stops itching.</span>"
 
 /datum/brain_trauma/mild/nervous_cough/on_life()
-<<<<<<< HEAD
 	if(prob(12) && !HAS_TRAIT(owner, TRAIT_SOOTHED_THROAT))
-=======
-	if(prob(12) && !owner.has_trait(TRAIT_SOOTHED_THROAT))
->>>>>>> Updated this old code to fork
 		if(prob(5))
 			to_chat(owner, "<span notice='warning'>[pick("You have a coughing fit!", "You can't stop coughing!")]</span>")
 			owner.Immobilize(20)
@@ -255,7 +182,6 @@
 			addtimer(CALLBACK(owner, /mob/.proc/emote, "cough"), 12)
 		owner.emote("cough")
 	..()
-<<<<<<< HEAD
 
 /datum/brain_trauma/mild/expressive_aphasia
 	name = "Expressive Aphasia"
@@ -336,5 +262,3 @@
 			speak_dejavu += speech_args[SPEECH_MESSAGE]
 	else
 		speak_dejavu += speech_args[SPEECH_MESSAGE]
-=======
->>>>>>> Updated this old code to fork

@@ -55,7 +55,6 @@
 /obj/machinery/microwave/examine(mob/user)
 	. = ..()
 	if(!operating)
-<<<<<<< HEAD
 		. += "<span class='notice'>Alt-click [src] to turn it on.</span>"
 
 	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
@@ -63,28 +62,13 @@
 		return
 	if(operating)
 		. += "<span class='notice'>\The [src] is operating.</span>"
-=======
-		to_chat(user, "<span class='notice'>Alt-click [src] to turn it on.</span>")
-
-	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
-		to_chat(user, "<span class='warning'>You're too far away to examine [src]'s contents and display!</span>")
-		return
-	if(operating)
-		to_chat(user, "<span class='notice'>\The [src] is operating.</span>")
->>>>>>> Updated this old code to fork
 		return
 
 	if(length(ingredients))
 		if(issilicon(user))
-<<<<<<< HEAD
 			. += "<span class='notice'>\The [src] camera shows:</span>"
 		else
 			. += "<span class='notice'>\The [src] contains:</span>"
-=======
-			to_chat(user, "<span class='notice'>\The [src] camera shows:</span>")
-		else
-			to_chat(user, "<span class='notice'>\The [src] contains:</span>")
->>>>>>> Updated this old code to fork
 		var/list/items_counts = new
 		for(var/i in ingredients)
 			if(istype(i, /obj/item/stack))
@@ -94,7 +78,6 @@
 				var/atom/movable/AM = i
 				items_counts[AM.name]++
 		for(var/O in items_counts)
-<<<<<<< HEAD
 			. += "<span class='notice'>- [items_counts[O]]x [O].</span>"
 	else
 		. += "<span class='notice'>\The [src] is empty.</span>"
@@ -103,16 +86,6 @@
 		. += "<span class='notice'>The status display reads:</span>\n"+\
 		"<span class='notice'>- Capacity: <b>[max_n_of_items]</b> items.<span>\n"+\
 		"<span class='notice'>- Cook time reduced by <b>[(efficiency - 1) * 25]%</b>.</span>"
-=======
-			to_chat(user, "<span class='notice'>- [items_counts[O]]x [O].</span>")
-	else
-		to_chat(user, "<span class='notice'>\The [src] is empty.</span>")
-
-	if(!(stat & (NOPOWER|BROKEN)))
-		to_chat(user, "<span class='notice'>The status display reads:</span>")
-		to_chat(user, "<span class='notice'>- Capacity: <b>[max_n_of_items]</b> items.<span>")
-		to_chat(user, "<span class='notice'>- Cook time reduced by <b>[(efficiency - 1) * 25]%</b>.<span>")
->>>>>>> Updated this old code to fork
 
 /obj/machinery/microwave/update_icon()
 	if(broken)
@@ -163,13 +136,8 @@
 
 	if(istype(O, /obj/item/reagent_containers/spray))
 		var/obj/item/reagent_containers/spray/clean_spray = O
-<<<<<<< HEAD
 		if(clean_spray.reagents.has_reagent(/datum/reagent/space_cleaner, clean_spray.amount_per_transfer_from_this))
 			clean_spray.reagents.remove_reagent(/datum/reagent/space_cleaner, clean_spray.amount_per_transfer_from_this,1)
-=======
-		if(clean_spray.reagents.has_reagent("cleaner", clean_spray.amount_per_transfer_from_this))
-			clean_spray.reagents.remove_reagent("cleaner", clean_spray.amount_per_transfer_from_this,1)
->>>>>>> Updated this old code to fork
 			playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 			user.visible_message("[user] has cleaned \the [src].", "<span class='notice'>You clean \the [src].</span>")
 			dirty = 0
@@ -220,21 +188,13 @@
 	..()
 
 /obj/machinery/microwave/AltClick(mob/user)
-<<<<<<< HEAD
 	if(user.canUseTopic(src, !issilicon(usr)))
-=======
-	if(user.canUseTopic(src, BE_CLOSE))
->>>>>>> Updated this old code to fork
 		cook()
 
 /obj/machinery/microwave/ui_interact(mob/user)
 	. = ..()
 
-<<<<<<< HEAD
 	if(operating || panel_open || !anchored || !user.canUseTopic(src, !issilicon(user)))
-=======
-	if(operating || panel_open || !anchored || !user.canUseTopic(src))
->>>>>>> Updated this old code to fork
 		return
 	if(isAI(user) && (stat & NOPOWER))
 		return
@@ -249,11 +209,7 @@
 	var/choice = show_radial_menu(user, src, isAI(user) ? ai_radial_options : radial_options, require_near = !issilicon(user))
 
 	// post choice verification
-<<<<<<< HEAD
 	if(operating || panel_open || !anchored || !user.canUseTopic(src, !issilicon(user)))
-=======
-	if(operating || panel_open || !anchored || !user.canUseTopic(src))
->>>>>>> Updated this old code to fork
 		return
 	if(isAI(user) && (stat & NOPOWER))
 		return
@@ -353,13 +309,8 @@
 	var/metal = 0
 	for(var/obj/item/O in ingredients)
 		O.microwave_act(src)
-<<<<<<< HEAD
 		if(O.materials[/datum/material/iron])
 			metal += O.materials[/datum/material/iron]
-=======
-		if(O.materials[MAT_METAL])
-			metal += O.materials[MAT_METAL]
->>>>>>> Updated this old code to fork
 
 	if(metal)
 		spark()

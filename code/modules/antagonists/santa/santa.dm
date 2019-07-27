@@ -8,13 +8,8 @@
 	give_equipment()
 	give_objective()
 
-<<<<<<< HEAD
 	ADD_TRAIT(owner, TRAIT_CANNOT_OPEN_PRESENTS, TRAIT_SANTA)
 	ADD_TRAIT(owner, TRAIT_PRESENT_VISION, TRAIT_SANTA)
-=======
-	owner.add_trait(TRAIT_CANNOT_OPEN_PRESENTS, TRAIT_SANTA)
-	owner.add_trait(TRAIT_PRESENT_VISION, TRAIT_SANTA)
->>>>>>> Updated this old code to fork
 
 /datum/antagonist/santa/greet()
 	. = ..()

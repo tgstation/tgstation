@@ -109,7 +109,6 @@
 	icon_state = "mouse_gray_dead"
 	bitesize = 3
 	eatverb = "devour"
-<<<<<<< HEAD
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	foodtype = GROSS | MEAT | RAW
 	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5)
@@ -118,11 +117,6 @@
 	. = ..()
 	if (reagents?.has_reagent(/datum/reagent/yuck) || reagents?.has_reagent(/datum/reagent/fuel))
 		. += "<span class='warning'>It's dripping with fuel and smells terrible.</span>"
-=======
-	list_reagents = list("nutriment" = 3, "vitamin" = 2)
-	foodtype = GROSS | MEAT | RAW
-	grind_results = list("blood" = 20, "liquidgibs" = 5)
->>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/snacks/deadmouse/attackby(obj/item/I, mob/user, params)
 	if(I.is_sharp() && user.a_intent == INTENT_HARM)
@@ -135,7 +129,6 @@
 	else
 		return ..()
 
-<<<<<<< HEAD
 /obj/item/reagent_containers/food/snacks/deadmouse/afterattack(obj/target, mob/living/user, proximity_flag)
 	if(proximity_flag && reagents && target.is_open_container())
 		// is_open_container will not return truthy if target.reagents doesn't exist
@@ -149,7 +142,5 @@
 	else
 		return ..()
 
-=======
->>>>>>> Updated this old code to fork
 /obj/item/reagent_containers/food/snacks/deadmouse/on_grind()
 	reagents.clear_reagents()

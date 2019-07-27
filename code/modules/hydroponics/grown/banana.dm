@@ -12,11 +12,7 @@
 	icon_dead = "banana-dead"
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/banana/mime, /obj/item/seeds/banana/bluespace)
-<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/consumable/banana = 0.1, /datum/reagent/potassium = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.02)
-=======
-	reagents_add = list("banana" = 0.1, "potassium" = 0.1, "vitamin" = 0.04, "nutriment" = 0.02)
->>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/snacks/grown/banana
 	seed = /obj/item/seeds/banana
@@ -28,13 +24,8 @@
 	filling_color = "#FFFF00"
 	bitesize = 5
 	foodtype = FRUIT
-<<<<<<< HEAD
 	juice_results = list(/datum/reagent/consumable/banana = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
-=======
-	juice_results = list("banana" = 0)
-	distill_reagent = "bananahonk"
->>>>>>> Updated this old code to fork
 
 /obj/item/reagent_containers/food/snacks/grown/banana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is aiming [src] at [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -42,11 +33,7 @@
 	sleep(25)
 	if(!user)
 		return (OXYLOSS)
-<<<<<<< HEAD
 	user.say("BANG!", forced = /datum/reagent/consumable/banana)
-=======
-	user.say("BANG!", forced = "banana")
->>>>>>> Updated this old code to fork
 	sleep(25)
 	if(!user)
 		return (OXYLOSS)
@@ -83,11 +70,7 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/banana/mime
 	growthstages = 4
 	mutatelist = list()
-<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/consumable/nothing = 0.1, /datum/reagent/toxin/mutetoxin = 0.1, /datum/reagent/consumable/nutriment = 0.02)
-=======
-	reagents_add = list("nothing" = 0.1, "mutetoxin" = 0.1, "nutriment" = 0.02)
->>>>>>> Updated this old code to fork
 	rarity = 15
 
 /obj/item/reagent_containers/food/snacks/grown/banana/mime
@@ -97,11 +80,7 @@
 	icon_state = "mimana"
 	trash = /obj/item/grown/bananapeel/mimanapeel
 	filling_color = "#FFFFEE"
-<<<<<<< HEAD
 	distill_reagent = /datum/reagent/consumable/ethanol/silencer
-=======
-	distill_reagent = "silencer"
->>>>>>> Updated this old code to fork
 
 /obj/item/grown/bananapeel/mimanapeel
 	seed = /obj/item/seeds/banana/mime
@@ -121,11 +100,7 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/banana/bluespace
 	mutatelist = list()
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/repeated_harvest)
-<<<<<<< HEAD
 	reagents_add = list(/datum/reagent/bluespace = 0.2, /datum/reagent/consumable/banana = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.02)
-=======
-	reagents_add = list("bluespace" = 0.2, "banana" = 0.1, "vitamin" = 0.04, "nutriment" = 0.02)
->>>>>>> Updated this old code to fork
 	rarity = 30
 
 /obj/item/reagent_containers/food/snacks/grown/banana/bluespace
@@ -150,10 +125,6 @@
 	name = "synthesized banana peel"
 	desc = "A synthetic banana peel."
 
-<<<<<<< HEAD
 /obj/item/grown/bananapeel/specialpeel/ComponentInitialize()
-=======
-/obj/item/grown/bananapeel/specialpeel/Initialize(AM)
->>>>>>> Updated this old code to fork
 	. = ..()
 	AddComponent(/datum/component/slippery, 40)

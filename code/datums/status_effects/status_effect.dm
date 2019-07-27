@@ -131,7 +131,6 @@
 		for(var/datum/status_effect/S in status_effects)
 			if(initial(S1.id) == S.id)
 				. += S
-<<<<<<< HEAD
 
 //////////////////////
 // STACKING EFFECTS //
@@ -236,5 +235,3 @@
 		owner.underlays -= status_underlay
 	QDEL_NULL(status_overlay)
 	return ..()
-=======
->>>>>>> Updated this old code to fork

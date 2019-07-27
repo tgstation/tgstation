@@ -4,10 +4,6 @@
 	animate_movement = FORWARD_STEPS
 	anchored = TRUE
 	density = TRUE
-<<<<<<< HEAD
-=======
-	layer = BELOW_OBJ_LAYER
->>>>>>> Updated this old code to fork
 	var/moving = 0
 	var/datum/gas_mixture/air_contents = new()
 
@@ -156,12 +152,9 @@
 /obj/structure/transit_tube_pod/return_air()
 	return air_contents
 
-<<<<<<< HEAD
 /obj/structure/transit_tube_pod/return_analyzable_air()
 	return air_contents
 
-=======
->>>>>>> Updated this old code to fork
 /obj/structure/transit_tube_pod/assume_air(datum/gas_mixture/giver)
 	return air_contents.merge(giver)
 

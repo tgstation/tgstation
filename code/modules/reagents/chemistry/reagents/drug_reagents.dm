@@ -1,29 +1,15 @@
 /datum/reagent/drug
 	name = "Drug"
-<<<<<<< HEAD
-=======
-	id = "drug"
->>>>>>> Updated this old code to fork
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
 	var/trippy = TRUE //Does this drug make you trip?
 
-<<<<<<< HEAD
 /datum/reagent/drug/on_mob_end_metabolize(mob/living/M)
 	if(trippy)
 		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[type]_high")
 
 /datum/reagent/drug/space_drugs
 	name = "Space drugs"
-=======
-/datum/reagent/drug/on_mob_delete(mob/living/M)
-	if(trippy)
-		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[id]_high")
-
-/datum/reagent/drug/space_drugs
-	name = "Space drugs"
-	id = "space_drugs"
->>>>>>> Updated this old code to fork
 	description = "An illegal chemical compound used as drug."
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 30
@@ -40,11 +26,7 @@
 
 /datum/reagent/drug/space_drugs/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You start tripping hard!</span>")
-<<<<<<< HEAD
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/overdose, name)
-=======
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/overdose, name)
->>>>>>> Updated this old code to fork
 
 /datum/reagent/drug/space_drugs/overdose_process(mob/living/M)
 	if(M.hallucination < volume && prob(20))
@@ -53,10 +35,6 @@
 
 /datum/reagent/drug/nicotine
 	name = "Nicotine"
-<<<<<<< HEAD
-=======
-	id = "nicotine"
->>>>>>> Updated this old code to fork
 	description = "Slightly reduces stun times. If overdosed it will deal toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
@@ -87,10 +65,6 @@
 
 /datum/reagent/drug/crank
 	name = "Crank"
-<<<<<<< HEAD
-=======
-	id = "crank"
->>>>>>> Updated this old code to fork
 	description = "Reduces stun times by about 200%. If overdosed or addicted it will deal significant Toxin, Brute and Brain damage."
 	reagent_state = LIQUID
 	color = "#FA00C8"
@@ -101,10 +75,7 @@
 	if(prob(5))
 		var/high_message = pick("You feel jittery.", "You feel like you gotta go fast.", "You feel like you need to step it up.")
 		to_chat(M, "<span class='notice'>[high_message]</span>")
-<<<<<<< HEAD
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
-=======
->>>>>>> Updated this old code to fork
 	M.AdjustStun(-20, FALSE)
 	M.AdjustKnockdown(-20, FALSE)
 	M.AdjustUnconscious(-20, FALSE)
@@ -143,10 +114,6 @@
 
 /datum/reagent/drug/krokodil
 	name = "Krokodil"
-<<<<<<< HEAD
-=======
-	id = "krokodil"
->>>>>>> Updated this old code to fork
 	description = "Cools and calms you down. If overdosed it will deal significant Brain and Toxin damage. If addicted it will begin to deal fatal amounts of Brute damage as the subject's skin falls off."
 	reagent_state = LIQUID
 	color = "#0064B4"
@@ -158,10 +125,7 @@
 	var/high_message = pick("You feel calm.", "You feel collected.", "You feel like you need to relax.")
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
-<<<<<<< HEAD
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smacked out", /datum/mood_event/narcotic_heavy, name)
-=======
->>>>>>> Updated this old code to fork
 	..()
 
 /datum/reagent/drug/krokodil/overdose_process(mob/living/M)
@@ -201,10 +165,6 @@
 
 /datum/reagent/drug/methamphetamine
 	name = "Methamphetamine"
-<<<<<<< HEAD
-=======
-	id = "methamphetamine"
->>>>>>> Updated this old code to fork
 	description = "Reduces stun times by about 300%, speeds the user up, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
 	reagent_state = LIQUID
 	color = "#FAFAFA"
@@ -212,31 +172,19 @@
 	addiction_threshold = 10
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 
-<<<<<<< HEAD
 /datum/reagent/drug/methamphetamine/on_mob_metabolize(mob/living/L)
 	..()
 	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-2, blacklisted_movetypes=(FLYING|FLOATING))
 
 /datum/reagent/drug/methamphetamine/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(type)
-=======
-/datum/reagent/drug/methamphetamine/on_mob_add(mob/living/L)
-	..()
-	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-2, blacklisted_movetypes=(FLYING|FLOATING))
-
-/datum/reagent/drug/methamphetamine/on_mob_delete(mob/living/L)
-	L.remove_movespeed_modifier(id)
->>>>>>> Updated this old code to fork
 	..()
 
 /datum/reagent/drug/methamphetamine/on_mob_life(mob/living/carbon/M)
 	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
-<<<<<<< HEAD
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
-=======
->>>>>>> Updated this old code to fork
 	M.AdjustStun(-40, FALSE)
 	M.AdjustKnockdown(-40, FALSE)
 	M.AdjustUnconscious(-40, FALSE)
@@ -301,10 +249,6 @@
 
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"
-<<<<<<< HEAD
-=======
-	id = "bath_salts"
->>>>>>> Updated this old code to fork
 	description = "Makes you impervious to stuns and grants a stamina regeneration buff, but you will be a nearly uncontrollable tramp-bearded raving lunatic."
 	reagent_state = LIQUID
 	color = "#FAFAFA"
@@ -313,31 +257,18 @@
 	taste_description = "salt" // because they're bathsalts?
 	var/datum/brain_trauma/special/psychotic_brawling/bath_salts/rage
 
-<<<<<<< HEAD
 /datum/reagent/drug/bath_salts/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_STUNIMMUNE, type)
 	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
-=======
-/datum/reagent/drug/bath_salts/on_mob_add(mob/living/L)
-	..()
-	L.add_trait(TRAIT_STUNIMMUNE, id)
-	L.add_trait(TRAIT_SLEEPIMMUNE, id)
->>>>>>> Updated this old code to fork
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		rage = new()
 		C.gain_trauma(rage, TRAUMA_RESILIENCE_ABSOLUTE)
 
-<<<<<<< HEAD
 /datum/reagent/drug/bath_salts/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_STUNIMMUNE, type)
 	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
-=======
-/datum/reagent/drug/bath_salts/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_STUNIMMUNE, id)
-	L.remove_trait(TRAIT_SLEEPIMMUNE, id)
->>>>>>> Updated this old code to fork
 	if(rage)
 		QDEL_NULL(rage)
 	..()
@@ -346,10 +277,7 @@
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
-<<<<<<< HEAD
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "salted", /datum/mood_event/stimulant_heavy, name)
-=======
->>>>>>> Updated this old code to fork
 	M.adjustStaminaLoss(-5, 0)
 	M.adjustBrainLoss(4)
 	M.hallucination += 5
@@ -421,10 +349,6 @@
 
 /datum/reagent/drug/aranesp
 	name = "Aranesp"
-<<<<<<< HEAD
-=======
-	id = "aranesp"
->>>>>>> Updated this old code to fork
 	description = "Amps you up, gets you going, and rapidly restores stamina damage. Side effects include breathlessness and toxicity."
 	reagent_state = LIQUID
 	color = "#78FFF0"
@@ -443,17 +367,12 @@
 
 /datum/reagent/drug/happiness
 	name = "Happiness"
-<<<<<<< HEAD
-=======
-	id = "happiness"
->>>>>>> Updated this old code to fork
 	description = "Fills you with ecstasic numbness and causes minor brain damage. Highly addictive. If overdosed causes sudden mood swings."
 	reagent_state = LIQUID
 	color = "#FFF378"
 	addiction_threshold = 10
 	overdose_threshold = 20
 
-<<<<<<< HEAD
 /datum/reagent/drug/happiness/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_FEARLESS, type)
@@ -461,15 +380,6 @@
 
 /datum/reagent/drug/happiness/on_mob_delete(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_FEARLESS, type)
-=======
-/datum/reagent/drug/happiness/on_mob_add(mob/living/L)
-	..()
-	L.add_trait(TRAIT_FEARLESS, id)
-	SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "happiness_drug", /datum/mood_event/happiness_drug)
-
-/datum/reagent/drug/happiness/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_FEARLESS, id)
->>>>>>> Updated this old code to fork
 	SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "happiness_drug")
 	..()
 
@@ -499,11 +409,7 @@
 	. = 1
 
 /datum/reagent/drug/happiness/addiction_act_stage1(mob/living/M)// all work and no play makes jack a dull boy
-<<<<<<< HEAD
 	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-=======
-	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
->>>>>>> Updated this old code to fork
 	mood.setSanity(min(mood.sanity, SANITY_DISTURBED))
 	M.Jitter(5)
 	if(prob(20))
@@ -511,11 +417,7 @@
 	..()
 
 /datum/reagent/drug/happiness/addiction_act_stage2(mob/living/M)
-<<<<<<< HEAD
 	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-=======
-	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
->>>>>>> Updated this old code to fork
 	mood.setSanity(min(mood.sanity, SANITY_UNSTABLE))
 	M.Jitter(10)
 	if(prob(30))
@@ -523,11 +425,7 @@
 	..()
 
 /datum/reagent/drug/happiness/addiction_act_stage3(mob/living/M)
-<<<<<<< HEAD
 	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-=======
-	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
->>>>>>> Updated this old code to fork
 	mood.setSanity(min(mood.sanity, SANITY_CRAZY))
 	M.Jitter(15)
 	if(prob(40))
@@ -535,11 +433,7 @@
 	..()
 
 /datum/reagent/drug/happiness/addiction_act_stage4(mob/living/carbon/human/M)
-<<<<<<< HEAD
 	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-=======
-	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
->>>>>>> Updated this old code to fork
 	mood.setSanity(SANITY_INSANE)
 	M.Jitter(20)
 	if(prob(50))

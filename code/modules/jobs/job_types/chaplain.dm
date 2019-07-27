@@ -26,7 +26,6 @@
 
 	var/obj/item/storage/book/bible/booze/B = new
 
-<<<<<<< HEAD
 	if(GLOB.religion)
 		B.deity_name = GLOB.deity
 		B.name = GLOB.bible_name
@@ -35,16 +34,6 @@
 		to_chat(H, "There is already an established religion onboard the station. You are an acolyte of [GLOB.deity]. Defer to the Chaplain.")
 		H.equip_to_slot_or_del(B, SLOT_IN_BACKPACK)
 		var/nrt = GLOB.holy_weapon_type || /obj/item/nullrod
-=======
-	if(SSreligion.religion)
-		B.deity_name = SSreligion.deity
-		B.name = SSreligion.bible_name
-		B.icon_state = SSreligion.bible_icon_state
-		B.item_state = SSreligion.bible_item_state
-		to_chat(H, "There is already an established religion onboard the station. You are an acolyte of [SSreligion.deity]. Defer to the Chaplain.")
-		H.equip_to_slot_or_del(B, SLOT_IN_BACKPACK)
-		var/nrt = SSreligion.holy_weapon_type || /obj/item/nullrod
->>>>>>> Updated this old code to fork
 		var/obj/item/nullrod/N = new nrt(H)
 		H.put_in_hands(N)
 		return
@@ -63,7 +52,6 @@
 	switch(lowertext(new_religion))
 		if("christianity") // DEFAULT_RELIGION
 			B.name = pick("The Holy Bible","The Dead Sea Scrolls")
-<<<<<<< HEAD
 		if("buddhism")
 			B.name = "The Sutras"
 		if("clownism","honkmother","honk","honkism","comedy")
@@ -117,35 +105,6 @@
 	GLOB.religion = new_religion
 	GLOB.bible_name = B.name
 	GLOB.deity = B.deity_name
-=======
-		if("satanism")
-			B.name = "The Unholy Bible"
-		if("cthulhu")
-			B.name = "The Necronomicon"
-		if("islam")
-			B.name = "Quran"
-		if("scientology")
-			B.name = pick("The Biography of L. Ron Hubbard","Dianetics")
-		if("chaos")
-			B.name = "The Book of Lorgar"
-		if("imperium")
-			B.name = "Uplifting Primer"
-		if("toolboxia")
-			B.name = "Toolbox Manifesto"
-		if("homosexuality")
-			B.name = "Guys Gone Wild"
-		if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks", "meme", "memes")
-			B.name = pick("Woodys Got Wood: The Aftermath", "War of the Cocks", "Sweet Bro and Hella Jef: Expanded Edition")
-			H.adjustBrainLoss(100) // starts off retarded as fuck
-		if("science")
-			B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
-		else
-			B.name = "The Holy Book of [new_religion]"
-
-	SSreligion.religion = new_religion
-	SSreligion.bible_name = B.name
-	SSreligion.deity = B.deity_name
->>>>>>> Updated this old code to fork
 
 	H.equip_to_slot_or_del(B, SLOT_IN_BACKPACK)
 
@@ -157,10 +116,7 @@
 	jobtype = /datum/job/chaplain
 
 	belt = /obj/item/pda/chaplain
-<<<<<<< HEAD
 	ears = /obj/item/radio/headset/headset_srv
-=======
->>>>>>> Updated this old code to fork
 	uniform = /obj/item/clothing/under/rank/chaplain
 	backpack_contents = list(/obj/item/camera/spooky = 1)
 	backpack = /obj/item/storage/backpack/cultpack

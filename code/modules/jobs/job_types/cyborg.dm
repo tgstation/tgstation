@@ -1,10 +1,7 @@
 /datum/job/cyborg
 	title = "Cyborg"
 	flag = CYBORG
-<<<<<<< HEAD
 	auto_deadmin_role_flags = DEADMIN_POSITION_SILICON
-=======
->>>>>>> Updated this old code to fork
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 0
@@ -18,11 +15,8 @@
 	display_order = JOB_DISPLAY_ORDER_CYBORG
 
 /datum/job/cyborg/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE, datum/outfit/outfit_override = null, client/preference_source = null)
-<<<<<<< HEAD
 	if(visualsOnly)
 		CRASH("dynamic preview is unsupported")
-=======
->>>>>>> Updated this old code to fork
 	return H.Robotize(FALSE, latejoin)
 
 /datum/job/cyborg/after_spawn(mob/living/silicon/robot/R, mob/M)

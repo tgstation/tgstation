@@ -5,13 +5,9 @@
 
 /obj/effect/clockwork/overlay/examine(mob/user)
 	if(linked)
-<<<<<<< HEAD
 		return linked.examine(user)
 	else
 		return ..()
-=======
-		linked.examine(user)
->>>>>>> Updated this old code to fork
 
 /obj/effect/clockwork/overlay/ex_act()
 	return FALSE
@@ -53,8 +49,4 @@
 	plane = FLOOR_PLANE
 
 /obj/effect/clockwork/overlay/floor/bloodcult //this is used by BLOOD CULT, it shouldn't use such a path...
-<<<<<<< HEAD
 	icon_state = "cult"
-=======
-	icon_state = "cult"
->>>>>>> Updated this old code to fork

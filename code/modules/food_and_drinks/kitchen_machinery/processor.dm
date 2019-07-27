@@ -22,15 +22,9 @@
 		rating_speed = M.rating
 
 /obj/machinery/processor/examine(mob/user)
-<<<<<<< HEAD
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: Outputting <b>[rating_amount]</b> item(s) at <b>[rating_speed*100]%</b> speed.</span>"
-=======
-	..()
-	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Outputting <b>[rating_amount]</b> item(s) at <b>[rating_speed*100]%</b> speed.<span>")
->>>>>>> Updated this old code to fork
 
 /obj/machinery/processor/proc/process_food(datum/food_processor_process/recipe, atom/movable/what)
 	if (recipe.output && loc && !QDELETED(src))
@@ -146,13 +140,10 @@
 	empty()
 	add_fingerprint(usr)
 
-<<<<<<< HEAD
 /obj/machinery/processor/container_resist(mob/living/user)
 	user.forceMove(drop_location())
 	user.visible_message("<span class='notice'>[user] crawls free of the processor!</span>")
 
-=======
->>>>>>> Updated this old code to fork
 /obj/machinery/processor/proc/empty()
 	for (var/obj/O in src)
 		O.forceMove(drop_location())
