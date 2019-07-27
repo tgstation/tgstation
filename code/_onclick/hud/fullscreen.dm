@@ -115,16 +115,6 @@
 	layer = CURSE_LAYER
 	plane = FULLSCREEN_PLANE
 
-/obj/screen/fullscreen/hive_mc
-	icon_state = "hive_mc"
-	layer = CURSE_LAYER
-	plane = FULLSCREEN_PLANE
-
-/obj/screen/fullscreen/hive_eyes
-	icon_state = "hive_eyes"
-	layer = CURSE_LAYER
-	plane = FULLSCREEN_PLANE
-
 /obj/screen/fullscreen/infection_covered
 	icon_state = "infection"
 	layer = INFECTION_LAYER
