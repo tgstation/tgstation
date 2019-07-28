@@ -2891,7 +2891,7 @@
 	name = "Geneticist";
 	oxy_damage = 55;
 	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
-	uniform = /obj/item/clothing/under/rank/geneticist
+	uniform = /obj/item/clothing/under/rank/medical/geneticist
 	},
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/tile/purple{
