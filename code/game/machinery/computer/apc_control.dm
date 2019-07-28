@@ -11,7 +11,6 @@
 	var/list/result_filters //For sorting the results
 	var/checking_logs = 0
 	var/list/logs
-	var/authenticated = 0
 	var/auth_id = "\[NULL\]"
 
 /obj/machinery/computer/apc_control/Initialize()
@@ -99,8 +98,10 @@
 				authenticated = TRUE
 				auth_id = "[ID.registered_name] ([ID.assignment])"
 				log_activity("logged in")
+				playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 	if(href_list["log_out"])
 		log_activity("logged out")
+		playsound(src, 'sound/machines/terminal_off.ogg', 50, 0)
 		authenticated = FALSE
 		auth_id = "\[NULL\]"
 	if(href_list["restore_logging"])

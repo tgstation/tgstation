@@ -13,7 +13,6 @@
 	speed_process = TRUE
 	circuit = /obj/item/circuitboard/machine/ore_redemption
 	layer = BELOW_OBJ_LAYER
-	var/obj/item/card/id/inserted_id
 	var/points = 0
 	var/ore_pickup_rate = 15
 	var/sheet_per_ore = 1
@@ -75,7 +74,7 @@
 	else
 		var/mats = O.materials & mat_container.materials
 		var/amount = O.amount
-		var/id = inserted_id && inserted_id.registered_name
+		var/id = inserted_scan_id && inserted_scan_id.registered_name
 		if (id)
 			id = " (ID: [id])"
 		mat_container.insert_item(O, sheet_per_ore) //insert it
@@ -179,11 +178,11 @@
 		return ..()
 	if(istype(W, /obj/item/card/id))
 		var/obj/item/card/id/I = user.get_active_held_item()
-		if(istype(I) && !istype(inserted_id))
-			if(!user.transferItemToLoc(I, src))
-				return
-			inserted_id = I
+		if(istype(I))
+			id_insert(user, I, inserted_prisoner_id)
+			inserted_prisoner_id = I
 			interact(user)
+			return
 		return
 
 	if(istype(W, /obj/item/disk/design_disk))
@@ -215,9 +214,9 @@
 /obj/machinery/mineral/ore_redemption/ui_data(mob/user)
 	var/list/data = list()
 	data["unclaimedPoints"] = points
-	if(inserted_id)
+	if(inserted_scan_id)
 		data["hasID"] = TRUE
-		if (inserted_id.registered_account)
+		if (inserted_scan_id.registered_account)
 			data["hasAccount"] = TRUE
 
 	data["materials"] = list()
@@ -259,22 +258,21 @@
 	var/datum/component/material_container/mat_container = materials.mat_container
 	switch(action)
 		if("Eject")
-			if(!inserted_id)
+			if(!inserted_scan_id)
 				return
-			usr.put_in_hands(inserted_id)
-			inserted_id = null
+			id_eject(usr, inserted_prisoner_id)
+			inserted_prisoner_id = null
 			return TRUE
 		if("Insert")
 			var/obj/item/card/id/I = usr.get_active_held_item()
 			if(istype(I))
-				if(!usr.transferItemToLoc(I,src))
-					return
-				inserted_id = I
+				id_insert(usr, I, inserted_prisoner_id)
+				inserted_prisoner_id = I
 			else
 				to_chat(usr, "<span class='warning'>Not a valid ID!</span>")
 			return TRUE
 		if("Claim")
-			if(inserted_id && inserted_id.registered_account.adjust_money(points))
+			if(inserted_scan_id && inserted_scan_id.registered_account.adjust_money(points))
 				points = 0
 			return TRUE
 		if("Release")
@@ -283,7 +281,7 @@
 
 			if(materials.on_hold())
 				to_chat(usr, "<span class='warning'>Mineral access is on hold, please contact the quartermaster.</span>")
-			else if(!check_access(inserted_id) && !allowed(usr)) //Check the ID inside, otherwise check the user
+			else if(!check_access(inserted_scan_id) && !allowed(usr)) //Check the ID inside, otherwise check the user
 				to_chat(usr, "<span class='warning'>Required access not found.</span>")
 			else
 				var/datum/material/mat = locate(params["id"])
@@ -304,7 +302,7 @@
 					desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
 
 				var/sheets_to_remove = round(min(desired,50,stored_amount))
-				
+
 				var/count = mat_container.retrieve_sheets(sheets_to_remove, mat, get_step(src, output_dir))
 				var/list/mats = list()
 				mats[mat] = MINERAL_MATERIAL_AMOUNT
@@ -338,7 +336,7 @@
 				return
 			var/alloy_id = params["id"]
 			var/datum/design/alloy = stored_research.isDesignResearchedID(alloy_id)
-			if((check_access(inserted_id) || allowed(usr)) && alloy)
+			if((check_access(inserted_scan_id) || allowed(usr)) && alloy)
 				var/smelt_amount = can_smelt_alloy(alloy)
 				var/desired = 0
 				if (params["sheets"])
