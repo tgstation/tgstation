@@ -224,6 +224,11 @@
 	// Sort through all /obj/machinery/power/solar_control in the station ONLY, and check that they are functioning.
 	// Make sure that lastgen is 0 or connected_panels.len is 0. Doesnt matter if it's tracking.
 	for (var/obj/machinery/power/solar_control/SC in SSsun.solars)
+		// Check On Station:
+		var/turf/T = get_turf(SC)
+		if(!T || !is_station_level(T.z)) // <------ Taken from NukeOp
+			//message_admins("DEBUG A: [SC] not on station!")
+			continue // Not on station! We don't care about this.
 		if (SC && SC.lastgen > 0 && SC.connected_panels.len > 0 && SC.connected_tracker)
 			return FALSE
 	return TRUE
