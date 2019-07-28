@@ -204,7 +204,7 @@
 	else
 		L.log_message("has been shot by [firer] with [src]", LOG_ATTACK, color="orange")
 
-	return L.apply_effects(stun, knockdown, unconscious, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter, paralyze, immobilize)
+	return BULLET_ACT_HIT
 
 /obj/item/projectile/proc/vol_by_damage()
 	if(src.damage)
@@ -257,6 +257,7 @@
 	permutated |= target		//Make sure we're never hitting it again. If we ever run into weirdness with piercing projectiles needing to hit something multiple times.. well.. that's a to-do.
 	if(!prehit(target))
 		return process_hit(T, select_target(T), qdel_self, hit_something)		//Hit whatever else we can since that didn't work.
+	SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, args)
 	var/result = target.bullet_act(src, def_zone)
 	if(result == BULLET_ACT_FORCE_PIERCE)
 		if(!CHECK_BITFIELD(movement_type, UNSTOPPABLE))

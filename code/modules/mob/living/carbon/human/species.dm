@@ -1150,12 +1150,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/spec_fully_heal(mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/spec_emp_act(mob/living/carbon/human/H, severity)
-	return
-
-/datum/species/proc/spec_emag_act(mob/living/carbon/human/H, mob/user)
-	return
-
 /datum/species/proc/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(!((target.health < 0 || HAS_TRAIT(target, TRAIT_FAKEDEATH)) && !(target.mobility_flags & MOBILITY_STAND)))
 		target.help_shake_act(user)
@@ -1467,9 +1461,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						var/datum/antagonist/rev/rev = H.mind.has_antag_datum(/datum/antagonist/rev)
 						if(rev)
 							rev.remove_revolutionary(FALSE, user)
-						var/datum/antagonist/hivevessel/woke = H.is_wokevessel()
-						if(woke && woke.one_mind)
-							H.mind.remove_antag_datum(/datum/antagonist/hivevessel)
 
 				if(bloody)	//Apply blood
 					if(H.wear_mask)

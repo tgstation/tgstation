@@ -111,8 +111,8 @@ SUBSYSTEM_DEF(traumas)
 						/obj/item/card/id/captains_spare, /obj/item/card/id/centcom, /obj/machinery/door/airlock/command)),
 
 						"the supernatural"  = typecacheof(list(/obj/structure/destructible/cult, /obj/item/tome,
-						/obj/item/melee/cultblade, /obj/item/twohanded/required/cult_bastard, /obj/item/restraints/legcuffs/bola/cult,
-						/obj/item/clothing/suit/cultrobes, /obj/item/clothing/suit/space/hardsuit/cult,
+						/obj/item/melee/cultblade, /obj/item/twohanded/required/cult_bastard,
+						/obj/item/restraints/legcuffs/bola/cult, /obj/item/clothing/suit/space/hardsuit/cult,
 						/obj/item/clothing/suit/hooded/cultrobes, /obj/item/clothing/head/hooded/cult_hoodie, /obj/effect/rune,
 						/obj/item/stack/sheet/runed_metal, /obj/machinery/door/airlock/cult, /obj/singularity/narsie,
 						/obj/item/soulstone,

@@ -19700,7 +19700,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aRl" = (
@@ -32646,6 +32645,7 @@
 	pixel_x = -25;
 	pixel_y = 5
 	},
+/obj/effect/mapping_helpers/ianbirthday,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "bsN" = (
@@ -75240,6 +75240,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"xOW" = (
+/obj/structure/cable,
+/turf/closed/wall/r_wall,
+/area/engine/engineering)
 "xVl" = (
 /turf/closed/wall,
 /area/hallway/secondary/service)
@@ -113940,10 +113944,10 @@ axY
 axY
 axY
 axY
+xOW
 axY
 axY
-axY
-axY
+xOW
 axY
 aWw
 aWw

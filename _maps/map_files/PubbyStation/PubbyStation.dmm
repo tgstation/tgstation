@@ -54937,6 +54937,10 @@
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/department/science)
+"rKW" = (
+/obj/effect/mapping_helpers/ianbirthday,
+/turf/open/floor/wood,
+/area/crew_quarters/heads/hop)
 "rLi" = (
 /obj/machinery/button/door{
 	id = "shootshut";
@@ -91021,7 +91025,7 @@ aaa
 aaa
 aAH
 aBC
-aCS
+rKW
 aDU
 aEN
 aAH

@@ -127,7 +127,6 @@ CONTINUOUS CLOCKWORK_CULT
 CONTINUOUS CHANGELING
 CONTINUOUS WIZARD
 #CONTINUOUS MONKEY
-CONTINUOUS HIVEMIND
 CONTINUOUS BLOODSUCKER
 
 ##Note: do not toggle continuous off for these modes, as they have no antagonists and would thus end immediately!
