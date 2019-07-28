@@ -74,8 +74,8 @@
 		if(how_many_arms < arms_required)
 			if(fall_off_if_missing_arms)
 				unbuckle_mob(user, TRUE)
-				user.visible_message("<span class='danger'>[user] falls off of \the [src].",\
-				"<span class='danger'>You fall of \the [src] while trying to operate it without [arms_required ? "both arms":"an arm"]!</span>")
+				user.visible_message("<span class='danger'>[user] falls off \the [src].",\
+				"<span class='danger'>You fall off \the [src] while trying to operate it without [arms_required ? "both arms":"an arm"]!</span>")
 				if(isliving(user))
 					var/mob/living/L = user
 					L.Stun(30)
