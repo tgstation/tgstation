@@ -1,0 +1,4 @@
+author: "Tlaltecuhtli"
+delete-after: True
+changes: 
+  - balance: "fireball starts at 8 tile range, increases 2 for every level"

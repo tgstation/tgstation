@@ -1,6 +1,0 @@
-author: "MMMiracles"
-delete-after: True
-changes: 
-  - rscadd: "Aiming at the head while throwing hats will cause them to land on people's heads."
-  - rscadd: "If a hat is already on someone's head and it makes sense, the thrown hat will knock it off to replace it."
-  - rscadd: "You can also throw hats onto borgs."
