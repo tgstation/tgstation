@@ -183,6 +183,22 @@
 	amount_per_transfer_from_this = 57
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/leporazine = 15, /datum/reagent/medicine/tricordrazine = 15, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/lavaland_extract = 2, /datum/reagent/medicine/omnizine = 5)
 
+/obj/item/reagent_containers/hypospray/medipen/survival/heirloom
+	name = "spent survival medipen"
+	desc = "A medipen for surviving in the harshest of environments. You vividly remember the day it saved your life. Or not at all, if you're not a miner."
+	list_reagents = list()
+
+/obj/item/reagent_containers/hypospray/medipen/survival/heirloom/Initialize()
+	. = ..()
+	update_icon() //so it shows up as empty
+
+/obj/item/reagent_containers/hypospray/combat/heresypurge
+	name = "holy water autoinjector"
+	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with 5 doses of a holy water mixture."
+	volume = 250
+	list_reagents = list(/datum/reagent/water/holywater = 150, /datum/reagent/peaceborg/tire = 50, /datum/reagent/peaceborg/confuse = 50)
+	amount_per_transfer_from_this = 50
+
 /obj/item/reagent_containers/hypospray/medipen/atropine
 	name = "atropine autoinjector"
 	desc = "A rapid way to save a person from a critical injury state!"
