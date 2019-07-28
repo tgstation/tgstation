@@ -61,23 +61,16 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	if(istype(I, /obj/item/card/id))
 		if(!inserted_scan_id)
 			id_insert(user, I, inserted_scan_id)
+			inserted_scan_id = I
 			return
 		if(!inserted_modify_id)
 			id_insert(user, I, inserted_modify_id)
+			inserted_modify_id = I
 			return
 		else
 			to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
 	else
 		return ..()
-
-/obj/machinery/computer/card/Destroy()
-	if(inserted_scan_id)
-		qdel(inserted_scan_id)
-		inserted_scan_id = null
-	if(inserted_modify_id)
-		qdel(inserted_modify_id)
-		inserted_modify_id = null
-	return ..()
 
 /obj/machinery/computer/card/handle_atom_del(atom/A)
 	..()
@@ -314,7 +307,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		return
 
 	usr.set_machine(src)
-	var/obj/item/card/id/I
 	switch(href_list["choice"])
 		if ("inserted_modify_id")
 			if (inserted_modify_id)
@@ -323,17 +315,15 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				region_access = null
 				head_subordinates = null
 				id_eject(usr, inserted_modify_id)
+				inserted_modify_id = null
 				authenticated = FALSE
-			else
-				id_insert(usr, I, inserted_modify_id)
 		if ("inserted_scan_id")
 			if (inserted_scan_id)
 				id_eject(usr, inserted_scan_id)
+				inserted_scan_id = null
 				authenticated = FALSE
-			else
-				id_insert(usr, I, inserted_scan_id)
 		if ("auth")
-			if ((!( authenticated ) && (inserted_scan_id || issilicon(usr)) && (inserted_modify_id || mode)))
+			if ((!authenticated && (inserted_scan_id || issilicon(usr)) && (inserted_modify_id || mode)))
 				if (check_access(inserted_scan_id))
 					region_access = list()
 					head_subordinates = list()

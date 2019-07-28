@@ -37,6 +37,7 @@
 /obj/machinery/computer/secure_data/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/card/id))
 		id_insert(user, I, inserted_scan_id)
+		inserted_scan_id = I
 	else
 		return ..()
 
@@ -323,13 +324,10 @@ What a mess.*/
 				active2 = null
 
 			if("Confirm Identity")
-				var/obj/item/card/id/I
 				if(inserted_scan_id)
 					id_eject(usr, inserted_scan_id)
+					inserted_scan_id = null
 					return
-				else
-					id_insert(usr, I, inserted_scan_id)
-
 			if("Log Out")
 				authenticated = null
 				screen = null

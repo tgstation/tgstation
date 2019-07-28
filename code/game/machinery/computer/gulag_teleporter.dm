@@ -21,11 +21,13 @@
 /obj/machinery/computer/gulag_teleporter_computer/Destroy()
 	if(inserted_prisoner_id)
 		inserted_prisoner_id.forceMove(get_turf(src))
+		inserted_prisoner_id = null
 	return ..()
 
 /obj/machinery/computer/gulag_teleporter_computer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/card/id))
 		id_insert(user, I, inserted_prisoner_id)
+		inserted_prisoner_id = I
 	else
 		return ..()
 
@@ -73,7 +75,6 @@
 	return data
 
 /obj/machinery/computer/gulag_teleporter_computer/ui_act(action, list/params)
-	var/obj/item/card/id/prisoner/I
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 	if(..())
 		return
@@ -88,8 +89,7 @@
 		if("handle_id")
 			if(inserted_prisoner_id)
 				id_eject(usr, inserted_prisoner_id)
-			else
-				id_insert(usr, I, inserted_prisoner_id)
+				inserted_prisoner_id = null
 		if("set_goal")
 			var/new_goal = input("Set the amount of points:", "Points", inserted_prisoner_id.goal) as num|null
 			if(!isnum(new_goal))

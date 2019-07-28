@@ -115,7 +115,6 @@ Class Procs:
 	var/atom/movable/occupant = null
 	var/speed_process = FALSE // Process as fast as possible?
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
-	var/obj/item/card/id/target_id
 	var/obj/item/card/id/inserted_scan_id
 	var/obj/item/card/id/inserted_modify_id
 	var/obj/item/card/id/prisoner/inserted_prisoner_id
@@ -153,6 +152,9 @@ Class Procs:
 	else
 		STOP_PROCESSING(SSfastprocess, src)
 	dropContents()
+	inserted_scan_id = null
+	inserted_modify_id = null
+	inserted_prisoner_id = null
 	if(length(component_parts))
 		for(var/atom/A in component_parts)
 			qdel(A)
@@ -556,7 +558,6 @@ Class Procs:
 	if(istype(I))
 		if(!user.transferItemToLoc(I, src))
 			return
-		target_id = I
 		user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
 							"<span class='notice'>You insert the ID card into the console.</span>")
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
@@ -569,7 +570,6 @@ Class Procs:
 		target_id.forceMove(drop_location())
 		if(!issilicon(user) && Adjacent(user))
 			user.put_in_hands(target_id)
-			target_id = null
 			user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
 								"<span class='notice'>You get the ID card from the console.</span>")
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
@@ -578,18 +578,19 @@ Class Procs:
 	else
 		to_chat(user, "<span class='warning'>There's no ID card in the console!</span>")
 
-/obj/machinery/computer/attackby(obj/item/I, mob/user, params)
-	if(target_id)
-		if(istype(I, /obj/item/card/id))
-			id_insert(user)
-			return
-	else
-		return ..()
-
-/obj/machinery/AltClick(mob/user, obj/item/card/id/target_id)
+/obj/machinery/AltClick(mob/user)
 	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational())
 		return
-	if(target_id)
-		id_eject(user)
-	if(!target_id)
-		to_chat(user, "<span class='warning'>There's no ID card in the console!</span>")
+	if(inserted_scan_id)
+		id_eject(user, inserted_scan_id)
+		inserted_scan_id = null
+		return
+	if(inserted_modify_id)
+		id_eject(user, inserted_modify_id)
+		inserted_modify_id = null
+		return
+	if(inserted_prisoner_id)
+		id_eject(user, inserted_prisoner_id)
+		inserted_prisoner_id = null
+		return
+	to_chat(user, "<span class='warning'>There's no ID card in the console!</span>")
