@@ -136,7 +136,7 @@
 	name = "Welding Goggles"
 	id = "welding_goggles"
 	build_type = AUTOLATHE
-	materials = list(datum/material/glass = 350)
+	materials = list(/datum/material/glass = 350)
 	build_path = /obj/item/clothing/glasses/welding
 	category = list("initial","Tools")
 
