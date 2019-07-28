@@ -45,6 +45,7 @@
 	backpack = /obj/item/storage/backpack/clown
 	satchel = /obj/item/storage/backpack/clown
 	duffelbag = /obj/item/storage/backpack/duffelbag/clown //strangely has a duffel
+	box = /obj/item/storage/box/hug/survival
 
 	chameleon_extras = /obj/item/stamp/clown
 
