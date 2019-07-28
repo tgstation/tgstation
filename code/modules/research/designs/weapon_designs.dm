@@ -339,7 +339,7 @@
 	desc = "The shots bounce on walls! Cool!"
 	id = "lens_ric"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 6000, MAT_URANIUM = 3000, MAT_PLASMA = 3000, MAT_BLUESPACE = 1000)
+	materials = list(/datum/material/iron = 2000, /datum/material/glass = 6000, /datum/material/uranium = 3000, /datum/material/plasma = 3000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/external_lens/ricochet
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -349,7 +349,7 @@
 	desc = "These lens cause on the target similar effects to being hit by a lighting."
 	id = "lens_shk"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 6000, MAT_URANIUM = 3000, MAT_SILVER = 7000)
+	materials = list(/datum/material/iron = 2000, /datum/material/glass = 6000, /datum/material/uranium = 3000, /datum/material/silver = 7000)
 	build_path = /obj/item/external_lens/shocking
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -359,7 +359,7 @@
 	desc = "Ultra viole(n)t light beams cause blindness on the target."
 	id = "lens_bln"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 6000, MAT_SILVER = 2000,  MAT_GOLD = 5000, MAT_DIAMOND = 1000)
+	materials = list(/datum/material/iron  2000, /datum/material/glass = 6000, /datum/material/silver = 2000,  /datum/material/gold = 5000, /datum/material/diamond = 1000)
 	build_path = /obj/item/external_lens/blinding
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -369,7 +369,7 @@
 	desc = "These lens make the beams almost invisible to the human eye."
 	id = "lens_sth"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 6000, MAT_URANIUM = 1500, MAT_TITANIUM = 2000, MAT_DIAMOND = 3000)
+	materials = list(/datum/material/iron = 2000, /datum/material/glass = 6000, /datum/material/uranium = 1500, /datum/material/titanium = 2000, /datum/material/diamond = 3000)
 	build_path = /obj/item/external_lens/stealth
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -379,7 +379,7 @@
 	desc = "These lens increase the target temperature and set it on fire."
 	id = "lens_inc"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 6000, MAT_SILVER = 2000,  MAT_PLASMA = 8000)
+	materials = list(/datum/material/iron = 2000, /datum/material/glass = 6000, /datum/material/silver = 2000,  /datum/material/plasma = 8000)
 	build_path = /obj/item/external_lens/incendiary
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -389,7 +389,7 @@
 	desc = "These lens shoot cheap mini beams improving the laser gun's capacity."
 	id = "lens_eco"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 6000, MAT_GLASS = 12000)
+	materials = list(/datum/material/iron = 6000, /datum/material/glass = 12000)
 	build_path = /obj/item/external_lens/economic
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -399,7 +399,7 @@
 	desc = "These lens create small holo barricades."
 	id = "lens_shd"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 6000, MAT_GLASS = 12000, MAT_SILVER = 5000)
+	materials = list(/datum/material/iron = 6000, /datum/material/glass = 12000, /datum/material/silver = 5000)
 	build_path = /obj/item/external_lens/shield
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
