@@ -143,7 +143,7 @@
 	name = "double-barreled shotgun"
 	desc = "A true classic."
 	icon_state = "dshotgun"
-	item_state = "shotgun_double"
+	item_state = "shotgun_db"
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_MEDIUM
 	force = 10
