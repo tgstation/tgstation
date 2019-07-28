@@ -6,14 +6,14 @@
 	icon_state = "blshell"
 	caliber = "shotgun"
 	projectile_type = /obj/item/projectile/bullet/shotgun_slug
-	materials = list(MAT_METAL=4000)
+	materials = list(/datum/material/iron=4000)
 
 /obj/item/ammo_casing/shotgun/beanbag
 	name = "beanbag slug"
 	desc = "A weak beanbag slug for riot control."
 	icon_state = "bshell"
 	projectile_type = /obj/item/projectile/bullet/shotgun_beanbag
-	materials = list(MAT_METAL=250)
+	materials = list(/datum/material/iron=250)
 
 /obj/item/ammo_casing/shotgun/incendiary
 	name = "incendiary slug"
@@ -34,7 +34,7 @@
 	desc = "A stunning taser slug."
 	icon_state = "stunshell"
 	projectile_type = /obj/item/projectile/bullet/shotgun_stunslug
-	materials = list(MAT_METAL=250)
+	materials = list(/datum/material/iron=250)
 
 /obj/item/ammo_casing/shotgun/meteorslug
 	name = "meteorslug shell"
@@ -71,6 +71,15 @@
 	projectile_type = /obj/item/projectile/bullet/pellet/shotgun_rubbershot
 	pellets = 6
 	variance = 25
+	materials = list(/datum/material/iron=4000)
+
+/obj/item/ammo_casing/shotgun/incapacitate
+	name = "custom incapacitating shot"
+	desc = "A shotgun casing filled with... something. used to incapacitate targets."
+	icon_state = "bountyshell"
+	projectile_type = /obj/item/projectile/bullet/pellet/shotgun_incapacitate
+	pellets = 12//double the pellets, but half the stun power of each, which makes this best for just dumping right in someone's face.
+	variance = 25
 	materials = list(MAT_METAL=4000)
 
 /obj/item/ammo_casing/shotgun/improvised
@@ -78,7 +87,7 @@
 	desc = "An extremely weak shotgun shell with multiple small pellets made out of metal shards."
 	icon_state = "improvshell"
 	projectile_type = /obj/item/projectile/bullet/pellet/shotgun_improvised
-	materials = list(MAT_METAL=250)
+	materials = list(/datum/material/iron=250)
 	pellets = 10
 	variance = 25
 

@@ -1,0 +1,4 @@
+author: "Dennok"
+delete-after: True
+changes: 
+  - rscadd: "connect_to_shuttle add shuttle id to connected machine id."

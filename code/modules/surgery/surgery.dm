@@ -38,20 +38,20 @@
 	return ..()
 
 
-/datum/surgery/proc/can_start(mob/user, mob/living) //FALSE to not show in list
+/datum/surgery/proc/can_start(mob/user, mob/living/patient) //FALSE to not show in list
 	. = TRUE
 	if(replaced_by == /datum/surgery)
 		return FALSE
 
+	// True surgeons (like abductor scientists) need no instructions
 	if(HAS_TRAIT(user, TRAIT_SURGEON) || HAS_TRAIT(user.mind, TRAIT_SURGEON))
-		if(replaced_by)
+		if(replaced_by) // only show top-level surgeries
 			return FALSE
 		else
 			return TRUE
 
 	if(!requires_tech && !replaced_by)
 		return TRUE
-	// True surgeons (like abductor scientists) need no instructions
 
 	if(requires_tech)
 		. = FALSE
@@ -64,8 +64,7 @@
 		if(type in SP.advanced_surgeries)
 			return TRUE
 
-
-	var/turf/T = get_turf(target)
+	var/turf/T = get_turf(patient)
 	var/obj/structure/table/optable/table = locate(/obj/structure/table/optable, T)
 	if(table)
 		if(!table.computer)
@@ -132,14 +131,14 @@
 	name = "Surgery Procedure Disk"
 	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
 	icon_state = "datadisk1"
-	materials = list(MAT_METAL=300, MAT_GLASS=100)
+	materials = list(/datum/material/iron=300, /datum/material/glass=100)
 	var/list/surgeries
 
 /obj/item/disk/surgery/debug
 	name = "Debug Surgery Disk"
 	desc = "A disk that contains all existing surgery procedures."
 	icon_state = "datadisk1"
-	materials = list(MAT_METAL=300, MAT_GLASS=100)
+	materials = list(/datum/material/iron=300, /datum/material/glass=100)
 
 /obj/item/disk/surgery/debug/Initialize()
 	. = ..()
@@ -147,7 +146,7 @@
 	var/list/req_tech_surgeries = subtypesof(/datum/surgery)
 	for(var/i in req_tech_surgeries)
 		var/datum/surgery/beep = i
-		if(beep.requires_tech)
+		if(initial(beep.requires_tech))
 			surgeries += beep
 
 //INFO
