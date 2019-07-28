@@ -272,7 +272,7 @@ to the arm are passed onto a stored beaker, if one exists. */
 	. = ..()
 	stored = new /obj/item/reagent_containers/glass/beaker/large(src)
 	update_icon()
-	RegisterSignal(src, COMSIG_BORG_SAFE_DECONSTRUCT, .proc/safedecon)
+	RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, .proc/safedecon)
 
 /obj/item/borg_beaker_holder/Destroy()
 	if(stored)
