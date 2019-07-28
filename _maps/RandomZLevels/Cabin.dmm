@@ -130,7 +130,7 @@
 "ay" = (
 /obj/machinery/light/small,
 /obj/structure/table/wood,
-/obj/item/toy/syndicateballoon,
+/obj/item/toy/balloon/syndicate,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "az" = (
