@@ -225,6 +225,9 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	connected = new /obj/structure/tray/c_tray(src)
 	connected.connected = src
 
+/obj/structure/bodycontainer/crematorium/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	id = "[idnum][id]"
+
 /obj/structure/bodycontainer/crematorium/update_icon()
 	if(!connected || connected.loc != src)
 		icon_state = "crema0"
