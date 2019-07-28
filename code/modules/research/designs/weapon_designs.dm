@@ -359,7 +359,7 @@
 	desc = "Ultra viole(n)t light beams cause blindness on the target."
 	id = "lens_bln"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron  2000, /datum/material/glass = 6000, /datum/material/silver = 2000,  /datum/material/gold = 5000, /datum/material/diamond = 1000)
+	materials = list(/datum/material/iron = 2000, /datum/material/glass = 6000, /datum/material/silver = 2000, /datum/material/gold = 5000, /datum/material/diamond = 1000)
 	build_path = /obj/item/external_lens/blinding
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
