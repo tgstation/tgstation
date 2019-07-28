@@ -63,7 +63,6 @@
 	var/late_joiner = FALSE
 
 	var/last_death = 0
-	var/memory_throttle_time = 0
 
 	var/force_escaped = FALSE  // Set by Into The Sunset command of the shuttle manipulator
 
@@ -130,9 +129,6 @@
 	last_death = world.time
 
 /datum/mind/proc/store_memory(new_text)
-	if (world.time < memory_throttle_time)
-		return
-	memory_throttle_time = world.time + 5 SECONDS
 	var/newlength = length(memory) + length(new_text)
 	if (newlength > MAX_MESSAGE_LEN * 100)
 		memory = copytext(memory, -newlength-MAX_MESSAGE_LEN * 100)
