@@ -259,7 +259,7 @@
 		if("Eject")
 			if(!inserted_scan_id)
 				return
-			id_eject(usr, I, inserted_prisoner_id)
+			id_eject(usr, inserted_prisoner_id)
 			return TRUE
 		if("Insert")
 			var/obj/item/card/id/I = usr.get_active_held_item()
@@ -299,7 +299,7 @@
 					desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
 
 				var/sheets_to_remove = round(min(desired,50,stored_amount))
-				
+
 				var/count = mat_container.retrieve_sheets(sheets_to_remove, mat, get_step(src, output_dir))
 				var/list/mats = list()
 				mats[mat] = MINERAL_MATERIAL_AMOUNT

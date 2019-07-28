@@ -323,8 +323,9 @@ What a mess.*/
 				active2 = null
 
 			if("Confirm Identity")
+				var/obj/item/card/id/I
 				if(inserted_scan_id)
-					id_eject(usr, I, inserted_scan_id)
+					id_eject(usr, inserted_scan_id)
 					return
 				else
 					id_insert(usr, I, inserted_scan_id)

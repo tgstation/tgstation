@@ -314,6 +314,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		return
 
 	usr.set_machine(src)
+	var/obj/item/card/id/I
 	switch(href_list["choice"])
 		if ("inserted_modify_id")
 			if (inserted_modify_id)
@@ -321,13 +322,13 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				inserted_modify_id.update_label()
 				region_access = null
 				head_subordinates = null
-				id_eject(usr, I, inserted_modify_id)
+				id_eject(usr, inserted_modify_id)
 				authenticated = FALSE
 			else
 				id_insert(usr, I, inserted_modify_id)
 		if ("inserted_scan_id")
 			if (inserted_scan_id)
-				id_eject(usr, I, inserted_scan_id)
+				id_eject(usr, inserted_scan_id)
 				authenticated = FALSE
 			else
 				id_insert(usr, I, inserted_scan_id)

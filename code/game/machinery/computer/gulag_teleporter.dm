@@ -73,6 +73,7 @@
 	return data
 
 /obj/machinery/computer/gulag_teleporter_computer/ui_act(action, list/params)
+	var/obj/item/card/id/prisoner/I
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 	if(..())
 		return
@@ -86,7 +87,7 @@
 			beacon = findbeacon()
 		if("handle_id")
 			if(inserted_prisoner_id)
-				id_eject(usr, I, inserted_prisoner_id)
+				id_eject(usr, inserted_prisoner_id)
 			else
 				id_insert(usr, I, inserted_prisoner_id)
 		if("set_goal")

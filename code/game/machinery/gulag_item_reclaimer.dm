@@ -77,7 +77,7 @@
 	switch(action)
 		if("handle_id")
 			if(inserted_prisoner_id)
-				id_eject(usr, I, inserted_prisoner_id)
+				id_eject(usr, inserted_prisoner_id)
 			else
 				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id)
 				if(I)

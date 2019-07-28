@@ -71,11 +71,12 @@ GLOBAL_LIST(labor_sheet_values)
 		return
 	switch(action)
 		if("handle_id")
-			if(inserted_prisoner_id)
-				if(!usr.get_active_held_item())
-					id_eject(usr, I, inserted_prisoner_id)
+			if(inserted_prisoner_id && !usr.get_active_held_item())
+				id_eject(usr, inserted_prisoner_id)
 			else
-				id_insert(usr, I, inserted_prisoner_id)
+				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id/prisoner)
+				if(I)
+					id_insert(usr, I, inserted_prisoner_id)
 		if("claim_points")
 			inserted_prisoner_id.points += stacking_machine.points
 			stacking_machine.points = 0

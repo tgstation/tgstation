@@ -196,8 +196,9 @@
 		if(href_list["temp"])
 			src.temp = null
 		if(href_list["inserted_scan_id"])
+			var/obj/item/card/id/I
 			if(inserted_scan_id)
-				id_eject(usr, I, inserted_scan_id)
+				id_eject(usr, inserted_scan_id)
 			else
 				id_insert(usr, I, inserted_scan_id)
 		else if(href_list["logout"])

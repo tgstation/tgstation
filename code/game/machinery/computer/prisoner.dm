@@ -90,11 +90,15 @@
 
 		if(href_list["id"])
 			if(href_list["id"] =="insert" && !inserted_prisoner_id)
-				id_insert(usr, I, inserted_prisoner_id)
+				var/obj/item/card/id/prisoner/I = usr.is_holding_item_of_type(/obj/item/card/id/prisoner)
+				if(I)
+					id_insert(usr, I, inserted_prisoner_id)
+				else
+					to_chat(usr, "<span class='danger'>No valid ID.</span>")
 			else if(inserted_prisoner_id)
 				switch(href_list["id"])
 					if("eject")
-						id_eject(usr, I, inserted_prisoner_id)
+						id_eject(usr, inserted_prisoner_id)
 					if("reset")
 						inserted_prisoner_id.points = 0
 					if("setgoal")

@@ -564,7 +564,7 @@ Class Procs:
 		to_chat(user, "<span class='danger'>No valid ID.</span>")
 	updateUsrDialog()
 
-/obj/machinery/proc/id_eject(mob/user, obj/item/card/id/I, obj/item/card/id/target_id)
+/obj/machinery/proc/id_eject(mob/user, obj/item/card/id/target_id)
 	if(target_id)
 		target_id.forceMove(drop_location())
 		if(!issilicon(user) && Adjacent(user))
@@ -581,7 +581,7 @@ Class Procs:
 /obj/machinery/computer/attackby(obj/item/I, mob/user, params)
 	if(target_id)
 		if(istype(I, /obj/item/card/id))
-			id_insert(user, I, target_id)
+			id_insert(user)
 			return
 	else
 		return ..()
