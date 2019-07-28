@@ -76,3 +76,20 @@
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 
+/obj/item/clothing/under/rank/rnd/roboticist
+	desc = "It's a slimming black with reinforced seams; great for industrial work."
+	name = "roboticist's jumpsuit"
+	icon_state = "robotics"
+	item_state = "robotics"
+	item_color = "robotics"
+	resistance_flags = NONE
+
+/obj/item/clothing/under/rank/rnd/roboticist/skirt
+	name = "roboticist's jumpskirt"
+	desc = "It's a slimming black with reinforced seams; great for industrial work."
+	icon_state = "robotics_skirt"
+	item_state = "robotics"
+	item_color = "robotics_skirt"
+	body_parts_covered = CHEST|GROIN|ARMS
+	can_adjust = FALSE
+	fitted = FEMALE_UNIFORM_TOP

@@ -94,7 +94,7 @@
 /*
  * Detective
  */
-/obj/item/clothing/under/rank/sercurity/detective
+/obj/item/clothing/under/rank/security/detective
 	name = "hard-worn suit"
 	desc = "Someone who wears this means business."
 	icon_state = "detective"

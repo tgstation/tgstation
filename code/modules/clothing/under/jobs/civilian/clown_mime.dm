@@ -26,7 +26,7 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
-/obj/item/clothing/under/rank/clown
+/obj/item/clothing/under/rank/civilian/clown
 	name = "clown suit"
 	desc = "<i>'HONK!'</i>"
 	icon_state = "clown"
@@ -60,7 +60,7 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
-/obj/item/clothing/under/rank/civilian/clown/yellow
+/obj/item/clothing/under/rank/civilian/clown/purple
 	name = "purple clown suit"
 	desc = "<i>'PURPLE HONK!'</i>"
 	icon_state = "purpleclown"

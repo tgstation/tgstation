@@ -25,7 +25,7 @@
 	mutantrace_variation = MUTANTRACE_VARIATION
 	alt_covers_chest = TRUE
 
-/obj/item/clothing/under/rank/cargo/tech
+/obj/item/clothing/under/rank/cargo/tech/skirt
 	name = "cargo technician's jumpskirt"
 	desc = "Skiiiiirts! They're comfy and easy to wear"
 	icon_state = "cargo_skirt"

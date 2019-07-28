@@ -151,20 +151,20 @@
 	item_state = "lawyer_black"
 	item_color = "lawyer_black"
 
-/obj/item/clothing/under/civilian/lawyer/black/skirt
+/obj/item/clothing/under/rank/civilian/lawyer/black/skirt
 	name = "lawyer black suitskirt"
 	icon_state = "lawyer_black_skirt"
 	item_state = "lawyer_black"
 	item_color = "lawyer_black_skirt"
 	fitted = FEMALE_UNIFORM_TOP
 
-/obj/item/clothing/under/civilian/lawyer/female
+/obj/item/clothing/under/rank/civilian/lawyer/female
 	name = "female black suit"
 	icon_state = "black_suit_fem"
 	item_state = "bl_suit"
 	item_color = "black_suit_fem"
 
-/obj/item/clothing/under/civilian/lawyer/female/skirt
+/obj/item/clothing/under/rank/civilian/lawyer/female/skirt
 	name = "female black suitskirt"
 	icon_state = "black_suit_fem_skirt"
 	item_state = "bl_suit"

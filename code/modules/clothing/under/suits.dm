@@ -62,7 +62,7 @@
 	icon_state = "really_black_suit_skirt"
 	item_state = "bl_suit"
 	item_color = "really_black_suit_skirt"
-	body_parts_covered = CHEST|GROIN|AMS
+	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 

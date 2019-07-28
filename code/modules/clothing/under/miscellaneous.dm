@@ -87,7 +87,7 @@
 	item_color = "assistant_formal"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/misc/plasmaman
+/obj/item/clothing/under/plasmaman
 	name = "plasma envirosuit"
 	desc = "A special containment suit that allows plasma-based lifeforms to exist safely in an oxygenated environment, and automatically extinguishes them in a crisis. Despite being airtight, it's not spaceworthy."
 	icon_state = "plasmaman"
@@ -102,11 +102,11 @@
 	var/extinguishes_left = 5
 
 
-/obj/item/clothing/under/misc/plasmaman/examine(mob/user)
+/obj/item/clothing/under/plasmaman/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>There are [extinguishes_left] extinguisher charges left in this suit.</span>"
 
-/obj/item/clothing/under/misc/plasmaman/proc/Extinguish(mob/living/carbon/human/H)
+/obj/item/clothing/under/plasmaman/proc/Extinguish(mob/living/carbon/human/H)
 	if(!istype(H))
 		return
 
@@ -121,7 +121,7 @@
 			new /obj/effect/particle_effect/water(get_turf(H))
 	return 0
 
-/obj/item/clothing/under/plasmaman/misc/attackby(obj/item/E, mob/user, params)
+/obj/item/clothing/under/plasmaman/attackby(obj/item/E, mob/user, params)
 	..()
 	if (istype(E, /obj/item/extinguisher_refill))
 		if (extinguishes_left == 5)
