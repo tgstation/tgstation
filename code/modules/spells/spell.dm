@@ -249,14 +249,14 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	switch(invocation_type)
 		if("shout")
 			if(prob(50))//Auto-mute? Fuck that noise
-				user.say(invocation, forced = "spell")
+				user.say(invocation, ignore_spam = TRUE, forced = "spell")
 			else
-				user.say(replacetext(invocation," ","`"), forced = "spell")
+				user.say(replacetext(invocation," ","`"), ignore_spam = TRUE, forced = "spell")
 		if("whisper")
 			if(prob(50))
-				user.whisper(invocation)
+				user.whisper(invocation, ignore_spam = TRUE)
 			else
-				user.whisper(replacetext(invocation," ","`"))
+				user.whisper(replacetext(invocation," ","`"), ignore_spam = TRUE)
 		if("emote")
 			user.visible_message(invocation, invocation_emote_self) //same style as in mob/living/emote.dm
 
