@@ -115,7 +115,13 @@ Class Procs:
 	var/atom/movable/occupant = null
 	var/speed_process = FALSE // Process as fast as possible?
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
+	var/obj/item/card/id/prisoner/inserted_prisoner_id
+	var/obj/item/card/id/inserted_scan_id
+	var/obj/item/card/id/inserted_modify_id
 	var/damage_deflection = 0
+	var/list/region_access = null // For the identification console (card.dm)
+	var/list/head_subordinates = null // For the identification console (card.dm)
+	var/authenticated = 0 // For the identification console (card.dm)
 
 	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
 	var/fair_market_price = 69
@@ -509,6 +515,8 @@ Class Procs:
 				. += "<span class='warning'>It's falling apart!</span>"
 	if(user.research_scanner && component_parts)
 		. += display_parts(user, TRUE)
+	if(inserted_prisoner_id || inserted_scan_id || inserted_modify_id)
+		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
 
 //called on machinery construction (i.e from frame to machinery) but not on initialization
 /obj/machinery/proc/on_construction()
@@ -542,3 +550,117 @@ Class Procs:
 	. = . % 9
 	AM.pixel_x = -8 + ((.%3)*8)
 	AM.pixel_y = -8 + (round( . / 3)*8)
+
+/obj/machinery/proc/id_eject_prisoner(mob/user)
+	if(inserted_prisoner_id)
+		inserted_prisoner_id.forceMove(drop_location())
+		if(!issilicon(user) && Adjacent(user))
+			user.put_in_hands(inserted_prisoner_id)
+			inserted_prisoner_id = null
+			user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
+								"<span class='notice'>You get the ID card from the console.</span>")
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+		updateUsrDialog()
+		return
+	else
+		to_chat(user, "<span class='warning'>There's no ID card in the console!</span>")
+
+	if(!inserted_prisoner_id)
+		to_chat(user, "<span class='warning'>There's no ID card in the console!</span>")
+		return
+	if(inserted_prisoner_id)
+		inserted_prisoner_id.forceMove(drop_location())
+		if(!issilicon(user) && Adjacent(user))
+			user.put_in_hands(inserted_prisoner_id)
+		inserted_prisoner_id = null
+		user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
+							"<span class='notice'>You get the ID card from the console.</span>")
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+		updateUsrDialog()
+
+/obj/machinery/proc/id_insert_prisoner(mob/user)
+	if(inserted_prisoner_id)
+		to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
+		return
+	var/obj/item/card/id/prisoner/I = user.get_active_held_item()
+	if(istype(I))
+		if(!user.transferItemToLoc(I, src))
+			return
+		inserted_prisoner_id = I
+		user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
+							"<span class='notice'>You insert the ID card into the console.</span>")
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	else
+		to_chat(user, "<span class='danger'>No valid ID.</span>")
+	updateUsrDialog()
+
+/obj/machinery/proc/id_insert_scan(mob/user, obj/item/card/id/I)
+	I = user.get_active_held_item()
+	if(istype(I))
+		if(inserted_scan_id)
+			to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
+			return
+		if(!user.transferItemToLoc(I, src))
+			return
+		inserted_scan_id = I
+		user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
+							"<span class='notice'>You insert the ID card into the console.</span>")
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+		updateUsrDialog()
+
+/obj/machinery/proc/id_eject_scan(mob/user)
+	if(!inserted_scan_id)
+		to_chat(user, "<span class='warning'>There's no ID card in the console!</span>")
+		return
+	if(inserted_scan_id)
+		inserted_scan_id.forceMove(drop_location())
+		if(!issilicon(user) && Adjacent(user))
+			user.put_in_hands(inserted_scan_id)
+		inserted_scan_id = null
+		user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
+							"<span class='notice'>You get the ID card from the console.</span>")
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+		updateUsrDialog()
+
+/obj/machinery/proc/id_eject_modify(mob/user)
+	if(inserted_modify_id)
+		GLOB.data_core.manifest_modify(inserted_modify_id.registered_name, inserted_modify_id.assignment)
+		inserted_modify_id.update_label()
+		inserted_modify_id.forceMove(drop_location())
+		if(!issilicon(user) && Adjacent(user))
+			user.put_in_hands(inserted_modify_id)
+		user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
+							"<span class='notice'>You get the ID card from the console.</span>")
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+		inserted_modify_id = null
+		region_access = null
+		head_subordinates = null
+		updateUsrDialog()
+
+/obj/machinery/proc/id_insert_modify(mob/user)
+	var/obj/item/card/id/I = user.get_active_held_item()
+	if(istype(I))
+		if(inserted_modify_id)
+			to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
+			return
+		if(!user.transferItemToLoc(I, src))
+			return
+		inserted_modify_id = I
+		user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
+							"<span class='notice'>You insert the ID card into the console.</span>")
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+		updateUsrDialog()
+
+/obj/machinery/AltClick(mob/user)
+	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational())
+		return
+	if(inserted_modify_id)
+		id_eject_modify(user)
+		authenticated = FALSE
+		return
+	if(inserted_scan_id)
+		id_eject_scan(user)
+		authenticated = FALSE
+		return
+	if(inserted_prisoner_id)
+		id_eject_prisoner(user)
