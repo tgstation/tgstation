@@ -36,9 +36,10 @@
 		if(chassis.selected == src)
 			chassis.selected = null
 		src.update_chassis_page()
-		chassis.occupant_message("<span class='danger'>[src] is destroyed!</span>")
 		log_message("[src] is destroyed.", LOG_MECHA)
-		SEND_SOUND(chassis.occupant, sound(destroy_sound , volume=50))
+		if(chassis.occupant)
+			chassis.occupant_message("<span class='danger'>[src] is destroyed!</span>")
+			chassis.occupant.playsound_local(chassis, destroy_sound, 50)
 		chassis = null
 	return ..()
 

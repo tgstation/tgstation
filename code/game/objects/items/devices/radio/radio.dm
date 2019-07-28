@@ -356,6 +356,7 @@
 	if(emped != curremp) //Don't fix it if it's been EMP'd again
 		return FALSE
 	emped = FALSE
+	on = TRUE
 	return TRUE
 
 ///////////////////////////////

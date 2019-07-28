@@ -143,7 +143,7 @@
 	. = ..()
 	if(!.)
 		return
-	on = TRUE
+	on = FALSE
 
 //Created through the autolathe or through deconstructing intercoms. Can be applied to wall to make a new intercom on it!
 /obj/item/wallframe/intercom
