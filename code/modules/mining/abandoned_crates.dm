@@ -64,7 +64,7 @@
 			var/newitem = pick(subtypesof(/obj/item/toy/prize))
 			new newitem(src)
 		if(57 to 58)
-			new /obj/item/toy/syndicateballoon(src)
+			new /obj/item/toy/balloon/syndicate(src)
 		if(59 to 60)
 			new /obj/item/borg/upgrade/modkit/aoe/mobs(src)
 			new /obj/item/clothing/suit/space(src)
