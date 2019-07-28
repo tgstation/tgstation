@@ -112,11 +112,10 @@
 		var/atom/movable/AM = i
 		var/obj/item/bodypart/head/as_head = AM
 		var/obj/item/mmi/as_mmi = AM
-		var/brain_holder = istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /mob/living/brain)
-		if(brain_holder)
+		if(istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /mob/living/brain))
 			emergency_stop(AM)
 		else if(isliving(AM))
-			if((obj_flags & EMAGGED)||((!allowed(AM))&&(!ishuman(AM))))
+			if((obj_flags & EMAGGED)||!ishuman(AM))
 				crush_living(AM)
 			else
 				emergency_stop(AM)
@@ -125,8 +124,6 @@
 			items_recycled++
 		else
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
-			AM.forceMove(loc)
-
 	if(items_recycled && sound)
 		playsound(src, item_recycle_sound, 50, 1)
 
