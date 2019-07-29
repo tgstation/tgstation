@@ -152,6 +152,11 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define SAWN_OFF_ACC_PENALTY 25
 #define SAWN_OFF_RECOIL 1
 
+//ammo box sprite defines
+#define AMMO_BOX_ONE_SPRITE 0
+#define AMMO_BOX_PER_BULLET 1
+#define AMMO_BOX_FULL_EMPTY 2
+
 //Projectile Reflect
 #define REFLECT_NORMAL 				(1<<0)
 #define REFLECT_FAKEPROJECTILE		(1<<1)
