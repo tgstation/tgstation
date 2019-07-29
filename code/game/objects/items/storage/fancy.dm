@@ -285,6 +285,25 @@
 	if(!contents.len)
 		add_overlay("[icon_state]_empty")
 
+/obj/item/storage/fancy/nicotine_patch
+  name = "nicotine patch pack"
+  desc = "A pack of Nanotrasen brand nicotine patches."
+  w_class = WEIGHT_CLASS_TINY
+  icon = 'icons/obj/cigarettes.dmi'
+  icon_state = "nicotine_patch"
+  spawn_type = /obj/item/reagent_containers/pill/patch/nicotine
+
+/obj/item/storage/fancy/nicotine_patch/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 6
+	STR.set_holdable(list(/obj/item/reagent_containers/pill/patch/nicotine))
+
+/obj/item/storage/fancy/nicotine_patch/update_icon()
+  cut_overlays()
+  if(!contents.len)
+    icon_state = "[initial(icon_state)]_empty"
+
 /////////////
 //CIGAR BOX//
 /////////////

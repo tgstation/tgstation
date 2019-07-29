@@ -44,3 +44,9 @@
 	desc = "Helps with brute and burn injuries."
 	list_reagents = list(/datum/reagent/medicine/synthflesh = 20)
 	icon_state = "bandaid_both"
+
+/obj/item/reagent_containers/pill/patch/nicotine
+	name = "nicotine patch"
+	desc = "A healthier alternative to smoking. Be careful not to use more than one at a time!"
+	list_reagents = list(/datum/reagent/drug/nicotine = 9)
+	icon_state = "bandaid_nic"
