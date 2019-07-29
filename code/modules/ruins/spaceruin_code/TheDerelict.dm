@@ -16,8 +16,6 @@
 	name = "unfinished paper scrap"
 	desc = "Looks like someone started shakily writing a will in space common, but were interrupted by something bloody..."
 	info = "I, Victor Belyakov, do hereby leave my _- "
-
 /obj/item/paper/fluff/ruins/thederelict/vaultraider
 	name = "Vault Raider Objectives"
 	info = "<b>Objectives #1</b>: Find out whatever is being hidden in Kosmichekaya Stantsiya 13s Vault"
-
