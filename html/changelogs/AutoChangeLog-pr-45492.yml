@@ -1,0 +1,4 @@
+author: "Garen"
+delete-after: True
+changes: 
+  - bugfix: "Fixes infinite loop when you catch a cult bola; you can no longer block them by trying to catch them"
