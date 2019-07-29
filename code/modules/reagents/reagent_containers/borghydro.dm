@@ -271,6 +271,7 @@ to the arm are passed onto a stored beaker, if one exists. */
 /obj/item/borg_beaker_holder/Initialize()
 	. = ..()
 	stored = new /obj/item/reagent_containers/glass/beaker/large(src)
+	RegisterSignal(stored, COMSIG_OBJ_UPDATE_ICON, .proc/update_icon)
 	update_icon()
 	RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, .proc/safedecon)
 
@@ -319,6 +320,7 @@ to the arm are passed onto a stored beaker, if one exists. */
 
 /obj/item/borg_beaker_holder/Exited(atom/A)
 	if(A == stored) //sanity check
+		UnregisterSignal(stored, COMSIG_OBJ_UPDATE_ICON)
 		stored = null
 	update_icon()
 	. = ..()
@@ -345,7 +347,6 @@ to the arm are passed onto a stored beaker, if one exists. */
 	else
 		stored.SplashReagents(get_turf(user))
 		loc.visible_message("<span class='notice'>[user] spills the contents of the [stored] all over the floor.</span>")
-		update_icon()
 
 /obj/item/borg_beaker_holder/pre_attack(atom/A, mob/living/user, params)
 	if(istype(A, /obj/item/reagent_containers/glass/beaker) || istype(A, /obj/item/reagent_containers/glass/bottle))
@@ -353,17 +354,16 @@ to the arm are passed onto a stored beaker, if one exists. */
 			var/obj/item/reagent_containers/container = A
 			container.forceMove(src)
 			stored = container
+			RegisterSignal(stored, COMSIG_OBJ_UPDATE_ICON, .proc/update_icon)
 			update_icon()
 			return
 	if(stored)
 		stored.melee_attack_chain(user, A, params)
-		update_icon()
 		return
 	. = ..()
 
 /obj/item/borg_beaker_holder/attackby(obj/item/W, mob/user, params)
 	if(stored)
 		W.melee_attack_chain(user, stored, params)
-		update_icon()
 		return
 	. = ..()
