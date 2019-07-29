@@ -22,8 +22,8 @@ The swapper implant comes in two parts, the activator pen, and the swapper impla
 
 		RL.visible_message("[RL] Suddenly vanishes, Leaving [AL] in their place!")
 		AL.visible_message("[AL] Suddenly vanishes, leaving [RL] in their place!")
-		to_chat(RL, "You suddenly find yourself in a new location.")
-		to_chat(AL, "You press the button on the pen, and suddenly find yourself in a new location.")
+		to_chat(RL, "<span class=notice>You suddenly find yourself in a new location.</span>")
+		to_chat(AL, "<span class=notice>You press the button on the pen, and suddenly find yourself in a new location.</span>")
 
 		///Move the reciever to the activator
 		do_teleport(RL, AT, channel = TELEPORT_CHANNEL_QUANTUM, forceMove = TRUE)
@@ -33,9 +33,9 @@ The swapper implant comes in two parts, the activator pen, and the swapper impla
 		///Cleans up the objects after use.
 		QDEL_NULL(R)
 		QDEL_NULL(A)
-		to_chat(AL, "The pen falls apart in your hands.")
+		to_chat(AL, "<span class=notice>The pen falls apart in your hands.</span>")
 	else
-		to_chat(AL, "You press the button on the pen, but you have not yet implanted the anybody!")
+		to_chat(AL, "<span class=warning>You press the button on the pen, but you have not yet implanted the anybody!</span>")
 
 /obj/item/pen/swap_activator/attack_self()
 	activate()
@@ -51,4 +51,20 @@ The swapper implant comes in two parts, the activator pen, and the swapper impla
 /obj/item/implanter/swapper
 	imp_type = /obj/item/implant/swapper
 
+/obj/item/implanter/swapper/attack(mob/living/M, mob/user)
+	if(!istype(M))
+		return
+	if(user && imp
+		var/turf/T = get_turf(M)
+		if(T && (M == user || do_mob(user, M, 0)))
+			if(src && imp)
+				if(imp.implant(M, user))
+					if (M == user)
+						to_chat(user, "<span class='notice'>You implant yourself.</span>")
+					else
+						to_chat(user, "<span class='notice>You Implant [M]</span>'")
+					imp = null
+					update_icon()
+				else
+					to_chat(user, "<span class='warning'>[src] fails to implant [M].</span>")
 
