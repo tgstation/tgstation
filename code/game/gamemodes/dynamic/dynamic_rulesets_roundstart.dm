@@ -339,7 +339,6 @@
 			SSticker.mode_result = "halfwin - interrupted"
 			SSticker.news_report = OPERATIVE_SKIRMISH
 
-/* Commented out because it can't reasonably check heads while being a roundstart ruleset.
 //////////////////////////////////////////////
 //                                          //
 //               REVS		                //
@@ -361,21 +360,13 @@
 	high_population_requirement = 10
 	delay = 5 MINUTES
 	flags = HIGHLANDER_RULESET
-	var/required_heads = 3
 	var/datum/team/revolution/revolution
 	var/finished = 0
 
 /datum/dynamic_ruleset/roundstart/delayed/revs/ready(forced = FALSE)
-	if (forced)
-		required_heads = 1
-		required_candidates = 1
-	if (!..())
-		return FALSE
-	var/head_check = 0
-	for (var/mob/player in mode.current_players[CURRENT_LIVING_PLAYERS])
-		if (player.mind.assigned_role in GLOB.command_positions)
-			head_check++
-	return (head_check >= required_heads)
+	// This is a way to get heads, I guess.
+	mode.required_jobs = list(list("Captain"=1),list("Head of Personnel"=1),list("Head of Security"=1),list("Chief Engineer"=1),list("Research Director"=1),list("Chief Medical Officer"=1))
+	return TRUE
 
 /datum/dynamic_ruleset/roundstart/delayed/revs/execute()
 	var/max_canditates = 4
@@ -438,7 +429,6 @@
 	else if(finished == 2)
 		SSticker.mode_result = "loss - rev heads killed"
 		SSticker.news_report = REVS_LOSE
-*/
 
 // Admin only rulesets. The threat requirement is 101 so it is not possible to roll them.
 

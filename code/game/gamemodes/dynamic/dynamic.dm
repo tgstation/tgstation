@@ -119,8 +119,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	else
 		dat += "none.<br>"
 	dat += "<br>Injection Timers: (<b>[get_injection_chance(TRUE)]%</b> chance)<BR>"
-	dat += "Latejoin: [(latejoin_injection_cooldown-world.time)>60*10 ? "[round((latejoin_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(latejoin_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
-	dat += "Midround: [(midround_injection_cooldown-world.time)>60*10 ? "[round((midround_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(midround_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];injectmid=2'>\[Now!\]</a><BR>"
+	dat += "Latejoin: [(latejoin_injection_cooldown-world.time)>60*20 ? "[round((latejoin_injection_cooldown-world.time)/60/20,0.1)] minutes" : "[(latejoin_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
+	dat += "Midround: [(midround_injection_cooldown-world.time)>60*20 ? "[round((midround_injection_cooldown-world.time)/60/20,0.1)] minutes" : "[(midround_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];injectmid=1'>\[Now!\]</a><BR>"
 	usr << browse(dat.Join(), "window=gamemode_panel;size=500x500")
 
 /datum/game_mode/dynamic/Topic(href, href_list)
@@ -337,9 +337,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if (rule.acceptable(roundstart_pop_ready,threat_level) && threat >= rule.cost)	// If we got the population and threat required
 			// Hacky but this will do for now. This allows delayed rulesets to be ran but it will refund if ready fails
 			// and forces a midround injection.
-			if(istype(rule, /datum/dynamic_ruleset/roundstart/delayed))
-				drafted_rules[rule] = rule.weight
-				continue
 			rule.candidates = candidates.Copy()
 			rule.trim_candidates()
 			if (rule.ready() && rule.candidates.len > 0)
@@ -400,10 +397,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 		if (istype(starting_rule, /datum/dynamic_ruleset/roundstart/delayed/))
 			var/datum/dynamic_ruleset/roundstart/delayed/rule = starting_rule
-			spend_threat(rule.cost)
-			threat_log += "[worldtime2text()]: Roundstart [rule.name] spent [rule.cost]"
 			addtimer(CALLBACK(src, .proc/execute_delayed, rule), rule.delay)
-			return TRUE
 
 		spend_threat(starting_rule.cost)
 		threat_log += "[worldtime2text()]: Roundstart [starting_rule.name] spent [starting_rule.cost]"
@@ -423,16 +417,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /// Executes delayed roundstart rules and has a hack in it.
 /datum/game_mode/dynamic/proc/execute_delayed(datum/dynamic_ruleset/roundstart/delayed/rule)
-	rule.candidates = GLOB.player_list.Copy()
+	update_playercounts()
+	rule.candidates = current_players[CURRENT_LIVING_PLAYERS].Copy()
 	rule.trim_candidates()
-	if(!rule.ready())
-		refund_threat(rule.cost)
-		threat_log += "[worldtime2text()]: Roundstart [rule.name] refunded [rule.cost]"
-		// Forces a midround injection so if it is the only ruleset picked something will still happen.
-		// This is a bit hacky but 
-		forced_injection = TRUE
-		midround_injection_cooldown = 0
-		return FALSE
 	if(rule.execute())
 		executed_rules += rule
 		if (rule.persistent)
