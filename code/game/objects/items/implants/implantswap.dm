@@ -3,6 +3,7 @@ The swapper implant comes in two parts, the activator pen, and the swapper impla
 */
 
 /obj/item/pen/swap_activator
+	///Stores the implant object ref.
 	var/obj/item/implant/swapper/reciever
 
 /obj/item/pen/swap_activator/proc/activate(var/obj/item/implant/swapper/R = reciever, var/obj/A = src)
@@ -38,14 +39,17 @@ The swapper implant comes in two parts, the activator pen, and the swapper impla
 		to_chat(AL, "<span class=warning>You press the button on the pen, but you have not yet implanted anybody!</span>")
 
 /obj/item/pen/swap_activator/attack_self()
+	///Click the pen and you are gone.
 	activate()
 
 /obj/item/implant/swapper
+	///Ensures that the thing was actually implanted.
 	var/implanted = FALSE
 
 /obj/item/implant/swapper/implant(silent = TRUE, force = TRUE)
 	. = ..()
 	if(.)
+		///If 1, it worked and the implant is implanted.
 		implanted = TRUE
 
 /obj/item/implanter/swapper
