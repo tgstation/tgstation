@@ -50,7 +50,7 @@
 	Info announcement when the core has landed
 */
 /obj/structure/infection/core/proc/generate_announcement()
-	priority_announce("The substance has landed, all available crew members are now required by threat of execution to fight the infection in any way possible.\n\n\
+	priority_announce("The substance has landed, all available crew members are now drafted to fight the infection in any way possible.\n\n\
 					   We've also analyzed the substance further, and deemed it to be a threat to continued operations in your solar system.\n\n\
 					   Reinforcements have been requested to be sent in, though we've been detecting anomalous signals coming from the substance's origin point as well.\n\n\
 					   If you stop the source of these signals, you may be able to disable the enemy entirely. Good luck.",
@@ -178,17 +178,7 @@
 	C.visible_message("<span class='notice'>[C] disintegrates as their energy begins to circle the core!</span>")
 	C.dust()
 	converting.Remove(stored_mind)
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as an evolving infection slime?", ROLE_INFECTION, null, ROLE_INFECTION, 50) //players must answer rapidly
-	if(LAZYLEN(candidates)) //if we got at least one candidate, they're a sentient spore now.
-		var/mob/dead/observer/O = pick(candidates)
-		var/datum/mind/spore_mind = O.mind
-		spore_mind.add_antag_datum(/datum/antagonist/infection/spore)
-		return
-	else
-		// get some points then everyone
-		for(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/S in overmind.infection_mobs)
-			S.add_points(100)
-			to_chat(S, "<span class='notice'>You feel the energy of a living being surge through you...</span>")
+	overmind.create_spore()
 
 /*
 	Pulses the nodes that have requested to expand, delays them so they don't all occur at once

@@ -169,5 +169,4 @@
 
 /obj/structure/infection/turret/core/Initialize()
 	. = ..()
-	AddComponent(/datum/component/knockback, -4)
 	AddComponent(/datum/component/summoning, list(/mob/living/simple_animal/hostile/infection/infectionspore), 10, 4, 0, "forms from the raw energy!", 'sound/effects/blobattack.ogg')

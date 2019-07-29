@@ -14,7 +14,7 @@
 	melee_damage_upper = 10
 	crystal_color = "#ff8c00"
 	// respawn time for the slime
-	var/respawn_time = 45
+	var/respawn_time = 30
 	// the time left to respawn
 	var/current_respawn_time = -1
 	// whether or not the spore can respawn
@@ -167,11 +167,10 @@
 		playsound(src.loc, 'sound/effects/splat.ogg', 100, FALSE, pressure_affected = FALSE)
 		visible_message("<span class='notice'>[src] fades into pure energy that races towards the core of the infection.</span>",
 			"<span class='notice'>You return to the core of the infection to reform your body.</span>")
-		if(prob(33))
-			var/type_of_drop = pickweight(slime_drops)
-			var/turf/T = get_turf(src)
-			if(type_of_drop && T)
-				new type_of_drop(T)
+		var/type_of_drop = pickweight(slime_drops)
+		var/turf/T = get_turf(src)
+		if(type_of_drop && T)
+			new type_of_drop(T)
 		forceMove(overmind.infection_core)
 		INVOKE_ASYNC(src, .proc/respawn)
 		return
@@ -270,7 +269,7 @@
 		to_chat(src, "<span class='warning'>Shifted spawn location to core.</span>")
 	else if(GLOB.infection_nodes.len)
 		var/obj/structure/infection/node/N = null
-		for(var/i in 1 to GLOB.infection_nodes.len)
+		for(var/i in 1 to GLOB.infection_nodes.len - curr)
 			N = GLOB.infection_nodes[curr + i]
 			if(N.loc != null) // very rare issue but a major one
 				break

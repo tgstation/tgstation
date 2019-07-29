@@ -5341,6 +5341,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
+/obj/effect/landmark/infection_gravity_spawn,
 /turf/open/floor/carpet,
 /area/hallway/secondary/entry)
 "apn" = (
@@ -151043,7 +151044,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+sPU
 aaa
 aaa
 aaa
@@ -153101,7 +153102,7 @@ aaa
 aaa
 aaa
 aaa
-sPU
+aaa
 aaa
 aaa
 aaa

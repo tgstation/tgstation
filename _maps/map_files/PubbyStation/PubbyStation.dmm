@@ -21349,6 +21349,7 @@
 "bcZ" = (
 /obj/machinery/light,
 /obj/effect/turf_decal/stripes/line,
+/obj/effect/landmark/infection_gravity_spawn,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "bda" = (

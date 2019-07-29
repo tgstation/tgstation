@@ -3,7 +3,7 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 /datum/round_event_control/infection
 	name = "Doom Clock Event"
 	weight = 1
-	max_occurrences = 3
+	max_occurrences = 1
 	earliest_start = 0 MINUTES
 	infectionevent = TRUE
 
@@ -73,9 +73,11 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 				break
 			return FALSE
 		boss_spore.forceMove(GLOB.infection_core)
+		boss_spore.can_respawn = TRUE
 		var/mob/living/simple_animal/boss = new boss_type(start)
 		boss.add_atom_colour(C.color, FIXED_COLOUR_PRIORITY)
 		boss.AddComponent(/datum/component/mindcontroller, boss_spore, list(ROLE_INFECTION))
+		boss.AddComponent(/datum/component/no_beacon_crossing)
 		boss.loot = boss_drop_list
 		boss.pass_flags |= PASSBLOB
 		GLOB.doom_event_mobs += boss
@@ -83,6 +85,7 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 	if(minion_types.len)
 		for(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/spore in (C.infection_mobs - boss_spore))
 			spore.forceMove(GLOB.infection_core)
+			spore.can_respawn = TRUE
 			var/minion_type = pickweight(minion_types)
 			var/mob/living/simple_animal/minion = new minion_type(start)
 			minion.add_atom_colour(C.color, FIXED_COLOUR_PRIORITY)

@@ -28,7 +28,7 @@
 	// multiplies incoming burn damage by this
 	var/fire_resist = 0.5
 	// if the infection blocks atmos and heat spread
-	var/atmosblock = FALSE
+	var/atmosblock = TRUE
 	// the controlling overmind of this structure
 	var/mob/camera/commander/overmind
 	// the angles that the node will expand on first, used to give a uniform distribution
@@ -64,6 +64,9 @@
 	AddComponent(/datum/component/no_beacon_crossing)
 	generate_upgrades()
 	menu_handler = new /datum/infection_menu(src)
+	var/turf/T = get_turf(src)
+	if(T)
+		T.ChangeTurf(/turf/open/floor/plating)
 
 /*
 	Generates the upgrades for the infection from the types

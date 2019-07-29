@@ -162,7 +162,7 @@
 	if(I)
 		StartCooldown()
 		playsound(T, 'sound/effects/splat.ogg', 100, FALSE, pressure_affected = FALSE)
-		I.change_to(/obj/structure/infection/node/mini, I.overmind)
+		I.change_to(/obj/structure/infection/node/mini, I.overmind, 25)
 		return
 	to_chat(S, "<span class='warning'>You must be above an infection to use this ability!</span>")
 
@@ -177,7 +177,7 @@
 	if(I)
 		StartCooldown()
 		playsound(T, 'sound/effects/splat.ogg', 100, FALSE, pressure_affected = FALSE)
-		I.change_to(/obj/structure/infection/shield/reflective, I.overmind)
+		I.change_to(/obj/structure/infection/shield/reflective, I.overmind, 25)
 		return
 	to_chat(S, "<span class='warning'>You must be above an infection to use this ability!</span>")
 

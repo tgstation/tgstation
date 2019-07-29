@@ -50492,6 +50492,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
+"wuK" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
+	dir = 8
+	},
+/obj/effect/landmark/infection_gravity_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
 "wvW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -83458,7 +83465,7 @@ avO
 avi
 byc
 awe
-aLY
+wuK
 awe
 bwi
 avi

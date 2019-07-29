@@ -22231,6 +22231,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
+/obj/effect/landmark/infection_gravity_spawn,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aWY" = (
@@ -74183,6 +74184,14 @@
 "lAu" = (
 /turf/open/space/basic,
 /area/space/nearstation)
+"lDM" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/structure/cable,
+/obj/effect/landmark/beacon_start/east,
+/turf/open/floor/plasteel,
+/area/hallway/primary/starboard)
 "lGS" = (
 /obj/docking_port/stationary/public_mining_dock,
 /turf/open/floor/plating,
@@ -74376,12 +74385,6 @@
 /obj/effect/landmark/infection_start,
 /turf/open/space/basic,
 /area/space)
-"nQP" = (
-/obj/effect/landmark/beacon_start/east,
-/turf/open/floor/engine{
-	name = "Holodeck Projector Floor"
-	},
-/area/holodeck/rec_center)
 "nXA" = (
 /obj/structure/rack{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -74500,14 +74503,6 @@
 "pcn" = (
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
-"pdV" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/effect/landmark/beacon_start/east,
-/turf/open/floor/plasteel,
-/area/hallway/primary/starboard)
 "pgY" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -75099,6 +75094,23 @@
 	dir = 8
 	},
 /area/engine/storage_shared)
+"vzS" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/landmark/beacon_start/east,
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/fitness/recreation)
 "vKx" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -111647,7 +111659,7 @@ agw
 ahj
 ahX
 afA
-ajU
+vzS
 afA
 amy
 anI
@@ -111685,7 +111697,7 @@ bcv
 bdX
 aZw
 bhM
-bjw
+lDM
 bkU
 alq
 alq
@@ -113960,7 +113972,7 @@ afD
 afD
 afD
 afD
-nQP
+afD
 afD
 afD
 afD
@@ -113998,7 +114010,7 @@ aWw
 aWw
 aWw
 bhQ
-pdV
+bjp
 blf
 bmU
 alq
@@ -122720,7 +122732,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+nOY
 aaa
 aaa
 aaa
@@ -123748,7 +123760,7 @@ aaa
 aaa
 aaa
 aaa
-nOY
+aaa
 aaa
 aaa
 aaa

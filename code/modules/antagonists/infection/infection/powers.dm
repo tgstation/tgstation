@@ -1,16 +1,26 @@
 GLOBAL_LIST_EMPTY(infection_spawns)
+GLOBAL_LIST_EMPTY(infection_gravity_spawns)
 
 /datum/map_template/infection_start
     name = "Infection Start"
     mappath = '_maps/templates/infection_spawn.dmm'
 
 /obj/effect/landmark/infection_start
-	name = "infectionstart"
+	name = "infection start"
 	icon_state = "infection_start"
 
 /obj/effect/landmark/infection_start/Initialize(mapload)
 	..()
 	GLOB.infection_spawns += get_turf(src)
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/infection_gravity_spawn
+	name = "infection gravity spawn"
+	icon_state = "infection_gravity"
+
+/obj/effect/landmark/infection_gravity_spawn/Initialize(mapload)
+	..()
+	GLOB.infection_gravity_spawns += get_turf(src)
 	return INITIALIZE_HINT_QDEL
 
 ////////////////////////
@@ -147,17 +157,30 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 /*
 	Attempts to create another spore for the infection commander
 */
-/mob/camera/commander/proc/create_spore()
-	to_chat(src, "<span class='warning'>Attempting to create a sentient slime...</span>")
+/mob/camera/commander/proc/create_spore(poll_ghosts = TRUE)
 
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as an evolving infection slime?", ROLE_INFECTION, null, ROLE_INFECTION, 50) //players must answer rapidly
-	if(LAZYLEN(candidates)) //if we got at least one candidate, they're a sentient spore now.
-		var/mob/dead/observer/C = pick(candidates)
-		var/datum/mind/spore_mind = C.mind
-		spore_mind.add_antag_datum(/datum/antagonist/infection/spore)
-		return TRUE
+	var/list/mob/dead/observer/candidates = list()
+	if(poll_ghosts)
+		to_chat(src, "<span class='warning'>Attempting to create a sentient slime...</span>")
+		candidates = pollGhostCandidates("Do you want to play as an evolving infection slime?", ROLE_INFECTION, null, ROLE_INFECTION, 50) //players must answer rapidly
+	if(LAZYLEN(candidates) || !poll_ghosts) //if we got at least one candidate, they're a sentient spore now.
+		var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/S = new /mob/living/simple_animal/hostile/infection/infectionspore/sentient(src, null, src)
+		if(poll_ghosts)
+			var/mob/dead/observer/C = pick(candidates)
+			S.key = C.key
+		if(infection_core)
+			S.forceMove(get_turf(infection_core))
+		else
+			// roundstart boys get gifts
+			S.add_points(500)
+			to_chat(S, "<b>It costs no points to revert your form before the meteor has landed, explore your evolutions while you have time.</b>")
+		S.update_icons()
+		S.infection_help()
+		infection_mobs += S
+		return S
 	to_chat(src, "<span class='warning'>You could not conjure a sentience for your slime. Try again later.</span>")
 	upgrade_points++
+	return FALSE
 
 /*
 	Opens the evolution menu

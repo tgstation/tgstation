@@ -50668,6 +50668,10 @@
 /obj/structure/girder,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
+"nrk" = (
+/obj/effect/landmark/infection_gravity_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "nro" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4
@@ -63110,7 +63114,7 @@ aaa
 awW
 aOh
 ayl
-ayl
+nrk
 aRY
 awW
 aaa
@@ -102139,7 +102143,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+seJ
 aaa
 aaa
 aaa
@@ -103163,7 +103167,7 @@ aaa
 aaa
 aaa
 aaa
-seJ
+aaa
 aaa
 aaa
 aaa

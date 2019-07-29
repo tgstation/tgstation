@@ -4,8 +4,8 @@
 	report_type = "infection"
 	false_report_weight = 10
 	required_players = 50 // this is an all out station war
-	required_enemies = 6
-	recommended_enemies = 6
+	required_enemies = 8
+	recommended_enemies = 8
 	antag_flag = ROLE_INFECTION
 	enemy_minimum_age = 14 // these should be somewhat experienced players for an all out war mode
 	round_ends_with_antag_death = TRUE
@@ -31,7 +31,7 @@
 	if(!GLOB.beacon_spawns.len)
 		setup_error = "No infection beacon spawnpoints found"
 		return FALSE
-	var/n_spores = min(CEILING(num_players() / 10, 1), antag_candidates.len)
+	var/n_spores = min(CEILING(num_players() / 7, 1), antag_candidates.len)
 	if(n_spores >= required_enemies || GLOB.Debug2)
 		for(var/i in 1 to n_spores)
 			var/datum/mind/new_spore = pick_n_take(antag_candidates)

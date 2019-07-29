@@ -139,6 +139,11 @@ GLOBAL_VAR(infection_commander)
 		G.setDir(B.dir)
 		INVOKE_ASYNC(G, /obj/structure/beacon_generator.proc/generateWalls)
 		sleep(100 / GLOB.beacon_spawns.len)
+	var/turf/T = pick(GLOB.infection_gravity_spawns)
+	if(T)
+		new /obj/machinery/gravity_generator/main/station/admin(T)
+	else
+		message_admins("Could not find extra gravity generator spawn location for infection gamemode, consider spawning in an admin gravity generator behind all of the beacons.")
 
 /mob/camera/commander/process()
 	if(!infection_core)

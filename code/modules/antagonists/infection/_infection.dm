@@ -64,14 +64,4 @@
 */
 /datum/antagonist/infection/spore/create_mob_type(var/turf/spawnturf)
 	var/mob/camera/commander/C = GLOB.infection_commander
-	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/S = new /mob/living/simple_animal/hostile/infection/infectionspore/sentient(C, null, C)
-	if(C.infection_core)
-		S.forceMove(get_turf(C.infection_core))
-	else
-		// roundstart boys get gifts
-		S.add_points(1000)
-		to_chat(S, "<b>It costs no points to revert your form before the meteor has landed, explore your evolutions while you have time.</b>")
-	S.update_icons()
-	S.infection_help()
-	C.infection_mobs += S
-	return S
+	return C.create_spore(FALSE)

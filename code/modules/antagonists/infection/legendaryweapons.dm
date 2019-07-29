@@ -15,6 +15,8 @@
 /obj/item/infectionkiller/Initialize(mapload)
 	. = ..()
 	if(is_item)
+		priority_announce("The Legendary Item \"[name]\" has been acquired from a slain enemy. You may track it with a GPS, as well as lock onto it from a teleporter.",
+					  "CentCom Biohazard Division", 'sound/misc/notice1.ogg')
 		AddComponent(/datum/component/stationloving, FALSE, FALSE)
 		var/obj/item/gps/internal/legendary/L = new /obj/item/gps/internal/legendary(src)
 		L.gpstag = "Legendary [name] Signal"
@@ -137,12 +139,10 @@
 /obj/item/infectionkiller/drill
 	name = "Drill of Legends"
 	desc = "A glowing golden drill, able to pierce through most material with ease."
-	icon = 'icons/obj/mining.dmi'
-	icon_state = "handdrill"
-	item_state = "jackhammer"
+	icon_state = "drilloflegends"
+	item_state = "drilloflegends"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
-	color = "#ffd700"
 	force = 30
 	armour_penetration = 100
 	tool_behaviour = TOOL_MINING
