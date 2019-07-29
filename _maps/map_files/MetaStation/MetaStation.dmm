@@ -19700,7 +19700,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aRl" = (
@@ -53202,16 +53201,19 @@
 /area/maintenance/port/aft)
 "cnm" = (
 /obj/structure/table,
-/obj/item/hemostat,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
+/obj/item/surgicaldrill,
+/obj/item/clothing/suit/apron/surgical,
+/obj/item/clothing/mask/surgical,
+/obj/item/clothing/gloves/color/latex,
 /turf/open/floor/plasteel,
 /area/medical/surgery)
 "cnn" = (
 /obj/structure/table,
-/obj/item/surgicaldrill,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/item/hemostat,
 /turf/open/floor/plasteel/white/side,
 /area/medical/surgery)
 "cno" = (
@@ -53900,10 +53902,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
 "coy" = (
-/obj/structure/table,
-/obj/item/clothing/gloves/color/latex,
-/obj/item/clothing/mask/surgical,
-/obj/item/clothing/suit/apron/surgical,
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -22
@@ -53911,6 +53909,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/smartfridge/organ,
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -75241,6 +75240,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"xOW" = (
+/obj/structure/cable,
+/turf/closed/wall/r_wall,
+/area/engine/engineering)
 "xVl" = (
 /turf/closed/wall,
 /area/hallway/secondary/service)
@@ -113941,10 +113944,10 @@ axY
 axY
 axY
 axY
+xOW
 axY
 axY
-axY
-axY
+xOW
 axY
 aWw
 aWw

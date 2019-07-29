@@ -44,7 +44,7 @@
 "l" = (
 /obj/effect/decal/remains/human,
 /obj/item/clothing/shoes/cult,
-/obj/item/clothing/suit/cultrobes,
+/obj/item/clothing/suit/hooded/cultrobes,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -80,7 +80,7 @@
 "q" = (
 /obj/effect/decal/remains/human,
 /obj/item/clothing/shoes/cult,
-/obj/item/clothing/suit/cultrobes,
+/obj/item/clothing/suit/hooded/cultrobes,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "LAVALAND_ATMOS"

@@ -22,7 +22,7 @@
 			if(2)
 				to_chat(H, "<span class='warning'>You hear an annoying buzz in your head.</span>")
 				H.confused += 15
-				H.adjustBrainLoss(10, 160)
+				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 160)
 			if(3)
 				H.hallucination += 60
 

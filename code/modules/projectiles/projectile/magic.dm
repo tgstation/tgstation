@@ -366,7 +366,7 @@
 		if(M.anti_magic_check())
 			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			qdel(src)
-			return
+			return BULLET_ACT_BLOCK
 	. = ..()
 
 
@@ -400,12 +400,11 @@
 /obj/item/projectile/magic/locker/on_hit(target)
 	if(created)
 		return ..()
-	var/obj/structure/closet/C = new locker_temp_instance(get_turf(src))
 	if(LAZYLEN(contents))
 		for(var/atom/movable/AM in contents)
-			C.insert(AM)
-		C.welded = weld
-		C.update_icon()
+			locker_temp_instance.insert(AM)
+		locker_temp_instance.welded = weld
+		locker_temp_instance.update_icon()
 	created = TRUE
 	return ..()
 

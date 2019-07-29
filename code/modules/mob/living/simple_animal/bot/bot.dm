@@ -478,8 +478,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 	if(step_count >= 1 && tries < BOT_STEP_MAX_RETRIES)
 		for(var/step_number = 0, step_number < step_count,step_number++)
-			spawn(BOT_STEP_DELAY*step_number)
-				bot_step(dest)
+			addtimer(CALLBACK(src, .proc/bot_step, dest), BOT_STEP_DELAY*step_number)
 	else
 		return FALSE
 	return TRUE

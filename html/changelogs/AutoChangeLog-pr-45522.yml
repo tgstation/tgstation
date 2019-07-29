@@ -1,0 +1,5 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - bugfix: "ORM can be connected to the ore silo once again."
+  - tweak: "You can now rotate the ORM by altclicking it while the panel is open. This action used to be done with a multitool."
