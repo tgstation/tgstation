@@ -13,9 +13,6 @@
 	//the maximum you can set the transfer to
 	var/max_transfer = 9
 
-	var/xen = 500
-	var/yen = 500
-
 /obj/machinery/plumbing/splitter/Initialize()
 	. = ..()
 	AddComponent(/datum/component/plumbing/splitter)
@@ -27,7 +24,7 @@
 /obj/machinery/plumbing/splitter/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "chem_splitter", name, xen, yen, master_ui, state)
+		ui = new(user, src, ui_key, "chem_splitter", name, 700, 200, master_ui, state)
 		ui.open()
 
 /obj/machinery/plumbing/splitter/ui_data(mob/user)

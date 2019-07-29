@@ -29,3 +29,6 @@
 #define REM_REAGENT		3	// reagent removed (may still exist)
 
 #define MIMEDRINK_SILENCE_DURATION 30  //ends up being 60 seconds given 1 tick every 2 seconds
+//used by chem masters and pill presses
+#define PILL_STYLE_COUNT 22 //Update this if you add more pill icons or you die
+#define RANDOM_PILL_STYLE 22 //Dont change this one though
