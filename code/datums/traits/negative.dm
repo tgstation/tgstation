@@ -327,6 +327,19 @@
 	for(var/obj/item/I in T)
 		if(I.fingerprintslast == quirk_holder.ckey)
 			quirk_holder.put_in_hands(I)
+			
+/datum/quirk/phobia
+	name = "Phobia"
+	desc = "You have a debilitating fear you just can't seem to overcome."
+	value = -2
+	gain_text = null
+	lose_text = null
+	medical_record_text = "Patient has a deep rooted phobia."
+
+/datum/quirk/phobia/add()
+	var/datum/brain_trauma/mild/phobia/T = new()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.gain_trauma(T, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/poor_aim
 	name = "Poor Aim"
