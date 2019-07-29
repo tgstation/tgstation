@@ -54,7 +54,7 @@ The swapper implant comes in two parts, the activator pen, and the swapper impla
 /obj/item/implanter/swapper/attack(mob/living/M, mob/user)
 	if(!istype(M))
 		return
-	if(user && imp
+	if(user && imp)
 		var/turf/T = get_turf(M)
 		if(T && (M == user || do_mob(user, M, 0)))
 			if(src && imp)
