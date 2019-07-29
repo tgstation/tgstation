@@ -4,9 +4,9 @@ The swapper implant comes in two parts, the activator pen, and the swapper impla
 
 /obj/item/pen/swap_activator
 	///Stores the implant object ref.
-	var/obj/item/implant/swapper/reciever
+	var/obj/item/implant/swapper/receiver
 
-/obj/item/pen/swap_activator/proc/activate(var/obj/item/implant/swapper/R = reciever, var/obj/A = src)
+/obj/item/pen/swap_activator/proc/activate(var/obj/item/implant/swapper/R = receiver, var/obj/A = src)
 	///Grab the recievers mob
 	var/mob/living/RL = R.loc
 	///Grab the activators mob
@@ -26,9 +26,9 @@ The swapper implant comes in two parts, the activator pen, and the swapper impla
 		to_chat(RL, "<span class=notice>You suddenly find yourself in a new location.</span>")
 		to_chat(AL, "<span class=notice>You press the button on the pen, and suddenly find yourself in a new location.</span>")
 
-		///Move the reciever to the activator
+		///Move the receiver to the activator
 		do_teleport(RL, AT, channel = TELEPORT_CHANNEL_QUANTUM, forceMove = TRUE)
-		///Move the activator to the reciever
+		///Move the activator to the receiver
 		do_teleport(AL, RT, channel = TELEPORT_CHANNEL_QUANTUM, forceMove = TRUE)
 
 		///Cleans up the objects after use.

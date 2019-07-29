@@ -1569,7 +1569,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 	/datum/uplink_item/implants/swapper
 	name = "Swapper Implant"
-	desc = "The Swapper Implant comes in two parts, an activator pen, and an implant. The implant can be stealthily injected into any living creature, and can remain inside them indefinetly. \
+	desc = "The Swapper Implant comes in two parts, an activator pen, and an implant. The implant can be stealthily injected into any living creature, and can remain inside them indefinitly. \
 	Upon activating the activator pen, the user will switch positions with whatever the implant is stuck in."
 	item = /obj/item/storage/box/syndie_kit/swapper_implant
 	cost = 5

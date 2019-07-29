@@ -538,5 +538,5 @@
 	var/obj/item/pen/swap_activator/swapA = new(src)
 	var/obj/item/implanter/swapper/swapR = new(src)
 	var/obj/item/implant/swapper/swapI = swapR.imp
-	swapA.reciever = swapI
+	swapA.receiver = swapI
 	
