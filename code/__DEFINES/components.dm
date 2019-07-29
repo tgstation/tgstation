@@ -323,10 +323,6 @@
 #define COMSIG_ACTION_TRIGGER "action_trigger"						//from base of datum/action/proc/Trigger(): (datum/action)
 	#define COMPONENT_ACTION_BLOCK_TRIGGER 1
 
-// /datum/component/swap_sender and /datum/component/swap_reciever
-
-#define COMSIG_SWAP_BIND "swap_bind"									//binds the sender and reciever upon creation.
-
 /*******Non-Signal Component Related Defines*******/
 
 //Redirection component init flags

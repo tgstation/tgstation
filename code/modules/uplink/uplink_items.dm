@@ -1473,6 +1473,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 7
 	limited_stock = 1
 
+
 // Implants
 /datum/uplink_item/implants
 	category = "Implants"
@@ -1566,6 +1567,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	// An empty uplink is kinda useless.
 	surplus = 0
 	restricted = TRUE
+
+	/datum/uplink_item/implants/swapper
+	name = "Swapper Implant"
+	desc = "The Swapper Implant comes in two parts, an activator pen, and an implant. The implant can be stealthily injected into any living creature, and can remain inside them indefinetly. \
+	Upon activating the activator pen, the user will switch positions with whatever the implant is stuck in."
+	item = /obj/item/storage/box/syndie_kit/swapper_implant
+	cost = 8
 
 /datum/uplink_item/implants/xray
 	name = "X-ray Vision Implant"

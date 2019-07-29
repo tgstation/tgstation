@@ -528,3 +528,19 @@
 /obj/item/storage/box/syndie_kit/bee_grenades/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/grenade/spawnergrenade/buzzkill(src)
+
+/obj/item/storage/box/syndie_kit/swapper_implant
+	name = "swapper implant box"
+	desc = "A box containing an activator pen and a swapper implant."
+
+/obj/item/storage/box/syndie_kit/swapper_implant/PopulateContents()
+	///Initializes the objects and the datum which links them together.
+	var/obj/item/pen/swap_activator/swapA = new(src)
+	var/obj/item/implanter/swapper/swapR = new(src)
+	var/obj/item/implant/swapper/swapI = swapR.imp
+	var/datum/swap/S = new
+	swapA.swap = S
+	swapI.swap = S
+	S.swap_reciever = swapI
+	S.swap_activator = swapA
+	
