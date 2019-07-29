@@ -1572,7 +1572,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "The Swapper Implant comes in two parts, an activator pen, and an implant. The implant can be stealthily injected into any living creature, and can remain inside them indefinetly. \
 	Upon activating the activator pen, the user will switch positions with whatever the implant is stuck in."
 	item = /obj/item/storage/box/syndie_kit/swapper_implant
-	cost = 8
+	cost = 5
 
 /datum/uplink_item/implants/xray
 	name = "X-ray Vision Implant"
