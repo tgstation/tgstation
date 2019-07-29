@@ -49652,6 +49652,7 @@
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 5
 	},
+/obj/machinery/meter,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "fjs" = (
@@ -51577,11 +51578,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/airalarm{
-	pixel_y = 22
-	},
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
+	},
+/obj/machinery/airalarm/engine{
+	pixel_y = 24
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -52256,6 +52257,19 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
 	name = "Freezer Output"
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
+"lvb" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 4
+	},
+/obj/machinery/button/door{
+	id = "Supermatter";
+	pixel_y = 24
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -88464,7 +88478,7 @@ cgT
 uRk
 uRk
 uRk
-xia
+lvb
 sWj
 bXk
 abI
