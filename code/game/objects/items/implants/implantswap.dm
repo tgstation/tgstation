@@ -20,8 +20,8 @@ The swapper implant comes in two parts, the activator pen, and the swapper impla
 		playsound(RL, 'sound/effects/sparks4.ogg')
 		playsound(AL, 'sound/effects/sparks4.ogg')
 
-		RL.visible_message("[RL] Suddenly vanishes, Leaving [AL] in their place!")
-		AL.visible_message("[AL] Suddenly vanishes, leaving [RL] in their place!")
+		RL.visible_message("[RL] suddenly vanishes, leaving [AL] in their place!")
+		AL.visible_message("[AL] suddenly vanishes, leaving [RL] in their place!")
 		to_chat(RL, "<span class=notice>You suddenly find yourself in a new location.</span>")
 		to_chat(AL, "<span class=notice>You press the button on the pen, and suddenly find yourself in a new location.</span>")
 
@@ -35,7 +35,7 @@ The swapper implant comes in two parts, the activator pen, and the swapper impla
 		QDEL_NULL(A)
 		to_chat(AL, "<span class=notice>The pen falls apart in your hands.</span>")
 	else
-		to_chat(AL, "<span class=warning>You press the button on the pen, but you have not yet implanted the anybody!</span>")
+		to_chat(AL, "<span class=warning>You press the button on the pen, but you have not yet implanted anybody!</span>")
 
 /obj/item/pen/swap_activator/attack_self()
 	activate()
