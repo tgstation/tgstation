@@ -161,7 +161,7 @@
 	return 0
 
 /turf/open/floor/crowbar_act(mob/living/user, obj/item/I)
-	if(intact && pry_tile(I, user)
+	if(intact && pry_tile(I, user))
 		return TRUE
 
 /turf/open/floor/proc/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
