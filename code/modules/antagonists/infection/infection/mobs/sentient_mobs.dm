@@ -7,11 +7,6 @@
 	desc = "An extremely strong slime in the early stages of life, what will it become next?"
 	hud_type = /datum/hud/infection_spore
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	health = 40
-	maxHealth = 40
-	obj_damage = 20
-	melee_damage_lower = 10
-	melee_damage_upper = 10
 	crystal_color = "#ff8c00"
 	// respawn time for the slime
 	var/respawn_time = 30
@@ -294,8 +289,8 @@
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/destructive
 	name = "destructive slime"
 	desc = "A slow moving but bulky and heavily damaging slime that is useful for taking out buildings and walls, as well as defending infection structures."
-	health = 60
-	maxHealth = 60
+	health = 100
+	maxHealth = 100
 	speed = 5
 	crystal_color = "#4169e1"
 	transform = matrix(1.5, 0, 0, 0, 1.5, 0)

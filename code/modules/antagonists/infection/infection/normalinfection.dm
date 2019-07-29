@@ -12,7 +12,7 @@
 	opacity = 0
 	anchored = TRUE
 	layer = TABLE_LAYER
-	CanAtmosPass = ATMOS_PASS_PROC
+	CanAtmosPass = ATMOS_PASS_NO
 	max_integrity = 30
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
 	// How many points the commander gets back when it removes an infection of that type. If less than 0, structure cannot be removed.
@@ -64,9 +64,6 @@
 	AddComponent(/datum/component/no_beacon_crossing)
 	generate_upgrades()
 	menu_handler = new /datum/infection_menu(src)
-	var/turf/T = get_turf(src)
-	if(T)
-		T.ChangeTurf(/turf/open/floor/plating)
 
 /*
 	Generates the upgrades for the infection from the types
@@ -319,6 +316,8 @@
 		if(T.dynamic_lighting == FALSE)
 			T.dynamic_lighting = TRUE
 			T.lighting_build_overlay()
+		T = T.ChangeTurf(/turf/open/floor/plating)
+		T.air_update_turf(1)
 		return I
 	else
 		T.blob_act(src)

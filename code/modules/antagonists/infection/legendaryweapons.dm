@@ -15,7 +15,7 @@
 /obj/item/infectionkiller/Initialize(mapload)
 	. = ..()
 	if(is_item)
-		priority_announce("The Legendary Item \"[name]\" has been acquired from a slain enemy. You may track it with a GPS, as well as lock onto it from a teleporter.",
+		priority_announce("The Legendary Item \"[name]\" has been acquired from a slain enemy. We've attached a GPS signaller and teleportation beacon to it, to make it a bit easier to find.",
 					  "CentCom Biohazard Division", 'sound/misc/notice1.ogg')
 		AddComponent(/datum/component/stationloving, FALSE, FALSE)
 		var/obj/item/gps/internal/legendary/L = new /obj/item/gps/internal/legendary(src)
@@ -133,6 +133,9 @@
 	src.force = initial(force)
 	if(!M || M.stat == DEAD && before_was_alive)
 		proc_start(M, user)
+
+/obj/item/infectionkiller/excaliju/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
 	if(is_procced())
 		user.changeNext_move(CLICK_CD_MELEE * 0.25)
 
