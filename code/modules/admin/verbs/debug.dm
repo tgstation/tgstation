@@ -245,8 +245,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	if(ishuman(M))
 		log_admin("[key_name(src)] has robotized [M.key].")
 		var/mob/living/carbon/human/H = M
-		spawn(0)
-			H.Robotize()
+		INVOKE_ASYNC(H, /mob/living/carbon/human.proc/Robotize)
 
 	else
 		alert("Invalid mob")
@@ -283,8 +282,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 		return
 
 	log_admin("[key_name(src)] has animalized [M.key].")
-	spawn(0)
-		M.Animalize()
+	INVOKE_ASYNC(M, /mob.proc/Animalize)
 
 
 /client/proc/makepAI(turf/T in GLOB.mob_list)

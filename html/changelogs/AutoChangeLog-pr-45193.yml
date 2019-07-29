@@ -1,0 +1,5 @@
+author: "kingofkosmos"
+delete-after: True
+changes: 
+  - rscadd: "alt-clicking on the identification console ejects only one id at a time."
+  - rscadd: "alt-clicking to eject the id from console now works also on the medical and security records consoles."

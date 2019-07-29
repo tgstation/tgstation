@@ -1,0 +1,4 @@
+author: "bandit"
+delete-after: True
+changes: 
+  - bugfix: "Disguised syndicate saboteur cyborgs now use the regular cyborg speech icon."

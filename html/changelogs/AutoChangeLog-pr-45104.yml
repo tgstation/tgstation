@@ -1,0 +1,15 @@
+author: "RandolfTheMeh"
+delete-after: True
+changes: 
+  - rscadd: "Organ Smartfridges! Store your organs safely. Upgrading the matter bin will give it the ability to heal organs held within- though this does not repair organs that are currently failing, however."
+  - rscadd: "Lobectomy! Not lobotomy, but cuts out a damaged lung lobe to make its performance passable. Restores a lung to working order if it was too damaged to work before, but can only be done once. The lobectomy step has a 95% chance of success, so use some form of sterilizer to ensure you don't accidentally get blood inside your patient's lungs!"
+  - rscadd: "Coronary Bypass! Restores a heart to working order if it was too damaged to work before, but can only be done once. Both incising the heart and grafting the bypass have a 90% chance to succeed, and failing them will cause heart damage and massive amounts of bleeding- so be sure to work with ideal conditions, proper tools, and sterilizer!"
+  - rscadd: "Organs now decay when not in a living host"
+  - rscadd: "Severe heart damage increases breathing rate, and causes a heart attack on failure"
+  - rscadd: "Severe lung damage increases breathing rate, and causes suffocation on failure"
+  - rscadd: "Stomach damage will likely cause the owner to vomit depending on how injured the stomach is, and how much they've eaten"
+  - tweak: "Brain damage effects now works similarly to the rest of the organ damage"
+  - tweak: "Appendicitis will do appendix damage when in stages 3 and 4, which can cause it to burst if left
+untreated"
+  - tweak: "Organs heal faster the healthier the host is"
+  - balance: "Defib timer has been extended to 15 minutes"

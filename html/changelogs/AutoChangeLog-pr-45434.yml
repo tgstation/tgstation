@@ -1,0 +1,4 @@
+author: "Dennok"
+delete-after: True
+changes: 
+  - rscadd: "Spending of tank don't change distribute_pressure."
