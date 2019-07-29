@@ -30,6 +30,7 @@
 	.["Mark Object"] = "?_src_=vars;[HrefToken()];mark_object=[REF(src)]"
 	.["Delete"] = "?_src_=vars;[HrefToken()];delete=[REF(src)]"
 	.["Show VV To Player"] = "?_src_=vars;[HrefToken(TRUE)];expose=[REF(src)]"
+	.["Modify Traits"] = "?_src_=vars;[HrefToken(TRUE)];traitmod=[REF(src)]"
 
 
 /datum/proc/on_reagent_change(changetype)
@@ -579,6 +580,13 @@
 		log_admin("Admin [key_name(usr)] Showed [key_name(C)] a VV window of a [thing]")
 		to_chat(C, "[usr.client.holder.fakekey ? "an Administrator" : "[usr.client.key]"] has granted you access to view a View Variables window")
 		C.debug_variables(thing)
+	else if(href_list["traitmod"])
+		if(!check_rights(NONE))
+			return
+		var/datum/A = locate(href_list["traitmod"])
+		if(!A)
+			return
+		holder.modify_traits(A)
 
 
 //Needs +VAREDIT past this point
