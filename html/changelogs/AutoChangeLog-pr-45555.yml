@@ -1,0 +1,4 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - bugfix: "Fixed exploit allowing somebody to crash the server"

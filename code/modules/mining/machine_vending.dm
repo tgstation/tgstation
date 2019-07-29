@@ -63,6 +63,11 @@
 	var/equipment_path = null
 	var/cost = 0
 
+/obj/machinery/mineral/equipment_vendor/examine(mob/user)
+	. = ..()
+	if(inserted_id)
+		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
+
 /datum/data/mining_equipment/New(name, path, cost)
 	src.equipment_name = name
 	src.equipment_path = path
@@ -105,17 +110,21 @@
 	if(href_list["choice"])
 		if(istype(inserted_id))
 			if(href_list["choice"] == "eject")
-				to_chat(usr, "<span class='notice'>You eject the ID from [src]'s card slot.</span>")
 				inserted_id.forceMove(loc)
 				inserted_id.verb_pickup()
 				inserted_id = null
+				usr.visible_message("<span class='notice'>[usr] gets an ID card from the console.</span>", \
+								"<span class='notice'>You get the ID card from the console.</span>")
+				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 		else if(href_list["choice"] == "insert")
 			var/obj/item/card/id/I = usr.get_active_held_item()
 			if(istype(I))
 				if(!usr.transferItemToLoc(I, src))
 					return
 				inserted_id = I
-				to_chat(usr, "<span class='notice'>You insert the ID into [src]'s card slot.</span>")
+				usr.visible_message("<span class='notice'>[usr] inserts an ID card into the console.</span>", \
+									"<span class='notice'>You insert the ID card into the console.</span>")
+				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 			else
 				to_chat(usr, "<span class='warning'>Error: No valid ID!</span>")
 				flick(icon_deny, src)
@@ -149,13 +158,18 @@
 		RedeemVoucher(I, user)
 		return
 	if(istype(I, /obj/item/card/id))
-		var/obj/item/card/id/C = usr.get_active_held_item()
-		if(istype(C) && !istype(inserted_id))
-			if(!usr.transferItemToLoc(C, src))
-				return
-			inserted_id = C
-			to_chat(usr, "<span class='notice'>You insert the ID into [src]'s card slot.</span>")
-			interact(user)
+		var/obj/item/card/id/C = user.get_active_held_item()
+		if(istype(C))
+			if(!inserted_id)
+				if(!user.transferItemToLoc(C, src))
+					return
+				inserted_id = C
+				user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
+									"<span class='notice'>You insert the ID card into the console.</span>")
+				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+				interact(user)
+			else
+				to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
 		return
 	if(default_deconstruction_screwdriver(user, "mining-open", "mining", I))
 		updateUsrDialog()
@@ -199,6 +213,21 @@
 	do_sparks(5, TRUE, src)
 	if(prob(50 / severity) && severity < 3)
 		qdel(src)
+
+/obj/machinery/mineral/equipment_vendor/AltClick(mob/user)
+	if(!user.canUseTopic(src, issilicon(user)))
+		return
+	if(!inserted_id)
+		to_chat(user, "<span class='warning'>There's no ID card in the console!</span>")
+	if(inserted_id)
+		inserted_id.forceMove(drop_location())
+		if(!issilicon(user) && Adjacent(user))
+			user.put_in_hands(inserted_id)
+			inserted_id = null
+			user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
+								"<span class='notice'>You get the ID card from the console.</span>")
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+		updateUsrDialog()
 
 
 /****************Golem Point Vendor**************************/
