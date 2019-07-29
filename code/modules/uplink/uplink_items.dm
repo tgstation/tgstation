@@ -1473,7 +1473,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 7
 	limited_stock = 1
 
-
 // Implants
 /datum/uplink_item/implants
 	category = "Implants"
