@@ -62,7 +62,7 @@ The swapper implant comes in two parts, the activator pen, and the swapper impla
 					if (M == user)
 						to_chat(user, "<span class='notice'>You implant yourself.</span>")
 					else
-						to_chat(user, "<span class='notice>You Implant [M]</span>'")
+						to_chat(user, "<span class='notice>You implant [M]</span>'")
 					imp = null
 					update_icon()
 				else
