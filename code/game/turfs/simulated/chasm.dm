@@ -100,19 +100,3 @@
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
 	underlay_appearance.icon_state = "dirt"
 	return TRUE
-
-//For Bag of Holding Bombs
-
-/turf/open/chasm/magic
-	name = "tear in the fabric of reality"
-	desc = "Where does it lead?"
-	icon = 'icons/turf/floors/magic_chasm.dmi'
-	baseturfs = /turf/open/chasm/magic
-	light_range = 1.9
-	light_power = 0.65
-
-/turf/open/chasm/magic/Initialize()
-	. = ..()
-	var/turf/T = safepick(get_area_turfs(/area/fabric_of_reality))
-	if(T)
-		set_target(T)

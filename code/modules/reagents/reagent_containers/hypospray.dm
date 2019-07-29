@@ -114,7 +114,7 @@
 	user.visible_message("<span class='suicide'>[user] begins to choke on \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return OXYLOSS//ironic. he could save others from oxyloss, but not himself.
 
-/obj/item/reagent_containers/hypospray/inject(mob/living/M, mob/user)
+/obj/item/reagent_containers/hypospray/medipen/inject(mob/living/M, mob/user)
 	. = ..()
 	if(.)
 		reagents.maximum_volume = 0 //Makes them useless afterwards
@@ -158,6 +158,26 @@
 	item_state = "morphen"
 	list_reagents = list(/datum/reagent/medicine/morphine = 10)
 
+/obj/item/reagent_containers/hypospray/medipen/oxandrolone
+	name = "oxandrolone medipen"
+	desc = "A autoinjector containing oxandrolone, used to treat severe burns."
+	list_reagents = list(/datum/reagent/medicine/oxandrolone = 10)
+
+/obj/item/reagent_containers/hypospray/medipen/penacid
+	name = "pentetic acid medipen"
+	desc = "A autoinjector containing pentetic acid, used to reduce high levels of radiations and moderate toxins."
+	list_reagents = list(/datum/reagent/medicine/pen_acid = 10)
+
+/obj/item/reagent_containers/hypospray/medipen/salacid
+	name = "salicyclic acid medipen"
+	desc = "A autoinjector containing salicyclic acid, used to treat severe brute damage."
+	list_reagents = list(/datum/reagent/medicine/sal_acid = 10)
+
+/obj/item/reagent_containers/hypospray/medipen/salbutamol
+	name = "salbutamol medipen"
+	desc = "A autoinjector containing salbutamol, used to heal oxygen damage quickly."
+	list_reagents = list(/datum/reagent/medicine/salbutamol = 10)
+
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure
 	name = "BVAK autoinjector"
 	desc = "Bio Virus Antidote Kit autoinjector. Has a two use system for yourself, and someone else. Inject when infected."
@@ -182,7 +202,7 @@
 	item_state = "stimpen"
 	volume = 57
 	amount_per_transfer_from_this = 57
-	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/leporazine = 15, /datum/reagent/medicine/tricordrazine = 15, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/lavaland_extract = 2, /datum/reagent/medicine/omnizine = 5)
+	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/leporazine = 15, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/lavaland_extract = 2, /datum/reagent/medicine/omnizine = 5)
 
 /obj/item/reagent_containers/hypospray/medipen/atropine
 	name = "atropine autoinjector"

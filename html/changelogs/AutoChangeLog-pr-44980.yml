@@ -1,4 +1,0 @@
-author: "Dennok"
-delete-after: True
-changes: 
-  - bugfix: "air issues on changing turfs"

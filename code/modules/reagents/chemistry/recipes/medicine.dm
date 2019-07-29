@@ -209,17 +209,11 @@
 	results = list(/datum/reagent/medicine/haloperidol = 5)
 	required_reagents = list(/datum/reagent/chlorine = 1, /datum/reagent/fluorine = 1, /datum/reagent/aluminium = 1, /datum/reagent/medicine/potass_iodide = 1, /datum/reagent/oil = 1)
 
-/datum/chemical_reaction/tricordrazine
-	name = "Tricordrazine"
-	id = /datum/reagent/medicine/tricordrazine
-	results = list(/datum/reagent/medicine/tricordrazine = 3)
-	required_reagents = list(/datum/reagent/medicine/bicaridine = 1, /datum/reagent/medicine/kelotane = 1, /datum/reagent/medicine/antitoxin = 1)
-
 /datum/chemical_reaction/regen_jelly
 	name = "Regenerative Jelly"
 	id = /datum/reagent/medicine/regen_jelly
 	results = list(/datum/reagent/medicine/regen_jelly = 2)
-	required_reagents = list(/datum/reagent/medicine/tricordrazine = 1, /datum/reagent/toxin/slimejelly = 1)
+	required_reagents = list(/datum/reagent/medicine/omnizine = 1, /datum/reagent/toxin/slimejelly = 1)
 
 /datum/chemical_reaction/corazone
 	name = "Corazone"
@@ -267,3 +261,20 @@
 	results = list(/datum/reagent/medicine/thializid = 5)
 	required_reagents = list(/datum/reagent/sulfur = 1, /datum/reagent/fluorine = 1, /datum/reagent/toxin = 1, /datum/reagent/nitrous_oxide = 2)
 
+/datum/chemical_reaction/sanguiose
+	name = "Sanguiose"
+	id = /datum/reagent/medicine/sanguiose
+	results = list(/datum/reagent/medicine/sanguiose= 4)
+	required_reagents = list(/datum/reagent/phosphorus = 1, /datum/reagent/hydrogen = 1,/datum/reagent/phenol=1, /datum/reagent/acetone=1,)
+	
+/datum/chemical_reaction/frogenite
+	name = "Frogenite"
+	id = /datum/reagent/medicine/frogenite
+	results = list(/datum/reagent/medicine/frogenite = 4)
+	required_reagents = list( /datum/reagent/lye = 1, /datum/reagent/hydrogen = 1,/datum/reagent/phenol=1, /datum/reagent/bromine=1,)
+
+/datum/chemical_reaction/ferveatium
+	name = "Ferveatium"
+	id = /datum/reagent/medicine/ferveatium
+	results = list(/datum/reagent/medicine/ferveatium = 4)
+	required_reagents = list( /datum/reagent/ammonia = 1, /datum/reagent/hydrogen = 1,/datum/reagent/phenol=1, /datum/reagent/toxin/acid=1,)
