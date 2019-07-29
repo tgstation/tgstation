@@ -265,7 +265,7 @@
 /obj/item/restraints/legcuffs/bola/cult/pickup(mob/living/user)
 	if(!iscultist(user))
 		to_chat(user, "<span class='warning'>The bola seems to take on a life of its own!</span>")
-		throw_impact(user)
+		ensnare(user)
 
 /obj/item/restraints/legcuffs/bola/cult/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(iscultist(hit_atom))
