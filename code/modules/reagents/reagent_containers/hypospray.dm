@@ -85,8 +85,8 @@
 		icon_state = "[initial(icon_state)]0"
 
 /obj/item/reagent_containers/hypospray/combat/heresypurge
-	name = "holy water autoinjector"
-	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with 5 doses of a holy water and pacifier mixture."
+	name = "holy water piercing injector"
+	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with 5 doses of a holy water and pacifier mixture. Not for use on your teammates."
 	item_state = "holy_hypo"
 	icon_state = "holy_hypo"
 	volume = 250
