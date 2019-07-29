@@ -300,8 +300,7 @@ to the arm are passed onto a stored beaker, if one exists. */
 /obj/item/borg_beaker_holder/update_icon()
 	cut_overlays()
 	if(stored)
-		var/xx = stored.pixel_x
-		var/yy = stored.pixel_y
+		COMPILE_OVERLAYS(stored)
 		stored.pixel_x = 0
 		stored.pixel_y = 0
 		var/image/img = image("icon"=stored, "layer"=FLOAT_LAYER)
@@ -309,8 +308,6 @@ to the arm are passed onto a stored beaker, if one exists. */
 		if(istype(stored, /obj/item/reagent_containers/glass/beaker))
 			arm.pixel_y = arm.pixel_y - 3
 		img.plane = FLOAT_PLANE
-		stored.pixel_x = xx
-		stored.pixel_y = yy
 		add_overlay(img)
 		add_overlay(arm)
 	else
