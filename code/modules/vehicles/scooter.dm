@@ -12,6 +12,7 @@
 
 
 /obj/vehicle/ridden/scooter/wrench_act(mob/living/user, obj/item/I)
+	..()
 	to_chat(user, "<span class='notice'>You begin to remove the handlebars...</span>")
 	if(I.use_tool(src, user, 40, volume=50))
 		var/obj/vehicle/ridden/scooter/skateboard/S = new(drop_location())
@@ -129,6 +130,7 @@
 		return ..()
 
 /obj/item/scooter_frame/wrench_act(mob/living/user, obj/item/I)
+	..()
 	to_chat(user, "<span class='notice'>You deconstruct [src].</span>")
 	new /obj/item/stack/rods(drop_location(), 10)
 	I.play_tool_sound(src)

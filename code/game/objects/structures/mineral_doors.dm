@@ -135,7 +135,8 @@
 	set_opacity(anchored ? !door_opened : FALSE)
 	air_update_turf(TRUE)
 
-/obj/structure/mineral_door/wrench_act(mob/living/user, obj/item/I)
+/obj/structure/mineral_door/wrench_act(mob/living/user, obj/item/I),
+	..()
 	default_unfasten_wrench(user, I, 40)
 	return TRUE
 
@@ -155,6 +156,7 @@
 		deconstruct(TRUE)
 
 /obj/structure/mineral_door/welder_act(mob/living/user, obj/item/I) //override if the door is supposed to be flammable.
+	..()
 	. = TRUE
 	if(anchored)
 		to_chat(user, "<span class='warning'>[src] is still firmly secured to the ground!</span>")
