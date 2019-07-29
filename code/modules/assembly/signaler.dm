@@ -5,7 +5,7 @@
 	item_state = "signaler"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	materials = list(MAT_METAL=400, MAT_GLASS=120)
+	materials = list(/datum/material/iron=400, /datum/material/glass=120)
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 	attachable = TRUE
 
@@ -100,8 +100,7 @@ Code:
 			code = new_code
 
 	if(href_list["send"])
-		spawn( 0 )
-			signal()
+		INVOKE_ASYNC(src, .proc/signal)
 
 	if(usr)
 		attack_self(usr)

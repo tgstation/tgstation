@@ -1,0 +1,4 @@
+author: "SpacePrius"
+delete-after: True
+changes: 
+  - bugfix: "Lollipop stick mask sprite is now fixed."

@@ -37,6 +37,7 @@
 	H.facial_hair_style = "Shaved"
 	H.hair_color = "000"
 	H.facial_hair_color = H.hair_color
+	H.update_body()
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
 	var/list/no_drops = list()
@@ -70,8 +71,9 @@
 	shoes = /obj/item/clothing/shoes/jackboots
 	mask = /obj/item/clothing/mask/gas/sechailer/swat/spacepol
 	glasses = /obj/item/clothing/glasses/sunglasses
+	ears = /obj/item/radio/headset
 	l_pocket = /obj/item/ammo_box/magazine/m45
-	r_pocket = /obj/item/ammo_box/magazine/m45
+	r_pocket = /obj/item/restraints/handcuffs
 	id = /obj/item/card/id
 
 /datum/outfit/spacepol/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -79,5 +81,90 @@
 		return
 	var/obj/item/card/id/W = H.wear_id
 	W.assignment = "Police Officer"
+	W.registered_name = H.real_name
+	W.update_label()
+
+/datum/outfit/russiancorpse/hunter
+	ears = /obj/item/radio/headset
+	r_hand = /obj/item/gun/ballistic/rifle/boltaction
+
+/datum/outfit/russiancorpse/hunter/pre_equip(mob/living/carbon/human/H)
+	if(prob(50))
+		head = /obj/item/clothing/head/ushanka
+
+/datum/outfit/bountyarmor
+	name = "Bounty Hunter - Armored"
+	uniform = /obj/item/clothing/under/rank/prisoner
+	head = /obj/item/clothing/head/hunter
+	suit = /obj/item/clothing/suit/space/hunter
+	gloves = /obj/item/clothing/gloves/combat
+	shoes = /obj/item/clothing/shoes/jackboots
+	mask = /obj/item/clothing/mask/gas/hunter
+	glasses = /obj/item/clothing/glasses/sunglasses/garb
+	ears = /obj/item/radio/headset
+	l_pocket = /obj/item/tank/internals/plasma/full
+	r_pocket = /obj/item/restraints/handcuffs/cable
+	id = /obj/item/card/id
+	r_hand = /obj/item/flamethrower/full/tank
+
+/datum/outfit/bountyarmor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+	var/obj/item/card/id/W = H.wear_id
+	W.assignment = "Bounty Hunter"
+	W.registered_name = H.real_name
+	W.update_label()
+
+/datum/outfit/bountyhook
+	name = "Bounty Hunter - Hook"
+	uniform = /obj/item/clothing/under/rank/prisoner
+	back = /obj/item/storage/backpack
+	head = /obj/item/clothing/head/scarecrow_hat
+	gloves = /obj/item/clothing/gloves/botanic_leather
+	ears = /obj/item/radio/headset
+	shoes = /obj/item/clothing/shoes/jackboots
+	mask = /obj/item/clothing/mask/scarecrow
+	r_pocket = /obj/item/restraints/handcuffs/cable
+	id = /obj/item/card/id
+	r_hand = /obj/item/gun/ballistic/shotgun/doublebarrel/hook
+
+	backpack_contents = list(
+		/obj/item/ammo_casing/shotgun/incapacitate = 6
+		)
+
+/datum/outfit/bountygrapple/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+	var/obj/item/card/id/W = H.wear_id
+	W.assignment = "Bounty Hunter"
+	W.registered_name = H.real_name
+	W.update_label()
+
+/datum/outfit/bountysynth
+	name = "Bounty Hunter - Synth"
+	uniform = /obj/item/clothing/under/rank/prisoner
+	back = /obj/item/storage/backpack
+	suit = /obj/item/clothing/suit/armor/riot
+	shoes = /obj/item/clothing/shoes/jackboots
+	glasses = /obj/item/clothing/glasses/eyepatch
+	r_pocket = /obj/item/restraints/handcuffs/cable
+	ears = /obj/item/radio/headset
+	id = /obj/item/card/id
+	r_hand = /obj/item/storage/firstaid/regular
+	l_hand = /obj/item/pinpointer/shuttle
+
+	backpack_contents = list(
+		/obj/item/bountytrap = 4
+		)
+
+/datum/outfit/bountysynth/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+	var/datum/species/synth/synthetic_appearance = new()
+	H.set_species(synthetic_appearance)
+	synthetic_appearance.assume_disguise(synthetic_appearance, H)
+	H.update_hair()
+	var/obj/item/card/id/W = H.wear_id
+	W.assignment = "Bounty Hunter"
 	W.registered_name = H.real_name
 	W.update_label()

@@ -9973,6 +9973,10 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/keycard_auth{
+	pixel_x = 28;
+	pixel_y = 8
+	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain)
 "aAz" = (
@@ -20707,7 +20711,6 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
 "bbo" = (
-/obj/item/clothing/head/hardhat/cakehat,
 /obj/structure/table/wood/fancy,
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
@@ -35704,13 +35707,6 @@
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 4
 	},
-/obj/machinery/requests_console{
-	announcementConsole = 1;
-	department = "Head of Security's Desk";
-	departmentType = 5;
-	name = "Head of Security RC";
-	pixel_y = 30
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -35718,6 +35714,12 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/requests_console{
+	department = "Atmospherics";
+	departmentType = 3;
+	name = "Atmos RC";
+	pixel_y = 30
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bKV" = (
@@ -36046,6 +36048,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/surgical_drapes,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "bLN" = (
@@ -36068,12 +36071,11 @@
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "bLQ" = (
-/obj/structure/table,
-/obj/item/surgical_drapes,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/smartfridge/organ,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "bLR" = (
@@ -54299,18 +54301,13 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "qaQ" = (
-/obj/structure/table/wood,
 /obj/item/pen{
 	layer = 4
-	},
-/obj/machinery/keycard_auth{
-	pixel_x = -26;
-	pixel_y = 6
 	},
 /obj/item/paper_bin{
 	layer = 2.9
 	},
-/turf/open/floor/wood,
+/turf/closed/wall,
 /area/crew_quarters/bar)
 "qbp" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
@@ -54940,6 +54937,10 @@
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/department/science)
+"rKW" = (
+/obj/effect/mapping_helpers/ianbirthday,
+/turf/open/floor/wood,
+/area/crew_quarters/heads/hop)
 "rLi" = (
 /obj/machinery/button/door{
 	id = "shootshut";
@@ -91024,7 +91025,7 @@ aaa
 aaa
 aAH
 aBC
-aCS
+rKW
 aDU
 aEN
 aAH
