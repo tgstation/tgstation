@@ -161,21 +161,29 @@
 /obj/item/reagent_containers/hypospray/medipen/oxandrolone
 	name = "oxandrolone medipen"
 	desc = "A autoinjector containing oxandrolone, used to treat severe burns."
+	icon_state = "oxapen"
+	item_state = "oxapen"
 	list_reagents = list(/datum/reagent/medicine/oxandrolone = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/penacid
 	name = "pentetic acid medipen"
 	desc = "A autoinjector containing pentetic acid, used to reduce high levels of radiations and moderate toxins."
+	icon_state = "penacid"
+	item_state = "penacid"
 	list_reagents = list(/datum/reagent/medicine/pen_acid = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/salacid
 	name = "salicyclic acid medipen"
 	desc = "A autoinjector containing salicyclic acid, used to treat severe brute damage."
+	icon_state = "salacid"
+	item_state = "salacid"	
 	list_reagents = list(/datum/reagent/medicine/sal_acid = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/salbutamol
 	name = "salbutamol medipen"
 	desc = "A autoinjector containing salbutamol, used to heal oxygen damage quickly."
+	icon_state = "salpen"
+	item_state = "salpen"	
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure
