@@ -232,17 +232,19 @@
 			return FALSE
 
 /obj/item/defibrillator/proc/cooldowncheck(mob/user)
-	spawn(50)
-		if(cell)
-			if(cell.charge >= paddles.revivecost)
-				user.visible_message("<span class='notice'>[src] beeps: Unit ready.</span>")
-				playsound(src, 'sound/machines/defib_ready.ogg', 50, 0)
-			else
-				user.visible_message("<span class='notice'>[src] beeps: Charge depleted.</span>")
-				playsound(src, 'sound/machines/defib_failed.ogg', 50, 0)
-		paddles.cooldown = FALSE
-		paddles.update_icon()
-		update_icon()
+	addtimer(CALLBACK(src, .proc/finish_charging), 5 SECONDS)
+
+/obj/item/defibrillator/proc/finish_charging()
+	if(cell)
+		if(cell.charge >= paddles.revivecost)
+			visible_message("<span class='notice'>[src] beeps: Unit ready.</span>")
+			playsound(src, 'sound/machines/defib_ready.ogg', 50, 0)
+		else
+			visible_message("<span class='notice'>[src] beeps: Charge depleted.</span>")
+			playsound(src, 'sound/machines/defib_failed.ogg', 50, 0)
+	paddles.cooldown = FALSE
+	paddles.update_icon()
+	update_icon()
 
 /obj/item/defibrillator/compact
 	name = "compact defibrillator"
