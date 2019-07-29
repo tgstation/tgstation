@@ -265,7 +265,7 @@
 /obj/item/restraints/legcuffs/bola/cult/pickup(mob/living/user)
 	if(!iscultist(user))
 		to_chat(user, "<span class='warning'>The bola seems to take on a life of its own!</span>")
-		throw_impact(user)
+		ensnare(user)
 
 /obj/item/restraints/legcuffs/bola/cult/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(iscultist(hit_atom))
@@ -273,7 +273,7 @@
 	. = ..()
 
 
-/obj/item/clothing/head/culthood
+/obj/item/clothing/head/hooded/cult_hoodie
 	name = "ancient cultist hood"
 	icon_state = "culthood"
 	desc = "A torn, dust-caked hood. Strange letters line the inside."
@@ -285,7 +285,7 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 
-/obj/item/clothing/suit/cultrobes
+/obj/item/clothing/suit/hooded/cultrobes
 	name = "ancient cultist robes"
 	desc = "A ragged, dusty set of robes. Strange letters line the inside."
 	icon_state = "cultrobes"
@@ -298,31 +298,26 @@
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
+	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie
 
 
-/obj/item/clothing/head/culthood/alt
+/obj/item/clothing/head/hooded/cult_hoodie/alt
 	name = "cultist hood"
 	desc = "An armored hood worn by the followers of Nar'Sie."
 	icon_state = "cult_hoodalt"
 	item_state = "cult_hoodalt"
 
-/obj/item/clothing/head/culthood/alt/ghost
-	item_flags = DROPDEL
-
-/obj/item/clothing/head/culthood/alt/ghost/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
-
-/obj/item/clothing/suit/cultrobes/alt
+/obj/item/clothing/suit/hooded/cultrobes/alt
 	name = "cultist robes"
 	desc = "An armored set of robes worn by the followers of Nar'Sie."
 	icon_state = "cultrobesalt"
 	item_state = "cultrobesalt"
+	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/alt
 
-/obj/item/clothing/suit/cultrobes/alt/ghost
+/obj/item/clothing/suit/hooded/cultrobes/alt/ghost
 	item_flags = DROPDEL
 
-/obj/item/clothing/suit/cultrobes/alt/ghost/Initialize()
+/obj/item/clothing/suit/hooded/cultrobes/alt/ghost/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
@@ -387,9 +382,9 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
 	var/current_charges = 3
-	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie
+	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/cult_shield
 
-/obj/item/clothing/head/hooded/cult_hoodie
+/obj/item/clothing/head/hooded/cult_hoodie/cult_shield
 	name = "empowered cultist armor"
 	desc = "Empowered garb which creates a powerful shield around the user."
 	icon_state = "cult_hoodalt"

@@ -1,4 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - code_imp: "Added signals for all basic tool acts."
