@@ -1,0 +1,5 @@
+author: "SynnGraffkin"
+delete-after: True
+changes: 
+  - tweak: "Further research into Matter Bins has increased their efficiency in solving missing genomes within DNA Scanning machines, revealing elusive \"Joker\" genes more often."
+  - code_imp: "Fixed a comment about the precision_coeff referring to the wrong part it is associated to."

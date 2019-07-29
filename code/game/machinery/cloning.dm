@@ -290,6 +290,7 @@
 				var/obj/item/I = pick_n_take(unattached_flesh)
 				if(isorgan(I))
 					var/obj/item/organ/O = I
+					O.organ_flags &= ~ORGAN_FROZEN
 					O.Insert(mob_occupant)
 				else if(isbodypart(I))
 					var/obj/item/bodypart/BP = I
@@ -307,6 +308,7 @@
 			for(var/i in unattached_flesh)
 				if(isorgan(i))
 					var/obj/item/organ/O = i
+					O.organ_flags &= ~ORGAN_FROZEN
 					O.Insert(mob_occupant)
 				else if(isbodypart(i))
 					var/obj/item/bodypart/BP = i
@@ -397,6 +399,9 @@
 	if(mess) //Clean that mess and dump those gibs!
 		for(var/obj/fl in unattached_flesh)
 			fl.forceMove(T)
+			if(istype(fl, /obj/item/organ))
+				var/obj/item/organ/O = fl
+				O.organ_flags &= ~ORGAN_FROZEN
 		unattached_flesh.Cut()
 		mess = FALSE
 		new /obj/effect/gibspawner/generic(get_turf(src), mob_occupant)
@@ -418,8 +423,6 @@
 		mob_occupant.grab_ghost()
 		to_chat(occupant, "<span class='notice'><b>There is a bright flash!</b><br><i>You feel like a new being.</i></span>")
 		mob_occupant.flash_act()
-
-	mob_occupant.adjustBrainLoss(mob_occupant.getCloneLoss())
 
 	occupant.forceMove(T)
 	icon_state = "pod_0"
@@ -516,8 +519,9 @@
 
 	for(var/o in H.internal_organs)
 		var/obj/item/organ/organ = o
-		if(!istype(organ) || organ.vital)
+		if(!istype(organ) || (organ.organ_flags & ORGAN_VITAL))
 			continue
+		organ.organ_flags |= ORGAN_FROZEN
 		organ.Remove(H, special=TRUE)
 		organ.forceMove(src)
 		unattached_flesh += organ

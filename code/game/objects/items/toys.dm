@@ -553,14 +553,10 @@
 
 /obj/item/toy/talking/attack_self(mob/user)
 	if(!cooldown)
-		var/list/messages = generate_messages()
 		activation_message(user)
 		playsound(loc, 'sound/machines/click.ogg', 20, 1)
 
-		spawn(0)
-			for(var/message in messages)
-				toy_talk(user, message)
-				sleep(10)
+		INVOKE_ASYNC(src, .proc/do_toy_talk, user)
 
 		cooldown = TRUE
 		spawn(recharge_time)
@@ -576,6 +572,11 @@
 
 /obj/item/toy/talking/proc/generate_messages()
 	return list(pick(messages))
+
+/obj/item/toy/talking/proc/do_toy_talk(mob/user)
+	for(var/message in generate_messages())
+		toy_talk(user, message)
+		sleep(10)
 
 /obj/item/toy/talking/proc/toy_talk(mob/user, message)
 	user.loc.visible_message("<span class='[span]'>[icon2html(src, viewers(user.loc))] [message]</span>")
@@ -1174,9 +1175,7 @@
 		var/list/possible_sounds = list('sound/voice/hiss1.ogg', 'sound/voice/hiss2.ogg', 'sound/voice/hiss3.ogg', 'sound/voice/hiss4.ogg')
 		var/chosen_sound = pick(possible_sounds)
 		playsound(get_turf(src), chosen_sound, 50, 1)
-		spawn(45)
-			if(src)
-				icon_state = "[initial(icon_state)]"
+		addtimer(VARSET_CALLBACK(src, icon_state, "[initial(icon_state)]"), 4.5 SECONDS)
 	else
 		to_chat(user, "<span class='warning'>The string on [src] hasn't rewound all the way!</span>")
 		return

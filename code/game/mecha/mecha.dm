@@ -619,15 +619,14 @@
 
 /obj/mecha/Bump(var/atom/obstacle)
 	if(phasing && get_charge() >= phasing_energy_drain && !throwing)
-		spawn()
-			if(can_move)
-				can_move = 0
-				if(phase_state)
-					flick(phase_state, src)
-				forceMove(get_step(src,dir))
-				use_power(phasing_energy_drain)
-				sleep(step_in*3)
-				can_move = 1
+		if(!can_move)
+			return
+		can_move = 0
+		if(phase_state)
+			flick(phase_state, src)
+		forceMove(get_step(src,dir))
+		use_power(phasing_energy_drain)
+		addtimer(VARSET_CALLBACK(src, can_move, TRUE), step_in*3)
 	else
 		if(..()) //mech was thrown
 			return
