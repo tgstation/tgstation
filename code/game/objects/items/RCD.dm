@@ -132,8 +132,7 @@ RLD
 		update_icon()
 		return TRUE
 	else
-		if(!silo_mats.mat_container.has_materials(list(MAT_METAL=500), amount))
-		if(!silo_mats.mat_container.has_materials(list(MAT_METAL=2000/sheetmultiplier), amount))
+		if(!silo_mats.mat_container.has_materials(list(/datum/material/iron = 500), amount))
 			if(user)
 				to_chat(user, no_ammo_message)
 			return FALSE
@@ -141,8 +140,8 @@ RLD
 			if(user)
 				to_chat(user, "Mineral access is on hold, please contact the quartermaster.")
 			return FALSE
-		silo_mats.mat_container.use_amount(list(/datum/material/iron=500), amount)
-		materials.silo_log(src, "consume", -amount, "build", list(/datum/material/iron=500))
+		silo_mats.mat_container.use_amount(list(/datum/material/iron = 500), amount)
+		materials.silo_log(src, "consume", -amount, "build", list(/datum/material/iron = 500))
 		return TRUE
 
 /obj/item/construction/proc/checkResource(amount, mob/user)
@@ -153,7 +152,7 @@ RLD
 			if(user)
 				to_chat(user, "Mineral access is on hold, please contact the quartermaster.")
 			return FALSE
-		. = silo_mats.mat_container.has_materials(list(/datum/material/iron=500), amount)
+		. = silo_mats.mat_container.has_materials(list(/datum/material/iron = 500), amount)
 	if(!. && user)
 		to_chat(user, no_ammo_message)
 		if(has_ammobar)
