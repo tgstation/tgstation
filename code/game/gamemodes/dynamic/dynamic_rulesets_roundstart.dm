@@ -39,11 +39,11 @@
 		message_admins("Dynamic Mode: Checking if we can turn someone into a traitor...")
 		mode.picking_specific_rule(/datum/dynamic_ruleset/midround/autotraitor)
 
-//////////////////////////////////////////////
-//                                          //
-//           BLOOD BROTHERS                 //
-//                                          //
-//////////////////////////////////////////////
+//////////////////////////////////////////
+//                                      //
+//           BLOOD BROTHERS             //
+//                                      //
+//////////////////////////////////////////
 
 /datum/dynamic_ruleset/roundstart/traitorbro
 	name = "Blood Brothers"
@@ -53,11 +53,11 @@
 	restricted_roles = list("Cyborg", "AI")
 	required_candidates = 2
 	weight = 4
-	cost = 15
-	requirements = list(50,40,40,30,30,20,15,15,15,15)
+	cost = 10
+	requirements = list(40,30,30,20,20,15,15,15,10,10)
 	high_population_requirement = 15
 	var/list/datum/team/brother_team/pre_brother_teams = list()
-	var/const/team_amount = 2 //hard limit on brother teams if scaling is turned off
+	var/const/team_amount = 2 // Hard limit on brother teams if scaling is turned off
 	var/const/min_team_size = 2
 
 /datum/dynamic_ruleset/roundstart/traitorbro/pre_execute()
@@ -145,6 +145,7 @@
 //                                          //
 //////////////////////////////////////////////
 
+// Dynamic is a wonderful thing that adds wizards to every round and then adds even more wizards during the round.
 /datum/dynamic_ruleset/roundstart/wizard
 	name = "Wizard"
 	antag_flag = ROLE_WIZARD

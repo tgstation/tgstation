@@ -91,7 +91,7 @@
 	message_admins("DYNAMIC MODE: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 	log_game("DYNAMIC: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 
-	applicants = pollGhostCandidates("The mode is looking for volunteers to become [initial(antag_flag)]", antag_flag, SSticker.mode, antag_flag, poll_time = 600)
+	applicants = pollGhostCandidates("The mode is looking for volunteers to become [antag_flag] for [src.name]", antag_flag, SSticker.mode, antag_flag, poll_time = 600)
 	
 	if(!applicants || applicants.len <= 0)
 		message_admins("DYNAMIC MODE: [name] received no applications.")
@@ -224,7 +224,7 @@
 	exclusive_roles = list("AI")
 	required_enemies = list(4,4,4,4,4,4,2,2,2,0)
 	required_candidates = 1
-	weight = 1
+	weight = 3
 	cost = 35
 	requirements = list(101,101,80,70,60,60,50,50,40,40)
 	high_population_requirement = 35
@@ -349,7 +349,7 @@
 	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
-	weight = 1
+	weight = 4
 	cost = 10
 	requirements = list(101,101,101,80,60,50,30,20,10,10)
 	high_population_requirement = 50
@@ -358,3 +358,94 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/blob/finish_setup(mob/new_character, index)
 	new_character.become_overmind()
+
+//////////////////////////////////////////////
+//                                          //
+//           XENOMORPH (GHOST)              //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/midround/from_ghosts/xenomorph
+	name = "Alien Infestation"
+	antag_datum = /datum/antagonist/xeno
+	antag_flag = ROLE_ALIEN
+	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_candidates = 1
+	weight = 3
+	cost = 10
+	requirements = list(101,101,101,70,50,40,20,15,10,10)
+	high_population_requirement = 50
+	repeatable = TRUE
+	var/list/vents = list()
+
+/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/execute()
+	// 50% chance of being incremented by one
+	required_candidates += prob(50)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in GLOB.machines)
+		if(QDELETED(temp_vent))
+			continue
+		if(is_station_level(temp_vent.loc.z) && !temp_vent.welded)
+			var/datum/pipeline/temp_vent_parent = temp_vent.parents[1]
+			if(!temp_vent_parent)
+				continue // No parent vent
+			// Stops Aliens getting stuck in small networks.
+			// See: Security, Virology
+			if(temp_vent_parent.other_atmosmch.len > 20)
+				vents += temp_vent
+	if(!vents.len)
+		return FALSE
+	. = ..()
+
+/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/generate_ruleset_body(mob/applicant)
+	var/obj/vent = pick_n_take(vents)
+	var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
+	new_xeno.key = applicant.key
+	message_admins("[ADMIN_LOOKUPFLW(new_xeno)] has been made into an alien by the midround ruleset.")
+	log_game("DYNAMIC: [key_name(new_xeno)] was spawned as an alien by the midround ruleset.")
+
+//////////////////////////////////////////////
+//                                          //
+//           NIGHTMARE (GHOST)              //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/midround/from_ghosts/nightmare
+	name = "Nightmare"
+	antag_datum = /datum/antagonist/nightmare
+	antag_flag = "Nightmare"
+	antag_flag_override = ROLE_ALIEN
+	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_candidates = 1
+	weight = 3
+	cost = 10
+	requirements = list(101,101,101,70,50,40,20,15,10,10)
+	high_population_requirement = 50
+	repeatable = TRUE
+	var/list/spawn_locs = list()
+
+/datum/dynamic_ruleset/midround/from_ghosts/nightmare/execute()
+	for(var/X in GLOB.xeno_spawn)
+		var/turf/T = X
+		var/light_amount = T.get_lumcount()
+		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
+			spawn_locs += T
+	if(!spawn_locs.len)
+		return FALSE
+	. = ..()
+
+/datum/dynamic_ruleset/midround/from_ghosts/nightmare/generate_ruleset_body(mob/applicant)
+	var/datum/mind/player_mind = new /datum/mind(applicant.key)
+	player_mind.active = TRUE
+
+	var/mob/living/carbon/human/S = new (pick(spawn_locs))
+	player_mind.transfer_to(S)
+	player_mind.assigned_role = "Nightmare"
+	player_mind.special_role = "Nightmare"
+	player_mind.add_antag_datum(/datum/antagonist/nightmare)
+	S.set_species(/datum/species/shadow/nightmare)
+
+	playsound(S, 'sound/magic/ethereal_exit.ogg', 50, 1, -1)
+	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Nightmare by the midround ruleset.")
+	log_game("DYNAMIC: [key_name(S)] was spawned as a Nightmare by the midround ruleset.")

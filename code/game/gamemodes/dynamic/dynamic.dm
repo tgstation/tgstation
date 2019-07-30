@@ -19,8 +19,8 @@ GLOBAL_VAR_INIT(dynamic_midround_delay_max, (35 MINUTES))
 // Are HIGHLANDER_RULESETs allowed to stack?
 GLOBAL_VAR_INIT(dynamic_no_stacking, TRUE)
 // A number between -5 and +5. 
-// Negative value will give a more peaceful round and
-// positive value will give a round with higher threat.
+// A negative value will give a more peaceful round and
+// a positive value will give a round with higher threat.
 GLOBAL_VAR_INIT(dynamic_curve_centre, 0)
 // A number between 0.5 and 4.
 // Higher value will favour extreme rounds and
@@ -37,7 +37,7 @@ GLOBAL_VAR_INIT(dynamic_forced_extended, FALSE)
 GLOBAL_VAR_INIT(dynamic_stacking_limit, 90)
 // List of forced roundstart rulesets.
 GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
-// Forced threat level, setting this to zero or higher forces threat to the value. 
+// Forced threat level, setting this to zero or higher forces the roundstart threat to the value. 
 GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /datum/game_mode/dynamic
@@ -63,17 +63,23 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/list/latejoin_rules = list()
 	/// List of midround rules used for selecting the rules.
 	var/list/midround_rules = list()
-	/// Pop range per requirement. If this is the default five, the pop range for requirements are:
-	/// 0-4, 5-9, 10-14, 15-19, 20-24, 25-29, 30-34, 35-39, 40-54, 45+
-	var/pop_per_requirement = 5
+	/** # Pop range per requirement.
+	  * If the value is five the range is:
+	  * 0-4, 5-9, 10-14, 15-19, 20-24, 25-29, 30-34, 35-39, 40-54, 45+
+	  * If it is six the range is:
+	  * 0-5, 6-11, 12-17, 18-23, 24-29, 30-35, 36-41, 42-47, 48-53, 54+
+	  * If it is seven the range is:
+	  * 0-6, 7-13, 14-20, 21-27, 28-34, 35-41, 42-48, 49-55, 56-62, 63+
+	  */
+	var/pop_per_requirement = 6
 	/// The requirement used for checking if a second rule should be selected.
-	var/list/second_rule_req = list(100,100,80,70,60,40,20,0,0,0)
+	var/list/second_rule_req = list(100, 100, 80, 70, 60, 50, 30, 20, 10, 0)
 	/// The requirement used for checking if a third rule should be selected.
-	var/list/third_rule_req = list(100,100,100,90,80,70,50,30,10,0)
+	var/list/third_rule_req = list(100, 100, 100, 90, 80, 70, 60, 50, 40, 30)
 	/// Threat requirement for a second ruleset when high pop override is in effect. 
-	var/high_pop_second_rule_req = 50
+	var/high_pop_second_rule_req = 40
 	/// Threat requirement for a third ruleset when high pop override is in effect. 
-	var/high_pop_third_rule_req = 70
+	var/high_pop_third_rule_req = 60
 	/// Number of players who were ready on roundstart.
 	var/roundstart_pop_ready = 0
 	/// List of candidates used on roundstart rulesets.
@@ -486,7 +492,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	return FALSE
 
 /// An experimental proc to allow admins to call rules on the fly or have rules call other rules.
-/datum/game_mode/dynamic/proc/picking_specific_rule(ruletype, forced=0)
+/datum/game_mode/dynamic/proc/picking_specific_rule(ruletype, forced = FALSE)
 	var/datum/dynamic_ruleset/midround/new_rule
 	if(ispath(ruletype))
 		new_rule = new ruletype() // You should only use it to call midround rules though.
