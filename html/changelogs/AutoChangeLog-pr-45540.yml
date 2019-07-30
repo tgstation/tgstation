@@ -1,0 +1,4 @@
+author: "blessedmulligan"
+delete-after: True
+changes: 
+  - tweak: "using a welder won't blind you if you're somehow far away from the welder when you use it"

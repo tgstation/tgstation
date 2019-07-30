@@ -86,4 +86,4 @@
 	if(eater.safety_mode || (eater.stat & (BROKEN|NOPOWER))) //I'm so sorry.
 		return
 	if(L.stat == DEAD && (L.butcher_results || L.guaranteed_butcher_results))
-		Butcher(src, L)
+		Butcher(parent, L)
