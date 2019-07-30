@@ -115,6 +115,7 @@
 					/obj/item/clothing/under/scratch = 1,
 					/obj/item/clothing/under/sailor = 1,
 					/obj/item/clothing/ears/headphones = 2,
+					/obj/item/clothing/head/delinquent = 1,
 					/obj/item/clothing/head/wig/random = 3)
 	contraband = list(/obj/item/clothing/suit/judgerobe = 1,
 					  /obj/item/clothing/head/powdered_wig = 1,
@@ -132,7 +133,8 @@
 				   /obj/item/shield/riot/roman/fake = 1,
 				   /obj/item/clothing/suit/chaplainsuit/clownpriest = 1,
 				   /obj/item/clothing/head/clownmitre = 1,
-				   /obj/item/skub = 1,)
+				   /obj/item/clothing/under/rank/psyche = 1,
+				   /obj/item/skub = 1)
 	refill_canister = /obj/item/vending_refill/autodrobe
 
 /obj/machinery/vending/autodrobe/canLoadItem(obj/item/I,mob/user)

@@ -22,6 +22,7 @@
 	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
 	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
 	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/check_area_mood)
+	RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/on_revive)
 
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	var/mob/living/owner = parent
@@ -82,7 +83,8 @@
 		msg += "<span class='nicegreen'>I don't have much of a reaction to anything right now.<span>\n"
 	to_chat(user || parent, msg)
 
-/datum/component/mood/proc/update_mood() //Called whenever a mood event is added or removed
+///Called after moodevent/s have been added/removed.
+/datum/component/mood/proc/update_mood()
 	mood = 0
 	shown_mood = 0
 	for(var/i in mood_events)
@@ -169,50 +171,43 @@
 					screen_obj.color = "#2eeb9a"
 			break
 
-/datum/component/mood/process() //Called on SSmood process
-	var/mob/living/owner = parent
-
+///Called on SSmood process
+/datum/component/mood/process()
 	switch(mood_level)
 		if(1)
-			setSanity(sanity-0.3)
+			setSanity(sanity-0.3, SANITY_INSANE, SANITY_NEUTRAL)
 		if(2)
-			setSanity(sanity-0.15)
+			setSanity(sanity-0.15, SANITY_INSANE, SANITY_GREAT)
 		if(3)
-			setSanity(sanity-0.1)
+			setSanity(sanity-0.1, SANITY_CRAZY, SANITY_GREAT)
 		if(4)
-			setSanity(sanity-0.05, minimum=SANITY_UNSTABLE)
+			setSanity(sanity-0.05, SANITY_UNSTABLE, SANITY_GREAT)
 		if(5)
-			setSanity(sanity+0.1)
+			setSanity(sanity+0.1, SANITY_UNSTABLE, SANITY_MAXIMUM)
 		if(6)
-			setSanity(sanity+0.2)
+			setSanity(sanity+0.2, SANITY_UNSTABLE, SANITY_MAXIMUM)
 		if(7)
-			setSanity(sanity+0.3)
+			setSanity(sanity+0.3, SANITY_UNSTABLE, SANITY_MAXIMUM)
 		if(8)
-			setSanity(sanity+0.4, maximum=INFINITY)
+			setSanity(sanity+0.4, SANITY_NEUTRAL, SANITY_MAXIMUM)
 		if(9)
-			setSanity(sanity+0.6, maximum=INFINITY)
+			setSanity(sanity+0.6, SANITY_NEUTRAL, SANITY_MAXIMUM)
+	HandleNutrition()
 
-	HandleNutrition(owner)
-
+///Sets sanity to the specified amount and applies effects.
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_GREAT)
-	var/mob/living/owner = parent
-
-	amount = CLAMP(amount, minimum, maximum)
-	if(amount == sanity)
-		return
 	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.5
 	// If the new amount would move towards the acceptable range faster then use it instead
-	if(sanity < minimum && amount < sanity + 0.5)
-		amount = sanity + 0.5
-	else if(sanity > maximum && amount > sanity - 0.5)
-		amount = sanity - 0.5
-
-	// Disturbed stops you from getting any more sane
-	if(HAS_TRAIT(owner, TRAIT_UNSTABLE))
-		sanity = min(amount,sanity)
+	if(amount < minimum)
+		amount += CLAMP(minimum - sanity, 0, 0.7)
 	else
-		sanity = amount
-
+		if(HAS_TRAIT(parent, TRAIT_UNSTABLE))
+			maximum = sanity
+		if(amount > maximum)
+			amount += CLAMP(maximum - sanity, -0.5, 0)
+	if(amount == sanity) //Prevents stuff from flicking around.
+		return
+	sanity = amount
 	var/mob/living/master = parent
 	switch(sanity)
 		if(SANITY_INSANE to SANITY_CRAZY)
@@ -280,14 +275,14 @@
 	qdel(event)
 	update_mood()
 
-/datum/component/mood/proc/remove_temp_moods(var/admin) //Removes all temp moods
+/datum/component/mood/proc/remove_temp_moods() //Removes all temp moods
 	for(var/i in mood_events)
 		var/datum/mood_event/moodlet = mood_events[i]
 		if(!moodlet || !moodlet.timeout)
 			continue
 		mood_events -= moodlet.category
 		qdel(moodlet)
-		update_mood()
+	update_mood()
 
 
 /datum/component/mood/proc/modify_hud(datum/source)
@@ -314,13 +309,12 @@
 /datum/component/mood/proc/hud_click(datum/source, location, control, params, mob/user)
 	print_mood(user)
 
-/datum/component/mood/proc/HandleNutrition(mob/living/L)
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		if(isethereal(H))
-			HandleCharge(H)
-		if(HAS_TRAIT(H, TRAIT_NOHUNGER))
-			return FALSE //no mood events for nutrition
+/datum/component/mood/proc/HandleNutrition()
+	var/mob/living/L = parent
+	if(isethereal(L))
+		HandleCharge(L)
+	if(HAS_TRAIT(L, TRAIT_NOHUNGER))
+		return FALSE //no mood events for nutrition
 	switch(L.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
 			if (!HAS_TRAIT(L, TRAIT_VORACIOUS))
@@ -339,7 +333,7 @@
 			add_event(null, "nutrition", /datum/mood_event/starving)
 
 /datum/component/mood/proc/HandleCharge(mob/living/carbon/human/H)
-	var/datum/species/ethereal/E = H.dna?.species
+	var/datum/species/ethereal/E = H.dna.species
 	switch(E.get_charge(H))
 		if(ETHEREAL_CHARGE_NONE to ETHEREAL_CHARGE_LOWPOWER)
 			add_event(null, "charge", /datum/mood_event/decharged)
@@ -355,6 +349,13 @@
 		add_event(null, "area", /datum/mood_event/area, list(A.mood_bonus, A.mood_message))
 	else
 		clear_event(null, "area")
+
+///Called when parent is ahealed.
+/datum/component/mood/proc/on_revive(datum/source, full_heal)
+	if(!full_heal)
+		return
+	remove_temp_moods()
+	setSanity(initial(sanity))
 
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN
