@@ -1,4 +1,0 @@
-author: "bandit"
-delete-after: True
-changes: 
-  - tweak: "Clicking the cloning pod examines it."
