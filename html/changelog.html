@@ -55,6 +55,66 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">29 July 2019</h2>
+			<h3 class="author">Dennok updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Spending of tank don't change distribute_pressure.</li>
+			</ul>
+			<h3 class="author">Garen updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixes infinite loop when you catch a cult bola; you can no longer block them by trying to catch them</li>
+			</ul>
+			<h3 class="author">MrStonedOne updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed exploit allowing somebody to crash the server</li>
+			</ul>
+			<h3 class="author">RandolfTheMeh updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Organ Smartfridges! Store your organs safely. Upgrading the matter bin will give it the ability to heal organs held within- though this does not repair organs that are currently failing, however.</li>
+				<li class="rscadd">Lobectomy! Not lobotomy, but cuts out a damaged lung lobe to make its performance passable. Restores a lung to working order if it was too damaged to work before, but can only be done once. The lobectomy step has a 95% chance of success, so use some form of sterilizer to ensure you don't accidentally get blood inside your patient's lungs!</li>
+				<li class="rscadd">Coronary Bypass! Restores a heart to working order if it was too damaged to work before, but can only be done once. Both incising the heart and grafting the bypass have a 90% chance to succeed, and failing them will cause heart damage and massive amounts of bleeding- so be sure to work with ideal conditions, proper tools, and sterilizer!</li>
+				<li class="rscadd">Organs now decay when not in a living host</li>
+				<li class="rscadd">Severe heart damage increases breathing rate, and causes a heart attack on failure</li>
+				<li class="rscadd">Severe lung damage increases breathing rate, and causes suffocation on failure</li>
+				<li class="rscadd">Stomach damage will likely cause the owner to vomit depending on how injured the stomach is, and how much they've eaten</li>
+				<li class="tweak">Brain damage effects now works similarly to the rest of the organ damage</li>
+				<li class="tweak">Appendicitis will do appendix damage when in stages 3 and 4, which can cause it to burst if left untreated</li>
+				<li class="tweak">Organs heal faster the healthier the host is</li>
+				<li class="balance">Defib timer has been extended to 15 minutes</li>
+			</ul>
+			<h3 class="author">SpacePrius updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Lollipop stick mask sprite is now fixed.</li>
+			</ul>
+			<h3 class="author">SynnGraffkin updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Further research into Matter Bins has increased their efficiency in solving missing genomes within DNA Scanning machines, revealing elusive "Joker" genes more often.</li>
+				<li class="code_imp">Fixed a comment about the precision_coeff referring to the wrong part it is associated to.</li>
+			</ul>
+			<h3 class="author">Tlaltecuhtli updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">trying to ride a vehicle without key no longer spams you with messages</li>
+			</ul>
+			<h3 class="author">bandit updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Disguised syndicate saboteur cyborgs now use the regular cyborg speech icon.</li>
+			</ul>
+			<h3 class="author">kingofkosmos updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">alt-clicking on the identification console ejects only one id at a time.</li>
+				<li class="rscadd">alt-clicking to eject the id from console now works also on the medical and security records consoles.</li>
+			</ul>
+			<h3 class="author">nemvar updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">ORM can be connected to the ore silo once again.</li>
+				<li class="tweak">You can now rotate the ORM by altclicking it while the panel is open. This action used to be done with a multitool.</li>
+				<li class="bugfix">The crab 17 protocol now gets destroyed  properly</li>
+			</ul>
+			<h3 class="author">xmikey555 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">You can now print .357 bullets again at the autolathe.</li>
+			</ul>
+
 			<h2 class="date">28 July 2019</h2>
 			<h3 class="author">AarontheIdiot updated:</h3>
 			<ul class="changes bgimages16">
@@ -2124,103 +2184,6 @@
 			<ul class="changes bgimages16">
 				<li class="balance">Medulary Failure takes 3 seconds to cast now.</li>
 				<li class="tweak">Some hivemind abilities have new icons.</li>
-			</ul>
-
-			<h2 class="date">27 May 2019</h2>
-			<h3 class="author">4dplanner updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">The deja vu effect (previously only used by rewind camera) now resets all your limbs and damage to the point it was added after 10 seconds (as well as the original position reset)</li>
-				<li class="rscadd">The deja vu effect cannot resurrect the dead, but will heal their corpse</li>
-				<li class="rscadd">New limbs fall off, old ones re-attach</li>
-				<li class="rscadd">Regenerative sepia cores add a deja vu effect before healing instead of a timestop</li>
-				<li class="rscadd">The rewind camera rewinds 2 times to distinguish it from the regenerative core</li>
-				<li class="bugfix">colossus and drake can no longer attack from the afterlife</li>
-				<li class="bugfix">timestop is properly defeated by antimagic.</li>
-				<li class="bugfix">timestop only checks antimagic once</li>
-			</ul>
-			<h3 class="author">Akrilla updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Traitors now recognize codewords automatically in spoken conversation. Phrases in blue, responses in red.</li>
-				<li class="tweak">Changed traitor greet text slightly.</li>
-			</ul>
-			<h3 class="author">ExcessiveUseOfVending updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Wardrobe Vendors will now accept clothing types they sell. Now you can clean up after getting that cool alternate uniform!</li>
-				<li class="code_imp">see PR #43964 on how to easily setup a vending machine to accept items!</li>
-			</ul>
-			<h3 class="author">Farquaar updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">The monk's frock has been sanctified and will no longer reveal your naked body when the hood is pulled up.</li>
-			</ul>
-			<h3 class="author">Fire Chance updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed the drink sprites overlapping when you are mixing beer with other drinks.</li>
-			</ul>
-			<h3 class="author">Garen7 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Lesser form lings can now toggle augmented vision</li>
-				<li class="bugfix">You can no longer turn back into human form as a lesser form ling while ventcrawling</li>
-				<li class="bugfix">Stuns and Reagents are now passed when transforming into a monkey or human</li>
-			</ul>
-			<h3 class="author">Irafas updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Connected the incinerator/janitor's/botany backroom/service rooms to the scrubber network</li>
-			</ul>
-			<h3 class="author">JJRcop updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">You can now build a new PDA messaging server if you lose it.</li>
-				<li class="tweak">Requests console messages no longer work if the messaging server is offline. Emergency alerts will still function in that case as long as the rest of telecomms is online.</li>
-			</ul>
-			<h3 class="author">Naksu updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="code_imp">pipeline gas reconciliation is now faster</li>
-			</ul>
-			<h3 class="author">OnlineGirlfriend updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Lemonade</li>
-				<li class="tweak">Arnold Palmer recipe</li>
-				<li class="imageadd">lemonade sprite</li>
-			</ul>
-			<h3 class="author">Putnam3145 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">All departments can now print basic power cells from their respective techfab.</li>
-			</ul>
-			<h3 class="author">RaveRadbury updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Quirks have flavor text in medical records</li>
-				<li class="rscadd">All quirks have medical record entries</li>
-				<li class="spellcheck">All quirk medical records refer to "Patient", removing a few instances of "Subject"</li>
-			</ul>
-			<h3 class="author">Tlaltecuhtli updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">fixes message spam from riding a vehicle without enough legs/arms</li>
-			</ul>
-			<h3 class="author">XDTM updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added a new device, the nanite communication remote, which can be used to send custom messages to message-based nanite programs.</li>
-				<li class="rscadd">Comm remotes use separate Comm Codes: for a message to be received, the signal's comm code must be the same as the program's.</li>
-			</ul>
-			<h3 class="author">actioninja updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Shuttle sounds should no longer ass blast your ears as they no longer play PER DOOR and instead from the nearest engine, or door if none are available.</li>
-				<li class="soundadd">Distant shuttle sounds.</li>
-			</ul>
-			<h3 class="author">bgobandit updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="admin">TP now shows the names of blood brothers' brothers.</li>
-			</ul>
-			<h3 class="author">hey there uwu updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">You can no longer choose the zombie race from the magic mirror, as intended.</li>
-			</ul>
-			<h3 class="author">nemvar updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Colored lights now shine in different colours.</li>
-				<li class="rscadd">Mops can now be printed at the autolathe and protolathe.</li>
-			</ul>
-			<h3 class="author">tralezab updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Gravitokinetic stands are now available!</li>
 			</ul>
 		</div>
 

@@ -1703,14 +1703,14 @@
 /obj/structure/table,
 /obj/item/paper,
 /obj/item/pen,
-/obj/item/clothing/under/schoolgirl,
+/obj/item/clothing/under/costume/schoolgirl,
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/school)
 "eD" = (
 /obj/structure/table,
 /obj/item/paper,
 /obj/item/pen,
-/obj/item/clothing/under/schoolgirl/green,
+/obj/item/clothing/under/costume/schoolgirl/green,
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/school)
 "eE" = (
@@ -1824,14 +1824,14 @@
 /obj/structure/table,
 /obj/item/paper,
 /obj/item/pen,
-/obj/item/clothing/under/schoolgirl/orange,
+/obj/item/clothing/under/costume/schoolgirl/orange,
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/school)
 "eU" = (
 /obj/structure/table,
 /obj/item/paper,
 /obj/item/pen,
-/obj/item/clothing/under/schoolgirl/red,
+/obj/item/clothing/under/costume/schoolgirl/red,
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/school)
 "eV" = (
@@ -1926,7 +1926,7 @@
 /obj/structure/table,
 /obj/item/paper,
 /obj/item/pen,
-/obj/item/clothing/under/schoolgirl,
+/obj/item/clothing/under/costume/schoolgirl,
 /obj/item/toy/katana,
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/school)
@@ -6968,8 +6968,8 @@
 /area/centcom/ferry)
 "pN" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
-/obj/item/clothing/under/rank/curator/treasure_hunter,
-/obj/item/clothing/under/skirt/black,
+/obj/item/clothing/under/rank/civilian/curator/treasure_hunter,
+/obj/item/clothing/under/dress/skirt,
 /obj/item/clothing/under/shorts/black,
 /obj/item/clothing/under/pants/track,
 /obj/item/clothing/accessory/armband/deputy,
@@ -17277,11 +17277,11 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "OU" = (
-/obj/item/clothing/under/jabroni,
-/obj/item/clothing/under/geisha,
-/obj/item/clothing/under/kilt,
+/obj/item/clothing/under/costume/jabroni,
+/obj/item/clothing/under/costume/geisha,
+/obj/item/clothing/under/costume/kilt,
 /obj/structure/closet,
-/obj/item/clothing/under/roman,
+/obj/item/clothing/under/costume/roman,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Pa" = (

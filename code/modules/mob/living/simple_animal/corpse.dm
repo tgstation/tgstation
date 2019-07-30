@@ -82,7 +82,7 @@
 
 /datum/outfit/piratecorpse
 	name = "Pirate Corpse"
-	uniform = /obj/item/clothing/under/pirate
+	uniform = /obj/item/clothing/under/costume/pirate
 	shoes = /obj/item/clothing/shoes/jackboots
 	glasses = /obj/item/clothing/glasses/eyepatch
 	head = /obj/item/clothing/head/bandana
@@ -106,7 +106,7 @@
 
 /datum/outfit/russiancorpse
 	name = "Russian Corpse"
-	uniform = /obj/item/clothing/under/soviet
+	uniform = /obj/item/clothing/under/costume/soviet
 	shoes = /obj/item/clothing/shoes/jackboots
 	head = /obj/item/clothing/head/bearpelt
 	gloves = /obj/item/clothing/gloves/color/black
@@ -142,7 +142,7 @@
 
 /datum/outfit/russiancorpse/officer
 	name = "Russian Officer Corpse"
-	uniform = /obj/item/clothing/under/rank/security/navyblue/russian
+	uniform = /obj/item/clothing/under/costume/russian_officer
 	suit = /obj/item/clothing/suit/security/officer/russian
 	shoes = /obj/item/clothing/shoes/combat
 	ears = /obj/item/radio/headset
@@ -174,7 +174,7 @@
 
 /datum/outfit/nanotrasensoldiercorpse2
 	name = "NT Private Security Officer Corpse"
-	uniform = /obj/item/clothing/under/rank/security
+	uniform = /obj/item/clothing/under/rank/security/officer
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
@@ -195,7 +195,7 @@
 
 /datum/outfit/cat_butcher
 	name = "Cat Butcher Uniform"
-	uniform = /obj/item/clothing/under/rank/medical/green
+	uniform = /obj/item/clothing/under/rank/medical/doctor/green
 	suit = /obj/item/clothing/suit/apron/surgical
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	gloves = /obj/item/clothing/gloves/color/latex/nitrile
