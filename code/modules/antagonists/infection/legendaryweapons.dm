@@ -15,7 +15,7 @@
 /obj/item/infectionkiller/Initialize(mapload)
 	. = ..()
 	if(is_item)
-		priority_announce("The Legendary Item \"[name]\" has been acquired from a slain enemy. We've attached a GPS signaller and teleportation beacon to it, to make it a bit easier to find.",
+		priority_announce("The Legendary Item \"[name]\" has been discovered somewhere on the station.\nWe've attached a GPS signaller and teleportation beacon to it so that you can find it.",
 					  "CentCom Biohazard Division", 'sound/misc/notice1.ogg')
 		AddComponent(/datum/component/stationloving, FALSE, FALSE)
 		var/obj/item/gps/internal/legendary/L = new /obj/item/gps/internal/legendary(src)
@@ -165,16 +165,56 @@
 	force = 30
 	hitsound = list('sound/items/airhorn.ogg')
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	// possible mobs to be spawned from the staff
-	var/list/possible_mobs = list(/mob/living/simple_animal/hostile/retaliate/clown/clownhulk=1,
-						/mob/living/simple_animal/hostile/retaliate/clown/mutant=1,
-						/mob/living/simple_animal/hostile/retaliate/clown/lube=2,
-						/mob/living/simple_animal/hostile/retaliate/clown/fleshclown=2,
-						/mob/living/simple_animal/hostile/retaliate/clown/banana=2)
+	actions_types = list(/datum/action/item_action/summon_clowns)
 
-/obj/item/infectionkiller/staff/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/summoning, possible_mobs, 100, 5, 50, "pops out of [src]!", 'sound/items/bikehorn.ogg', list("neutral"))
+/datum/action/item_action/summon_clowns
+	name = "Summon Sentient Clown"
+	desc = "Take a clown out of this staff to help you fight, and reclaim the clown motherland."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "clown"
+	// stores the clowns created by the action
+	var/list/clowns_created = list()
+	// max clowns available at a time
+	var/max_clowns = 5
+	// cooldown time for clowns
+	var/cooldown_time = 0
+	// cooldown time added for clown spawning in deciseconds
+	var/cooldown_time_added = 300
+	// possible mobs to be spawned from the staff, weighted list, higher number means more chance to be picked
+	var/list/possible_mobs = list(/mob/living/simple_animal/hostile/retaliate/clown/clownhulk=1,
+						/mob/living/simple_animal/hostile/retaliate/clown/longface=3,
+						/mob/living/simple_animal/hostile/retaliate/clown/clownhulk/chlown=1,
+						/mob/living/simple_animal/hostile/retaliate/clown/mutant/blob=3,
+						/mob/living/simple_animal/hostile/retaliate/clown=5,
+						/mob/living/simple_animal/hostile/retaliate/clown/lube=3,
+						/mob/living/simple_animal/hostile/retaliate/clown/clownhulk/destroyer=1)
+
+/datum/action/item_action/summon_clowns/IsAvailable()
+	// get rid of clowns that don't exist anymore
+	for(var/mob/living/SM in clowns_created)
+		if(!SM || SM.stat == DEAD)
+			clowns_created -= SM
+	return (cooldown_time <= world.time) && (clowns_created.len < max_clowns) && ..()
+
+/datum/action/item_action/summon_clowns/Trigger()
+	if(..())
+		// people are going to try and use it as often as possible anyways, might as well just apply the full cooldown whether it works or not
+		cooldown_time = world.time + cooldown_time_added
+		UpdateButtonIcon()
+		to_chat(owner, "<span class='warning'>You reach into the staff to pull out a clown...</span>")
+		var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as a summoned clown?", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, POLL_IGNORE_CLOWN_STAFF_SUMMON) //players must answer rapidly // see poll_ignore.dm
+		if(LAZYLEN(candidates))
+			var/mob/dead/observer/C = pick(candidates)
+			var/picked_type = pickweight(possible_mobs)
+			var/mob/living/SM = new picked_type(owner.loc)
+			SM.key = C.key
+			clowns_created += SM
+			to_chat(SM, "<span class='userdanger'>You are grateful to be chosen to reclaim the clown motherland! Serve and assist [owner.real_name] and the station in defeating the infection as your first task!</span>")
+			to_chat(owner, "<span class='notice'>And you pull [SM] out of the staff! It worked!</span>")
+		else
+			to_chat(owner, "<span class='notice'>You can't find a clown in the staff!</span>")
+	sleep(cooldown_time_added)
+	UpdateButtonIcon()
 
 /obj/item/infectionkiller/tonic
 	name = "Spinel Tonic"
@@ -190,7 +230,7 @@
 		var/mob/living/carbon/human/H = M
 		to_chat(H, "<span class='colossus'><b>YOU FEEL LIKE A GOD.</b></span>")
 		H.AddComponent(/datum/component/superpowers, -1, FALSE, FALSE, /obj/item/infectionkiller/tonicfists, /obj/item/infectionkiller/tonic)
-		qdel(src)
+		qdel(src, force=TRUE)
 		return
 	. = ..()
 

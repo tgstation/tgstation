@@ -30,6 +30,8 @@
 	var/upgrade_subtype = /datum/infection_upgrade/spore_type_change
 	// handles the menu for upgrading
 	var/datum/infection_menu/menu_handler
+	// Actions that the slime starts with
+	var/list/default_actions = list()
 	// things that can drop after the slime dies a fake death
 	var/list/slime_drops = list(/obj/item/clothing/head/helmet/space=1,
 								/obj/item/clothing/suit/space=1,
@@ -55,6 +57,9 @@
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/Initialize(mapload, var/obj/structure/infection/factory/linked_node, commander)
 	. = ..()
 	generate_upgrades()
+	for(var/type_action in default_actions)
+		var/datum/action/cooldown/infection/add_action = new type_action()
+		add_action.Grant(src)
 
 /*
 	Generates the actual upgrade datums for this slime
@@ -115,6 +120,8 @@
 	The amount of points given to the slime every life tick
 */
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/get_point_generation_rate()
+	if(iscommander(loc))
+		return 0
 	return 2
 
 /*
@@ -277,7 +284,9 @@
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/infector
 	name = "infector slime"
 	desc = "A slime that oozes infective pus from all of it's pores."
-	crystal_color = "#228b22"
+	icon_state = "infest-moth-core"
+	crystal_color = "#ffffff"
+	crystal_icon_state = "infest-moth-layer"
 	upgrade_subtype = /datum/infection_upgrade/infector
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/hunter

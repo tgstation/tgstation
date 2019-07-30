@@ -53,14 +53,33 @@
 		sleep(9)
 		if(I.infection_core)
 			var/list/possible_turfs = RANGE_TURFS(2, I.infection_core) - RANGE_TURFS(1, I.infection_core)
-			for(var/atom/movable/M in T.contents - S)
-				if(M.anchored)
-					continue
-				if(ismob(M) && !isliving(M))
-					return
-				M.forceMove(pick(possible_turfs))
+			var/do_fade = FALSE
+			for(var/mob/living/L in T.contents)
+				L.forceMove(pick(possible_turfs))
+				do_fade = TRUE
+			if(do_fade)
+				new /obj/effect/temp_visual/fading_person(T)
 		return
 	to_chat(I, "<span class='warning'>You must be above an infection to use this ability!</span>")
+
+/datum/action/cooldown/infection/targetlocation
+	name = "Target Location"
+	desc = "Announces to all current sentient slimes that you want them to target the location you are currently at."
+	icon_icon = 'icons/effects/landmarks_static.dmi'
+	button_icon_state = "x3"
+	cost = 0
+	cooldown_time = 200
+
+/datum/action/cooldown/infection/targetlocation/fire(mob/camera/commander/I, turf/T)
+	StartCooldown()
+	if(!I.infection_core)
+		to_chat(I, "<span class='warning'>The core has not landed yet!</span>")
+		return
+	to_chat(I, "<span class='warning'>You alert your slimes to target this spot!</span>")
+	for(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/SM in I.infection_mobs)
+		SM.playsound_local(SM.loc, 'sound/effects/magic.ogg', 100, 1)
+		// give a link to the mob to walk towards the location
+		to_chat(SM, "<a href=?src=[REF(SM)];walk_to=[REF(T)]>The commander is requesting that you prioritize a location!</a>")
 
 /datum/action/cooldown/infection/creator
 	name = "Create"

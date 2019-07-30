@@ -58,7 +58,7 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 	var/mob/camera/commander/C = GLOB.infection_commander
 	C.upgrade_points++
 	C.max_infection_points += 50
-	C.base_point_rate++
+	C.infection_core.point_rate++
 	C.add_points(C.max_infection_points)
 	to_chat(C, "<span class='notice'>You feel pure energy surge through you...</span>")
 	for(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/spore in C.infection_mobs)

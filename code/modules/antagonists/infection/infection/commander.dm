@@ -61,7 +61,8 @@ GLOBAL_VAR(infection_commander)
 									/datum/action/cooldown/infection/creator/resource,
 									/datum/action/cooldown/infection/creator/node,
 									/datum/action/cooldown/infection/creator/factory,
-									/datum/action/cooldown/infection/coregrab)
+									/datum/action/cooldown/infection/coregrab,
+									/datum/action/cooldown/infection/targetlocation)
 
 	// Actions that the infection commander can spend upgrade points to unlock
 	var/list/unlockable_actions = list()

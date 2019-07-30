@@ -119,6 +119,7 @@
 	deathmessage = "dissapates in the atmosphere!"
 	// color of the crystal on top of the infection slime
 	var/crystal_color = "#ffffff"
+	var/crystal_icon_state = "infest-slime-layer"
 
 /mob/living/simple_animal/hostile/infection/infectionspore/Initialize(mapload, var/obj/structure/infection/factory/linked_node, commander)
 	if(istype(linked_node))
@@ -126,6 +127,7 @@
 		factory.spores += src
 	if(commander)
 		overmind = commander
+	update_icons()
 	. = ..()
 
 /mob/living/simple_animal/hostile/infection/infectionspore/Life()
@@ -148,7 +150,7 @@
 /mob/living/simple_animal/hostile/infection/infectionspore/update_icons()
 	cut_overlays()
 	color = null
-	var/mutable_appearance/slime_crystal = mutable_appearance('icons/mob/infection/slime_mob.dmi', "infest-slime-layer")
+	var/mutable_appearance/slime_crystal = mutable_appearance('icons/mob/infection/slime_mob.dmi', crystal_icon_state)
 	if(crystal_color)
 		slime_crystal.color = crystal_color
 	add_overlay(slime_crystal)

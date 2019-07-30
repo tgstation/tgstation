@@ -20,9 +20,9 @@
 	// the projectile shot from this turret
 	var/projectile_type = /obj/item/projectile/bullet/infection
 	// the projectiles sound when it is fired
-	var/projectile_sound = 'sound/weapons/gunshot_smg.ogg'
+	var/projectile_sound = 'sound/effects/crystal_fire.ogg'
 	// the sound when the projectile hits the person
-	var/hit_sound = 'sound/effects/meteorimpact.ogg'
+	var/hit_sound = 'sound/effects/crystal_turret_hitsound.ogg'
 
 /obj/structure/infection/turret/Initialize()
 	. = ..()

@@ -12,7 +12,7 @@
 	opacity = 0
 	anchored = TRUE
 	layer = TABLE_LAYER
-	CanAtmosPass = ATMOS_PASS_NO
+	CanAtmosPass = ATMOS_PASS_PROC
 	max_integrity = 30
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
 	// How many points the commander gets back when it removes an infection of that type. If less than 0, structure cannot be removed.
@@ -64,6 +64,7 @@
 	AddComponent(/datum/component/no_beacon_crossing)
 	generate_upgrades()
 	menu_handler = new /datum/infection_menu(src)
+	eat_nearby_supermatter()
 
 /*
 	Generates the upgrades for the infection from the types
@@ -143,6 +144,23 @@
 				shake_camera(M, 4, 3)
 		playsound(src.loc, pick('sound/effects/curseattack.ogg', 'sound/effects/curse1.ogg', 'sound/effects/curse2.ogg', 'sound/effects/curse3.ogg', 'sound/effects/curse4.ogg',), 300, 1, pressure_affected = FALSE)
 		visible_message("<span class='danger'[to_eat] is absorbed by the infection!</span>")
+		qdel(to_eat)
+
+/*
+	Attempts to eat nearby supermatter crystals
+	This is to prevent supermatter crystals from just literally sitting in the infection until they explode
+*/
+/obj/structure/infection/proc/eat_nearby_supermatter()
+	var/list/contents_adjacent = urange(1, src)
+	var/obj/machinery/power/supermatter_crystal/to_eat = locate(/obj/machinery/power/supermatter_crystal) in contents_adjacent
+	if(to_eat)
+		for(var/mob/M in range(10,src))
+			if(M.client)
+				flash_color(M.client, "#FB6B00", 1)
+				shake_camera(M, 4, 3)
+		playsound(src.loc, pick('sound/effects/curseattack.ogg', 'sound/effects/curse1.ogg', 'sound/effects/curse2.ogg', 'sound/effects/curse3.ogg', 'sound/effects/curse4.ogg',), 300, 1, pressure_affected = FALSE)
+		visible_message("<span class='danger'[to_eat] is absorbed by the infection!</span>")
+		qdel(to_eat)
 
 /obj/structure/infection/singularity_pull()
 	return
@@ -270,8 +288,9 @@
 	obj_integrity = min(max_integrity, obj_integrity+health_regen)
 	update_icon()
 	var/turf/T = get_turf(src)
-	if(istype(T, /turf/open/chasm))
-		T.ChangeTurf(/turf/open/space)
+	if(istype(T, /turf/open/chasm) || istype(T, /turf/open/space))
+		T = T.ChangeTurf(/turf/open/floor/plating)
+		T.air_update_turf(1)
 
 /*
 	Consumes the contents of the tile this infection is on
@@ -318,6 +337,7 @@
 			T.lighting_build_overlay()
 		T = T.ChangeTurf(/turf/open/floor/plating)
 		T.air_update_turf(1)
+		eat_nearby_supermatter()
 		return I
 	else
 		T.blob_act(src)

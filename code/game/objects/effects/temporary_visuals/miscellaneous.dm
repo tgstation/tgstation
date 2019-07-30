@@ -465,3 +465,8 @@
 	else
 		return INITIALIZE_HINT_QDEL
 
+/obj/effect/temp_visual/fading_person
+	name = "fading person"
+	icon = 'icons/mob/infection/crystal_effect.dmi'
+	icon_state = "shadowed_out"
+	duration = 20
