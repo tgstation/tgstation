@@ -119,8 +119,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 /obj/machinery/computer/card/ui_interact(mob/user)
 	. = ..()
-
-	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+	if(isliving(user))
+		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 	var/list/dat = list()
 	if (mode == 1) // accessing crew manifest
 		dat += "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br><br>"
