@@ -496,6 +496,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   * Space is not powered ever, so this returns 0
   */
 /area/space/powered(chan) //Nope.avi
+	#ifdef EVENTMODE
+	return 1 //SIKE.gif
+	#endif
 	return 0
 
 /**

@@ -1,0 +1,8 @@
+{
+    "map_name": "Ball Map",
+    "map_path": "map_files/BallMap",
+    "map_file": "summer_ball.dmm",
+	"shuttles": {
+	    "cargo": "cargo_delta"
+    }
+}
