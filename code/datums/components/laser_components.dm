@@ -13,7 +13,7 @@
 	lens_path = _lens_path
 
 /datum/component/extralasers/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_SCREWDRIVER_ACT, .proc/screwdrive)
+	RegisterSignal(parent, COMSIG_ATOM_SCREWDRIVER_ACT, .proc/on_screwdrive)
 	attach()
 
 /datum/component/extralasers/UnregisterFromParent()
@@ -41,7 +41,8 @@
 	L.recharge_newshot()
 	L.update_icon(TRUE)
 
-/datum/component/extralasers/proc/screwdrive(datum/source, mob/user, obj/item/I)
+///when hit by a screwdriver, qdel which calls detach
+/datum/component/extralasers/proc/on_screwdrive(datum/source, mob/user, obj/item/I)
 	user.visible_message("[user] has detached the lens.", "<span class='notice'>You detach the lens.</span>")
 	var/turf/T = get_turf(parent)
 	new lens_path(T)
