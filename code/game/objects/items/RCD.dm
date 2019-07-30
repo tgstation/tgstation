@@ -54,7 +54,7 @@ RLD
 	if(upgrade & RCD_UPGRADE_SILO_LINK)
 		. += "\A [src]. Remote storage link state: [silo_link ? "[silo_mats.on_hold() ? "ON HOLD" : "ON"]" : "OFF"]."
 		if(silo_link && !silo_mats.on_hold())
-			. += "\A [src]. Remote connection have iron in equivalent to [silo_mats.mat_container.amount(/datum/material/iron)/(MINERAL_MATERIAL_AMOUNT/4)] rcd units." // 1 matter for 1 floortile, as 4 tiles are produced from 1 metal
+			. += "\A [src]. Remote connection have iron in equivalent to [silo_mats.mat_container.materials[/datum/material/iron]/500] rcd units." // 1 matter for 1 floortile, as 4 tiles are produced from 1 metal
 
 /obj/item/construction/Destroy()
 	QDEL_NULL(spark_system)
@@ -140,8 +140,8 @@ RLD
 			if(user)
 				to_chat(user, "Mineral access is on hold, please contact the quartermaster.")
 			return FALSE
-		silo_mats.mat_container.use_amount(list(/datum/material/iron = 500), amount)
-		materials.silo_log(src, "consume", -amount, "build", list(/datum/material/iron = 500))
+		silo_mats.mat_container.use_materials(list(/datum/material/iron = 500), amount)
+		silo_mats.silo_log(src, "consume", -amount, "build", list(/datum/material/iron = 500))
 		return TRUE
 
 /obj/item/construction/proc/checkResource(amount, mob/user)
