@@ -41,12 +41,48 @@
 	icon_state = "plasmaman-helm"
 	item_state = "plasmaman-helm"
 	strip_delay = 80
-	flash_protect = 0
+	flash_protect = 2
+	tint = 2
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 75)
 	resistance_flags = FIRE_PROOF
 	var/brightness_on = 4 //luminosity when the light is on
 	var/on = FALSE
-	actions_types = list(/datum/action/item_action/toggle_helmet_light)
+	var/visor_icon = "envisor"
+	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_welding_screen/plasmaman)
+	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
+
+/obj/item/clothing/head/helmet/space/plasmaman/Initialize()
+	. = ..()
+	visor_toggling()
+	update_icon()
+	cut_overlays()
+
+/obj/item/clothing/head/helmet/space/plasmaman/AltClick(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE))
+		toggle_welding_screen(user)
+
+/obj/item/clothing/head/helmet/space/plasmaman/proc/toggle_welding_screen(mob/living/user)
+	if(weldingvisortoggle(user))
+		if(on)
+			to_chat(user, "<span class='notice'>Your helmet's torch can't pass through your welding visor!</span>")
+			on = FALSE
+			playsound(src, 'sound/mecha/mechmove03.ogg', 50, 1) //Visors don't just come from nothing
+			update_icon()
+		else
+			playsound(src, 'sound/mecha/mechmove03.ogg', 50, 1) //Visors don't just come from nothing
+			update_icon()
+
+/obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(isinhands)
+	. = ..()
+	if(!isinhands && !up)
+		. += mutable_appearance('icons/mob/head.dmi', visor_icon)
+	else
+		cut_overlays()
+
+/obj/item/clothing/head/helmet/space/plasmaman/update_icon()
+	cut_overlays()
+	add_overlay(visor_icon)
+	..()
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_self(mob/user)
 	on = !on
@@ -55,7 +91,11 @@
 	user.update_inv_head() //So the mob overlay updates
 
 	if(on)
-		set_light(brightness_on)
+		if(!up)
+			to_chat(user, "<span class='notice'>Your helmet's torch can't pass through your welding visor!</span>")
+			set_light(0)
+		else
+			set_light(brightness_on)
 	else
 		set_light(0)
 
@@ -136,6 +176,7 @@
 	desc = "A khaki helmet given to plasmamen miners operating on lavaland."
 	icon_state = "explorer_envirohelm"
 	item_state = "explorer_envirohelm"
+	visor_icon = "explorer_envisor"
 
 /obj/item/clothing/head/helmet/space/plasmaman/chaplain
 	name = "chaplain's plasma envirosuit helmet"
@@ -155,6 +196,7 @@
 	icon_state = "prototype_envirohelm"
 	item_state = "prototype_envirohelm"
 	actions_types = list()
+	visor_icon = "prototype_envisor"
 
 /obj/item/clothing/head/helmet/space/plasmaman/botany
 	name = "botany plasma envirosuit helmet"
@@ -173,9 +215,11 @@
 	desc = "The make-up is painted on, it's a miracle it doesn't chip. It's not very colourful."
 	icon_state = "mime_envirohelm"
 	item_state = "mime_envirohelm"
+	visor_icon = "mime_envisor"
 
 /obj/item/clothing/head/helmet/space/plasmaman/clown
 	name = "clown envirosuit helmet"
 	desc = "The make-up is painted on, it's a miracle it doesn't chip. <i>'HONK!'</i>"
 	icon_state = "clown_envirohelm"
 	item_state = "clown_envirohelm"
+	visor_icon = "clown_envisor"
