@@ -258,11 +258,10 @@
 	var/healthanalyzer = /obj/item/healthanalyzer
 	var/firstaid = /obj/item/storage/firstaid
 
-/obj/item/bot_assembly/medbot/Initialize()
-	. = ..()
-	spawn(5)
-		if(skin)
-			add_overlay("kit_skin_[skin]")
+/obj/item/bot_assembly/medbot/proc/set_skin(skin)
+	src.skin = skin
+	if(skin)
+		add_overlay("kit_skin_[skin]")
 
 /obj/item/bot_assembly/medbot/attackby(obj/item/W, mob/user, params)
 	..()
