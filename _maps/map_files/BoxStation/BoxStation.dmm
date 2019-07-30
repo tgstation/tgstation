@@ -4797,6 +4797,36 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/brig)
+"aki" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/sign/directions/evac{
+	dir = 4;
+	pixel_x = -31;
+	pixel_y = -32
+	},
+/obj/structure/sign/directions/engineering{
+	pixel_x = -31;
+	pixel_y = -40
+	},
+/obj/structure/sign/directions/security{
+	dir = 4;
+	pixel_x = -31;
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"akj" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "akk" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -5086,6 +5116,23 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/brig)
+"akP" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+	dir = 5
+	},
+/obj/structure/lattice,
+/turf/open/space,
+/area/space/nearstation)
+"akQ" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/engine/supermatter)
 "akR" = (
 /obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 2";
@@ -19478,21 +19525,6 @@
 /obj/item/wirecutters,
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
-"aYj" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters{
-	id = "commissaryshutter";
-	name = "Vacant Commissary Shutter"
-	},
-/turf/open/floor/plasteel,
-/area/space)
 "aYk" = (
 /obj/machinery/light,
 /obj/effect/turf_decal/tile/blue,
@@ -30642,30 +30674,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"bBo" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/sign/directions/evac{
-	dir = 4;
-	pixel_x = -63;
-	pixel_y = -60;
-	pixel_x = 32;
-	pixel_y = 28
-	},
-/obj/structure/sign/directions/engineering{
-	pixel_x = -31;
-	pixel_y = -40
-	},
-/obj/structure/sign/directions/security{
-	dir = 4;
-	pixel_x = -63;
-	pixel_y = 0;
-	pixel_x = 32;
-	pixel_y = -24
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "bBp" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -44803,13 +44811,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"csA" = (
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/engine/supermatter)
 "csD" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -47474,15 +47475,6 @@
 	},
 /turf/open/floor/plating,
 /area/lawoffice)
-"cCj" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
-	},
-/turf/open/floor/plating,
-/area/maintenance/port)
 "cCl" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -50610,12 +50602,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
-"mRR" = (
-/obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	dir = 5
-	},
-/turf/open/space,
-/area/space/nearstation)
 "mSf" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -50842,11 +50828,6 @@
 /obj/machinery/computer/bounty,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
-"ogA" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/open/space,
-/area/space/nearstation)
 "olh" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -74384,7 +74365,7 @@ aTJ
 aPK
 cCl
 aYh
-aQM
+dfx
 cCm
 aSg
 aSg
@@ -74640,7 +74621,7 @@ aSm
 aTI
 aPK
 aWB
-cCj
+akj
 soQ
 sST
 bbU
@@ -76439,7 +76420,7 @@ aTL
 aTP
 tav
 tav
-aYj
+swH
 swH
 baU
 nXi
@@ -76946,7 +76927,7 @@ aqR
 arP
 aLI
 aNr
-bBo
+aki
 aRh
 aJq
 aJq
@@ -80362,7 +80343,7 @@ cqU
 cEf
 cEt
 cEM
-csA
+akQ
 cEg
 cFK
 cGe
@@ -89333,8 +89314,8 @@ bVu
 bVu
 bVu
 bVu
-mRR
-ogA
+akP
+aaf
 aaf
 aaf
 aaf
