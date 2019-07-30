@@ -115,6 +115,16 @@
 	layer = CURSE_LAYER
 	plane = FULLSCREEN_PLANE
 
+/obj/screen/fullscreen/hive_mc
+	icon_state = "hive_mc"
+	layer = CURSE_LAYER
+	plane = FULLSCREEN_PLANE
+
+/obj/screen/fullscreen/hive_eyes
+	icon_state = "hive_eyes"
+	layer = CURSE_LAYER
+	plane = FULLSCREEN_PLANE
+
 /obj/screen/fullscreen/impaired
 	icon_state = "impairedoverlay"
 

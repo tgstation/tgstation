@@ -220,6 +220,7 @@
 
 	if(H)
 		H.faction |= factions
+		remove_hivemember(H)
 
 		for(var/V in quirks)
 			var/datum/quirk/Q = new V(H)
