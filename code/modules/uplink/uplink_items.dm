@@ -1816,7 +1816,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Syndicate Balloon"
 	desc = "For showing that you are THE BOSS: A useless red balloon with the Syndicate logo on it. \
 			Can blow the deepest of covers."
-	item = /obj/item/toy/syndicateballoon
+	item = /obj/item/toy/balloon/syndicate
 	cost = 20
 	cant_discount = TRUE
 	illegal_tech = FALSE
