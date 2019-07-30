@@ -14439,11 +14439,6 @@
 /obj/machinery/power/shieldwallgen,
 /turf/open/floor/plasteel/dark,
 /area/teleporter)
-"aDf" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/bridge/showroom/corporate)
 "aDg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
@@ -101002,7 +100997,7 @@ bEO
 bzR
 bBz
 bBz
-aDf
+bLv
 aFO
 bOy
 bQg
