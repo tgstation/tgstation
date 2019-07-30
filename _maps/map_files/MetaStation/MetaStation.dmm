@@ -12522,6 +12522,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/power/shieldwallgen,
 /turf/open/floor/plasteel/dark,
 /area/teleporter)
 "azi" = (
@@ -13173,6 +13174,7 @@
 /obj/item/radio/intercom{
 	pixel_x = 27
 	},
+/obj/machinery/power/shieldwallgen,
 /turf/open/floor/plasteel/dark,
 /area/teleporter)
 "aAr" = (
@@ -14079,6 +14081,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
+/obj/machinery/power/shieldwallgen,
 /turf/open/floor/plasteel/dark,
 /area/teleporter)
 "aCm" = (
@@ -14447,6 +14450,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/machinery/power/shieldwallgen,
 /turf/open/floor/plasteel/dark,
 /area/teleporter)
 "aDf" = (
