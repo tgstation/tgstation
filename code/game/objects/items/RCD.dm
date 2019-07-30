@@ -37,12 +37,16 @@ RLD
 	var/has_ammobar = FALSE	//controls whether or not does update_icon apply ammo indicator overlays
 	var/ammo_sections = 10	//amount of divisions in the ammo indicator overlay/number of ammo indicator states
 	var/upgrade = FALSE
+	var/datum/component/remote_materials/silo_mats //remote connection to the silo
+	var/silo_link = FALSE //switch to use internal or remote storage
 
-/obj/item/construction/Initialize()
+/obj/item/construction/Initialize(mapload)
 	. = ..()
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
+	if(upgrade & RCD_UPGRADE_SILO_LINK)
+		silo_mats = AddComponent(/datum/component/remote_materials, "RCD", mapload, FALSE)
 
 /obj/item/construction/examine(mob/user)
 	. = ..()
@@ -90,6 +94,8 @@ RLD
 		var/obj/item/rcd_upgrade/rcd_up = W
 		if(!(upgrade & rcd_up.upgrade))
 			upgrade |= rcd_up.upgrade
+			if((rcd_up.upgrade & RCD_UPGRADE_SILO_LINK) && !silo_mats)
+				silo_mats = AddComponent(/datum/component/remote_materials, "RCD", FALSE, FALSE)
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 			qdel(W)
 	else
@@ -117,13 +123,27 @@ RLD
 		spark_system.start()
 
 /obj/item/construction/proc/useResource(amount, mob/user)
-	if(matter < amount)
-		if(user)
-			to_chat(user, no_ammo_message)
-		return FALSE
-	matter -= amount
-	update_icon()
-	return TRUE
+	if(!silo_mats || !silo_link)
+		if(matter < amount)
+			if(user)
+				to_chat(user, no_ammo_message)
+			return FALSE
+		matter -= amount
+		update_icon()
+		return TRUE
+	else
+		if(!silo_mats.mat_container.has_materials(list(MAT_METAL=500), amount))
+		if(!silo_mats.mat_container.has_materials(list(MAT_METAL=2000/sheetmultiplier), amount))
+			if(user)
+				to_chat(user, no_ammo_message)
+			return FALSE
+		if(silo_mats.on_hold())
+			if(user)
+				to_chat(user, "Mineral access is on hold, please contact the quartermaster.")
+			return FALSE
+		silo_mats.mat_container.use_amount(list(/datum/material/iron=500), amount)
+		materials.silo_log(src, "consume", -amount, "build", list(/datum/material/iron=500))
+		return TRUE
 
 /obj/item/construction/proc/checkResource(amount, mob/user)
 	if(!silo_mats || !silo_link)
@@ -200,6 +220,24 @@ RLD
 		window_type_name = "glass"
 
 	to_chat(user, "<span class='notice'>You change \the [src]'s window mode to [window_type_name].</span>")
+
+/obj/item/construction/rcd/verb/toggle_silo_link_verb()
+	set name = "RCD : Toggle Silo Link"
+	set category = "Object"
+	set src in view(1)
+
+	if(!usr.canUseTopic(src, BE_CLOSE))
+		return
+
+	toggle_silo_link(usr)
+
+/obj/item/construction/rcd/proc/toggle_silo_link(mob/user)
+	if(silo_mats)
+		silo_link = !silo_link
+		to_chat(user, "<span class='notice'>You change \the [src]'s storage link state: [silo_link ? "ON" : "OFF"].</span>")
+	else
+		to_chat(user, "<span class='warning'>\the [src] dont have remote storage connection.</span>")
+
 
 /obj/item/construction/rcd/proc/change_airlock_access(mob/user)
 	if (!ishuman(user) && !user.has_unlimited_silicon_privilege)
@@ -818,6 +856,10 @@ RLD
 /obj/item/rcd_upgrade/simple_circuits
 	desc = "It contains the design for firelock, air alarm, fire alarm, apc circuits and crap power cells."
 	upgrade = RCD_UPGRADE_SIMPLE_CIRCUITS
+
+/obj/item/rcd_upgrade/silo_link
+	desc = "It contains direct silo connection RCD upgrade."
+	upgrade = RCD_UPGRADE_SILO_LINK
 
 #undef GLOW_MODE
 #undef LIGHT_MODE
