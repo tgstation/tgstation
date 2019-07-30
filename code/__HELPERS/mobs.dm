@@ -31,6 +31,19 @@
 		else
 			return pick(GLOB.underwear_list)
 
+/proc/random_underwear_color()
+	switch(pick(20;"brown",15;"blue",15;"green",1;"amber"))
+		if("brown")
+			return "630"
+		if("blue")
+			return "36c"
+		if("green")
+			return "060"
+		if("amber")
+			return "fc0"
+		else
+			return "000"
+
 /proc/random_undershirt(gender)
 	if(!GLOB.undershirt_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, GLOB.undershirt_list, GLOB.undershirt_m, GLOB.undershirt_f)
