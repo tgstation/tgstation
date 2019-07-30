@@ -11049,14 +11049,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/teleporter)
-"avW" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/space)
-"avX" = (
-/turf/closed/wall/r_wall,
-/area/space)
 "avY" = (
 /obj/machinery/door/airlock/external{
 	name = "Labor Camp Shuttle Airlock";
@@ -11166,9 +11158,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/brig)
-"awk" = (
-/turf/closed/wall,
-/area/space)
 "awl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -12079,7 +12068,7 @@
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
-/area/space)
+/area/maintenance/central)
 "ayi" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -12183,7 +12172,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/space)
+/area/maintenance/central)
 "ayu" = (
 /obj/machinery/gateway{
 	dir = 9
@@ -13189,9 +13178,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"aAs" = (
-/turf/open/space/basic,
-/area/ai_monitored/storage/eva)
 "aAt" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -13235,7 +13221,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/space)
+/area/maintenance/central)
 "aAz" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green{
@@ -14461,7 +14447,7 @@
 "aDg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/space)
+/area/maintenance/central)
 "aDh" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -15761,7 +15747,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/space)
+/area/maintenance/central)
 "aFR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/firedoor,
@@ -17596,7 +17582,7 @@
 /obj/structure/table_frame,
 /obj/item/bikehorn,
 /turf/open/floor/plating,
-/area/space)
+/area/maintenance/central)
 "aJz" = (
 /obj/structure/closet/l3closet/scientist,
 /obj/effect/turf_decal/bot{
@@ -18826,7 +18812,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table_frame,
 /turf/open/floor/plating,
-/area/space)
+/area/maintenance/central)
 "aMg" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
@@ -18873,7 +18859,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/space)
+/area/maintenance/central)
 "aMm" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
@@ -20151,10 +20137,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ai_monitored/storage/eva)
-"aOQ" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall,
-/area/crew_quarters/bar)
 "aOR" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/firecloset,
@@ -21425,6 +21407,7 @@
 /obj/structure/disposalpipe/junction/flip{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aRt" = (
@@ -100245,9 +100228,9 @@ buE
 bBE
 bDf
 bEE
-avW
+bBz
 aaa
-aAs
+aaa
 bLw
 aFA
 aIa
@@ -100502,7 +100485,7 @@ bzS
 bBF
 bDg
 bEM
-avX
+bzR
 aaf
 aaa
 bLv
@@ -103586,7 +103569,7 @@ bAa
 bBM
 bDj
 bES
-avX
+bzR
 aaf
 aaa
 bLv
@@ -103843,7 +103826,7 @@ bAb
 imV
 bDr
 bES
-avW
+bBz
 aaa
 aaa
 bLw
@@ -104100,9 +104083,9 @@ bcj
 bBN
 akH
 bES
-awk
-awk
-awk
+bcg
+bcg
+bcg
 bLw
 bLw
 bLw
@@ -104365,7 +104348,7 @@ aDg
 aDg
 aJy
 aMf
-aOQ
+awm
 aPX
 dCE
 bWA
