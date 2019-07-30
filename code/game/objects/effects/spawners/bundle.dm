@@ -24,20 +24,20 @@
 /obj/effect/spawner/bundle/costume/gladiator
 	name = "gladiator costume spawner"
 	items = list(
-		/obj/item/clothing/under/gladiator,
+		/obj/item/clothing/under/costume/gladiator,
 		/obj/item/clothing/head/helmet/gladiator)
 
 /obj/effect/spawner/bundle/costume/madscientist
 	name = "mad scientist costume spawner"
 	items = list(
-		/obj/item/clothing/under/gimmick/rank/captain/suit,
+		/obj/item/clothing/under/rank/captain/suit,
 		/obj/item/clothing/head/flatcap,
 		/obj/item/clothing/suit/toggle/labcoat/mad)
 
 /obj/effect/spawner/bundle/costume/elpresidente
 	name = "el presidente costume spawner"
 	items = list(
-		/obj/item/clothing/under/gimmick/rank/captain/suit,
+		/obj/item/clothing/under/rank/captain/suit,
 		/obj/item/clothing/head/flatcap,
 		/obj/item/clothing/mask/cigarette/cigar/havana,
 		/obj/item/clothing/shoes/jackboots)
@@ -45,14 +45,14 @@
 /obj/effect/spawner/bundle/costume/nyangirl
 	name = "nyangirl costume spawner"
 	items = list(
-		/obj/item/clothing/under/schoolgirl,
+		/obj/item/clothing/under/costume/schoolgirl,
 		/obj/item/clothing/head/kitty,
 		/obj/item/clothing/glasses/blindfold)
 
 /obj/effect/spawner/bundle/costume/maid
 	name = "maid costume spawner"
 	items = list(
-		/obj/item/clothing/under/skirt/black,
+		/obj/item/clothing/under/dress/skirt,
 		/obj/effect/spawner/lootdrop/minor/beret_or_rabbitears,
 		/obj/item/clothing/glasses/blindfold)
 
@@ -61,13 +61,13 @@
 	name = "butler costume spawner"
 	items = list(
 		/obj/item/clothing/accessory/waistcoat,
-		/obj/item/clothing/under/suit_jacket,
+		/obj/item/clothing/under/suit/black,
 		/obj/item/clothing/head/that)
 
 /obj/effect/spawner/bundle/costume/highlander
 	name = "highlander costume spawner"
 	items = list(
-		/obj/item/clothing/under/kilt,
+		/obj/item/clothing/under/costume/kilt,
 		/obj/item/clothing/head/beret)
 
 /obj/effect/spawner/bundle/costume/prig
@@ -78,7 +78,7 @@
 		/obj/effect/spawner/lootdrop/minor/bowler_or_that,
 		/obj/item/clothing/shoes/sneakers/black,
 		/obj/item/cane,
-		/obj/item/clothing/under/sl_suit,
+		/obj/item/clothing/under/suit/sl,
 		/obj/item/clothing/mask/fakemoustache)
 
 /obj/effect/spawner/bundle/costume/plaguedoctor
@@ -92,7 +92,7 @@
 	name = "night owl costume spawner"
 	items = list(
 		/obj/item/clothing/suit/toggle/owlwings,
-		/obj/item/clothing/under/owl,
+		/obj/item/clothing/under/costume/owl,
 		/obj/item/clothing/mask/gas/owl_mask)
 
 /obj/effect/spawner/bundle/costume/griffin
@@ -100,20 +100,20 @@
 	items = list(
 		/obj/item/clothing/suit/toggle/owlwings/griffinwings,
 		/obj/item/clothing/shoes/griffin,
-		/obj/item/clothing/under/griffin,
+		/obj/item/clothing/under/costume/griffin,
 		/obj/item/clothing/head/griffin)
 
 /obj/effect/spawner/bundle/costume/waiter
 	name = "waiter costume spawner"
 	items = list(
-		/obj/item/clothing/under/waiter,
+		/obj/item/clothing/under/suit/waiter,
 		/obj/effect/spawner/lootdrop/minor/kittyears_or_rabbitears,
 		/obj/item/clothing/suit/apron)
 
 /obj/effect/spawner/bundle/costume/pirate
 	name = "pirate costume spawner"
 	items = list(
-		/obj/item/clothing/under/pirate,
+		/obj/item/clothing/under/costume/pirate,
 		/obj/item/clothing/suit/pirate,
 		/obj/effect/spawner/lootdrop/minor/pirate_or_bandana,
 		/obj/item/clothing/glasses/eyepatch)
@@ -121,7 +121,7 @@
 /obj/effect/spawner/bundle/costume/commie
 	name = "commie costume spawner"
 	items = list(
-		/obj/item/clothing/under/soviet,
+		/obj/item/clothing/under/costume/soviet,
 		/obj/item/clothing/head/ushanka)
 
 /obj/effect/spawner/bundle/costume/imperium_monk
@@ -145,7 +145,7 @@
 /obj/effect/spawner/bundle/costume/cutewitch
 	name = "cute witch costume spawner"
 	items = list(
-		/obj/item/clothing/under/sundress,
+		/obj/item/clothing/under/dress/sundress,
 		/obj/item/clothing/head/witchwig,
 		/obj/item/staff/broom)
 
@@ -161,10 +161,10 @@
 	name = "sexy clown costume spawner"
 	items = list(
 		/obj/item/clothing/mask/gas/sexyclown,
-		/obj/item/clothing/under/rank/clown/sexy)
+		/obj/item/clothing/under/rank/civilian/clown/sexy)
 
 /obj/effect/spawner/bundle/costume/sexymime
 	name = "sexy mime costume spawner"
 	items = list(
 		/obj/item/clothing/mask/gas/sexymime,
-		/obj/item/clothing/under/sexymime)
+		/obj/item/clothing/under/rank/civilian/mime/sexy)

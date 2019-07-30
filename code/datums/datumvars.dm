@@ -30,6 +30,7 @@
 	.["Mark Object"] = "?_src_=vars;[HrefToken()];mark_object=[REF(src)]"
 	.["Delete"] = "?_src_=vars;[HrefToken()];delete=[REF(src)]"
 	.["Show VV To Player"] = "?_src_=vars;[HrefToken(TRUE)];expose=[REF(src)]"
+	.["Modify Traits"] = "?_src_=vars;[HrefToken(TRUE)];traitmod=[REF(src)]"
 
 
 /datum/proc/on_reagent_change(changetype)
@@ -86,6 +87,7 @@
 			atomsnowflake += "<a href='?_src_=vars;[HrefToken()];rename=[refid]'><b id='name'>[D]</b></a>"
 			atomsnowflake += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir' id='dir'>[dir2text(A.dir) || A.dir]</a> <a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=right'>>></a></font>"
 			var/mob/living/M = A
+
 			atomsnowflake += {"
 				<br><font size='1'><a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=ckey' id='ckey'>[M.ckey || "No ckey"]</a> / <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=real_name' id='real_name'>[M.real_name || "No real name"]</a></font>
 				<br><font size='1'>
@@ -94,7 +96,7 @@
 					TOXIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=toxin' id='toxin'>[M.getToxLoss()]</a>
 					OXY:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=oxygen' id='oxygen'>[M.getOxyLoss()]</a>
 					CLONE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=clone' id='clone'>[M.getCloneLoss()]</a>
-					BRAIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brain' id='brain'>[M.getBrainLoss()]</a>
+					BRAIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brain' id='brain'>[M.getOrganLoss(ORGAN_SLOT_BRAIN)]</a>
 					STAMINA:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stamina' id='stamina'>[M.getStaminaLoss()]</a>
 				</font>
 			"}
@@ -578,6 +580,13 @@
 		log_admin("Admin [key_name(usr)] Showed [key_name(C)] a VV window of a [thing]")
 		to_chat(C, "[usr.client.holder.fakekey ? "an Administrator" : "[usr.client.key]"] has granted you access to view a View Variables window")
 		C.debug_variables(thing)
+	else if(href_list["traitmod"])
+		if(!check_rights(NONE))
+			return
+		var/datum/A = locate(href_list["traitmod"])
+		if(!A)
+			return
+		holder.modify_traits(A)
 
 
 //Needs +VAREDIT past this point
@@ -1356,8 +1365,8 @@
 					L.adjustOxyLoss(amount)
 					newamt = L.getOxyLoss()
 				if("brain")
-					L.adjustBrainLoss(amount)
-					newamt = L.getBrainLoss()
+					L.adjustOrganLoss(ORGAN_SLOT_BRAIN, amount)
+					newamt = L.getOrganLoss(ORGAN_SLOT_BRAIN)
 				if("clone")
 					L.adjustCloneLoss(amount)
 					newamt = L.getCloneLoss()

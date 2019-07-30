@@ -448,10 +448,8 @@
 			process_bot()
 			num_steps--
 			if(mode != BOT_IDLE)
-				spawn(0)
-					for(var/i=num_steps,i>0,i--)
-						sleep(2)
-						process_bot()
+				var/process_timer = addtimer(CALLBACK(src, .proc/process_bot), 2, TIMER_LOOP|TIMER_STOPPABLE)
+				addtimer(CALLBACK(GLOBAL_PROC, /proc/deltimer, process_timer), (num_steps*2) + 1) 
 
 /mob/living/simple_animal/bot/mulebot/proc/process_bot()
 	if(!on || client)
@@ -515,11 +513,7 @@
 							buzz(SIGH)
 							mode = BOT_WAIT_FOR_NAV
 							blockcount = 0
-							spawn(20)
-								calc_path(avoid=next)
-								if(path.len > 0)
-									buzz(DELIGHT)
-								mode = BOT_BLOCKED
+							addtimer(CALLBACK(src, .proc/process_blocked, next), 2 SECONDS)
 							return
 						return
 				else
@@ -532,18 +526,26 @@
 
 		if(BOT_NAV)	// calculate new path
 			mode = BOT_WAIT_FOR_NAV
-			spawn(0)
-				calc_path()
+			INVOKE_ASYNC(src, .proc/process_nav)
 
-				if(path.len > 0)
-					blockcount = 0
-					mode = BOT_BLOCKED
-					buzz(DELIGHT)
+/mob/living/simple_animal/bot/mulebot/proc/process_blocked(turf/next)
+	calc_path(avoid=next)
+	if(path.len > 0)
+		buzz(DELIGHT)
+	mode = BOT_BLOCKED
 
-				else
-					buzz(SIGH)
+/mob/living/simple_animal/bot/mulebot/proc/process_nav()
+	calc_path()
 
-					mode = BOT_NO_ROUTE
+	if(path.len > 0)
+		blockcount = 0
+		mode = BOT_BLOCKED
+		buzz(DELIGHT)
+
+	else
+		buzz(SIGH)
+
+		mode = BOT_NO_ROUTE
 
 // calculates a path to the current destination
 // given an optional turf to avoid
@@ -573,10 +575,12 @@
 /mob/living/simple_animal/bot/mulebot/proc/start_home()
 	if(!on)
 		return
-	spawn(0)
-		set_destination(home_destination)
-		mode = BOT_BLOCKED
+	INVOKE_ASYNC(src, .proc/do_start_home)
 	update_icon()
+
+/mob/living/simple_animal/bot/mulebot/proc/do_start_home()
+	set_destination(home_destination)
+	mode = BOT_BLOCKED
 
 // called when bot reaches current target
 /mob/living/simple_animal/bot/mulebot/proc/at_target()

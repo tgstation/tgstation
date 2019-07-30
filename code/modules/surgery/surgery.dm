@@ -60,7 +60,7 @@
 		var/mob/living/silicon/robot/R = user
 		var/obj/item/surgical_processor/SP = locate() in R.module.modules
 		if(!SP || (replaced_by in SP.advanced_surgeries))
-			return FALSE
+			return .
 		if(type in SP.advanced_surgeries)
 			return TRUE
 
@@ -68,9 +68,9 @@
 	var/obj/structure/table/optable/table = locate(/obj/structure/table/optable, T)
 	if(table)
 		if(!table.computer)
-			return FALSE
+			return .
 		if(table.computer.stat & (NOPOWER|BROKEN) || (replaced_by in table.computer.advanced_surgeries))
-			return FALSE
+			return .
 		if(type in table.computer.advanced_surgeries)
 			return TRUE
 

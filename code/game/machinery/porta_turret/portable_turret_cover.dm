@@ -92,6 +92,5 @@
 		to_chat(user, "<span class='notice'>You short out [parent_turret]'s threat assessment circuits.</span>")
 		visible_message("[parent_turret] hums oddly...")
 		parent_turret.obj_flags |= EMAGGED
-		parent_turret.on = 0
-		spawn(40)
-			parent_turret.on = 1
+		parent_turret.on = FALSE
+		addtimer(VARSET_CALLBACK(parent_turret, on, TRUE), 4 SECONDS)
