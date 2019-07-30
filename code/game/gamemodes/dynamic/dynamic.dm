@@ -29,7 +29,7 @@ GLOBAL_VAR_INIT(dynamic_curve_width, 1.8)
 // If enabled only picks a single starting rule and executes only autotraitor midround ruleset. 
 GLOBAL_VAR_INIT(dynamic_classic_secret, FALSE)
 // How many roundstart players required for high population override to take effect.
-GLOBAL_VAR_INIT(dynamic_high_pop_limit, 60)
+GLOBAL_VAR_INIT(dynamic_high_pop_limit, 55)
 // If enabled does not accept or execute any rulesets.
 GLOBAL_VAR_INIT(dynamic_forced_extended, FALSE)
 // How high threat is required for HIGHLANDER_RULESETs stacking.

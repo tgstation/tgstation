@@ -296,6 +296,7 @@
 		else
 			var/datum/antagonist/nukeop/new_op = new antag_datum()
 			M.add_antag_datum(new_op)
+	return TRUE
 
 /datum/dynamic_ruleset/roundstart/nuclear/check_finished()
 	if(nuke_team.operatives_dead())
