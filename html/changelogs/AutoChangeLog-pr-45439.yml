@@ -1,6 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - imageadd: "Added unique action button icons for Charge, Thrown Lightning, Spell Cards, Spacetime Distortion and Teleport spells."
-  - bugfix: "Minor icon fixes to a few Wizard spells, centering them in the middle and removing rogue pixels."
-  - bugfix: "Lightning Bolt spell now properly loads its icon upon spell accquire."

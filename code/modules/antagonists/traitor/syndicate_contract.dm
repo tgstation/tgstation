@@ -74,17 +74,19 @@
 				if (traitor_data.current_contract == src) 
 					traitor_data.current_contract = null
 
-			for(var/obj/item/W in M)
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					if(W == H.w_uniform)
-						continue //So all they're left with are shoes and uniform.
-					if(W == H.shoes)
-						continue
+			if (iscarbon(M))
+				for(var/obj/item/W in M)
+					if (ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if(W == H.w_uniform)
+							continue //So all they're left with are shoes and uniform.
+						if(W == H.shoes)
+							continue
 				
-				M.transferItemToLoc(W)
-				victim_belongings.Add(W)
 
+					M.transferItemToLoc(W)
+					victim_belongings.Add(W)
+				
 			var/obj/structure/closet/supplypod/extractionpod/pod = source
 
 			// Handle the pod returning
