@@ -1,0 +1,36 @@
+<ui-display>
+  <ui-section label='Power'>
+    <ui-button icon='{{data.on ? "power-off" : "close"}}' style='{{data.on ? "selected" : null}}'
+      action='power'>{{data.on ? "On" : "Off"}}</ui-button>
+  </ui-section>
+  {{#if data.max_rate}}
+    <ui-section label='Transfer Rate'>
+      <ui-button icon='pencil' action='rate' params='{"rate": "input"}'>Set</ui-button>
+      <ui-button icon='plus' state='{{data.rate == data.max_rate ? "disabled" : null}}' action='rate' params='{"rate": "max"}'>Max</ui-button>
+      <span>{{Math.round(adata.rate)}} L/s</span>
+    </ui-section>
+  {{else}}
+    <ui-section label='Output Pressure'>
+      <ui-button icon='pencil' action='pressure' params='{"pressure": "input"}'>Set</ui-button>
+      <ui-button icon='plus' state='{{data.pressure == data.max_pressure ? "disabled" : null}}' action='pressure' params='{"pressure": "max"}'>Max</ui-button>
+      <span>{{Math.round(adata.pressure)}} kPa</span>
+    </ui-section>
+  {{/if}}
+  <ui-section label='Target Temperature'>
+	<ui-button icon='fast-backward' style='{{data.target == 0 ? "disabled" : null}}'
+		action='target' params='{"adjust": -20}'/>
+	<ui-button icon='backward' style='{{data.target == 0 ? "disabled" : null}}'
+		action='target' params='{"adjust": -5}'/>
+	<ui-button icon='pencil' action='target' params='{"target": "input"}'>{{Math.fixed(adata.target, 2)}}</ui-button>
+	<ui-button icon='forward'
+		action='target' params='{"adjust": 5}'/>
+	<ui-button icon='fast-forward'
+		action='target' params='{"adjust": 20}'/>
+	{{#if data.mode==0}}
+      <ui-button icon='pencil' action='range'>{{Math.fixed(adata.range, 2)}}</ui-button>
+  	{{/if}}
+	<ui-button action='setRange' state='{{data.mode==0 ? "selected" : null}}'>Range</ui-button>
+	<ui-button action='setBelow' state='{{data.mode==1 ? "selected" : null}}'>Below</ui-button>
+	<ui-button action='setAbove' state='{{data.mode==2 ? "selected" : null}}'>Above</ui-button>
+  </ui-section>
+</ui-display>
