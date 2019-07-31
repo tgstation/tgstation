@@ -1,10 +1,10 @@
 GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 /client/proc/outfit_manager()
-	set category = "Debug"
+	set category = "Fun"
 	set name = "Outfit Manager"
 
-	if(!check_rights(R_DEBUG))
+	if(!check_rights(R_FUN))
 		return
 	holder.outfit_manager(usr)
 
