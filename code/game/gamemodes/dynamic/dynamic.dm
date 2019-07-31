@@ -3,9 +3,10 @@
 #define CURRENT_DEAD_PLAYERS	3
 #define CURRENT_OBSERVERS	    4
 
-#define HIGHLANDER_RULESET 1
-#define TRAITOR_RULESET    2
-#define MINOR_RULESET      4
+#define ONLY_RULESET       1
+#define HIGHLANDER_RULESET 2
+#define TRAITOR_RULESET    4
+#define MINOR_RULESET      8
 
 #define RULESET_STOP_PROCESSING 1
 
@@ -102,6 +103,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/pop_last_updated = 0
 	/// How many percent of the rounds are more peaceful.
 	var/peaceful_percentage = 50
+	/// If a highlander executed.
+	var/highlander_executed = FALSE
+	/// If a only ruleset has been executed.
+	var/only_ruleset_executed = FALSE
 
 /datum/game_mode/dynamic/admin_panel()
 	var/list/dat = list("<html><head><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
@@ -125,8 +130,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	else
 		dat += "none.<br>"
 	dat += "<br>Injection Timers: (<b>[get_injection_chance(TRUE)]%</b> chance)<BR>"
-	dat += "Latejoin: [(latejoin_injection_cooldown-world.time)>60*20 ? "[round((latejoin_injection_cooldown-world.time)/60/20,0.1)] minutes" : "[(latejoin_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
-	dat += "Midround: [(midround_injection_cooldown-world.time)>60*20 ? "[round((midround_injection_cooldown-world.time)/60/20,0.1)] minutes" : "[(midround_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];injectmid=1'>\[Now!\]</a><BR>"
+	dat += "Latejoin: [(latejoin_injection_cooldown-world.time)>60*10 ? "[round((latejoin_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(latejoin_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
+	dat += "Midround: [(midround_injection_cooldown-world.time)>60*10 ? "[round((midround_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(midround_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];injectmid=1'>\[Now!\]</a><BR>"
 	usr << browse(dat.Join(), "window=gamemode_panel;size=500x500")
 
 /datum/game_mode/dynamic/Topic(href, href_list)
@@ -331,7 +336,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		rule.candidates = candidates.Copy()
 		rule.trim_candidates()
 		if (rule.ready(TRUE))
-			picking_roundstart_rule(list(rule))
+			picking_roundstart_rule(list(rule), forced = TRUE)
 
 /datum/game_mode/dynamic/proc/roundstart()
 	if (GLOB.dynamic_forced_extended)
@@ -339,9 +344,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		return TRUE
 	var/list/drafted_rules = list()
 	for (var/datum/dynamic_ruleset/roundstart/rule in roundstart_rules)
-		if (threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
-			if(rule.flags & HIGHLANDER_RULESET && check_for_highlander(drafted_rules))
-				continue
 		if (rule.acceptable(roundstart_pop_ready,threat_level) && threat >= rule.cost)	// If we got the population and threat required
 			// Hacky but this will do for now. This allows delayed rulesets to be ran but it will refund if ready fails
 			// and forces a midround injection.
@@ -384,43 +386,57 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	return TRUE
 
 /// Picks a random roundstart rule from the list given as an argument and executes it.
-/datum/game_mode/dynamic/proc/picking_roundstart_rule(list/drafted_rules = list())
+/datum/game_mode/dynamic/proc/picking_roundstart_rule(list/drafted_rules = list(), forced = FALSE)
 	var/datum/dynamic_ruleset/roundstart/starting_rule = pickweight(drafted_rules)
 	if(!starting_rule)
 		return FALSE
 
-	// Check if a blocking ruleset has been executed.
-	if(check_blocking(starting_rule.blocking_rules, executed_rules))
-		drafted_rules -= starting_rule
-		if(drafted_rules.len <= 0)
+	if(!forced)
+		if(only_ruleset_executed)
 			return FALSE
-		starting_rule = pickweight(drafted_rules)
+		// Check if a blocking ruleset has been executed.
+		else if(check_blocking(starting_rule.blocking_rules, executed_rules))
+			drafted_rules -= starting_rule
+			if(drafted_rules.len <= 0)
+				return FALSE
+			starting_rule = pickweight(drafted_rules)
+		// Check if the ruleset is highlander and if a highlander ruleset has been executed
+		else if(starting_rule.flags & HIGHLANDER_RULESET)
+			if(threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+				if(highlander_executed)
+					drafted_rules -= starting_rule
+					if(drafted_rules.len <= 0)
+						return FALSE
+					starting_rule = pickweight(drafted_rules)
 
-	if (starting_rule)
-		message_admins("Picking a [istype(starting_rule, /datum/dynamic_ruleset/roundstart/delayed/) ? " delayed " : ""] ruleset [starting_rule.name]")
-		log_game("DYNAMIC: Picking a [istype(starting_rule, /datum/dynamic_ruleset/roundstart/delayed/) ? " delayed " : ""] ruleset [starting_rule.name]")
+	message_admins("Picking a [istype(starting_rule, /datum/dynamic_ruleset/roundstart/delayed/) ? " delayed " : ""] ruleset [starting_rule.name]")
+	log_game("DYNAMIC: Picking a [istype(starting_rule, /datum/dynamic_ruleset/roundstart/delayed/) ? " delayed " : ""] ruleset [starting_rule.name]")
 
-		roundstart_rules -= starting_rule
-		drafted_rules -= starting_rule
+	roundstart_rules -= starting_rule
+	drafted_rules -= starting_rule
 
-		if (istype(starting_rule, /datum/dynamic_ruleset/roundstart/delayed/))
-			var/datum/dynamic_ruleset/roundstart/delayed/rule = starting_rule
-			addtimer(CALLBACK(src, .proc/execute_delayed, rule), rule.delay)
+	if (istype(starting_rule, /datum/dynamic_ruleset/roundstart/delayed/))
+		var/datum/dynamic_ruleset/roundstart/delayed/rule = starting_rule
+		addtimer(CALLBACK(src, .proc/execute_delayed, rule), rule.delay)
 
-		spend_threat(starting_rule.cost)
-		threat_log += "[worldtime2text()]: Roundstart [starting_rule.name] spent [starting_rule.cost]"
-		starting_rule.trim_candidates()
-		if (starting_rule.pre_execute())
-			executed_rules += starting_rule
-			if (starting_rule.persistent)
-				current_rules += starting_rule
-			for(var/mob/M in starting_rule.assigned)
-				for (var/datum/dynamic_ruleset/roundstart/rule in roundstart_rules)
-					if (!rule.ready())
-						drafted_rules -= rule // And removing rules that are no longer elligible
-			return TRUE
-		else
-			stack_trace("The starting rule \"[starting_rule.name]\" failed to pre_execute.")
+	spend_threat(starting_rule.cost)
+	threat_log += "[worldtime2text()]: Roundstart [starting_rule.name] spent [starting_rule.cost]"
+	starting_rule.trim_candidates()
+	if (starting_rule.pre_execute())
+		if(starting_rule.flags & HIGHLANDER_RULESET)
+			highlander_executed = TRUE
+		else if(starting_rule.flags & ONLY_RULESET)
+			only_ruleset_executed = TRUE
+		executed_rules += starting_rule
+		if (starting_rule.persistent)
+			current_rules += starting_rule
+		for(var/mob/M in starting_rule.assigned)
+			for (var/datum/dynamic_ruleset/roundstart/rule in roundstart_rules)
+				if (!rule.ready())
+					drafted_rules -= rule // And removing rules that are no longer elligible
+		return TRUE
+	else
+		stack_trace("The starting rule \"[starting_rule.name]\" failed to pre_execute.")
 	return FALSE
 
 /// Executes delayed roundstart rules and has a hack in it.
@@ -438,53 +454,82 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		return FALSE
 
 /// Picks a random latejoin rule from the list given as an argument and executes it.
-/datum/game_mode/dynamic/proc/picking_latejoin_rule(list/drafted_rules = list())
+/datum/game_mode/dynamic/proc/picking_latejoin_rule(list/drafted_rules = list(), forced = FALSE)
 	var/datum/dynamic_ruleset/latejoin/latejoin_rule = pickweight(drafted_rules)
 	if(!latejoin_rule)
 		return FALSE
-
-	// Check if a blocking ruleset has been executed.
-	if(check_blocking(latejoin_rule.blocking_rules, executed_rules))
-		drafted_rules -= latejoin_rule
-		if(drafted_rules.len <= 0)
-			return FALSE
-		latejoin_rule = pickweight(drafted_rules)
 	
-	if (latejoin_rule)
-		if (!latejoin_rule.repeatable)
-			latejoin_rules = remove_from_list(latejoin_rules,latejoin_rule.type)
-		spend_threat(latejoin_rule.cost)
-		threat_log += "[worldtime2text()]: Latejoin [latejoin_rule.name] spent [latejoin_rule.cost]"
-		if (latejoin_rule.execute())
-			var/mob/M = pick(latejoin_rule.candidates)
-			message_admins("[key_name(M)] joined the station, and was selected by the [latejoin_rule.name] ruleset.")
-			log_game("DYNAMIC: [key_name(M)] joined the station, and was selected by the [latejoin_rule.name] ruleset.")
-			executed_rules += latejoin_rule
-			if (latejoin_rule.persistent)
-				current_rules += latejoin_rule
-			return TRUE
-		else
-			stack_trace("The latejoin rule \"[latejoin_rule.name]\" failed to execute.")
+	if(!forced)
+		if(only_ruleset_executed)
+			return FALSE
+		// Check if a blocking ruleset has been executed.
+		else if(check_blocking(latejoin_rule.blocking_rules, executed_rules))
+			drafted_rules -= latejoin_rule
+			if(drafted_rules.len <= 0)
+				return FALSE
+			latejoin_rule = pickweight(drafted_rules)
+		// Check if the ruleset is highlander and if a highlander ruleset has been executed
+		else if(latejoin_rule.flags & HIGHLANDER_RULESET)
+			if(threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+				if(highlander_executed)
+					drafted_rules -= latejoin_rule
+					if(drafted_rules.len <= 0)
+						return FALSE
+					latejoin_rule = pickweight(drafted_rules)
+	
+	if (!latejoin_rule.repeatable)
+		latejoin_rules = remove_from_list(latejoin_rules,latejoin_rule.type)
+	spend_threat(latejoin_rule.cost)
+	threat_log += "[worldtime2text()]: Latejoin [latejoin_rule.name] spent [latejoin_rule.cost]"
+	if (latejoin_rule.execute())
+		if(latejoin_rule.flags & HIGHLANDER_RULESET)
+			highlander_executed = TRUE
+		else if(latejoin_rule.flags & ONLY_RULESET)
+			only_ruleset_executed = TRUE
+		var/mob/M = pick(latejoin_rule.candidates)
+		message_admins("[key_name(M)] joined the station, and was selected by the [latejoin_rule.name] ruleset.")
+		log_game("DYNAMIC: [key_name(M)] joined the station, and was selected by the [latejoin_rule.name] ruleset.")
+		executed_rules += latejoin_rule
+		if (latejoin_rule.persistent)
+			current_rules += latejoin_rule
+		return TRUE
+	else
+		stack_trace("The latejoin rule \"[latejoin_rule.name]\" failed to execute.")
 	return FALSE
 
 /// Picks a random midround rule from the list given as an argument and executes it.
-/datum/game_mode/dynamic/proc/picking_midround_rule(list/drafted_rules = list())
+/datum/game_mode/dynamic/proc/picking_midround_rule(list/drafted_rules = list(), forced = FALSE)
 	var/datum/dynamic_ruleset/midround/midround_rule = pickweight(drafted_rules)
 	if(!midround_rule)
 		return FALSE
 	
-	// Check if a blocking ruleset has been executed.
-	if(check_blocking(midround_rule.blocking_rules, executed_rules))
-		drafted_rules -= midround_rule
-		if(drafted_rules.len <= 0)
+	if(!forced)
+		if(only_ruleset_executed)
 			return FALSE
-		midround_rule = pickweight(drafted_rules)
+		// Check if a blocking ruleset has been executed.
+		else if(check_blocking(midround_rule.blocking_rules, executed_rules))
+			drafted_rules -= midround_rule
+			if(drafted_rules.len <= 0)
+				return FALSE
+			midround_rule = pickweight(drafted_rules)
+		// Check if the ruleset is highlander and if a highlander ruleset has been executed
+		else if(midround_rule.flags & HIGHLANDER_RULESET)
+			if(threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+				if(highlander_executed)
+					drafted_rules -= midround_rule
+					if(drafted_rules.len <= 0)
+						return FALSE
+					midround_rule = pickweight(drafted_rules)
 
 	if (!midround_rule.repeatable)
 		midround_rules = remove_from_list(midround_rules,midround_rule.type)
 	spend_threat(midround_rule.cost)
 	threat_log += "[worldtime2text()]: Midround [midround_rule.name] spent [midround_rule.cost]"
 	if (midround_rule.execute())
+		if(midround_rule.flags & HIGHLANDER_RULESET)
+			highlander_executed = TRUE
+		else if(midround_rule.flags & ONLY_RULESET)
+			only_ruleset_executed = TRUE
 		message_admins("Injecting midround rule [midround_rule.name]")
 		log_game("DYNAMIC: Injecting some threats...[midround_rule.name]!")
 		executed_rules += midround_rule
@@ -498,18 +543,38 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/datum/dynamic_ruleset/midround/new_rule
 	if(ispath(ruletype))
 		new_rule = new ruletype() // You should only use it to call midround rules though.
-	else if(istype(ruletype,/datum/dynamic_ruleset))
+	else if(istype(ruletype, /datum/dynamic_ruleset))
 		new_rule = ruletype
 	else
 		return FALSE
+	
+	if(!new_rule)
+		return FALSE
+	
+	if(!forced)
+		if(only_ruleset_executed)
+			return FALSE
+		// Check if a blocking ruleset has been executed.
+		else if(check_blocking(new_rule.blocking_rules, executed_rules))
+			return FALSE
+		// Check if the ruleset is highlander and if a highlander ruleset has been executed
+		else if(new_rule.flags & HIGHLANDER_RULESET)
+			if(threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+				if(highlander_executed)
+					return FALSE
+	
 	update_playercounts()
-	if (new_rule && (forced || (new_rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len,threat_level) && new_rule.cost <= threat)))
+	if ((forced || (new_rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len,threat_level) && new_rule.cost <= threat)))
 		new_rule.candidates = current_players.Copy()
 		new_rule.trim_candidates()
 		if (new_rule.ready(forced))
 			spend_threat(new_rule.cost)
 			threat_log += "[worldtime2text()]: Forced rule [new_rule.name] spent [new_rule.cost]"
 			if (new_rule.execute()) // This should never fail since ready() returned 1
+				if(new_rule.flags & HIGHLANDER_RULESET)
+					highlander_executed = TRUE
+				else if(new_rule.flags & ONLY_RULESET)
+					only_ruleset_executed = TRUE
 				log_game("DYNAMIC: Making a call to a specific ruleset...[new_rule.name]!")
 				executed_rules += new_rule
 				if (new_rule.persistent)
@@ -552,10 +617,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 					// Classic secret : only autotraitor/minor roles
 					if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
 						continue
-					// No stacking : only one round-enter, unless > stacking_limit threat.
-					if (threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
-						if(rule.flags & HIGHLANDER_RULESET && check_for_highlander(drafted_rules))
-							continue
 					rule.candidates = list()
 					rule.candidates = current_players.Copy()
 					rule.trim_candidates()
@@ -648,7 +709,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		forced_latejoin_rule.trim_candidates()
 		log_game("DYNAMIC: Forcing ruleset [forced_latejoin_rule]")
 		if (forced_latejoin_rule.ready(TRUE))
-			picking_latejoin_rule(list(forced_latejoin_rule))
+			picking_latejoin_rule(list(forced_latejoin_rule), forced = TRUE)
 		forced_latejoin_rule = null
 
 	else if (latejoin_injection_cooldown < world.time && prob(get_injection_chance()))
@@ -660,7 +721,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 					continue
 				// No stacking : only one round-enter, unless > stacking_limit threat.
 				if (threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
-					if(rule.flags & HIGHLANDER_RULESET && check_for_highlander(drafted_rules))
+					if(rule.flags & HIGHLANDER_RULESET && highlander_executed)
 						continue
 					
 				rule.candidates = list(newPlayer)
@@ -685,12 +746,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /// Expend threat, can't fall under 0.
 /datum/game_mode/dynamic/proc/spend_threat(cost)
 	threat = max(threat-cost,0)
-
-/// Checks the list given as arguments for HIGHLANDER_RULESET rules.
-/datum/game_mode/dynamic/proc/check_for_highlander(list/drafted_rules)
-	for (var/datum/dynamic_ruleset/roundstart/DR in drafted_rules)
-		if (DR.flags & HIGHLANDER_RULESET)
-			return TRUE
 
 /// Turns the value generated by lorentz distribution to threat value between 0 and 100.
 /datum/game_mode/dynamic/proc/lorentz_to_threat(x)

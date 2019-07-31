@@ -91,7 +91,7 @@
 	message_admins("DYNAMIC MODE: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 	log_game("DYNAMIC: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 
-	applicants = pollGhostCandidates("The mode is looking for volunteers to become [antag_flag] for [src.name]", antag_flag, SSticker.mode, antag_flag, poll_time = 600)
+	applicants = pollGhostCandidates("The mode is looking for volunteers to become [antag_flag] for [src.name]", antag_flag, SSticker.mode, antag_flag, poll_time = 300)
 	
 	if(!applicants || applicants.len <= 0)
 		message_admins("DYNAMIC MODE: [name] received no applications.")
@@ -354,10 +354,10 @@
 	requirements = list(101,101,101,80,60,50,30,20,10,10)
 	high_population_requirement = 50
 	repeatable = TRUE
-	makeBody = FALSE
 
-/datum/dynamic_ruleset/midround/from_ghosts/blob/finish_setup(mob/new_character, index)
-	new_character.become_overmind()
+/datum/dynamic_ruleset/midround/from_ghosts/blob/generate_ruleset_body(mob/applicant)
+	var/body = applicant.become_overmind()
+	return body
 
 //////////////////////////////////////////////
 //                                          //
@@ -403,6 +403,7 @@
 	new_xeno.key = applicant.key
 	message_admins("[ADMIN_LOOKUPFLW(new_xeno)] has been made into an alien by the midround ruleset.")
 	log_game("DYNAMIC: [key_name(new_xeno)] was spawned as an alien by the midround ruleset.")
+	return new_xeno
 
 //////////////////////////////////////////////
 //                                          //
@@ -449,3 +450,4 @@
 	playsound(S, 'sound/magic/ethereal_exit.ogg', 50, 1, -1)
 	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Nightmare by the midround ruleset.")
 	log_game("DYNAMIC: [key_name(S)] was spawned as a Nightmare by the midround ruleset.")
+	return S
