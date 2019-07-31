@@ -32,7 +32,7 @@
 
 /obj/item/clothing/glasses/hud/health
 	name = "health scanner HUD"
-	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
+	desc = "A heads-up display that scans the humanoids in view and provides accurate data about their health status."
 	icon_state = "healthhud"
 	hud_type = DATA_HUD_MEDICAL_ADVANCED
 	glass_colour_type = /datum/client_colour/glass_colour/lightblue
@@ -83,7 +83,7 @@
 
 /obj/item/clothing/glasses/hud/security
 	name = "security HUD"
-	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records."
+	desc = "A heads-up display that scans the humanoids in view and provides accurate data about their ID status and security records."
 	icon_state = "securityhud"
 	hud_type = DATA_HUD_SECURITY_ADVANCED
 	glass_colour_type = /datum/client_colour/glass_colour/red
@@ -128,7 +128,7 @@
 
 /obj/item/clothing/glasses/hud/security/night
 	name = "night vision security HUD"
-	desc = "An advanced heads-up display which provides id data and vision in complete darkness."
+	desc = "An advanced heads-up display that provides ID data and vision in complete darkness."
 	icon_state = "securityhudnight"
 	darkness_view = 8
 	flash_protect = -1
