@@ -17,8 +17,8 @@
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
 	w_class = WEIGHT_CLASS_SMALL
-	force = 15
-	throwforce = 25
+	force = 12
+	throwforce = 15
 	armour_penetration = 35
 	actions_types = list(/datum/action/item_action/cult_dagger)
 
@@ -38,7 +38,7 @@
 	flags_1 = CONDUCT_1
 	sharpness = IS_SHARP
 	w_class = WEIGHT_CLASS_BULKY
-	force = 30
+	force = 18
 	throwforce = 10
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "rended")
@@ -63,7 +63,6 @@
 
 /obj/item/melee/cultblade/ghost
 	name = "eldritch sword"
-	force = 19 //can't break normal airlocks
 	item_flags = NEEDS_PERMIT | DROPDEL
 	flags_1 = NONE
 
@@ -279,7 +278,7 @@
 	desc = "A torn, dust-caked hood. Strange letters line the inside."
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEEARS
 	flags_cover = HEADCOVERSEYES
-	armor = list("melee" = 40, "bullet" = 30, "laser" = 40,"energy" = 20, "bomb" = 25, "bio" = 10, "rad" = 0, "fire" = 10, "acid" = 10)
+	armor = list("melee" = 30, "bullet" = 30, "laser" = 20,"energy" = 20, "bomb" = 25, "bio" = 10, "rad" = 0, "fire" = 10, "acid" = 10)
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -292,7 +291,7 @@
 	item_state = "cultrobes"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
-	armor = list("melee" = 40, "bullet" = 30, "laser" = 40,"energy" = 20, "bomb" = 25, "bio" = 10, "rad" = 0, "fire" = 10, "acid" = 10)
+	armor = list("melee" = 30, "bullet" = 30, "laser" = 20,"energy" = 20, "bomb" = 25, "bio" = 10, "rad" = 0, "fire" = 10, "acid" = 10)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
@@ -656,7 +655,7 @@
 	slot_flags = 0
 	force = 17
 	force_wielded = 24
-	throwforce = 40
+	throwforce = 30
 	throw_speed = 2
 	armour_penetration = 30
 	block_chance = 30
@@ -692,7 +691,7 @@
 				if(is_servant_of_ratvar(L))
 					L.Paralyze(100)
 				else
-					L.Paralyze(50)
+					L.Knockdown(50)
 			break_spear(T)
 	else
 		..()
@@ -991,7 +990,7 @@
 				if(is_servant_of_ratvar(L))
 					L.Paralyze(60)
 				else
-					L.Paralyze(30)
+					L.Knockdown(30)
 				if(D?.thrower)
 					for(var/mob/living/Next in orange(2, T))
 						if(!Next.density || iscultist(Next))
