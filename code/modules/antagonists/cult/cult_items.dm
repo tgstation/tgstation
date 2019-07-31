@@ -691,7 +691,7 @@
 				if(is_servant_of_ratvar(L))
 					L.Paralyze(100)
 				else
-					L.Knockdown(50)
+					L.Knockdown(100)
 			break_spear(T)
 	else
 		..()
