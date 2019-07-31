@@ -11,7 +11,7 @@
 	throw_speed = 2
 	throw_range = 7
 	force = 10
-	materials = list(MAT_METAL = 90)
+	materials = list(/datum/material/iron = 90)
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
 	dog_fashion = /datum/dog_fashion/back
 	resistance_flags = FIRE_PROOF
@@ -36,7 +36,7 @@
 	throwforce = 2
 	w_class = WEIGHT_CLASS_SMALL
 	force = 3
-	materials = list(MAT_METAL = 50, MAT_GLASS = 40)
+	materials = list(/datum/material/iron = 50, /datum/material/glass = 40)
 	max_water = 30
 	sprite_name = "miniFE"
 	dog_fashion = null
