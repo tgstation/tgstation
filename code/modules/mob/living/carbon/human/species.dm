@@ -1222,8 +1222,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
 			playsound(target.loc, user.dna.species.miss_sound, 25, 1, -1)
-			target.visible_message("<span class='danger'>[user] attempted to [atk_verb] [target]!</span>",\
-			"<span class='userdanger'>[user] attempted to [atk_verb] you!</span>", null, COMBAT_MESSAGE_RANGE)
+			target.visible_message("<span class='danger'>[user]'s [atk_verb] misses [target]!</span>",\
+			"<span class='userdanger'>[user]'s [atk_verb] misses you!</span>", null, COMBAT_MESSAGE_RANGE)
 			log_combat(user, target, "attempted to punch")
 			return FALSE
 

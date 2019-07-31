@@ -147,7 +147,7 @@
 		if(prob(75))
 			ML.apply_damage(rand(1,3), BRUTE, affecting, armor)
 			ML.visible_message("<span class='danger'>[name] bites [ML]!</span>", \
-							"<span class='userdanger'>[name] bites you!</span>")
+							"<span class='userdanger'>[name] bites you!</span>", null, COMBAT_MESSAGE_RANGE)
 			if(armor >= 2)
 				return
 			for(var/thing in diseases)
@@ -155,7 +155,7 @@
 				ML.ForceContractDisease(D)
 		else
 			ML.visible_message("<span class='danger'>[src]'s bite misses [ML]!</span>", \
-							"<span class='danger'>[src]'s bite misses you!</span>")
+							"<span class='danger'>[src]'s bite misses you!</span>", null, COMBAT_MESSAGE_RANGE)
 
 /*
 	Aliens

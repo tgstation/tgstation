@@ -213,7 +213,7 @@
 	. = list()
 
 	.["visible"] =  "<span class ='danger'>[user] knocks [target] down with [src]!</span>"
-	.["local"] = "<span class ='userdanger'>You knock [target] down with [src]!</span>"
+	.["local"] = "<span class ='userdanger'>[user] knocks you down with [src]!</span>"
 
 	return .
 

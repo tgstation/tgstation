@@ -53,8 +53,8 @@
 
 	if(!damage)
 		playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
-		D.visible_message("<span class='warning'>[A] attempts to [atk_verb] [D]!</span>", \
-			"<span class='userdanger'>[A] attempts to [atk_verb] you!</span>", null, COMBAT_MESSAGE_RANGE)
+		D.visible_message("<span class='warning'>[A]'s [atk_verb] misses [D]!</span>", \
+			"<span class='userdanger'>[A]'s [atk_verb] misses you!</span>", null, COMBAT_MESSAGE_RANGE)
 		log_combat(A, D, "attempted to [atk_verb]")
 		return 0
 

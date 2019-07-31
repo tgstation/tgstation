@@ -288,7 +288,7 @@
 				fluff = "atomic [fluff]"
 
 		D.visible_message("<span class='danger'><B>[A] [fluff] [D]!</B></span>", \
-						"<span class='userdanger'>[A] [fluff] you!</span>")
+						"<span class='userdanger'>[A] [fluff] you!</span>", null, COMBAT_MESSAGE_RANGE)
 		playsound(A.loc, "swing_hit", 50, 1)
 		if (!D.stat)
 			D.emote("scream")
@@ -332,7 +332,7 @@
 		addtimer(CALLBACK(src, .proc/CheckStrikeTurf, A, T), 4)
 
 		D.visible_message("<span class='danger'><B>[A] headbutts [D]!</B></span>", \
-						"<span class='userdanger'>[A] headbutts you!</span>")
+						"<span class='userdanger'>[A] headbutts you!</span>", null, COMBAT_MESSAGE_RANGE)
 		D.adjustBruteLoss(rand(10,20))
 		playsound(A.loc, "swing_hit", 50, 1)
 		D.Unconscious(20)
@@ -346,7 +346,7 @@
 	A.setDir(turn(A.dir, 90))
 
 	D.visible_message("<span class='danger'><B>[A] roundhouse-kicks [D]!</B></span>", \
-					"<span class='userdanger'>[A] roundhouse-kicks you!</span>")
+					"<span class='userdanger'>[A] roundhouse-kicks you!</span>", null, COMBAT_MESSAGE_RANGE)
 	playsound(A.loc, "swing_hit", 50, 1)
 	D.adjustBruteLoss(rand(10,20))
 
@@ -391,7 +391,7 @@
 			A.pixel_y = 0
 			if (falling == 1)
 				A.visible_message("<span class='danger'><B>...and dives head-first into the ground, ouch!</B></span>", \
-								"<span class='danger'><B>...and dive head-first into the ground, ouch!</B></span>")
+								"<span class='userdanger'>...and dive head-first into the ground, ouch!</span>")
 				A.adjustBruteLoss(rand(10,20))
 				A.Paralyze(60)
 			to_chat(A, "<span class='warning'>[D] is too far away!</span>")
@@ -446,7 +446,7 @@
 		return 1
 	A.start_pulling(D)
 	D.visible_message("<span class='danger'>[A] gets [D] in a cinch!</span>", \
-								"<span class='userdanger'>[A] gets you in a cinch!</span>")
+								"<span class='userdanger'>[A] gets you in a cinch!</span>", null, COMBAT_MESSAGE_RANGE)
 	D.Stun(rand(60,100))
 	log_combat(A, D, "cinched")
 	return 1

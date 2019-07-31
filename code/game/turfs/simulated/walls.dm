@@ -145,7 +145,10 @@
 	else
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		add_dent(WALL_DENT_HIT)
-		to_chat(user, text("<span class='notice'>You punch the wall.</span>"))
+		user.visible_message("<span class='danger'>[user] smashes \the [src]!</span>", \
+					"<span class='danger'>You smash \the [src]!</span>", \
+					"<span class='italics'>You hear a booming smash!</span>")
+
 	return TRUE
 
 /turf/closed/wall/attack_hand(mob/user)
