@@ -148,7 +148,8 @@
 		var/mob/M = AM
 		log_combat(src, M, "grabbed", addition="passive grab")
 		if(!supress_message)
-			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
+			visible_message("<span class='warning'>[src] grabs [M] passively!</span>", \
+				"<span class='warning'>You grab [src] passively!</span>")
 	return TRUE
 
 /atom/movable/proc/stop_pulling()

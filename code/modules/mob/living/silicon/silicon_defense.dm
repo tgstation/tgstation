@@ -58,8 +58,8 @@
 		..(user, 1)
 		adjustBruteLoss(rand(10, 15))
 		playsound(loc, "punch", 25, 1, -1)
-		visible_message("<span class='danger'>[user] has punched [src]!</span>", \
-				"<span class='userdanger'>[user] has punched [src]!</span>")
+		visible_message("<span class='danger'>[user] punches [src]!</span>", \
+				"<span class='userdanger'>[user] punches you!</span>", null, COMBAT_MESSAGE_RANGE)
 		return 1
 	return 0
 
@@ -77,8 +77,8 @@
 		else
 			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			playsound(src.loc, 'sound/effects/bang.ogg', 10, 1)
-			visible_message("<span class='danger'>[M] punches [src], but doesn't leave a dent.</span>", \
-				"<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>", null, COMBAT_MESSAGE_RANGE)
+			visible_message("<span class='danger'>[M] punches [src], but doesn't leave a dent!</span>", \
+				"<span class='warning'>[M] punches you, but doesn't leave a dent!</span>", null, COMBAT_MESSAGE_RANGE)
 
 /mob/living/silicon/attack_drone(mob/living/simple_animal/drone/M)
 	if(M.a_intent == INTENT_HARM)

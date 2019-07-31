@@ -58,7 +58,7 @@
 	if(!C.handcuffed)
 		if(C.get_num_arms(FALSE) >= 2 || C.get_arm_ignore())
 			C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
-								"<span class='userdanger'>[user] is trying to put [src.name] on [C]!</span>")
+								"<span class='userdanger'>[user] is trying to put [src.name] on you!</span>")
 
 			playsound(loc, cuffsound, 30, 1, -2)
 			if(do_mob(user, C, 30) && (C.get_num_arms(FALSE) >= 2 || C.get_arm_ignore()))
@@ -66,7 +66,8 @@
 					apply_cuffs(C, user, TRUE)
 				else
 					apply_cuffs(C, user)
-				to_chat(user, "<span class='notice'>You handcuff [C].</span>")
+				C.visible_message("<span class='notice'>[user] handcuffs [C].</span>", \
+									"<span class='userdanger'>[user] handcuffs you.</span>")
 				SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 
 				log_combat(user, C, "handcuffed")
