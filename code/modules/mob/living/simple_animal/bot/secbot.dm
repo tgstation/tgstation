@@ -69,7 +69,7 @@
 	var/datum/job/detective/J = new/datum/job/detective
 	access_card.access += J.get_access()
 	prev_access = access_card.access
-
+	
 	//SECHUD
 	var/datum/atom_hud/secsensor = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	secsensor.add_hud_to(src)
@@ -91,6 +91,13 @@
 	anchored = FALSE
 	walk_to(src,0)
 	last_found = world.time
+
+/mob/living/simple_animal/bot/secbot/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = FALSE, override = FALSE, tesla_shock = FALSE, illusion = FALSE, stun = TRUE)//shocks only make him angry
+	if(base_speed < initial(base_speed) + 3)
+		base_speed += 3
+		addtimer(VARSET_CALLBACK(src, base_speed, base_speed - 3), 60)
+		playsound(src, 'sound/machines/defib_zap.ogg', 50)
+		visible_message("<span class='warning'>[src] shakes and speeds up!</span>")
 
 /mob/living/simple_animal/bot/secbot/set_custom_texts()
 

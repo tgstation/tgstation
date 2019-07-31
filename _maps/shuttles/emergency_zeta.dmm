@@ -264,8 +264,8 @@
 	dir = 8
 	},
 /obj/structure/closet/abductor,
-/obj/item/clothing/under/pj/blue,
-/obj/item/clothing/under/pj/red,
+/obj/item/clothing/under/misc/pj/blue,
+/obj/item/clothing/under/misc/pj,
 /obj/item/clothing/shoes/sneakers/white,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/clothing/glasses/eyepatch,

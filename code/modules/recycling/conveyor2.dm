@@ -370,6 +370,11 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. = ..()
 	id = "[rand()]" //this couldn't possibly go wrong
 
+/obj/item/conveyor_switch_construct/attack_self(mob/user)
+	for(var/obj/item/conveyor_construct/C in view())
+		C.id = id
+	to_chat(user, "<span class='notice'>You have linked all nearby conveyor belt assemblies to this switch.</span>")
+
 /obj/item/conveyor_switch_construct/afterattack(atom/A, mob/user, proximity)
 	. = ..()
 	if(!proximity || user.stat || !isfloorturf(A) || istype(A, /area/shuttle))

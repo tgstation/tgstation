@@ -279,9 +279,7 @@
 			step_towards(A, target)
 			sleep(2)
 		A.Smoke()
-		spawn(100)
-			if(src)
-				resin_cooldown = FALSE
+		addtimer(VARSET_CALLBACK(src, resin_cooldown, FALSE), 10 SECONDS)
 		return
 	if(nozzle_mode == RESIN_FOAM)
 		if(!Adj|| !isturf(target))

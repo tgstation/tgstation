@@ -98,7 +98,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	singular_name = "metal sheet"
 	icon_state = "sheet-metal"
 	item_state = "sheet-metal"
-	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
 	throwforce = 10
 	flags_1 = CONDUCT_1
 	resistance_flags = FIRE_PROOF
@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	desc = "This sheet is an alloy of iron and plasma."
 	icon_state = "sheet-plasteel"
 	item_state = "sheet-metal"
-	materials = list(MAT_METAL=2000, MAT_PLASMA=2000)
+	materials = list(/datum/material/iron=2000, /datum/material/plasma=2000)
 	throwforce = 10
 	flags_1 = CONDUCT_1
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 80)
@@ -271,7 +271,7 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
  * Cloth
  */
 GLOBAL_LIST_INIT(cloth_recipes, list ( \
-	new/datum/stack_recipe("white jumpskirt", /obj/item/clothing/under/skirt/color/white, 3), /*Ladies first*/ \
+	new/datum/stack_recipe("white jumpskirt", /obj/item/clothing/under/color/jumpskirt/white, 3), /*Ladies first*/ \
 	new/datum/stack_recipe("white jumpsuit", /obj/item/clothing/under/color/white, 3), \
 	new/datum/stack_recipe("white shoes", /obj/item/clothing/shoes/sneakers/white, 2), \
 	new/datum/stack_recipe("white scarf", /obj/item/clothing/neck/scarf, 1), \
@@ -309,17 +309,6 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cloth
 
-/obj/item/stack/sheet/cloth/durathread
-	name = "durathread"
-	desc = "A fabric sown from incredibly durable threads, known for its usefulness in armor production."
-	singular_name = "durathread roll"
-	icon_state = "sheet-durathread"
-	merge_type = /obj/item/stack/sheet/cloth/durathread
-
-/obj/item/stack/sheet/cloth/durathread/Initialize(mapload, new_amount, merge = TRUE)
-	. = ..()
-	recipes = null //ree override
-
 /obj/item/stack/sheet/cloth/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.cloth_recipes
 	return ..()
@@ -330,18 +319,39 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 /obj/item/stack/sheet/cloth/five
 	amount = 5
 
+GLOBAL_LIST_INIT(durathread_recipes, list ( \
+	new/datum/stack_recipe("durathread jumpsuit", /obj/item/clothing/under/misc/durathread, 4, time = 40),
+	new/datum/stack_recipe("durathread beret", /obj/item/clothing/head/beret/durathread, 2, time = 40), \
+	new/datum/stack_recipe("durathread beanie", /obj/item/clothing/head/beanie/durathread, 2, time = 40), \
+	new/datum/stack_recipe("durathread bandana", /obj/item/clothing/mask/bandana/durathread, 1, time = 25), \
+	))
+
+/obj/item/stack/sheet/durathread
+	name = "durathread"
+	desc = "A fabric sown from incredibly durable threads, known for its usefulness in armor production."
+	singular_name = "durathread roll"
+	icon_state = "sheet-durathread"
+	item_state = "sheet-cloth"
+	resistance_flags = FLAMMABLE
+	force = 0
+	throwforce = 0
+	merge_type = /obj/item/stack/sheet/durathread
+
+/obj/item/stack/sheet/durathread/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.durathread_recipes
+	return ..()
+
 /obj/item/stack/sheet/cotton
 	name = "raw cotton bundle"
 	desc = "A bundle of raw cotton ready to be spun on the loom."
 	singular_name = "raw cotton ball"
 	icon_state = "sheet-cotton"
-	is_fabric = TRUE
 	resistance_flags = FLAMMABLE
 	force = 0
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cotton
-	pull_effort = 30
-	loom_result = /obj/item/stack/sheet/cloth
+	var/pull_effort = 30
+	var/loom_result = /obj/item/stack/sheet/cloth
 
 /obj/item/stack/sheet/cotton/durathread
 	name = "raw durathread bundle"
@@ -350,7 +360,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	icon_state = "sheet-durathreadraw"
 	merge_type = /obj/item/stack/sheet/cotton/durathread
 	pull_effort = 70
-	loom_result = /obj/item/stack/sheet/cloth/durathread
+	loom_result = /obj/item/stack/sheet/durathread
 
 
 /*
@@ -644,7 +654,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	singular_name = "plastic sheet"
 	icon_state = "sheet-plastic"
 	item_state = "sheet-plastic"
-	materials = list(MAT_PLASTIC=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/plastic=MINERAL_MATERIAL_AMOUNT)
 	throwforce = 7
 	merge_type = /obj/item/stack/sheet/plastic
 

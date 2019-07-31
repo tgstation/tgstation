@@ -1614,7 +1614,7 @@
 /area/awaymission/BMPship/Aft)
 "gj" = (
 /obj/structure/closet,
-/obj/item/clothing/under/overalls,
+/obj/item/clothing/under/misc/overalls,
 /turf/open/floor/plasteel,
 /area/awaymission/BMPship/Aft)
 "gk" = (
@@ -1754,7 +1754,7 @@
 /area/awaymission/BMPship/Aft)
 "gP" = (
 /obj/structure/closet,
-/obj/item/clothing/under/lawyer/bluesuit,
+/obj/item/clothing/under/rank/civilian/lawyer/bluesuit,
 /obj/item/clothing/suit/apron,
 /turf/open/floor/plasteel,
 /area/awaymission/BMPship/Aft)
