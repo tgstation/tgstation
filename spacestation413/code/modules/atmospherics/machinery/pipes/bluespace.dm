@@ -2,7 +2,7 @@ GLOBAL_LIST_EMPTY(bluespace_pipe_networks)
 /obj/machinery/atmospherics/pipe/bluespace
 	name = "bluespace pipe"
 	desc = "Transmits gas across large distances of space. Developed using bluespace technology."
-	icon = 'yogstation/icons/obj/atmospherics/pipes/bluespace.dmi'
+	icon = 'spacestation413/icons/obj/atmospherics/pipes/bluespace.dmi'
 	icon_state = "map"
 	pipe_state = "bluespace"
 	dir = SOUTH
