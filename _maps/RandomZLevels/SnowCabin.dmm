@@ -96,8 +96,9 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "ar" = (
-/obj/machinery/door/airlock/wood{
-	name = "bathroom"
+/obj/structure/cable,
+/obj/machinery/door/airlock/command{
+	name = "Manager's Office"
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
@@ -127,20 +128,14 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "av" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "cabin APC";
-	pixel_y = 23
-	},
+/obj/machinery/telecomms/relay/preset/mining,
 /obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aw" = (
 /obj/structure/cable,
-/obj/machinery/power/smes/magical{
-	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. It seems to be powered just fine without our intervention.";
-	name = "nanotrasen power storage unit"
-	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "ax" = (
@@ -173,6 +168,9 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_x = -32
+	},
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "aC" = (
@@ -182,22 +180,36 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_x = 32
+	},
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "aD" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/structure/cable,
+/obj/machinery/power/smes/magical{
+	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. It seems to be powered just fine without our intervention.";
+	name = "nanotrasen power storage unit"
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aE" = (
-/obj/machinery/telecomms/relay/preset/mining,
-/obj/structure/cable,
-/turf/open/floor/plating,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/baseturf_helper/asteroid/snow,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/awaymission/cabin)
 "aF" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "cabin APC";
+	pixel_y = 23
+	},
 /obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aG" = (
@@ -207,10 +219,11 @@
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "aH" = (
-/obj/structure/cable,
-/obj/structure/table/reinforced,
-/obj/item/folder/white,
-/turf/open/floor/plasteel/white,
+/obj/machinery/shower{
+	dir = 1
+	},
+/obj/structure/curtain,
+/turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "aI" = (
 /obj/machinery/light{
@@ -220,25 +233,31 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "aJ" = (
-/obj/machinery/shower{
-	dir = 8
-	},
-/obj/machinery/door/window/northright,
-/turf/open/floor/plasteel/freezer,
+/obj/structure/table,
+/obj/item/surgicaldrill,
+/obj/item/circular_saw,
+/obj/item/cautery,
+/obj/item/surgical_drapes,
+/obj/item/scalpel,
+/obj/item/hemostat,
+/turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "aK" = (
-/obj/machinery/shower{
-	dir = 4
+/obj/structure/table/optable,
+/obj/machinery/light{
+	dir = 1
 	},
-/obj/machinery/door/window/northleft,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "aL" = (
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aM" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/baseturf_helper/asteroid/snow,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -257,27 +276,46 @@
 /area/awaymission/cabin)
 "aP" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks,
+/obj/machinery/chem_dispenser/drinks{
+	desc = "Contains a large reservoir of soft drinks so that you can refill your cup. For free.";
+	name = "free refill dispenser"
+	},
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "aQ" = (
-/obj/machinery/door/airlock/wood{
-	name = "maintenance"
+/obj/structure{
+	anchored = 1;
+	density = 1;
+	desc = "Generates power from lava!";
+	dir = 1;
+	icon = 'icons/obj/atmospherics/pipes/simple.dmi';
+	icon_state = "compressor";
+	name = "geothermal generator"
 	},
-/obj/structure/cable,
-/turf/open/floor/plating,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/awaymission/cabin)
 "aR" = (
 /obj/machinery/door/window/westright{
 	name = "fireplace"
 	},
 /obj/structure/fireplace,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aS" = (
-/obj/machinery/door/airlock/wood{
-	name = "janitor closet"
+/obj/structure/sink/kitchen{
+	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	name = "sink";
+	pixel_y = 28
 	},
+/obj/structure/janitorialcart,
+/obj/item/mop,
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/caution,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aT" = (
@@ -285,6 +323,7 @@
 	name = "fireplace"
 	},
 /obj/structure/fireplace,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aU" = (
@@ -292,21 +331,19 @@
 /obj/machinery/door/window/westright{
 	name = "fireplace"
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aV" = (
 /obj/machinery/space_heater,
-/obj/effect/decal/remains/robot,
-/obj/structure/sign/warning/fire{
-	pixel_y = 32
-	},
-/turf/open/floor/plating,
+/turf/open/floor/wood,
 /area/awaymission/cabin)
 "aW" = (
 /obj/structure/fireplace,
 /obj/machinery/door/window/eastleft{
 	name = "fireplace"
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aX" = (
@@ -324,7 +361,10 @@
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "ba" = (
-/obj/machinery/door/airlock/wood,
+/obj/structure/fans/tiny,
+/obj/machinery/door/airlock/wood/glass{
+	name = "Cabin"
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bb" = (
@@ -354,7 +394,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "bg" = (
-/obj/machinery/door/window/westright{
+/obj/machinery/door/window/westleft{
 	name = "manager's desk"
 	},
 /turf/open/floor/carpet,
@@ -366,13 +406,17 @@
 "bi" = (
 /obj/machinery/door/airlock/wood{
 	id_tag = "WheresTheSyndiBalloon";
-	name = "manager's bedroom"
+	name = "Manager's Bedroom"
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bj" = (
 /obj/structure/toilet{
 	dir = 4
+	},
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_x = 0;
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
@@ -422,11 +466,15 @@
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "br" = (
-/obj/machinery/computer/arcade/orion_trail,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 32
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bs" = (
-/obj/machinery/computer/arcade/battle,
+/obj/machinery/newscaster{
+	pixel_y = 32
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bt" = (
@@ -477,38 +525,45 @@
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "bD" = (
-/obj/structure/table/optable,
-/turf/open/floor/plasteel/white,
-/area/awaymission/cabin)
-"bE" = (
+/obj/structure/window/reinforced/tinted{
+	dir = 4;
+	name = "surgery window"
+	},
 /obj/machinery/computer/operating,
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
+"bE" = (
+/turf/open/floor/plasteel/white,
+/area/awaymission/cabin)
 "bF" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/atmospherics/components/unary/cryo_cell,
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "bG" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12;
+	pixel_y = 2
+	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "bH" = (
-/turf/open/floor/plasteel/white,
-/area/awaymission/cabin)
-"bI" = (
 /obj/machinery/shower{
-	dir = 4
-	},
-/obj/machinery/door/window/eastright,
-/obj/structure/window{
 	dir = 1
 	},
+/obj/structure/curtain,
 /obj/item/soap/nanotrasen{
 	pixel_x = -1;
 	pixel_y = -3
 	},
 /turf/open/floor/plasteel/freezer,
+/area/awaymission/cabin)
+"bI" = (
+/obj/structure/window/reinforced/tinted{
+	dir = 4;
+	name = "surgery window"
+	},
+/turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "bJ" = (
 /obj/structure/sink{
@@ -545,8 +600,8 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/cabin)
 "bP" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 5
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
@@ -557,7 +612,10 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "bR" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/structure/window/reinforced/tinted{
+	dir = 8;
+	name = "surgery window"
+	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "bS" = (
@@ -575,17 +633,15 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bU" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/structure/table/wood,
+/obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/drinks/shaker,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bV" = (
-/obj/structure/table,
-/obj/item/kitchen/knife/butcher,
-/turf/open/floor/plasteel/cafeteria,
+/obj/machinery/door/airlock/maintenance{
+	name = "Garage"
+	},
+/turf/open/floor/wood,
 /area/awaymission/cabin)
 "bW" = (
 /obj/machinery/light{
@@ -607,21 +663,17 @@
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "bZ" = (
-/obj/structure/table,
-/obj/item/surgicaldrill,
-/obj/item/circular_saw,
-/obj/item/cautery,
-/obj/item/surgical_drapes,
-/obj/item/scalpel,
-/obj/item/hemostat,
-/turf/open/floor/plasteel/white,
+/obj/structure/window/reinforced/tinted/fulltile{
+	name = "surgery window"
+	},
+/obj/structure/grille,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "ca" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 9
-	},
-/obj/machinery/light{
-	dir = 4
+/obj/structure/curtain{
+	can_be_unanchored = 0;
+	max_integrity = 25;
+	name = "surgery curtain"
 	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
@@ -716,11 +768,10 @@
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "cm" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "cn" = (
@@ -766,17 +817,18 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cu" = (
-/obj/machinery/vending/medical,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "cv" = (
 /obj/machinery/light{
-	dir = 4
+	dir = 8
 	},
-/obj/structure/table,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/fire,
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "cw" = (
@@ -797,14 +849,22 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cz" = (
-/obj/structure/piano,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/structure/piano{
+	desc = "Very theatrical.";
+	icon_state = "piano";
+	name = "theatre piano"
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cA" = (
-/obj/machinery/door/airlock/wood{
-	name = "stage left"
-	},
 /obj/structure/cable,
+/obj/machinery/door/airlock/wood{
+	name = "Stage Left"
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cB" = (
@@ -818,12 +878,12 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cD" = (
-/obj/machinery/door/window/westright{
-	name = "bar"
-	},
 /obj/structure/sign/barsign{
 	pixel_y = -32;
 	req_access = null
+	},
+/obj/machinery/door/window/westleft{
+	name = "Bar"
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
@@ -854,6 +914,7 @@
 /area/awaymission/cabin)
 "cI" = (
 /obj/structure/cable,
+/obj/structure/chair/office/light,
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "cJ" = (
@@ -883,18 +944,16 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cL" = (
-/obj/structure/table/reinforced,
-/obj/item/clothing/glasses/cold,
-/obj/item/clothing/glasses/cold,
-/obj/item/clothing/glasses/cold,
-/obj/item/clothing/suit/hooded/wintercoat/engineering,
-/obj/item/clothing/suit/hooded/wintercoat/engineering,
-/obj/item/clothing/suit/hooded/wintercoat/engineering,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "cM" = (
 /obj/machinery/door/airlock/wood{
-	name = "gateway"
+	name = "Gateway"
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
@@ -909,10 +968,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "cP" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 9
-	},
-/obj/machinery/atmospherics/pipe/manifold/general/visible,
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "cQ" = (
@@ -1092,21 +1148,24 @@
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "du" = (
-/obj/structure{
-	anchored = 1;
-	density = 1;
-	desc = "Generates power from lava!";
-	dir = 1;
-	icon = 'icons/obj/atmospherics/pipes/simple.dmi';
-	icon_state = "compressor";
-	name = "geothermal generator"
-	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
 /area/awaymission/cabin)
 "dv" = (
+/obj/structure{
+	anchored = 1;
+	density = 1;
+	desc = "Generates power from lava!";
+	dir = 2;
+	icon = 'icons/obj/atmospherics/pipes/simple.dmi';
+	icon_state = "turbine";
+	name = "geothermal generator"
+	},
 /obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -1328,10 +1387,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "eh" = (
-/obj/machinery/door/airlock/wood{
-	name = "manager's office"
-	},
-/obj/structure/cable,
+/obj/machinery/door/airlock/wood/glass,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "ei" = (
@@ -1374,8 +1430,9 @@
 /turf/open/floor/wood/cold,
 /area/awaymission/cabin)
 "eo" = (
-/obj/machinery/door/airlock/wood{
-	name = "cabin"
+/obj/structure/cable,
+/obj/machinery/door/airlock{
+	name = "Kitchen"
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
@@ -1391,6 +1448,7 @@
 	id = "garage_cabin";
 	name = "garage door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/cabin)
 "er" = (
@@ -2610,7 +2668,7 @@
 	name = "ATV key"
 	},
 /turf/open/floor/plating,
-/area/space)
+/area/awaymission/cabin)
 "gN" = (
 /obj/machinery/light,
 /obj/effect/decal/cleanable/dirt,
@@ -2768,21 +2826,20 @@
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "hf" = (
-/obj/structure/sink/kitchen{
-	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "sink";
-	pixel_y = 28
+/obj/machinery/space_heater,
+/obj/effect/decal/remains/robot,
+/obj/structure/sign/warning/fire{
+	pixel_y = 32
 	},
-/obj/structure/janitorialcart,
-/obj/item/mop,
-/obj/item/reagent_containers/glass/bucket,
-/obj/item/caution,
+/obj/machinery/space_heater,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "hg" = (
-/obj/machinery/door/airlock/wood{
-	name = "heater storage"
+/obj/machinery/door/airlock/maintenance{
+	name = "janitor closet"
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "hh" = (
@@ -2816,10 +2873,10 @@
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "hm" = (
-/obj/machinery/door/airlock/wood{
-	name = "gateway"
-	},
 /obj/structure/cable,
+/obj/machinery/door/airlock/wood{
+	name = "Gateway"
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "hn" = (
@@ -2829,22 +2886,16 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "ho" = (
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_y = -32
-	},
-/turf/open/floor/plasteel/white,
-/area/awaymission/cabin)
-"hp" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 5
-	},
 /obj/item/wrench/medical,
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
+"hp" = (
+/obj/machinery/stasis,
+/obj/item/bedsheet/medical,
+/turf/open/floor/plasteel/white,
+/area/awaymission/cabin)
 "hq" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/vending/medical,
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "hr" = (
@@ -2868,67 +2919,63 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "hu" = (
-/obj/structure{
-	anchored = 1;
-	density = 1;
-	desc = "Generates power from lava!";
-	dir = 2;
-	icon = 'icons/obj/atmospherics/pipes/simple.dmi';
-	icon_state = "turbine";
-	name = "geothermal generator"
-	},
-/obj/structure/cable,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/structure/table/reinforced,
+/obj/item/clothing/glasses/cold,
+/obj/item/clothing/glasses/cold,
+/obj/item/clothing/glasses/cold,
+/obj/item/clothing/suit/hooded/wintercoat/engineering,
+/obj/item/clothing/suit/hooded/wintercoat/engineering,
+/obj/item/clothing/suit/hooded/wintercoat/engineering,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "hv" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/head/welding{
+	pixel_y = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/awaymission/cabin)
+"hw" = (
 /obj/structure/closet/toolcloset,
 /obj/item/lightreplacer,
 /obj/item/storage/toolbox/mechanical,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/awaymission/cabin)
-"hw" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
 /area/awaymission/cabin)
 "hx" = (
-/obj/machinery/door/airlock/wood{
-	name = "stage right"
-	},
 /obj/structure/cable,
+/obj/machinery/door/airlock/wood{
+	name = "Stage Right"
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "hy" = (
-/obj/machinery/door/airlock/wood{
-	name = "kitchen"
+/obj/machinery/door/airlock/maintenance{
+	name = "heater storage"
 	},
-/obj/structure/cable,
-/turf/open/floor/wood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
 /area/awaymission/cabin)
 "hz" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/cabin)
 "hA" = (
-/obj/machinery/door/airlock/wood{
-	name = "kitchen cold room"
-	},
 /obj/structure/cable,
+/obj/machinery/door/airlock/freezer{
+	name = "Freezer"
+	},
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "hB" = (
-/obj/machinery/door/airlock/wood{
-	name = "backstage"
-	},
 /obj/structure/cable,
+/obj/machinery/door/airlock{
+	name = "Backstage"
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "hC" = (
@@ -2939,10 +2986,9 @@
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "hD" = (
-/obj/machinery/door/airlock/glass_large{
-	name = "medbay"
-	},
 /obj/structure/cable,
+/obj/structure/table/reinforced,
+/obj/item/folder/white,
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "hE" = (
@@ -3199,8 +3245,9 @@
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "in" = (
+/obj/structure/cable,
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 24
+	pixel_y = 32
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
@@ -3605,8 +3652,13 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "js" = (
-/obj/structure/cable,
-/obj/structure/chair/office/light,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/brute,
+/obj/item/storage/firstaid/fire,
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "jt" = (
@@ -3709,10 +3761,11 @@
 /turf/open/floor/wood/cold,
 /area/awaymission/cabin/lumbermill)
 "jC" = (
-/obj/structure/table/reinforced,
-/obj/item/clothing/head/welding{
-	pixel_y = 4
+/obj/structure/cable,
+/obj/machinery/door/airlock/engineering{
+	name = "Generator Room"
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "jD" = (
@@ -4554,8 +4607,9 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/cabin/caves)
 "lz" = (
-/obj/machinery/stasis,
-/obj/item/bedsheet/medical,
+/obj/structure/sign/poster/official/cleanliness{
+	pixel_y = -32
+	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "lA" = (
@@ -5512,6 +5566,63 @@
 	name = "soviet floor"
 	},
 /area/awaymission/cabin/caves/sovietcave)
+"nM" = (
+/obj/machinery/door/airlock/glass_large{
+	name = "Medical Bay"
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/white,
+/area/awaymission/cabin)
+"nN" = (
+/obj/machinery/light/small{
+	dir = 2
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin)
+"nO" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin)
+"nR" = (
+/obj/structure/cable,
+/obj/machinery/newscaster{
+	pixel_y = -32
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin)
+"nS" = (
+/obj/machinery/newscaster{
+	pixel_y = -32
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin)
+"nT" = (
+/obj/structure/window{
+	dir = 4
+	},
+/obj/structure/chair/stool,
+/turf/open/floor/wood,
+/area/awaymission/cabin)
+"nU" = (
+/obj/machinery/door/airlock{
+	name = "Bathroom"
+	},
+/turf/open/floor/plasteel/freezer,
+/area/awaymission/cabin)
+"nV" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/door/airlock/maintenance{
+	name = "Maintenance"
+	},
+/turf/open/floor/plating,
+/area/awaymission/cabin)
 
 (1,1,1) = {"
 ab
@@ -25213,8 +25324,8 @@ an
 an
 an
 an
-eo
-eo
+ba
+ba
 an
 eq
 eq
@@ -25455,7 +25566,7 @@ dB
 an
 an
 aq
-aq
+aV
 jr
 au
 jk
@@ -25468,7 +25579,7 @@ bM
 ij
 bT
 cs
-cz
+bl
 an
 aq
 aq
@@ -25718,7 +25829,7 @@ bb
 eg
 bm
 eg
-eg
+nR
 an
 eg
 eg
@@ -26488,7 +26599,7 @@ aI
 aA
 aq
 an
-aq
+br
 eg
 an
 cE
@@ -26739,13 +26850,13 @@ ac
 dB
 dB
 an
-ar
+nU
 an
 an
 an
 aR
 an
-in
+aq
 eg
 an
 eg
@@ -26998,14 +27109,14 @@ dB
 an
 as
 aB
-aJ
+aH
 an
 an
 an
 aq
 eg
 an
-cE
+cz
 eg
 eg
 eg
@@ -27257,12 +27368,12 @@ an
 an
 an
 an
-hf
 aS
+hg
 aq
 ht
 an
-bo
+nT
 bo
 bo
 bo
@@ -27271,7 +27382,7 @@ cB
 an
 aq
 eg
-ba
+bV
 ed
 ed
 gM
@@ -27512,7 +27623,7 @@ dB
 an
 at
 aC
-aK
+aH
 an
 an
 an
@@ -27767,7 +27878,7 @@ ac
 dB
 dB
 an
-ar
+nU
 an
 an
 an
@@ -28027,12 +28138,12 @@ an
 aq
 au
 jt
-aq
+aV
 aq
 an
-aq
+bs
 eg
-ba
+eh
 bb
 eg
 bb
@@ -29567,7 +29678,7 @@ dB
 an
 an
 aq
-aq
+aV
 ju
 au
 ji
@@ -29833,7 +29944,7 @@ eg
 ht
 an
 hb
-eu
+bU
 ev
 eu
 cK
@@ -30348,7 +30459,7 @@ eg
 an
 bv
 bN
-bU
+nO
 aq
 ap
 eg
@@ -30608,7 +30719,7 @@ an
 an
 bu
 an
-hy
+eo
 an
 aq
 eg
@@ -30851,7 +30962,7 @@ ac
 dB
 dB
 an
-ar
+nU
 an
 an
 an
@@ -30866,7 +30977,7 @@ bO
 bO
 bO
 hz
-hy
+eo
 eg
 eg
 aq
@@ -31110,7 +31221,7 @@ dB
 an
 as
 aB
-aJ
+aH
 an
 an
 an
@@ -31119,7 +31230,7 @@ eg
 an
 bx
 bO
-bV
+cJ
 cF
 cJ
 hz
@@ -31369,8 +31480,8 @@ an
 an
 an
 an
-aV
-hg
+hf
+hy
 aq
 eg
 an
@@ -31624,7 +31735,7 @@ dB
 an
 at
 aC
-aK
+aH
 an
 an
 an
@@ -31879,13 +31990,13 @@ ac
 dB
 dB
 an
-ar
+nU
 an
 an
 an
 aW
 an
-in
+aq
 eg
 an
 an
@@ -32139,7 +32250,7 @@ an
 aq
 au
 jv
-aq
+aV
 aq
 an
 bs
@@ -33173,12 +33284,12 @@ an
 eg
 aq
 an
-bD
-cm
+aJ
+bG
 bZ
+cv
 hq
-cu
-hq
+cv
 an
 aq
 eg
@@ -33430,12 +33541,12 @@ an
 ct
 bh
 an
+aK
 bE
-bH
-bH
-bH
-bH
-ho
+ca
+bE
+bE
+lz
 an
 aq
 eg
@@ -33679,7 +33790,7 @@ dB
 an
 an
 aq
-aq
+aV
 jw
 au
 jh
@@ -33687,13 +33798,13 @@ an
 eg
 aq
 an
-bF
-bP
-bH
-js
-aH
+bD
+bI
+bZ
 cI
 hD
+cP
+nM
 eg
 eg
 aq
@@ -33944,13 +34055,13 @@ iV
 eg
 aq
 an
-bG
-bQ
-hp
-cI
+bR
+bR
+bR
+cP
 jq
-bH
-bH
+bE
+bE
 aq
 eg
 aq
@@ -34201,12 +34312,12 @@ an
 eg
 aq
 an
-bH
-bR
-cP
-bH
-bH
+bF
+bP
+cm
 ho
+bE
+lz
 an
 aq
 eg
@@ -34456,14 +34567,14 @@ az
 aq
 an
 eg
-aq
+nS
 an
-bH
-bR
-ca
-lz
-cv
-lz
+bF
+bQ
+cu
+hp
+js
+hp
 an
 aq
 eg
@@ -34712,8 +34823,8 @@ aI
 aA
 aq
 an
-eg
-aq
+in
+nN
 an
 an
 an
@@ -34963,7 +35074,7 @@ ac
 dB
 dB
 an
-ar
+nU
 an
 an
 an
@@ -34971,14 +35082,14 @@ aU
 an
 eg
 eg
-aQ
+nV
 ei
 et
 hj
 hr
 hs
 et
-aQ
+nV
 eg
 eg
 an
@@ -35222,11 +35333,11 @@ dB
 an
 as
 aB
-aJ
+aH
 an
 an
 an
-eh
+ar
 an
 an
 an
@@ -35486,7 +35597,7 @@ bf
 bb
 an
 bj
-bI
+bH
 an
 kk
 aq
@@ -35734,10 +35845,10 @@ ac
 dB
 ax
 an
-av
-aD
 aF
-aQ
+cL
+aw
+jC
 bb
 bb
 az
@@ -35990,16 +36101,16 @@ ac
 ac
 dB
 ax
-aE
-aF
-aL
-cL
+av
+aw
+ed
+hu
 an
 aY
 bc
 bg
 an
-ar
+nU
 an
 an
 cc
@@ -36247,10 +36358,10 @@ ac
 ac
 dB
 ax
-aF
-aL
-aL
-jC
+aw
+ed
+ed
+hv
 an
 hl
 bd
@@ -36504,10 +36615,10 @@ ac
 ac
 dB
 ax
-aw
+aD
+aM
+du
 hw
-dv
-hv
 an
 aZ
 be
@@ -36761,9 +36872,9 @@ ac
 gP
 dB
 ax
-aM
-du
-hu
+aE
+aQ
+dv
 an
 an
 ao
