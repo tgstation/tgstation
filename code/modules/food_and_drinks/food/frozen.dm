@@ -11,7 +11,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/ice = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/ice = 2)
 	tastes = list("ice cream" = 1)
-  foodtype = GRAIN | DAIRY
+  	foodtype = GRAIN | DAIRY
 
 /obj/item/reagent_containers/food/snacks/spacefreezy
 	name = "space freezy"
