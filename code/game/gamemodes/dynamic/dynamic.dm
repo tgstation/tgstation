@@ -328,6 +328,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		message_admins("Drafting players for forced ruleset [rule.name].")
 		log_game("DYNAMIC: Drafting players for forced ruleset [rule.name].")
 		rule.mode = src
+		rule.candidates = candidates.Copy()
+		rule.trim_candidates()
 		if (rule.ready(TRUE))
 			picking_roundstart_rule(list(rule))
 
@@ -454,7 +456,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		spend_threat(latejoin_rule.cost)
 		threat_log += "[worldtime2text()]: Latejoin [latejoin_rule.name] spent [latejoin_rule.cost]"
 		if (latejoin_rule.execute())
-			var/mob/M = pick(latejoin_rule.assigned)
+			var/mob/M = pick(latejoin_rule.candidates)
 			message_admins("[key_name(M)] joined the station, and was selected by the [latejoin_rule.name] ruleset.")
 			log_game("DYNAMIC: [key_name(M)] joined the station, and was selected by the [latejoin_rule.name] ruleset.")
 			executed_rules += latejoin_rule

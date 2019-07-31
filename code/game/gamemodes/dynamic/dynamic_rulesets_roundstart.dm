@@ -200,21 +200,20 @@
 	required_candidates = 2
 	weight = 3
 	cost = 30
-	requirements = list(101,101,70,50,40,30,10,10,10,10)
+	requirements = list(100,90,80,60,40,30,10,10,10,10)
 	high_population_requirement = 10
 	flags = HIGHLANDER_RULESET
-	var/cultist_cap = list(2,2,3,4,4,4,4,4,4,4)
+	var/cultist_cap = list(2,2,2,3,3,4,4,4,4,4)
 	var/datum/team/cult/main_cult
 
 /datum/dynamic_ruleset/roundstart/bloodcult/ready(forced = FALSE)
-	var/indice_pop = min(10,round(mode.roundstart_pop_ready/5)+1)
+	var/indice_pop = min(10,round(mode.roundstart_pop_ready/pop_per_requirement)+1)
 	required_candidates = cultist_cap[indice_pop]
 	. = ..()
 
 /datum/dynamic_ruleset/roundstart/bloodcult/pre_execute()
-	var/indice_pop = min(10,round(mode.roundstart_pop_ready/5)+1)
+	var/indice_pop = min(10,round(mode.roundstart_pop_ready/pop_per_requirement)+1)
 	var/cultists = cultist_cap[indice_pop]
-
 	for(var/cultists_number = 1 to cultists)
 		if(candidates.len <= 0)
 			break

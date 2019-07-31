@@ -82,8 +82,8 @@
 	if (population >= GLOB.dynamic_high_pop_limit)
 		return (threat_level >= high_population_requirement)
 	else
-		var/pop_req = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
-		var/indice_pop = min(10,round(population/pop_req)+1)
+		pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
+		var/indice_pop = min(10,round(population/pop_per_requirement)+1)
 		return (threat_level >= requirements[indice_pop])
 
 /// This is called if persistent variable is true everytime SSTicker ticks.
