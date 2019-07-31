@@ -280,12 +280,12 @@
 	tastes = list("blackberry" = 2, "strawberries" = 2, "chocolate" = 2, "sweetness" = 2,"cake" = 3)
 	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
 
-obj/item/reagent_containers/food/snacks/store/cake/holy_cake
+/obj/item/reagent_containers/food/snacks/store/cake/holy_cake
 	name = "angel food cake"
 	desc = "A cake made for angels and chaplains alike! Contains holy water."
 	icon_state = "holy_cake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/holy_cake_slice
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, "/datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/water/holywater = 10)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/water/holywater = 10)
 	tastes = list("cake" = 5, "sweetness" = 1, "clouds" = 1)
 	foodtype = GRAIN | DAIRY | SUGAR
 
@@ -318,11 +318,11 @@ obj/item/reagent_containers/food/snacks/store/cake/holy_cake
 
 /obj/item/reagent_containers/food/snacks/store/cake/hardware_cake
 	name = "hardware cake"
-	desc = "A 'cake' that is made with electronic boards and leaks acid..."
+	desc = "A quote on quote cake that is made with electronic boards and leaks acid..."
 	icon_state = "hardware_cake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/hardware_cake_slice
 	bonus_reagents = list(/datum/reagent/toxin/acid = 15, /datum/reagent/oil = 15)
-	tastes = list("acid" = 1, "metal" = 1, "regret" = 10)
+	tastes = list("acid" = 3, "metal" = 4, "glass" = 5)
 	foodtype = GRAIN | GROSS
 
 /obj/item/reagent_containers/food/snacks/cakeslice/hardware_cake_slice
@@ -330,5 +330,5 @@ obj/item/reagent_containers/food/snacks/store/cake/holy_cake
 	desc = "A slice of electronic boards and some acid."
 	icon_state = "hardware_cake_slice"
 	filling_color = "#00FFFF"
-	tastes = list("acid" = 1, "metal" = 1, "regret" = 10)
+	tastes = list("acid" = 3, "metal" = 4, "glass" = 5)
 	foodtype = GRAIN | GROSS
