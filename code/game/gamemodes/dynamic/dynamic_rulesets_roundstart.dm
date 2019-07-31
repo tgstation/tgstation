@@ -200,7 +200,7 @@
 	required_candidates = 2
 	weight = 3
 	cost = 30
-	requirements = list(90,80,60,30,20,10,10,10,10,10)
+	requirements = list(101,101,70,50,40,30,10,10,10,10)
 	high_population_requirement = 10
 	flags = HIGHLANDER_RULESET
 	var/cultist_cap = list(2,2,3,4,4,4,4,4,4,4)
