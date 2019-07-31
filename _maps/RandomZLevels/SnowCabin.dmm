@@ -3350,7 +3350,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/cabin/caves)
 "iG" = (
-/obj/structure/ice_stasis,
+/obj/structure/fluff/iced_abductor,
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
 "iH" = (
