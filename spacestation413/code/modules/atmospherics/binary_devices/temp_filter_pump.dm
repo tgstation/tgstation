@@ -34,16 +34,19 @@
 		if(CHECK_AROUND)
 			if(input_starting_temperature-temp_range>target_temperature || input_starting_temperature+temp_range<target_temperature)
 				last_check_success = FALSE
+				update_icon()
 				return
 
 		if(CHECK_BELOW)
 			if(input_starting_temperature > target_temperature)
 				last_check_success = FALSE
+				update_icon()
 				return
 
 		if(CHECK_ABOVE)
 			if(input_starting_temperature < target_temperature)
 				last_check_success = FALSE
+				update_icon()
 				return
 
 	var/datum/gas_mixture/air2 = airs[2]
@@ -137,7 +140,7 @@
 																datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_temp_pump", name, 335, 115, master_ui, state)
+		ui = new(user, src, ui_key, "atmos_temp_pump", name, 435, 160, master_ui, state)
 		ui.open()
 
 #undef CHECK_AROUND
