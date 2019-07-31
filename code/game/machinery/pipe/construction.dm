@@ -43,7 +43,7 @@ Buildable meters
 /obj/item/pipe/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from)
 	if(make_from)
 		make_from_existing(make_from)
-	else
+	else if(_pipe_type) // 413/yogs - only change if _pipe_type is set
 		pipe_type = _pipe_type
 		setDir(_dir)
 
