@@ -16546,7 +16546,7 @@
 /obj/structure/chair/wood/normal{
 	dir = 8
 	},
-/obj/item/clothing/under/janimaid,
+/obj/item/clothing/under/rank/civilian/janitor/maid,
 /obj/structure/cable,
 /turf/open/floor/wood{
 	icon_state = "wood-broken"
@@ -19032,7 +19032,7 @@
 /area/janitor)
 "aXP" = (
 /obj/structure/table,
-/obj/item/clothing/under/maid,
+/obj/item/clothing/under/costume/maid,
 /obj/item/key/janitor,
 /obj/item/grenade/clusterbuster/cleaner,
 /obj/item/grenade/chem_grenade/cleaner,
@@ -20757,9 +20757,9 @@
 "bbt" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/table/wood,
-/obj/item/clothing/under/sundress,
-/obj/item/clothing/under/waiter,
-/obj/item/clothing/under/blacktango,
+/obj/item/clothing/under/dress/sundress,
+/obj/item/clothing/under/suit/waiter,
+/obj/item/clothing/under/dress/blacktango,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
 "bbu" = (
@@ -20817,7 +20817,7 @@
 	pixel_x = 6;
 	pixel_y = -5
 	},
-/obj/item/clothing/under/rank/mailman,
+/obj/item/clothing/under/misc/mailman,
 /obj/item/clothing/head/mailman,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -32798,7 +32798,7 @@
 /area/crew_quarters/heads/cmo)
 "bEI" = (
 /obj/structure/closet,
-/obj/item/clothing/under/rank/nursesuit,
+/obj/item/clothing/under/rank/medical/doctor,
 /obj/item/clothing/head/nursehat,
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/airalarm{
@@ -36048,6 +36048,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/surgical_drapes,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "bLN" = (
@@ -36070,12 +36071,11 @@
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "bLQ" = (
-/obj/structure/table,
-/obj/item/surgical_drapes,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/smartfridge/organ,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "bLR" = (
@@ -47731,10 +47731,10 @@
 /turf/open/floor/carpet,
 /area/chapel/main/monastery)
 "cwz" = (
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
+/obj/item/clothing/under/misc/burial,
+/obj/item/clothing/under/misc/burial,
+/obj/item/clothing/under/misc/burial,
+/obj/item/clothing/under/misc/burial,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
@@ -51863,7 +51863,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "klV" = (
-/obj/item/clothing/under/rank/clown/sexy,
+/obj/item/clothing/under/rank/civilian/clown/sexy,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/crew_quarters/dorms)
 "kmn" = (
@@ -54937,6 +54937,10 @@
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/department/science)
+"rKW" = (
+/obj/effect/mapping_helpers/ianbirthday,
+/turf/open/floor/wood,
+/area/crew_quarters/heads/hop)
 "rLi" = (
 /obj/machinery/button/door{
 	id = "shootshut";
@@ -91021,7 +91025,7 @@ aaa
 aaa
 aAH
 aBC
-aCS
+rKW
 aDU
 aEN
 aAH

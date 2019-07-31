@@ -84,7 +84,7 @@
 /obj/item/storage/box/hero/PopulateContents()
 	new /obj/item/clothing/head/fedora/curator(src)
 	new /obj/item/clothing/suit/curator(src)
-	new /obj/item/clothing/under/rank/curator/treasure_hunter(src)
+	new /obj/item/clothing/under/rank/civilian/curator/treasure_hunter(src)
 	new /obj/item/clothing/shoes/workboots/mining(src)
 	new /obj/item/melee/curator_whip(src)
 
@@ -101,7 +101,7 @@
 	name = "Braveheart, the Scottish rebel - 1300's."
 
 /obj/item/storage/box/hero/scottish/PopulateContents()
-	new /obj/item/clothing/under/kilt(src)
+	new /obj/item/clothing/under/costume/kilt(src)
 	new /obj/item/claymore/weak/ceremonial(src)
 	new /obj/item/toy/crayon/spraycan(src)
 	new /obj/item/clothing/shoes/sandal(src)

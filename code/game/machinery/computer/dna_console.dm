@@ -2,7 +2,7 @@
 #define NUMBER_OF_BUFFERS 3
 #define SCRAMBLE_TIMEOUT 600
 #define JOKER_TIMEOUT 12000					//20 minutes
-#define JOKER_UPGRADE 1800
+#define JOKER_UPGRADE 3000
 
 #define RADIATION_STRENGTH_MAX 15
 #define RADIATION_STRENGTH_MULTIPLIER 1			//larger has more range
@@ -717,7 +717,7 @@
 						I.research = TRUE
 						if(connected)
 							I.damage_coeff = connected.damage_coeff*4
-							injectorready = world.time + INJECTOR_TIMEOUT * (1 - 0.1 * connected.precision_coeff) //precision_coeff being the manipulator rating
+							injectorready = world.time + INJECTOR_TIMEOUT * (1 - 0.1 * connected.precision_coeff) //precision_coeff being the matter bin rating
 						else
 							injectorready = world.time + INJECTOR_TIMEOUT
 		if("mutator")

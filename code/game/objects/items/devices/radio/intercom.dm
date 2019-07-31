@@ -139,6 +139,12 @@
 /obj/item/radio/intercom/add_blood_DNA(list/blood_dna)
 	return FALSE
 
+/obj/item/radio/intercom/end_emp_effect(curremp)
+	. = ..()
+	if(!.)
+		return
+	on = FALSE
+
 //Created through the autolathe or through deconstructing intercoms. Can be applied to wall to make a new intercom on it!
 /obj/item/wallframe/intercom
 	name = "intercom frame"
@@ -147,4 +153,4 @@
 	result_path = /obj/item/radio/intercom/unscrewed
 	pixel_shift = 29
 	inverse = TRUE
-	materials = list(MAT_METAL = 75, MAT_GLASS = 25)
+	materials = list(/datum/material/iron = 75, /datum/material/glass = 25)
