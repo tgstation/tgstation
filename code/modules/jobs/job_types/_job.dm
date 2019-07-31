@@ -201,9 +201,6 @@
 		holder = "[uniform]"
 	uniform = text2path(holder)
 
-	if(isplasmaman(H))
-		box = /obj/item/storage/box/survival_plasma
-
 /datum/outfit/job/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return

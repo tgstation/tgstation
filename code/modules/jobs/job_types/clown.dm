@@ -49,11 +49,6 @@
 
 	chameleon_extras = /obj/item/stamp/clown
 
-/datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H)
-	. = ..()
-	if(isplasmaman(H))
-		box = /obj/item/storage/box/hug/survival_plasma
-
 /datum/outfit/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 	if(visualsOnly)
