@@ -340,8 +340,7 @@
 /obj/machinery/power/shieldwallgen/wrench_act(mob/living/user, obj/item/I)
 	. = default_unfasten_wrench(user, I, 0)
 	var/turf/T = get_turf(src)
-	var/obj/structure/cable/C = locate(/obj/structure/cable) in T
-	C.update_icon()
+	update_cable_icons_on_turf(T)
 	if(. == SUCCESSFUL_UNFASTEN && anchored)
 		connect_to_network()
 
