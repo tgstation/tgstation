@@ -4723,10 +4723,6 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj/item/clothing/under/rank/security/spacepol{
-	armor = list("melee" = 2, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30);
-	desc = "Cops always stop the fun of others."
-	},
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/head/helmet/police{
 	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 2, "bomb" = 15, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20);
@@ -4735,6 +4731,10 @@
 /obj/structure/closet{
 	anchored = 1;
 	name = "uniform closet"
+	},
+/obj/item/clothing/under/rank/security/officer/spacepol{
+	armor = list("melee" = 2, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 10, "acid" = 10);
+	desc = "Anyone enjoying their time while working in a megacorporation, planetary government, or band of pirates is under the jurisdiction of the fun police."
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/cabin/caves/mountain)
