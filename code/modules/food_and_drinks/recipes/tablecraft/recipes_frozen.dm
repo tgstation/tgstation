@@ -214,17 +214,6 @@
 	result = /obj/item/reagent_containers/food/snacks/snowcones/pwgrmer
 	subcategory = CAT_ICE
 
-/datum/crafting_recipe/food/kiwi_sc
-	name = "Soda water snowcone"
-	reqs = list(
-		/obj/item/reagent_containers/food/drinks/sillycup = 1,
-		/obj/item/reagent_containers/food/snacks/egg/kiwiEgg = 1,
-		/datum/reagent/water  = 5,
-		/datum/reagent/consumable/ice = 15
-	)
-	result = /obj/item/reagent_containers/food/snacks/snowcones/kiwi
-	subcategory = CAT_ICE
-
 /datum/crafting_recipe/food/honey_sc
 	name = "Honey snowcone"
 	reqs = list(
