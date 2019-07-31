@@ -2,7 +2,6 @@
 	pipe_type = /obj/machinery/atmospherics/pipe/bluespace
 	var/bluespace_network_name = "default"
 	icon_state = "bluespace"
-	disposable = FALSE
 
 /obj/item/pipe/bluespace/attack_self(mob/user)
 	var/new_name = input(user, "Enter identifier for bluespace pipe network", "bluespace pipe", bluespace_network_name) as text|null
