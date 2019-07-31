@@ -343,7 +343,15 @@
 /obj/item/restraints/legcuffs/bola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return//abort
-	var/mob/living/carbon/C = hit_atom
+	ensnare(hit_atom)
+
+/**
+  * Attempts to legcuff someone with the bola
+  *
+  * Arguments:
+  * * C - the carbon that we will try to ensnare
+  */
+/obj/item/restraints/legcuffs/bola/proc/ensnare(mob/living/carbon/C)
 	if(!C.legcuffed && C.get_num_legs(FALSE) >= 2)
 		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
 		C.legcuffed = src

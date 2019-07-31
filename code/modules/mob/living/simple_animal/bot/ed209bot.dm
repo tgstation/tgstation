@@ -362,8 +362,7 @@ Auto Patrol[]"},
 			playsound(src, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/edplaceholder.ogg'), 50, FALSE)
 			visible_message("<b>[src]</b> points at [C.name]!")
 			mode = BOT_HUNT
-			spawn(0)
-				handle_automated_action()	// ensure bot quickly responds to a perp
+			INVOKE_ASYNC(src, .proc/handle_automated_action) // ensure bot quickly responds to a perp
 			break
 		else
 			continue
@@ -542,8 +541,7 @@ Auto Patrol[]"},
 /mob/living/simple_animal/bot/ed209/proc/stun_attack(mob/living/carbon/C)
 	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 	icon_state = "[lasercolor]ed209-c"
-	spawn(2)
-		icon_state = "[lasercolor]ed209[on]"
+	addtimer(VARSET_CALLBACK(src, icon_state, "[lasercolor]ed209[on]"), 2)
 	var/threat = 5
 	C.Paralyze(100)
 	C.stuttering = 5
