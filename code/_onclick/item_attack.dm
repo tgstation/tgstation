@@ -130,10 +130,10 @@
 	var/message_hit_area = ""
 	if(hit_area)
 		message_hit_area = " in the [hit_area]"
-	var/attack_message = "[src] is [message_verb][message_hit_area] with [I]!"
+	var/attack_message = "[src] [message_verb][message_hit_area] with [I]!"
 	var/attack_message_you = "You're [message_verb][message_hit_area] with [I]!"
 	if(user in viewers(src, null))
-		attack_message = "[user] is [message_verb] [src][message_hit_area] with [I]!"
+		attack_message = "[user] [message_verb] [src][message_hit_area] with [I]!"
 		attack_message_you = "[src] [message_verb] you[message_hit_area] with [I]!"
 	visible_message("<span class='danger'>[attack_message]</span>",\
 		"<span class='userdanger'>[attack_message_you]</span>", null, COMBAT_MESSAGE_RANGE)

@@ -153,12 +153,12 @@
 		if(I)
 			if(D.temporarilyRemoveItemFromInventory(I))
 				A.put_in_hands(I)
-		D.visible_message("<span class='danger'>[A] has disarmed [D]!</span>", \
-							"<span class='userdanger'>[A] has disarmed [D]!</span>")
+		D.visible_message("<span class='danger'>[A] disarms [D]!</span>", \
+							"<span class='userdanger'>[A] disarms you!</span>")
 		playsound(D, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 	else
-		D.visible_message("<span class='danger'>[A] attempted to disarm [D]!</span>", \
-							"<span class='userdanger'>[A] attempted to disarm [D]!</span>")
+		D.visible_message("<span class='danger'>[A] fails to disarm [D]!</span>", \
+							"<span class='userdanger'>[A] fails to disarm you!</span>")
 		playsound(D, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 	log_combat(A, D, "disarmed (Krav Maga)", "[I ? " removing \the [I]" : ""]")
 	return 1

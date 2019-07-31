@@ -185,8 +185,8 @@
 			D.Jitter(2)
 			D.apply_damage(5, A.dna.species.attack_type)
 	else
-		D.visible_message("<span class='danger'>[A] attempted to disarm [D]!</span>", \
-							"<span class='userdanger'>[A] attempted to disarm [D]!</span>")
+		D.visible_message("<span class='danger'>[A] fails to disarm [D]!</span>", \
+							"<span class='userdanger'>[A] fails to disarm you!</span>")
 		playsound(D, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 	log_combat(A, D, "disarmed (CQC)", "[I ? " grabbing \the [I]" : ""]")
 	if(restraining && A.pulling == D)

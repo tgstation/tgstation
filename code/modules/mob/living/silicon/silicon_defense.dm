@@ -11,8 +11,8 @@
 		if (prob(90))
 			log_combat(M, src, "attacked")
 			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
-			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
-							"<span class='userdanger'>[M] has slashed at [src]!</span>")
+			visible_message("<span class='danger'>[M] slashes at [src]!</span>", \
+							"<span class='userdanger'>[M] slashes at you!</span>")
 			if(prob(8))
 				flash_act(affect_silicon = 1)
 			log_combat(M, src, "attacked")
@@ -20,8 +20,8 @@
 			updatehealth()
 		else
 			playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-			visible_message("<span class='danger'>[M] took a swipe at [src]!</span>", \
-							"<span class='userdanger'>[M] took a swipe at [src]!</span>")
+			visible_message("<span class='danger'>[M]'s swipe misses [src]!</span>", \
+							"<span class='userdanger'>[M]'s swipe misses you!</span>")
 
 /mob/living/silicon/attack_animal(mob/living/simple_animal/M)
 	. = ..()
@@ -31,7 +31,8 @@
 			for(var/mob/living/N in buckled_mobs)
 				N.Paralyze(20)
 				unbuckle_mob(N)
-				N.visible_message("<span class='boldwarning'>[N] is knocked off of [src] by [M]!</span>")
+				N.visible_message("<span class='boldwarning'>[N] is knocked off of [src] by [M]!</span>", \
+							"<span class='boldwarning'>You're knocked off of [src] by [M]!</span>")
 		switch(M.melee_damage_type)
 			if(BRUTE)
 				adjustBruteLoss(damage)

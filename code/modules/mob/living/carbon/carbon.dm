@@ -154,7 +154,8 @@
 			return
 
 	if(thrown_thing)
-		visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>")
+		visible_message("<span class='danger'>[src] throws [thrown_thing].</span>", \
+						"<span class='danger'>You throw [thrown_thing].</span>")
 		log_message("has thrown [thrown_thing]", LOG_ATTACK)
 		newtonian_move(get_dir(target, src))
 		thrown_thing.safe_throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed, src, null, null, null, move_force)
@@ -215,7 +216,7 @@
 		var/obj/item/ITEM = get_item_by_slot(slot)
 		if(ITEM && istype(ITEM, /obj/item/tank) && wear_mask && (wear_mask.clothing_flags & MASKINTERNALS))
 			visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>", \
-							"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>")
+							"<span class='userdanger'>You try to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>")
 			if(do_mob(usr, src, POCKET_STRIP_DELAY))
 				if(internal)
 					internal = null
@@ -226,7 +227,7 @@
 						update_internals_hud_icon(1)
 
 				visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>", \
-								"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>")
+								"<span class='userdanger'>You [internal ? "open" : "close"] the valve on [src]'s [ITEM.name].</span>")
 
 /mob/living/carbon/fall(forced)
     loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing

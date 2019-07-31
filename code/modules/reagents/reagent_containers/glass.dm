@@ -24,7 +24,7 @@
 		if(user.a_intent == INTENT_HARM)
 			var/R
 			M.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [M]!</span>", \
-							"<span class='userdanger'>[user] splashes the contents of [src] onto [M]!</span>")
+							"<span class='userdanger'>[user] splashes the contents of [src] onto you!</span>")
 			if(reagents)
 				for(var/datum/reagent/A in reagents.reagent_list)
 					R += "[A] ([num2text(A.volume)]),"

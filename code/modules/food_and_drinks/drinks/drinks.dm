@@ -40,12 +40,14 @@
 			M.changeNext_move(CLICK_CD_MELEE * 0.5) //chug! chug! chug!
 
 	else
-		M.visible_message("<span class='danger'>[user] attempts to feed the contents of [src] to [M].</span>", "<span class='userdanger'>[user] attempts to feed the contents of [src] to [M].</span>")
+		M.visible_message("<span class='danger'>[user] attempts to feed the contents of [src] to [M].</span>", \
+			"<span class='userdanger'>[user] attempts to feed the contents of [src] to you.</span>")
 		if(!do_mob(user, M))
 			return
 		if(!reagents || !reagents.total_volume)
 			return // The drink might be empty after the delay, such as by spam-feeding
-		M.visible_message("<span class='danger'>[user] feeds the contents of [src] to [M].</span>", "<span class='userdanger'>[user] feeds the contents of [src] to [M].</span>")
+		M.visible_message("<span class='danger'>[user] feeds the contents of [src] to [M].</span>", \
+			"<span class='userdanger'>[user] feeds the contents of [src] to you.</span>")
 		log_combat(user, M, "fed", reagents.log_list())
 
 	var/fraction = min(gulp_size/reagents.total_volume, 1)

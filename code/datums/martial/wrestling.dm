@@ -402,7 +402,8 @@
 
 		A.forceMove(D.loc)
 
-		A.visible_message("<span class='danger'><B>[A] leg-drops [D]!</B></span>")
+		D.visible_message("<span class='danger'><B>[A] leg-drops [D]!</B></span>", \
+									"<span class='userdanger'>[A] leg-drops you!</span>")
 		playsound(A.loc, "swing_hit", 50, 1)
 		A.emote("scream")
 
@@ -437,7 +438,7 @@
 		return 1
 	A.start_pulling(D)
 	D.visible_message("<span class='danger'>[A] gets [D] in a cinch!</span>", \
-								"<span class='userdanger'>[A] gets [D] in a cinch!</span>")
+								"<span class='userdanger'>[A] gets you in a cinch!</span>")
 	D.Stun(rand(60,100))
 	log_combat(A, D, "cinched")
 	return 1
