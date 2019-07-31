@@ -11,7 +11,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/ice = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/ice = 2)
 	tastes = list("ice cream" = 1)
-  	foodtype = GRAIN | DAIRY
+	foodtype = GRAIN | DAIRY
 
 /obj/item/reagent_containers/food/snacks/spacefreezy
 	name = "space freezy"
@@ -41,7 +41,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/banana = 10, /datum/reagent/consumable/nutriment/vitamin = 4)
 	filling_color = "#FFFACD"
 	tastes = list("ice cream" = 1, "banana" = 1, "a bad joke" = 1)
-  	foodtype = FRUIT | DAIRY | SUGAR
+	foodtype = FRUIT | DAIRY | SUGAR
 
 /////////////
 //SNOWCONES//
