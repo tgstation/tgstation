@@ -67,6 +67,16 @@
 //////////////////Misc///////////////////
 /////////////////////////////////////////
 
+/datum/design/welding_goggles
+	name = "Welding Goggles"
+	desc = "Protects the eyes from bright flashes; approved by the mad scientist association."
+	id = "welding_goggles"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	build_path = /obj/item/clothing/glasses/welding
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
 /datum/design/welding_mask
 	name = "Welding Gas Mask"
 	desc = "A gas mask with built in welding goggles and face shield. Looks like a skull, clearly designed by a nerd."
