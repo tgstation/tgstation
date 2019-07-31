@@ -44,7 +44,7 @@
 	var/mob/dead/observer/G = usr
 	G.register_pai()
 
-/datum/hud/ghost/New(mob/owner, ui_style = 'icons/mob/screen_midnight.dmi')
+/datum/hud/ghost/New(mob/owner)
 	..()
 	var/obj/screen/using
 
@@ -73,6 +73,12 @@
 	static_inventory += using
 
 /datum/hud/ghost/show_hud(version = 0, mob/viewmob)
+	// don't show this HUD if observing; show the HUD of the observee
+	var/mob/dead/observer/O = mymob
+	if (istype(O) && O.observetarget)
+		plane_masters_update()
+		return FALSE
+
 	. = ..()
 	if(!.)
 		return
@@ -81,7 +87,3 @@
 		screenmob.client.screen -= static_inventory
 	else
 		screenmob.client.screen += static_inventory
-
-/mob/dead/observer/create_mob_hud()
-	if(client && !hud_used)
-		hud_used = new /datum/hud/ghost(src, ui_style2icon(client.prefs.UI_style))

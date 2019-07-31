@@ -20,12 +20,6 @@
 				else if (avg_dam <= 75)	{  return "health-2"; }
 				else					{  return "health-0"; }
 			}
-		},
-		computed:{
-			sorted_sensors() {
-				var sensors = this.get('data.sensors')
-				return sensors.sort(function(a,b) { return a.ijob - b.ijob ;});
-			}
 		}
 	}
 </script>
@@ -45,7 +39,7 @@
 		</tr>
 		</thead>
 		<tbody>
-		{{#each sorted_sensors}}
+		{{#each data.sensors}}
 			<tr>
 				<td>
 					<span class='{{isHead(ijob) ? "bold " :""}}{{dept_class(ijob)}}'>

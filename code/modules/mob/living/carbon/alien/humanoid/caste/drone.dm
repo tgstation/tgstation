@@ -5,20 +5,15 @@
 	health = 125
 	icon_state = "aliend"
 
-
 /mob/living/carbon/alien/humanoid/drone/Initialize()
 	AddAbility(new/obj/effect/proc_holder/alien/evolve(null))
 	. = ..()
-
 
 /mob/living/carbon/alien/humanoid/drone/create_internal_organs()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/large
 	internal_organs += new /obj/item/organ/alien/resinspinner
 	internal_organs += new /obj/item/organ/alien/acid
 	..()
-
-/mob/living/carbon/alien/humanoid/drone/movement_delay()
-	. = ..()
 
 /obj/effect/proc_holder/alien/evolve
 	name = "Evolve to Praetorian"
@@ -37,7 +32,7 @@
 		return 0
 
 	if(!isturf(user.loc))
-		to_chat(user, "<span class='notice'>You can't evolve here!</span>")
+		to_chat(user, "<span class='warning'>You can't evolve here!</span>")
 		return 0
 	if(!get_alien_type(/mob/living/carbon/alien/humanoid/royal))
 		var/mob/living/carbon/alien/humanoid/royal/praetorian/new_xeno = new (user.loc)

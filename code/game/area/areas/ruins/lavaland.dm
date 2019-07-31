@@ -6,7 +6,8 @@
 /area/ruin/powered/clownplanet
 	icon_state = "dk_yellow"
 
-/area/ruin/powered/animal_hospital
+/area/ruin/unpowered/gaia
+	name = "Patch of Eden"
 	icon_state = "dk_yellow"
 
 /area/ruin/powered/snow_biodome
@@ -69,7 +70,6 @@
 
 /area/ruin/unpowered/syndicate_lava_base/telecomms
 	name = "Syndicate Lavaland Telecommunications"
-
 
 //Xeno Nest
 

@@ -15,7 +15,7 @@
 	density = TRUE
 	max_integrity = 100
 	var/proj_pass_rate = 50 //How many projectiles will pass the cover. Lower means stronger cover
-	var/material = METAL
+	var/bar_material = METAL
 
 /obj/structure/barricade/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -26,7 +26,7 @@
 	return
 
 /obj/structure/barricade/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weldingtool) && user.a_intent != INTENT_HARM && material == METAL)
+	if(I.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM && bar_material == METAL)
 		if(obj_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount=0))
 				return
@@ -61,8 +61,24 @@
 	desc = "This space is blocked off by a wooden barricade."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "woodenbarricade"
-	material = WOOD
+	bar_material = WOOD
 	var/drop_amount = 3
+
+/obj/structure/barricade/wooden/attackby(obj/item/I, mob/user)
+	if(istype(I,/obj/item/stack/sheet/mineral/wood))
+		var/obj/item/stack/sheet/mineral/wood/W = I
+		if(W.amount < 5)
+			to_chat(user, "<span class='warning'>You need at least five wooden planks to make a wall!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>You start adding [I] to [src]...</span>")
+			if(do_after(user, 50, target=src))
+				W.use(5)
+				new /turf/closed/wall/mineral/wood/nonmetal(get_turf(src))
+				qdel(src)
+				return
+	return ..()
+
 
 /obj/structure/barricade/wooden/crude
 	name = "crude plank barricade"
@@ -89,7 +105,7 @@
 	max_integrity = 280
 	proj_pass_rate = 20
 	pass_flags = LETPASSTHROW
-	material = SAND
+	bar_material = SAND
 	climbable = TRUE
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/barricade/sandbags, /turf/closed/wall, /turf/closed/wall/r_wall, /obj/structure/falsewall, /obj/structure/falsewall/reinforced, /turf/closed/wall/rust, /turf/closed/wall/r_wall/rust, /obj/structure/barricade/security)
@@ -132,8 +148,8 @@
 	var/mode = SINGLE
 
 /obj/item/grenade/barrier/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to toggle modes.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to toggle modes.</span>"
 
 /obj/item/grenade/barrier/AltClick(mob/living/carbon/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))

@@ -53,7 +53,7 @@
 	name = "resin"
 	desc = "Looks like some kind of thick resin."
 	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
-	icon_state = "resin"
+	icon_state = "smooth"
 	density = TRUE
 	opacity = 1
 	anchored = TRUE
@@ -64,9 +64,9 @@
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
 
-/obj/structure/alien/resin/New(location)
-	..()
-	air_update_turf(1)
+/obj/structure/alien/resin/Initialize(mapload)
+	. = ..()
+	air_update_turf(TRUE)
 
 /obj/structure/alien/resin/Move()
 	var/turf/T = loc
@@ -77,7 +77,7 @@
 	name = "resin wall"
 	desc = "Thick resin solidified into a wall."
 	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
-	icon_state = "wall0"	//same as resin, but consistency ho!
+	icon_state = "smooth"	//same as resin, but consistency ho!
 	resintype = "wall"
 	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
 
@@ -88,7 +88,7 @@
 	name = "resin membrane"
 	desc = "Resin just thin enough to let light pass through."
 	icon = 'icons/obj/smooth_structures/alien/resin_membrane.dmi'
-	icon_state = "membrane0"
+	icon_state = "smooth"
 	opacity = 0
 	max_integrity = 160
 	resintype = "membrane"
@@ -115,6 +115,7 @@
 	anchored = TRUE
 	density = FALSE
 	layer = TURF_LAYER
+	plane = FLOOR_PLANE
 	icon_state = "weeds"
 	max_integrity = 15
 	canSmoothWith = list(/obj/structure/alien/weeds, /turf/closed/wall)
@@ -244,12 +245,15 @@
 			icon_state = "[base_icon]_hatched"
 
 /obj/structure/alien/egg/attack_paw(mob/living/user)
-	. = attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/alien/egg/attack_alien(mob/living/carbon/alien/user)
-	. = attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/alien/egg/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(user.getorgan(/obj/item/organ/alien/plasmavessel))
 		switch(status)
 			if(BURST)

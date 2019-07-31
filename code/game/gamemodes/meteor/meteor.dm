@@ -1,6 +1,7 @@
 /datum/game_mode/meteor
 	name = "meteor"
 	config_tag = "meteor"
+	report_type = "meteor"
 	false_report_weight = 1
 	var/meteordelay = 2000
 	var/nometeors = 0

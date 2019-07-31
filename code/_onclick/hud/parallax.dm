@@ -167,6 +167,8 @@
 /datum/hud/proc/update_parallax()
 	var/client/C = mymob.client
 	var/turf/posobj = get_turf(C.eye)
+	if(!posobj) 
+		return
 	var/area/areaobj = posobj.loc
 
 	// Update the movement direction of the parallax if necessary (for shuttles)
@@ -194,6 +196,7 @@
 
 	for(var/thing in C.parallax_layers)
 		var/obj/screen/parallax_layer/L = thing
+		L.update_status(mymob)
 		if (L.view_sized != C.view)
 			L.update_o(C.view)
 
@@ -275,6 +278,9 @@
 	add_overlay(new_overlays)
 	view_sized = view
 
+/obj/screen/parallax_layer/proc/update_status(mob/M)
+	return
+
 /obj/screen/parallax_layer/layer_1
 	icon_state = "layer1"
 	speed = 0.6
@@ -297,10 +303,12 @@
 	speed = 3
 	layer = 30
 
+/obj/screen/parallax_layer/planet/update_status(mob/M)
+	var/turf/T = get_turf(M)
+	if(is_station_level(T.z))
+		invisibility = 0
+	else
+		invisibility = INVISIBILITY_ABSTRACT
+
 /obj/screen/parallax_layer/planet/update_o()
 	return //Shit wont move
-
-#undef LOOP_NONE
-#undef LOOP_NORMAL
-#undef LOOP_REVERSE
-#undef LOOP_TIME

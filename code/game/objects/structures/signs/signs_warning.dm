@@ -36,6 +36,11 @@
 	desc = "A warning sign which reads 'DISPOSAL: LEADS TO SPACE'."
 	icon_state = "deathsposal"
 
+/obj/structure/sign/warning/bodysposal
+	name = "\improper DISPOSAL: LEADS TO MORGUE"
+	desc = "A warning sign which reads 'DISPOSAL: LEADS TO MORGUE'."
+	icon_state = "bodysposal"
+
 /obj/structure/sign/warning/pods
 	name = "\improper ESCAPE PODS"
 	desc = "A warning sign which reads 'ESCAPE PODS'."
@@ -45,11 +50,13 @@
 	name = "\improper DANGER: FIRE"
 	desc = "A warning sign which reads 'DANGER: FIRE'."
 	icon_state = "fire"
+	resistance_flags = FIRE_PROOF
 
 /obj/structure/sign/warning/nosmoking
 	name = "\improper NO SMOKING"
 	desc = "A warning sign which reads 'NO SMOKING'."
 	icon_state = "nosmoking2"
+	resistance_flags = FLAMMABLE
 
 /obj/structure/sign/warning/nosmoking/circle
 	icon_state = "nosmoking"
@@ -73,3 +80,13 @@
 	name = "\improper ENGINEERING SAFETY"
 	desc = "A sign detailing the various safety protocols when working on-site to ensure a safe shift."
 	icon_state = "safety"
+
+/obj/structure/sign/warning/explosives
+	name = "\improper HIGH EXPLOSIVES"
+	desc = "A warning sign which reads 'HIGH EXPLOSIVES'."
+	icon_state = "explosives"
+
+/obj/structure/sign/warning/explosives/alt
+	name = "\improper HIGH EXPLOSIVES"
+	desc = "A warning sign which reads 'HIGH EXPLOSIVES'."
+	icon_state = "explosives2"

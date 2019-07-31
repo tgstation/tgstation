@@ -20,7 +20,7 @@ Bonus
 	desc = "The virus inhibits the body's thermoregulation, cooling the body down."
 	stealth = 0
 	resistance = 2
-	stage_speed = 2
+	stage_speed = 3
 	transmittable = 2
 	level = 2
 	severity = 2
@@ -33,10 +33,10 @@ Bonus
 /datum/symptom/fever/Start(datum/disease/advance/A)
 	if(!..())
 		return
-	if(A.properties["stage_speed"] >= 5) //dangerous cold
+	if(A.properties["stage_rate"] >= 5) //dangerous cold
 		power = 1.5
 		unsafe = TRUE
-	if(A.properties["stage_speed"] >= 10)
+	if(A.properties["stage_rate"] >= 10)
 		power = 2.5
 
 /datum/symptom/shivering/Activate(datum/disease/advance/A)

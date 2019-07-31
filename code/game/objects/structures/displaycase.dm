@@ -20,7 +20,7 @@
 
 /obj/structure/displaycase/Initialize()
 	. = ..()
-	if(start_showpieces.len && !start_showpiece_type) 
+	if(start_showpieces.len && !start_showpiece_type)
 		var/list/showpiece_entry = pick(start_showpieces)
 		if (showpiece_entry && showpiece_entry["type"])
 			start_showpiece_type = showpiece_entry["type"]
@@ -38,14 +38,13 @@
 	return ..()
 
 /obj/structure/displaycase/examine(mob/user)
-	..()
+	. = ..()
 	if(alert)
-		to_chat(user, "<span class='notice'>Hooked up with an anti-theft system.</span>")
+		. += "<span class='notice'>Hooked up with an anti-theft system.</span>"
 	if(showpiece)
-		to_chat(user, "<span class='notice'>There's [showpiece] inside.</span>")
+		. += "<span class='notice'>There's [showpiece] inside.</span>"
 	if(trophy_message)
-		to_chat(user, "The plaque reads:")
-		to_chat(user, trophy_message)
+		. += "The plaque reads:\n [trophy_message]"
 
 
 /obj/structure/displaycase/proc/dump()
@@ -106,7 +105,7 @@
 			toggle_lock(user)
 		else
 			to_chat(user,  "<span class='warning'>Access denied.</span>")
-	else if(istype(W, /obj/item/weldingtool) && user.a_intent == INTENT_HELP && !broken)
+	else if(W.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HELP && !broken)
 		if(obj_integrity < max_integrity)
 			if(!W.tool_start_check(user, amount=5))
 				return
@@ -119,7 +118,7 @@
 		else
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 		return
-	else if(!alert && istype(W, /obj/item/crowbar) && openable) //Only applies to the lab cage and player made display cases
+	else if(!alert && W.tool_behaviour == TOOL_CROWBAR && openable) //Only applies to the lab cage and player made display cases
 		if(broken)
 			if(showpiece)
 				to_chat(user, "<span class='notice'>Remove the displayed object first.</span>")
@@ -155,12 +154,16 @@
 	update_icon()
 
 /obj/structure/displaycase/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/displaycase/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (showpiece && (broken || open))
 		to_chat(user, "<span class='notice'>You deactivate the hover field built into the case.</span>")
+		log_combat(user, src, "deactivates the hover field of")
 		dump()
 		src.add_fingerprint(user)
 		update_icon()
@@ -170,10 +173,9 @@
 		if (!Adjacent(user))
 			return
 		user.visible_message("<span class='danger'>[user] kicks the display case.</span>", null, null, COMBAT_MESSAGE_RANGE)
+		log_combat(user, src, "kicks")
 		user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 		take_damage(2)
-
-
 
 /obj/structure/displaycase_chassis
 	anchored = TRUE
@@ -186,7 +188,7 @@
 
 
 /obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wrench)) //The player can only deconstruct the wooden frame
+	if(I.tool_behaviour == TOOL_WRENCH) //The player can only deconstruct the wooden frame
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 30))
@@ -265,33 +267,33 @@
 			is_locked = !is_locked
 			to_chat(user, "You [!is_locked ? "un" : ""]lock the case.")
 		else
-			to_chat(user, "<span class='danger'>The lock is stuck shut!</span>")
+			to_chat(user, "<span class='warning'>The lock is stuck shut!</span>")
 		return
 
 	if(is_locked)
-		to_chat(user, "<span class='danger'>The case is shut tight with an old fashioned physical lock. Maybe you should ask the curator for the key?</span>")
+		to_chat(user, "<span class='warning'>The case is shut tight with an old fashioned physical lock. Maybe you should ask the curator for the key?</span>")
 		return
 
 	if(!added_roundstart)
-		to_chat(user, "You've already put something new in this case.")
+		to_chat(user, "<span class='warning'>You've already put something new in this case!</span>")
 		return
 
 	if(is_type_in_typecache(W, GLOB.blacklisted_cargo_types))
-		to_chat(user, "<span class='danger'>The case rejects the [W].</span>")
+		to_chat(user, "<span class='warning'>The case rejects the [W]!</span>")
 		return
 
 	for(var/a in W.GetAllContents())
 		if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types))
-			to_chat(user, "<span class='danger'>The case rejects the [W].</span>")
+			to_chat(user, "<span class='warning'>The case rejects the [W]!</span>")
 			return
 
 	if(user.transferItemToLoc(W, src))
 
 		if(showpiece)
-			to_chat(user, "You press a button, and [showpiece] descends into the floor of the case.")
+			to_chat(user, "<span class='notice'>You press a button, and [showpiece] descends into the floor of the case.</span>")
 			QDEL_NULL(showpiece)
 
-		to_chat(user, "You insert [W] into the case.")
+		to_chat(user, "<span class='notice'>You insert [W] into the case.</span>")
 		showpiece = W
 		added_roundstart = FALSE
 		update_icon()
@@ -304,9 +306,9 @@
 		if(chosen_plaque)
 			if(user.Adjacent(src))
 				trophy_message = chosen_plaque
-				to_chat(user, "You set the plaque's text.")
+				to_chat(user, "<span class='notice'>You set the plaque's text.</span>")
 			else
-				to_chat(user, "You are too far to set the plaque's text.")
+				to_chat(user, "<span class='warning'>You are too far to set the plaque's text!</span>")
 
 		SSpersistence.SaveTrophy(src)
 		return TRUE

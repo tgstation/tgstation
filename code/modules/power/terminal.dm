@@ -8,9 +8,8 @@
 	icon_state = "term"
 	desc = "It's an underfloor wiring terminal for power equipment."
 	level = 1
-	var/obj/machinery/power/master = null
-	anchored = TRUE
 	layer = WIRE_TERMINAL_LAYER //a bit above wires
+	var/obj/machinery/power/master = null
 
 
 /obj/machinery/power/terminal/Initialize()
@@ -25,6 +24,9 @@
 		master = null
 	return ..()
 
+/obj/machinery/power/terminal/should_have_node()
+	return TRUE
+
 /obj/machinery/power/terminal/hide(i)
 	if(i)
 		invisibility = INVISIBILITY_MAXIMUM
@@ -35,17 +37,17 @@
 
 
 /obj/machinery/power/proc/can_terminal_dismantle()
-	. = 0
+	. = FALSE
 
 /obj/machinery/power/apc/can_terminal_dismantle()
-	. = 0
+	. = FALSE
 	if(opened)
-		. = 1
+		. = TRUE
 
 /obj/machinery/power/smes/can_terminal_dismantle()
-	. = 0
+	. = FALSE
 	if(panel_open)
-		. = 1
+		. = TRUE
 
 
 /obj/machinery/power/terminal/proc/dismantle(mob/living/user, obj/item/I)

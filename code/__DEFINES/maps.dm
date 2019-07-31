@@ -33,13 +33,16 @@ require only minor tweaks.
 #define ZTRAIT_STATION "Station"
 #define ZTRAIT_MINING "Mining"
 #define ZTRAIT_REEBE "Reebe"
-#define ZTRAIT_TRANSIT "Transit"
+#define ZTRAIT_RESERVED "Transit/Reserved"
 #define ZTRAIT_AWAY "Away Mission"
 #define ZTRAIT_SPACE_RUINS "Space Ruins"
 #define ZTRAIT_LAVA_RUINS "Lava Ruins"
 
 // number - bombcap is multiplied by this before being applied to bombs
 #define ZTRAIT_BOMBCAP_MULTIPLIER "Bombcap Multiplier"
+
+// number - default gravity if there's no gravity generators or area overrides present
+#define ZTRAIT_GRAVITY "Gravity"
 
 // numeric offsets - e.g. {"Down": -1} means that chasms will fall to z - 1 rather than oblivion
 #define ZTRAIT_UP "Up"
@@ -54,11 +57,18 @@ require only minor tweaks.
     // CROSSLINKED - mixed in with the cross-linked space pool
     #define CROSSLINKED "Cross"
 
+// string - type path of the z-level's baseturf (defaults to space)
+#define ZTRAIT_BASETURF "Baseturf"
+
 // default trait definitions, used by SSmapping
-#define ZTRAITS_CENTCOM list(ZTRAIT_LINKAGE = SELFLOOPING, ZTRAIT_CENTCOM = TRUE)
+#define ZTRAITS_CENTCOM list(ZTRAIT_CENTCOM = TRUE)
 #define ZTRAITS_STATION list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_STATION = TRUE)
 #define ZTRAITS_SPACE list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE)
-#define ZTRAITS_LAVALAND list(ZTRAIT_MINING = TRUE, ZTRAIT_LAVA_RUINS = TRUE, ZTRAIT_BOMBCAP_MULTIPLIER = 2)
+#define ZTRAITS_LAVALAND list(\
+    ZTRAIT_MINING = TRUE, \
+    ZTRAIT_LAVA_RUINS = TRUE, \
+    ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
+    ZTRAIT_BASETURF = /turf/open/lava/smooth/lava_land_surface)
 #define ZTRAITS_REEBE list(ZTRAIT_REEBE = TRUE, ZTRAIT_BOMBCAP_MULTIPLIER = 0.5)
 
 #define DL_NAME "name"
@@ -76,6 +86,8 @@ require only minor tweaks.
 #define CAMERA_LOCK_CENTCOM 4
 #define CAMERA_LOCK_REEBE 8
 
+//Reserved/Transit turf type
+#define RESERVED_TURF_TYPE /turf/open/space/basic			//What the turf is when not being used
 
 //Ruin Generation
 

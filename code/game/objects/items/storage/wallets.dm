@@ -1,15 +1,27 @@
 /obj/item/storage/wallet
 	name = "wallet"
 	desc = "It can hold a few small and personal things."
-	storage_slots = 4
 	icon_state = "wallet"
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
-	can_hold = list(
+	slot_flags = ITEM_SLOT_ID
+	component_type = /datum/component/storage/concrete/wallet
+
+	var/obj/item/card/id/front_id = null
+	var/obj/item/card/id/cached_front_id = null
+	var/list/combined_access
+	var/cached_flat_icon
+
+/obj/item/storage/wallet/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage/concrete/wallet)
+	STR.max_items = 4
+	STR.set_holdable(list(
 		/obj/item/stack/spacecash,
+		/obj/item/holochip,
 		/obj/item/card,
 		/obj/item/clothing/mask/cigarette,
-		/obj/item/device/flashlight/pen,
+		/obj/item/flashlight/pen,
 		/obj/item/seeds,
 		/obj/item/stack/medical,
 		/obj/item/toy/crayon,
@@ -26,48 +38,75 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/screwdriver,
-		/obj/item/stamp)
-	slot_flags = SLOT_ID
+		/obj/item/stamp),
+		list(/obj/item/screwdriver/power))
 
-	var/obj/item/card/id/front_id = null
-	var/list/combined_access = list()
-
-
-/obj/item/storage/wallet/remove_from_storage(obj/item/W, atom/new_location)
-	. = ..(W, new_location)
-	if(.)
-		if(istype(W, /obj/item/card/id))
-			if(W == front_id)
-				front_id = null
-			refreshID()
-			update_icon()
+/obj/item/storage/wallet/Exited(atom/movable/AM)
+	. = ..()
+	refreshID()
 
 /obj/item/storage/wallet/proc/refreshID()
-	combined_access.Cut()
+	LAZYCLEARLIST(combined_access)
+	if(!(front_id in src))
+		front_id = null
 	for(var/obj/item/card/id/I in contents)
 		if(!front_id)
 			front_id = I
-			update_icon()
+		LAZYINITLIST(combined_access)
 		combined_access |= I.access
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		if(H.wear_id == src)
+			H.sec_hud_set_ID()
+	update_icon()
+	update_label()
 
-/obj/item/storage/wallet/handle_item_insertion(obj/item/W, prevent_warning = 0)
+/obj/item/storage/wallet/Entered(atom/movable/AM)
 	. = ..()
-	if(.)
-		if(istype(W, /obj/item/card/id))
-			refreshID()
+	refreshID()
 
-/obj/item/storage/wallet/update_icon()
-	icon_state = "wallet"
+/obj/item/storage/wallet/update_icon(list/override_overlays)
+	if(!override_overlays && front_id == cached_front_id) //Icon didn't actually change
+		return
+	cut_overlays()
+	cached_flat_icon = null
+	cached_front_id = front_id
 	if(front_id)
-		icon_state = "wallet_[front_id.icon_state]"
+		var/list/add_overlays = list()
+		add_overlays += mutable_appearance(front_id.icon, front_id.icon_state)
+		if(override_overlays)
+			add_overlays += override_overlays
+		else
+			add_overlays += front_id.overlays
+		add_overlays += mutable_appearance(icon, "wallet_overlay")
+		add_overlay(add_overlays)
 
+/obj/item/storage/wallet/proc/get_cached_flat_icon()
+	if(!cached_flat_icon)
+		cached_flat_icon = getFlatIcon(src)
+	return cached_flat_icon
 
+/obj/item/storage/wallet/get_examine_string(mob/user, thats = FALSE)
+	if(front_id)
+		return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]" //displays all overlays in chat
+	return ..()
+
+/obj/item/storage/wallet/proc/update_label()
+	if(front_id)
+		name = "wallet displaying [front_id]"
+	else
+		name = "wallet"
+
+/obj/item/storage/wallet/examine()
+	. = ..()
+	if(front_id)
+		. += "<span class='notice'>Alt-click to remove the id.</span>"
 
 /obj/item/storage/wallet/GetID()
 	return front_id
 
 /obj/item/storage/wallet/GetAccess()
-	if(combined_access.len)
+	if(LAZYLEN(combined_access))
 		return combined_access
 	else
 		return ..()
@@ -76,17 +115,5 @@
 	icon_state = "random_wallet"
 
 /obj/item/storage/wallet/random/PopulateContents()
-	var/item1_type = pick( /obj/item/stack/spacecash/c10, /obj/item/stack/spacecash/c100, /obj/item/stack/spacecash/c1000, /obj/item/stack/spacecash/c20, /obj/item/stack/spacecash/c200, /obj/item/stack/spacecash/c50, /obj/item/stack/spacecash/c500)
-	var/item2_type
-	if(prob(50))
-		item2_type = pick( /obj/item/stack/spacecash/c10, /obj/item/stack/spacecash/c100, /obj/item/stack/spacecash/c1000, /obj/item/stack/spacecash/c20, /obj/item/stack/spacecash/c200, /obj/item/stack/spacecash/c50, /obj/item/stack/spacecash/c500)
-	var/item3_type = pick( /obj/item/coin/silver, /obj/item/coin/silver, /obj/item/coin/gold, /obj/item/coin/iron, /obj/item/coin/iron, /obj/item/coin/iron )
-
-	spawn(2)
-		if(item1_type)
-			new item1_type(src)
-		if(item2_type)
-			new item2_type(src)
-		if(item3_type)
-			new item3_type(src)
-	update_icon()
+	new /obj/item/holochip(src, rand(5,30))
+	icon_state = "wallet"

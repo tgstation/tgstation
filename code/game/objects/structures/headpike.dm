@@ -13,7 +13,6 @@
 	icon_state = "headpike-bone"
 	bonespear = TRUE
 
-
 /obj/structure/headpike/CheckParts(list/parts_list)
 	..()
 	victim = locate(/obj/item/bodypart/head) in parts_list
@@ -38,7 +37,9 @@
 		add_overlay(H)
 
 /obj/structure/headpike/attack_hand(mob/user)
-	..()
+	. = ..()
+	if(.)
+		return
 	to_chat(user, "<span class='notice'>You take down [src].</span>")
 	victim.forceMove(drop_location())
 	victim = null

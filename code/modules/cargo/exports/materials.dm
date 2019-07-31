@@ -14,10 +14,10 @@
 	if(!isitem(O))
 		return 0
 	var/obj/item/I = O
-	if(!(material_id in I.materials))
+	if(!(getmaterialref(material_id) in I.materials))
 		return 0
 
-	var/amount = I.materials[material_id]
+	var/amount = I.materials[getmaterialref(material_id)]
 
 	if(istype(I, /obj/item/stack))
 		var/obj/item/stack/S = I
@@ -29,66 +29,58 @@
 
 // Materials. Nothing but plasma is really worth selling. Better leave it all to RnD and sell some plasma instead.
 
-// Bananium. Exporting it makes the clown cry. Priceless.
 /datum/export/material/bananium
-	cost = 5000
-	material_id = MAT_BANANIUM
+	cost = 1000
+	material_id = /datum/material/bananium
 	message = "cm3 of bananium"
 
-// Diamonds. Rare and expensive.
 /datum/export/material/diamond
-	cost = 2500
-	material_id = MAT_DIAMOND
+	cost = 500
+	material_id = /datum/material/diamond
 	message = "cm3 of diamonds"
 
-// Plasma. The oil of 26 century. The reason why you are here.
 /datum/export/material/plasma
-	cost = 300
+	cost = 200
 	k_elasticity = 0
-	material_id = MAT_PLASMA
+	material_id = /datum/material/plasma
 	message = "cm3 of plasma"
 
-// Uranium. Still useful for both power generation and nuclear annihilation.
 /datum/export/material/uranium
-	cost = 400
-	material_id = MAT_URANIUM
+	cost = 100
+	material_id = /datum/material/uranium
 	message = "cm3 of uranium"
 
-// Gold. Used in electronics and corrosion-resistant plating.
 /datum/export/material/gold
-	cost = 250
-	material_id = MAT_GOLD
+	cost = 125
+	material_id = /datum/material/gold
 	message = "cm3 of gold"
 
-// Silver.
 /datum/export/material/silver
-	cost = 100
-	material_id = MAT_SILVER
+	cost = 50
+	material_id = /datum/material/silver
 	message = "cm3 of silver"
 
-// Titanium.
 /datum/export/material/titanium
-	cost = 250
-	material_id = MAT_TITANIUM
+	cost = 125
+	material_id = /datum/material/titanium
 	message = "cm3 of titanium"
 
-// Plastitanium.
 /datum/export/material/plastitanium
-	cost = 550
-	material_id = MAT_TITANIUM // code can only check for one material_id; plastitanium is half plasma, half titanium, so ((250 x 250) + (250 x 500)) / 250
+	cost = 325 // plasma + titanium costs
+	material_id = /datum/material/titanium // code can only check for one material_id; plastitanium is half plasma, half titanium
 	message = "cm3 of plastitanium"
 
-// Metal. Common building material.
 /datum/export/material/metal
+	cost = 5
 	message = "cm3 of metal"
-	material_id = MAT_METAL
+	material_id = /datum/material/iron
 	export_types = list(
 		/obj/item/stack/sheet/metal, /obj/item/stack/tile/plasteel,
 		/obj/item/stack/rods, /obj/item/stack/ore, /obj/item/coin)
 
-// Glass. Common building material.
 /datum/export/material/glass
+	cost = 5
 	message = "cm3 of glass"
-	material_id = MAT_GLASS
+	material_id = /datum/material/glass
 	export_types = list(/obj/item/stack/sheet/glass, /obj/item/stack/ore,
 		/obj/item/shard)

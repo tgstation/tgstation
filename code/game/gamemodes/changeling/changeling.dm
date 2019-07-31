@@ -1,6 +1,6 @@
 GLOBAL_LIST_INIT(possible_changeling_IDs, list("Alpha","Beta","Gamma","Delta","Epsilon","Zeta","Eta","Theta","Iota","Kappa","Lambda","Mu","Nu","Xi","Omicron","Pi","Rho","Sigma","Tau","Upsilon","Phi","Chi","Psi","Omega"))
 GLOBAL_LIST_INIT(slots, list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store"))
-GLOBAL_LIST_INIT(slot2slot, list("head" = slot_head, "wear_mask" = slot_wear_mask, "neck" = slot_neck, "back" = slot_back, "wear_suit" = slot_wear_suit, "w_uniform" = slot_w_uniform, "shoes" = slot_shoes, "belt" = slot_belt, "gloves" = slot_gloves, "glasses" = slot_glasses, "ears" = slot_ears, "wear_id" = slot_wear_id, "s_store" = slot_s_store))
+GLOBAL_LIST_INIT(slot2slot, list("head" = SLOT_HEAD, "wear_mask" = SLOT_WEAR_MASK, "neck" = SLOT_NECK, "back" = SLOT_BACK, "wear_suit" = SLOT_WEAR_SUIT, "w_uniform" = SLOT_W_UNIFORM, "shoes" = SLOT_SHOES, "belt" = SLOT_BELT, "gloves" = SLOT_GLOVES, "glasses" = SLOT_GLASSES, "ears" = SLOT_EARS, "wear_id" = SLOT_WEAR_ID, "s_store" = SLOT_S_STORE))
 GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "wear_mask" = /obj/item/clothing/mask/changeling, "back" = /obj/item/changeling, "wear_suit" = /obj/item/clothing/suit/changeling, "w_uniform" = /obj/item/clothing/under/changeling, "shoes" = /obj/item/clothing/shoes/changeling, "belt" = /obj/item/changeling, "gloves" = /obj/item/clothing/gloves/changeling, "glasses" = /obj/item/clothing/glasses/changeling, "ears" = /obj/item/changeling, "wear_id" = /obj/item/changeling, "s_store" = /obj/item/changeling))
 GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our this objective to all lings
 
@@ -8,6 +8,7 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 /datum/game_mode/changeling
 	name = "changeling"
 	config_tag = "changeling"
+	report_type = "changeling"
 	antag_flag = ROLE_CHANGELING
 	false_report_weight = 10
 	restricted_jobs = list("AI", "Cyborg")
@@ -52,6 +53,7 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 			changeling.restricted_roles = restricted_jobs
 		return 1
 	else
+		setup_error = "Not enough changeling candidates"
 		return 0
 
 /datum/game_mode/changeling/post_setup()
@@ -69,7 +71,7 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 		GLOB.changeling_team_objective_type = pick(possible_team_objectives)
 
 	for(var/datum/mind/changeling in changelings)
-		log_game("[changeling.key] (ckey) has been selected as a changeling")
+		log_game("[key_name(changeling)] has been selected as a changeling")
 		var/datum/antagonist/changeling/new_antag = new()
 		new_antag.team_mode = TRUE
 		changeling.add_antag_datum(new_antag)
@@ -82,10 +84,10 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 		return
 	if(changelings.len <= (changelingcap - 2) || prob(100 - (csc * 2)))
 		if(ROLE_CHANGELING in character.client.prefs.be_special)
-			if(!jobban_isbanned(character, ROLE_CHANGELING) && !jobban_isbanned(character, ROLE_SYNDICATE))
+			if(!is_banned_from(character.ckey, list(ROLE_CHANGELING, ROLE_SYNDICATE)) && !QDELETED(character))
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))
-						character.mind.make_Changling()
+						character.mind.make_Changeling()
 						changelings += character.mind
 
 /datum/game_mode/changeling/generate_report()

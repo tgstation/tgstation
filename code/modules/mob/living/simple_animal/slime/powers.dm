@@ -48,34 +48,58 @@
 	var/mob/living/simple_animal/slime/S = owner
 	S.Feed()
 
-/mob/living/simple_animal/slime/proc/CanFeedon(mob/living/M)
+/mob/living/simple_animal/slime/proc/CanFeedon(mob/living/M, silent = FALSE)
 	if(!Adjacent(M))
-		return 0
+		return FALSE
 
 	if(buckled)
 		Feedstop()
-		return 0
+		return FALSE
+
+	if(issilicon(M))
+		return FALSE
+
+	if(isanimal(M))
+		var/mob/living/simple_animal/S = M
+		if(S.damage_coeff[TOX] <= 0 && S.damage_coeff[CLONE] <= 0) //The creature wouldn't take any damage, it must be too weird even for us.
+			if(silent)
+				return FALSE
+			to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \
+			"This subject does not have life energy", "This subject is empty", \
+			"I am not satisified", "I can not feed from this subject", \
+			"I do not feel nourished", "This subject is not food")]!</span>")
+			return FALSE
 
 	if(isslime(M))
+		if(silent)
+			return FALSE
 		to_chat(src, "<span class='warning'><i>I can't latch onto another slime...</i></span>")
-		return 0
+		return FALSE
 
 	if(docile)
+		if(silent)
+			return FALSE
 		to_chat(src, "<span class='notice'><i>I'm not hungry anymore...</i></span>")
-		return 0
+		return FALSE
 
 	if(stat)
+		if(silent)
+			return FALSE
 		to_chat(src, "<span class='warning'><i>I must be conscious to do this...</i></span>")
-		return 0
+		return FALSE
 
 	if(M.stat == DEAD)
+		if(silent)
+			return FALSE
 		to_chat(src, "<span class='warning'><i>This subject does not have a strong enough life energy...</i></span>")
-		return 0
+		return FALSE
 
 	if(locate(/mob/living/simple_animal/slime) in M.buckled_mobs)
+		if(silent)
+			return FALSE
 		to_chat(src, "<span class='warning'><i>Another slime is already feeding on this subject...</i></span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /mob/living/simple_animal/slime/proc/Feedon(mob/living/M)
 	M.unbuckle_all_mobs(force=1) //Slimes rip other mobs (eg: shoulder parrots) off (Slimes Vs Slimes is already handled in CanFeedon())
@@ -160,7 +184,7 @@
 				var/mob/living/simple_animal/slime/M
 				M = new(loc, child_colour)
 				if(ckey)
-					M.nutrition = new_nutrition //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
+					M.set_nutrition(new_nutrition) //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
 				M.powerlevel = new_powerlevel
 				if(i != 1)
 					step_away(M,src)

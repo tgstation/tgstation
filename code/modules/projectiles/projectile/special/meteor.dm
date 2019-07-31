@@ -4,10 +4,10 @@
 	icon_state = "small1"
 	damage = 0
 	damage_type = BRUTE
-	nodamage = 1
+	nodamage = TRUE
 	flag = "bullet"
 
-/obj/item/projectile/meteor/Collide(atom/A)
+/obj/item/projectile/meteor/Bump(atom/A)
 	if(A == firer)
 		forceMove(A.loc)
 		return

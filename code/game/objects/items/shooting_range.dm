@@ -32,9 +32,11 @@
 	return TRUE
 
 /obj/item/target/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(pinnedLoc)
 		pinnedLoc.removeTarget(user)
-	..()
 
 /obj/item/target/syndicate
 	icon_state = "target_s"
@@ -58,7 +60,7 @@
 #define DECALTYPE_BULLET 2
 
 /obj/item/target/clown/bullet_act(obj/item/projectile/P)
-	..()
+	. = ..()
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
 
 /obj/item/target/bullet_act(obj/item/projectile/P)
@@ -87,8 +89,8 @@
 		else
 			bullet_hole.icon_state = "dent"
 		add_overlay(bullet_hole)
-		return
-	return -1
+		return BULLET_ACT_HIT
+	return BULLET_ACT_FORCE_PIERCE
 
 #undef DECALTYPE_SCORCH
 #undef DECALTYPE_BULLET

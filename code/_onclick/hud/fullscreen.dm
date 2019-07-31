@@ -15,11 +15,8 @@
 	screen.icon_state = "[initial(screen.icon_state)][severity]"
 	screen.severity = severity
 	if (client && screen.should_show_to(src))
+		screen.update_for_view(client.view)
 		client.screen += screen
-		if (screen.screen_loc == "CENTER-7,CENTER-7" && screen.view != client.view)
-			var/list/actualview = getviewsize(client.view)
-			screen.view = client.view
-			screen.transform = matrix(actualview[1]/FULLSCREEN_OVERLAY_RESOLUTION_X, 0, 0, 0, actualview[2]/FULLSCREEN_OVERLAY_RESOLUTION_Y, 0)
 
 	return screen
 
@@ -58,6 +55,7 @@
 		for(var/category in screens)
 			screen = screens[category]
 			if(screen.should_show_to(src))
+				screen.update_for_view(client.view)
 				client.screen |= screen
 			else
 				client.screen -= screen
@@ -72,6 +70,12 @@
 	var/view = 7
 	var/severity = 0
 	var/show_when_dead = FALSE
+
+/obj/screen/fullscreen/proc/update_for_view(client_view)
+	if (screen_loc == "CENTER-7,CENTER-7" && view != client_view)
+		var/list/actualview = getviewsize(client_view)
+		view = client_view
+		transform = matrix(actualview[1]/FULLSCREEN_OVERLAY_RESOLUTION_X, 0, 0, 0, actualview[2]/FULLSCREEN_OVERLAY_RESOLUTION_Y, 0)
 
 /obj/screen/fullscreen/proc/should_show_to(mob/mymob)
 	if(!show_when_dead && mymob.stat == DEAD)
@@ -106,11 +110,6 @@
 	layer = BLIND_LAYER
 	plane = FULLSCREEN_PLANE
 
-/obj/screen/fullscreen/depression
-	icon_state = "depression"
-	layer = FLASH_LAYER
-	plane = FULLSCREEN_PLANE
-
 /obj/screen/fullscreen/curse
 	icon_state = "curse"
 	layer = CURSE_LAYER
@@ -118,11 +117,6 @@
 
 /obj/screen/fullscreen/impaired
 	icon_state = "impairedoverlay"
-
-/obj/screen/fullscreen/blurry
-	icon = 'icons/mob/screen_gen.dmi'
-	screen_loc = "WEST,SOUTH to EAST,NORTH"
-	icon_state = "blurry"
 
 /obj/screen/fullscreen/flash
 	icon = 'icons/mob/screen_gen.dmi'

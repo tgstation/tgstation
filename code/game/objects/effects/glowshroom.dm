@@ -36,7 +36,7 @@
 
 /obj/structure/glowshroom/examine(mob/user)
 	. = ..()
-	to_chat(user, "This is a [generation]\th generation [name]!")
+	. += "This is a [generation]\th generation [name]!"
 
 /obj/structure/glowshroom/Destroy()
 	if(myseed)
@@ -78,7 +78,7 @@
 				pixel_x = -32
 		icon_state = "[base_icon_state][rand(1,3)]"
 	else //if on the floor, glowshroom on-floor sprite
-		icon_state = "[base_icon_state]f"
+		icon_state = base_icon_state
 
 	addtimer(CALLBACK(src, .proc/Spread), delay)
 

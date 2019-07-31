@@ -5,7 +5,6 @@
 	icon_state = "chronogun"
 	item_state = "chronogun"
 	w_class = WEIGHT_CLASS_NORMAL
-	harmful = FALSE
 
 	var/mob/living/current_target
 	var/last_check = 0
@@ -117,6 +116,8 @@
 		new /obj/effect/temp_visual/heal(get_turf(target), "#80F5FF")
 	target.adjustBruteLoss(-4)
 	target.adjustFireLoss(-4)
+	target.adjustToxLoss(-1)
+	target.adjustOxyLoss(-1)
 	return
 
 /obj/item/gun/medbeam/proc/on_beam_release(var/mob/living/target)

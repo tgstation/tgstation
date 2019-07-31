@@ -6,13 +6,13 @@
 	icon_state = "telecrystal"
 	w_class = WEIGHT_CLASS_TINY
 	max_amount = 50
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 
 /obj/item/stack/telecrystal/attack(mob/target, mob/user)
 	if(target == user) //You can't go around smacking people with crystals to find out if they have an uplink or not.
 		for(var/obj/item/implant/uplink/I in target)
 			if(I && I.imp_in)
-				GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, I)
+				var/datum/component/uplink/hidden_uplink = I.GetComponent(/datum/component/uplink)
 				if(hidden_uplink)
 					hidden_uplink.telecrystals += amount
 					use(amount)
@@ -21,6 +21,7 @@
 		return ..()
 
 /obj/item/stack/telecrystal/afterattack(obj/item/I, mob/user, proximity)
+	. = ..()
 	if(istype(I, /obj/item/cartridge/virus/frame))
 		var/obj/item/cartridge/virus/frame/cart = I
 		if(!cart.charges)
@@ -29,8 +30,6 @@
 		cart.telecrystals += amount
 		use(amount)
 		to_chat(user, "<span class='notice'>You slot [src] into [cart].  The next time it's used, it will also give telecrystals.</span>")
-	else
-		return ..()
 
 /obj/item/stack/telecrystal/five
 	amount = 5

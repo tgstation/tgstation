@@ -18,7 +18,7 @@
   * optional state datum/ui_state The state used to determine status.
  **/
 /datum/proc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	return -1 // Not implemented.
+	return FALSE // Not implemented.
 
  /**
   * public
@@ -49,6 +49,20 @@
 	if(!ui || ui.status != UI_INTERACTIVE)
 		return 1 // If UI is not interactive or usr calling Topic is not the UI user, bail.
 
+ /**
+  * public
+  *
+  * Called on an object when a tgui object is being created, allowing you to customise the html
+  * For example: inserting a custom stylesheet that you need in the head
+  *
+  * For this purpose, some tags are available in the html, to be parsed out with replacetext
+  * (customheadhtml) - Additions to the head tag
+  *
+  * required html the html base text
+  *
+ **/
+/datum/proc/ui_base_html(html)
+	return html
 
  /**
   * private
@@ -66,6 +80,14 @@
   * Used to track UIs for a mob.
  **/
 /mob/var/list/open_uis = list()
+ /**
+  * public
+  *
+  * Called on a UI's object when the UI is closed, not to be confused with client/verb/uiclose(), which closes the ui window
+  *
+  *
+ **/
+/datum/proc/ui_close()
 
  /**
   * verb

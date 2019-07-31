@@ -21,9 +21,9 @@
 	toggle(1)
 
 /obj/structure/destructible/clockwork/powered/clockwork_obelisk/examine(mob/user)
-	..()
+	. = ..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		to_chat(user, "<span class='nzcrentr_small'>It requires <b>[DisplayPower(hierophant_cost)]</b> to broadcast over the Hierophant Network, and <b>[DisplayPower(gateway_cost)]</b> to open a Spatial Gateway.</span>")
+		. += "<span class='nzcrentr_small'>It requires <b>[DisplayPower(hierophant_cost)]</b> to broadcast over the Hierophant Network, and <b>[DisplayPower(gateway_cost)]</b> to open a Spatial Gateway.</span>"
 
 /obj/structure/destructible/clockwork/powered/clockwork_obelisk/can_be_unfasten_wrench(mob/user, silent)
 	if(active)
@@ -42,6 +42,9 @@
 	return affected
 
 /obj/structure/destructible/clockwork/powered/clockwork_obelisk/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(!is_servant_of_ratvar(user) || !can_access_clockwork_power(src, hierophant_cost) || !anchored)
 		to_chat(user, "<span class='warning'>You place your hand on [src], but it doesn't react.</span>")
 		return

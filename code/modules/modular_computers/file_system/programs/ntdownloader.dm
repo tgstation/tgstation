@@ -17,7 +17,7 @@
 	var/download_completion = 0 //GQ of downloaded data.
 	var/download_netspeed = 0
 	var/downloaderror = ""
-	var/obj/item/device/modular_computer/my_computer = null
+	var/obj/item/modular_computer/my_computer = null
 
 /datum/computer_file/program/ntnetdownload/proc/begin_file_download(filename)
 	if(downloaded_file)

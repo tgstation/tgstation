@@ -14,7 +14,7 @@
 
 		var/obj/item/reagent_containers/syringe/S = SG.syringes[1]
 
-		S.reagents.trans_to(BB, S.reagents.total_volume)
+		S.reagents.trans_to(BB, S.reagents.total_volume, transfered_by = user)
 		BB.name = S.name
 		var/obj/item/projectile/bullet/dart/D = BB
 		D.piercing = S.proj_piercing
@@ -35,7 +35,7 @@
 		var/obj/item/gun/chem/CG = loc
 		if(CG.syringes_left <= 0)
 			return
-		CG.reagents.trans_to(BB, 15)
+		CG.reagents.trans_to(BB, 15, transfered_by = user)
 		BB.name = "chemical dart"
 		CG.syringes_left--
 	..()

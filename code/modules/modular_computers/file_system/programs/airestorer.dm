@@ -44,6 +44,7 @@
 		if("PRG_beginReconstruction")
 			if(A && A.health < 100)
 				restoring = TRUE
+				A.notify_ghost_cloning("Your core files are being restored!", source = computer)
 			return TRUE
 		if("PRG_eject")
 			if(computer.all_components[MC_AI])
@@ -56,7 +57,7 @@
 	..()
 	if(!restoring)	//Put the check here so we don't check for an ai all the time
 		return
-	var/obj/item/device/aicard/cardhold = get_ai(2)
+	var/obj/item/aicard/cardhold = get_ai(2)
 
 	var/obj/item/computer_hardware/ai_slot/ai_slot = get_ai(1)
 
@@ -94,7 +95,7 @@
 	// A shortcut for getting the AI stored inside the computer. The program already does necessary checks.
 	AI = get_ai()
 
-	var/obj/item/device/aicard/aicard = get_ai(2)
+	var/obj/item/aicard/aicard = get_ai(2)
 
 	if(!aicard)
 		data["nocard"] = TRUE
@@ -103,7 +104,7 @@
 		if(!AI)
 			data["error"] = "No AI located"
 		else
-			var/obj/item/device/aicard/cardhold = AI.loc
+			var/obj/item/aicard/cardhold = AI.loc
 			if(cardhold.flush)
 				data["error"] = "Flush in progress"
 			else

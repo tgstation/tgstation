@@ -11,17 +11,23 @@
 	name = "plating"
 	icon_state = "plating"
 	intact = FALSE
+	baseturfs = /turf/baseturf_bottom
+	footstep = FOOTSTEP_PLATING
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
 	var/attachment_holes = TRUE
 
 /turf/open/floor/plating/examine(mob/user)
-	..()
+	. = ..()
 	if(broken || burnt)
-		to_chat(user, "<span class='notice'>It looks like the dents could be <i>welded</i> smooth.</span>")
+		. += "<span class='notice'>It looks like the dents could be <i>welded</i> smooth.</span>"
 		return
 	if(attachment_holes)
-		to_chat(user, "<span class='notice'>There are a few attachment holes for a new <i>tile</i> or reinforcement <i>rods</i>.</span>")
+		. += "<span class='notice'>There are a few attachment holes for a new <i>tile</i> or reinforcement <i>rods</i>.</span>"
 	else
-		to_chat(user, "<span class='notice'>You might be able to build ontop of it with some <i>tiles</i>...</span>")
+		. += "<span class='notice'>You might be able to build ontop of it with some <i>tiles</i>...</span>"
 
 /turf/open/floor/plating/Initialize()
 	if (!broken_states)
@@ -55,7 +61,7 @@
 			to_chat(user, "<span class='notice'>You begin reinforcing the floor...</span>")
 			if(do_after(user, 30, target = src))
 				if (R.get_amount() >= 2 && !istype(src, /turf/open/floor/engine))
-					ChangeTurf(/turf/open/floor/engine)
+					PlaceOnTop(/turf/open/floor/engine)
 					playsound(src, 'sound/items/deconstruct.ogg', 80, 1)
 					R.use(2)
 					to_chat(user, "<span class='notice'>You reinforce the floor.</span>")
@@ -70,7 +76,7 @@
 			var/obj/item/stack/tile/W = C
 			if(!W.use(1))
 				return
-			var/turf/open/floor/T = ChangeTurf(W.turf_type)
+			var/turf/open/floor/T = PlaceOnTop(W.turf_type)
 			if(istype(W, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
 				var/obj/item/stack/tile/light/L = W
 				var/turf/open/floor/light/F = T
@@ -87,6 +93,9 @@
 		broken = FALSE
 
 	return TRUE
+
+/turf/open/floor/plating/make_plating()
+	return
 
 /turf/open/floor/plating/foam
 	name = "metal foam plating"
@@ -120,9 +129,20 @@
 		else
 			to_chat(user, "<span class='danger'>You hit [src], to no effect!</span>")
 
+/turf/open/floor/plating/foam/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	if(the_rcd.mode == RCD_FLOORWALL)
+		return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 1)
+
+/turf/open/floor/plating/foam/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	if(passed_mode == RCD_FLOORWALL)
+		to_chat(user, "<span class='notice'>You build a floor.</span>")
+		ChangeTurf(/turf/open/floor/plating)
+		return TRUE
+	return FALSE
+
 /turf/open/floor/plating/foam/ex_act()
 	..()
 	ScrapeAway()
 
-/turf/open/floor/plating/foam/tool_act(mob/living/user, obj/tool/I, tool_type)
+/turf/open/floor/plating/foam/tool_act(mob/living/user, obj/item/I, tool_type)
 	return

@@ -537,7 +537,7 @@
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bA" = (
-/obj/item/device/toner,
+/obj/item/toner,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bB" = (
@@ -595,7 +595,7 @@
 /obj/item/paper/crumpled/ruins/originalcontent,
 /obj/item/paper/crumpled/ruins/originalcontent,
 /obj/item/paper/crumpled/ruins/originalcontent,
-/obj/item/device/gps{
+/obj/item/gps{
 	gpstag = "Pulpy Signal"
 	},
 /turf/open/indestructible/paper,
@@ -910,6 +910,10 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"Ns" = (
+/obj/item/paper/secretrecipe,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 
@@ -2246,7 +2250,7 @@ ap
 az
 af
 al
-aA
+Ns
 bW
 ca
 af

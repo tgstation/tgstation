@@ -1,0 +1,54 @@
+<ui-display title='Nanite Programming'>
+{{#if !data.has_disk}}
+  <ui-notice>Insert a nanite program disk.</ui-notice>
+{{else}}
+  <ui-button icon='eject' action='eject'>Eject Disk</ui-button>
+  {{#if !data.has_program}}
+    <ui-notice>No program detected.</ui-notice>
+  {{else}}
+    <ui-section>
+      <ui-display title='{{data.name}}'>
+        {{data.desc}}
+      </ui-display>
+    </ui-section>
+    <ui-section>
+      <ui-section label='Program Info'>
+      	Nanites Consumed: {{data.use_rate}}<br>
+        {{#if data.can_trigger}}
+          Trigger Cost: {{data.trigger_cost}}u<br>
+        {{/if}}
+      </ui-section>
+
+      <ui-section label='Status'>
+        <ui-button
+          icon='{{data.activated ? "toggle-on" : "toggle-off" }}'
+          action='toggle_active'>
+          {{data.activated ? "Active" : "Inactive" }}
+        </ui-button>
+      </ui-section>
+
+      <ui-section label='Settings'>
+        <ui-button icon='pencil' action='set_activation_delay'></ui-button> Activation Delay: {{data.activation_delay}} <br>
+        <ui-button icon='pencil' action='set_timer'></ui-button> Timer: {{data.timer}} <br>
+        <ui-button icon='pencil' action='set_timer_type'></ui-button> Timer Type: {{data.timer_type}} <br>
+      </ui-section>
+
+      <ui-section label='Codes'>
+        <ui-button icon='pencil' action='set_code' params='{"target_code": "activation"}'></ui-button> Activation Code: {{data.activation_code}} <br>
+        <ui-button icon='pencil' action='set_code' params='{"target_code": "deactivation"}'></ui-button> Deactivation Code: {{data.deactivation_code}} <br>
+        <ui-button icon='pencil' action='set_code' params='{"target_code": "kill"}'></ui-button> Kill Code: {{data.kill_code}} <br>
+        {{#if data.can_trigger}}
+          <ui-button icon='pencil' action='set_code' params='{"target_code": "trigger"}'></ui-button> Trigger Code: {{data.trigger_code}} <br>
+        {{/if}}
+      </ui-section>
+
+      {{#if data.has_extra_settings}}
+        <ui-section label='Special'>
+          {{#each data.extra_settings}}
+            <ui-button icon='pencil' action='set_extra_setting' params='{"target_setting": "{{name}}"}'></ui-button> {{name}}: {{value}} <br>
+          {{/each}}
+        </ui-section>
+	    {{/if}}
+    </ui-section>
+  {{/if}}
+{{/if}}

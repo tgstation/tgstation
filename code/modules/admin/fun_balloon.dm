@@ -6,7 +6,7 @@
 	anchored = TRUE
 	var/popped = FALSE
 
-/obj/effect/fun_balloon/New()
+/obj/effect/fun_balloon/Initialize()
 	. = ..()
 	SSobj.processing |= src
 
@@ -31,13 +31,15 @@
 	playsound(get_turf(src), 'sound/items/party_horn.ogg', 50, 1, -1)
 	qdel(src)
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/fun_balloon/attack_ghost(mob/user)
 	if(!user.client || !user.client.holder || popped)
 		return
-	switch(alert("Pop [src]?","Fun Balloon","Yes","No"))
-		if("Yes")
-			effect()
-			pop()
+	var/confirmation = alert("Pop [src]?","Fun Balloon","Yes","No")
+	if(confirmation == "Yes" && !popped)
+		popped = TRUE
+		effect()
+		pop()
 
 /obj/effect/fun_balloon/sentience
 	name = "sentience fun balloon"
@@ -90,50 +92,30 @@
 	icon_state = "syndballoon"
 	anchored = TRUE
 
-/obj/effect/station_crash/New()
+/obj/effect/station_crash/Initialize()
+	..()
 	for(var/S in SSshuttle.stationary)
 		var/obj/docking_port/stationary/SM = S
 		if(SM.id == "emergency_home")
 			var/new_dir = turn(SM.dir, 180)
 			SM.forceMove(get_ranged_target_turf(SM, new_dir, rand(3,15)))
 			break
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
-
-//Shuttle Build
-
-/obj/effect/shuttle_build
-	name = "shuttle_build"
-	desc = "Some assembly required."
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "syndballoon"
-	anchored = TRUE
-
-/obj/effect/shuttle_build/New()
-	SSshuttle.emergency.initiate_docking(SSshuttle.getDock("emergency_home"))
-	qdel(src)
 
 //Arena
 
 /obj/effect/forcefield/arena_shuttle
 	name = "portal"
+	timeleft = 0
 	var/list/warp_points
 
 /obj/effect/forcefield/arena_shuttle/Initialize()
 	. = ..()
-	warp_points = get_area_turfs(/area/shuttle/escape)
-	for(var/thing in warp_points)
-		CHECK_TICK
-		var/turf/T = thing
-		if(istype(T.loc, /area/shuttle/escape/backup))
-			warp_points -= T
-			continue
-		for(var/atom/movable/TAM in T)
-			if(TAM.density && TAM.anchored)
-				warp_points -= T
-				break
+	for(var/obj/effect/landmark/shuttle_arena_safe/exit in GLOB.landmarks_list)
+		warp_points += exit
 
-/obj/effect/forcefield/arena_shuttle/CollidedWith(atom/movable/AM)
+/obj/effect/forcefield/arena_shuttle/Bumped(atom/movable/AM)
 	if(!isliving(AM))
 		return
 
@@ -141,7 +123,7 @@
 	if(L.pulling && istype(L.pulling, /obj/item/bodypart/head))
 		to_chat(L, "Your offering is accepted. You may pass.")
 		qdel(L.pulling)
-		var/turf/LA = pick(warp_points)
+		var/turf/LA = get_turf(pick(warp_points))
 		L.forceMove(LA)
 		L.hallucination = 0
 		to_chat(L, "<span class='reallybig redtext'>The battle is won. Your bloodlust subsides.</span>")
@@ -161,9 +143,10 @@
 
 /obj/effect/forcefield/arena_shuttle_entrance
 	name = "portal"
+	timeleft = 0
 	var/list/warp_points = list()
 
-/obj/effect/forcefield/arena_shuttle_entrance/CollidedWith(atom/movable/AM)
+/obj/effect/forcefield/arena_shuttle_entrance/Bumped(atom/movable/AM)
 	if(!isliving(AM))
 		return
 
@@ -175,12 +158,13 @@
 	var/mob/living/M = AM
 	M.forceMove(get_turf(LA))
 	to_chat(M, "<span class='reallybig redtext'>You're trapped in a deadly arena! To escape, you'll need to drag a severed head to the escape portals.</span>")
-	spawn()
-		var/obj/effect/mine/pickup/bloodbath/B = new (M)
-		B.mineEffect(M)
+	INVOKE_ASYNC(src, .proc/do_bloodbath, M)
 
+/obj/effect/forcefield/arena_shuttle_entrance/proc/do_bloodbath(mob/living/L)
+	var/obj/effect/mine/pickup/bloodbath/B = new (L)
+	B.mineEffect(L)
 
 /area/shuttle_arena
 	name = "arena"
-	has_gravity = TRUE
+	has_gravity = STANDARD_GRAVITY
 	requires_power = FALSE

@@ -4,7 +4,7 @@
 	use_power = NO_POWER_USE
 	max_integrity = 250
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 60, "acid" = 30)
-
+	anchored = FALSE
 
 	var/datum/gas_mixture/air_contents
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
@@ -33,13 +33,26 @@
 
 	return ..()
 
+/obj/machinery/portable_atmospherics/ex_act(severity, target)
+	if(severity == 1 || target == src)
+		if(resistance_flags & INDESTRUCTIBLE)
+			return //Indestructable cans shouldn't release air
+
+		//This explosion will destroy the can, release its air.
+		var/turf/T = get_turf(src)
+		T.assume_air(air_contents)
+		T.air_update_turf()
+
+	return ..()
+
 /obj/machinery/portable_atmospherics/process_atmos()
 	if(!connected_port) // Pipe network handles reactions if connected.
-		air_contents.react()
-	else
-		update_icon()
+		air_contents.react(src)
 
 /obj/machinery/portable_atmospherics/return_air()
+	return air_contents
+
+/obj/machinery/portable_atmospherics/return_analyzable_air()
 	return air_contents
 
 /obj/machinery/portable_atmospherics/proc/connect(obj/machinery/atmospherics/components/unary/portables_connector/new_port)
@@ -60,6 +73,7 @@
 	anchored = TRUE //Prevent movement
 	pixel_x = new_port.pixel_x
 	pixel_y = new_port.pixel_y
+	update_icon()
 	return TRUE
 
 /obj/machinery/portable_atmospherics/Move()
@@ -75,10 +89,8 @@
 	connected_port = null
 	pixel_x = 0
 	pixel_y = 0
+	update_icon()
 	return TRUE
-
-/obj/machinery/portable_atmospherics/portableConnectorReturnAir()
-	return air_contents
 
 /obj/machinery/portable_atmospherics/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, !ismonkey(user)))
@@ -88,14 +100,15 @@
 		replace_tank(user, TRUE)
 
 /obj/machinery/portable_atmospherics/examine(mob/user)
-	..()
+	. = ..()
 	if(holding)
-		to_chat(user, "<span class='notice'>\The [src] contains [holding]. Alt-click [src] to remove it.</span>")
+		. += "<span class='notice'>\The [src] contains [holding]. Alt-click [src] to remove it.</span>"+\
+			"<span class='notice'>Click [src] with another gas tank to hot swap [holding].</span>"
 
 /obj/machinery/portable_atmospherics/proc/replace_tank(mob/living/user, close_valve, obj/item/tank/new_tank)
 	if(holding)
 		holding.forceMove(drop_location())
-		if(Adjacent(user) && !issilicon(user))
+		if(Adjacent(user) && !issiliconoradminghost(user))
 			user.put_in_hands(holding)
 	if(new_tank)
 		holding = new_tank
@@ -113,7 +126,7 @@
 			to_chat(user, "<span class='notice'>[holding ? "In one smooth motion you pop [holding] out of [src]'s connector and replace it with [T]" : "You insert [T] into [src]"].</span>")
 			replace_tank(user, FALSE, T)
 			update_icon()
-	else if(istype(W, /obj/item/wrench))
+	else if(W.tool_behaviour == TOOL_WRENCH)
 		if(!(stat & BROKEN))
 			if(connected_port)
 				disconnect()
@@ -138,8 +151,6 @@
 					"<span class='notice'>You fasten [src] to the port.</span>", \
 					"<span class='italics'>You hear a ratchet.</span>")
 				update_icon()
-	else if(istype(W, /obj/item/device/analyzer) && Adjacent(user))
-		atmosanalyzer_scan(air_contents, user)
 	else
 		return ..()
 

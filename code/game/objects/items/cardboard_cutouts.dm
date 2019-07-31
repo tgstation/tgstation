@@ -18,6 +18,7 @@
 
 	var/lastattacker = null
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/cardboard_cutout/attack_hand(mob/living/user)
 	if(user.a_intent == INTENT_HELP || pushed_over)
 		return ..()
@@ -48,7 +49,7 @@
 		change_appearance(I, user)
 		return
 	// Why yes, this does closely resemble mob and object attack code.
-	if(I.flags_1 & NOBLUDGEON_1)
+	if(I.item_flags & NOBLUDGEON)
 		return
 	if(!I.force)
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), 1, -1)
@@ -73,6 +74,7 @@
 	playsound(src, 'sound/weapons/slice.ogg', 50, 1)
 	if(prob(P.damage))
 		push_over()
+	return BULLET_ACT_HIT
 
 /obj/item/cardboard_cutout/proc/change_appearance(obj/item/toy/crayon/crayon, mob/living/user)
 	if(!crayon || !user)
@@ -86,7 +88,7 @@
 		to_chat(user, "<span class='warning'>Take the cap off first!</span>")
 		return
 	var/new_appearance = input(user, "Choose a new appearance for [src].", "26th Century Deception") as null|anything in possible_appearances
-	if(!new_appearance || !crayon || !user.canUseTopic(src))
+	if(!new_appearance || !crayon || !user.canUseTopic(src, BE_CLOSE))
 		return
 	if(!do_after(user, 10, FALSE, src, TRUE))
 		return

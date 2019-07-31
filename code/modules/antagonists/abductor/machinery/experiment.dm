@@ -4,7 +4,6 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "experiment-open"
 	density = FALSE
-	anchored = TRUE
 	state_open = TRUE
 	var/points = 0
 	var/credits = 0
@@ -16,14 +15,16 @@
 	var/breakout_time = 450
 
 /obj/machinery/abductor/experiment/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user) || !ishuman(target))
+	var/mob/living/L = user
+	if(user.stat || (isliving(user) && (!(L.mobility_flags & MOBILITY_STAND) || !(L.mobility_flags & MOBILITY_UI))) || !Adjacent(user) || !target.Adjacent(user) || !ishuman(target))
 		return
 	if(isabductor(target))
 		return
 	close_machine(target)
 
 /obj/machinery/abductor/experiment/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	experimentUI(user)
@@ -99,8 +100,9 @@
 	dat += "<h3> Experiment </h3>"
 	if(occupant)
 		var/obj/item/photo/P = new
-		P.photocreate(null, icon(dissection_icon(occupant), dir = SOUTH))
-		user << browse_rsc(P.img, "dissection_img")
+		P.picture = new
+		P.picture.picture_image = icon(dissection_icon(occupant), dir = SOUTH)
+		user << browse_rsc(P.picture.picture_image, "dissection_img")
 		dat += "<table><tr><td>"
 		dat += "<img src=dissection_img height=80 width=80>" //Avert your eyes
 		dat += "</td><td>"

@@ -2,13 +2,11 @@
 	layer = CLOSED_TURF_LAYER
 	opacity = 1
 	density = TRUE
-	blocks_air = 1
+	blocks_air = TRUE
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	rad_insulation = RAD_MEDIUM_INSULATION
 
-/turf/closed/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
-
-/turf/closed/ChangeTurf()
+/turf/closed/AfterChange()
 	. = ..()
 	SSair.high_pressure_delta -= src
 
@@ -31,10 +29,25 @@
 /turf/closed/indestructible/acid_act(acidpwr, acid_volume, acid_id)
 	return 0
 
+/turf/closed/indestructible/Melt()
+	to_be_destroyed = FALSE
+	return src
+
+/turf/closed/indestructible/singularity_act()
+	return
+
 /turf/closed/indestructible/oldshuttle
 	name = "strange shuttle wall"
 	icon = 'icons/turf/shuttleold.dmi'
 	icon_state = "block"
+
+/turf/closed/indestructible/sandstone
+	name = "sandstone wall"
+	desc = "A wall with sandstone plating. Rough."
+	icon = 'icons/turf/walls/sandstone_wall.dmi'
+	icon_state = "sandstone"
+	baseturfs = /turf/closed/indestructible/sandstone
+	smooth = SMOOTH_TRUE
 
 /turf/closed/indestructible/oldshuttle/corner
 	icon_state = "corner"
@@ -44,6 +57,7 @@
 	icon = 'icons/blank_title.png'
 	icon_state = ""
 	layer = FLY_LAYER
+	bullet_bounce_sound = null
 
 /turf/closed/indestructible/splashscreen/New()
 	SStitle.splash_turf = src
@@ -62,6 +76,11 @@
 	icon = 'icons/turf/walls/riveted.dmi'
 	icon_state = "riveted"
 	smooth = SMOOTH_TRUE
+
+/turf/closed/indestructible/syndicate
+	icon = 'icons/turf/walls/plastitanium_wall.dmi'
+	icon_state = "map-shuttle"
+	smooth = SMOOTH_MORE
 
 /turf/closed/indestructible/riveted/uranium
 	icon = 'icons/turf/walls/uranium_wall.dmi'
@@ -86,6 +105,19 @@
 	underlays += mutable_appearance('icons/obj/structures.dmi', "grille") //add a grille underlay
 	underlays += mutable_appearance('icons/turf/floors.dmi', "plating") //add the plating underlay, below the grille
 
+/turf/closed/indestructible/opsglass
+	name = "window"
+	icon_state = "plastitanium_window"
+	opacity = 0
+	smooth = SMOOTH_TRUE
+	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
+
+/turf/closed/indestructible/opsglass/Initialize()
+	. = ..()
+	icon_state = null
+	underlays += mutable_appearance('icons/obj/structures.dmi', "grille")
+	underlays += mutable_appearance('icons/turf/floors.dmi', "plating")
+
 /turf/closed/indestructible/fakedoor
 	name = "CentCom Access"
 	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
@@ -102,6 +134,8 @@
 	desc = "An extremely densely-packed rock, sheeted over with centuries worth of ice and snow."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "snowrock"
+	bullet_sizzle = TRUE
+	bullet_bounce_sound = null
 
 /turf/closed/indestructible/rock/snow/ice
 	name = "iced rock"

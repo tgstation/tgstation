@@ -88,9 +88,8 @@
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_sensor_off"
 	name = "airlock sensor"
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	resistance_flags = FIRE_PROOF
 
-	anchored = TRUE
 	power_channel = ENVIRON
 
 	var/id_tag
@@ -102,6 +101,17 @@
 	var/on = TRUE
 	var/alert = FALSE
 
+/obj/machinery/airlock_sensor/incinerator_toxmix
+	id_tag = INCINERATOR_TOXMIX_AIRLOCK_SENSOR
+	master_tag = INCINERATOR_TOXMIX_AIRLOCK_CONTROLLER
+
+/obj/machinery/airlock_sensor/incinerator_atmos
+	id_tag = INCINERATOR_ATMOS_AIRLOCK_SENSOR
+	master_tag = INCINERATOR_ATMOS_AIRLOCK_CONTROLLER
+
+/obj/machinery/airlock_sensor/incinerator_syndicatelava
+	id_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_SENSOR
+	master_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_CONTROLLER
 
 /obj/machinery/airlock_sensor/update_icon()
 	if(on)
@@ -113,6 +123,9 @@
 		icon_state = "airlock_sensor_off"
 
 /obj/machinery/airlock_sensor/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	var/datum/signal/signal = new(list(
 		"tag" = master_tag,
 		"command" = "cycle"

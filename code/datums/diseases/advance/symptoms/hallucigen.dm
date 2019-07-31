@@ -18,7 +18,7 @@ Bonus
 /datum/symptom/hallucigen
 	name = "Hallucigen"
 	desc = "The virus stimulates the brain, causing occasional hallucinations."
-	stealth = -2
+	stealth = -1
 	resistance = -3
 	stage_speed = -3
 	transmittable = -1
@@ -50,7 +50,7 @@ Bonus
 		if(1, 2)
 			if(prob(base_message_chance))
 				if(!fake_healthy)
-					to_chat(M, "<span class='notice'>[pick("Something appears in your peripheral vision, then winks out.", "You hear a faint whispher with no source.", "Your head aches.")]</span>")
+					to_chat(M, "<span class='notice'>[pick("Something appears in your peripheral vision, then winks out.", "You hear a faint whisper with no source.", "Your head aches.")]</span>")
 				else
 					to_chat(M, "<span class='notice'>[pick(healthy_messages)]</span>")
 		if(3, 4)

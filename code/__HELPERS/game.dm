@@ -8,23 +8,11 @@
 #define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
 #define CULT_POLL_WAIT 2400
 
-/proc/get_area(atom/A)
-	if(isarea(A))
-		return A
-	var/turf/T = get_turf(A)
-	return T ? T.loc : null
-
 /proc/get_area_name(atom/X, format_text = FALSE)
 	var/area/A = isarea(X) ? X : get_area(X)
 	if(!A)
 		return null
 	return format_text ? format_text(A.name) : A.name
-
-/proc/get_area_by_name(N) //get area by its name
-	for(var/area/A in world)
-		if(A.name == N)
-			return A
-	return 0
 
 /proc/get_areas_in_range(dist=0, atom/center=usr)
 	if(!dist)
@@ -171,6 +159,43 @@
 		processing_list.Cut(1, 2)
 		processing_list += A.contents
 
+/** recursive_organ_check
+  * inputs: O (object to start with)
+  * outputs:
+  * description: A pseudo-recursive loop based off of the recursive mob check, this check looks for any organs held
+  *				 within 'O', toggling their frozen flag. This check excludes items held within other safe organ
+  *				 storage units, so that only the lowest level of container dictates whether we do or don't decompose
+  */
+/proc/recursive_organ_check(atom/O)
+
+	var/list/processing_list = list(O)
+	var/list/processed_list = list()
+	var/index = 1
+	var/obj/item/organ/found_organ
+
+	while(index <= length(processing_list))
+
+		var/atom/A = processing_list[index]
+
+		if(istype(A, /obj/item/organ))
+			found_organ = A
+			found_organ.organ_flags ^= ORGAN_FROZEN
+
+		else if(istype(A, /mob/living/carbon))
+			var/mob/living/carbon/Q = A
+			for(var/organ in Q.internal_organs)
+				found_organ = organ
+				found_organ.organ_flags ^= ORGAN_FROZEN
+
+		for(var/atom/B in A)	//objects held within other objects are added to the processing list, unless that object is something that can hold organs safely
+			if(!processed_list[B] && !istype(B, /obj/structure/closet/crate/freezer) && !istype(B, /obj/structure/closet/secure_closet/freezer))
+				processing_list+= B
+
+		index++
+		processed_list[A] = A
+
+	return
+
 // Better recursive loop, technically sort of not actually recursive cause that shit is retarded, enjoy.
 //No need for a recursive limit either
 /proc/recursive_mob_check(atom/O,client_check=1,sight_check=1,include_radio=1)
@@ -194,7 +219,7 @@
 			if(sight_check && !isInSight(A_tmp, O))
 				passed=0
 
-		else if(include_radio && istype(A, /obj/item/device/radio))
+		else if(include_radio && istype(A, /obj/item/radio))
 			passed=1
 
 			if(sight_check && !isInSight(A, O))
@@ -240,15 +265,15 @@
 		processing_list.Cut(1, 2)
 		processing_list += A.contents
 
-/proc/get_mobs_in_radio_ranges(list/obj/item/device/radio/radios)
+/proc/get_mobs_in_radio_ranges(list/obj/item/radio/radios)
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
-	for(var/obj/item/device/radio/R in radios)
+	for(var/obj/item/radio/R in radios)
 		if(R)
 			. |= get_hearers_in_view(R.canhear_range, R)
 
 
-#define SIGN(X) ((X<0)?-1:1)
+#define SIGNV(X) ((X<0)?-1:1)
 
 /proc/inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)
 	var/turf/T
@@ -279,7 +304,7 @@
 			if(T.opacity)
 				return 0
 	return 1
-#undef SIGN
+#undef SIGNV
 
 
 /proc/isInSight(atom/A, atom/B)
@@ -336,6 +361,19 @@
 		else if(isliving(M.current))
 			return M.current.stat != DEAD
 	return FALSE
+	
+/**
+  * Exiled check
+  * 
+  * Checks if the current body of the mind has an exile implant and is currently in 
+  * an away mission. Returns FALSE if any of those conditions aren't met.
+  */ 
+/proc/considered_exiled(datum/mind/M)
+	if(!ishuman(M?.current))
+		return FALSE
+	for(var/obj/item/implant/I in M.current.implants)
+		if(istype(I, /obj/item/implant/exile && M.current.onAwayMission()))
+			return TRUE
 
 /proc/considered_afk(datum/mind/M)
 	return !M || !M.current || !M.current.client || M.current.client.is_afk()
@@ -356,7 +394,7 @@
 /proc/flick_overlay(image/I, list/show_to, duration)
 	for(var/client/C in show_to)
 		C.images += I
-	addtimer(CALLBACK(GLOBAL_PROC, /.proc/remove_images_from_clients, I, show_to), duration, TIMER_CLIENT_TIME)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/remove_images_from_clients, I, show_to), duration, TIMER_CLIENT_TIME)
 
 /proc/flick_overlay_view(image/I, atom/target, duration) //wrapper for the above, flicks to everyone who can see the target atom
 	var/list/viewing = list()
@@ -386,44 +424,6 @@
 					continue
 			active_players++
 	return active_players
-
-/datum/projectile_data
-	var/src_x
-	var/src_y
-	var/time
-	var/distance
-	var/power_x
-	var/power_y
-	var/dest_x
-	var/dest_y
-
-/datum/projectile_data/New(var/src_x, var/src_y, var/time, var/distance, \
-						   var/power_x, var/power_y, var/dest_x, var/dest_y)
-	src.src_x = src_x
-	src.src_y = src_y
-	src.time = time
-	src.distance = distance
-	src.power_x = power_x
-	src.power_y = power_y
-	src.dest_x = dest_x
-	src.dest_y = dest_y
-
-/proc/projectile_trajectory(src_x, src_y, rotation, angle, power)
-
-	// returns the destination (Vx,y) that a projectile shot at [src_x], [src_y], with an angle of [angle],
-	// rotated at [rotation] and with the power of [power]
-	// Thanks to VistaPOWA for this function
-
-	var/power_x = power * cos(angle)
-	var/power_y = power * sin(angle)
-	var/time = 2* power_y / 10 //10 = g
-
-	var/distance = time * power_x
-
-	var/dest_x = src_x + distance*sin(rotation);
-	var/dest_y = src_y + distance*cos(rotation);
-
-	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)
 
 /proc/showCandidatePollWindow(mob/M, poll_time, Question, list/candidates, ignore_category, time_passed, flashwindow = TRUE)
 	set waitfor = 0
@@ -477,7 +477,7 @@
 			if(!gametypeCheck.age_check(M.client))
 				continue
 		if(jobbanType)
-			if(jobban_isbanned(M, jobbanType) || jobban_isbanned(M, ROLE_SYNDICATE))
+			if(is_banned_from(M.ckey, list(jobbanType, ROLE_SYNDICATE)) || QDELETED(M))
 				continue
 
 		showCandidatePollWindow(M, poll_time, Question, result, ignore_category, time_passed, flashwindow)
@@ -539,14 +539,24 @@
 		return
 	winset(C, "mainwindow", "flash=5")
 
+//Recursively checks if an item is inside a given type, even through layers of storage. Returns the atom if it finds it.
+/proc/recursive_loc_check(atom/movable/target, type)
+	var/atom/A = target
+	if(istype(A, type))
+		return A
+
+	while(!istype(A.loc, type))
+		if(!A.loc)
+			return
+		A = A.loc
+
+	return A.loc
+
 /proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 	if(!SSticker.IsRoundInProgress() || QDELETED(character))
 		return
 	var/area/A = get_area(character)
-	var/message = "<span class='game deadsay'><span class='name'>\
-		[character.real_name]</span> ([rank]) has arrived at the station at \
-		<span class='name'>[A.name]</span>.</span>"
-	deadchat_broadcast(message, follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
+	deadchat_broadcast(" has arrived at the station at <span class='name'>[A.name]</span>.", "<span class='game'><span class='name'>[character.real_name]</span> ([rank])", follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
 	if((!GLOB.announcement_systems.len) || (!character.mind))
 		return
 	if((character.mind.assigned_role == "Cyborg") || (character.mind.assigned_role == character.mind.special_role))
@@ -574,3 +584,45 @@
 	var/pressure = environment.return_pressure()
 	if(pressure <= LAVALAND_EQUIPMENT_EFFECT_PRESSURE)
 		. = TRUE
+
+/proc/ispipewire(item)
+	var/static/list/pire_wire = list(
+		/obj/machinery/atmospherics,
+		/obj/structure/disposalpipe,
+		/obj/structure/cable
+	)
+	return (is_type_in_list(item, pire_wire))
+
+// Find a obstruction free turf that's within the range of the center. Can also condition on if it is of a certain area type.
+/proc/find_obstruction_free_location(var/range, var/atom/center, var/area/specific_area)
+	var/list/turfs = RANGE_TURFS(range, center)
+	var/list/possible_loc = list()
+
+	for(var/turf/found_turf in turfs)
+		var/area/turf_area = get_area(found_turf)
+
+		// We check if both the turf is a floor, and that it's actually in the area. 
+		// We also want a location that's clear of any obstructions.
+		if (specific_area)
+			if (!istype(turf_area, specific_area))
+				continue
+
+		if (!isspaceturf(found_turf))
+			if (!is_blocked_turf(found_turf))
+				possible_loc.Add(found_turf)
+
+	// Need at least one free location.
+	if (possible_loc.len < 1)
+		return FALSE
+
+	return pick(possible_loc)
+
+/proc/power_fail(duration_min, duration_max)
+	for(var/P in GLOB.apcs_list)
+		var/obj/machinery/power/apc/C = P
+		if(C.cell && SSmapping.level_trait(C.z, ZTRAIT_STATION))
+			var/area/A = C.area
+			if(GLOB.typecache_powerfailure_safe_areas[A.type])
+				continue
+
+			C.energy_fail(rand(duration_min,duration_max))

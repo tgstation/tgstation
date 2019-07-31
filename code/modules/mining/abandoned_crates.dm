@@ -64,7 +64,7 @@
 			var/newitem = pick(subtypesof(/obj/item/toy/prize))
 			new newitem(src)
 		if(57 to 58)
-			new /obj/item/toy/syndicateballoon(src)
+			new /obj/item/toy/balloon/syndicate(src)
 		if(59 to 60)
 			new /obj/item/borg/upgrade/modkit/aoe/mobs(src)
 			new /obj/item/clothing/suit/space(src)
@@ -112,24 +112,24 @@
 		if(90)
 			new /obj/item/organ/heart(src)
 		if(91)
-			new /obj/item/device/soulstone/anybody(src)
+			new /obj/item/soulstone/anybody(src)
 		if(92)
 			new /obj/item/katana(src)
 		if(93)
 			new /obj/item/dnainjector/xraymut(src)
 		if(94)
 			new /obj/item/storage/backpack/clown(src)
-			new /obj/item/clothing/under/rank/clown(src)
+			new /obj/item/clothing/under/rank/civilian/clown(src)
 			new /obj/item/clothing/shoes/clown_shoes(src)
-			new /obj/item/device/pda/clown(src)
+			new /obj/item/pda/clown(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/bikehorn(src)
 			new /obj/item/toy/crayon/rainbow(src)
 			new /obj/item/reagent_containers/spray/waterflower(src)
 		if(95)
-			new /obj/item/clothing/under/rank/mime(src)
+			new /obj/item/clothing/under/rank/civilian/mime(src)
 			new /obj/item/clothing/shoes/sneakers/black(src)
-			new /obj/item/device/pda/mime(src)
+			new /obj/item/pda/mime(src)
 			new /obj/item/clothing/gloves/color/white(src)
 			new /obj/item/clothing/mask/gas/mime(src)
 			new /obj/item/clothing/head/beret(src)
@@ -150,6 +150,7 @@
 		if(100)
 			new /obj/item/clothing/head/bearpelt(src)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
 	if(locked)
 		to_chat(user, "<span class='notice'>The crate is locked with a Deca-code lock.</span>")
@@ -168,6 +169,7 @@
 				locked = FALSE
 				cut_overlays()
 				add_overlay("securecrateg")
+				tamperproof = 0 // set explosion chance to zero, so we dont accidently hit it with a multitool and instantly die
 			else if (input == null || sanitycheck == null || length(input) != codelen)
 				to_chat(user, "<span class='notice'>You leave the crate alone.</span>")
 			else
@@ -182,11 +184,11 @@
 /obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
-	attack_hand(user) //this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
+	return attack_hand(user) //this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
 
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/W, mob/user)
 	if(locked)
-		if(istype(W, /obj/item/device/multitool))
+		if(W.tool_behaviour == TOOL_MULTITOOL)
 			to_chat(user, "<span class='notice'>DECA-CODE LOCK REPORT:</span>")
 			if(attempts == 1)
 				to_chat(user, "<span class='warning'>* Anti-Tamper Bomb will activate on next failed access attempt.</span>")

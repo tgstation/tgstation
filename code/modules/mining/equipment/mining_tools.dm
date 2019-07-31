@@ -4,21 +4,21 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "pickaxe"
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT | SLOT_BACK
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	force = 15
 	throwforce = 10
 	item_state = "pickaxe"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
-	materials = list(MAT_METAL=2000) //one sheet, but where can you make them?
+	materials = list(/datum/material/iron=2000) //one sheet, but where can you make them?
 	tool_behaviour = TOOL_MINING
 	toolspeed = 1
 	usesound = list('sound/effects/picaxe1.ogg', 'sound/effects/picaxe2.ogg', 'sound/effects/picaxe3.ogg')
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 
 /obj/item/pickaxe/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] begins digging into their chest!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] begins digging into [user.p_their()] chest!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	if(use_tool(user, user, 30, volume=50))
 		return BRUTELOSS
 	user.visible_message("<span class='suicide'>[user] couldn't do it!</span>")
@@ -30,9 +30,9 @@
 	icon_state = "minipick"
 	force = 10
 	throwforce = 7
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=1000)
+	materials = list(/datum/material/iron=1000)
 
 /obj/item/pickaxe/silver
 	name = "silver-plated pickaxe"
@@ -54,7 +54,7 @@
 	name = "mining drill"
 	icon_state = "handdrill"
 	item_state = "jackhammer"
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	toolspeed = 0.6 //available from roundstart, faster than a pickaxe.
 	usesound = 'sound/weapons/drill.ogg'
 	hitsound = 'sound/weapons/drill.ogg'
@@ -63,7 +63,11 @@
 /obj/item/pickaxe/drill/cyborg
 	name = "cyborg mining drill"
 	desc = "An integrated electric mining drill."
-	flags_1 = NODROP_1
+	flags_1 = NONE
+
+/obj/item/pickaxe/drill/cyborg/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
 /obj/item/pickaxe/drill/diamonddrill
 	name = "diamond-tipped mining drill"
@@ -81,6 +85,7 @@
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
 	toolspeed = 0.1 //the epitome of powertools. extremely fast mining, laughs at puny walls
+	w_class = WEIGHT_CLASS_HUGE //the epitome of power(gamer)tools is CHUNCKY
 	usesound = 'sound/weapons/sonic_jackhammer.ogg'
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls."
@@ -93,7 +98,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	force = 8
 	tool_behaviour = TOOL_SHOVEL
 	toolspeed = 1
@@ -101,7 +106,7 @@
 	throwforce = 4
 	item_state = "shovel"
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=50)
+	materials = list(/datum/material/iron=50)
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
 	sharpness = IS_SHARP
 

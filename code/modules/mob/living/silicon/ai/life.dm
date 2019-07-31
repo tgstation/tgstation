@@ -19,7 +19,7 @@
 			// messenging the client
 			malfhacked(malfhack)
 
-		if(!eyeobj || QDELETED(eyeobj) || !eyeobj.loc)
+		if(isturf(loc) && (QDELETED(eyeobj) || !eyeobj.loc))
 			view_core()
 
 		if(machine)
@@ -28,11 +28,15 @@
 		// Handle power damage (oxy)
 		if(aiRestorePowerRoutine)
 			// Lost power
-			adjustOxyLoss(1)
+			if (!battery)
+				to_chat(src, "<span class='warning'>Your backup battery's output drops below usable levels. It takes only a moment longer for your systems to fail, corrupted and unusable.</span>")
+				adjustOxyLoss(200)
+			else
+				battery --
 		else
 			// Gain Power
-			if(getOxyLoss())
-				adjustOxyLoss(-1)
+			if (battery < 200)
+				battery ++
 
 		if(!lacks_power())
 			var/area/home = get_area(src)
@@ -96,6 +100,7 @@
 
 /mob/living/silicon/ai/proc/start_RestorePowerRoutine()
 	to_chat(src, "Backup battery online. Scanners, camera, and radio interface offline. Beginning fault-detection.")
+	end_multicam()
 	sleep(50)
 	var/turf/T = get_turf(src)
 	var/area/AIarea = get_area(src)
@@ -121,11 +126,10 @@
 		T = get_turf(src)
 		AIarea = get_area(src)
 		if(AIarea)
-			for(var/area/A in AIarea.related)
-				for (var/obj/machinery/power/apc/APC in A)
-					if (!(APC.stat & BROKEN))
-						theAPC = APC
-						break
+			for (var/obj/machinery/power/apc/APC in AIarea)
+				if (!(APC.stat & BROKEN))
+					theAPC = APC
+					break
 		if (!theAPC)
 			switch(PRP)
 				if(1)

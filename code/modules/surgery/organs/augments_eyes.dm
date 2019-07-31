@@ -4,7 +4,7 @@
 	icon_state = "eye_implant"
 	implant_overlay = "eye_implant_overlay"
 	slot = ORGAN_SLOT_EYES
-	zone = "eyes"
+	zone = BODY_ZONE_PRECISE_EYES
 	w_class = WEIGHT_CLASS_TINY
 
 // HUD implants
@@ -35,6 +35,11 @@
 	name = "Security HUD implant"
 	desc = "These cybernetic eye implants will display a security HUD over everything you see."
 	HUD_type = DATA_HUD_SECURITY_ADVANCED
+
+/obj/item/organ/cyberimp/eyes/hud/diagnostic
+	name = "Diagnostic HUD implant"
+	desc = "These cybernetic eye implants will display a diagnostic HUD over everything you see."
+	HUD_type = DATA_HUD_DIAGNOSTIC_ADVANCED
 
 /obj/item/organ/cyberimp/eyes/hud/security/syndicate
 	name = "Contraband Security HUD Implant"

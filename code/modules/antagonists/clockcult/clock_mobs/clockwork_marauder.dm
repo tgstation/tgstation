@@ -6,6 +6,7 @@
 	name = "clockwork marauder"
 	desc = "The stalwart apparition of a soldier, blazing with crimson flames. It's armed with a gladius and shield."
 	icon_state = "clockwork_marauder"
+	mob_biotypes = list(MOB_INORGANIC, MOB_HUMANOID)
 	health = 120
 	maxHealth = 120
 	force_threshold = 8
@@ -81,14 +82,14 @@
 
 /mob/living/simple_animal/hostile/clockwork/marauder/bullet_act(obj/item/projectile/P)
 	if(deflect_projectile(P))
-		return
+		return BULLET_ACT_BLOCK
 	return ..()
 
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/deflect_projectile(obj/item/projectile/P)
 	if(!shield_health)
 		return
 	var/energy_projectile = istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam)
-	visible_message("<span class='danger'>[src] deflects [P] with their shield!</span>", \
+	visible_message("<span class='danger'>[src] deflects [P] with [p_their()] shield!</span>", \
 	"<span class='danger'>You block [P] with your shield! <i>Blocks left:</i> <b>[shield_health - 1]</b></span>")
 	if(energy_projectile)
 		playsound(src, 'sound/weapons/effects/searwall.ogg', 50, TRUE)

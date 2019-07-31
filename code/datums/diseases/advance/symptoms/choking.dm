@@ -22,7 +22,7 @@ Bonus
 	stealth = -3
 	resistance = -2
 	stage_speed = -2
-	transmittable = -4
+	transmittable = -2
 	level = 3
 	severity = 3
 	base_message_chance = 15
@@ -99,13 +99,16 @@ Bonus
 	symptom_delay_min = 14
 	symptom_delay_max = 30
 	var/paralysis = FALSE
+	threshold_desc = "<b>Stage Speed 8:</b> Additionally synthesizes pancuronium and sodium thiopental inside the host.<br>\
+					  <b>Transmission 8:</b> Doubles the damage caused by the symptom."
+
 
 /datum/symptom/asphyxiation/Start(datum/disease/advance/A)
 	if(!..())
 		return
 	if(A.properties["stage_rate"] >= 8)
 		paralysis = TRUE
-	if(A.properties["transmission"] >= 8)
+	if(A.properties["transmittable"] >= 8)
 		power = 2
 
 /datum/symptom/asphyxiation/Activate(datum/disease/advance/A)
@@ -117,7 +120,7 @@ Bonus
 			to_chat(M, "<span class='warning'><b>[pick("Your windpipe feels thin.", "Your lungs feel small.")]</span>")
 			Asphyxiate_stage_3_4(M, A)
 			M.emote("gasp")
-		else
+		if(5)
 			to_chat(M, "<span class='userdanger'>[pick("Your lungs hurt!", "It hurts to breathe!")]</span>")
 			Asphyxiate(M, A)
 			M.emote("gasp")
@@ -135,11 +138,11 @@ Bonus
 	var/get_damage = rand(15,21) * power
 	M.adjustOxyLoss(get_damage)
 	if(paralysis)
-		M.reagents.add_reagent_list(list("pancuronium" = 3, "sodium_thiopental" = 3))
+		M.reagents.add_reagent_list(list(/datum/reagent/toxin/pancuronium = 3, /datum/reagent/toxin/sodium_thiopental = 3))
 	return 1
 
 /datum/symptom/asphyxiation/proc/Asphyxiate_death(mob/living/M, datum/disease/advance/A)
 	var/get_damage = rand(25,35) * power
 	M.adjustOxyLoss(get_damage)
-	M.adjustBrainLoss(get_damage/2)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, get_damage/2)
 	return 1

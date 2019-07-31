@@ -89,9 +89,9 @@
 	R.toggle_ionpulse()
 
 /datum/hud/robot
-	ui_style_icon = 'icons/mob/screen_cyborg.dmi'
+	ui_style = 'icons/mob/screen_cyborg.dmi'
 
-/datum/hud/robot/New(mob/owner, ui_style = 'icons/mob/screen_cyborg.dmi')
+/datum/hud/robot/New(mob/owner)
 	..()
 	var/mob/living/silicon/robot/mymobR = mymob
 	var/obj/screen/using
@@ -244,11 +244,6 @@
 			screenmob.client.screen -= A
 		R.shown_robot_modules = 0
 		screenmob.client.screen -= R.robot_modules_background
-
-/mob/living/silicon/robot/create_mob_hud()
-	if(client && !hud_used)
-		hud_used = new /datum/hud/robot(src)
-
 
 /datum/hud/robot/persistent_inventory_update(mob/viewer)
 	if(!mymob)

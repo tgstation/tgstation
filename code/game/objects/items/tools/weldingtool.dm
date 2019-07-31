@@ -8,7 +8,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	force = 3
 	throwforce = 5
 	hitsound = "swing_hit"
@@ -21,13 +21,14 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
 	resistance_flags = FIRE_PROOF
 
-	materials = list(MAT_METAL=70, MAT_GLASS=30)
+	materials = list(/datum/material/iron=70, /datum/material/glass=30)
 	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
 	var/status = TRUE 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
 	var/change_icons = 1
 	var/can_off_process = 0
 	var/light_intensity = 2 //how powerful the emitted light is when used.
+	var/progress_flash_divisor = 10
 	var/burned_fuel_for = 0	//when fuel was last removed
 	heat = 3800
 	tool_behaviour = TOOL_WELDER
@@ -36,7 +37,7 @@
 /obj/item/weldingtool/Initialize()
 	. = ..()
 	create_reagents(max_fuel)
-	reagents.add_reagent("welding_fuel", max_fuel)
+	reagents.add_reagent(/datum/reagent/fuel, max_fuel)
 	update_icon()
 
 
@@ -86,7 +87,7 @@
 
 
 /obj/item/weldingtool/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		flamethrower_screwdriver(I, user)
 	else if(istype(I, /obj/item/stack/rods))
 		flamethrower_rods(I, user)
@@ -96,7 +97,7 @@
 
 /obj/item/weldingtool/proc/explode()
 	var/turf/T = get_turf(loc)
-	var/plasmaAmount = reagents.get_reagent_amount("plasma")
+	var/plasmaAmount = reagents.get_reagent_amount(/datum/reagent/toxin/plasma)
 	dyn_explosion(T, plasmaAmount/5)//20 plasma in a standard welder has a 4 power explosion. no breaches, but enough to kill/dismember holder
 	qdel(src)
 
@@ -110,7 +111,7 @@
 		if(src.use_tool(H, user, 0, volume=50, amount=1))
 			if(user == H)
 				user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>",
-					"<span class='notice'>You start fixing some of the dents on [H]'s [affecting.name].</span>")
+					"<span class='notice'>You start fixing some of the dents on [H == user ? "your" : "[H]'s"] [affecting.name].</span>")
 				if(!do_mob(user, H, 50))
 					return
 			item_heal_robotic(H, user, 15, 0)
@@ -119,10 +120,11 @@
 
 
 /obj/item/weldingtool/afterattack(atom/O, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(!status && O.is_refillable())
-		reagents.trans_to(O, reagents.total_volume)
+		reagents.trans_to(O, reagents.total_volume, transfered_by = user)
 		to_chat(user, "<span class='notice'>You empty [src]'s fuel tank into [O].</span>")
 		update_icon()
 	if(isOn())
@@ -135,13 +137,13 @@
 		if(isliving(O))
 			var/mob/living/L = O
 			if(L.IgniteMob())
-				message_admins("[key_name_admin(user)] set [key_name_admin(L)] on fire")
-				log_game("[key_name(user)] set [key_name(L)] on fire")
+				message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(L)] on fire with [src] at [AREACOORD(user)]")
+				log_game("[key_name(user)] set [key_name(L)] on fire with [src] at [AREACOORD(user)]")
 
 
 /obj/item/weldingtool/attack_self(mob/user)
-	if(src.reagents.has_reagent("plasma"))
-		message_admins("[key_name_admin(user)] activated a rigged welder.")
+	if(src.reagents.has_reagent(/datum/reagent/toxin/plasma))
+		message_admins("[ADMIN_LOOKUPFLW(user)] activated a rigged welder at [AREACOORD(user)].")
 		explode()
 	switched_on(user)
 	if(welding)
@@ -152,7 +154,7 @@
 
 // Returns the amount of fuel in the welder
 /obj/item/weldingtool/proc/get_fuel()
-	return reagents.get_reagent_amount("welding_fuel")
+	return reagents.get_reagent_amount(/datum/reagent/fuel)
 
 
 // Uses fuel from the welding tool.
@@ -163,7 +165,7 @@
 	if(used)
 		burned_fuel_for = 0
 	if(get_fuel() >= used)
-		reagents.remove_reagent("welding_fuel", used)
+		reagents.remove_reagent(/datum/reagent/fuel, used)
 		check_fuel()
 		return TRUE
 	else
@@ -218,8 +220,8 @@
 
 
 /obj/item/weldingtool/examine(mob/user)
-	..()
-	to_chat(user, "It contains [get_fuel()] unit\s of fuel out of [max_fuel].")
+	. = ..()
+	. += "It contains [get_fuel()] unit\s of fuel out of [max_fuel]."
 
 /obj/item/weldingtool/is_hot()
 	return welding * heat
@@ -231,8 +233,18 @@
 // When welding is about to start, run a normal tool_use_check, then flash a mob if it succeeds.
 /obj/item/weldingtool/tool_start_check(mob/living/user, amount=0)
 	. = tool_use_check(user, amount)
-	if(. && user)
+	if(. && user && get_dist(get_turf(src), get_turf(user)) <= 1)
 		user.flash_act(light_intensity)
+
+// Flash the user during welding progress
+/obj/item/weldingtool/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
+	. = ..()
+	if(. && user && get_dist(get_turf(src), get_turf(user)) <= 1)
+		if (progress_flash_divisor == 0)
+			user.flash_act(min(light_intensity,1))
+			progress_flash_divisor = initial(progress_flash_divisor)
+		else
+			progress_flash_divisor--
 
 // If welding tool ran out of fuel during a construction task, construction fails.
 /obj/item/weldingtool/tool_use_check(mob/living/user, amount)
@@ -254,10 +266,10 @@
 	status = !status
 	if(status)
 		to_chat(user, "<span class='notice'>You resecure [src] and close the fuel tank.</span>")
-		container_type = NONE
+		DISABLE_BITFIELD(reagents.flags, OPENCONTAINER)
 	else
 		to_chat(user, "<span class='notice'>[src] can now be attached, modified, and refuelled.</span>")
-		container_type = OPENCONTAINER
+		ENABLE_BITFIELD(reagents.flags, OPENCONTAINER)
 	add_fingerprint(user)
 
 /obj/item/weldingtool/proc/flamethrower_rods(obj/item/I, mob/user)
@@ -285,12 +297,17 @@
 	desc = "A slightly larger welder with a larger tank."
 	icon_state = "indwelder"
 	max_fuel = 40
-	materials = list(MAT_GLASS=60)
+	materials = list(/datum/material/glass=60)
 
 /obj/item/weldingtool/largetank/cyborg
 	name = "integrated welding tool"
 	desc = "An advanced welder designed to be used in robotic systems."
 	toolspeed = 0.5
+
+/obj/item/weldingtool/largetank/cyborg/cyborg_unequip(mob/user)
+	if(!isOn())
+		return
+	switched_on(user)
 
 /obj/item/weldingtool/largetank/flamethrower_screwdriver()
 	return
@@ -302,7 +319,7 @@
 	icon_state = "miniwelder"
 	max_fuel = 10
 	w_class = WEIGHT_CLASS_TINY
-	materials = list(MAT_METAL=30, MAT_GLASS=10)
+	materials = list(/datum/material/iron=30, /datum/material/glass=10)
 	change_icons = 0
 
 /obj/item/weldingtool/mini/flamethrower_screwdriver()
@@ -319,7 +336,7 @@
 
 /obj/item/weldingtool/abductor/process()
 	if(get_fuel() <= max_fuel)
-		reagents.add_reagent("welding_fuel", 1)
+		reagents.add_reagent(/datum/reagent/fuel, 1)
 	..()
 
 /obj/item/weldingtool/hugetank
@@ -328,7 +345,7 @@
 	icon_state = "upindwelder"
 	item_state = "upindwelder"
 	max_fuel = 80
-	materials = list(MAT_METAL=70, MAT_GLASS=120)
+	materials = list(/datum/material/iron=70, /datum/material/glass=120)
 
 /obj/item/weldingtool/experimental
 	name = "experimental welding tool"
@@ -336,7 +353,7 @@
 	icon_state = "exwelder"
 	item_state = "exwelder"
 	max_fuel = 40
-	materials = list(MAT_METAL=70, MAT_GLASS=120)
+	materials = list(/datum/material/iron=70, /datum/material/glass=120)
 	var/last_gen = 0
 	change_icons = 0
 	can_off_process = 1
@@ -356,6 +373,6 @@
 	..()
 	if(get_fuel() < max_fuel && nextrefueltick < world.time)
 		nextrefueltick = world.time + 10
-		reagents.add_reagent("welding_fuel", 1)
+		reagents.add_reagent(/datum/reagent/fuel, 1)
 
 #undef WELDER_FUEL_BURN_INTERVAL

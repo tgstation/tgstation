@@ -36,10 +36,11 @@
 		return
 	. = ..()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/effect/clockwork/city_of_cogs_rift/attack_hand(atom/movable/AM)
 	beckon(AM)
 
-/obj/effect/clockwork/city_of_cogs_rift/CollidedWith(atom/movable/AM)
+/obj/effect/clockwork/city_of_cogs_rift/Bumped(atom/movable/AM)
 	if(!QDELETED(AM))
 		if(isliving(AM))
 			var/mob/living/L = AM
@@ -48,12 +49,19 @@
 				"<span class='notice'>You begin climbing through [src]...</span>")
 				if(!do_after(L, 30, target = L))
 					return
-		beckon(AM)
+		if(!istype(AM, /obj/effect/))
+			beckon(AM)
 
 /obj/effect/clockwork/city_of_cogs_rift/proc/beckon(atom/movable/AM)
 	var/turf/T = get_turf(pick(GLOB.city_of_cogs_spawns))
-	if(is_servant_of_ratvar(AM))
+	if(ismob(AM) && is_servant_of_ratvar(AM))
 		T = GLOB.ark_of_the_clockwork_justiciar ? get_step(GLOB.ark_of_the_clockwork_justiciar, SOUTH) : get_turf(pick(GLOB.servant_spawns))
+	else // Handle mechas and such
+		var/list/target_contents = AM.GetAllContents() + AM
+		for(var/mob/living/L in target_contents)
+			if(is_servant_of_ratvar(L) && L.stat != DEAD) // Having a living cultist in your inventory sends you to the cultist spawn
+				T = GLOB.ark_of_the_clockwork_justiciar ? get_step(GLOB.ark_of_the_clockwork_justiciar, SOUTH) : get_turf(pick(GLOB.servant_spawns))
+				break
 	AM.visible_message("<span class='danger'>[AM] passes through [src]!</span>", null, null, null, AM)
 	AM.forceMove(T)
 	AM.visible_message("<span class='danger'>[AM] materializes from the air!</span>", \
@@ -64,6 +72,6 @@
 		var/mob/living/L = AM
 		L.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/static)
 		L.clear_fullscreen("flash", 5)
-		var/obj/item/device/transfer_valve/TTV = locate() in L.GetAllContents()
+		var/obj/item/transfer_valve/TTV = locate() in L.GetAllContents()
 		if(TTV)
 			to_chat(L, "<span class='userdanger'>The air resonates with the Ark's presence; your explosives will be significantly dampened here!</span>")

@@ -86,39 +86,42 @@
 
 	to_chat(U, "<span class='notice'>Now tracking [target.get_visible_name()] on camera.</span>")
 
+	INVOKE_ASYNC(src, .proc/do_track, target, U)
+
+/mob/living/silicon/ai/proc/do_track(mob/living/target, mob/living/silicon/ai/U)
 	var/cameraticks = 0
-	spawn(0)
-		while(U.cameraFollow == target)
-			if(U.cameraFollow == null)
-				return
 
-			if(!target.can_track(usr))
-				U.tracking = 1
-				if(!cameraticks)
-					to_chat(U, "<span class='warning'>Target is not near any active cameras. Attempting to reacquire...</span>")
-				cameraticks++
-				if(cameraticks > 9)
-					U.cameraFollow = null
-					to_chat(U, "<span class='warning'>Unable to reacquire, cancelling track...</span>")
-					tracking = 0
-					return
-				else
-					sleep(10)
-					continue
+	while(U.cameraFollow == target)
+		if(U.cameraFollow == null)
+			return
 
-			else
-				cameraticks = 0
-				U.tracking = 0
-
-			if(U.eyeobj)
-				U.eyeobj.setLoc(get_turf(target))
-
-			else
-				view_core()
+		if(!target.can_track(usr))
+			U.tracking = 1
+			if(!cameraticks)
+				to_chat(U, "<span class='warning'>Target is not near any active cameras. Attempting to reacquire...</span>")
+			cameraticks++
+			if(cameraticks > 9)
 				U.cameraFollow = null
+				to_chat(U, "<span class='warning'>Unable to reacquire, cancelling track...</span>")
+				tracking = 0
 				return
+			else
+				sleep(10)
+				continue
 
-			sleep(10)
+		else
+			cameraticks = 0
+			U.tracking = 0
+
+		if(U.eyeobj)
+			U.eyeobj.setLoc(get_turf(target))
+
+		else
+			view_core()
+			U.cameraFollow = null
+			return
+
+		sleep(10)
 
 /proc/near_camera(mob/living/M)
 	if (!isturf(M.loc))
@@ -146,10 +149,6 @@
 		for (var/j = 1 to i - 1)
 			a = L[j]
 			b = L[j + 1]
-			if (a.c_tag_order != b.c_tag_order)
-				if (a.c_tag_order > b.c_tag_order)
-					L.Swap(j, j + 1)
-			else
-				if (sorttext(a.c_tag, b.c_tag) < 0)
-					L.Swap(j, j + 1)
+			if (sorttext(a.c_tag, b.c_tag) < 0)
+				L.Swap(j, j + 1)
 	return L

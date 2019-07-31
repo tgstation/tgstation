@@ -20,15 +20,14 @@
 	var/active_sound = null
 	var/toggle_cooldown = null
 	var/cooldown = 0
-	var/obj/item/device/flashlight/F = null
-	var/can_flashlight = 0
-	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
+
+	var/clothing_flags = NONE
 
 	//Var modification - PLEASE be careful with this I know who you are and where you live
-	var/list/user_vars_to_edit = list() //VARNAME = VARVALUE eg: "name" = "butts"
-	var/list/user_vars_remembered = list() //Auto built by the above + dropped() + equipped()
+	var/list/user_vars_to_edit //VARNAME = VARVALUE eg: "name" = "butts"
+	var/list/user_vars_remembered //Auto built by the above + dropped() + equipped()
 
-	var/obj/item/storage/internal/pocket/pockets = null
+	var/pocket_storage_component_path
 
 	//These allow head/mask items to dynamically alter the user's hair
 	// and facial hair, checking hair_extensions.dmi and facialhair_extensions.dmi
@@ -37,16 +36,17 @@
 	var/dynamic_hair_suffix = ""//head > mask for head hair
 	var/dynamic_fhair_suffix = ""//mask > head for facial hair
 
-/obj/item/clothing/New()
-	..()
-	if(ispath(pockets))
-		pockets = new pockets(src)
+
+/obj/item/clothing/Initialize()
+	if(CHECK_BITFIELD(clothing_flags, VOICEBOX_TOGGLABLE))
+		actions_types += /datum/action/item_action/toggle_voice_box
+	. = ..()
+	if(ispath(pocket_storage_component_path))
+		LoadComponent(pocket_storage_component_path)
 
 /obj/item/clothing/MouseDrop(atom/over_object)
+	. = ..()
 	var/mob/M = usr
-
-	if(pockets && over_object == M)
-		return pockets.MouseDrop(over_object)
 
 	if(ismecha(M.loc)) // stops inventory actions in a mech
 		return
@@ -56,22 +56,20 @@
 		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
 			add_fingerprint(usr)
 
-/obj/item/clothing/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
-	if(pockets)
-		pockets.close_all()
-	return ..()
+/obj/item/reagent_containers/food/snacks/clothing
+	name = "temporary moth clothing snack item"
+	desc = "If you're reading this it means I messed up. This is related to moths eating clothes and I didn't know a better way to do it than making a new food object."
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
+	tastes = list("dust" = 1, "lint" = 1)
+	foodtype = CLOTH
 
-/obj/item/clothing/attack_hand(mob/user)
-	if(pockets && pockets.priority && ismob(loc))
-		//If we already have the pockets open, close them.
-		if (user.s_active == pockets)
-			pockets.close(user)
-		//Close whatever the user has open and show them the pockets.
-		else
-			if (user.s_active)
-				user.s_active.close(user)
-			pockets.orient2hud(user)
-			pockets.show_to(user)
+/obj/item/clothing/attack(mob/M, mob/user, def_zone)
+	if(user.a_intent != INTENT_HARM && ismoth(M))
+		var/obj/item/reagent_containers/food/snacks/clothing/clothing_as_food = new
+		clothing_as_food.name = name
+		if(clothing_as_food.attack(M, user, def_zone))
+			take_damage(15, sound_effect=FALSE)
+		qdel(clothing_as_food)
 	else
 		return ..()
 
@@ -83,83 +81,69 @@
 		obj_integrity = max_integrity
 		to_chat(user, "<span class='notice'>You fix the damage on [src] with [C].</span>")
 		return 1
-	if(pockets)
-		var/i = pockets.attackby(W, user, params)
-		if(i)
-			return i
 	return ..()
-
-/obj/item/clothing/AltClick(mob/user)
-	if(istype(user) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)) && pockets && pockets.quickdraw && pockets.contents.len)
-		var/obj/item/I = pockets.contents[1]
-		if(!I)
-			return
-		pockets.remove_from_storage(I, get_turf(src))
-
-		if(!user.put_in_hands(I))
-			to_chat(user, "<span class='notice'>You fumble for [I] and it falls on the floor.</span>")
-			return 1
-		user.visible_message("<span class='warning'>[user] draws [I] from [src]!</span>", "<span class='notice'>You draw [I] from [src].</span>")
-		return 1
-	else
-		return ..()
-
 
 /obj/item/clothing/Destroy()
-	if(pockets)
-		qdel(pockets)
-		pockets = null
 	user_vars_remembered = null //Oh god somebody put REFERENCES in here? not to worry, we'll clean it up
 	return ..()
-
 
 /obj/item/clothing/dropped(mob/user)
 	..()
 	if(!istype(user))
 		return
-	if(user_vars_remembered && user_vars_remembered.len)
+	if(LAZYLEN(user_vars_remembered))
 		for(var/variable in user_vars_remembered)
 			if(variable in user.vars)
 				if(user.vars[variable] == user_vars_to_edit[variable]) //Is it still what we set it to? (if not we best not change it)
 					user.vars[variable] = user_vars_remembered[variable]
-		user_vars_remembered = list()
-
+		user_vars_remembered = initial(user_vars_remembered) // Effectively this sets it to null.
 
 /obj/item/clothing/equipped(mob/user, slot)
 	..()
-
+	if (!istype(user))
+		return
 	if(slot_flags & slotdefine2slotbit(slot)) //Was equipped to a valid slot for this item?
-		for(var/variable in user_vars_to_edit)
-			if(variable in user.vars)
-				user_vars_remembered[variable] = user.vars[variable]
-				user.vars[variable] = user_vars_to_edit[variable]
-
+		if (LAZYLEN(user_vars_to_edit))
+			for(var/variable in user_vars_to_edit)
+				if(variable in user.vars)
+					LAZYSET(user_vars_remembered, variable, user.vars[variable])
+					user.vv_edit_var(variable, user_vars_to_edit[variable])
 
 /obj/item/clothing/examine(mob/user)
-	..()
+	. = ..()
+	switch (max_heat_protection_temperature)
+		if (400 to 1000)
+			. += "[src] offers the wearer limited protection from fire."
+		if (1001 to 1600)
+			. += "[src] offers the wearer some protection from fire."
+		if (1601 to 35000)
+			. += "[src] offers the wearer robust protection from fire."
 	if(damaged_clothes)
-		to_chat(user,  "<span class='warning'>It looks damaged!</span>")
+		. += "<span class='warning'>It looks damaged!</span>"
+	var/datum/component/storage/pockets = GetComponent(/datum/component/storage)
 	if(pockets)
 		var/list/how_cool_are_your_threads = list("<span class='notice'>")
-		if(pockets.priority)
+		if(pockets.attack_hand_interact)
 			how_cool_are_your_threads += "[src]'s storage opens when clicked.\n"
 		else
 			how_cool_are_your_threads += "[src]'s storage opens when dragged to yourself.\n"
-		how_cool_are_your_threads += "[src] can store [pockets.storage_slots] item\s.\n"
-		how_cool_are_your_threads += "[src] can store items that are [weightclass2text(pockets.max_w_class)] or smaller.\n"
+		if (pockets.can_hold?.len) // If pocket type can hold anything, vs only specific items
+			how_cool_are_your_threads += "[src] can store [pockets.max_items] <a href='?src=[REF(src)];show_valid_pocket_items=1'>item\s</a>.\n"
+		else
+			how_cool_are_your_threads += "[src] can store [pockets.max_items] item\s that are [weightclass2text(pockets.max_w_class)] or smaller.\n"
 		if(pockets.quickdraw)
 			how_cool_are_your_threads += "You can quickly remove an item from [src] using Alt-Click.\n"
 		if(pockets.silent)
 			how_cool_are_your_threads += "Adding or removing items from [src] makes no noise.\n"
 		how_cool_are_your_threads += "</span>"
-		to_chat(user, how_cool_are_your_threads.Join())
+		. += how_cool_are_your_threads.Join()
 
 /obj/item/clothing/obj_break(damage_flag)
 	if(!damaged_clothes)
 		update_clothes_damaged_state(TRUE)
 	if(ismob(loc)) //It's not important enough to warrant a message if nobody's wearing it
 		var/mob/M = loc
-		M.visible_message("<span class='warning'>[M]'s [name] starts to fall apart!", "<span class='warning'>Your [name] starts to fall apart!</span>")
+		to_chat(M, "<span class='warning'>Your [name] starts to fall apart!</span>")
 
 /obj/item/clothing/proc/update_clothes_damaged_state(damaging = TRUE)
 	var/index = "[REF(initial(icon))]-[initial(icon_state)]"
@@ -238,8 +222,6 @@ BLIND     // can't see anything
 		if(H.w_uniform == src)
 			H.update_suit_sensors()
 
-	..()
-
 /obj/item/clothing/under/AltClick(mob/user)
 	if(..())
 		return 1
@@ -306,7 +288,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags
 	up = !up
-	flags_1 ^= visor_flags
+	clothing_flags ^= visor_flags
 	flags_inv ^= visor_flags_inv
 	flags_cover ^= initial(flags_cover)
 	icon_state = "[initial(icon_state)][up ? "up" : ""]"

@@ -6,7 +6,7 @@
 	switch(_key)
 		if("Delete", "H")
 			if(!pulling)
-				to_chat(src, "<span class='notice'>You are not pulling anything.</span>")
+				to_chat(src, "<span class='warning'>You are not pulling anything!</span>")
 			else
 				stop_pulling()
 			return
@@ -28,6 +28,9 @@
 				to_chat(src, "<span class='warning'>You have nothing to drop in your hand!</span>")
 			else
 				dropItemToGround(I)
+			return
+		if("E")
+			quick_equip()
 			return
 		if("Alt")
 			toggle_move_intent()

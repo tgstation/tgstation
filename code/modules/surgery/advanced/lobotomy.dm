@@ -1,10 +1,6 @@
-/obj/item/disk/surgery/lobotomy
-	name = "Lobotomy Surgery Disk"
-	desc = "The disk provides instructions on how to perform a lobotomy, to cure the most resilient brain ailments."
-	surgeries = list(/datum/surgery/advanced/lobotomy)
-
 /datum/surgery/advanced/lobotomy
-	name = "lobotomy"
+	name = "Lobotomy"
+	desc = "An invasive surgical procedure which guarantees removal of almost all brain traumas, but might cause another permanent trauma in return."
 	steps = list(
 	/datum/surgery_step/incise,
 	/datum/surgery_step/retract_skin,
@@ -13,8 +9,8 @@
 	/datum/surgery_step/lobotomize,
 	/datum/surgery_step/close)
 
-	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	possible_locs = list("head")
+	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	possible_locs = list(BODY_ZONE_HEAD)
 	requires_bodypart_type = 0
 
 /datum/surgery/advanced/lobotomy/can_start(mob/user, mob/living/carbon/target)
@@ -37,10 +33,14 @@
 	return TRUE
 
 /datum/surgery_step/lobotomize/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to cut a piece of [target]'s brain.", "<span class='notice'>You begin to cut a piece of [target]'s brain...</span>")
+	display_results(user, target, "<span class='notice'>You begin to perform a lobotomy on [target]'s brain...</span>",
+		"[user] begins to perform a lobotomy on [target]'s brain.",
+		"[user] begins to perform surgery on [target]'s brain.")
 
 /datum/surgery_step/lobotomize/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] successfully lobotomizes [target]!", "<span class='notice'>You succeed in lobotomizing [target].</span>")
+	display_results(user, target, "<span class='notice'>You succeed in lobotomizing [target].</span>",
+			"[user] successfully lobotomizes [target]!",
+			"[user] completes the surgery on [target]'s brain.")
 	target.cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
 	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/brainwashed))
 		target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
@@ -54,9 +54,12 @@
 	return TRUE
 
 /datum/surgery_step/lobotomize/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(target.getorganslot(ORGAN_SLOT_BRAIN))
-		user.visible_message("<span class='warning'>[user] removes the wrong part, causing more damage!</span>", "<span class='warning'>You remove the wrong part, causing more damage!</span>")
-		target.adjustBrainLoss(80)
+	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
+	if(B)
+		display_results(user, target, "<span class='warning'>You remove the wrong part, causing more damage!</span>",
+			"[user] successfully lobotomizes [target]!",
+			"[user] completes the surgery on [target]'s brain.")
+		B.applyOrganDamage(80)
 		switch(rand(1,3))
 			if(1)
 				target.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_MAGIC)

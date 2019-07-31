@@ -2,9 +2,6 @@
 	Station Airlocks Regular
 */
 
-/obj/machinery/door/airlock/abandoned
-	abandoned = TRUE
-
 /obj/machinery/door/airlock/command
 	icon = 'icons/obj/doors/airlocks/station/command.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_com
@@ -19,9 +16,6 @@
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_eng
 
-/obj/machinery/door/airlock/engineering/abandoned
-	abandoned = TRUE
-
 /obj/machinery/door/airlock/medical
 	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_med
@@ -31,9 +25,6 @@
 	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_mai
 	normal_integrity = 250
-
-/obj/machinery/door/airlock/maintenance/abandoned
-	abandoned = TRUE
 
 /obj/machinery/door/airlock/maintenance/external
 	name = "external airlock access"
@@ -49,9 +40,6 @@
 	name = "atmospherics airlock"
 	icon = 'icons/obj/doors/airlocks/station/atmos.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_atmo
-
-/obj/machinery/door/airlock/atmos/abandoned
-	abandoned = TRUE
 
 /obj/machinery/door/airlock/research
 	icon = 'icons/obj/doors/airlocks/station/research.dmi'
@@ -79,6 +67,20 @@
 	opacity = 0
 	glass = TRUE
 
+/obj/machinery/door/airlock/glass/incinerator
+	autoclose = FALSE
+	frequency = FREQ_AIRLOCK_CONTROL
+	heat_proof = TRUE
+	req_access = list(ACCESS_SYNDICATE)
+
+/obj/machinery/door/airlock/glass/incinerator/syndicatelava_interior
+	name = "Turbine Interior Airlock"
+	id_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_INTERIOR
+
+/obj/machinery/door/airlock/glass/incinerator/syndicatelava_exterior
+	name = "Turbine Exterior Airlock"
+	id_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_EXTERIOR
+
 /obj/machinery/door/airlock/command/glass
 	opacity = 0
 	glass = TRUE
@@ -88,13 +90,13 @@
 	opacity = 0
 	glass = TRUE
 
+/obj/machinery/door/airlock/engineering/glass/critical
+	critical_machine = TRUE //stops greytide virus from opening & bolting doors in critical positions, such as the SM chamber.
+
 /obj/machinery/door/airlock/security/glass
 	opacity = 0
 	glass = TRUE
 	normal_integrity = 400
-
-/obj/machinery/door/airlock/security/glass/abandoned
-	abandoned = TRUE
 
 /obj/machinery/door/airlock/medical/glass
 	opacity = 0
@@ -104,6 +106,20 @@
 	opacity = 0
 	glass = TRUE
 
+/obj/machinery/door/airlock/research/glass/incinerator
+	autoclose = FALSE
+	frequency = FREQ_AIRLOCK_CONTROL
+	heat_proof = TRUE
+	req_access = list(ACCESS_TOX)
+
+/obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior
+	name = "Mixing Room Interior Airlock"
+	id_tag = INCINERATOR_TOXMIX_AIRLOCK_INTERIOR
+
+/obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior
+	name = "Mixing Room Exterior Airlock"
+	id_tag = INCINERATOR_TOXMIX_AIRLOCK_EXTERIOR
+
 /obj/machinery/door/airlock/mining/glass
 	opacity = 0
 	glass = TRUE
@@ -111,6 +127,9 @@
 /obj/machinery/door/airlock/atmos/glass
 	opacity = 0
 	glass = TRUE
+
+/obj/machinery/door/airlock/atmos/glass/critical
+	critical_machine = TRUE //stops greytide virus from opening & bolting doors in critical positions, such as the SM chamber.
 
 /obj/machinery/door/airlock/science/glass
 	opacity = 0
@@ -216,8 +235,8 @@
 
 /obj/machinery/door/airlock/plasma/attackby(obj/item/C, mob/user, params)
 	if(C.is_hot() > 300)//If the temperature of the object is over 300, then ignite
-		message_admins("Plasma airlock ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]")
-		log_game("Plasma airlock ignited by [key_name(user)] in [COORD(src)]")
+		message_admins("Plasma airlock ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(src)]")
+		log_game("Plasma airlock ignited by [key_name(user)] in [AREACOORD(src)]")
 		ignite(C.is_hot())
 	else
 		return ..()
@@ -281,6 +300,20 @@
 	opacity = 0
 	glass = TRUE
 
+/obj/machinery/door/airlock/public/glass/incinerator
+	autoclose = FALSE
+	frequency = FREQ_AIRLOCK_CONTROL
+	heat_proof = TRUE
+	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS)
+
+/obj/machinery/door/airlock/public/glass/incinerator/atmos_interior
+	name = "Turbine Interior Airlock"
+	id_tag = INCINERATOR_ATMOS_AIRLOCK_INTERIOR
+
+/obj/machinery/door/airlock/public/glass/incinerator/atmos_exterior
+	name = "Turbine Exterior Airlock"
+	id_tag = INCINERATOR_ATMOS_AIRLOCK_EXTERIOR
+
 //////////////////////////////////
 /*
 	External Airlocks
@@ -302,7 +335,7 @@
 	CentCom Airlocks
 */
 
-/obj/machinery/door/airlock/centcom
+/obj/machinery/door/airlock/centcom //Use grunge as a station side version, as these have special effects related to them via phobias and such.
 	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_centcom
@@ -310,8 +343,10 @@
 	security_level = 6
 	explosion_block = 2
 
-/obj/machinery/door/airlock/centcom/abandoned
-	abandoned = TRUE
+/obj/machinery/door/airlock/grunge
+	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_grunge
 
 //////////////////////////////////
 /*
@@ -345,9 +380,6 @@
 	overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_mhatch
-
-/obj/machinery/door/airlock/maintenance_hatch/abandoned
-	abandoned = TRUE
 
 //////////////////////////////////
 /*
@@ -445,7 +477,7 @@
 			throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
 			SEND_SOUND(L, sound(pick('sound/hallucinations/turn_around1.ogg','sound/hallucinations/turn_around2.ogg'),0,1,50))
 			flash_color(L, flash_color="#960000", flash_time=20)
-			L.Knockdown(40)
+			L.Paralyze(40)
 			L.throw_at(throwtarget, 5, 1,src)
 		return 0
 
@@ -530,14 +562,14 @@
 	return ..()
 
 /obj/machinery/door/airlock/clockwork/examine(mob/user)
-	..()
+	. = ..()
 	var/gear_text = "The cogwheel is flickering and twisting wildly. Report this to a coder."
 	switch(construction_state)
 		if(GEAR_SECURE)
 			gear_text = "<span class='brass'>The cogwheel is solidly <b>wrenched</b> to the brass around it.</span>"
 		if(GEAR_LOOSE)
 			gear_text = "<span class='alloy'>The cogwheel has been <i>loosened</i>, but remains <b>connected loosely</b> to the door!</span>"
-	to_chat(user, gear_text)
+	. += gear_text
 
 /obj/machinery/door/airlock/clockwork/emp_act(severity)
 	if(prob(80/severity))
@@ -586,7 +618,7 @@
 /obj/machinery/door/airlock/clockwork/proc/attempt_construction(obj/item/I, mob/living/user)
 	if(!I || !user || !user.canUseTopic(src))
 		return 0
-	else if(istype(I, /obj/item/wrench))
+	else if(I.tool_behaviour == TOOL_WRENCH)
 		if(construction_state == GEAR_SECURE)
 			user.visible_message("<span class='notice'>[user] begins loosening [src]'s cogwheel...</span>", "<span class='notice'>You begin loosening [src]'s cogwheel...</span>")
 			if(!I.use_tool(src, user, 75, volume=50) || construction_state != GEAR_SECURE)
@@ -602,7 +634,7 @@
 			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			construction_state = GEAR_SECURE
 		return 1
-	else if(istype(I, /obj/item/crowbar))
+	else if(I.tool_behaviour == TOOL_CROWBAR)
 		if(construction_state == GEAR_SECURE)
 			to_chat(user, "<span class='warning'>[src]'s cogwheel is too tightly secured! Your [I.name] can't reach under it!</span>")
 			return 1

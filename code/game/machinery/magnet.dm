@@ -11,7 +11,6 @@
 	desc = "A device that uses station power to create points of magnetic energy."
 	level = 1		// underfloor
 	layer = LOW_OBJ_LAYER
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 
@@ -47,10 +46,10 @@
 // update the invisibility and icon
 /obj/machinery/magnetic_module/hide(intact)
 	invisibility = intact ? INVISIBILITY_MAXIMUM : 0
-	updateicon()
+	update_icon()
 
 // update the icon_state
-/obj/machinery/magnetic_module/proc/updateicon()
+/obj/machinery/magnetic_module/update_icon()
 	var/state="floor_magnet"
 	var/onstate=""
 	if(!on)
@@ -162,7 +161,7 @@
 	else
 		use_power = NO_POWER_USE
 
-	updateicon()
+	update_icon()
 
 
 /obj/machinery/magnetic_module/proc/magnetic_process() // proc that actually does the magneting
@@ -195,7 +194,6 @@
 	icon = 'icons/obj/airlock_machines.dmi' // uses an airlock machine icon, THINK GREEN HELP THE ENVIRONMENT - RECYCLING!
 	icon_state = "airlock_control_standby"
 	density = FALSE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 45
 	var/frequency = FREQ_MAGNETS
@@ -238,14 +236,8 @@
 			if(M.freq == frequency && M.code == code)
 				magnets.Add(M)
 
-
-/obj/machinery/magnetic_controller/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/magnetic_controller/attack_hand(mob/user)
-	if(stat & (BROKEN|NOPOWER))
-		return
-	user.set_machine(src)
+/obj/machinery/magnetic_controller/ui_interact(mob/user)
+	. = ..()
 	var/dat = "<B>Magnetic Control Console</B><BR><BR>"
 	if(!autolink)
 		dat += {"
@@ -300,8 +292,7 @@
 
 		radio_connection.post_signal(src, signal, filter = RADIO_MAGNETS)
 
-		spawn(1)
-			updateUsrDialog() // pretty sure this increases responsiveness
+		updateUsrDialog()
 
 	if(href_list["operation"])
 		switch(href_list["operation"])
@@ -324,7 +315,7 @@
 			if("togglemoving")
 				moving = !moving
 				if(moving)
-					spawn() MagnetMove()
+					INVOKE_ASYNC(src, .proc/MagnetMove)
 
 
 	updateUsrDialog()
@@ -361,8 +352,7 @@
 		pathpos++ // increase iterator
 
 		// Broadcast the signal
-		spawn()
-			radio_connection.post_signal(src, signal, filter = RADIO_MAGNETS)
+		INVOKE_ASYNC(CALLBACK(radio_connection, /datum/radio_frequency.proc/post_signal, src, signal, RADIO_MAGNETS))
 
 		if(speed == 10)
 			sleep(1)

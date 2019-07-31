@@ -18,6 +18,7 @@
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
+	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST, MOB_REPTILE)
 	gold_core_spawnable = FRIENDLY_SPAWN
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
@@ -38,3 +39,12 @@
 		return TRUE
 	else
 		return ..()
+
+/mob/living/simple_animal/hostile/lizard/space
+	name = "Space Lizard"
+	desc = "A cute tiny lizard with a tiny space helmet."
+	icon_state = "lizard_space"
+	icon_living = "lizard_space"
+	unsuitable_atmos_damage = 0
+	minbodytemp = TCMB
+	maxbodytemp = T0C + 40

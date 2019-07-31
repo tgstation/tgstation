@@ -12,7 +12,12 @@
 /mob/camera/aiEye/remote/holo/setLoc()
 	. = ..()
 	var/obj/machinery/holopad/H = origin
-	H.move_hologram(eye_user, loc)
+	H?.move_hologram(eye_user, loc)
+
+/obj/machinery/holopad/remove_eye_control(mob/living/user)
+	if(user.client)
+		user.reset_perspective(null)
+	user.remote_control = null
 
 //this datum manages it's own references
 
@@ -54,23 +59,19 @@
 /datum/holocall/Destroy()
 	QDEL_NULL(hangup)
 
-	var/user_good = !QDELETED(user)
-	if(user_good)
-		user.reset_perspective()
-		user.remote_control = null
-
 	if(!QDELETED(eye))
-		if(user_good && user.client)
-			for(var/datum/camerachunk/chunk in eye.visibleCameraChunks)
-				chunk.remove(eye)
-		qdel(eye)
-	eye = null
+		QDEL_NULL(eye)
+
+	if(connected_holopad && !QDELETED(hologram))
+		hologram = null
+		connected_holopad.clear_holo(user)
 
 	user = null
 
-	if(hologram)
+	//Hologram survived holopad destro
+	if(!QDELETED(hologram))
 		hologram.HC = null
-		hologram = null
+		QDEL_NULL(hologram)
 
 	for(var/I in dialed_holopads)
 		var/obj/machinery/holopad/H = I
@@ -93,9 +94,10 @@
 /datum/holocall/proc/Disconnect(obj/machinery/holopad/H)
 	testing("Holocall disconnect")
 	if(H == connected_holopad)
-		calling_holopad.say("[usr] disconnected.")
+		var/area/A = get_area(connected_holopad)
+		calling_holopad.say("[A] holopad disconnected.")
 	else if(H == calling_holopad && connected_holopad)
-		connected_holopad.say("[usr] disconnected.")
+		connected_holopad.say("[user] disconnected.")
 
 	ConnectionFailure(H, TRUE)
 
@@ -157,6 +159,7 @@
 	eye.setLoc(H.loc)
 
 	hangup = new(eye, src)
+	hangup.Grant(user)
 
 //Checks the validity of a holocall and qdels itself if it's not. Returns TRUE if valid, FALSE otherwise
 /datum/holocall/proc/Check()
@@ -174,7 +177,7 @@
 		if(!connected_holopad)
 			. = world.time < (call_start_time + HOLOPAD_MAX_DIAL_TIME)
 			if(!.)
-				calling_holopad.say("No answer recieved.")
+				calling_holopad.say("No answer received.")
 				calling_holopad.temp = ""
 
 	if(!.)
@@ -205,7 +208,7 @@
 /datum/holorecord/proc/set_caller_image(mob/user)
 	var/olddir = user.dir
 	user.setDir(SOUTH)
-	caller_image = getFlatIcon(user)
+	caller_image = image(user)
 	user.setDir(olddir)
 
 /obj/item/disk/holodisk
@@ -213,7 +216,7 @@
 	desc = "Stores recorder holocalls."
 	icon_state = "holodisk"
 	obj_flags = UNIQUE_RENAME
-	materials = list(MAT_METAL = 100, MAT_GLASS = 100)
+	materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
 	var/datum/holorecord/record
 	//Preset variables
 	var/preset_image_type
@@ -284,7 +287,7 @@
 	else
 		var/datum/preset_holoimage/H = new preset_image_type
 		record.caller_image = H.build_image()
-		
+
 //These build caller image from outfit and some additional data, for use by mappers for ruin holorecords
 /datum/preset_holoimage
 	var/nonhuman_mobtype //Fill this if you just want something nonhuman
@@ -303,7 +306,7 @@
 			mannequin.equipOutfit(outfit_type,TRUE)
 		mannequin.setDir(SOUTH)
 		COMPILE_OVERLAYS(mannequin)
-		. = getFlatIcon(mannequin)
+		. = image(mannequin)
 		unset_busy_human_dummy("HOLODISK_PRESET")
 
 /obj/item/disk/holodisk/example
@@ -328,6 +331,21 @@
 	DELAY 20"}
 
 /datum/preset_holoimage/engineer
+	outfit_type = /datum/outfit/job/engineer
+
+/datum/preset_holoimage/engineer/rig
+	outfit_type = /datum/outfit/job/engineer/gloved/rig
+
+/datum/preset_holoimage/engineer/ce
+	outfit_type = /datum/outfit/job/ce
+
+/datum/preset_holoimage/engineer/ce/rig
+	outfit_type = /datum/outfit/job/engineer/gloved/rig
+
+/datum/preset_holoimage/engineer/atmos
+	outfit_type = /datum/outfit/job/atmos
+
+/datum/preset_holoimage/engineer/atmos/rig
 	outfit_type = /datum/outfit/job/engineer/gloved/rig
 
 /datum/preset_holoimage/researcher
@@ -348,3 +366,48 @@
 /datum/preset_holoimage/clown
 	outfit_type = /datum/outfit/job/clown
 
+/obj/item/disk/holodisk/donutstation/whiteship
+	name = "Blackbox Print-out #DS024"
+	desc = "A holodisk containing the last viable recording of DS024's blackbox."
+	preset_image_type = /datum/preset_holoimage/engineer/ce
+	preset_record_text = {"
+	NAME Geysr Shorthalt
+	SAY Engine renovations complete and the ships been loaded. We all ready?
+	DELAY 25
+	PRESET /datum/preset_holoimage/engineer
+	NAME Jacob Ullman
+	SAY Lets blow this popsicle stand of a station.
+	DELAY 20
+	PRESET /datum/preset_holoimage/engineer/atmos
+	NAME Lindsey Cuffler
+	SAY Uh, sir? Shouldn't we call for a secondary shuttle? The bluespace drive on this thing made an awfully weird noise when we jumped here..
+	DELAY 30
+	PRESET /datum/preset_holoimage/engineer/ce
+	NAME Geysr Shorthalt
+	SAY Pah! Ship techie at the dock said to give it a good few kicks if it started acting up, let me just..
+	DELAY 25
+	SOUND punch
+	SOUND sparks
+	DELAY 10
+	SOUND punch
+	SOUND sparks
+	DELAY 10
+	SOUND punch
+	SOUND sparks
+	SOUND warpspeed
+	DELAY 15
+	PRESET /datum/preset_holoimage/engineer/atmos
+	NAME Lindsey Cuffler
+	SAY Uhh.. is it supposed to be doing that??
+	DELAY 15
+	PRESET /datum/preset_holoimage/engineer/ce
+	NAME Geysr Shorthalt
+	SAY See? Working as intended. Now, are we all ready?
+	DELAY 10
+	PRESET /datum/preset_holoimage/engineer
+	NAME Jacob Ullman
+	SAY Is it supposed to be glowing like that?
+	DELAY 20
+	SOUND explosion
+
+	"}

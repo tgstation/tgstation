@@ -114,7 +114,7 @@
 	airlock_type = /obj/machinery/door/airlock/highsecurity
 	noglass = TRUE
 	material_type = /obj/item/stack/sheet/plasteel
-	material_amt = 6
+	material_amt = 4
 
 /obj/structure/door_assembly/door_assembly_vault
 	name = "vault door assembly"
@@ -124,7 +124,7 @@
 	airlock_type = /obj/machinery/door/airlock/vault
 	noglass = TRUE
 	material_type = /obj/item/stack/sheet/plasteel
-	material_amt = 8
+	material_amt = 6
 
 /obj/structure/door_assembly/door_assembly_shuttle
 	name = "shuttle airlock assembly"
@@ -159,6 +159,12 @@
 	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
 	airlock_type = /obj/machinery/door/airlock/centcom
+	noglass = TRUE
+
+/obj/structure/door_assembly/door_assembly_grunge
+	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
+	airlock_type = /obj/machinery/door/airlock/grunge
 	noglass = TRUE
 
 /obj/structure/door_assembly/door_assembly_gold

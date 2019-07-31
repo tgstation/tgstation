@@ -12,6 +12,7 @@
 	desc = "A .50 bullet casing, specialised in sending the target to sleep, instead of hell."
 	projectile_type = /obj/item/projectile/bullet/p50/soporific
 	icon_state = "sleeper"
+	harmful = FALSE
 
 /obj/item/ammo_casing/p50/penetrator
 	name = ".50 penetrator round bullet casing"

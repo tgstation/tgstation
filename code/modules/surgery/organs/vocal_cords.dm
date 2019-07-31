@@ -3,12 +3,14 @@
 #define COOLDOWN_MEME 300
 #define COOLDOWN_NONE 100
 
-/obj/item/organ/vocal_cords //organs that are activated through speech with the :x channel
+/obj/item/organ/vocal_cords //organs that are activated through speech with the :x/MODE_KEY_VOCALCORDS channel
 	name = "vocal cords"
 	icon_state = "appendix"
-	zone = "mouth"
+	zone = BODY_ZONE_PRECISE_MOUTH
 	slot = ORGAN_SLOT_VOICE
 	gender = PLURAL
+	decay_factor = 0	//we don't want decaying vocal cords to somehow matter or appear on scanners since they don't do anything damaged
+	healing_factor = 0
 	var/list/spans = null
 
 /obj/item/organ/vocal_cords/proc/can_speak_with() //if there is any limitation to speaking with these cords
@@ -23,7 +25,7 @@
 /obj/item/organ/adamantine_resonator
 	name = "adamantine resonator"
 	desc = "Fragments of adamantine exist in all golems, stemming from their origins as purely magical constructs. These are used to \"hear\" messages from their leaders."
-	zone = "head"
+	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_ADAMANTINE_RESONATOR
 	icon_state = "adamantine_resonator"
 
@@ -137,7 +139,7 @@
 	user.say(message, spans = span_list, sanitize = FALSE)
 
 	message = lowertext(message)
-	var/mob/living/list/listeners = list()
+	var/list/mob/living/listeners = list()
 	for(var/mob/living/L in get_hearers_in_view(8, user))
 		if(L.can_hear() && !L.anti_magic_check(FALSE, TRUE) && L.stat != DEAD)
 			if(L == user && !include_speaker)
@@ -265,7 +267,7 @@
 		cooldown = COOLDOWN_STUN
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.Knockdown(60 * power_multiplier)
+			L.Paralyze(60 * power_multiplier)
 
 	//SLEEP
 	else if((findtext(message, sleep_words)))
@@ -305,14 +307,14 @@
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.heal_overall_damage(10 * power_multiplier, 10 * power_multiplier, 0, 0)
+			L.heal_overall_damage(10 * power_multiplier, 10 * power_multiplier)
 
 	//BRUTE DAMAGE
 	else if((findtext(message, hurt_words)))
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.apply_damage(15 * power_multiplier, def_zone = "chest")
+			L.apply_damage(15 * power_multiplier, def_zone = BODY_ZONE_CHEST)
 
 	//BLEED
 	else if((findtext(message, bleed_words)))
@@ -484,11 +486,8 @@
 		cooldown = COOLDOWN_DAMAGE //because stun removal
 		for(var/V in listeners)
 			var/mob/living/L = V
-			if(L.resting)
-				L.lay_down() //aka get up
-			L.SetStun(0)
-			L.SetKnockdown(0)
-			L.SetUnconscious(0) //i said get up i don't care if you're being tazed
+			L.set_resting(FALSE)
+			L.SetAllImmobility(0)
 
 	//SIT
 	else if((findtext(message, sit_words)))
@@ -569,7 +568,7 @@
 		cooldown = COOLDOWN_NONE
 
 	if(message_admins)
-		message_admins("[key_name_admin(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
+		message_admins("[ADMIN_LOOKUPFLW(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
 	log_game("[key_name(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
 	SSblackbox.record_feedback("tally", "voice_of_god", 1, log_message)
 

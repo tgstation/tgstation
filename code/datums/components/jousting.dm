@@ -13,37 +13,26 @@
 	var/requires_mob_riding = TRUE			//whether this only works if the attacker is riding a mob, rather than anything they can buckle to.
 	var/requires_mount = TRUE				//kinda defeats the point of jousting if you're not mounted but whatever.
 	var/mob/current_holder
-	var/datum/component/redirect/listener
 	var/current_timerid
 
 /datum/component/jousting/Initialize()
 	if(!isitem(parent))
-		. = COMPONENT_INCOMPATIBLE
-		CRASH("Warning: Jousting component incorrectly applied to invalid parent type [parent.type]")
-	RegisterSignal(COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-	RegisterSignal(COMSIG_ITEM_DROPPED, .proc/on_drop)
-	RegisterSignal(COMSIG_ITEM_ATTACK, .proc/on_attack)
+		return COMPONENT_INCOMPATIBLE
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/on_attack)
 
-/datum/component/jousting/Destroy()
-	QDEL_NULL(listener)
-	return ..()
-
-/datum/component/jousting/proc/on_equip(mob/user, slot)
+/datum/component/jousting/proc/on_equip(datum/source, mob/user, slot)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/mob_move, TRUE)
 	current_holder = user
-	if(!listener)
-		listener = user.AddComponent(/datum/component/redirect, COMSIG_MOVABLE_MOVED, CALLBACK(src, .proc/mob_move))
-	else
-		user.TakeComponent(listener)
-		if(QDELING(listener))
-			listener = null
 
-/datum/component/jousting/proc/on_drop(mob/user)
-	QDEL_NULL(listener)
+/datum/component/jousting/proc/on_drop(datum/source, mob/user)
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	current_holder = null
 	current_direction = NONE
 	current_tile_charge = 0
 
-/datum/component/jousting/proc/on_attack(mob/living/target, mob/user)
+/datum/component/jousting/proc/on_attack(datum/source, mob/living/target, mob/user)
 	if(user != current_holder)
 		return
 	var/current = current_tile_charge
@@ -65,11 +54,11 @@
 			msg += " and knocks [target] [target_buckled? "off of [target.buckled]" : "down"]"
 			if(target_buckled)
 				target.buckled.unbuckle_mob(target)
-			target.Knockdown(knockdown_time)
+			target.Paralyze(knockdown_time)
 		if(length(msg))
 			user.visible_message("<span class='danger'>[msg]!</span>")
 
-/datum/component/jousting/proc/mob_move(newloc, dir)
+/datum/component/jousting/proc/mob_move(datum/source, newloc, dir)
 	if(!current_holder || (requires_mount && ((requires_mob_riding && !ismob(current_holder.buckled)) || (!current_holder.buckled))))
 		return
 	if(dir != current_direction)

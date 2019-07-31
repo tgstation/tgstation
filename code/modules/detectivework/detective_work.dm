@@ -1,27 +1,27 @@
 //CONTAINS: Suit fibers and Detective's Scanning Computer
 
 /atom/proc/return_fingerprints()
-	GET_COMPONENT(D, /datum/component/forensics)
+	var/datum/component/forensics/D = GetComponent(/datum/component/forensics)
 	if(D)
 		. = D.fingerprints
 
 /atom/proc/return_hiddenprints()
-	GET_COMPONENT(D, /datum/component/forensics)
+	var/datum/component/forensics/D = GetComponent(/datum/component/forensics)
 	if(D)
 		. = D.hiddenprints
 
 /atom/proc/return_blood_DNA()
-	GET_COMPONENT(D, /datum/component/forensics)
+	var/datum/component/forensics/D = GetComponent(/datum/component/forensics)
 	if(D)
 		. = D.blood_DNA
 
 /atom/proc/blood_DNA_length()
-	GET_COMPONENT(D, /datum/component/forensics)
+	var/datum/component/forensics/D = GetComponent(/datum/component/forensics)
 	if(D)
 		. = length(D.blood_DNA)
 
 /atom/proc/return_fibers()
-	GET_COMPONENT(D, /datum/component/forensics)
+	var/datum/component/forensics/D = GetComponent(/datum/component/forensics)
 	if(D)
 		. = D.fibers
 
@@ -30,7 +30,7 @@
 		. = AddComponent(/datum/component/forensics, fingerprints)
 
 //Set ignoregloves to add prints irrespective of the mob having gloves on.
-/atom/proc/add_fingerprint(mob/living/M, ignoregloves = FALSE)
+/atom/proc/add_fingerprint(mob/M, ignoregloves = FALSE)
 	var/datum/component/forensics/D = AddComponent(/datum/component/forensics)
 	. = D.add_fingerprint(M, ignoregloves)
 
@@ -57,7 +57,7 @@
 	if(length(hiddenprints))
 		. = AddComponent(/datum/component/forensics, null, hiddenprints)
 
-/atom/proc/add_hiddenprint(mob/living/M)
+/atom/proc/add_hiddenprint(mob/M)
 	var/datum/component/forensics/D = AddComponent(/datum/component/forensics)
 	. = D.add_hiddenprint(M)
 

@@ -11,22 +11,27 @@
 /datum/round_event/mass_hallucination/start()
 	switch(rand(1,4))
 		if(1) //same sound for everyone
-			var/sound = pick("explosion","far_explosion","phone","alarm","hallelujah","creepy","ratvar","shuttle_dock",
-				"wall_decon","door_hack","blob_alert","tesla","malf_ai","meteors")
+			var/sound = pick("airlock","airlock_pry","console","explosion","far_explosion","mech","glass","alarm","beepsky","mech","wall_decon","door_hack","tesla")
 			for(var/mob/living/carbon/C in GLOB.alive_mob_list)
 				new /datum/hallucination/sounds(C, TRUE, sound)
-		if(2 to 4)
+		if(2)
+			var/weirdsound = pick("phone","hallelujah","highlander","hyperspace","game_over","creepy","tesla")
+			for(var/mob/living/carbon/C in GLOB.alive_mob_list)
+				new /datum/hallucination/weird_sounds(C, TRUE, weirdsound)
+		if(3)
+			var/stationmessage = pick("ratvar","shuttle_dock","blob_alert","malf_ai","meteors","supermatter")
+			for(var/mob/living/carbon/C in GLOB.alive_mob_list)
+				new /datum/hallucination/stationmessage(C, TRUE, stationmessage)
+		if(4 to 6)
 			var/picked_hallucination = pick(	/datum/hallucination/bolts,
-												/datum/hallucination/whispers,
+												/datum/hallucination/chat,
 												/datum/hallucination/message,
 												/datum/hallucination/bolts,
 												/datum/hallucination/fake_flood,
 												/datum/hallucination/battle,
 												/datum/hallucination/fire,
 												/datum/hallucination/self_delusion,
-												/datum/hallucination/fakeattacker,
 												/datum/hallucination/death,
-												/datum/hallucination/xeno_attack,
 												/datum/hallucination/delusion,
 												/datum/hallucination/oh_yeah)
 			for(var/mob/living/carbon/C in GLOB.alive_mob_list)

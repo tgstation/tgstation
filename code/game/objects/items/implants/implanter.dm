@@ -9,7 +9,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=600, MAT_GLASS=200)
+	materials = list(/datum/material/iron=600, /datum/material/glass=200)
 	var/obj/item/implant/imp = null
 	var/imp_type = null
 
@@ -63,11 +63,3 @@
 	if(imp_type)
 		imp = new imp_type(src)
 	update_icon()
-
-/obj/item/implanter/adrenalin
-	name = "implanter (adrenalin)"
-	imp_type = /obj/item/implant/adrenalin
-
-/obj/item/implanter/emp
-	name = "implanter (EMP)"
-	imp_type = /obj/item/implant/emp

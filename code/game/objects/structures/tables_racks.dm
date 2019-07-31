@@ -35,11 +35,11 @@
 	canSmoothWith = list(/obj/structure/table, /obj/structure/table/reinforced)
 
 /obj/structure/table/examine(mob/user)
-	..()
-	deconstruction_hints(user)
+	. = ..()
+	. += deconstruction_hints(user)
 
 /obj/structure/table/proc/deconstruction_hints(mob/user)
-	to_chat(user, "<span class='notice'>The top is <b>screwed</b> on, but the main <b>bolts</b> are also visible.</span>")
+	return "<span class='notice'>The top is <b>screwed</b> on, but the main <b>bolts</b> are also visible.</span>"
 
 /obj/structure/table/update_icon()
 	if(smooth)
@@ -57,29 +57,38 @@
 	new /obj/structure/table/reinforced/brass(A)
 
 /obj/structure/table/attack_paw(mob/user)
-	attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/table/attack_hand(mob/living/user)
-	if(user.pulling && isliving(user.pulling))
-		var/mob/living/pushed_mob = user.pulling
-		if(pushed_mob.buckled)
-			to_chat(user, "<span class='warning'>[pushed_mob] is buckled to [pushed_mob.buckled]!</span>")
-			return
-		if(user.a_intent == INTENT_GRAB)
-			if(user.grab_state < GRAB_AGGRESSIVE)
-				to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
+	if(Adjacent(user) && user.pulling)
+		if(isliving(user.pulling))
+			var/mob/living/pushed_mob = user.pulling
+			if(pushed_mob.buckled)
+				to_chat(user, "<span class='warning'>[pushed_mob] is buckled to [pushed_mob.buckled]!</span>")
 				return
-			tablepush(user, pushed_mob)
-		if(user.a_intent == INTENT_HELP)
-			pushed_mob.visible_message("<span class='notice'>[user] begins to place [pushed_mob] onto [src]...</span>", \
-								"<span class='userdanger'>[user] begins to place [pushed_mob] onto [src]...</span>")
-			if(do_after(user, 35, target = pushed_mob))
-				tableplace(user, pushed_mob)
-			else
-				return
-		user.stop_pulling()
-	else
-		..()
+			if(user.a_intent == INTENT_GRAB)
+				if(user.grab_state < GRAB_AGGRESSIVE)
+					to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
+					return
+				tablepush(user, pushed_mob)
+			if(user.a_intent == INTENT_HELP)
+				pushed_mob.visible_message("<span class='notice'>[user] begins to place [pushed_mob] onto [src]...</span>", \
+									"<span class='userdanger'>[user] begins to place [pushed_mob] onto [src]...</span>")
+				if(do_after(user, 35, target = pushed_mob))
+					tableplace(user, pushed_mob)
+				else
+					return
+			user.stop_pulling()
+		else if(user.pulling.pass_flags & PASSTABLE)
+			user.Move_Pulled(src)
+			if (user.pulling.loc == loc)
+				user.visible_message("<span class='notice'>[user] places [user.pulling] onto [src].</span>",
+					"<span class='notice'>You place [user.pulling] onto [src].</span>")
+				user.stop_pulling()
+	return ..()
+
+/obj/structure/table/attack_tk()
+	return FALSE
 
 /obj/structure/table/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
@@ -98,39 +107,43 @@
 		. = . || (mover.pass_flags & PASSTABLE)
 
 /obj/structure/table/proc/tableplace(mob/living/user, mob/living/pushed_mob)
-	pushed_mob.forceMove(src.loc)
-	pushed_mob.lay_down()
+	pushed_mob.forceMove(loc)
+	pushed_mob.set_resting(TRUE, TRUE)
 	pushed_mob.visible_message("<span class='notice'>[user] places [pushed_mob] onto [src].</span>", \
 								"<span class='notice'>[user] places [pushed_mob] onto [src].</span>")
-	add_logs(user, pushed_mob, "placed")
+	log_combat(user, pushed_mob, "places", null, "onto [src]")
 
 /obj/structure/table/proc/tablepush(mob/living/user, mob/living/pushed_mob)
-	pushed_mob.forceMove(src.loc)
-	pushed_mob.Knockdown(40)
-	pushed_mob.visible_message("<span class='danger'>[user] pushes [pushed_mob] onto [src].</span>", \
-								"<span class='userdanger'>[user] pushes [pushed_mob] onto [src].</span>")
-	add_logs(user, pushed_mob, "pushed")
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='danger'>Throwing [pushed_mob] onto the table might hurt them!</span>")
+		return
+	var/added_passtable = FALSE
+	if(!pushed_mob.pass_flags & PASSTABLE)
+		added_passtable = TRUE
+		pushed_mob.pass_flags |= PASSTABLE
+	pushed_mob.Move(src.loc)
+	if(added_passtable)
+		pushed_mob.pass_flags &= ~PASSTABLE
+	if(pushed_mob.loc != loc) //Something prevented the tabling
+		return
+	pushed_mob.Paralyze(40)
+	pushed_mob.visible_message("<span class='danger'>[user] slams [pushed_mob] onto [src]!</span>", \
+								"<span class='userdanger'>[user] slams you onto [src]!</span>")
+	log_combat(user, pushed_mob, "tabled", null, "onto [src]")
 	if(!ishuman(pushed_mob))
 		return
 	var/mob/living/carbon/human/H = pushed_mob
-	GET_COMPONENT_FROM(mood, /datum/component/mood, H)
-	if(mood)
-		if(iscatperson(H)) //Catpeople are a bit dumb and think its fun to be on a table
-			mood.add_event("table", /datum/mood_event/happytable)
-			H.startTailWag()
-			addtimer(CALLBACK(H, /mob/living/carbon/human.proc/endTailWag), 30)
-		else
-			mood.add_event("table", /datum/mood_event/table)
+	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
 
 /obj/structure/table/attackby(obj/item/I, mob/user, params)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(istype(I, /obj/item/screwdriver) && deconstruction_ready)
+	if(!(flags_1 & NODECONSTRUCT_1) && user.a_intent != INTENT_HELP)
+		if(I.tool_behaviour == TOOL_SCREWDRIVER && deconstruction_ready)
 			to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 			if(I.use_tool(src, user, 20, volume=50))
 				deconstruct(TRUE)
 			return
 
-		if(istype(I, /obj/item/wrench) && deconstruction_ready)
+		if(I.tool_behaviour == TOOL_WRENCH && deconstruction_ready)
 			to_chat(user, "<span class='notice'>You start deconstructing [src]...</span>")
 			if(I.use_tool(src, user, 40, volume=50))
 				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
@@ -140,17 +153,12 @@
 	if(istype(I, /obj/item/storage/bag/tray))
 		var/obj/item/storage/bag/tray/T = I
 		if(T.contents.len > 0) // If the tray isn't empty
-			var/list/obj/item/oldContents = T.contents.Copy()
-			T.quick_empty()
-
-			for(var/obj/item/C in oldContents)
-				C.forceMove(drop_location())
-
+			SEND_SIGNAL(I, COMSIG_TRY_STORAGE_QUICK_EMPTY, drop_location())
 			user.visible_message("[user] empties [I] on [src].")
 			return
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
-	if(user.a_intent != INTENT_HARM && !(I.flags_1 & ABSTRACT_1))
+	if(user.a_intent != INTENT_HARM && !(I.item_flags & ABSTRACT))
 		if(user.transferItemToLoc(I, drop_location()))
 			var/list/click_params = params2list(params)
 			//Center the icon where the user clicked.
@@ -190,14 +198,13 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 	var/list/debris = list()
 
-/obj/structure/table/glass/New()
+/obj/structure/table/glass/Initialize()
 	. = ..()
 	debris += new frame
 	debris += new /obj/item/shard
 
 /obj/structure/table/glass/Destroy()
-	for(var/i in debris)
-		qdel(i)
+	QDEL_LIST(debris)
 	. = ..()
 
 /obj/structure/table/glass/Crossed(atom/movable/AM)
@@ -231,7 +238,7 @@
 		debris -= AM
 		if(istype(AM, /obj/item/shard))
 			AM.throw_impact(L)
-	L.Knockdown(100)
+	L.Paralyze(100)
 	qdel(src)
 
 /obj/structure/table/glass/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
@@ -294,25 +301,20 @@
 	framestack = /obj/item/stack/rods
 	buildstack = /obj/item/stack/tile/carpet
 	canSmoothWith = list(/obj/structure/table/wood/fancy, /obj/structure/table/wood/fancy/black)
+	var/smooth_icon = 'icons/obj/smooth_structures/fancy_table.dmi' // see Initialize()
 
-/obj/structure/table/wood/fancy/New()
-	// New() is used so that the /black subtype can override `icon` easily and
-	// the correct value will be used by the smoothing subsystem.
+/obj/structure/table/wood/fancy/Initialize()
 	. = ..()
 	// Needs to be set dynamically because table smooth sprites are 32x34,
 	// which the editor treats as a two-tile-tall object. The sprites are that
 	// size so that the north/south corners look nice - examine the detail on
 	// the sprites in the editor to see why.
-	icon = 'icons/obj/smooth_structures/fancy_table.dmi'
+	icon = smooth_icon
 
 /obj/structure/table/wood/fancy/black
 	icon_state = "fancy_table_black"
 	buildstack = /obj/item/stack/tile/carpet/black
-
-/obj/structure/table/wood/fancy/black/New()
-	. = ..()
-	// Ditto above.
-	icon = 'icons/obj/smooth_structures/fancy_table_black.dmi'
+	smooth_icon = 'icons/obj/smooth_structures/fancy_table_black.dmi'
 
 /*
  * Reinforced tables
@@ -331,12 +333,12 @@
 
 /obj/structure/table/reinforced/deconstruction_hints(mob/user)
 	if(deconstruction_ready)
-		to_chat(user, "<span class='notice'>The top cover has been <i>welded</i> loose and the main frame's <b>bolts</b> are exposed.</span>")
+		return "<span class='notice'>The top cover has been <i>welded</i> loose and the main frame's <b>bolts</b> are exposed.</span>"
 	else
-		to_chat(user, "<span class='notice'>The top cover is firmly <b>welded</b> on.</span>")
+		return "<span class='notice'>The top cover is firmly <b>welded</b> on.</span>"
 
 /obj/structure/table/reinforced/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weldingtool))
+	if(W.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HELP)
 		if(!W.tool_start_check(user, amount=0))
 			return
 
@@ -366,9 +368,9 @@
 	buildstackamount = 1
 	canSmoothWith = list(/obj/structure/table/reinforced/brass, /obj/structure/table/bronze)
 
-/obj/structure/table/reinforced/brass/New()
+/obj/structure/table/reinforced/brass/Initialize()
+	. = ..()
 	change_construction_value(2)
-	..()
 
 /obj/structure/table/reinforced/brass/Destroy()
 	change_construction_value(-2)
@@ -390,7 +392,7 @@
 	obj_integrity = max_integrity
 
 /obj/structure/table/bronze
-	name = "brass table"
+	name = "bronze table"
 	desc = "A solid table made out of bronze."
 	icon = 'icons/obj/smooth_structures/brass_table.dmi'
 	icon_state = "brass_table"
@@ -414,13 +416,13 @@
 	buildstack = /obj/item/stack/sheet/mineral/silver
 	smooth = SMOOTH_FALSE
 	can_buckle = 1
-	buckle_lying = 1
+	buckle_lying = -1
 	buckle_requires_restraints = 1
 	var/mob/living/carbon/human/patient = null
 	var/obj/machinery/computer/operating/computer = null
 
-/obj/structure/table/optable/New()
-	..()
+/obj/structure/table/optable/Initialize()
+	. = ..()
 	for(var/direction in GLOB.cardinals)
 		computer = locate(/obj/machinery/computer/operating, get_step(src, direction))
 		if(computer)
@@ -428,23 +430,20 @@
 			break
 
 /obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
-	pushed_mob.forceMove(src.loc)
-	pushed_mob.resting = 1
-	pushed_mob.update_canmove()
+	pushed_mob.forceMove(loc)
+	pushed_mob.set_resting(TRUE, TRUE)
 	visible_message("<span class='notice'>[user] has laid [pushed_mob] on [src].</span>")
 	check_patient()
 
 /obj/structure/table/optable/proc/check_patient()
-	var/mob/M = locate(/mob/living/carbon/human, loc)
+	var/mob/living/carbon/human/M = locate(/mob/living/carbon/human, loc)
 	if(M)
 		if(M.resting)
 			patient = M
-			return 1
+			return TRUE
 	else
 		patient = null
-		return 0
-
-
+		return FALSE
 
 /*
  * Racks
@@ -461,8 +460,8 @@
 	max_integrity = 20
 
 /obj/structure/rack/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>")
+	. = ..()
+	. += "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>"
 
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target)
 	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
@@ -479,6 +478,7 @@
 		. = . || (mover.pass_flags & PASSTABLE)
 
 /obj/structure/rack/MouseDrop_T(obj/O, mob/user)
+	. = ..()
 	if ((!( istype(O, /obj/item) ) || user.get_active_held_item() != O))
 		return
 	if(!user.dropItemToGround(O))
@@ -486,9 +486,8 @@
 	if(O.loc != src.loc)
 		step(O, get_dir(O, src))
 
-
 /obj/structure/rack/attackby(obj/item/W, mob/user, params)
-	if (istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
+	if (W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1) && user.a_intent != INTENT_HELP)
 		W.play_tool_sound(src)
 		deconstruct(TRUE)
 		return
@@ -501,13 +500,15 @@
 	attack_hand(user)
 
 /obj/structure/rack/attack_hand(mob/living/user)
-	if(user.IsKnockdown() || user.resting || user.lying || user.get_num_legs() < 2)
+	. = ..()
+	if(.)
+		return
+	if(!(user.mobility_flags & MOBILITY_STAND) || user.get_num_legs() < 2)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 	user.visible_message("<span class='danger'>[user] kicks [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
 	take_damage(rand(4,8), BRUTE, "melee", 1)
-
 
 /obj/structure/rack/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -541,11 +542,11 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "rack_parts"
 	flags_1 = CONDUCT_1
-	materials = list(MAT_METAL=2000)
+	materials = list(/datum/material/iron=2000)
 	var/building = FALSE
 
 /obj/item/rack_parts/attackby(obj/item/W, mob/user, params)
-	if (istype(W, /obj/item/wrench))
+	if (W.tool_behaviour == TOOL_WRENCH)
 		new /obj/item/stack/sheet/metal(user.loc)
 		qdel(src)
 	else

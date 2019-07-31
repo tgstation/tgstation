@@ -111,6 +111,9 @@ The use of the : operator to override type safety checks is not allowed. You mus
 ### Type paths must begin with a /
 eg: `/datum/thing`, not `datum/thing`
 
+### Type paths must be lowercase
+eg: `/datum/thing/blue`, not `datum/thing/BLUE` or `datum/thing/Blue`
+
 ### Datum type paths must began with "datum"
 In DM, this is optional, but omitting it makes finding definitions harder.
 
@@ -240,6 +243,8 @@ This prevents nesting levels from getting deeper then they need to be.
 
 * Queries must never specify the database, be it in code, or in text files in the repo.
 
+* Primary keys are inherently immutable and you must never do anything to change the primary key of a row or entity. This includes preserving auto increment numbers of rows when copying data to a table in a conversion script. No amount of bitching about gaps in ids or out of order ids will save you from this policy.
+
 ### Mapping Standards
 * TGM Format & Map Merge
 	* All new maps submitted to the repo through a pull request must be in TGM format (unless there is a valid reason present to have it in the default BYOND format.) This is done using the [Map Merge](https://github.com/tgstation/tgstation/wiki/Map-Merger) utility included in the repo to convert the file to TGM format.
@@ -265,6 +270,8 @@ This prevents nesting levels from getting deeper then they need to be.
 * If you used regex to replace code during development of your code, post the regex in your PR for the benefit of future developers and downstream users.
 
 * Changes to the `/config` tree must be made in a way that allows for updating server deployments while preserving previous behaviour. This is due to the fact that the config tree is to be considered owned by the user and not necessarily updated alongside the remainder of the code. The code to preserve previous behaviour may be removed at some point in the future given the OK by maintainers.
+
+* The dlls section of tgs3.json is not designed for dlls that are purely `call()()`ed since those handles are closed between world reboots. Only put in dlls that may have to exist between world reboots.
 
 #### Enforced not enforced
 The following coding styles are not only not enforced at all, but are generally frowned upon to change for little to no reason:
@@ -386,6 +393,10 @@ There is no strict process when it comes to merging pull requests. Pull requests
 * If your pull request is accepted, the code you add no longer belongs exclusively to you but to everyone; everyone is free to work on it, but you are also free to support or object to any changes being made, which will likely hold more weight, as you're the one who added the feature. It is a shame this has to be explicitly said, but there have been cases where this would've saved some trouble.
 
 * Please explain why you are submitting the pull request, and how you think your change will be beneficial to the game. Failure to do so will be grounds for rejecting the PR.
+
+* If your pull request is not finished make sure it is at least testable in a live environment. Pull requests that do not at least meet this requirement will be closed. You may request a maintainer reopen the pull request when you're ready, or make a new one.
+
+* While we have no issue helping contributors (and especially new contributors) bring reasonably sized contributions up to standards via the pull request review process, larger contributions are expected to pass a higher bar of completeness and code quality *before* you open a pull request. Maintainers may close such pull requests that are deemed to be substantially flawed. You should take some time to discuss with maintainers or other contributors on how to improve the changes.
 
 ## Porting features/sprites/sounds/tools from other codebases
 

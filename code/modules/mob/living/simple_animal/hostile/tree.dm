@@ -12,6 +12,7 @@
 	response_help = "brushes"
 	response_disarm = "pushes"
 	response_harm = "hits"
+	faction = list("plants")
 	speed = 1
 	maxHealth = 250
 	health = 250
@@ -56,7 +57,7 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(prob(15))
-			C.Knockdown(60)
+			C.Paralyze(60)
 			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
 					"<span class='userdanger'>\The [src] knocks you down!</span>")
 
@@ -69,3 +70,4 @@
 	icon_gib = "festivus_pole"
 	loot = list(/obj/item/stack/rods)
 	speak_emote = list("polls")
+	faction = list()

@@ -34,24 +34,25 @@
 	return
 
 /obj/effect/sound_emitter/examine(mob/user)
-	..()
+	. = ..()
 	if(!isobserver(user))
 		return
-	to_chat(user, "<span class='boldnotice'>Sound File:</span> [sound_file ? sound_file : "None chosen"]")
-	to_chat(user, "<span class='boldnotice'>Mode:</span> [motus_operandi]</span>")
-	to_chat(user, "<span class='boldnotice'>Range:</span> [emitter_range]</span>")
-	to_chat(user, "<b>Sound is playing at [sound_volume]% volume.</b>")
+	. += "<span class='boldnotice'>Sound File:</span> [sound_file ? sound_file : "None chosen"]"
+	. += "<span class='boldnotice'>Mode:</span> [motus_operandi]</span>"
+	. += "<span class='boldnotice'>Range:</span> [emitter_range]</span>"
+	. += "<b>Sound is playing at [sound_volume]% volume.</b>"
 	if(user.client.holder)
-		to_chat(user, "<b>Alt-click it to quickly activate it!</b>")
+		. += "<b>Alt-click it to quickly activate it!</b>"
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/sound_emitter/attack_ghost(mob/user)
-	if(!check_rights_for(user.client, R_SOUNDS))
+	if(!check_rights_for(user.client, R_SOUND))
 		examine(user)
 		return
 	edit_emitter(user)
 
 /obj/effect/sound_emitter/AltClick(mob/user)
-	if(check_rights_for(user.client, R_SOUNDS))
+	if(check_rights_for(user.client, R_SOUND))
 		activate(user)
 		to_chat(user, "<span class='notice'>Sound emitter activated.</span>")
 
@@ -73,7 +74,7 @@
 
 /obj/effect/sound_emitter/Topic(href, href_list)
 	..()
-	if(!ismob(usr) || !usr.client || !check_rights_for(usr.client, R_SOUNDS))
+	if(!ismob(usr) || !usr.client || !check_rights_for(usr.client, R_SOUND))
 		return
 	var/mob/user = usr
 	if(href_list["edit_label"])
@@ -142,7 +143,7 @@
 		if(M.client.prefs.toggles & SOUND_MIDI)
 			M.playsound_local(M, sound_file, sound_volume, FALSE, channel = CHANNEL_ADMIN, pressure_affected = FALSE)
 	if(user)
-		log_admin("[ADMIN_LOOKUPFLW(user)] activated a sound emitter with file \"[sound_file]\" at [COORD(src)]")
+		log_admin("[ADMIN_LOOKUPFLW(user)] activated a sound emitter with file \"[sound_file]\" at [AREACOORD(src)]")
 	flick("shield1", src)
 
 #undef SOUND_EMITTER_LOCAL

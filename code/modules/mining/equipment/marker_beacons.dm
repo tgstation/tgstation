@@ -36,9 +36,9 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 	update_icon()
 
 /obj/item/stack/marker_beacon/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Use in-hand to place a [singular_name].</span>")
-	to_chat(user, "<span class='notice'>Alt-click to select a color. Current color is [picked_color].</span>")
+	. = ..()
+	. += "<span class='notice'>Use in-hand to place a [singular_name].\n"+\
+	"Alt-click to select a color. Current color is [picked_color].</span>"
 
 /obj/item/stack/marker_beacon/update_icon()
 	icon_state = "[initial(icon_state)][lowertext(picked_color)]"
@@ -93,8 +93,8 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 	qdel(src)
 
 /obj/structure/marker_beacon/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to select a color. Current color is [picked_color].</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to select a color. Current color is [picked_color].</span>"
 
 /obj/structure/marker_beacon/update_icon()
 	while(!picked_color || !GLOB.marker_beacon_colors[picked_color])
@@ -103,6 +103,9 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 	set_light(light_range, light_power, GLOB.marker_beacon_colors[picked_color])
 
 /obj/structure/marker_beacon/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	to_chat(user, "<span class='notice'>You start picking [src] up...</span>")
 	if(do_after(user, remove_speed, target = src))
 		var/obj/item/stack/marker_beacon/M = new(loc)
@@ -121,8 +124,15 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 			M.add(1)
 			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			qdel(src)
-	else
-		return ..()
+			return
+	if(istype(I, /obj/item/light_eater))
+		var/obj/effect/decal/cleanable/ash/A = new /obj/effect/decal/cleanable/ash(drop_location())
+		A.desc += "\nLooks like this used to be \a [src] some time ago."
+		visible_message("<span class='danger'>[src] is disintegrated by [I]!</span>")
+		playsound(src, 'sound/items/welder.ogg', 50, 1)
+		qdel(src)
+		return
+	return ..()
 
 /obj/structure/marker_beacon/AltClick(mob/living/user)
 	..()

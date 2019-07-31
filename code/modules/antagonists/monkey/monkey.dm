@@ -63,7 +63,6 @@
 
 /datum/antagonist/monkey/proc/forge_objectives()
 	objectives |= monkey_team.objectives
-	owner.objectives |= objectives
 
 /datum/antagonist/monkey/admin_remove(mob/admin)
 	var/mob/living/carbon/monkey/M = owner.current
@@ -71,9 +70,9 @@
 		switch(alert(admin, "Humanize?", "Humanize", "Yes", "No"))
 			if("Yes")
 				if(admin == M)
-					admin = M.humanize(TR_KEEPITEMS  |  TR_KEEPIMPLANTS  |  TR_KEEPORGANS  |  TR_KEEPDAMAGE  |  TR_KEEPVIRUS  |  TR_DEFAULTMSG)
+					admin = M.humanize(TR_KEEPITEMS  |  TR_KEEPIMPLANTS  |  TR_KEEPORGANS  |  TR_KEEPDAMAGE  |  TR_KEEPVIRUS  | TR_KEEPSTUNS | TR_KEEPREAGENTS |  TR_DEFAULTMSG)
 				else
-					M.humanize(TR_KEEPITEMS  |  TR_KEEPIMPLANTS  |  TR_KEEPORGANS  |  TR_KEEPDAMAGE  |  TR_KEEPVIRUS  |  TR_DEFAULTMSG)
+					M.humanize(TR_KEEPITEMS  |  TR_KEEPIMPLANTS  |  TR_KEEPORGANS  |  TR_KEEPDAMAGE  |  TR_KEEPVIRUS  |  TR_KEEPSTUNS  |  TR_KEEPREAGENTS  |  TR_DEFAULTMSG)
 			if("No")
 				//nothing
 			else
@@ -98,8 +97,8 @@
 			else
 				return
 	new_owner.add_antag_datum(src)
-	log_admin("[key_name(admin)] made [key_name(new_owner.current)] a monkey leader!")
-	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner.current)] a monkey leader!")
+	log_admin("[key_name(admin)] made [key_name(new_owner)] a monkey leader!")
+	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] a monkey leader!")
 
 /datum/antagonist/monkey/leader/on_gain()
 	. = ..()

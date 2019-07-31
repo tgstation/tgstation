@@ -5,22 +5,22 @@
 		And maybe we'll come back\n\
 		To Earth, who can tell?"
 
-	var/displayed_text
-	var/atom/attached_to
-	color = "#ff0000"
-	var/text_size = 4
-	var/started = FALSE
 	invisibility = INVISIBILITY_OBSERVER
 	anchored = TRUE
 	layer = GHOST_LAYER
+	color = "#ff0000" // text color
+	var/text_size = 3 // larger values clip when the displayed text is larger than 2 digits.
+	var/started = FALSE
+	var/displayed_text
+	var/atom/attached_to
 
-/obj/effect/countdown/New(atom/A)
+/obj/effect/countdown/Initialize()
 	. = ..()
-	attach(A)
+	attach(loc)
 
 /obj/effect/countdown/examine(mob/user)
 	. = ..()
-	to_chat(user, "This countdown is displaying: [displayed_text].")
+	. += "This countdown is displaying: [displayed_text]."
 
 /obj/effect/countdown/proc/attach(atom/A)
 	attached_to = A
@@ -63,6 +63,12 @@
 /obj/effect/countdown/ex_act(severity, target) //immune to explosions
 	return
 
+/obj/effect/countdown/singularity_pull()
+	return
+
+/obj/effect/countdown/singularity_act()
+	return
+
 /obj/effect/countdown/syndicatebomb
 	name = "syndicate bomb countdown"
 
@@ -86,7 +92,7 @@
 
 /obj/effect/countdown/clonepod
 	name = "cloning pod countdown"
-	color = "#0C479D"
+	color = "#18d100"
 	text_size = 1
 
 /obj/effect/countdown/clonepod/get_value()
@@ -116,7 +122,7 @@
 	color = "#00ff80"
 
 /obj/effect/countdown/supermatter/get_value()
-	var/obj/machinery/power/supermatter_shard/S = attached_to
+	var/obj/machinery/power/supermatter_crystal/S = attached_to
 	if(!istype(S))
 		return
 	return "<div align='center' valign='middle' style='position:relative; top:0px; left:0px'>[round(S.get_integrity(), 1)]%</div>"
@@ -135,7 +141,6 @@
 
 /obj/effect/countdown/doomsday
 	name = "doomsday countdown"
-	text_size = 3
 
 /obj/effect/countdown/doomsday/get_value()
 	var/obj/machinery/doomsday_device/DD = attached_to
@@ -155,8 +160,13 @@
 		var/time_left = max(0, (A.death_time - world.time) / 10)
 		return round(time_left)
 
-/obj/effect/countdown/singularity_pull()
-	return
+/obj/effect/countdown/hourglass
+	name = "hourglass countdown"
 
-/obj/effect/countdown/singularity_act()
-	return
+/obj/effect/countdown/hourglass/get_value()
+	var/obj/item/hourglass/H = attached_to
+	if(!istype(H))
+		return
+	else
+		var/time_left = max(0, (H.finish_time - world.time) / 10)
+		return round(time_left)

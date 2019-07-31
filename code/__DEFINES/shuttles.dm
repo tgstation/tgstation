@@ -7,6 +7,8 @@
 #define SHUTTLE_STRANDED	"stranded"
 #define SHUTTLE_ESCAPE		"escape"
 #define SHUTTLE_ENDGAME		"endgame: game over"
+#define SHUTTLE_RECHARGING		"recharging"
+#define SHUTTLE_PREARRIVAL		"landing"
 
 #define EMERGENCY_IDLE_OR_RECALLED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_IDLE) || (SSshuttle.emergency.mode == SHUTTLE_RECALL)))
 #define EMERGENCY_ESCAPED_OR_ENDGAMED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_ESCAPE) || (SSshuttle.emergency.mode == SHUTTLE_ENDGAME)))
@@ -14,13 +16,13 @@
 
 // Shuttle return values
 #define SHUTTLE_CAN_DOCK "can_dock"
-#define SHUTTLE_NOT_A_DOCKING_PORT "not_a_docking_port"
-#define SHUTTLE_DWIDTH_TOO_LARGE "docking_width_too_large"
-#define SHUTTLE_WIDTH_TOO_LARGE "width_too_large"
-#define SHUTTLE_DHEIGHT_TOO_LARGE "docking_height_too_large"
-#define SHUTTLE_HEIGHT_TOO_LARGE "height_too_large"
-#define SHUTTLE_ALREADY_DOCKED "we_are_already_docked"
-#define SHUTTLE_SOMEONE_ELSE_DOCKED "someone_else_docked"
+#define SHUTTLE_NOT_A_DOCKING_PORT "not a docking port"
+#define SHUTTLE_DWIDTH_TOO_LARGE "docking width too large"
+#define SHUTTLE_WIDTH_TOO_LARGE "width too large"
+#define SHUTTLE_DHEIGHT_TOO_LARGE "docking height too large"
+#define SHUTTLE_HEIGHT_TOO_LARGE "height too large"
+#define SHUTTLE_ALREADY_DOCKED "we are already docked"
+#define SHUTTLE_SOMEONE_ELSE_DOCKED "someone else docked"
 
 //Launching Shuttles to CentCom
 #define NOLAUNCH -1
@@ -52,12 +54,12 @@
 #define ENGINE_DEFAULT_MAXSPEED_ENGINES 5
 
 //Docking error flags
-#define DOCKING_SUCCESS 0
-#define DOCKING_BLOCKED 1
-#define DOCKING_IMMOBILIZED 2
-#define DOCKING_AREA_EMPTY 4
-#define DOCKING_NULL_DESTINATION 8
-#define DOCKING_NULL_SOURCE 16
+#define DOCKING_SUCCESS				0
+#define DOCKING_BLOCKED				(1<<0)
+#define DOCKING_IMMOBILIZED			(1<<1)
+#define DOCKING_AREA_EMPTY			(1<<2)
+#define DOCKING_NULL_DESTINATION	(1<<3)
+#define DOCKING_NULL_SOURCE			(1<<4)
 
 //Docking turf movements
 #define MOVE_TURF 1
@@ -74,7 +76,9 @@
 #define SHUTTLE_DOCKER_BLOCKED 3
 
 //Shuttle defaults
-#define SHUTTLE_DEFAULT_TURF_TYPE /turf/open/space
-#define SHUTTLE_DEFAULT_BASETURF_TYPE /turf/open/space
 #define SHUTTLE_DEFAULT_SHUTTLE_AREA_TYPE /area/shuttle
 #define SHUTTLE_DEFAULT_UNDERLYING_AREA /area/space
+
+//Shuttle unlocks
+#define SHUTTLE_UNLOCK_BUBBLEGUM "bubblegum"
+#define SHUTTLE_UNLOCK_ALIENTECH "abductor"

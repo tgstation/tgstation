@@ -2,18 +2,45 @@
 	name = "stomach"
 	icon_state = "stomach"
 	w_class = WEIGHT_CLASS_NORMAL
-	zone = "chest"
+	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_STOMACH
 	attack_verb = list("gored", "squished", "slapped", "digested")
 	desc = "Onaka ga suite imasu."
+
+	healing_factor = STANDARD_ORGAN_HEALING
+	decay_factor = STANDARD_ORGAN_DECAY
+
+	low_threshold_passed = "<span class='info'>Your stomach flashes with pain before subsiding. Food doesn't seem like a good idea right now.</span>"
+	high_threshold_passed = "<span class='warning'>Your stomach flares up with constant pain- you can hardly stomach the idea of food right now!</span>"
+	high_threshold_cleared = "<span class='info'>The pain in your stomach dies down for now, but food still seems unappealing.</span>"
+	low_threshold_cleared = "<span class='info'>The last bouts of pain in your stomach have died out.</span>"
+
 	var/disgust_metabolism = 1
 
 /obj/item/organ/stomach/on_life()
 	var/mob/living/carbon/human/H = owner
+	var/datum/reagent/Nutri
 
+	..()
 	if(istype(H))
-		H.dna.species.handle_digestion(H)
+		if(!(organ_flags & ORGAN_FAILING))
+			H.dna.species.handle_digestion(H)
 		handle_disgust(H)
+
+	if(damage < low_threshold)
+		return
+
+	Nutri = locate(/datum/reagent/consumable/nutriment) in H.reagents.reagent_list
+
+	if(Nutri)
+		if(prob((damage/40) * Nutri.volume * Nutri.volume))
+			H.vomit(damage)
+			to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
+
+	else if(Nutri && damage > high_threshold)
+		if(prob((damage/10) * Nutri.volume * Nutri.volume))
+			H.vomit(damage)
+			to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
 
 /obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H)
 	if(H.disgust)
@@ -36,33 +63,25 @@
 				H.blur_eyes(3) //We need to add more shit down here
 
 		H.adjust_disgust(-0.5 * disgust_metabolism)
-	GET_COMPONENT_FROM(mood, /datum/component/mood, H)
 	switch(H.disgust)
 		if(0 to DISGUST_LEVEL_GROSS)
 			H.clear_alert("disgust")
-			if(mood)
-				mood.clear_event("disgust")
+			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "disgust")
 		if(DISGUST_LEVEL_GROSS to DISGUST_LEVEL_VERYGROSS)
 			H.throw_alert("disgust", /obj/screen/alert/gross)
-			if(mood)
-				mood.add_event("disgust", /datum/mood_event/disgust/gross)
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/gross)
 		if(DISGUST_LEVEL_VERYGROSS to DISGUST_LEVEL_DISGUSTED)
 			H.throw_alert("disgust", /obj/screen/alert/verygross)
-			if(mood)
-				mood.add_event("disgust", /datum/mood_event/disgust/verygross)
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/verygross)
 		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
 			H.throw_alert("disgust", /obj/screen/alert/disgusted)
-			if(mood)
-				mood.add_event("disgust", /datum/mood_event/disgust/disgusted)
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/disgusted)
 
 /obj/item/organ/stomach/Remove(mob/living/carbon/M, special = 0)
 	var/mob/living/carbon/human/H = owner
 	if(istype(H))
 		H.clear_alert("disgust")
-		GET_COMPONENT_FROM(mood, /datum/component/mood, H)
-		if(mood)
-			mood.clear_event("disgust")
-
+		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "disgust")
 	..()
 
 /obj/item/organ/stomach/fly
@@ -72,5 +91,37 @@
 
 /obj/item/organ/stomach/plasmaman
 	name = "digestive crystal"
-	icon_state = "pstomach"
+	icon_state = "stomach-p"
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
+
+/obj/item/organ/stomach/ethereal
+	name = "biological battery"
+	icon_state = "stomach-p" //Welp. At least it's more unique in functionaliy.
+	desc = "A crystal-like organ that stores the electric charge of ethereals."
+	var/crystal_charge = ETHEREAL_CHARGE_FULL
+
+/obj/item/organ/stomach/ethereal/on_life()
+	..()
+	adjust_charge(-ETHEREAL_CHARGE_FACTOR)
+
+/obj/item/organ/stomach/ethereal/Insert(mob/living/carbon/M, special = 0)
+	..()
+	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/charge)
+	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_electrocute)
+
+/obj/item/organ/stomach/ethereal/Remove(mob/living/carbon/M, special = 0)
+	UnregisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
+	UnregisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT)
+	..()
+
+/obj/item/organ/stomach/ethereal/proc/charge(datum/source, amount, repairs)
+	adjust_charge(amount / 70)
+
+/obj/item/organ/stomach/ethereal/proc/on_electrocute(datum/source, shock_damage, siemens_coeff = 1, illusion = FALSE)
+	if(illusion)
+		return
+	adjust_charge(shock_damage * siemens_coeff * 2)
+	to_chat(owner, "<span class='notice'>You absorb some of the shock into your body!</span>")
+
+/obj/item/organ/stomach/ethereal/proc/adjust_charge(amount)
+	crystal_charge = CLAMP(crystal_charge + amount, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_FULL)

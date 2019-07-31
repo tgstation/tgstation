@@ -5,16 +5,6 @@
 	max_ammo = 4
 	multiload = 0
 
-/obj/item/ammo_box/magazine/internal/shot/ammo_count(countempties = 1)
-	if (!countempties)
-		var/boolets = 0
-		for(var/obj/item/ammo_casing/bullet in stored_ammo)
-			if(bullet.BB)
-				boolets++
-		return boolets
-	else
-		return ..()
-
 /obj/item/ammo_box/magazine/internal/shot/tube
 	name = "dual feed shotgun internal tube"
 	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
@@ -46,3 +36,8 @@
 	name = "riot shotgun internal magazine"
 	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
 	max_ammo = 6
+
+/obj/item/ammo_box/magazine/internal/shot/bounty
+	name = "triple-barrel shotgun internal magazine"
+	ammo_type = /obj/item/ammo_casing/shotgun/incapacitate
+	max_ammo = 3

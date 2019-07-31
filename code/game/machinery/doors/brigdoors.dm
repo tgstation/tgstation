@@ -1,7 +1,7 @@
 #define CHARS_PER_LINE 5
 #define FONT_SIZE "5pt"
 #define FONT_COLOR "#09f"
-#define FONT_STYLE "Arial Black"
+#define FONT_STYLE "Small Fonts"
 #define MAX_TIMER 9000
 
 #define PRESET_SHORT 1200
@@ -24,7 +24,6 @@
 	icon_state = "frame"
 	desc = "A remote control for a door."
 	req_access = list(ACCESS_SECURITY)
-	anchored = TRUE
 	density = FALSE
 	var/id = null // id of linked machinery/lockers
 
@@ -33,15 +32,16 @@
 
 	var/timing = FALSE		// boolean, true/1 timer is on, false/0 means it's not timing
 	var/list/obj/machinery/targets = list()
-	var/obj/item/device/radio/Radio //needed to send messages to sec radio
+	var/obj/item/radio/Radio //needed to send messages to sec radio
 
 	maptext_height = 26
 	maptext_width = 32
+	maptext_y = -1
 
 /obj/machinery/door_timer/Initialize()
 	. = ..()
 
-	Radio = new/obj/item/device/radio(src)
+	Radio = new/obj/item/radio(src)
 	Radio.listening = 0
 
 /obj/machinery/door_timer/Initialize()
@@ -169,7 +169,7 @@
 	if(timing)
 		var/disp1 = id
 		var/time_left = time_left(seconds = TRUE)
-		var/disp2 = "[add_zero(num2text((time_left / 60) % 60),2)]~[add_zero(num2text(time_left % 60), 2)]"
+		var/disp2 = "[add_zero(num2text((time_left / 60) % 60),2)]:[add_zero(num2text(time_left % 60), 2)]"
 		if(length(disp2) > CHARS_PER_LINE)
 			disp2 = "Error"
 		update_display(disp1, disp2)
@@ -190,6 +190,8 @@
 //Checks to see if there's 1 line or 2, adds text-icons-numbers/letters over display
 // Stolen from status_display
 /obj/machinery/door_timer/proc/update_display(line1, line2)
+	line1 = uppertext(line1)
+	line2 = uppertext(line2)
 	var/new_text = {"<div style="font-size:[FONT_SIZE];color:[FONT_COLOR];font:'[FONT_STYLE]';text-align:center;" valign="top">[line1]<br>[line2]</div>"}
 	if(maptext != new_text)
 		maptext = new_text

@@ -6,8 +6,10 @@
 #define PLANE_SPACE -95
 #define PLANE_SPACE_PARALLAX -90
 
+#define FLOOR_PLANE -2
 #define GAME_PLANE -1
 #define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
+
 #define SPACE_LAYER 1.8
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define
 #define MID_TURF_LAYER 2.02
@@ -81,23 +83,29 @@
 #define ABOVE_LIGHTING_PLANE 16
 #define ABOVE_LIGHTING_LAYER 16
 
-#define BYOND_LIGHTING_PLANE 17
-#define BYOND_LIGHTING_LAYER 17
+#define FLOOR_OPENSPACE_PLANE 17
+#define OPENSPACE_LAYER 17
+
+#define BYOND_LIGHTING_PLANE 18
+#define BYOND_LIGHTING_LAYER 18
+
+#define CAMERA_STATIC_PLANE 19
+#define CAMERA_STATIC_LAYER 19
 
 //HUD layer defines
 
-#define FULLSCREEN_PLANE 18
-#define FLASH_LAYER 18
-#define FULLSCREEN_LAYER 18.1
-#define UI_DAMAGE_LAYER 18.2
-#define BLIND_LAYER 18.3
-#define CRIT_LAYER 18.4
-#define CURSE_LAYER 18.5
+#define FULLSCREEN_PLANE 20
+#define FLASH_LAYER 20
+#define FULLSCREEN_LAYER 20.1
+#define UI_DAMAGE_LAYER 20.2
+#define BLIND_LAYER 20.3
+#define CRIT_LAYER 20.4
+#define CURSE_LAYER 20.5
 
-#define HUD_PLANE 19
-#define HUD_LAYER 19
-#define ABOVE_HUD_PLANE 20
-#define ABOVE_HUD_LAYER 20
+#define HUD_PLANE 21
+#define HUD_LAYER 21
+#define ABOVE_HUD_PLANE 22
+#define ABOVE_HUD_LAYER 22
 
-#define SPLASHSCREEN_LAYER 21
-#define SPLASHSCREEN_PLANE 21
+#define SPLASHSCREEN_LAYER 23
+#define SPLASHSCREEN_PLANE 23

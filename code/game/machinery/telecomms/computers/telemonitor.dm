@@ -19,10 +19,8 @@
 	var/temp = ""				// temporary feedback messages
 	circuit = /obj/item/circuitboard/computer/comm_monitor
 
-/obj/machinery/computer/telecomms/monitor/attack_hand(mob/user)
-	if(..())
-		return
-	user.set_machine(src)
+/obj/machinery/computer/telecomms/monitor/ui_interact(mob/user)
+	. = ..()
 	var/dat = "<TITLE>Telecommunications Monitor</TITLE><center><b>Telecommunications Monitor</b></center>"
 
 	switch(screen)

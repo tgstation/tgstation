@@ -23,12 +23,13 @@
 		flags_1 |= HEAR_1
 
 /obj/machinery/door/password/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	. = ..()
 	if(!density || !voice_activated || radio_freq)
 		return
 	if(findtext(raw_message,password))
 		open()
 
-/obj/machinery/door/password/CollidedWith(atom/movable/AM)
+/obj/machinery/door/password/Bumped(atom/movable/AM)
 	return !density && ..()
 
 /obj/machinery/door/password/try_to_activate_door(mob/user)

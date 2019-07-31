@@ -1,4 +1,4 @@
-// Ensure the frequency is within bounds of what it should be sending/recieving at
+// Ensure the frequency is within bounds of what it should be sending/receiving at
 /proc/sanitize_frequency(frequency, free = FALSE)
 	. = round(frequency)
 	if(free)
@@ -12,3 +12,8 @@
 /proc/format_frequency(frequency)
 	frequency = text2num(frequency)
 	return "[round(frequency / 10)].[frequency % 10]"
+
+//Opposite of format, returns as a number
+/proc/unformat_frequency(frequency)
+	frequency = text2num(frequency)
+	return frequency * 10

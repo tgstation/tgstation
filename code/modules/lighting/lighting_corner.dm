@@ -96,7 +96,7 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 
 	if (!needs_update)
 		needs_update = TRUE
-		GLOB.lighting_update_corners += src
+		SSlighting.corners_queue += src
 
 /datum/lighting_corner/proc/update_objects()
 	// Cache these values a head of time so 4 individual lighting objects don't all calculate them individually.
@@ -127,7 +127,7 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 		if (T.lighting_object)
 			if (!T.lighting_object.needs_update)
 				T.lighting_object.needs_update = TRUE
-				GLOB.lighting_update_objects += T.lighting_object
+				SSlighting.objects_queue += T.lighting_object
 
 
 /datum/lighting_corner/dummy/New()
@@ -138,6 +138,6 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 	if (!force)
 		return QDEL_HINT_LETMELIVE
 
-	stack_trace("Ok, Look, TG, I need you to find whatever fucker decided to call qdel on a fucking lighting corner, then tell him very nicely and politely that he is 100% retarded and needs his head checked. Thanks. Send them my regards by the way.")
+	stack_trace("Ok, Look, /tg/, I need you to find whatever fucker decided to call qdel on a fucking lighting corner, then tell him very nicely and politely that he is 100% retarded and needs his head checked. Thanks. Send them my regards by the way.")
 
 	return ..()

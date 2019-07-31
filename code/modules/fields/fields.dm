@@ -276,49 +276,53 @@
 	..()
 
 //DEBUG FIELD ITEM
-/obj/item/device/multitool/field_debug
+/obj/item/multitool/field_debug
 	name = "strange multitool"
 	desc = "Seems to project a colored field!"
 	var/list/field_params = list("field_shape" = FIELD_SHAPE_RADIUS_SQUARE, "current_range" = 5, "set_fieldturf_color" = "#aaffff", "set_edgeturf_color" = "#ffaaff")
 	var/field_type = /datum/proximity_monitor/advanced/debug
 	var/operating = FALSE
 	var/datum/proximity_monitor/advanced/current = null
-	var/datum/component/mobhook
+	var/mob/listeningTo
 
-/obj/item/device/multitool/field_debug/Initialize()
+/obj/item/multitool/field_debug/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/device/multitool/field_debug/Destroy()
+/obj/item/multitool/field_debug/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(current)
-	QDEL_NULL(mobhook)
+	listeningTo = null
 	return ..()
 
-/obj/item/device/multitool/field_debug/proc/setup_debug_field()
+/obj/item/multitool/field_debug/proc/setup_debug_field()
 	var/list/new_params = field_params.Copy()
 	new_params["host"] = src
 	current = make_field(field_type, new_params)
 
-/obj/item/device/multitool/field_debug/attack_self(mob/user)
+/obj/item/multitool/field_debug/attack_self(mob/user)
 	operating = !operating
 	to_chat(user, "You turn [src] [operating? "on":"off"].")
-	QDEL_NULL(mobhook)
+	UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+	listeningTo = null
 	if(!istype(current) && operating)
-		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED), CALLBACK(src, .proc/on_mob_move))
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_mob_move)
+		listeningTo = user
 		setup_debug_field()
 	else if(!operating)
 		QDEL_NULL(current)
 
-/obj/item/device/multitool/field_debug/dropped()
+/obj/item/multitool/field_debug/dropped()
 	. = ..()
-	QDEL_NULL(mobhook)
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+		listeningTo = null
 
-/obj/item/device/multitool/field_debug/proc/on_mob_move()
+/obj/item/multitool/field_debug/proc/on_mob_move()
 	check_turf(get_turf(src))
 
-/obj/item/device/multitool/field_debug/process()
+/obj/item/multitool/field_debug/process()
 	check_turf(get_turf(src))
 
-/obj/item/device/multitool/field_debug/proc/check_turf(turf/T)
+/obj/item/multitool/field_debug/proc/check_turf(turf/T)
 	current.HandleMove()

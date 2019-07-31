@@ -5,6 +5,7 @@
 	icon_state = "wizard"
 	icon_living = "wizard"
 	icon_dead = "wizard_dead"
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	speak_chance = 0
 	turns_per_move = 3
 	response_help = "pokes"
@@ -35,6 +36,8 @@
 	var/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/mm = null
 
 	var/next_cast = 0
+
+	do_footstep = TRUE
 
 /mob/living/simple_animal/hostile/wizard/Initialize()
 	. = ..()

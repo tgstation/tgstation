@@ -14,6 +14,7 @@
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm = "kicks"
+	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
 	gold_core_spawnable = FRIENDLY_SPAWN
 	melee_damage_lower = 18
 	melee_damage_upper = 18
@@ -21,6 +22,8 @@
 	maxHealth = 50
 	speed = 10
 	glide_size = 2
+
+	do_footstep = TRUE
 
 
 //Cargo Sloth

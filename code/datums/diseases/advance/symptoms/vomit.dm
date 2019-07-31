@@ -6,7 +6,7 @@ Vomiting
 	Very Very Noticable.
 	Decreases resistance.
 	Doesn't increase stage speed.
-	Little transmittable.
+	Little transmissibility.
 	Medium Level.
 
 Bonus
@@ -25,8 +25,8 @@ Bonus
 	desc = "The virus causes nausea and irritates the stomach, causing occasional vomit."
 	stealth = -2
 	resistance = -1
-	stage_speed = 0
-	transmittable = 1
+	stage_speed = -1
+	transmittable = 2
 	level = 3
 	severity = 3
 	base_message_chance = 100
@@ -55,7 +55,7 @@ Bonus
 	switch(A.stage)
 		if(1, 2, 3, 4)
 			if(prob(base_message_chance) && !suppress_warning)
-				to_chat(M, "<span class='warning'>[pick("You feel nauseous.", "You feel like you're going to throw up!")]</span>")
+				to_chat(M, "<span class='warning'>[pick("You feel nauseated.", "You feel like you're going to throw up!")]</span>")
 		else
 			vomit(M)
 

@@ -4,7 +4,6 @@
 	icon = 'icons/obj/machines/biogenerator.dmi'
 	icon_state = "biogen-empty"
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
 	circuit = /obj/item/circuitboard/machine/biogenerator
@@ -16,7 +15,7 @@
 	var/productivity = 0
 	var/max_items = 40
 	var/datum/techweb/stored_research
-	var/list/show_categories = list("Food", "Botany Chemicals", "Leather and Cloth")
+	var/list/show_categories = list("Food", "Botany Chemicals", "Organic Materials")
 	var/list/timesFiveCategories = list("Food", "Botany Chemicals")
 
 /obj/machinery/biogenerator/Initialize()
@@ -53,6 +52,11 @@
 	productivity = P
 	max_items = max_storage
 
+/obj/machinery/biogenerator/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Productivity at <b>[productivity*100]%</b>.<br>Matter consumption reduced by <b>[(efficiency*25)-25]</b>%.<br>Machine can hold up to <b>[max_items]</b> pieces of produce.</span>"
+
 /obj/machinery/biogenerator/on_reagent_change(changetype)			//When the reagents change, change the icon as well.
 	update_icon()
 
@@ -81,9 +85,6 @@
 			B.forceMove(drop_location())
 			beaker = null
 		update_icon()
-		return
-
-	if(exchange_parts(user, O))
 		return
 
 	if(default_deconstruction_crowbar(O))
@@ -116,8 +117,8 @@
 			for(var/obj/item/reagent_containers/food/snacks/grown/G in PB.contents)
 				if(i >= max_items)
 					break
-				PB.remove_from_storage(G, src)
-				i++
+				if(SEND_SIGNAL(PB, COMSIG_TRY_STORAGE_TAKE, G, src))
+					i++
 			if(i<max_items)
 				to_chat(user, "<span class='info'>You empty the plant bag into the biogenerator.</span>")
 			else if(PB.contents.len == 0)
@@ -151,10 +152,10 @@
 	else
 		to_chat(user, "<span class='warning'>You cannot put this in [src.name]!</span>")
 
-/obj/machinery/biogenerator/interact(mob/user)
+/obj/machinery/biogenerator/ui_interact(mob/user)
 	if(stat & BROKEN || panel_open)
 		return
-	user.set_machine(src)
+	. = ..()
 	var/dat
 	if(processing)
 		dat += "<div class='statusDisplay'>Biogenerator is processing! Please wait...</div><BR>"
@@ -177,7 +178,7 @@
 			for(var/V in categories)
 				categories[V] = list()
 			for(var/V in stored_research.researched_designs)
-				var/datum/design/D = stored_research.researched_designs[V]
+				var/datum/design/D = SSresearch.techweb_design_by_id(V)
 				for(var/C in categories)
 					if(C in D.category)
 						categories[C] += D
@@ -189,12 +190,12 @@
 				dat += "<div class='statusDisplay'>"
 				for(var/V in categories[cat])
 					var/datum/design/D = V
-					dat += "[D.name]: <A href='?src=[REF(src)];create=[REF(D)];amount=1'>Make</A>"
+					dat += "[D.name]: <A href='?src=[REF(src)];create=[D.id];amount=1'>Make</A>"
 					if(cat in timesFiveCategories)
-						dat += "<A href='?src=[REF(src)];create=[REF(D)];amount=5'>x5</A>"
+						dat += "<A href='?src=[REF(src)];create=[D.id];amount=5'>x5</A>"
 					if(ispath(D.build_path, /obj/item/stack))
-						dat += "<A href='?src=[REF(src)];create=[REF(D)];amount=10'>x10</A>"
-					dat += "([D.materials[MAT_BIOMASS]/efficiency])<br>"
+						dat += "<A href='?src=[REF(src)];create=[D.id];amount=10'>x10</A>"
+					dat += "([D.materials[getmaterialref(/datum/material/biomass)]/efficiency])<br>"
 				dat += "</div>"
 		else
 			dat += "<div class='statusDisplay'>No container inside, please insert container.</div>"
@@ -202,15 +203,11 @@
 	var/datum/browser/popup = new(user, "biogen", name, 350, 520)
 	popup.set_content(dat)
 	popup.open()
-	return
-
-/obj/machinery/biogenerator/attack_hand(mob/user)
-	interact(user)
 
 /obj/machinery/biogenerator/proc/activate()
-	if (usr.stat != 0)
+	if (usr.stat != CONSCIOUS)
 		return
-	if (src.stat != 0) //NOPOWER etc
+	if (src.stat != NONE) //NOPOWER etc
 		return
 	if(processing)
 		to_chat(usr, "<span class='warning'>The biogenerator is in the process of working.</span>")
@@ -218,9 +215,9 @@
 	var/S = 0
 	for(var/obj/item/reagent_containers/food/snacks/grown/I in contents)
 		S += 5
-		if(I.reagents.get_reagent_amount("nutriment") < 0.1)
+		if(I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment) < 0.1)
 			points += 1*productivity
-		else points += I.reagents.get_reagent_amount("nutriment")*10*productivity
+		else points += I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)*10*productivity
 		qdel(I)
 	if(S)
 		processing = TRUE
@@ -233,17 +230,16 @@
 		update_icon()
 	else
 		menustat = "void"
-	return
 
-/obj/machinery/biogenerator/proc/check_cost(list/materials, multiplier = 1, remove_points = 1)
-	if(materials.len != 1 || materials[1] != MAT_BIOMASS)
+/obj/machinery/biogenerator/proc/check_cost(list/materials, multiplier = 1, remove_points = TRUE)
+	if(materials.len != 1 || materials[1] != getmaterialref(/datum/material/biomass))
 		return FALSE
-	if (materials[MAT_BIOMASS]*multiplier/efficiency > points)
+	if (materials[getmaterialref(/datum/material/biomass)]*multiplier/efficiency > points)
 		menustat = "nopoints"
 		return FALSE
 	else
 		if(remove_points)
-			points -= materials[MAT_BIOMASS]*multiplier/efficiency
+			points -= materials[getmaterialref(/datum/material/biomass)]*multiplier/efficiency
 		update_icon()
 		updateUsrDialog()
 		return TRUE
@@ -270,8 +266,7 @@
 		if(!check_cost(D.materials, amount))
 			return FALSE
 
-		var/obj/item/stack/product = new D.build_path(loc)
-		product.amount = amount
+		new D.build_path(drop_location(), amount)
 		for(var/R in D.make_reagents)
 			beaker.reagents.add_reagent(R, D.make_reagents[R]*amount)
 	else
@@ -314,8 +309,22 @@
 
 	else if(href_list["create"])
 		var/amount = (text2num(href_list["amount"]))
-		var/datum/design/D = locate(href_list["create"])
-		create_product(D, amount)
+		//Can't be outside these (if you change this keep a sane limit)
+		amount = CLAMP(amount, 1, 10)
+		var/id = href_list["create"]
+		if(!stored_research.researched_designs.Find(id))
+			//naughty naughty
+			stack_trace("ID did not map to a researched datum [id]")
+			return
+
+		//Get design by id (or may return error design)
+		var/datum/design/D = SSresearch.techweb_design_by_id(id)
+		//Valid design datum, amount and the datum is not the error design, lets proceed
+		if(D && amount && !istype(D, /datum/design/error_design))
+			create_product(D, amount)
+		//This shouldnt happen normally but href forgery is real
+		else
+			stack_trace("ID could not be turned into a valid techweb design datum [id]")
 		updateUsrDialog()
 
 	else if(href_list["menu"])

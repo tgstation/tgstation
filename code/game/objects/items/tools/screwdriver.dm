@@ -7,13 +7,13 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	force = 5
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	materials = list(MAT_METAL=75)
+	materials = list(/datum/material/iron=75)
 	attack_verb = list("stabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
@@ -73,9 +73,12 @@
 /obj/item/screwdriver/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))
 		return ..()
-	if(user.zone_selected != "eyes" && user.zone_selected != "head")
+	if(user.zone_selected != BODY_ZONE_PRECISE_EYES && user.zone_selected != BODY_ZONE_HEAD)
 		return ..()
-	if(user.has_trait(TRAIT_CLUMSY) && prob(50))
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You don't want to harm [M]!</span>")
+		return
+	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		M = user
 	return eyestab(M,user)
 
@@ -98,6 +101,9 @@
 	toolspeed = 0.1
 	random_color = FALSE
 
+/obj/item/screwdriver/abductor/get_belt_overlay()
+	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "screwdriver_nuke")
+
 /obj/item/screwdriver/power
 	name = "hand drill"
 	desc = "A simple powered hand drill. It's fitted with a screw bit."
@@ -105,7 +111,7 @@
 	item_state = "drill"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25) //done for balance reasons, making them high value for research, but harder to get
+	materials = list(/datum/material/iron=150,/datum/material/silver=50,/datum/material/titanium=25) //done for balance reasons, making them high value for research, but harder to get
 	force = 8 //might or might not be too high, subject to change
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 8
@@ -114,7 +120,7 @@
 	attack_verb = list("drilled", "screwed", "jabbed","whacked")
 	hitsound = 'sound/items/drill_hit.ogg'
 	usesound = 'sound/items/drill_use.ogg'
-	toolspeed = 0.25
+	toolspeed = 0.7
 	random_color = FALSE
 
 /obj/item/screwdriver/power/suicide_act(mob/user)
@@ -123,7 +129,7 @@
 
 /obj/item/screwdriver/power/attack_self(mob/user)
 	playsound(get_turf(user),'sound/items/change_drill.ogg',50,1)
-	var/obj/item/wrench/power/b_drill = new /obj/item/wrench/power
+	var/obj/item/wrench/power/b_drill = new /obj/item/wrench/power(drop_location())
 	to_chat(user, "<span class='notice'>You attach the bolt driver bit to [src].</span>")
 	qdel(src)
 	user.put_in_active_hand(b_drill)

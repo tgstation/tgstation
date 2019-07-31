@@ -9,8 +9,39 @@
 	var/appearance_cache
 
 	var/id
+	var/ordered = TRUE //If the button gets placed into the default bar
+
+/obj/screen/movable/action_button/proc/can_use(mob/user)
+	if (linked_action)
+		return linked_action.owner == user
+	else if (isobserver(user))
+		var/mob/dead/observer/O = user
+		return !O.observetarget
+	else
+		return TRUE
+
+/obj/screen/movable/action_button/MouseDrop(over_object)
+	if(!can_use(usr))
+		return
+	if((istype(over_object, /obj/screen/movable/action_button) && !istype(over_object, /obj/screen/movable/action_button/hide_toggle)))
+		if(locked)
+			to_chat(usr, "<span class='warning'>Action button \"[name]\" is locked, unlock it first.</span>")
+			return
+		var/obj/screen/movable/action_button/B = over_object
+		var/list/actions = usr.actions
+		actions.Swap(actions.Find(src.linked_action), actions.Find(B.linked_action))
+		moved = FALSE
+		ordered = TRUE
+		B.moved = FALSE
+		B.ordered = TRUE
+		usr.update_action_buttons()
+	else
+		return ..()
 
 /obj/screen/movable/action_button/Click(location,control,params)
+	if (!can_use(usr))
+		return
+
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"])
 		if(locked)
@@ -43,6 +74,9 @@
 	var/show_state = "show"
 
 /obj/screen/movable/action_button/hide_toggle/Click(location,control,params)
+	if (!can_use(usr))
+		return
+
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"])
 		if(locked)
@@ -79,7 +113,7 @@
 		name = "Show Buttons"
 	else
 		name = "Hide Buttons"
-	UpdateIcon()
+	update_icon()
 	usr.update_action_buttons()
 
 /obj/screen/movable/action_button/hide_toggle/AltClick(mob/user)
@@ -100,9 +134,9 @@
 	hide_icon = settings["toggle_icon"]
 	hide_state = settings["toggle_hide"]
 	show_state = settings["toggle_show"]
-	UpdateIcon()
+	update_icon()
 
-/obj/screen/movable/action_button/hide_toggle/proc/UpdateIcon()
+/obj/screen/movable/action_button/hide_toggle/update_icon()
 	cut_overlays()
 	add_overlay(mutable_appearance(hide_icon, hidden ? show_state : hide_state))
 
@@ -117,7 +151,7 @@
 
 /datum/hud/proc/get_action_buttons_icons()
 	. = list()
-	.["bg_icon"] = ui_style_icon
+	.["bg_icon"] = ui_style
 	.["bg_state"] = "template"
 
 	//TODO : Make these fit theme
@@ -149,13 +183,14 @@
 				client.screen += A.button
 	else
 		for(var/datum/action/A in actions)
-			button_number++
 			A.UpdateButtonIcon()
 			var/obj/screen/movable/action_button/B = A.button
-			if(!B.moved)
-				B.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number)
-			else
+			if(B.ordered)
+				button_number++
+			if(B.moved)
 				B.screen_loc = B.moved
+			else
+				B.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number)
 			if(reload_screen)
 				client.screen += B
 

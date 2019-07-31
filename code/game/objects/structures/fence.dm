@@ -29,13 +29,13 @@
 	update_cut_status()
 
 /obj/structure/fence/examine(mob/user)
-	.=..()
+	. = ..()
 
 	switch(hole_size)
 		if(MEDIUM_HOLE)
-			user.show_message("There is a large hole in \the [src].")
+			. += "There is a large hole in \the [src]."
 		if(LARGE_HOLE)
-			user.show_message("\The [src] has been completely cut through.")
+			. += "\The [src] has been completely cut through."
 
 /obj/structure/fence/end
 	icon_state = "end"
@@ -58,9 +58,9 @@
 	hole_size = LARGE_HOLE
 
 /obj/structure/fence/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/wirecutters))
+	if(W.tool_behaviour == TOOL_WIRECUTTER)
 		if(!cuttable)
-			to_chat(user, "<span class='notice'>This section of the fence can't be cut.</span>")
+			to_chat(user, "<span class='warning'>This section of the fence can't be cut!</span>")
 			return
 		if(invulnerable)
 			to_chat(user, "<span class='notice'>This fence is too strong to cut through.</span>")
@@ -155,7 +155,6 @@
 #undef CLIMB_TIME
 
 #undef NO_HOLE
-#undef SMALL_HOLE
 #undef MEDIUM_HOLE
 #undef LARGE_HOLE
 #undef MAX_HOLE_SIZE

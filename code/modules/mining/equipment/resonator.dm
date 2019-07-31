@@ -42,7 +42,7 @@
 		new /obj/effect/temp_visual/resonance(T, user, src, burst_time)
 		user.changeNext_move(CLICK_CD_MELEE)
 
-/obj/item/resonator/pre_attackby(atom/target, mob/user, params)
+/obj/item/resonator/pre_attack(atom/target, mob/user, params)
 	if(check_allowed_items(target, 1))
 		CreateResonance(target, user)
 	return TRUE
@@ -100,7 +100,7 @@
 	playsound(T,'sound/weapons/resonator_blast.ogg',50,1)
 	for(var/mob/living/L in T)
 		if(creator)
-			add_logs(creator, L, "used a resonator field on", "resonator")
+			log_combat(creator, L, "used a resonator field on", "resonator")
 		to_chat(L, "<span class='userdanger'>[src] ruptured with you in it!</span>")
 		L.apply_damage(resonance_damage, BRUTE)
 	qdel(src)

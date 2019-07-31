@@ -1,0 +1,4 @@
+author: "81Denton"
+delete-after: True
+changes: 
+  - balance: "Moved welding goggles from the autolathe to Engineering and R&D protolathes. The prerequisite techweb node is Industrial Engineering."

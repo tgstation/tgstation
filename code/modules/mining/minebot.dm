@@ -36,20 +36,18 @@
 	del_on_death = TRUE
 	var/mode = MINEDRONE_COLLECT
 	var/light_on = 0
-
-	var/datum/action/innate/minedrone/toggle_light/toggle_light_action
-	var/datum/action/innate/minedrone/toggle_mode/toggle_mode_action
-	var/datum/action/innate/minedrone/dump_ore/dump_ore_action
 	var/obj/item/gun/energy/kinetic_accelerator/minebot/stored_gun
 
 /mob/living/simple_animal/hostile/mining_drone/Initialize()
 	. = ..()
 	stored_gun = new(src)
-	toggle_light_action = new()
+	var/datum/action/innate/minedrone/toggle_light/toggle_light_action = new()
 	toggle_light_action.Grant(src)
-	toggle_mode_action = new()
+	var/datum/action/innate/minedrone/toggle_meson_vision/toggle_meson_vision_action = new()
+	toggle_meson_vision_action.Grant(src)
+	var/datum/action/innate/minedrone/toggle_mode/toggle_mode_action = new()
 	toggle_mode_action.Grant(src)
-	dump_ore_action = new()
+	var/datum/action/innate/minedrone/dump_ore/dump_ore_action = new()
 	dump_ore_action.Grant(src)
 	var/obj/item/implant/radio/mining/imp = new(src)
 	imp.implant(src)
@@ -60,32 +58,37 @@
 
 	SetCollectBehavior()
 
+/mob/living/simple_animal/hostile/mining_drone/Destroy()
+	for (var/datum/action/innate/minedrone/action in actions)
+		qdel(action)
+	return ..()
+
 /mob/living/simple_animal/hostile/mining_drone/sentience_act()
 	..()
 	check_friendly_fire = 0
 
 /mob/living/simple_animal/hostile/mining_drone/examine(mob/user)
-	..()
+	. = ..()
 	var/t_He = p_they(TRUE)
 	var/t_him = p_them()
 	var/t_s = p_s()
 	if(health < maxHealth)
 		if(health >= maxHealth * 0.5)
-			to_chat(user, "<span class='warning'>[t_He] look[t_s] slightly dented.</span>")
+			. += "<span class='warning'>[t_He] look[t_s] slightly dented.</span>"
 		else
-			to_chat(user, "<span class='boldwarning'>[t_He] look[t_s] severely dented!</span>")
-	to_chat(user, "<span class='notice'>Using a mining scanner on [t_him] will instruct [t_him] to drop stored ore. <b>[max(0, LAZYLEN(contents) - 1)] Stored Ore</b>\n\
-	Field repairs can be done with a welder.")
+			. += "<span class='boldwarning'>[t_He] look[t_s] severely dented!</span>"
+	. += {"<span class='notice'>Using a mining scanner on [t_him] will instruct [t_him] to drop stored ore. <b>[max(0, LAZYLEN(contents) - 1)] Stored Ore</b>\n
+	Field repairs can be done with a welder."}
 	if(stored_gun && stored_gun.max_mod_capacity)
-		to_chat(user, "<b>[stored_gun.get_remaining_mod_capacity()]%</b> mod capacity remaining.")
+		. += "<b>[stored_gun.get_remaining_mod_capacity()]%</b> mod capacity remaining."
 		for(var/A in stored_gun.get_modkits())
 			var/obj/item/borg/upgrade/modkit/M = A
-			to_chat(user, "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>")
+			. += "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>"
 
 /mob/living/simple_animal/hostile/mining_drone/welder_act(mob/living/user, obj/item/I)
 	. = TRUE
 	if(mode == MINEDRONE_ATTACK)
-		to_chat(user, "<span class='info'>[src] can't be repaired while in attack mode!</span>")
+		to_chat(user, "<span class='warning'>[src] can't be repaired while in attack mode!</span>")
 		return
 
 	if(maxHealth == health)
@@ -97,11 +100,11 @@
 		to_chat(user, "<span class='info'>You repair some of the armor on [src].</span>")
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner))
+	if(istype(I, /obj/item/mining_scanner) || istype(I, /obj/item/t_scanner/adv_mining_scanner))
 		to_chat(user, "<span class='info'>You instruct [src] to drop any collected ore.</span>")
 		DropOre()
 		return
-	if(istype(I, /obj/item/crowbar) || istype(I, /obj/item/borg/upgrade/modkit))
+	if(I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/borg/upgrade/modkit))
 		I.melee_attack_chain(user, stored_gun, params)
 		return
 	..()
@@ -115,6 +118,9 @@
 	..()
 
 /mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/M)
+	. = ..()
+	if(.)
+		return
 	if(M.a_intent == INTENT_HELP)
 		toggle_mode()
 		switch(mode)
@@ -123,7 +129,6 @@
 			if(MINEDRONE_ATTACK)
 				to_chat(M, "<span class='info'>[src] has been set to attack hostile wildlife.</span>")
 		return
-	..()
 
 /mob/living/simple_animal/hostile/mining_drone/CanPass(atom/movable/O)
 	if(istype(O, /obj/item/projectile/kinetic))
@@ -139,7 +144,7 @@
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()
 	mode = MINEDRONE_COLLECT
-	idle_vision_range = 9
+	vision_range = 9
 	search_objects = 2
 	wander = TRUE
 	ranged = FALSE
@@ -150,7 +155,7 @@
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetOffenseBehavior()
 	mode = MINEDRONE_ATTACK
-	idle_vision_range = 7
+	vision_range = 7
 	search_objects = 0
 	wander = FALSE
 	ranged = TRUE
@@ -179,17 +184,35 @@
 /mob/living/simple_animal/hostile/mining_drone/proc/DropOre(message = 1)
 	if(!contents.len)
 		if(message)
-			to_chat(src, "<span class='notice'>You attempt to dump your stored ore, but you have none.</span>")
+			to_chat(src, "<span class='warning'>You attempt to dump your stored ore, but you have none!</span>")
 		return
 	if(message)
 		to_chat(src, "<span class='notice'>You dump your stored ore.</span>")
 	for(var/obj/item/stack/ore/O in contents)
 		O.forceMove(drop_location())
 
-/mob/living/simple_animal/hostile/mining_drone/adjustHealth(amount)
+/mob/living/simple_animal/hostile/mining_drone/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(mode != MINEDRONE_ATTACK && amount > 0)
 		SetOffenseBehavior()
 	. = ..()
+
+/datum/action/innate/minedrone/toggle_meson_vision
+	name = "Toggle Meson Vision"
+	button_icon_state = "meson"
+
+/datum/action/innate/minedrone/toggle_meson_vision/Activate()
+	var/mob/living/simple_animal/hostile/mining_drone/user = owner
+	if(user.sight & SEE_TURFS)
+		user.sight &= ~SEE_TURFS
+		user.lighting_alpha = initial(user.lighting_alpha)
+	else
+		user.sight |= SEE_TURFS
+		user.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+
+	user.sync_lighting_plane_alpha()
+
+	to_chat(user, "<span class='notice'>You toggle your meson vision [(user.sight & SEE_TURFS) ? "on" : "off"].</span>")
+
 
 /mob/living/simple_animal/hostile/mining_drone/proc/toggle_mode()
 	switch(mode)
@@ -240,20 +263,21 @@
 
 //Melee
 
-/obj/item/device/mine_bot_upgrade
+/obj/item/mine_bot_upgrade
 	name = "minebot melee upgrade"
 	desc = "A minebot upgrade."
 	icon_state = "door_electronics"
 	icon = 'icons/obj/module.dmi'
 
-/obj/item/device/mine_bot_upgrade/afterattack(mob/living/simple_animal/hostile/mining_drone/M, mob/user, proximity)
+/obj/item/mine_bot_upgrade/afterattack(mob/living/simple_animal/hostile/mining_drone/M, mob/user, proximity)
+	. = ..()
 	if(!istype(M) || !proximity)
 		return
 	upgrade_bot(M, user)
 
-/obj/item/device/mine_bot_upgrade/proc/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
+/obj/item/mine_bot_upgrade/proc/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
 	if(M.melee_damage_upper != initial(M.melee_damage_upper))
-		to_chat(user, "[src] already has a combat upgrade installed!")
+		to_chat(user, "<span class='warning'>[src] already has a combat upgrade installed!</span>")
 		return
 	M.melee_damage_lower += 7
 	M.melee_damage_upper += 7
@@ -261,12 +285,12 @@
 
 //Health
 
-/obj/item/device/mine_bot_upgrade/health
+/obj/item/mine_bot_upgrade/health
 	name = "minebot armor upgrade"
 
-/obj/item/device/mine_bot_upgrade/health/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
+/obj/item/mine_bot_upgrade/health/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
 	if(M.maxHealth != initial(M.maxHealth))
-		to_chat(user, "[src] already has reinforced armor!")
+		to_chat(user, "<span class='warning'>[src] already has reinforced armor!</span>")
 		return
 	M.maxHealth += 45
 	M.updatehealth()
@@ -276,7 +300,7 @@
 
 /obj/item/slimepotion/slime/sentience/mining
 	name = "minebot AI upgrade"
-	desc = "Can be used to grant sentience to minebots. Is incompatable with minebot armor and melee upgrades, and will override them."
+	desc = "Can be used to grant sentience to minebots. It's incompatible with minebot armor and melee upgrades, and will override them."
 	icon_state = "door_electronics"
 	icon = 'icons/obj/module.dmi'
 	sentience_type = SENTIENCE_MINEBOT

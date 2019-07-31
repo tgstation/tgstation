@@ -27,7 +27,6 @@
 	desc = "The compressor stage of a gas turbine generator."
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "compressor"
-	anchored = TRUE
 	density = TRUE
 	resistance_flags = FIRE_PROOF
 	CanAtmosPass = ATMOS_PASS_DENSITY
@@ -42,13 +41,17 @@
 	var/comp_id = 0
 	var/efficiency
 
+/obj/machinery/power/compressor/Destroy()
+	if (turbine && turbine.compressor == src)
+		turbine.compressor = null
+	turbine = null
+	return ..()
 
 /obj/machinery/power/turbine
 	name = "gas turbine generator"
 	desc = "A gas turbine used for backup power generation."
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "turbine"
-	anchored = TRUE
 	density = TRUE
 	resistance_flags = FIRE_PROOF
 	CanAtmosPass = ATMOS_PASS_DENSITY
@@ -58,6 +61,12 @@
 	var/turf/outturf
 	var/lastgen
 	var/productivity = 1
+
+/obj/machinery/power/turbine/Destroy()
+	if (compressor && compressor.turbine == src)
+		compressor.turbine = null
+	compressor = null
+	return ..()
 
 /obj/machinery/computer/turbine_computer
 	name = "gas turbine control computer"
@@ -96,6 +105,11 @@
 		E += M.rating
 	efficiency = E / 6
 
+/obj/machinery/power/compressor/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Efficiency at <b>[efficiency*100]%</b>.</span>"
+
 /obj/machinery/power/compressor/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
 		return
@@ -110,9 +124,6 @@
 		else
 			to_chat(user, "<span class='alert'>Turbine not connected.</span>")
 			stat |= BROKEN
-		return
-
-	if(exchange_parts(user, I))
 		return
 
 	default_deconstruction_crowbar(I)
@@ -137,6 +148,7 @@
 
 // RPM function to include compression friction - be advised that too low/high of a compfriction value can make things screwy
 
+	rpm = min(rpm, (COMPFRICTION*efficiency)/2)
 	rpm = max(0, rpm - (rpm*rpm)/(COMPFRICTION*efficiency))
 
 
@@ -180,6 +192,11 @@
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		P += C.rating
 	productivity = P / 6
+
+/obj/machinery/power/turbine/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Productivity at <b>[productivity*100]%</b>.</span>"
 
 /obj/machinery/power/turbine/locate_machinery()
 	if(compressor)
@@ -227,13 +244,6 @@
 
 	updateDialog()
 
-/obj/machinery/power/turbine/attack_hand(mob/user)
-
-	if(..())
-		return
-
-	interact(user)
-
 /obj/machinery/power/turbine/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
 		return
@@ -250,12 +260,9 @@
 			stat |= BROKEN
 		return
 
-	if(exchange_parts(user, I))
-		return
-
 	default_deconstruction_crowbar(I)
 
-/obj/machinery/power/turbine/interact(mob/user)
+/obj/machinery/power/turbine/ui_interact(mob/user)
 
 	if(!Adjacent(user)  || (stat & (NOPOWER|BROKEN)) && !issilicon(user))
 		user.unset_machine(src)
@@ -320,12 +327,6 @@
 				return
 	else
 		compressor = locate(/obj/machinery/power/compressor) in range(5, src)
-
-/obj/machinery/computer/turbine_computer/attack_hand(var/mob/user as mob)
-	if(..())
-		return
-
-	ui_interact(user)
 
 /obj/machinery/computer/turbine_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)

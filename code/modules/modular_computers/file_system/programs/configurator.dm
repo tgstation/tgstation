@@ -14,7 +14,7 @@
 	requires_ntnet = 0
 	tgui_id = "ntos_configuration"
 
-	var/obj/item/device/modular_computer/movable = null
+	var/obj/item/modular_computer/movable = null
 
 
 /datum/computer_file/program/computerconfig/ui_data(mob/user)

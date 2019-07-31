@@ -3,10 +3,9 @@
 
 /datum/component/decal/blood/Initialize(_icon, _icon_state, _dir, _cleanable=CLEAN_STRENGTH_BLOOD, _color, _layer=ABOVE_OBJ_LAYER)
 	if(!isitem(parent))
-		. = COMPONENT_INCOMPATIBLE
-		CRASH("Warning: Blood decal attempted to be added to non-item of type [parent.type]")
+		return COMPONENT_INCOMPATIBLE
 	. = ..()
-	RegisterSignal(COMSIG_ATOM_GET_EXAMINE_NAME, .proc/get_examine_name)
+	RegisterSignal(parent, COMSIG_ATOM_GET_EXAMINE_NAME, .proc/get_examine_name)
 
 /datum/component/decal/blood/generate_appearance(_icon, _icon_state, _dir, _layer, _color)
 	var/obj/item/I = parent
@@ -33,7 +32,7 @@
 		blood_splatter_appearances[index] = pic
 	return TRUE
 
-/datum/component/decal/blood/proc/get_examine_name(mob/user, list/override)
+/datum/component/decal/blood/proc/get_examine_name(datum/source, mob/user, list/override)
 	var/atom/A = parent
 	override[EXAMINE_POSITION_ARTICLE] = A.gender == PLURAL? "some" : "a"
 	override[EXAMINE_POSITION_BEFORE] = " blood-stained "

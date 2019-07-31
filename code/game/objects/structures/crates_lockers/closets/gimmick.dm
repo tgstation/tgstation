@@ -17,7 +17,7 @@
 	icon_state = "syndicate"
 
 /obj/structure/closet/gimmick/russian
-	name = "russian surplus closet"
+	name = "\improper Russian surplus closet"
 	desc = "It's a storage unit for Russian standard-issue surplus."
 
 /obj/structure/closet/gimmick/russian/PopulateContents()
@@ -25,7 +25,7 @@
 	for(var/i in 1 to 5)
 		new /obj/item/clothing/head/ushanka(src)
 	for(var/i in 1 to 5)
-		new /obj/item/clothing/under/soviet(src)
+		new /obj/item/clothing/under/costume/soviet(src)
 
 /obj/structure/closet/gimmick/tacticool
 	name = "tacticool gear closet"
@@ -104,4 +104,4 @@
 	new /obj/item/clothing/suit/space/nasavoid(src)
 	new /obj/item/crowbar(src)
 	new /obj/item/stock_parts/cell(src)
-	new /obj/item/device/multitool(src)
+	new /obj/item/multitool(src)

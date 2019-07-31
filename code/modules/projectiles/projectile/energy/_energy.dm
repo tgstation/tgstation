@@ -4,5 +4,4 @@
 	damage = 0
 	damage_type = BURN
 	flag = "energy"
-	is_reflectable = TRUE
-
+	reflectable = REFLECT_NORMAL

@@ -10,6 +10,8 @@
 	if(!isMotion())
 		. = PROCESS_KILL
 		return
+	if(stat & EMPED)
+		return
 	if (detectTime > 0)
 		var/elapsed = world.time - detectTime
 		if (elapsed > alarm_delay)
@@ -40,6 +42,7 @@
 	localMotionTargets = null
 	if(istype(A))
 		A.motioncameras -= src
+	cancelAlarm()
 	return ..()
 
 /obj/machinery/camera/proc/lostTargetRef(datum/weakref/R)
@@ -63,6 +66,7 @@
 	for (var/mob/living/silicon/aiPlayer in GLOB.player_list)
 		if (status)
 			aiPlayer.triggerAlarm("Motion", get_area(src), list(src), src)
+			visible_message("<span class='warning'>A red light flashes on the [src]!</span>")
 	detectTime = -1
 	return TRUE
 
@@ -71,3 +75,38 @@
 	if (!area_motion)
 		if(isliving(AM))
 			newTarget(AM)
+
+/obj/machinery/camera/motion/thunderdome
+	name = "entertainment camera"
+	network = list("thunder")
+	c_tag = "Arena"
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
+
+/obj/machinery/camera/motion/thunderdome/Initialize()
+	. = ..()
+	proximity_monitor.SetRange(7)
+
+/obj/machinery/camera/motion/thunderdome/HasProximity(atom/movable/AM as mob|obj)
+	if (!isliving(AM) || get_area(AM) != get_area(src))
+		return
+	localMotionTargets |= WEAKREF(AM)
+	if (!detectTime)
+		for(var/obj/machinery/computer/security/telescreen/entertainment/TV in GLOB.machines)
+			TV.notify(TRUE)
+	detectTime = world.time + 30 SECONDS
+
+/obj/machinery/camera/motion/thunderdome/process()
+	if (!detectTime)
+		return
+
+	for (var/datum/weakref/targetref in localMotionTargets)
+		var/mob/target = targetref.resolve()
+		if(QDELETED(target) || target.stat == DEAD || get_dist(src, target) > 7 || get_area(src) != get_area(target))
+			localMotionTargets -= targetref
+
+	if (localMotionTargets.len)
+		detectTime = world.time + 30 SECONDS
+	else if (world.time > detectTime)
+		detectTime = 0
+		for(var/obj/machinery/computer/security/telescreen/entertainment/TV in GLOB.machines)
+			TV.notify(FALSE)

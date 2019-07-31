@@ -7,10 +7,10 @@
 
 /mob/living/carbon/monkey/attack_paw(mob/living/M)
 	if(..()) //successful monkey bite.
-		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+		var/dam_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		if(!affecting)
-			affecting = get_bodypart("chest")
+			affecting = get_bodypart(BODY_ZONE_CHEST)
 		if(M.limb_destroyer)
 			dismembering_strike(M, affecting.body_zone)
 		if(stat != DEAD)
@@ -24,7 +24,7 @@
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
 			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(L.zone_selected))
 			if(!affecting)
-				affecting = get_bodypart("chest")
+				affecting = get_bodypart(BODY_ZONE_CHEST)
 			apply_damage(damage, BRUTE, affecting)
 
 /mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M)
@@ -52,9 +52,9 @@
 									"<span class='userdanger'>[M] has knocked out [name]!</span>", null, 5)
 				var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 				if(!affecting)
-					affecting = get_bodypart("chest")
+					affecting = get_bodypart(BODY_ZONE_CHEST)
 				apply_damage(damage, BRUTE, affecting)
-				add_logs(M, src, "attacked")
+				log_combat(M, src, "attacked")
 
 			else
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
@@ -64,9 +64,9 @@
 			if(!IsUnconscious())
 				M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 				if (prob(25))
-					Knockdown(40)
+					Paralyze(40)
 					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-					add_logs(M, src, "pushed")
+					log_combat(M, src, "pushed")
 					visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
 						"<span class='userdanger'>[M] has pushed down [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 				else if(dropItemToGround(get_active_held_item()))
@@ -90,9 +90,9 @@
 							"<span class='userdanger'>[M] has slashed [name]!</span>", null, COMBAT_MESSAGE_RANGE)
 
 				var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
-				add_logs(M, src, "attacked")
+				log_combat(M, src, "attacked")
 				if(!affecting)
-					affecting = get_bodypart("chest")
+					affecting = get_bodypart(BODY_ZONE_CHEST)
 				if(!dismembering_strike(M, affecting.body_zone)) //Dismemberment successful
 					return 1
 				apply_damage(damage, BRUTE, affecting)
@@ -106,7 +106,7 @@
 			var/obj/item/I = null
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			if(prob(95))
-				Knockdown(20)
+				Paralyze(20)
 				visible_message("<span class='danger'>[M] has tackled down [name]!</span>", \
 						"<span class='userdanger'>[M] has tackled down [name]!</span>", null, COMBAT_MESSAGE_RANGE)
 			else
@@ -115,7 +115,7 @@
 					visible_message("<span class='danger'>[M] has disarmed [name]!</span>", "<span class='userdanger'>[M] has disarmed [name]!</span>", null, COMBAT_MESSAGE_RANGE)
 				else
 					I = null
-			add_logs(M, src, "disarmed", "[I ? " removing \the [I]" : ""]")
+			log_combat(M, src, "disarmed", "[I ? " removing \the [I]" : ""]")
 			updatehealth()
 
 
@@ -123,12 +123,12 @@
 	. = ..()
 	if(.)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		var/dam_zone = dismembering_strike(M, pick("chest", "l_hand", "r_hand", "l_leg", "r_leg"))
+		var/dam_zone = dismembering_strike(M, pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 		if(!dam_zone) //Dismemberment successful
 			return TRUE
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		if(!affecting)
-			affecting = get_bodypart("chest")
+			affecting = get_bodypart(BODY_ZONE_CHEST)
 		apply_damage(damage, M.melee_damage_type, affecting)
 
 /mob/living/carbon/monkey/attack_slime(mob/living/simple_animal/slime/M)
@@ -136,17 +136,17 @@
 		var/damage = rand(5, 35)
 		if(M.is_adult)
 			damage = rand(20, 40)
-		var/dam_zone = dismembering_strike(M, pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg"))
+		var/dam_zone = dismembering_strike(M, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 		if(!dam_zone) //Dismemberment successful
 			return 1
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		if(!affecting)
-			affecting = get_bodypart("chest")
+			affecting = get_bodypart(BODY_ZONE_CHEST)
 		apply_damage(damage, BRUTE, affecting)
 
 /mob/living/carbon/monkey/acid_act(acidpwr, acid_volume, bodyzone_hit)
 	. = 1
-	if(!bodyzone_hit || bodyzone_hit == "head")
+	if(!bodyzone_hit || bodyzone_hit == BODY_ZONE_HEAD)
 		if(wear_mask)
 			if(!(wear_mask.resistance_flags & UNACIDABLE))
 				wear_mask.acid_act(acidpwr, acid_volume)
@@ -192,7 +192,7 @@
 		var/max_limb_loss = round(4/severity) //so you don't lose four limbs at severity 3.
 		for(var/X in bodyparts)
 			var/obj/item/bodypart/BP = X
-			if(prob(50/severity) && BP.body_zone != "chest")
+			if(prob(50/severity) && BP.body_zone != BODY_ZONE_CHEST)
 				BP.brute_dam = BP.max_damage
 				BP.dismember()
 				max_limb_loss--

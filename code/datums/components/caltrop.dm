@@ -12,9 +12,9 @@
 	probability = _probability
 	flags = _flags
 
-	RegisterSignal(list(COMSIG_MOVABLE_CROSSED), .proc/Crossed)
+	RegisterSignal(parent, list(COMSIG_MOVABLE_CROSSED), .proc/Crossed)
 
-/datum/component/caltrop/proc/Crossed(atom/movable/AM)
+/datum/component/caltrop/proc/Crossed(datum/source, atom/movable/AM)
 	var/atom/A = parent
 	if(!A.has_gravity())
 		return
@@ -24,13 +24,13 @@
 
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
-		if(H.has_trait(TRAIT_PIERCEIMMUNE))
+		if(HAS_TRAIT(H, TRAIT_PIERCEIMMUNE))
 			return
 
 		if((flags & CALTROP_IGNORE_WALKERS) && H.m_intent == MOVE_INTENT_WALK)
 			return
 
-		var/picked_def_zone = pick("l_leg", "r_leg")
+		var/picked_def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 		var/obj/item/bodypart/O = H.get_bodypart(picked_def_zone)
 		if(!istype(O))
 			return
@@ -46,7 +46,7 @@
 			return
 
 		var/damage = rand(min_damage, max_damage)
-		if(H.has_trait(TRAIT_LIGHT_STEP))
+		if(HAS_TRAIT(H, TRAIT_LIGHT_STEP))
 			damage *= 0.75
 		H.apply_damage(damage, BRUTE, picked_def_zone)
 
@@ -59,4 +59,4 @@
 						"<span class='userdanger'>You slide on [A]!</span>")
 
 			cooldown = world.time
-		H.Knockdown(60)
+		H.Paralyze(60)

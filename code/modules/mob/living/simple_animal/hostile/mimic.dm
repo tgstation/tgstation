@@ -12,6 +12,7 @@
 	maxHealth = 250
 	health = 250
 	gender = NEUTER
+	mob_biotypes = list(MOB_INORGANIC)
 
 	harm_intent_damage = 5
 	melee_damage_lower = 8
@@ -68,7 +69,7 @@
 		icon_state = initial(icon_state)
 		if(prob(15) && iscarbon(target))
 			var/mob/living/carbon/C = target
-			C.Knockdown(40)
+			C.Paralyze(40)
 			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
 					"<span class='userdanger'>\The [src] knocks you down!</span>")
 
@@ -178,7 +179,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	. = ..()
 	if(knockdown_people && . && prob(15) && iscarbon(target))
 		var/mob/living/carbon/C = target
-		C.Knockdown(40)
+		C.Paralyze(40)
 		C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
 				"<span class='userdanger'>\The [src] knocks you down!</span>")
 

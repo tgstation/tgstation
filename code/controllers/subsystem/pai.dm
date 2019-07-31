@@ -11,10 +11,10 @@ SUBSYSTEM_DEF(pai)
 /datum/controller/subsystem/pai/Topic(href, href_list[])
 	if(href_list["download"])
 		var/datum/paiCandidate/candidate = locate(href_list["candidate"]) in candidates
-		var/obj/item/device/paicard/card = locate(href_list["device"]) in pai_card_list
+		var/obj/item/paicard/card = locate(href_list["device"]) in pai_card_list
 		if(card.pai)
 			return
-		if(istype(card, /obj/item/device/paicard) && istype(candidate, /datum/paiCandidate))
+		if(istype(card, /obj/item/paicard) && istype(candidate, /datum/paiCandidate))
 			if(check_ready(candidate) != candidate)
 				return FALSE
 			var/mob/living/silicon/pai/pai = new(card)
@@ -71,7 +71,7 @@ SUBSYSTEM_DEF(pai)
 			if("submit")
 				if(candidate)
 					candidate.ready = 1
-					for(var/obj/item/device/paicard/p in pai_card_list)
+					for(var/obj/item/paicard/p in pai_card_list)
 						if(!p.pai)
 							p.alertUpdate()
 				usr << browse(null, "window=paiRecruit")
@@ -140,7 +140,7 @@ SUBSYSTEM_DEF(pai)
 			return C
 	return FALSE
 
-/datum/controller/subsystem/pai/proc/findPAI(obj/item/device/paicard/p, mob/user)
+/datum/controller/subsystem/pai/proc/findPAI(obj/item/paicard/p, mob/user)
 	if(!ghost_spam)
 		ghost_spam = TRUE
 		for(var/mob/dead/observer/G in GLOB.player_list)

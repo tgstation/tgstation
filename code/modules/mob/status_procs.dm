@@ -3,147 +3,25 @@
 //The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness, ear damage,
 // eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, and TRAIT_NEARSIGHT trait.
 
-/////////////////////////////////// STUN ////////////////////////////////////
 
-/mob/proc/IsStun() //non-living mobs shouldn't be stunned
-	return FALSE
 
-/////////////////////////////////// KNOCKDOWN ////////////////////////////////////
-
-/mob/proc/IsKnockdown() //non-living mobs shouldn't be knocked down
-	return FALSE
-
-/////////////////////////////////// UNCONSCIOUS ////////////////////////////////////
-
-/mob/proc/IsUnconscious() //non-living mobs shouldn't be unconscious
-	return FALSE
-
-/mob/living/IsUnconscious() //If we're unconscious
-	return has_status_effect(STATUS_EFFECT_UNCONSCIOUS)
-
-/mob/living/proc/AmountUnconscious() //How many deciseconds remain in our unconsciousness
-	var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
-	if(U)
-		return U.duration - world.time
-	return 0
-
-/mob/living/proc/Unconscious(amount, updating = TRUE, ignore_canunconscious = FALSE) //Can't go below remaining duration
-	if(((status_flags & CANUNCONSCIOUS) && !has_trait(TRAIT_STUNIMMUNE))  || ignore_canunconscious)
-		var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
-		if(U)
-			U.duration = max(world.time + amount, U.duration)
-		else if(amount > 0)
-			U = apply_status_effect(STATUS_EFFECT_UNCONSCIOUS, amount, updating)
-		return U
-
-/mob/living/proc/SetUnconscious(amount, updating = TRUE, ignore_canunconscious = FALSE) //Sets remaining duration
-	if(((status_flags & CANUNCONSCIOUS) && !has_trait(TRAIT_STUNIMMUNE)) || ignore_canunconscious)
-		var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
-		if(amount <= 0)
-			if(U)
-				qdel(U)
-		else if(U)
-			U.duration = world.time + amount
-		else
-			U = apply_status_effect(STATUS_EFFECT_UNCONSCIOUS, amount, updating)
-		return U
-
-/mob/living/proc/AdjustUnconscious(amount, updating = TRUE, ignore_canunconscious = FALSE) //Adds to remaining duration
-	if(((status_flags & CANUNCONSCIOUS) && !has_trait(TRAIT_STUNIMMUNE)) || ignore_canunconscious)
-		var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
-		if(U)
-			U.duration += amount
-		else if(amount > 0)
-			U = apply_status_effect(STATUS_EFFECT_UNCONSCIOUS, amount, updating)
-		return U
-
-/////////////////////////////////// SLEEPING ////////////////////////////////////
-
-/mob/living/proc/IsSleeping() //If we're asleep
-	return has_status_effect(STATUS_EFFECT_SLEEPING)
-
-/mob/living/proc/AmountSleeping() //How many deciseconds remain in our sleep
-	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
-	if(S)
-		return S.duration - world.time
-	return 0
-
-/mob/living/proc/Sleeping(amount, updating = TRUE, ignore_sleepimmune = FALSE) //Can't go below remaining duration
-	if((!has_trait(TRAIT_SLEEPIMMUNE)) || ignore_sleepimmune)
-		var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
-		if(S)
-			S.duration = max(world.time + amount, S.duration)
-		else if(amount > 0)
-			S = apply_status_effect(STATUS_EFFECT_SLEEPING, amount, updating)
-		return S
-
-/mob/living/proc/SetSleeping(amount, updating = TRUE, ignore_sleepimmune = FALSE) //Sets remaining duration
-	if((!has_trait(TRAIT_SLEEPIMMUNE)) || ignore_sleepimmune)
-		var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
-		if(amount <= 0)
-			if(S)
-				qdel(S)
-		else if(S)
-			S.duration = world.time + amount
-		else
-			S = apply_status_effect(STATUS_EFFECT_SLEEPING, amount, updating)
-		return S
-
-/mob/living/proc/AdjustSleeping(amount, updating = TRUE, ignore_sleepimmune = FALSE) //Adds to remaining duration
-	if((!has_trait(TRAIT_SLEEPIMMUNE)) || ignore_sleepimmune)
-		var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
-		if(S)
-			S.duration += amount
-		else if(amount > 0)
-			S = apply_status_effect(STATUS_EFFECT_SLEEPING, amount, updating)
-		return S
-
-/////////////////////////////////// RESTING ////////////////////////////////////
-
-/mob/proc/Resting(amount)
-	resting = max(max(resting,amount),0)
-
-/mob/living/Resting(amount)
-	..()
-	update_canmove()
-
-/mob/proc/SetResting(amount)
-	resting = max(amount,0)
-
-/mob/living/SetResting(amount)
-	..()
-	update_canmove()
-
-/mob/proc/AdjustResting(amount)
-	resting = max(resting + amount,0)
-
-/mob/living/AdjustResting(amount)
-	..()
-	update_canmove()
-
-/////////////////////////////////// JITTERINESS ////////////////////////////////////
-
+///Set the jitter of a mob
 /mob/proc/Jitter(amount)
 	jitteriness = max(jitteriness,amount,0)
 
-/////////////////////////////////// DIZZINESS ////////////////////////////////////
-
+/**
+  * Set the dizzyness of a mob to a passed in amount
+  *
+  * Except if dizziness is already higher in which case it does nothing
+  */
 /mob/proc/Dizzy(amount)
 	dizziness = max(dizziness,amount,0)
 
-/////////////////////////////////// EYE DAMAGE ////////////////////////////////////
+///FOrce set the dizzyness of a mob
+/mob/proc/set_dizziness(amount)
+	dizziness = max(amount, 0)
 
-/mob/proc/damage_eyes(amount)
-	return
-
-/mob/proc/adjust_eye_damage(amount)
-	return
-
-/mob/proc/set_eye_damage(amount)
-	return
-
-/////////////////////////////////// EYE_BLIND ////////////////////////////////////
-
+///Blind a mobs eyes by amount
 /mob/proc/blind_eyes(amount)
 	if(amount>0)
 		var/old_eye_blind = eye_blind
@@ -153,6 +31,11 @@
 				throw_alert("blind", /obj/screen/alert/blind)
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 
+/**
+  * Adjust a mobs blindness by an amount
+  *
+  * Will apply the blind alerts if needed
+  */
 /mob/proc/adjust_blindness(amount)
 	if(amount>0)
 		var/old_eye_blind = eye_blind
@@ -167,13 +50,15 @@
 			blind_minimum = 1
 		if(isliving(src))
 			var/mob/living/L = src
-			if(L.has_trait(TRAIT_BLIND))
+			if(HAS_TRAIT(L, TRAIT_BLIND))
 				blind_minimum = 1
 		eye_blind = max(eye_blind+amount, blind_minimum)
 		if(!eye_blind)
 			clear_alert("blind")
 			clear_fullscreen("blind")
-
+/**
+  * Force set the blindness of a mob to some level
+  */
 /mob/proc/set_blindness(amount)
 	if(amount>0)
 		var/old_eye_blind = eye_blind
@@ -188,63 +73,59 @@
 			blind_minimum = 1
 		if(isliving(src))
 			var/mob/living/L = src
-			if(L.has_trait(TRAIT_BLIND))
+			if(HAS_TRAIT(L, TRAIT_BLIND))
 				blind_minimum = 1
 		eye_blind = blind_minimum
 		if(!eye_blind)
 			clear_alert("blind")
 			clear_fullscreen("blind")
 
-/////////////////////////////////// EYE_BLURRY ////////////////////////////////////
-
+/**
+  * Make the mobs vision blurry
+  */
 /mob/proc/blur_eyes(amount)
 	if(amount>0)
-		var/old_eye_blurry = eye_blurry
 		eye_blurry = max(amount, eye_blurry)
-		if(!old_eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+	update_eye_blur()
 
+/**
+  * Adjust the current blurriness of the mobs vision by amount
+  */
 /mob/proc/adjust_blurriness(amount)
-	var/old_eye_blurry = eye_blurry
 	eye_blurry = max(eye_blurry+amount, 0)
-	if(amount>0)
-		if(!old_eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-	else if(old_eye_blurry && !eye_blurry)
-		clear_fullscreen("blurry")
+	update_eye_blur()
 
+///Set the mobs blurriness of vision to an amount
 /mob/proc/set_blurriness(amount)
-	var/old_eye_blurry = eye_blurry
 	eye_blurry = max(amount, 0)
-	if(amount>0)
-		if(!old_eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-	else if(old_eye_blurry)
-		clear_fullscreen("blurry")
+	update_eye_blur()
 
-/////////////////////////////////// DRUGGY ////////////////////////////////////
+///Apply the blurry overlays to a mobs clients screen
+/mob/proc/update_eye_blur()
+	if(!client)
+		return
+	var/obj/screen/plane_master/floor/OT = locate(/obj/screen/plane_master/floor) in client.screen
+	var/obj/screen/plane_master/game_world/GW = locate(/obj/screen/plane_master/game_world) in client.screen
+	GW.backdrop(src)
+	OT.backdrop(src)
 
+///Adjust the drugginess of a mob
 /mob/proc/adjust_drugginess(amount)
 	return
 
+///Set the drugginess of a mob
 /mob/proc/set_drugginess(amount)
 	return
 
-/////////////////////////////////// GROSSED OUT ////////////////////////////////////
-
+///Adjust the disgust level of a mob
 /mob/proc/adjust_disgust(amount)
 	return
 
+///Set the disgust level of a mob
 /mob/proc/set_disgust(amount)
 	return
 
-/////////////////////////////////// TEMPERATURE ////////////////////////////////////
-
+///Adjust the body temperature of a mob, with min/max settings
 /mob/proc/adjust_bodytemperature(amount,min_temp=0,max_temp=INFINITY)
-	if(bodytemperature > min_temp && bodytemperature < max_temp)
+	if(bodytemperature >= min_temp && bodytemperature <= max_temp)
 		bodytemperature = CLAMP(bodytemperature + amount,min_temp,max_temp)
-
-
-
-
-

@@ -3,7 +3,7 @@
 
 GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		/obj/machinery/field/containment,
-		/obj/machinery/power/supermatter_shard,
+		/obj/machinery/power/supermatter_crystal,
 		/obj/machinery/doomsday_device,
 		/obj/machinery/nuclearbomb,
 		/obj/machinery/nuclearbomb/selfdestruct,
@@ -185,6 +185,8 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 							A.playsound_local(A, AM.unlock_sound, 50, 0)
 					else //Adding uses to an existing module
 						action.uses += initial(action.uses)
+						action.desc = "[initial(action.desc)] It has [action.uses] use\s remaining."
+						action.UpdateButtonIcon()
 						temp = "Additional use[action.uses > 1 ? "s" : ""] added to [action.name]!"
 			processing_time -= AM.cost
 
@@ -208,7 +210,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	var/unlock_text = "<span class='notice'>Hello World!</span>" //Text shown when an ability is unlocked
 	var/unlock_sound //Sound played when an ability is unlocked
 
-/datum/AI_Module/proc/upgrade(mob/living/silicon/AI/AI) //Apply upgrades!
+/datum/AI_Module/proc/upgrade(mob/living/silicon/ai/AI) //Apply upgrades!
 	return
 
 /datum/AI_Module/large //Big, powerful stuff that can only be used once.
@@ -238,6 +240,8 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		return
 	if(alert(owner, "Send arming signal? (true = arm, false = cancel)", "purge_all_life()", "confirm = TRUE;", "confirm = FALSE;") != "confirm = TRUE;")
 		return
+	if (active)
+		return //prevent the AI from activating an already active doomsday
 	active = TRUE
 	set_us_up_the_bomb(owner)
 
@@ -319,7 +323,6 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	name = "doomsday device"
 	icon_state = "nuclearbomb_base"
 	desc = "A weapon which disintegrates all organic life in a large area."
-	anchored = TRUE
 	density = TRUE
 	verb_exclaim = "blares"
 	var/timing = FALSE
@@ -398,7 +401,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	unlock_text = "<span class='notice'>You establish a power diversion to your turrets, upgrading their health and damage.</span>"
 	unlock_sound = 'sound/items/rped.ogg'
 
-/datum/AI_Module/large/upgrade_turrets/upgrade(mob/living/silicon/AI/AI)
+/datum/AI_Module/large/upgrade_turrets/upgrade(mob/living/silicon/ai/AI)
 	for(var/obj/machinery/porta_turret/ai/turret in GLOB.machines)
 		turret.obj_integrity += 30
 		turret.lethal_projectile = /obj/item/projectile/beam/laser/heavylaser //Once you see it, you will know what it means to FEAR.
@@ -487,8 +490,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 /datum/AI_Module/large/break_fire_alarms
 	module_name = "Thermal Sensor Override"
 	mod_pick_name = "burnpigs"
-	description = "Gives you the ability to override the thermal sensors on all fire alarms. This will remove their ability to scan for fire and thus their ability to alert. \
-	Anyone can check the fire alarm's interface and may be tipped off by its status."
+	description = "Gives you the ability to override the thermal sensors on all fire alarms. This will remove their ability to scan for fire and thus their ability to alert."
 	one_purchase = TRUE
 	cost = 25
 	power_type = /datum/action/innate/ai/break_fire_alarms
@@ -506,6 +508,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		if(!is_station_level(F.z))
 			continue
 		F.obj_flags |= EMAGGED
+		F.update_icon()
 	to_chat(owner, "<span class='notice'>All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized.</span>")
 	owner.playsound_local(owner, 'sound/machines/terminal_off.ogg', 50, 0)
 
@@ -533,7 +536,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		if(!is_station_level(AA.z))
 			continue
 		AA.obj_flags |= EMAGGED
-	to_chat(owner, "<span class='notice'>All air alarm safeties on the station have been overriden. Air alarms may now use the Flood environmental mode.</span>")
+	to_chat(owner, "<span class='notice'>All air alarm safeties on the station have been overridden. Air alarms may now use the Flood environmental mode.</span>")
 	owner.playsound_local(owner, 'sound/machines/terminal_off.ogg', 50, 0)
 
 
@@ -554,8 +557,16 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	uses = 2
 	linked_ability_type = /obj/effect/proc_holder/ranged_ai/overload_machine
 
+/datum/action/innate/ai/ranged/overload_machine/New()
+	..()
+	desc = "[desc] It has [uses] use\s remaining."
+	button.desc = desc
+
 /datum/action/innate/ai/ranged/overload_machine/proc/detonate_machine(obj/machinery/M)
 	if(M && !QDELETED(M))
+		var/turf/T = get_turf(M)
+		message_admins("[ADMIN_LOOKUPFLW(usr)] overloaded [M.name] at [ADMIN_VERBOSEJMP(T)].")
+		log_game("[key_name(usr)] overloaded [M.name] at [AREACOORD(T)].")
 		explosion(get_turf(M), 0, 2, 3, 0)
 		if(M) //to check if the explosion killed it before we try to delete it
 			qdel(M)
@@ -580,6 +591,9 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		return
 	ranged_ability_user.playsound_local(ranged_ability_user, "sparks", 50, 0)
 	attached_action.adjust_uses(-1)
+	if(attached_action && attached_action.uses)
+		attached_action.desc = "[initial(attached_action.desc)] It has [attached_action.uses] use\s remaining."
+		attached_action.UpdateButtonIcon()
 	target.audible_message("<span class='userdanger'>You hear a loud electrical buzzing sound coming from [target]!</span>")
 	addtimer(CALLBACK(attached_action, /datum/action/innate/ai/ranged/overload_machine.proc/detonate_machine, target), 50) //kaboom!
 	remove_ranged_ability("<span class='danger'>Overcharging machine...</span>")
@@ -603,6 +617,11 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	uses = 4
 	linked_ability_type = /obj/effect/proc_holder/ranged_ai/override_machine
 
+/datum/action/innate/ai/ranged/override_machine/New()
+	..()
+	desc = "[desc] It has [uses] use\s remaining."
+	button.desc = desc
+
 /datum/action/innate/ai/ranged/override_machine/proc/animate_machine(obj/machinery/M)
 	if(M && !QDELETED(M))
 		new/mob/living/simple_animal/hostile/mimic/copy/machine(get_turf(M), M, owner, 1)
@@ -623,10 +642,13 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		to_chat(ranged_ability_user, "<span class='warning'>You can only animate machines!</span>")
 		return
 	if(!target.can_be_overridden() || is_type_in_typecache(target, GLOB.blacklisted_malf_machines))
-		to_chat(ranged_ability_user, "<span class='warning'>That machine can't be overriden!</span>")
+		to_chat(ranged_ability_user, "<span class='warning'>That machine can't be overridden!</span>")
 		return
 	ranged_ability_user.playsound_local(ranged_ability_user, 'sound/misc/interference.ogg', 50, 0)
 	attached_action.adjust_uses(-1)
+	if(attached_action && attached_action.uses)
+		attached_action.desc = "[initial(attached_action.desc)] It has [attached_action.uses] use\s remaining."
+		attached_action.UpdateButtonIcon()
 	target.audible_message("<span class='userdanger'>You hear a loud electrical buzzing sound coming from [target]!</span>")
 	addtimer(CALLBACK(attached_action, /datum/action/innate/ai/ranged/override_machine.proc/animate_machine, target), 50) //kabeep!
 	remove_ranged_ability("<span class='danger'>Sending override signal...</span>")
@@ -666,6 +688,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		active = FALSE
 		return
 	if(!owner_AI.can_place_transformer(src))
+		active = FALSE
 		return
 	var/turf/T = get_turf(owner_AI.eyeobj)
 	var/obj/machinery/transformer/conveyor = new(T)
@@ -720,9 +743,15 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /datum/action/innate/ai/blackout
 	name = "Blackout"
-	desc = "Overloads lights across the station."
+	desc = "Overloads random lights across the station."
 	button_icon_state = "blackout"
 	uses = 3
+	auto_use_uses = FALSE
+
+/datum/action/innate/ai/blackout/New()
+	..()
+	desc = "[desc] It has [uses] use\s remaining."
+	button.desc = desc
 
 /datum/action/innate/ai/blackout/Activate()
 	for(var/obj/machinery/power/apc/apc in GLOB.apcs_list)
@@ -732,6 +761,10 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 			apc.overload++
 	to_chat(owner, "<span class='notice'>Overcurrent applied to the powernet.</span>")
 	owner.playsound_local(owner, "sparks", 50, 0)
+	adjust_uses(-1)
+	if(src && uses) //Not sure if not having src here would cause a runtime, so it's here to be safe
+		desc = "[initial(desc)] It has [uses] use\s remaining."
+		UpdateButtonIcon()
 
 
 //Disable Emergency Lights
@@ -782,7 +815,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /datum/action/innate/ai/reactivate_cameras/New()
 	..()
-	desc = "[desc] There are 30 reactivations remaining."
+	desc = "[desc] It has [uses] use\s remaining."
 	button.desc = desc
 
 /datum/action/innate/ai/reactivate_cameras/Activate()
@@ -800,10 +833,10 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	owner.playsound_local(owner, 'sound/items/wirecutter.ogg', 50, 0)
 	adjust_uses(0, TRUE) //Checks the uses remaining
 	if(src && uses) //Not sure if not having src here would cause a runtime, so it's here to be safe
-		desc = "[initial(desc)] There are [uses] reactivations remaining."
+		desc = "[initial(desc)] It has [uses] use\s remaining."
+		UpdateButtonIcon()
 
-
-//Upgrade Camera Network: EMP-proofs all cameras, in addition to giving them x-ray vision.
+//Upgrade Camera Network: EMP-proofs all cameras, in addition to giving them X-ray vision.
 /datum/AI_Module/large/upgrade_cameras
 	module_name = "Upgrade Camera Network"
 	mod_pick_name = "upgradecam"
@@ -823,17 +856,17 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	for(var/V in GLOB.cameranet.cameras)
 		var/obj/machinery/camera/C = V
 		if(C.assembly)
-			var/upgraded = 0
+			var/upgraded = FALSE
 
 			if(!C.isXRay())
-				C.upgradeXRay()
+				C.upgradeXRay(TRUE) //if this is removed you can get rid of camera_assembly/var/malf_xray_firmware_active and clean up isxray()
 				//Update what it can see.
 				GLOB.cameranet.updateVisibility(C, 0)
-				upgraded = 1
+				upgraded = TRUE
 
 			if(!C.isEmpProof())
-				C.upgradeEmpProof()
-				upgraded = 1
+				C.upgradeEmpProof(TRUE) //if this is removed you can get rid of camera_assembly/var/malf_emp_firmware_active and clean up isemp()
+				upgraded = TRUE
 
 			if(upgraded)
 				upgraded_cameras++

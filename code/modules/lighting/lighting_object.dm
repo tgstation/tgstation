@@ -5,13 +5,11 @@
 
 	icon             = LIGHTING_ICON
 	icon_state       = "transparent"
-	color            = LIGHTING_BASE_MATRIX
+	color            = null //we manually set color in init instead
 	plane            = LIGHTING_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer            = LIGHTING_LAYER
 	invisibility     = INVISIBILITY_LIGHTING
-
-	blend_mode       = BLEND_ADD
 
 	var/needs_update = FALSE
 	var/turf/myturf
@@ -19,6 +17,9 @@
 /atom/movable/lighting_object/Initialize(mapload)
 	. = ..()
 	verbs.Cut()
+	//We avoid setting this in the base as if we do then the parent atom handling will add_atom_color it and that
+	//is totally unsuitable for this object, as we are always changing it's colour manually
+	color = LIGHTING_BASE_MATRIX
 
 	myturf = loc
 	if (myturf.lighting_object)
@@ -30,11 +31,11 @@
 		S.update_starlight()
 
 	needs_update = TRUE
-	GLOB.lighting_update_objects += src
+	SSlighting.objects_queue += src
 
 /atom/movable/lighting_object/Destroy(var/force)
 	if (force)
-		GLOB.lighting_update_objects     -= src
+		SSlighting.objects_queue -= src
 		if (loc != myturf)
 			var/turf/oldturf = get_turf(myturf)
 			var/turf/newturf = get_turf(loc)
@@ -102,7 +103,7 @@
 	#if LIGHTING_SOFT_THRESHOLD != 0
 	var/set_luminosity = max > LIGHTING_SOFT_THRESHOLD
 	#else
-	// Because of floating points�?, it won't even be a flat 0.
+	// Because of floating points™?, it won't even be a flat 0.
 	// This number is mostly arbitrary.
 	var/set_luminosity = max > 1e-6
 	#endif

@@ -60,6 +60,11 @@
 		next_activation = world.time + rand(symptom_delay_min * 10, symptom_delay_max * 10)
 		return TRUE
 
+/datum/symptom/proc/on_stage_change(new_stage, datum/disease/advance/A)
+	if(neutered)
+		return FALSE
+	return TRUE
+
 /datum/symptom/proc/Copy()
 	var/datum/symptom/new_symp = new type
 	new_symp.name = name
@@ -68,4 +73,10 @@
 	return new_symp
 
 /datum/symptom/proc/generate_threshold_desc()
+	return
+
+/datum/symptom/proc/OnAdd(datum/disease/advance/A)		//Overload when a symptom needs to be active before processing, like changing biotypes.
+	return
+
+/datum/symptom/proc/OnRemove(datum/disease/advance/A)	//But dont forget to remove them too.
 	return

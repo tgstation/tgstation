@@ -63,7 +63,6 @@
 /area/ruin/space/oldteleporter)
 "n" = (
 /obj/machinery/power/apc{
-	dir = 0;
 	name = "Worn-out APC";
 	pixel_y = -24
 	},

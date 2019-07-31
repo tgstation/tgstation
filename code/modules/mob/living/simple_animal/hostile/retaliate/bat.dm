@@ -9,6 +9,7 @@
 	response_help = "brushes aside"
 	response_disarm = "flails at"
 	response_harm = "hits"
+	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
 	speak_chance = 0
 	maxHealth = 15
 	health = 15

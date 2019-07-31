@@ -42,7 +42,7 @@
 /area/ruin/space/has_grav/powered/authorship)
 "i" = (
 /obj/structure/table,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /obj/machinery/light{
 	dir = 1
 	},

@@ -9,7 +9,7 @@
 #define META_GAS_OVERLAY		4
 #define META_GAS_DANGER			5
 #define META_GAS_ID				6
-
+#define META_GAS_FUSION_POWER   7
 //ATMOS
 //stuff you should probably leave well alone!
 #define R_IDEAL_GAS_EQUATION	8.31	//kPa*L/(K*mol)
@@ -39,8 +39,8 @@
 #define MINIMUM_TEMPERATURE_TO_MOVE					(T20C+100)			//or this (or both, obviously)
 #define MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND		4		//Minimum temperature difference before group processing is suspended
 #define MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER		0.5		//Minimum temperature difference before the gas temperatures are just set to be equal
-#define MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION		T20C+10
-#define MINIMUM_TEMPERATURE_START_SUPERCONDUCTION	T20C+200
+#define MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION		(T20C+10)
+#define MINIMUM_TEMPERATURE_START_SUPERCONDUCTION	(T20C+200)
 
 //HEAT TRANSFER COEFFICIENTS
 //Must be between 0 and 1. Values closer to 1 equalize temperature faster
@@ -51,16 +51,21 @@
 #define HEAT_CAPACITY_VACUUM				7000	//a hack to help make vacuums "cold", sacrificing realism for gameplay
 
 //FIRE
-#define FIRE_MINIMUM_TEMPERATURE_TO_SPREAD	150+T0C
-#define FIRE_MINIMUM_TEMPERATURE_TO_EXIST	100+T0C
+#define FIRE_MINIMUM_TEMPERATURE_TO_SPREAD	(150+T0C)
+#define FIRE_MINIMUM_TEMPERATURE_TO_EXIST	(100+T0C)
 #define FIRE_SPREAD_RADIOSITY_SCALE			0.85
 #define FIRE_GROWTH_RATE					40000	//For small fires
-#define PLASMA_MINIMUM_BURN_TEMPERATURE		100+T0C
+#define PLASMA_MINIMUM_BURN_TEMPERATURE		(100+T0C)
+#define PLASMA_UPPER_TEMPERATURE			(1370+T0C)
+#define PLASMA_OXYGEN_FULLBURN				10
 
 //GASES
 #define MIN_TOXIC_GAS_DAMAGE				1
 #define MAX_TOXIC_GAS_DAMAGE				10
-#define MOLES_GAS_VISIBLE					0.5		//Moles in a standard cell after which gases are visible
+#define MOLES_GAS_VISIBLE					0.25	//Moles in a standard cell after which gases are visible
+
+#define FACTOR_GAS_VISIBLE_MAX				20 //moles_visible * FACTOR_GAS_VISIBLE_MAX = Moles after which gas is at maximum visibility
+#define MOLES_GAS_VISIBLE_STEP				0.25 //Mole step for alpha updates. This means alpha can update at 0.25, 0.5, 0.75 and so on
 
 //REACTIONS
 //return values for reactions (bitflags)
@@ -98,8 +103,7 @@
 #define FIRE_HELM_MIN_TEMP_PROTECT			60		//Cold protection for fire helmets
 #define FIRE_HELM_MAX_TEMP_PROTECT			30000	//for fire helmet quality items (red and white hardhats)
 
-#define FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT	35000	//what max_heat_protection_temperature is set to for firesuit quality suits. MUST NOT BE 0.
-#define FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT	35000	//for fire helmet quality items (red and white hardhats)
+#define FIRE_IMMUNITY_MAX_TEMP_PROTECT	35000		//what max_heat_protection_temperature is set to for firesuit quality suits and helmets. MUST NOT BE 0.
 
 #define HELMET_MIN_TEMP_PROTECT				160		//For normal helmets
 #define HELMET_MAX_TEMP_PROTECT				600		//For normal helmets
@@ -121,7 +125,7 @@
 //Atmos pipe limits
 #define MAX_OUTPUT_PRESSURE					4500 // (kPa) What pressure pumps and powered equipment max out at.
 #define MAX_TRANSFER_RATE					200 // (L/s) Maximum speed powered equipment can work at.
-
+#define VOLUME_PUMP_LEAK_AMOUNT				0.1 //10% of an overclocked volume pump leaks into the air
 //used for device_type vars
 #define UNARY		1
 #define BINARY 		2
@@ -143,11 +147,105 @@
 #define ATMOS_PASS_NO 0
 #define ATMOS_PASS_PROC -1 //ask CanAtmosPass()
 #define ATMOS_PASS_DENSITY -2 //just check density
+
 #define CANATMOSPASS(A, O) ( A.CanAtmosPass == ATMOS_PASS_PROC ? A.CanAtmosPass(O) : ( A.CanAtmosPass == ATMOS_PASS_DENSITY ? !A.density : A.CanAtmosPass ) )
+#define CANVERTICALATMOSPASS(A, O) ( A.CanAtmosPassVertical == ATMOS_PASS_PROC ? A.CanAtmosPass(O, TRUE) : ( A.CanAtmosPassVertical == ATMOS_PASS_DENSITY ? !A.density : A.CanAtmosPassVertical ) )
+
+//OPEN TURF ATMOS
+#define OPENTURF_DEFAULT_ATMOS		"o2=22;n2=82;TEMP=293.15" //the default air mix that open turfs spawn
+#define TCOMMS_ATMOS				"n2=100;TEMP=80" //-193,15°C telecommunications. also used for xenobiology slime killrooms
+#define AIRLESS_ATMOS				"TEMP=2.7" //space
+#define FROZEN_ATMOS				"o2=22;n2=82;TEMP=180" //-93.15°C snow and ice turfs
+#define KITCHEN_COLDROOM_ATMOS		"o2=33;n2=124;TEMP=193.15" //-80°C kitchen coldroom; higher amount of mol to reach about 101.3 kpA
+#define BURNMIX_ATMOS				"o2=2500;plasma=5000;TEMP=370" //used in the holodeck burn test program
+
+//ATMOSPHERICS DEPARTMENT GAS TANK TURFS
+#define ATMOS_TANK_N2O				"n2o=6000;TEMP=293.15"
+#define ATMOS_TANK_CO2				"co2=50000;TEMP=293.15"
+#define ATMOS_TANK_PLASMA			"plasma=70000;TEMP=293.15"
+#define ATMOS_TANK_O2				"o2=100000;TEMP=293.15"
+#define ATMOS_TANK_N2				"n2=100000;TEMP=293.15"
+#define ATMOS_TANK_AIRMIX			"o2=2644;n2=10580;TEMP=293.15"
 
 //LAVALAND
 #define LAVALAND_EQUIPMENT_EFFECT_PRESSURE 50 //what pressure you have to be under to increase the effect of equipment meant for lavaland
-#define LAVALAND_DEFAULT_ATMOS "o2=14;n2=23;TEMP=300"
+
+//ATMOS MIX IDS
+#define LAVALAND_DEFAULT_ATMOS		"LAVALAND_ATMOS"
+
+//ATMOSIA GAS MONITOR TAGS
+#define ATMOS_GAS_MONITOR_INPUT_O2 "o2_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_O2 "o2_out"
+#define ATMOS_GAS_MONITOR_SENSOR_O2 "o2_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_TOX "tox_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_TOX "tox_out"
+#define ATMOS_GAS_MONITOR_SENSOR_TOX "tox_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_AIR "air_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_AIR "air_out"
+#define ATMOS_GAS_MONITOR_SENSOR_AIR "air_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_MIX "mix_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_MIX "mix_out"
+#define ATMOS_GAS_MONITOR_SENSOR_MIX "mix_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_N2O "n2o_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_N2O "n2o_out"
+#define ATMOS_GAS_MONITOR_SENSOR_N2O "n2o_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_N2 "n2_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_N2 "n2_out"
+#define ATMOS_GAS_MONITOR_SENSOR_N2 "n2_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_CO2 "co2_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_CO2 "co2_out"
+#define ATMOS_GAS_MONITOR_SENSOR_CO2 "co2_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_INCINERATOR "incinerator_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_INCINERATOR "incinerator_out"
+#define ATMOS_GAS_MONITOR_SENSOR_INCINERATOR "incinerator_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_TOXINS_LAB "toxinslab_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_TOXINS_LAB "toxinslab_out"
+#define ATMOS_GAS_MONITOR_SENSOR_TOXINS_LAB "toxinslab_sensor"
+
+#define ATMOS_GAS_MONITOR_LOOP_DISTRIBUTION "distro-loop_meter"
+#define ATMOS_GAS_MONITOR_LOOP_ATMOS_WASTE "atmos-waste_loop_meter"
+
+#define ATMOS_GAS_MONITOR_WASTE_ENGINE "engine-waste_out"
+#define ATMOS_GAS_MONITOR_WASTE_ATMOS "atmos-waste_out"
+
+//AIRLOCK CONTROLLER TAGS
+
+//RnD toxins burn chamber
+#define INCINERATOR_TOXMIX_IGNITER 				"toxmix_igniter"
+#define INCINERATOR_TOXMIX_VENT 				"toxmix_vent"
+#define INCINERATOR_TOXMIX_DP_VENTPUMP			"toxmix_airlock_pump"
+#define INCINERATOR_TOXMIX_AIRLOCK_SENSOR 		"toxmix_airlock_sensor"
+#define INCINERATOR_TOXMIX_AIRLOCK_CONTROLLER 	"toxmix_airlock_controller"
+#define INCINERATOR_TOXMIX_AIRLOCK_INTERIOR 	"toxmix_airlock_interior"
+#define INCINERATOR_TOXMIX_AIRLOCK_EXTERIOR 	"toxmix_airlock_exterior"
+
+//Atmospherics/maintenance incinerator
+#define INCINERATOR_ATMOS_IGNITER 				"atmos_incinerator_igniter"
+#define INCINERATOR_ATMOS_MAINVENT 				"atmos_incinerator_mainvent"
+#define INCINERATOR_ATMOS_AUXVENT 				"atmos_incinerator_auxvent"
+#define INCINERATOR_ATMOS_DP_VENTPUMP			"atmos_incinerator_airlock_pump"
+#define INCINERATOR_ATMOS_AIRLOCK_SENSOR 		"atmos_incinerator_airlock_sensor"
+#define INCINERATOR_ATMOS_AIRLOCK_CONTROLLER	"atmos_incinerator_airlock_controller"
+#define INCINERATOR_ATMOS_AIRLOCK_INTERIOR 		"atmos_incinerator_airlock_interior"
+#define INCINERATOR_ATMOS_AIRLOCK_EXTERIOR 		"atmos_incinerator_airlock_exterior"
+
+//Syndicate lavaland base incinerator (lavaland_surface_syndicate_base1.dmm)
+#define INCINERATOR_SYNDICATELAVA_IGNITER 				"syndicatelava_igniter"
+#define INCINERATOR_SYNDICATELAVA_MAINVENT 				"syndicatelava_mainvent"
+#define INCINERATOR_SYNDICATELAVA_AUXVENT 				"syndicatelava_auxvent"
+#define INCINERATOR_SYNDICATELAVA_DP_VENTPUMP			"syndicatelava_airlock_pump"
+#define INCINERATOR_SYNDICATELAVA_AIRLOCK_SENSOR 		"syndicatelava_airlock_sensor"
+#define INCINERATOR_SYNDICATELAVA_AIRLOCK_CONTROLLER 	"syndicatelava_airlock_controller"
+#define INCINERATOR_SYNDICATELAVA_AIRLOCK_INTERIOR 		"syndicatelava_airlock_interior"
+#define INCINERATOR_SYNDICATELAVA_AIRLOCK_EXTERIOR	 	"syndicatelava_airlock_exterior"
 
 //MULTIPIPES
 //IF YOU EVER CHANGE THESE CHANGE SPRITES TO MATCH.
@@ -158,12 +256,24 @@
 #define PIPING_LAYER_P_Y 5
 #define PIPING_LAYER_LCHANGE 0.05
 
-#define PIPING_ALL_LAYER 1					//intended to connect with all layers, check for all instead of just one.
-#define PIPING_ONE_PER_TURF 2 				//can only be built if nothing else with this flag is on the tile already.
-#define PIPING_DEFAULT_LAYER_ONLY 4			//can only exist at PIPING_LAYER_DEFAULT
-#define PIPING_CARDINAL_AUTONORMALIZE 8		//north/south east/west doesn't matter, auto normalize on build.
+#define PIPING_ALL_LAYER				(1<<0)	//intended to connect with all layers, check for all instead of just one.
+#define PIPING_ONE_PER_TURF				(1<<1) 	//can only be built if nothing else with this flag is on the tile already.
+#define PIPING_DEFAULT_LAYER_ONLY		(1<<2)	//can only exist at PIPING_LAYER_DEFAULT
+#define PIPING_CARDINAL_AUTONORMALIZE	(1<<3)	//north/south east/west doesn't matter, auto normalize on build.
 
 //HELPERS
+#define PIPING_LAYER_SHIFT(T, PipingLayer) \
+	if(T.dir & (NORTH|SOUTH)) {									\
+		T.pixel_x = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X;\
+	}																		\
+	if(T.dir & (EAST|WEST)) {										\
+		T.pixel_y = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y;\
+	}
+
+#define PIPING_LAYER_DOUBLE_SHIFT(T, PipingLayer) \
+	T.pixel_x = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X;\
+	T.pixel_y = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y;
+
 #define THERMAL_ENERGY(gas) (gas.temperature * gas.heat_capacity())
 
 #define ADD_GAS(gas_id, out_list)\
@@ -171,17 +281,33 @@
 
 #define ASSERT_GAS(gas_id, gas_mixture) if (!gas_mixture.gases[gas_id]) { ADD_GAS(gas_id, gas_mixture.gases) };
 
+//prefer this to gas_mixture/total_moles in performance critical areas
+#define TOTAL_MOLES(cached_gases, out_var)\
+	out_var = 0;\
+	for(var/total_moles_id in cached_gases){\
+		out_var += cached_gases[total_moles_id][MOLES];\
+	}
+#ifdef TESTING
+GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
+#define CALCULATE_ADJACENT_TURFS(T) if (SSadjacent_air.queue[T]) { GLOB.atmos_adjacent_savings[1] += 1 } else { GLOB.atmos_adjacent_savings[2] += 1; SSadjacent_air.queue[T] = 1 }
+#else
+#define CALCULATE_ADJACENT_TURFS(T) SSadjacent_air.queue[T] = 1
+#endif
+
 GLOBAL_LIST_INIT(pipe_paint_colors, list(
-		"Amethyst" = rgb(130,43,255), //supplymain
-		"Blue" = rgb(0,0,255),
-		"Brown" = rgb(178,100,56),
-		"Cyan" = rgb(0,255,249),
-		"Dark" = rgb(69,69,69),
-		"Green" = rgb(30,255,0),
-		"Grey" = rgb(255,255,255),
-		"Orange" = rgb(255,129,25),
-		"Purple" = rgb(128,0,182),
-		"Red" = rgb(255,0,0),
-		"Violet" = rgb(64,0,128),
-		"Yellow" = rgb(255,198,0)
-		))
+		"amethyst" = rgb(130,43,255), //supplymain
+		"blue" = rgb(0,0,255),
+		"brown" = rgb(178,100,56),
+		"cyan" = rgb(0,255,249),
+		"dark" = rgb(69,69,69),
+		"green" = rgb(30,255,0),
+		"grey" = rgb(255,255,255),
+		"orange" = rgb(255,129,25),
+		"purple" = rgb(128,0,182),
+		"red" = rgb(255,0,0),
+		"violet" = rgb(64,0,128),
+		"yellow" = rgb(255,198,0)
+))
+
+#define MIASMA_CORPSE_MOLES 0.02
+#define MIASMA_GIBS_MOLES 0.005

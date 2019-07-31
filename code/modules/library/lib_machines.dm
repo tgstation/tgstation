@@ -28,13 +28,8 @@
 	var/SQLquery
 	clockwork = TRUE //it'd look weird
 
-/obj/machinery/computer/libraryconsole/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/libraryconsole/interact(mob/user)
-	user.set_machine(src)
+/obj/machinery/computer/libraryconsole/ui_interact(mob/user)
+	. = ..()
 	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)
 		if(0)
@@ -46,6 +41,8 @@
 		if(1)
 			if (!SSdbcore.Connect())
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font><BR>"
+			else if(QDELETED(user))
+				return
 			else if(!SQLquery)
 				dat += "<font color=red><b>ERROR</b>: Malformed search request. Please contact your system administrator for assistance.</font><BR>"
 			else
@@ -55,12 +52,16 @@
 				var/datum/DBQuery/query_library_list_books = SSdbcore.NewQuery(SQLquery)
 				if(!query_library_list_books.Execute())
 					dat += "<font color=red><b>ERROR</b>: Unable to retrieve book listings. Please contact your system administrator for assistance.</font><BR>"
-				while(query_library_list_books.NextRow())
-					var/author = query_library_list_books.item[1]
-					var/title = query_library_list_books.item[2]
-					var/category = query_library_list_books.item[3]
-					var/id = query_library_list_books.item[4]
-					dat += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td>[id]</td></tr>"
+				else
+					while(query_library_list_books.NextRow())
+						var/author = query_library_list_books.item[1]
+						var/title = query_library_list_books.item[2]
+						var/category = query_library_list_books.item[3]
+						var/id = query_library_list_books.item[4]
+						dat += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td>[id]</td></tr>"
+				qdel(query_library_list_books)
+				if(QDELETED(user))
+					return
 				dat += "</table><BR>"
 			dat += "<A href='?src=[REF(src)];back=1'>\[Go Back\]</A><BR>"
 	var/datum/browser/popup = new(user, "publiclibrary", name, 600, 400)
@@ -140,6 +141,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	GLOB.cachedbooks = list()
 	var/datum/DBQuery/query_library_cache = SSdbcore.NewQuery("SELECT id, author, title, category FROM [format_table_name("library")] WHERE isnull(deleted)")
 	if(!query_library_cache.Execute())
+		qdel(query_library_cache)
 		return
 	while(query_library_cache.NextRow())
 		var/datum/cachedbook/newbook = new()
@@ -148,6 +150,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		newbook.title = query_library_cache.item[3]
 		newbook.category = query_library_cache.item[4]
 		GLOB.cachedbooks += newbook
+	qdel(query_library_cache)
 
 
 
@@ -163,11 +166,12 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 /obj/machinery/computer/libraryconsole/bookmanagement
 	name = "book inventory management console"
 	desc = "Librarian's command station."
-	var/arcanecheckout = 0
 	screenstate = 0 // 0 - Main Menu, 1 - Inventory, 2 - Checked Out, 3 - Check Out a Book
 	verb_say = "beeps"
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
+	pass_flags = PASSTABLE
+	var/arcanecheckout = 0
 	var/buffer_book
 	var/buffer_mob
 	var/upload_category = "Fiction"
@@ -201,8 +205,8 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		circuit.name = "Book Inventory Management Console (Machine Board)"
 		circuit.build_path = /obj/machinery/computer/libraryconsole/bookmanagement
 
-/obj/machinery/computer/libraryconsole/bookmanagement/interact(mob/user)
-	user.set_machine(src)
+/obj/machinery/computer/libraryconsole/bookmanagement/ui_interact(mob/user)
+	. = ..()
 	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)
 		if(0)
@@ -319,14 +323,13 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	return null
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/print_forbidden_lore(mob/user)
-	var/spook = pick("blood", "brass")
-	var/turf/T = get_turf(src)
-	if(spook == "blood")
-		new /obj/item/melee/cultblade/dagger(T)
+	if (prob(50))
+		new /obj/item/melee/cultblade/dagger(get_turf(src))
+		to_chat(user, "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a sinister dagger sitting on the desk. You don't even remember where it came from...</span>")
 	else
-		new /obj/item/clockwork/slab(T)
+		new /obj/item/clockwork/slab(get_turf(src))
+		to_chat(user, "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a strange metal tablet sitting on the desk. You don't even remember where it came from...</span>")
 
-	to_chat(user, "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a [spook == "blood" ? "sinister dagger" : "strange metal tablet"] sitting on the desk. You don't even remember where it came from...</span>")
 	user.visible_message("[user] stares at the blank screen for a few moments, [user.p_their()] expression frozen in fear. When [user.p_they()] finally awaken[user.p_s()] from it, [user.p_they()] look[user.p_s()] a lot older.", 2)
 
 /obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/W, mob/user, params)
@@ -419,12 +422,16 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 						var/sqlauthor = sanitizeSQL(scanner.cache.author)
 						var/sqlcontent = sanitizeSQL(scanner.cache.dat)
 						var/sqlcategory = sanitizeSQL(upload_category)
-						var/datum/DBQuery/query_library_upload = SSdbcore.NewQuery("INSERT INTO [format_table_name("library")] (author, title, content, category, ckey, datetime, round_id_created) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]', '[usr.ckey]', Now(), '[GLOB.round_id]')")
+						var/sqlckey = sanitizeSQL(usr.ckey)
+						var/msg = "[key_name(usr)] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs"
+						var/datum/DBQuery/query_library_upload = SSdbcore.NewQuery("INSERT INTO [format_table_name("library")] (author, title, content, category, ckey, datetime, round_id_created) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]', '[sqlckey]', Now(), '[GLOB.round_id]')")
 						if(!query_library_upload.Execute())
+							qdel(query_library_upload)
 							alert("Database error encountered uploading to Archive")
 							return
 						else
-							log_game("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
+							log_game(msg)
+							qdel(query_library_upload)
 							alert("Upload Complete. Uploaded title will be unavailable for printing for a short period")
 	if(href_list["newspost"])
 		if(!GLOB.news_network)
@@ -457,28 +464,31 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 			cooldown = world.time + PRINTER_COOLDOWN
 			var/datum/DBQuery/query_library_print = SSdbcore.NewQuery("SELECT * FROM [format_table_name("library")] WHERE id=[sqlid] AND isnull(deleted)")
 			if(!query_library_print.Execute())
+				qdel(query_library_print)
 				say("PRINTER ERROR! Failed to print document (0x0000000F)")
 				return
 			while(query_library_print.NextRow())
 				var/author = query_library_print.item[2]
 				var/title = query_library_print.item[3]
 				var/content = query_library_print.item[4]
-				var/obj/item/book/B = new(get_turf(src))
-				B.name = "Book: [title]"
-				B.title = title
-				B.author = author
-				B.dat = content
-				B.icon_state = "book[rand(1,8)]"
-				visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
+				if(!QDELETED(src))
+					var/obj/item/book/B = new(get_turf(src))
+					B.name = "Book: [title]"
+					B.title = title
+					B.author = author
+					B.dat = content
+					B.icon_state = "book[rand(1,8)]"
+					visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
 				break
+			qdel(query_library_print)
 	if(href_list["printbible"])
 		if(cooldown < world.time)
 			var/obj/item/storage/book/bible/B = new /obj/item/storage/book/bible(src.loc)
-			if(SSreligion.bible_icon_state && SSreligion.bible_item_state)
-				B.icon_state = SSreligion.bible_icon_state
-				B.item_state = SSreligion.bible_item_state
-				B.name = SSreligion.bible_name
-				B.deity_name = SSreligion.deity
+			if(GLOB.bible_icon_state && GLOB.bible_item_state)
+				B.icon_state = GLOB.bible_icon_state
+				B.item_state = GLOB.bible_item_state
+				B.name = GLOB.bible_name
+				B.deity_name = GLOB.deity
 			cooldown = world.time + PRINTER_COOLDOWN
 		else
 			say("Printer currently unavailable, please wait a moment.")
@@ -499,7 +509,6 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bigscanner"
 	desc = "It servers the purpose of scanning stuff."
-	anchored = TRUE
 	density = TRUE
 	var/obj/item/book/cache		// Last scanned book
 
@@ -511,6 +520,9 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		return ..()
 
 /obj/machinery/libraryscanner/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	usr.set_machine(src)
 	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	if(cache)
@@ -555,7 +567,6 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	icon = 'icons/obj/library.dmi'
 	icon_state = "binder"
 	desc = "Only intended for binding paper products."
-	anchored = TRUE
 	density = TRUE
 	var/busy = FALSE
 

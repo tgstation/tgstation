@@ -4,7 +4,6 @@
 	animate_movement = FORWARD_STEPS
 	anchored = TRUE
 	density = TRUE
-	layer = BELOW_OBJ_LAYER
 	var/moving = 0
 	var/datum/gas_mixture/air_contents = new()
 
@@ -28,7 +27,7 @@
 		icon_state = "pod"
 
 /obj/structure/transit_tube_pod/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/crowbar))
+	if(I.tool_behaviour == TOOL_CROWBAR)
 		if(!moving)
 			I.play_tool_sound(src)
 			if(contents.len)
@@ -151,6 +150,9 @@
 		deconstruct(FALSE)	//we automatically deconstruct the pod
 
 /obj/structure/transit_tube_pod/return_air()
+	return air_contents
+
+/obj/structure/transit_tube_pod/return_analyzable_air()
 	return air_contents
 
 /obj/structure/transit_tube_pod/assume_air(datum/gas_mixture/giver)

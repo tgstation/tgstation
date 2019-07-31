@@ -22,7 +22,7 @@
 	var/framestackamount = 2
 
 /obj/structure/table_frame/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wrench))
+	if(I.tool_behaviour == TOOL_WRENCH)
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 30))
@@ -147,9 +147,9 @@
 	framestack = /obj/item/stack/tile/brass
 	framestackamount = 1
 
-/obj/structure/table_frame/brass/New()
+/obj/structure/table_frame/brass/Initialize()
+	. = ..()
 	change_construction_value(1)
-	..()
 
 /obj/structure/table_frame/brass/Destroy()
 	change_construction_value(-1)

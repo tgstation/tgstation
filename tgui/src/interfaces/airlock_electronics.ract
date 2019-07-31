@@ -20,6 +20,12 @@
 			{{/each}}</tr>
 		</tbody>
 	</table>
+	<hr/>
+	<span class='highlight bold'>Unrestricted Access:</span>
+	<ui-button icon='{{data.unres_direction & 1 ? "check-square-o" : "square-o"}}' style='{{data.unres_direction & 1 ? "selected" : null}}' action='direc_set' params='{"unres_direction": "1"}'>North</ui-button>
+	<ui-button icon='{{data.unres_direction & 4 ? "check-square-o" : "square-o"}}' style='{{data.unres_direction & 4 ? "selected" : null}}' action='direc_set' params='{"unres_direction": "4"}'>East</ui-button>
+	<ui-button icon='{{data.unres_direction & 2 ? "check-square-o" : "square-o"}}' style='{{data.unres_direction & 2 ? "selected" : null}}' action='direc_set' params='{"unres_direction": "2"}'>South</ui-button>
+	<ui-button icon='{{data.unres_direction & 8 ? "check-square-o" : "square-o"}}' style='{{data.unres_direction & 8 ? "selected" : null}}' action='direc_set' params='{"unres_direction": "8"}'>West</ui-button>
 </ui-display>
 
 <style>

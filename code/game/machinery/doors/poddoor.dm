@@ -16,13 +16,18 @@
 	damage_deflection = 70
 	poddoor = TRUE
 
+/obj/machinery/door/poddoor/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	id = "[idnum][id]"
+
 /obj/machinery/door/poddoor/preopen
 	icon_state = "open"
 	density = FALSE
 	opacity = 0
 
 /obj/machinery/door/poddoor/ert
+	name = "hardened blast door"
 	desc = "A heavy duty blast door that only opens for dire emergencies."
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 //special poddoors that open when emergency shuttle docks at centcom
 /obj/machinery/door/poddoor/shuttledock
@@ -36,7 +41,27 @@
 	else
 		INVOKE_ASYNC(src, .proc/close)
 
-/obj/machinery/door/poddoor/CollidedWith(atom/movable/AM)
+/obj/machinery/door/poddoor/incinerator_toxmix
+	name = "combustion chamber vent"
+	id = INCINERATOR_TOXMIX_VENT
+
+/obj/machinery/door/poddoor/incinerator_atmos_main
+	name = "turbine vent"
+	id = INCINERATOR_ATMOS_MAINVENT
+
+/obj/machinery/door/poddoor/incinerator_atmos_aux
+	name = "combustion chamber vent"
+	id = INCINERATOR_ATMOS_AUXVENT
+
+/obj/machinery/door/poddoor/incinerator_syndicatelava_main
+	name = "turbine vent"
+	id = INCINERATOR_SYNDICATELAVA_MAINVENT
+
+/obj/machinery/door/poddoor/incinerator_syndicatelava_aux
+	name = "combustion chamber vent"
+	id = INCINERATOR_SYNDICATELAVA_AUXVENT
+
+/obj/machinery/door/poddoor/Bumped(atom/movable/AM)
 	if(density)
 		return 0
 	else
@@ -64,7 +89,7 @@
 		icon_state = "open"
 
 /obj/machinery/door/poddoor/try_to_activate_door(mob/user)
- 	return
+	return
 
 /obj/machinery/door/poddoor/try_to_crowbar(obj/item/I, mob/user)
 	if(stat & NOPOWER)

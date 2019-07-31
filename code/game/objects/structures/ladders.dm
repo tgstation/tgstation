@@ -23,13 +23,7 @@
 /obj/structure/ladder/Destroy(force)
 	if ((resistance_flags & INDESTRUCTIBLE) && !force)
 		return QDEL_HINT_LETMELIVE
-
-	if(up && up.down == src)
-		up.down = null
-		up.update_icon()
-	if(down && down.up == src)
-		down.up = null
-		down.update_icon()
+	disconnect()
 	return ..()
 
 /obj/structure/ladder/LateInitialize()
@@ -51,6 +45,15 @@
 			L.update_icon()
 
 	update_icon()
+
+/obj/structure/ladder/proc/disconnect()
+	if(up && up.down == src)
+		up.down = null
+		up.update_icon()
+	if(down && down.up == src)
+		down.up = null
+		down.update_icon()
+	up = down = null
 
 /obj/structure/ladder/update_icon()
 	if(up && down)
@@ -110,6 +113,9 @@
 		add_fingerprint(user)
 
 /obj/structure/ladder/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	use(user)
 
 /obj/structure/ladder/attack_paw(mob/user)
@@ -122,8 +128,10 @@
 	if(R.Adjacent(src))
 		return use(R)
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/structure/ladder/attack_ghost(mob/dead/observer/user)
 	use(user, TRUE)
+	return ..()
 
 /obj/structure/ladder/proc/show_fluff_message(going_up, mob/user)
 	if(going_up)

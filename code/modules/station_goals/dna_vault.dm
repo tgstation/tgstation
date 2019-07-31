@@ -59,7 +59,7 @@
 	return FALSE
 
 
-/obj/item/device/dna_probe
+/obj/item/dna_probe
 	name = "DNA Sampler"
 	desc = "Can be used to take chemical and genetic samples of pretty much anything."
 	icon = 'icons/obj/syringe.dmi'
@@ -67,18 +67,18 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "hypo"
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	var/list/animals = list()
 	var/list/plants = list()
 	var/list/dna = list()
 
-/obj/item/device/dna_probe/proc/clear_data()
+/obj/item/dna_probe/proc/clear_data()
 	animals = list()
 	plants = list()
 	dna = list()
 
-/obj/item/device/dna_probe/afterattack(atom/target, mob/user, proximity)
-	..()
+/obj/item/dna_probe/afterattack(atom/target, mob/user, proximity)
+	. = ..()
 	if(!proximity || !target)
 		return
 	//tray plants
@@ -128,7 +128,10 @@
 	idle_power_usage = 5000
 	pixel_x = -32
 	pixel_y = -64
-	light_range = 1
+	light_range = 3
+	light_power = 1.5
+	light_color = LIGHT_COLOR_CYAN
+
 
 	//High defaults so it's not completed automatically if there's no station goal
 	var/animals_max = 100
@@ -223,8 +226,8 @@
 
 
 /obj/machinery/dna_vault/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/dna_probe))
-		var/obj/item/device/dna_probe/P = I
+	if(istype(I, /obj/item/dna_probe))
+		var/obj/item/dna_probe/P = I
 		var/uploaded = 0
 		for(var/plant in P.plants)
 			if(!plants[plant])
@@ -256,25 +259,25 @@
 				var/obj/item/organ/lungs/L = H.internal_organs_slot[ORGAN_SLOT_LUNGS]
 				L.tox_breath_dam_min = 0
 				L.tox_breath_dam_max = 0
-			H.add_trait(TRAIT_VIRUSIMMUNE, "dna_vault")
+			ADD_TRAIT(H, TRAIT_VIRUSIMMUNE, "dna_vault")
 		if(VAULT_NOBREATH)
 			to_chat(H, "<span class='notice'>Your lungs feel great.</span>")
-			H.add_trait(TRAIT_NOBREATH, "dna_vault")
+			ADD_TRAIT(H, TRAIT_NOBREATH, "dna_vault")
 		if(VAULT_FIREPROOF)
 			to_chat(H, "<span class='notice'>You feel fireproof.</span>")
 			S.burnmod = 0.5
-			H.add_trait(TRAIT_RESISTHEAT, "dna_vault")
-			H.add_trait(TRAIT_NOFIRE, "dna_vault")
+			ADD_TRAIT(H, TRAIT_RESISTHEAT, "dna_vault")
+			ADD_TRAIT(H, TRAIT_NOFIRE, "dna_vault")
 		if(VAULT_STUNTIME)
 			to_chat(H, "<span class='notice'>Nothing can keep you down for long.</span>")
 			S.stunmod = 0.5
 		if(VAULT_ARMOUR)
 			to_chat(H, "<span class='notice'>You feel tough.</span>")
 			S.armor = 30
-			H.add_trait(TRAIT_PIERCEIMMUNE, "dna_vault")
+			ADD_TRAIT(H, TRAIT_PIERCEIMMUNE, "dna_vault")
 		if(VAULT_SPEED)
 			to_chat(H, "<span class='notice'>Your legs feel faster.</span>")
-			H.add_trait(TRAIT_GOTTAGOFAST, "dna_vault")
+			H.add_movespeed_modifier(MOVESPEED_ID_DNA_VAULT, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
 		if(VAULT_QUICK)
 			to_chat(H, "<span class='notice'>Your arms move as fast as lightning.</span>")
 			H.next_move_modifier = 0.5

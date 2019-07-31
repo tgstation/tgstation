@@ -3,6 +3,7 @@
 /mob/living/simple_animal/imp
 	name = "imp"
 	real_name = "imp"
+	unique_name = TRUE
 	desc = "A large, menacing creature covered in armored black scales."
 	speak_emote = list("cackles")
 	emote_hear = list("cackles","screeches")
@@ -12,6 +13,7 @@
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "imp"
 	icon_living = "imp"
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	speed = 1
 	a_intent = INTENT_HARM
 	stop_automated_movement = 1
@@ -34,7 +36,7 @@
 	var/boost = 0
 	bloodcrawl = BLOODCRAWL_EAT
 	var/list/consumed_mobs = list()
-	var/playstyle_string = "<span class='big bold'>You are an imp,</span><B> a mischevious creature from hell. You are the lowest rank on the hellish totem pole  \
+	var/playstyle_string = "<span class='big bold'>You are an imp,</span><B> a mischievous creature from hell. You are the lowest rank on the hellish totem pole  \
 							Though you are not obligated to help, perhaps by aiding a higher ranking devil, you might just get a promotion.  However, you are incapable	\
 							of intentionally harming a fellow devil.</B>"
 
@@ -55,3 +57,19 @@
 	visible_message("<span class='danger'>[src] screams in agony as it sublimates into a sulfurous smoke.</span>")
 	ghostize()
 	qdel(src)
+
+
+/datum/antagonist/imp
+	name = "Imp"
+	antagpanel_category = "Devil"
+	show_in_roundend = FALSE
+
+/datum/antagonist/imp/on_gain()
+	. = ..()
+	give_objectives()
+
+/datum/antagonist/imp/proc/give_objectives()
+	var/datum/objective/newobjective = new
+	newobjective.explanation_text = "Try to get a promotion to a higher devilic rank."
+	newobjective.owner = owner
+	objectives += newobjective

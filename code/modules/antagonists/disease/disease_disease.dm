@@ -27,7 +27,7 @@
 
 
 /datum/disease/advance/sentient_disease/IsSame(datum/disease/D)
-	if(istype(src, D.type))
+	if(istype(D, /datum/disease/advance/sentient_disease))
 		var/datum/disease/advance/sentient_disease/V = D
 		if(V.overmind == overmind)
 			return TRUE
@@ -51,7 +51,8 @@
 	if(cures.len)
 		return
 	var/list/not_used = advance_cures.Copy()
-	cures = list(pick_n_take(not_used), pick_n_take(not_used))
+	not_used.Cut(1, 6)	// Removes the first five tiers of cures.
+	cures = list(pick(pick_n_take(not_used)), pick(pick_n_take(not_used)))
 
 	// Get the cure name from the cure_id
 	var/datum/reagent/D1 = GLOB.chemical_reagents_list[cures[1]]

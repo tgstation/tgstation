@@ -6,14 +6,15 @@
 	var/datum/action/innate/shuttledocker_place/place_action = new
 	var/shuttleId = ""
 	var/shuttlePortId = ""
-	var/shuttlePortName = ""
+	var/shuttlePortName = "custom location"
 	var/list/jumpto_ports = list() //hashset of ports to jump to and ignore for collision purposes
 	var/obj/docking_port/stationary/my_port //the custom docking port placed by this console
 	var/obj/docking_port/mobile/shuttle_port //the mobile docking port of the connected shuttle
+	var/list/locked_traits = list(ZTRAIT_RESERVED, ZTRAIT_CENTCOM, ZTRAIT_AWAY, ZTRAIT_REEBE) //traits forbided for custom docking
 	var/view_range = 7
 	var/x_offset = 0
 	var/y_offset = 0
-	var/space_turfs_only = TRUE
+	var/list/whitelist_turfs = list(/turf/open/space, /turf/open/floor/plating, /turf/open/lava)
 	var/see_hidden = FALSE
 	var/designate_time = 0
 	var/turf/designating_target_loc
@@ -22,6 +23,13 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/Initialize()
 	. = ..()
 	GLOB.navigation_computers += src
+	for(var/V in SSshuttle.stationary)
+		if(!V)
+			continue
+		var/obj/docking_port/stationary/S = V
+		if(jumpto_ports[S.id])
+			z_lock |= S.z
+	whitelist_turfs = typecacheof(whitelist_turfs)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/Destroy()
 	. = ..()
@@ -30,6 +38,9 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/attack_hand(mob/user)
 	if(jammed)
 		to_chat(user, "<span class='warning'>The Syndicate is jamming the console!</span>")
+		return
+	if(!shuttle_port && !SSshuttle.getShuttle(shuttleId))
+		to_chat(user,"<span class='warning'>Warning: Shuttle connection severed!</span>")
 		return
 	return ..()
 
@@ -54,10 +65,9 @@
 		shuttle_port = null
 		return
 
-	eyeobj = new /mob/camera/aiEye/remote/shuttle_docker()
+	eyeobj = new /mob/camera/aiEye/remote/shuttle_docker(null, src)
 	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
-	the_eye.origin = src
-	the_eye.dir = shuttle_port.dir
+	the_eye.setDir(shuttle_port.dir)
 	var/turf/origin = locate(shuttle_port.x + x_offset, shuttle_port.y + y_offset, shuttle_port.z)
 	for(var/V in shuttle_port.shuttle_areas)
 		var/area/A = V
@@ -70,7 +80,7 @@
 			I.loc = locate(origin.x + x_off, origin.y + y_off, origin.z) //we have to set this after creating the image because it might be null, and images created in nullspace are immutable.
 			I.layer = ABOVE_NORMAL_TURF_LAYER
 			I.plane = 0
-			I.mouse_opacity = 0
+			I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 			the_eye.placement_images[I] = list(x_off, y_off)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/give_eye_control(mob/user)
@@ -134,8 +144,9 @@
 		my_port.dheight = shuttle_port.dheight
 		my_port.dwidth = shuttle_port.dwidth
 		my_port.hidden = shuttle_port.hidden
-	my_port.dir = the_eye.dir
+	my_port.setDir(the_eye.dir)
 	my_port.forceMove(locate(eyeobj.x - x_offset, eyeobj.y - y_offset, eyeobj.z))
+
 	if(current_user.client)
 		current_user.client.images -= the_eye.placed_images
 
@@ -153,7 +164,7 @@
 	if(current_user.client)
 		current_user.client.images += the_eye.placed_images
 		to_chat(current_user, "<span class='notice'>Transit location designated</span>")
-	return
+	return TRUE
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/canDesignateTarget()
 	if(!designating_target_loc || !current_user || (eyeobj.loc != designating_target_loc) || (stat & (NOPOWER|BROKEN)) )
@@ -163,7 +174,7 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/rotateLandingSpot()
 	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
 	var/list/image_cache = the_eye.placement_images
-	the_eye.dir = turn(the_eye.dir, -90)
+	the_eye.setDir(turn(the_eye.dir, -90))
 	for(var/i in 1 to image_cache.len)
 		var/image/pic = image_cache[i]
 		var/list/coords = image_cache[pic]
@@ -181,7 +192,7 @@
 	var/turf/eyeturf = get_turf(the_eye)
 	if(!eyeturf)
 		return SHUTTLE_DOCKER_BLOCKED
-	if(z_lock.len && !(eyeturf.z in z_lock))
+	if(!eyeturf.z || SSmapping.level_has_any_trait(eyeturf.z, locked_traits))
 		return SHUTTLE_DOCKER_BLOCKED
 
 	. = SHUTTLE_DOCKER_LANDING_CLEAR
@@ -219,9 +230,9 @@
 		if(hidden_turf_info)
 			. = SHUTTLE_DOCKER_BLOCKED_BY_HIDDEN_PORT
 
-	if(space_turfs_only)
+	if(length(whitelist_turfs))
 		var/turf_type = hidden_turf_info ? hidden_turf_info[2] : T.type
-		if(!ispath(turf_type, /turf/open/space))
+		if(!is_type_in_typecache(turf_type, whitelist_turfs))
 			return SHUTTLE_DOCKER_BLOCKED
 
 	// Checking for overlapping dock boundaries
@@ -244,11 +255,22 @@
 		current_user.client.images -= remove_images
 		current_user.client.images += add_images
 
+/obj/machinery/computer/camera_advanced/shuttle_docker/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	if(port && (shuttleId == initial(shuttleId) || override))
+		shuttleId = port.id
+		shuttlePortId = "[port.id]_custom"
+	if(dock)
+		jumpto_ports[dock.id] = TRUE
+
 /mob/camera/aiEye/remote/shuttle_docker
 	visible_icon = FALSE
-	use_static = FALSE
+	use_static = USE_STATIC_NONE
 	var/list/placement_images = list()
 	var/list/placed_images = list()
+
+/mob/camera/aiEye/remote/shuttle_docker/Initialize(mapload, obj/machinery/computer/camera_advanced/origin)
+	src.origin = origin
+	return ..()
 
 /mob/camera/aiEye/remote/shuttle_docker/setLoc(T)
 	..()
@@ -303,12 +325,25 @@
 	var/list/L = list()
 	for(var/V in SSshuttle.stationary)
 		if(!V)
+			stack_trace("SSshuttle.stationary have null entry!")
 			continue
 		var/obj/docking_port/stationary/S = V
 		if(console.z_lock.len && !(S.z in console.z_lock))
 			continue
 		if(console.jumpto_ports[S.id])
-			L[S.name] = S
+			L["([L.len])[S.name]"] = S
+
+	for(var/V in SSshuttle.beacons)
+		if(!V)
+			stack_trace("SSshuttle.beacons have null entry!")
+			continue
+		var/obj/machinery/spaceship_navigation_beacon/nav_beacon = V
+		if(!nav_beacon.z || SSmapping.level_has_any_trait(nav_beacon.z, console.locked_traits))
+			break
+		if(!nav_beacon.locked)
+			L["([L.len]) [nav_beacon.name] located: [nav_beacon.x] [nav_beacon.y] [nav_beacon.z]"] = nav_beacon
+		else
+			L["([L.len]) [nav_beacon.name] locked"] = null
 
 	playsound(console, 'sound/machines/terminal_prompt.ogg', 25, 0)
 	var/selected = input("Choose location to jump to", "Locations", null) as null|anything in L

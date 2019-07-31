@@ -27,3 +27,9 @@
 	desc = "What could this even be?"
 	icon_state = "crunchy"
 	bitesize_mod = 2
+
+/obj/item/reagent_containers/food/snacks/grown/random/Initialize()
+	. = ..()
+	wine_power = rand(10,150)
+	if(prob(1))
+		wine_power = 200

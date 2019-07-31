@@ -3,7 +3,6 @@
 	desc = "Use this to transport to and from the humans' habitat."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "alien-pad-idle"
-	anchored = TRUE
 	var/turf/teleport_target
 
 /obj/machinery/abductor/pad/proc/Warp(mob/living/target)

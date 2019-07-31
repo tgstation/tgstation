@@ -29,7 +29,7 @@
 	pipename = initial(pipe_type.name)
 
 	if(flip)
-		GET_COMPONENT(rotcomp,/datum/component/simple_rotation)
+		var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
 		rotcomp.BaseRot(null,ROTATION_FLIP)
 
 	update_icon()
@@ -52,7 +52,7 @@
 			layer = initial(layer)
 
 	else if(ispath(pipe_type, /obj/machinery/disposal/bin))
-		// Disposal bins recieve special icon treating
+		// Disposal bins receive special icon treating
 		if(anchored)
 			icon_state = "disposal"
 		else
