@@ -10,7 +10,7 @@
 		return
 	owner.dna.add_mutation(CLOWNMUT)
 	owner.dna.add_mutation(EPILEPSY)
-	owner.setBrainLoss(BRAIN_DAMAGE_DEATH - 10)
+	owner.setOrganLoss(ORGAN_SLOT_BRAIN,BRAIN_DAMAGE_DEATH - 1)
 
 	var/mob/living/carbon/human/H = owner
 
@@ -32,7 +32,7 @@
 
 /datum/mutation/human/cluwne/on_life(mob/living/carbon/human/owner)
 	if((prob(15) && owner.IsUnconscious()))
-		owner.setBrainLoss(BRAIN_DAMAGE_DEATH - 10) // there I changed it to setBrainLoss
+		owner.setOrganLoss(ORGAN_SLOT_BRAIN,BRAIN_DAMAGE_DEATH - 1)
 		switch(rand(1, 6))
 			if(1)
 				owner.say("HONK")
