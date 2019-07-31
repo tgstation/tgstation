@@ -224,3 +224,41 @@
 		message = jointext(new_message, " ")
 
 	speech_args[SPEECH_MESSAGE] = trim(message)
+
+/datum/brain_trauma/mild/mind_echo
+	name = "Mind Echo"
+	desc = "Patient's language neurons do not terminate properly, causing previous speech patterns to occasionally resurface spontaneously."
+	scan_desc = "looping neural pattern"
+	gain_text = "<span class='warning'>You feel a faint echo of your thoughts...</span>"
+	lose_text = "<span class='notice'>The faint echo fades away.</span>"
+	var/list/hear_dejavu = list()
+	var/list/speak_dejavu = list()
+
+/datum/brain_trauma/mild/mind_echo/handle_hearing(datum/source, list/hearing_args)
+	if(owner == hearing_args[HEARING_SPEAKER])
+		return
+	if(hear_dejavu.len >= 5)
+		if(prob(25))
+			var/deja_vu = pick_n_take(hear_dejavu)
+			var/static/regex/quoted_spoken_message = regex("\".+\"", "gi")
+			hearing_args[HEARING_MESSAGE] = quoted_spoken_message.Replace(hearing_args[HEARING_MESSAGE], "\"[deja_vu]\"") //Quotes included to avoid cases where someone says part of their name
+			return
+	if(hear_dejavu.len >= 15)
+		if(prob(50))
+			popleft(hear_dejavu) //Remove the oldest
+			hear_dejavu += hearing_args[HEARING_RAW_MESSAGE]
+	else
+		hear_dejavu += hearing_args[HEARING_RAW_MESSAGE]
+
+/datum/brain_trauma/mild/mind_echo/handle_speech(datum/source, list/speech_args)
+	if(speak_dejavu.len >= 5)
+		if(prob(25))
+			var/deja_vu = pick_n_take(speak_dejavu)
+			speech_args[SPEECH_MESSAGE] = deja_vu
+			return
+	if(speak_dejavu.len >= 15)
+		if(prob(50))
+			popleft(speak_dejavu) //Remove the oldest
+			speak_dejavu += speech_args[SPEECH_MESSAGE]
+	else
+		speak_dejavu += speech_args[SPEECH_MESSAGE]

@@ -86,6 +86,11 @@
 	else //this is handled by toggle_camera, so no need to update it twice.
 		update_icon()
 
+/obj/machinery/camera/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	for(var/i in network)
+		network -= i
+		network += "[idnum][i]"
+
 /obj/machinery/camera/Destroy()
 	if(can_use())
 		toggle_cam(null, 0) //kick anyone viewing out and remove from the camera chunks
@@ -133,31 +138,33 @@
 	if(!(. & EMP_PROTECT_SELF))
 		if(prob(150/severity))
 			update_icon()
-			var/list/previous_network = network
 			network = list()
 			GLOB.cameranet.removeCamera(src)
 			stat |= EMPED
 			set_light(0)
 			emped = emped+1  //Increase the number of consecutive EMP's
 			update_icon()
-			var/thisemp = emped //Take note of which EMP this proc is for
-			spawn(900)
-				if(loc) //qdel limbo
-					triggerCameraAlarm() //camera alarm triggers even if multiple EMPs are in effect.
-					if(emped == thisemp) //Only fix it if the camera hasn't been EMP'd again
-						network = previous_network
-						stat &= ~EMPED
-						update_icon()
-						if(can_use())
-							GLOB.cameranet.addCamera(src)
-						emped = 0 //Resets the consecutive EMP count
-						addtimer(CALLBACK(src, .proc/cancelCameraAlarm), 100)
+			addtimer(CALLBACK(src, .proc/post_emp_reset, emped, network), 90 SECONDS)
 			for(var/i in GLOB.player_list)
 				var/mob/M = i
 				if (M.client.eye == src)
 					M.unset_machine()
 					M.reset_perspective(null)
 					to_chat(M, "The screen bursts into static.")
+
+/obj/machinery/camera/proc/post_emp_reset(thisemp, previous_network)
+	if(QDELETED(src))
+		return
+	triggerCameraAlarm() //camera alarm triggers even if multiple EMPs are in effect.
+	if(emped != thisemp) //Only fix it if the camera hasn't been EMP'd again
+		return
+	network = previous_network
+	stat &= ~EMPED
+	update_icon()
+	if(can_use())
+		GLOB.cameranet.addCamera(src)
+	emped = 0 //Resets the consecutive EMP count
+	addtimer(CALLBACK(src, .proc/cancelCameraAlarm), 100)
 
 /obj/machinery/camera/ex_act(severity, target)
 	if(invuln)

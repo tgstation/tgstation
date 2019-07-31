@@ -644,7 +644,7 @@
 		. = 1
 	if(prob(20))
 		M.losebreath += 4
-		M.adjustBrainLoss(2*REM, 150)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM, 150)
 		M.adjustToxLoss(3*REM,0)
 		M.adjustStaminaLoss(10*REM,0)
 		M.blur_eyes(5)
@@ -745,7 +745,7 @@
 	name = "Caramel"
 	description = "Who would have guessed that heating sugar is so delicious?"
 	nutriment_factor = 10 * REAGENTS_METABOLISM
-	color = "#C65A00"
+	color = "#D98736"
 	taste_mult = 2
-	taste_description = "bitter sweetness"
+	taste_description = "caramel"
 	reagent_state = SOLID

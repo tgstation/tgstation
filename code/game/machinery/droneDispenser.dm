@@ -50,10 +50,10 @@
 
 /obj/machinery/droneDispenser/Initialize()
 	. = ..()
-	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, TRUE, /obj/item/stack)
-	materials.insert_amount(starting_amount)
+	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, TRUE, /obj/item/stack)
+	materials.insert_amount_mat(starting_amount)
 	materials.precise_insertion = TRUE
-	using_materials = list(MAT_METAL=metal_cost, MAT_GLASS=glass_cost)
+	using_materials = list(/datum/material/iron = metal_cost, /datum/material/glass = glass_cost)
 
 /obj/machinery/droneDispenser/preloaded
 	starting_amount = 5000
@@ -168,7 +168,7 @@
 			update_icon()
 
 		if(DRONE_PRODUCTION)
-			materials.use_amount(using_materials)
+			materials.use_materials(using_materials)
 			if(power_used)
 				use_power(power_used)
 
