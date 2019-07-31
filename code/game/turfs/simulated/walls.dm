@@ -110,7 +110,8 @@
 	switch(M.damtype)
 		if(BRUTE)
 			playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
-			visible_message("<span class='danger'>[M.name] has hit [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
+			M.visible_message("<span class='danger'>[M.name] hits [src]!</span>", \
+							"<span class='danger'>You hit [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 			if(prob(hardness + M.force) && M.force > 20)
 				dismantle_wall(1)
 				playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
@@ -230,7 +231,9 @@
 		if(user.loc == T)
 			I.play_tool_sound(src)
 			dismantle_wall()
-			visible_message("<span class='warning'>[user] smashes through [src] with [I]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")
+			user.visible_message("<span class='warning'>[user] smashes through [src] with [I]!</span>", \
+								"<span class='warning'>You smash through [src] with [I]!</span>", \
+								"<span class='italics'>You hear the grinding of metal.</span>")
 			return TRUE
 	return FALSE
 

@@ -83,7 +83,7 @@
 
 /obj/attacked_by(obj/item/I, mob/living/user)
 	if(I.force)
-		user.visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", \
+		user.visible_message("<span class='danger'>[user] hits [src] with [I]!</span>", \
 					"<span class='danger'>You hit [src] with [I]!</span>", null, COMBAT_MESSAGE_RANGE)
 		//only witnesses close by and the victim see a hit message.
 		log_combat(user, src, "attacked", I)
