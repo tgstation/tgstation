@@ -8,7 +8,7 @@
 	range = 3
 	invocation = "OO'BANAN'A!"
 	invocation_type = "shout"
-	action_icon = 'yogstation/icons/mob/actions.dmi'
+	action_icon = 'spacestation413/icons/mob/actions.dmi'
 	action_icon_state = "slip"
 
 /obj/effect/proc_holder/spell/aoe_turf/slip/cast(list/targets,mob/user = usr)
