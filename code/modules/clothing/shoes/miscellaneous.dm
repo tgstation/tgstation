@@ -104,10 +104,10 @@
 		to_chat(user, "<span class='warning'>You must hold the [src] in your hand to do this!</span>")
 		return
 	if (!enabled_waddle)
-		to_chat(user, "<span class='notice'>You switch off the waddle dampeners!</span>")
+		to_chat(user, "<span class='notice'>You switch on the waddle dampeners!</span>")
 		enabled_waddle = TRUE
 	else
-		to_chat(user, "<span class='notice'>You switch on the waddle dampeners!</span>")
+		to_chat(user, "<span class='notice'>You switch off the waddle dampeners!</span>")
 		enabled_waddle = FALSE
 
 /obj/item/clothing/shoes/clown_shoes/jester
