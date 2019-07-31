@@ -258,7 +258,7 @@
 
 /datum/reagent/fuel/unholywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
-		M.reagents.add_reagent(type,reac_volume/4)
+		M.reagents.add_reagent(type,reac_volume * 0.25)
 		return
 	return ..()
 
@@ -267,18 +267,15 @@
 		M.drowsyness = max(M.drowsyness-5, 0)
 		M.AdjustAllImmobility(-40, FALSE)
 		M.adjustStaminaLoss(-10, 0)
-		M.adjustToxLoss(-2, 0)
-		M.adjustOxyLoss(-2, 0)
-		M.adjustBruteLoss(-2, 0)
-		M.adjustFireLoss(-2, 0)
+		M.adjustToxLoss(-1.5, 0)
+		M.adjustOxyLoss(-1.5, 0)
+		M.adjustBruteLoss(-1.5, 0)
+		M.adjustFireLoss(-1.5, 0)
 		if(ishuman(M) && M.blood_volume < BLOOD_VOLUME_NORMAL)
-			M.blood_volume += 3
-	else  // Will deal about 90 damage when 50 units are thrown
-		M.adjustBrainLoss(3, 150)
-		M.adjustToxLoss(2, 0)
-		M.adjustFireLoss(2, 0)
-		M.adjustOxyLoss(2, 0)
-		M.adjustBruteLoss(2, 0)
+			M.blood_volume += 2
+	else
+		M.adjustStaminaLoss(8) //Since the math for adjusting stamina is somewhat weird, this will deal ~70 stamina damage if a full bottle is thrown.
+		M.adjustFireLoss(1)
 	holder.remove_reagent(type, 1)
 	return TRUE
 
