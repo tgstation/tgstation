@@ -300,7 +300,6 @@
 /obj/item/reagent_containers/food/snacks/store/cake/pound_cake
 	name = "pound cake"
 	desc = "A condensed cake made for filling people up quickly."
-	icon = 'icons/obj/food/cake.dmi'
 	icon_state = "pound_cake"
 	slices_num = 7 //Its ment to feed the party
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/pound_cake_slice
