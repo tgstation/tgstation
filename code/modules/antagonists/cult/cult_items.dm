@@ -377,7 +377,7 @@
 	icon_state = "cult_armor"
 	item_state = "cult_armor"
 	w_class = WEIGHT_CLASS_BULKY
-	armor = list("melee" = 50, "bullet" = 40, "laser" = 50,"energy" = 30, "bomb" = 50, "bio" = 30, "rad" = 30, "fire" = 50, "acid" = 60)
+	armor = list("melee" = 40, "bullet" = 30, "laser" = 40,"energy" = 30, "bomb" = 50, "bio" = 30, "rad" = 30, "fire" = 50, "acid" = 60)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
 	var/current_charges = 3
@@ -387,7 +387,7 @@
 	name = "empowered cultist armor"
 	desc = "Empowered garb which creates a powerful shield around the user."
 	icon_state = "cult_hoodalt"
-	armor = list("melee" = 50, "bullet" = 40, "laser" = 50,"energy" = 30, "bomb" = 50, "bio" = 30, "rad" = 30, "fire" = 50, "acid" = 50)
+	armor = list("melee" = 40, "bullet" = 30, "laser" = 40,"energy" = 30, "bomb" = 50, "bio" = 30, "rad" = 30, "fire" = 50, "acid" = 50)
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
