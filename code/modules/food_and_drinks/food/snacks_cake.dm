@@ -252,7 +252,7 @@
 	icon_state = "blackbarry_strawberries_cake_vanilla_cake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/bsvc
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 14, /datum/reagent/consumable/nutriment/vitamin = 4)
-	tastes = list("blackbarry" = 2, "strawberries" = 2, "vanilla" = 2, "sweetness" = 2, "cake" = 3)
+	tastes = list("blackberry" = 2, "strawberries" = 2, "vanilla" = 2, "sweetness" = 2, "cake" = 3)
 	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
 
 /obj/item/reagent_containers/food/snacks/cakeslice/bsvc
@@ -260,7 +260,7 @@
 	desc = "Just a slice of cake  filled with assortment of blackberries and strawberries!"
 	icon_state = "blackbarry_strawberries_cake_vanilla_slice"
 	filling_color = "#FFD700"
-	tastes = list("blackbarry" = 2, "strawberries" = 2, "vanilla" = 2, "sweetness" = 2,"cake" = 3)
+	tastes = list("blackberry" = 2, "strawberries" = 2, "vanilla" = 2, "sweetness" = 2,"cake" = 3)
 	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
 
 /obj/item/reagent_containers/food/snacks/store/cake/bscc // blackbarry strawberries chocolate cake
