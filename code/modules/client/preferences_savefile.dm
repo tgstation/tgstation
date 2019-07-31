@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	23
+#define SAVEFILE_VERSION_MAX	24
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -109,6 +109,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			all_quirks -= "Physically Obstructive"
 			all_quirks -= "Neat"
 			all_quirks -= "NEET"
+	if(current_version < 24)
+		if (!(underwear in GLOB.underwear_list))
+			underwear = "Nude"
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
