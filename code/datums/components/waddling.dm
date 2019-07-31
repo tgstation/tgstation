@@ -3,7 +3,7 @@
 
 /datum/component/waddling/Initialize()
 	. = ..()
-	if(!isatom(parent))
+	if(!ismovableatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	if(isliving(parent))
 		RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED), .proc/LivingWaddle)
