@@ -48,7 +48,7 @@
 				last_check_success = FALSE
 				update_icon()
 				return
-
+	update_icon()
 	var/datum/gas_mixture/air2 = airs[2]
 
 
@@ -140,7 +140,7 @@
 																datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_temp_pump", name, 435, 160, master_ui, state)
+		ui = new(user, src, ui_key, "atmos_temp_pump", name, 430, 180, master_ui, state)
 		ui.open()
 
 #undef CHECK_AROUND
