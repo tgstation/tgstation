@@ -265,7 +265,7 @@
 
 /obj/item/reagent_containers/food/snacks/store/cake/bscc // blackbarry strawberries chocolate cake
 	name = "blackberry and strawberry chocolate cake"
-	desc = "A plain cake, filled with assortment of blackberries and strawberries!"
+	desc = "A chocolate cake, filled with assortment of blackberries and strawberries!"
 	icon_state = "blackbarry_strawberries_cake_coco_cake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/bscc
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 14, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/coco = 5)
