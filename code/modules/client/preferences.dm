@@ -223,8 +223,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<table width='100%'><tr><td width='24%' valign='top'>"
 
 			dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
-			dat += "<a href='?_src_=prefs;preference=species;task=random_race'>Random Species</A> "
-			dat += "<a href='?_src_=prefs;preference=species'>Always Random Species: [be_random_species ? "Yes" : "No"]</A><br>"
+			dat += "<a href='?_src_=prefs;preference=rand_species;task=random_race'>Random Species</A> "
+			dat += "<a href='?_src_=prefs;preference=rand_species'>Always Random Species: [be_random_species ? "Yes" : "No"]</A><br>"
 
 			dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
 			dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
@@ -1414,7 +1414,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("all")
 					be_random_body = !be_random_body
 
-				if("species")
+				if("rand_species")
 					be_random_species = !be_random_species
 
 				if("hear_midis")

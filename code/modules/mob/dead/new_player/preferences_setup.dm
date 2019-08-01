@@ -21,8 +21,8 @@
 	age = rand(AGE_MIN,AGE_MAX)
 
 /datum/preferences/proc/random_species()
-	var/rando_race = pick(GLOB.roundstart_races)
-	pref_species = new rando_race()
+	var/random_species_type = GLOB.species_list[pick(GLOB.roundstart_races)]
+	pref_species = new random_species_type
 
 /datum/preferences/proc/update_preview_icon()
 	// Determine what job is marked as 'High' priority, and dress them up as such.
