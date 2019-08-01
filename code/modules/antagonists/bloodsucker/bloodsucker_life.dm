@@ -168,7 +168,7 @@
 
 	owner.current.adjustStaminaLoss(-5 * (regenRate * 4) * mult, 0) // Humans lose stamina damage really quickly. Vamps should heal more.
 	owner.current.adjustCloneLoss(-1 * (regenRate * 4) * mult, 0)
-	owner.current.adjustBrainLoss(-1 * (regenRate * 4) * mult, 0)
+	owner.current.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * (regenRate * 4) * mult) //adjustBrainLoss(-1 * (regenRate * 4) * mult, 0)
 
 	owner.current.setOxyLoss(0)
 	owner.current.setToxLoss(0)
