@@ -106,6 +106,7 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/toy/eightball = 1,
 	/obj/item/reagent_containers/pill/floorpill = 1,
 	/obj/item/reagent_containers/food/snacks/cannedpeaches/maint = 1,
+	//FULPCODE STARTS
 	/obj/item/book/granter/language_book/common = 1,
 	/obj/item/book/granter/language_book/aphasia = 1,
 	/obj/item/book/granter/language_book/beachbum = 1,
@@ -120,5 +121,6 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/book/granter/language_book/xeno = 1,
 	/obj/item/book/granter/language_book/blahsucker = 1,
 	/obj/item/book/granter/language_book/russian = 1,
+	//FULPCODE ENDS
 	"" = 3
 	))

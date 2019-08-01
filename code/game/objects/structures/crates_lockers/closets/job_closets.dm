@@ -1,4 +1,5 @@
 // Closets for specific jobs
+// Snippets on the ends relating to language granters are FULPCODE
 
 /obj/structure/closet/gmcloset
 	name = "formal closet"
