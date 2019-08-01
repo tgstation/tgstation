@@ -172,7 +172,7 @@
 		/obj/item/clothing/shoes/sneakers/black = 3)
 	generate_items_inside(items_inside,src)
 	if(prob(20))
-	new /obj/item/book/granter/language_book/ratvarian(src)
+		new /obj/item/book/granter/language_book/ratvarian(src)
 	return
 
 /obj/structure/closet/wardrobe/engineering_yellow
