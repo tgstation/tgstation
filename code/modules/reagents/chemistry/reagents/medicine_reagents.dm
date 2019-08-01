@@ -1425,7 +1425,7 @@
 	taste_description = "salty"
 
 /datum/reagent/medicine/sanguiose/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-1, 0)
+	M.adjustBruteLoss(-3, 0) // 413 -- buff shitty borg chems
 	M.adjustOxyLoss(0.25,0)
 	M.blood_volume -= 1 //Removes blood
 	..()
@@ -1454,7 +1454,7 @@
 
 /datum/reagent/medicine/frogenite/on_mob_life(mob/living/carbon/M) //Reuses code done by cobby in Perflu to convert burn damage to oxygen, Meant to simunlate a chemical reaction to remove oxygen from the body.
 	var/firecalc = 1*REM*current_cycle
-	M.adjustFireLoss(-1, 0)
+	M.adjustFireLoss(-3, 0) // 413 -- buff shitty borg chems
 	if (firecalc <10)
 		M.adjustOxyLoss(firecalc*0.15, 0)
 	if (firecalc >= 10)
@@ -1486,7 +1486,7 @@
 
 /datum/reagent/medicine/ferveatium/on_mob_life(mob/living/carbon/M) //Reuses code done by cobby in Perflu to convert burn damage to oxygen, Meant to simunlate a chemical reaction to remove oxygen from the body.
 	var/toxcalc = 1*REM*current_cycle
-	M.adjustToxLoss(-1, 0)
+	M.adjustToxLoss(-3, 0) // 413 -- buff shitty borg chems
 	if (toxcalc <10)
 		M.adjustFireLoss(toxcalc/10, 0)
 	if (toxcalc >= 10)
