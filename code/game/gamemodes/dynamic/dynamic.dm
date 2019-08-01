@@ -460,89 +460,57 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		stack_trace("The delayed roundstart rule \"[rule.name]\" failed to execute.")
 		return FALSE
 
-/// Picks a random latejoin rule from the list given as an argument and executes it.
-/datum/game_mode/dynamic/proc/picking_latejoin_rule(list/drafted_rules = list(), forced = FALSE)
-	var/datum/dynamic_ruleset/latejoin/latejoin_rule = pickweight(drafted_rules)
-	if(!latejoin_rule)
+/// Picks a random midround OR latejoin rule from the list given as an argument and executes it.
+/// Also this could be named better.
+/datum/game_mode/dynamic/proc/picking_midround_latejoin_rule(list/drafted_rules = list(), forced = FALSE)
+	var/datum/dynamic_ruleset/rule = pickweight(drafted_rules)
+	if(!rule)
 		return FALSE
 	
 	if(!forced)
 		if(only_ruleset_executed)
 			return FALSE
 		// Check if a blocking ruleset has been executed.
-		else if(check_blocking(latejoin_rule.blocking_rules, executed_rules))
-			drafted_rules -= latejoin_rule
+		else if(check_blocking(rule.blocking_rules, executed_rules))
+			drafted_rules -= rule
 			if(drafted_rules.len <= 0)
 				return FALSE
-			latejoin_rule = pickweight(drafted_rules)
+			rule = pickweight(drafted_rules)
 		// Check if the ruleset is highlander and if a highlander ruleset has been executed
-		else if(latejoin_rule.flags & HIGHLANDER_RULESET)
+		else if(rule.flags & HIGHLANDER_RULESET)
 			if(threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
 				if(highlander_executed)
-					drafted_rules -= latejoin_rule
+					drafted_rules -= rule
 					if(drafted_rules.len <= 0)
 						return FALSE
-					latejoin_rule = pickweight(drafted_rules)
+					rule = pickweight(drafted_rules)
 	
-	if (!latejoin_rule.repeatable)
-		latejoin_rules = remove_from_list(latejoin_rules,latejoin_rule.type)
-	spend_threat(latejoin_rule.cost)
-	threat_log += "[worldtime2text()]: Latejoin [latejoin_rule.name] spent [latejoin_rule.cost]"
-	if (latejoin_rule.execute())
-		if(latejoin_rule.flags & HIGHLANDER_RULESET)
+	if(!rule.repeatable)
+		if(rule.ruletype == "Latejoin")
+			latejoin_rules = remove_from_list(latejoin_rules, rule.type)
+		else if(rule.type == "Midround")
+			midround_rules = remove_from_list(midround_rules, rule.type)
+
+	spend_threat(rule.cost)
+	threat_log += "[worldtime2text()]: [rule.ruletype] [rule.name] spent [rule.cost]"
+	if (rule.execute())
+		if(rule.flags & HIGHLANDER_RULESET)
 			highlander_executed = TRUE
-		else if(latejoin_rule.flags & ONLY_RULESET)
+		else if(rule.flags & ONLY_RULESET)
 			only_ruleset_executed = TRUE
-		var/mob/M = pick(latejoin_rule.candidates)
-		message_admins("[key_name(M)] joined the station, and was selected by the [latejoin_rule.name] ruleset.")
-		log_game("DYNAMIC: [key_name(M)] joined the station, and was selected by the [latejoin_rule.name] ruleset.")
-		executed_rules += latejoin_rule
-		if (latejoin_rule.persistent)
-			current_rules += latejoin_rule
+		var/mob/M = pick(rule.candidates)
+		if(rule.ruletype == "Latejoin")
+			message_admins("[key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
+			log_game("DYNAMIC: [key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
+		else if (rule.ruletype == "Midround")
+			message_admins("Injecting midround rule [rule.name]")
+			log_game("DYNAMIC: Injecting midround rule [rule.name]!")
+		executed_rules += rule
+		if (rule.persistent)
+			current_rules += rule
 		return TRUE
 	else
-		stack_trace("The latejoin rule \"[latejoin_rule.name]\" failed to execute.")
-	return FALSE
-
-/// Picks a random midround rule from the list given as an argument and executes it.
-/datum/game_mode/dynamic/proc/picking_midround_rule(list/drafted_rules = list(), forced = FALSE)
-	var/datum/dynamic_ruleset/midround/midround_rule = pickweight(drafted_rules)
-	if(!midround_rule)
-		return FALSE
-	
-	if(!forced)
-		if(only_ruleset_executed)
-			return FALSE
-		// Check if a blocking ruleset has been executed.
-		else if(check_blocking(midround_rule.blocking_rules, executed_rules))
-			drafted_rules -= midround_rule
-			if(drafted_rules.len <= 0)
-				return FALSE
-			midround_rule = pickweight(drafted_rules)
-		// Check if the ruleset is highlander and if a highlander ruleset has been executed
-		else if(midround_rule.flags & HIGHLANDER_RULESET)
-			if(threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
-				if(highlander_executed)
-					drafted_rules -= midround_rule
-					if(drafted_rules.len <= 0)
-						return FALSE
-					midround_rule = pickweight(drafted_rules)
-
-	if (!midround_rule.repeatable)
-		midround_rules = remove_from_list(midround_rules,midround_rule.type)
-	spend_threat(midround_rule.cost)
-	threat_log += "[worldtime2text()]: Midround [midround_rule.name] spent [midround_rule.cost]"
-	if (midround_rule.execute())
-		if(midround_rule.flags & HIGHLANDER_RULESET)
-			highlander_executed = TRUE
-		else if(midround_rule.flags & ONLY_RULESET)
-			only_ruleset_executed = TRUE
-		message_admins("Injecting midround rule [midround_rule.name]")
-		log_game("DYNAMIC: Injecting some threats...[midround_rule.name]!")
-		executed_rules += midround_rule
-		if (midround_rule.persistent)
-			current_rules += midround_rule
-		return TRUE
+		stack_trace("The [rule.ruletype] rule \"[rule.name]\" failed to execute.")
 	return FALSE
 
 /// An experimental proc to allow admins to call rules on the fly or have rules call other rules.
@@ -630,7 +598,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 					if (rule.ready() && rule.candidates.len > 0)
 						drafted_rules[rule] = rule.get_weight()
 			if (drafted_rules.len > 0)
-				picking_midround_rule(drafted_rules)
+				picking_midround_latejoin_rule(drafted_rules)
 	
 /// Updates current_players.
 /datum/game_mode/dynamic/proc/update_playercounts()
@@ -716,7 +684,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		forced_latejoin_rule.trim_candidates()
 		log_game("DYNAMIC: Forcing ruleset [forced_latejoin_rule]")
 		if (forced_latejoin_rule.ready(TRUE))
-			picking_latejoin_rule(list(forced_latejoin_rule), forced = TRUE)
+			picking_midround_latejoin_rule(list(forced_latejoin_rule), forced = TRUE)
 		forced_latejoin_rule = null
 
 	else if (latejoin_injection_cooldown < world.time && prob(get_injection_chance()))
@@ -736,7 +704,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				if (rule.ready())
 					drafted_rules[rule] = rule.get_weight()
 
-		if (drafted_rules.len > 0 && picking_latejoin_rule(drafted_rules))
+		if (drafted_rules.len > 0 && picking_midround_latejoin_rule(drafted_rules))
 			var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
 			latejoin_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time
 
