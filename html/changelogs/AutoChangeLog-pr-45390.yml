@@ -1,4 +1,0 @@
-author: "RandolfTheMeh"
-delete-after: True
-changes: 
-  - bugfix: "The CE's blueprints can no longer be used if not in-hand, and its scanning function has been fixed."
