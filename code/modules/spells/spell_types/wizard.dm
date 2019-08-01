@@ -15,18 +15,27 @@
 	sound = 'sound/magic/magic_missile.ogg'
 
 /obj/item/projectile/magic/spell/magic_missile
-	name = "a magic missile"
+	name = "magic missile"
 	icon_state = "magicm"
 	range = 20
 	speed = 5
 	trigger_range = 0
 	linger = TRUE
+	nodamage = FALSE
 	paralyze = 60
 	hitsound = 'sound/magic/mm_hit.ogg'
 
 	trail = TRUE
 	trail_lifespan = 5
 	trail_icon_state = "magicmd"
+
+/obj/item/projectile/magic/spell/magic_missile/on_hit(target)
+	. = ..()
+	if(ismob(target))
+		var/mob/M = target
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return BULLET_ACT_BLOCK
 
 /obj/effect/proc_holder/spell/targeted/genetic/mutate
 	name = "Mutate"
@@ -142,6 +151,7 @@
 	range = -1
 	include_user = TRUE
 	cooldown_min = 200 //100 deciseconds reduction per rank
+	action_icon_state = "teleport"
 
 	smoke_spread = 1
 	smoke_amt = 2
@@ -355,6 +365,7 @@
 	clothes_req = TRUE
 	item_type = /obj/item/spellpacket/lightningbolt
 	charge_max = 10
+	action_icon_state = "thrownlightning"
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket/cast(list/targets, mob/user = usr)
 	..()

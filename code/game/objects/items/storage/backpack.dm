@@ -242,31 +242,31 @@
 	name = "virologist satchel"
 	desc = "A sterile satchel with virologist colours."
 	icon_state = "satchel-vir"
-	item_state = "satchel-vir"
+	item_state = "viropack"
 
 /obj/item/storage/backpack/satchel/chem
 	name = "chemist satchel"
 	desc = "A sterile satchel with chemist colours."
 	icon_state = "satchel-chem"
-	item_state = "satchel-chem"
+	item_state = "chempack"
 
 /obj/item/storage/backpack/satchel/gen
 	name = "geneticist satchel"
 	desc = "A sterile satchel with geneticist colours."
 	icon_state = "satchel-gen"
-	item_state = "satchel-gen"
+	item_state = "genepack"
 
 /obj/item/storage/backpack/satchel/tox
 	name = "scientist satchel"
 	desc = "Useful for holding research materials."
 	icon_state = "satchel-tox"
-	item_state = "satchel-tox"
+	item_state = "toxpack"
 
 /obj/item/storage/backpack/satchel/hyd
 	name = "botanist satchel"
 	desc = "A satchel made of all natural fibers."
 	icon_state = "satchel-hyd"
-	item_state = "satchel-hyd"
+	item_state = "botpack"
 
 /obj/item/storage/backpack/satchel/sec
 	name = "security satchel"
@@ -278,7 +278,7 @@
 	name = "explorer satchel"
 	desc = "A robust satchel for stashing your loot."
 	icon_state = "satchel-explorer"
-	item_state = "securitypack"
+	item_state = "explorerpack"
 
 /obj/item/storage/backpack/satchel/cap
 	name = "captain's satchel"
@@ -442,7 +442,7 @@
 	item_state = "duffel-syndieammo"
 
 /obj/item/storage/backpack/duffelbag/syndie/hitman/PopulateContents()
-	new /obj/item/clothing/under/lawyer/blacksuit(src)
+	new /obj/item/clothing/under/suit/black(src)
 	new /obj/item/clothing/accessory/waistcoat(src)
 	new /obj/item/clothing/suit/toggle/lawyer/black(src)
 	new /obj/item/clothing/shoes/laceup(src)
@@ -603,7 +603,7 @@
 
 /obj/item/storage/backpack/duffelbag/clown/syndie/PopulateContents()
 	new /obj/item/pda/clown(src)
-	new /obj/item/clothing/under/rank/clown(src)
+	new /obj/item/clothing/under/rank/civilian/clown(src)
 	new /obj/item/clothing/shoes/clown_shoes(src)
 	new /obj/item/clothing/mask/gas/clown_hat(src)
 	new /obj/item/bikehorn(src)
