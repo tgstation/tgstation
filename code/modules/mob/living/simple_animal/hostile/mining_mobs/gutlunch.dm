@@ -110,7 +110,9 @@
 	gender = FEMALE
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen/Life()
-	..()
+	. = ..()
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_DEAD))
+		return
 	if(udder.reagents.total_volume == udder.reagents.maximum_volume) //Only breed when we're full.
 		make_babies()
 
@@ -134,7 +136,9 @@
 	update_transform()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch/Life()
-	..()
+	. = ..()
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_DEAD))
+		return
 	growth++
 	if(growth > 50) //originally used a timer for this but was more problem that it's worth.
 		growUp()

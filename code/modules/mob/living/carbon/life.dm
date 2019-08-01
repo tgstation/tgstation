@@ -1,56 +1,51 @@
-/mob/living/carbon/Life()
-	set invisibility = 0
-
-	if(notransform)
+/mob/living/carbon/Process_Living(seconds, times_fired)
+	. = ..()
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL))
 		return
-
+	if(!IS_IN_STASIS(src)) //Ugly, but it has to be here.
+		. |= handle_diseases()
+		if(. & MOBFLAG_QDELETED)
+			return
 	if(damageoverlaytemp)
 		damageoverlaytemp = 0
 		update_damage_hud()
-
-	if(!IS_IN_STASIS(src))
-
-		if(stat != DEAD) //Reagent processing needs to come before breathing, to prevent edge cases.
-			handle_organs()
-
-		. = ..()
-
-		if (QDELETED(src))
-			return
-
-		if(.) //not dead
-			handle_blood()
-
-		if(stat != DEAD)
-			var/bprv = handle_bodyparts()
-			if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
-				update_stamina() //needs to go before updatehealth to remove stamcrit
-				updatehealth()
-
-		if(stat != DEAD)
-			handle_brain_damage()
-
-	else
-		. = ..()
-
-	if(stat == DEAD)
+	if(. & MOBFLAG_DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
 		LoadComponent(/datum/component/rot/corpse)
-
-	check_cremation()
-
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
+	. |= check_cremation()
 
-	if(stat != DEAD)
-		return 1
+/mob/living/carbon/Life(seconds, times_fired)
+	. = ..()
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_DEAD))
+		return
+	. |= handle_organs()
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_DEAD)) //Apparently some organs gib you.
+		return
+	. |= handle_blood()
+	if(. & MOBFLAG_DEAD) //Apparently some organs gib you.
+		return
+	. |= handle_bodyparts()
+	if(. & MOBFLAG_UPDATE_HEALTH)
+		update_stamina() //needs to go before updatehealth to remove stamcrit
+		updatehealth()
+	if(. & MOBFLAG_DEAD)
+		return
+	. |= handle_brain_damage()
+	if(. & MOBFLAG_DEAD)
+		return
+	. |= handle_breathing(times_fired)
+	if(. & MOBFLAG_DEAD)
+		return
+	. |= handle_heart()
 
 ///////////////
 // BREATHING //
 ///////////////
 
-//Start of a breath chain, calls breathe()
-/mob/living/carbon/handle_breathing(times_fired)
+///Start of a breath chain, calls breathe()
+/mob/living/carbon/proc/handle_breathing(times_fired)
 	var/next_breath = 4
 	var/obj/item/organ/lungs/L = getorganslot(ORGAN_SLOT_LUNGS)
 	var/obj/item/organ/heart/H = getorganslot(ORGAN_SLOT_HEART)
@@ -71,15 +66,18 @@
 		if(istype(loc, /obj/))
 			var/obj/location_as_object = loc
 			location_as_object.handle_internal_lifeform(src,0)
+	if(stat == DEAD)
+		return MOBFLAG_DEAD
 
-//Second link in a breath chain, calls check_breath()
+///Second link in a breath chain, calls check_breath()
 /mob/living/carbon/proc/breathe()
-	var/obj/item/organ/lungs = getorganslot(ORGAN_SLOT_LUNGS)
+	if(HAS_TRAIT(src, TRAIT_NOBREATH))
+		return
 	if(reagents.has_reagent(/datum/reagent/toxin/lexorin, needs_metabolizing = TRUE))
 		return
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
-
+	var/obj/item/organ/lungs = getorganslot(ORGAN_SLOT_LUNGS)
 	var/datum/gas_mixture/environment
 	if(loc)
 		environment = loc.return_air()
@@ -326,7 +324,7 @@
 	if(stam_regen_start_time <= world.time)
 		stam_regen = TRUE
 		if(stam_paralyzed)
-			. |= BODYPART_LIFE_UPDATE_HEALTH //make sure we remove the stamcrit
+			. |= MOBFLAG_UPDATE_HEALTH //make sure we remove the stamcrit
 	for(var/I in bodyparts)
 		var/obj/item/bodypart/BP = I
 		if(BP.needs_processing)
@@ -336,8 +334,12 @@
 	for(var/V in internal_organs)
 		var/obj/item/organ/O = V
 		O.on_life()
+	if(QDELETED(src)) //Ugly but I will get something better later.
+		return MOBFLAG_QDELETED
+	if(stat == DEAD)
+		return MOBFLAG_DEAD
 
-/mob/living/carbon/handle_diseases()
+/mob/living/carbon/proc/handle_diseases()
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(prob(D.infectivity))
@@ -389,6 +391,8 @@
 	radiation -= min(radiation, RAD_LOSS_PER_TICK)
 	if(radiation > RAD_MOB_SAFE)
 		adjustToxLoss(log(radiation-RAD_MOB_SAFE)*RAD_TOX_COEFFICIENT)
+	if(stat == DEAD) //Ideally this wouldn't be here, and the mutation would return if it killed the mob.
+		return MOBFLAG_DEAD
 
 
 /*
@@ -571,6 +575,9 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		if(drunkenness >= 101)
 			adjustToxLoss(2) //Let's be honest you shouldn't be alive by now
 
+	if(stat == DEAD)
+		return MOBFLAG_DEAD
+
 //used in human and monkey handle_environment()
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()
 	var/body_temperature_difference = BODYTEMP_NORMAL - bodytemperature
@@ -667,6 +674,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(chest.cremation_progress >= 100)
 		visible_message("<span class='warning'>[src]'s body crumbles into a pile of ash!</span>")
 		dust(TRUE, TRUE)
+		return MOBFLAG_QDELETED
 
 ////////////////
 //BRAIN DAMAGE//
@@ -676,10 +684,22 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	for(var/T in get_traumas())
 		var/datum/brain_trauma/BT = T
 		BT.on_life()
+	if(stat == DEAD) //Again workaround. Ideally the traumas would return the flag.
+		return MOBFLAG_DEAD
 
 /////////////////////////////////////
 //MONKEYS WITH TOO MUCH CHOLOESTROL//
 /////////////////////////////////////
+
+/mob/living/carbon/proc/handle_heart()
+	if(!undergoing_cardiac_arrest())
+		return
+	if(!HAS_TRAIT(src, TRAIT_NOBREATH))
+		adjustOxyLoss(8)
+		Unconscious(80)
+	adjustBruteLoss(2)
+	if(stat == DEAD)
+		return MOBFLAG_DEAD
 
 /mob/living/carbon/proc/can_heartattack()
 	if(!needs_heart())
@@ -689,10 +709,11 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		return FALSE
 	return TRUE
 
+///If this carbon needs a heart to survive.
 /mob/living/carbon/proc/needs_heart()
 	if(HAS_TRAIT(src, TRAIT_STABLEHEART))
 		return FALSE
-	if(dna && dna.species && (NOBLOOD in dna.species.species_traits)) //not all carbons have species!
+	if(!dna || dna.species && (NOBLOOD in dna.species.species_traits)) //not all carbons have species!
 		return FALSE
 	return TRUE
 

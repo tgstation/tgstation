@@ -118,10 +118,13 @@
 		trauma = _trauma
 	return ..()
 
-/mob/living/split_personality/Life()
+/mob/living/split_personality/Process_Living()
+	. = ..()
+	if(. & MOBFLAG_QDELETED)
+		return
 	if(QDELETED(body))
 		qdel(src) //in case trauma deletion doesn't already do it
-
+		. |= MOBFLAG_QDELETED
 	if((body.stat == DEAD && trauma.owner_backseat == src))
 		trauma.switch_personalities()
 		qdel(trauma)
@@ -130,8 +133,6 @@
 	if(!body.client && trauma.initialized)
 		trauma.switch_personalities()
 		qdel(trauma)
-
-	..()
 
 /mob/living/split_personality/Login()
 	..()

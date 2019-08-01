@@ -47,8 +47,10 @@
 	..()
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
 
-/mob/living/simple_animal/hostile/retaliate/clown/Life()
+/mob/living/simple_animal/hostile/retaliate/clown/Process_Living()
 	. = ..()
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+		return
 	if(banana_time && banana_time < world.time)
 		var/turf/T = get_turf(src)
 		var/list/adjacent =  T.GetAtmosAdjacentTurfs(1)
@@ -73,8 +75,10 @@
 	emote_see = list("bubbles", "oozes")
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/particle_effect/foam)
 
-/mob/living/simple_animal/hostile/retaliate/clown/lube/Life()
+/mob/living/simple_animal/hostile/retaliate/clown/lube/Process_Living()
 	. = ..()
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL))
+		return
 	var/turf/open/OT = get_turf(src)
 	if(isopenturf(OT))
 		OT.MakeSlippery(TURF_WET_LUBE, 100)

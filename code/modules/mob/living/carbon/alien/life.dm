@@ -1,6 +1,8 @@
-/mob/living/carbon/alien/Life()
+/mob/living/carbon/alien/Process_Living(seconds, times_fired)
+	. = ..()
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL))
+		return
 	findQueen()
-	return..()
 
 /mob/living/carbon/alien/check_breath(datum/gas_mixture/breath)
 	if(status_flags & GODMODE)
@@ -39,7 +41,7 @@
 	handle_breath_temperature(breath)
 
 /mob/living/carbon/alien/handle_status_effects()
-	..()
+	. = ..()
 	//natural reduction of movement delay due to stun.
 	if(move_delay_add > 0)
 		move_delay_add = max(0, move_delay_add - rand(1, 2))

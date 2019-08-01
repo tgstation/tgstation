@@ -136,8 +136,10 @@
 	status_flags |= GODMODE
 	timer = rand(1,15)
 
-/mob/living/simple_animal/shade/howling_ghost/Life()
-	..()
+/mob/living/simple_animal/shade/howling_ghost/Process_Living()
+	. = ..()
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_DEAD|MOBFLAG_KILLALL))
+		return
 	timer--
 	if(prob(20))
 		roam()
@@ -205,11 +207,10 @@
 /mob/living/simple_animal/hostile/retaliate/clown/insane/ex_act()
 	return
 
-/mob/living/simple_animal/hostile/retaliate/clown/insane/Life()
+/mob/living/simple_animal/hostile/retaliate/clown/insane/Process_Living()
 	timer--
 	if(target)
 		stalk()
-	return
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/proc/stalk()
 	var/mob/living/M = target

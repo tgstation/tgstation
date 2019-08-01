@@ -26,8 +26,10 @@
 
 	do_footstep = TRUE
 
-/mob/living/simple_animal/hostile/jungle/mega_arachnid/Life()
-	..()
+/mob/living/simple_animal/hostile/jungle/mega_arachnid/Process_Living()
+	. = ..()
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+		return
 	if(target && ranged_cooldown > world.time && iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(!C.legcuffed && C.health < 50)

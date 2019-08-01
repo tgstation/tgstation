@@ -22,6 +22,8 @@
 			blood_volume += 0.1 // regenerate blood VERY slowly
 			if(blood_volume < BLOOD_VOLUME_OKAY)
 				adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.02, 1))
+				if(stat == DEAD)
+					return MOBFLAG_DEAD
 
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood()
@@ -71,6 +73,8 @@
 			if(-INFINITY to BLOOD_VOLUME_SURVIVE)
 				if(!HAS_TRAIT(src, TRAIT_NODEATH))
 					death()
+		if(stat == DEAD)
+			. |= MOBFLAG_DEAD
 
 		var/temp_bleed = 0
 		//Bleeding out

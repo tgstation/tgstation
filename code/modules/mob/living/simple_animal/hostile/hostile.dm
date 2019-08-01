@@ -63,11 +63,11 @@
 	targets_from = null
 	return ..()
 
-/mob/living/simple_animal/hostile/Life()
+/mob/living/simple_animal/hostile/Process_Living()
 	. = ..()
-	if(!.) //dead
-		walk(src, 0) //stops walking
-		return 0
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+		return
+	walk(src, 0) //stops walking
 
 /mob/living/simple_animal/hostile/handle_automated_action()
 	if(AIStatus == AI_OFF)

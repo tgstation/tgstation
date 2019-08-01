@@ -1,11 +1,8 @@
 
 /mob/living/brain/Life()
-	set invisibility = 0
-	if (notransform)
-		return
-	if(!loc)
-		return
 	. = ..()
+	if(. (MOBFLAG_QDELETED|MOBFLAG_DEAD))
+		return
 	handle_emp_damage()
 
 /mob/living/brain/update_stat()

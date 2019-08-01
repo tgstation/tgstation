@@ -22,8 +22,10 @@
 	deathmessage = "vanishes into thin air! It was a fake!"
 
 
-/mob/living/simple_animal/hostile/illusion/Life()
-	..()
+/mob/living/simple_animal/hostile/illusion/Process_Living()
+	. = ..()
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL))
+		return
 	if(world.time > life_span)
 		death()
 

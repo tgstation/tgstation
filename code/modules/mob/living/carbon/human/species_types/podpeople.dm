@@ -26,6 +26,7 @@
 	C.faction -= "vines"
 
 /datum/species/pod/spec_life(mob/living/carbon/human/H)
+	. = ..()
 	if(H.stat == DEAD)
 		return
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
@@ -42,6 +43,8 @@
 
 	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
 		H.take_overall_damage(2,0)
+		if(H.stat == DEAD)
+			return MOBFLAG_DEAD
 
 /datum/species/pod/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.type == /datum/reagent/toxin/plantbgone)

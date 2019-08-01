@@ -101,7 +101,10 @@
 		factory.spores += src
 	. = ..()
 
-/mob/living/simple_animal/hostile/blob/blobspore/Life()
+/mob/living/simple_animal/hostile/blob/blobspore/Process_Living()
+	. = ..()
+	if(. & MOBFLAG_QDELETED|MOBFLAG_DEAD|MOBFLAG_KILLALL)
+		return
 	if(!is_zombie && isturf(src.loc))
 		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
 			if(H.stat == DEAD)
@@ -109,7 +112,7 @@
 				break
 	if(factory && z != factory.z)
 		death()
-	..()
+		. |= MOBFLAG_DEAD
 
 /mob/living/simple_animal/hostile/blob/blobspore/proc/Zombify(mob/living/carbon/human/H)
 	is_zombie = 1
@@ -225,8 +228,11 @@
 	else
 		pass_flags &= ~PASSBLOB
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/Life()
-	if(..())
+/mob/living/simple_animal/hostile/blob/blobbernaut/Process_Living()
+	. = ..()
+	if(. & MOBFLAG_QDELETED|MOBFLAG_DEAD|MOBFLAG_KILLALL)
+		return
+	else //Fuck me if I remove this nesting.
 		var/list/blobs_in_area = range(2, src)
 		if(independent)
 			return // strong independent blobbernaut that don't need no blob

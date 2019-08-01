@@ -146,7 +146,7 @@
 
 
 /mob/living/simple_animal/handle_status_effects()
-	..()
+	. = ..()
 	if(stuttering)
 		stuttering = 0
 
@@ -261,6 +261,8 @@
 		adjustHealth(unsuitable_atmos_damage)
 
 	handle_temperature_damage()
+	if(stat == DEAD)
+		return MOBFLAG_DEAD
 
 /mob/living/simple_animal/proc/handle_temperature_damage()
 	if((bodytemperature < minbodytemp) || (bodytemperature > maxbodytemp))

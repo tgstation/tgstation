@@ -37,8 +37,10 @@
 
 	do_footstep = TRUE
 
-/mob/living/simple_animal/hostile/asteroid/goliath/Life()
+/mob/living/simple_animal/hostile/asteroid/goliath/Process_Living()
 	. = ..()
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+		return
 	handle_preattack()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/proc/handle_preattack()
@@ -126,23 +128,24 @@
 	var/turf/last_location
 	var/tentacle_recheck_cooldown = 100
 
-/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/Life()
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/Process_Living()
 	. = ..()
-	if(!.) // dead
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
 		return
-	if(isturf(loc))
-		if(!LAZYLEN(cached_tentacle_turfs) || loc != last_location || tentacle_recheck_cooldown <= world.time)
-			LAZYCLEARLIST(cached_tentacle_turfs)
-			last_location = loc
-			tentacle_recheck_cooldown = world.time + initial(tentacle_recheck_cooldown)
-			for(var/turf/open/T in orange(4, loc))
-				LAZYADD(cached_tentacle_turfs, T)
-		for(var/t in cached_tentacle_turfs)
-			if(isopenturf(t))
-				if(prob(10))
-					new /obj/effect/temp_visual/goliath_tentacle(t, src)
-			else
-				cached_tentacle_turfs -= t
+	if(!isturf(loc))
+		return
+	if(!LAZYLEN(cached_tentacle_turfs) || loc != last_location || tentacle_recheck_cooldown <= world.time)
+		LAZYCLEARLIST(cached_tentacle_turfs)
+		last_location = loc
+		tentacle_recheck_cooldown = world.time + initial(tentacle_recheck_cooldown)
+		for(var/turf/open/T in orange(4, loc))
+			LAZYADD(cached_tentacle_turfs, T)
+	for(var/t in cached_tentacle_turfs)
+		if(isopenturf(t))
+			if(prob(10))
+				new /obj/effect/temp_visual/goliath_tentacle(t, src)
+		else
+			cached_tentacle_turfs -= t
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril
 	fromtendril = TRUE

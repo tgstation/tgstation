@@ -742,6 +742,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/takes_crit_damage = (!HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
 		if((H.health < H.crit_threshold) && takes_crit_damage)
 			H.adjustBruteLoss(1)
+			if(H.stat == DEAD)
+				return MOBFLAG_DEAD
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
@@ -1568,11 +1570,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //BREATHING//
 /////////////
 
-/datum/species/proc/breathe(mob/living/carbon/human/H)
-	if(HAS_TRAIT(H, TRAIT_NOBREATH))
-		return TRUE
-
-
 /datum/species/proc/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/H)
 	if(!environment)
 		return
@@ -1672,6 +1669,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			else
 				H.adjustBruteLoss(LOW_PRESSURE_DAMAGE * H.physiology.pressure_mod)
 				H.throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
+	if(H.stat == DEAD)
+		return MOBFLAG_DEAD
 
 //////////
 // FIRE //

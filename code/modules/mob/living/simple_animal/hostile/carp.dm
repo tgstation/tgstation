@@ -159,6 +159,8 @@
 
 /mob/living/simple_animal/hostile/carp/megacarp/Life()
 	. = ..()
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_DEAD))
+		return
 	if(regen_cooldown < world.time)
 		heal_overall_damage(4)
 

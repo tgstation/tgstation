@@ -7,22 +7,23 @@
 	var/SStun = 0 // stun variable
 
 
-/mob/living/simple_animal/slime/Life()
-	set invisibility = 0
-	if (notransform)
+/mob/living/simple_animal/slime/Process_Living()
+	. = ..()
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
 		return
-	if(..())
-		if(buckled)
-			handle_feeding()
-		if(!stat) // Slimes in stasis don't lose nutrition, don't change mood and don't respond to speech
-			handle_nutrition()
-			if(QDELETED(src)) // Stop if the slime split during handle_nutrition()
-				return
-			reagents.remove_all(0.5 * REAGENTS_METABOLISM * reagents.reagent_list.len) //Slimes are such snowflakes
-			handle_targets()
-			if (!ckey)
-				handle_mood()
-				handle_speech()
+	if(buckled)
+		handle_feeding()
+	if(!stat) // Slimes in stasis don't lose nutrition, don't change mood and don't respond to speech
+		handle_nutrition()
+		if(QDELETED(src)) // Stop if the slime split during handle_nutrition() Yeah, no, this needs some work
+			return
+		reagents.remove_all(0.5 * REAGENTS_METABOLISM * reagents.reagent_list.len) //Slimes are such snowflakes
+		handle_targets()
+		if (!ckey)
+			handle_mood()
+			handle_speech()
+		if(prob(30))
+			adjustBruteLoss(-1)
 
 // Unlike most of the simple animals, slimes support UNCONSCIOUS
 /mob/living/simple_animal/slime/update_stat()
@@ -148,11 +149,9 @@
 			stat = CONSCIOUS
 			update_mobility()
 			regenerate_icons()
-
+	else
+		. = MOBFLAG_DEAD
 	updatehealth()
-
-
-	return //TODO: DEFERRED
 
 /mob/living/simple_animal/slime/proc/adjust_body_temperature(current, loc_temp, boost)
 	var/temperature = current
@@ -170,11 +169,6 @@
 		temperature = max(loc_temp, temperature-change)
 	temp_change = (temperature - current)
 	return temp_change
-
-/mob/living/simple_animal/slime/handle_status_effects()
-	..()
-	if(prob(30) && !stat)
-		adjustBruteLoss(-1)
 
 /mob/living/simple_animal/slime/proc/handle_feeding()
 	if(!ismob(buckled))

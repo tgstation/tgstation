@@ -21,7 +21,7 @@
 	revert_to_reality()
 	return ..()
 
-/mob/living/carbon/human/virtual_reality/Life()
+/mob/living/carbon/human/virtual_reality/Process_Living()
 	. = ..()
 	if(real_mind)
 		var/mob/living/real_me = real_mind.current

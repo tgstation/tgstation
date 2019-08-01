@@ -165,9 +165,11 @@
 		if(!hopping)
 			Hop()
 
-/mob/living/simple_animal/hostile/jungle/leaper/Life()
+/mob/living/simple_animal/hostile/jungle/leaper/Process_Living()
 	. = ..()
-	update_icons()
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL))
+		return
+	update_icons() //If anyone sees this, please try to remove this one day.
 
 /mob/living/simple_animal/hostile/jungle/leaper/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(prob(33) && !ckey)

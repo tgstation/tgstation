@@ -58,6 +58,10 @@
 	diag_hud_set_status()
 	diag_hud_set_health()
 
+///Attention fucko, this is important. Life is like super out and only used for things that are actually alive. Use Process_Living instead
+/mob/living/silicon/Life()
+	return
+
 /mob/living/silicon/med_hud_set_health()
 	return //we use a different hud
 

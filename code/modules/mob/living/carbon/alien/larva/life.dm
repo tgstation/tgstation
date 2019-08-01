@@ -1,14 +1,11 @@
 
-
 /mob/living/carbon/alien/larva/Life()
-	set invisibility = 0
-	if (notransform)
+	. = ..()
+	if(. (MOBFLAG_QDELETED|MOBFLAG_DEAD))
 		return
-	if(..() && !IS_IN_STASIS(src)) //not dead and not in stasis
-		// GROW!
-		if(amount_grown < max_grown)
-			amount_grown++
-			update_icons()
+	if(amount_grown < max_grown)
+		amount_grown++
+		update_icons()
 
 
 /mob/living/carbon/alien/larva/update_stat()

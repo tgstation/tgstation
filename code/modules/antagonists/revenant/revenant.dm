@@ -105,7 +105,7 @@
 		mind.add_antag_datum(/datum/antagonist/revenant)
 
 //Life, Stat, Hud Updates, and Say
-/mob/living/simple_animal/revenant/Life()
+/mob/living/simple_animal/revenant/Process_Living()
 	if(stasis)
 		return
 	if(revealed && essence <= 0)
@@ -125,7 +125,7 @@
 		update_action_buttons_icon() //because we update something required by our spells in life, we need to update our buttons
 	update_spooky_icon()
 	update_health_hud()
-	..()
+	. = ..()
 
 /mob/living/simple_animal/revenant/Stat()
 	..()

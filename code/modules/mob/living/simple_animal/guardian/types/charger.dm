@@ -14,8 +14,10 @@
 	var/charging = 0
 	var/obj/screen/alert/chargealert
 
-/mob/living/simple_animal/hostile/guardian/charger/Life()
+/mob/living/simple_animal/hostile/guardian/charger/Process_Living()
 	. = ..()
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL))
+		return
 	if(ranged_cooldown <= world.time)
 		if(!chargealert)
 			chargealert = throw_alert("charge", /obj/screen/alert/cancharge)

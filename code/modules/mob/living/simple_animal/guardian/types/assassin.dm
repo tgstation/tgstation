@@ -20,8 +20,10 @@
 	. = ..()
 	stealthcooldown = 0
 
-/mob/living/simple_animal/hostile/guardian/assassin/Life()
+/mob/living/simple_animal/hostile/guardian/assassin/Process_Living()
 	. = ..()
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL))
+		return
 	updatestealthalert()
 	if(loc == summoner && toggle)
 		ToggleMode(0)

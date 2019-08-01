@@ -1,14 +1,11 @@
-/mob/living/proc/Life(seconds, times_fired)
+///Called by the mob subsystem. ALWAYS call parent first.
+/mob/living/proc/Process_Living(seconds, times_fired)
 	set waitfor = FALSE
 	set invisibility = 0
-
-	if(digitalinvis)
-		handle_diginvis() //AI becomes unable to see mob
-
-	if((movement_type & FLYING) && !(movement_type & FLOATING))	//TODO: Better floating
-		float(on = TRUE)
-
-	if (client)
+	. = NONE
+	if(stat == DEAD)
+		. |= MOBFLAG_DEAD
+	if(client) //Just a bunch of Z level tracking stuff.
 		var/turf/T = get_turf(src)
 		if(!T)
 			for(var/obj/effect/landmark/error/E in GLOB.landmarks_list)
@@ -29,60 +26,43 @@
 	else if (registered_z)
 		log_game("Z-TRACKING: [src] of type [src.type] has a Z-registration despite not having a client.")
 		update_z(null)
-
-	if (notransform)
+	if(notransform || !loc)
+		. |= MOBFLAG_KILLALL
 		return
-	if(!loc)
+	if(digitalinvis) //TO-DO: Get rid of this somehow.
+		handle_diginvis()
+	if((movement_type & FLYING) && !(movement_type & FLOATING))	//TODO: Better floating
+		float(on = TRUE)
+	//Here is where the fun begins
+	if(!IS_IN_STASIS(src) && !(. & MOBFLAG_DEAD))
+		. |= Life(seconds, times_fired)
+	if(. & MOBFLAG_QDELETED)
 		return
-
-	if(!IS_IN_STASIS(src))
-
-		if(stat != DEAD)
-			//Mutations and radiation
-			handle_mutations_and_radiation()
-
-		if(stat != DEAD)
-			//Breathing, if applicable
-			handle_breathing(times_fired)
-
-		handle_diseases()// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
-
-		if (QDELETED(src)) // diseases can qdel the mob via transformations
-			return
-
-		if(stat != DEAD)
-			//Random events (vomiting etc)
-			handle_random_events()
-
-		//Handle temperature/pressure differences between body and environment
-		var/datum/gas_mixture/environment = loc.return_air()
-		if(environment)
-			handle_environment(environment)
-
-		handle_gravity()
-
-		if(stat != DEAD)
-			handle_traits() // eye, ear, brain damages
-			handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
-
-	handle_fire()
-
+	var/datum/gas_mixture/environment = loc.return_air()
+	if(environment)
+		. |= handle_environment(environment)
+	handle_fire(environment)
+	handle_gravity()
 	if(machine)
 		machine.check_eye(src)
 
-	if(stat != DEAD)
-		return 1
+///Called if the mob isn't in stasis AND alive.
+/mob/living/proc/Life(seconds, times_fired)
+	. |= handle_mutations_and_radiation()
+	if(. & MOBFLAG_DEAD)
+		return
+	. |= handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
+	if(. & MOBFLAG_DEAD)
+		return
+	handle_random_events() //Only used by carbons right now, but there is value in this being on living.
+	handle_traits() // eye, ear, brain damages
 
-/mob/living/proc/handle_breathing(times_fired)
-	return
-
+///Handles mutation and radiation and stuff like that.
 /mob/living/proc/handle_mutations_and_radiation()
 	radiation = 0 //so radiation don't accumulate in simple animals
 	return
 
-/mob/living/proc/handle_diseases()
-	return
-
+///Makes the user invisible to the AI.
 /mob/living/proc/handle_diginvis()
 	if(!digitaldisguise)
 		src.digitaldisguise = image(loc = src)
@@ -90,14 +70,16 @@
 	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
 		AI.client.images |= src.digitaldisguise
 
-
+///Used for stuff like vomiting.
 /mob/living/proc/handle_random_events()
 	return
 
+///Handles how the mob should react to surrounding atmos.
 /mob/living/proc/handle_environment(datum/gas_mixture/environment)
 	return
 
-/mob/living/proc/handle_fire()
+///Handles fire and when it should get extinguished. Attention. Environment can be null.
+/mob/living/proc/handle_fire(datum/gas_mixture/G)
 	if(fire_stacks < 0) //If we've doused ourselves in water to avoid fire, dry off slowly
 		fire_stacks = min(0, fire_stacks + 1)//So we dry ourselves back to default, nonflammable.
 	if(!on_fire)
@@ -107,8 +89,7 @@
 	else
 		ExtinguishMob()
 		return TRUE //mob was put out, on_fire = FALSE via ExtinguishMob(), no need to update everything down the chain.
-	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(!G.gases[/datum/gas/oxygen] || G.gases[/datum/gas/oxygen][MOLES] < 1)
+	if(!G || !G.gases[/datum/gas/oxygen] || G.gases[/datum/gas/oxygen][MOLES] < 1)
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return TRUE
 	var/turf/location = get_turf(src)

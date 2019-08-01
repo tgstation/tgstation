@@ -364,7 +364,7 @@
 		desc = "At a ripe old age of [record_age] Ian's not as spry as he used to be, but he'll always be the HoP's beloved corgi." //RIP
 		turns_per_move = 20
 
-/mob/living/simple_animal/pet/dog/corgi/Ian/Life()
+/mob/living/simple_animal/pet/dog/corgi/Ian/Process_Living()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(FALSE)
 		memory_saved = TRUE
@@ -417,11 +417,12 @@
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
-/mob/living/simple_animal/pet/dog/corgi/Ian/Life()
-	..()
-
+/mob/living/simple_animal/pet/dog/corgi/Ian/Process_Living() //God help us, this proc gave me cancer.
+	. = ..()
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+		return
 	//Feeding, chasing food, FOOOOODDDD
-	if(!stat && !resting && !buckled)
+	if(!resting && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 5)
 			turns_since_scan = 0
@@ -488,8 +489,10 @@
 	nofur = TRUE
 	unique_pet = TRUE
 
-/mob/living/simple_animal/pet/dog/corgi/narsie/Life()
-	..()
+/mob/living/simple_animal/pet/dog/corgi/narsie/Process_Living()
+	. = ..()
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+		return
 	for(var/mob/living/simple_animal/pet/P in range(1, src))
 		if(P != src && prob(5))
 			visible_message("<span class='warning'>[src] devours [P]!</span>", \
@@ -614,8 +617,10 @@
 		return
 	..()
 
-/mob/living/simple_animal/pet/dog/corgi/Lisa/Life()
-	..()
+/mob/living/simple_animal/pet/dog/corgi/Lisa/Process_Living()
+	. = ..()
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+		return
 
 	make_babies()
 
@@ -627,8 +632,10 @@
 					setDir(i)
 					sleep(1)
 
-/mob/living/simple_animal/pet/dog/pug/Life()
-	..()
+/mob/living/simple_animal/pet/dog/pug/Process_Living()
+	. = ..()
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+		return
 
 	if(!stat && !resting && !buckled)
 		if(prob(1))

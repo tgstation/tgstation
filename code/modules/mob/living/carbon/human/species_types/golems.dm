@@ -95,6 +95,7 @@
 	var/datum/action/innate/ignite/ignite
 
 /datum/species/golem/plasma/spec_life(mob/living/carbon/human/H)
+	. = ..()
 	if(H.bodytemperature > 750)
 		if(!boom_warning && H.on_fire)
 			to_chat(H, "<span class='userdanger'>You feel like you could blow up at any moment!</span>")
@@ -108,9 +109,10 @@
 		explosion(get_turf(H),1,2,4,flame_range = 5)
 		if(H)
 			H.gib()
+			return . | MOBFLAG_QDELETED
 	if(H.fire_stacks < 2) //flammable
 		H.adjust_fire_stacks(1)
-	..()
+
 
 /datum/species/golem/plasma/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
@@ -312,6 +314,8 @@
 
 	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
 		H.take_overall_damage(2,0)
+	if(H.stat == DEAD)
+		return MOBFLAG_DEAD
 
 /datum/species/golem/wood/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.type == /datum/reagent/toxin/plantbgone)
@@ -333,13 +337,13 @@
 	special_names = list("Oxide", "Rod", "Meltdown", "235")
 
 /datum/species/golem/uranium/spec_life(mob/living/carbon/human/H)
+	. = ..()
 	if(!active)
 		if(world.time > last_event+30)
 			active = 1
 			radiation_pulse(H, 50)
 			last_event = world.time
 			active = null
-	..()
 
 //Immune to physical bullets and resistant to brute, but very vulnerable to burn damage. Dusts on death.
 /datum/species/golem/sand
@@ -569,6 +573,7 @@
 			last_banana = world.time
 
 /datum/species/golem/bananium/spec_life(mob/living/carbon/human/H)
+	. = ..()
 	if(!active)
 		if(world.time > last_honk + honkooldown)
 			active = 1
@@ -576,7 +581,6 @@
 			last_honk = world.time
 			honkooldown = rand(20, 80)
 			active = null
-	..()
 
 /datum/species/golem/bananium/spec_death(gibbed, mob/living/carbon/human/H)
 	playsound(get_turf(H), 'sound/misc/sadtrombone.ogg', 70, 0)
@@ -731,9 +735,9 @@
 	return golem_name
 
 /datum/species/golem/cloth/spec_life(mob/living/carbon/human/H)
+	. = ..()
 	if(H.fire_stacks < 1)
 		H.adjust_fire_stacks(1) //always prone to burning
-	..()
 
 /datum/species/golem/cloth/spec_death(gibbed, mob/living/carbon/human/H)
 	if(gibbed)

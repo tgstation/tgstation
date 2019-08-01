@@ -18,38 +18,27 @@
 #define THERMAL_PROTECTION_HAND_LEFT	0.025
 #define THERMAL_PROTECTION_HAND_RIGHT	0.025
 
-/mob/living/carbon/human/Life()
-	set invisibility = 0
-	if (notransform)
-		return
-
+/mob/living/carbon/human/Process_Living()
 	. = ..()
-
-	if (QDELETED(src))
-		return 0
-
-	if(!IS_IN_STASIS(src))
-		if(.) //not dead
-
-			for(var/datum/mutation/human/HM in dna.mutations) // Handle active genes
-				HM.on_life()
-
-		if(stat != DEAD)
-			//heart attack stuff
-			handle_heart()
-
-		if(stat != DEAD)
-			//Stuff jammed in your limbs hurts
-			handle_embedded_objects()
-
-		dna.species.spec_life(src) // for mutantraces
-
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL))
+		return
 	//Update our name based on whether our face is obscured/disfigured
+	. |= dna.species.spec_life(src) // for mutantraces
+	if(. & MOBFLAG_QDELETED)
+		return
 	name = get_visible_name()
 
-	if(stat != DEAD)
-		return 1
-
+mob/living/carbon/human/Life()
+	. = ..()
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_DEAD))
+		return
+	for(var/datum/mutation/human/HM in dna.mutations) // Handle active genes
+		HM.on_life()
+	if(stat == DEAD) //Workaround. This will get removed later (TM)
+		. |= MOBFLAG_DEAD
+	if(. & MOBFLAG_DEAD)
+		return
+	. |= handle_embedded_objects()
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
 	if (wear_suit && head && istype(wear_suit, /obj/item/clothing) && istype(head, /obj/item/clothing))
@@ -75,12 +64,9 @@
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "brain_damage")
 
 /mob/living/carbon/human/handle_mutations_and_radiation()
+	. = NONE
 	if(!dna || !dna.species.handle_mutations_and_radiation(src))
-		..()
-
-/mob/living/carbon/human/breathe()
-	if(!dna.species.breathe(src))
-		..()
+		. |= ..()
 
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
 
@@ -112,7 +98,7 @@
 			lun.check_breath(breath,src)
 
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
-	dna.species.handle_environment(environment, src)
+	return dna.species.handle_environment(environment, src)
 
 ///FIRE CODE
 /mob/living/carbon/human/handle_fire()
@@ -308,18 +294,8 @@
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
 					SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "embedded")
-
-/mob/living/carbon/human/proc/handle_heart()
-	var/we_breath = !HAS_TRAIT_FROM(src, TRAIT_NOBREATH, SPECIES_TRAIT)
-
-	if(!undergoing_cardiac_arrest())
-		return
-
-	if(we_breath)
-		adjustOxyLoss(8)
-		Unconscious(80)
-	// Tissues die without blood circulation
-	adjustBruteLoss(2)
+	if(stat == DEAD)
+		return MOBFLAG_DEAD
 
 #undef THERMAL_PROTECTION_HEAD
 #undef THERMAL_PROTECTION_CHEST

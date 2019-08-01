@@ -188,8 +188,9 @@
 							playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 							visible_message("<span class='danger'>[M] has attempted to disarm [src]!</span>")
 
+/// devils do not need to breathe
 /mob/living/carbon/true_devil/handle_breathing()
-	// devils do not need to breathe
+	return
 
 /mob/living/carbon/true_devil/is_literate()
 	return TRUE

@@ -41,6 +41,7 @@
 
 /datum/species/angel/spec_life(mob/living/carbon/human/H)
 	HandleFlight(H)
+	. = ..()
 
 /datum/species/angel/proc/HandleFlight(mob/living/carbon/human/H)
 	if(H.movement_type & FLYING)

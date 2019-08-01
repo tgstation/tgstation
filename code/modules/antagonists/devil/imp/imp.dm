@@ -44,8 +44,10 @@
 	..()
 	boost = world.time + 30
 
-/mob/living/simple_animal/imp/Life()
-	..()
+/mob/living/simple_animal/imp/Process_Living()
+	. = ..()
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_DEAD|MOBFLAG_KILLALL))
+		return
 	if(boost<world.time)
 		speed = 1
 	else

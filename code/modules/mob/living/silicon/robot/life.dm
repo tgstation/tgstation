@@ -1,21 +1,18 @@
-/mob/living/silicon/robot/Life()
-	set invisibility = 0
-	if (src.notransform)
+/mob/living/silicon/robot/Process_Living()
+	. = ..()
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
 		return
-
-	..()
-	adjustOxyLoss(-10) //we're a robot!
+	adjustOxyLoss(-10) //we're a robot! Yes so what the fuck why and how? This comment doesn't help.
 	handle_robot_hud_updates()
 	handle_robot_cell()
 
 /mob/living/silicon/robot/proc/handle_robot_cell()
-	if(stat != DEAD)
-		if(low_power_mode)
-			if(cell && cell.charge)
-				low_power_mode = 0
-				update_headlamp()
-		else if(stat == CONSCIOUS)
-			use_power()
+	if(low_power_mode)
+		if(cell && cell.charge)
+			low_power_mode = 0
+			update_headlamp()
+	else if(stat == CONSCIOUS)
+		use_power()
 
 /mob/living/silicon/robot/proc/use_power()
 	if(cell && cell.charge)

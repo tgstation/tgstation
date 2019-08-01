@@ -128,10 +128,19 @@
 	emittersemicd = TRUE
 	addtimer(CALLBACK(src, .proc/emittercool), 600)
 
-/mob/living/silicon/pai/Life()
+/mob/living/silicon/pai/Process_Living()
+	. = ..()
+	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+		return
 	if(hacking)
 		process_hack()
-	return ..()
+	if(cable)
+		if(get_dist(src, cable) > 1)
+			var/turf/T = get_turf(src.loc)
+			T.visible_message("<span class='warning'>[src.cable] rapidly retracts back into its spool.</span>", "<span class='italics'>You hear a click and the sound of wire spooling rapidly.</span>")
+			qdel(src.cable)
+			cable = null
+	silent = max(silent - 1, 0)
 
 /mob/living/silicon/pai/proc/process_hack()
 
@@ -263,18 +272,6 @@
 /mob/living/silicon/pai/examine(mob/user)
 	. = ..()
 	. += "A personal AI in holochassis mode. Its master ID string seems to be [master]."
-
-/mob/living/silicon/pai/Life()
-	if(stat == DEAD)
-		return
-	if(cable)
-		if(get_dist(src, cable) > 1)
-			var/turf/T = get_turf(src.loc)
-			T.visible_message("<span class='warning'>[src.cable] rapidly retracts back into its spool.</span>", "<span class='italics'>You hear a click and the sound of wire spooling rapidly.</span>")
-			qdel(src.cable)
-			cable = null
-	silent = max(silent - 1, 0)
-	. = ..()
 
 /mob/living/silicon/pai/updatehealth()
 	if(status_flags & GODMODE)

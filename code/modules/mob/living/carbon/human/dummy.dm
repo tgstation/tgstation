@@ -11,7 +11,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	in_use = FALSE
 	return ..()
 
-/mob/living/carbon/human/dummy/Life()
+/mob/living/carbon/human/dummy/Process_Living()
 	return
 
 /mob/living/carbon/human/dummy/proc/wipe_state()
