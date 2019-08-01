@@ -50,7 +50,7 @@
 	fall_off_if_missing_arms = FALSE
 	var/datum/effect_system/spark_spread/sparks
 	var/board_icon = "skateboard"
-	var/instability = 10
+	var/instability = 10 // stamina drain multiplier
 	var/grinding = FALSE
 
 /obj/vehicle/ridden/scooter/skateboard/Initialize()
@@ -78,7 +78,7 @@
 
 /obj/vehicle/ridden/scooter/skateboard/generate_actions()
 	. = ..()
-	initialize_controller_action_type(/datum/action/vehicle/ridden/scooter/skateboard/Kickflip, VEHICLE_CONTROL_DRIVE)
+	initialize_controller_action_type(/datum/action/vehicle/ridden/scooter/skateboard/ollie, VEHICLE_CONTROL_DRIVE)
 
 /obj/vehicle/ridden/scooter/skateboard/post_buckle_mob(mob/living/M)//allows skateboards to be non-dense but still allows 2 skateboarders to collide with each other
 	density = TRUE
@@ -94,11 +94,11 @@
 	if(A.density && has_buckled_mobs())
 		var/mob/living/H = buckled_mobs[1]
 		H.adjustStaminaLoss(instability*5)
-		playsound(src, 'sound/effects/bang.ogg', 50, 1)
-		if(H.getStaminaLoss() > 90 || grinding)
+		playsound(src, 'sound/effects/bang.ogg', 40, 1)
+		if(!iscarbon(H) || H.getStaminaLoss() >= 100 || grinding)
 			var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
 			unbuckle_mob(H)
-			H.throw_at(throw_target, 4, 3)
+			H.throw_at(throw_target, 3, 2)
 			var/head_slot = H.get_item_by_slot(SLOT_HEAD)
 			if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
 				H.adjustBrainLoss(3)
@@ -113,14 +113,27 @@
 /obj/vehicle/ridden/scooter/skateboard/proc/grind()
 	visible_message("<span class='warning'>radical!</span>")
 	vehicle_move(dir)
-	playsound(src, 'sound/effects/roll.ogg', 50, 1) //need a better sound!
-	if(buckled_mobs.len && locate(/obj/structure/table) in loc.contents)
-		if (prob (25))
-			var/turf/location = get_turf(loc)
-			if(location)
-				location.hotspot_expose(1000,1000)
-			sparks.start() //the most radical way to start plasma fires
-		addtimer(CALLBACK(src, .proc/grind), 2)
+	if(has_buckled_mobs() && locate(/obj/structure/table) in loc.contents)
+		var/mob/living/L = buckled_mobs[1]
+		L.adjustStaminaLoss(instability)
+		if (L.getStaminaLoss() >= 100)
+			playsound(src, 'sound/effects/bang.ogg', 20, 1)
+			unbuckle_mob(L)
+			var/atom/throw_target = get_edge_target_turf(src, pick(GLOB.cardinals))
+			L.throw_at(throw_target, 2, 2)
+			visible_message("<span class='danger'>[L] loses [L.p_their()] footing and slams on the ground!</span>")
+			grinding = FALSE
+			icon_state = board_icon
+			return
+		else
+			playsound(src, 'sound/vehicles/skateboard_roll.ogg', 50, 1)
+			if(prob (25))
+				var/turf/location = get_turf(loc)
+				if(location)
+					location.hotspot_expose(1000,1000)
+				sparks.start() //the most radical way to start plasma fires
+			addtimer(CALLBACK(src, .proc/grind), 2)
+			return
 	else
 		grinding = FALSE
 		icon_state = board_icon
