@@ -101,7 +101,6 @@
 
 /obj/machinery/shuttle_scrambler/Initialize(mapload)
 	. = ..()
-	//gps.tracking = FALSE
 	update_icon()
 
 /obj/machinery/shuttle_scrambler/process()
