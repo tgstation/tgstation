@@ -51,7 +51,7 @@
 		if(H)
 			H.shape.dust() //make sure we're killing the bat if you are out of blood, if you don't it creates weird situations where the bat is alive but the caster is dusted.
 		C.dust()
-		return . | MOBFLAG_QDELETED
+		return . | MOBFLAG_DELETED
 	var/area/A = get_area(C)
 	if(istype(A, /area/chapel))
 		to_chat(C, "<span class='warning'>You don't belong here!</span>")

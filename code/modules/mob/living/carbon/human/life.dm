@@ -20,23 +20,23 @@
 
 /mob/living/carbon/human/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL))
+	if(. & MOBFLAG_DELETED)
 		return
 	//Update our name based on whether our face is obscured/disfigured
 	. |= dna.species.spec_life(src) // for mutantraces
-	if(. & MOBFLAG_QDELETED)
+	if(. & MOBFLAG_DELETED)
 		return
 	name = get_visible_name()
 
 mob/living/carbon/human/Life()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_DEAD))
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	for(var/datum/mutation/human/HM in dna.mutations) // Handle active genes
 		HM.on_life()
 	if(stat == DEAD) //Workaround. This will get removed later (TM)
 		. |= MOBFLAG_DEAD
-	if(. & MOBFLAG_DEAD)
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	. |= handle_embedded_objects()
 

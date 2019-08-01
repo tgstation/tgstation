@@ -49,12 +49,12 @@
 	if(QDELETED(myhead))
 		myhead = null
 		H.gib()
-		return . | MOBFLAG_QDELETED
+		return . | MOBFLAG_DELETED
 	var/obj/item/bodypart/head/head2 = H.get_bodypart(BODY_ZONE_HEAD)
 	if(head2)
 		myhead = null
 		H.gib()
-		return . | MOBFLAG_QDELETED
+		return . | MOBFLAG_DELETED
 
 /datum/species/dullahan/proc/update_vision_perspective(mob/living/carbon/human/H)
 	var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)

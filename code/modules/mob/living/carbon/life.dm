@@ -1,10 +1,10 @@
 /mob/living/carbon/Process_Living(seconds, times_fired)
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL))
+	if(. & MOBFLAG_DELETED)
 		return
 	if(!IS_IN_STASIS(src)) //Ugly, but it has to be here.
 		. |= handle_diseases()
-		if(. & MOBFLAG_QDELETED)
+		if(. & MOBFLAG_DELETED)
 			return
 	if(damageoverlaytemp)
 		damageoverlaytemp = 0
@@ -18,25 +18,25 @@
 
 /mob/living/carbon/Life(seconds, times_fired)
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_DEAD))
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	. |= handle_organs()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_DEAD)) //Apparently some organs gib you.
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	. |= handle_blood()
-	if(. & MOBFLAG_DEAD) //Apparently some organs gib you.
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	. |= handle_bodyparts()
 	if(. & MOBFLAG_UPDATE_HEALTH)
 		update_stamina() //needs to go before updatehealth to remove stamcrit
 		updatehealth()
-	if(. & MOBFLAG_DEAD)
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	. |= handle_brain_damage()
-	if(. & MOBFLAG_DEAD)
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	. |= handle_breathing(times_fired)
-	if(. & MOBFLAG_DEAD)
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	. |= handle_heart()
 
@@ -335,7 +335,7 @@
 		var/obj/item/organ/O = V
 		O.on_life()
 	if(QDELETED(src)) //Ugly but I will get something better later.
-		return MOBFLAG_QDELETED
+		return MOBFLAG_DELETED
 	if(stat == DEAD)
 		return MOBFLAG_DEAD
 
@@ -674,7 +674,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(chest.cremation_progress >= 100)
 		visible_message("<span class='warning'>[src]'s body crumbles into a pile of ash!</span>")
 		dust(TRUE, TRUE)
-		return MOBFLAG_QDELETED
+		return MOBFLAG_DELETED
 
 ////////////////
 //BRAIN DAMAGE//

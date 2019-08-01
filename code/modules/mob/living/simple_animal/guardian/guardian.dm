@@ -128,7 +128,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/Process_Living()//Dies if the summoner dies
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL))
+	if(. & MOBFLAG_DELETED)
 		return
 	update_health_hud() //we need to update all of our health displays to match our summoner and we can't practically give the summoner a hook to do it
 	med_hud_set_health()
@@ -145,11 +145,13 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			summoner.dust()
 			death(TRUE)
 			qdel(src)
+			. |= MOBFLAG_DELETED
 	else
 		to_chat(src, "<span class='danger'>Your summoner has died!</span>")
 		visible_message("<span class='danger'><B>[src] dies along with its user!</B></span>")
 		death(TRUE)
 		qdel(src)
+		. |= MOBFLAG_DELETED
 	snapback()
 
 /mob/living/simple_animal/hostile/guardian/Stat()

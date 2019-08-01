@@ -39,7 +39,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	handle_preattack()
 
@@ -130,7 +130,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	if(!isturf(loc))
 		return

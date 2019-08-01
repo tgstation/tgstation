@@ -419,7 +419,7 @@
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Process_Living() //God help us, this proc gave me cancer.
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	//Feeding, chasing food, FOOOOODDDD
 	if(!resting && !buckled)
@@ -491,7 +491,7 @@
 
 /mob/living/simple_animal/pet/dog/corgi/narsie/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	for(var/mob/living/simple_animal/pet/P in range(1, src))
 		if(P != src && prob(5))
@@ -619,9 +619,8 @@
 
 /mob/living/simple_animal/pet/dog/corgi/Lisa/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
-
 	make_babies()
 
 	if(!stat && !resting && !buckled)
@@ -634,7 +633,7 @@
 
 /mob/living/simple_animal/pet/dog/pug/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 
 	if(!stat && !resting && !buckled)

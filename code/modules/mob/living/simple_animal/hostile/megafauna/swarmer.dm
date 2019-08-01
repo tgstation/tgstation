@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	var/createtype = GetUncappedAISwarmerType()
 	if(createtype && world.time > swarmer_spawn_cooldown && GLOB.AISwarmers.len < (GetTotalAISwarmerCap()*0.5))

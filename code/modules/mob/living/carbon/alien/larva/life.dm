@@ -1,7 +1,7 @@
 
 /mob/living/carbon/alien/larva/Life()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_DEAD))
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	if(amount_grown < max_grown)
 		amount_grown++

@@ -27,7 +27,7 @@
 		log_game("Z-TRACKING: [src] of type [src.type] has a Z-registration despite not having a client.")
 		update_z(null)
 	if(notransform || !loc)
-		. |= MOBFLAG_KILLALL
+		. |= MOBFLAG_DELETED //We are basically deleted at that point, we shouldn't be doing stuff.
 		return
 	if(digitalinvis) //TO-DO: Get rid of this somehow.
 		handle_diginvis()
@@ -36,7 +36,7 @@
 	//Here is where the fun begins
 	if(!IS_IN_STASIS(src) && !(. & MOBFLAG_DEAD))
 		. |= Life(seconds, times_fired)
-	if(. & MOBFLAG_QDELETED)
+	if(. & MOBFLAG_DELETED)
 		return
 	var/datum/gas_mixture/environment = loc.return_air()
 	if(environment)
@@ -49,10 +49,10 @@
 ///Called if the mob isn't in stasis AND alive.
 /mob/living/proc/Life(seconds, times_fired)
 	. |= handle_mutations_and_radiation()
-	if(. & MOBFLAG_DEAD)
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	. |= handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
-	if(. & MOBFLAG_DEAD)
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	handle_random_events() //Only used by carbons right now, but there is value in this being on living.
 	handle_traits() // eye, ear, brain damages

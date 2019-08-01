@@ -109,7 +109,7 @@
 		explosion(get_turf(H),1,2,4,flame_range = 5)
 		if(H)
 			H.gib()
-			return . | MOBFLAG_QDELETED
+			return . | MOBFLAG_DELETED
 	if(H.fire_stacks < 2) //flammable
 		H.adjust_fire_stacks(1)
 

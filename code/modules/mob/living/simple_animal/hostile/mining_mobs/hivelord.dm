@@ -183,7 +183,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	if(isturf(loc))
 		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
@@ -203,7 +203,7 @@
 	L.stored_mob = H
 	H.forceMove(L)
 	qdel(src)
-	return MOBFLAG_QDELETED
+	return MOBFLAG_DELETED
 
 //Advanced Legion is slightly tougher to kill and can raise corpses (revive other legions)
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/advanced

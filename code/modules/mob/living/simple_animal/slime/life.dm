@@ -9,7 +9,7 @@
 
 /mob/living/simple_animal/slime/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	if(buckled)
 		handle_feeding()

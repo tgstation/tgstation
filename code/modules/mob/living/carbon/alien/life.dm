@@ -1,6 +1,6 @@
 /mob/living/carbon/alien/Process_Living(seconds, times_fired)
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL))
+	if(. & MOBFLAG_DELETED)
 		return
 	findQueen()
 

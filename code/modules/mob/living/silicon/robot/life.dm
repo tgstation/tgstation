@@ -1,6 +1,6 @@
 /mob/living/silicon/robot/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	adjustOxyLoss(-10) //we're a robot! Yes so what the fuck why and how? This comment doesn't help.
 	handle_robot_hud_updates()

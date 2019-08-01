@@ -24,9 +24,9 @@
 
 /mob/living/simple_animal/hostile/illusion/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL))
+	if(. & MOBFLAG_DELETED)
 		return
-	if(world.time > life_span)
+	if(world.time > life_span) //Someone turn this into a timer.
 		death()
 
 

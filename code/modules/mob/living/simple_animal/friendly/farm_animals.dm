@@ -44,7 +44,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/goat/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	//chance to go crazy and start wacking stuff
 	if(!enemies.len && prob(1))
@@ -154,7 +154,7 @@
 
 /mob/living/simple_animal/cow/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	if(stat == CONSCIOUS)
 		udder.generateMilk()
@@ -223,7 +223,7 @@
 
 /mob/living/simple_animal/chick/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	if(!ckey)
 		amount_grown += rand(1,2)
@@ -233,7 +233,7 @@
 
 /mob/living/simple_animal/chick/holo/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL))
+	if(. & MOBFLAG_DELETED)
 		return
 	amount_grown = 0
 
@@ -303,9 +303,9 @@
 	else
 		..()
 
-/mob/living/simple_animal/chicken/Process_Living()
+/mob/living/simple_animal/chicken/Life()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	if((prob(3) && eggsleft > 0) && egg_type)
 		visible_message("<span class='alertalien'>[src] [pick(layMessage)]</span>")

@@ -14,7 +14,7 @@
 
 /mob/living/simple_animal/hostile/guardian/fire/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL))
+	if(. & MOBFLAG_DELETED)
 		return
 	if(summoner)
 		summoner.ExtinguishMob()

@@ -46,7 +46,7 @@
 
 /mob/living/simple_animal/hostile/mushroom/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	adjustBruteLoss(-2)
 

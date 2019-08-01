@@ -167,7 +167,7 @@
 
 /mob/living/simple_animal/hostile/jungle/leaper/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL))
+	if(. & MOBFLAG_DELETED)
 		return
 	update_icons() //If anyone sees this, please try to remove this one day.
 

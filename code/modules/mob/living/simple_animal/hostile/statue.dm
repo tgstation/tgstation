@@ -81,7 +81,7 @@
 
 /mob/living/simple_animal/hostile/statue/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	if(!client && target) // If we have a target and we're AI controlled
 		var/mob/watching = can_be_seen()

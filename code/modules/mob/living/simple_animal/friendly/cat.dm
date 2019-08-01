@@ -167,7 +167,7 @@
 
 /mob/living/simple_animal/pet/cat/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	if(!stat && !buckled && !client)
 		if(prob(1))
@@ -279,7 +279,7 @@
 
 /mob/living/simple_animal/pet/cat/cak/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	if(health < maxHealth)
 		adjustBruteLoss(-8) //Fast life regen

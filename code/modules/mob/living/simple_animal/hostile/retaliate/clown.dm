@@ -49,7 +49,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/clown/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	if(banana_time && banana_time < world.time)
 		var/turf/T = get_turf(src)
@@ -75,9 +75,9 @@
 	emote_see = list("bubbles", "oozes")
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/particle_effect/foam)
 
-/mob/living/simple_animal/hostile/retaliate/clown/lube/Process_Living()
+/mob/living/simple_animal/hostile/retaliate/clown/lube/Process_Living() //Someone move this to Moved(), or better yet, add the snailcrawl component to this.
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL))
+	if(. & MOBFLAG_DELETED)
 		return
 	var/turf/open/OT = get_turf(src)
 	if(isopenturf(OT))

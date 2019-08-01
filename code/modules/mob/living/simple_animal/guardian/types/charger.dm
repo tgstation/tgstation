@@ -16,7 +16,7 @@
 
 /mob/living/simple_animal/hostile/guardian/charger/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL))
+	if(. & MOBFLAG_DELETED)
 		return
 	if(ranged_cooldown <= world.time)
 		if(!chargealert)

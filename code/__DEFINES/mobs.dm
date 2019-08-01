@@ -3,10 +3,11 @@
 //Misc mob defines
 
 //Mob Process_Living defines
-#define MOBFLAG_DEAD		(1 << 0)
-#define MOBFLAG_QDELETED	(1 << 1)
-#define MOBFLAG_KILLALL		(1 << 2)
-#define MOBFLAG_UPDATE_HEALTH (1 << 2)
+#define MOBFLAG_DEAD		(1 << 0) //This flag gets added to . if the mob has died during the proc.
+#define MOBFLAG_DELETED		(1 << 1) //This flag gets added to the mob if the mob has been deleted during the proc.
+#define MOBFLAG_UPDATE_HEALTH (1 << 2) //Only used by humans. This flag makes updates the damage overlays after life is done. More things should use this.
+
+#define MOBFLAGS_DEAD_OR_DEL (MOBFLAG_DEAD|MOBFLAG_DELETED)
 
 //Ready states at roundstart for mob/dead/new_player
 #define PLAYER_NOT_READY 0

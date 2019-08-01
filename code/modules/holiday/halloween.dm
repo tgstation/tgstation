@@ -138,7 +138,7 @@
 
 /mob/living/simple_animal/shade/howling_ghost/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_DEAD|MOBFLAG_KILLALL))
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	timer--
 	if(prob(20))

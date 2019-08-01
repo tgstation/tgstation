@@ -1,7 +1,7 @@
 
 /mob/living/brain/Life()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_DEAD))
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	handle_emp_damage()
 

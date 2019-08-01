@@ -120,11 +120,11 @@
 
 /mob/living/split_personality/Process_Living()
 	. = ..()
-	if(. & MOBFLAG_QDELETED)
+	if(. & MOBFLAG_DELETED)
 		return
 	if(QDELETED(body))
 		qdel(src) //in case trauma deletion doesn't already do it
-		. |= MOBFLAG_QDELETED
+		. |= MOBFLAG_DELETED
 	if((body.stat == DEAD && trauma.owner_backseat == src))
 		trauma.switch_personalities()
 		qdel(trauma)

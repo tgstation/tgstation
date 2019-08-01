@@ -353,7 +353,7 @@
  */
 /mob/living/simple_animal/parrot/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL|MOBFLAG_DEAD))
+	if(. & MOBFLAGS_DEAD_OR_DEL)
 		return
 	//Sprite update for when a parrot gets pulled
 	if(pulledby && !stat && parrot_state != PARROT_WANDER)

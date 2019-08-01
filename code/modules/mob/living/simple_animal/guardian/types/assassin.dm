@@ -22,7 +22,7 @@
 
 /mob/living/simple_animal/hostile/guardian/assassin/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL))
+	if(. & MOBFLAG_DELETED)
 		return
 	updatestealthalert()
 	if(loc == summoner && toggle)

@@ -42,7 +42,7 @@
 
 /mob/living/simple_animal/hostile/tree/Process_Living()
 	. = ..()
-	if(. & (MOBFLAG_QDELETED|MOBFLAG_KILLALL))
+	if(. & MOBFLAG_DELETED)
 		return
 	if(isopenturf(loc))
 		var/turf/open/T = src.loc
