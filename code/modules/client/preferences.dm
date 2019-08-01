@@ -51,6 +51,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/real_name						//our character's name
 	var/be_random_name = 0				//whether we'll have a random name every round
 	var/be_random_body = 0				//whether we'll have a random body every round
+	var/be_random_species = 0			//whether we'll be a random species every round
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
 	var/underwear = "Nude"				//underwear type
@@ -222,6 +223,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<table width='100%'><tr><td width='24%' valign='top'>"
 
 			dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
+			dat += "<a href='?_src_=prefs;preference=species;task=random_race'>Random Species</A> "
+			dat += "<a href='?_src_=prefs;preference=species'>Always Random Species: [be_random_species ? "Yes" : "No"]</A><br>"
 
 			dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
 			dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
@@ -1016,7 +1019,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					jumpsuit_style = pick(GLOB.jumpsuitlist)
 				if("all")
 					random_character()
-
+		if ("random_race")
+			random_species()
 		if("input")
 
 			if(href_list["preference"] in GLOB.preferences_custom_names)
@@ -1410,6 +1414,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("all")
 					be_random_body = !be_random_body
 
+				if("species")
+					be_random_species = !be_random_species
+
 				if("hear_midis")
 					toggles ^= SOUND_MIDI
 
@@ -1496,6 +1503,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	if(be_random_body)
 		random_character(gender)
+
+	if(be_random_species)
+		random_species()
 
 	if(roundstart_checks)
 		if(CONFIG_GET(flag/humans_need_surnames) && (pref_species.id == "human"))
