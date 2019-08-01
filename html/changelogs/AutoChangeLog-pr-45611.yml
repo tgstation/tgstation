@@ -1,0 +1,4 @@
+author: "Twaticus"
+delete-after: True
+changes: 
+  - imageadd: "inhand floor tile sprites"

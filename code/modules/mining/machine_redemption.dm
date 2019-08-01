@@ -49,8 +49,6 @@
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: Smelting <b>[sheet_per_ore]</b> sheet(s) per piece of ore.<br>Ore pickup speed at <b>[ore_pickup_rate]</b>.</span>"
-	if(panel_open)
-		. += "<span class='notice'>Alt-click to rotate the input and output direction.</span>"
 
 /obj/machinery/mineral/ore_redemption/proc/smelt_ore(obj/item/stack/ore/O)
 	var/datum/component/material_container/mat_container = materials.mat_container
@@ -181,8 +179,7 @@
 	if(istype(W, /obj/item/card/id))
 		var/obj/item/card/id/I = user.get_active_held_item()
 		if(istype(I))
-			id_insert(user, I, inserted_prisoner_id)
-			inserted_prisoner_id = I
+			id_insert_prisoner(user)
 			interact(user)
 			return
 		return
@@ -200,10 +197,7 @@
 
 	return ..()
 
-/obj/machinery/mineral/ore_redemption/AltClick(mob/living/user)
-	..()
-	if(!user.canUseTopic(src, BE_CLOSE))
-		return
+/obj/machinery/mineral/ore_redemption/multitool_act(mob/living/user, obj/item/multitool/I)
 	if (panel_open)
 		input_dir = turn(input_dir, -90)
 		output_dir = turn(output_dir, -90)
@@ -265,14 +259,12 @@
 		if("Eject")
 			if(!inserted_scan_id)
 				return
-			id_eject(usr, inserted_prisoner_id)
-			inserted_prisoner_id = null
+			id_eject_prisoner(usr)
 			return TRUE
 		if("Insert")
 			var/obj/item/card/id/I = usr.get_active_held_item()
 			if(istype(I))
-				id_insert(usr, I, inserted_prisoner_id)
-				inserted_prisoner_id = I
+				id_insert_prisoner(usr)
 			else
 				to_chat(usr, "<span class='warning'>Not a valid ID!</span>")
 			return TRUE
@@ -283,7 +275,6 @@
 		if("Release")
 			if(!mat_container)
 				return
-
 			if(materials.on_hold())
 				to_chat(usr, "<span class='warning'>Mineral access is on hold, please contact the quartermaster.</span>")
 			else if(!check_access(inserted_scan_id) && !allowed(usr)) //Check the ID inside, otherwise check the user
@@ -307,7 +298,7 @@
 					desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
 
 				var/sheets_to_remove = round(min(desired,50,stored_amount))
-
+				
 				var/count = mat_container.retrieve_sheets(sheets_to_remove, mat, get_step(src, output_dir))
 				var/list/mats = list()
 				mats[mat] = MINERAL_MATERIAL_AMOUNT

@@ -1,7 +1,0 @@
-author: "Cobby"
-delete-after: True
-changes: 
-  - balance: "Tend Wounds is -2 Steps (Scalpel > Healing w Hemo > Cautery)"
-  - bugfix: "Borgs can now perform Tend Wounds"
-  - rscadd: "Anti-spam on Tend Wounds (Starting Message only, Result Message untouched)"
-  - admin: "The incise step for Tend Wounds does not cause damage, making it borg friendly."
