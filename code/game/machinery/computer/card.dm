@@ -287,7 +287,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 							accesses += "<a href='?src=[REF(src)];choice=access;access_target=[A];allowed=1'>[replacetext(get_access_desc(A), " ", "&nbsp")]</a> "
 						accesses += "<br>"
 					accesses += "</td>"
-				accesses += "</tr></table>"
+				accesses += "</tr></table"
 			body = "[carddesc.Join()]<br>[jobs.Join()]<br><br>[accesses.Join()]" //CHECK THIS
 
 		else
