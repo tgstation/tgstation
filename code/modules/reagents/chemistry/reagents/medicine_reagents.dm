@@ -41,7 +41,6 @@
 	M.heal_bodypart_damage(5,5)
 	M.adjustToxLoss(-5, 0, TRUE)
 	M.hallucination = 0
-	M.setBrainLoss(0)
 	REMOVE_TRAITS_NOT_IN(M, list(SPECIES_TRAIT, ROUNDSTART_TRAIT, ORGAN_TRAIT))
 	M.set_blurriness(0)
 	M.set_blindness(0)
@@ -63,6 +62,9 @@
 		M.blood_volume = BLOOD_VOLUME_NORMAL
 
 	M.cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
+	for(var/organ in M.internal_organs)
+		var/obj/item/organ/O = organ
+		O.setOrganDamage(0)
 	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
 		if(D.severity == DISEASE_SEVERITY_POSITIVE)
@@ -846,6 +848,13 @@
 			addtimer(CALLBACK(M, /mob/living/carbon.proc/do_jitter_animation, 10), 40) //jitter immediately, then again after 4 and 8 seconds
 			addtimer(CALLBACK(M, /mob/living/carbon.proc/do_jitter_animation, 10), 80)
 			sleep(100) //so the ghost has time to re-enter
+
+
+			var/mob/living/carbon/H = M
+			for(var/organ in H.internal_organs)
+				var/obj/item/organ/O = organ
+				O.setOrganDamage(0)
+
 			M.adjustOxyLoss(-20, 0)
 			M.adjustToxLoss(-20, 0)
 			M.updatehealth()
@@ -866,7 +875,7 @@
 	color = "#DCDCFF"
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/C)
-	C.adjustBrainLoss(-2*REM)
+	C.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2*REM)
 	..()
 
 /datum/reagent/medicine/neurine
@@ -1016,7 +1025,7 @@
 	M.adjustFireLoss(-5*REM, 0)
 	M.adjustOxyLoss(-15, 0)
 	M.adjustToxLoss(-5*REM, 0)
-	M.adjustBrainLoss(-15*REM)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -15*REM)
 	M.adjustCloneLoss(-3*REM, 0)
 	..()
 	. = 1
@@ -1039,7 +1048,7 @@
 	M.adjustFireLoss(-3 * REM, 0)
 	M.adjustOxyLoss(-15 * REM, 0)
 	M.adjustToxLoss(-3 * REM, 0)
-	M.adjustBrainLoss(2 * REM, 150) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM, 150) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
 	M.adjustCloneLoss(-1 * REM, 0)
 	M.adjustStaminaLoss(-30 * REM, 0)
 	M.jitteriness = min(max(0, M.jitteriness + 3), 30)
@@ -1069,7 +1078,7 @@
 	if (M.hallucination >= 5)
 		M.hallucination -= 5
 	if(prob(20))
-		M.adjustBrainLoss(1*REM, 50)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM, 50)
 	M.adjustStaminaLoss(2.5*REM, 0)
 	..()
 	return TRUE
@@ -1345,15 +1354,15 @@
 	if(trans_volume >= 0.6) //prevents cheesing with ultralow doses.
 		C.adjustToxLoss(-1.5 * min(2, trans_volume) * REM, 0)	  //This is to promote iv pole use for that chemotherapy feel.
 	var/obj/item/organ/liver/L = C.internal_organs_slot[ORGAN_SLOT_LIVER]
-	if(L.failing || !L)
+	if((L.organ_flags & ORGAN_FAILING) || !L)
 		return
-	conversion_amount = trans_volume * (min(100 -C.getLiverLoss(), 80) / 100) //the more damaged the liver the worse we metabolize.
+	conversion_amount = trans_volume * (min(100 -C.getOrganLoss(ORGAN_SLOT_LIVER), 80) / 100) //the more damaged the liver the worse we metabolize.
 	C.reagents.remove_reagent(/datum/reagent/medicine/thializid, conversion_amount)
 	C.reagents.add_reagent(/datum/reagent/medicine/oxalizid, conversion_amount)
 	..()
 
 /datum/reagent/medicine/thializid/on_mob_life(mob/living/carbon/M)
-	M.adjustLiverLoss(0.8)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.8)
 	M.adjustToxLoss(-1*REM, 0)
 	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.type,1)
@@ -1362,7 +1371,7 @@
 	. = 1
 
 /datum/reagent/medicine/thializid/overdose_process(mob/living/carbon/M)
-	M.adjustLiverLoss(1.5)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 1.5)
 	M.adjust_disgust(3)
 	M.reagents.add_reagent(/datum/reagent/medicine/oxalizid, 0.225 * REM)
 	..()
@@ -1378,7 +1387,7 @@
 	var/datum/brain_trauma/mild/muscle_weakness/U
 
 /datum/reagent/medicine/oxalizid/on_mob_life(mob/living/carbon/M)
-	M.adjustLiverLoss(0.1)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.1)
 	M.adjustToxLoss(-1*REM, 0)
 	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.type,1)
@@ -1396,7 +1405,7 @@
 	return ..()
 
 /datum/reagent/medicine/oxalizid/overdose_process(mob/living/carbon/M)
-	M.adjustLiverLoss(1.5)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 1.5)
 	M.adjust_disgust(3)
 	..()
 	. = 1
@@ -1404,7 +1413,7 @@
 #undef PERF_BASE_DAMAGE
 
 //Injectables!
-//These are shitty chems for medibots and borgs to use in place of the old trekchems. They're limited to injection only, hence the name.
+//These are shitty chems
 
 /datum/reagent/medicine/sanguiose
 	name = "Sanguiose"
@@ -1454,8 +1463,8 @@
 	. = 1
 
 /datum/reagent/medicine/frogenite/overdose_process(mob/living/M)
-	M.adjustOxyLoss(15,0)
-	M.reagents.remove_reagent(type, metabolization_rate*10) // Reused code from syndicate nanites meant to purge the chem quickly.
+	M.adjustOxyLoss(3,0)
+	M.reagents.remove_reagent(type, metabolization_rate*2) // Reused code from syndicate nanites meant to purge the chem quickly.
 	to_chat(M, "<span class='notice'>You feel like you aren't getting any oxygen!</span>")
 	..()
 	. = 1
@@ -1463,7 +1472,7 @@
 /datum/reagent/medicine/frogenite/on_transfer(atom/A, method=TOUCH, volume) // Borrowed from whoever made charcoal injection or pill only and modified so it doesn't add a reagent.
 	if(method == INJECT || !iscarbon(A)) //the atom not the charcoal
 		return
-	A.reagents.remove_reagent(type, volume) 
+	A.reagents.remove_reagent(type, volume)
 	..()
 
 /datum/reagent/medicine/ferveatium
@@ -1486,8 +1495,8 @@
 	. = 1
 
 /datum/reagent/medicine/ferveatium/overdose_process(mob/living/M)
-	M.adjustFireLoss(15,0)
-	M.reagents.remove_reagent(type, metabolization_rate*10) // Reused code from syndicate nanites meant to purge the chem quickly.
+	M.adjustFireLoss(3,0)
+	M.reagents.remove_reagent(type, metabolization_rate*2) // Reused code from syndicate nanites meant to purge the chem quickly.
 	to_chat(M, "<span class='notice'>You feel like you are melting!</span>")
 	..()
 	. = 1
@@ -1497,5 +1506,3 @@
 		return
 	A.reagents.remove_reagent(type, volume)
 	..()
-
-

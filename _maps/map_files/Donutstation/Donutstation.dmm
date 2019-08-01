@@ -647,12 +647,12 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "abL" = (
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
-/obj/item/clothing/under/burial,
+/obj/item/clothing/under/misc/burial,
+/obj/item/clothing/under/misc/burial,
+/obj/item/clothing/under/misc/burial,
+/obj/item/clothing/under/misc/burial,
+/obj/item/clothing/under/misc/burial,
+/obj/item/clothing/under/misc/burial,
 /obj/structure/table,
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
@@ -3301,6 +3301,7 @@
 /turf/closed/wall/r_wall,
 /area/crew_quarters/heads/hop)
 "aiP" = (
+/obj/effect/mapping_helpers/ianbirthday,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "aiQ" = (
@@ -14576,6 +14577,7 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "aKj" = (
+/obj/machinery/smartfridge/organ,
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -36694,7 +36696,7 @@
 /area/tcommsat/server)
 "bJo" = (
 /obj/effect/decal/remains/human,
-/obj/item/clothing/under/rank/engineer,
+/obj/item/clothing/under/rank/engineering/engineer,
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "bJp" = (
@@ -39776,10 +39778,10 @@
 	name = "Surplus Genetics Supplies"
 	},
 /obj/item/storage/pill_bottle/mutadone,
-/obj/item/clothing/under/pj/blue,
-/obj/item/clothing/under/pj/blue,
-/obj/item/clothing/under/pj/red,
-/obj/item/clothing/under/pj/red,
+/obj/item/clothing/under/misc/pj/blue,
+/obj/item/clothing/under/misc/pj/blue,
+/obj/item/clothing/under/misc/pj,
+/obj/item/clothing/under/misc/pj,
 /obj/item/clothing/shoes/sneakers/white,
 /obj/item/clothing/shoes/sneakers/white,
 /obj/item/clothing/shoes/sneakers/white,
@@ -40742,7 +40744,7 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/neck/stethoscope,
 /obj/item/clothing/neck/stethoscope,
-/obj/item/clothing/under/rank/nursesuit,
+/obj/item/clothing/under/rank/medical/doctor,
 /obj/item/clothing/head/nursehat,
 /obj/item/clothing/glasses/science{
 	pixel_x = 3;

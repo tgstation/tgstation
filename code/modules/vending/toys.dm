@@ -13,7 +13,7 @@
 		/obj/item/toy/sword = 10,
 		/obj/item/ammo_box/foambox = 20,
 		/obj/item/toy/foamblade = 10,
-		/obj/item/toy/syndicateballoon = 10,
+		/obj/item/toy/balloon/syndicate = 10,
 		/obj/item/clothing/suit/syndicatefake = 5,
 		/obj/item/clothing/head/syndicatefake = 5)
 	contraband = list(
