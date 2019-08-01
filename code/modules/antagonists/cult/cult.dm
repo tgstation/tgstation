@@ -72,9 +72,9 @@
 	if (owner.assigned_role == "Clown")
 		to_chat(owner, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 		H.dna.remove_mutation(CLOWNMUT)
-	. += cult_give_item(/obj/item/melee/cultblade/dagger, H)
-	if(metal)
-		. += cult_give_item(/obj/item/stack/sheet/runed_metal/ten, H)
+	//. += cult_give_item(/obj/item/melee/cultblade/dagger, H)
+	//if(metal)
+		//. += cult_give_item(/obj/item/stack/sheet/runed_metal/ten, H)
 	to_chat(owner, "These will help you start the cult on this station. Use them well, and remember - you are not the only one.</span>")
 
 
@@ -107,8 +107,8 @@
 	if(!cult_team.cult_master)
 		vote.Grant(current)
 	communion.Grant(current)
-	if(ishuman(current))
-		magic.Grant(current)
+	//if(ishuman(current))
+		//magic.Grant(current)
 	current.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
 	if(cult_team.cult_risen)
 		cult_team.rise(current)
@@ -204,10 +204,10 @@
 	var/mob/living/current = owner.current
 	if(mob_override)
 		current = mob_override
-	if(!cult_team.reckoning_complete)
-		reckoning.Grant(current)
-	bloodmark.Grant(current)
-	throwing.Grant(current)
+	//if(!cult_team.reckoning_complete)
+		//reckoning.Grant(current)
+	//bloodmark.Grant(current)
+	//throwing.Grant(current)
 	current.update_action_buttons_icon()
 	current.apply_status_effect(/datum/status_effect/cult_master)
 	if(cult_team.cult_risen)
