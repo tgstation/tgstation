@@ -56,7 +56,7 @@
 	starting_node = FALSE
 	display_name = "Quantum Tech"
 	description = "Strange modified bluespace stock parts, with a dash of quantum physics mixed in."
-	design_ids = list("quantumcap","quantumscan","quantummanip","quantumlaser","quantumbin")
+	design_ids = list("quantumcap","quantumscan","quantummanip","quantumlaser","quantumbin","quantumcell")
 	prereq_ids = list("micro_bluespace")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	export_price = 5000
