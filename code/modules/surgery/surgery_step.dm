@@ -1,3 +1,5 @@
+#define SURGERY_BRAIN_DAMAGE_PENALTY 50 // 413 -- make brain damage reduce surgery chance
+
 /datum/surgery_step
 	var/name
 	var/list/implements = list()	//format is path = probability of success. alternatively
@@ -75,10 +77,12 @@
 		if(implement_type)	//this means it isn't a require hand or any item step.
 			prob_chance = implements[implement_type]
 		// 413 -- brain damage reduces success probability (since we're allowing self-surgery)
-		var/brain_loss = user.getOrganLoss(ORGAN_SLOT_BRAIN)
-		if(brain_loss && brain_loss > BRAIN_DAMAGE_SEVERE)
-			brain_loss = brain_loss - BRAIN_DAMAGE_SEVERE
-			prob_chance -= (brain_loss) * (SURGERY_BRAIN_DAMAGE_PENALTY/(BRAIN_DAMAGE_DEATH - BRAIN_DAMAGE_SEVERE))
+		if(isliving(user))
+			var/mob/living/livingUser = user
+			var/brain_loss = livingUser.getOrganLoss(ORGAN_SLOT_BRAIN)
+			if(brain_loss && brain_loss > BRAIN_DAMAGE_SEVERE)
+				brain_loss = brain_loss - BRAIN_DAMAGE_SEVERE
+				prob_chance -= (brain_loss) * (SURGERY_BRAIN_DAMAGE_PENALTY/(BRAIN_DAMAGE_DEATH - BRAIN_DAMAGE_SEVERE))
 		// 413 end
 		prob_chance *= surgery.get_propability_multiplier()
 
@@ -150,3 +154,5 @@
 		detailed_mobs -= target //The patient can't see well what's going on, unless it's something like getting cut
 	user.visible_message(detailed_message, self_message, vision_distance = 1, ignored_mobs = target_detailed ? null : target)
 	user.visible_message(vague_message, "", ignored_mobs = detailed_mobs)
+
+#undef SURGERY_BRAIN_DAMAGE_PENALTY // 413
