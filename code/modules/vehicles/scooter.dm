@@ -111,7 +111,6 @@
 
 ///Moves the vehicle forward and if it lands on a table, repeats
 /obj/vehicle/ridden/scooter/skateboard/proc/grind()
-	visible_message("<span class='warning'>radical!</span>")
 	vehicle_move(dir)
 	if(has_buckled_mobs() && locate(/obj/structure/table) in loc.contents)
 		var/mob/living/L = buckled_mobs[1]
