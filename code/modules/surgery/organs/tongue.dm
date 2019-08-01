@@ -20,6 +20,8 @@
 		/datum/language/aphasia,
 		/datum/language/piratespeak,
 		/datum/language/vampiric,
+		//FULPCODE FOR THE NEXT LINE
+		/datum/language/russian,
 	))
 
 /obj/item/organ/tongue/Initialize(mapload)
