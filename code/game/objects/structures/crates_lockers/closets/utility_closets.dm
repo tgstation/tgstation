@@ -153,7 +153,7 @@
 
 /obj/structure/closet/bombcloset/security/PopulateContents()
 	new /obj/item/clothing/suit/bomb_suit/security(src)
-	new /obj/item/clothing/under/rank/security(src)
+	new /obj/item/clothing/under/rank/security/officer(src)
 	new /obj/item/clothing/shoes/jackboots(src)
 	new /obj/item/clothing/head/bomb_hood/security(src)
 

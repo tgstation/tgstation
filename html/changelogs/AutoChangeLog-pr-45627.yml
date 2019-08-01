@@ -1,0 +1,4 @@
+author: "kingofkosmos"
+delete-after: True
+changes: 
+  - bugfix: "inserting/ejecting consoles with id's fixed."
