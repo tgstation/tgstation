@@ -30,8 +30,7 @@
 
 /obj/machinery/gulag_item_reclaimer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/card/id))
-		id_insert(user, I, inserted_prisoner_id)
-		inserted_prisoner_id = I
+		id_insert_prisoner(user)
 	else
 		return ..()
 
@@ -78,8 +77,11 @@
 	switch(action)
 		if("handle_id")
 			if(inserted_prisoner_id)
-				id_eject(usr, inserted_prisoner_id)
-				inserted_prisoner_id = null
+				id_eject_prisoner(usr)
+			else
+				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id/prisoner)
+				if(I)
+					id_insert_prisoner(usr)
 		if("release_items")
 			var/mob/living/carbon/human/H = locate(params["mobref"]) in stored_items
 			if ((H == usr || allowed(usr)) && inserted_prisoner_id)

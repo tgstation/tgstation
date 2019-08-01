@@ -34,8 +34,7 @@ GLOBAL_LIST(labor_sheet_values)
 
 /obj/machinery/mineral/labor_claim_console/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/card/id))
-		id_insert(user, I, inserted_prisoner_id)
-		inserted_prisoner_id = I
+		id_insert_prisoner(user)
 	else
 		return ..()
 
@@ -73,8 +72,10 @@ GLOBAL_LIST(labor_sheet_values)
 	switch(action)
 		if("handle_id")
 			if(inserted_prisoner_id)
-				id_eject(usr, inserted_prisoner_id)
-				inserted_prisoner_id = null
+				if(!usr.get_active_held_item())
+					id_eject_prisoner(usr)
+			else
+				id_insert_prisoner(usr)
 		if("claim_points")
 			inserted_prisoner_id.points += stacking_machine.points
 			stacking_machine.points = 0
