@@ -50,3 +50,47 @@
 	foodtype = FRUIT
 	tastes = list("vanilla" = 1)
 	distill_reagent = /datum/reagent/consumable/vanilla //Takes longer, but you can get even more vanilla from it.
+
+/obj/item/seeds/cocoapod/bungotree
+	name = "pack of bungo tree seeds"
+	desc = "These seeds grow into bungo trees. They look like they might contain a horrible cardiotoxin."
+	icon_state = "seed-bungotree"
+	species = "bungotree"
+	plantname = "Bungo Tree"
+	product = /obj/item/reagent_containers/food/snacks/grown/bungofruit
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
+	mutatelist = list()
+	reagents_add = list(/datum/reagent/consumable/enzyme = 0.15, /datum/reagent/consumable/nutriment = 0.1)
+	growthstages = 4
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	icon_grow = "bungotree-grow"
+	icon_dead = "bungotree-dead"
+
+/obj/item/reagent_containers/food/snacks/grown/bungofruit
+	seed = /obj/item/seeds/cocoapod/bungotree
+	name = "bungo fruit"
+	desc = "A strange fruit, tough leathery skin protects Its juicy flesh and large poisonous seed."
+	icon_state = "bungo"
+	trash = /obj/item/reagent_containers/food/snacks/grown/bungopit
+	filling_color = "#E8C22F"
+	foodtype = FRUIT
+	tastes = list("bungo" = 2, "tropical fruitiness" = 1)
+	distill_reagent = null
+
+/obj/item/reagent_containers/food/snacks/grown/bungopit
+	seed = /obj/item/seeds/cocoapod/bungotree
+	name = "bungo pit"
+	icon_state = "bungopit"
+	desc = "A large seed, It is said to be potent enough to be able to stop a mans heart."
+	w_class = WEIGHT_CLASS_TINY
+	throwforce = 5
+	throw_speed = 3
+	throw_range = 7
+	foodtype = TOXIC
+	tastes = list("acrid bitterness" = 1)
+
+/obj/item/reagent_containers/food/snacks/grown/bungopit/Initialize()
+	. =..()
+	reagents.clear_reagents()
+	reagents.add_reagent(/datum/reagent/toxin/delayed, seed.potency * 0.15) //replace with new toxin
+	reagents.add_reagent(/datum/reagent/consumable/nutriment, seed.potency * 0.04)
