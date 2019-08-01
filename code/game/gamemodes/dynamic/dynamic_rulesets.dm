@@ -52,6 +52,12 @@
 	var/antag_flag_override = null 
 	/// If a ruleset type which is in this list has been executed, then the ruleset will not be executed.
 	var/list/blocking_rules = list()
+	/// The minimum amount of players required for the rule to be considered. 
+	var/minimum_players = 0
+	/// The maximum amount of players required for the rule to be considered.
+	/// Anything below zero or exactly zero is ignored. 
+	var/maximum_players = 0
+
 
 /datum/dynamic_ruleset/New()
 	..()
@@ -78,7 +84,11 @@
 
 /// By default, a rule is acceptable if it satisfies the threat level/population requirements.
 /// If your rule has extra checks, such as counting security officers, do that in ready() instead
-/datum/dynamic_ruleset/proc/acceptable(population=0, threat_level=0)
+/datum/dynamic_ruleset/proc/acceptable(population = 0, threat_level = 0)
+	if(minimum_players > population)
+		return FALSE
+	if(maximum_players > 0 && population > maximum_players)
+		return FALSE
 	if (population >= GLOB.dynamic_high_pop_limit)
 		return (threat_level >= high_population_requirement)
 	else

@@ -352,8 +352,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/list/drafted_rules = list()
 	for (var/datum/dynamic_ruleset/roundstart/rule in roundstart_rules)
 		if (rule.acceptable(roundstart_pop_ready,threat_level) && threat >= rule.cost)	// If we got the population and threat required
-			// Hacky but this will do for now. This allows delayed rulesets to be ran but it will refund if ready fails
-			// and forces a midround injection.
 			rule.candidates = candidates.Copy()
 			rule.trim_candidates()
 			if (rule.ready() && rule.candidates.len > 0)

@@ -88,20 +88,20 @@
 	if (possible_volunteers.len <= 0) // This shouldn't happen, as ready() should return FALSE if there is not a single valid candidate
 		message_admins("Possible volunteers was 0. This shouldn't appear, because of ready(), unless you forced it!")
 		return
-	message_admins("DYNAMIC MODE: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
+	message_admins("Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 	log_game("DYNAMIC: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 
 	applicants = pollGhostCandidates("The mode is looking for volunteers to become [antag_flag] for [src.name]", antag_flag, SSticker.mode, antag_flag, poll_time = 300)
 	
 	if(!applicants || applicants.len <= 0)
-		message_admins("DYNAMIC MODE: [name] received no applications.")
-		log_game("DYNAMIC: [name] received no applications.")
+		message_admins("The ruleset [name] received no applications.")
+		log_game("DYNAMIC: The ruleset [name] received no applications.")
 		mode.refund_threat(cost)
 		mode.threat_log += "[worldtime2text()]: Rule [name] refunded [cost] (no applications)"
 		mode.executed_rules -= src
 		return
 
-	message_admins("DYNAMIC MODE: [applicants.len] players volunteered for [name].")
+	message_admins("[applicants.len] players volunteered for the ruleset [name].")
 	log_game("DYNAMIC: [applicants.len] players volunteered for [name].")
 	review_applications()
 
@@ -122,12 +122,10 @@
 			if(applicant.stat == DEAD) // Not an observer? If they're dead, make them one.
 				applicant = applicant.ghostize(FALSE)
 			else // Not dead? Disregard them, pick a new applicant
-				message_admins("[name]: Rule could not use [applicant], not dead.")
 				i--
 				continue
 
 		if(!applicant)
-			message_admins("[name]: Applicant was null. This may be caused if the mind changed bodies after applying.")
 			i--
 			continue
 
@@ -138,7 +136,7 @@
 
 		finish_setup(new_character, i)
 		assigned += applicant
-		notify_ghosts("[new_character] has been picked for [src.name]!", source = new_character, action = NOTIFY_ORBIT, header="Something Interesting!")
+		notify_ghosts("[new_character] has been picked for the ruleset [name]!", source = new_character, action = NOTIFY_ORBIT, header="Something Interesting!")
 	applicants.Cut()
 
 /datum/dynamic_ruleset/midround/from_ghosts/proc/generate_ruleset_body(mob/applicant)
@@ -175,7 +173,7 @@
 	high_population_requirement = 10
 	flags = TRAITOR_RULESET
 
-/datum/dynamic_ruleset/midround/autotraitor/acceptable(population=0, threat=0)
+/datum/dynamic_ruleset/midround/autotraitor/acceptable(population = 0, threat = 0)
 	var/player_count = mode.current_players[CURRENT_LIVING_PLAYERS].len
 	var/antag_count = mode.current_players[CURRENT_LIVING_ANTAGS].len
 	var/max_traitors = round(player_count / 10) + 1
