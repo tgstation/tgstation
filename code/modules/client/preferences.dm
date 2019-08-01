@@ -989,6 +989,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return TRUE
 
 	switch(href_list["task"])
+		if ("random_race")
+			random_species()
+
 		if("random")
 			switch(href_list["preference"])
 				if("name")
@@ -1019,8 +1022,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					jumpsuit_style = pick(GLOB.jumpsuitlist)
 				if("all")
 					random_character()
-		if ("random_race")
-			random_species()
+
 		if("input")
 
 			if(href_list["preference"] in GLOB.preferences_custom_names)
@@ -1408,14 +1410,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					else
 						be_special += be_special_type
 
+				if("rand_species")
+					be_random_species = !be_random_species
+
 				if("name")
 					be_random_name = !be_random_name
 
 				if("all")
 					be_random_body = !be_random_body
-
-				if("rand_species")
-					be_random_species = !be_random_species
 
 				if("hear_midis")
 					toggles ^= SOUND_MIDI
@@ -1498,14 +1500,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return 1
 
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE)
+
+	if(be_random_species)
+		random_species()
+		
 	if(be_random_name)
 		real_name = pref_species.random_name(gender)
 
 	if(be_random_body)
 		random_character(gender)
-
-	if(be_random_species)
-		random_species()
 
 	if(roundstart_checks)
 		if(CONFIG_GET(flag/humans_need_surnames) && (pref_species.id == "human"))
