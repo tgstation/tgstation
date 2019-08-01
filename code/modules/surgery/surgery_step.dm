@@ -74,6 +74,12 @@
 
 		if(implement_type)	//this means it isn't a require hand or any item step.
 			prob_chance = implements[implement_type]
+		// 413 -- brain damage reduces success probability (since we're allowing self-surgery)
+		var/brain_loss = user.getOrganLoss(ORGAN_SLOT_BRAIN)
+		if(brain_loss && brain_loss > BRAIN_DAMAGE_SEVERE)
+			brain_loss = brain_loss - BRAIN_DAMAGE_SEVERE
+			prob_chance -= (brain_loss) * (SURGERY_BRAIN_DAMAGE_PENALTY/(BRAIN_DAMAGE_DEATH - BRAIN_DAMAGE_SEVERE))
+		// 413 end
 		prob_chance *= surgery.get_propability_multiplier()
 
 		if((prob(prob_chance) || (iscyborg(user) && !silicons_obey_prob)) && chem_check(target) && !try_to_fail)
