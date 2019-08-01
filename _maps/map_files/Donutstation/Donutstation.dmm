@@ -5,6 +5,9 @@
 "aab" = (
 /turf/closed/wall,
 /area/space/nearstation)
+"aac" = (
+/turf/closed/wall/r_wall,
+/area/medical/chemistry)
 "aad" = (
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
@@ -27,6 +30,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
+"aag" = (
+/obj/structure/sign/departments/medbay/alt,
+/turf/closed/wall/r_wall,
+/area/medical/chemistry)
 "aah" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/dark,
@@ -18403,10 +18410,6 @@
 "aUk" = (
 /turf/closed/wall/r_wall,
 /area/engine/gravity_generator)
-"aUl" = (
-/obj/structure/sign/departments/medbay/alt,
-/turf/closed/wall,
-/area/medical/chemistry)
 "aUm" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -78046,7 +78049,7 @@ aJH
 aII
 beT
 aHW
-aHW
+aac
 azH
 bCg
 bba
@@ -78297,13 +78300,13 @@ aXn
 aVV
 aJz
 aGo
-aHW
+aac
 aHW
 aIB
 aIp
 beU
 kcl
-aHW
+aac
 aSs
 bGC
 bba
@@ -78554,13 +78557,13 @@ aXs
 aGZ
 aJX
 esN
-aHW
+aac
 bTc
 aIp
 aIp
 beV
 aUF
-aHW
+aac
 aSt
 sjP
 bba
@@ -78811,13 +78814,13 @@ aXt
 aHa
 aJY
 bya
-aHW
+aac
 aIt
 aIC
 aIJ
 beV
 aUa
-aHW
+aac
 aUm
 sjP
 bbb
@@ -79074,7 +79077,7 @@ aIp
 bdZ
 beW
 aUA
-aHW
+aac
 bCg
 sjP
 sjP
@@ -79331,7 +79334,7 @@ aIp
 beF
 bes
 bGG
-aHW
+aac
 bCg
 aBx
 ahT
@@ -79588,7 +79591,7 @@ aIp
 beG
 bet
 aUB
-aHW
+aac
 bCg
 bSU
 ahT
@@ -79839,13 +79842,13 @@ aUQ
 aGu
 aUQ
 aTV
-aHW
+aac
 aIA
 aID
 beX
 aIp
 aUb
-aHW
+aac
 bCg
 bTb
 ahT
@@ -80096,13 +80099,13 @@ aXC
 aHc
 aXM
 aUt
-aHW
+aac
 aIp
 aIp
 bfj
 aIp
 aUE
-aHW
+aac
 bCg
 bKa
 ahT
@@ -80353,13 +80356,13 @@ bts
 aHd
 aXN
 aHN
-aUl
+aag
 aGS
 aUx
 bpv
 aIp
 aIp
-aHW
+aac
 bCg
 ahT
 ahT
@@ -80616,7 +80619,7 @@ aHn
 bfn
 aIR
 aJf
-aHW
+aac
 bCg
 ahT
 bRt
@@ -80873,7 +80876,7 @@ aTK
 bfI
 aHn
 aNO
-aHW
+aac
 bCg
 ahT
 akT

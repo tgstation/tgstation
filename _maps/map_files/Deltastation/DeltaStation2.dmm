@@ -42,6 +42,30 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/starboard/fore)
+"aah" = (
+/turf/closed/wall/r_wall,
+/area/medical/medbay/central)
+"aai" = (
+/obj/machinery/status_display/ai,
+/turf/closed/wall/r_wall,
+/area/medical/chemistry)
+"aaj" = (
+/turf/closed/wall/r_wall,
+/area/medical/chemistry)
+"aak" = (
+/obj/machinery/status_display/evac,
+/turf/closed/wall/r_wall,
+/area/medical/chemistry)
+"aal" = (
+/obj/structure/sign/departments/chemistry,
+/turf/closed/wall/r_wall,
+/area/medical/chemistry)
+"aam" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/department/medical/central)
+"aan" = (
+/turf/closed/wall/r_wall,
+/area/medical/genetics/cloning)
 "aao" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
@@ -84871,10 +84895,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
-"dbi" = (
-/obj/machinery/status_display/ai,
-/turf/closed/wall,
-/area/medical/chemistry)
 "dbj" = (
 /obj/machinery/computer/med_data{
 	dir = 4
@@ -85798,9 +85818,6 @@
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
-"dcM" = (
-/turf/closed/wall,
-/area/medical/chemistry)
 "dcN" = (
 /obj/structure/table/glass,
 /obj/item/assembly/igniter,
@@ -86652,10 +86669,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
-"der" = (
-/obj/machinery/status_display/evac,
-/turf/closed/wall,
-/area/medical/chemistry)
 "des" = (
 /obj/structure/table/glass,
 /obj/item/clipboard,
@@ -87198,10 +87211,6 @@
 /obj/effect/turf_decal/tile/purple,
 /turf/open/floor/plasteel/white,
 /area/science/lab)
-"dfv" = (
-/obj/structure/sign/departments/chemistry,
-/turf/closed/wall,
-/area/medical/chemistry)
 "dfw" = (
 /obj/machinery/light{
 	dir = 8
@@ -156275,15 +156284,15 @@ cSC
 cUr
 cWh
 cND
-cPy
+aah
 dba
-dcM
+aaj
 dba
-dfv
+aal
 dgT
 dio
 dkf
-inw
+aam
 inw
 dpg
 inw
@@ -156532,15 +156541,15 @@ cSD
 cUs
 cWi
 cXF
-cPy
+aah
 dbb
 dcN
 del
-dcM
+aaj
 dgU
 dip
 dba
-inw
+aam
 dng
 dph
 dqU
@@ -156797,7 +156806,7 @@ dfw
 dgV
 diq
 dkg
-inw
+aam
 dnh
 dpi
 dqV
@@ -157054,7 +157063,7 @@ den
 dgW
 dir
 dkh
-inw
+aam
 dni
 dpj
 dqW
@@ -157568,7 +157577,7 @@ dfy
 dgY
 den
 dkj
-inw
+aam
 dnk
 dpl
 dqY
@@ -157817,7 +157826,7 @@ cSF
 cUx
 cQU
 cXK
-cPy
+aah
 dbg
 dcS
 dcS
@@ -157825,7 +157834,7 @@ dcS
 dgZ
 dcS
 dkk
-dlV
+aan
 dlV
 dlV
 dlV
@@ -158331,11 +158340,11 @@ cSF
 cUx
 cQU
 cXM
-cPy
-dbi
-dcM
-der
-dcM
+aah
+aai
+aaj
+aak
+aaj
 dhb
 diu
 dkm
