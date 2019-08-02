@@ -41,7 +41,6 @@
 	M.heal_bodypart_damage(5,5)
 	M.adjustToxLoss(-5, 0, TRUE)
 	M.hallucination = 0
-	M.setBrainLoss(0)
 	REMOVE_TRAITS_NOT_IN(M, list(SPECIES_TRAIT, ROUNDSTART_TRAIT, ORGAN_TRAIT))
 	M.set_blurriness(0)
 	M.set_blindness(0)
@@ -63,6 +62,9 @@
 		M.blood_volume = BLOOD_VOLUME_NORMAL
 
 	M.cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
+	for(var/organ in M.internal_organs)
+		var/obj/item/organ/O = organ
+		O.setOrganDamage(0)
 	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
 		if(D.severity == DISEASE_SEVERITY_POSITIVE)
@@ -846,6 +848,13 @@
 			addtimer(CALLBACK(M, /mob/living/carbon.proc/do_jitter_animation, 10), 40) //jitter immediately, then again after 4 and 8 seconds
 			addtimer(CALLBACK(M, /mob/living/carbon.proc/do_jitter_animation, 10), 80)
 			sleep(100) //so the ghost has time to re-enter
+
+
+			var/mob/living/carbon/H = M
+			for(var/organ in H.internal_organs)
+				var/obj/item/organ/O = organ
+				O.setOrganDamage(0)
+
 			M.adjustOxyLoss(-20, 0)
 			M.adjustToxLoss(-20, 0)
 			M.updatehealth()
@@ -866,7 +875,7 @@
 	color = "#DCDCFF"
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/C)
-	C.adjustBrainLoss(-2*REM)
+	C.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2*REM)
 	..()
 
 /datum/reagent/medicine/neurine
@@ -961,23 +970,6 @@
 	..()
 
 //Trek Chems, used primarily by medibots. Only heals a specific damage type, but is very efficient.
-/datum/reagent/medicine/bicaridine
-	name = "Bicaridine"
-	description = "Restores bruising. Overdose causes it instead."
-	reagent_state = LIQUID
-	color = "#C8A5DC"
-	overdose_threshold = 30
-
-/datum/reagent/medicine/bicaridine/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-2*REM, 0)
-	..()
-	. = 1
-
-/datum/reagent/medicine/bicaridine/overdose_process(mob/living/M)
-	M.adjustBruteLoss(4*REM, FALSE, FALSE, BODYPART_ORGANIC)
-	..()
-	. = 1
-
 /datum/reagent/medicine/dexalin
 	name = "Dexalin"
 	description = "Restores oxygen loss. Overdose causes it instead."
@@ -995,43 +987,6 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/kelotane
-	name = "Kelotane"
-	description = "Restores fire damage. Overdose causes it instead."
-	reagent_state = LIQUID
-	color = "#C8A5DC"
-	overdose_threshold = 30
-
-/datum/reagent/medicine/kelotane/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss(-2*REM, 0)
-	..()
-	. = 1
-
-/datum/reagent/medicine/kelotane/overdose_process(mob/living/M)
-	M.adjustFireLoss(4*REM, FALSE, FALSE, BODYPART_ORGANIC)
-	..()
-	. = 1
-
-/datum/reagent/medicine/antitoxin
-	name = "Anti-Toxin"
-	description = "Heals toxin damage and removes toxins in the bloodstream. Overdose causes toxin damage."
-	reagent_state = LIQUID
-	color = "#C8A5DC"
-	overdose_threshold = 30
-	taste_description = "a roll of gauze"
-
-/datum/reagent/medicine/antitoxin/on_mob_life(mob/living/carbon/M)
-	M.adjustToxLoss(-2*REM, 0)
-	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
-		M.reagents.remove_reagent(R.type,1)
-	..()
-	. = 1
-
-/datum/reagent/medicine/antitoxin/overdose_process(mob/living/M)
-	M.adjustToxLoss(4*REM, 0) // End result is 2 toxin loss taken, because it heals 2 and then removes 4.
-	..()
-	. = 1
-
 /datum/reagent/medicine/inaprovaline
 	name = "Inaprovaline"
 	description = "Stabilizes the breathing of patients. Good for those in critical condition."
@@ -1042,31 +997,6 @@
 	if(M.losebreath >= 5)
 		M.losebreath -= 5
 	..()
-
-/datum/reagent/medicine/tricordrazine
-	name = "Tricordrazine"
-	description = "Has a high chance to heal all types of damage. Overdose instead causes it."
-	reagent_state = LIQUID
-	color = "#C8A5DC"
-	overdose_threshold = 30
-	taste_description = "grossness"
-
-/datum/reagent/medicine/tricordrazine/on_mob_life(mob/living/carbon/M)
-	if(prob(80))
-		M.adjustBruteLoss(-1*REM, 0)
-		M.adjustFireLoss(-1*REM, 0)
-		M.adjustOxyLoss(-1*REM, 0)
-		M.adjustToxLoss(-1*REM, 0)
-		. = 1
-	..()
-
-/datum/reagent/medicine/tricordrazine/overdose_process(mob/living/M)
-	M.adjustToxLoss(2*REM, 0)
-	M.adjustOxyLoss(2*REM, 0)
-	M.adjustBruteLoss(2*REM, FALSE, FALSE, BODYPART_ORGANIC)
-	M.adjustFireLoss(2*REM, FALSE, FALSE, BODYPART_ORGANIC)
-	..()
-	. = 1
 
 /datum/reagent/medicine/regen_jelly
 	name = "Regenerative Jelly"
@@ -1095,7 +1025,7 @@
 	M.adjustFireLoss(-5*REM, 0)
 	M.adjustOxyLoss(-15, 0)
 	M.adjustToxLoss(-5*REM, 0)
-	M.adjustBrainLoss(-15*REM)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -15*REM)
 	M.adjustCloneLoss(-3*REM, 0)
 	..()
 	. = 1
@@ -1118,7 +1048,7 @@
 	M.adjustFireLoss(-3 * REM, 0)
 	M.adjustOxyLoss(-15 * REM, 0)
 	M.adjustToxLoss(-3 * REM, 0)
-	M.adjustBrainLoss(2 * REM, 150) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM, 150) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
 	M.adjustCloneLoss(-1 * REM, 0)
 	M.adjustStaminaLoss(-30 * REM, 0)
 	M.jitteriness = min(max(0, M.jitteriness + 3), 30)
@@ -1148,7 +1078,7 @@
 	if (M.hallucination >= 5)
 		M.hallucination -= 5
 	if(prob(20))
-		M.adjustBrainLoss(1*REM, 50)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM, 50)
 	M.adjustStaminaLoss(2.5*REM, 0)
 	..()
 	return TRUE
@@ -1424,15 +1354,15 @@
 	if(trans_volume >= 0.6) //prevents cheesing with ultralow doses.
 		C.adjustToxLoss(-1.5 * min(2, trans_volume) * REM, 0)	  //This is to promote iv pole use for that chemotherapy feel.
 	var/obj/item/organ/liver/L = C.internal_organs_slot[ORGAN_SLOT_LIVER]
-	if(L.failing || !L)
+	if((L.organ_flags & ORGAN_FAILING) || !L)
 		return
-	conversion_amount = trans_volume * (min(100 -C.getLiverLoss(), 80) / 100) //the more damaged the liver the worse we metabolize.
+	conversion_amount = trans_volume * (min(100 -C.getOrganLoss(ORGAN_SLOT_LIVER), 80) / 100) //the more damaged the liver the worse we metabolize.
 	C.reagents.remove_reagent(/datum/reagent/medicine/thializid, conversion_amount)
 	C.reagents.add_reagent(/datum/reagent/medicine/oxalizid, conversion_amount)
 	..()
 
 /datum/reagent/medicine/thializid/on_mob_life(mob/living/carbon/M)
-	M.adjustLiverLoss(0.8)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.8)
 	M.adjustToxLoss(-1*REM, 0)
 	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.type,1)
@@ -1441,7 +1371,7 @@
 	. = 1
 
 /datum/reagent/medicine/thializid/overdose_process(mob/living/carbon/M)
-	M.adjustLiverLoss(1.5)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 1.5)
 	M.adjust_disgust(3)
 	M.reagents.add_reagent(/datum/reagent/medicine/oxalizid, 0.225 * REM)
 	..()
@@ -1457,7 +1387,7 @@
 	var/datum/brain_trauma/mild/muscle_weakness/U
 
 /datum/reagent/medicine/oxalizid/on_mob_life(mob/living/carbon/M)
-	M.adjustLiverLoss(0.1)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.1)
 	M.adjustToxLoss(-1*REM, 0)
 	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.type,1)
@@ -1475,9 +1405,104 @@
 	return ..()
 
 /datum/reagent/medicine/oxalizid/overdose_process(mob/living/carbon/M)
-	M.adjustLiverLoss(1.5)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 1.5)
 	M.adjust_disgust(3)
 	..()
 	. = 1
 
 #undef PERF_BASE_DAMAGE
+
+//Injectables!
+//These are shitty chems
+
+/datum/reagent/medicine/sanguiose
+	name = "Sanguiose"
+	description = "A chemical developed to aid in the butchering proccess, it causes a chemical reaction which consumes blood and oxygen while healing cuts, bruises, and other similar injuries,"
+	reagent_state = LIQUID
+	color = "#FF6464"
+	metabolization_rate = 0.5* REAGENTS_METABOLISM
+	overdose_threshold = 25
+	taste_description = "salty"
+
+/datum/reagent/medicine/sanguiose/on_mob_life(mob/living/carbon/M)
+	M.adjustBruteLoss(-1, 0)
+	M.adjustOxyLoss(0.25,0)
+	M.blood_volume -= 1 //Removes blood
+	..()
+	. = 1
+
+/datum/reagent/medicine/sanguiose/overdose_process(mob/living/M)
+	M.adjustOxyLoss(3,0)
+	M.blood_volume -= 2 //I hope you like blood.
+	..()
+	. = 1
+
+/datum/reagent/medicine/sanguiose/on_transfer(atom/A, method=TOUCH, volume) // Borrowed from whoever made charcoal injection or pill only and modified so it doesn't add a reagent.
+	if(method == INJECT || !iscarbon(A)) //the atom not the charcoal
+		return
+	A.reagents.remove_reagent(type, volume)
+	..()
+
+/datum/reagent/medicine/frogenite
+	name = "Frogenite"
+	description = "An industrial cryostorage chemical previously used for preservation and storage. It removes oxygen from the body and heals to prevent and heal burns. If too much is injected the reaction will speed up dramatically removing all oxygen quickly."
+	reagent_state = LIQUID
+	color = "#00FFFF"
+	metabolization_rate = 0.5* REAGENTS_METABOLISM
+	overdose_threshold = 25
+	taste_description = "Oil"
+
+/datum/reagent/medicine/frogenite/on_mob_life(mob/living/carbon/M) //Reuses code done by cobby in Perflu to convert burn damage to oxygen, Meant to simunlate a chemical reaction to remove oxygen from the body.
+	var/firecalc = 1*REM*current_cycle
+	M.adjustFireLoss(-1, 0)
+	if (firecalc <10)
+		M.adjustOxyLoss(firecalc*0.15, 0)
+	if (firecalc >= 10)
+		M.adjustOxyLoss(1.5,0)
+	..()
+	. = 1
+
+/datum/reagent/medicine/frogenite/overdose_process(mob/living/M)
+	M.adjustOxyLoss(3,0)
+	M.reagents.remove_reagent(type, metabolization_rate*2) // Reused code from syndicate nanites meant to purge the chem quickly.
+	to_chat(M, "<span class='notice'>You feel like you aren't getting any oxygen!</span>")
+	..()
+	. = 1
+
+/datum/reagent/medicine/frogenite/on_transfer(atom/A, method=TOUCH, volume) // Borrowed from whoever made charcoal injection or pill only and modified so it doesn't add a reagent.
+	if(method == INJECT || !iscarbon(A)) //the atom not the charcoal
+		return
+	A.reagents.remove_reagent(type, volume)
+	..()
+
+/datum/reagent/medicine/ferveatium
+	name = "Ferveatium"
+	description = "A chemical previously used to cook questionable meat, it has come to enjoy a new life as a treatment for many poisons."
+	reagent_state = LIQUID
+	color = "#00FFFF"
+	metabolization_rate = 0.5* REAGENTS_METABOLISM
+	overdose_threshold = 25
+	taste_description = "Fire"
+
+/datum/reagent/medicine/ferveatium/on_mob_life(mob/living/carbon/M) //Reuses code done by cobby in Perflu to convert burn damage to oxygen, Meant to simunlate a chemical reaction to remove oxygen from the body.
+	var/toxcalc = 1*REM*current_cycle
+	M.adjustToxLoss(-1, 0)
+	if (toxcalc <10)
+		M.adjustFireLoss(toxcalc/10, 0)
+	if (toxcalc >= 10)
+		M.adjustFireLoss(1,0)
+	..()
+	. = 1
+
+/datum/reagent/medicine/ferveatium/overdose_process(mob/living/M)
+	M.adjustFireLoss(3,0)
+	M.reagents.remove_reagent(type, metabolization_rate*2) // Reused code from syndicate nanites meant to purge the chem quickly.
+	to_chat(M, "<span class='notice'>You feel like you are melting!</span>")
+	..()
+	. = 1
+
+/datum/reagent/medicine/ferveatium/on_transfer(atom/A, method=TOUCH, volume) // Borrowed from whoever made charcoal injection or pill only and modified so it doesn't add a reagent.
+	if(method == INJECT || !iscarbon(A)) //the atom not the charcoal
+		return
+	A.reagents.remove_reagent(type, volume)
+	..()

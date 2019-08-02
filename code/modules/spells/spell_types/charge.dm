@@ -10,7 +10,7 @@
 	range = -1
 	cooldown_min = 400 //50 deciseconds reduction per rank
 	include_user = TRUE
-
+	action_icon_state = "charge"
 
 /obj/effect/proc_holder/spell/targeted/charge/cast(list/targets,mob/user = usr)
 	for(var/mob/living/L in targets)

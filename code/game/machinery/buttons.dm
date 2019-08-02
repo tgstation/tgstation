@@ -41,6 +41,8 @@
 			board.one_access = 1
 			board.accesses = req_one_access
 
+	setup_device()
+
 
 /obj/machinery/button/update_icon()
 	cut_overlays()
@@ -123,6 +125,11 @@
 		var/obj/item/assembly/control/A = device
 		A.id = id
 	initialized_button = 1
+
+/obj/machinery/button/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	if(id && istype(device, /obj/item/assembly/control))
+		var/obj/item/assembly/control/A = device
+		A.id = "[idnum][id]"
 
 /obj/machinery/button/attack_hand(mob/user)
 	. = ..()
@@ -283,4 +290,4 @@
 	desc = "Used for building buttons."
 	icon_state = "button"
 	result_path = /obj/machinery/button
-	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
