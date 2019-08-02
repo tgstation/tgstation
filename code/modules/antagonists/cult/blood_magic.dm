@@ -39,7 +39,7 @@
 	user.add_mob_blood(target)
 	target.become_husk(CULT_TRAIT)
 	var/datum/antagonist/cult/cultistinfo = user.mind.has_antag_datum(/datum/antagonist/cult)
-	cultistinfo.add_sac()
+	cultistinfo.add_sac(user)
 	for(var/datum/objective/sacrifice/sac_objective in cultistinfo.cult_team.objectives)
 		if(sac_objective.target == target.mind)
 			sac_objective.sacced = TRUE
