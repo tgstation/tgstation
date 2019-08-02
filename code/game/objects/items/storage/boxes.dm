@@ -751,9 +751,9 @@
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 
 /obj/item/storage/box/hug/survival/PopulateContents()
-	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/clothing/mask/gas/clown_hat(src)
 	new /obj/item/tank/internals/emergency_oxygen(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
+	new /obj/item/reagent_containers/food/snacks/grown/banana(src)
 
 /obj/item/storage/box/rubbershot
 	name = "box of rubber shots"

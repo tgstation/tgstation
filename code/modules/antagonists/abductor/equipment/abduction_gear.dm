@@ -137,7 +137,7 @@
 	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
 
-/obj/item/abductor/proc/AbductorCheck(mob/user)
+obj/item/abductor/proc/AbductorCheck(mob/user)
 	if (HAS_TRAIT(user, TRAIT_ABDUCTOR_TRAINING))
 		return TRUE
 	if (istype(user) && user.mind && HAS_TRAIT(user.mind, TRAIT_ABDUCTOR_TRAINING))
@@ -525,7 +525,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
 		playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
-		L.Sleeping(1200)
+		L.Sleeping(600)
 		log_combat(user, L, "put to sleep")
 	else
 		if(L.anti_magic_check(FALSE, FALSE, TRUE, 0))
