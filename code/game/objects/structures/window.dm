@@ -642,7 +642,6 @@
 
 /obj/structure/window/reinforced/fulltile/unanchored
 	anchored = FALSE
-	state = WINDOW_OUT_OF_FRAME
 
 /obj/structure/window/reinforced/tinted/fulltile
 	icon = 'icons/obj/smooth_structures/tinted_window.dmi'
