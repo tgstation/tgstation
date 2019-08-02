@@ -616,6 +616,8 @@ Class Procs:
 		inserted_scan_id.forceMove(drop_location())
 		if(!issilicon(user) && Adjacent(user))
 			user.put_in_hands(inserted_scan_id)
+		if(authenticated)
+			authenticated = 0
 		inserted_scan_id = null
 		user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
 							"<span class='notice'>You get the ID card from the console.</span>")
@@ -656,11 +658,9 @@ Class Procs:
 		return
 	if(inserted_modify_id)
 		id_eject_modify(user)
-		authenticated = FALSE
 		return
 	if(inserted_scan_id)
 		id_eject_scan(user)
-		authenticated = FALSE
 		return
 	if(inserted_prisoner_id)
 		id_eject_prisoner(user)

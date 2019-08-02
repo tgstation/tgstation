@@ -9,6 +9,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 #define JOB_MAX_POSITIONS -1 // Trying to reduce the number of slots below that of current holders of that job, or trying to open more slots than allowed
 #define JOB_DENIED 0
 
+#define LOGGED_OFF 0
+#define LOGGED_DEPARTMENT 1
+#define LOGGED_ALL 2
+
 /obj/machinery/computer/card
 	name = "identification console"
 	desc = "You can use this to manage jobs and ID access."
@@ -223,7 +227,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		if (authenticated && inserted_modify_id)
 			var/list/carddesc = list()
 			var/list/jobs = list()
-			if (authenticated == 2)
+			if (authenticated == LOGGED_ALL)
 				var/list/jobs_all = list()
 				for(var/job in (list("Unassigned") + get_jobs() + "Custom"))
 					jobs_all += "<a href='?src=[REF(src)];choice=assign;assign_target=[job]'>[replacetext(job, " ", "&nbsp;")]</a> " //make sure there isn't a line break in the middle of a job
@@ -272,12 +276,12 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 					<table style='width:100%'>
 					<tr>"}
 				for(var/i = 1; i <= 7; i++)
-					if(authenticated == 1 && !(i in region_access))
+					if(authenticated == LOGGED_DEPARTMENT && !(i in region_access))
 						continue
 					accesses += "<td style='width:14%'><b>[get_region_accesses_name(i)]:</b></td>"
 				accesses += "</tr><tr>"
 				for(var/i = 1; i <= 7; i++)
-					if(authenticated == 1 && !(i in region_access))
+					if(authenticated == LOGGED_DEPARTMENT && !(i in region_access))
 						continue
 					accesses += "<td style='width:14%' valign='top'>"
 					for(var/A in get_region_accesses(i))
@@ -320,6 +324,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				id_insert_modify(usr)
 		if ("inserted_scan_id")
 			if (inserted_scan_id)
+				authenticated = LOGGED_OFF
 				id_eject_scan(usr)
 			else
 				id_insert_scan(usr)
@@ -332,9 +337,9 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						if(target_dept)
 							head_subordinates = get_all_jobs()
 							region_access |= target_dept
-							authenticated = 1
+							authenticated = LOGGED_DEPARTMENT
 						else
-							authenticated = 2
+							authenticated = LOGGED_ALL
 						playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
 
 					else
@@ -355,13 +360,13 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 							region_access |= 5
 							get_subordinates("Chief Engineer")
 						if(region_access)
-							authenticated = 1
+							authenticated = LOGGED_DEPARTMENT
 			else if ((!( authenticated ) && issilicon(usr)) && (!inserted_modify_id))
 				to_chat(usr, "<span class='warning'>You can't modify an ID without an ID inserted to modify! Once one is in the modify slot on the computer, you can log in.</span>")
 		if ("logout")
 			region_access = null
 			head_subordinates = null
-			authenticated = 0
+			authenticated = LOGGED_OFF
 			playsound(src, 'sound/machines/terminal_off.ogg', 50, FALSE)
 
 		if("access")
@@ -375,7 +380,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 							inserted_modify_id.access += access_type
 						playsound(src, "terminal_type", 50, FALSE)
 		if ("assign")
-			if (authenticated == 2)
+			if (authenticated == LOGGED_ALL)
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
 					var/newJob = reject_bad_text(input("Enter a custom job assignment.", "Assignment", inserted_modify_id ? inserted_modify_id.assignment : "Unassigned"), MAX_NAME_LEN)
