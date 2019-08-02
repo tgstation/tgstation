@@ -125,7 +125,7 @@
 		else if(UM.has_antag_datum(/datum/antagonist/fugitive))
 			message_say = "FOR FREEDOM!"
 		else if(UM.has_antag_datum(/datum/antagonist/ashwalker))
-			message_say = "FOR THE TENDRIL!"
+			message_say = "I HAVE NO IDEA WHAT THIS THING DOES!"
 		else if(UM.has_antag_datum(/datum/antagonist/ert))
 			message_say = "FOR NANOTRASEN!"
 		else if(UM.has_antag_datum(/datum/antagonist/pirate))
