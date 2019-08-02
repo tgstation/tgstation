@@ -84,6 +84,9 @@ SUBSYSTEM_DEF(economy)
 		if(D.department_id == dep_id)
 			return D
 
+/datum/controller/subsystem/economy/proc/get_shares(dep_id)
+	return department_share[dep_id]
+
 /datum/controller/subsystem/economy/proc/eng_payout()
 	var/engineering_cash = 3000
 	var/datum/bank_account/D = get_dep_account(ACCOUNT_ENG)

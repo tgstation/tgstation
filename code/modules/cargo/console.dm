@@ -11,7 +11,7 @@
 	var/blockade_warning = "Bluespace instability detected. Shuttle movement impossible."
 
 	light_color = "#E2853D"//orange
-	var/department = null
+	var/department = ACCOUNT_CAR
 
 /obj/machinery/computer/cargo/request
 	name = "supply request console"
@@ -247,3 +247,21 @@
 
 	var/datum/signal/status_signal = new(list("command" = command))
 	frequency.post_signal(src, status_signal)
+
+/obj/machinery/computer/cargo/request/sci
+	department = ACCOUNT_SCI
+
+/obj/machinery/computer/cargo/request/med
+	department = ACCOUNT_MED
+
+/obj/machinery/computer/cargo/request/sec
+	department = ACCOUNT_SEC
+
+/obj/machinery/computer/cargo/request/civ
+	department = ACCOUNT_CIV
+
+/obj/machinery/computer/cargo/request/srv
+	department = ACCOUNT_SRV
+
+/obj/machinery/computer/cargo/request/eng
+	department = ACCOUNT_ENG
