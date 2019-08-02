@@ -1,3 +1,53 @@
+/obj/effect/proc_holder/spell/targeted/cult_sac
+	name = "Sacrifice"
+	desc = "Offer a body to Nar'Sie in exchange for his favor, husking the body."
+	action_background_icon_state = "bg_demon"
+	action_icon = 'icons/mob/actions/actions_cult.dmi'
+	action_icon_state = "carve"
+	charge_max = 10
+	clothes_req = FALSE
+	stat_allowed = FALSE
+	range = 1
+	antimagic_allowed = TRUE
+
+/obj/effect/proc_holder/spell/targeted/cult_sac/cast(list/targets, mob/living/user = usr)
+	var/mob/living/carbon/target = targets[1]
+	if(iscultist(target))
+		to_chat(user, "<span class='cultitalic'>You cannot sacrifice another cultist!</span>")
+		return
+	if(!target.mind)
+		to_chat(user, "<span class='cultitalic'>This body has no soul, it is useless!</span>")
+		return
+	if(HAS_TRAIT_FROM(target, TRAIT_HUSK, CULT_TRAIT))
+		to_chat(user, "<span class='cultitalic'>This body was already desecrated, you cannot sacrifice it again!</span>")
+		return
+	if(target.stat != DEAD)
+		to_chat(user, "<span class='cultitalic'>You can only sacrifice the dead!</span>")
+		return
+	var/obj/item/inhand = user.get_active_held_item()
+	if(inhand.sharpness == IS_BLUNT || !inhand)
+		to_chat(user, "<span class='cultitalic'>You need a sharp item in your hand to make a sacrifice!</span>")
+		return
+	to_chat(user, "<span class='cultitalic'>You start sacrificing the body...</span>")
+	var/sac_delay = max(5, (20-inhand.force/2))*10
+	if(do_after(user, sac_delay, target = target))
+		sacrifice_person(user, target)
+	else
+		to_chat(user, "<span class='cultitalic'>Your sacrifice was interrupted!</span>")
+
+/proc/sacrifice_person(mob/user, mob/living/target)
+	user.add_mob_blood(target)
+	target.become_husk(CULT_TRAIT)
+	var/datum/antagonist/cult/cultistinfo = user.mind.has_antag_datum(/datum/antagonist/cult)
+	cultistinfo.add_sac()
+	for(var/datum/objective/sacrifice/sac_objective in cultistinfo.cult_team.objectives)
+		if(sac_objective.target == target.mind)
+			sac_objective.sacced = TRUE
+			sac_objective.update_explanation_text()
+			to_chat(user, "<span class='cultlarge'>Yes! This is the one I desire! You have done well.</span>")
+			return
+	to_chat(user, "<span class='cultlarge'>I accept this sacrifice.</span>")
+
 /datum/action/innate/cult/blood_magic //Blood magic handles the creation of blood spells (formerly talismans)
 	name = "Prepare Blood Magic"
 	button_icon_state = "carve"

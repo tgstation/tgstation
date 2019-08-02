@@ -7,12 +7,12 @@
 	antag_moodlet = /datum/mood_event/cult
 	var/datum/action/innate/cult/comm/communion = new
 	var/datum/action/innate/cult/mastervote/vote = new
-	var/datum/action/innate/cult/blood_magic/magic = new
+	var/obj/effect/proc_holder/spell/targeted/cult_sac/magic = new
 	job_rank = ROLE_CULTIST
 	var/ignore_implant = FALSE
 	var/give_equipment = FALSE
 	var/datum/team/cult/cult_team
-
+	var/sac_number = 0 //number of people this cultist has sacrificed
 
 /datum/antagonist/cult/get_team()
 	return cult_team
@@ -64,6 +64,8 @@
 	if(cult_team.blood_target && cult_team.blood_target_image && current.client)
 		current.client.images += cult_team.blood_target_image
 
+/datum/antagonist/cult/proc/add_sac()
+	sac_number += 1
 
 /datum/antagonist/cult/proc/equip_cultist(metal=TRUE)
 	var/mob/living/carbon/H = owner.current
@@ -107,8 +109,8 @@
 	if(!cult_team.cult_master)
 		vote.Grant(current)
 	communion.Grant(current)
-	//if(ishuman(current))
-		//magic.Grant(current)
+	if(ishuman(current))
+		current.AddSpell(magic)
 	current.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
 	if(cult_team.cult_risen)
 		cult_team.rise(current)
@@ -124,7 +126,7 @@
 	current.remove_language(/datum/language/narsie)
 	vote.Remove(current)
 	communion.Remove(current)
-	magic.Remove(current)
+	current.RemoveSpell(magic)
 	current.clear_alert("bloodsense")
 	if(ishuman(current))
 		var/mob/living/carbon/human/H = current
@@ -184,9 +186,9 @@
 	var/datum/action/innate/cult/master/pulse/throwing = new
 
 /datum/antagonist/cult/master/Destroy()
-	QDEL_NULL(reckoning)
-	QDEL_NULL(bloodmark)
-	QDEL_NULL(throwing)
+	//QDEL_NULL(reckoning)
+	//QDEL_NULL(bloodmark)
+	//QDEL_NULL(throwing)
 	return ..()
 
 /datum/antagonist/cult/master/on_gain()
@@ -195,9 +197,7 @@
 	set_antag_hud(current, "cultmaster")
 
 /datum/antagonist/cult/master/greet()
-	to_chat(owner.current, "<span class='cultlarge'>You are the cult's Master</span>. As the cult's Master, you have a unique title and loud voice when communicating, are capable of marking \
-	targets, such as a location or a noncultist, to direct the cult to them, and, finally, you are capable of summoning the entire living cult to your location <b><i>once</i></b>.")
-	to_chat(owner.current, "Use these abilities to direct the cult to victory at any cost.")
+	to_chat(owner.current, "<span class='cultlarge'>You are the cult's Master</span>. As the cult's Master, you have a unique title and loud voice when communicating.")
 
 /datum/antagonist/cult/master/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -304,7 +304,7 @@
 		if(player.mind && !player.mind.has_antag_datum(/datum/antagonist/cult) && !is_convertable_to_cult(player) && player.stat != DEAD)
 			target_candidates += player.mind
 
-	if(target_candidates.len == 0)
+	if(target_candidates.len == 0)	
 		message_admins("Cult Sacrifice: Could not find unconvertible target, checking for convertible target.")
 		for(var/mob/living/carbon/human/player in GLOB.player_list)
 			if(player.mind && !player.mind.has_antag_datum(/datum/antagonist/cult) && player.stat != DEAD)
