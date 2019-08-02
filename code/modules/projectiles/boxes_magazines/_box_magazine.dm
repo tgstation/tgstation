@@ -19,10 +19,7 @@
 	var/ammo_type = /obj/item/ammo_casing
 	///maximum amount of ammo in the magazine
 	var/max_ammo = 7
-	///Controls how sprites are updated for the ammo box
-	///AMMO_BOX_ONE_SPRITE: ammo box will always use provided icon state
-	///AMMO_BOX_PER_BULLET: ammo box will have a different state for each bullet; <icon_state>-<bullets left>
-	///AMMO_BOX_FULL_EMPTY: ammo box will have a different state for full and empty; <icon_state>-max_ammo and <icon_state>-0
+	///Controls how sprites are updated for the ammo box; see defines in combat.dm: AMMO_BOX_ONE_SPRITE; AMMO_BOX_PER_BULLET; AMMO_BOX_FULL_EMPTY
 	var/multiple_sprites = AMMO_BOX_ONE_SPRITE
 	///String, used for checking if ammo of different types but still fits can fit inside it; generally used for magazines
 	var/caliber

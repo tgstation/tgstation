@@ -61,15 +61,7 @@
 	var/special_mags = FALSE
 	///Whether the gun is currently alarmed to prevent it from spamming sounds
 	var/alarmed = FALSE
-	///Four bolt types:
-	///BOLT_TYPE_STANDARD: Gun has a bolt, it stays closed while not cycling. The gun must be racked to have a bullet chambered when a mag is inserted.
-	///Example: c20, shotguns, m90
-	///BOLT_TYPE_OPEN: Gun has a bolt, it is open when ready to fire. The gun can never have a chambered bullet with no magazine, but the bolt stays ready when a mag is removed.
-	///Example: Some SMGs, the L6
-	///BOLT_TYPE_NO_BOLT: Gun has no moving bolt mechanism, it cannot be racked. Also dumps the entire contents when emptied instead of a magazine.
-	///Example: Break action shotguns, revolvers
-	///BOLT_TYPE_LOCKING: Gun has a bolt, it locks back when empty. It can be released to chamber a round if a magazine is in.
-	///Example: Pistols with a slide lock, some SMGs
+	///The bolt type of the gun, affects quite a bit of functionality, see combat.dm defines for bolt types: BOLT_TYPE_STANDARD; BOLT_TYPE_LOCKING; BOLT_TYPE_OPEN; BOLT_TYPE_NO_BOLT
 	var/bolt_type = BOLT_TYPE_STANDARD
  	///Used for locking bolt and open bolt guns. Set a bit differently for the two but prevents firing when true for both.
 	var/bolt_locked = FALSE
