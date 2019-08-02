@@ -55,18 +55,15 @@
 		return S
 
 /datum/wires/explosive/c4
-	holder_type = /obj/item/grenade/plastic/c4
-	randomize = TRUE	//Same behaviour since no wire actually disarms it
+	holder_type = /obj/item/grenade/c4
+	randomize = TRUE
 
-/datum/wires/explosive/c4/interactable(mob/user)
-	var/obj/item/grenade/plastic/c4/P = holder
-	if(P.open_panel)
-		return TRUE
+/datum/wires/explosive/c4/interactable(mob/user) //No need to unscrew wire panels on plastic explosives
+	return TRUE
 
 /datum/wires/explosive/c4/explode()
-	var/obj/item/grenade/plastic/c4/P = holder
+	var/obj/item/grenade/c4/P = holder
 	P.prime()
-
 
 /datum/wires/explosive/pizza
 	holder_type = /obj/item/pizzabox
