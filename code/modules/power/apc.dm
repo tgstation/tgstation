@@ -1036,7 +1036,7 @@
 		return
 	operating = !operating
 	add_hiddenprint(user)
-	log_combat(user, src, "turned [operating ? "on" : "off"]")
+	log_game("[key_name(user)] turned [operating ? "on" : "off"] the [src] in [AREACOORD(src)]")
 	update()
 	update_icon()
 
