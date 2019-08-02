@@ -22,8 +22,8 @@ SUBSYSTEM_DEF(economy)
 	var/list/department_share = list(ACCOUNT_CIV = 0.10,
 									 ACCOUNT_ENG = 0.20,
 									 ACCOUNT_SEC = 0.20,
-									 ACCOUNT_MED = 0.10,
-									 ACCOUNT_SRV = 0.20,
+									 ACCOUNT_MED = 0.20,
+									 ACCOUNT_SRV = 0.10,
 									 ACCOUNT_SCI = 0.20,
 									 ACCOUNT_CAR = 1.00)
 
