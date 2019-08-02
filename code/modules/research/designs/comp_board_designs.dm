@@ -311,3 +311,11 @@
 	build_path = /obj/item/circuitboard/computer/advanced_camera
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/board/finances
+	name = "Computer Design (Financial Computer)"
+	desc = "Allows for the construction of circuit boards used to build the financial computer."
+	id = "financial_computer"
+	build_path = /obj/item/circuitboard/computer/card/finances
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SERVICE

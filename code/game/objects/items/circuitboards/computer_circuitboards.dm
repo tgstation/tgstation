@@ -40,6 +40,9 @@
 	..()
 	to_chat(user, "Currently set to \"[dept_list[target_dept]]\".")
 
+/obj/item/circuitboard/computer/card/finances
+	name = "Financial Computer (Computer Board)"
+	build_path = /obj/machinery/computer/finances
 
 //obj/item/circuitboard/computer/shield
 //	name = "Shield Control (Computer Board)"

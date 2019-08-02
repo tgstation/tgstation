@@ -12,6 +12,14 @@ SUBSYSTEM_DEF(economy)
 										ACCOUNT_SRV = ACCOUNT_SRV_NAME,
 										ACCOUNT_CAR = ACCOUNT_CAR_NAME,
 										ACCOUNT_SEC = ACCOUNT_SEC_NAME)
+	var/list/department_share = list(ACCOUNT_CIV = 0.20,
+									 ACCOUNT_ENG = 0.10,
+									 ACCOUNT_SEC = 0.30,
+									 ACCOUNT_MED = 0.10,
+									 ACCOUNT_SRV = 0.10,
+									 ACCOUNT_SCI = 0.20,
+									 ACCOUNT_CAR = 1.00) 
+
 	var/list/generated_accounts = list()
 	var/full_ancap = FALSE // Enables extra money charges for things that normally would be free, such as sleepers/cryo/cloning.
 							//Take care when enabling, as players will NOT respond well if the economy is set up for low cash flows.
@@ -129,3 +137,10 @@ SUBSYSTEM_DEF(economy)
 	var/datum/bank_account/D = get_dep_account(ACCOUNT_CIV)
 	if(D)
 		D.adjust_money(min(civ_cash, MAX_GRANT_CIV))
+
+/datum/controller/subsystem/economy/proc/department_payout(var/N)
+	for(var/A in department_accounts)
+		var/datum/bank_account/D = get_dep_account(A)
+		var/payout = department_share[A] * N
+		D.adjust_money(payout)
+
