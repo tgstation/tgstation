@@ -408,10 +408,17 @@
 	desc = "A poster advertising a movie about some masked men."
 	icon_state = "poster44"
 
+//annoyingly, poster45 is in another file.
+
 /obj/structure/sign/poster/contraband/free_key
 	name = "Free Syndicate Encryption Key"
 	desc = "A poster about traitors begging for more."
 	icon_state = "poster46"
+
+/obj/structure/sign/poster/contraband/bountyhunters
+	name = "Bounty Hunters"
+	desc = "A poster advertising bounty hunting services. \"I hear you got a problem.\""
+	icon_state = "poster47"
 
 /obj/structure/sign/poster/official
 	poster_item_name = "motivational poster"

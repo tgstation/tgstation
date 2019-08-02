@@ -40,6 +40,7 @@
 	var/can_repair_constructs = FALSE
 	var/can_repair_self = FALSE
 	var/runetype
+	var/holy = FALSE
 
 /mob/living/simple_animal/hostile/construct/Initialize()
 	. = ..()
@@ -81,7 +82,9 @@
 	if(isconstruct(M)) //is it a construct?
 		var/mob/living/simple_animal/hostile/construct/C = M
 		if(!C.can_repair_constructs || (C == src && !C.can_repair_self))
-			return
+			return ..()
+		if(holy != C.holy)
+			return ..()
 		if(health < maxHealth)
 			adjustHealth(-5)
 			if(src != M)
@@ -174,6 +177,7 @@
 /mob/living/simple_animal/hostile/construct/armored/angelic
 	icon_state = "behemoth_angelic"
 	icon_living = "behemoth_angelic"
+	holy = TRUE	
 	loot = list(/obj/item/ectoplasm/angelic)
 
 /mob/living/simple_animal/hostile/construct/armored/noncult
@@ -227,6 +231,7 @@
 /mob/living/simple_animal/hostile/construct/wraith/angelic
 	icon_state = "floating_angelic"
 	icon_living = "floating_angelic"
+	holy = TRUE
 	loot = list(/obj/item/ectoplasm/angelic)
 
 /mob/living/simple_animal/hostile/construct/wraith/noncult
@@ -310,6 +315,7 @@
 /mob/living/simple_animal/hostile/construct/builder/angelic
 	icon_state = "artificer_angelic"
 	icon_living = "artificer_angelic"
+	holy = TRUE
 	loot = list(/obj/item/ectoplasm/angelic)
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult/purified,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,

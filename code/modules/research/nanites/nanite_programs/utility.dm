@@ -270,7 +270,7 @@
 		return
 	var/rep_rate = round(nanites.nanite_volume / 50, 1) //0.5 per 50 nanite volume
 	rep_rate *= 0.5
-	nanites.adjust_nanites(rep_rate)
+	nanites.adjust_nanites(null, rep_rate)
 	if(prob(rep_rate))
 		var/datum/nanite_program/fault = pick(nanites.programs)
 		if(fault == src)
