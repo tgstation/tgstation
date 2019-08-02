@@ -6,6 +6,8 @@
 
 /datum/dynamic_ruleset/midround // Can be drafted once in a while during a round
 	ruletype = "Midround"
+	/// If the ruleset should be restricted from ghost roles.
+	var/restrict_ghost_roles = TRUE
 	var/list/living_players = list()
 	var/list/living_antags = list()
 	var/list/dead_players = list()
@@ -13,8 +15,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts
 	weight = 0
-	/// List of ghost candidates for the midround ruleset.
-	var/list/applicants = list()
+	/// Whether the ruleset should call generate_ruleset_body or not.
 	var/makeBody = TRUE
 
 /datum/dynamic_ruleset/midround/trim_candidates()
@@ -45,6 +46,9 @@
 			trimmed_list.Remove(M)
 			continue
 		if (M.mind)
+			if (restrict_ghost_roles && M.mind.assigned_role in GLOB.exp_specialmap[EXP_TYPE_SPECIAL]) // Are they playing a ghost role?
+				trimmed_list.Remove(M)
+				continue
 			if (M.mind.assigned_role in restricted_roles || HAS_TRAIT(M, TRAIT_MINDSHIELD)) // Does their job allow it or are they mindshielded?
 				trimmed_list.Remove(M)
 				continue
@@ -91,9 +95,9 @@
 	message_admins("Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 	log_game("DYNAMIC: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 
-	applicants = pollGhostCandidates("The mode is looking for volunteers to become [antag_flag] for [src.name]", antag_flag, SSticker.mode, antag_flag, poll_time = 300)
+	candidates = pollGhostCandidates("The mode is looking for volunteers to become [antag_flag] for [src.name]", antag_flag, SSticker.mode, antag_flag, poll_time = 300)
 	
-	if(!applicants || applicants.len <= 0)
+	if(!candidates || candidates.len <= 0)
 		message_admins("The ruleset [name] received no applications.")
 		log_game("DYNAMIC: The ruleset [name] received no applications.")
 		mode.refund_threat(cost)
@@ -101,23 +105,23 @@
 		mode.executed_rules -= src
 		return
 
-	message_admins("[applicants.len] players volunteered for the ruleset [name].")
-	log_game("DYNAMIC: [applicants.len] players volunteered for [name].")
+	message_admins("[candidates.len] players volunteered for the ruleset [name].")
+	log_game("DYNAMIC: [candidates.len] players volunteered for [name].")
 	review_applications()
 
 /// Here is where you can check if your ghost applicants are valid for the ruleset.
 /// Called by send_applications().
 /datum/dynamic_ruleset/midround/from_ghosts/proc/review_applications()
 	for (var/i = 1, i <= required_candidates, i++)
-		if(applicants.len <= 0)
+		if(candidates.len <= 0)
 			if(i == 1)
 				// We have found no candidates so far and we are out of applicants.
 				mode.refund_threat(cost)
 				mode.threat_log += "[worldtime2text()]: Rule [name] refunded [cost] (all applications invalid)"
 				mode.executed_rules -= src
 			break
-		var/mob/applicant = pick(applicants)
-		applicants -= applicant
+		var/mob/applicant = pick(candidates)
+		candidates -= applicant
 		if(!isobserver(applicant))
 			if(applicant.stat == DEAD) // Not an observer? If they're dead, make them one.
 				applicant = applicant.ghostize(FALSE)
@@ -137,7 +141,7 @@
 		finish_setup(new_character, i)
 		assigned += applicant
 		notify_ghosts("[new_character] has been picked for the ruleset [name]!", source = new_character, action = NOTIFY_ORBIT, header="Something Interesting!")
-	applicants.Cut()
+	candidates.Cut()
 
 /datum/dynamic_ruleset/midround/from_ghosts/proc/generate_ruleset_body(mob/applicant)
 	var/mob/living/carbon/human/new_character = makeBody(applicant)
@@ -164,7 +168,7 @@
 	antag_datum = /datum/antagonist/traitor
 	antag_flag = ROLE_TRAITOR
 	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
-	restricted_roles = list("Cyborg", "AI", "Positronic Brain", "Free Golem", "Servant Golem", "Lifebringer")
+	restricted_roles = list("Cyborg", "AI", "Positronic Brain")
 	required_candidates = 1
 	weight = 7
 	cost = 10

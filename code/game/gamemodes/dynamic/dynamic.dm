@@ -265,6 +265,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	threat = threat_level
 
 /datum/game_mode/dynamic/can_start()
+	/* Disabled for now, had some changes that need to be tested and this might interfere with that.
 	if(GLOB.dynamic_curve_centre == 0)
 		// 10 is when the centre starts to decrease
 		// 6 is just 1 + 5 (from the maximum value and the one decreased)
@@ -272,6 +273,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		// Limited between 1 and 5 then inverted and rounded
 		// With this you get a centre curve that stays at -5 until 10 then first rapidly decreases but slows down at the end
 		GLOB.dynamic_curve_centre = round(-CLAMP((10*6/GLOB.player_list.len)-1, 0, 5), 0.5)
+	*/
 	message_admins("Dynamic mode parameters for the round:")
 	message_admins("Centre is [GLOB.dynamic_curve_centre], Width is [GLOB.dynamic_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].")
 	message_admins("Stacking limit is [GLOB.dynamic_stacking_limit], Classic secret is [GLOB.dynamic_classic_secret ? "Enabled" : "Disabled"], High population limit is [GLOB.dynamic_high_pop_limit].")
