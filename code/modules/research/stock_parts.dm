@@ -280,7 +280,7 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	rating = 4
 	materials = list(/datum/material/iron=80)
 
-//Rating 5 [XEON] 
+//Rating 5 [XEON/FULP] 
 
 /obj/item/stock_parts/capacitor/quantumcap
 	name = "Quantum Capacitor"
