@@ -181,15 +181,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<table width='100%'><tr><td width='75%' valign='top'>"
 			if(is_banned_from(user.ckey, "Appearance"))
 				dat += "<b>You are banned from using custom names and appearances. You can continue to adjust your characters, but you will be randomised once you join the game.</b><br>"
-			if (!be_random_species) 	// don't let random species choose their own name
+			if (!be_random_species) 	// don't let random species choose their name
 				dat += "<a href='?_src_=prefs;preference=name;task=random'>Random Name</A> "
 				dat += "<a href='?_src_=prefs;preference=name'>Always Random Name: [be_random_name ? "Yes" : "No"]</a><BR>"
 				dat += "<b>Name:</b> "
 				dat += "<a href='?_src_=prefs;preference=name;task=input'>[real_name]</a><BR>"
 			else
-				dat += "<b>Name Randomized (always random species)"
-				dat += "<br>"
-
+				dat += "<b>Name Randomized (always random species)</b><br>"
 
 			if(!(AGENDER in pref_species.species_traits))
 				var/dispGender
