@@ -409,8 +409,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 		if(prob(50))
 			radiation_pulse(src, power * (1 + (tritiumcomp*3)*(power_transmission_bonus/(10-(bzcomp*5)))))	// Emit upto 5x the radiation at 100% BZ & 3x Rad amount at 100% Tritum
-		if(prob(20 * (bzcomp * 3)) && bzcomp > 0.4)
-			src.fire_nuclear_particle()		// Start to emit radballs at a maximum of 60% chance per tick
+		if(prob(10 * (bzcomp * 3)) && bzcomp > 0.4)
+			src.fire_nuclear_particle()		// Start to emit radballs at a maximum of 30% chance per tick
 
 
 		var/device_energy = power * REACTION_POWER_MODIFIER
