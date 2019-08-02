@@ -43,7 +43,7 @@
 							of intentionally harming a fellow devil.</B>"
 
 /mob/living/simple_animal/imp/Initialize()
-	..()
+	. = ..()
 	set_varspeed(1)
 	addtimer(CALLBACK(src, /mob/living/simple_animal/proc/set_varspeed, 0), 30)
 
