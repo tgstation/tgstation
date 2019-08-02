@@ -1,0 +1,7 @@
+<ui-display title='Financial Console'>
+	{{#if !data.authorized}}
+		<span>"You are not authorized to use this console!"</span>
+	{{else}}
+		{{#each data.shares}}
+			<span>{{data.shares.name}}</span>
+			<ui-button action={{data.shares.department}}>{{data.shares.share}}</ui-button>

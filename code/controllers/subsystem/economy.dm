@@ -5,6 +5,13 @@ SUBSYSTEM_DEF(economy)
 	runlevels = RUNLEVEL_GAME
 	var/roundstart_paychecks = 5
 	var/budget_pool = 35000
+	var/list/departments = list(ACCOUNT_CIV,
+								ACCOUNT_ENG
+								ACCOUNT_SCI
+								ACCOUNT_MED
+								ACCOUNT_SRV
+								ACCOUNT_CAR
+								ACCOUNT_SEC)
 	var/list/department_accounts = list(ACCOUNT_CIV = ACCOUNT_CIV_NAME,
 										ACCOUNT_ENG = ACCOUNT_ENG_NAME,
 										ACCOUNT_SCI = ACCOUNT_SCI_NAME,
@@ -18,7 +25,7 @@ SUBSYSTEM_DEF(economy)
 									 ACCOUNT_MED = 0.10,
 									 ACCOUNT_SRV = 0.10,
 									 ACCOUNT_SCI = 0.20,
-									 ACCOUNT_CAR = 1.00) 
+									 ACCOUNT_CAR = 1.00)
 
 	var/list/generated_accounts = list()
 	var/full_ancap = FALSE // Enables extra money charges for things that normally would be free, such as sleepers/cryo/cloning.
@@ -143,4 +150,19 @@ SUBSYSTEM_DEF(economy)
 		var/datum/bank_account/D = get_dep_account(A)
 		var/payout = department_share[A] * N
 		D.adjust_money(payout)
+
+/datum/controller/subsystem/economy/proc/change_budget(department, amount)
+	var/list/temp_shares = department_share
+	var/tempsum = 0
+	temp_share[department] = amount
+	for(var/D in departments)
+		tempsum += temp_shares[D]
+	if(tempsum <= 2)
+		department_share = temp_shares
+	else
+		return 0
+
+
+
+
 
