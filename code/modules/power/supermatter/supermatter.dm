@@ -5,7 +5,7 @@
 #define PLASMA_HEAT_PENALTY 15     // Higher == Bigger heat and waste penalty from having the crystal surrounded by this gas. Negative numbers reduce penalty.
 #define OXYGEN_HEAT_PENALTY 1
 #define PLUOXIUM_HEAT_PENALTY 5
-#define TRITIUM_HEAT_PENALTY 30
+#define TRITIUM_HEAT_PENALTY 10
 #define CO2_HEAT_PENALTY 0.1
 #define NITROGEN_HEAT_MODIFIER -1.5
 
@@ -408,7 +408,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		power = max( (removed.temperature * temp_factor / T0C) * gasmix_power_ratio + power, 0) //Total laser power plus an overload
 
 		if(prob(50))
-			radiation_pulse(src, power * (1 + power_transmission_bonus/(10-(bzcomp*5))))	// Emit upto 5x the radiation at 100% BZ
+			radiation_pulse(src, power * (1 + (tritiumcomp*3)*(power_transmission_bonus/(10-(bzcomp*5)))))	// Emit upto 5x the radiation at 100% BZ & 3x Rad amount at 100% Tritum
 		if(prob(20 * (bzcomp * 3)) && bzcomp > 0.4)
 			src.fire_nuclear_particle()		// Start to emit radballs at a maximum of 60% chance per tick
 
