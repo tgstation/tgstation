@@ -1,4 +1,0 @@
-author: "Dennok"
-delete-after: True
-changes: 
-  - rscadd: "Make basic id cards constructable in service fab after some researtch."
