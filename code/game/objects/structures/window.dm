@@ -425,7 +425,7 @@
 				return
 	return ..()
 	
-/obj/structure/window/reinforced/proc/cool_bolts()
+/obj/structure/window/proc/cool_bolts()
 	if(state == RWINDOW_BOLTS_HEATED)
 		state = RWINDOW_SECURE
 		visible_message("<span class='notice'>The bolts on \the [src] look like they've cooled off...</span>")
@@ -489,11 +489,12 @@
 /obj/structure/window/plasma/unanchored
 	anchored = FALSE
 
-/obj/structure/window/reinforced/plasma
+/obj/structure/window/plasma/reinforced
 	name = "reinforced plasma window"
 	desc = "A window made out of a plasma-silicate alloy and a rod matrix. It looks hopelessly tough to break and is most likely nigh fireproof."
 	icon_state = "plasmarwindow"
 	reinf = TRUE
+	state = RWINDOW_SECURE
 	heat_resistance = 50000
 	armor = list("melee" = 90, "bullet" = 20, "laser" = 0, "energy" = 0, "bomb" = 60, "bio" = 100, "rad" = 100, "fire" = 99, "acid" = 100)
 	max_integrity = 500
@@ -501,16 +502,78 @@
 	explosion_block = 2
 	glass_type = /obj/item/stack/sheet/plasmarglass
 
-/obj/structure/window/reinforced/plasma/spawner/east
+//entirely copypasted code
+//take this out when construction is made a component or otherwise modularized in some way
+/obj/structure/window/plasma/reinforced/attackby(obj/item/I, mob/living/user, params)
+	switch(state)
+		if(RWINDOW_SECURE)
+			if(I.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HARM)
+				user.visible_message("<span class='notice'>[user] holds \the [I] to the security screws on \the [src]...</span>",
+										"<span class='notice'>You begin heating the security screws on \the [src]...</span>")
+				if(I.use_tool(src, user, 180, volume = 100))
+					to_chat(user, "<span class='notice'>The security bolts are glowing white hot and look ready to be removed.</span>")
+					state = RWINDOW_BOLTS_HEATED
+					addtimer(CALLBACK(src, .proc/cool_bolts), 300)
+				return
+		if(RWINDOW_BOLTS_HEATED)
+			if(I.tool_behaviour == TOOL_SCREWDRIVER)
+				user.visible_message("<span class='notice'>[user] digs into the heated security screws and starts removing them...</span>",
+										"<span class='notice'>You dig into the heated screws hard and they start turning...</span>")
+				if(I.use_tool(src, user, 80, volume = 50))
+					state = RWINDOW_BOLTS_OUT
+					to_chat(user, "<span class='notice'>The screws come out, and a gap forms around the edge of the pane.</span>")
+				return
+		if(RWINDOW_BOLTS_OUT)
+			if(I.tool_behaviour == TOOL_CROWBAR)
+				user.visible_message("<span class='notice'>[user] wedges \the [I] into the gap in the frame and starts prying...</span>",
+										"<span class='notice'>You wedge \the [I] into the gap in the frame and start prying...</span>")
+				if(I.use_tool(src, user, 50, volume = 50))
+					state = RWINDOW_OUT_OF_FRAME
+					to_chat(user, "<span class='notice'>The panel pops out of the frame, exposing some thin metal bars that looks like they can be cut.</span>")
+				return
+		if(RWINDOW_OUT_OF_FRAME)
+			if(I.tool_behaviour == TOOL_WIRECUTTER)
+				user.visible_message("<span class='notice'>[user] starts cutting the exposed bars on \the [src]...</span>",
+										"<span class='notice'>You start cutting the exposed bars on \the [src]</span>")
+				if(I.use_tool(src, user, 30, volume = 50))
+					state = RWINDOW_BARS_CUT
+					to_chat(user, "<span class='notice'>The panels falls out of the way exposing the frame bolts.</span>")
+				return
+		if(RWINDOW_BARS_CUT)
+			if(I.tool_behaviour == TOOL_WRENCH)
+				user.visible_message("<span class='notice'>[user] starts unfastening \the [src] from the frame...</span>",
+					"<span class='notice'>You start unfastening the bolts from the frame...</span>")
+				if(I.use_tool(src, user, 50, volume = 50))
+					to_chat(user, "<span class='notice'>You unscrew the bolts the frame and the window pops loose.</span>")
+					state = WINDOW_OUT_OF_FRAME
+					setAnchored(FALSE)
+				return
+	return ..()
+	
+/obj/structure/window/plasma/reinforced/examine(mob/user)
+	. = ..()
+	switch(state)
+		if(RWINDOW_SECURE)
+			. += "It's been screwed in with one way screws, you'd need to <b>heat them</b> to have any chance of backing them out."
+		if(RWINDOW_BOLTS_HEATED)
+			. += "The screws are glowing white hot, and you'll likely be able to <b>unscrew them</b> now."
+		if(RWINDOW_BOLTS_OUT)
+			. += "The screws have been removed, revealing a small gap you could fit a <b>prying tool</b> in."
+		if(RWINDOW_OUT_OF_FRAME)
+			. += "The main plate of the window has popped out of the frame, exposing some bars that look like they can be <b>cut</b>."
+		if(RWINDOW_BARS_CUT)
+			. += "The main pane can be easily moved out of the way to reveal some <b>bolts</b> holding the frame in."
+
+/obj/structure/window/plasma/reinforced/spawner/east
 	dir = EAST
 
-/obj/structure/window/reinforced/plasma/spawner/west
+/obj/structure/window/plasma/reinforced/spawner/west
 	dir = WEST
 
-/obj/structure/window/reinforced/plasma/spawner/north
+/obj/structure/window/plasma/reinforced/spawner/north
 	dir = NORTH
 
-/obj/structure/window/reinforced/plasma/unanchored
+/obj/structure/window/plasma/reinforced/unanchored
 	anchored = FALSE
 
 /obj/structure/window/reinforced/tinted
@@ -531,7 +594,7 @@
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/reinforced/plasma/fulltile)
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
 	glass_amount = 2
 
 /obj/structure/window/fulltile/unanchored
@@ -545,13 +608,13 @@
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/reinforced/plasma/fulltile)
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
 	glass_amount = 2
 
 /obj/structure/window/plasma/fulltile/unanchored
 	anchored = FALSE
 
-/obj/structure/window/reinforced/plasma/fulltile
+/obj/structure/window/plasma/reinforced/fulltile
 	icon = 'icons/obj/smooth_structures/rplasma_window.dmi'
 	icon_state = "rplasmawindow"
 	dir = FULLTILE_WINDOW_DIR
@@ -561,7 +624,7 @@
 	smooth = SMOOTH_TRUE
 	glass_amount = 2
 
-/obj/structure/window/reinforced/plasma/fulltile/unanchored
+/obj/structure/window/plasma/reinforced/fulltile/unanchored
 	anchored = FALSE
 
 /obj/structure/window/reinforced/fulltile
@@ -572,7 +635,7 @@
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/reinforced/plasma/fulltile)
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
 	level = 3
 	glass_amount = 2
 
@@ -586,7 +649,7 @@
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/reinforced/plasma/fulltile)
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
 	level = 3
 	glass_amount = 2
 
@@ -594,7 +657,7 @@
 	icon = 'icons/obj/smooth_structures/rice_window.dmi'
 	icon_state = "ice_window"
 	max_integrity = 150
-	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/reinforced/plasma/fulltile)
+	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
 	level = 3
 	glass_amount = 2
 

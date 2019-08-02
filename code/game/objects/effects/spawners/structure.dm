@@ -300,12 +300,12 @@ again.
 /obj/effect/spawner/structure/window/plasma/reinforced
 	name = "reinforced plasma window spawner"
 	icon_state = "prwindow_spawner"
-	spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/plasma/fulltile)
+	spawn_list = list(/obj/structure/grille, /obj/structure/window/plasma/reinforced/fulltile)
 
 /obj/effect/spawner/structure/window/hollow/plasma/reinforced
 	name = "hollow reinforced plasma window spawner"
 	icon_state = "phrwindow_spawner_full"
-	spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/plasma, /obj/structure/window/reinforced/plasma/spawner/north, /obj/structure/window/reinforced/plasma/spawner/east, /obj/structure/window/reinforced/plasma/spawner/west)
+	spawn_list = list(/obj/structure/grille, /obj/structure/window/plasma/reinforced, /obj/structure/window/plasma/reinforced/spawner/north, /obj/structure/window/plasma/reinforced/spawner/east, /obj/structure/window/plasma/reinforced/spawner/west)
 
 /obj/effect/spawner/structure/window/hollow/plasma/reinforced/end
 	icon_state = "phrwindow_spawner_end"
@@ -313,13 +313,13 @@ again.
 /obj/effect/spawner/structure/window/hollow/plasma/reinforced/end/Initialize()
 	switch(dir)
 		if(NORTH)
-			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/plasma/spawner/north, /obj/structure/window/reinforced/plasma/spawner/east, /obj/structure/window/reinforced/plasma/spawner/west)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/plasma/reinforced/spawner/north, /obj/structure/window/plasma/reinforced/spawner/east, /obj/structure/window/plasma/reinforced/spawner/west)
 		if(EAST)
-			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/plasma, /obj/structure/window/reinforced/plasma/spawner/north, /obj/structure/window/reinforced/plasma/spawner/east)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/plasma/reinforced, /obj/structure/window/plasma/reinforced/spawner/north, /obj/structure/window/plasma/reinforced/spawner/east)
 		if(SOUTH)
-			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/plasma, /obj/structure/window/reinforced/plasma/spawner/east, /obj/structure/window/reinforced/plasma/spawner/west)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/plasma/reinforced, /obj/structure/window/plasma/reinforced/spawner/east, /obj/structure/window/plasma/reinforced/spawner/west)
 		if(WEST)
-			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/plasma, /obj/structure/window/reinforced/plasma/spawner/north, /obj/structure/window/reinforced/plasma/spawner/west)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/plasma/reinforced, /obj/structure/window/plasma/reinforced/spawner/north, /obj/structure/window/plasma/reinforced/spawner/west)
 	. = ..()
 
 /obj/effect/spawner/structure/window/hollow/plasma/reinforced/middle
@@ -328,9 +328,9 @@ again.
 /obj/effect/spawner/structure/window/hollow/plasma/reinforced/middle/Initialize()
 	switch(dir)
 		if(NORTH,SOUTH)
-			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/plasma, /obj/structure/window/reinforced/plasma/spawner/north)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/plasma/reinforced, /obj/structure/window/plasma/reinforced/spawner/north)
 		if(EAST,WEST)
-			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/plasma/spawner/east, /obj/structure/window/reinforced/plasma/spawner/west)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/plasma/reinforced/spawner/east, /obj/structure/window/plasma/reinforced/spawner/west)
 	. = ..()
 
 /obj/effect/spawner/structure/window/hollow/plasma/reinforced/directional
@@ -339,19 +339,19 @@ again.
 /obj/effect/spawner/structure/window/hollow/plasma/reinforced/directional/Initialize()
 	switch(dir)
 		if(NORTH)
-			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/plasma/spawner/north)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/plasma/reinforced/spawner/north)
 		if(NORTHEAST)
-			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/plasma/spawner/north, /obj/structure/window/reinforced/plasma/spawner/east)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/plasma/reinforced/spawner/north, /obj/structure/window/plasma/reinforced/spawner/east)
 		if(EAST)
-			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/plasma/spawner/east)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/plasma/reinforced/spawner/east)
 		if(SOUTHEAST)
-			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/plasma, /obj/structure/window/reinforced/plasma/spawner/east)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/plasma/reinforced, /obj/structure/window/plasma/reinforced/spawner/east)
 		if(SOUTH)
-			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/plasma)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/plasma/reinforced)
 		if(SOUTHWEST)
-			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/plasma, /obj/structure/window/reinforced/plasma/spawner/west)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/plasma/reinforced, /obj/structure/window/plasma/reinforced/spawner/west)
 		if(WEST)
-			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/plasma/spawner/west)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/plasma/reinforced/spawner/west)
 		if(NORTHWEST)
-			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/plasma/spawner/north, /obj/structure/window/reinforced/plasma/spawner/west)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/plasma/reinforced/spawner/north, /obj/structure/window/plasma/reinforced/spawner/west)
 	. = ..()
