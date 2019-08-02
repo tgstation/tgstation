@@ -403,10 +403,10 @@
 				user.visible_message("<span class='notice'>[user] wedges \the [I] into the gap in the frame and starts prying...</span>",
 										"<span class='notice'>You wedge \the [I] into the gap in the frame and start prying...</span>")
 				if(I.use_tool(src, user, 50, volume = 50))
-					state = RWINDOW_OUT_OF_FRAME
+					state = RWINDOW_POPPED
 					to_chat(user, "<span class='notice'>The panel pops out of the frame, exposing some thin metal bars that looks like they can be cut.</span>")
 				return
-		if(RWINDOW_OUT_OF_FRAME)
+		if(RWINDOW_POPPED)
 			if(I.tool_behaviour == TOOL_WIRECUTTER)
 				user.visible_message("<span class='notice'>[user] starts cutting the exposed bars on \the [src]...</span>",
 										"<span class='notice'>You start cutting the exposed bars on \the [src]</span>")
@@ -439,7 +439,7 @@
 			. += "The screws are glowing white hot, and you'll likely be able to <b>unscrew them</b> now."
 		if(RWINDOW_BOLTS_OUT)
 			. += "The screws have been removed, revealing a small gap you could fit a <b>prying tool</b> in."
-		if(RWINDOW_OUT_OF_FRAME)
+		if(RWINDOW_POPPED)
 			. += "The main plate of the window has popped out of the frame, exposing some bars that look like they can be <b>cut</b>."
 		if(RWINDOW_BARS_CUT)
 			. += "The main pane can be easily moved out of the way to reveal some <b>bolts</b> holding the frame in."
@@ -527,10 +527,10 @@
 				user.visible_message("<span class='notice'>[user] wedges \the [I] into the gap in the frame and starts prying...</span>",
 										"<span class='notice'>You wedge \the [I] into the gap in the frame and start prying...</span>")
 				if(I.use_tool(src, user, 50, volume = 50))
-					state = RWINDOW_OUT_OF_FRAME
+					state = RWINDOW_POPPED
 					to_chat(user, "<span class='notice'>The panel pops out of the frame, exposing some thin metal bars that looks like they can be cut.</span>")
 				return
-		if(RWINDOW_OUT_OF_FRAME)
+		if(RWINDOW_POPPED)
 			if(I.tool_behaviour == TOOL_WIRECUTTER)
 				user.visible_message("<span class='notice'>[user] starts cutting the exposed bars on \the [src]...</span>",
 										"<span class='notice'>You start cutting the exposed bars on \the [src]</span>")
@@ -543,7 +543,7 @@
 				user.visible_message("<span class='notice'>[user] starts unfastening \the [src] from the frame...</span>",
 					"<span class='notice'>You start unfastening the bolts from the frame...</span>")
 				if(I.use_tool(src, user, 50, volume = 50))
-					to_chat(user, "<span class='notice'>You unscrew the bolts the frame and the window pops loose.</span>")
+					to_chat(user, "<span class='notice'>You unfasten the bolts from the frame and the window pops loose.</span>")
 					state = WINDOW_OUT_OF_FRAME
 					setAnchored(FALSE)
 				return
@@ -558,7 +558,7 @@
 			. += "The screws are glowing white hot, and you'll likely be able to <b>unscrew them</b> now."
 		if(RWINDOW_BOLTS_OUT)
 			. += "The screws have been removed, revealing a small gap you could fit a <b>prying tool</b> in."
-		if(RWINDOW_OUT_OF_FRAME)
+		if(RWINDOW_POPPED)
 			. += "The main plate of the window has popped out of the frame, exposing some bars that look like they can be <b>cut</b>."
 		if(RWINDOW_BARS_CUT)
 			. += "The main pane can be easily moved out of the way to reveal some <b>bolts</b> holding the frame in."
