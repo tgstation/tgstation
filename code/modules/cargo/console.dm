@@ -11,6 +11,7 @@
 	var/blockade_warning = "Bluespace instability detected. Shuttle movement impossible."
 
 	light_color = "#E2853D"//orange
+	var/department = null
 
 /obj/machinery/computer/cargo/request
 	name = "supply request console"
@@ -49,18 +50,25 @@
 	board.contraband = TRUE
 	board.obj_flags |= EMAGGED
 
+/obj/machinery/computer/cargo/attacked_by(obj/item/card/id/departmental_budget/I, mob/living/user)
+	if(istype(I, /obj/item/card/id/departmental_budget) && isnull(department))
+		department = I.department_ID
+
 /obj/machinery/computer/cargo/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "cargo", name, 1000, 800, master_ui, state)
-		ui.open()
+	if(!isnull(department))
+		if(!ui)
+			ui = new(user, src, ui_key, "cargo", name, 1000, 800, master_ui, state)
+			ui.open()
+	else
+		to_chat(usr, "<span class='warning'>You must assign this terminal to a department!</span>")
 
 /obj/machinery/computer/cargo/ui_data()
 	var/list/data = list()
 	data["requestonly"] = requestonly
 	data["location"] = SSshuttle.supply.getStatusText()
-	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	var/datum/bank_account/D = SSeconomy.get_dep_account(department)
 	if(D)
 		data["points"] = D.account_balance
 	data["away"] = SSshuttle.supply.getDockedId() == "supply_away"
