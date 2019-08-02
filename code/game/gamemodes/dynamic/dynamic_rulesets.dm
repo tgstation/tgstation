@@ -117,7 +117,7 @@
 /// Give your candidates or assignees equipment and antag datum here.
 /datum/dynamic_ruleset/roundstart/delayed/execute()
 	if (SSticker && SSticker.current_state < GAME_STATE_PLAYING)
-		CRASH("The delayed ruleset [src.name] executed before the round started.")
+		CRASH("The delayed ruleset [name] executed before the round started.")
 
 /// Here you can perform any additional checks you want. (such as checking the map etc)
 /// Remember that on roundstart no one knows what their job is at this point.

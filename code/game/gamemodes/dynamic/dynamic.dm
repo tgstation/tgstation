@@ -353,7 +353,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		return TRUE
 	var/list/drafted_rules = list()
 	for (var/datum/dynamic_ruleset/roundstart/rule in roundstart_rules)
-		if (rule.acceptable(roundstart_pop_ready,threat_level) && threat >= rule.cost)	// If we got the population and threat required
+		if (rule.acceptable(roundstart_pop_ready, threat_level) && threat >= rule.cost)	// If we got the population and threat required
 			rule.candidates = candidates.Copy()
 			rule.trim_candidates()
 			if (rule.ready() && rule.candidates.len > 0)
@@ -539,7 +539,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 					return FALSE
 	
 	update_playercounts()
-	if ((forced || (new_rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len,threat_level) && new_rule.cost <= threat)))
+	if ((forced || (new_rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && new_rule.cost <= threat)))
 		new_rule.candidates = current_players.Copy()
 		new_rule.trim_candidates()
 		if (new_rule.ready(forced))
@@ -588,7 +588,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if (prob(get_injection_chance()))
 			var/list/drafted_rules = list()
 			for (var/datum/dynamic_ruleset/midround/rule in midround_rules)
-				if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len,threat_level) && threat >= rule.cost)
+				if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && threat >= rule.cost)
 					// Classic secret : only autotraitor/minor roles
 					if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
 						continue
@@ -690,7 +690,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	else if (latejoin_injection_cooldown < world.time && prob(get_injection_chance()))
 		var/list/drafted_rules = list()
 		for (var/datum/dynamic_ruleset/latejoin/rule in latejoin_rules)
-			if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len,threat_level) && threat >= rule.cost)
+			if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && threat >= rule.cost)
 				// Classic secret : only autotraitor/minor roles
 				if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
 					continue

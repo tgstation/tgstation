@@ -362,13 +362,10 @@
 	high_population_requirement = 10
 	delay = 5 MINUTES
 	flags = HIGHLANDER_RULESET
+	// I give up, just there should be enough heads with 35 players...
+	minimum_players = 35
 	var/datum/team/revolution/revolution
 	var/finished = 0
-
-/datum/dynamic_ruleset/roundstart/delayed/revs/ready(forced = FALSE)
-	// This is a way to get heads, I guess.
-	mode.required_jobs = list(list("Captain"=1),list("Head of Personnel"=1),list("Head of Security"=1),list("Chief Engineer"=1),list("Research Director"=1),list("Chief Medical Officer"=1))
-	return TRUE
 
 /datum/dynamic_ruleset/roundstart/delayed/revs/execute()
 	var/max_canditates = 4
