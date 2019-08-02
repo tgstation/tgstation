@@ -4,16 +4,16 @@
 
 #define PLASMA_HEAT_PENALTY 15     // Higher == Bigger heat and waste penalty from having the crystal surrounded by this gas. Negative numbers reduce penalty.
 #define OXYGEN_HEAT_PENALTY 1
-#define PLUOXIUM_HEAT_PENALTY 5
+#define PLUOXIUM_HEAT_PENALTY -1
 #define TRITIUM_HEAT_PENALTY 10
 #define CO2_HEAT_PENALTY 0.1
 #define NITROGEN_HEAT_MODIFIER -1.5
 
 #define OXYGEN_TRANSMIT_MODIFIER 1.5   //Higher == Bigger bonus to power generation.
 #define PLASMA_TRANSMIT_MODIFIER 4
-#define PLUOXIUM_TRANSMIT_MODIFIER 6
 
 #define N2O_HEAT_RESISTANCE 6          //Higher == Gas makes the crystal more resistant against heat damage.
+#define PLUOXIUM_HEAT_RESISTANCE 3
 
 #define POWERLOSS_INHIBITION_GAS_THRESHOLD 0.20         //Higher == Higher percentage of inhibitor gas needed before the charge inertia chain reaction effect starts.
 #define POWERLOSS_INHIBITION_MOLE_THRESHOLD 20        //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.        //Scales powerloss inhibition down until this amount of moles is reached
@@ -377,9 +377,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		gasmix_power_ratio = min(max(plasmacomp + o2comp + co2comp + pluoxiumcomp + tritiumcomp - n2comp, 0), 1)
 
 		dynamic_heat_modifier = max((plasmacomp * PLASMA_HEAT_PENALTY)+(o2comp * OXYGEN_HEAT_PENALTY)+(co2comp * CO2_HEAT_PENALTY)+(tritiumcomp * TRITIUM_HEAT_PENALTY)+(pluoxiumcomp * PLUOXIUM_HEAT_PENALTY)+(n2comp * NITROGEN_HEAT_MODIFIER), 0.5)
-		dynamic_heat_resistance = max(n2ocomp * N2O_HEAT_RESISTANCE, 1)
+		dynamic_heat_resistance = max((n2ocomp * N2O_HEAT_RESISTANCE) + (pluoxiumcomp * PLUOXIUM_HEAT_RESISTANCE), 1)
 
-		power_transmission_bonus = max((plasmacomp * PLASMA_TRANSMIT_MODIFIER) + (o2comp * OXYGEN_TRANSMIT_MODIFIER) + (pluoxiumcomp * PLUOXIUM_TRANSMIT_MODIFIER), 0)
+		power_transmission_bonus = max((plasmacomp * PLASMA_TRANSMIT_MODIFIER) + (o2comp * OXYGEN_TRANSMIT_MODIFIER), 0)
 
 		//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
 		mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
