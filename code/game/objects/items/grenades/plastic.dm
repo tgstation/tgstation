@@ -21,7 +21,7 @@
 /obj/item/grenade/c4/Initialize()
 	. = ..()
 	plastic_overlay = mutable_appearance(icon, "[item_state]2", HIGH_OBJ_LAYER)
-	wires = new /datum/wires/explosive/plastic(src)
+	wires = new /datum/wires/explosive/c4(src)
 
 /obj/item/grenade/c4/ComponentInitialize()
 	. = ..()
