@@ -6708,6 +6708,9 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/machinery/computer/cargo/request/sec{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/security/main)
 "anw" = (
@@ -42628,6 +42631,7 @@
 	dir = 10
 	},
 /obj/structure/cable,
+/obj/machinery/computer/cargo/request/civ,
 /turf/open/floor/wood,
 /area/library)
 "bPT" = (
@@ -48756,6 +48760,7 @@
 /area/medical/storage)
 "cdt" = (
 /obj/effect/landmark/event_spawn,
+/obj/machinery/computer/cargo/request/med,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "cdu" = (
@@ -51817,6 +51822,9 @@
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/computer/cargo/request/sci{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/science/lab)
@@ -73644,6 +73652,18 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
+"fGd" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/computer/cargo/request/eng{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/engine/break_room)
 "fGz" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -73947,6 +73967,15 @@
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
+"jmm" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/computer/cargo/request/srv{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard)
 "jrE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -74624,6 +74653,19 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/hydroponics)
+"qnh" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/computer/finances{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/bridge)
 "qom" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/cable,
@@ -101355,7 +101397,7 @@ biZ
 bkE
 bmy
 bmA
-bot
+qnh
 bsU
 bux
 bsU
@@ -112938,7 +112980,7 @@ bPd
 cco
 byN
 bTc
-rBU
+jmm
 xVl
 kys
 cow
@@ -115745,7 +115787,7 @@ aWw
 bhW
 bjG
 xyt
-bnb
+fGd
 owR
 owR
 pmZ

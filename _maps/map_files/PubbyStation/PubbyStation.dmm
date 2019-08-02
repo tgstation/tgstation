@@ -31570,6 +31570,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/computer/cargo/request/med{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bCm" = (
@@ -44499,6 +44502,7 @@
 	pixel_x = 24
 	},
 /obj/item/stack/rods/fifty,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
 /area/maintenance/department/chapel/monastery)
 "ckl" = (
@@ -47660,7 +47664,6 @@
 /turf/open/floor/plating,
 /area/maintenance/department/chapel/monastery)
 "cwn" = (
-/obj/item/storage/toolbox/mechanical,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -47668,6 +47671,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/computer/cargo/request/civ,
 /turf/open/floor/plating,
 /area/maintenance/department/chapel/monastery)
 "cwo" = (
@@ -51346,6 +51350,19 @@
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
+"jbg" = (
+/obj/machinery/light{
+	light_color = "#e8eaff"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/computer/finances{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/bridge)
 "jcB" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -52472,6 +52489,15 @@
 	},
 /turf/open/floor/plating,
 /area/storage/emergency/starboard)
+"lKR" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/computer/cargo/request/srv{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/bar)
 "lMU" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/cable,
@@ -53265,6 +53291,9 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/computer/cargo/request/sci{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "nJI" = (
@@ -54867,6 +54896,19 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
+"rAX" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/computer/cargo/request/sec{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/security/main)
 "rBh" = (
 /obj/structure/mopbucket,
 /obj/item/mop,
@@ -55417,6 +55459,17 @@
 	},
 /turf/open/floor/plating,
 /area/engine/supermatter)
+"tcK" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/machinery/computer/cargo/request/eng{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "tcY" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -81760,7 +81813,7 @@ amn
 alC
 alE
 feH
-apb
+rAX
 agP
 aqx
 arq
@@ -88218,7 +88271,7 @@ aSP
 aSP
 aPE
 aWf
-aXb
+lKR
 aPE
 aYY
 bae
@@ -88709,7 +88762,7 @@ auR
 avZ
 axb
 ayb
-azh
+jbg
 aAB
 aBx
 aCL
@@ -91103,7 +91156,7 @@ cam
 cbp
 cci
 cam
-cdI
+tcK
 bXk
 lXk
 bXk
