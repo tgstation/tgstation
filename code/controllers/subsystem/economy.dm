@@ -6,11 +6,11 @@ SUBSYSTEM_DEF(economy)
 	var/roundstart_paychecks = 5
 	var/budget_pool = 35000
 	var/list/departments = list(ACCOUNT_CIV,
-								ACCOUNT_ENG
-								ACCOUNT_SCI
-								ACCOUNT_MED
-								ACCOUNT_SRV
-								ACCOUNT_CAR
+								ACCOUNT_ENG,
+								ACCOUNT_SCI,
+								ACCOUNT_MED,
+								ACCOUNT_SRV,
+								ACCOUNT_CAR,
 								ACCOUNT_SEC)
 	var/list/department_accounts = list(ACCOUNT_CIV = ACCOUNT_CIV_NAME,
 										ACCOUNT_ENG = ACCOUNT_ENG_NAME,
@@ -145,6 +145,7 @@ SUBSYSTEM_DEF(economy)
 	if(D)
 		D.adjust_money(min(civ_cash, MAX_GRANT_CIV))
 
+//* This pays out departments based on their assigned budgets
 /datum/controller/subsystem/economy/proc/department_payout(var/N)
 	for(var/A in department_accounts)
 		var/datum/bank_account/D = get_dep_account(A)
@@ -154,7 +155,7 @@ SUBSYSTEM_DEF(economy)
 /datum/controller/subsystem/economy/proc/change_budget(department, amount)
 	var/list/temp_shares = department_share
 	var/tempsum = 0
-	temp_share[department] = amount
+	temp_shares[department] = amount
 	for(var/D in departments)
 		tempsum += temp_shares[D]
 	if(tempsum <= 2)

@@ -5,15 +5,22 @@
 	icon_keyboard = "generic_key"
 	req_access = list(ACCESS_FINANCE)
 	circuit = /obj/item/circuitboard/computer/card/finances
-	var/list/account_names = SSeconomy.department_accounts - list(ACCOUNT_CAR)
-	var/list/account_shares = SSeconomy.department_share - list(ACCOUNT_CAR)
-	var/list/departments = SSeconomy.departments - list(ACCOUNT_CAR)
+	var/list/account_names = list()
+	var/list/account_shares = list()
+	var/list/departments = list()
 	var/sum = 0.0
 
 /obj/machinery/computer/finances/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
+	departments += SSeconomy.departments
+	account_shares += SSeconomy.department_share
+	account_names += SSeconomy.department_accounts
+	account_names -= list(ACCOUNT_CAR)
+	account_shares -= list(ACCOUNT_CAR)
+	departments -= list(ACCOUNT_CAR)
 	for(var/S in account_shares)
 		sum += S * 100
+		
 
 /obj/machinery/computer/finances/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null,\
 		 force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state )
@@ -24,7 +31,7 @@
 		to_chat(user, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
 		return
 	if(!ui)
-		ui = new(user, drc, ui_key, "financial", name, 300, 300, master_ui, state)
+		ui = new(user, src, ui_key, "financial", name, 300, 300, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/finances/ui_data()
@@ -37,8 +44,8 @@
 	data["shares"] = list()
 	for(var/A in departments)
 		data["shares"] += list(
-			"department" = A
-			"name" = account_names[A]
+			"department" = A,
+			"name" = account_names[A],
 			"share" = account_shares[A]
 		)
 	data["sum"] = sum
@@ -50,7 +57,7 @@
 		if(action == A)
 			var/newnum = input("Set the new budget:", "Budget", "0") as num|null
 			newnum = newnum/100
-			if(!SSeconomy.change_budget)
+			if(!SSeconomy.change_budget(A, newnum))
 				return
 			else
 				SSeconomy.change_budget(A, newnum)
