@@ -2970,5 +2970,6 @@
 #include "spacestation413\code\modules\spells\cluwnecurse.dm"
 #include "spacestation413\code\modules\spells\slip.dm"
 #include "spacestation413\code\modules\spells\spell_types\touch.dm"
+#include "spacestation413\code\modules\surgery\surgery.dm"
 #include "spacestation413\code\modules\surgery\organs\butts.dm"
 // END_INCLUDE
