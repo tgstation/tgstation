@@ -29,8 +29,8 @@ The proc then removes the two items, destroying them permanently, and handles th
 		playsound(RL, 'sound/effects/sparks4.ogg')
 		playsound(AL, 'sound/effects/sparks4.ogg')
 
-		RL.visible_message("[RL] suddenly vanishes, leaving [AL] in their place!")
-		AL.visible_message("[AL] suddenly vanishes, leaving [RL] in their place!")
+		RL.visible_message("<span class=warning>[RL] suddenly vanishes, leaving [AL] in their place!</span>")
+		AL.visible_message("<span class=warning>[AL] suddenly vanishes, leaving [RL] in their place!</span>")
 		to_chat(RL, "<span class=notice>You suddenly find yourself in a new location.</span>")
 		to_chat(AL, "<span class=notice>You press the button on the pen, and suddenly find yourself in a new location.</span>")
 
