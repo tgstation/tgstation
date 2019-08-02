@@ -137,7 +137,7 @@
 	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
 
-obj/item/abductor/proc/AbductorCheck(mob/user)
+/obj/item/abductor/proc/AbductorCheck(mob/user)
 	if (HAS_TRAIT(user, TRAIT_ABDUCTOR_TRAINING))
 		return TRUE
 	if (istype(user) && user.mind && HAS_TRAIT(user.mind, TRAIT_ABDUCTOR_TRAINING))
