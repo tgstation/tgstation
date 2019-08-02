@@ -35,6 +35,7 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	del_on_death = TRUE
 	deathmessage = "screams in agony as it sublimates into a sulfurous smoke."
+	deathsound = 'sound/magic/demon_dies.ogg'
 	var/boost = 0
 	bloodcrawl = BLOODCRAWL_EAT
 	var/list/consumed_mobs = list()
@@ -46,10 +47,6 @@
 	. = ..()
 	set_varspeed(1)
 	addtimer(CALLBACK(src, /mob/living/simple_animal/proc/set_varspeed, 0), 30)
-
-/mob/living/simple_animal/imp/death()
-	playsound(src,'sound/magic/demon_dies.ogg', 80, 1)
-	. = ..()
 
 /datum/antagonist/imp
 	name = "Imp"
