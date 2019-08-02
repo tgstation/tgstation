@@ -431,8 +431,10 @@
 	if(!HAS_TRAIT(src, TRAIT_HUSK))
 		ADD_TRAIT(src, TRAIT_DISFIGURED, "husk")
 		. = TRUE
-	ADD_TRAIT(src, TRAIT_HUSK, source)
-	update_body()
+		ADD_TRAIT(src, TRAIT_HUSK, source)
+		update_body()
+	else
+		ADD_TRAIT(src, TRAIT_HUSK, source)	//I have no idea why the original code applied this unconditionally, but here it is
 
 /mob/living/proc/cure_fakedeath(source)
 	REMOVE_TRAIT(src, TRAIT_FAKEDEATH, source)
