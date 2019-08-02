@@ -34,8 +34,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	materials = list(MAT_METAL=500)
-	breakouttime = 600 //Deciseconds = 60s = 1 minute
+	materials = list(/datum/material/iron=500)
+	breakouttime = 1 MINUTES
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	var/trashtype = null //for disposable cuffs
@@ -96,14 +96,15 @@
 		qdel(src)
 	return
 
-/obj/item/restraints/handcuffs/sinew
+/obj/item/restraints/handcuffs/cable/sinew
 	name = "sinew restraints"
 	desc = "A pair of restraints fashioned from long strands of flesh."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "sinewcuff"
 	item_state = "sinewcuff"
-	breakouttime = 300 //Deciseconds = 30s
-	cuffsound = 'sound/weapons/cablecuff.ogg'
+	materials = null
+	item_color = "white"
+	color = "#000000"
 
 /obj/item/restraints/handcuffs/cable
 	name = "cable restraints"
@@ -114,17 +115,13 @@
 	color = "#ff0000"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	materials = list(MAT_METAL=150, MAT_GLASS=75)
-	breakouttime = 300 //Deciseconds = 30s
+	materials = list(/datum/material/iron=150, /datum/material/glass=75)
+	breakouttime = 30 SECONDS
 	cuffsound = 'sound/weapons/cablecuff.ogg'
 
 /obj/item/restraints/handcuffs/cable/Initialize(mapload, param_color)
 	. = ..()
 
-	var/list/cable_colors = GLOB.cable_colors
-	item_color = param_color || item_color || pick(cable_colors)
-	if(cable_colors[item_color])
-		item_color = cable_colors[item_color]
 	update_icon()
 
 /obj/item/restraints/handcuffs/cable/update_icon()
@@ -168,7 +165,7 @@
 /obj/item/restraints/handcuffs/fake
 	name = "fake handcuffs"
 	desc = "Fake handcuffs meant for gag purposes."
-	breakouttime = 10 //Deciseconds = 1s
+	breakouttime = 1 SECONDS
 
 /obj/item/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params)
 	..()
@@ -178,7 +175,7 @@
 			var/obj/item/wirerod/W = new /obj/item/wirerod
 			remove_item_from_storage(user)
 			user.put_in_hands(W)
-			to_chat(user, "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>")
+			to_chat(user, "<span class='notice'>You wrap [src] around the top of [I].</span>")
 			qdel(src)
 		else
 			to_chat(user, "<span class='warning'>You need one rod to make a wired rod!</span>")
@@ -208,7 +205,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	materials = list()
-	breakouttime = 450 //Deciseconds = 45s
+	breakouttime = 45 SECONDS
 	trashtype = /obj/item/restraints/handcuffs/cable/zipties/used
 	item_color = "white"
 
@@ -234,7 +231,7 @@
 	throwforce = 0
 	w_class = WEIGHT_CLASS_NORMAL
 	slowdown = 7
-	breakouttime = 300	//Deciseconds = 30s = 0.5 minute
+	breakouttime = 30 SECONDS
 
 /obj/item/restraints/legcuffs/beartrap
 	name = "bear trap"
@@ -346,7 +343,15 @@
 /obj/item/restraints/legcuffs/bola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return//abort
-	var/mob/living/carbon/C = hit_atom
+	ensnare(hit_atom)
+
+/**
+  * Attempts to legcuff someone with the bola
+  *
+  * Arguments:
+  * * C - the carbon that we will try to ensnare
+  */
+/obj/item/restraints/legcuffs/bola/proc/ensnare(mob/living/carbon/C)
 	if(!C.legcuffed && C.get_num_legs(FALSE) >= 2)
 		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
 		C.legcuffed = src

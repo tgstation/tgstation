@@ -74,9 +74,10 @@
 
 #define STATUS_EFFECT_CRUSHERMARK /datum/status_effect/crusher_mark //if struck with a proto-kinetic crusher, takes a ton of damage
 
-#define STATUS_EFFECT_SAWBLEED /datum/status_effect/saw_bleed //if the bleed builds up enough, takes a ton of damage
+#define STATUS_EFFECT_SAWBLEED /datum/status_effect/stacking/saw_bleed //if the bleed builds up enough, takes a ton of damage
 
 #define STATUS_EFFECT_NECROPOLIS_CURSE /datum/status_effect/necropolis_curse
+#define STATUS_EFFECT_HIVEMIND_CURSE /datum/status_effect/necropolis_curse/hivemind
 #define CURSE_BLINDING	1 //makes the edges of the target's screen obscured
 #define CURSE_SPAWNING	2 //spawns creatures that attack the target only
 #define CURSE_WASTING	4 //causes gradual damage
@@ -96,6 +97,8 @@
 
 #define STATUS_EFFECT_STASIS /datum/status_effect/incapacitating/stasis //Halts biological functions like bleeding, chemical processing, blood regeneration, walking, etc
 
+#define STATUS_EFFECT_FAKE_VIRUS /datum/status_effect/fake_virus //gives you fluff messages for cough, sneeze, headache, etc but without an actual virus
+
 /////////////
 // NEUTRAL //
 /////////////
@@ -110,10 +113,6 @@
 
 #define STATUS_EFFECT_BUGGED /datum/status_effect/bugged //Lets other mobs listen in on what it hears
 
-#define STATUS_EFFECT_HIVE_TRACKER /datum/status_effect/hive_track
-
-#define STATUS_EFFECT_HIVE_RADAR /datum/status_effect/agent_pinpointer/hivemind
-
 #define STATUS_EFFECT_BOUNTY /datum/status_effect/bounty //rewards the person who added this to the target with refreshed spells and a fair heal
 
 /////////////
@@ -122,3 +121,7 @@
 
 #define STATUS_EFFECT_RAINBOWPROTECTION /datum/status_effect/rainbow_protection //Invulnerable and pacifistic
 #define STATUS_EFFECT_SLIMESKIN /datum/status_effect/slimeskin //Increased armor
+
+// Stasis helpers
+
+#define IS_IN_STASIS(mob) (mob.has_status_effect(STATUS_EFFECT_STASIS))

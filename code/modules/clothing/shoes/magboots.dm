@@ -40,8 +40,8 @@
 	return clothing_flags & NOSLIP
 
 /obj/item/clothing/shoes/magboots/examine(mob/user)
-	..()
-	to_chat(user, "Its mag-pulse traction system appears to be [magpulse ? "enabled" : "disabled"].")
+	. = ..()
+	. += "Its mag-pulse traction system appears to be [magpulse ? "enabled" : "disabled"]."
 
 
 /obj/item/clothing/shoes/magboots/advance

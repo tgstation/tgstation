@@ -16,13 +16,18 @@
 	damage_deflection = 70
 	poddoor = TRUE
 
+/obj/machinery/door/poddoor/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	id = "[idnum][id]"
+
 /obj/machinery/door/poddoor/preopen
 	icon_state = "open"
 	density = FALSE
 	opacity = 0
 
 /obj/machinery/door/poddoor/ert
+	name = "hardened blast door"
 	desc = "A heavy duty blast door that only opens for dire emergencies."
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 //special poddoors that open when emergency shuttle docks at centcom
 /obj/machinery/door/poddoor/shuttledock

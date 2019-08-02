@@ -1,7 +1,7 @@
 /datum/outfit/ert
 	name = "ERT Common"
 
-	uniform = /obj/item/clothing/under/rank/centcom_officer
+	uniform = /obj/item/clothing/under/rank/centcom/officer
 	shoes = /obj/item/clothing/shoes/combat/swat
 	gloves = /obj/item/clothing/gloves/combat
 	ears = /obj/item/radio/headset/headset_cent/alt
@@ -19,7 +19,7 @@
 
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
-	W.update_label(W.registered_name, W.assignment)
+	W.update_label()
 
 /datum/outfit/ert/commander
 	name = "ERT Commander"
@@ -163,7 +163,7 @@
 /datum/outfit/centcom_official
 	name = "CentCom Official"
 
-	uniform = /obj/item/clothing/under/rank/centcom_officer
+	uniform = /obj/item/clothing/under/rank/centcom/officer
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	gloves = /obj/item/clothing/gloves/color/black
 	ears = /obj/item/radio/headset/headset_cent
@@ -173,7 +173,7 @@
 	back = /obj/item/storage/backpack/satchel
 	r_pocket = /obj/item/pda/heads
 	l_hand = /obj/item/clipboard
-	id = /obj/item/card/id
+	id = /obj/item/card/id/centcom
 
 /datum/outfit/centcom_official/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
@@ -185,7 +185,6 @@
 	pda.update_label()
 
 	var/obj/item/card/id/W = H.wear_id
-	W.icon_state = "centcom"
 	W.access = get_centcom_access("CentCom Official")
 	W.access += ACCESS_WEAPONS
 	W.assignment = "CentCom Official"

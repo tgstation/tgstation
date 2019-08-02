@@ -7,13 +7,10 @@
 	icon_keyboard = "med_key"
 	req_one_access = list(ACCESS_MEDICAL, ACCESS_FORENSICS_LOCKERS)
 	circuit = /obj/item/circuitboard/computer/med_data
-	var/obj/item/card/id/scan = null
-	var/authenticated = null
 	var/rank = null
 	var/screen = null
 	var/datum/data/record/active1
 	var/datum/data/record/active2
-	var/a_id = null
 	var/temp = null
 	var/printing = null
 	//Sorting Variables
@@ -25,22 +22,20 @@
 /obj/machinery/computer/med_data/syndie
 	icon_keyboard = "syndie_key"
 
-/obj/machinery/computer/med_data/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/card/id) && !scan)
-		if(!user.transferItemToLoc(O, src))
-			return
-		scan = O
-		to_chat(user, "<span class='notice'>You insert [O].</span>")
+/obj/machinery/computer/med_data/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/card/id))
+		id_insert_scan(user)
 	else
 		return ..()
 
 /obj/machinery/computer/med_data/ui_interact(mob/user)
 	. = ..()
+	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 	var/dat
 	if(temp)
 		dat = text("<TT>[temp]</TT><BR><BR><A href='?src=[REF(src)];temp=1'>Clear Screen</A>")
 	else
-		dat = text("Confirm Identity: <A href='?src=[REF(src)];scan=1'>[]</A><HR>", (src.scan ? text("[]", src.scan.name) : "----------"))
+		dat = text("Confirm Identity: <A href='?src=[REF(src)];inserted_scan_id=1'>[]</A><HR>", (src.inserted_scan_id ? text("[]", src.inserted_scan_id.name) : "----------"))
 		if(src.authenticated)
 			switch(src.screen)
 				if(1)
@@ -116,7 +111,7 @@
 						dat += "<td><a href='?src=[REF(src)];field=show_photo_front'><img src=photo_front height=80 width=80 border=4></a></td>"
 						dat += "<td><a href='?src=[REF(src)];field=show_photo_side'><img src=photo_side height=80 width=80 border=4></a></td></tr>"
 						dat += "<tr><td>ID:</td><td>[active1.fields["id"]]</td></tr>"
-						dat += "<tr><td>Sex:</td><td><A href='?src=[REF(src)];field=sex'>&nbsp;[active1.fields["sex"]]&nbsp;</A></td></tr>"
+						dat += "<tr><td>Gender:</td><td><A href='?src=[REF(src)];field=gender'>&nbsp;[active1.fields["gender"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td>Age:</td><td><A href='?src=[REF(src)];field=age'>&nbsp;[active1.fields["age"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td>Species:</td><td><A href='?src=[REF(src)];field=species'>&nbsp;[active1.fields["species"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td>Fingerprint:</td><td><A href='?src=[REF(src)];field=fingerprint'>&nbsp;[active1.fields["fingerprint"]]&nbsp;</A></td></tr>"
@@ -205,21 +200,17 @@
 		usr.set_machine(src)
 		if(href_list["temp"])
 			src.temp = null
-		if(href_list["scan"])
-			if(src.scan)
-				usr.put_in_hands(scan)
-				scan = null
+		if(href_list["inserted_scan_id"])
+			if(inserted_scan_id)
+				id_eject_scan(usr)
 			else
-				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id)
-				if(I)
-					if(!usr.transferItemToLoc(I, src))
-						return
-					src.scan = I
+				id_insert_scan(usr)
 		else if(href_list["logout"])
 			src.authenticated = null
 			src.screen = null
 			src.active1 = null
 			src.active2 = null
+			playsound(src, 'sound/machines/terminal_off.ogg', 50, FALSE)
 		else if(href_list["choice"])
 			// SORTING!
 			if(href_list["choice"] == "Sorting")
@@ -246,13 +237,16 @@
 				src.authenticated = 1
 				src.rank = "Central Command"
 				src.screen = 1
-			else if(istype(src.scan, /obj/item/card/id))
+			else if(istype(src.inserted_scan_id, /obj/item/card/id))
 				src.active1 = null
 				src.active2 = null
-				if(src.check_access(src.scan))
-					src.authenticated = src.scan.registered_name
-					src.rank = src.scan.assignment
+				if(src.check_access(src.inserted_scan_id))
+					src.authenticated = src.inserted_scan_id.registered_name
+					src.rank = src.inserted_scan_id.assignment
 					src.screen = 1
+				else
+					to_chat(usr, "<span class='danger'>Unauthorized access.</span>")
+			playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
 		if(src.authenticated)
 
 			if(href_list["screen"])
@@ -297,12 +291,14 @@
 							if(!canUseMedicalRecordsConsole(usr, t1, a1))
 								return
 							src.active1.fields["fingerprint"] = t1
-					if("sex")
+					if("gender")
 						if(active1)
-							if(src.active1.fields["sex"] == "Male")
-								src.active1.fields["sex"] = "Female"
+							if(src.active1.fields["gender"] == "Male")
+								src.active1.fields["gender"] = "Female"
+							else if(src.active1.fields["gender"] == "Female")
+								src.active1.fields["gender"] = "Other"
 							else
-								src.active1.fields["sex"] = "Male"
+								src.active1.fields["gender"] = "Male"
 					if("age")
 						if(active1)
 							var/t1 = input("Please input age:", "Med. records", src.active1.fields["age"], null)  as num
@@ -530,7 +526,7 @@
 					var/obj/item/paper/P = new /obj/item/paper( src.loc )
 					P.info = "<CENTER><B>Medical Record - (MR-[GLOB.data_core.medicalPrintCount])</B></CENTER><BR>"
 					if(active1 in GLOB.data_core.general)
-						P.info += text("Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>", src.active1.fields["name"], src.active1.fields["id"], src.active1.fields["sex"], src.active1.fields["age"])
+						P.info += text("Name: [] ID: []<BR>\nGender: []<BR>\nAge: []<BR>", src.active1.fields["name"], src.active1.fields["id"], src.active1.fields["gender"], src.active1.fields["age"])
 						P.info += "\nSpecies: [active1.fields["species"]]<BR>"
 						P.info += text("\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", src.active1.fields["fingerprint"], src.active1.fields["p_stat"], src.active1.fields["m_stat"])
 					else
@@ -546,6 +542,7 @@
 						P.info += "<B>Medical Record Lost!</B><BR>"
 						P.name = text("MR-[] '[]'", GLOB.data_core.medicalPrintCount, "Record Lost")
 					P.info += "</TT>"
+					P.update_icon()
 					src.printing = null
 
 	src.add_fingerprint(usr)
@@ -560,11 +557,11 @@
 				switch(rand(1,6))
 					if(1)
 						if(prob(10))
-							R.fields["name"] = random_unique_lizard_name(R.fields["sex"],1)
+							R.fields["name"] = random_unique_lizard_name(R.fields["gender"],1)
 						else
-							R.fields["name"] = random_unique_name(R.fields["sex"],1)
+							R.fields["name"] = random_unique_name(R.fields["gender"],1)
 					if(2)
-						R.fields["sex"]	= pick("Male", "Female")
+						R.fields["gender"]	= pick("Male", "Female", "Other")
 					if(3)
 						R.fields["age"] = rand(AGE_MIN, AGE_MAX)
 					if(4)
@@ -583,7 +580,7 @@
 	if(user)
 		if(message)
 			if(authenticated)
-				if(user.canUseTopic(src))
+				if(user.canUseTopic(src, BE_CLOSE))
 					if(!record1 || record1 == active1)
 						if(!record2 || record2 == active2)
 							return 1

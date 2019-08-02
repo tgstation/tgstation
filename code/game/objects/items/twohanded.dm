@@ -33,7 +33,7 @@
 	if(!wielded || !user)
 		return
 	wielded = 0
-	if(force_unwielded)
+	if(!isnull(force_unwielded))
 		force = force_unwielded
 	var/sf = findtext(name," (Wielded)")
 	if(sf)
@@ -263,6 +263,7 @@
  * Double-Bladed Energy Swords - Cheridan
  */
 /obj/item/twohanded/dualsaber
+	icon = 'icons/obj/transforming_energy.dmi'
 	icon_state = "dualsaber0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -297,7 +298,7 @@
 
 		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)//stole from chainsaw code
 		var/obj/item/organ/brain/B = user.getorganslot(ORGAN_SLOT_BRAIN)
-		B.vital = FALSE//this cant possibly be a good idea
+		B.organ_flags &= ~ORGAN_VITAL	//this cant possibly be a good idea
 		var/randdir
 		for(var/i in 1 to 24)//like a headless chicken!
 			if(user.is_holding(src))
@@ -466,7 +467,7 @@
 	throw_speed = 4
 	embedding = list("embedded_impact_pain_multiplier" = 3)
 	armour_penetration = 10
-	materials = list(MAT_METAL=1150, MAT_GLASS=2075)
+	materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 	sharpness = IS_SHARP
@@ -509,7 +510,7 @@
 		parts_list -= G
 		qdel(src)
 	..()
-	
+
 
 /obj/item/twohanded/spear/explosive
 	name = "explosive lance"
@@ -534,10 +535,10 @@
 	return BRUTELOSS
 
 /obj/item/twohanded/spear/explosive/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to set your war cry.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to set your war cry.</span>"
 
-/obj/item/twohanded/spear/explosive/update_icon()	
+/obj/item/twohanded/spear/explosive/update_icon()
 	icon_state = "spearbomb[wielded]"
 
 /obj/item/twohanded/spear/explosive/AltClick(mob/user)
@@ -550,6 +551,8 @@
 
 /obj/item/twohanded/spear/explosive/afterattack(atom/movable/AM, mob/user, proximity)
 	. = ..()
+	if(!proximity)
+		return
 	if(wielded)
 		user.say("[war_cry]", forced="spear warcry")
 		explosive.forceMove(AM)
@@ -570,7 +573,7 @@
 	throwforce = 13
 	throw_speed = 2
 	throw_range = 4
-	materials = list(MAT_METAL=13000)
+	materials = list(/datum/material/iron=13000)
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = "swing_hit"
 	sharpness = IS_SHARP
@@ -599,7 +602,7 @@
 	force = on ? force_on : initial(force)
 	throwforce = on ? force_on : initial(force)
 	icon_state = "chainsaw_[on ? "on" : "off"]"
-	GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
+	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
 	butchering.butchering_enabled = on
 
 	if(on)
@@ -718,7 +721,7 @@
 
 /obj/item/twohanded/pitchfork/demonic/attack(mob/target, mob/living/carbon/human/user)
 	if(user.mind && user.owns_soul() && !is_devil(user))
-		to_chat(user, "<span class ='warning'>[src] burns in your hands.</span>")
+		to_chat(user, "<span class='warning'>[src] burns in your hands.</span>")
 		user.apply_damage(rand(force/2, force), BURN, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 	..()
 
@@ -821,18 +824,20 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
-	var/datum/component/mobhook
+	var/mob/listeningTo
 	var/zoom_out_amt = 6
 	var/zoom_amt = 10
+
+/obj/item/twohanded/binoculars/Destroy()
+	listeningTo = null
+	return ..()
 
 /obj/item/twohanded/binoculars/wield(mob/user)
 	. = ..()
 	if(!wielded)
 		return
-	if(QDELETED(mobhook))
-		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/unwield)))
-	else
-		user.TakeComponent(mobhook)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/unwield)
+	listeningTo = user
 	user.visible_message("[user] holds [src] up to [user.p_their()] eyes.","You hold [src] up to your eyes.")
 	item_state = "binoculars_wielded"
 	user.regenerate_icons()
@@ -856,7 +861,8 @@
 
 /obj/item/twohanded/binoculars/unwield(mob/user)
 	. = ..()
-	mobhook.RemoveComponent()
+	UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+	listeningTo = null
 	user.visible_message("[user] lowers [src].","You lower [src].")
 	item_state = "binoculars"
 	user.regenerate_icons()

@@ -1,8 +1,12 @@
+GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't really work on borgos
+	/obj/item/clothing/head/helmet/space/santahat,
+	/obj/item/clothing/head/welding,
+	/obj/item/clothing/head/mob_holder, //I am so very upset that this breaks things
+	/obj/item/clothing/head/helmet/space/eva \
+	)))
+
 /mob/living/silicon/robot/attackby(obj/item/I, mob/living/user)
-	if(hat_offset != INFINITY && user.a_intent == INTENT_HELP && is_type_in_typecache(I, equippable_hats))
-		if(!(I.slot_flags & ITEM_SLOT_HEAD))
-			to_chat(user, "<span class='warning'>You can't quite fit [I] onto [src]'s head.</span>")
-			return
+	if(I.slot_flags & ITEM_SLOT_HEAD && hat_offset != INFINITY && user.a_intent == INTENT_HELP && !is_type_in_typecache(I, GLOB.blacklisted_borg_hats))
 		to_chat(user, "<span class='notice'>You begin to place [I] on [src]'s head...</span>")
 		to_chat(src, "<span class='notice'>[user] is placing [I] on your head...</span>")
 		if(do_after(user, 30, target = src))

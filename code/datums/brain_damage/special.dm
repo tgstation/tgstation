@@ -188,6 +188,56 @@
 	REMOVE_TRAIT(owner, TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
 	active = FALSE
 
+/datum/brain_trauma/special/existential_crisis
+	name = "Existential Crisis"
+	desc = "Patient's hold on reality becomes faint, causing occasional bouts of non-existence."
+	scan_desc = "existential crisis"
+	gain_text = "<span class='notice'>You feel less real.</span>"
+	lose_text = "<span class='warning'>You feel more substantial again.</span>"
+	var/obj/effect/abstract/sync_holder/veil/veil
+	var/next_crisis = 0
+
+/datum/brain_trauma/special/existential_crisis/on_life()
+	..()
+	if(!veil && world.time > next_crisis && prob(3))
+		if(isturf(owner.loc))
+			fade_out()
+
+/datum/brain_trauma/special/existential_crisis/on_lose()
+	if(veil)
+		fade_in()
+	..()
+
+/datum/brain_trauma/special/existential_crisis/proc/fade_out()
+	if(veil)
+		return
+	var/duration = rand(50, 450)
+	veil = new(owner.drop_location())
+	to_chat(owner, "<span class='warning'>[pick("You stop thinking for a moment. Therefore you are not.",\
+												"To be or not to be...",\
+												"Why exist?",\
+												"You stop keeping it real.",\
+												"Your grip on existence slips.",\
+												"Do you even exist?",\
+												"You simply fade away.")]</span>")
+	owner.forceMove(veil)
+	SEND_SIGNAL(owner, COMSIG_MOVABLE_SECLUDED_LOCATION)
+	for(var/thing in owner)
+		var/atom/movable/AM = thing
+		SEND_SIGNAL(AM, COMSIG_MOVABLE_SECLUDED_LOCATION)
+	next_crisis = world.time + 600
+	addtimer(CALLBACK(src, .proc/fade_in), duration)
+
+/datum/brain_trauma/special/existential_crisis/proc/fade_in()
+	QDEL_NULL(veil)
+	to_chat(owner, "<span class='notice'>You fade back into reality.</span>")
+	next_crisis = world.time + 600
+
+//base sync holder is in desynchronizer.dm
+/obj/effect/abstract/sync_holder/veil
+	name = "non-existence"
+	desc = "Existence is just a state of mind."
+
 /datum/brain_trauma/special/beepsky
 	name = "Criminal"
 	desc = "Patient seems to be a criminal."
@@ -195,6 +245,7 @@
 	gain_text = "<span class='warning'>Justice is coming for you.</span>"
 	lose_text = "<span class='notice'>You were absolved for your crimes.</span>"
 	clonable = FALSE
+	random_gain = FALSE
 	var/obj/effect/hallucination/simple/securitron/beepsky
 
 /datum/brain_trauma/special/beepsky/on_gain()
@@ -211,24 +262,26 @@
 	..()
 
 /datum/brain_trauma/special/beepsky/on_life()
+	if(QDELETED(beepsky) || !beepsky.loc || beepsky.z != owner.z)
+		QDEL_NULL(beepsky)
+		if(prob(30))
+			create_securitron()
+		else
+			return
 	if(get_dist(owner, beepsky) >= 10 && prob(20))
 		QDEL_NULL(beepsky)
 		create_securitron()
 	if(owner.stat != CONSCIOUS)
 		if(prob(20))
-			playsound(owner, 'sound/voice/beepsky/iamthelaw.ogg', 50)
+			owner.playsound_local(beepsky, 'sound/voice/beepsky/iamthelaw.ogg', 50)
 		return
-	if(QDELETED(beepsky) || !beepsky.loc || beepsky.z != owner.z)
-		QDEL_NULL(beepsky)
-		create_securitron()
 	if(get_dist(owner, beepsky) <= 1)
-		playsound(owner, 'sound/weapons/egloves.ogg', 50)
-		owner.visible_message("<span class='warning'>[owner] tries to fight the law.</span>", "<span class='userdanger'>You feel the fist of the LAW.</span>")
-		owner.take_bodypart_damage(0,0,rand(30, 50))
+		owner.playsound_local(owner, 'sound/weapons/egloves.ogg', 50)
+		owner.visible_message("<span class='warning'>[owner]'s body jerks as if it was shocked.</span>", "<span class='userdanger'>You feel the fist of the LAW.</span>")
+		owner.take_bodypart_damage(0,0,rand(40, 70))
 		QDEL_NULL(beepsky)
-		create_securitron()
 	if(prob(20) && get_dist(owner, beepsky) <= 8)
-		playsound(owner, 'sound/voice/beepsky/criminal.ogg', 40)
+		owner.playsound_local(beepsky, 'sound/voice/beepsky/criminal.ogg', 40)
 	..()
 
 /obj/effect/hallucination/simple/securitron
@@ -247,7 +300,7 @@
 	if(prob(60))
 		forceMove(get_step_towards(src, victim))
 		if(prob(5))
-			say("Level 10 infraction alert!")
+			to_chat(victim, "<span class='name'>[name]</span> exclaims, \"<span class='robotic'>Level 10 infraction alert!\"</span>")
 
 /obj/effect/hallucination/simple/securitron/Destroy()
 	STOP_PROCESSING(SSfastprocess,src)

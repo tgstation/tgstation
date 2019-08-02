@@ -30,7 +30,7 @@
 
 	var/list/ride_offset_x = list("north" = 0, "south" = 0, "east" = -6, "west" = 6)
 	var/list/ride_offset_y = list("north" = 4, "south" = 4, "east" = 3, "west" = 3)
-	var/ride_allow_incapacitated = FALSE
+	var/ride_allow_incapacitated = TRUE
 	var/allow_riding = TRUE
 	var/canDispose = FALSE // Whether the borg can stuff itself into disposal
 
@@ -88,8 +88,8 @@
 		var/obj/item/stack/S = I
 
 		if(is_type_in_list(S, list(/obj/item/stack/sheet/metal, /obj/item/stack/rods, /obj/item/stack/tile/plasteel)))
-			if(S.materials[MAT_METAL])
-				S.cost = S.materials[MAT_METAL] * 0.25
+			if(S.materials[/datum/material/iron])
+				S.cost = S.materials[/datum/material/iron] * 0.25
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/metal)
 
 		else if(istype(S, /obj/item/stack/sheet/glass))
@@ -112,6 +112,10 @@
 		else if(istype(S, /obj/item/stack/marker_beacon))
 			S.cost = 1
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/beacon)
+
+		else if(istype(S, /obj/item/stack/pipe_cleaner_coil))
+			S.cost = 1
+			S.source = get_or_create_estorage(/datum/robot_energy_storage/pipe_cleaner)
 
 		if(S && S.source)
 			S.materials = list()
@@ -410,11 +414,11 @@
 /obj/item/reagent_containers/spray/cyborg_drying
 	name = "drying agent spray"
 	color = "#A000A0"
-	list_reagents = list("drying_agent" = 250)
+	list_reagents = list(/datum/reagent/drying_agent = 250)
 
 /obj/item/reagent_containers/spray/cyborg_lube
 	name = "lube spray"
-	list_reagents = list("lube" = 250)
+	list_reagents = list(/datum/reagent/lube = 250)
 
 /obj/item/robot_module/janitor/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
@@ -425,11 +429,11 @@
 
 	var/obj/item/reagent_containers/spray/cyborg_drying/CD = locate(/obj/item/reagent_containers/spray/cyborg_drying) in basic_modules
 	if(CD)
-		CD.reagents.add_reagent("drying_agent", 5 * coeff)
+		CD.reagents.add_reagent(/datum/reagent/drying_agent, 5 * coeff)
 
 	var/obj/item/reagent_containers/spray/cyborg_lube/CL = locate(/obj/item/reagent_containers/spray/cyborg_lube) in emag_modules
 	if(CL)
-		CL.reagents.add_reagent("lube", 2 * coeff)
+		CL.reagents.add_reagent(/datum/reagent/lube, 2 * coeff)
 
 /obj/item/robot_module/clown
 	name = "Clown"
@@ -480,7 +484,8 @@
 		/obj/item/lighter,
 		/obj/item/storage/bag/tray,
 		/obj/item/reagent_containers/borghypo/borgshaker,
-		/obj/item/borg/lollipop)
+		/obj/item/borg/lollipop,
+		/obj/item/stack/pipe_cleaner_coil/cyborg)
 	emag_modules = list(/obj/item/reagent_containers/borghypo/borgshaker/hacked)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/service,
 		/obj/item/borg/sight/xray/truesight_lens)
@@ -492,7 +497,7 @@
 	..()
 	var/obj/item/reagent_containers/O = locate(/obj/item/reagent_containers/food/condiment/enzyme) in basic_modules
 	if(O)
-		O.reagents.add_reagent("enzyme", 2 * coeff)
+		O.reagents.add_reagent(/datum/reagent/consumable/enzyme, 2 * coeff)
 
 /obj/item/robot_module/butler/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
@@ -616,6 +621,7 @@
 		/obj/item/borg/sight/thermal,
 		/obj/item/construction/rcd/borg/syndicate,
 		/obj/item/pipe_dispenser,
+		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/extinguisher,
 		/obj/item/weldingtool/largetank/cyborg,
 		/obj/item/screwdriver/nuke,
@@ -687,3 +693,8 @@
 	max_energy = 30
 	recharge_rate = 1
 	name = "Marker Beacon Storage"
+
+/datum/robot_energy_storage/pipe_cleaner
+	max_energy = 50
+	recharge_rate = 2
+	name = "Pipe Cleaner Synthesizer"

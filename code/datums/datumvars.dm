@@ -30,6 +30,7 @@
 	.["Mark Object"] = "?_src_=vars;[HrefToken()];mark_object=[REF(src)]"
 	.["Delete"] = "?_src_=vars;[HrefToken()];delete=[REF(src)]"
 	.["Show VV To Player"] = "?_src_=vars;[HrefToken(TRUE)];expose=[REF(src)]"
+	.["Modify Traits"] = "?_src_=vars;[HrefToken(TRUE)];traitmod=[REF(src)]"
 
 
 /datum/proc/on_reagent_change(changetype)
@@ -86,6 +87,7 @@
 			atomsnowflake += "<a href='?_src_=vars;[HrefToken()];rename=[refid]'><b id='name'>[D]</b></a>"
 			atomsnowflake += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir' id='dir'>[dir2text(A.dir) || A.dir]</a> <a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=right'>>></a></font>"
 			var/mob/living/M = A
+
 			atomsnowflake += {"
 				<br><font size='1'><a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=ckey' id='ckey'>[M.ckey || "No ckey"]</a> / <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=real_name' id='real_name'>[M.real_name || "No real name"]</a></font>
 				<br><font size='1'>
@@ -94,7 +96,7 @@
 					TOXIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=toxin' id='toxin'>[M.getToxLoss()]</a>
 					OXY:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=oxygen' id='oxygen'>[M.getOxyLoss()]</a>
 					CLONE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=clone' id='clone'>[M.getCloneLoss()]</a>
-					BRAIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brain' id='brain'>[M.getBrainLoss()]</a>
+					BRAIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brain' id='brain'>[M.getOrganLoss(ORGAN_SLOT_BRAIN)]</a>
 					STAMINA:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stamina' id='stamina'>[M.getStaminaLoss()]</a>
 				</font>
 			"}
@@ -578,6 +580,13 @@
 		log_admin("Admin [key_name(usr)] Showed [key_name(C)] a VV window of a [thing]")
 		to_chat(C, "[usr.client.holder.fakekey ? "an Administrator" : "[usr.client.key]"] has granted you access to view a View Variables window")
 		C.debug_variables(thing)
+	else if(href_list["traitmod"])
+		if(!check_rights(NONE))
+			return
+		var/datum/A = locate(href_list["traitmod"])
+		if(!A)
+			return
+		holder.modify_traits(A)
 
 
 //Needs +VAREDIT past this point
@@ -935,21 +944,25 @@
 
 			if(A.reagents)
 				var/chosen_id
-				var/list/reagent_options = sortList(GLOB.chemical_reagents_list)
-				switch(alert(usr, "Choose a method.", "Add Reagents", "Enter ID", "Choose ID"))
-					if("Enter ID")
+				switch(alert(usr, "Choose a method.", "Add Reagents", "Search", "Choose from a list", "I'm feeling lucky"))
+					if("Search")
 						var/valid_id
 						while(!valid_id)
-							chosen_id = stripped_input(usr, "Enter the ID of the reagent you want to add.")
-							if(!chosen_id) //Get me out of here!
+							chosen_id = input(usr, "Enter the ID of the reagent you want to add.", "Search reagents") as null|text
+							if(isnull(chosen_id)) //Get me out of here!
 								break
-							for(var/ID in reagent_options)
-								if(ID == chosen_id)
-									valid_id = 1
+							if (!ispath(text2path(chosen_id)))
+								chosen_id = pick_closest_path(chosen_id, make_types_fancy(subtypesof(/datum/reagent)))
+								if (ispath(chosen_id))
+									valid_id = TRUE
+							else
+								valid_id = TRUE
 							if(!valid_id)
 								to_chat(usr, "<span class='warning'>A reagent with that ID doesn't exist!</span>")
-					if("Choose ID")
-						chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") as null|anything in reagent_options
+					if("Choose from a list")
+						chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") as null|anything in subtypesof(/datum/reagent)
+					if("I'm feeling lucky")
+						chosen_id = pick(subtypesof(/datum/reagent))
 				if(chosen_id)
 					var/amount = input(usr, "Choose the amount to add.", "Choose the amount.", A.reagents.maximum_volume) as num
 					if(amount)
@@ -1352,8 +1365,8 @@
 					L.adjustOxyLoss(amount)
 					newamt = L.getOxyLoss()
 				if("brain")
-					L.adjustBrainLoss(amount)
-					newamt = L.getBrainLoss()
+					L.adjustOrganLoss(ORGAN_SLOT_BRAIN, amount)
+					newamt = L.getOrganLoss(ORGAN_SLOT_BRAIN)
 				if("clone")
 					L.adjustCloneLoss(amount)
 					newamt = L.getCloneLoss()
@@ -1402,4 +1415,3 @@
 						H.remove_quirk(T)
 					else
 						H.add_quirk(T,TRUE)
-

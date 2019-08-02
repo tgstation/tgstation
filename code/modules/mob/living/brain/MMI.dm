@@ -58,11 +58,11 @@
 		brainmob.forceMove(src)
 		brainmob.container = src
 		var/fubar_brain = newbrain.brain_death && newbrain.suicided && brainmob.suiciding //brain is damaged beyond repair or from a suicider
-		if(!fubar_brain && !newbrain.damaged_brain) // the brain organ hasn't been beaten to death, nor was from a suicider.
+		if(!fubar_brain && !(newbrain.organ_flags & ORGAN_FAILING)) // the brain organ hasn't been beaten to death, nor was from a suicider.
 			brainmob.stat = CONSCIOUS //we manually revive the brain mob
 			GLOB.dead_mob_list -= brainmob
 			GLOB.alive_mob_list += brainmob
-		else if(!fubar_brain && newbrain.damaged_brain) // the brain is damaged, but not from a suicider
+		else if(!fubar_brain && newbrain.organ_flags & ORGAN_FAILING) // the brain is damaged, but not from a suicider
 			to_chat(user, "<span class='warning'>[src]'s indicator light turns yellow and its brain integrity alarm beeps softly. Perhaps you should check [newbrain] for damage.</span>")
 			playsound(src, "sound/machines/synth_no.ogg", 5, TRUE)
 		else
@@ -100,7 +100,7 @@
 	brainmob.emp_damage = 0
 	brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
 	GLOB.alive_mob_list -= brainmob //Get outta here
-	GLOB.dead_mob_list += brainmob
+	GLOB.dead_mob_list |= brainmob
 	brain.brainmob = brainmob //Set the brain to use the brainmob
 	brainmob = null //Set mmi brainmob var to null
 	if(user)
@@ -193,18 +193,18 @@
 	qdel(src)
 
 /obj/item/mmi/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>There is a switch to toggle the radio system [radio.on ? "off" : "on"].[brain ? " It is currently being covered by [brain]." : null]</span>")
+	. = ..()
+	. += "<span class='notice'>There is a switch to toggle the radio system [radio.on ? "off" : "on"].[brain ? " It is currently being covered by [brain]." : null]</span>"
 	if(brainmob)
 		var/mob/living/brain/B = brainmob
 		if(!B.key || !B.mind || B.stat == DEAD)
-			to_chat(user, "<span class='warning'>The MMI indicates the brain is completely unresponsive.</span>")
+			. += "<span class='warning'>The MMI indicates the brain is completely unresponsive.</span>"
 
 		else if(!B.client)
-			to_chat(user, "<span class='warning'>The MMI indicates the brain is currently inactive; it might change.</span>")
+			. += "<span class='warning'>The MMI indicates the brain is currently inactive; it might change.</span>"
 
 		else
-			to_chat(user, "<span class='notice'>The MMI indicates the brain is active.</span>")
+			. += "<span class='notice'>The MMI indicates the brain is active.</span>"
 
 /obj/item/mmi/relaymove(mob/user)
 	return //so that the MMI won't get a warning about not being able to move if it tries to move

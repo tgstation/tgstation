@@ -24,7 +24,7 @@
 	name = "small light fixture frame"
 	icon_state = "bulb-construct-item"
 	result_path = /obj/structure/light_construct/small
-	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
 
 /obj/item/wallframe/light_fixture/try_build(turf/on_wall, user)
 	if(!..())
@@ -67,22 +67,21 @@
 	return cell
 
 /obj/structure/light_construct/examine(mob/user)
-	..()
-	switch(src.stage)
+	. = ..()
+	switch(stage)
 		if(1)
-			to_chat(user, "It's an empty frame.")
+			. += "It's an empty frame."
 		if(2)
-			to_chat(user, "It's wired.")
+			. += "It's wired."
 		if(3)
-			to_chat(user, "The casing is closed.")
+			. += "The casing is closed."
 	if(cell_connectors)
 		if(cell)
-			to_chat(user, "You see [cell] inside the casing.")
+			. += "You see [cell] inside the casing."
 		else
-			to_chat(user, "The casing has no power cell for backup power.")
+			. += "The casing has no power cell for backup power."
 	else
-		to_chat(user, "<span class='danger'>This casing doesn't support power cells for backup power.</span>")
-		return
+		. += "<span class='danger'>This casing doesn't support power cells for backup power.</span>"
 
 /obj/structure/light_construct/attack_hand(mob/user)
 	if(cell)
@@ -345,13 +344,16 @@
 		var/BR = brightness
 		var/PO = bulb_power
 		var/CO = bulb_colour
+		if(color)
+			CO = color
 		var/area/A = get_area(src)
 		if (A && A.fire)
 			CO = bulb_emergency_colour
 		else if (nightshift_enabled)
 			BR = nightshift_brightness
 			PO = nightshift_light_power
-			CO = nightshift_light_color
+			if(!color)
+				CO = nightshift_light_color
 		var/matching = light && BR == light.light_range && PO == light.light_power && CO == light.light_color
 		if(!matching)
 			switchcount++
@@ -383,6 +385,10 @@
 			removeStaticPower(static_power_used, STATIC_LIGHT)
 
 	broken_sparks(start_only=TRUE)
+
+/obj/machinery/light/update_atom_colour()
+	..()
+	update()
 
 /obj/machinery/light/proc/broken_sparks(start_only=FALSE)
 	if(status == LIGHT_BROKEN && has_power())
@@ -419,18 +425,18 @@
 
 // examine verb
 /obj/machinery/light/examine(mob/user)
-	..()
+	. = ..()
 	switch(status)
 		if(LIGHT_OK)
-			to_chat(user, "It is turned [on? "on" : "off"].")
+			. += "It is turned [on? "on" : "off"]."
 		if(LIGHT_EMPTY)
-			to_chat(user, "The [fitting] has been removed.")
+			. += "The [fitting] has been removed."
 		if(LIGHT_BURNED)
-			to_chat(user, "The [fitting] is burnt out.")
+			. += "The [fitting] is burnt out."
 		if(LIGHT_BROKEN)
-			to_chat(user, "The [fitting] has been smashed.")
+			. += "The [fitting] has been smashed."
 	if(cell)
-		to_chat(user, "Its backup power charge meter reads [round((cell.charge / cell.maxcharge) * 100, 0.1)]%.")
+		. += "Its backup power charge meter reads [round((cell.charge / cell.maxcharge) * 100, 0.1)]%."
 
 
 
@@ -630,9 +636,12 @@
 			if(istype(eth_species))
 				to_chat(H, "<span class='notice'>You start channeling some power through the [fitting] into your body.</span>")
 				if(do_after(user, 50, target = src))
-					to_chat(H, "<span class='notice'>You receive some charge from the [fitting].</span>")
-					eth_species.adjust_charge(5)
-					return
+					var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+					if(istype(stomach))
+						to_chat(H, "<span class='notice'>You receive some charge from the [fitting].</span>")
+						stomach.adjust_charge(5)
+					else
+						to_chat(H, "<span class='warning'>You can't receive charge from the [fitting]!</span>")
 				return
 
 			if(H.gloves)
@@ -753,8 +762,8 @@
 	var/status = LIGHT_OK		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/switchcount = 0	// number of times switched
-	materials = list(MAT_GLASS=100)
-	grind_results = list("silicon" = 5, "nitrogen" = 10) //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
+	materials = list(/datum/material/glass=100)
+	grind_results = list(/datum/reagent/silicon = 5, /datum/reagent/nitrogen = 10) //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
 	var/rigged = FALSE		// true if rigged to explode
 	var/brightness = 2 //how much light it gives off
 
@@ -836,7 +845,7 @@
 
 		to_chat(user, "<span class='notice'>You inject the solution into \the [src].</span>")
 
-		if(S.reagents.has_reagent("plasma", 5))
+		if(S.reagents.has_reagent(/datum/reagent/toxin/plasma, 5))
 
 			rigged = TRUE
 

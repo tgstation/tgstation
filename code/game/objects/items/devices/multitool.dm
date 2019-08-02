@@ -24,15 +24,15 @@
 	throwforce = 0
 	throw_range = 7
 	throw_speed = 3
-	materials = list(MAT_METAL=50, MAT_GLASS=20)
+	materials = list(/datum/material/iron=50, /datum/material/glass=20)
 	var/obj/machinery/buffer // simple machine buffer for device linkage
 	toolspeed = 1
 	usesound = 'sound/weapons/empty.ogg'
 	var/mode = 0
 
 /obj/item/multitool/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Its buffer [buffer ? "contains [buffer]." : "is empty."]</span>")
+	. = ..()
+	. += "<span class='notice'>Its buffer [buffer ? "contains [buffer]." : "is empty."]</span>"
 
 /obj/item/multitool/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!</span>")

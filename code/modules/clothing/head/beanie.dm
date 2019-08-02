@@ -93,7 +93,7 @@
 /obj/item/clothing/head/beanie/rasta
 	name = "rastacap"
 	desc = "Perfect for tucking in those dreadlocks."
-	icon_state = "rastabeanie"
-	item_color = "rastabeanie"	
+	icon_state = "beanierasta"
+	item_color = "beanierasta"	
 
 //No dog fashion sprites yet :(  poor Ian can't be dope like the rest of us yet

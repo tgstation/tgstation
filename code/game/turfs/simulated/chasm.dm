@@ -15,11 +15,11 @@
 	AddComponent(/datum/component/chasm, SSmapping.get_turf_below(src))
 
 /turf/open/chasm/proc/set_target(turf/target)
-	GET_COMPONENT(chasm_component, /datum/component/chasm)
+	var/datum/component/chasm/chasm_component = GetComponent(/datum/component/chasm)
 	chasm_component.target_turf = target
 
 /turf/open/chasm/proc/drop(atom/movable/AM)
-	GET_COMPONENT(chasm_component, /datum/component/chasm)
+	var/datum/component/chasm/chasm_component = GetComponent(/datum/component/chasm)
 	chasm_component.drop(AM)
 
 /turf/open/chasm/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
@@ -100,19 +100,3 @@
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
 	underlay_appearance.icon_state = "dirt"
 	return TRUE
-
-//For Bag of Holding Bombs
-
-/turf/open/chasm/magic
-	name = "tear in the fabric of reality"
-	desc = "Where does it lead?"
-	icon = 'icons/turf/floors/magic_chasm.dmi'
-	baseturfs = /turf/open/chasm/magic
-	light_range = 1.9
-	light_power = 0.65
-
-/turf/open/chasm/magic/Initialize()
-	. = ..()
-	var/turf/T = safepick(get_area_turfs(/area/fabric_of_reality))
-	if(T)
-		set_target(T)

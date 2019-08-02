@@ -254,33 +254,33 @@
 	addtimer(CALLBACK(src, .proc/update), 5)
 
 /obj/machinery/power/apc/examine(mob/user)
-	..()
+	. = ..()
 	if(stat & BROKEN)
 		return
 	if(opened)
 		if(has_electronics && terminal)
-			to_chat(user, "The cover is [opened==APC_COVER_REMOVED?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"].")
+			. += "The cover is [opened==APC_COVER_REMOVED?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"]."
 		else
-			to_chat(user, "It's [ !terminal ? "not" : "" ] wired up.")
-			to_chat(user, "The electronics are[!has_electronics?"n't":""] installed.")
+			. += {"It's [ !terminal ? "not" : "" ] wired up.\n
+			The electronics are[!has_electronics?"n't":""] installed."}
 		if(user.Adjacent(src) && integration_cog)
-			to_chat(user, "<span class='warning'>[src]'s innards have been replaced by strange brass machinery!</span>")
+			. += "<span class='warning'>[src]'s innards have been replaced by strange brass machinery!</span>"
 
 	else
 		if (stat & MAINT)
-			to_chat(user, "The cover is closed. Something is wrong with it. It doesn't work.")
+			. += "The cover is closed. Something is wrong with it. It doesn't work."
 		else if (malfhack)
-			to_chat(user, "The cover is broken. It may be hard to force it open.")
+			. += "The cover is broken. It may be hard to force it open."
 		else
-			to_chat(user, "The cover is closed.")
+			. += "The cover is closed."
 
 	if(integration_cog && is_servant_of_ratvar(user))
-		to_chat(user, "<span class='brass'>There is an integration cog installed!</span>")
+		. += "<span class='brass'>There is an integration cog installed!</span>"
 
-	to_chat(user, "<span class='notice'>Alt-Click the APC to [ locked ? "unlock" : "lock"] the interface.</span>")
+	. += "<span class='notice'>Alt-Click the APC to [ locked ? "unlock" : "lock"] the interface.</span>"
 
 	if(issilicon(user))
-		to_chat(user, "<span class='notice'>Ctrl-Click the APC to switch the breaker [ operating ? "off" : "on"].</span>")
+		. += "<span class='notice'>Ctrl-Click the APC to switch the breaker [ operating ? "off" : "on"].</span>"
 
 // update the APC icon to show the three base states
 // also add overlays for indicator lights
@@ -711,6 +711,52 @@
 		wires.interact(user)
 	else
 		return ..()
+
+/obj/machinery/power/apc/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	if(the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS)
+		if(!has_electronics)
+			if(stat & BROKEN)
+				to_chat(user, "<span class='warning'>[src]'s frame is too damaged to support a circuit.</span>")
+				return FALSE
+			return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 20, "cost" = 1)	
+		else if(!cell)
+			if(stat & MAINT)
+				to_chat(user, "<span class='warning'>There's no connector for a power cell.</span>")
+				return FALSE
+			return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 50, "cost" = 10) //16 for a wall
+		else
+			to_chat(user, "<span class='warning'>[src] has both electronics and a cell.</span>")
+			return FALSE
+	return FALSE
+
+/obj/machinery/power/apc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
+		if(RCD_UPGRADE_SIMPLE_CIRCUITS)
+			if(!has_electronics)
+				if(stat & BROKEN)
+					to_chat(user, "<span class='warning'>[src]'s frame is too damaged to support a circuit.</span>")
+					return
+				user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
+				"<span class='notice'>You adapt a power control board and click it into place in [src]'s guts.</span>")
+				has_electronics = TRUE
+				locked = TRUE
+				return TRUE
+			else if(!cell)
+				if(stat & MAINT)
+					to_chat(user, "<span class='warning'>There's no connector for a power cell.</span>")
+					return FALSE
+				var/obj/item/stock_parts/cell/crap/empty/C = new(src)
+				C.forceMove(src)
+				cell = C
+				chargecount = 0
+				user.visible_message("<span class='notice'>[user] fabricates a weak power cell and places it into [src].</span>", \
+				"<span class='warning'>Your [the_rcd.name] whirrs with strain as you create a weak power cell and place it into [src]!</span>")
+				update_icon()
+				return TRUE
+			else
+				to_chat(user, "<span class='warning'>[src] has both electronics and a cell.</span>")
+				return FALSE
+	return FALSE
 
 /obj/machinery/power/apc/AltClick(mob/user)
 	..()

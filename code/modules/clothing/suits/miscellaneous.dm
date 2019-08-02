@@ -461,7 +461,7 @@
 
 /obj/item/clothing/suit/gothcoat
 	name = "gothic coat"
-	desc = "Perfect for those who want stalk in a corner of a bar."
+	desc = "Perfect for those who want to stalk around a corner of a bar."
 	icon_state = "gothcoat"
 	item_state = "gothcoat"
 
@@ -480,6 +480,21 @@
 	icon_state = "pharoah"
 	icon_state = "pharoah"
 	body_parts_covered = CHEST|GROIN
+
+/obj/item/clothing/suit/caution
+	name = "wet floor sign"
+	desc = "Caution! Wet Floor!"
+	icon_state = "caution"
+	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
+	force = 1
+	throwforce = 3
+	throw_speed = 2
+	throw_range = 5
+	w_class = WEIGHT_CLASS_SMALL
+	body_parts_covered = CHEST|GROIN
+	attack_verb = list("warned", "cautioned", "smashed")
+	armor = list("melee" = 5, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
 
 

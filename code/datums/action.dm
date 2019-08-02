@@ -199,10 +199,15 @@
 /datum/action/item_action/toggle_firemode
 	name = "Toggle Firemode"
 
-/datum/action/item_action/rcl
+/datum/action/item_action/rcl_col
 	name = "Change Cable Color"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "rcl_rainbow"
+
+/datum/action/item_action/rcl_gui
+	name = "Toggle Fast Wiring Gui"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "rcl_gui"
 
 /datum/action/item_action/startchainsaw
 	name = "Pull The Starting Cord"
@@ -501,6 +506,7 @@
 		else
 			to_chat(owner, "<span class='warning'>Your hands are full!</span>")
 
+///MGS BOX!
 /datum/action/item_action/agent_box
 	name = "Deploy Box"
 	desc = "Find inner peace, here, in the box."
@@ -508,22 +514,30 @@
 	background_icon_state = "bg_agent"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "deploy_box"
+	///Cooldown between deploys. Uses world.time
 	var/cooldown = 0
-	var/obj/structure/closet/cardboard/agent/box
+	///The type of closet this action spawns.
+	var/boxtype = /obj/structure/closet/cardboard/agent
 
+///Handles opening and closing the box.
 /datum/action/item_action/agent_box/Trigger()
-	if(!..())
+	. = ..()
+	if(!.)
 		return FALSE
-	if(QDELETED(box))
-		if(cooldown < world.time - 100)
-			box = new(owner.drop_location())
-			owner.forceMove(box)
-			cooldown = world.time
-			owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
-	else
-		owner.forceMove(box.drop_location())
+	if(istype(owner.loc, /obj/structure/closet/cardboard/agent))
+		var/obj/structure/closet/cardboard/agent/box = owner.loc
 		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
-		QDEL_NULL(box)
+		box.open()
+		return
+	//Box closing from here on out.
+	if(!isturf(owner.loc)) //Don't let the player use this to escape mechs/welded closets.
+		to_chat(owner, "<span class = 'notice'>You need more space to activate this implant.</span>")
+		return
+	if(cooldown < world.time - 100)
+		var/box = new boxtype(owner.drop_location())
+		owner.forceMove(box)
+		cooldown = world.time
+		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
 
 //Preset for spells
 /datum/action/spell_action
@@ -701,12 +715,26 @@
 	small_icon = 'icons/mob/alien.dmi'
 	small_icon_state = "alienq"
 
-/datum/action/small_sprite/drake
+/datum/action/small_sprite/megafauna
+	icon_icon = 'icons/mob/actions/actions_xeno.dmi'
+	button_icon_state = "smallqueen"
+	background_icon_state = "bg_alien"
 	small_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+
+/datum/action/small_sprite/megafauna/drake
 	small_icon_state = "ash_whelp"
 
-/datum/action/small_sprite/spacedragon
-	small_icon = 'icons/mob/animal.dmi'
+/datum/action/small_sprite/megafauna/colossus
+	small_icon_state = "Basilisk"
+
+/datum/action/small_sprite/megafauna/bubblegum
+	small_icon_state = "goliath2"
+
+/datum/action/small_sprite/megafauna/legion
+	small_icon_state = "mega_legion"
+
+/datum/action/small_sprite/megafauna/spacedragon
+	small_icon = 'icons/mob/carp.dmi'
 	small_icon_state = "carp"
 
 /datum/action/small_sprite/Trigger()

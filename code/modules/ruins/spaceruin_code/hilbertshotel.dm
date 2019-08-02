@@ -140,7 +140,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
                         if(ismob(A))
                             var/mob/M = A
                             if(M.mind)
-                                to_chat(M, "<span class='warning'>As the sphere breaks apart, you're suddenly ejected into the depths of space!")
+                                to_chat(M, "<span class='warning'>As the sphere breaks apart, you're suddenly ejected into the depths of space!</span>")
                         var/max = world.maxx-TRANSITIONEDGE
                         var/min = 1+TRANSITIONEDGE
                         var/list/possible_transtitons = list()
@@ -327,7 +327,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     for(var/obj/item/hilbertshotel/H in hotels)
         if(parentSphere == H)
             relocate(H)
- 
+
 /area/hilbertshotel/proc/relocate(obj/item/hilbertshotel/H)
     if(prob(0.135685)) //Because screw you
         qdel(H)
@@ -452,7 +452,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     id_access_list = list(ACCESS_AWAY_GENERIC3, ACCESS_RESEARCH)
     instant = TRUE
     id = /obj/item/card/id/silver
-    uniform = /obj/item/clothing/under/rank/research_director
+    uniform = /obj/item/clothing/under/rank/rnd/research_director
     shoes = /obj/item/clothing/shoes/sneakers/brown
     back = /obj/item/storage/backpack/satchel/leather
     suit = /obj/item/clothing/suit/toggle/labcoat
@@ -528,4 +528,3 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     Lay your head to rest, it soon becomes clear<br>
     There's always more room around every bend<br>
     Not all that's countable has an end...<i>"}
-

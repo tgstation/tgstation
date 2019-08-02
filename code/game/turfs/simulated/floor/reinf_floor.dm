@@ -13,8 +13,8 @@
 	tiled_dirt = FALSE
 
 /turf/open/floor/engine/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The reinforcement rods are <b>wrenched</b> firmly in place.</span>")
+	. += ..()
+	. += "<span class='notice'>The reinforcement rods are <b>wrenched</b> firmly in place.</span>"
 
 /turf/open/floor/engine/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -125,7 +125,7 @@
 
 /turf/open/floor/engine/cult
 	name = "engraved floor"
-	desc = "The air smells strangely over this sinister flooring."
+	desc = "The air smells strange over this sinister flooring."
 	icon_state = "plating"
 	floor_tile = null
 	var/obj/effect/clockwork/overlay/floor/bloodcult/realappearance

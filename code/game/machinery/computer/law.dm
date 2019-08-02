@@ -5,7 +5,7 @@
 	icon_screen = "command"
 	var/obj/item/gps/internal/ai_upload/embedded_gps
 	var/obj/item/gps/internal/ai_upload/embedded_gps_type = /obj/item/gps/internal/ai_upload
-	time_to_scewdrive = 60
+	time_to_screwdrive = 60
 
 /obj/item/gps/internal/ai_upload
 	icon_state = null

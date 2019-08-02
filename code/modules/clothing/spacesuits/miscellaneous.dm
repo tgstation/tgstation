@@ -12,6 +12,7 @@ Contains:
  - EVA spacesuit
  - Freedom's spacesuit (freedom from vacuum's oppression)
  - Carp hardsuit
+ - Bounty hunter hardsuit
 */
 
 	//Death squad armored space suits, not hardsuits!
@@ -329,6 +330,10 @@ Contains:
 	actions_types = list()
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/suit/space/hardsuit/ert/paranormal/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, FALSE, FALSE, TRUE, ITEM_SLOT_OCLOTHING)
+
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal
 	name = "paranormal response team hardsuit"
 	desc = "Powerful wards are built into this hardsuit, protecting the user from all manner of paranormal threats."
@@ -340,7 +345,7 @@ Contains:
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, TRUE, ITEM_SLOT_OCLOTHING)
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
 	name = "inquisitor's hardsuit"
@@ -393,3 +398,13 @@ Contains:
 		torn = TRUE
 		playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1)
 		playsound(loc, 'sound/effects/refill.ogg', 50, 1)
+
+/obj/item/clothing/suit/space/hunter
+	name = "bounty hunting suit"
+	desc = "A custom version of the MK.II SWAT suit, modified to look rugged and tough. Works as a space suit, if you can find a helmet."
+	icon_state = "hunter"
+	item_state = "swat_suit"
+	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/kitchen/knife/combat)
+	armor = list(melee = 60, bullet = 40, laser = 40, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
+	strip_delay = 130
+	resistance_flags = FIRE_PROOF | ACID_PROOF

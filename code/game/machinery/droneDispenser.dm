@@ -50,10 +50,10 @@
 
 /obj/machinery/droneDispenser/Initialize()
 	. = ..()
-	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, TRUE, /obj/item/stack)
-	materials.insert_amount(starting_amount)
+	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, TRUE, /obj/item/stack)
+	materials.insert_amount_mat(starting_amount)
 	materials.precise_insertion = TRUE
-	using_materials = list(MAT_METAL=metal_cost, MAT_GLASS=glass_cost)
+	using_materials = list(/datum/material/iron = metal_cost, /datum/material/glass = glass_cost)
 
 /obj/machinery/droneDispenser/preloaded
 	starting_amount = 5000
@@ -129,9 +129,9 @@
 	break_message = "slowly falls dark, lights stuttering."
 
 /obj/machinery/droneDispenser/examine(mob/user)
-	..()
+	. = ..()
 	if((mode == DRONE_RECHARGING) && !stat && recharging_text)
-		to_chat(user, "<span class='warning'>[recharging_text]</span>")
+		. += "<span class='warning'>[recharging_text]</span>"
 
 /obj/machinery/droneDispenser/power_change()
 	..()
@@ -146,7 +146,7 @@
 	if((stat & (NOPOWER|BROKEN)) || !anchored)
 		return
 
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	if(!materials.has_materials(using_materials))
 		return // We require more minerals
 
@@ -168,7 +168,7 @@
 			update_icon()
 
 		if(DRONE_PRODUCTION)
-			materials.use_amount(using_materials)
+			materials.use_materials(using_materials)
 			if(power_used)
 				use_power(power_used)
 
@@ -211,7 +211,7 @@
 
 /obj/machinery/droneDispenser/attackby(obj/item/I, mob/living/user)
 	if(I.tool_behaviour == TOOL_CROWBAR)
-		GET_COMPONENT(materials, /datum/component/material_container)
+		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 		materials.retrieve_all()
 		I.play_tool_sound(src)
 		to_chat(user, "<span class='notice'>You retrieve the materials from [src].</span>")

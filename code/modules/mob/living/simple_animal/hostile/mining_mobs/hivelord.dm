@@ -81,12 +81,14 @@
 	throw_message = "falls right through the strange body of the"
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	pass_flags = PASSTABLE
+	pass_flags = PASSTABLE | PASSMOB
+	density = FALSE
 	del_on_death = 1
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/Initialize()
 	. = ..()
 	addtimer(CALLBACK(src, .proc/death), 100)
+	AddComponent(/datum/component/swarming)
 
 //Legion
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion
@@ -174,7 +176,6 @@
 	speak_emote = list("echoes")
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "is shrugged off by"
-	pass_flags = PASSTABLE
 	del_on_death = TRUE
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
@@ -279,7 +280,7 @@
 				head = /obj/item/clothing/head/helmet/space/plasmaman
 				belt = /obj/item/tank/internals/plasmaman/belt
 			else
-				uniform = /obj/item/clothing/under/rank/miner/lavaland
+				uniform = /obj/item/clothing/under/rank/cargo/miner/lavaland
 				if (prob(4))
 					belt = pickweight(list(/obj/item/storage/belt/mining = 2, /obj/item/storage/belt/mining/alt = 2))
 				else if(prob(10))
@@ -298,7 +299,7 @@
 				l_pocket = pickweight(list(/obj/item/stack/spacecash/c1000 = 7, /obj/item/reagent_containers/hypospray/medipen/survival = 2, /obj/item/borg/upgrade/modkit/cooldown = 1 ))
 		if("Ashwalker")
 			mob_species = /datum/species/lizard/ashwalker
-			uniform = /obj/item/clothing/under/gladiator/ash_walker
+			uniform = /obj/item/clothing/under/costume/gladiator/ash_walker
 			if(prob(95))
 				head = /obj/item/clothing/head/helmet/gladiator
 			else
@@ -338,7 +339,7 @@
 				l_pocket = pick(list(/obj/item/crowbar/power, /obj/item/wrench/power, /obj/item/weldingtool/experimental))
 		if("YeOlde")
 			mob_gender = FEMALE
-			uniform = /obj/item/clothing/under/maid
+			uniform = /obj/item/clothing/under/costume/maid
 			gloves = /obj/item/clothing/gloves/color/white
 			shoes = /obj/item/clothing/shoes/laceup
 			head = /obj/item/clothing/head/helmet/knight
@@ -361,9 +362,8 @@
 			back = /obj/item/tank/internals/oxygen
 			mask = /obj/item/clothing/mask/breath
 		if("Cultist")
-			uniform = /obj/item/clothing/under/roman
-			suit = /obj/item/clothing/suit/cultrobes
-			head = /obj/item/clothing/head/culthood
+			uniform = /obj/item/clothing/under/costume/roman
+			suit = /obj/item/clothing/suit/hooded/cultrobes
 			suit_store = /obj/item/tome
 			r_pocket = /obj/item/restraints/legcuffs/bola/cult
 			l_pocket = /obj/item/melee/cultblade/dagger

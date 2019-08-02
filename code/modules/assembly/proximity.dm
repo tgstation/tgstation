@@ -2,7 +2,7 @@
 	name = "proximity sensor"
 	desc = "Used for scanning and alerting when someone enters a certain proximity."
 	icon_state = "prox"
-	materials = list(MAT_METAL=800, MAT_GLASS=200)
+	materials = list(/datum/material/iron=800, /datum/material/glass=200)
 	attachable = TRUE
 
 	var/scanning = FALSE
@@ -21,8 +21,8 @@
 	. = ..()
 
 /obj/item/assembly/prox_sensor/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The proximity sensor is [timing ? "arming" : (scanning ? "armed" : "disarmed")].</span>")
+	. = ..()
+	. += "<span class='notice'>The proximity sensor is [timing ? "arming" : (scanning ? "armed" : "disarmed")].</span>"
 
 /obj/item/assembly/prox_sensor/activate()
 	if(!..())
@@ -157,4 +157,3 @@
 
 	if(usr)
 		attack_self(usr)
-

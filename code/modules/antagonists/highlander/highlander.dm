@@ -45,21 +45,20 @@
 		qdel(I)
 	for(var/obj/item/I in H.held_items)
 		qdel(I)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/kilt/highlander(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/kilt/highlander(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/radio/headset/heads/captain(H), SLOT_EARS)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(H), SLOT_HEAD)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/pinpointer/nuke(H), SLOT_L_STORE)
 	for(var/obj/item/pinpointer/nuke/P in H)
 		P.attack_self(H)
-	var/obj/item/card/id/W = new(H)
-	W.icon_state = "centcom"
+	var/obj/item/card/id/centcom/W = new(H)
 	W.access = get_all_accesses()
 	W.access += get_all_centcom_access()
 	W.assignment = "Highlander"
 	W.registered_name = H.real_name
 	ADD_TRAIT(W, TRAIT_NODROP, HIGHLANDER)
-	W.update_label(H.real_name)
+	W.update_label()
 	H.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
 	sword = new(H)

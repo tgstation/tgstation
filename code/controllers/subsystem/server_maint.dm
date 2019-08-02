@@ -8,6 +8,7 @@ SUBSYSTEM_DEF(server_maint)
 	init_order = INIT_ORDER_SERVER_MAINT
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	var/list/currentrun
+	var/cleanup_ticker = 0
 
 /datum/controller/subsystem/server_maint/PreInit()
 	world.hub_password = "" //quickly! before the hubbies see us.
@@ -23,6 +24,32 @@ SUBSYSTEM_DEF(server_maint)
 			log_world("Found a null in clients list!")
 		src.currentrun = GLOB.clients.Copy()
 
+		switch (cleanup_ticker) // do only one of these at a time, once per 5 fires
+			if (0)
+				if(listclearnulls(GLOB.player_list))
+					log_world("Found a null in player_list!")
+				cleanup_ticker++
+			if (5)
+				if(listclearnulls(GLOB.mob_list))
+					log_world("Found a null in mob_list!")
+				cleanup_ticker++
+			if (10)
+				if(listclearnulls(GLOB.alive_mob_list))
+					log_world("Found a null in alive_mob_list!")
+				cleanup_ticker++
+			if (15)
+				if(listclearnulls(GLOB.suicided_mob_list))
+					log_world("Found a null in suicided_mob_list!")
+				cleanup_ticker++
+			if (20)
+				if(listclearnulls(GLOB.dead_mob_list))
+					log_world("Found a null in dead_mob_list!")
+				cleanup_ticker++
+			if (25)
+				cleanup_ticker = 0
+			else
+				cleanup_ticker++
+
 	var/list/currentrun = src.currentrun
 	var/round_started = SSticker.HasRoundStarted()
 
@@ -37,7 +64,7 @@ SUBSYSTEM_DEF(server_maint)
 			var/cmob = C.mob
 			if (!isnewplayer(cmob) || !SSticker.queued_players.Find(cmob))
 				log_access("AFK: [key_name(C)]")
-				to_chat(C, "<span class='userdanger'>You have been inactive for more than [DisplayTimeText(afk_period)] and have been disconnected.</span><br><span class='danger'You may reconnect via the button in the file menu or by <b><u><a href='byond://winset?command=.reconnect'>clicking here to reconnect</a></b></u></span>")
+				to_chat(C, "<span class='userdanger'>You have been inactive for more than [DisplayTimeText(afk_period)] and have been disconnected.</span><br><span class='danger'>You may reconnect via the button in the file menu or by <b><u><a href='byond://winset?command=.reconnect'>clicking here to reconnect</a></u></b>.</span>")
 				QDEL_IN(C, 1) //to ensure they get our message before getting disconnected
 				continue
 
