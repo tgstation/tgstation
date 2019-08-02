@@ -19,11 +19,11 @@ SUBSYSTEM_DEF(economy)
 										ACCOUNT_SRV = ACCOUNT_SRV_NAME,
 										ACCOUNT_CAR = ACCOUNT_CAR_NAME,
 										ACCOUNT_SEC = ACCOUNT_SEC_NAME)
-	var/list/department_share = list(ACCOUNT_CIV = 0.20,
-									 ACCOUNT_ENG = 0.10,
-									 ACCOUNT_SEC = 0.30,
+	var/list/department_share = list(ACCOUNT_CIV = 0.10,
+									 ACCOUNT_ENG = 0.20,
+									 ACCOUNT_SEC = 0.20,
 									 ACCOUNT_MED = 0.10,
-									 ACCOUNT_SRV = 0.10,
+									 ACCOUNT_SRV = 0.20,
 									 ACCOUNT_SCI = 0.20,
 									 ACCOUNT_CAR = 1.00)
 
