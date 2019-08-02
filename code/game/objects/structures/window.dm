@@ -419,7 +419,7 @@
 				user.visible_message("<span class='notice'>[user] starts unfastening \the [src] from the frame...</span>",
 					"<span class='notice'>You start unfastening the bolts from the frame...</span>")
 				if(I.use_tool(src, user, 50, volume = 50))
-					to_chat(user, "<span class='notice'>You unscrew the bolts the frame and the window pops loose.</span>")
+					to_chat(user, "<span class='notice'>You unscrew the bolts from the frame and the window pops loose.</span>")
 					state = WINDOW_OUT_OF_FRAME
 					setAnchored(FALSE)
 				return
