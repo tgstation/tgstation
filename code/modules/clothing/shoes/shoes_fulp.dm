@@ -73,12 +73,23 @@
 	alternate_worn_icon = 'icons/mob/feet_fulp.dmi'
 	item_state = "digi_brown"
 
-/obj/item/clothing/shoes/magboots
-	name = "digitigrade magboots"
-	desc = "A custom-made variant set of magnetic boots, intended to ensure lizardfolk can safely perform EVA."
+// not working, will fix later
+///obj/item/clothing/shoes/magboots/digitigrade
+//	name = "digitigrade magboots"
+//	desc = "A custom-made variant set of magnetic boots, intended to ensure lizardfolk can safely perform EVA."
+//	flags_inv = FULL_DIGITIGRADE
+//	fulp_item = TRUE
+//	icon = 'icons/obj/clothing/shoes_fulp.dmi'
+//	icon_state = "digi_magboots0"
+//	alternate_worn_icon = 'icons/mob/feet_fulp.dmi'
+//	item_state = "digi_magboots0"
+
+/obj/item/clothing/shoes/sneakers/mime/digitigrade
+	name = "mime shoes"
+	desc = "shh"
 	flags_inv = FULL_DIGITIGRADE
 	fulp_item = TRUE
 	icon = 'icons/obj/clothing/shoes_fulp.dmi'
-	icon_state = "digi_magboots0"
+	icon_state = "digi_mime"
 	alternate_worn_icon = 'icons/mob/feet_fulp.dmi'
-	item_state = "digi_magboots0"
+	item_state = "digi_mime"
