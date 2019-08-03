@@ -35,6 +35,19 @@
 
 
 /datum/action/innate/cult/create_rune/Activate()
+	var/area/A = get_area(owner)
+	var/datum/antagonist/cult/user_antag = owner.mind.has_antag_datum(/datum/antagonist/cult, TRUE)
+	var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
+	var/datum/objective/sacrifice/sac_objective = locate() in user_antag.cult_team.objectives
+	if(sac_objective)
+		if(!sac_objective.sacced)
+			to_chat(owner, "<span class='cultlarge'>You must sacrifice the interloper before you can start summoning me!</span>")
+			return
+	if(!(A in summon_objective.summon_spots))
+		to_chat(owner, "<span class='cultlarge'>You can only summon me where the veil is weak - in [english_list(summon_objective.summon_spots)]!</span>")
+		return
+	summon_objective.summon_spots -= A
+
 	var/turf/T = get_turf(owner)
 	if(turf_check(T))
 		var/chosen_keyword
@@ -116,3 +129,14 @@
 	rune_innerring_type = /obj/effect/temp_visual/cult/rune_spawn/rune1/inner
 	rune_center_type = /obj/effect/temp_visual/cult/rune_spawn/rune1/center
 	rune_color = RUNE_COLOR_MEDIUMRED
+
+/datum/action/innate/cult/create_rune/narsie //only one given to cultists
+	name = "Summon Nar'Sie Rune"
+	desc = "Prepare the ritual to bring Nar'Sie into this world. Must be used in a summon location. Be ready to defend the rune."
+	button_icon_state = "barrier"
+	base_cooldown = 0
+	rune_type = /obj/effect/rune/narsie
+	rune_word_type = /obj/effect/temp_visual/cult/rune_spawn/rune4
+	rune_innerring_type = /obj/effect/temp_visual/cult/rune_spawn/rune4/inner
+	rune_center_type = /obj/effect/temp_visual/cult/rune_spawn/rune4/center
+	rune_color = RUNE_COLOR_DARKRED

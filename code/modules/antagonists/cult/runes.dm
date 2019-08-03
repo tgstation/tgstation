@@ -452,12 +452,14 @@ structure_check() searches for nearby cultist structures required for the invoca
 	light_range = 0
 	update_light()
 
+
+
 //Ritual of Dimensional Rending: Calls forth the avatar of Nar'Sie upon the station.
 /obj/effect/rune/narsie
 	cultist_name = "Nar'Sie"
-	cultist_desc = "tears apart dimensional barriers, calling forth the Geometer. Requires 9 invokers."
+	cultist_desc = "tears apart dimensional barriers, calling forth the Geometer. Repeatedly invoke the rune to call upon your god!"
 	invocation = "TOK-LYR RQA-NAP G'OLT-ULOFT!!"
-	req_cultists = 9
+	req_cultists = 1
 	icon = 'icons/effects/96x96.dmi'
 	color = RUNE_COLOR_DARKRED
 	icon_state = "rune_large"
@@ -465,7 +467,28 @@ structure_check() searches for nearby cultist structures required for the invoca
 	pixel_y = -32
 	scribe_delay = 500 //how long the rune takes to create
 	scribe_damage = 40.1 //how much damage you take doing it
-	var/used = FALSE
+	light_range = 7
+	light_color = "#FF0000"
+	light_power = 0
+	var/light_power_off = 0
+	var/light_power_on = 5
+	var/active = FALSE //if summoning has started
+	var/used = FALSE //if has been invoked recently
+	var/invocation_charges = 0
+	var/summon_charges = 3 //debug val, set to higher for gameplay
+	var/list/random_chants = list(
+		"sha", "mir", "sas", "mah", "hra", "zar", "tok", "lyr", "nqa", "nap", "olt", "val",
+		"yam", "qha", "fel", "det", "fwe", "mah", "erl", "ath", "yro", "eth", "gal", "mud",
+		"gib", "bar", "tea", "fuu", "jin", "kla", "atu", "kal", "lig",
+		"yoka", "drak", "loso", "arta", "weyh", "ines", "toth", "fara", "amar", "nyag", "eske", "reth", "dedo", "btoh", "nikt", "neth", "abis"
+	)
+	var/invoke_sound = 'sound/magic/clockwork/narsie_attack.ogg'
+	var/cooldown_sound = 'sound/magic/enter_blood.ogg'
+
+/obj/effect/rune/narsie/examine(mob/user)
+	. = ..()
+	if(iscultist(user) || user.stat == DEAD)
+		. += "<b>Invocation Power:</b> [invocation_charges] out of [summon_charges]"
 
 /obj/effect/rune/narsie/Initialize(mapload, set_keyword)
 	. = ..()
@@ -475,35 +498,66 @@ structure_check() searches for nearby cultist structures required for the invoca
 	GLOB.poi_list -= src
 	. = ..()
 
-/obj/effect/rune/narsie/conceal() //can't hide this, and you wouldn't want to
-	return
+/obj/effect/rune/narsie/proc/reallow_invocation(turf)
+	used = FALSE
+	playsound(turf, cooldown_sound, 100)
+	light_power = light_power_off
+	update_light()
 
 /obj/effect/rune/narsie/invoke(var/list/invokers)
-	if(used)
-		return
-	if(!is_station_level(z))
-		return
 	var/mob/living/user = invokers[1]
-	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-	var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
-	var/area/place = get_area(src)
-	if(!(place in summon_objective.summon_spots))
-		to_chat(user, "<span class='cultlarge'>The Geometer can only be summoned where the veil is weak - in [english_list(summon_objective.summon_spots)]!</span>")
+	if(!is_station_level(z)) //Needed to prevent lavaland ruin with narsie rune from ending the round
+		to_chat(B.current, "<span class='cultlarge'>You must summon me to the station.</span>")
 		return
-	if(locate(/obj/singularity/narsie) in GLOB.poi_list)
-		for(var/M in invokers)
-			to_chat(M, "<span class='warning'>Nar'Sie is already on this plane!</span>")
-		log_game("Nar'Sie rune failed - already summoned")
+	if(used)
+		to_chat(user, "<span class='cultitalic'>The rune has been invoked recently, try again soon!</span>")
+		return
+	if(active)
+		var/nearby_cultists = 0
+		var/selected_chant = pick(random_chants)
+		for(var/mob/M in view_or_range(distance = 2, center = src, type = "range"))
+			if(M.mind)
+				if(M.mind.has_antag_datum(/datum/antagonist/cult, TRUE) && M.stat == CONSCIOUS)
+					nearby_cultists += 1
+					M.say("[selected_chant]!!", forced = TRUE)
+		light_power = light_power_on
+		update_light()
+		to_chat(user, "<span class='cultitalic'>You progress the ritual by [nearby_cultists]!</span>")
+		invocation_charges += nearby_cultists
+		used = TRUE
+		fail_invoke() //makes rune flash red
+		var/turf/T = get_turf(src)
+		playsound(T, invoke_sound, 100)
+		addtimer(CALLBACK(src, .proc/reallow_invocation, T), 100) //causes rune to be invocable again after a delay
+		if(invocation_charges >= summon_charges)
+			summon_narsie(T)
+			qdel(src)
+		return
+	//attempting the summoning
+	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult, TRUE)
+	var/confirm_final = alert(user, "This is the FINAL step to summon Nar'Sie; it is a long, painful ritual and the crew will be alerted to your location", "Are you prepared for the final battle?", "My life for Nar'Sie!", "No")
+	if(confirm_final == "No")
+		to_chat(user, "<span class='cult'>You decide to prepare further before scribing the rune.</span>")
 		return
 	//BEGIN THE SUMMONING
-	used = TRUE
+	active = TRUE
+	fail_invoke()
 	..()
+	var/area/A = get_area(src)
+	priority_announce("Figments from an eldritch god are being summoned into [A.map_name] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensional Affairs", 'sound/ai/spanomalies.ogg')
+	notify_ghosts("\A [src] has been activated at [get_area(src)]!", source = src, action = NOTIFY_ORBIT)
+	sound_to_playing_players('sound/hallucinations/im_here1.ogg')
+	for(var/datum/mind/B in user_antag.cult_team.members)
+		if(B.current)
+			to_chat(B.current, "<span class='cultlarge'>Keep invoking the rune until I tear through.</span>")
+			user_antag.cult_team.ascend(B.current)
+
+
+
+/obj/effect/rune/narsie/proc/summon_narsie(turf/T)
 	sound_to_playing_players('sound/effects/dimensional_rend.ogg')
-	var/turf/T = get_turf(src)
 	sleep(40)
-	if(src)
-		color = RUNE_COLOR_RED
-	new /obj/singularity/narsie/large/cult(T) //Causes Nar'Sie to spawn even if the rune has been removed
+	new /obj/singularity/narsie/large/cult(T)
 
 /obj/effect/rune/narsie/attackby(obj/I, mob/user, params)	//Since the narsie rune takes a long time to make, add logging to removal.
 	if((istype(I, /obj/item/melee/cultblade/dagger) && iscultist(user)))
@@ -517,6 +571,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 			log_game("Summon Narsie rune erased by [key_name(user)] using a null rod")
 			message_admins("[ADMIN_LOOKUPFLW(user)] erased a Narsie rune with a null rod")
 			..()
+
+
 
 //Rite of Resurrection: Requires a dead or inactive cultist. When reviving the dead, you can only perform one revival for every sacrifice your cult has carried out.
 /obj/effect/rune/raise_dead
@@ -749,7 +805,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	icon_state = "4"
 	color = RUNE_COLOR_BURNTORANGE
 	light_color = LIGHT_COLOR_LAVA
-	req_cultists = 3
+	req_cultists = 1
 	invoke_damage = 10
 	construct_invoke = FALSE
 	var/tick_damage = 25
@@ -951,7 +1007,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	. = ..()
 	var/area/place = get_area(src)
 	var/mob/living/user = invokers[1]
-	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult, TRUE)
 	var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
 	if(summon_objective.summon_spots.len <= 1)
 		to_chat(user, "<span class='cultlarge'>Only one ritual site remains - it must be reserved for the final summoning!</span>")

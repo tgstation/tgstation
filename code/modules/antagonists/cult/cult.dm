@@ -7,16 +7,19 @@
 	antag_moodlet = /datum/mood_event/cult
 	var/datum/action/innate/cult/comm/communion = new
 	var/datum/action/innate/cult/mastervote/vote = new
+	var/datum/action/innate/cult/create_rune/narsie/summonrune = new
+	var/datum/action/innate/cult/cult_sac/sacrifice = new
 	job_rank = ROLE_CULTIST
 	var/ignore_implant = FALSE
 	var/give_equipment = FALSE
 	var/datum/team/cult/cult_team
 	var/sac_number = 0 //number of people this cultist has sacrificed
-	var/tier_1 = 1
-	var/tier_2 = 5
-	var/tier_3 = 10
+	var/tier_1 = 1 //number of sacrifices to receive each bonus
+	var/tier_2 = 2 //debug val
+	var/tier_3 = 3 //debug val
 	var/cult_stun_mod = 0.65
 	var/cult_armor_mod = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 35)
+
 /datum/antagonist/cult/get_team()
 	return cult_team
 
@@ -42,6 +45,8 @@
 /datum/antagonist/cult/Destroy()
 	QDEL_NULL(communion)
 	QDEL_NULL(vote)
+	QDEL_NULL(sacrifice)
+	QDEL_NULL(summonrune)
 	return ..()
 
 /datum/antagonist/cult/can_be_owned(datum/mind/new_owner)
@@ -67,17 +72,18 @@
 	if(cult_team.blood_target && cult_team.blood_target_image && current.client)
 		current.client.images += cult_team.blood_target_image
 
-/datum/antagonist/cult/proc/add_sac(mob/living/carbon/human/cultist)
-	sac_number += 1
+/datum/antagonist/cult/proc/add_sac(mob/living/carbon/human/cultist, sac_increase = 1)
+	sac_number += sac_increase
+
 	if(sac_number == tier_1)
+		to_chat(cultist, "<span class='cultitalic'>Your eyes strain as you see the truth of the Geometer!</span>")
+		ADD_TRAIT(cultist, TRAIT_NIGHT_VISION, CULT_TRAIT)
+		cultist.update_sight()
+		
+	else if(sac_number == tier_2)
 		to_chat(cultist, "<span class='cultitalic'>You feel your blood surging with dark power!</span>")
 		cultist.physiology.stun_mod *= cult_stun_mod
 
-	else if(sac_number == tier_2)
-		to_chat(cultist, "<span class='cultitalic'>Your eyes strain as you see the truth of the Geometer. You can see the blood coursing through your veins! </span>")
-		ADD_TRAIT(cultist, TRAIT_THERMAL_VISION, CULT_TRAIT)
-		cultist.update_sight()
-		
 	else if(sac_number == tier_3)
 		to_chat(cultist, "<span class='cultitalic'>You feel your skin ripple with unholy strength!</span>")
 		cultist.physiology.armor.melee += cult_armor_mod["melee"]
@@ -127,8 +133,8 @@
 	if(!cult_team.cult_master)
 		vote.Grant(current)
 	communion.Grant(current)
-	if(ishuman(current))
-		current.AddSpell(new /obj/effect/proc_holder/spell/targeted/cult_sac())
+	sacrifice.Grant(current)
+	summonrune.Grant(current)
 	current.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
 	if(cult_team.cult_risen)
 		cult_team.rise(current)
@@ -144,7 +150,8 @@
 	current.remove_language(/datum/language/narsie)
 	vote.Remove(current)
 	communion.Remove(current)
-	current.RemoveSpell(/obj/effect/proc_holder/spell/targeted/cult_sac)
+	summonrune.Remove(current)
+	sacrifice.Remove(current)
 	current.clear_alert("bloodsense")
 	if(ishuman(current))
 		var/mob/living/carbon/human/H = current
@@ -153,10 +160,15 @@
 		REMOVE_TRAIT(H, CULT_EYES, null)
 		H.remove_overlay(HALO_LAYER)
 		H.update_body()
+		to_chat(H, "<span class='cultitalic'>You feel your powers fall away!</span>")
+
 		if(sac_number >= tier_1)
-			H.physiology.stun_mod /= cult_stun_mod
+			REMOVE_TRAIT(H, TRAIT_NIGHT_VISION, CULT_TRAIT )
+			H.update_sight()
+
 		if(sac_number >= tier_2)
-			REMOVE_TRAIT(H, TRAIT_THERMAL_VISION, CULT_TRAIT )
+			H.physiology.stun_mod /= cult_stun_mod
+		
 		if(sac_number >= tier_3)
 			H.physiology.armor.melee -= cult_armor_mod["melee"]
 			H.physiology.armor.bullet -= cult_armor_mod["bullet"]
@@ -206,7 +218,6 @@
 			qdel(o)
 
 /datum/antagonist/cult/master
-	ignore_implant = TRUE
 	show_in_antagpanel = FALSE //Feel free to add this later
 	var/datum/action/innate/cult/master/finalreck/reckoning = new
 	var/datum/action/innate/cult/master/cultmark/bloodmark = new
