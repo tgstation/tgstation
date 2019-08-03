@@ -1,6 +1,3 @@
-#define STANDARD_ORGAN_THRESHOLD 100
-#define STANDARD_ORGAN_HEALING 0.001
-
 /obj/item/organ
 	name = "organ"
 	icon = 'icons/obj/surgery.dmi'
@@ -8,32 +5,26 @@
 	var/status = ORGAN_ORGANIC
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
-	var/broken_cyber_organ = FALSE //if the organ stopped working.
 	var/zone = BODY_ZONE_CHEST
 	var/slot
 	// DO NOT add slots with matching names to different zones - it will break internal_organs_slot list!
-	var/vital = 0
-	//Was this organ implanted/inserted/etc, if true will not be removed during species change.
-	var/external = FALSE
-	var/synthetic = FALSE // To distinguish between organic and synthetic organs
+	var/organ_flags = 0
 	var/maxHealth = STANDARD_ORGAN_THRESHOLD
 	var/damage = 0		//total damage this organ has sustained
-	var/failing	= FALSE			//is this organ failing or not
-	var/healing_factor = STANDARD_ORGAN_HEALING	//fraction of maxhealth healed per on_life()
+	///Healing factor and decay factor function on % of maxhealth, and do not work by applying a static number per tick
+	var/healing_factor 	= 0										//fraction of maxhealth healed per on_life(), set to 0 for generic organs
+	var/decay_factor 	= 0										//same as above but when without a living owner, set to 0 for generic organs
 	var/high_threshold	= STANDARD_ORGAN_THRESHOLD * 0.45		//when severe organ damage occurs
 	var/low_threshold	= STANDARD_ORGAN_THRESHOLD * 0.1		//when minor organ damage occurs
-	var/Unique_Failure_Msg		//certain organs may want unique failure messages for details on how to fix them
 
-/obj/item/organ/proc/Assemble_Failure_Message()	//need to assemble a failure message since we can't have variables be based off of the same object's variables
-	var/name_length
-	//if no unique failure message is set, output the generic one, otherwise give the one we have set
-	if(!Unique_Failure_Msg)
-		name_length = lentext(name)
-		if(name[name_length] == "s")	//plural case, done without much sanitization since I don't know any organ that ends with an "s" that isn't plural at the moment
-			Unique_Failure_Msg = "<span class='danger'>Subject's [name] are too damaged to function, and needs to be replaced or fixed!</span>"
-		else
-			Unique_Failure_Msg = "<span class='danger'>Subject's [name] is too damaged to function, and needs to be replaced or fixed!</span>"
-	return Unique_Failure_Msg
+	///Organ variables for determining what we alert the owner with when they pass/clear the damage thresholds
+	var/prev_damage = 0
+	var/low_threshold_passed
+	var/high_threshold_passed
+	var/now_failing
+	var/now_fixed
+	var/high_threshold_cleared
+	var/low_threshold_cleared
 
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	if(!iscarbon(M) || owner == M)
@@ -62,7 +53,7 @@
 		M.internal_organs -= src
 		if(M.internal_organs_slot[slot] == src)
 			M.internal_organs_slot.Remove(slot)
-		if(vital && !special && !(M.status_flags & GODMODE))
+		if((organ_flags & ORGAN_VITAL) && !special && !(M.status_flags & GODMODE))
 			M.death()
 	for(var/X in actions)
 		var/datum/action/A = X
@@ -72,21 +63,88 @@
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
 
-/obj/item/organ/proc/on_life()
-	var/mob/living/carbon/C = owner
-	//if we start to fail, cap our damage and fail the organ
-	if(damage > maxHealth)
-		failing = TRUE
+/obj/item/organ/process()	//runs decay when outside of a person
+	if((organ_flags & (ORGAN_SYNTHETIC | ORGAN_FROZEN)) || istype(loc, /obj/item/mmi))
+		return
+	if(damage >= maxHealth)
+		organ_flags |= ORGAN_FAILING
 		damage = maxHealth
-	//repair organ damage if the organ is not failing
-	if((!failing) && C)
-		damage = max(0, damage - (maxHealth * healing_factor) )
+		return
+	else if(!owner)
+		damage = min(maxHealth, damage + (maxHealth * decay_factor))
+
+	else
+		var/mob/living/carbon/C = owner
+		if(!C)
+			return
+		if(C.stat == DEAD && !IS_IN_STASIS(C))
+			if(damage >= maxHealth)
+				organ_flags |= ORGAN_FAILING
+				damage = maxHealth
+				return
+			damage = min(maxHealth, damage + (maxHealth * decay_factor))
+
+/obj/item/organ/proc/on_life()	//repair organ damage if the organ is not failing
+	var/mob/living/carbon/C = owner
+	if(!C)
+		return
+	if(damage >= maxHealth)
+		organ_flags |= ORGAN_FAILING
+		damage = maxHealth
+		check_damage_thresholds(C)
+		prev_damage = damage
+		return
+	if((!(organ_flags & ORGAN_FAILING)) && (C.stat !=DEAD))
+		///Damage decrements by a percent of its maxhealth
+		damage = max(0, damage - (maxHealth * healing_factor))
+		if(C.satiety > 0)
+			///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
+			damage = max(0, damage - ((maxHealth * healing_factor) * (C.satiety / MAX_SATIETY) * 4))
+		check_damage_thresholds(C)
+		prev_damage = damage
 	return
+
+/** check_damage_thresholds
+  * input: M (a mob, the owner of the organ we call the proc on)
+  * output:
+  * description: By checking our current damage against our previous damage, we can decide whether we've passed an organ threshold.
+  *				 If we have, send the corresponding threshold message to the owner, if such a message exists.
+  */
+/obj/item/organ/proc/check_damage_thresholds(var/M)
+	if(damage == prev_damage)
+		return
+	var/delta = damage - prev_damage
+	if(delta > 0)
+		if(damage == maxHealth)
+			if(now_failing)
+				to_chat(M, now_failing)
+		else if(damage > high_threshold && prev_damage <= high_threshold)
+			if(high_threshold_passed)
+				to_chat(M, high_threshold_passed)
+		else if(damage > low_threshold && prev_damage <= low_threshold)
+			if(low_threshold_passed)
+				to_chat(M, low_threshold_passed)
+	else if(delta < 0)
+		if(prev_damage > low_threshold && damage <= low_threshold)
+			if(low_threshold_cleared)
+				to_chat(M, low_threshold_cleared)
+		else if(prev_damage > high_threshold && damage <= high_threshold)
+			if(high_threshold_cleared)
+				to_chat(M, high_threshold_cleared)
+		else if(prev_damage == maxHealth)
+			if(now_fixed)
+				to_chat(M, now_fixed)
 
 /obj/item/organ/examine(mob/user)
 	. = ..()
-	if(status == ORGAN_ROBOTIC && broken_cyber_organ)
+	if(status == ORGAN_ROBOTIC && (organ_flags & ORGAN_FAILING))
 		. += "<span class='warning'>[src] seems to be broken!</span>"
+
+	else if(organ_flags & ORGAN_FAILING)
+		. += "<span class='warning'>[src] has decayed for too long, and has turned a sickly color! It doesn't look like it will work anymore!</span>"
+
+	else if(damage > high_threshold)
+		. += "<span class='warning'>[src] is starting to look discolored.</span>"
 
 
 /obj/item/organ/proc/prepare_eat()
@@ -106,8 +164,12 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	foodtype = RAW | MEAT | GROSS
 
+/obj/item/organ/Initialize()
+	START_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/item/organ/Destroy()
+	STOP_PROCESSING(SSobj, src)
 	if(owner)
 		// The special flag is important, because otherwise mobs can die
 		// while undergoing transformation into different mobs.
@@ -129,15 +191,19 @@
 /obj/item/organ/item_action_slot_check(slot,mob/user)
 	return //so we don't grant the organ's action to mobs who pick up the organ.
 
-/obj/item/organ/proc/applyOrganDamage(var/d)	//use for damaging effects
+///Adjusts an organ's damage by the amount "d", up to a maximum amount, which is by default max damage
+/obj/item/organ/proc/applyOrganDamage(var/d, var/maximum = maxHealth)	//use for damaging effects
+	if(maximum < d + damage)
+		d = max(0, maximum - damage)
 	damage = max(0, damage + d)
 
+///SETS an organ's damage to the amount "d", and in doing so clears or sets the failing flag, good for when you have an effect that should fix an organ if broken
 /obj/item/organ/proc/setOrganDamage(var/d)	//use mostly for admin heals
 	damage = CLAMP(d, 0 ,maxHealth)
 	if(d >= maxHealth)
-		failing = TRUE
+		organ_flags |= ORGAN_FAILING
 	else
-		failing = FALSE
+		organ_flags &= ~ORGAN_FAILING
 
 //Looking for brains?
 //Try code/modules/mob/living/carbon/brain/brain_item.dm

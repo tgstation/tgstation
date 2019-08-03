@@ -310,6 +310,9 @@
 	rating = 5 //self-recharge makes these desirable
 	self_recharge = 1 // Infused slime cores self-recharge, over time
 
+/*Hypercharged slime cell - located in /code/modules/research/xenobiology/crossbreeding/_misc.dm
+/obj/item/stock_parts/cell/high/slime/hypercharged */
+
 /obj/item/stock_parts/cell/emproof
 	name = "\improper EMP-proof cell"
 	desc = "An EMP-proof cell."

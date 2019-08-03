@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - code_imp: "Gloves of the North Star functionality is now handled by a component."
