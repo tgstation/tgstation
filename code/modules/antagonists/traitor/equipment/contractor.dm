@@ -28,14 +28,68 @@
 	var/contract_rep = 0
 	var/list/hub_items = list()
 	var/list/purchased_items = list()
-
 	var/static/list/contractor_items = typecacheof(/datum/contractor_item/, TRUE)
+
+	// 6 initial contracts
+	var/list/to_generate = list(
+		CONTRACT_PAYOUT_LARGE,
+		CONTRACT_PAYOUT_MEDIUM,
+		CONTRACT_PAYOUT_SMALL,
+		CONTRACT_PAYOUT_SMALL,
+		CONTRACT_PAYOUT_SMALL,
+		CONTRACT_PAYOUT_SMALL
+	)
+	
+	var/lowest_TC_threshold = 30 // We don't want the sum of all the payouts to be under this amount
+
+	var/datum/syndicate_contract/current_contract
+	var/list/datum/syndicate_contract/assigned_contracts = list()
+
+	var/list/assigned_targets = list() // used as a blacklist to make sure we're not assigning targets already assigned
+
+	var/contract_TC_payed_out = 0 // Keeping track for roundend reporting
+	var/contract_TC_to_redeem = 0 // Used internally and roundend reporting - what TC we have available to cashout.
 
 /datum/contractor_hub/proc/create_hub_items()
 	for(var/path in contractor_items)
 		var/datum/contractor_item/contractor_item = new path
 
 		hub_items.Add(contractor_item)
+
+/datum/contractor_hub/proc/create_initial_contracts()
+	
+	var/total = 0
+	var/lowest_paying_sum = 0
+	var/datum/syndicate_contract/lowest_paying_contract
+
+	// Randomise order, so we don't have contracts always in payout order.
+	to_generate = shuffle(to_generate)
+
+	// Support contract generation happening multiple times
+	var/start_index = 1
+	if (assigned_contracts.len != 0)
+		start_index = assigned_contracts.len + 1
+
+	// Generate contracts, and find the lowest paying.
+	for (var/i = 1; i <= to_generate.len; i++)
+		var/datum/syndicate_contract/contract_to_add = new(owner, to_generate[i], assigned_targets)
+		var/contract_payout_total = contract_to_add.contract.payout + contract_to_add.contract.payout_bonus
+		
+		assigned_targets.Add(contract_to_add.contract.target)
+
+		if (!lowest_paying_contract || (contract_payout_total < lowest_paying_sum))
+			lowest_paying_sum = contract_payout_total
+			lowest_paying_contract = contract_to_add
+
+		total += contract_payout_total
+		contract_to_add.id = start_index
+		assigned_contracts.Add(contract_to_add)
+
+		start_index++
+
+	// If the threshold for TC payouts isn't reached, boost the lowest paying contract
+	if (total < lowest_TC_threshold)
+		lowest_paying_contract.contract.payout_bonus += (lowest_TC_threshold - total)
 
 /datum/contractor_item
 	var/name // Name of item

@@ -3,19 +3,24 @@
 	var/status = CONTRACT_STATUS_INACTIVE
 	var/datum/objective/contract/contract = new()
 	var/ransom = 0
+	var/owner = null
+	var/payout_type = null
 
 	var/list/victim_belongings = list()
 
-/datum/syndicate_contract/New(owner, type, blacklist)
-	generate(owner, type, blacklist)
+/datum/syndicate_contract/New(contract_owner, blacklist, type=CONTRACT_PAYOUT_SMALL)
+	owner = contract_owner
+	payout_type = type
 
-/datum/syndicate_contract/proc/generate(owner, type, blacklist)
+	generate(blacklist)
+
+/datum/syndicate_contract/proc/generate(blacklist)
 	contract.owner = owner
 	contract.find_target(null, blacklist)
 
-	if (type == CONTRACT_PAYOUT_LARGE)
+	if (payout_type == CONTRACT_PAYOUT_LARGE)
 		contract.payout_bonus = rand(9,13)
-	else if (type == CONTRACT_PAYOUT_MEDIUM)
+	else if (payout_type == CONTRACT_PAYOUT_MEDIUM)
 		contract.payout_bonus = rand(6,8)
 	else
 		contract.payout_bonus = rand(2,4)
@@ -133,12 +138,13 @@
 
 // They're off to holding - handle the return timer and give some text about what's going on.
 /datum/syndicate_contract/proc/handleVictimExperience(var/mob/living/M)
-	// Ship 'em back - dead or alive, it depends on if the Syndicate get paid... 4 minutes wait.
+	// Ship 'em back - dead or alive, 4 minutes wait.
 	// Even if they weren't the target, we're still treating them the same.
 	addtimer(CALLBACK(src, .proc/returnVictim, M), (60 * 10) * 4)
 
 	if (M.stat != DEAD)
-		// Heal them up - gets them out of crit/soft crit.
+		// Heal them up - gets them out of crit/soft crit. If omnizine is removed in the future, this needs to be replaced with a
+		// method of healing them, consequence free, to a reasonable amount of health.
 		M.reagents.add_reagent(/datum/reagent/medicine/omnizine, 20)
 
 		M.flash_act()
