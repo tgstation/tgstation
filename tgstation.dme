@@ -1640,6 +1640,7 @@
 #include "code\modules\clothing\shoes\colour.dm"
 #include "code\modules\clothing\shoes\magboots.dm"
 #include "code\modules\clothing\shoes\miscellaneous.dm"
+#include "code\modules\clothing\shoes\shoes_fulp.dm"
 #include "code\modules\clothing\spacesuits\_spacesuits.dm"
 #include "code\modules\clothing\spacesuits\chronosuit.dm"
 #include "code\modules\clothing\spacesuits\hardsuit.dm"

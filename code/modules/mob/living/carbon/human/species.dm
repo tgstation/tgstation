@@ -798,16 +798,23 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(SLOT_SHOES)
+			to_chat(H, "okay")
 			if(H.shoes)
+				to_chat(H, "this")
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_FEET) )
+				to_chat(H, "is")
 				return FALSE
 			if(num_legs < 2)
+				to_chat(H, "epic")
 				return FALSE
-			if(DIGITIGRADE in species_traits)
+			if((DIGITIGRADE in species_traits) == !(I.flags_inv & FULL_DIGITIGRADE))
+				to_chat(H, "fuck")
 				if(!disable_warning)
-					to_chat(H, "<span class='warning'>The footwear around here isn't compatible with your feet!</span>")
+					to_chat(H, "aaa")
+					to_chat(H, "<span class='warning'>These shoes aren't compatible with your feet!</span>")
 				return FALSE
+			to_chat(H, "a snowball in july?")
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(SLOT_BELT)
 			if(H.belt)
@@ -944,8 +951,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	return FALSE //Unsupported slot
 
 /datum/species/proc/equip_delay_self_check(obj/item/I, mob/living/carbon/human/H, bypass_equip_delay_self)
+	to_chat(H, "suck")
 	if(!I.equip_delay_self || bypass_equip_delay_self)
+		to_chat(H, "these")
 		return TRUE
+		to_chat(H, "nuts")
 	H.visible_message("<span class='notice'>[H] start putting on [I]...</span>", "<span class='notice'>You start putting on [I]...</span>")
 	return do_after(H, I.equip_delay_self, target = H)
 
