@@ -4562,7 +4562,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "amT" = (
-/obj/machinery/computer/prisoner,
+/obj/machinery/computer/prisoner/management,
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
@@ -6400,7 +6400,7 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "arR" = (
-/obj/machinery/computer/prisoner,
+/obj/machinery/computer/prisoner/management,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},

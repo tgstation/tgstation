@@ -220,20 +220,20 @@
 					sortBy = href_list["sort"]
 					order = initial(order)
 		else if(href_list["login"])
-			if(issilicon(usr))
+			var/mob/M = usr
+			var/obj/item/card/id/I = M.get_idcard(TRUE)
+			if(issilicon(M))
 				active1 = null
 				active2 = null
 				authenticated = 1
 				rank = "AI"
 				screen = 1
-			else if(IsAdminGhost(usr))
+			else if(IsAdminGhost(M))
 				active1 = null
 				active2 = null
 				authenticated = 1
 				rank = "Central Command"
 				screen = 1
-			var/mob/M = usr
-			var/obj/item/card/id/I = M.get_idcard(TRUE)
 			else if(istype(I) && check_access(I))
 				active1 = null
 				active2 = null

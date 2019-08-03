@@ -2007,7 +2007,7 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hos)
 "aeu" = (
-/obj/machinery/computer/prisoner,
+/obj/machinery/computer/prisoner/management,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hos)
 "aev" = (
@@ -7736,7 +7736,7 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "apI" = (
-/obj/machinery/computer/prisoner{
+/obj/machinery/computer/prisoner/management{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -27303,7 +27303,7 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bhr" = (
-/obj/machinery/computer/prisoner,
+/obj/machinery/computer/prisoner/management,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
