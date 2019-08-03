@@ -1,5 +1,0 @@
-author: "JJRcop"
-delete-after: True
-changes: 
-  - rscdel: "Removed text macros from the chem dispenser."
-  - rscadd: "Replaced with dispenser input recording macros."

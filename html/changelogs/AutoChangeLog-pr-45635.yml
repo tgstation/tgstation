@@ -1,4 +1,0 @@
-author: "Anonmare"
-delete-after: True
-changes: 
-  - bugfix: "AIs can click to examine clone pods for clone progress once again"
