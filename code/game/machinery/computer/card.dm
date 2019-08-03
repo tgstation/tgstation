@@ -324,7 +324,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				id_insert_modify(usr)
 		if ("inserted_scan_id")
 			if (inserted_scan_id)
-				authenticated = LOGGED_OFF
 				id_eject_scan(usr)
 			else
 				id_insert_scan(usr)
