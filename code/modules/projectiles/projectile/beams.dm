@@ -200,6 +200,6 @@
 
 /obj/item/projectile/beam/shrink/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if(isopenturf(target) || istype(target, /turf/closed/indestructible) || target.GetComponent(/datum/component/shrink))//shrunk floors wouldnt do anything except look weird, i-walls shouldnt be bypassable
+	if(isopenturf(target) || istype(target, /turf/closed/indestructible))//shrunk floors wouldnt do anything except look weird, i-walls shouldnt be bypassable
 		return
-	target.AddComponent(/datum/component/shrink, shrink_time, "shrink_ray_beam")
+	target.AddComponent(/datum/component/shrink, shrink_time)

@@ -1,12 +1,12 @@
 /datum/component/shrink
-	var/atom/parent_atom
 	var/olddens
 	var/oldopac
+	dupe_mode = COMPONENT_DUPE_HIGHLANDER
 
 /datum/component/shrink/Initialize(shrink_time)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
-	parent_atom = parent
+	var/atom/parent_atom = parent
 	parent_atom.transform = parent_atom.transform.Scale(0.5,0.5)
 	olddens = parent_atom.density
 	oldopac = parent_atom.opacity
@@ -23,14 +23,15 @@
 			if(ishuman(C))
 				var/mob/living/carbon/human/H = C
 				H.physiology.damage_resistance -= 100//carbons take double damage while shrunk
-				addtimer(VARSET_CALLBACK(H, physiology.damage_resistance, H.physiology.damage_resistance + 100), shrink_time)
-		addtimer(CALLBACK(src, .proc/grow_back_living, L), shrink_time)
+//		addtimer(CALLBACK(src, .proc/grow_back_living, L), shrink_time)
 	else
 		parent_atom.visible_message("<span class='warning'>[parent_atom] shrinks down to a tiny size!</span>",
 		"<span class='userdanger'>Everything grows bigger!</span>")
-		addtimer(CALLBACK(src, .proc/grow_back), shrink_time)
-
+//		addtimer(CALLBACK(src, .proc/grow_back), shrink_time)
+	QDEL_IN(src, shrink_time)
+/*
 /datum/component/shrink/proc/grow_back(var/del_after = TRUE)
+	var/atom/parent_atom = parent
 	parent_atom.transform = parent_atom.transform.Scale(2,2)
 	parent_atom.density = olddens
 	parent_atom.opacity = oldopac
@@ -44,3 +45,15 @@
 		var/mob/living/carbon/human/H = L
 		H.physiology.damage_resistance += 100
 	qdel(src)
+*/
+/datum/component/shrink/Destroy()
+	var/atom/parent_atom = parent
+	parent_atom.transform = parent_atom.transform.Scale(2,2)
+	parent_atom.density = olddens
+	parent_atom.opacity = oldopac
+	if(isliving(parent_atom))
+		var/mob/living/L = parent_atom
+		L.remove_movespeed_modifier(MOVESPEED_ID_SHRINK_RAY)
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
+			H.physiology.damage_resistance += 100
