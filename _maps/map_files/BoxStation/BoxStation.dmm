@@ -4358,7 +4358,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ajr" = (
-/obj/machinery/computer/gulag_teleporter_computer,
+/obj/machinery/computer/prisoner/gulag_teleporter_computer,
 /turf/open/floor/plasteel,
 /area/security/processing)
 "ajs" = (
