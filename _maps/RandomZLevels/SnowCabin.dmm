@@ -525,10 +525,6 @@
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "bD" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 4;
-	name = "surgery window"
-	},
 /obj/machinery/computer/operating,
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
@@ -557,13 +553,6 @@
 	pixel_y = -3
 	},
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/cabin)
-"bI" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 4;
-	name = "surgery window"
-	},
-/turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "bJ" = (
 /obj/structure/sink{
@@ -611,13 +600,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
-"bR" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 8;
-	name = "surgery window"
-	},
-/turf/open/floor/plasteel/white,
-/area/awaymission/cabin)
 "bS" = (
 /turf/open/floor/wood/cold,
 /area/awaymission/cabin/snowforest)
@@ -661,21 +643,6 @@
 	},
 /obj/machinery/processor,
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/cabin)
-"bZ" = (
-/obj/structure/window/reinforced/tinted/fulltile{
-	name = "surgery window"
-	},
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/awaymission/cabin)
-"ca" = (
-/obj/structure/curtain{
-	can_be_unanchored = 0;
-	max_integrity = 25;
-	name = "surgery curtain"
-	},
-/turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "cb" = (
 /obj/machinery/gateway{
@@ -33286,7 +33253,7 @@ aq
 an
 aJ
 bG
-bZ
+bE
 cv
 hq
 cv
@@ -33543,7 +33510,7 @@ bh
 an
 aK
 bE
-ca
+bE
 bE
 bE
 lz
@@ -33799,8 +33766,8 @@ eg
 aq
 an
 bD
-bI
-bZ
+bE
+bE
 cI
 hD
 cP
@@ -34055,9 +34022,9 @@ iV
 eg
 aq
 an
-bR
-bR
-bR
+bE
+bE
+bE
 cP
 jq
 bE
