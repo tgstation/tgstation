@@ -59,14 +59,3 @@ otherwise it opens like a breeze.
 				return
 			else
 				SSeconomy.change_budget(A, newnum)
-
-
-
-
-	
-
-
-
-
-	
-	
