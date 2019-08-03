@@ -42,8 +42,8 @@
 	var/obj/item/assembly/assembly = get_attached(get_wire(1))
 	message_admins("\An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
 	log_game("\An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
-	var/turf/T = get_turf(src)
 	var/mob/M = get_mob_by_ckey(fingerprint)
+	var/turf/T = get_turf(M)	
 	G.log_grenade(M, T)
 	G.prime()
 
