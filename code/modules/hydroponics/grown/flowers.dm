@@ -214,3 +214,30 @@
 	if(!user.gloves)
 		to_chat(user, "<span class='danger'>The [name] burns your bare hand!</span>")
 		user.adjustFireLoss(rand(1, 5))
+
+/obj/item/seeds/poppy/lily/trumpet
+	name = "pack of spaceman's trumpet seeds"
+	desc = "A plant sculped by extensive genetic engineering. The spaceman's trumpet is said to bear no resemblance to its wild ancestors. Inside the NT central AgriSci department it is better known as NTPW-0372."
+	icon_state = "seed-trumpet"
+	species = "spacemanstrumpet"
+	plantname = "Spaceman's Trumpet Plant"
+	product = /obj/item/reagent_containers/food/snacks/grown/poppy
+	endurance = 40
+	maturation = 8
+	yield = 4
+	potency = 20
+	growthstages = 4
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	icon_grow = "trumpet-grow"
+	icon_dead = "trumpet-dead"
+	mutatelist = list()
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05)
+
+/obj/item/reagent_containers/food/snacks/grown/trumpet
+	seed = /obj/item/seeds/poppy/lily/trumpet
+	name = "spaceman's trumpet"
+	desc = "A vivid flower that smells faintly of.freshly cut grass.Touching the flower seems to stain the skin some time after contact, yet most other surfaces seem to be unaffected by this phenomenon."
+	icon_state = "spacemanstrumpet"
+	filling_color = "#FF6347"
+	bitesize_mod = 3
+	foodtype = VEGETABLES

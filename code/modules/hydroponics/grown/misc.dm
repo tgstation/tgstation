@@ -191,3 +191,31 @@
 	playsound(src, 'sound/effects/fuse.ogg', seed.potency, 0)
 	reagents.chem_temp = 1000 //Sets off the black powder
 	reagents.handle_reactions()
+
+/obj/item/seeds/galaxythistle
+	name = "pack of galaxy thistle seeds"
+	desc = "An impressive species of weed that is thought to have evolved from the simple milk thistle. Contains flavolignans that can help repair a damaged liver."
+	icon_state = "seed-galaxythistle"
+	species = "galaxythistle"
+	plantname = "Galaxy Thistle"
+	lifespan = 70
+	endurance = 40
+	maturation = 3
+	production = 2
+	yield = 2
+	potency = 25
+	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy)
+	mutatelist = list()
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1) //add silibinin here
+
+/obj/item/reagent_containers/food/snacks/grown/galaxythistle
+	seed = /obj/item/seeds/galaxythistle
+	name = "galaxy thistle flower head"
+	desc = "This spiny cluster of florets reminds you of the highlands."
+	icon_state = "galaxythistle"
+	filling_color = "#1E7549"
+	bitesize_mod = 3
+	foodtype = VEGETABLES
+	wine_power = 35
