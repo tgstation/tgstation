@@ -13663,6 +13663,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/computer/cargo/request/srv{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aIl" = (
@@ -17852,8 +17855,7 @@
 /turf/open/floor/plasteel,
 /area/bridge)
 "aTV" = (
-/obj/structure/table/reinforced,
-/obj/machinery/recharger,
+/obj/machinery/computer/finances,
 /turf/open/floor/plasteel,
 /area/bridge)
 "aTW" = (
@@ -17894,6 +17896,7 @@
 "aUc" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/firstaid/regular,
+/obj/machinery/recharger,
 /turf/open/floor/plasteel,
 /area/bridge)
 "aUd" = (
@@ -31295,12 +31298,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bCO" = (
-/obj/structure/table,
-/obj/item/storage/box/bodybags{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/rxglasses,
+/obj/machinery/computer/cargo/request/med,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bCP" = (
@@ -31347,6 +31345,11 @@
 /obj/item/clothing/neck/stethoscope,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/item/storage/box/rxglasses,
+/obj/item/storage/box/bodybags{
+	pixel_x = 3;
+	pixel_y = 3
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
@@ -37713,6 +37716,9 @@
 "bUm" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable,
+/obj/machinery/computer/cargo/request/eng{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bUn" = (
@@ -43278,6 +43284,9 @@
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
+	},
+/obj/machinery/computer/cargo/request/sec{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
@@ -50888,6 +50897,12 @@
 /obj/machinery/light,
 /turf/open/floor/plating,
 /area/engine/engineering)
+"oHj" = (
+/obj/machinery/computer/cargo/request/civ{
+	dir = 1
+	},
+/turf/open/floor/plasteel/grimy,
+/area/chapel/office)
 "oHU" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
@@ -97994,7 +98009,7 @@ aGU
 aIC
 aJU
 aLe
-aMX
+oHj
 aFw
 aCR
 aCR
