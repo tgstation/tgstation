@@ -1,6 +1,6 @@
 //FULPCODE//
 
-//currently only exists for admins, will be implemented later//
+//currently only exists for admins and language books, will be more implemented later//
 
 /datum/language/russian
 	name = "Space Russian"
@@ -9,7 +9,7 @@
 	sentence_chance = 5
 	space_chance = 50
 	syllables = list("bly", "bor", "cy", "da", "ko", "et", "sa", "gop", "grad", "kov", "ski", "vok", "nik", "cyka", "ka", "kor", "yov", "suk", "grad", "kov", "blyat", "vod", "ka") 
-	icon = "icons/misc/language_fulp.dmi"
+	icon = 'icons/fulpicons/fulpicons_small.dmi'
 	icon_state = "commie"
 	default_priority = 90
 	flags = TONGUELESS_SPEECH

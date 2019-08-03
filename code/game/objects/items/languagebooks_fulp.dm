@@ -42,7 +42,7 @@
 	name = "Maps of Meaning"
 	desc = "A forgotten tome from ancient earth history. Even the cover gives you a headache."
 	learnable_language = /datum/language/aphasia
-	remarks = list("I should really tidy my room...", "beware the feminine chaos dragon...", "think like a lobster", "my head hurts...", "this is just gibberish...", "yes daddy...")
+	remarks = list("I should really tidy my room...", "beware the feminine chaos dragon...", "think like a lobster...", "my head hurts...", "this is just gibberish...", "yes daddy...")
 	icon_state = "book_aphasia"
 	language_name = "Gibberish"
 
@@ -58,7 +58,7 @@
 	name = "Binary 101"
 	desc = "...or How I Stopped Worrying and Learned to Love the Hats."
 	learnable_language = /datum/language/drone
-	remarks = list("hello world...", "zero before one one, but never after zero one zero...", "hats...", "processing...", "beep boop")
+	remarks = list("hello world...", "zero before one one, but never after zero one zero...", "hats...", "processing...", "beep boop!")
 	icon_state = "book_drone"
 	language_name = "Binary"
 
@@ -66,7 +66,7 @@
 	name = "Your Guide to the One True God"
 	desc = "This guide details how to speak Nar'Sian, without being a cultist! The pages are stained with blood, proving its authenticity!"
 	learnable_language = /datum/language/narsie
-	remarks = list("finally, I see!", "the veil peels back before my mortal eyes...", "ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn...", "is this welsh?", "i can feel her behind my eyes")
+	remarks = list("finally, I see!", "the veil peels back before my mortal eyes...", "ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn...", "is this welsh?", "i can feel her behind my eyes...")
 	icon_state = "book_narsie"
 	language_name = "Nar'sian"
 	
@@ -91,7 +91,7 @@
 	name = "A Book Made Out of a Monkey"
 	desc = "Oh wow now that's just gross. It's still moving slightly."
 	learnable_language = /datum/language/monkey
-	remarks = list("never ick in ooc...", "a whole chapter on bananas...", "disarming techniques and you...", "monkeys with machine guns", "ook ook ee ee aaa!")
+	remarks = list("never ick in ooc...", "a whole chapter on bananas...", "disarming techniques and you...", "monkeys with machine guns..?", "ook ook ee ee aaa!")
 	icon_state = "book_monkey"
 	language_name = "Monkey"
 
