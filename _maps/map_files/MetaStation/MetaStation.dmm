@@ -74319,20 +74319,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
-"nCL" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/turf/open/floor/plasteel/white,
-/area/medical/sleeper)
 "nHj" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment{
@@ -74363,10 +74349,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/research)
-"nMv" = (
-/obj/structure/extinguisher_cabinet,
-/turf/closed/wall,
-/area/medical/medbay/central)
 "nXA" = (
 /obj/structure/rack{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -74797,6 +74779,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
+"sgR" = (
+/obj/structure/extinguisher_cabinet,
+/turf/closed/wall,
+/area/medical/medbay/central)
 "siF" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
@@ -75293,6 +75279,20 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
+"yiH" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel/white,
+/area/medical/sleeper)
 
 (1,1,1) = {"
 aaa
@@ -97032,7 +97032,7 @@ cbI
 bXK
 cev
 cfJ
-nCL
+yiH
 cih
 cjH
 clg
@@ -99859,7 +99859,7 @@ cbS
 cdw
 czE
 cfS
-nMv
+sgR
 cis
 cjO
 clp
