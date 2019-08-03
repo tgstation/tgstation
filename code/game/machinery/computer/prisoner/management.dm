@@ -10,12 +10,11 @@
 	var/timeleft = 60
 	var/stop = 0
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
-	var/obj/card/id/prisoner/contained_id
 	circuit = /obj/item/circuitboard/computer/prisoner
 
 	light_color = LIGHT_COLOR_RED
 
-/obj/machinery/computer/prisoner/ui_interact(mob/user)
+/obj/machinery/computer/prisoner/management/ui_interact(mob/user)
 	. = ..()
 	if(isliving(user))
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
@@ -70,7 +69,7 @@
 	popup.open()
 	return
 
-/obj/machinery/computer/prisoner/attackby(obj/item/I, mob/user, params)
+/obj/machinery/computer/prisoner/management/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/card/id))
 		if(screen)
 			id_insert(user)
@@ -79,12 +78,12 @@
 	else
 		return ..()
 
-/obj/machinery/computer/prisoner/process()
+/obj/machinery/computer/prisoner/management/process()
 	if(!..())
 		src.updateDialog()
 	return
 
-/obj/machinery/computer/prisoner/Topic(href, href_list)
+/obj/machinery/computer/prisoner/management/Topic(href, href_list)
 	if(..())
 		return
 	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr))
@@ -92,11 +91,11 @@
 
 		if(href_list["id"])
 			if(href_list["id"] =="insert" && !contained_id)
-				id_insert_prisoner(usr)
+				id_insert(usr)
 			else if(contained_id)
 				switch(href_list["id"])
 					if("eject")
-						id_eject_prisoner(usr)
+						id_eject(usr)
 					if("reset")
 						contained_id.points = 0
 					if("setgoal")

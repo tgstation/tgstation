@@ -12,17 +12,13 @@
 	if(contained_id)
 		. += "<span class='notice'><b>Alt-click</b> to eject the ID card.</span>"
 
-/obj/machinery/computer/prisoner/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/card/id/prisoner))
-		id_insert(user, I)
-	else
-		return ..()
+
 
 /obj/machinery/computer/prisoner/AltClick(mob/user)
-	eject_id(user)
+	id_eject(user)
 	return ..()
 
-/obj/machinery/computer/prisoner/proc/insert_id(mob/user, obj/item/card/id/prisoner/P)
+/obj/machinery/computer/prisoner/proc/id_insert(mob/user, obj/item/card/id/prisoner/P)
 	if(istype(P))
 		if(contained_id)
 			to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
@@ -35,7 +31,7 @@
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 		updateUsrDialog()
 
-/obj/machinery/computer/prisoner/proc/eject_id(mob/user)
+/obj/machinery/computer/prisoner/proc/id_eject(mob/user)
 	if(!contained_id)
 		to_chat(user, "<span class='warning'>There's no ID card in the console!</span>")
 		return
@@ -48,3 +44,9 @@
 							"<span class='notice'>You get the ID card from the console.</span>")
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 		updateUsrDialog()
+
+/obj/machinery/computer/prisoner/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/card/id/prisoner))
+		id_insert(user, I)
+	else
+		return ..()

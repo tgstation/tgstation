@@ -5,7 +5,7 @@
 	icon_screen = "explosive"
 	icon_keyboard = "security_key"
 	req_access = list(ACCESS_ARMORY)
-	circuit = /obj/item/circuitboard/computer/prisoner/gulag_teleporter_console
+	circuit = /obj/item/circuitboard/computer/gulag_teleporter_console
 	var/default_goal = 200
 	var/obj/machinery/gulag_teleporter/teleporter = null
 	var/obj/structure/gulag_beacon/beacon = null
@@ -78,7 +78,7 @@
 			if(contained_id)
 				id_eject(usr)
 			else
-				id_inser(usr)
+				id_insert(usr)
 		if("set_goal")
 			var/new_goal = input("Set the amount of points:", "Points", contained_id.goal) as num|null
 			if(!isnum(new_goal))
