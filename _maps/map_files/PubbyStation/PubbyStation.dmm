@@ -24591,8 +24591,10 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "blT" = (
-/obj/machinery/portable_atmospherics/canister,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/machinery/computer/nanite_cloud_controller,
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
 /turf/open/floor/engine,
 /area/science/explab)
 "blV" = (
@@ -24969,16 +24971,17 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "bmZ" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
+/obj/machinery/nanite_program_hub,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/meter,
 /turf/open/floor/engine,
 /area/science/explab)
 "bna" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
-	},
+/obj,
 /turf/open/floor/engine,
 /area/science/explab)
 "bnc" = (
@@ -25359,10 +25362,8 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "bnZ" = (
-/obj/machinery/portable_atmospherics/canister,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
+/obj/machinery/nanite_programmer,
+/obj/effect/turf_decal/stripes/end,
 /turf/open/floor/engine,
 /area/science/explab)
 "boc" = (
@@ -49539,11 +49540,14 @@
 /turf/closed/wall,
 /area/maintenance/department/security/brig)
 "eQF" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
+/obj/machinery/computer/nanite_chamber_control{
+	dir = 8;
+	step_x = 0
 	},
 /turf/open/floor/engine,
-/area/science/explab)
+/area/science/explab{
+	dir = 3
+	})
 "eQN" = (
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -53450,6 +53454,12 @@
 	luminosity = 2
 	},
 /area/maintenance/department/science)
+"oec" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/science/explab)
 "oep" = (
 /obj/structure/table/glass,
 /obj/item/paper_bin,
@@ -54459,7 +54469,11 @@
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "qDJ" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/structure/table,
+/obj/item/storage/box/disks_nanite,
+/obj/item/nanite_scanner,
+/obj/item/nanite_remote,
+/obj/item/nanite_remote/comm,
 /turf/open/floor/engine,
 /area/science/explab)
 "qEN" = (
@@ -56318,7 +56332,10 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "vmG" = (
-/obj/machinery/atmospherics/components/trinary/filter,
+/obj/machinery/nanite_chamber,
+/obj/effect/turf_decal/stripes/end{
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/science/explab)
 "vmY" = (
@@ -99027,8 +99044,8 @@ bbI
 aGP
 aTx
 vll
-bky
-boh
+oec
+bna
 pbI
 bky
 bqt
