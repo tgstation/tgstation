@@ -125,7 +125,7 @@
 
 /turf/open/floor/engine/cult
 	name = "engraved floor"
-	desc = "The air smells strangely over this sinister flooring."
+	desc = "The air smells strange over this sinister flooring."
 	icon_state = "plating"
 	floor_tile = null
 	var/obj/effect/clockwork/overlay/floor/bloodcult/realappearance
