@@ -1185,9 +1185,8 @@
 	..()
 
 /datum/reagent/stimulum/on_mob_life(mob/living/carbon/M)
-	var/tox_damage = current_cycle*0.1*REM // 1 toxin damage per cycle at cycle 10
 	M.adjustStaminaLoss(-2*REM, 0)
-	M.adjustToxLoss(tox_damage, 0)
+	M.adjustToxLoss(current_cycle*0.1*REM, 0) // 1 toxin damage per cycle at cycle 10
 	..()
 
 /datum/reagent/nitryl
