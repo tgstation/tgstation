@@ -156,8 +156,8 @@ SUBSYSTEM_DEF(ticker)
 					++totalPlayers
 					if(player.ready == PLAYER_READY_TO_PLAY)
 						++totalPlayersReady
-				if(totalPlayersReady > 3)
-					SERVER_TOOLS_DISCORD_WEBHOOK_BROADCAST("<@&379039468822331423>\nNew round starting on [SSmapping.config.map_name]!\nPlayers ready: [totalPlayersReady], [GLOB.player_list.len] total")
+				if(GLOB.player_list.len > 3)
+					SERVER_TOOLS_DISCORD_WEBHOOK_BROADCAST("<@&379039468822331423>\nNew round starting on [SSmapping.config.map_name]!\nPlayers ready: [totalPlayersReady], [GLOB.player_list.len] players total")
 			// 413 end
 			send2chat("New round starting on [SSmapping.config.map_name]!", CONFIG_GET(string/chat_announce_new_game))
 			current_state = GAME_STATE_PREGAME
