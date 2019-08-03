@@ -83,6 +83,9 @@
 		return
 	user.examinate(src)
 
+/obj/machinery/clonepod/attack_ai(mob/user)
+	return attack_hand(user)
+
 /obj/machinery/clonepod/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>The <i>linking</i> device can be <i>scanned<i> with a multitool.</span>"
