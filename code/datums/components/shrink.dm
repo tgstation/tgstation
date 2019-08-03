@@ -23,29 +23,12 @@
 			if(ishuman(C))
 				var/mob/living/carbon/human/H = C
 				H.physiology.damage_resistance -= 100//carbons take double damage while shrunk
-//		addtimer(CALLBACK(src, .proc/grow_back_living, L), shrink_time)
 	else
 		parent_atom.visible_message("<span class='warning'>[parent_atom] shrinks down to a tiny size!</span>",
 		"<span class='userdanger'>Everything grows bigger!</span>")
-//		addtimer(CALLBACK(src, .proc/grow_back), shrink_time)
 	QDEL_IN(src, shrink_time)
-/*
-/datum/component/shrink/proc/grow_back(var/del_after = TRUE)
-	var/atom/parent_atom = parent
-	parent_atom.transform = parent_atom.transform.Scale(2,2)
-	parent_atom.density = olddens
-	parent_atom.opacity = oldopac
-	if(del_after)
-		qdel(src)
 
-/datum/component/shrink/proc/grow_back_living(var/mob/living/L)
-	grow_back(FALSE)
-	L.remove_movespeed_modifier(MOVESPEED_ID_SHRINK_RAY)
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		H.physiology.damage_resistance += 100
-	qdel(src)
-*/
+
 /datum/component/shrink/Destroy()
 	var/atom/parent_atom = parent
 	parent_atom.transform = parent_atom.transform.Scale(2,2)
@@ -57,3 +40,4 @@
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
 			H.physiology.damage_resistance += 100
+	..()

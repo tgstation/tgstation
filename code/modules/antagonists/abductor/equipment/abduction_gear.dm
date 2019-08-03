@@ -385,6 +385,17 @@
 	item_state = "alienpistol"
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 
+/obj/item/gun/energy/shrink_ray
+	name = "shrink ray blaster"
+	desc = "This is a piece of frightening alien tech that enhances the magnetic pull of atoms in a localized space to temporarily make an object shrink. \
+			That or it's just space magic. Either way, it shrinks stuff."
+	ammo_type = list(/obj/item/ammo_casing/energy/shrink)
+	item_state = "shrink_ray"
+	icon_state = "shrink_ray"
+	fire_delay = 30
+	selfcharge = 1//shot costs 200 energy, has a max capacity of 1000 for 5 shots. self charge returns 25 energy every couple ticks, so about 1 shot charged every 12~ seconds
+	trigger_guard = TRIGGER_GUARD_ALLOW_ALL// variable-size trigger, get it? (abductors need this to be set so the gun is usable for them)
+
 /obj/item/paper/guides/antag/abductor
 	name = "Dissection Guide"
 	icon_state = "alienpaper_words"
