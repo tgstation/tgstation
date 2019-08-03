@@ -19557,9 +19557,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/machinery/computer/cargo/request/srv{
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
 "aQl" = (
@@ -38983,7 +38980,6 @@
 	},
 /obj/item/restraints/handcuffs,
 /obj/item/assembly/flash/handheld,
-/obj/item/mining_voucher,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "byk" = (
@@ -41043,7 +41039,9 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bBF" = (
-/obj/machinery/computer/finances,
+/obj/structure/table/reinforced,
+/obj/item/clipboard,
+/obj/item/mining_voucher,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bBG" = (
@@ -48912,9 +48910,6 @@
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
-	},
-/obj/machinery/computer/cargo/request/eng{
-	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
@@ -78228,14 +78223,12 @@
 	name = "medbay camera";
 	network = list("ss13","medbay")
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/computer/cargo/request/med{
-	dir = 4
-	},
 /turf/open/floor/plasteel,
 /area/medical/storage)
 "cPE" = (
@@ -114087,9 +114080,6 @@
 	pixel_y = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/computer/cargo/request/civ{
-	dir = 1
-	},
 /turf/open/floor/plasteel/dark,
 /area/library)
 "eny" = (
@@ -114925,25 +114915,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/crew_quarters/heads/hor)
-"kvZ" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/computer/cargo/request/sec{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/security/main)
 "kyo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -115744,22 +115715,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"pyE" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/computer/cargo/request/sci{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/science/lab)
 "pAL" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/dirt,
@@ -154525,7 +154480,7 @@ cZp
 daU
 dcI
 deh
-pyE
+dcH
 dgO
 dcH
 dkc
@@ -170915,7 +170870,7 @@ bhd
 biO
 bky
 bmr
-kvZ
+bnT
 bps
 brx
 btw

@@ -1503,9 +1503,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red,
-/obj/machinery/computer/cargo/request/sec{
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/security/main)
 "aen" = (
@@ -12383,16 +12380,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj/item/storage/belt/medical{
-	pixel_y = 2
-	},
-/obj/item/storage/belt/medical{
-	pixel_y = 2
-	},
-/obj/item/storage/belt/medical{
-	pixel_y = 2
-	},
-/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "aEZ" = (
@@ -12764,14 +12751,22 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "aFL" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
+/obj/structure/table,
+/obj/item/storage/belt/medical{
+	pixel_y = 2
 	},
+/obj/item/storage/belt/medical{
+	pixel_y = 2
+	},
+/obj/item/storage/belt/medical{
+	pixel_y = 2
+	},
+/obj/item/clothing/neck/stethoscope,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/machinery/computer/cargo/request/med{
-	dir = 4
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
@@ -45013,15 +45008,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"cFW" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 4
-	},
-/obj/machinery/computer/cargo/request/sci{
-	dir = 1
-	},
-/turf/open/floor/plasteel/white,
-/area/science/lab)
 "cIZ" = (
 /turf/closed/wall,
 /area/crew_quarters/fitness/locker_room)
@@ -45807,12 +45793,6 @@
 	},
 /turf/open/space/basic,
 /area/space)
-"fkd" = (
-/obj/machinery/computer/cargo/request/eng{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "fpA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 9
@@ -48094,22 +48074,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
-"ojG" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/computer/finances{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/bridge)
 "okf" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
@@ -48378,10 +48342,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port)
-"peH" = (
-/obj/machinery/computer/cargo/request/srv,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "peJ" = (
 /mob/living/simple_animal/hostile/lizard/space{
 	name = "Unscrews-the-Tables"
@@ -48407,13 +48367,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
-"piQ" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/computer/cargo/request/civ{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/chapel/office)
 "pjJ" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
@@ -79085,7 +79038,7 @@ aLf
 acy
 amZ
 adb
-cFW
+aeO
 aiY
 aeD
 acy
@@ -80169,7 +80122,7 @@ aoh
 aoh
 aoh
 aoh
-peH
+aBx
 aUi
 azH
 aaa
@@ -88888,7 +88841,7 @@ aor
 aor
 hrD
 aor
-fkd
+aor
 aor
 aTJ
 ofx
@@ -92166,7 +92119,7 @@ bAD
 aHL
 agh
 byW
-piQ
+bzd
 bzd
 bzB
 bAc
@@ -97083,7 +97036,7 @@ aea
 ahw
 bKo
 bFx
-ojG
+bFA
 bIm
 bHz
 aFd
