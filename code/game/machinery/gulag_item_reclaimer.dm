@@ -94,6 +94,8 @@
 					else
 						new /obj/item/holochip(drop_location(), P.points)
 						to_chat(usr, "An ID with your bank account registration was not located amongst your items, a sum of [P.points] has been dispensed as holochips.")
+					QDEL(P)
+					to_chat(usr, "<span class='notice'>The prisoner ID disintegrates as your items are reclaimed.</span>")
 				drop_items(H)
 			else
 				to_chat(usr, "Access denied.")
