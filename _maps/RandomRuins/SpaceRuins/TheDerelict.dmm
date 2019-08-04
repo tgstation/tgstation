@@ -16,12 +16,10 @@
 /turf/open/floor/plasteel/airless,
 /area/solar/derelict_starboard)
 "ae" = (
-/obj/machinery/door/airlock/highsecurity{
-	locked = 1;
-	resistance_flags = 115
+/obj/machinery/door/airlock/vault{
+	id_tag = "derelictvaultouter"
 	},
-/obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "af" = (
 /turf/open/floor/plating/airless{
@@ -3090,7 +3088,7 @@
 	dir = 1
 	},
 /obj/structure/rack,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "mz" = (
 /obj/structure/lattice,
@@ -3588,7 +3586,7 @@
 /obj/item/stack/sheet/mineral/silver,
 /obj/item/stack/sheet/mineral/silver,
 /obj/item/stack/sheet/mineral/silver,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "vC" = (
 /obj/structure/window/reinforced{
@@ -3610,10 +3608,6 @@
 "xr" = (
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating/airless,
-/area/ruin/space/derelict/bridge/ai_upload)
-"zJ" = (
-/obj/structure/cable,
-/turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/ai_upload)
 "Av" = (
 /obj/item/stack/rods,
@@ -3647,7 +3641,7 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/glass/fifty,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "Ev" = (
 /turf/open/floor/plasteel/airless{
@@ -3710,7 +3704,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "Lv" = (
@@ -3735,7 +3728,7 @@
 	start_charge = 0
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "Ob" = (
 /obj/item/clothing/head/helmet/space/syndicate/black/green,
@@ -3761,7 +3754,7 @@
 /obj/item/stack/sheet/metal/fifty,
 /obj/item/stack/sheet/metal/fifty,
 /obj/item/stack/sheet/metal/fifty,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "Rd" = (
 /obj/item/stack/cable_coil,
@@ -3783,9 +3776,21 @@
 "Tm" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary/port)
+"Ub" = (
+/obj/machinery/door/airlock/vault{
+	id_tag = derelictvaultinner
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
 "Uz" = (
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"Vt" = (
+/obj/structure/cable,
+/turf/closed/indestructible/riveted{
+	color = "#FF8888"
+	},
+/area/ruin/space/derelict/bridge/ai_upload)
 "Vz" = (
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary/port)
@@ -3795,6 +3800,10 @@
 	icon_state = "damaged2"
 	},
 /area/ruin/space/derelict/singularity_engine)
+"Xu" = (
+/obj/structure/rack,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
 "YQ" = (
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
@@ -10833,7 +10842,7 @@ ax
 ax
 ax
 ae
-ax
+ce
 ax
 ax
 bj
@@ -10945,8 +10954,8 @@ bj
 bW
 bW
 bW
-ae
-bW
+Ub
+Vt
 bW
 bW
 bj
@@ -11056,9 +11065,9 @@ bj
 bj
 bj
 bW
-by
-aR
-zJ
+Xu
+bz
+bz
 Ni
 Qj
 bW
@@ -11170,9 +11179,9 @@ bj
 bj
 bW
 my
-aR
-aR
-aR
+bz
+bz
+bz
 DX
 bW
 bj
@@ -11282,10 +11291,10 @@ bj
 bj
 bj
 bW
-by
-aR
-by
-aR
+Xu
+bz
+Xu
+bz
 vo
 bW
 bj

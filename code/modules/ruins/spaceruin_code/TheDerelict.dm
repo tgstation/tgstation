@@ -21,7 +21,7 @@
 	info = "<b>Objectives #1</b>: Find out whatever is being hidden in Kosmichekaya Stantsiya 13s Vault"
 
 
-/// Vault controller
+/// Vault controller for use on the derelict/KS13.
 /obj/machinery/computer/vaultcontroller
 	name = "vault controller"
 	desc = "It seems to be powering and controlling the vault locks."
@@ -34,6 +34,7 @@
 	var/obj/structure/cable/attached_cable
 	var/obj/machinery/door/airlock/outer
 	var/obj/machinery/door/airlock/inner
+	var/locked = TRUE
 	var/siphoned_power = 0
 	var/siphon_max = 5e7
 
@@ -41,6 +42,18 @@
 /obj/machinery/computer/monitor/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>It appears to be powered via a cable connector.</span>"
+
+
+///Initializing airlock links, set during mapping.
+/obj/machinery/computer/vaultcontroller/Initialize()
+	..()
+	for(var/obj/machinery/door/airlock/I in GLOB.machines)
+		if(I.id_tag == "derelictvaultouter")
+			outer = I
+		if(I.id_tag == "derelictvaultinner")
+			inner = I
+		if(outer && inner)
+			break
 
 
 /obj/machinery/computer/vaultcontroller/process()
@@ -61,6 +74,39 @@
 		siphoned_power += surpluspower
 
 
+/obj/machinery/computer/vaultcontroller/proc/activate_lock()
+	if(locked)
+		unlock_vault()
+	else
+		lock_vault()
+
+
+/obj/machinery/computer/vaultcontroller/proc/lock_vault()
+	if(outer && !outer.density)
+		outer.safe = FALSE //Make sure its forced closed, always
+		outer.unbolt()
+		outer.close()
+		outer.bolt()
+	if(inner && !inner.density)
+		inner.safe = FALSE //Make sure its forced closed, always
+		inner.unbolt()
+		inner.close()
+		inner.bolt()
+	locked = TRUE
+
+
+/obj/machinery/computer/vaultcontroller/proc/unlock_vault()
+	if(outer && outer.density)
+		outer.unbolt()
+		outer.open()
+		outer.bolt()
+	if(inner && inner.density)
+		inner.unbolt()
+		inner.open()
+		inner.bolt()
+	locked = FALSE
+
+
 /obj/machinery/computer/vaultcontroller/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -72,7 +118,7 @@
 /obj/machinery/computer/vaultcontroller/ui_act(action, params)
 	if(..())
 		return
-	switch(action)
+	//switch(action)
 
 
 /obj/machinery/computer/vaultcontroller/ui_data()
