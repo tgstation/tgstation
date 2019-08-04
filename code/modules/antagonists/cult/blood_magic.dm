@@ -38,19 +38,17 @@
 	else
 		to_chat(owner, "<span class='cultitalic'>Your sacrifice was interrupted!</span>")
 
-/proc/sacrifice_person(mob/user, mob/living/target)
+/datum/action/innate/cult/cult_sac/proc/sacrifice_person(mob/user, mob/living/target)
 	user.add_mob_blood(target)
 	target.become_husk(CULT_TRAIT)
 	var/datum/antagonist/cult/cultistinfo = user.mind.has_antag_datum(/datum/antagonist/cult)
-	cultistinfo.add_sac(user)
+	cultistinfo.add_sac()
 	for(var/datum/objective/sacrifice/sac_objective in cultistinfo.cult_team.objectives)
 		if(sac_objective.target == target.mind)
 			sac_objective.sacced = TRUE
-			sound_to_playing_players('sound/hallucinations/i_see_you1.ogg')
 			sac_objective.update_explanation_text()
+			sound_to_playing_players('sound/hallucinations/i_see_you1.ogg')
 			to_chat(user, "<span class='cultlarge'>Yes! This is the one I desire! You have done well.</span>")
-			for(var/datum/mind/B in cultistinfo.cult_team.members)
-				if(B.current)
-					to_chat(B.current, "<span class='cultlarge'>The interloper has been sacrificed.</span>")
+			cultistinfo.cult_team.message_all_cultists("<span class='cultlarge'>The interloper has been sacrificed.</span>")
 		else
 			to_chat(user, "<span class='cultlarge'>I accept this sacrifice.</span>")

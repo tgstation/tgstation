@@ -41,15 +41,13 @@
 			. += "<b>Keyword:</b> [keyword]"
 
 /obj/effect/rune/attackby(obj/I, mob/user, params)
-	if(istype(I, /obj/item/melee/cultblade/dagger) && iscultist(user))
-		SEND_SOUND(user,'sound/items/sheath.ogg')
-		if(do_after(user, 15, target = src))
-			to_chat(user, "<span class='notice'>You carefully erase the [lowertext(cultist_name)] rune.</span>")
+	if(istype(I, /obj/item/nullrod))
+		if(do_after(user, 100, target = src))
+			user.say("BEGONE FOUL MAGIKS!!", forced = "nullrod")
+			to_chat(user, "<span class='danger'>You disrupt the magic of [src] with [I].</span>")
+			log_game("[src] erased by [key_name(user)] using a null rod")
+			message_admins("[ADMIN_LOOKUPFLW(user)] erased a [src] with a null rod")
 			qdel(src)
-	else if(istype(I, /obj/item/nullrod))
-		user.say("BEGONE FOUL MAGIKS!!", forced = "nullrod")
-		to_chat(user, "<span class='danger'>You disrupt the magic of [src] with [I].</span>")
-		qdel(src)
 
 /obj/effect/rune/attack_hand(mob/living/user)
 	. = ..()
@@ -74,12 +72,6 @@
 			attack_hand(M)
 		else
 			to_chat(M, "<span class='warning'>You are unable to invoke the rune!</span>")
-
-/obj/effect/rune/proc/conceal() //for talisman of revealing/hiding
-	visible_message("<span class='danger'>[src] fades away.</span>")
-	invisibility = INVISIBILITY_OBSERVER
-	alpha = 100 //To help ghosts distinguish hidden runes
-
 /*
 
 There are a few different procs each rune runs through when a cultist activates it.
@@ -258,16 +250,3 @@ structure_check() searches for nearby cultist structures required for the invoca
 	sound_to_playing_players('sound/effects/dimensional_rend.ogg')
 	sleep(40)
 	new /obj/singularity/narsie/large/cult(T)
-
-/obj/effect/rune/narsie/attackby(obj/I, mob/user, params)	//Since the narsie rune takes a long time to make, add logging to removal.
-	if((istype(I, /obj/item/melee/cultblade/dagger) && iscultist(user)))
-		user.visible_message("<span class='warning'>[user.name] begins erasing [src]...</span>", "<span class='notice'>You begin erasing [src]...</span>")
-		if(do_after(user, 50, target = src))	//Prevents accidental erasures.
-			log_game("Summon Narsie rune erased by [key_name(user)] with [I.name]")
-			message_admins("[ADMIN_LOOKUPFLW(user)] erased a Narsie rune with [I.name]")
-			..()
-	else
-		if(istype(I, /obj/item/nullrod))	//Begone foul magiks. You cannot hinder me.
-			log_game("Summon Narsie rune erased by [key_name(user)] using a null rod")
-			message_admins("[ADMIN_LOOKUPFLW(user)] erased a Narsie rune with a null rod")
-			..()

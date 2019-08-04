@@ -19,15 +19,13 @@
 	var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
 	if(!input || !IsAvailable())
 		return
-
 	cultist_commune(usr, input)
 
 /datum/action/innate/cult/comm/proc/cultist_commune(mob/living/user, message)
 	var/my_message
 	if(!message)
 		return
-	user.whisper("O bidai nabora se[pick("'","`")]sma!", language = /datum/language/common)
-	user.whisper(html_decode(message))
+	user.whisper("O bidai nabora se'sma!", language = /datum/language/common)
 	var/title = "Acolyte"
 	var/span = "cult italic"
 	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/cult/master))
@@ -43,7 +41,6 @@
 		else if(M in GLOB.dead_mob_list)
 			var/link = FOLLOW_LINK(M, user)
 			to_chat(M, "[link] [my_message]")
-
 	user.log_talk(message, LOG_SAY, tag="cult")
 
 /datum/action/innate/cult/mastervote
@@ -70,9 +67,7 @@
 	for(var/datum/mind/B in team.members)
 		if(B.current)
 			B.current.update_action_buttons_icon()
-			if(!B.current.incapacitated())
-				SEND_SOUND(B.current, 'sound/hallucinations/im_here1.ogg')
-				to_chat(B.current, "<span class='cultlarge'>Acolyte [Nominee] has asserted that [Nominee.p_theyre()] worthy of leading the cult. A vote will be called shortly.</span>")
+			to_chat(B.current, "<span class='cultlarge'>Acolyte [Nominee] has asserted that [Nominee.p_theyre()] worthy of leading the cult. A vote will be called shortly.</span>")
 	sleep(100)
 	var/list/asked_cultists = list()
 	for(var/datum/mind/B in team.members)
@@ -107,12 +102,11 @@
 	team.cult_master = Nominee
 	SSticker.mode.remove_cultist(Nominee.mind, TRUE)
 	Nominee.mind.add_antag_datum(/datum/antagonist/cult/master)
+	team.message_all_cultists("<span class='cultlarge'>[Nominee] has won the cult's support and is now their master. Follow [Nominee.p_their()] orders to the best of your ability!</span>")
 	for(var/datum/mind/B in team.members)
 		if(B.current)
 			for(var/datum/action/innate/cult/mastervote/vote in B.current.actions)
 				vote.Remove(B.current)
-			if(!B.current.incapacitated())
-				to_chat(B.current,"<span class='cultlarge'>[Nominee] has won the cult's support and is now their master. Follow [Nominee.p_their()] orders to the best of your ability!</span>")
 	return TRUE
 
 /datum/action/innate/cult/master/IsAvailable()

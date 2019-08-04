@@ -35,6 +35,7 @@
 
 
 /datum/action/innate/cult/create_rune/Activate()
+	//refactor
 	var/area/A = get_area(owner)
 	var/datum/antagonist/cult/user_antag = owner.mind.has_antag_datum(/datum/antagonist/cult, TRUE)
 	var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
@@ -79,10 +80,9 @@
 			scribe_mod *= 0.5
 		playsound(T, 'sound/magic/enter_blood.ogg', 100, FALSE)
 		if(do_after(owner, scribe_mod, target = owner, extra_checks = CALLBACK(owner, /mob.proc/break_do_after_checks, health, action_interrupt)))
+			//refactor
 			summon_objective.summon_spots -= A
-			for(var/datum/mind/B in user_antag.cult_team.members)
-				if(B.current)
-					to_chat(B.current, "<span class='cultlarge'>A ritual site has been made in [A]!</span>")
+			user_antag.cult_team.message_all_cultists("<span class='cultlarge'>A ritual site has been made in [A]!</span>")
 			var/obj/effect/rune/new_rune = new rune_type(owner.loc)
 			new_rune.keyword = chosen_keyword
 		else

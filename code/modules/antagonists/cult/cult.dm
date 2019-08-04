@@ -72,49 +72,29 @@
 	if(cult_team.blood_target && cult_team.blood_target_image && current.client)
 		current.client.images += cult_team.blood_target_image
 
-/datum/antagonist/cult/proc/add_sac(sac_increase = 1)
+/datum/antagonist/cult/proc/add_sac()
 	var/mob/living/carbon/human/cultist = owner.current
-	sac_number += sac_increase
-
+	sac_number += 1
 	if(sac_number == tier_1)
 		to_chat(cultist, "<span class='cultitalic'>Your eyes strain as you see the truth of the Geometer!</span>")
 		ADD_TRAIT(cultist, TRAIT_NIGHT_VISION, CULT_TRAIT)
 		cultist.update_sight()
-		
-	else if(sac_number == tier_2)
+	if(sac_number == tier_2)
 		to_chat(cultist, "<span class='cultitalic'>You feel your blood surging with dark power!</span>")
 		cultist.physiology.stun_mod *= cult_stun_mod
-
-	else if(sac_number == tier_3)
+	if(sac_number == tier_3)
 		to_chat(cultist, "<span class='cultitalic'>You feel your skin ripple with unholy strength!</span>")
 		cultist.physiology.damage_resistance += cult_damage_mod
+	
+	
 
-/datum/antagonist/cult/proc/equip_cultist(metal=TRUE)
+/datum/antagonist/cult/proc/equip_cultist()
 	var/mob/living/carbon/H = owner.current
 	if(!istype(H))
 		return
 	if (owner.assigned_role == "Clown")
 		to_chat(owner, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 		H.dna.remove_mutation(CLOWNMUT)
-
-/datum/antagonist/cult/proc/cult_give_item(obj/item/item_path, mob/living/carbon/human/mob)
-	var/list/slots = list(
-		"backpack" = SLOT_IN_BACKPACK,
-		"left pocket" = SLOT_L_STORE,
-		"right pocket" = SLOT_R_STORE
-	)
-
-	var/T = new item_path(mob)
-	var/item_name = initial(item_path.name)
-	var/where = mob.equip_in_one_of_slots(T, slots)
-	if(!where)
-		to_chat(mob, "<span class='userdanger'>Unfortunately, you weren't able to get a [item_name]. This is very bad and you should adminhelp immediately (press F1).</span>")
-		return 0
-	else
-		to_chat(mob, "<span class='danger'>You have a [item_name] in your [where].</span>")
-		if(where == "backpack")
-			SEND_SIGNAL(mob.back, COMSIG_TRY_STORAGE_SHOW, mob)
-		return TRUE
 
 /datum/antagonist/cult/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -340,3 +320,7 @@
 
 /datum/team/cult/is_gamemode_hero()
 	return SSticker.mode.name == "cult"
+
+/datum/team/cult/proc/message_all_cultists(message)
+	for(var/datum/mind/B in members)
+		to_chat(B.current,"[message]")
