@@ -28,36 +28,14 @@
 	if(locate(/obj/effect/rune) in T)
 		to_chat(owner, "<span class='cult'>There is already a rune here.</span>")
 		return FALSE
-	if(!is_station_level(T.z) && !is_mining_level(T.z))
-		to_chat(owner, "<span class='warning'>The veil is not weak enough here.</span>")
-		return FALSE
 	return TRUE
 
+/datum/action/innate/cult/create_rune/proc/on_cast_effect()
 
 /datum/action/innate/cult/create_rune/Activate()
-	//refactor
-	var/area/A = get_area(owner)
-	var/datum/antagonist/cult/user_antag = owner.mind.has_antag_datum(/datum/antagonist/cult, TRUE)
-	var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
-	var/datum/objective/sacrifice/sac_objective = locate() in user_antag.cult_team.objectives
-	if(sac_objective)
-		if(!sac_objective.sacced)
-			to_chat(owner, "<span class='cultlarge'>You must sacrifice the interloper before you can start summoning me!</span>")
-			return
-	if(!(A in summon_objective.summon_spots))
-		to_chat(owner, "<span class='cultlarge'>You can only summon me where the veil is weak - in [english_list(summon_objective.summon_spots)]!</span>")
-		return
-
 	var/turf/T = get_turf(owner)
 	if(turf_check(T))
-		var/chosen_keyword
-		if(initial(rune_type.req_keyword))
-			chosen_keyword = stripped_input(owner, "Enter a keyword for the new rune.", "Words of Power")
-			if(!chosen_keyword)
-				return
-	//the outer ring is always the same across all runes
 		var/obj/effect/temp_visual/cult/rune_spawn/R1 = new(T, scribe_time, rune_color)
-	//the rest are not always the same, so we need types for em
 		var/obj/effect/temp_visual/cult/rune_spawn/R2
 		if(rune_word_type)
 			R2 = new rune_word_type(T, scribe_time, rune_color)
@@ -67,7 +45,6 @@
 		var/obj/effect/temp_visual/cult/rune_spawn/R4
 		if(rune_center_type)
 			R4 = new rune_center_type(T, scribe_time, rune_color)
-
 		cooldown = base_cooldown + world.time
 		owner.update_action_buttons_icon()
 		addtimer(CALLBACK(owner, /mob.proc/update_action_buttons_icon), base_cooldown)
@@ -80,11 +57,8 @@
 			scribe_mod *= 0.5
 		playsound(T, 'sound/magic/enter_blood.ogg', 100, FALSE)
 		if(do_after(owner, scribe_mod, target = owner, extra_checks = CALLBACK(owner, /mob.proc/break_do_after_checks, health, action_interrupt)))
-			//refactor
-			summon_objective.summon_spots -= A
-			user_antag.cult_team.message_all_cultists("<span class='cultlarge'>A ritual site has been made in [A]!</span>")
-			var/obj/effect/rune/new_rune = new rune_type(owner.loc)
-			new_rune.keyword = chosen_keyword
+			on_cast_effect()
+			new rune_type(owner.loc)
 		else
 			qdel(R1)
 			if(R2)
@@ -106,3 +80,24 @@
 	rune_innerring_type = /obj/effect/temp_visual/cult/rune_spawn/rune4/inner
 	rune_center_type = /obj/effect/temp_visual/cult/rune_spawn/rune4/center
 	rune_color = RUNE_COLOR_DARKRED
+
+/datum/action/innate/cult/create_rune/narsie/turf_check(turf/T)
+	var/area/A = get_area(owner)
+	var/datum/antagonist/cult/user_antag = owner.mind.has_antag_datum(/datum/antagonist/cult, TRUE)
+	var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
+	var/datum/objective/sacrifice/sac_objective = locate() in user_antag.cult_team.objectives
+	if(sac_objective)
+		if(!sac_objective.sacced)
+			to_chat(owner, "<span class='cultlarge'>You must sacrifice the interloper before you can start summoning me!</span>")
+			return FALSE
+	if(!(A in summon_objective.summon_spots))
+		to_chat(owner, "<span class='cultlarge'>You can only summon me where the veil is weak - in [english_list(summon_objective.summon_spots)]!</span>")
+		return FALSE
+	return ..(T)
+
+/datum/action/innate/cult/create_rune/narsie/on_cast_effect()
+	var/area/A = get_area(owner)
+	var/datum/antagonist/cult/user_antag = owner.mind.has_antag_datum(/datum/antagonist/cult, TRUE)
+	var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
+	summon_objective.summon_spots -= A
+	user_antag.cult_team.message_all_cultists("<span class='cultlarge'>A ritual site has been made in [A]!</span>")

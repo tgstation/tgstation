@@ -20,13 +20,8 @@
 	var/invoke_damage = 0 //how much damage invokers take when invoking it
 	var/construct_invoke = TRUE //if constructs can invoke it
 
-	var/req_keyword = 0 //If the rune requires a keyword - go figure amirite
-	var/keyword //The actual keyword for the rune
-
 /obj/effect/rune/Initialize(mapload, set_keyword)
 	. = ..()
-	if(set_keyword)
-		keyword = set_keyword
 	var/image/I = image(icon = 'icons/effects/blood.dmi', icon_state = null, loc = src)
 	I.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cult_runes", I)
@@ -37,8 +32,6 @@
 		. += "<b>Name:</b> [cultist_name]\n"+\
 		"<b>Effects:</b> [capitalize(cultist_desc)]\n"+\
 		"<b>Required Acolytes:</b> [req_cultists_text ? "[req_cultists_text]":"[req_cultists]"]"
-		if(req_keyword && keyword)
-			. += "<b>Keyword:</b> [keyword]"
 
 /obj/effect/rune/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/nullrod))
