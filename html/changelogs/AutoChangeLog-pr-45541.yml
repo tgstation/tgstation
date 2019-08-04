@@ -1,8 +1,0 @@
-author: "zeroisthebiggay"
-delete-after: True
-changes: 
-  - bugfix: "(BOX) Replaced the broken shutter in the engine room."
-  - bugfix: "(BOX) Replaced the missing lattices in the mix to turbine pipe loop."
-  - bugfix: "(BOX) Moved the position of a singular wire to be on top of a pipe just like all the wires before and after it."
-  - bugfix: "(BOX) Made the signs at arrivals not floating."
-  - bugfix: "(BOX) Made one of the shutters at the vacant commissary actually zoned."
