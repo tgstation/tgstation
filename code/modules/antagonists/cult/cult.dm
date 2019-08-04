@@ -15,10 +15,10 @@
 	var/datum/team/cult/cult_team
 	var/sac_number = 0 //number of people this cultist has sacrificed
 	var/tier_1 = 1 //number of sacrifices to receive each bonus
-	var/tier_2 = 2 //debug val
-	var/tier_3 = 3 //debug val
+	var/tier_2 = 4
+	var/tier_3 = 9
 	var/cult_stun_mod = 0.65
-	var/cult_armor_mod = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 35)
+	var/cult_damage_mod = 25
 
 /datum/antagonist/cult/get_team()
 	return cult_team
@@ -72,7 +72,8 @@
 	if(cult_team.blood_target && cult_team.blood_target_image && current.client)
 		current.client.images += cult_team.blood_target_image
 
-/datum/antagonist/cult/proc/add_sac(mob/living/carbon/human/cultist, sac_increase = 1)
+/datum/antagonist/cult/proc/add_sac(sac_increase = 1)
+	var/mob/living/carbon/human/cultist = owner.current
 	sac_number += sac_increase
 
 	if(sac_number == tier_1)
@@ -86,10 +87,7 @@
 
 	else if(sac_number == tier_3)
 		to_chat(cultist, "<span class='cultitalic'>You feel your skin ripple with unholy strength!</span>")
-		cultist.physiology.armor.melee += cult_armor_mod["melee"]
-		cultist.physiology.armor.bullet += cult_armor_mod["bullet"]
-		cultist.physiology.armor.laser += cult_armor_mod["laser"]
-		cultist.physiology.armor.energy += cult_armor_mod["energy"]
+		cultist.physiology.damage_resistance += cult_damage_mod
 
 /datum/antagonist/cult/proc/equip_cultist(metal=TRUE)
 	var/mob/living/carbon/H = owner.current
@@ -98,11 +96,6 @@
 	if (owner.assigned_role == "Clown")
 		to_chat(owner, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 		H.dna.remove_mutation(CLOWNMUT)
-	//. += cult_give_item(/obj/item/melee/cultblade/dagger, H)
-	//if(metal)
-		//. += cult_give_item(/obj/item/stack/sheet/runed_metal/ten, H)
-	//to_chat(owner, "These will help you start the cult on this station. Use them well, and remember - you are not the only one.</span>")
-
 
 /datum/antagonist/cult/proc/cult_give_item(obj/item/item_path, mob/living/carbon/human/mob)
 	var/list/slots = list(
@@ -136,10 +129,8 @@
 	sacrifice.Grant(current)
 	summonrune.Grant(current)
 	current.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
-	if(cult_team.cult_risen)
-		cult_team.rise(current)
-		if(cult_team.cult_ascendent)
-			cult_team.ascend(current)
+	if(cult_team.cult_ascendent)
+		cult_team.ascend(current)
 
 /datum/antagonist/cult/remove_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -161,19 +152,13 @@
 		H.remove_overlay(HALO_LAYER)
 		H.update_body()
 		to_chat(H, "<span class='cultitalic'>You feel your powers fall away!</span>")
-
 		if(sac_number >= tier_1)
 			REMOVE_TRAIT(H, TRAIT_NIGHT_VISION, CULT_TRAIT )
 			H.update_sight()
-
-		if(sac_number >= tier_2)
+		else if(sac_number >= tier_2)
 			H.physiology.stun_mod /= cult_stun_mod
-		
-		if(sac_number >= tier_3)
-			H.physiology.armor.melee -= cult_armor_mod["melee"]
-			H.physiology.armor.bullet -= cult_armor_mod["bullet"]
-			H.physiology.armor.laser -= cult_armor_mod["laser"]
-			H.physiology.armor.energy -= cult_armor_mod["energy"]
+		else if(sac_number >= tier_3)
+			H.physiology.damage_resistance -= cult_damage_mod
 
 /datum/antagonist/cult/on_removal()
 	SSticker.mode.cult -= owner
@@ -219,15 +204,6 @@
 
 /datum/antagonist/cult/master
 	show_in_antagpanel = FALSE //Feel free to add this later
-	var/datum/action/innate/cult/master/finalreck/reckoning = new
-	var/datum/action/innate/cult/master/cultmark/bloodmark = new
-	var/datum/action/innate/cult/master/pulse/throwing = new
-
-/datum/antagonist/cult/master/Destroy()
-	//QDEL_NULL(reckoning)
-	//QDEL_NULL(bloodmark)
-	//QDEL_NULL(throwing)
-	return ..()
 
 /datum/antagonist/cult/master/on_gain()
 	. = ..()
@@ -242,25 +218,16 @@
 	var/mob/living/current = owner.current
 	if(mob_override)
 		current = mob_override
-	//if(!cult_team.reckoning_complete)
-		//reckoning.Grant(current)
-	//bloodmark.Grant(current)
-	//throwing.Grant(current)
 	current.update_action_buttons_icon()
 	current.apply_status_effect(/datum/status_effect/cult_master)
-	if(cult_team.cult_risen)
-		cult_team.rise(current)
-		if(cult_team.cult_ascendent)
-			cult_team.ascend(current)
+	if(cult_team.cult_ascendent)
+		cult_team.ascend(current)
 
 /datum/antagonist/cult/master/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current = owner.current
 	if(mob_override)
 		current = mob_override
-	reckoning.Remove(current)
-	bloodmark.Remove(current)
-	throwing.Remove(current)
 	current.update_action_buttons_icon()
 	current.remove_status_effect(/datum/status_effect/cult_master)
 
@@ -282,46 +249,7 @@
 	var/cult_vote_called = FALSE
 	var/mob/living/cult_master
 	var/reckoning_complete = FALSE
-	var/cult_risen = FALSE
 	var/cult_ascendent = FALSE
-
-/datum/team/cult/proc/check_size()
-	if(cult_ascendent)
-		return
-	var/alive = 0
-	var/cultplayers = 0
-	for(var/I in GLOB.player_list)
-		var/mob/M = I
-		if(M.stat != DEAD)
-			if(iscultist(M))
-				++cultplayers
-			else
-				++alive
-	var/ratio = cultplayers/alive
-	if(ratio > CULT_RISEN && !cult_risen)
-		for(var/datum/mind/B in members)
-			if(B.current)
-				SEND_SOUND(B.current, 'sound/hallucinations/i_see_you2.ogg')
-				to_chat(B.current, "<span class='cultlarge'>The veil weakens as your cult grows, your eyes begin to glow...</span>")
-				addtimer(CALLBACK(src, .proc/rise, B.current), 200)
-		cult_risen = TRUE
-
-	if(ratio > CULT_ASCENDENT && !cult_ascendent)
-		for(var/datum/mind/B in members)
-			if(B.current)
-				SEND_SOUND(B.current, 'sound/hallucinations/im_here1.ogg')
-				to_chat(B.current, "<span class='cultlarge'>Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!")
-				addtimer(CALLBACK(src, .proc/ascend, B.current), 200)
-		cult_ascendent = TRUE
-
-
-/datum/team/cult/proc/rise(cultist)
-	if(ishuman(cultist))
-		var/mob/living/carbon/human/H = cultist
-		H.eye_color = "f00"
-		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-		ADD_TRAIT(H, CULT_EYES, CULT_TRAIT)
-		H.update_body()
 
 /datum/team/cult/proc/ascend(cultist)
 	if(ishuman(cultist))
@@ -382,7 +310,7 @@
 
 /datum/objective/sacrifice/update_explanation_text()
 	if(target)
-		explanation_text = "Sacrifice [target], the [target.assigned_role] via invoking a Sacrifice rune with [target.p_them()] on it and three acolytes around it."
+		explanation_text = "Use your sacrifice power with a sharp item to sacrifice [target]."
 	else
 		explanation_text = "The veil has already been weakened here, proceed to the final objective."
 

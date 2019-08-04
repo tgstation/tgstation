@@ -108,7 +108,7 @@
 	name = "Night Vision"
 	desc = "You can see slightly more clearly in full darkness than most people."
 	value = 1
-	mob_trait = TRAIT_NIGHT_VISION
+	mob_trait = TRAIT_DARK_SIGHT
 	gain_text = "<span class='notice'>The shadows seem a little less dark.</span>"
 	lose_text = "<span class='danger'>Everything seems a little darker.</span>"
 	medical_record_text = "Patient's eyes show above-average acclimation to darkness."

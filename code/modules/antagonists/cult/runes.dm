@@ -210,7 +210,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 	var/mob/living/F = invokers[1]
 	var/datum/antagonist/cult/C = F.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-	var/datum/team/cult/Cult_team = C.cult_team
 	var/is_convertable = is_convertable_to_cult(L,C.cult_team)
 	if(L.stat != DEAD && (is_clock || is_convertable))
 		invocation = "Mah'weyh pleggh at e'ntrath!"
@@ -228,7 +227,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 		do_sacrifice(L, invokers)
 	animate(src, color = oldcolor, time = 5)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 5)
-	Cult_team.check_size() // Triggers the eye glow or aura effects if the cult has grown large enough relative to the crew
 	rune_in_use = FALSE
 
 /obj/effect/rune/convert/proc/do_convert(mob/living/convertee, list/invokers)
@@ -475,7 +473,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/active = FALSE //if summoning has started
 	var/used = FALSE //if has been invoked recently
 	var/invocation_charges = 0
-	var/summon_charges = 3 //debug val, set to higher for gameplay
+	var/summon_charges = 100 //time to summon: 200s with 1 cultist, to a minimum of 60s with 9 or more cultists
 	var/list/random_chants = list(
 		"sha", "mir", "sas", "mah", "hra", "zar", "tok", "lyr", "nqa", "nap", "olt", "val",
 		"yam", "qha", "fel", "det", "fwe", "mah", "erl", "ath", "yro", "eth", "gal", "mud",
@@ -507,7 +505,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/narsie/invoke(var/list/invokers)
 	var/mob/living/user = invokers[1]
 	if(!is_station_level(z)) //Needed to prevent lavaland ruin with narsie rune from ending the round
-		to_chat(B.current, "<span class='cultlarge'>You must summon me to the station.</span>")
+		to_chat(user, "<span class='cultlarge'>You must summon me to the station.</span>")
 		return
 	if(used)
 		to_chat(user, "<span class='cultitalic'>The rune has been invoked recently, try again soon!</span>")
@@ -522,10 +520,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 					M.say("[selected_chant]!!", forced = TRUE)
 		light_power = light_power_on
 		update_light()
-		to_chat(user, "<span class='cultitalic'>You progress the ritual by [nearby_cultists]!</span>")
-		invocation_charges += nearby_cultists
-		used = TRUE
 		fail_invoke() //makes rune flash red
+		var/charges_gained = min(3.5+nearby_cultists*1.5, 17)
+		to_chat(user, "<span class='cultitalic'>You progress the ritual by [charges_gained]!</span>")
+		invocation_charges += charges_gained
+		used = TRUE
 		var/turf/T = get_turf(src)
 		playsound(T, invoke_sound, 100)
 		addtimer(CALLBACK(src, .proc/reallow_invocation, T), 100) //causes rune to be invocable again after a delay

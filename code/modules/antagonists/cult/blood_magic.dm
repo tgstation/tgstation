@@ -49,8 +49,11 @@
 			sound_to_playing_players('sound/hallucinations/i_see_you1.ogg')
 			sac_objective.update_explanation_text()
 			to_chat(user, "<span class='cultlarge'>Yes! This is the one I desire! You have done well.</span>")
-			return
-	to_chat(user, "<span class='cultlarge'>I accept this sacrifice.</span>")
+			for(var/datum/mind/B in cultistinfo.cult_team.members)
+				if(B.current)
+					to_chat(B.current, "<span class='cultlarge'>The interloper has been sacrificed.</span>")
+		else
+			to_chat(user, "<span class='cultlarge'>I accept this sacrifice.</span>")
 
 /datum/action/innate/cult/blood_magic //Blood magic handles the creation of blood spells (formerly talismans)
 	name = "Prepare Blood Magic"

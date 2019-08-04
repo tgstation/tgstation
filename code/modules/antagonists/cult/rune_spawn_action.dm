@@ -46,7 +46,6 @@
 	if(!(A in summon_objective.summon_spots))
 		to_chat(owner, "<span class='cultlarge'>You can only summon me where the veil is weak - in [english_list(summon_objective.summon_spots)]!</span>")
 		return
-	summon_objective.summon_spots -= A
 
 	var/turf/T = get_turf(owner)
 	if(turf_check(T))
@@ -80,6 +79,10 @@
 			scribe_mod *= 0.5
 		playsound(T, 'sound/magic/enter_blood.ogg', 100, FALSE)
 		if(do_after(owner, scribe_mod, target = owner, extra_checks = CALLBACK(owner, /mob.proc/break_do_after_checks, health, action_interrupt)))
+			summon_objective.summon_spots -= A
+			for(var/datum/mind/B in user_antag.cult_team.members)
+				if(B.current)
+					to_chat(B.current, "<span class='cultlarge'>A ritual site has been made in [A]!</span>")
 			var/obj/effect/rune/new_rune = new rune_type(owner.loc)
 			new_rune.keyword = chosen_keyword
 		else
@@ -132,9 +135,9 @@
 
 /datum/action/innate/cult/create_rune/narsie //only one given to cultists
 	name = "Summon Nar'Sie Rune"
-	desc = "Prepare the ritual to bring Nar'Sie into this world. Must be used in a summon location. Be ready to defend the rune."
+	desc = "Prepare the ritual to bring Nar'Sie into this world. Must be used in a summon location. Be ready to defend the rune. You can only draw one rune per summon site."
 	button_icon_state = "barrier"
-	base_cooldown = 0
+	base_cooldown = 70
 	rune_type = /obj/effect/rune/narsie
 	rune_word_type = /obj/effect/temp_visual/cult/rune_spawn/rune4
 	rune_innerring_type = /obj/effect/temp_visual/cult/rune_spawn/rune4/inner

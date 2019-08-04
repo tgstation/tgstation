@@ -142,6 +142,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_UNINTELLIGIBLE_SPEECH "unintelligible-speech"
 #define TRAIT_UNSTABLE			"unstable"
 #define TRAIT_OIL_FRIED			"oil_fried"
+#define TRAIT_NIGHT_VISION		"night_vision"
 
 //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
@@ -155,7 +156,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
 #define TRAIT_AGEUSIA			"ageusia"
 #define TRAIT_HEAVY_SLEEPER		"heavy_sleeper"
-#define TRAIT_NIGHT_VISION		"night_vision"
+#define TRAIT_DARK_SIGHT		"dark_sight"
 #define TRAIT_LIGHT_STEP		"light_step"
 #define TRAIT_SPIRITUAL			"spiritual"
 #define TRAIT_VORACIOUS			"voracious"
