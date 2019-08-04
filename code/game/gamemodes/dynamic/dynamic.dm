@@ -498,14 +498,15 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			highlander_executed = TRUE
 		else if(rule.flags & ONLY_RULESET)
 			only_ruleset_executed = TRUE
-		var/mob/M = pick(rule.candidates)
 		if(rule.ruletype == "Latejoin")
+			var/mob/M = pick(rule.candidates)
 			message_admins("[key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
 			log_game("DYNAMIC: [key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
 		else if (rule.ruletype == "Midround")
 			message_admins("Injecting midround rule [rule.name]")
 			log_game("DYNAMIC: Injecting midround rule [rule.name]!")
 		executed_rules += rule
+		rule.candidates.Cut()
 		if (rule.persistent)
 			current_rules += rule
 		return TRUE

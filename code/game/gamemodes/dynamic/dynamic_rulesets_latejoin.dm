@@ -39,7 +39,6 @@
 
 /datum/dynamic_ruleset/latejoin/execute()
 	var/mob/M = pick(candidates)
-	candidates -= M
 	assigned += M.mind
 	M.mind.special_role = antag_flag
 	M.mind.add_antag_datum(antag_datum)
@@ -100,7 +99,6 @@
 
 /datum/dynamic_ruleset/latejoin/provocateur/execute()
 	var/mob/M = pick(candidates)
-	candidates -= M
 	assigned += M.mind
 	M.mind.special_role = antag_flag
 	var/datum/antagonist/rev/head/new_head = new()
