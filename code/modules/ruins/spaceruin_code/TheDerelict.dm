@@ -69,9 +69,16 @@
 		ui.open()
 
 
+/obj/machinery/computer/vaultcontroller/ui_act(action, params)
+	if(..())
+		return
+	switch(action)
+
+
 /obj/machinery/computer/vaultcontroller/ui_data()
 	var/list/data = list()
 	data["stored"] = siphoned_power
 	data["max"] = siphon_max
 
 	return data
+
