@@ -5,7 +5,6 @@
  * Airless plating
  * Engine floor
  * Foam plating
- * Glass floor
  */
 
 /turf/open/floor/plating
@@ -147,15 +146,3 @@
 
 /turf/open/floor/plating/foam/tool_act(mob/living/user, obj/item/I, tool_type)
 	return
-
-/turf/open/floor/plating/glass
-	name = "glass floor"
-	desc = "Its like a window but on the ground."
-	icon_state = "plating"
-	plane = PLANE_SPACE
-	layer = SPACE_LAYER
-	light_power = 0.25
-	footstep = FOOTSTEP_PLATING
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
-	clawfootstep = FOOTSTEP_HARD_CLAW
-	heavyfootstep = FOOTSTEP_GENERIC_HEAVY	

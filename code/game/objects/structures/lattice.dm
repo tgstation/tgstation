@@ -148,12 +148,3 @@
 		pixel_x = 0
 		pixel_y = 0
 	return TRUE
-
-/obj/structure/lattice/catwalk/glass
-	name = "glass floor"
-	desc = "Its like a window but for the floor."
-	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
-	icon_state = "r_window"
-	number_of_rods = 3
-	smooth = SMOOTH_TRUE
-	canSmoothWith = null
