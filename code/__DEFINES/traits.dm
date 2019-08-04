@@ -234,3 +234,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define NINJA_SUIT_TRAIT "ninja-suit"
 #define ANTI_DROP_IMPLANT_TRAIT "anti-drop-implant"
 #define VR_ZONE_TRAIT "vr_zone_trait"
+#define SANGUIOSE_TRAIT "sanguiose"
+#define FROGENITE_TRAIT "frogenite"
+#define FERVEATIUM_TRAIT "ferveatium"
