@@ -12,7 +12,6 @@
 #define IDLE_POWER_USE 1
 #define ACTIVE_POWER_USE 2
 
-
 //bitflags for door switches.
 #define OPEN	(1<<0)
 #define IDSCAN	(1<<1)
@@ -31,6 +30,11 @@
 #define SMELTER			(1<<7) 	//uses various minerals
 #define NANITE_COMPILER  (1<<8) //Prints nanite disks
 //Note: More than one of these can be added to a design but imprinter and lathe designs are incompatable.
+
+//Authorization
+#define LOGGED_OFF 0
+#define LOGGED_DEPARTMENT 1
+#define LOGGED_ALL 2
 
 //Modular computer/NTNet defines
 
@@ -66,6 +70,7 @@
 #define PROGRAM_CONSOLE	(1<<0)
 #define PROGRAM_LAPTOP	(1<<1)
 #define PROGRAM_TABLET	(1<<2)
+
 //Program states
 #define PROGRAM_STATE_KILLED 0
 #define PROGRAM_STATE_BACKGROUND 1

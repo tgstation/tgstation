@@ -617,7 +617,7 @@ Class Procs:
 		if(!issilicon(user) && Adjacent(user))
 			user.put_in_hands(inserted_scan_id)
 		if(authenticated)
-			authenticated = 0
+			authenticated = LOGGED_OFF
 		inserted_scan_id = null
 		user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
 							"<span class='notice'>You get the ID card from the console.</span>")
