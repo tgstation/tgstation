@@ -48,7 +48,7 @@
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.max_combined_w_class = 30
 	STR.max_items = 30
-	STR.set_holdable(null, list(/obj/item/disk/nuclear))
+	STR.set_holdable(null, list(/obj/item/disk/nuclear, /obj/item/infinity_gem)) // 413
 
 /obj/item/storage/bag/trash/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] puts [src] over [user.p_their()] head and starts chomping at the insides! Disgusting!</span>")
