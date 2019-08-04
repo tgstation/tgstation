@@ -474,14 +474,6 @@
 	name = "Use [target.name]"
 	button.name = name
 
-/datum/action/item_action/cult_dagger
-	name = "Draw Blood Rune"
-	desc = "Use the ritual dagger to create a powerful blood rune"
-	icon_icon = 'icons/mob/actions/actions_cult.dmi'
-	button_icon_state = "draw"
-	buttontooltipstyle = "cult"
-	background_icon_state = "bg_demon"
-
 /datum/action/item_action/cult_dagger/Grant(mob/M)
 	if(iscultist(M))
 		..()
