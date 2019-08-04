@@ -1,18 +1,3 @@
-GLOBAL_LIST_EMPTY(sacrificed) //a mixed list of minds and mobs
-GLOBAL_LIST(rune_types) //Every rune that can be drawn by ritual daggers
-GLOBAL_LIST_EMPTY(teleport_runes)
-GLOBAL_LIST_EMPTY(wall_runes)
-/*
-
-This file contains runes.
-Runes are used by the cult to cause many different effects and are paramount to their success.
-They are drawn with a ritual dagger in blood, and are distinguishable to cultists and normal crew by examining.
-Fake runes can be drawn in crayon to fool people.
-Runes can either be invoked by one's self or with many different cultists. Each rune has a specific incantation that the cultists will say when invoking it.
-
-
-*/
-
 /obj/effect/rune
 	name = "rune"
 	var/cultist_name = "basic rune"
@@ -94,11 +79,6 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	visible_message("<span class='danger'>[src] fades away.</span>")
 	invisibility = INVISIBILITY_OBSERVER
 	alpha = 100 //To help ghosts distinguish hidden runes
-
-/obj/effect/rune/proc/reveal() //for talisman of revealing/hiding
-	invisibility = 0
-	visible_message("<span class='danger'>[src] suddenly appears!</span>")
-	alpha = initial(alpha)
 
 /*
 
@@ -273,8 +253,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(B.current)
 			to_chat(B.current, "<span class='cultlarge'>Keep invoking the rune until I tear through.</span>")
 			user_antag.cult_team.ascend(B.current)
-
-
 
 /obj/effect/rune/narsie/proc/summon_narsie(turf/T)
 	sound_to_playing_players('sound/effects/dimensional_rend.ogg')
