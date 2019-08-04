@@ -85,8 +85,8 @@
 //	item_state = "digi_magboots0"
 
 /obj/item/clothing/shoes/sneakers/mime/digitigrade
-	name = "mime shoes"
-	desc = "shh"
+	name = "digitigrade mime shoes"
+	desc = "For the quiestest of lizardfolk."
 	flags_inv = FULL_DIGITIGRADE
 	fulp_item = TRUE
 	icon = 'icons/obj/clothing/shoes_fulp.dmi'
