@@ -451,7 +451,6 @@ GLOBAL_LIST_INIT(cardboard_recipes, list (														\
  */
 
 GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
-	new/datum/stack_recipe("runed door", /obj/machinery/door/airlock/cult, 1, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("runed girder", /obj/structure/girder/cult, 1, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("pylon", /obj/structure/destructible/cult/pylon, 4, time = 40, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("forge", /obj/structure/destructible/cult/forge, 3, time = 40, one_per_turf = TRUE, on_floor = TRUE), \
@@ -474,17 +473,6 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 /obj/item/stack/sheet/runed_metal/ratvar_act()
 	new /obj/item/stack/tile/brass(loc, amount)
 	qdel(src)
-
-/obj/item/stack/sheet/runed_metal/attack_self(mob/living/user)
-	if(!iscultist(user))
-		to_chat(user, "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>")
-		return
-	var/turf/T = get_turf(user) //we may have moved. adjust as needed...
-	var/area/A = get_area(user)
-	if((!is_station_level(T.z) && !is_mining_level(T.z)) || (A && !A.blob_allowed))
-		to_chat(user, "<span class='warning'>The veil is not weak enough here.</span>")
-		return FALSE
-	return ..()
 
 /obj/item/stack/sheet/runed_metal/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.runed_metal_recipes

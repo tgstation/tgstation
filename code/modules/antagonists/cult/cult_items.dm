@@ -17,8 +17,8 @@
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
 	w_class = WEIGHT_CLASS_SMALL
-	force = 15
-	throwforce = 25
+	force = 5
+	throwforce = 10
 	armour_penetration = 35
 
 /obj/item/melee/cultblade
@@ -31,7 +31,7 @@
 	flags_1 = CONDUCT_1
 	sharpness = IS_SHARP
 	w_class = WEIGHT_CLASS_BULKY
-	force = 30
+	force = 15
 	throwforce = 10
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "rended")

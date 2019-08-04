@@ -1,3 +1,13 @@
+/datum/action/innate/cult
+	icon_icon = 'icons/mob/actions/actions_cult.dmi'
+	background_icon_state = "bg_demon"
+	buttontooltipstyle = "cult"
+
+/datum/action/innate/cult/IsAvailable()
+	if(!iscultist(owner))
+		return FALSE
+	return ..()
+
 /datum/action/innate/cult/cult_sac //Sacrifice a body to Nar'Sie
 	name = "Sacrifice"
 	desc = "Offer a body to Nar'Sie in exchange for a fragment of his power, husking the body. You must be holding a sharp object to conduct the sacrifice."	

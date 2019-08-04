@@ -1,15 +1,4 @@
-// Contains cult communion, guide, and cult master abilities
-
-/datum/action/innate/cult
-	icon_icon = 'icons/mob/actions/actions_cult.dmi'
-	background_icon_state = "bg_demon"
-	buttontooltipstyle = "cult"
-
-/datum/action/innate/cult/IsAvailable()
-	if(!iscultist(owner))
-		return FALSE
-	return ..()
-
+// Contains cult communion, guide
 /datum/action/innate/cult/comm
 	name = "Communion"
 	desc = "Whispered words that all cultists can hear.<br><b>Warning:</b>Nearby non-cultists can still hear you."
