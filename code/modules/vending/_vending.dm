@@ -64,7 +64,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	///Last mob to shop with us
 	var/last_shopper
 
-	
+
 	/**
 	  * List of products this machine sells
 	  *
@@ -347,6 +347,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	return TRUE
 
 /obj/machinery/vending/wrench_act(mob/living/user, obj/item/I)
+	..()
 	if(panel_open)
 		default_unfasten_wrench(user, I, time = 60)
 	return TRUE

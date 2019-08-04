@@ -17,9 +17,6 @@
 		I.forceMove(get_turf(src))
 	if(linked_teleporter)
 		linked_teleporter.linked_reclaimer = null
-	if(inserted_prisoner_id)
-		inserted_prisoner_id.forceMove(get_turf(src))
-		inserted_prisoner_id = null
 	return ..()
 
 /obj/machinery/gulag_item_reclaimer/emag_act(mob/user)
@@ -27,12 +24,6 @@
 		return
 	req_access = list()
 	obj_flags |= EMAGGED
-
-/obj/machinery/gulag_item_reclaimer/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/card/id))
-		id_insert_prisoner(user)
-	else
-		return ..()
 
 /obj/machinery/gulag_item_reclaimer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -48,10 +39,10 @@
 	if(allowed(user))
 		can_reclaim = TRUE
 
-	if(inserted_prisoner_id)
-		data["id"] = inserted_prisoner_id
-		data["id_name"] = inserted_prisoner_id.registered_name
-		if(inserted_prisoner_id.points >= inserted_prisoner_id.goal)
+	var/obj/item/card/id/I = user.get_idcard(TRUE)
+	if(istype(I, /obj/item/card/id/prisoner))
+		var/obj/item/card/id/prisoner/P = I
+		if(P.points >= P.goal)
 			can_reclaim = TRUE
 
 	var/list/mobs = list()
@@ -75,16 +66,9 @@
 
 /obj/machinery/gulag_item_reclaimer/ui_act(action, list/params)
 	switch(action)
-		if("handle_id")
-			if(inserted_prisoner_id)
-				id_eject_prisoner(usr)
-			else
-				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/card/id/prisoner)
-				if(I)
-					id_insert_prisoner(usr)
 		if("release_items")
 			var/mob/living/carbon/human/H = locate(params["mobref"]) in stored_items
-			if ((H == usr || allowed(usr)) && inserted_prisoner_id)
+			if ((H == usr || allowed(usr)))
 				var/obj/item/card/id/target_id
 				if (stored_items[H])
 					idloop:
@@ -98,14 +82,18 @@
 								if (potential_id.registered_account && potential_id.registered_account == H.get_bank_account())
 									target_id = potential_id
 									break idloop
-				if (target_id)
-					target_id.registered_account.adjust_money(inserted_prisoner_id.points * 0.5)
-					var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SEC)
-					if(D)
-						D.adjust_money(inserted_prisoner_id.points * 0.5)
-				else
-					new /obj/item/holochip(drop_location(), inserted_prisoner_id.points)
-					to_chat(usr, "An ID with your bank account registration was not located amongst your items, a sum of [inserted_prisoner_id.points] has been dispensed as holochips.")
+				var/mob/M = usr
+				var/obj/item/card/id/I = M.get_idcard(TRUE)
+				if(istype(I, /obj/item/card/id/prisoner))
+					var/obj/item/card/id/prisoner/P = I
+					if (target_id)
+						target_id.registered_account.adjust_money(P.points * 0.5)
+						var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SEC)
+						if(D)
+							D.adjust_money(P.points * 0.5)
+					else
+						new /obj/item/holochip(drop_location(), P.points)
+						to_chat(usr, "An ID with your bank account registration was not located amongst your items, a sum of [P.points] has been dispensed as holochips.")
 				drop_items(H)
 			else
 				to_chat(usr, "Access denied.")

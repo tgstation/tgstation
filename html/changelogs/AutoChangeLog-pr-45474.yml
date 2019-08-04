@@ -1,0 +1,6 @@
+author: "SpacePrius"
+delete-after: True
+changes: 
+  - tweak: "Sanguiose now has a 2% chance per tick of making the patient deaf, and no longer deals blood loss."
+  - tweak: "Frogenite now has a 2% chance per tick of making the patient blind, and no longer deals oxy damage."
+  - tweak: "Ferveatium now has a 2% chance per tick  of making the patient feel fat, and no longer deals burn damage."

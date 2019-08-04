@@ -1,0 +1,5 @@
+author: "81Denton"
+delete-after: True
+changes: 
+  - admin: "Added logging for door/shutter crushing and for bot hacking (when silicons disable their safeties)."
+  - admin: "APC breaker toggling is no longer logged in the combat log, but the game log."

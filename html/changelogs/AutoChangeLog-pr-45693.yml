@@ -1,0 +1,8 @@
+author: "actioninja"
+delete-after: True
+changes: 
+  - tweak: "Medical and Security consoles now check access on worn or inhand ID instead of requiring an inserted ID"
+  - tweak: "mining vendor now reads from ID in hand or on person instead of requiring an inserted ID"
+  - bugfix: "ORM is functional again (for real this time)"
+  - tweak: "ORM claim points button transfers points to worn/inhand ID instead of to an inserted ID, no longer accepts insertions"
+  - tweak: "Same for gulag consoles"
