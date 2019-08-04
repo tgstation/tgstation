@@ -327,7 +327,7 @@
 	for(var/obj/item/I in T)
 		if(I.fingerprintslast == quirk_holder.ckey)
 			quirk_holder.put_in_hands(I)
-			
+
 /datum/quirk/phobia
 	name = "Phobia"
 	desc = "You have a debilitating fear you just can't seem to overcome."
