@@ -54,7 +54,7 @@ RLD
 	if(upgrade & RCD_UPGRADE_SILO_LINK)
 		. += "\A [src]. Remote storage link state: [silo_link ? "[silo_mats.on_hold() ? "ON HOLD" : "ON"]" : "OFF"]."
 		if(silo_link && !silo_mats.on_hold())
-			. += "\A [src]. Remote connection have iron in equivalent to [silo_mats.mat_container.materials[/datum/material/iron]/500] rcd units." // 1 matter for 1 floortile, as 4 tiles are produced from 1 metal
+			. += "\A [src]. Remote connection have iron in equivalent to [silo_mats.mat_container.get_material_amount(/datum/material/iron)/500] rcd units." // 1 matter for 1 floortile, as 4 tiles are produced from 1 metal
 
 /obj/item/construction/Destroy()
 	QDEL_NULL(spark_system)
@@ -132,14 +132,15 @@ RLD
 		update_icon()
 		return TRUE
 	else
-		if(!silo_mats.mat_container.has_materials(list(/datum/material/iron = 500), amount))
-			if(user)
-				to_chat(user, no_ammo_message)
-			return FALSE
 		if(silo_mats.on_hold())
 			if(user)
 				to_chat(user, "Mineral access is on hold, please contact the quartermaster.")
 			return FALSE
+		if(!silo_mats.mat_container.has_materials(list(/datum/material/iron = 500), amount))
+			if(user)
+				to_chat(user, no_ammo_message)
+			return FALSE
+
 		silo_mats.mat_container.use_materials(list(/datum/material/iron = 500), amount)
 		silo_mats.silo_log(src, "consume", -amount, "build", list(/datum/material/iron = 500))
 		return TRUE
@@ -481,13 +482,14 @@ RLD
 	var/list/rcd_results = A.rcd_vals(user, src)
 	if(!rcd_results)
 		return FALSE
-	if(do_after(user, rcd_results["delay"] * delay_mod, target = A))
-		if(checkResource(rcd_results["cost"], user))
-			if(A.rcd_act(user, src, rcd_results["mode"]))
-				useResource(rcd_results["cost"], user)
-				activate()
-				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-				return TRUE
+	if(checkResource(rcd_results["cost"], user))
+		if(do_after(user, rcd_results["delay"] * delay_mod, target = A))
+			if(checkResource(rcd_results["cost"], user))
+				if(A.rcd_act(user, src, rcd_results["mode"]))
+					useResource(rcd_results["cost"], user)
+					activate()
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					return TRUE
 
 /obj/item/construction/rcd/Initialize()
 	. = ..()
