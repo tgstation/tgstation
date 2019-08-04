@@ -26,7 +26,8 @@
 /datum/disease/transformation/melting/New(mob_source)
 	. = ..()
 	creator = mob_source
-	agent = "[splittext(creator.name," ")[1]] Microorganisms"
+	var/list/splitname = splittext(creator.name," ")
+	agent = "[splitname[1]] Microorganisms"
 
 /datum/disease/transformation/melting/stage_act()
 	var/obj/item/organ/heart/slime/slimeheart = affected_mob.getorganslot(ORGAN_SLOT_HEART)
