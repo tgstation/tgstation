@@ -415,7 +415,7 @@
 	name = "Security Cameras (Computer Board)"
 	icon_state = "security"
 	build_path = /obj/machinery/computer/security
-	
+
 /obj/item/circuitboard/computer/advanced_camera
 	name = "Advanced Camera Console (Computer Board)"
 	icon_state = "security"
@@ -437,6 +437,7 @@
 	var/contraband = FALSE
 
 /obj/item/circuitboard/computer/cargo/multitool_act(mob/living/user)
+	. = ..()
 	if(!(obj_flags & EMAGGED))
 		contraband = !contraband
 		to_chat(user, "<span class='notice'>Receiver spectrum set to [contraband ? "Broad" : "Standard"].</span>")
@@ -454,6 +455,7 @@
 	build_path = /obj/machinery/computer/cargo/express
 
 /obj/item/circuitboard/computer/cargo/express/multitool_act(mob/living/user)
+	. = ..()
 	if (!(obj_flags & EMAGGED))
 		to_chat(user, "<span class='notice'>Routing protocols are already set to: \"factory defaults\".</span>")
 	else
