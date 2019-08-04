@@ -146,9 +146,6 @@
 	current.clear_alert("bloodsense")
 	if(ishuman(current))
 		var/mob/living/carbon/human/H = current
-		H.eye_color = initial(H.eye_color)
-		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-		REMOVE_TRAIT(H, CULT_EYES, null)
 		H.remove_overlay(HALO_LAYER)
 		H.update_body()
 		to_chat(H, "<span class='cultitalic'>You feel your powers fall away!</span>")
@@ -233,9 +230,6 @@
 
 	if(ishuman(current))
 		var/mob/living/carbon/human/H = current
-		H.eye_color = initial(H.eye_color)
-		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-		REMOVE_TRAIT(H, CULT_EYES, null)
 		H.remove_overlay(HALO_LAYER)
 		H.update_body()
 
