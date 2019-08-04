@@ -14,7 +14,6 @@
 	var/req_cultists = 1 //The amount of cultists required around the rune to invoke it. If only 1, any cultist can invoke it.
 	var/req_cultists_text //if we have a description override for required cultists to invoke
 	var/rune_in_use = FALSE // Used for some runes, this is for when you want a rune to not be usable when in use.
-
 	var/scribe_delay = 40 //how long the rune takes to create
 	var/scribe_damage = 0.1 //how much damage you take doing it
 	var/invoke_damage = 0 //how much damage invokers take when invoking it
@@ -34,12 +33,12 @@
 		"<b>Required Acolytes:</b> [req_cultists_text ? "[req_cultists_text]":"[req_cultists]"]"
 
 /obj/effect/rune/attackby(obj/I, mob/user, params)
-	if(istype(I, /obj/item/nullrod))
+	if(istype(I, /obj/item/nullrod) || istype(I, /obj/item/nullrod) )
 		if(do_after(user, 100, target = src))
-			user.say("BEGONE FOUL MAGIKS!!", forced = "nullrod")
+			user.say("BEGONE FOUL MAGIKS!!", forced = "holy")
 			to_chat(user, "<span class='danger'>You disrupt the magic of [src] with [I].</span>")
-			log_game("[src] erased by [key_name(user)] using a null rod")
-			message_admins("[ADMIN_LOOKUPFLW(user)] erased a [src] with a null rod")
+			log_game("[src] erased by [key_name(user)] using [I]")
+			message_admins("[ADMIN_LOOKUPFLW(user)] erased a [src] with [I]")
 			qdel(src)
 
 /obj/effect/rune/attack_hand(mob/living/user)
@@ -123,22 +122,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 	color = rgb(255, 0, 0)
 	animate(src, color = oldcolor, time = 5)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 5)
-
-//Malformed Rune: This forms if a rune is not drawn correctly. Invoking it does nothing but hurt the user.
-/obj/effect/rune/malformed
-	cultist_name = "malformed rune"
-	cultist_desc = "a senseless rune written in gibberish. No good can come from invoking this."
-	invocation = "Ra'sha yoka!"
-	invoke_damage = 30
-
-/obj/effect/rune/malformed/Initialize(mapload, set_keyword)
-	. = ..()
-	icon_state = "[rand(1,7)]"
-	color = rgb(rand(0,255), rand(0,255), rand(0,255))
-
-/obj/effect/rune/malformed/invoke(var/list/invokers)
-	..()
-	qdel(src)
 
 //Ritual of Dimensional Rending: Calls forth the avatar of Nar'Sie upon the station.
 /obj/effect/rune/narsie
@@ -234,6 +217,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	priority_announce("Figments from an eldritch god are being summoned into [A.map_name] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensional Affairs", 'sound/ai/spanomalies.ogg')
 	notify_ghosts("\A [src] has been activated at [get_area(src)]!", source = src, action = NOTIFY_ORBIT)
 	sound_to_playing_players('sound/hallucinations/im_here1.ogg')
+	user_antag.cult_team.cult_ascendent = TRUE
 	for(var/datum/mind/B in user_antag.cult_team.members)
 		if(B.current)
 			to_chat(B.current, "<span class='cultlarge'>Keep invoking the rune until I tear through.</span>")
