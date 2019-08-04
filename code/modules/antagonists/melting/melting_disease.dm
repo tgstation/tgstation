@@ -5,7 +5,7 @@
 	cures = list(/datum/reagent/consumable/frostoil)
 	cure_chance = 5
 	spread_flags = DISEASE_SPREAD_AIRBORNE
-	agent = "M.L. Microorganisms"
+	agent = "Melting Microorganisms"
 	desc = "This disease breaks down and converts the body to slime, giving the sensation of \"burning\"."
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	visibility_flags = 0
@@ -21,16 +21,12 @@
 	var/obj/item/slime_mask/mask
 	var/attemped_add_mask = FALSE
 
-	//bantype = "Melting" antag ban! duh!
+	//bantype = "Melting" antag ban! duh! //remember to put this in
 
 /datum/disease/transformation/melting/New(mob_source)
 	. = ..()
 	creator = mob_source
-	var/list/new_agent_name = list()
-	for(var/word in splittext(name," "))
-		new_agent_name += "[copytext(word, 1, 2)]."
-	new_agent_name += " Microorganisms"
-	agent = jointext(new_agent_name, "")
+	agent = "[splittext(creator.name," ")[1]] Microorganisms"
 
 /datum/disease/transformation/melting/stage_act()
 	var/obj/item/organ/heart/slime/slimeheart = affected_mob.getorganslot(ORGAN_SLOT_HEART)
@@ -55,7 +51,7 @@
 				affected_mob.adjustToxLoss(2)
 			if(prob(4))
 				return
-				//goo vomit
+				affected_mob.vomit(slime = TRUE, specialcolor = creator.slimebody_color)
 				affected_mob.adjustCloneLoss(5)
 		if(4)
 			if(affected_mob.stat == UNCONSCIOUS)
@@ -81,6 +77,9 @@
 	new_slime.creator = creator
 	brain.forceMove(new_slime)
 
+/datum/disease/transformation/melting/cure()
+	QDEL_NULL(mask)
+	..()
 
 /obj/item/slime_mask
 	name = "slime mask"

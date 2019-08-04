@@ -7,11 +7,8 @@
 	action_background_icon_state = "bg_melting"
 	action_icon_state = "mark"
 
-	school = "transmutation"
 	charge_max = 600
 	clothes_req = FALSE
-	invocation = "GIN'YU CAPAN"
-	invocation_type = "whisper"
 	range = 1
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
@@ -67,7 +64,12 @@
 	background_icon_state = "bg_melting"
 
 /datum/action/innate/colorchange/Activate()
-	owner.color = input(owner, "Choose your new color", "Color","#"+owner.color) as color|null
+	var/mob/living/simple_animal/hostile/melting/melting = owner
+	var/picked_color = input(melting, "Choose your new color", "Color","#"+melting.slimebody_color) as color|null
+	if(!melting.colors)
+		alert("You were too late on picking a color, sorry!")
+	else
+		melting.setup_icons(picked_color)
 	QDEL_NULL(src)
 
 /obj/effect/proc_holder/spell/aimed/slime
@@ -75,7 +77,7 @@
 	desc = "Fires a heavy hitting slime projectile, stuns and infects the target with the slime disease. Converts critical humans into minions."
 
 	action_background_icon_state = "bg_melting"
-	action_icon_state = "slimeball" //change
+	action_icon_state = "slimeball"
 
 	charge_max = 500
 	range = 20
@@ -91,7 +93,7 @@
 /obj/item/projectile/slime
 	name = "slime ball"
 	icon_state = "slime"
-	damage = 5
+	damage = 40
 	damage_type = TOX
 	nodamage = FALSE
 	armour_penetration = 100

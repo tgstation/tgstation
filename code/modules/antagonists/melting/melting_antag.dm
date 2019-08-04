@@ -8,8 +8,6 @@
 	to_chat(owner.current, "<span class='notice'>Infect members of the crew to gain adaptation points, and spread your infection further.</span>")
 	owner.announce_objectives()
 
-/datum/antagonist/melting/proc/forge_objectives(var/datum/mind/obsessionmind)
-
 /datum/antagonist/melting/roundend_report_header()
 	return 	"<span class='header'>There was a melting abnormality!</span><br>"
 
@@ -38,10 +36,7 @@
 
 	return report.Join("<br>")
 
-//objectives//
-
-
-
+//and for the melted antag...
 //It does nothing! (Besides tracking)
 
 /datum/antagonist/melted

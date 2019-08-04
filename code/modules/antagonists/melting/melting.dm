@@ -24,6 +24,7 @@
 	attacktext = "glomps"
 	attack_sound = 'sound/effects/blobattack.ogg'
 	del_on_death = TRUE
+	var/slimebody_color
 	var/obj/effect/proc_holder/spell/targeted/mark/mark
 	var/datum/action/innate/colorchange/colors
 	var/obj/effect/proc_holder/spell/aimed/slime/slimeball
@@ -41,9 +42,11 @@
 	slimeball = new
 	AddSpell(slimeball)
 
-/mob/living/simple_animal/hostile/melting/proc/setup_icons()
+/mob/living/simple_animal/hostile/melting/proc/setup_icons(decided_color)
 	cut_overlays()
-	var/slimebody_color = rgb(rand(100, 255), rand(100, 255), rand(100, 255))
+	slimebody_color = rgb(rand(100, 255), rand(100, 255), rand(100, 255))
+	if(decided_color)
+		slimebody_color = decided_color
 	slimebody_overlay = slimebody_overlay || mutable_appearance('icons/mob/melting.dmi')
 	slimebody_overlay.icon_state = "melting_base"
 	slimebody_overlay.color = slimebody_color
@@ -66,7 +69,7 @@
 		QDEL_NULL(colors)
 	QDEL_NULL(slimeball)
 
-	for(var/datum/disease/transformation/melting/ourdisease in SSdisease.active_diseases)
+	for(var/datum/disease/transformation/melting/ourdisease in SSdisease.active_diseases)//on death, it globally cures the melting disease.
 		ourdisease.cure(FALSE)
 
 	return ..()
