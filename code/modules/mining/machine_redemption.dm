@@ -203,7 +203,6 @@
 /obj/machinery/mineral/ore_redemption/ui_data(mob/user)
 	var/list/data = list()
 	data["unclaimedPoints"] = points
-	data["canClaimPoints"] = (points > 0)
 
 	data["materials"] = list()
 	var/datum/component/material_container/mat_container = materials.mat_container
@@ -246,10 +245,13 @@
 		if("Claim")
 			var/mob/M = usr
 			var/obj/item/card/id/I = M.get_idcard(TRUE)
-			if(I && I.registered_account.adjust_money(points))
-				points = 0
+			if(points)
+				if(I && I.registered_account.adjust_money(points))
+					points = 0
+				else
+					to_chat(usr, "<span class='warning'>No ID detected.</span>")
 			else
-				to_chat(usr, "<span class='warning'>No ID detected.</span>")
+				to_chat(usr, "<span class='warning'>No points to claim.</span>")
 			return TRUE
 		if("Release")
 			if(!mat_container)

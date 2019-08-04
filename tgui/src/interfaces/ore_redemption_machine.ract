@@ -4,7 +4,7 @@
 	</ui-section>
 	<ui-section>
 		Current unclaimed credits: {{data.unclaimedPoints}}
-			<ui-button action='Claim' state={{(canClaimPoints) ? null : 'disabled'}}>
+			<ui-button action='Claim'>
 				Claim
 			</ui-button>
 	</ui-section>

@@ -47,6 +47,7 @@ GLOBAL_LIST(labor_sheet_values)
 	if(obj_flags & EMAGGED)
 		can_go_home = TRUE
 
+	data["status_info"] = "No Prisoner ID detected."
 	var/obj/item/card/id/I = user.get_idcard(TRUE)
 	if(istype(I, /obj/item/card/id/prisoner))
 		var/obj/item/card/id/prisoner/P = I
