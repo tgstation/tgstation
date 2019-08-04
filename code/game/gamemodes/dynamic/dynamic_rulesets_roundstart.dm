@@ -263,11 +263,11 @@
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	high_population_requirement = 10
 	flags = HIGHLANDER_RULESET
-	var/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
+	var/operative_cap = list(2,2,2,3,3,3,4,4,5,5)
 	var/datum/team/nuclear/nuke_team
 
 /datum/dynamic_ruleset/roundstart/nuclear/ready(forced = FALSE)
-	var/indice_pop = min(10,round(mode.roundstart_pop_ready/5)+1)
+	var/indice_pop = min(10,round(mode.roundstart_pop_ready/pop_per_requirement)+1)
 	required_candidates = operative_cap[indice_pop]
 	. = ..()
 
