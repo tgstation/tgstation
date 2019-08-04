@@ -525,12 +525,14 @@
 		update_icon()
 
 /obj/machinery/power/apc/wirecutter_act(mob/living/user, obj/item/W)
+	. = ..()
 	if (terminal && opened)
 		terminal.dismantle(user, W)
 		return TRUE
 
 
 /obj/machinery/power/apc/welder_act(mob/living/user, obj/item/W)
+	. = ..()
 	if (opened && !has_electronics && !terminal)
 		if(!W.tool_start_check(user, amount=3))
 			return
@@ -718,7 +720,7 @@
 			if(stat & BROKEN)
 				to_chat(user, "<span class='warning'>[src]'s frame is too damaged to support a circuit.</span>")
 				return FALSE
-			return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 20, "cost" = 1)	
+			return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 20, "cost" = 1)
 		else if(!cell)
 			if(stat & MAINT)
 				to_chat(user, "<span class='warning'>There's no connector for a power cell.</span>")
@@ -1036,7 +1038,7 @@
 		return
 	operating = !operating
 	add_hiddenprint(user)
-	log_combat(user, src, "turned [operating ? "on" : "off"]")
+	log_game("[key_name(user)] turned [operating ? "on" : "off"] the [src] in [AREACOORD(src)]")
 	update()
 	update_icon()
 

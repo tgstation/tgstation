@@ -205,6 +205,7 @@ All the important duct code:
 
 
 /obj/machinery/duct/wrench_act(mob/living/user, obj/item/I) //I can also be the RPD
+	..()
 	add_fingerprint(user)
 	I.play_tool_sound(src)
 	if(anchored)

@@ -67,6 +67,7 @@
 	qdel(H)
 
 /obj/structure/disposaloutlet/welder_act(mob/living/user, obj/item/I)
+	..()
 	if(!I.tool_start_check(user, amount=0))
 		return TRUE
 
