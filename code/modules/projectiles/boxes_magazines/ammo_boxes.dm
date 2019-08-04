@@ -4,7 +4,7 @@
 	icon_state = "357"
 	ammo_type = /obj/item/ammo_casing/a357
 	max_ammo = 7
-	multiple_sprites = 1
+	multiple_sprites = AMMO_BOX_PER_BULLET
 
 /obj/item/ammo_box/c38
 	name = "speed loader (.38)"
@@ -12,8 +12,8 @@
 	icon_state = "38"
 	ammo_type = /obj/item/ammo_casing/c38
 	max_ammo = 6
-	multiple_sprites = 1
-	materials = list(MAT_METAL = 20000)
+	multiple_sprites = AMMO_BOX_PER_BULLET
+	materials = list(/datum/material/iron = 20000)
 
 /obj/item/ammo_box/c38/trac
 	name = "speed loader (.38 TRAC)"
@@ -53,7 +53,7 @@
 	icon_state = "40mm"
 	ammo_type = /obj/item/ammo_casing/a40mm
 	max_ammo = 4
-	multiple_sprites = 1
+	multiple_sprites = AMMO_BOX_PER_BULLET
 
 /obj/item/ammo_box/a762
 	name = "stripper clip (7.62mm)"
@@ -61,7 +61,7 @@
 	icon_state = "762"
 	ammo_type = /obj/item/ammo_casing/a762
 	max_ammo = 5
-	multiple_sprites = 1
+	multiple_sprites = AMMO_BOX_PER_BULLET
 
 /obj/item/ammo_box/n762
 	name = "ammo box (7.62x38mmR)"
@@ -75,9 +75,9 @@
 	icon_state = "foambox"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
 	max_ammo = 40
-	materials = list(MAT_METAL = 500)
+	materials = list(/datum/material/iron = 500)
 
 /obj/item/ammo_box/foambox/riot
 	icon_state = "foambox_riot"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
-	materials = list(MAT_METAL = 50000)
+	materials = list(/datum/material/iron = 50000)

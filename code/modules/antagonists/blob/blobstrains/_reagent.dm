@@ -16,7 +16,7 @@
 	reagent.reaction_mob(L, VAPOR, 20, 0, mob_protection, overmind)//this will do between 10 and 20 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
 
 /datum/blobstrain/reagent/on_sporedeath(mob/living/spore)
-	spore.reagents.add_reagent(reagent.id, 10)
+	spore.reagents.add_reagent(reagent.type, 10)
 
 // These can only be applied by blobs. They are what (reagent) blobs are made out of.
 /datum/reagent/blob

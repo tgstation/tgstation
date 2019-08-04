@@ -20,10 +20,23 @@
 	else
 		return TRUE
 
-/obj/screen/movable/action_button/MouseDrop()
-	if (!can_use(usr))
+/obj/screen/movable/action_button/MouseDrop(over_object)
+	if(!can_use(usr))
 		return
-	return ..()
+	if((istype(over_object, /obj/screen/movable/action_button) && !istype(over_object, /obj/screen/movable/action_button/hide_toggle)))
+		if(locked)
+			to_chat(usr, "<span class='warning'>Action button \"[name]\" is locked, unlock it first.</span>")
+			return
+		var/obj/screen/movable/action_button/B = over_object
+		var/list/actions = usr.actions
+		actions.Swap(actions.Find(src.linked_action), actions.Find(B.linked_action))
+		moved = FALSE
+		ordered = TRUE
+		B.moved = FALSE
+		B.ordered = TRUE
+		usr.update_action_buttons()
+	else
+		return ..()
 
 /obj/screen/movable/action_button/Click(location,control,params)
 	if (!can_use(usr))

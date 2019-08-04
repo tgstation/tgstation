@@ -22,7 +22,7 @@ RLD
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=100000)
+	materials = list(/datum/material/iron=100000)
 	req_access_txt = "11"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
@@ -45,8 +45,8 @@ RLD
 	spark_system.attach(src)
 
 /obj/item/construction/examine(mob/user)
-	..()
-	to_chat(user, "\A [src]. It currently holds [matter]/[max_matter] matter-units." )
+	. = ..()
+	. += "\A [src]. It currently holds [matter]/[max_matter] matter-units."
 
 /obj/item/construction/Destroy()
 	QDEL_NULL(spark_system)
@@ -83,9 +83,11 @@ RLD
 	if(loaded)
 		to_chat(user, "<span class='notice'>[src] now holds [matter]/[max_matter] matter-units.</span>")
 	else if(istype(W, /obj/item/rcd_upgrade))
-		upgrade = TRUE
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		qdel(W)
+		var/obj/item/rcd_upgrade/rcd_up = W
+		if(!(upgrade & rcd_up.upgrade))
+			upgrade |= rcd_up.upgrade
+			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+			qdel(W)
 	else
 		return ..()
 	update_icon()	//ensures that ammo counters (if present) get updated
@@ -114,10 +116,10 @@ RLD
 	if(matter < amount)
 		if(user)
 			to_chat(user, no_ammo_message)
-		return 0
+		return FALSE
 	matter -= amount
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/item/construction/proc/checkResource(amount, mob/user)
 	. = matter >= amount
@@ -315,7 +317,6 @@ RLD
 		"Medical" = get_airlock_image(/obj/machinery/door/airlock/medical),
 		"Research" = get_airlock_image(/obj/machinery/door/airlock/research),
 		"Freezer" = get_airlock_image(/obj/machinery/door/airlock/freezer),
-		"Science" = get_airlock_image(/obj/machinery/door/airlock/science),
 		"Virology" = get_airlock_image(/obj/machinery/door/airlock/virology),
 		"Mining" = get_airlock_image(/obj/machinery/door/airlock/mining),
 		"Maintenance" = get_airlock_image(/obj/machinery/door/airlock/maintenance),
@@ -334,7 +335,6 @@ RLD
 		"Command" = get_airlock_image(/obj/machinery/door/airlock/command/glass),
 		"Medical" = get_airlock_image(/obj/machinery/door/airlock/medical/glass),
 		"Research" = get_airlock_image(/obj/machinery/door/airlock/research/glass),
-		"Science" = get_airlock_image(/obj/machinery/door/airlock/science/glass),
 		"Virology" = get_airlock_image(/obj/machinery/door/airlock/virology/glass),
 		"Mining" = get_airlock_image(/obj/machinery/door/airlock/mining/glass),
 		"Maintenance" = get_airlock_image(/obj/machinery/door/airlock/maintenance/glass),
@@ -370,8 +370,6 @@ RLD
 						airlock_type = /obj/machinery/door/airlock/research
 					if("Freezer")
 						airlock_type = /obj/machinery/door/airlock/freezer
-					if("Science")
-						airlock_type = /obj/machinery/door/airlock/science
 					if("Virology")
 						airlock_type = /obj/machinery/door/airlock/virology
 					if("Mining")
@@ -413,8 +411,6 @@ RLD
 						airlock_type = /obj/machinery/door/airlock/medical/glass
 					if("Research")
 						airlock_type = /obj/machinery/door/airlock/research/glass
-					if("Science")
-						airlock_type = /obj/machinery/door/airlock/science/glass
 					if("Virology")
 						airlock_type = /obj/machinery/door/airlock/virology/glass
 					if("Mining")
@@ -461,7 +457,7 @@ RLD
 		"Grilles & Windows" = image(icon = 'icons/mob/radial.dmi', icon_state = "grillewindow"),
 		"Floors & Walls" = image(icon = 'icons/mob/radial.dmi', icon_state = "wallfloor")
 	)
-	if(upgrade)
+	if(upgrade & RCD_UPGRADE_FRAMES)
 		choices += list(
 		"Machine Frames" = image(icon = 'icons/mob/radial.dmi', icon_state = "machine"),
 		"Computer Frames" = image(icon = 'icons/mob/radial.dmi', icon_state = "computer_dir"),
@@ -599,11 +595,11 @@ RLD
 	w_class = WEIGHT_CLASS_TINY
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	materials = list(MAT_METAL=12000, MAT_GLASS=8000)
+	materials = list(/datum/material/iron=12000, /datum/material/glass=8000)
 	var/ammoamt = 40
 
 /obj/item/rcd_ammo/large
-	materials = list(MAT_METAL=48000, MAT_GLASS=32000)
+	materials = list(/datum/material/iron=48000, /datum/material/glass=32000)
 	ammoamt = 160
 
 
@@ -799,9 +795,18 @@ RLD
 
 /obj/item/rcd_upgrade
 	name = "RCD advanced design disk"
-	desc = "It contains the design for machine frames and computer frames."
+	desc = "It seems to be empty."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "datadisk3"
+	var/upgrade
+
+/obj/item/rcd_upgrade/frames
+	desc = "It contains the design for machine frames and computer frames."
+	upgrade = RCD_UPGRADE_FRAMES
+
+/obj/item/rcd_upgrade/simple_circuits
+	desc = "It contains the design for firelock, air alarm, fire alarm, apc circuits and crap power cells."
+	upgrade = RCD_UPGRADE_SIMPLE_CIRCUITS
 
 #undef GLOW_MODE
 #undef LIGHT_MODE

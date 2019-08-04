@@ -24,9 +24,7 @@
 	if(!istype(female))
 		female = list()
 
-	for(var/path in typesof(prototype))
-		if(path == prototype)
-			continue
+	for(var/path in subtypesof(prototype))
 		if(roundstart)
 			var/datum/sprite_accessory/P = path
 			if(initial(P.locked))
@@ -262,11 +260,11 @@
 
 /datum/sprite_accessory/hair/cornrowbraid
 	name = "Cornrow Braid"
-	icon_state = "hair_rowbraid"
+	icon_state = "hair_cornrowbraid"
 
 /datum/sprite_accessory/hair/cornrowdualtail
-	name = "Cornrow Dual Tail"
-	icon_state = "hair_rowdualtail"
+	name = "Cornrow Tail"
+	icon_state = "hair_cornrowtail"
 
 /datum/sprite_accessory/hair/crew
 	name = "Crewcut"
@@ -283,10 +281,6 @@
 /datum/sprite_accessory/hair/dandpompadour
 	name = "Dandy Pompadour"
 	icon_state = "hair_dandypompadour"
-
-/datum/sprite_accessory/hair/dave
-	name = "Dave"
-	icon_state = "hair_dave"
 
 /datum/sprite_accessory/hair/devillock
 	name = "Devil Lock"
@@ -490,7 +484,7 @@
 
 /datum/sprite_accessory/hair/shavedmohawk
 	name = "Mohawk (Unshaven)"
-	icon_state = "hair_unshavenmohawk"
+	icon_state = "hair_unshaven_mohawk"
 
 /datum/sprite_accessory/hair/mulder
 	name = "Mulder"
@@ -616,10 +610,6 @@
 	name = "Ponytail (Spiky)"
 	icon_state = "hair_spikyponytail"
 
-/datum/sprite_accessory/hair/ziegler
-	name = "Ponytail (Ziegler)"
-	icon_state = "hair_ziegler"
-
 /datum/sprite_accessory/hair/poofy
 	name = "Poofy"
 	icon_state = "hair_poofy"
@@ -631,10 +621,6 @@
 /datum/sprite_accessory/hair/ronin
 	name = "Ronin"
 	icon_state = "hair_ronin"
-
-/datum/sprite_accessory/hair/scully
-	name = "Scully"
-	icon_state = "hair_scully"
 
 /datum/sprite_accessory/hair/shaved
 	name = "Shaved"
@@ -869,10 +855,6 @@
 /datum/sprite_accessory/facial_hair/moonshiner
 	name = "Beard (Moonshiner)"
 	icon_state = "facial_moonshiner"
-
-/datum/sprite_accessory/facial_hair/tribearder
-	name = "Beard (Tribearder)"
-	icon_state = "facial_tribearder"
 
 /datum/sprite_accessory/facial_hair/longbeard
 	name = "Beard (Long)"
@@ -1489,6 +1471,10 @@
 	name = "Knee-high (White)"
 	icon_state = "white_knee"
 
+/datum/sprite_accessory/socks/bee_knee
+	name = "Knee-high (Bee)"
+	icon_state = "bee_knee"
+
 /datum/sprite_accessory/socks/black_norm
 	name = "Normal (Black)"
 	icon_state = "black_norm"
@@ -1508,6 +1494,38 @@
 /datum/sprite_accessory/socks/white_short
 	name = "Short (White)"
 	icon_state = "white_short"
+
+/datum/sprite_accessory/socks/stockings_blue
+	name = "Stockings (Blue)"
+	icon_state = "stockings_blue"
+
+/datum/sprite_accessory/socks/stockings_cyan
+	name = "Stockings (Cyan)"
+	icon_state = "stockings_cyan"
+
+/datum/sprite_accessory/socks/stockings_dpink
+	name = "Stockings (Dark Pink)"
+	icon_state = "stockings_dpink"
+
+/datum/sprite_accessory/socks/stockings_green
+	name = "Stockings (Green)"
+	icon_state = "stockings_black"
+
+/datum/sprite_accessory/socks/stockings_orange
+	name = "Stockings (Orange)"
+	icon_state = "stockings_orange"
+
+/datum/sprite_accessory/socks/stockings_programmer
+	name = "Stockings (Programmer)"
+	icon_state = "stockings_lpink"
+
+/datum/sprite_accessory/socks/stockings_purple
+	name = "Stockings (Purple)"
+	icon_state = "stockings_purple"
+
+/datum/sprite_accessory/socks/stockings_yellow
+	name = "Stockings (Yellow)"
+	icon_state = "stockings_yellow"
 
 /datum/sprite_accessory/socks/black_thigh
 	name = "Thigh-high (Black)"
@@ -1540,6 +1558,10 @@
 /datum/sprite_accessory/socks/white_thigh
 	name = "Thigh-high (White)"
 	icon_state = "white_thigh"
+
+/datum/sprite_accessory/socks/bee_thigh
+	name = "Thigh-high (Bee)"
+	icon_state = "bee_thigh"
 
 //////////.//////////////////
 // MutantParts Definitions //
@@ -1867,3 +1889,55 @@
 /datum/sprite_accessory/moth_wings/snow
 	name = "Snow"
 	icon_state = "snow"
+
+/datum/sprite_accessory/moth_markings // the markings that moths can have. finally something other than the boring tan
+	icon = 'icons/mob/moth_markings.dmi'
+	color_src = null
+
+/datum/sprite_accessory/moth_markings/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/moth_markings/reddish
+	name = "Reddish"
+	icon_state = "reddish"
+
+/datum/sprite_accessory/moth_markings/royal
+	name = "Royal"
+	icon_state = "royal"
+
+/datum/sprite_accessory/moth_markings/gothic
+	name = "Gothic"
+	icon_state = "gothic"
+
+/datum/sprite_accessory/moth_markings/whitefly
+	name = "White Fly"
+	icon_state = "whitefly"
+
+/datum/sprite_accessory/moth_markings/lovers
+	name = "Lovers"
+	icon_state = "lovers"
+
+/datum/sprite_accessory/moth_markings/punished
+	name = "Punished"
+	icon_state = "punished"
+
+/datum/sprite_accessory/moth_markings/firewatch
+	name = "Firewatch"
+	icon_state = "firewatch"
+
+/datum/sprite_accessory/moth_markings/deathhead
+	name = "Deathshead"
+	icon_state = "deathhead"
+
+/datum/sprite_accessory/moth_markings/poison
+	name = "Poison"
+	icon_state = "poison"
+
+/datum/sprite_accessory/moth_markings/ragged
+	name = "Ragged"
+	icon_state = "ragged"
+
+/datum/sprite_accessory/moth_markings/moonfly
+	name = "Moon Fly"
+	icon_state = "moonfly"

@@ -13,6 +13,7 @@
 	maxHealth = 500
 	layer = BELOW_MOB_LAYER
 	can_be_held = TRUE
+	radio = /obj/item/radio/headset/silicon/pai
 	var/network = "ss13"
 	var/obj/machinery/camera/current = null
 
@@ -27,7 +28,6 @@
 	var/speakDoubleExclamation = "alarms"
 	var/speakQuery = "queries"
 
-	var/obj/item/radio/headset			// The pAI's headset
 	var/obj/item/pai_cable/cable		// The cable we produce and use when door or camera jacking
 
 	var/master				// Name of the one who commands us
@@ -38,10 +38,6 @@
 	var/temp				// General error reporting text contained here will typically be shown once and cleared
 	var/screen				// Which screen our main window displays
 	var/subscreen			// Which specific function of the main screen is being displayed
-
-	var/obj/item/pda/ai/pai/pda = null
-	
-	var/obj/machinery/newscaster			//pAI Newscaster
 
 	var/secHUD = 0			// Toggles whether the Security HUD is active or not
 	var/medHUD = 0			// Toggles whether the Medical  HUD is active or not
@@ -58,6 +54,8 @@
 	var/obj/item/integrated_signaler/signaler // AI's signaller
 
 	var/obj/item/instrument/piano_synth/internal_instrument
+	var/obj/machinery/newscaster			//pAI Newscaster
+	var/obj/item/healthanalyzer/hostscan				//pAI healthanalyzer
 
 	var/encryptmod = FALSE
 	var/holoform = FALSE
@@ -92,6 +90,8 @@
 
 /mob/living/silicon/pai/Destroy()
 	QDEL_NULL(internal_instrument)
+	if(cable)
+		QDEL_NULL(cable)
 	if (loc != card)
 		card.forceMove(drop_location())
 	card.pai = null
@@ -111,33 +111,28 @@
 		P.setPersonality(src)
 	forceMove(P)
 	card = P
-	job = "personal AI"
+	job = "Personal AI"
 	signaler = new(src)
-	if(!radio)
-		radio = new /obj/item/radio/headset/silicon/pai(src)
+	hostscan = new /obj/item/healthanalyzer(src)
 	newscaster = new /obj/machinery/newscaster(src)
 	if(!aicamera)
 		aicamera = new /obj/item/camera/siliconcam/ai_camera(src)
+		aicamera.flash_enabled = TRUE
 
 	//PDA
-	pda = new(src)
-	spawn(5)
-		pda.ownjob = "pAI Messenger"
-		pda.owner = text("[]", src)
-		pda.name = pda.owner + " (" + pda.ownjob + ")"
+	aiPDA = new/obj/item/pda/ai(src)
+	aiPDA.owner = real_name
+	aiPDA.ownjob = "pAI Messenger"
+	aiPDA.name = real_name + " (" + aiPDA.ownjob + ")"
 
 	. = ..()
 
 	emittersemicd = TRUE
 	addtimer(CALLBACK(src, .proc/emittercool), 600)
 
-/mob/living/silicon/pai/Life()
-	if(hacking)
-		process_hack()
-	return ..()
+
 
 /mob/living/silicon/pai/proc/process_hack()
-
 	if(cable && cable.machine && istype(cable.machine, /obj/machinery/door) && cable.machine == hackdoor && get_dist(src, hackdoor) <= 1)
 		hackprogress = CLAMP(hackprogress + 4, 0, 100)
 	else
@@ -264,20 +259,21 @@
 	return TRUE
 
 /mob/living/silicon/pai/examine(mob/user)
-	..()
-	to_chat(user, "A personal AI in holochassis mode. Its master ID string seems to be [master].")
+	. = ..()
+	. += "A personal AI in holochassis mode. Its master ID string seems to be [master]."
 
 /mob/living/silicon/pai/Life()
-	if(stat == DEAD)
+	. = ..()
+	if(QDELETED(src) || stat == DEAD)
 		return
 	if(cable)
 		if(get_dist(src, cable) > 1)
-			var/turf/T = get_turf(src.loc)
-			T.visible_message("<span class='warning'>[src.cable] rapidly retracts back into its spool.</span>", "<span class='italics'>You hear a click and the sound of wire spooling rapidly.</span>")
-			qdel(src.cable)
-			cable = null
+			var/turf/T = get_turf(src)
+			T.visible_message("<span class='warning'>[cable] rapidly retracts back into its spool.</span>", "<span class='italics'>You hear a click and the sound of wire spooling rapidly.</span>")
+			QDEL_NULL(cable)
+	if(hacking)
+		process_hack()
 	silent = max(silent - 1, 0)
-	. = ..()
 
 /mob/living/silicon/pai/updatehealth()
 	if(status_flags & GODMODE)
@@ -291,7 +287,7 @@
 /obj/item/paicard/attackby(obj/item/W, mob/user, params)
 	..()
 	user.set_machine(src)
-	if(pai.encryptmod == TRUE)
+	if(pai && pai.encryptmod == TRUE)
 		if(W.tool_behaviour == TOOL_SCREWDRIVER)
 			pai.radio.attackby(W, user, params)
 		else if(istype(W, /obj/item/encryptionkey))
