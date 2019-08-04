@@ -74,11 +74,12 @@
 
 /mob/living/simple_animal/bot/secbot/Initialize()
 	. = ..()
+	weapon = new baton_type()
 	update_icon()
 	var/datum/job/detective/J = new/datum/job/detective
 	access_card.access += J.get_access()
 	prev_access = access_card.access
-	
+
 	//SECHUD
 	var/datum/atom_hud/secsensor = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	secsensor.add_hud_to(src)
