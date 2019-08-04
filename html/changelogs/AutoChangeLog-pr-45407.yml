@@ -1,5 +1,0 @@
-author: "Dennok"
-delete-after: True
-changes: 
-  - bugfix: "Shuttles no more ruin areas on fly off from moved custom
-dock."

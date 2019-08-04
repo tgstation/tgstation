@@ -196,24 +196,27 @@
 	return TRUE
 
 /obj/machinery/camera/wirecutter_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(!panel_open)
-		return FALSE
+		return
 	toggle_cam(user, 1)
 	obj_integrity = max_integrity //this is a pretty simplistic way to heal the camera, but there's no reason for this to be complex.
 	I.play_tool_sound(src)
 	return TRUE
 
 /obj/machinery/camera/multitool_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(!panel_open)
-		return FALSE
+		return
 
 	setViewRange((view_range == initial(view_range)) ? short_range : initial(view_range))
 	to_chat(user, "<span class='notice'>You [(view_range == initial(view_range)) ? "restore" : "mess up"] the camera's focus.</span>")
 	return TRUE
 
 /obj/machinery/camera/welder_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(!panel_open)
-		return FALSE
+		return
 
 	if(!I.tool_start_check(user, amount=0))
 		return TRUE
