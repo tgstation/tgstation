@@ -19,3 +19,19 @@
 /obj/item/paper/fluff/ruins/thederelict/vaultraider
 	name = "Vault Raider Objectives"
 	info = "<b>Objectives #1</b>: Find out whatever is being hidden in Kosmichekaya Stantsiya 13s Vault"
+
+
+/// Vault controller
+/obj/machinery/computer/vaultcontroller
+	name = "vault controller"
+	desc = "It seems to be powering and controlling the vault locks."
+	icon_screen = "power"
+	icon_keyboard = "power_key"
+	light_color = LIGHT_COLOR_YELLOW
+	use_power = NO_POWER_USE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+	var/obj/structure/cable/attached_wire
+	var/obj/machinery/door/airlock/outer
+	var/obj/machinery/door/airlock/inner
+
