@@ -101,6 +101,7 @@
 /datum/mutation/human/laser_eyes/proc/on_ranged_attack(mob/living/carbon/human/source, atom/target, mouseparams)
 	if(source.a_intent != INTENT_HARM)
 		return
+	to_chat(source, "<span class='warning'>You shoot with your laser eyes!</span>")
 	source.changeNext_move(CLICK_CD_RANGE)
 	var/obj/item/projectile/beam/laser_eyes/LE = new(source.loc)
 	LE.firer = source
