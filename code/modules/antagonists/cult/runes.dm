@@ -218,9 +218,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 	notify_ghosts("\A [src] has been activated at [get_area(src)]!", source = src, action = NOTIFY_ORBIT)
 	sound_to_playing_players('sound/hallucinations/im_here1.ogg')
 	user_antag.cult_team.cult_ascendent = TRUE
+	user_antag.cult_team.message_all_cultists("<span class='cultlarge'>Keep invoking the rune until I tear through.</span>")
 	for(var/datum/mind/B in user_antag.cult_team.members)
 		if(B.current)
-			to_chat(B.current, "<span class='cultlarge'>Keep invoking the rune until I tear through.</span>")
 			user_antag.cult_team.ascend(B.current)
 
 /obj/effect/rune/narsie/proc/summon_narsie(turf/T)

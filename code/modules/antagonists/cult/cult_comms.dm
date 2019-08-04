@@ -53,10 +53,10 @@
 		to_chat(Nominee, "It would be premature to select a leader while everyone is still settling in, try again in [DisplayTimeText(CULT_POLL_WAIT-world.time)].")
 		return
 	team.cult_vote_called = TRUE //somebody's trying to be a master, make sure we don't let anyone else try
+	team.message_all_cultists("<span class='cultlarge'>Acolyte [Nominee] has asserted that [Nominee.p_theyre()] worthy of leading the cult. A vote will be called shortly.</span>")
 	for(var/datum/mind/B in team.members)
 		if(B.current)
 			B.current.update_action_buttons_icon()
-			to_chat(B.current, "<span class='cultlarge'>Acolyte [Nominee] has asserted that [Nominee.p_theyre()] worthy of leading the cult. A vote will be called shortly.</span>")
 	sleep(100)
 	var/list/asked_cultists = list()
 	for(var/datum/mind/B in team.members)
