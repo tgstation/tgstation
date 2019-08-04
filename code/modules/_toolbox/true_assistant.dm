@@ -109,7 +109,14 @@ GLOBAL_LIST_EMPTY(toolbox_statues)
 			take_damage(rand(10, 90), BRUTE, "bomb", 0)
 
 /obj/structure/statue/toolbox/proc/PerformSacrifice(mob/living/carbon/human/user)
-	for (var/mob/living/carbon/human/H in view(2, src))
+	for (var/mob/living/carbon/H in view(2, src))
+		if(!istype(H,/mob/living/carbon/human))
+			if(istype(H,/mob/living/carbon/monkey))
+				if(!(GLOB.clients.len < 10))
+					continue
+			else
+				continue
+
 		if (H == Holder)
 			continue
 		if (H.stat == 0)
@@ -138,23 +145,27 @@ GLOBAL_LIST_EMPTY(toolbox_statues)
 		obj_integrity = max_integrity
 		sacrifices++
 		toolbox_points++
-		if(H.mind && H.ckey)
-			var/rememberckey = H.ckey
-			spawn(0)
-				for(var/mob/M in GLOB.player_list)
-					if(M.ckey && M.ckey == rememberckey)
-						alert(M,"You have been sacrificed to the Chaos Maiden. If the Maiden gets destroyed you will be returned!","Chaos Maiden Sacrifice","Ok")
-						break
-			save_sacrificed_mob(H)
+		if(H.mind)
+			var/mob/targetsacrifice
+			for(var/mob/M in GLOB.player_list)
+				if(M.ckey && M.mind == H.mind)
+					targetsacrifice = M
+					break
+			if(targetsacrifice)
+				spawn(0)
+					alert(targetsacrifice,"You have been sacrificed to the Chaos Maiden. If the Maiden gets destroyed you will be returned!","Chaos Maiden Sacrifice","Ok")
+			save_sacrificed_mob(H,S_ckey)
 		H.gib(no_brain = 1)
 		for(var/mob/M in GLOB.player_list)
 			if(istype(M,/mob/dead/new_player))
 				continue
 			to_chat(M, "<span class='userdanger'>[H] has been sacrificed to the chaos maiden!</span>")
+		H.log_message("<font color='orange'>[H.real_name][H.ckey ? "([H.ckey])" : ""] has been sacrificed to the chaos maiden.</font>", INDIVIDUAL_ATTACK_LOG)
 		playsound(src, 'sound/toolbox/toolbox_scream.ogg', 50, 0)
 		return
 
-	if (GLOB.clients.len < 10)
+	//anyone else hate repeating code?
+	/*if (GLOB.clients.len < 10)
 		for (var/mob/living/carbon/monkey/M in view(2, src))
 			if (M.stat == 0)
 				to_chat(user, "<span class='danger'>[M] is too strong to be sacrificed!</span>")
@@ -170,11 +181,16 @@ GLOBAL_LIST_EMPTY(toolbox_statues)
 				if(istype(mob,/mob/dead/new_player))
 					continue
 				to_chat(mob, "<span class='userdanger'>[M] has been sacrificed to the chaos maiden!</span>")
+			M.log_message("<font color='orange'>[M.real_name][M.ckey ? "([M.ckey])" : ""] has been sacrificed to the chaos maiden.</font>", INDIVIDUAL_ATTACK_LOG)
 			toolbox_points += 0.5
-			M.gib(no_brain = 1)
+			M.gib(no_brain = 1)*/
 
-/obj/structure/statue/toolbox/proc/save_sacrificed_mob(mob/living/carbon/M)
+/obj/structure/statue/toolbox/proc/save_sacrificed_mob(mob/living/carbon/M,_ckey)
 	if(!istype(M) || !M.mind)
+		return
+	if(M.ckey)
+		_ckey = M.ckey
+	if(!_ckey)
 		return
 	var/list/saved_list = list()
 	saved_list["type"] = M.type
@@ -187,7 +203,7 @@ GLOBAL_LIST_EMPTY(toolbox_statues)
 		saved_list["location"] = "x=[T.x];y=[T.y];z=[T.z]"
 		var/obj/effect/decal/remains/human/remains = new(T)
 		saved_list["remains"] = "\ref[remains]"
-	saved_list["ckey"] = M.ckey
+	saved_list["ckey"] = _ckey
 	sacrificed_mobs[M.mind] = saved_list
 
 /obj/structure/statue/toolbox/proc/restore_sacrificed_mob(datum/mind/mind)

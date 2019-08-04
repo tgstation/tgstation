@@ -35,5 +35,6 @@
 		if(prob(66))
 			spawn_type = /obj/structure/spider/spiderling/nurse
 		spawn_atom_to_turf(spawn_type, vent, 1, FALSE)
+		log_game("Spiderling spawned via event at ([vent.x],[vent.y],[vent.z] [get_area(vent)])")
 		vents -= vent
 		spawncount--

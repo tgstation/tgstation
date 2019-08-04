@@ -246,6 +246,7 @@
 	to_chat(owner, "<span class='warning'>You feel something crawling in your skin.</span>")
 	owner.faction |= "spiders"
 	var/obj/structure/spider/spiderling/S = new(owner.drop_location())
+	log_game("Spiderling spawned via Abductor organ gland at ([S.x],[S.y],[S.z] [get_area(S)])")
 	S.directive = "Protect your nest inside [owner.real_name]."
 
 /obj/item/organ/heart/gland/egg

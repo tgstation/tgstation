@@ -209,7 +209,11 @@
 		return
 	if(wisp.loc == src)
 		to_chat(user, "<span class='notice'>You release the wisp. It begins to bob around your head.</span>")
-		user.sight |= SEE_MOBS
+		if(istype(user,/mob/living/carbon))
+			var/mob/living/carbon/C = user
+			C.additional_sight_flags |= SEE_MOBS
+		else
+			user.sight |= SEE_MOBS
 		icon_state = "lantern"
 		wisp.orbit(user, 20)
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Freed")
@@ -221,7 +225,11 @@
 			var/atom/A = wisp.orbiting.orbiting
 			if(isliving(A))
 				var/mob/living/M = A
-				M.sight &= ~SEE_MOBS
+				if(istype(M,/mob/living/carbon))
+					var/mob/living/carbon/C = user
+					C.additional_sight_flags |= SEE_MOBS
+				else
+					M.sight &= ~SEE_MOBS
 				to_chat(M, "<span class='notice'>Your vision returns to normal.</span>")
 
 		wisp.stop_orbit()

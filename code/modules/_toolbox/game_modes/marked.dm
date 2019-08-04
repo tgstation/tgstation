@@ -46,6 +46,7 @@
 				H.equip_to_slot_or_del(folder, slot_in_backpack)
 				to_chat(marked_mind.current,"<span class='big bold'><font color='red'>You have been marked for death!</font><span>")
 				to_chat(marked_mind.current,"<B>Various Syndicate cartels have put a bounty on your head. There are agents onboard the station who are here to assassinate you. You have been given a folder that contains proof of this fact, we suggest you show this security so they can offer you the necessary protection.</B>")
+				log_game("[H.key] (ckey) has been selected as a Marked witness")
 	return ..()
 
 /datum/game_mode/traitor/marked/special_report()

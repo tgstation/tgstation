@@ -28,7 +28,7 @@
 	if(emagged)
 		if(isliving(A))
 			var/mob/living/M = A
-			M.adjustBruteLoss(25)
+			M.adjustBruteLoss(15)
 			var/atom/newLoc = get_edge_target_turf(M, get_dir(src, get_step_away(M, src)))
 			M.throw_at(newLoc, 4, 1)
 
@@ -54,7 +54,7 @@
 				visible_message("<span class='danger'>\the [src] grinds [M.name]'s flesh!</span>")
 				//M.gib()
 				playsound(src, 'sound/weapons/circsawhit.ogg', 100, TRUE)
-				M.adjustBruteLoss(rand(40,70))
+				M.adjustBruteLoss(rand(20,60))
 				M.Knockdown(30)
 				M.add_splatter_floor(loc)
 				var/list/listlimbs = list(

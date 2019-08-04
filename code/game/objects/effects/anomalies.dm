@@ -76,6 +76,18 @@
 	if(istype(I, /obj/item/device/analyzer))
 		to_chat(user, "<span class='notice'>Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(aSignal.frequency)], code [aSignal.code].</span>")
 
+/obj/effect/anomaly/Collide(atom/movable/AM)
+	..()
+	if(istype(AM,/mob))
+		var/mob/C = AM
+		C.log_message("<font color='orange'>[C.real_name][C.ckey ? "([C.ckey])" : ""] has bumped in to [src].</font>", INDIVIDUAL_ATTACK_LOG)
+
+/obj/effect/anomaly/CollidedWith(atom/movable/AM)
+	..()
+	if(istype(AM,/mob))
+		var/mob/C = AM
+		C.log_message("<font color='orange'>[C.real_name][C.ckey ? "([C.ckey])" : ""] has bumped in to [src].</font>", INDIVIDUAL_ATTACK_LOG)
+
 ///////////////////////
 
 /obj/effect/anomaly/grav
@@ -107,9 +119,11 @@
 	gravShock(A)
 
 /obj/effect/anomaly/grav/Collide(mob/A)
+	..()
 	gravShock(A)
 
 /obj/effect/anomaly/grav/CollidedWith(atom/movable/AM)
+	..()
 	gravShock(AM)
 
 /obj/effect/anomaly/grav/proc/gravShock(mob/living/A)
@@ -142,9 +156,11 @@
 	mobShock(M)
 
 /obj/effect/anomaly/flux/Collide(mob/living/M)
+	..()
 	mobShock(M)
 
 /obj/effect/anomaly/flux/CollidedWith(atom/movable/AM)
+	..()
 	mobShock(AM)
 
 /obj/effect/anomaly/flux/proc/mobShock(mob/living/M)

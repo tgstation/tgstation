@@ -69,6 +69,7 @@
 		var/num = rand(3,12)
 		for(var/i=0, i<num, i++)
 			var/obj/structure/spider/spiderling/S = new /obj/structure/spider/spiderling(src.loc)
+			log_game("Spiderling spawned via spider egg cluster hatching at ([S.x],[S.y],[S.z] [get_area(S)])")
 			S.poison_type = poison_type
 			S.poison_per_bite = poison_per_bite
 			S.faction = faction.Copy()
