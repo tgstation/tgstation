@@ -96,44 +96,7 @@
 			cooldown = 0
 			owner.update_action_buttons_icon()
 
-//teleport rune
-/datum/action/innate/cult/create_rune/tele
-	name = "Summon Teleport Rune"
-	desc = "Summons a teleport rune to your location, as though it has been there all along..."
-	button_icon_state = "telerune"
-	rune_type = /obj/effect/rune/teleport
-	rune_word_type = /obj/effect/temp_visual/cult/rune_spawn/rune2
-	rune_innerring_type = /obj/effect/temp_visual/cult/rune_spawn/rune2/inner
-	rune_center_type = /obj/effect/temp_visual/cult/rune_spawn/rune2/center
-	rune_color = RUNE_COLOR_TELEPORT
-
-/datum/action/innate/cult/create_rune/wall
-	name = "Summon Barrier Rune"
-	desc = "Summons an active barrier rune to your location, as though it has been there all along..."
-	button_icon_state = "barrier"
-	rune_type = /obj/effect/rune/wall
-	rune_word_type = /obj/effect/temp_visual/cult/rune_spawn/rune4
-	rune_innerring_type = /obj/effect/temp_visual/cult/rune_spawn/rune4/inner
-	rune_center_type = /obj/effect/temp_visual/cult/rune_spawn/rune4/center
-	rune_color = RUNE_COLOR_DARKRED
-
-/datum/action/innate/cult/create_rune/wall/Activate()
-	. = ..()
-	var/obj/effect/rune/wall/W = locate(/obj/effect/rune/wall) in owner.loc
-	if(W)
-		W.spread_density()
-
-/datum/action/innate/cult/create_rune/revive
-	name = "Summon Revive Rune"
-	desc = "Summons a revive rune to your location, as though it has been there all along..."
-	button_icon_state = "revive"
-	rune_type = /obj/effect/rune/raise_dead
-	rune_word_type = /obj/effect/temp_visual/cult/rune_spawn/rune1
-	rune_innerring_type = /obj/effect/temp_visual/cult/rune_spawn/rune1/inner
-	rune_center_type = /obj/effect/temp_visual/cult/rune_spawn/rune1/center
-	rune_color = RUNE_COLOR_MEDIUMRED
-
-/datum/action/innate/cult/create_rune/narsie //only one given to cultists
+/datum/action/innate/cult/create_rune/narsie
 	name = "Summon Nar'Sie Rune"
 	desc = "Prepare the ritual to bring Nar'Sie into this world. Must be used in a summon location. Be ready to defend the rune. You can only draw one rune per summon site."
 	button_icon_state = "barrier"
