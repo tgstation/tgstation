@@ -8,6 +8,8 @@
 	ruletype = "Midround"
 	/// If the ruleset should be restricted from ghost roles.
 	var/restrict_ghost_roles = TRUE
+	/// What type the ruleset is restricted to. 
+	var/required_type = /mob/living/human
 	var/list/living_players = list()
 	var/list/living_antags = list()
 	var/list/dead_players = list()
@@ -36,6 +38,9 @@
 	var/list/trimmed_list = L.Copy()
 	var/antag_name = initial(antag_flag)
 	for(var/mob/M in trimmed_list)
+		if (!istype(M, required_type))
+			trimmed_list.Remove(M)
+			continue
 		if (!M.client) // Are they connected?
 			trimmed_list.Remove(M)
 			continue
@@ -141,7 +146,6 @@
 		finish_setup(new_character, i)
 		assigned += applicant
 		notify_ghosts("[new_character] has been picked for the ruleset [name]!", source = new_character, action = NOTIFY_ORBIT, header="Something Interesting!")
-	candidates.Cut()
 
 /datum/dynamic_ruleset/midround/from_ghosts/proc/generate_ruleset_body(mob/applicant)
 	var/mob/living/carbon/human/new_character = makeBody(applicant)
@@ -230,6 +234,7 @@
 	cost = 35
 	requirements = list(101,101,80,70,60,60,50,50,40,40)
 	high_population_requirement = 35
+	required_type = /mob/living/silicon/ai
 	var/ion_announce = 33
 	var/removeDontImproveChance = 10
 
