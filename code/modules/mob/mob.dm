@@ -11,11 +11,11 @@
   * Unsets the focus var
   *
   * Clears alerts for this mob
-  * 
+  *
   * Resets all the observers perspectives to the tile this mob is on
-  * 
+  *
   * qdels any client colours in place on this mob
-  * 
+  *
   * Ghostizes the client attached to this mob
   *
   * Parent call
@@ -48,7 +48,7 @@
   *
   * Sends global signal COMSIG_GLOB_MOB_CREATED
   *
-  * Adds to global lists 
+  * Adds to global lists
   * * GLOB.mob_list
   * * GLOB.mob_directory (by tag)
   * * GLOB.dead_mob_list - if mob is dead
@@ -134,7 +134,7 @@
 /mob/proc/get_photo_description(obj/item/camera/camera)
 	return "a ... thing?"
 
-/** 
+/**
   * Show a message to this mob (visual)
   */
 /mob/proc/show_message(msg, type, alt_msg, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
@@ -169,7 +169,7 @@
 
 /**
   * Generate a visible message from this atom
-  * 
+  *
   * Show a message to all player mobs who sees this atom
   *
   * Show a message to the src mob (if the src is a mob)
@@ -198,21 +198,29 @@
 			continue
 		if(M in ignored_mobs)
 			continue
-		var/msg = message
+		var/msg = "<span class='notice'>"
+		msg += message
+		msg += "</span>"
 		if(M == src) //the src always see the main message or self message
 			if(self_message)
-				msg = self_message
+				msg = "<span class='notice'>"
+				msg += self_message
+				msg += "</span>"
 		else
 			if(M.see_invisible<invisibility || (T != loc && T != src))//if src is invisible to us or is inside something (and isn't a turf),
 				if(blind_message) // then people see blind message if there is one, otherwise nothing.
-					msg = blind_message
+					msg = "<span class='italics'>"
+					msg += blind_message
+					msg += "</span>"
 				else
 					continue
 
 			else if(T.lighting_object)
 				if(T.lighting_object.invisibility <= M.see_invisible && T.is_softly_lit()) //the light object is dark and not invisible to us
 					if(blind_message)
-						msg = blind_message
+						msg = "<span class='italics'>"
+						msg += blind_message
+						msg += "</span>"
 					else
 						continue
 
@@ -234,10 +242,14 @@
 	if(hearing_distance)
 		range = hearing_distance
 	for(var/mob/M in get_hearers_in_view(range, src))
-		var/msg = message
+		var/msg = "<span class='italics'>"
+		msg += message
+		msg += "</span>"
 		if(self_message && M==src)
-			msg = self_message
-		M.show_message( msg, 2, deaf_message, 1)
+			msg = "<span class='italics'>"
+			msg += self_message
+			msg += "</span>"
+		M.show_message(msg, 2, deaf_message, 1)
 
 /**
   * Show a message to all mobs in earshot of this atom
@@ -254,7 +266,10 @@
 	if(hearing_distance)
 		range = hearing_distance
 	for(var/mob/M in get_hearers_in_view(range, src))
-		M.show_message( message, 2, deaf_message, 1)
+		var/msg = "<span class='italics'>"
+		msg += message
+		msg += "</span>"
+		M.show_message(msg, 2, deaf_message, 1)
 
 ///Get the item on the mob in the storage slot identified by the id passed in
 /mob/proc/get_item_by_slot(slot_id)
@@ -325,7 +340,7 @@
 	return
 
 /**
-  * Equip an item to the slot or delete 
+  * Equip an item to the slot or delete
   *
   * This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to
   * equip people when the round starts and when events happen and such.
@@ -542,7 +557,7 @@
 		memory_throttle_time = world.time + 5 SECONDS
 		msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 		msg = sanitize(msg)
-		
+
 		mind.store_memory(msg)
 	else
 		to_chat(src, "You don't have a mind datum for some reason, so you can't add a note to it.")
@@ -671,7 +686,7 @@
 		return
 	if(isAI(M))
 		return
-/** 
+/**
   * Handle the result of a click drag onto this mob
   *
   * For mobs this just shows the inventory
@@ -688,7 +703,7 @@
 
 /**
   * Output an update to the stat panel for the client
-  * 
+  *
   * calculates client ping, round id, server time, time dilation and other data about the round
   * and puts it in the mob status panel on a regular loop
   */
@@ -1006,7 +1021,7 @@
   * Fully update the name of a mob
   *
   * This will update a mob's name, real_name, mind.name, GLOB.data_core records, pda, id and traitor text
-  * 
+  *
   * Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
   */
 /mob/proc/fully_replace_character_name(oldname,newname)
