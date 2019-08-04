@@ -1,4 +1,4 @@
-#define CULT_SCALING_COEFFICIENT 9.3 //Roughly one new cultist at roundstart per this many players
+#define CULT_SCALING_COEFFICIENT 6 //Roughly one new cultist at roundstart per this many players
 
 /datum/game_mode
 	var/list/datum/mind/cult = list()
@@ -67,7 +67,7 @@
 
 	//cult scaling goes here
 	recommended_enemies = 1 + round(num_players()/CULT_SCALING_COEFFICIENT)
-	var/remaining = (num_players() % CULT_SCALING_COEFFICIENT) * 10 //Basically the % of how close the population is toward adding another cultis
+	var/remaining = (num_players() % CULT_SCALING_COEFFICIENT) * 10 //Basically the % of how close the population is toward adding another cultist
 	if(prob(remaining))
 		recommended_enemies++
 
@@ -161,7 +161,6 @@
 	return "Some stations in your sector have reported evidence of blood sacrifice and strange magic. Ties to the Wizards' Federation have been proven not to exist, and many employees \
 			have disappeared; even Central Command employees light-years away have felt strange presences and at times hysterical compulsions. Interrogations point towards this being the work of \
 			the cult of Nar'Sie. If evidence of this cult is discovered aboard your station, extreme caution and extreme vigilance must be taken going forward, and all resources should be \
-			devoted to stopping this cult. Note that holy water seems to weaken and eventually return the minds of cultists that ingest it, and mindshield implants will prevent conversion \
-			altogether."
+			devoted to stopping this cult."
 
 #undef CULT_SCALING_COEFFICIENT
