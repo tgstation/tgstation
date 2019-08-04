@@ -22,9 +22,9 @@
 	if(istype(object,/turf) && left_click && !alt_click && !ctrl_click)
 		var/turf/T = object
 		if(isspaceturf(object))
-			T.PlaceOnTop(/turf/open/floor/plating)
+			T.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		else if(isplatingturf(object))
-			T.PlaceOnTop(/turf/open/floor/plasteel)
+			T.PlaceOnTop(/turf/open/floor/plasteel, flags = CHANGETURF_INHERIT_AIR)
 		else if(isfloorturf(object))
 			T.PlaceOnTop(/turf/closed/wall)
 		else if(iswallturf(object))
@@ -35,7 +35,7 @@
 		log_admin("Build Mode: [key_name(c)] deleted [object] at [AREACOORD(object)]")
 		if(isturf(object))
 			var/turf/T = object
-			T.ScrapeAway()
+			T.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 		else if(isobj(object))
 			qdel(object)
 		return

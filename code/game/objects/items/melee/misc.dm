@@ -491,7 +491,7 @@
 
 /obj/item/melee/supermatter_sword/proc/consume_turf(turf/T)
 	var/oldtype = T.type
-	var/turf/newT = T.ScrapeAway()
+	var/turf/newT = T.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	if(newT.type == oldtype)
 		return
 	playsound(T, 'sound/effects/supermatter.ogg', 50, 1)
