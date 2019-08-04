@@ -1413,7 +1413,7 @@
 #undef PERF_BASE_DAMAGE
 
 //Injectables!
-//These are shitty chems for medibots and borgs to use in place of the old trekchems. They're limited to injection only, hence the name.
+//These are shitty chems
 
 /datum/reagent/medicine/sanguiose
 	name = "Sanguiose"
@@ -1463,8 +1463,8 @@
 	. = 1
 
 /datum/reagent/medicine/frogenite/overdose_process(mob/living/M)
-	M.adjustOxyLoss(15,0)
-	M.reagents.remove_reagent(type, metabolization_rate*10) // Reused code from syndicate nanites meant to purge the chem quickly.
+	M.adjustOxyLoss(3,0)
+	M.reagents.remove_reagent(type, metabolization_rate*2) // Reused code from syndicate nanites meant to purge the chem quickly.
 	to_chat(M, "<span class='notice'>You feel like you aren't getting any oxygen!</span>")
 	..()
 	. = 1
@@ -1472,7 +1472,7 @@
 /datum/reagent/medicine/frogenite/on_transfer(atom/A, method=TOUCH, volume) // Borrowed from whoever made charcoal injection or pill only and modified so it doesn't add a reagent.
 	if(method == INJECT || !iscarbon(A)) //the atom not the charcoal
 		return
-	A.reagents.remove_reagent(type, volume) 
+	A.reagents.remove_reagent(type, volume)
 	..()
 
 /datum/reagent/medicine/ferveatium
@@ -1495,8 +1495,8 @@
 	. = 1
 
 /datum/reagent/medicine/ferveatium/overdose_process(mob/living/M)
-	M.adjustFireLoss(15,0)
-	M.reagents.remove_reagent(type, metabolization_rate*10) // Reused code from syndicate nanites meant to purge the chem quickly.
+	M.adjustFireLoss(3,0)
+	M.reagents.remove_reagent(type, metabolization_rate*2) // Reused code from syndicate nanites meant to purge the chem quickly.
 	to_chat(M, "<span class='notice'>You feel like you are melting!</span>")
 	..()
 	. = 1
@@ -1506,5 +1506,3 @@
 		return
 	A.reagents.remove_reagent(type, volume)
 	..()
-
-
