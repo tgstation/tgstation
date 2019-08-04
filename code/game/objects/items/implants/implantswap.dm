@@ -16,9 +16,9 @@ The proc then removes the two items, destroying them permanently, and handles th
 */
 /obj/item/pen/swap_activator/proc/activate(var/obj/item/implant/swapper/R = receiver, var/obj/A = src)
 	//Grab the recievers mob
-	var/mob/living/RL = R.loc
+	var/mob/living/carbon/RL = R.loc
 	//Grab the activators mob
-	var/mob/living/AL = A.loc
+	var/mob/living/carbon/AL = A.loc
 	
 	if(R.implanted && R && A)
 		//Grab the recievers turf
@@ -70,20 +70,20 @@ Other Components
 /obj/item/implanter/swapper
 	imp_type = /obj/item/implant/swapper
 
-/obj/item/implanter/swapper/attack(mob/living/M, mob/user)
-	if(!istype(M))
+/obj/item/implanter/swapper/attack(mob/living/carbon/C, mob/user)
+	if(!istype(C, /mob/living/carbon))
 		return
 	if(user && imp)
-		var/turf/T = get_turf(M)
-		if(T && (M == user || do_mob(user, M, 0)))
+		var/turf/T = get_turf(C)
+		if(T && (C == user || do_mob(user, C, 0)))
 			if(src && imp)
-				if(imp.implant(M, user))
-					if (M == user)
+				if(imp.implant(C, user))
+					if (C == user)
 						to_chat(user, "<span class='notice'>You implant yourself.</span>")
 					else
-						to_chat(user, "<span class='notice>You implant [M]</span>'")
+						to_chat(user, "<span class='notice>You implant [C]</span>'")
 					imp = null
 					update_icon()
 				else
-					to_chat(user, "<span class='warning'>[src] fails to implant [M].</span>")
+					to_chat(user, "<span class='warning'>[src] fails to implant [C].</span>")
 
