@@ -12,7 +12,9 @@
 	</ui-section>
 </ui-display>
 <ui-display>
-	<center>
+	<span>Points: {{data.id_points}}</span>
+	<ui-section label='Status'>
+		<span>{{data.status_info}}</span>
 		<ui-button action="move_shuttle" state={{data.can_go_home ? null : 'disabled'}}>Move shuttle</ui-button>
-	</center>
+	</ui-section>
 </ui-display>

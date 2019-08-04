@@ -74,11 +74,8 @@
 	else
 		var/mats = O.materials & mat_container.materials
 		var/amount = O.amount
-		var/id = inserted_scan_id && inserted_scan_id.registered_name
-		if (id)
-			id = " (ID: [id])"
 		mat_container.insert_item(O, sheet_per_ore) //insert it
-		materials.silo_log(src, "smelted", amount, "ores[id]", mats)
+		materials.silo_log(src, "smelted", amount, "someone", mats)
 		qdel(O)
 
 /obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/D)
@@ -206,10 +203,7 @@
 /obj/machinery/mineral/ore_redemption/ui_data(mob/user)
 	var/list/data = list()
 	data["unclaimedPoints"] = points
-	if(inserted_scan_id)
-		data["hasID"] = TRUE
-		if (inserted_scan_id.registered_account)
-			data["hasAccount"] = TRUE
+	data["canClaimPoints"] = (points > 0)
 
 	data["materials"] = list()
 	var/datum/component/material_container/mat_container = materials.mat_container

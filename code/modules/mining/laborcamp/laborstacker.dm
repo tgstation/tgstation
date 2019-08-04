@@ -50,8 +50,12 @@ GLOBAL_LIST(labor_sheet_values)
 	var/obj/item/card/id/I = user.get_idcard(TRUE)
 	if(istype(I, /obj/item/card/id/prisoner))
 		var/obj/item/card/id/prisoner/P = I
+		data["id_points"] = P.points
 		if(P.points >= P.goal)
 			can_go_home = TRUE
+			data["status_info"] = "Goal met!"
+		else
+			data["status_info"] = "You are [(P.goal - P.points)] points away."
 
 	if(stacking_machine)
 		data["unclaimed_points"] = stacking_machine.points
