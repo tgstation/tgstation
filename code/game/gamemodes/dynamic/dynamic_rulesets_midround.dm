@@ -9,7 +9,7 @@
 	/// If the ruleset should be restricted from ghost roles.
 	var/restrict_ghost_roles = TRUE
 	/// What type the ruleset is restricted to. 
-	var/required_type = /mob/living/human
+	var/required_type = /mob/living/carbon/human
 	var/list/living_players = list()
 	var/list/living_antags = list()
 	var/list/dead_players = list()
