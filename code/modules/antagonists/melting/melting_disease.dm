@@ -31,7 +31,7 @@
 /datum/disease/transformation/melting/stage_act()
 	var/obj/item/organ/heart/slime/slimeheart = affected_mob.getorganslot(ORGAN_SLOT_HEART)
 	if(istype(slimeheart))
-		return //champions are not affected by the disease
+		return //champions are not affected by the disease, it doesn't even progress
 	..()
 	switch(stage)
 		if(2)
@@ -51,7 +51,7 @@
 				affected_mob.adjustToxLoss(2)
 			if(prob(4))
 				return
-				affected_mob.vomit(slime = TRUE, specialcolor = creator.slimebody_color)
+				affected_mob.vomit(specialcolor = creator.slimebody_color, toxic = TRUE)
 				affected_mob.adjustCloneLoss(5)
 		if(4)
 			if(affected_mob.stat == UNCONSCIOUS)

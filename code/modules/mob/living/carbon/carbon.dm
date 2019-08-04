@@ -428,7 +428,7 @@
 		return 0
 	return ..()
 
-/mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, toxic = FALSE, harm = TRUE, force = FALSE)
+/mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, specialcolor = null, stun = TRUE, distance = 1, message = TRUE, toxic = FALSE, harm = TRUE, force = FALSE)
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER) && !force)
 		return TRUE
 
@@ -471,7 +471,7 @@
 				T.add_vomit_floor(src, VOMIT_PURPLE)
 		else
 			if(T)
-				T.add_vomit_floor(src, VOMIT_TOXIC)//toxic barf looks different
+				T.add_vomit_floor(src, VOMIT_TOXIC, specialcolor)//toxic barf looks different
 		T = get_step(T, dir)
 		if (is_blocked_turf(T))
 			break
