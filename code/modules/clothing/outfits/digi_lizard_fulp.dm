@@ -1,3 +1,7 @@
+/datum/outfit/digitigrade
+	name = "Digitigrade Shoes"
+	shoes = /obj/item/clothing/shoes/sneakers/brown/digitigrade
+
 /datum/outfit/digitigrade/bar
 	name = "Bartender Digitigrade"
 	shoes = /obj/item/clothing/shoes/laceup/digitigrade
