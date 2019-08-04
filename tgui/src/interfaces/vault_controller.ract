@@ -1,0 +1,5 @@
+<ui-display>
+	<ui-section label='Charge'>
+		<ui-bar min='0' max='{{data.max}}' value='{{data.stored}}'>{{Math.fixed(adata.stored/1000)}} kW</ui-bar>
+	</ui-section>
+</ui-display>

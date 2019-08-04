@@ -31,7 +31,47 @@
 	use_power = NO_POWER_USE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-	var/obj/structure/cable/attached_wire
+	var/obj/structure/cable/attached_cable
 	var/obj/machinery/door/airlock/outer
 	var/obj/machinery/door/airlock/inner
+	var/siphoned_power = 0
+	var/siphon_max = 5e7
 
+
+/obj/machinery/computer/monitor/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>It appears to be powered via a cable connector.</span>"
+
+
+/obj/machinery/computer/vaultcontroller/process()
+	update_cable()
+	if(attached_cable)
+		attempt_siphon()
+
+
+/obj/machinery/computer/vaultcontroller/proc/update_cable()
+	var/turf/T = get_turf(src)
+	attached_cable = locate(/obj/structure/cable) in T
+
+
+/obj/machinery/computer/vaultcontroller/proc/attempt_siphon()
+	var/surpluspower = attached_cable.surplus()
+	if(surpluspower)
+		attached_cable.add_load(surpluspower)
+		siphoned_power += surpluspower
+
+
+/obj/machinery/computer/vaultcontroller/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "vault_controller", name, 400, 400, master_ui, state)
+		ui.open()
+
+
+/obj/machinery/computer/vaultcontroller/ui_data()
+	var/list/data = list()
+	data["stored"] = siphoned_power
+	data["max"] = siphon_max
+
+	return data

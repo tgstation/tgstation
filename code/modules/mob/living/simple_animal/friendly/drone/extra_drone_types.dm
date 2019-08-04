@@ -99,7 +99,7 @@
 	icon = 'icons/mob/drone.dmi'
 	icon_state = "drone_maint_hat"
 	density = FALSE
-	anchored = FALSE
+	anchored = TRUE
 	mob_type = /mob/living/simple_animal/drone/derelict
 	mob_name = "derelict drone"
 	death = FALSE
