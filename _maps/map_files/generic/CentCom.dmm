@@ -3849,7 +3849,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "jS" = (
-/obj/machinery/computer/prisoner,
+/obj/machinery/computer/prisoner/management,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/centcom/control)
@@ -5887,7 +5887,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "nY" = (
-/obj/machinery/computer/prisoner{
+/obj/machinery/computer/prisoner/management{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -10884,7 +10884,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
 "yv" = (
-/obj/machinery/computer/prisoner{
+/obj/machinery/computer/prisoner/management{
 	dir = 1
 	},
 /obj/machinery/light,

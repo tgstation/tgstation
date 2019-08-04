@@ -406,7 +406,7 @@
 /turf/open/floor/plasteel,
 /area/science)
 "bC" = (
-/obj/machinery/computer/gulag_teleporter_computer{
+/obj/machinery/computer/prisoner/gulag_teleporter_computer{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
