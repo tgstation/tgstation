@@ -3,19 +3,17 @@
 	var/status = CONTRACT_STATUS_INACTIVE
 	var/datum/objective/contract/contract = new()
 	var/ransom = 0
-	var/owner = null
 	var/payout_type = null
 
 	var/list/victim_belongings = list()
 
 /datum/syndicate_contract/New(contract_owner, blacklist, type=CONTRACT_PAYOUT_SMALL)
-	owner = contract_owner
+	contract.owner = contract_owner
 	payout_type = type
 
 	generate(blacklist)
 
 /datum/syndicate_contract/proc/generate(blacklist)
-	contract.owner = owner
 	contract.find_target(null, blacklist)
 
 	if (payout_type == CONTRACT_PAYOUT_LARGE)
@@ -62,22 +60,22 @@
 			var/datum/antagonist/traitor/traitor_data = contract.owner.has_antag_datum(/datum/antagonist/traitor)
 			
 			if (M == contract.target.current)
-				traitor_data.contract_TC_to_redeem += contract.payout
+				traitor_data.contractor_hub.contract_TC_to_redeem += contract.payout
 
 				if (M.stat != DEAD)
-					traitor_data.contract_TC_to_redeem += contract.payout_bonus
+					traitor_data.contractor_hub.contract_TC_to_redeem += contract.payout_bonus
 
 				status = CONTRACT_STATUS_COMPLETE
 
-				if (traitor_data.current_contract == src) 
-					traitor_data.current_contract = null
+				if (traitor_data.contractor_hub.current_contract == src) 
+					traitor_data.contractor_hub.current_contract = null
 				
 				traitor_data.contractor_hub.contract_rep += 2
 			else
 				status = CONTRACT_STATUS_ABORTED // Sending a target that wasn't even yours is as good as just aborting it
 				
-				if (traitor_data.current_contract == src) 
-					traitor_data.current_contract = null
+				if (traitor_data.contractor_hub.current_contract == src) 
+					traitor_data.contractor_hub.current_contract = null
 
 			if (iscarbon(M))
 				for(var/obj/item/W in M)

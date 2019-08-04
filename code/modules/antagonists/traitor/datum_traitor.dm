@@ -374,8 +374,8 @@
 	var total_spent_rep = 0
 
 	var/completed_contracts = 0
-	var/tc_total = contract_TC_payed_out + contract_TC_to_redeem
-	for (var/datum/syndicate_contract/contract in assigned_contracts)
+	var/tc_total = contractor_hub.contract_TC_payed_out + contractor_hub.contract_TC_to_redeem
+	for (var/datum/syndicate_contract/contract in contractor_hub.assigned_contracts)
 		if (contract.status == CONTRACT_STATUS_COMPLETE)
 			completed_contracts++
 
