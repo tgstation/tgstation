@@ -365,13 +365,21 @@
 /obj/effect/proc_holder/spell/self/time_reverse
 	name = "Reverse Time"
 	desc = "Stores your position and health at the current time, which you can then revert to at will."
-	charge_max=1200
+	charge_max=600
 	clothes_req = FALSE
 	action_icon = 'spacestation413/icons/mob/actions.dmi'
 	action_icon_state = "time_reverse"
 	var/time_stored = FALSE
-	var/health_at_store
-	var/turf/position_at_store
+	var/brute_loss
+	var/fire_loss
+	var/list/datum/saved_bodypart/saved_bodyparts //maps bodypart slots to health
+	var/clone_loss = 0
+	var/tox_loss = 0
+	var/oxy_loss = 0
+	var/brain_loss = 0
+	var/saved_x
+	var/saved_y
+	var/saved_z
 
 /obj/effect/proc_holder/spell/self/time_reverse/cast(list/targets,mob/user)
 	. = ..()
@@ -379,22 +387,44 @@
 		return
 	var/mob/living/living_user = user
 	if(!time_stored)
-		position_at_store=get_turf(living_user)
-		health_at_store = living_user.health
-		time_stored = TRUE
-		charge_counter = 1200
+		var/turf/T = get_turf(user)
+		if(T)
+			saved_x = T.x
+			saved_y = T.y
+			saved_z = T.z
+		brute_loss = living_user.getBruteLoss()
+		fire_loss = living_user.getFireLoss()
+		clone_loss = living_user.getCloneLoss()
+		tox_loss = living_user.getToxLoss()
+		oxy_loss = living_user.getOxyLoss()
+		brain_loss = living_user.getOrganLoss(ORGAN_SLOT_BRAIN)
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			saved_bodyparts = C.save_bodyparts()
 		to_chat(user,"<span class='notice'>You save the current moment...</span>")
+		time_stored = TRUE
 	else
-		do_teleport(living_user,position_at_store,forceMove = TRUE, channel = TELEPORT_CHANNEL_FREE)
-		to_chat(user,"<span class='danger'>You return to your saved moment! The shock exhausts you!</span>")
-		var/health_right_now = living_user.health
-		living_user.fully_heal()
-		living_user.adjustStaminaLoss(max(0,((100-health_right_now)+(100-health_at_store))))
+		to_chat(user,"<span class='danger'>You return to your saved moment!</span>")
+		living_user.adjustBruteLoss(brute_loss-living_user.getBruteLoss())
+		living_user.adjustFireLoss(fire_loss-living_user.getFireLoss())
+		living_user.setCloneLoss(clone_loss)
+		living_user.setToxLoss(tox_loss)
+		living_user.setOxyLoss(oxy_loss)
+		living_user.setOrganLoss(ORGAN_SLOT_BRAIN, brain_loss)
+		if(iscarbon(user))
+			if(saved_bodyparts)
+				var/mob/living/carbon/C = user
+				C.apply_saved_bodyparts(saved_bodyparts)
+		living_user.updatehealth()
+		//comes after healing so new limbs comically drop to the floor
+		if(!isnull(x) && istype(user, /atom/movable))
+			var/atom/movable/AM = user
+			var/turf/T = locate(saved_x,saved_y,saved_z)
+			AM.forceMove(T)
 		time_stored = FALSE
 
-
 /obj/effect/proc_holder/spell/self/time_reverse/empowered
-	charge_max = 300
+	charge_max = 150
 	stat_allowed = TRUE
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop/time_gem
