@@ -110,6 +110,7 @@
 // wrench: (un)anchor
 // weldingtool: convert to real pipe
 /obj/structure/disposalconstruct/wrench_act(mob/living/user, obj/item/I)
+	..()
 	if(anchored)
 		anchored = FALSE
 		density = FALSE
@@ -155,6 +156,7 @@
 	return TRUE
 
 /obj/structure/disposalconstruct/welder_act(mob/living/user, obj/item/I)
+	..()
 	if(anchored)
 		if(!I.tool_start_check(user, amount=0))
 			return TRUE

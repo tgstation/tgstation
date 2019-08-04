@@ -245,7 +245,7 @@
 
 // Wirecutter behavior for girders
 /obj/structure/girder/wirecutter_act(mob/user, obj/item/tool)
-	. = FALSE
+	. = ..()
 	if(state == GIRDER_REINF_STRUTS)
 		to_chat(user, "<span class='notice'>You start removing the inner grille...</span>")
 		if(tool.use_tool(src, user, 40, volume=100))
@@ -257,7 +257,7 @@
 		return TRUE
 
 /obj/structure/girder/wrench_act(mob/user, obj/item/tool)
-	. = FALSE
+	. = ..()
 	if(state == GIRDER_DISPLACED)
 		if(!isfloorturf(loc))
 			to_chat(user, "<span class='warning'>A floor must be present to secure the girder!</span>")

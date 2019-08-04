@@ -83,6 +83,9 @@
 		return
 	user.examinate(src)
 
+/obj/machinery/clonepod/attack_ai(mob/user)
+	return attack_hand(user)
+
 /obj/machinery/clonepod/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>The <i>linking</i> device can be <i>scanned<i> with a multitool.</span>"
@@ -438,6 +441,7 @@
 	unattached_flesh.Cut()
 
 	occupant = null
+	clonemind = null
 
 /obj/machinery/clonepod/proc/malfunction()
 	var/mob/living/mob_occupant = occupant
@@ -448,7 +452,7 @@
 		mess = TRUE
 		maim_clone(mob_occupant)	//Remove every bit that's grown back so far to drop later, also destroys bits that haven't grown yet
 		icon_state = "pod_g"
-		if(mob_occupant.mind != clonemind)
+		if(clonemind && mob_occupant.mind != clonemind)
 			clonemind.transfer_to(mob_occupant)
 		mob_occupant.grab_ghost() // We really just want to make you suffer.
 		flash_color(mob_occupant, flash_color="#960000", flash_time=100)
