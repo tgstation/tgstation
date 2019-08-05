@@ -50,4 +50,4 @@ Bonus
 			to_chat(M, "<span class='userdanger'>A wave of dizziness washes over you!</span>")
 			M.dizziness = min(L.dizziness + 30, 100)
 			if(power >= 2)
-				M.set_drugginess(30)
+				M.set_drugginess(40)
