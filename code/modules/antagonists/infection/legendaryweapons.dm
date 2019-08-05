@@ -15,8 +15,12 @@
 /obj/item/infectionkiller/Initialize(mapload)
 	. = ..()
 	if(is_item)
-		priority_announce("The Legendary Item \"[name]\" has been discovered somewhere on the station.\nWe've attached a GPS signaller and teleportation beacon to it so that you can find it.",
-					  "CentCom Biohazard Division", 'sound/misc/notice1.ogg')
+		if(GLOB.infection_core)
+			priority_announce("The Legendary Item \"[name]\" has been discovered somewhere on the station.\n\n\
+							   We've attached a GPS signaller and teleportation beacon to it so that you can find it.\n\n\
+							   It's probably a smart idea to open a two-way portal as well, just in case it lies inside the infections walls.\n\n\
+							   We doubt this item can be destroyed by the infection, and believe it could destroy the core of it as well.",
+							   "CentCom Biohazard Division", 'sound/magic/summonitems_generic.ogg')
 		AddComponent(/datum/component/stationloving, FALSE, FALSE)
 		var/obj/item/gps/internal/legendary/L = new /obj/item/gps/internal/legendary(src)
 		L.gpstag = "Legendary [name] Signal"

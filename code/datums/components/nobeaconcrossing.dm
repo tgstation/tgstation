@@ -13,7 +13,7 @@
 	Then disintegrates or kills them if they have
 */
 /datum/component/no_beacon_crossing/proc/check_passed(atom/parentatom = parent)
-	if(isobj(parentatom.loc))
+	if(isobj(parentatom.loc) || ismob(parentatom.loc))
 		return
 	// if you somehow got past a beacon wall then time to die
 	var/obj/structure/beacon_generator/closest

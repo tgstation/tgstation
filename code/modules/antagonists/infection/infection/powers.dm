@@ -142,19 +142,6 @@ GLOBAL_LIST_EMPTY(infection_gravity_spawns)
 	return N
 
 /*
-	Toggles the node requirement for the commander for types of infection to be placed
-*/
-/mob/camera/commander/verb/toggle_node_req()
-	set category = "Infection"
-	set name = "Toggle Node Requirement"
-	set desc = "Toggle requiring nodes to place resource and factory infections."
-	nodes_required = !nodes_required
-	if(nodes_required)
-		to_chat(src, "<span class='warning'>You now require a nearby node or core to place factory and resource infections.</span>")
-	else
-		to_chat(src, "<span class='warning'>You no longer require a nearby node or core to place factory and resource infections.</span>")
-
-/*
 	Attempts to create another spore for the infection commander
 */
 /mob/camera/commander/proc/create_spore(poll_ghosts = TRUE)
@@ -168,9 +155,9 @@ GLOBAL_LIST_EMPTY(infection_gravity_spawns)
 		if(poll_ghosts)
 			var/mob/dead/observer/C = pick(candidates)
 			S.key = C.key
-		if(infection_core)
-			S.forceMove(get_turf(infection_core))
-		else
+		var/turf/T = get_turf(src)
+		S.create_respawn_mob(T)
+		if(!infection_core)
 			// roundstart boys get gifts
 			S.add_points(1000)
 			to_chat(S, "<b>It costs no points to revert your form before the meteor has landed, explore your evolutions while you have time.</b>")
@@ -240,23 +227,6 @@ GLOBAL_LIST_EMPTY(infection_gravity_spawns)
 		if(isturf(IS.loc) && get_dist(IS, T) <= 35)
 			IS.LoseTarget()
 			IS.Goto(pick(surrounding_turfs), IS.move_to_delay)
-
-/*
-	Uses all of the infection spores to say a message through them
-*/
-/mob/camera/commander/verb/infection_broadcast()
-	set category = "Infection"
-	set name = "Infection Broadcast"
-	set desc = "Speak with your infection slimes as your mouthpieces."
-	var/speak_text = input(src, "What would you like to say with your minions?", "Infection Broadcast", null) as text
-	if(!speak_text)
-		return
-	else
-		to_chat(src, "You broadcast with your minions, <B>[speak_text]</B>")
-	for(var/INF in infection_mobs)
-		var/mob/living/simple_animal/hostile/infection/IN = INF
-		if(IN.stat == CONSCIOUS)
-			IN.say(speak_text)
 
 /*
 	Help guide for playing the infection commander

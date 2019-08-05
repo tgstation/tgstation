@@ -75,14 +75,6 @@
 	action_type = /datum/action/cooldown/infection/creator/barrier
 	cost = 1
 
-/datum/infection_upgrade/overmind/freecam
-	name = "Full Vision"
-	description = "Allows you to see the entire station with no restrictions on the movement of your camera."
-	cost = 1
-
-/datum/infection_upgrade/overmind/freecam/upgrade_effect(mob/camera/commander/parentcommander)
-	parentcommander.freecam = TRUE
-
 /datum/infection_upgrade/overmind/medical
 	name = "Medical Diagnostics System"
 	description = "Allows you to see the health of allies and enemies alike, giving you even greater strategical planning power with your forces."

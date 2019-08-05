@@ -15,6 +15,7 @@
 	CanAtmosPass = ATMOS_PASS_PROC
 	max_integrity = 30
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
+	resistance_flags = ACID_PROOF
 	// How many points the commander gets back when it removes an infection of that type. If less than 0, structure cannot be removed.
 	var/point_return = 0
 	// how much health this blob regens when pulsed
@@ -47,6 +48,11 @@
 	var/upgrade_subtype = null
 	// menu handler for the upgrade menus
 	var/datum/infection_menu/menu_handler
+	// types of objects to eat
+	var/list/types_to_eat = list(/obj/singularity,
+								 /obj/singularity/energy_ball,
+								 /obj/machinery/power/supermatter_crystal,
+								 /obj/machinery/gravity_generator)
 
 /obj/structure/infection/Initialize(mapload, owner_overmind)
 	. = ..()
@@ -64,7 +70,6 @@
 	AddComponent(/datum/component/no_beacon_crossing)
 	generate_upgrades()
 	menu_handler = new /datum/infection_menu(src)
-	eat_nearby_supermatter()
 
 /*
 	Generates the upgrades for the infection from the types
@@ -97,19 +102,11 @@
 /obj/structure/infection/proc/creation_action()
 	return
 
-/obj/structure/infection/relaymove(mob/user)
-	if(istype(user, /mob/living/simple_animal/hostile/infection/infectionspore/sentient))
-		var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/I = user
-		I.cycle_node()
-	return
-
 /obj/structure/infection/Destroy()
 	if(atmosblock)
 		atmosblock = FALSE
 		air_update_turf(1)
 	GLOB.infections -= src //it's no longer in the all infections list either
-	for(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/I in contents)
-		I.cycle_node()
 	var/turf/T = get_turf(src)
 	var/list/stored_contents = list()
 	if(T)
@@ -122,37 +119,26 @@
 	return
 
 /obj/structure/infection/singularity_act()
-	eat_nearby_singularity()
 	return
 
 /obj/structure/infection/tesla_act(power)
-	eat_nearby_singularity()
 	. = ..()
 	return
 
 /*
-	Attempts to eat nearby singularities when acted on by them.
-	This is to prevent singularities making it essentially impossible to destroy the infection due to some person who thought it would work
+	Attempts to eat nearby problem / important objects
 */
-/obj/structure/infection/proc/eat_nearby_singularity()
-	var/list/contents_adjacent = urange(1, src)
-	var/obj/singularity/to_eat = locate(/obj/singularity) in contents_adjacent
-	if(to_eat)
-		for(var/mob/M in range(10,src))
-			if(M.client)
-				flash_color(M.client, "#FB6B00", 1)
-				shake_camera(M, 4, 3)
-		playsound(src.loc, pick('sound/effects/curseattack.ogg', 'sound/effects/curse1.ogg', 'sound/effects/curse2.ogg', 'sound/effects/curse3.ogg', 'sound/effects/curse4.ogg',), 300, 1, pressure_affected = FALSE)
-		visible_message("<span class='danger'[to_eat] is absorbed by the infection!</span>")
-		qdel(to_eat)
 
-/*
-	Attempts to eat nearby supermatter crystals
-	This is to prevent supermatter crystals from just literally sitting in the infection until they explode
-*/
-/obj/structure/infection/proc/eat_nearby_supermatter()
+/obj/structure/infection/proc/eat_nearby()
 	var/list/contents_adjacent = urange(1, src)
-	var/obj/machinery/power/supermatter_crystal/to_eat = locate(/obj/machinery/power/supermatter_crystal) in contents_adjacent
+	var/to_eat = null
+	for(var/type in types_to_eat)
+		for(var/thing in contents_adjacent)
+			if(istype(thing, type))
+				to_eat = thing
+				break
+		if(to_eat)
+			break
 	if(to_eat)
 		for(var/mob/M in range(10,src))
 			if(M.client)
@@ -261,6 +247,7 @@
 				INF.loc.blob_act(INF)
 			INF.air_update_turf(1)
 			INF.Be_Pulsed()
+			INF.ConsumeTile()
 			previous = INF
 
 /*
@@ -296,10 +283,14 @@
 	Consumes the contents of the tile this infection is on
 */
 /obj/structure/infection/proc/ConsumeTile()
-	for(var/atom/A in loc)
-		if(isliving(A) || ismecha(A))
+	eat_nearby()
+	for(var/obj/O in loc)
+		if(ismecha(O) || O == src)
 			continue
-		A.blob_act(src)
+		if(O.resistance_flags & ACID_PROOF)
+			O.blob_act(src)
+		else
+			O.acid_act(80, 80)
 	if(iswallturf(loc))
 		loc.blob_act(src) //don't ask how a wall got on top of the core, just eat it
 
@@ -337,7 +328,6 @@
 			T.lighting_build_overlay()
 		T = T.ChangeTurf(/turf/open/floor/plating)
 		T.air_update_turf(1)
-		eat_nearby_supermatter()
 		return I
 	else
 		T.blob_act(src)
@@ -451,7 +441,6 @@
 	obj_integrity = 25
 	max_integrity = 25
 	health_regen = 3
-	brute_resist = 0.25
 	// time in deciseconds for overlay on entering and exiting to fade in and fade out
 	var/overlay_fade_time = 40
 
@@ -468,7 +457,6 @@
 	if(ismob(mover))
 		var/mob/M = mover
 		M.add_movespeed_modifier(MOVESPEED_ID_INFECTION_STRUCTURE, update=TRUE, priority=100, multiplicative_slowdown=3)
-		M.overlay_fullscreen("infectionvision", /obj/screen/fullscreen/curse, 1)
 
 /obj/structure/infection/normal/Uncrossed(atom/movable/mover)
 	. = ..()
@@ -476,7 +464,6 @@
 		if(ismob(mover))
 			var/mob/M = mover
 			M.remove_movespeed_modifier(MOVESPEED_ID_INFECTION_STRUCTURE, update = TRUE)
-			M.clear_fullscreen("infectionvision", overlay_fade_time)
 
 /obj/structure/infection/normal/update_icon()
 	..()

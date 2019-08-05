@@ -11,10 +11,11 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 	// ok time to go old event mobs you had your fun
 	for(var/mob/living/oldmob in GLOB.doom_event_mobs)
 		GLOB.doom_event_mobs -= oldmob
-		oldmob.visible_message("<span class='notice'>[oldmob] fades away as all of it's energy leaves it's body...</span>",
-							   "<span class='notice'>Your consciousness fades away as the last remnants of the energy that brought you back into this world dissipate...</span>")
-		oldmob.health = 0 // need to snowflake this for mobs like megafauna that refuse to die
-		oldmob.death()
+		if(ismob(oldmob) && oldmob.stat != DEAD)
+			oldmob.visible_message("<span class='notice'>[oldmob] fades away as all of it's energy leaves it's body...</span>",
+								   "<span class='notice'>Your consciousness fades away as the last remnants of the energy that brought you back into this world dissipate...</span>")
+			oldmob.health = 0 // need to snowflake this for mobs like megafauna that refuse to die
+			oldmob.death()
 	var/doom_delay = 300 // 30 seconds
 	INVOKE_ASYNC(src, .proc/doom_smash_sounds, doom_delay)
 	sleep(doom_delay - 90)
@@ -72,8 +73,7 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 					continue
 				break
 			return FALSE
-		boss_spore.forceMove(GLOB.infection_core)
-		boss_spore.can_respawn = TRUE
+		boss_spore.death()
 		var/mob/living/simple_animal/boss = new boss_type(start)
 		boss.add_atom_colour(C.color, FIXED_COLOUR_PRIORITY)
 		boss.AddComponent(/datum/component/mindcontroller, boss_spore, list(ROLE_INFECTION))
@@ -84,8 +84,7 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 	// everyone else gets minions
 	if(minion_types.len)
 		for(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/spore in (C.infection_mobs - boss_spore))
-			spore.forceMove(GLOB.infection_core)
-			spore.can_respawn = TRUE
+			spore.death()
 			var/minion_type = pickweight(minion_types)
 			var/mob/living/simple_animal/minion = new minion_type(start)
 			minion.add_atom_colour(C.color, FIXED_COLOUR_PRIORITY)

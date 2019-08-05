@@ -31574,6 +31574,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/effect/landmark/beacon_start/south,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "byn" = (
@@ -45145,20 +45146,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/department/security)
-"dhq" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/landmark/beacon_start/south,
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/fitness)
 "diw" = (
 /obj/item/radio/intercom{
 	pixel_y = -29
@@ -45247,20 +45234,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
-"dAc" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 9
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
-/obj/structure/cable,
-/obj/effect/landmark/beacon_start/south,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "dCc" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -45409,11 +45382,6 @@
 /obj/effect/landmark/start/station_engineer,
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
-"elv" = (
-/obj/structure/cable,
-/obj/effect/landmark/beacon_start/south,
-/turf/open/floor/plating,
-/area/maintenance/starboard)
 "elZ" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -45562,20 +45530,6 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
-"eAM" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/obj/structure/cable,
-/obj/effect/landmark/beacon_start/south,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "eBl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
@@ -47225,6 +47179,10 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engine_room/external)
+"kNM" = (
+/obj/effect/landmark/infection_gravity_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
 "kTN" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -48667,7 +48625,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/effect/landmark/beacon_start/south,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "qoF" = (
@@ -48723,6 +48680,11 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
+"qqz" = (
+/obj/structure/cable,
+/obj/effect/landmark/beacon_start/south,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "qrk" = (
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
 /obj/effect/turf_decal/tile/green,
@@ -48745,6 +48707,20 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/lab)
+"qtR" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/structure/cable,
+/obj/effect/landmark/beacon_start/south,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "qxz" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/item/twohanded/required/kirbyplants/random,
@@ -48783,20 +48759,6 @@
 	},
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
-"qyM" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 5
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/obj/structure/cable,
-/obj/effect/landmark/beacon_start/south,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "qBm" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil{
@@ -50327,6 +50289,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"vTN" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/landmark/beacon_start/south,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/lobby)
 "vUd" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	name = "Mix Bypass"
@@ -50492,13 +50467,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
-"wuK" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
-	dir = 8
-	},
-/obj/effect/landmark/infection_gravity_spawn,
-/turf/open/floor/plasteel,
-/area/hallway/secondary/exit/departure_lounge)
 "wvW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -77306,7 +77274,7 @@ aet
 asd
 asT
 buW
-dhq
+asT
 blk
 bri
 bBS
@@ -77392,10 +77360,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
 lOI
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -79146,7 +79114,7 @@ aPC
 aXq
 bgG
 aHa
-aJY
+vTN
 aGu
 aXU
 bpk
@@ -79164,7 +79132,7 @@ bTv
 sjP
 sjP
 sjP
-sjP
+qqz
 aUi
 aoh
 aoh
@@ -80670,8 +80638,8 @@ aDL
 hvP
 bBJ
 qYP
-qYP
 vgF
+qYP
 qYP
 ueN
 qYP
@@ -80946,7 +80914,7 @@ awn
 bRD
 bGM
 aXS
-qyM
+iMs
 aIn
 axM
 aTK
@@ -82194,7 +82162,7 @@ asb
 acf
 acf
 awO
-abP
+qtR
 bsI
 axk
 bxA
@@ -82451,7 +82419,7 @@ asP
 bli
 bfC
 abP
-dAc
+hYI
 axh
 bxA
 bxC
@@ -83465,7 +83433,7 @@ avO
 avi
 byc
 awe
-wuK
+aLY
 awe
 bwi
 avi
@@ -83721,7 +83689,7 @@ aaa
 aaa
 avB
 aLh
-awe
+kNM
 awe
 awe
 bwj
@@ -85787,7 +85755,7 @@ bym
 bxY
 byp
 qYP
-vgF
+qYP
 bAK
 awV
 aaT
@@ -92731,7 +92699,7 @@ afk
 aaZ
 aSl
 aSd
-eAM
+bsO
 bsw
 axe
 aMw
@@ -94310,7 +94278,7 @@ awO
 btG
 btm
 qYP
-vgF
+qYP
 bua
 aOn
 aWg
@@ -94549,7 +94517,7 @@ bHh
 qYP
 qYP
 qYP
-vgF
+qYP
 aAA
 cew
 btq
@@ -95810,7 +95778,7 @@ bAD
 bwD
 bSl
 bSm
-elv
+bAD
 bAD
 aNV
 asj

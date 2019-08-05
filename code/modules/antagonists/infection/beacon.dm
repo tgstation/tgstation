@@ -37,6 +37,8 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 	desc = "It sustains the barriers."
 	density = TRUE
 	anchored = TRUE
+	move_force = INFINITY
+	move_resist = INFINITY
 	layer = FLY_LAYER
 	CanAtmosPass = ATMOS_PASS_PROC
 	max_integrity = 1000

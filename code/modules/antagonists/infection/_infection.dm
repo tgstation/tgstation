@@ -1,5 +1,5 @@
 #define SAME_INFECTION_TYPE(check, typetocheck) (check.type == typetocheck || check.building == typetocheck)
-#define ISRESPAWNING(MOB) (istype(MOB.loc, /obj/structure/infection) || istype(MOB.loc, /mob/camera/commander))
+#define ISRESPAWNING(MOB) (istype(MOB.loc, /mob/camera/infectionslime))
 
 /*
 	The actual infection antagonist

@@ -19,6 +19,8 @@
 	var/list/crystal_colors = list("#3333aa" = 20, "#33aa33" = 15, "#aa3333" = 15, "#ffffff" = 8, "#822282" = 4, "#444444" = 1)
 	// the last time something tried to mine this to avoid message spam
 	var/last_act = 0
+	// multiplicative delay to mining speed on this type
+	var/mining_time_mod = 40
 
 /obj/structure/infection/shield/Initialize(mapload)
 	canSmoothWith = typesof(/obj/structure/infection/shield)
@@ -42,7 +44,7 @@
 		if (!isturf(T))
 			return
 
-		if(last_act + (40 * I.toolspeed) > world.time)//prevents message spam
+		if(last_act + (mining_time_mod * I.toolspeed) > world.time)//prevents message spam
 			return
 		last_act = world.time
 		to_chat(user, "<span class='notice'>You start picking...</span>")
@@ -81,7 +83,10 @@
 	icon_state = "reflective"
 	smooth = SMOOTH_FALSE
 	flags_1 = CHECK_RICOCHET_1
-	max_integrity = 200
+	max_integrity = 150
+	brute_resist = 1
+	fire_resist = 0.125
+	mining_time_mod = 20
 
 /obj/structure/infection/shield/reflective/Initialize(mapload)
 	. = ..()
@@ -89,6 +94,8 @@
 	vis_contents.Cut()
 
 /obj/structure/infection/shield/reflective/handle_ricochet(obj/item/projectile/P)
+	if(!istype(P, /obj/item/projectile/beam))
+		return FALSE
 	var/turf/p_turf = get_turf(P)
 	var/face_direction = get_dir(src, p_turf)
 	var/face_angle = dir2angle(face_direction)
@@ -98,10 +105,6 @@
 	if(!(P.reflectable & REFLECT_FAKEPROJECTILE))
 		visible_message("<span class='warning'>[P] reflects off [src]!</span>")
 	return TRUE
-
-/obj/structure/infection/shield/reflective/core
-	name = "core reflective infection"
-	point_return = 0
 
 /*
 	A barrier that prevents entry except from infectious creatures and things being pulled by them
@@ -113,13 +116,6 @@
 	icon = 'icons/mob/infection/infection.dmi'
 	icon_state = "door"
 	smooth = SMOOTH_FALSE
-	max_integrity = 150
-	brute_resist = 0.5
-	fire_resist = 0.25
-	explosion_block = 3
-	point_return = 0
-	build_time = 100
-	atmosblock = TRUE
 
 /obj/structure/infection/shield/barrier/Initialize(mapload)
 	. = ..()

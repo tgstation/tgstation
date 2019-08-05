@@ -12,7 +12,7 @@
 	max_integrity = 150
 	point_return = 10
 	upgrade_subtype = /datum/infection_upgrade/beamturret
-	scan_range = 8 // range to search for targets
+	scan_range = 4 // range to search for targets
 	projectile_type = /obj/item/projectile/bullet/infection/beam // the bullet fired for this turret
 	projectile_sound = null
 	hit_sound = 'sound/effects/hitscan_zap.ogg'

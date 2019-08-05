@@ -16,7 +16,7 @@
 	// the amount of times the turret will fire every time it finds a target
 	var/frequency = 1
 	// the range that this turret will search to find targets
-	var/scan_range = 7
+	var/scan_range = 8
 	// the projectile shot from this turret
 	var/projectile_type = /obj/item/projectile/bullet/infection
 	// the projectiles sound when it is fired
@@ -165,7 +165,6 @@
 	desc = "A turret for the core of the infection. It holds destructive capabilities that many might find unbeatable."
 	point_return = -1
 	upgrade_subtype = null
-	scan_range = 8
 
 /obj/structure/infection/turret/core/Initialize()
 	. = ..()

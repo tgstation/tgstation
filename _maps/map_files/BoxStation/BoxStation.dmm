@@ -7580,11 +7580,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"asi" = (
-/obj/structure/cable,
-/obj/effect/landmark/beacon_start/east,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "ask" = (
 /obj/structure/dresser,
 /turf/open/floor/carpet,
@@ -15448,6 +15443,7 @@
 /area/hallway/primary/port)
 "aNq" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aNr" = (
@@ -15491,7 +15487,6 @@
 /obj/effect/turf_decal/plaque{
 	icon_state = "L8"
 	},
-/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aNy" = (
@@ -18278,6 +18273,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plasteel,
 /area/bridge)
 "aVl" = (
@@ -30165,7 +30161,6 @@
 /area/hallway/primary/central)
 "bAf" = (
 /obj/machinery/holopad,
-/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bAg" = (
@@ -40636,7 +40631,6 @@
 	dir = 9
 	},
 /obj/structure/cable,
-/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "ccO" = (
@@ -49910,6 +49904,13 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/science/nanite)
+"ife" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/landmark/beacon_start/east,
+/turf/open/floor/plasteel,
+/area/hallway/primary/starboard)
 "ifv" = (
 /obj/structure/table,
 /obj/item/clipboard,
@@ -50408,10 +50409,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
-"lmI" = (
-/obj/effect/landmark/beacon_start/east,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "lqJ" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lantern,
@@ -50470,14 +50467,6 @@
 /obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"lGl" = (
-/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/effect/landmark/beacon_start/east,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "lHR" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -50668,10 +50657,6 @@
 /obj/structure/girder,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
-"nrk" = (
-/obj/effect/landmark/infection_gravity_spawn,
-/turf/open/floor/plasteel,
-/area/hallway/secondary/entry)
 "nro" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4
@@ -51117,6 +51102,14 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/engine_smes)
+"pzR" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/landmark/infection_gravity_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "pDu" = (
 /obj/machinery/computer/nanite_cloud_controller,
 /obj/effect/turf_decal/bot,
@@ -51298,11 +51291,6 @@
 "qyN" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
-/area/hallway/primary/central)
-"qCp" = (
-/obj/effect/landmark/event_spawn,
-/obj/effect/landmark/beacon_start/east,
-/turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "qGG" = (
 /obj/effect/turf_decal/stripes/line{
@@ -51593,13 +51581,6 @@
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
-"sTF" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/landmark/beacon_start/east,
-/turf/open/floor/plating,
-/area/maintenance/port)
 "sXy" = (
 /obj/machinery/door/airlock/external{
 	name = "Security External Airlock";
@@ -63114,7 +63095,7 @@ aaa
 awW
 aOh
 ayl
-nrk
+ayl
 aRY
 awW
 aaa
@@ -64924,7 +64905,7 @@ aym
 ayl
 aIK
 ayl
-beM
+pzR
 aAC
 aaf
 aoV
@@ -67720,7 +67701,7 @@ aaf
 aaa
 ali
 aoX
-lGl
+arI
 asc
 atr
 atN
@@ -67752,7 +67733,7 @@ czK
 aPz
 aPz
 bdt
-sTF
+aWv
 aTu
 bjg
 bkD
@@ -77258,7 +77239,7 @@ aJq
 aJq
 aJq
 aJq
-qCp
+bHt
 aJq
 aLY
 beX
@@ -85482,7 +85463,7 @@ aJq
 aLY
 aJq
 bco
-lmI
+aJq
 beo
 aJq
 aJq
@@ -88052,7 +88033,7 @@ aQc
 bad
 bby
 aYV
-aYV
+sgt
 bet
 bfG
 bhe
@@ -93678,7 +93659,7 @@ ane
 aqw
 arr
 arr
-asi
+arr
 arr
 apC
 awG
@@ -93706,7 +93687,7 @@ aYR
 ban
 aYV
 aYV
-sgt
+aYV
 bez
 bfP
 bfS
@@ -99617,7 +99598,7 @@ aZf
 aRS
 bbF
 aYV
-aXq
+ife
 aYV
 bfX
 bhD
@@ -102143,7 +102124,7 @@ aaa
 aaa
 aaa
 aaa
-seJ
+aaa
 aaa
 aaa
 aaa
@@ -104473,7 +104454,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+seJ
 aaa
 aaa
 aaa

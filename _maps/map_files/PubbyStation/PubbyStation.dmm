@@ -9394,7 +9394,6 @@
 	codes_txt = "patrol;next_patrol=BrigP";
 	location = "BrigS1"
 	},
-/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "ayO" = (
@@ -12156,7 +12155,6 @@
 	dir = 6
 	},
 /obj/structure/cable,
-/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/restrooms)
 "aFI" = (
@@ -13299,7 +13297,6 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aJc" = (
@@ -21349,7 +21346,6 @@
 "bcZ" = (
 /obj/machinery/light,
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/landmark/infection_gravity_spawn,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "bda" = (
@@ -23163,11 +23159,11 @@
 /obj/effect/turf_decal/plaque{
 	icon_state = "L7"
 	},
-/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bhP" = (
 /obj/machinery/holopad,
+/obj/effect/landmark/beacon_start/east,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bhQ" = (
@@ -48943,6 +48939,11 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/engine/engineering)
+"daz" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/beacon_start/east,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "daY" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
@@ -49164,14 +49165,6 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/department/engine)
-"dIo" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/effect/landmark/beacon_start/east,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "dJm" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Research Pit";
@@ -51455,10 +51448,6 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
-"jkp" = (
-/obj/effect/landmark/beacon_start/east,
-/turf/open/floor/plating,
-/area/maintenance/department/engine)
 "jlb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -51664,18 +51653,23 @@
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
-"jMQ" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 1
-	},
-/obj/effect/landmark/beacon_start/east,
-/turf/open/floor/plasteel/white,
-/area/science/explab)
 "jMS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/spawner/xmastree,
 /turf/open/floor/carpet,
 /area/library)
+"jNd" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/machinery/light,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/landmark/infection_gravity_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
 "jOe" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -51928,10 +51922,6 @@
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
-"kvf" = (
-/obj/effect/landmark/beacon_start/east,
-/turf/open/floor/plating,
-/area/maintenance/department/cargo)
 "kvj" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -55855,6 +55845,16 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space/nearstation)
+"uar" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/beacon_start/east,
+/turf/open/floor/plasteel,
+/area/science/explab)
 "uaC" = (
 /obj/structure/chair/comfy/black{
 	dir = 8
@@ -76941,7 +76941,7 @@ aRE
 aSw
 aTL
 aML
-gmO
+jNd
 aQt
 gpC
 ppQ
@@ -81621,7 +81621,7 @@ bVu
 mzU
 rzp
 kpK
-jkp
+bDi
 bZt
 bva
 oAW
@@ -88005,7 +88005,7 @@ bbl
 aRN
 bgo
 bhd
-aBI
+daz
 aHG
 bjf
 cpX
@@ -90103,7 +90103,7 @@ bWB
 mCe
 bYk
 bYM
-dIo
+mMP
 xsB
 xsB
 xsB
@@ -97781,7 +97781,7 @@ bnY
 bpg
 bqr
 bqs
-jMQ
+bti
 wBb
 bvT
 bxC
@@ -98809,7 +98809,7 @@ bky
 bky
 bqt
 bqs
-btl
+uar
 buC
 bvW
 bxG
@@ -102136,7 +102136,7 @@ aEl
 aEj
 aEj
 aTx
-kvf
+aFi
 aFi
 aEj
 gfi
@@ -107266,7 +107266,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+ouS
 aaa
 aaa
 aaa
@@ -112944,7 +112944,7 @@ aaa
 aaa
 aaa
 aaa
-ouS
+aaa
 aaa
 aaa
 aaa

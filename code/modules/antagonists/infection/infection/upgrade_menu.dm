@@ -7,6 +7,8 @@
 	var/name = "Evolution Menu"
 	// The actual thing that we are trying to upgrade
 	var/atom/upgrading
+	// stores the ui we have open
+	var/datum/tgui/ui
 
 /datum/infection_menu/New(upgrading)
 	src.upgrading = upgrading
@@ -68,6 +70,7 @@
 	if(!ui)
 		ui = new(user, src, ui_key, "infection_menu", name, 900, 480, master_ui, state)
 		ui.open()
+	src.ui = ui
 
 /datum/infection_menu/ui_data(mob/user)
 	var/list/data = list()

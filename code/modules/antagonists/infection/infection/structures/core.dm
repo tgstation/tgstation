@@ -36,8 +36,8 @@
 		return INITIALIZE_HINT_QDEL
 	if(overmind)
 		update_icon()
-		for(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/S in overmind.contents)
-			S.forceMove(get_turf(src))
+		for(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/S in overmind.infection_mobs)
+			S.respawnmob.forceMove(get_turf(src))
 	point_rate = new_rate
 	addtimer(CALLBACK(src, .proc/generate_announcement), 40)
 	SSevents.frequency_lower = DOOM_CLOCK_EVENT_DELAY

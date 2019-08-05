@@ -44,7 +44,7 @@ GLOBAL_VAR(infection_commander)
 	// Are we placing the core of the infection? Used to prevent premature end of gamemode
 	var/placing = FALSE
 	// If this commander can move his camera wherever he wants with no limitations
-	var/freecam = FALSE
+	var/freecam = TRUE
 	// Points generated every life tick from the core
 	var/base_point_rate = 2
 	// The amount of time it takes for the core to be placed after this mob has been spawned

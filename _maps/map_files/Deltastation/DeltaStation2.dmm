@@ -5341,7 +5341,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/effect/landmark/infection_gravity_spawn,
 /turf/open/floor/carpet,
 /area/hallway/secondary/entry)
 "apn" = (
@@ -9972,6 +9971,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/effect/landmark/beacon_start/south,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "ayj" = (
@@ -10601,7 +10601,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/effect/landmark/beacon_start/south,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "azk" = (
@@ -34546,7 +34545,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/effect/landmark/beacon_start/south,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bqe" = (
@@ -54093,7 +54091,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/effect/landmark/beacon_start/south,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bWN" = (
@@ -54360,7 +54357,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/effect/landmark/beacon_start/south,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bXl" = (
@@ -67292,6 +67288,7 @@
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
+/obj/effect/landmark/beacon_start/south,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
 "cvw" = (
@@ -75559,7 +75556,6 @@
 	icon_state = "L8"
 	},
 /obj/structure/cable,
-/obj/effect/landmark/beacon_start/south,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "cKA" = (
@@ -114108,10 +114104,6 @@
 /obj/machinery/air_sensor/atmos/toxins_mixing_tank,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
-"eAZ" = (
-/obj/effect/landmark/beacon_start/south,
-/turf/open/floor/plasteel/grimy,
-/area/library/abandoned)
 "eCM" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -114810,22 +114802,6 @@
 	},
 /turf/open/floor/engine,
 /area/science/explab)
-"jAM" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/effect/landmark/beacon_start/south,
-/turf/open/floor/plasteel,
-/area/science/mixing)
 "jDu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -115370,6 +115346,20 @@
 /obj/effect/landmark/xeno_spawn,
 /turf/open/floor/engine,
 /area/science/explab)
+"nnj" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/landmark/infection_gravity_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "npR" = (
 /obj/structure/table,
 /obj/item/storage/secure/safe{
@@ -116296,21 +116286,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
-"tJi" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/effect/landmark/beacon_start/south,
-/turf/open/floor/plasteel,
-/area/medical/medbay/central)
 "tMk" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -116334,21 +116309,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
-"tWy" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/effect/landmark/beacon_start/south,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "ukr" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -116595,6 +116555,20 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"vVp" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/landmark/beacon_start/south,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
 "waK" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -116751,21 +116725,6 @@
 "xdD" = (
 /turf/closed/wall/r_wall,
 /area/science/mixing/chamber)
-"xlX" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/effect/landmark/beacon_start/south,
-/turf/open/floor/plasteel,
-/area/hallway/secondary/exit/departure_lounge)
 "xmt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -146385,7 +146344,7 @@ dPB
 dSs
 dTo
 dPB
-eAZ
+dPB
 dPx
 dPx
 dXr
@@ -148678,7 +148637,7 @@ dtk
 duG
 dwi
 dxR
-jAM
+dzv
 dAy
 dCc
 dzv
@@ -151044,7 +151003,7 @@ aaa
 aaa
 aaa
 aaa
-sPU
+aaa
 aaa
 aaa
 aaa
@@ -151213,7 +151172,7 @@ bus
 csm
 ctP
 bqU
-tWy
+bqU
 bqU
 bqY
 bqU
@@ -153354,7 +153313,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+sPU
 aaa
 aaa
 aaa
@@ -153427,7 +153386,7 @@ abs
 abF
 abP
 acb
-aco
+nnj
 aco
 aco
 aco
@@ -155123,7 +155082,7 @@ dNL
 dNL
 dTG
 dUy
-xlX
+dUy
 dVZ
 dUx
 dXN
@@ -155869,12 +155828,12 @@ dlR
 cPk
 cPk
 dqT
-cPk
+fyi
 cXD
 cPk
 cUp
 dlR
-fyi
+cPk
 cPk
 dCw
 dCw
@@ -155894,7 +155853,7 @@ dRV
 dSR
 dTF
 dUx
-dUx
+vVp
 dWe
 dWc
 dXL
@@ -160465,7 +160424,7 @@ bus
 bFE
 bGN
 bqU
-tWy
+bqU
 bwZ
 bqU
 bqU
@@ -163070,7 +163029,7 @@ dbs
 dvx
 dxg
 diy
-tJi
+dbs
 dde
 dkz
 diy
