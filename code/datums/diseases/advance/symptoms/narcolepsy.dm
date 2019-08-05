@@ -18,20 +18,20 @@ Bonus
 	stealth = -1
 	resistance = -2
 	stage_speed = -3
-	transmittable = -4
+	transmittable = 0
 	level = 6
 	symptom_delay_min = 25
 	symptom_delay_max = 70
 	severity = 4
-	var/stamina = FALSE
-	threshold_desc = "<b>Transmission 7:</b> Also relaxes the muscles, weakening and slowing the host.<br>\
+	var/yawning = FALSE
+	threshold_desc = "<b>Transmission 7:</b> Causes the host to yawn, spreading the virus in a manner similar to that of a sneeze.<br>\
 					  <b>Resistance 10:</b> Causes narcolepsy more often, increasing the chance of the host falling asleep."
 
 /datum/symptom/narcolepsy/Start(datum/disease/advance/A)
 	if(!..())
 		return
-	if(A.properties["transmittable"] >= 7) //stamina damage
-		stamina = TRUE
+	if(A.properties["transmittable"] >= 7) //yawning (mostly just some copy+pasted code from sneezing, with a few tweaks)
+		yawning = TRUE
 	if(A.properties["resistance"] >= 10) //act more often
 		symptom_delay_min = 20
 		symptom_delay_max = 45
@@ -53,11 +53,15 @@ Bonus
 			if(prob(50))
 				to_chat(M, "<span class='warning'>You nod off for a moment.</span>")
 			M.drowsyness += 10
-			if(stamina)
-				M.adjustStaminaLoss(20)
+			if(yawning)
+				M.emote("sneeze")
+				if(M.CanSpreadAirborneDisease())
+					A.spread(4)
 		if(5)
 			if(prob(50))
 				to_chat(M, "<span class='warning'>[pick("So tired...","You feel very sleepy.","You have a hard time keeping your eyes open.","You try to stay awake.")]</span>")
 			M.drowsyness = min(M.drowsyness + 40, 200)
-			if(stamina)
-				M.adjustStaminaLoss(30)
+			if(yawning)
+				M.emote("sneeze")
+				if(M.CanSpreadAirborneDisease())
+					A.spread(4)
