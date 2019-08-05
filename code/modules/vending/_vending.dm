@@ -153,9 +153,9 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/custom = FALSE
 	/// where the money is sent
 	var/datum/bank_account/private_a
-
+	/// how many items have been inserted in a custom vendor
 	var/loaded_items = 0
-
+	/// max number of items that the custom vendor can hold
 	var/max_loaded_items = 20
 
 /obj/item/circuitboard
@@ -398,6 +398,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(canLoadItem(I))
 				loadingAttempt(I,user)
 				updateUsrDialog()
+			return
 
 	if(refill_canister && istype(I, refill_canister))
 		if (!panel_open)
@@ -479,8 +480,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(ishuman(user))
 		H = user
 		C = H.get_idcard(TRUE)
-
-	var/price = 69
+	///temp var to set the shown price
+	var/price = 1
 
 	if(!C)
 		dat += "<font color = 'red'><h3>No ID Card detected!</h3></font>"
@@ -589,7 +590,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 						say("Thank you for buying local and purchasing [O]!")
 						O.forceMove(drop_location())
 						break
-					loaded_items--
+				loaded_items--
 			vend_ready = 1
 			updateUsrDialog()
 			return
@@ -807,6 +808,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 	return
 
 /obj/machinery/vending/custom
+	name = "Custom Vendor"
+	icon_state = "robotics"
+	icon_deny = "robotics-deny"
 	payment_department = NO_FREEBIES
 	refill_canister = /obj/item/vending_refill/custom
 	custom = TRUE
