@@ -24,7 +24,7 @@ Bonus
 	symptom_delay_max = 70
 	severity = 4
 	var/yawning = FALSE
-	threshold_desc = "<b>Transmission 7:</b> Causes the host to yawn, spreading the virus in a manner similar to that of a sneeze.<br>\
+	threshold_desc = "<b>Transmission 7:</b> Causes the host to occasionally emit a yawn that spreads the virus in a manner similar to that of a sneeze.<br>\
 					  <b>Resistance 10:</b> Causes narcolepsy more often, increasing the chance of the host falling asleep."
 
 /datum/symptom/narcolepsy/Start(datum/disease/advance/A)
@@ -54,14 +54,14 @@ Bonus
 				to_chat(M, "<span class='warning'>You nod off for a moment.</span>")
 			M.drowsyness += 10
 			if(yawning)
-				M.emote("sneeze")
+				M.emote("yawn")
 				if(M.CanSpreadAirborneDisease())
-					A.spread(4)
+					A.spread(6)
 		if(5)
 			if(prob(50))
 				to_chat(M, "<span class='warning'>[pick("So tired...","You feel very sleepy.","You have a hard time keeping your eyes open.","You try to stay awake.")]</span>")
 			M.drowsyness = min(M.drowsyness + 40, 200)
 			if(yawning)
-				M.emote("sneeze")
+				M.emote("yawn")
 				if(M.CanSpreadAirborneDisease())
-					A.spread(4)
+					A.spread(6)
