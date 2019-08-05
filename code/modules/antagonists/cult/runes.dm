@@ -719,10 +719,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 		fail_invoke()
 		log_game("Summon Cultist rune failed - target died")
 		return
-	if(cultist_to_summon.pulledby || cultist_to_summon.buckled)
-		to_chat(user, "<span class='cult italic'>[cultist_to_summon] is being held in place!</span>")
+	if(cultist_to_summon.reagents.has_reagent(/datum/reagent/water/holywater))
+		to_chat(user, "<span class='cult italic'>The holy energy in [cultist_to_summon]'s body blocks the summon!</span>")
 		fail_invoke()
-		log_game("Summon Cultist rune failed - target restrained")
+		log_game("Summon Cultist rune failed - target contains holy water")
 		return
 	if(!iscultist(cultist_to_summon))
 		to_chat(user, "<span class='cult italic'>[cultist_to_summon] is not a follower of the Geometer!</span>")
