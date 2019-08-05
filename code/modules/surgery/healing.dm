@@ -86,7 +86,7 @@
 
 /datum/surgery/healing/brute/upgraded/femto
 	name = "Tend Wounds (Bruises, Exp.)"
-	replaced_by = /datum/surgery/healing/combo/upgraded/femto
+	replaced_by = null
 	requires_tech = TRUE
 	healing_step_type = /datum/surgery_step/heal/brute/upgraded/femto
 	desc = "A surgical procedure that provides experimental treatment for a patient's brute traumas."
@@ -121,7 +121,7 @@
 
 /datum/surgery/healing/burn/upgraded/femto
 	name = "Tend Wounds (Burn, Exp.)"
-	replaced_by = /datum/surgery/healing/combo/upgraded/femto
+	replaced_by = null
 	requires_tech = TRUE
 	healing_step_type = /datum/surgery_step/heal/burn/upgraded/femto
 	desc = "A surgical procedure that provides experimental treatment for a patient's burns."
