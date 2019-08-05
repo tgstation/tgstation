@@ -580,6 +580,7 @@
 	gem_flag = POWER_GEM
 	gauntlet_gem = "power"
 	color = "#c673c5"
+	spells = list(/obj/effect/proc_holder/spell/aoe_turf/repulse/power_gem)
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/power_gem
 	anti_magic_check = FALSE
