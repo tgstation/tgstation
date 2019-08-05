@@ -15,12 +15,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
 /area/solar/derelict_starboard)
-"ae" = (
-/obj/machinery/door/airlock/vault{
-	id_tag = "derelictvaultouter"
-	},
-/turf/open/floor/plasteel/airless,
-/area/ruin/space/derelict/bridge/ai_upload)
 "af" = (
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
@@ -2576,6 +2570,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary)
+"kx" = (
+/obj/machinery/door/airlock/vault/derelict,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
 "kB" = (
 /obj/structure/window/fulltile,
 /turf/open/floor/plating/airless,
@@ -3666,13 +3664,6 @@
 	icon_state = "floorscorched2"
 	},
 /area/space/nearstation)
-"Ke" = (
-/obj/machinery/power/terminal{
-	dir = 4
-	},
-/obj/item/stack/cable_coil/cut,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/bridge/ai_upload)
 "Kf" = (
 /obj/item/paper/fluff/ruins/thederelict/vaultraider,
 /obj/effect/decal/remains/human{
@@ -3776,12 +3767,6 @@
 "Tm" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary/port)
-"Ub" = (
-/obj/machinery/door/airlock/vault{
-	id_tag = derelictvaultinner
-	},
-/turf/open/floor/plasteel/airless,
-/area/ruin/space/derelict/bridge/ai_upload)
 "Uz" = (
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -3807,6 +3792,13 @@
 "YQ" = (
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
+"ZA" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/closed/wall/r_wall,
 /area/ruin/space/derelict/bridge/ai_upload)
 "ZB" = (
 /obj/structure/lattice,
@@ -9597,7 +9589,7 @@ bj
 bj
 ax
 ax
-bz
+bJ
 ax
 ax
 ax
@@ -9709,11 +9701,11 @@ bj
 bj
 bj
 ax
-ax
-bJ
-ax
-ax
-ax
+bz
+bz
+bO
+bz
+bP
 ax
 aa
 aa
@@ -9822,11 +9814,11 @@ bj
 bj
 bj
 ax
-bz
-bz
+bE
+bE
+bQ
+bY
 bO
-bz
-bP
 ax
 aa
 aa
@@ -9936,10 +9928,10 @@ bj
 bj
 ax
 bz
+bL
+bR
 bK
-bO
-bO
-bO
+cd
 ax
 aa
 aa
@@ -10049,10 +10041,10 @@ bj
 bj
 ax
 bz
-bE
-bK
-bY
-cd
+bM
+bL
+bF
+bO
 ax
 ci
 ci
@@ -10161,11 +10153,11 @@ bj
 bj
 bj
 ax
+bF
+Kf
+CZ
+bZ
 bE
-bE
-bQ
-bK
-bO
 ax
 aa
 aa
@@ -10274,11 +10266,11 @@ bj
 bj
 bj
 ax
+bG
+Ob
+bO
 bz
-bL
-bR
-bF
-bE
+bO
 ax
 aa
 aa
@@ -10387,10 +10379,10 @@ bj
 bj
 bj
 ax
-bz
-bM
-bL
+bO
 bE
+bO
+bO
 bO
 ax
 aa
@@ -10500,12 +10492,12 @@ bj
 bj
 bj
 ax
-bF
-Kf
-CZ
-bZ
+bK
+Lr
 xr
-ce
+YQ
+LX
+ZA
 ce
 ce
 ce
@@ -10613,11 +10605,11 @@ bj
 bj
 bj
 ax
-bG
-Ob
-bO
-bO
-Ke
+ax
+ax
+kx
+ce
+ax
 ax
 bj
 bj
@@ -10725,13 +10717,13 @@ bj
 bj
 bj
 bj
-ax
-bz
-Lr
-xr
-YQ
-LX
-ax
+bW
+bW
+bW
+kx
+Vt
+bW
+bW
 bj
 bj
 bj
@@ -10838,13 +10830,13 @@ bj
 bj
 bj
 bj
-ax
-ax
-ax
-ae
-ce
-ax
-ax
+bW
+Xu
+bz
+bz
+Ni
+Qj
+bW
 bj
 bj
 bj
@@ -10952,11 +10944,11 @@ bj
 bj
 bj
 bW
-bW
-bW
-Ub
-Vt
-bW
+my
+bz
+bz
+bz
+DX
 bW
 bj
 bj
@@ -11067,9 +11059,9 @@ bj
 bW
 Xu
 bz
+Xu
 bz
-Ni
-Qj
+vo
 bW
 bj
 bj
@@ -11178,11 +11170,11 @@ bj
 bj
 bj
 bW
-my
-bz
-bz
-bz
-DX
+bW
+bW
+bW
+bW
+bW
 bW
 bj
 bj
@@ -11290,13 +11282,13 @@ bj
 bj
 bj
 bj
-bW
-Xu
-bz
-Xu
-bz
-vo
-bW
+bj
+bj
+bj
+bj
+bj
+bj
+bj
 bj
 bj
 bj
@@ -11403,13 +11395,13 @@ bj
 bj
 bj
 bj
-bW
-bW
-bW
-bW
-bW
-bW
-bW
+bj
+bj
+bj
+bj
+bj
+bj
+bj
 bj
 bj
 bj
