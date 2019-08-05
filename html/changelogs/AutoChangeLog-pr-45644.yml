@@ -1,4 +1,0 @@
-author: "CameronWoof"
-delete-after: True
-changes: 
-  - bugfix: "Attaching a beaker with water in it to an IV drip no longer creates a fulltile overlay"
