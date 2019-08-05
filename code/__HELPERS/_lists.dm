@@ -382,6 +382,7 @@
 			i++
 	return i
 
+/// Returns datum/data/record
 /proc/find_record(field, value, list/L)
 	for(var/datum/data/record/R in L)
 		if(R.fields[field] == value)
