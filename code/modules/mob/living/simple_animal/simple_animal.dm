@@ -472,8 +472,28 @@
 			return
 	sync_lighting_plane_alpha()
 
-/mob/living/simple_animal/get_idcard(hand_first)
-	return access_card
+//Gets ID card. If hand_first is false the one in the id slot is prioritized, otherwise innate access goes first.
+/mob/living/simple_animal/get_idcard(hand_first = TRUE)
+	var/obj/item/card/id/id_card
+	
+	// Check hands if relevant
+	if (can_hold_items())
+		var/obj/item/held_item = get_active_held_item()
+		if(held_item) // Check active hand
+			id_card = held_item.GetID()
+		if(!id_card) // If there is no ID, check the other hand
+			held_item = get_inactive_held_item()
+			if(held_item)
+				id_card = held_item.GetID()
+		if(id_card && hand_first)
+			return id_card
+		else
+			. = id_card
+
+	// Check innate access
+	if(access_card)
+		return access_card
+
 
 /mob/living/simple_animal/can_hold_items()
 	return dextrous
