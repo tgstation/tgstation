@@ -1,0 +1,6 @@
+author: "MMMiracles"
+delete-after: True
+changes: 
+  - rscadd: "You can now draw on plasmaman helmets with a crayon to turn their frown upside-down."
+  - tweak: "Plasmaman visors are now transparent and given a side-mounted light."
+  - balance: "Plasmaman helmets no longer hide your identity when worn by themselves."
