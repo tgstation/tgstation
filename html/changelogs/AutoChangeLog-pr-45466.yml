@@ -1,4 +1,0 @@
-author: "SpacePrius"
-delete-after: True
-changes: 
-  - bugfix: "The sec vendor in the gulag now actually has ID and cost requirements."

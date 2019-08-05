@@ -1,5 +1,5 @@
 //computer that handle the points and teleports the prisoner
-/obj/machinery/computer/gulag_teleporter_computer
+/obj/machinery/computer/prisoner/gulag_teleporter_computer
 	name = "labor camp teleporter console"
 	desc = "Used to send criminals to the Labor Camp."
 	icon_screen = "explosive"
@@ -14,29 +14,18 @@
 
 	light_color = LIGHT_COLOR_RED
 
-/obj/machinery/computer/gulag_teleporter_computer/Initialize()
+/obj/machinery/computer/prisoner/gulag_teleporter_computer/Initialize()
 	. = ..()
 	scan_machinery()
 
-/obj/machinery/computer/gulag_teleporter_computer/Destroy()
-	if(inserted_prisoner_id)
-		inserted_prisoner_id.forceMove(get_turf(src))
-	return ..()
-
-/obj/machinery/computer/gulag_teleporter_computer/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/card/id))
-		id_insert_prisoner(user)
-	else
-		return ..()
-
-/obj/machinery/computer/gulag_teleporter_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+/obj/machinery/computer/prisoner/gulag_teleporter_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "gulag_console", name, 455, 440, master_ui, state)
 		ui.open()
 
-/obj/machinery/computer/gulag_teleporter_computer/ui_data(mob/user)
+/obj/machinery/computer/prisoner/gulag_teleporter_computer/ui_data(mob/user)
 	var/list/data = list()
 
 	var/list/prisoner_list = list()
@@ -45,7 +34,7 @@
 	if(teleporter && (teleporter.occupant && ishuman(teleporter.occupant)))
 		prisoner = teleporter.occupant
 		prisoner_list["name"] = prisoner.real_name
-		if(inserted_prisoner_id)
+		if(contained_id)
 			can_teleport = TRUE
 		if(!isnull(GLOB.data_core.general))
 			for(var/r in GLOB.data_core.security)
@@ -64,16 +53,17 @@
 	if(beacon)
 		data["beacon"] = beacon
 		data["beacon_location"] = "([beacon.x], [beacon.y], [beacon.z])"
-	if(inserted_prisoner_id)
-		data["id"] = inserted_prisoner_id
-		data["id_name"] = inserted_prisoner_id.registered_name
-		data["goal"] = inserted_prisoner_id.goal
+	if(contained_id)
+		data["id"] = contained_id
+		data["id_name"] = contained_id.registered_name
+		data["goal"] = contained_id.goal
 	data["can_teleport"] = can_teleport
 
 	return data
 
-/obj/machinery/computer/gulag_teleporter_computer/ui_act(action, list/params)
-	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+/obj/machinery/computer/prisoner/gulag_teleporter_computer/ui_act(action, list/params)
+	if(isliving(usr))
+		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 	if(..())
 		return
 	if(!allowed(usr))
@@ -85,19 +75,19 @@
 		if("scan_beacon")
 			beacon = findbeacon()
 		if("handle_id")
-			if(inserted_prisoner_id)
-				id_eject_prisoner(usr)
+			if(contained_id)
+				id_eject(usr)
 			else
-				id_insert_prisoner(usr)
+				id_insert(usr)
 		if("set_goal")
-			var/new_goal = input("Set the amount of points:", "Points", inserted_prisoner_id.goal) as num|null
+			var/new_goal = input("Set the amount of points:", "Points", contained_id.goal) as num|null
 			if(!isnum(new_goal))
 				return
 			if(!new_goal)
 				new_goal = default_goal
 			if (new_goal > 1000)
 				to_chat(usr, "The entered amount of points is too large. Points have instead been set to the maximum allowed amount.")
-			inserted_prisoner_id.goal = CLAMP(new_goal, 0, 1000) //maximum 1000 points
+			contained_id.goal = CLAMP(new_goal, 0, 1000) //maximum 1000 points
 		if("toggle_open")
 			if(teleporter.locked)
 				to_chat(usr, "The teleporter is locked")
@@ -113,11 +103,11 @@
 				return
 			addtimer(CALLBACK(src, .proc/teleport, usr), 5)
 
-/obj/machinery/computer/gulag_teleporter_computer/proc/scan_machinery()
+/obj/machinery/computer/prisoner/gulag_teleporter_computer/proc/scan_machinery()
 	teleporter = findteleporter()
 	beacon = findbeacon()
 
-/obj/machinery/computer/gulag_teleporter_computer/proc/findteleporter()
+/obj/machinery/computer/prisoner/gulag_teleporter_computer/proc/findteleporter()
 	var/obj/machinery/gulag_teleporter/teleporterf = null
 
 	for(var/direction in GLOB.cardinals)
@@ -125,20 +115,20 @@
 		if(teleporterf && teleporterf.is_operational())
 			return teleporterf
 
-/obj/machinery/computer/gulag_teleporter_computer/proc/findbeacon()
+/obj/machinery/computer/prisoner/gulag_teleporter_computer/proc/findbeacon()
 	return locate(/obj/structure/gulag_beacon)
 
-/obj/machinery/computer/gulag_teleporter_computer/proc/teleport(mob/user)
-	if(!inserted_prisoner_id) //incase the ID was removed after the transfer timer was set.
+/obj/machinery/computer/prisoner/gulag_teleporter_computer/proc/teleport(mob/user)
+	if(!contained_id) //incase the ID was removed after the transfer timer was set.
 		say("Warning: Unable to transfer prisoner without a valid Prisoner ID inserted!")
 		return
 	var/id_goal_not_set
-	if(!inserted_prisoner_id.goal)
+	if(!contained_id.goal)
 		id_goal_not_set = TRUE
-		inserted_prisoner_id.goal = default_goal
-		say("[inserted_prisoner_id]'s ID card goal defaulting to [inserted_prisoner_id.goal] points.")
-	log_game("[key_name(user)] teleported [key_name(prisoner)] to the Labor Camp [COORD(beacon)] for [id_goal_not_set ? "default goal of ":""][inserted_prisoner_id.goal] points.")
-	teleporter.handle_prisoner(inserted_prisoner_id, temporary_record)
+		contained_id.goal = default_goal
+		say("[contained_id]'s ID card goal defaulting to [contained_id.goal] points.")
+	log_game("[key_name(user)] teleported [key_name(prisoner)] to the Labor Camp [COORD(beacon)] for [id_goal_not_set ? "default goal of ":""][contained_id.goal] points.")
+	teleporter.handle_prisoner(contained_id, temporary_record)
 	playsound(src, 'sound/weapons/emitter.ogg', 50, 1)
 	prisoner.forceMove(get_turf(beacon))
 	prisoner.Paralyze(40) // small travel dizziness
@@ -148,5 +138,5 @@
 	if(teleporter.locked)
 		teleporter.locked = FALSE
 	teleporter.toggle_open()
-	inserted_prisoner_id = null
+	contained_id = null
 	temporary_record = null
