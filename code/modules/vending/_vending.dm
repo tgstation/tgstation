@@ -670,7 +670,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	updateUsrDialog()
 
-/// proc to see who is the onwer of the custom vendor
+/// proc to see who is the owner of the custom vendor
 /obj/machinery/vending/proc/isowner(mob/user)
 	. = FALSE
 	if(custom)
@@ -834,6 +834,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 /obj/item/price_tagger/attack_self(mob/user)
 	price = round(input(user,"set price","price") as num|null, 1)
+	to_chat(user, "<span class='notice'> The [src] will now give things an $[price] tag.</span>")
 
 /obj/item/price_tagger/afterattack(atom/target, mob/user, proximity)
 	. = ..()
