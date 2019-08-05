@@ -62,18 +62,7 @@
 	icon_state = "rapid"
 	item_state = "rapid"
 	transfer_prints = TRUE
-	var/warcry = "AT"
 
-/obj/item/clothing/gloves/rapid/Touch(mob/living/target,proximity = TRUE)
-	var/mob/living/M = loc
-
-	if(M.a_intent == INTENT_HARM)
-		M.changeNext_move(CLICK_CD_RAPID)
-		if(warcry)
-			M.say("[warcry]", ignore_spam = TRUE, forced = "north star warcry")
-	.= FALSE
-
-/obj/item/clothing/gloves/rapid/attack_self(mob/user)
-	var/input = stripped_input(user,"What do you want your battlecry to be? Max length of 6 characters.", ,"", 7)
-	if(input)
-		warcry = input
+/obj/item/clothing/gloves/rapid/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/punchcooldown)

@@ -161,6 +161,7 @@
 
 /obj/machinery/power/smes/wirecutter_act(mob/living/user, obj/item/I)
 	//disassembling the terminal
+	. = ..()
 	if(terminal && panel_open)
 		terminal.dismantle(user, I)
 		return TRUE

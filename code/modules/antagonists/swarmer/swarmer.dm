@@ -8,7 +8,7 @@
 
 /obj/effect/mob_spawn/swarmer
 	name = "unactivated swarmer"
-	desc = "A currently unactivated swarmer. Swarmers can self activate at any time, it would be wise to immediately dispose of this."
+	desc = "A currently unactivated swarmer. Swarmers can self activate at any time, so it would be wise to immediately dispose of this."
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer_unactivated"
 	density = FALSE
@@ -56,7 +56,7 @@
 	name = "Swarmer"
 	unique_name = 1
 	icon = 'icons/mob/swarmer.dmi'
-	desc = "A robot of unknown design, they seek only to consume materials and replicate themselves indefinitely."
+	desc = "Robotic constructs of unknown design, swarmers seek only to consume materials and replicate themselves indefinitely."
 	speak_emote = list("tones")
 	initial_language_holder = /datum/language_holder/swarmer
 	bubble_icon = "swarmer"
@@ -602,7 +602,7 @@
 /mob/living/simple_animal/hostile/swarmer/proc/CreateTrap()
 	set name = "Create trap"
 	set category = "Swarmer"
-	set desc = "Creates a simple trap that will non-lethally electrocute anything that steps on it. Costs 5 resources"
+	set desc = "Creates a simple trap that will non-lethally electrocute anything that steps on it. Costs 5 resources."
 	if(locate(/obj/structure/swarmer/trap) in loc)
 		to_chat(src, "<span class='warning'>There is already a trap here. Aborting.</span>")
 		return

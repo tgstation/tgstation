@@ -21,7 +21,10 @@
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED
 	path_image_color = "#FF0000"
 
+	a_intent = "harm"
+
 	var/baton_type = /obj/item/melee/baton
+	var/obj/item/weapon
 	var/mob/living/carbon/target
 	var/oldtarget_name
 	var/threatlevel = FALSE
@@ -32,6 +35,12 @@
 	var/weaponscheck = FALSE //If true, arrest people for weapons if they lack access
 	var/check_records = TRUE //Does it check security records?
 	var/arrest_type = FALSE //If true, don't handcuff
+
+	var/fair_market_price_arrest = 25 // On arrest, charges the violator this much. If they don't have that much in their account, the securitron will beat them instead
+	var/fair_market_price_detain = 5 // Charged each time the violator is stunned on detain
+	var/weapon_force = 20 // Only used for NAP violation beatdowns on non-grievous securitrons
+	var/market_verb = "Suspect"
+	var/payment_department = ACCOUNT_SEC
 
 /mob/living/simple_animal/bot/secbot/beepsky
 	name = "Officer Beep O'sky"
@@ -69,7 +78,7 @@
 	var/datum/job/detective/J = new/datum/job/detective
 	access_card.access += J.get_access()
 	prev_access = access_card.access
-
+	
 	//SECHUD
 	var/datum/atom_hud/secsensor = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	secsensor.add_hud_to(src)
@@ -91,6 +100,13 @@
 	anchored = FALSE
 	walk_to(src,0)
 	last_found = world.time
+
+/mob/living/simple_animal/bot/secbot/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = FALSE, override = FALSE, tesla_shock = FALSE, illusion = FALSE, stun = TRUE)//shocks only make him angry
+	if(base_speed < initial(base_speed) + 3)
+		base_speed += 3
+		addtimer(VARSET_CALLBACK(src, base_speed, base_speed - 3), 60)
+		playsound(src, 'sound/machines/defib_zap.ogg', 50)
+		visible_message("<span class='warning'>[src] shakes and speeds up!</span>")
 
 /mob/living/simple_animal/bot/secbot/set_custom_texts()
 
@@ -212,7 +228,10 @@ Auto Patrol: []"},
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
 		if(!C.IsParalyzed() || arrest_type)
-			stun_attack(A)
+			if(!check_nap_violations())
+				stun_attack(A, TRUE)
+			else
+				stun_attack(A)
 		else if(C.canBeHandcuffed() && !C.handcuffed)
 			cuff(A)
 	else
@@ -242,12 +261,15 @@ Auto Patrol: []"},
 		playsound(src, "law", 50, 0)
 		back_to_idle()
 
-/mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/C)
+/mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/C, var/harm = FALSE)
 	var/judgement_criteria = judgement_criteria()
 	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 	icon_state = "secbot-c"
 	addtimer(CALLBACK(src, .proc/update_icon), 2)
 	var/threat = 5
+
+	if(harm)
+		weapon.attack(C, src)
 	if(ishuman(C))
 		C.stuttering = 5
 		C.Paralyze(100)
@@ -288,7 +310,10 @@ Auto Patrol: []"},
 
 			if(target)		// make sure target exists
 				if(Adjacent(target) && isturf(target.loc))	// if right next to perp
-					stun_attack(target)
+					if(!check_nap_violations())
+						stun_attack(target, TRUE)
+					else
+						stun_attack(target)
 
 					mode = BOT_PREP_ARREST
 					anchored = TRUE
@@ -332,6 +357,9 @@ Auto Patrol: []"},
 				return
 
 			if(target.handcuffed) //no target or target cuffed? back to idle.
+				if(!check_nap_violations())
+					stun_attack(target, TRUE)
+					return
 				back_to_idle()
 				return
 
@@ -438,3 +466,38 @@ Auto Patrol: []"},
 
 /obj/machinery/bot_core/secbot
 	req_access = list(ACCESS_SECURITY)
+
+/// Returns false if the current target is unable to pay the fair_market_price for being arrested/detained
+/mob/living/simple_animal/bot/secbot/proc/check_nap_violations()
+	if(!SSeconomy.full_ancap)
+		return TRUE
+
+	if(target)
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			var/obj/item/card/id/I = H.get_idcard(TRUE)
+			if(I)
+				var/datum/bank_account/insurance = I.registered_account
+				if(!insurance)
+					say("[market_verb] NAP Violation: No bank account found.")
+					nap_violation(target)
+					return FALSE
+				else
+					var/fair_market_price = (arrest_type ? fair_market_price_detain : fair_market_price_arrest)
+					if(!insurance.adjust_money(-fair_market_price))
+						say("[market_verb] NAP Violation: Unable to pay.")
+						nap_violation(target)
+						return FALSE
+					var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
+					say("Thank you for your compliance. Your account been charged [fair_market_price] credits.")
+					if(D)
+						D.adjust_money(fair_market_price)
+			else
+				say("[market_verb] NAP Violation: No ID card found.")
+				nap_violation(target)
+				return FALSE
+	return TRUE
+
+/// Does nothing
+/mob/living/simple_animal/bot/secbot/proc/nap_violation(mob/violator)
+	return

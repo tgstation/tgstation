@@ -4705,12 +4705,13 @@
 /area/ruin/space/has_grav/ancientstation/rnd)
 "NK" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/urinal{
-	pixel_y = 32
-	},
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/structure/table,
+/obj/item/toy/seashell,
+/obj/item/toy/seashell,
+/obj/item/toy/seashell,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/ancientstation)
 "OA" = (

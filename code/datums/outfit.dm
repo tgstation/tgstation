@@ -95,6 +95,9 @@
 	  */
 	var/list/implants = null
 
+  /// Any undershirt. While on humans it is a string, here we use paths to stay consistent with the rest of the equips.
+	var/datum/sprite_accessory/undershirt = null
+
 	/// Any clothing accessory item
 	var/accessory = null
 
@@ -178,6 +181,9 @@
 		H.equip_to_slot_or_del(new id(H),SLOT_WEAR_ID)
 	if(suit_store)
 		H.equip_to_slot_or_del(new suit_store(H),SLOT_S_STORE)
+
+	if(undershirt)
+		H.undershirt = initial(undershirt.name)
 
 	if(accessory)
 		var/obj/item/clothing/under/U = H.w_uniform
