@@ -73,13 +73,13 @@
 
 /datum/surgery/healing/brute/basic
 	name = "Tend Wounds (Bruises, Basic)"
-	replaced_by = /datum/surgery/healing/brute/upgraded
+	replaced_by = /datum/surgery/healing/combo
 	healing_step_type = /datum/surgery_step/heal/brute/basic
 	desc = "A surgical procedure that provides basic treatment for a patient's brute traumas."
 
 /datum/surgery/healing/brute/upgraded
 	name = "Tend Wounds (Bruises, Adv.)"
-	replaced_by = /datum/surgery/healing/brute/upgraded/femto
+	replaced_by = /datum/surgery/healing/combo/upgraded
 	requires_tech = TRUE
 	healing_step_type = /datum/surgery_step/heal/brute/upgraded
 	desc = "A surgical procedure that provides advanced treatment for a patient's brute traumas."
@@ -108,13 +108,13 @@
 
 /datum/surgery/healing/burn/basic
 	name = "Tend Wounds (Burn, Basic)"
-	replaced_by = /datum/surgery/healing/burn/upgraded
+	replaced_by = /datum/surgery/healing/combo
 	healing_step_type = /datum/surgery_step/heal/burn/basic
 	desc = "A surgical procedure that provides basic treatment for a patient's burns."
 
 /datum/surgery/healing/burn/upgraded
 	name = "Tend Wounds (Burn, Adv.)"
-	replaced_by = /datum/surgery/healing/burn/upgraded/femto
+	replaced_by = /datum/surgery/healing/combo/upgraded
 	requires_tech = TRUE
 	healing_step_type = /datum/surgery_step/heal/burn/upgraded
 	desc = "A surgical procedure that provides advanced treatment for a patient's burns."
