@@ -57,5 +57,4 @@ Bonus
 			if(brain_damage)
 				M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * power, 80)
 				M.updatehealth()
-
 	return
