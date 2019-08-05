@@ -24,7 +24,7 @@ Bonus
 	symptom_delay_max = 70
 	severity = 4
 	var/yawning = FALSE
-	threshold_desc = "<b>Transmission 7:</b> Causes the host to occasionally emit a yawn that spreads the virus in a manner similar to that of a sneeze.<br>\
+	threshold_desc = "<b>Transmission 7:</b> Causes the host to periodically emit a yawn that spreads the virus in a manner similar to that of a sneeze.<br>\
 					  <b>Resistance 10:</b> Causes narcolepsy more often, increasing the chance of the host falling asleep."
 
 /datum/symptom/narcolepsy/Start(datum/disease/advance/A)
