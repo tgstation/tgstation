@@ -766,6 +766,10 @@
 	name = "Very Long Hair 2"
 	icon_state = "hair_longest"
 
+/datum/sprite_accessory/hair/long_spots
+	name = "Very Long Spotted"
+	icon_state = "hair_vlongspotted"
+
 /datum/sprite_accessory/hair/longest2
 	name = "Very Long Over Eye"
 	icon_state = "hair_longest2"

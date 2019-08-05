@@ -87,6 +87,13 @@
 	item_color = "assistant_formal"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/misc/mafiaboss
+	name = "mafia boss outfit"
+	desc = "I shall not allow anyone, no matter who they may be, to threaten my everlasting climax."
+	icon_state = "mafia"
+	item_state = "mafia"
+	item_color = "mafia"
+
 /obj/item/clothing/under/plasmaman
 	name = "plasma envirosuit"
 	desc = "A special containment suit that allows plasma-based lifeforms to exist safely in an oxygenated environment, and automatically extinguishes them in a crisis. Despite being airtight, it's not spaceworthy."
