@@ -127,15 +127,10 @@
 		var/datum/gas_mixture/air_contents = airs[1]
 		volume_rate = CLAMP(number, 0, air_contents.volume)
 
-	if("status" in signal.data)
-		spawn(2)
-			broadcast_status()
-		return //do not update_icon
+	addtimer(CALLBACK(src, .proc/broadcast_status), 2)
 
-	spawn(2)
-		broadcast_status()
-
-	update_icon()
+	if(!("status" in signal.data)) //do not update_icon
+		update_icon()
 
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \

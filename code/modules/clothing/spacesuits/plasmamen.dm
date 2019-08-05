@@ -44,12 +44,16 @@
 	flash_protect = 2
 	tint = 2
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 75)
+	flags_inv = HIDEEARS|HIDEHAIR|HIDEFACIALHAIR|HIDEMASK|HIDEEYES|HIDEFACE
 	resistance_flags = FIRE_PROOF
 	var/brightness_on = 4 //luminosity when the light is on
 	var/on = FALSE
+	var/smile = FALSE
+	var/smile_color = "#FF0000"
 	var/visor_icon = "envisor"
 	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_welding_screen/plasmaman)
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
+	visor_flags_inv = HIDEEYES | HIDEFACE
 
 /obj/item/clothing/head/helmet/space/plasmaman/Initialize()
 	. = ..()
@@ -83,6 +87,39 @@
 	cut_overlays()
 	add_overlay(visor_icon)
 	..()
+	var/smile = FALSE
+	var/smile_color = "#FF0000"
+	actions_types = list(/datum/action/item_action/toggle_helmet_light)
+
+/obj/item/clothing/head/helmet/space/plasmaman/attackby(obj/item/C, mob/living/user)
+	. = ..()
+	if(istype(C, /obj/item/toy/crayon))
+		var/obj/item/toy/crayon/CR = C
+		to_chat(user, "You start drawing a smiley face on the helmet's visor..")
+		if(do_after(user, 25, target = src))
+			smile = TRUE
+			smile_color = CR.paint_color
+			to_chat(user, "You draw a smiley on the helmet visor.")
+			update_icon()
+			return
+	to_chat(user, "Seems like someone already drew something on this helmet's visor.")
+
+/obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(isinhands)
+	. = ..()
+	if(!isinhands && smile)
+		var/mutable_appearance/M = mutable_appearance('icons/mob/head.dmi', "eva_smile_overlay")
+		M.color = smile_color
+		. += M
+
+/obj/item/clothing/head/helmet/space/plasmaman/ComponentInitialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, .proc/wipe_that_smile_off_your_face)
+
+///gets called when receiving the CLEAN_ACT signal from something, i.e soap or a shower. exists to remove any smiley faces drawn on the helmet.
+/obj/item/clothing/head/helmet/space/plasmaman/proc/wipe_that_smile_off_your_face()
+	if(smile)
+		smile = FALSE
+		cut_overlays()
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_self(mob/user)
 	on = !on
@@ -213,6 +250,7 @@
 /obj/item/clothing/head/helmet/space/plasmaman/mime
 	name = "mime envirosuit helmet"
 	desc = "The make-up is painted on, it's a miracle it doesn't chip. It's not very colourful."
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	icon_state = "mime_envirohelm"
 	item_state = "mime_envirohelm"
 	visor_icon = "mime_envisor"
@@ -220,6 +258,7 @@
 /obj/item/clothing/head/helmet/space/plasmaman/clown
 	name = "clown envirosuit helmet"
 	desc = "The make-up is painted on, it's a miracle it doesn't chip. <i>'HONK!'</i>"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	icon_state = "clown_envirohelm"
 	item_state = "clown_envirohelm"
 	visor_icon = "clown_envisor"

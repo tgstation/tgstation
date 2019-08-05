@@ -64,6 +64,7 @@
 	return 0
 
 /obj/item/robot_suit/wrench_act(mob/living/user, obj/item/I) //Deconstucts empty borg shell. Flashes remain unbroken because they haven't been used yet
+	. = ..()
 	var/turf/T = get_turf(src)
 	if(l_leg || r_leg || chest || l_arm || r_arm || head)
 		if(I.use_tool(src, user, 5, volume=50))
@@ -259,7 +260,7 @@
 				to_chat(user, "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose!</span>")
 				return
 
-			if(M.brain?.damaged_brain)
+			if(M.brain?.organ_flags & ORGAN_FAILING)
 				to_chat(user, "<span class='warning'>The MMI indicates that the brain is damaged!</span>")
 				return
 

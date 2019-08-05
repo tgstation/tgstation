@@ -241,8 +241,7 @@
 						addtimer(CALLBACK(mecha.overload_action, /datum/action/innate/mecha/mech_defense_mode.proc/Activate, FALSE), 100) //10 seconds of speeeeed, then toggle off
 
 					retreat_distance = 50
-					spawn(100)
-						retreat_distance = 0
+					addtimer(VARSET_CALLBACK(src, retreat_distance, 0), 10 SECONDS)
 
 
 
