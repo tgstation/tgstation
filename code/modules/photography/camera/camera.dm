@@ -31,8 +31,8 @@
 	var/picture_size_y = 2
 	var/picture_size_x_min = 1
 	var/picture_size_y_min = 1
-	var/picture_size_x_max = 4
-	var/picture_size_y_max = 4
+	var/picture_size_x_max = 3
+	var/picture_size_y_max = 3
 	var/can_customise = TRUE
 	var/default_picture_name
 
