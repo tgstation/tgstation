@@ -964,7 +964,7 @@
 	name = "Price Tagger"
 	id = "price_tagger"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500))
+	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500)
 	build_path = /obj/item/price_tagger
 	category = list("initial", "Misc")
 
@@ -972,6 +972,6 @@
 	name = "Custom Vendor Refill"
 	id = "custom_vendor_refill"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2000))
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2000)
 	build_path = /obj/item/vending_refill/custom
 	category = list("initial", "Misc")
