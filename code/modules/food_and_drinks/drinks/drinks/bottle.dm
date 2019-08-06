@@ -101,7 +101,7 @@
 	//Display an attack message.
 	if(target != user)
 		target.visible_message("<span class='danger'>[user] hits [target][head_attack_message] with a bottle of [src.name]!</span>", \
-				"<span class='userdanger'>[user] hits you[head_attack_message] with a bottle of [src.name]!</span>")
+				"<span class='userdanger'>[user] hits you [head_attack_message] with a bottle of [src.name]!</span>")
 	else
 		target.visible_message("<span class='danger'>[target] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!</span>", \
 				"<span class='userdanger'>You hit yourself with a bottle of [src.name][head_attack_message]!</span>")

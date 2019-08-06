@@ -41,8 +41,8 @@
 			M.changeNext_move(CLICK_CD_MELEE * 0.5) //chug! chug! chug!
 
 	else
-		M.visible_message("<span class='danger'>[user] is feeding [M] the contents of [src].</span>", \
-			"<span class='userdanger'>[user] is feeding you the contents of [src].</span>")
+		M.visible_message("<span class='danger'>[user] attempts to feed [M] the contents of [src].</span>", \
+			"<span class='userdanger'>[user] attempts to feed you the contents of [src].</span>")
 		if(!do_mob(user, M))
 			return
 		if(!reagents || !reagents.total_volume)

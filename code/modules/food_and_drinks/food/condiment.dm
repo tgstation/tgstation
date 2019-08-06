@@ -49,8 +49,8 @@
 		user.visible_message("<span class='notice'>[user] swallows some of the contents of \the [src].</span>", \
 			"<span class='notice'>You swallow some of the contents of \the [src].</span>")
 	else
-		M.visible_message("<span class='warning'>[user] is feeding [M] from [src].</span>", \
-			"<span class='warning'>[user] is feeding you from [src].</span>")
+		M.visible_message("<span class='warning'>[user] attempts to feed [M] from [src].</span>", \
+			"<span class='warning'>[user] attempts to feed you from [src].</span>")
 		if(!do_mob(user, M))
 			return
 		if(!reagents || !reagents.total_volume)
