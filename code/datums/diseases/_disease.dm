@@ -137,7 +137,7 @@
 	qdel(src)
 
 /datum/disease/proc/IsSame(datum/disease/D)
-	if(istype(src, D.type))
+	if(istype(D, type))
 		return TRUE
 	return FALSE
 

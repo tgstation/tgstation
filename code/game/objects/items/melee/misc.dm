@@ -212,8 +212,8 @@
 /obj/item/melee/classic_baton/proc/get_stun_description(mob/living/target, mob/living/user)
 	. = list()
 
-	.["visible"] =  "<span class ='danger'>[user] has knocked down [target] with [src]!</span>"
-	.["local"] = "<span class ='danger'>[user] has knocked down [target] with [src]!</span>"
+	.["visible"] =  "<span class ='danger'>[user] knocks [target] down with [src]!</span>"
+	.["local"] = "<span class ='userdanger'>[user] knocks you down with [src]!</span>"
 
 	return .
 
@@ -386,8 +386,8 @@
 	force = 5
 
 	cooldown = 20
-	stun_time_carbon = 85 
-	affect_silicon = TRUE 
+	stun_time_carbon = 85
+	affect_silicon = TRUE
 	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
 
