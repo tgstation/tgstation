@@ -2,99 +2,24 @@
 	name = "Digitigrade Shoes"
 	shoes = /obj/item/clothing/shoes/sneakers/brown/digitigrade
 
-/datum/outfit/digitigrade/bar
-	name = "Bartender Digitigrade"
+/datum/outfit/digitigrade/laceups
+	name = "Laceup Digitigrade"
 	shoes = /obj/item/clothing/shoes/laceup/digitigrade
 
-/datum/outfit/digitigrade/chef
-	name = "Chef Digitigrade"
-
-	shoes = /obj/item/clothing/shoes/sneakers/brown/digitigrade
-
-/datum/outfit/digitigrade/botany
-	name = "Botany Digitigrade"
-
-	shoes = /obj/item/clothing/shoes/sneakers/brown/digitigrade
-
-/datum/outfit/digitigrade/curator
-	name = "Curator Digitigrade"
-
-	shoes = /obj/item/clothing/shoes/laceup/digitigrade
-
-/datum/outfit/digitigrade/chaplain
-	name = "Chaplain Digitigrade"
-
-	shoes = /obj/item/clothing/shoes/sneakers/brown/digitigrade
-
-/datum/outfit/digitigrade/janitor
-	name = "Janitor Digitigrade"
-
-	shoes = /obj/item/clothing/shoes/sneakers/brown/digitigrade
-
-/datum/outfit/digitigrade/security
-	name = "Security Digitigrade"
+/datum/outfit/digitigrade/jackboots
+	name = "Jackboot Digitigrade"
 
 	shoes = /obj/item/clothing/shoes/jackboots/digitigrade
 
-/datum/outfit/digitigrade/detective
-	name = "Detective Digitigrade"
-
-	shoes = /obj/item/clothing/shoes/laceup/digitigrade
-
-/datum/outfit/digitigrade/warden
-	name = "Warden Digitigrade"
-
-	shoes = /obj/item/clothing/shoes/jackboots/digitigrade
-
-/datum/outfit/digitigrade/cargo
-	name = "Cargo Digitigrade"
+/datum/outfit/digitigrade/workboots
+	name = "Workboot Digitigrade"
 
 	shoes = /obj/item/clothing/shoes/workboots/digitigrade
 
-/datum/outfit/digitigrade/mining
-	name = "Mining Digitigrade"
+/datum/outfit/digitigrade/combats
+	name = "Combat Digitigrade"
 
 	shoes = /obj/item/clothing/shoes/digicombat
-
-/datum/outfit/digitigrade/medical
-	name = "Medical Digitigrade"
-
-	shoes = /obj/item/clothing/shoes/sneakers/brown/digitigrade
-
-/datum/outfit/digitigrade/viro
-	name = "Virology Digitigrade"
-
-	shoes = /obj/item/clothing/shoes/sneakers/brown/digitigrade
-
-/datum/outfit/digitigrade/chemist
-	name = "Chemist Digitigrade"
-
-	shoes = /obj/item/clothing/shoes/sneakers/brown/digitigrade
-
-/datum/outfit/digitigrade/genetics
-	name = "Genetics Digitigrade"
-
-	shoes = /obj/item/clothing/shoes/sneakers/brown/digitigrade
-
-/datum/outfit/digitigrade/science
-	name = "Science Digitigrade"
-
-	shoes = /obj/item/clothing/shoes/sneakers/brown/digitigrade
-
-/datum/outfit/digitigrade/robotics
-	name = "Robotics Digitigrade"
-
-	shoes = /obj/item/clothing/shoes/sneakers/brown/digitigrade
-
-/datum/outfit/digitigrade/engineering
-	name = "Engineering Digitigrade"
-
-	shoes = /obj/item/clothing/shoes/workboots/digitigrade
-
-/datum/outfit/digitigrade/atmospherics
-	name = "Atmospherics Digitigrade"
-
-	shoes = /obj/item/clothing/shoes/workboots/digitigrade
 
 /datum/outfit/digitigrade/mime
 	name = "Mime Digitigrade"
