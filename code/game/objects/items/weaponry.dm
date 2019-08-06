@@ -540,8 +540,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	item_state = "hoverboard_nt"
 	board_item_type = "/obj/vehicle/ridden/scooter/skateboard/hoverboard/admin"
 
-/obj/vehicle/ridden/scooter/skateboard/hoverboard/
-
 /obj/item/melee/baseball_bat
 	name = "baseball bat"
 	desc = "There ain't a skull in the league that can withstand a swatter."
