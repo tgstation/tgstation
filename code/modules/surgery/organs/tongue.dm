@@ -19,9 +19,8 @@
 		/datum/language/ratvar,
 		/datum/language/aphasia,
 		/datum/language/piratespeak,
-		/datum/language/vampiric,
-		//FULPCODE FOR THE NEXT LINE
-		/datum/language/russian,
+		/datum/language/vampiric, // FULP
+		/datum/language/russian, // FULP
 	))
 
 /obj/item/organ/tongue/Initialize(mapload)
