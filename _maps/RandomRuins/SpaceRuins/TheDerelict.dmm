@@ -2,10 +2,6 @@
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
-"ab" = (
-/obj/structure/lattice,
-/turf/template_noop,
-/area/template_noop)
 "ac" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
@@ -1261,7 +1257,7 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/access)
 "fw" = (
-/obj/effect/mob_spawn/drone_dusty,
+/obj/effect/mob_spawn/drone/dusty,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/access)
 "fx" = (
@@ -1982,7 +1978,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "in" = (
-/obj/effect/mob_spawn/drone_dusty,
+/obj/effect/mob_spawn/drone/dusty,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "io" = (
@@ -3439,8 +3435,8 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/effect/mob_spawn/drone_dusty,
 /obj/structure/cable,
+/obj/effect/mob_spawn/drone/dusty,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/se_solar)
 "nV" = (
@@ -8667,7 +8663,7 @@ mp
 mp
 mt
 lx
-aa
+lz
 md
 nk
 nu
@@ -8778,9 +8774,9 @@ mt
 lx
 lx
 mt
-ab
-ab
-aa
+lA
+lA
+lz
 md
 nl
 nv
