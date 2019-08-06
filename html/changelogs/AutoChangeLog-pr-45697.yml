@@ -1,0 +1,4 @@
+author: "JDawg1290"
+delete-after: True
+changes: 
+  - rscadd: "Added call to log_grenade for remotely signaled grenades"
