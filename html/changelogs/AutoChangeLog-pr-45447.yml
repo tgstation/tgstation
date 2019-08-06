@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a bug where Aggressive Replication and Mitosis wouldn't actually generate more nanites."

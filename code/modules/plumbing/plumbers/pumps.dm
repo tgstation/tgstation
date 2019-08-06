@@ -35,6 +35,7 @@
 	return ..()
 
 /obj/machinery/power/liquid_pump/wrench_act(mob/living/user, obj/item/I)
+	..()
 	default_unfasten_wrench(user, I)
 	return TRUE
 ///please note that the component has a hook in the parent call, wich handles activating and deactivating

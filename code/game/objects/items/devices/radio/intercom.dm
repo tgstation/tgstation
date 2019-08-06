@@ -139,6 +139,12 @@
 /obj/item/radio/intercom/add_blood_DNA(list/blood_dna)
 	return FALSE
 
+/obj/item/radio/intercom/end_emp_effect(curremp)
+	. = ..()
+	if(!.)
+		return
+	on = FALSE
+
 //Created through the autolathe or through deconstructing intercoms. Can be applied to wall to make a new intercom on it!
 /obj/item/wallframe/intercom
 	name = "intercom frame"

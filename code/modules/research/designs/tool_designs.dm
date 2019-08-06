@@ -33,13 +33,23 @@
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
-/datum/design/rcd_upgrade
-	name = "Advanced RCD designs upgrade"
+/datum/design/rcd_upgrade/frames
+	name = "RCD frames designs upgrade"
 	desc = "Adds the computer frame and machine frame to the RCD."
-	id = "rcd_upgrade"
+	id = "rcd_upgrade_frames"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500, /datum/material/silver = 1500, /datum/material/titanium = 2000)
-	build_path = /obj/item/rcd_upgrade
+	build_path = /obj/item/rcd_upgrade/frames
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/rcd_upgrade/simple_circuits
+	name = "RCD simple circuits designs upgrade"
+	desc = "Adds the simple circuits to the RCD."
+	id = "rcd_upgrade_simple_circuits"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500, /datum/material/silver = 1500, /datum/material/titanium = 2000)
+	build_path = /obj/item/rcd_upgrade/simple_circuits
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
