@@ -290,7 +290,6 @@ BLIND     // can't see anything
 	up = !up
 	clothing_flags ^= visor_flags
 	flags_inv ^= visor_flags_inv
-	flags_cover ^= initial(flags_cover)
 	icon_state = "[initial(icon_state)][up ? "up" : ""]"
 	if(visor_vars_to_toggle & VISOR_FLASHPROTECT)
 		flash_protect ^= initial(flash_protect)
