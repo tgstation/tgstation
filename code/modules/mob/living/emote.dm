@@ -312,12 +312,6 @@
 	message = "sneezes."
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/yawn
-	key = "yawn"
-	key_third_person = "yawns"
-	message = "yawns."
-	emote_type = EMOTE_AUDIBLE
-
 /datum/emote/living/smug
 	key = "smug"
 	key_third_person = "smugs"
