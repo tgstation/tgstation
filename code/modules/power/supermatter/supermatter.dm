@@ -640,6 +640,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		radiation_pulse(src, 150, 4)
 
 /obj/machinery/power/supermatter_crystal/wrench_act(mob/user, obj/item/tool)
+	..()
 	if (moveable)
 		default_unfasten_wrench(user, tool, time = 20)
 	return TRUE

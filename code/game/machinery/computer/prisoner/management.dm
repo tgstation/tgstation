@@ -1,4 +1,4 @@
-/obj/machinery/computer/prisoner
+/obj/machinery/computer/prisoner/management
 	name = "prisoner management console"
 	desc = "Used to manage tracking implants placed inside criminals."
 	icon_screen = "explosive"
@@ -14,18 +14,19 @@
 
 	light_color = LIGHT_COLOR_RED
 
-/obj/machinery/computer/prisoner/ui_interact(mob/user)
+/obj/machinery/computer/prisoner/management/ui_interact(mob/user)
 	. = ..()
-	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+	if(isliving(user))
+		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 	var/dat = ""
 	if(screen == 0)
 		dat += "<HR><A href='?src=[REF(src)];lock=1'>{Log In}</A>"
 	else if(screen == 1)
 		dat += "<H3>Prisoner ID Management</H3>"
-		if(inserted_prisoner_id)
-			dat += text("<A href='?src=[REF(src)];id=eject'>[inserted_prisoner_id]</A><br>")
-			dat += text("Collected Points: [inserted_prisoner_id.points]. <A href='?src=[REF(src)];id=reset'>Reset.</A><br>")
-			dat += text("Card goal: [inserted_prisoner_id.goal].  <A href='?src=[REF(src)];id=setgoal'>Set </A><br>")
+		if(contained_id)
+			dat += text("<A href='?src=[REF(src)];id=eject'>[contained_id]</A><br>")
+			dat += text("Collected Points: [contained_id.points]. <A href='?src=[REF(src)];id=reset'>Reset.</A><br>")
+			dat += text("Card goal: [contained_id.goal].  <A href='?src=[REF(src)];id=setgoal'>Set </A><br>")
 			dat += text("Space Law recommends quotas of 100 points per minute they would normally serve in the brig.<BR>")
 		else
 			dat += text("<A href='?src=[REF(src)];id=insert'>Insert Prisoner ID.</A><br>")
@@ -68,40 +69,40 @@
 	popup.open()
 	return
 
-/obj/machinery/computer/prisoner/attackby(obj/item/I, mob/user, params)
+/obj/machinery/computer/prisoner/management/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/card/id))
 		if(screen)
-			id_insert_prisoner(user)
+			id_insert(user)
 		else
 			to_chat(user, "<span class='danger'>Unauthorized access.</span>")
 	else
 		return ..()
 
-/obj/machinery/computer/prisoner/process()
+/obj/machinery/computer/prisoner/management/process()
 	if(!..())
 		src.updateDialog()
 	return
 
-/obj/machinery/computer/prisoner/Topic(href, href_list)
+/obj/machinery/computer/prisoner/management/Topic(href, href_list)
 	if(..())
 		return
 	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr))
 		usr.set_machine(src)
 
 		if(href_list["id"])
-			if(href_list["id"] =="insert" && !inserted_prisoner_id)
-				id_insert_prisoner(usr)
-			else if(inserted_prisoner_id)
+			if(href_list["id"] =="insert" && !contained_id)
+				id_insert(usr)
+			else if(contained_id)
 				switch(href_list["id"])
 					if("eject")
-						id_eject_prisoner(usr)
+						id_eject(usr)
 					if("reset")
-						inserted_prisoner_id.points = 0
+						contained_id.points = 0
 					if("setgoal")
 						var/num = round(input(usr, "Choose prisoner's goal:", "Input an Integer", null) as num|null)
 						if(num >= 0)
 							num = min(num,1000) //Cap the quota to the equivilent of 10 minutes.
-							inserted_prisoner_id.goal = num
+							contained_id.goal = num
 		else if(href_list["inject1"])
 			var/obj/item/implant/I = locate(href_list["inject1"]) in GLOB.tracked_chem_implants
 			if(I && istype(I))
@@ -116,7 +117,7 @@
 				I.activate(10)
 
 		else if(href_list["lock"])
-			if(src.allowed(usr))
+			if(allowed(usr))
 				screen = !screen
 				playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
 			else

@@ -246,6 +246,7 @@
 	return ..()
 
 /obj/structure/guillotine/wrench_act(mob/living/user, obj/item/I)
+	. = ..()
 	if (current_action)
 		return
 

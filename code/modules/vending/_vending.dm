@@ -64,7 +64,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	///Last mob to shop with us
 	var/last_shopper
 
-	
+
 	/**
 	  * List of products this machine sells
 	  *
@@ -130,14 +130,18 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/default_price = 25
 	///Default price of premium items if not overridden
 	var/extra_price = 50
-	/**
+  	/**
 	  * Is this item on station or not
 	  *
 	  * if it doesn't originate from off-station during mapload, everything is free
 	  */
-	var/onstation = TRUE
-	///ID's that can load this vending machine wtih refills
+	var/onstation = TRUE //if it doesn't originate from off-station during mapload, everything is free
+  ///A variable to change on a per instance basis on the map that allows the instance to force cost and ID requirements
+	var/onstation_override = FALSE //change this on the object on the map to override the onstation check. DO NOT APPLY THIS GLOBALLY.
+
+  ///ID's that can load this vending machine wtih refills
 	var/list/canload_access_list
+
 
 	var/list/vending_machine_input = list()
 	///Display header on the input view
@@ -177,7 +181,10 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
 	last_slogan = world.time + rand(0, slogan_delay)
 	power_change()
-
+	
+	if(onstation_override) //overrides the checks if true. 
+		onstation = TRUE
+		return
 	if(mapload) //check if it was initially created off station during mapload.
 		if(!is_station_level(z))
 			onstation = FALSE
@@ -340,6 +347,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	return TRUE
 
 /obj/machinery/vending/wrench_act(mob/living/user, obj/item/I)
+	..()
 	if(panel_open)
 		default_unfasten_wrench(user, I, time = 60)
 	return TRUE

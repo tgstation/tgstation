@@ -33,12 +33,6 @@
 	clockwork = TRUE //it'd look weird
 	pass_flags = PASSTABLE
 
-/obj/machinery/computer/secure_data/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/card/id))
-		id_insert_scan(user)
-	else
-		return ..()
-
 //Someone needs to break down the dat += into chunks instead of long ass lines.
 /obj/machinery/computer/secure_data/ui_interact(mob/user)
 	. = ..()
@@ -49,9 +43,9 @@
 	var/dat
 
 	if(temp)
-		dat = text("<TT>[]</TT><BR><BR><A href='?src=[REF(src)];choice=Clear Screen'>Clear Screen</A>", temp)
+		dat = "<TT>[temp]</TT><BR><BR><A href='?src=[REF(src)];choice=Clear Screen'>Clear Screen</A>"
 	else
-		dat = text("Confirm Identity: <A href='?src=[REF(src)];choice=Confirm Identity'>[]</A><HR>", (inserted_scan_id ? text("[]", inserted_scan_id.name) : "----------"))
+		dat = ""
 		if(authenticated)
 			switch(screen)
 				if(1)
@@ -321,13 +315,6 @@ What a mess.*/
 				active1 = null
 				active2 = null
 
-			if("Confirm Identity")
-				if(inserted_scan_id)
-					id_eject_scan(usr)
-					return
-				else
-					id_insert_scan(usr)
-
 			if("Log Out")
 				authenticated = null
 				screen = null
@@ -336,28 +323,29 @@ What a mess.*/
 				playsound(src, 'sound/machines/terminal_off.ogg', 50, FALSE)
 
 			if("Log In")
-				if(issilicon(usr))
-					var/mob/living/silicon/borg = usr
+				var/mob/M = usr
+				var/obj/item/card/id/I = M.get_idcard(TRUE)
+				if(issilicon(M))
+					var/mob/living/silicon/borg = M
 					active1 = null
 					active2 = null
 					authenticated = borg.name
 					rank = "AI"
 					screen = 1
-				else if(IsAdminGhost(usr))
+				else if(IsAdminGhost(M))
 					active1 = null
 					active2 = null
-					authenticated = usr.client.holder.admin_signature
+					authenticated = M.client.holder.admin_signature
 					rank = "Central Command"
 					screen = 1
-				else if(istype(inserted_scan_id, /obj/item/card/id))
+				else if(I && check_access(I))
 					active1 = null
 					active2 = null
-					if(check_access(inserted_scan_id))
-						authenticated = inserted_scan_id.registered_name
-						rank = inserted_scan_id.assignment
-						screen = 1
-					else
-						to_chat(usr, "<span class='danger'>Unauthorized Access.</span>")
+					authenticated = I.registered_name
+					rank = I.assignment
+					screen = 1
+				else
+					to_chat(usr, "<span class='danger'>Unauthorized Access.</span>")
 				playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
 
 //RECORD FUNCTIONS
