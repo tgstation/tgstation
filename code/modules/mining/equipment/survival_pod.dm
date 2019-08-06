@@ -161,6 +161,7 @@
 	pixel_y = -32
 
 /obj/item/gps/computer/wrench_act(mob/living/user, obj/item/I)
+	..()
 	if(flags_1 & NODECONSTRUCT_1)
 		return TRUE
 
@@ -240,6 +241,7 @@
 	qdel(src)
 
 /obj/structure/fans/wrench_act(mob/living/user, obj/item/I)
+	..()
 	if(flags_1 & NODECONSTRUCT_1)
 		return TRUE
 

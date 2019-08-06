@@ -33,8 +33,7 @@
 	var/score_type = BOSS_SCORE
 	var/elimination = 0
 	var/anger_modifier = 0
-	var/obj/item/gps/internal
-	var/internal_type
+	var/gps_name = null
 	var/recovery_time = 0
 	var/true_spawn = TRUE // if this is a megafauna that should grant achievements, or have a gps signal
 	var/nest_range = 10
@@ -44,8 +43,8 @@
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()
-	if(internal_type && true_spawn)
-		internal = new internal_type(src)
+	if(gps_name && true_spawn)
+		AddComponent(/datum/component/gps, gps_name)
 	apply_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
 	ADD_TRAIT(src, TRAIT_NO_TELEPORT, MEGAFAUNA_TRAIT)
 	for(var/action_type in attack_action_types)
@@ -54,10 +53,6 @@
 	if(small_sprite_type)
 		var/datum/action/small_sprite/small_action = new small_sprite_type()
 		small_action.Grant(src)
-
-/mob/living/simple_animal/hostile/megafauna/Destroy()
-	QDEL_NULL(internal)
-	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/Moved()
 	if(nest && nest.parent && get_dist(nest.parent, src) > nest_range)

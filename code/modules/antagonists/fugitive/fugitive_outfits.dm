@@ -11,7 +11,7 @@
 
 /datum/outfit/yalp_cultist
 	name = "Cultist of Yalp Elor"
-	uniform = /obj/item/clothing/under/rank/chaplain
+	uniform = /obj/item/clothing/under/rank/civilian/chaplain
 	suit = /obj/item/clothing/suit/chaplainsuit/holidaypriest
 	gloves = /obj/item/clothing/gloves/color/red
 	shoes = /obj/item/clothing/shoes/sneakers/black
@@ -63,7 +63,7 @@
 
 /datum/outfit/spacepol
 	name = "Spacepol Officer"
-	uniform = /obj/item/clothing/under/rank/security/spacepol
+	uniform = /obj/item/clothing/under/rank/security/officer/spacepol
 	suit = /obj/item/clothing/suit/armor/vest/blueshirt
 	belt = /obj/item/gun/ballistic/automatic/pistol/m1911
 	head = /obj/item/clothing/head/helmet/police

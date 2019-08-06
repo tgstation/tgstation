@@ -503,7 +503,7 @@
 /obj/structure/window/reinforced,
 /obj/structure/table,
 /obj/item/storage/bag/tray,
-/obj/item/clothing/under/waiter,
+/obj/item/clothing/under/suit/waiter,
 /turf/open/floor/plasteel/cafeteria,
 /area/shuttle/escape)
 "bg" = (

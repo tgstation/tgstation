@@ -212,7 +212,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (!(ignore_spam || forced) && src.client.handle_spam_prevention(message,MUTE_IC))
 			return
 
 	if (stat)

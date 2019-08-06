@@ -80,7 +80,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		var/sheets = round(amount) / MINERAL_MATERIAL_AMOUNT
 		var/ref = REF(M)
 		if (sheets)
-			if (sheets >= 1)	
+			if (sheets >= 1)
 				ui += "<a href='?src=[REF(src)];ejectsheet=[ref];eject_amt=1'>Eject</a>"
 			else
 				ui += "<span class='linkOff'>Eject</span>"
@@ -163,6 +163,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		return TRUE
 
 /obj/machinery/ore_silo/multitool_act(mob/living/user, obj/item/multitool/I)
+	. = ..()
 	if (istype(I))
 		to_chat(user, "<span class='notice'>You log [src] in the multitool's buffer.</span>")
 		I.buffer = src
