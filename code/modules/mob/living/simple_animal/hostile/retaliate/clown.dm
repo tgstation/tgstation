@@ -73,9 +73,9 @@
 	emote_see = list("bubbles", "oozes")
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/particle_effect/foam)
 
-/mob/living/simple_animal/hostile/retaliate/clown/lube/ComponentInitialize()
+/mob/living/simple_animal/hostile/retaliate/clown/lube/Initialize()
 	. = ..()
-	AddElement(/datum/element/snailcrawl) //Not a component
+	AddElement(/datum/element/snailcrawl)
 
 /mob/living/simple_animal/hostile/retaliate/clown/banana
 	name = "Clownana"
