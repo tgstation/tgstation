@@ -5,19 +5,19 @@
 
 /datum/mood_event/wellfed
 	description = "<span class='nicegreen'>I'm stuffed!</span>\n"
-	mood_change = 8
+	mood_change = 6
 
 /datum/mood_event/fed
 	description = "<span class='nicegreen'>I have recently had some food.</span>\n"
-	mood_change = 5
+	mood_change = 3
 
 /datum/mood_event/hungry
 	description = "<span class='warning'>I'm getting a bit hungry.</span>\n"
-	mood_change = -8
+	mood_change = -4
 
 /datum/mood_event/starving
 	description = "<span class='boldwarning'>I'm starving!</span>\n"
-	mood_change = -14
+	mood_change = -8
 
 //charge
 /datum/mood_event/charged
