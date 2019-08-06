@@ -179,15 +179,15 @@
 	desc = "Contains epinephrine - used to stabilize patients."
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 15)
 
-/obj/item/reagent_containers/syringe/charcoal
-	name = "syringe (charcoal)"
-	desc = "Contains charcoal."
-	list_reagents = list(/datum/reagent/medicine/charcoal = 15)
+/obj/item/reagent_containers/syringe/palletta
+	name = "syringe (palletta)"
+	desc = "Contains palletta."
+	list_reagents = list(/datum/reagent/medicine/C2/palletta = 15)
 
 /obj/item/reagent_containers/syringe/perfluorodecalin
 	name = "syringe (perfluorodecalin)"
 	desc = "Contains perfluorodecalin."
-	list_reagents = list(/datum/reagent/medicine/perfluorodecalin = 15)
+	list_reagents = list(/datum/reagent/medicine/C2/perfluorodecalin = 15)
 
 /obj/item/reagent_containers/syringe/antiviral
 	name = "syringe (spaceacillin)"

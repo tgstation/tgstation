@@ -46,7 +46,7 @@
 	var/treatment_brute_avoid = null
 	var/treatment_brute = /datum/reagent/medicine/sanguiose
 	var/treatment_oxy_avoid = null
-	var/treatment_oxy = /datum/reagent/medicine/dexalin
+	var/treatment_oxy = /datum/reagent/medicine/salbutamol
 	var/treatment_fire_avoid = null
 	var/treatment_fire = /datum/reagent/medicine/frogenite
 	var/treatment_tox_avoid = null
@@ -381,7 +381,7 @@
 
 	if((!C.reagents.has_reagent(treatment_fire_avoid)) && (C.getFireLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_fire)))
 		return TRUE
-		
+
 	if((!C.reagents.has_reagent(treatment_tox_avoid)) && (C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_tox)))
 		return TRUE
 
@@ -461,7 +461,7 @@
 		if(!reagent_id && (C.getFireLoss() >= heal_threshold))
 			if(!C.reagents.has_reagent(treatment_fire) && !C.reagents.has_reagent(treatment_fire_avoid))
 				reagent_id = treatment_fire
-				
+
 		if(!reagent_id && (C.getToxLoss() >= heal_threshold))
 			if(!C.reagents.has_reagent(treatment_tox) && !C.reagents.has_reagent(treatment_tox_avoid))
 				reagent_id = treatment_tox

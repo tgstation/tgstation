@@ -22,27 +22,13 @@
 	name = /datum/reagent/medicine/inacusiate
 	id = /datum/reagent/medicine/inacusiate
 	results = list(/datum/reagent/medicine/inacusiate = 2)
-	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/charcoal = 1)
+	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/C2/palletta = 1)
 
 /datum/chemical_reaction/synaptizine
 	name = "Synaptizine"
 	id = /datum/reagent/medicine/synaptizine
 	results = list(/datum/reagent/medicine/synaptizine = 3)
 	required_reagents = list(/datum/reagent/consumable/sugar = 1, /datum/reagent/lithium = 1, /datum/reagent/water = 1)
-
-/datum/chemical_reaction/charcoal
-	name = "Charcoal"
-	id = /datum/reagent/medicine/charcoal
-	results = list(/datum/reagent/medicine/charcoal = 2)
-	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/consumable/sodiumchloride = 1)
-	mix_message = "The mixture yields a fine black powder."
-	required_temp = 380
-
-/datum/chemical_reaction/silver_sulfadiazine
-	name = "Silver Sulfadiazine"
-	id = /datum/reagent/medicine/silver_sulfadiazine
-	results = list(/datum/reagent/medicine/silver_sulfadiazine = 5)
-	required_reagents = list(/datum/reagent/ammonia = 1, /datum/reagent/silver = 1, /datum/reagent/sulfur = 1, /datum/reagent/oxygen = 1, /datum/reagent/chlorine = 1)
 
 /datum/chemical_reaction/salglu_solution
 	name = "Saline-Glucose Solution"
@@ -64,16 +50,9 @@
 
 /datum/chemical_reaction/synthflesh
 	name = "Synthflesh"
-	id = /datum/reagent/medicine/synthflesh
-	results = list(/datum/reagent/medicine/synthflesh = 3)
-	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/styptic_powder = 1)
-
-/datum/chemical_reaction/styptic_powder
-	name = "Styptic Powder"
-	id = /datum/reagent/medicine/styptic_powder
-	results = list(/datum/reagent/medicine/styptic_powder = 4)
-	required_reagents = list(/datum/reagent/aluminium = 1, /datum/reagent/hydrogen = 1, /datum/reagent/oxygen = 1, /datum/reagent/toxin/acid = 1)
-	mix_message = "The solution yields an astringent powder."
+	id = /datum/reagent/medicine/C2/synthflesh
+	results = list(/datum/reagent/medicine/C2/synthflesh = 3)
+	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/C2/acetaminophen = 1)
 
 /datum/chemical_reaction/calomel
 	name = "Calomel"
@@ -112,14 +91,6 @@
 	results = list(/datum/reagent/medicine/salbutamol = 5)
 	required_reagents = list(/datum/reagent/medicine/sal_acid = 1, /datum/reagent/lithium = 1, /datum/reagent/aluminium = 1, /datum/reagent/bromine = 1, /datum/reagent/ammonia = 1)
 
-/datum/chemical_reaction/perfluorodecalin
-	name = "Perfluorodecalin"
-	id = /datum/reagent/medicine/perfluorodecalin
-	results = list(/datum/reagent/medicine/perfluorodecalin = 3)
-	required_reagents = list(/datum/reagent/hydrogen = 1, /datum/reagent/fluorine = 1, /datum/reagent/oil = 1)
-	required_temp = 370
-	mix_message = "The mixture rapidly turns into a dense pink liquid."
-
 /datum/chemical_reaction/ephedrine
 	name = "Ephedrine"
 	id = /datum/reagent/medicine/ephedrine
@@ -138,7 +109,7 @@
 	name = "Oculine"
 	id = /datum/reagent/medicine/oculine
 	results = list(/datum/reagent/medicine/oculine = 3)
-	required_reagents = list(/datum/reagent/medicine/charcoal = 1, /datum/reagent/carbon = 1, /datum/reagent/hydrogen = 1)
+	required_reagents = list(/datum/reagent/medicine/C2/palletta = 1, /datum/reagent/carbon = 1, /datum/reagent/hydrogen = 1)
 	mix_message = "The mixture sputters loudly and becomes a pale pink color."
 
 /datum/chemical_reaction/atropine
@@ -182,7 +153,7 @@
 	name = /datum/reagent/medicine/antihol
 	id = /datum/reagent/medicine/antihol
 	results = list(/datum/reagent/medicine/antihol = 3)
-	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/medicine/charcoal = 1, /datum/reagent/copper = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/medicine/C2/palletta = 1, /datum/reagent/copper = 1)
 
 /datum/chemical_reaction/cryoxadone
 	name = "Cryoxadone"
@@ -266,7 +237,7 @@
 	id = /datum/reagent/medicine/sanguiose
 	results = list(/datum/reagent/medicine/sanguiose= 4)
 	required_reagents = list(/datum/reagent/phosphorus = 1, /datum/reagent/hydrogen = 1,/datum/reagent/phenol=1, /datum/reagent/acetone=1,)
-	
+
 /datum/chemical_reaction/frogenite
 	name = "Frogenite"
 	id = /datum/reagent/medicine/frogenite

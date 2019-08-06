@@ -220,24 +220,24 @@
 /obj/item/reagent_containers/glass/beaker/slime
 	list_reagents = list(/datum/reagent/toxin/slimejelly = 50)
 
-/obj/item/reagent_containers/glass/beaker/large/styptic
-	name = "styptic reserve tank"
-	list_reagents = list(/datum/reagent/medicine/styptic_powder = 50)
+/obj/item/reagent_containers/glass/beaker/large/acetaminophen
+	name = "acetaminophen reserve tank"
+	list_reagents = list(/datum/reagent/medicine/C2/acetaminophen = 50)
 
-/obj/item/reagent_containers/glass/beaker/large/silver_sulfadiazine
-	name = "silver sulfadiazine reserve tank"
-	list_reagents = list(/datum/reagent/medicine/silver_sulfadiazine = 50)
+/obj/item/reagent_containers/glass/beaker/large/neomycin_sulfate
+	name = "neomycin sulfate reserve tank"
+	list_reagents = list(/datum/reagent/medicine/C2/neomycin_sulfate = 50)
 
-/obj/item/reagent_containers/glass/beaker/large/charcoal
-	name = "charcoal reserve tank"
-	list_reagents = list(/datum/reagent/medicine/charcoal = 50)
+/obj/item/reagent_containers/glass/beaker/large/palletta
+	name = "palletta reserve tank"
+	list_reagents = list(/datum/reagent/medicine/C2/palletta = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/epinephrine
 	name = "epinephrine reserve tank"
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 50)
 
 /obj/item/reagent_containers/glass/beaker/synthflesh
-	list_reagents = list(/datum/reagent/medicine/synthflesh = 50)
+	list_reagents = list(/datum/reagent/medicine/C2/synthflesh = 50)
 
 /obj/item/reagent_containers/glass/bucket
 	name = "bucket"

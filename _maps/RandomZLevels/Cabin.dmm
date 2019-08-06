@@ -177,7 +177,7 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aG" = (
-/obj/item/reagent_containers/pill/patch/styptic,
+/obj/item/reagent_containers/pill/patch/acetaminophen,
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "aH" = (
@@ -469,7 +469,7 @@
 /area/awaymission/cabin)
 "bK" = (
 /obj/effect/decal/cleanable/blood,
-/obj/item/reagent_containers/pill/patch/styptic,
+/obj/item/reagent_containers/pill/patch/acetaminophen,
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "bL" = (

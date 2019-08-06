@@ -1,4 +1,4 @@
-#define PERF_BASE_DAMAGE		0.5
+
 
 //////////////////////////////////////////////////////////////////////////////////////////
 					// MEDICINE REAGENTS
@@ -213,37 +213,6 @@
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 
 //Goon Chems. Ported mainly from Goonstation. Easily mixable (or not so easily) and provide a variety of effects.
-/datum/reagent/medicine/silver_sulfadiazine
-	name = "Silver Sulfadiazine"
-	description = "If used in touch-based applications, immediately restores burn wounds as well as restoring more over time. If ingested through other means or overdosed, deals minor toxin damage."
-	reagent_state = LIQUID
-	color = "#C8A5DC"
-	overdose_threshold = 45
-
-/datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
-	if(iscarbon(M) && M.stat != DEAD)
-		if(method in list(INGEST, VAPOR, INJECT))
-			M.adjustToxLoss(0.5*reac_volume)
-			if(show_message)
-				to_chat(M, "<span class='warning'>You don't feel so good...</span>")
-		else if(M.getFireLoss())
-			M.adjustFireLoss(-reac_volume)
-			if(show_message)
-				to_chat(M, "<span class='danger'>You feel your burns healing! It stings like hell!</span>")
-			M.emote("scream")
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
-	..()
-
-/datum/reagent/medicine/silver_sulfadiazine/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss(-2*REM, 0)
-	..()
-	. = 1
-
-/datum/reagent/medicine/silver_sulfadiazine/overdose_process(mob/living/M)
-	M.adjustFireLoss(2.5*REM, 0)
-	M.adjustToxLoss(0.5, 0)
-	..()
-	. = 1
 
 /datum/reagent/medicine/oxandrolone
 	name = "Oxandrolone"
@@ -266,39 +235,6 @@
 		M.adjustFireLoss(4.5*REM, FALSE, FALSE, BODYPART_ORGANIC) // it's going to be healing either 4 or 0.5
 		. = 1
 	..()
-
-/datum/reagent/medicine/styptic_powder
-	name = "Styptic Powder"
-	description = "If used in touch-based applications, immediately restores bruising as well as restoring more over time. If ingested through other means or overdosed, deals minor toxin damage."
-	reagent_state = LIQUID
-	color = "#FF9696"
-	overdose_threshold = 45
-
-/datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
-	if(iscarbon(M) && M.stat != DEAD)
-		if(method in list(INGEST, VAPOR, INJECT))
-			M.adjustToxLoss(0.5*reac_volume)
-			if(show_message)
-				to_chat(M, "<span class='warning'>You don't feel so good...</span>")
-		else if(M.getBruteLoss())
-			M.adjustBruteLoss(-reac_volume)
-			if(show_message)
-				to_chat(M, "<span class='danger'>You feel your bruises healing! It stings like hell!</span>")
-			M.emote("scream")
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
-	..()
-
-
-/datum/reagent/medicine/styptic_powder/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-2*REM, 0)
-	..()
-	. = 1
-
-/datum/reagent/medicine/styptic_powder/overdose_process(mob/living/M)
-	M.adjustBruteLoss(2.5*REM, 0)
-	M.adjustToxLoss(0.5, 0)
-	..()
-	. = 1
 
 /datum/reagent/medicine/salglu_solution
 	name = "Saline-Glucose Solution"
@@ -376,47 +312,6 @@
 	if(iscarbon(M))
 		var/mob/living/carbon/N = M
 		N.hal_screwyhud = SCREWYHUD_NONE
-	..()
-
-/datum/reagent/medicine/synthflesh
-	name = "Synthflesh"
-	description = "Has a 100% chance of instantly healing brute and burn damage. One unit of the chemical will heal one point of damage. Touch application only."
-	reagent_state = LIQUID
-	color = "#FFEBEB"
-
-/datum/reagent/medicine/synthflesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
-	if(iscarbon(M))
-		if (M.stat == DEAD)
-			show_message = 0
-		if(method in list(PATCH, TOUCH))
-			M.adjustBruteLoss(-1.25 * reac_volume)
-			M.adjustFireLoss(-1.25 * reac_volume)
-			if(show_message)
-				to_chat(M, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
-	..()
-
-/datum/reagent/medicine/charcoal
-	name = "Charcoal"
-	description = "Heals toxin damage as well as slowly removing any other chemicals the patient has in their bloodstream."
-	reagent_state = LIQUID
-	color = "#000000"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	taste_description = "ash"
-
-/datum/reagent/medicine/charcoal/on_mob_life(mob/living/carbon/M)
-	M.adjustToxLoss(-2*REM, 0)
-	. = 1
-	for(var/datum/reagent/R in M.reagents.reagent_list)
-		if(R != src)
-			M.reagents.remove_reagent(R.type,1)
-	..()
-
-/datum/reagent/medicine/charcoal/on_transfer(atom/A, method=TOUCH, volume)
-	if(method == INGEST || !iscarbon(A)) //the atom not the charcoal
-		return
-	A.reagents.remove_reagent(/datum/reagent/medicine/charcoal/, volume) //We really should not be injecting an insoluble granular material.
-	A.reagents.add_reagent(/datum/reagent/carbon, volume) // Its pores would get clogged with gunk anyway.
 	..()
 
 /datum/reagent/medicine/omnizine
@@ -499,9 +394,9 @@
 
 /datum/reagent/medicine/sal_acid/on_mob_life(mob/living/carbon/M)
 	if(M.getBruteLoss() > 25)
-		M.adjustBruteLoss(-4*REM, 0) //Twice as effective as styptic powder for severe bruising
+		M.adjustBruteLoss(-4*REM, 0)
 	else
-		M.adjustBruteLoss(-0.5*REM, 0) //But only a quarter as effective for more minor ones
+		M.adjustBruteLoss(-0.5*REM, 0)
 	..()
 	. = 1
 
@@ -524,29 +419,6 @@
 		M.losebreath -= 2
 	..()
 	. = 1
-
-/datum/reagent/medicine/perfluorodecalin
-	name = "Perfluorodecalin"
-	description = "Restores oxygen deprivation while producing a lesser amount of toxic byproducts. Both scale with exposure to the drug and current amount of oxygen deprivation. Overdose causes toxic byproducts regardless of oxygen deprivation."
-	reagent_state = LIQUID
-	color = "#FF6464"
-	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-	overdose_threshold = 35 // at least 2 full syringes +some, this stuff is nasty if left in for long
-
-/datum/reagent/medicine/perfluorodecalin/on_mob_life(mob/living/carbon/human/M)
-	var/oxycalc = 2.5*REM*current_cycle
-	if(!overdosed)
-		oxycalc = min(oxycalc,M.getOxyLoss()+PERF_BASE_DAMAGE) //if NOT overdosing, we lower our toxdamage to only the damage we actually healed with a minimum of 0.5. IE if we only heal 10 oxygen damage but we COULD have healed 20, we will only take toxdamage for the 10. We would take the toxdamage for the extra 10 if we were overdosing.
-	M.adjustOxyLoss(-oxycalc, 0)
-	M.adjustToxLoss(oxycalc/2.5, 0)
-	if(prob(current_cycle) && M.losebreath)
-		M.losebreath--
-	..()
-	return TRUE
-
-/datum/reagent/medicine/perfluorodecalin/overdose_process(mob/living/M)
-    metabolization_rate += 1
-    return ..()
 
 /datum/reagent/medicine/ephedrine
 	name = "Ephedrine"
@@ -961,22 +833,6 @@
 	..()
 
 //Trek Chems, used primarily by medibots. Only heals a specific damage type, but is very efficient.
-/datum/reagent/medicine/dexalin
-	name = "Dexalin"
-	description = "Restores oxygen loss. Overdose causes it instead."
-	reagent_state = LIQUID
-	color = "#C8A5DC"
-	overdose_threshold = 30
-
-/datum/reagent/medicine/dexalin/on_mob_life(mob/living/carbon/M)
-	M.adjustOxyLoss(-2*REM, 0)
-	..()
-	. = 1
-
-/datum/reagent/medicine/dexalin/overdose_process(mob/living/M)
-	M.adjustOxyLoss(4*REM, 0)
-	..()
-	. = 1
 
 /datum/reagent/medicine/inaprovaline
 	name = "Inaprovaline"
@@ -1401,8 +1257,6 @@
 	..()
 	. = 1
 
-#undef PERF_BASE_DAMAGE
-
 //Injectables!
 //These are shitty chems for medibots and borgs to use in place of the old trekchems. They're limited to injection only, hence the name.
 
@@ -1463,7 +1317,7 @@
 /datum/reagent/medicine/frogenite/on_transfer(atom/A, method=TOUCH, volume) // Borrowed from whoever made charcoal injection or pill only and modified so it doesn't add a reagent.
 	if(method == INJECT || !iscarbon(A)) //the atom not the charcoal
 		return
-	A.reagents.remove_reagent(type, volume) 
+	A.reagents.remove_reagent(type, volume)
 	..()
 
 /datum/reagent/medicine/ferveatium
@@ -1497,5 +1351,3 @@
 		return
 	A.reagents.remove_reagent(type, volume)
 	..()
-
-

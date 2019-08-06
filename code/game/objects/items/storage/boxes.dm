@@ -1028,7 +1028,7 @@
 
 /obj/item/storage/box/silver_sulf/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
+		new /obj/item/reagent_containers/pill/patch/neomycin_sulfate(src)
 
 /obj/item/storage/box/fountainpens
 	name = "box of fountain pens"

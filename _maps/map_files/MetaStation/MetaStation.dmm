@@ -5825,7 +5825,7 @@
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
 /obj/item/reagent_containers/glass/bottle/epinephrine,
-/obj/item/reagent_containers/glass/bottle/charcoal,
+/obj/item/reagent_containers/glass/bottle/palletta,
 /obj/item/reagent_containers/syringe,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
@@ -42121,7 +42121,7 @@
 /obj/structure/rack,
 /obj/item/stack/medical/ointment,
 /obj/item/stack/medical/bruise_pack,
-/obj/item/reagent_containers/syringe/charcoal,
+/obj/item/reagent_containers/syringe/palletta,
 /obj/item/reagent_containers/syringe/epinephrine{
 	pixel_x = -1;
 	pixel_y = 2
@@ -46509,7 +46509,7 @@
 	pixel_x = 8;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/palletta{
 	pixel_x = -5
 	},
 /obj/item/reagent_containers/glass/bottle/morphine,
@@ -47143,7 +47143,7 @@
 	pixel_x = 7;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/palletta{
 	pixel_x = -4;
 	pixel_y = -3
 	},
@@ -51731,7 +51731,7 @@
 /obj/item/stack/sheet/mineral/plasma,
 /obj/structure/table/glass,
 /obj/item/reagent_containers/glass/bottle/epinephrine,
-/obj/item/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/palletta{
 	pixel_x = 7;
 	pixel_y = 4
 	},
@@ -52383,7 +52383,7 @@
 /obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = 8
 	},
-/obj/item/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/palletta{
 	pixel_x = -5
 	},
 /obj/item/reagent_containers/syringe/epinephrine,
@@ -53084,7 +53084,7 @@
 	pixel_x = 7;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/palletta{
 	pixel_x = -2;
 	pixel_y = -1
 	},
