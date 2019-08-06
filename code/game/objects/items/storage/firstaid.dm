@@ -94,7 +94,7 @@
 		return
 	var/static/items_inside = list(
 	    /obj/item/storage/pill_bottle/palletta/less = 1,
-		/obj/item/reagent_containers/syringe/thializid = 3,
+		/obj/item/reagent_containers/syringe/palletta = 3,
 		/obj/item/storage/pill_bottle/potassiodide = 1,
 		/obj/item/reagent_containers/hypospray/medipen/penacid = 1,
 		/obj/item/healthanalyzer = 1)
