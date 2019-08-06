@@ -42,16 +42,23 @@
 	return ..()
 
 /obj/vehicle/ridden/scooter/skateboard
-	name = "skateboard"
-	desc = "An unfinished scooter which can only barely be called a skateboard. It's still rideable, but probably unsafe. Looks like you'll need to add a few rods to make handlebars. Alt-click to adjust speed."
+	name = "improvised skateboard"
+	desc = "An unfinished scooter which can only barely be called a skateboard. It's still rideable, but probably unsafe. Looks like you'll need to add a few rods to make handlebars."
 	icon_state = "skateboard"
 	density = FALSE
 	arms_required = 0
 	fall_off_if_missing_arms = FALSE
 	var/datum/effect_system/spark_spread/sparks
-	var/board_icon = "skateboard"
-	var/instability = 10 // stamina drain multiplier
+	///Whether the board is currently grinding
 	var/grinding = FALSE
+	///World time for the last crash
+	var/last_crash
+	///Stores the default icon state
+	var/board_icon = "skateboard"
+	///The handheld item counterpart for the board
+	var/board_item_type = "/obj/item/melee/skateboard"
+	///Stamina drain multiplier
+	var/instability = 10
 
 /obj/vehicle/ridden/scooter/skateboard/Initialize()
 	. = ..()
@@ -72,7 +79,7 @@
 	. = ..()
 
 /obj/vehicle/ridden/scooter/skateboard/relaymove()
-	if (grinding)
+	if (grinding || world.time - last_crash < 10)
 		return FALSE
 	return ..()
 
@@ -93,34 +100,37 @@
 	. = ..()
 	if(A.density && has_buckled_mobs())
 		var/mob/living/H = buckled_mobs[1]
-		H.adjustStaminaLoss(instability*5)
+		H.adjustStaminaLoss(instability*6)
 		playsound(src, 'sound/effects/bang.ogg', 40, 1)
-		if(!iscarbon(H) || H.getStaminaLoss() >= 100 || grinding)
+		if(!iscarbon(H) || H.getStaminaLoss() >= 100 || grinding || world.time - last_crash < 10)
 			var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
 			unbuckle_mob(H)
 			H.throw_at(throw_target, 3, 2)
 			var/head_slot = H.get_item_by_slot(SLOT_HEAD)
 			if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
-				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3)
+				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 				H.updatehealth()
 			visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
+			H.Paralyze(80)
 		else
 			var/backdir = turn(dir, 180)
 			vehicle_move(backdir)
 			H.spin(4, 1)
+		last_crash = world.time
 
 ///Moves the vehicle forward and if it lands on a table, repeats
 /obj/vehicle/ridden/scooter/skateboard/proc/grind()
 	vehicle_move(dir)
 	if(has_buckled_mobs() && locate(/obj/structure/table) in loc.contents)
 		var/mob/living/L = buckled_mobs[1]
-		L.adjustStaminaLoss(instability)
+		L.adjustStaminaLoss(instability*0.5)
 		if (L.getStaminaLoss() >= 100)
 			playsound(src, 'sound/effects/bang.ogg', 20, 1)
 			unbuckle_mob(L)
 			var/atom/throw_target = get_edge_target_turf(src, pick(GLOB.cardinals))
 			L.throw_at(throw_target, 2, 2)
 			visible_message("<span class='danger'>[L] loses [L.p_their()] footing and slams on the ground!</span>")
+			L.Paralyze(40)
 			grinding = FALSE
 			icon_state = board_icon
 			return
@@ -146,9 +156,42 @@
 		to_chat(M, "<span class='warning'>You can't lift this up when somebody's on it.</span>")
 		return
 	if(over_object == M)
-		var/obj/item/melee/skateboard/board = new /obj/item/melee/skateboard()
+		var/board = new board_item_type(get_turf(M))
 		M.put_in_hands(board)
 		qdel(src)
+
+/obj/vehicle/ridden/scooter/skateboard/pro
+	name = "skateboard"
+	desc = "A RaDSTORMz brand professional skateboard. Looks a lot more stable than the average board."
+	icon_state = "skateboard2"
+	board_icon = "skateboard2"
+	board_item_type = "/obj/item/melee/skateboard/pro"
+	instability = 6
+
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/
+	name = "hoverboard"
+	desc = "A blast from the past, so retro!"
+	board_item_type = "/obj/item/melee/skateboard/hoverboard"
+	instability = 3
+	icon_state = "hoverboard_red"
+	board_icon = "hoverboard_red"
+
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/screwdriver_act(mob/living/user, obj/item/I)
+	return
+
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/stack/rods))
+		return
+	else
+		return ..()
+
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/admin
+	name = "\improper Board Of Directors"
+	desc = "The engineering complexity of a spaceship concentrated inside of a board. Just as expensive, too."
+	board_item_type = "/obj/item/melee/skateboard/hoverboard/admin"
+	instability = 0
+	icon_state = "hoverboard_nt"
+	board_icon = "hoverboard_nt"
 
 //CONSTRUCTION
 /obj/item/scooter_frame

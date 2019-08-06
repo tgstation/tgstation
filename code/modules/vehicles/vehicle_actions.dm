@@ -210,16 +210,22 @@
 			playsound(src, 'sound/effects/bang.ogg', 20, 1)
 			V.unbuckle_mob(L)
 			L.throw_at(landing_turf, 2, 2)
+			L.Paralyze(40)
 			V.visible_message("<span class='danger'>[L] misses the landing and falls on [L.p_their()] face!</span>")
 		else
 			L.spin(4, 1)
 			animate(L, pixel_y = -6, time = 4)
 			animate(V, pixel_y = -6, time = 3)
 			playsound(V, 'sound/vehicles/skateboard_ollie.ogg', 50, 1)
-			L.pass_flags |= PASSTABLE
+			var/passtable_mob = FALSE
+			if (L.pass_flags & PASSTABLE)//checks if L has an existing flag to make sure we don't clear it later
+				passtable_mob = TRUE
+			else
+				L.pass_flags |= PASSTABLE
 			V.pass_flags |= PASSTABLE
 			L.Move(landing_turf, vehicle_target.dir)
-			L.pass_flags &= ~PASSTABLE
+			if (!passtable_mob)//clears the flag here
+				L.pass_flags &= ~PASSTABLE
 			V.pass_flags &= ~PASSTABLE
 		if(locate(/obj/structure/table) in V.loc.contents)
 			V.grinding = TRUE
