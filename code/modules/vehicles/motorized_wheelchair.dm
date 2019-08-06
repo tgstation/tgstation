@@ -6,26 +6,22 @@
 	var/power_efficiency = 1
 	var/power_usage = 40
 	var/panel_open = FALSE
-	var/required_parts = list(/obj/item/stock_parts/manipulator, 
+	var/list/required_parts = list(/obj/item/stock_parts/manipulator, 
 							/obj/item/stock_parts/manipulator,
 							/obj/item/stock_parts/capacitor)
-	var/component_parts = list()
 	var/obj/item/stock_parts/cell/power_cell
 
-/obj/vehicle/ridden/wheelchair/motorized/Initialize()
-	. = ..()
-	component_parts += new /obj/item/stock_parts/manipulator(src)
-	component_parts += new /obj/item/stock_parts/manipulator(src)
-	component_parts += new /obj/item/stock_parts/capacitor(src)
+/obj/vehicle/ridden/wheelchair/motorized/CheckParts(list/parts_list)
+	..()
 	refresh_parts()
 
 /obj/vehicle/ridden/wheelchair/motorized/proc/refresh_parts()
 	var/_temp = 0
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in contents)
 		_temp += M.rating
 	speed = _temp
 	_temp = 0
-	for(var/obj/item/stock_parts/capacitor/C in component_parts)
+	for(var/obj/item/stock_parts/capacitor/C in contents)
 		_temp += C.rating
 	power_efficiency = _temp
 	var/datum/component/riding/D = GetComponent(/datum/component/riding)
@@ -97,19 +93,18 @@
 					I.forceMove(src)
 					power_cell = I
 					to_chat(user, "<span class='notice'>You install the [I].</span>")
+				refresh_parts()
 				return
 			var/obj/item/stock_parts/B = I
 			var/P 
-			for(var/obj/item/A in component_parts)
+			for(var/obj/item/stock_parts/A in contents)
 				for(var/D in required_parts)
 					if(ispath(A.type, D))
 						P = D
 						break
 				if(istype(B, P) && istype(A, P))
 					if(B.get_part_rating() > A.get_part_rating())
-						component_parts += B
 						B.forceMove(src)
-						component_parts -= A
 						user.put_in_hands(A)
 						user.visible_message("<span class='notice'>[user] replaces [A] with [B] in [src].</span>", "<span class='notice'>You replace [A] with [B].</span>")
 						break

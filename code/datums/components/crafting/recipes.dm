@@ -408,14 +408,8 @@
 		/obj/item/stack/rods = 8,
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/stock_parts/capacitor = 1)
-	blacklist = list(
-		/obj/item/stock_parts/manipulator/femto,
-		/obj/item/stock_parts/manipulator/pico,
-		/obj/item/stock_parts/manipulator/nano,
-		/obj/item/stock_parts/capacitor/quadratic,
-		/obj/item/stock_parts/capacitor/super,
-		/obj/item/stock_parts/capacitor/adv
-	)
+	parts = list(/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/capacitor = 1)
 	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
 	time = 200
 	category = CAT_MISC
