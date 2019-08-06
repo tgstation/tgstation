@@ -59,20 +59,23 @@
 	. = ..()
 	desc += " This drone appears to have a complex holoprojector built on its 'head'."
 
-/obj/item/drone_shell/syndrone
+/obj/effect/mob_spawn/drone/syndrone
 	name = "syndrone shell"
 	desc = "A shell of a syndrone, a modified maintenance drone designed to infiltrate and annihilate."
 	icon_state = "syndrone_item"
-	drone_type = /mob/living/simple_animal/drone/syndrone
+	mob_name = "syndrone"
+	mob_type = /mob/living/simple_animal/drone/syndrone
 
-/obj/item/drone_shell/syndrone/badass
+/obj/effect/mob_spawn/drone/syndrone/badass
 	name = "badass syndrone shell"
-	drone_type = /mob/living/simple_animal/drone/syndrone/badass
+	mob_name = "badass syndrone"
+	mob_type = /mob/living/simple_animal/drone/syndrone/badass
 
-/obj/item/drone_shell/snowflake
+/obj/effect/mob_spawn/drone/snowflake
 	name = "snowflake drone shell"
 	desc = "A shell of a snowflake drone, a maintenance drone with a built in holographic projector to display hats and masks."
-	drone_type = /mob/living/simple_animal/drone/snowflake
+	mob_name = "snowflake drone"
+	mob_type = /mob/living/simple_animal/drone/snowflake
 
 /mob/living/simple_animal/drone/polymorphed
 	default_storage = null
@@ -93,17 +96,14 @@
 	icon_living = icon_state
 	icon_dead = "[visualAppearence]_dead"
 
-/obj/effect/mob_spawn/drone_dusty
+/obj/effect/mob_spawn/drone/dusty
 	name = "derelict drone shell"
 	desc = "A long-forgotten drone shell. It seems kind of... Space Russian."
 	icon = 'icons/mob/drone.dmi'
 	icon_state = "drone_maint_hat"
-	density = FALSE
-	anchored = TRUE
-	mob_type = /mob/living/simple_animal/drone/derelict
 	mob_name = "derelict drone"
-	death = FALSE
-	roundstart = FALSE
+	mob_type = /mob/living/simple_animal/drone/derelict
+	anchored = TRUE
 	flavour_text = {"
 	<b>You are a drone on KS13. Repair, maintain and improve the station that housed you on activation.</b>
 	"}

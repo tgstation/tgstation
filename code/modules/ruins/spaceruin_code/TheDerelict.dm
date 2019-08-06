@@ -44,19 +44,6 @@
 	. += "<span class='notice'>It appears to be powered via a cable connector.</span>"
 
 
-//Initializing airlock links.
-/obj/machinery/computer/vaultcontroller/Initialize()
-	..()
-	for(var/obj/machinery/door/airlock/vault/derelict/A in GLOB.airlocks)
-		if(A.id_tag == "derelictvault")
-			if(!door1)
-				door1 = A
-			if(door1 && !door2)
-				door2 = A
-			if(door1 && door2)
-				break
-
-
 //Checks for cable connection, charges if possible.
 /obj/machinery/computer/vaultcontroller/process()
 	if(siphoned_power >= siphon_max)
@@ -72,6 +59,18 @@
 	attached_cable = locate(/obj/structure/cable) in T
 
 
+///Initializes airlock links.
+/obj/machinery/computer/vaultcontroller/proc/find_airlocks()
+	for(var/obj/machinery/door/airlock/A in GLOB.airlocks)
+		if(A.id_tag == "derelictvault")
+			if(!door1)
+				door1 = A
+				continue
+			if(door1 && !door2)
+				door2 = A
+				break
+
+
 ///Tries to charge from powernet excess, no upper limit except max charge.
 /obj/machinery/computer/vaultcontroller/proc/attempt_siphon()
 	var/surpluspower = CLAMP(attached_cable.surplus(), 0, (siphon_max - siphoned_power))
@@ -80,28 +79,27 @@
 		siphoned_power += surpluspower
 
 
-///Attempts to lock/unlock vault doors, if machine is charged.
-/obj/machinery/computer/vaultcontroller/proc/activate_lock()
-	if(siphoned_power < siphon_max)
-		return
-	if(locked)
-		unlock_vault()
-	else
-		lock_vault()
+///Handles the doors closing
+/obj/machinery/computer/vaultcontroller/proc/cycle_close(obj/machinery/door/airlock/A)
+	A.safe = FALSE //Make sure its forced closed, always
+	A.unbolt()
+	A.close()
+	A.bolt()
+
+
+///Handles the doors opening
+/obj/machinery/computer/vaultcontroller/proc/cycle_open(obj/machinery/door/airlock/A)
+	A.unbolt()
+	A.open()
+	A.bolt()
 
 
 ///Attempts to lock the vault doors
 /obj/machinery/computer/vaultcontroller/proc/lock_vault()
 	if(door1 && !door1.density)
-		door1.safe = FALSE //Make sure its forced closed, always
-		door1.unbolt()
-		door1.close()
-		door1.bolt()
+		cycle_close(door1)
 	if(door2 && !door2.density)
-		door2.safe = FALSE //Make sure its forced closed, always
-		door2.unbolt()
-		door2.close()
-		door2.bolt()
+		cycle_close(door2)
 	if(door1.density && door1.locked && door2.density && door2.locked)
 		locked = TRUE
 
@@ -109,15 +107,23 @@
 ///Attempts to unlock the vault doors
 /obj/machinery/computer/vaultcontroller/proc/unlock_vault()
 	if(door1 && door1.density)
-		door1.unbolt()
-		door1.open()
-		door1.bolt()
+		cycle_open(door1)
 	if(door2 && door2.density)
-		door2.unbolt()
-		door2.open()
-		door2.bolt()
+		cycle_open(door2)
 	if(!door1.density && door1.locked && !door2.density && door2.locked)
 		locked = FALSE
+
+
+///Attempts to lock/unlock vault doors, if machine is charged.
+/obj/machinery/computer/vaultcontroller/proc/activate_lock()
+	if(siphoned_power < siphon_max)
+		return
+	if(!door1 || !door2)
+		find_airlocks()
+	if(locked)
+		unlock_vault()
+	else
+		lock_vault()
 
 
 /obj/machinery/computer/vaultcontroller/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
@@ -141,7 +147,6 @@
 	data["stored"] = siphoned_power
 	data["max"] = siphon_max
 	data["doorstatus"] = locked
-
 	return data
 
 

@@ -3086,6 +3086,11 @@
 	dir = 1
 	},
 /obj/structure/rack,
+/obj/item/stack/sheet/mineral/gold,
+/obj/item/stack/sheet/mineral/gold,
+/obj/item/stack/sheet/mineral/gold,
+/obj/item/stack/sheet/mineral/gold,
+/obj/item/stack/sheet/mineral/gold,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "mz" = (
@@ -3568,6 +3573,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge)
+"rC" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/mineral/titanium,
+/obj/item/stack/sheet/mineral/titanium,
+/obj/item/stack/sheet/mineral/titanium,
+/obj/item/stack/sheet/mineral/titanium,
+/obj/item/stack/sheet/mineral/titanium,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
 "rK" = (
 /turf/template_noop,
 /area/ruin/space/derelict/medical)
@@ -3580,6 +3594,7 @@
 /area/space/nearstation)
 "vo" = (
 /obj/structure/rack,
+/obj/item/stack/sheet/mineral/silver,
 /obj/item/stack/sheet/mineral/silver,
 /obj/item/stack/sheet/mineral/silver,
 /obj/item/stack/sheet/mineral/silver,
@@ -3787,11 +3802,25 @@
 /area/ruin/space/derelict/singularity_engine)
 "Xu" = (
 /obj/structure/rack,
+/obj/item/stack/sheet/mineral/uranium,
+/obj/item/stack/sheet/mineral/uranium,
+/obj/item/stack/sheet/mineral/uranium,
+/obj/item/stack/sheet/mineral/uranium,
+/obj/item/stack/sheet/mineral/uranium,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "YQ" = (
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
+"Zu" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
+/turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "ZA" = (
 /obj/machinery/power/terminal{
@@ -11057,9 +11086,9 @@ bj
 bj
 bj
 bW
-Xu
+Zu
 bz
-Xu
+rC
 bz
 vo
 bW
