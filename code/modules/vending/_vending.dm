@@ -349,7 +349,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		.[record.product_path] += record.amount
 
 /obj/machinery/vending/crowbar_act(mob/living/user, obj/item/I)
-	if(!component_parts && custom)
+	if(!component_parts || custom)
 		return FALSE
 	default_deconstruction_crowbar(I)
 	return TRUE
@@ -383,22 +383,22 @@ GLOBAL_LIST_EMPTY(vending_products)
 			var/obj/item/assembly/voice/V = I
 			if(V.recorded)
 				slogan_list += "[V.recorded]"
-			return
 		if(!private_a)
 			var/mob/living/carbon/human/H
 			var/obj/item/card/id/C
 			if(ishuman(user))
 				H = user
 				C = H.get_idcard(TRUE)
-				if(C && C.registered_account)
+				if(C?.registered_account)
 					private_a = C.registered_account
 					say("The [src] has been linked to [C].")
-			return
 		if(isowner(user))
 			if(canLoadItem(I))
 				loadingAttempt(I,user)
 				updateUsrDialog()
-			return
+			else
+				return ..()
+		return
 
 	if(refill_canister && istype(I, refill_canister))
 		if (!panel_open)
@@ -503,7 +503,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 						if(T.name == O)
 							price = "$[T.custom_price]"
 							break
-				dat += "<B>[capitalize(O)] ([price]): [N]</B><br>"
+				dat += "<B>[O] ([price]): [N]</B><br>"
 		dat += "</div>"
 
 	if(!custom)
@@ -548,9 +548,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 /obj/machinery/vending/Topic(href, href_list)
 	if(..())
 		return
-
 	usr.set_machine(src)
-	var/price
+	///what we are selling
+	var/obj/S
+
 	if((href_list["dispense"]) && (vend_ready))
 		var/N = href_list["dispense"]
 		if(vending_machine_input[N] <= 0) // Sanity check, there are probably ways to press the button when it shouldn't be possible.
@@ -573,23 +574,22 @@ GLOBAL_LIST_EMPTY(vending_products)
 			var/datum/bank_account/account = C.registered_account
 			for(var/obj/O in contents)
 				if(O.name == N)
-					price = O.custom_price
+					S = O
 					break
-			if(!account.has_money(price))
+			if(!account.has_money(S.custom_price))
 				say("You do not possess the funds to purchase this.")
 			else
-				account.adjust_money(-price)
+				account.adjust_money(-S.custom_price)
 				var/datum/bank_account/D = private_a
 				if(D)
-					D.adjust_money(price)
+					D.adjust_money(S.custom_price)
 				use_power(5)
-
 				vending_machine_input[N] = max(vending_machine_input[N] - 1, 0)
-				for(var/obj/O in contents)
-					if(O.name == N)
-						say("Thank you for buying local and purchasing [O]!")
-						O.forceMove(drop_location())
-						break
+				if(last_shopper != usr || purchase_message_cooldown < world.time)
+					say("Thank you for buying local and purchasing [S]!")
+					purchase_message_cooldown = world.time + 5 SECONDS
+					last_shopper = usr
+				S.forceMove(drop_location())
 				loaded_items--
 			vend_ready = 1
 			updateUsrDialog()
@@ -678,8 +678,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 		var/obj/item/card/id/C
 		if(ishuman(user))
 			H = user
-			C = H.get_idcard(TRUE)
-			if(C.registered_account && C.registered_account == private_a)
+			C = H.get_idcard(FALSE)
+			if(C?.registered_account && C.registered_account == private_a)
 				return TRUE
 
 /obj/machinery/vending/process()
@@ -811,13 +811,16 @@ GLOBAL_LIST_EMPTY(vending_products)
 	name = "Custom Vendor"
 	icon_state = "robotics"
 	icon_deny = "robotics-deny"
+	max_integrity = 400
 	payment_department = NO_FREEBIES
 	refill_canister = /obj/item/vending_refill/custom
 	custom = TRUE
 
 /obj/machinery/vending/custom/Destroy()
+	var/turf/T = get_turf(src)
 	for(var/obj/item/I in contents)
-		I.forceMove(get_turf(src))
+		I?.forceMove(T)
+	explosion(T, -1, 0, 3)
 	return ..()
 
 /obj/item/vending_refill/custom
