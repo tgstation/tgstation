@@ -20,7 +20,7 @@
 
 /obj/item/grenade/c4/Initialize()
 	. = ..()
-	plastic_overlay = mutable_appearance(icon, "[item_state]2", HIGH_OBJ_LAYER)
+	plastic_overlay = mutable_appearance(icon, "[item_state]2") //Float layer
 	wires = new /datum/wires/explosive/c4(src)
 
 /obj/item/grenade/c4/ComponentInitialize()
@@ -98,7 +98,7 @@
 			I.throw_range = max(1, (I.throw_range - 3))
 			I.embedding = I.embedding.setRating(embed_chance = 0)
 
-		target.add_overlay(plastic_overlay, TRUE)
+		target.add_overlay(plastic_overlay)
 		to_chat(user, "<span class='notice'>You plant the bomb. Timer counting down from [det_time].</span>")
 		addtimer(CALLBACK(src, .proc/prime), det_time*10)
 
