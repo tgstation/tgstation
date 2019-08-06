@@ -1,7 +1,7 @@
 /datum/computer_file/program/contract_uplink
-	filename = "contract uplink"
-	filedesc = "Syndicate Contract Uplink"
-	program_icon_state = "hostile"
+	filename = "contractor uplink"
+	filedesc = "Syndicate Contractor Uplink"
+	program_icon_state = "assign"
 	extended_desc = "A standard, Syndicate issued system for handling important contracts while on the field."
 	size = 10
 	requires_ntnet = 0
@@ -33,6 +33,8 @@
 			// Set as the active contract
 			hard_drive.traitor_data.contractor_hub.assigned_contracts[contract_id].status = CONTRACT_STATUS_ACTIVE
 			hard_drive.traitor_data.contractor_hub.current_contract = hard_drive.traitor_data.contractor_hub.assigned_contracts[contract_id]
+			
+			program_icon_state = "single_contract"
 			return 1
 		if("PRG_login")
 			var/datum/antagonist/traitor/traitor_data = user.mind.has_antag_datum(/datum/antagonist/traitor)
@@ -52,6 +54,8 @@
 					traitor_data.contractor_hub.create_contracts(traitor_data.owner)
 
 					hard_drive.traitor_data = traitor_data
+
+					program_icon_state = "contracts"
 					assigned = TRUE
 			return 1
 		if("PRG_call_extraction")
@@ -59,6 +63,8 @@
 				if (hard_drive.traitor_data.contractor_hub.current_contract.handle_extraction(user))
 					user.playsound_local(user, 'sound/effects/confirmdropoff.ogg', 100, 1)
 					hard_drive.traitor_data.contractor_hub.current_contract.status = CONTRACT_STATUS_EXTRACTING
+
+					program_icon_state = "extracted"
 				else
 					user.playsound_local(user, 'sound/machines/uplinkerror.ogg', 50)
 					error = "Either both you or your target aren't at the dropoff location, or the pod hasn't got a valid place to land. Clear space, or make sure you're both inside."
@@ -72,6 +78,8 @@
 
 			hard_drive.traitor_data.contractor_hub.current_contract = null
 			hard_drive.traitor_data.contractor_hub.assigned_contracts[contract_id].status = CONTRACT_STATUS_ABORTED
+
+			program_icon_state = "contracts"
 
 			return 1
 		if("PRG_redeem_TC")
@@ -95,8 +103,10 @@
 			error = ""
 		if("PRG_contractor_hub")
 			page = CONTRACT_UPLINK_PAGE_HUB
+			program_icon_state = "store"
 		if ("PRG_hub_back")
 			page = CONTRACT_UPLINK_PAGE_CONTRACTS
+			program_icon_state = "contracts"
 		if ("buy_hub")
 			if (hard_drive.traitor_data.owner.current == user)
 				var/item = params["item"]
@@ -110,6 +120,7 @@
 /datum/computer_file/program/contract_uplink/ui_data(mob/user)
 	var/list/data = list()
 	var/obj/item/computer_hardware/hard_drive/small/syndicate/hard_drive = computer.all_components[MC_HDD]
+	var/screen_to_be = null
 
 	if (hard_drive && hard_drive.traitor_data != null)
 		var/datum/antagonist/traitor/traitor_data = hard_drive.traitor_data
@@ -117,8 +128,10 @@
 
 		if (traitor_data.contractor_hub.current_contract)
 			data["ongoing_contract"] = TRUE
+			screen_to_be = "single_contract"
 			if (traitor_data.contractor_hub.current_contract.status == CONTRACT_STATUS_EXTRACTING)
 				data["extraction_enroute"] = TRUE
+				screen_to_be = "extracted"
 		
 		data["logged_in"] = TRUE
 		data["station_name"] = GLOB.station_name
@@ -172,6 +185,18 @@
 				direction = "???"
 
 			data["dropoff_direction"] = direction
+
+		if (page == CONTRACT_UPLINK_PAGE_HUB)
+			screen_to_be = "store"
+		
+		if (!screen_to_be)
+			screen_to_be = "contracts"
 	else
 		data["logged_in"] = FALSE
+		
+	if (!screen_to_be)
+		screen_to_be = "assign"
+
+	program_icon_state = screen_to_be
+	update_computer_icon()
 	return data
