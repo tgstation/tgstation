@@ -49,13 +49,13 @@
 	else
 		log_combat(user, M, "attempted to apply", src, reagents.log_list())
 		M.visible_message("<span class='danger'>[user] attempts to [apply_method] [src] on [M].</span>", \
-							"<span class='userdanger'>[user] attempts to [apply_method] [src] on [M].</span>")
+							"<span class='userdanger'>[user] attempts to [apply_method] [src] on you.</span>")
 		if(!do_mob(user, M))
 			return
 		if(!reagents || !reagents.total_volume)
 			return
 		M.visible_message("<span class='danger'>[user] [apply_method]s [M] down with [src].</span>", \
-							"<span class='userdanger'>[user] [apply_method]s [M] down with [src].</span>")
+							"<span class='userdanger'>[user] [apply_method]s you down with [src].</span>")
 
 	if(!reagents || !reagents.total_volume)
 		return
