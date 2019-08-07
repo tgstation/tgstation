@@ -46,14 +46,17 @@
 		return 0
 
 	if(M == user)
-		user.visible_message("<span class='notice'>[user] swallows some of the contents of \the [src].</span>", "<span class='notice'>You swallow some of the contents of \the [src].</span>")
+		user.visible_message("<span class='notice'>[user] swallows some of the contents of \the [src].</span>", \
+			"<span class='notice'>You swallow some of the contents of \the [src].</span>")
 	else
-		user.visible_message("<span class='warning'>[user] attempts to feed [M] from [src].</span>")
+		M.visible_message("<span class='warning'>[user] attempts to feed [M] from [src].</span>", \
+			"<span class='warning'>[user] attempts to feed you from [src].</span>")
 		if(!do_mob(user, M))
 			return
 		if(!reagents || !reagents.total_volume)
 			return // The condiment might be empty after the delay.
-		user.visible_message("<span class='warning'>[user] feeds [M] from [src].</span>")
+		M.visible_message("<span class='warning'>[user] fed [M] from [src].</span>", \
+			"<span class='warning'>[user] fed you from [src].</span>")
 		log_combat(user, M, "fed", reagents.log_list())
 
 	var/fraction = min(10/reagents.total_volume, 1)
