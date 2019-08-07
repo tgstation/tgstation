@@ -54,7 +54,7 @@
 
 /datum/reagent/medicine/C2/ichiyuri/on_mob_life(mob/living/carbon/M)
 	M.adjustFireLoss(-0.25*current_cycle*REM)
-	if(prob(resetting_probability))
+	if(prob(resetting_probability) && !(M.restrained() || M.incapacitated()))
 		if(spammer < world.time)
 			to_chat(M,"<span class='warning'>You can't help but to itch the burn.</span>")
 			spammer = world.time + (10 SECONDS)
