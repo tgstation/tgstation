@@ -431,10 +431,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		var/datum/dynamic_ruleset/roundstart/delayed/rule = starting_rule
 		addtimer(CALLBACK(src, .proc/execute_delayed, rule), rule.delay)
 
-	spend_threat(starting_rule.cost)
-	threat_log += "[worldtime2text()]: Roundstart [starting_rule.name] spent [starting_rule.cost]"
 	starting_rule.trim_candidates()
 	if (starting_rule.pre_execute())
+		spend_threat(starting_rule.cost)
+		threat_log += "[worldtime2text()]: Roundstart [starting_rule.name] spent [starting_rule.cost]"
 		if(starting_rule.flags & HIGHLANDER_RULESET)
 			highlander_executed = TRUE
 		else if(starting_rule.flags & ONLY_RULESET)
@@ -495,10 +495,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			latejoin_rules = remove_from_list(latejoin_rules, rule.type)
 		else if(rule.type == "Midround")
 			midround_rules = remove_from_list(midround_rules, rule.type)
-
-	spend_threat(rule.cost)
-	threat_log += "[worldtime2text()]: [rule.ruletype] [rule.name] spent [rule.cost]"
+	
 	if (rule.execute())
+		log_game("DYNAMIC: Injected a [rule.ruletype == 'latejoin' ? 'latejoin' : 'midround'] ruleset [rule.name].")
+		spend_threat(rule.cost)
+		threat_log += "[worldtime2text()]: [rule.ruletype] [rule.name] spent [rule.cost]"
 		if(rule.flags & HIGHLANDER_RULESET)
 			highlander_executed = TRUE
 		else if(rule.flags & ONLY_RULESET)
@@ -507,9 +508,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			var/mob/M = pick(rule.candidates)
 			message_admins("[key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
 			log_game("DYNAMIC: [key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
-		else if (rule.ruletype == "Midround")
-			message_admins("Injecting midround rule [rule.name]")
-			log_game("DYNAMIC: Injecting midround rule [rule.name]!")
 		executed_rules += rule
 		rule.candidates.Cut()
 		if (rule.persistent)
