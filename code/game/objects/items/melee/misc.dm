@@ -295,7 +295,7 @@
 				user.do_attack_animation(target)
 
 			playsound(get_turf(src), on_stun_sound, 75, 1, -1)
-			target.Paralyze(stun_time_carbon)
+			target.Knockdown(stun_time_carbon)
 			target.adjustStaminaLoss(stamina_damage)
 			additional_effects_carbon(target, user)
 
