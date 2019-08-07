@@ -80,13 +80,13 @@
 	icon_state = "book_ratvar"
 	language_name = "Ratvarian"
 
-/obj/item/book/granter/language_book/piratespeak
-	name = "To Hornswagle a Bilgerat"
-	desc = "A longwinded and dull nautical romance novel featuring an alarming amount of sailing jargon. Piratical tripe."
-	learnable_language = /datum/language/piratespeak
-	remarks = list("Fore is the front of the ship, aft is the back...", "Port is the ship's left, starboard is the right...", "What even is a piece of eight?", "I wonder if they serve grog at the bar..?", "How to effectively gesture with a hook hand...")
-	icon_state = "book_pirate"
-	language_name = "Pirate"
+///obj/item/book/granter/language_book/piratespeak  //not actually assigned to pirates, so currently unused
+//	name = "To Hornswagle a Bilgerat"
+//	desc = "A longwinded and dull nautical romance novel featuring an alarming amount of sailing jargon. Piratical tripe."
+//	learnable_language = /datum/language/piratespeak
+//	remarks = list("Fore is the front of the ship, aft is the back...", "Port is the ship's left, starboard is the right...", "What even is a piece of eight?", "I wonder if they serve grog at the bar..?", "How to effectively gesture with a hook hand...")
+//	icon_state = "book_pirate"
+//	language_name = "Pirate"
 
 /obj/item/book/granter/language_book/monkey
 	name = "A Book Made Out of a Monkey"
@@ -96,13 +96,13 @@
 	icon_state = "book_monkey"
 	language_name = "Monkey"
 
-/obj/item/book/granter/language_book/mushroom
-	name = "'A Fun Guide to Mushrooms' by Mike O'Phile"
-	desc = "All the puns in this book dont leave mushroom to spore."
-	learnable_language = /datum/language/mushroom
-	remarks = list("These puns are positively crimini...", "The writing in this book is very porcini...", "Absolute shittake...", "Please God no morel!", "My first cellium...", "This is giving me trama...")
-	icon_state = "book_mushroom"
-	language_name = "Mushroom"
+///obj/item/book/granter/language_book/mushroom //attached to a commented-out race
+//	name = "'A Fun Guide to Mushrooms' by Mike O'Phile"
+//	desc = "All the puns in this book dont leave mushroom to spore."
+//	learnable_language = /datum/language/mushroom
+//	remarks = list("These puns are positively crimini...", "The writing in this book is very porcini...", "Absolute shittake...", "Please God no morel!", "My first cellium...", "This is giving me trama...")
+//	icon_state = "book_mushroom"
+//	language_name = "Mushroom"
 
 /obj/item/book/granter/language_book/draconic
 	name = "Draconic for Dummies"
@@ -136,13 +136,13 @@
 	icon_state = "book_vampire"
 	language_name = "Blah-Sucker"
 
-/obj/item/book/granter/language_book/russian
-	name = "The Cyka's Guide To Space-Russian"
-	desc = "A nu cheeki breeki iv damke!"
-	learnable_language = /datum/language/russian
-	remarks = list("What if the space workers owned the means of space production..?", "Permanent revolution or socialism in one star system..?", "Boy I'd sure go for some cheap grain alcohol right now...", "Squatting and you; hip drive...", "Huh, lying down protects you from bears...")
-	icon_state = "book_russian"
-	language_name = "Space Russian"
+///obj/item/book/granter/language_book/russian // s o o n
+//	name = "The Cyka's Guide To Space-Russian"
+//	desc = "A nu cheeki breeki iv damke!"
+//	learnable_language = /datum/language/russian
+//	remarks = list("What if the space workers owned the means of space production..?", "Permanent revolution or socialism in one star system..?", "Boy I'd sure go for some cheap grain alcohol right now...", "Squatting and you; hip drive...", "Huh, lying down protects you from bears...")
+//	icon_state = "book_russian"
+//	language_name = "Space Russian"
 
 /obj/item/book/granter/language_book/random
 	icon_state = "random_book"
