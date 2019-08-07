@@ -1,0 +1,4 @@
+author: "willox"
+delete-after: True
+changes: 
+  - bugfix: "Correct attacker is shown when being attacked by items"
