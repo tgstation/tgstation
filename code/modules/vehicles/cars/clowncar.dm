@@ -28,6 +28,7 @@
 		if(H.mind && H.mind.assigned_role == "Clown") //Ensures only clowns can drive the car. (Including more at once)
 			add_control_flags(H, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_PERMISSION)
 			RegisterSignal(H, COMSIG_MOB_CLICKON, .proc/FireCannon)
+			M.log_message("has entered [src] as a possible driver", LOG_ATTACK)
 			return
 	add_control_flags(M, VEHICLE_CONTROL_KIDNAPPED)
 
@@ -192,7 +193,7 @@
 		flick("clowncar_recoil", src)
 		playsound(src, pick('sound/vehicles/carcannon1.ogg', 'sound/vehicles/carcannon2.ogg', 'sound/vehicles/carcannon3.ogg'), 75)
 		L.throw_at(A, 10, 2)
-		log_combat(user, L, "fired", src, "towards [A]")
+		log_combat(user, L, "fired", src, "towards [A]") //this doesn't catch if the mob hits something between the car and the target
 		return COMSIG_MOB_CANCEL_CLICKON
 
 /obj/vehicle/sealed/car/clowncar/proc/ThanksCounter()
