@@ -174,7 +174,7 @@
 			exited_dirs |= angle2dir_cardinal(dir2angle(Ddir) + ang_change)
 
 	update_icon()
-	..()
+	return ..()
 
 /obj/effect/decal/cleanable/blood/footprints/Crossed(atom/movable/O)
 	..()
