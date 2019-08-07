@@ -397,8 +397,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 				return
 
 			if(istype(I, /obj/item/pen))
-				name = input(user,"set name","name") as text|null
-				desc = input(user,"set description","description") as text|null
+				name = stripped_input(user,"Set name","Name","Vendor", 20)
+				desc = stripped_input(user,"Set description","Description","Great Deals", 60)
 				return
 
 			if(canLoadItem(I))
