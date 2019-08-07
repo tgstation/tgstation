@@ -1,0 +1,4 @@
+author: "YPOQ"
+delete-after: True
+changes: 
+  - bugfix: "General beepsky can now attack properly and ancap beepsky will properly beat the poor."

@@ -119,7 +119,7 @@
 
 /obj/item/clothing/suit/wizrobe/fake
 	name = "wizard robe"
-	desc = "A rather dull blue robe meant to mimick real wizard robes."
+	desc = "A rather dull blue robe meant to mimic real wizard robes."
 	icon_state = "wizard-fake"
 	item_state = "wizrobe"
 	gas_transfer_coefficient = 1
@@ -201,7 +201,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard
 	name = "battlemage helmet"
-	desc = "A suitably impressive helmet.."
+	desc = "A suitably impressive helmet."
 	icon_state = "battlemage"
 	item_state = "battlemage"
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT

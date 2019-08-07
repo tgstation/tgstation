@@ -12,6 +12,7 @@
 
 
 /obj/vehicle/ridden/scooter/wrench_act(mob/living/user, obj/item/I)
+	..()
 	to_chat(user, "<span class='notice'>You begin to remove the handlebars...</span>")
 	if(I.use_tool(src, user, 40, volume=50))
 		var/obj/vehicle/ridden/scooter/skateboard/S = new(drop_location())
@@ -79,7 +80,7 @@
 		H.adjustStaminaLoss(40)
 		var/head_slot = H.get_item_by_slot(SLOT_HEAD)
 		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
-			H.adjustBrainLoss(3)
+			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3)
 			H.updatehealth()
 		visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
@@ -129,6 +130,7 @@
 		return ..()
 
 /obj/item/scooter_frame/wrench_act(mob/living/user, obj/item/I)
+	..()
 	to_chat(user, "<span class='notice'>You deconstruct [src].</span>")
 	new /obj/item/stack/rods(drop_location(), 10)
 	I.play_tool_sound(src)
@@ -205,7 +207,7 @@
 		H.adjustStaminaLoss(10)
 		var/head_slot = H.get_item_by_slot(SLOT_HEAD)
 		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
-			H.adjustBrainLoss(1)
+			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1)
 			H.updatehealth()
 		visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
