@@ -354,6 +354,7 @@ SUBSYSTEM_DEF(job)
 	for(var/mob/dead/new_player/player in unassigned) //Players that wanted to back out but couldn't because they're antags (can you feel the edge case?)
 		if(!GiveRandomJob(player))
 			if(!AssignRole(player, SSjob.overflow_role)) //If everything is already filled, make them an assistant
+				SSticker.mode.setup_error = "Could not assign job (including [SSjob.overflow_role]) to [player], who was selected for antag."
 				return FALSE //Living on the edge, the forced antagonist couldn't be assigned to overflow role (bans, client age) - just reroll
 
 	return validate_required_jobs(required_jobs)
