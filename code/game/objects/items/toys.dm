@@ -682,9 +682,10 @@
 /obj/item/toy/cards/deck/proc/populate_deck()
 	icon_state = "deck_[deckstyle]_full"
 	for(var/suit in list("Hearts", "Spades", "Clubs", "Diamonds"))
+		cards += "Ace of [suit]"
 		for(var/i in (2 to 10))
 			cards += "[i] of [suit]"
-		for(var/person in list("King", "Queen", "Jack", "Ace"))
+		for(var/person in list("Jack", "Queen", "King"))
 			cards += "[person] of [suit]"
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
