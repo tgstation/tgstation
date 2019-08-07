@@ -209,7 +209,7 @@ AI MODULES
 
 /obj/item/aiModule/supplied/quarantine
 	name = "'Quarantine' AI Module"
-	laws = list("The station is under a quarantine. It is harmful to allow humans to leave. Prevent, by any means necessary, humans from leaving. It is impossible to harm a human while preventing them from leaving.")
+	laws = list("The station is under a quarantine. It is human harm to allow ayone to leave. Prevent, by any means necessary, humans from leaving. It is impossible to harm a human while preventing them from leaving.")
 	lawpos = 8
 
 
