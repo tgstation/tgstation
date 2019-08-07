@@ -16,6 +16,7 @@
 
 #define TRITIUM_RADIOACTIVITY_MODIFIER 3  //Higher == Crystal spews out more radiation
 #define BZ_RADIOACTIVITY_MODIFIER 5
+#define PLUOXIUM_RADIOACTIVITY_MODIFIER -2
 
 #define N2O_HEAT_RESISTANCE 6          //Higher == Gas makes the crystal more resistant against heat damage.
 #define PLUOXIUM_HEAT_RESISTANCE 3
@@ -417,7 +418,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		power = max( (removed.temperature * temp_factor / T0C) * gasmix_power_ratio + power, 0) //Total laser power plus an overload
 
 		if(prob(50))
-			radiation_pulse(src, power * (1 + (tritiumcomp*TRITIUM_RADIOACTIVITY_MODIFIER)*(power_transmission_bonus/(10-(bzcomp*BZ_RADIOACTIVITY_MODIFIER)))))	// Emit upto 5x the radiation at 100% BZ & 3x Rad amount at 100% Tritum
+			radiation_pulse(src, power * (1 + (tritiumcomp * TRITIUM_RADIOACTIVITY_MODIFIER) + ((pluoxiumcomp * PLUOXIUM_RADIOACTIVITY_MODIFIER) * pluoxiumbonus) * (power_transmission_bonus/(10-(bzcomp * BZ_RADIOACTIVITY_MODIFIER)))))	// Rad Modifiers BZ(500%), Tritium(300%), and Pluoxium(-200%)
 		if(prob(10 * (bzcomp * 3)) && bzcomp > 0.4)
 			src.fire_nuclear_particle()		// Start to emit radballs at a maximum of 30% chance per tick
 
