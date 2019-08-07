@@ -5,11 +5,11 @@
 	icon_deny = "wallmed-deny"
 	density = FALSE
 	products = list(/obj/item/reagent_containers/syringe = 3,
-		            /obj/item/reagent_containers/pill/patch/acetaminophen = 5,
-					/obj/item/reagent_containers/pill/patch/neomycin_sulfate = 5,
-					/obj/item/reagent_containers/pill/palletta = 2,
-					/obj/item/reagent_containers/medigel/acetaminophen = 2,
-					/obj/item/reagent_containers/medigel/neomycin_sulfate = 2,
+		            /obj/item/reagent_containers/pill/patch/libital = 5,
+					/obj/item/reagent_containers/pill/patch/aiuri = 5,
+					/obj/item/reagent_containers/pill/multiver = 2,
+					/obj/item/reagent_containers/medigel/libital = 2,
+					/obj/item/reagent_containers/medigel/aiuri = 2,
 					/obj/item/reagent_containers/medigel/sterilizine = 1)
 	contraband = list(/obj/item/reagent_containers/pill/tox = 2,
 	                  /obj/item/reagent_containers/pill/morphine = 2)
@@ -26,6 +26,6 @@
 
 /obj/machinery/vending/wallmed/pubby
 	products = list(/obj/item/reagent_containers/syringe = 3,
-					/obj/item/reagent_containers/pill/patch/acetaminophen = 1,
-					/obj/item/reagent_containers/pill/patch/neomycin_sulfate = 1,
+					/obj/item/reagent_containers/pill/patch/libital = 1,
+					/obj/item/reagent_containers/pill/patch/aiuri = 1,
 					/obj/item/reagent_containers/medigel/sterilizine = 1)

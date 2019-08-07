@@ -27,20 +27,20 @@
 		return 0
 	return 1 // Masks were stopping people from "eating" patches. Thanks, inheritance.
 
-/obj/item/reagent_containers/pill/patch/acetaminophen
-	name = "acetaminophen patch (brute)"
+/obj/item/reagent_containers/pill/patch/libital
+	name = "libital patch (brute)"
 	desc = "A common pain reliever. Does minor liver damage."
-	list_reagents = list(/datum/reagent/medicine/C2/acetaminophen = 10)
+	list_reagents = list(/datum/reagent/medicine/C2/libital = 10)
 	icon_state = "bandaid_brute"
 
-/obj/item/reagent_containers/pill/patch/neomycin_sulfate
-	name = "neomycin sulfate patch (burn)"
+/obj/item/reagent_containers/pill/patch/aiuri
+	name = "aiuri patch (burn)"
 	desc = "Helps with burn injuries. Does minor eye damage."
-	list_reagents = list(/datum/reagent/medicine/C2/neomycin_sulfate = 10)
+	list_reagents = list(/datum/reagent/medicine/C2/aiuri = 10)
 	icon_state = "bandaid_burn"
 
-/obj/item/reagent_containers/pill/patch/synthflesh
-	name = "synthflesh patch"
+/obj/item/reagent_containers/pill/patch/instabitaluri
+	name = "instabitaluri patch"
 	desc = "Helps with brute and burn injuries."
-	list_reagents = list(/datum/reagent/medicine/C2/synthflesh = 20)
+	list_reagents = list(/datum/reagent/medicine/C2/instabitaluri = 20)
 	icon_state = "bandaid_both"

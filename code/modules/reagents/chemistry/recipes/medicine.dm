@@ -22,7 +22,7 @@
 	name = /datum/reagent/medicine/inacusiate
 	id = /datum/reagent/medicine/inacusiate
 	results = list(/datum/reagent/medicine/inacusiate = 2)
-	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/C2/palletta = 1)
+	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/C2/multiver = 1)
 
 /datum/chemical_reaction/synaptizine
 	name = "Synaptizine"
@@ -48,11 +48,11 @@
 	results = list(/datum/reagent/medicine/mine_salve = 15)
 	required_reagents = list(/datum/reagent/toxin/plasma = 5, /datum/reagent/iron = 5, /datum/reagent/consumable/sugar = 1) // A sheet of plasma, a twinkie and a sheet of metal makes four of these
 
-/datum/chemical_reaction/synthflesh
-	name = "Synthflesh"
-	id = /datum/reagent/medicine/C2/synthflesh
-	results = list(/datum/reagent/medicine/C2/synthflesh = 3)
-	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/C2/acetaminophen = 1)
+/datum/chemical_reaction/instabitaluri
+	name = "Instabitaluri"
+	id = /datum/reagent/medicine/C2/instabitaluri
+	results = list(/datum/reagent/medicine/C2/instabitaluri = 3)
+	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/C2/libital = 1)
 
 /datum/chemical_reaction/calomel
 	name = "Calomel"
@@ -109,7 +109,7 @@
 	name = "Oculine"
 	id = /datum/reagent/medicine/oculine
 	results = list(/datum/reagent/medicine/oculine = 3)
-	required_reagents = list(/datum/reagent/medicine/C2/palletta = 1, /datum/reagent/carbon = 1, /datum/reagent/hydrogen = 1)
+	required_reagents = list(/datum/reagent/medicine/C2/multiver = 1, /datum/reagent/carbon = 1, /datum/reagent/hydrogen = 1)
 	mix_message = "The mixture sputters loudly and becomes a pale pink color."
 
 /datum/chemical_reaction/atropine
@@ -153,7 +153,7 @@
 	name = /datum/reagent/medicine/antihol
 	id = /datum/reagent/medicine/antihol
 	results = list(/datum/reagent/medicine/antihol = 3)
-	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/medicine/C2/palletta = 1, /datum/reagent/copper = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/medicine/C2/multiver = 1, /datum/reagent/copper = 1)
 
 /datum/chemical_reaction/cryoxadone
 	name = "Cryoxadone"

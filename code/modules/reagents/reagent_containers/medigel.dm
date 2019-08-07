@@ -66,23 +66,23 @@
 		reagents.trans_to(M, amount_per_transfer_from_this, transfered_by = user, method = apply_type)
 	return
 
-/obj/item/reagent_containers/medigel/acetaminophen
-	name = "medical gel (acetaminophen)"
-	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains acetaminophen, for treating cuts and bruises. Acetaminophen does minor liver damage."
+/obj/item/reagent_containers/medigel/libital
+	name = "medical gel (libital)"
+	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains libital, for treating cuts and bruises. Libital does minor liver damage."
 	icon_state = "brutegel"
-	list_reagents = list(/datum/reagent/medicine/C2/acetaminophen = 60)
+	list_reagents = list(/datum/reagent/medicine/C2/libital = 60)
 
-/obj/item/reagent_containers/medigel/neomycin_sulfate
-	name = "medical gel (neomycin sulfate)"
-	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains neomycin sulfate, useful for treating burns. Neomycin Sulfate does minor eye damage."
+/obj/item/reagent_containers/medigel/aiuri
+	name = "medical gel (aiuri)"
+	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains aiuri, useful for treating burns. Aiuri does minor eye damage."
 	icon_state = "burngel"
-	list_reagents = list(/datum/reagent/medicine/C2/neomycin_sulfate = 60)
+	list_reagents = list(/datum/reagent/medicine/C2/aiuri = 60)
 
-/obj/item/reagent_containers/medigel/synthflesh
-	name = "medical gel (synthflesh)"
-	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains synthflesh, a brute and burn healing agent."
+/obj/item/reagent_containers/medigel/instabitaluri
+	name = "medical gel (instabitaluri)"
+	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains instabitaluri, a brute and burn healing agent."
 	icon_state = "synthgel"
-	list_reagents = list(/datum/reagent/medicine/C2/synthflesh = 60)
+	list_reagents = list(/datum/reagent/medicine/C2/instabitaluri = 60)
 	custom_price = 80
 
 /obj/item/reagent_containers/medigel/sterilizine

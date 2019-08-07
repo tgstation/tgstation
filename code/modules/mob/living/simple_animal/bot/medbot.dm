@@ -44,13 +44,13 @@
 	var/stationary_mode = 0 //If enabled, the Medibot will not move automatically.
 	//Setting which reagents to use to treat what by default. By id.
 	var/treatment_brute_avoid = null
-	var/treatment_brute = /datum/reagent/medicine/C2/acetaminophen
+	var/treatment_brute = /datum/reagent/medicine/C2/libital
 	var/treatment_oxy_avoid = null
 	var/treatment_oxy = /datum/reagent/medicine/salbutamol
 	var/treatment_fire_avoid = null
-	var/treatment_fire = /datum/reagent/medicine/C2/neomycin_sulfate
+	var/treatment_fire = /datum/reagent/medicine/C2/aiuri
 	var/treatment_tox_avoid = null
-	var/treatment_tox = /datum/reagent/medicine/C2/palletta
+	var/treatment_tox = /datum/reagent/medicine/C2/multiver
 	var/treatment_virus_avoid = null
 	var/treatment_virus = /datum/reagent/medicine/spaceacillin
 	var/treat_virus = 1 //If on, the bot will attempt to treat viral infections, curing them if possible.

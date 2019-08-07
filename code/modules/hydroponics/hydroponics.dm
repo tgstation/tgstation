@@ -504,8 +504,8 @@
 			to_chat(user, "<span class='notice'>[src] warms as it might on a spring day under a genuine Sun.</span>")
 
 	// Antitoxin binds shit pretty well. So the tox goes significantly down
-	if(S.has_reagent(/datum/reagent/medicine/C2/palletta, 1))
-		adjustToxic(-round(S.get_reagent_amount(/datum/reagent/medicine/C2/palletta) * 2))
+	if(S.has_reagent(/datum/reagent/medicine/C2/multiver, 1))
+		adjustToxic(-round(S.get_reagent_amount(/datum/reagent/medicine/C2/multiver) * 2))
 
 	// NIGGA, YOU JUST WENT ON FULL RETARD.
 	if(S.has_reagent(/datum/reagent/toxin, 1))
