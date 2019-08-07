@@ -144,7 +144,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 	var/list/vending_machine_input = list()
 	///Display header on the input view
-	var/input_display_header = "Custom Compartment"
+	var/input_display_header = "Custom Vendor"
 
 	//The type of refill canisters used by this machine.
 	var/obj/item/vending_refill/refill_canister = null
@@ -379,10 +379,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 		return
 
 	if(custom)
-		if(istype(I, /obj/item/assembly/voice))
-			var/obj/item/assembly/voice/V = I
-			if(V.recorded)
-				slogan_list += "[V.recorded]"
 		if(!private_a)
 			var/mob/living/carbon/human/H
 			var/obj/item/card/id/C
@@ -392,13 +388,25 @@ GLOBAL_LIST_EMPTY(vending_products)
 				if(C?.registered_account)
 					private_a = C.registered_account
 					say("The [src] has been linked to [C].")
+
 		if(isowner(user))
+			if(istype(I, /obj/item/assembly/voice))
+				var/obj/item/assembly/voice/V = I
+				if(V.recorded)
+					slogan_list += "[V.recorded]"
+				return
+
+			if(istype(I, /obj/item/pen))
+				name = input(user,"set name","name") as text|null
+				desc = input(user,"set description","description") as text|null
+				return
+
 			if(canLoadItem(I))
 				loadingAttempt(I,user)
 				updateUsrDialog()
-			else
-				return ..()
-		return
+				return
+
+		return ..()
 
 	if(refill_canister && istype(I, refill_canister))
 		if (!panel_open)
@@ -818,9 +826,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 /obj/machinery/vending/custom/Destroy()
 	var/turf/T = get_turf(src)
-	for(var/obj/item/I in contents)
-		I?.forceMove(T)
-	explosion(T, -1, 0, 3)
+	if(T)
+		for(var/obj/item/I in contents)
+			I.forceMove(T)
+		explosion(T, -1, 0, 3)
 	return ..()
 
 /obj/item/vending_refill/custom
