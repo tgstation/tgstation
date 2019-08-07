@@ -378,10 +378,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		n2ocomp = max(removed.gases[/datum/gas/nitrous_oxide][MOLES]/combined_gas, 0)
 		n2comp = max(removed.gases[/datum/gas/nitrogen][MOLES]/combined_gas, 0)
 
-		if(pluoxiumcomp < 15)
-			pluoxiumbonus = 0	//Just to be safe I don't want to remove pluoxium
+		if(pluoxiumcomp >= 15)
+			pluoxiumbonus = 1	//Just to be safe I don't want to remove pluoxium
 		else
-			pluoxiumbonus = 1
+			pluoxiumbonus = 0
 
 		gasmix_power_ratio = min(max(plasmacomp + o2comp + co2comp + pluoxiumcomp + tritiumcomp - n2comp, 0), 1)
 
