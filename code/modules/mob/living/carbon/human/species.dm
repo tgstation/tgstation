@@ -806,9 +806,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return FALSE
 			if(num_legs < 2)
 				return FALSE
-			if((DIGITIGRADE in species_traits) == !(I.flags_inv & FULL_DIGITIGRADE))
+			if((DIGITIGRADE in species_traits) == !(I.flags_inv & FULL_DIGITIGRADE)) //fulp
 				if(!disable_warning)
-					to_chat(H, "<span class='warning'>These shoes aren't compatible with your feet!</span>")
+					to_chat(H, "<span class='warning'>These shoes aren't compatible with your feet!</span>") //fulp
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(SLOT_BELT)
