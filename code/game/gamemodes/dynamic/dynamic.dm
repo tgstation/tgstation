@@ -497,7 +497,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			midround_rules = remove_from_list(midround_rules, rule.type)
 	
 	if (rule.execute())
-		log_game("DYNAMIC: Injected a [rule.ruletype == 'latejoin' ? 'latejoin' : 'midround'] ruleset [rule.name].")
+		log_game("DYNAMIC: Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
 		spend_threat(rule.cost)
 		threat_log += "[worldtime2text()]: [rule.ruletype] [rule.name] spent [rule.cost]"
 		if(rule.flags & HIGHLANDER_RULESET)

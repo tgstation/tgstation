@@ -298,15 +298,6 @@
 			M.add_antag_datum(new_op)
 	return TRUE
 
-/datum/dynamic_ruleset/roundstart/nuclear/check_finished()
-	if(nuke_team.operatives_dead())
-		for(var/obj/machinery/nuclearbomb/N in GLOB.nuke_list)
-			if(N.proper_bomb && (N.timing || N.exploding))
-				return FALSE
-		// If ops are dead and bomb is not exploding, end the round
-		return TRUE
-	return FALSE
-
 /datum/dynamic_ruleset/roundstart/nuclear/round_result()
 	var result = nuke_team.get_result()
 	switch(result)
