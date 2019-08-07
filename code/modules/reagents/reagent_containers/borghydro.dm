@@ -1,4 +1,4 @@
-#define	C2NAMEREAGENT	"[initial(reagent.name)] (Has Side-Effects)"
+#define C2NAMEREAGENT	"[initial(reagent.name)] (Has Side-Effects)"
 /*
 Contains:
 Borg Hypospray
@@ -261,4 +261,4 @@ Borg Shaker
 	reagent_ids = list(/datum/reagent/medicine/epinephrine)
 	accepts_reagent_upgrades = FALSE
 
-#undef C2NAME
+#undef C2NAMEREAGENT
