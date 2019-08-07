@@ -372,7 +372,7 @@
 			to_chat(target, "<span class='danger'>You are pricked by [G]!</span>")
 
 /datum/plant_gene/trait/smoke
-	name = "gaseous decomposition"
+	name = "Gaseous Decomposition"
 
 /datum/plant_gene/trait/smoke/on_squash(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
 	var/datum/effect_system/smoke_spread/chem/S = new

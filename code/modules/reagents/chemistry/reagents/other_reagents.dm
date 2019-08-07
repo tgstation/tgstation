@@ -1168,7 +1168,7 @@
 
 /datum/reagent/stimulum
 	name = "Stimulum"
-	description = "An unstable experimental gas that greatly increases the energy of those that inhale it"
+	description = "An unstable experimental gas that greatly increases the energy of those that inhale it, while dealing increasing toxin damage over time."
 	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because stimulum/nitryl are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "E1A116"
@@ -1186,11 +1186,12 @@
 
 /datum/reagent/stimulum/on_mob_life(mob/living/carbon/M)
 	M.adjustStaminaLoss(-2*REM, 0)
+	M.adjustToxLoss(current_cycle*0.1*REM, 0) // 1 toxin damage per cycle at cycle 10
 	..()
 
 /datum/reagent/nitryl
 	name = "Nitryl"
-	description = "A highly reactive gas that makes you feel faster"
+	description = "A highly reactive gas that makes you feel faster."
 	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because stimulum/nitryl are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "90560B"
