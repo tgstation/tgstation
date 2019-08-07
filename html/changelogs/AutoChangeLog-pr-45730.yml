@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - bugfix: "Lemonade reagent now has proper color instead of being pitch black."

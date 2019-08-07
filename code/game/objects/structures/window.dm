@@ -146,7 +146,8 @@
 	if(!can_be_reached(user))
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message("[user] knocks on [src].")
+	user.visible_message("<span class='notice'>[user] knocks on [src].</span>", \
+		"<span class='notice'>You knock on [src].</span>")
 	add_fingerprint(user)
 	playsound(src, 'sound/effects/Glassknock.ogg', 50, 1)
 
