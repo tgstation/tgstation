@@ -5,7 +5,8 @@
 	switch(M.a_intent)
 		if("help")
 			if (health > 0)
-				visible_message("<span class='notice'>[M] [response_help] [src].</span>")
+				visible_message("<span class='notice'>[M] [response_help] [src].</span>", \
+					"<span class='notice'>[M] [response_help] you.</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 		if("grab")
@@ -17,7 +18,7 @@
 				return
 			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>",\
-			"<span class='userdanger'>[M] [response_harm] [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+				"<span class='userdanger'>[M] [response_harm] you!</span>", null, COMBAT_MESSAGE_RANGE)
 			playsound(loc, attacked_sound, 25, 1, -1)
 			attack_threshold_check(harm_intent_damage)
 			log_combat(M, src, "attacked")
@@ -31,8 +32,8 @@
 			return FALSE
 		..(user, 1)
 		playsound(loc, "punch", 25, 1, -1)
-		visible_message("<span class='danger'>[user] has punched [src]!</span>", \
-			"<span class='userdanger'>[user] has punched [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+		visible_message("<span class='danger'>[user] punches [src]!</span>", \
+			"<span class='userdanger'>[user] punches you!</span>", null, COMBAT_MESSAGE_RANGE)
 		adjustBruteLoss(15)
 		return TRUE
 
@@ -44,7 +45,8 @@
 			return 1
 	if (M.a_intent == INTENT_HELP)
 		if (health > 0)
-			visible_message("<span class='notice'>[M.name] [response_help] [src].</span>")
+			visible_message("<span class='notice'>[M.name] [response_help] [src].</span>", \
+				"<span class='notice'>[M.name] [response_help] you.</span>")
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 
@@ -53,12 +55,12 @@
 		if(M.a_intent == INTENT_DISARM)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] [response_disarm] [name]!</span>", \
-					"<span class='userdanger'>[M] [response_disarm] [name]!</span>", null, COMBAT_MESSAGE_RANGE)
+					"<span class='userdanger'>[M] [response_disarm] you!</span>", null, COMBAT_MESSAGE_RANGE)
 			log_combat(M, src, "disarmed")
 		else
 			var/damage = rand(15, 30)
-			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
-					"<span class='userdanger'>[M] has slashed at [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+			visible_message("<span class='danger'>[M] slashes at [src]!</span>", \
+					"<span class='userdanger'>[M] slashes at you!</span>", null, COMBAT_MESSAGE_RANGE)
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 			attack_threshold_check(damage)
 			log_combat(M, src, "attacked")

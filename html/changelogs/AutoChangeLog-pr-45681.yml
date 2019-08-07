@@ -1,0 +1,4 @@
+author: "RandolfTheMeh"
+delete-after: True
+changes: 
+  - bugfix: "Split Personality is only rolled if the brain's owner is not dead, and Imaginary Friend is rolled only if they're both not dead and also a player."

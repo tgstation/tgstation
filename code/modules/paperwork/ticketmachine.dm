@@ -60,6 +60,7 @@
 		ours.id = id
 
 /obj/machinery/button/ticket_machine/multitool_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(I.tool_behaviour == TOOL_MULTITOOL)
 		var/obj/item/multitool/M = I
 		if(M.buffer && !istype(M.buffer, /obj/machinery/ticket_machine))
@@ -177,6 +178,8 @@
 	maptext_x = 7
 	maptext_y = 10
 	w_class = WEIGHT_CLASS_TINY
+	resistance_flags = FLAMMABLE
+	max_integrity = 50
 	var/saved_maptext = null
 
 /obj/item/ticket_machine_ticket/attack_hand(mob/user)
@@ -196,7 +199,6 @@
 		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
 		fire_act()
 
-/obj/item/ticket_machine_ticket/fire_act(exposed_temperature, exposed_volume)
+/obj/item/paper/extinguish()
 	..()
-	if(!(resistance_flags & FIRE_PROOF))
-		icon_state = "ticket_onfire"
+	update_icon()

@@ -44,6 +44,12 @@
 	var/cell_type = /obj/item/stock_parts/cell
 	var/vest_type = /obj/item/clothing/suit/armor/vest
 
+	var/fair_market_projectile = /obj/item/projectile/bullet/c38 // For shooting the worst scumbags of all: the poor
+	var/fair_market_price_arrest = 25 // On arrest, charges the violator this much. If they don't have that much in their account, ED-209 will shoot them instead
+	var/fair_market_price_detain = 5 // Charged each time the violator is stunned on detain
+	var/market_verb = "Suspect"
+	var/payment_department = ACCOUNT_SEC
+
 	do_footstep = TRUE
 
 
@@ -362,8 +368,7 @@ Auto Patrol[]"},
 			playsound(src, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/edplaceholder.ogg'), 50, FALSE)
 			visible_message("<b>[src]</b> points at [C.name]!")
 			mode = BOT_HUNT
-			spawn(0)
-				handle_automated_action()	// ensure bot quickly responds to a perp
+			INVOKE_ASYNC(src, .proc/handle_automated_action) // ensure bot quickly responds to a perp
 			break
 		else
 			continue
@@ -542,8 +547,7 @@ Auto Patrol[]"},
 /mob/living/simple_animal/bot/ed209/proc/stun_attack(mob/living/carbon/C)
 	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 	icon_state = "[lasercolor]ed209-c"
-	spawn(2)
-		icon_state = "[lasercolor]ed209[on]"
+	addtimer(VARSET_CALLBACK(src, icon_state, "[lasercolor]ed209[on]"), 2)
 	var/threat = 5
 	C.Paralyze(100)
 	C.stuttering = 5
@@ -571,3 +575,38 @@ Auto Patrol[]"},
 			C.handcuffed = new /obj/item/restraints/handcuffs/cable/zipties/used(C)
 			C.update_handcuffed()
 			back_to_idle()
+
+/// Returns false if the current target is unable to pay the fair_market_price for being arrested/detained
+/mob/living/simple_animal/bot/ed209/proc/check_nap_violations()
+	if(!SSeconomy.full_ancap)
+		return TRUE
+
+	if(target)
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			var/obj/item/card/id/I = H.get_idcard(TRUE)
+			if(I)
+				var/datum/bank_account/insurance = I.registered_account
+				if(!insurance)
+					say("[market_verb] NAP Violation: No bank account found.")
+					nap_violation(target)
+					return FALSE
+				else
+					var/fair_market_price = (arrest_type ? fair_market_price_detain : fair_market_price_arrest)
+					if(!insurance.adjust_money(-fair_market_price))
+						say("[market_verb] NAP Violation: Unable to pay.")
+						nap_violation(target)
+						return FALSE
+					var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
+					say("Thank you for your compliance. Your account been charged [fair_market_price] credits.")
+					if(D)
+						D.adjust_money(fair_market_price)
+			else
+				say("[market_verb] NAP Violation: No ID card found.")
+				nap_violation(target)
+				return FALSE
+	return TRUE
+
+/// Does nothing
+/mob/living/simple_animal/bot/ed209/proc/nap_violation(mob/violator)
+	return

@@ -86,8 +86,10 @@ matrix:
         - git checkout $TRAVIS_BRANCH || true
       script:
         - ~/dmdoc
+        - touch dmdoc/.nojekyll
       deploy:
         provider: pages
         skip_cleanup: true
         local_dir: dmdoc
         github_token: $DMDOC_GITHUB_TOKEN
+        fqdn: codedocs.tgstation13.org

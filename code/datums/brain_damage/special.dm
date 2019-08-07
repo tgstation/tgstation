@@ -188,6 +188,56 @@
 	REMOVE_TRAIT(owner, TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
 	active = FALSE
 
+/datum/brain_trauma/special/existential_crisis
+	name = "Existential Crisis"
+	desc = "Patient's hold on reality becomes faint, causing occasional bouts of non-existence."
+	scan_desc = "existential crisis"
+	gain_text = "<span class='notice'>You feel less real.</span>"
+	lose_text = "<span class='warning'>You feel more substantial again.</span>"
+	var/obj/effect/abstract/sync_holder/veil/veil
+	var/next_crisis = 0
+
+/datum/brain_trauma/special/existential_crisis/on_life()
+	..()
+	if(!veil && world.time > next_crisis && prob(3))
+		if(isturf(owner.loc))
+			fade_out()
+
+/datum/brain_trauma/special/existential_crisis/on_lose()
+	if(veil)
+		fade_in()
+	..()
+
+/datum/brain_trauma/special/existential_crisis/proc/fade_out()
+	if(veil)
+		return
+	var/duration = rand(50, 450)
+	veil = new(owner.drop_location())
+	to_chat(owner, "<span class='warning'>[pick("You stop thinking for a moment. Therefore you are not.",\
+												"To be or not to be...",\
+												"Why exist?",\
+												"You stop keeping it real.",\
+												"Your grip on existence slips.",\
+												"Do you even exist?",\
+												"You simply fade away.")]</span>")
+	owner.forceMove(veil)
+	SEND_SIGNAL(owner, COMSIG_MOVABLE_SECLUDED_LOCATION)
+	for(var/thing in owner)
+		var/atom/movable/AM = thing
+		SEND_SIGNAL(AM, COMSIG_MOVABLE_SECLUDED_LOCATION)
+	next_crisis = world.time + 600
+	addtimer(CALLBACK(src, .proc/fade_in), duration)
+
+/datum/brain_trauma/special/existential_crisis/proc/fade_in()
+	QDEL_NULL(veil)
+	to_chat(owner, "<span class='notice'>You fade back into reality.</span>")
+	next_crisis = world.time + 600
+
+//base sync holder is in desynchronizer.dm
+/obj/effect/abstract/sync_holder/veil
+	name = "non-existence"
+	desc = "Existence is just a state of mind."
+
 /datum/brain_trauma/special/beepsky
 	name = "Criminal"
 	desc = "Patient seems to be a criminal."

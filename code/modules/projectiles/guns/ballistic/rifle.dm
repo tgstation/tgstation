@@ -91,6 +91,7 @@ obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
 	can_bayonet = FALSE
 	item_flags = NEEDS_PERMIT | DROPDEL | ABSTRACT | NOBLUDGEON
 	flags_1 = NONE
+	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage
 
