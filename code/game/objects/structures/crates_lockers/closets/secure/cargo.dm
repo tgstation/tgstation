@@ -23,4 +23,4 @@
 	new /obj/item/storage/photo_album/QM(src)
 	new /obj/item/circuitboard/machine/ore_silo(src)
 	new /obj/item/card/id/departmental_budget/car(src)
-	new /obj/item/clothing/shoes/sneakers/brown/digitigrade
+	new /obj/item/clothing/shoes/sneakers/brown/digitigrade //fulp
