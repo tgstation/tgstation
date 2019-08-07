@@ -23409,7 +23409,7 @@
 /obj/structure/table/reinforced,
 /obj/item/folder/yellow,
 /obj/item/stamp/ce,
-/obj/item/reagent_containers/pill/patch/silver_sulf,
+/obj/item/reagent_containers/pill/patch/aiuri,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
