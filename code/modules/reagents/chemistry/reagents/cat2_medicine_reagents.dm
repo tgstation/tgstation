@@ -46,14 +46,14 @@
 /*Suffix: -uri*/
 /datum/reagent/medicine/C2/ichiyuri
 	name = "Ichiyuri"
-	description = "Used to treat serious burns. Scales with prolonged exposure, but causes burns to itch as well."
+	description = "Used to treat serious burns. Prolonged exposure can cause burns to itch."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	var/resetting_probability = 0
 	var/spammer = 0
 
 /datum/reagent/medicine/C2/ichiyuri/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss(-0.25*current_cycle*REM)
+	M.adjustFireLoss(-2*REM)
 	if(prob(resetting_probability) && !(M.restrained() || M.incapacitated()))
 		if(spammer < world.time)
 			to_chat(M,"<span class='warning'>You can't help but to itch the burn.</span>")
@@ -75,9 +75,8 @@
 	var/message_cd = 0
 
 /datum/reagent/medicine/C2/aiuri/on_mob_life(mob/living/carbon/M)
-	var/obj/item/organ/eyes/the_hills_have = M.getorganslot(ORGAN_SLOT_EYES)
-	M.adjustFireLoss(-1*REM)
-	the_hills_have?.applyOrganDamage(1)
+	M.adjustFireLoss(-0.5*REM)
+	M.applyOrganDamage(ORGAN_SLOT_EYES,1*REM)
 	..()
 	return TRUE
 
