@@ -145,7 +145,7 @@
   var/reset_mods = 0 //amount, not bool
 
 /datum/reagent/medicine/C2/fiziver/on_mob_life(mob/living/carbon/human/M)
-	var/maths = CORTI_WEAKRATE * current_cycle
+	var/maths = FIZ_WEAKRATE * current_cycle
 	reset_mods += maths
 	var/datum/physiology/phis = M.physiology
 	phis.brute_mod += maths
