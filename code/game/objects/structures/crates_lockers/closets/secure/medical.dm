@@ -76,6 +76,7 @@
 	new /obj/item/circuitboard/machine/techfab/department/medical(src)
 	new /obj/item/storage/photo_album/CMO(src)
 	new /obj/item/card/id/departmental_budget/med(src)
+	new /obj/item/clothing/shoes/sneakers/brown/digitigrade(src) //fulp
 
 /obj/structure/closet/secure_closet/animal
 	name = "animal control"

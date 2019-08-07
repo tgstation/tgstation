@@ -20,6 +20,8 @@
 	var/active_sound = null
 	var/toggle_cooldown = null
 	var/cooldown = 0
+//FULPCODE
+	var/fulp_item = FALSE
 
 	var/clothing_flags = NONE
 
