@@ -65,7 +65,6 @@
 				target.mind.linglink = 1
 				target.say("[MODE_TOKEN_CHANGELING] AAAAARRRRGGGGGHHHHH!!")
 				to_chat(target, "<span class='changeling bold'>You can now communicate in the changeling hivemind, say \"[MODE_TOKEN_CHANGELING] message\" to communicate!</span>")
-				target.reagents.add_reagent(/datum/reagent/medicine/salbutamol, 40) // So they don't choke to death while you interrogate them
 		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("[name]", "[i]"))
 	changeling.islinking = 0
 
