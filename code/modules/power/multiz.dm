@@ -5,7 +5,6 @@
 	icon_state = "cablerelay-off"
 	var/obj/machinery/power/deck_relay/below ///The relay that's below us (for bridging powernets)
 	var/obj/machinery/power/deck_relay/above ///The relay that's above us (for bridging powernets)
-	var/list/relays = list()
 	anchored = TRUE
 	density = FALSE
 
@@ -19,11 +18,8 @@
 		icon_state = "cablerelay-off"
 		if(above) //Lose connections
 			above.below = null
-			above.relays -= src
 		if(below)
 			below.above = null
-			below.relays -= src
-		relays = list()
 		return
 	refresh() //Sometimes the powernets get lost, so we need to keep checking.
 	if(powernet && (powernet.avail <= 0))		// is it powered?
@@ -52,20 +48,23 @@
 
 ///Handles re-acquiring + merging powernets found by find_relays()
 /obj/machinery/power/deck_relay/proc/refresh()
-	var/turf/ours = get_turf(src)
-	for(var/X in relays) //Typeless loops are apparently more efficient.
-		var/obj/machinery/power/deck_relay/DR = X
-		if(!DR)
-			continue
-		var/turf/T = get_turf(DR)
-		var/obj/structure/cable/C = T.get_cable_node()
-		var/obj/structure/cable/XR = ours.get_cable_node()
-		if(C && XR)
-			merge_powernets(XR.powernet,C.powernet)//Bridge the powernets.
+	if(above)
+		above.merge(src)
+	if(below)
+		below.merge(src)
+
+/obj/machinery/power/deck_relay/proc/merge(var/obj/machinery/power/deck_relay/DR)
+	if(!DR)
+		return
+	var/turf/merge_from = get_turf(DR)
+	var/turf/merge_to = get_turf(src)
+	var/obj/structure/cable/C = merge_from.get_cable_node()
+	var/obj/structure/cable/XR = merge_to.get_cable_node()
+	if(C && XR)
+		merge_powernets(XR.powernet,C.powernet)//Bridge the powernets.
 
 ///Locates relays that are above and below this object
 /obj/machinery/power/deck_relay/proc/find_relays()
-	relays = list()
 	var/turf/T = get_turf(src)
 	if(!T || !istype(T))
 		return FALSE
@@ -76,8 +75,6 @@
 		powernet = C.powernet
 	below = locate(/obj/machinery/power/deck_relay) in(SSmapping.get_turf_below(T))
 	above = locate(/obj/machinery/power/deck_relay) in(SSmapping.get_turf_above(T))
-	relays += below
-	relays += above
 	if(below || above)
 		icon_state = "cablerelay-on"
 	return TRUE
