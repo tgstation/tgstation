@@ -103,26 +103,35 @@
 	stage_speed = 2
 	transmittable = -2
 	level = 7
-	var/food_conversion = FALSE
-	desc = "The virus rapidly breaks down any foreign chemicals in the bloodstream."
-	threshold_desc = "<b>Resistance 7:</b> Increases chem removal speed.<br>\
-					  <b>Stage Speed 6:</b> Consumed chemicals nourish the host."
+	var/tox_only = FALSE
+	desc = "The virus heals the host's toxin damage and rapidly breaks down any foreign chemicals in their bloodstream."
+	threshold_desc = "<b>Resistance 7:</b> Only removes toxins (instead of all foreign chemicals) from the bloodstream.<br>\
+					  <b>Stage Speed 6:</b> Increases chem removal speed and toxin damage healing rate."
 
 /datum/symptom/heal/chem/Start(datum/disease/advance/A)
 	if(!..())
 		return
-	if(A.properties["stage_rate"] >= 6)
-		food_conversion = TRUE
 	if(A.properties["resistance"] >= 7)
+		tox_only = TRUE
+	if(A.properties["stage_rate"] >= 6)
 		power = 2
 
 /datum/symptom/heal/chem/Heal(mob/living/M, datum/disease/advance/A, actual_power)
-	for(var/datum/reagent/R in M.reagents.reagent_list) //Not just toxins!
-		M.reagents.remove_reagent(R.type, actual_power)
-		if(food_conversion)
-			M.adjust_nutrition(0.3)
-		if(prob(2))
-			to_chat(M, "<span class='notice'>You feel a mild warmth as your blood purifies itself.</span>")
+	M.adjustToxLoss(-(0.5 * actual_power))
+	if(tox_only)
+		for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
+			M.reagents.remove_reagent(R.type, actual_power)
+			if(food_conversion && M.nutrition < NUTRITION_LEVEL_ALMOST_FULL)
+				M.adjust_nutrition(0.3)
+			if(prob(2))
+				to_chat(M, "<span class='notice'>You feel a mild warmth as your blood purifies itself.</span>")
+	else
+		for(var/datum/reagent/R in M.reagents.reagent_list) //Not just toxins!
+			M.reagents.remove_reagent(R.type, actual_power)
+			if(food_conversion && M.nutrition < NUTRITION_LEVEL_ALMOST_FULL) //Perhaps I should remove the NUTRITION_LEVEL_ALMOST_FULL check here but leave the one up above to give this symptom the ability to make you fat (again) if you don't meet its resistance threshold? Nah, this is fine.
+				M.adjust_nutrition(0.3)
+			if(prob(2))
+				to_chat(M, "<span class='notice'>You feel a mild warmth as your blood purifies itself.</span>")
 	return 1
 
 
