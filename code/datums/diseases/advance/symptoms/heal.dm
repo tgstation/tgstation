@@ -108,7 +108,7 @@
 	desc = "The virus heals the host's toxin damage and rapidly breaks down any foreign chemicals in their bloodstream."
 	threshold_desc = "<b>Resistance 7:</b> Consumed chemicals nourish the host.<br>\
 					  <b>Stage Speed 6:</b> Increases chemical removal speed and toxin damage healing rate.<br>\
-					  <b>Stealth 3:</b> Only removes toxins from the host's bloodstream (instead of all foreign chemicals)."
+					  <b>Stealth 3:</b> Only removes toxins (instead of all foreign chemicals) from the host's bloodstream."
 
 /datum/symptom/heal/chem/Start(datum/disease/advance/A)
 	if(!..())
