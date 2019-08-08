@@ -68,3 +68,7 @@
 				target.reagents.add_reagent(/datum/reagent/medicine/salbutamol, 40) // So they don't choke to death while you interrogate them
 		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("[name]", "[i]"))
 	changeling.islinking = 0
+
+/datum/action/changeling/linglink/Remove(mob/user)
+	changeling.islinking = 0
+	..()
