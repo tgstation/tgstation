@@ -607,6 +607,13 @@
 	result = /obj/item/reagent_containers/glass/bucket/wooden
 	category = CAT_PRIMAL
 
+/datum/crafting_recipe/torch
+	name = "Torch"
+	time = 30
+	reqs = list(/obj/item/stack/sheet/cloth = 1, /obj/item/grown/log = 2)
+	result = /obj/item/flashlight/flare/torch
+	category = CAT_PRIMAL
+
 /datum/crafting_recipe/headpike
 	name = "Spike Head (Glass Spear)"
 	time = 65
