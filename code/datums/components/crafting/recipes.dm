@@ -296,7 +296,7 @@
 				/obj/item/stack/cable_coil = 1,
 				/datum/reagent/fuel = 10)
 	tools = list(TOOL_SCREWDRIVER)
-	time = 25
+	time = 12
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
 
