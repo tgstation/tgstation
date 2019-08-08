@@ -1,10 +1,10 @@
 /datum/action/changeling/linglink
 	name = "Hivemind Link"
-	desc = "We link our victim's mind into the hivemind for personal interrogation."
+	desc = "We link our victim's mind into the hivemind for personal interrogation and/or remote communication."
 	helptext = "If we find a human mad enough to support our cause, this can be a helpful tool to stay in touch."
 	button_icon_state = "hivemind_link"
 	chemical_cost = 0
-	dna_cost = 0
+	dna_cost = 2
 	req_human = 1
 
 /datum/action/changeling/linglink/can_sting(mob/living/carbon/user)
@@ -12,7 +12,7 @@
 		return
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(changeling.islinking)
-		to_chat(user, "<span class='warning'>We have already formed a link with the victim!</span>")
+		to_chat(user, "<span class='warning'>We are already forming a link!</span>")
 		return
 	if(!user.pulling)
 		to_chat(user, "<span class='warning'>We must be tightly grabbing a creature to link with them!</span>")
@@ -44,9 +44,17 @@
 		switch(i)
 			if(1)
 				to_chat(user, "<span class='notice'>This creature is compatible. We must hold still...</span>")
+				if(!do_mob(user, target, 60))
+					to_chat(user, "<span class='warning'>Our linking with [target] has been interrupted!</span>")
+					changeling.islinking = 0
+					return
 			if(2)
 				to_chat(user, "<span class='notice'>We stealthily stab [target] with a minor proboscis...</span>")
 				to_chat(target, "<span class='userdanger'>You experience a stabbing sensation and your ears begin to ring...</span>")
+				if(!do_mob(user, target, 60))
+					to_chat(user, "<span class='warning'>Our linking with [target] has been interrupted!</span>")
+					changeling.islinking = 0
+					return
 			if(3)
 				to_chat(user, "<span class='notice'>We mold the [target]'s mind like clay, granting [target.p_them()] the ability to speak in the hivemind!</span>")
 				to_chat(target, "<span class='userdanger'>A migraine throbs behind your eyes, you hear yourself screaming - but your mouth has not opened!</span>")
@@ -58,15 +66,5 @@
 				target.say("[MODE_TOKEN_CHANGELING] AAAAARRRRGGGGGHHHHH!!")
 				to_chat(target, "<span class='changeling bold'>You can now communicate in the changeling hivemind, say \"[MODE_TOKEN_CHANGELING] message\" to communicate!</span>")
 				target.reagents.add_reagent(/datum/reagent/medicine/salbutamol, 40) // So they don't choke to death while you interrogate them
-				sleep(1800)
 		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("[name]", "[i]"))
-		if(!do_mob(user, target, 20))
-			to_chat(user, "<span class='warning'>Our link with [target] has ended!</span>")
-			changeling.islinking = 0
-			target.mind.linglink = 0
-			return
-
 	changeling.islinking = 0
-	target.mind.linglink = 0
-	to_chat(user, "<span class='notice'>You cannot sustain the connection any longer, your victim fades from the hivemind</span>")
-	to_chat(target, "<span class='userdanger'>The link cannot be sustained any longer, your connection to the hivemind has faded!</span>")
