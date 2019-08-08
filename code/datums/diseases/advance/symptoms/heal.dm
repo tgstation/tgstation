@@ -126,14 +126,14 @@
 		for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
 			M.reagents.remove_reagent(R.type, actual_power)
 			if(food_conversion && M.nutrition < NUTRITION_LEVEL_ALMOST_FULL)
-				M.adjust_nutrition(0.3)
+				M.adjust_nutrition(10)
 			if(prob(2))
 				to_chat(M, "<span class='notice'>You feel a mild warmth as your blood purifies itself.</span>")
 	else
 		for(var/datum/reagent/R in M.reagents.reagent_list) //Not just toxins!
 			M.reagents.remove_reagent(R.type, actual_power)
 			if(food_conversion && M.nutrition < NUTRITION_LEVEL_ALMOST_FULL) //Perhaps I should remove the NUTRITION_LEVEL_ALMOST_FULL check here but leave the one up above to give this symptom the ability to make you fat (again) if you don't meet its resistance threshold? Nah, this is fine.
-				M.adjust_nutrition(0.3)
+				M.adjust_nutrition(10)
 			if(prob(2))
 				to_chat(M, "<span class='notice'>You feel a mild warmth as your blood purifies itself.</span>")
 	return 1
