@@ -36,6 +36,8 @@
 <ui-tabs tabs='{{tabs}}'>
   {{#each data.supplies}}
     <tab name='{{name}}'>
+	  <ui-button tooltip='Pay with your bank account instead of the cargo budget. Costs 10% extra for handling fees.' tooltip-side='right' 
+	  		icon='{{data.self_paid ? "check-square-o" : "square-o"}}' action='toggleprivate'>Buy privately</ui-button>
       {{#each packs}}
         <ui-section label='{{name}}' candystripe nowrap>
 		  {{#if small_item}}
@@ -48,11 +50,7 @@
 		  {{else}}
 			<div class='content'> </div>
 		  {{/if}}
-          {{#if !private}}
-		  	<ui-button tooltip='{{desc}}' tooltip-side='left' action='add' params='{"id": "{{id}}","self_paid": "0"}'>{{cost}}Credits</ui-button>
-		  {{else}}
-		  	<ui-button tooltip='Pay with your bank account instead of the cargo budget. Costs 10% extra for handling fees.' tooltip-side='left' action='add' params='{"id": "{{id}}","self_paid": "1"}'>Buy Directly</ui-button>
-		  {{/if}}
+		  <ui-button tooltip='{{desc}}' tooltip-side='left' action='add' params='{"id": "{{id}}"}'>{{data.self_paid ? Math.round(cost*1.1) : cost}} Credits</ui-button>
         </ui-section>
       {{/each}}
     </tab>
