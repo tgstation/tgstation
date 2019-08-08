@@ -74,6 +74,7 @@
 		message = blockade_warning
 	data["message"] = message
 	data["supplies"] = list()
+	data["private"] = FALSE
 	for(var/pack in SSshuttle.supply_packs)
 		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
 		if(!data["supplies"][P.group])
