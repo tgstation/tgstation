@@ -103,18 +103,22 @@
 	stage_speed = 2
 	transmittable = -2
 	level = 7
+	var/food_conversion = FALSE
 	var/tox_only = FALSE
 	desc = "The virus heals the host's toxin damage and rapidly breaks down any foreign chemicals in their bloodstream."
-	threshold_desc = "<b>Resistance 7:</b> Only removes toxins (instead of all foreign chemicals) from the bloodstream.<br>\
-					  <b>Stage Speed 6:</b> Increases chem removal speed and toxin damage healing rate."
+	threshold_desc = "<b>Resistance 7:</b> Consumed chemicals nourish the host.<br>\
+					  <b>Stage Speed 6:</b> Increases chemical removal speed and toxin damage healing rate.<br>\
+					  <b>Stealth 3:</b> Only removes toxins (instead of all foreign chemicals) from the bloodstream."
 
 /datum/symptom/heal/chem/Start(datum/disease/advance/A)
 	if(!..())
 		return
 	if(A.properties["resistance"] >= 7)
-		tox_only = TRUE
+		food_conversion = TRUE
 	if(A.properties["stage_rate"] >= 6)
 		power = 2
+	if(A.properties["stealth"] >= 3)
+		tox_only = TRUE
 
 /datum/symptom/heal/chem/Heal(mob/living/M, datum/disease/advance/A, actual_power)
 	M.adjustToxLoss(-(0.5 * actual_power))
