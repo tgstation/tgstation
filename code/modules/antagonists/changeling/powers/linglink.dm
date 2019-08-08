@@ -68,7 +68,6 @@
 		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("[name]", "[i]"))
 	changeling.islinking = 0
 
-
 /datum/action/changeling/linglink/Remove(mob/user)
 	changeling.islinking = 0
 	..()
