@@ -63,6 +63,15 @@
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
+"aah" = (
+/turf/closed/wall/r_wall,
+/area/medical/chemistry)
+"aai" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/maintenance/department/engine)
 "abf" = (
 /obj/structure/bed,
 /turf/open/floor/plating,
@@ -26180,9 +26189,6 @@
 /obj/machinery/smartfridge/chemistry/preloaded,
 /turf/closed/wall,
 /area/medical/chemistry)
-"bpY" = (
-/turf/closed/wall,
-/area/medical/chemistry)
 "bqb" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -28481,12 +28487,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
-"bvu" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/maintenance/department/engine)
 "bvw" = (
 /obj/machinery/computer/rdconsole/core{
 	dir = 4
@@ -87917,13 +87917,13 @@ bnF
 boL
 bpV
 bpV
-bpY
-bpY
+aah
+aah
 bvq
 bpX
-bpY
-bpY
-bpY
+aah
+aah
+aah
 bCw
 bDy
 bDy
@@ -88180,7 +88180,7 @@ bvr
 bwS
 byw
 bAe
-bpY
+aah
 bCx
 bDy
 bEI
@@ -88694,7 +88694,7 @@ bwU
 bsK
 bsK
 bAg
-bpY
+aah
 bCz
 bDy
 bEK
@@ -88951,7 +88951,7 @@ bvt
 bwV
 byy
 bAh
-bpY
+aah
 bCA
 bDy
 bEL
@@ -89208,7 +89208,7 @@ mcf
 nnf
 byz
 ooh
-bpY
+aah
 bCB
 dhz
 bEM
@@ -89457,15 +89457,15 @@ bjd
 bmA
 bmA
 bjd
-bpY
-bpY
-bpY
+aah
+aah
+aah
 pSc
 gGA
 bwW
 byA
 bAi
-bpY
+aah
 pwj
 bva
 bva
@@ -89716,13 +89716,13 @@ aBI
 bmB
 bva
 bsn
-bva
-bva
-bvu
-bva
-bva
-bva
-bva
+bBX
+bBX
+aai
+bBX
+bBX
+bBX
+bBX
 pwj
 hVx
 xDj

@@ -5145,6 +5145,9 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/brig)
+"akS" = (
+/turf/closed/wall/r_wall,
+/area/medical/chemistry)
 "akT" = (
 /obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 3";
@@ -85930,15 +85933,15 @@ aJC
 aHP
 aHP
 aHP
-bfF
-bfF
-bfF
-bfF
-bfF
-bfF
-bfF
-bfF
-bfF
+akS
+akS
+akS
+akS
+akS
+akS
+akS
+akS
+akS
 bqM
 brV
 bof
@@ -86187,7 +86190,7 @@ aJC
 bcq
 bcq
 bcq
-bfF
+akS
 nQI
 bio
 bgF
@@ -86444,7 +86447,7 @@ aJC
 aYV
 aYV
 aYV
-bfF
+akS
 bgZ
 bin
 bin
@@ -86701,7 +86704,7 @@ aJC
 aYV
 aYV
 aYV
-bfF
+akS
 bhc
 bip
 bgP
@@ -86958,7 +86961,7 @@ aJC
 aYV
 aYV
 ber
-bfF
+akS
 bhb
 bip
 bjO
@@ -87215,7 +87218,7 @@ bbx
 aYV
 aYV
 aYV
-bfF
+akS
 bhd
 bis
 bjR
@@ -87472,13 +87475,13 @@ aQg
 aYV
 aYV
 bes
-bfF
-bfF
+akS
+akS
 bir
 bjQ
 blh
-bfF
-bfF
+akS
+akS
 bfF
 bfF
 bqU

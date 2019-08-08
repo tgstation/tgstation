@@ -773,6 +773,16 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
+"abT" = (
+/obj/structure/sign/directions/medical{
+	pixel_y = -7
+	},
+/turf/closed/wall/r_wall,
+/area/medical/chemistry)
+"abU" = (
+/obj/structure/sign/departments/chemistry,
+/turf/closed/wall/r_wall,
+/area/medical/chemistry)
 "abV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/light/small{
@@ -896,6 +906,9 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space/nearstation)
+"acl" = (
+/turf/closed/wall/r_wall,
+/area/medical/chemistry)
 "acm" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -49953,16 +49966,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"cfV" = (
-/obj/structure/sign/directions/medical{
-	pixel_y = -7
-	},
-/turf/closed/wall,
-/area/medical/chemistry)
-"cfW" = (
-/obj/structure/sign/departments/chemistry,
-/turf/closed/wall,
-/area/medical/chemistry)
 "cfX" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -50006,9 +50009,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/chemistry)
-"cga" = (
-/turf/closed/wall,
 /area/medical/chemistry)
 "cgb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -100629,16 +100629,16 @@ cak
 cbV
 cdA
 ceF
-cfV
-cga
+abT
+acl
 civ
 cfY
 cls
-cga
-cga
-cga
-cga
-cga
+acl
+acl
+acl
+acl
+acl
 csD
 ctA
 cuu
@@ -100886,7 +100886,7 @@ cal
 cbW
 cdB
 ceG
-cfW
+abU
 chb
 ciw
 cjS
@@ -100895,7 +100895,7 @@ cmz
 cnH
 coT
 cqr
-cga
+acl
 csE
 ctA
 cuv
@@ -101409,7 +101409,7 @@ cmB
 cnJ
 coV
 cqt
-cga
+acl
 cKJ
 ctB
 cuw
@@ -101666,7 +101666,7 @@ cmC
 cnK
 coW
 cqu
-cga
+acl
 csH
 ctC
 cux
@@ -101919,11 +101919,11 @@ chf
 ciA
 cjW
 clw
-cga
+acl
 cnL
 coX
 cnL
-cga
+acl
 cbC
 ctB
 cuy
@@ -102171,16 +102171,16 @@ bZb
 ccb
 cdF
 bZa
-cga
+acl
 cfX
-cga
+acl
 cfX
-cga
-cga
+acl
+acl
 cnM
 coY
 coY
-cga
+acl
 csI
 ctD
 cuz
