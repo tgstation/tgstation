@@ -283,6 +283,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["real_name"]			>> real_name
 	S["name_is_always_random"] >> be_random_name
 	S["body_is_always_random"] >> be_random_body
+	S["species_is_always_random"] >> be_random_species
 	S["gender"]				>> gender
 	S["age"]				>> age
 	S["hair_color"]			>> hair_color
@@ -356,6 +357,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	be_random_body	= sanitize_integer(be_random_body, 0, 1, initial(be_random_body))
+	be_random_species	= sanitize_integer(be_random_species, 0, 1, initial(be_random_species))
 
 	if(gender == MALE)
 		hair_style			= sanitize_inlist(hair_style, GLOB.hair_styles_male_list)
@@ -421,6 +423,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["real_name"]			, real_name)
 	WRITE_FILE(S["name_is_always_random"] , be_random_name)
 	WRITE_FILE(S["body_is_always_random"] , be_random_body)
+	WRITE_FILE(S["species_is_always_random"] , be_random_species)
 	WRITE_FILE(S["gender"]				, gender)
 	WRITE_FILE(S["age"]				, age)
 	WRITE_FILE(S["hair_color"]			, hair_color)

@@ -51,6 +51,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/real_name						//our character's name
 	var/be_random_name = 0				//whether we'll have a random name every round
 	var/be_random_body = 0				//whether we'll have a random body every round
+	var/be_random_species = 0			//whether we'll be a random species every round
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
 	var/underwear = "Nude"				//underwear type
@@ -180,11 +181,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<table width='100%'><tr><td width='75%' valign='top'>"
 			if(is_banned_from(user.ckey, "Appearance"))
 				dat += "<b>You are banned from using custom names and appearances. You can continue to adjust your characters, but you will be randomised once you join the game.</b><br>"
-			dat += "<a href='?_src_=prefs;preference=name;task=random'>Random Name</A> "
-			dat += "<a href='?_src_=prefs;preference=name'>Always Random Name: [be_random_name ? "Yes" : "No"]</a><BR>"
-
-			dat += "<b>Name:</b> "
-			dat += "<a href='?_src_=prefs;preference=name;task=input'>[real_name]</a><BR>"
+			if (!be_random_species) 	// don't let random species choose their name
+				dat += "<a href='?_src_=prefs;preference=name;task=random'>Random Name</A> "
+				dat += "<a href='?_src_=prefs;preference=name'>Always Random Name: [be_random_name ? "Yes" : "No"]</a><BR>"
+				dat += "<b>Name:</b> "
+				dat += "<a href='?_src_=prefs;preference=name;task=input'>[real_name]</a><BR>"
+			else
+				dat += "<b>Name Randomized (always random species)</b><br>"
 
 			if(!(AGENDER in pref_species.species_traits))
 				var/dispGender
@@ -222,6 +225,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<table width='100%'><tr><td width='24%' valign='top'>"
 
 			dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
+			dat += "<a href='?_src_=prefs;preference=rand_species;task=random_race'>Random Species</A> "
+			dat += "<a href='?_src_=prefs;preference=rand_species'>Always Random Species: [be_random_species ? "Yes" : "No"]</A><br>"
 
 			dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
 			dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
@@ -999,6 +1004,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return TRUE
 
 	switch(href_list["task"])
+		if ("random_race")
+			random_species()
+
 		if("random")
 			switch(href_list["preference"])
 				if("name")
@@ -1423,6 +1431,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					else
 						be_special += be_special_type
 
+				if("rand_species")
+					be_random_species = !be_random_species
+
 				if("name")
 					be_random_name = !be_random_name
 
@@ -1510,6 +1521,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return 1
 
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE)
+
+	if(be_random_species)
+		be_random_name = 1
+		random_species()
+		
 	if(be_random_name)
 		real_name = pref_species.random_name(gender)
 
