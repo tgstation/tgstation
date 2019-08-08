@@ -102,10 +102,6 @@
 	dat += "[S.clothes_req?"Requires wizard garb.":"Can be cast without wizard garb."]<br>"
 	return dat
 
-/datum/spellbook_entry/fireball
-	name = "Fireball"
-	spell_type = /obj/effect/proc_holder/spell/aimed/fireball
-
 /datum/spellbook_entry/spell_cards
 	name = "Spell Cards"
 	spell_type = /obj/effect/proc_holder/spell/aimed/spell_cards

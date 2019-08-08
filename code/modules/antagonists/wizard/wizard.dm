@@ -196,7 +196,7 @@
 	switch(school)
 		if(APPRENTICE_DESTRUCTION)
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(null))
-			owner.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball(null))
+			owner.AddSpell(new /obj/effect/proc_holder/spell/aimed/lightningbolt(null))
 			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned powerful, destructive spells. You are able to cast magic missile and fireball.")
 		if(APPRENTICE_BLUESPACE)
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null))
