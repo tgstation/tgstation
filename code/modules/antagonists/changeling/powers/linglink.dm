@@ -1,7 +1,7 @@
 /datum/action/changeling/linglink
 	name = "Hivemind Link"
-	desc = "We link our victim's mind into the hivemind for personal interrogation and/or remote communication."
-	helptext = "If we find a human mad enough to support our cause, this can be a helpful tool to stay in touch."
+	desc = "We permanently link our victim's mind into the hivemind, allowing them to hear messages sent through it and even send messages through it themselves."
+	helptext = "If we find a humanoid mad enough to support our cause, this can be a helpful tool to stay in touch."
 	button_icon_state = "hivemind_link"
 	chemical_cost = 0
 	dna_cost = 2
