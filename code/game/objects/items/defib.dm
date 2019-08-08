@@ -215,6 +215,7 @@
 		var/M = get(paddles, /mob)
 		remove_paddles(M)
 	QDEL_NULL(paddles)
+	QDEL_NULL(cell)
 	return ..()
 
 /obj/item/defibrillator/proc/deductcharge(chrgdeductamt)
@@ -303,6 +304,10 @@
 	var/combat = FALSE //If it penetrates armor and gives additional functionality
 	var/grab_ghost = FALSE
 	var/tlimit = DEFIB_TIME_LIMIT * 10
+
+/obj/item/twohanded/shockpaddles/Destroy()
+	defib = null
+	return ..()
 
 /obj/item/twohanded/shockpaddles/equipped(mob/user, slot)
 	. = ..()
