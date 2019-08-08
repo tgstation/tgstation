@@ -135,6 +135,13 @@
 				to_chat(current_user, "<span class='warning'>Unknown object detected in landing zone. Please designate another location.</span>")
 		return
 
+	///Make one use port that deleted after fly off, to don't lose info that need on to properly fly off.
+	if(my_port && my_port.get_docked())
+		my_port.delete_after = TRUE
+		my_port.id = null
+		my_port.name = "Old [my_port.name]"
+		my_port = null
+
 	if(!my_port)
 		my_port = new()
 		my_port.name = shuttlePortName
