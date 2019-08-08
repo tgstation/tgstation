@@ -60,11 +60,12 @@
 	log_combat(user, target, "attempted to inject", src)
 
 	if(target != user)
-		target.visible_message("<span class='danger'>[user] is trying to inject [target] with [src]!</span>", "<span class='userdanger'>[user] is trying to inject [target] with [src]!</span>")
+		target.visible_message("<span class='danger'>[user] is trying to inject [target] with [src]!</span>", \
+			"<span class='userdanger'>[user] is trying to inject you with [src]!</span>")
 		if(!do_mob(user, target) || used)
 			return
 		target.visible_message("<span class='danger'>[user] injects [target] with the syringe with [src]!", \
-						"<span class='userdanger'>[user] injects [target] with the syringe with [src]!</span>")
+						"<span class='userdanger'>[user] injects you with the syringe with [src]!</span>")
 
 	else
 		to_chat(user, "<span class='notice'>You inject yourself with [src].</span>")
@@ -515,4 +516,3 @@
 		log_attack("[log_msg] [loc_name(user)]")
 		return TRUE
 	return FALSE
-

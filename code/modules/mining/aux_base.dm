@@ -24,12 +24,11 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	req_one_access = list(ACCESS_CARGO, ACCESS_CONSTRUCTION, ACCESS_HEADS, ACCESS_RESEARCH)
 	var/possible_destinations
 	clockwork = TRUE
-	var/obj/item/gps/internal/base/locator
 	circuit = /obj/item/circuitboard/computer/auxillary_base
 
 /obj/machinery/computer/auxillary_base/Initialize()
 	. = ..()
-	locator = new(src)
+	AddComponent(/datum/component/gps, "NT_AUX")
 
 /obj/machinery/computer/auxillary_base/ui_interact(mob/user)
 	. = ..()
@@ -151,7 +150,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		if(!is_mining_level(T.z))
 			return BAD_ZLEVEL
 
-		
+
 		var/list/colony_turfs = base_dock.return_ordered_turfs(T.x,T.y,T.z,base_dock.dir)
 		for(var/i in 1 to colony_turfs.len)
 			CHECK_TICK
