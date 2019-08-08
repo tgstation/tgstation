@@ -6,7 +6,7 @@
 
 /obj/machinery/limbgrower
 	name = "limb grower"
-	desc = "It grows new limbs using Instabitaluri."
+	desc = "It grows new limbs using Synthflesh (Instabitaluri)."
 	icon = 'icons/obj/machines/limbgrower.dmi'
 	icon_state = "limbgrower_idleoff"
 	density = TRUE

@@ -261,7 +261,7 @@
 /******COMBOS******/
 /*Suffix: Combo of healing, prob gonna get wack REAL fast*/
 /datum/reagent/medicine/C2/instabitaluri
-	name = "Instabitaluri"
+	name = "Synthflesh (Instabitaluri)"
 	description = "Has a 100% chance of instantly healing brute and burn damage at the cost of toxicity (75% of damage healed). Touch application only."
 	reagent_state = LIQUID
 	color = "#FFEBEB"
