@@ -6,6 +6,7 @@
 	else
 		gender = pick(MALE,FEMALE)
 	underwear = random_underwear(gender)
+	underwear_color = random_short_color()
 	undershirt = random_undershirt(gender)
 	socks = random_socks()
 	skin_tone = random_skin_tone()

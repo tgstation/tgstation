@@ -55,6 +55,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
 	var/underwear = "Nude"				//underwear type
+	var/underwear_color = "000"			//underwear color
 	var/undershirt = "Nude"				//undershirt type
 	var/socks = "Nude"					//socks type
 	var/backbag = DBACKPACK				//backpack type
@@ -229,6 +230,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<a href='?_src_=prefs;preference=rand_species'>Always Random Species: [be_random_species ? "Yes" : "No"]</A><br>"
 
 			dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
+			dat += "<b>Underwear Color:</b><BR><span style='border: 1px solid #161616; background-color: #[underwear_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=underwear_color;task=input'>Change</a><BR>"
 			dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
 			dat += "<b>Socks:</b><BR><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><BR>"
 			dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a><BR>"
@@ -1023,6 +1025,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					facial_hair_style = random_facial_hair_style(gender)
 				if("underwear")
 					underwear = random_underwear(gender)
+				if("underwear_color")
+					underwear_color = random_short_color()
 				if("undershirt")
 					undershirt = random_undershirt(gender)
 				if("socks")
@@ -1164,6 +1168,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in GLOB.underwear_list
 					if(new_underwear)
 						underwear = new_underwear
+
+				if("underwear_color")
+					var/new_underwear_color = input(user, "Choose your character's underwear color:", "Character Preference","#"+underwear_color) as color|null
+					if(new_underwear_color)
+						underwear_color = sanitize_hexcolor(new_underwear_color)
 
 				if("undershirt")
 					var/new_undershirt
@@ -1560,6 +1569,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.hair_style = hair_style
 	character.facial_hair_style = facial_hair_style
 	character.underwear = underwear
+	character.underwear_color = underwear_color
 	character.undershirt = undershirt
 	character.socks = socks
 
