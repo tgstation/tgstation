@@ -45,6 +45,8 @@
 
 #define MODE_MONKEY "monkeyhive"
 
+#define MODE_CORPSETALK "corpsetalk" //FULP
+
 //Spans. Robot speech, italics, etc. Applied in compose_message().
 #define SPAN_ROBOT "robot"
 #define SPAN_YELL "yell"
