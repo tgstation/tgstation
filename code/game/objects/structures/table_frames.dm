@@ -1,14 +1,27 @@
-/* Table Frames
- * Contains:
- *		Frames
- *		Wooden Frames
- */
+///Crafting datum that's solely used to determine what material matches what table.
+/datum/table_construction //Oh hell yeah. Datums that solely exist to hold variables.
+	var/material
+	var/table_type
+	var/time
+	var/amount
 
+/datum/table_construction/New(material, table_type, time = 20, amount = 1)
+	src.material = material //Do NOT remove the src.whatever. They are actually needed here.
+	src.table_type = table_type
+	src.time = time
+	src.amount = amount
 
-/*
- * Normal Frames
- */
+///Crafting list for metal tables.
+GLOBAL_LIST_INIT(table_construction_metal, list( \
+	new /datum/table_construction(/obj/item/stack/sheet/plasteel, /obj/structure/table/reinforced, time = 50),
+	new /datum/table_construction(/obj/item/stack/sheet/metal, /obj/structure/table),
+	new /datum/table_construction(/obj/item/stack/sheet/glass, /obj/structure/table/glass),
+	new /datum/table_construction(/obj/item/stack/sheet/mineral/silver, /obj/structure/table/optable),
+	new /datum/table_construction(/obj/item/stack/tile/carpet/black, /obj/structure/table/wood/fancy/black), /* Important, keep subtypes in front of the main type */
+	new /datum/table_construction(/obj/item/stack/tile/carpet, /obj/structure/table/wood/fancy),
+	new /datum/table_construction(/obj/item/stack/tile/bronze, /obj/structure/table/bronze)))
 
+///A normal table frame. Can be used to create tables.
 /obj/structure/table_frame
 	name = "table frame"
 	desc = "Four metal legs with four framing rods for a table. You could easily pass through this."
@@ -20,73 +33,45 @@
 	max_integrity = 100
 	var/framestack = /obj/item/stack/rods
 	var/framestackamount = 2
+	var/list/tablelist
 
+/obj/structure/table_frame/Initialize()
+	. = ..()
+	set_table_list()
+
+///Called on init. Links the table crafting with a global list. Overridden in subtypes.
+/obj/structure/table_frame/proc/set_table_list()
+	tablelist = GLOB.table_construction_metal
+
+///Deconstructs the frame.
+/obj/structure/table_frame/wrench_act(mob/user, obj/item/I)
+	..()
+	. = TRUE //Never attack.
+	to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
+	I.play_tool_sound(src)
+	if(!I.use_tool(src, user, 30))
+		return
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	deconstruct(TRUE)
+
+///Handles the crafting if this gets attacked with a stack.
 /obj/structure/table_frame/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WRENCH)
-		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
-		I.play_tool_sound(src)
-		if(I.use_tool(src, user, 30))
-			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
-			deconstruct(TRUE)
-	else if(istype(I, /obj/item/stack/sheet/plasteel))
-		var/obj/item/stack/sheet/plasteel/P = I
-		if(P.get_amount() < 1)
-			to_chat(user, "<span class='warning'>You need one plasteel sheet to do this!</span>")
-			return
-		to_chat(user, "<span class='notice'>You start adding [P] to [src]...</span>")
-		if(do_after(user, 50, target = src) && P.use(1))
-			make_new_table(/obj/structure/table/reinforced)
-	else if(istype(I, /obj/item/stack/sheet/metal))
-		var/obj/item/stack/sheet/metal/M = I
-		if(M.get_amount() < 1)
-			to_chat(user, "<span class='warning'>You need one metal sheet to do this!</span>")
-			return
-		to_chat(user, "<span class='notice'>You start adding [M] to [src]...</span>")
-		if(do_after(user, 20, target = src) && M.use(1))
-			make_new_table(/obj/structure/table)
-	else if(istype(I, /obj/item/stack/sheet/glass))
-		var/obj/item/stack/sheet/glass/G = I
-		if(G.get_amount() < 1)
-			to_chat(user, "<span class='warning'>You need one glass sheet to do this!</span>")
-			return
-		to_chat(user, "<span class='notice'>You start adding [G] to [src]...</span>")
-		if(do_after(user, 20, target = src) && G.use(1))
-			make_new_table(/obj/structure/table/glass)
-	else if(istype(I, /obj/item/stack/sheet/mineral/silver))
-		var/obj/item/stack/sheet/mineral/silver/S = I
-		if(S.get_amount() < 1)
-			to_chat(user, "<span class='warning'>You need one silver sheet to do this!</span>")
-			return
-		to_chat(user, "<span class='notice'>You start adding [S] to [src]...</span>")
-		if(do_after(user, 20, target = src) && S.use(1))
-			make_new_table(/obj/structure/table/optable)
-	else if(istype(I, /obj/item/stack/tile/carpet/black))
-		var/obj/item/stack/tile/carpet/black/C = I
-		if(C.get_amount() < 1)
-			to_chat(user, "<span class='warning'>You need one  black carpet sheet to do this!</span>")
-			return
-		to_chat(user, "<span class='notice'>You start adding [C] to [src]...</span>")
-		if(do_after(user, 20, target = src) && C.use(1))
-			make_new_table(/obj/structure/table/wood/fancy/black)
-	else if(istype(I, /obj/item/stack/tile/carpet))
-		var/obj/item/stack/tile/carpet/C = I
-		if(C.get_amount() < 1)
-			to_chat(user, "<span class='warning'>You need one carpet sheet to do this!</span>")
-			return
-		to_chat(user, "<span class='notice'>You start adding [C] to [src]...</span>")
-		if(do_after(user, 20, target = src) && C.use(1))
-			make_new_table(/obj/structure/table/wood/fancy)
-	else if(istype(I, /obj/item/stack/tile/bronze))
-		var/obj/item/stack/tile/bronze/B = I
-		if(B.get_amount() < 1)
-			to_chat(user, "<span class='warning'>You need one bronze sheet to do this!</span>")
-			return
-		to_chat(user, "<span class='notice'>You start adding [B] to [src]...</span>")
-		if(do_after(user, 20, target = src) && B.use(1))
-			make_new_table(/obj/structure/table/bronze)
-	else
+	if(!istype(I, /obj/item/stack)) //Act normally if its not a stack.
 		return ..()
+	var/obj/item/stack/P = I
+	for(var/i in tablelist)
+		var/datum/table_construction/tc = i
+		if(!istype(P, tc.material))
+			continue
+		if(P.get_amount() < tc.amount)
+			to_chat(user, "<span class='warning'>You need one [P.singular_name] to do this!</span>")
+			return //We can safely return here.
+		to_chat(user, "<span class='notice'>You start adding [P] to [src]...</span>")
+		if(do_after(user, tc.time, target = src) && P.use(tc.amount))
+			make_new_table(tc.table_type)
+		return TRUE //No afterattack.
 
+///Creates the table. Makes sure the table drops the right frame/materials upon getting deconstructed.
 /obj/structure/table_frame/proc/make_new_table(table_type) //makes sure the new table made retains what we had as a frame
 	var/obj/structure/table/T = new table_type(loc)
 	T.frame = type
@@ -99,16 +84,21 @@
 	qdel(src)
 
 /obj/structure/table_frame/narsie_act()
-	new /obj/structure/table_frame/wood(src.loc)
+	new /obj/structure/table_frame/wood(loc)
 	qdel(src)
 
 /obj/structure/table_frame/ratvar_act()
-	new /obj/structure/table_frame/brass(src.loc)
+	new /obj/structure/table_frame/brass(loc)
 	qdel(src)
 
 /*
  * Wooden Frames
  */
+
+GLOBAL_LIST_INIT(table_construction_wood, list(
+	new /datum/table_construction(/obj/item/stack/tile/carpet/black, /obj/structure/table/wood/fancy/black),
+	new /datum/table_construction(/obj/item/stack/tile/carpet, /obj/structure/table/wood/poker),
+	new /datum/table_construction(/obj/item/stack/sheet/mineral/wood, /obj/structure/table/wood)))
 
 /obj/structure/table_frame/wood
 	name = "wooden table frame"
@@ -118,26 +108,16 @@
 	framestackamount = 2
 	resistance_flags = FLAMMABLE
 
-/obj/structure/table_frame/wood/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stack/sheet/mineral/wood))
-		var/obj/item/stack/sheet/mineral/wood/W = I
-		if(W.get_amount() < 1)
-			to_chat(user, "<span class='warning'>You need one wood sheet to do this!</span>")
-			return
-		to_chat(user, "<span class='notice'>You start adding [W] to [src]...</span>")
-		if(do_after(user, 20, target = src) && W.use(1))
-			make_new_table(/obj/structure/table/wood)
-		return
-	else if(istype(I, /obj/item/stack/tile/carpet))
-		var/obj/item/stack/tile/carpet/C = I
-		if(C.get_amount() < 1)
-			to_chat(user, "<span class='warning'>You need one carpet sheet to do this!</span>")
-			return
-		to_chat(user, "<span class='notice'>You start adding [C] to [src]...</span>")
-		if(do_after(user, 20, target = src) && C.use(1))
-			make_new_table(/obj/structure/table/wood/poker)
-	else
-		return ..()
+/obj/structure/table_frame/wood/set_table_list()
+	tablelist = GLOB.table_construction_wood
+
+GLOBAL_LIST_INIT(table_construction_brass, list(
+	new /datum/table_construction(/obj/item/stack/sheet/plasteel, /obj/structure/table/reinforced, time = 50),
+	new /datum/table_construction(/obj/item/stack/sheet/metal, /obj/structure/table),
+	new /datum/table_construction(/obj/item/stack/sheet/glass, /obj/structure/table/glass),
+	new /datum/table_construction(/obj/item/stack/sheet/mineral/silver, /obj/structure/table/optable),
+	new /datum/table_construction(/obj/item/stack/tile/bronze, /obj/structure/table/bronze),
+	new /datum/table_construction(/obj/item/stack/tile/brass, /obj/structure/table/reinforced/brass)))
 
 /obj/structure/table_frame/brass
 	name = "brass table frame"
@@ -155,22 +135,14 @@
 	change_construction_value(-1)
 	return ..()
 
-/obj/structure/table_frame/brass/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stack/tile/brass))
-		var/obj/item/stack/tile/brass/W = I
-		if(W.get_amount() < 1)
-			to_chat(user, "<span class='warning'>You need one brass sheet to do this!</span>")
-			return
-		to_chat(user, "<span class='notice'>You start adding [W] to [src]...</span>")
-		if(do_after(user, 20, target = src) && W.use(1))
-			make_new_table(/obj/structure/table/reinforced/brass)
-	else
-		return ..()
+/obj/structure/table_frame/brass/set_table_list()
+	tablelist = GLOB.table_construction_brass
 
 /obj/structure/table_frame/brass/narsie_act()
 	..()
-	if(src) //do we still exist?
-		var/previouscolor = color
-		color = "#960000"
-		animate(src, color = previouscolor, time = 8)
-		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
+	if(QDELETED(src)) //do we still exist?
+		return
+	var/previouscolor = color
+	color = "#960000"
+	animate(src, color = previouscolor, time = 8)
+	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)

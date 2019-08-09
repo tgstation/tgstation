@@ -725,6 +725,10 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	buildstacktype = /obj/item/stack/sheet/mineral/abductor
 	icon_state = "bed"
 
+GLOBAL_LIST_INIT(table_construction_abductor, list(
+	new /datum/table_construction(/obj/item/stack/sheet/mineral/abductor, /obj/structure/table/abductor, time = 50),
+	new /datum/table_construction(/obj/item/stack/sheet/mineral/silver, /obj/structure/table/optable/abductor, time = 50)))
+
 /obj/structure/table_frame/abductor
 	name = "alien table frame"
 	desc = "A sturdy table frame made from alien alloy."
@@ -732,37 +736,8 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	framestack = /obj/item/stack/sheet/mineral/abductor
 	framestackamount = 1
 
-/obj/structure/table_frame/abductor/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WRENCH)
-		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
-		I.play_tool_sound(src)
-		if(I.use_tool(src, user, 30))
-			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-			for(var/i = 1, i <= framestackamount, i++)
-				new framestack(get_turf(src))
-			qdel(src)
-			return
-	if(istype(I, /obj/item/stack/sheet/mineral/abductor))
-		var/obj/item/stack/sheet/P = I
-		if(P.get_amount() < 1)
-			to_chat(user, "<span class='warning'>You need one alien alloy sheet to do this!</span>")
-			return
-		to_chat(user, "<span class='notice'>You start adding [P] to [src]...</span>")
-		if(do_after(user, 50, target = src))
-			P.use(1)
-			new /obj/structure/table/abductor(src.loc)
-			qdel(src)
-		return
-	if(istype(I, /obj/item/stack/sheet/mineral/silver))
-		var/obj/item/stack/sheet/P = I
-		if(P.get_amount() < 1)
-			to_chat(user, "<span class='warning'>You need one sheet of silver to do	this!</span>")
-			return
-		to_chat(user, "<span class='notice'>You start adding [P] to [src]...</span>")
-		if(do_after(user, 50, target = src))
-			P.use(1)
-			new /obj/structure/table/optable/abductor(src.loc)
-			qdel(src)
+/obj/structure/table_frame/abductor/set_table_list()
+	tablelist = GLOB.table_construction_abductor
 
 /obj/structure/table/abductor
 	name = "alien table"
