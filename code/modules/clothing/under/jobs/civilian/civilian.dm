@@ -233,3 +233,22 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
+
+/obj/item/clothing/under/rank/civilian/lawyer/blacksuit
+	name = "black suit"
+	desc = "A professional black suit. Nanotrasen Investigation Bureau approved!"
+	icon_state = "blacksuit"
+	item_state = "bar_suit"
+	item_color = "blacksuit"
+	can_adjust = TRUE
+	alt_covers_chest = TRUE
+
+/obj/item/clothing/under/rank/civilian/lawyer/blacksuit/skirt
+	name = "black suitskirt"
+	desc = "A professional black suit. Nanotrasen Investigation Bureau approved!"
+	icon_state = "blacksuit_skirt"
+	item_state = "bar_suit"
+	item_color = "blacksuit_skirt"
+	alt_covers_chest = TRUE
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
