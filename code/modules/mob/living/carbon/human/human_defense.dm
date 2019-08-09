@@ -381,7 +381,7 @@
 	var/bomb_armor = getarmor(null, "bomb")
 
 	switch (severity)
-		if (1)
+		if (EXPLODE_DEVASTATE)
 			if(prob(bomb_armor))
 				b_loss = 500
 				var/atom/throw_target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
@@ -394,7 +394,7 @@
 				gib()
 				return
 
-		if (2)
+		if (EXPLODE_HEAVY)
 			b_loss = 60
 			f_loss = 60
 			if(bomb_armor)
@@ -404,9 +404,9 @@
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)
 			if (prob(max(70 - (bomb_armor * 0.5), 0)))
-				Unconscious(200)
+				knockdown(200)
 
-		if(3)
+		if(EXPLODE_LIGHT)
 			b_loss = 30
 			if(bomb_armor)
 				b_loss = 15*(2 - round(bomb_armor*0.01, 0.05))
@@ -414,7 +414,7 @@
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(15,60)
 			if (prob(max(50 - (bomb_armor * 0.5), 0)))
-				Unconscious(160)
+				knockdown(160)
 
 	take_overall_damage(b_loss,f_loss)
 
