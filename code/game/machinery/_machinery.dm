@@ -117,7 +117,6 @@ Class Procs:
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
 	var/obj/item/card/id/inserted_scan_id
 	var/obj/item/card/id/inserted_modify_id
-	var/damage_deflection = 0
 	var/list/region_access = null // For the identification console (card.dm)
 	var/list/head_subordinates = null // For the identification console (card.dm)
 	var/authenticated = 0 // For the identification console (card.dm)
@@ -385,11 +384,6 @@ Class Procs:
 		occupant = null
 		update_icon()
 		updateUsrDialog()
-
-/obj/machinery/run_obj_armor(damage_amount, damage_type, damage_flag = NONE, attack_dir)
-	if(damage_flag == "melee" && damage_amount < damage_deflection)
-		return 0
-	return ..()
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/I)
 	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_SCREWDRIVER)

@@ -296,7 +296,7 @@ Versioning
 	var/lakey = L.lastattackerckey
 	var/sqlbrute = L.getBruteLoss()
 	var/sqlfire = L.getFireLoss()
-	var/sqlbrain = L.getOrganLoss(ORGAN_SLOT_BRAIN)
+	var/sqlbrain = L.getOrganLoss(ORGAN_SLOT_BRAIN) || BRAIN_DAMAGE_DEATH //getOrganLoss returns null without a brain but a value is required for this column
 	var/sqloxy = L.getOxyLoss()
 	var/sqltox = L.getToxLoss()
 	var/sqlclone = L.getCloneLoss()
