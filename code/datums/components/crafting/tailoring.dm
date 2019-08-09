@@ -42,6 +42,30 @@
 	time = 25
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/durathread_duffelbag
+	name = "Durathread Dufflebag"
+	result = /obj/item/storage/backpack/duffelbag/durathread
+	reqs = list(/obj/item/stack/sheet/durathread = 7,
+				/obj/item/stack/sheet/leather = 3)
+	time = 70
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_toolbelt
+	name = "Durathread Toolbelt"
+	result = /obj/item/storage/belt/durathread
+	reqs = list(/obj/item/stack/sheet/durathread = 5,
+				/obj/item/stack/sheet/leather = 1)
+	time = 30
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_bandolier
+	name = "Durathread Bandolier"
+	result = /obj/item/storage/belt/bandolier/durathread
+	reqs = list(/obj/item/stack/sheet/durathread = 6,
+				/obj/item/stack/sheet/leather = 2)
+	time = 50
+	category = CAT_CLOTHING
+
 /datum/crafting_recipe/fannypack
 	name = "Fannypack"
 	result = /obj/item/storage/belt/fannypack

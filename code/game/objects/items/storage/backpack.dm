@@ -420,6 +420,14 @@
 	for(var/i in 1 to 10)
 		new /obj/item/reagent_containers/food/snacks/pie/cream(src)
 
+/obj/item/storage/backpack/duffelbag/durathread
+	name = "durathread duffel bag"
+	desc = "A lightweight duffel bag made out of durathread."
+	icon_state = "duffel-durathread"
+	item_state = "duffel-durathread"
+	resistance_flags = FIRE_PROOF
+	slowdown = 0
+
 /obj/item/storage/backpack/fireproof
 	resistance_flags = FIRE_PROOF
 
