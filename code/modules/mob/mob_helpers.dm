@@ -222,7 +222,7 @@
 
 /**
   * Convert a message into leet non gaijin speak
-  * 
+  *
   * The difference with stutter is that this proc can stutter more than 1 letter
   *
   * The issue here is that anything that does not have a space is treated as one word (in many instances). For instance, "LOOKING," is a word, including the comma.
@@ -397,7 +397,7 @@
   * The kitchen sink of notification procs
   *
   * Arguments:
-  * * message 
+  * * message
   * * ghost_sound sound to play
   * * enter_link Href link to enter the ghost role being notified for
   * * source The source of the notification
@@ -476,7 +476,7 @@
 		return
 	return TRUE
 
-/** 
+/**
   * Offer control of the passed in mob to dead player
   *
   * Automatic logging and uses pollCandidatesForMob, how convenient
@@ -569,7 +569,14 @@
   */
 /mob/proc/common_trait_examine()
 	if(HAS_TRAIT(src, TRAIT_DISSECTED))
-		. += "<span class='notice'>This body has been dissected and analyzed. It is no longer worth experimenting on.</span><br>"
+		var/dissectionmsg = ""
+		if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Extraterrestrial Dissection"))
+			dissectionmsg = " via Extraterrestrial Dissection. It is no longer worth experimenting on"
+		else if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Experimental Dissection"))
+			dissectionmsg = " via Experimental Dissection"
+		else if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Thorough Dissection"))
+			dissectionmsg = " via Thorough Dissection"
+		. += "<span class='notice'>This body has been dissected and analyzed[dissectionmsg].</span><br>"
 
 /**
   * Get the list of keywords for policy config
