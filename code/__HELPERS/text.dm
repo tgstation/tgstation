@@ -52,7 +52,7 @@
 	if(config.ic_filter_regex && findtext(t, config.ic_filter_regex))
 		alert("You cannot set a name that contains a word prohibited in IC chat!")
 		return ""
-	if(t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/dead/new_player/preferences.dm
+	if(t == "space" || t == "floor" || t == "wall" || t == "r-wall" || t == "monkey" || t == "unknown" || t == "inactive ai")	//prevents these common metagamey names
 		alert("Invalid name.")
 		return ""
 	return sanitize(t)
