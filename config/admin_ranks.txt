@@ -39,6 +39,11 @@ Include =
 Exclude = AUTOADMIN
 Edit =
 
+Name = Mentor
+Include = MENTOR
+Exclude =
+Edit =
+
 Name = Moderator
 Include = ADMIN
 Exclude =
