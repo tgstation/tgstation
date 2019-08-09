@@ -404,7 +404,7 @@
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)
 			if (prob(max(70 - (bomb_armor * 0.5), 0)))
-				knockdown(200)
+				Knockdown(200)
 
 		if(EXPLODE_LIGHT)
 			b_loss = 30
@@ -414,7 +414,7 @@
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(15,60)
 			if (prob(max(50 - (bomb_armor * 0.5), 0)))
-				knockdown(160)
+				Knockdown(160)
 
 	take_overall_damage(b_loss,f_loss)
 
