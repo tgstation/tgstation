@@ -67,7 +67,7 @@ GLOBAL_LIST_INIT(table_construction_metal, list( \
 				to_chat(user, "<span class='warning'>You need [tc.amount] [P.singular_name]\s to do this!</span>")
 				return //We can safely return here.
 			to_chat(user, "<span class='notice'>You start adding [P] to [src]...</span>")
-			if(!do_after(user, tc.time, target = src) && P.use(tc.amount))
+			if(!do_after(user, tc.time, target = src) || !P.use(tc.amount))
 				return
 			var/obj/structure/table/T = new tc.table_type(loc)//makes sure the new table made retains what we had as a frame
 			T.frame = type
