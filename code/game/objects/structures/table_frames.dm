@@ -56,20 +56,20 @@ GLOBAL_LIST_INIT(table_construction_metal, list( \
 
 ///Handles the crafting if this gets attacked with a stack.
 /obj/structure/table_frame/attackby(obj/item/I, mob/user, params)
-	if(!istype(I, /obj/item/stack)) //Act normally if its not a stack.
-		return ..()
-	var/obj/item/stack/P = I
-	for(var/i in tablelist)
-		var/datum/table_construction/tc = i
-		if(!istype(P, tc.material))
-			continue
-		if(P.get_amount() < tc.amount)
-			to_chat(user, "<span class='warning'>You need one [P.singular_name] to do this!</span>")
-			return //We can safely return here.
-		to_chat(user, "<span class='notice'>You start adding [P] to [src]...</span>")
-		if(do_after(user, tc.time, target = src) && P.use(tc.amount))
-			make_new_table(tc.table_type)
-		return TRUE //No afterattack.
+	if(istype(I, /obj/item/stack)) //Sorry for the nesting.
+		var/obj/item/stack/P = I
+		for(var/i in tablelist)
+			var/datum/table_construction/tc = i
+			if(!istype(P, tc.material))
+				continue
+			if(P.get_amount() < tc.amount)
+				to_chat(user, "<span class='warning'>You need one [P.singular_name] to do this!</span>")
+				return //We can safely return here.
+			to_chat(user, "<span class='notice'>You start adding [P] to [src]...</span>")
+			if(do_after(user, tc.time, target = src) && P.use(tc.amount))
+				make_new_table(tc.table_type)
+			return TRUE //No afterattack.
+	. = ..()
 
 ///Creates the table. Makes sure the table drops the right frame/materials upon getting deconstructed.
 /obj/structure/table_frame/proc/make_new_table(table_type) //makes sure the new table made retains what we had as a frame
