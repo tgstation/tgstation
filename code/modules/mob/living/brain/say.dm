@@ -6,7 +6,7 @@
 			if(prob(10))//10% chane to drop the message entirely
 				return
 			else
-				message = Gibberish(message, (emp_damage*6))//scrambles the message, gets worse when emp_damage is higher
+				message = Gibberish(message, emp_damage >= 12)//scrambles the message, gets worse when emp_damage is higher
 
 		..()
 

@@ -152,7 +152,4 @@
 
 /obj/item/clothing/mask/chameleon/gps/Initialize()
 	. = ..()
-	new /obj/item/gps/internal/lavaland_syndicate_base(src)
-
-/obj/item/gps/internal/lavaland_syndicate_base
-	gpstag = "Encrypted Signal"
+	AddComponent(/datum/component/gps, "Encrypted Signal")
