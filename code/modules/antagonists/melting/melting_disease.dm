@@ -59,7 +59,7 @@
 				do_disease_transformation(affected_mob)
 			affected_mob.slurring += 2
 			if(prob(10))
-				//goo vomit
+				affected_mob.vomit(specialcolor = creator.slimebody_color, toxic = TRUE)
 				affected_mob.adjustCloneLoss(5)
 		if(5)
 			do_disease_transformation(affected_mob)
