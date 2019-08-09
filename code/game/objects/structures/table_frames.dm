@@ -64,7 +64,7 @@ GLOBAL_LIST_INIT(table_construction_metal, list( \
 				continue
 			. = TRUE //No afterattack.
 			if(P.get_amount() < tc.amount)
-				to_chat(user, "<span class='warning'>You need [tc.amount] [P.singular_name][tc.amount == 1 ? "" : "s"] to do this!</span>")
+				to_chat(user, "<span class='warning'>You need [tc.amount] [P.singular_name]\s to do this!</span>")
 				return //We can safely return here.
 			to_chat(user, "<span class='notice'>You start adding [P] to [src]...</span>")
 			if(!do_after(user, tc.time, target = src) && P.use(tc.amount))
