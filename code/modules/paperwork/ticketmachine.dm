@@ -18,6 +18,8 @@
 	var/cooldown = 50 //Small cooldown, stops the clown from immediately breaking it.
 	var/ready = TRUE
 	var/id = "ticket_machine_default" //For buttons
+	var/list/ticket_holders = list()
+	var/list/tickets = list()
 
 /obj/machinery/ticket_machine/multitool_act(mob/living/user, obj/item/I)
 	if(!multitool_check_buffer(user, I)) //make sure it has a data buffer
@@ -32,7 +34,13 @@
 		return
 	to_chat(user, "<span class='warning'>You overload [src]'s bureaucratic logic circuitry to its MAXIMUM setting.</span>")
 	ticket_number = rand(0,999)
+	current_number = ticket_number
 	obj_flags |= EMAGGED
+	if(tickets.len)
+		for(var/obj/item/ticket_machine_ticket/ticket in tickets)
+			qdel(ticket)
+		tickets.Cut()
+	update_icon()
 
 /obj/machinery/ticket_machine/Initialize()
 	. = ..()
@@ -42,8 +50,11 @@
 	if(current_number >= ticket_number)
 		return
 	playsound(src, 'sound/misc/announce_dig.ogg', 50, 0)
-	say("Next customer, please!")
+	if(current_number > 0)
+		if(!(obj_flags & EMAGGED))
+			QDEL_NULL(tickets[current_number])
 	current_number ++ //Increment the one we're serving.
+	say("Now serving customer #[current_number]!")
 	update_icon() //Update our icon here rather than when they take a ticket to show the current ticket number being served
 
 /obj/machinery/button/ticket_machine
@@ -133,13 +144,12 @@
 			qdel(I)
 			ticket_number = 0
 			current_number = 0
+			if(tickets.len)
+				for(var/obj/item/ticket_machine_ticket/ticket in tickets)
+					qdel(ticket)
+				tickets.Cut()
 			max_number = initial(max_number)
 			update_icon()
-			return
-	if(istype(I, /obj/item/ticket_machine_ticket))
-		to_chat(user, "<span class='warning'>You start to cram [I] into [src]'s recycling bin.</span>")
-		if(do_after(user, 20, target = src)) //Slight delay so they don't accidentally dispose of their ticket and move to the BACK OF THE LINE
-			qdel(I)
 			return
 
 /obj/machinery/ticket_machine/proc/reset_cooldown()
@@ -153,6 +163,10 @@
 	if(ticket_number >= max_number)
 		to_chat(user,"Ticket supply depleted, please refill this unit with a hand labeller refill cartridge!")
 		return
+	if(user in ticket_holders)
+		if(!(obj_flags & EMAGGED))
+			to_chat(user, "You already have a ticket!")
+			return
 	ready = FALSE
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 100, 0)
 	addtimer(CALLBACK(src, .proc/reset_cooldown), cooldown)//Small cooldown to prevent the clown from ripping out every ticket
@@ -162,7 +176,11 @@
 	theirticket.name = "Ticket #[ticket_number]"
 	theirticket.maptext = "<font color='#000000'>[ticket_number]</font>"
 	theirticket.saved_maptext = "<font color='#000000'>[ticket_number]</font>"
+	theirticket.source = src
+	theirticket.owner = user
 	user.put_in_hands(theirticket)
+	ticket_holders += user
+	tickets += theirticket
 	if(obj_flags & EMAGGED) //Emag the machine to destroy the HOP's life.
 		theirticket.fire_act()
 		user.dropItemToGround(theirticket)
@@ -181,6 +199,8 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
 	var/saved_maptext = null
+	var/mob/living/carbon/owner = null
+	var/obj/machinery/ticket_machine/source = null
 
 /obj/item/ticket_machine_ticket/attack_hand(mob/user)
 	. = ..()
@@ -202,3 +222,8 @@
 /obj/item/paper/extinguish()
 	..()
 	update_icon()
+
+/obj/item/ticket_machine_ticket/Destroy()
+	if(owner && source)
+		source.ticket_holders -= owner
+	..()
