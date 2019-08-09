@@ -43,7 +43,7 @@
 	return ..()
 
 /obj/item/melee/touch_attack/disintegrate
-	name = "\improper disintegrating touch"
+	name = "\improper smiting touch"
 	desc = "This hand of mine glows with an awesome power!"
 	catchphrase = "EI NATH!!"
 	on_use_sound = 'sound/magic/disintegrate.ogg'
