@@ -62,22 +62,20 @@ GLOBAL_LIST_INIT(table_construction_metal, list( \
 			var/datum/table_construction/tc = i
 			if(!istype(P, tc.material))
 				continue
+			. = TRUE //No afterattack.
 			if(P.get_amount() < tc.amount)
-				to_chat(user, "<span class='warning'>You need one [P.singular_name] to do this!</span>")
+				to_chat(user, "<span class='warning'>You need [tc.amount] [P.singular_name][tc.amount == 1 ? "" : "s"] to do this!</span>")
 				return //We can safely return here.
 			to_chat(user, "<span class='notice'>You start adding [P] to [src]...</span>")
-			if(do_after(user, tc.time, target = src) && P.use(tc.amount))
-				make_new_table(tc.table_type)
-			return TRUE //No afterattack.
+			if(!do_after(user, tc.time, target = src) && P.use(tc.amount))
+				return
+			var/obj/structure/table/T = new tc.table_type(loc)//makes sure the new table made retains what we had as a frame
+			T.frame = type
+			T.framestack = framestack
+			T.framestackamount = framestackamount
+			qdel(src)
+			return
 	. = ..()
-
-///Creates the table. Makes sure the table drops the right frame/materials upon getting deconstructed.
-/obj/structure/table_frame/proc/make_new_table(table_type) //makes sure the new table made retains what we had as a frame
-	var/obj/structure/table/T = new table_type(loc)
-	T.frame = type
-	T.framestack = framestack
-	T.framestackamount = framestackamount
-	qdel(src)
 
 /obj/structure/table_frame/deconstruct(disassembled = TRUE)
 	new framestack(get_turf(src), framestackamount)
