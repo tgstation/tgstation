@@ -409,7 +409,7 @@
 	FreeAllVassals()
 
 	// Elders get Dusted
-	if (vamptitle)
+	if (vampreputation) // (vamptitle)
 		owner.current.visible_message("<span class='warning'>[owner.current]'s skin crackles and dries, their skin and bones withering to dust. A hollow cry whips from what is now a sandy pile of remains.</span>", \
 			 "<span class='userdanger'>Your soul escapes your withering body as the abyss welcomes you to your Final Death.</span>", \
 			 "<span class='italics'>You hear a dry, crackling sound.</span>")
