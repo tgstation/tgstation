@@ -1413,24 +1413,29 @@
 #undef PERF_BASE_DAMAGE
 
 //Injectables!
-//These are shitty chems for medibots and borgs to use in place of the old trekchems. They're limited to injection only, hence the name.
+//These are shitty chems
 
 /datum/reagent/medicine/sanguiose
 	name = "Sanguiose"
-	description = "A chemical developed to aid in the butchering proccess, it causes a chemical reaction which consumes blood and oxygen while healing cuts, bruises, and other similar injuries,"
+	description = "A chemical developed to aid in the butchering proccess, it causes a chemical reaction which heals bruises and other similar injuries. Has a moderate chance of causing deafness in the user."
 	reagent_state = LIQUID
 	color = "#FF6464"
 	metabolization_rate = 0.5* REAGENTS_METABOLISM
 	overdose_threshold = 25
 	taste_description = "salty"
-
+	
 /datum/reagent/medicine/sanguiose/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-1, 0)
-	M.adjustOxyLoss(0.25,0)
-	M.blood_volume -= 1 //Removes blood
+	if(prob(2))
+		//Adds deafness with a 2% chance
+		ADD_TRAIT(M, TRAIT_DEAF, SANGUIOSE_TRAIT)
 	..()
 	. = 1
 
+/datum/reagent/medicine/sanguiose/on_mob_delete(mob/living/L)
+	. = ..()
+	//removes trait if it comes from the medicine trait.
+	REMOVE_TRAIT(L, TRAIT_DEAF, SANGUIOSE_TRAIT)
 /datum/reagent/medicine/sanguiose/overdose_process(mob/living/M)
 	M.adjustOxyLoss(3,0)
 	M.blood_volume -= 2 //I hope you like blood.
@@ -1445,7 +1450,7 @@
 
 /datum/reagent/medicine/frogenite
 	name = "Frogenite"
-	description = "An industrial cryostorage chemical previously used for preservation and storage. It removes oxygen from the body and heals to prevent and heal burns. If too much is injected the reaction will speed up dramatically removing all oxygen quickly."
+	description = "An industrial cryostorage chemical previously used for preservation and storage. It heals burns, but has a moderate chance of inducing temporary blindness. If too much is injected the medication will start freezing the hemoglobin reducing blood oxygen oxygen quickly."
 	reagent_state = LIQUID
 	color = "#00FFFF"
 	metabolization_rate = 0.5* REAGENTS_METABOLISM
@@ -1453,18 +1458,21 @@
 	taste_description = "Oil"
 
 /datum/reagent/medicine/frogenite/on_mob_life(mob/living/carbon/M) //Reuses code done by cobby in Perflu to convert burn damage to oxygen, Meant to simunlate a chemical reaction to remove oxygen from the body.
-	var/firecalc = 1*REM*current_cycle
 	M.adjustFireLoss(-1, 0)
-	if (firecalc <10)
-		M.adjustOxyLoss(firecalc*0.15, 0)
-	if (firecalc >= 10)
-		M.adjustOxyLoss(1.5,0)
+	if(prob(2))
+		//Adds blindness witha 2% chance
+		ADD_TRAIT(M, TRAIT_BLIND, FROGENITE_TRAIT)
 	..()
 	. = 1
 
+/datum/reagent/medicine/frogenite/on_mob_delete(mob/living/L)
+	. = ..()
+	//removes blindness if trait comes from the medicine
+	REMOVE_TRAIT(L, TRAIT_BLIND, FROGENITE_TRAIT)
+
 /datum/reagent/medicine/frogenite/overdose_process(mob/living/M)
-	M.adjustOxyLoss(15,0)
-	M.reagents.remove_reagent(type, metabolization_rate*10) // Reused code from syndicate nanites meant to purge the chem quickly.
+	M.adjustOxyLoss(3,0)
+	M.reagents.remove_reagent(type, metabolization_rate*2) // Reused code from syndicate nanites meant to purge the chem quickly.
 	to_chat(M, "<span class='notice'>You feel like you aren't getting any oxygen!</span>")
 	..()
 	. = 1
@@ -1477,7 +1485,7 @@
 
 /datum/reagent/medicine/ferveatium
 	name = "Ferveatium"
-	description = "A chemical previously used to cook questionable meat, it has come to enjoy a new life as a treatment for many poisons."
+	description = "A chemical previously used to cook questionable meat, it has come to enjoy a new life as a treatment for many poisons. Use has a slight chance of causing the patient to feel lethargic and slow."
 	reagent_state = LIQUID
 	color = "#00FFFF"
 	metabolization_rate = 0.5* REAGENTS_METABOLISM
@@ -1485,18 +1493,21 @@
 	taste_description = "Fire"
 
 /datum/reagent/medicine/ferveatium/on_mob_life(mob/living/carbon/M) //Reuses code done by cobby in Perflu to convert burn damage to oxygen, Meant to simunlate a chemical reaction to remove oxygen from the body.
-	var/toxcalc = 1*REM*current_cycle
 	M.adjustToxLoss(-1, 0)
-	if (toxcalc <10)
-		M.adjustFireLoss(toxcalc/10, 0)
-	if (toxcalc >= 10)
-		M.adjustFireLoss(1,0)
+	if(prob(2))
+		//Adds fatness with a 2% chance probability.
+		ADD_TRAIT(M, TRAIT_FAT, FERVEATIUM_TRAIT)
 	..()
 	. = 1
 
+/datum/reagent/medicine/ferveatium/on_mob_delete(mob/living/L)
+	. = ..()
+	//removes the fat trait.
+	REMOVE_TRAIT(L, TRAIT_FAT, FERVEATIUM_TRAIT)
+
 /datum/reagent/medicine/ferveatium/overdose_process(mob/living/M)
-	M.adjustFireLoss(15,0)
-	M.reagents.remove_reagent(type, metabolization_rate*10) // Reused code from syndicate nanites meant to purge the chem quickly.
+	M.adjustFireLoss(3,0)
+	M.reagents.remove_reagent(type, metabolization_rate*2) // Reused code from syndicate nanites meant to purge the chem quickly.
 	to_chat(M, "<span class='notice'>You feel like you are melting!</span>")
 	..()
 	. = 1
@@ -1521,14 +1532,14 @@
 
 /datum/reagent/medicine/polypyr  //This is intended to be an ingredient in advanced chems.
 	name = "Polypyrylium Oligomers"
-	description = "A´purple mixture of short polyelectrolyte chains not easily synthesized in the laboratory. It is valued as an intermediate in the synthesis of the cutting edge pharmaceuticals."
+	description = "Aï¿½purple mixture of short polyelectrolyte chains not easily synthesized in the laboratory. It is valued as an intermediate in the synthesis of the cutting edge pharmaceuticals."
 	reagent_state = SOLID
 	color = "#9423FF"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 50
 	taste_description = "numbing bitterness"
 
-/datum/reagent/medicine/polypyr/on_mob_life(mob/living/carbon/M) //I wánted a collection of small positive effects, this is as hard to obtain as coniine after all.
+/datum/reagent/medicine/polypyr/on_mob_life(mob/living/carbon/M) //I wï¿½nted a collection of small positive effects, this is as hard to obtain as coniine after all.
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, -0.25)
 	M.adjustBruteLoss(-0.35, 0)
 	if(prob(50))

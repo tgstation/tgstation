@@ -67,6 +67,16 @@
 //////////////////Misc///////////////////
 /////////////////////////////////////////
 
+/datum/design/welding_goggles
+	name = "Welding Goggles"
+	desc = "Protects the eyes from bright flashes; approved by the mad scientist association."
+	id = "welding_goggles"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	build_path = /obj/item/clothing/glasses/welding
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
 /datum/design/welding_mask
 	name = "Welding Gas Mask"
 	desc = "A gas mask with built in welding goggles and face shield. Looks like a skull, clearly designed by a nerd."
@@ -255,6 +265,16 @@
 	build_path = /obj/item/tank/internals/plasma/empty
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	
+/datum/design/id
+	name = "Identification Card"
+	desc = "A card used to provide ID and determine access across the station."
+	id = "idcard"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron=200, /datum/material/glass = 100)
+	build_path = /obj/item/card/id
+	category = list("Electronics")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE	
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////

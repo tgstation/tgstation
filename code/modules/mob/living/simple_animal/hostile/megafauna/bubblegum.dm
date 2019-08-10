@@ -59,7 +59,7 @@ Difficulty: Hard
 	var/enrage_till = 0
 	var/enrage_time = 70
 	var/revving_charge = FALSE
-	internal_type = /obj/item/gps/internal/bubblegum
+	gps_name = "Bloody Signal"
 	medal_type = BOSS_MEDAL_BUBBLEGUM
 	score_type = BUBBLEGUM_SCORE
 	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
@@ -383,12 +383,6 @@ Difficulty: Hard
 		INVOKE_ASYNC(B, .proc/charge, chargeat, delay, chargepast)
 	if(useoriginal)
 		charge(chargeat, delay, chargepast)
-
-/obj/item/gps/internal/bubblegum
-	icon_state = null
-	gpstag = "Bloody Signal"
-	desc = "You're not quite sure how a signal can be bloody."
-	invisibility = 100
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
