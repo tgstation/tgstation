@@ -141,6 +141,8 @@
 
 ///Adjusts an organ's damage by the amount "d", up to a maximum amount, which is by default max damage
 /obj/item/organ/proc/applyOrganDamage(var/d, var/maximum = maxHealth)	//use for damaging effects
+	if(!d) //Micro-optimization.
+		return
 	if(maximum < damage)
 		return
 	damage = CLAMP(damage + d, 0, maximum)
