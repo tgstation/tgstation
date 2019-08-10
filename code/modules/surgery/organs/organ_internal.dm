@@ -77,10 +77,10 @@
 	if(organ_flags & ORGAN_FAILING)
 		return
 	///Damage decrements by a percent of its maxhealth
-	applyOrganDamage(-(maxHealth * healing_factor))
-	if(owner.satiety > 0)
-		///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
-		applyOrganDamage(4 * healing_factor * owner.satiety / MAX_SATIETY)
+	var/healing_amount = -(maxHealth * healing_factor)
+	///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
+	healing_amount -= owner.satiety > 0 ? 4 * healing_factor * owner.satiety / MAX_SATIETY : 0
+	applyOrganDamage(healing_amount)
 
 /obj/item/organ/examine(mob/user)
 	. = ..()
