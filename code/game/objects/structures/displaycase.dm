@@ -172,6 +172,9 @@
 	    //prevents remote "kicks" with TK
 		if (!Adjacent(user))
 			return
+		if (user.a_intent == INTENT_HELP)
+			user.examinate(src)
+			return
 		user.visible_message("<span class='danger'>[user] kicks the display case.</span>", null, null, COMBAT_MESSAGE_RANGE)
 		log_combat(user, src, "kicks")
 		user.do_attack_animation(src, ATTACK_EFFECT_KICK)
