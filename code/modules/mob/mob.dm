@@ -198,29 +198,21 @@
 			continue
 		if(M in ignored_mobs)
 			continue
-		var/msg = "<span class='notice'>"
-		msg += message
-		msg += "</span>"
+		var/msg = "<span class='notice'>[message]</span>"
 		if(M == src) //the src always see the main message or self message
 			if(self_message)
-				msg = "<span class='notice'>"
-				msg += self_message
-				msg += "</span>"
+				msg = "<span class='notice'>[self_message]</span>"
 		else
 			if(M.see_invisible<invisibility || (T != loc && T != src))//if src is invisible to us or is inside something (and isn't a turf),
 				if(blind_message) // then people see blind message if there is one, otherwise nothing.
-					msg = "<span class='italics'>"
-					msg += blind_message
-					msg += "</span>"
+					msg = "<span class='italics'>[blind_message]</span>"
 				else
 					continue
 
 			else if(T.lighting_object)
 				if(T.lighting_object.invisibility <= M.see_invisible && T.is_softly_lit()) //the light object is dark and not invisible to us
 					if(blind_message)
-						msg = "<span class='italics'>"
-						msg += blind_message
-						msg += "</span>"
+						msg = "<span class='italics'>[blind_message]</span>"
 					else
 						continue
 
@@ -242,13 +234,9 @@
 	if(hearing_distance)
 		range = hearing_distance
 	for(var/mob/M in get_hearers_in_view(range, src))
-		var/msg = "<span class='italics'>"
-		msg += message
-		msg += "</span>"
+		var/msg = "<span class='italics'>[message]</span>"
 		if(self_message && M==src)
-			msg = "<span class='italics'>"
-			msg += self_message
-			msg += "</span>"
+			msg = "<span class='italics'>[self_message]</span>"
 		M.show_message(msg, 2, deaf_message, 1)
 
 /**
@@ -266,9 +254,7 @@
 	if(hearing_distance)
 		range = hearing_distance
 	for(var/mob/M in get_hearers_in_view(range, src))
-		var/msg = "<span class='italics'>"
-		msg += message
-		msg += "</span>"
+		var/msg = "<span class='italics'>[message]</span>"
 		M.show_message(msg, 2, deaf_message, 1)
 
 ///Get the item on the mob in the storage slot identified by the id passed in
