@@ -160,12 +160,12 @@
 	/// After a target is hit, we do a chunk of stamina damage, along with other effects.
 	/// After a period of time, we then check to see what stun duration we give.
 	L.Jitter(20)
-	L.confused = max(10, L.confused)
+	L.confused = max(8, L.confused)
 	L.apply_effect(EFFECT_STUTTER, stunforce)
-	L.adjustStaminaLoss(65)
+	L.adjustStaminaLoss(60)
 
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
-	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, L), 20)
+	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, L), 2.5 SECONDS)
 
 	if(user)
 		L.lastattacker = user.real_name
