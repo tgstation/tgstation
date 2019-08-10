@@ -373,7 +373,19 @@ update_label()
 		if(popup_input == "Forge")
 			var/t = copytext(sanitize(input(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name))as text | null),1,26)
 			if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/dead/new_player/prefrences.dm
-				registered_name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]" // Invalid/blank names give a randomly generated one.
+				if (ishuman(user))
+					var/mob/living/carbon/human/human_agent = user
+
+					// Invalid/blank names give a randomly generated one.
+					if (human_agent.gender == "male")
+						registered_name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]" 
+					else if (human_agent.gender == "female")
+						registered_name = "[pick(GLOB.first_names_female)] [pick(GLOB.last_names)]" 
+					else
+						registered_name = "[pick(GLOB.first_names)] [pick(GLOB.last_names)]"
+				else
+					alert ("Invalid name.")
+					return	
 			else
 				registered_name = t
 
