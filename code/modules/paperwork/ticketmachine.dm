@@ -19,7 +19,7 @@
 	var/ready = TRUE
 	var/id = "ticket_machine_default" //For buttons
 	var/list/ticket_holders = list()
-	var/list/tickets = list()
+	var/list/obj/item/ticket_machine_ticket/tickets = list()
 
 /obj/machinery/ticket_machine/multitool_act(mob/living/user, obj/item/I)
 	if(!multitool_check_buffer(user, I)) //make sure it has a data buffer
@@ -56,7 +56,8 @@
 		QDEL_NULL(tickets[current_number])
 	current_number ++ //Increment the one we're serving.
 	say("Now serving ticket #[current_number]!")
-	tickets[current_number].visible_message("<span class='notice'>\the [tickets[current_number]] vibrates!</span>")
+	if(!(obj_flags & EMAGGED))
+		tickets[current_number].visible_message("<span class='notice'>\the [tickets[current_number]] vibrates!</span>")
 	update_icon() //Update our icon here rather than when they take a ticket to show the current ticket number being served
 
 /obj/machinery/button/ticket_machine
@@ -175,7 +176,7 @@
 	ticket_number ++
 	to_chat(user, "<span class='notice'>You take a ticket from [src], looks like you're ticket number #[ticket_number]...</span>")
 	var/obj/item/ticket_machine_ticket/theirticket = new /obj/item/ticket_machine_ticket(get_turf(src))
-	theirticket.name = "NanoPaper Ticket #[ticket_number]"
+	theirticket.name = "Ticket #[ticket_number]"
 	theirticket.maptext = "<font color='#000000'>[ticket_number]</font>"
 	theirticket.saved_maptext = "<font color='#000000'>[ticket_number]</font>"
 	theirticket.source = src
@@ -191,8 +192,8 @@
 		return
 
 /obj/item/ticket_machine_ticket
-	name = "NanoPaper Ticket"
-	desc = "A ticket which shows your place in the Head of Personnel line. Made from Nanotrasen patented NanoPaper®. Feels (and burns) just like the real thing. Its form seems to shimmer and shift in your hand."
+	name = "Ticket"
+	desc = "A ticket which shows your place in the Head of Personnel's line. Made from Nanotrasen patented NanoPaper®. Though solid, its form seems to shimmer slightly. Feels (and burns) just like the real thing."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "ticket"
 	maptext_x = 7
