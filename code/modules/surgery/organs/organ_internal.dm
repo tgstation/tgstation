@@ -45,6 +45,7 @@
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Grant(M)
+	STOP_PROCESSING(SSobj, src)
 
 //Special is for instant replacement like autosurgeons
 /obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE)
@@ -58,51 +59,28 @@
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(M)
+	START_PROCESSING(SSobj, src)
 
 
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
 
-/obj/item/organ/process()	//runs decay when outside of a person
+/obj/item/organ/process()
+	on_death() //Kinda hate doing it like this, but I really don't want to call process directly.
+
+/obj/item/organ/proc/on_death()	//runs decay when outside of a person
 	if((organ_flags & (ORGAN_SYNTHETIC | ORGAN_FROZEN)) || istype(loc, /obj/item/mmi))
 		return
-	if(damage >= maxHealth)
-		organ_flags |= ORGAN_FAILING
-		damage = maxHealth
-		return
-	else if(!owner)
-		damage = min(maxHealth, damage + (maxHealth * decay_factor))
-
-	else
-		var/mob/living/carbon/C = owner
-		if(!C)
-			return
-		if(C.stat == DEAD && !IS_IN_STASIS(C))
-			if(damage >= maxHealth)
-				organ_flags |= ORGAN_FAILING
-				damage = maxHealth
-				return
-			damage = min(maxHealth, damage + (maxHealth * decay_factor))
+	applyOrganDamage(maxHealth * decay_factor)
 
 /obj/item/organ/proc/on_life()	//repair organ damage if the organ is not failing
-	var/mob/living/carbon/C = owner
-	if(!C)
+	if(organ_flags & ORGAN_FAILING)
 		return
-	if(damage >= maxHealth)
-		organ_flags |= ORGAN_FAILING
-		damage = maxHealth
-		check_damage_thresholds(C)
-		prev_damage = damage
-		return
-	if((!(organ_flags & ORGAN_FAILING)) && (C.stat !=DEAD))
-		///Damage decrements by a percent of its maxhealth
-		damage = max(0, damage - (maxHealth * healing_factor))
-		if(C.satiety > 0)
-			///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
-			damage = max(0, damage - ((maxHealth * healing_factor) * (C.satiety / MAX_SATIETY) * 4))
-		check_damage_thresholds(C)
-		prev_damage = damage
-	return
+	///Damage decrements by a percent of its maxhealth
+	applyOrganDamage(-(maxHealth * healing_factor))
+	if(owner.satiety > 0)
+		///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
+		applyOrganDamage(4 * healing_factor * owner.satiety / MAX_SATIETY)
 
 /** check_damage_thresholds
   * input: M (a mob, the owner of the organ we call the proc on)
@@ -115,9 +93,10 @@
 		return
 	var/delta = damage - prev_damage
 	if(delta > 0)
-		if(damage == maxHealth)
+		if(damage >= maxHealth)
 			if(now_failing)
 				to_chat(M, now_failing)
+				organ_flags |= ORGAN_FAILING
 		else if(damage > high_threshold && prev_damage <= high_threshold)
 			if(high_threshold_passed)
 				to_chat(M, high_threshold_passed)
@@ -165,15 +144,16 @@
 	foodtype = RAW | MEAT | GROSS
 
 /obj/item/organ/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
-	return ..()
 
 /obj/item/organ/Destroy()
-	STOP_PROCESSING(SSobj, src)
 	if(owner)
 		// The special flag is important, because otherwise mobs can die
 		// while undergoing transformation into different mobs.
 		Remove(owner, special=TRUE)
+	else
+		STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/organ/attack(mob/living/carbon/M, mob/user)
@@ -193,17 +173,15 @@
 
 ///Adjusts an organ's damage by the amount "d", up to a maximum amount, which is by default max damage
 /obj/item/organ/proc/applyOrganDamage(var/d, var/maximum = maxHealth)	//use for damaging effects
-	if(maximum < d + damage)
-		d = max(0, maximum - damage)
-	damage = max(0, damage + d)
+	if(maximum < damage)
+		return
+	damage = CLAMP(damage + d, 0, maximum)
+	check_damage_thresholds(owner)
+	prev_damage = damage
 
 ///SETS an organ's damage to the amount "d", and in doing so clears or sets the failing flag, good for when you have an effect that should fix an organ if broken
 /obj/item/organ/proc/setOrganDamage(var/d)	//use mostly for admin heals
-	damage = CLAMP(d, 0 ,maxHealth)
-	if(d >= maxHealth)
-		organ_flags |= ORGAN_FAILING
-	else
-		organ_flags &= ~ORGAN_FAILING
+	applyOrganDamage(d - damage)
 
 //Looking for brains?
 //Try code/modules/mob/living/carbon/brain/brain_item.dm
