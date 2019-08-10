@@ -124,16 +124,6 @@
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/beamrifle
-	name = "Beam Marksman Rifle"
-	desc = "A powerful long ranged anti-material rifle that fires charged particle beams to obliterate targets."
-	id = "beamrifle"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 10000, /datum/material/glass = 5000, /datum/material/diamond = 5000, /datum/material/uranium = 8000, /datum/material/silver = 4500, /datum/material/gold = 5000)
-	build_path = /obj/item/gun/energy/beam_rifle
-	category = list("Weapons")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
 /datum/design/decloner
 	name = "Decloner"
 	desc = "Your opponent will bubble into a messy pile of goop."
