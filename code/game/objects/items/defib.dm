@@ -35,7 +35,6 @@
 
 /obj/item/defibrillator/loaded/Initialize() //starts with hicap
 	. = ..()
-	paddles = make_paddles()
 	cell = new(src)
 	update_icon()
 	return
@@ -216,8 +215,8 @@
 		var/M = get(paddles, /mob)
 		remove_paddles(M)
 	QDEL_NULL(paddles)
-	. = ..()
-	update_icon()
+	QDEL_NULL(cell)
+	return ..()
 
 /obj/item/defibrillator/proc/deductcharge(chrgdeductamt)
 	if(cell)
@@ -260,7 +259,6 @@
 
 /obj/item/defibrillator/compact/loaded/Initialize()
 	. = ..()
-	paddles = make_paddles()
 	cell = new(src)
 	update_icon()
 
@@ -272,7 +270,6 @@
 
 /obj/item/defibrillator/compact/combat/loaded/Initialize()
 	. = ..()
-	paddles = make_paddles()
 	cell = new /obj/item/stock_parts/cell/infinite(src)
 	update_icon()
 
@@ -308,16 +305,15 @@
 	var/grab_ghost = FALSE
 	var/tlimit = DEFIB_TIME_LIMIT * 10
 
-	var/mob/listeningTo
+/obj/item/twohanded/shockpaddles/Destroy()
+	defib = null
+	return ..()
 
 /obj/item/twohanded/shockpaddles/equipped(mob/user, slot)
 	. = ..()
-	if(!req_defib || listeningTo == user)
+	if(!req_defib)
 		return
-	if(listeningTo)
-		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/check_range)
-	listeningTo = user
 
 /obj/item/twohanded/shockpaddles/Moved()
 	. = ..()
@@ -330,16 +326,15 @@
 		defib.fire_act(exposed_temperature, exposed_volume)
 
 /obj/item/twohanded/shockpaddles/proc/check_range()
-	if(!req_defib)
+	if(!req_defib || !defib)
 		return
 	if(!in_range(src,defib))
 		var/mob/living/L = loc
 		if(istype(L))
 			to_chat(L, "<span class='warning'>[defib]'s paddles overextend and come out of your hands!</span>")
-			L.temporarilyRemoveItemFromInventory(src,TRUE)
 		else
 			visible_message("<span class='notice'>[src] snap back into [defib].</span>")
-			snap_back()
+		snap_back()
 
 /obj/item/twohanded/shockpaddles/proc/recharge(var/time)
 	if(req_defib || !time)
@@ -380,14 +375,14 @@
 /obj/item/twohanded/shockpaddles/dropped(mob/user)
 	if(!req_defib)
 		return ..()
-	if(listeningTo)
-		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 	if(user)
+		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 		var/obj/item/twohanded/offhand/O = user.get_inactive_held_item()
 		if(istype(O))
 			O.unwield()
-		to_chat(user, "<span class='notice'>The paddles snap back into the main unit.</span>")
-		snap_back()
+		if(user != loc)
+			to_chat(user, "<span class='notice'>The paddles snap back into the main unit.</span>")
+			snap_back()
 	return unwield(user)
 
 /obj/item/twohanded/shockpaddles/proc/snap_back()

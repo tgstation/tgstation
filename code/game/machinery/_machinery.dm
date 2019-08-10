@@ -115,10 +115,8 @@ Class Procs:
 	var/atom/movable/occupant = null
 	var/speed_process = FALSE // Process as fast as possible?
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
-	var/obj/item/card/id/prisoner/inserted_prisoner_id
 	var/obj/item/card/id/inserted_scan_id
 	var/obj/item/card/id/inserted_modify_id
-	var/damage_deflection = 0
 	var/list/region_access = null // For the identification console (card.dm)
 	var/list/head_subordinates = null // For the identification console (card.dm)
 	var/authenticated = 0 // For the identification console (card.dm)
@@ -387,11 +385,6 @@ Class Procs:
 		update_icon()
 		updateUsrDialog()
 
-/obj/machinery/run_obj_armor(damage_amount, damage_type, damage_flag = NONE, attack_dir)
-	if(damage_flag == "melee" && damage_amount < damage_deflection)
-		return 0
-	return ..()
-
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/I)
 	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_SCREWDRIVER)
 		I.play_tool_sound(src, 50)
@@ -515,7 +508,7 @@ Class Procs:
 				. += "<span class='warning'>It's falling apart!</span>"
 	if(user.research_scanner && component_parts)
 		. += display_parts(user, TRUE)
-	if(inserted_prisoner_id || inserted_scan_id || inserted_modify_id)
+	if(inserted_scan_id || inserted_modify_id)
 		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
 
 //called on machinery construction (i.e from frame to machinery) but not on initialization
@@ -550,49 +543,6 @@ Class Procs:
 	. = . % 9
 	AM.pixel_x = -8 + ((.%3)*8)
 	AM.pixel_y = -8 + (round( . / 3)*8)
-
-/obj/machinery/proc/id_eject_prisoner(mob/user)
-	if(inserted_prisoner_id)
-		inserted_prisoner_id.forceMove(drop_location())
-		if(!issilicon(user) && Adjacent(user))
-			user.put_in_hands(inserted_prisoner_id)
-			inserted_prisoner_id = null
-			user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
-								"<span class='notice'>You get the ID card from the console.</span>")
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-		updateUsrDialog()
-		return
-	else
-		to_chat(user, "<span class='warning'>There's no ID card in the console!</span>")
-
-	if(!inserted_prisoner_id)
-		to_chat(user, "<span class='warning'>There's no ID card in the console!</span>")
-		return
-	if(inserted_prisoner_id)
-		inserted_prisoner_id.forceMove(drop_location())
-		if(!issilicon(user) && Adjacent(user))
-			user.put_in_hands(inserted_prisoner_id)
-		inserted_prisoner_id = null
-		user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
-							"<span class='notice'>You get the ID card from the console.</span>")
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-		updateUsrDialog()
-
-/obj/machinery/proc/id_insert_prisoner(mob/user)
-	if(inserted_prisoner_id)
-		to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
-		return
-	var/obj/item/card/id/prisoner/I = user.get_active_held_item()
-	if(istype(I))
-		if(!user.transferItemToLoc(I, src))
-			return
-		inserted_prisoner_id = I
-		user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
-							"<span class='notice'>You insert the ID card into the console.</span>")
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-	else
-		to_chat(user, "<span class='danger'>No valid ID.</span>")
-	updateUsrDialog()
 
 /obj/machinery/proc/id_insert_scan(mob/user, obj/item/card/id/I)
 	I = user.get_active_held_item()
@@ -662,5 +612,3 @@ Class Procs:
 		id_eject_scan(user)
 		authenticated = FALSE
 		return
-	if(inserted_prisoner_id)
-		id_eject_prisoner(user)

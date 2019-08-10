@@ -49,6 +49,8 @@
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: Smelting <b>[sheet_per_ore]</b> sheet(s) per piece of ore.<br>Ore pickup speed at <b>[ore_pickup_rate]</b>.</span>"
+	if(panel_open)
+		. += "<span class='notice'>Alt-click to rotate the input and output direction.</span>"
 
 /obj/machinery/mineral/ore_redemption/proc/smelt_ore(obj/item/stack/ore/O)
 	var/datum/component/material_container/mat_container = materials.mat_container
@@ -74,11 +76,8 @@
 	else
 		var/mats = O.materials & mat_container.materials
 		var/amount = O.amount
-		var/id = inserted_scan_id && inserted_scan_id.registered_name
-		if (id)
-			id = " (ID: [id])"
 		mat_container.insert_item(O, sheet_per_ore) //insert it
-		materials.silo_log(src, "smelted", amount, "ores[id]", mats)
+		materials.silo_log(src, "smelted", amount, "someone", mats)
 		qdel(O)
 
 /obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/D)
@@ -176,13 +175,6 @@
 
 	if(!powered())
 		return ..()
-	if(istype(W, /obj/item/card/id))
-		var/obj/item/card/id/I = user.get_active_held_item()
-		if(istype(I))
-			id_insert_prisoner(user)
-			interact(user)
-			return
-		return
 
 	if(istype(W, /obj/item/disk/design_disk))
 		if(user.transferItemToLoc(W, src))
@@ -197,7 +189,10 @@
 
 	return ..()
 
-/obj/machinery/mineral/ore_redemption/multitool_act(mob/living/user, obj/item/multitool/I)
+/obj/machinery/mineral/ore_redemption/AltClick(mob/living/user)
+	. = ..()
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
 	if (panel_open)
 		input_dir = turn(input_dir, -90)
 		output_dir = turn(output_dir, -90)
@@ -213,10 +208,6 @@
 /obj/machinery/mineral/ore_redemption/ui_data(mob/user)
 	var/list/data = list()
 	data["unclaimedPoints"] = points
-	if(inserted_scan_id)
-		data["hasID"] = TRUE
-		if (inserted_scan_id.registered_account)
-			data["hasAccount"] = TRUE
 
 	data["materials"] = list()
 	var/datum/component/material_container/mat_container = materials.mat_container
@@ -256,28 +247,23 @@
 		return
 	var/datum/component/material_container/mat_container = materials.mat_container
 	switch(action)
-		if("Eject")
-			if(!inserted_scan_id)
-				return
-			id_eject_prisoner(usr)
-			return TRUE
-		if("Insert")
-			var/obj/item/card/id/I = usr.get_active_held_item()
-			if(istype(I))
-				id_insert_prisoner(usr)
-			else
-				to_chat(usr, "<span class='warning'>Not a valid ID!</span>")
-			return TRUE
 		if("Claim")
-			if(inserted_scan_id && inserted_scan_id.registered_account.adjust_money(points))
-				points = 0
+			var/mob/M = usr
+			var/obj/item/card/id/I = M.get_idcard(TRUE)
+			if(points)
+				if(I && I.registered_account.adjust_money(points))
+					points = 0
+				else
+					to_chat(usr, "<span class='warning'>No ID detected.</span>")
+			else
+				to_chat(usr, "<span class='warning'>No points to claim.</span>")
 			return TRUE
 		if("Release")
 			if(!mat_container)
 				return
 			if(materials.on_hold())
 				to_chat(usr, "<span class='warning'>Mineral access is on hold, please contact the quartermaster.</span>")
-			else if(!check_access(inserted_scan_id) && !allowed(usr)) //Check the ID inside, otherwise check the user
+			else if(!allowed(usr)) //Check the ID inside, otherwise check the user
 				to_chat(usr, "<span class='warning'>Required access not found.</span>")
 			else
 				var/datum/material/mat = locate(params["id"])
@@ -298,7 +284,7 @@
 					desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
 
 				var/sheets_to_remove = round(min(desired,50,stored_amount))
-				
+
 				var/count = mat_container.retrieve_sheets(sheets_to_remove, mat, get_step(src, output_dir))
 				var/list/mats = list()
 				mats[mat] = MINERAL_MATERIAL_AMOUNT

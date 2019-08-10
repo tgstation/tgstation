@@ -28,6 +28,7 @@
 		if(H.mind && H.mind.assigned_role == "Clown") //Ensures only clowns can drive the car. (Including more at once)
 			add_control_flags(H, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_PERMISSION)
 			RegisterSignal(H, COMSIG_MOB_CLICKON, .proc/FireCannon)
+			M.log_message("has entered [src] as a possible driver", LOG_ATTACK)
 			return
 	add_control_flags(M, VEHICLE_CONTROL_KIDNAPPED)
 
@@ -76,11 +77,13 @@
 		L.visible_message("<span class='warning'>[src] rams into [L] and sucks [L.p_them()] up!</span>") //fuck off shezza this isn't ERP.
 		mob_forced_enter(L)
 		playsound(src, pick('sound/vehicles/clowncar_ram1.ogg', 'sound/vehicles/clowncar_ram2.ogg', 'sound/vehicles/clowncar_ram3.ogg'), 75)
+		log_combat(src, M, "sucked up")
 	else if(istype(M, /turf/closed))
 		visible_message("<span class='warning'>[src] rams into [M] and crashes!</span>")
 		playsound(src, pick('sound/vehicles/clowncar_crash1.ogg', 'sound/vehicles/clowncar_crash2.ogg'), 75)
 		playsound(src, 'sound/vehicles/clowncar_crashpins.ogg', 75)
 		DumpMobs(TRUE)
+		log_combat(src, M, "crashed into", null, "dumping all passengers")
 
 /obj/vehicle/sealed/car/clowncar/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -89,6 +92,7 @@
 	to_chat(user, "<span class='danger'>You scramble \the [src]'s child safety lock, and a panel with six colorful buttons appears!</span>")
 	initialize_controller_action_type(/datum/action/vehicle/sealed/RollTheDice, VEHICLE_CONTROL_DRIVE)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/Cannon, VEHICLE_CONTROL_DRIVE)
+	AddComponent(/datum/component/waddling)
 
 /obj/vehicle/sealed/car/clowncar/Destroy()
   playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
@@ -189,6 +193,7 @@
 		flick("clowncar_recoil", src)
 		playsound(src, pick('sound/vehicles/carcannon1.ogg', 'sound/vehicles/carcannon2.ogg', 'sound/vehicles/carcannon3.ogg'), 75)
 		L.throw_at(A, 10, 2)
+		log_combat(user, L, "fired", src, "towards [A]") //this doesn't catch if the mob hits something between the car and the target
 		return COMSIG_MOB_CANCEL_CLICKON
 
 /obj/vehicle/sealed/car/clowncar/proc/ThanksCounter()

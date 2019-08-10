@@ -2875,7 +2875,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "agp" = (
-/obj/machinery/computer/prisoner,
+/obj/machinery/computer/prisoner/management,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "agq" = (
@@ -4358,7 +4358,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ajr" = (
-/obj/machinery/computer/gulag_teleporter_computer,
+/obj/machinery/computer/prisoner/gulag_teleporter_computer,
 /turf/open/floor/plasteel,
 /area/security/processing)
 "ajs" = (
@@ -17818,7 +17818,7 @@
 /turf/closed/wall,
 /area/bridge)
 "aTR" = (
-/obj/machinery/computer/prisoner,
+/obj/machinery/computer/prisoner/management,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},

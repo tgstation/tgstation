@@ -67,10 +67,17 @@
 		new /obj/effect/particle_effect/smoke(get_turf(src))
 		qdel(src)
 
+//Non-default pods
+
 /obj/item/survivalcapsule/luxury
 	name = "luxury bluespace shelter capsule"
 	desc = "An exorbitantly expensive luxury suite stored within a pocket of bluespace."
 	template_id = "shelter_beta"
+
+/obj/item/survivalcapsule/luxuryelite
+	name = "luxury elite bar capsule"
+	desc = "A luxury bar in a capsule. Bartender required and not included."
+	template_id = "shelter_charlie"
 
 //Pod objects
 
@@ -161,6 +168,7 @@
 	pixel_y = -32
 
 /obj/item/gps/computer/wrench_act(mob/living/user, obj/item/I)
+	..()
 	if(flags_1 & NODECONSTRUCT_1)
 		return TRUE
 
@@ -240,6 +248,7 @@
 	qdel(src)
 
 /obj/structure/fans/wrench_act(mob/living/user, obj/item/I)
+	..()
 	if(flags_1 & NODECONSTRUCT_1)
 		return TRUE
 
