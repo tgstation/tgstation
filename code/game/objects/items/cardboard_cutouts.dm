@@ -60,17 +60,15 @@
 	user.do_attack_animation(src)
 
 	if(I.force)
-		user.visible_message("<span class='danger'>[user] has hit \
-			[src] with [I]!</span>", "<span class='danger'>You hit [src] \
-			with [I]!</span>")
-
+		user.visible_message("<span class='danger'>[user] hits [src] with [I]!</span>", \
+			"<span class='danger'>You hit [src] with [I]!</span>")
 		if(prob(I.force))
 			push_over()
 
 /obj/item/cardboard_cutout/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/bullet/reusable))
 		P.on_hit(src, 0)
-	visible_message("<span class='danger'>[src] has been hit by [P]!</span>")
+	visible_message("<span class='danger'>[src] is hit by [P]!</span>")
 	playsound(src, 'sound/weapons/slice.ogg', 50, 1)
 	if(prob(P.damage))
 		push_over()

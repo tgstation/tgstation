@@ -1,10 +1,19 @@
 /obj/item/organ/lungs
+	var/failed = FALSE
+	var/operated = FALSE	//whether we can still have our damages fixed through surgery
 	name = "lungs"
 	icon_state = "lungs"
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_LUNGS
 	gender = PLURAL
 	w_class = WEIGHT_CLASS_NORMAL
+
+	healing_factor = STANDARD_ORGAN_HEALING
+	decay_factor = STANDARD_ORGAN_DECAY
+
+	high_threshold_passed = "<span class='warning'>You feel some sort of constriction around your chest as your breathing becomes shallow and rapid.</span>"
+	now_fixed = "<span class='warning'>Your lungs seem to once again be able to hold air.</span>"
+	high_threshold_cleared = "<span class='info'>The constriction around your chest loosens as your breathing calms down.</span>"
 
 	//Breath damage
 
@@ -243,7 +252,7 @@
 			H.hallucination += 10
 			H.reagents.add_reagent(/datum/reagent/bz_metabolites,5)
 			if(prob(33))
-				H.adjustBrainLoss(3, 150)
+				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150)
 
 		else if(bz_pp > 0.01)
 			H.hallucination += 5
@@ -379,6 +388,17 @@
 			if(prob(20))
 				to_chat(H, "<span class='warning'>You feel [hot_message] in your [name]!</span>")
 
+/obj/item/organ/lungs/on_life()
+	..()
+	if((!failed) && ((organ_flags & ORGAN_FAILING)))
+		if(owner.stat == CONSCIOUS)
+			owner.visible_message("<span class='danger'>[owner] grabs [owner.p_their()] throat, struggling for breath!</span>", \
+								"<span class='userdanger'>You suddenly feel like you can't breathe!</span>")
+		failed = TRUE
+	else if(!(organ_flags & ORGAN_FAILING))
+		failed = FALSE
+	return
+
 /obj/item/organ/lungs/prepare_eat()
 	var/obj/S = ..()
 	S.reagents.add_reagent(/datum/reagent/medicine/salbutamol, 5)
@@ -409,7 +429,8 @@
 	name = "cybernetic lungs"
 	desc = "A cybernetic version of the lungs found in traditional humanoid entities. Allows for greater intakes of oxygen than organic lungs, requiring slightly less pressure."
 	icon_state = "lungs-c"
-	synthetic = TRUE
+	organ_flags = ORGAN_SYNTHETIC
+	maxHealth = 1.1 * STANDARD_ORGAN_THRESHOLD
 	safe_oxygen_min = 13
 
 /obj/item/organ/lungs/cybernetic/emp_act()
@@ -425,6 +446,7 @@
 	icon_state = "lungs-c-u"
 	safe_toxins_max = 20
 	safe_co2_max = 20
+	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 
 	cold_level_1_threshold = 200
 	cold_level_2_threshold = 140

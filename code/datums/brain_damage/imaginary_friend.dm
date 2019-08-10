@@ -8,6 +8,10 @@
 	var/friend_initialized = FALSE
 
 /datum/brain_trauma/special/imaginary_friend/on_gain()
+	var/mob/living/M = owner
+	if(M.stat == DEAD || !M.client)
+		qdel(src)
+		return
 	..()
 	make_friend()
 	get_ghost()
@@ -140,7 +144,7 @@
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (!(ignore_spam || forced) && src.client.handle_spam_prevention(message,MUTE_IC))
 			return
 
 	friend_talk(message)

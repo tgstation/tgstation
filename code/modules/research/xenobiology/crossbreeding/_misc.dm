@@ -53,11 +53,11 @@ Slimecrossing Items
 	for(var/_part in bodyparts)
 		var/obj/item/bodypart/part = _part
 		var/datum/saved_bodypart/saved_part = new(part)
-		
+
 		ret[part.body_zone] = saved_part
 	return ret
 
-	
+
 
 /datum/component/dejavu
 	var/integrity	//for objects
@@ -84,7 +84,7 @@ Slimecrossing Items
 		clone_loss = L.getCloneLoss()
 		tox_loss = L.getToxLoss()
 		oxy_loss = L.getOxyLoss()
-		brain_loss = L.getBrainLoss()
+		brain_loss = L.getOrganLoss(ORGAN_SLOT_BRAIN)
 	if(iscarbon(parent))
 		var/mob/living/carbon/C = parent
 		saved_bodyparts = C.save_bodyparts()
@@ -104,7 +104,7 @@ Slimecrossing Items
 		L.setCloneLoss(clone_loss)
 		L.setToxLoss(tox_loss)
 		L.setOxyLoss(oxy_loss)
-		L.setBrainLoss(brain_loss)
+		L.setOrganLoss(ORGAN_SLOT_BRAIN, brain_loss)
 
 	if(iscarbon(parent))
 		if(saved_bodyparts)
@@ -142,13 +142,13 @@ Slimecrossing Items
 			to_chat(user, "<span class=notice>You take a photo with [target]!</span>")
 			to_chat(target, "<span class=notice>[user] takes a photo with you!</span>")
 		to_chat(target, "<span class=notice>You'll remember this moment forever!</span>")
-			
+
 		used = TRUE
 		target.AddComponent(/datum/component/dejavu, 2)
 	.=..()
-		
-		
-	
+
+
+
 //Timefreeze camera - Old Burning Sepia result. Kept in case admins want to spawn it
 /obj/item/camera/timefreeze
 	name = "sepia-tinted camera"

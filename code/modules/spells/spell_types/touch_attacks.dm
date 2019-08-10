@@ -53,8 +53,8 @@
 
 
 /obj/effect/proc_holder/spell/targeted/touch/disintegrate
-	name = "Disintegrate"
-	desc = "This spell charges your hand with vile energy that can be used to violently explode victims."
+	name = "Smite"
+	desc = "This spell charges your hand with an unholy energy that can be used to cause a touched victim to violently explode."
 	hand_path = /obj/item/melee/touch_attack/disintegrate
 
 	school = "evocation"

@@ -71,7 +71,7 @@
 
 /obj/item/clothing/mask/pig
 	name = "pig mask"
-	desc = "A rubber pig mask with a builtin voice modulator."
+	desc = "A rubber pig mask with a built-in voice modulator."
 	icon_state = "pig"
 	item_state = "pig"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
@@ -85,7 +85,7 @@
 
 /obj/item/clothing/mask/pig/cursed
 	name = "pig face"
-	desc = "It looks like a mask, but closer inspection reveals it's melded onto this persons face!"
+	desc = "It looks like a mask, but closer inspection reveals it's melded onto this person's face!"
 	flags_inv = HIDEFACIALHAIR
 	clothing_flags = NONE
 
@@ -141,7 +141,7 @@
 
 /obj/item/clothing/mask/cowmask/cursed
 	name = "cow face"
-	desc = "It looks like a cow mask, but closer inspection reveals it's melded onto this persons face!"
+	desc = "It looks like a cow mask, but closer inspection reveals it's melded onto this person's face!"
 	flags_inv = HIDEFACIALHAIR
 	clothing_flags = NONE
 
