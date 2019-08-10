@@ -116,7 +116,6 @@
 	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 150
-	ignored_by = list(/mob/living/simple_animal/slime)
 	var/datum/action/innate/split_body/slime_split
 	var/list/mob/living/carbon/bodies
 	var/datum/action/innate/swap_body/swap_body
