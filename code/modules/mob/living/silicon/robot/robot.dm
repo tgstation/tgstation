@@ -10,6 +10,8 @@
 	has_limbs = 1
 	hud_type = /datum/hud/robot
 
+	radio = /obj/item/radio/borg
+
 	var/custom_name = ""
 	var/braintype = "Cyborg"
 	var/obj/item/robot_suit/robot_suit = null //Used for deconstruction to remember what the borg was constructed out of..
@@ -40,7 +42,7 @@
 	var/mutable_appearance/eye_lights
 
 	var/mob/living/silicon/ai/connected_ai = null
-	var/obj/item/stock_parts/cell/cell = null
+	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high ///If this is a path, this gets created as an object in Initialize.
 
 	var/opened = 0
 	var/emagged = FALSE
@@ -80,12 +82,6 @@
 	var/hasExpanded = FALSE
 	var/obj/item/hat
 	var/hat_offset = -3
-	var/list/blacklisted_hats = list( //Hats that don't really work on borgos
-	/obj/item/clothing/head/helmet/space/santahat,
-	/obj/item/clothing/head/welding,
-	/obj/item/clothing/head/mob_holder, //I am so very upset that this breaks things
-	/obj/item/clothing/head/helmet/space/eva,
-	)
 
 	can_buckle = TRUE
 	buckle_lying = FALSE
@@ -111,15 +107,14 @@
 
 	ident = rand(1, 999)
 
-	if(!cell)
-		cell = new /obj/item/stock_parts/cell/high(src)
+	if(ispath(cell))
+		cell = new cell(src)
 
 	if(lawupdate)
 		make_laws()
 		if(!TryConnectToAI())
 			lawupdate = FALSE
 
-	radio = new /obj/item/radio/borg(src)
 	if(!scrambledcodes && !builtInCamera)
 		builtInCamera = new (src)
 		builtInCamera.c_tag = real_name
@@ -149,8 +144,6 @@
 		mmi.update_icon()
 
 	updatename()
-
-	blacklisted_hats = typecacheof(blacklisted_hats)
 
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 	aicamera = new/obj/item/camera/siliconcam/robot_camera(src)
@@ -723,6 +716,7 @@
 	update_icons()
 
 /mob/living/silicon/robot/proc/deconstruct()
+	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
 	var/turf/T = get_turf(src)
 	if (robot_suit)
 		robot_suit.forceMove(T)
@@ -764,6 +758,10 @@
 		cell.forceMove(T)
 		cell = null
 	qdel(src)
+
+///This is the subtype that gets created by robot suits. It's needed so that those kind of borgs don't have a useless cell in them
+/mob/living/silicon/robot/nocell
+	cell = null
 
 /mob/living/silicon/robot/modules
 	var/set_module = /obj/item/robot_module
@@ -816,11 +814,11 @@
 							Your cyborg LMG will slowly produce ammunition from your power supply, and your operative pinpointer will find and locate fellow nuclear operatives. \
 							<i>Help the operatives secure the disk at all costs!</i></b>"
 	set_module = /obj/item/robot_module/syndicate
+	cell = /obj/item/stock_parts/cell/hyper
+	radio = /obj/item/radio/borg/syndicate
 
 /mob/living/silicon/robot/modules/syndicate/Initialize()
 	. = ..()
-	cell = new /obj/item/stock_parts/cell/hyper(src, 25000)
-	radio = new /obj/item/radio/borg/syndicate(src)
 	laws = new /datum/ai_laws/syndicate_override()
 	addtimer(CALLBACK(src, .proc/show_playstyle), 5)
 
@@ -981,6 +979,7 @@
 
 
 /mob/living/silicon/robot/proc/ResetModule()
+	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
 	uneq_all()
 	shown_robot_modules = FALSE
 	if(hud_used)
@@ -1129,6 +1128,7 @@
 
 /mob/living/silicon/robot/shell
 	shell = TRUE
+	cell = null
 
 /mob/living/silicon/robot/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()

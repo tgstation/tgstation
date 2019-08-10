@@ -22,6 +22,8 @@
 
 ///returns the damage value of the attack after processing the obj's various armor protections
 /obj/proc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir, armour_penetration = 0)
+	if(damage_flag == "melee" && damage_amount < damage_deflection)
+		return 0
 	switch(damage_type)
 		if(BRUTE)
 		if(BURN)
@@ -54,13 +56,11 @@
 		return
 	..() //contents explosion
 	if(target == src)
-		obj_integrity = 0
-		qdel(src)
+		take_damage(INFINITY, BRUTE, "bomb", 0)
 		return
 	switch(severity)
 		if(1)
-			obj_integrity = 0
-			qdel(src)
+			take_damage(INFINITY, BRUTE, "bomb", 0)
 		if(2)
 			take_damage(rand(100, 250), BRUTE, "bomb", 0)
 		if(3)
@@ -80,7 +80,7 @@
 /obj/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == INTENT_HARM)
 		..(user, 1)
-		visible_message("<span class='danger'>[user] smashes [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
+		user.visible_message("<span class='danger'>[user] smashes [src]!</span>", "<span class='danger'>You smash [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 		if(density)
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 			user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced="hulk")
@@ -155,7 +155,7 @@
 				return 0
 			else
 				return 0
-	visible_message("<span class='danger'>[M.name] has hit [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
+	M.visible_message("<span class='danger'>[M.name] hits [src]!</span>", "<span class='danger'>You hit [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 	return take_damage(M.force*3, mech_damtype, "melee", play_soundeffect, get_dir(src, M)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 
 /obj/singularity_act()

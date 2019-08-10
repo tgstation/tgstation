@@ -10,7 +10,7 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	strip_delay = 60
-	resistance_flags = NONE
+	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR
 
@@ -349,7 +349,7 @@
 	return ..()
 
 /obj/item/clothing/head/helmet/screwdriver_act(mob/living/user, obj/item/I)
-	..()
+	. = ..()
 	if(can_flashlight && attached_light) //if it has a light but can_flashlight is false, the light is permanently attached.
 		I.play_tool_sound(src)
 		to_chat(user, "<span class='notice'>You unscrew [attached_light] from [src].</span>")

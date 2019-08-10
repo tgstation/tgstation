@@ -370,7 +370,8 @@
 	name = "curtain"
 	desc = "Contains less than 1% mercury."
 	icon = 'icons/obj/watercloset.dmi'
-	icon_state = "open"
+	icon_state = "bathroom-open"
+	var/icon_type = "bathroom"//used in making the icon state
 	color = "#ACD1E9" //Default color, didn't bother hardcoding other colors, mappers can and should easily change it.
 	alpha = 200 //Mappers can also just set this to 255 if they want curtains that can't be seen through
 	layer = SIGN_LAYER
@@ -385,13 +386,13 @@
 
 /obj/structure/curtain/update_icon()
 	if(!open)
-		icon_state = "closed"
+		icon_state = "[icon_type]-closed"
 		layer = WALL_OBJ_LAYER
 		density = TRUE
 		open = FALSE
 
 	else
-		icon_state = "open"
+		icon_state = "[icon_type]-open"
 		layer = SIGN_LAYER
 		density = FALSE
 		open = TRUE
@@ -403,10 +404,12 @@
 		return ..()
 
 /obj/structure/curtain/wrench_act(mob/living/user, obj/item/I)
+	..()
 	default_unfasten_wrench(user, I, 50)
 	return TRUE
 
 /obj/structure/curtain/wirecutter_act(mob/living/user, obj/item/I)
+	..()
 	if(anchored)
 		return TRUE
 
@@ -441,3 +444,9 @@
 				playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			playsound(loc, 'sound/items/welder.ogg', 80, 1)
+
+/obj/structure/curtain/bounty
+	icon_type = "bounty"
+	icon_state = "bounty-open"
+	color = null
+	alpha = 255

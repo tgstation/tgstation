@@ -23,7 +23,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 	hitsound = 'sound/weapons/chainhit.ogg'
-	materials = list(MAT_METAL = 1000)
+	materials = list(/datum/material/iron = 1000)
 
 /obj/item/melee/chainofcommand/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -65,7 +65,7 @@
 	sharpness = IS_SHARP
 	attack_verb = list("slashed", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
-	materials = list(MAT_METAL = 1000)
+	materials = list(/datum/material/iron = 1000)
 
 /obj/item/melee/sabre/Initialize()
 	. = ..()
@@ -138,12 +138,12 @@
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
+	force = 5
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = IS_SHARP
-	force = 7
 	throwforce = 10
 	block_chance = 20
-	armour_penetration = 85
+	armour_penetration = 65
 	attack_verb = list("slashed", "stung", "prickled", "poked")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 
@@ -152,7 +152,7 @@
 	user.changeNext_move(CLICK_CD_RAPID)
 	if(iscarbon(target))
 		var/mob/living/carbon/H = target
-		H.reagents.add_reagent(/datum/reagent/toxin/histamine, 4)
+		H.reagents.add_reagent(/datum/reagent/toxin, 4)
 
 /obj/item/melee/beesword/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is stabbing [user.p_them()]self in the throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -212,8 +212,8 @@
 /obj/item/melee/classic_baton/proc/get_stun_description(mob/living/target, mob/living/user)
 	. = list()
 
-	.["visible"] =  "<span class ='danger'>[user] has knocked down [target] with [src]!</span>"
-	.["local"] = "<span class ='danger'>[user] has knocked down [target] with [src]!</span>"
+	.["visible"] =  "<span class ='danger'>[user] knocks [target] down with [src]!</span>"
+	.["local"] = "<span class ='userdanger'>[user] knocks you down with [src]!</span>"
 
 	return .
 
@@ -386,8 +386,8 @@
 	force = 5
 
 	cooldown = 20
-	stun_time_carbon = 85 
-	affect_silicon = TRUE 
+	stun_time_carbon = 85
+	affect_silicon = TRUE
 	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
 

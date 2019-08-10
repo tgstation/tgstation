@@ -9,9 +9,12 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/looping_sound/supermatter
-	mid_sounds = list('sound/machines/sm/supermatter1.ogg'=1,'sound/machines/sm/supermatter2.ogg'=1,'sound/machines/sm/supermatter3.ogg'=1)
-	mid_length = 10
-	volume = 1
+	mid_sounds = list('sound/machines/sm/loops/calm.ogg' = 1)
+	mid_length = 60
+	volume = 40
+	extra_range = 10
+	falloff = 4
+	vary = TRUE
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

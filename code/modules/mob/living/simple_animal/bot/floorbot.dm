@@ -239,10 +239,7 @@
 				mode = BOT_REPAIRING
 				F.ReplaceWithLattice()
 				audible_message("<span class='danger'>[src] makes an excited booping sound.</span>")
-				spawn(5)
-					anchored = FALSE
-					mode = BOT_IDLE
-					target = null
+				addtimer(CALLBACK(src, .proc/go_idle), 0.5 SECONDS)
 			path = list()
 			return
 		if(path.len == 0)
@@ -265,6 +262,11 @@
 
 
 	oldloc = loc
+
+/mob/living/simple_animal/bot/floorbot/proc/go_idle()
+	anchored = FALSE
+	mode = BOT_IDLE
+	target = null
 
 /mob/living/simple_animal/bot/floorbot/proc/is_hull_breach(turf/t) //Ignore space tiles not considered part of a structure, also ignores shuttle docking areas.
 	var/area/t_area = get_area(t)

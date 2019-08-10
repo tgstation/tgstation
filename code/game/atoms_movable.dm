@@ -148,7 +148,8 @@
 		var/mob/M = AM
 		log_combat(src, M, "grabbed", addition="passive grab")
 		if(!supress_message)
-			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
+			M.visible_message("<span class='warning'>[src] grabs [M] passively.</span>", \
+				"<span class='danger'>[src] grabs you passively.</span>")
 	return TRUE
 
 /atom/movable/proc/stop_pulling()
@@ -579,6 +580,8 @@
 	TT.diagonals_first = diagonals_first
 	TT.force = force
 	TT.callback = callback
+	if(!QDELETED(thrower))
+		TT.target_zone = thrower.zone_selected
 
 	var/dist_x = abs(target.x - src.x)
 	var/dist_y = abs(target.y - src.y)
@@ -740,9 +743,8 @@
 
 /atom/movable/vv_get_dropdown()
 	. = ..()
-	. -= "Jump to"
-	.["Follow"] = "?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(src)]"
-	.["Get"] = "?_src_=holder;[HrefToken()];admingetmovable=[REF(src)]"
+	. += "<option value='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(src)]'>Follow</option>"
+	. += "<option value='?_src_=holder;[HrefToken()];admingetmovable=[REF(src)]'>Get</option>"
 
 /atom/movable/proc/ex_check(ex_id)
 	if(!ex_id)

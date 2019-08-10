@@ -12,7 +12,7 @@
 	var/mode = SYRINGE_DRAW
 	var/busy = FALSE		// needed for delayed drawing of blood
 	var/proj_piercing = 0 //does it pierce through thick clothes when shot with syringe gun
-	materials = list(MAT_METAL=10, MAT_GLASS=20)
+	materials = list(/datum/material/iron=10, /datum/material/glass=20)
 	reagent_flags = TRANSPARENT
 
 /obj/item/reagent_containers/syringe/Initialize()
@@ -79,7 +79,7 @@
 				var/drawn_amount = reagents.maximum_volume - reagents.total_volume
 				if(target != user)
 					target.visible_message("<span class='danger'>[user] is trying to take a blood sample from [target]!</span>", \
-									"<span class='userdanger'>[user] is trying to take a blood sample from [target]!</span>")
+									"<span class='userdanger'>[user] is trying to take a blood sample from you!</span>")
 					busy = TRUE
 					if(!do_mob(user, target, extra_checks=CALLBACK(L, /mob/living/proc/can_inject, user, TRUE)))
 						busy = FALSE
@@ -130,7 +130,7 @@
 					return
 				if(L != user)
 					L.visible_message("<span class='danger'>[user] is trying to inject [L]!</span>", \
-											"<span class='userdanger'>[user] is trying to inject [L]!</span>")
+											"<span class='userdanger'>[user] is trying to inject you!</span>")
 					if(!do_mob(user, L, extra_checks=CALLBACK(L, /mob/living/proc/can_inject, user, TRUE)))
 						return
 					if(!reagents.total_volume)
@@ -138,7 +138,7 @@
 					if(L.reagents.total_volume >= L.reagents.maximum_volume)
 						return
 					L.visible_message("<span class='danger'>[user] injects [L] with the syringe!", \
-									"<span class='userdanger'>[user] injects [L] with the syringe!</span>")
+									"<span class='userdanger'>[user] injects you with the syringe!</span>")
 
 				if(L != user)
 					log_combat(user, L, "injected", src, addition="which had [contained]")
@@ -264,3 +264,23 @@
 	name = "spider extract syringe"
 	desc = "Contains crikey juice - makes any gold core create the most deadly companions in the world."
 	list_reagents = list(/datum/reagent/spider_extract = 1)
+
+/obj/item/reagent_containers/syringe/oxandrolone
+	name = "syringe (oxandrolone)"
+	desc = "Contains oxandrolone, used to treat severe burns."
+	list_reagents = list(/datum/reagent/medicine/oxandrolone = 15)
+
+/obj/item/reagent_containers/syringe/salacid
+	name = "syringe (salicyclic acid)"
+	desc = "Contains salicyclic acid, used to treat severe brute damage."
+	list_reagents = list(/datum/reagent/medicine/sal_acid = 15)
+
+/obj/item/reagent_containers/syringe/penacid
+	name = "syringe (pentetic acid)"
+	desc = "Contains pentetic acid, used to reduce high levels of radiation and heal severe toxins."
+	list_reagents = list(/datum/reagent/medicine/pen_acid = 15)
+
+/obj/item/reagent_containers/syringe/thializid
+	name = "syringe (thializid)"
+	desc = "Contains thializid, used to treat toxins and purge chemicals.The tag on the syringe states 'Inject one time per minute'"
+	list_reagents = list(/datum/reagent/medicine/thializid = 15)

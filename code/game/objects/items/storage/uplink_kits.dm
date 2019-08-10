@@ -42,10 +42,10 @@
 			new /obj/item/ammo_box/a357(src)
 			new /obj/item/ammo_box/a357(src)
 			new /obj/item/card/emag(src)
-			new /obj/item/grenade/plastic/c4(src)
+			new /obj/item/grenade/c4(src)
 			new /obj/item/clothing/gloves/color/latex/nitrile(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
-			new /obj/item/clothing/under/suit_jacket/really_black(src)
+			new /obj/item/clothing/under/suit/black_really(src)
 
 		if("screwed")
 			new /obj/item/sbeacondrop/bomb(src)
@@ -90,8 +90,8 @@
 			new /obj/item/storage/toolbox/syndicate(src)
 
 		if("sabotage")
-			new /obj/item/grenade/plastic/c4 (src)
-			new /obj/item/grenade/plastic/c4 (src)
+			new /obj/item/grenade/c4 (src)
+			new /obj/item/grenade/c4 (src)
 			new /obj/item/doorCharge(src)
 			new /obj/item/doorCharge(src)
 			new /obj/item/camera_bug(src)
@@ -107,7 +107,7 @@
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/clothing/gloves/color/latex/nitrile(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
-			new /obj/item/clothing/under/suit_jacket/really_black(src)
+			new /obj/item/clothing/under/suit/black_really(src)
 
 		if("metaops")
 			new /obj/item/clothing/suit/space/hardsuit/syndi(src) // 8 tc
@@ -115,12 +115,12 @@
 			new /obj/item/implanter/explosive(src) // 2 tc
 			new /obj/item/ammo_box/magazine/m12g(src) // 2 tc
 			new /obj/item/ammo_box/magazine/m12g(src) // 2 tc
-			new /obj/item/grenade/plastic/c4 (src) // 1 tc
-			new /obj/item/grenade/plastic/c4 (src) // 1 tc
+			new /obj/item/grenade/c4 (src) // 1 tc
+			new /obj/item/grenade/c4 (src) // 1 tc
 			new /obj/item/card/emag(src) // 6 tc
 
 /obj/item/storage/box/syndicate/bundle_B/PopulateContents()
-	switch (pickweight(list( "bond" = 2, "ninja" = 1, "darklord" = 1, "white_whale_holy_grail" = 2, "mad_scientist" = 2, "bee" = 2, "mr_freeze" = 2)))
+	switch (pickweight(list( "bond" = 2, "ninja" = 1, "darklord" = 1, "white_whale_holy_grail" = 2, "mad_scientist" = 2, "bee" = 1, "mr_freeze" = 2)))
 		if("bond")
 			new /obj/item/gun/ballistic/automatic/pistol(src)
 			new /obj/item/suppressor(src)
@@ -158,7 +158,7 @@
 		if("mad_scientist")
 			new /obj/item/clothing/suit/toggle/labcoat/mad(src) // 0 tc
 			new /obj/item/clothing/shoes/jackboots(src) // 0 tc
-			new /obj/item/megaphone(src) // 0 tc (because how else are they to know you're mad?)
+			new /obj/item/megaphone(src) // 0 tc 
 			new /obj/item/grenade/clusterbuster/random(src) // 10 tc?
 			new /obj/item/grenade/clusterbuster/random(src) // 10 tc?
 			new /obj/item/grenade/chem_grenade/bioterrorfoam(src) // 5 tc
@@ -168,7 +168,7 @@
 			new /obj/item/assembly/signaler(src) // 0 tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
 			new /obj/item/pen/edagger(src)
-			new /obj/item/gun/energy/wormhole_projector(src) //mooorttyyyy
+			new /obj/item/gun/energy/wormhole_projector(src)
 			new /obj/item/gun/energy/decloner/unrestricted(src)
 
 		if("bee")
@@ -176,7 +176,8 @@
 			new /obj/item/clothing/suit/hooded/bee_costume(src) // 0 tc
 			new /obj/item/clothing/mask/rat/bee(src) // 0 tc
 			new /obj/item/storage/belt/fannypack/yellow(src) // 0 tc
-			new /obj/item/storage/box/syndie_kit/bee_grenades(src) // 15 tc
+			new /obj/item/grenade/spawnergrenade/buzzkill(src)
+			new /obj/item/grenade/spawnergrenade/buzzkill(src)
 			new /obj/item/reagent_containers/glass/bottle/beesease(src) // 10 tc?
 			new /obj/item/melee/beesword(src) //priceless
 
@@ -249,7 +250,7 @@
 			from where you sent them off from in several minutes time. Don't worry, we give you a cut of what we get paid. We pay this into whatever 
 			ID card you have equipped, on top of the TC payment we give.</p>
 			
-			<p>Good luck agent.</p>"}
+			<p>Good luck agent. You can burn this document with the supplied lighter.</p>"}
 
 	return ..()
 
@@ -497,7 +498,7 @@
 	new /obj/item/book/granter/spell/mimery_guns(src)
 
 /obj/item/storage/box/syndie_kit/centcom_costume/PopulateContents()
-	new /obj/item/clothing/under/rank/centcom_officer(src)
+	new /obj/item/clothing/under/rank/centcom/officer(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/radio/headset/headset_cent/empty(src)

@@ -6,7 +6,7 @@
 	icon_deny = "robotics-deny"
 	req_access = list(ACCESS_ROBOTICS)
 	products = list(/obj/item/clothing/suit/toggle/labcoat = 4,
-					/obj/item/clothing/under/rank/roboticist = 4,
+					/obj/item/clothing/under/rank/rnd/roboticist = 4,
 					/obj/item/stack/cable_coil = 4,
 					/obj/item/assembly/flash/handheld = 4,
 					/obj/item/stock_parts/cell/high = 12,
@@ -19,9 +19,10 @@
 					/obj/item/clothing/mask/breath/medical = 5,
 					/obj/item/screwdriver = 5,
 					/obj/item/crowbar = 5)
+	contraband = list(/obj/item/organ/tongue/robot = 2)
 	refill_canister = /obj/item/vending_refill/robotics
 	default_price = 50
-	extra_price = 75
+	extra_price = 300
 	payment_department = ACCOUNT_SCI
 
 /obj/item/vending_refill/robotics
