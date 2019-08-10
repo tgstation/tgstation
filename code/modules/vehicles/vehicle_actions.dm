@@ -196,10 +196,11 @@
 	name = "Ollie"
 	desc = "Get some air! Land on a table to do a gnarly grind."
 	button_icon_state = "skateboard_ollie"
-	var/last_ollie
+	///Cooldown to next jump
+	var/next_ollie
 
 /datum/action/vehicle/ridden/scooter/skateboard/ollie/Trigger()
-	if(world.time - last_ollie > 5)
+	if(world.time > next_ollie)
 		var/obj/vehicle/ridden/scooter/skateboard/V = vehicle_target
 		if (V.grinding)
 			return
@@ -207,7 +208,7 @@
 		var/turf/landing_turf = get_step(V.loc, V.dir)
 		L.adjustStaminaLoss(V.instability*2)
 		if (L.getStaminaLoss() >= 100)
-			playsound(src, 'sound/effects/bang.ogg', 20, 1)
+			playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
 			V.unbuckle_mob(L)
 			L.throw_at(landing_turf, 2, 2)
 			L.Paralyze(40)
@@ -216,7 +217,7 @@
 			L.spin(4, 1)
 			animate(L, pixel_y = -6, time = 4)
 			animate(V, pixel_y = -6, time = 3)
-			playsound(V, 'sound/vehicles/skateboard_ollie.ogg', 50, 1)
+			playsound(V, 'sound/vehicles/skateboard_ollie.ogg', 50, TRUE)
 			var/passtable_mob = FALSE
 			if (L.pass_flags & PASSTABLE)//checks if L has an existing flag to make sure we don't clear it later
 				passtable_mob = TRUE
@@ -231,4 +232,4 @@
 			V.grinding = TRUE
 			V.icon_state = "[V.board_icon]-grind"
 			addtimer(CALLBACK(V, /obj/vehicle/ridden/scooter/skateboard/.proc/grind), 2)
-		last_ollie = world.time
+		next_ollie = world.time + 5

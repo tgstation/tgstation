@@ -51,12 +51,12 @@
 	var/datum/effect_system/spark_spread/sparks
 	///Whether the board is currently grinding
 	var/grinding = FALSE
-	///World time for the last crash
-	var/last_crash
+	///Stores the time of the last crash plus a short cooldown, affects availability and outcome of certain actions
+	var/next_crash
 	///Stores the default icon state
 	var/board_icon = "skateboard"
 	///The handheld item counterpart for the board
-	var/board_item_type = "/obj/item/melee/skateboard"
+	var/board_item_type = /obj/item/melee/skateboard
 	///Stamina drain multiplier
 	var/instability = 10
 
@@ -74,12 +74,11 @@
 
 /obj/vehicle/ridden/scooter/skateboard/Destroy()
 	if(sparks)
-		qdel(sparks)
-	sparks = null
+		QDEL_NULL(sparks)
 	. = ..()
 
 /obj/vehicle/ridden/scooter/skateboard/relaymove()
-	if (grinding || world.time - last_crash < 10)
+	if (grinding || world.time < next_crash)
 		return FALSE
 	return ..()
 
@@ -101,8 +100,8 @@
 	if(A.density && has_buckled_mobs())
 		var/mob/living/H = buckled_mobs[1]
 		H.adjustStaminaLoss(instability*6)
-		playsound(src, 'sound/effects/bang.ogg', 40, 1)
-		if(!iscarbon(H) || H.getStaminaLoss() >= 100 || grinding || world.time - last_crash < 10)
+		playsound(src, 'sound/effects/bang.ogg', 40, TRUE)
+		if(!iscarbon(H) || H.getStaminaLoss() >= 100 || grinding || world.time < next_crash)
 			var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
 			unbuckle_mob(H)
 			H.throw_at(throw_target, 3, 2)
@@ -116,7 +115,7 @@
 			var/backdir = turn(dir, 180)
 			vehicle_move(backdir)
 			H.spin(4, 1)
-		last_crash = world.time
+		next_crash = world.time + 10
 
 ///Moves the vehicle forward and if it lands on a table, repeats
 /obj/vehicle/ridden/scooter/skateboard/proc/grind()
@@ -125,7 +124,7 @@
 		var/mob/living/L = buckled_mobs[1]
 		L.adjustStaminaLoss(instability*0.5)
 		if (L.getStaminaLoss() >= 100)
-			playsound(src, 'sound/effects/bang.ogg', 20, 1)
+			playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
 			unbuckle_mob(L)
 			var/atom/throw_target = get_edge_target_turf(src, pick(GLOB.cardinals))
 			L.throw_at(throw_target, 2, 2)
@@ -135,7 +134,7 @@
 			icon_state = board_icon
 			return
 		else
-			playsound(src, 'sound/vehicles/skateboard_roll.ogg', 50, 1)
+			playsound(src, 'sound/vehicles/skateboard_roll.ogg', 50, TRUE)
 			if(prob (25))
 				var/turf/location = get_turf(loc)
 				if(location)
@@ -165,13 +164,13 @@
 	desc = "A RaDSTORMz brand professional skateboard. Looks a lot more stable than the average board."
 	icon_state = "skateboard2"
 	board_icon = "skateboard2"
-	board_item_type = "/obj/item/melee/skateboard/pro"
+	board_item_type = /obj/item/melee/skateboard/pro
 	instability = 6
 
 /obj/vehicle/ridden/scooter/skateboard/hoverboard/
 	name = "hoverboard"
 	desc = "A blast from the past, so retro!"
-	board_item_type = "/obj/item/melee/skateboard/hoverboard"
+	board_item_type = /obj/item/melee/skateboard/hoverboard
 	instability = 3
 	icon_state = "hoverboard_red"
 	board_icon = "hoverboard_red"
@@ -188,7 +187,7 @@
 /obj/vehicle/ridden/scooter/skateboard/hoverboard/admin
 	name = "\improper Board Of Directors"
 	desc = "The engineering complexity of a spaceship concentrated inside of a board. Just as expensive, too."
-	board_item_type = "/obj/item/melee/skateboard/hoverboard/admin"
+	board_item_type = /obj/item/melee/skateboard/hoverboard/admin
 	instability = 0
 	icon_state = "hoverboard_nt"
 	board_icon = "hoverboard_nt"
