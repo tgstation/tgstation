@@ -1,5 +1,6 @@
 ///////////	Oldstation items
 
+
 /obj/item/paper/fluff/ruins/oldstation
 	name = "Cryo Awakening Alert"
 	info = "<B>**WARNING**</B><BR><BR>Catastrophic damage sustained to station. Powernet exhausted to reawaken crew.<BR><BR>Immediate Objectives<br><br>1: Activate emergency power generator<br>2: Lift station lockdown on the bridge<br><br>Please locate the 'Damage Report' on the bridge for a detailed situation report."
@@ -51,3 +52,7 @@
 /obj/item/paper/fluff/ruins/oldstation/generator_manual
 	name = "S.U.P.E.R.P.A.C.M.A.N.-type portable generator manual"
 	info = "You can barely make out a faded sentence... <br><br> Wrench down the generator on top of a wire node connected to either a SMES input terminal or the power grid."
+
+/obj/item/paper/fluff/ruins/oldstation/protosleep
+	name = "Prototype Delivery"
+	info = "<b>*Prototype Sleeper*</b><br><br>We have deliverted the lastest in medical technology to the medical bay."
