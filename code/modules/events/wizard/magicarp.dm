@@ -95,4 +95,3 @@
 	maxHealth = 75
 	health = 75
 	gold_core_spawnable = HOSTILE_SPAWN
-	..()
