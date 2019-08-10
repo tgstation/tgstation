@@ -5,6 +5,7 @@
 	default_color = "59CE00"
 	species_traits = list(MUTCOLORS,EYECOLOR)
 	inherent_traits = list(TRAIT_ALWAYS_CLEAN)
+	inherent_factions = list("plants", "vines")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -14,16 +15,6 @@
 	disliked_food = MEAT | DAIRY
 	liked_food = VEGETABLES | FRUIT | GRAIN
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
-
-/datum/species/pod/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	. = ..()
-	C.faction |= "plants"
-	C.faction |= "vines"
-
-/datum/species/pod/on_species_loss(mob/living/carbon/C)
-	. = ..()
-	C.faction -= "plants"
-	C.faction -= "vines"
 
 /datum/species/pod/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD)
