@@ -79,7 +79,7 @@
 	var/xeno_projectile_types = list(/obj/item/projectile/magic/change, /obj/item/projectile/magic/animate, /obj/item/projectile/magic/resurrection,
 	/obj/item/projectile/magic/teleport, /obj/item/projectile/magic/door, /obj/item/projectile/magic/aoe/fireball, /obj/item/projectile/magic/spellblade,
 	/obj/item/projectile/magic/arcane_barrage) //and all this code just to remove a single bolt
-	
+
 /mob/living/simple_animal/hostile/carp/xenobiology/ranged/Initialize()
 	projectiletype = pick(xeno_projectile_types)
 	..()
