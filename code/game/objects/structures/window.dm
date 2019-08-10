@@ -435,15 +435,15 @@
 	. = ..()
 	switch(state)
 		if(RWINDOW_SECURE)
-			. += "It's been screwed in with one way screws, you'd need to <b>heat them</b> to have any chance of backing them out."
+			. += "<span class='notice'>It's been screwed in with one way screws, you'd need to <b>heat them</b> to have any chance of backing them out.</span>"
 		if(RWINDOW_BOLTS_HEATED)
-			. += "The screws are glowing white hot, and you'll likely be able to <b>unscrew them</b> now."
+			. += "<span class='notice'>The screws are glowing white hot, and you'll likely be able to <b>unscrew them</b> now.</span>"
 		if(RWINDOW_BOLTS_OUT)
-			. += "The screws have been removed, revealing a small gap you could fit a <b>prying tool</b> in."
+			. += "<span class='notice'>The screws have been removed, revealing a small gap you could fit a <b>prying tool</b> in.</span>"
 		if(RWINDOW_POPPED)
-			. += "The main plate of the window has popped out of the frame, exposing some bars that look like they can be <b>cut</b>."
+			. += "<span class='notice'>The main plate of the window has popped out of the frame, exposing some bars that look like they can be <b>cut</b>.</span>"
 		if(RWINDOW_BARS_CUT)
-			. += "The main pane can be easily moved out of the way to reveal some <b>bolts</b> holding the frame in."
+			. += "<span class='notice'>The main pane can be easily moved out of the way to reveal some <b>bolts</b> holding the frame in.</span>"
 
 /obj/structure/window/reinforced/spawner/east
 	dir = EAST
@@ -554,15 +554,15 @@
 	. = ..()
 	switch(state)
 		if(RWINDOW_SECURE)
-			. += "It's been screwed in with one way screws, you'd need to <b>heat them</b> to have any chance of backing them out."
+			. += "<span class='notice'>It's been screwed in with one way screws, you'd need to <b>heat them</b> to have any chance of backing them out.</span>"
 		if(RWINDOW_BOLTS_HEATED)
-			. += "The screws are glowing white hot, and you'll likely be able to <b>unscrew them</b> now."
+			. += "<span class='notice'>The screws are glowing white hot, and you'll likely be able to <b>unscrew them</b> now.</span>"
 		if(RWINDOW_BOLTS_OUT)
-			. += "The screws have been removed, revealing a small gap you could fit a <b>prying tool</b> in."
+			. += "<span class='notice'>The screws have been removed, revealing a small gap you could fit a <b>prying tool</b> in.</span>"
 		if(RWINDOW_POPPED)
-			. += "The main plate of the window has popped out of the frame, exposing some bars that look like they can be <b>cut</b>."
+			. += "<span class='notice'>The main plate of the window has popped out of the frame, exposing some bars that look like they can be <b>cut</b>.</span>"
 		if(RWINDOW_BARS_CUT)
-			. += "The main pane can be easily moved out of the way to reveal some <b>bolts</b> holding the frame in."
+			. += "<span class='notice'>The main pane can be easily moved out of the way to reveal some <b>bolts</b> holding the frame in.</span>"
 
 /obj/structure/window/plasma/reinforced/spawner/east
 	dir = EAST
