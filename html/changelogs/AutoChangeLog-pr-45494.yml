@@ -1,4 +1,0 @@
-author: "Zxaber"
-delete-after: True
-changes: 
-  - rscadd: "Replaced the beaker module with a beaker storage apparatus to mediborgs, that can carry beakers and place them into machines. Starts with a Large Beaker by default."

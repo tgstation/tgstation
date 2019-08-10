@@ -65,38 +65,13 @@
 	return data
 
 /obj/machinery/gulag_item_reclaimer/ui_act(action, list/params)
-	switch(action)
-		if("release_items")
-			var/mob/living/carbon/human/H = locate(params["mobref"]) in stored_items
-			if ((H == usr || allowed(usr)))
-				var/obj/item/card/id/target_id
-				if (stored_items[H])
-					idloop:
-						for(var/obj/item/I in stored_items[H])
-							if (istype(I, /obj/item/card/id))
-								var/obj/item/card/id/potential_id = I
-								if (potential_id.registered_account && potential_id.registered_account == H.get_bank_account())
-									target_id = potential_id
-									break
-							for (var/obj/item/card/id/potential_id in I.GetAllContents())
-								if (potential_id.registered_account && potential_id.registered_account == H.get_bank_account())
-									target_id = potential_id
-									break idloop
-				var/mob/M = usr
-				var/obj/item/card/id/I = M.get_idcard(TRUE)
-				if(istype(I, /obj/item/card/id/prisoner))
-					var/obj/item/card/id/prisoner/P = I
-					if (target_id)
-						target_id.registered_account.adjust_money(P.points * 0.5)
-						var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SEC)
-						if(D)
-							D.adjust_money(P.points * 0.5)
-					else
-						new /obj/item/holochip(drop_location(), P.points)
-						to_chat(usr, "An ID with your bank account registration was not located amongst your items, a sum of [P.points] has been dispensed as holochips.")
-				drop_items(H)
-			else
-				to_chat(usr, "Access denied.")
+	if(action != "release_items") //Since we only have one button, this is fine.
+		return
+	var/mob/living/carbon/human/H = locate(params["mobref"]) in stored_items
+	if(H != usr && !allowed(usr))
+		to_chat(usr, "<span class='warning'>Access denied.</span>")
+		return
+	drop_items(H)
 
 /obj/machinery/gulag_item_reclaimer/proc/drop_items(mob/user)
 	if(!stored_items[user])
