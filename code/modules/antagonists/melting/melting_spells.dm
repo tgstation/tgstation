@@ -101,8 +101,9 @@
 
 /obj/item/projectile/slime/on_hit(mob/living/carbon/target)
 	. = ..()
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		var/datum/disease/transformation/melting/disease = new()
-		disease.creator = firer
-		disease.try_infect(H, make_copy = FALSE)
+	if(!ishuman(target))
+		return
+	var/mob/living/carbon/human/H = target
+	var/datum/disease/transformation/melting/disease = new()
+	disease.creator = firer
+	disease.try_infect(H, make_copy = FALSE)

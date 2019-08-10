@@ -44,9 +44,10 @@
 
 /mob/living/simple_animal/hostile/melting/proc/setup_icons(decided_color)
 	cut_overlays()
-	slimebody_color = rgb(rand(100, 255), rand(100, 255), rand(100, 255))
 	if(decided_color)
 		slimebody_color = decided_color
+	else
+		slimebody_color = rgb(rand(100, 255), rand(100, 255), rand(100, 255))
 	slimebody_overlay = slimebody_overlay || mutable_appearance('icons/mob/melting.dmi')
 	slimebody_overlay.icon_state = "melting_base"
 	slimebody_overlay.color = slimebody_color
@@ -124,7 +125,7 @@
 	var/newmeltword = lowertext(meltword_endings.Replace(present_tense, ""))//Ceaseless >> cease
 	if(copytext(newmeltword, -1) == "e")
 		newmeltword = copytext(newmeltword, length(newmeltword)-1)//cease >> ceas //needed to prevent things like "ceaseed"
-	newmeltword = "[newmeltword]ed"//cease >> ceased
+	newmeltword = "the [newmeltword]ed"//ceas >> ceased
 	return newmeltword
 
 /mob/living/simple_animal/hostile/melted/Login()
