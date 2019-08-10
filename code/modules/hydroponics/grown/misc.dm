@@ -193,11 +193,12 @@
 	reagents.handle_reactions()
 
 /obj/item/seeds/galaxythistle
-	name = "pack of galaxy thistle seeds"
+	name = "pack of galaxythistle seeds"
 	desc = "An impressive species of weed that is thought to have evolved from the simple milk thistle. Contains flavolignans that can help repair a damaged liver."
 	icon_state = "seed-galaxythistle"
 	species = "galaxythistle"
-	plantname = "Galaxy Thistle"
+	plantname = "Galaxythistle"
+	product = /obj/item/reagent_containers/food/snacks/grown/galaxythistle
 	lifespan = 70
 	endurance = 40
 	maturation = 3
@@ -206,16 +207,17 @@
 	potency = 25
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
-	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy)
+	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/invasive)
 	mutatelist = list()
-	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1) //add silibinin here
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05, /datum/reagent/medicine/silibinin = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/galaxythistle
 	seed = /obj/item/seeds/galaxythistle
-	name = "galaxy thistle flower head"
+	name = "galaxythistle flower head"
 	desc = "This spiny cluster of florets reminds you of the highlands."
 	icon_state = "galaxythistle"
 	filling_color = "#1E7549"
 	bitesize_mod = 3
 	foodtype = VEGETABLES
 	wine_power = 35
+	tastes = list("thistle" = 2, "artichoke" = 1)

@@ -182,7 +182,7 @@
 	plantname = "Chanterelle Mushrooms"
 	product = /obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle
 	lifespan = 35
-	endurance = 20
+	endurance = 8
 	maturation = 7
 	production = 1
 	yield = 5
@@ -199,6 +199,32 @@
 	icon_state = "chanterelle"
 	filling_color = "#FFA500"
 
+//Jupiter Cup
+/obj/item/seeds/chanterelle/jupitercup
+	name = "pack of jupiter cup mycelium"
+	desc = "This mycelium grows into jupiter cups. Zeus would be envious at the power at your fingertips."
+	icon_state = "mycelium-jupitercup"
+	species = "jupitercup"
+	plantname = "Jupiter Cups"
+	product = /obj/item/reagent_containers/food/snacks/grown/mushroom/jupitercup
+	production = 3
+	endurance = 35
+	growthstages = 2
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/reagent/liquidelectricity, /datum/plant_gene/trait/plant_type/carnivory)
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
+
+/obj/item/seeds/chanterelle/jupitercup/Initialize()
+	..()
+	set_mutability(/datum/plant_gene/reagent/liquidelectricity, PLANT_GENE_REMOVABLE)
+	set_mutability(/datum/plant_gene/trait/plant_type/carnivory, PLANT_GENE_IMMUTABLE)
+
+/obj/item/reagent_containers/food/snacks/grown/mushroom/jupitercup
+	seed = /obj/item/seeds/chanterelle/jupitercup
+	name = "jupiter cup"
+	desc = "A strange red mushroom, its surface is moist and slick. You wonder how many tiny worms have met their fate inside."
+	icon_state = "jupitercup"
+	filling_color = "#B5003D"
 
 // Glowshroom
 /obj/item/seeds/glowshroom

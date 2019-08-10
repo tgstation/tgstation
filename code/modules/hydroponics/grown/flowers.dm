@@ -221,17 +221,22 @@
 	icon_state = "seed-trumpet"
 	species = "spacemanstrumpet"
 	plantname = "Spaceman's Trumpet Plant"
-	product = /obj/item/reagent_containers/food/snacks/grown/poppy
+	product = /obj/item/reagent_containers/food/snacks/grown/trumpet
 	endurance = 40
 	maturation = 8
 	yield = 4
 	potency = 20
 	growthstages = 4
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
-	icon_grow = "trumpet-grow"
-	icon_dead = "trumpet-dead"
+	icon_grow = "spacemanstrumpet-grow"
+	icon_dead = "spacemanstrumpet-dead"
 	mutatelist = list()
+	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/reagent/polypyr)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05)
+
+/obj/item/seeds/poppy/lily/trumpet/Initialize()
+	..()
+	set_mutability(/datum/plant_gene/reagent/polypyr, PLANT_GENE_REMOVABLE)
 
 /obj/item/reagent_containers/food/snacks/grown/trumpet
 	seed = /obj/item/seeds/poppy/lily/trumpet
