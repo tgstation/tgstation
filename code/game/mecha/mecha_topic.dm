@@ -236,7 +236,7 @@
 			output_maintenance_dialog(id_card,usr)
 
 		if(href_list["set_internal_tank_valve"] && state >=1)
-			var/new_pressure = input(usr,"Input new output pressure","Pressure setting",internal_tank_valve) as num
+			var/new_pressure = input(usr,"Input new output pressure","Pressure setting",internal_tank_valve) as num|null
 			if(new_pressure)
 				internal_tank_valve = new_pressure
 				to_chat(usr, "The internal pressure valve has been set to [internal_tank_valve]kPa.")
