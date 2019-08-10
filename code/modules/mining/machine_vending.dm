@@ -42,6 +42,7 @@
 		new /datum/data/mining_equipment("Super Resonator",				/obj/item/resonator/upgraded,										2500),
 		new /datum/data/mining_equipment("Jump Boots",					/obj/item/clothing/shoes/bhop,										2500),
 		new /datum/data/mining_equipment("Luxury Shelter Capsule",		/obj/item/survivalcapsule/luxury,									3000),
+		new /datum/data/mining_equipment("Luxury Bar Capsule",			/obj/item/survivalcapsule/luxuryelite,								10000),
 		new /datum/data/mining_equipment("Nanotrasen Minebot",			/mob/living/simple_animal/hostile/mining_drone,						800),
 		new /datum/data/mining_equipment("Minebot Melee Upgrade",		/obj/item/mine_bot_upgrade,											400),
 		new /datum/data/mining_equipment("Minebot Armor Upgrade",		/obj/item/mine_bot_upgrade/health,									400),
@@ -63,11 +64,6 @@
 	var/equipment_path = null
 	var/cost = 0
 
-/obj/machinery/mineral/equipment_vendor/examine(mob/user)
-	. = ..()
-	if(inserted_id)
-		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
-
 /datum/data/mining_equipment/New(name, path, cost)
 	src.equipment_name = name
 	src.equipment_path = path
@@ -86,15 +82,7 @@
 /obj/machinery/mineral/equipment_vendor/ui_interact(mob/user)
 	. = ..()
 	var/list/dat = list()
-	dat +="<div class='statusDisplay'>"
-	if(istype(inserted_id))
-		if (inserted_id.registered_account)
-			dat += "You have [inserted_id.registered_account.account_balance] credits. <a href='?src=[REF(src)];choice=eject'>Eject ID.</a><br>"
-		else
-			dat += "No account registered with this ID. <a href='?src=[REF(src)];choice=eject'>Eject ID.</a><br>"
-	else
-		dat += "No ID inserted.  <A href='?src=[REF(src)];choice=insert'>Insert ID.</A><br>"
-	dat += "</div><br><b>Equipment point cost list:</b><BR><table border='0' width='300'>"
+	dat += "<br><b>Equipment point cost list:</b><BR><table border='0' width='300'>"
 	for(var/datum/data/mining_equipment/prize in prize_list)
 		dat += "<tr><td>[prize.equipment_name]</td><td>[prize.cost]</td><td><A href='?src=[REF(src)];purchase=[REF(prize)]'>Purchase</A></td></tr>"
 	dat += "</table>"
@@ -107,37 +95,18 @@
 /obj/machinery/mineral/equipment_vendor/Topic(href, href_list)
 	if(..())
 		return
-	if(href_list["choice"])
-		if(istype(inserted_id))
-			if(href_list["choice"] == "eject")
-				inserted_id.forceMove(loc)
-				inserted_id.verb_pickup()
-				inserted_id = null
-				usr.visible_message("<span class='notice'>[usr] gets an ID card from the console.</span>", \
-								"<span class='notice'>You get the ID card from the console.</span>")
-				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-		else if(href_list["choice"] == "insert")
-			var/obj/item/card/id/I = usr.get_active_held_item()
-			if(istype(I))
-				if(!usr.transferItemToLoc(I, src))
-					return
-				inserted_id = I
-				usr.visible_message("<span class='notice'>[usr] inserts an ID card into the console.</span>", \
-									"<span class='notice'>You insert the ID card into the console.</span>")
-				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-			else
-				to_chat(usr, "<span class='warning'>Error: No valid ID!</span>")
-				flick(icon_deny, src)
 	if(href_list["purchase"])
-		if(istype(inserted_id) && inserted_id.registered_account)
-			var/datum/bank_account/account = inserted_id.registered_account
+		var/mob/M = usr
+		var/obj/item/card/id/I = M.get_idcard(TRUE)
+		if(istype(I) && I.registered_account)
+			var/datum/bank_account/account = I.registered_account
 			var/datum/data/mining_equipment/prize = locate(href_list["purchase"]) in prize_list
 			if (!prize || !(prize in prize_list))
 				to_chat(usr, "<span class='warning'>Error: Invalid choice!</span>")
 				flick(icon_deny, src)
 				return
 			if(prize.cost > account.account_balance)
-				to_chat(usr, "<span class='warning'>Error: Insufficient points for [prize.equipment_name]!</span>")
+				to_chat(usr, "<span class='warning'>Error: Insufficient credits for [prize.equipment_name] on [I]!</span>")
 				flick(icon_deny, src)
 			else
 				if (account.adjust_money(-prize.cost))
@@ -148,7 +117,7 @@
 					to_chat(usr, "<span class='warning'>Error: Transaction failure, please try again later!</span>")
 					flick(icon_deny, src)
 		else
-			to_chat(usr, "<span class='warning'>Error: Please insert a valid ID!</span>")
+			to_chat(usr, "<span class='warning'>Error: An ID with a registered account is required!</span>")
 			flick(icon_deny, src)
 	updateUsrDialog()
 	return
@@ -156,20 +125,6 @@
 /obj/machinery/mineral/equipment_vendor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/mining_voucher))
 		RedeemVoucher(I, user)
-		return
-	if(istype(I, /obj/item/card/id))
-		var/obj/item/card/id/C = user.get_active_held_item()
-		if(istype(C))
-			if(!inserted_id)
-				if(!user.transferItemToLoc(C, src))
-					return
-				inserted_id = C
-				user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
-									"<span class='notice'>You insert the ID card into the console.</span>")
-				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-				interact(user)
-			else
-				to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
 		return
 	if(default_deconstruction_screwdriver(user, "mining-open", "mining", I))
 		updateUsrDialog()
@@ -213,22 +168,6 @@
 	do_sparks(5, TRUE, src)
 	if(prob(50 / severity) && severity < 3)
 		qdel(src)
-
-/obj/machinery/mineral/equipment_vendor/AltClick(mob/user)
-	if(!user.canUseTopic(src, issilicon(user)))
-		return
-	if(!inserted_id)
-		to_chat(user, "<span class='warning'>There's no ID card in the console!</span>")
-	if(inserted_id)
-		inserted_id.forceMove(drop_location())
-		if(!issilicon(user) && Adjacent(user))
-			user.put_in_hands(inserted_id)
-			inserted_id = null
-			user.visible_message("<span class='notice'>[user] gets an ID card from the console.</span>", \
-								"<span class='notice'>You get the ID card from the console.</span>")
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-		updateUsrDialog()
-
 
 /****************Golem Point Vendor**************************/
 

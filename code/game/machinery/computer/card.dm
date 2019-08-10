@@ -19,8 +19,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	var/mode = 0
 	var/printing = null
 	var/target_dept = 0 //Which department this computer has access to. 0=all departments
-	var/list/region_access
-	var/list/head_subordinates
 
 	//Cooldown for closing positions in seconds
 	//if set to -1: No cooldown... probably a bad idea
@@ -60,17 +58,24 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 /obj/machinery/computer/card/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/card/id))
 		if(!inserted_scan_id)
-			id_insert(user, I, inserted_scan_id)
-			inserted_scan_id = I
+			id_insert_scan(user)
 			return
 		if(!inserted_modify_id)
-			id_insert(user, I, inserted_modify_id)
-			inserted_modify_id = I
+			id_insert_modify(user)
 			return
 		else
 			to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
 	else
 		return ..()
+
+/obj/machinery/computer/card/Destroy()
+	if(inserted_scan_id)
+		qdel(inserted_scan_id)
+		inserted_scan_id = null
+	if(inserted_modify_id)
+		qdel(inserted_modify_id)
+		inserted_modify_id = null
+	return ..()
 
 /obj/machinery/computer/card/handle_atom_del(atom/A)
 	..()
@@ -310,20 +315,16 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	switch(href_list["choice"])
 		if ("inserted_modify_id")
 			if (inserted_modify_id)
-				GLOB.data_core.manifest_modify(inserted_modify_id.registered_name, inserted_modify_id.assignment)
-				inserted_modify_id.update_label()
-				region_access = null
-				head_subordinates = null
-				id_eject(usr, inserted_modify_id)
-				inserted_modify_id = null
-				authenticated = FALSE
+				id_eject_modify(usr)
+			else
+				id_insert_modify(usr)
 		if ("inserted_scan_id")
 			if (inserted_scan_id)
-				id_eject(usr, inserted_scan_id)
-				inserted_scan_id = null
-				authenticated = FALSE
+				id_eject_scan(usr)
+			else
+				id_insert_scan(usr)
 		if ("auth")
-			if ((!authenticated && (inserted_scan_id || issilicon(usr)) && (inserted_modify_id || mode)))
+			if ((!( authenticated ) && (inserted_scan_id || issilicon(usr)) && (inserted_modify_id || mode)))
 				if (check_access(inserted_scan_id))
 					region_access = list()
 					head_subordinates = list()
@@ -403,12 +404,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				if (inserted_modify_id)
 					inserted_modify_id.assignment = t1
 					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
-					inserted_modify_id.update_label()
 		if ("demote")
 			if(inserted_modify_id.assignment in head_subordinates || inserted_modify_id.assignment == "Assistant")
 				inserted_modify_id.assignment = "Unassigned"
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
-				inserted_modify_id.update_label()
 			else
 				to_chat(usr, "<span class='error'>You are not authorized to demote this position.</span>")
 		if ("reg")
@@ -419,7 +418,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 					if(newName)
 						inserted_modify_id.registered_name = newName
 						playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
-						inserted_modify_id.update_label()
 					else
 						to_chat(usr, "<span class='error'>Invalid name entered.</span>")
 						updateUsrDialog()
