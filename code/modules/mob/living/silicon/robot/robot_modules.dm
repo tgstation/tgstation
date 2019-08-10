@@ -527,7 +527,7 @@
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/borg/sight/meson,
 		/obj/item/storage/bag/ore/cyborg,
-		/obj/item/pickaxe/drill/cyborg,
+		/obj/item/pickaxe/drill,
 		/obj/item/shovel,
 		/obj/item/crowbar/cyborg,
 		/obj/item/weldingtool/mini,

@@ -59,7 +59,6 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 		/obj/item/storage/backpack/holding,
 		/obj/item/storage/belt/champion,
 		/obj/item/soap/deluxe,
-		/obj/item/pickaxe/diamond,
 		/obj/item/pen/invisible,
 		/obj/item/lipstick/random,
 		/obj/item/grenade/smokebomb,

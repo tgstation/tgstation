@@ -509,7 +509,6 @@
 				/obj/item/stack/sheet/mineral/plasma{amount = 15} = 10,
 				/obj/item/stack/sheet/mineral/gold{amount = 15} = 10,
 				/obj/item/book/granter/spell/barnyard = 4,
-				/obj/item/pickaxe/drill/diamonddrill = 6,
 				/obj/item/borg/upgrade/disablercooler = 7)
 
 
@@ -528,7 +527,6 @@
 				/obj/item/book/granter/spell/charge = 12,
 				/obj/item/grenade/clusterbuster/spawner_manhacks = 15,
 				/obj/item/book/granter/spell/fireball = 10,
-				/obj/item/pickaxe/drill/jackhammer = 30,
 				/obj/item/borg/upgrade/syndicate = 13,
 				/obj/item/borg/upgrade/selfrepair = 17)
 

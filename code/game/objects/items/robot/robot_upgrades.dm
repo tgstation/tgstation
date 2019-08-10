@@ -123,27 +123,22 @@
 /obj/item/borg/upgrade/ddrill/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		for(var/obj/item/pickaxe/drill/cyborg/D in R.module)
+		for(var/obj/item/pickaxe/drill/D in R.module)
 			R.module.remove_module(D, TRUE)
-		for(var/obj/item/shovel/S in R.module)
-			R.module.remove_module(S, TRUE)
 
-		var/obj/item/pickaxe/drill/cyborg/diamond/DD = new /obj/item/pickaxe/drill/cyborg/diamond(R.module)
+		var/obj/item/pickaxe/drill/diamond/DD = new /obj/item/pickaxe/drill/diamond(R.module)
 		R.module.basic_modules += DD
 		R.module.add_module(DD, FALSE, TRUE)
 
 /obj/item/borg/upgrade/ddrill/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		for(var/obj/item/pickaxe/drill/cyborg/diamond/DD in R.module)
+		for(var/obj/item/pickaxe/drill/diamond/DD in R.module)
 			R.module.remove_module(DD, TRUE)
 
-		var/obj/item/pickaxe/drill/cyborg/D = new (R.module)
+		var/obj/item/pickaxe/drill/D = new (R.module)
 		R.module.basic_modules += D
 		R.module.add_module(D, FALSE, TRUE)
-		var/obj/item/shovel/S = new (R.module)
-		R.module.basic_modules += S
-		R.module.add_module(S, FALSE, TRUE)
 
 /obj/item/borg/upgrade/soh
 	name = "mining cyborg satchel of holding"
@@ -398,7 +393,7 @@
 	desc = "An upgrade to the Medical module's hypospray, allowing it \
 		to treat a wider range of conditions and problems."
 	additional_reagents = list(/datum/reagent/medicine/mannitol, /datum/reagent/medicine/oculine, /datum/reagent/medicine/inacusiate,
-		/datum/reagent/medicine/mutadone, /datum/reagent/medicine/haloperidol, /datum/reagent/medicine/oxandrolone, /datum/reagent/medicine/sal_acid, 
+		/datum/reagent/medicine/mutadone, /datum/reagent/medicine/haloperidol, /datum/reagent/medicine/oxandrolone, /datum/reagent/medicine/sal_acid,
 		/datum/reagent/medicine/rezadone, /datum/reagent/medicine/pen_acid)
 
 /obj/item/borg/upgrade/piercing_hypospray

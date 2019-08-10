@@ -22,26 +22,6 @@
 	category = list("Mining Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
-/datum/design/drill
-	name = "Mining Drill"
-	desc = "Yours is the drill that will pierce through the rock walls."
-	id = "drill"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 6000, /datum/material/glass = 1000) //expensive, but no need for miners.
-	build_path = /obj/item/pickaxe/drill
-	category = list("Mining Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_CARGO
-
-/datum/design/drill_diamond
-	name = "Diamond-Tipped Mining Drill"
-	desc = "Yours is the drill that will pierce the heavens!"
-	id = "drill_diamond"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 6000, /datum/material/glass = 1000, /datum/material/diamond = 2000) //Yes, a whole diamond is needed.
-	build_path = /obj/item/pickaxe/drill/diamonddrill
-	category = list("Mining Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_CARGO
-
 /datum/design/plasmacutter
 	name = "Plasma Cutter"
 	desc = "You could use it to cut limbs off of xenos! Or, you know, mine stuff."
@@ -59,16 +39,6 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 3000, /datum/material/glass = 1000, /datum/material/plasma = 2000, /datum/material/gold = 500)
 	build_path = /obj/item/gun/energy/plasmacutter/adv
-	category = list("Mining Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_CARGO
-
-/datum/design/jackhammer
-	name = "Sonic Jackhammer"
-	desc = "Essentially a handheld planet-cracker. Can drill through walls with ease as well."
-	id = "jackhammer"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 6000, /datum/material/glass = 2000, /datum/material/silver = 2000, /datum/material/diamond = 6000)
-	build_path = /obj/item/pickaxe/drill/jackhammer
 	category = list("Mining Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 

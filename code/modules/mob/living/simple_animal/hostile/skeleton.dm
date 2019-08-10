@@ -117,7 +117,6 @@
 	melee_damage_upper = 25
 	attacktext = "blasts"
 	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
-	loot = list(/obj/effect/decal/remains/plasma, /obj/item/pickaxe/drill/jackhammer)
 
 /mob/living/simple_animal/hostile/skeleton/plasmaminer/Initialize()
 	. = ..()
