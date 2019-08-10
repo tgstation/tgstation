@@ -427,6 +427,7 @@
 				to_chat(user, "<span class='notice'>You remove [dropped_arm] from [src].</span>")
 				build_step--
 				if(toyswordamt > 0 || toyswordamt)
+					toyswordamt = 0
 					icon_state = initial(icon_state)
 					to_chat(user, "<span class='notice'>The superglue binding [src]'s toy swords to its chassis snaps!</span>")
 					for(var/IS in 1 to toyswordamt)
@@ -454,6 +455,7 @@
 					qdel(src)
 			else if(I.tool_behaviour == TOOL_SCREWDRIVER) //deconstruct
 				build_step--
+				swordamt = 0
 				icon_state = initial(icon_state)
 				to_chat(user, "<span class='notice'>You unbolt [src]'s energy swords</span>")
 				for(var/IS in 1 to swordamt)
