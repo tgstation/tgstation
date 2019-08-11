@@ -606,4 +606,13 @@
 	desc = "This informational poster teaches the viewer what carbon dioxide is."
 	icon_state = "poster35_legit"
 
+/obj/item/paper/maintnote
+	name = "maintenance note"
+	icon_state = "maint_paper"
+	item_state = "maint_paper"
+
+/obj/item/paper/maintnote/Initialize()
+	info = pick(world.file2list("strings/tips.txt"))
+	return ..()
+
 #undef PLACE_SPEED
