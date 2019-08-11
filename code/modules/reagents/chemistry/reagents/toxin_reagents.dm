@@ -910,7 +910,7 @@
 	taste_description = "tannin"
 
 /datum/reagent/toxin/bungotoxin/on_mob_life(mob/living/carbon/M)
-	M.adjustOrganLoss(ORGAN_SLOT_HEART, 2)
+	M.adjustOrganLoss(ORGAN_SLOT_HEART, 3)
 	M.confused = M.dizziness //add a tertiary effect here if this is isn't an effective poison.
 	. = 1
 	..()
