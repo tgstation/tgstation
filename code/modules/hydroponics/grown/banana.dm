@@ -101,7 +101,7 @@
 	endurance = 0
 	genes = /datum/plant_gene/trait/slip
 	mutatelist = list()
-	reagents_add = list(/datum/reagent/consumable/banana = 0.2, /datum/reagent/medicine/omnizine = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.02)
+	reagents_add = list(/datum/reagent/consumable/banana = 0.1, /datum/reagent/medicine/omnizine = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.02)
 
 /obj/item/reagent_containers/food/snacks/grown/banana/medinana
 	seed = /obj/item/seeds/banana/medinana
