@@ -446,7 +446,7 @@
 	description = "Take on the world! A fast acting, hard hitting drug that pushes the limit on what you can handle."
 	reagent_state = LIQUID
 	color = "#e38e44"
-	metabolization_rate = 3 * REAGENTS_METABOLISM
+	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 
 /datum/reagent/drug/pumpup/on_mob_metabolize(mob/living/L)
