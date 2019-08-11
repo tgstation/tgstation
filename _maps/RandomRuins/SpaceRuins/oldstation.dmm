@@ -200,6 +200,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-25"
+	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/comm)
 "aI" = (
@@ -651,13 +654,18 @@
 /area/ruin/space/has_grav/ancientstation)
 "bP" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-25"
 	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/ruin/space/has_grav/ancientstation)
+/area/ruin/space/has_grav/ancientstation/comm)
 "bQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -5571,6 +5579,12 @@
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ancientstation/atmo)
+"nL" = (
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-25"
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
 "nM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm{
@@ -5961,7 +5975,7 @@ me
 gd
 me
 ch
-nq
+nL
 nq
 nq
 nq
@@ -7446,7 +7460,7 @@ aA
 aY
 aY
 aG
-bP
+bQ
 ia
 cO
 dm
@@ -7464,7 +7478,7 @@ rv
 dm
 cO
 bQ
-bP
+bQ
 aT
 jZ
 yk
@@ -7918,7 +7932,7 @@ aa
 aa
 gK
 aS
-aM
+bP
 ax
 aW
 aI
