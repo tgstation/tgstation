@@ -34,7 +34,7 @@
 	if(suicide_mob == REF(user))
 		user.visible_message("<span class='suicide'>[user]'s [src] receives a signal, killing [user.p_them()] instantly!</span>")
 	else
-		user.visible_message("<span class='suicide'>[user]'s [src] receives a signal and dies like a gamer!</span>")
+		user.visible_message("<span class='suicide'>[user]'s [src] receives a signal and [user.p_they()] die[user.p_s()] like a gamer!</span>")
 	user.adjustOxyLoss(200)//it sends an electrical pulse to their heart, killing them. or something.
 	user.death(0)
 	user.set_suicide(TRUE)
