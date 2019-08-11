@@ -99,14 +99,14 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/banana/medinana
 	lifespan = 0 //not meant to grow
 	endurance = 0
-	genes = null
+	genes = /datum/plant_gene/trait/slip
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/consumable/banana = 0.2, /datum/reagent/medicine/omnizine = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.02)
 
 /obj/item/reagent_containers/food/snacks/grown/banana/medinana
 	seed = /obj/item/seeds/banana/medinana
 	name = "medinana"
-	desc = "No sane clown goes outside the theatre backstage without one of these in their bag. Due to their unique plant structure, the peel doesn't slip."
+	desc = "No sane clown goes outside the theatre backstage without one of these in their bag."
 	icon_state = "medinana"
 	trash = /obj/item/grown/bananapeel/medinanapeel
 	filling_color = "#FFFFEE"
@@ -115,7 +115,7 @@
 /obj/item/grown/bananapeel/medinanapeel
 	seed = null
 	name = "medinana peel"
-	desc = "A medinana peel. Doesn't feel very slippery to the touch."
+	desc = "A medinana peel."
 	icon_state = "medinana_peel"
 	item_state = "medinana_peel"
 
