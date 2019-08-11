@@ -613,6 +613,5 @@
 
 /obj/item/paper/maintnote/Initialize()
 	info = pick(world.file2list("strings/tips.txt"))
-	return ..()
 
 #undef PLACE_SPEED
