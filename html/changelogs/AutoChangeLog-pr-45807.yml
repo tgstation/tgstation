@@ -1,0 +1,6 @@
+author: "ExcessiveUseOfCobblestone"
+delete-after: True
+changes: 
+  - rscadd: "Examining a dissected body will provide insight on the highest tier performed."
+  - bugfix: "You can do ayy dissection now if you get the tech"
+  - bugfix: "FINALLY fixed the surgery logic correctly"
