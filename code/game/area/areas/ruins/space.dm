@@ -243,7 +243,7 @@
 /area/ruin/space/has_grav/ancientstation/atmo
 	name = "Beta Station Atmospherics"
 	icon_state = "red"
-	has_gravity = FALSE
+	has_gravity = TRUE
 
 /area/ruin/space/has_grav/ancientstation/betanorth
 	name = "Beta Station North Corridor"
@@ -285,8 +285,8 @@
 	name = "Delta Station Research and Development"
 	icon_state = "toxlab"
 
-/area/ruin/space/has_grav/ancientstation/hivebot
-	name = "Hivebot Mothership"
+/area/ruin/space/has_grav/ancientstation/deltaai
+	name = "Delta Station AI Core"
 	icon_state = "teleporter"
 
 /area/ruin/space/has_grav/ancientstation/mining
