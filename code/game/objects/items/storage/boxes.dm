@@ -773,7 +773,7 @@
 // Clown survival box
 /obj/item/storage/box/hug/survival/PopulateContents()
 	new /obj/item/clothing/mask/gas/clown_hat(src)
-	new /obj/item/reagent_containers/food/snacks/grown/banana(src)
+	new /obj/item/reagent_containers/food/snacks/grown/banana/medinana(src)
 	
 	if(!isplasmaman(loc))
 		new /obj/item/tank/internals/emergency_oxygen(src)

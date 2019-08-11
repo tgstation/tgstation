@@ -89,6 +89,36 @@
 	icon_state = "mimana_peel"
 	item_state = "mimana_peel"
 
+//basically just a placeholder becaue i don't know how to add reagents without seeds
+
+/obj/item/seeds/banana/medinana
+	name = "pack of medinana seeds"
+	desc = "Seeds that are supposed to grow into trees. Due to a medinana's unique plant structure, however, the seeds are extremely weak and are bound to die almost instantly."
+	species = "medinana"
+	plantname = "Medinana Tree"
+	product = /obj/item/reagent_containers/food/snacks/grown/banana/medinana
+	lifespan = 0 //not meant to grow
+	endurance = 0
+	genes = null
+	mutatelist = list()
+	reagents_add = list(/datum/reagent/consumable/banana = 0.2, /datum/reagent/medicine/omnizine = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.02)
+
+/obj/item/reagent_containers/food/snacks/grown/banana/medinana
+	seed = /obj/item/seeds/banana/medinana
+	name = "medinana"
+	desc = "No sane clown goes outside the theatre backstage without one of these in their bag. Due to their unique plant structure, the peel doesn't slip."
+	icon_state = "medinana"
+	trash = /obj/item/grown/bananapeel/medinanapeel
+	filling_color = "#FFFFEE"
+	distill_reagent = /datum/reagent/medicine/omnizine
+
+/obj/item/grown/bananapeel/medinanapeel
+	seed = null
+	name = "medinana peel"
+	desc = "A medinana peel. Doesn't feel very slippery to the touch."
+	icon_state = "medinana_peel"
+	item_state = "medinana_peel"
+
 // Bluespace Banana
 /obj/item/seeds/banana/bluespace
 	name = "pack of bluespace banana seeds"
