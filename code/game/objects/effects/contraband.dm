@@ -612,6 +612,6 @@
 	item_state = "maint_paper"
 
 /obj/item/paper/maintnote/Initialize()
-	info = pick(world.file2list("strings/tips.txt"))
+	info = pick(world.file2list("strings/ic_tips.txt"))
 
 #undef PLACE_SPEED
