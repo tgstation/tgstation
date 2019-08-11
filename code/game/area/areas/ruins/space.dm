@@ -289,6 +289,10 @@
 	name = "Hivebot Mothership"
 	icon_state = "teleporter"
 
+/area/ruin/space/has_grav/ancientstation/mining
+	name = "Beta Station Mining Equipment"
+	icon_state = "green"
+
 //DERELICT
 
 /area/ruin/space/derelict
