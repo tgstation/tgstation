@@ -13,11 +13,11 @@
 
 /datum/mood_event/hungry
 	description = "<span class='warning'>I'm getting a bit hungry.</span>\n"
-	mood_change = -8
+	mood_change = -6
 
 /datum/mood_event/starving
 	description = "<span class='boldwarning'>I'm starving!</span>\n"
-	mood_change = -14
+	mood_change = -10
 
 //charge
 /datum/mood_event/charged
@@ -26,11 +26,11 @@
 
 /datum/mood_event/lowpower
 	description = "<span class='warning'>My power is running low, I should go charge up somewhere.</span>\n"
-	mood_change = -10
+	mood_change = -6
 
 /datum/mood_event/decharged
 	description = "<span class='boldwarning'>I'm in desperate need of some electricity!</span>\n"
-	mood_change = -15
+	mood_change = -10
 
 //Disgust
 /datum/mood_event/gross

@@ -23,6 +23,14 @@
 #define WINDOW_IN_FRAME 1
 #define WINDOW_SCREWED_TO_FRAME 2
 
+//reinforced window construction states
+#define RWINDOW_FRAME_BOLTED 3
+#define RWINDOW_BARS_CUT 4
+#define RWINDOW_POPPED 5
+#define RWINDOW_BOLTS_OUT 6
+#define RWINDOW_BOLTS_HEATED 7
+#define RWINDOW_SECURE 8
+
 //airlock assembly construction states
 #define AIRLOCK_ASSEMBLY_NEEDS_WIRES 0
 #define AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS 1
