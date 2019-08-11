@@ -195,3 +195,11 @@
 	desc = "All-purpose snail medicine! Do not use on non-snails!"
 	list_reagents = list(/datum/reagent/snail = 10)
 	icon_state = "snail"
+
+/obj/item/reagent_containers/hypospray/medipen/pumpup
+	name = "maintanance pump-up"
+	desc = "A ghetto looking autoinjector filled with a cheap adrenaline shot... Looks pretty rusted."
+	volume = 15
+	amount_per_transfer_from_this = 15
+	list_reagents = list(/datum/reagent/drug/pumpup = 15)
+	icon_state = "maintenance"
