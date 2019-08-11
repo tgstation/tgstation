@@ -40,6 +40,11 @@
 /obj/effect/decal/cleanable/robot_debris,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/ancientstation/hivebot)
+"aj" = (
+/obj/machinery/door/airlock/command,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/ancientstation/betanorth)
 "ak" = (
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/ancientstation/comm)
@@ -738,13 +743,15 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "cd" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small{
-	dir = 8
+/obj/machinery/door/airlock/command{
+	name = "Beta Station Access"
 	},
+/obj/machinery/door/poddoor{
+	id = "ancient"
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/ruin/space/has_grav/ancientstation/betanorth)
+/area/ruin/space/has_grav/ancientstation)
 "ce" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -984,12 +991,9 @@
 /turf/closed/mineral/iron,
 /area/ruin/space/has_grav/ancientstation)
 "cL" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small{
-	dir = 4
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
 	},
-/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/betanorth)
 "cM" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
@@ -2691,7 +2695,7 @@
 /obj/structure/rack,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ancientstation/betanorth)
 "gV" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
@@ -2811,9 +2815,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/engi)
 "hn" = (
-/obj/structure/sign/warning/radiation,
-/turf/closed/wall,
-/area/ruin/space/has_grav/ancientstation/engi)
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
 "ho" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow,
@@ -3793,13 +3797,14 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/engi)
 "jk" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Backup Generator Room"
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
-/obj/machinery/door/firedoor,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/ancientstation/engi)
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/has_grav/ancientstation/betanorth)
 "jl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -5529,14 +5534,43 @@
 	},
 /area/ruin/space/has_grav/ancientstation/betanorth)
 "nE" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/emcloset/anchored,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ancientstation/betanorth)
 "nF" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ancientstation/betanorth)
+"nG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/emcloset/anchored,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"nH" = (
+/obj/structure/grille/broken,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/atmo)
+"nI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/ancientstation/engi)
+"nJ" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering{
+	name = "Backup Generator Room"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ancientstation/engi)
+"nK" = (
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/atmo)
 "nM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm{
@@ -5949,7 +5983,7 @@ ny
 nz
 kK
 nB
-jO
+nK
 kQ
 kT
 gK
@@ -6212,7 +6246,7 @@ az
 fU
 ac
 bJ
-bJ
+aj
 cj
 bJ
 bJ
@@ -6225,7 +6259,7 @@ lX
 bJ
 bJ
 fi
-jO
+nH
 mH
 hw
 mH
@@ -6260,18 +6294,18 @@ ac
 az
 ac
 bJ
-cd
+bI
 ck
 ch
-bJ
 nr
+me
 me
 gu
 gU
-bq
-fY
-bq
-me
+hn
+jk
+hn
+lV
 gK
 gK
 dF
@@ -6311,14 +6345,14 @@ ch
 bI
 mS
 ch
-ch
 eg
+cL
 me
 gd
 gd
 gd
-fY
 nE
+nG
 ch
 gK
 aa
@@ -6359,8 +6393,8 @@ bJ
 mW
 mV
 ch
-ch
 fA
+gd
 fZ
 gd
 me
@@ -7079,7 +7113,7 @@ ch
 np
 mV
 bJ
-bJ
+gK
 eI
 eI
 eI
@@ -7127,7 +7161,7 @@ ch
 mW
 mS
 bJ
-bJ
+gK
 eI
 bv
 eK
@@ -7145,7 +7179,7 @@ gK
 dF
 gK
 gK
-aa
+gK
 aa
 dF
 aa
@@ -7175,7 +7209,7 @@ ch
 mW
 mS
 nh
-bJ
+dl
 eI
 ej
 ju
@@ -7192,8 +7226,8 @@ eI
 eI
 eI
 eI
+eI
 gK
-aa
 aa
 dF
 aa
@@ -7223,8 +7257,8 @@ ch
 mW
 mS
 ch
-ch
 fP
+em
 el
 eL
 fe
@@ -7234,6 +7268,7 @@ fE
 fe
 em
 if
+em
 hv
 eI
 iU
@@ -7241,7 +7276,6 @@ ji
 gH
 eI
 gK
-aa
 aa
 dF
 aa
@@ -7271,8 +7305,8 @@ ch
 bI
 mY
 ch
-bJ
 ay
+em
 ju
 eM
 ju
@@ -7282,6 +7316,7 @@ ju
 ju
 hP
 em
+em
 iw
 eI
 iV
@@ -7289,7 +7324,6 @@ XJ
 jC
 dl
 gK
-aa
 aa
 dF
 aa
@@ -7316,11 +7350,11 @@ gK
 gK
 gK
 bJ
-cL
+bI
 mY
 ch
-bJ
 lJ
+ju
 en
 eN
 lK
@@ -7330,13 +7364,13 @@ Wn
 ho
 hQ
 ig
+nI
 ix
 eI
 iW
 jj
 ie
 eI
-gK
 gK
 gK
 dF
@@ -7364,7 +7398,7 @@ aT
 aG
 aG
 aG
-aG
+cd
 nb
 aG
 eI
@@ -7380,9 +7414,9 @@ eI
 eI
 dl
 eI
-hn
-jk
+eI
 iX
+nJ
 eI
 aG
 aT
