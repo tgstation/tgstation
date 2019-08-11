@@ -700,7 +700,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /datum/asset/simple/genetics
 	assets = list(
-		"dna_discovered.png"	= 'html/dna_discovered.png',
-		"dna_undiscovered.png"	= 'html/dna_undiscovered.png',
-		"dna_extra.png" 		= 'html/dna_extra.png'
+		"dna_discovered.gif"	= 'html/dna_discovered.gif',
+		"dna_undiscovered.gif"	= 'html/dna_undiscovered.gif',
+		"dna_extra.gif" 		= 'html/dna_extra.gif'
 	)
