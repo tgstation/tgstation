@@ -35,7 +35,7 @@
 
 /obj/item/organ/body_egg/on_life()
 	. = ..()
-	egg_process
+	egg_process()
 
 /obj/item/organ/body_egg/proc/egg_process()
 	return
