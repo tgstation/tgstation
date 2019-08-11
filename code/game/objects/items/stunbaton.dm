@@ -12,7 +12,10 @@
 	attack_verb = list("beaten")
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 
-	var/stunforce = 140
+	var/cooldown_check = 0
+
+	var/cooldown = (2 SECONDS)
+	var/stunforce = 100
 	var/status = 0
 	var/obj/item/stock_parts/cell/cell
 	var/hitcost = 1000
@@ -25,6 +28,9 @@
 /obj/item/melee/baton/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is putting the live [name] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
+
+/obj/item/melee/baton/proc/get_wait_description()
+	return "<span class='danger'>The baton is still charging!</span>"
 
 /obj/item/melee/baton/Initialize()
 	. = ..()
@@ -131,15 +137,19 @@
 
 	if(user.a_intent != INTENT_HARM)
 		if(status)
-			if(baton_stun(M, user))
-				user.do_attack_animation(M)
-				return
+			if(cooldown_check <= world.time)
+				if(baton_stun(M, user))
+					user.do_attack_animation(M)
+					return
+			else 
+				to_chat(user, get_wait_description())
 		else
 			M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
 							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
 	else
 		if(status)
-			baton_stun(M, user)
+			if(cooldown_check <= world.time)
+				baton_stun(M, user)
 		..()
 
 
@@ -179,6 +189,8 @@
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		H.forcesay(GLOB.hit_appends)
+
+	cooldown_check = world.time + cooldown
 
 	return 1
 
