@@ -181,10 +181,11 @@
 		if(istype(the_reagent, /datum/reagent/medicine))
 			medibonus += 1
 	M.adjustToxLoss(0.5 * medibonus)
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, medibonus)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.type, medibonus*0.5)
-		M.adjustOrganLoss(ORGAN_SLOT_LUNGS, medibonus)
 	..()
+	return TRUE
 
 /datum/reagent/medicine/C2/syriniver
 	name = "Syriniver"
