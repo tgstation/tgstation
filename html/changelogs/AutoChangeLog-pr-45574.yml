@@ -1,0 +1,5 @@
+author: "carlarctg"
+delete-after: True
+changes: 
+  - imageadd: "added some icons and images for hyposprays and medipens so they stand out"
+  - tweak: "tweaked a few descriptions on said hypos so they better describe the contents"
