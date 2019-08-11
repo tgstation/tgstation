@@ -40,19 +40,6 @@
 /obj/effect/decal/cleanable/robot_debris,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/ancientstation/hivebot)
-"aj" = (
-/obj/structure/closet/crate,
-/obj/item/stack/sheet/mineral/silver{
-	amount = 25
-	},
-/obj/item/stack/sheet/mineral/gold{
-	amount = 25
-	},
-/obj/item/stack/ore/bluespace_crystal,
-/obj/item/stack/ore/bluespace_crystal,
-/obj/item/stack/ore/bluespace_crystal,
-/turf/open/floor/plasteel/dark,
-/area/ruin/space/has_grav/ancientstation/hivebot)
 "ak" = (
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/ancientstation/comm)
@@ -410,8 +397,15 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/comm)
 "bh" = (
-/turf/closed/mineral/diamond,
-/area/ruin/unpowered)
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/silver{
+	amount = 25
+	},
+/obj/item/stack/sheet/mineral/gold{
+	amount = 25
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/ancientstation/hivebot)
 "bi" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -648,8 +642,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation)
 "bO" = (
-/obj/structure/sign/departments/medbay/alt,
-/turf/closed/wall/rust,
+/turf/closed/mineral/bscrystal,
 /area/ruin/space/has_grav/ancientstation)
 "bP" = (
 /obj/effect/decal/cleanable/dirt,
@@ -746,18 +739,12 @@
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "cd" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
-/obj/item/circular_saw,
-/obj/item/retractor,
-/obj/item/hemostat,
-/obj/item/scalpel{
-	pixel_y = 12
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 8
 	},
-/obj/item/cautery{
-	pixel_x = 4
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/ancientstation/deltacorridor)
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/ancientstation/betanorth)
 "ce" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -864,16 +851,8 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation)
 "cr" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/command{
-	name = "Delta Station Access"
-	},
-/obj/machinery/door/poddoor{
-	id = "ancient"
-	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/ruin/space/has_grav/ancientstation/powered)
+/area/ruin/space/has_grav/ancientstation/betanorth)
 "cs" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/transit_tube/station/reverse/flipped{
@@ -1006,10 +985,10 @@
 /area/ruin/space/has_grav/ancientstation)
 "cL" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/betanorth)
 "cM" = (
@@ -1189,12 +1168,16 @@
 /area/ruin/space/has_grav/ancientstation/betanorth)
 "dk" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small{
-	dir = 4
+/obj/structure/closet/crate/secure/engineering{
+	name = "plasma tank crate";
+	req_access_txt = "204"
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/ruin/space/has_grav/ancientstation/betanorth)
+/obj/item/tank/internals/plasma/full,
+/obj/item/tank/internals/plasma/full,
+/obj/item/tank/internals/plasma/full,
+/obj/item/tank/internals/plasma/full,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ancientstation/deltacorridor)
 "dl" = (
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/ancientstation/engi)
@@ -1425,15 +1408,11 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/comm)
 "dM" = (
-/obj/structure/closet/crate,
-/obj/item/stack/sheet/metal{
-	amount = 50
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
-/obj/item/stack/sheet/metal{
-	amount = 25
-	},
-/obj/item/clothing/gloves/color/yellow,
-/turf/open/floor/plating/airless,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/betanorth)
 "dN" = (
 /obj/effect/decal/cleanable/dirt,
@@ -5361,10 +5340,15 @@
 /area/ruin/space/has_grav/ancientstation/betanorth)
 "nd" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/command{
+	name = "Delta Station Access"
+	},
+/obj/machinery/door/poddoor{
+	id = "ancient"
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/ruin/space/has_grav/ancientstation/betanorth)
+/area/ruin/space/has_grav/ancientstation)
 "ne" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -5396,12 +5380,7 @@
 /area/ruin/space/has_grav/ancientstation/atmo)
 "nh" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
-/turf/open/floor/plasteel,
+/turf/closed/wall/rust,
 /area/ruin/space/has_grav/ancientstation/betanorth)
 "ni" = (
 /obj/structure/lattice,
@@ -5443,17 +5422,21 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/betanorth)
 "nq" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/ancientstation/betanorth)
 "nr" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/obj/item/stack/sheet/metal{
+	amount = 25
+	},
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/stack/sheet/glass{
+	amount = 25
+	},
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ancientstation/betanorth)
 "ns" = (
 /obj/effect/decal/cleanable/dirt,
@@ -5524,6 +5507,36 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ancientstation/atmo)
+"nC" = (
+/obj/structure/closet/crate,
+/obj/item/cautery{
+	pixel_x = 4
+	},
+/obj/item/hemostat,
+/obj/item/circular_saw,
+/obj/item/scalpel{
+	pixel_y = 12
+	},
+/obj/item/retractor,
+/obj/item/surgical_drapes,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"nD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/optable,
+/turf/open/floor/plasteel/airless/white/side{
+	dir = 4
+	},
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"nE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/emcloset/anchored,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"nF" = (
+/obj/structure/closet/firecloset,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
 "nM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm{
@@ -5651,18 +5664,6 @@
 "Ku" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/particle_accelerator/control_box,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/ancientstation/deltacorridor)
-"KR" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/tank/internals/plasma/full,
-/obj/item/tank/internals/plasma/full,
-/obj/item/tank/internals/plasma/full,
-/obj/item/tank/internals/plasma/full,
-/obj/structure/closet/crate/secure/engineering{
-	name = "plasma tank crate";
-	req_access_txt = "204"
-	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "Ll" = (
@@ -5829,14 +5830,14 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
 aa
 aa
 aa
@@ -5877,13 +5878,13 @@ ac
 gK
 gK
 gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
+ch
+ch
+ch
+bF
+lV
+ch
+ch
 gK
 aa
 aa
@@ -5926,18 +5927,18 @@ me
 gd
 me
 ch
-ch
-ch
-bF
-lV
-ch
-ch
+nq
+nq
+nq
+nq
+nC
+bJ
 gK
 aa
 ac
 ac
 lh
-ac
+fU
 lh
 nk
 nl
@@ -6026,7 +6027,7 @@ mu
 dD
 kb
 eH
-eH
+nD
 ch
 gK
 gK
@@ -6208,7 +6209,7 @@ aa
 aa
 ac
 az
-bh
+fU
 ac
 bJ
 bJ
@@ -6259,11 +6260,11 @@ ac
 az
 ac
 bJ
-bI
+cd
 ck
-cL
+ch
 bJ
-dM
+nr
 me
 gu
 gU
@@ -6275,7 +6276,7 @@ gK
 gK
 dF
 gK
-gK
+dF
 gK
 dF
 gK
@@ -6309,7 +6310,7 @@ gK
 ch
 bI
 mS
-bI
+ch
 ch
 eg
 me
@@ -6317,28 +6318,28 @@ gd
 gd
 gd
 fY
-bq
+nE
 ch
+gK
+aa
 dF
+aa
 dF
-bf
+aa
 dF
+aa
+aa
+aa
+aa
 dF
-dF
-bf
 aa
 aa
 aa
 aa
-dF
 aa
-jD
-dH
-lS
 aa
-lz
-my
-lz
+aa
+aa
 aa
 "}
 (12,1,1) = {"
@@ -6352,12 +6353,12 @@ aa
 aa
 aa
 aa
-aa
+dF
 gK
 bJ
 mW
 mV
-mW
+ch
 ch
 fA
 fZ
@@ -6365,28 +6366,28 @@ gd
 me
 me
 fZ
-me
+nF
 ch
-gK
+dF
+dF
+bf
+dF
+bf
+dF
+bf
+aa
+aa
+aa
 aa
 dF
 aa
-dF
-aa
-dF
 aa
 aa
 aa
 aa
-dF
 aa
-jD
-my
-lz
 aa
-lz
-my
-lS
+aa
 aa
 "}
 (13,1,1) = {"
@@ -6405,7 +6406,7 @@ gK
 ch
 np
 mV
-mW
+ch
 bJ
 mf
 bJ
@@ -6428,6 +6429,102 @@ aa
 aa
 dF
 aa
+jD
+dH
+lS
+aa
+lz
+my
+lz
+aa
+"}
+(14,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+dF
+aa
+aa
+ch
+cr
+dM
+ch
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+aa
+dF
+aa
+dF
+aa
+dF
+aa
+aa
+aa
+aa
+dF
+aa
+jD
+my
+lz
+aa
+lz
+my
+lS
+aa
+"}
+(15,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+dF
+aa
+aa
+ch
+cr
+dM
+ch
+gK
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+dF
+aa
+dF
+aa
+dF
+aa
+aa
+aa
+aa
+dF
+aa
 lz
 my
 lS
@@ -6437,7 +6534,7 @@ my
 jD
 aa
 "}
-(14,1,1) = {"
+(16,1,1) = {"
 aa
 aa
 aa
@@ -6453,17 +6550,17 @@ gK
 bK
 mW
 mV
-mW
 bJ
 gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 dF
 aa
@@ -6485,7 +6582,7 @@ aa
 aa
 aa
 "}
-(15,1,1) = {"
+(17,1,1) = {"
 aa
 aa
 aa
@@ -6501,9 +6598,9 @@ mF
 jE
 mW
 mV
-bI
 bJ
 gK
+aa
 aa
 aa
 aa
@@ -6533,7 +6630,7 @@ my
 lz
 aa
 "}
-(16,1,1) = {"
+(18,1,1) = {"
 aa
 aa
 aa
@@ -6549,9 +6646,9 @@ mN
 jE
 mW
 mS
-nq
 ch
 gK
+aa
 aa
 aa
 aa
@@ -6581,7 +6678,7 @@ my
 lz
 aa
 "}
-(17,1,1) = {"
+(19,1,1) = {"
 aa
 aa
 aa
@@ -6597,9 +6694,9 @@ mQ
 ga
 mX
 nc
-bI
 mv
 gK
+aa
 aa
 aa
 aa
@@ -6629,7 +6726,7 @@ dH
 lz
 aa
 "}
-(18,1,1) = {"
+(20,1,1) = {"
 aa
 aa
 aa
@@ -6645,9 +6742,9 @@ mR
 mF
 bI
 mS
-bI
 mw
 gK
+aa
 aa
 aa
 aa
@@ -6677,7 +6774,7 @@ my
 aa
 aa
 "}
-(19,1,1) = {"
+(21,1,1) = {"
 aa
 aa
 aa
@@ -6693,9 +6790,9 @@ gh
 mM
 gi
 mZ
-nd
 mw
 gK
+aa
 aa
 aa
 aa
@@ -6725,7 +6822,7 @@ my
 lz
 aa
 "}
-(20,1,1) = {"
+(22,1,1) = {"
 aa
 aa
 aa
@@ -6741,9 +6838,9 @@ mT
 mF
 bI
 mS
-nd
 mw
 gK
+aa
 aa
 aa
 aa
@@ -6773,7 +6870,7 @@ dH
 aa
 aa
 "}
-(21,1,1) = {"
+(23,1,1) = {"
 aa
 aa
 aa
@@ -6789,9 +6886,9 @@ mU
 jE
 mW
 mV
-bI
 mx
 gK
+aa
 aa
 aa
 aa
@@ -6821,7 +6918,7 @@ dH
 lz
 aa
 "}
-(22,1,1) = {"
+(24,1,1) = {"
 aa
 aa
 aa
@@ -6837,9 +6934,9 @@ mK
 jE
 bI
 na
-nr
 ch
 gK
+aa
 aa
 aa
 gK
@@ -6869,7 +6966,7 @@ my
 lz
 aa
 "}
-(23,1,1) = {"
+(25,1,1) = {"
 aa
 aa
 aa
@@ -6885,9 +6982,9 @@ mF
 ga
 bI
 mS
-nh
 bJ
 gK
+aa
 aa
 aa
 gK
@@ -6917,7 +7014,7 @@ my
 lS
 aa
 "}
-(24,1,1) = {"
+(26,1,1) = {"
 aa
 aa
 aa
@@ -6933,8 +7030,8 @@ gK
 bK
 bI
 mV
-bI
 bJ
+gK
 gK
 gK
 gK
@@ -6965,7 +7062,7 @@ my
 aa
 aa
 "}
-(25,1,1) = {"
+(27,1,1) = {"
 aa
 aa
 aa
@@ -6981,7 +7078,7 @@ gK
 ch
 np
 mV
-mW
+bJ
 bJ
 eI
 eI
@@ -7013,7 +7110,7 @@ my
 lz
 aa
 "}
-(26,1,1) = {"
+(28,1,1) = {"
 aa
 aa
 aa
@@ -7029,7 +7126,7 @@ gK
 ch
 mW
 mS
-mW
+bJ
 bJ
 eI
 bv
@@ -7061,7 +7158,7 @@ my
 lz
 aa
 "}
-(27,1,1) = {"
+(29,1,1) = {"
 aa
 aa
 aa
@@ -7077,7 +7174,7 @@ gK
 ch
 mW
 mS
-mW
+nh
 bJ
 eI
 ej
@@ -7109,7 +7206,7 @@ dH
 lz
 aa
 "}
-(28,1,1) = {"
+(30,1,1) = {"
 aa
 aa
 aa
@@ -7125,7 +7222,7 @@ gK
 ch
 mW
 mS
-mW
+ch
 ch
 fP
 el
@@ -7157,7 +7254,7 @@ aa
 aa
 aa
 "}
-(29,1,1) = {"
+(31,1,1) = {"
 aa
 aa
 aa
@@ -7173,7 +7270,7 @@ gK
 ch
 bI
 mY
-bI
+ch
 bJ
 ay
 ju
@@ -7205,7 +7302,7 @@ aa
 aa
 aa
 "}
-(30,1,1) = {"
+(32,1,1) = {"
 aa
 aa
 aa
@@ -7219,9 +7316,9 @@ gK
 gK
 gK
 bJ
-bI
+cL
 mY
-dk
+ch
 bJ
 lJ
 en
@@ -7253,7 +7350,7 @@ aa
 aa
 aa
 "}
-(31,1,1) = {"
+(33,1,1) = {"
 aa
 aa
 aa
@@ -7267,9 +7364,9 @@ aT
 aG
 aG
 aG
-bO
+aG
 nb
-bO
+aG
 eI
 eI
 dl
@@ -7301,7 +7398,7 @@ aa
 aa
 aa
 "}
-(32,1,1) = {"
+(34,1,1) = {"
 aa
 aa
 aa
@@ -7349,7 +7446,7 @@ aa
 aa
 aa
 "}
-(33,1,1) = {"
+(35,1,1) = {"
 aa
 aa
 aa
@@ -7397,7 +7494,7 @@ ac
 aa
 aa
 "}
-(34,1,1) = {"
+(36,1,1) = {"
 aa
 aa
 aa
@@ -7445,7 +7542,7 @@ ac
 ac
 aa
 "}
-(35,1,1) = {"
+(37,1,1) = {"
 aa
 aa
 aa
@@ -7493,7 +7590,7 @@ ac
 ac
 aa
 "}
-(36,1,1) = {"
+(38,1,1) = {"
 aa
 aa
 aa
@@ -7541,7 +7638,7 @@ fU
 ac
 ac
 "}
-(37,1,1) = {"
+(39,1,1) = {"
 aa
 aa
 aa
@@ -7589,7 +7686,7 @@ lh
 ac
 ac
 "}
-(38,1,1) = {"
+(40,1,1) = {"
 aa
 aa
 aa
@@ -7637,7 +7734,7 @@ lp
 ac
 aa
 "}
-(39,1,1) = {"
+(41,1,1) = {"
 aa
 aa
 aa
@@ -7685,7 +7782,7 @@ lh
 ac
 aa
 "}
-(40,1,1) = {"
+(42,1,1) = {"
 aa
 aa
 aa
@@ -7733,7 +7830,7 @@ ac
 aa
 aa
 "}
-(41,1,1) = {"
+(43,1,1) = {"
 aa
 aa
 aa
@@ -7781,7 +7878,7 @@ aa
 aa
 aa
 "}
-(42,1,1) = {"
+(44,1,1) = {"
 aa
 aa
 aa
@@ -7829,7 +7926,7 @@ aa
 aa
 aa
 "}
-(43,1,1) = {"
+(45,1,1) = {"
 aa
 aa
 aa
@@ -7877,7 +7974,7 @@ aa
 aa
 aa
 "}
-(44,1,1) = {"
+(46,1,1) = {"
 aa
 aa
 aa
@@ -7925,7 +8022,7 @@ aa
 aa
 aa
 "}
-(45,1,1) = {"
+(47,1,1) = {"
 aa
 aa
 aa
@@ -7973,7 +8070,7 @@ aa
 aa
 aa
 "}
-(46,1,1) = {"
+(48,1,1) = {"
 aa
 aa
 aa
@@ -8021,7 +8118,7 @@ aa
 aa
 aa
 "}
-(47,1,1) = {"
+(49,1,1) = {"
 aa
 aa
 aa
@@ -8036,7 +8133,7 @@ aT
 aT
 aT
 bX
-cr
+nd
 bX
 eJ
 eJ
@@ -8069,7 +8166,7 @@ aa
 aa
 aa
 "}
-(48,1,1) = {"
+(50,1,1) = {"
 aa
 aa
 aa
@@ -8117,7 +8214,7 @@ aa
 aa
 aa
 "}
-(49,1,1) = {"
+(51,1,1) = {"
 aa
 aa
 aa
@@ -8165,7 +8262,7 @@ aa
 aa
 aa
 "}
-(50,1,1) = {"
+(52,1,1) = {"
 aa
 aa
 aa
@@ -8178,7 +8275,7 @@ aa
 ab
 az
 az
-cK
+bO
 cK
 ci
 bL
@@ -8213,7 +8310,7 @@ aa
 aa
 aa
 "}
-(51,1,1) = {"
+(53,1,1) = {"
 aa
 aa
 aa
@@ -8261,7 +8358,7 @@ aa
 aa
 aa
 "}
-(52,1,1) = {"
+(54,1,1) = {"
 aa
 aa
 aa
@@ -8309,7 +8406,7 @@ ab
 aa
 aa
 "}
-(53,1,1) = {"
+(55,1,1) = {"
 aa
 aa
 aa
@@ -8357,7 +8454,7 @@ aa
 aa
 aa
 "}
-(54,1,1) = {"
+(56,1,1) = {"
 aa
 aa
 aa
@@ -8405,7 +8502,7 @@ aa
 aa
 aa
 "}
-(55,1,1) = {"
+(57,1,1) = {"
 aa
 aa
 aa
@@ -8453,7 +8550,7 @@ aa
 aa
 aa
 "}
-(56,1,1) = {"
+(58,1,1) = {"
 aa
 aa
 aa
@@ -8501,7 +8598,7 @@ ac
 ac
 aa
 "}
-(57,1,1) = {"
+(59,1,1) = {"
 ab
 aa
 aa
@@ -8549,7 +8646,7 @@ az
 az
 aa
 "}
-(58,1,1) = {"
+(60,1,1) = {"
 aa
 aa
 aa
@@ -8597,7 +8694,7 @@ az
 ac
 aa
 "}
-(59,1,1) = {"
+(61,1,1) = {"
 aa
 aa
 aa
@@ -8645,7 +8742,7 @@ az
 ac
 aa
 "}
-(60,1,1) = {"
+(62,1,1) = {"
 aa
 aa
 aa
@@ -8693,7 +8790,7 @@ aa
 aa
 aa
 "}
-(61,1,1) = {"
+(63,1,1) = {"
 aa
 aa
 aa
@@ -8741,7 +8838,7 @@ aa
 aa
 aa
 "}
-(62,1,1) = {"
+(64,1,1) = {"
 aa
 aa
 aa
@@ -8789,7 +8886,7 @@ aa
 aa
 ab
 "}
-(63,1,1) = {"
+(65,1,1) = {"
 aa
 aa
 ac
@@ -8837,7 +8934,7 @@ aa
 aa
 aa
 "}
-(64,1,1) = {"
+(66,1,1) = {"
 aa
 ac
 ac
@@ -8885,7 +8982,7 @@ aa
 aa
 aa
 "}
-(65,1,1) = {"
+(67,1,1) = {"
 aa
 ac
 ad
@@ -8933,7 +9030,7 @@ aa
 aa
 aa
 "}
-(66,1,1) = {"
+(68,1,1) = {"
 aa
 ac
 ad
@@ -8981,7 +9078,7 @@ aa
 aa
 aa
 "}
-(67,1,1) = {"
+(69,1,1) = {"
 ac
 ac
 ad
@@ -9029,7 +9126,7 @@ aa
 aa
 aa
 "}
-(68,1,1) = {"
+(70,1,1) = {"
 ac
 ac
 ad
@@ -9077,7 +9174,7 @@ aa
 aa
 aa
 "}
-(69,1,1) = {"
+(71,1,1) = {"
 ac
 ac
 ad
@@ -9125,7 +9222,7 @@ aa
 aa
 aa
 "}
-(70,1,1) = {"
+(72,1,1) = {"
 ac
 ac
 ad
@@ -9173,7 +9270,7 @@ aa
 aa
 aa
 "}
-(71,1,1) = {"
+(73,1,1) = {"
 ac
 ac
 ad
@@ -9221,7 +9318,7 @@ aa
 aa
 aa
 "}
-(72,1,1) = {"
+(74,1,1) = {"
 ac
 ac
 ad
@@ -9269,7 +9366,7 @@ aa
 aa
 aa
 "}
-(73,1,1) = {"
+(75,1,1) = {"
 ac
 ac
 ad
@@ -9317,7 +9414,7 @@ aa
 aa
 aa
 "}
-(74,1,1) = {"
+(76,1,1) = {"
 ac
 ac
 ad
@@ -9365,7 +9462,7 @@ aa
 aa
 aa
 "}
-(75,1,1) = {"
+(77,1,1) = {"
 ac
 ac
 ad
@@ -9413,7 +9510,7 @@ aa
 aa
 aa
 "}
-(76,1,1) = {"
+(78,1,1) = {"
 ac
 ac
 ad
@@ -9461,7 +9558,7 @@ aa
 aa
 aa
 "}
-(77,1,1) = {"
+(79,1,1) = {"
 ac
 ac
 ad
@@ -9509,11 +9606,11 @@ aa
 aa
 aa
 "}
-(78,1,1) = {"
+(80,1,1) = {"
 aa
 ac
 ad
-aj
+bh
 ai
 dG
 aD
@@ -9557,7 +9654,7 @@ aa
 aa
 aa
 "}
-(79,1,1) = {"
+(81,1,1) = {"
 aa
 ac
 ac
@@ -9575,7 +9672,7 @@ cc
 cc
 dh
 bE
-aa
+gK
 bE
 eZ
 eZ
@@ -9605,7 +9702,7 @@ aa
 aa
 aa
 "}
-(80,1,1) = {"
+(82,1,1) = {"
 aa
 ac
 ac
@@ -9619,16 +9716,16 @@ aF
 ac
 ac
 bE
-cd
+he
 OY
-KR
+dh
 bE
-aa
+gK
 bE
 eZ
 fz
 fz
-dh
+dk
 hK
 hK
 Ku
@@ -9653,7 +9750,7 @@ aa
 aa
 aa
 "}
-(81,1,1) = {"
+(83,1,1) = {"
 aa
 aa
 ac
@@ -9671,7 +9768,7 @@ bE
 bE
 bE
 bE
-aa
+gK
 bE
 bE
 fz
@@ -9701,7 +9798,7 @@ aa
 aa
 aa
 "}
-(82,1,1) = {"
+(84,1,1) = {"
 aa
 aa
 aa
@@ -9749,7 +9846,7 @@ aa
 aa
 aa
 "}
-(83,1,1) = {"
+(85,1,1) = {"
 aa
 aa
 aa
