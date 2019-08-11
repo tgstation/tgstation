@@ -300,12 +300,8 @@
 
 
 ///This atom has been hit by a hulkified mob in hulk mode (user)
-/atom/proc/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+/atom/proc/attack_hulk(mob/living/carbon/human/user)
 	SEND_SIGNAL(src, COMSIG_ATOM_HULK_ATTACK, user)
-	if(does_attack_animation)
-		user.changeNext_move(CLICK_CD_MELEE)
-		log_combat(user, src, "punched", "hulk powers")
-		user.do_attack_animation(src, ATTACK_EFFECT_SMASH)
 
 /**
   * Ensure a list of atoms/reagents exists inside this atom

@@ -16,16 +16,10 @@
 	var/obj/item/clothing/gloves/G = gloves // not typecast specifically enough in defines
 	if(proximity && istype(G) && G.Touch(A,1))
 		return
-
-	var/override = 0
-
-	for(var/datum/mutation/human/HM in dna.mutations)
-		override += HM.on_attack_hand(A, proximity)
-
-	if(override)
+	//This signal is needed to prevent gloves of the north star + hulk.
+	if(SEND_SIGNAL(src, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, A, proximity) & COMPONENT_NO_ATTACK_HAND)
 		return
-
-	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A)
+	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A, proximity)
 	A.attack_hand(src)
 
 //Return TRUE to cancel other attack hand effects that respect it.

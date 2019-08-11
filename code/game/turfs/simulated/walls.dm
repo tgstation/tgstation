@@ -136,8 +136,8 @@
 		dismantle_wall(1)
 		return
 
-/turf/closed/wall/attack_hulk(mob/user, does_attack_animation = 0)
-	..(user, 1)
+/turf/closed/wall/attack_hulk(mob/user)
+	..()
 	if(prob(hardness))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
@@ -148,7 +148,6 @@
 		user.visible_message("<span class='danger'>[user] smashes \the [src]!</span>", \
 					"<span class='danger'>You smash \the [src]!</span>", \
 					"<span class='italics'>You hear a booming smash!</span>")
-
 	return TRUE
 
 /turf/closed/wall/attack_hand(mob/user)

@@ -54,15 +54,14 @@
 	if(L.a_intent == INTENT_HELP)
 		visible_message("[L.name] rubs its head against [src].")
 
-/mob/living/silicon/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
-	if(user.a_intent == INTENT_HARM)
-		..(user, 1)
-		adjustBruteLoss(rand(10, 15))
-		playsound(loc, "punch", 25, 1, -1)
-		visible_message("<span class='danger'>[user] punches [src]!</span>", \
-				"<span class='userdanger'>[user] punches you!</span>", null, COMBAT_MESSAGE_RANGE)
-		return 1
-	return 0
+/mob/living/silicon/attack_hulk(mob/living/carbon/human/user)
+	. = ..()
+	if(!.)
+		return
+	adjustBruteLoss(rand(10, 15))
+	playsound(loc, "punch", 25, 1, -1)
+	visible_message("<span class='danger'>[user] punches [src]!</span>", \
+			"<span class='userdanger'>[user] punches you!</span>", null, COMBAT_MESSAGE_RANGE)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/silicon/attack_hand(mob/living/carbon/human/M)
