@@ -1,8 +1,8 @@
 
 /datum/disease/transformation/melting
 	name = "Melting Disease"
-	cure_text = "An injection of frost oil."
-	cures = list(/datum/reagent/consumable/frostoil)
+	cure_text = "Killing the abnormality spreading the disease. Freezing will stop progression and symptoms."
+	cures = list()
 	cure_chance = 5
 	spread_flags = DISEASE_SPREAD_AIRBORNE
 	agent = "Melting Microorganisms"
@@ -33,6 +33,8 @@
 	var/obj/item/organ/heart/slime/slimeheart = affected_mob.getorganslot(ORGAN_SLOT_HEART)
 	if(istype(slimeheart))
 		return //champions are not affected by the disease, it doesn't even progress
+	if(affected_mob.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
+		return //same effect as a champion, no progression or symptoms
 	..()
 	switch(stage)
 		if(2)

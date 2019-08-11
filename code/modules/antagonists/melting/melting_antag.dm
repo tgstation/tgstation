@@ -4,8 +4,11 @@
 	show_in_antagpanel = FALSE
 
 /datum/antagonist/melting/greet()
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/slimealert.ogg', 100, FALSE, pressure_affected = FALSE)
 	to_chat(owner.current, "<span class='notice'>You are the [owner.special_role]!</span>")
-	to_chat(owner.current, "<span class='notice'>Infect members of the crew to gain adaptation points, and spread your infection further.</span>")
+	to_chat(owner.current, "<span class='notice'>Use your mark ability while close to brainwash a champion! He will safely spread your disease generating you an army.</span>")
+	to_chat(owner.current, "<span class='notice'>If you're in trouble, use your slime toss to infect a victim and deal massive damage. Sadly, it's on a very high cooldown so be wise when you use it.</span>")
+	to_chat(owner.current, "<span class='notice'>If you die, your infection will be globally cured and your slime minions will no longer be able to infect victims with the infection.</span>")
 	owner.announce_objectives()
 
 /datum/antagonist/melting/roundend_report_header()

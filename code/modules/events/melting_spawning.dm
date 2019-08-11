@@ -1,13 +1,13 @@
 /datum/round_event_control/melting
 	name = "Spawn Melting"
-	typepath = /datum/round_event/ghost_role/nightmare
+	typepath = /datum/round_event/ghost_role/melting
 	max_occurrences = 1
 	min_players = 40
 	earliest_start = 1 HOURS //it's jungle fever basically
 
 /datum/round_event/ghost_role/melting
 	minimum_required = 1
-	role_name = "nightmare"
+	role_name = "melting abnormality"
 	fakeable = FALSE
 
 /datum/round_event/ghost_role/melting/spawn_role()
