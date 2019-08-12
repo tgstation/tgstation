@@ -138,6 +138,10 @@
 		H.spawn_gibs()
 		H.spill_organs()
 		H.spread_bodyparts()
+		var/turf/T = get_turf(src)
+		if(T)
+			T.assume_air(air_contents)
+			air_update_turf()
 
 	return (BRUTELOSS)
 
