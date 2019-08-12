@@ -1,6 +1,6 @@
-/obj/item/organ/cyberimp/eyes/hud
-	name = "cybernetic hud"
-	desc = "artificial photoreceptors with specialized functionality"
+/obj/item/organ/cyberimp/eyes
+	name = "cybernetic eye implant"
+	desc = "Implants for your eyes."
 	icon_state = "eye_implant"
 	implant_overlay = "eye_implant_overlay"
 	slot = ORGAN_SLOT_EYES
