@@ -55,13 +55,6 @@
 	item_state = "crowbar"
 	toolspeed = 0.7
 
-/obj/item/crowbar/cyborg
-	name = "hydraulic crowbar"
-	desc = "A hydraulic prying tool, compact but powerful. Designed to replace crowbar in construction cyborgs."
-	usesound = 'sound/items/jaws_pry.ogg'
-	force = 10
-	toolspeed = 0.5
-
 /obj/item/crowbar/power
 	name = "jaws of life"
 	desc = "A set of jaws of life, compressed through the magic of science. It's fitted with a prying head."
@@ -70,7 +63,6 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	materials = list(/datum/material/iron=150,/datum/material/silver=50,/datum/material/titanium=25)
-
 	usesound = 'sound/items/jaws_pry.ogg'
 	force = 15
 	toolspeed = 0.7
@@ -86,3 +78,12 @@
 	to_chat(user, "<span class='notice'>You attach the cutting jaws to [src].</span>")
 	qdel(src)
 	user.put_in_active_hand(cutjaws)
+
+/obj/item/crowbar/cyborg
+	name = "hydraulic crowbar"
+	desc = "A hydraulic prying tool, simple but powerful."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "crowbar_cyborg"
+	usesound = 'sound/items/jaws_pry.ogg'
+	force = 10
+	toolspeed = 0.5

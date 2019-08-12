@@ -149,7 +149,7 @@
 /obj/item/kitchen/knife/combat/cyborg
 	name = "cyborg knife"
 	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "knife"
+	icon_state = "knife_cyborg"
 	desc = "A cyborg-mounted plasteel knife. Extremely sharp and durable."
 
 /obj/item/kitchen/knife/carrotshiv

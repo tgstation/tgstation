@@ -135,7 +135,11 @@
 	user.put_in_active_hand(b_drill)
 
 /obj/item/screwdriver/cyborg
-	name = "powered screwdriver"
-	desc = "An electrical screwdriver, designed to be both precise and quick."
+	name = "automated screwdriver"
+	desc = "A powerful automated screwdriver, designed to be both precise and quick."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "screwdriver_cyborg"
+	hitsound = 'sound/items/drill_hit.ogg'
 	usesound = 'sound/items/drill_use.ogg'
 	toolspeed = 0.5
+	random_color = FALSE
