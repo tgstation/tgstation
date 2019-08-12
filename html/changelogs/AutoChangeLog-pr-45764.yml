@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - tweak: "Cargo console UI touched up a bit. Requests and cart moved below the cargo packs for less button shuffling, buying privately is now a toggle, resized window slightly."

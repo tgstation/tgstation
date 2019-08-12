@@ -5,6 +5,7 @@
 	ammo_type = /obj/item/ammo_casing/a357
 	max_ammo = 7
 	multiple_sprites = AMMO_BOX_PER_BULLET
+	item_flags = NO_MAT_REDEMPTION
 
 /obj/item/ammo_box/c38
 	name = "speed loader (.38)"

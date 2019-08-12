@@ -1,5 +1,0 @@
-author: "Akrilla"
-delete-after: True
-changes: 
-  - tweak: "Buffs up the Syndicate cigarettes to give about 15u of omnizine over two minutes."
-  - code_imp: "Allows for cigarettes to give all their chems over their lifetime with a new var."
