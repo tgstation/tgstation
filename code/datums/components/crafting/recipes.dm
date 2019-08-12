@@ -294,7 +294,7 @@
 	result = /obj/item/ammo_casing/shotgun/improvised
 	reqs = list(/obj/item/stack/sheet/metal = 2,
 				/obj/item/stack/cable_coil = 1,
-				/datum/reagent/fuel = 10)
+				/datum/reagent/fuel = 10 )
 	tools = list(TOOL_SCREWDRIVER)
 	time = 12
 	category = CAT_WEAPONRY
