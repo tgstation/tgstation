@@ -31,12 +31,20 @@
 	item_color = "waiter"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/suit/black
-	name = "black suit"
+/obj/item/clothing/under/suit/blacktwopiece
+	name = "black two piece suit"
 	desc = "A black suit and red tie. Very formal."
 	icon_state = "black_suit"
 	item_state = "bl_suit"
 	item_color = "black_suit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/suit/black
+	name = "black suit"
+	desc = "A professional looking black suit. Ready for some serious law."
+	icon_state = "blacksuit"
+	item_state = "blacksuit"
+	item_color = "blacksuit"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/suit/black/skirt
