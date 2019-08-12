@@ -7,7 +7,6 @@
 	max_combined_w_class = 100
 	max_items = 50
 	display_numerical_stacking = TRUE
-	rad_flags = RAD_PROTECT_CONTENTS
 
 /datum/component/storage/concrete/rped/can_be_inserted(obj/item/I, stop_messages, mob/M)
 	. = ..()
@@ -25,7 +24,6 @@
 	max_combined_w_class = 800
 	max_items = 400
 	display_numerical_stacking = TRUE
-	rad_flags = RAD_PROTECT_CONTENTS
 
 /datum/component/storage/concrete/bluespace/rped/can_be_inserted(obj/item/I, stop_messages, mob/M)
 	. = ..()
