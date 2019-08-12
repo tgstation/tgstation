@@ -5,6 +5,7 @@
 	circuit = /obj/item/circuitboard/computer/cargo
 	var/requestonly = FALSE
 	var/contraband = FALSE
+	var/self_paid = FALSE
 	var/safety_warning = "For safety reasons, the automated supply shuttle \
 		cannot transport live organisms, human remains, classified nuclear weaponry, \
 		homing beacons or machinery housing any form of artificial intelligence."
@@ -53,7 +54,7 @@
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "cargo", name, 1000, 800, master_ui, state)
+		ui = new(user, src, ui_key, "cargo", name, 750, 850, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/cargo/ui_data()
@@ -74,6 +75,7 @@
 		message = blockade_warning
 	data["message"] = message
 	data["supplies"] = list()
+	data["self_paid"] = self_paid
 	for(var/pack in SSshuttle.supply_packs)
 		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
 		if(!data["supplies"][P.group])
@@ -153,7 +155,6 @@
 				. = TRUE
 		if("add")
 			var/id = text2path(params["id"])
-			var/self_paid = text2num(params["self_paid"])
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))
 				return
@@ -227,6 +228,8 @@
 		if("denyall")
 			SSshuttle.requestlist.Cut()
 			. = TRUE
+		if("toggleprivate")	
+			self_paid = !self_paid
 	if(.)
 		post_signal("supply")
 

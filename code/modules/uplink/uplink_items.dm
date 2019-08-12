@@ -890,7 +890,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls, sabotage equipment, or connect \
 			an assembly to it in order to alter the way it detonates. It can be attached to almost all objects and has a modifiable timer with a \
 			minimum setting of 10 seconds."
-	item = /obj/item/grenade/plastic/c4
+	item = /obj/item/grenade/c4
 	cost = 1
 
 /datum/uplink_item/explosives/c4bag
@@ -1749,7 +1749,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Magillitis Serum Autoinjector"
 	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in Hominidae. \
 			Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
-	item = /obj/item/reagent_containers/hypospray/magillitis
+	item = /obj/item/reagent_containers/hypospray/medipen/magillitis
 	cost = 15
 	restricted_roles = list("Geneticist", "Chief Medical Officer")
 

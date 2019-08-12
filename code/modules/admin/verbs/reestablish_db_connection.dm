@@ -19,8 +19,8 @@
 		message_admins("[key_name_admin(usr)] has <b>forced</b> the database to disconnect!")
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Force Reestablished Database Connection") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-	log_admin("[key_name(usr)] is attempting to re-established the DB Connection")
-	message_admins("[key_name_admin(usr)] is attempting to re-established the DB Connection")
+	log_admin("[key_name(usr)] is attempting to re-establish the DB Connection")
+	message_admins("[key_name_admin(usr)] is attempting to re-establish the DB Connection")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Reestablished Database Connection") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	SSdbcore.failed_connections = 0

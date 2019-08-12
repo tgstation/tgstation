@@ -59,18 +59,19 @@
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		var/obj/item/surgical_processor/SP = locate() in R.module.modules
-		if(!SP || (replaced_by in SP.advanced_surgeries))
-			return .
-		if(type in SP.advanced_surgeries)
-			return TRUE
+		if(SP) //no early return for !SP since we want to check optable should this not exist.
+			if(replaced_by in SP.advanced_surgeries)
+				return FALSE
+			if(type in SP.advanced_surgeries)
+				return TRUE
 
 	var/turf/T = get_turf(patient)
 	var/obj/structure/table/optable/table = locate(/obj/structure/table/optable, T)
 	if(table)
-		if(!table.computer)
+		if(table.computer.stat & (NOPOWER|BROKEN))
 			return .
-		if(table.computer.stat & (NOPOWER|BROKEN) || (replaced_by in table.computer.advanced_surgeries))
-			return .
+		if(replaced_by in table.computer.advanced_surgeries)
+			return FALSE
 		if(type in table.computer.advanced_surgeries)
 			return TRUE
 

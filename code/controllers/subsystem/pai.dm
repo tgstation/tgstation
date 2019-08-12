@@ -41,7 +41,7 @@ SUBSYSTEM_DEF(pai)
 			if("name")
 				t = input("Enter a name for your pAI", "pAI Name", candidate.name) as text
 				if(t)
-					candidate.name = copytext(sanitize(t),1,MAX_NAME_LEN)
+					candidate.name = copytext(sanitize_name(t),1,MAX_NAME_LEN)
 			if("desc")
 				t = input("Enter a description for your pAI", "pAI Description", candidate.description) as message
 				if(t)

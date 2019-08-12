@@ -47,7 +47,7 @@
 				atoms += A
 			CHECK_TICK
 
-	var/icon/res = icon('icons/effects/96x96.dmi', "")
+	var/icon/res = icon('icons/effects/96x96.dmi', "transparent")
 	res.Scale(psize_x, psize_y)
 
 	var/list/sorted = list()
