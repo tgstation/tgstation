@@ -23,6 +23,19 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	var/linked_dirs = 0 //bitflag
 	var/node = FALSE //used for sprites display
 	var/datum/powernet/powernet
+	color = "#FFF200"
+
+/obj/structure/cable/red
+	color = "#DA0000"
+
+/obj/structure/cable/blue
+	color = "#00B7EF"
+
+/obj/structure/cable/green
+	color = "#A8E61D"
+
+/obj/structure/cable/purple
+	color = "#7a28ed"
 
 /obj/structure/cable/Initialize(mapload, param_color)
 	. = ..()
@@ -30,6 +43,8 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	var/turf/T = get_turf(src)			// hide if turf is not intact
 	if(level==1)
 		hide(T.intact)
+	if(param_color)
+		color = param_color
 	GLOB.cable_list += src //add it to the global cable list
 	connect_wire()
 
@@ -68,6 +83,8 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 						continue
 		var/inverse = turn(check_dir, 180)
 		for(var/obj/structure/cable/C in TB)
+			if(C.color != color)
+				continue
 			linked_dirs |= check_dir
 			C.linked_dirs |= inverse
 			C.update_icon()
@@ -126,7 +143,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 						dir_string = "[dir_string]-node"
 						break
 		icon_state = dir_string
-	
+
 
 /obj/structure/cable/proc/handlecable(obj/item/W, mob/user, params)
 	var/turf/T = get_turf(src)
@@ -234,7 +251,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		if(src == C)
 			continue
 
-		if(C.linked_dirs & inverse_dir) //we've got a matching cable in the neighbor turf
+		if(C.linked_dirs & inverse_dir && C.color == color) //we've got a matching cable in the neighbor turf
 			if(!C.powernet) //if the matching cable somehow got no powernet, make him one (should not happen for cables)
 				var/datum/powernet/newPN = new()
 				newPN.add_cable(C)
@@ -292,7 +309,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 			T = get_step(src, check_dir)
 			if(T)
 				var/obj/structure/cable/C = locate(/obj/structure/cable) in T
-				if(C)
+				if(C && C.color == color)
 					. += C
 
 /obj/structure/cable/proc/get_machine_connections(powernetless_only)
@@ -326,13 +343,17 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 	//clear the powernet of any machines on tile first
 	for(var/obj/machinery/power/P in T1)
-		P.disconnect_from_network() 
+		P.disconnect_from_network()
 
 	var/list/P_list = list()
 	for(var/dir_check in GLOB.cardinals)
 		if(linked_dirs & dir_check)
 			T1 = get_step(loc, dir_check)
-			P_list += locate(/obj/structure/cable) in T1
+			var/obj/structure/cable/cable_found = locate(/obj/structure/cable) in T1
+			if(cable_found)
+				if(cable_found.color == color)
+					P_list += cable_found
+
 
 	// remove the cut cable from its turf and powernet, so that it doesn't get count in propagate_network worklist
 	if(remove)
@@ -368,7 +389,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	max_amount = MAXCOIL
 	amount = MAXCOIL
 	merge_type = /obj/item/stack/cable_coil // This is here to let its children merge between themselves
-	item_color = "red"
+	item_color = "yellow"
 	desc = "A coil of insulated power cable."
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
@@ -382,6 +403,44 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	full_w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/copper = 2) //2 copper per cable in the coil
 	usesound = 'sound/items/deconstruct.ogg'
+	color = "#FFF200"
+
+/obj/item/stack/cable_coil/attackby(obj/item/I, mob/user)
+	. = ..()
+	if(istype(I, /obj/item/toy/crayon))
+		var/obj/item/toy/crayon/i_eat_crayons = I
+		to_chat(user, "<span class='notice'>You start to colour in [src]...</span>")
+		if(do_after(user, 5 SECONDS, target=src))
+			to_chat(user, "<span class='notice'>You colour in [src] with [I]!</span>")
+			color = i_eat_crayons.paint_color
+
+/obj/item/stack/cable_coil/red
+	color = "#DA0000"
+	item_color = "red"
+
+/obj/item/stack/cable_coil/red/twenty
+	amount = 20
+
+/obj/item/stack/cable_coil/blue
+	color = "#00B7EF"
+	item_color = "blue"
+
+/obj/item/stack/cable_coil/blue/twenty
+	amount = 20
+
+/obj/item/stack/cable_coil/green
+	color = "#A8E61D"
+	item_color = "green"
+
+/obj/item/stack/cable_coil/green/twenty
+	amount = 20
+
+/obj/item/stack/cable_coil/purple
+	color = "#7a28ed"
+	item_color = "#DA00FF"
+
+/obj/item/stack/cable_coil/purple/twenty
+	amount = 20
 
 /obj/item/stack/cable_coil/cyborg
 	is_cyborg = 1
@@ -450,7 +509,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 /obj/item/stack/cable_coil/proc/get_new_cable(location)
 	var/path = /obj/structure/cable
-	return new path(location, item_color)
+	return new path(location, color)
 
 // called when cable_coil is clicked on a turf
 /obj/item/stack/cable_coil/proc/place_turf(turf/T, mob/user, dirnew)
@@ -464,14 +523,16 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	if(get_amount() < 1) // Out of cable
 		to_chat(user, "<span class='warning'>There is no cable left!</span>")
 		return
-	
+
 	if(get_dist(T,user) > 1) // Too far
 		to_chat(user, "<span class='warning'>You can't lay cable at a place that far away!</span>")
 		return
 
-	if(is_type_in_list(/obj/structure/cable, T.contents))
-		to_chat(user, "<span class='warning'>There's already a cable at that position!</span>")
-		return
+	var/obj/structure/cable/found = locate(/obj/structure/cable) in T
+	if(found)
+		if(found.color == color)
+			to_chat(user, "<span class='warning'>There's already a cable at that position!</span>")
+			return
 
 	var/obj/structure/cable/C = get_new_cable(T)
 
