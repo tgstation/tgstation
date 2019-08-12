@@ -140,7 +140,7 @@
 	new /obj/item/clothing/mask/gas/explorer(src)
 	new /obj/item/crowbar/red(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-	
+
 	if(!isplasmaman(loc))
 		new /obj/item/tank/internals/emergency_oxygen(src)
 	else
@@ -150,7 +150,7 @@
 /obj/item/storage/box/engineer/PopulateContents()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-		
+
 	if(!isplasmaman(loc))
 		new /obj/item/tank/internals/emergency_oxygen/engi(src)
 	else
@@ -163,7 +163,7 @@
 // Syndie survival box
 /obj/item/storage/box/syndie/PopulateContents()
 	new /obj/item/clothing/mask/gas/syndicate(src)
-	
+
 	if(!isplasmaman(loc))
 		new /obj/item/tank/internals/emergency_oxygen/engi(src)
 	else
@@ -173,7 +173,7 @@
 /obj/item/storage/box/security/PopulateContents()
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-	
+
 	if(!isplasmaman(loc))
 		new /obj/item/tank/internals/emergency_oxygen(src)
 	else
@@ -667,6 +667,7 @@
 	item_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	rad_flags = RAD_PROTECT_CONTENTS
 	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
 
 /obj/item/storage/box/lights/ComponentInitialize()
@@ -684,6 +685,7 @@
 /obj/item/storage/box/lights/tubes
 	name = "box of replacement tubes"
 	illustration = "lighttube"
+	rad_flags = RAD_PROTECT_CONTENTS
 
 /obj/item/storage/box/lights/tubes/PopulateContents()
 	for(var/i in 1 to 21)
@@ -692,6 +694,7 @@
 /obj/item/storage/box/lights/mixed
 	name = "box of replacement lights"
 	illustration = "lightmixed"
+	rad_flags = RAD_PROTECT_CONTENTS
 
 /obj/item/storage/box/lights/mixed/PopulateContents()
 	for(var/i in 1 to 14)
@@ -774,7 +777,7 @@
 /obj/item/storage/box/hug/survival/PopulateContents()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-	
+
 	if(!isplasmaman(loc))
 		new /obj/item/tank/internals/emergency_oxygen(src)
 	else
