@@ -24,19 +24,19 @@
 	circuit = /obj/item/circuitboard/computer/cargo/request
 	requestonly = TRUE
 
-/obj/machinery/computer/cargo/Destroy()
-	. = ..()
-	QDEL_NULL(radio)
-
 /obj/machinery/computer/cargo/Initialize()
 	. = ..()
-	radio = new /obj/item/radio/headset/silicon/ai(src)
+	radio = new /obj/item/radio/headset/headset_cargo(src)
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	contraband = board.contraband
 	if (board.obj_flags & EMAGGED)
 		obj_flags |= EMAGGED
 	else
 		obj_flags &= ~EMAGGED
+
+/obj/machinery/computer/cargo/Destroy()
+	. = ..()
+	QDEL_NULL(radio)
 
 /obj/machinery/computer/cargo/proc/get_export_categories()
 	var/cat = EXPORT_CARGO
