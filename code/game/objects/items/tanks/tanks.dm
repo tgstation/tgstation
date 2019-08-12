@@ -142,6 +142,7 @@
 		if(T)
 			T.assume_air(air_contents)
 			air_update_turf()
+			qdel(air_contents)
 
 	return (BRUTELOSS)
 
