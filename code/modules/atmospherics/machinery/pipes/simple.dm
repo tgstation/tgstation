@@ -11,7 +11,7 @@
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH
 	pipe_flags = PIPING_CARDINAL_AUTONORMALIZE
-
+	rad_flags = RAD_PROTECT_CONTENTS
 	device_type = BINARY
 
 	construction_type = /obj/item/pipe/binary/bendable
