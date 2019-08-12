@@ -266,9 +266,13 @@
 	H.equip_to_slot_or_del(new hat(H), SLOT_HEAD)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/roman(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), SLOT_SHOES)
-	H.put_in_hands(new /obj/item/shield/riot/roman(H), TRUE)
-	H.put_in_hands(new /obj/item/claymore(H), TRUE)
-	H.equip_to_slot_or_del(new /obj/item/twohanded/spear(H), SLOT_BACK)
+	H.equip_to_slot_or_del(new/obj/item/claymore(H), SLOT_BELT)
+	//var/block = pick(/obj/item/shield/riot/roman(H), /obj/item/twohanded/spear/pike)
+	if(prob(80)
+		H.equip_to_slot_or_del(new/obj/item/shield/riot/roman(H), SLOT_BACK)
+	else
+		H.equip_to_slot_or_del(new/obj/item/twohanded/spear/pike(H), SLOT_BACK)
+	//H.equip_to_slot_or_del(new block(H), SLOT_BACK)
 
 
 /obj/item/voodoo
