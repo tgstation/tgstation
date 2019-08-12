@@ -356,15 +356,16 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/proc/Communicate()
 	if(summoner)
+		var/sender_ckey = src.key
 		var/input = stripped_input(src, "Please enter a message to tell your summoner.", "Guardian", "")
-		var/list/guardians = summoner.hasparasites()
-		if(!(src in guardians) || !input) //reset, or did not enter anything
+		if(sender_ckey != src.key || !input) //guardian got reset, or did not enter anything
 			return
 
 		var/preliminary_message = "<span class='holoparasite bold'>[input]</span>" //apply basic color/bolding
 		var/my_message = "<font color=\"[namedatum.colour]\"><b><i>[src]:</i></b></font> [preliminary_message]" //add source, color source with the guardian's color
 
 		to_chat(summoner, my_message)
+		var/list/guardians = summoner.hasparasites()
 		for(var/para in guardians)
 			to_chat(para, my_message)
 		for(var/M in GLOB.dead_mob_list)
