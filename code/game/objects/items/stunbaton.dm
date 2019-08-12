@@ -29,9 +29,6 @@
 	user.visible_message("<span class='suicide'>[user] is putting the live [name] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
 
-/obj/item/melee/baton/proc/get_wait_description()
-	return "<span class='danger'>The baton is still charging!</span>"
-
 /obj/item/melee/baton/Initialize()
 	. = ..()
 	if(preload_cell_type)
@@ -142,7 +139,7 @@
 					user.do_attack_animation(M)
 					return
 			else 
-				to_chat(user, get_wait_description())
+				to_chat(user, "<span class='danger'>The baton is still charging!</span>")
 		else
 			M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
 							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
