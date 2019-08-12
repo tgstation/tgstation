@@ -198,7 +198,7 @@
 			if(!A.mutable)
 				return
 			if(A)
-				var/new_name = stripped_input(usr, "Name the disease", "New name", "", MAX_NAME_LEN)
+				var/new_name = sanitize_name(stripped_input(usr, "Name the disease", "New name", "", MAX_NAME_LEN))
 				if(!new_name || ..())
 					return
 				A.AssignName(new_name)
