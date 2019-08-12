@@ -1,7 +1,0 @@
-author: "Akrilla"
-delete-after: True
-changes: 
-  - rscadd: "Contractors can now reroll their contracts a small number of times."
-  - rscadd: "Brand new sprites! A redesign of the specialist space suit, and the kit's own unique tablet. Done by Mey Ha Zah."
-  - tweak: "Displays contract target jobs under their name."
-  - tweak: "New locations, such as maintenance, are now possible dropoff locations."

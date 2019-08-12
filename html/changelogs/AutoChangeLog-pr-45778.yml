@@ -1,4 +1,0 @@
-author: "Penterwast"
-delete-after: True
-changes: 
-  - admin: "Added logging for CentComm nuke request messages."

@@ -1,6 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - rscadd: "Cargo can now buy a crate of bulletproof helmets for only 1500 spacebux!"
-  - balance: "completely changed the contents of the artistic crates (rest in peace painting)"
-  - spellcheck: "special ops supplies crate now have a slightly different description"

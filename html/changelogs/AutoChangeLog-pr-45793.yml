@@ -1,4 +1,0 @@
-author: "bgobandit"
-delete-after: True
-changes: 
-  - bugfix: "Wizard rounds should properly generate messages when the wiz dies."
