@@ -55,7 +55,7 @@
 	strip_delay = 80
 
 /obj/item/clothing/suit/armor/hos/trenchcoat
-	name = "armored trenchoat"
+	name = "armored trenchcoat"
 	desc = "A trenchcoat enhanced with a special lightweight kevlar. The epitome of tactical plainclothes."
 	icon_state = "hostrench"
 	item_state = "hostrench"
@@ -122,7 +122,6 @@
 	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 	strip_delay = 80
 	equip_delay_other = 60
-	slowdown = 0.5
 
 /obj/item/clothing/suit/armor/bone
 	name = "bone armor"

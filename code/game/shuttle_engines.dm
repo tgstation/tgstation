@@ -35,10 +35,12 @@
 			state = ENGINE_UNWRENCHED
 
 /obj/structure/shuttle/engine/wrench_act(mob/living/user, obj/item/I)
+	..()
 	default_unfasten_wrench(user, I)
 	return TRUE
 
 /obj/structure/shuttle/engine/welder_act(mob/living/user, obj/item/I)
+	. = ..()
 	switch(state)
 		if(ENGINE_UNWRENCHED)
 			to_chat(user, "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>")

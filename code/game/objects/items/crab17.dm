@@ -80,6 +80,7 @@
 	add_overlay("hatch")
 	add_overlay("legs_retracted")
 	addtimer(CALLBACK(src, .proc/startUp), 50)
+	QDEL_IN(src, 8 MINUTES) //Self destruct after 8 min
 
 
 /obj/structure/checkoutmachine/proc/startUp() //very VERY snowflake code that adds a neat animation when the pod lands.
@@ -172,7 +173,6 @@
 			account.transfer_money(B, amount)
 			B.bank_card_talk("You have lost [percentage_lost * 100]% of your funds! A spacecoin credit deposit machine is located at: [get_area(src)].")
 	addtimer(CALLBACK(src, .proc/dump), 150) //Drain every 15 seconds
-	addtimer(CALLBACK(src, .proc/qdel, src), 8 MINUTES) //Self destruct after 8 min
 
 /obj/structure/checkoutmachine/process()
 	var/anydir = pick(GLOB.cardinals)

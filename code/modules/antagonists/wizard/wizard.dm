@@ -143,7 +143,7 @@
 	var/wizard_name_second = pick(GLOB.wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
 	var/mob/living/wiz_mob = owner.current
-	var/newname = copytext(sanitize(input(wiz_mob, "You are the [name]. Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)
+	var/newname = copytext(sanitize_name(input(wiz_mob, "You are the [name]. Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)
 
 	if (!newname)
 		newname = randomname
@@ -201,12 +201,12 @@
 		if(APPRENTICE_BLUESPACE)
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null))
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
-			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned reality bending mobility spells. You are able to cast teleport and ethereal jaunt.")
+			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned reality-bending mobility spells. You are able to cast teleport and ethereal jaunt.")
 		if(APPRENTICE_HEALING)
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/charge(null))
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall(null))
 			H.put_in_hands(new /obj/item/gun/magic/staff/healing(H))
-			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned livesaving survival spells. You are able to cast charge and forcewall.")
+			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned life-saving survival spells. You are able to cast charge and forcewall.")
 		if(APPRENTICE_ROBELESS)
 			owner.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/mind_transfer(null))
