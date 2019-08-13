@@ -51,12 +51,12 @@
 	if(current_number >= ticket_number)
 		return
 	playsound(src, 'sound/misc/announce_dig.ogg', 50, 0)
-	if(current_number && !(obj_flags & EMAGGED))
+	if(current_number && !(obj_flags & EMAGGED) && tickets[current_number])
 		tickets[current_number].visible_message("<span class='notice'>\the [tickets[current_number]] disperses!</span>")
-		QDEL_NULL(tickets[current_number])
+		qdel(tickets[current_number])
 	current_number ++ //Increment the one we're serving.
 	say("Now serving ticket #[current_number]!")
-	if(!(obj_flags & EMAGGED))
+	if(!(obj_flags & EMAGGED) && tickets[current_number])
 		tickets[current_number].visible_message("<span class='notice'>\the [tickets[current_number]] vibrates!</span>")
 	update_icon() //Update our icon here rather than when they take a ticket to show the current ticket number being served
 
@@ -179,6 +179,7 @@
 	theirticket.name = "Ticket #[ticket_number]"
 	theirticket.maptext = "<font color='#000000'>[ticket_number]</font>"
 	theirticket.saved_maptext = "<font color='#000000'>[ticket_number]</font>"
+	theirticket.ticket_number = ticket_number
 	theirticket.source = src
 	theirticket.owner = user
 	user.put_in_hands(theirticket)
@@ -204,6 +205,7 @@
 	var/saved_maptext = null
 	var/mob/living/carbon/owner
 	var/obj/machinery/ticket_machine/source
+	var/ticket_number
 
 /obj/item/ticket_machine_ticket/attack_hand(mob/user)
 	. = ..()
@@ -229,4 +231,7 @@
 /obj/item/ticket_machine_ticket/Destroy()
 	if(owner && source)
 		source.ticket_holders -= owner
-	..()
+		source.tickets[ticket_number] = null
+		owner = null
+		source = null
+	return ..()
