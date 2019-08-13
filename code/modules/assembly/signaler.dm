@@ -14,7 +14,7 @@
 	var/delay = 0
 	var/datum/radio_frequency/radio_connection
 	///Holds the mind that commited suicide.
-	var/datum/mind/suicider = null
+	var/datum/mind/suicider
 	///Holds a reference string to the mob, decides how much of a gamer you are.
 	var/suicide_mob
 	var/hearing_range = 1
