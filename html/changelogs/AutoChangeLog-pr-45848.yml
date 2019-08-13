@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - tweak: "Hop console now hurts your eyes less. Red button text replaced with green."

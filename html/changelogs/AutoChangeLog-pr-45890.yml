@@ -1,0 +1,7 @@
+author: "actioninja"
+delete-after: True
+changes: 
+  - bugfix: "newly constructed reinforced windows start in the correct state, meaning they can be disassembled"
+  - bugfix: "crowbar can no longer be used out of order on construction"
+  - bugfix: "screwed down but not levered in windows can be unscrewed again"
+  - tweak: "shuttle and plastitanium windows now have the proper values to match reinforced windows."

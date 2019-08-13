@@ -103,6 +103,7 @@
 	name = "Extraterrestrial Dissection"
 	value_multiplier = 10
 	requires_tech = TRUE
+	replaced_by = null
 
 
 #undef BASE_HUMAN_REWARD

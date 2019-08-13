@@ -220,7 +220,7 @@
 
 /datum/supply_pack/emergency/specialops
 	name = "Special Ops Supplies"
-	desc = "(*!&@#TOO CHEAP FOR THAT NULL_ENTRY, HUH OPERATIVE? WELL, THIS LITTLE ORDER CAN STILL HELP YOU OUT IN A PINCH. CONTAINS A BOX OF FIVE EMP GRENADES, THREE SMOKEBOMBS, AN INCENDIARY GRENADE, AND A \"SLEEPY PEN\" FULL OF NICE TOXINS!#@*$"
+	desc = "(*!&@#SAD ABOUT THAT NULL_ENTRY, HUH OPERATIVE? WELL, THIS LITTLE ORDER CAN STILL HELP YOU OUT IN A PINCH. CONTAINS A BOX OF FIVE EMP GRENADES, THREE SMOKEBOMBS, AN INCENDIARY GRENADE, AND A \"SLEEPY PEN\" FULL OF NICE TOXINS!#@*$"
 	hidden = TRUE
 	cost = 2000
 	contains = list(/obj/item/storage/box/emps,
@@ -416,6 +416,15 @@
 					/obj/item/clothing/suit/armor/bulletproof,
 					/obj/item/clothing/suit/armor/bulletproof)
 	crate_name = "bulletproof armor crate"
+	
+/datum/supply_pack/security/armory/bullethelmets
+	name = "Bulletproof Helmets Crate"
+	desc = "Contains three bulletproof helmets. Requires Armory access to open."
+	cost = 1500
+	contains = list(/obj/item/clothing/head/helmet/alt,
+					/obj/item/clothing/head/helmet/alt,
+					/obj/item/clothing/head/helmet/alt)
+	crate_name = "bulletproof helmets crate"
 
 /datum/supply_pack/security/armory/chemimp
 	name = "Chemical Implants Crate"
@@ -2273,17 +2282,15 @@
 
 /datum/supply_pack/misc/artsupply
 	name = "Art Supplies"
-	desc = "Make some happy little accidents with six canvasses, two easels, and two rainbow crayons!"
-	cost = 800
-	contains = list(/obj/structure/easel,
-					/obj/structure/easel,
-					/obj/item/canvas/nineteenXnineteen,
-					/obj/item/canvas/nineteenXnineteen,
-					/obj/item/canvas/twentythreeXnineteen,
-					/obj/item/canvas/twentythreeXnineteen,
-					/obj/item/canvas/twentythreeXtwentythree,
-					/obj/item/canvas/twentythreeXtwentythree,
-					/obj/item/toy/crayon/rainbow,
+	desc = "Make some happy little accidents with a rapid pipe cleaner layer, three spraycans, and lots of crayons!"
+	cost = 1000
+	contains = list(/obj/item/twohanded/rcl,
+					/obj/item/storage/toolbox/artistic,
+					/obj/item/toy/crayon/spraycan,
+					/obj/item/toy/crayon/spraycan,
+					/obj/item/toy/crayon/spraycan,
+					/obj/item/storage/crayons,
+					/obj/item/toy/crayon/white,
 					/obj/item/toy/crayon/rainbow)
 	crate_name = "art supply crate"
 	crate_type = /obj/structure/closet/crate/wooden

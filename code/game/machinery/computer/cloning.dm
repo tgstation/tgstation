@@ -41,7 +41,7 @@
 	if(pods)
 		for(var/P in pods)
 			var/obj/machinery/clonepod/pod = P
-			if(pod.occupant && pod.clonemind == mind)
+			if(pod.occupant && mind && pod.clonemind == mind)
 				return null
 			if(pod.is_operational() && !(pod.occupant || pod.mess))
 				return pod
