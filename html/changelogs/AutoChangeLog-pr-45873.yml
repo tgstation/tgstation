@@ -1,0 +1,4 @@
+author: "Niknakflak"
+delete-after: True
+changes: 
+  - rscadd: "pAIs may now choose to display their holoform as a bat, lizard, butterfly, or hawk."
