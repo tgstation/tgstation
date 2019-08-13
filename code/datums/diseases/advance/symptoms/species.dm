@@ -27,8 +27,8 @@
 	severity = 0
 
 /datum/symptom/inorganic_adaptation/OnAdd(datum/disease/advance/A)
-	A.infectable_biotypes |= MOB_HUMANOID //Humanoid covers plasmamen and golems.
+	A.infectable_biotypes |= MOB_MINERAL //Mineral covers plasmamen and golems.
 
 /datum/symptom/inorganic_adaptation/OnRemove(datum/disease/advance/A)
-	A.infectable_biotypes &= ~MOB_HUMANOID
+	A.infectable_biotypes &= ~MOB_MINERAL
 

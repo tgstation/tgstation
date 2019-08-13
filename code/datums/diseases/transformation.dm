@@ -284,7 +284,7 @@
 	stage4	= list("<span class='danger'>You're ravenous.</span>")
 	stage5	= list("<span class='danger'>You have become a morph.</span>")
 	new_form = /mob/living/simple_animal/hostile/morph
-	infectable_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_UNDEAD //magic!
+	infectable_biotypes = MOB_ORGANIC|MOB_MINERAL|MOB_UNDEAD //magic!
 
 /datum/disease/transformation/gondola
 	name = "Gondola Transformation"
