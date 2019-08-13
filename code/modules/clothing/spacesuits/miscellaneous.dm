@@ -163,7 +163,7 @@ Contains:
 	desc = "The integrated helmet of an ERT hardsuit, this one has blue highlights."
 	icon_state = "hardsuit0-ert_commander"
 	item_state = "hardsuit0-ert_commander"
-	item_color = "ert_commander"
+	mob_overlay_state = "ert_commander"
 	armor = list("melee" = 65, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
 	strip_delay = 130
 	brightness_on = 7
@@ -193,7 +193,7 @@ Contains:
 	desc = "The integrated helmet of an ERT hardsuit, this one has red highlights."
 	icon_state = "hardsuit0-ert_security"
 	item_state = "hardsuit0-ert_security"
-	item_color = "ert_security"
+	mob_overlay_state = "ert_security"
 
 /obj/item/clothing/suit/space/hardsuit/ert/sec
 	name = "emergency response team security hardsuit"
@@ -208,7 +208,7 @@ Contains:
 	desc = "The integrated helmet of an ERT hardsuit, this one has orange highlights."
 	icon_state = "hardsuit0-ert_engineer"
 	item_state = "hardsuit0-ert_engineer"
-	item_color = "ert_engineer"
+	mob_overlay_state = "ert_engineer"
 
 /obj/item/clothing/suit/space/hardsuit/ert/engi
 	name = "emergency response team engineering hardsuit"
@@ -223,7 +223,7 @@ Contains:
 	desc = "The integrated helmet of an ERT hardsuit, this one has white highlights."
 	icon_state = "hardsuit0-ert_medical"
 	item_state = "hardsuit0-ert_medical"
-	item_color = "ert_medical"
+	mob_overlay_state = "ert_medical"
 
 /obj/item/clothing/suit/space/hardsuit/ert/med
 	name = "emergency response team medical hardsuit"
@@ -239,7 +239,7 @@ Contains:
 	desc = "The integrated helmet of an ERT hardsuit, this one has purple highlights."
 	icon_state = "hardsuit0-ert_janitor"
 	item_state = "hardsuit0-ert_janitor"
-	item_color = "ert_janitor"
+	mob_overlay_state = "ert_janitor"
 
 /obj/item/clothing/suit/space/hardsuit/ert/jani
 	name = "emergency response team janitorial hardsuit"
@@ -325,7 +325,7 @@ Contains:
 	desc = "A helmet worn by those who deal with paranormal threats for a living."
 	icon_state = "hardsuit0-prt"
 	item_state = "hardsuit0-prt"
-	item_color = "knight_grey"
+	mob_overlay_state = "knight_grey"
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	actions_types = list()
 	resistance_flags = FIRE_PROOF

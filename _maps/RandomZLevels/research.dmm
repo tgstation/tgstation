@@ -5153,7 +5153,6 @@
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/dorm)
 "lp" = (
-/obj/machinery/washing_machine,
 /turf/open/floor/plasteel/yellowsiding{
 	dir = 4
 	},

@@ -1005,7 +1005,6 @@
 	},
 /area/awaymission/wildwest/gov)
 "dG" = (
-/obj/machinery/washing_machine,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -1208,7 +1207,6 @@
 /area/awaymission/wildwest/mines)
 "el" = (
 /obj/effect/decal/cleanable/blood,
-/obj/machinery/washing_machine,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -1901,7 +1899,6 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "gt" = (
-/obj/machinery/washing_machine,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "gu" = (

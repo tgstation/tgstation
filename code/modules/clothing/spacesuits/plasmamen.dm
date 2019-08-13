@@ -81,7 +81,7 @@
 /obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(isinhands)
 	. = ..()
 	if(!isinhands && !up)
-		. += mutable_appearance('icons/mob/head.dmi', visor_icon)
+		. += mutable_appearance('icons/mob/clothing/head.dmi', visor_icon)
 	else
 		cut_overlays()
 
@@ -109,11 +109,11 @@
 /obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(isinhands)
 	. = ..()
 	if(!isinhands && smile)
-		var/mutable_appearance/M = mutable_appearance('icons/mob/head.dmi', smile_state)
+		var/mutable_appearance/M = mutable_appearance('icons/mob/clothing/head.dmi', smile_state)
 		M.color = smile_color
 		. += M
 	if(!isinhands && !up)
-		. += mutable_appearance('icons/mob/head.dmi', visor_icon)
+		. += mutable_appearance('icons/mob/clothing/head.dmi', visor_icon)
 	else
 		cut_overlays()
 

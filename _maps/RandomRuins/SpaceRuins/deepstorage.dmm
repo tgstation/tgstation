@@ -2453,7 +2453,6 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "gg" = (
-/obj/machinery/washing_machine,
 /obj/machinery/light{
 	dir = 4
 	},

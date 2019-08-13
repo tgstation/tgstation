@@ -4,7 +4,6 @@
 	desc = "A glowing bluespace crystal, not much is known about how they work. It looks very delicate."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "bluespace_crystal"
-	item_color = "cosmos"
 	singular_name = "bluespace crystal"
 	w_class = WEIGHT_CLASS_TINY
 	materials = list(/datum/material/bluespace=MINERAL_MATERIAL_AMOUNT)

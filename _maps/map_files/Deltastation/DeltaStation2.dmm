@@ -74699,7 +74699,6 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cJe" = (
-/obj/machinery/washing_machine,
 /obj/machinery/camera{
 	c_tag = "Dormitories - Port";
 	dir = 4;
@@ -76589,7 +76588,6 @@
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/aft)
 "cMq" = (
-/obj/machinery/washing_machine,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},

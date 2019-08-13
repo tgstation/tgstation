@@ -6473,7 +6473,6 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/washing_machine,
 /turf/open/floor/plasteel/cafeteria,
 /area/security/prison)
 "ars" = (
@@ -6490,7 +6489,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/washing_machine,
 /turf/open/floor/plasteel/cafeteria,
 /area/security/prison)
 "aru" = (
@@ -7855,7 +7853,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/machinery/washing_machine,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/fitness/recreation)
 "auv" = (

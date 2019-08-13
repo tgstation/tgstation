@@ -3,7 +3,7 @@
 /obj/item/clothing/shoes/sneakers/black
 	name = "black shoes"
 	icon_state = "black"
-	item_color = "black"
+	mob_overlay_state = "black"
 	desc = "A pair of black shoes."
 	custom_price = 20
 
@@ -12,80 +12,77 @@
 	heat_protection = FEET
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 
-/obj/item/clothing/shoes/sneakers/black/redcoat
-	item_color = "redcoat"	//Exists for washing machines. Is not different from black shoes in any way.
-
 /obj/item/clothing/shoes/sneakers/brown
 	name = "brown shoes"
 	desc = "A pair of brown shoes."
 	icon_state = "brown"
-	item_color = "brown"
+	mob_overlay_state = "brown"
 
 /obj/item/clothing/shoes/sneakers/brown/captain
-	item_color = "captain"	//Exists for washing machines. Is not different from brown shoes in any way.
+	mob_overlay_state = "captain"	//Exists for washing machines. Is not different from brown shoes in any way.
 
 /obj/item/clothing/shoes/sneakers/brown/hop
-	item_color = "hop"		//Exists for washing machines. Is not different from brown shoes in any way.
+	mob_overlay_state = "hop"		//Exists for washing machines. Is not different from brown shoes in any way.
 
 /obj/item/clothing/shoes/sneakers/brown/ce
-	item_color = "chief"		//Exists for washing machines. Is not different from brown shoes in any way.
+	mob_overlay_state = "chief"		//Exists for washing machines. Is not different from brown shoes in any way.
 
 /obj/item/clothing/shoes/sneakers/brown/rd
-	item_color = "director"	//Exists for washing machines. Is not different from brown shoes in any way.
+	mob_overlay_state = "director"	//Exists for washing machines. Is not different from brown shoes in any way.
 
 /obj/item/clothing/shoes/sneakers/brown/cmo
-	item_color = "medical"	//Exists for washing machines. Is not different from brown shoes in any way.
+	mob_overlay_state = "medical"	//Exists for washing machines. Is not different from brown shoes in any way.
 
 /obj/item/clothing/shoes/sneakers/brown/qm
-	item_color = "cargo"		//Exists for washing machines. Is not different from brown shoes in any way.
+	mob_overlay_state = "cargo"		//Exists for washing machines. Is not different from brown shoes in any way.
 
 /obj/item/clothing/shoes/sneakers/blue
 	name = "blue shoes"
 	icon_state = "blue"
-	item_color = "blue"
+	mob_overlay_state = "blue"
 
 /obj/item/clothing/shoes/sneakers/green
 	name = "green shoes"
 	icon_state = "green"
-	item_color = "green"
+	mob_overlay_state = "green"
 
 /obj/item/clothing/shoes/sneakers/yellow
 	name = "yellow shoes"
 	icon_state = "yellow"
-	item_color = "yellow"
+	mob_overlay_state = "yellow"
 
 /obj/item/clothing/shoes/sneakers/purple
 	name = "purple shoes"
 	icon_state = "purple"
-	item_color = "purple"
+	mob_overlay_state = "purple"
 
 /obj/item/clothing/shoes/sneakers/brown
 	name = "brown shoes"
 	icon_state = "brown"
-	item_color = "brown"
+	mob_overlay_state = "brown"
 
 /obj/item/clothing/shoes/sneakers/red
 	name = "red shoes"
 	desc = "Stylish red shoes."
 	icon_state = "red"
-	item_color = "red"
+	mob_overlay_state = "red"
 
 /obj/item/clothing/shoes/sneakers/white
 	name = "white shoes"
 	icon_state = "white"
 	permeability_coefficient = 0.01
-	item_color = "white"
+	mob_overlay_state = "white"
 
 /obj/item/clothing/shoes/sneakers/rainbow
 	name = "rainbow shoes"
 	desc = "Very gay shoes."
 	icon_state = "rain_bow"
-	item_color = "rainbow"
+	mob_overlay_state = "rainbow"
 
 /obj/item/clothing/shoes/sneakers/orange
 	name = "orange shoes"
 	icon_state = "orange"
-	item_color = "orange"
+	mob_overlay_state = "orange"
 
 /obj/item/clothing/shoes/sneakers/orange/attack_self(mob/user)
 	if (src.chained)

@@ -1554,7 +1554,6 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/dorm)
 "dF" = (
-/obj/machinery/washing_machine,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},

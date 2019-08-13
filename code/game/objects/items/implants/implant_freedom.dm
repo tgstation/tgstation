@@ -2,7 +2,7 @@
 	name = "freedom implant"
 	desc = "Use this to escape from those evil Red Shirts."
 	icon_state = "freedom"
-	item_color = "r"
+	implant_color = "r"
 	uses = 4
 
 

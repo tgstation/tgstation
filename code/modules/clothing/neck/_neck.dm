@@ -21,42 +21,42 @@
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "bluetie"
 	item_state = ""	//no inhands
-	item_color = "bluetie"
+	mob_overlay_state = "bluetie"
 	w_class = WEIGHT_CLASS_SMALL
 	custom_price = 15
 
 /obj/item/clothing/neck/tie/blue
 	name = "blue tie"
 	icon_state = "bluetie"
-	item_color = "bluetie"
+	mob_overlay_state = "bluetie"
 
 /obj/item/clothing/neck/tie/red
 	name = "red tie"
 	icon_state = "redtie"
-	item_color = "redtie"
+	mob_overlay_state = "redtie"
 
 /obj/item/clothing/neck/tie/black
 	name = "black tie"
 	icon_state = "blacktie"
-	item_color = "blacktie"
+	mob_overlay_state = "blacktie"
 
 /obj/item/clothing/neck/tie/horrible
 	name = "horrible tie"
 	desc = "A neosilk clip-on tie. This one is disgusting."
 	icon_state = "horribletie"
-	item_color = "horribletie"
+	mob_overlay_state = "horribletie"
 
 /obj/item/clothing/neck/tie/detective
 	name = "loose tie"
 	desc = "A loosely tied necktie, a perfect accessory for the over-worked detective."
 	icon_state = "detective"
-	item_color = "detective"
+	mob_overlay_state = "detective"
 
 /obj/item/clothing/neck/stethoscope
 	name = "stethoscope"
 	desc = "An outdated medical apparatus for listening to the sounds of the human body. It also makes you look like you know what you're doing."
 	icon_state = "stethoscope"
-	item_color = "stethoscope"
+	mob_overlay_state = "stethoscope"
 
 /obj/item/clothing/neck/stethoscope/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] puts \the [src] to [user.p_their()] chest! It looks like [user.p_they()] wont hear much!</span>")
@@ -99,61 +99,61 @@
 	name = "white scarf"
 	icon_state = "scarf"
 	desc = "A stylish scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks."
-	item_color = "white"
+	mob_overlay_state = "white"
 	dog_fashion = /datum/dog_fashion/head
 	custom_price = 10
 
 /obj/item/clothing/neck/scarf/black
 	name = "black scarf"
-	item_color = "black"
+	mob_overlay_state = "black"
 	icon_state = "scarf"
 	color = "#4A4A4B" //Grey but it looks black
 
 /obj/item/clothing/neck/scarf/pink
 	name = "pink scarf"
-	item_color = "pink"
+	mob_overlay_state = "pink"
 	icon_state = "scarf"
 	color = "#F699CD" //Pink
 
 /obj/item/clothing/neck/scarf/red
 	name = "red scarf"
-	item_color = "red"
+	mob_overlay_state = "red"
 	icon_state = "scarf"
 	color = "#D91414" //Red
 
 /obj/item/clothing/neck/scarf/green
 	name = "green scarf"
-	item_color = "green"
+	mob_overlay_state = "green"
 	icon_state = "scarf"
 	color = "#5C9E54" //Green
 
 /obj/item/clothing/neck/scarf/darkblue
 	name = "dark blue scarf"
-	item_color = "blue"
+	mob_overlay_state = "blue"
 	icon_state = "scarf"
 	color = "#1E85BC" //Blue
 
 /obj/item/clothing/neck/scarf/purple
 	name = "purple scarf"
-	item_color = "purple"
+	mob_overlay_state = "purple"
 	icon_state = "scarf"
 	color = "#9557C5" //Purple
 
 /obj/item/clothing/neck/scarf/yellow
 	name = "yellow scarf"
-	item_color = "yellow"
+	mob_overlay_state = "yellow"
 	icon_state = "scarf"
 	color = "#E0C14F" //Yellow
 
 /obj/item/clothing/neck/scarf/orange
 	name = "orange scarf"
-	item_color = "orange"
+	mob_overlay_state = "orange"
 	icon_state = "scarf"
 	color = "#C67A4B" //Orange
 
 /obj/item/clothing/neck/scarf/cyan
 	name = "cyan scarf"
-	item_color = "cyan"
+	mob_overlay_state = "cyan"
 	icon_state = "scarf"
 	color = "#54A3CE" //Cyan
 
@@ -163,12 +163,12 @@
 /obj/item/clothing/neck/scarf/zebra
 	name = "zebra scarf"
 	icon_state = "zebrascarf"
-	item_color = "zebrascarf"
+	mob_overlay_state = "zebrascarf"
 
 /obj/item/clothing/neck/scarf/christmas
 	name = "christmas scarf"
 	icon_state = "christmasscarf"
-	item_color = "christmasscarf"
+	mob_overlay_state = "christmasscarf"
 
 //The three following scarves don't have the scarf subtype
 //This is because Ian can equip anything from that subtype
@@ -176,26 +176,26 @@
 /obj/item/clothing/neck/stripedredscarf
 	name = "striped red scarf"
 	icon_state = "stripedredscarf"
-	item_color = "stripedredscarf"
+	mob_overlay_state = "stripedredscarf"
 	custom_price = 10
 
 /obj/item/clothing/neck/stripedgreenscarf
 	name = "striped green scarf"
 	icon_state = "stripedgreenscarf"
-	item_color = "stripedgreenscarf"
+	mob_overlay_state = "stripedgreenscarf"
 	custom_price = 10
 
 /obj/item/clothing/neck/stripedbluescarf
 	name = "striped blue scarf"
 	icon_state = "stripedbluescarf"
-	item_color = "stripedbluescarf"
+	mob_overlay_state = "stripedbluescarf"
 	custom_price = 10
 
 /obj/item/clothing/neck/petcollar
 	name = "pet collar"
 	desc = "It's for pets."
 	icon_state = "petcollar"
-	item_color = "petcollar"
+	mob_overlay_state = "petcollar"
 	var/tagname = null
 
 /obj/item/clothing/neck/petcollar/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
@@ -216,7 +216,7 @@
 	desc = "Damn, it feels good to be a gangster."
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "bling"
-	item_color = "bling"
+	mob_overlay_state = "bling"
 
 /obj/item/clothing/neck/neckerchief
 	icon = 'icons/obj/clothing/masks.dmi' //In order to reuse the bandana sprite
@@ -226,7 +226,7 @@
 /obj/item/clothing/neck/neckerchief/worn_overlays(isinhands)
 	. = ..()
 	if(!isinhands)
-		var/mutable_appearance/realOverlay = mutable_appearance('icons/mob/mask.dmi', icon_state)
+		var/mutable_appearance/realOverlay = mutable_appearance('icons/mob/clothing/mask.dmi', icon_state)
 		realOverlay.pixel_y = -3
 		. += realOverlay
 
