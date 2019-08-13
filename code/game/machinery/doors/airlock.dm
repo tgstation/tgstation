@@ -304,7 +304,7 @@
 	if(id_tag)
 		for(var/obj/machinery/doorButtons/D in GLOB.machines)
 			D.removeMe(src)
-	qdel(note)
+	QDEL_NULL(note)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.remove_from_hud(src)
 	return ..()
