@@ -34,17 +34,17 @@
 			</head>
 			<body>
 				<div id='content'>
-					[get_stats_part()]<br>
+					[get_stats_part()]
 				</div></div>
 				<div id='eq_list'>
 					[get_equipment_list()]
 				</div>
 				<hr>
 				<div id='commands'>
-					[get_commands()]<br>
+					[get_commands()]
 				</div>
 				<div id='equipment_menu'>
-					[get_equipment_menu()]<br>
+					[get_equipment_menu()]
 				</div>
 			</body>
 		</html>"}
@@ -140,7 +140,7 @@
 			<a href='?src=[REF(src)];toggle_maint_access=1'><span id='t_maint_access'>[maint_access?"Forbid":"Permit"] maintenance protocols</span></a><br>
 			[internal_tank?"<a href='?src=[REF(src)];toggle_port_connection=1'><span id='t_port_connection'>[internal_tank.connected_port?"Disconnect from":"Connect to"] gas port</span></a><br>":""]
 			<a href='?src=[REF(src)];dna_lock=1'>DNA-lock</a><br>
-			<a href='?src=[REF(src)];change_name=1'>Change exosuit name</a><br>
+			<a href='?src=[REF(src)];change_name=1'>Change exosuit name</a>
 		</div>
 	</div>"}
 
