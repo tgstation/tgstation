@@ -289,7 +289,7 @@ All ShuttleMove procs go here
 	// If the pod was launched, the storage will always open. The CentCom check
 	// ignores the movement of the shuttle from the staging area on CentCom to
 	// the station as it is loaded in.
-	if (oldT && !is_centcom_level(oldT.z))
+	if (oldT && !is_reserved_level(oldT.z))
 		unlocked = TRUE
 
 /************************************Mob move procs************************************/
