@@ -5,7 +5,7 @@
 	icon_living = "old"
 	icon_dead = "old_dead"
 	icon_gib = "clown_gib"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	gender = MALE
 	turns_per_move = 5
 	response_help = "pokes"

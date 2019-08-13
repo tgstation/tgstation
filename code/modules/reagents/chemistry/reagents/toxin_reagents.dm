@@ -233,7 +233,7 @@
 
 /datum/reagent/toxin/pestkiller/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	..()
-	if(MOB_BUG in M.mob_biotypes)
+	if(M.mob_biotypes & MOB_BUG)
 		var/damage = min(round(0.4*reac_volume, 0.1),10)
 		M.adjustToxLoss(damage)
 
