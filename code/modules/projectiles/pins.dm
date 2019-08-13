@@ -186,6 +186,81 @@
 	desc = "This is a DNA-locked firing pin which only authorizes one user. Attempt to fire once to DNA-link. It has a small explosive charge on it."
 	selfdestruct = TRUE
 
+// Capitalism pin, brought to you by ARMA 3 DLC.
+// Checks if the user has a valid bank account on an ID and if so attempts to extract a one-time payment to authorize use of the gun. Otherwise fails to shoot.
+/obj/item/firing_pin/capitalism
+	name = "capitalism firing pin"
+	desc = "A firing pin with a built-in paywall."
+	color = "#FFD700"
+	fail_message = ""
+	var/list/gun_owners = list() //list of people who've successfully paid the premium and can now use the firing pin freely
+	var/payment_amount //how much gets paid out to license yourself to the gun
+	var/obj/item/card/id/pin_owner
+	var/owned = FALSE
+
+/obj/item/firing_pin/capitalism/attackby(obj/item/M, mob/user, params)
+	if(istype(M, /obj/item/card/id))
+		var/obj/item/card/id/id = M
+		if(!id.registered_account)
+			to_chat(user, "<span class='warning'>ERROR: Identification card lacks registered bank account!</span>")
+			return
+		if(id != pin_owner && owned)
+			to_chat(user, "<span class='warning'>ERROR: This firing pin has already been authorized!</span>")
+			return
+		if(id == pin_owner)
+			to_chat(user, "<span class='notice'>You unlink the card from the firing pin.</span>")
+			desc = initial(desc)
+			gun_owners -= user
+			pin_owner = null
+			owned = FALSE
+			return
+		var/transaction_amount = input(user, "Insert valid deposit amount for gun purchase", "Money Deposit") as null|num
+		if(transaction_amount < 1)
+			to_chat(user, "<span class='warning'>ERROR: Invalid amount designated.</span>")
+			return
+		if(!transaction_amount)
+			return	
+		pin_owner = id
+		owned = TRUE
+		payment_amount = transaction_amount
+		gun_owners += user
+		to_chat(user, "<span class='notice'>You link the card to the firing pin.</span>")
+		desc += " This firing pin is currently authorized to pay into the account of [user.name]."
+		
+
+/obj/item/firing_pin/capitalism/pin_auth(mob/living/user)
+	if(!istype(user))//nice try commie
+		return FALSE
+	if(!pin_owner)
+		to_chat(user, "<span class='warning'>ERROR: Installed firing pin has no active bank account linked to it!</span>")
+		return FALSE
+	if(ishuman(user))
+		var/datum/bank_account/credit_card_details
+		var/mob/living/carbon/human/H = user
+		if(H in gun_owners)
+			return TRUE
+		if(H.get_bank_account())
+			credit_card_details = H.get_bank_account()
+		if(credit_card_details)
+			if(credit_card_details.account_balance >= payment_amount)
+				to_chat(user, "<span class='warning'>DEBUG: Successfully subtracted money from user's bank account.</span>")
+				credit_card_details.adjust_money(-payment_amount)
+				pin_owner.registered_account.adjust_money(payment_amount)
+				gun_owners += H
+				to_chat(user, "<span class='notice'>Gun license purchased, have a secure day!</span>")
+				return TRUE
+		to_chat(user, "<span class='warning'>ERROR: User has no valid bank account to substract neccesary funds from!</span>")
+		return FALSE
+
+
+// Ultra-honk pin, clown's deadly joke item.
+// A gun with ultra-honk pin is useful for clown and useless for everyone else.
+/obj/item/firing_pin/clown/ultra/pin_auth(mob/living/user)
+	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+	if(user && (!(HAS_TRAIT(user, TRAIT_CLUMSY)) && !(user.mind && user.mind.assigned_role == "Clown")))
+		return FALSE
+	return TRUE
+
 // Laser tag pins
 /obj/item/firing_pin/tag
 	name = "laser tag firing pin"
