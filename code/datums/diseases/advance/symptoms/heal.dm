@@ -247,7 +247,7 @@
 		addtimer(CALLBACK(src, .proc/coma, M), 60)
 
 /datum/symptom/heal/coma/proc/coma(mob/living/M)
-	M.fakedeath("regenerative_coma", deathgasp)
+	M.fakedeath("regenerative_coma", !deathgasp)
 	M.update_stat()
 	M.update_mobility()
 	addtimer(CALLBACK(src, .proc/uncoma, M), 300)
