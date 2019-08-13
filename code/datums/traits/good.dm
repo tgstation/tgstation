@@ -143,6 +143,8 @@
 	var/obj/item/camera/camera = new(get_turf(H))
 	var/list/camera_slots = list (
 		"neck" = SLOT_NECK,
+		"left pocket" = SLOT_L_STORE,
+		"right pocket" = SLOT_R_STORE,
 		"backpack" = SLOT_IN_BACKPACK,
 		"hands" = SLOT_HANDS
 	)
