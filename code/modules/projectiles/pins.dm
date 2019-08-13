@@ -186,19 +186,20 @@
 	desc = "This is a DNA-locked firing pin which only authorizes one user. Attempt to fire once to DNA-link. It has a small explosive charge on it."
 	selfdestruct = TRUE
 
-// Capitalism pin, brought to you by ARMA 3 DLC.
+// Paywall pin, brought to you by ARMA 3 DLC.
 // Checks if the user has a valid bank account on an ID and if so attempts to extract a one-time payment to authorize use of the gun. Otherwise fails to shoot.
-/obj/item/firing_pin/capitalism
-	name = "capitalism firing pin"
-	desc = "A firing pin with a built-in paywall."
+/obj/item/firing_pin/paywall
+	name = "paywall firing pin"
+	desc = "A firing pin with a built-in configurable paywall."
 	color = "#FFD700"
 	fail_message = ""
 	var/list/gun_owners = list() //list of people who've successfully paid the premium and can now use the firing pin freely
 	var/payment_amount //how much gets paid out to license yourself to the gun
 	var/obj/item/card/id/pin_owner
 	var/owned = FALSE
+	var/active_prompt = FALSE //purchase prompt to prevent spamming it
 
-/obj/item/firing_pin/capitalism/attackby(obj/item/M, mob/user, params)
+/obj/item/firing_pin/paywall/attackby(obj/item/M, mob/user, params)
 	if(istype(M, /obj/item/card/id))
 		var/obj/item/card/id/id = M
 		if(!id.registered_account)
@@ -228,7 +229,7 @@
 		desc += " This firing pin is currently authorized to pay into the account of [user.name]."
 		
 
-/obj/item/firing_pin/capitalism/pin_auth(mob/living/user)
+/obj/item/firing_pin/paywall/pin_auth(mob/living/user)
 	if(!istype(user))//nice try commie
 		return FALSE
 	if(!pin_owner)
@@ -241,9 +242,11 @@
 			return TRUE
 		if(H.get_bank_account())
 			credit_card_details = H.get_bank_account()
-		if(credit_card_details)
+		if(credit_card_details && !active_prompt)
 			var/license_request = input("Do you wish to pay [payment_amount] for license of this [gun.name]?", "License Purchase") as null|anything in list("Yes","No")
+			active_prompt = TRUE
 			if(!license_request)
+				active_prompt = FALSE
 				return FALSE
 			switch(license_request)
 				if("Yes")
@@ -252,7 +255,10 @@
 						pin_owner.registered_account.adjust_money(payment_amount)
 						gun_owners += H
 						to_chat(user, "<span class='notice'>Gun license purchased, have a secure day!</span>")
+						active_prompt = FALSE
 						return TRUE
+					to_chat(user, "<span class='warning'>ERROR: User balance insufficent for successful transaction!</span>")
+					return FALSE
 				if("No")
 					to_chat(user, "<span class='warning'>ERROR: User has declined to purchase gun license!</span>")
 					return FALSE
