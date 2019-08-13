@@ -440,8 +440,9 @@
 	if(race != H.dna.species.type)
 		to_chat(H, mutationtext)
 		H.set_species(race)
-		return
-	to_chat(H, "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>")
+	else
+		to_chat(H, "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>")
+	qdel(src)
 
 /datum/reagent/mutationtoxin/classic //The one from plasma on green slimes
 	name = "Mutation Toxin"
