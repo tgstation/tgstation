@@ -1,4 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - code_imp: "GPS functionality is now a component."

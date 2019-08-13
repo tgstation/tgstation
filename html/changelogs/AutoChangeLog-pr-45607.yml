@@ -1,0 +1,6 @@
+author: "Dennok"
+delete-after: True
+changes: 
+  - rscadd: "Silo link RCD upgrade"
+  - rscadd: "RCD now check mats before construction wait."
+  - bugfix: "has_materials()  properly check materials."

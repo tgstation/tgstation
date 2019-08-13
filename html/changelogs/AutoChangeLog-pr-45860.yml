@@ -1,0 +1,5 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - code_imp: "Changed a laser pointer var so that T4 micro lasers no longer give a success percentage above 100%."
+  - tweak: "Made cat related laserpointer acts scale off the pointer's micro laser tier."
