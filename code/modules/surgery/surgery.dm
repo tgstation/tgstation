@@ -76,6 +76,8 @@
 
 
 /datum/surgery/proc/next_step(mob/user, intent)
+	if(location != user.zone_selected)
+		return FALSE
 	if(step_in_progress)
 		return TRUE
 
