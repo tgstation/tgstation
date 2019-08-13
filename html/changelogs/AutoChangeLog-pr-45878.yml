@@ -1,0 +1,4 @@
+author: "Tlaltecuhtli"
+delete-after: True
+changes: 
+  - tweak: "cargo request console pings supply radio when someone makes a new request"
