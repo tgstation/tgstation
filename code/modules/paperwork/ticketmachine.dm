@@ -33,7 +33,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class='warning'>You overload [src]'s bureaucratic logic circuitry to its MAXIMUM setting.</span>")
-	ticket_number = rand(0,100)
+	ticket_number = rand(0,max_number)
 	current_number = ticket_number
 	obj_flags |= EMAGGED
 	if(tickets.len)
@@ -193,7 +193,7 @@
 
 /obj/item/ticket_machine_ticket
 	name = "Ticket"
-	desc = "A ticket which shows your place in the Head of Personnel's line. Made from Nanotrasen patented NanoPaper®. Though solid, its form seems to shimmer slightly. Feels (and burns) just like the real thing."
+	desc = "A ticket which shows your place in the Head of Personnel's line. Made from Nanotrasen patented NanoPaperÂ®. Though solid, its form seems to shimmer slightly. Feels (and burns) just like the real thing."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "ticket"
 	maptext_x = 7
