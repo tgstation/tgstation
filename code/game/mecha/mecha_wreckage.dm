@@ -123,7 +123,6 @@
 /obj/structure/mecha_wreckage/gygax/dark
 	name = "\improper Dark Gygax wreckage"
 	icon_state = "darkgygax-broken"
-	parts = null
 
 /obj/structure/mecha_wreckage/marauder
 	name = "\improper Marauder wreckage"
