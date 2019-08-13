@@ -35,8 +35,8 @@
 		obj_flags &= ~EMAGGED
 
 /obj/machinery/computer/cargo/Destroy()
-	. = ..()
 	QDEL_NULL(radio)
+	..()
 
 /obj/machinery/computer/cargo/proc/get_export_categories()
 	var/cat = EXPORT_CARGO
