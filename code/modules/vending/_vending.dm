@@ -832,6 +832,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 		explosion(T, -1, 0, 3)
 	return ..()
 
+/obj/machinery/vending/custom/unbreakable
+	name = "Indestructible Vendor"
+	resistance_flags = INDESTRUCTIBLE
+
 /obj/item/vending_refill/custom
 	machine_name = "Custom Vendor"
 	icon_state = "refill_custom"
