@@ -180,17 +180,15 @@
 		return
 
 	if(!(flags_1&NODECONSTRUCT_1) && !(reinf && state >= RWINDOW_FRAME_BOLTED))
-		if(I.tool_behaviour == TOOL_SCREWDRIVER && !anchored)
-			I.play_tool_sound(src, 75)
+		if(I.tool_behaviour == TOOL_SCREWDRIVER)
 			to_chat(user, "<span class='notice'>You begin to [anchored ? "unscrew the window from":"screw the window to"] the floor...</span>")
-			if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
+			if(I.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
 				setAnchored(!anchored)
 				to_chat(user, "<span class='notice'>You [anchored ? "fasten the window to":"unfasten the window from"] the floor.</span>")
 			return
 		else if(I.tool_behaviour == TOOL_WRENCH && !anchored)
-			I.play_tool_sound(src, 75)
 			to_chat(user, "<span class='notice'> You begin to disassemble [src]...</span>")
-			if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+			if(I.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 				var/obj/item/stack/sheet/G = new glass_type(user.loc, glass_amount)
 				G.add_fingerprint(user)
 				playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
@@ -199,8 +197,7 @@
 			return
 		else if(I.tool_behaviour == TOOL_CROWBAR && reinf && (state == WINDOW_OUT_OF_FRAME) && anchored)
 			to_chat(user, "<span class='notice'>You begin to lever the window into the frame...</span>")
-			I.play_tool_sound(src, 75)
-			if(I.use_tool(src, user, 100, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+			if(I.use_tool(src, user, 100, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 				state = RWINDOW_SECURE
 				to_chat(user, "<span class='notice'>You pry the window into the frame.</span>")
 			return
