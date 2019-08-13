@@ -28,12 +28,7 @@
 	var/y_shift = getItemPixelShiftY()
 
 	if(r_hand)
-
-		var/r_state = r_hand.item_state
-		if(!r_state)
-			r_state = r_hand.icon_state
-
-		var/mutable_appearance/r_hand_overlay = r_hand.build_worn_icon(state = r_state, default_layer = DRONE_HANDS_LAYER, default_icon_file = r_hand.righthand_file, isinhands = TRUE)
+		var/mutable_appearance/r_hand_overlay = r_hand.build_worn_icon(default_layer = DRONE_HANDS_LAYER, default_icon_file = r_hand.righthand_file, isinhands = TRUE)
 		if(y_shift)
 			r_hand_overlay.pixel_y += y_shift
 
@@ -46,12 +41,7 @@
 			client.screen |= r_hand
 
 	if(l_hand)
-
-		var/l_state = l_hand.item_state
-		if(!l_state)
-			l_state = l_hand.icon_state
-
-		var/mutable_appearance/l_hand_overlay = l_hand.build_worn_icon(state = l_state, default_layer = DRONE_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
+		var/mutable_appearance/l_hand_overlay = l_hand.build_worn_icon(default_layer = DRONE_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
 		if(y_shift)
 			l_hand_overlay.pixel_y += y_shift
 
