@@ -221,16 +221,6 @@ RLD
 
 	to_chat(user, "<span class='notice'>You change \the [src]'s window mode to [window_type_name].</span>")
 
-/obj/item/construction/rcd/verb/toggle_silo_link_verb()
-	set name = "RCD : Toggle Silo Link"
-	set category = "Object"
-	set src in view(1)
-
-	if(!usr.canUseTopic(src, BE_CLOSE))
-		return
-
-	toggle_silo_link(usr)
-
 /obj/item/construction/rcd/proc/toggle_silo_link(mob/user)
 	if(silo_mats)
 		silo_link = !silo_link
@@ -512,6 +502,10 @@ RLD
 		"Machine Frames" = image(icon = 'icons/mob/radial.dmi', icon_state = "machine"),
 		"Computer Frames" = image(icon = 'icons/mob/radial.dmi', icon_state = "computer_dir"),
 		)
+	if(upgrade & RCD_UPGRADE_SILO_LINK)
+		choices += list(
+		"Silo Link" = image(icon = 'icons/obj/mining.dmi', icon_state = "silo"),
+		)
 	if(mode == RCD_AIRLOCK)
 		choices += list(
 		"Change Access" = image(icon = 'icons/mob/radial.dmi', icon_state = "access"),
@@ -547,6 +541,9 @@ RLD
 			return
 		if("Change Window Type")
 			toggle_window_type(user)
+			return
+		if("Silo Link")
+			toggle_silo_link(user)
 			return
 		else
 			return
