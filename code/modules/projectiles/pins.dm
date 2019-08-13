@@ -242,13 +242,20 @@
 		if(H.get_bank_account())
 			credit_card_details = H.get_bank_account()
 		if(credit_card_details)
-			if(credit_card_details.account_balance >= payment_amount)
-				to_chat(user, "<span class='warning'>DEBUG: Successfully subtracted money from user's bank account.</span>")
-				credit_card_details.adjust_money(-payment_amount)
-				pin_owner.registered_account.adjust_money(payment_amount)
-				gun_owners += H
-				to_chat(user, "<span class='notice'>Gun license purchased, have a secure day!</span>")
-				return TRUE
+			var/license_request = input("Do you wish to pay [payment_amount] for license of this [gun.name]?", "License Purchase") as null|anything in list("Yes","No")
+			if(!license_request)
+				return FALSE
+			switch(license_request)
+				if("Yes")
+					if(credit_card_details.account_balance >= payment_amount)
+						credit_card_details.adjust_money(-payment_amount)
+						pin_owner.registered_account.adjust_money(payment_amount)
+						gun_owners += H
+						to_chat(user, "<span class='notice'>Gun license purchased, have a secure day!</span>")
+						return TRUE
+				if("No")
+					to_chat(user, "<span class='warning'>ERROR: User has declined to purchase gun license!</span>")
+					return FALSE
 		to_chat(user, "<span class='warning'>ERROR: User has no valid bank account to substract neccesary funds from!</span>")
 		return FALSE
 
