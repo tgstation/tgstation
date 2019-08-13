@@ -27,6 +27,48 @@
 	. = ..()
 	update_icon()
 
+/obj/item/storage/belt/durathread
+	name = "durathread toolbelt"
+	desc = "A toolbelt made out of durathread, it seems resistant enough to hold even big tools like an RCD, it also has higher capacity."
+	icon_state = "webbing-durathread"
+	item_state = "webbing-durathread"
+	resistance_flags = FIRE_PROOF
+
+/obj/item/storage/belt/durathread/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 14
+	STR.max_combined_w_class = 32
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.set_holdable(list(
+		/obj/item/crowbar,
+		/obj/item/screwdriver,
+		/obj/item/weldingtool,
+		/obj/item/wirecutters,
+		/obj/item/wrench,
+		/obj/item/multitool,
+		/obj/item/flashlight,
+		/obj/item/stack/cable_coil,
+		/obj/item/t_scanner,
+		/obj/item/analyzer,
+		/obj/item/geiger_counter,
+		/obj/item/extinguisher/mini,
+		/obj/item/radio,
+		/obj/item/clothing/gloves,
+		/obj/item/holosign_creator/atmos,
+		/obj/item/holosign_creator/engineering,
+		/obj/item/forcefield_projector,
+		/obj/item/assembly/signaler,
+		/obj/item/lightreplacer,
+		/obj/item/rcd_ammo,
+		/obj/item/construction/rcd,
+		/obj/item/pipe_dispenser,
+		/obj/item/stack/rods,
+		/obj/item/stack/tile/plasteel,
+		/obj/item/grenade/chem_grenade/metalfoam,
+		/obj/item/grenade/chem_grenade/smart_metal_foam
+		))
+
 /obj/item/storage/belt/utility
 	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
 	desc = "Holds tools."
@@ -527,15 +569,25 @@
 	desc = "A bandolier for holding shotgun ammunition."
 	icon_state = "bandolier"
 	item_state = "bandolier"
+	var/max_ammo = 18
 
 /obj/item/storage/belt/bandolier/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 18
+	STR.max_items = max_ammo
+	STR.max_combined_w_class = max_ammo
 	STR.display_numerical_stacking = TRUE
 	STR.set_holdable(list(
 		/obj/item/ammo_casing/shotgun
 		))
+
+/obj/item/storage/belt/bandolier/durathread
+	name = "durathread bandolier"
+	desc = "An double stacked bandolier made out of durathread."
+	icon_state = "bandolier-durathread"
+	item_state = "bandolier-durathread"
+	max_ammo = 32
+	resistance_flags = FIRE_PROOF
 
 /obj/item/storage/belt/holster
 	name = "shoulder holster"
