@@ -439,6 +439,9 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/listeningstation)
 "aJ" = (
+/obj/machinery/washing_machine{
+	pixel_x = 4
+	},
 /obj/structure/window{
 	dir = 8
 	},

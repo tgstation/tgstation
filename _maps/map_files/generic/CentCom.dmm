@@ -773,6 +773,7 @@
 	},
 /area/holodeck/rec_center/medical)
 "ch" = (
+/obj/machinery/washing_machine,
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -7093,6 +7094,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/ert)
 "pY" = (
+/obj/machinery/washing_machine,
 /turf/open/floor/plasteel/freezer,
 /area/syndicate_mothership/control)
 "pZ" = (
@@ -17283,6 +17285,7 @@
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Pa" = (
+/obj/machinery/washing_machine,
 /turf/open/floor/plasteel/white,
 /area/centcom/holding)
 "Ph" = (

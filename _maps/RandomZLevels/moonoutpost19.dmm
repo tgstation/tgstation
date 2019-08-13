@@ -6292,6 +6292,7 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/moonoutpost19/arrivals)
 "nw" = (
+/obj/machinery/washing_machine,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},

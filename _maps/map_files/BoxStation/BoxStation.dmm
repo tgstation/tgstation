@@ -276,6 +276,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aaK" = (
+/obj/machinery/washing_machine,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -377,6 +378,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aaX" = (
+/obj/machinery/washing_machine,
 /obj/structure/window/reinforced,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -20817,6 +20819,7 @@
 /turf/open/floor/carpet,
 /area/bridge/meeting_room)
 "bbN" = (
+/obj/machinery/washing_machine,
 /obj/machinery/light,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -20827,6 +20830,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/locker)
 "bbO" = (
+/obj/machinery/washing_machine,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},

@@ -523,6 +523,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/security/prison)
 "abs" = (
+/obj/machinery/washing_machine,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -12272,6 +12273,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/restrooms)
 "aAd" = (
+/obj/machinery/washing_machine,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -71450,6 +71452,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "dhA" = (
+/obj/machinery/washing_machine,
 /obj/structure/sign/poster/official/random{
 	pixel_y = 32
 	},

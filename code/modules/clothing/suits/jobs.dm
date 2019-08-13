@@ -50,6 +50,7 @@
 	desc = "An 18th-century multi-purpose trenchcoat. Someone who wears this means serious business."
 	icon_state = "detective"
 	item_state = "det_suit"
+	mob_overlay_state = "detective"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	armor = list("melee" = 25, "bullet" = 10, "laser" = 25, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 45)

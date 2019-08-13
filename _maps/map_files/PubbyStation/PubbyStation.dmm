@@ -1144,6 +1144,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/security/prison)
 "aeX" = (
+/obj/machinery/washing_machine,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -3434,6 +3435,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
 "akr" = (
+/obj/machinery/washing_machine,
 /obj/item/radio/intercom{
 	dir = 4;
 	pixel_x = -31
@@ -6024,6 +6026,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/dorms)
 "aqU" = (
+/obj/machinery/washing_machine,
 /obj/machinery/requests_console{
 	department = "Crew Quarters";
 	pixel_y = 30
@@ -6037,6 +6040,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/dorms)
 "aqV" = (
+/obj/machinery/washing_machine,
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
@@ -18504,6 +18508,7 @@
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/secondary/exit/departure_lounge)
 "aWM" = (
+/obj/machinery/washing_machine,
 /obj/structure/sign/plaques/deempisi{
 	pixel_y = 28
 	},
