@@ -125,6 +125,9 @@
 	module = new /obj/item/robot_module(src)
 	module.rebuild_modules()
 	update_icons()
+	//Remove the two verbs cmd_toggle_pda_receiver and cmd_toggle_pda_silent since cyborgs to do not have PDAs
+	src.verbs -= /mob/living/silicon/verb/cmd_toggle_pda_receiver
+	src.verbs -= /mob/living/silicon/verb/cmd_toggle_pda_silent
 	. = ..()
 
 	//If this body is meant to be a borg controlled by the AI player
