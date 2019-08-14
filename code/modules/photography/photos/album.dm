@@ -49,7 +49,7 @@
 	for(var/i in ids)
 		if(i in current_ids)
 			continue
-		var/obj/item/photo/P = load_photo_from_disk(i)
+		var/obj/item/photo/old/P = load_photo_from_disk(i)
 		if(istype(P))
 			if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, P, null, TRUE, TRUE))
 				qdel(P)
