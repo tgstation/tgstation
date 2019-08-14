@@ -1,0 +1,8 @@
+{
+    "map_name": "Summer Ball",
+    "map_path": "map_files/SummerBall",
+    "map_file": "SummerBall.dmm",
+	"shuttles": {
+	    "cargo": "cargo_delta"
+    }
+}
