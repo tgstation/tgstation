@@ -34,7 +34,9 @@
 /obj/item/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) //was it caught by a mob?
 		var/turf/T = get_turf(hit_atom)
-		new/obj/effect/decal/cleanable/food/egg_smudge(T)
+		new /obj/effect/decal/cleanable/food/egg_smudge(T)
+		if(prob(13)) //Roughly a 1/8 (12.5%) chance, as in Minecraft. I decided not to include the chances for the creation of multiple chicks from the impact of one egg, since that'd probably require nested prob()s or something (and people might think that it was a bug, anyway).
+			new /mob/living/simple_animal/chick(T)
 		reagents.reaction(hit_atom, TOUCH)
 		qdel(src)
 
