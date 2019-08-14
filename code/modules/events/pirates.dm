@@ -51,8 +51,8 @@
 				priority_announce("Trying to cheat us? You'll regret this!",sender_override = ship_name)
 	if(!shuttle_spawned)
 		spawn_shuttle()
-
-
+	else
+		priority_announce("Too late to beg for mercy!",sender_override = ship_name)
 
 /datum/round_event/pirates/start()
 	if(!paid_off && !shuttle_spawned)
