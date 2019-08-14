@@ -193,11 +193,31 @@
 	desc = "A firing pin with a built-in configurable paywall."
 	color = "#FFD700"
 	fail_message = ""
-	var/list/gun_owners = list() //list of people who've successfully paid the premium and can now use the firing pin freely
+	var/list/gun_owners = list() //list of people who've accepted the license prompt. If this is the multi-payment pin, then this means they accepted the waiver that each shot will cost them money
 	var/payment_amount //how much gets paid out to license yourself to the gun
 	var/obj/item/card/id/pin_owner
 	var/owned = FALSE
 	var/active_prompt = FALSE //purchase prompt to prevent spamming it
+
+/obj/item/firing_pin/paywall/examine(mob/user)
+	. = ..()
+	if(pin_owner)
+		. += "<span class='notice'>This firing pin is currently authorized to pay into the account of [pin_owner.registered_name].</span>"
+
+/obj/item/firing_pin/paywall/gun_insert(mob/living/user, obj/item/gun/G)
+	if(!pin_owner)
+		to_chat(user, "<span class='warning'>ERROR: Please swipe valid identification card before installing firing pin!</span>")
+		return
+	gun = G
+	forceMove(gun)
+	gun.pin = src
+	gun.desc += "<span class='notice'>This [gun.name] has a license permit cost of [payment_amount] .</span>"
+	return
+	
+
+/obj/item/firing_pin/paywall/gun_remove(mob/living/user)
+	gun.clumsy_check = initial(gun.clumsy_check)
+	..()
 
 /obj/item/firing_pin/paywall/attackby(obj/item/M, mob/user, params)
 	if(istype(M, /obj/item/card/id))
@@ -210,7 +230,6 @@
 			return
 		if(id == pin_owner)
 			to_chat(user, "<span class='notice'>You unlink the card from the firing pin.</span>")
-			desc = initial(desc)
 			gun_owners -= user
 			pin_owner = null
 			owned = FALSE
@@ -225,9 +244,7 @@
 		owned = TRUE
 		payment_amount = transaction_amount
 		gun_owners += user
-		to_chat(user, "<span class='notice'>You link the card to the firing pin.</span>")
-		desc += " This firing pin is currently authorized to pay into the account of [user.name]."
-		
+		to_chat(user, "<span class='notice'>You link the card to the firing pin.</span>")		
 
 /obj/item/firing_pin/paywall/pin_auth(mob/living/user)
 	if(!istype(user))//nice try commie
@@ -243,11 +260,8 @@
 		if(H.get_bank_account())
 			credit_card_details = H.get_bank_account()
 		if(credit_card_details && !active_prompt)
-			var/license_request = input("Do you wish to pay [payment_amount] for license of this [gun.name]?", "License Purchase") as null|anything in list("Yes","No")
+			var/license_request = alert(usr, "Do you wish to pay [payment_amount] for license of this [gun.name]?", "License Purchase", "Yes", "No")
 			active_prompt = TRUE
-			if(!license_request)
-				active_prompt = FALSE
-				return FALSE
 			switch(license_request)
 				if("Yes")
 					if(credit_card_details.account_balance >= payment_amount)
