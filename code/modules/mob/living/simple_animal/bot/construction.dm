@@ -163,7 +163,7 @@
 					if(!istype(W, /obj/item/gun/energy/laser/redtag))
 						return
 				if("")
-					if(!istype(W, /obj/item/gun/energy/e_gun/dragnet))
+					if(!istype(W, /obj/item/gun/energy/disabler))
 						return
 				else
 					return
