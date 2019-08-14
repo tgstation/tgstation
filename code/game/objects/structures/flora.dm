@@ -13,6 +13,9 @@
 	var/log_amount = 10
 
 /obj/structure/flora/tree/attackby(obj/item/W, mob/user, params)
+	#ifdef EVENTMODE
+	return
+	#endif
 	if(log_amount && (!(flags_1 & NODECONSTRUCT_1)))
 		if(W.is_sharp() && W.force > 0)
 			if(W.hitsound)
