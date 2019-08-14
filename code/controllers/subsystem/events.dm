@@ -57,7 +57,7 @@ SUBSYSTEM_DEF(events)
 /datum/controller/subsystem/events/proc/spawnEvent()
 	set waitfor = FALSE	//for the admin prompt
 	#ifdef EVENTMODE
-	return;
+	return
 	#endif
 	if(!CONFIG_GET(flag/allow_random_events))
 		return
