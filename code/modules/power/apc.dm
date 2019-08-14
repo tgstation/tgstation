@@ -661,7 +661,7 @@
 			to_chat(user, "<span class='warning'>You found no reason for repairing this APC</span>")
 			return
 		if (!(stat & BROKEN) && opened==APC_COVER_REMOVED) // Cover is the only thing broken, we do not need to remove elctronicks to replace cover
-			user.visible_message("[user.name] replaces missing APC's cover.",\
+			user.visible_message("<span class='notice'>[user.name] replaces missing APC's cover.</span>", \
 							"<span class='notice'>You begin to replace APC's cover...</span>")
 			if(do_after(user, 20, target = src)) // replacing cover is quicker than replacing whole frame
 				to_chat(user, "<span class='notice'>You replace missing APC's cover.</span>")
@@ -672,7 +672,7 @@
 		if (has_electronics)
 			to_chat(user, "<span class='warning'>You cannot repair this APC until you remove the electronics still inside!</span>")
 			return
-		user.visible_message("[user.name] replaces the damaged APC frame with a new one.",\
+		user.visible_message("<span class='notice'>[user.name] replaces the damaged APC frame with a new one.</span>", \
 							"<span class='notice'>You begin to replace the damaged APC frame...</span>")
 		if(do_after(user, 50, target = src))
 			to_chat(user, "<span class='notice'>You replace the damaged APC frame with a new one.</span>")
