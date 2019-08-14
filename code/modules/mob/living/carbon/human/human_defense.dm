@@ -662,7 +662,7 @@
 		..()
 
 /mob/living/carbon/human/proc/check_self_for_injuries()
-	visible_message("[src] examines [p_them()]self.", \
+	visible_message("<span class='notice'>[src] examines [p_them()]self.</span>", \
 		"<span class='notice'>You check yourself for injuries.</span>")
 
 	var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)

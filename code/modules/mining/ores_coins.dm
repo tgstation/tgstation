@@ -475,7 +475,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		var/oldloc = loc
 		sleep(15)
 		if(loc == oldloc && user && !user.incapacitated())
-			user.visible_message("[user] has flipped [src]. It lands on [coinflip].", \
+			user.visible_message("<span class='notice'>[user] has flipped [src]. It lands on [coinflip].</span>", \
  							 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
 							 "<span class='italics'>You hear the clattering of loose change.</span>")
 	return TRUE//did the coin flip? useful for suicide_act

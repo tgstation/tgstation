@@ -47,10 +47,10 @@
 		if(WIRE_CAMERA) // Pulse to disable the camera.
 			if(!QDELETED(R.builtInCamera) && !R.scrambledcodes)
 				R.builtInCamera.toggle_cam(usr, 0)
-				R.visible_message("[R]'s camera lens focuses loudly.", "Your camera lens focuses loudly.")
+				R.visible_message("<span class='notice'>[R]'s camera lens focuses loudly.</span>", "Your camera lens focuses loudly.")
 		if(WIRE_LAWSYNC) // Forces a law update if possible.
 			if(R.lawupdate)
-				R.visible_message("[R] gently chimes.", "LawSync protocol engaged.")
+				R.visible_message("<span class='notice'>[R] gently chimes.</span>", "LawSync protocol engaged.")
 				R.lawsync()
 				R.show_laws()
 		if(WIRE_LOCKDOWN)

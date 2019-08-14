@@ -136,7 +136,7 @@
 								if(WEST)
 									can_use_mirror = mirror.pixel_x < 0
 
-					M.visible_message("[M] directs [src] to [their] mouth.", \
+					M.visible_message("<span class='notice'>[M] directs [src] to [their] mouth.</span>", \
 					"<span class='notice'>You point [src] into your mouth.</span>")
 					if(!can_use_mirror)
 						to_chat(user, "<span class='notice'>You can't see anything without a mirror.</span>")

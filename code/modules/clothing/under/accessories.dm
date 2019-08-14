@@ -132,7 +132,7 @@
 			if(user == M)
 				delay = 0
 			else
-				user.visible_message("[user] is trying to pin [src] on [M]'s chest.", \
+				user.visible_message("<span class='notice'>[user] is trying to pin [src] on [M]'s chest.</span>", \
 									 "<span class='notice'>You try to pin [src] on [M]'s chest.</span>")
 			var/input
 			if(!commended && user != M)
@@ -142,7 +142,7 @@
 					if(user == M)
 						to_chat(user, "<span class='notice'>You attach [src] to [U].</span>")
 					else
-						user.visible_message("[user] pins \the [src] on [M]'s chest.", \
+						user.visible_message("<span class='notice'>[user] pins \the [src] on [M]'s chest.</span>", \
 											 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
 						if(input)
 							SSblackbox.record_feedback("associative", "commendation", 1, list("commender" = "[user.real_name]", "commendee" = "[M.real_name]", "medal" = "[src]", "reason" = input))
