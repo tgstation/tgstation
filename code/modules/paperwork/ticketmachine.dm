@@ -15,7 +15,7 @@
 	var/ticket_number = 0 //Increment the ticket number whenever the HOP presses his button
 	var/current_number = 0 //What ticket number are we currently serving?
 	var/max_number = 100 //At this point, you need to refill it.
-	var/cooldown = 50 //Small cooldown, used when emagged to prevent flaming ticket spam
+	var/cooldown = 50
 	var/ready = TRUE
 	var/id = "ticket_machine_default" //For buttons
 	var/list/ticket_holders = list()
@@ -161,7 +161,7 @@
 
 /obj/machinery/ticket_machine/attack_hand(mob/living/carbon/user)
 	. = ..()
-	if(!ready && (obj_flags & EMAGGED))
+	if(!ready)
 		to_chat(user,"You press the button, but nothing happens...")
 		return
 	if(ticket_number >= max_number)
@@ -170,9 +170,7 @@
 	if((user in ticket_holders) && !(obj_flags & EMAGGED))
 		to_chat(user, "You already have a ticket!")
 		return
-	ready = FALSE
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 100, 0)
-	addtimer(CALLBACK(src, .proc/reset_cooldown), cooldown)//Small cooldown to prevent the clown from ripping out every ticket
 	ticket_number ++
 	to_chat(user, "<span class='notice'>You take a ticket from [src], looks like you're ticket number #[ticket_number]...</span>")
 	var/obj/item/ticket_machine_ticket/theirticket = new /obj/item/ticket_machine_ticket(get_turf(src))
@@ -186,6 +184,8 @@
 	ticket_holders += user
 	tickets += theirticket
 	if(obj_flags & EMAGGED) //Emag the machine to destroy the HOP's life.
+		ready = FALSE
+		addtimer(CALLBACK(src, .proc/reset_cooldown), cooldown)//Small cooldown to prevent piles of flaming tickets
 		theirticket.fire_act()
 		user.dropItemToGround(theirticket)
 		user.adjust_fire_stacks(1)
