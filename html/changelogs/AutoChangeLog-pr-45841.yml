@@ -1,4 +1,0 @@
-author: "Penterwast"
-delete-after: True
-changes: 
-  - admin: "Binary chat messages are now marked as such in logs."

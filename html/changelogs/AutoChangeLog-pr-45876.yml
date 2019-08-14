@@ -1,4 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - bugfix: "the correct black suit is now spawning in places it should be, the other sprite spawns in law wardrobe."

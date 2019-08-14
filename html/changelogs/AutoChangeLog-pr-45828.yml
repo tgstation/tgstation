@@ -1,5 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - code_imp: "Improved the way factions are applied to species."
-  - bugfix: "Shadowpeople no longer get attacked by faithless."
