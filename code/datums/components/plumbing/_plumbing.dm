@@ -53,7 +53,7 @@
 
 	return TRUE
 ///called from in process(). only calls process_request(), but can be overwritten for children with special behaviour
-/datum/component/plumbing/proc/send_request(dir) //this should usually be overwritten when dealing with custom pipes
+/datum/component/plumbing/proc/send_request(dir)
 	process_request(amount = 10, reagent = null, dir = dir)
 ///check who can give us what we want, and how many each of them will give us
 /datum/component/plumbing/proc/process_request(amount, reagent, dir)
@@ -64,13 +64,13 @@
 	net = ducts[num2text(dir)]
 	for(var/A in net.suppliers)
 		var/datum/component/plumbing/supplier = A
-		if(supplier.can_give(amount, reagent))
+		if(supplier.can_give(amount, reagent, net))
 			valid_suppliers += supplier
 	for(var/A in valid_suppliers)
 		var/datum/component/plumbing/give = A
-		give.transfer_to(src, amount / valid_suppliers.len, reagent)
+		give.transfer_to(src, amount / valid_suppliers.len, reagent, net)
 ///returns TRUE when they can give the specified amount and reagent. called by process request
-/datum/component/plumbing/proc/can_give(amount, reagent)
+/datum/component/plumbing/proc/can_give(amount, reagent, datum/ductnet/net)
 	if(!reagents || amount <= 0)
 		return
 
@@ -80,13 +80,13 @@
 	else if(reagents.total_volume > 0) //take whatever
 		return TRUE
 ///this is where the reagent is actually transferred and is thus the finish point of our process()
-/datum/component/plumbing/proc/transfer_to(datum/component/plumbing/target, amount, reagent)
+/datum/component/plumbing/proc/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net)
 	if(!reagents || !target || !target.reagents)
 		return FALSE
 	if(reagent)
-		reagents.trans_id_to(target.reagents, reagent, amount)
+		reagents.trans_id_to(target.parent, reagent, amount)
 	else
-		reagents.trans_to(target.reagents, amount)
+		reagents.trans_to(target.parent, amount)
 ///We create our luxurious piping overlays/underlays, to indicate where we do what. only called once if use_overlays = TRUE in Initialize()
 /datum/component/plumbing/proc/create_overlays()
 	var/atom/movable/AM = parent
@@ -178,6 +178,11 @@
 				new_supply_connects += turn(D, angle)
 		demand_connects = new_demand_connects
 		supply_connects = new_supply_connects
+///Give the direction of a pipe, and it'll return wich direction it originally was when it's object pointed SOUTH
+/datum/component/plumbing/proc/get_original_direction(dir)
+	var/atom/movable/AM = parent
+	return turn(dir, dir2angle(AM.dir) - 180)
+
 ///has one pipe input that only takes, example is manual output pipe
 /datum/component/plumbing/simple_demand
 	demand_connects = NORTH
@@ -188,22 +193,3 @@
 /datum/component/plumbing/tank
 	demand_connects = WEST
 	supply_connects = EAST
-
-/datum/component/plumbing/acclimator
-	demand_connects = WEST
-	supply_connects = EAST
-
-/datum/component/plumbing/acclimator/Initialize(start=TRUE, _turn_connects=TRUE)
-	. = ..()
-	if(. && istype(parent, /obj/machinery/plumbing/acclimator))
-		return TRUE
-
-/datum/component/plumbing/acclimator/can_give(amount, reagent)
-	. = ..()
-	if(.)
-		var/obj/machinery/plumbing/acclimator/AC = parent
-		if(AC.reagents.chem_temp >= AC.target_temperature && AC.target_temperature + AC.allowed_temperature_difference >= AC.reagents.chem_temp) //cooling here
-			return TRUE
-		if(AC.reagents.chem_temp <= AC.target_temperature && AC.target_temperature - AC.allowed_temperature_difference <= AC.reagents.chem_temp) //heating here
-			return TRUE
-	return FALSE

@@ -60,7 +60,6 @@
 	return TRUE
 
 /datum/surgery_step/heal/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] screws up!", "<span class='warning'>You screwed up!</span>")
 	display_results(user, target, "<span class='warning'>You screwed up!</span>",
 		"[user] screws up!",
 		"[user] fixes some of [target]'s wounds.", TRUE)
