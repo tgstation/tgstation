@@ -289,14 +289,6 @@
 		to_chat(user, "<span class='warning'>ERROR: User has no valid bank account to substract neccesary funds from!</span>")
 		return FALSE
 
-// Ultra-honk pin, clown's deadly joke item.
-// A gun with ultra-honk pin is useful for clown and useless for everyone else.
-/obj/item/firing_pin/clown/ultra/pin_auth(mob/living/user)
-	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
-	if(user && (!(HAS_TRAIT(user, TRAIT_CLUMSY)) && !(user.mind && user.mind.assigned_role == "Clown")))
-		return FALSE
-	return TRUE
-
 // Laser tag pins
 /obj/item/firing_pin/tag
 	name = "laser tag firing pin"
