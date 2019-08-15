@@ -452,3 +452,13 @@
 	construction_time = 250
 	build_path = /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam
 	category = list("Exosuit Equipment")
+	
+/datum/design/advanced_clamp
+	name = "Exosuit Module (Advanced Hydraulic Clamp)"
+	desc = "An upgraded version of the standard clamp."
+	id = "mech_advanced_clamp"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=10000,/datum/material/titanium=6500)
+	construction_time = 100
+	build_path = /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/advanced
+	category = list("Exosuit Equipment")
