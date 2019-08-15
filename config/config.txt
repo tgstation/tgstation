@@ -309,10 +309,10 @@ TICKLAG 0.5
 #FPS 20
 
 ## Comment this out to disable automuting
-#AUTOMUTE_ON
+AUTOMUTE_ON
 
 ## Uncomment this to let players see their own notes (they can still be set by admins only)
-#SEE_OWN_NOTES
+SEE_OWN_NOTES
 
 ### Comment these two out to prevent notes fading out over time for admins.
 ## Notes older then this will start fading out.
