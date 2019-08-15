@@ -1423,7 +1423,7 @@
 	metabolization_rate = 0.5* REAGENTS_METABOLISM
 	overdose_threshold = 25
 	taste_description = "salty"
-	
+
 /datum/reagent/medicine/sanguiose/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-1, 0)
 	if(prob(2))
@@ -1548,6 +1548,14 @@
 			H.bleed_rate = max(H.bleed_rate - 1, 0)
 	..()
 	. = 1
+
+/datum/reagent/medicine/polypyr/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(method == TOUCH || method == VAPOR)
+		if(M && ishuman(M) && reac_volume >= 0.5)
+			var/mob/living/carbon/human/H = M
+			H.hair_color = "92f"
+			H.facial_hair_color = "92f"
+			H.update_hair()
 
 /datum/reagent/medicine/polypyr/overdose_process(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5)

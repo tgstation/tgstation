@@ -60,7 +60,7 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/bungofruit
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list()
-	reagents_add = list(/datum/reagent/consumable/enzyme = 0.15, /datum/reagent/consumable/nutriment = 0.1)
+	reagents_add = list(/datum/reagent/consumable/enzyme = 0.1, /datum/reagent/consumable/nutriment = 0.1)
 	growthstages = 4
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "bungotree-grow"
