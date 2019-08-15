@@ -67,12 +67,12 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 /obj/machinery/computer/card/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/card/id))
 		if(!inserted_scan_id)
-			id_insert(user, I, inserted_scan_id)
-			inserted_scan_id = I
+			if(id_insert(user, I, inserted_scan_id))
+				inserted_scan_id = I
 			return
 		if(!inserted_modify_id)
-			id_insert(user, I, inserted_modify_id)
-			inserted_modify_id = I
+			if(id_insert(user, I, inserted_modify_id))
+				inserted_modify_id = I
 			return
 		else
 			to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
@@ -137,18 +137,19 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	if(istype(I))
 		if(target)
 			to_chat(user, "<span class='warning'>There's already an ID card in the console!</span>")
-			return
+			return FALSE
 		if(!user.transferItemToLoc(I, src))
-			return
+			return FALSE
 		user.visible_message("<span class='notice'>[user] inserts an ID card into the console.</span>", \
 							"<span class='notice'>You insert the ID card into the console.</span>")
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 		updateUsrDialog()
+		return TRUE
 
 /obj/machinery/computer/card/proc/id_eject(mob/user, obj/target)
 	if(!target)
 		to_chat(user, "<span class='warning'>There's no ID card in the console!</span>")
-		return
+		return FALSE
 	else
 		target.forceMove(drop_location())
 		if(!issilicon(user) && Adjacent(user))
@@ -157,21 +158,22 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 							"<span class='notice'>You get the ID card from the console.</span>")
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 		updateUsrDialog()
+		return TRUE
 
 /obj/machinery/computer/card/AltClick(mob/user)
 	..()
 	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational())
 		return
 	if(inserted_modify_id)
-		id_eject(user, inserted_modify_id)
-		inserted_modify_id = null
-		authenticated = FALSE
-		return
+		if(id_eject(user, inserted_modify_id))
+			inserted_modify_id = null
+			authenticated = FALSE
+			return
 	if(inserted_scan_id)
-		id_eject(user, inserted_scan_id)
-		inserted_scan_id = null
-		authenticated = FALSE
-		return
+		if(id_eject(user, inserted_scan_id))
+			inserted_scan_id = null
+			authenticated = FALSE
+			return
 
 /obj/machinery/computer/card/ui_interact(mob/user)
 	. = ..()
@@ -364,22 +366,22 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	switch(href_list["choice"])
 		if ("inserted_modify_id")
 			if (inserted_modify_id)
-				id_eject(usr, inserted_modify_id)
-				inserted_modify_id = null
+				if(id_eject(usr, inserted_modify_id))
+					inserted_modify_id = null
 			else
 				var/mob/M = usr
 				var/obj/item/card/id/I = M.get_idcard(TRUE)
-				id_insert(usr, I, inserted_modify_id)
-				inserted_modify_id = I
+				if(id_insert(usr, I, inserted_modify_id))
+					inserted_modify_id = I
 		if ("inserted_scan_id")
 			if (inserted_scan_id)
-				id_eject(usr, inserted_scan_id)
-				inserted_scan_id = null
+				if(id_eject(usr, inserted_scan_id))
+					inserted_scan_id = null
 			else
 				var/mob/M = usr
 				var/obj/item/card/id/I = M.get_idcard(TRUE)
-				id_insert(usr, I, inserted_scan_id)
-				inserted_scan_id = I
+				if(id_insert(usr, I, inserted_scan_id))
+					inserted_scan_id = I
 		if ("auth")
 			if ((!( authenticated ) && (inserted_scan_id || issilicon(usr)) && (inserted_modify_id || mode)))
 				if (check_access(inserted_scan_id))
