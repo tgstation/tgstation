@@ -123,6 +123,54 @@
 	build_path = /obj/item/reagent_containers/glass/bottle/nutrient/empty
 	category = list("initial", "Botany Chemicals")
 
+/datum/design/plantbgone_bottle
+	name = "Plant-B-Gone Bottle"
+	id = "plantbgone_bottle"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass= 50)
+	build_path = /obj/item/reagent_containers/spray/plantbgone
+	category = list("initial","Botany Chemicals")
+
+/datum/design/mutagen_bottle
+	name = "Unstable Mutagen Bottle"
+	id = "mutagen_bottle"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass= 400)
+	build_path = /obj/item/reagent_containers/glass/bottle/mutagen
+	category = list("initial","Botany Chemicals")
+
+/datum/design/ash_bottle
+	name = "Ash Bottle"
+	id = "ash_bottle"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass= 15)
+	build_path = /obj/item/reagent_containers/glass/bottle/ash
+	category = list("initial","Botany Chemicals")
+
+/datum/design/ammonia_bottle
+	name = "Ammonia Bottle"
+	id = "ammonia_bottle"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass= 25)
+	build_path = /obj/item/reagent_containers/glass/bottle/ammonia
+	category = list("initial","Botany Chemicals")
+
+/datum/design/saltpetre_bottle
+	name = "Saltpetre Bottle"
+	id = "saltpetre_bottle"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass= 50)
+	build_path = /obj/item/reagent_containers/glass/bottle/saltpetre
+	category = list("initial","Botany Chemicals")
+
+/datum/design/diethylamine_bottle
+	name = "Diethylamine Bottle"
+	id = "diethylamine_bottle"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass= 100)
+	build_path = /obj/item/reagent_containers/glass/bottle/diethylamine
+	category = list("initial","Botany Chemicals")
+
 /datum/design/cloth
 	name = "Roll of Cloth"
 	id = "cloth"
