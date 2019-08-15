@@ -53,7 +53,7 @@
 //Rights:2, 4, 6, 8...
 /mob/proc/get_empty_held_index_for_side(side = LEFT_HANDS, all = FALSE)
 	var/list/empty_indexes = all ? list() : null
-	for(var/i in side to held_items.len step 2)
+	for(var/i in (side == LEFT_HANDS) ? 1 : 2 to held_items.len step 2)
 		if(!held_items[i])
 			if(!all)
 				return i
@@ -64,7 +64,7 @@
 //Same as the above, but returns the first or ALL held *ITEMS* for the side
 /mob/proc/get_held_items_for_side(side = LEFT_HANDS, all = FALSE)
 	var/list/holding_items = all ? list() : null
-	for(var/i in side to held_items.len step 2)
+	for(var/i in (side == LEFT_HANDS) ? 1 : 2 to held_items.len step 2)
 		var/obj/item/I = held_items[i]
 		if(I)
 			if(!all)
