@@ -4,20 +4,22 @@
 #Ranks will match to those with the same name in admin_ranks.txt, if a match isn't found the user won't be adminned.
 #If SQL-based admin loading is enabled, admins listed here will always be loaded first and will override any duplicate entries in the database.
 
+
 TheSwain = Fulp Crew
-Clowno = Fu1p Crew
+Clowno = Fulp Crew
 #fulpstation = Fulp Crew
-Oney = Fu1p Crew
+Oney = Fulp Crew
 tomamoto = Fulp Crew
 Grupert87 = Admin
 Grupert99 = Admin
 Krinkels = Admin
 Rumpelgeist = Admin
 ImpendingRiot = Moderator
-#FaKanza	 = Admin
+#FaKanza = Admin
 #Trickytyfly = Admin
-
+Coolsur6 = Moderator
 #ADMINS
+
 saladata = Admin
 RootVeggie = Admin
 Hugh Mann = Admin
@@ -37,7 +39,6 @@ hiimchros = Admin
 InkPacket = Admin
 Kasabaru = Admin
 RaveMaster93 = Admin
-Coolsurf6 = Admin
 Dr. Fake Name = Admin
 tamaguen = Admin
 
@@ -56,7 +57,7 @@ shlomobergerstein = Admin Candidate
 Evilsack = Moderator
 #Malgover = Moderator
 Misdoubtful = Admin Candidate
-Shadowflame909 = Admin Candidate
+Shadowflame909 = Admin Jr.
 Glubtok = Moderator
 BringTheBoom = Moderator
 
