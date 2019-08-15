@@ -1,5 +1,0 @@
-author: "Akrilla"
-delete-after: True
-changes: 
-  - rscadd: "Adds a shower area to the top of Metastation stasis bed room, and adds a shower inside chemistry."
-  - rscdel: "Removes the lobby, and outside chemistry shower."

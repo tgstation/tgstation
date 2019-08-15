@@ -62,6 +62,7 @@
 	return TRUE
 
 /obj/item/clothing/mask/gas/sechailer/wirecutter_act(mob/living/user, obj/item/I)
+	..()
 	if(aggressiveness != 4)
 		to_chat(user, "<span class='danger'>You broke the restrictor!</span>")
 		aggressiveness = 4

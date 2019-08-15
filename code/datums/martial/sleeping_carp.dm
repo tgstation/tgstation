@@ -7,7 +7,6 @@
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
 	id = MARTIALART_SLEEPINGCARP
-	no_guns = TRUE
 	allow_temp_override = FALSE
 	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
 	var/old_grab_state = null
@@ -161,6 +160,16 @@
 	P.firer = A
 	P.setAngle(rand(0, 360))//SHING
 	return BULLET_ACT_FORCE_PIERCE
+
+/datum/martial_art/the_sleeping_carp/teach(mob/living/carbon/human/H, make_temporary = FALSE)
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(H, TRAIT_NOGUNS, SLEEPING_CARP_TRAIT)
+
+/datum/martial_art/the_sleeping_carp/on_remove(mob/living/carbon/human/H)
+	. = ..()
+	REMOVE_TRAIT(H, TRAIT_NOGUNS, SLEEPING_CARP_TRAIT)
 
 
 /mob/living/carbon/human/proc/sleeping_carp_help()

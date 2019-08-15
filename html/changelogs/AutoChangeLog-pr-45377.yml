@@ -1,0 +1,7 @@
+author: "Akrilla"
+delete-after: True
+changes: 
+  - rscadd: "Adds a new ghetto chem, Pump-Up, which can be made with epinephrine and coffee. Quick to metabolize, but massively lowers stun baton stun time. 2 epi : 5 coffee makes 5 units."
+  - rscadd: "Maintenance Pump-Up - a ghetto autoinjector containing the new chem, which is now part of the maintenance loot spawns."
+  - tweak: "Stun baton applies a delayed stun, with initial hit dealing stamina damage, slowdown and other effects. The stun will be applied 2 seconds after, but two hits put them in stamina crit instantly. There's a delay of two seconds before the baton can stun again."
+  - tweak: "Regular batons, e.g. telescopic, detective's, and contractor baton now deal a two second knockdown, with stamina damage. Two hits stuns them with a stamina crit."

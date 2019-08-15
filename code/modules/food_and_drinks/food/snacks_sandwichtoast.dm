@@ -52,16 +52,6 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/cherryjelly = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	foodtype = GRAIN | FRUIT
 
-/obj/item/reagent_containers/food/snacks/icecreamsandwich
-	name = "icecream sandwich"
-	desc = "Portable Ice-cream in its own packaging."
-	icon = 'icons/obj/food/food.dmi'
-	icon_state = "icecreamsandwich"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/ice = 2)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/ice = 2)
-	tastes = list("ice cream" = 1)
-	foodtype = GRAIN | DAIRY
-
 /obj/item/reagent_containers/food/snacks/notasandwich
 	name = "not-a-sandwich"
 	desc = "Something seems to be wrong with this, you can't quite figure what. Maybe it's his moustache."

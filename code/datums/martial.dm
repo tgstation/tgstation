@@ -6,9 +6,7 @@
 	var/current_target
 	var/datum/martial_art/base // The permanent style. This will be null unless the martial art is temporary
 	var/block_chance = 0 //Chance to block melee attacks using items while on throw mode.
-	var/restraining = 0 //used in cqc's disarm_act to check if the disarmed is being restrained and so whether they should be put in a chokehold or not
 	var/help_verb
-	var/no_guns = FALSE
 	var/allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -25,13 +23,15 @@
 
 /datum/martial_art/proc/add_to_streak(element,mob/living/carbon/human/D)
 	if(D != current_target)
-		current_target = D
-		streak = ""
-		restraining = 0
+		reset_streak(D)
 	streak = streak+element
 	if(length(streak) > max_streak_length)
 		streak = copytext(streak,2)
 	return
+
+/datum/martial_art/proc/reset_streak(mob/living/carbon/human/new_target)
+	current_target = new_target
+	streak = ""
 
 /datum/martial_art/proc/basic_hit(mob/living/carbon/human/A,mob/living/carbon/human/D)
 
@@ -53,8 +53,8 @@
 
 	if(!damage)
 		playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
-		D.visible_message("<span class='warning'>[A] has attempted to [atk_verb] [D]!</span>", \
-			"<span class='userdanger'>[A] has attempted to [atk_verb] [D]!</span>", null, COMBAT_MESSAGE_RANGE)
+		D.visible_message("<span class='warning'>[A]'s [atk_verb] misses [D]!</span>", \
+			"<span class='userdanger'>[A]'s [atk_verb] misses you!</span>", null, COMBAT_MESSAGE_RANGE)
 		log_combat(A, D, "attempted to [atk_verb]")
 		return 0
 
@@ -62,23 +62,23 @@
 	var/armor_block = D.run_armor_check(affecting, "melee")
 
 	playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
-	D.visible_message("<span class='danger'>[A] has [atk_verb]ed [D]!</span>", \
-			"<span class='userdanger'>[A] has [atk_verb]ed [D]!</span>", null, COMBAT_MESSAGE_RANGE)
+	D.visible_message("<span class='danger'>[A] [atk_verb]ed [D]!</span>", \
+			"<span class='userdanger'>[A] [atk_verb]ed you!</span>", null, COMBAT_MESSAGE_RANGE)
 
 	D.apply_damage(damage, A.dna.species.attack_type, affecting, armor_block)
 
 	log_combat(A, D, "punched")
 
 	if((D.stat != DEAD) && damage >= A.dna.species.punchstunthreshold)
-		D.visible_message("<span class='danger'>[A] has knocked [D] down!!</span>", \
-								"<span class='userdanger'>[A] has knocked [D] down!</span>")
+		D.visible_message("<span class='danger'>[A] knocks [D] down!!</span>", \
+								"<span class='userdanger'>[A] knocks you down!</span>")
 		D.apply_effect(40, EFFECT_KNOCKDOWN, armor_block)
 		D.forcesay(GLOB.hit_appends)
 	else if(!(D.mobility_flags & MOBILITY_STAND))
 		D.forcesay(GLOB.hit_appends)
 	return 1
 
-/datum/martial_art/proc/teach(mob/living/carbon/human/H,make_temporary=0)
+/datum/martial_art/proc/teach(mob/living/carbon/human/H,make_temporary=FALSE)
 	if(!istype(H) || !H.mind)
 		return FALSE
 	if(H.mind.martial_art)

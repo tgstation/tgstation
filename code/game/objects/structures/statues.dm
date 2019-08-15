@@ -287,3 +287,8 @@
 	name = "snowman"
 	desc = "Several lumps of snow put together to form a snowman."
 	icon_state = "snowman"
+
+/obj/structure/statue/snow/snowlegion
+    name = "snowlegion"
+    desc = "Looks like that weird kid with the tiger plushie has been round here again."
+    icon_state = "snowlegion"

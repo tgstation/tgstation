@@ -28,6 +28,7 @@
 				. += "[O] ([distance == 0 ? "same tile" : "[distance] tiles [dir2text(get_dir(src, O))]"])"
 
 /obj/structure/destructible/clockwork/trap/wrench_act(mob/living/user, obj/item/I)
+	..()
 	if(!is_servant_of_ratvar(user))
 		return ..()
 	to_chat(user, "<span class='notice'>You break down the delicate components of [src] into brass.</span>")
@@ -57,6 +58,7 @@
 	..()
 
 /obj/structure/destructible/clockwork/trap/wirecutter_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(!is_servant_of_ratvar(user))
 		return
 	if(!wired_to.len)

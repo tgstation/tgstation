@@ -1,4 +1,0 @@
-author: "SpacePrius"
-delete-after: True
-changes: 
-  - bugfix: "Bartender now actually has theater access even on full crews."

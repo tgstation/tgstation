@@ -165,8 +165,8 @@
 			if ("harm")
 				var/damage = rand(1, 5)
 				playsound(loc, "punch", 25, 1, -1)
-				visible_message("<span class='danger'>[M] has punched [src]!</span>", \
-						"<span class='userdanger'>[M] has punched [src]!</span>")
+				visible_message("<span class='danger'>[M] punches [src]!</span>", \
+						"<span class='userdanger'>[M] punches you!</span>")
 				adjustBruteLoss(damage)
 				log_combat(M, src, "attacked")
 				updatehealth()
@@ -176,17 +176,18 @@
 						Unconscious(40)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 						log_combat(M, src, "pushed")
-						visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
-							"<span class='userdanger'>[M] has pushed down [src]!</span>")
+						visible_message("<span class='danger'>[M] pushes [src] down!</span>", \
+							"<span class='userdanger'>[M] pushes you down!</span>")
 					else
 						if (prob(25))
 							dropItemToGround(get_active_held_item())
 							playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-							visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
-							"<span class='userdanger'>[M] has disarmed [src]!</span>")
+							visible_message("<span class='danger'>[M] disarms [src]!</span>", \
+							"<span class='userdanger'>[M] disarms you!</span>")
 						else
 							playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-							visible_message("<span class='danger'>[M] has attempted to disarm [src]!</span>")
+							visible_message("<span class='danger'>[M] fails to disarm [src]!</span>", \
+							"<span class='userdanger'>[M] fails to disarm you!</span>")
 
 /mob/living/carbon/true_devil/handle_breathing()
 	// devils do not need to breathe
@@ -198,11 +199,11 @@
 	if(!ascended)
 		var/b_loss
 		switch (severity)
-			if (1)
+			if (EXPLODE_DEVASTATE)
 				b_loss = 500
-			if (2)
+			if (EXPLODE_HEAVY)
 				b_loss = 150
-			if(3)
+			if (EXPLODE_LIGHT)
 				b_loss = 30
 		if(has_bane(BANE_LIGHT))
 			b_loss *=2

@@ -51,6 +51,7 @@
 	AddComponent(/datum/component/plumbing/simple_supply)
 
 /obj/machinery/plumbing/synthesizer/wrench_act(mob/living/user, obj/item/I)
+	..()
 	default_unfasten_wrench(user, I)
 	return TRUE
 

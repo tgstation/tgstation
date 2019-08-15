@@ -1,4 +1,0 @@
-author: "Garen"
-delete-after: True
-changes: 
-  - bugfix: "The monk frock sprite no longer bugs out when you toggle the hood"

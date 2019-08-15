@@ -36,7 +36,7 @@
 	retreat_distance = 5
 	minimum_distance = 5
 	ranged_cooldown_time = 20
-	internal_type = /obj/item/gps/internal/legion
+	gps_name = "Echoing Signal"
 	medal_type = BOSS_MEDAL_LEGION
 	score_type = LEGION_SCORE
 	pixel_y = -16
@@ -240,12 +240,6 @@
 	pixel_y = L.pixel_y
 	faction = L.faction.Copy()
 	GiveTarget(L.target)
-
-/obj/item/gps/internal/legion
-	icon_state = null
-	gpstag = "Echoing Signal"
-	desc = "The message repeats."
-	invisibility = 100
 
 //Loot
 
