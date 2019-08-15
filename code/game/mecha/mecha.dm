@@ -111,7 +111,7 @@
 	var/thrusters_active = FALSE
 	var/defense_mode = FALSE
 	var/leg_overload_mode = FALSE
-	var/leg_overload_coeff = 80
+	var/leg_overload_coeff = 100
 	var/zoom_mode = FALSE
 	var/smoke = 5
 	var/smoke_ready = 1
