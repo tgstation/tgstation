@@ -158,7 +158,7 @@
 				if (record)
 					target_rank = record.fields["rank"]
 				else 
-					target_rank = "Unassigned"
+					target_rank = "Unknown"
 
 			data["contracts"] += list(list(
 				"target" = contract.contract.target,
