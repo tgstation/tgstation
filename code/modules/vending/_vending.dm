@@ -151,8 +151,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 	/// how many items have been inserted in a vendor
 	var/loaded_items = 0
-	/// safety var
-	var/custom = FALSE
 
 /obj/item/circuitboard
     ///determines if the circuit board originated from a vendor off station or not.
@@ -392,9 +390,29 @@ GLOBAL_LIST_EMPTY(vending_products)
 				else
 					to_chat(user, "<span class='warning'>There's nothing to restock!</span>")
 			return
-	if(canLoadItem(I) && !custom)
-		loadingAttempt(I,user)
-		updateUsrDialog() //can't put this on the proc above because we spam it below
+	if(compartmentLoadAccessCheck(user))
+		if(canLoadItem(I))
+			loadingAttempt(I,user)
+			updateUsrDialog() //can't put this on the proc above because we spam it below
+
+		if(istype(I, /obj/item/storage/bag)) //trays USUALLY
+			var/obj/item/storage/T = I
+			var/loaded = 0
+			var/denied_items = 0
+			for(var/obj/item/the_item in T.contents)
+				if(contents.len >= MAX_VENDING_INPUT_AMOUNT) // no more than 30 item can fit inside, legacy from snack vending although not sure why it exists
+					to_chat(user, "<span class='warning'>[src]'s compartment is full.</span>")
+					break
+				if(canLoadItem(the_item) && loadingAttempt(the_item,user))
+					SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, the_item, src, TRUE)
+					loaded++
+				else
+					denied_items++
+			if(denied_items)
+				to_chat(user, "<span class='warning'>[src] refuses some items!</span>")
+			if(loaded)
+				to_chat(user, "<span class='notice'>You insert [loaded] dishes into [src]'s compartment.</span>")
+				updateUsrDialog()
 
 	else
 		..()
@@ -409,6 +427,32 @@ GLOBAL_LIST_EMPTY(vending_products)
 		vending_machine_input[I.name] = 1
 	to_chat(user, "<span class='notice'>You insert [I] into [src]'s input compartment.</span>")
 	loaded_items++
+
+/**
+  * Is the passed in user allowed to load this vending machines compartments
+  *
+  * Arguments:
+  * * user - mob that is doing the loading of the vending machine
+  */
+/obj/machinery/vending/proc/compartmentLoadAccessCheck(mob/user)
+	if(!canload_access_list)
+		return TRUE
+	else
+		var/do_you_have_access = FALSE
+		var/req_access_txt_holder = req_access_txt
+		for(var/i in canload_access_list)
+			req_access_txt = i
+			if(!allowed(user) && !(obj_flags & EMAGGED) && scan_id)
+				continue
+			else
+				do_you_have_access = TRUE
+				break //you passed don't bother looping anymore
+		req_access_txt = req_access_txt_holder // revert to normal (before the proc ran)
+		if(do_you_have_access)
+			return TRUE
+		else
+			to_chat(user, "<span class='warning'>[src]'s input compartment blinks red: Access denied.</span>")
+			return FALSE
 
 /obj/machinery/vending/exchange_parts(mob/user, obj/item/storage/part_replacer/W)
 	if(!istype(W))
@@ -763,7 +807,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 	var/datum/bank_account/private_a
 	/// max number of items that the custom vendor can hold
 	var/max_loaded_items = 20
-	custom = TRUE
 
 /// proc to see who is the owner of the custom vendor
 
@@ -901,6 +944,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 		return
 
 	return ..()
+
+/obj/machinery/vending/custom/compartmentLoadAccessCheck(mob/user)
+	return FALSE
 
 /obj/machinery/vending/custom/crowbar_act(mob/living/user, obj/item/I)
 	return FALSE
