@@ -54,12 +54,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	// generic traits tied to having the species
 	var/list/inherent_traits = list()
 	var/list/inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	///List of factions the mob gain upon gaining this species.
+	var/list/inherent_factions
 
 	var/attack_verb = "punch"	// punch-specific attack verb
 	var/sound/attack_sound = 'sound/weapons/punch1.ogg'
 	var/sound/miss_sound = 'sound/weapons/punchmiss.ogg'
 
-	var/list/mob/living/ignored_by = list()	// list of mobs that will ignore this species
 	//Breathing!
 	var/obj/item/organ/lungs/mutantlungs = null
 	var/breathid = "o2"
@@ -301,6 +302,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(TRAIT_NOMETABOLISM in inherent_traits)
 		C.reagents.end_metabolization(C, keep_liverless = TRUE)
 
+	if(inherent_factions)
+		for(var/i in inherent_factions)
+			C.faction += i //Using +=/-= for this in case you also gain the faction from a different source.
+
 	C.add_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE, 100, override=TRUE, multiplicative_slowdown=speedmod, movetypes=(~FLYING))
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
@@ -321,6 +326,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/location = C.dna.mutation_index.Find(inert_mutation)
 		C.dna.mutation_index[location] = new_species.inert_mutation
 		C.dna.mutation_index[new_species.inert_mutation] = create_sequence(new_species.inert_mutation)
+
+	if(inherent_factions)
+		for(var/i in inherent_factions)
+			C.faction -= i
 
 	C.remove_movespeed_modifier(MOVESPEED_ID_SPECIES)
 

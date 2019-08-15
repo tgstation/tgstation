@@ -1,8 +1,0 @@
-author: "pireamaineach"
-delete-after: True
-changes: 
-  - balance: "Plasmaman helmets now have welding visors, which can't stack with their torches in the helmet and are visible."
-  - bugfix: "Clicking on the helmet with any item no longer tells you that someone's already drawn a face on it, you can't put infinite faces on it."
-  - tweak: "Plasmaman helmets hide masks again, the sprites are no longer transparent. Mind, the original bounty just wanted it so you could see faces through it, not for it to be transparent.
-tweak:Plasmaman helmets now have special smile sprites rather than pulling from the EVA one, as the visors are different sizes."
-  - balance: "You can't eat through plasmaman helmets anymore."

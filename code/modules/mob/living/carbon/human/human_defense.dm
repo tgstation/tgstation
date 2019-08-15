@@ -376,47 +376,50 @@
 	..()
 	if (!severity)
 		return
-	var/b_loss = 0
-	var/f_loss = 0
+	var/brute_loss = 0
+	var/burn_loss = 0
 	var/bomb_armor = getarmor(null, "bomb")
 
+//200 max knockdown for EXPLODE_HEAVY
+//160 max knockdown for EXPLODE_LIGHT
+
+
 	switch (severity)
-		if (1)
-			if(prob(bomb_armor))
-				b_loss = 500
-				var/atom/throw_target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
-				throw_at(throw_target, 200, 4)
-				damage_clothes(400 - bomb_armor, BRUTE, "bomb")
-			else
+		if (EXPLODE_DEVASTATE)
+			if(bomb_armor < EXPLODE_GIB_THRESHOLD) //gibs the mob if their bomb armor is lower than EXPLODE_GIB_THRESHOLD
 				for(var/I in contents)
 					var/atom/A = I
 					A.ex_act(severity)
 				gib()
 				return
+			else
+				brute_loss = 500
+				var/atom/throw_target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
+				throw_at(throw_target, 200, 4)
+				damage_clothes(400 - bomb_armor, BRUTE, "bomb")
 
-		if (2)
-			b_loss = 60
-			f_loss = 60
+		if (EXPLODE_HEAVY)
+			brute_loss = 60
+			burn_loss = 60
 			if(bomb_armor)
-				b_loss = 30*(2 - round(bomb_armor*0.01, 0.05))
-				f_loss = b_loss
+				brute_loss = 30*(2 - round(bomb_armor*0.01, 0.05))
+				burn_loss = brute_loss				//damage gets reduced from 120 to up to 60 combined brute+burn
 			damage_clothes(200 - bomb_armor, BRUTE, "bomb")
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)
-			if (prob(max(70 - (bomb_armor * 0.5), 0)))
-				Unconscious(200)
+			Unconscious(20)							//short amount of time for follow up attacks against elusive enemies like wizards
+			Knockdown(200 - (bomb_armor * 1.6)) 	//between ~4 and ~20 seconds of knockdown depending on bomb armor
 
-		if(3)
-			b_loss = 30
+		if(EXPLODE_LIGHT)
+			brute_loss = 30
 			if(bomb_armor)
-				b_loss = 15*(2 - round(bomb_armor*0.01, 0.05))
+				brute_loss = 15*(2 - round(bomb_armor*0.01, 0.05))
 			damage_clothes(max(50 - bomb_armor, 0), BRUTE, "bomb")
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(15,60)
-			if (prob(max(50 - (bomb_armor * 0.5), 0)))
-				Unconscious(160)
+			Knockdown(160 - (bomb_armor * 1.6))		//100 bomb armor will prevent knockdown altogether
 
-	take_overall_damage(b_loss,f_loss)
+	take_overall_damage(brute_loss,burn_loss)
 
 	//attempt to dismember bodyparts
 	if(severity <= 2 || !bomb_armor)
