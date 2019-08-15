@@ -196,8 +196,13 @@
 	var/list/gun_owners = list() //list of people who've accepted the license prompt. If this is the multi-payment pin, then this means they accepted the waiver that each shot will cost them money
 	var/payment_amount //how much gets paid out to license yourself to the gun
 	var/obj/item/card/id/pin_owner
+	var/multi_payment = FALSE //if true, user has to pay everytime they fire the gun
 	var/owned = FALSE
 	var/active_prompt = FALSE //purchase prompt to prevent spamming it
+
+/obj/item/firing_pin/paywall/attack_self(mob/user)
+	multi_payment = !multi_payment
+	to_chat(user, "<span class='notice'>You set the pin to [( multi_payment ) ? "process payment for every shot" : "one-time license payment"].</span>")
 
 /obj/item/firing_pin/paywall/examine(mob/user)
 	. = ..()
@@ -211,12 +216,15 @@
 	gun = G
 	forceMove(gun)
 	gun.pin = src
-	gun.desc += "<span class='notice'>This [gun.name] has a license permit cost of [payment_amount] .</span>"
+	if(multi_payment)
+		gun.desc += "<span class='notice'> This [gun.name] has a per-shot cost of [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""].</span>"
+		return
+	gun.desc += "<span class='notice'> This [gun.name] has a license permit cost of [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""].</span>"
 	return
 	
 
 /obj/item/firing_pin/paywall/gun_remove(mob/living/user)
-	gun.clumsy_check = initial(gun.clumsy_check)
+	gun.desc = initial(desc)
 	..()
 
 /obj/item/firing_pin/paywall/attackby(obj/item/M, mob/user, params)
@@ -249,28 +257,30 @@
 /obj/item/firing_pin/paywall/pin_auth(mob/living/user)
 	if(!istype(user))//nice try commie
 		return FALSE
-	if(!pin_owner)
-		to_chat(user, "<span class='warning'>ERROR: Installed firing pin has no active bank account linked to it!</span>")
-		return FALSE
 	if(ishuman(user))
 		var/datum/bank_account/credit_card_details
 		var/mob/living/carbon/human/H = user
-		if(H in gun_owners)
-			return TRUE
 		if(H.get_bank_account())
 			credit_card_details = H.get_bank_account()
+		if(H in gun_owners)
+			if(multi_payment && credit_card_details)
+				if(credit_card_details.adjust_money(-payment_amount))
+					pin_owner.registered_account.adjust_money(payment_amount)
+					return TRUE
+				to_chat(user, "<span class='warning'>ERROR: User balance insufficent for successful transaction!</span>")	
+				return FALSE	
+			return TRUE				
 		if(credit_card_details && !active_prompt)
-			var/license_request = alert(usr, "Do you wish to pay [payment_amount] for license of this [gun.name]?", "License Purchase", "Yes", "No")
+			var/license_request = alert(usr, "Do you wish to pay [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""] for [( multi_payment ) ? "each shot of [gun.name]" : "usage license of [gun.name]"]?", "Weapon Purchase", "Yes", "No")
 			active_prompt = TRUE
 			switch(license_request)
 				if("Yes")
-					if(credit_card_details.account_balance >= payment_amount)
-						credit_card_details.adjust_money(-payment_amount)
+					if(credit_card_details.adjust_money(-payment_amount))
 						pin_owner.registered_account.adjust_money(payment_amount)
 						gun_owners += H
 						to_chat(user, "<span class='notice'>Gun license purchased, have a secure day!</span>")
 						active_prompt = FALSE
-						return TRUE
+						return FALSE //we return false here so you don't click initially to fire, get the prompt, accept the prompt, and THEN the gun
 					to_chat(user, "<span class='warning'>ERROR: User balance insufficent for successful transaction!</span>")
 					return FALSE
 				if("No")
@@ -278,7 +288,6 @@
 					return FALSE
 		to_chat(user, "<span class='warning'>ERROR: User has no valid bank account to substract neccesary funds from!</span>")
 		return FALSE
-
 
 // Ultra-honk pin, clown's deadly joke item.
 // A gun with ultra-honk pin is useful for clown and useless for everyone else.
