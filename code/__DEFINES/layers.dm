@@ -74,7 +74,6 @@
 #define MID_LANDMARK_LAYER 9.1
 #define HIGH_LANDMARK_LAYER 9.2
 #define AREA_LAYER 10
-#define MASSIVE_OBJ_LAYER 11
 #define POINT_LAYER 12
 
 #define LIGHTING_PLANE 15
@@ -82,6 +81,8 @@
 
 #define ABOVE_LIGHTING_PLANE 16
 #define ABOVE_LIGHTING_LAYER 16
+
+#define MASSIVE_OBJ_LAYER 16.5//this needs to be incredibly high because these are massive objects (singularities, narsie, etc) that can clip under computer screens and other darkness disobeying things
 
 #define FLOOR_OPENSPACE_PLANE 17
 #define OPENSPACE_LAYER 17
