@@ -206,6 +206,16 @@
 		invocation_type ="none"
 	..()
 
+/obj/effect/proc_holder/spell/aimed/finger_guns/InterceptClickOn(mob/living/caller, params, atom/target)
+	if(owner.incapacitated())
+		to_chat(owner, "<span class='warning'>You can't properly point your fingers while incapacitated.</span>")
+		if(charge_type == "recharge")
+			var/refund_percent = current_amount/projectile_amount
+			charge_counter = charge_max * refund_percent
+			start_recharge()
+		remove_ranged_ability(msg)
+		on_deactivation(user)
+	..()
 
 /obj/item/book/granter/spell/mimery_blockade
 	spell = /obj/effect/proc_holder/spell/targeted/forcewall/mime
