@@ -149,14 +149,10 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	//The type of refill canisters used by this machine.
 	var/obj/item/vending_refill/refill_canister = null
 
-	/// if the machine has this value set as TRUE, it will accept items as input and give money to the id it was set to
-	var/custom = FALSE
-	/// where the money is sent
-	var/datum/bank_account/private_a
-	/// how many items have been inserted in a custom vendor
+	/// how many items have been inserted in a vendor
 	var/loaded_items = 0
-	/// max number of items that the custom vendor can hold
-	var/max_loaded_items = 20
+	/// safety var
+	var/custom = FALSE
 
 /obj/item/circuitboard
     ///determines if the circuit board originated from a vendor off station or not.
@@ -349,7 +345,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		.[record.product_path] += record.amount
 
 /obj/machinery/vending/crowbar_act(mob/living/user, obj/item/I)
-	if(!component_parts || custom)
+	if(!component_parts)
 		return FALSE
 	default_deconstruction_crowbar(I)
 	return TRUE
@@ -378,36 +374,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 		wires.interact(user)
 		return
 
-	if(custom)
-		if(!private_a)
-			var/mob/living/carbon/human/H
-			var/obj/item/card/id/C
-			if(ishuman(user))
-				H = user
-				C = H.get_idcard(TRUE)
-				if(C?.registered_account)
-					private_a = C.registered_account
-					say("The [src] has been linked to [C].")
-
-		if(isowner(user))
-			if(istype(I, /obj/item/assembly/voice))
-				var/obj/item/assembly/voice/V = I
-				if(V.recorded)
-					slogan_list += "[V.recorded]"
-				return
-
-			if(istype(I, /obj/item/pen))
-				name = stripped_input(user,"Set name","Name","Vendor", 20)
-				desc = stripped_input(user,"Set description","Description","Great Deals", 60)
-				return
-
-			if(canLoadItem(I))
-				loadingAttempt(I,user)
-				updateUsrDialog()
-				return
-
-		return ..()
-
 	if(refill_canister && istype(I, refill_canister))
 		if (!panel_open)
 			to_chat(user, "<span class='warning'>You should probably unscrew the service panel first!</span>")
@@ -426,6 +392,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 				else
 					to_chat(user, "<span class='warning'>There's nothing to restock!</span>")
 			return
+	if(canLoadItem(I) && !custom)
+		loadingAttempt(I,user)
+		updateUsrDialog() //can't put this on the proc above because we spam it below
 
 	else
 		..()
@@ -440,7 +409,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 		vending_machine_input[I.name] = 1
 	to_chat(user, "<span class='notice'>You insert [I] into [src]'s input compartment.</span>")
 	loaded_items++
-
 
 /obj/machinery/vending/exchange_parts(mob/user, obj/item/storage/part_replacer/W)
 	if(!istype(W))
@@ -488,8 +456,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(ishuman(user))
 		H = user
 		C = H.get_idcard(TRUE)
-	///temp var to set the shown price
-	var/price = 1
 
 	if(!C)
 		dat += "<font color = 'red'><h3>No ID Card detected!</h3></font>"
@@ -504,45 +470,37 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(vending_machine_input[O] > 0)
 				var/N = vending_machine_input[O]
 				dat += "<a href='byond://?src=[REF(src)];dispense=[sanitize(O)]'>Dispense</A> "
-				if(isowner(user))
-					price = "FREE"
-				else
-					for(var/obj/T in contents)
-						if(T.name == O)
-							price = "$[T.custom_price]"
-							break
-				dat += "<B>[O] ([price]): [N]</B><br>"
+				dat += "<B>[O] ($[default_price]): [N]</B><br>"
 		dat += "</div>"
 
-	if(!custom)
-		dat += {"<h3>Select an item</h3>
-						<div class='statusDisplay'>"}
-		if(!product_records.len)
-			dat += "<font color = 'red'>No product loaded!</font>"
-		else
-			var/list/display_records = product_records + coin_records
-			if(extended_inventory)
-				display_records = product_records + coin_records + hidden_records
-			dat += "<table>"
-			for (var/datum/data/vending_product/R in display_records)
-				var/price_listed = "$[default_price]"
-				var/is_hidden = hidden_records.Find(R)
-				if(is_hidden && !extended_inventory)
-					continue
-				if(R.custom_price)
-					price_listed = "$[R.custom_price]"
-				if(!onstation || account && account.account_job && account.account_job.paycheck_department == payment_department)
-					price_listed = "FREE"
-				if(coin_records.Find(R) || is_hidden)
-					price_listed = "$[R.custom_premium_price ? R.custom_premium_price : extra_price]"
-				dat += {"<tr><td><span class="vending32x32 [replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-")]"></td>
-								<td style=\"width: 100%\"><b>[sanitize(R.name)]  ([price_listed])</b></td>"}
-				if(R.amount > 0 && ((C && C.registered_account && onstation) || (!onstation && isliving(user))))
-					dat += "<td align='right'><b>[R.amount]&nbsp;</b><a href='byond://?src=[REF(src)];vend=[REF(R)]'>Vend</a></td>"
-				else
-					dat += "<td align='right'><span class='linkOff'>Not&nbsp;Available</span></td>"
-				dat += "</tr>"
-			dat += "</table>"
+	dat += {"<h3>Select an item</h3>
+					<div class='statusDisplay'>"}
+	if(!product_records.len)
+		dat += "<font color = 'red'>No product loaded!</font>"
+	else
+		var/list/display_records = product_records + coin_records
+		if(extended_inventory)
+			display_records = product_records + coin_records + hidden_records
+		dat += "<table>"
+		for (var/datum/data/vending_product/R in display_records)
+			var/price_listed = "$[default_price]"
+			var/is_hidden = hidden_records.Find(R)
+			if(is_hidden && !extended_inventory)
+				continue
+			if(R.custom_price)
+				price_listed = "$[R.custom_price]"
+			if(!onstation || account && account.account_job && account.account_job.paycheck_department == payment_department)
+				price_listed = "FREE"
+			if(coin_records.Find(R) || is_hidden)
+				price_listed = "$[R.custom_premium_price ? R.custom_premium_price : extra_price]"
+			dat += {"<tr><td><span class="vending32x32 [replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-")]"></td>
+							<td style=\"width: 100%\"><b>[sanitize(R.name)]  ([price_listed])</b></td>"}
+			if(R.amount > 0 && ((C && C.registered_account && onstation) || (!onstation && isliving(user))))
+				dat += "<td align='right'><b>[R.amount]&nbsp;</b><a href='byond://?src=[REF(src)];vend=[REF(R)]'>Vend</a></td>"
+			else
+				dat += "<td align='right'><span class='linkOff'>Not&nbsp;Available</span></td>"
+			dat += "</tr>"
+		dat += "</table>"
 	dat += "</div>"
 	if(onstation && C && C.registered_account)
 		dat += "<b>Balance: $[account.account_balance]</b>"
@@ -557,15 +515,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(..())
 		return
 	usr.set_machine(src)
-	///what we are selling
-	var/obj/S
-
 	if((href_list["dispense"]) && (vend_ready))
 		var/N = href_list["dispense"]
 		if(vending_machine_input[N] <= 0) // Sanity check, there are probably ways to press the button when it shouldn't be possible.
 			return
 		vend_ready = 0
-		if(ishuman(usr) && onstation)
+		if(ishuman(usr))
 			var/mob/living/carbon/human/H = usr
 			var/obj/item/card/id/C = H.get_idcard(TRUE)
 
@@ -580,25 +535,24 @@ GLOBAL_LIST_EMPTY(vending_products)
 				vend_ready = 1
 				return
 			var/datum/bank_account/account = C.registered_account
-			for(var/obj/O in contents)
-				if(O.name == N)
-					S = O
-					break
-			if(!account.has_money(S.custom_price))
+			if(!account.has_money(default_price))
 				say("You do not possess the funds to purchase this.")
 			else
-				account.adjust_money(-S.custom_price)
-				var/datum/bank_account/D = private_a
+				account.adjust_money(-default_price)
+				var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SRV)
 				if(D)
-					D.adjust_money(S.custom_price)
+					D.adjust_money(default_price)
 				use_power(5)
 				vending_machine_input[N] = max(vending_machine_input[N] - 1, 0)
-				if(last_shopper != usr || purchase_message_cooldown < world.time)
-					say("Thank you for buying local and purchasing [S]!")
-					purchase_message_cooldown = world.time + 5 SECONDS
-					last_shopper = usr
-				S.forceMove(drop_location())
-				loaded_items--
+				for(var/obj/O in contents)
+					if(O.name == N)
+						if(last_shopper != usr || purchase_message_cooldown < world.time)
+							say("Thank you for buying local and purchasing [O]!")
+							purchase_message_cooldown = world.time + 5 SECONDS
+							last_shopper = usr
+						O.forceMove(drop_location())
+						loaded_items--
+						break
 			vend_ready = 1
 			updateUsrDialog()
 			return
@@ -677,18 +631,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 		shut_up = !shut_up
 
 	updateUsrDialog()
-
-/// proc to see who is the owner of the custom vendor
-/obj/machinery/vending/proc/isowner(mob/user)
-	. = FALSE
-	if(custom)
-		var/mob/living/carbon/human/H
-		var/obj/item/card/id/C
-		if(ishuman(user))
-			H = user
-			C = H.get_idcard(FALSE)
-			if(C?.registered_account && C.registered_account == private_a)
-				return TRUE
 
 /obj/machinery/vending/process()
 	if(stat & (BROKEN|NOPOWER))
@@ -805,12 +747,7 @@ GLOBAL_LIST_EMPTY(vending_products)
   * * user - the user doing the loading
   */
 /obj/machinery/vending/proc/canLoadItem(obj/item/I, mob/user)
-	. = FALSE
-	if(loaded_items >= max_loaded_items)
-		say("There are too many items in stock.")
-		return
-	if(I.custom_price)
-		return TRUE
+	return
 
 /obj/machinery/vending/onTransitZ()
 	return
@@ -822,7 +759,151 @@ GLOBAL_LIST_EMPTY(vending_products)
 	max_integrity = 400
 	payment_department = NO_FREEBIES
 	refill_canister = /obj/item/vending_refill/custom
+	/// where the money is sent
+	var/datum/bank_account/private_a
+	/// max number of items that the custom vendor can hold
+	var/max_loaded_items = 20
 	custom = TRUE
+
+/// proc to see who is the owner of the custom vendor
+
+/obj/machinery/vending/custom/proc/isowner(mob/user)
+	. = FALSE
+	var/mob/living/carbon/human/H
+	var/obj/item/card/id/C
+	if(ishuman(user))
+		H = user
+		C = H.get_idcard(FALSE)
+		if(C?.registered_account && C.registered_account == private_a)
+			return TRUE
+
+/obj/machinery/vending/custom/canLoadItem(obj/item/I, mob/user)
+	. = FALSE
+	if(loaded_items >= max_loaded_items)
+		say("There are too many items in stock.")
+		return
+	if(I.custom_price)
+		return TRUE
+
+/obj/machinery/vending/custom/Topic(href, href_list)
+	usr.set_machine(src)
+	///what we are selling
+	var/obj/S
+
+	if((href_list["dispense"]) && (vend_ready))
+		var/N = href_list["dispense"]
+		vend_ready = 0
+		if(ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			var/obj/item/card/id/C = H.get_idcard(TRUE)
+
+			if(!C)
+				say("No card found.")
+				flick(icon_deny,src)
+				vend_ready = 1
+				return
+			else if (!C.registered_account)
+				say("No account found.")
+				flick(icon_deny,src)
+				vend_ready = 1
+				return
+			var/datum/bank_account/account = C.registered_account
+			for(var/obj/O in contents)
+				if(O.name == N)
+					S = O
+					break
+			if(!account.has_money(S.custom_price))
+				say("You do not possess the funds to purchase this.")
+			else
+				account.adjust_money(-S.custom_price)
+				var/datum/bank_account/owner = private_a
+				if(owner)
+					owner.adjust_money(S.custom_price)
+				use_power(5)
+				vending_machine_input[N] = max(vending_machine_input[N] - 1, 0)
+				if(last_shopper != usr || purchase_message_cooldown < world.time)
+					say("Thank you for buying local and purchasing [S]!")
+					purchase_message_cooldown = world.time + 5 SECONDS
+					last_shopper = usr
+				S.forceMove(drop_location())
+				loaded_items--
+				vend_ready = 1
+	updateUsrDialog()
+
+/obj/machinery/vending/custom/ui_interact(mob/user)
+	var/list/dat = list()
+	var/datum/bank_account/account
+	var/mob/living/carbon/human/H
+	var/obj/item/card/id/C
+	if(ishuman(user))
+		H = user
+		C = H.get_idcard(TRUE)
+	///temp var to set the shown price
+	var/price = 1
+
+	if(!C)
+		dat += "<font color = 'red'><h3>No ID Card detected!</h3></font>"
+	else if (!C.registered_account)
+		dat += "<font color = 'red'><h3>No account on registered ID card!</h3></font>"
+	else
+		account = C.registered_account
+	if(vending_machine_input.len)
+		dat += "<h3>[input_display_header]</h3>"
+		dat += "<div class='statusDisplay'>"
+		for (var/O in vending_machine_input)
+			if(vending_machine_input[O] > 0)
+				var/N = vending_machine_input[O]
+				dat += "<a href='byond://?src=[REF(src)];dispense=[sanitize(O)]'>Dispense</A> "
+				if(isowner(user))
+					price = "FREE"
+				else
+					for(var/obj/T in contents)
+						if(T.name == O)
+							price = "$[T.custom_price]"
+							break
+				dat += "<B>[O] ([price]): [N]</B><br>"
+		dat += "</div>"
+		dat += "<b>Balance: $[account.account_balance]</b>"
+
+	var/datum/browser/popup = new(user, "vending", (name))
+	popup.add_stylesheet(get_asset_datum(/datum/asset/spritesheet/vending))
+	popup.set_content(dat.Join(""))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
+	popup.open()
+
+/obj/machinery/vending/custom/attackby(obj/item/I, mob/user, params)
+
+	if(!private_a)
+		var/mob/living/carbon/human/H
+		var/obj/item/card/id/C
+		if(ishuman(user))
+			H = user
+			C = H.get_idcard(TRUE)
+			if(C?.registered_account)
+				private_a = C.registered_account
+				say("The [src] has been linked to [C].")
+
+	if(isowner(user))
+		if(istype(I, /obj/item/pen))
+			name = stripped_input(user,"Set name","Name", name, 20)
+			desc = stripped_input(user,"Set description","Description", desc, 60)
+			slogan_list += stripped_input(user,"Set slogan","Slogan","Epic", 60)
+			last_slogan = world.time + rand(0, slogan_delay)
+			return
+
+		if(canLoadItem(I))
+			loadingAttempt(I,user)
+			updateUsrDialog()
+			return
+
+	if(panel_open && is_wire_tool(I))
+		wires.interact(user)
+		return
+
+	return ..()
+
+/obj/machinery/vending/custom/crowbar_act(mob/living/user, obj/item/I)
+	return FALSE
 
 /obj/machinery/vending/custom/Destroy()
 	var/turf/T = get_turf(src)
