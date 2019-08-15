@@ -183,7 +183,7 @@
 		log_game("[key_name(H)] golem-swapped into [src]")
 		H.visible_message("<span class='notice'>A faint light leaves [H], moving to [src] and animating it!</span>","<span class='notice'>You leave your old body behind, and transfer into [src]!</span>")
 		show_flavour = FALSE
-		var/mob/living/carbon/human/newgolem = create(name = H.real_name)
+		var/mob/living/carbon/human/newgolem = create(newname = H.real_name)
 		H.transfer_trait_datums(newgolem)
 		H.mind.transfer_to(newgolem)
 		H.death()
