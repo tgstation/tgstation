@@ -520,7 +520,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		if(vending_machine_input[N] <= 0) // Sanity check, there are probably ways to press the button when it shouldn't be possible.
 			return
 		vend_ready = 0
-		if(ishuman(usr))
+		if(ishuman(usr) && onstation)
 			var/mob/living/carbon/human/H = usr
 			var/obj/item/card/id/C = H.get_idcard(TRUE)
 
@@ -747,7 +747,7 @@ GLOBAL_LIST_EMPTY(vending_products)
   * * user - the user doing the loading
   */
 /obj/machinery/vending/proc/canLoadItem(obj/item/I, mob/user)
-	return
+	return FALSE
 
 /obj/machinery/vending/onTransitZ()
 	return
@@ -881,7 +881,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			C = H.get_idcard(TRUE)
 			if(C?.registered_account)
 				private_a = C.registered_account
-				say("The [src] has been linked to [C].")
+				say("\The [src] has been linked to [C].")
 
 	if(isowner(user))
 		if(istype(I, /obj/item/pen))
