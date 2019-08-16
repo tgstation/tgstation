@@ -96,5 +96,5 @@
 /obj/item/reagent_containers/food/snacks/grown/bungopit/Initialize()
 	. =..()
 	reagents.clear_reagents()
-	reagents.add_reagent(/datum/reagent/toxin/bungotoxin, seed.potency * 0.15) //replace with new toxin
+	reagents.add_reagent(/datum/reagent/toxin/bungotoxin, seed.potency * 0.10) //More than this will kill at too low potency
 	reagents.add_reagent(/datum/reagent/consumable/nutriment, seed.potency * 0.04)
