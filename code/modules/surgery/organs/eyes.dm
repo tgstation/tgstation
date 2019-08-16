@@ -155,8 +155,7 @@
 	desc = "These cybernetic eye implants will give you thermal vision. Vertical slit pupil included."
 	eye_color = "FC0"
 	sight_flags = SEE_MOBS
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-	flash_protect = -1
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MILDLY_VISIBLE
 	see_in_dark = 8
 
 /obj/item/organ/eyes/robotic/flashlight
