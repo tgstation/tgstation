@@ -327,8 +327,8 @@
 	icon_state = "thermal"
 	item_state = "glasses"
 	vision_flags = SEE_MOBS
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-	flash_protect = -1
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MILDLY_VISIBLE
+	darkness_view = 8
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
 /obj/item/clothing/glasses/thermal/emp_act(severity)
