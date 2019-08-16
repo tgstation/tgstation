@@ -39,10 +39,10 @@
 /obj/machinery/computer/sat_control
 	name = "satellite control"
 	desc = "Used to control the satellite network."
+	circuit = /obj/item/circuitboard/computer/sat_control
 	ui_x = 400
 	ui_y = 305
-	circuit = /obj/item/circuitboard/computer/sat_control
-	
+
 	var/notice
 
 /obj/machinery/computer/sat_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
