@@ -50,16 +50,6 @@
 	description = "Basic mechanical, electronic, surgical and botanical tools."
 	design_ids = list("screwdriver", "wrench", "wirecutters", "crowbar", "multitool", "welding_tool", "tscanner", "analyzer", "cable_coil", "pipe_painter", "airlock_painter", "scalpel", "circular_saw", "surgicaldrill", "retractor", "cautery", "hemostat", "surgical_drapes", "syringe", "cultivator", "plant_analyzer", "shovel", "spade", "hatchet",  "mop")
 
-//T5 PARTS [XEON/FULP]
-/datum/techweb_node/quantum_tech
-	id = "quantum_tech"
-	starting_node = FALSE
-	display_name = "Quantum Tech"
-	description = "Strange modified bluespace stock parts, with a dash of quantum physics mixed in."
-	design_ids = list("quantumcap","quantumscan","quantummanip","quantumlaser","quantumbin","quantumcell")
-	prereq_ids = list("micro_bluespace")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
-	export_price = 5000
 	
 /////////////////////////Biotech/////////////////////////
 /datum/techweb_node/biotech

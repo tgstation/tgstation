@@ -280,42 +280,6 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	rating = 4
 	materials = list(/datum/material/iron=80)
 
-//Rating 5 [XEON/FULP] 
-
-/obj/item/stock_parts/capacitor/quantumcap
-	name = "Quantum Capacitor"
-	desc = "A capacitor engineered with a mix of bluespace and quantum technologies."
-	icon_state = "quadratic_capacitor"
-	rating = 5
-	materials = list(/datum/material/iron=55)
-
-/obj/item/stock_parts/scanning_module/quantumscan
-	name = "quantum field scanning module"
-	desc = "A special scanning module using a mix of bluespace and quantum tech to scan even sub-atomic materials."
-	icon_state = "triphasic_scan_module"
-	rating = 5
-	materials = list(/datum/material/iron=70)
-
-/obj/item/stock_parts/manipulator/quantummanip
-	name = "quantum field manipulator"
-	desc = "A strange, almost intangible manipulator that uses bluespace tech to manipulate and fold quantum states."
-	icon_state = "femto_mani"
-	rating = 5
-	materials = list(/datum/material/iron=50)
-
-/obj/item/stock_parts/micro_laser/quantumlaser
-	name = "quantum micro-laser"
-	desc = "A modified quadultra micro-laser designed to make use of newly discovered quantum tech."
-	icon_state = "quadultra_micro_laser"
-	rating = 5
-	materials = list(/datum/material/iron=15, /datum/material/glass = 25)
-
-/obj/item/stock_parts/matter_bin/quantumbin
-	name = "entangled matter bin"
-	desc = "A bluespace matter bin that makes use of entangled particles to store states of materials as energy."
-	icon_state = "bluespace_matter_bin"
-	rating = 5
-	materials = list(/datum/material/iron=100)
 
 // Subspace stock parts
 
