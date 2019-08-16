@@ -140,15 +140,41 @@
 //BLOODY FOOTPRINTS
 /obj/effect/decal/cleanable/blood/footprints
 	name = "footprints"
-	icon = 'icons/effects/footprints.dmi'
-	icon_state = "nothingwhatsoever"
 	desc = "WHOSE FOOTPRINTS ARE THESE?"
+	icon = 'icons/effects/footprints.dmi'
 	icon_state = "blood1"
 	random_icon_states = null
 	blood_state = BLOOD_STATE_HUMAN //the icon state to load images from
 	var/entered_dirs = 0
 	var/exited_dirs = 0
 	var/list/shoe_types = list()
+
+/obj/effect/decal/cleanable/blood/footprints/Initialize(mapload)
+	. = ..()
+	icon_state = "" //All of the footprint visuals come from overlays
+	if(mapload)
+		entered_dirs |= dir //Keep the same appearance as in the map editor
+		update_icon()
+
+//Rotate all of the footprint directions too
+/obj/effect/decal/cleanable/blood/footprints/setDir(newdir)
+	if(dir == newdir)
+		return ..()
+
+	var/ang_change = dir2angle(newdir) - dir2angle(dir)
+	var/old_entered_dirs = entered_dirs
+	var/old_exited_dirs = exited_dirs
+	entered_dirs = 0
+	exited_dirs = 0
+
+	for(var/Ddir in GLOB.cardinals)
+		if(old_entered_dirs & Ddir)
+			entered_dirs |= angle2dir_cardinal(dir2angle(Ddir) + ang_change)
+		if(old_exited_dirs & Ddir)
+			exited_dirs |= angle2dir_cardinal(dir2angle(Ddir) + ang_change)
+
+	update_icon()
+	return ..()
 
 /obj/effect/decal/cleanable/blood/footprints/Crossed(atom/movable/O)
 	..()

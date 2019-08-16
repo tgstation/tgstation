@@ -12,6 +12,8 @@
 	var/obj_integrity	//defaults to max_integrity
 	var/max_integrity = 500
 	var/integrity_failure = 0 //0 if we have no special broken behavior
+	///Damage under this value will be completely ignored
+	var/damage_deflection = 0
 
 	var/resistance_flags = NONE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
 
@@ -172,6 +174,7 @@
 	return
 
 /obj/proc/update_icon()
+	SEND_SIGNAL(src, COMSIG_OBJ_UPDATE_ICON)
 	return
 
 /mob/proc/unset_machine()

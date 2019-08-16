@@ -1532,11 +1532,11 @@
 	pixel_y = 4
 	},
 /obj/structure/table/reinforced,
-/obj/item/grenade/plastic/c4,
-/obj/item/grenade/plastic/c4,
-/obj/item/grenade/plastic/c4,
-/obj/item/grenade/plastic/c4,
-/obj/item/grenade/plastic/c4,
+/obj/item/grenade/c4,
+/obj/item/grenade/c4,
+/obj/item/grenade/c4,
+/obj/item/grenade/c4,
+/obj/item/grenade/c4,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/armory)
 "dk" = (

@@ -1,0 +1,5 @@
+author: "Dennok"
+delete-after: True
+changes: 
+  - bugfix: "You can perform many surgeries at one time again."
+  - rscadd: "You can see target of started surgery on operating computer."

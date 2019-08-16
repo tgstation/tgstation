@@ -201,28 +201,23 @@
 /**
   * Turn text into complete gibberish!
   *
-  * t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
+  * text is the inputted message, replace_characters will cause original letters to be replaced and chance are the odds that a character gets modified.
   */
-/proc/Gibberish(t, p)
-	var/returntext = ""
-	for(var/i = 1, i <= length(t), i++)
-
-		var/letter = copytext(t, i, i+1)
-		if(prob(50))
-			if(p >= 70)
+/proc/Gibberish(text, replace_characters = FALSE, chance = 50)
+	. = ""
+	for(var/i in 1 to length(text))
+		var/letter = text[i]
+		if(prob(chance))
+			if(replace_characters)
 				letter = ""
-
-			for(var/j = 1, j <= rand(0, 2), j++)
+			for(var/j in 1 to rand(0, 2))
 				letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
-
-		returntext += letter
-
-	return returntext
+		. += letter
 
 
 /**
   * Convert a message into leet non gaijin speak
-  * 
+  *
   * The difference with stutter is that this proc can stutter more than 1 letter
   *
   * The issue here is that anything that does not have a space is treated as one word (in many instances). For instance, "LOOKING," is a word, including the comma.
@@ -397,7 +392,7 @@
   * The kitchen sink of notification procs
   *
   * Arguments:
-  * * message 
+  * * message
   * * ghost_sound sound to play
   * * enter_link Href link to enter the ghost role being notified for
   * * source The source of the notification
@@ -476,7 +471,7 @@
 		return
 	return TRUE
 
-/** 
+/**
   * Offer control of the passed in mob to dead player
   *
   * Automatic logging and uses pollCandidatesForMob, how convenient
@@ -569,7 +564,14 @@
   */
 /mob/proc/common_trait_examine()
 	if(HAS_TRAIT(src, TRAIT_DISSECTED))
-		. += "<span class='notice'>This body has been dissected and analyzed. It is no longer worth experimenting on.</span><br>"
+		var/dissectionmsg = ""
+		if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Extraterrestrial Dissection"))
+			dissectionmsg = " via Extraterrestrial Dissection. It is no longer worth experimenting on"
+		else if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Experimental Dissection"))
+			dissectionmsg = " via Experimental Dissection"
+		else if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Thorough Dissection"))
+			dissectionmsg = " via Thorough Dissection"
+		. += "<span class='notice'>This body has been dissected and analyzed[dissectionmsg].</span><br>"
 
 /**
   * Get the list of keywords for policy config

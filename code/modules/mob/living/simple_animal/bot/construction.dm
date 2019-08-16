@@ -17,7 +17,7 @@
 		return
 
 /obj/item/bot_assembly/proc/rename_bot()
-	var/t = stripped_input(usr, "Enter new robot name", name, created_name,MAX_NAME_LEN)
+	var/t = sanitize_name(stripped_input(usr, "Enter new robot name", name, created_name,MAX_NAME_LEN))
 	if(!t)
 		return
 	if(!in_range(src, usr) && loc != usr)
@@ -163,7 +163,7 @@
 					if(!istype(W, /obj/item/gun/energy/laser/redtag))
 						return
 				if("")
-					if(!istype(W, /obj/item/gun/energy/e_gun/dragnet))
+					if(!istype(W, /obj/item/gun/energy/disabler))
 						return
 				else
 					return

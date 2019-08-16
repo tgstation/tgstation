@@ -23,6 +23,14 @@
 #define WINDOW_IN_FRAME 1
 #define WINDOW_SCREWED_TO_FRAME 2
 
+//reinforced window construction states
+#define RWINDOW_FRAME_BOLTED 3
+#define RWINDOW_BARS_CUT 4
+#define RWINDOW_POPPED 5
+#define RWINDOW_BOLTS_OUT 6
+#define RWINDOW_BOLTS_HEATED 7
+#define RWINDOW_SECURE 8
+
 //airlock assembly construction states
 #define AIRLOCK_ASSEMBLY_NEEDS_WIRES 0
 #define AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS 1
@@ -89,6 +97,7 @@
 #define CAT_SANDWICH	"Sandwiches"
 #define CAT_SOUP	"Soups"
 #define CAT_SPAGHETTI	"Spaghettis"
+#define CAT_ICE	"Frozen"
 
 #define RCD_FLOORWALL 1
 #define RCD_AIRLOCK 2
@@ -99,3 +108,4 @@
 
 #define RCD_UPGRADE_FRAMES	1
 #define RCD_UPGRADE_SIMPLE_CIRCUITS	2
+#define RCD_UPGRADE_SILO_LINK	4

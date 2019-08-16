@@ -5046,10 +5046,10 @@
 /area/maintenance/port)
 "akp" = (
 /obj/structure/rack,
-/obj/item/clothing/gloves/color/yellow,
 /obj/item/mop,
 /obj/item/bikehorn/rubberducky,
 /obj/effect/spawner/lootdrop/maintenance/two,
+/obj/item/clothing/gloves/color/fyellow,
 /obj/item/grenade/empgrenade,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)

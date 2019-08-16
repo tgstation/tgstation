@@ -96,14 +96,11 @@
 	icon_state = "dominator"
 	density = TRUE
 	var/active = FALSE
-	var/obj/item/gps/gps
 	var/credits_stored = 0
 	var/siphon_per_tick = 5
 
 /obj/machinery/shuttle_scrambler/Initialize(mapload)
 	. = ..()
-	gps = new/obj/item/gps/internal/pirate(src)
-	gps.tracking = FALSE
 	update_icon()
 
 /obj/machinery/shuttle_scrambler/process()
@@ -122,7 +119,7 @@
 
 /obj/machinery/shuttle_scrambler/proc/toggle_on(mob/user)
 	SSshuttle.registerTradeBlockade(src)
-	gps.tracking = TRUE
+	AddComponent(/datum/component/gps, "Nautical Signal")
 	active = TRUE
 	to_chat(user,"<span class='notice'>You toggle [src] [active ? "on":"off"].</span>")
 	to_chat(user,"<span class='warning'>The scrambling signal can be now tracked by GPS.</span>")
@@ -158,7 +155,6 @@
 
 /obj/machinery/shuttle_scrambler/proc/toggle_off(mob/user)
 	SSshuttle.clearTradeBlockade(src)
-	gps.tracking = FALSE
 	active = FALSE
 	STOP_PROCESSING(SSobj,src)
 
@@ -170,12 +166,7 @@
 
 /obj/machinery/shuttle_scrambler/Destroy()
 	toggle_off()
-	QDEL_NULL(gps)
 	return ..()
-
-/obj/item/gps/internal/pirate
-	gpstag = "Nautical Signal"
-	desc = "You can hear shanties over the static."
 
 /obj/machinery/computer/shuttle/pirate
 	name = "pirate shuttle console"

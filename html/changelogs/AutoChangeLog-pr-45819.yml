@@ -1,0 +1,6 @@
+author: "81Denton"
+delete-after: True
+changes: 
+  - balance: "Explosions now cause knockdown instead of KOs, with the amount of time scaling off bomb armor. Heavy explosions still cause a ~2 second KO for follow up attacks."
+  - balance: "Devastating explosions now no longer gib players with more than 50 bomb armor. This used to be more or less random depending on the amount of bomb armor."
+  - code_imp: "Removed reagent explosion code that would trigger for <1 amount reactions."

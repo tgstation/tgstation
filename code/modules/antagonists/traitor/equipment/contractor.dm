@@ -28,14 +28,69 @@
 	var/contract_rep = 0
 	var/list/hub_items = list()
 	var/list/purchased_items = list()
-
 	var/static/list/contractor_items = typecacheof(/datum/contractor_item/, TRUE)
+
+	var/datum/syndicate_contract/current_contract
+	var/list/datum/syndicate_contract/assigned_contracts = list()
+
+	var/list/assigned_targets = list() // used as a blacklist to make sure we're not assigning targets already assigned
+
+	var/contract_TC_payed_out = 0 // Keeping track for roundend reporting
+	var/contract_TC_to_redeem = 0 // Used internally and roundend reporting - what TC we have available to cashout.
 
 /datum/contractor_hub/proc/create_hub_items()
 	for(var/path in contractor_items)
 		var/datum/contractor_item/contractor_item = new path
 
 		hub_items.Add(contractor_item)
+
+/datum/contractor_hub/proc/create_contracts(datum/mind/owner)
+
+	// 6 initial contracts
+	var/list/to_generate = list(
+		CONTRACT_PAYOUT_LARGE,
+		CONTRACT_PAYOUT_MEDIUM,
+		CONTRACT_PAYOUT_SMALL,
+		CONTRACT_PAYOUT_SMALL,
+		CONTRACT_PAYOUT_SMALL,
+		CONTRACT_PAYOUT_SMALL
+	)
+
+	// We don't want the sum of all the payouts to be under this amount
+	var/lowest_TC_threshold = 30 
+
+	var/total = 0
+	var/lowest_paying_sum = 0
+	var/datum/syndicate_contract/lowest_paying_contract
+
+	// Randomise order, so we don't have contracts always in payout order.
+	to_generate = shuffle(to_generate)
+
+	// Support contract generation happening multiple times
+	var/start_index = 1
+	if (assigned_contracts.len != 0)
+		start_index = assigned_contracts.len + 1
+
+	// Generate contracts, and find the lowest paying.
+	for (var/i = 1; i <= to_generate.len; i++)
+		var/datum/syndicate_contract/contract_to_add = new(owner, assigned_targets, to_generate[i])
+		var/contract_payout_total = contract_to_add.contract.payout + contract_to_add.contract.payout_bonus
+		
+		assigned_targets.Add(contract_to_add.contract.target)
+
+		if (!lowest_paying_contract || (contract_payout_total < lowest_paying_sum))
+			lowest_paying_sum = contract_payout_total
+			lowest_paying_contract = contract_to_add
+
+		total += contract_payout_total
+		contract_to_add.id = start_index
+		assigned_contracts.Add(contract_to_add)
+
+		start_index++
+
+	// If the threshold for TC payouts isn't reached, boost the lowest paying contract
+	if (total < lowest_TC_threshold)
+		lowest_paying_contract.contract.payout_bonus += (lowest_TC_threshold - total)
 
 /datum/contractor_item
 	var/name // Name of item
@@ -44,6 +99,36 @@
 	var/item_icon = "fa-broadcast-tower" // fontawesome icon to use inside the hub - https://fontawesome.com/icons/
 	var/limited = -1 // Any number above 0 for how many times it can be bought in a round for a single traitor. -1 is unlimited.
 	var/cost // Cost of the item in contract rep.
+
+/datum/contractor_item/contract_reroll
+	name = "Contract Reroll"
+	desc = "Request a reroll of your current contract list. Will generate a new target, payment, and dropoff for the contracts you currently have available."
+	item_icon = "fa-dice"
+	limited = 2
+	cost = 0
+
+/datum/contractor_item/contract_reroll/handle_purchase(var/datum/contractor_hub/hub)
+	. = ..()
+
+	if (.)
+		/// We're not regenerating already completed/aborted/extracting contracts, but we don't want to repeat their targets.
+		var/list/new_target_list = list()
+		for(var/datum/syndicate_contract/contract_check in hub.assigned_contracts)
+			if (contract_check.status != CONTRACT_STATUS_ACTIVE && contract_check.status != CONTRACT_STATUS_INACTIVE)
+				if (contract_check.contract.target)
+					new_target_list.Add(contract_check.contract.target)
+				continue
+		
+		/// Reroll contracts without duplicates
+		for(var/datum/syndicate_contract/rerolling_contract in hub.assigned_contracts)
+			if (rerolling_contract.status != CONTRACT_STATUS_ACTIVE && rerolling_contract.status != CONTRACT_STATUS_INACTIVE)
+				continue
+
+			rerolling_contract.generate(new_target_list)
+			new_target_list.Add(rerolling_contract.contract.target)
+
+		/// Set our target list with the new set we've generated.
+		hub.assigned_targets = new_target_list
 
 /datum/contractor_item/contractor_pinpointer
 	name = "Contractor Pinpointer"
@@ -169,6 +254,8 @@
 		return FALSE
 
 	hub.purchased_items.Add(src)
+
+	user.playsound_local(user, 'sound/machines/uplinkpurchase.ogg', 100)
 
 	if (item && ispath(item))
 		var/atom/item_to_create = new item(get_turf(user))
