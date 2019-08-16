@@ -701,7 +701,7 @@
 	display_name = "Advanced Exosuits"
 	description = "For when you just aren't Gundam enough."
 	prereq_ids = list("adv_robotics")
-	design_ids = list("mech_repair_droid", "mech_advanced_clamp")
+	design_ids = list("mech_repair_droid")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -750,7 +750,7 @@
 	display_name = "Advanced Exosuit Equipment"
 	description = "Tools for high level mech suits"
 	prereq_ids = list("adv_mecha")
-	design_ids = list("mech_rcd")
+	design_ids = list("mech_rcd", "mech_advanced_clamp")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
