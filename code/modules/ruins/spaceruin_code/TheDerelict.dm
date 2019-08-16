@@ -150,7 +150,7 @@
 	return data
 
 
-//Airlock that can't be deconstructed, broken or hacked.
+///Airlock that can't be deconstructed, broken or hacked.
 /obj/machinery/door/airlock/vault/derelict
 	locked = TRUE
 	move_resist = INFINITY
@@ -159,11 +159,8 @@
 	id_tag = "derelictvault"
 
 
-//Overrides rcd_act to prevent all deconstruction.
-/obj/machinery/door/airlock/vault/derelict/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	return
-
-
-//Overrides tool_act to prevent all deconstruction and hacking.
-/obj/machinery/door/airlock/vault/derelict/tool_act(mob/living/user, obj/item/I, tool_type)
-	return
+///Overrides screwdriver attack to prevent all deconstruction and hacking.
+/obj/machinery/door/airlock/vault/derelict/attackby(obj/item/C, mob/user, params)
+	if(C.tool_behaviour == TOOL_SCREWDRIVER)
+		return
+	..()

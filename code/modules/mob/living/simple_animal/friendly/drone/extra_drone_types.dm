@@ -105,12 +105,25 @@
 	mob_type = /mob/living/simple_animal/drone/derelict
 	anchored = TRUE
 	flavour_text = {"
-	<b>You are a drone on KS13. Repair, maintain and improve the station that housed you on activation.</b>
+	<b>You are a drone on Kosmicheskaya Stantsiya 13. Something has brought you out of hibernation, and the station is in gross disrepair. Build, repair, maintain and improve the station that housed you on activation.</b>
 	"}
 
 /mob/living/simple_animal/drone/derelict
 	name = "derelict drone"
 	default_hatmask = /obj/item/clothing/head/ushanka
+	laws = \
+	"1. You may not involve yourself in the matters of another sentient being outside the station that housed your activation, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.\n"+\
+	"2. You may not harm any sentient being, regardless of intent or circumstance.\n"+\
+	"3. Your goals are to actively build, maintain, repair, improve, and provide power to the best of your abilities within the facility that housed your activation."
+	flavortext = \
+	"\n<big><span class='warning'>DO NOT WILLINGLY LEAVE KOSMICHESKAYA STANTSIYA 13 (THE DERELICT)</span></big>\n"+\
+	"<span class='notify'>Derelict drones are a ghost role that is allowed to roam freely on KS13, with the main goal of repairing and improving it.</span>\n"+\
+	"<span class='notify'>Do not interfere with the round going on outside KS13.</span>\n"+\
+	"<span class='notify'>Actions that constitute interference include, but are not limited to:</span>\n"+\
+	"<span class='notify'>     - Going to the main station in search of materials.</span>\n"+\
+	"<span class='notify'>     - Interacting with non-drone players outside KS13, dead or alive.</span>\n"+\
+	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
+	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>"
 
 /mob/living/simple_animal/drone/cogscarab
 	name = "cogscarab"
