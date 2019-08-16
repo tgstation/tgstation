@@ -1,0 +1,5 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - code_imp: "Cleaned up organ decay code."
+  - balance: "Stasis now stops body eggs from processing."
