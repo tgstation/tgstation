@@ -789,11 +789,23 @@
 	load = AM
 	mode = BOT_IDLE
 	update_icon()
+	if(istype(AM, /mob/dead/observer))
+		RegisterSignal(AM, COMSIG_MOVABLE_MOVED, .proc/ghostmoved)
 
-/mob/living/simple_animal/bot/mulebot/paranormal/relaymove(mob/user)
-	if(istype(load, /mob/dead/observer))
-		unload(0)
+/mob/living/simple_animal/bot/mulebot/paranormal/update_icon()
+	if(load && isobserver(load))//there are issues with adding a ghost as an overlay, and this prevents metagaming to see who is dead
+		visible_message("<span class='warning'>A ghostly figure appears on [src]!</span>")
+		var/static/mutable_appearance/greyscale_overlay
+		greyscale_overlay = greyscale_overlay || mutable_appearance('icons/mob/mob.dmi')
+		greyscale_overlay.icon_state = "ghost"
+		add_overlay(greyscale_overlay)
 	..()
+
+/mob/living/simple_animal/bot/mulebot/paranormal/proc/ghostmoved(atom/movable/AM, OldLoc, Dir, Forced)
+	visible_message("<span class='notice'>The ghostly figure vanishes...</span>")
+	UnregisterSignal(AM, COMSIG_MOVABLE_MOVED)
+	unload(0)
+	update_icon()
 
 #undef SIGH
 #undef ANNOYED
