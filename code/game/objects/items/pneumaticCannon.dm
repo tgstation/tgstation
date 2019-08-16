@@ -126,7 +126,8 @@
 	else
 		I.forceMove(src)
 	loadedItems += I
-	loadedWeightClass += I.w_class
+	if(isitem(I))
+		loadedWeightClass += I.w_class
 	return TRUE
 
 /obj/item/pneumatic_cannon/afterattack(atom/target, mob/living/user, flag, params)
