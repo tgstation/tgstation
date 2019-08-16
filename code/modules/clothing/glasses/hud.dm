@@ -200,7 +200,7 @@
 	icon_state = "thermal"
 	hud_type = DATA_HUD_SECURITY_ADVANCED
 	vision_flags = SEE_MOBS
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MILDLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
 /obj/item/clothing/glasses/hud/toggle/thermal/attack_self(mob/user)
