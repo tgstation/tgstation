@@ -745,6 +745,8 @@
 	desc = "A Multiple Utility Load Effector bot. It only seems to accept paranormal forces, and for this reason is fucking useless."
 	icon_state = "paranormalmulebot0"
 	base_icon = "paranormalmulebot"
+	var/static/mutable_appearance/ghost_overlay
+	var/ghost_rider = FALSE
 
 /mob/living/simple_animal/bot/mulebot/paranormal/MouseDrop_T(atom/movable/AM, mob/user)
 	var/mob/living/L = user
@@ -790,20 +792,36 @@
 	mode = BOT_IDLE
 	update_icon()
 	if(istype(AM, /mob/dead/observer))
+		ghost_rider = TRUE
 		RegisterSignal(AM, COMSIG_MOVABLE_MOVED, .proc/ghostmoved)
 
 /mob/living/simple_animal/bot/mulebot/paranormal/update_icon()
-	if(load && isobserver(load))//there are issues with adding a ghost as an overlay, and this prevents metagaming to see who is dead
+	if(load && isobserver(load) && isnull(ghost_overlay))//there are issues with adding a ghost as an overlay, and this prevents metagaming to see who is dead
+		ghost_rider = TRUE
 		visible_message("<span class='warning'>A ghostly figure appears on [src]!</span>")
-		var/static/mutable_appearance/greyscale_overlay
-		greyscale_overlay = greyscale_overlay || mutable_appearance('icons/mob/mob.dmi')
-		greyscale_overlay.icon_state = "ghost"
-		add_overlay(greyscale_overlay)
-	..()
+		ghost_overlay = ghost_overlay || mutable_appearance('icons/mob/mob.dmi')
+		ghost_overlay.icon_state = "ghost"
+		ghost_overlay.pixel_y = 9
+		add_overlay(ghost_overlay)
+	if(open)
+		icon_state="[base_icon]-hatch"
+	else
+		icon_state = "[base_icon][wires.is_cut(WIRE_AVOIDANCE)]"
+	if(!ghost_rider)
+		cut_overlays()
+	if(load && !ismob(load))//buckling handles the mob offsets
+		load.pixel_y = initial(load.pixel_y) + 9
+		if(load.layer < layer)
+			load.layer = layer + 0.01
+		add_overlay(load)
+	return
 
 /mob/living/simple_animal/bot/mulebot/paranormal/proc/ghostmoved(atom/movable/AM, OldLoc, Dir, Forced)
 	visible_message("<span class='notice'>The ghostly figure vanishes...</span>")
 	UnregisterSignal(AM, COMSIG_MOVABLE_MOVED)
+	ghost_rider = FALSE
+	cut_overlays()
+	QDEL_NULL(ghost_overlay)
 	unload(0)
 	update_icon()
 
