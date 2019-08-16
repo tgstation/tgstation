@@ -347,8 +347,10 @@
 			var/dmg = rand(M.force/2, M.force)
 			switch(M.damtype)
 				if("brute")
-					if(M.force > 20)
+					if(M.force > 35) // durand and other heavy mechas
 						Unconscious(20)
+					else if(M.force > 20 && !IsKnockdown()) // lightweight mechas like gygax
+						Knockdown(40)
 					update |= temp.receive_damage(dmg, 0)
 					playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 				if("fire")

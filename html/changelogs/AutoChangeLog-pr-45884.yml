@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "The regenerative coma symptom no longer makes you deathgasp if you haven't met its stealth 2+ threshold."

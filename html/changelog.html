@@ -55,6 +55,71 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">16 August 2019</h2>
+			<h3 class="author">81Denton updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">Explosions now cause knockdown instead of KOs, with the amount of time scaling off bomb armor. Heavy explosions still cause a ~2 second KO for follow up attacks.</li>
+				<li class="balance">Devastating explosions now no longer gib players with more than 50 bomb armor. This used to be more or less random depending on the amount of bomb armor.</li>
+				<li class="code_imp">Removed reagent explosion code that would trigger for <1 amount reactions.</li>
+			</ul>
+			<h3 class="author">ATHATH updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">The regenerative coma symptom no longer makes you deathgasp if you haven't met its stealth 2+ threshold.</li>
+			</ul>
+			<h3 class="author">Akrilla updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Adds a new ghetto chem, Pump-Up, which can be made with epinephrine and coffee. Quick to metabolize, but massively lowers stun baton stun time. 2 epi : 5 coffee makes 5 units.</li>
+				<li class="rscadd">Maintenance Pump-Up - a ghetto autoinjector containing the new chem, which is now part of the maintenance loot spawns.</li>
+				<li class="tweak">Stun baton applies a delayed stun, with initial hit dealing stamina damage, slowdown and other effects. The stun will be applied 2 seconds after, but two hits put them in stamina crit instantly. There's a delay of two seconds before the baton can stun again.</li>
+				<li class="tweak">Regular batons, e.g. telescopic, detective's, and contractor baton now deal a two second knockdown, with stamina damage. Two hits stuns them with a stamina crit.</li>
+			</ul>
+			<h3 class="author">Dawson1917 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscdel">Removed GPS from the Deep Storage ruin and the Caravan Ambush ruin</li>
+				<li class="rscadd">ED-209s now get a disabler!</li>
+				<li class="rscdel">ED-209s no longer have a DragNET</li>
+				<li class="bugfix">Fixed a bug that let anyone unlock the ED-209s controls regardless of their access.</li>
+				<li class="bugfix">The "beserker" hardsuit has had its name corrected to "berserker"</li>
+			</ul>
+			<h3 class="author">Dennok updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">You can perform many surgeries at one time again.</li>
+				<li class="rscadd">You can see target of started surgery on operating computer.</li>
+			</ul>
+			<h3 class="author">Sanator updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">fixed pod suit storage not working as intended</li>
+			</ul>
+			<h3 class="author">Tlaltecuhtli updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">gygax now has force 25 instead of 30</li>
+				<li class="balance">gygax inflicts knockdown instead of unconscious</li>
+				<li class="balance">leg acurator doesnt auto punch</li>
+			</ul>
+			<h3 class="author">actioninja updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">fried foods now have proper x/y dimensions</li>
+			</ul>
+			<h3 class="author">cacogen updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Can only get one HoP ticket per person unless it's emagged</li>
+				<li class="tweak">Previous ticket deletes ("disperses", it's "nanite paper") when HoP calls the next customer</li>
+				<li class="tweak">Reduces maximum number of tickets to 100 because the refill mechanic would never be used otherwise</li>
+				<li class="rscdel">Can no longer recycle tickets using the machine, because it allows you to artificially inflate the amount of tickets the HoP has to get through</li>
+				<li class="rscadd">Tickets vibrate (nanomachines, son) when it's your turn, so you can step away from the line if it's taking too long</li>
+			</ul>
+			<h3 class="author">carlarctg updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">cultists can now easily snuff out blood spells by dropping them. they will also drop the spell when stunned, but can easily activate it again</li>
+			</ul>
+			<h3 class="author">nemvar updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Arm implants now support having more than two hands.</li>
+				<li class="bugfix">Arm implants now properly work all the time.</li>
+				<li class="code_imp">Cleaned up organ decay code.</li>
+				<li class="balance">Stasis now stops body eggs from processing.</li>
+			</ul>
+
 			<h2 class="date">14 August 2019</h2>
 			<h3 class="author">AcapitalA updated:</h3>
 			<ul class="changes bgimages16">
@@ -2177,46 +2242,6 @@
 			<h3 class="author">Shaps/Ryll updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="tweak">NT has updated its personnel policies and allowed for employees to register as gender neutral, with standard support for they/them pronouns.</li>
-			</ul>
-
-			<h2 class="date">14 June 2019</h2>
-			<h3 class="author">Citinited updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixes an exploit allowing you to move enabled emitters</li>
-			</ul>
-			<h3 class="author">Naksu updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscdel">Free nanomeds have been removed from mining capsules</li>
-			</ul>
-			<h3 class="author">WJohnston updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Having very high sanity no longer takes away your action speed bonus.</li>
-				<li class="bugfix">Sanity no longer constantly dips beyond its maximum/minimum, which caused issues.</li>
-			</ul>
-			<h3 class="author">XDTM updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Decreased the cost of the advanced surgery node to 1500 from 2500, as was intended when adding the Improved Wound Mending node.</li>
-				<li class="bugfix">Interrupting a surgery step or finishing a repeatable surgery step no longer uses the tool on the target, attacking or forcefeeding them.</li>
-			</ul>
-			<h3 class="author">actioninja updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Being fat is no longer lessened by flying</li>
-			</ul>
-			<h3 class="author">fludd12 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">A bunch of minor issues with xenobiology are no more!</li>
-			</ul>
-			<h3 class="author">nemvar updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">A new objective type: "Protect Object". Please use it at leasure for badminnery.</li>
-				<li class="rscadd">Ashlizards are now more savage and like stuff like sacrificing and head spikes.</li>
-				<li class="bugfix">The "toggle open" verb from closets works now.</li>
-			</ul>
-
-			<h2 class="date">13 June 2019</h2>
-			<h3 class="author">Tlaltecuhtli updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">surgical drapes and syringes can be printed by medlathe</li>
 			</ul>
 		</div>
 
