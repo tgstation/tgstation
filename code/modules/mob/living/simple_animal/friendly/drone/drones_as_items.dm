@@ -17,9 +17,6 @@
 	roundstart = FALSE
 	mob_type = /mob/living/simple_animal/drone //Type of drone that will be spawned
 
-	var/seasonal_hats = TRUE //If TRUE, and there are no default hats, different holidays will grant different hats
-	var/static/list/possible_seasonal_hats //This is built automatically in build_seasonal_hats() but can also be edited by admins!
-
 /obj/effect/mob_spawn/drone/Initialize()
 	. = ..()
 	var/area/A = get_area(src)
@@ -28,15 +25,6 @@
 	GLOB.poi_list |= src
 	if(isnull(possible_seasonal_hats))
 		build_seasonal_hats()
-
-/obj/effect/mob_spawn/drone/proc/build_seasonal_hats()
-	possible_seasonal_hats = list()
-	if(!length(SSevents.holidays))
-		return //no holidays, no hats; we'll keep the empty list so we never call this proc again
-	for(var/V in SSevents.holidays)
-		var/datum/holiday/holiday = SSevents.holidays[V]
-		if(holiday.drone_hat)
-			possible_seasonal_hats += holiday.drone_hat
 
 /obj/effect/mob_spawn/drone/Destroy()
 	GLOB.poi_list -= src
