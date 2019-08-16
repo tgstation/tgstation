@@ -182,7 +182,7 @@
 	plantname = "Chanterelle Mushrooms"
 	product = /obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle
 	lifespan = 35
-	endurance = 8
+	endurance = 20
 	maturation = 7
 	production = 1
 	yield = 5
@@ -191,6 +191,7 @@
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
+	mutatelist = list(/obj/item/seeds/chanterelle/jupitercup)
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle
 	seed = /obj/item/seeds/chanter
@@ -207,8 +208,10 @@
 	species = "jupitercup"
 	plantname = "Jupiter Cups"
 	product = /obj/item/reagent_containers/food/snacks/grown/mushroom/jupitercup
-	production = 3
-	endurance = 35
+	lifespan = 40
+	production = 4
+	endurance = 8
+	yield = 4
 	growthstages = 2
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/reagent/liquidelectricity, /datum/plant_gene/trait/plant_type/carnivory)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
@@ -216,8 +219,8 @@
 
 /obj/item/seeds/chanterelle/jupitercup/Initialize()
 	..()
-	set_mutability(/datum/plant_gene/reagent/liquidelectricity, PLANT_GENE_REMOVABLE)
-	set_mutability(/datum/plant_gene/trait/plant_type/carnivory, PLANT_GENE_IMMUTABLE)
+	unset_mutability(/datum/plant_gene/reagent/liquidelectricity, PLANT_GENE_EXTRACTABLE)
+	unset_mutability(/datum/plant_gene/trait/plant_type/carnivory, PLANT_GENE_REMOVABLE)
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/jupitercup
 	seed = /obj/item/seeds/chanterelle/jupitercup

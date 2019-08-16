@@ -1,13 +1,13 @@
 /datum/plant_gene
 	var/name
-	var/mutability = PLANT_GENE_EXTRACTABLE ///This variable tells the genemodder if we want the gene to be extractable, only removable or neither.
+	var/mutability_flags = PLANT_GENE_EXTRACTABLE | PLANT_GENE_REMOVABLE ///These flags tells the genemodder if we want the gene to be extractable, only removable or neither.
 
 /datum/plant_gene/proc/get_name() // Used for manipulator display and gene disk name.
 	var/formatted_name
-	if(mutability == PLANT_GENE_IMMUTABLE)
-		formatted_name += "Immutable "
-	else if(mutability == PLANT_GENE_REMOVABLE)
-		formatted_name += "Excisable "
+//	if(mutability == PLANT_GENE_IMMUTABLE)
+//		formatted_name += "Immutable "
+//	else if(mutability == PLANT_GENE_REMOVABLE)
+//		formatted_name += "Excisable "
 	formatted_name += name
 	return formatted_name
 
@@ -109,10 +109,10 @@
 
 /datum/plant_gene/reagent/get_name()
 	var/formatted_name
-	if(mutability == PLANT_GENE_IMMUTABLE)
-		formatted_name += "Immutable "
-	else if(mutability == PLANT_GENE_REMOVABLE)
-		formatted_name += "Excisable "
+//	if(mutability_flags & PLANT_GENE_IMMUTABLE)
+//		formatted_name += "Immutable "
+//	else if(mutability_flags & PLANT_GENE_REMOVABLE)
+//		formatted_name += "Excisable "
 	formatted_name += "[name] production [rate*100]%"
 	return formatted_name
 

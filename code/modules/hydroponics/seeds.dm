@@ -96,10 +96,15 @@
 		reagents_add[R.reagent_id] = R.rate
 
 ///Call this to set if the gene modder should disallow extracting and/or removing a gene.
-/obj/item/seeds/proc/set_mutability(typepath, _mutability)
+/obj/item/seeds/proc/set_mutability(typepath, mutability)
 	var/datum/plant_gene/g = get_gene(typepath)
 	if(g)
-		g.mutability = _mutability
+		g.mutability_flags |=  mutability
+
+/obj/item/seeds/proc/unset_mutability(typepath, mutability)
+	var/datum/plant_gene/g = get_gene(typepath)
+	if(g)
+		g.mutability_flags &=  ~mutability
 
 /obj/item/seeds/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0)
 	adjust_lifespan(rand(-lifemut,lifemut))
