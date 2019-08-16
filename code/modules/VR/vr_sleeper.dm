@@ -10,8 +10,6 @@
 	state_open = TRUE
 	occupant_typecache = list(/mob/living/carbon/human) // turned into typecache in Initialize
 	circuit = /obj/item/circuitboard/machine/vr_sleeper
-	ui_x = 475
-	ui_y = 340
 	var/you_die_in_the_game_you_die_for_real = FALSE
 	var/datum/effect_system/spark_spread/sparks
 	var/mob/living/carbon/human/virtual_reality/vr_human

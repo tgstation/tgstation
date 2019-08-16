@@ -6,6 +6,7 @@
 	circuit = /obj/item/circuitboard/computer/nanite_cloud_controller
 	ui_x = 600
 	ui_y = 800
+	
 	var/obj/item/disk/nanite_program/disk
 	var/list/datum/nanite_cloud_backup/cloud_backups = list()
 	var/current_view = 0 //0 is the main menu, any other number is the page of the backup with that ID

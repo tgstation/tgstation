@@ -13,7 +13,6 @@
 	
 	var/auth_need = 3
 	var/list/authorized = list()
-	
 
 /obj/machinery/computer/emergency_shuttle/attackby(obj/item/I, mob/user,params)
 	if(istype(I, /obj/item/card/id))
