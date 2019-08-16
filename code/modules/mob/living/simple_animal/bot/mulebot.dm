@@ -33,6 +33,7 @@
 
 	path_image_color = "#7F5200"
 
+	var/base_icon = "mulebot"
 	var/atom/movable/load = null
 	var/mob/living/passenger = null
 	var/turf/target				// this is turf to navigate to (location of beacon)
@@ -125,9 +126,9 @@
 
 /mob/living/simple_animal/bot/mulebot/update_icon()
 	if(open)
-		icon_state="mulebot-hatch"
+		icon_state="[base_icon]-hatch"
 	else
-		icon_state = "mulebot[wires.is_cut(WIRE_AVOIDANCE)]"
+		icon_state = "[base_icon][wires.is_cut(WIRE_AVOIDANCE)]"
 	cut_overlays()
 	if(load && !ismob(load))//buckling handles the mob offsets
 		load.pixel_y = initial(load.pixel_y) + 9
@@ -449,7 +450,7 @@
 			num_steps--
 			if(mode != BOT_IDLE)
 				var/process_timer = addtimer(CALLBACK(src, .proc/process_bot), 2, TIMER_LOOP|TIMER_STOPPABLE)
-				addtimer(CALLBACK(GLOBAL_PROC, /proc/deltimer, process_timer), (num_steps*2) + 1) 
+				addtimer(CALLBACK(GLOBAL_PROC, /proc/deltimer, process_timer), (num_steps*2) + 1)
 
 /mob/living/simple_animal/bot/mulebot/proc/process_bot()
 	if(!on || client)
@@ -738,6 +739,59 @@
 /mob/living/simple_animal/bot/mulebot/insertpai(mob/user, obj/item/paicard/card)
 	if(..())
 		visible_message("[src] safeties are locked on.")
+
+/mob/living/simple_animal/bot/mulebot/paranormal//allows ghosts only unless hacked to actually be useful
+	name = "paranormal MULEbot"
+	desc = "A Multiple Utility Load Effector bot. It only seems to accept paranormal forces, and for this reason is fucking useless."
+	icon_state = "paranormalmulebot0"
+	base_icon = "paranormalmulebot"
+
+/mob/living/simple_animal/bot/mulebot/paranormal/MouseDrop_T(atom/movable/AM, mob/user)
+	var/mob/living/L = user
+
+	if(user.incapacitated() || (istype(L) && !(L.mobility_flags & MOBILITY_STAND)))
+		return
+
+	if(!istype(AM) || iscameramob(AM) || istype(AM, /obj/effect/dummy/phased_mob)) //allows ghosts!
+		return
+
+	load(AM)
+
+/mob/living/simple_animal/bot/mulebot/paranormal/load(atom/movable/AM)
+	if(load ||  AM.anchored)
+		return
+
+	if(!isturf(AM.loc)) //To prevent the loading from stuff from someone's inventory or screen icons.
+		return
+
+	if(istype(AM, /mob/dead/observer))
+		var/mob/dead/observer/ghost = AM
+	else
+		if(!wires.is_cut(WIRE_LOADCHECK))
+			buzz(SIGH)
+			return	// if not hacked, only allow ghosts to be loaded
+
+	var/obj/structure/closet/crate/CRATE
+	if(istype(AM, /obj/structure/closet/crate))
+		CRATE = AM
+	if(CRATE) // if it's a crate, close before loading
+		CRATE.close()
+
+	if(isobj(AM))
+		var/obj/O = AM
+		if(O.has_buckled_mobs() || (locate(/mob) in AM)) //can't load non crates objects with mobs buckled to it or inside it.
+			buzz(SIGH)
+			return
+
+	if(isliving(AM))
+		if(!load_mob(AM))
+			return
+	else
+		AM.forceMove(src)
+
+	load = AM
+	mode = BOT_IDLE
+	update_icon()
 
 #undef SIGH
 #undef ANNOYED
