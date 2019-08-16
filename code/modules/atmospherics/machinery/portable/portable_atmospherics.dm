@@ -14,6 +14,9 @@
 
 	var/maximum_pressure = 90 * ONE_ATMOSPHERE
 
+	ui_x = 420
+	ui_y = 435
+
 /obj/machinery/portable_atmospherics/New()
 	..()
 	SSair.atmos_machinery += src

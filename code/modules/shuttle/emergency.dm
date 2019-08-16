@@ -8,8 +8,12 @@
 	desc = "For shuttle control."
 	icon_screen = "shuttle"
 	icon_keyboard = "tech_key"
+	ui_x = 400
+	ui_y = 400
+	
 	var/auth_need = 3
 	var/list/authorized = list()
+	
 
 /obj/machinery/computer/emergency_shuttle/attackby(obj/item/I, mob/user,params)
 	if(istype(I, /obj/item/card/id))
@@ -20,8 +24,7 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "emergency_shuttle_console", name,
-			400, 400, master_ui, state)
+		ui = new(user, src, ui_key, "emergency_shuttle_console", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/emergency_shuttle/ui_data()
