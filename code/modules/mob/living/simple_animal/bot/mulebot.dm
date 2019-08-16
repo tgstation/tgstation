@@ -764,12 +764,9 @@
 	if(!isturf(AM.loc)) //To prevent the loading from stuff from someone's inventory or screen icons.
 		return
 
-	if(istype(AM, /mob/dead/observer))
-		var/mob/dead/observer/ghost = AM
-	else
-		if(!wires.is_cut(WIRE_LOADCHECK))
-			buzz(SIGH)
-			return	// if not hacked, only allow ghosts to be loaded
+	if(!istype(AM, /mob/dead/observer) && !wires.is_cut(WIRE_LOADCHECK))
+		buzz(SIGH)
+		return	// if not hacked, only allow ghosts to be loaded
 
 	var/obj/structure/closet/crate/CRATE
 	if(istype(AM, /obj/structure/closet/crate))
@@ -792,6 +789,11 @@
 	load = AM
 	mode = BOT_IDLE
 	update_icon()
+
+/mob/living/simple_animal/bot/mulebot/paranormal/relaymove(mob/user)
+	if(istype(load, /mob/dead/observer))
+		unload(0)
+	..()
 
 #undef SIGH
 #undef ANNOYED
