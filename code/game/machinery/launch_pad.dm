@@ -71,6 +71,15 @@
 
 	return ..()
 
+/obj/machinery/launchpad/attack_ghost(mob/dead/observer/ghost)
+	. = ..()
+	if(.)
+		return
+	var/target_x = x + x_offset
+	var/target_y = y + y_offset
+	var/turf/target = locate(target_x, target_y, z)
+	ghost.forceMove(target)
+
 /obj/machinery/launchpad/proc/isAvailable()
 	if(stat & NOPOWER)
 		return FALSE
@@ -145,6 +154,7 @@
 	for(var/atom/movable/ROI in source)
 		if(ROI == src)
 			continue
+		if(!istype(ROI) || isdead(ROI) || iscameramob(ROI) || istype(ROI, /obj/effect/dummy/phased_mob))
 		// if it's anchored, don't teleport
 		var/on_chair = ""
 		if(ROI.anchored)
@@ -154,12 +164,9 @@
 					// TP people on office chairs
 					if(L.buckled.anchored)
 						continue
-
 					on_chair = " (on a chair)"
 				else
 					continue
-			else if(!isobserver(ROI))
-				continue
 		if(!first)
 			log_msg += ", "
 		if(ismob(ROI))
