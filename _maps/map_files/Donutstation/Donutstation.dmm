@@ -17728,7 +17728,8 @@
 /area/medical/morgue)
 "aSA" = (
 /obj/machinery/atmospherics/components/unary/tank/toxins{
-	dir = 4
+	dir = 4;
+	initialize_directions = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -17782,6 +17783,9 @@
 /obj/machinery/computer/security/telescreen/turbine{
 	dir = 1;
 	pixel_y = -30
+	},
+/obj/machinery/computer/atmos_control/incinerator{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
@@ -25358,6 +25362,7 @@
 /obj/item/radio/intercom{
 	pixel_x = 29
 	},
+/obj/item/reagent_containers/dropper,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bkl" = (
@@ -41104,6 +41109,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/computer/atmos_control/toxinsmix,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bUg" = (

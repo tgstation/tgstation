@@ -16665,6 +16665,9 @@
 	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/computer/atmos_control/incinerator{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/maintenance/disposal/incinerator)
 "aLe" = (
@@ -81930,6 +81933,7 @@
 	pixel_x = 32;
 	receive_ore_updates = 1
 	},
+/obj/item/reagent_containers/dropper,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cVU" = (
@@ -115182,6 +115186,9 @@
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
+	},
+/obj/machinery/computer/atmos_control/toxinsmix{
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)

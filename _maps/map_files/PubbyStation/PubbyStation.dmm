@@ -33686,6 +33686,9 @@
 	dir = 1;
 	pixel_y = -24
 	},
+/obj/machinery/computer/atmos_control/toxinsmix{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing/chamber)
 "bGt" = (
@@ -41725,6 +41728,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/computer/atmos_control/incinerator,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/disposal/incinerator)
 "bZg" = (
@@ -42418,7 +42422,10 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/components/unary/tank/toxins,
+/obj/machinery/atmospherics/components/unary/tank/toxins{
+	dir = 4;
+	initialize_directions = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/maintenance/disposal/incinerator)
 "cbC" = (
