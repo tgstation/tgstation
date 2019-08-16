@@ -359,12 +359,10 @@
 /area/janitor)
 "aaW" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/delivery,
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = -28
 	},
 /obj/structure/closet/radiation,
-/obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
@@ -2063,9 +2061,7 @@
 /area/crew_quarters/fitness/recreation)
 "aeD" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/delivery,
 /obj/structure/closet/radiation,
-/obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
@@ -7872,8 +7868,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/closet/secure_closet/atmospherics,
-/obj/effect/turf_decal/delivery,
-/obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)

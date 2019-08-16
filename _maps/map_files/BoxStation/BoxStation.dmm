@@ -50841,6 +50841,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/brig)
+"otB" = (
+/obj/machinery/computer/atmos_control/toxinsmix,
+/turf/open/floor/plasteel/white,
+/area/science/mixing)
 "ouv" = (
 /obj/machinery/airalarm{
 	pixel_y = 28
@@ -100847,7 +100851,7 @@ bMv
 bNv
 bMv
 rcD
-bFU
+otB
 tjy
 bFU
 piD
