@@ -155,9 +155,9 @@
 		if(ROI == src)
 			continue
 		if(!istype(ROI) || isdead(ROI) || iscameramob(ROI) || istype(ROI, /obj/effect/dummy/phased_mob))
-		// if it's anchored, don't teleport
+			continue//don't teleport these
 		var/on_chair = ""
-		if(ROI.anchored)
+		if(ROI.anchored)// if it's anchored, don't teleport
 			if(isliving(ROI))
 				var/mob/living/L = ROI
 				if(L.buckled)
