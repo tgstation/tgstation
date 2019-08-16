@@ -1,6 +1,0 @@
-author: "Dawson1917"
-delete-after: True
-changes: 
-  - rscadd: "ED-209s now get a disabler!"
-  - rscdel: "ED-209s no longer have a DragNET"
-  - bugfix: "Fixed a bug that let anyone unlock the ED-209s controls regardless of their access."

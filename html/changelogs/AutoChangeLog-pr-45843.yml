@@ -1,5 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - rscadd: "Arm implants now support having more than two hands."
-  - bugfix: "Arm implants now properly work all the time."

@@ -1,6 +1,0 @@
-author: "Tlaltecuhtli"
-delete-after: True
-changes: 
-  - balance: "gygax now has force 25 instead of 30"
-  - balance: "gygax inflicts knockdown instead of unconscious"
-  - balance: "leg acurator doesnt auto punch"

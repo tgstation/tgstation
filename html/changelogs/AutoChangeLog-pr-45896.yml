@@ -1,4 +1,0 @@
-author: "Sanator"
-delete-after: True
-changes: 
-  - bugfix: "fixed pod suit storage not working as intended"

@@ -1,8 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - tweak: "Can only get one HoP ticket per person unless it's emagged"
-  - tweak: "Previous ticket deletes (\"disperses\", it's \"nanite paper\") when HoP calls the next customer"
-  - tweak: "Reduces maximum number of tickets to 100 because the refill mechanic would never be used otherwise"
-  - rscdel: "Can no longer recycle tickets using the machine, because it allows you to artificially inflate the amount of tickets the HoP has to get through"
-  - rscadd: "Tickets vibrate (nanomachines, son) when it's your turn, so you can step away from the line if it's taking too long"
