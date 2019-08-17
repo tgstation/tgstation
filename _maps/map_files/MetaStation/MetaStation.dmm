@@ -456,10 +456,15 @@
 /turf/open/floor/plasteel/freezer,
 /area/security/prison)
 "abj" = (
-/obj/structure/easel,
-/obj/item/canvas/twentythreeXtwentythree,
-/obj/item/canvas/twentythreeXtwentythree,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/storage/photo_album/prison{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/camera{
+	pixel_x = -4
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "abk" = (
@@ -771,6 +776,7 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
+/obj/item/storage/photo_album/bar,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "abV" = (
@@ -65640,14 +65646,10 @@
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "cMG" = (
-/obj/item/paper_bin{
-	pixel_x = -2;
-	pixel_y = 8
-	},
-/obj/item/pen,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table/wood,
 /obj/structure/cable,
+/obj/item/storage/photo_album/chapel,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "cMH" = (
@@ -74657,7 +74659,7 @@
 /area/vacant_room/commissary)
 "qLf" = (
 /obj/structure/table/wood,
-/obj/item/storage/photo_album,
+/obj/item/storage/photo_album/library,
 /turf/open/floor/engine/cult,
 /area/library)
 "rbG" = (
