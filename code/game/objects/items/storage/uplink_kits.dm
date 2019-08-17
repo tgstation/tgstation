@@ -90,16 +90,13 @@
 			new /obj/item/storage/toolbox/syndicate(src)
 
 		if("sabotage")
-			new /obj/item/grenade/c4 (src) // 1 TC
-			new /obj/item/grenade/c4 (src) // 1 TC
-			new /obj/item/multitool/ai_detect(src) // 2 TC
-			new /obj/item/card/emag(src) // 6 TC
-			new /obj/item/camera_bug(src) // 2 TC
-			new /obj/item/sbeacondrop/powersink(src) // 10 TC
-			new /obj/item/cartridge/virus/syndicate(src) // 4 TC
-			new /obj/item/storage/toolbox/syndicate(src) // 2 TC
-			new /obj/item/pizzabox/bomb(src) // 3 TC
-			new /obj/item/storage/box/syndie_kit/emp(src) // 2 TC
+			new /obj/item/multitool/ai_detect(src)
+			new /obj/item/camera_bug(src)
+			new /obj/item/sbeacondrop/powersink(src)
+			new /obj/item/cartridge/virus/syndicate(src)
+			new /obj/item/storage/toolbox/syndicate(src)
+			new /obj/item/pizzabox/bomb(src)
+			new /obj/item/storage/box/syndie_kit/emp(src)
 
 		if("sniper") //This shit is unique so can't really balance it around tc, also no silencer because getting killed without ANY indicator on what killed you sucks
 			new /obj/item/gun/ballistic/automatic/sniper_rifle(src) // 12 tc
@@ -528,3 +525,21 @@
 /obj/item/storage/box/syndie_kit/bee_grenades/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/grenade/spawnergrenade/buzzkill(src)
+
+/obj/item/storage/backpack/duffelbag/syndie/sabotage
+
+/obj/item/storage/backpack/duffelbag/syndie/sabotage/PopulateContents()
+	new /obj/item/grenade/c4(src)
+	new /obj/item/grenade/c4(src)
+	new /obj/item/grenade/c4(src)
+	new /obj/item/grenade/c4/x4(src)
+	new /obj/item/grenade/c4/x4(src)
+	new /obj/item/storage/box/syndie_kit/signaler(src)
+
+/obj/item/storage/box/syndie_kit/signaler
+	name = "Signaler Box"
+	desc = "Contains everything an agent would need to remotely detonate their bombs."
+
+/obj/item/storage/box/syndie_kit/signaler/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/assembly/signaler(src)
