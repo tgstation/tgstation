@@ -194,7 +194,7 @@
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_combined_w_class = 100
 	STR.max_items = 100
-	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/grown, /obj/item/seeds, /obj/item/grown, /obj/item/reagent_containers/honeycomb))
+	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/grown, /obj/item/seeds, /obj/item/grown, /obj/item/reagent_containers/honeycomb, /obj/item/disk/plantgene))
 ////////
 
 /obj/item/storage/bag/plants/portaseeder
