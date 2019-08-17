@@ -152,8 +152,4 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	switch(severity)
-		if(1)
-			damage+=40
-		if(2)
-			damage+=25
+	damage += 40/severity
