@@ -85,6 +85,7 @@
 		var/obj/S = pick(crowbar_salvage)
 		S.forceMove(user.drop_location())
 		user.visible_message("[user] pries [S] from [src].", "<span class='notice'>You pry [S] from [src].</span>")
+		crowbar_salvage -= S
 		return
 	to_chat(user, "<span class='notice'>You don't see anything that can be cut with [I]!</span>")
 
