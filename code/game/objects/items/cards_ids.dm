@@ -373,7 +373,7 @@ update_label()
 		if(popup_input == "Forge")
 			var/input_text = input(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name))as text | null
 			
-			if (input_text == null)
+			if (isnull(input_text))
 				return
 			
 			var/t = copytext(sanitize(input_text), 1, 26)
