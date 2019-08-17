@@ -537,7 +537,7 @@
 	new /obj/item/storage/box/syndie_kit/signaler(src)
 
 /obj/item/storage/box/syndie_kit/signaler
-	name = "Signaler Box"
+	name = "signaler box"
 	desc = "Contains everything an agent would need to remotely detonate their bombs."
 
 /obj/item/storage/box/syndie_kit/signaler/PopulateContents()
