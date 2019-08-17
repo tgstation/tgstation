@@ -170,18 +170,18 @@
 	..()
 
 	switch (severity)
-		if (1)
+		if (EXPLODE_DEVASTATE)
 			gib()
 			return
 
-		if (2)
+		if (EXPLODE_HEAVY)
 			take_overall_damage(60, 60)
 			damage_clothes(200, BRUTE, "bomb")
 			adjustEarDamage(30, 120)
 			if(prob(70))
 				Unconscious(200)
 
-		if(3)
+		if(EXPLODE_LIGHT)
 			take_overall_damage(30, 0)
 			damage_clothes(50, BRUTE, "bomb")
 			adjustEarDamage(15,60)

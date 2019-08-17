@@ -356,8 +356,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/proc/Communicate()
 	if(summoner)
+		var/sender_key = key
 		var/input = stripped_input(src, "Please enter a message to tell your summoner.", "Guardian", "")
-		if(!input)
+		if(sender_key != key || !input) //guardian got reset, or did not enter anything
 			return
 
 		var/preliminary_message = "<span class='holoparasite bold'>[input]</span>" //apply basic color/bolding

@@ -1,4 +1,0 @@
-author: "bandit"
-delete-after: True
-changes: 
-  - tweak: "Clicking a display case on help intent examines it."
