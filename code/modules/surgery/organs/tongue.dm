@@ -19,6 +19,7 @@
 		/datum/language/ratvar,
 		/datum/language/aphasia,
 		/datum/language/piratespeak,
+		//datum/language/vox_pidgin,
 	))
 
 /obj/item/organ/tongue/Initialize(mapload)
@@ -44,6 +45,7 @@
 
 /obj/item/organ/tongue/could_speak_in_language(datum/language/dt)
 	return is_type_in_typecache(dt, languages_possible)
+
 
 /obj/item/organ/tongue/lizard
 	name = "forked tongue"

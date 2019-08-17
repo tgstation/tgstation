@@ -3,6 +3,7 @@
 	icon_state = "bullet"
 	damage = 60
 	damage_type = BRUTE
+	pointed = IS_POINTED
 	nodamage = FALSE
 	flag = "bullet"
 	hitsound_wall = "ricochet"

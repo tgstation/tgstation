@@ -174,10 +174,34 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define REFLECT_NORMAL 				(1<<0)
 #define REFLECT_FAKEPROJECTILE		(1<<1)
 
-//Object/Item sharpness
+
+		//sharpness and pointedness defines, damage procs figure out what subtype of physical (brute) damage is being inflicted based
+		//on these parameters
+
+//sharpness, used to determine if an attack does slashing damage, and for a variety of things like butchering and surgery where you need a cutting implement
 #define IS_BLUNT			0
 #define IS_SHARP			1
 #define IS_SHARP_ACCURATE	2
+
+//pointedness, used to determine if an attack does piercing damage. This overrides sharp when both are in an attack's type_array, but we need both for odds and ends that use these
+#define NOT_POINTED			0
+#define IS_POINTED			1
+
+//used to determine which of the energy subtypes an attack applies, this is important for critical damage effects
+#define ENERGYTYPE_BURN 	0 //burn damage to critical parts can set the mob on fire, and continous fire damage to a limb will burn it to ash in time (cremation_progress)
+#define ENERGYTYPE_ENERGY	1 //energy damage should be given to any burn-like damage that shouldn't be able to set a mob on fire.
+#define ENERGYTYPE_COLD		2 //cold type damage applies stamina damage and eventually leads to frostbite, disabling limbs without surgery
+#define ENERGYTPYE_ACID		3 //
+
+		//Critical and bloodloss damage constants
+#define SHARP_BLEED_FACTOR   		0.1 // 10% of a slashing attack's damage will be applied to a limb as bloodloss
+#define PUNCTURE_BLEED_FACTOR   	0.05 // 5% of a puncturing weapons damage will be applied to a limb as bloodloss
+#define INTERNAL_BLEEDING_THRESHOLD 0.5 // piercing attacks dealing 50% of a part's max_damage will cause internal bleeding in crit
+#define DISMEMBERMENT_THRESHOLD     0.2 // slashing attacks dealing 20% of a part's max_damage will increment the dismemberment_progress counter
+#define IMPACT_FRACTURE_THRESHOLD   0.025 // impact attacks dealing 10% of a part's max_damage will increment the fracture_progress counter
+#define IMPACT_ORGAN_DAMAGE 	    0.05 // 20% of critical impact damage passes through to vital organs at max critical damage
+#define IMPACT_ORGAN_DAMAGE_MAX 	0.5 // impact damage to organs will not exceed 50% damage 
+
 
 //His Grace.
 #define HIS_GRACE_SATIATED 0 //He hungers not. If bloodthirst is set to this, His Grace is asleep.

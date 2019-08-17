@@ -2,7 +2,6 @@
 
 #define HIEROPHANT_CLUB_CARDINAL_DAMAGE 30
 
-
 /obj/structure/closet/crate/necropolis
 	name = "necropolis chest"
 	desc = "It's watching you closely."

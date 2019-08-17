@@ -121,7 +121,7 @@
 
 	if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
 		to_chat(attached, "<span class='userdanger'>The IV drip needle is ripped out of you!</span>")
-		attached.apply_damage(3, BRUTE, pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM))
+		attached.apply_damage(3, BRUTE, pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM), force = TRUE, crit_array = list(IS_BLUNT, IS_POINTED, FALSE))
 		attached = null
 		update_icon()
 		return PROCESS_KILL

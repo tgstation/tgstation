@@ -88,7 +88,7 @@
 
 	//Apply the damage!
 	armor_block = min(90,armor_block)
-	target.apply_damage(force, BRUTE, affecting, armor_block)
+	target.apply_damage(force, BRUTE, affecting, armor_block, crit_array = list(IS_BLUNT, NOT_POINTED, TRUE))
 
 	// You are going to knock someone down for longer if they are not wearing a helmet.
 	var/head_attack_message = ""

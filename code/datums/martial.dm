@@ -65,7 +65,7 @@
 	D.visible_message("<span class='danger'>[A] [atk_verb]ed [D]!</span>", \
 			"<span class='userdanger'>[A] [atk_verb]ed you!</span>", null, COMBAT_MESSAGE_RANGE)
 
-	D.apply_damage(damage, A.dna.species.attack_type, affecting, armor_block)
+	D.apply_damage(damage, A.dna.species.attack_type, affecting, armor_block, crit_array = A.get_crit_array())
 
 	log_combat(A, D, "punched")
 

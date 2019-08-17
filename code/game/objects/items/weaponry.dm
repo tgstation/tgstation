@@ -294,6 +294,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 25 //kills regular carps in one hit
 	force = 10
 	throw_range = 0 //throwing these invalidates the speargun
+	pointed = IS_POINTED
 	attack_verb = list("stabbed", "ripped", "gored", "impaled")
 	embedding = list("embedded_pain_multiplier" = 8, "embed_chance" = 100, "embedded_fall_chance" = 0, "embedded_impact_pain_multiplier" = 15) //55 damage+embed on hit
 
@@ -325,7 +326,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		icon_state = "switchblade_ext"
 		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 		hitsound = 'sound/weapons/bladeslice.ogg'
-		sharpness = IS_SHARP
+		pointed = IS_POINTED
 	else
 		force = 3
 		w_class = WEIGHT_CLASS_SMALL
@@ -333,7 +334,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		icon_state = "switchblade"
 		attack_verb = list("stubbed", "poked")
 		hitsound = 'sound/weapons/genhit.ogg'
-		sharpness = IS_BLUNT
+		pointed = NOT_POINTED
 
 /obj/item/switchblade/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -427,7 +428,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/mounted_chainsaw
 	name = "mounted chainsaw"
-	desc = "A chainsaw that has replaced your arm."
+	desc = "A chainsaw that has replaced your arm. Groovy!"
 	icon_state = "chainsaw_on"
 	item_state = "mounted_chainsaw"
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'

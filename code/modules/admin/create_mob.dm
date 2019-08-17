@@ -28,6 +28,9 @@
 	H.dna.features["mcolor"] = random_short_color()
 	H.dna.features["ethcolor"] = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)]
 	H.dna.features["tail_lizard"] = pick(GLOB.tails_list_lizard)
+	H.dna.features["tail_vox"] = pick(GLOB.tails_list_vox)
+	H.dna.features["quills"] = pick(GLOB.quills_list)
+	H.dna.features["face_quills"] = pick(GLOB.face_quills_list)
 	H.dna.features["snout"] = pick(GLOB.snouts_list) 
 	H.dna.features["horns"] = pick(GLOB.horns_list) 
 	H.dna.features["frills"] = pick(GLOB.frills_list)

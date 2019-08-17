@@ -109,6 +109,8 @@
 		if(brain_death || brainmob?.health <= HEALTH_THRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
 			to_chat(user, "<span class='warning'>[src] is far too damaged, there's nothing else we can do for it!</span>")
 			return
+		if(istype(src, /obj/item/organ/brain/cortical_stack))
+			to_chat(user, "<span class='warning'>[src] is mechanical, mannitol won't do anything for it!</span>")
 
 		if(!O.reagents.has_reagent(/datum/reagent/medicine/mannitol, 10))
 			to_chat(user, "<span class='warning'>There's not enough mannitol in [O] to restore [src]!</span>")
@@ -238,6 +240,45 @@
 	name = "alien brain"
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"
 	icon_state = "brain-x"
+
+/obj/item/organ/brain/cortical_stack
+	name = "cortical stack"
+	desc = "the cortical stack of a vox, containing their higher personality"
+	icon_state = "cortical_stack"
+	decay_factor = 0
+	status = ORGAN_ROBOTIC
+	organ_flags = list(ORGAN_SYNTHETIC, ORGAN_VITAL)
+
+
+/obj/item/organ/brain/cortical_stack/emp_act(severity)
+	. = ..()
+	if(!owner || . & EMP_PROTECT_SELF)
+		return
+	var/stun_amount = 200/severity
+	owner.Stun(stun_amount)
+	to_chat(owner, "<span class='warning'>Your body seizes up!</span>")
+
+obj/item/organ/vox_brain //it's a fake, dummy brain, doesn't actually do anything for now.
+	name = "vox brain"	
+	desc = "A piece of juicy meat found in the head of a vox."
+	icon_state = "brain"
+	organ_flags = ORGAN_SLOT_CORTICAL_STACK 
+	icon_state = "brain"
+	throw_speed = 3
+	throw_range = 5
+	layer = ABOVE_MOB_LAYER
+	zone = BODY_ZONE_HEAD
+	organ_flags = ORGAN_VITAL
+	attack_verb = list("attacked", "slapped", "whacked")
+
+
+
+/obj/item/organ/brain/slime
+	name = "slime core"
+	desc = "the core of a slimeperson"
+	slot = ORGAN_SLOT_BRAIN
+	zone = BODY_ZONE_CHEST
+
 
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////

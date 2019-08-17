@@ -43,7 +43,7 @@
 		playsound(get_turf(A), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 		D.emote("scream")
 		D.dropItemToGround(D.get_active_held_item())
-		D.apply_damage(5, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+		D.apply_damage(5, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM), crit_array = A.get_crit_array())
 		D.Stun(60)
 		return TRUE
 
@@ -85,7 +85,7 @@
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head!</span>", \
 						  "<span class='userdanger'>[A] kicks you in the jaw!</span>")
-		D.apply_damage(20, A.dna.species.attack_type, BODY_ZONE_HEAD)
+		D.apply_damage(20, A.dna.species.attack_type, BODY_ZONE_HEAD, crit_array = A.get_crit_array())
 		D.drop_all_held_items()
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
 		D.Stun(80)
@@ -100,7 +100,7 @@
 							"<span class='userdanger'>[A] piledrives you with their elbow!</span>")
 		if(D.stat)
 			D.death() //FINISH HIM!
-		D.apply_damage(50, A.dna.species.attack_type, BODY_ZONE_CHEST)
+		D.apply_damage(50, A.dna.species.attack_type, BODY_ZONE_CHEST, crit_array = A.get_crit_array())
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 75, 1, -1)
 		return TRUE
 	return basic_hit(A,D)
@@ -130,7 +130,7 @@
 	var/atk_verb = pick("punches", "kicks", "chops", "hits", "slams")
 	D.visible_message("<span class='danger'>[A] [atk_verb] [D]!</span>", \
 					  "<span class='userdanger'>[A] [atk_verb] you!</span>")
-	D.apply_damage(rand(10,15), BRUTE)
+	D.apply_damage(rand(10,15), BRUTE, crit_array = A.get_crit_array())
 	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, 1, -1)
 	if(prob(D.getBruteLoss()) && (D.mobility_flags & MOBILITY_STAND))
 		D.visible_message("<span class='warning'>[D] stumbles and falls!</span>", "<span class='userdanger'>The blow sends you to the ground!</span>")
@@ -213,7 +213,7 @@
 		user.Paralyze(60)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
+			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD, crit_array = src.get_crit_array())
 		else
 			user.take_bodypart_damage(2*force)
 		return

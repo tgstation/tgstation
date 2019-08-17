@@ -119,6 +119,9 @@
 #define DYNCOLORS		16 //Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
 #define AGENDER			17
 #define NOEYESPRITES	18 //Do not draw eyes or eyeless overlay
+#define NOBONES			19 // species does not have bones that can be broken
+#define FRAGILEBONES	20 // species' bones are more eaisly broken
+#define RAPIDBLOODLOSS  21 // species bloodloss cap per limb is doubled, and blunt damage can cause internal bleeding
 
 //organ slots
 #define ORGAN_SLOT_BRAIN "brain"
@@ -142,6 +145,7 @@
 #define ORGAN_SLOT_HEART_AID "heartdrive"
 #define ORGAN_SLOT_BRAIN_ANTIDROP "brain_antidrop"
 #define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
+#define ORGAN_SLOT_CORTICAL_STACK "brain_corticalstack" //vox 
 #define ORGAN_SLOT_TAIL "tail"
 #define ORGAN_SLOT_PARASITE_EGG "parasite_egg"
 

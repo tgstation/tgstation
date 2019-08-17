@@ -6,18 +6,22 @@
 	attack_verb = "burn"
 	attack_sound = 'sound/weapons/etherealhit.ogg'
 	miss_sound = 'sound/weapons/etherealmiss.ogg'
-	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ethereal
+	mutanteyes = /obj/item/organ/eyes/ethereal
 	mutantstomach = /obj/item/organ/stomach/ethereal
+	no_equip = list(SLOT_WEAR_MASK, SLOT_WEAR_SUIT, SLOT_GLOVES, SLOT_SHOES, SLOT_W_UNIFORM, SLOT_S_STORE)
+	nojumpsuit = 1
+	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ethereal
 	exotic_blood = /datum/reagent/consumable/liquidelectricity //Liquid Electricity. fuck you think of something better gamer
 	siemens_coeff = 0.5 //They thrive on energy
 	brutemod = 1.25 //They're weak to punches
 	attack_type = BURN //burn bish
 	damage_overlay_type = "" //We are too cool for regular damage overlays
-	species_traits = list(DYNCOLORS, AGENDER, NO_UNDERWEAR)
+	species_traits = list(DYNCOLORS, NO_UNDERWEAR, HAIR, FACEHAIR, EYECOLOR)
+	inherent_traits = list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD, TRAIT_NOBREATH, TRAIT_ALWAYS_CLEAN, TRAIT_RADIMMUNE, TRAIT_NOHUNGER)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
-	inherent_traits = list(TRAIT_NOHUNGER)
-	sexes = FALSE //no fetish content allowed
 	toxic_food = NONE
+	hair_color = "0F0"
+	hair_alpha = 150
 	var/current_color
 	var/EMPeffect = FALSE
 	var/emageffect = FALSE
@@ -64,9 +68,12 @@
 			current_color = rgb(r2 + ((r1-r2)*healthpercent), g2 + ((g1-g2)*healthpercent), b2 + ((b1-b2)*healthpercent))
 		H.set_light(1 + (2 * healthpercent), 1 + (1 * healthpercent), current_color)
 		fixed_mut_color = copytext(current_color, 2)
+		hair_color = fixed_mut_color
 	else
 		H.set_light(0)
 		fixed_mut_color = rgb(128,128,128)
+		hair_color = fixed_mut_color
+		
 	H.update_body()
 
 /datum/species/ethereal/proc/on_emp_act(mob/living/carbon/human/H, severity)
@@ -134,3 +141,6 @@
 	if(istype(stomach))
 		return stomach.crystal_charge
 	return ETHEREAL_CHARGE_NONE
+
+datum/species/ethereal/space_move(mob/living/carbon/human/H)
+	return TRUE

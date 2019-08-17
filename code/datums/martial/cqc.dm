@@ -47,7 +47,7 @@
 		D.visible_message("<span class='warning'>[A] slams [D] into the ground!</span>", \
 						  	"<span class='userdanger'>[A] slams you into the ground!</span>")
 		playsound(get_turf(A), 'sound/weapons/slam.ogg', 50, 1, -1)
-		D.apply_damage(10, BRUTE)
+		D.apply_damage(10, BRUTE, crit_array = A.get_crit_array())
 		D.Paralyze(120)
 		log_combat(A, D, "slammed (CQC)")
 	return TRUE
@@ -61,7 +61,7 @@
 		playsound(get_turf(A), 'sound/weapons/cqchit1.ogg', 50, 1, -1)
 		var/atom/throw_target = get_edge_target_turf(D, A.dir)
 		D.throw_at(throw_target, 1, 14, A)
-		D.apply_damage(10, A.dna.species.attack_type)
+		D.apply_damage(10, A.dna.species.attack_type, crit_array = A.get_crit_array())
 		log_combat(A, D, "kicked (CQC)")
 	if(D.IsParalyzed() && !D.stat)
 		log_combat(A, D, "knocked out (Head kick)(CQC)")
@@ -109,7 +109,7 @@
 		if(I && D.temporarilyRemoveItemFromInventory(I))
 			A.put_in_hands(I)
 		D.adjustStaminaLoss(50)
-		D.apply_damage(25, A.dna.species.attack_type)
+		D.apply_damage(25, A.dna.species.attack_type, crit_array = A.get_crit_array())
 	return TRUE
 
 /datum/martial_art/cqc/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -142,7 +142,7 @@
 	if(!(D.mobility_flags & MOBILITY_STAND))
 		bonus_damage += 5
 		picked_hit_type = "stomps on"
-	D.apply_damage(bonus_damage, BRUTE)
+	D.apply_damage(bonus_damage, BRUTE, crit_array = A.get_crit_array())
 	if(picked_hit_type == "kicks" || picked_hit_type == "stomps on")
 		playsound(get_turf(D), 'sound/weapons/cqchit2.ogg', 50, 1, -1)
 	else
@@ -154,7 +154,7 @@
 		D.visible_message("<span class='warning'>[A] leg sweeps [D]!", \
 							"<span class='userdanger'>[A] leg sweeps you!</span>")
 		playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, 1, -1)
-		D.apply_damage(10, BRUTE)
+		D.apply_damage(10, BRUTE, crit_array = A.get_crit_array())
 		D.Paralyze(60)
 		log_combat(A, D, "sweeped (CQC)")
 	return TRUE
@@ -175,7 +175,7 @@
 			if(I && D.temporarilyRemoveItemFromInventory(I))
 				A.put_in_hands(I)
 			D.Jitter(2)
-			D.apply_damage(5, A.dna.species.attack_type)
+			D.apply_damage(5, A.dna.species.attack_type, crit_array = A.get_crit_array())
 	else
 		D.visible_message("<span class='danger'>[A] fails to disarm [D]!</span>", \
 							"<span class='userdanger'>[A] fails to disarm you!</span>", null, COMBAT_MESSAGE_RANGE)

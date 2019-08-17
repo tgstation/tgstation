@@ -245,7 +245,7 @@
 		additional_effects_carbon(user) // user is the target here
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
+			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD, crit_array = list(IS_BLUNT, NOT_POINTED, TRUE))
 		else
 			user.take_bodypart_damage(2*force)
 		return

@@ -29,7 +29,7 @@
 						visible_message("<span class='danger'>[M] knocks [src] down!</span>", \
 								"<span class='userdanger'>[M] knocks you down!</span>")
 					var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
-					apply_damage(damage, BRUTE, affecting)
+					apply_damage(damage, BRUTE, affecting, crit_array = list(IS_SHARP, NOT_POINTED, TRUE))
 					log_combat(M, src, "attacked")
 				else
 					playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)

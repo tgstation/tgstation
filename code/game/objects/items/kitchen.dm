@@ -24,6 +24,7 @@
 	throw_range = 5
 	materials = list(/datum/material/iron=80)
 	flags_1 = CONDUCT_1
+	pointed = IS_POINTED
 	attack_verb = list("attacked", "stabbed", "poked")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
@@ -142,6 +143,8 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	desc = "A sharpened bone. The bare minimum in survival."
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 35, "embedded_fall_chance" = 10)
+	sharpness = IS_BLUNT
+	pointed = IS_POINTED
 	force = 15
 	throwforce = 15
 	materials = list()

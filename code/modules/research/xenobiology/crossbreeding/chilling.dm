@@ -257,7 +257,7 @@ Chilling extracts:
 	else
 		user.visible_message("<span class='danger'>[src] chills and snaps off the front of the bone on [user]'s arm, leaving behind a strange, gun-like structure!</span>")
 	user.emote("scream")
-	L.apply_damage(30,BURN,which_hand)
+	L.apply_damage(30,BURN,which_hand, gun.get_crit_array())
 	..()
 
 /obj/item/slimecross/chilling/pink

@@ -20,6 +20,7 @@
 	var/fireloss = 0	//Burn damage caused by being way too hot, too cold or burnt.
 	var/cloneloss = 0	//Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
 	var/staminaloss = 0		//Stamina damage, or exhaustion. You recover it slowly naturally, and are knocked down if it gets too high. Holodeck and hallucinations deal this.
+	var/radiation = 0 //If the mob is irradiated.
 	var/crit_threshold = HEALTH_THRESHOLD_CRIT // when the mob goes from "normal" to crit
 
 	var/mobility_flags = MOBILITY_FLAGS_DEFAULT
@@ -109,7 +110,6 @@
 
 	var/can_be_held = FALSE	//whether this can be picked up and held.
 
-	var/radiation = 0 //If the mob is irradiated.
 	var/ventcrawl_layer = PIPING_LAYER_DEFAULT
 	var/losebreath = 0
 
@@ -118,3 +118,14 @@
 	var/list/disease_resistances = list()
 
 	var/drag_slowdown = TRUE //Whether the mob is slowed down when dragging another prone mob
+
+	
+	var/attack_sharp = IS_BLUNT //are the mob's innate attacks slashing type?
+
+	var/attack_piercing = NOT_POINTED // are the mob's innate attacks puncture type
+
+	var/burn_type = ENERGYTYPE_ENERGY // if the mob's innate attacks deal energy ("burn") damage, this will tell the procs what subtype to apply
+
+	var/can_crit = TRUE // can the mob's attacks deal critical damage normally?
+
+	

@@ -4,16 +4,17 @@
 	id = "jelly"
 	default_color = "00FF90"
 	say_mod = "chirps"
-	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD)
-	inherent_traits = list(TRAIT_TOXINLOVER)
+	species_traits = list(MUTCOLORS,EYECOLOR,RAPIDBLOODLOSS, NOBONES)
+	inherent_traits = list(TRAIT_TOXINLOVER, TRAIT_IMPACT_BLEEDING)
 	mutantlungs = /obj/item/organ/lungs/slime
+	mutant_brain = /obj/item/organ/brain/slime 
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = /datum/reagent/toxin/slimejelly
 	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
 	liked_food = MEAT
 	coldmod = 6   // = 3x cold damage
-	heatmod = 0.5 // = 1/4x heat damage
+	heatmod = 0.25 // = 1/4x heat damage
 	burnmod = 0.5 // = 1/2x generic burn damage
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 
@@ -114,10 +115,13 @@
 	name = "Slimeperson"
 	id = "slime"
 	default_color = "00FFFF"
-	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
+	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR)
+	inherent_traits = list(TRAIT_EASYDISMEMBER, TRAIT_EASYLIMBDISABLE)
 	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 150
+	heatmod = 1
+	burnmod = 1
 	ignored_by = list(/mob/living/simple_animal/slime)
 	var/datum/action/innate/split_body/slime_split
 	var/list/mob/living/carbon/bodies

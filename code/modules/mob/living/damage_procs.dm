@@ -8,7 +8,7 @@
 	Returns
 	standard 0 if fail
 */
-/mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE)
+/mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, crit_array = list())
 	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
 	var/hit_percent = (100-blocked)/100
 	if(!damage || (!forced && hit_percent <= 0))
@@ -29,7 +29,7 @@
 			adjustStaminaLoss(damage_amount, forced = forced)
 	return 1
 
-/mob/living/proc/apply_damage_type(damage = 0, damagetype = BRUTE) //like apply damage except it always uses the damage procs
+/mob/living/proc/apply_damage_type(damage = 0, damagetype = BRUTE, crit_array = list()) //like apply damage except it always uses the damage procs
 	switch(damagetype)
 		if(BRUTE)
 			return adjustBruteLoss(damage)
@@ -60,13 +60,13 @@
 			return getStaminaLoss()
 
 
-/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = FALSE, stamina = 0, brain = 0)
+/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = FALSE, stamina = 0, brain = 0, crit_array = list())
 	if(blocked >= 100)
 		return 0
 	if(brute)
-		apply_damage(brute, BRUTE, def_zone, blocked)
+		apply_damage(brute, BRUTE, def_zone, blocked, crit_array = crit_array)
 	if(burn)
-		apply_damage(burn, BURN, def_zone, blocked)
+		apply_damage(burn, BURN, def_zone, blocked, crit_array = crit_array)
 	if(tox)
 		apply_damage(tox, TOX, def_zone, blocked)
 	if(oxy)

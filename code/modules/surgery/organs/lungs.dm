@@ -419,6 +419,18 @@
 
 	safe_toxins_max = 0 //We breathe this to gain POWER.
 
+/obj/item/organ/lungs/vox
+	name = "vox lungs"
+	desc = "lungs belonging to a vox, adapted to low oxygen conditions"
+
+	safe_oxygen_min = 5
+	safe_oxygen_max = 50
+	safe_toxins_max = 10
+	safe_nitro_min = 70
+	safe_co2_max = 20
+
+	safe_toxins_max = 0 //We breathe this to gain POWER.
+
 /obj/item/organ/lungs/slime/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
 	. = ..()
 	if (breath && breath.gases[/datum/gas/plasma])

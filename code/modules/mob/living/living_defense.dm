@@ -46,7 +46,7 @@
 	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration)
 	var/on_hit_state = P.on_hit(src, armor)
 	if(!P.nodamage && on_hit_state != BULLET_ACT_BLOCK)
-		apply_damage(P.damage, P.damage_type, def_zone, armor)
+		apply_damage(P.damage, P.damage_type, def_zone, armor, crit_array = P.get_crit_array())
 		apply_effects(P.stun, P.knockdown, P.unconscious, P.irradiate, P.slur, P.stutter, P.eyeblur, P.drowsy, FALSE, P.stamina, P.jitter, P.paralyze, P.immobilize)
 		if(P.dismemberment)
 			check_projectile_dismemberment(P, def_zone)
@@ -88,7 +88,7 @@
 			visible_message("<span class='danger'>[src] is hit by [I]!</span>", \
 							"<span class='userdanger'>You're hit by [I]!</span>")
 			var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
-			apply_damage(I.throwforce, dtype, zone, armor)
+			apply_damage(I.throwforce, dtype, zone, armor, , crit_array = I.get_crit_array())
 			if(I.thrownby)
 				log_combat(I.thrownby, src, "threw and hit", I)
 		else
@@ -424,3 +424,8 @@
 		used_item = get_active_held_item()
 	..()
 	setMovetype(movement_type & ~FLOATING) // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
+
+
+
+mob/living/proc/get_crit_array() //so the damage procs can evaluate whether an attack should cause bloodloss, dismember, pierce through to organs, break bones, ect.
+	return list(attack_sharp, attack_piercing, can_crit)

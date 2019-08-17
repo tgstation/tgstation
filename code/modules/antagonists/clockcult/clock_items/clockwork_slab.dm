@@ -144,8 +144,8 @@
 		playsound(get_turf(user), 'sound/weapons/sear.ogg', 50, 1)
 		user.dropItemToGround(src)
 		user.emote("scream")
-		user.apply_damage(5, BURN, BODY_ZONE_L_ARM)
-		user.apply_damage(5, BURN, BODY_ZONE_R_ARM)
+		user.apply_damage(5, BURN, BODY_ZONE_L_ARM, crit_array = list(IS_BLUNT, NOT_POINTED, TRUE))
+		user.apply_damage(5, BURN, BODY_ZONE_R_ARM, crit_array = list(IS_BLUNT, NOT_POINTED, TRUE))
 		return 0
 	if(!is_servant_of_ratvar(user))
 		to_chat(user, "<span class='warning'>The information on [src]'s display shifts rapidly. After a moment, your head begins to pound, and you tear your eyes away.</span>")

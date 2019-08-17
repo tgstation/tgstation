@@ -105,6 +105,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_LIMBATTACHMENT 	"limb_attach"
 #define TRAIT_NOLIMBDISABLE		"no_limb_disable"
 #define TRAIT_EASYLIMBDISABLE	"easy_limb_disable"
+#define TRAIT_IMPACT_BLEEDING	"impact_bleeding"
 #define TRAIT_TOXINLOVER		"toxinlover"
 #define TRAIT_NOBREATH			"no_breath"
 #define TRAIT_ANTIMAGIC			"anti_magic"
@@ -147,7 +148,16 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SECURITY_HUD		"sec_hud"
 
 //non-mob traits
-#define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
+#define TRAIT_PARALYSIS			"paralysis"         //Used for limb-based paralysis, where replacing the limb will fix it
+#define TRAIT_PART_CRIT			"part critical"     //used to flag a part as being in critical
+#define TRAIT_STAMINA_DISABLED  "stamina disabled"  //flags parts that have reached the stamina damage limit
+#define TRAIT_DAMAGE_DISABLED   "damage disabled"   //flags parts that have hit the critical damage limit and become disabled
+#define TRAIT_FRAGILE_BONES 	"fragile bones"		//flags parts that are from a fragile boned species, ie Vox.
+#define TRAIT_NO_BONES			"no bones"		    //flags a part that doesn't have any bones to break
+#define TRAIT_BROKEN_BONES		"broken bones"		//broken bones in this part
+#define TRAIT_SPLINTED_BONES	"splinted bones"	//part has splinted bones
+#define TRAIT_INTERNAL_BLEEDING "internal bleeding" //part has internal bleeding
+
 
 // item traits
 #define TRAIT_NODROP            "nodrop"

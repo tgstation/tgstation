@@ -19,6 +19,7 @@
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_EARS
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
+	pointed = IS_POINTED
 	throw_speed = 3
 	throw_range = 7
 	materials = list(/datum/material/iron=10)

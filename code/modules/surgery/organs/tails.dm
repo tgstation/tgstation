@@ -63,3 +63,27 @@
 		tail_type = H.dna.features["tail_lizard"]
 		spines = H.dna.features["spines"]
 		H.update_body()
+
+
+/obj/item/organ/tail/vox
+	name = "vox tail"
+	desc = "A severed vox tail. Somewhere, no doubt, a vox hater is very pleased with themselves."
+	color = "#116611"
+	tail_type = "Vox"
+
+/obj/item/organ/tail/vox/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
+	..()
+	if(istype(H))
+		if(!("tail_vox" in H.dna.species.mutant_bodyparts))
+			H.dna.species.mutant_bodyparts |= "tail_vox"
+			H.dna.features["tail_vox"] = tail_type
+			H.update_body()
+
+
+/obj/item/organ/tail/vox/Remove(mob/living/carbon/human/H,  special = 0)
+	..()
+	if(istype(H))
+		H.dna.features["tail_vox"] = "None"
+		H.dna.species.mutant_bodyparts -= "tail_vox"
+		color = H.hair_color
+		H.update_body()

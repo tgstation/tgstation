@@ -20,9 +20,7 @@
 	var/active_sound = null
 	var/toggle_cooldown = null
 	var/cooldown = 0
-
 	var/clothing_flags = NONE
-
 	//Var modification - PLEASE be careful with this I know who you are and where you live
 	var/list/user_vars_to_edit //VARNAME = VARVALUE eg: "name" = "butts"
 	var/list/user_vars_remembered //Auto built by the above + dropped() + equipped()

@@ -2,6 +2,8 @@
 				BLOOD SYSTEM
 ****************************************************/
 
+//bleeding is going to be moved to individual bodyparts, overall effects of bloodloss remain global however
+
 /mob/living/carbon/human/proc/suppress_bloodloss(amount)
 	if(bleedsuppress)
 		return
@@ -236,8 +238,10 @@
 		"AB+" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+"),
 		"O-" = list("O-"),
 		"O+" = list("O-", "O+"),
-		"L" = list("L"),
-		"U" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+", "L", "U")
+		"L" = list("L"),  //unathi
+		"V" = list("V"),  //vox
+		"AY"= list("AY"), //abductor
+		"U" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+", "L", "U") //wompire, BLEEEEH!
 	)
 
 	var/safe = bloodtypes_safe[bloodtype]

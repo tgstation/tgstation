@@ -80,6 +80,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/heat = 0
 	///All items with sharpness of IS_SHARP or higher will automatically get the butchering component.
 	var/sharpness = IS_BLUNT
+	var/pointed = NOT_POINTED
+	var/energy_type = ENERGYTYPE_BURN //stuff dealing energy damage is mostly burn, we'll give the ENERGY type to projectiles and hand out COLD and ACID on a call by call basis
+	var/can_crit = TRUE // by default projectiles and item attacks should do critical damage
 
 	var/tool_behaviour = NONE
 	var/toolspeed = 1
@@ -489,7 +492,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		)
 	if(is_human_victim)
 		var/mob/living/carbon/human/U = M
-		U.apply_damage(7, BRUTE, affecting)
+		U.apply_damage(7, BRUTE, affecting, crit_array = list(IS_BLUNT, IS_POINTED, TRUE))
 
 	else
 		M.take_bodypart_damage(7)
@@ -599,6 +602,15 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/is_sharp()
 	return sharpness
+
+/obj/item/proc/is_pointed()
+	return pointed
+
+/obj/item/proc/get_crit_array()
+	return list(sharpness, pointed, can_crit)
+
+obj/item/proc/can_bleed() //can cause bleeding
+	return is_sharp() || is_pointed()
 
 /obj/item/proc/get_dismemberment_chance(obj/item/bodypart/affecting)
 	if(affecting.can_dismember(src))

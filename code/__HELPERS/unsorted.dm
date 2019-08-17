@@ -769,7 +769,7 @@ GLOBAL_LIST_INIT(can_embed_types, typecacheof(list(
 /proc/can_embed(obj/item/W)
 	if(W.is_sharp())
 		return 1
-	if(is_pointed(W))
+	if(W.is_pointed())
 		return 1
 
 	if(is_type_in_typecache(W, GLOB.can_embed_types))

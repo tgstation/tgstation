@@ -49,7 +49,7 @@
 		var/msg
 		if(damage)
 			msg += "[user] [sharp? "impales" : "slams into"] [target] [sharp? "on" : "with"] their [parent]"
-			target.apply_damage(damage, BRUTE, user.zone_selected, 0)
+			target.apply_damage(damage, BRUTE, user.zone_selected, 0, crit_array = I.get_crit_array())
 		if(prob(knockdown_chance))
 			msg += " and knocks [target] [target_buckled? "off of [target.buckled]" : "down"]"
 			if(target_buckled)

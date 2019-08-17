@@ -12,7 +12,7 @@
 				Unconscious(rand(100,200))
 
 			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
-			apply_damage(damage, BRUTE, affecting)
+			apply_damage(damage, BRUTE, affecting, crit_array = M.get_crit_array())
 		else
 			playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M]'s kick misses [src]!</span>", \

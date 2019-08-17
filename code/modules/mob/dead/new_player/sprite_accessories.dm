@@ -60,6 +60,7 @@
 	var/dimension_y = 32
 	var/center = FALSE	//Should we center the sprite?
 
+
 //////////////////////
 // Hair Definitions //
 //////////////////////
@@ -1565,6 +1566,14 @@
 	name = "Smooth"
 	icon_state = "smooth"
 
+/datum/sprite_accessory/tails/vox/vox
+	name = "Vox"
+	icon_state = "vox"
+
+/datum/sprite_accessory/tails_animated/vox/vox
+	name = "Vox"
+	icon_state = "vox"
+
 /datum/sprite_accessory/tails/lizard/dtiger
 	name = "Dark Tiger"
 	icon_state = "dtiger"
@@ -1903,3 +1912,38 @@
 /datum/sprite_accessory/moth_markings/moonfly
 	name = "Moon Fly"
 	icon_state = "moonfly"
+
+datum/sprite_accessory/quills //Voxxy gets customization too!
+	icon = 'icons/mob/vox_quills.dmi'
+	color_src = HAIR
+
+/datum/sprite_accessory/quills/none
+	name = "None"
+	icon_state = null
+
+datum/sprite_accessory/quills/crested
+	name = "Crested"
+	icon_state = "quills_crested"
+
+datum/sprite_accessory/face_quills //Voxxy gets customization too!
+	icon = 'icons/mob/vox_quills.dmi'
+	gender = MALE
+	color_src = HAIR
+
+datum/sprite_accessory/face_quills/none
+	name = "None"
+	icon_state = null
+	gender = NEUTER
+
+datum/sprite_accessory/face_quills/neck
+	name = "Neck Quills"
+	icon_state = "face_quills_neck"
+
+//IPC acessories
+//datum/sprite_accessory/vox/hair/...
+	//name = "..."
+	//icon_state = "..."
+
+//datum/sprite_accessory/vox/hair/...
+
+	

@@ -17,6 +17,8 @@
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
 	w_class = WEIGHT_CLASS_SMALL
+	sharpness = IS_BLUNT
+	pointed = IS_POINTED
 	force = 15
 	throwforce = 25
 	armour_penetration = 35
@@ -55,7 +57,7 @@
 							 "<span class='cultlarge'>\"You shouldn't play with sharp things. You'll poke someone's eye out.\"</span>")
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			H.apply_damage(rand(force/2, force), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+			H.apply_damage(rand(force/2, force), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM), crit_array = list(IS_SHARP, NOT_POINTED, FALSE))
 		else
 			user.adjustBruteLoss(rand(force/2,force))
 		return
@@ -80,7 +82,7 @@
 			to_chat(user, "<span class='cultlarge'>\"One of Ratvar's toys is trying to play with things [user.p_they()] shouldn't. Cute.\"</span>")
 			to_chat(user, "<span class='userdanger'>A horrible force yanks at your arm!</span>")
 			user.emote("scream")
-			user.apply_damage(30, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+			user.apply_damage(30, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM), crit_array = list(IS_SHARP, NOT_POINTED, FALSE))
 			user.dropItemToGround(src)
 
 /obj/item/twohanded/required/cult_bastard
@@ -146,7 +148,7 @@
 			to_chat(user, "<span class='cultlarge'>\"One of Ratvar's toys is trying to play with things [user.p_they()] shouldn't. Cute.\"</span>")
 			to_chat(user, "<span class='userdanger'>A horrible force yanks at your arm!</span>")
 			user.emote("scream")
-			user.apply_damage(30, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+			user.apply_damage(30, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM), crit_array = list(IS_SHARP, NOT_POINTED, FALSE))
 			user.dropItemToGround(src, TRUE)
 			user.Paralyze(50)
 			return

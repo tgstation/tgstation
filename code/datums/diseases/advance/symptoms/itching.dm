@@ -51,4 +51,4 @@ BONUS
 		var/can_scratch = scratch && !M.incapacitated()
 		M.visible_message("[can_scratch ? "<span class='warning'>[M] scratches [M.p_their()] [bodypart.name].</span>" : ""]", "<span class='warning'>Your [bodypart.name] itches. [can_scratch ? " You scratch it." : ""]</span>")
 		if(can_scratch)
-			bodypart.receive_damage(0.5)
+			bodypart.receive_damage(0.5, crit_array = list(IS_SHARP, NOT_POINTED, FALSE))

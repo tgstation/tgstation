@@ -305,6 +305,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_mcolor"]					>> features["mcolor"]
 	S["feature_ethcolor"]					>> features["ethcolor"]
 	S["feature_lizard_tail"]			>> features["tail_lizard"]
+	S["feature_vox_tail"]				>> features["tail_vox"]
+	S["feature_quills"]					>> features["quills"]
+	S["feature_face_quills"]			>> features["face_quills"]
 	S["feature_lizard_snout"]			>> features["snout"]
 	S["feature_lizard_horns"]			>> features["horns"]
 	S["feature_lizard_frills"]			>> features["frills"]
@@ -394,6 +397,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["ethcolor"]	= copytext(features["ethcolor"],1,7)
 	features["tail_lizard"]	= sanitize_inlist(features["tail_lizard"], GLOB.tails_list_lizard)
 	features["tail_human"] 	= sanitize_inlist(features["tail_human"], GLOB.tails_list_human, "None")
+	features["tail_vox"] 	= sanitize_inlist(features["tail_vox"], GLOB.tails_list_vox)
+	features["quills"] 	= sanitize_inlist(features["quills"], GLOB.quills_list)
+	features["face_quills"] = sanitize_inlist(features["face_quills"], GLOB.face_quills_list)
 	features["snout"]	= sanitize_inlist(features["snout"], GLOB.snouts_list)
 	features["horns"] 	= sanitize_inlist(features["horns"], GLOB.horns_list)
 	features["ears"]	= sanitize_inlist(features["ears"], GLOB.ears_list, "None")
@@ -448,6 +454,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feature_mcolor"]					, features["mcolor"])
 	WRITE_FILE(S["feature_ethcolor"]					, features["ethcolor"])
 	WRITE_FILE(S["feature_lizard_tail"]			, features["tail_lizard"])
+	WRITE_FILE(S["feature_vox_tail"]			, features["tail_vox"])
+	WRITE_FILE(S["feature_quills"]				, features["quills"])
+	WRITE_FILE(S["feature_face_quills"]				, features["face_quills"])
 	WRITE_FILE(S["feature_human_tail"]				, features["tail_human"])
 	WRITE_FILE(S["feature_lizard_snout"]			, features["snout"])
 	WRITE_FILE(S["feature_lizard_horns"]			, features["horns"])

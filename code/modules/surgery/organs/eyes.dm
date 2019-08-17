@@ -202,7 +202,7 @@
 
 /obj/item/organ/eyes/robotic/glow
 	name = "High Luminosity Eyes"
-	desc = "Special glowing eyes, used by snowflakes who want to be special."
+	desc = "Special glowing eyes, they look real neat but don't do much beyond look cool."
 	eye_color = "000"
 	actions_types = list(/datum/action/item_action/organ_action/use, /datum/action/item_action/organ_action/toggle)
 	var/current_color_string = "#ffffff"
@@ -388,3 +388,15 @@
 	eye_icon_state = "snail_eyes"
 	icon_state = "snail_eyeballs"
 
+
+/obj/item/organ/eyes/vox
+	name = "vox eyes"
+	desc = "the eyes of a vox, slightly wider set than a human."
+	eye_icon_state = "vox_eyes"
+	icon_state = "vox_eyeballs"
+
+
+/obj/item/organ/eyes/ethereal
+	name = "ethereal eyes"
+	desc = "the glowing eyes of an ethereal"
+	eye_icon_state = "eyes_ethereal"

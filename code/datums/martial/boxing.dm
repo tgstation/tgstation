@@ -33,7 +33,7 @@
 	D.visible_message("<span class='danger'>[A] [atk_verb]ed [D]!</span>", \
 			"<span class='userdanger'>[A] [atk_verb]ed you!</span>", null, COMBAT_MESSAGE_RANGE)
 
-	D.apply_damage(damage, STAMINA, affecting, armor_block)
+	D.apply_damage(damage, STAMINA, affecting, armor_block, crit_array = A.get_crit_array())
 	log_combat(A, D, "punched (boxing) ")
 	if(D.getStaminaLoss() > 50)
 		var/knockout_prob = D.getStaminaLoss() + rand(-15,15)

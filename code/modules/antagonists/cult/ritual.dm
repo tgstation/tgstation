@@ -114,7 +114,7 @@ This file contains the cult dagger and rune list code
 	user.visible_message("<span class='warning'>[user] [user.blood_volume ? "cuts open [user.p_their()] arm and begins writing in [user.p_their()] own blood":"begins sketching out a strange design"]!</span>", \
 						 "<span class='cult'>You [user.blood_volume ? "slice open your arm and ":""]begin drawing a sigil of the Geometer.</span>")
 	if(user.blood_volume)
-		user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+		user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM), crit_array = list(IS_SHARP, NOT_POINTED, FALSE))
 	var/scribe_mod = initial(rune_to_scribe.scribe_delay)
 	if(istype(get_turf(user), /turf/open/floor/engine/cult) && !(ispath(rune_to_scribe, /obj/effect/rune/narsie)))
 		scribe_mod *= 0.5

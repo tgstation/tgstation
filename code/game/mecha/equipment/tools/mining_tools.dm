@@ -13,6 +13,7 @@
 	energy_drain = 10
 	force = 15
 	harmful = TRUE
+	pointed = IS_POINTED
 	var/drill_delay = 7
 	var/drill_level = DRILL_BASIC
 
@@ -120,7 +121,7 @@
 	else
 		//drill makes a hole
 		var/obj/item/bodypart/target_part = target.get_bodypart(ran_zone(BODY_ZONE_CHEST))
-		target.apply_damage(10, BRUTE, BODY_ZONE_CHEST, target.run_armor_check(target_part, "melee"))
+		target.apply_damage(10, BRUTE, BODY_ZONE_CHEST, target.run_armor_check(target_part, "melee"), src.get_crit_array())
 
 		//blood splatters
 		var/splatter_dir = get_dir(chassis, target)

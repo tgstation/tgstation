@@ -223,7 +223,7 @@
 			if(!I || !L || I.loc != src || !(I in L.embedded_objects))
 				return
 			L.embedded_objects -= I
-			L.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
+			L.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class, crit_array = I.get_crit_array())//It hurts to rip it out, get surgery you dingus.
 			I.forceMove(get_turf(src))
 			usr.put_in_hands(I)
 			usr.emote("scream")
@@ -1185,6 +1185,9 @@
 
 /mob/living/carbon/human/species/synth/military
 	race = /datum/species/synth/military
+
+/mob/living/carbon/human/species/vox
+	race = /datum/species/vox
 
 /mob/living/carbon/human/species/vampire
 	race = /datum/species/vampire

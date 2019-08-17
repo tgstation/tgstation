@@ -38,6 +38,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
 	damtype = "fire"
 	force = 15
+	pointed = IS_POINTED
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	throwforce = 5
 	w_class = WEIGHT_CLASS_TINY
@@ -61,7 +62,7 @@
 	var/hit_zone = (C.held_index_to_dir(C.active_hand_index) == "l" ? "l_":"r_") + "arm"
 	var/obj/item/bodypart/affecting = C.get_bodypart(hit_zone)
 	if(affecting)
-		if(affecting.receive_damage(0, force))
+		if(affecting.receive_damage(0, force, crit_array = src.get_crit_array()))
 			C.update_damage_overlays()
 	to_chat(C, "<span class='userdanger'>The nettle burns your bare hand!</span>")
 	return TRUE

@@ -300,7 +300,7 @@
 				close_trap()
 				L.visible_message("<span class='danger'>[L] triggers \the [src].</span>", \
 						"<span class='userdanger'>You trigger \the [src]!</span>")
-				L.apply_damage(trap_damage, BRUTE, def_zone)
+				L.apply_damage(trap_damage, BRUTE, def_zone, crit_array = list(IS_BLUNT, IS_POINTED, TRUE))
 	..()
 
 /obj/item/restraints/legcuffs/beartrap/energy

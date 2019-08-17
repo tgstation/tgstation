@@ -88,7 +88,7 @@
 		C.visible_message("<span class='danger'>[C]'s head begins to collapse in on itself!</span>", "<span class='userdanger'>Your head feels like it's collapsing in on itself! This was really not a good idea!</span>", "<span class='italics'>You hear something crack and explode in gore.</span>")
 		var/turf/T = get_turf(C)
 		for(var/i in 1 to 3)
-			C.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
+			C.apply_damage(30, BRUTE, BODY_ZONE_HEAD, crit_array = list(IS_BLUNT, NOT_POINTED, TRUE))
 			new /obj/effect/gibspawner/generic(T, C)
 			sleep(1)
 		C.ghostize()

@@ -894,7 +894,7 @@
 				playsound(M, get_sfx("desceration"), 50, TRUE, -1)
 				M.visible_message("<span class='warning'>[M] rattles loudly and flails around!!</span>", "<span class='danger'>Your bones hurt so much that your missing muscles spasm!!</span>")
 				M.say("OOF!!", forced=/datum/reagent/toxin/bonehurtingjuice)
-				bp.receive_damage(200, 0, 0) //But I don't think we should
+				bp.receive_damage(200, 0, 0, crit_array = list(IS_BLUNT, NOT_POINTED, TRUE)) //But I don't think we should
 			else
 				to_chat(M, "<span class='warning'>Your missing arm aches from wherever you left it.</span>")
 				M.emote("sigh")
