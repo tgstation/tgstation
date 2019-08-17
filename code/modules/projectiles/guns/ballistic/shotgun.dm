@@ -174,7 +174,7 @@
 	name = "improvised shotgun"
 	desc = "Essentially a tube that aims shotgun shells."
 	icon_state = "ishotgun"
-	item_state = "shotgun"
+	item_state = "ishotgun"
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	slot_flags = null
@@ -198,7 +198,7 @@
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised/update_icon()
 	..()
 	if(slung)
-		add_overlay("improvised_sling")
+		add_overlay("ishotgunsling")
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised/sawoff(mob/user)
 	. = ..()
@@ -211,7 +211,7 @@
 	name = "sawn-off improvised shotgun"
 	desc = "A single-shot shotgun. Better not miss."
 	icon_state = "ishotgun"
-	item_state = "gun"
+	item_state = "ishotgun"
 	w_class = WEIGHT_CLASS_NORMAL
 	sawn_off = TRUE
 	slot_flags = ITEM_SLOT_BELT
@@ -226,7 +226,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_MEDIUM
 	can_be_sawn_off = FALSE
-	force = 10 //it has a hook on it
+	force = 16 //it has a hook on it
 	attack_verb = list("slashed", "hooked", "stabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	//our hook gun!
@@ -260,3 +260,11 @@
 		hook.afterattack(target, user, flag, params)
 	else
 		return ..()
+
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/hook/improvised
+	name = "hook modified improvised shotgun"
+	icon_state = "hookishotgun"
+	item_state = "ishotgun"
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/improvised
+	force = 14 //it has a hook on it

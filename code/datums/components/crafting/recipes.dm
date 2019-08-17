@@ -324,6 +324,17 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
+/datum/crafting_recipe/hookishotgun
+	name = "Hook Modified Improvised Shotgun"
+	result = /obj/item/gun/ballistic/shotgun/hook/improvised
+	reqs = list(/obj/item/weaponcrafting/receiver = 1,
+				/obj/item/gun/ballistic/shotgun/doublebarrel/improvised = 1,
+				/obj/item/gun/magic/hook)
+	tools = list(TOOL_SCREWDRIVER)
+	time = 70
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+
 /datum/crafting_recipe/chainsaw
 	name = "Chainsaw"
 	result = /obj/item/twohanded/required/chainsaw
