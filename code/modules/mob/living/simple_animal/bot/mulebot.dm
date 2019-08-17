@@ -75,9 +75,9 @@
 /mob/living/simple_animal/bot/mulebot/proc/set_id(new_id)
 	id = new_id
 	if(paicard)
-		bot_name = "\improper MULEbot ([new_id])"
+		bot_name = "[initial(name)] ([new_id])"
 	else
-		name = "\improper MULEbot ([new_id])"
+		name = "[initial(name)] ([new_id])"
 
 /mob/living/simple_animal/bot/mulebot/bot_reset()
 	..()
