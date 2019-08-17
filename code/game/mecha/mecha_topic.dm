@@ -386,7 +386,7 @@
 		log_message("Recalibration of coordination system started.", LOG_MECHA)
 		addtimer(CALLBACK(src, .proc/stationary_repair, loc), 100, TIMER_UNIQUE)
 
-//Repairs internal damage if the mech hasn't moved.
+///Repairs internal damage if the mech hasn't moved.
 /obj/mecha/proc/stationary_repair(location)
 	if(location == loc)
 		clearInternalDamage(MECHA_INT_CONTROL_LOST)
