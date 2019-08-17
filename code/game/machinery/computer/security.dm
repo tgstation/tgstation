@@ -641,6 +641,10 @@ What a mess.*/
 					if("age")
 						if(istype(active1, /datum/data/record))
 							var/t1 = input("Please input age:", "Secure. records", active1.fields["age"], null) as num|null
+							
+							if (!t1)
+								return
+
 							if(!canUseSecurityRecordsConsole(usr, "age", a1))
 								return
 							active1.fields["age"] = t1
@@ -728,12 +732,19 @@ What a mess.*/
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input citation crime:", "Secure. records", "", null)
 							var/fine = FLOOR(input(usr, "Please input citation fine:", "Secure. records", 50) as num|null, 1)
-							if(!fine || fine < 0)
+							
+							if (isnull(fine))
+								return
+
+							if(fine < 0)
 								to_chat(usr, "<span class='warning'>You're pretty sure that's not how money works.</span>")
 								return
+
 							fine = min(fine, maxFine)
+
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
+								
 							var/crime = GLOB.data_core.createCrimeEntry(t1, "", authenticated, station_time_timestamp(), fine)
 							for (var/obj/item/pda/P in GLOB.PDAs)
 								if(P.owner == active1.fields["name"])

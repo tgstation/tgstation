@@ -36,4 +36,8 @@
 
 /client/proc/get_dead_say()
 	var/msg = input(src, null, "dsay \"text\"") as text|null
+
+	if (isnull(msg))
+		return
+
 	dsay(msg)

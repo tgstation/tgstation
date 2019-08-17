@@ -138,6 +138,10 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		if("rename")
 			var/atom/parentasatom = parent
 			var/a = input("Please enter desired tag.", parentasatom.name, gpstag) as text|null
+			
+			if (!a)
+				return
+
 			a = copytext(sanitize(a), 1, 20)
 			gpstag = a
 			. = TRUE

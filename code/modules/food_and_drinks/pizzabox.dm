@@ -125,6 +125,10 @@
 				return
 			else
 				bomb_timer = input(user, "Set the [bomb] timer from [BOMB_TIMER_MIN] to [BOMB_TIMER_MAX].", bomb, bomb_timer) as num|null
+				
+				if (isnull(bomb_timer))
+					return
+				
 				bomb_timer = CLAMP(CEILING(bomb_timer / 2, 1), BOMB_TIMER_MIN, BOMB_TIMER_MAX)
 				bomb_defused = FALSE
 
