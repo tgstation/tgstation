@@ -199,6 +199,7 @@
 	..()
 	if(slung)
 		add_overlay("ishotgunsling")
+		item_state = "ishotgunsling" //e
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised/sawoff(mob/user)
 	. = ..()
@@ -206,12 +207,13 @@
 		new /obj/item/stack/cable_coil(get_turf(src), 10)
 		slung = 0
 		update_icon()
+		item_state = "ishotgun_sawn" //e
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised/sawn
 	name = "sawn-off improvised shotgun"
 	desc = "A single-shot shotgun. Better not miss."
-	icon_state = "ishotgun"
-	item_state = "ishotgun"
+	icon_state = "ishotgun_sawn"
+	item_state = "ishotgun_sawn"
 	w_class = WEIGHT_CLASS_NORMAL
 	sawn_off = TRUE
 	slot_flags = ITEM_SLOT_BELT
@@ -265,6 +267,6 @@
 /obj/item/gun/ballistic/shotgun/doublebarrel/hook/improvised
 	name = "hook modified improvised shotgun"
 	icon_state = "hookishotgun"
-	item_state = "ishotgun"
+	item_state = "hookishotgun"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/improvised
 	force = 14 //it has a hook on it
