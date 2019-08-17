@@ -1,0 +1,4 @@
+author: "Dennok"
+delete-after: True
+changes: 
+  - rscadd: "Revival brain shock stem now repeatable."
