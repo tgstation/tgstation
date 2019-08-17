@@ -372,7 +372,7 @@ update_label()
 			return
 		if(popup_input == "Forge")
 			var/t = copytext(sanitize(input(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name))as text | null),1,26)
-			if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/dead/new_player/prefrences.dm
+			if(t == "" || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/dead/new_player/prefrences.dm
 				if (ishuman(user))
 					var/mob/living/carbon/human/human_agent = user
 
@@ -386,6 +386,8 @@ update_label()
 				else
 					alert ("Invalid name.")
 					return	
+			else if (!t)
+				return
 			else
 				registered_name = t
 
