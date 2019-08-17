@@ -328,7 +328,8 @@
 	name = "Hook Modified Improvised Shotgun"
 	result = /obj/item/gun/ballistic/shotgun/hook/improvised
 	reqs = list(/obj/item/weaponcrafting/receiver = 1,
-				/obj/item/gun/ballistic/shotgun/doublebarrel/improvised = 1,
+				/obj/item/gun/ballistic/shotgun/doublebarrel/improvised = 1
+				/obj/item/stack/cable_coil = 5,
 				/obj/item/gun/magic/hook)
 	tools = list(TOOL_SCREWDRIVER)
 	time = 70
