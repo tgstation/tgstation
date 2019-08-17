@@ -1,4 +1,0 @@
-author: "willox"
-delete-after: True
-changes: 
-  - bugfix: "bloody footprints no longer spawn with incorrect steps and don't break when rotated on shuttles"

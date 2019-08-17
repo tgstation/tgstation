@@ -1,7 +1,0 @@
-author: "Twaticus"
-delete-after: True
-changes: 
-  - rscadd: "Underwear can now have any color. (Your character will most likely be nude now so check your prefs!!)"
-  - rscadd: "Underwear color option in dressers"
-  - tweak: "changed some underwear names"
-  - imagedel: "deleted duplicate underwear"

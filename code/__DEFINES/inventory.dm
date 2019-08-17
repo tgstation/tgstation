@@ -128,6 +128,10 @@
 #define NECK		(1<<11)
 #define FULL_BODY	(~0)
 
+//defines for the index of hands
+#define LEFT_HANDS 1
+#define RIGHT_HANDS 2
+
 //flags for female outfits: How much the game can safely "take off" the uniform without it looking weird
 #define NO_FEMALE_UNIFORM			0
 #define FEMALE_UNIFORM_FULL			1

@@ -972,6 +972,16 @@
 	icon_state = "male_stripe"
 	gender = MALE
 
+/datum/sprite_accessory/underwear/male_midway
+	name = "Men's Midway Boxer"
+	icon_state = "male_midway"
+	gender = MALE
+
+/datum/sprite_accessory/underwear/male_longjohns
+	name = "Men's Long Johns"
+	icon_state = "male_longjohns"
+	gender = MALE
+
 /datum/sprite_accessory/underwear/male_kinky
 	name = "Men's Kinky"
 	icon_state = "male_kinky"
@@ -1066,6 +1076,11 @@
 /datum/sprite_accessory/underwear/swimsuit_stripe
 	name = "Ladies' Stripe Swimsuit"
 	icon_state = "swim_stripe"
+	gender = FEMALE
+
+/datum/sprite_accessory/underwear/swimsuit_halter
+	name = "Ladies' Halter Swimsuit"
+	icon_state = "swim_halter"
 	gender = FEMALE
 
 /datum/sprite_accessory/underwear/female_white_neko
