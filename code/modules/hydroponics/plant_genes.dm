@@ -4,10 +4,13 @@
 
 /datum/plant_gene/proc/get_name() // Used for manipulator display and gene disk name.
 	var/formatted_name
-//	if(mutability == PLANT_GENE_IMMUTABLE)
-//		formatted_name += "Immutable "
-//	else if(mutability == PLANT_GENE_REMOVABLE)
-//		formatted_name += "Excisable "
+	if(!(mutability_flags & PLANT_GENE_REMOVABLE && mutability_flags & PLANT_GENE_EXTRACTABLE))
+		if(mutability_flags & PLANT_GENE_REMOVABLE)
+			formatted_name += "Fragile "
+		else if(mutability_flags & PLANT_GENE_EXTRACTABLE)
+			formatted_name += "Essential "
+		else
+			formatted_name += "Immutable "
 	formatted_name += name
 	return formatted_name
 
@@ -109,10 +112,13 @@
 
 /datum/plant_gene/reagent/get_name()
 	var/formatted_name
-//	if(mutability_flags & PLANT_GENE_IMMUTABLE)
-//		formatted_name += "Immutable "
-//	else if(mutability_flags & PLANT_GENE_REMOVABLE)
-//		formatted_name += "Excisable "
+	if(!(mutability_flags & PLANT_GENE_REMOVABLE && mutability_flags & PLANT_GENE_EXTRACTABLE))
+		if(mutability_flags & PLANT_GENE_REMOVABLE)
+			formatted_name += "Fragile "
+		else if(mutability_flags & PLANT_GENE_EXTRACTABLE)
+			formatted_name += "Essential "
+		else
+			formatted_name += "Immutable "
 	formatted_name += "[name] production [rate*100]%"
 	return formatted_name
 
@@ -425,7 +431,7 @@
 	name = "Invasive Spreading"
 
 /datum/plant_gene/trait/invasive/on_grow(obj/machinery/hydroponics/H)
-	for(var/step_dir in GLOB.cardinals)
+	for(var/step_dir in GLOB.alldirs)
 		var/obj/machinery/hydroponics/HY = locate() in get_step(H, step_dir)
 		if(HY && prob(15))
 			if(HY.myseed) // check if there is something in the tray.

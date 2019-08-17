@@ -95,12 +95,13 @@
 	for(var/datum/plant_gene/reagent/R in genes)
 		reagents_add[R.reagent_id] = R.rate
 
-///Call this to set if the gene modder should disallow extracting and/or removing a gene.
+///This proc adds a mutability_flag to a gene
 /obj/item/seeds/proc/set_mutability(typepath, mutability)
 	var/datum/plant_gene/g = get_gene(typepath)
 	if(g)
 		g.mutability_flags |=  mutability
 
+///This proc removes a mutability_flag from a gene
 /obj/item/seeds/proc/unset_mutability(typepath, mutability)
 	var/datum/plant_gene/g = get_gene(typepath)
 	if(g)

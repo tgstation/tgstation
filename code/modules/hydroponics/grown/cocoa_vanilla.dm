@@ -69,6 +69,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "bungotree-grow"
 	icon_dead = "bungotree-dead"
+	rarity = 15
 
 /obj/item/reagent_containers/food/snacks/grown/bungofruit
 	seed = /obj/item/seeds/cocoapod/bungotree

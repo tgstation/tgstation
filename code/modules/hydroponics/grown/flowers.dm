@@ -68,6 +68,7 @@
 	mutatelist = list()
 	genes = list(/datum/plant_gene/reagent/polypyr)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05)
+	rarity = 30
 
 /obj/item/seeds/poppy/lily/trumpet/Initialize()
 	..()

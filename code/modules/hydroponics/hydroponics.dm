@@ -196,7 +196,7 @@
 			else if(pestlevel < 4 && myseed.get_gene(/datum/plant_gene/trait/plant_type/carnivory))
 				adjustHealth(-2 / rating)
 				if(prob(5))
-					adjustPests(-2 / rating)
+					adjustPests(-1 / rating)
 
 			// If it's a weed, it doesn't stunt the growth
 			if(weedlevel >= 5 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
