@@ -602,6 +602,7 @@ Class Procs:
 		updateUsrDialog()
 
 /obj/machinery/AltClick(mob/user)
+	..()
 	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational())
 		return
 	if(inserted_modify_id)
