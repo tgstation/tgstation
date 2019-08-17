@@ -6,7 +6,6 @@
  *		Spears
  *		CHAINSAWS
  *		Bone Axe and Spear
- *		Awl Pike
  */
 
 /*##################################################################
@@ -873,57 +872,3 @@
 		C.change_view(CONFIG_GET(string/default_view))
 		user.client.pixel_x = 0
 		user.client.pixel_y = 0
-
-/obj/item/twohanded/spear/pike
-	icon_state = "awlpike0"
-	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
-	name = "awl pike"
-	desc = "Extremely long and deadly weapon, dating from many centuries in the past. It almost feels like it pulses with an eerie energy."
-	force = 12
-	w_class = WEIGHT_CLASS_HUGE
-	slot_flags = ITEM_SLOT_BACK
-	force_unwielded = 12
-	force_wielded = 35 //less than a claymore, but not by much
-	throwforce = 25
-	throw_speed = 3
-	armour_penetration = 20
-	materials = list()
-	hitsound = 'sound/weapons/pierceslow.ogg'
-	attack_verb = list("lunged at", "thrusted at", "jabbed", "pierced", "gored", "stabbed", "impaled")
-	sharpness = IS_SHARP
-	max_integrity = null
-	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 10)
-	block_chance = 33
-	resistance_flags = FIRE_PROOF
-	war_cry = "FOR THE EMPEROR!"
-	icon_prefix = "awlpike"
-	reach = 2
-	min_reach = 2
-
-/obj/item/twohanded/spear/pike/attack(atom/M, mob/living/carbon/human/user)
-	var/dist = get_dist(M, user)
-	if(dist < min_reach)
-		to_chat(user, "<span class='warning'>[M] is too close stab with the [src]! Try unwielding or moving further back.</span>")
-		return
-	..()
-
-
-/obj/item/twohanded/spear/pike/admin
-	icon_state = "spearglass0"
-	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
-	name = "grim pike"
-	desc = ""
-	force = 30
-	force_unwielded = 15
-	force_wielded = 60
-	throwforce = 80
-	armour_penetration = 100 //SHUNK
-	armor = list("melee" = 30, "bullet" = 10, "laser" = 10, "energy" = 5, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 10)
-	block_chance = 50
-	resistance_flags = FIRE_PROOF
-	war_cry = "AAAAARGH!!!"
-	//var/icon_prefix = "spearglass"
-	reach = 3
-	min_reach = null
