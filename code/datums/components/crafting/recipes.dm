@@ -16,8 +16,7 @@
 	name = "Pin Removal"
 	result = /obj/item/gun
 	reqs = list(/obj/item/gun = 1)
-	blacklist = list(/obj/item/gun/magic, //cant put the mindshield firing pin on the wand of death
-					/obj/item/gun/ballistic/shotgun/doublebarrel/improvised) //cant remove an integrated pin
+	blacklist = list(/obj/item/gun/magic) //cant put the mindshield firing pin on the wand of death
 	parts = list(/obj/item/gun = 1)
 	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	time = 50
@@ -325,7 +324,7 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
-/datum/crafting_recipe/hookishotgun
+/datum/crafting_recipe/hookishotgun //it just removes the hook's firing pin
 	name = "Hook Modified Improvised Shotgun"
 	result = /obj/item/gun/ballistic/shotgun/doublebarrel/hook/improvised
 	reqs = list(/obj/item/weaponcrafting/receiver = 1,
