@@ -194,6 +194,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define EXPLODE_DEVASTATE 1
 #define EXPLODE_HEAVY 2
 #define EXPLODE_LIGHT 3
+#define EXPLODE_GIB_THRESHOLD 50	//ex_act() with EXPLODE_DEVASTATE severity will gib mobs with less than this much bomb armor
 
 #define EMP_HEAVY 1
 #define EMP_LIGHT 2

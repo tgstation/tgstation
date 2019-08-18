@@ -21,18 +21,22 @@
 	var/hash
 
 	var/type = islist? /list : D.type
+	var/no_icon = FALSE
 
 	if(istype(D, /atom))
 		sprite = getFlatIcon(D)
-		hash = md5(sprite)
-		src << browse_rsc(sprite, "vv[hash].png")
+		if(sprite)
+			hash = md5(sprite)
+			src << browse_rsc(sprite, "vv[hash].png")
+		else
+			no_icon = TRUE
 
 	title = "[D] ([REF(D)]) = [type]"
 	var/formatted_type = replacetext("[type]", "/", "<wbr>/")
 
 	var/sprite_text
 	if(sprite)
-		sprite_text = "<img src='vv[hash].png'></td><td>"
+		sprite_text = no_icon? "\[NO ICON\]" : "<img src='vv[hash].png'></td><td>"
 	var/list/header = islist(D)? list("<b>/list</b>") : D.vv_get_header()
 
 	var/marked_line

@@ -1749,7 +1749,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Magillitis Serum Autoinjector"
 	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in Hominidae. \
 			Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
-	item = /obj/item/reagent_containers/hypospray/magillitis
+	item = /obj/item/reagent_containers/hypospray/medipen/magillitis
 	cost = 15
 	restricted_roles = list("Geneticist", "Chief Medical Officer")
 
