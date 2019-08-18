@@ -22,11 +22,11 @@ GLOBAL_VAR_INIT(dynamic_no_stacking, TRUE)
 // A number between -5 and +5. 
 // A negative value will give a more peaceful round and
 // a positive value will give a round with higher threat.
-GLOBAL_VAR_INIT(dynamic_curve_centre, 0)
+GLOBAL_VAR_INIT(dynamic_curve_centre, -1.0) // 413 -- lower threat on average
 // A number between 0.5 and 4.
 // Higher value will favour extreme rounds and
 // lower value rounds closer to the average.
-GLOBAL_VAR_INIT(dynamic_curve_width, 1.8)
+GLOBAL_VAR_INIT(dynamic_curve_width, 2.0) // 413 -- higher threat range. why the fuck are these globals, anyway
 // If enabled only picks a single starting rule and executes only autotraitor midround ruleset. 
 GLOBAL_VAR_INIT(dynamic_classic_secret, FALSE)
 // How many roundstart players required for high population override to take effect.
