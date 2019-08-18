@@ -23,11 +23,6 @@
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
-/obj/item/wrench/cyborg
-	name = "automatic wrench"
-	desc = "An advanced robotic wrench. Can be found in construction cyborgs."
-	toolspeed = 0.5
-
 /obj/item/wrench/brass
 	name = "brass wrench"
 	desc = "A brass wrench. It's faintly warm to the touch."
@@ -108,3 +103,10 @@
 	user.dust()
 
 	return OXYLOSS
+
+/obj/item/wrench/cyborg
+	name = "hydraulic wrench"
+	desc = "An advanced robotic wrench, powered by internal hydraulics. Twice as fast as the handheld version."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "wrench_cyborg"
+	toolspeed = 0.5
