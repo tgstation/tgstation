@@ -170,7 +170,7 @@
 	desc = "This spell stops time for everyone except for you, allowing you to move freely while your enemies and even projectiles are frozen."
 	charge_max = 500
 	clothes_req = TRUE
-	invocation = "TOKI WO TOMARE"
+	invocation = "TOKI YO TOMARE"
 	invocation_type = "shout"
 	range = 0
 	cooldown_min = 100
@@ -290,7 +290,7 @@
 		var/atom/movable/AM = am
 		if(AM == user || AM.anchored)
 			continue
-		
+
 		if(ismob(AM))
 			var/mob/M = AM
 			if(M.anti_magic_check(anti_magic_check, FALSE))

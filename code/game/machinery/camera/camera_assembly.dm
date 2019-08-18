@@ -239,8 +239,9 @@
 	return TRUE
 
 /obj/structure/camera_assembly/wirecutter_act(mob/user, obj/item/I)
+	. = ..()
 	if(state != STATE_WIRED)
-		return FALSE
+		return
 
 	new /obj/item/stack/cable_coil(drop_location(), 2)
 	I.play_tool_sound(src)
@@ -249,8 +250,9 @@
 	return TRUE
 
 /obj/structure/camera_assembly/wrench_act(mob/user, obj/item/I)
+	. = ..()
 	if(state != STATE_WRENCHED)
-		return FALSE
+		return
 	I.play_tool_sound(src)
 	to_chat(user, "<span class='notice'>You detach [src] from its place.</span>")
 	new /obj/item/wallframe/camera(drop_location())

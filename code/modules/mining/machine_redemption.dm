@@ -76,11 +76,8 @@
 	else
 		var/mats = O.materials & mat_container.materials
 		var/amount = O.amount
-		var/id = inserted_scan_id && inserted_scan_id.registered_name
-		if (id)
-			id = " (ID: [id])"
 		mat_container.insert_item(O, sheet_per_ore) //insert it
-		materials.silo_log(src, "smelted", amount, "ores[id]", mats)
+		materials.silo_log(src, "smelted", amount, "someone", mats)
 		qdel(O)
 
 /obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/D)
@@ -178,14 +175,6 @@
 
 	if(!powered())
 		return ..()
-	if(istype(W, /obj/item/card/id))
-		var/obj/item/card/id/I = user.get_active_held_item()
-		if(istype(I))
-			id_insert(user, I, inserted_prisoner_id)
-			inserted_prisoner_id = I
-			interact(user)
-			return
-		return
 
 	if(istype(W, /obj/item/disk/design_disk))
 		if(user.transferItemToLoc(W, src))
@@ -201,7 +190,7 @@
 	return ..()
 
 /obj/machinery/mineral/ore_redemption/AltClick(mob/living/user)
-	..()
+	. = ..()
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 	if (panel_open)
@@ -219,10 +208,6 @@
 /obj/machinery/mineral/ore_redemption/ui_data(mob/user)
 	var/list/data = list()
 	data["unclaimedPoints"] = points
-	if(inserted_scan_id)
-		data["hasID"] = TRUE
-		if (inserted_scan_id.registered_account)
-			data["hasAccount"] = TRUE
 
 	data["materials"] = list()
 	var/datum/component/material_container/mat_container = materials.mat_container
@@ -262,31 +247,23 @@
 		return
 	var/datum/component/material_container/mat_container = materials.mat_container
 	switch(action)
-		if("Eject")
-			if(!inserted_scan_id)
-				return
-			id_eject(usr, inserted_prisoner_id)
-			inserted_prisoner_id = null
-			return TRUE
-		if("Insert")
-			var/obj/item/card/id/I = usr.get_active_held_item()
-			if(istype(I))
-				id_insert(usr, I, inserted_prisoner_id)
-				inserted_prisoner_id = I
-			else
-				to_chat(usr, "<span class='warning'>Not a valid ID!</span>")
-			return TRUE
 		if("Claim")
-			if(inserted_scan_id && inserted_scan_id.registered_account.adjust_money(points))
-				points = 0
+			var/mob/M = usr
+			var/obj/item/card/id/I = M.get_idcard(TRUE)
+			if(points)
+				if(I && I.registered_account.adjust_money(points))
+					points = 0
+				else
+					to_chat(usr, "<span class='warning'>No ID detected.</span>")
+			else
+				to_chat(usr, "<span class='warning'>No points to claim.</span>")
 			return TRUE
 		if("Release")
 			if(!mat_container)
 				return
-
 			if(materials.on_hold())
 				to_chat(usr, "<span class='warning'>Mineral access is on hold, please contact the quartermaster.</span>")
-			else if(!check_access(inserted_scan_id) && !allowed(usr)) //Check the ID inside, otherwise check the user
+			else if(!allowed(usr)) //Check the ID inside, otherwise check the user
 				to_chat(usr, "<span class='warning'>Required access not found.</span>")
 			else
 				var/datum/material/mat = locate(params["id"])

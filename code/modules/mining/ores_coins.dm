@@ -40,6 +40,7 @@
 		add_overlay(stack_overlays)
 
 /obj/item/stack/ore/welder_act(mob/living/user, obj/item/I)
+	..()
 	if(!refined_type)
 		return TRUE
 
@@ -451,6 +452,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		..()
 
 /obj/item/coin/wirecutter_act(mob/living/user, obj/item/I)
+	..()
 	if(!string_attached)
 		return TRUE
 

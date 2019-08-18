@@ -46,8 +46,8 @@
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "core_container_empty"
 	item_state = "tile"
-	lefthand_file = 'icons/mob/inhands/misc/sheets_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/sheets_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/tiles_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/tiles_righthand.dmi'
 	var/obj/item/nuke_core/core
 
 /obj/item/nuke_core_container/Destroy()
@@ -85,7 +85,7 @@
 //snowflake screwdriver, works as a key to start nuke theft, traitor only
 /obj/item/screwdriver/nuke
 	name = "screwdriver"
-	desc = "A screwdriver with an ultra thin tip."
+	desc = "A screwdriver with an ultra thin tip that's carefully designed to boost screwing speed."
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "screwdriver_nuke"
 	item_state = "screwdriver_nuke"

@@ -175,19 +175,19 @@
 /datum/component/mood/process()
 	switch(mood_level)
 		if(1)
-			setSanity(sanity-0.3, SANITY_INSANE, SANITY_NEUTRAL)
+			setSanity(sanity-0.3, SANITY_INSANE)
 		if(2)
-			setSanity(sanity-0.15, SANITY_INSANE, SANITY_GREAT)
+			setSanity(sanity-0.15, SANITY_INSANE)
 		if(3)
-			setSanity(sanity-0.1, SANITY_CRAZY, SANITY_GREAT)
+			setSanity(sanity-0.1, SANITY_CRAZY)
 		if(4)
-			setSanity(sanity-0.05, SANITY_UNSTABLE, SANITY_GREAT)
+			setSanity(sanity-0.05, SANITY_UNSTABLE)
 		if(5)
-			setSanity(sanity+0.1, SANITY_UNSTABLE, SANITY_MAXIMUM)
+			setSanity(sanity, SANITY_UNSTABLE) //This makes sure that mood gets increased should you be below the minimum.
 		if(6)
-			setSanity(sanity+0.2, SANITY_UNSTABLE, SANITY_MAXIMUM)
+			setSanity(sanity+0.2, SANITY_UNSTABLE)
 		if(7)
-			setSanity(sanity+0.3, SANITY_UNSTABLE, SANITY_MAXIMUM)
+			setSanity(sanity+0.3, SANITY_UNSTABLE)
 		if(8)
 			setSanity(sanity+0.4, SANITY_NEUTRAL, SANITY_MAXIMUM)
 		if(9)
@@ -195,16 +195,16 @@
 	HandleNutrition()
 
 ///Sets sanity to the specified amount and applies effects.
-/datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_GREAT)
+/datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_GREAT, override = FALSE)
 	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.5
 	// If the new amount would move towards the acceptable range faster then use it instead
 	if(amount < minimum)
 		amount += CLAMP(minimum - sanity, 0, 0.7)
 	else
-		if(HAS_TRAIT(parent, TRAIT_UNSTABLE))
+		if(!override && HAS_TRAIT(parent, TRAIT_UNSTABLE))
 			maximum = sanity
 		if(amount > maximum)
-			amount += CLAMP(maximum - sanity, -0.5, 0)
+			amount = max(maximum, sanity)
 	if(amount == sanity) //Prevents stuff from flicking around.
 		return
 	sanity = amount
@@ -355,7 +355,7 @@
 	if(!full_heal)
 		return
 	remove_temp_moods()
-	setSanity(initial(sanity))
+	setSanity(initial(sanity), override = TRUE)
 
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN

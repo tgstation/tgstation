@@ -3,23 +3,11 @@
 /obj/machinery/computer/upload
 	var/mob/living/silicon/current = null //The target of future law uploads
 	icon_screen = "command"
-	var/obj/item/gps/internal/ai_upload/embedded_gps
-	var/obj/item/gps/internal/ai_upload/embedded_gps_type = /obj/item/gps/internal/ai_upload
 	time_to_screwdrive = 60
 
-/obj/item/gps/internal/ai_upload
-	icon_state = null
-	gpstag = "Encrypted Upload Signal"
-	desc = "Signal used to connect remotely with silicons."
-	invisibility = 100
-
 /obj/machinery/computer/upload/Initialize()
-	embedded_gps = new embedded_gps_type(src)
-	return ..()
-
-/obj/machinery/computer/upload/Destroy()
-	QDEL_NULL(embedded_gps)
-	return ..()
+	. = ..()
+	AddComponent(/datum/component/gps, "Encrypted Upload Signal")
 
 /obj/machinery/computer/upload/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/aiModule))

@@ -187,11 +187,12 @@
 /obj/item/clothing/head/wig
 	name = "wig"
 	desc = "A bunch of hair without a head attached."
-	icon_state = ""
+	icon = 'icons/mob/human_face.dmi'	  // default icon for all hairs
+	icon_state = "hair_vlong"
 	item_state = "pwig"
 	flags_inv = HIDEHAIR
+	color = "#000"
 	var/hair_style = "Very Long Hair"
-	var/hair_color = "#000"
 	var/adjustablecolor = TRUE //can color be changed manually?
 
 /obj/item/clothing/head/wig/Initialize(mapload)
@@ -199,15 +200,13 @@
 	update_icon()
 
 /obj/item/clothing/head/wig/update_icon()
-	cut_overlays()
 	var/datum/sprite_accessory/S = GLOB.hair_styles_list[hair_style]
 	if(!S)
+		icon = 'icons/obj/clothing/hats.dmi'
 		icon_state = "pwig"
 	else
-		var/mutable_appearance/M = mutable_appearance(S.icon,S.icon_state)
-		M.appearance_flags |= RESET_COLOR
-		M.color = hair_color
-		add_overlay(M)
+		icon = S.icon
+		icon_state = S.icon_state
 
 /obj/item/clothing/head/wig/worn_overlays(isinhands = FALSE, file2use)
 	. = list()
@@ -217,7 +216,7 @@
 			return
 		var/mutable_appearance/M = mutable_appearance(S.icon, S.icon_state,layer = -HAIR_LAYER)
 		M.appearance_flags |= RESET_COLOR
-		M.color = hair_color
+		M.color = color
 		. += M
 
 /obj/item/clothing/head/wig/attack_self(mob/user)
@@ -228,18 +227,18 @@
 		hair_style = new_style
 		user.visible_message("<span class='notice'>[user] changes \the [src]'s hairstyle to [new_style].</span>", "<span class='notice'>You change \the [src]'s hairstyle to [new_style].</span>")
 	if(adjustablecolor)
-		hair_color = input(usr,"","Choose Color",hair_color) as color|null
+		color = input(usr,"","Choose Color",color) as color|null
 	update_icon()
 
 /obj/item/clothing/head/wig/random/Initialize(mapload)
 	hair_style = pick(GLOB.hair_styles_list - "Bald") //Don't want invisible wig
-	hair_color = "#[random_short_color()]"
+	color = "#[random_short_color()]"
 	. = ..()
 
 /obj/item/clothing/head/wig/natural
 	name = "natural wig"
 	desc = "A bunch of hair without a head attached. This one changes color to match the hair of the wearer. Nothing natural about that."
-	hair_color = "#FFF"
+	color = "#FFF"
 	adjustablecolor = FALSE
 	custom_price = 25
 
@@ -249,7 +248,7 @@
 
 /obj/item/clothing/head/wig/natural/equipped(mob/living/carbon/human/user, slot)
 	if(ishuman(user) && slot == SLOT_HEAD)
-		hair_color = "#[user.hair_color]"
+		color = "#[user.hair_color]"
 		update_icon()
 		user.update_inv_head()
 

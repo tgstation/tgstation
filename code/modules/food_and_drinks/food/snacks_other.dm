@@ -338,36 +338,6 @@
 	tastes = list("melon" = 1)
 	foodtype = FRUIT
 
-/obj/item/reagent_containers/food/snacks/spacefreezy
-	name = "space freezy"
-	desc = "The best icecream in space."
-	icon_state = "spacefreezy"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/bluecherryjelly = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
-	filling_color = "#87CEFA"
-	tastes = list("blue cherries" = 2, "ice cream" = 2)
-	foodtype = FRUIT | DAIRY
-
-/obj/item/reagent_containers/food/snacks/sundae
-	name = "sundae"
-	desc = "A classic dessert."
-	icon_state = "sundae"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/banana = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
-	filling_color = "#FFFACD"
-	tastes = list("ice cream" = 1, "banana" = 1)
-	foodtype = FRUIT | DAIRY | SUGAR
-
-/obj/item/reagent_containers/food/snacks/honkdae
-	name = "honkdae"
-	desc = "The clown's favorite dessert."
-	icon_state = "honkdae"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/banana = 10, /datum/reagent/consumable/nutriment/vitamin = 4)
-	filling_color = "#FFFACD"
-	tastes = list("ice cream" = 1, "banana" = 1, "a bad joke" = 1)
-	foodtype = FRUIT | DAIRY | SUGAR
-
 /obj/item/reagent_containers/food/snacks/nachos
 	name = "nachos"
 	desc = "Chips from Space Mexico."
@@ -429,7 +399,6 @@
 	tastes = list("death" = 2, "rock" = 1, "meat" = 1, "hot peppers" = 1)
 	foodtype = MEAT
 
-
 /obj/item/reagent_containers/food/snacks/powercrepe
 	name = "Powercrepe"
 	desc = "With great power, comes great crepes.  It looks like a pancake filled with jelly but packs quite a punch."
@@ -489,7 +458,6 @@
 			handle_reagents()
 			next_succ = world.time + succ_int
 
-
 /obj/item/reagent_containers/food/snacks/lollipop/equipped(mob/user, slot)
 	. = ..()
 	if(slot == SLOT_WEAR_MASK)
@@ -500,8 +468,6 @@
 /obj/item/reagent_containers/food/snacks/lollipop/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
-
-
 
 /obj/item/reagent_containers/food/snacks/lollipop/proc/change_head_color(C)
 	headcolor = C

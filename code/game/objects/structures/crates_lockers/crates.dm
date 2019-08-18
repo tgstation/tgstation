@@ -111,7 +111,7 @@
 	..()
 
 /obj/structure/closet/crate/freezer/Initialize()
-	..()
+	. = ..()
 	recursive_organ_check(src)
 
 

@@ -358,10 +358,6 @@
 	health_cost = source.health_cost
 	..()
 
-/obj/item/melee/blood_magic/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
-
 /obj/item/melee/blood_magic/Destroy()
 	if(!QDELETED(source))
 		if(uses <= 0)

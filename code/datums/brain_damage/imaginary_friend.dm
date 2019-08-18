@@ -8,6 +8,10 @@
 	var/friend_initialized = FALSE
 
 /datum/brain_trauma/special/imaginary_friend/on_gain()
+	var/mob/living/M = owner
+	if(M.stat == DEAD || !M.client)
+		qdel(src)
+		return
 	..()
 	make_friend()
 	get_ghost()

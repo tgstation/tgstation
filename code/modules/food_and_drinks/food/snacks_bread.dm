@@ -217,6 +217,8 @@
 	species_exception = fried.species_exception
 	item_flags = fried.item_flags
 	obj_flags = fried.obj_flags
+	inhand_x_dimension = fried.inhand_x_dimension
+	inhand_y_dimension = fried.inhand_y_dimension
 
 	if(istype(fried, /obj/item/reagent_containers/food/snacks))
 		fried.reagents.trans_to(src, fried.reagents.total_volume)

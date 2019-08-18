@@ -82,7 +82,7 @@
 /proc/load_photo_from_disk(id, location)
 	var/datum/picture/P = load_picture_from_disk(id)
 	if(istype(P))
-		var/obj/item/photo/p = new(location, P)
+		var/obj/item/photo/old/p = new(location, P)
 		return p
 
 /proc/load_picture_from_disk(id)

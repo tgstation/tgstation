@@ -4,7 +4,7 @@
 /area/space)
 "aab" = (
 /turf/closed/wall,
-/area/space/nearstation)
+/area/science/test_area)
 "aad" = (
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
@@ -91,7 +91,7 @@
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/science/test_area)
 "aaq" = (
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
@@ -112,7 +112,7 @@
 	dir = 8
 	},
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/science/test_area)
 "aat" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -159,14 +159,14 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/science/test_area)
 "aaC" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'BOMB RANGE";
 	name = "BOMB RANGE"
 	},
 /turf/closed/wall,
-/area/space/nearstation)
+/area/science/test_area)
 "aaD" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -177,14 +177,14 @@
 	dir = 4
 	},
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/science/test_area)
 "aaF" = (
 /obj/structure/chair,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/science/test_area)
 "aaG" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible,
 /obj/effect/turf_decal/stripes/line{
@@ -206,7 +206,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/science/test_area)
 "aaJ" = (
 /obj/structure/toilet{
 	dir = 4
@@ -1247,7 +1247,7 @@
 	dir = 5
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/science/test_area)
 "adC" = (
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/chapel{
@@ -1483,7 +1483,7 @@
 	},
 /obj/structure/window/reinforced,
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/science/test_area)
 "aej" = (
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
@@ -1519,7 +1519,7 @@
 	dir = 4
 	},
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/science/test_area)
 "aeq" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -1601,7 +1601,7 @@
 	dir = 9
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/science/test_area)
 "aeD" = (
 /obj/machinery/rnd/production/protolathe/department/science,
 /turf/open/floor/plasteel,
@@ -2427,7 +2427,7 @@
 	dir = 5
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/science/test_area)
 "agC" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Server Room";
@@ -2534,7 +2534,7 @@
 	icon_state = "riveted";
 	name = "hyper-reinforced wall"
 	},
-/area/space/nearstation)
+/area/science/test_area)
 "agM" = (
 /obj/item/target/alien/anchored,
 /obj/effect/turf_decal/stripes/line{
@@ -2544,7 +2544,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/science/test_area)
 "agN" = (
 /turf/open/floor/plasteel/white/side{
 	dir = 8
@@ -2553,13 +2553,13 @@
 "agO" = (
 /obj/item/toy/figure/scientist,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/science/test_area)
 "agP" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/science/test_area)
 "agQ" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -2576,7 +2576,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/science/test_area)
 "agS" = (
 /obj/structure/chair{
 	dir = 4
@@ -2585,7 +2585,7 @@
 	dir = 10
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/science/test_area)
 "agT" = (
 /obj/machinery/computer/secure_data,
 /obj/effect/turf_decal/tile/red{
@@ -2656,7 +2656,7 @@
 	dir = 6
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/science/test_area)
 "ahd" = (
 /obj/machinery/power/smes,
 /obj/machinery/camera{
@@ -2674,7 +2674,7 @@
 	dir = 10
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/science/test_area)
 "ahf" = (
 /obj/machinery/door/airlock/command{
 	name = "Captain's Quarters";
@@ -2685,7 +2685,7 @@
 "ahg" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/science/test_area)
 "ahh" = (
 /obj/structure/chair{
 	dir = 1
@@ -2694,7 +2694,7 @@
 	dir = 6
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/science/test_area)
 "ahi" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -2789,7 +2789,7 @@
 /turf/open/floor/plasteel,
 /area/storage/tools)
 "ahw" = (
-/obj/machinery/computer/prisoner,
+/obj/machinery/computer/prisoner/management,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -2955,7 +2955,7 @@
 /obj/item/target,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/science/test_area)
 "ahT" = (
 /turf/closed/wall,
 /area/crew_quarters/bar)
@@ -4186,7 +4186,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "akX" = (
-/obj/machinery/computer/prisoner{
+/obj/machinery/computer/prisoner/management{
 	dir = 8
 	},
 /obj/machinery/light{
@@ -12093,7 +12093,7 @@
 /turf/open/floor/plasteel/white,
 /area/security/brig)
 "aEs" = (
-/obj/machinery/computer/gulag_teleporter_computer{
+/obj/machinery/computer/prisoner/gulag_teleporter_computer{
 	dir = 4
 	},
 /obj/machinery/gulag_item_reclaimer{
@@ -45813,6 +45813,9 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
+"fqf" = (
+/turf/open/floor/plating/airless,
+/area/science/test_area)
 "fst" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -55655,9 +55658,9 @@ aal
 aab
 aab
 aaF
-aeH
-aeH
-aeH
+fqf
+fqf
+fqf
 ahe
 aab
 aab
@@ -55912,9 +55915,9 @@ aal
 aap
 aaB
 aaI
-aeH
+fqf
 agO
-aeH
+fqf
 ahg
 ahS
 aap
@@ -56169,9 +56172,9 @@ aal
 aab
 aab
 adB
-aeH
-aeH
-aeH
+fqf
+fqf
+fqf
 ahh
 aab
 aab
