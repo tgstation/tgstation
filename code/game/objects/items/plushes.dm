@@ -125,8 +125,10 @@
 				stuffed = FALSE
 			else
 				to_chat(user, "<span class='notice'>What a fool you are. [src] is a god, how can you kill a god? What a grand and intoxicating innocence.</span>")
-				if(iscarbon(user) && user.drunkenness < 50)
-					user.drunkenness = min(user.drunkenness + 20, 50)
+				if(iscarbon(user))
+					var/mob/living/carbon/C = user
+					if(C.drunkenness < 50)
+						C.drunkenness = min(C.drunkenness + 20, 50)
 				var/turf/current_location = get_turf(user)
 				var/area/current_area = current_location.loc //copied from hand tele code
 				if(current_location && current_area && current_area.noteleport)
