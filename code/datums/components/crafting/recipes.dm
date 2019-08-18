@@ -324,18 +324,6 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
-/datum/crafting_recipe/hookishotgun //it just removes the hook's firing pin
-	name = "Hook Modified Improvised Shotgun"
-	result = /obj/item/gun/ballistic/shotgun/doublebarrel/hook/improvised
-	reqs = list(/obj/item/weaponcrafting/receiver = 1,
-				/obj/item/gun/ballistic/shotgun/doublebarrel/improvised = 1,
-				/obj/item/stack/cable_coil = 5,
-				/obj/item/gun/magic/hook)
-	tools = list(TOOL_SCREWDRIVER)
-	time = 70
-	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
-
 /datum/crafting_recipe/chainsaw
 	name = "Chainsaw"
 	result = /obj/item/twohanded/required/chainsaw

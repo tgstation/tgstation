@@ -266,11 +266,3 @@
 		hook.afterattack(target, user, flag, params)
 	else
 		return ..()
-
-
-/obj/item/gun/ballistic/shotgun/doublebarrel/hook/improvised
-	name = "hook modified improvised shotgun"
-	icon_state = "hookishotgun"
-	item_state = "hookishotgun"
-	mag_type = /obj/item/ammo_box/magazine/internal/shot/improvised
-	force = 14 //it has a hook on it
