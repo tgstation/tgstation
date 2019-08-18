@@ -186,7 +186,6 @@
 	sawn_desc = "I'm just here for the gasoline."
 	unique_reskin = null
 	var/slung = FALSE
-	pin = /obj/item/firing_pin/modular
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised/attackby(obj/item/A, mob/user, params)
 	..()
