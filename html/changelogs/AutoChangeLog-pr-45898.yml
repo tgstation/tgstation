@@ -1,8 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - rscadd: "New persistent photo albums have been added to the bar, chapel, library, permabrig and nuke ops base"
-  - rscadd: "Cameras may be purchased at the library's games vendor"
-  - rscadd: "The photograper quirk now grants you your very own persistent album to document your adventures"
-  - code_imp: "the photographer quirk now checks for free slots when assigning the items locations"
-  - tweak: "pictures that are not from the ongoing round will look visibly old"
