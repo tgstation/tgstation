@@ -212,12 +212,11 @@
 		new /obj/item/stack/cable_coil(get_turf(src), 10)
 		slung = 0
 		update_icon()
-		item_state = "ishotgun_sawn" //e
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised/sawn
 	name = "sawn-off improvised shotgun"
 	desc = "A single-shot shotgun. Better not miss."
-	icon_state = "ishotgun_sawn"
+	icon_state = "ishotgun" //_sawn
 	item_state = "ishotgun_sawn"
 	w_class = WEIGHT_CLASS_NORMAL
 	sawn_off = TRUE

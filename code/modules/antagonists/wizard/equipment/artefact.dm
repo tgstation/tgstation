@@ -270,6 +270,7 @@
 	H.put_in_hands(new /obj/item/claymore(H), TRUE)
 	H.equip_to_slot_or_del(new /obj/item/twohanded/spear(H), SLOT_BACK)
 
+
 /obj/item/voodoo
 	name = "wicker doll"
 	desc = "Something creepy about it."
