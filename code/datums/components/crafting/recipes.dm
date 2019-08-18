@@ -16,6 +16,8 @@
 	name = "Pin Removal"
 	result = /obj/item/gun
 	reqs = list(/obj/item/gun = 1)
+	blacklist = list(/obj/item/gun/magic, //cant put the mindshield firing pin on the wand of death
+					/obj/item/gun/ballistic/shotgun/doublebarrel/improvised) //cant remove an integrated pin
 	parts = list(/obj/item/gun = 1)
 	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	time = 50

@@ -67,6 +67,9 @@
 		if(gun)
 			qdel(gun)
 
+/obj/item/firing_pin/modular //so the improvised shotgun doesn't have an electronic pin
+	name = "integrated makeshift pin"
+	desc = "Firing pin that comes by default in every modular receiver. You probably shouldn't be able to see this."
 
 
 /obj/item/firing_pin/magic
