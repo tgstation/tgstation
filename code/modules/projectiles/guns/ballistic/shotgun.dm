@@ -204,7 +204,7 @@
 	..()
 	if(slung)
 		add_overlay("ishotgunsling")
-		item_state = "ishotgunsling" //e
+		item_state = "ishotgunsling"
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised/sawoff(mob/user)
 	. = ..()
