@@ -111,7 +111,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	materials =	typelist("materials", materials)
 
 	if(materials) //Otherwise, use the instances already provided.
-		var/list/temp_list = list() 
+		var/list/temp_list = list()
 		for(var/i in materials) //Go through all of our materials, get the subsystem instance, and then replace the list.
 			var/amount = materials[i]
 			var/datum/material/M = getmaterialref(i)
@@ -633,7 +633,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return
 
 /obj/item/attack_hulk(mob/living/carbon/human/user)
-	return 0
+	return FALSE
 
 /obj/item/attack_animal(mob/living/simple_animal/M)
 	if (obj_flags & CAN_BE_HIT)

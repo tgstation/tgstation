@@ -92,7 +92,7 @@
 // Chasms for the jungle, with planetary atmos and a different icon
 /turf/open/chasm/jungle
 	icon = 'icons/turf/floors/junglechasm.dmi'
-	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/chasm/jungle
 
