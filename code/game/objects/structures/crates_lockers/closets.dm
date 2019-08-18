@@ -134,7 +134,7 @@
 /obj/structure/closet/proc/open(mob/living/user)
 	if(opened || !can_open(user))
 		return
-	playsound(loc, open_sound, 15, 1, -3)
+	playsound(loc, open_sound, 100, 1, -3)
 	opened = TRUE
 	if(!dense_when_open)
 		density = FALSE
@@ -188,7 +188,7 @@
 	if(!opened || !can_close(user))
 		return FALSE
 	take_contents()
-	playsound(loc, close_sound, 15, 1, -3)
+	playsound(loc, close_sound, 100, 1, -3)
 	climb_time = initial(climb_time)
 	opened = FALSE
 	density = TRUE
