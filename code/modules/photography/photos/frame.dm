@@ -99,7 +99,7 @@
 		load_from_id(data[persistence_id])
 
 /obj/structure/sign/picture_frame/proc/load_from_id(id)
-	var/obj/item/photo/P = load_photo_from_disk(id)
+	var/obj/item/photo/old/P = load_photo_from_disk(id)
 	if(istype(P))
 		if(istype(framed))
 			framed.forceMove(drop_location())
