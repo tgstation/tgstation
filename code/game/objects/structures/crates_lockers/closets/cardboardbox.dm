@@ -13,6 +13,8 @@
 	material_drop = /obj/item/stack/sheet/cardboard
 	delivery_icon = "deliverybox"
 	anchorable = FALSE
+	open_sound = 'sound/machines/cardboard_box.ogg'
+	close_sound = 'sound/machines/cardboard_box.ogg'
 	var/move_speed_multiplier = 1
 	var/move_delay = FALSE
 	var/egged = 0
@@ -66,7 +68,8 @@
 	resistance_flags = NONE
 	move_speed_multiplier = 2
 	cutting_tool = /obj/item/weldingtool
-	open_sound = 'sound/machines/click.ogg'
+	open_sound = 'sound/machines/crate_open.ogg'
+	close_sound = 'sound/machines/crate_close.ogg'
 	material_drop = /obj/item/stack/sheet/plasteel
 #undef SNAKE_SPAM_TICKS
 

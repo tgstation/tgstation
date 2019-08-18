@@ -8,6 +8,8 @@
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 4
 	delivery_icon = "deliverybox"
+	open_sound = 'sound/machines/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/wooden_closet_close.ogg'
 	var/obj/item/tank/internals/emergency_oxygen/tank
 
 /obj/structure/closet/crate/critter/Initialize()
