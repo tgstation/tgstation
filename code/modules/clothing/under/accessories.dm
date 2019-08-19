@@ -225,7 +225,7 @@
 /obj/item/clothing/accessory/medal/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
 		atmos_spawn_air("plasma=20;TEMP=[exposed_temperature]")
-		visible_message("<span class='danger'> \The [src] bursts into flame!</span>","<span class='userdanger'>Your [src] bursts into flame!</span>")
+		visible_message("<span class='danger'>\The [src] bursts into flame!</span>", "<span class='userdanger'>Your [src] bursts into flame!</span>")
 		qdel(src)
 
 /obj/item/clothing/accessory/medal/plasma/nobel_science

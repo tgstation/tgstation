@@ -784,7 +784,7 @@
 		//Put the items in that list into a string of text
 		for(var/B in broken)
 			broken_message += B
-		to_chat(src, "<span class='warning'> Your [broken_message] [broken_plural ? "are" : "is"] non-functional!</span>")
+		to_chat(src, "<span class='warning'>Your [broken_message] [broken_plural ? "are" : "is"] non-functional!</span>")
 	if(damaged.len)
 		if(damaged.len > 1)
 			damaged.Insert(damaged.len, "and ")

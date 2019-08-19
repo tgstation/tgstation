@@ -213,7 +213,7 @@
 /obj/item/book/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/pen))
 		if(is_blind(user))
-			to_chat(user, "<span class='warning'> As you are trying to write on the book, you suddenly feel very stupid!</span>")
+			to_chat(user, "<span class='warning'>As you are trying to write on the book, you suddenly feel very stupid!</span>")
 			return
 		if(unique)
 			to_chat(user, "<span class='warning'>These pages don't seem to take the ink well! Looks like you can't modify it.</span>")
