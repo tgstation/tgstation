@@ -53,8 +53,7 @@
 		var/mob/living/M = AM
 		var/turf/T = get_turf(src)
 		investigate_log("([key_name(A)]) has been consumed by the BoH tear at [AREACOORD(T)].", INVESTIGATE_SINGULO)
-		ghosts += M.ghostize(FALSE)
-		return
+		M.ghostize(FALSE)
 	else if(!isobj(AM))
 		return
 	AM.forceMove(src)
