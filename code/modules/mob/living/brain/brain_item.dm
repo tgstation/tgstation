@@ -243,7 +243,7 @@
 
 /obj/item/organ/brain/cortical_stack
 	name = "cortical stack"
-	desc = "the cortical stack of a vox, containing their higher personality"
+	desc = "the cortical stack of a vox, containing their higher brain functions and personality. Don't lose this! Or do if you want that..."
 	icon_state = "cortical_stack"
 	decay_factor = 0
 	status = ORGAN_ROBOTIC
@@ -262,7 +262,7 @@ obj/item/organ/vox_brain //it's a fake, dummy brain, doesn't actually do anythin
 	name = "vox brain"	
 	desc = "A piece of juicy meat found in the head of a vox."
 	icon_state = "brain"
-	organ_flags = ORGAN_SLOT_CORTICAL_STACK 
+	slot = ORGAN_SLOT_CORTICAL_STACK 
 	icon_state = "brain"
 	throw_speed = 3
 	throw_range = 5

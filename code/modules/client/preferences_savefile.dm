@@ -389,7 +389,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	facial_hair_color			= sanitize_hexcolor(facial_hair_color, 3, 0)
 	underwear_color			= sanitize_hexcolor(underwear_color, 3, 0)
 	eye_color		= sanitize_hexcolor(eye_color, 3, 0)
-	skin_tone		= sanitize_inlist(skin_tone, GLOB.skin_tones)
+	var/list/skin_tones = GLOB.skin_tones_human + GLOB.skin_tones_exotic
+	skin_tone		= sanitize_inlist(skin_tone, skin_tones)
 	backbag			= sanitize_inlist(backbag, GLOB.backbaglist, initial(backbag))
 	jumpsuit_style	= sanitize_inlist(jumpsuit_style, GLOB.jumpsuitlist, initial(jumpsuit_style))
 	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))

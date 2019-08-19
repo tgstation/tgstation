@@ -236,35 +236,50 @@
 	. = L
 
 
-/proc/skintone2hex(skin_tone)
-	. = 0
-	switch(skin_tone)
-		if("caucasian1")
-			. = "ffe0d1"
-		if("caucasian2")
-			. = "fcccb3"
-		if("caucasian3")
-			. = "e8b59b"
-		if("latino")
-			. = "d9ae96"
-		if("mediterranean")
-			. = "c79b8b"
-		if("asian1")
-			. = "ffdeb3"
-		if("asian2")
-			. = "e3ba84"
-		if("arab")
-			. = "c4915e"
-		if("indian")
-			. = "b87840"
-		if("african1")
-			. = "754523"
-		if("african2")
-			. = "471c18"
-		if("albino")
-			. = "fff4e6"
-		if("orange")
-			. = "ffc905"
+//proc/skintone2hex(skin_tone)
+//	. = 0
+//	switch(skin_tone)
+//		//human_tones
+//		if("caucasian1")
+//			. = SKIN_HEX_CAUCASIAN_1
+//		if("caucasian2")
+//			. = SKIN_HEX_CAUCASIAN_2
+//		if("caucasian3")
+//			. = SKIN_HEX_CAUCASIAN_3
+//		if("latino")
+//			. = SKIN_HEX_LATINO
+//		if("mediterranean")
+//			. = SKIN_HEX_MEDITERRANEAN
+//		if("asian1")
+//			. = SKIN_TONE_ASIAN_1
+//		if("asian2")
+//			. = SKIN_TONE_ASIAN_2
+//		if("arab")
+//			. = SKIN_TONE_ARAB
+//		if("indian")
+//			. = SKIN_TONE_INDIAN
+//		if("african1")
+//			. = SKIN_TONE_AFRICAN_1
+//		if("african2")
+//			. = SKIN_TONE_AFRICAN_2
+//		if("albino")
+//			. = SKIN_TONE_ALBINO
+//		if("orange")
+//			. = SKIN_TONE_ORANGE //fuck my life
+//		//exotic tones
+//		if("light green")
+//			. = SKIN_TONE_GREEN_1
+//		if("emerald green")
+//			. = SKIN_TONE_GREEN_2
+//		if("azure")
+//			. = SKIN_TONE_BLUE_2
+//		if("brown")
+//			. = SKIN_TONE_BROWN_1
+//		if("light grey")
+//			. = SKIN_TONE_GREY_1
+//		if("grey")
+//			. = SKIN_TONE_GREY_2
+
 
 /mob/living/carbon/proc/Digitigrade_Leg_Swap(swap_back)
 	var/body_plan_changed = FALSE

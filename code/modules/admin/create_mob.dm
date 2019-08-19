@@ -16,7 +16,8 @@
 	H.name = H.real_name
 	H.underwear = random_underwear(H.gender)
 	H.underwear_color = random_short_color()
-	H.skin_tone = random_skin_tone()
+	var/list/allowed_skintones = H.dna.species.get_allowed_skintones()
+	H.skin_tone = random_skin_tone(allowed_skintones)
 	H.hair_style = random_hair_style(H.gender)
 	H.facial_hair_style = random_facial_hair_style(H.gender)
 	H.hair_color = random_short_color()

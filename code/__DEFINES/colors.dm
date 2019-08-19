@@ -58,3 +58,26 @@
 #define COLOR_ASSEMBLY_LBLUE   "#5D99BE"
 #define COLOR_ASSEMBLY_BLUE    "#38559E"
 #define COLOR_ASSEMBLY_PURPLE  "#6F6192"
+
+//human skin tone hex values
+#define SKIN_HEX_AFRICAN_1     "754523"
+#define SKIN_HEX_AFRICAN_2     "471c18"
+#define SKIN_HEX_ALBINO        "fff4e6"
+#define SKIN_HEX_ARAB          "c4915e"
+#define SKIN_HEX_ASIAN_1       "ffdeb3"
+#define SKIN_HEX_ASIAN_2       "e3ba84"
+#define SKIN_HEX_CAUCASIAN_1   "ffe0d1"
+#define SKIN_HEX_CAUCASIAN_2   "fcccb3"
+#define SKIN_HEX_CAUCASIAN_3   "e8b59b"
+#define SKIN_HEX_INDIAN        "b87840"
+#define SKIN_HEX_LATINO        "d9ae96"
+#define SKIN_HEX_MEDITERRANEAN "c79b8b"
+#define SKIN_HEX_ORANGE        "ffc905"
+
+//exotic skin tone hex values
+#define SKIN_HEX_GREEN_1     "e6f377" //light green, used by AYYs and vox
+#define SKIN_HEX_GREEN_2     "74d2a0" //emerald green, used by vox and unathi
+#define SKIN_HEX_BLUE_2      "85c1bb" //azure blue, used by vox and unathi
+#define SKIN_HEX_GREY_1      "b5b5b5" //light grey, used by vox and AYYs
+#define SKIN_HEX_GREY_2      "59614e" //mid grey, used by AYYs
+#define SKIN_HEX_BROWN_1     "efbd8e" //brown, used by vox

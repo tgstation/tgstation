@@ -572,7 +572,7 @@ generate/load female uniform sprites matching all previously decided variables
 
 	if(dna.check_mutation(HULK))
 		. += "-coloured-hulk"
-	else if(dna.species.use_skintones)
+	else if(dna.species.use_skintones || dna.species.exotic_skintones.len)
 		. += "-coloured-[skin_tone]"
 	else if(dna.species.fixed_mut_color)
 		. += "-coloured-[dna.species.fixed_mut_color]"

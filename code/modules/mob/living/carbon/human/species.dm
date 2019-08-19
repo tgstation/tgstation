@@ -15,8 +15,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/hair_color	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
 	var/list/fitted_slots = list() //which slots to use species sprite variants for, if any? !!NOT IMPLEMENTED YET!!!
-	var/list/locked_slots = list() //use this instead of fitted_slots for any slots where the species has specially defined gear !!NOT IMPLEMENTED YET!!! 
-	var/use_skintones = 0	// does it use skintones or not? (spoiler alert this is only used by humans)
+	var/use_skintones = 0	// does it use human skintones or not? (spoiler alert this is only used by humans)
+	var/list/exotic_skintones = list() //list of exotic skintones used by this race, if any
 	var/exotic_blood = ""	// If your race wants to bleed something other than bog standard blood, change this to reagent id.
 	var/exotic_bloodtype = "" //If your race uses a non standard bloodtype (A+, O-, AB-, etc)
 	var/meat = /obj/item/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
@@ -53,6 +53,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/list/special_step_sounds //Sounds to override barefeet walkng
 	var/grab_sound //Special sound for grabbing
 	var/datum/outfit/outfit_important_for_life /// A path to an outfit that is important for species life e.g. plasmaman outfit
+	var/can_crit = TRUE
 
 
 	// species-only traits. Can be found in DNA.dm
@@ -255,7 +256,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/obj/item/organ/I = new path()
 		I.Insert(C)
 
-/datum/species/proc/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+/datum/species/proc/on_species_gain(mob/living/carbon/human/C, datum/species/old_species, pref_load)
 	// Drop the items the new species can't wear
 	if((AGENDER in species_traits))
 		C.gender = PLURAL
@@ -265,6 +266,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			C.dropItemToGround(thing)
 	if(C.hud_used)
 		C.hud_used.update_locked_slots()
+	var/list/allowed_skintones = get_allowed_skintones()
+	if(allowed_skintones.len && !(C.skin_tone in allowed_skintones))
+		C.skin_tone = random_skin_tone(allowed_skintones)
+		C.dna.update_ui_block(DNA_SKIN_TONE_BLOCK)
 
 	// this needs to be FIRST because qdel calls update_body which checks if we have DIGITIGRADE legs or not and if not then removes DIGITIGRADE from species_traits
 	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
@@ -736,6 +741,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 							accessory_overlay.color = "#[H.facial_hair_color]"
 						if(EYECOLOR)
 							accessory_overlay.color = "#[H.eye_color]"
+						if(SKINTONE_EXOTIC)
+							accessory_overlay.color = "#[skintone2hex(H.skin_tone)]"
 				else
 					accessory_overlay.color = forced_colour
 			standing += accessory_overlay
@@ -1792,7 +1799,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 
 ////////////
-//Stun//
+//Stun    //
 ////////////
 
 /datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
@@ -1821,3 +1828,19 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/start_wagging_tail(mob/living/carbon/human/H)
 
 /datum/species/proc/stop_wagging_tail(mob/living/carbon/human/H)
+
+//////////////
+//Skin_tone //
+//////////////
+/datum/species/proc/get_allowed_skintones()
+	var/list/allowed_skin_tones = list()
+	if(use_skintones)
+		allowed_skin_tones += GLOB.skin_tones_human
+	allowed_skin_tones += exotic_skintones
+	return allowed_skin_tones
+
+//////////////
+//crit_array//
+//////////////
+/datum/species/proc/get_crit_array() //so the damage procs can evaluate attacks properly.
+	return list(attack_sharp, attack_piercing, can_crit)

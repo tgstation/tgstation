@@ -147,6 +147,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MEDICAL_HUD		"med_hud"
 #define TRAIT_SECURITY_HUD		"sec_hud"
 
+//psionic traits
+#define TRAIT_PSYCHIC			"psychic"
+#define TRAIT_TELEPATH			"telepath"
+#define TRAIT_MINDLINKED		"mind_linked"
+
 //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis"         //Used for limb-based paralysis, where replacing the limb will fix it
 #define TRAIT_PART_CRIT			"part critical"     //used to flag a part as being in critical

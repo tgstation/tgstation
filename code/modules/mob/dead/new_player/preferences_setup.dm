@@ -9,7 +9,6 @@
 	underwear_color = random_short_color()
 	undershirt = random_undershirt(gender)
 	socks = random_socks()
-	skin_tone = random_skin_tone()
 	hair_style = random_hair_style(gender)
 	facial_hair_style = random_facial_hair_style(gender)
 	hair_color = random_short_color()
@@ -19,6 +18,8 @@
 		var/rando_race = pick(GLOB.roundstart_races)
 		pref_species = new rando_race()
 	features = random_features()
+	var/list/allowed_skin_tones = pref_species.get_allowed_skintones()
+	skin_tone = random_skin_tone(allowed_skin_tones)
 	age = rand(AGE_MIN,AGE_MAX)
 
 /datum/preferences/proc/random_species()

@@ -16,7 +16,7 @@
 	from doing this unless you absolutely know what you are doing, and have defined a
 	conversion in savefile.dm
 */
-/proc/init_sprite_accessory_subtypes(prototype, list/L, list/male, list/female,var/roundstart = FALSE)//Roundstart argument builds a specific list for roundstart parts where some parts may be locked
+/proc/init_sprite_accessory_subtypes(prototype, list/L, list/male, list/female, var/roundstart = FALSE)//Roundstart argument builds a specific list for roundstart parts where some parts may be locked
 	if(!istype(L))
 		L = list()
 	if(!istype(male))
@@ -50,10 +50,11 @@
 	var/icon			//the icon file the accessory is located in
 	var/icon_state		//the icon_state of the accessory
 	var/name			//the preview name of the accessory
+	var/race = FALSE 	//If this accessory is race locked 
 	var/gender = NEUTER	//Determines if the accessory will be skipped or included in random hair generations
 	var/gender_specific //Something that can be worn by either gender, but looks different on each
 	var/use_static		//determines if the accessory will be skipped by color preferences
-	var/color_src = MUTCOLORS	//Currently only used by mutantparts so don't worry about hair and stuff. This is the source that this accessory will get its color from. Default is MUTCOLOR, but can also be HAIR, FACEHAIR, EYECOLOR and 0 if none.
+	var/color_src = MUTCOLORS	//Currently only used by mutantparts so don't worry about hair and stuff. This is the source that this accessory will get its color from. Default is MUTCOLOR, but can also be HAIR, FACEHAIR, EYECOLOR, SKINTONE_EXOTIC, and 0 if none.
 	var/hasinner		//Decides if this sprite has an "inner" part, such as the fleshy parts on ears.
 	var/locked = FALSE		//Is this part locked from roundstart selection? Used for parts that apply effects
 	var/dimension_x = 32
@@ -1567,10 +1568,12 @@
 	icon_state = "smooth"
 
 /datum/sprite_accessory/tails/vox/vox
+	color_src = SKINTONE_EXOTIC
 	name = "Vox"
 	icon_state = "vox"
 
 /datum/sprite_accessory/tails_animated/vox/vox
+	color_src = SKINTONE_EXOTIC
 	name = "Vox"
 	icon_state = "vox"
 
@@ -1919,25 +1922,96 @@ datum/sprite_accessory/quills //Voxxy gets customization too!
 
 /datum/sprite_accessory/quills/none
 	name = "None"
-	icon_state = null
+	icon_state = "none"
 
 datum/sprite_accessory/quills/crested
 	name = "Crested"
-	icon_state = "quills_crested"
+	icon_state = "crested"
 
-datum/sprite_accessory/face_quills //Voxxy gets customization too!
+datum/sprite_accessory/quills/emperor
+	name = "Emperor"
+	icon_state = "emperor"
+
+datum/sprite_accessory/quills/keel
+	name = "Keel"
+	icon_state = "keel"
+
+datum/sprite_accessory/quills/keet
+	name = "Keet"
+	icon_state = "keet"
+
+datum/sprite_accessory/quills/short
+	name = "Short"
+	icon_state = "short"
+
+datum/sprite_accessory/quills/kiel
+	name = "Kiel"
+	icon_state = "kiel"
+
+datum/sprite_accessory/quills/kingly
+	name = "Kingly"
+	icon_state = "kingly"
+
+datum/sprite_accessory/quills/afro
+	name = "Afro"
+	icon_state = "afro"
+
+datum/sprite_accessory/quills/yasu
+	name = "Yasu"
+	icon_state = "yasu"
+
+datum/sprite_accessory/quills/razor
+	name = "Razor"
+	icon_state = "razor"
+
+datum/sprite_accessory/quills/razorclipped
+	name = "Razor Clipped"
+	icon_state = "razorclipped"
+
+datum/sprite_accessory/quills/mohawk
+	name = "Mohawk"
+	icon_state = "mohawk"
+
+datum/sprite_accessory/quills/horned
+	name = "Horned"
+	icon_state = "horned"
+
+datum/sprite_accessory/quills/nights
+	name = "Nights"
+	icon_state = "nights"
+
+datum/sprite_accessory/face_quills //Voxxy beards that I've literally never seen anyone use!
 	icon = 'icons/mob/vox_quills.dmi'
+	color_src = FACEHAIR
 	gender = MALE
-	color_src = HAIR
 
 datum/sprite_accessory/face_quills/none
 	name = "None"
-	icon_state = null
+	icon_state = "none"
 	gender = NEUTER
+
+datum/sprite_accessory/face_quills/colonel
+	name = "Colonel"
+	icon_state = "colonel"
+	gender = MALE
+
+datum/sprite_accessory/face_quills/fu
+	name = "Fu"
+	icon_state = "fu"
+	gender = MALE
 
 datum/sprite_accessory/face_quills/neck
 	name = "Neck Quills"
-	icon_state = "face_quills_neck"
+	icon_state = "neck"
+	gender = MALE
+
+datum/sprite_accessory/face_quills/beard
+	name = "Beard"
+	icon_state = "beard"
+	gender = MALE
+
+
+
 
 //IPC acessories
 //datum/sprite_accessory/vox/hair/...

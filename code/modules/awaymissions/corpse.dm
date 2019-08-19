@@ -178,10 +178,11 @@
 		H.facial_hair_style = facial_hair_style
 	else
 		H.facial_hair_style = random_facial_hair_style(gender)
-	if(skin_tone)
+	var/list/allowed_skintones = H.dna.species.get_allowed_skintones()
+	if(skin_tone && skin_tone in allowed_skintones)
 		H.skin_tone = skin_tone
 	else
-		H.skin_tone = random_skin_tone()
+		H.skin_tone = random_skin_tone(allowed_skintones)
 	H.update_hair()
 	H.update_body()
 	if(outfit)

@@ -31,7 +31,7 @@
 #define ELVIS		/datum/mutation/human/elvis
 #define RADIOACTIVE	/datum/mutation/human/radioactive
 #define GLOWY		/datum/mutation/human/glow
-#define TELEPATHY	/datum/mutation/human/telepathy
+#define TELEPATHY	/datum/mutation/human/telepathy //TODO: change this to "psychic, and fold other psychic powers into the psionics system"
 #define FIREBREATH	/datum/mutation/human/firebreath
 #define VOID		/datum/mutation/human/void
 #define STRONG    	/datum/mutation/human/strong
@@ -101,27 +101,29 @@
 #define CLONER_MATURE_CLONE "mature"
 
 //species traits for mutantraces
-#define MUTCOLORS		1
-#define HAIR			2
-#define FACEHAIR		3
-#define EYECOLOR		4
-#define LIPS			5
-#define NOBLOOD			6
-#define NOTRANSSTING	7
-#define MUTCOLORS_PARTSONLY	8	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
-#define NOZOMBIE		9
-#define DIGITIGRADE		10	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
-#define NO_UNDERWEAR	11
-#define NOSTOMACH		12
-#define NO_DNA_COPY     13
-#define DRINKSBLOOD		14
-#define NOFLASH			15
-#define DYNCOLORS		16 //Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
-#define AGENDER			17
-#define NOEYESPRITES	18 //Do not draw eyes or eyeless overlay
-#define NOBONES			19 // species does not have bones that can be broken
-#define FRAGILEBONES	20 // species' bones are more eaisly broken
-#define RAPIDBLOODLOSS  21 // species bloodloss cap per limb is doubled, and blunt damage can cause internal bleeding
+#define SKINTONE_EXOTIC 1 //this exists so we can use exotic skintones alongside mutant bodyparts, obviously it can't be zero or things will get fucked up.
+#define MUTCOLORS		2
+#define HAIR			3
+#define FACEHAIR		4
+#define EYECOLOR		5
+#define LIPS			6
+#define NOBLOOD			7
+#define NOTRANSSTING	8
+#define MUTCOLORS_PARTSONLY	9	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
+#define NOZOMBIE		10
+#define DIGITIGRADE		11	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
+#define NO_UNDERWEAR	12
+#define NOSTOMACH		13
+#define NO_DNA_COPY     14
+#define DRINKSBLOOD		15
+#define NOFLASH			16
+#define DYNCOLORS		17 //Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
+#define AGENDER			18
+#define NOEYESPRITES	19 //Do not draw eyes or eyeless overlay
+#define NOBONES			20 // species does not have bones that can be broken
+#define FRAGILEBONES	21 // species' bones are more eaisly broken
+#define RAPIDBLOODLOSS  22 // species bloodloss cap per limb is doubled, and blunt damage can cause internal bleeding
+
 
 //organ slots
 #define ORGAN_SLOT_BRAIN "brain"

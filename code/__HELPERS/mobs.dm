@@ -152,10 +152,13 @@
 		if(!findname(.))
 			break
 
-/proc/random_skin_tone()
-	return pick(GLOB.skin_tones)
+/proc/random_skin_tone(list/sourcelist = list())
+	if(sourcelist.len)
+		return pick(sourcelist)
+	return pick(GLOB.skin_tones_all)
 
-GLOBAL_LIST_INIT(skin_tones, list(
+
+GLOBAL_LIST_INIT(skin_tones_human, list(
 	"albino",
 	"caucasian1",
 	"caucasian2",
@@ -169,8 +172,82 @@ GLOBAL_LIST_INIT(skin_tones, list(
 	"african1",
 	"african2"
 	))
+GLOBAL_LIST_INIT(skin_tones_exotic, list( //all exotic skin colors need to be in here
+	"light green",						  //for DNA block purposes. Also make sure to define the hex code
+	"azure",							 //in colors and match the skin tone name to that define in helpers.dm
+	"brown",
+	"emerald",
+	"light grey",
+	"grey"
+	))
+
+
+GLOBAL_LIST_INIT(skin_tones_all, list(
+	"albino",
+	"caucasian1",
+	"caucasian2",
+	"caucasian3",
+	"latino",
+	"mediterranean",
+	"asian1",
+	"asian2",
+	"arab",
+	"indian",
+	"african1",
+	"african2",
+	"light green",				
+	"azure",							
+	"brown",
+	"emerald",
+	"light grey",
+	"grey"
+	))
 
 GLOBAL_LIST_EMPTY(species_list)
+
+/proc/skintone2hex(skin_tone)
+	. = 0
+	switch(skin_tone)
+		//human_tones
+		if("caucasian1")
+			. = SKIN_HEX_CAUCASIAN_1
+		if("caucasian2")
+			. = SKIN_HEX_CAUCASIAN_2
+		if("caucasian3")
+			. = SKIN_HEX_CAUCASIAN_3
+		if("latino")
+			. = SKIN_HEX_LATINO
+		if("mediterranean")
+			. = SKIN_HEX_MEDITERRANEAN
+		if("asian1")
+			. = SKIN_HEX_ASIAN_1
+		if("asian2")
+			. = SKIN_HEX_ASIAN_2
+		if("arab")
+			. = SKIN_HEX_ARAB
+		if("indian")
+			. = SKIN_HEX_INDIAN
+		if("african1")
+			. = SKIN_HEX_AFRICAN_1
+		if("african2")
+			. = SKIN_HEX_AFRICAN_2
+		if("albino")
+			. = SKIN_HEX_ALBINO
+		if("orange")
+			. = SKIN_HEX_ORANGE //fuck my life
+		//exotic tones
+		if("light green")
+			. = SKIN_HEX_GREEN_1
+		if("emerald")
+			. = SKIN_HEX_GREEN_2
+		if("azure")
+			. = SKIN_HEX_BLUE_2
+		if("brown")
+			. = SKIN_HEX_BROWN_1
+		if("light grey")
+			. = SKIN_HEX_GREY_1
+		if("grey")
+			. = SKIN_HEX_GREY_2
 
 /proc/age2agedescription(age)
 	switch(age)

@@ -317,7 +317,7 @@
 		species_id = S.limbs_id
 		species_flags_list = H.dna.species.species_traits
 
-		if(S.use_skintones)
+		if(S.use_skintones || S.exotic_skintones.len)
 			skin_tone = H.skin_tone
 			should_draw_greyscale = TRUE
 		else

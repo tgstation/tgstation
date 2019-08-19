@@ -252,12 +252,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a><BR>"
 			dat += "<b>Jumpsuit:</b><BR><a href ='?_src_=prefs;preference=suit;task=input'>[jumpsuit_style]</a><BR>"
 			dat += "<b>Uplink Spawn Location:</b><BR><a href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a><BR></td>"
-
-			var/use_skintones = pref_species.use_skintones
-			if(use_skintones)
-
+			var/list/allowed_skintones = pref_species.get_allowed_skintones()
+			if(allowed_skintones.len)
 				dat += APPEARANCE_CATEGORY_COLUMN
-
+				//var/skin_noun = pref_species.tooltip_nouns[SKINTONE_EXOTIC] //so it doesn't say "skin tone" for a species whose body covering isn't skin
+				//dat += "<h3>[skin_noun]</h3>"
 				dat += "<h3>Skin Tone</h3>"
 
 				dat += "<a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
@@ -265,7 +264,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/mutant_colors
 			if((MUTCOLORS in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits))
 
-				if(!use_skintones)
+				if(!allowed_skintones.len)
 					dat += APPEARANCE_CATEGORY_COLUMN
 
 				dat += "<h3>Mutant Color</h3>"
@@ -276,7 +275,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			if(istype(pref_species, /datum/species/ethereal)) //not the best thing to do tbf but I dont know whats better.
 
-				if(!use_skintones)
+				if(!allowed_skintones.len)
 					dat += APPEARANCE_CATEGORY_COLUMN
 
 				dat += "<h3>Ethereal Color</h3>"
@@ -286,7 +285,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			if((EYECOLOR in pref_species.species_traits) && !(NOEYESPRITES in pref_species.species_traits))
 
-				if(!use_skintones && !mutant_colors)
+				if(!mutant_colors && !allowed_skintones.len)
 					dat += APPEARANCE_CATEGORY_COLUMN
 
 				dat += "<h3>Eye Color</h3>"
@@ -294,7 +293,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
 
 				dat += "</td>"
-			else if(use_skintones || mutant_colors)
+			else if(allowed_skintones.len || mutant_colors)
 				dat += "</td>"
 
 			if(HAIR in pref_species.species_traits)
@@ -351,7 +350,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<h3>Quills</h3>"
 
 				dat += "<a href='?_src_=prefs;preference=quills;task=input'>[features["quills"]]</a><BR>"
-
+				dat += "<span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
 				mutant_category++
 				if(mutant_category >= MAX_MUTANT_ROWS)
 					dat += "</td>"
@@ -364,7 +363,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<h3>Face Quills</h3>"
 
 				dat += "<a href='?_src_=prefs;preference=face_quills;task=input'>[features["face_quills"]]</a><BR>"
-
+				dat += "<span style='border: 1px solid #161616; background-color: #[facial_hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
 				mutant_category++
 				if(mutant_category >= MAX_MUTANT_ROWS)
 					dat += "</td>"
@@ -1089,7 +1088,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(BODY_ZONE_PRECISE_EYES)
 					eye_color = random_eye_color()
 				if("s_tone")
-					skin_tone = random_skin_tone()
+					var/list/allowed_skintones = pref_species.get_allowed_skintones()
+					skin_tone = random_skin_tone(allowed_skintones)
 				if("bag")
 					backbag = pick(GLOB.backbaglist)
 				if("suit")
@@ -1258,6 +1258,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(result)
 						var/newtype = GLOB.species_list[result]
 						pref_species = new newtype()
+						//see if our skintone is still allowed
+						var/list/allowed_skintones = pref_species.get_allowed_skintones()
+						if(allowed_skintones.len && !skin_tone in allowed_skintones)
+							skin_tone = random_skin_tone(allowed_skintones)
+						
+
 						//Now that we changed our species, we must verify that the mutant colour is still allowed.
 						var/temp_hsv = RGBtoHSV(features["mcolor"])
 						if(features["mcolor"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3]))
@@ -1371,7 +1377,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["moth_markings"] = new_moth_markings
 
 				if("s_tone")
-					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in GLOB.skin_tones
+					var/list/allowed_skintones = pref_species.get_allowed_skintones()
+					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in allowed_skintones
 					if(new_s_tone)
 						skin_tone = new_s_tone
 
