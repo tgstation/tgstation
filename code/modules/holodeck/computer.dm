@@ -297,7 +297,7 @@
 			silent = FALSE					// otherwise make sure they are dropped
 
 	if(!silent)
-		visible_message("[O] fades away!")
+		visible_message("<span class='notice'>[O] fades away!</span>")
 	qdel(O)
 
 #undef HOLODECK_CD

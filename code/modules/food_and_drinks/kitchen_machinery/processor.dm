@@ -125,7 +125,7 @@
 		process_food(P, O)
 	pixel_x = initial(pixel_x) //return to its spot after shaking
 	processing = FALSE
-	visible_message("\The [src] finishes processing.")
+	visible_message("<span class='notice'>\The [src] finishes processing.</span>")
 
 /obj/machinery/processor/verb/eject()
 	set category = "Object"
@@ -190,7 +190,7 @@
 	if (!P)
 		return
 
-	visible_message("[picked_slime] is sucked into [src].")
+	visible_message("<span class='notice'>[picked_slime] is sucked into [src].</span>")
 	picked_slime.forceMove(src)
 
 /obj/machinery/processor/slime/process_food(datum/food_processor_process/recipe, atom/movable/what)

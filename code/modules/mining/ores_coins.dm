@@ -212,7 +212,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/twohanded/required/gibtonite/attackby(obj/item/I, mob/user, params)
 	if(!wires && istype(I, /obj/item/assembly/igniter))
-		user.visible_message("[user] attaches [I] to [src].", "<span class='notice'>You attach [I] to [src].</span>")
+		user.visible_message("<span class='notice'>[user] attaches [I] to [src].</span>", "<span class='notice'>You attach [I] to [src].</span>")
 		wires = new /datum/wires/explosive/gibtonite(src)
 		attacher = key_name(user)
 		qdel(I)
@@ -232,7 +232,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 			primed = FALSE
 			if(det_timer)
 				deltimer(det_timer)
-			user.visible_message("The chain reaction was stopped! ...The ore's quality looks diminished.", "<span class='notice'>You stopped the chain reaction. ...The ore's quality looks diminished.</span>")
+			user.visible_message("<span class='notice'>The chain reaction was stopped! ...The ore's quality looks diminished.</span>", "<span class='notice'>You stopped the chain reaction. ...The ore's quality looks diminished.</span>")
 			icon_state = "Gibtonite ore"
 			quality = GIBTONITE_QUALITY_LOW
 			return

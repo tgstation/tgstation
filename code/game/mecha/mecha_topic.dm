@@ -263,8 +263,8 @@
 		var/obj/item/mecha_parts/mecha_equipment/equip = locate(href_list["select_equip"]) in src
 		if(equip && equip.selectable)
 			selected = equip
-			occupant_message("You switch to [equip]")
-			visible_message("[src] raises [equip]")
+			occupant_message("<span class='notice'>You switch to [equip].</span>")
+			visible_message("<span class='notice'>[src] raises [equip].</span>")
 			send_byjax(usr,"exosuit.browser","eq_list",src.get_equipment_list())
 
 	if(href_list["rmictoggle"])

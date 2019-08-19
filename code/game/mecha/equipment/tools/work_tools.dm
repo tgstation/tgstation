@@ -57,7 +57,7 @@
 			return
 		if(!O.anchored)
 			if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
-				chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
+				chassis.visible_message("<span class='notice'>[chassis] lifts [target] and starts to load it into cargo compartment.</span>")
 				O.anchored = TRUE
 				if(do_after_cooldown(target))
 					cargo_holder.cargo += O
@@ -88,8 +88,8 @@
 			log_combat(chassis.occupant, M, "attacked", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 		else
 			step_away(M,chassis)
-			occupant_message("You push [target] out of the way.")
-			chassis.visible_message("[chassis] pushes [target] out of the way.")
+			occupant_message("<span class='notice'>You push [target] out of the way.</span>")
+			chassis.visible_message("<span class='notice'>[chassis] pushes [target] out of the way.</span>")
 		return 1
 
 
@@ -117,7 +117,7 @@
 		var/obj/O = target
 		if(!O.anchored)
 			if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
-				chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
+				chassis.visible_message("<span class='notice'>[chassis] lifts [target] and starts to load it into cargo compartment.</span>")
 				O.anchored = TRUE
 				if(do_after_cooldown(target))
 					cargo_holder.cargo += O

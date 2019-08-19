@@ -46,7 +46,7 @@
 		var/type = prob(70) ? pick(welder_salvage) : null
 		if(type)
 			var/N = new type(get_turf(user))
-			user.visible_message("[user] cuts [N] from [src].", "<span class='notice'>You cut [N] from [src].</span>")
+			user.visible_message("<span class='notice'>[user] cuts [N] from [src].</span>", "<span class='notice'>You cut [N] from [src].</span>")
 			if(istype(N, /obj/item/mecha_parts/part))
 				welder_salvage -= type
 			salvage_num--
@@ -62,7 +62,7 @@
 			var/type = prob(70) ? pick(wirecutters_salvage) : null
 			if(type)
 				var/N = new type(get_turf(user))
-				user.visible_message("[user] cuts [N] from [src].", "<span class='notice'>You cut [N] from [src].</span>")
+				user.visible_message("<span class='notice'>[user] cuts [N] from [src].</span>", "<span class='notice'>You cut [N] from [src].</span>")
 				salvage_num--
 			else
 				to_chat(user, "<span class='warning'>You fail to salvage anything valuable from [src]!</span>")
@@ -73,7 +73,7 @@
 			if(S)
 				S.forceMove(user.drop_location())
 				crowbar_salvage -= S
-				user.visible_message("[user] pries [S] from [src].", "<span class='notice'>You pry [S] from [src].</span>")
+				user.visible_message("<span class='notice'>[user] pries [S] from [src].</span>", "<span class='notice'>You pry [S] from [src].</span>")
 			return
 		else
 			to_chat(user, "<span class='warning'>You don't see anything that can be pried with [I]!</span>")

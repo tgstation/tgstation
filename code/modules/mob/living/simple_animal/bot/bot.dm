@@ -306,7 +306,7 @@
 
 			if(W.use_tool(src, user, 0, volume=40))
 				adjustHealth(-10)
-				user.visible_message("[user] repairs [src]!","<span class='notice'>You repair [src].</span>")
+				user.visible_message("<span class='notice'>[user] repairs [src]!</span>","<span class='notice'>You repair [src].</span>")
 		else
 			if(W.force) //if force is non-zero
 				do_sparks(5, TRUE, src)
@@ -327,7 +327,7 @@
 	new /obj/effect/temp_visual/emp(loc)
 	if(paicard)
 		paicard.emp_act(severity)
-		src.visible_message("[paicard] is flies out of [bot_name]!","<span class='warning'>You are forcefully ejected from [bot_name]!</span>")
+		src.visible_message("<span class='notice'>[paicard] is flies out of [bot_name]!</span>","<span class='warning'>You are forcefully ejected from [bot_name]!</span>")
 		ejectpai(0)
 	if(on)
 		turn_off()
@@ -894,7 +894,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 				if(!user.transferItemToLoc(card, src))
 					return
 				paicard = card
-				user.visible_message("[user] inserts [card] into [src]!","<span class='notice'>You insert [card] into [src].</span>")
+				user.visible_message("<span class='notice'>[user] inserts [card] into [src]!</span>", "<span class='notice'>You insert [card] into [src].</span>")
 				paicard.pai.mind.transfer_to(src)
 				to_chat(src, "<span class='notice'>You sense your form change as you are uploaded into [src].</span>")
 				bot_name = name

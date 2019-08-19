@@ -102,7 +102,7 @@
 		return
 	if(ruined)
 		return
-	visible_message("[user] rips [src] in a single, decisive motion!" )
+	visible_message("<span class='notice'>[user] rips [src] in a single, decisive motion!</span>" )
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, 1)
 
 	var/obj/structure/sign/poster/ripped/R = new(loc)

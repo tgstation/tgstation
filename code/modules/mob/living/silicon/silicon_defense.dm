@@ -52,7 +52,7 @@
 
 /mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L)
 	if(L.a_intent == INTENT_HELP)
-		visible_message("[L.name] rubs its head against [src].")
+		visible_message("<span class='notice'>[L.name] rubs its head against [src].</span>")
 
 /mob/living/silicon/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == INTENT_HARM)

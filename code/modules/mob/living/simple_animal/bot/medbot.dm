@@ -381,7 +381,7 @@
 
 	if((!C.reagents.has_reagent(treatment_fire_avoid)) && (C.getFireLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_fire)))
 		return TRUE
-		
+
 	if((!C.reagents.has_reagent(treatment_tox_avoid)) && (C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_tox)))
 		return TRUE
 
@@ -461,7 +461,7 @@
 		if(!reagent_id && (C.getFireLoss() >= heal_threshold))
 			if(!C.reagents.has_reagent(treatment_fire) && !C.reagents.has_reagent(treatment_fire_avoid))
 				reagent_id = treatment_fire
-				
+
 		if(!reagent_id && (C.getToxLoss() >= heal_threshold))
 			if(!C.reagents.has_reagent(treatment_tox) && !C.reagents.has_reagent(treatment_tox_avoid))
 				reagent_id = treatment_tox
@@ -510,7 +510,7 @@
 			failed = TRUE
 
 		if(failed)
-			visible_message("[src] retracts its syringe.")
+			visible_message("<span class='notice'>[src] retracts its syringe.</span>")
 		update_icon()
 		soft_reset()
 		return

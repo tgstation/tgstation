@@ -57,7 +57,7 @@
 			R.SetLockdown(!R.lockcharge) // Toggle
 		if(WIRE_RESET_MODULE)
 			if(R.has_module())
-				R.visible_message("[R]'s module servos twitch.", "Your module display flickers.")
+				R.visible_message("<span class='notice'>[R]'s module servos twitch.</span>", "Your module display flickers.")
 
 /datum/wires/robot/on_cut(wire, mend)
 	var/mob/living/silicon/robot/R = holder
@@ -78,7 +78,7 @@
 			if(!QDELETED(R.builtInCamera) && !R.scrambledcodes)
 				R.builtInCamera.status = mend
 				R.builtInCamera.toggle_cam(usr, 0)
-				R.visible_message("[R]'s camera lens focuses loudly.", "Your camera lens focuses loudly.")
+				R.visible_message("<span class='notice'>[R]'s camera lens focuses loudly.</span>", "Your camera lens focuses loudly.")
 		if(WIRE_LOCKDOWN) // Simple lockdown.
 			R.SetLockdown(!mend)
 		if(WIRE_RESET_MODULE)

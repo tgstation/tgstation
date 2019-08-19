@@ -64,7 +64,7 @@
 
 		if(mineral)
 			var/obj/item/stack/sheet/mineral/mineral_path = text2path("/obj/item/stack/sheet/mineral/[mineral]")
-			user.visible_message("[user] welds the [mineral] plating off the airlock assembly.", "You start to weld the [mineral] plating off the airlock assembly...")
+			user.visible_message("<span class='notice'>[user] welds the [mineral] plating off the airlock assembly.</span>", "<span class='notice'>You start to weld the [mineral] plating off the airlock assembly...</span>")
 			if(W.use_tool(src, user, 40, volume=50))
 				to_chat(user, "<span class='notice'>You weld the [mineral] plating off.</span>")
 				new mineral_path(loc, 2)
@@ -72,7 +72,7 @@
 				transfer_assembly_vars(src, PA)
 
 		else if(glass)
-			user.visible_message("[user] welds the glass panel out of the airlock assembly.", "You start to weld the glass panel out of the airlock assembly...")
+			user.visible_message("<span class='notice'>[user] welds the glass panel out of the airlock assembly.</span>", "<span class='notice'>You start to weld the glass panel out of the airlock assembly...</span>")
 			if(W.use_tool(src, user, 40, volume=50))
 				to_chat(user, "<span class='notice'>You weld the glass panel out.</span>")
 				if(heat_proof_finished)
@@ -83,7 +83,7 @@
 				glass = 0
 		else if(!anchored)
 			user.visible_message("<span class='warning'>[user] disassembles the airlock assembly.</span>", \
-								"You start to disassemble the airlock assembly...")
+								"<span class='notice'>You start to disassemble the airlock assembly...</span>")
 			if(W.use_tool(src, user, 40, volume=50))
 				to_chat(user, "<span class='notice'>You disassemble the airlock assembly.</span>")
 				deconstruct(TRUE)

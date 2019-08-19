@@ -227,7 +227,7 @@
 			I.forceMove(get_turf(src))
 			usr.put_in_hands(I)
 			usr.emote("scream")
-			usr.visible_message("[usr] successfully rips [I] out of [usr.p_their()] [L.name]!","<span class='notice'>You successfully remove [I] from your [L.name].</span>")
+			usr.visible_message("<span class='notice'>[usr] successfully rips [I] out of [usr.p_their()] [L.name]!</span>", "<span class='notice'>You successfully remove [I] from your [L.name].</span>")
 			if(!has_embedded_objects())
 				clear_alert("embeddedobject")
 				SEND_SIGNAL(usr, COMSIG_CLEAR_MOOD_EVENT, "embedded")
@@ -640,7 +640,7 @@
 		if(C.health > C.crit_threshold)
 			return
 
-		src.visible_message("[src] performs CPR on [C.name]!", "<span class='notice'>You perform CPR on [C.name].</span>")
+		src.visible_message("<span class='notice'>[src] performs CPR on [C.name]!</span>", "<span class='notice'>You perform CPR on [C.name].</span>")
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "perform_cpr", /datum/mood_event/perform_cpr)
 		C.cpr_time = world.time
 		log_combat(src, C, "CPRed")
