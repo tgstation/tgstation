@@ -84,13 +84,13 @@
 	resistance_flags = NONE
 	grind_results = list(/datum/reagent/aluminium = 10)
 
-/obj/item/trash/can/food/cannedpeaches
+/obj/item/trash/can/food/peaches
 	name = "empty canned peaches"
 	desc = "Was a nice can of ripe peaches swimming in their own juices."
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "peachcan"
 
-/obj/item/trash/can/food/cannedpeaches/maint
+/obj/item/trash/can/food/peaches/maint
 	name = "empty Maintenance Peaches"
 	desc = "I have a mouth and I must eat. Sadly, this is empty."
 	icon_state = "peachcanmaint"

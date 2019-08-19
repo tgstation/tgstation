@@ -576,7 +576,7 @@
 	tastes = list("chocolate" = 1)
 	foodtype = JUNKFOOD | SUGAR
 
-/obj/item/reagent_containers/food/snacks/canned/
+/obj/item/reagent_containers/food/snacks/canned
 	name = "Canned Air"
 	desc = "If you ever wondered where air came from..."
 	list_reagents = list(/datum/reagent/oxygen = 6, /datum/reagent/nitrogen = 24)
@@ -620,19 +620,19 @@
 	tastes = list("beans" = 1)
 	foodtype = VEGETABLES
 
-/obj/item/reagent_containers/food/snacks/canned/cannedpeaches
+/obj/item/reagent_containers/food/snacks/canned/peaches
 	name = "canned peaches"
 	desc = "Just a nice can of ripe peaches swimming in their own juices."
 	icon_state = "peachcan"
-	trash = /obj/item/trash/can/food/cannedpeaches
+	trash = /obj/item/trash/can/food/peaches
 	list_reagents = list(/datum/reagent/consumable/peachjuice = 20, /datum/reagent/consumable/sugar = 8, /datum/reagent/consumable/nutriment = 2)
 	filling_color = "#ffdf26"
 	tastes = list("peaches" = 7, "tin" = 1)
 	foodtype = FRUIT | SUGAR
 
-/obj/item/reagent_containers/food/snacks/canned/cannedpeaches/maint
+/obj/item/reagent_containers/food/snacks/canned/peaches/maint
 	name = "Maintenance Peaches"
 	desc = "I have a mouth and I must eat."
 	icon_state = "peachcanmaint"
-	trash = /obj/item/trash/can/food/cannedpeaches/maint
+	trash = /obj/item/trash/can/food/peaches/maint
 	tastes = list("peaches" = 1, "tin" = 7)
