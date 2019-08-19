@@ -26,7 +26,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/structure/extraction_point,
 		/obj/machinery/syndicatebomb,
 		/obj/item/hilbertshotel,
-		/obj/item/swapper
+		/obj/item/swapper,
+		/obj/docking_port
 	)))
 
 /obj/docking_port/mobile/supply
@@ -60,7 +61,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		for(var/trf in shuttle_area)
 			var/turf/T = trf
 			for(var/a in T.GetAllContents())
-				if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types))
+				if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types) && !istype(a, /obj/docking_port))
 					return FALSE
 	return TRUE
 

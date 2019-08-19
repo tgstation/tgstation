@@ -74,7 +74,6 @@
 	var/list/equipment = new
 	var/obj/item/mecha_parts/mecha_equipment/selected
 	var/max_equip = 3
-	var/datum/events/events
 
 	var/stepsound = 'sound/mecha/mechstep.ogg'
 	var/turnsound = 'sound/mecha/mechturn.ogg'
@@ -133,7 +132,6 @@
 
 /obj/mecha/Initialize()
 	. = ..()
-	events = new
 	icon_state += "-open"
 	add_radio()
 	add_cabin()
@@ -527,8 +525,6 @@
 
 /obj/mecha/Move(atom/newloc, direct)
 	. = ..()
-	if(.)
-		events.fireEvent("onMove",get_turf(src))
 	if (internal_tank?.disconnect()) // Something moved us and broke connection
 		occupant_message("<span class='warning'>Air port connection has been severed!</span>")
 		log_message("Lost connection to gas port.", LOG_MECHA)
