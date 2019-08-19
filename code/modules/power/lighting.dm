@@ -85,7 +85,7 @@
 
 /obj/structure/light_construct/attack_hand(mob/user)
 	if(cell)
-		user.visible_message("[user] removes [cell] from [src]!","<span class='notice'>You remove [cell].</span>")
+		user.visible_message("<span class='notice'>[user] removes [cell] from [src]!</span>", "<span class='notice'>You remove [cell].</span>")
 		user.put_in_hands(cell)
 		cell.update_icon()
 		cell = null

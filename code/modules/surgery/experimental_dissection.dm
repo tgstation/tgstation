@@ -31,7 +31,7 @@
 	repeatable = TRUE
 
 /datum/surgery_step/dissection/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] starts dissecting [target].", "<span class='notice'>You start dissecting [target].</span>")
+	user.visible_message("<span class='notice'>[user] starts dissecting [target].</span>", "<span class='notice'>You start dissecting [target].</span>")
 
 /datum/surgery_step/dissection/proc/check_value(mob/living/target, datum/surgery/advanced/experimental_dissection/ED)
 	var/cost = BASE_HUMAN_REWARD
@@ -72,7 +72,7 @@
 
 /datum/surgery_step/dissection/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/points_earned = check_value(target, surgery)
-	user.visible_message("[user] dissects [target], discovering [points_earned] point\s of data!", "<span class='notice'>You dissect [target], and add your [points_earned] point\s worth of discoveries to the research database!</span>")
+	user.visible_message("<span class='notice'>[user] dissects [target], discovering [points_earned] point\s of data!</span>", "<span class='notice'>You dissect [target], and add your [points_earned] point\s worth of discoveries to the research database!</span>")
 	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = points_earned))
 	var/obj/item/bodypart/L = target.get_bodypart(BODY_ZONE_CHEST)
 	target.apply_damage(80, BRUTE, L)
@@ -81,7 +81,7 @@
 	return TRUE
 
 /datum/surgery_step/dissection/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] dissects [target]!", EXPDIS_FAIL_MSG)
+	user.visible_message("<span class='notice'>[user] dissects [target]!</span>", EXPDIS_FAIL_MSG)
 	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = (round(check_value(target, surgery) * 0.01))))
 	var/obj/item/bodypart/L = target.get_bodypart(BODY_ZONE_CHEST)
 	target.apply_damage(80, BRUTE, L)

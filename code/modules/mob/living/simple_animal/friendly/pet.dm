@@ -30,7 +30,7 @@
 
 	if(istype(O, /obj/item/newspaper))
 		if(!stat)
-			user.visible_message("[user] baps [name] on the nose with the rolled up [O].")
+			user.visible_message("<span class='notice'>[user] baps [name] on the nose with the rolled up [O].</span>")
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2))
 					setDir(i)
@@ -72,4 +72,3 @@
 	if(pcollar && collar_type)
 		add_overlay("[collar_type]collar")
 		add_overlay("[collar_type]tag")
-

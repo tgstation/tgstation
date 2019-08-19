@@ -435,27 +435,23 @@
 				if (has_electronics == APC_ELECTRONICS_INSTALLED)
 					has_electronics = APC_ELECTRONICS_MISSING
 					if (stat & BROKEN)
-						user.visible_message(\
-							"[user.name] has broken the power control board inside [src.name]!",\
+						user.visible_message("<span class='notice'>[user.name] has broken the power control board inside [src.name]!</span>",\
 							"<span class='notice'>You break the charred power control board and remove the remains.</span>",
 							"<span class='italics'>You hear a crack.</span>")
 						return
 					else if (obj_flags & EMAGGED)
 						obj_flags &= ~EMAGGED
-						user.visible_message(\
-							"[user.name] has discarded an emagged power control board from [src.name]!",\
+						user.visible_message("<span class='notice'>[user.name] has discarded an emagged power control board from [src.name]!</span>",\
 							"<span class='notice'>You discard the emagged power control board.</span>")
 						return
 					else if (malfhack)
-						user.visible_message(\
-							"[user.name] has discarded a strangely programmed power control board from [src.name]!",\
+						user.visible_message("<span class='notice'>[user.name] has discarded a strangely programmed power control board from [src.name]!</span>",\
 							"<span class='notice'>You discard the strangely programmed board.</span>")
 						malfai = null
 						malfhack = 0
 						return
 					else
-						user.visible_message(\
-							"[user.name] has removed the power control board from [src.name]!",\
+						user.visible_message("<span class='notice'>[user.name] has removed the power control board from [src.name]!</span>",\
 							"<span class='notice'>You remove the power control board.</span>")
 						new /obj/item/electronics/apc(loc)
 						return
@@ -492,7 +488,7 @@
 	. = TRUE
 	if(opened)
 		if(cell)
-			user.visible_message("[user] removes \the [cell] from [src]!","<span class='notice'>You remove \the [cell].</span>")
+			user.visible_message("<span class='notice'>[user] removes \the [cell] from [src]!</span>", "<span class='notice'>You remove \the [cell].</span>")
 			var/turf/T = get_turf(user)
 			cell.forceMove(T)
 			cell.update_icon()
@@ -542,13 +538,11 @@
 		if(W.use_tool(src, user, 50, volume=50, amount=3))
 			if ((stat & BROKEN) || opened==APC_COVER_REMOVED)
 				new /obj/item/stack/sheet/metal(loc)
-				user.visible_message(\
-					"[user.name] has cut [src] apart with [W].",\
+				user.visible_message("<span class='notice'>[user.name] has cut [src] apart with [W].</span>",\
 					"<span class='notice'>You disassembled the broken APC frame.</span>")
 			else
 				new /obj/item/wallframe/apc(loc)
-				user.visible_message(\
-					"[user.name] has cut [src] from the wall with [W].",\
+				user.visible_message("<span class='notice'>[user.name] has cut [src] from the wall with [W].</span>",\
 					"<span class='notice'>You cut the APC frame from the wall.</span>")
 			qdel(src)
 			return TRUE
@@ -569,8 +563,7 @@
 			if(!user.transferItemToLoc(W, src))
 				return
 			cell = W
-			user.visible_message(\
-				"[user.name] has inserted the power cell to [src.name]!",\
+			user.visible_message("<span class='notice'>[user.name] has inserted the power cell to [src.name]!</span>",\
 				"<span class='notice'>You insert the power cell.</span>")
 			chargecount = 0
 			update_icon()
@@ -837,7 +830,7 @@
 		return
 	if(opened && (!issilicon(user)))
 		if(cell)
-			user.visible_message("[user] removes \the [cell] from [src]!","<span class='notice'>You remove \the [cell].</span>")
+			user.visible_message("<span class='notice'>[user] removes \the [cell] from [src]!</span>", "<span class='notice'>You remove \the [cell].</span>")
 			user.put_in_hands(cell)
 			cell.update_icon()
 			src.cell = null

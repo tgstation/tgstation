@@ -37,7 +37,7 @@
 		var/mob/living/carbon/human/L = target
 		var/obj/item/organ/tail/cat/tail = L.getorgan(/obj/item/organ/tail/cat)
 		if(!QDELETED(tail))
-			visible_message("[src] severs [L]'s tail in one swift swipe!", "<span class='notice'>You sever [L]'s tail in one swift swipe.</span>")
+			visible_message("<span class='notice'>[src] severs [L]'s tail in one swift swipe!</span>", "<span class='notice'>You sever [L]'s tail in one swift swipe.</span>")
 			tail.Remove(L)
 			var/obj/item/organ/tail/cat/dropped_tail = new(target.drop_location())
 			dropped_tail.color = L.hair_color

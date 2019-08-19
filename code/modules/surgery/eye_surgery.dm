@@ -25,10 +25,10 @@
 
 /datum/surgery_step/fix_eyes/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/obj/item/organ/eyes/E = target.getorganslot(ORGAN_SLOT_EYES)
-	user.visible_message("[user] successfully fixes [target]'s eyes!", "<span class='notice'>You succeed in fixing [target]'s eyes.</span>")
+	user.visible_message("<span class='notice'>[user] successfully fixes [target]'s eyes!</span>", "<span class='notice'>You succeed in fixing [target]'s eyes.</span>")
 	display_results(user, target, "<span class='notice'>You succeed in fixing [target]'s eyes.</span>",
-		"[user] successfully fixes [target]'s eyes!",
-		"[user] completes the surgery on [target]'s eyes.")
+		"<span class='notice'>[user] successfully fixes [target]'s eyes!</span>",
+		"<span class='notice'>[user] completes the surgery on [target]'s eyes.</span>")
 	target.cure_blind(list(EYE_DAMAGE))
 	target.set_blindness(0)
 	target.cure_nearsighted(list(EYE_DAMAGE))

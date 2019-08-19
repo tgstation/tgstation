@@ -88,7 +88,7 @@
 						return
 				busy = FALSE
 				if(L.transfer_blood_to(src, drawn_amount))
-					user.visible_message("[user] takes a blood sample from [L].")
+					user.visible_message("<span class='notice'>[user] takes a blood sample from [L].</span>")
 				else
 					to_chat(user, "<span class='warning'>You are unable to draw any blood from [L]!</span>")
 

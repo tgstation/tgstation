@@ -317,7 +317,7 @@
 	if(isturf(loc))
 		amount_grown += rand(1,2)
 		if(amount_grown >= 100)
-			visible_message("[src] hatches with a quiet cracking sound.")
+			visible_message("<span class='notice'>[src] hatches with a quiet cracking sound.</span>")
 			new /mob/living/simple_animal/chick(get_turf(src))
 			STOP_PROCESSING(SSobj, src)
 			qdel(src)
@@ -340,10 +340,10 @@
 /obj/item/udder/proc/milkAnimal(obj/O, mob/user)
 	var/obj/item/reagent_containers/glass/G = O
 	if(G.reagents.total_volume >= G.volume)
-		to_chat(user, "<span class='danger'>[O] is full.</span>")
+		to_chat(user, "<span class='warning'>[O] is full.</span>")
 		return
 	var/transfered = reagents.trans_to(O, rand(5,10))
 	if(transfered)
-		user.visible_message("[user] milks [src] using \the [O].", "<span class='notice'>You milk [src] using \the [O].</span>")
+		user.visible_message("<span class='notice'>[user] milks [src] using \the [O].</span>", "<span class='notice'>You milk [src] using \the [O].</span>")
 	else
-		to_chat(user, "<span class='danger'>The udder is dry. Wait a bit longer...</span>")
+		to_chat(user, "<span class='warning'>The udder is dry. Wait a bit longer...</span>")

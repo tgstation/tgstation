@@ -108,7 +108,7 @@
 	if(G)
 		G.forceMove(loc)
 		QDEL_NULL(G.pin)
-		visible_message("[G] can now fit a new pin, but the old one was destroyed in the process.", null, null, 3)
+		visible_message("<span class='notice'>[G] can now fit a new pin, but the old one was destroyed in the process.</span>", null, null, 3)
 		qdel(src)
 
 /obj/item/gun/examine(mob/user)

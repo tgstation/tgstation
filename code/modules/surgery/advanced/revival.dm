@@ -64,12 +64,12 @@
 	target.adjustOxyLoss(-50, 0)
 	target.updatehealth()
 	if(target.revive())
-		target.visible_message("...[target] wakes up, alive and aware!")
+		target.visible_message("<span class='notice'>...[target] wakes up, alive and aware!</span>")
 		target.emote("gasp")
 		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50, 199) //MAD SCIENCE
 		return TRUE
 	else
-		target.visible_message("...[target.p_they()] convulses, then lies still.")
+		target.visible_message("<span class='warning'>...[target.p_they()] convulses, then lies still.</span>")
 		return FALSE
 
 /datum/surgery_step/revive/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

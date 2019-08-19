@@ -38,7 +38,7 @@
 			"[user] begins to augment [target]'s [parse_zone(user.zone_selected)] with [aug].",
 			"[user] begins to augment [target]'s [parse_zone(user.zone_selected)].")
 	else
-		user.visible_message("[user] looks for [target]'s [parse_zone(user.zone_selected)].", "<span class='notice'>You look for [target]'s [parse_zone(user.zone_selected)]...</span>")
+		user.visible_message("<span class='notice'>[user] looks for [target]'s [parse_zone(user.zone_selected)].</span>", "<span class='notice'>You look for [target]'s [parse_zone(user.zone_selected)]...</span>")
 
 
 //ACTUAL SURGERIES

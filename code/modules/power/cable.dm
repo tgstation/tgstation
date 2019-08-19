@@ -126,7 +126,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 						dir_string = "[dir_string]-node"
 						break
 		icon_state = dir_string
-	
+
 
 /obj/structure/cable/proc/handlecable(obj/item/W, mob/user, params)
 	var/turf/T = get_turf(src)
@@ -135,7 +135,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(W.tool_behaviour == TOOL_WIRECUTTER)
 		if (shock(user, 50))
 			return
-		user.visible_message("[user] cuts the cable.", "<span class='notice'>You cut the cable.</span>")
+		user.visible_message("<span class='notice'>[user] cuts the cable.</span>", "<span class='notice'>You cut the cable.</span>")
 		investigate_log("was cut by [key_name(usr)] in [AREACOORD(src)]", INVESTIGATE_WIRES)
 		deconstruct()
 		return
@@ -326,7 +326,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 	//clear the powernet of any machines on tile first
 	for(var/obj/machinery/power/P in T1)
-		P.disconnect_from_network() 
+		P.disconnect_from_network()
 
 	var/list/P_list = list()
 	for(var/dir_check in GLOB.cardinals)
@@ -464,7 +464,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	if(get_amount() < 1) // Out of cable
 		to_chat(user, "<span class='warning'>There is no cable left!</span>")
 		return
-	
+
 	if(get_dist(T,user) > 1) // Too far
 		to_chat(user, "<span class='warning'>You can't lay cable at a place that far away!</span>")
 		return
