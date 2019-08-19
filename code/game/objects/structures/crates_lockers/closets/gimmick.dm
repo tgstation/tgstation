@@ -25,7 +25,7 @@
 	for(var/i in 1 to 5)
 		new /obj/item/clothing/head/ushanka(src)
 	for(var/i in 1 to 5)
-		new /obj/item/clothing/under/soviet(src)
+		new /obj/item/clothing/under/costume/soviet(src)
 
 /obj/structure/closet/gimmick/tacticool
 	name = "tacticool gear closet"

@@ -44,7 +44,7 @@
 			table.computer = src
 			break
 
-/obj/machinery/computer/operating/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/computer/operating/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.not_incapacitated_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "operating_computer", name, 350, 470, master_ui, state)
@@ -104,7 +104,7 @@
 						else
 							alternative_step = "Finish operation"
 					data["procedures"] += list(list(
-						"name" = capitalize(procedure.name),
+						"name" = capitalize("[parse_zone(procedure.location)] [procedure.name]"),
 						"next_step" = capitalize(surgery_step.name),
 						"chems_needed" = chems_needed,
 						"alternative_step" = alternative_step,

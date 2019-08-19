@@ -74,7 +74,7 @@
 	var/static/image/drained_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_empty")
 
 	var/datum/action/item_action/zoom_lock_action/zoom_lock_action
-	var/datum/component/mobhook
+	var/mob/listeningTo
 
 /obj/item/gun/energy/beam_rifle/debug
 	delay = 0
@@ -178,7 +178,7 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	set_user(null)
 	QDEL_LIST(current_tracers)
-	QDEL_NULL(mobhook)
+	listeningTo = null
 	return ..()
 
 /obj/item/gun/energy/beam_rifle/emp_act(severity)
@@ -265,14 +265,15 @@
 	if(user == current_user)
 		return
 	stop_aiming(current_user)
-	QDEL_NULL(mobhook)
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+		listeningTo = null
 	if(istype(current_user))
-		LAZYREMOVE(current_user.mousemove_intercept_objects, src)
 		current_user = null
 	if(istype(user))
 		current_user = user
-		LAZYOR(current_user.mousemove_intercept_objects, src)
-		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/on_mob_move)))
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_mob_move)
+		listeningTo = user
 
 /obj/item/gun/energy/beam_rifle/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
 	if(aiming)

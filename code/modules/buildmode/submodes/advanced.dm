@@ -8,7 +8,7 @@
 /datum/buildmode_mode/advanced/show_help(client/c)
 	to_chat(c, "<span class='notice'>***********************************************************</span>")
 	to_chat(c, "<span class='notice'>Right Mouse Button on buildmode button = Set object type</span>")
-	to_chat(c, "<span class='notice'>Left Mouse Button + alt on turf/obj    = Copy object type")
+	to_chat(c, "<span class='notice'>Left Mouse Button + alt on turf/obj    = Copy object type</span>")
 	to_chat(c, "<span class='notice'>Left Mouse Button on turf/obj          = Place objects</span>")
 	to_chat(c, "<span class='notice'>Right Mouse Button                     = Delete objects</span>")
 	to_chat(c, "")
@@ -56,4 +56,3 @@
 		if(isobj(object))
 			log_admin("Build Mode: [key_name(c)] deleted [object] at [AREACOORD(object)]")
 			qdel(object)
-	

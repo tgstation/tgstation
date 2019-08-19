@@ -32,6 +32,7 @@
 					/obj/item/seeds/replicapod = 3,
 					/obj/item/seeds/wheat/rice = 3,
 					/obj/item/seeds/soya = 3,
+					/obj/item/seeds/sugarcane = 3,
 					/obj/item/seeds/sunflower = 3,
 					/obj/item/seeds/tea = 3,
 					/obj/item/seeds/tobacco = 3,

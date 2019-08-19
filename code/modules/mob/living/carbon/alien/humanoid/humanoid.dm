@@ -22,11 +22,6 @@
 					 /obj/item/bodypart/r_arm/alien, /obj/item/bodypart/r_leg/alien, /obj/item/bodypart/l_leg/alien)
 
 
-//This is fine right now, if we're adding organ specific damage this needs to be updated
-/mob/living/carbon/alien/humanoid/Initialize()
-	AddAbility(new/obj/effect/proc_holder/alien/regurgitate(null))
-	. = ..()
-
 /mob/living/carbon/alien/humanoid/restrained(ignore_grab)
 	return handcuffed
 
@@ -59,7 +54,7 @@
 	//strip panel
 	if(href_list["pouches"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		visible_message("<span class='danger'>[usr] tries to empty [src]'s pouches.</span>", \
-						"<span class='userdanger'>[usr] tries to empty [src]'s pouches.</span>")
+						"<span class='userdanger'>[usr] tries to empty your pouches.</span>")
 		if(do_mob(usr, src, POCKET_STRIP_DELAY * 0.5))
 			dropItemToGround(r_store)
 			dropItemToGround(l_store)
@@ -73,7 +68,8 @@
 
 /mob/living/carbon/alien/humanoid/resist_grab(moving_resist)
 	if(pulledby.grab_state)
-		visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
+		visible_message("<span class='danger'>[src] breaks free of [pulledby]'s grip!</span>", \
+						"<span class='danger'>You break free of [pulledby]'s grip!</span>")
 	pulledby.stop_pulling()
 	. = 0
 
@@ -93,15 +89,11 @@
 	else
 		return initial(pixel_x)
 
-/mob/living/carbon/alien/humanoid/get_permeability_protection()
+/mob/living/carbon/alien/humanoid/get_permeability_protection(list/target_zones)
 	return 0.8
 
 /mob/living/carbon/alien/humanoid/alien_evolve(mob/living/carbon/alien/humanoid/new_xeno)
 	drop_all_held_items()
-	for(var/atom/movable/A in stomach_contents)
-		stomach_contents.Remove(A)
-		new_xeno.stomach_contents.Add(A)
-		A.forceMove(new_xeno)
 	..()
 
 //For alien evolution/promotion/queen finder procs. Checks for an active alien of that type

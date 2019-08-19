@@ -28,7 +28,7 @@
 	. = ..()
 	START_PROCESSING(SSprocessing, src)
 	GLOB.poi_list += src
-	AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_POST_THROW = CALLBACK(src, .proc/move_gracefully)))
+	RegisterSignal(src, COMSIG_MOVABLE_POST_THROW, .proc/move_gracefully)
 
 /obj/item/his_grace/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
@@ -51,23 +51,23 @@
 	return
 
 /obj/item/his_grace/examine(mob/user)
-	..()
+	. = ..()
 	if(awakened)
 		switch(bloodthirst)
 			if(HIS_GRACE_SATIATED to HIS_GRACE_PECKISH)
-				to_chat(user, "<span class='his_grace'>[src] isn't very hungry. Not yet.</span>")
+				. += "<span class='his_grace'>[src] isn't very hungry. Not yet.</span>"
 			if(HIS_GRACE_PECKISH to HIS_GRACE_HUNGRY)
-				to_chat(user, "<span class='his_grace'>[src] would like a snack.</span>")
+				. += "<span class='his_grace'>[src] would like a snack.</span>"
 			if(HIS_GRACE_HUNGRY to HIS_GRACE_FAMISHED)
-				to_chat(user, "<span class='his_grace'>[src] is quite hungry now.</span>")
+				. += "<span class='his_grace'>[src] is quite hungry now.</span>"
 			if(HIS_GRACE_FAMISHED to HIS_GRACE_STARVING)
-				to_chat(user, "<span class='his_grace'>[src] is openly salivating at the sight of you. Be careful.</span>")
+				. += "<span class='his_grace'>[src] is openly salivating at the sight of you. Be careful.</span>"
 			if(HIS_GRACE_STARVING to HIS_GRACE_CONSUME_OWNER)
-				to_chat(user, "<span class='his_grace bold'>You walk a fine line. [src] is very close to devouring you.</span>")
+				. += "<span class='his_grace bold'>You walk a fine line. [src] is very close to devouring you.</span>"
 			if(HIS_GRACE_CONSUME_OWNER to HIS_GRACE_FALL_ASLEEP)
-				to_chat(user, "<span class='his_grace bold'>[src] is shaking violently and staring directly at you.</span>")
+				. += "<span class='his_grace bold'>[src] is shaking violently and staring directly at you.</span>"
 	else
-		to_chat(user, "<span class='his_grace'>[src] is latched closed.</span>")
+		. += "<span class='his_grace'>[src] is latched closed.</span>"
 
 /obj/item/his_grace/relaymove(mob/living/user) //Allows changelings, etc. to climb out of Him after they revive, provided He isn't active
 	if(!awakened)

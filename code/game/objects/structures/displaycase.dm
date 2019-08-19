@@ -38,14 +38,13 @@
 	return ..()
 
 /obj/structure/displaycase/examine(mob/user)
-	..()
+	. = ..()
 	if(alert)
-		to_chat(user, "<span class='notice'>Hooked up with an anti-theft system.</span>")
+		. += "<span class='notice'>Hooked up with an anti-theft system.</span>"
 	if(showpiece)
-		to_chat(user, "<span class='notice'>There's [showpiece] inside.</span>")
+		. += "<span class='notice'>There's [showpiece] inside.</span>"
 	if(trophy_message)
-		to_chat(user, "The plaque reads:")
-		to_chat(user, trophy_message)
+		. += "The plaque reads:\n [trophy_message]"
 
 
 /obj/structure/displaycase/proc/dump()
@@ -173,6 +172,9 @@
 	    //prevents remote "kicks" with TK
 		if (!Adjacent(user))
 			return
+		if (user.a_intent == INTENT_HELP)
+			user.examinate(src)
+			return
 		user.visible_message("<span class='danger'>[user] kicks the display case.</span>", null, null, COMBAT_MESSAGE_RANGE)
 		log_combat(user, src, "kicks")
 		user.do_attack_animation(src, ATTACK_EFFECT_KICK)
@@ -268,33 +270,33 @@
 			is_locked = !is_locked
 			to_chat(user, "You [!is_locked ? "un" : ""]lock the case.")
 		else
-			to_chat(user, "<span class='danger'>The lock is stuck shut!</span>")
+			to_chat(user, "<span class='warning'>The lock is stuck shut!</span>")
 		return
 
 	if(is_locked)
-		to_chat(user, "<span class='danger'>The case is shut tight with an old fashioned physical lock. Maybe you should ask the curator for the key?</span>")
+		to_chat(user, "<span class='warning'>The case is shut tight with an old fashioned physical lock. Maybe you should ask the curator for the key?</span>")
 		return
 
 	if(!added_roundstart)
-		to_chat(user, "You've already put something new in this case.")
+		to_chat(user, "<span class='warning'>You've already put something new in this case!</span>")
 		return
 
 	if(is_type_in_typecache(W, GLOB.blacklisted_cargo_types))
-		to_chat(user, "<span class='danger'>The case rejects the [W].</span>")
+		to_chat(user, "<span class='warning'>The case rejects the [W]!</span>")
 		return
 
 	for(var/a in W.GetAllContents())
 		if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types))
-			to_chat(user, "<span class='danger'>The case rejects the [W].</span>")
+			to_chat(user, "<span class='warning'>The case rejects the [W]!</span>")
 			return
 
 	if(user.transferItemToLoc(W, src))
 
 		if(showpiece)
-			to_chat(user, "You press a button, and [showpiece] descends into the floor of the case.")
+			to_chat(user, "<span class='notice'>You press a button, and [showpiece] descends into the floor of the case.</span>")
 			QDEL_NULL(showpiece)
 
-		to_chat(user, "You insert [W] into the case.")
+		to_chat(user, "<span class='notice'>You insert [W] into the case.</span>")
 		showpiece = W
 		added_roundstart = FALSE
 		update_icon()
@@ -307,9 +309,9 @@
 		if(chosen_plaque)
 			if(user.Adjacent(src))
 				trophy_message = chosen_plaque
-				to_chat(user, "You set the plaque's text.")
+				to_chat(user, "<span class='notice'>You set the plaque's text.</span>")
 			else
-				to_chat(user, "You are too far to set the plaque's text.")
+				to_chat(user, "<span class='warning'>You are too far to set the plaque's text!</span>")
 
 		SSpersistence.SaveTrophy(src)
 		return TRUE

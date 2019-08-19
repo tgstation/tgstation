@@ -293,7 +293,6 @@
 	pixel_y = 8
 	},
 /obj/item/radio/intercom{
-	dir = 2;
 	name = "Station Intercom (General)";
 	pixel_y = -31
 	},
@@ -310,7 +309,6 @@
 /area/shuttle/escape)
 "aS" = (
 /obj/item/radio/intercom{
-	dir = 2;
 	name = "Station Intercom (General)";
 	pixel_y = -31
 	},
@@ -400,9 +398,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bl" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
+/obj/machinery/stasis,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bm" = (
@@ -540,7 +536,6 @@
 	pixel_y = 2
 	},
 /obj/item/radio/intercom{
-	dir = 2;
 	name = "Station Intercom (General)";
 	pixel_y = -31
 	},
@@ -589,7 +584,6 @@
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/radio/intercom{
-	dir = 2;
 	name = "Station Intercom (General)";
 	pixel_x = -27
 	},
@@ -664,9 +658,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bP" = (
-/obj/structure/closet/crate/medical{
-	name = "medical crate"
-	},
+/obj/structure/closet/crate/medical,
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/o2{
 	pixel_x = 3;
@@ -691,7 +683,6 @@
 /area/shuttle/escape)
 "bQ" = (
 /obj/item/radio/intercom{
-	dir = 2;
 	name = "Station Intercom (General)";
 	pixel_y = -31
 	},

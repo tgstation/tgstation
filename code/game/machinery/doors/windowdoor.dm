@@ -55,12 +55,15 @@
 		icon_state = "[base_state]open"
 
 /obj/machinery/door/window/proc/open_and_close()
-	open()
+	if(!open())
+		return
+	autoclose = TRUE
 	if(check_access(null))
 		sleep(50)
 	else //secure doors close faster
 		sleep(20)
-	close()
+	if(!density && autoclose) //did someone change state while we slept?
+		close()
 
 /obj/machinery/door/window/Bumped(atom/movable/AM)
 	if( operating || !density )
@@ -282,6 +285,10 @@
 
 /obj/machinery/door/window/interact(mob/user)		//for sillycones
 	try_to_activate_door(user)
+
+/obj/machinery/door/window/try_to_activate_door(mob/user)
+	if (..())
+		autoclose = FALSE
 
 /obj/machinery/door/window/try_to_crowbar(obj/item/I, mob/user)
 	if(!hasPower())

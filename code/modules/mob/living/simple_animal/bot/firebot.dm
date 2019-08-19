@@ -132,7 +132,7 @@
 		extinguish_people = TRUE
 
 		internal_ext = new /obj/item/extinguisher(src)
-		internal_ext.chem = "clf3" //Refill the internal extinguisher with liquid fire
+		internal_ext.chem = /datum/reagent/clf3 //Refill the internal extinguisher with liquid fire
 		internal_ext.power = 3
 		internal_ext.safety = FALSE
 		internal_ext.precision = FALSE

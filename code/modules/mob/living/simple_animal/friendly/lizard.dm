@@ -39,3 +39,12 @@
 		return TRUE
 	else
 		return ..()
+
+/mob/living/simple_animal/hostile/lizard/space
+	name = "Space Lizard"
+	desc = "A cute tiny lizard with a tiny space helmet."
+	icon_state = "lizard_space"
+	icon_living = "lizard_space"
+	unsuitable_atmos_damage = 0
+	minbodytemp = TCMB
+	maxbodytemp = T0C + 40

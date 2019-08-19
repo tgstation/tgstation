@@ -92,10 +92,10 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		message = "The arrivals shuttle has been damaged. Docking for repairs..."
 
 	if(channels.len == 0)
-		radio.talk_into(src, message, null, list(SPAN_ROBOT), get_default_language())
+		radio.talk_into(src, message, null)
 	else
 		for(var/channel in channels)
-			radio.talk_into(src, message, channel, list(SPAN_ROBOT), get_default_language())
+			radio.talk_into(src, message, channel)
 
 //config stuff
 

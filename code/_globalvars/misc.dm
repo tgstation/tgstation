@@ -6,8 +6,6 @@ GLOBAL_VAR_INIT(timezoneOffset, 0) // The difference betwen midnight (of the hos
 	// However it'd be ok to use for accessing attack logs and such too, which are even laggier.
 GLOBAL_VAR_INIT(fileaccess_timer, 0)
 
-GLOBAL_VAR_INIT(TAB, "&nbsp;&nbsp;&nbsp;&nbsp;")
-
 GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 
 GLOBAL_VAR_INIT(CELLRATE, 0.002)  // conversion ratio between a watt-tick and kilojoule
@@ -18,3 +16,12 @@ GLOBAL_LIST_EMPTY(powernets)
 GLOBAL_VAR_INIT(bsa_unlock, FALSE)	//BSA unlocked by head ID swipes
 
 GLOBAL_LIST_EMPTY(player_details)	// ckey -> /datum/player_details
+
+// All religion stuff
+GLOBAL_VAR(religion)
+GLOBAL_VAR(deity)
+GLOBAL_VAR(bible_name)
+GLOBAL_VAR(bible_icon_state)
+GLOBAL_VAR(bible_item_state)
+GLOBAL_VAR(holy_weapon_type)
+GLOBAL_VAR(holy_armor_type)

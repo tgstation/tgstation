@@ -118,6 +118,6 @@
 		return
 
 /obj/item/computer_hardware/card_slot/examine(mob/user)
-	..()
+	. = ..()
 	if(stored_card || stored_card2)
-		to_chat(user, "There appears to be something loaded in the card slots.")
+		. += "There appears to be something loaded in the card slots."

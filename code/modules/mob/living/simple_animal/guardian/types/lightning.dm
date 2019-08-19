@@ -47,7 +47,7 @@
 				successfulshocks = 0
 			if(shockallchains())
 				successfulshocks++
-			sleep(3)
+			SLEEP_CHECK_DEATH(3)
 
 /mob/living/simple_animal/hostile/guardian/beam/Recall()
 	. = ..()

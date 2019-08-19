@@ -23,7 +23,7 @@
 
 /obj/item/radio/intercom/ratvar/attackby(obj/item/I, mob/living/user, params)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		to_chat(user, "<span class='danger'>[src] is fastened to the wall with [is_servant_of_ratvar(user) ? "replicant alloy" : "some material you've never seen"], and can't be removed.</span>")
+		to_chat(user, "<span class='warning'>[src] is fastened to the wall with [is_servant_of_ratvar(user) ? "replicant alloy" : "some material you've never seen"], and can't be removed.</span>")
 		return //no unfastening!
 	. = ..()
 
@@ -49,11 +49,11 @@
 	return ..()
 
 /obj/item/radio/intercom/examine(mob/user)
-	..()
+	. = ..()
 	if(!unfastened)
-		to_chat(user, "<span class='notice'>It's <b>screwed</b> and secured to the wall.</span>")
+		. += "<span class='notice'>It's <b>screwed</b> and secured to the wall.</span>"
 	else
-		to_chat(user, "<span class='notice'>It's <i>unscrewed</i> from the wall, and can be <b>detached</b>.</span>")
+		. += "<span class='notice'>It's <i>unscrewed</i> from the wall, and can be <b>detached</b>.</span>"
 
 /obj/item/radio/intercom/attackby(obj/item/I, mob/living/user, params)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
@@ -139,6 +139,12 @@
 /obj/item/radio/intercom/add_blood_DNA(list/blood_dna)
 	return FALSE
 
+/obj/item/radio/intercom/end_emp_effect(curremp)
+	. = ..()
+	if(!.)
+		return
+	on = FALSE
+
 //Created through the autolathe or through deconstructing intercoms. Can be applied to wall to make a new intercom on it!
 /obj/item/wallframe/intercom
 	name = "intercom frame"
@@ -147,4 +153,4 @@
 	result_path = /obj/item/radio/intercom/unscrewed
 	pixel_shift = 29
 	inverse = TRUE
-	materials = list(MAT_METAL = 75, MAT_GLASS = 25)
+	materials = list(/datum/material/iron = 75, /datum/material/glass = 25)

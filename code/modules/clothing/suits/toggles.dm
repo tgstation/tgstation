@@ -71,6 +71,7 @@
 
 /obj/item/clothing/head/hooded
 	var/obj/item/clothing/suit/hooded/suit
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/hooded/Destroy()
 	suit = null
@@ -120,8 +121,8 @@
 		A.UpdateButtonIcon()
 
 /obj/item/clothing/suit/toggle/examine(mob/user)
-	..()
-	to_chat(user, "Alt-click on [src] to toggle the [togglename].")
+	. = ..()
+	. += "Alt-click on [src] to toggle the [togglename]."
 
 //Hardsuit toggle code
 /obj/item/clothing/suit/space/hardsuit/Initialize()

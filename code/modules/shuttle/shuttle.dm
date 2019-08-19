@@ -23,6 +23,8 @@
 	var/area_type
 	var/hidden = FALSE //are we invisible to shuttle navigation computers?
 
+	var/delete_after = FALSE ///Delete this port after ship fly off.
+
 	//these objects are indestructible
 /obj/docking_port/Destroy(force)
 	// unless you assert that you know what you're doing. Horrible things
@@ -155,8 +157,6 @@
 /obj/docking_port/stationary
 	name = "dock"
 
-	area_type = SHUTTLE_DEFAULT_UNDERLYING_AREA
-
 	var/last_dock_time
 
 	var/datum/map_template/shuttle/roundstart_template
@@ -169,6 +169,9 @@
 		id = "[SSshuttle.stationary.len]"
 	if(name == "dock")
 		name = "dock[SSshuttle.stationary.len]"
+	if(!area_type)
+		var/area/place = get_area(src)
+		area_type = place?.type // We might be created in nullspace
 
 	if(mapload)
 		for(var/turf/T in return_turfs())
@@ -183,6 +186,13 @@
 		SSshuttle.stationary -= src
 	. = ..()
 
+/obj/docking_port/stationary/Moved(atom/oldloc, dir, forced)
+	. = ..()
+	if(area_type) // We already have one
+		return
+	var/area/newarea = get_area(src)
+	area_type = newarea?.type
+
 /obj/docking_port/stationary/proc/load_roundstart()
 	if(json_key)
 		var/sid = SSmapping.config.shuttles[json_key]
@@ -194,10 +204,10 @@
 
 		roundstart_template = SSmapping.shuttle_templates[sid]
 		if(!roundstart_template)
-			CRASH("Invalid path ([roundstart_template]) passed to docking port.")
+			CRASH("Invalid path ([sid]/[roundstart_template]) passed to docking port.")
 
 	if(roundstart_template)
-		SSshuttle.manipulator.action_load(roundstart_template, src)
+		SSshuttle.action_load(roundstart_template, src)
 
 //returns first-found touching shuttleport
 /obj/docking_port/stationary/get_docked()
@@ -262,6 +272,7 @@
 	var/engine_coeff = 1 //current engine coeff
 	var/current_engines = 0 //current engine power
 	var/initial_engines = 0 //initial engine power
+	var/list/engine_list = list()
 	var/can_move_docking_ports = FALSE //if this shuttle can move docking ports other than the one it is docked at
 	var/list/hidden_turfs = list()
 
@@ -423,7 +434,10 @@
 		if(initiate_docking(S1) != DOCKING_SUCCESS)
 			WARNING("shuttle \"[id]\" could not enter transit space. Docked at [S0 ? S0.id : "null"]. Transit dock [S1 ? S1.id : "null"].")
 		else
-			previous = S0
+			if(S0.delete_after)
+				qdel(S0, TRUE)
+			else
+				previous = S0
 	else
 		WARNING("shuttle \"[id]\" could not enter transit space. S0=[S0 ? S0.id : "null"] S1=[S1 ? S1.id : "null"]")
 
@@ -725,19 +739,47 @@
 	return null
 
 /obj/docking_port/mobile/proc/hyperspace_sound(phase, list/areas)
-	var/s
+	var/selected_sound
 	switch(phase)
 		if(HYPERSPACE_WARMUP)
-			s = 'sound/effects/hyperspace_begin.ogg'
+			selected_sound = "hyperspace_begin"
 		if(HYPERSPACE_LAUNCH)
-			s = 'sound/effects/hyperspace_progress.ogg'
+			selected_sound = "hyperspace_progress"
 		if(HYPERSPACE_END)
-			s = 'sound/effects/hyperspace_end.ogg'
+			selected_sound = "hyperspace_end"
 		else
 			CRASH("Invalid hyperspace sound phase: [phase]")
-	for(var/A in areas)
-		for(var/obj/machinery/door/E in A)	//dumb, I know, but playing it on the engines doesn't do it justice
-			playsound(E, s, 100, FALSE, max(width, height) - world.view)
+	// This previously was played from each door at max volume, and was one of the worst things I had ever seen.
+	// Now it's instead played from the nearest engine if close, or the first engine in the list if far since it doesn't really matter.
+	// Or a door if for some reason the shuttle has no engine, fuck oh hi daniel fuck it
+	var/range = (engine_coeff * max(width, height))
+	var/long_range = range * 2.5
+	var/atom/distant_source
+	if(engine_list[1])
+		distant_source = engine_list[1]
+	else
+		for(var/A in areas)
+			distant_source = locate(/obj/machinery/door) in A
+			if(distant_source)
+				break
+
+	if(distant_source)
+		for(var/mob/M in SSmobs.clients_by_zlevel[z])
+			var/dist_far = get_dist(M, distant_source)
+			if(dist_far <= long_range && dist_far > range)
+				M.playsound_local(distant_source, "sound/effects/[selected_sound]_distance.ogg", 100, falloff = 20)
+			else if(dist_far <= range)
+				var/source
+				if(engine_list.len == 0)
+					source = distant_source
+				else
+					var/closest_dist = 10000
+					for(var/obj/O in engine_list)
+						var/dist_near = get_dist(M, O)
+						if(dist_near < closest_dist)
+							source = O
+							closest_dist = dist_near
+				M.playsound_local(source, "sound/effects/[selected_sound].ogg", 100, falloff = range / 2)
 
 // Losing all initial engines should get you 2
 // Adding another set of engines at 0.5 time
@@ -757,6 +799,7 @@
 		var/area/shuttle/areaInstance = thing
 		for(var/obj/structure/shuttle/engine/E in areaInstance.contents)
 			if(!QDELETED(E))
+				engine_list += E
 				. += E.engine_power
 
 // Double initial engines to get to 0.5 minimum

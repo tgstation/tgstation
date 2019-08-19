@@ -19,9 +19,9 @@ Bonus
 
 	name = "Spontaneous Combustion"
 	desc = "The virus turns fat into an extremely flammable compound, and raises the body's temperature, making the host burst into flames spontaneously."
-	stealth = 1
+	stealth = -1
 	resistance = -4
-	stage_speed = -4
+	stage_speed = -3
 	transmittable = -4
 	level = 6
 	severity = 5
@@ -156,7 +156,7 @@ Bonus
 	M.adjust_fire_stacks(get_stacks)
 	M.take_overall_damage(burn = get_stacks / 2, required_status = BODYPART_ORGANIC)
 	if(chems)
-		M.reagents.add_reagent("clf3", 2 * power)
+		M.reagents.add_reagent(/datum/reagent/clf3, 2 * power)
 	return 1
 
 /datum/symptom/alkali/proc/Alkali_fire_stage_5(mob/living/M, datum/disease/advance/A)
@@ -164,5 +164,5 @@ Bonus
 	M.adjust_fire_stacks(get_stacks)
 	M.take_overall_damage(burn = get_stacks, required_status = BODYPART_ORGANIC)
 	if(chems)
-		M.reagents.add_reagent_list(list("napalm" = 4 * power, "clf3" = 4 * power))
+		M.reagents.add_reagent_list(list(/datum/reagent/napalm = 4 * power, /datum/reagent/clf3 = 4 * power))
 	return 1

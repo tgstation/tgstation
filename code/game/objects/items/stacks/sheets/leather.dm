@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(human_recipes, list( \
 
 GLOBAL_LIST_INIT(gondola_recipes, list ( \
 	new/datum/stack_recipe("gondola mask", /obj/item/clothing/mask/gondola, 1), \
-	new/datum/stack_recipe("gondola suit", /obj/item/clothing/under/gondola, 2), \
+	new/datum/stack_recipe("gondola suit", /obj/item/clothing/under/costume/gondola, 2), \
 	))
 
 /obj/item/stack/sheet/animalhide/gondola
@@ -179,7 +179,7 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 
 
 GLOBAL_LIST_INIT(sinew_recipes, list ( \
-	new/datum/stack_recipe("sinew restraints", /obj/item/restraints/handcuffs/sinew, 1), \
+	new/datum/stack_recipe("sinew restraints", /obj/item/restraints/handcuffs/cable/sinew, 1), \
 ))
 
 /obj/item/stack/sheet/sinew/Initialize(mapload, new_amount, merge = TRUE)

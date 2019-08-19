@@ -16,7 +16,7 @@
 /obj/item/soapstone/examine(mob/user)
 	. = ..()
 	if(remaining_uses != -1)
-		to_chat(user, "It has [remaining_uses] uses left.")
+		. += "It has [remaining_uses] uses left."
 
 /obj/item/soapstone/afterattack(atom/target, mob/user, proximity)
 	. = ..()
@@ -193,7 +193,7 @@
 	update_icon()
 
 /obj/structure/chisel_message/examine(mob/user)
-	..()
+	. = ..()
 	ui_interact(user)
 
 /obj/structure/chisel_message/Destroy()

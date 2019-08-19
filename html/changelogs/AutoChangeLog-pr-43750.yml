@@ -1,5 +1,0 @@
-author: "py01"
-delete-after: True
-changes: 
-  - bugfix: "CQC and Sleeping Carp are properly logged.
-Change: CQC can passively grab targets when not on grab intent. Passive grabs do not count towards combos for CQC or Sleeping carp."

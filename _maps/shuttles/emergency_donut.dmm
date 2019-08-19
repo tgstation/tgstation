@@ -330,7 +330,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bf" = (
-/obj/machinery/sleeper,
+/obj/machinery/stasis,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bg" = (
@@ -376,9 +376,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bl" = (
-/obj/structure/closet/crate/medical{
-	name = "medical crate"
-	},
+/obj/structure/closet/crate/medical,
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/o2{
 	pixel_x = 3;
@@ -485,6 +483,13 @@
 "bt" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"bS" = (
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/clothing/suit/apron/surgical,
+/obj/item/clothing/mask/surgical,
+/obj/structure/table/optable,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -660,7 +665,7 @@ aW
 aX
 aY
 ab
-bf
+bS
 bj
 bn
 ab

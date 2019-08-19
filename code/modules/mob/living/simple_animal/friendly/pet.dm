@@ -24,7 +24,7 @@
 		fully_replace_character_name(null, "\proper [P.tagname]")
 
 /mob/living/simple_animal/pet/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/clothing/neck/petcollar) && !pcollar && collar_type)
+	if(istype(O, /obj/item/clothing/neck/petcollar) && !pcollar)
 		add_collar(O, user)
 		return
 

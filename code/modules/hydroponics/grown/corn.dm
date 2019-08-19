@@ -13,7 +13,7 @@
 	icon_grow = "corn-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "corn-dead" // Same for the dead icon
 	mutatelist = list(/obj/item/seeds/corn/snapcorn)
-	reagents_add = list("cornoil" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
+	reagents_add = list(/datum/reagent/consumable/cornoil = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/corn
 	seed = /obj/item/seeds/corn
@@ -25,9 +25,9 @@
 	trash = /obj/item/grown/corncob
 	bitesize_mod = 2
 	foodtype = VEGETABLES
-	juice_results = list("corn_starch" = 0)
+	juice_results = list(/datum/reagent/consumable/corn_starch = 0)
 	tastes = list("corn" = 1)
-	distill_reagent = "whiskey"
+	distill_reagent = /datum/reagent/consumable/ethanol/whiskey
 
 /obj/item/grown/corncob
 	name = "corn cob"

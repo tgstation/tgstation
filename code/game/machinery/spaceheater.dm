@@ -46,14 +46,14 @@
 	return ..()
 
 /obj/machinery/space_heater/examine(mob/user)
-	..()
-	to_chat(user, "\The [src] is [on ? "on" : "off"], and the hatch is [panel_open ? "open" : "closed"].")
+	. = ..()
+	. += "\The [src] is [on ? "on" : "off"], and the hatch is [panel_open ? "open" : "closed"]."
 	if(cell)
-		to_chat(user, "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")
+		. += "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
 	else
-		to_chat(user, "There is no power cell installed.")
+		. += "There is no power cell installed."
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Temperature range at <b>[settableTemperatureRange]°C</b>.<br>Heating power at <b>[heatingPower*0.001]kJ</b>.<br>Power consumption at <b>[(efficiency*-0.0025)+150]%</b>.<span>") //100%, 75%, 50%, 25%
+		. += "<span class='notice'>The status display reads: Temperature range at <b>[settableTemperatureRange]°C</b>.<br>Heating power at <b>[heatingPower*0.001]kJ</b>.<br>Power consumption at <b>[(efficiency*-0.0025)+150]%</b>.</span>" //100%, 75%, 50%, 25%
 
 /obj/machinery/space_heater/update_icon()
 	if(on)
@@ -158,8 +158,6 @@
 		panel_open = !panel_open
 		user.visible_message("\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src].", "<span class='notice'>You [panel_open ? "open" : "close"] the hatch on \the [src].</span>")
 		update_icon()
-		if(panel_open)
-			interact(user)
 	else if(default_deconstruction_crowbar(I))
 		return
 	else

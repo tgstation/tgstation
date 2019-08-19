@@ -9,7 +9,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
-	grind_results = list("iodine" = 4)
+	grind_results = list(/datum/reagent/iodine = 4)
 	var/datum/picture/picture
 	var/scribble		//Scribble on the back.
 
@@ -62,12 +62,12 @@
 	..()
 
 /obj/item/photo/examine(mob/user)
-	..()
+	. = ..()
 
 	if(in_range(src, user) || isobserver(user))
 		show(user)
 	else
-		to_chat(user, "<span class='warning'>You need to get closer to get a good look at this photo!</span>")
+		. += "<span class='warning'>You need to get closer to get a good look at this photo!</span>"
 
 /obj/item/photo/proc/show(mob/user)
 	if(!istype(picture) || !picture.picture_image)
@@ -91,3 +91,6 @@
 	if((loc == usr || loc.loc && loc.loc == usr) && usr.stat == CONSCIOUS && !usr.incapacitated())
 		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
+
+/obj/item/photo/old
+	icon_state = "photo_old"

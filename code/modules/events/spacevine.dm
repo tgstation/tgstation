@@ -292,7 +292,7 @@
 	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
 
 /obj/structure/spacevine/examine(mob/user)
-	..()
+	. = ..()
 	var/text = "This one is a"
 	if(mutations.len)
 		for(var/A in mutations)
@@ -301,7 +301,7 @@
 	else
 		text += " normal"
 	text += " vine."
-	to_chat(user, text)
+	. += text
 
 /obj/structure/spacevine/Destroy()
 	for(var/datum/spacevine_mutation/SM in mutations)
@@ -395,17 +395,13 @@
 
 /datum/spacevine_controller/vv_get_dropdown()
 	. = ..()
-	. += "---"
-	.["Delete Vines"] = "?_src_=[REF(src)];[HrefToken()];purge_vines=1"
+	VV_DROPDOWN_OPTION(VV_HK_SPACEVINE_PURGE, "Delete Vines")
 
-/datum/spacevine_controller/Topic(href, href_list)
-	if(..() || !check_rights(R_ADMIN, FALSE) || !usr.client.holder.CheckAdminHref(href, href_list))
-		return
-
-	if(href_list["purge_vines"])
-		if(alert(usr, "Are you sure you want to delete this spacevine cluster?", "Delete Vines", "Yes", "No") != "Yes")
-			return
-		DeleteVines()
+/datum/spacevine_controller/vv_do_topic(href_list)
+	. = ..()
+	if(href_list[VV_HK_SPACEVINE_PURGE])
+		if(alert(usr, "Are you sure you want to delete this spacevine cluster?", "Delete Vines", "Yes", "No") == "Yes")
+			DeleteVines()
 
 /datum/spacevine_controller/proc/DeleteVines()	//this is kill
 	QDEL_LIST(vines)	//this will also qdel us

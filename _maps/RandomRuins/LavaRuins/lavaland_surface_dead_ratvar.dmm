@@ -16,7 +16,7 @@
 "e" = (
 /obj/item/stack/tile/brass,
 /turf/open/floor/clockwork{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors/unexplored)
 "f" = (
@@ -28,7 +28,7 @@
 /area/lavaland/surface/outdoors/unexplored)
 "h" = (
 /turf/open/floor/clockwork{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors/unexplored)
 "i" = (
@@ -41,7 +41,7 @@
 "k" = (
 /obj/item/clockwork/alloy_shards/small,
 /turf/open/floor/clockwork{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors/unexplored)
 "l" = (
@@ -62,7 +62,7 @@
 "p" = (
 /obj/item/clockwork/alloy_shards/medium,
 /turf/open/floor/clockwork{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors/unexplored)
 "q" = (
@@ -76,7 +76,7 @@
 "s" = (
 /obj/item/clockwork/alloy_shards/large,
 /turf/open/floor/clockwork{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors/unexplored)
 "t" = (
@@ -86,7 +86,7 @@
 "u" = (
 /obj/structure/grille/ratvar,
 /turf/open/floor/clockwork{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors/unexplored)
 "v" = (
@@ -97,44 +97,44 @@
 "w" = (
 /obj/structure/grille/ratvar/broken,
 /turf/open/floor/clockwork{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors/unexplored)
 "x" = (
 /obj/structure/destructible/clockwork/wall_gear,
 /obj/item/stack/tile/brass,
 /turf/open/floor/clockwork{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors/unexplored)
 "y" = (
 /obj/item/clockwork/component/geis_capacitor/fallen_armor,
 /turf/open/floor/clockwork{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors/unexplored)
 "z" = (
 /obj/structure/destructible/clockwork/wall_gear,
 /turf/open/floor/clockwork{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors/unexplored)
 "A" = (
 /obj/item/clockwork/alloy_shards/clockgolem_remains,
 /turf/open/floor/clockwork{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors/unexplored)
 "B" = (
 /obj/item/clockwork/weapon/ratvarian_spear,
 /turf/open/floor/clockwork{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors/unexplored)
 "C" = (
 /obj/item/clockwork/alloy_shards/medium/gear_bit,
 /turf/open/floor/clockwork{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors/unexplored)
 "D" = (
@@ -148,7 +148,7 @@
 "F" = (
 /obj/structure/dead_ratvar,
 /turf/open/floor/clockwork{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors/unexplored)
 "G" = (

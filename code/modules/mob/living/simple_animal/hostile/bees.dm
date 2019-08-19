@@ -77,10 +77,10 @@
 
 
 /mob/living/simple_animal/hostile/poison/bees/examine(mob/user)
-	..()
+	. = ..()
 
 	if(!beehome)
-		to_chat(user, "<span class='warning'>This bee is homeless!</span>")
+		. += "<span class='warning'>This bee is homeless!</span>"
 
 
 /mob/living/simple_animal/hostile/poison/bees/proc/generate_bee_visuals()
@@ -142,13 +142,14 @@
 			var/mob/living/L = target
 			if(L.reagents)
 				beegent.reaction_mob(L, INJECT)
-				L.reagents.add_reagent(beegent.id, rand(1,5))
+				L.reagents.add_reagent(beegent.type, rand(1,5))
 
 
 /mob/living/simple_animal/hostile/poison/bees/proc/assign_reagent(datum/reagent/R)
 	if(istype(R))
 		beegent = R
 		name = "[initial(name)] ([R.name])"
+		real_name = name
 		poison_type = null
 		generate_bee_visuals()
 
@@ -208,7 +209,7 @@
 /mob/living/simple_animal/hostile/poison/bees/toxin/Initialize()
 	. = ..()
 	var/datum/reagent/R = pick(typesof(/datum/reagent/toxin))
-	assign_reagent(GLOB.chemical_reagents_list[initial(R.id)])
+	assign_reagent(GLOB.chemical_reagents_list[R])
 
 /mob/living/simple_animal/hostile/poison/bees/queen
 	name = "queen bee"
@@ -228,7 +229,7 @@
 	if(. && beegent && isliving(target))
 		var/mob/living/L = target
 		beegent.reaction_mob(L, TOUCH)
-		L.reagents.add_reagent(beegent.id, rand(1,5))
+		L.reagents.add_reagent(beegent.type, rand(1,5))
 
 
 //PEASENT BEES
@@ -239,7 +240,7 @@
 /mob/living/simple_animal/hostile/poison/bees/proc/reagent_incompatible(mob/living/simple_animal/hostile/poison/bees/B)
 	if(!B)
 		return FALSE
-	if(B.beegent && beegent && B.beegent.id != beegent.id || B.beegent && !beegent || !B.beegent && beegent)
+	if(B.beegent && beegent && B.beegent.type != beegent.type || B.beegent && !beegent || !B.beegent && beegent)
 		return TRUE
 	return FALSE
 
@@ -256,21 +257,21 @@
 /obj/item/queen_bee/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/syringe))
 		var/obj/item/reagent_containers/syringe/S = I
-		if(S.reagents.has_reagent("royal_bee_jelly")) //checked twice, because I really don't want royal bee jelly to be duped
-			if(S.reagents.has_reagent("royal_bee_jelly",5))
-				S.reagents.remove_reagent("royal_bee_jelly", 5)
+		if(S.reagents.has_reagent(/datum/reagent/royal_bee_jelly)) //checked twice, because I really don't want royal bee jelly to be duped
+			if(S.reagents.has_reagent(/datum/reagent/royal_bee_jelly,5))
+				S.reagents.remove_reagent(/datum/reagent/royal_bee_jelly, 5)
 				var/obj/item/queen_bee/qb = new(user.drop_location())
 				qb.queen = new(qb)
 				if(queen && queen.beegent)
 					qb.queen.assign_reagent(queen.beegent) //Bees use the global singleton instances of reagents, so we don't need to worry about one bee being deleted and her copies losing their reagents.
 				user.put_in_active_hand(qb)
-				user.visible_message("<span class='notice'>[user] injects [src] with royal bee jelly, causing it to split into two bees, MORE BEES!</span>","<span class ='warning'>You inject [src] with royal bee jelly, causing it to split into two bees, MORE BEES!</span>")
+				user.visible_message("<span class='notice'>[user] injects [src] with royal bee jelly, causing it to split into two bees, MORE BEES!</span>","<span class='warning'>You inject [src] with royal bee jelly, causing it to split into two bees, MORE BEES!</span>")
 			else
 				to_chat(user, "<span class='warning'>You don't have enough royal bee jelly to split a bee in two!</span>")
 		else
 			var/datum/reagent/R = GLOB.chemical_reagents_list[S.reagents.get_master_reagent_id()]
-			if(R && S.reagents.has_reagent(R.id, 5))
-				S.reagents.remove_reagent(R.id,5)
+			if(R && S.reagents.has_reagent(R.type, 5))
+				S.reagents.remove_reagent(R.type,5)
 				queen.assign_reagent(R)
 				user.visible_message("<span class='warning'>[user] injects [src]'s genome with [R.name], mutating its DNA!</span>","<span class='warning'>You inject [src]'s genome with [R.name], mutating its DNA!</span>")
 				name = queen.name
@@ -296,10 +297,10 @@
 			forceMove(beehome.drop_location())
 	else
 		..()
-		
+
 /mob/living/simple_animal/hostile/poison/bees/short
 	desc = "These bees seem unstable and won't survive for long."
 
-/mob/living/simple_animal/hostile/poison/bees/short/Initialize()
+/mob/living/simple_animal/hostile/poison/bees/short/Initialize(mapload, timetolive=50 SECONDS)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/death), 50 SECONDS)
+	addtimer(CALLBACK(src, .proc/death), timetolive)

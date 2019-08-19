@@ -265,9 +265,7 @@
 	pixel_x = -4;
 	pixel_y = 1
 	},
-/obj/item/reagent_containers/glass/bottle/chloralhydrate{
-	name = "chloral hydrate bottle"
-	},
+/obj/item/reagent_containers/glass/bottle/chloralhydrate,
 /obj/item/reagent_containers/glass/bottle/toxin{
 	pixel_x = 6;
 	pixel_y = 8

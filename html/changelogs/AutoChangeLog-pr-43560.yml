@@ -1,5 +1,0 @@
-author: "JoeyJo0"
-delete-after: True
-changes: 
-  - rscadd: "N2O Decomposition reaction"
-  - tweak: "N2O is no longer the perfect \"safety gas\". N2O Decomposes starting from 1400K, feeding more oxygen into the engine."

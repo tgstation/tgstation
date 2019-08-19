@@ -89,8 +89,6 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	roundend_category = "devils"
 	antagpanel_category = "Devil"
 	job_rank = ROLE_DEVIL
-	//Don't delete upon mind destruction, otherwise soul re-selling will break.
-	delete_on_mind_deletion = FALSE
 	var/obligation
 	var/ban
 	var/bane
@@ -384,14 +382,14 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		if(BANISH_WATER)
 			if(iscarbon(body))
 				var/mob/living/carbon/H = body
-				return H.reagents.has_reagent("holy water")
+				return H.reagents.has_reagent(/datum/reagent/water/holywater)
 			return 0
 		if(BANISH_COFFIN)
 			return (body && istype(body.loc, /obj/structure/closet/crate/coffin))
 		if(BANISH_FORMALDYHIDE)
 			if(iscarbon(body))
 				var/mob/living/carbon/H = body
-				return H.reagents.has_reagent("formaldehyde")
+				return H.reagents.has_reagent(/datum/reagent/toxin/formaldehyde)
 			return 0
 		if(BANISH_RUNES)
 			if(body)
@@ -414,11 +412,11 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		if(BANISH_FUNERAL_GARB)
 			if(ishuman(body))
 				var/mob/living/carbon/human/H = body
-				if(H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under/burial))
+				if(H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under/misc/burial))
 					return 1
 				return 0
 			else
-				for(var/obj/item/clothing/under/burial/B in range(0,body))
+				for(var/obj/item/clothing/under/misc/burial/B in range(0,body))
 					if(B.loc == get_turf(B)) //Make sure it's not in someone's inventory or something.
 						return 1
 				return 0
@@ -456,7 +454,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 			return -1
 		currentMob.change_mob_type( /mob/living/carbon/human, targetturf, null, 1)
 		var/mob/living/carbon/human/H = owner.current
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/black(H), SLOT_W_UNIFORM)
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/civilian/lawyer/black(H), SLOT_W_UNIFORM)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), SLOT_SHOES)
 		H.equip_to_slot_or_del(new /obj/item/storage/briefcase(H), SLOT_HANDS)
 		H.equip_to_slot_or_del(new /obj/item/pen(H), SLOT_L_STORE)
@@ -539,10 +537,10 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	var/list/parts = list()
 	parts += "The devil's true name is: [truename]"
 	parts += "The devil's bans were:"
-	parts += "[GLOB.TAB][GLOB.lawlorify[LORE][ban]]"
-	parts += "[GLOB.TAB][GLOB.lawlorify[LORE][bane]]"
-	parts += "[GLOB.TAB][GLOB.lawlorify[LORE][obligation]]"
-	parts += "[GLOB.TAB][GLOB.lawlorify[LORE][banish]]"
+	parts += "[FOURSPACES][GLOB.lawlorify[LORE][ban]]"
+	parts += "[FOURSPACES][GLOB.lawlorify[LORE][bane]]"
+	parts += "[FOURSPACES][GLOB.lawlorify[LORE][obligation]]"
+	parts += "[FOURSPACES][GLOB.lawlorify[LORE][banish]]"
 	return parts.Join("<br>")
 
 /datum/antagonist/devil/roundend_report()

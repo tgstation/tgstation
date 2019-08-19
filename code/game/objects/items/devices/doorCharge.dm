@@ -12,18 +12,18 @@
 	item_flags = NOBLUDGEON
 	force = 3
 	attack_verb = list("blown up", "exploded", "detonated")
-	materials = list(MAT_METAL=50, MAT_GLASS=30)
+	materials = list(/datum/material/iron=50, /datum/material/glass=30)
 
 /obj/item/doorCharge/ex_act(severity, target)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			visible_message("<span class='warning'>[src] detonates!</span>")
 			explosion(src.loc,0,2,1,flame_range = 4)
 			qdel(src)
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				ex_act(EXPLODE_DEVASTATE)
-		if(3)
+		if(EXPLODE_LIGHT)
 			if(prob(25))
 				ex_act(EXPLODE_DEVASTATE)
 
@@ -35,8 +35,8 @@
 	return ..()
 
 /obj/item/doorCharge/examine(mob/user)
-	..()
+	. = ..()
 	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/traitor)) //No nuke ops because the device is excluded from nuclear
-		to_chat(user, "A small explosive device that can be used to sabotage airlocks to cause an explosion upon opening. To apply, remove the airlock's maintenance panel and place it within.")
+		. += "A small explosive device that can be used to sabotage airlocks to cause an explosion upon opening. To apply, remove the airlock's maintenance panel and place it within."
 	else
-		to_chat(user, "A small, suspicious object that feels lukewarm when held.")
+		. += "A small, suspicious object that feels lukewarm when held."

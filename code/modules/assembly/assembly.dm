@@ -12,7 +12,7 @@
 	icon_state = ""
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=100)
+	materials = list(/datum/material/iron=100)
 	throwforce = 2
 	throw_speed = 3
 	throw_range = 7
@@ -111,8 +111,8 @@
 	return TRUE
 
 /obj/item/assembly/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>\The [src] [secured? "is secured and ready to be used!" : "can be attached to other things."]</span>")
+	. = ..()
+	. += "<span class='notice'>\The [src] [secured? "is secured and ready to be used!" : "can be attached to other things."]</span>"
 
 
 /obj/item/assembly/attack_self(mob/user)

@@ -49,5 +49,5 @@
 /client/keyLoop()
 	if(holder)
 		holder.keyLoop(src)
-	if(mob.focus)
+	if(mob?.focus)
 		mob.focus.keyLoop(src)

@@ -8,9 +8,9 @@
 	var/state = 1
 
 /obj/structure/frame/examine(user)
-	..()
+	. = ..()
 	if(circuit)
-		to_chat(user, "It has \a [circuit] installed.")
+		. += "It has \a [circuit] installed."
 
 
 /obj/structure/frame/deconstruct(disassembled = TRUE)
@@ -29,7 +29,7 @@
 	var/list/req_component_names = null // user-friendly names of components
 
 /obj/structure/frame/machine/examine(user)
-	..()
+	. = ..()
 	if(state == 3 && req_components && req_component_names)
 		var/hasContent = 0
 		var/requires = "It requires"
@@ -44,9 +44,9 @@
 			hasContent = 1
 
 		if(hasContent)
-			to_chat(user, requires + ".")
+			. +=  "[requires]."
 		else
-			to_chat(user, "It does not require any more components.")
+			. += "It does not require any more components."
 
 /obj/structure/frame/machine/proc/update_namelist()
 	if(!req_components)

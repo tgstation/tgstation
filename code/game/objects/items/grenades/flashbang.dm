@@ -31,6 +31,7 @@
 	if(!distance || loc == M || loc == M.loc)	//Stop allahu akbarring rooms with this.
 		M.Paralyze(200)
 		M.soundbang_act(1, 200, 10, 15)
-
 	else
+		if(distance <= 1)
+			M.Paralyze(30)
 		M.soundbang_act(1, max(200/max(1,distance), 60), rand(0, 5))

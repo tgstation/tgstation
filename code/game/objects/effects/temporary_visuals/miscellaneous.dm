@@ -141,6 +141,23 @@
 	. = ..()
 	update_icon()
 
+/obj/effect/temp_visual/bsa_splash
+	name = "\improper Bluespace energy wave"
+	desc = "A massive, rippling wave of bluepace energy, all rapidly exhausting itself the moment it leaves the concentrated beam of light."
+	icon = 'icons/effects/beam_splash.dmi'
+	icon_state = "beam_splash_l"
+	layer = ABOVE_ALL_MOB_LAYER
+	pixel_y = -16
+	duration = 50
+
+/obj/effect/temp_visual/bsa_splash/Initialize(mapload, dir)
+	. = ..()
+	switch(dir)
+		if(WEST)
+			icon_state = "beam_splash_w"
+		if(EAST)
+			icon_state = "beam_splash_e"
+
 /obj/item/projectile/curse_hand/update_icon()
 	icon_state = "[icon_state][handedness]"
 
@@ -440,3 +457,4 @@
 			animate(src, alpha = 0, transform = skew, time = duration)
 	else
 		return INITIALIZE_HINT_QDEL
+

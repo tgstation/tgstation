@@ -13,8 +13,8 @@
 	tiled_dirt = FALSE
 
 /turf/open/floor/engine/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The reinforcement rods are <b>wrenched</b> firmly in place.</span>")
+	. += ..()
+	. += "<span class='notice'>The reinforcement rods are <b>wrenched</b> firmly in place.</span>"
 
 /turf/open/floor/engine/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -37,6 +37,7 @@
 	return
 
 /turf/open/floor/engine/wrench_act(mob/living/user, obj/item/I)
+	..()
 	to_chat(user, "<span class='notice'>You begin removing rods...</span>")
 	if(I.use_tool(src, user, 30, volume=80))
 		if(!istype(src, /turf/open/floor/engine))
@@ -125,7 +126,7 @@
 
 /turf/open/floor/engine/cult
 	name = "engraved floor"
-	desc = "The air smells strangely over this sinister flooring."
+	desc = "The air smells strange over this sinister flooring."
 	icon_state = "plating"
 	floor_tile = null
 	var/obj/effect/clockwork/overlay/floor/bloodcult/realappearance

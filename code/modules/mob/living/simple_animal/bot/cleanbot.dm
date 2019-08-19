@@ -14,7 +14,7 @@
 	model = "Cleanbot"
 	bot_core_type = /obj/machinery/bot_core/cleanbot
 	window_id = "autoclean"
-	window_name = "Automatic Station Cleaner v1.2"
+	window_name = "Automatic Station Cleaner v1.3"
 	pass_flags = PASSMOB
 	path_image_color = "#993299"
 
@@ -200,28 +200,30 @@
 		target_types += /obj/effect/decal/cleanable/crayon
 
 	if(trash)
-		target_types += /obj/item/trash
+		target_types = list(
+		/obj/item/trash,
+		/obj/item/reagent_containers/food/snacks/deadmouse
+		)
 
 	target_types = typecacheof(target_types)
 
 /mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
-	if(istype(A, /obj/effect/decal/cleanable))
-		anchored = TRUE
+	if(is_cleanable(A))
 		icon_state = "cleanbot-c"
-		visible_message("<span class='notice'>[src] begins to clean up [A].</span>")
 		mode = BOT_CLEANING
-		spawn(50)
-			if(mode == BOT_CLEANING)
-				if(A && isturf(A.loc))
-					var/atom/movable/AM = A
-					if(istype(AM, /obj/effect/decal/cleanable))
-						for(var/obj/effect/decal/cleanable/C in A.loc)
-							qdel(C)
 
-				anchored = FALSE
-				target = null
-			mode = BOT_IDLE
-			icon_state = "cleanbot[on]"
+		var/turf/T = get_turf(A)
+		if(do_after(src, 1, target = T))
+			SEND_SIGNAL(T, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
+			visible_message("<span class='notice'>[src] cleans \the [T].</span>")
+			for(var/atom/dirtything in T)
+				if(is_cleanable(dirtything))
+					qdel(dirtything)
+
+			target = null
+
+		mode = BOT_IDLE
+		icon_state = "cleanbot[on]"
 	else if(istype(A, /obj/item) || istype(A, /obj/effect/decal/remains))
 		visible_message("<span class='danger'>[src] sprays hydrofluoric acid at [A]!</span>")
 		playsound(src, 'sound/effects/spray2.ogg', 50, 1, -6)

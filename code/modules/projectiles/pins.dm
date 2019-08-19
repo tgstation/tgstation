@@ -26,15 +26,15 @@
 			if(G.pin && (force_replace || G.pin.pin_removeable))
 				G.pin.forceMove(get_turf(G))
 				G.pin.gun_remove(user)
-				to_chat(user, "<span class ='notice'>You remove [G]'s old pin.</span>")
+				to_chat(user, "<span class='notice'>You remove [G]'s old pin.</span>")
 
 			if(!G.pin)
 				if(!user.temporarilyRemoveItemFromInventory(src))
 					return
 				gun_insert(user, G)
-				to_chat(user, "<span class ='notice'>You insert [src] into [G].</span>")
+				to_chat(user, "<span class='notice'>You insert [src] into [G].</span>")
 			else
-				to_chat(user, "<span class ='notice'>This firearm already has a firing pin installed.</span>")
+				to_chat(user, "<span class='notice'>This firearm already has a firing pin installed.</span>")
 
 /obj/item/firing_pin/emag_act(mob/user)
 	if(obj_flags & EMAGGED)

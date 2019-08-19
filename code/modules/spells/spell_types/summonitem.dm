@@ -80,8 +80,6 @@
 
 						if(iscarbon(M)) //Edge case housekeeping
 							var/mob/living/carbon/C = M
-							if(C.stomach_contents && item_to_retrieve in C.stomach_contents)
-								C.stomach_contents -= item_to_retrieve
 							for(var/X in C.bodyparts)
 								var/obj/item/bodypart/part = X
 								if(item_to_retrieve in part.embedded_objects)

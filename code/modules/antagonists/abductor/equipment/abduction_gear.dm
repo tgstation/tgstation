@@ -221,12 +221,9 @@
 	if(marked == target)
 		to_chat(user, "<span class='warning'>This specimen is already marked!</span>")
 		return
-	if(ishuman(target))
-		if(isabductor(target))
-			marked = target
-			to_chat(user, "<span class='notice'>You mark [target] for future retrieval.</span>")
-		else
-			prepare(target,user)
+	if(isabductor(target) || iscow(target))
+		marked = target
+		to_chat(user, "<span class='notice'>You mark [target] for future retrieval.</span>")
 	else
 		prepare(target,user)
 
@@ -344,8 +341,8 @@
 		if(QDELETED(G))
 			return
 
-		if(istype(C.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
-			to_chat(user, "<span class='warning'>Your target seems to have some sort of protective headgear on, blocking the message from being sent!</span>")
+		if(C.anti_magic_check(FALSE, FALSE, TRUE, 0))
+			to_chat(user, "<span class='warning'>Your target seems to have some sort of tinfoil protection on, blocking the message from being sent!</span>")
 			return
 
 		G.mind_control(command, user)
@@ -519,10 +516,10 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/abductor/baton/proc/SleepAttack(mob/living/L,mob/living/user)
 	if(L.incapacitated(TRUE, TRUE))
-		if(istype(L.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
-			to_chat(user, "<span class='warning'>The specimen's protective headgear is interfering with the sleep inducement!</span>")
-			L.visible_message("<span class='danger'>[user] tried to induced sleep in [L] with [src], but [L.p_their()] headgear protected [L.p_them()]!</span>", \
-								"<span class='userdanger'>You feel a strange wave of heavy drowsiness wash over you, but your headgear deflects most of it!</span>")
+		if(L.anti_magic_check(FALSE, FALSE, TRUE))
+			to_chat(user, "<span class='warning'>The specimen's tinfoil protection is interfering with the sleep inducement!</span>")
+			L.visible_message("<span class='danger'>[user] tried to induced sleep in [L] with [src], but [L.p_their()] tinfoil protection [L.p_them()]!</span>", \
+								"<span class='userdanger'>You feel a strange wave of heavy drowsiness wash over you, but your tinfoil protection deflects most of it!</span>")
 			L.drowsyness += 2
 			return
 		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
@@ -531,10 +528,10 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		L.Sleeping(1200)
 		log_combat(user, L, "put to sleep")
 	else
-		if(istype(L.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
-			to_chat(user, "<span class='warning'>The specimen's protective headgear is completely blocking our sleep inducement methods!</span>")
-			L.visible_message("<span class='danger'>[user] tried to induce sleep in [L] with [src], but [L.p_their()] headgear completely protected [L.p_them()]!</span>", \
-								"<span class='userdanger'>Any sense of drowsiness is quickly diminished as your headgear deflects the effects!</span>")
+		if(L.anti_magic_check(FALSE, FALSE, TRUE, 0))
+			to_chat(user, "<span class='warning'>The specimen's tinfoil protection is completely blocking our sleep inducement methods!</span>")
+			L.visible_message("<span class='danger'>[user] tried to induce sleep in [L] with [src], but [L.p_their()] tinfoil protection completely protected [L.p_them()]!</span>", \
+								"<span class='userdanger'>Any sense of drowsiness is quickly diminished as your tinfoil protection deflects the effects!</span>")
 			return
 		L.drowsyness += 1
 		to_chat(user, "<span class='warning'>Sleep inducement works fully only on stunned specimens! </span>")
@@ -607,16 +604,16 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	. = ..()
 
 /obj/item/abductor/baton/examine(mob/user)
-	..()
+	. = ..()
 	switch(mode)
 		if(BATON_STUN)
-			to_chat(user, "<span class='warning'>The baton is in stun mode.</span>")
+			. += "<span class='warning'>The baton is in stun mode.</span>"
 		if(BATON_SLEEP)
-			to_chat(user, "<span class='warning'>The baton is in sleep inducement mode.</span>")
+			. += "<span class='warning'>The baton is in sleep inducement mode.</span>"
 		if(BATON_CUFF)
-			to_chat(user, "<span class='warning'>The baton is in restraining mode.</span>")
+			. += "<span class='warning'>The baton is in restraining mode.</span>"
 		if(BATON_PROBE)
-			to_chat(user, "<span class='warning'>The baton is in probing mode.</span>")
+			. += "<span class='warning'>The baton is in probing mode.</span>"
 
 /obj/item/radio/headset/abductor
 	name = "alien headset"
@@ -639,6 +636,40 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		return // Stops humans from disassembling abductor headsets.
 	return ..()
 
+/obj/item/abductor_machine_beacon
+	name = "machine beacon"
+	desc = "A beacon designed to instantly tele-construct abductor machinery."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "beacon"
+	w_class = WEIGHT_CLASS_TINY
+	var/obj/machinery/spawned_machine
+
+/obj/item/abductor_machine_beacon/attack_self(mob/user)
+	..()
+	user.visible_message("<span class='notice'>[user] places down [src] and activates it.</span>", "<span class='notice'>You place down [src] and activate it.</span>")
+	user.dropItemToGround(src)
+	playsound(src, 'sound/machines/terminal_alert.ogg', 50)
+	addtimer(CALLBACK(src, .proc/try_spawn_machine), 30)
+
+/obj/item/abductor_machine_beacon/proc/try_spawn_machine()
+	var/viable = FALSE
+	if(isfloorturf(loc))
+		var/turf/T = loc
+		viable = TRUE
+		for(var/obj/thing in T.contents)
+			if(thing.density || ismachinery(thing) || isstructure(thing))
+				viable = FALSE
+	if(viable)
+		playsound(src, 'sound/effects/phasein.ogg', 50, TRUE)
+		var/new_machine = new spawned_machine(loc)
+		visible_message("<span class='notice'>[new_machine] warps on top of the beacon!")
+		qdel(src)
+	else
+		playsound(src, 'sound/machines/buzz-two.ogg', 50)
+
+/obj/item/abductor_machine_beacon/chem_dispenser
+	name = "beacon - Reagent Synthesizer"
+	spawned_machine = /obj/machinery/chem_dispenser/abductor
 
 /obj/item/scalpel/alien
 	name = "alien scalpel"
@@ -757,7 +788,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon_state = "bed"
 	can_buckle = 1
 
-	var/static/list/injected_reagents = list("corazone")
+	var/static/list/injected_reagents = list(/datum/reagent/medicine/corazone)
 
 /obj/structure/table/optable/abductor/Crossed(atom/movable/AM)
 	. = ..()

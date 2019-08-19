@@ -52,7 +52,7 @@
 
 /obj/structure/kitchenspike/crowbar_act(mob/living/user, obj/item/I)
 	if(has_buckled_mobs())
-		to_chat(user, "<span class='notice'>You can't do that while something's on the spike!</span>")
+		to_chat(user, "<span class='warning'>You can't do that while something's on the spike!</span>")
 		return TRUE
 
 	if(I.use_tool(src, user, 20, volume=100))

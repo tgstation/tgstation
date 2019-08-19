@@ -64,8 +64,6 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Returns a list of references to all components of component_type that exist in the datum
 1. `/datum/proc/GetExactComponent(component_type(type)) -> datum/component?` (public, final)
     * Returns a reference to a component whose type MATCHES component_type if that component exists in the datum, null otherwise
-1. `GET_COMPONENT(varname, component_type)` OR `GET_COMPONENT_FROM(varname, component_type, src)`
-    * Shorthand for `var/component_type/varname = src.GetComponent(component_type)`
 1. `SEND_SIGNAL(target, sigtype, ...)` (public, final)
     * Use to send signals to target datum
     * Extra arguments are to be specified in the signal definition

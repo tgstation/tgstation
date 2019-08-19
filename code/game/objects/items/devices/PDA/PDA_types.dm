@@ -22,7 +22,6 @@
 	icon = null
 	ttone = "data"
 	fon = FALSE
-	detonatable = FALSE
 
 /obj/item/pda/ai/attack_self(mob/user)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
@@ -33,7 +32,9 @@
 /obj/item/pda/ai/pai
 	ttone = "assist"
 
-
+/obj/item/pda/ai/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_PDA_CHECK_DETONATE, .proc/pda_no_detonate)
 
 /obj/item/pda/medical
 	name = "medical PDA"
@@ -120,7 +121,10 @@
 	default_cartridge = /obj/item/cartridge/captain
 	inserted_item = /obj/item/pen/fountain/captain
 	icon_state = "pda-captain"
-	detonatable = FALSE
+
+/obj/item/pda/captain/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_PDA_CHECK_DETONATE, .proc/pda_no_detonate)
 
 /obj/item/pda/cargo
 	name = "cargo technician PDA"

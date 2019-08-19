@@ -1,5 +1,6 @@
 /obj/item/shield
 	name = "shield"
+	icon = 'icons/obj/shields.dmi'
 	block_chance = 50
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
 	var/transparent = FALSE	// makes beam projectiles pass through the shield
@@ -10,7 +11,6 @@
 /obj/item/shield/riot
 	name = "riot shield"
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
-	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "riot"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
@@ -20,7 +20,7 @@
 	throw_speed = 2
 	throw_range = 3
 	w_class = WEIGHT_CLASS_BULKY
-	materials = list(MAT_GLASS=7500, MAT_METAL=1000)
+	materials = list(/datum/material/glass=7500, /datum/material/iron=1000)
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 	transparent = TRUE
@@ -53,15 +53,15 @@
 		return ..()
 
 /obj/item/shield/riot/examine(mob/user)
-	..()
+	. = ..()
 	var/healthpercent = round((obj_integrity/max_integrity) * 100, 1)
 	switch(healthpercent)
 		if(50 to 99)
-			to_chat(user, "<span class='info'>It looks slightly damaged.</span>")
+			. += "<span class='info'>It looks slightly damaged.</span>"
 		if(25 to 50)
-			to_chat(user, "<span class='info'>It appears heavily damaged.</span>")
+			. += "<span class='info'>It appears heavily damaged.</span>"
 		if(0 to 25)
-			to_chat(user, "<span class='warning'>It's falling apart!</span>")
+			. += "<span class='warning'>It's falling apart!</span>"
 
 /obj/item/shield/riot/proc/shatter(mob/living/carbon/human/owner)
 	playsound(owner, 'sound/effects/glassbr3.ogg', 100)
@@ -85,7 +85,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	transparent = FALSE
-	materials = list(MAT_METAL=8500)
+	materials = list(/datum/material/iron=8500)
 	max_integrity = 65
 
 /obj/item/shield/riot/roman/fake
@@ -175,13 +175,13 @@
 		item_state = "flashshield"
 
 /obj/item/shield/riot/flash/examine(mob/user)
-	..()
-	to_chat(user, "<span class='info'>The mounted bulb has burnt out. You can try replacing it with a new one.</span>")
+	. = ..()
+	if (embedded_flash?.burnt_out)
+		. += "<span class='info'>The mounted bulb has burnt out. You can try replacing it with a new one.</span>"
 
 /obj/item/shield/energy
 	name = "energy combat shield"
 	desc = "A shield that reflects almost all energy projectiles, but is useless against physical attacks. It can be retracted, expanded, and stored anywhere."
-	icon = 'icons/obj/items_and_weapons.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -233,7 +233,6 @@
 /obj/item/shield/riot/tele
 	name = "telescopic shield"
 	desc = "An advanced riot shield made of lightweight materials that collapses for easy storage."
-	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "teleriot0"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'

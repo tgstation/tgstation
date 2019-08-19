@@ -2,7 +2,7 @@
 	name = "spray bottle"
 	desc = "A spray bottle, with an unscrewable top."
 	icon = 'icons/obj/janitor.dmi'
-	icon_state = "cleaner"
+	icon_state = "sprayer_large"
 	item_state = "cleaner"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
@@ -160,8 +160,9 @@
 /obj/item/reagent_containers/spray/cleaner
 	name = "space cleaner"
 	desc = "BLAM!-brand non-foaming space cleaner!"
+	icon_state = "cleaner"
 	volume = 100
-	list_reagents = list("cleaner" = 100)
+	list_reagents = list(/datum/reagent/space_cleaner = 100)
 	amount_per_transfer_from_this = 2
 	stream_amount = 5
 
@@ -184,7 +185,7 @@
 	name = "spray tan"
 	volume = 50
 	desc = "Gyaro brand spray tan. Do not spray near eyes or other orifices."
-	list_reagents = list("spraytan" = 50)
+	list_reagents = list(/datum/reagent/spraytan = 50)
 
 
 //pepperspray
@@ -199,7 +200,7 @@
 	volume = 40
 	stream_range = 4
 	amount_per_transfer_from_this = 5
-	list_reagents = list("condensedcapsaicin" = 40)
+	list_reagents = list(/datum/reagent/consumable/condensedcapsaicin = 40)
 
 /obj/item/reagent_containers/spray/pepper/empty //for protolathe printing
 	list_reagents = null
@@ -223,17 +224,26 @@
 	item_state = "sunflower"
 	amount_per_transfer_from_this = 1
 	volume = 10
-	list_reagents = list("water" = 10)
+	list_reagents = list(/datum/reagent/water = 10)
 
 /obj/item/reagent_containers/spray/waterflower/attack_self(mob/user) //Don't allow changing how much the flower sprays
 	return
 
+///Subtype used for the lavaland clown ruin.
+/obj/item/reagent_containers/spray/waterflower/superlube
+	name = "clown flower"
+	desc = "A delightly devilish flower... you got a feeling where this is going."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "clownflower"
+	volume = 30
+	list_reagents = list(/datum/reagent/lube/superlube = 30)
+
 /obj/item/reagent_containers/spray/waterflower/cyborg
 	reagent_flags = NONE
 	volume = 100
-	list_reagents = list("water" = 100)
+	list_reagents = list(/datum/reagent/water = 100)
 	var/generate_amount = 5
-	var/generate_type = "water"
+	var/generate_type = /datum/reagent/water
 	var/last_generate = 0
 	var/generate_delay = 10	//deciseconds
 	can_fill_from_container = FALSE
@@ -241,9 +251,9 @@
 /obj/item/reagent_containers/spray/waterflower/cyborg/hacked
 	name = "nova flower"
 	desc = "This doesn't look safe at all..."
-	list_reagents = list("clf3" = 3)
+	list_reagents = list(/datum/reagent/clf3 = 3)
 	volume = 3
-	generate_type = "clf3"
+	generate_type = /datum/reagent/clf3
 	generate_amount = 1
 	generate_delay = 40		//deciseconds
 
@@ -305,7 +315,7 @@
 		..(the_targets[i], user)
 
 /obj/item/reagent_containers/spray/chemsprayer/bioterror
-	list_reagents = list("sodium_thiopental" = 100, "coniine" = 100, "venom" = 100, "condensedcapsaicin" = 100, "initropidril" = 100, "polonium" = 100)
+	list_reagents = list(/datum/reagent/toxin/sodium_thiopental = 100, /datum/reagent/toxin/coniine = 100, /datum/reagent/toxin/venom = 100, /datum/reagent/consumable/condensedcapsaicin = 100, /datum/reagent/toxin/initropidril = 100, /datum/reagent/toxin/polonium = 100)
 
 
 /obj/item/reagent_containers/spray/chemsprayer/janitor
@@ -316,11 +326,11 @@
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	reagent_flags = NONE
-	list_reagents = list("cleaner" = 1000)
+	list_reagents = list(/datum/reagent/space_cleaner = 1000)
 	volume = 1000
 	amount_per_transfer_from_this = 5
 	var/generate_amount = 50
-	var/generate_type = "cleaner"
+	var/generate_type = /datum/reagent/space_cleaner
 	var/last_generate = 0
 	var/generate_delay = 10	//deciseconds
 
@@ -348,4 +358,58 @@
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
-	list_reagents = list("plantbgone" = 100)
+	list_reagents = list(/datum/reagent/toxin/plantbgone = 100)
+
+/obj/item/reagent_containers/spray/syndicate
+	name = "suspicious spray bottle"
+	desc = "A spray bottle, with a high performance plastic nozzle. The color scheme makes you feel slightly uneasy."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "sprayer_sus_8"
+	item_state = "sprayer_sus"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	spray_range = 4
+	stream_range = 2
+	volume = 100
+	custom_premium_price = 200
+
+/obj/item/reagent_containers/spray/syndicate/Initialize()
+	. = ..()
+	icon_state = pick("sprayer_sus_1", "sprayer_sus_2", "sprayer_sus_3", "sprayer_sus_4", "sprayer_sus_5","sprayer_sus_6", "sprayer_sus_7", "sprayer_sus_8")
+
+/obj/item/reagent_containers/spray/medical
+	name = "medical spray bottle"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "sprayer_med_red"
+	item_state = "sprayer_med_red"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	volume = 100
+	unique_reskin = list("Red" = "sprayer_med_red",
+						"Yellow" = "sprayer_med_yellow",
+						"Blue" = "sprayer_med_blue")
+
+/obj/item/reagent_containers/spray/medical/AltClick(mob/user)
+	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+		reskin_obj(user)
+
+/obj/item/reagent_containers/spray/medical/reskin_obj(mob/M)
+	..()
+	switch(icon_state)
+		if("sprayer_med_red")
+			item_state = "sprayer_med_red"
+		if("sprayer_med_yellow")
+			item_state = "sprayer_med_yellow"
+		if("sprayer_med_blue")
+			item_state = "sprayer_med_blue"
+	M.update_inv_hands()
+
+/obj/item/reagent_containers/spray/rhigoxane
+	name = "medical spray (rhigoxane)"
+	desc = "A medical spray bottle.This one contains rhigoxane, it is used to treat burns and cool down temperature if applied with spray."
+	icon_state = "sprayer_large"
+	list_reagents = list(/datum/reagent/medicine/rhigoxane = 100)
+
+
+
+

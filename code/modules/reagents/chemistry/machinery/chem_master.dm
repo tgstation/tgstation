@@ -153,7 +153,7 @@
 /obj/machinery/chem_master/ui_base_html(html)
 	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
 	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
-	
+
 /obj/machinery/chem_master/ui_data(mob/user)
 	var/list/data = list()
 	data["isBeakerLoaded"] = beaker ? 1 : 0
@@ -166,20 +166,20 @@
 	data["chosenPillStyle"] = chosenPillStyle
 	data["isPillBottleLoaded"] = bottle ? 1 : 0
 	if(bottle)
-		GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
+		var/datum/component/storage/STRB = bottle.GetComponent(/datum/component/storage)
 		data["pillBotContent"] = bottle.contents.len
 		data["pillBotMaxContent"] = STRB.max_items
 
 	var/beakerContents[0]
 	if(beaker)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			beakerContents.Add(list(list("name" = R.name, "id" = R.id, "volume" = R.volume))) // list in a list because Byond merges the first list...
+			beakerContents.Add(list(list("name" = R.name, "id" = ckey(R.name), "volume" = R.volume))) // list in a list because Byond merges the first list...
 		data["beakerContents"] = beakerContents
 
 	var/bufferContents[0]
 	if(reagents.total_volume)
 		for(var/datum/reagent/N in reagents.reagent_list)
-			bufferContents.Add(list(list("name" = N.name, "id" = N.id, "volume" = N.volume))) // ^
+			bufferContents.Add(list(list("name" = N.name, "id" = ckey(N.name), "volume" = N.volume))) // ^
 		data["bufferContents"] = bufferContents
 
 	//Calculated at init time as it never changes
@@ -203,26 +203,26 @@
 
 		if("transferToBuffer")
 			if(beaker)
-				var/id = params["id"]
+				var/reagent = GLOB.name2reagent[params["id"]]
 				var/amount = text2num(params["amount"])
 				if (amount > 0)
-					beaker.reagents.trans_id_to(src, id, amount)
+					beaker.reagents.trans_id_to(src, reagent, amount)
 					. = TRUE
 				else if (amount == -1) // -1 means custom amount
 					useramount = input("Enter the Amount you want to transfer:", name, useramount) as num|null
 					if (useramount > 0)
-						beaker.reagents.trans_id_to(src, id, useramount)
+						beaker.reagents.trans_id_to(src, reagent, useramount)
 						. = TRUE
 
 		if("transferFromBuffer")
-			var/id = params["id"]
+			var/reagent = GLOB.name2reagent[params["id"]]
 			var/amount = text2num(params["amount"])
 			if (amount > 0)
 				if(mode)
-					reagents.trans_id_to(beaker, id, amount)
+					reagents.trans_id_to(beaker, reagent, amount)
 					. = TRUE
 				else
-					reagents.remove_reagent(id, amount)
+					reagents.remove_reagent(reagent, amount)
 					. = TRUE
 
 		if("toggleMode")
@@ -248,7 +248,7 @@
 				var/target_loc = drop_location()
 				var/drop_threshold = INFINITY
 				if(bottle)
-					GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
+					var/datum/component/storage/STRB = bottle.GetComponent(/datum/component/storage)
 					if(STRB)
 						drop_threshold = STRB.max_items - bottle.contents.len
 
@@ -343,7 +343,7 @@
 			. = TRUE
 
 		if("analyze")
-			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]
+			var/datum/reagent/R = GLOB.name2reagent[params["id"]]
 			if(R)
 				var/state = "Unknown"
 				if(initial(R.reagent_state) == 1)

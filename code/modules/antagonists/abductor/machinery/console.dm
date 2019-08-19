@@ -28,7 +28,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!HAS_TRAIT(user, TRAIT_ABDUCTOR_TRAINING))
+	if(!HAS_TRAIT(user, TRAIT_ABDUCTOR_TRAINING) && !HAS_TRAIT(user.mind, TRAIT_ABDUCTOR_TRAINING))
 		to_chat(user, "<span class='warning'>You start mashing alien buttons at random!</span>")
 		if(do_after(user,100, target = src))
 			TeleporterSend()
@@ -45,6 +45,7 @@
 		dat += "<b>Transfer data in exchange for supplies:</b><br>"
 		dat += "<a href='?src=[REF(src)];dispense=baton'>Advanced Baton (2 Credits)</A><br>"
 		dat += "<a href='?src=[REF(src)];dispense=mind_device'>Mental Interface Device (2 Credits)</A><br>"
+		dat += "<a href='?src=[REF(src)];dispense=chem_dispenser'>Reagent Synthetizer (2 Credits)</A><br>"
 		dat += "<a href='?src=[REF(src)];dispense=helmet'>Agent Helmet</A><br>"
 		dat += "<a href='?src=[REF(src)];dispense=vest'>Agent Vest</A><br>"
 		dat += "<a href='?src=[REF(src)];dispense=silencer'>Radio Silencer</A><br>"
@@ -113,6 +114,8 @@
 				Dispense(/obj/item/clothing/suit/armor/abductor/vest)
 			if("mind_device")
 				Dispense(/obj/item/abductor/mind_device,cost=2)
+			if("chem_dispenser")
+				Dispense(/obj/item/abductor_machine_beacon/chem_dispenser,cost=2)
 			if("tongue")
 				Dispense(/obj/item/organ/tongue/abductor)
 	updateUsrDialog()
@@ -181,8 +184,8 @@
 			c.console = src
 
 /obj/machinery/abductor/console/proc/AddSnapshot(mob/living/carbon/human/target)
-	if(istype(target.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
-		say("Subject wearing specialized protective headgear, unable to get a proper scan!")
+	if(target.anti_magic_check(FALSE, FALSE, TRUE, 0))
+		say("Subject wearing specialized protective tinfoil gear, unable to get a proper scan!")
 		return
 	var/datum/icon_snapshot/entry = new
 	entry.name = target.name

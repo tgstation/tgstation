@@ -18,18 +18,15 @@
 
 /mob/living/simple_animal/hostile/guardian/dextrous/examine(mob/user)
 	if(dextrous)
-		var/msg = "<span class='info'>*---------*\nThis is [icon2html(src)] \a <b>[src]</b>!\n"
-		msg += "[desc]\n"
-
+		. = list("<span class='info'>*---------*\nThis is [icon2html(src)] \a <b>[src]</b>!\n[desc]")
 		for(var/obj/item/I in held_items)
 			if(!(I.item_flags & ABSTRACT))
-				msg += "It has [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))].\n"
+				. += "It has [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))]."
 		if(internal_storage && !(internal_storage.item_flags & ABSTRACT))
-			msg += "It is holding [internal_storage.get_examine_string(user)] in its internal storage.\n"
-		msg += "*---------*</span>"
-		to_chat(user, msg)
+			. += "It is holding [internal_storage.get_examine_string(user)] in its internal storage."
+		. += "*---------*</span>"
 	else
-		..()
+		return ..()
 
 /mob/living/simple_animal/hostile/guardian/dextrous/Recall(forced)
 	if(!summoner || loc == summoner || (cooldown > world.time && !forced))

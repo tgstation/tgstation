@@ -17,7 +17,7 @@
 	return TRUE
 
 /obj/item/onetankbomb/examine(mob/user)
-	bombtank.examine(user)
+	return bombtank.examine(user)
 
 /obj/item/onetankbomb/update_icon()
 	cut_overlays()
@@ -30,6 +30,7 @@
 		add_overlay("bomb_assembly")
 
 /obj/item/onetankbomb/wrench_act(mob/living/user, obj/item/I)
+	..()
 	to_chat(user, "<span class='notice'>You disassemble [src]!</span>")
 	if(bombassembly)
 		bombassembly.forceMove(drop_location())
@@ -43,6 +44,7 @@
 	return TRUE
 
 /obj/item/onetankbomb/welder_act(mob/living/user, obj/item/I)
+	..()
 	. = FALSE
 	if(status)
 		to_chat(user, "<span class='notice'>[bombtank] already has a pressure hole!</span>")

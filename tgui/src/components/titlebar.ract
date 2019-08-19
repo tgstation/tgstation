@@ -53,6 +53,9 @@ component.exports = {
     {{#if config.fancy}}
       <i class='minimize fa fa-minus fa-2x' on-click='minimize'></i>
       <i class='close fa fa-close fa-2x' on-click='close'></i>
+    {{else}}
+      <i class='minimize no-icons' on-click='minimize'></i>
+      <i class='close no-icons' on-click='close'></i>
     {{/if}}
   </header>
 {{/if}}

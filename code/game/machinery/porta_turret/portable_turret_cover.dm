@@ -81,7 +81,7 @@
 /obj/machinery/porta_turret_cover/attack_animal(mob/living/simple_animal/user)
 	parent_turret.attack_animal(user)
 
-/obj/machinery/porta_turret_cover/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+/obj/machinery/porta_turret_cover/attack_hulk(mob/living/carbon/human/user)
 	return parent_turret.attack_hulk(user)
 
 /obj/machinery/porta_turret_cover/can_be_overridden()
@@ -92,6 +92,5 @@
 		to_chat(user, "<span class='notice'>You short out [parent_turret]'s threat assessment circuits.</span>")
 		visible_message("[parent_turret] hums oddly...")
 		parent_turret.obj_flags |= EMAGGED
-		parent_turret.on = 0
-		spawn(40)
-			parent_turret.on = 1
+		parent_turret.on = FALSE
+		addtimer(VARSET_CALLBACK(parent_turret, on, TRUE), 4 SECONDS)

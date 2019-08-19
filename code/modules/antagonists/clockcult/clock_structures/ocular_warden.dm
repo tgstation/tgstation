@@ -25,8 +25,8 @@
 	return ..()
 
 /obj/structure/destructible/clockwork/ocular_warden/examine(mob/user)
-	..()
-	to_chat(user, "<span class='brass'>[target ? "<b>It's fixated on [target]!</b>" : "Its gaze is wandering aimlessly."]</span>")
+	. = ..()
+	. += "<span class='brass'>[target ? "<b>It's fixated on [target]!</b>" : "Its gaze is wandering aimlessly."]</span>"
 
 /obj/structure/destructible/clockwork/ocular_warden/hulk_damage()
 	return 25
@@ -60,7 +60,7 @@
 		else
 			if(isliving(target))
 				var/mob/living/L = target
-				if(!L.anti_magic_check(major = FALSE))
+				if(!L.anti_magic_check(chargecost = 0))
 					if(isrevenant(L))
 						var/mob/living/simple_animal/revenant/R = L
 						if(R.revealed)

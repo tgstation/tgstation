@@ -49,7 +49,7 @@
 			var/datum/surgery/S = available_surgeries[P]
 
 			for(var/datum/surgery/other in M.surgeries)
-				if(other.location == S.location)
+				if(other.location == selected_zone)
 					return //during the input() another surgery was started at the same location.
 
 			//we check that the surgery is still doable after the input() wait.
@@ -79,7 +79,7 @@
 	else if(!current_surgery.step_in_progress)
 		attempt_cancel_surgery(current_surgery, I, M, user)
 
-	return 1
+	return TRUE
 
 /proc/attempt_cancel_surgery(datum/surgery/S, obj/item/I, mob/living/M, mob/user)
 	var/selected_zone = user.zone_selected
@@ -95,6 +95,9 @@
 		if(is_robotic)
 			close_tool_type = /obj/item/screwdriver
 		if(istype(close_tool, close_tool_type) || iscyborg(user))
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.bleed_rate = max( (H.bleed_rate - 3), 0)
 			M.surgeries -= S
 			user.visible_message("[user] closes [M]'s [parse_zone(selected_zone)] with [close_tool] and removes [I].", \
 				"<span class='notice'>You close [M]'s [parse_zone(selected_zone)] with [close_tool] and remove [I].</span>")

@@ -21,9 +21,9 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
-	materials = list(MAT_METAL=10)
+	materials = list(/datum/material/iron=10)
 	pressure_resistance = 2
-	grind_results = list("iron" = 2, "iodine" = 1)
+	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
 	var/colour = "black"	//what colour the ink is!
 	var/degrees = 0
 	var/font = PEN_FONT
@@ -79,7 +79,7 @@
 	throwforce = 5
 	throw_speed = 4
 	colour = "crimson"
-	materials = list(MAT_GOLD = 750)
+	materials = list(/datum/material/gold = 750)
 	sharpness = IS_SHARP
 	resistance_flags = FIRE_PROOF
 	unique_reskin = list("Oak" = "pen-fountain-o",
@@ -165,20 +165,32 @@
 /obj/item/pen/sleepy/Initialize()
 	. = ..()
 	create_reagents(45, OPENCONTAINER)
-	reagents.add_reagent("chloralhydratedelayed", 20)
-	reagents.add_reagent("mutetoxin", 15)
-	reagents.add_reagent("tirizene", 10)
+	reagents.add_reagent(/datum/reagent/toxin/chloralhydrate, 20)
+	reagents.add_reagent(/datum/reagent/toxin/mutetoxin, 15)
+	reagents.add_reagent(/datum/reagent/toxin/staminatoxin, 10)
 
 /*
  * (Alan) Edaggers
  */
 /obj/item/pen/edagger
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
+	sharpness = IS_SHARP
 	var/on = FALSE
 
 /obj/item/pen/edagger/Initialize()
 	. = ..()
-	AddComponent(/datum/component/butchering, 60, 100, 0, 'sound/weapons/blade1.ogg', TRUE)
+	AddComponent(/datum/component/butchering, 60, 100, 0, 'sound/weapons/blade1.ogg')
+
+/obj/item/pen/edagger/is_sharp()
+	return on * sharpness
+
+/obj/item/pen/edagger/suicide_act(mob/user)
+	. = BRUTELOSS
+	if(on)
+		user.visible_message("<span class='suicide'>[user] forcefully rams the pen into their mouth!</span>")
+	else
+		user.visible_message("<span class='suicide'>[user] is holding a pen up to their mouth! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		attack_self(user)
 
 /obj/item/pen/edagger/attack_self(mob/living/user)
 	if(on)
@@ -203,8 +215,6 @@
 		throwforce = 35
 		playsound(user, 'sound/weapons/saberon.ogg', 5, 1)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
-	GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
-	butchering.butchering_enabled = on
 	update_icon()
 
 /obj/item/pen/edagger/update_icon()

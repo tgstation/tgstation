@@ -27,6 +27,7 @@
 		if(prob(10))
 			to_chat(target, "You feel as if you are being watched.")
 		return
+	face_atom(target)
 	draining = TRUE
 	essence_drained += rand(15, 20)
 	to_chat(src, "<span class='revennotice'>You search for the soul of [target].</span>")
@@ -115,6 +116,7 @@
 	notice = "revennotice"
 	boldnotice = "revenboldnotice"
 	holy_check = TRUE
+	tinfoil_check = FALSE
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant
 	clothes_req = 0
@@ -354,7 +356,7 @@
 					to_chat(H, "<span class='revenminor'>You feel [pick("suddenly sick", "a surge of nausea", "like your skin is <i>wrong</i>")].</span>")
 			else
 				if(mob.reagents)
-					mob.reagents.add_reagent("plasma", 5)
+					mob.reagents.add_reagent(/datum/reagent/toxin/plasma, 5)
 		else
 			mob.adjustToxLoss(5)
 	for(var/obj/structure/spacevine/vine in T) //Fucking with botanists, the ability.

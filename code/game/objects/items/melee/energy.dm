@@ -1,4 +1,5 @@
 /obj/item/melee/transforming/energy
+	icon = 'icons/obj/transforming_energy.dmi'
 	hitsound_on = 'sound/weapons/blade1.ogg'
 	heat = 3500
 	max_integrity = 200

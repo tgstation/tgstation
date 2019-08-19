@@ -114,7 +114,7 @@
 
 /datum/action/vehicle/sealed/remove_key
 	name = "Remove key"
-	desc = "Take your key out of the vehicle's ignition"
+	desc = "Take your key out of the vehicle's ignition."
 	button_icon_state = "car_removekey"
 
 /datum/action/vehicle/sealed/remove_key/Trigger()
@@ -146,7 +146,7 @@
 			playsound(vehicle_entered_target, hornsound, 75)
 
 /datum/action/vehicle/sealed/DumpKidnappedMobs
-	name = "Dump kidnapped mobs"
+	name = "Dump Kidnapped Mobs"
 	desc = "Dump all objects and people in your car on the floor."
 	button_icon_state = "car_dump"
 
@@ -156,7 +156,7 @@
 
 
 /datum/action/vehicle/sealed/RollTheDice
-	name = "Press a colorful button"
+	name = "Press Colorful Button"
 	desc = "Press one of those colorful buttons on your display panel!"
 	button_icon_state = "car_rtd"
 
@@ -166,8 +166,8 @@
 		C.RollTheDice(owner)
 
 /datum/action/vehicle/sealed/Cannon
-	name = "Toggle siege mode"
-	desc = "Destroy them with their own fodder"
+	name = "Toggle Siege Mode"
+	desc = "Destroy them with their own fodder!"
 	button_icon_state = "car_cannon"
 
 /datum/action/vehicle/sealed/Cannon/Trigger()
@@ -178,7 +178,7 @@
 		C.ToggleCannon()
 
 /datum/action/vehicle/sealed/Thank
-	name = "Thank the Clown car Driver"
+	name = "Thank the Clown Car Driver"
 	desc = "They're just doing their job."
 	button_icon_state = "car_thanktheclown"
 	var/last_thank_time

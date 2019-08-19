@@ -5,8 +5,8 @@
 	name = "chocolate egg"
 	desc = "Such, sweet, fattening food."
 	icon_state = "chocolateegg"
-	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
-	list_reagents = list("nutriment" = 4, "sugar" = 2, "cocoa" = 2)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/coco = 2)
 	filling_color = "#A0522D"
 	tastes = list("chocolate" = 4, "sweetness" = 1)
 	foodtype = JUNKFOOD | SUGAR
@@ -15,7 +15,7 @@
 	name = "egg"
 	desc = "An egg!"
 	icon_state = "egg"
-	list_reagents = list("eggyolk" = 5)
+	list_reagents = list(/datum/reagent/consumable/eggyolk = 5)
 	cooked_type = /obj/item/reagent_containers/food/snacks/boiledegg
 	filling_color = "#F0E68C"
 	foodtype = MEAT
@@ -50,6 +50,11 @@
 		to_chat(usr, "<span class='notice'>You colour [src] with [W].</span>")
 		icon_state = "egg-[clr]"
 		item_color = clr
+	else if(istype(W, /obj/item/stamp/clown))
+		var/clowntype = pick("grock", "grimaldi", "rainbow", "chaos", "joker", "sexy", "standard", "bobble", "krusty", "bozo", "pennywise", "ronald", "jacobs", "kelly", "popov", "cluwne")
+		icon_state = "egg-clown-[clowntype]"
+		desc = "An egg that has been decorated with the grotesque, robustable likeness of a clown's face. "
+		to_chat(usr, "<span class='notice'>You stamp [src] with [W], creating an artistic and not remotely horrifying likeness of clown makeup.</span>")
 	else
 		..()
 
@@ -89,34 +94,34 @@
 	name = "fried egg"
 	desc = "A fried egg, with a touch of salt and pepper."
 	icon_state = "friedegg"
-	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	bitesize = 1
 	filling_color = "#FFFFF0"
-	list_reagents = list("nutriment" = 3)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3)
 	tastes = list("egg" = 4, "salt" = 1, "pepper" = 1)
-	foodtype = MEAT | FRIED
+	foodtype = MEAT | FRIED | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/boiledegg
 	name = "boiled egg"
 	desc = "A hard boiled egg."
 	icon_state = "egg"
-	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	filling_color = "#FFFFF0"
-	list_reagents = list("nutriment" = 2, "vitamin" = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("egg" = 1)
-	foodtype = MEAT
+	foodtype = MEAT | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/omelette	//FUCK THIS
 	name = "omelette du fromage"
 	desc = "That's all you can say!"
 	icon_state = "omelette"
 	trash = /obj/item/trash/plate
-	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
-	list_reagents = list("nutriment" = 8, "vitamin" = 1)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 1)
 	bitesize = 1
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("egg" = 1, "cheese" = 1)
-	foodtype = MEAT
+	foodtype = MEAT | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/omelette/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/kitchen/fork))
@@ -129,7 +134,7 @@
 				"<span class='notice'>You take a piece of omelette with your fork.</span>")
 
 			var/datum/reagent/R = pick(reagents.reagent_list)
-			reagents.remove_reagent(R.id, 1)
+			reagents.remove_reagent(R.type, 1)
 			F.forkload = R
 			if(reagents.total_volume <= 0)
 				qdel(src)
@@ -140,10 +145,10 @@
 	name = "eggs benedict"
 	desc = "There is only one egg on this, how rude."
 	icon_state = "benedict"
-	bonus_reagents = list("vitamin" = 4)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 4)
 	trash = /obj/item/trash/plate
 	w_class = WEIGHT_CLASS_NORMAL
-	list_reagents = list("nutriment" = 6, "vitamin" = 4)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("egg" = 1, "bacon" = 1, "bun" = 1)
 
-	foodtype = MEAT
+	foodtype = MEAT | BREAKFAST

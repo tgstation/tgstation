@@ -5,6 +5,12 @@
 
 #define LINKED_SERVER_NONRESPONSIVE  (!linkedServer || (linkedServer.stat & (NOPOWER|BROKEN)))
 
+#define MSG_MON_SCREEN_MAIN 		0
+#define MSG_MON_SCREEN_LOGS 		1
+#define MSG_MON_SCREEN_HACKED 		2
+#define MSG_MON_SCREEN_CUSTOM_MSG 	3
+#define MSG_MON_SCREEN_REQUEST_LOGS 4
+
 // The monitor itself.
 /obj/machinery/computer/message_monitor
 	name = "message monitor console"
@@ -21,7 +27,7 @@
 	var/defaultmsg = "<span class='notice'>Welcome. Please select an option.</span>"
 	var/rebootmsg = "<span class='warning'>%$&(£: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!</span>"
 	//Computer properties
-	var/screen = 0 		// 0 = Main menu, 1 = Message Logs, 2 = Hacked screen, 3 = Custom Message
+	var/screen = MSG_MON_SCREEN_MAIN 		// 0 = Main menu, 1 = Message Logs, 2 = Hacked screen, 3 = Custom Message
 	var/hacking = FALSE		// Is it being hacked into by the AI/Cyborg
 	var/message = "<span class='notice'>System bootup complete. Please select an option.</span>"	// The message that shows on the main menu.
 	var/auth = FALSE // Are they authenticated?
@@ -46,7 +52,7 @@
 		return
 	if(!isnull(linkedServer))
 		obj_flags |= EMAGGED
-		screen = 2
+		screen = MSG_MON_SCREEN_HACKED
 		spark_system.set_up(5, 0, src)
 		spark_system.start()
 		var/obj/item/paper/monitorkey/MK = new(loc, linkedServer)
@@ -86,21 +92,21 @@
 
 	if(auth)
 		dat += "<h4><dd><A href='?src=[REF(src)];auth=1'>&#09;<font color='green'>\[Authenticated\]</font></a>&#09;/"
-		dat += " Server Power: <A href='?src=[REF(src)];active=1'>[linkedServer && linkedServer.toggled ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</a></h4>"
+		dat += " Server Power: <A href='?src=[REF(src)];active=1'>[linkedServer && linkedServer.on ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</a></h4>"
 	else
 		dat += "<h4><dd><A href='?src=[REF(src)];auth=1'>&#09;<font color='red'>\[Unauthenticated\]</font></a>&#09;/"
-		dat += " Server Power: <u>[linkedServer && linkedServer.toggled ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</u></h4>"
+		dat += " Server Power: <u>[linkedServer && linkedServer.on ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</u></h4>"
 
 	if(hacking || (obj_flags & EMAGGED))
-		screen = 2
+		screen = MSG_MON_SCREEN_HACKED
 	else if(!auth || LINKED_SERVER_NONRESPONSIVE)
 		if(LINKED_SERVER_NONRESPONSIVE)
 			message = noserver
-		screen = 0
+		screen = MSG_MON_SCREEN_MAIN
 
 	switch(screen)
 		//Main menu
-		if(0)
+		if(MSG_MON_SCREEN_MAIN)
 			//&#09; = TAB
 			var/i = 0
 			dat += "<dd><A href='?src=[REF(src)];find=1'>&#09;[++i]. Link To A Server</a></dd>"
@@ -131,7 +137,7 @@
 				dat += "<br><hr><dd><span class='warning'>Reg, #514 forbids sending messages to a Head of Staff containing Erotic Rendering Properties.</span>"
 
 		//Message Logs
-		if(1)
+		if(MSG_MON_SCREEN_LOGS)
 			var/index = 0
 			dat += "<center><A href='?src=[REF(src)];back=1'>Back</a> - <A href='?src=[REF(src)];refresh=1'>Refresh</a></center><hr>"
 			dat += "<table border='1' width='100%'><tr><th width = '5%'>X</th><th width='15%'>Sender</th><th width='15%'>Recipient</th><th width='300px' word-wrap: break-word>Message</th></tr>"
@@ -144,7 +150,7 @@
 				dat += "<tr><td width = '5%'><center><A href='?src=[REF(src)];delete_logs=[REF(pda)]' style='color: rgb(255,0,0)'>X</a></center></td><td width='15%'>[pda.sender]</td><td width='15%'>[pda.recipient]</td><td width='300px'>[pda.message][pda.picture ? " <a href='byond://?src=[REF(pda)];photo=1'>(Photo)</a>":""]</td></tr>"
 			dat += "</table>"
 		//Hacking screen.
-		if(2)
+		if(MSG_MON_SCREEN_HACKED)
 			if(isAI(user) || iscyborg(user))
 				dat += "Brute-forcing for server key.<br> It will take 20 seconds for every character that the password has."
 				dat += "In the meantime, this console can reveal your true intentions if you let someone access it. Make sure no humans enter the room during that time."
@@ -187,7 +193,7 @@
 				001101001011011010110010100101110"}
 
 		//Fake messages
-		if(3)
+		if(MSG_MON_SCREEN_CUSTOM_MSG)
 			dat += "<center><A href='?src=[REF(src)];back=1'>Back</a> - <A href='?src=[REF(src)];Reset=1'>Reset</a></center><hr>"
 
 			dat += {"<table border='1' width='100%'>
@@ -205,7 +211,7 @@
 			dat += "</table><br><center><A href='?src=[REF(src)];select=Send'>Send</a>"
 
 		//Request Console Logs
-		if(4)
+		if(MSG_MON_SCREEN_REQUEST_LOGS)
 
 			var/index = 0
 			/* 	data_rc_msg
@@ -243,7 +249,7 @@
 		var/currentKey = linkedServer.decryptkey
 		to_chat(user, "<span class='warning'>Brute-force completed! The key is '[currentKey]'.</span>")
 	hacking = FALSE
-	screen = 0 // Return the screen back to normal
+	screen = MSG_MON_SCREEN_MAIN // Return the screen back to normal
 
 /obj/machinery/computer/message_monitor/proc/UnmagConsole()
 	obj_flags &= ~EMAGGED
@@ -265,7 +271,7 @@
 				message = noserver
 			else if(auth)
 				auth = FALSE
-				screen = 0
+				screen = MSG_MON_SCREEN_MAIN
 			else
 				var/dkey = trim(input(usr, "Please enter the decryption key.") as text|null)
 				if(dkey && dkey != "")
@@ -300,7 +306,7 @@
 			if(LINKED_SERVER_NONRESPONSIVE)
 				message = noserver
 			else if(auth)
-				screen = 1
+				screen = MSG_MON_SCREEN_LOGS
 
 		//Clears the logs - KEY REQUIRED
 		if (href_list["clear_logs"])
@@ -340,7 +346,7 @@
 			var/mob/living/silicon/S = usr
 			if(istype(S) && S.hack_software)
 				hacking = TRUE
-				screen = 2
+				screen = MSG_MON_SCREEN_HACKED
 				//Time it takes to bruteforce is dependant on the password length.
 				spawn(100*length(linkedServer.decryptkey))
 					if(src && linkedServer && usr)
@@ -348,7 +354,7 @@
 		//Delete the log.
 		if (href_list["delete_logs"])
 			//Are they on the view logs screen?
-			if(screen == 1)
+			if(screen == MSG_MON_SCREEN_LOGS)
 				if(LINKED_SERVER_NONRESPONSIVE)
 					message = noserver
 				else //if(istype(href_list["delete_logs"], /datum/data_pda_msg))
@@ -357,7 +363,7 @@
 		//Delete the request console log.
 		if (href_list["delete_requests"])
 			//Are they on the view logs screen?
-			if(screen == 4)
+			if(screen == MSG_MON_SCREEN_REQUEST_LOGS)
 				if(LINKED_SERVER_NONRESPONSIVE)
 					message = noserver
 				else //if(istype(href_list["delete_logs"], /datum/data_pda_msg))
@@ -368,12 +374,12 @@
 			if(LINKED_SERVER_NONRESPONSIVE)
 				message = noserver
 			else if(auth)
-				screen = 3
+				screen = MSG_MON_SCREEN_CUSTOM_MSG
 		//Fake messaging selection - KEY REQUIRED
 		if (href_list["select"])
 			if(LINKED_SERVER_NONRESPONSIVE)
 				message = noserver
-				screen = 0
+				screen = MSG_MON_SCREEN_MAIN
 			else
 				switch(href_list["select"])
 
@@ -415,7 +421,7 @@
 							message = "<span class='notice'>NOTICE: No message entered!</span>"
 							return attack_hand(usr)
 
-						var/datum/signal/subspace/pda/signal = new(src, list(
+						var/datum/signal/subspace/messaging/pda/signal = new(src, list(
 							"name" = "[customsender]",
 							"job" = "[customjob]",
 							"message" = custommessage,
@@ -431,12 +437,18 @@
 			if(LINKED_SERVER_NONRESPONSIVE)
 				message = noserver
 			else if(auth)
-				screen = 4
+				screen = MSG_MON_SCREEN_REQUEST_LOGS
 
 		if (href_list["back"])
-			screen = 0
+			screen = MSG_MON_SCREEN_MAIN
 
 	return attack_hand(usr)
+
+#undef MSG_MON_SCREEN_MAIN
+#undef MSG_MON_SCREEN_LOGS
+#undef MSG_MON_SCREEN_HACKED
+#undef MSG_MON_SCREEN_CUSTOM_MSG
+#undef MSG_MON_SCREEN_REQUEST_LOGS
 
 #undef LINKED_SERVER_NONRESPONSIVE
 
@@ -457,7 +469,7 @@
 	add_overlay("paper_words")
 
 /obj/item/paper/monitorkey/LateInitialize()
-	for (var/obj/machinery/telecomms/message_server/server in GLOB.telecomms_list)
+	for (var/obj/machinery/telecomms/message_server/preset/server in GLOB.telecomms_list)
 		if (server.decryptkey)
 			print(server)
 			break

@@ -4,6 +4,7 @@
 	desc = "Why is it detached..."
 	force = 3
 	throwforce = 3
+	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/mob/human_parts.dmi'
 	icon_state = ""
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
@@ -23,7 +24,7 @@
 
 	var/disabled = BODYPART_NOT_DISABLED //If disabled, limb is as good as missing
 	var/body_damage_coeff = 1 //Multiplier of the limb's damage that gets applied to the mob
-	var/stam_damage_coeff = 0.5
+	var/stam_damage_coeff = 0.75
 	var/brutestate = 0
 	var/burnstate = 0
 	var/brute_dam = 0
@@ -31,7 +32,8 @@
 	var/stamina_dam = 0
 	var/max_stamina_damage = 0
 	var/max_damage = 0
-	var/stam_heal_tick = 3		//per Life().
+
+	var/cremation_progress = 0 //Gradually increases while burning when at full damage, destroys the limb when at 100
 
 	var/brute_reduction = 0 //Subtracted to brute damage taken
 	var/burn_reduction = 0	//Subtracted to burn damage taken
@@ -65,11 +67,11 @@
 	var/heavy_burn_msg = "peeling away"
 
 /obj/item/bodypart/examine(mob/user)
-	..()
+	. = ..()
 	if(brute_dam > DAMAGE_PRECISION)
-		to_chat(user, "<span class='warning'>This limb has [brute_dam > 30 ? "severe" : "minor"] bruising.</span>")
+		. += "<span class='warning'>This limb has [brute_dam > 30 ? "severe" : "minor"] bruising.</span>"
 	if(burn_dam > DAMAGE_PRECISION)
-		to_chat(user, "<span class='warning'>This limb has [burn_dam > 30 ? "severe" : "minor"] burns.</span>")
+		. += "<span class='warning'>This limb has [burn_dam > 30 ? "severe" : "minor"] burns.</span>"
 
 /obj/item/bodypart/blob_act()
 	take_damage(max_damage)
@@ -97,7 +99,7 @@
 	..()
 
 /obj/item/bodypart/attackby(obj/item/W, mob/user, params)
-	if(W.sharpness)
+	if(W.is_sharp())
 		add_fingerprint(user)
 		if(!contents.len)
 			to_chat(user, "<span class='warning'>There is nothing left inside [src]!</span>")
@@ -134,10 +136,10 @@
 	needs_processing = .
 
 //Return TRUE to get whatever mob this is in to update health.
-/obj/item/bodypart/proc/on_life()
-	if(stamina_dam > DAMAGE_PRECISION)					//DO NOT update health here, it'll be done in the carbon's life.
-		if(heal_damage(0, 0, stam_heal_tick, null, FALSE))
-			. |= BODYPART_LIFE_UPDATE_HEALTH
+/obj/item/bodypart/proc/on_life(stam_regen)
+	if(stamina_dam > DAMAGE_PRECISION && stam_regen)					//DO NOT update health here, it'll be done in the carbon's life.
+		heal_damage(0, 0, INFINITY, null, FALSE)
+		. |= BODYPART_LIFE_UPDATE_HEALTH
 
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
@@ -181,17 +183,18 @@
 	burn_dam += burn
 
 	//We've dealt the physical damages, if there's room lets apply the stamina damage.
-	var/current_damage = get_damage(TRUE)		//This time around, count stamina loss too.
-	var/available_damage = max_damage - current_damage
-	stamina_dam += round(CLAMP(stamina, 0, min(max_stamina_damage - stamina_dam, available_damage)), DAMAGE_PRECISION)
+	stamina_dam += round(CLAMP(stamina, 0, max_stamina_damage - stamina_dam), DAMAGE_PRECISION)
+
 
 	if(owner && updating_health)
 		owner.updatehealth()
 		if(stamina > DAMAGE_PRECISION)
 			owner.update_stamina()
+			owner.stam_regen_start_time = world.time + STAMINA_REGEN_BLOCK_TIME
+			. = TRUE
 	consider_processing()
 	update_disabled()
-	return update_bodypart_damage_state()
+	return update_bodypart_damage_state() || .
 
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
 //Damage cannot go below zero.
@@ -208,13 +211,14 @@
 		owner.updatehealth()
 	consider_processing()
 	update_disabled()
+	cremation_progress = min(0, cremation_progress - ((brute_dam + burn_dam)*(100/max_damage)))
 	return update_bodypart_damage_state()
 
 //Returns total damage.
 /obj/item/bodypart/proc/get_damage(include_stamina = FALSE)
 	var/total = brute_dam + burn_dam
 	if(include_stamina)
-		total += stamina_dam
+		total = max(total, stamina_dam)
 	return total
 
 //Checks disabled status thresholds
@@ -442,7 +446,7 @@
 	px_x = 0
 	px_y = 0
 	stam_damage_coeff = 1
-	max_stamina_damage = 100
+	max_stamina_damage = 120
 	var/obj/item/cavity_item
 
 /obj/item/bodypart/chest/can_dismember(obj/item/I)
@@ -502,7 +506,6 @@
 	held_index = 1
 	px_x = -6
 	px_y = 0
-	stam_heal_tick = 2
 
 /obj/item/bodypart/l_arm/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_L_ARM))
@@ -511,17 +514,17 @@
 
 /obj/item/bodypart/l_arm/set_disabled(new_disabled)
 	. = ..()
-	if(disabled == new_disabled)
+	if(!.)
 		return
 	if(disabled == BODYPART_DISABLED_DAMAGE)
-		if(owner.stat > UNCONSCIOUS)
+		if(owner.stat < UNCONSCIOUS)
 			owner.emote("scream")
-		if(. && (owner.stat > DEAD))
+		if(owner.stat < DEAD)
 			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
 		if(held_index)
 			owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	else if(disabled == BODYPART_DISABLED_PARALYSIS)
-		if(. && (owner.stat > DEAD))
+		if(owner.stat < DEAD)
 			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
 			if(held_index)
 				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
@@ -566,7 +569,6 @@
 	held_index = 2
 	px_x = 6
 	px_y = 0
-	stam_heal_tick = 2
 	max_stamina_damage = 50
 
 /obj/item/bodypart/r_arm/is_disabled()
@@ -576,17 +578,17 @@
 
 /obj/item/bodypart/r_arm/set_disabled(new_disabled)
 	. = ..()
-	if(disabled == new_disabled)
+	if(!.)
 		return
 	if(disabled == BODYPART_DISABLED_DAMAGE)
-		if(owner.stat > UNCONSCIOUS)
+		if(owner.stat < UNCONSCIOUS)
 			owner.emote("scream")
-		if(. && (owner.stat > DEAD))
+		if(owner.stat < DEAD)
 			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
 		if(held_index)
 			owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	else if(disabled == BODYPART_DISABLED_PARALYSIS)
-		if(. && (owner.stat > DEAD))
+		if(owner.stat < DEAD)
 			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
 			if(held_index)
 				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
@@ -628,7 +630,6 @@
 	body_damage_coeff = 0.75
 	px_x = -2
 	px_y = 12
-	stam_heal_tick = 2
 	max_stamina_damage = 50
 
 /obj/item/bodypart/l_leg/is_disabled()
@@ -638,15 +639,15 @@
 
 /obj/item/bodypart/l_leg/set_disabled(new_disabled)
 	. = ..()
-	if(disabled == new_disabled)
+	if(!.)
 		return
 	if(disabled == BODYPART_DISABLED_DAMAGE)
-		if(owner.stat > UNCONSCIOUS)
+		if(owner.stat < UNCONSCIOUS)
 			owner.emote("scream")
-		if(. && (owner.stat > DEAD))
+		if(owner.stat < DEAD)
 			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
 	else if(disabled == BODYPART_DISABLED_PARALYSIS)
-		if(. && (owner.stat > DEAD))
+		if(owner.stat < DEAD)
 			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
 
 /obj/item/bodypart/l_leg/digitigrade
@@ -688,7 +689,6 @@
 	px_x = 2
 	px_y = 12
 	max_stamina_damage = 50
-	stam_heal_tick = 2
 
 /obj/item/bodypart/r_leg/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_R_LEG))
@@ -697,15 +697,15 @@
 
 /obj/item/bodypart/r_leg/set_disabled(new_disabled)
 	. = ..()
-	if(disabled == new_disabled)
+	if(!.)
 		return
 	if(disabled == BODYPART_DISABLED_DAMAGE)
-		if(owner.stat > UNCONSCIOUS)
+		if(owner.stat < UNCONSCIOUS)
 			owner.emote("scream")
-		if(. && (owner.stat > DEAD))
+		if(owner.stat < DEAD)
 			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
 	else if(disabled == BODYPART_DISABLED_PARALYSIS)
-		if(. && (owner.stat > DEAD))
+		if(owner.stat < DEAD)
 			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
 
 /obj/item/bodypart/r_leg/digitigrade
