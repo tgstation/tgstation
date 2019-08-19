@@ -69,10 +69,13 @@
 /obj/effect/mob_spawn/proc/equip(mob/M)
 	return
 
-/obj/effect/mob_spawn/proc/create(ckey, name)
+/obj/effect/mob_spawn/proc/create(ckey, newname)
 	var/mob/living/M = new mob_type(get_turf(src)) //living mobs only
-	if(!random)
-		M.real_name = mob_name ? mob_name : M.name
+	if(!random || newname)
+		if(newname)
+			M.real_name = newname
+		else
+			M.real_name = mob_name ? mob_name : M.name
 		if(!mob_gender)
 			mob_gender = pick(MALE, FEMALE)
 		M.gender = mob_gender
@@ -106,12 +109,13 @@
 				A.objectives += O
 		if(assignedrole)
 			M.mind.assigned_role = assignedrole
-		special(M, name)
+		special(M)
 		MM.name = M.real_name
 	if(uses > 0)
 		uses--
 	if(!permanent && !uses)
 		qdel(src)
+	return M
 
 // Base version - place these on maps/templates.
 /obj/effect/mob_spawn/human
