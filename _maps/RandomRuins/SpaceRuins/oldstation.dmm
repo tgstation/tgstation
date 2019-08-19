@@ -484,7 +484,7 @@
 /area/ruin/space/has_grav/ancientstation/comm)
 "bo" = (
 /obj/machinery/door/airlock/highsecurity,
-/turf/open/space/basic,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/ancientstation/deltaai)
 "bp" = (
 /obj/machinery/door/window/brigdoor/westleft,
@@ -744,11 +744,6 @@
 "cb" = (
 /obj/structure/sign/poster/official/science,
 /turf/closed/wall/rust,
-/area/ruin/space/has_grav/ancientstation/deltacorridor)
-"cc" = (
-/obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot,
-/turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "cd" = (
 /obj/machinery/door/airlock/command{
@@ -4052,8 +4047,8 @@
 "jP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/personal,
 /obj/item/storage/backpack/duffelbag,
+/obj/structure/closet,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation)
 "jQ" = (
@@ -4073,14 +4068,6 @@
 	amount = 25
 	},
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/ancientstation)
-"jR" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/personal,
-/obj/item/storage/backpack/old,
-/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation)
 "jS" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
@@ -4736,6 +4723,7 @@
 	pixel_y = 28;
 	start_charge = 0
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/has_grav/ancientstation/kitchen)
 "ly" = (
@@ -5540,6 +5528,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/engi)
 "nJ" = (
@@ -6247,6 +6236,11 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation)
+"yx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ancientstation/deltacorridor)
 "Af" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -8543,7 +8537,7 @@ bN
 bN
 bN
 bN
-jR
+ns
 aG
 gK
 aa
@@ -10346,9 +10340,9 @@ nU
 td
 tT
 bE
-cc
 dh
-cc
+dh
+dh
 bE
 gK
 aa
@@ -10397,7 +10391,7 @@ Sf
 bE
 jg
 jz
-dh
+yx
 bE
 gK
 aa
