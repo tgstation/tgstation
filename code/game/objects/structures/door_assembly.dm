@@ -294,6 +294,20 @@
 	target.update_name()
 	qdel(source)
 
+/obj/structure/door_assembly/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_DECONSTRUCT)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 40, "cost" = 10)
+	return FALSE
+
+/obj/structure/door_assembly/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
+		if(RCD_DECONSTRUCT)
+			to_chat(user, "<span class='notice'>You deconstruct the airlock assembly.</span>")
+			qdel(src)
+			return TRUE
+	return FALSE
+
 /obj/structure/door_assembly/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/turf/T = get_turf(src)

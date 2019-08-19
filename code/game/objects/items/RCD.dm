@@ -36,7 +36,7 @@ RLD
 	var/no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on the device blinks yellow.</span>"
 	var/has_ammobar = FALSE	//controls whether or not does update_icon apply ammo indicator overlays
 	var/ammo_sections = 10	//amount of divisions in the ammo indicator overlay/number of ammo indicator states
-	var/upgrade = FALSE
+	var/upgrade = NONE
 	var/datum/component/remote_materials/silo_mats //remote connection to the silo
 	var/silo_link = FALSE //switch to use internal or remote storage
 

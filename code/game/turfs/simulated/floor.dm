@@ -228,7 +228,7 @@
 /turf/open/floor/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
-			return list("mode" = RCD_FLOORWALL, "delay" = 20, "cost" = 16)
+			return list("mode" = RCD_FLOORWALL, "delay" = 20, "cost" = 12)
 		if(RCD_AIRLOCK)
 			if(the_rcd.airlock_glass)
 				return list("mode" = RCD_AIRLOCK, "delay" = 50, "cost" = 20)
@@ -247,8 +247,10 @@
 /turf/open/floor/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
-			to_chat(user, "<span class='notice'>You build a wall.</span>")
-			PlaceOnTop(/turf/closed/wall)
+			if(locate(/obj/structure/girder) in src)
+				return
+			to_chat(user, "<span class='notice'>You build a girder.</span>")
+			new /obj/structure/girder(src)
 			return TRUE
 		if(RCD_AIRLOCK)
 			if(locate(/obj/machinery/door/airlock) in src)
