@@ -6,31 +6,57 @@
 
 //Food items that aren't eaten normally and leave an empty container behind.
 /obj/item/reagent_containers/food/condiment
-	name = "condiment container"
-	desc = "Just your average condiment container."
+	name = "condiment bottle"
+	desc = "An empty condiment bottle."
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "emptycondiment"
 	reagent_flags = OPENCONTAINER
+	obj_flags = UNIQUE_RENAME
 	possible_transfer_amounts = list(1, 5, 10, 15, 20, 25, 30, 50)
 	volume = 50
 	//Possible_states has the reagent type as key and a list of, in order, the icon_state, the name and the desc as values. Used in the on_reagent_change(changetype) to change names, descs and sprites.
 	var/list/possible_states = list(
 	 /datum/reagent/consumable/ketchup = list("ketchup", "ketchup bottle", "You feel more American already."),
-	 /datum/reagent/consumable/capsaicin = list("hotsauce", "hotsauce bottle", "You can almost TASTE the stomach ulcers now!"),
-	 /datum/reagent/consumable/enzyme = list("enzyme", "universal enzyme bottle", "Used in cooking various dishes"),
-	 /datum/reagent/consumable/soysauce = list("soysauce", "soy sauce bottle", "A salty soy-based flavoring"),
-	 /datum/reagent/consumable/frostoil = list("coldsauce", "coldsauce bottle", "Leaves the tongue numb in its passage"),
-	 /datum/reagent/consumable/sodiumchloride = list("saltshakersmall", "salt shaker", "Salt. From space oceans, presumably"),
-	 /datum/reagent/consumable/blackpepper = list("peppermillsmall", "pepper mill", "Often used to flavor food or make people sneeze"),
-	 /datum/reagent/consumable/cornoil = list("oliveoil", "corn oil bottle", "A delicious oil used in cooking. Made from corn"),
+	 /datum/reagent/consumable/capsaicin = list("hotsauce", "hotsauce bottle", "You can almost TASTE the stomach ulcers!"),
+	 /datum/reagent/consumable/enzyme = list("enzyme", "universal enzyme bottle", "Used in cooking various dishes."),
+	 /datum/reagent/consumable/soysauce = list("soysauce", "soy sauce bottle", "A salty soy-based flavoring."),
+	 /datum/reagent/consumable/frostoil = list("coldsauce", "coldsauce bottle", "Leaves the tongue numb from its passage."),
+	 /datum/reagent/consumable/sodiumchloride = list("saltshakersmall", "salt shaker", "Salt. From space oceans, presumably."),
+	 /datum/reagent/consumable/blackpepper = list("peppermillsmall", "pepper mill", "Often used to flavor food or make people sneeze."),
+	 /datum/reagent/consumable/cornoil = list("oliveoil", "corn oil bottle", "A delicious oil used in cooking. Made from corn."),
 	 /datum/reagent/consumable/sugar = list("emptycondiment", "sugar bottle", "Tasty spacey sugar!"),
 	 /datum/reagent/consumable/mayonnaise = list("mayonnaise", "mayonnaise jar", "An oily condiment made from egg yolks."),
 	 )
 	var/originalname = "condiment" //Can't use initial(name) for this. This stores the name set by condimasters.
+	var/customsprite = FALSE
 
 /obj/item/reagent_containers/food/condiment/Initialize()
 	. = ..()
 	possible_states = typelist("possible_states", possible_states)
+
+	update_icon()
+
+/obj/item/reagent_containers/food/condiment/update_icon()
+	cut_overlays()
+	if(reagents.total_volume && !customsprite)
+		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[icon_state]-10")
+
+		var/percent = round((reagents.total_volume / volume) * 100)
+		switch(percent)
+			if(0 to 9)
+				filling.icon_state = "[icon_state]-10"
+			if(10 to 29)
+				filling.icon_state = "[icon_state]25"
+			if(30 to 49)
+				filling.icon_state = "[icon_state]50"
+			if(50 to 69)
+				filling.icon_state = "[icon_state]75"
+			if(70 to INFINITY)
+				filling.icon_state = "[icon_state]100"
+
+		filling.color = mix_color_from_reagents(reagents.reagent_list)
+		add_overlay(filling)
+	. = ..()
 
 /obj/item/reagent_containers/food/condiment/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is trying to eat the entire [src]! It looks like [user.p_they()] forgot how food works!</span>")
@@ -103,20 +129,13 @@
 			icon_state = temp_list[1]
 			name = temp_list[2]
 			desc = temp_list[3]
-
-		else
-			name = "[originalname] bottle"
-			main_reagent = reagents.get_master_reagent_name()
-			if (reagents.reagent_list.len==1)
-				desc = "Looks like it is [lowertext(main_reagent)], but you are not sure."
-			else
-				desc = "A mixture of various condiments. [lowertext(main_reagent)] is one of them."
-			icon_state = "mixedcondiments"
+			customsprite = TRUE
 	else
 		icon_state = "emptycondiment"
 		name = "condiment bottle"
 		desc = "An empty condiment bottle."
-		return
+		customsprite = FALSE
+	update_icon()
 
 /obj/item/reagent_containers/food/condiment/enzyme
 	name = "universal enzyme"
