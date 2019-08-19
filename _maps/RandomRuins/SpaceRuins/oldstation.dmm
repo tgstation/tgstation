@@ -18,7 +18,7 @@
 /area/ruin/space/has_grav/ancientstation/deltaai)
 "af" = (
 /obj/structure/alien/weeds,
-/mob/living/carbon/alien/humanoid/hunter,
+/mob/living/simple_animal/hostile/alien,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/ancientstation/deltaai)
 "ag" = (
@@ -76,7 +76,7 @@
 /area/ruin/space/has_grav/ancientstation/comm)
 "ao" = (
 /obj/structure/alien/weeds,
-/mob/living/carbon/alien/humanoid/drone,
+/mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/ancientstation/deltaai)
 "ap" = (
@@ -395,7 +395,7 @@
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/alien/weeds,
-/mob/living/carbon/alien/humanoid/hunter,
+/mob/living/simple_animal/hostile/alien,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/ancientstation/deltaai)
 "bf" = (
@@ -1119,7 +1119,7 @@
 /area/ruin/space/has_grav/ancientstation/deltaai)
 "de" = (
 /obj/structure/alien/weeds,
-/mob/living/carbon/alien/humanoid/royal/queen,
+/mob/living/simple_animal/hostile/alien/queen,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/ancientstation/deltaai)
 "df" = (
@@ -1353,7 +1353,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/structure/alien/weeds,
-/mob/living/carbon/alien/humanoid/drone,
+/mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "dH" = (
@@ -2282,10 +2282,17 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "fW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/alien/weeds/node,
 /obj/structure/alien/weeds,
-/mob/living/carbon/alien/humanoid/drone,
-/turf/open/floor/plasteel/white,
-/area/ruin/space/has_grav/ancientstation/rnd)
+/mob/living/simple_animal/hostile/alien/drone,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/ancientstation/deltacorridor)
 "fX" = (
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/mining)
@@ -2530,14 +2537,13 @@
 /area/ruin/space/has_grav/ancientstation/sec)
 "gD" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/alien/weeds/node,
 /obj/structure/alien/weeds,
-/mob/living/carbon/alien/humanoid/drone,
+/mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "gE" = (
@@ -2914,9 +2920,8 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "hE" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/alien/weeds,
-/mob/living/carbon/alien/humanoid/drone,
+/mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/ancientstation/rnd)
 "hF" = (
@@ -5572,15 +5577,10 @@
 /area/ruin/space/has_grav/ancientstation/rnd)
 "nN" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/alien/weeds,
-/mob/living/carbon/alien/humanoid/drone,
-/turf/open/floor/plasteel,
-/area/ruin/space/has_grav/ancientstation/deltacorridor)
+/mob/living/simple_animal/hostile/alien/drone,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/has_grav/ancientstation/rnd)
 "nO" = (
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
@@ -5660,7 +5660,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/alien/weeds,
-/mob/living/carbon/alien/humanoid/hunter,
+/mob/living/simple_animal/hostile/alien,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "nX" = (
@@ -9701,7 +9701,7 @@ dZ
 eF
 oG
 gG
-hE
+nN
 oe
 hg
 eb
@@ -9989,11 +9989,11 @@ ad
 gK
 bE
 oq
-gD
+fW
 dy
 eC
 fu
-fW
+hE
 gP
 eC
 oi
@@ -10237,7 +10237,7 @@ ou
 dJ
 jx
 jy
-nN
+gD
 nP
 oK
 dJ
