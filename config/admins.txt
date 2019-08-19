@@ -17,7 +17,8 @@ Rumpelgeist = Admin
 ImpendingRiot = Moderator
 #FaKanza = Admin
 #Trickytyfly = Admin
-Coolsur6 = Moderator
+Coolsuf6 = Admin
+Coolsurf6 = Admin
 #ADMINS
 
 saladata = Admin
@@ -52,11 +53,11 @@ The P.I.S.S. = Moderator
 Shmiff = Moderator
 #HeavenDIO = Moderator
 SuperStimpy = Moderator
-BLU_REMOTE = Moderator
-shlomobergerstein = Admin Candidate
-Evilsack = Moderator
+BLU_REMOTE = Admin Candidate
+shlomobergerstein = Admin Jr.
+#Evilsack = Moderator
 #Malgover = Moderator
-Misdoubtful = Admin Candidate
+Misdoubtful = Admin Jr.
 Shadowflame909 = Admin Jr.
 Glubtok = Moderator
 BringTheBoom = Moderator
