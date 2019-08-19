@@ -65,7 +65,7 @@
 	master.cut_overlay(overlay)
 	playsound(master, 'sound/items/welder.ogg', 100, 1)
 	var/obj/effect/overlay/thermite/fakefire = new(master)
-	addtimer(CALLBACK(src, .proc/burn_parent, fakefire, user), min(amount * 0.25 SECONDS, 15 SECONDS))
+	addtimer(CALLBACK(src, .proc/burn_parent, fakefire, user), min(amount * 0.35 SECONDS, 20 SECONDS))
 	UnregisterFromParent()
 
 /datum/component/thermite/proc/burn_parent(var/datum/fakefire, mob/user)
