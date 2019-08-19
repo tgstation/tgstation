@@ -581,6 +581,7 @@
 	desc = "If you ever wondered where air came from..."
 	list_reagents = list(/datum/reagent/oxygen = 6, /datum/reagent/nitrogen = 24)
 	icon_state = "peachcan"
+	in_container = TRUE
 	reagent_flags = NONE
 	spillable = FALSE
 	w_class = WEIGHT_CLASS_NORMAL
@@ -595,6 +596,7 @@
 /obj/item/reagent_containers/food/snacks/canned/attack_self(mob/user)
 	if(!is_drainable())
 		open_can(user)
+		icon_state = "[icon_state]_open"
 	return ..()
 
 /obj/item/reagent_containers/food/snacks/canned/attack(mob/living/M, mob/user, def_zone)
@@ -603,17 +605,11 @@
 		return 0
 	return ..()
 
-/obj/item/reagent_containers/food/snacks/canned/examine(mob/user)
-	bitecount = 0
-	return ..()
-
 /obj/item/reagent_containers/food/snacks/canned/beans
 	name = "tin of beans"
 	desc = "Musical fruit in a slightly less musical container."
 	icon_state = "beans"
 	trash = /obj/item/trash/can/food/beans
-	reagent_flags = OPENCONTAINER
-	spillable = TRUE
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 10)
 	filling_color = "#B22222"

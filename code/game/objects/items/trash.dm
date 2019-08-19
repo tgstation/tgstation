@@ -85,21 +85,18 @@
 	grind_results = list(/datum/reagent/aluminium = 10)
 
 /obj/item/trash/can/food/peaches
-	name = "empty canned peaches"
-	desc = "Was a nice can of ripe peaches swimming in their own juices."
+	name = "canned peaches"
 	icon = 'icons/obj/food/food.dmi'
-	icon_state = "peachcan"
+	icon_state = "peachcan_empty"
 
 /obj/item/trash/can/food/peaches/maint
-	name = "empty Maintenance Peaches"
-	desc = "I have a mouth and I must eat. Sadly, this is empty."
-	icon_state = "peachcanmaint"
+	name = "Maintenance Peaches"
+	icon_state = "peachcanmaint_empty"
 
 /obj/item/trash/can/food/beans
-	name = "empty tin of beans"
-	desc = "Was musical fruit in a slightly less musical container."
+	name = "tin of beans"
 	icon = 'icons/obj/food/food.dmi'
-	icon_state = "beans"
+	icon_state = "beans_empty"
 
 /obj/item/trash/can/Initialize()
 	. = ..()
