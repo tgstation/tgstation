@@ -79,3 +79,17 @@
 	limbs_id = "lizard"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE)
 	inherent_traits = list(TRAIT_CHUNKYFINGERS,TRAIT_NOBREATH)
+
+/*
+ Lizard subspecies: DRAGONBORN (they fly!)
+*/
+
+/datum/species/lizard/dragonborn
+	name = "Dragonborn"
+	id = "dragonborn"
+	limbs_id = "lizard"
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE)
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
+
+	flying_species = TRUE
+	wings_icon = "Dragon"

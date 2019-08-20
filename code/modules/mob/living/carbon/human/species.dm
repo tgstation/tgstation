@@ -49,6 +49,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/grab_sound //Special sound for grabbing
 	var/datum/outfit/outfit_important_for_life /// A path to an outfit that is important for species life e.g. plasmaman outfit
 
+	var/flying_species = FALSE
+	var/datum/action/innate/flight/fly
+	var/wings_icon = ""
+
 	// species-only traits. Can be found in DNA.dm
 	var/list/species_traits = list()
 	// generic traits tied to having the species
@@ -306,6 +310,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		for(var/i in inherent_factions)
 			C.faction += i //Using +=/-= for this in case you also gain the faction from a different source.
 
+	if(flying_species && isnull(fly))
+		fly = new
+		fly.Grant(C)
+	if(C.dna && C.dna.species && (C.dna.features["wings"] != wings_icon))
+		if(!("wings" in C.dna.species.mutant_bodyparts))
+			C.dna.species.mutant_bodyparts |= "wings"
+		C.dna.features["wings"] = wings_icon
+		C.update_body()
+
 	C.add_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE, 100, override=TRUE, multiplicative_slowdown=speedmod, movetypes=(~FLYING))
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
@@ -330,6 +343,18 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(inherent_factions)
 		for(var/i in inherent_factions)
 			C.faction -= i
+
+	if(flying_species)
+		fly.Remove(C)
+		QDEL_NULL(fly)
+		if(C.movement_type & FLYING)
+			C.setMovetype(C.movement_type & ~FLYING)
+		ToggleFlight(C,0)
+	if(C.dna && C.dna.species && (C.dna.features["wings"] == wings_icon))
+		if("wings" in C.dna.species.mutant_bodyparts)
+			C.dna.species.mutant_bodyparts -= "wings"
+		C.dna.features["wings"] = "None"
+		C.update_body()
 
 	C.remove_movespeed_modifier(MOVESPEED_ID_SPECIES)
 
@@ -757,6 +782,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/takes_crit_damage = (!HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
 		if((H.health < H.crit_threshold) && takes_crit_damage)
 			H.adjustBruteLoss(1)
+	if(flying_species)
+		HandleFlight(H)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
@@ -1769,10 +1796,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 
 ////////////
-//Stun//
+//  Stun  //
 ////////////
 
 /datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
+	if(flying_species && H.movement_type & FLYING)
+		ToggleFlight(H,0)
+		flyslip(H)
 	. = stunmod * H.physiology.stun_mod * amount
 
 //////////////
@@ -1780,10 +1810,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //////////////
 
 /datum/species/proc/space_move(mob/living/carbon/human/H)
-	return 0
+	if(H.movement_type & FLYING)
+		return TRUE
+	return FALSE
 
 /datum/species/proc/negates_gravity(mob/living/carbon/human/H)
-	return 0
+	if(H.movement_type & FLYING)
+		return TRUE
+	return FALSE
 
 ////////////////
 //Tail Wagging//
@@ -1798,3 +1832,93 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/start_wagging_tail(mob/living/carbon/human/H)
 
 /datum/species/proc/stop_wagging_tail(mob/living/carbon/human/H)
+
+///////////////
+//FLIGHT SHIT//
+///////////////
+
+/datum/species/proc/HandleFlight(mob/living/carbon/human/H)
+	if(H.movement_type & FLYING)
+		if(!CanFly(H))
+			ToggleFlight(H,0)
+			return 0
+		return 1
+	else
+		return 0
+
+/datum/species/proc/CanFly(mob/living/carbon/human/H)
+	if(H.stat || !(H.mobility_flags & MOBILITY_STAND))
+		return 0
+	if(H.wear_suit && ((H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception))))	//Jumpsuits have tail holes, so it makes sense they have wing holes too
+		to_chat(H, "Your suit blocks your wings from extending!")
+		return 0
+	var/turf/T = get_turf(H)
+	if(!T)
+		return 0
+
+	var/datum/gas_mixture/environment = T.return_air()
+	if(environment && !(environment.return_pressure() > 30))
+		to_chat(H, "<span class='warning'>The atmosphere is too thin for you to fly!</span>")
+		return 0
+	else
+		return 1
+
+/datum/species/proc/flyslip(mob/living/carbon/human/H)
+	var/obj/buckled_obj
+	if(H.buckled)
+		buckled_obj = H.buckled
+
+	to_chat(H, "<span class='notice'>Your wings spazz out and launch you!</span>")
+
+	playsound(H.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+
+	for(var/obj/item/I in H.held_items)
+		H.accident(I)
+
+	var/olddir = H.dir
+
+	H.stop_pulling()
+	if(buckled_obj)
+		buckled_obj.unbuckle_mob(H)
+		step(buckled_obj, olddir)
+	else
+		for(var/i=1, i<5, i++)
+			spawn (i)
+				step(H, olddir)
+				H.spin(1,1)
+	return 1
+
+/datum/species/proc/ToggleFlight(mob/living/carbon/human/H,flight)
+	if(flight && CanFly(H))
+		stunmod = 2
+		speedmod = -0.35
+		H.setMovetype(H.movement_type | FLYING)
+		override_float = TRUE
+		H.pass_flags |= PASSTABLE
+		H.OpenWings()
+	else
+		stunmod = 1
+		speedmod = 0
+		H.setMovetype(H.movement_type & ~FLYING)
+		override_float = FALSE
+		H.pass_flags &= ~PASSTABLE
+		H.CloseWings()
+
+/datum/action/innate/flight
+	name = "Toggle Flight"
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "flight"
+
+/datum/action/innate/flight/Activate()
+	var/mob/living/carbon/human/H = owner
+	var/datum/species/angel/A = H.dna.species
+	if(A.CanFly(H))
+		if(H.movement_type & FLYING)
+			to_chat(H, "<span class='notice'>You settle gently back onto the ground...</span>")
+			A.ToggleFlight(H,FALSE)
+			H.update_mobility()
+		else
+			to_chat(H, "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>")
+			A.ToggleFlight(H,TRUE)
+			H.set_resting(FALSE, FALSE)
