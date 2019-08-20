@@ -379,8 +379,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		n2ocomp = max(removed.gases[/datum/gas/nitrous_oxide][MOLES]/combined_gas, 0)
 		n2comp = max(removed.gases[/datum/gas/nitrogen][MOLES]/combined_gas, 0)
 
-		if(pluoxiumcomp >= 15)
-			pluoxiumbonus = 1	//Just to be safe I don't want to remove pluoxium
+		if(pluoxiumcomp >= 0.15)
+			pluoxiumbonus = 1	//makes pluoxium only work at 15%+
 		else
 			pluoxiumbonus = 0
 
@@ -419,7 +419,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 		if(prob(50))
 			radiation_pulse(src, power * (1 + (tritiumcomp * TRITIUM_RADIOACTIVITY_MODIFIER) + ((pluoxiumcomp * PLUOXIUM_RADIOACTIVITY_MODIFIER) * pluoxiumbonus) * (power_transmission_bonus/(10-(bzcomp * BZ_RADIOACTIVITY_MODIFIER)))))	// Rad Modifiers BZ(500%), Tritium(300%), and Pluoxium(-200%)
-		if(bzcomp >= 0.4 && prob(30 * bzcomp))
+		if(bzcomp >= 0.4 && prob(30 * (bzcomp*2)))
 			src.fire_nuclear_particle()		// Start to emit radballs at a maximum of 30% chance per tick
 
 
