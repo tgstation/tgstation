@@ -49,9 +49,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/grab_sound //Special sound for grabbing
 	var/datum/outfit/outfit_important_for_life /// A path to an outfit that is important for species life e.g. plasmaman outfit
 
-	var/flying_species = FALSE
-	var/datum/action/innate/flight/fly
-	var/wings_icon = ""
+	var/flying_species = FALSE //is a flying species, just a check for some things
+	var/datum/action/innate/flight/fly //the actual flying ability given to flying species
+	var/wings_icon = "" //the icon used for the wings
 
 	// species-only traits. Can be found in DNA.dm
 	var/list/species_traits = list()
@@ -1836,6 +1836,21 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 ///////////////
 //FLIGHT SHIT//
 ///////////////
+
+/datum/species/proc/GiveSpeciesFlight(mob/living/carbon/human/H)
+	if(islizard(H)
+		wings_icon = "Dragon"
+	else
+		wings_icon = "Angel"
+	flying_species = TRUE
+	if(isnull(fly))
+		fly = new
+		fly.Grant(H)
+	if(H.dna.features["wings"] != wings_icon)
+		if(!("wings" in H.dna.species.mutant_bodyparts))
+			H.dna.species.mutant_bodyparts |= "wings"
+		H.dna.features["wings"] = wings_icon
+		H.update_body()
 
 /datum/species/proc/HandleFlight(mob/living/carbon/human/H)
 	if(H.movement_type & FLYING)
