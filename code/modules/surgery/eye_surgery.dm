@@ -20,8 +20,8 @@
 
 /datum/surgery_step/fix_eyes/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin to fix [target]'s eyes...</span>",
-		"[user] begins to fix [target]'s eyes.",
-		"[user] begins to perform surgery on [target]'s eyes.")
+		"<span class='notice'>[user] begins to fix [target]'s eyes.</span>",
+		"<span class='notice'>[user] begins to perform surgery on [target]'s eyes.</span>")
 
 /datum/surgery_step/fix_eyes/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/obj/item/organ/eyes/E = target.getorganslot(ORGAN_SLOT_EYES)
