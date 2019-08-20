@@ -71,7 +71,7 @@
 					set_mode(CLAMPED_OFF)
 					user.visible_message( \
 						"[user] attaches \the [src] to the cable.", \
-						"<span class='notice'>You wrench \the [src] into the cable.</span>",
+						"<span class='notice'>You bolt \the [src] into the floor and connect it to the cable.</span>",
 						"<span class='italics'>You hear some wires being connected to something.</span>")
 			else
 				to_chat(user, "<span class='warning'>This device must be placed over an exposed, powered cable node!</span>")
@@ -79,7 +79,7 @@
 			set_mode(DISCONNECTED)
 			user.visible_message( \
 				"[user] detaches \the [src] from the cable.", \
-				"<span class='notice'>You unwrench \the [src] from the cable.</span>",
+				"<span class='notice'>You unbolt \the [src] from the floor and detach it from the cable.</span>",
 				"<span class='italics'>You hear some wires being disconnected from something.</span>")
 
 	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
