@@ -342,6 +342,7 @@
 	restricted_roles = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director")
 	required_candidates = 3
 	weight = 2
+	delay = 7 MINUTES
 	cost = 35
 	requirements = list(101,101,70,40,30,20,10,10,10,10)
 	high_population_requirement = 10

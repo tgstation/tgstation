@@ -326,8 +326,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 	for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
 		rule.candidates.Cut() // The rule should not use candidates at this point as they all are null.
-		if(!rule.execute())
-			stack_trace("The starting rule \"[rule.name]\" failed to execute.")
+		if(rule.delay > 0)
+			addtimer(CALLBACK(rule, /datum/dynamic_ruleset/roundstart.proc/execute), rule.delay)
+		else
+			if(!rule.execute())
+				stack_trace("The starting rule \"[rule.name]\" failed to execute.")
 	..()
 
 /// A simple roundstart proc used when dynamic_forced_roundstart_ruleset has rules in it.
@@ -411,6 +414,12 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 					if(drafted_rules.len <= 0)
 						return FALSE
 					starting_rule = pickweight(drafted_rules)
+		// With low pop and high threat there might be rulesets that get executed with no valid candidates.
+		else if(starting_rule.ready())
+			drafted_rules -= starting_rule
+			if(drafted_rules.len <= 0)
+				return FALSE
+			starting_rule = pickweight(drafted_rules)
 
 	message_admins("Picking a ruleset [starting_rule.name]")
 	log_game("DYNAMIC: Picking a ruleset [starting_rule.name]")

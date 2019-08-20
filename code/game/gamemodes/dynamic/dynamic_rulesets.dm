@@ -73,6 +73,9 @@
 
 /datum/dynamic_ruleset/roundstart // One or more of those drafted at roundstart
 	ruletype = "Roundstart"
+	/// Delay for when execute will get called from the time of post_setup.
+	/// Make sure your ruleset works with execute being called during the game when using this.
+	var/delay = 0
 
 // Can be drafted when a player joins the server
 /datum/dynamic_ruleset/latejoin
