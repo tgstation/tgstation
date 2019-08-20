@@ -8,7 +8,9 @@
 	deflect_chance = 5
 	armor = list("melee" = 25, "bullet" = 20, "laser" = 30, "energy" = 15, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	max_temperature = 25000
+	leg_overload_coeff = 80
 	infra_luminosity = 6
+	force = 25
 	wreckage = /obj/structure/mecha_wreckage/gygax
 	internal_damage_threshold = 35
 	max_equip = 3
@@ -22,7 +24,7 @@
 	deflect_chance = 15
 	armor = list("melee" = 40, "bullet" = 40, "laser" = 50, "energy" = 35, "bomb" = 20, "bio" = 0, "rad" =20, "fire" = 100, "acid" = 100)
 	max_temperature = 35000
-	leg_overload_coeff = 100
+	leg_overload_coeff = 70
 	operation_req_access = list(ACCESS_SYNDICATE)
 	internals_req_access = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/gygax/dark

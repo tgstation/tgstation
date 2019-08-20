@@ -362,6 +362,11 @@
 	pestlevel = 0 // Reset
 	update_icon()
 	visible_message("<span class='warning'>The [oldPlantName] is overtaken by some [myseed.plantname]!</span>")
+	name = "hydroponics tray ([myseed.plantname])"
+	if(myseed.product)
+		desc = initial(myseed.product.desc)
+	else
+		desc = initial(desc)
 
 
 /obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0) // Mutates the current seed
@@ -396,6 +401,11 @@
 	sleep(5) // Wait a while
 	update_icon()
 	visible_message("<span class='warning'>[oldPlantName] suddenly mutates into [myseed.plantname]!</span>")
+	name = "hydroponics tray ([myseed.plantname])"
+	if(myseed.product)
+		desc = initial(myseed.product.desc)
+	else
+		desc = initial(desc)
 
 
 /obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent instead. Mind you, this pretty much destroys the old plant
@@ -617,7 +627,7 @@
 		adjustHealth(round(S.get_reagent_amount(/datum/reagent/ammonia) * 0.5))
 		adjustNutri(round(S.get_reagent_amount(/datum/reagent/ammonia) * 1))
 		if(myseed)
-			myseed.adjust_yield(round(S.get_reagent_amount(/datum/reagent/ammonia) * 0.01))
+			myseed.adjust_yield(round(S.get_reagent_amount(/datum/reagent/ammonia) * 0.04))
 
 	// Saltpetre is used for gardening IRL, to simplify highly, it speeds up growth and strengthens plants
 	if(S.has_reagent(/datum/reagent/saltpetre, 1))
@@ -761,6 +771,15 @@
 			to_chat(user, "<span class='notice'>You plant [O].</span>")
 			dead = 0
 			myseed = O
+			name = "hydroponics tray ([myseed.plantname])"
+			if(!myseed.productdesc) //we haven't changed our produce's description
+				if(myseed.product)
+					myseed.productdesc = initial(myseed.product.desc)
+				else if(myseed.desc)
+					myseed.productdesc = myseed.desc
+				else
+					myseed.productdesc = "A fascinating specimen."
+			desc = myseed.productdesc
 			age = 1
 			plant_health = myseed.endurance
 			lastcycle = world.time
@@ -827,8 +846,11 @@
 					harvest = FALSE //To make sure they can't just put in another seed and insta-harvest it
 				qdel(myseed)
 				myseed = null
+				name = initial(name)
+				desc = initial(desc)
 			weedlevel = 0 //Has a side effect of cleaning up those nasty weeds
 			update_icon()
+
 
 	else
 		return ..()
@@ -859,6 +881,8 @@
 		qdel(myseed)
 		myseed = null
 		update_icon()
+		name = initial(name)
+		desc = initial(desc)
 	else
 		if(user)
 			examine(user)
@@ -876,6 +900,8 @@
 		qdel(myseed)
 		myseed = null
 		dead = 0
+		name = initial(name)
+		desc = initial(desc)
 	update_icon()
 
 /// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.///

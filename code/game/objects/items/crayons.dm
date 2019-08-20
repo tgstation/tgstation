@@ -397,6 +397,16 @@
 
 /obj/item/toy/crayon/attack(mob/M, mob/user)
 	if(edible && (M == user))
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			var/covered = ""
+			if(C.is_mouth_covered(head_only = 1))
+				covered = "headgear"
+			else if(C.is_mouth_covered(mask_only = 1))
+				covered = "mask"
+			if(covered)
+				to_chat(C, "<span class='warning'>You have to remove your [covered] first!</span>")
+				return
 		to_chat(user, "You take a bite of the [src.name]. Delicious!")
 		var/eaten = use_charges(user, 5, FALSE)
 		if(check_empty(user)) //Prevents divsion by zero
