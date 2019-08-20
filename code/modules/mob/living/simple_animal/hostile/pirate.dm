@@ -5,7 +5,7 @@
 	icon_state = "piratemelee"
 	icon_living = "piratemelee"
 	icon_dead = "pirate_dead"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 0
 	turns_per_move = 5
 	response_help = "pushes"
@@ -42,7 +42,7 @@
 	var/obj/effect/light_emitter/red_energy_sword/sord
 
 	do_footstep = TRUE
- 
+
 /mob/living/simple_animal/hostile/pirate/melee/space
 	name = "Space Pirate Swashbuckler"
 	icon_state = "piratespace"
