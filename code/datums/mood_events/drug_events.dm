@@ -7,6 +7,11 @@
 	mood_change = 2
 	timeout = 6 MINUTES
 
+/datum/mood_event/wrong_brand
+	description = "<span class='warning'>I hate that brand of cigarettes.</span>\n"
+	mood_change = -2
+	timeout = 6 MINUTES
+	
 /datum/mood_event/overdose
 	mood_change = -8
 	timeout = 5 MINUTES
