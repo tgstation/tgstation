@@ -51,7 +51,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/flying_species = FALSE //is a flying species, just a check for some things
 	var/datum/action/innate/flight/fly //the actual flying ability given to flying species
-	var/wings_icon = "" //the icon used for the wings
+	var/wings_icon = "Angel" //the icon used for the wings
 
 	// species-only traits. Can be found in DNA.dm
 	var/list/species_traits = list()
@@ -1838,10 +1838,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 ///////////////
 
 /datum/species/proc/GiveSpeciesFlight(mob/living/carbon/human/H)
-	if(islizard(H)
-		wings_icon = "Dragon"
-	else
-		wings_icon = "Angel"
+	if(flying_species) //species that already have flying traits should not work with this proc
+		return
 	flying_species = TRUE
 	if(isnull(fly))
 		fly = new
@@ -1856,27 +1854,27 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(H.movement_type & FLYING)
 		if(!CanFly(H))
 			ToggleFlight(H,0)
-			return 0
-		return 1
+			return FALSE
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /datum/species/proc/CanFly(mob/living/carbon/human/H)
 	if(H.stat || !(H.mobility_flags & MOBILITY_STAND))
-		return 0
+		return FALSE
 	if(H.wear_suit && ((H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception))))	//Jumpsuits have tail holes, so it makes sense they have wing holes too
 		to_chat(H, "Your suit blocks your wings from extending!")
-		return 0
+		return FALSE
 	var/turf/T = get_turf(H)
 	if(!T)
-		return 0
+		return FALSE
 
 	var/datum/gas_mixture/environment = T.return_air()
 	if(environment && !(environment.return_pressure() > 30))
 		to_chat(H, "<span class='warning'>The atmosphere is too thin for you to fly!</span>")
-		return 0
+		return FALSE
 	else
-		return 1
+		return TRUE
 
 /datum/species/proc/flyslip(mob/living/carbon/human/H)
 	var/obj/buckled_obj
@@ -1897,23 +1895,23 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		buckled_obj.unbuckle_mob(H)
 		step(buckled_obj, olddir)
 	else
-		for(var/i=1, i<5, i++)
-			spawn (i)
-				step(H, olddir)
-				H.spin(1,1)
-	return 1
+		for(var/i in 1 to 5)
+			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 4), 1, FALSE, CALLBACK(C, /mob/living/carbon/.proc/spin, 1, 1))
+	return TRUE
 
-/datum/species/proc/ToggleFlight(mob/living/carbon/human/H,flight)
-	if(flight && CanFly(H))
-		stunmod = 2
-		speedmod = -0.35
+//UNSAFE PROC, should only be called through the Activate or other sources that check for CanFly
+/datum/species/proc/ToggleFlight(mob/living/carbon/human/H)
+	if(!(H.movement_type & FLYING))
+		stunmod *= 2
+		speedmod -= 0.35
 		H.setMovetype(H.movement_type | FLYING)
 		override_float = TRUE
 		H.pass_flags |= PASSTABLE
 		H.OpenWings()
+		H.update_mobility()
 	else
-		stunmod = 1
-		speedmod = 0
+		stunmod *= 0.5
+		speedmod += 0.35
 		H.setMovetype(H.movement_type & ~FLYING)
 		override_float = FALSE
 		H.pass_flags &= ~PASSTABLE
@@ -1929,11 +1927,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/mob/living/carbon/human/H = owner
 	var/datum/species/angel/A = H.dna.species
 	if(A.CanFly(H))
-		if(H.movement_type & FLYING)
+		A.ToggleFlight(H)
+		if(!(H.movement_type & FLYING))
 			to_chat(H, "<span class='notice'>You settle gently back onto the ground...</span>")
-			A.ToggleFlight(H,FALSE)
-			H.update_mobility()
 		else
 			to_chat(H, "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>")
-			A.ToggleFlight(H,TRUE)
-			H.set_resting(FALSE, FALSE)
+			H.set_resting(FALSE)
