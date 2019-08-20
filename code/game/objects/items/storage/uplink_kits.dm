@@ -90,7 +90,7 @@
 			new /obj/item/storage/toolbox/syndicate(src)
 
 		if("sabotage")
-			new /obj/item/multitool/ai_detect(src)
+			/obj/item/storage/backpack/duffelbag/syndie/sabotage
 			new /obj/item/camera_bug(src)
 			new /obj/item/sbeacondrop/powersink(src)
 			new /obj/item/cartridge/virus/syndicate(src)
@@ -526,6 +526,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/grenade/spawnergrenade/buzzkill(src)
 
+///Subtype for the sabotage bundle. Contains three C4, two X4 and 6 signalers
 /obj/item/storage/backpack/duffelbag/syndie/sabotage
 
 /obj/item/storage/backpack/duffelbag/syndie/sabotage/PopulateContents()
