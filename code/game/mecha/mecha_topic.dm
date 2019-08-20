@@ -302,7 +302,7 @@
 	if (href_list["toggle_port_connection"])
 		if(internal_tank.connected_port)
 			if(internal_tank.disconnect())
-				occupant_message("Disconnected from the air system port.")
+				occupant_message("<span class='notice'>Disconnected from the air system port.</span>")
 				log_message("Disconnected from gas port.", LOG_MECHA)
 			else
 				occupant_message("<span class='warning'>Unable to disconnect from the air system port!</span>")
@@ -310,7 +310,7 @@
 		else
 			var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate() in loc
 			if(internal_tank.connect(possible_port))
-				occupant_message("Connected to the air system port.")
+				occupant_message("<span class='notice'>Connected to the air system port.</span>")
 				log_message("Connected to gas port.", LOG_MECHA)
 			else
 				occupant_message("<span class='warning'>Unable to connect with air system port!</span>")
@@ -322,13 +322,13 @@
 			to_chat(occupant, "<span class='warning'>You do not have any DNA!</span>")
 			return
 		dna_lock = occupant.dna.unique_enzymes
-		occupant_message("You feel a prick as the needle takes your DNA sample.")
+		occupant_message("<span class='notice'>You feel a prick as the needle takes your DNA sample.</span>")
 
 	if(href_list["reset_dna"])
 		dna_lock = null
 
 	if(href_list["repair_int_control_lost"])
-		occupant_message("Recalibrating coordination system...")
+		occupant_message("<span class='notice'>Recalibrating coordination system...</span>")
 		log_message("Recalibration of coordination system started.", LOG_MECHA)
 		var/T = loc
 		spawn(100)

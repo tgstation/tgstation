@@ -85,15 +85,15 @@
 		if(1)
 			if(!locked)
 				if(!istype(target) || target.anchored || target.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)
-					occupant_message("Unable to lock on [target]")
+					occupant_message("<span class='warning'>Unable to lock on [target]!</span>")
 					return
 				if(ismob(target))
 					var/mob/M = target
 					if(M.mob_negates_gravity())
-						occupant_message("Unable to lock on [target]")
+						occupant_message("<span class='warning'>Unable to lock on [target]!</span>")
 						return
 				locked = target
-				occupant_message("Locked on [target]")
+				occupant_message("<span class='notice'>Locked on [target].</span>")
 				send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
 			else if(target!=locked)
 				if(locked in view(chassis))
@@ -106,7 +106,7 @@
 					return TRUE
 				else
 					locked = null
-					occupant_message("Lock on [locked] disengaged.")
+					occupant_message("<span class='notice'>Lock on [locked] disengaged.</span>")
 					send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
 		if(2)
 			var/list/atoms = list()
@@ -336,7 +336,7 @@
 	if(isnull(cur_charge) || !chassis.cell)
 		STOP_PROCESSING(SSobj, src)
 		set_ready_state(1)
-		occupant_message("No powercell detected.")
+		occupant_message("<span class='notice'>No powercell detected.</span>")
 		return
 	if(cur_charge < chassis.cell.maxcharge)
 		var/area/A = get_area(chassis)
@@ -414,10 +414,10 @@
 			var/units = min(max(round(to_load / P.perunit),1),P.amount)
 			fuel.amount += units
 			P.use(units)
-			occupant_message("[units] unit\s of [fuel] successfully loaded.")
+			occupant_message("<span class='notice'>[units] unit\s of [fuel] successfully loaded.</span>")
 			return units
 		else
-			occupant_message("Unit is full.")
+			occupant_message("<span class='notice'>Unit is full.</span>")
 			return 0
 	else
 		occupant_message("<span class='warning'>[fuel] traces in target minimal! [P] cannot be used as fuel.</span>")
@@ -439,7 +439,7 @@
 	var/cur_charge = chassis.get_charge()
 	if(isnull(cur_charge))
 		set_ready_state(1)
-		occupant_message("No powercell detected.")
+		occupant_message("<span class='notice'>No powercell detected.</span>")
 		log_message("Deactivated.", LOG_MECHA)
 		STOP_PROCESSING(SSobj, src)
 		return

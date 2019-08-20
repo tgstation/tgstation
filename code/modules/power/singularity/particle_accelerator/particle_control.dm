@@ -280,7 +280,7 @@
 				W.play_tool_sound(src, 75)
 				anchored = TRUE
 				user.visible_message("<span class='notice'>[user.name] secures the [name] to the floor.</span>", \
-					"You secure the external bolts.")
+					"<span class='notice'>You secure the external bolts.</span>")
 				construction_state = PA_CONSTRUCTION_UNWIRED
 				did_something = TRUE
 		if(PA_CONSTRUCTION_UNWIRED)
@@ -288,31 +288,31 @@
 				W.play_tool_sound(src, 75)
 				anchored = FALSE
 				user.visible_message("<span class='notice'>[user.name] detaches the [name] from the floor.</span>", \
-					"You remove the external bolts.")
+					"<span class='notice'>You remove the external bolts.</span>")
 				construction_state = PA_CONSTRUCTION_UNSECURED
 				did_something = TRUE
 			else if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/CC = W
 				if(CC.use(1))
 					user.visible_message("<span class='notice'>[user.name] adds wires to the [name].</span>", \
-						"You add some wires.")
+						"<span class='notice'>You add some wires.</span>")
 					construction_state = PA_CONSTRUCTION_PANEL_OPEN
 					did_something = TRUE
 		if(PA_CONSTRUCTION_PANEL_OPEN)
 			if(W.tool_behaviour == TOOL_WIRECUTTER)//TODO:Shock user if its on?
 				user.visible_message("<span class='notice'>[user.name] removes some wires from the [name].</span>", \
-					"You remove some wires.")
+					"<span class='notice'>You remove some wires.</span>")
 				construction_state = PA_CONSTRUCTION_UNWIRED
 				did_something = TRUE
 			else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 				user.visible_message("<span class='notice'>[user.name] closes the [name]'s access panel.</span>", \
-					"You close the access panel.")
+					"<span class='notice'>You close the access panel.</span>")
 				construction_state = PA_CONSTRUCTION_COMPLETE
 				did_something = TRUE
 		if(PA_CONSTRUCTION_COMPLETE)
 			if(W.tool_behaviour == TOOL_SCREWDRIVER)
 				user.visible_message("<span class='notice'>[user.name] opens the [name]'s access panel.</span>", \
-					"You open the access panel.")
+					"<span class='notice'>You open the access panel.</span>")
 				construction_state = PA_CONSTRUCTION_PANEL_OPEN
 				did_something = TRUE
 

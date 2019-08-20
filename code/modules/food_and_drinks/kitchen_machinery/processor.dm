@@ -75,7 +75,7 @@
 	var/datum/food_processor_process/P = select_recipe(O)
 	if(P)
 		user.visible_message("<span class='notice'>[user] put [O] into [src].</span>", \
-			"You put [O] into [src].")
+			"<span class='notice'>You put [O] into [src].</span>")
 		user.transferItemToLoc(O, src, TRUE)
 		return 1
 	else
