@@ -106,3 +106,7 @@
 //cloning defines. These are flags.
 #define CLONING_SUCCESS (1<<0)
 #define CLONING_DELETE_RECORD (1<<1)
+
+//these flags are used to tell the DNA modifier if a plant gene cannot be extracted or modified.
+#define PLANT_GENE_REMOVABLE	(1<<0)
+#define PLANT_GENE_EXTRACTABLE	(1<<1)

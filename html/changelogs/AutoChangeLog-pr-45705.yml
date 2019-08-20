@@ -1,5 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - tweak: "Laser eyes now generate a message when shot."
-  - code_imp: "Cleaned up mutation code."

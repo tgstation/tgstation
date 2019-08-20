@@ -406,39 +406,28 @@
 	return FALSE
 
 /obj/machinery/smartfridge/organ/load(obj/item/O)
-	if(..())	//if the item loads, clear can_decompose
-		var/obj/item/organ/organ = O
-		organ.organ_flags |= ORGAN_FROZEN
-
-/obj/machinery/smartfridge/organ/dispense(obj/item/O, var/mob/M)
+	. = ..()
+	if(!.)	//if the item loads, clear can_decompose
+		return
 	var/obj/item/organ/organ = O
-	organ.organ_flags &= ~ORGAN_FROZEN
-	..()
+	organ.organ_flags |= ORGAN_FROZEN
 
 /obj/machinery/smartfridge/organ/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		max_n_of_items = 20 * B.rating
 		repair_rate = max(0, STANDARD_ORGAN_HEALING * (B.rating - 1))
 
-/obj/machinery/smartfridge/organ/Destroy()
-	for(var/organ in src)
-		var/obj/item/organ/O = organ
-		if(O)
-			O.organ_flags &= ~ORGAN_FROZEN
-	..()
-
 /obj/machinery/smartfridge/organ/process()
-	for(var/organ in src)
+	for(var/organ in contents)
 		var/obj/item/organ/O = organ
-		if(O)
-			O.damage = max(0, O.damage - repair_rate)
+		if(!istype(O))
+			return
+		O.applyOrganDamage(-repair_rate)
 
-/obj/machinery/smartfridge/organ/deconstruct()
-	for(var/organ in src)
-		var/obj/item/organ/O = organ
-		if(O)
-			O.organ_flags &= ~ORGAN_FROZEN
-	..()
+/obj/machinery/smartfridge/organ/Exited(obj/item/organ/AM, atom/newLoc)
+	. = ..()
+	if(istype(AM))
+		AM.organ_flags &= ~ORGAN_FROZEN
 
 // -----------------------------
 // Chemistry Medical Smartfridge

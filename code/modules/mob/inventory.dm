@@ -51,46 +51,24 @@
 //Finds the first available (null) index OR all available (null) indexes in held_items based on a side.
 //Lefts: 1, 3, 5, 7...
 //Rights:2, 4, 6, 8...
-/mob/proc/get_empty_held_index_for_side(side = "left", all = FALSE)
-	var/start = 0
-	var/static/list/lefts = list("l" = TRUE,"L" = TRUE,"LEFT" = TRUE,"left" = TRUE)
-	var/static/list/rights = list("r" = TRUE,"R" = TRUE,"RIGHT" = TRUE,"right" = TRUE) //"to remain silent"
-	if(lefts[side])
-		start = 1
-	else if(rights[side])
-		start = 2
-	if(!start)
-		return FALSE
-	var/list/empty_indexes
-	for(var/i in start to held_items.len step 2)
+/mob/proc/get_empty_held_index_for_side(side = LEFT_HANDS, all = FALSE)
+	var/list/empty_indexes = all ? list() : null
+	for(var/i in (side == LEFT_HANDS) ? 1 : 2 to held_items.len step 2)
 		if(!held_items[i])
 			if(!all)
 				return i
-			if(!empty_indexes)
-				empty_indexes = list()
 			empty_indexes += i
 	return empty_indexes
 
 
 //Same as the above, but returns the first or ALL held *ITEMS* for the side
-/mob/proc/get_held_items_for_side(side = "left", all = FALSE)
-	var/start = 0
-	var/static/list/lefts = list("l" = TRUE,"L" = TRUE,"LEFT" = TRUE,"left" = TRUE)
-	var/static/list/rights = list("r" = TRUE,"R" = TRUE,"RIGHT" = TRUE,"right" = TRUE) //"to remain silent"
-	if(lefts[side])
-		start = 1
-	else if(rights[side])
-		start = 2
-	if(!start)
-		return FALSE
-	var/list/holding_items
-	for(var/i in start to held_items.len step 2)
+/mob/proc/get_held_items_for_side(side = LEFT_HANDS, all = FALSE)
+	var/list/holding_items = all ? list() : null
+	for(var/i in (side == LEFT_HANDS) ? 1 : 2 to held_items.len step 2)
 		var/obj/item/I = held_items[i]
 		if(I)
 			if(!all)
 				return I
-			if(!holding_items)
-				holding_items = list()
 			holding_items += I
 	return holding_items
 
@@ -193,11 +171,11 @@
 
 //Puts the item into the first available left hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_l_hand(obj/item/I)
-	return put_in_hand(I, get_empty_held_index_for_side("l"))
+	return put_in_hand(I, get_empty_held_index_for_side(LEFT_HANDS))
 
 //Puts the item into the first available right hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_r_hand(obj/item/I)
-	return put_in_hand(I, get_empty_held_index_for_side("r"))
+	return put_in_hand(I, get_empty_held_index_for_side(RIGHT_HANDS))
 
 /mob/proc/put_in_hand_check(obj/item/I)
 	return FALSE					//nonliving mobs don't have hands
@@ -247,9 +225,9 @@
 	if(put_in_active_hand(I, forced))
 		return TRUE
 
-	var/hand = get_empty_held_index_for_side("l")
+	var/hand = get_empty_held_index_for_side(LEFT_HANDS)
 	if(!hand)
-		hand =  get_empty_held_index_for_side("r")
+		hand =  get_empty_held_index_for_side(RIGHT_HANDS)
 	if(hand)
 		if(put_in_hand(I, hand, forced))
 			return TRUE
