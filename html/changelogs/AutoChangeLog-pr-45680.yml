@@ -1,7 +1,0 @@
-author: "81Denton"
-delete-after: True
-changes: 
-  - bugfix: "X4 now has a wire panel that lets you attach assemblies, just like C4. You can also attach X4 to creatures now."
-  - tweak: "C4 and X4 wires no longer need a screwdriver to access."
-  - rscadd: "Added a few extra C4/X4 suicide lines for different antagonists.
-remove: Removed generic plastic explosives, as they're not used anywhere ingame and overlap with chemical grenades."

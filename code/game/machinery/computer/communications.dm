@@ -320,7 +320,7 @@
 					return
 				Nuke_request(input, usr)
 				to_chat(usr, "<span class='notice'>Request sent.</span>")
-				usr.log_message("has requested the nuclear codes from CentCom", LOG_SAY)
+				usr.log_message("has requested the nuclear codes from CentCom with reason \"[input]\"", LOG_SAY)
 				priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self Destruct Codes Requested",'sound/ai/commandreport.ogg')
 				CM.lastTimeUsed = world.time
 

@@ -22,7 +22,7 @@
 
 /datum/surgery_step/heal
 	name = "repair body"
-	implements = list(/obj/item/hemostat = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
+	implements = list(/obj/item/hemostat = 100, TOOL_SCREWDRIVER = 65, /obj/item/pen = 55)
 	repeatable = TRUE
 	time = 25
 	var/brutehealing = 0
@@ -60,7 +60,6 @@
 	return TRUE
 
 /datum/surgery_step/heal/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] screws up!", "<span class='warning'>You screwed up!</span>")
 	display_results(user, target, "<span class='warning'>You screwed up!</span>",
 		"[user] screws up!",
 		"[user] fixes some of [target]'s wounds.", TRUE)

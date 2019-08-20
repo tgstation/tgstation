@@ -14,7 +14,7 @@
 	var/static/list/mutable_appearance/visual_indicators = list()
 	var/obj/effect/proc_holder/spell/power
 	var/layer_used = MUTATIONS_LAYER //which mutation layer to use
-	var/list/species_allowed = list() //to restrict mutation to only certain species
+	var/list/species_allowed //to restrict mutation to only certain species
 	var/health_req //minimum health required to acquire the mutation
 	var/limb_req //required limbs to acquire this mutation
 	var/time_coeff = 1 //coefficient for timed mutations
@@ -57,7 +57,7 @@
 /datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/H)
 	if(!H || !istype(H) || H.stat == DEAD || (src in H.dna.mutations))
 		return TRUE
-	if(species_allowed.len && !species_allowed.Find(H.dna.species.id))
+	if(species_allowed && !species_allowed.Find(H.dna.species.id))
 		return TRUE
 	if(health_req && H.health < health_req)
 		return TRUE
@@ -91,12 +91,6 @@
 /datum/mutation/human/proc/get_visual_indicator()
 	return
 
-/datum/mutation/human/proc/on_attack_hand( atom/target, proximity)
-	return
-
-/datum/mutation/human/proc/on_ranged_attack(atom/target)
-	return
-
 /datum/mutation/human/proc/on_life()
 	return
 
@@ -123,7 +117,7 @@
 
 /mob/living/carbon/human/update_mutations_overlay()
 	for(var/datum/mutation/human/CM in dna.mutations)
-		if(CM.species_allowed.len && !CM.species_allowed.Find(dna.species.id))
+		if(CM.species_allowed && !CM.species_allowed.Find(dna.species.id))
 			dna.force_lose(CM) //shouldn't have that mutation at all
 			continue
 		if(CM.visual_indicators.len)

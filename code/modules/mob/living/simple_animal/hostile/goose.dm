@@ -56,8 +56,10 @@
 	. = ..()
 	goosevomit = new
 	goosevomit.Grant(src)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/goosement)
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/Destroy()
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 	QDEL_NULL(goosevomit)
 	return ..()
 
@@ -131,8 +133,7 @@
 	vomiting = FALSE
 	icon_state = initial(icon_state)
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/Moved(oldLoc, dir)
-	. = ..()
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/goosement(atom/movable/AM, OldLoc, Dir, Forced)
 	if(vomiting)
 		vomit() // its supposed to keep vomiting if you move
 		return
