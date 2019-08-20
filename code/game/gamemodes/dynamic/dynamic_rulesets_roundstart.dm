@@ -356,7 +356,7 @@
 	var/max_canditates = 3
 	for(var/i = 1 to max_canditates)
 		if(candidates.len <= 0)
-			return FALSE
+			break
 		var/mob/M = pick_n_take(candidates)
 		assigned += M.mind
 		M.mind.restricted_roles = restricted_roles
@@ -374,7 +374,6 @@
 	revolution.update_objectives()
 	revolution.update_heads()
 	SSshuttle.registerHostileEnvironment(src)
-
 	return TRUE
 	
 /datum/dynamic_ruleset/roundstart/revs/rule_process()

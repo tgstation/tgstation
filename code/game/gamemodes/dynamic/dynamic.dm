@@ -438,10 +438,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		executed_rules += starting_rule
 		if (starting_rule.persistent)
 			current_rules += starting_rule
-		for(var/mob/M in starting_rule.assigned)
-			for (var/datum/dynamic_ruleset/roundstart/rule in roundstart_rules)
-				if (!rule.ready())
-					drafted_rules -= rule // And removing rules that are no longer elligible
+		for (var/datum/dynamic_ruleset/roundstart/rule in drafted_rules)
+			if (!rule.ready())
+				drafted_rules -= rule // And removing rules that are no longer elligible
 		return TRUE
 	else
 		stack_trace("The starting rule \"[starting_rule.name]\" failed to pre_execute.")

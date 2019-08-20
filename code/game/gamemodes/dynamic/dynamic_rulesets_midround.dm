@@ -29,7 +29,6 @@
 
 /datum/dynamic_ruleset/midround/proc/trim_list(list/L = list())
 	var/list/trimmed_list = L.Copy()
-	var/antag_name = initial(antag_flag)
 	for(var/mob/M in trimmed_list)
 		if (!istype(M, required_type))
 			trimmed_list.Remove(M)
@@ -40,9 +39,14 @@
 		if(!mode.check_age(M.client, minimum_required_age))
 			trimmed_list.Remove(M)
 			continue
-		if (!(antag_name in M.client.prefs.be_special) || is_banned_from(M.ckey, list(antag_name, ROLE_SYNDICATE))) // Are they willing and not antag-banned?
-			trimmed_list.Remove(M)
-			continue
+		if(antag_flag_override)
+			if(!(antag_flag_override in M.client.prefs.be_special) || is_banned_from(M.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
+				candidates.Remove(M)
+				continue
+		else
+			if(!antag_flag in M.client.prefs.be_special || is_banned_from(M.ckey, list(antag_flag, ROLE_SYNDICATE)))
+				candidates.Remove(M)
+				continue
 		if (M.mind)
 			if (restrict_ghost_roles && M.mind.assigned_role in GLOB.exp_specialmap[EXP_TYPE_SPECIAL]) // Are they playing a ghost role?
 				trimmed_list.Remove(M)

@@ -163,9 +163,14 @@
 		if(P.mind.special_role) // We really don't want to give antag to an antag.
 			candidates.Remove(P)
 			continue
-		if (!(antag_flag in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag, ROLE_SYNDICATE)) || (antag_flag_override && is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE))))//are they willing and not antag-banned?
-			candidates.Remove(P)
-			continue
+		if(antag_flag_override)
+			if(!antag_flag_override in P.client.prefs.be_special || is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
+				candidates.Remove(P)
+				continue
+		else
+			if(!antag_flag in P.client.prefs.be_special || is_banned_from(P.ckey, list(antag_flag, ROLE_SYNDICATE)))
+				candidates.Remove(P)
+				continue
 
 /// Do your checks if the ruleset is ready to be executed here.
 /// Should ignore certain checks if forced is TRUE
