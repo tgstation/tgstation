@@ -17,7 +17,7 @@
 	new_form = /mob/living/simple_animal/hostile/melted
 	infectable_biotypes = list(MOB_ORGANIC)
 	process_dead = TRUE
-	var/mob/living/simple_animal/hostile/melting/creator
+	var/mob/living/simple_animal/hostile/melted/creator
 	var/obj/item/slime_mask/mask
 	var/attemped_add_mask = FALSE
 
@@ -53,15 +53,18 @@
 				to_chat(affected_mob, "<span class='danger'>You feel a burning pain in your chest.</span>")
 				affected_mob.adjustToxLoss(2)
 			if(prob(4))
-				return
-				affected_mob.vomit(specialcolor = creator.slimebody_color, toxic = TRUE)
+				to_chat(affected_mob, "<span class='danger'>Bits of you fall to the ground.</span>")
+				var/turf/T = get_turf(affected_mob)
+				T.add_vomit_floor(src, VOMIT_TOXIC, creator.slimebody_color)
 				affected_mob.adjustCloneLoss(5)
 		if(4)
 			if(affected_mob.stat == UNCONSCIOUS)
 				do_disease_transformation(affected_mob)
 			affected_mob.slurring += 2
 			if(prob(10))
-				affected_mob.vomit(specialcolor = creator.slimebody_color, toxic = TRUE)
+				to_chat(affected_mob, "<span class='danger'>Bits of you fall to the ground.</span>")
+				var/turf/T = get_turf(affected_mob)
+				T.add_vomit_floor(src, VOMIT_TOXIC, creator.slimebody_color)
 				affected_mob.adjustCloneLoss(5)
 		if(5)
 			do_disease_transformation(affected_mob)

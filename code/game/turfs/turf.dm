@@ -551,6 +551,7 @@
 		V.icon_state = "vomitpurp_[pick(1,4)]"
 	else if (toxvomit == VOMIT_TOXIC)
 		V.icon_state = "vomittox_[pick(1,4)]"
+		V.color = specialcolor
 	if (iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(C.reagents)
