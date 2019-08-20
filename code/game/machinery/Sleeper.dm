@@ -114,10 +114,12 @@
 	return FALSE
 
 /obj/machinery/sleeper/wrench_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(default_change_direction_wrench(user, I))
 		return TRUE
 
 /obj/machinery/sleeper/crowbar_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(default_pry_open(I))
 		return TRUE
 	if(default_deconstruction_crowbar(I))

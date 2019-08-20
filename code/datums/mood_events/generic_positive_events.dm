@@ -74,7 +74,7 @@
 	hidden = TRUE
 
 /datum/mood_event/badass_antag
-	description = "I'm a fucking badass and everyone around me knows it. Just look at them; they're all fucking shaking at the mere thought of me around."
+	description = "<span class='greentext'>I'm a fucking badass and everyone around me knows it. Just look at them; they're all fucking shaking at the mere thought of me around.</span>\n"
 	mood_change = 7
 	hidden = TRUE
 	special_screen_obj = "badass_sun"

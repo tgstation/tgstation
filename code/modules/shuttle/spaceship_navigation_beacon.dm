@@ -13,7 +13,7 @@
 	idle_power_usage = 0
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/spaceship_navigation_beacon
-	
+
 	var/locked = FALSE //Locked beacons don't allow to jump to it.
 
 
@@ -40,12 +40,13 @@ obj/machinery/spaceship_navigation_beacon/emp_act()
 	update_icon()
 
 /obj/machinery/spaceship_navigation_beacon/multitool_act(mob/living/user, obj/item/multitool/I)
+	..()
 	if(panel_open)
 		var/new_name = "Beacon_[input("Enter the custom name for this beacon", "It be Beacon ..your input..") as text]"
 		if(new_name && Adjacent(user))
 			name = new_name
 			to_chat(user, "<span class='notice'>You change beacon name to [name].</span>")
-	else 
+	else
 		locked =!locked
 		to_chat(user, "<span class='notice'>You [locked ? "" : "un"]lock [src].</span>")
 	return TRUE

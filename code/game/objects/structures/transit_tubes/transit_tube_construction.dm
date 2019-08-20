@@ -41,6 +41,7 @@
 		icon_state = "[base_icon][flipped]"
 
 /obj/structure/c_transit_tube/wrench_act(mob/living/user, obj/item/I)
+	..()
 	if(!can_wrench_in_loc(user))
 		return
 	to_chat(user, "<span class='notice'>You start attaching the [name]...</span>")

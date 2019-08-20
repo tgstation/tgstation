@@ -48,7 +48,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	health = 750
 	maxHealth = 750 //""""low-ish"""" HP because it's a passive boss, and the swarm itself is the real foe
 	mob_biotypes = list(MOB_ROBOTIC)
-	internal_type = /obj/item/gps/internal/swarmer_beacon
+	gps_name = "Hungry Signal"
 	medal_type = BOSS_MEDAL_SWARMERS
 	score_type = SWARMER_BEACON_SCORE
 	faction = list("mining", "boss", "swarmer")
@@ -88,12 +88,6 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 		call_help_cooldown = world.time + call_help_cooldown_amt
 		summon_backup(25) //long range, only called max once per 15 seconds, so it's not deathlag
 
-
-/obj/item/gps/internal/swarmer_beacon
-	icon_state = null
-	gpstag = "Hungry Signal"
-	desc = "Transmitted over the signal is a strange message repeated in every language you know of, and some you don't too..." //the message is "nom nom nom"
-	invisibility = 100
 
 //SWARMER AI
 //AI versions of the swarmer mini-antag

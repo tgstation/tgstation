@@ -170,6 +170,7 @@
 	..()
 
 /obj/machinery/computer/camera_advanced/xenobio/multitool_act(mob/living/user, obj/item/multitool/I)
+	. = ..()
 	if (istype(I) && istype(I.buffer,/obj/machinery/monkey_recycler))
 		to_chat(user, "<span class='notice'>You link [src] with [I.buffer] in [I] buffer.</span>")
 		connected_recycler = I.buffer

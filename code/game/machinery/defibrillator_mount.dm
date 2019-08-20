@@ -96,6 +96,7 @@
 	..()
 
 /obj/machinery/defibrillator_mount/multitool_act(mob/living/user, obj/item/multitool)
+	..()
 	if(!defib)
 		to_chat(user, "<span class='warning'>There isn't any defibrillator to clamp in!</span>")
 		return TRUE

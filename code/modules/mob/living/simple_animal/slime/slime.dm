@@ -287,7 +287,8 @@
 			return
 		if(buckled)
 			Feedstop(silent = TRUE)
-			visible_message("<span class='danger'>[M] pulls [src] off!</span>")
+			visible_message("<span class='danger'>[M] pulls [src] off!</span>", \
+				"<span class='danger'>You pull [src] off!</span>")
 			return
 		attacked += 5
 		if(nutrition >= 100) //steal some nutrition. negval handled in life()
@@ -311,32 +312,37 @@
 	if(..()) //successful larva bite.
 		attacked += 10
 
-/mob/living/simple_animal/slime/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
-	if(user.a_intent == INTENT_HARM)
-		discipline_slime(user)
-		return ..()
+/mob/living/simple_animal/slime/attack_hulk(mob/living/carbon/human/user)
+	. = ..()
+	if(!.)
+		return
+	discipline_slime(user)
 
 /mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/M)
 	if(buckled)
 		M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		if(buckled == M)
 			if(prob(60))
-				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off!</span>")
+				M.visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off!</span>", \
+					"<span class='danger'>You attempt to wrestle \the [name] off!</span>")
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 
 			else
-				visible_message("<span class='warning'>[M] manages to wrestle \the [name] off!</span>")
+				M.visible_message("<span class='warning'>[M] manages to wrestle \the [name] off!</span>", \
+					"<span class='notice'>You manage to wrestle \the [name] off!</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 				discipline_slime(M)
 
 		else
 			if(prob(30))
-				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off of [buckled]!</span>")
+				buckled.visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off of [buckled]!</span>", \
+					"<span class='warning'>[M] attempts to wrestle \the [name] off of you!</span>")
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 
 			else
-				visible_message("<span class='warning'>[M] manages to wrestle \the [name] off of [buckled]!</span>")
+				buckled.visible_message("<span class='warning'>[M] manages to wrestle \the [name] off of [buckled]!</span>", \
+					"<span class='notice'>[M] manage to wrestle \the [name] off of you!</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 				discipline_slime(M)

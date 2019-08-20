@@ -56,7 +56,7 @@ Difficulty: Medium
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/ashdrake = 10)
 	var/swooping = NONE
 	var/player_cooldown = 0
-	internal_type = /obj/item/gps/internal/dragon
+	gps_name = "Fiery Signal"
 	medal_type = BOSS_MEDAL_DRAKE
 	score_type = DRAKE_SCORE
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
@@ -380,10 +380,6 @@ Difficulty: Medium
 	if(!lava_success)
 		arena_escape_enrage()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/death()
-	QDEL_NULL(internal) // so drake corpses don't have a gps signal
-	. = ..()
-
 /mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
 	if(severity == EXPLODE_LIGHT)
 		return
@@ -414,12 +410,6 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon/Goto(target, delay, minimum_distance)
 	if(!swooping)
 		..()
-
-/obj/item/gps/internal/dragon
-	icon_state = null
-	gpstag = "Fiery Signal"
-	desc = "Here there be dragons."
-	invisibility = 100
 
 /obj/effect/temp_visual/lava_warning
 	icon_state = "lavastaff_warn"

@@ -370,12 +370,12 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		if(MODE_WHISPER)
 			return ITALICS
 		if(MODE_R_HAND)
-			for(var/obj/item/r_hand in get_held_items_for_side("r", all = TRUE))
+			for(var/obj/item/r_hand in get_held_items_for_side(RIGHT_HANDS, all = TRUE))
 				if (r_hand)
 					return r_hand.talk_into(src, message, , spans, language)
 				return ITALICS | REDUCE_RANGE
 		if(MODE_L_HAND)
-			for(var/obj/item/l_hand in get_held_items_for_side("l", all = TRUE))
+			for(var/obj/item/l_hand in get_held_items_for_side(LEFT_HANDS, all = TRUE))
 				if (l_hand)
 					return l_hand.talk_into(src, message, , spans, language)
 				return ITALICS | REDUCE_RANGE

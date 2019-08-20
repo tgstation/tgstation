@@ -27,6 +27,7 @@
 	AddComponent(/datum/component/plumbing/acclimator)
 
 /obj/machinery/plumbing/acclimator/wrench_act(mob/living/user, obj/item/I)
+	..()
 	default_unfasten_wrench(user, I)
 	return TRUE
 

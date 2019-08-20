@@ -51,9 +51,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/real_name						//our character's name
 	var/be_random_name = 0				//whether we'll have a random name every round
 	var/be_random_body = 0				//whether we'll have a random body every round
+	var/be_random_species = 0			//whether we'll be a random species every round
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
 	var/underwear = "Nude"				//underwear type
+	var/underwear_color = "000"			//underwear color
 	var/undershirt = "Nude"				//undershirt type
 	var/socks = "Nude"					//socks type
 	var/backbag = DBACKPACK				//backpack type
@@ -65,7 +67,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFF", "ethcolor" = "9c3030", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain")
+	var/list/features = list("mcolor" = "FFF", "ethcolor" = "9c3030", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain", "moth_markings" = "None")
 	var/list/genders = list(MALE, FEMALE, PLURAL)
 	var/list/friendlyGenders = list("Male" = "male", "Female" = "female", "Other" = "plural")
 
@@ -180,11 +182,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<table width='100%'><tr><td width='75%' valign='top'>"
 			if(is_banned_from(user.ckey, "Appearance"))
 				dat += "<b>You are banned from using custom names and appearances. You can continue to adjust your characters, but you will be randomised once you join the game.</b><br>"
-			dat += "<a href='?_src_=prefs;preference=name;task=random'>Random Name</A> "
-			dat += "<a href='?_src_=prefs;preference=name'>Always Random Name: [be_random_name ? "Yes" : "No"]</a><BR>"
-
-			dat += "<b>Name:</b> "
-			dat += "<a href='?_src_=prefs;preference=name;task=input'>[real_name]</a><BR>"
+			if (!be_random_species) 	// don't let random species choose their name
+				dat += "<a href='?_src_=prefs;preference=name;task=random'>Random Name</A> "
+				dat += "<a href='?_src_=prefs;preference=name'>Always Random Name: [be_random_name ? "Yes" : "No"]</a><BR>"
+				dat += "<b>Name:</b> "
+				dat += "<a href='?_src_=prefs;preference=name;task=input'>[real_name]</a><BR>"
+			else
+				dat += "<b>Name Randomized (always random species)</b><br>"
 
 			if(!(AGENDER in pref_species.species_traits))
 				var/dispGender
@@ -222,8 +226,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<table width='100%'><tr><td width='24%' valign='top'>"
 
 			dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
+			dat += "<a href='?_src_=prefs;preference=rand_species;task=random_race'>Random Species</A> "
+			dat += "<a href='?_src_=prefs;preference=rand_species'>Always Random Species: [be_random_species ? "Yes" : "No"]</A><br>"
 
 			dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
+			dat += "<b>Underwear Color:</b><BR><span style='border: 1px solid #161616; background-color: #[underwear_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=underwear_color;task=input'>Change</a><BR>"
 			dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
 			dat += "<b>Socks:</b><BR><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><BR>"
 			dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a><BR>"
@@ -393,6 +400,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<h3>Moth wings</h3>"
 
 				dat += "<a href='?_src_=prefs;preference=moth_wings;task=input'>[features["moth_wings"]]</a><BR>"
+
+				mutant_category++
+				if(mutant_category >= MAX_MUTANT_ROWS)
+					dat += "</td>"
+					mutant_category = 0
+
+			if("moth_markings" in pref_species.default_features)
+				if(!mutant_category)
+					dat += APPEARANCE_CATEGORY_COLUMN
+
+				dat += "<h3>Moth markings</h3>"
+
+				dat += "<a href='?_src_=prefs;preference=moth_markings;task=input'>[features["moth_markings"]]</a><BR>"
 
 				mutant_category++
 				if(mutant_category >= MAX_MUTANT_ROWS)
@@ -986,6 +1006,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return TRUE
 
 	switch(href_list["task"])
+		if ("random_race")
+			random_species()
+
 		if("random")
 			switch(href_list["preference"])
 				if("name")
@@ -1002,6 +1025,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					facial_hair_style = random_facial_hair_style(gender)
 				if("underwear")
 					underwear = random_underwear(gender)
+				if("underwear_color")
+					underwear_color = random_short_color()
 				if("undershirt")
 					undershirt = random_undershirt(gender)
 				if("socks")
@@ -1144,6 +1169,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_underwear)
 						underwear = new_underwear
 
+				if("underwear_color")
+					var/new_underwear_color = input(user, "Choose your character's underwear color:", "Character Preference","#"+underwear_color) as color|null
+					if(new_underwear_color)
+						underwear_color = sanitize_hexcolor(new_underwear_color)
+
 				if("undershirt")
 					var/new_undershirt
 					if(gender == MALE)
@@ -1260,6 +1290,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_moth_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in GLOB.moth_wings_list
 					if(new_moth_wings)
 						features["moth_wings"] = new_moth_wings
+
+				if("moth_markings")
+					var/new_moth_markings
+					new_moth_markings = input(user, "Choose your character's markings:", "Character Preference") as null|anything in GLOB.moth_markings_list
+					if(new_moth_markings)
+						features["moth_markings"] = new_moth_markings
 
 				if("s_tone")
 					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in GLOB.skin_tones
@@ -1404,6 +1440,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					else
 						be_special += be_special_type
 
+				if("rand_species")
+					be_random_species = !be_random_species
+
 				if("name")
 					be_random_name = !be_random_name
 
@@ -1491,6 +1530,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return 1
 
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE)
+
+	if(be_random_species)
+		be_random_name = 1
+		random_species()
+		
 	if(be_random_name)
 		real_name = pref_species.random_name(gender)
 
@@ -1525,6 +1569,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.hair_style = hair_style
 	character.facial_hair_style = facial_hair_style
 	character.underwear = underwear
+	character.underwear_color = underwear_color
 	character.undershirt = undershirt
 	character.socks = socks
 

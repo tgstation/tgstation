@@ -4115,7 +4115,9 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "UJ" = (
-/obj/machinery/vending/security,
+/obj/machinery/vending/security{
+	onstation_override = 1
+	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},

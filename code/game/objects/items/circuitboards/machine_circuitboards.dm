@@ -844,6 +844,7 @@
 		/obj/item/stock_parts/manipulator = 1)
 
 /obj/item/circuitboard/machine/public_nanite_chamber/multitool_act(mob/living/user)
+	. = ..()
 	var/new_cloud = input("Set the public nanite chamber's Cloud ID (1-100).", "Cloud ID", cloud_id) as num|null
 	if(new_cloud == null)
 		return

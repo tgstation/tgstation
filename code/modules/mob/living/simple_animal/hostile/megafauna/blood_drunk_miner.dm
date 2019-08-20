@@ -44,7 +44,7 @@ Difficulty: Medium
 	wander = FALSE
 	del_on_death = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL
-	internal_type = /obj/item/gps/internal/miner
+	gps_name = "Resonant Signal"
 	medal_type = BOSS_MEDAL_MINER
 	var/obj/item/melee/transforming/cleaving_saw/miner/miner_saw
 	var/time_until_next_transform = 0
@@ -274,12 +274,6 @@ Difficulty: Medium
 	animate(src, color = list("#A7A19E", "#A7A19E", "#A7A19E", list(0, 0, 0)), time = 10, easing = EASE_IN, flags = ANIMATION_PARALLEL)
 	sleep(4)
 	animate(src, alpha = 0, time = 6, easing = EASE_OUT, flags = ANIMATION_PARALLEL)
-
-/obj/item/gps/internal/miner
-	icon_state = null
-	gpstag = "Resonant Signal"
-	desc = "The sweet blood, oh, it sings to me."
-	invisibility = 100
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/guidance
 	guidance = TRUE

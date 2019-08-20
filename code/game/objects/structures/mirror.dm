@@ -67,6 +67,7 @@
 	qdel(src)
 
 /obj/structure/mirror/welder_act(mob/living/user, obj/item/I)
+	..()
 	if(user.a_intent == INTENT_HARM)
 		return FALSE
 
@@ -134,7 +135,7 @@
 
 	switch(choice)
 		if("name")
-			var/newname = copytext(sanitize(input(H, "Who are we again?", "Name change", H.name) as null|text),1,MAX_NAME_LEN)
+			var/newname = copytext(sanitize_name(input(H, "Who are we again?", "Name change", H.name) as null|text),1,MAX_NAME_LEN)
 
 			if(!newname)
 				return

@@ -390,7 +390,7 @@
 	smooth = SMOOTH_MORE|SMOOTH_BORDER
 	canSmoothWith = list (/turf/closed)
 	baseturfs = /turf/open/floor/plating/ashplanet/wateryrock
-	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	environment_type = "waste"
 	turf_type = /turf/open/floor/plating/ashplanet/rocky
 	defer_change = 1

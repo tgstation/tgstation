@@ -387,7 +387,7 @@
 	display_name = "Computer Consoles"
 	description = "Computers and how they work."
 	prereq_ids = list("datatheory")
-	design_ids = list("cargo", "cargorequest", "libraryconsole", "mining", "crewconsole", "rdcamera", "comconsole", "idcardconsole", "seccamera")
+	design_ids = list("cargo", "cargorequest", "libraryconsole", "mining", "crewconsole", "rdcamera", "comconsole", "idcard","idcardconsole", "seccamera")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 	export_price = 5000
 
@@ -584,6 +584,15 @@
 	design_ids = list("rcd_upgrade_frames", "rcd_upgrade_simple_circuits")
 	prereq_ids = list("adv_engi")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
+/datum/techweb_node/adv_rcd_upgrade
+	id = "adv_rcd_upgrade"
+	display_name = "Advanced RCD designs upgrade"
+	description = "Unlocks new RCD designs."
+	design_ids = list("rcd_upgrade_silo_link")
+	prereq_ids = list("rcd_upgrade", "bluespace_travel")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 25000)
 	export_price = 5000
 
 /////////////////////////weaponry tech/////////////////////////

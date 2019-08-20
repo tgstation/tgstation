@@ -381,5 +381,6 @@
 	song.interact(user)
 
 /obj/structure/piano/wrench_act(mob/living/user, obj/item/I)
+	..()
 	default_unfasten_wrench(user, I, 40)
 	return TRUE

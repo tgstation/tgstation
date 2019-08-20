@@ -107,15 +107,16 @@ GENE SCANNER
 
 	// Clumsiness/brain damage check
 	if ((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50))
-		to_chat(user, "<span class='notice'>You stupidly try to analyze the floor's vitals!</span>")
-		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>")
+		user.visible_message("<span class='warning'>[user] analyzes the floor's vitals!</span>", \
+							"<span class='notice'>You stupidly try to analyze the floor's vitals!</span>")
 		to_chat(user, "<span class='info'>Analyzing results for The floor:\n\tOverall status: <b>Healthy</b></span>")
 		to_chat(user, "<span class='info'>Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FF8000'>Burn</font>/<font color='red'>Brute</font></span>")
 		to_chat(user, "<span class='info'>\tDamage specifics: <font color='blue'>0</font>-<font color='green'>0</font>-<font color='#FF8000'>0</font>-<font color='red'>0</font></span>")
 		to_chat(user, "<span class='info'>Body temperature: ???</span>")
 		return
 
-	user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>")
+	user.visible_message("<span class='notice'>[user] analyzes [M]'s vitals.</span>", \
+						"<span class='notice'>You analyze [M]'s vitals.</span>")
 
 	if(scanmode == 0)
 		healthscan(user, M, mode, advanced)
@@ -696,7 +697,8 @@ GENE SCANNER
 	materials = list(/datum/material/iron=200)
 
 /obj/item/nanite_scanner/attack(mob/living/M, mob/living/carbon/human/user)
-	user.visible_message("<span class='notice'>[user] has analyzed [M]'s nanites.</span>")
+	user.visible_message("<span class='notice'>[user] analyzes [M]'s nanites.</span>", \
+						"<span class='notice'>You analyze [M]'s nanites.</span>")
 
 	add_fingerprint(user)
 
@@ -728,7 +730,8 @@ GENE SCANNER
 /obj/item/sequence_scanner/attack(mob/living/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
 	if (!HAS_TRAIT(M, TRAIT_RADIMMUNE) && !HAS_TRAIT(M, TRAIT_BADDNA)) //no scanning if its a husk or DNA-less Species
-		user.visible_message("<span class='notice'>[user] has analyzed [M]'s genetic sequence.</span>")
+		user.visible_message("<span class='notice'>[user] analyzes [M]'s genetic sequence.</span>", \
+							"<span class='notice'>You analyze [M]'s genetic sequence.</span>")
 		gene_scan(M, user)
 
 	else
