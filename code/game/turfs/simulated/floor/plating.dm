@@ -61,7 +61,7 @@
 			to_chat(user, "<span class='notice'>You begin reinforcing the floor...</span>")
 			if(do_after(user, 30, target = src))
 				if (R.get_amount() >= 2 && !istype(src, /turf/open/floor/engine))
-					PlaceOnTop(/turf/open/floor/engine, flags = CHANGETURF_INHERIT_AIR)
+					PlaceOnTop(/turf/open/floor/engine)
 					playsound(src, 'sound/items/deconstruct.ogg', 80, 1)
 					R.use(2)
 					to_chat(user, "<span class='notice'>You reinforce the floor.</span>")
@@ -76,7 +76,7 @@
 			var/obj/item/stack/tile/W = C
 			if(!W.use(1))
 				return
-			var/turf/open/floor/T = PlaceOnTop(W.turf_type, flags = CHANGETURF_INHERIT_AIR)
+			var/turf/open/floor/T = PlaceOnTop(W.turf_type)
 			if(istype(W, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
 				var/obj/item/stack/tile/light/L = W
 				var/turf/open/floor/light/F = T
@@ -118,7 +118,7 @@
 				qdel(L)
 			to_chat(user, "<span class='notice'>You reinforce the foamed plating with tiling.</span>")
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, TRUE)
-			ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+			ChangeTurf(/turf/open/floor/plating)
 	else
 		playsound(src, 'sound/weapons/tap.ogg', 100, TRUE) //The attack sound is muffled by the foam itself
 		user.changeNext_move(CLICK_CD_MELEE)
@@ -126,7 +126,7 @@
 		if(prob(I.force * 20 - 25))
 			user.visible_message("<span class='danger'>[user] smashes through [src]!</span>", \
 							"<span class='danger'>You smash through [src] with [I]!</span>")
-			ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+			ScrapeAway()
 		else
 			to_chat(user, "<span class='danger'>You hit [src], to no effect!</span>")
 
@@ -137,13 +137,13 @@
 /turf/open/floor/plating/foam/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	if(passed_mode == RCD_FLOORWALL)
 		to_chat(user, "<span class='notice'>You build a floor.</span>")
-		ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+		ChangeTurf(/turf/open/floor/plating)
 		return TRUE
 	return FALSE
 
 /turf/open/floor/plating/foam/ex_act()
 	..()
-	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+	ScrapeAway()
 
 /turf/open/floor/plating/foam/tool_act(mob/living/user, obj/item/I, tool_type)
 	return

@@ -4,7 +4,7 @@
 	if (!istype(M))
 		return
 
-	var/new_rating = input("Enter new rating:","Num") as num|null
+	var/new_rating = input("Enter new rating:","Num") as num
 	if(new_rating && M.component_parts)
 		for(var/obj/item/stock_parts/P in M.component_parts)
 			P.rating = new_rating

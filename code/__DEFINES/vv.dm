@@ -73,7 +73,6 @@
 #define VV_HK_EXPOSE "expose"
 #define VV_HK_CALLPROC "proc_call"
 #define VV_HK_MARK "mark"
-#define VV_HK_ADDCOMPONENT "addcomponent"
 #define VV_HK_MODIFY_TRAITS "modtraits"
 
 // /atom
@@ -121,3 +120,7 @@
 
 // misc
 #define VV_HK_SPACEVINE_PURGE "spacevine_purge"
+
+
+
+

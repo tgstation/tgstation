@@ -85,7 +85,7 @@
 //snowflake screwdriver, works as a key to start nuke theft, traitor only
 /obj/item/screwdriver/nuke
 	name = "screwdriver"
-	desc = "A screwdriver with an ultra thin tip that's carefully designed to boost screwing speed."
+	desc = "A screwdriver with an ultra thin tip."
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "screwdriver_nuke"
 	item_state = "screwdriver_nuke"

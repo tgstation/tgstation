@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - rscadd: "Thrown eggs now have a 13% chance (roughly a 1/8 chance) to spawn a chick upon impact (provided that the egg is not caught, of course)."

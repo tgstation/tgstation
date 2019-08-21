@@ -195,7 +195,7 @@
 			var/turf/T = usr.drop_location()
 			if(!isturf(T))
 				return
-			T.PlaceOnTop(R.result_type, flags = CHANGETURF_INHERIT_AIR)
+			T.PlaceOnTop(R.result_type)
 		else
 			O = new R.result_type(usr.drop_location())
 		if(O)

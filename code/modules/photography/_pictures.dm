@@ -36,16 +36,16 @@
 	if(autogenerate_icon && !picture_icon && picture_image)
 		regenerate_small_icon()
 
-/datum/picture/proc/get_small_icon(iconstate)
+/datum/picture/proc/get_small_icon()
 	if(!picture_icon)
-		regenerate_small_icon(iconstate)
+		regenerate_small_icon()
 	return picture_icon
 
-/datum/picture/proc/regenerate_small_icon(iconstate)
+/datum/picture/proc/regenerate_small_icon()
 	if(!picture_image)
 		return
 	var/icon/small_img = icon(picture_image)
-	var/icon/ic = icon('icons/obj/items_and_weapons.dmi', iconstate ? iconstate :"photo")
+	var/icon/ic = icon('icons/obj/items_and_weapons.dmi', "photo")
 	small_img.Scale(8, 8)
 	ic.Blend(small_img,ICON_OVERLAY, 13, 13)
 	picture_icon = ic

@@ -5,7 +5,7 @@
 	icon_state = "recharge_floor"                           //        Some people just want to watch the world burn i guess
 
 /turf/open/floor/mech_bay_recharge_floor/break_tile()
-	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+	ScrapeAway()
 
 /turf/open/floor/mech_bay_recharge_floor/airless
 	icon_state = "recharge_floor_asteroid"

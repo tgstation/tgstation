@@ -69,7 +69,7 @@
 				say("Subject may not have abiotic items on.")
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
 				return
-	if(!(C.mob_biotypes & MOB_ORGANIC))
+	if(!(MOB_ORGANIC in C.mob_biotypes))
 		say("Subject is not organic.")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
 		return
