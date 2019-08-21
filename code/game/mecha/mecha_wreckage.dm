@@ -249,6 +249,22 @@
 	name = "\improper Phazon wreckage"
 	icon_state = "phazon-broken"
 
+/obj/structure/mecha_wreckage/phazon/Initialize()
+	. = ..()
+	var/list/parts = list(
+								/obj/item/mecha_parts/part/phazon_torso,
+								/obj/item/mecha_parts/part/phazon_head,
+								/obj/item/mecha_parts/part/phazon_left_arm,
+								/obj/item/mecha_parts/part/phazon_right_arm,
+								/obj/item/mecha_parts/part/phazon_left_leg,
+								/obj/item/mecha_parts/part/phazon_right_leg,
+								/obj/item/assembly/signaler/anomaly)
+	for(var/i = 0; i < 2; i++)
+		if(parts.len && prob(40))
+			var/part = pick(parts)
+			welder_salvage += part
+			parts -= part	
+
 
 /obj/structure/mecha_wreckage/odysseus
 	name = "\improper Odysseus wreckage"
