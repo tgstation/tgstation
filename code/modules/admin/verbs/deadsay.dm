@@ -35,5 +35,9 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Dsay") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/get_dead_say()
-	var/msg = input(src, null, "dsay \"text\"") as text
+	var/msg = input(src, null, "dsay \"text\"") as text|null
+
+	if (isnull(msg))
+		return
+
 	dsay(msg)

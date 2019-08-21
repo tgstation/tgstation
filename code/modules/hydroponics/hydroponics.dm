@@ -124,6 +124,7 @@
 
 			needs_update = 1
 
+
 //Nutrients//////////////////////////////////////////////////////////////
 			// Nutrients deplete slowly
 			if(prob(50))
@@ -175,8 +176,27 @@
 
 //Pests & Weeds//////////////////////////////////////////////////////////
 
-			else if(pestlevel >= 5)
-				adjustHealth(-1 / rating)
+			if(pestlevel >= 8)
+				if(!myseed.get_gene(/datum/plant_gene/trait/plant_type/carnivory))
+					adjustHealth(-2 / rating)
+
+				else
+					adjustHealth(2 / rating)
+					adjustPests(-1 / rating)
+
+			else if(pestlevel >= 4)
+				if(!myseed.get_gene(/datum/plant_gene/trait/plant_type/carnivory))
+					adjustHealth(-1 / rating)
+
+				else
+					adjustHealth(1 / rating)
+					if(prob(50))
+						adjustPests(-1 / rating)
+
+			else if(pestlevel < 4 && myseed.get_gene(/datum/plant_gene/trait/plant_type/carnivory))
+				adjustHealth(-2 / rating)
+				if(prob(5))
+					adjustPests(-1 / rating)
 
 			// If it's a weed, it doesn't stunt the growth
 			if(weedlevel >= 5 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
@@ -216,6 +236,12 @@
 			needs_update = 1
 		if (needs_update)
 			update_icon()
+
+		if(myseed && prob(5 * (11-myseed.production)))
+			for(var/g in myseed.genes)
+				if(istype(g, /datum/plant_gene/trait))
+					var/datum/plant_gene/trait/selectedtrait = g
+					selectedtrait.on_grow(src)
 	return
 
 /obj/machinery/hydroponics/proc/nutrimentMutation()

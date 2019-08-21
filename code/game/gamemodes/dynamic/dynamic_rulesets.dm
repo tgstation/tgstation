@@ -73,10 +73,9 @@
 
 /datum/dynamic_ruleset/roundstart // One or more of those drafted at roundstart
 	ruletype = "Roundstart"
-
-/datum/dynamic_ruleset/roundstart/delayed/ // Executed with a 30 seconds delay
-	var/delay = 30 SECONDS
-	var/required_type = /mob/living/carbon/human // No ghosts, new players or silicons allowed.
+	/// Delay for when execute will get called from the time of post_setup.
+	/// Make sure your ruleset works with execute being called during the game when using this.
+	var/delay = 0
 
 // Can be drafted when a player joins the server
 /datum/dynamic_ruleset/latejoin
@@ -100,7 +99,7 @@
 /datum/dynamic_ruleset/proc/rule_process()
 	return
 
-/// Called on game mode pre_setup, used for non-delayed roundstart rulesets only.
+/// Called on game mode pre_setup for roundstart rulesets.
 /// Do everything you need to do before job is assigned here.
 /// IMPORTANT: ASSIGN special_role HERE
 /datum/dynamic_ruleset/proc/pre_execute()
@@ -112,12 +111,6 @@
 	for(var/datum/mind/M in assigned)
 		M.add_antag_datum(antag_datum)
 	return TRUE
-
-/// Called after delay set in ruleset.
-/// Give your candidates or assignees equipment and antag datum here.
-/datum/dynamic_ruleset/roundstart/delayed/execute()
-	if (SSticker && SSticker.current_state < GAME_STATE_PLAYING)
-		CRASH("The delayed ruleset [name] executed before the round started.")
 
 /// Here you can perform any additional checks you want. (such as checking the map etc)
 /// Remember that on roundstart no one knows what their job is at this point.
@@ -142,14 +135,6 @@
 /// Usually this does not need to be changed unless you need some specific requirements from your candidates.
 /datum/dynamic_ruleset/proc/trim_candidates()
 	return
-
-/// Counts how many players are ready at roundstart.
-/// Used only by non-delayed roundstart rulesets. 
-/datum/dynamic_ruleset/proc/num_players()
-	. = 0
-	for(var/mob/dead/new_player/P in GLOB.player_list)
-		if(P.client && P.ready == PLAYER_READY_TO_PLAY)
-			. ++
 
 /// Set mode result and news report here.
 /// Only called if ruleset is flagged as HIGHLANDER_RULESET
@@ -178,32 +163,14 @@
 		if(P.mind.special_role) // We really don't want to give antag to an antag.
 			candidates.Remove(P)
 			continue
-		if (!(antag_flag in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag, ROLE_SYNDICATE)) || (antag_flag_override && is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE))))//are they willing and not antag-banned?
-			candidates.Remove(P)
-			continue
-
-/// Checks if candidates are required mob type, connected, banned and if the job is exclusive to the role. 
-/datum/dynamic_ruleset/roundstart/delayed/trim_candidates()
-	. = ..()
-	for (var/mob/P in candidates)
-		if (!istype(P, required_type))
-			candidates.Remove(P) // Can be a new_player, etc.
-			continue
-		if(!mode.check_age(P.client, minimum_required_age))
-			candidates.Remove(P)
-			continue
-		if (!P.client || !P.mind || !P.mind.assigned_role) // Are they connected?
-			candidates.Remove(P)
-			continue
-		if(P.mind.special_role || P.mind.antag_datums?.len > 0) // Are they an antag already?
-			candidates.Remove(P)
-			continue
-		if (!(antag_flag in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag, ROLE_SYNDICATE)) || (antag_flag_override && is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE))))//are they willing and not antag-banned?
-			candidates.Remove(P)
-			continue
-		if ((exclusive_roles.len > 0) && !(P.mind.assigned_role in exclusive_roles)) // Is the rule exclusive to their job?
-			candidates.Remove(P)
-			continue
+		if(antag_flag_override)
+			if(!antag_flag_override in P.client.prefs.be_special || is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
+				candidates.Remove(P)
+				continue
+		else
+			if(!antag_flag in P.client.prefs.be_special || is_banned_from(P.ckey, list(antag_flag, ROLE_SYNDICATE)))
+				candidates.Remove(P)
+				continue
 
 /// Do your checks if the ruleset is ready to be executed here.
 /// Should ignore certain checks if forced is TRUE
