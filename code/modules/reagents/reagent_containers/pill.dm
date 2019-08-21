@@ -216,7 +216,7 @@
 
 /obj/item/reagent_containers/pill/aranesp
 	name = "smooth pill"
-	desc = "This blue pill is feels slightly moist."
+	desc = "This blue pill feels slightly moist."
 	list_reagents = list(/datum/reagent/drug/aranesp = 10)
 	icon_state = "pill3"
 

@@ -13401,13 +13401,6 @@
 /area/crew_quarters/bar)
 "aEZ" = (
 /obj/structure/table/wood,
-/obj/item/storage/fancy/cigarettes/cigars{
-	pixel_y = 6
-	},
-/obj/item/storage/fancy/cigarettes/cigars/cohiba{
-	pixel_y = 3
-	},
-/obj/item/storage/fancy/cigarettes/cigars/havana,
 /obj/item/radio/intercom{
 	pixel_y = 26
 	},
@@ -13420,6 +13413,14 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/item/storage/photo_album/bar{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/storage/fancy/cigarettes/cigars/havana,
+/obj/item/storage/fancy/cigarettes/cigars/cohiba{
+	pixel_y = 3
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
@@ -17199,7 +17200,6 @@
 /turf/open/floor/plating,
 /area/security/prison)
 "aMf" = (
-/obj/structure/easel,
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = 32
 	},
@@ -17207,10 +17207,17 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/canvas/twentythreeXtwentythree,
-/obj/item/canvas/twentythreeXtwentythree,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
+	},
+/obj/structure/table,
+/obj/item/storage/photo_album/prison{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/camera{
+	pixel_x = -2;
+	pixel_y = -2
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -64898,10 +64905,10 @@
 /area/library)
 "cqQ" = (
 /obj/structure/table/wood,
-/obj/item/storage/briefcase,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/storage/photo_album/library,
 /turf/open/floor/plasteel/grimy,
 /area/library)
 "cqR" = (
@@ -113705,8 +113712,7 @@
 /area/chapel/office)
 "efZ" = (
 /obj/structure/table/wood,
-/obj/item/folder/red,
-/obj/item/pen,
+/obj/item/storage/photo_album/chapel,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "ega" = (

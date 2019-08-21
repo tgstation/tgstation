@@ -185,3 +185,21 @@
 		var/mob/living/carbon/M = target
 		M.visible_message("<span class='danger'>[M] explodes into a shower of gibs!</span>")
 		M.gib()
+
+//a shrink ray that shrinks stuff, which grows back after a short while.
+/obj/item/projectile/beam/shrink
+	name = "shrink ray"
+	icon_state = "blue_laser"
+	hitsound = 'sound/weapons/shrink_hit.ogg'
+	damage = 0
+	damage_type = STAMINA
+	flag = "energy"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/shrink
+	light_color = LIGHT_COLOR_BLUE
+	var/shrink_time = 90
+
+/obj/item/projectile/beam/shrink/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(isopenturf(target) || istype(target, /turf/closed/indestructible))//shrunk floors wouldnt do anything except look weird, i-walls shouldnt be bypassable
+		return
+	target.AddComponent(/datum/component/shrink, shrink_time)

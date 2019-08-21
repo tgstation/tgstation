@@ -1,4 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - admin: "Player deaths+suicides are now logged in the attack log and no longer in the game log."

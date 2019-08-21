@@ -286,12 +286,12 @@
 				req_mat = getmaterialref(req_mat) //Get the ref
 
 			else // Its a category. (For example MAT_CATEGORY_RIGID)
-				if(!has_enough_of_category(req_mat, mats[req_mat], multiplier)) //Do we have enough of this category?
+				if(!has_enough_of_category(req_mat, mats[x], multiplier)) //Do we have enough of this category?
 					return FALSE
 				else
 					continue
 
-		if(!has_enough_of_material(req_mat, mats[req_mat], multiplier))//Not a category, so just check the normal way
+		if(!has_enough_of_material(req_mat, mats[x], multiplier))//Not a category, so just check the normal way
 			return FALSE
 
 	return TRUE
