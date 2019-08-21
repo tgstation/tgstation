@@ -1,6 +1,6 @@
 /datum/symptom/mind_restoration
 	name = "Mind Restoration"
-	desc = "The virus strengthens the bonds between neurons, reducing the duration of any ailments of the mind."
+	desc = "The virus strengthens the bonds between neurons, reducing the durations of any ailments of the mind, healing brain damage, and curing mild brain traumas."
 	stealth = -1
 	resistance = -2
 	stage_speed = 1
@@ -9,19 +9,19 @@
 	symptom_delay_min = 5
 	symptom_delay_max = 10
 	var/purge_alcohol = FALSE
-	var/trauma_heal_mild = FALSE
 	var/trauma_heal_severe = FALSE
-	threshold_desc = "<b>Resistance 6:</b> Heals minor brain traumas.<br>\
-					  <b>Resistance 9:</b> Heals severe brain traumas.<br>\
-					  <b>Transmission 8:</b> Purges alcohol in the bloodstream."
+	var/trauma_heal_magic = FALSE
+	threshold_desc = "<b>Resistance 6:</b> Cures severe brain traumas as well.<br>\
+					  <b>Resistance 9:</b> Also cures deep-rooted brain traumas, as well as a few types of permanent brain traumas.<br>\
+					  <b>Transmission 8:</b> Purges alcohol from the bloodstream."
 
 /datum/symptom/mind_restoration/Start(datum/disease/advance/A)
 	if(!..())
 		return
-	if(A.properties["resistance"] >= 6) //heal brain damage
-		trauma_heal_mild = TRUE
-	if(A.properties["resistance"] >= 9) //heal severe traumas
+	if(A.properties["resistance"] >= 6) //heals severe traumas
 		trauma_heal_severe = TRUE
+	if(A.properties["resistance"] >= 9) //heals deep-rooted traumas and traumas of the "magic" resilience tier (which show up as being of the same tier ("permanent") as absolute traumas on health analyzers because they just do)
+		trauma_heal_magic = TRUE
 	if(A.properties["transmittable"] >= 8) //purge alcohol
 		purge_alcohol = TRUE
 
@@ -29,7 +29,6 @@
 	if(!..())
 		return
 	var/mob/living/M = A.affected_mob
-
 
 	if(A.stage >= 3)
 		M.dizziness = max(0, M.dizziness - 2)
@@ -52,11 +51,13 @@
 
 	if(A.stage >= 5)
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3)
-		if(trauma_heal_mild && iscarbon(M))
+		if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(prob(10))
-				if(trauma_heal_severe)
-					C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_LOBOTOMY)
+				if(trauma_heal_magic)
+					C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_MAGIC)  //it might look like we're skipping over a resilience tier (which we technically are), but magic resilience tier traumas are actually really rare, so I lumped them in with the lobotomy resilience tier traumas because I don't think that they're common enough to warrant adding a new threshold effect that just gives this symptom the ability to cure them
+				else if(trauma_heal_severe)
+					C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_TRAUMA_RESILIENCE_SURGERY)
 				else
 					C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
 
