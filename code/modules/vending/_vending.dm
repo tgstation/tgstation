@@ -808,9 +808,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	/// max number of items that the custom vendor can hold
 	var/max_loaded_items = 20
 
-/// proc to see who is the owner of the custom vendor
-
-/obj/machinery/vending/custom/proc/isowner(mob/user)
+/obj/machinery/vending/custom/compartmentLoadAccessCheck(mob/user)
 	. = FALSE
 	var/mob/living/carbon/human/H
 	var/obj/item/card/id/C
@@ -897,7 +895,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(vending_machine_input[O] > 0)
 				var/N = vending_machine_input[O]
 				dat += "<a href='byond://?src=[REF(src)];dispense=[sanitize(O)]'>Dispense</A> "
-				if(isowner(user))
+				if(compartmentLoadAccessCheck(user))
 					price = "FREE"
 				else
 					for(var/obj/T in contents)
@@ -926,7 +924,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 				private_a = C.registered_account
 				say("\The [src] has been linked to [C].")
 
-	if(isowner(user))
+	if(compartmentLoadAccessCheck(user))
 		if(istype(I, /obj/item/pen))
 			name = stripped_input(user,"Set name","Name", name, 20)
 			desc = stripped_input(user,"Set description","Description", desc, 60)
