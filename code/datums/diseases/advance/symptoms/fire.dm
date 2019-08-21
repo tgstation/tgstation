@@ -1,5 +1,6 @@
 /*
 //////////////////////////////////////
+
 Spontaneous Combustion
 	Slightly hidden.
 	Lowers resistance tremendously.
@@ -8,6 +9,7 @@ Spontaneous Combustion
 	Fatal Level.
 Bonus
 	Ignites infected mob.
+	
 //////////////////////////////////////
 */
 
