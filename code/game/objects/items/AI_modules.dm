@@ -241,6 +241,9 @@ AI MODULES
 	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len))
 	if(!targName)
 		return
+	if(contains_ic_filtered_words(targName))
+		to_chat(user, "<span class='warning'>Error: Law contains invalid text.</span>") // AI LAW 2 SAY U W U WITHOUT THE SPACES
+		return
 	laws[1] = targName
 	..()
 
@@ -444,6 +447,9 @@ AI MODULES
 /obj/item/aiModule/core/freeformcore/attack_self(mob/user)
 	var/targName = stripped_input(user, "Please enter a new core law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len))
 	if(!targName)
+		return
+	if(contains_ic_filtered_words(targName))
+		to_chat(user, "<span class='warning'>Error: Law contains invalid text.</span>")
 		return
 	laws[1] = targName
 	..()
