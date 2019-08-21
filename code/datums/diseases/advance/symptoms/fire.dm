@@ -8,10 +8,10 @@ Spontaneous Combustion
 	Decreases stage tremendously.
 	Decreases transmittablity tremendously.
 	Fatal Level.
-	
+
 Bonus
 	Ignites infected mob.
-	
+
 //////////////////////////////////////
 */
 
