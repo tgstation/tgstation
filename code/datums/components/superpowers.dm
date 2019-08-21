@@ -36,12 +36,12 @@
 
 /datum/component/superpowers/RegisterWithParent()
 	if(attack_item_type)
-		RegisterSignal(parent, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/on_attack_hand)
+		RegisterSignal(parent, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/on_attack_hand)
 	if(stored_item_type)
 		RegisterSignal(parent, COMSIG_MOB_DEATH, .proc/on_parent_death)
 
 /datum/component/superpowers/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_HUMAN_MELEE_UNARMED_ATTACK, COMSIG_MOB_DEATH))
+	UnregisterSignal(parent, list(COMSIG_HUMAN_EARLY_UNARMED_ATTACK, COMSIG_MOB_DEATH))
 
 /*
 	Interrupts the hand attack and replaces it with the weapon if the user is on harm intent and attacking something that isn't an item
@@ -53,7 +53,7 @@
 			var/obj/item/I = new attack_item_type(attacker)
 			I.melee_attack_chain(attacker, attacked)
 			qdel(I)
-			return COMPONENT_HUMAN_MELEE_UNARMED_NO_ATTACK
+			return COMPONENT_NO_ATTACK_HAND
 
 /*
 	Removes the superpowers on the parent mobs death and spawns the stored item type

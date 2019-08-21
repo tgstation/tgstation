@@ -86,6 +86,7 @@
 			. += "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>"
 
 /mob/living/simple_animal/hostile/mining_drone/welder_act(mob/living/user, obj/item/I)
+	..()
 	. = TRUE
 	if(mode == MINEDRONE_ATTACK)
 		to_chat(user, "<span class='warning'>[src] can't be repaired while in attack mode!</span>")

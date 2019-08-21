@@ -140,6 +140,7 @@
 
 //welding tool: unfasten and convert to obj/disposalconstruct
 /obj/structure/disposalpipe/welder_act(mob/living/user, obj/item/I)
+	..()
 	if(!can_be_deconstructed(user))
 		return TRUE
 

@@ -29,7 +29,7 @@
 	icon = 'icons/obj/money_machine.dmi'
 	icon_state = "bogdanoff"
 	layer = TABLE_LAYER //So that the crate inside doesn't appear underneath
-	armor = list("melee" = 80, "bullet" = 50, "laser" = 50, "energy" = 100, "bomb" = 100, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 80)
+	armor = list("melee" = 80, "bullet" = 30, "laser" = 30, "energy" = 60, "bomb" = 90, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 80)
 	density = TRUE
 	pixel_z = -8
 	layer = LARGE_MOB_LAYER
@@ -80,6 +80,7 @@
 	add_overlay("hatch")
 	add_overlay("legs_retracted")
 	addtimer(CALLBACK(src, .proc/startUp), 50)
+	QDEL_IN(src, 8 MINUTES) //Self destruct after 8 min
 
 
 /obj/structure/checkoutmachine/proc/startUp() //very VERY snowflake code that adds a neat animation when the pod lands.
@@ -172,7 +173,6 @@
 			account.transfer_money(B, amount)
 			B.bank_card_talk("You have lost [percentage_lost * 100]% of your funds! A spacecoin credit deposit machine is located at: [get_area(src)].")
 	addtimer(CALLBACK(src, .proc/dump), 150) //Drain every 15 seconds
-	addtimer(CALLBACK(src, .proc/qdel, src), 8 MINUTES) //Self destruct after 8 min
 
 /obj/structure/checkoutmachine/process()
 	var/anydir = pick(GLOB.cardinals)

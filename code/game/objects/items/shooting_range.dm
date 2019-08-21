@@ -26,6 +26,7 @@
 		pinnedLoc.forceMove(loc)
 
 /obj/item/target/welder_act(mob/living/user, obj/item/I)
+	..()
 	if(I.use_tool(src, user, 0, volume=40))
 		removeOverlays()
 		to_chat(user, "<span class='notice'>You slice off [src]'s uneven chunks of aluminium and scorch marks.</span>")

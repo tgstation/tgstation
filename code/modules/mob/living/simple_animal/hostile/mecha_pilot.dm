@@ -23,7 +23,7 @@
 	desc = "Death to Nanotrasen. This variant comes in MECHA DEATH flavour."
 	wanted_objects = list()
 	search_objects = 0
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 
 	var/spawn_mecha_type = /obj/mecha/combat/marauder/mauler/loaded
 	var/obj/mecha/mecha //Ref to pilot's mecha instance
@@ -241,8 +241,7 @@
 						addtimer(CALLBACK(mecha.overload_action, /datum/action/innate/mecha/mech_defense_mode.proc/Activate, FALSE), 100) //10 seconds of speeeeed, then toggle off
 
 					retreat_distance = 50
-					spawn(100)
-						retreat_distance = 0
+					addtimer(VARSET_CALLBACK(src, retreat_distance, 0), 10 SECONDS)
 
 
 

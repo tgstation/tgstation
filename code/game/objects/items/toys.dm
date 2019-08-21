@@ -148,18 +148,18 @@
 	item_state = "syndballoon"
 	random_color = FALSE
 
-/obj/item/toy/syndicateballoon/pickup(mob/user)
+/obj/item/toy/balloon/syndicate/pickup(mob/user)
 	. = ..()
 	if(user && user.mind && user.mind.has_antag_datum(/datum/antagonist, TRUE))
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
 
-/obj/item/toy/syndicateballoon/dropped(mob/user)
+/obj/item/toy/balloon/syndicate/dropped(mob/user)
 	if(user)
 		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
 	. = ..()
 
 
-/obj/item/toy/syndicateballoon/Destroy()
+/obj/item/toy/balloon/syndicate/Destroy()
 	if(ismob(loc))
 		var/mob/M = loc
 		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
@@ -553,14 +553,10 @@
 
 /obj/item/toy/talking/attack_self(mob/user)
 	if(!cooldown)
-		var/list/messages = generate_messages()
 		activation_message(user)
 		playsound(loc, 'sound/machines/click.ogg', 20, 1)
 
-		spawn(0)
-			for(var/message in messages)
-				toy_talk(user, message)
-				sleep(10)
+		INVOKE_ASYNC(src, .proc/do_toy_talk, user)
 
 		cooldown = TRUE
 		spawn(recharge_time)
@@ -576,6 +572,11 @@
 
 /obj/item/toy/talking/proc/generate_messages()
 	return list(pick(messages))
+
+/obj/item/toy/talking/proc/do_toy_talk(mob/user)
+	for(var/message in generate_messages())
+		toy_talk(user, message)
+		sleep(10)
 
 /obj/item/toy/talking/proc/toy_talk(mob/user, message)
 	user.loc.visible_message("<span class='[span]'>[icon2html(src, viewers(user.loc))] [message]</span>")
@@ -677,29 +678,15 @@
 	. = ..()
 	populate_deck()
 
+///Generates all the cards within the deck.
 /obj/item/toy/cards/deck/proc/populate_deck()
 	icon_state = "deck_[deckstyle]_full"
-	for(var/i in 2 to 10)
-		cards += "[i] of Hearts"
-		cards += "[i] of Spades"
-		cards += "[i] of Clubs"
-		cards += "[i] of Diamonds"
-	cards += "King of Hearts"
-	cards += "King of Spades"
-	cards += "King of Clubs"
-	cards += "King of Diamonds"
-	cards += "Queen of Hearts"
-	cards += "Queen of Spades"
-	cards += "Queen of Clubs"
-	cards += "Queen of Diamonds"
-	cards += "Jack of Hearts"
-	cards += "Jack of Spades"
-	cards += "Jack of Clubs"
-	cards += "Jack of Diamonds"
-	cards += "Ace of Hearts"
-	cards += "Ace of Spades"
-	cards += "Ace of Clubs"
-	cards += "Ace of Diamonds"
+	for(var/suit in list("Hearts", "Spades", "Clubs", "Diamonds"))
+		cards += "Ace of [suit]"
+		for(var/i in 2 to 10)
+			cards += "[i] of [suit]"
+		for(var/person in list("Jack", "Queen", "King"))
+			cards += "[person] of [suit]"
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 //ATTACK HAND NOT CALLING PARENT
@@ -1174,9 +1161,7 @@
 		var/list/possible_sounds = list('sound/voice/hiss1.ogg', 'sound/voice/hiss2.ogg', 'sound/voice/hiss3.ogg', 'sound/voice/hiss4.ogg')
 		var/chosen_sound = pick(possible_sounds)
 		playsound(get_turf(src), chosen_sound, 50, 1)
-		spawn(45)
-			if(src)
-				icon_state = "[initial(icon_state)]"
+		addtimer(VARSET_CALLBACK(src, icon_state, "[initial(icon_state)]"), 4.5 SECONDS)
 	else
 		to_chat(user, "<span class='warning'>The string on [src] hasn't rewound all the way!</span>")
 		return

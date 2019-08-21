@@ -3437,7 +3437,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes{
-	icon_state = "warningline";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -3717,7 +3716,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/dark/visible{
-	icon_state = "pipe11-2";
 	dir = 6
 	},
 /turf/open/floor/plasteel,
@@ -3839,7 +3837,6 @@
 	},
 /obj/structure/cable,
 /obj/machinery/computer/monitor/secret{
-	icon_state = "computer";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -4079,14 +4076,12 @@
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "kY" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/visible{
-	icon_state = "manifold-2";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "kZ" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
-	icon_state = "connector_map-2";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -4099,11 +4094,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/visible{
-	icon_state = "pipe11-2";
 	dir = 6
 	},
 /obj/machinery/computer/atmos_control/tank/nitrogen_tank{
-	icon_state = "computer";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -4275,7 +4268,6 @@
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "ls" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/visible{
-	icon_state = "manifold-2";
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -4292,7 +4284,6 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supplymain/visible{
-	icon_state = "pipe11-2";
 	dir = 9
 	},
 /turf/open/floor/plasteel,
@@ -4674,7 +4665,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/visible,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/binary/pump{
-	icon_state = "pump_map-2";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -4863,7 +4853,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/visible,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/binary/pump{
-	icon_state = "pump_map-2";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -4878,7 +4867,6 @@
 "mK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/atmos_control/tank/toxin_tank{
-	icon_state = "computer";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -5006,6 +4994,14 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/portable_atmospherics/canister,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/button/door/incinerator_vent_syndicatelava_aux{
+	pixel_x = -8;
+	pixel_y = -40
+	},
+/obj/machinery/button/door/incinerator_vent_syndicatelava_main{
+	pixel_x = 6;
+	pixel_y = -40
+	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "nf" = (
@@ -5014,7 +5010,6 @@
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "ng" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
-	icon_state = "pipe11-2";
 	dir = 5
 	},
 /turf/open/floor/plasteel,
@@ -5601,7 +5596,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/binary/pump{
-	icon_state = "pump_map-2";
 	dir = 1
 	},
 /turf/open/floor/engine,
@@ -5630,7 +5624,6 @@
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "og" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	icon_state = "freezer";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -5804,7 +5797,6 @@
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "oz" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	icon_state = "scrub_map-2";
 	dir = 1
 	},
 /turf/open/floor/engine/vacuum,
@@ -5903,7 +5895,6 @@
 /area/ruin/unpowered/syndicate_lava_base/testlab)
 "vX" = (
 /obj/machinery/atmospherics/pipe/simple/orange{
-	icon_state = "pipe11-2";
 	dir = 8
 	},
 /obj/structure/grille,
@@ -5963,7 +5954,6 @@
 /area/ruin/unpowered/syndicate_lava_base/testlab)
 "Ec" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	icon_state = "freezer";
 	dir = 1
 	},
 /obj/machinery/light/small,
@@ -5971,11 +5961,9 @@
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "Ed" = (
 /obj/machinery/atmospherics/pipe/simple/dark/visible{
-	icon_state = "pipe11-2";
 	dir = 9
 	},
 /obj/machinery/computer/atmos_control/tank/carbon_tank{
-	icon_state = "computer";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -6007,7 +5995,6 @@
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "JB" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
-	icon_state = "pipe11-2";
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,

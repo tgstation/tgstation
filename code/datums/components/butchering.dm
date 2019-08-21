@@ -60,7 +60,8 @@
 			new sinew (T)
 		meat.guaranteed_butcher_results.Remove(sinew)
 	if(butcher)
-		meat.visible_message("<span class='notice'>[butcher] butchers [meat].</span>")
+		butcher.visible_message("<span class='notice'>[butcher] butchers [meat].</span>", \
+								"<span class='notice'>You butcher [meat].</span>")
 	ButcherEffects(meat)
 	meat.harvest(butcher)
 	meat.gib(FALSE, FALSE, TRUE)
@@ -86,4 +87,4 @@
 	if(eater.safety_mode || (eater.stat & (BROKEN|NOPOWER))) //I'm so sorry.
 		return
 	if(L.stat == DEAD && (L.butcher_results || L.guaranteed_butcher_results))
-		Butcher(src, L)
+		Butcher(parent, L)

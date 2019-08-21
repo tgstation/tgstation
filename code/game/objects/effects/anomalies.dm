@@ -235,21 +235,23 @@
 				if(!A.Move(newloc) && newloc) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
 					A.forceMove(newloc)
 
-				spawn()
-					if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
-						var/mob/M = A
-						if(M.client)
-							var/obj/blueeffect = new /obj(src)
-							blueeffect.screen_loc = "WEST,SOUTH to EAST,NORTH"
-							blueeffect.icon = 'icons/effects/effects.dmi'
-							blueeffect.icon_state = "shieldsparkles"
-							blueeffect.layer = FLASH_LAYER
-							blueeffect.plane = FULLSCREEN_PLANE
-							blueeffect.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-							M.client.screen += blueeffect
-							sleep(20)
-							M.client.screen -= blueeffect
-							qdel(blueeffect)
+				if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
+					var/mob/M = A
+					if(M.client)
+						INVOKE_ASYNC(src, .proc/blue_effect, M)
+
+/obj/effect/anomaly/bluespace/proc/blue_effect(mob/M)
+	var/obj/blueeffect = new /obj(src)
+	blueeffect.screen_loc = "WEST,SOUTH to EAST,NORTH"
+	blueeffect.icon = 'icons/effects/effects.dmi'
+	blueeffect.icon_state = "shieldsparkles"
+	blueeffect.layer = FLASH_LAYER
+	blueeffect.plane = FULLSCREEN_PLANE
+	blueeffect.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	M.client.screen += blueeffect
+	sleep(20)
+	M.client.screen -= blueeffect
+	qdel(blueeffect)
 
 /////////////////////
 

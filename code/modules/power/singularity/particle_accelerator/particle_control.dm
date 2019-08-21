@@ -35,7 +35,7 @@
 	return ..()
 
 /obj/machinery/particle_accelerator/control_box/multitool_act(mob/living/user, obj/item/I)
-	..()
+	. = ..()
 	if(construction_state == PA_CONSTRUCTION_PANEL_OPEN)
 		wires.interact(user)
 		return TRUE

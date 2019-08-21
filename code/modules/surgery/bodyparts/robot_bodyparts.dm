@@ -151,6 +151,7 @@
 		return ..()
 
 /obj/item/bodypart/chest/robot/wirecutter_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(!wired)
 		return
 	. = TRUE
@@ -265,6 +266,7 @@
 	return ..()
 
 /obj/item/bodypart/head/robot/crowbar_act(mob/living/user, obj/item/I)
+	..()
 	if(flash1 || flash2)
 		I.play_tool_sound(src)
 		to_chat(user, "<span class='notice'>You remove the flash from [src].</span>")

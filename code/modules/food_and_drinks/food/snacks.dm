@@ -119,17 +119,17 @@ All foods are distributed among various categories. Use common sense.
 			if(!isbrain(M))		//If you're feeding it to someone else.
 				if(fullness <= (600 * (1 + M.overeatduration / 1000)))
 					M.visible_message("<span class='danger'>[user] attempts to feed [M] [src].</span>", \
-										"<span class='userdanger'>[user] attempts to feed [M] [src].</span>")
+										"<span class='userdanger'>[user] attempts to feed you [src].</span>")
 				else
 					M.visible_message("<span class='warning'>[user] cannot force any more of [src] down [M]'s throat!</span>", \
-										"<span class='warning'>[user] cannot force any more of [src] down [M]'s throat!</span>")
+										"<span class='warning'>[user] cannot force any more of [src] down your throat!</span>")
 					return FALSE
 
 				if(!do_mob(user, M))
 					return
 				log_combat(user, M, "fed", reagents.log_list())
-				M.visible_message("<span class='danger'>[user] forces [M] to eat [src].</span>", \
-									"<span class='userdanger'>[user] forces [M] to eat [src].</span>")
+				M.visible_message("<span class='danger'>[user] forces [M] to eat [src]!</span>", \
+									"<span class='userdanger'>[user] forces you to eat [src]!</span>")
 
 			else
 				to_chat(user, "<span class='warning'>[M] doesn't seem to have a mouth!</span>")

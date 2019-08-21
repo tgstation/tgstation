@@ -64,7 +64,7 @@
 	var/can_receive = TRUE
 	var/obj/item/card/id/access_card = null
 	var/chassis = "repairbot"
-	var/list/possible_chassis = list("cat" = TRUE, "mouse" = TRUE, "monkey" = TRUE, "corgi" = FALSE, "fox" = FALSE, "repairbot" = TRUE, "rabbit" = TRUE)		//assoc value is whether it can be picked up.
+	var/list/possible_chassis = list("cat" = TRUE, "mouse" = TRUE, "monkey" = TRUE, "corgi" = FALSE, "fox" = FALSE, "repairbot" = TRUE, "rabbit" = TRUE, "bat" = FALSE, "butterfly" = FALSE, "hawk" = FALSE, "lizard" = FALSE)		//assoc value is whether it can be picked up.
 	var/static/item_head_icon = 'icons/mob/pai_item_head.dmi'
 	var/static/item_lh_icon = 'icons/mob/pai_item_lh.dmi'
 	var/static/item_rh_icon = 'icons/mob/pai_item_rh.dmi'
@@ -90,6 +90,8 @@
 
 /mob/living/silicon/pai/Destroy()
 	QDEL_NULL(internal_instrument)
+	if(cable)
+		QDEL_NULL(cable)
 	if (loc != card)
 		card.forceMove(drop_location())
 	card.pai = null
@@ -128,13 +130,9 @@
 	emittersemicd = TRUE
 	addtimer(CALLBACK(src, .proc/emittercool), 600)
 
-/mob/living/silicon/pai/Life()
-	if(hacking)
-		process_hack()
-	return ..()
+
 
 /mob/living/silicon/pai/proc/process_hack()
-
 	if(cable && cable.machine && istype(cable.machine, /obj/machinery/door) && cable.machine == hackdoor && get_dist(src, hackdoor) <= 1)
 		hackprogress = CLAMP(hackprogress + 4, 0, 100)
 	else
@@ -265,16 +263,17 @@
 	. += "A personal AI in holochassis mode. Its master ID string seems to be [master]."
 
 /mob/living/silicon/pai/Life()
-	if(stat == DEAD)
+	. = ..()
+	if(QDELETED(src) || stat == DEAD)
 		return
 	if(cable)
 		if(get_dist(src, cable) > 1)
-			var/turf/T = get_turf(src.loc)
-			T.visible_message("<span class='warning'>[src.cable] rapidly retracts back into its spool.</span>", "<span class='italics'>You hear a click and the sound of wire spooling rapidly.</span>")
-			qdel(src.cable)
-			cable = null
+			var/turf/T = get_turf(src)
+			T.visible_message("<span class='warning'>[cable] rapidly retracts back into its spool.</span>", "<span class='italics'>You hear a click and the sound of wire spooling rapidly.</span>")
+			QDEL_NULL(cable)
+	if(hacking)
+		process_hack()
 	silent = max(silent - 1, 0)
-	. = ..()
 
 /mob/living/silicon/pai/updatehealth()
 	if(status_flags & GODMODE)

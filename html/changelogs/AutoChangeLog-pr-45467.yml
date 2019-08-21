@@ -1,4 +1,0 @@
-author: "SpacePrius"
-delete-after: True
-changes: 
-  - bugfix: "Engineering console now draws power from the SMES grid on metastation."

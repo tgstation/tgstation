@@ -1,4 +1,0 @@
-author: "Zxaber"
-delete-after: True
-changes: 
-  - balance: "Re-worked the Durand's defense ability into a directional shield that blocks all attacks except explosive and EMP-based. Does not inhibit movement or weapon use, but has a very high power cost."

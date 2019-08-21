@@ -252,10 +252,12 @@
 			state = EMITTER_UNWRENCHED
 
 /obj/machinery/power/emitter/wrench_act(mob/living/user, obj/item/I)
+	..()
 	default_unfasten_wrench(user, I)
 	return TRUE
 
 /obj/machinery/power/emitter/welder_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(active)
 		to_chat(user, "Turn \the [src] off first.")
 		return TRUE

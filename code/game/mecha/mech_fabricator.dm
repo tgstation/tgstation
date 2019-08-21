@@ -351,12 +351,7 @@
 		add_part_set_to_queue(href_list["partset_to_queue"])
 		return update_queue_on_page()
 	if(href_list["process_queue"])
-		spawn(0)
-			if(processing_queue || being_built)
-				return FALSE
-			processing_queue = 1
-			process_queue()
-			processing_queue = 0
+		INVOKE_ASYNC(src, .proc/do_process_queue)
 	if(href_list["clear_temp"])
 		temp = null
 	if(href_list["screen"])
@@ -393,6 +388,13 @@
 
 	updateUsrDialog()
 	return
+
+/obj/machinery/mecha_part_fabricator/proc/do_process_queue()
+	if(processing_queue || being_built)
+		return FALSE
+	processing_queue = 1
+	process_queue()
+	processing_queue = 0
 
 /obj/machinery/mecha_part_fabricator/on_deconstruction()
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)

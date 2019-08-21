@@ -39,10 +39,14 @@
 		g1 = GetGreenPart(default_color)
 		b1 = GetBluePart(default_color)
 		spec_updatehealth(H)
+		RegisterSignal(C, COMSIG_ATOM_EMAG_ACT, .proc/on_emag_act)
+		RegisterSignal(C, COMSIG_ATOM_EMP_ACT, .proc/on_emp_act)
 
 /datum/species/ethereal/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	.=..()
 	C.set_light(0)
+	UnregisterSignal(C, COMSIG_ATOM_EMAG_ACT)
+	UnregisterSignal(C, COMSIG_ATOM_EMP_ACT)
 
 /datum/species/ethereal/random_name(gender,unique,lastname)
 	if(unique)
@@ -65,25 +69,25 @@
 		fixed_mut_color = rgb(128,128,128)
 	H.update_body()
 
-/datum/species/ethereal/spec_emp_act(mob/living/carbon/human/H, severity)
-	.=..()
+/datum/species/ethereal/proc/on_emp_act(mob/living/carbon/human/H, severity)
 	EMPeffect = TRUE
 	spec_updatehealth(H)
 	to_chat(H, "<span class='notice'>You feel the light of your body leave you.</span>")
 	switch(severity)
 		if(EMP_LIGHT)
-			addtimer(CALLBACK(src, .proc/stop_emp, H), 100, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 10 seconds
+			addtimer(CALLBACK(src, .proc/stop_emp, H), 10 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 10 seconds
 		if(EMP_HEAVY)
-			addtimer(CALLBACK(src, .proc/stop_emp, H), 200, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 20 seconds
+			addtimer(CALLBACK(src, .proc/stop_emp, H), 20 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 20 seconds
 
-/datum/species/ethereal/spec_emag_act(mob/living/carbon/human/H, mob/user)
+/datum/species/ethereal/proc/on_emag_act(mob/living/carbon/human/H, mob/user)
 	if(emageffect)
 		return
 	emageffect = TRUE
-	to_chat(user, "<span class='notice'>You tap [H] on the back with your card.</span>")
+	if(user)
+		to_chat(user, "<span class='notice'>You tap [H] on the back with your card.</span>")
 	H.visible_message("<span class='danger'>[H] starts flickering in an array of colors!</span>")
 	handle_emag(H)
-	addtimer(CALLBACK(src, .proc/stop_emag, H), 300, TIMER_UNIQUE|TIMER_OVERRIDE) //Disco mode for 30 seconds! This doesn't affect the ethereal at all besides either annoying some players, or making someone look badass.
+	addtimer(CALLBACK(src, .proc/stop_emag, H), 30 SECONDS) //Disco mode for 30 seconds! This doesn't affect the ethereal at all besides either annoying some players, or making someone look badass.
 
 
 /datum/species/ethereal/spec_life(mob/living/carbon/human/H)

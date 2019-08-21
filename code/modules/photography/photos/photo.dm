@@ -35,7 +35,7 @@
 /obj/item/photo/update_icon()
 	if(!istype(picture) || !picture.picture_image)
 		return
-	var/icon/I = picture.get_small_icon()
+	var/icon/I = picture.get_small_icon(initial(icon_state))
 	if(I)
 		icon = I
 
@@ -91,3 +91,6 @@
 	if((loc == usr || loc.loc && loc.loc == usr) && usr.stat == CONSCIOUS && !usr.incapacitated())
 		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
+
+/obj/item/photo/old
+	icon_state = "photo_old"
