@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - bugfix: "Dumping storage containers while click dragging now respects sanity."
