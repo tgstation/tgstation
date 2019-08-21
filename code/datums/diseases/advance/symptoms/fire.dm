@@ -1,17 +1,13 @@
 /*
 //////////////////////////////////////
-
 Spontaneous Combustion
-
 	Slightly hidden.
 	Lowers resistance tremendously.
 	Decreases stage tremendously.
 	Decreases transmittablity tremendously.
 	Fatal Level.
-
 Bonus
 	Ignites infected mob.
-
 //////////////////////////////////////
 */
 
@@ -81,19 +77,15 @@ Bonus
 
 /*
 //////////////////////////////////////
-
 Alkali perspiration
-
 	Hidden.
 	Lowers resistance.
 	Decreases stage speed.
 	Decreases transmittablity.
 	Fatal Level.
-
 Bonus
 	Ignites infected mob.
 	Explodes mob on contact with water.
-
 //////////////////////////////////////
 */
 
@@ -112,9 +104,9 @@ Bonus
 	symptom_delay_max = 90
 	var/chems = FALSE
 	var/explosion_power = 1
-	threshold_desc = "<b>Resistance 9:</b> Doubles the intensity of the immolation effect, but reduces the frequency of all of this symptom's effects.<br>\
-					  <b>Stage Speed 8:</b> Increases explosion radius and explosion damage to the host when the host is wet.<br>\
-					  <b>Transmission 8:</b> Additionally synthesizes chlorine trifluoride and napalm inside the host. More chemicals are synthesized if the resistance 9 threshold has been met."
+	threshold_desc = "<b>Resistance 9:</b> Doubles the intensity of the effect, but reduces its frequency.<br>\
+					  <b>Stage Speed 8:</b> Increases explosion radius when the host is wet.<br>\
+					  <b>Transmission 8:</b> Additionally synthesizes chlorine trifluoride and napalm inside the host."
 
 /datum/symptom/alkali/Start(datum/disease/advance/A)
 	if(!..())
@@ -137,21 +129,19 @@ Bonus
 			if(prob(base_message_chance))
 				to_chat(M, "<span class='warning'>[pick("Your veins boil.", "You feel hot.", "You smell meat cooking.")]</span>")
 		if(4)
-			if(M.fire_stacks < 0)
-				M.visible_message("<span class='warning'>[M]'s sweat sizzles and pops on contact with water!</span>")
-				explosion(get_turf(M),-1,(-2 + explosion_power),(2 * explosion_power))
 			Alkali_fire_stage_4(M, A)
 			M.IgniteMob()
 			to_chat(M, "<span class='userdanger'>Your sweat bursts into flames!</span>")
 			M.emote("scream")
 		if(5)
-			if(M.fire_stacks < 0)
-				M.visible_message("<span class='warning'>[M]'s sweat sizzles and pops on contact with water!</span>")
-				explosion(get_turf(M),-1,(-2 + explosion_power),(2 * explosion_power))
 			Alkali_fire_stage_5(M, A)
 			M.IgniteMob()
 			to_chat(M, "<span class='userdanger'>Your skin erupts into an inferno!</span>")
 			M.emote("scream")
+			if(M.fire_stacks < 0)
+				M.visible_message("<span class='warning'>[M]'s sweat sizzles and pops on contact with water!</span>")
+				explosion(get_turf(M),0,0,2 * explosion_power)
+				Alkali_fire_stage_5(M, A)
 
 /datum/symptom/alkali/proc/Alkali_fire_stage_4(mob/living/M, datum/disease/advance/A)
 	var/get_stacks = 6 * power
