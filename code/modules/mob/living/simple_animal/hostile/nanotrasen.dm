@@ -6,7 +6,7 @@
 	icon_living = "nanotrasen"
 	icon_dead = null
 	icon_gib = "syndicate_gib"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 12
 	turns_per_move = 5
 	response_help = "pokes"
