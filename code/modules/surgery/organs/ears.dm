@@ -146,7 +146,6 @@
 	icon_state = "ears-c-u"
 	desc = "an advanced cybernetic ear, surpassing the performance of organic ears"
 	damage_multiplier = 0.5
-	bang_protect = 1
 
 /obj/item/organ/ears/cybernetic/emp_act(severity)
 	. = ..()
