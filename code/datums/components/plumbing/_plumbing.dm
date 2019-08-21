@@ -54,7 +54,7 @@
 	return TRUE
 ///called from in process(). only calls process_request(), but can be overwritten for children with special behaviour
 /datum/component/plumbing/proc/send_request(dir)
-	process_request(amount = 10, reagent = null, dir = dir)
+	process_request(amount = required_reagents[RT] - RD.amount, reagent = null, dir = dir)
 ///check who can give us what we want, and how many each of them will give us
 /datum/component/plumbing/proc/process_request(amount, reagent, dir)
 	var/list/valid_suppliers = list()

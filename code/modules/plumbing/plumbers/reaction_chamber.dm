@@ -16,11 +16,30 @@
 
 /obj/machinery/plumbing/reaction_chamber/Initialize()
 	. = ..()
-/*
-/obj/machinery/plumbing/reaction_chamber/send_request(dir, lazy_amount = TRUE)
-	for(var/RT in required_reagents)
-		for(var/A in reagents.reagent_list)
-			var/datum/reagent/RD = A
-			if(RT == RD.type && required_reagents[RT] < RD.amount)
 
-				process_request(amount = 10, reagent = null, dir = dir, lazy_amount = lazy_amount)*/
+/obj/machinery/plumbing/reaction_chamber/on_reagent_change()
+	if(reagents.total_volume == 0 && RC.emptying) //we were emptying, but now we aren't
+		emptying = FALSE
+
+/obj/machinery/plumbing/reaction_chamber/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "chem_reactor", name, 500, 500, master_ui, state)
+		ui.open()
+
+/obj/machinery/plumbing/reaction_chamber/ui_data(mob/user)
+	var/list/data = list()
+	data["reagents"] = required_reagents
+	data["emptying"] = emptying
+	return data
+
+/obj/machinery/plumbing/reaction_chamber/ui_act(action, params)
+	if(..())
+		return
+	. = TRUE
+	switch(action)
+		if("remove")
+			var/reagent = get_chem_id(params["chem"])
+			if(reagent)
+				required_reagents.Remove(reagent)
+		if("add")
