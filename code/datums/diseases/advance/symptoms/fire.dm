@@ -2,11 +2,13 @@
 //////////////////////////////////////
 
 Spontaneous Combustion
+
 	Slightly hidden.
 	Lowers resistance tremendously.
 	Decreases stage tremendously.
 	Decreases transmittablity tremendously.
 	Fatal Level.
+	
 Bonus
 	Ignites infected mob.
 	
