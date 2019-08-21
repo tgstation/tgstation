@@ -22,7 +22,7 @@
 		trauma_heal_severe = TRUE
 	if(A.properties["resistance"] >= 9) //heals deep-rooted traumas and traumas of the "magic" resilience tier (which show up as being of the same tier ("permanent") as absolute traumas on health analyzers because they just do)
 		trauma_heal_magic = TRUE
-	if(A.properties["transmittable"] >= 8) //purge alcohol
+	if(A.properties["transmittable"] >= 8) //purges alcohol
 		purge_alcohol = TRUE
 
 /datum/symptom/mind_restoration/Activate(var/datum/disease/advance/A)
