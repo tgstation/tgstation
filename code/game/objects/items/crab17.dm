@@ -29,7 +29,7 @@
 	icon = 'icons/obj/money_machine.dmi'
 	icon_state = "bogdanoff"
 	layer = TABLE_LAYER //So that the crate inside doesn't appear underneath
-	armor = list("melee" = 80, "bullet" = 50, "laser" = 50, "energy" = 100, "bomb" = 100, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 80)
+	armor = list("melee" = 80, "bullet" = 30, "laser" = 30, "energy" = 60, "bomb" = 90, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 80)
 	density = TRUE
 	pixel_z = -8
 	layer = LARGE_MOB_LAYER

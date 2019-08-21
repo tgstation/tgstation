@@ -134,9 +134,14 @@
 		air_update_turf(1)
 
 /obj/machinery/atmospherics/components/proc/safe_input(var/title, var/text, var/default_set)
-	var/new_value = input(usr,text,title,default_set) as num
+	var/new_value = input(usr,text,title,default_set) as num|null
+	
+	if (isnull(new_value))
+		return default_set
+	
 	if(usr.canUseTopic(src))
 		return new_value
+		
 	return default_set
 
 // Helpers
