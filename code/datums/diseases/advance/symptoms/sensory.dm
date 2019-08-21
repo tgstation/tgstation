@@ -6,8 +6,8 @@
 	stage_speed = 1
 	transmittable = -3
 	level = 5
-	symptom_delay_min = 5
-	symptom_delay_max = 10
+	symptom_delay_min = 1
+	symptom_delay_max = 1
 	var/purge_alcohol = FALSE
 	var/trauma_heal_severe = FALSE
 	var/trauma_heal_magic = FALSE
@@ -53,7 +53,7 @@
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3)
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
-			if(prob(10))
+			if(prob(2))
 				if(trauma_heal_magic)
 					C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_MAGIC)  //it might look like we're skipping over a resilience tier (which we technically are), but magic resilience tier traumas are actually really rare, so I lumped them in with the lobotomy resilience tier traumas because I don't think that they're common enough to warrant adding a new threshold effect that just gives this symptom the ability to cure them
 				else if(trauma_heal_severe)
