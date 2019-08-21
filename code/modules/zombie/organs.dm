@@ -45,7 +45,7 @@
 		return
 	if(!(src in owner.internal_organs))
 		Remove(owner)
-	if(MOB_INORGANIC in owner.mob_biotypes)//does not process in inorganic things
+	if(owner.mob_biotypes & MOB_MINERAL)//does not process in inorganic things
 		return
 	if (causes_damage && !iszombie(owner) && owner.stat != DEAD)
 		owner.adjustToxLoss(1)

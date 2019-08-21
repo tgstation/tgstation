@@ -241,6 +241,9 @@
 
 /turf/closed/wall/singularity_pull(S, current_size)
 	..()
+	wall_singularity_pull(current_size)
+
+/turf/closed/wall/proc/wall_singularity_pull(current_size)
 	if(current_size >= STAGE_FIVE)
 		if(prob(50))
 			dismantle_wall()
