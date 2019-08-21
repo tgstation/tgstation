@@ -478,7 +478,7 @@ GLOBAL_LIST_EMPTY(species_list)
 /proc/passtable_on(target, source)
 	var/mob/living/L = target
 	ADD_TRAIT(L, TRAIT_PASSTABLE, source)
-		L.pass_flags |= PASSTABLE
+	L.pass_flags |= PASSTABLE
 
 /proc/passtable_off(target, source)
 	var/mob/living/L = target
