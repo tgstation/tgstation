@@ -5,8 +5,6 @@
 	use_power = IDLE_POWER_USE
 	device_type = BINARY
 	layer = GAS_PUMP_LAYER
-	ui_x = 335
-	ui_y = 115
 
 /obj/machinery/atmospherics/components/binary/SetInitDirections()
 	switch(dir)
