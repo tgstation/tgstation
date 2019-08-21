@@ -30,6 +30,8 @@
 				objectives_complete = FALSE
 				break
 
+	if(var/datum/antagonist/meltedchampion/champ in GLOB.antagonists)
+		report += "<span class='neutraltext'>[name]'s champion was [champ.owner.current]!</span>"
 	report += "<span class='neutraltext'>[name] had converted [GLOB.meltedmobs.len] into slime creatures!</span>"
 
 	if(objectives.len == 0 || objectives_complete)
@@ -38,6 +40,37 @@
 		report += "<span class='redtext big'>The [name] has failed!</span>"
 
 	return report.Join("<br>")
+
+//Melting Champion
+
+/datum/antagonist/meltedchampion
+	name = "Champion"
+	var/meltingname = "Melting Abnormality"
+	var/datum/action/innate/communicate/talk
+
+/datum/antagonist/meltedchampion/New()
+	for(var/datum/antagonist/melting/melting_antagonist in GLOB.antagonists)
+		meltingname = melting_antagonist.owner.current.name
+		break
+
+/datum/antagonist/meltedchampion/apply_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	talk = new
+	talk.Grant(M)
+
+/datum/antagonist/meltedchampion/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	QDEL_NULL(talk)
+
+/datum/antagonist/meltedchampion/greet()
+	owner.visible_message("<span class='danger'>[owner] clutches their chest!</span>")
+	owner.current.playsound_local(get_turf(owner.current), 'sound/weapons/slime_impact.ogg', 100, FALSE, pressure_affected = FALSE)
+	to_chat(owner.current, "<span class='warning'>You feel a sharp pain in your chest as your heart melts!</span>")
+	to_chat(owner.current, "<span class='userdanger'>You are the [meltingname]’s champion. You must work to protect the [meltingname] and help it take over the station.</span>")
+	to_chat(owner.current, "<span class='notice'>To help you do this, your heart has been fused with slime. This lets it heal you, and in the event of your death to revive you as a large creature.</span>")
+	to_chat(owner.current, "<span class='notice'><b>Communicate</b> You can communicate to [var_slime_first] [var_slime_last] using this ability.</span>")
+	to_chat(owner.current, "<span class='notice'>Becoming cold will flip the healing in your heart into damage, so stay warm at all costs.</span>")
+	owner.announce_objectives()
 
 //and for the melted antag...
 //It does nothing! (Besides tracking)

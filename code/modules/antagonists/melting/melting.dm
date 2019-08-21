@@ -27,6 +27,7 @@
 	var/slimebody_color
 	var/obj/effect/proc_holder/spell/targeted/mark/mark
 	var/datum/action/innate/colorchange/colors
+	var/datum/action/innate/communicate/talk
 	var/obj/effect/proc_holder/spell/aimed/slime/slimeball
 	var/static/mutable_appearance/slimebody_overlay
 
@@ -41,6 +42,8 @@
 	addtimer(CALLBACK(src, .proc/remove_colorpick), 1 MINUTES)
 	slimeball = new
 	AddSpell(slimeball)
+	talk = new
+	talk.Grant(src)
 
 /mob/living/simple_animal/hostile/melting/proc/setup_icons(decided_color)
 	cut_overlays()
@@ -69,6 +72,7 @@
 	if(colors)
 		QDEL_NULL(colors)
 	QDEL_NULL(slimeball)
+	QDEL_NULL(talk)
 
 	for(var/datum/disease/transformation/melting/ourdisease in SSdisease.active_diseases)//on death, it globally cures the melting disease.
 		ourdisease.cure(FALSE)

@@ -17,7 +17,7 @@
 	new_form = /mob/living/simple_animal/hostile/melted
 	infectable_biotypes = list(MOB_ORGANIC)
 	process_dead = TRUE
-	var/mob/living/simple_animal/hostile/melted/creator
+	var/mob/living/simple_animal/hostile/melting/creator
 	var/obj/item/slime_mask/mask
 	var/attemped_add_mask = FALSE
 
@@ -73,6 +73,10 @@
 	var/mob/living/carbon/human/affected_human = affected_mob
 	if(!istype(affected_human))
 		return
+	var/slimeheart = FALSE
+	var/obj/item/organ/heart/heart = affected_human.getorganslot(ORGAN_SLOT_HEART)
+	if(istype(heart, /obj/item/organ/heart/slime))
+		slimeheart = TRUE
 	var/obj/item/organ/brain/brain = affected_human.getorganslot(ORGAN_SLOT_BRAIN)
 	if(!brain)
 		return
@@ -82,6 +86,8 @@
 		return
 	new_slime.creator = creator
 	brain.forceMove(new_slime)
+	//if(slimeheart)
+		//new_slime.become_greater()
 
 /datum/disease/transformation/melting/cure()
 	QDEL_NULL(mask)
