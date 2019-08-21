@@ -1,6 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - tweak: "Hulks now always scream on attack."
-  - tweak: "Hulks now only hulk smash on harm intent."
-  - code_imp: "Hulk code is less shit now."

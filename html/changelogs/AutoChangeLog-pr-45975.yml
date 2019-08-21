@@ -1,0 +1,4 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - tweak: "Clicking the plant DNA modifier or its UI fields with a disk or pack of seeds when it already has some inside will swap them."

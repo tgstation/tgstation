@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - balance: "Thermite now burns longer and needs more units to burn down walls."
