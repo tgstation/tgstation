@@ -2923,3 +2923,7 @@
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
 // END_INCLUDE
+
+
+// AUSTATION INCLUDES FILE
+#include "austation\includes.dm"
