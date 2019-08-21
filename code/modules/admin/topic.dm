@@ -291,7 +291,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		var/ratio = input("Enter new life ratio",, CONFIG_GET(number/midround_antag_life_check) * 100) as num
+		var/ratio = input("Enter new life ratio",, CONFIG_GET(number/midround_antag_life_check) * 100) as num|null
 		if(!ratio)
 			return
 		CONFIG_SET(number/midround_antag_life_check, ratio / 100)

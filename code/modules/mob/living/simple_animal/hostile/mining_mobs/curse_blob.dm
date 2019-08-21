@@ -5,7 +5,7 @@
 	icon_state = "curseblob"
 	icon_living = "curseblob"
 	icon_aggro = "curseblob"
-	mob_biotypes = list(MOB_SPIRIT)
+	mob_biotypes = MOB_SPIRIT
 	movement_type = FLYING
 	move_to_delay = 5
 	vision_range = 20
