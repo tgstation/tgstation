@@ -12,6 +12,7 @@
 	icon_state = "shuttle"
 	// Loading the same shuttle map at a different time will produce distinct area instances.
 	unique = FALSE
+	sound_environment = 2
 
 /area/shuttle/Initialize()
 	if(!canSmoothWithAreas)

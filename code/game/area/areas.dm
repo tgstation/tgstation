@@ -77,6 +77,8 @@
 	/// typecache to limit the areas that atoms in this area can smooth with, used for shuttles IIRC
 	var/list/canSmoothWithAreas
 
+	var/sound_environment = -1
+
 /**
   * A list of teleport locations
   *

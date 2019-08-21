@@ -74,6 +74,10 @@
 		if(S.volume <= 0)
 			return //No sound
 
+		var/area/A = get_area(src)
+		if(A.sound_environment > -1)
+			S.environment = A.sound_environment
+
 		var/dx = turf_source.x - T.x // Hearing from the right/left
 		S.x = dx
 		var/dz = turf_source.y - T.y // Hearing from infront/behind

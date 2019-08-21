@@ -3,6 +3,7 @@
 /area/mine
 	icon_state = "mining"
 	has_gravity = STANDARD_GRAVITY
+	sound_environment = 5
 
 /area/mine/explored
 	name = "Mine"
@@ -80,6 +81,7 @@
 	icon_state = "mining"
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
+	sound_environment = 13
 
 /area/lavaland/surface
 	name = "Lavaland"

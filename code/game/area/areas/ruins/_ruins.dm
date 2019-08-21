@@ -7,6 +7,7 @@
 	hidden = TRUE
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	ambientsounds = RUINS
+	sound_environment = 5
 
 
 /area/ruin/unpowered
