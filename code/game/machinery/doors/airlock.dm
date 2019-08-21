@@ -68,7 +68,6 @@
 	var/justzap = FALSE
 	var/obj/item/electronics/airlock/electronics
 	var/shockCooldown = FALSE //Prevents multiple shocks from happening
-	var/obj/item/doorCharge/charge //If applied, causes an explosion upon opening the door
 	var/obj/item/note //Any papers pinned to the airlock
 	var/detonated = FALSE
 	var/abandoned = FALSE
@@ -293,9 +292,6 @@
 
 /obj/machinery/door/airlock/Destroy()
 	QDEL_NULL(wires)
-	if(charge)
-		qdel(charge)
-		charge = null
 	QDEL_NULL(electronics)
 	if (cyclelinkedairlock)
 		if (cyclelinkedairlock.cyclelinkedairlock == src)
@@ -633,10 +629,6 @@
 	. = ..()
 	if(obj_flags & EMAGGED)
 		. += "<span class='warning'>Its access panel is smoking slightly.</span>"
-	if(charge && !panel_open && in_range(user, src))
-		. += "<span class='warning'>The maintenance panel seems haphazardly fastened.</span>"
-	if(charge && panel_open)
-		. += "<span class='warning'>Something is wired up to the airlock's electronics!</span>"
 	if(note)
 		if(!in_range(user, src))
 			. += "There's a [note.name] pinned to the front. You can't read it from here."
@@ -949,23 +941,6 @@
 		cable.plugin(src, user)
 	else if(istype(C, /obj/item/airlock_painter))
 		change_paintjob(C, user)
-	else if(istype(C, /obj/item/doorCharge))
-		if(!panel_open || security_level)
-			to_chat(user, "<span class='warning'>The maintenance panel must be open to apply [C]!</span>")
-			return
-		if(obj_flags & EMAGGED)
-			return
-		if(charge && !detonated)
-			to_chat(user, "<span class='warning'>There's already a charge hooked up to this door!</span>")
-			return
-		if(detonated)
-			to_chat(user, "<span class='warning'>The maintenance panel is destroyed!</span>")
-			return
-		to_chat(user, "<span class='warning'>You apply [C]. Next time someone opens the door, it will explode.</span>")
-		panel_open = FALSE
-		update_icon()
-		user.transferItemToLoc(C, src, TRUE)
-		charge = C
 	else if(istype(C, /obj/item/paper) || istype(C, /obj/item/photo))
 		if(note)
 			to_chat(user, "<span class='warning'>There's already something pinned to this airlock! Use wirecutters to remove it.</span>")
@@ -1018,18 +993,6 @@
 		beingcrowbarred = 1
 	else
 		beingcrowbarred = 0
-	if(panel_open && charge)
-		to_chat(user, "<span class='notice'>You carefully start removing [charge] from [src]...</span>")
-		if(!I.use_tool(src, user, 150, volume=50))
-			to_chat(user, "<span class='warning'>You slip and [charge] detonates!</span>")
-			charge.ex_act(EXPLODE_DEVASTATE)
-			user.Paralyze(60)
-			return
-		user.visible_message("<span class='notice'>[user] removes [charge] from [src].</span>", \
-							 "<span class='notice'>You gently pry out [charge] from [src] and unhook its wires.</span>")
-		charge.forceMove(get_turf(user))
-		charge = null
-		return
 	if(!security_level && (beingcrowbarred && panel_open && ((obj_flags & EMAGGED) || (density && welded && !operating && !hasPower() && !locked))))
 		user.visible_message("[user] removes the electronics from the airlock assembly.", \
 							 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
@@ -1082,20 +1045,6 @@
 	if(!forced)
 		if(!hasPower() || wires.is_cut(WIRE_OPEN))
 			return FALSE
-	if(charge && !detonated)
-		panel_open = TRUE
-		update_icon(AIRLOCK_OPENING)
-		visible_message("<span class='warning'>[src]'s panel is blown off in a spray of deadly shrapnel!</span>")
-		charge.forceMove(drop_location())
-		charge.ex_act(EXPLODE_DEVASTATE)
-		detonated = 1
-		charge = null
-		for(var/mob/living/carbon/human/H in orange(2,src))
-			H.Unconscious(160)
-			H.adjust_fire_stacks(20)
-			H.IgniteMob() //Guaranteed knockout and ignition for nearby people
-			H.apply_damage(40, BRUTE, BODY_ZONE_CHEST)
-		return
 	if(forced < 2)
 		if(obj_flags & EMAGGED)
 			return FALSE

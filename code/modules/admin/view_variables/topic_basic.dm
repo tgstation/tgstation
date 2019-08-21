@@ -47,5 +47,32 @@
 				usr.client.debug_variables(src)
 	if(href_list[VV_HK_MARK])
 		usr.client.mark_datum(target)
+	if(href_list[VV_HK_ADDCOMPONENT])
+		if(!check_rights(NONE))
+			return
+		var/list/names = list()
+		var/list/componentsubtypes = subtypesof(/datum/component)
+		names += "---Components---"
+		names += componentsubtypes
+		names += "---Elements---"
+		names += subtypesof(/datum/element)
+		var/result = input(usr, "Choose a component/element to add","better know what ur fuckin doin pal") as null|anything in names
+		if(!usr || !result || result == "---Components---" || result == "---Elements---")
+			return
+		if(QDELETED(src))
+			to_chat(usr, "That thing doesn't exist anymore!")
+			return
+		var/list/lst = get_callproc_args()
+		if(!lst)
+			return
+		var/datumname = "error"
+		if(result in componentsubtypes)
+			datumname = "component"
+			target.AddComponent(result, lst)
+		else
+			datumname = "element"
+			target.AddElement(result, lst)
+		log_admin("[key_name(usr)] has added [result] [datumname] to [key_name(src)].")
+		message_admins("<span class='notice'>[key_name_admin(usr)] has added [result] [datumname] to [key_name_admin(src)].</span>")
 	if(href_list[VV_HK_CALLPROC])
 		usr.client.callproc_datum(target)

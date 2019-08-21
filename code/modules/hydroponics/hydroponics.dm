@@ -124,6 +124,7 @@
 
 			needs_update = 1
 
+
 //Nutrients//////////////////////////////////////////////////////////////
 			// Nutrients deplete slowly
 			if(prob(50))
@@ -175,8 +176,27 @@
 
 //Pests & Weeds//////////////////////////////////////////////////////////
 
-			else if(pestlevel >= 5)
-				adjustHealth(-1 / rating)
+			if(pestlevel >= 8)
+				if(!myseed.get_gene(/datum/plant_gene/trait/plant_type/carnivory))
+					adjustHealth(-2 / rating)
+
+				else
+					adjustHealth(2 / rating)
+					adjustPests(-1 / rating)
+
+			else if(pestlevel >= 4)
+				if(!myseed.get_gene(/datum/plant_gene/trait/plant_type/carnivory))
+					adjustHealth(-1 / rating)
+
+				else
+					adjustHealth(1 / rating)
+					if(prob(50))
+						adjustPests(-1 / rating)
+
+			else if(pestlevel < 4 && myseed.get_gene(/datum/plant_gene/trait/plant_type/carnivory))
+				adjustHealth(-2 / rating)
+				if(prob(5))
+					adjustPests(-1 / rating)
 
 			// If it's a weed, it doesn't stunt the growth
 			if(weedlevel >= 5 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
@@ -216,6 +236,12 @@
 			needs_update = 1
 		if (needs_update)
 			update_icon()
+
+		if(myseed && prob(5 * (11-myseed.production)))
+			for(var/g in myseed.genes)
+				if(istype(g, /datum/plant_gene/trait))
+					var/datum/plant_gene/trait/selectedtrait = g
+					selectedtrait.on_grow(src)
 	return
 
 /obj/machinery/hydroponics/proc/nutrimentMutation()
@@ -362,6 +388,11 @@
 	pestlevel = 0 // Reset
 	update_icon()
 	visible_message("<span class='warning'>The [oldPlantName] is overtaken by some [myseed.plantname]!</span>")
+	name = "hydroponics tray ([myseed.plantname])"
+	if(myseed.product)
+		desc = initial(myseed.product.desc)
+	else
+		desc = initial(desc)
 
 
 /obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0) // Mutates the current seed
@@ -396,6 +427,11 @@
 	sleep(5) // Wait a while
 	update_icon()
 	visible_message("<span class='warning'>[oldPlantName] suddenly mutates into [myseed.plantname]!</span>")
+	name = "hydroponics tray ([myseed.plantname])"
+	if(myseed.product)
+		desc = initial(myseed.product.desc)
+	else
+		desc = initial(desc)
 
 
 /obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent instead. Mind you, this pretty much destroys the old plant
@@ -761,6 +797,15 @@
 			to_chat(user, "<span class='notice'>You plant [O].</span>")
 			dead = 0
 			myseed = O
+			name = "hydroponics tray ([myseed.plantname])"
+			if(!myseed.productdesc) //we haven't changed our produce's description
+				if(myseed.product)
+					myseed.productdesc = initial(myseed.product.desc)
+				else if(myseed.desc)
+					myseed.productdesc = myseed.desc
+				else
+					myseed.productdesc = "A fascinating specimen."
+			desc = myseed.productdesc
 			age = 1
 			plant_health = myseed.endurance
 			lastcycle = world.time
@@ -827,8 +872,11 @@
 					harvest = FALSE //To make sure they can't just put in another seed and insta-harvest it
 				qdel(myseed)
 				myseed = null
+				name = initial(name)
+				desc = initial(desc)
 			weedlevel = 0 //Has a side effect of cleaning up those nasty weeds
 			update_icon()
+
 
 	else
 		return ..()
@@ -859,6 +907,8 @@
 		qdel(myseed)
 		myseed = null
 		update_icon()
+		name = initial(name)
+		desc = initial(desc)
 	else
 		if(user)
 			examine(user)
@@ -876,6 +926,8 @@
 		qdel(myseed)
 		myseed = null
 		dead = 0
+		name = initial(name)
+		desc = initial(desc)
 	update_icon()
 
 /// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.///

@@ -429,11 +429,11 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/mob/living/carbon/human/H = pick(mob_pool)
 	feedback_details += " Mob: [H.real_name]"
 
-	var/free_hand = H.get_empty_held_index_for_side(side = "left")
+	var/free_hand = H.get_empty_held_index_for_side(LEFT_HANDS)
 	if(free_hand)
 		side = "left"
 	else
-		free_hand = H.get_empty_held_index_for_side(side = "right")
+		free_hand = H.get_empty_held_index_for_side(RIGHT_HANDS)
 		if(free_hand)
 			side = "right"
 
