@@ -26,7 +26,6 @@ matrix:
         - find . -name "*.json" -not -path "./tgui/node_modules/*" -print0 | xargs -0 python3 ./tools/json_verifier.py
         - tools/travis/build_tgui.sh
         - tools/travis/check_grep.sh
-        - ~/dreamchecker
 
     - name: "Compile All Maps"
       addons:
