@@ -58,7 +58,13 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 	// one lucky nerd
 	var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/boss_spore
 	if(boss_type)
-		boss_spore = locate(/mob/living/simple_animal/hostile/infection/infectionspore/sentient) in C.infection_mobs
+		var/list/possible_boss = C.infection_mobs.Copy()
+		boss_spore = null
+		for(var/i in 1 to possible_boss.len)
+			var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/S = pick_n_take(possible_boss)
+			if(S.client)
+				boss_spore = S
+				break
 		if(!boss_spore)
 			message_admins("Error! Failed to get slime for infection event.")
 			// spawn a random legendary weapon so the game isn't unbeatable
@@ -84,6 +90,8 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 	// everyone else gets minions
 	if(minion_types.len)
 		for(var/mob/living/simple_animal/hostile/infection/infectionspore/sentient/spore in (C.infection_mobs - boss_spore))
+			if(!spore.client)
+				continue
 			spore.death()
 			var/minion_type = pickweight(minion_types)
 			var/mob/living/simple_animal/minion = new minion_type(start)

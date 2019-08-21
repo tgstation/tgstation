@@ -290,7 +290,7 @@
 		if(O.resistance_flags & ACID_PROOF)
 			O.blob_act(src)
 		else
-			O.acid_act(80, 80)
+			O.acid_act(160, 160)
 	if(iswallturf(loc))
 		loc.blob_act(src) //don't ask how a wall got on top of the core, just eat it
 

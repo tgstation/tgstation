@@ -64,13 +64,12 @@
 			to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
 			change_to(/obj/structure/infection/normal, overmind)
 			SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
-		return
 		var/type_of_drop = pickweight(ore_drops)
-		var/turf/T = get_turf(src)
 		if(type_of_drop && T)
 			var/amount = rand(1, 4)
 			for(var/i in 1 to amount)
 				new type_of_drop(T)
+		return
 	. = ..()
 
 /obj/structure/infection/shield/Bumped(atom/movable/AM)

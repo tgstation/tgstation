@@ -9,7 +9,7 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	crystal_color = "#ff8c00"
 	// respawn time for the slime
-	var/respawn_time = 30
+	var/respawn_time = 300
 	// the time left to respawn
 	var/current_respawn_time = 0
 	// the upgrade points the spore has stored
@@ -63,8 +63,14 @@
 	if(overmind && !overmind.placed)
 		stat(null, "Time Before Automatic Placement: [max(round((overmind.autoplace_time - world.time)*0.1, 0.1), 0)]")
 
+/mob/living/simple_animal/hostile/infection/infectionspore/sentient/Login()
+	. = ..()
+	client.images |= image('icons/mob/cameramob.dmi', respawnmob, "marker")
+
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/Life()
 	. = ..()
+	if(!client)
+		death()
 	add_points(get_point_generation_rate())
 	var/list/infection_in_area = range(2, src)
 	var/healed = FALSE
@@ -166,6 +172,7 @@
 		if(!respawnmob)
 			create_respawn_mob(get_turf(overmind.infection_core))
 		forceMove(respawnmob)
+		client.images |= image('icons/mob/cameramob.dmi', respawnmob, "marker")
 		INVOKE_ASYNC(src, .proc/start_spawn)
 		return
 	. = ..()
@@ -178,7 +185,7 @@
 		current_respawn_time = world.time
 		return
 	current_respawn_time = world.time + increase_time
-	to_chat(src, "<b>You will be able to respawn in [round(world.time - current_respawn_time, 1)] seconds.</b>")
+	to_chat(src, "<b>You will be able to respawn in [round((current_respawn_time - world.time) / 10, 1)] seconds.</b>")
 	sleep(increase_time)
 	if(!QDELETED(src) && current_respawn_time <= world.time)
 		to_chat(src, "<b>You may now respawn!</b>")
@@ -192,7 +199,7 @@
 		to_chat(src, "<span class='warning'>You cannot respawn right now!</span>")
 		return
 	if(current_respawn_time > world.time)
-		to_chat(src, "<b>You will be able to respawn in [round(world.time - current_respawn_time, 1)] seconds.</b>")
+		to_chat(src, "<b>You will be able to respawn in [round((current_respawn_time - world.time) / 10, 1)] seconds.</b>")
 		return
 	var/turf/T = get_turf(src)
 	if(T)
