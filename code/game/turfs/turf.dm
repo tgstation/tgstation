@@ -404,7 +404,7 @@
 				continue
 			if(O.invisibility == INVISIBILITY_MAXIMUM)
 				O.singularity_act()
-	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+	ScrapeAway()
 	return(2)
 
 /turf/proc/can_have_cabling()
@@ -567,7 +567,7 @@
 //Whatever happens after high temperature fire dies out or thermite reaction works.
 //Should return new turf
 /turf/proc/Melt()
-	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+	return ScrapeAway()
 
 /turf/bullet_act(obj/item/projectile/P)
 	. = ..()

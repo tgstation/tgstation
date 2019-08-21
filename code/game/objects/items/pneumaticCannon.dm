@@ -126,10 +126,7 @@
 	else
 		I.forceMove(src)
 	loadedItems += I
-	if(isitem(I))
-		loadedWeightClass += I.w_class
-	else
-		loadedWeightClass++
+	loadedWeightClass += I.w_class
 	return TRUE
 
 /obj/item/pneumatic_cannon/afterattack(atom/target, mob/living/user, flag, params)
@@ -186,7 +183,7 @@
 		for(var/i in 1 to throw_amount)
 			if(!loadedItems.len)
 				break
-			var/atom/movable/I
+			var/obj/item/I
 			if(fire_mode == PCANNON_FILO)
 				I = loadedItems[loadedItems.len]
 			else
@@ -194,17 +191,13 @@
 			if(!throw_item(target, I, user))
 				break
 
-/obj/item/pneumatic_cannon/proc/throw_item(turf/target, atom/movable/AM, mob/user)
-	if(!istype(AM))
+/obj/item/pneumatic_cannon/proc/throw_item(turf/target, obj/item/I, mob/user)
+	if(!istype(I))
 		return FALSE
-	loadedItems -= AM
-	if(isitem(AM))
-		var/obj/item/I = AM
-		loadedWeightClass -= I.w_class
-	else
-		loadedWeightClass--
-	AM.forceMove(get_turf(src))
-	AM.throw_at(target, pressureSetting * 10 * range_multiplier, pressureSetting * 2, user, spin_item)
+	loadedItems -= I
+	loadedWeightClass -= I.w_class
+	I.forceMove(get_turf(src))
+	I.throw_at(target, pressureSetting * 10 * range_multiplier, pressureSetting * 2, user, spin_item)
 	return TRUE
 
 /obj/item/pneumatic_cannon/proc/get_target(turf/target, turf/starting)
@@ -221,10 +214,7 @@
 	. = ..()
 	if (loadedItems.Remove(A))
 		var/obj/item/I = A
-		if(istype(I))
-			loadedWeightClass -= I.w_class
-		else
-			loadedWeightClass--
+		loadedWeightClass -= I.w_class
 	else if (A == tank)
 		tank = null
 		update_icon()

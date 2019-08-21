@@ -83,6 +83,11 @@
 
 	random_color = FALSE
 
+/obj/item/wirecutters/cyborg
+	name = "wirecutters"
+	desc = "This cuts wires."
+	toolspeed = 0.5
+
 /obj/item/wirecutters/power
 	name = "jaws of life"
 	desc = "A set of jaws of life, compressed through the magic of science. It's fitted with a cutting head."
@@ -119,12 +124,3 @@
 		return
 	else
 		..()
-
-
-/obj/item/wirecutters/cyborg
-	name = "powered wirecutters"
-	desc = "Cuts wires with the power of ELECTRICITY. Faster than normal wirecutters."
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "wirecutters_cyborg"
-	toolspeed = 0.5
-	random_color = FALSE
