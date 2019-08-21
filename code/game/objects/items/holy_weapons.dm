@@ -672,5 +672,5 @@
 	armour_penetration = 10
 	sharpness = IS_SHARP_ACCURATE
 	w_class = WEIGHT_CLASS_BULKY
-	attack_verb = list("stabbed", "poked", "slashed")
+	attack_verb = list("stabbed", "poked", "slashed", "clocked")
 	hitsound = 'sound/weapons/bladeslice.ogg'
