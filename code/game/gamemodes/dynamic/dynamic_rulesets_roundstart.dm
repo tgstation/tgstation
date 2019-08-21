@@ -11,7 +11,7 @@
 	antag_flag = ROLE_TRAITOR
 	antag_datum = /datum/antagonist/traitor/
 	minimum_required_age = 0
-	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Head of Personnel", "Captain") // austation -- HOP can no longer be antag
 	restricted_roles = list("Cyborg")
 	required_candidates = 1
 	weight = 5
@@ -49,7 +49,7 @@
 	name = "Blood Brothers"
 	antag_flag = ROLE_BROTHER
 	antag_datum = /datum/antagonist/brother/
-	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Head of Personnel", "Captain") // austation -- HOP can no longer be antag
 	restricted_roles = list("Cyborg", "AI")
 	required_candidates = 2
 	weight = 4
@@ -100,7 +100,7 @@
 	name = "Changelings"
 	antag_flag = ROLE_CHANGELING
 	antag_datum = /datum/antagonist/changeling
-	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Head of Personnel", "Captain") // austation -- HOP can no longer be antag
 	restricted_roles = list("AI", "Cyborg")
 	required_candidates = 1
 	weight = 3
@@ -251,7 +251,7 @@
 	antag_datum = /datum/antagonist/nukeop
 	var/datum/antagonist/antag_leader_datum = /datum/antagonist/nukeop/leader
 	minimum_required_age = 14
-	restricted_roles = list("Head of Security", "Captain") // Just to be sure that a nukie getting picked won't ever imply a Captain or HoS not getting drafted
+	restricted_roles = list("Head of Security", "Head of Personnel", "Captain") // Just to be sure that a nukie getting picked won't ever imply a Captain or HoS not getting drafted // austation -- HOP can no longer be antag
 	required_candidates = 5
 	weight = 3
 	cost = 40
@@ -577,7 +577,7 @@
 	name = "Devil"
 	antag_flag = ROLE_DEVIL
 	antag_datum = /datum/antagonist/devil
-	restricted_roles = list("Lawyer", "Curator", "Chaplain", "Head of Security", "Captain", "AI")
+	restricted_roles = list("Lawyer", "Curator", "Chaplain", "Head of Security", "Head of Personnel", "Captain", "AI") // austation -- HOP can no longer be antag
 	required_candidates = 1
 	weight = 3
 	cost = 0
