@@ -138,7 +138,7 @@
 				if(baton_stun(M, user))
 					user.do_attack_animation(M)
 					return
-			else 
+			else
 				to_chat(user, "<span class='danger'>The baton is still charging!</span>")
 		else
 			M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
@@ -193,13 +193,8 @@
 
 /// After the initial stun period, we check to see if the target needs to have the stun applied.
 /obj/item/melee/baton/proc/apply_stun_effect_end(mob/living/target)
-	var/trait_check = HAS_TRAIT(target, TRAIT_STUNRESISTANCE) //var since we check it in out to_chat as well as determine stun duration
-	if(trait_check)
-		target.Paralyze(stunforce * 0.1)
-	else
-		target.Paralyze(stunforce)
-	if(!target.IsParalyzed())
-		to_chat(target, "<span class='warning'>You muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]</span>")
+	target.Paralyze(stunforce)
+
 
 /obj/item/melee/baton/emp_act(severity)
 	. = ..()
