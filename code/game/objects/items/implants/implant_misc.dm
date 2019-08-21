@@ -39,7 +39,7 @@
 	imp_in.SetUnconscious(0)
 	imp_in.SetParalyzed(0)
 	imp_in.SetImmobilized(0)
-	imp_in.adjustStaminaLoss(-75)
+	imp_in.adjustStaminaLoss(-150)
 	imp_in.set_resting(FALSE)
 	imp_in.update_mobility()
 
@@ -146,4 +146,3 @@
 /obj/item/implanter/radio/syndicate
 	name = "implanter (internal syndicate radio)"
 	imp_type = /obj/item/implant/radio/syndicate
-

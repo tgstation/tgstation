@@ -9,21 +9,31 @@
 	name = "electrically-charged arm"
 	icon_state = "elecarm"
 	var/charge_cost = 30
+	var/knockdown = 50
+	var/cooldown = (2 SECONDS)
+
+	var/cooldown_check = 0
 
 /obj/item/borg/stun/attack(mob/living/M, mob/living/user)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.check_shields(src, 0, "[M]'s [name]", MELEE_ATTACK))
-			playsound(M, 'sound/weapons/genhit.ogg', 50, 1)
-			return FALSE
-	if(iscyborg(user))
-		var/mob/living/silicon/robot/R = user
-		if(!R.cell.use(charge_cost))
-			return
-
+	if(cooldown_check <= world.time)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.check_shields(src, 0, "[M]'s [name]", MELEE_ATTACK))
+				playsound(M, 'sound/weapons/genhit.ogg', 50, 1)
+				return FALSE
+			if(iscyborg(user))
+				var/mob/living/silicon/robot/R = user
+				if(!R.cell.use(charge_cost))
+					return
+			cooldown_check = world.time + cooldown
+	else
+		to_chat(user, "<span class='danger'>[src] is still charging!</span>")
+		return FALSE
 	user.do_attack_animation(M)
-	M.Paralyze(100)
+	M.Knockdown(knockdown)
 	M.apply_effect(EFFECT_STUTTER, 5)
+	M.adjustStaminaLoss(65)
+
 
 	M.visible_message("<span class='danger'>[user] has prodded [M] with [src]!</span>", \
 					"<span class='userdanger'>[user] has prodded you with [src]!</span>")

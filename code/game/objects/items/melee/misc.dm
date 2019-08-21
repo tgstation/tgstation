@@ -174,9 +174,9 @@
 	var/cooldown_check = 0 // Used interally, you don't want to modify
 
 	var/cooldown = 40 // Default wait time until can stun again.
-	var/knockdown_time_carbon = (1.5 SECONDS) // Knockdown length for carbons.
+	var/knockdown_time_carbon = (5 SECONDS) // Knockdown length for carbons.
 	var/stun_time_silicon = (5 SECONDS) // If enabled, how long do we stun silicons.
-	var/stamina_damage = 55 // Do we deal stamina damage.
+	var/stamina_damage = 60 // Do we deal stamina damage.
 	var/affect_silicon = FALSE // Does it stun silicons.
 	var/on_sound // "On" sound, played when switching between able to stun or not.
 	var/on_stun_sound = "sound/effects/woodhit.ogg" // Default path to sound for when we stun.
@@ -237,9 +237,9 @@
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, "<span class ='danger'>You hit yourself over the head.</span>")
 
-		user.Paralyze(knockdown_time_carbon * force)
+		user.Knockdown(knockdown_time_carbon)
 		user.adjustStaminaLoss(stamina_damage)
-		
+
 		additional_effects_carbon(user) // user is the target here
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -386,7 +386,7 @@
 
 	cooldown = 25
 	stamina_damage = 85
-	affect_silicon = TRUE 
+	affect_silicon = TRUE
 	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
 
