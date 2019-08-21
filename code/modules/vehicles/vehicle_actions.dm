@@ -218,15 +218,10 @@
 			animate(L, pixel_y = -6, time = 4)
 			animate(V, pixel_y = -6, time = 3)
 			playsound(V, 'sound/vehicles/skateboard_ollie.ogg', 50, TRUE)
-			var/passtable_mob = FALSE
-			if (L.pass_flags & PASSTABLE)//checks if L has an existing flag to make sure we don't clear it later
-				passtable_mob = TRUE
-			else
-				L.pass_flags |= PASSTABLE
+			passtable_on(L, VEHICLE_TRAIT)
 			V.pass_flags |= PASSTABLE
 			L.Move(landing_turf, vehicle_target.dir)
-			if (!passtable_mob)//clears the flag here
-				L.pass_flags &= ~PASSTABLE
+			passtable_off(L, VEHICLE_TRAIT)
 			V.pass_flags &= ~PASSTABLE
 		if(locate(/obj/structure/table) in V.loc.contents)
 			V.grinding = TRUE
