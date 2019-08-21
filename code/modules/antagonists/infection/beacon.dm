@@ -40,7 +40,6 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 	move_force = INFINITY
 	move_resist = INFINITY
 	layer = FLY_LAYER
-	CanAtmosPass = ATMOS_PASS_PROC
 	max_integrity = 1000
 	resistance_flags = INDESTRUCTIBLE
 	// Stores the walls that this beacon is generating, to be destroyed when the beacon is destroyed
@@ -96,6 +95,11 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 			continue
 		qdel(I)
 	qdel(src)
+
+/obj/structure/beacon_generator/attack_animal(mob/living/simple_animal/M)
+	playsound(src, 'sound/effects/bang.ogg', 50, 1)
+	to_chat(M, "<span class='warning'>This is far too strong for you to destroy.</span>")
+	. = ..()
 
 /obj/structure/beacon_generator/update_icon()
 	vis_contents.Cut()

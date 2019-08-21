@@ -178,7 +178,7 @@
 	cost = 200
 
 /datum/infection_upgrade/hunter/napalm/upgrade_effect(atom/parent)
-	parent.AddComponent(/datum/component/igniter, 3)
+	parent.AddComponent(/datum/component/igniter, 1)
 
 /datum/infection_upgrade/hunter/flash
 	name = "Bright Flash"
@@ -231,15 +231,6 @@
 	parentdestructive.move_force = MOVE_FORCE_EXTREMELY_STRONG
 	parentdestructive.move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	parentdestructive.pull_force = MOVE_FORCE_EXTREMELY_STRONG
-
-/datum/infection_upgrade/destructive/voice
-	name = "Booming Voice"
-	description = "Gain the ability to shout at a massive volume, which could stun nearby unprotected opponents."
-	cost = 200
-
-/datum/infection_upgrade/destructive/voice/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/destructive/parentdestructive)
-	var/datum/action/cooldown/infection/add_action = new /datum/action/cooldown/infection/voice()
-	add_action.Grant(parentdestructive)
 
 /datum/infection_upgrade/destructive/health
 	name = "Health Boost"

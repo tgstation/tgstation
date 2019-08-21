@@ -151,11 +151,12 @@ GLOBAL_LIST_EMPTY(doom_event_mobs)
 	typepath = /datum/round_event/infection/jungle
 
 /datum/round_event/infection/jungle
-	boss_type = /mob/living/simple_animal/hostile/gorilla
+	boss_type = /mob/living/simple_animal/hostile/jungle/mega_arachnid
 	boss_drop_list = list(/obj/item/infectionkiller/tonic)
 	minion_types = list(/mob/living/simple_animal/hostile/poison/bees=1,
 						/mob/living/simple_animal/hostile/killertomato=1,
-						/mob/living/simple_animal/hostile/mushroom=1)
+						/mob/living/simple_animal/hostile/mushroom=1,
+						/mob/living/simple_animal/hostile/jungle/seedling=1)
 	minion_drop_list = list()
 	warning_message = "Jungle Creatures are invading the station!"
 	warning_jingle = 'sound/creatures/gorilla.ogg'

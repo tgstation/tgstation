@@ -442,7 +442,7 @@
 	max_integrity = 25
 	health_regen = 3
 	// time in deciseconds for overlay on entering and exiting to fade in and fade out
-	var/overlay_fade_time = 40
+	var/overlay_fade_time = 20
 
 /obj/structure/infection/normal/evolve_menu(var/mob/camera/commander/C)
 	return
@@ -457,6 +457,7 @@
 	if(ismob(mover))
 		var/mob/M = mover
 		M.add_movespeed_modifier(MOVESPEED_ID_INFECTION_STRUCTURE, update=TRUE, priority=100, multiplicative_slowdown=3)
+		M.overlay_fullscreen("infectionvision", /obj/screen/fullscreen/curse, 1)
 
 /obj/structure/infection/normal/Uncrossed(atom/movable/mover)
 	. = ..()
@@ -464,6 +465,7 @@
 		if(ismob(mover))
 			var/mob/M = mover
 			M.remove_movespeed_modifier(MOVESPEED_ID_INFECTION_STRUCTURE, update = TRUE)
+			M.clear_fullscreen("infectionvision", overlay_fade_time)
 
 /obj/structure/infection/normal/update_icon()
 	..()

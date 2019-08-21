@@ -36,7 +36,7 @@
 	icon_icon = 'icons/effects/effects.dmi'
 	button_icon_state = "bluestream_fade"
 	cost = 50
-	cooldown_time = 600
+	cooldown_time = 450
 
 /datum/action/cooldown/infection/coregrab/fire(mob/camera/commander/I, turf/T)
 	var/obj/structure/infection/S = locate(/obj/structure/infection) in T.contents
@@ -174,7 +174,7 @@
 	name = "Miniature Node"
 	desc = "Creates a miniature node on the infection you're standing on."
 	button_icon_state = "node"
-	cooldown_time = 900
+	cooldown_time = 600
 
 /datum/action/cooldown/infection/mininode/fire(mob/living/simple_animal/hostile/infection/infectionspore/sentient/S, turf/T)
 	var/obj/structure/infection/I = locate(/obj/structure/infection/normal) in T.contents
@@ -189,7 +189,7 @@
 	name = "Reflective Shield"
 	desc = "Creates a reflective shield on the infection you're standing on."
 	button_icon_state = "reflective"
-	cooldown_time = 600
+	cooldown_time = 450
 
 /datum/action/cooldown/infection/reflective/fire(mob/living/simple_animal/hostile/infection/infectionspore/sentient/S, turf/T)
 	var/obj/structure/infection/I = locate(/obj/structure/infection/normal) in T.contents
@@ -205,7 +205,7 @@
 	desc = "Creates a bright flash of light centered around you."
 	icon_icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	button_icon_state = "flash"
-	cooldown_time = 900
+	cooldown_time = 450
 
 /datum/action/cooldown/infection/flash/fire(mob/living/simple_animal/hostile/infection/infectionspore/sentient/S, turf/T)
 	if(ISRESPAWNING(S))
@@ -213,22 +213,9 @@
 		return
 	StartCooldown()
 	playsound(T, 'sound/weapons/flash.ogg', 100, FALSE, pressure_affected = FALSE)
-	for(var/mob/living/L in viewers(S,4) - S)
+	new /obj/effect/temp_visual/at_shield(T)
+	sleep(8)
+	new /obj/effect/temp_visual/at_shield(T)
+	sleep(8)
+	for(var/mob/living/L in viewers(S,2) - S)
 		L.flash_act()
-
-/datum/action/cooldown/infection/voice
-	name = "Booming Voice"
-	desc = "A large sound erupts from your body, possibly stunning opponents around you."
-	icon_icon = 'icons/obj/projectiles.dmi'
-	button_icon_state = "kinetic_blast"
-	cooldown_time = 900
-
-/datum/action/cooldown/infection/voice/fire(mob/living/simple_animal/hostile/infection/infectionspore/sentient/S, turf/T)
-	if(ISRESPAWNING(S))
-		to_chat(S, "<span class='warning'>You must be alive to use this ability!</span>")
-		return
-	StartCooldown()
-	playsound(T, 'sound/voice/ed209_20sec.ogg', 100, FALSE, pressure_affected = FALSE)
-	for(var/mob/living/L in get_hearers_in_view(4, T) - S)
-		L.Paralyze(200)
-		L.soundbang_act(1, 200, 10, 15)

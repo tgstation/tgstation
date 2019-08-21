@@ -18,8 +18,7 @@
 		if(GLOB.infection_core)
 			priority_announce("The Legendary Item \"[name]\" has been discovered somewhere on the station.\n\n\
 							   We've attached a GPS signaller and teleportation beacon to it so that you can find it.\n\n\
-							   It's probably a smart idea to open a two-way portal as well, just in case it lies inside the infections walls.\n\n\
-							   We doubt this item can be destroyed by the infection, and believe it could destroy the core of it as well.",
+							   We believe this item could destroy the core of the infection as well.",
 							   "CentCom Biohazard Division", 'sound/magic/summonitems_generic.ogg')
 		AddComponent(/datum/component/stationloving, FALSE, FALSE)
 		var/obj/item/gps/internal/legendary/L = new /obj/item/gps/internal/legendary(src)
@@ -93,9 +92,9 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = 'sound/weapons/wpnHit1.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	force = 30
+	force = 25
 	armour_penetration = 50
-	block_chance = 50
+	block_chance = 75
 	sharpness = IS_SHARP
 	// time until the proc ends
 	var/proctime = 0
@@ -166,7 +165,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	color = "#ffd700"
-	force = 30
+	force = 25
 	hitsound = list('sound/items/airhorn.ogg')
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	actions_types = list(/datum/action/item_action/summon_clowns)
@@ -183,7 +182,7 @@
 	// cooldown time for clowns
 	var/cooldown_time = 0
 	// cooldown time added for clown spawning in deciseconds
-	var/cooldown_time_added = 300
+	var/cooldown_time_added = 150
 	// possible mobs to be spawned from the staff, weighted list, higher number means more chance to be picked
 	var/list/possible_mobs = list(/mob/living/simple_animal/hostile/retaliate/clown/clownhulk=1,
 						/mob/living/simple_animal/hostile/retaliate/clown/longface=3,

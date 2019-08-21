@@ -9,8 +9,8 @@
 	icon_state = "smooth"
 	smooth = SMOOTH_TRUE
 	max_integrity = 150
-	brute_resist = 0.5
-	fire_resist = 0.25
+	brute_resist = 0.6
+	fire_resist = 0.4
 	explosion_block = 3
 	point_return = 0
 	build_time = 100
@@ -20,7 +20,18 @@
 	// the last time something tried to mine this to avoid message spam
 	var/last_act = 0
 	// multiplicative delay to mining speed on this type
-	var/mining_time_mod = 40
+	var/mining_time_mod = 20
+	// list of ore drops weighted
+	var/list/ore_drops = list(/obj/item/stack/ore/uranium=2,
+							  /obj/item/stack/ore/iron=2,
+							  /obj/item/stack/ore/glass/basalt=2,
+							  /obj/item/stack/ore/plasma=2,
+							  /obj/item/stack/ore/silver=2,
+							  /obj/item/stack/ore/gold=2,
+							  /obj/item/stack/ore/diamond=2,
+							  /obj/item/stack/ore/bananium=2,
+							  /obj/item/stack/ore/titanium=2,
+							  /obj/item/twohanded/required/gibtonite=1)
 
 /obj/structure/infection/shield/Initialize(mapload)
 	canSmoothWith = typesof(/obj/structure/infection/shield)
@@ -54,6 +65,12 @@
 			change_to(/obj/structure/infection/normal, overmind)
 			SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
 		return
+		var/type_of_drop = pickweight(ore_drops)
+		var/turf/T = get_turf(src)
+		if(type_of_drop && T)
+			var/amount = rand(1, 4)
+			for(var/i in 1 to amount)
+				new type_of_drop(T)
 	. = ..()
 
 /obj/structure/infection/shield/Bumped(atom/movable/AM)
@@ -83,10 +100,10 @@
 	icon_state = "reflective"
 	smooth = SMOOTH_FALSE
 	flags_1 = CHECK_RICOCHET_1
-	max_integrity = 150
-	brute_resist = 1
-	fire_resist = 0.125
-	mining_time_mod = 20
+	brute_resist = 0.8
+	fire_resist = 0.2
+	explosion_block = 2
+	mining_time_mod = 10
 
 /obj/structure/infection/shield/reflective/Initialize(mapload)
 	. = ..()

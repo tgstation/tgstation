@@ -31,26 +31,13 @@
 	// the mob we get moved to while respawning
 	var/mob/camera/infectionslime/respawnmob
 	// things that can drop after the slime dies a fake death
-	var/list/slime_drops = list(/obj/item/clothing/head/helmet/space=1,
-								/obj/item/clothing/suit/space=1,
-								/obj/item/clothing/suit/armor/bone=2,
-								/obj/item/clothing/suit/hooded/cloak/goliath=2,
-								/obj/item/twohanded/bonespear=2,
-								/obj/item/stack/ore/diamond=1,
-								/obj/item/stack/ore/plasma=1,
+	var/list/slime_drops = list(/obj/item/gun/energy/laser=1,
 								/obj/item/stack/spacecash/c500=1,
-								/obj/item/clothing/under/color/grey=2,
-								/obj/item/clothing/suit/hooded/explorer=1,
 								/obj/item/clothing/head/hardhat/cakehat=2,
-								/obj/item/tank/internals/oxygen=2,
-								/obj/item/clothing/mask/gas=2,
 								/obj/item/clothing/gloves/color/yellow=1,
-								/obj/item/stack/ore/plasma=3,
 								/obj/item/extinguisher=2,
 								/obj/item/pickaxe/drill/diamonddrill=1,
-								/obj/item/clothing/shoes/magboots=1,
-								/obj/item/tank/jetpack/suit=1,
-								/obj/item/clothing/head/helmet/space/hardsuit=1)
+								/obj/item/clothing/shoes/magboots=1)
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/Initialize(mapload, var/obj/structure/infection/factory/linked_node, commander)
 	. = ..()
@@ -243,6 +230,9 @@
 	Refund the upgrades this slime has purchased and transfer them to a base type
 */
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/refund_upgrades()
+	var/confirm = alert("Are you sure you want to refund all of your upgrades?", "Revert Form", "Yes", "No")
+	if(confirm != "Yes")
+		return
 	if(!ISRESPAWNING(src))
 		to_chat(src, "<span class='warning'>You cannot revert unless you are reforming!</span>")
 		return

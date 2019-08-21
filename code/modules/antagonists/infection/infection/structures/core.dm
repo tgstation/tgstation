@@ -54,7 +54,7 @@
 					   We've also analyzed the substance further, and deemed it to be a threat to continued operations in your solar system.\n\n\
 					   Reinforcements have been requested to be sent in, though we've been detecting anomalous signals coming from the substance's origin point as well.\n\n\
 					   If you stop the source of these signals, you may be able to disable the enemy entirely. Good luck.",
-					   "CentCom Biohazard Division", 'sound/misc/notice1.ogg')
+					   "CentCom Biohazard Division", 'sound/effects/crystal_fire.ogg')
 
 /obj/structure/infection/core/evolve_menu(var/mob/camera/commander/C)
 	return
