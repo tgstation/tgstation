@@ -81,15 +81,19 @@ Bonus
 
 /*
 //////////////////////////////////////
+
 Alkali perspiration
+
 	Hidden.
 	Lowers resistance.
 	Decreases stage speed.
 	Decreases transmittablity.
 	Fatal Level.
+
 Bonus
 	Ignites infected mob.
 	Explodes mob on contact with water.
+
 //////////////////////////////////////
 */
 
