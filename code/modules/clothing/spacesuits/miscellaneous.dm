@@ -358,18 +358,18 @@ Contains:
 	icon_state = "hardsuit0-inq"
 	item_state = "hardsuit0-inq"
 
-/obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker
+/obj/item/clothing/suit/space/hardsuit/ert/paranormal/berserker
 	name = "champion's hardsuit"
 	desc = "Voices echo from the hardsuit, driving the user insane."
-	icon_state = "hardsuit-beserker"
-	item_state = "hardsuit-beserker"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/beserker
+	icon_state = "hardsuit-berserker"
+	item_state = "hardsuit-berserker"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/berserker
 
-/obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/beserker
+/obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/berserker
 	name = "champion's helmet"
 	desc = "Peering into the eyes of the helmet is enough to seal damnation."
-	icon_state = "hardsuit0-beserker"
-	item_state = "hardsuit0-beserker"
+	icon_state = "hardsuit0-berserker"
+	item_state = "hardsuit0-berserker"
 
 /obj/item/clothing/head/helmet/space/fragile
 	name = "emergency space helmet"

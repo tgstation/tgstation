@@ -45,6 +45,7 @@
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Grant(M)
+	STOP_PROCESSING(SSobj, src)
 
 //Special is for instant replacement like autosurgeons
 /obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE)
@@ -58,92 +59,38 @@
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(M)
+	START_PROCESSING(SSobj, src)
 
 
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
 
-/obj/item/organ/process()	//runs decay when outside of a person
-	if((organ_flags & (ORGAN_SYNTHETIC | ORGAN_FROZEN)) || istype(loc, /obj/item/mmi))
-		return
-	if(damage >= maxHealth)
-		organ_flags |= ORGAN_FAILING
-		damage = maxHealth
-		return
-	else if(!owner)
-		damage = min(maxHealth, damage + (maxHealth * decay_factor))
+/obj/item/organ/process()
+	on_death() //Kinda hate doing it like this, but I really don't want to call process directly.
 
-	else
-		var/mob/living/carbon/C = owner
-		if(!C)
-			return
-		if(C.stat == DEAD && !IS_IN_STASIS(C))
-			if(damage >= maxHealth)
-				organ_flags |= ORGAN_FAILING
-				damage = maxHealth
-				return
-			damage = min(maxHealth, damage + (maxHealth * decay_factor))
+/obj/item/organ/proc/on_death()	//runs decay when outside of a person
+	if(organ_flags & (ORGAN_SYNTHETIC | ORGAN_FROZEN))
+		return
+	applyOrganDamage(maxHealth * decay_factor)
 
 /obj/item/organ/proc/on_life()	//repair organ damage if the organ is not failing
-	var/mob/living/carbon/C = owner
-	if(!C)
+	if(organ_flags & ORGAN_FAILING)
 		return
-	if(damage >= maxHealth)
-		organ_flags |= ORGAN_FAILING
-		damage = maxHealth
-		check_damage_thresholds(C)
-		prev_damage = damage
-		return
-	if((!(organ_flags & ORGAN_FAILING)) && (C.stat !=DEAD))
-		///Damage decrements by a percent of its maxhealth
-		damage = max(0, damage - (maxHealth * healing_factor))
-		if(C.satiety > 0)
-			///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
-			damage = max(0, damage - ((maxHealth * healing_factor) * (C.satiety / MAX_SATIETY) * 4))
-		check_damage_thresholds(C)
-		prev_damage = damage
-	return
-
-/** check_damage_thresholds
-  * input: M (a mob, the owner of the organ we call the proc on)
-  * output:
-  * description: By checking our current damage against our previous damage, we can decide whether we've passed an organ threshold.
-  *				 If we have, send the corresponding threshold message to the owner, if such a message exists.
-  */
-/obj/item/organ/proc/check_damage_thresholds(var/M)
-	if(damage == prev_damage)
-		return
-	var/delta = damage - prev_damage
-	if(delta > 0)
-		if(damage == maxHealth)
-			if(now_failing)
-				to_chat(M, now_failing)
-		else if(damage > high_threshold && prev_damage <= high_threshold)
-			if(high_threshold_passed)
-				to_chat(M, high_threshold_passed)
-		else if(damage > low_threshold && prev_damage <= low_threshold)
-			if(low_threshold_passed)
-				to_chat(M, low_threshold_passed)
-	else if(delta < 0)
-		if(prev_damage > low_threshold && damage <= low_threshold)
-			if(low_threshold_cleared)
-				to_chat(M, low_threshold_cleared)
-		else if(prev_damage > high_threshold && damage <= high_threshold)
-			if(high_threshold_cleared)
-				to_chat(M, high_threshold_cleared)
-		else if(prev_damage == maxHealth)
-			if(now_fixed)
-				to_chat(M, now_fixed)
+	///Damage decrements by a percent of its maxhealth
+	var/healing_amount = -(maxHealth * healing_factor)
+	///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
+	healing_amount -= owner.satiety > 0 ? 4 * healing_factor * owner.satiety / MAX_SATIETY : 0
+	applyOrganDamage(healing_amount)
 
 /obj/item/organ/examine(mob/user)
 	. = ..()
-	if(status == ORGAN_ROBOTIC && (organ_flags & ORGAN_FAILING))
-		. += "<span class='warning'>[src] seems to be broken!</span>"
-
-	else if(organ_flags & ORGAN_FAILING)
+	if(organ_flags & ORGAN_FAILING)
+		if(status == ORGAN_ROBOTIC)
+			. += "<span class='warning'>[src] seems to be broken!</span>"
+			return
 		. += "<span class='warning'>[src] has decayed for too long, and has turned a sickly color! It doesn't look like it will work anymore!</span>"
-
-	else if(damage > high_threshold)
+		return
+	if(damage > high_threshold)
 		. += "<span class='warning'>[src] is starting to look discolored.</span>"
 
 
@@ -165,15 +112,16 @@
 	foodtype = RAW | MEAT | GROSS
 
 /obj/item/organ/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
-	return ..()
 
 /obj/item/organ/Destroy()
-	STOP_PROCESSING(SSobj, src)
 	if(owner)
 		// The special flag is important, because otherwise mobs can die
 		// while undergoing transformation into different mobs.
 		Remove(owner, special=TRUE)
+	else
+		STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/organ/attack(mob/living/carbon/M, mob/user)
@@ -193,17 +141,46 @@
 
 ///Adjusts an organ's damage by the amount "d", up to a maximum amount, which is by default max damage
 /obj/item/organ/proc/applyOrganDamage(var/d, var/maximum = maxHealth)	//use for damaging effects
-	if(maximum < d + damage)
-		d = max(0, maximum - damage)
-	damage = max(0, damage + d)
+	if(!d) //Micro-optimization.
+		return
+	if(maximum < damage)
+		return
+	damage = CLAMP(damage + d, 0, maximum)
+	var/mess = check_damage_thresholds(owner)
+	prev_damage = damage
+	if(mess && owner)
+		to_chat(owner, mess)
 
 ///SETS an organ's damage to the amount "d", and in doing so clears or sets the failing flag, good for when you have an effect that should fix an organ if broken
 /obj/item/organ/proc/setOrganDamage(var/d)	//use mostly for admin heals
-	damage = CLAMP(d, 0 ,maxHealth)
-	if(d >= maxHealth)
-		organ_flags |= ORGAN_FAILING
+	applyOrganDamage(d - damage)
+
+/** check_damage_thresholds
+  * input: M (a mob, the owner of the organ we call the proc on)
+  * output: returns a message should get displayed.
+  * description: By checking our current damage against our previous damage, we can decide whether we've passed an organ threshold.
+  *				 If we have, send the corresponding threshold message to the owner, if such a message exists.
+  */
+/obj/item/organ/proc/check_damage_thresholds(var/M)
+	if(damage == prev_damage)
+		return
+	var/delta = damage - prev_damage
+	if(delta > 0)
+		if(damage >= maxHealth)
+			organ_flags |= ORGAN_FAILING
+			return now_failing
+		if(damage > high_threshold && prev_damage <= high_threshold)
+			return high_threshold_passed
+		if(damage > low_threshold && prev_damage <= low_threshold)
+			return low_threshold_passed
 	else
 		organ_flags &= ~ORGAN_FAILING
+		if(prev_damage > low_threshold && damage <= low_threshold)
+			return low_threshold_cleared
+		if(prev_damage > high_threshold && damage <= high_threshold)
+			return high_threshold_cleared
+		if(prev_damage == maxHealth)
+			return now_fixed
 
 //Looking for brains?
 //Try code/modules/mob/living/carbon/brain/brain_item.dm

@@ -98,23 +98,26 @@
 		var/obj/item/assembly/flash/F = holder
 		F.set_light(7)
 
-	var/obj/item/arm_item = owner.get_active_held_item()
-
-	if(arm_item)
-		if(!owner.dropItemToGround(arm_item))
-			to_chat(owner, "<span class='warning'>Your [arm_item] interferes with [src]!</span>")
+	var/side = zone == BODY_ZONE_R_ARM? "r" : "l"
+	var/hand = owner.get_empty_held_index_for_side(side)
+	if(hand)
+		owner.put_in_hand(holder, hand)
+	else
+		var/list/hand_items = owner.get_held_items_for_side(side, all = TRUE)
+		var/success = FALSE
+		var/list/failure_message = list()
+		for(var/i in 1 to hand_items.len) //Can't just use *in* here.
+			var/I = hand_items[i]
+			if(!owner.dropItemToGround(I))
+				failure_message += "<span class='warning'>Your [I] interferes with [src]!</span>"
+				continue
+			to_chat(owner, "<span class='notice'>You drop [I] to activate [src]!</span>")
+			success = owner.put_in_hand(holder, owner.get_empty_held_index_for_side(side))
+			break
+		if(!success)
+			for(var/i in failure_message)
+				to_chat(owner, i)
 			return
-		else
-			to_chat(owner, "<span class='notice'>You drop [arm_item] to activate [src]!</span>")
-
-	var/result = (zone == BODY_ZONE_R_ARM ? owner.put_in_r_hand(holder) : owner.put_in_l_hand(holder))
-	if(!result)
-		to_chat(owner, "<span class='warning'>Your [name] fails to activate!</span>")
-		return
-
-	// Activate the hand that now holds our item.
-	owner.swap_hand(result)//... or the 1st hand if the index gets lost somehow
-
 	owner.visible_message("<span class='notice'>[owner] extends [holder] from [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
 		"<span class='notice'>You extend [holder] from your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
 		"<span class='italics'>You hear a short mechanical noise.</span>")
@@ -177,7 +180,7 @@
 
 /obj/item/organ/cyberimp/arm/toolset
 	name = "integrated toolset implant"
-	desc = "A stripped-down version of the engineering cyborg toolset, designed to be installed on subject's arm. Contains all necessary tools."
+	desc = "A stripped-down version of the engineering cyborg toolset, designed to be installed on subject's arm. Contain advanced versions of every tool."
 	contents = newlist(/obj/item/screwdriver/cyborg, /obj/item/wrench/cyborg, /obj/item/weldingtool/largetank/cyborg,
 		/obj/item/crowbar/cyborg, /obj/item/wirecutters/cyborg, /obj/item/multitool/cyborg)
 

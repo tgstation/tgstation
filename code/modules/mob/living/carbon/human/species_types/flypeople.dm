@@ -3,7 +3,7 @@
 	id = "fly"
 	say_mod = "buzzes"
 	species_traits = list(NOEYESPRITES)
-	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID, MOB_BUG)
+	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	mutanttongue = /obj/item/organ/tongue/fly
 	mutantliver = /obj/item/organ/liver/fly
 	mutantstomach = /obj/item/organ/stomach/fly

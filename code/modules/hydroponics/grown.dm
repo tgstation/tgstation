@@ -132,7 +132,7 @@
 	..()
 
 /obj/item/reagent_containers/food/snacks/grown/generate_trash(atom/location)
-	if(trash && ispath(trash, /obj/item/grown))
+	if(trash && (ispath(trash, /obj/item/grown) || ispath(trash, /obj/item/reagent_containers/food/snacks/grown)))
 		. = new trash(location, seed)
 		trash = null
 		return
@@ -164,7 +164,7 @@
  * Attack self for growns
  *
  * Spawns the trash item at the growns drop_location()
- * 
+ *
  * Then deletes the grown object
  *
  * Then puts trash item into the hand of user attack selfing, or drops it back on the ground

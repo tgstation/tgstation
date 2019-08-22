@@ -178,7 +178,7 @@
 	name = "improvised shotgun"
 	desc = "Essentially a tube that aims shotgun shells."
 	icon_state = "ishotgun"
-	item_state = "shotgun"
+	item_state = "ishotgun"
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	slot_flags = null
@@ -202,7 +202,8 @@
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised/update_icon()
 	..()
 	if(slung)
-		add_overlay("improvised_sling")
+		add_overlay("ishotgunsling")
+		item_state = "ishotgunsling"
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised/sawoff(mob/user)
 	. = ..()
@@ -214,8 +215,8 @@
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised/sawn
 	name = "sawn-off improvised shotgun"
 	desc = "A single-shot shotgun. Better not miss."
-	icon_state = "ishotgun"
-	item_state = "gun"
+	icon_state = "ishotgun" //_sawn
+	item_state = "ishotgun_sawn"
 	w_class = WEIGHT_CLASS_NORMAL
 	sawn_off = TRUE
 	slot_flags = ITEM_SLOT_BELT
@@ -230,7 +231,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_MEDIUM
 	can_be_sawn_off = FALSE
-	force = 10 //it has a hook on it
+	force = 16 //it has a hook on it
 	attack_verb = list("slashed", "hooked", "stabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	//our hook gun!

@@ -456,10 +456,15 @@
 /turf/open/floor/plasteel/freezer,
 /area/security/prison)
 "abj" = (
-/obj/structure/easel,
-/obj/item/canvas/twentythreeXtwentythree,
-/obj/item/canvas/twentythreeXtwentythree,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/storage/photo_album/prison{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/camera{
+	pixel_x = -4
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "abk" = (
@@ -771,6 +776,7 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
+/obj/item/storage/photo_album/bar,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "abV" = (
@@ -65634,14 +65640,10 @@
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "cMG" = (
-/obj/item/paper_bin{
-	pixel_x = -2;
-	pixel_y = 8
-	},
-/obj/item/pen,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table/wood,
 /obj/structure/cable,
+/obj/item/storage/photo_album/chapel,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "cMH" = (
@@ -72686,6 +72688,10 @@
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"dwy" = (
+/obj/structure/extinguisher_cabinet,
+/turf/closed/wall,
+/area/medical/medbay/central)
 "dwL" = (
 /turf/closed/wall/r_wall,
 /area/maintenance/starboard/secondary)
@@ -73481,9 +73487,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"dNl" = (
-/turf/open/space/basic,
-/area/science/mixing/chamber)
 "dOB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -74663,7 +74666,7 @@
 /area/vacant_room/commissary)
 "qLf" = (
 /obj/structure/table/wood,
-/obj/item/storage/photo_album,
+/obj/item/storage/photo_album/library,
 /turf/open/floor/engine/cult,
 /area/library)
 "rbG" = (
@@ -74786,10 +74789,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
-"sgR" = (
-/obj/structure/extinguisher_cabinet,
-/turf/closed/wall,
-/area/medical/medbay/central)
 "siF" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
@@ -74848,6 +74847,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/department/science)
+"sQe" = (
+/obj/structure/cable,
+/turf/closed/wall/r_wall,
+/area/engine/engineering)
 "tjt" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -75149,6 +75152,20 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/closed/wall,
 /area/science/misc_lab/range)
+"wMh" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel/white,
+/area/medical/sleeper)
 "wOE" = (
 /turf/open/floor/plating,
 /area/maintenance/aft/secondary)
@@ -75238,10 +75255,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"xOW" = (
-/obj/structure/cable,
-/turf/closed/wall/r_wall,
-/area/engine/engineering)
 "xVl" = (
 /turf/closed/wall,
 /area/hallway/secondary/service)
@@ -75286,20 +75299,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
-"yiH" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/turf/open/floor/plasteel/white,
-/area/medical/sleeper)
 
 (1,1,1) = {"
 aaa
@@ -97039,7 +97038,7 @@ cbI
 bXK
 cev
 cfJ
-yiH
+wMh
 cih
 cjH
 clg
@@ -99866,7 +99865,7 @@ cbS
 cdw
 czE
 cfS
-sgR
+dwy
 cis
 cjO
 clp
@@ -111970,7 +111969,7 @@ cAP
 cDu
 cEA
 aaf
-dNl
+aaa
 aaa
 ack
 cwf
@@ -113956,10 +113955,10 @@ axY
 axY
 axY
 axY
-xOW
+sQe
 axY
 axY
-xOW
+sQe
 axY
 aWw
 aWw

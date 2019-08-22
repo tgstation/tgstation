@@ -279,7 +279,11 @@
 	plant(user)
 
 /obj/item/chair/proc/plant(mob/user)
-	for(var/obj/A in get_turf(loc))
+	var/turf/T = get_turf(loc)
+	if(!isfloorturf(T))
+		to_chat(user, "<span class='danger'>You need ground to plant this on!</span>")
+		return
+	for(var/obj/A in T)
 		if(istype(A, /obj/structure/chair))
 			to_chat(user, "<span class='danger'>There is already a chair here.</span>")
 			return

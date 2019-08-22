@@ -1,0 +1,4 @@
+author: "Mithrandalf"
+delete-after: True
+changes: 
+  - bugfix: "fixed cargo digitigrade jumpsuits"

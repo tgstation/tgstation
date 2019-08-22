@@ -12,6 +12,9 @@
 	idle_power_usage = 5
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/smartfridge
+	ui_x = 440
+	ui_y = 550
+
 	var/max_n_of_items = 1500
 	var/allow_ai_retrieve = FALSE
 	var/list/initial_contents
@@ -164,7 +167,7 @@
 /obj/machinery/smartfridge/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "smartvend", name, 440, 550, master_ui, state)
+		ui = new(user, src, ui_key, "smartvend", name, ui_x, ui_y, master_ui, state)
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
@@ -406,39 +409,28 @@
 	return FALSE
 
 /obj/machinery/smartfridge/organ/load(obj/item/O)
-	if(..())	//if the item loads, clear can_decompose
-		var/obj/item/organ/organ = O
-		organ.organ_flags |= ORGAN_FROZEN
-
-/obj/machinery/smartfridge/organ/dispense(obj/item/O, var/mob/M)
+	. = ..()
+	if(!.)	//if the item loads, clear can_decompose
+		return
 	var/obj/item/organ/organ = O
-	organ.organ_flags &= ~ORGAN_FROZEN
-	..()
+	organ.organ_flags |= ORGAN_FROZEN
 
 /obj/machinery/smartfridge/organ/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		max_n_of_items = 20 * B.rating
 		repair_rate = max(0, STANDARD_ORGAN_HEALING * (B.rating - 1))
 
-/obj/machinery/smartfridge/organ/Destroy()
-	for(var/organ in src)
-		var/obj/item/organ/O = organ
-		if(O)
-			O.organ_flags &= ~ORGAN_FROZEN
-	..()
-
 /obj/machinery/smartfridge/organ/process()
-	for(var/organ in src)
+	for(var/organ in contents)
 		var/obj/item/organ/O = organ
-		if(O)
-			O.damage = max(0, O.damage - repair_rate)
+		if(!istype(O))
+			return
+		O.applyOrganDamage(-repair_rate)
 
-/obj/machinery/smartfridge/organ/deconstruct()
-	for(var/organ in src)
-		var/obj/item/organ/O = organ
-		if(O)
-			O.organ_flags &= ~ORGAN_FROZEN
-	..()
+/obj/machinery/smartfridge/organ/Exited(obj/item/organ/AM, atom/newLoc)
+	. = ..()
+	if(istype(AM))
+		AM.organ_flags &= ~ORGAN_FROZEN
 
 // -----------------------------
 // Chemistry Medical Smartfridge
