@@ -370,7 +370,7 @@
 	var/super_lung_modification = FALSE
 	threshold_desc = "<b>Transmission 6:</b> Increases temperature adjustment rate.<br>\
 					  <b>Resistance 4:</b> The virus permanently modifies the lungs of its hosts so that they can safely breathe plasma.<br>\
-					  <b>Resistance 12:</b> The virus permanently modifies the lungs of its hosts so that they are healed whenever they inhale a significant amount of plasma.<br>\
+					  <b>Resistance 10:</b> The virus permanently modifies the lungs of its hosts so that they are healed whenever they inhale a significant amount of plasma.<br>\
 					  <b>Stage Speed 7:</b> Increases healing speed."
 
 /datum/symptom/heal/plasma/Start(datum/disease/advance/A)
@@ -380,7 +380,7 @@
 		power = 2
 	if(A.properties["resistance"] >= 4)
 		lung_modification = TRUE
-	if(A.properties["resistance"] >= 12)
+	if(A.properties["resistance"] >= 10)
 		super_lung_modification = TRUE
 	if(A.properties["transmittable"] >= 6)
 		temp_rate = 4
