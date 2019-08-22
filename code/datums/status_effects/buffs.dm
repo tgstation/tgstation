@@ -563,6 +563,7 @@
 	name = "Reinforcing Tendrils"
 	desc = "You can move faster than your broken body could normally handle!"
 	icon_state = "regenerative_core"
+	name = "Regenerative Core Tendrils"
 
 /datum/status_effect/regenerative_core
 	id = "Regenerative Core"
@@ -596,29 +597,3 @@
 /datum/status_effect/antimagic/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
 	owner.visible_message("<span class='warning'>[owner]'s dull aura fades away...</span>")
-
-/datum/status_effect/medbot_mark
-	id = "medbot_mark"
-	duration = 30 SECONDS
-	status_type = STATUS_EFFECT_REFRESH
-	alert_type = /obj/screen/alert/status_effect/medbot_mark
-	var/mob/living/simple_animal/bot/medbot/your_doctor_medbot
-	examine_text = "<span class='notice'They seem to be more susceptible to healing!</span>"
-	var/emagged = FALSE
-
-/datum/status_effect/medbot_mark/on_apply()
-	. = ..()
-	RegisterSignal(src, COMSIG_MOB_APPLY_DAMGE, .proc/amplify_healing)
-
-/datum/status_effect/medbot_mark/proc/amplify_healing(_damage, _damagetype) //from signal
-	if(!emagged && _damage >= 0)
-		return
-	owner.apply_damage_type(_damage*0.1,_damagetype, force = TRUE)
-
-/datum/status_effect/medbot_mark/on_remove()
-	UnregisterSignal(src, COMSIG_MOB_APPLY_DAMGE)
-
-/obj/screen/alert/status_effect/medbot_mark
-	name = "Medbot's Mark"
-	desc = "Healing is amplified by 10%!"
-	icon_state = "medbot_mark"

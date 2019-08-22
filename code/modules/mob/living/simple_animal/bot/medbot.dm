@@ -34,7 +34,7 @@
 	var/oldloc = null
 	var/last_found = 0
 	var/last_newpatient_speak = 0 //Don't spam the "HEY I'M COMING" messages
-	var/heal_amount = 1 //How much healing do we do at a time?
+	var/heal_amount = 2.5 //How much healing do we do at a time?
 	var/heal_threshold = 10 //Start healing when they have this much damage in a category
 	var/declare_crit = 1 //If active, the bot will transmit a critical patient alert to MedHUD users.
 	var/declare_cooldown = 0 //Prevents spam of critical patient alerts.
@@ -310,16 +310,9 @@
 	if(declare_crit && C.health <= 0) //Critical condition! Call for help!
 		declare(C)
 
-	var/datum/status_effect/medbot_mark/mandm = C.has_status_effect(STATUS_EFFECT_MEDBOT_MARK)
-	if(mandm && (mandm.your_doctor_medbot != src))
-		if(mandm.your_doctor_medbot.heal_amount > heal_amount)
-			return FALSE
-		else
-			mandm.your_doctor_medbot = src //fight fight fight
-
 	//They're injured enough for it!
 	if(C.getBruteLoss() >= heal_threshold)
-		return TRUE
+		return TRUE //If they're already medicated don't bother!
 
 	if(C.getOxyLoss() >= (5 + heal_threshold))
 		return TRUE
@@ -364,15 +357,10 @@
 		soft_reset()
 		return
 
-	var/datum/status_effect/medbot_mark/the_mark = patient.has_status_effect(STATUS_EFFECT_MEDBOT_MARK)
 	var/tending = TRUE
 	while(tending)
-		if(the_mark && the_mark.your_doctor_medbot != src)
-			bot_reset()
-			tending = FALSE
-			return
-
 		var/treatment_method = null
+
 		if(C.getBruteLoss() >= heal_threshold)
 			treatment_method = BRUTE
 
@@ -411,21 +399,19 @@
 					else
 						patient.apply_damage_type((healies*-1),treatment_method) //don't need to check treatment_method since we know by this point that they were actually damaged.
 						log_combat(src, patient, "tended the wounds of", "internal tools", "([uppertext(treatment_method)])")
-					the_mark = patient.apply_status_effect(STATUS_EFFECT_MEDBOT_MARK)
-					the_mark.emagged = (emagged == 2)
-					the_mark.your_doctor_medbot = src
 					C.visible_message("<span class='danger'>[src] tends the wounds of [patient]!</span>", \
 						"<span class='userdanger'>[src] tends your wounds!</span>")
 				else
 					tending = FALSE
 			else
 				tending = FALSE
-		else
-			tending = FALSE
-		if(!tending)
-			visible_message("[src] places its tools back into itself.")
+
+			if(!tending)
+				visible_message("[src] places its tools back into itself.")
 			update_icon()
 			soft_reset()
+		else
+			tending = FALSE
 
 /mob/living/simple_animal/bot/medbot/explode()
 	on = FALSE

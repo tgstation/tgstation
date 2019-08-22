@@ -40,8 +40,6 @@
 
 #define STATUS_EFFECT_ANTIMAGIC /datum/status_effect/antimagic //grants antimagic (and reapplies if lost) for the duration
 
-#define STATUS_EFFECT_MEDBOT_MARK /datum/status_effect/medbot_mark //amplifies healing
-
 /////////////
 // DEBUFFS //
 /////////////
