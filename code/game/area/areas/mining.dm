@@ -81,7 +81,7 @@
 	icon_state = "mining"
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
-	sound_environment = SOUND_ENVIRONMENT_QUARRY
+	sound_environment = SOUND_ENVIRONMENT_FOREST //This is fairly echoey and spooky sounding
 
 /area/lavaland/surface
 	name = "Lavaland"
