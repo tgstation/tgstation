@@ -13414,6 +13414,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/storage/photo_album/bar{
+	pixel_x = -6;
+	pixel_y = 6
+	},
 /obj/item/storage/fancy/cigarettes/cigars/havana,
 /obj/item/storage/fancy/cigarettes/cigars/cohiba{
 	pixel_y = 3
@@ -17210,6 +17214,10 @@
 	dir = 1
 	},
 /obj/structure/table,
+/obj/item/storage/photo_album/prison{
+	pixel_x = 4;
+	pixel_y = 4
+	},
 /obj/item/camera{
 	pixel_x = -2;
 	pixel_y = -2
@@ -64903,6 +64911,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/storage/photo_album/library,
 /turf/open/floor/plasteel/grimy,
 /area/library)
 "cqR" = (
@@ -113707,6 +113716,7 @@
 /area/chapel/office)
 "efZ" = (
 /obj/structure/table/wood,
+/obj/item/storage/photo_album/chapel,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "ega" = (
