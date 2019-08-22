@@ -48,6 +48,6 @@ Bonus
 				to_chat(M, "<span class='warning'>[pick("You feel dizzy.", "Your head spins.")]</span>")
 		else
 			to_chat(M, "<span class='userdanger'>A wave of dizziness washes over you!</span>")
-			M.dizziness = min(M.dizziness + 30, 100)
+			M.dizziness = CLAMP(M.dizziness, M.dizziness + 30, 100)
 			if(power >= 2)
 				M.set_drugginess(40)
