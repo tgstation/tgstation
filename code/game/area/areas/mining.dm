@@ -3,7 +3,7 @@
 /area/mine
 	icon_state = "mining"
 	has_gravity = STANDARD_GRAVITY
-	sound_environment = SOUND_ENVIRONMENT_STONEROOM
+	sound_environment = SOUND_AREA_STANDARD_STATION
 
 /area/mine/explored
 	name = "Mine"
@@ -81,7 +81,7 @@
 	icon_state = "mining"
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
-	sound_environment = SOUND_ENVIRONMENT_FOREST //This is fairly echoey and spooky sounding
+	sound_environment = SOUND_AREA_LAVALAND
 
 /area/lavaland/surface
 	name = "Lavaland"
