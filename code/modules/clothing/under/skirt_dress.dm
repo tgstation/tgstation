@@ -99,3 +99,13 @@
 	icon_state = "plaid_green"
 	item_state = "plaid_green"
 	item_color = "plaid_green"
+
+/obj/item/clothing/under/dress/skirt/summer
+	desc = "A revealing outfit perfect for a warm summer day."
+	custom_price = 75
+
+/obj/item/clothing/under/dress/skirt/summer/pink
+	name = "pink summer skirt"
+	icon_state = "pink_summer_skirt"
+	item_state = "pink_summer_skirt"
+	item_color = "pink_summer_skirt"
