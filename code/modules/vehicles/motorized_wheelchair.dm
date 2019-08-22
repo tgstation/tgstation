@@ -16,14 +16,11 @@
 	refresh_parts()
 
 /obj/vehicle/ridden/wheelchair/motorized/proc/refresh_parts()
-	var/_temp = 0
+	speed = 0
 	for(var/obj/item/stock_parts/manipulator/M in contents)
-		_temp += M.rating
-	speed = _temp
-	_temp = 0
+		speed += M.rating
 	for(var/obj/item/stock_parts/capacitor/C in contents)
-		_temp += C.rating
-	power_efficiency = _temp
+		power_efficiency = C.rating
 	var/datum/component/riding/D = GetComponent(/datum/component/riding)
 	D.vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * 6.7) / speed
 
