@@ -1,3 +1,4 @@
+GLOBAL_VAR(medibot_unique_id_gen)
 //MEDBOT
 //MEDBOT PATHFINDING
 //MEDBOT ASSEMBLY
@@ -42,6 +43,7 @@
 	//Setting which reagents to use to treat what by default. By id.
 	var/shut_up = 0 //self explanatory :)
 	var/datum/techweb/linked_techweb
+	var/medibot_counter = 0 //we use this to stop multibotting
 
 /mob/living/simple_animal/bot/medbot/mysterious
 	name = "\improper Mysterious Medibot"
@@ -84,6 +86,10 @@
 	skin = new_skin
 	update_icon()
 	linked_techweb = SSresearch.science_tech
+	if(!GLOB.medibot_unique_id_gen)
+		GLOB.medibot_unique_id_gen = 0
+	medibot_counter = GLOB.medibot_unique_id_gen
+	GLOB.medibot_unique_id_gen++
 
 /mob/living/simple_animal/bot/medbot/update_mobility()
 	. = ..()
@@ -299,6 +305,9 @@
 	if(emagged == 2) //Everyone needs our medicine. (Our medicine is toxins)
 		return TRUE
 
+	if(HAS_TRAIT(C,TRAIT_MEDIBOTCOMINGTHROUGH) && !HAS_TRAIT_FROM(C,TRAIT_MEDIBOTCOMINGTHROUGH,medibot_counter)) //someone is healing them already sweetie
+		return FALSE
+
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		if (H.wear_suit && H.head && istype(H.wear_suit, /obj/item/clothing) && istype(H.head, /obj/item/clothing))
@@ -401,6 +410,7 @@
 						log_combat(src, patient, "tended the wounds of", "internal tools", "([uppertext(treatment_method)])")
 					C.visible_message("<span class='danger'>[src] tends the wounds of [patient]!</span>", \
 						"<span class='userdanger'>[src] tends your wounds!</span>")
+					ADD_TRAIT(patient,TRAIT_MEDIBOTCOMINGTHROUGH,medibot_counter)
 				else
 					tending = FALSE
 			else
@@ -410,6 +420,7 @@
 				visible_message("[src] places its tools back into itself.")
 			update_icon()
 			soft_reset()
+			REMOVE_TRAIT(patient,TRAIT_MEDIBOTCOMINGTHROUGH,medibot_counter)
 		else
 			tending = FALSE
 
