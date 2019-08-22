@@ -12,6 +12,9 @@
 	density = FALSE
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/sleeper
+	ui_x = 375
+	ui_y = 550
+
 	var/efficiency = 1
 	var/min_health = -25
 	var/list/available_chems
@@ -27,6 +30,7 @@
 	var/enter_message = "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
 	payment_department = ACCOUNT_MED
 	fair_market_price = 5
+
 /obj/machinery/sleeper/Initialize(mapload)
 	. = ..()
 	if(mapload)
@@ -140,7 +144,7 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "sleeper", name, 375, 550, master_ui, state)
+		ui = new(user, src, ui_key, "sleeper", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/sleeper/AltClick(mob/user)
