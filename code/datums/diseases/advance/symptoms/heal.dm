@@ -211,7 +211,7 @@
 
 /datum/symptom/heal/coma
 	name = "Regenerative Coma"
-	desc = "The virus causes the host to fall into a death-like coma when severely damaged, then rapidly fixes the damage."
+	desc = "The virus causes the host to fall into a death-like coma when severely damaged, then rapidly fixes the damage. At stage 5, the virus will also stabilize the host while they are in critical condition."
 	stealth = 0
 	resistance = 2
 	stage_speed = -3
@@ -230,6 +230,24 @@
 		power = 1.5
 	if(A.properties["stealth"] >= 2)
 		deathgasp = TRUE
+
+
+/datum/symptom/heal/coma/on_stage_change(new_stage, datum/disease/advance/A)  //mostly copy+pasted from the code for self-respiration's TRAIT_NOBREATH stuff
+	if(!..())
+		return FALSE
+	var/mob/living/carbon/M = A.affected_mob
+	switch(A.stage)
+		if(4)  //why am I changing these stage numbers from the numbers that were laid out in self-respiration? well, I just realized that if a sentient disease takes the regen coma (or self-respiration?) symptom after it reaches stage 5 in a host, the host might not get that symptom's added trait. I'll have to investigate/test this more later.
+			REMOVE_TRAIT(M, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
+		if(5)
+			ADD_TRAIT(M, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
+	return TRUE
+
+/datum/symptom/heal/coma/End(datum/disease/advance/A)
+	if(!..())
+		return
+	if(A.stage >= 5)
+		REMOVE_TRAIT(A.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
 
 /datum/symptom/heal/coma/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
@@ -348,7 +366,11 @@
 	level = 8
 	passive_message = "<span class='notice'>You feel an odd attraction to plasma.</span>"
 	var/temp_rate = 1
+	var/lung_modification = FALSE
+	var/super_lung_modification = FALSE
 	threshold_desc = "<b>Transmission 6:</b> Increases temperature adjustment rate.<br>\
+					  <b>Resistance 4:</b> The virus permanently modifies the lungs of its hosts so that they can safely breathe plasma.<br>\
+					  <b>Resistance 12:</b> The virus permanently modifies the lungs of its hosts so that they are healed whenever they inhale a significant amount of plasma.<br>\
 					  <b>Stage Speed 7:</b> Increases healing speed."
 
 /datum/symptom/heal/plasma/Start(datum/disease/advance/A)
@@ -356,8 +378,13 @@
 		return
 	if(A.properties["stage_rate"] >= 7)
 		power = 2
+	if(A.properties["resistance"] >= 4)
+		lung_modification = TRUE
+	if(A.properties["resistance"] >= 12)
+		super_lung_modification = TRUE
 	if(A.properties["transmittable"] >= 6)
 		temp_rate = 4
+		
 
 /datum/symptom/heal/plasma/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
@@ -365,12 +392,20 @@
 	var/list/gases
 
 	. = 0
-
+	
+	if(lung_modification && iscarbon(M))
+		var/mob/living/carbon/C = M
+		var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
+		if(L)
+			L.safe_toxins_max = 0  //the reason that this is here in CanHeal instead of in on_stage_change or something is that someone might have their lungs taken out and replaced with new ones
+			L.all_you_need_is_plasma = TRUE
+			if(super_lung_modification)
+				L.plasma_healing = TRUE
 	if(M.loc)
 		environment = M.loc.return_air()
 	if(environment)
 		gases = environment.gases
-		if(gases["plasma"] && gases["plasma"][MOLES] > gases["plasma"][GAS_META][META_GAS_MOLES_VISIBLE]) //if there's enough plasma in the air to see
+		if(gases[/datum/gas/plasma] && gases[/datum/gas/plasma][MOLES] > gases[/datum/gas/plasma][GAS_META][META_GAS_MOLES_VISIBLE])
 			. += power * 0.5
 	if(M.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
 		. +=  power * 0.75
