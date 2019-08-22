@@ -188,6 +188,7 @@
 			if(active)
 				icon_state = "swordrainbow"
 				user.update_inv_hands()
+				set_light(2, 3, rgb(rand(0,255),rand(0,255),rand(0,255)))
 		else
 			to_chat(user, "<span class='warning'>It's already fabulous!</span>")
 	else
