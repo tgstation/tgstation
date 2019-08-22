@@ -642,8 +642,9 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/its_only_game.ogg',
 		'sound/roundend/yeehaw.ogg',
 		'sound/roundend/disappointed.ogg',
+		'austation/sound/roundend/ohthatsit.ogg',
 		'sound/roundend/scrunglartiy.ogg'\
-		)
+		) // austation -- New roundend sound ohthatsit.ogg
 
 	SEND_SOUND(world, sound(round_end_sound))
 	text2file(login_music, "data/last_round_lobby_music.txt")
