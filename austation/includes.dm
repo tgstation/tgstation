@@ -1,4 +1,7 @@
 // AuStation includes file
+#include "code\controllers\configuration\entries\game_options.dm"
+#include "code\controllers\configuration\entries\general.dm"
+#include "code\controllers\subsystem\autotransfer.dm"
 #include "code\datums\ai_laws.dm"
 #include "code\game\objects\items\AI_modules.dm"
 #include "code\game\objects\items\robot\robot_upgrades.dm"
