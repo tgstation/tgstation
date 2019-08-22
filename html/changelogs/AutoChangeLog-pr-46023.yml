@@ -1,4 +1,0 @@
-author: "iprice"
-delete-after: True
-changes: 
-  - bugfix: "Occasional 'Already contains an APC!' error incorrectly generated."
