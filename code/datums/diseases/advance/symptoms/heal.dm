@@ -211,7 +211,7 @@
 
 /datum/symptom/heal/coma
 	name = "Regenerative Coma"
-	desc = "The virus causes the host to fall into a death-like coma when severely damaged, then rapidly fixes the damage. At stage 5, the virus will also stabilize the host while they are in critical condition."
+	desc = "The virus causes the host to fall into a death-like coma when severely damaged, then rapidly fixes the damage. The virus also stabilizes the host while they are in critical condition."
 	stealth = 0
 	resistance = 2
 	stage_speed = -3
@@ -237,16 +237,16 @@
 		return FALSE
 	var/mob/living/carbon/M = A.affected_mob
 	switch(A.stage)
-		if(4)  //why am I changing these stage numbers from the numbers that were laid out in self-respiration? well, I just realized that if a sentient disease takes the regen coma (or self-respiration?) symptom after it reaches stage 5 in a host, the host might not get that symptom's added trait. I'll have to investigate/test this more later.
+		if(3)  //Note to self: Do some testing to see if a sentient disease adding this symptom to itself after it has reached stage 5 in a host will cause said host to not gain this trait until the virus goes down a stage in them. If that is true, self-respiration and this symptom will both have to be altered.
 			REMOVE_TRAIT(M, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
-		if(5)
+		if(4)
 			ADD_TRAIT(M, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
 	return TRUE
 
 /datum/symptom/heal/coma/End(datum/disease/advance/A)
 	if(!..())
 		return
-	if(A.stage >= 5)
+	if(A.stage >= 4)
 		REMOVE_TRAIT(A.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
 
 /datum/symptom/heal/coma/CanHeal(datum/disease/advance/A)
