@@ -313,11 +313,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(flying_species && isnull(fly))
 		fly = new
 		fly.Grant(C)
-	if(C.dna && C.dna.species && (C.dna.features["wings"] != wings_icon))
-		if(!("wings" in C.dna.species.mutant_bodyparts))
-			C.dna.species.mutant_bodyparts |= "wings"
-		C.dna.features["wings"] = wings_icon
-		C.update_body()
 
 	C.add_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE, 100, override=TRUE, multiplicative_slowdown=speedmod, movetypes=(~FLYING))
 
@@ -1845,8 +1840,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		fly = new
 		fly.Grant(H)
 	if(H.dna.features["wings"] != wings_icon)
-		if(!("wings" in H.dna.species.mutant_bodyparts))
-			H.dna.species.mutant_bodyparts |= "wings"
+		mutant_bodyparts |= "wings"
 		H.dna.features["wings"] = wings_icon
 		H.update_body()
 
@@ -1895,8 +1889,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		buckled_obj.unbuckle_mob(H)
 		step(buckled_obj, olddir)
 	else
-		for(var/i in 1 to 5)
-			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 4), 1, FALSE, CALLBACK(C, /mob/living/carbon/.proc/spin, 1, 1))
+		new /datum/forced_movement(H, get_ranged_target_turf(H, olddir, 4), 1, FALSE, CALLBACK(H, /mob/living/carbon/.proc/spin, 1, 1))
 	return TRUE
 
 //UNSAFE PROC, should only be called through the Activate or other sources that check for CanFly
