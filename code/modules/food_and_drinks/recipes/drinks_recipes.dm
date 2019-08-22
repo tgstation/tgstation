@@ -208,8 +208,8 @@
 /datum/chemical_reaction/margarita
 	name = "Margarita"
 	id = /datum/reagent/consumable/ethanol/margarita
-	results = list(/datum/reagent/consumable/ethanol/margarita = 3)
-	required_reagents = list(/datum/reagent/consumable/ethanol/tequila = 2, /datum/reagent/consumable/limejuice = 1)
+	results = list(/datum/reagent/consumable/ethanol/margarita = 4)
+	required_reagents = list(/datum/reagent/consumable/ethanol/tequila = 2, /datum/reagent/consumable/triple_sec = 1, /datum/reagent/consumable/limejuice = 1)
 
 /datum/chemical_reaction/longislandicedtea
 	name = "Long Island Iced Tea"
