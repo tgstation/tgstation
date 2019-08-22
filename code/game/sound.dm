@@ -73,10 +73,6 @@
 		if(S.volume <= 0)
 			return //No sound
 
-		var/area/A = get_area(src)
-		if(A.sound_environment > -1)
-			S.environment = A.sound_environment
-
 		var/dx = turf_source.x - T.x // Hearing from the right/left
 		S.x = dx
 		var/dz = turf_source.y - T.y // Hearing from infront/behind
@@ -84,9 +80,10 @@
 		// The y value is for above your head, but there is no ceiling in 2d spessmens.
 		S.y = 1
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
+
 		var/area/A = get_area(src)
 		if(A.sound_environment > -1)
-			S.environment = A.sound_environmen
+			S.environment = A.sound_environment
 
 
 	SEND_SOUND(src, S)
