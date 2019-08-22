@@ -62,6 +62,8 @@
 	var/heat_damage_type = BURN
 
 	var/crit_stabilizing_reagent = /datum/reagent/medicine/epinephrine
+	var/all_you_need_is_plasma = FALSE //da da, da da da da daaaaaaaaaa
+	var/plasma_healing = FALSE
 
 
 /obj/item/organ/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
@@ -100,6 +102,13 @@
 	var/N2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrogen][MOLES])
 	var/Toxins_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/plasma][MOLES])
 	var/CO2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/carbon_dioxide][MOLES])
+	if(all_you_need_is_plasma) //if pluoxium can add its partial pressure to O2_pp, I'm sure that nothing could possibly go wrong if I try to add Toxins_pp to some other pps
+		if(safe_oxygen_min)
+			O2_pp += Toxins_pp
+		if(safe_nitro_min)
+			N2_pp += Toxins_pp
+		if(safe_co2_min)
+			CO2_pp += Toxins_pp
 
 
 	//-- OXY --//
@@ -197,7 +206,13 @@
 
 
 	//-- TOX --//
-
+	
+	if(plasma_healing && Toxins_pp > META_GAS_MOLES_VISIBLE)
+		H.heal_overall_damage(0.5,0.5, 0, BODYPART_ORGANIC)
+		H.adjustToxLoss(-0.5)
+		H.adjustOxyLoss(-0.5)
+	
+	
 	//Too much toxins!
 	if(safe_toxins_max)
 		if(Toxins_pp > safe_toxins_max)
@@ -353,7 +368,7 @@
 		H.emote("gasp")
 	if(breath_pp > 0)
 		var/ratio = safe_breath_min/breath_pp
-		H.adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!
+		H.adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
 		H.failed_last_breath = TRUE
 		. = true_pp*ratio/6
 	else
