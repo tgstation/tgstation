@@ -15,8 +15,7 @@
 	var/cooldown_check = 0
 
 	var/cooldown = (3 SECONDS)
-	var/stunforce = 100
-	var/knockdown = 50
+	var/stunforce = 60
 	var/status = 0
 	var/obj/item/stock_parts/cell/cell
 	var/hitcost = 1000

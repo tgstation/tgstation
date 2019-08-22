@@ -9,8 +9,8 @@
 	name = "electrically-charged arm"
 	icon_state = "elecarm"
 	var/charge_cost = 30
-	var/knockdown = 50
-	var/cooldown = (2 SECONDS)
+	var/knockdown = 60
+	var/cooldown = (3 SECONDS)
 
 	var/cooldown_check = 0
 
