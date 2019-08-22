@@ -209,7 +209,7 @@
 	
 	if(plasma_healing && Toxins_pp > META_GAS_MOLES_VISIBLE)
 		H.heal_overall_damage(1,1, 0, BODYPART_ORGANIC) //about 1/4 as fast as the regen that podpeople get in light (remember that check_breath usually only fires off once every 4 ticks)
-		H.adjustToxLoss(-1)
+		H.adjustToxLoss(-1, TRUE, TRUE) //heals even toxinlovers
 		H.adjustOxyLoss(-1)
 	
 	
@@ -433,13 +433,14 @@
 	desc = "A large organelle designed to store oxygen and other important gasses."
 
 	safe_toxins_max = 0 //We breathe this to gain POWER.
-	all_you_need_is_plasma = TRUE //giving them plasma healing would be a bad idea, I think, since they'd die from the tox healing being converted into tox damage
+	all_you_need_is_plasma = TRUE //pure plasma mixes should no longer suffocate slimepeople (I hope)
+	plasma_healing = TRUE
 
 /obj/item/organ/lungs/slime/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
 	. = ..()
 	if (breath && breath.gases[/datum/gas/plasma])
 		var/plasma_pp = breath.get_breath_partial_pressure(breath.gases[/datum/gas/plasma][MOLES])
-		owner.blood_volume += (0.1 * plasma_pp) // 5/s when breathing literally nothing but plasma
+		owner.blood_volume += (0.1 * plasma_pp) // 5/s when breathing literally nothing but plasma (I got that 5/s number from the 10/s number in the unedited version of this comment (before I nerfed this blood_volume gain rate); I kind of suspect that the number really should be 1.25/s (since check_breath) only fires once every four ticks, but I'm not an expert on these sorts of things)
 
 /obj/item/organ/lungs/cybernetic
 	name = "cybernetic lungs"
