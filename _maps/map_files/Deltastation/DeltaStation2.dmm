@@ -13414,10 +13414,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/item/storage/photo_album/bar{
-	pixel_x = -6;
-	pixel_y = 6
-	},
 /obj/item/storage/fancy/cigarettes/cigars/havana,
 /obj/item/storage/fancy/cigarettes/cigars/cohiba{
 	pixel_y = 3
@@ -15232,11 +15228,11 @@
 /area/maintenance/disposal/incinerator)
 "aIm" = (
 /obj/machinery/igniter/incinerator_atmos,
+/obj/structure/cable,
 /obj/machinery/air_sensor/atmos/incinerator_tank{
 	pixel_x = -32;
 	pixel_y = 32
 	},
-/obj/structure/cable,
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "aIn" = (
@@ -17214,10 +17210,6 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/storage/photo_album/prison{
-	pixel_x = 4;
-	pixel_y = 4
-	},
 /obj/item/camera{
 	pixel_x = -2;
 	pixel_y = -2
@@ -64911,7 +64903,6 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/storage/photo_album/library,
 /turf/open/floor/plasteel/grimy,
 /area/library)
 "cqR" = (
@@ -113716,7 +113707,6 @@
 /area/chapel/office)
 "efZ" = (
 /obj/structure/table/wood,
-/obj/item/storage/photo_album/chapel,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "ega" = (
@@ -114543,14 +114533,14 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "hZA" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
+	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/maintenance/disposal/incinerator)

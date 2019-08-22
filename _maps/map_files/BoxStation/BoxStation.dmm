@@ -43118,9 +43118,6 @@
 	id = "incineratorturbine"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/warning/nosmoking{
-	pixel_x = -28
-	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "cli" = (
@@ -43843,11 +43840,11 @@
 /obj/machinery/igniter{
 	id = "Incinerator"
 	},
-/obj/machinery/air_sensor{
+/obj/structure/cable,
+/obj/machinery/air_sensor/atmos/incinerator_tank{
 	pixel_x = -32;
 	pixel_y = -32
 	},
-/obj/structure/cable,
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "cos" = (
@@ -44058,7 +44055,8 @@
 "cpO" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Incinerator Output Pump"
+	name = "Incinerator Output Pump";
+	target_pressure = 4500
 	},
 /turf/open/space,
 /area/maintenance/disposal/incinerator)
@@ -46679,7 +46677,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "czJ" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -51164,6 +51162,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"pZL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/radiation,
+/obj/effect/turf_decal/bot,
+/obj/structure/sign/warning/nosmoking{
+	pixel_x = -28
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/disposal/incinerator)
 "qae" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/junction/flip{
@@ -89561,7 +89568,7 @@ bzs
 cfj
 cfj
 akC
-akF
+pZL
 akF
 alY
 alZ

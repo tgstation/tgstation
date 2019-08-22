@@ -169,12 +169,16 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	name = "Incinerator Air Control"
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_INCINERATOR = "Incinerator Chamber")
 	circuit = /obj/item/circuitboard/computer/atmos_control/incinerator
+	ui_x = 400
+	ui_y = 300
 
 //Toxins mix sensor only
 /obj/machinery/computer/atmos_control/toxinsmix
 	name = "Toxins Mixing Air Control"
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_TOXINS_LAB = "Toxins Mixing Chamber")
 	circuit = /obj/item/circuitboard/computer/atmos_control/toxinsmix
+	ui_x = 400
+	ui_y = 300
 
 /////////////////////////////////////////////////////////////
 // LARGE TANK CONTROL

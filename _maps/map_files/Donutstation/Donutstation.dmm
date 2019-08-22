@@ -17910,7 +17910,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "aSX" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -17918,7 +17918,8 @@
 "aSY" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Incinerator Output Pump"
+	name = "Incinerator Output Pump";
+	target_pressure = 4500
 	},
 /turf/open/space/basic,
 /area/maintenance/disposal/incinerator)
@@ -17943,11 +17944,11 @@
 /area/maintenance/disposal/incinerator)
 "aTc" = (
 /obj/machinery/igniter/incinerator_atmos,
-/obj/machinery/air_sensor{
+/obj/structure/cable,
+/obj/machinery/air_sensor/atmos/incinerator_tank{
 	pixel_x = -32;
 	pixel_y = -32
 	},
-/obj/structure/cable,
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "aTd" = (
@@ -41109,7 +41110,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/computer/atmos_control/toxinsmix,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bUg" = (
@@ -45388,6 +45388,10 @@
 /obj/effect/landmark/start/station_engineer,
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
+"ejv" = (
+/obj/machinery/air_sensor/atmos/toxins_mixing_tank,
+/turf/open/floor/engine/vacuum,
+/area/science/mixing)
 "elZ" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -48278,6 +48282,7 @@
 /obj/item/radio/intercom{
 	pixel_y = 29
 	},
+/obj/machinery/computer/atmos_control/toxinsmix,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "oPe" = (
@@ -71843,7 +71848,7 @@ bgg
 aal
 acm
 acr
-acr
+ejv
 ada
 adU
 adD

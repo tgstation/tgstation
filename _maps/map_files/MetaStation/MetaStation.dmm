@@ -458,10 +458,6 @@
 "abj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/storage/photo_album/prison{
-	pixel_x = 6;
-	pixel_y = 6
-	},
 /obj/item/camera{
 	pixel_x = -4
 	},
@@ -776,7 +772,6 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/obj/item/storage/photo_album/bar,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "abV" = (
@@ -54514,9 +54509,8 @@
 /turf/open/space,
 /area/space/nearstation)
 "cpN" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 8;
-	volume_rate = 200
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/maintenance/disposal/incinerator)
@@ -65643,7 +65637,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table/wood,
 /obj/structure/cable,
-/obj/item/storage/photo_album/chapel,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "cMH" = (
@@ -74666,7 +74659,6 @@
 /area/vacant_room/commissary)
 "qLf" = (
 /obj/structure/table/wood,
-/obj/item/storage/photo_album/library,
 /turf/open/floor/engine/cult,
 /area/library)
 "rbG" = (

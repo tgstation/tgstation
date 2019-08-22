@@ -36288,6 +36288,9 @@
 	id = "toxigniter";
 	luminosity = 2
 	},
+/obj/machinery/air_sensor/atmos/toxins_mixing_tank{
+	pixel_y = -32
+	},
 /turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "bMn" = (
@@ -43196,7 +43199,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "ceA" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
