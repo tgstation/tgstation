@@ -73,10 +73,10 @@
 	var/mob/living/carbon/human/affected_human = affected_mob
 	if(!istype(affected_human))
 		return
-	var/slimeheart = FALSE
-	var/obj/item/organ/heart/heart = affected_human.getorganslot(ORGAN_SLOT_HEART)
-	if(istype(heart, /obj/item/organ/heart/slime))
-		slimeheart = TRUE
+	//var/slimeheart = FALSE
+	//var/obj/item/organ/heart/heart = affected_human.getorganslot(ORGAN_SLOT_HEART)
+	//if(istype(heart, /obj/item/organ/heart/slime))
+		//slimeheart = TRUE
 	var/obj/item/organ/brain/brain = affected_human.getorganslot(ORGAN_SLOT_BRAIN)
 	if(!brain)
 		return

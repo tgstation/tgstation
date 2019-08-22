@@ -46,9 +46,10 @@
 		return
 
 	var/datum/disease/transformation/melting/delivereddisease
-	if(var/datum/disease/transformation/melting/founddisease in target.diseases)
+	for(var/datum/disease/transformation/melting/founddisease in target.diseases)
 		delivereddisease = founddisease
-	else
+		break
+	if(!delivereddisease)
 		delivereddisease = new /datum/disease/transformation/melting()
 		delivereddisease.creator = user
 	var/obj/item/organ/heart/slime/slimeheart = new(get_turf(target), delivereddisease)
@@ -159,17 +160,18 @@
 	var/message = input("Send a message!", "Communicate")
 	var/datum/antagonist/A
 	if(champion)
-		if(var/datum/antagonist/melting/melting_antagonist in GLOB.antagonists && melting_antagonist.owner)
-			A = melting_antagonist
-		else
-			to_chat(owner, "<span class='warning'>There's nobody on the other end...?</span>")
-			return
+		for(var/datum/antagonist/melting/melting_antagonist in GLOB.antagonists)
+			if(melting_antagonist.owner)
+				A = melting_antagonist
+				break
 	else
-		if(var/datum/antagonist/meltedchampion/champion_antagonist in GLOB.antagonists && champion_antagonist.owner)
-			A = champion_antagonist
-		else
-			to_chat(owner, "<span class='warning'>There's nobody on the other end...?</span>")
-			return
+		for(var/datum/antagonist/meltedchampion/champion_antagonist in GLOB.antagonists)
+			if(champion_antagonist.owner)
+				A = champion_antagonist
+				break
+	if(!A)
+		to_chat(owner, "<span class='warning'>There's nobody on the other end...?</span>")
+		return
 	to_chat(owner, "<span class='[champion ? "warning" : "notice"]'><b>[owner]</b>:[message]")
 	to_chat(A.owner, "<span class='[champion ? "warning" : "notice"]'><b>[owner]</b>:[message]")
 	for(var/mob/dead in GLOB.dead_mob_list)
