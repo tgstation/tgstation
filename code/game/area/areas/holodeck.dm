@@ -8,7 +8,7 @@
 	var/obj/machinery/computer/holodeck/linked
 	var/restricted = 0 // if true, program goes on emag list
 
-	sound_environment = 1
+	sound_environment = SOUND_ENVIRONMENT_PADDED_CELL
 
 /*
 	Power tracking: Use the holodeck computer's power grid

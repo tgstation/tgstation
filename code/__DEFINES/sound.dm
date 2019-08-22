@@ -73,3 +73,33 @@
 	'sound/hallucinations/growl3.ogg', 'sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg', 'sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg',\
 	'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg',\
 	'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
+
+//default byond sound environments
+#define SOUND_ENVIRONMENT_NONE -1
+#define SOUND_ENVIRONMENT_GENERIC 0
+#define SOUND_ENVIRONMENT_PADDED_CELL 1
+#define SOUND_ENVIRONMENT_ROOM 2
+#define SOUND_ENVIRONMENT_BATHROOM 3
+#define SOUND_ENVIRONMENT_LIVINGROOM 4
+#define SOUND_ENVIRONMENT_STONEROOM 5
+#define SOUND_ENVIRONMENT_AUDITORIUM 6
+#define SOUND_ENVIRONMENT_CONCERT_HALL 7
+#define SOUND_ENVIRONMENT_CAVE 8
+#define SOUND_ENVIRONMENT_ARENA 9
+#define SOUND_ENVIRONMENT_HANGAR 10
+#define SOUND_ENVIRONMENT_CARPETTED_HALLWAY 11
+#define SOUND_ENVIRONMENT_HALLWAY 12
+#define SOUND_ENVIRONMENT_STONE_CORRIDOR 13
+#define SOUND_ENVIRONMENT_ALLEY 14
+#define SOUND_ENVIRONMENT_FOREST 15
+#define SOUND_ENVIRONMENT_CITY 16
+#define SOUND_ENVIRONMENT_MOUNTAINS 17
+#define SOUND_ENVIRONMENT_QUARRY 18
+#define SOUND_ENVIRONMENT_PLAIN 19
+#define SOUND_ENVIRONMENT_PARKING_LOT 20
+#define SOUND_ENVIRONMENT_SEWER_PIPE 21
+#define SOUND_ENVIRONMENT_UNDERWATER 22
+#define SOUND_ENVIRONMENT_DRUGGED 23
+#define SOUND_ENVIRONMENT_DIZZY 24
+#define SOUND_ENVIRONMENT_PSYCHOTIC 25
+//If we ever make custom ones add them here
