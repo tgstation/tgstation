@@ -155,7 +155,7 @@
 	name = "morphine medipen"
 	desc = "A rapid way to get you out of a tight situation and fast! You'll feel rather drowsy, though."
 	icon_state = "morphen"
-	item_state = "morphen"
+	item_state = "morphen" //e
 	list_reagents = list(/datum/reagent/medicine/morphine = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/oxandrolone
