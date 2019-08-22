@@ -1,0 +1,4 @@
+author: "redmoogle"
+delete-after: True
+changes: 
+  - bugfix: "Fixed some SM code"
