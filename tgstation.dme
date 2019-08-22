@@ -390,6 +390,7 @@
 #include "code\datums\components\rot.dm"
 #include "code\datums\components\rotation.dm"
 #include "code\datums\components\shrapnel.dm"
+#include "code\datums\components\shrink.dm"
 #include "code\datums\components\slippery.dm"
 #include "code\datums\components\spawner.dm"
 #include "code\datums\components\spill.dm"

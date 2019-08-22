@@ -1,0 +1,4 @@
+author: "Akrilla"
+delete-after: True
+changes: 
+  - rscadd: "Agents cards randomly assign you a name if you leave the name field blank."
