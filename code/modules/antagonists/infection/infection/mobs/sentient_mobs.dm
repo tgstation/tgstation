@@ -237,14 +237,14 @@
 	Refund the upgrades this slime has purchased and transfer them to a base type
 */
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/refund_upgrades()
-	var/confirm = alert("Are you sure you want to refund all of your upgrades?", "Revert Form", "Yes", "No")
-	if(confirm != "Yes")
-		return
 	if(!ISRESPAWNING(src))
 		to_chat(src, "<span class='warning'>You cannot revert unless you are reforming!</span>")
 		return
 	if(spent_upgrade_points == 0)
 		to_chat(src, "<span class='warning'>We are unable to revert our form any further!</span>")
+		return
+	var/confirm = alert("Are you sure you want to refund all of your upgrades?", "Revert Form", "Yes", "No")
+	if(confirm != "Yes")
 		return
 	to_chat(src, "<span class='warning'>Successfully reverted to base evolution!</span>")
 	if(!GLOB.infection_core)

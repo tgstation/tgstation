@@ -13,8 +13,10 @@
 	var/attack_item_type
 	// an item type that is spawned when the mob dies, as well as takes away their super powers
 	var/stored_item_type
+	// self explanatory, no reason to add this if you have a stored item type
+	var/remove_on_death
 
-/datum/component/superpowers/Initialize(speedboost=0, stuns=TRUE, pushable=TRUE, attack_item_type, stored_item_type)
+/datum/component/superpowers/Initialize(speedboost=0, stuns=TRUE, pushable=TRUE, attack_item_type, stored_item_type, remove_on_death=FALSE)
 	if(!ishuman(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/mob/living/carbon/human/H = parent
@@ -24,6 +26,7 @@
 	src.pushable = pushable
 	src.attack_item_type = attack_item_type
 	src.stored_item_type = stored_item_type
+	src.remove_on_death = remove_on_death
 
 	if(!stuns)
 		ADD_TRAIT(H, TRAIT_STUNIMMUNE, COMPONENT_SUPERPOWERS_TRAIT)
@@ -61,7 +64,8 @@
 /datum/component/superpowers/proc/on_parent_death(mob/living/carbon/human/H, gibbed)
 	if(stored_item_type)
 		new stored_item_type(H.loc)
-		REMOVE_TRAIT(H, TRAIT_STUNIMMUNE, TRAIT_HULK)
-		REMOVE_TRAIT(H, TRAIT_PUSHIMMUNE, TRAIT_HULK)
+	if(stored_item_type || remove_on_death)
+		REMOVE_TRAIT(H, TRAIT_STUNIMMUNE, COMPONENT_SUPERPOWERS_TRAIT)
+		REMOVE_TRAIT(H, TRAIT_PUSHIMMUNE, COMPONENT_SUPERPOWERS_TRAIT)
 		H.remove_movespeed_modifier(MOVESPEED_ID_SUPERPOWER_COMPONENT, update = TRUE)
 		_RemoveFromParent()
