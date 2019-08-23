@@ -22,12 +22,6 @@
 /obj/machinery/computer/med_data/syndie
 	icon_keyboard = "syndie_key"
 
-/obj/machinery/computer/med_data/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/card/id))
-		id_insert_scan(user)
-	else
-		return ..()
-
 /obj/machinery/computer/med_data/ui_interact(mob/user)
 	. = ..()
 	if(isliving(user))

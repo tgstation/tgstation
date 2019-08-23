@@ -13401,13 +13401,6 @@
 /area/crew_quarters/bar)
 "aEZ" = (
 /obj/structure/table/wood,
-/obj/item/storage/fancy/cigarettes/cigars{
-	pixel_y = 6
-	},
-/obj/item/storage/fancy/cigarettes/cigars/cohiba{
-	pixel_y = 3
-	},
-/obj/item/storage/fancy/cigarettes/cigars/havana,
 /obj/item/radio/intercom{
 	pixel_y = 26
 	},
@@ -13420,6 +13413,14 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/item/storage/photo_album/bar{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/storage/fancy/cigarettes/cigars/havana,
+/obj/item/storage/fancy/cigarettes/cigars/cohiba{
+	pixel_y = 3
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
@@ -17199,7 +17200,6 @@
 /turf/open/floor/plating,
 /area/security/prison)
 "aMf" = (
-/obj/structure/easel,
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = 32
 	},
@@ -17207,10 +17207,17 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/canvas/twentythreeXtwentythree,
-/obj/item/canvas/twentythreeXtwentythree,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
+	},
+/obj/structure/table,
+/obj/item/storage/photo_album/prison{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/camera{
+	pixel_x = -2;
+	pixel_y = -2
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -19106,7 +19113,7 @@
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
 /obj/item/folder/yellow,
-/obj/item/reagent_containers/pill/patch/silver_sulf,
+/obj/item/reagent_containers/pill/patch/aiuri,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -32307,7 +32314,7 @@
 /obj/structure/table/glass,
 /obj/item/storage/firstaid/regular,
 /obj/item/reagent_containers/glass/bottle/epinephrine,
-/obj/item/reagent_containers/glass/bottle/charcoal,
+/obj/item/reagent_containers/glass/bottle/multiver,
 /obj/item/reagent_containers/syringe,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -52218,7 +52225,7 @@
 /obj/item/cartridge/engineering{
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/pill/patch/silver_sulf,
+/obj/item/reagent_containers/pill/patch/aiuri,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -64898,10 +64905,10 @@
 /area/library)
 "cqQ" = (
 /obj/structure/table/wood,
-/obj/item/storage/briefcase,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/storage/photo_album/library,
 /turf/open/floor/plasteel/grimy,
 /area/library)
 "cqR" = (
@@ -70644,7 +70651,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/syringe/charcoal,
+/obj/item/reagent_containers/syringe/multiver,
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
 	use_power = 0
@@ -78101,7 +78108,7 @@
 /area/medical/medbay/central)
 "cPq" = (
 /obj/structure/table,
-/obj/item/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/multiver{
 	pixel_x = 6
 	},
 /obj/item/reagent_containers/glass/bottle/epinephrine,
@@ -83875,7 +83882,7 @@
 "cZy" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/multiver{
 	pixel_x = 6
 	},
 /obj/item/reagent_containers/glass/bottle/epinephrine,
@@ -87252,7 +87259,7 @@
 /obj/item/stack/sheet/mineral/plasma,
 /obj/item/stack/sheet/mineral/plasma,
 /obj/item/stack/sheet/mineral/plasma,
-/obj/item/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/multiver{
 	pixel_x = 6
 	},
 /obj/item/reagent_containers/glass/bottle/epinephrine,
@@ -113705,8 +113712,7 @@
 /area/chapel/office)
 "efZ" = (
 /obj/structure/table/wood,
-/obj/item/folder/red,
-/obj/item/pen,
+/obj/item/storage/photo_album/chapel,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "ega" = (

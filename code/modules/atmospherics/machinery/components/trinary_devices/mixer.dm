@@ -14,6 +14,9 @@
 	construction_type = /obj/item/pipe/trinary/flippable
 	pipe_state = "mixer"
 
+	ui_x = 370
+	ui_y = 165
+
 	//node 3 is the outlet, nodes 1 & 2 are intakes
 
 /obj/machinery/atmospherics/components/trinary/mixer/CtrlClick(mob/user)
@@ -132,7 +135,7 @@
 																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_mixer", name, 370, 165, master_ui, state)
+		ui = new(user, src, ui_key, "atmos_mixer", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/atmospherics/components/trinary/mixer/ui_data()

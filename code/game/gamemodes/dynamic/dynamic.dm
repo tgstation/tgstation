@@ -110,7 +110,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /datum/game_mode/dynamic/admin_panel()
 	var/list/dat = list("<html><head><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
-	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</A><BR>"
+	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</A><a href='?src=\ref[src];[HrefToken()]'>\[Refresh\]</A><BR>"
 	dat += "Threat Level: <b>[threat_level]</b><br/>"
 
 	dat += "Threat to Spend: <b>[threat]</b> <a href='?src=\ref[src];[HrefToken()];adjustthreat=1'>\[Adjust\]</A> <a href='?src=\ref[src];[HrefToken()];threatlog=1'>\[View Log\]</a><br/>"
@@ -265,15 +265,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	threat = threat_level
 
 /datum/game_mode/dynamic/can_start()
-	/* Disabled for now, had some changes that need to be tested and this might interfere with that.
-	if(GLOB.dynamic_curve_centre == 0)
-		// 10 is when the centre starts to decrease
-		// 6 is just 1 + 5 (from the maximum value and the one decreased)
-		// 1 just makes the curve look better, I don't know.
-		// Limited between 1 and 5 then inverted and rounded
-		// With this you get a centre curve that stays at -5 until 10 then first rapidly decreases but slows down at the end
-		GLOB.dynamic_curve_centre = round(-CLAMP((10*6/GLOB.player_list.len)-1, 0, 5), 0.5)
-	*/
 	message_admins("Dynamic mode parameters for the round:")
 	message_admins("Centre is [GLOB.dynamic_curve_centre], Width is [GLOB.dynamic_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].")
 	message_admins("Stacking limit is [GLOB.dynamic_stacking_limit], Classic secret is [GLOB.dynamic_classic_secret ? "Enabled" : "Disabled"], High population limit is [GLOB.dynamic_high_pop_limit].")
@@ -335,8 +326,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 	for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
 		rule.candidates.Cut() // The rule should not use candidates at this point as they all are null.
-		if(!rule.execute())
-			stack_trace("The starting rule \"[rule.name]\" failed to execute.")
+		if(rule.delay > 0)
+			addtimer(CALLBACK(rule, /datum/dynamic_ruleset/roundstart.proc/execute), rule.delay)
+		else
+			if(!rule.execute())
+				stack_trace("The starting rule \"[rule.name]\" failed to execute.")
 	..()
 
 /// A simple roundstart proc used when dynamic_forced_roundstart_ruleset has rules in it.
@@ -420,16 +414,18 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 					if(drafted_rules.len <= 0)
 						return FALSE
 					starting_rule = pickweight(drafted_rules)
+		// With low pop and high threat there might be rulesets that get executed with no valid candidates.
+		else if(starting_rule.ready())
+			drafted_rules -= starting_rule
+			if(drafted_rules.len <= 0)
+				return FALSE
+			starting_rule = pickweight(drafted_rules)
 
-	message_admins("Picking a [istype(starting_rule, /datum/dynamic_ruleset/roundstart/delayed/) ? " delayed " : ""] ruleset [starting_rule.name]")
-	log_game("DYNAMIC: Picking a [istype(starting_rule, /datum/dynamic_ruleset/roundstart/delayed/) ? " delayed " : ""] ruleset [starting_rule.name]")
+	message_admins("Picking a ruleset [starting_rule.name]")
+	log_game("DYNAMIC: Picking a ruleset [starting_rule.name]")
 
 	roundstart_rules -= starting_rule
 	drafted_rules -= starting_rule
-
-	if (istype(starting_rule, /datum/dynamic_ruleset/roundstart/delayed/))
-		var/datum/dynamic_ruleset/roundstart/delayed/rule = starting_rule
-		addtimer(CALLBACK(src, .proc/execute_delayed, rule), rule.delay)
 
 	starting_rule.trim_candidates()
 	if (starting_rule.pre_execute())
@@ -442,28 +438,13 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		executed_rules += starting_rule
 		if (starting_rule.persistent)
 			current_rules += starting_rule
-		for(var/mob/M in starting_rule.assigned)
-			for (var/datum/dynamic_ruleset/roundstart/rule in roundstart_rules)
-				if (!rule.ready())
-					drafted_rules -= rule // And removing rules that are no longer elligible
+		for (var/datum/dynamic_ruleset/roundstart/rule in drafted_rules)
+			if (!rule.ready())
+				drafted_rules -= rule // And removing rules that are no longer elligible
 		return TRUE
 	else
 		stack_trace("The starting rule \"[starting_rule.name]\" failed to pre_execute.")
 	return FALSE
-
-/// Executes delayed roundstart rules and has a hack in it.
-/datum/game_mode/dynamic/proc/execute_delayed(datum/dynamic_ruleset/roundstart/delayed/rule)
-	update_playercounts()
-	rule.candidates = current_players[CURRENT_LIVING_PLAYERS].Copy()
-	rule.trim_candidates()
-	if(rule.execute())
-		executed_rules += rule
-		if (rule.persistent)
-			current_rules += rule
-		return TRUE
-	else
-		stack_trace("The delayed roundstart rule \"[rule.name]\" failed to execute.")
-		return FALSE
 
 /// Picks a random midround OR latejoin rule from the list given as an argument and executes it.
 /// Also this could be named better.
@@ -544,7 +525,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	
 	update_playercounts()
 	if ((forced || (new_rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && new_rule.cost <= threat)))
-		new_rule.candidates = current_players.Copy()
 		new_rule.trim_candidates()
 		if (new_rule.ready(forced))
 			spend_threat(new_rule.cost)
@@ -576,7 +556,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if (GLOB.dynamic_forced_extended)
 			return
 		
-		// Somehow it manages to trigger midround multiple times so this was moved here.
+		// Somehow it managed to trigger midround multiple times so this was moved here.
 		// There is no way this should be able to trigger an injection twice now.
 		var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
 		midround_injection_cooldown = (round(CLAMP(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max)) + world.time)
@@ -585,21 +565,19 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if(EMERGENCY_ESCAPED_OR_ENDGAMED) // Unless the shuttle is gone
 			return
 
-		log_game("DYNAMIC: Checking state of the round.")
+		message_admins("DYNAMIC: Checking for midround injection.")
+		log_game("DYNAMIC: Checking for midround injection.")
 			
 		update_playercounts()
-
-		if (prob(get_injection_chance()))
+		if (get_injection_chance())
 			var/list/drafted_rules = list()
 			for (var/datum/dynamic_ruleset/midround/rule in midround_rules)
 				if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && threat >= rule.cost)
 					// Classic secret : only autotraitor/minor roles
 					if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
 						continue
-					rule.candidates = list()
-					rule.candidates = current_players.Copy()
 					rule.trim_candidates()
-					if (rule.ready() && rule.candidates.len > 0)
+					if (rule.ready())
 						drafted_rules[rule] = rule.get_weight()
 			if (drafted_rules.len > 0)
 				picking_midround_latejoin_rule(drafted_rules)

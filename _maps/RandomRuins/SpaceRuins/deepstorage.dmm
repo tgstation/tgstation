@@ -184,9 +184,6 @@
 /obj/item/storage/box/zipties,
 /obj/item/switchblade,
 /obj/effect/turf_decal/delivery,
-/obj/item/gps{
-	gpstag = "DEEP"
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/storage)
@@ -1908,7 +1905,7 @@
 	pixel_y = 4
 	},
 /obj/item/storage/firstaid/toxin,
-/obj/item/storage/pill_bottle/charcoal,
+/obj/item/storage/pill_bottle/multiver,
 /obj/machinery/light,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/deepstorage/armory)

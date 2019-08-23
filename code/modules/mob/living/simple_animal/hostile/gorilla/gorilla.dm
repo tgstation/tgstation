@@ -9,7 +9,7 @@
 	icon_state = "crawling"
 	icon_living = "crawling"
 	icon_dead = "dead"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 80
 	maxHealth = 220
 	health = 220

@@ -22,7 +22,7 @@
 	icon_state = "guard"
 	icon_living = "guard"
 	icon_dead = "guard_dead"
-	mob_biotypes = list(MOB_ORGANIC, MOB_BUG)
+	mob_biotypes = MOB_ORGANIC|MOB_BUG
 	speak_emote = list("chitters")
 	emote_hear = list("chitters")
 	speak_chance = 5
@@ -486,7 +486,7 @@
 	desc = "Set a directive for your children to follow."
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "directive"
-	
+
 /datum/action/innate/spider/set_directive/IsAvailable()
 	if(..())
 		if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider))

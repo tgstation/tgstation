@@ -6,6 +6,8 @@
 	icon_state = "close"
 	density = TRUE
 	max_integrity = 250
+	ui_x = 400
+	ui_y = 305
 
 	var/obj/item/clothing/suit/space/suit = null
 	var/obj/item/clothing/head/helmet/space/helmet = null
@@ -420,7 +422,7 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "suit_storage_unit", name, 400, 305, master_ui, state)
+		ui = new(user, src, ui_key, "suit_storage_unit", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/suit_storage_unit/ui_data()
