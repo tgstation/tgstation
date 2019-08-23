@@ -85,7 +85,7 @@
 		else
 			to_chat(H, "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>")
 			A.ToggleFlight(H,TRUE)
-			H.set_resting(FALSE, FALSE)
+			H.set_resting(FALSE, TRUE)
 
 /datum/species/angel/proc/flyslip(mob/living/carbon/human/H)
 	var/obj/buckled_obj
