@@ -31,8 +31,10 @@
 	if(!client || !can_hear())
 		return
 
+	var/direct_sent = FALSE
 	if(!S)
 		S = sound(get_sfx(soundin))
+		direct_sent = TRUE
 
 	S.wait = 0 //No queue
 	S.channel = channel || open_sound_channel()
@@ -67,7 +69,7 @@
 			if(distance <= 1)
 				pressure_factor = max(pressure_factor, 0.15) //touching the source of the sound
 
-			if(pressure_factor < 0.5)
+			if(!direct_sent && pressure_factor < 0.5)
 				S.environment = SOUND_AREA_SPACE
 			S.volume *= pressure_factor
 			//End Atmosphere affecting sound
@@ -83,7 +85,7 @@
 		S.y = 1
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 
-		if(S.environment == -1)
+		if(!direct_sent && S.environment == -1)
 			var/area/A = get_area(src)
 			if(A.sound_environment > -1)
 				S.environment = A.sound_environment
