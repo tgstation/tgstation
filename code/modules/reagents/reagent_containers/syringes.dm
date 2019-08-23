@@ -199,13 +199,6 @@
 	desc = "Contains several paralyzing reagents."
 	list_reagents = list(/datum/reagent/consumable/ethanol/neurotoxin = 5, /datum/reagent/toxin/mutetoxin = 5, /datum/reagent/toxin/sodium_thiopental = 5)
 
-/obj/item/reagent_containers/syringe/stimulants
-	name = "Stimpack"
-	desc = "Contains stimulants."
-	amount_per_transfer_from_this = 50
-	volume = 50
-	list_reagents = list(/datum/reagent/medicine/stimulants = 50)
-
 /obj/item/reagent_containers/syringe/calomel
 	name = "syringe (calomel)"
 	desc = "Contains calomel."
