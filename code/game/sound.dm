@@ -83,7 +83,7 @@
 		S.y = 1
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 
-		if(S.environment != -1)
+		if(S.environment == -1)
 			var/area/A = get_area(src)
 			if(A.sound_environment > -1)
 				S.environment = A.sound_environment
