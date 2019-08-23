@@ -179,6 +179,7 @@
 /datum/spellbook_entry/mutate
 	name = "Mutate"
 	spell_type = /obj/effect/proc_holder/spell/targeted/genetic/mutate
+	cost = 1
 
 /datum/spellbook_entry/jaunt
 	name = "Ethereal Jaunt"
