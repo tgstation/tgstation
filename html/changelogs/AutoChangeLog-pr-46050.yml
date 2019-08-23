@@ -1,4 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - admin: "Admin revives now set the mob's `suiciding` var to FALSE."
