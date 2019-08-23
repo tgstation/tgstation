@@ -10,9 +10,12 @@
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
-	var/id = 0
 	max_integrity = 150
 	integrity_failure = 50
+	ui_x = 500
+	ui_y = 400
+
+	var/id = 0
 	var/obscured = 0
 	var/sunfrac = 0
 	var/adir = SOUTH // actual dir
@@ -345,7 +348,7 @@
 												datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "solar_control", name, 500, 400, master_ui, state)
+		ui = new(user, src, ui_key, "solar_control", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/power/solar_control/ui_data()

@@ -139,7 +139,7 @@
 	var/new_thing_type = fabrication_values["new_obj_type"]
 	if(isturf(target)) //if our target is a turf, we're just going to ChangeTurf it and assume it'll work out.
 		var/turf/T = target
-		T.ChangeTurf(new_thing_type)
+		T.ChangeTurf(new_thing_type, flags = CHANGETURF_INHERIT_AIR)
 	else
 		if(new_thing_type)
 			if(fabrication_values["dir_in_new"])

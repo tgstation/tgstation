@@ -193,7 +193,7 @@
 	item_state = "tbpen"
 	volume = 60
 	amount_per_transfer_from_this = 30
-	list_reagents = list(/datum/reagent/medicine/atropine = 10, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/omnizine = 20, /datum/reagent/medicine/perfluorodecalin = 15, /datum/reagent/medicine/spaceacillin = 20)
+	list_reagents = list(/datum/reagent/medicine/atropine = 10, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/omnizine = 20, /datum/reagent/medicine/C2/convermol = 15, /datum/reagent/medicine/spaceacillin = 20)
 
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure/update_icon()
 	if(reagents.total_volume > 30)
@@ -235,3 +235,11 @@
 	ignore_flags = 0
 	reagent_flags = NONE
 	list_reagents = list(/datum/reagent/magillitis = 5)
+
+/obj/item/reagent_containers/hypospray/medipen/pumpup
+	name = "maintanance pump-up"
+	desc = "A ghetto looking autoinjector filled with a cheap adrenaline shot... Great for shrugging off the effects of stunbatons."
+	volume = 15
+	amount_per_transfer_from_this = 15
+	list_reagents = list(/datum/reagent/drug/pumpup = 15)
+	icon_state = "maintenance"
