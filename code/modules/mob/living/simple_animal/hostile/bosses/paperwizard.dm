@@ -2,7 +2,7 @@
 /mob/living/simple_animal/hostile/boss/paper_wizard
 	name = "Mjor the Creative"
 	desc = "A wizard with a taste for the arts."
-	mob_biotypes = list(MOB_INORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_HUMANOID
 	boss_abilities = list(/datum/action/boss/wizard_summon_minions, /datum/action/boss/wizard_mimic)
 	faction = list("hostile","stickman")
 	del_on_death = TRUE

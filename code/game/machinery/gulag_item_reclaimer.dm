@@ -8,6 +8,8 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 100
 	active_power_usage = 2500
+	ui_x = 455
+	ui_y = 440
 	var/list/stored_items = list()
 	var/obj/machinery/gulag_teleporter/linked_teleporter = null
 
@@ -29,7 +31,7 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "gulag_item_reclaimer", name, 455, 440, master_ui, state)
+		ui = new(user, src, ui_key, "gulag_item_reclaimer", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/gulag_item_reclaimer/ui_data(mob/user)
