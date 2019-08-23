@@ -254,7 +254,7 @@
 			var/mob/M = usr
 			var/obj/item/card/id/I = M.get_idcard(TRUE)
 			if(points)
-				if(I && I.registered_account && I.registered_account.adjust_money(points))
+				if(I?.registered_account?.adjust_money(points))
 					points = 0
 				else
 					to_chat(usr, "<span class='warning'>No valid ID detected.</span>")
