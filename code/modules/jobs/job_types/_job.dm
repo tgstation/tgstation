@@ -175,7 +175,7 @@
 	var/pda_slot = SLOT_BELT
 
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	switch(H.backbag)
+	switch(H.backpack)
 		if(GBACKPACK)
 			back = /obj/item/storage/backpack //Grey backpack
 		if(GSATCHEL)

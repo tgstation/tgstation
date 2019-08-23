@@ -1,29 +1,50 @@
 
 	//The mob should have a gender you want before running this proc. Will run fine without H
 /datum/preferences/proc/random_character(gender_override)
-	if(gender_override)
+	if(gender_override && !random_gender)
 		gender = gender_override
 	else
 		gender = pick(MALE,FEMALE)
-	underwear = random_underwear(gender)
-	underwear_color = random_short_color()
-	undershirt = random_undershirt(gender)
-	socks = random_socks()
-	skin_tone = random_skin_tone()
-	hair_style = random_hair_style(gender)
-	facial_hair_style = random_facial_hair_style(gender)
-	hair_color = random_short_color()
-	facial_hair_color = hair_color
-	eye_color = random_eye_color()
+	if(random_age)
+		age = rand(AGE_MIN,AGE_MAX)
+	if(random_underwear)
+		underwear = random_underwear(gender)
+	if(random_underwear_color)
+		underwear_color = random_short_color()
+	if(random_undershirt)
+		undershirt = random_undershirt(gender)
+	if(random_socks)
+		socks = random_socks()
+	if(random_backpack)
+		backpack = random_backpack()
+	if(random_jumpsuit_style)
+		jumpsuit_style = pick(GLOB.jumpsuitlist)
+	if(random_hairstyle)
+		hairstyle = random_hairstyle(gender)
+	if(random_facial_hairstyle)
+		facial_hairstyle = random_facial_hairstyle(gender)
+	if(random_hair_color)
+		hair_color = random_short_color()
+	if(random_facial_hair_color)
+		facial_hair_color = random_short_color()
+	else
+		facial_hair_color = hair_color
+	if(random_skin_tone)
+		skin_tone = random_skin_tone()
+	if(random_eye_color)
+		eye_color = random_eye_color()
 	if(!pref_species)
 		var/rando_race = pick(GLOB.roundstart_races)
 		pref_species = new rando_race()
+	if(random_species)
+		random_species()
 	features = random_features()
-	age = rand(AGE_MIN,AGE_MAX)
 
 /datum/preferences/proc/random_species()
 	var/random_species_type = GLOB.species_list[pick(GLOB.roundstart_races)]
 	pref_species = new random_species_type
+	if(random_name)
+		real_name = pref_species.random_name(gender,1)
 
 /datum/preferences/proc/update_preview_icon()
 	// Determine what job is marked as 'High' priority, and dress them up as such.
@@ -45,7 +66,7 @@
 
 	// Set up the dummy for its photoshoot
 	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
-	copy_to(mannequin)
+	copy_to(mannequin, 1, TRUE, TRUE)
 
 	if(previewJob)
 		mannequin.job = previewJob.title
