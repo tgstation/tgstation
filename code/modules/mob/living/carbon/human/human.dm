@@ -820,6 +820,7 @@
 	. = ..()
 	VV_DROPDOWN_OPTION("", "---------")
 	VV_DROPDOWN_OPTION(VV_HK_COPY_OUTFIT, "Copy Outfit")
+	VV_DROPDOWN_OPTION(VV_HK_MOD_MUTATIONS, "Add/Remove Mutation")
 	VV_DROPDOWN_OPTION(VV_HK_MOD_QUIRKS, "Add/Remove Quirks")
 	VV_DROPDOWN_OPTION(VV_HK_MAKE_MONKEY, "Make Monkey")
 	VV_DROPDOWN_OPTION(VV_HK_MAKE_CYBORG, "Make Cyborg")
@@ -834,6 +835,26 @@
 		if(!check_rights(R_SPAWN))
 			return
 		copy_outfit()
+	if(href_list[VV_HK_MOD_MUTATIONS])
+		if(!check_rights(R_SPAWN))
+			return
+		
+		var/list/options = list("Clear"="Clear")
+		for(var/x in subtypesof(/datum/mutation/human))
+			var/datum/mutation/human/mut = x
+			var/name = initial(mut.name)
+			options[dna.check_mutation(mut) ? "[name] (Remove)" : "[name] (Add)"] = mut
+
+		var/result = input(usr, "Choose mutation to add/remove","Mutation Mod") as null|anything in options
+		if(result)
+			if(result == "Clear")
+				dna.remove_all_mutations()
+			else
+				var/mut = options[result]
+				if(dna.check_mutation(mut))
+					dna.remove_mutation(mut)
+				else
+					dna.add_mutation(mut)
 	if(href_list[VV_HK_MOD_QUIRKS])
 		if(!check_rights(R_SPAWN))
 			return
