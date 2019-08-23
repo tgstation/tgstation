@@ -149,10 +149,10 @@ SUBSYSTEM_DEF(ticker)
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 			to_chat(world, "<span class='boldnotice'>Welcome to [station_name()]!</span>")
-			if(GLOB.master_mode == "sandbox")
+			if(GLOB.master_mode == "sandbox") // austation begin -- TGS Bot now pings notification role but not for sandbox rounds
 				send2chat("New sandbox round starting on [SSmapping.config.map_name]!", CONFIG_GET(string/chat_announce_new_game))
 			else
-				send2chat("<@&586792483892232209> New round starting on [SSmapping.config.map_name]!", CONFIG_GET(string/chat_announce_new_game))
+				send2chat("<@&586792483892232209> New round starting on [SSmapping.config.map_name]!", CONFIG_GET(string/chat_announce_new_game)) // austation end
 			current_state = GAME_STATE_PREGAME
 			//Everyone who wants to be an observer is now spawned
 			create_observers()
