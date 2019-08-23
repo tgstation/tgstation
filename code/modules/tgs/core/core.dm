@@ -12,8 +12,10 @@
 		return
 
 	var/datum/tgs_version/version = new(raw_parameter)
+
 	if(!version.Valid(FALSE))
 		TGS_ERROR_LOG("Failed to validate TGS version parameter: [raw_parameter]!")
+		log_runtime("Invalid TGS Version param")
 		return
 
 	var/api_datum
