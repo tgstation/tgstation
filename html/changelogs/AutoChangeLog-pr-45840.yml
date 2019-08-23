@@ -1,9 +1,0 @@
-author: "Krysonism"
-delete-after: True
-changes: 
-  - rscadd: "Four new plants!"
-  - rscadd: "Three new plant reagents!"
-  - tweak: "Plants with high toxicity are now capable of taking pest damage."
-  - balance: "High pest levels are more damaging to plants."
-  - imageadd: "Added new plants sprites."
-  - code_imp: "Coders can now make plant genes unextractable."

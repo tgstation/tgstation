@@ -1,4 +1,0 @@
-author: "wesoda25"
-delete-after: True
-changes: 
-  - tweak: "op and sec now need a space after them to be replaced by greek and polizia for italian mustache. Bye bye greeken and poliziaond!"

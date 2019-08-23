@@ -1905,7 +1905,7 @@
 	pixel_y = 4
 	},
 /obj/item/storage/firstaid/toxin,
-/obj/item/storage/pill_bottle/charcoal,
+/obj/item/storage/pill_bottle/multiver,
 /obj/machinery/light,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
