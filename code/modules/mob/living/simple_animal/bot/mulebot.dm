@@ -341,14 +341,6 @@
 
 	load(AM)
 
-	if(user.incapacitated() || !(L.mobility_flags & MOBILITY_STAND))
-		return
-
-	if(!istype(AM))
-		return
-
-	load(AM)
-
 // called to load a crate
 /mob/living/simple_animal/bot/mulebot/proc/load(atom/movable/AM)
 	if(load ||  AM.anchored)
