@@ -44,13 +44,13 @@
 	var/stationary_mode = 0 //If enabled, the Medibot will not move automatically.
 	//Setting which reagents to use to treat what by default. By id.
 	var/treatment_brute_avoid = null
-	var/treatment_brute = /datum/reagent/medicine/sanguiose
+	var/treatment_brute = /datum/reagent/medicine/C2/libital
 	var/treatment_oxy_avoid = null
-	var/treatment_oxy = /datum/reagent/medicine/dexalin
+	var/treatment_oxy = /datum/reagent/medicine/salbutamol
 	var/treatment_fire_avoid = null
-	var/treatment_fire = /datum/reagent/medicine/frogenite
+	var/treatment_fire = /datum/reagent/medicine/C2/aiuri
 	var/treatment_tox_avoid = null
-	var/treatment_tox = /datum/reagent/medicine/ferveatium
+	var/treatment_tox = /datum/reagent/medicine/C2/multiver
 	var/treatment_virus_avoid = null
 	var/treatment_virus = /datum/reagent/medicine/spaceacillin
 	var/treat_virus = 1 //If on, the bot will attempt to treat viral infections, curing them if possible.
@@ -381,7 +381,7 @@
 
 	if((!C.reagents.has_reagent(treatment_fire_avoid)) && (C.getFireLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_fire)))
 		return TRUE
-		
+
 	if((!C.reagents.has_reagent(treatment_tox_avoid)) && (C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_tox)))
 		return TRUE
 
@@ -461,7 +461,7 @@
 		if(!reagent_id && (C.getFireLoss() >= heal_threshold))
 			if(!C.reagents.has_reagent(treatment_fire) && !C.reagents.has_reagent(treatment_fire_avoid))
 				reagent_id = treatment_fire
-				
+
 		if(!reagent_id && (C.getToxLoss() >= heal_threshold))
 			if(!C.reagents.has_reagent(treatment_tox) && !C.reagents.has_reagent(treatment_tox_avoid))
 				reagent_id = treatment_tox
