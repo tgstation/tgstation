@@ -17,6 +17,11 @@
 	mutanteyes = /obj/item/organ/eyes/moth
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 
+/datum/species/moth/check_roundstart_eligible() //replaced by monthmen every april fools
+	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+		return FALSE
+	return TRUE
+
 /datum/species/moth/regenerate_organs(mob/living/carbon/C,datum/species/old_species,replace_current=TRUE)
 	. = ..()
 	if(ishuman(C))
