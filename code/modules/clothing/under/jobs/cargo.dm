@@ -32,6 +32,7 @@
 	item_state = "lb_suit"
 	item_color = "cargo_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 

@@ -700,25 +700,25 @@
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "bT" = (
 /obj/effect/turf_decal/delivery,
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = -2
 	},
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = 5
 	},
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = 1;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = 8;
 	pixel_y = -3
 	},
@@ -733,25 +733,25 @@
 /area/ruin/space/has_grav/deepstorage/storage)
 "bU" = (
 /obj/effect/turf_decal/delivery,
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = -2
 	},
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = 5
 	},
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = 1;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = 8;
 	pixel_y = -3
 	},
@@ -1905,7 +1905,7 @@
 	pixel_y = 4
 	},
 /obj/item/storage/firstaid/toxin,
-/obj/item/storage/pill_bottle/charcoal,
+/obj/item/storage/pill_bottle/multiver,
 /obj/machinery/light,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
