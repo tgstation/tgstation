@@ -24,7 +24,7 @@
 	name = "Itching Powder"
 	id = /datum/reagent/toxin/itching_powder
 	results = list(/datum/reagent/toxin/itching_powder = 3)
-	required_reagents = list(/datum/reagent/fuel = 1, /datum/reagent/ammonia = 1, /datum/reagent/medicine/C2/multiver = 1)
+	required_reagents = list(/datum/reagent/fuel = 1, /datum/reagent/ammonia = 1, /datum/reagent/medicine/charcoal = 1)
 
 /datum/chemical_reaction/facid
 	name = "Fluorosulfuric acid"
@@ -85,7 +85,7 @@
 	name = "Mindbreaker Toxin"
 	id = /datum/reagent/toxin/mindbreaker
 	results = list(/datum/reagent/toxin/mindbreaker = 5)
-	required_reagents = list(/datum/reagent/silicon = 1, /datum/reagent/hydrogen = 1, /datum/reagent/medicine/C2/multiver = 1)
+	required_reagents = list(/datum/reagent/silicon = 1, /datum/reagent/hydrogen = 1, /datum/reagent/medicine/charcoal = 1)
 
 /datum/chemical_reaction/heparin
 	name = "Heparin"

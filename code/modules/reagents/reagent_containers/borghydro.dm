@@ -1,4 +1,3 @@
-#define C2NAMEREAGENT	"[initial(reagent.name)] (Has Side-Effects)"
 /*
 Contains:
 Borg Hypospray
@@ -28,7 +27,7 @@ Borg Hypospray
 	var/bypass_protection = 0 //If the hypospray can go through armor or thick material
 
 	var/list/datum/reagents/reagent_list = list()
-	var/list/reagent_ids = list(/datum/reagent/medicine/C2/convermol, /datum/reagent/medicine/C2/libital, /datum/reagent/medicine/C2/multiver, /datum/reagent/medicine/C2/aiuri, /datum/reagent/medicine/epinephrine, /datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/salglu_solution)
+	var/list/reagent_ids = list(/datum/reagent/medicine/dexalin, /datum/reagent/medicine/sanguiose, /datum/reagent/medicine/ferveatium, /datum/reagent/medicine/frogenite, /datum/reagent/medicine/epinephrine, /datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/salglu_solution)
 	var/accepts_reagent_upgrades = TRUE //If upgrades can increase number of reagents dispensed.
 	var/list/modes = list() //Basically the inverse of reagent_ids. Instead of having numbers as "keys" and strings as values it has strings as keys and numbers as values.
 								//Used as list for input() in shakers.
@@ -69,18 +68,11 @@ Borg Hypospray
 	R.add_reagent(reagent, 30)
 
 	modes[reagent] = modes.len + 1
-
-	if(initial(reagent.harmful))
-		reagent_names[C2NAMEREAGENT] = reagent
-	else
-		reagent_names[initial(reagent.name)] = reagent
+	reagent_names[initial(reagent.name)] = reagent
 
 /obj/item/reagent_containers/borghypo/proc/del_reagent(datum/reagent/reagent)
 	reagent_ids -= reagent
-	if(istype(reagent, /datum/reagent/medicine/C2))
-		reagent_names -= C2NAMEREAGENT
-	else
-		reagent_names -= initial(reagent.name)
+	reagent_names -= initial(reagent.name)
 	var/datum/reagents/RG
 	var/datum/reagents/TRG
 	for(var/i in 1 to reagent_ids.len)
@@ -371,6 +363,5 @@ to the arm are passed onto a stored beaker, if one exists. */
 	if(stored)
 		W.melee_attack_chain(user, stored, params)
 		return
-	. = ..()
-  
-#undef C2NAMEREAGENT
+	. = ..() 
+	
