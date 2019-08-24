@@ -88,8 +88,8 @@
 			if(A.sound_environment > -1)
 				S.environment = A.sound_environment
 
- 	//If the round is over or hasn't started kill all environments so endround music plays correctly
-	if(SSticker.current_state == GAME_STATE_FINISHED || SSticker.current_state >= GAME_STATE_SETTING_UP)
+ 	//If the round isn't running kill all environments so endround/preround music plays correctly
+	if(SSticker.current_state != GAME_STATE_PLAYING)
 		S.environment = SOUND_ENVIRONMENT_NONE
 
 	SEND_SOUND(src, S)
