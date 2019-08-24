@@ -264,7 +264,9 @@
 
 /obj/item/defibrillator/compact/combat
 	name = "combat defibrillator"
-	desc = "A belt-equipped blood-red defibrillator that can be rapidly deployed. Does not have the restrictions or safeties of conventional defibrillators and can revive through space suits."
+	desc = "A belt-equipped blood-red defibrillator. Can revive through spacesuits, has an experimental self-recharging battery, and can be utilized in combat via applying the paddles in a disarming or agressive manner."
+	icon_state = "defibcombat" //needs defib inhand sprites
+	item_state = "defibcombat"
 	combat = TRUE
 	safety = FALSE
 
@@ -272,6 +274,21 @@
 	. = ..()
 	cell = new /obj/item/stock_parts/cell/infinite(src)
 	update_icon()
+
+/obj/item/defibrillator/compact/combat/cooldowncheck(mob/user)
+	addtimer(CALLBACK(src, .proc/finish_charging), 2.5 SECONDS)
+
+/obj/item/defibrillator/compact/combat/make_paddles()
+	return new /obj/item/twohanded/shockpaddles/syndicate(src)
+
+/obj/item/twohanded/shockpaddles/syndicate/update_icon()
+	icon_state = "syndiepaddles[wielded]"
+	item_state = "syndiepaddles[wielded]"
+	if(cooldown)
+		icon_state = "syndiepaddles[wielded]_cooldown"
+	if(iscarbon(loc))
+		var/mob/living/carbon/C = loc
+		C.update_inv_hands()
 
 /obj/item/defibrillator/compact/combat/loaded/attackby(obj/item/W, mob/user, params)
 	if(W == paddles)
@@ -676,11 +693,14 @@
 
 /obj/item/twohanded/shockpaddles/syndicate
 	name = "syndicate defibrillator paddles"
-	desc = "A pair of paddles used to revive deceased operatives. It possesses both the ability to penetrate armor and to deliver powerful shocks offensively."
+	desc = "A pair of paddles used to revive deceased operatives. It possesses both the ability to penetrate armor and to deliver powerful or disabling shocks offensively."
 	combat = TRUE
 	icon = 'icons/obj/defib.dmi'
-	icon_state = "defibpaddles0"
-	item_state = "defibpaddles0"
+	icon_state = "syndiepaddles0"
+	item_state = "syndiepaddles0"
+	req_defib = TRUE
+a
+/obj/item/twohanded/shockpaddles/syndicate/cyborg
 	req_defib = FALSE
 
 #undef HALFWAYCRITDEATH
