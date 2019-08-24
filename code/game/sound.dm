@@ -91,6 +91,9 @@
 				S.environment = A.sound_environment
 
 
+	if(ROUND IS OVER)
+		S.environment = SOUND_ENVIRONMENT_NONE
+
 	SEND_SOUND(src, S)
 
 /proc/sound_to_playing_players(soundin, volume = 100, vary = FALSE, frequency = 0, falloff = FALSE, channel = 0, pressure_affected = FALSE, sound/S)
