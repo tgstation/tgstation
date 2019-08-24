@@ -621,15 +621,15 @@ generate/load female uniform sprites matching all previously decided variables
 
 // Only renders the head of the human
 /mob/living/carbon/human/proc/update_body_parts_head_only()
-	if (!dna)
+	if(!dna)
 		return
 
-	if (!dna.species)
+	if(!dna.species)
 		return
 
-	var/obj/item/bodypart/HD = get_bodypart("head")
+	var/obj/item/bodypart/HD = get_bodypart(BODY_ZONE_HEAD)
 
-	if (!istype(HD))
+	if(!istype(HD) && !(ABSTRACT_HEAD in dna.species.species_traits))
 		return
 
 	HD.update_limb()

@@ -61,7 +61,7 @@
 	return ..()
 
 /datum/species/shadow/nightmare/check_roundstart_eligible()
-	return FALSE
+	return .....()
 
 //Organs
 

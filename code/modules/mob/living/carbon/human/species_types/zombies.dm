@@ -34,7 +34,8 @@
 	changesource_flags = ADMIN | WABBAJACK | ERT_SPAWN
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
-	return FALSE
+	//WARNING: CURSED CODE
+	return .....()
 
 
 /datum/species/zombie/infectious/spec_stun(mob/living/carbon/human/H,amount)

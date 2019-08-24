@@ -20,7 +20,7 @@
 	nojumpsuit = TRUE
 	sexes = FALSE
 	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
-	meat = /obj/item/paper
+	meat = /obj/item/stack/sheet/cardboard
 
 
 /datum/species/monthmen/check_roundstart_eligible()
