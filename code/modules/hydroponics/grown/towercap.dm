@@ -119,7 +119,7 @@
 /obj/item/grown/log/bamboo
 	seed = /obj/item/seeds/bamboo
 	name = "bamboo log"
-	desc = "An long and resistant bamboo log."
+	desc = "A long and resistant bamboo log."
 	icon_state = "bamboo"
 	plank_type = /obj/item/stack/sheet/mineral/bamboo
 	plank_name = "bamboo sticks"
