@@ -2,7 +2,7 @@
 
 /obj/machinery/atmospherics/pipe/manifold4w
 	icon = 'icons/obj/atmospherics/pipes/manifold.dmi'
-	icon_state = ""
+	icon_state = "manifold4w-2"
 
 	name = "4-way pipe manifold"
 	desc = "A manifold composed of regular pipes."
@@ -17,6 +17,7 @@
 	var/mutable_appearance/center
 
 /obj/machinery/atmospherics/pipe/manifold4w/New()
+	icon_state = ""
 	center = mutable_appearance(icon, "manifold4w_center")
 	return ..()
 
