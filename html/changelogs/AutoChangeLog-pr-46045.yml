@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - rscadd: "Crafting now tries to put stuff into your hands and can pull items from your pockets."

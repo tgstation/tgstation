@@ -1,0 +1,4 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - rscadd: "Adds a Morrowind reference that occurs if you try to kill a divine plushie."

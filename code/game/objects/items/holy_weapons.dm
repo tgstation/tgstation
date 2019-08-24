@@ -387,20 +387,6 @@
 	attack_verb = list("chopped", "sliced", "cut", "zandatsu'd")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 
-/obj/item/nullrod/Hypertool
-	icon = 'icons/obj/device.dmi'
-	icon_state = "hypertool"
-	item_state = "hypertool"
-	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	slot_flags = ITEM_SLOT_BELT
-	name = "hypertool"
-	desc = "A tool so powerful even you cannot perfectly use it."
-	armour_penetration = 35
-	damtype = BRAIN
-	attack_verb = list("pulsed", "mended", "cut")
-	hitsound = 'sound/effects/sparks4.ogg'
-
 /obj/item/nullrod/scythe/spellblade
 	icon_state = "spellblade"
 	item_state = "spellblade"
@@ -467,7 +453,6 @@
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
-
 
 /obj/item/nullrod/hammmer
 	icon_state = "hammeron"
@@ -660,3 +645,32 @@
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("bashes", "smacks", "whacks")
+
+/obj/item/nullrod/hypertool
+	icon = 'icons/obj/device.dmi'
+	icon_state = "hypertool"
+	item_state = "hypertool"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	slot_flags = ITEM_SLOT_BELT
+	name = "hypertool"
+	desc = "A tool so powerful even you cannot perfectly use it."
+	armour_penetration = 35
+	damtype = BRAIN
+	attack_verb = list("pulsed", "mended", "cut")
+	hitsound = 'sound/effects/sparks4.ogg'
+
+/obj/item/nullrod/spear
+	name = "ancient spear"
+	desc = "An ancient spear made of brass, I mean gold, I mean bronze."
+	icon_state = "ratvarian_spear"
+	item_state = "ratvarian_spear"
+	lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
+	icon = 'icons/obj/clockwork_objects.dmi'
+	slot_flags = ITEM_SLOT_BELT
+	armour_penetration = 10
+	sharpness = IS_SHARP_ACCURATE
+	w_class = WEIGHT_CLASS_BULKY
+	attack_verb = list("stabbed", "poked", "slashed", "clocked")
+	hitsound = 'sound/weapons/bladeslice.ogg'

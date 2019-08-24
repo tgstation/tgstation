@@ -7,6 +7,9 @@
 	icon_screen = "crew"
 	icon_keyboard = "med_key"
 	circuit = /obj/item/circuitboard/computer/operating
+	ui_x = 350
+	ui_y = 470
+
 	var/mob/living/carbon/human/patient
 	var/obj/structure/table/optable/table
 	var/list/advanced_surgeries = list()
@@ -47,7 +50,7 @@
 /obj/machinery/computer/operating/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.not_incapacitated_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "operating_computer", name, 350, 470, master_ui, state)
+		ui = new(user, src, ui_key, "operating_computer", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/operating/ui_data(mob/user)

@@ -1,7 +1,7 @@
 //Dogs.
 
 /mob/living/simple_animal/pet/dog
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	response_help  = "pets"
 	response_disarm = "bops"
 	response_harm   = "kicks"

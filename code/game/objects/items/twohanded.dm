@@ -729,7 +729,7 @@
 		user.visible_message("<span class='danger'>[user] blasts \the [target] with \the [src]!</span>")
 		playsound(target, 'sound/magic/disintegrate.ogg', 100, 1)
 		W.break_wall()
-		W.ScrapeAway()
+		W.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 		return
 
 //HF blade
