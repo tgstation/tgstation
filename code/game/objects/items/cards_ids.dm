@@ -201,7 +201,8 @@
 		total += cash_money
 		
 		registered_account.adjust_money(cash_money)
-		qdel(money)
+
+	QDEL_LIST(money)	
 
 	return total
 
