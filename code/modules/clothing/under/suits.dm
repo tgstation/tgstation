@@ -138,3 +138,14 @@
 	icon_state = "white_suit"
 	item_state = "white_suit"
 	item_color = "white_suit"
+
+/obj/item/clothing/under/suit/dick/summer
+	desc = "A revealing outfit perfect for a warm summer day."
+	custom_price = 75
+
+/obj/item/clothing/under/suit/dick/summer/pink
+	name = "pink summer cockpants"
+	icon = 'icons/mob/cock.dmi'
+	icon_state = "hugedick"
+	item_state = "hugedick"
+	item_color = "penis"
