@@ -177,7 +177,7 @@
 	board_icon = "hoverboard_red"
 
 /obj/vehicle/ridden/scooter/skateboard/hoverboard/screwdriver_act(mob/living/user, obj/item/I)
-	return
+	return FALSE
 
 /obj/vehicle/ridden/scooter/skateboard/hoverboard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/stack/rods))
