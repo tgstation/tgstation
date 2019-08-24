@@ -1877,7 +1877,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	to_chat(H, "<span class='notice'>Your wings spazz out and launch you!</span>")
 
-	playsound(H.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+	playsound(H.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 
 	for(var/obj/item/I in H.held_items)
 		H.accident(I)
