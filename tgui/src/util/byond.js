@@ -2,8 +2,8 @@ const encode = encodeURIComponent
 
 // Helper to generate a BYOND href given 'params' as an object
 // (with an optional 'url' for eg winset).
-export const href = (url = '', params = {}) => {
-  return `byond://${url}?`
+export const href = (url, params = {}) => {
+  return `byond://${url || ''}?`
     + Object.keys(params)
       .map(key => `${encode(key)}=${encode(params[key])}`)
       .join('&');
@@ -24,14 +24,13 @@ export const callByond = (url, params = {}) => {
   // Create a callback array if it doesn't exist yet
   window.byondCallbacks = window.byondCallbacks || [];
   // Create a Promise and push its resolve function into callback array
-  let callbackFn;
-  const promise = new Promise(resolve => {
-    callbackFn = resolve;
-  });
   const callbackIndex = window.byondCallbacks.length;
-  window.byondCallbacks.push(callbackFn);
+  const promise = new Promise(resolve => {
+    // TODO: Fix a potential memory leak
+    window.byondCallbacks.push(resolve);
+  });
   // Call BYOND client
-  window.location.href = href(url, Object.assign({}, params, {
+  window.location.href = href(url || '', Object.assign({}, params, {
     callback: `byondCallbacks[${callbackIndex}]`,
   }));
   // Return promise (awaitable)
@@ -41,7 +40,7 @@ export const callByond = (url, params = {}) => {
 export const runCommand = command => callByond('winset', { command });
 
 /**
- * A simple debug print, which works only on development builds.
+ * A simple debug print.
  * 
  * TODO: Find a better way to debug print.
  * Right now we just print into the game chat.
