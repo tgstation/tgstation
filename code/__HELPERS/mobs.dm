@@ -477,7 +477,7 @@ GLOBAL_LIST_EMPTY(species_list)
 
 /proc/passtable_on(target, source)
 	var/mob/living/L = target
-	if (L.pass_flags & PASSTABLE)
+	if (!HAS_TRAIT(L, TRAIT_PASSTABLE) && L.pass_flags & PASSTABLE)
 		ADD_TRAIT(L, TRAIT_PASSTABLE, INNATE_TRAIT)
 	ADD_TRAIT(L, TRAIT_PASSTABLE, source)
 	L.pass_flags |= PASSTABLE
