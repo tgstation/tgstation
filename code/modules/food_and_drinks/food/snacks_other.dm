@@ -549,6 +549,26 @@
 	tastes = list("butter" = 1)
 	foodtype = DAIRY
 
+/obj/item/reagent_containers/food/snacks/butter/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>If you had a rod you could make <b>butter on a stick</b>.</span>"
+
+/obj/item/reagent_containers/food/snacks/butter/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/stack/rods))//they will always have at least one if they are holding it.
+		to_chat(user, "<span class='notice'>You stick the rod into the stick of butter.</span>")
+		var/obj/item/stack/rods/R = W
+		var/obj/item/reagent_containers/food/snacks/butter/on_a_stick/new_item = new(usr.loc)
+		var/replace = (user.get_inactive_held_item() == R)
+		R.use(1)
+		if(!R && replace)
+			user.put_in_hands(new_item)
+
+/obj/item/reagent_containers/food/snacks/butter/on_a_stick //there's something so special about putting it on a stick.
+	name = "butter on a stick"
+	desc = "delicious, golden, fatty goodness on a stick."
+	icon_state = "butteronastick"
+	trash = /obj/item/stack/rods
+
 /obj/item/reagent_containers/food/snacks/onionrings
 	name = "onion rings"
 	desc = "Onion slices coated in batter."
