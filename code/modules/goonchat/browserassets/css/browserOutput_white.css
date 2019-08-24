@@ -250,7 +250,7 @@ a.popt {text-decoration: none;}
 .bold, .name, .prefix, .ooc, .looc, .adminooc, .admin, .medal, .yell {font-weight: bold;}
 
 /* ADD HERE FOR ITALIC */
-.italic, .italics,  .emote {color: #000099;	font-style: italic;}
+.italic, .italics,  .emote {font-style: italic;}
 
 /* OUTPUT COLORS */
 .highlight {background: yellow;}
