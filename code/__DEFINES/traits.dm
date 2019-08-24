@@ -200,6 +200,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define CLOTHING_TRAIT "clothing"
 #define GLASSES_TRAIT "glasses"
 #define VEHICLE_TRAIT "vehicle" // inherited from riding vehicles
+#define INNATE_TRAIT "innate"
 
 // unique trait sources, still defines
 #define CLONING_POD_TRAIT "cloning-pod"
