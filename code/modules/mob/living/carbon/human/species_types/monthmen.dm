@@ -7,7 +7,7 @@
 	species_traits = list(NO_UNDERWEAR, NOBLOOD)
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
 	skinned_type = /obj/item/paper
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
+	changesource_flags = null //absolutely no way to get the race, it's completely out of theme of ss13 and should stay locked up in april fools
 	damage_overlay_type = "" //no blood
 	//organs
 	mutant_brain = /obj/item/organ/brain/monthmen
@@ -15,7 +15,7 @@
 	mutanttongue = /obj/item/organ/tongue/monthmen
 	mutantears = /obj/item/organ/ears/monthmen
 	//other traits
-	siemens_coeff = 0
+	siemens_coeff = 0 //not very good at conducting electricity
 	nojumpsuit = TRUE
 	sexes = FALSE
 	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)

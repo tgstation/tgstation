@@ -291,8 +291,8 @@
 #define HUMAN_CARRY_SLOWDOWN 0.35
 
 //Flags that control what things can spawn species (whitelist)
-//Badmin magic mirror
-#define MIRROR_BADMIN (1<<0)
+//Badmin magic mirror, VV dropdown menu. Basically things that only admins could spawn.
+#define ADMIN (1<<0)
 //Standard magic mirror (wizard)
 #define MIRROR_MAGIC  (1<<1)
 //Pride ruin mirror

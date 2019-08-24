@@ -12,7 +12,7 @@
 	mutantears = /obj/item/organ/ears/dullahan
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
+	changesource_flags = ADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
 
 	var/obj/item/dullahan_relay/myhead
 

@@ -882,7 +882,12 @@
 	if(href_list[VV_HK_SET_SPECIES])
 		if(!check_rights(R_SPAWN))
 			return
-		var/result = input(usr, "Please choose a new species","Species") as null|anything in GLOB.species_list
+		var/list/sanitized_races = list()
+		for(var/thing in GLOB.species_list)
+			var/datum/species/S = thing
+			if(initial(S.changesource_flags) & ADMIN)
+				sanitized_races += S
+		var/result = input(usr, "Please choose a new species","Species") as null|anything in sanitized_races
 		if(result)
 			var/newtype = GLOB.species_list[result]
 			admin_ticket_log("[key_name_admin(usr)] has modified the bodyparts of [src] to [result]")

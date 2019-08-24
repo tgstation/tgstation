@@ -115,7 +115,7 @@
 /obj/structure/mirror/magic/badmin/New()
 	for(var/speciestype in subtypesof(/datum/species))
 		var/datum/species/S = speciestype
-		if(initial(S.changesource_flags) & MIRROR_BADMIN)
+		if(initial(S.changesource_flags) & ADMIN)
 			choosable_races += initial(S.id)
 	..()
 

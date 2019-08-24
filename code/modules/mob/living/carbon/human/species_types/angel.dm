@@ -9,7 +9,7 @@
 	no_equip = list(SLOT_BACK)
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
+	changesource_flags = ADMIN | WABBAJACK | ERT_SPAWN
 
 	var/datum/action/innate/flight/fly
 
