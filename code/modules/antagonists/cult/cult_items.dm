@@ -328,7 +328,7 @@
 	item_state = "magus"
 	desc = "A helm worn by the followers of Nar'Sie."
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS|HIDEEYES
-	armor = list("melee" = 30, "bullet" = 30, "laser" = 30,"energy" = 20, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 10, "acid" = 10)
+	armor = list("melee" = 50, "bullet" = 30, "laser" = 50,"energy" = 20, "bomb" = 25, "bio" = 10, "rad" = 0, "fire" = 10, "acid" = 10)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
 /obj/item/clothing/suit/magusred
@@ -346,7 +346,7 @@
 	desc = "A heavily-armored helmet worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
 	icon_state = "cult_helmet"
 	item_state = "cult_helmet"
-	armor = list("melee" = 60, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 40, "acid" = 75)
+	armor = list("melee" = 70, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 40, "acid" = 75)
 	brightness_on = 0
 	actions_types = list()
 
@@ -378,7 +378,7 @@
 	icon_state = "cult_armor"
 	item_state = "cult_armor"
 	w_class = WEIGHT_CLASS_BULKY
-	armor = list("melee" = 50, "bullet" = 40, "laser" = 50,"energy" = 30, "bomb" = 50, "bio" = 30, "rad" = 30, "fire" = 50, "acid" = 60)
+	armor = list("melee" = 50, "bullet" = 40, "laser" = 50,"energy" = 30, "bomb" = 50, "bio" = 30, "rad" = 30, "fire" = 50, "acid" = 50)
 	var/current_charges = 3
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/cult_shield
 
