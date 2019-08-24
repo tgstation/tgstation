@@ -1925,4 +1925,4 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			to_chat(H, "<span class='notice'>You settle gently back onto the ground...</span>")
 		else
 			to_chat(H, "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>")
-			H.set_resting(FALSE)
+			H.set_resting(FALSE, TRUE)
