@@ -621,7 +621,7 @@
 		if(holycheck)
 			to_chat(C, "<span class='notice'>You feel blessed!</span>")
 			ADD_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
-		playsound(C.loc, 'sound/items/poster_ripped.ogg', 50, 1, -1)
+		playsound(C.loc, 'sound/items/poster_ripped.ogg', 50, TRUE, -1)
 		C.adjustBruteLoss(20)
 		C.emote("scream")
 	..()
