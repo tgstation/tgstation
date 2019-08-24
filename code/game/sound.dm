@@ -31,10 +31,8 @@
 	if(!client || !can_hear())
 		return
 
-	var/direct_sent = FALSE
 	if(!S)
 		S = sound(get_sfx(soundin))
-		direct_sent = TRUE
 
 	S.wait = 0 //No queue
 	S.channel = channel || open_sound_channel()
@@ -69,7 +67,7 @@
 			if(distance <= 1)
 				pressure_factor = max(pressure_factor, 0.15) //touching the source of the sound
 
-			if(!direct_sent && pressure_factor < 0.5)
+			if(pressure_factor < 0.5)
 				S.environment = SOUND_AREA_SPACE
 			S.volume *= pressure_factor
 			//End Atmosphere affecting sound
@@ -85,13 +83,13 @@
 		S.y = 1
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 
-		if(!direct_sent && S.environment == -1)
+		if(S.environment == -1)
 			var/area/A = get_area(src)
 			if(A.sound_environment > -1)
 				S.environment = A.sound_environment
 
-
-	if(ROUND IS OVER)
+ 	//If the round is over or hasn't started kill all environments so endround music plays correctly
+	if(SSticker.current_state == GAME_STATE_FINISHED || SSticker.current_state >= GAME_STATE_SETTING_UP)
 		S.environment = SOUND_ENVIRONMENT_NONE
 
 	SEND_SOUND(src, S)
