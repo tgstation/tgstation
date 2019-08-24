@@ -24,6 +24,9 @@
 	icon_screen = "holocontrol"
 	idle_power_usage = 10
 	active_power_usage = 50
+	ui_x = 400
+	ui_y = 500
+
 	var/area/holodeck/linked
 	var/area/holodeck/program
 	var/area/holodeck/last_program
@@ -81,7 +84,7 @@
 /obj/machinery/computer/holodeck/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "holodeck", name, 400, 500, master_ui, state)
+		ui = new(user, src, ui_key, "holodeck", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/holodeck/ui_data(mob/user)

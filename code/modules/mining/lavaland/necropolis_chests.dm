@@ -609,16 +609,21 @@
 
 /datum/reagent/flightpotion/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
-		if(!ishumanbasic(M) || reac_volume < 5) // implying xenohumans are holy
+		var/mob/living/carbon/C = M
+		var/holycheck = ishumanbasic(C)
+		if(!(holycheck || islizard(C)) || reac_volume < 5) // implying xenohumans are holy //as with all things,
 			if(method == INGEST && show_message)
-				to_chat(M, "<span class='notice'><i>You feel nothing but a terrible aftertaste.</i></span>")
+				to_chat(C, "<span class='notice'><i>You feel nothing but a terrible aftertaste.</i></span>")
 			return ..()
 
-		to_chat(M, "<span class='userdanger'>A terrible pain travels down your back as wings burst out!</span>")
-		M.set_species(/datum/species/angel)
-		playsound(M.loc, 'sound/items/poster_ripped.ogg', 50, 1, -1)
-		M.adjustBruteLoss(20)
-		M.emote("scream")
+		to_chat(C, "<span class='userdanger'>A terrible pain travels down your back as wings burst out!</span>")
+		C.dna.species.GiveSpeciesFlight(C)
+		if(holycheck)
+			to_chat(C, "<span class='notice'>You feel blessed!</span>")
+			ADD_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
+		playsound(C.loc, 'sound/items/poster_ripped.ogg', 50, TRUE, -1)
+		C.adjustBruteLoss(20)
+		C.emote("scream")
 	..()
 
 
@@ -957,7 +962,7 @@
 			timer = world.time + create_delay + 1
 			if(do_after(user, create_delay, target = T))
 				var/old_name = T.name
-				if(T.TerraformTurf(turf_type))
+				if(T.TerraformTurf(turf_type, flags = CHANGETURF_INHERIT_AIR))
 					user.visible_message("<span class='danger'>[user] turns \the [old_name] into [transform_string]!</span>")
 					message_admins("[ADMIN_LOOKUPFLW(user)] fired the lava staff at [ADMIN_VERBOSEJMP(T)]")
 					log_game("[key_name(user)] fired the lava staff at [AREACOORD(T)].")
@@ -968,7 +973,7 @@
 			qdel(L)
 		else
 			var/old_name = T.name
-			if(T.TerraformTurf(reset_turf_type))
+			if(T.TerraformTurf(reset_turf_type, flags = CHANGETURF_INHERIT_AIR))
 				user.visible_message("<span class='danger'>[user] turns \the [old_name] into [reset_string]!</span>")
 				timer = world.time + reset_cooldown
 				playsound(T,'sound/magic/fireball.ogg', 200, 1)

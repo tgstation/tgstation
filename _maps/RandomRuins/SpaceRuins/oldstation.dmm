@@ -18,7 +18,7 @@
 /area/ruin/space/has_grav/ancientstation/deltaai)
 "af" = (
 /obj/structure/alien/weeds,
-/mob/living/carbon/alien/humanoid/hunter,
+/mob/living/simple_animal/hostile/alien,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/ancientstation/deltaai)
 "ag" = (
@@ -76,7 +76,7 @@
 /area/ruin/space/has_grav/ancientstation/comm)
 "ao" = (
 /obj/structure/alien/weeds,
-/mob/living/carbon/alien/humanoid/drone,
+/mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/ancientstation/deltaai)
 "ap" = (
@@ -395,7 +395,7 @@
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/alien/weeds,
-/mob/living/carbon/alien/humanoid/hunter,
+/mob/living/simple_animal/hostile/alien,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/ancientstation/deltaai)
 "bf" = (
@@ -484,7 +484,7 @@
 /area/ruin/space/has_grav/ancientstation/comm)
 "bo" = (
 /obj/machinery/door/airlock/highsecurity,
-/turf/open/space/basic,
+/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/ancientstation/deltaai)
 "bp" = (
 /obj/machinery/door/window/brigdoor/westleft,
@@ -744,11 +744,6 @@
 "cb" = (
 /obj/structure/sign/poster/official/science,
 /turf/closed/wall/rust,
-/area/ruin/space/has_grav/ancientstation/deltacorridor)
-"cc" = (
-/obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot,
-/turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "cd" = (
 /obj/machinery/door/airlock/command{
@@ -1119,7 +1114,7 @@
 /area/ruin/space/has_grav/ancientstation/deltaai)
 "de" = (
 /obj/structure/alien/weeds,
-/mob/living/carbon/alien/humanoid/royal/queen,
+/mob/living/simple_animal/hostile/alien/queen,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/ancientstation/deltaai)
 "df" = (
@@ -1353,7 +1348,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/structure/alien/weeds,
-/mob/living/carbon/alien/humanoid/drone,
+/mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "dH" = (
@@ -2282,10 +2277,17 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "fW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/alien/weeds/node,
 /obj/structure/alien/weeds,
-/mob/living/carbon/alien/humanoid/drone,
-/turf/open/floor/plasteel/white,
-/area/ruin/space/has_grav/ancientstation/rnd)
+/mob/living/simple_animal/hostile/alien/drone,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/ancientstation/deltacorridor)
 "fX" = (
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/mining)
@@ -2530,14 +2532,13 @@
 /area/ruin/space/has_grav/ancientstation/sec)
 "gD" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/alien/weeds/node,
 /obj/structure/alien/weeds,
-/mob/living/carbon/alien/humanoid/drone,
+/mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "gE" = (
@@ -2914,9 +2915,8 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "hE" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/alien/weeds,
-/mob/living/carbon/alien/humanoid/drone,
+/mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/ancientstation/rnd)
 "hF" = (
@@ -4047,8 +4047,8 @@
 "jP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/personal,
 /obj/item/storage/backpack/duffelbag,
+/obj/structure/closet,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation)
 "jQ" = (
@@ -4068,14 +4068,6 @@
 	amount = 25
 	},
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/ancientstation)
-"jR" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/personal,
-/obj/item/storage/backpack/old,
-/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation)
 "jS" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
@@ -4731,6 +4723,7 @@
 	pixel_y = 28;
 	start_charge = 0
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/has_grav/ancientstation/kitchen)
 "ly" = (
@@ -5535,6 +5528,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/engi)
 "nJ" = (
@@ -5572,15 +5566,10 @@
 /area/ruin/space/has_grav/ancientstation/rnd)
 "nN" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/alien/weeds,
-/mob/living/carbon/alien/humanoid/drone,
-/turf/open/floor/plasteel,
-/area/ruin/space/has_grav/ancientstation/deltacorridor)
+/mob/living/simple_animal/hostile/alien/drone,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/has_grav/ancientstation/rnd)
 "nO" = (
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
@@ -5660,7 +5649,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/alien/weeds,
-/mob/living/carbon/alien/humanoid/hunter,
+/mob/living/simple_animal/hostile/alien,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "nX" = (
@@ -6247,6 +6236,11 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation)
+"yx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ancientstation/deltacorridor)
 "Af" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -8543,7 +8537,7 @@ bN
 bN
 bN
 bN
-jR
+ns
 aG
 gK
 aa
@@ -9701,7 +9695,7 @@ dZ
 eF
 oG
 gG
-hE
+nN
 oe
 hg
 eb
@@ -9989,11 +9983,11 @@ ad
 gK
 bE
 oq
-gD
+fW
 dy
 eC
 fu
-fW
+hE
 gP
 eC
 oi
@@ -10237,7 +10231,7 @@ ou
 dJ
 jx
 jy
-nN
+gD
 nP
 oK
 dJ
@@ -10346,9 +10340,9 @@ nU
 td
 tT
 bE
-cc
 dh
-cc
+dh
+dh
 bE
 gK
 aa
@@ -10397,7 +10391,7 @@ Sf
 bE
 jg
 jz
-dh
+yx
 bE
 gK
 aa

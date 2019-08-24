@@ -140,7 +140,7 @@
 		var/mob/living/L = occupant
 		if(SEND_SIGNAL(L, COMSIG_HAS_NANITES))
 			return
-		if((MOB_ORGANIC in L.mob_biotypes) || (MOB_UNDEAD in L.mob_biotypes))
+		if(L.mob_biotypes & (MOB_ORGANIC | MOB_UNDEAD))
 			inject_nanites(attacker)
 
 /obj/machinery/public_nanite_chamber/open_machine()
