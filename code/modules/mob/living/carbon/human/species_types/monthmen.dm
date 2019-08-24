@@ -4,11 +4,12 @@
 	id = "month"
 	//visuals
 	default_color = "FFFFFF"
-	species_traits = list(NO_UNDERWEAR, NOBLOOD)
+	species_traits = list(NO_UNDERWEAR, NOBLOOD, ABSTRACT_HEAD)
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
 	skinned_type = /obj/item/paper
 	changesource_flags = null //absolutely no way to get the race, it's completely out of theme of ss13 and should stay locked up in april fools
 	damage_overlay_type = "" //no blood
+	offset_features = list(OFFSET_UNIFORM = list(0,0), OFFSET_ID = list(0,0), OFFSET_GLOVES = list(0,0), OFFSET_GLASSES = list(0,4), OFFSET_EARS = list(0,-7), OFFSET_SHOES = list(0,0), OFFSET_S_STORE = list(0,0), OFFSET_FACEMASK = list(0,0), OFFSET_HEAD = list(0,0), OFFSET_FACE = list(0,0), OFFSET_BELT = list(0,0), OFFSET_BACK = list(0,0), OFFSET_SUIT = list(0,0), OFFSET_NECK = list(0,0))
 	//organs
 	mutant_brain = /obj/item/organ/brain/monthmen
 	mutanteyes = /obj/item/organ/eyes/monthmen
@@ -21,10 +22,11 @@
 	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	meat = /obj/item/paper
 
+
 /datum/species/monthmen/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 		return TRUE
-	return FALSE
+	return TRUE
 
 /datum/species/monthmen/random_name(gender,unique,lastname)
 	var/month = pick(list("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"))
@@ -37,7 +39,7 @@
 				days_in_that_month = 28
 		if("April", "June", "September", "November")
 			days_in_that_month = 30
-			
+
 	return "[thtotext(rand(1, days_in_that_month))] of [month]"
 
 /datum/species/monthmen/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)

@@ -119,6 +119,7 @@
 #define DYNCOLORS		16 //Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
 #define AGENDER			17
 #define NOEYESPRITES	18 //Do not draw eyes or eyeless overlay
+#define ABSTRACT_HEAD	19 //Currently only the head. This lets the species equip items that would normally require the labelled bodypart to be present.
 
 //organ slots
 #define ORGAN_SLOT_BRAIN "brain"

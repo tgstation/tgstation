@@ -783,7 +783,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return FALSE
 			if(!(I.slot_flags & ITEM_SLOT_MASK))
 				return FALSE
-			if(!H.get_bodypart(BODY_ZONE_HEAD))
+			if(!H.get_bodypart(BODY_ZONE_HEAD) && !(ABSTRACT_HEAD in species_traits))
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(SLOT_NECK)
@@ -842,7 +842,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return FALSE
 			if(!(I.slot_flags & ITEM_SLOT_EYES))
 				return FALSE
-			if(!H.get_bodypart(BODY_ZONE_HEAD))
+			if(!H.get_bodypart(BODY_ZONE_HEAD) && !(ABSTRACT_HEAD in species_traits))
 				return FALSE
 			var/obj/item/organ/eyes/E = H.getorganslot(ORGAN_SLOT_EYES)
 			if(E?.no_glasses)
@@ -853,7 +853,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return FALSE
 			if(!(I.slot_flags & ITEM_SLOT_HEAD))
 				return FALSE
-			if(!H.get_bodypart(BODY_ZONE_HEAD))
+			if(!H.get_bodypart(BODY_ZONE_HEAD) && !(ABSTRACT_HEAD in species_traits))
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(SLOT_EARS)
@@ -861,7 +861,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return FALSE
 			if(!(I.slot_flags & ITEM_SLOT_EARS))
 				return FALSE
-			if(!H.get_bodypart(BODY_ZONE_HEAD))
+			if(!H.get_bodypart(BODY_ZONE_HEAD) && !(ABSTRACT_HEAD in species_traits))
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(SLOT_W_UNIFORM)
