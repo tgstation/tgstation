@@ -6,7 +6,7 @@
 /*Suffix: -bital*/
 
 /datum/reagent/medicine/C2/sanguibital
-	name = "Sanobital"
+	name = "Sanguibital"
 	description = "A unique medicine that heals bruises, scaling with the rate at which one is bleeding out. Dilates blood streams, increasing the amount of blood lost. Overdosing further increases blood loss."
 	color = "#ECEC8D" // rgb: 236	236	141
 	taste_description = "whatever vampires would eat"
@@ -180,7 +180,7 @@
 		var/datum/reagent/the_reagent = r
 		if(istype(the_reagent, /datum/reagent/medicine))
 			medibonus += 1
-	M.adjustToxLoss(0.5 * medibonus)
+	M.adjustToxLoss(-0.5 * medibonus)
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, medibonus)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.type, medibonus*0.5)

@@ -1,0 +1,4 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - tweak: "Moved the robotic voiceboxes from the contraband section of the mostly-unused RoboTech vending machine to the contraband section of the RoboDrobe vending machine. Unfortunately, this meant that the price of techpriest robes had to be increased."

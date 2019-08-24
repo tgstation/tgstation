@@ -334,6 +334,9 @@
 /mob/living/simple_animal/bot/mulebot/MouseDrop_T(atom/movable/AM, mob/user)
 	var/mob/living/L = user
 
+	if (!istype(L))
+		return
+
 	if(user.incapacitated() || (istype(L) && !(L.mobility_flags & MOBILITY_STAND)))
 		return
 
