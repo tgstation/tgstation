@@ -2,7 +2,7 @@
 
 /obj/machinery/atmospherics/pipe/manifold
 	icon = 'icons/obj/atmospherics/pipes/manifold.dmi'
-	icon_state = "manifold-2"
+	icon_state = ""
 
 	name = "pipe manifold"
 	desc = "A manifold composed of regular pipes."
