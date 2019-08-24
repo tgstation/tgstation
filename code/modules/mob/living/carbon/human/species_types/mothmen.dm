@@ -19,8 +19,8 @@
 
 /datum/species/moth/check_roundstart_eligible() //replaced by monthmen every april fools
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
-		return FALSE
-	return ..()
+		return ENABLED
+	return ..(POSSIBLE)
 
 /datum/species/moth/regenerate_organs(mob/living/carbon/C,datum/species/old_species,replace_current=TRUE)
 	. = ..()

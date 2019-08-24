@@ -34,8 +34,7 @@
 	changesource_flags = ADMIN | WABBAJACK | ERT_SPAWN
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
-	//WARNING: CURSED CODE
-	return .....()
+	return .....()//skips the parent proc so is just the normal roundstart eligible (don't pass POSSIBLE)
 
 
 /datum/species/zombie/infectious/spec_stun(mob/living/carbon/human/H,amount)

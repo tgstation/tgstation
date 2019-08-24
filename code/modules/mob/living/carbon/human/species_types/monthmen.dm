@@ -25,8 +25,8 @@
 
 /datum/species/monthmen/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
-		return TRUE
-	return TRUE
+		return ENABLED
+	return ..(POSSIBLE)
 
 /datum/species/monthmen/random_name(gender,unique,lastname)
 	var/month = pick(list("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"))

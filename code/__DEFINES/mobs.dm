@@ -306,4 +306,9 @@
 //Wabbacjack staff projectiles
 #define WABBAJACK     (1<<6)
 
+//Defines for the possibility of a race being chosen, as long as it has a check, it's possible. that way the unit test doesn't freak out when a race isn't roundstart and cannot be spawned
+#define IMPOSSIBLE	0 //FALSE,	only for the base check_roundstart_eligible to warn a unit test if the species is not roundstart, has no changesources, and has no special event enabling them.
+#define POSSIBLE	1 //TRUE,	pass on species check_roundstart_eligible if you added a condition that lets it pass sometimes
+#define ENABLED 	2 //TRUE,	special case for species
+
 #define SLEEP_CHECK_DEATH(X) sleep(X); if(QDELETED(src) || stat == DEAD) return;

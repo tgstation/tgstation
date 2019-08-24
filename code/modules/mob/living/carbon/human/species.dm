@@ -100,16 +100,16 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /proc/generate_selectable_species()
 	for(var/I in subtypesof(/datum/species))
 		var/datum/species/S = new I
-		if(S.check_roundstart_eligible())
+		if(S.check_roundstart_eligible() == ENABLED)//don't change this, see mobs.dm defines file (it's not a bool)
 			GLOB.roundstart_races += S.id
 			qdel(S)
 	if(!GLOB.roundstart_races.len)
 		GLOB.roundstart_races += "human"
 
-/datum/species/proc/check_roundstart_eligible()
+/datum/species/proc/check_roundstart_eligible(possibility = IMPOSSIBLE)
 	if(id in (CONFIG_GET(keyed_list/roundstart_races)))
-		return TRUE
-	return FALSE
+		return ENABLED
+	return possibility //either POSSIBLE or IMPOSSIBLE, if further down there is a special thing that enables it roundstart it's passed down (up?) that it's possible
 
 /datum/species/proc/random_name(gender,unique,lastname)
 	if(unique)

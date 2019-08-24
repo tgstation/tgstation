@@ -26,8 +26,8 @@
 
 /datum/species/shadow/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
-		return TRUE
-	return ..()
+		return ENABLED
+	return ..(POSSIBLE)
 
 /datum/species/shadow/nightmare
 	name = "Nightmare"
@@ -61,7 +61,7 @@
 	return ..()
 
 /datum/species/shadow/nightmare/check_roundstart_eligible()
-	return .....()
+	return .....()//skips the parent proc so is just the normal roundstart eligible (don't pass POSSIBLE)
 
 //Organs
 
