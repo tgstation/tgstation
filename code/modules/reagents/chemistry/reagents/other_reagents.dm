@@ -442,7 +442,7 @@
 		H.set_species(race)
 	else
 		to_chat(H, "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>")
-	qdel(src)
+	H.reagents.del_reagent(type)
 
 /datum/reagent/mutationtoxin/classic //The one from plasma on green slimes
 	name = "Mutation Toxin"
@@ -563,7 +563,7 @@
 	..()
 	if(!istype(H))
 		return
-	if(!H.dna || !H.dna.species || !(MOB_ORGANIC in H.mob_biotypes))
+	if(!H.dna || !H.dna.species || !(H.mob_biotypes & MOB_ORGANIC))
 		return
 
 	if(isjellyperson(H))
@@ -1353,7 +1353,7 @@
 /datum/reagent/carpet/reaction_turf(turf/T, reac_volume)
 	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
 		var/turf/open/floor/F = T
-		F.PlaceOnTop(/turf/open/floor/carpet)
+		F.PlaceOnTop(/turf/open/floor/carpet, flags = CHANGETURF_INHERIT_AIR)
 	..()
 
 /datum/reagent/bromine

@@ -322,7 +322,7 @@
 		if(s == "crew manifest")
 			dat += "<a href='byond://?src=[REF(src)];software=manifest;sub=0'>Crew Manifest</a> <br>"
 		if(s == "host scan")
-			dat += "<a href='byond://?src=[REF(src)];software=hostscan;sub=0'>Host Health Scan</a>"
+			dat += "<a href='byond://?src=[REF(src)];software=hostscan;sub=0'>Host Health Scan</a> <br>"
 		if(s == "medical records")
 			dat += "<a href='byond://?src=[REF(src)];software=medicalrecord;sub=0'>Medical Records</a> <br>"
 		if(s == "security records")
