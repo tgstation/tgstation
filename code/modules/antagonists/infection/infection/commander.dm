@@ -103,23 +103,19 @@ GLOBAL_VAR(infection_commander)
 	First info announcement when the infection has just been spotted
 */
 /mob/camera/commander/proc/generate_announcement()
-	priority_announce("[station_name()]: An abnormal and biological meteor has been detected on a collision course with your station. \n\n\
-					   This substance appears to be self replicating, and will stop at nothing to consume all matter around it.\n\n\
-					   Our calculations estimate the meteor will impact in [(autoplace_time - world.time)/600] minutes.\n\n\
-					   We will be deploying beacons that will defend the majority of your station, provided that they are not destroyed.\n\n\
-					   Further updates will be given as we analyze the substance.",
+	priority_announce("[station_name()]: A self replicating and all consuming entity has been detected on a collision course with your station. \n\
+					   Our calculations estimate the substance will impact in [(autoplace_time - world.time)/600] minutes.\n\n\
+					   We will be deploying beacons that will defend the majority of your station, prepare to go to war to protect them. \n\
+					   There will also be a gravity generator near your arrivals shuttle, we recommend that you power it unless you want to fight while floating around.",
 					  "CentCom Biohazard Division", 'sound/misc/notice1.ogg')
 
 /*
 	Extra info announcement to hopefully avoid people running in and dying to an unkillable enemy
 */
 /mob/camera/commander/proc/info_announcement()
-	priority_announce("[station_name()]: We have updated information regarding the biohazardous substance. \n\n\
-					   It appears to have a core that is virtually indestructible, we have been unable to affect it in any way, even with something as powerful as a singularity.\n\n\
-					   We advise that you do not attempt to attack the core, unless you find something that you think may damage it.\n\n\
-					   The meteor also appears to be heavily defended by many structures, that attack seemingly anything that gets close to it.\n\n\
-					   However some of these structures do not seem to naturally regenerate, and if they do, are not as strong as they once were.\n\n\
-					   Try to use this information to your advantage, we will report back again once the core has landed.",
+	priority_announce("[station_name()]: The entity appears to have a core that is virtually indestructible, normal destructive methods will not affect it in any way. \n\n\
+					   The core is also heavily defended, so we recommend that you don't rush in blindly unless you want to feed the infection. \n\n\
+					   On that note, the infection appears to be able to assimilate sentient creatures into its own army, top priority should be saving those killed by the infection.",
 					  "CentCom Biohazard Division", 'sound/misc/notice1.ogg')
 
 /*
@@ -142,9 +138,9 @@ GLOBAL_VAR(infection_commander)
 		sleep(100 / GLOB.beacon_spawns.len)
 	var/turf/T = pick(GLOB.infection_gravity_spawns)
 	if(T)
-		new /obj/machinery/gravity_generator/main/station/admin(T)
+		new /obj/machinery/gravity_generator/main/station(T)
 	else
-		message_admins("Could not find extra gravity generator spawn location for infection gamemode, consider spawning in an admin gravity generator behind all of the beacons.")
+		message_admins("Could not find extra gravity generator spawn location for infection gamemode, consider spawning in a gravity generator behind all of the beacons.")
 
 /mob/camera/commander/process()
 	if(!infection_core)

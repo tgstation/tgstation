@@ -15,10 +15,11 @@
 /obj/item/infectionkiller/Initialize(mapload)
 	. = ..()
 	if(is_item)
+		notify_ghosts("The Legendary Weapon [name] Was Found!", source = src, action = NOTIFY_ORBIT, header = "Legendary Weapon")
 		if(GLOB.infection_core)
 			priority_announce("The Legendary Item \"[name]\" has been discovered somewhere on the station.\n\n\
-							   We've attached a GPS signaller and teleportation beacon to it so that you can find it.\n\n\
-							   We believe this item could destroy the core of the infection as well.",
+							   We've attached a GPS signaller and teleportation beacon to it so that you can find it.\n\
+							   We believe this item contains enough power to destroy the infection core.",
 							   "CentCom Biohazard Division", 'sound/magic/summonitems_generic.ogg')
 		AddComponent(/datum/component/stationloving, FALSE, FALSE)
 		var/obj/item/gps/internal/legendary/L = new /obj/item/gps/internal/legendary(src)
@@ -174,7 +175,7 @@
 	item_state = "honker"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
-	color = "#ffd700"
+	color = "#ffbb00"
 	force = 25
 	hitsound = list('sound/items/airhorn.ogg')
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -194,13 +195,16 @@
 	// cooldown time added for clown spawning in deciseconds
 	var/cooldown_time_added = 150
 	// possible mobs to be spawned from the staff, weighted list, higher number means more chance to be picked
-	var/list/possible_mobs = list(/mob/living/simple_animal/hostile/retaliate/clown/clownhulk=1,
+	var/list/possible_mobs = list(/mob/living/simple_animal/hostile/retaliate/clown/clownhulk=2,
 						/mob/living/simple_animal/hostile/retaliate/clown/longface=3,
-						/mob/living/simple_animal/hostile/retaliate/clown/clownhulk/chlown=1,
+						/mob/living/simple_animal/hostile/retaliate/clown/clownhulk/chlown=2,
 						/mob/living/simple_animal/hostile/retaliate/clown/mutant/blob=3,
-						/mob/living/simple_animal/hostile/retaliate/clown=5,
 						/mob/living/simple_animal/hostile/retaliate/clown/lube=3,
-						/mob/living/simple_animal/hostile/retaliate/clown/clownhulk/destroyer=1)
+						/mob/living/simple_animal/hostile/retaliate/clown/clownhulk/destroyer=2,
+						/mob/living/simple_animal/hostile/retaliate/clown/banana=2,
+						/mob/living/simple_animal/hostile/retaliate/clown/fleshclown=2,
+						/mob/living/simple_animal/hostile/retaliate/clown/clownhulk/honcmunculus=2,
+						/mob/living/simple_animal/hostile/retaliate/clown/mutant=2)
 
 /datum/action/item_action/summon_clowns/IsAvailable()
 	// get rid of clowns that don't exist anymore

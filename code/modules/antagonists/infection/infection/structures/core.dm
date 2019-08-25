@@ -50,10 +50,8 @@
 	Info announcement when the core has landed
 */
 /obj/structure/infection/core/proc/generate_announcement()
-	priority_announce("The substance has landed, all available crew members are now drafted to fight the infection in any way possible.\n\n\
-					   We've also analyzed the substance further, and deemed it to be a threat to continued operations in your solar system.\n\n\
-					   Reinforcements have been requested to be sent in, though we've been detecting anomalous signals coming from the substance's origin point as well.\n\n\
-					   If you stop the source of these signals, you may be able to disable the enemy entirely. Good luck.",
+	priority_announce("The substance has landed, we will update you once we find a way to destroy it. \n\
+					   In the meantime, take down the infections outer defenses and attempt to expose the core.",
 					   "CentCom Biohazard Division", 'sound/effects/crystal_fire.ogg')
 
 /obj/structure/infection/core/evolve_menu(var/mob/camera/commander/C)

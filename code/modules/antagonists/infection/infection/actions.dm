@@ -40,9 +40,9 @@
 
 /datum/action/cooldown/infection/coregrab/fire(mob/camera/commander/I, turf/T)
 	var/obj/structure/infection/S = locate(/obj/structure/infection) in T.contents
-	if(!I.can_buy(cost))
-		return
 	if(S)
+		if(!I.can_buy(cost))
+			return
 		StartCooldown()
 		playsound(T, 'sound/effects/seedling_chargeup.ogg', 100, FALSE, pressure_affected = FALSE)
 		new /obj/effect/temp_visual/bluespace_fissure(T)

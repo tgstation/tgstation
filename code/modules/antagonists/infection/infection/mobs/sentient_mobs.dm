@@ -9,7 +9,7 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	crystal_color = "#ff8c00"
 	// respawn time for the slime
-	var/respawn_time = 300
+	var/respawn_time = 600
 	// the time left to respawn
 	var/current_respawn_time = 0
 	// the upgrade points the spore has stored
@@ -82,8 +82,11 @@
 		healed = TRUE
 	if(healed)
 		var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
-		if(overmind)
-			H.color = overmind.color
+		H.color = "#00ff00"
+	if(!(locate(/obj/structure/infection) in infection_in_area))
+		adjustHealth(maxHealth*0.025)
+		var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being hurt
+		H.color = "#ff0000"
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/AttackingTarget()
 	if(isliving(target))
@@ -228,7 +231,6 @@
 	new_spore.create_respawn_mob(respawnmob.loc)
 	INVOKE_ASYNC(new_spore, .proc/start_spawn, current_respawn_time - world.time)
 	overmind.infection_mobs += new_spore
-	menu_handler.ui.close()
 	qdel(src)
 	new_spore.update_icons()
 	new_spore.evolve_menu() // re-update the menu since they changed type

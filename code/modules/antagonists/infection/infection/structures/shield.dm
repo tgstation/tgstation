@@ -45,11 +45,19 @@
 		vis_contents += crystal_overlay
 	. = ..()
 
+/obj/structure/infection/shield/Destroy()
+	var/turf/T = get_turf(src)
+	var/type_of_drop = pickweight(ore_drops)
+	if(type_of_drop && T)
+		var/amount = rand(1, 4)
+		for(var/i in 1 to amount)
+			new type_of_drop(T)
+	. = ..()
+
 /obj/structure/infection/shield/evolve_menu(var/mob/camera/commander/C)
 	return
 
 /obj/structure/infection/shield/attackby(obj/item/I, mob/user, params)
-
 	if(I.tool_behaviour == TOOL_MINING)
 		var/turf/T = user.loc
 		if (!isturf(T))
@@ -64,11 +72,6 @@
 			to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
 			change_to(/obj/structure/infection/normal, overmind)
 			SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
-		var/type_of_drop = pickweight(ore_drops)
-		if(type_of_drop && T)
-			var/amount = rand(1, 4)
-			for(var/i in 1 to amount)
-				new type_of_drop(T)
 		return
 	. = ..()
 

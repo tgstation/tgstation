@@ -32,7 +32,7 @@
 #define BLOB_REFLECTOR_COST 15
 
 //Infection
-#define DOOM_CLOCK_EVENT_DELAY 6000 // 10 minutes per event
+#define DOOM_CLOCK_EVENT_DELAY 4500 // 7 minutes 30 seconds per event
 #define CORE_CONVERSION_TIME 600 // time to convert corpses near the core to slimes
 #define CORE_AUTOPLACE_TIME 3000 // 5 minutes
 

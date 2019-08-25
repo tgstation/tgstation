@@ -103,8 +103,8 @@
 	desc = "A floating, fragile slime."
 	icon_state = "infest-slime-core"
 	icon_living = "infest-slime-core"
-	health = 80
-	maxHealth = 80
+	health = 70
+	maxHealth = 70
 	verb_say = "psychically pulses"
 	verb_ask = "psychically probes"
 	verb_exclaim = "psychically yells"

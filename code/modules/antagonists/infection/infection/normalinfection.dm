@@ -285,7 +285,11 @@
 /obj/structure/infection/proc/ConsumeTile()
 	eat_nearby()
 	for(var/obj/O in loc)
-		if(ismecha(O) || O == src)
+		if(istype(O, /obj/structure/infection))
+			continue
+		if(istype(O, /obj/effect))
+			continue
+		if(ismecha(O))
 			continue
 		INVOKE_ASYNC(src, .proc/eatObject, O)
 	if(iswallturf(loc))
@@ -408,7 +412,7 @@
 		return
 	if(building)
 		return // no
-	var/obj/structure/infection/I = new type(src.loc, controller)
+	var/obj/structure/infection/I = new type(null, controller)
 	if(structure_build_time == null)
 		structure_build_time = I.build_time
 	var/obj/effect/overlay/vis/newicon = new
@@ -461,7 +465,7 @@
 		return TRUE
 	if(ismob(mover))
 		var/mob/M = mover
-		M.add_movespeed_modifier(MOVESPEED_ID_INFECTION_STRUCTURE, update=TRUE, priority=100, multiplicative_slowdown=3)
+		M.add_movespeed_modifier(MOVESPEED_ID_INFECTION_STRUCTURE, update=TRUE, priority=100, multiplicative_slowdown=2)
 		M.overlay_fullscreen("infectionvision", /obj/screen/fullscreen/curse, 1)
 
 /obj/structure/infection/normal/Uncrossed(atom/movable/mover)
