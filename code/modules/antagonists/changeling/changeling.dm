@@ -102,9 +102,6 @@
 	remove_changeling_powers()
 	. = ..()
 
-/datum/antagonist/changeling/on_body_transfer(mob/living/old_body, mob/living/new_body)
-	..()
-
 /datum/antagonist/changeling/proc/remove_clownmut()
 	if (owner)
 		var/mob/living/carbon/human/H = owner.current
