@@ -99,7 +99,7 @@
 		/datum/gas/hypernoblium		= new/datum/tlv(-1, -1, 1000, 1000), // Hyper-Noblium is inert and nontoxic
 		/datum/gas/water_vapor		= new/datum/tlv/dangerous,
 		/datum/gas/tritium			= new/datum/tlv/dangerous,
-		/datum/gas/stimulum			= new/datum/tlv(-1, -1, 1000, 1000), // Stimulum has only positive effects
+		/datum/gas/stimulum			= new/datum/tlv/dangerous,
 		/datum/gas/nitryl			= new/datum/tlv/dangerous,
 		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 1000, 1000) // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
 	)
@@ -137,7 +137,7 @@
 		/datum/gas/hypernoblium		= new/datum/tlv(-1, -1, 1000, 1000), // Hyper-Noblium is inert and nontoxic
 		/datum/gas/water_vapor		= new/datum/tlv/dangerous,
 		/datum/gas/tritium			= new/datum/tlv/dangerous,
-		/datum/gas/stimulum			= new/datum/tlv(-1, -1, 1000, 1000), // Stimulum has only positive effects
+		/datum/gas/stimulum			= new/datum/tlv/dangerous,
 		/datum/gas/nitryl			= new/datum/tlv/dangerous,
 		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 1000, 1000) // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
 	)
@@ -792,7 +792,7 @@
 
 /obj/machinery/airalarm/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if((buildstage == 0) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
-		return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 20, "cost" = 1)	
+		return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 20, "cost" = 1)
 	return FALSE
 
 /obj/machinery/airalarm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
