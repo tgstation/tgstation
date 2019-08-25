@@ -1,5 +1,5 @@
 # CONTRIBUTING
-
+ANTAG FREEZE
 ## Reporting Issues
 
 See [this page](http://tgstation13.org/wiki/Reporting_Issues) for a guide and format to issue reports.
