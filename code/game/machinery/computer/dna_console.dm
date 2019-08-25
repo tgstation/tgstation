@@ -36,8 +36,6 @@
 	var/combine
 	var/radduration = 2
 	var/radstrength = 1
-	///the max instability of the advanced injector.
-	var/advanced_injector_limit = 50
 	var/max_chromosomes = 6
 	///Amount of mutations we can store
 	var/list/buffer[NUMBER_OF_BUFFERS]
@@ -48,9 +46,11 @@
 	///combinations of injectors for the 'injector selection'. format is list("Elsa" = list(Cryokinesis, Geladikinesis), "The Hulk" = list(Hulk, Gigantism), etc) Glowy and the gang being an initialized datum
 	var/list/injector_selection = list()
 	///max amount of selections you can make
-	var/max_injector_instability = 2
+	var/max_injector_selections = 2
 	///hard-cap on the advanced dna injector
 	var/max_injector_mutations = 10
+	///the max instability of the advanced injector.
+	var/max_injector_instability = 50
 
 	var/injectorready = 0	//world timer cooldown var
 	var/jokerready = 0
@@ -897,7 +897,7 @@
 						var/datum/mutation/human/mootacion = B
 						total_instability += mootacion.instability
 					total_instability += HM.instability
-					if((total_instability >= advanced_injector_limit) || (true_selection.len + 1) >= max_injector_mutations)
+					if((total_instability > max_injector_instability) || (true_selection.len + 1) > max_injector_mutations)
 						to_chat(usr, "<span class='warning'>Adding more mutations would make the advanced injector too unstable!</span>")
 					else
 						true_selection += HM //reminder that this works. because I keep forgetting this works
@@ -919,7 +919,7 @@
 					injector_selection.Remove(selection)
 
 		if("add_advinjector")
-			if(LAZYLEN(injector_selection) < max_injector_instability)
+			if(LAZYLEN(injector_selection) < max_injector_selections)
 				var/new_selection = input(usr, "Enter Adv. Injector name", "Advanced Injectors") as text|null
 				if(new_selection && !(new_selection in injector_selection))
 					injector_selection[new_selection] = list()
