@@ -200,8 +200,8 @@
 	desc = "Bio Virus Antidote Kit autoinjector. Has a two use system for yourself, and someone else. Inject when infected."
 	icon_state = "tbpen"
 	item_state = "tbpen"
-	volume = 60
-	amount_per_transfer_from_this = 30
+	volume = 20
+	amount_per_transfer_from_this = 10
 	list_reagents = list(/datum/reagent/vaccine/fungal_tb = 20)
 
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure/update_icon()
