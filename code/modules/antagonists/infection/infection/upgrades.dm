@@ -107,12 +107,12 @@
 
 /datum/infection_upgrade/spore_type_change/infector_spore
 	name = "Infector Spore"
-	description = "An underboss of the infection. Can upgrade to repair buildings around it, and can create spore possessed humans with dead bodies. "
+	description = "An underboss of the infection that takes care of tasks like bringing back bodies to the core, or directly advancing the front lines with building upgrades."
 	new_type = /mob/living/simple_animal/hostile/infection/infectionspore/sentient/infector
 
 /datum/infection_upgrade/spore_type_change/hunter_spore
 	name = "Hunter Spore"
-	description = "A fast spore with abilities useful for hunting down humans. Works well with myconid spores that can grab humans past the beacon walls."
+	description = "A fast spore with abilities useful for hunting down humans. Works well with infector spores that can grab humans."
 	new_type = /mob/living/simple_animal/hostile/infection/infectionspore/sentient/hunter
 
 /datum/infection_upgrade/spore_type_change/destructive_spore
@@ -149,6 +149,14 @@
 
 /datum/infection_upgrade/infector/spacewalk/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/infector/parentinfector)
 	parentinfector.spacewalk = TRUE
+
+/datum/infection_upgrade/infector/suction
+	name = "Suction Cups"
+	description = "Pockets of fluid on the sides of your body create suction forces, allowing you to pull objects."
+	cost = 200
+
+/datum/infection_upgrade/infector/suction/upgrade_effect(mob/living/simple_animal/hostile/infection/infectionspore/sentient/infector/parentinfector)
+	parentinfector.verbs += /mob/living/verb/pulled
 
 /datum/infection_upgrade/infector/respawn_time
 	name = "Reduce Respawn Time"

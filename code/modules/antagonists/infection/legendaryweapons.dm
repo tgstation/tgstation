@@ -42,6 +42,16 @@
 /obj/item/infectionkiller/ex_act(severity)
 	return
 
+/obj/item/infectionkiller/can_be_pulled(user, grab_state, force)
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.faction.Find(ROLE_INFECTION))
+			to_chat(L, "<span class='warning'>You feel yourself start to disintegrate as you touch the radiant object!</span>")
+			playsound(get_turf(L), 'sound/effects/supermatter.ogg', 50, 1)
+			L.adjustBruteLoss(30)
+			return FALSE
+	return ..()
+
 /obj/item/infectionkiller/melee_attack_chain(mob/user, atom/target, params)
 	if(istype(target, /obj/structure/infection))
 		before_structure_attack(target, user)

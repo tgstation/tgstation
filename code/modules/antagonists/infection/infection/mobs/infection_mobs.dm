@@ -25,6 +25,7 @@
 
 /mob/living/simple_animal/hostile/infection/Initialize(mapload, owner_overmind)
 	. = ..()
+	verbs -= /mob/living/verb/pulled
 	if(!can_cross_beacons)
 		AddComponent(/datum/component/no_beacon_crossing)
 

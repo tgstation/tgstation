@@ -287,12 +287,17 @@
 	for(var/obj/O in loc)
 		if(ismecha(O) || O == src)
 			continue
-		if(O.resistance_flags & ACID_PROOF)
-			O.blob_act(src)
-		else
-			O.acid_act(160, 160)
+		INVOKE_ASYNC(src, .proc/eatObject, O)
 	if(iswallturf(loc))
 		loc.blob_act(src) //don't ask how a wall got on top of the core, just eat it
+
+/obj/structure/infection/proc/eatObject(obj/O)
+	O.take_damage(100, BURN, "", FALSE)
+	if(!QDELETED(O))
+		O.add_overlay(GLOB.infection_destroy_overlay)
+	sleep(5)
+	if(!QDELETED(O))
+		O.cut_overlay(GLOB.infection_destroy_overlay)
 
 /*
 	Attack animation for infection expansion
@@ -312,8 +317,8 @@
 /obj/structure/infection/proc/expand(turf/T = null, controller = null, space_expand = FALSE)
 	infection_attack_animation(T)
 	// do not expand to areas that are space, unless we're very lucky or the core
-	if(isspaceturf(T) && !(locate(/obj/structure/lattice) in T) && !space_expand && prob(80))
-		return null
+	if(isspaceturf(T) && !(locate(/obj/structure/lattice) in T) && !space_expand && !(locate(/obj/structure/beacon_generator) in T) && prob(80))
+		return
 	if(locate(/obj/structure/beacon_wall) in T.contents || locate(/obj/structure/infection) in T.contents)
 		return
 	var/obj/structure/infection/I = new /obj/structure/infection/normal(src.loc, (controller || overmind))

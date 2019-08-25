@@ -146,7 +146,7 @@
 	icon = 'icons/mob/infection/crystal_effect.dmi'
 	icon_state = "lightning-projectile"
 	layer = ABOVE_MOB_LAYER
-	damage = 25
+	damage = 15
 	speed = 2.5
 	damage_type = BRUTE
 	pass_flags = PASSTABLE | PASSBLOB

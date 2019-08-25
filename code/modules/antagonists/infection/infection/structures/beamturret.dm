@@ -46,7 +46,7 @@
 
 /obj/item/projectile/bullet/infection/beam
 	name = "lightning beam"
-	damage = 20
+	damage = 10
 	damage_type = BURN
 	pass_flags = PASSTABLE | PASSBLOB | PASSGLASS | PASSGRILLE | PASSMOB | PASSCLOSEDTURF
 	hitscan = TRUE

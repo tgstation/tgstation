@@ -1,5 +1,6 @@
 #define SAME_INFECTION_TYPE(check, typetocheck) (check.type == typetocheck || check.building == typetocheck)
 #define ISRESPAWNING(MOB) (istype(MOB.loc, /mob/camera/infectionslime))
+GLOBAL_DATUM_INIT(infection_destroy_overlay, /mutable_appearance, mutable_appearance('icons/effects/effects.dmi', "greenshatter2"))
 
 /*
 	The actual infection antagonist
