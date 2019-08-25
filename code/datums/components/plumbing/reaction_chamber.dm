@@ -4,8 +4,8 @@
 
 /datum/component/plumbing/reaction_chamber/Initialize(start=TRUE, _turn_connects=TRUE)
 	. = ..()
-	if(. && istype(parent, /obj/machinery/plumbing/reaction_chamber))
-		return TRUE
+	if(!istype(parent, /obj/machinery/plumbing/reaction_chamber))
+		return COMPONENT_INCOMPATIBLE
 
 /datum/component/plumbing/reaction_chamber/can_give(amount, reagent)
 	. = ..()
@@ -18,12 +18,24 @@
 	if(RC.emptying)
 		return
 	for(var/RT in RC.required_reagents)
+		to_chat(world, "1-[RT]")
+		var/succes = FALSE
 		for(var/A in reagents.reagent_list)
+			to_chat(world, "2-[RT]")
 			var/datum/reagent/RD = A
-			if(RT == RD.type && RC.required_reagents[RT] < RD.amount)
-				process_request(min(required_reagents[RT] - RD.amount, MACHINE_REAGENT_TRANSFER) , RT, dir)
-				return
-	reagents.flags &= ~NOREACT
+			if(RT == RD.type)
+				to_chat(world, "3-[RT]-[succes]")
+				succes = TRUE
+				if(RC.required_reagents[RT] < RD.volume)
+					to_chat(world, "4-[RT]-[succes]")
+					process_request(min(RC.required_reagents[RT] - RD.volume, MACHINE_REAGENT_TRANSFER) , RT, dir)
+					return
+		if(!succes)
+			to_chat(world, "5-[RT]-[succes]")
+			process_request(min(RC.required_reagents[RT], MACHINE_REAGENT_TRANSFER), RT, dir)
+			return
+
+	reagents.flags &= ~NO_REACT
 	RC.emptying = TRUE
 
 /datum/component/plumbing/reaction_chamber/can_give(amount, reagent, datum/ductnet/net)

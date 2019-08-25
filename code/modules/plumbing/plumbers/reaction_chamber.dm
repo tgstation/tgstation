@@ -5,7 +5,7 @@
 	icon_state = "reaction_chamber"
 
 	buffer = 100
-	reagent_flags = TRANSPARENT | NOREACT
+	reagent_flags = TRANSPARENT | NO_REACT
 	/**list of set reagents that the reaction_chamber allows in, and must all be present before mixing is enabled.
 	* example: list(/datum/reagent/water = 20, /datum/reagent/oil = 50)
 	*//
@@ -16,20 +16,25 @@
 
 /obj/machinery/plumbing/reaction_chamber/Initialize()
 	. = ..()
+	AddComponent(/datum/component/plumbing/reaction_chamber)
 
 /obj/machinery/plumbing/reaction_chamber/on_reagent_change()
-	if(reagents.total_volume == 0 && RC.emptying) //we were emptying, but now we aren't
+	if(reagents.total_volume == 0 && emptying) //we were emptying, but now we aren't
 		emptying = FALSE
 
 /obj/machinery/plumbing/reaction_chamber/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "chem_reactor", name, 500, 500, master_ui, state)
+		ui = new(user, src, ui_key, "reaction_chamber", name, 500, 500, master_ui, state)
 		ui.open()
 
 /obj/machinery/plumbing/reaction_chamber/ui_data(mob/user)
 	var/list/data = list()
-	data["reagents"] = required_reagents
+	var/list/text_reagents = list()
+	for(var/A in required_reagents) //make a list where the key is text, because that looks alot better in the ui than a typepath
+		var/datum/reagent/R = A
+		text_reagents[initial(R.name)] = required_reagents[R]dgfgfgd
+	data["reagents"] = text_reagents
 	data["emptying"] = emptying
 	return data
 
@@ -43,3 +48,8 @@
 			if(reagent)
 				required_reagents.Remove(reagent)
 		if("add")
+			var/input_reagent = get_chem_id(replacetext(lowertext(input("Enter the name of the reagent", "Input") as text|null), " ", ""))
+			if(input_reagent && !required_reagents.Find(input_reagent))
+				var/input_amount = CLAMP(round(input("Enter amount", "Input") as num|null), 1, 100)
+				if(input_amount)
+					required_reagents[input_reagent] = input_amount
