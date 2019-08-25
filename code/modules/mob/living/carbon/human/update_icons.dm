@@ -499,7 +499,7 @@ default_icon_file: The icon file to draw states from if no other icon file is sp
 isinhands: If true then alternate_worn_icon is skipped so that default_icon_file is used,
 in this situation default_icon_file is expected to match either the lefthand_ or righthand_ file var
 
-femalueuniform: A value matching a uniform item's fitted var, if this is anything but NO_FEMALE_UNIFORM, we
+femaleuniform: A value matching a uniform item's fitted var, if this is anything but NO_FEMALE_UNIFORM, we
 generate/load female uniform sprites matching all previously decided variables
 
 
@@ -629,7 +629,7 @@ generate/load female uniform sprites matching all previously decided variables
 
 	var/obj/item/bodypart/HD = get_bodypart(BODY_ZONE_HEAD)
 
-	if(!istype(HD) && !(ABSTRACT_HEAD in dna.species.species_traits))
+	if(!istype(HD))
 		return
 
 	HD.update_limb()
