@@ -71,6 +71,7 @@
 
 		brainmob.reset_perspective()
 		brain = newbrain
+		brain.organ_flags |= ORGAN_FROZEN
 
 		name = "[initial(name)]: [brainmob.real_name]"
 		update_icon()
@@ -107,6 +108,7 @@
 		user.put_in_hands(brain) //puts brain in the user's hand or otherwise drops it on the user's turf
 	else
 		brain.forceMove(get_turf(src))
+	brain.organ_flags &= ~ORGAN_FROZEN
 	brain = null //No more brain in here
 
 
@@ -130,6 +132,7 @@
 	else if(!brain)
 		brain = new(src)
 		brain.name = "[L.real_name]'s brain"
+	brain.organ_flags |= ORGAN_FROZEN
 
 	name = "[initial(name)]: [brainmob.real_name]"
 	update_icon()
