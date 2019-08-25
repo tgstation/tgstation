@@ -162,13 +162,6 @@
 	/// bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
 	var/status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH
 
-/*	/// Can they be tracked by the AI?
-	var/digitalcamo = 0
-	///Are they ivisible to the AI?
-	var/digitalinvis = 0
-	///what does the AI see instead of them?
-	var/image/digitaldisguise = null*/
-
 	/// Can they interact with station electronics
 	var/has_unlimited_silicon_privilege = 0
 
