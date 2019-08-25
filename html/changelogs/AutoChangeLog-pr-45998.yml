@@ -1,4 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - bugfix: "replaced the pubby outlet injector with the correct type so it expels gasses at the correct rate"
