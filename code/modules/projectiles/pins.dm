@@ -68,7 +68,6 @@
 			qdel(gun)
 
 
-
 /obj/item/firing_pin/magic
 	name = "magic crystal shard"
 	desc = "A small enchanted shard which allows magical weapons to fire."

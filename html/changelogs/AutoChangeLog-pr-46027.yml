@@ -1,6 +1,0 @@
-author: "TheChosenEvilOne"
-delete-after: True
-changes: 
-  - bugfix: "Midround rulesets can again be executed."
-  - bugfix: "Revolution ruleset has been fixed."
-  - code_imp: "Replaced the delayed ruleset type with a delay var."

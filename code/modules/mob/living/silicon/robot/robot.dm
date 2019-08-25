@@ -135,6 +135,7 @@
 	else if(!mmi || !mmi.brainmob)
 		mmi = new (src)
 		mmi.brain = new /obj/item/organ/brain(mmi)
+		mmi.brain.organ_flags |= ORGAN_FROZEN
 		mmi.brain.name = "[real_name]'s brain"
 		mmi.name = "[initial(mmi.name)]: [real_name]"
 		mmi.brainmob = new(mmi)

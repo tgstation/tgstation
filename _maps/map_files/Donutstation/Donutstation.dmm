@@ -12901,7 +12901,7 @@
 	pixel_y = 3
 	},
 /obj/item/storage/firstaid/regular,
-/obj/item/reagent_containers/glass/bottle/charcoal,
+/obj/item/reagent_containers/glass/bottle/multiver,
 /obj/item/reagent_containers/glass/bottle/epinephrine,
 /obj/item/reagent_containers/syringe,
 /turf/open/floor/plasteel/white,
@@ -14590,7 +14590,7 @@
 /area/medical/surgery)
 "aKl" = (
 /obj/structure/closet/crate/freezer/surplus_limbs,
-/obj/item/reagent_containers/glass/beaker/synthflesh,
+/obj/item/reagent_containers/glass/beaker/instabitaluri,
 /turf/open/floor/plasteel/white/side{
 	dir = 8
 	},
