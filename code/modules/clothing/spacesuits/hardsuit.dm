@@ -790,22 +790,23 @@
 	shield_state = "shield-red"
 	shield_on = "shield-red"
 
-/obj/item/clothing/suit/space/hardsuit/shielded/syndi/attackby(obj/item/W, mob/living/user, params)
-	if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(shield_state == "shield-red")
-			shield_state = "shield-old"
-			shield_on = "shield-old"
-			to_chat(user, "<span class='warning'>You roll back the hardsuit's software, changing the shield's color!</span>")
-			user.update_inv_wear_suit()
-
-		else
-			shield_state = "shield-red"
-			shield_on = "shield-red"
-			to_chat(user, "<span class='warning'>You update the hardsuit's hardware, changing back the shield's color to red.</span>")
-			user.update_inv_wear_suit()
+/obj/item/clothing/suit/space/hardsuit/shielded/syndi/multitool_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(shield_state == "broken")
+		to_chat(user, "<span class='warning'>You can't interface with the hardsuit's software if the shield's broken!</span>")
+		return
+	
+	if(shield_state == "shield-red")
+		shield_state = "shield-old"
+		shield_on = "shield-old"
+		to_chat(user, "<span class='warning'>You roll back the hardsuit's software, changing the shield's color!</span>")
+		user.update_inv_wear_suit()
 
 	else
-		return ..()
+		shield_state = "shield-red"
+		shield_on = "shield-red"
+		to_chat(user, "<span class='warning'>You update the hardsuit's hardware, changing back the shield's color to red.</span>")
+	user.update_inv_wear_suit()
 
 /obj/item/clothing/suit/space/hardsuit/shielded/syndi/Initialize()
 	jetpack = new /obj/item/tank/jetpack/suit(src)
