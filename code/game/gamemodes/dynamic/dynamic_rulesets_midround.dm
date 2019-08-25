@@ -44,7 +44,7 @@
 				candidates.Remove(M)
 				continue
 		else
-			if(!antag_flag in M.client.prefs.be_special || is_banned_from(M.ckey, list(antag_flag, ROLE_SYNDICATE)))
+			if(!(antag_flag in M.client.prefs.be_special) || is_banned_from(M.ckey, list(antag_flag, ROLE_SYNDICATE)))
 				candidates.Remove(M)
 				continue
 		if (M.mind)
