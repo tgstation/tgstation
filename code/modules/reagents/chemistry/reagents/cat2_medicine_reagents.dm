@@ -9,7 +9,7 @@
 	name = "Sanobital"
 	description = "A unique medicine that heals bruises, scaling with the rate at which one is bleeding out. Dilates blood streams, increasing the amount of blood lost. Overdosing further increases blood loss."
 	color = "#ECEC8D" // rgb: 236	236	141
-	taste_description = "whatever vampires would eat"
+	taste_description = "tastes like copper"
 	overdose_threshold = 35
 	reagent_state = SOLID
 
