@@ -451,7 +451,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		to_chat(user, "<span class='warning'>You cannot saw-off \the [src] with \the [bayonet] attached!</span>")
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message("[user] begins to shorten \the [src].", "<span class='notice'>You begin to shorten \the [src]...</span>")
+	user.visible_message("<span class='notice'>[user] begins to shorten \the [src].</span>", "<span class='notice'>You begin to shorten \the [src]...</span>")
 
 	//if there's any live ammo inside the gun, makes it go off
 	if(blow_up(user))
@@ -461,7 +461,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	if(do_after(user, 30, target = src))
 		if(sawn_off)
 			return
-		user.visible_message("[user] shortens \the [src]!", "<span class='notice'>You shorten \the [src].</span>")
+		user.visible_message("<span class='notice'>[user] shortens \the [src]!</span>", "<span class='notice'>You shorten \the [src].</span>")
 		name = "sawn-off [src.name]"
 		desc = sawn_desc
 		w_class = WEIGHT_CLASS_NORMAL

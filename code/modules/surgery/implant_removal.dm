@@ -18,18 +18,18 @@
 		break
 	if(I)
 		display_results(user, target, "<span class='notice'>You begin to extract [I] from [target]'s [target_zone]...</span>",
-			"[user] begins to extract [I] from [target]'s [target_zone].",
-			"[user] begins to extract something from [target]'s [target_zone].")
+			"<span class='notice'>[user] begins to extract [I] from [target]'s [target_zone].</span>",
+			"<span class='notice'>[user] begins to extract something from [target]'s [target_zone].</span>")
 	else
 		display_results(user, target, "<span class='notice'>You look for an implant in [target]'s [target_zone]...</span>",
-			"[user] looks for an implant in [target]'s [target_zone].",
-			"[user] looks for something in [target]'s [target_zone].")
+			"<span class='notice'>[user] looks for an implant in [target]'s [target_zone].</span>",
+			"<span class='notice'>[user] looks for something in [target]'s [target_zone].</span>")
 
 /datum/surgery_step/extract_implant/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(I)
 		display_results(user, target, "<span class='notice'>You successfully remove [I] from [target]'s [target_zone].</span>",
-			"[user] successfully removes [I] from [target]'s [target_zone]!",
-			"[user] successfully removes something from [target]'s [target_zone]!")
+			"<span class='notice'>[user] successfully removes [I] from [target]'s [target_zone]!</span>",
+			"<span class='notice'>[user] successfully removes something from [target]'s [target_zone]!</span>")
 		I.removed(target)
 
 		var/obj/item/implantcase/case
@@ -43,8 +43,8 @@
 			I.forceMove(case)
 			case.update_icon()
 			display_results(user, target, "<span class='notice'>You place [I] into [case].</span>",
-				"[user] places [I] into [case]!",
-				"[user] places it into [case]!")
+				"<span class='notice'>[user] places [I] into [case]!</span>",
+				"<span class='notice'>[user] places it into [case]!</span>")
 		else
 			qdel(I)
 

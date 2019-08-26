@@ -171,7 +171,7 @@
 			if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state)
 				return 0
 			if(user.a_intent != INTENT_GRAB)
-				to_chat(user, "<span class='warning'>You must be on grab intent to upgrade your grab further!<span>")
+				to_chat(user, "<span class='warning'>You must be on grab intent to upgrade your grab further!</span>")
 				return 0
 		user.grab_state++
 		switch(user.grab_state)
@@ -313,6 +313,13 @@
 		if("disarm")
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			return TRUE
+
+/mob/living/attack_hulk(mob/living/carbon/human/user)
+	..()
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You don't want to hurt [src]!</span>")
+		return FALSE
+	return TRUE
 
 /mob/living/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))

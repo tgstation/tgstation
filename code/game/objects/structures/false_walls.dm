@@ -110,14 +110,11 @@
 	else if(W.tool_behaviour == TOOL_WELDER)
 		if(W.use_tool(src, user, 0, volume=50))
 			dismantle(user, TRUE)
-	else if(istype(W, /obj/item/pickaxe/drill/jackhammer))
-		W.play_tool_sound(src)
-		dismantle(user, TRUE)
 	else
 		return ..()
 
 /obj/structure/falsewall/proc/dismantle(mob/user, disassembled=TRUE, obj/item/tool = null)
-	user.visible_message("[user] dismantles the false wall.", "<span class='notice'>You dismantle the false wall.</span>")
+	user.visible_message("<span class='notice'>[user] dismantles the false wall.</span>", "<span class='notice'>You dismantle the false wall.</span>")
 	if(tool)
 		tool.play_tool_sound(src, 100)
 	else

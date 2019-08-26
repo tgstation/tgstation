@@ -14,7 +14,7 @@
 
 /datum/symptom/undead_adaptation/OnRemove(datum/disease/advance/A)
 	A.process_dead = FALSE
-	A.infectable_biotypes -= MOB_UNDEAD
+	A.infectable_biotypes &= ~MOB_UNDEAD
 
 /datum/symptom/inorganic_adaptation
 	name = "Inorganic Biology"
@@ -27,8 +27,8 @@
 	severity = 0
 
 /datum/symptom/inorganic_adaptation/OnAdd(datum/disease/advance/A)
-	A.infectable_biotypes |= MOB_INORGANIC
+	A.infectable_biotypes |= MOB_MINERAL //Mineral covers plasmamen and golems.
 
 /datum/symptom/inorganic_adaptation/OnRemove(datum/disease/advance/A)
-	A.infectable_biotypes -= MOB_INORGANIC
+	A.infectable_biotypes &= ~MOB_MINERAL
 

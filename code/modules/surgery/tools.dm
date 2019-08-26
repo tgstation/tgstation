@@ -3,6 +3,9 @@
 	desc = "Retracts stuff."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	item_state = "clamps"
 	materials = list(/datum/material/iron=6000, /datum/material/glass=3000)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
@@ -24,6 +27,9 @@
 	desc = "You think you have seen this before."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	item_state = "clamps"
 	materials = list(/datum/material/iron=5000, /datum/material/glass=2500)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
@@ -47,6 +53,9 @@
 	desc = "This stops bleeding."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	item_state = "cautery"
 	materials = list(/datum/material/iron=2500, /datum/material/glass=750)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
@@ -101,6 +110,7 @@
 	icon_state = "scalpel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	item_state = "scalpel"
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 
@@ -185,6 +195,9 @@
 	desc = "Nanotrasen brand surgical drapes provide optimal safety and infection control."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "surgical_drapes"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	item_state = "drapes"
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("slapped")
 
@@ -210,7 +223,7 @@
 		to_chat(user, "<span class='notice'>[src] can only hold body parts!</span>")
 		return
 
-	user.visible_message("[user] puts [I] into [src].", "<span class='notice'>You put [I] inside [src].</span>")
+	user.visible_message("<span class='notice'>[user] puts [I] into [src].</span>", "<span class='notice'>You put [I] inside [src].</span>")
 	icon_state = "evidence"
 	var/xx = I.pixel_x
 	var/yy = I.pixel_y
@@ -229,7 +242,7 @@
 /obj/item/organ_storage/attack_self(mob/user)
 	if(contents.len)
 		var/obj/item/I = contents[1]
-		user.visible_message("[user] dumps [I] from [src].", "<span class='notice'>You dump [I] from [src].</span>")
+		user.visible_message("<span class='notice'>[user] dumps [I] from [src].</span>", "<span class='notice'>You dump [I] from [src].</span>")
 		cut_overlays()
 		I.forceMove(get_turf(src))
 		icon_state = "evidenceobj"

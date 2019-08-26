@@ -9,7 +9,7 @@
 	mind_control_duration = 3000
 
 /obj/item/organ/heart/gland/heal/activate()
-	if(!MOB_ORGANIC in owner.mob_biotypes)
+	if(!(owner.mob_biotypes & MOB_ORGANIC))
 		return
 
 	for(var/organ in owner.internal_organs)
@@ -76,7 +76,7 @@
 		liver.forceMove(owner.drop_location())
 	else
 		to_chat(owner, "<span class='warning'>You feel a weird rumble in your bowels...</span>")
-	
+
 	var/liver_type = /obj/item/organ/liver
 	if(owner?.dna?.species?.mutantliver)
 		liver_type = owner.dna.species.mutantliver
@@ -91,7 +91,7 @@
 		lungs.forceMove(owner.drop_location())
 	else
 		to_chat(owner, "<span class='warning'>You feel a weird rumble inside your chest...</span>")
-	
+
 	var/lung_type = /obj/item/organ/lungs
 	if(owner.dna.species && owner.dna.species.mutantlungs)
 		lung_type = owner.dna.species.mutantlungs
@@ -126,9 +126,9 @@
 		to_chat(owner, "<span class='warning'>You feel a weird tingle in your [parse_zone(body_zone)]... even if you don't have one.</span>")
 
 	addtimer(CALLBACK(src, .proc/finish_replace_limb, body_zone), rand(150, 300))
-	
+
 /obj/item/organ/heart/gland/heal/proc/finish_replace_limb(body_zone)
-	owner.visible_message("<span class='warning'>With a loud snap, [owner]'s [parse_zone(body_zone)] rapidly grows back from [owner.p_their()] body!</span>", 
+	owner.visible_message("<span class='warning'>With a loud snap, [owner]'s [parse_zone(body_zone)] rapidly grows back from [owner.p_their()] body!</span>",
 	"<span class='userdanger'>With a loud snap, your [parse_zone(body_zone)] rapidly grows back from your body!</span>",
 	"<span class='warning'>Your hear a loud snap.</span>")
 	playsound(owner, 'sound/magic/demon_consume.ogg', 50, 1)

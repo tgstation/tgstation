@@ -78,7 +78,7 @@
 			if(!O.tool_start_check(user, amount=0))
 				return
 
-			user.visible_message("[user] begins repairing [src].", \
+			user.visible_message("<span class='notice'>[user] begins repairing [src].</span>", \
 				"<span class='notice'>You begin repairing [src]...</span>", \
 				"<span class='italics'>You hear welding.</span>")
 

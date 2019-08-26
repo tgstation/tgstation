@@ -51,7 +51,7 @@
 		var/mob/living/brain/B = newbrain.brainmob
 		if(!B.key)
 			B.notify_ghost_cloning("Someone has put your brain in a MMI!", source = src)
-		user.visible_message("[user] sticks \a [newbrain] into [src].", "<span class='notice'>[src]'s indicator light turn on as you insert [newbrain].</span>")
+		user.visible_message("<span class='notice'>[user] sticks \a [newbrain] into [src].</span>", "<span class='notice'>[src]'s indicator light turn on as you insert [newbrain].</span>")
 
 		brainmob = newbrain.brainmob
 		newbrain.brainmob = null
@@ -71,6 +71,7 @@
 
 		brainmob.reset_perspective()
 		brain = newbrain
+		brain.organ_flags |= ORGAN_FROZEN
 
 		name = "[initial(name)]: [brainmob.real_name]"
 		update_icon()
@@ -107,6 +108,7 @@
 		user.put_in_hands(brain) //puts brain in the user's hand or otherwise drops it on the user's turf
 	else
 		brain.forceMove(get_turf(src))
+	brain.organ_flags &= ~ORGAN_FROZEN
 	brain = null //No more brain in here
 
 
@@ -130,6 +132,7 @@
 	else if(!brain)
 		brain = new(src)
 		brain.name = "[L.real_name]'s brain"
+	brain.organ_flags |= ORGAN_FROZEN
 
 	name = "[initial(name)]: [brainmob.real_name]"
 	update_icon()

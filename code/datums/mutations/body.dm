@@ -93,14 +93,14 @@
 	if(..())
 		return
 	owner.transform = owner.transform.Scale(1, 0.8)
-	owner.pass_flags |= PASSTABLE
+	passtable_on(owner, GENETIC_MUTATION)
 	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>", "<span class='notice'>Everything around you seems to grow..</span>")
 
 /datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	owner.transform = owner.transform.Scale(1, 1.25)
-	owner.pass_flags &= ~PASSTABLE
+	passtable_off(owner, GENETIC_MUTATION)
 	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>", "<span class='notice'>Everything around you seems to shrink..</span>")
 
 

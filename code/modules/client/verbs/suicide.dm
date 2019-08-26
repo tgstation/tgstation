@@ -21,13 +21,6 @@
 		if(mmi.brainmob)
 			mmi.brainmob.suiciding = suicide_state
 
-/mob/living/carbon/human/virtual_reality/set_suicide(suicide_state)
-	return
-
-/mob/living/carbon/human/virtual_reality/canSuicide()
-	to_chat(src, "<span class='warning'>I'm sorry [first_name()], I'm afraid you can't do that.</span>")
-	return
-
 /mob/living/carbon/human/verb/suicide()
 	set hidden = 1
 	if(!canSuicide())

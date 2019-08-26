@@ -40,8 +40,8 @@
 		var/datum/surgery/healing/the_surgery = surgery
 		if(!the_surgery.antispam)
 			display_results(user, target, "<span class='notice'>You attempt to patch some of [target]'s [woundtype].</span>",
-		"[user] attempts to patch some of [target]'s [woundtype].",
-		"[user] attempts to patch some of [target]'s [woundtype].")
+		"<span class='notice'>[user] attempts to patch some of [target]'s [woundtype].</span>",
+		"<span class='notice'>[user] attempts to patch some of [target]'s [woundtype].</span>")
 
 /datum/surgery_step/heal/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	if(..())
@@ -51,8 +51,8 @@
 
 /datum/surgery_step/heal/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You succeed in fixing some of [target]'s wounds.</span>",
-		"[user] fixes some of [target]'s wounds.",
-		"[user] fixes some of [target]'s wounds.")
+		"<span class='notice'>[user] fixes some of [target]'s wounds.</span>",
+		"<span class='notice'>[user] fixes some of [target]'s wounds.</span>")
 	target.heal_bodypart_damage(brutehealing,burnhealing)
 	if(istype(surgery, /datum/surgery/healing))
 		var/datum/surgery/healing/the_surgery = surgery
@@ -61,8 +61,8 @@
 
 /datum/surgery_step/heal/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='warning'>You screwed up!</span>",
-		"[user] screws up!",
-		"[user] fixes some of [target]'s wounds.", TRUE)
+		"<span class='warning'>[user] screws up!</span>",
+		"<span class='notice'>[user] fixes some of [target]'s wounds.</span>", TRUE)
 	target.take_bodypart_damage(5,0)
 	return FALSE
 

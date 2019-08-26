@@ -50,7 +50,7 @@
 			location = get_turf(target)
 			target.cut_overlay(plastic_overlay, TRUE)
 			if(!ismob(target) || full_damage_on_mobs)
-				target.ex_act(2, target)
+				target.ex_act(EXPLODE_HEAVY, target)
 	else
 		location = get_turf(src)
 	if(location)
@@ -66,7 +66,11 @@
 	prime()
 
 /obj/item/grenade/c4/attack_self(mob/user)
-	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
+	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num|null
+	
+	if (isnull(newtime))
+		return
+
 	if(user.get_active_held_item() == src)
 		newtime = CLAMP(newtime, 10, 60000)
 		det_time = newtime

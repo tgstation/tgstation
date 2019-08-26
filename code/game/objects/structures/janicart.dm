@@ -80,7 +80,7 @@
 	else if(mybag)
 		mybag.attackby(I, user)
 	else if(I.tool_behaviour == TOOL_CROWBAR)
-		user.visible_message("[user] begins to empty the contents of [src].", "<span class='notice'>You begin to empty the contents of [src]...</span>")
+		user.visible_message("<span class='notice'>[user] begins to empty the contents of [src].</span>", "<span class='notice'>You begin to empty the contents of [src]...</span>")
 		if(I.use_tool(src, user, 30))
 			to_chat(usr, "<span class='notice'>You empty the contents of [src]'s bucket onto the floor.</span>")
 			reagents.reaction(src.loc)
@@ -164,4 +164,3 @@
 		add_overlay("cart_sign[signs]")
 	if(reagents.total_volume > 0)
 		add_overlay("cart_water")
-

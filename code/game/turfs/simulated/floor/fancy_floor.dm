@@ -90,7 +90,7 @@
 /turf/open/floor/grass/attackby(obj/item/C, mob/user, params)
 	if((C.tool_behaviour == TOOL_SHOVEL) && params)
 		new ore_type(src, 2)
-		user.visible_message("[user] digs up [src].", "<span class='notice'>You [turfverb] [src].</span>")
+		user.visible_message("<span class='notice'>[user] digs up [src].</span>", "<span class='notice'>You [turfverb] [src].</span>")
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
 		make_plating()
 	if(..())
@@ -125,7 +125,7 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "basalt"
 	ore_type = /obj/item/stack/ore/glass/basalt
-	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	slowdown = 0
 
 /turf/open/floor/grass/snow/basalt/Initialize()

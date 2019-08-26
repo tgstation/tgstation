@@ -229,7 +229,7 @@
 	foodtype = RAW | MEAT | TOXIC
 
 /obj/item/reagent_containers/food/snacks/meat/slab/goliath/burn()
-	visible_message("[src] finishes cooking!")
+	visible_message("<span class='notice'>[src] finishes cooking!</span>")
 	new /obj/item/reagent_containers/food/snacks/meat/steak/goliath(loc)
 	qdel(src)
 

@@ -10,8 +10,8 @@
 
 	if(!IS_IN_STASIS(src))
 
-		if(stat != DEAD) //Reagent processing needs to come before breathing, to prevent edge cases.
-			handle_organs()
+		//Reagent processing needs to come before breathing, to prevent edge cases.
+		handle_organs()
 
 		. = ..()
 
@@ -87,7 +87,7 @@
 	var/datum/gas_mixture/breath
 
 	if(!getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL) || HAS_TRAIT(src, TRAIT_MAGIC_CHOKE) || lungs.organ_flags & ORGAN_FAILING)
+		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL) || HAS_TRAIT(src, TRAIT_MAGIC_CHOKE) || (lungs && lungs.organ_flags & ORGAN_FAILING))
 			losebreath++  //You can't breath at all when in critical or when being choked, so you're going to miss a breath
 
 		else if(health <= crit_threshold)
@@ -333,9 +333,14 @@
 			. |= BP.on_life(stam_regen)
 
 /mob/living/carbon/proc/handle_organs()
-	for(var/V in internal_organs)
-		var/obj/item/organ/O = V
-		O.on_life()
+	if(stat != DEAD)
+		for(var/V in internal_organs)
+			var/obj/item/organ/O = V
+			O.on_life()
+	else
+		for(var/V in internal_organs)
+			var/obj/item/organ/O = V
+			O.on_death() //Needed so organs decay while inside the body.
 
 /mob/living/carbon/handle_diseases()
 	for(var/thing in diseases)
