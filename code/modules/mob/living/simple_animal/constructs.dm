@@ -3,7 +3,7 @@
 	real_name = "Construct"
 	desc = ""
 	gender = NEUTER
-	mob_biotypes = list(MOB_INORGANIC)
+	mob_biotypes = NONE
 	speak_emote = list("hisses")
 	response_help  = "thinks better of touching"
 	response_disarm = "flails at"
@@ -177,7 +177,7 @@
 /mob/living/simple_animal/hostile/construct/armored/angelic
 	icon_state = "behemoth_angelic"
 	icon_living = "behemoth_angelic"
-	holy = TRUE	
+	holy = TRUE
 	loot = list(/obj/item/ectoplasm/angelic)
 
 /mob/living/simple_animal/hostile/construct/armored/noncult

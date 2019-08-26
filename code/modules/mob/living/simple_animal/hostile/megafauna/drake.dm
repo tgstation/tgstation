@@ -190,7 +190,7 @@ Difficulty: Medium
 		if(istype(T, /turf/open/indestructible))
 			continue
 		if(!istype(T, /turf/closed/indestructible))
-			T.ChangeTurf(/turf/open/floor/plating/asteroid/basalt/lava_land_surface)
+			T.ChangeTurf(/turf/open/floor/plating/asteroid/basalt/lava_land_surface, flags = CHANGETURF_INHERIT_AIR)
 		else
 			indestructible_turfs += T
 	SLEEP_CHECK_DEATH(10) // give them a bit of time to realize what attack is actually happening
@@ -446,9 +446,9 @@ Difficulty: Medium
 	if(!istype(T, /turf/closed) && !istype(T, /turf/open/lava))
 		var/lava_turf = /turf/open/lava/smooth
 		var/reset_turf = T.type
-		T.ChangeTurf(lava_turf)
+		T.ChangeTurf(lava_turf, flags = CHANGETURF_INHERIT_AIR)
 		sleep(reset_time)
-		T.ChangeTurf(reset_turf)
+		T.ChangeTurf(reset_turf, flags = CHANGETURF_INHERIT_AIR)
 
 /obj/effect/temp_visual/drakewall
 	desc = "An ash drakes true flame."

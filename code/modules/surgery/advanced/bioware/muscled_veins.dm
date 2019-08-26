@@ -18,13 +18,13 @@
 
 /datum/surgery_step/muscled_veins/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You start wrapping muscles around [target]'s circulatory system.</span>",
-		"[user] starts wrapping muscles around [target]'s circulatory system.",
-		"[user] starts manipulating [target]'s circulatory system.")
+		"<span class='notice'>[user] starts wrapping muscles around [target]'s circulatory system.</span>",
+		"<span class='notice'>[user] starts manipulating [target]'s circulatory system.</span>")
 
 /datum/surgery_step/muscled_veins/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You reshape [target]'s circulatory system, adding a muscled membrane!</span>",
-		"[user] reshapes [target]'s circulatory system, adding a muscled membrane!",
-		"[user] finishes manipulating [target]'s circulatory system.")
+		"<span class='notice'>[user] reshapes [target]'s circulatory system, adding a muscled membrane!</span>",
+		"<span class='notice'>[user] finishes manipulating [target]'s circulatory system.</span>")
 	new /datum/bioware/muscled_veins(target)
 	return TRUE
 

@@ -72,7 +72,13 @@ FROM dm_base
 EXPOSE 1337
 
 RUN apt-get update \
+    && apt-get install -y --no-install-recommends software-properties-common \
+    && add-apt-repository ppa:ubuntu-toolchain-r/test \
+    && apt-get update \
+    && apt-get upgrade -y \
+    && apt-get dist-upgrade -y \
     && apt-get install -y --no-install-recommends \
+    libmariadb2 \
     mariadb-client \
     libssl1.0.0 \
     && rm -rf /var/lib/apt/lists/* \

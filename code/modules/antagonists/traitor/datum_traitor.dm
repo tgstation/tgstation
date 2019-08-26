@@ -53,7 +53,7 @@
 	UnregisterSignal(owner.current, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
 	SSticker.mode.traitors -= owner
 	if(!silent && owner.current)
-		to_chat(owner.current,"<span class='userdanger'> You are no longer the [special_role]! </span>")
+		to_chat(owner.current,"<span class='userdanger'>You are no longer the [special_role]!</span>")
 	owner.special_role = null
 	..()
 
@@ -385,7 +385,7 @@
 	/// Get all the icons/total cost for all our items bought
 	for (var/datum/contractor_item/contractor_purchase in contractor_hub.purchased_items)
 		contractor_item_icons += "<span class='tooltip_container'>\[ <i class=\"fas [contractor_purchase.item_icon]\"></i><span class='tooltip_hover'><b>[contractor_purchase.name] - [contractor_purchase.cost] Rep</b><br><br>[contractor_purchase.desc]</span> \]</span>"
-		
+
 		total_spent_rep += contractor_purchase.cost
 
 		/// Special case for reinforcements, we want to show their ckey and name on round end.

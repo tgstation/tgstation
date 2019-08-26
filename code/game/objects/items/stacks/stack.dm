@@ -195,7 +195,7 @@
 			var/turf/T = usr.drop_location()
 			if(!isturf(T))
 				return
-			T.PlaceOnTop(R.result_type)
+			T.PlaceOnTop(R.result_type, flags = CHANGETURF_INHERIT_AIR)
 		else
 			O = new R.result_type(usr.drop_location())
 		if(O)
@@ -213,8 +213,7 @@
 
 		else if(istype(O, /obj/item/restraints/handcuffs/cable))
 			var/obj/item/cuffs = O
-			cuffs.item_color = item_color
-			cuffs.update_icon()
+			cuffs.color = color
 
 		if (QDELETED(O))
 			return //It's a stack and has already been merged

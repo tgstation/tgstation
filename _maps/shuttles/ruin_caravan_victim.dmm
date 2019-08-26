@@ -853,9 +853,6 @@
 /obj/item/folder/yellow{
 	pixel_x = -6
 	},
-/obj/item/gps{
-	gpstag = "Distress Signal"
-	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
