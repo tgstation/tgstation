@@ -43567,7 +43567,6 @@
 /area/engine/engineering)
 "cfT" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 1
 	},
@@ -43577,6 +43576,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cfV" = (
@@ -48968,9 +48968,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "dir" = (
@@ -50066,7 +50064,6 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "gkz" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
@@ -51127,6 +51124,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "iCV" = (
@@ -53103,10 +53101,10 @@
 	},
 /area/maintenance/department/science)
 "nAs" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8
-	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "nBw" = (
@@ -54241,9 +54239,8 @@
 /turf/closed/wall,
 /area/crew_quarters/bar)
 "qbp" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -55585,7 +55582,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
-/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "tIT" = (
@@ -56008,8 +56005,8 @@
 /area/science/explab)
 "uBs" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
+/obj/machinery/meter,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "uCS" = (
@@ -56739,8 +56736,8 @@
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "wza" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -86933,7 +86930,7 @@ nAs
 cfT
 uBs
 gkz
-qbp
+sWj
 bXk
 bXk
 bXk
@@ -87443,7 +87440,7 @@ xsB
 orZ
 qFu
 cet
-ulY
+qbp
 cfV
 cgu
 cgU
