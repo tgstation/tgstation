@@ -10,6 +10,7 @@
 	possible_locs = list(BODY_ZONE_CHEST)
 	requires_bodypart_type = 0
 	replaced_by = /datum/surgery
+	ignore_clothes = TRUE
 	var/healing_step_type
 	var/antispam = FALSE
 
@@ -53,7 +54,10 @@
 	display_results(user, target, "<span class='notice'>You succeed in fixing some of [target]'s wounds.</span>",
 		"[user] fixes some of [target]'s wounds.",
 		"[user] fixes some of [target]'s wounds.")
-	target.heal_bodypart_damage(brutehealing,burnhealing)
+	if(get_location_accessible(target, target_zone))
+		target.heal_bodypart_damage(brutehealing,burnhealing)
+	else
+		target.heal_bodypart_damage(brutehealing*0.85,burnhealing*0.85) //15% less healing if with clothes.
 	if(istype(surgery, /datum/surgery/healing))
 		var/datum/surgery/healing/the_surgery = surgery
 		the_surgery.antispam = TRUE
