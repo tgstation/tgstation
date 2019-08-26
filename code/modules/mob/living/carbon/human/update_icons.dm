@@ -121,6 +121,9 @@ There are several things that need to be remembered:
 			t_color = U.icon_state
 		if(U.adjusted == ALT_STYLE)
 			t_color = "[t_color]_d"
+		else if(U.fulp_digisuit && DIGITIGRADE in src.dna.species.species_traits) //FULP - checks if eligable
+			t_color = "[t_color]_f" //FULP - appends a _f suffix
+			U.alternate_worn_icon = 'icons/mob/uniform_fulp.dmi' //FULP - points it to the _fulp dmi
 		else if(U.adjusted == DIGITIGRADE_STYLE)
 			t_color = "[t_color]_l"
 

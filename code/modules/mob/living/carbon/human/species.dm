@@ -620,7 +620,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			species_traits += DIGITIGRADE
 		var/should_be_squished = FALSE
 		if(H.wear_suit && ((H.wear_suit.flags_inv & HIDEJUMPSUIT) || (H.wear_suit.body_parts_covered & LEGS)) || (H.w_uniform && (H.w_uniform.body_parts_covered & LEGS)))
-			should_be_squished = TRUE
+			var/obj/item/clothing/under/leggyjumpsuit = H.w_uniform //FULP
+			if(leggyjumpsuit.mutantrace_variation == !MUTANTRACE_VARIATION) //FULP - excludes mutantrace clothes from forcing 'squished' legs
+				should_be_squished = TRUE //NOT FULP, but indented in fulpcode
 		if(O.use_digitigrade == FULL_DIGITIGRADE && should_be_squished)
 			O.use_digitigrade = SQUISHED_DIGITIGRADE
 			update_needed = TRUE
