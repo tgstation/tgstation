@@ -800,7 +800,6 @@
 		shield_state = "shield-old"
 		shield_on = "shield-old"
 		to_chat(user, "<span class='warning'>You roll back the hardsuit's software, changing the shield's color!</span>")
-		user.update_inv_wear_suit()
 
 	else
 		shield_state = "shield-red"
