@@ -20,6 +20,7 @@
 #include "code\modules\hydroponics\grown\kudzu.dm"
 #include "code\modules\hydroponics\grown\mushrooms.dm"
 #include "code\modules\reagents\chemistry\reagents\medicine_reagents.dm"
+#include "code\modules\reagents\chemistry\reagents\other_reagents.dm"
 #include "code\modules\reagents\chemistry\recipes\medicine.dm"
 #include "code\modules\reagents\chemistry\recipes\others.dm"
 #include "code\modules\reagents\chemistry\recipes\pyrotechnics.dm"

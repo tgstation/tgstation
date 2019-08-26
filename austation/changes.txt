@@ -8,3 +8,4 @@ Flatgub:Crew autotransfer vote
 Flatgub:Autosandbox and respawn
 Terra:TGS Bot now pings notification role but not for sandbox rounds
 Terra:Austation custom icon
+Terra:Australium reagent
