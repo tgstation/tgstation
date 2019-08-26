@@ -30,7 +30,9 @@
 		var/obj/item/clothing/CH = H.head
 		if (CS.clothing_flags & CH.clothing_flags & STOPSPRESSUREDAMAGE)
 			atmos_sealed = TRUE
-	if((!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman)) && !atmos_sealed)
+	if(!istype(H.head, /obj/item/clothing/head/beret/highlander) || !istype(H.w_uniform, /obj/item/clothing/under/costume/kilt/highlander))
+		return
+	if(!atmos_sealed && (!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman)))
 		if(environment)
 			if(environment.total_moles())
 				if(environment.gases[/datum/gas/oxygen] && (environment.gases[/datum/gas/oxygen][MOLES]) >= 1) //Same threshhold that extinguishes fire
