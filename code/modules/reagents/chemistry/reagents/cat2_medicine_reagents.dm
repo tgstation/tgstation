@@ -76,6 +76,7 @@
 
 /datum/reagent/medicine/C2/aiuri/on_mob_life(mob/living/carbon/M)
 	M.adjustFireLoss(-0.5*REM)
+	M.adjustOrganLoss(ORGAN_SLOT_EYES,0.25*REM)
 	..()
 	return TRUE
 
