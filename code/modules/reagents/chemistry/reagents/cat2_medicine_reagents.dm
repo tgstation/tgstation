@@ -75,8 +75,7 @@
 	var/message_cd = 0
 
 /datum/reagent/medicine/C2/aiuri/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss(-2.0*REM)
-	M.adjustOrganLoss(ORGAN_SLOT_EYES,1*REM)
+	M.adjustFireLoss(-0.5*REM)
 	..()
 	return TRUE
 
@@ -275,7 +274,7 @@
 		if(method in list(PATCH, TOUCH))
 			var/harmies = min(Carbies.getBruteLoss(),Carbies.adjustBruteLoss(-1.25 * reac_volume)*-1)
 			var/burnies = min(Carbies.getFireLoss(),Carbies.adjustFireLoss(-1.25 * reac_volume)*-1)
-			Carbies.adjustToxLoss((harmies+burnies)*0.50)
+			Carbies.adjustToxLoss((harmies+burnies)*0.66)
 			if(show_message)
 				to_chat(Carbies, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
 			SEND_SIGNAL(Carbies, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
