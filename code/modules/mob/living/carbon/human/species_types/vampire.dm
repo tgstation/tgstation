@@ -18,8 +18,8 @@
 
 /datum/species/vampire/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
-		return ENABLED
-	return ..(POSSIBLE)
+		return TRUE
+	return ..()
 
 /datum/species/vampire/on_species_gain(mob/living/carbon/human/C, datum/species/old_species)
 	. = ..()
