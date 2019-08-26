@@ -3872,7 +3872,7 @@
 /obj/item/reagent_containers/syringe{
 	name = "steel point"
 	},
-/obj/item/reagent_containers/glass/bottle/charcoal,
+/obj/item/reagent_containers/glass/bottle/multiver,
 /obj/item/reagent_containers/glass/bottle/epinephrine,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -19299,7 +19299,7 @@
 "aYm" = (
 /obj/structure/closet/crate/wooden/toy,
 /obj/item/lipstick/random,
-/obj/item/clothing/gloves/color/rainbow/clown,
+/obj/item/clothing/gloves/color/rainbow,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -33973,7 +33973,7 @@
 /area/medical/medbay/central)
 "bHb" = (
 /obj/structure/closet/crate/freezer/surplus_limbs,
-/obj/item/reagent_containers/glass/beaker/synthflesh,
+/obj/item/reagent_containers/glass/beaker/instabitaluri,
 /obj/machinery/newscaster/security_unit{
 	pixel_y = 32
 	},
@@ -39573,7 +39573,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "bUc" = (
-/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/canned/beans,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "bUd" = (
@@ -51004,10 +51004,8 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "imB" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1;
-	frequency = 1441;
-	id = "inc_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
