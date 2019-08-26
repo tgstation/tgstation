@@ -19,7 +19,7 @@
 	var/internal_fire = FALSE //If the bones themselves are burning clothes won't help you much
 	disliked_food = FRUIT
 	liked_food = VEGETABLES
-	changesource_flags = ADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
+	changesource_flags = ADMIN | MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	outfit_important_for_life = /datum/outfit/plasmaman
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)

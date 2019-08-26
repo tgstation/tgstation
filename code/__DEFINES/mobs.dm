@@ -291,19 +291,23 @@
 #define HUMAN_CARRY_SLOWDOWN 0.35
 
 //Flags that control what things can spawn species (whitelist)
-//Badmin magic mirror, VV dropdown menu. Basically things that only admins could spawn.
-#define ADMIN (1<<0)
+//no spawn, but tells the unit tests this can spawn from events. add it if they are enabled roundstart on holidays or other ways they are available
+#define EVENTRACE (1<<0)
+//VV dropdown menu
+#define ADMIN (1<<1)
+//Badmin magic mirror
+#define MIRROR_BADMIN (1<<2)
 //Standard magic mirror (wizard)
-#define MIRROR_MAGIC  (1<<1)
+#define MIRROR_MAGIC  (1<<3)
 //Pride ruin mirror
-#define MIRROR_PRIDE  (1<<2)
+#define MIRROR_PRIDE  (1<<4)
 //Race swap wizard event
-#define RACE_SWAP     (1<<3)
+#define RACE_SWAP     (1<<5)
 //ERT spawn template (avoid races that don't function without correct gear)
-#define ERT_SPAWN     (1<<4)
+#define ERT_SPAWN     (1<<6)
 //xenobio black crossbreed
-#define SLIME_EXTRACT (1<<5)
+#define SLIME_EXTRACT (1<<7)
 //Wabbacjack staff projectiles
-#define WABBAJACK     (1<<6)
+#define WABBAJACK     (1<<8)
 
 #define SLEEP_CHECK_DEATH(X) sleep(X); if(QDELETED(src) || stat == DEAD) return;

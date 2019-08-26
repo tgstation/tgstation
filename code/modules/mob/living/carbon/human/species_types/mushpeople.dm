@@ -3,7 +3,7 @@
 	id = "mush"
 	mutant_bodyparts = list("caps")
 	default_features = list("caps" = "Round")
-	changesource_flags = ADMIN | WABBAJACK | ERT_SPAWN
+	changesource_flags = ADMIN | MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 	fixed_mut_color = "DBBF92"
 	hair_color = "FF4B19" //cap color, spot color uses eye color

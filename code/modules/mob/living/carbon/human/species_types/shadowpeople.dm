@@ -10,7 +10,7 @@
 	species_traits = list(NOBLOOD,NOEYESPRITES,NOFLASH)
 	inherent_traits = list(TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_NOBREATH)
 	inherent_factions = list("faithless")
-	changesource_flags = ADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
+	changesource_flags = EVENTRACE | ADMIN | MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	mutanteyes = /obj/item/organ/eyes/night_vision
 
 
@@ -25,6 +25,8 @@
 			H.heal_overall_damage(1,1, 0, BODYPART_ORGANIC)
 
 /datum/species/shadow/check_roundstart_eligible()
+	if(istype(src, /datum/species/shadow/nightmare))
+		return ..()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
 		return TRUE
 	return ..()
@@ -37,6 +39,7 @@
 	no_equip = list(SLOT_WEAR_MASK, SLOT_WEAR_SUIT, SLOT_GLOVES, SLOT_SHOES, SLOT_W_UNIFORM, SLOT_S_STORE)
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NO_DNA_COPY,NOTRANSSTING,NOEYESPRITES,NOFLASH)
 	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_NOBREATH,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOHUNGER)
+	changesource_flags = ADMIN | MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC //not an eventrace
 	mutanteyes = /obj/item/organ/eyes/night_vision/nightmare
 	mutant_organs = list(/obj/item/organ/heart/nightmare)
 	mutant_brain = /obj/item/organ/brain/nightmare
@@ -61,7 +64,7 @@
 	return ..()
 
 /datum/species/shadow/nightmare/check_roundstart_eligible()
-	return .....()
+	return ..()
 
 //Organs
 

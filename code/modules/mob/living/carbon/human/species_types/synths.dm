@@ -13,7 +13,7 @@
 	var/datum/species/fake_species //a species to do most of our work for us, unless we're damaged
 	var/list/initial_species_traits //for getting these values back for assume_disguise()
 	var/list/initial_inherent_traits
-	changesource_flags = ADMIN | WABBAJACK
+	changesource_flags = ADMIN | MIRROR_BADMIN | WABBAJACK
 
 /datum/species/synth/New()
 	initial_species_traits = species_traits.Copy()
