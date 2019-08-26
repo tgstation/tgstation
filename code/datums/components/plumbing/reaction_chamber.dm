@@ -15,26 +15,20 @@
 
 /datum/component/plumbing/reaction_chamber/send_request(dir)
 	var/obj/machinery/plumbing/reaction_chamber/RC = parent
-	if(RC.emptying)
+	if(RC.emptying || !LAZYLEN(RC.required_reagents))
 		return
 	for(var/RT in RC.required_reagents)
-		to_chat(world, "1-[RT]")
-		var/succes = FALSE
+		var/has_reagent = FALSE
 		for(var/A in reagents.reagent_list)
-			to_chat(world, "2-[RT]")
 			var/datum/reagent/RD = A
 			if(RT == RD.type)
-				to_chat(world, "3-[RT]-[succes]")
-				succes = TRUE
-				if(RC.required_reagents[RT] < RD.volume)
-					to_chat(world, "4-[RT]-[succes]")
+				has_reagent = TRUE
+				if(RD.volume < RC.required_reagents[RT])
 					process_request(min(RC.required_reagents[RT] - RD.volume, MACHINE_REAGENT_TRANSFER) , RT, dir)
 					return
-		if(!succes)
-			to_chat(world, "5-[RT]-[succes]")
+		if(!has_reagent)
 			process_request(min(RC.required_reagents[RT], MACHINE_REAGENT_TRANSFER), RT, dir)
 			return
-
 	reagents.flags &= ~NO_REACT
 	RC.emptying = TRUE
 
