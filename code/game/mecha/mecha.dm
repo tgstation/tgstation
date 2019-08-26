@@ -558,7 +558,7 @@
 		return 0
 	if(zoom_mode)
 		if(world.time - last_message > 20)
-			occupant_message("Unable to move while in zoom mode.")
+			occupant_message("<span class='warning'>Unable to move while in zoom mode!</span>")
 			last_message = world.time
 		return 0
 
@@ -866,7 +866,7 @@
 		log_message("Permission denied (Attached mobs).", LOG_MECHA)
 		return
 
-	visible_message("[user] starts to climb into [name].")
+	visible_message("<span class='notice'>[user] starts to climb into [name].</span>")
 
 	if(do_after(user, enter_delay, target = src))
 		if(obj_integrity <= 0)

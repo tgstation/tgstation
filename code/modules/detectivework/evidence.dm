@@ -46,7 +46,7 @@
 		if(!user.dropItemToGround(I))
 			return
 
-	user.visible_message("[user] puts [I] into [src].", "<span class='notice'>You put [I] inside [src].</span>",\
+	user.visible_message("<span class='notice'>[user] puts [I] into [src].</span>", "<span class='notice'>You put [I] inside [src].</span>",\
 	"<span class='italics'>You hear a rustle as someone puts something into a plastic bag.</span>")
 
 	icon_state = "evidence"
@@ -67,7 +67,7 @@
 /obj/item/evidencebag/attack_self(mob/user)
 	if(contents.len)
 		var/obj/item/I = contents[1]
-		user.visible_message("[user] takes [I] out of [src].", "<span class='notice'>You take [I] out of [src].</span>",\
+		user.visible_message("<span class='notice'>[user] takes [I] out of [src].</span>", "<span class='notice'>You take [I] out of [src].</span>",\
 		"<span class='italics'>You hear someone rustle around in a plastic bag, and remove something.</span>")
 		cut_overlays()	//remove the overlays
 		user.put_in_hands(I)

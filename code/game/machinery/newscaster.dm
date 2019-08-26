@@ -736,7 +736,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		if(stat & BROKEN)
 			if(!I.tool_start_check(user, amount=0))
 				return
-			user.visible_message("[user] is repairing [src].", \
+			user.visible_message("<span class='notice'>[user] is repairing [src].</span>", \
 							"<span class='notice'>You begin repairing [src]...</span>", \
 							"<span class='italics'>You hear welding.</span>")
 			if(I.use_tool(src, user, 40, volume=50))

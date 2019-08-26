@@ -714,7 +714,7 @@
 	src.cards -= choice
 	H.pickup(user)
 	user.put_in_hands(H)
-	user.visible_message("[user] draws a card from the deck.", "<span class='notice'>You draw a card from the deck.</span>")
+	user.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>You draw a card from the deck.</span>")
 	update_icon()
 
 /obj/item/toy/cards/deck/update_icon()
@@ -731,7 +731,7 @@
 	if(cooldown < world.time - 50)
 		cards = shuffle(cards)
 		playsound(src, 'sound/items/cardshuffle.ogg', 50, 1)
-		user.visible_message("[user] shuffles the deck.", "<span class='notice'>You shuffle the deck.</span>")
+		user.visible_message("<span class='notice'>[user] shuffles the deck.</span>", "<span class='notice'>You shuffle the deck.</span>")
 		cooldown = world.time
 
 /obj/item/toy/cards/deck/attackby(obj/item/I, mob/living/user, params)
@@ -742,7 +742,7 @@
 				to_chat(user, "<span class='warning'>The card is stuck to your hand, you can't add it to the deck!</span>")
 				return
 			cards += SC.cardname
-			user.visible_message("[user] adds a card to the bottom of the deck.","<span class='notice'>You add the card to the bottom of the deck.</span>")
+			user.visible_message("<span class='notice'>[user] adds a card to the bottom of the deck.</span>","<span class='notice'>You add the card to the bottom of the deck.</span>")
 			qdel(SC)
 		else
 			to_chat(user, "<span class='warning'>You can't mix cards from other decks!</span>")
@@ -754,7 +754,7 @@
 				to_chat(user, "<span class='warning'>The hand of cards is stuck to your hand, you can't add it to the deck!</span>")
 				return
 			cards += CH.currenthand
-			user.visible_message("[user] puts [user.p_their()] hand of cards in the deck.", "<span class='notice'>You put the hand of cards in the deck.</span>")
+			user.visible_message("<span class='notice'>[user] puts [user.p_their()] hand of cards in the deck.</span>", "<span class='notice'>You put the hand of cards in the deck.</span>")
 			qdel(CH)
 		else
 			to_chat(user, "<span class='warning'>You can't mix cards from other decks!</span>")
@@ -852,7 +852,7 @@
 	if(istype(C))
 		if(C.parentdeck == src.parentdeck)
 			src.currenthand += C.cardname
-			user.visible_message("[user] adds a card to [user.p_their()] hand.", "<span class='notice'>You add the [C.cardname] to your hand.</span>")
+			user.visible_message("<span class='notice'>[user] adds a card to [user.p_their()] hand.</span>", "<span class='notice'>You add the [C.cardname] to your hand.</span>")
 			qdel(C)
 			interact(user)
 			if(currenthand.len > 4)
@@ -894,7 +894,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/cardUser = user
 		if(cardUser.is_holding(src))
-			cardUser.visible_message("[cardUser] checks [cardUser.p_their()] card.", "<span class='notice'>The card reads: [cardname].</span>")
+			cardUser.visible_message("<span class='notice'>[cardUser] checks [cardUser.p_their()] card.</span>", "<span class='notice'>The card reads: [cardname].</span>")
 		else
 			. += "<span class='warning'>You need to have the card in your hand to check it!</span>"
 
@@ -941,7 +941,7 @@
 		var/obj/item/toy/cards/cardhand/H = I
 		if(H.parentdeck == parentdeck)
 			H.currenthand += cardname
-			user.visible_message("[user] adds a card to [user.p_their()] hand.", "<span class='notice'>You add the [cardname] to your hand.</span>")
+			user.visible_message("<span class='notice'>[user] adds a card to [user.p_their()] hand.</span>", "<span class='notice'>You add the [cardname] to your hand.</span>")
 			qdel(src)
 			H.interact(user)
 			if(H.currenthand.len > 4)

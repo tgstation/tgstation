@@ -144,7 +144,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	add_fingerprint(user)
 
 /obj/structure/pipe_cleaner/proc/cut_pipe_cleaner(mob/user)
-	user.visible_message("[user] pulls up the pipe cleaner.", "<span class='notice'>You pull up the pipe cleaner.</span>")
+	user.visible_message("<span class='notice'>[user] pulls up the pipe cleaner.</span>", "<span class='notice'>You pull up the pipe cleaner.</span>")
 	stored.add_fingerprint(user)
 	investigate_log("was pulled up by [key_name(usr)] in [AREACOORD(src)]", INVESTIGATE_WIRES)
 	deconstruct()

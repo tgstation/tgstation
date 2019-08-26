@@ -672,7 +672,7 @@
 
 		if(pre_noise || post_noise)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
-		user.visible_message("[user] coats [target] with spray paint!", "<span class='notice'>You coat [target] with spray paint.</span>")
+		user.visible_message("<span class='notice'>[user] coats [target] with spray paint!</span>", "<span class='notice'>You coat [target] with spray paint.</span>")
 		return
 
 	. = ..()

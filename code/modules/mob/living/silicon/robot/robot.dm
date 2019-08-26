@@ -389,7 +389,7 @@
 				adjustFireLoss(-30)
 				adjustToxLoss(-30)
 				updatehealth()
-				user.visible_message("[user] has fixed some of the burnt wires on [src].", "<span class='notice'>You fix some of the burnt wires on [src].</span>")
+				user.visible_message("<span class='notice'>[user] has fixed some of the burnt wires on [src].</span>", "<span class='notice'>You fix some of the burnt wires on [src].</span>")
 			else
 				to_chat(user, "<span class='warning'>You need more cable to repair [src]!</span>")
 		else
@@ -449,7 +449,7 @@
 		else
 			to_chat(user, "<span class='notice'>You start to unfasten [src]'s securing bolts...</span>")
 			if(W.use_tool(src, user, 50, volume=50) && !cell)
-				user.visible_message("[user] deconstructs [src]!", "<span class='notice'>You unfasten the securing bolts, and [src] falls to pieces!</span>")
+				user.visible_message("<span class='notice'>[user] deconstructs [src]!</span>", "<span class='notice'>You unfasten the securing bolts, and [src] falls to pieces!</span>")
 				deconstruct()
 
 	else if(istype(W, /obj/item/aiModule))

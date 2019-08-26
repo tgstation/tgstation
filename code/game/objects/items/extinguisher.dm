@@ -233,7 +233,7 @@
 			var/turf/open/theturf = T
 			theturf.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 
-		user.visible_message("[user] empties out \the [src] onto the floor using the release valve.", "<span class='info'>You quietly empty out \the [src] using its release valve.</span>")
+		user.visible_message("<span class='notice'>[user] empties out \the [src] onto the floor using the release valve.</span>", "<span class='info'>You quietly empty out \the [src] using its release valve.</span>")
 
 //firebot assembly
 /obj/item/extinguisher/attackby(obj/O, mob/user, params)

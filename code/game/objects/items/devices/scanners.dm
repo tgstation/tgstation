@@ -586,7 +586,7 @@ GENE SCANNER
 
 	var/icon = target
 	if(!silent && isliving(user))
-		user.visible_message("[user] has used the analyzer on [icon2html(icon, viewers(user))] [target].", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
+		user.visible_message("<span class='notice'>[user] has used the analyzer on [icon2html(icon, viewers(user))] [target].</span>", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
 	to_chat(user, "<span class='boldnotice'>Results of analysis of [icon2html(icon, user)] [target].</span>")
 
 	var/list/airs = islist(mixture) ? mixture : list(mixture)

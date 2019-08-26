@@ -688,7 +688,7 @@
 		if(recharge_rate)
 			START_PROCESSING(SSobj, src)
 		if(current_charges <= 0)
-			owner.visible_message("[owner]'s shield overloads!")
+			owner.visible_message("<span class='warning'>[owner]'s shield overloads!</span>")
 			shield_state = "broken"
 			owner.update_inv_wear_suit()
 		return 1

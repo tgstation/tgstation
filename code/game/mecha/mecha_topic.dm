@@ -297,8 +297,8 @@
 		if(!equip || !equip.selectable)
 			return
 		selected = equip
-		occupant_message("You switch to [equip]")
-		visible_message("[src] raises [equip]")
+		occupant_message("<span class='notice'>You switch to [equip].</span>")
+		visible_message("<span class='notice'>[src] raises [equip].</span>")
 		send_byjax(usr, "exosuit.browser", "eq_list", get_equipment_list())
 		return
 
@@ -350,7 +350,7 @@
 	if (href_list["toggle_port_connection"])
 		if(internal_tank.connected_port)
 			if(internal_tank.disconnect())
-				occupant_message("Disconnected from the air system port.")
+				occupant_message("<span class='notice'>Disconnected from the air system port.</span>")
 				log_message("Disconnected from gas port.", LOG_MECHA)
 			else
 				occupant_message("<span class='warning'>Unable to disconnect from the air system port!</span>")
@@ -358,7 +358,7 @@
 		else
 			var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate() in loc
 			if(internal_tank.connect(possible_port))
-				occupant_message("Connected to the air system port.")
+				occupant_message("<span class='notice'>Connected to the air system port.</span>")
 				log_message("Connected to gas port.", LOG_MECHA)
 			else
 				occupant_message("<span class='warning'>Unable to connect with air system port!</span>")
@@ -369,10 +369,10 @@
 	//Turns on the DNA lock
 	if(href_list["dna_lock"])
 		if(!iscarbon(occupant) || !occupant.dna)
-			occupant_message("You feel a prick as the needle takes your DNA sample.")
+			occupant_message("<span class='notice'>You feel a prick as the needle takes your DNA sample.</span>")
 			return
 		dna_lock = occupant.dna.unique_enzymes
-		occupant_message("You feel a prick as the needle takes your DNA sample.")
+		occupant_message("<span class='notice'>You feel a prick as the needle takes your DNA sample.</span>")
 		return
 
 	//Resets the DNA lock
@@ -382,7 +382,7 @@
 
 	//Repairs internal damage
 	if(href_list["repair_int_control_lost"])
-		occupant_message("Recalibrating coordination system...")
+		occupant_message("<span class='notice'>Recalibrating coordination system...</span>")
 		log_message("Recalibration of coordination system started.", LOG_MECHA)
 		addtimer(CALLBACK(src, .proc/stationary_repair, loc), 100, TIMER_UNIQUE)
 

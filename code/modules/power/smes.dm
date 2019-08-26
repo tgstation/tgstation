@@ -140,8 +140,7 @@
 				return
 			if(!terminal)
 				C.use(10)
-				user.visible_message(\
-					"[user.name] has built a power terminal.",\
+				user.visible_message("<span class='notice'>[user.name] has built a power terminal.</span>",\
 					"<span class='notice'>You build the power terminal.</span>")
 
 				//build the terminal and link it to the network

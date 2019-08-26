@@ -24,7 +24,7 @@
 		if(manifest)
 			tear_manifest(user)
 
-		user.visible_message("[user] pries \the [src] open.", \
+		user.visible_message("<span class='notice'>[user] pries \the [src] open.</span>", \
 							 "<span class='notice'>You pry open \the [src].</span>", \
 							 "<span class='italics'>You hear splitting wood.</span>")
 		playsound(src.loc, 'sound/weapons/slashmiss.ogg', 75, 1)

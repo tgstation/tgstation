@@ -49,7 +49,7 @@
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return FALSE
 		attach(M)
-		user.visible_message("[user] attaches [src] to [M].", "<span class='notice'>You attach [src] to [M].</span>")
+		user.visible_message("<span class='notice'>[user] attaches [src] to [M].</span>", "<span class='notice'>You attach [src] to [M].</span>")
 		return TRUE
 	to_chat(user, "<span class='warning'>You are unable to attach [src] to [M]!</span>")
 	return FALSE

@@ -653,7 +653,7 @@
 		return
 	if(length(contents))
 		var/obj/item/I = contents[1]
-		user.visible_message("[user] takes [I] out of [src].", "<span class='notice'>You take [I] out of [src].</span>")
+		user.visible_message("<span class='notice'>[user] takes [I] out of [src].</span>", "<span class='notice'>You take [I] out of [src].</span>")
 		user.put_in_hands(I)
 		update_icon()
 	else

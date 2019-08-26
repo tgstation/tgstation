@@ -128,7 +128,7 @@
 			if(user == M)
 				delay = 0
 			else
-				user.visible_message("[user] is trying to pin [src] on [M]'s chest.", \
+				user.visible_message("<span class='notice'>[user] is trying to pin [src] on [M]'s chest.</span>", \
 									 "<span class='notice'>You try to pin [src] on [M]'s chest.</span>")
 			var/input
 			if(!commended && user != M)
@@ -138,7 +138,7 @@
 					if(user == M)
 						to_chat(user, "<span class='notice'>You attach [src] to [U].</span>")
 					else
-						user.visible_message("[user] pins \the [src] on [M]'s chest.", \
+						user.visible_message("<span class='notice'>[user] pins \the [src] on [M]'s chest.</span>", \
 											 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
 						if(input)
 							SSblackbox.record_feedback("associative", "commendation", 1, list("commender" = "[user.real_name]", "commendee" = "[M.real_name]", "medal" = "[src]", "reason" = input))
@@ -217,7 +217,7 @@
 /obj/item/clothing/accessory/medal/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
 		atmos_spawn_air("plasma=20;TEMP=[exposed_temperature]")
-		visible_message("<span class='danger'> \The [src] bursts into flame!</span>","<span class='userdanger'>Your [src] bursts into flame!</span>")
+		visible_message("<span class='danger'>\The [src] bursts into flame!</span>", "<span class='userdanger'>Your [src] bursts into flame!</span>")
 		qdel(src)
 
 /obj/item/clothing/accessory/medal/plasma/nobel_science
@@ -282,7 +282,7 @@
 /obj/item/clothing/accessory/lawyers_badge/attack_self(mob/user)
 	if(prob(1))
 		user.say("The testimony contradicts the evidence!", forced = "attorney's badge")
-	user.visible_message("[user] shows [user.p_their()] attorney's badge.", "<span class='notice'>You show your attorney's badge.</span>")
+	user.visible_message("<span class='notice'>[user] shows [user.p_their()] attorney's badge.</span>", "<span class='notice'>You show your attorney's badge.</span>")
 
 /obj/item/clothing/accessory/lawyers_badge/on_uniform_equip(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
