@@ -136,40 +136,9 @@ Borg Hypospray
 /obj/item/reagent_containers/borghypo/examine(mob/user)
 	. = ..()
 	. += DescribeContents()	//Because using the standardized reagents datum was just too cool for whatever fuckwit wrote this
-	if(type == /obj/item/reagent_containers/borghypo) //So that nonstandard hypos (hacked, clown, etc) don't get this.
-		switch(mode)
-			if(1)
-				. += "Currently loaded: Convermol. Treats suffocation but is toxic, with both effects scaling based on oxygen deprivation and amount of the drug administered. Overdose threshold is 35u."
-			if(2)
-				. += "Currently loaded: Libital. Treats brute, but also inflicts damage on the patient's liver. Intended for minor injuries. No overdose effects."
-			if(3)
-				. += "Currently loaded: Multiver. Heals toxin effects and purges chemicals from the patient, including itself. Deals damage to the lungs, scailing with the number of medical chemicals in the patient. No overdose effects."
-			if(4)
-				. += "Currently loaded: Aiuri. Heals burn injuries, but also inflicts damage on the patient's eyes. Indended for minor injuries. No overdose effects."
-			if(5)
-				. += "Currently loaded: Epinephrine. For patients in critical condition, prevents suffocation effects and slightly heals all injury types. Overdose threshold is 30u."
-			if(6)
-				. += "Currently loaded: Spaceacillin. All-purpose antiviral agent, prevents spreading viruses from the patient to others. No overdose effects."
-			if(7)
-				. += "Currently loaded: Saline-Glucose Solution. Has a low chance to heal brute and burn injuries. Can function as a temporary substute for blood. Overdose threshold is 60u."
-			if(8)
-				. += "Currently loaded: Mannitol. Heals brain damage, but not traumas. No overdose effects."
-			if(9)
-				. += "Currently loaded: Oculine. Heals eye damage and has a chance to cure blindness not caused by genetics or brain damage. No overdose effects."
-			if(10)
-				. += "Currently loaded: Inacusiate. Rapidly heals ear damage. Non-effective against genetic deafness. No overdose effects."
-			if(11)
-				. += "Currently loaded: Mutadone. Removes genetic mutations. No overdose effects."
-			if(12)
-				. += "Currently loaded: Haloperidol. Dampens the effects of most drugs while purging them. Has as chance of dealing brain damage. No overdose effects."
-			if(13)
-				. += "Currently loaded: Oxandrolone. Heals burn injuries. Effect is greater for more severe injuries. Overdose threshold is 25u."
-			if(14)
-				. += "Currently loaded: Salicyclic Acid. Heals brute injuries. Effect is greater for more severe injuries. Overdose threshold is 25u."
-			if(15)
-				. += "Currently loaded: Rezadone. Heals all cellular damage, while also slowly healing brute and burn injuries. Overdose threshold is 30u."
-			if(16)
-				. += "Currently loaded: Pentetic Acid. Reduces high levels of radiation and slowly heals injuries from toxins. Purges all other chemicals. No overdose effects."
+	//if(type == /obj/item/reagent_containers/borghypo) //So that nonstandard hypos (hacked, clown, etc) don't get this.
+	var/datum/reagent/loaded = modes[mode]
+	. += "Currently loaded: [initial(loaded.name)]. [initial(loaded.description)]"
 
 /obj/item/reagent_containers/borghypo/proc/DescribeContents()
 	. = list()
