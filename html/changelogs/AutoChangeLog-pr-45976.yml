@@ -1,0 +1,4 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - rscadd: "You can pick up plant gene disks with plant bags now. Useful for filling the disk compartmentaliser quickly."

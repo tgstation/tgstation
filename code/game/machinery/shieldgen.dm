@@ -132,13 +132,13 @@
 		return
 
 	if (active)
-		user.visible_message("[user] deactivated \the [src].", \
+		user.visible_message("<span class='notice'>[user] deactivated \the [src].</span>", \
 			"<span class='notice'>You deactivate \the [src].</span>", \
 			"<span class='italics'>You hear heavy droning fade out.</span>")
 		shields_down()
 	else
 		if(anchored)
-			user.visible_message("[user] activated \the [src].", \
+			user.visible_message("<span class='notice'>[user] activated \the [src].</span>", \
 				"<span class='notice'>You activate \the [src].</span>", \
 				"<span class='italics'>You hear heavy droning.</span>")
 			shields_up()
@@ -375,12 +375,12 @@
 		return
 
 	if(active)
-		user.visible_message("[user] turned \the [src] off.", \
+		user.visible_message("<span class='notice'>[user] turned \the [src] off.</span>", \
 			"<span class='notice'>You turn off \the [src].</span>", \
 			"<span class='italics'>You hear heavy droning fade out.</span>")
 		active = FALSE
 	else
-		user.visible_message("[user] turned \the [src] on.", \
+		user.visible_message("<span class='notice'>[user] turned \the [src] on.</span>", \
 			"<span class='notice'>You turn on \the [src].</span>", \
 			"<span class='italics'>You hear heavy droning.</span>")
 		active = ACTIVE_SETUPFIELDS

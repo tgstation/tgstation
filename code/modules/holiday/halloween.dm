@@ -250,7 +250,7 @@
 /mob/living/simple_animal/hostile/clown_insane/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/nullrod))
 		if(prob(5))
-			visible_message("[src] finally found the peace it deserves. <i>You hear honks echoing off into the distance.</i>")
+			visible_message("<span class='notice'>[src] finally found the peace it deserves. <i>You hear honks echoing off into the distance.</i></span>")
 			playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)
 			qdel(src)
 		else
