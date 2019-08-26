@@ -7,6 +7,10 @@
 	material_drop_amount = 4
 	delivery_icon = "deliverybox"
 	integrity_failure = 0 //Makes the crate break when integrity reaches 0, instead of opening and becoming an invisible sprite.
+	open_sound = 'sound/machines/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound_volume = 25
+	close_sound_volume = 50
 
 /obj/structure/closet/crate/large/attack_hand(mob/user)
 	add_fingerprint(user)
