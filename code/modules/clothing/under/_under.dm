@@ -168,3 +168,6 @@
 				. += "Its vital tracker and tracking beacon appear to be enabled."
 	if(attached_accessory)
 		. += "\A [attached_accessory] is attached to it."
+
+/obj/item/clothing/under/rank
+	dying_key = DYE_REGISTRY_UNDER

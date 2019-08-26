@@ -110,6 +110,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/dye_color
 	///Whether the item is unaffected by standard dying.
 	var/undyeable = FALSE
+	///What dye registry should be looked at when dying this item; see washing_machine.dm
+	var/dying_key
 
 	//Grinder vars
 	var/list/grind_results //A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only

@@ -178,12 +178,14 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		color_source = null
 	update_icon()
 
-/obj/item/proc/dye_item(dye_color, dye_key) 
-	if(dye_key)
-		if(!GLOB.dye_registry[dye_key])
-			log_runtime("Item just tried to be dyed with an invalid registry key: [dye_key]")
-			return
-		var/obj/item/target_type = GLOB.dye_registry[dye_key][dye_color]
+/obj/item/proc/dye_item(dye_color) 
+	if(undyeable)
+		return FALSE
+	if(dying_key)
+		if(!GLOB.dye_registry[dying_key])
+			log_runtime("Item just tried to be dyed with an invalid registry key: [dying_key]")
+			return FALSE
+		var/obj/item/target_type = GLOB.dye_registry[dying_key][dye_color]
 		if(target_type)
 			icon = initial(target_type.icon)
 			icon_state = initial(target_type.icon_state)
@@ -195,8 +197,9 @@ GLOBAL_LIST_INIT(dye_registry, list(
 			inhand_y_dimension = initial(target_type.inhand_y_dimension)
 			name = initial(target_type.name)
 			desc = "[initial(target_type.desc)] The colors look a little dodgy."
-			return target_type //hacky solution to extend this functionality in some cases
+			return target_type //successfully "appearance copy" dyed something; returns the target type as a hacky way of extending
 	add_atom_colour(dye_color, FIXED_COLOUR_PRIORITY)
+	return FALSE
 
 //what happens to this object when washed inside a washing machine
 /atom/movable/proc/machine_wash(obj/machinery/washing_machine/WM)
@@ -210,59 +213,33 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	new /obj/item/reagent_containers/food/snacks/meat/slab/corgi(loc)
 	qdel(src)
 
-/obj/item/paper/machine_wash(obj/machinery/washing_machine/WM)
-	if(WM.color_source)
-		add_atom_colour(WM.color_source.dye_color, WASHABLE_COLOUR_PRIORITY)
-
 /mob/living/simple_animal/pet/dog/corgi/machine_wash(obj/machinery/washing_machine/WM)
 	WM.bloody_mess = TRUE
 	gib()
 
+/obj/item/machine_wash(obj/machinery/washing_machine/WM)
+	if(WM.color_source)
+		dye_item(WM.color_source.dye_color)
+
+/obj/item/clothing/under/dye_item(dye_color, dye_key)
+	. = ..()
+	if(.)
+		var/obj/item/clothing/under/U = .
+		can_adjust = initial(U.can_adjust)
+		if(!can_adjust && adjusted) //we deadjust the uniform if it's now unadjustable
+			toggle_jumpsuit_adjust()
+
 /obj/item/clothing/under/machine_wash(obj/machinery/washing_machine/WM)
 	freshly_laundered = TRUE
 	addtimer(VARSET_CALLBACK(src, freshly_laundered, FALSE), 5 MINUTES, TIMER_UNIQUE | TIMER_OVERRIDE)
-
-/obj/item/clothing/under/color/machine_wash(obj/machinery/washing_machine/WM)
 	..()
-	jumpsuit_wash(WM)
-
-/obj/item/clothing/under/rank/machine_wash(obj/machinery/washing_machine/WM)
-	..()
-	jumpsuit_wash(WM)
-
-/obj/item/clothing/under/proc/jumpsuit_wash(obj/machinery/washing_machine/WM)
-	if(WM.color_source)
-		var/wash_color = WM.color_source.dye_color
-		//safe to assume this return since DYE_REGISTRY_UNDER only contains unders
-		var/obj/item/clothing/under/target_type = dye_item(wash_color, DYE_REGISTRY_UNDER)
-		if(target_type)
-			can_adjust = initial(target_type.can_adjust)
-			if(!can_adjust && adjusted) //we deadjust the uniform if it's now unadjustable
-				toggle_jumpsuit_adjust()
-
-/obj/item/storage/belt/fannypack/machine_wash(obj/machinery/washing_machine/WM)
-	if(WM.color_source)
-		var/wash_color = WM.color_source.dye_color
-		dye_item(wash_color, DYE_REGISTRY_FANNYPACK)
-
-/obj/item/clothing/gloves/color/machine_wash(obj/machinery/washing_machine/WM)
-	if(WM.color_source)
-		var/wash_color = WM.color_source.dye_color
-		dye_item(wash_color, DYE_REGISTRY_GLOVES)
 
 /obj/item/clothing/shoes/sneakers/machine_wash(obj/machinery/washing_machine/WM)
 	if(chained)
 		chained = 0
 		slowdown = SHOES_SLOWDOWN
 		new /obj/item/restraints/handcuffs(loc)
-	if(WM.color_source)
-		var/wash_color = WM.color_source.dye_color
-		dye_item(wash_color, DYE_REGISTRY_SNEAKERS)
-
-/obj/item/bedsheet/machine_wash(obj/machinery/washing_machine/WM)
-	if(WM.color_source)
-		var/wash_color = WM.color_source.dye_color
-		dye_item(wash_color, DYE_REGISTRY_BEDSHEET)
+	..()
 
 /obj/machinery/washing_machine/relaymove(mob/user)
 	container_resist(user)

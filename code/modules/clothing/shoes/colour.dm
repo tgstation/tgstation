@@ -1,4 +1,5 @@
 /obj/item/clothing/shoes/sneakers
+	dying_key = DYE_REGISTRY_SNEAKERS
 
 /obj/item/clothing/shoes/sneakers/black
 	name = "black shoes"

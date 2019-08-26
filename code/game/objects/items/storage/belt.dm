@@ -567,6 +567,7 @@
 	desc = "A dorky fannypack for keeping small items in."
 	icon_state = "fannypack_leather"
 	item_state = "fannypack_leather"
+	dying_key = DYE_REGISTRY_FANNYPACK
 	custom_price = 15
 
 /obj/item/storage/belt/fannypack/ComponentInitialize()
