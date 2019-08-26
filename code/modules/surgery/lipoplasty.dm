@@ -16,15 +16,15 @@
 	time = 64
 
 /datum/surgery_step/cut_fat/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to cut away [target]'s excess fat.", "<span class='notice'>You begin to cut away [target]'s excess fat...</span>")
+	user.visible_message("<span class='notice'>[user] begins to cut away [target]'s excess fat.</span>", "<span class='notice'>You begin to cut away [target]'s excess fat...</span>")
 	display_results(user, target, "<span class='notice'>You begin to cut away [target]'s excess fat...</span>",
-			"[user] begins to cut away [target]'s excess fat.",
-			"[user] begins to cut [target]'s [target_zone] with [tool].")
+			"<span class='notice'>[user] begins to cut away [target]'s excess fat.</span>",
+			"<span class='notice'>[user] begins to cut [target]'s [target_zone] with [tool].</span>")
 
 /datum/surgery_step/cut_fat/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You cut [target]'s excess fat loose.</span>",
-			"[user] cuts [target]'s excess fat loose!",
-			"[user] finishes the cut on [target]'s [target_zone].")
+			"<span class='notice'>[user] cuts [target]'s excess fat loose!</span>",
+			"<span class='notice'>[user] finishes the cut on [target]'s [target_zone].</span>")
 	return 1
 
 //remove fat
@@ -35,13 +35,13 @@
 
 /datum/surgery_step/remove_fat/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin to extract [target]'s loose fat...</span>",
-			"[user] begins to extract [target]'s loose fat!",
-			"[user] begins to extract something from [target]'s [target_zone].")
+			"<span class='notice'>[user] begins to extract [target]'s loose fat!</span>",
+			"<span class='notice'>[user] begins to extract something from [target]'s [target_zone].</span>")
 
 /datum/surgery_step/remove_fat/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You extract [target]'s fat.</span>",
-			"[user] extracts [target]'s fat!",
-			"[user] extracts [target]'s fat!")
+			"<span class='notice'>[user] extracts [target]'s fat!</span>",
+			"<span class='notice'>[user] extracts [target]'s fat!</span>")
 	target.overeatduration = 0 //patient is unfatted
 	var/removednutriment = target.nutrition
 	target.set_nutrition(NUTRITION_LEVEL_WELL_FED)

@@ -125,7 +125,6 @@
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_gauntlets"
 	item_state = "clockwork_gauntlets"
-	item_color = null //So they don't wash.
 	strip_delay = 50
 	equip_delay_other = 30
 	body_parts_covered = ARMS

@@ -58,15 +58,15 @@
 
 /obj/item/stack/medical/bruise_pack/heal(mob/living/M, mob/user)
 	if(M.stat == DEAD)
-		to_chat(user, "<span class='warning'> [M] is dead! You can not help [M.p_them()].</span>")
+		to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.p_them()].</span>")
 		return
 	if(isanimal(M))
 		var/mob/living/simple_animal/critter = M
 		if (!(critter.healable))
-			to_chat(user, "<span class='warning'> You cannot use \the [src] on [M]!</span>")
+			to_chat(user, "<span class='warning'>You cannot use \the [src] on [M]!</span>")
 			return FALSE
 		else if (critter.health == critter.maxHealth)
-			to_chat(user, "<span class='notice'> [M] is at full health.</span>")
+			to_chat(user, "<span class='notice'>[M] is at full health.</span>")
 			return FALSE
 		user.visible_message("<span class='green'>[user] applies \the [src] on [M].</span>", "<span class='green'>You apply \the [src] on [M].</span>")
 		M.heal_bodypart_damage((heal_brute/2))
@@ -104,7 +104,7 @@
 			to_chat(user, "<span class='warning'>You need at least two gauzes to do this!</span>")
 			return
 		new /obj/item/stack/sheet/cloth(user.drop_location())
-		user.visible_message("[user] cuts [src] into pieces of cloth with [I].", \
+		user.visible_message("<span class='notice'>[user] cuts [src] into pieces of cloth with [I].</span>", \
 					 "<span class='notice'>You cut [src] into pieces of cloth with [I].</span>", \
 					 "<span class='italics'>You hear cutting.</span>")
 		use(2)
@@ -140,7 +140,7 @@
 
 /obj/item/stack/medical/ointment/heal(mob/living/M, mob/user)
 	if(M.stat == DEAD)
-		to_chat(user, "<span class='warning'> [M] is dead! You can not help [M.p_them()].</span>")
+		to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.p_them()].</span>")
 		return
 	if(iscarbon(M))
 		return heal_carbon(M, user, 0, heal_burn)
