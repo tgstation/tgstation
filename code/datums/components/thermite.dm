@@ -27,14 +27,12 @@
 
 	if(immunelist[parent.type])
 		amount = 0 //Yeah the overlay can still go on it and be cleaned but you arent burning down a diamond wall
-		return
-	amount = _amount
-	if(resistlist[parent.type])
-		burn_require = 50
-		return
-	burn_require = 30
-
-
+	else
+		amount = _amount
+		if(resistlist[parent.type])
+			burn_require = 50
+		else
+			burn_require = 30
 
 	var/turf/master = parent
 	overlay = mutable_appearance('icons/effects/effects.dmi', "thermite")
