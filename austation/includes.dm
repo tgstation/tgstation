@@ -7,5 +7,8 @@
 #include "code\game\objects\items\AI_modules.dm"
 #include "code\game\objects\items\robot\robot_upgrades.dm"
 #include "code\modules\food_and_drinks\drinks\drinks.dm"
+#include "code\modules\reagents\chemistry\reagents\other_reagents.dm"
+#include "code\modules\reagents\chemistry\recipes\others.dm"
+#include "code\modules\reagents\reagent_containers\bottle.dm"
 #include "code\modules\research\designs\AI_module_designs.dm"
 #include "code\modules\research\designs\mechfabricator_designs.dm"
