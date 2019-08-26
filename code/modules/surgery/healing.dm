@@ -51,13 +51,17 @@
 				break
 
 /datum/surgery_step/heal/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='notice'>You succeed in fixing some of [target]'s wounds.</span>",
-		"[user] fixes some of [target]'s wounds.",
-		"[user] fixes some of [target]'s wounds.")
+	var/umsg = "You succeed in fixing some of [target]'s wounds"
+	var/tmsg = "[user] fixes some of [target]'s wounds"
 	if(get_location_accessible(target, target_zone))
 		target.heal_bodypart_damage(brutehealing,burnhealing)
 	else
 		target.heal_bodypart_damage(brutehealing*0.85,burnhealing*0.85) //15% less healing if with clothes.
+		umsg += " as best as you can while they have clothing on." //space please
+		tmsg += " as best as they can while [target] has clothing on."
+	display_results(user, target, "<span class='notice'>[umsg].</span>",
+		"[tmsg].",
+		"[tmsg].")
 	if(istype(surgery, /datum/surgery/healing))
 		var/datum/surgery/healing/the_surgery = surgery
 		the_surgery.antispam = TRUE
