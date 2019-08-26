@@ -288,6 +288,27 @@
 	filling_color = "#B22222"
 	tastes = list("beef" = 1, "cod fish" = 1)
 
+/obj/item/reagent_containers/food/snacks/meat/rawcrab
+	name = "raw crab meat"
+	desc = "A pile of raw crab meat."
+	icon_state = "crabmeatraw"
+	cooked_type = /obj/item/reagent_containers/food/snacks/meat/crab
+	bitesize = 3
+	list_reagents = list("nutriment" = 1, "cooking_oil" = 3)
+	filling_color = "#EAD079"
+	tastes = list("raw crab" = 1)
+	foodtype = RAW | MEAT
+
+/obj/item/reagent_containers/food/snacks/meat/crab
+	name = "crab meat"
+	desc = "Some deliciously cooked crab meat."
+	icon_state = "crabmeat"
+	list_reagents = list("nutriment" = 2)
+	bonus_reagents = list("nutriment" = 3, "vitamin" = 2, "cooking_oil" = 2)
+	filling_color = "#DFB73A"
+	tastes = list("crab" = 1)
+	foodtype = MEAT
+
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
 
 
