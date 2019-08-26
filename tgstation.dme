@@ -63,6 +63,7 @@
 #include "code\__DEFINES\materials.dm"
 #include "code\__DEFINES\maths.dm"
 #include "code\__DEFINES\MC.dm"
+#include "code\__DEFINES\mecha.dm"
 #include "code\__DEFINES\medal.dm"
 #include "code\__DEFINES\melee.dm"
 #include "code\__DEFINES\menu.dm"

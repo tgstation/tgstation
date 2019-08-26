@@ -34,7 +34,7 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	energy_drain = 20
-	range = MELEE
+	range = MECHA_MELEE
 	equip_cooldown = 20
 	var/mob/living/carbon/patient = null
 	var/inject_amount = 10
@@ -256,7 +256,7 @@
 	var/synth_speed = 5 //[num] reagent units per cycle
 	energy_drain = 10
 	var/mode = 0 //0 - fire syringe, 1 - analyze reagents.
-	range = MELEE|RANGED
+	range = MECHA_MELEE|MECHA_RANGED
 	equip_cooldown = 10
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/Initialize()
@@ -524,7 +524,7 @@
 	desc = "Equipment for medical exosuits. Generates a focused beam of medical nanites."
 	icon_state = "mecha_medigun"
 	energy_drain = 10
-	range = MELEE|RANGED
+	range = MECHA_MELEE|MECHA_RANGED
 	equip_cooldown = 0
 	var/obj/item/gun/medbeam/mech/medigun
 	materials = list(/datum/material/iron = 15000, /datum/material/glass = 8000, /datum/material/plasma = 3000, /datum/material/gold = 8000, /datum/material/diamond = 2000)
