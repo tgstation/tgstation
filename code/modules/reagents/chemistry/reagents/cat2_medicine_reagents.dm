@@ -163,7 +163,7 @@
 	return ..()
 
 /datum/reagent/medicine/C2/fiziver/overdose_process(mob/living/carbon/human/M)
-	prob(40)
+	if(prob(40))
 		M.adjustBruteLoss(0.2) //the damage from these will of course be increased by the brute_mod and burn_mod adjustments
 		M.adjustFireLoss(0.2)
 	..()
