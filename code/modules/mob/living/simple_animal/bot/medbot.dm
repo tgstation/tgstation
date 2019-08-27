@@ -408,8 +408,8 @@ GLOBAL_VAR(medibot_unique_id_gen)
 					else
 						patient.apply_damage_type((healies*-1),treatment_method) //don't need to check treatment_method since we know by this point that they were actually damaged.
 						log_combat(src, patient, "tended the wounds of", "internal tools", "([uppertext(treatment_method)])")
-					C.visible_message("<span class='danger'>[src] tends the wounds of [patient]!</span>", \
-						"<span class='userdanger'>[src] tends your wounds!</span>")
+					C.visible_message("<span class='notice'>[src] tends the wounds of [patient]!</span>", \
+						"<span class='green'>[src] tends your wounds!</span>")
 					ADD_TRAIT(patient,TRAIT_MEDIBOTCOMINGTHROUGH,medibot_counter)
 				else
 					tending = FALSE

@@ -24,9 +24,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 */
 /obj/item/banhammer/attack(mob/M, mob/user)
 	if(user.zone_selected == BODY_ZONE_HEAD)
-		M.visible_message("<span class='danger'>[user] are stroking the head of [M] with a bangammer</span>", "<span class='userdanger'>[user] are stroking the head with a bangammer</span>", "you hear a bangammer stroking a head");
+		M.visible_message("<span class='danger'>[user] is stroking the head of [M] with a banhammer.</span>", "<span class='userdanger'>[user] is stroking your head with a banhammer.</span>", "<span class='italics'>You hear a banhammer stroking a head.</span>")
 	else
-		M.visible_message("<span class='danger'>[M] has been banned FOR NO REISIN by [user]</span>", "<span class='userdanger'>You have been banned FOR NO REISIN by [user]</span>", "you hear a banhammer banning someone")
+		M.visible_message("<span class='danger'>[M] has been banned FOR NO REISIN by [user]!</span>", "<span class='userdanger'>You have been banned FOR NO REISIN by [user]!</span>", "<span class='italics'>You hear a banhammer banning someone.</span>")
 	playsound(loc, 'sound/effects/adminhelp.ogg', 15) //keep it at 15% volume so people don't jump out of their skin too much
 	if(user.a_intent != INTENT_HELP)
 		return ..(M, user)
@@ -502,7 +502,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "catwhip"
 
 /obj/item/melee/skateboard
-	name = "skateboard"
+	name = "improvised skateboard"
 	desc = "A skateboard. It can be placed on its wheels and ridden, or used as a strong weapon."
 	icon_state = "skateboard"
 	item_state = "skateboard"
@@ -510,10 +510,35 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 4
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("smacked", "whacked", "slammed", "smashed")
+	///The vehicle counterpart for the board
+	var/board_item_type = /obj/vehicle/ridden/scooter/skateboard
 
 /obj/item/melee/skateboard/attack_self(mob/user)
-	new /obj/vehicle/ridden/scooter/skateboard(get_turf(user))
+	new board_item_type(get_turf(user))
 	qdel(src)
+
+/obj/item/melee/skateboard/pro
+	name = "skateboard"
+	desc = "A RaDSTORMz brand professional skateboard. It looks sturdy and well made."
+	icon_state = "skateboard2"
+	item_state = "skateboard2"
+	board_item_type = /obj/vehicle/ridden/scooter/skateboard/pro
+	custom_premium_price = 300
+
+/obj/item/melee/skateboard/hoverboard
+	name = "hoverboard"
+	desc = "A blast from the past, so retro!"
+	icon_state = "hoverboard_red"
+	item_state = "hoverboard_red"
+	board_item_type = /obj/vehicle/ridden/scooter/skateboard/hoverboard
+	custom_premium_price = 2015
+
+/obj/item/melee/skateboard/hoverboard/admin
+	name = "\improper Board Of Directors"
+	desc = "The engineering complexity of a spaceship concentrated inside of a board. Just as expensive, too."
+	icon_state = "hoverboard_nt"
+	item_state = "hoverboard_nt"
+	board_item_type = /obj/vehicle/ridden/scooter/skateboard/hoverboard/admin
 
 /obj/item/melee/baseball_bat
 	name = "baseball bat"
@@ -647,7 +672,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	playsound(M, 'sound/weapons/slap.ogg', 50, 1, -1)
 	user.visible_message("<span class='danger'>[user] slaps [M]!</span>",
 	"<span class='notice'>You slap [M]!</span>",\
-	"You hear a slap.")
+	"<span class='italics'>You hear a slap.</span>")
 	return
 /obj/item/proc/can_trigger_gun(mob/living/user)
 	if(!user.can_use_guns(src))

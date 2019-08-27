@@ -68,7 +68,7 @@
 		if(O.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
 			if(!O.tool_start_check(user, amount=0))
 				return
-			user.visible_message("[user] is repairing [src].", \
+			user.visible_message("<span class='notice'>[user] is repairing [src].</span>", \
 							"<span class='notice'>You begin repairing [src]...</span>", \
 							"<span class='italics'>You hear welding.</span>")
 			if(O.use_tool(src, user, 40, volume=50))
