@@ -19,11 +19,9 @@
 	//other traits
 	no_equip = list(SLOT_WEAR_MASK, SLOT_GLASSES)
 	siemens_coeff = 0 //not very good at conducting electricity
-	nojumpsuit = TRUE
 	sexes = FALSE
 	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	meat = /obj/item/stack/sheet/cardboard
-
 
 /datum/species/monthmen/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])

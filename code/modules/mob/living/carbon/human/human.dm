@@ -845,7 +845,7 @@
 	if(href_list[VV_HK_MOD_MUTATIONS])
 		if(!check_rights(R_SPAWN))
 			return
-		
+
 		var/list/options = list("Clear"="Clear")
 		for(var/x in subtypesof(/datum/mutation/human))
 			var/datum/mutation/human/mut = x
@@ -912,9 +912,9 @@
 			return
 		var/list/sanitized_races = list()
 		for(var/thing in GLOB.species_list)
-			var/datum/species/S = thing
+			var/datum/species/S = GLOB.species_list[thing]
 			if(initial(S.changesource_flags) & ADMIN)
-				sanitized_races += S
+				sanitized_races += thing
 		var/result = input(usr, "Please choose a new species","Species") as null|anything in sanitized_races
 		if(result)
 			var/newtype = GLOB.species_list[result]
