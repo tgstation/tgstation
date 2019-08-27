@@ -145,7 +145,7 @@
 	phis.burn_mod /= weak_mod
 	phis.oxy_mod /= weak_mod
 	phis.stamina_mod /= weak_mod
-	weak_mod = min(5, (1+(current_cycle*0.04)))
+	weak_mod = min(3, (1+(current_cycle*0.04)))
 	phis.brute_mod *= weak_mod
 	phis.burn_mod *= weak_mod
 	phis.oxy_mod *= weak_mod
