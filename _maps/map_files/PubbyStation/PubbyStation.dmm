@@ -936,6 +936,7 @@
 "aer" = (
 /obj/item/reagent_containers/glass/bucket,
 /obj/structure/cable,
+/obj/item/reagent_containers/glass/bottle/nutrient/ez,
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
 "aes" = (

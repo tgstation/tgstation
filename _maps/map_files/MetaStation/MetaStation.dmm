@@ -221,6 +221,7 @@
 	name = "old sink";
 	pixel_y = 28
 	},
+/obj/item/reagent_containers/glass/bottle/nutrient/ez,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},

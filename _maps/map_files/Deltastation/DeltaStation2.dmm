@@ -15186,6 +15186,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/item/reagent_containers/glass/bottle/nutrient/ez,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aIg" = (

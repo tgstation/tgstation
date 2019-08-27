@@ -50523,6 +50523,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"mcz" = (
+/obj/item/reagent_containers/glass/bottle/nutrient/ez,
+/turf/open/floor/plating,
+/area/security/prison)
 "mdr" = (
 /obj/machinery/nuclearbomb/beer,
 /turf/open/floor/plating,
@@ -78928,7 +78932,7 @@ aag
 aaa
 aak
 xUZ
-aay
+mcz
 aat
 aat
 aaJ
