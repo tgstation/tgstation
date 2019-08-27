@@ -25,7 +25,7 @@
 /datum/reagent/medicine/C2/sanguibital/overdose_process(mob/living/carbon/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.bleed_rate += 0.5
+		H.bleed(2)
 	..()
 	return TRUE
 
