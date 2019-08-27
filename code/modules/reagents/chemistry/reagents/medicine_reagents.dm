@@ -1193,7 +1193,7 @@
 	M.adjustFireLoss(3*REM, 0.)
 	M.adjust_bodytemperature(-35 * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
 	..()
-  
+
 /datum/reagent/medicine/silibinin/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, -2)//Add a chance to cure liver trauma once implemented.
 	..()
@@ -1228,5 +1228,23 @@
 
 /datum/reagent/medicine/polypyr/overdose_process(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5)
+	..()
+	. = 1
+
+/datum/reagent/medicine/mitocholide
+	name = "Mitocholide"
+	description = "A functionalized omnizine derrivative that is used to support the regeneration of damaged organs.The compound's polycationic tail provides selective retention to damaged tissue.
+	color = "#C8A5DC"
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+
+/datum/reagent/medicine/mitocholide(mob/living/carbon/M)
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, -0.5)
+	M.adjustOrganLoss(ORGAN_SLOT_HEART, -0.5)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.5)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, -0.5)
+	M.adjustOrganLoss(ORGAN_SLOT_STOMACH, -0.5)
+	M.adjustOrganLoss(ORGAN_SLOT_EYES, -0.5)
+	M.adjustOrganLoss(ORGAN_SLOT_EARS, -0.5)
+	//If organ traumas are implemented I suggest giving this a chance to cure low level trauma.
 	..()
 	. = 1
