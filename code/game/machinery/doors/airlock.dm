@@ -960,25 +960,25 @@
 		if(user.a_intent != INTENT_HELP)
 			if(!W.tool_start_check(user, amount=0))
 				return
-			user.visible_message("[user] is [welded ? "unwelding":"welding"] the airlock.", \
+			user.visible_message("<span class='notice'>[user] is [welded ? "unwelding":"welding"] the airlock.</span>", \
 							"<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>", \
 							"<span class='italics'>You hear welding.</span>")
 			if(W.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
 				welded = !welded
-				user.visible_message("[user.name] has [welded? "welded shut":"unwelded"] [src].", \
+				user.visible_message("<span class='notice'>[user.name] has [welded? "welded shut":"unwelded"] [src].</span>", \
 									"<span class='notice'>You [welded ? "weld the airlock shut":"unweld the airlock"].</span>")
 				update_icon()
 		else
 			if(obj_integrity < max_integrity)
 				if(!W.tool_start_check(user, amount=0))
 					return
-				user.visible_message("[user] is welding the airlock.", \
+				user.visible_message("<span class='notice'>[user] is welding the airlock.</span>", \
 								"<span class='notice'>You begin repairing the airlock...</span>", \
 								"<span class='italics'>You hear welding.</span>")
 				if(W.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
 					obj_integrity = max_integrity
 					stat &= ~BROKEN
-					user.visible_message("[user.name] has repaired [src].", \
+					user.visible_message("<span class='notice'>[user.name] has repaired [src].</span>", \
 										"<span class='notice'>You finish repairing the airlock.</span>")
 					update_icon()
 			else
@@ -994,7 +994,7 @@
 	else
 		beingcrowbarred = 0
 	if(!security_level && (beingcrowbarred && panel_open && ((obj_flags & EMAGGED) || (density && welded && !operating && !hasPower() && !locked))))
-		user.visible_message("[user] removes the electronics from the airlock assembly.", \
+		user.visible_message("<span class='notice'>[user] removes the electronics from the airlock assembly.</span>", \
 							 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
 		if(I.use_tool(src, user, 40, volume=100))
 			deconstruct(TRUE, user)

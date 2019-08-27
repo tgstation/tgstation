@@ -831,7 +831,7 @@
 
 	else if(istype(O, /obj/item/cultivator))
 		if(weedlevel > 0)
-			user.visible_message("[user] uproots the weeds.", "<span class='notice'>You remove the weeds from [src].</span>")
+			user.visible_message("<span class='notice'>[user] uproots the weeds.</span>", "<span class='notice'>You remove the weeds from [src].</span>")
 			weedlevel = 0
 			update_icon()
 		else

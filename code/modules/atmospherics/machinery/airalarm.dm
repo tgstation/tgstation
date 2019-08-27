@@ -730,7 +730,7 @@
 				return
 		if(1)
 			if(W.tool_behaviour == TOOL_CROWBAR)
-				user.visible_message("[user.name] removes the electronics from [src.name].",\
+				user.visible_message("<span class='notice'>[user.name] removes the electronics from [src.name].</span>", \
 									"<span class='notice'>You start prying out the circuit...</span>")
 				W.play_tool_sound(src)
 				if (W.use_tool(src, user, 20))
@@ -747,7 +747,7 @@
 				if(cable.get_amount() < 5)
 					to_chat(user, "<span class='warning'>You need five lengths of cable to wire the air alarm!</span>")
 					return
-				user.visible_message("[user.name] wires the air alarm.", \
+				user.visible_message("<span class='notice'>[user.name] wires the air alarm.</span>", \
 									"<span class='notice'>You start wiring the air alarm...</span>")
 				if (do_after(user, 20, target = src))
 					if (cable.get_amount() >= 5 && buildstage == 1)
