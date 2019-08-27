@@ -1,3 +1,7 @@
+/obj/item/clothing/under/suit
+	icon = 'icons/obj/clothing/under/suits.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/under/suits.dmi'
+
 /obj/item/clothing/under/suit/white_on_white
 	name = "white suit"
 	desc = "A white suit, suitable for an excellent host."

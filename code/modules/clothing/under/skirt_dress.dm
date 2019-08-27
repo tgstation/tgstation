@@ -2,6 +2,8 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 	body_parts_covered = CHEST|GROIN
+	icon = 'icons/obj/clothing/under/dress.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/under/dress.dmi'
 
 /obj/item/clothing/under/dress/sundress
 	name = "sundress"

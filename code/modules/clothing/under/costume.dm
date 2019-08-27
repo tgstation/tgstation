@@ -26,13 +26,6 @@
 	icon_state = "griffin"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/costume/cloud
-	name = "cloud costume"
-	desc = "A costume made to resemble a fluffy cloud. Hopefully concealing any naughty bits the children might see."
-	icon_state = "cloud"
-	can_adjust = FALSE
-
-
 /obj/item/clothing/under/costume/schoolgirl
 	name = "blue schoolgirl uniform"
 	desc = "It's just like one of my Japanese animes!"

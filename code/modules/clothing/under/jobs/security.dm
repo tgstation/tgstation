@@ -9,6 +9,10 @@
  * Security
  */
 
+/obj/item/clothing/under/rank/security
+	icon = 'icons/obj/clothing/under/security.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/under/security.dmi'
+
 /obj/item/clothing/under/rank/security/officer
 	name = "security jumpsuit"
 	desc = "A tactical security jumpsuit for officers complete with Nanotrasen belt buckle."

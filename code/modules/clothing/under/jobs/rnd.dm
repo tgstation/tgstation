@@ -1,3 +1,7 @@
+/obj/item/clothing/under/rank/rnd
+	icon = 'icons/obj/clothing/under/rnd.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/under/rnd.dmi'
+
 /obj/item/clothing/under/rank/rnd/research_director
 	desc = "It's a suit worn by those with the know-how to achieve the position of \"Research Director\". Its fabric provides minor protection from biological contaminants."
 	name = "research director's vest suit"
