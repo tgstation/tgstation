@@ -1,3 +1,7 @@
+/obj/item/clothing/under/costume
+	icon = 'icons/obj/clothing/under/costume.dmi'
+	mob_overlay_icon =  = 'icons/mob/clothing/under/costume.dmi'
+
 /obj/item/clothing/under/costume/roman
 	name = "\improper Roman armor"
 	desc = "Ancient Roman armor. Made of metallic and leather straps."
