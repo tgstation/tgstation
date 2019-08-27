@@ -88,7 +88,7 @@
 ///HTML for internal damage.
 /obj/mecha/proc/report_internal_damage()
 	. = ""
-	var/static/list/dam_reports = list(
+	var/list/dam_reports = list(
 		"[MECHA_INT_FIRE]" = "<span class='userdanger'>INTERNAL FIRE</span>",
 		"[MECHA_INT_TEMP_CONTROL]" = "<span class='userdanger'>LIFE SUPPORT SYSTEM MALFUNCTION</span>",
 		"[MECHA_INT_TANK_BREACH]" = "<span class='userdanger'>GAS TANK BREACH</span>",
@@ -240,7 +240,7 @@
 					return
 				output_access_dialog(id_card,usr)
 				return
-        
+
 			if(href_list["maint_access"])
 				if(!maint_access)
 					return
