@@ -18,14 +18,14 @@
 		var/mob/living/carbon/human/H = M
 		if(H.bleed_rate)
 			H.adjustBruteLoss(-0.5*H.bleed_rate*REM)
-			H.bleed_rate += 2
+			H.bleed_rate += 0.5
 	..()
 	return TRUE
 
 /datum/reagent/medicine/C2/sanguibital/overdose_process(mob/living/carbon/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.bleed_rate += 2
+		H.bleed_rate += 0.5
 	..()
 	return TRUE
 
