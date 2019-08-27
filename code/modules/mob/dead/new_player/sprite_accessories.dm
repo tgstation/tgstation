@@ -1686,10 +1686,10 @@
 	icon_state = "none"
 
 /datum/sprite_accessory/wings
-	icon = 'icons/mob/wings.dmi'
+	icon = 'icons/mob/clothing/wings.dmi'
 
 /datum/sprite_accessory/wings_open
-	icon = 'icons/mob/wings.dmi'
+	icon = 'icons/mob/clothing/wings.dmi'
 
 /datum/sprite_accessory/wings/angel
 	name = "Angel"
