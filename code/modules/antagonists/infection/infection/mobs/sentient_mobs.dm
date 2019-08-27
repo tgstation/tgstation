@@ -72,21 +72,22 @@
 	if(!client)
 		death()
 	add_points(get_point_generation_rate())
-	var/list/infection_in_area = range(2, src)
-	var/healed = FALSE
-	if(locate(/obj/structure/infection/core) in infection_in_area)
-		adjustHealth(-maxHealth*0.1)
-		healed = TRUE
-	if(locate(/obj/structure/infection/node) in infection_in_area)
-		adjustHealth(-maxHealth*0.05)
-		healed = TRUE
-	if(healed)
-		var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
-		H.color = "#00ff00"
-	if(!(locate(/obj/structure/infection) in infection_in_area))
-		adjustHealth(maxHealth*0.025)
-		var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being hurt
-		H.color = "#ff0000"
+	if(!ISRESPAWNING(src))
+		var/list/infection_in_area = range(2, src)
+		var/healed = FALSE
+		if(locate(/obj/structure/infection/core) in infection_in_area)
+			adjustHealth(-maxHealth*0.1)
+			healed = TRUE
+		if(locate(/obj/structure/infection/node) in infection_in_area)
+			adjustHealth(-maxHealth*0.05)
+			healed = TRUE
+		if(healed)
+			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
+			H.color = "#00ff00"
+		if(!(locate(/obj/structure/infection) in infection_in_area))
+			adjustHealth(maxHealth*0.025)
+			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being hurt
+			H.color = "#ff0000"
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/AttackingTarget()
 	if(isliving(target))
