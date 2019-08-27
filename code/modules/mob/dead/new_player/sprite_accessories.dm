@@ -1686,10 +1686,10 @@
 	icon_state = "none"
 
 /datum/sprite_accessory/wings
-	icon = 'icons/mob/clothing/wings.dmi'
+	icon = 'icons/mob/wings.dmi'
 
 /datum/sprite_accessory/wings_open
-	icon = 'icons/mob/clothing/wings.dmi'
+	icon = 'icons/mob/wings.dmi'
 
 /datum/sprite_accessory/wings/angel
 	name = "Angel"
@@ -1814,7 +1814,7 @@
 	icon_state = "round"
 
 /datum/sprite_accessory/moth_wings
-	icon = 'icons/mob/clothing/moth_wings.dmi'
+	icon = 'icons/mob/moth_wings.dmi'
 	color_src = null
 
 /datum/sprite_accessory/moth_wings/plain
