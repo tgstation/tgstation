@@ -117,4 +117,4 @@
 	var/list/diseases = list() // list of all diseases in a mob
 	var/list/disease_resistances = list()
 
-	var/drag_slowdown = TRUE //Whether the mob is slowed down when dragging another prone mob
+	var/drag_slowdown = TRUE //If the mob causes slowdown when dragged and prone.
