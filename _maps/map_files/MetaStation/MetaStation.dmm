@@ -9910,7 +9910,6 @@
 "auz" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas,
-/obj/item/clothing/glasses/sunglasses,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
@@ -57700,7 +57699,6 @@
 /area/maintenance/port/aft)
 "cwn" = (
 /obj/structure/rack,
-/obj/item/clothing/glasses/sunglasses,
 /obj/item/flashlight/pen,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
@@ -66642,7 +66640,6 @@
 "cOA" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas,
-/obj/item/clothing/glasses/sunglasses,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/light/small{
 	dir = 4
