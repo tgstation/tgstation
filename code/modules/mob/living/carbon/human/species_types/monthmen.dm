@@ -9,13 +9,14 @@
 	skinned_type = /obj/item/paper
 	changesource_flags = EVENTRACE //absolutely no way to get the race even for admins, it's completely out of theme of ss13
 	damage_overlay_type = "" //no blood
-	offset_features = list(OFFSET_UNIFORM = list(0,0), OFFSET_ID = list(0,0), OFFSET_GLOVES = list(0,0), OFFSET_GLASSES = list(0,4), OFFSET_EARS = list(0,-7), OFFSET_SHOES = list(0,0), OFFSET_S_STORE = list(0,0), OFFSET_FACEMASK = list(0,0), OFFSET_HEAD = list(0,0), OFFSET_FACE = list(0,0), OFFSET_BELT = list(0,0), OFFSET_BACK = list(0,0), OFFSET_SUIT = list(0,0), OFFSET_NECK = list(0,0))
+	offset_features = list(OFFSET_UNIFORM = list(0,0), OFFSET_ID = list(0,0), OFFSET_GLOVES = list(0,0), OFFSET_GLASSES = list(0,0), OFFSET_EARS = list(0,-7), OFFSET_SHOES = list(0,0), OFFSET_S_STORE = list(0,0), OFFSET_FACEMASK = list(0,0), OFFSET_HEAD = list(0,0), OFFSET_FACE = list(0,0), OFFSET_BELT = list(0,0), OFFSET_BACK = list(0,0), OFFSET_SUIT = list(0,0), OFFSET_NECK = list(0,0))
 	//organs
 	mutant_brain = /obj/item/organ/brain/monthmen
 	mutanteyes = /obj/item/organ/eyes/monthmen
 	mutanttongue = /obj/item/organ/tongue/monthmen
 	mutantears = /obj/item/organ/ears/monthmen
 	//other traits
+	no_equip = list(SLOT_WEAR_MASK, SLOT_GLASSES)
 	siemens_coeff = 0 //not very good at conducting electricity
 	nojumpsuit = TRUE
 	sexes = FALSE
@@ -71,6 +72,6 @@
 	zone = "abstract"
 
 /obj/item/organ/eyes/monthmen
-	name = "head vision"
-	desc = "An abstraction."
-	zone = "abstract"
+	name = "monthmen eyes"
+	desc = "Turns out googly eyes in real life are horrifying."
+	zone = BODY_ZONE_CHEST
