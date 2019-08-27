@@ -1224,7 +1224,7 @@
 	name = "Red Crayon Powder"
 	colorname = "red"
 	color = "#DA0000" // red
-	random_color_list = list("#DA0000")
+	random_color_list = list("#FC7474")
 
 /datum/reagent/colorful_reagent/crayonpowder/orange
 	name = "Orange Crayon Powder"
@@ -1254,7 +1254,7 @@
 	name = "Purple Crayon Powder"
 	colorname = "purple"
 	color = "#DA00FF" // purple
-	random_color_list = list("#DA00FF")
+	random_color_list = list("#BD8FC4")
 
 /datum/reagent/colorful_reagent/crayonpowder/invisible
 	name = "Invisible Crayon Powder"
