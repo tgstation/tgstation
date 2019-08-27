@@ -1,0 +1,5 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - balance: "the rest of the helmets i could find now share the same armor as their suit counterparts"
+  - balance: "the flagellant hood (the head part) now has 0 armor instead of negative"
