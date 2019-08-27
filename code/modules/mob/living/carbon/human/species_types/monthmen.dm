@@ -4,12 +4,13 @@
 	id = "month"
 	//visuals
 	default_color = "FFFFFF"
-	species_traits = list(NO_UNDERWEAR, NOBLOOD, ABSTRACT_HEAD)
-	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
+	species_traits = list(EYECOLOR,NO_UNDERWEAR,NOBLOOD,ABSTRACT_HEAD)
+	default_features = list("mcolor" = "FFF")
 	skinned_type = /obj/item/paper
 	changesource_flags = EVENTRACE //absolutely no way to get the race even for admins, it's completely out of theme of ss13
 	damage_overlay_type = "" //no blood
-	offset_features = list(OFFSET_UNIFORM = list(0,0), OFFSET_ID = list(0,0), OFFSET_GLOVES = list(0,0), OFFSET_GLASSES = list(0,0), OFFSET_EARS = list(0,-7), OFFSET_SHOES = list(0,0), OFFSET_S_STORE = list(0,0), OFFSET_FACEMASK = list(0,0), OFFSET_HEAD = list(0,0), OFFSET_FACE = list(0,0), OFFSET_BELT = list(0,0), OFFSET_BACK = list(0,0), OFFSET_SUIT = list(0,0), OFFSET_NECK = list(0,0))
+	missing_eye_state = "montheyes_missing"
+	offset_features = list(OFFSET_UNIFORM = list(0,0), OFFSET_ID = list(0,0), OFFSET_GLOVES = list(0,0), OFFSET_GLASSES = list(0,0), OFFSET_EARS = list(0,-7), OFFSET_SHOES = list(0,0), OFFSET_S_STORE = list(0,0), OFFSET_FACEMASK = list(0,0), OFFSET_HEAD = list(0,-6), OFFSET_FACE = list(0,0), OFFSET_BELT = list(0,0), OFFSET_BACK = list(0,0), OFFSET_SUIT = list(0,0), OFFSET_NECK = list(0,0))
 	//organs
 	mutant_brain = /obj/item/organ/brain/monthmen
 	mutanteyes = /obj/item/organ/eyes/monthmen
@@ -27,7 +28,7 @@
 /datum/species/monthmen/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 		return TRUE
-	return TRUE
+	return ..()
 
 /datum/species/monthmen/random_name(gender,unique,lastname)
 	var/month = pick(list("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"))
@@ -41,7 +42,7 @@
 		if("April", "June", "September", "November")
 			days_in_that_month = 30
 
-	return "[thtotext(rand(1, days_in_that_month))] of [month]"
+	return "[capitalize(thtotext(rand(1, days_in_that_month)))] of [month]"
 
 /datum/species/monthmen/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
@@ -49,6 +50,7 @@
 	if(head)
 		head.drop_limb()
 		qdel(head)
+	H.regenerate_limbs()
 
 /datum/species/monthmen/on_species_loss(mob/living/carbon/human/H)
 	H.regenerate_limb(BODY_ZONE_HEAD,FALSE)
@@ -75,3 +77,5 @@
 	name = "monthmen eyes"
 	desc = "Turns out googly eyes in real life are horrifying."
 	zone = BODY_ZONE_CHEST
+	icon_state = "montheyeballs"
+	eye_icon_state = "montheyes"

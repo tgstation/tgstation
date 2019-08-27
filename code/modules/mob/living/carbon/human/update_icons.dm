@@ -637,7 +637,7 @@ generate/load female uniform sprites matching all previously decided variables
 	add_overlay(HD.get_limb_icon())
 	update_damage_overlays()
 
-	if(HD && !(HAS_TRAIT(src, TRAIT_HUSK)))
+	if((!HD && !(ABSTRACT_HEAD in dna.species.species_traits)) && !(HAS_TRAIT(src, TRAIT_HUSK)))
 		// lipstick
 		if(lip_style && (LIPS in dna.species.species_traits))
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[lip_style]", -BODY_LAYER)
@@ -652,9 +652,9 @@ generate/load female uniform sprites matching all previously decided variables
 			var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
 			var/mutable_appearance/eye_overlay
 			if(!E)
-				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
+				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', dna.species.missing_eye_state, -BODY_LAYER)//no eyes = use the default icon for the species
 			else
-				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', E.eye_icon_state, -BODY_LAYER)
+				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', E.eye_icon_state, -BODY_LAYER)//eyes = use the eye's icon state
 			if((EYECOLOR in dna.species.species_traits) && E)
 				eye_overlay.color = "#" + eye_color
 			if(OFFSET_FACE in dna.species.offset_features)

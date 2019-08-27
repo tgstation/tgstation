@@ -156,7 +156,7 @@
 /mob/living/carbon/update_inv_head()
 	remove_overlay(HEAD_LAYER)
 
-	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
+	if(!get_bodypart(BODY_ZONE_HEAD) && !(ABSTRACT_HEAD in dna.species.species_traits)) //Decapitated, unless the species is OK with that...?
 		return
 
 	if(client && hud_used && hud_used.inv_slots[SLOT_BACK])

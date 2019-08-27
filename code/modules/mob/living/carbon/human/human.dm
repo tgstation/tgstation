@@ -750,7 +750,12 @@
 		if(hud_used.healthdoll)
 			hud_used.healthdoll.cut_overlays()
 			if(stat != DEAD)
-				hud_used.healthdoll.icon_state = "healthdoll_OVERLAY"
+				var/abstract_head = FALSE //this is bad but fine in the context that only one niche species uses the special healthdoll icon
+				if(!(ABSTRACT_HEAD in dna.species.species_traits))
+					hud_used.healthdoll.icon_state = "healthdoll_OVERLAY"
+				else
+					abstract_head = TRUE
+					hud_used.healthdoll.icon_state = "healthdoll_OVERLAY_HEADLESS"
 				for(var/X in bodyparts)
 					var/obj/item/bodypart/BP = X
 					var/damage = BP.burn_dam + BP.brute_dam
@@ -771,6 +776,8 @@
 					if(icon_num)
 						hud_used.healthdoll.add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[BP.body_zone][icon_num]"))
 				for(var/t in get_missing_limbs()) //Missing limbs
+					if(abstract_head && istype(t, /obj/item/bodypart/head)) //skip head if abstract
+						continue
 					hud_used.healthdoll.add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[t]6"))
 				for(var/t in get_disabled_limbs()) //Disabled limbs
 					hud_used.healthdoll.add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[t]7"))
