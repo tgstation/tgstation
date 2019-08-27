@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - balance: "Replaced the agent in the BVAK injector with a fungal TB vaccine."
