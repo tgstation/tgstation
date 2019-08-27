@@ -233,8 +233,14 @@
 				paint_mode = PAINT_NORMAL
 		if("select_colour")
 			if(can_change_colour)
-				paint_color = input(usr,"","Choose Color",paint_color) as color|null
-				. = TRUE
+				var/chosen_colour = input(usr,"","Choose Color",paint_color) as color|null
+				
+				if(color_hex2num(chosen_colour) < 200) //Colors too dark are rejected
+					to_chat(usr, "<span class='warning'>That color is too dark! Choose a lighter one.</span>")
+					. = FALSE
+				else
+					paint_color = chosen_colour
+					. = TRUE
 		if("enter_text")
 			var/txt = stripped_input(usr,"Choose what to write.",
 				"Scribbles",default = text_buffer)
