@@ -33,7 +33,7 @@
 
 /mob/living/simple_animal/hostile/lizard/AttackingTarget()
 	if(is_type_in_typecache(target,edibles)) //Makes sure player lizards only consume edibles.
-		visible_message("[name] consumes [target] in a single gulp", "<span class='notice'>You consume [target] in a single gulp</span>")
+		visible_message("<span class='notice'>[name] consumes [target] in a single gulp.</span>", "<span class='notice'>You consume [target] in a single gulp.</span>")
 		QDEL_NULL(target) //Nom
 		adjustBruteLoss(-2)
 		return TRUE

@@ -373,7 +373,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 				to_chat(owner.current, "<span class='userdanger'>Unfortunately, the power that stemmed from your contracts has been extinguished.  You no longer have enough power to resurrect.</span>")
 				return -1
 		else
-			to_chat(owner.current, "<span class='danger'> You seem to have resurrected without your hellish powers.</span>")
+			to_chat(owner.current, "<span class='danger'>You seem to have resurrected without your hellish powers.</span>")
 	else
 		to_chat(owner.current, "<span class='userdanger'>Your hellish powers are too weak to resurrect yourself.</span>")
 

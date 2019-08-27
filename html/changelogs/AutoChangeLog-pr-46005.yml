@@ -1,0 +1,10 @@
+author: "MMMiracles (Donutstation)"
+delete-after: True
+changes: 
+  - tweak: "The southern/north-west parts of maintenance has been revamped to include more things to dig through and places to hide from authority."
+  - tweak: "The atmos tanks have had an extra layer of space added between the windows between them and maintenance."
+  - tweak: "The permabrig has had a small B-ball court added as well as an N2O release system."
+  - tweak: "Tweaks and additions to the various department excess storage rooms through-out maintenance."
+  - tweak: "The AI core now has a more proper internal defense against ranged attacks, the tri-ai spawns have gotten similar treatment as well."
+  - tweak: "The few maintenance-facing windows have been beefed up to their stronger plasma variants."
+  - tweak: "More directional signs to help those in finding some departments."

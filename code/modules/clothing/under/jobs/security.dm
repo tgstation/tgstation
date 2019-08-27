@@ -14,7 +14,6 @@
 	desc = "A tactical security jumpsuit for officers complete with Nanotrasen belt buckle."
 	icon_state = "rsecurity"
 	item_state = "r_suit"
-	item_color = "rsecurity"
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30)
 	strip_delay = 50
 	alt_covers_chest = TRUE
@@ -26,14 +25,12 @@
 	desc = "A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood."
 	icon_state = "security"
 	item_state = "gy_suit"
-	item_color = "security"
 
 /obj/item/clothing/under/rank/security/officer/skirt
 	name = "security jumpskirt"
 	desc = "A \"tactical\" security jumpsuit with the legs replaced by a skirt."
 	icon_state = "secskirt"
 	item_state = "r_suit"
-	item_color = "secskirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE //you know now that i think of it if you adjust the skirt and the sprite disappears isn't that just like flashing everyone
 	fitted = FEMALE_UNIFORM_TOP
@@ -43,7 +40,6 @@
 	desc = "I'm a little busy right now, Calhoun."
 	icon_state = "blueshift"
 	item_state = "blueshift"
-	item_color = "blueshift"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/security/officer/formal
@@ -51,7 +47,6 @@
 	desc = "The latest in fashionable security outfits."
 	icon_state = "officerblueclothes"
 	item_state = "officerblueclothes"
-	item_color = "officerblueclothes"
 	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/security/warden
@@ -59,7 +54,6 @@
 	desc = "A formal security suit for officers complete with Nanotrasen belt buckle."
 	icon_state = "rwarden"
 	item_state = "r_suit"
-	item_color = "rwarden"
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30)
 	strip_delay = 50
 	alt_covers_chest = TRUE
@@ -71,14 +65,12 @@
 	desc = "A formal relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood."
 	icon_state = "warden"
 	item_state = "gy_suit"
-	item_color = "warden"
 
 /obj/item/clothing/under/rank/security/warden/skirt
 	name = "warden's suitskirt"
 	desc = "A formal security suitskirt for officers complete with Nanotrasen belt buckle."
 	icon_state = "rwarden_skirt"
 	item_state = "r_suit"
-	item_color = "rwarden_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
@@ -88,7 +80,6 @@
 	name = "warden's formal uniform"
 	icon_state = "wardenblueclothes"
 	item_state = "wardenblueclothes"
-	item_color = "wardenblueclothes"
 	alt_covers_chest = TRUE
 
 /*
@@ -99,7 +90,6 @@
 	desc = "Someone who wears this means business."
 	icon_state = "detective"
 	item_state = "det"
-	item_color = "detective"
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30)
 	strip_delay = 50
 	alt_covers_chest = TRUE
@@ -111,7 +101,6 @@
 	desc = "Someone who wears this means business."
 	icon_state = "detective_skirt"
 	item_state = "det"
-	item_color = "detective_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
@@ -121,7 +110,6 @@
 	desc = "A hard-boiled private investigator's grey suit, complete with tie clip."
 	icon_state = "greydet"
 	item_state = "greydet"
-	item_color = "greydet"
 	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/security/detective/grey/skirt
@@ -129,7 +117,6 @@
 	desc = "A hard-boiled private investigator's grey suitskirt, complete with tie clip."
 	icon_state = "greydet_skirt"
 	item_state = "greydet"
-	item_color = "greydet_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
@@ -142,7 +129,6 @@
 	desc = "A security jumpsuit decorated for those few with the dedication to achieve the position of Head of Security."
 	icon_state = "rhos"
 	item_state = "r_suit"
-	item_color = "rhos"
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	strip_delay = 60
 	alt_covers_chest = TRUE
@@ -154,7 +140,6 @@
 	desc = "A security jumpskirt decorated for those few with the dedication to achieve the position of Head of Security."
 	icon_state = "rhos_skirt"
 	item_state = "r_suit"
-	item_color = "rhos_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
@@ -164,21 +149,18 @@
 	desc = "There are old men, and there are bold men, but there are very few old, bold men."
 	icon_state = "hos"
 	item_state = "gy_suit"
-	item_color = "hos"
 
 /obj/item/clothing/under/rank/security/head_of_security/alt
 	name = "head of security's turtleneck"
 	desc = "A stylish alternative to the normal head of security jumpsuit, complete with tactical pants."
 	icon_state = "hosalt"
 	item_state = "bl_suit"
-	item_color = "hosalt"
 
 /obj/item/clothing/under/rank/security/head_of_security/alt/skirt
 	name = "head of security's turtleneck skirt"
 	desc = "A stylish alternative to the normal head of security jumpsuit, complete with a tactical skirt."
 	icon_state = "hosalt_skirt"
 	item_state = "bl_suit"
-	item_color = "hosalt_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
@@ -188,7 +170,6 @@
 	desc = "A male head of security's luxury-wear, for special occasions."
 	icon_state = "hos_parade_male"
 	item_state = "r_suit"
-	item_color = "hos_parade_male"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/security/head_of_security/parade/female
@@ -196,7 +177,6 @@
 	desc = "A female head of security's luxury-wear, for special occasions."
 	icon_state = "hos_parade_fem"
 	item_state = "r_suit"
-	item_color = "hos_parade_fem"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
@@ -205,7 +185,6 @@
 	name = "head of security's formal uniform"
 	icon_state = "hosblueclothes"
 	item_state = "hosblueclothes"
-	item_color = "hosblueclothes"
 	alt_covers_chest = TRUE
 
 /*
@@ -217,7 +196,6 @@
 	desc = "Space not controlled by megacorporations, planets, or pirates is under the jurisdiction of Spacepol."
 	icon_state = "spacepol"
 	item_state = "spacepol"
-	item_color = "spacepol"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/prisoner
@@ -225,7 +203,6 @@
 	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
 	icon_state = "prisoner"
 	item_state = "o_suit"
-	item_color = "prisoner"
 	has_sensor = LOCKED_SENSORS
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
@@ -235,7 +212,6 @@
 	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
 	icon_state = "prisoner_skirt"
 	item_state = "o_suit"
-	item_color = "prisoner_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
