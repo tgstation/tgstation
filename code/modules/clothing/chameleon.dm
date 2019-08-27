@@ -656,7 +656,6 @@
 	name = "black tie"
 	desc = "A neosilk clip-on tie."
 	icon_state = "blacktie"
-	item_color = "blacktie"
 	resistance_flags = NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 
