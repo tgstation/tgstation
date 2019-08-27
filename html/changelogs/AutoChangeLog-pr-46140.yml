@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - rscadd: "Borgs can now examine their hypospray tool to get a summery of the currently loaded chem's effects."
