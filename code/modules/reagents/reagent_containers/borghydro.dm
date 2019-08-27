@@ -136,6 +136,8 @@ Borg Hypospray
 /obj/item/reagent_containers/borghypo/examine(mob/user)
 	. = ..()
 	. += DescribeContents()	//Because using the standardized reagents datum was just too cool for whatever fuckwit wrote this
+	var/datum/reagent/loaded = modes[mode]
+	. += "Currently loaded: [initial(loaded.name)]. [initial(loaded.description)]"
 
 /obj/item/reagent_containers/borghypo/proc/DescribeContents()
 	. = list()
