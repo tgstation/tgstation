@@ -99,7 +99,7 @@
 	set_weapon()
 
 /mob/living/simple_animal/bot/ed209/electrocute_act()
-    return
+    return 0
 
 /mob/living/simple_animal/bot/ed209/set_custom_texts()
 	text_hack = "You disable [name]'s combat inhibitor."
