@@ -1,0 +1,6 @@
+author: "MacBlaze1"
+delete-after: True
+changes: 
+  - tweak: "Changed the eye damage of aiuri to .25 from 1, does not change healing."
+  - tweak: "Changed toxin conversion of instabitaluri to 66% from 75%, does not buff healing."
+  - balance: "Changed eye damage giving rate of aiuri and toxin conversion of  instabitaluri"
