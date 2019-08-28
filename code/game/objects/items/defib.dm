@@ -231,7 +231,10 @@
 			return FALSE
 
 /obj/item/defibrillator/proc/cooldowncheck(mob/user)
-	addtimer(CALLBACK(src, .proc/finish_charging), 5 SECONDS)
+	if(!obj/item/defibrillator/compact/combat)
+		addtimer(CALLBACK(src, .proc/finish_charging), 5 SECONDS)
+	else
+		addtimer(CALLBACK(src, .proc/finish_charging), 2.5 SECONDS)
 
 /obj/item/defibrillator/proc/finish_charging()
 	if(cell)
@@ -275,20 +278,8 @@
 	cell = new /obj/item/stock_parts/cell/infinite(src)
 	update_icon()
 
-/obj/item/defibrillator/compact/combat/cooldowncheck(mob/user)
-	addtimer(CALLBACK(src, .proc/finish_charging), 2.5 SECONDS)
-
 /obj/item/defibrillator/compact/combat/make_paddles()
 	return new /obj/item/twohanded/shockpaddles/syndicate(src)
-
-/obj/item/twohanded/shockpaddles/syndicate/update_icon()
-	icon_state = "syndiepaddles[wielded]"
-	item_state = "syndiepaddles[wielded]"
-	if(cooldown)
-		icon_state = "syndiepaddles[wielded]_cooldown"
-	if(iscarbon(loc))
-		var/mob/living/carbon/C = loc
-		C.update_inv_hands()
 
 /obj/item/defibrillator/compact/combat/loaded/attackby(obj/item/W, mob/user, params)
 	if(W == paddles)
@@ -374,10 +365,10 @@
 		update_icon()
 
 /obj/item/twohanded/shockpaddles/update_icon()
-	icon_state = "defibpaddles[wielded]"
-	item_state = "defibpaddles[wielded]"
+	icon_state = "[base_icon_state][wielded]"
+	item_state = "[base_icon_state][wielded]"
 	if(cooldown)
-		icon_state = "defibpaddles[wielded]_cooldown"
+		icon_state = "[base_icon_state][wielded]_cooldown"
 	if(iscarbon(loc))
 		var/mob/living/carbon/C = loc
 		C.update_inv_hands()
@@ -699,7 +690,7 @@
 	icon_state = "syndiepaddles0"
 	item_state = "syndiepaddles0"
 	req_defib = TRUE
-a
+
 /obj/item/twohanded/shockpaddles/syndicate/cyborg
 	req_defib = FALSE
 
