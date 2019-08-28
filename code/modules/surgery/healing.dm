@@ -57,8 +57,8 @@
 		target.heal_bodypart_damage(brutehealing,burnhealing)
 	else
 		target.heal_bodypart_damage(brutehealing*0.4,burnhealing*0.4) //60% less healing if with clothes.
-		umsg += " as best as you can while they have clothing on." //space please
-		tmsg += " as best as they can while [target] has clothing on."
+		umsg += " as best as you can while they have clothing on" //space please, no period
+		tmsg += " as best as they can while [target] has clothing on"
 	display_results(user, target, "<span class='notice'>[umsg].</span>",
 		"[tmsg].",
 		"[tmsg].")
