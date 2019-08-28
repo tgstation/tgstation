@@ -17,15 +17,15 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.bleed_rate)
-			H.adjustBruteLoss(-0.5*H.bleed_rate*REM)
-			H.bleed_rate += 2
+			H.bleed(2)
+			H.adjustBruteLoss(round(10*((H.blood_volume/BLOOD_VOLUME_NORMAL)-1),0.1),TRUE) //More Blood Loss = More Healing upto <5 brute per tick
 	..()
 	return TRUE
 
 /datum/reagent/medicine/C2/sanguibital/overdose_process(mob/living/carbon/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.bleed_rate += 2
+		H.bleed(2)
 	..()
 	return TRUE
 
