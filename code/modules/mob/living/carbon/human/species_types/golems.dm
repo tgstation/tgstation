@@ -1048,7 +1048,7 @@
 /datum/species/golem/snow
 	name = "Snow Golem"
 	id = "snow golem"
-	limbs_id = "s_golem"
+	limbs_id = "sn_golem"
 	fixed_mut_color = "null" //custom sprites
 	armor = 45 //down from 55
 	burnmod = 3 //melts easily
