@@ -1048,7 +1048,8 @@
 /datum/species/golem/snow
 	name = "Snow Golem"
 	id = "snow golem"
-	fixed_mut_color = "ebfcfc"
+	limbs_id = "s_golem"
+	fixed_mut_color = "null" //custom sprites
 	armor = 45 //down from 55
 	burnmod = 3 //melts easily
 	info_text = "As a <span class='danger'>Snow Golem</span>, you are extremely vulnerable to burn damage but you can generate snowballs and shoot cryokinetic beams. You will also turn to snow when dying, preventing any form of recovery."
