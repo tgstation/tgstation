@@ -10,3 +10,4 @@ Terra:TGS Bot now pings notification role but not for sandbox rounds
 Terra:Austation custom icon
 Terra:Australium reagent
 Terra:Luminol and Energized Luminol reagents
+Terra:Trekchems have returned, byebye Cobby!
