@@ -548,7 +548,6 @@ Auto Patrol[]"},
 			retaliate(H)
 	..()
 
-
 /mob/living/simple_animal/bot/ed209/RangedAttack(atom/A)
 	if(!on)
 		return
