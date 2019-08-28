@@ -1,0 +1,4 @@
+author: "ATHATH and glubtok (mostly glubtok)"
+delete-after: True
+changes: 
+  - bugfix: "The plasma fixation symptom now correctly/actually heals you while you are standing in visible amounts of plasma gas."
