@@ -1234,3 +1234,35 @@
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5)
 	..()
 	. = 1
+
+/datum/reagent/medicine/badstims  //These are bad for combat on purpose. Can be used in mixtures to promote non-combat use.
+	name = "Experimental Stimulants"
+	description = "Experimental Stimulants designed to get you away from trouble."
+	reagent_state = LIQUID
+	color = "#F5F5F5"
+
+/datum/reagent/medicine/badstims/on_mob_life(mob/living/carbon/M)
+	..()
+	if(prob(30) && iscarbon(M))
+		var/obj/item/I = M.get_active_held_item()
+		if(I && M.dropItemToGround(I))
+			to_chat(M, "<span class='notice'>Your hands spaz out and you drop what you were holding!</span>")
+	if(prob(50))
+		M.losebreath++
+		M.adjustOxyLoss(1, 0)
+	M.adjustStaminaLoss(-10, 0)
+	M.adjustToxLoss(0.5, 0)
+	M.Jitter(10)
+	M.Dizzy(15)
+
+/datum/reagent/medicine/badstims/on_mob_metabolize(mob/living/L)
+	..()
+	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.35, blacklisted_movetypes=(FLYING|FLOATING))
+	L.ignore_slowdown(type)
+
+/datum/reagent/medicine/badstims/on_mob_end_metabolize(mob/living/L)
+	..()
+	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+	L.remove_movespeed_modifier(type)
+	L.unignore_slowdown(type)
