@@ -18,7 +18,7 @@
 		var/mob/living/carbon/human/H = M
 		if(H.bleed_rate)
 			H.bleed(2)
-			H.adjustBruteLoss(round(5*((H.blood_volume/BLOOD_VOLUME_NORMAL)-1),0.1),TRUE) //More Blood Loss = More Healing upto <5 brute per tick
+			H.adjustBruteLoss(round(10*((H.blood_volume/BLOOD_VOLUME_NORMAL)-1),0.1),TRUE) //More Blood Loss = More Healing upto <5 brute per tick
 	..()
 	return TRUE
 
