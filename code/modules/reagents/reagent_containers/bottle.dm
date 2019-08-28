@@ -78,10 +78,10 @@
 	desc = "A small bottle of Mannitol. Useful for healing brain damage."
 	list_reagents = list(/datum/reagent/medicine/mannitol = 30)
 
-/obj/item/reagent_containers/glass/bottle/multiver
-	name = "multiver bottle"
-	desc = "A small bottle of multiver, which removes toxins and other chemicals from the bloodstream but causes shortness of breath. All effects scale with the amount of reagents in the patient."
-	list_reagents = list(/datum/reagent/medicine/C2/multiver = 30)
+/obj/item/reagent_containers/glass/bottle/charcoal
+	name = "charcoal bottle"
+	desc = "A small bottle of charcoal, which removes toxins and other chemicals from the bloodstream."
+	list_reagents = list(/datum/reagent/medicine/charcoal = 30)
 
 /obj/item/reagent_containers/glass/bottle/mutagen
 	name = "unstable mutagen bottle"

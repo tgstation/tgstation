@@ -54,7 +54,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	var/heal_brute = 40
 	self_delay = 20
-	grind_results = list(/datum/reagent/medicine/C2/libital = 10)
+	grind_results = list(/datum/reagent/medicine/styptic_powder = 10)
 
 /obj/item/stack/medical/bruise_pack/heal(mob/living/M, mob/user)
 	if(M.stat == DEAD)
@@ -136,7 +136,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	var/heal_burn = 40
 	self_delay = 20
-	grind_results = list(/datum/reagent/medicine/C2/ichiyuri = 10)
+	grind_results = list(/datum/reagent/medicine/silver_sulfadiazine = 10)
 
 /obj/item/stack/medical/ointment/heal(mob/living/M, mob/user)
 	if(M.stat == DEAD)
