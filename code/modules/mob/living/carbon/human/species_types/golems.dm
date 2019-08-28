@@ -1051,10 +1051,10 @@
 	fixed_mut_color = "ebfcfc"
 	armor = 45 //down from 55
 	burnmod = 3 //melts easily
-	info_text = "As a <span class='danger'>Snow Golem</span>, you are extremely vulnerable to burn damage but you can generate snow and shoot cryokinetic beams. You will also turn to snow when dying, preventing any form of recovery."
+	info_text = "As a <span class='danger'>Snow Golem</span>, you are extremely vulnerable to burn damage but you can generate snowballs and shoot cryokinetic beams. You will also turn to snow when dying, preventing any form of recovery."
 	prefix = "Snow"
 	special_names = list("Flake", "Blizzard", "Storm")
-	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
+	inherent_traits = list(TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
 	
 	var/obj/effect/proc_holder/spell/targeted/conjure_item/snowball/ball
 	var/obj/effect/proc_holder/spell/aimed/cryo/cryo
