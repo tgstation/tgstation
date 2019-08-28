@@ -374,17 +374,10 @@
 		update_icon()
 
 /obj/item/twohanded/shockpaddles/update_icon()
-	if(syndicate_paddles = FALSE)
-		icon_state = "defibpaddles[wielded]"
-		item_state = "defibpaddles[wielded]"
-	else
-		icon_state = "syndiepaddles[wielded]"
-		item_state = "syndiepaddles[wielded]"
+	icon_state = "defibpaddles[wielded]"
+	item_state = "defibpaddles[wielded]"
 	if(cooldown)
-		if(syndicate_paddles = FALSE)
-			icon_state = "defibpaddles[wielded]_cooldown"
-		else
-			icon_state = "syndiepaddles[wielded]_cooldown"
+		icon_state = "defibpaddles[wielded]_cooldown"
 	if(iscarbon(loc))
 		var/mob/living/carbon/C = loc
 		C.update_inv_hands()
@@ -706,7 +699,7 @@
 	icon_state = "syndiepaddles0"
 	item_state = "syndiepaddles0"
 	req_defib = TRUE
-
+a
 /obj/item/twohanded/shockpaddles/syndicate/cyborg
 	req_defib = FALSE
 
