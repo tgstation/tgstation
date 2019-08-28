@@ -209,6 +209,24 @@
 	results = list(/datum/reagent/medicine/haloperidol = 5)
 	required_reagents = list(/datum/reagent/chlorine = 1, /datum/reagent/fluorine = 1, /datum/reagent/aluminium = 1, /datum/reagent/medicine/potass_iodide = 1, /datum/reagent/oil = 1)
 
+/datum/chemical_reaction/bicaridine
+	name = "Bicaridine"
+	id = /datum/reagent/medicine/bicaridine
+	results = list(/datum/reagent/medicine/bicaridine = 3)
+	required_reagents = list(/datum/reagent/carbon = 1, /datum/reagent/oxygen = 1, /datum/reagent/consumable/sugar = 1)
+
+/datum/chemical_reaction/kelotane
+	name = "Kelotane"
+	id = /datum/reagent/medicine/kelotane
+	results = list(/datum/reagent/medicine/kelotane = 2)
+	required_reagents = list(/datum/reagent/carbon = 1, /datum/reagent/silicon = 1)
+
+/datum/chemical_reaction/antitoxin
+	name = "Antitoxin"
+	id = /datum/reagent/medicine/antitoxin
+	results = list(/datum/reagent/medicine/antitoxin = 3)
+	required_reagents = list(/datum/reagent/nitrogen = 1, /datum/reagent/silicon = 1, /datum/reagent/potassium = 1)
+
 /datum/chemical_reaction/tricordrazine
 	name = "Tricordrazine"
 	id = /datum/reagent/medicine/tricordrazine
@@ -266,4 +284,3 @@
 	id = /datum/reagent/medicine/thializid
 	results = list(/datum/reagent/medicine/thializid = 5)
 	required_reagents = list(/datum/reagent/sulfur = 1, /datum/reagent/fluorine = 1, /datum/reagent/toxin = 1, /datum/reagent/nitrous_oxide = 2)
-
