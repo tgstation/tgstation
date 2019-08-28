@@ -1094,11 +1094,6 @@
 	charge_max = 15
 	action_icon = 'icons/obj/toy.dmi'
 	action_icon_state = "snowball"
-	
-/obj/effect/proc_holder/spell/targeted/conjure_item/snowball/cast(list/targets, mob/user = usr)
-	..()
-	for(var/mob/living/carbon/C in targets)
-		C.throw_mode_on()
 
 /datum/species/golem/capitalist
 	name = "Capitalist Golem"
