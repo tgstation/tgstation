@@ -106,6 +106,18 @@
 	if(istype(data))
 		src.data |= data.Copy()
 
+/datum/reagent/vaccine/fungal_tb
+
+/datum/reagent/vaccine/fungal_tb/New(data)
+	. = ..()
+	var/list/cached_data
+	if(!data)
+		cached_data = list()
+	else
+		cached_data = data
+	cached_data |= "[/datum/disease/tuberculosis]"
+	src.data = cached_data
+
 /datum/reagent/water
 	name = "Water"
 	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen."
@@ -442,7 +454,7 @@
 		H.set_species(race)
 	else
 		to_chat(H, "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>")
-	qdel(src)
+	H.reagents.del_reagent(type)
 
 /datum/reagent/mutationtoxin/classic //The one from plasma on green slimes
 	name = "Mutation Toxin"
@@ -1772,7 +1784,8 @@
 	else
 		var/yuck_cycles = current_cycle - yuck_cycle
 		if(yuck_cycles % YUCK_PUKE_CYCLES == 0)
-			holder.remove_reagent(type, 5)
+			if(yuck_cycles >= YUCK_PUKE_CYCLES * YUCK_PUKES_TO_STUN)
+				holder.remove_reagent(type, 5)
 			C.vomit(rand(14, 26), stun = yuck_cycles >= YUCK_PUKE_CYCLES * YUCK_PUKES_TO_STUN)
 	if(holder)
 		return ..()

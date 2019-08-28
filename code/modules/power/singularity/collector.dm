@@ -82,7 +82,7 @@
 	if(anchored)
 		if(!src.locked)
 			toggle_power()
-			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
+			user.visible_message("<span class='notice'>[user.name] turns the [src.name] [active? "on":"off"].</span>", \
 			"<span class='notice'>You turn the [src.name] [active? "on":"off"].</span>")
 			var/fuel
 			if(loaded_tank)

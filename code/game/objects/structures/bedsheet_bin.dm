@@ -18,8 +18,8 @@ LINEN BINS
 	throw_speed = 1
 	throw_range = 2
 	w_class = WEIGHT_CLASS_TINY
-	item_color = "white"
 	resistance_flags = FLAMMABLE
+	dying_key = DYE_REGISTRY_BEDSHEET
 
 	dog_fashion = /datum/dog_fashion/head/ghost
 	var/list/dream_messages = list("white")
@@ -57,31 +57,26 @@ LINEN BINS
 /obj/item/bedsheet/blue
 	icon_state = "sheetblue"
 	item_state = "sheetblue"
-	item_color = "blue"
 	dream_messages = list("blue")
 
 /obj/item/bedsheet/green
 	icon_state = "sheetgreen"
 	item_state = "sheetgreen"
-	item_color = "green"
 	dream_messages = list("green")
 
 /obj/item/bedsheet/grey
 	icon_state = "sheetgrey"
 	item_state = "sheetgrey"
-	item_color = "grey"
 	dream_messages = list("grey")
 
 /obj/item/bedsheet/orange
 	icon_state = "sheetorange"
 	item_state = "sheetorange"
-	item_color = "orange"
 	dream_messages = list("orange")
 
 /obj/item/bedsheet/purple
 	icon_state = "sheetpurple"
 	item_state = "sheetpurple"
-	item_color = "purple"
 	dream_messages = list("purple")
 
 /obj/item/bedsheet/patriot
@@ -89,7 +84,6 @@ LINEN BINS
 	desc = "You've never felt more free than when sleeping on this."
 	icon_state = "sheetUSA"
 	item_state = "sheetUSA"
-	item_color = "sheetUSA"
 	dream_messages = list("America", "freedom", "fireworks", "bald eagles")
 
 /obj/item/bedsheet/rainbow
@@ -97,19 +91,16 @@ LINEN BINS
 	desc = "A multicolored blanket. It's actually several different sheets cut up and sewn together."
 	icon_state = "sheetrainbow"
 	item_state = "sheetrainbow"
-	item_color = "rainbow"
 	dream_messages = list("red", "orange", "yellow", "green", "blue", "purple", "a rainbow")
 
 /obj/item/bedsheet/red
 	icon_state = "sheetred"
 	item_state = "sheetred"
-	item_color = "red"
 	dream_messages = list("red")
 
 /obj/item/bedsheet/yellow
 	icon_state = "sheetyellow"
 	item_state = "sheetyellow"
-	item_color = "yellow"
 	dream_messages = list("yellow")
 
 /obj/item/bedsheet/mime
@@ -117,7 +108,6 @@ LINEN BINS
 	desc = "A very soothing striped blanket.  All the noise just seems to fade out when you're under the covers in this."
 	icon_state = "sheetmime"
 	item_state = "sheetmime"
-	item_color = "mime"
 	dream_messages = list("silence", "gestures", "a pale face", "a gaping mouth", "the mime")
 
 /obj/item/bedsheet/clown
@@ -125,7 +115,6 @@ LINEN BINS
 	desc = "A rainbow blanket with a clown mask woven in. It smells faintly of bananas."
 	icon_state = "sheetclown"
 	item_state = "sheetrainbow"
-	item_color = "clown"
 	dream_messages = list("honk", "laughter", "a prank", "a joke", "a smiling face", "the clown")
 
 /obj/item/bedsheet/captain
@@ -133,7 +122,6 @@ LINEN BINS
 	desc = "It has a Nanotrasen symbol on it, and was woven with a revolutionary new kind of thread guaranteed to have 0.01% permeability for most non-chemical substances, popular among most modern captains."
 	icon_state = "sheetcaptain"
 	item_state = "sheetcaptain"
-	item_color = "captain"
 	dream_messages = list("authority", "a golden ID", "sunglasses", "a green disc", "an antique gun", "the captain")
 
 /obj/item/bedsheet/rd
@@ -141,7 +129,6 @@ LINEN BINS
 	desc = "It appears to have a beaker emblem, and is made out of fire-resistant material, although it probably won't protect you in the event of fires you're familiar with every day."
 	icon_state = "sheetrd"
 	item_state = "sheetrd"
-	item_color = "director"
 	dream_messages = list("authority", "a silvery ID", "a bomb", "a mech", "a facehugger", "maniacal laughter", "the research director")
 
 // for Free Golems.
@@ -155,7 +142,6 @@ LINEN BINS
 	desc = "It's a sterilized* blanket commonly used in the Medbay.  *Sterilization is voided if a virologist is present onboard the station."
 	icon_state = "sheetmedical"
 	item_state = "sheetmedical"
-	item_color = "medical"
 	dream_messages = list("healing", "life", "surgery", "a doctor")
 
 /obj/item/bedsheet/cmo
@@ -163,7 +149,6 @@ LINEN BINS
 	desc = "It's a sterilized blanket that has a cross emblem. There's some cat fur on it, likely from Runtime."
 	icon_state = "sheetcmo"
 	item_state = "sheetcmo"
-	item_color = "cmo"
 	dream_messages = list("authority", "a silvery ID", "healing", "life", "surgery", "a cat", "the chief medical officer")
 
 /obj/item/bedsheet/hos
@@ -171,7 +156,6 @@ LINEN BINS
 	desc = "It is decorated with a shield emblem. While crime doesn't sleep, you do, but you are still THE LAW!"
 	icon_state = "sheethos"
 	item_state = "sheethos"
-	item_color = "hosred"
 	dream_messages = list("authority", "a silvery ID", "handcuffs", "a baton", "a flashbang", "sunglasses", "the head of security")
 
 /obj/item/bedsheet/hop
@@ -179,7 +163,6 @@ LINEN BINS
 	desc = "It is decorated with a key emblem. For those rare moments when you can rest and cuddle with Ian without someone screaming for you over the radio."
 	icon_state = "sheethop"
 	item_state = "sheethop"
-	item_color = "hop"
 	dream_messages = list("authority", "a silvery ID", "obligation", "a computer", "an ID", "a corgi", "the head of personnel")
 
 /obj/item/bedsheet/ce
@@ -187,7 +170,6 @@ LINEN BINS
 	desc = "It is decorated with a wrench emblem. It's highly reflective and stain resistant, so you don't need to worry about ruining it with oil."
 	icon_state = "sheetce"
 	item_state = "sheetce"
-	item_color = "chief"
 	dream_messages = list("authority", "a silvery ID", "the engine", "power tools", "an APC", "a parrot", "the chief engineer")
 
 /obj/item/bedsheet/qm
@@ -195,19 +177,16 @@ LINEN BINS
 	desc = "It is decorated with a crate emblem in silver lining.  It's rather tough, and just the thing to lie on after a hard day of pushing paper."
 	icon_state = "sheetqm"
 	item_state = "sheetqm"
-	item_color = "qm"
 	dream_messages = list("a grey ID", "a shuttle", "a crate", "a sloth", "the quartermaster")
 
 /obj/item/bedsheet/brown
 	icon_state = "sheetbrown"
 	item_state = "sheetbrown"
-	item_color = "cargo"
 	dream_messages = list("brown")
 
 /obj/item/bedsheet/black
 	icon_state = "sheetblack"
 	item_state = "sheetblack"
-	item_color = "black"
 	dream_messages = list("black")
 
 /obj/item/bedsheet/centcom
@@ -215,7 +194,6 @@ LINEN BINS
 	desc = "Woven with advanced nanothread for warmth as well as being very decorated, essential for all officials."
 	icon_state = "sheetcentcom"
 	item_state = "sheetcentcom"
-	item_color = "centcom"
 	dream_messages = list("a unique ID", "authority", "artillery", "an ending")
 
 /obj/item/bedsheet/syndie
@@ -223,7 +201,6 @@ LINEN BINS
 	desc = "It has a syndicate emblem and it has an aura of evil."
 	icon_state = "sheetsyndie"
 	item_state = "sheetsyndie"
-	item_color = "syndie"
 	dream_messages = list("a green disc", "a red crystal", "a glowing blade", "a wire-covered ID")
 
 /obj/item/bedsheet/cult
@@ -231,7 +208,6 @@ LINEN BINS
 	desc = "You might dream of Nar'Sie if you sleep with this. It seems rather tattered and glows of an eldritch presence."
 	icon_state = "sheetcult"
 	item_state = "sheetcult"
-	item_color = "cult"
 	dream_messages = list("a tome", "a floating red crystal", "a glowing sword", "a bloody symbol", "a massive humanoid figure")
 
 /obj/item/bedsheet/wiz
@@ -239,7 +215,6 @@ LINEN BINS
 	desc = "A special fabric enchanted with magic so you can have an enchanted night. It even glows!"
 	icon_state = "sheetwiz"
 	item_state = "sheetwiz"
-	item_color = "wiz"
 	dream_messages = list("a book", "an explosion", "lightning", "a staff", "a skeleton", "a robe", "magic")
 
 /obj/item/bedsheet/nanotrasen
@@ -247,13 +222,11 @@ LINEN BINS
 	desc = "It has the Nanotrasen logo on it and has an aura of duty."
 	icon_state = "sheetNT"
 	item_state = "sheetNT"
-	item_color = "nanotrasen"
 	dream_messages = list("authority", "an ending")
 
 /obj/item/bedsheet/ian
 	icon_state = "sheetian"
 	item_state = "sheetian"
-	item_color = "ian"
 	dream_messages = list("a dog", "a corgi", "woof", "bark", "arf")
 
 /obj/item/bedsheet/cosmos
@@ -261,14 +234,12 @@ LINEN BINS
 	desc = "Made from the dreams of those who wonder at the stars."
 	icon_state = "sheetcosmos"
 	item_state = "sheetcosmos"
-	item_color = "cosmos"
 	dream_messages = list("the infinite cosmos", "Hans Zimmer music", "a flight through space", "the galaxy", "being fabulous", "shooting stars")
 	light_power = 2
 	light_range = 1.4
 
 /obj/item/bedsheet/random
 	icon_state = "random_bedsheet"
-	item_color = "rainbow"
 	name = "random bedsheet"
 	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
 
@@ -280,7 +251,6 @@ LINEN BINS
 
 /obj/item/bedsheet/dorms
 	icon_state = "random_bedsheet"
-	item_color = "rainbow"
 	name = "random dorms bedsheet"
 	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
 

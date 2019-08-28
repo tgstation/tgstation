@@ -223,7 +223,7 @@
 		to_chat(user, "<span class='notice'>[src] can only hold body parts!</span>")
 		return
 
-	user.visible_message("[user] puts [I] into [src].", "<span class='notice'>You put [I] inside [src].</span>")
+	user.visible_message("<span class='notice'>[user] puts [I] into [src].</span>", "<span class='notice'>You put [I] inside [src].</span>")
 	icon_state = "evidence"
 	var/xx = I.pixel_x
 	var/yy = I.pixel_y
@@ -242,7 +242,7 @@
 /obj/item/organ_storage/attack_self(mob/user)
 	if(contents.len)
 		var/obj/item/I = contents[1]
-		user.visible_message("[user] dumps [I] from [src].", "<span class='notice'>You dump [I] from [src].</span>")
+		user.visible_message("<span class='notice'>[user] dumps [I] from [src].</span>", "<span class='notice'>You dump [I] from [src].</span>")
 		cut_overlays()
 		I.forceMove(get_turf(src))
 		icon_state = "evidenceobj"

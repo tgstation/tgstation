@@ -1,0 +1,6 @@
+author: "Akrilla"
+delete-after: True
+changes: 
+  - tweak: "Stun baton's delayed stun is now a delayed knockdown of five seconds applied after 2 seconds, with the slowdown still remaining."
+  - tweak: "The confusion effect given by the baton is very slightly increased."
+  - tweak: "Adrenels and stimpacks has the same interaction with batons that pump-up does."

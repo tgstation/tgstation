@@ -1,0 +1,4 @@
+author: "bandit"
+delete-after: True
+changes: 
+  - bugfix: "Fixed an erroneous message with ignoring a player's OOC messages."

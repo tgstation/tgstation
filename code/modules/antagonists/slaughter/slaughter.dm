@@ -182,4 +182,4 @@
 		// Be safe and just eject the corpse
 		victim.forceMove(get_turf(victim))
 		victim.exit_blood_effect()
-		victim.visible_message("[victim] falls out of the air, covered in blood, looking highly confused. And dead.")
+		victim.visible_message("<span class='warning'>[victim] falls out of the air, covered in blood, looking highly confused. And dead.</span>")

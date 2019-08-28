@@ -300,3 +300,39 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/ianbirthday/admin/LateInitialize()
 	birthday()
 	qdel(src)
+
+//lets mappers place notes on airlocks with custom info or a pre-made note from a path
+/obj/effect/mapping_helpers/airlock_note_placer
+	name = "Airlock Note Placer"
+	late = TRUE
+	icon_state = "airlocknoteplacer"
+	var/note_info //for writing out custom notes without creating an extra paper subtype
+	var/note_name //custom note name
+	var/note_path //if you already have something wrote up in a paper subtype, put the path here
+
+/obj/effect/mapping_helpers/airlock_note_placer/LateInitialize()
+	var/turf/turf = get_turf(src)
+	if(note_path && !istype(note_path, /obj/item/paper)) //don't put non-paper in the paper slot thank you
+		log_mapping("[src] at [x],[y] had an improper note_path path, could not place paper note.")
+		qdel(src)
+	if(locate(/obj/machinery/door/airlock) in turf)
+		var/obj/machinery/door/airlock/found_airlock = locate(/obj/machinery/door/airlock) in turf
+		if(note_path)
+			found_airlock.note = note_path
+			found_airlock.update_icon()
+			qdel(src)
+		if(note_info)
+			var/obj/item/paper/paper = new /obj/item/paper(src)
+			if(note_name)
+				paper.name = note_name
+			paper.info = "[note_info]"
+			found_airlock.note = paper
+			paper.forceMove(found_airlock)
+			found_airlock.update_icon()
+			qdel(src)
+		log_mapping("[src] at [x],[y] had no note_path or note_info, cannot place paper note.")
+		qdel(src)
+	log_mapping("[src] at [x],[y] could not find an airlock on current turf, cannot place paper note.")
+	qdel(src)
+
+

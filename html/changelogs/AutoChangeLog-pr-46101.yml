@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - balance: "hulks no longer slow from damage"

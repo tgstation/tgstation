@@ -668,7 +668,7 @@
 		..()
 
 /mob/living/carbon/human/proc/check_self_for_injuries()
-	visible_message("[src] examines [p_them()]self.", \
+	visible_message("<span class='notice'>[src] examines [p_them()]self.</span>", \
 		"<span class='notice'>You check yourself for injuries.</span>")
 
 	var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
@@ -801,7 +801,7 @@
 		//Put the items in that list into a string of text
 		for(var/B in broken)
 			broken_message += B
-		to_chat(src, "<span class='warning'> Your [broken_message] [broken_plural ? "are" : "is"] non-functional!</span>")
+		to_chat(src, "<span class='warning'>Your [broken_message] [broken_plural ? "are" : "is"] non-functional!</span>")
 	if(damaged.len)
 		if(damaged.len > 1)
 			damaged.Insert(damaged.len, "and ")

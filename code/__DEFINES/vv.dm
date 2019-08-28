@@ -111,6 +111,7 @@
 
 // /mob/living/carbon/human
 #define VV_HK_COPY_OUTFIT "copy_outfit"
+#define VV_HK_MOD_MUTATIONS "quirkmut"
 #define VV_HK_MOD_QUIRKS "quirkmod"
 #define VV_HK_MAKE_MONKEY "human_monkify"
 #define VV_HK_MAKE_CYBORG "human_cyborgify"
