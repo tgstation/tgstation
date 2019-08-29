@@ -356,7 +356,7 @@
 	else
 		to_chat(user, "[src] is already active.")
 
-/obj/item/toy/windupToolbox/Rumble()
+/obj/item/toy/windupToolbox/proc/Rumble()
 	var/static/list/transforms
 	if(!transforms)
 		var/matrix/M1 = matrix()
