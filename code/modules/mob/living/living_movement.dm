@@ -45,14 +45,14 @@
 	if(pulling && (isliving(pulling) || isstructure(pulling)))
 		if(isliving(pulling))
 			var/mob/living/L = pulling
-			if(L.drag_slowdown && !(L.mobility_flags & MOBILITY_STAND) && !L.buckled && grab_state < GRAB_AGGRESSIVE)
-				add_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING, multiplicative_slowdown = PULL_BULKY_SLOWDOWN)
+			if(!L.drag_slowdown || (L.mobility_flags & MOBILITY_STAND) || L.buckled || grab_state >= GRAB_AGGRESSIVE)
 				return
 		if(isstructure(pulling))
 			var/obj/structure/S = pulling
-			if(S.drag_slowdown)
-				add_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING, multiplicative_slowdown = PULL_BULKY_SLOWDOWN)
+			if(!S.drag_slowdown)
 				return
+		add_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING, multiplicative_slowdown = PULL_BULKY_SLOWDOWN)
+		return
 	remove_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING)
 
 /mob/living/can_zFall(turf/T, levels)
