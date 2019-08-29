@@ -35,6 +35,7 @@
 	var/weaponscheck = FALSE //If true, arrest people for weapons if they lack access
 	var/check_records = TRUE //Does it check security records?
 	var/arrest_type = FALSE //If true, don't handcuff
+	var/ranged = FALSE //used for EDs
 
 	var/fair_market_price_arrest = 25 // On arrest, charges the violator this much. If they don't have that much in their account, the securitron will beat them instead
 	var/fair_market_price_detain = 5 // Charged each time the violator is stunned on detain
@@ -90,7 +91,10 @@
 
 /mob/living/simple_animal/bot/secbot/update_icon()
 	if(mode == BOT_HUNT)
-		icon_state = "[initial(icon_state)]-c"
+		if(ranged)
+			icon_state = "ed209[on]"
+		else
+			icon_state = "[initial(icon_state)]-c"
 		return
 	..()
 
@@ -114,7 +118,6 @@
 		visible_message("<span class='warning'>[src] shakes and speeds up!</span>")
 
 /mob/living/simple_animal/bot/secbot/set_custom_texts()
-
 	text_hack = "You overload [name]'s target identification system."
 	text_dehack = "You reboot [name] and restore the target identification."
 	text_dehack_fail = "[name] refuses to accept your authority!"
@@ -438,16 +441,34 @@ Auto Patrol: []"},
 	walk_to(src,0)
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/atom/Tsec = drop_location()
+	if(ranged)
+		var/obj/item/bot_assembly/ed209/Sa = new (Tsec)
+		Sa.build_step = 1
+		Sa.add_overlay("hs_hole")
+		Sa.created_name = name
+		new /obj/item/assembly/prox_sensor(Tsec)
+		var/obj/item/gun/energy/disabler/G = new (Tsec)
+		G.cell.charge = 0
+		G.update_icon()
+		if(prob(50))
+			new /obj/item/bodypart/l_leg/robot(Tsec)
+			if(prob(25))
+				new /obj/item/bodypart/r_leg/robot(Tsec)
+		if(prob(25))//50% chance for a helmet OR vest
+			if(prob(50))
+				new /obj/item/clothing/head/helmet(Tsec)
+			else
+				new /obj/item/clothing/suit/armor(Tsec)
+	else
+		var/obj/item/bot_assembly/secbot/Sa = new (Tsec)
+		Sa.build_step = 1
+		Sa.add_overlay("hs_hole")
+		Sa.created_name = name
+		new /obj/item/assembly/prox_sensor(Tsec)
+		drop_part(baton_type, Tsec)
 
-	var/obj/item/bot_assembly/secbot/Sa = new (Tsec)
-	Sa.build_step = 1
-	Sa.add_overlay("hs_hole")
-	Sa.created_name = name
-	new /obj/item/assembly/prox_sensor(Tsec)
-	drop_part(baton_type, Tsec)
-
-	if(prob(50))
-		drop_part(robot_arm, Tsec)
+		if(prob(50))
+			drop_part(robot_arm, Tsec)
 
 	do_sparks(3, TRUE, src)
 
