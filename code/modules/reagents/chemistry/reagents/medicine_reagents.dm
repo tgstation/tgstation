@@ -1242,7 +1242,7 @@
 	overdose_threshold = 50
 	metabolization_rate = 0.2 //same as C2s
 
-/datum/reagent/medicine/saline/on_mob_life(mob/living/carbon/M) //
+/datum/reagent/medicine/granibitaluri/on_mob_life(mob/living/carbon/M) //
 	if(M.getBruteLoss() <= 10)
 		M.adjustBruteLoss(-0.1)
 	else if(M.getFireLoss() <= 10)
@@ -1250,7 +1250,7 @@
 	..()
 	return TRUE
 
-/datum/reagent/medicine/saline/overdose_process(mob/living/M)
+/datum/reagent/medicine/granibitaluri/overdose_process(mob/living/M)
 	. = TRUE
 	M.getOrganLoss(ORGAN_SLOT_HEART,0.2)
 	M.getOrganLoss(ORGAN_SLOT_LUNGS,0.2)
