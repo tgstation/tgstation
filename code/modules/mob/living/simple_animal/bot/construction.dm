@@ -151,7 +151,9 @@
 				to_chat(user, "<span class='notice'>You start attaching the gun to the frame...</span>")
 				if(W.use_tool(src, user, 40, volume=100))
 					var/mob/living/simple_animal/bot/secbot/ed209/B = new(drop_location())
+					B.name = created_name
 					to_chat(user, "<span class='notice'>You complete the ED-209.</span>")
+					qdel(src)
 
 //Floorbot assemblies
 /obj/item/bot_assembly/floorbot
