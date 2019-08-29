@@ -359,11 +359,11 @@
 /area/janitor)
 "aaW" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/delivery,
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = -28
 	},
 /obj/structure/closet/radiation,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "aaX" = (
@@ -2067,9 +2067,8 @@
 /area/crew_quarters/fitness/recreation)
 "aeD" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/radiation,
 /obj/effect/turf_decal/delivery,
-/obj/structure/window/reinforced,
-/obj/structure/closet/secure_closet/atmospherics,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "aeE" = (
@@ -6464,13 +6463,14 @@
 	},
 /area/maintenance/port)
 "amV" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/item/extinguisher,
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom{
 	pixel_y = -29
+	},
+/obj/machinery/computer/atmos_control/incinerator{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
@@ -7872,9 +7872,9 @@
 /area/security/main)
 "apX" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/fueltank,
-/obj/item/storage/toolbox/emergency,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/structure/closet/secure_closet/atmospherics,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "apY" = (
@@ -9471,7 +9471,8 @@
 "atw" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Incinerator Output Pump"
+	name = "Incinerator Output Pump";
+	target_pressure = 4500
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -54513,7 +54514,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "cpN" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -58818,18 +58819,13 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
-/obj/structure/closet/l3closet/scientist{
-	pixel_x = -2
-	},
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/closet/bombcloset,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cyA" = (
-/obj/structure/closet/wardrobe/science_white,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/closet/bombcloset,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cyB" = (
@@ -58853,9 +58849,6 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cyD" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -60497,10 +60490,10 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cCt" = (
-/obj/structure/closet/bombcloset,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/closet/wardrobe/science_white,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cCu" = (
@@ -60576,10 +60569,10 @@
 /obj/item/radio/intercom{
 	pixel_y = -28
 	},
-/obj/structure/tank_dispenser,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/tank_dispenser,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cCy" = (
@@ -69719,6 +69712,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/item/reagent_containers/dropper,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "dcd" = (
@@ -74445,6 +74439,18 @@
 "ojg" = (
 /turf/closed/wall,
 /area/science/misc_lab/range)
+"onu" = (
+/obj/item/radio/intercom{
+	pixel_y = -28
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/computer/atmos_control/toxinsmix{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "oub" = (
 /obj/structure/sign/poster/official/random,
 /turf/closed/wall,
@@ -107112,8 +107118,8 @@ crQ
 cyA
 czt
 cAy
-cBs
-cCt
+cBt
+cCu
 wQA
 cEr
 cEr
@@ -107369,8 +107375,8 @@ crQ
 cyB
 fIp
 cAz
-cBt
-cCu
+cBu
+cCv
 wQA
 cEs
 cFn
@@ -107626,8 +107632,8 @@ crQ
 cyC
 ffD
 dDA
-cBu
-cCv
+cBv
+cCw
 wQA
 atJ
 tXK
@@ -107883,8 +107889,8 @@ crQ
 cyD
 mom
 cAz
-cBv
-cCw
+cBs
+onu
 wQA
 cEu
 cFo
