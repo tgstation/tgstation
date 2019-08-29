@@ -91249,7 +91249,6 @@
 	},
 /area/maintenance/department/medical/central)
 "dnl" = (
-/obj/machinery/clonepod,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -91266,10 +91265,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel/dark,
 /area/medical/genetics/cloning)
 "dnm" = (
-/obj/machinery/computer/cloning,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -91282,7 +91281,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics/cloning)
 "dnn" = (
-/obj/machinery/dna_scannernew,
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
@@ -92349,9 +92347,6 @@
 /area/maintenance/department/medical/central)
 "dpm" = (
 /obj/machinery/door/window/eastleft,
-/obj/structure/mirror{
-	pixel_x = -28
-	},
 /obj/machinery/shower{
 	dir = 4;
 	name = "emergency shower"
@@ -92365,6 +92360,15 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/structure/mirror{
+	icon_state = "mirror_broke";
+	step_x = -28;
+	step_y = -28;
+	pixel_y = 28
+	},
+/obj/structure/barricade/wooden{
+	name = "wooden barricade (CLOSED)"
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/genetics/cloning)
@@ -93339,6 +93343,9 @@
 	},
 /obj/machinery/light/small{
 	dir = 8
+	},
+/obj/structure/barricade/wooden{
+	name = "wooden barricade (CLOSED)"
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/genetics/cloning)
@@ -114295,6 +114302,19 @@
 	},
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
+"gdT" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/medical/genetics/cloning)
 "gmj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -158604,7 +158624,7 @@ div
 dkn
 dlV
 dnn
-dpo
+gdT
 drb
 dsv
 dtC
