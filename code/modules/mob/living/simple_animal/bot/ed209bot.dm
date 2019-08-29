@@ -57,7 +57,6 @@
 		var/mob/living/carbon/t = pick(targets)
 		if(t.stat != DEAD && !t.handcuffed) //we don't shoot people who are dead, cuffed or lying down.
 			shootAt(t)
-	switch(mode)
 	..()
 
 /mob/living/simple_animal/bot/secbot/ed209/proc/set_weapon()  //used to update the projectile type and firing sound
