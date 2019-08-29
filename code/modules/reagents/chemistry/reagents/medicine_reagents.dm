@@ -1252,6 +1252,6 @@
 
 /datum/reagent/medicine/granibitaluri/overdose_process(mob/living/M)
 	. = TRUE
-	M.getOrganLoss(ORGAN_SLOT_HEART,0.2)
-	M.getOrganLoss(ORGAN_SLOT_LUNGS,0.2)
+	M.adjustOrganLoss(ORGAN_SLOT_HEART,0.2)
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS,0.2)
 	..()
