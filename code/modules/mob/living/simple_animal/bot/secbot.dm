@@ -91,7 +91,7 @@
 
 /mob/living/simple_animal/bot/secbot/update_icon()
 	if(mode == BOT_HUNT)
-			icon_state = "[initial(icon_state)]-c"
+		icon_state = "[initial(icon_state)]-c"
 		return
 	..()
 
