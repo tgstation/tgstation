@@ -125,7 +125,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/obj/item/coin/coin
 	///Bills we accept?
 	var/obj/item/stack/spacecash/bill
-	var/chef_price = 10
 	///Default price of items if not overridden
 	var/default_price = 25
 	///Default price of premium items if not overridden
@@ -145,10 +144,13 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 	var/list/vending_machine_input = list()
 	///Display header on the input view
-	var/input_display_header = "Custom Compartment"
+	var/input_display_header = "Custom Vendor"
 
 	//The type of refill canisters used by this machine.
 	var/obj/item/vending_refill/refill_canister = null
+
+	/// how many items have been inserted in a vendor
+	var/loaded_items = 0
 
 /obj/item/circuitboard
     ///determines if the circuit board originated from a vendor off station or not.
@@ -181,8 +183,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
 	last_slogan = world.time + rand(0, slogan_delay)
 	power_change()
-	
-	if(onstation_override) //overrides the checks if true. 
+
+	if(onstation_override) //overrides the checks if true.
 		onstation = TRUE
 		return
 	if(mapload) //check if it was initially created off station during mapload.
@@ -369,6 +371,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(panel_open && is_wire_tool(I))
 		wires.interact(user)
 		return
+
 	if(refill_canister && istype(I, refill_canister))
 		if (!panel_open)
 			to_chat(user, "<span class='warning'>You should probably unscrew the service panel first!</span>")
@@ -398,7 +401,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			var/denied_items = 0
 			for(var/obj/item/the_item in T.contents)
 				if(contents.len >= MAX_VENDING_INPUT_AMOUNT) // no more than 30 item can fit inside, legacy from snack vending although not sure why it exists
-					to_chat(user, "<span class='warning'>[src]'s chef compartment is full.</span>")
+					to_chat(user, "<span class='warning'>[src]'s compartment is full.</span>")
 					break
 				if(canLoadItem(the_item) && loadingAttempt(the_item,user))
 					SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, the_item, src, TRUE)
@@ -408,21 +411,48 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(denied_items)
 				to_chat(user, "<span class='warning'>[src] refuses some items!</span>")
 			if(loaded)
-				to_chat(user, "<span class='notice'>You insert [loaded] dishes into [src]'s chef compartment.</span>")
+				to_chat(user, "<span class='notice'>You insert [loaded] dishes into [src]'s compartment.</span>")
 				updateUsrDialog()
+
 	else
 		..()
 
 /obj/machinery/vending/proc/loadingAttempt(obj/item/I,mob/user)
-  . = TRUE
-  if(!user.transferItemToLoc(I, src))
-    return FALSE
-  if(vending_machine_input[I.name])
-    vending_machine_input[I.name]++
-  else
-    vending_machine_input[I.name] = 1
-  to_chat(user, "<span class='notice'>You insert [I] into [src]'s input compartment.</span>")
+	. = TRUE
+	if(!user.transferItemToLoc(I, src))
+		return FALSE
+	if(vending_machine_input[I.name])
+		vending_machine_input[I.name]++
+	else
+		vending_machine_input[I.name] = 1
+	to_chat(user, "<span class='notice'>You insert [I] into [src]'s input compartment.</span>")
+	loaded_items++
 
+/**
+  * Is the passed in user allowed to load this vending machines compartments
+  *
+  * Arguments:
+  * * user - mob that is doing the loading of the vending machine
+  */
+/obj/machinery/vending/proc/compartmentLoadAccessCheck(mob/user)
+	if(!canload_access_list)
+		return TRUE
+	else
+		var/do_you_have_access = FALSE
+		var/req_access_txt_holder = req_access_txt
+		for(var/i in canload_access_list)
+			req_access_txt = i
+			if(!allowed(user) && !(obj_flags & EMAGGED) && scan_id)
+				continue
+			else
+				do_you_have_access = TRUE
+				break //you passed don't bother looping anymore
+		req_access_txt = req_access_txt_holder // revert to normal (before the proc ran)
+		if(do_you_have_access)
+			return TRUE
+		else
+			to_chat(user, "<span class='warning'>[src]'s input compartment blinks red: Access denied.</span>")
+			return FALSE
 
 /obj/machinery/vending/exchange_parts(mob/user, obj/item/storage/part_replacer/W)
 	if(!istype(W))
@@ -484,12 +514,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(vending_machine_input[O] > 0)
 				var/N = vending_machine_input[O]
 				dat += "<a href='byond://?src=[REF(src)];dispense=[sanitize(O)]'>Dispense</A> "
-				dat += "<B>[capitalize(O)] ($[default_price]): [N]</B><br>"
+				dat += "<B>[O] ($[default_price]): [N]</B><br>"
 		dat += "</div>"
 
 	dat += {"<h3>Select an item</h3>
 					<div class='statusDisplay'>"}
-
 	if(!product_records.len)
 		dat += "<font color = 'red'>No product loaded!</font>"
 	else
@@ -529,9 +558,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 /obj/machinery/vending/Topic(href, href_list)
 	if(..())
 		return
-
 	usr.set_machine(src)
-
 	if((href_list["dispense"]) && (vend_ready))
 		var/N = href_list["dispense"]
 		if(vending_machine_input[N] <= 0) // Sanity check, there are probably ways to press the button when it shouldn't be possible.
@@ -552,22 +579,27 @@ GLOBAL_LIST_EMPTY(vending_products)
 				vend_ready = 1
 				return
 			var/datum/bank_account/account = C.registered_account
-			if(!account.adjust_money(-chef_price))
-				say("You do not possess the funds to purchase this meal.")
-		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SRV)
-		if(D)
-			D.adjust_money(chef_price)
-		use_power(5)
-
-		vending_machine_input[N] = max(vending_machine_input[N] - 1, 0)
-		for(var/obj/O in contents)
-			if(O.name == N)
-				say("Thank you for buying local and purchasing [O]!")
-				O.forceMove(drop_location())
-				break
-		vend_ready = 1
-		updateUsrDialog()
-		return
+			if(!account.has_money(default_price))
+				say("You do not possess the funds to purchase this.")
+			else
+				account.adjust_money(-default_price)
+				var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SRV)
+				if(D)
+					D.adjust_money(default_price)
+				use_power(5)
+				vending_machine_input[N] = max(vending_machine_input[N] - 1, 0)
+				for(var/obj/O in contents)
+					if(O.name == N)
+						if(last_shopper != usr || purchase_message_cooldown < world.time)
+							say("Thank you for buying local and purchasing [O]!")
+							purchase_message_cooldown = world.time + 5 SECONDS
+							last_shopper = usr
+						O.forceMove(drop_location())
+						loaded_items--
+						break
+			vend_ready = 1
+			updateUsrDialog()
+			return
 
 	if((href_list["vend"]) && (vend_ready))
 		if(panel_open)
@@ -643,7 +675,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 		shut_up = !shut_up
 
 	updateUsrDialog()
-
 
 /obj/machinery/vending/process()
 	if(stat & (BROKEN|NOPOWER))
@@ -759,33 +790,200 @@ GLOBAL_LIST_EMPTY(vending_products)
   * * I - the item being loaded
   * * user - the user doing the loading
   */
-/obj/machinery/vending/proc/canLoadItem(obj/item/I,mob/user)
+/obj/machinery/vending/proc/canLoadItem(obj/item/I, mob/user)
 	return FALSE
-/**
-  * Is the passed in user allowed to load this vending machines compartments
-  *
-  * Arguments:
-  * * user - mob that is doing the loading of the vending machine
-  */
-/obj/machinery/vending/proc/compartmentLoadAccessCheck(mob/user)
-	if(!canload_access_list)
-		return TRUE
-	else
-		var/do_you_have_access = FALSE
-		var/req_access_txt_holder = req_access_txt
-		for(var/i in canload_access_list)
-			req_access_txt = i
-			if(!allowed(user) && !(obj_flags & EMAGGED) && scan_id)
-				continue
-			else
-				do_you_have_access = TRUE
-				break //you passed don't bother looping anymore
-		req_access_txt = req_access_txt_holder // revert to normal (before the proc ran)
-		if(do_you_have_access)
-			return TRUE
-		else
-			to_chat(user, "<span class='warning'>[src]'s input compartment blinks red: Access denied.</span>")
-			return FALSE
 
 /obj/machinery/vending/onTransitZ()
 	return
+
+/obj/machinery/vending/custom
+	name = "Custom Vendor"
+	icon_state = "robotics"
+	icon_deny = "robotics-deny"
+	max_integrity = 400
+	payment_department = NO_FREEBIES
+	refill_canister = /obj/item/vending_refill/custom
+	/// where the money is sent
+	var/datum/bank_account/private_a
+	/// max number of items that the custom vendor can hold
+	var/max_loaded_items = 20
+
+/obj/machinery/vending/custom/compartmentLoadAccessCheck(mob/user)
+	. = FALSE
+	var/mob/living/carbon/human/H
+	var/obj/item/card/id/C
+	if(ishuman(user))
+		H = user
+		C = H.get_idcard(FALSE)
+		if(C?.registered_account && C.registered_account == private_a)
+			return TRUE
+
+/obj/machinery/vending/custom/canLoadItem(obj/item/I, mob/user)
+	. = FALSE
+	if(loaded_items >= max_loaded_items)
+		say("There are too many items in stock.")
+		return
+	if(I.custom_price)
+		return TRUE
+
+/obj/machinery/vending/custom/Topic(href, href_list)
+	usr.set_machine(src)
+	///what we are selling
+	var/obj/S
+
+	if((href_list["dispense"]) && (vend_ready))
+		var/N = href_list["dispense"]
+		vend_ready = 0
+		if(ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			var/obj/item/card/id/C = H.get_idcard(TRUE)
+
+			if(!C)
+				say("No card found.")
+				flick(icon_deny,src)
+				vend_ready = 1
+				return
+			else if (!C.registered_account)
+				say("No account found.")
+				flick(icon_deny,src)
+				vend_ready = 1
+				return
+			var/datum/bank_account/account = C.registered_account
+			for(var/obj/O in contents)
+				if(O.name == N)
+					S = O
+					break
+			if(!account.has_money(S.custom_price))
+				say("You do not possess the funds to purchase this.")
+			else
+				account.adjust_money(-S.custom_price)
+				var/datum/bank_account/owner = private_a
+				if(owner)
+					owner.adjust_money(S.custom_price)
+				use_power(5)
+				vending_machine_input[N] = max(vending_machine_input[N] - 1, 0)
+				if(last_shopper != usr || purchase_message_cooldown < world.time)
+					say("Thank you for buying local and purchasing [S]!")
+					purchase_message_cooldown = world.time + 5 SECONDS
+					last_shopper = usr
+				S.forceMove(drop_location())
+				loaded_items--
+				vend_ready = 1
+	updateUsrDialog()
+
+/obj/machinery/vending/custom/ui_interact(mob/user)
+	var/list/dat = list()
+	var/datum/bank_account/account
+	var/mob/living/carbon/human/H
+	var/obj/item/card/id/C
+	if(ishuman(user))
+		H = user
+		C = H.get_idcard(TRUE)
+	///temp var to set the shown price
+	var/price = 1
+
+	if(!C)
+		dat += "<font color = 'red'><h3>No ID Card detected!</h3></font>"
+	else if (!C.registered_account)
+		dat += "<font color = 'red'><h3>No account on registered ID card!</h3></font>"
+	else
+		account = C.registered_account
+	if(vending_machine_input.len)
+		dat += "<h3>[input_display_header]</h3>"
+		dat += "<div class='statusDisplay'>"
+		for (var/O in vending_machine_input)
+			if(vending_machine_input[O] > 0)
+				var/N = vending_machine_input[O]
+				dat += "<a href='byond://?src=[REF(src)];dispense=[sanitize(O)]'>Dispense</A> "
+				if(compartmentLoadAccessCheck(user))
+					price = "FREE"
+				else
+					for(var/obj/T in contents)
+						if(T.name == O)
+							price = "$[T.custom_price]"
+							break
+				dat += "<B>[O] ([price]): [N]</B><br>"
+		dat += "</div>"
+		dat += "<b>Balance: $[account.account_balance]</b>"
+
+	var/datum/browser/popup = new(user, "vending", (name))
+	popup.add_stylesheet(get_asset_datum(/datum/asset/spritesheet/vending))
+	popup.set_content(dat.Join(""))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
+	popup.open()
+
+/obj/machinery/vending/custom/attackby(obj/item/I, mob/user, params)
+
+	if(!private_a)
+		var/mob/living/carbon/human/H
+		var/obj/item/card/id/C
+		if(ishuman(user))
+			H = user
+			C = H.get_idcard(TRUE)
+			if(C?.registered_account)
+				private_a = C.registered_account
+				say("\The [src] has been linked to [C].")
+
+	if(compartmentLoadAccessCheck(user))
+		if(istype(I, /obj/item/pen))
+			name = stripped_input(user,"Set name","Name", name, 20)
+			desc = stripped_input(user,"Set description","Description", desc, 60)
+			slogan_list += stripped_input(user,"Set slogan","Slogan","Epic", 60)
+			last_slogan = world.time + rand(0, slogan_delay)
+			return
+
+		if(canLoadItem(I))
+			loadingAttempt(I,user)
+			updateUsrDialog()
+			return
+
+	if(panel_open && is_wire_tool(I))
+		wires.interact(user)
+		return
+
+	return ..()
+
+/obj/machinery/vending/custom/compartmentLoadAccessCheck(mob/user)
+	return FALSE
+
+/obj/machinery/vending/custom/crowbar_act(mob/living/user, obj/item/I)
+	return FALSE
+
+/obj/machinery/vending/custom/Destroy()
+	var/turf/T = get_turf(src)
+	if(T)
+		for(var/obj/item/I in contents)
+			I.forceMove(T)
+		explosion(T, -1, 0, 3)
+	return ..()
+
+/obj/machinery/vending/custom/unbreakable
+	name = "Indestructible Vendor"
+	resistance_flags = INDESTRUCTIBLE
+
+/obj/item/vending_refill/custom
+	machine_name = "Custom Vendor"
+	icon_state = "refill_custom"
+	custom_premium_price = 30
+
+/obj/item/price_tagger
+	name = "price tagger"
+	desc = "This tool is used to set a price for items used in custom vendors."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "pricetagger"
+	custom_premium_price = 25
+	///the price of the item
+	var/price = 1
+
+/obj/item/price_tagger/attack_self(mob/user)
+	price = max(1, round(input(user,"set price","price") as num|null, 1))
+	to_chat(user, "<span class='notice'> The [src] will now give things an $[price] tag.</span>")
+
+/obj/item/price_tagger/afterattack(atom/target, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	if(isitem(target))
+		var/obj/item/I = target
+		I.custom_price = price
+		to_chat(user, "<span class='notice'>You set the price of [I] to $[price].</span>")
