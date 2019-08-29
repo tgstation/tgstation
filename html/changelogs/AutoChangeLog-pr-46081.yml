@@ -1,0 +1,8 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - rscadd: "Toxins and incinerator burn chambers on all maps now has a console which allows you to read off gas mixture inside."
+  - tweak: "Toxins and incinerator have been remapped slightly on some maps to fit the new computer. Some welder/water tanks are gone, added another radsuit on box and meta."
+  - bugfix: "Incinerator outputs have had the space pump and injector maxed."
+  - bugfix: "The incinerator plasma tanks have been rotated on some maps. Notably, box station' no longer outputs into a wall."
+  - tweak: "Xenobiology now has two droppers."
