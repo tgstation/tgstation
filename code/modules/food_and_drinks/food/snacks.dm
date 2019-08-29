@@ -45,6 +45,8 @@ All foods are distributed among various categories. Use common sense.
 	var/eatverb
 	var/dried_type = null
 	var/dry = 0
+	var/dunkable = FALSE // for dunkable food, make true
+	var/dunk_amount = 10 // how much reagent is transferred per dunk
 	var/cooked_type = null  //for microwave cooking. path of the resulting item after microwaving
 	var/filling_color = "#FFFFFF" //color to use when added to custom food.
 	var/custom_food_type = null  //for food customizing. path of the custom food to create
@@ -330,6 +332,19 @@ All foods are distributed among various categories. Use common sense.
 					M.emote("me", 1, "[sattisfaction_text]")
 				qdel(src)
 
+/obj/item/reagent_containers/food/snacks/afterattack(obj/item/reagent_containers/glass/glass, mob/user, proximity)
+	. = ..()
+	if(!dunkable)
+		return
+	if(istype(glass))	//you can dunk dunkable snacks into beakers
+		if(glass.reagents.trans_to(src, dunk_amount, transfered_by = user))	//if reagents were transfered, show the message
+			to_chat(user, "<span class='notice'>You dunk \the [src] into \the [glass].</span>")
+		else			//if not, either the beaker was empty, or the snack was full
+			if(!glass.reagents.total_volume)
+				to_chat(user, "<span class='warning'>[glass] is empty!</span>")
+			else
+				to_chat(user, "<span class='warning'>[src] is full!</span>")
+
 // //////////////////////////////////////////////Store////////////////////////////////////////
 /// All the food items that can store an item inside itself, like bread or cake.
 /obj/item/reagent_containers/food/snacks/store
@@ -362,3 +377,4 @@ All foods are distributed among various categories. Use common sense.
 		TB.MouseDrop(over)
 	else
 		return ..()
+

@@ -34,6 +34,7 @@
 	icon_state = "breadslice"
 	customfoodfilling = 1
 	foodtype = GRAIN
+	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/store/bread/meat
 	name = "meatbread loaf"

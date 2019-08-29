@@ -12,10 +12,10 @@
 	filling_color = "#D2691E"
 	tastes = list("donut" = 1)
 	foodtype = JUNKFOOD | GRAIN | FRIED | SUGAR | BREAKFAST
+	dunkable = TRUE
 	var/frosted_icon = "donut2"
 	var/is_frosted = FALSE
 	var/extra_reagent = null
-	var/chem_volume = 15
 
 /obj/item/reagent_containers/food/snacks/donut/Initialize()
 	. = ..()
@@ -43,18 +43,6 @@
 				last_check_time = world.time
 				return
 	..()
-
-/obj/item/reagent_containers/food/snacks/donut/afterattack(obj/item/reagent_containers/glass/glass, mob/user, proximity)
-	. = ..()
-	if(istype(glass))	//you can dunk donuts into beakers
-		if(glass.reagents.trans_to(src, chem_volume, transfered_by = user))	//if reagents were transfered, show the message
-			to_chat(user, "<span class='notice'>You dunk \the [src] into \the [glass].</span>")
-		else			//if not, either the beaker was empty, or the donut was full
-			if(!glass.reagents.total_volume)
-				to_chat(user, "<span class='warning'>[glass] is empty!</span>")
-			else
-				to_chat(user, "<span class='warning'>[src] is full!</span>")
-
 
 /obj/item/reagent_containers/food/snacks/donut/chaos
 	name = "chaos donut"
