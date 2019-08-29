@@ -70,15 +70,14 @@
 	if(owner.health > owner.crit_threshold)
 		var/healing = 15
 		if((locate(/obj/structure/bed) in owner.loc))
-			healing +=10
+			healing += 10
 		else
 			if((locate(/obj/structure/table) in owner.loc))
-				healing +=5
+				healing += 5
 		owner.adjustBruteLoss((-healing/50), 0)
 		owner.adjustFireLoss((-healing/50), 0)
 		owner.adjustToxLoss((-healing/50), 0)
 		owner.adjustStaminaLoss((-healing/50), 0)
-	..()
 	if(human_owner && human_owner.drunkenness)
 		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
 	if(prob(20))
