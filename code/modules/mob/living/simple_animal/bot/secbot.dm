@@ -91,9 +91,6 @@
 
 /mob/living/simple_animal/bot/secbot/update_icon()
 	if(mode == BOT_HUNT)
-		if(ranged)
-			icon_state = "ed209[on]"
-		else
 			icon_state = "[initial(icon_state)]-c"
 		return
 	..()
@@ -191,6 +188,8 @@ Auto Patrol: []"},
         final = final|JUDGE_WEAPONCHECK
     if(emagged == 2)
         final = final|JUDGE_EMAGGED
+	if(ranged)
+		final = final|JUDGE_IGNOREMONKEYS
     return final
 
 /mob/living/simple_animal/bot/secbot/proc/special_retaliate_after_attack(mob/user) //allows special actions to take place after being attacked.
@@ -272,7 +271,7 @@ Auto Patrol: []"},
 /mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/C, var/harm = FALSE)
 	var/judgement_criteria = judgement_criteria()
 	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
-	icon_state = "secbot-c"
+	icon_state = "[initial(icon_state)]-c"
 	addtimer(CALLBACK(src, .proc/update_icon), 2)
 	var/threat = 5
 
@@ -423,7 +422,10 @@ Auto Patrol: []"},
 			target = C
 			oldtarget_name = C.name
 			speak("Level [threatlevel] infraction alert!")
-			playsound(loc, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
+			if(ranged)
+				playsound(src, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/edplaceholder.ogg'), 50, FALSE)
+			else
+				playsound(loc, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
 			visible_message("<b>[src]</b> points at [C.name]!")
 			mode = BOT_HUNT
 			INVOKE_ASYNC(src, .proc/handle_automated_action)
