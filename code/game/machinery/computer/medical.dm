@@ -163,11 +163,6 @@
 						var/turf/bl = get_turf(M)
 						if(bl)	//if it can't find a turf for the medibot, then it probably shouldn't be showing up
 							bdat += "[M.name] - <b>\[[bl.x],[bl.y]\]</b> - [M.on ? "Online" : "Offline"]<br>"
-							if((!isnull(M.reagent_glass)) && M.use_beaker)
-								bdat += "Reservoir: \[[M.reagent_glass.reagents.total_volume]/[M.reagent_glass.reagents.maximum_volume]\]<br>"
-							else
-								bdat += "Using Internal Synthesizer.<br>"
-
 					if(!bdat)
 						dat += "<br><center>None detected</center>"
 					else

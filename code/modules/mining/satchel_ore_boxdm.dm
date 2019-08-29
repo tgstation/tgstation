@@ -20,7 +20,7 @@
 
 /obj/structure/ore_box/crowbar_act(mob/living/user, obj/item/I)
 	if(I.use_tool(src, user, 50, volume=50))
-		user.visible_message("[user] pries \the [src] apart.",
+		user.visible_message("<span class='notice'>[user] pries \the [src] apart.</span>",
 			"<span class='notice'>You pry apart \the [src].</span>",
 			"<span class='italics'>You hear splitting wood.</span>")
 		deconstruct(TRUE, user)

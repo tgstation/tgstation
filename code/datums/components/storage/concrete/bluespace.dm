@@ -9,7 +9,7 @@
 		var/atom/dumping_location = dest.get_dumping_location()
 		var/turf/bagT = get_turf(parent)
 		var/turf/destT = get_turf(dumping_location)
-		if(bagT.z == destT.z && get_dist(M, dumping_location) < dumping_range)
+		if(destT && bagT && bagT.z == destT.z && get_dist(M, dumping_location) < dumping_range)
 			if(dumping_location.storage_contents_dump_act(src, M))
 				if(alt_sound && prob(1))
 					playsound(src, alt_sound, 40, 1)

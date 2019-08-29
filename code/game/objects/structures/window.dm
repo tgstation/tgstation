@@ -187,7 +187,7 @@
 				to_chat(user, "<span class='notice'>You [anchored ? "fasten the window to":"unfasten the window from"] the floor.</span>")
 			return
 		else if(I.tool_behaviour == TOOL_WRENCH && !anchored)
-			to_chat(user, "<span class='notice'> You begin to disassemble [src]...</span>")
+			to_chat(user, "<span class='notice'>You begin to disassemble [src]...</span>")
 			if(I.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 				var/obj/item/stack/sheet/G = new glass_type(user.loc, glass_amount)
 				G.add_fingerprint(user)
@@ -421,12 +421,12 @@
 					setAnchored(FALSE)
 				return
 	return ..()
-	
+
 /obj/structure/window/proc/cool_bolts()
 	if(state == RWINDOW_BOLTS_HEATED)
 		state = RWINDOW_SECURE
 		visible_message("<span class='notice'>The bolts on \the [src] look like they've cooled off...</span>")
-	
+
 /obj/structure/window/reinforced/examine(mob/user)
 	. = ..()
 	switch(state)
@@ -546,7 +546,7 @@
 					setAnchored(FALSE)
 				return
 	return ..()
-	
+
 /obj/structure/window/plasma/reinforced/examine(mob/user)
 	. = ..()
 	switch(state)
@@ -837,7 +837,7 @@
 	add_fingerprint(user)
 	if(user.a_intent != INTENT_HARM)
 		user.changeNext_move(CLICK_CD_MELEE)
-		user.visible_message("[user] knocks on [src].")
+		user.visible_message("<span class='notice'>[user] knocks on [src].</span>")
 		playsound(src, "pageturn", 50, 1)
 	else
 		take_damage(4,BRUTE,"melee", 0)
@@ -865,11 +865,11 @@
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 	if(istype(W, /obj/item/paper) && obj_integrity < max_integrity)
-		user.visible_message("[user] starts to patch the holes in \the [src].")
+		user.visible_message("<span class='notice'>[user] starts to patch the holes in \the [src].</span>")
 		if(do_after(user, 20, target = src))
 			obj_integrity = min(obj_integrity+4,max_integrity)
 			qdel(W)
-			user.visible_message("[user] patches some of the holes in \the [src].")
+			user.visible_message("<span class='notice'>[user] patches some of the holes in \the [src].</span>")
 			if(obj_integrity == max_integrity)
 				update_icon()
 			return

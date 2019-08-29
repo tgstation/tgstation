@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - bugfix: "Trays now scatter their contents when used for attacks, like they are supposed to."

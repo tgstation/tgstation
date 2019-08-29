@@ -540,8 +540,8 @@
 			to_chat(user, "<span class='notice'>[src] warms as it might on a spring day under a genuine Sun.</span>")
 
 	// Antitoxin binds shit pretty well. So the tox goes significantly down
-	if(S.has_reagent(/datum/reagent/medicine/charcoal, 1))
-		adjustToxic(-round(S.get_reagent_amount(/datum/reagent/medicine/charcoal) * 2))
+	if(S.has_reagent(/datum/reagent/medicine/C2/multiver, 1))
+		adjustToxic(-round(S.get_reagent_amount(/datum/reagent/medicine/C2/multiver) * 2))
 
 	// NIGGA, YOU JUST WENT ON FULL RETARD.
 	if(S.has_reagent(/datum/reagent/toxin, 1))
@@ -831,7 +831,7 @@
 
 	else if(istype(O, /obj/item/cultivator))
 		if(weedlevel > 0)
-			user.visible_message("[user] uproots the weeds.", "<span class='notice'>You remove the weeds from [src].</span>")
+			user.visible_message("<span class='notice'>[user] uproots the weeds.</span>", "<span class='notice'>You remove the weeds from [src].</span>")
 			weedlevel = 0
 			update_icon()
 		else

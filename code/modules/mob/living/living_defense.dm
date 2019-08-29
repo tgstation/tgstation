@@ -171,7 +171,7 @@
 			if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state)
 				return 0
 			if(user.a_intent != INTENT_GRAB)
-				to_chat(user, "<span class='warning'>You must be on grab intent to upgrade your grab further!<span>")
+				to_chat(user, "<span class='warning'>You must be on grab intent to upgrade your grab further!</span>")
 				return 0
 		user.grab_state++
 		switch(user.grab_state)
@@ -229,21 +229,20 @@
 /mob/living/attack_animal(mob/living/simple_animal/M)
 	M.face_atom(src)
 	if(M.melee_damage_upper == 0)
-		M.visible_message("<span class='notice'>\The [M] [M.friendly] [src]!</span>", \
-						"<span class='notice'>\The [M] [M.friendly] you!</span>")
+		visible_message("<span class='notice'>\The [M] [M.friendly] [src]!</span>", \
+						"<span class='notice'>\The [M] [M.friendly] you!</span>", null, COMBAT_MESSAGE_RANGE)
 		return FALSE
-	else
-		if(HAS_TRAIT(M, TRAIT_PACIFISM))
-			to_chat(M, "<span class='warning'>You don't want to hurt anyone!</span>")
-			return FALSE
+	if(HAS_TRAIT(M, TRAIT_PACIFISM))
+		to_chat(M, "<span class='warning'>You don't want to hurt anyone!</span>")
+		return FALSE
 
-		if(M.attack_sound)
-			playsound(loc, M.attack_sound, 50, 1, 1)
-		M.do_attack_animation(src)
-		visible_message("<span class='danger'>\The [M] [M.attacktext] [src]!</span>", \
-						"<span class='userdanger'>\The [M] [M.attacktext] you!</span>", null, COMBAT_MESSAGE_RANGE)
-		log_combat(M, src, "attacked")
-		return TRUE
+	if(M.attack_sound)
+		playsound(loc, M.attack_sound, 50, 1, 1)
+	M.do_attack_animation(src)
+	visible_message("<span class='danger'>\The [M] [M.attacktext] [src]!</span>", \
+					"<span class='userdanger'>\The [M] [M.attacktext] you!</span>", null, COMBAT_MESSAGE_RANGE)
+	log_combat(M, src, "attacked")
+	return TRUE
 
 
 /mob/living/attack_paw(mob/living/carbon/monkey/M)

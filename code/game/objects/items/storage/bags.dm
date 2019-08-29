@@ -194,7 +194,7 @@
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_combined_w_class = 100
 	STR.max_items = 100
-	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/grown, /obj/item/seeds, /obj/item/grown, /obj/item/reagent_containers/honeycomb))
+	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/grown, /obj/item/seeds, /obj/item/grown, /obj/item/reagent_containers/honeycomb, /obj/item/disk/plantgene))
 ////////
 
 /obj/item/storage/bag/plants/portaseeder
@@ -294,8 +294,7 @@
 	. = ..()
 	// Drop all the things. All of them.
 	var/list/obj/item/oldContents = contents.Copy()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.quick_empty()
+	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_QUICK_EMPTY)
 	// Make each item scatter a bit
 	for(var/obj/item/I in oldContents)
 		INVOKE_ASYNC(src, .proc/do_scatter, I)
