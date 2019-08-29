@@ -45,12 +45,12 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency/shuttle_build{
-	dwidth = 6;
+	dwidth = 9;
 	height = 15;
 	name = "Shuttle Under Construction";
 	port_direction = 4;
 	preferred_direction = 2;
-	width = 23
+	width = 26
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -181,12 +181,15 @@ a
 c
 e
 e
+h
+e
+e
 g
 e
 i
 e
 e
-e
+h
 e
 e
 g
@@ -204,6 +207,9 @@ a
 (2,1,1) = {"
 b
 d
+f
+f
+f
 f
 f
 f
@@ -244,6 +250,9 @@ f
 f
 f
 f
+f
+f
+f
 e
 a
 a
@@ -269,6 +278,9 @@ f
 f
 f
 f
+f
+f
+f
 e
 e
 h
@@ -279,6 +291,9 @@ a
 (5,1,1) = {"
 b
 d
+f
+f
+f
 f
 f
 f
@@ -324,6 +339,9 @@ f
 f
 f
 f
+f
+f
+f
 h
 "}
 (7,1,1) = {"
@@ -335,9 +353,12 @@ f
 f
 f
 f
-j
 f
+f
+j
 m
+f
+f
 f
 f
 f
@@ -360,9 +381,12 @@ f
 f
 f
 f
-k
 f
+f
+k
 n
+f
+f
 f
 f
 f
@@ -385,9 +409,12 @@ f
 f
 f
 f
-l
 f
+f
+l
 o
+f
+f
 f
 f
 f
@@ -404,6 +431,9 @@ h
 (10,1,1) = {"
 b
 d
+f
+f
+f
 f
 f
 f
@@ -448,12 +478,18 @@ f
 f
 f
 f
+f
+f
+f
 h
 h
 "}
 (12,1,1) = {"
 c
 c
+f
+f
+f
 f
 f
 f
@@ -494,6 +530,9 @@ f
 f
 f
 f
+f
+f
+f
 e
 a
 a
@@ -504,6 +543,9 @@ a
 (14,1,1) = {"
 b
 d
+f
+f
+f
 f
 f
 f
@@ -535,13 +577,16 @@ h
 e
 e
 e
+h
+e
+e
 e
 h
 e
 e
 e
-e
 h
+e
 e
 p
 a

@@ -151,7 +151,7 @@
 		return
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-	RegisterSignal(listeningTo, COMSIG_MOVABLE_MOVED, .proc/trigger)
+	RegisterSignal(to_hook, COMSIG_MOVABLE_MOVED, .proc/trigger)
 	listeningTo = to_hook
 
 /obj/item/twohanded/rcl/proc/trigger(mob/user)
@@ -189,7 +189,7 @@
 					return //If we've run out, display message and exit
 			else
 				last = null
-		loaded.item_color	 = colors[current_color_index]
+		loaded.pipe_cleaner_color = colors[current_color_index]
 		last = loaded.place_turf(get_turf(src), user, turn(user.dir, 180))
 		is_empty(user) //If we've run out, display message
 	update_icon()
@@ -266,7 +266,7 @@
 	if(T.intact || !T.can_have_cabling())
 		return
 
-	loaded.item_color	 = colors[current_color_index]
+	loaded.pipe_cleaner_color = colors[current_color_index]
 
 	var/obj/structure/pipe_cleaner/linkingCable = findLinkingCable(user)
 	if(linkingCable)
@@ -300,7 +300,7 @@
 		var/cwname = colors[current_color_index]
 		to_chat(user, "Color changed to [cwname]!")
 		if(loaded)
-			loaded.item_color= colors[current_color_index]
+			loaded.pipe_cleaner_color = colors[current_color_index]
 		if(wiring_gui_menu)
 			wiringGuiUpdate(user)
 	else if(istype(action, /datum/action/item_action/rcl_gui))

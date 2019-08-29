@@ -2,6 +2,8 @@
 	name = "atmospheric alert console"
 	desc = "Used to monitor the station's air alarms."
 	circuit = /obj/item/circuitboard/computer/atmos_alert
+	ui_x = 350
+	ui_y = 300
 	icon_screen = "alert:0"
 	icon_keyboard = "atmos_key"
 	var/list/priority_alarms = list()
@@ -23,7 +25,7 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_alert", name, 350, 300, master_ui, state)
+		ui = new(user, src, ui_key, "atmos_alert", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/atmos_alert/ui_data(mob/user)

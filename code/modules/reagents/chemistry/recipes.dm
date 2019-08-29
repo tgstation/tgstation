@@ -52,28 +52,25 @@
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(S, pick(NORTH,SOUTH,EAST,WEST))
 
-/datum/chemical_reaction/proc/goonchem_vortex(turf/T, setting_type, range)
+///Simulates a vortex that moves nearby movable atoms towards or away from the turf T. Range also determines the strength of the effect. High values cause nearby objects to be thrown.
+/proc/goonchem_vortex(turf/T, setting_type, range)
 	for(var/atom/movable/X in orange(range, T))
-		if(iseffect(X))
+		if(X.anchored)
 			continue
-		if(!X.anchored)
-			var/distance = get_dist(X, T)
-			var/moving_power = max(range - distance, 1)
-			if(moving_power > 2) //if the vortex is powerful and we're close, we get thrown
-				if(setting_type)
-					var/atom/throw_target = get_edge_target_turf(X, get_dir(X, get_step_away(X, T)))
-					X.throw_at(throw_target, moving_power, 1)
-				else
-					X.throw_at(T, moving_power, 1)
+		if(iseffect(X) || iscameramob(X) || isdead(X))
+			continue
+		var/distance = get_dist(X, T)
+		var/moving_power = max(range - distance, 1)
+		if(moving_power > 2) //if the vortex is powerful and we're close, we get thrown
+			if(setting_type)
+				var/atom/throw_target = get_edge_target_turf(X, get_dir(X, get_step_away(X, T)))
+				X.throw_at(throw_target, moving_power, 1)
 			else
-				spawn(0) //so everything moves at the same time.
-					if(setting_type)
-						for(var/i = 0, i < moving_power, i++)
-							sleep(2)
-							if(!step_away(X, T))
-								break
-					else
-						for(var/i = 0, i < moving_power, i++)
-							sleep(2)
-							if(!step_towards(X, T))
-								break
+				X.throw_at(T, moving_power, 1)
+		else
+			if(setting_type)
+				if(step_away(X, T) && moving_power > 1) //Can happen twice at most. So this is fine.
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/_step_away, X, T), 2)
+			else
+				if(step_towards(X, T) && moving_power > 1)
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/_step_towards, X, T), 2)

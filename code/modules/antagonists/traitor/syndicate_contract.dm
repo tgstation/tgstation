@@ -3,27 +3,27 @@
 	var/status = CONTRACT_STATUS_INACTIVE
 	var/datum/objective/contract/contract = new()
 	var/ransom = 0
+	var/payout_type = null
 
 	var/list/victim_belongings = list()
 
-/datum/syndicate_contract/New(owner)
-	generate(owner)
+/datum/syndicate_contract/New(contract_owner, blacklist, type=CONTRACT_PAYOUT_SMALL)
+	contract.owner = contract_owner
+	payout_type = type
 
-/datum/syndicate_contract/proc/generate(owner)
-	contract.owner = owner
-	contract.find_target()
+	generate(blacklist)
 
-	// Balanced around being low numbers, with about 50/50 chance of getting at least one very high paying
-	// contract.
-	// High payout
-	if (prob(15))
+/datum/syndicate_contract/proc/generate(blacklist)
+	contract.find_target(null, blacklist)
+
+	if (payout_type == CONTRACT_PAYOUT_LARGE)
+		contract.payout_bonus = rand(9,13)
+	else if (payout_type == CONTRACT_PAYOUT_MEDIUM)
 		contract.payout_bonus = rand(6,8)
-	else if (prob(45)) // Low payout
-		contract.payout_bonus = rand(1,2)
-	else // Medium payout
-		contract.payout_bonus = rand(3,5)
+	else
+		contract.payout_bonus = rand(2,4)
 
-	contract.payout = rand(0, 3)
+	contract.payout = rand(0, 2)
 	contract.generate_dropoff()
 
 	ransom = 100 * rand(18, 45)
@@ -31,33 +31,14 @@
 /datum/syndicate_contract/proc/handle_extraction(var/mob/living/user)
 	if (contract.target && contract.dropoff_check(user, contract.target.current))
 
-		var/list/turfs = RANGE_TURFS(3, user)
-		var/list/possible_drop_loc = list()
+		var/turf/free_location = find_obstruction_free_location(3, user, contract.dropoff)
 
-		for(var/T in turfs)
-			var/turf/found_turf = T
-			var/area/turf_area = get_area(found_turf)
+		if (free_location)
+			// We've got a valid location, launch.
+			launch_extraction_pod(free_location)
+			return TRUE
 
-			// We check if both the turf is a floor, and that it's actually in the area. 
-			// We also want a location that's clear of any obstructions.
-			var/location_clear = TRUE
-			if (isfloorturf(found_turf) && istype(turf_area, contract.dropoff))
-				for (var/content in found_turf.contents)
-					if (istype(content, /obj/machinery) || istype(content, /obj/structure))
-						location_clear = FALSE
-				if (location_clear)
-					possible_drop_loc.Add(found_turf)
-
-		// Need at least one free location.
-		if (possible_drop_loc.len < 1)
-			return FALSE
-
-		var/pod_rand_loc = rand(1, possible_drop_loc.len)
-
-		// We've got a valid location, launch.
-		launch_extraction_pod(possible_drop_loc[pod_rand_loc])
-		return 1
-	return 0
+	return FALSE
 
 // Launch the pod to collect our victim.
 /datum/syndicate_contract/proc/launch_extraction_pod(turf/empty_pod_turf)
@@ -67,7 +48,7 @@
 
 	empty_pod.stay_after_drop = TRUE
 	empty_pod.reversing = TRUE
-	empty_pod.explosionSize = list(0,0,2,1)
+	empty_pod.explosionSize = list(0,0,0,1)
 	empty_pod.leavingSound = 'sound/effects/podwoosh.ogg'
 
 	new /obj/effect/DPtarget(empty_pod_turf, empty_pod)
@@ -79,58 +60,91 @@
 			var/datum/antagonist/traitor/traitor_data = contract.owner.has_antag_datum(/datum/antagonist/traitor)
 			
 			if (M == contract.target.current)
-				traitor_data.contract_TC_to_redeem += contract.payout
+				traitor_data.contractor_hub.contract_TC_to_redeem += contract.payout
 
 				if (M.stat != DEAD)
-					traitor_data.contract_TC_to_redeem += contract.payout_bonus
+					traitor_data.contractor_hub.contract_TC_to_redeem += contract.payout_bonus
 
 				status = CONTRACT_STATUS_COMPLETE
 
-				if (traitor_data.current_contract == src) 
-					traitor_data.current_contract = null
-	
+				if (traitor_data.contractor_hub.current_contract == src) 
+					traitor_data.contractor_hub.current_contract = null
+				
+				traitor_data.contractor_hub.contract_rep += 2
 			else
 				status = CONTRACT_STATUS_ABORTED // Sending a target that wasn't even yours is as good as just aborting it
 				
-				if (traitor_data.current_contract == src) 
-					traitor_data.current_contract = null
+				if (traitor_data.contractor_hub.current_contract == src) 
+					traitor_data.contractor_hub.current_contract = null
 
-			for(var/obj/item/W in M)
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					if(W == H.w_uniform)
-						continue //So all they're left with are shoes and uniform.
-					if(W == H.shoes)
-						continue
+			if (iscarbon(M))
+				for(var/obj/item/W in M)
+					if (ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if(W == H.w_uniform)
+							continue //So all they're left with are shoes and uniform.
+						if(W == H.shoes)
+							continue
 				
-				M.transferItemToLoc(W)
-				victim_belongings.Add(W)
 
+					M.transferItemToLoc(W)
+					victim_belongings.Add(W)
+				
+			var/obj/structure/closet/supplypod/extractionpod/pod = source
+
+			// Handle the pod returning
+			pod.send_up(pod)
+
+			if (ishuman(M))
+				var/mob/living/carbon/human/target = M
+				
+				// After we remove items, at least give them what they need to live.
+				target.dna.species.give_important_for_life(target)
+
+			// After pod is sent we start the victim narrative/heal.
 			handleVictimExperience(M)
 
 			// This is slightly delayed because of the sleep calls above to handle the narrative. 
 			// We don't want to tell the station instantly.
 			var/points_to_check
 			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-
 			if(D)
 				points_to_check = D.account_balance
-
 			if(points_to_check >= ransom)
 				D.adjust_money(-ransom)
 			else 
 				D.adjust_money(-points_to_check)
-			
+
 			priority_announce("One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. \
-								As is policy we've taken a portion of the station's funds to offset the overall cost.", null, 'sound/ai/attention.ogg', null, "Nanotrasen Asset Protection")
+							As is policy we've taken a portion of the station's funds to offset the overall cost.", null, 'sound/ai/attention.ogg', null, "Nanotrasen Asset Protection")
+
+			sleep(30)
+
+			// Pay contractor their portion of ransom
+			if (status == CONTRACT_STATUS_COMPLETE)
+				var/mob/living/carbon/human/H
+				var/obj/item/card/id/C
+				if(ishuman(contract.owner.current))
+					H = contract.owner.current
+					C = H.get_idcard(TRUE)
+
+				if(C && C.registered_account)
+					C.registered_account.adjust_money(ransom * 0.35)
+
+					C.registered_account.bank_card_talk("We've processed the ransom, agent. Here's your cut - your balance is now \
+					$[C.registered_account.account_balance].", TRUE)
 
 // They're off to holding - handle the return timer and give some text about what's going on.
 /datum/syndicate_contract/proc/handleVictimExperience(var/mob/living/M)
-	// Ship 'em back - dead or alive, it depends on if the Syndicate get paid... 5 minutes wait.
+	// Ship 'em back - dead or alive, 4 minutes wait.
 	// Even if they weren't the target, we're still treating them the same.
-	addtimer(CALLBACK(src, .proc/returnVictim, M), (60 * 10) * 5)
+	addtimer(CALLBACK(src, .proc/returnVictim, M), (60 * 10) * 4)
 
 	if (M.stat != DEAD)
+		// Heal them up - gets them out of crit/soft crit. If omnizine is removed in the future, this needs to be replaced with a
+		// method of healing them, consequence free, to a reasonable amount of health.
+		M.reagents.add_reagent(/datum/reagent/medicine/omnizine, 20)
+
 		M.flash_act()
 		M.confused += 10
 		M.blur_eyes(5)
@@ -160,13 +174,8 @@
 	var/list/possible_drop_loc = list()
 
 	for (var/turf/possible_drop in contract.dropoff.contents)
-		var/location_clear = TRUE
-		// We don't care as much about what we land on than we did for sending the pod down.
 		if (!isspaceturf(possible_drop) && !isclosedturf(possible_drop))
-			for (var/content in possible_drop.contents)
-				if (istype(content, /obj/machinery) || istype(content, /obj/structure))
-					location_clear = FALSE
-			if (location_clear)
+			if (!is_blocked_turf(possible_drop))
 				possible_drop_loc.Add(possible_drop)
 
 	if (possible_drop_loc.len > 0)

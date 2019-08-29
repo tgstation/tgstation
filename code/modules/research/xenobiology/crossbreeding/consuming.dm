@@ -18,7 +18,7 @@ Consuming extracts:
 /obj/item/slimecross/consuming/attackby(obj/item/O, mob/user)
 	if(istype(O,/obj/item/reagent_containers/food/snacks))
 		if(last_produced + cooldown > world.time)
-			to_chat(user, "<span class='warning'>[src] is still digesting after its last meal!<span>")
+			to_chat(user, "<span class='warning'>[src] is still digesting after its last meal!</span>")
 			return
 		var/datum/reagent/N = O.reagents.has_reagent(/datum/reagent/consumable/nutriment)
 		if(N)
@@ -125,7 +125,7 @@ Consuming extracts:
 	M.adjustToxLoss(-5, forced=1) //To heal slimepeople.
 	M.adjustOxyLoss(-5)
 	M.adjustCloneLoss(-5)
-	M.adjustBrainLoss(-5)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5)
 
 /obj/item/slimecross/consuming/blue
 	colour = "blue"

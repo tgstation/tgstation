@@ -4,7 +4,7 @@
 	offset_features = list(OFFSET_UNIFORM = list(0,0), OFFSET_ID = list(0,0), OFFSET_GLOVES = list(0,0), OFFSET_GLASSES = list(0,4), OFFSET_EARS = list(0,0), OFFSET_SHOES = list(0,0), OFFSET_S_STORE = list(0,0), OFFSET_FACEMASK = list(0,0), OFFSET_HEAD = list(0,0), OFFSET_FACE = list(0,0), OFFSET_BELT = list(0,0), OFFSET_BACK = list(0,0), OFFSET_SUIT = list(0,0), OFFSET_NECK = list(0,0))
 	default_color = "336600" //vomit green
 	species_traits = list(MUTCOLORS, NO_UNDERWEAR)
-	inherent_traits = list(TRAIT_ALWAYS_CLEAN)
+	inherent_traits = list(TRAIT_ALWAYS_CLEAN, TRAIT_NOSLIPALL)
 	attack_verb = "slap"
 	say_mod = "slurs"
 	coldmod = 0.5 //snails only come out when its cold and wet
@@ -33,13 +33,11 @@
 	if(!istype(bag, /obj/item/storage/backpack/snail))
 		if(C.dropItemToGround(bag)) //returns TRUE even if its null
 			C.equip_to_slot_or_del(new /obj/item/storage/backpack/snail(C), SLOT_BACK)
-	C.AddComponent(/datum/component/snailcrawl)
-	ADD_TRAIT(C, TRAIT_NOSLIPALL, SPECIES_TRAIT)
+	C.AddElement(/datum/element/snailcrawl)
 
 /datum/species/snail/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	qdel(C.GetComponent(/datum/component/snailcrawl))
-	REMOVE_TRAIT(C, TRAIT_NOSLIPALL, SPECIES_TRAIT)
+	C.RemoveElement(/datum/element/snailcrawl)
 	var/obj/item/storage/backpack/bag = C.get_item_by_slot(SLOT_BACK)
 	if(istype(bag, /obj/item/storage/backpack/snail))
 		bag.emptyStorage()

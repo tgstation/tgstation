@@ -32,6 +32,19 @@
 		return
 	if(!cargo_holder)
 		return
+	if(ismecha(target))
+		var/obj/mecha/M = target
+		var/have_ammo
+		for(var/obj/item/mecha_ammo/box in cargo_holder.cargo)
+			if(istype(box, /obj/item/mecha_ammo) && box.rounds)
+				have_ammo = TRUE
+				if(M.ammo_resupply(box, chassis.occupant, TRUE))
+					return
+		if(have_ammo)
+			to_chat(chassis.occupant, "No further supplies can be provided to [M].")
+		else
+			to_chat(chassis.occupant, "No providable supplies found in cargo hold")
+		return
 	if(isobj(target))
 		var/obj/O = target
 		if(istype(O, /obj/machinery/door/firedoor))
@@ -44,7 +57,7 @@
 			return
 		if(!O.anchored)
 			if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
-				chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
+				chassis.visible_message("<span class='notice'>[chassis] lifts [target] and starts to load it into cargo compartment.</span>")
 				O.anchored = TRUE
 				if(do_after_cooldown(target))
 					cargo_holder.cargo += O
@@ -69,14 +82,14 @@
 				return
 			M.adjustOxyLoss(round(dam_force/2))
 			M.updatehealth()
-			target.visible_message("<span class='danger'>[chassis] squeezes [target].</span>", \
-								"<span class='userdanger'>[chassis] squeezes [target].</span>",\
+			target.visible_message("<span class='danger'>[chassis] squeezes [target]!</span>", \
+								"<span class='userdanger'>[chassis] squeezes you!</span>",\
 								"<span class='italics'>You hear something crack.</span>")
-			log_combat(chassis.occupant, M, "attacked", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
+			log_combat(chassis.occupant, M, "attacked", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 		else
 			step_away(M,chassis)
-			occupant_message("You push [target] out of the way.")
-			chassis.visible_message("[chassis] pushes [target] out of the way.")
+			occupant_message("<span class='notice'>You push [target] out of the way.</span>")
+			chassis.visible_message("<span class='notice'>[chassis] pushes [target] out of the way.</span>")
 		return 1
 
 
@@ -104,7 +117,7 @@
 		var/obj/O = target
 		if(!O.anchored)
 			if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
-				chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
+				chassis.visible_message("<span class='notice'>[chassis] lifts [target] and starts to load it into cargo compartment.</span>")
 				O.anchored = TRUE
 				if(do_after_cooldown(target))
 					cargo_holder.cargo += O
@@ -130,12 +143,12 @@
 					return
 				M.adjustOxyLoss(round(dam_force/2))
 				M.updatehealth()
-				target.visible_message("<span class='danger'>[chassis] destroys [target] in an unholy fury.</span>", \
-									"<span class='userdanger'>[chassis] destroys [target] in an unholy fury.</span>")
-				log_combat(chassis.occupant, M, "attacked", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
+				target.visible_message("<span class='danger'>[chassis] destroys [target] in an unholy fury!</span>", \
+									"<span class='userdanger'>[chassis] destroys you in an unholy fury!</span>")
+				log_combat(chassis.occupant, M, "attacked", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 			else
-				target.visible_message("<span class='danger'>[chassis] destroys [target] in an unholy fury.</span>", \
-									"<span class='userdanger'>[chassis] destroys [target] in an unholy fury.</span>")
+				target.visible_message("<span class='danger'>[chassis] destroys [target] in an unholy fury!</span>", \
+									"<span class='userdanger'>[chassis] destroys you in an unholy fury!</span>")
 		else if(chassis.occupant.a_intent == INTENT_DISARM)
 			if(real_clamp)
 				var/mob/living/carbon/C = target
@@ -153,15 +166,16 @@
 					limbs_gone = "[limbs_gone], [affected]"
 				if(play_sound)
 					playsound(src, get_dismember_sound(), 80, TRUE)
-					target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off.</span>", \
-								   "<span class='userdanger'>[chassis] rips [target]'s arms off.</span>")
-					log_combat(chassis.occupant, M, "dismembered of[limbs_gone],", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
+					target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off!</span>", \
+								   "<span class='userdanger'>[chassis] rips your arms off!</span>")
+					log_combat(chassis.occupant, M, "dismembered of[limbs_gone],", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 			else
-				target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off.</span>", \
-								   "<span class='userdanger'>[chassis] rips [target]'s arms off.</span>")
+				target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off!</span>", \
+								   "<span class='userdanger'>[chassis] rips your arms off!</span>")
 		else
 			step_away(M,chassis)
-			target.visible_message("[chassis] tosses [target] like a piece of paper.")
+			target.visible_message("<span class='danger'>[chassis] tosses [target] like a piece of paper!</span>", \
+								"<span class='userdanger'>[chassis] tosses you like a piece of paper!</span>")
 		return 1
 
 
@@ -172,7 +186,7 @@
 	icon_state = "mecha_exting"
 	equip_cooldown = 5
 	energy_drain = 0
-	range = MELEE|RANGED
+	range = MECHA_MELEE|MECHA_RANGED
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/Initialize()
 	. = ..()
@@ -239,7 +253,7 @@
 	icon_state = "mecha_rcd"
 	equip_cooldown = 10
 	energy_drain = 250
-	range = MELEE|RANGED
+	range = MECHA_MELEE|MECHA_RANGED
 	item_flags = NO_MAT_REDEMPTION
 	var/mode = 0 //0 - deconstruct, 1 - wall or floor, 2 - airlock.
 
@@ -265,20 +279,20 @@
 		if(0)
 			if(iswallturf(target))
 				var/turf/closed/wall/W = target
-				occupant_message("Deconstructing [W]...")
+				occupant_message("<span class='notice'>Deconstructing [W]...</span>")
 				if(do_after_cooldown(W))
 					chassis.spark_system.start()
-					W.ScrapeAway()
+					W.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 					playsound(W, 'sound/items/deconstruct.ogg', 50, 1)
 			else if(isfloorturf(target))
 				var/turf/open/floor/F = target
-				occupant_message("Deconstructing [F]...")
+				occupant_message("<span class='notice'>Deconstructing [F]...</span>")
 				if(do_after_cooldown(target))
 					chassis.spark_system.start()
-					F.ScrapeAway()
+					F.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 					playsound(F, 'sound/items/deconstruct.ogg', 50, 1)
 			else if (istype(target, /obj/machinery/door/airlock))
-				occupant_message("Deconstructing [target]...")
+				occupant_message("<span class='notice'>Deconstructing [target]...</span>")
 				if(do_after_cooldown(target))
 					chassis.spark_system.start()
 					qdel(target)
@@ -286,21 +300,21 @@
 		if(1)
 			if(isspaceturf(target))
 				var/turf/open/space/S = target
-				occupant_message("Building Floor...")
+				occupant_message("<span class='notice'>Building Floor...</span>")
 				if(do_after_cooldown(S))
-					S.PlaceOnTop(/turf/open/floor/plating)
+					S.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 					playsound(S, 'sound/items/deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
 			else if(isfloorturf(target))
 				var/turf/open/floor/F = target
-				occupant_message("Building Wall...")
+				occupant_message("<span class='notice'>Building Wall...</span>")
 				if(do_after_cooldown(F))
 					F.PlaceOnTop(/turf/closed/wall)
 					playsound(F, 'sound/items/deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
 		if(2)
 			if(isfloorturf(target))
-				occupant_message("Building Airlock...")
+				occupant_message("<span class='notice'>Building Airlock...</span>")
 				if(do_after_cooldown(target))
 					chassis.spark_system.start()
 					var/obj/machinery/door/airlock/T = new /obj/machinery/door/airlock(target)
@@ -319,13 +333,13 @@
 		mode = text2num(href_list["mode"])
 		switch(mode)
 			if(0)
-				occupant_message("Switched RCD to Deconstruct.")
+				occupant_message("<span class='notice'>Switched RCD to Deconstruct.</span>")
 				energy_drain = initial(energy_drain)
 			if(1)
-				occupant_message("Switched RCD to Construct.")
+				occupant_message("<span class='notice'>Switched RCD to Construct.</span>")
 				energy_drain = 2*initial(energy_drain)
 			if(2)
-				occupant_message("Switched RCD to Construct Airlock.")
+				occupant_message("<span class='notice'>Switched RCD to Construct Airlock.</span>")
 				energy_drain = 2*initial(energy_drain)
 	return
 

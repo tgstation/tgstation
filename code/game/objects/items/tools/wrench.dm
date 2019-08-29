@@ -11,7 +11,7 @@
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL
 	usesound = 'sound/items/ratchet.ogg'
-	materials = list(MAT_METAL=150)
+	materials = list(/datum/material/iron=150)
 
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 	tool_behaviour = TOOL_WRENCH
@@ -22,11 +22,6 @@
 	user.visible_message("<span class='suicide'>[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
 	return (BRUTELOSS)
-
-/obj/item/wrench/cyborg
-	name = "automatic wrench"
-	desc = "An advanced robotic wrench. Can be found in construction cyborgs."
-	toolspeed = 0.5
 
 /obj/item/wrench/brass
 	name = "brass wrench"
@@ -52,7 +47,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	usesound = 'sound/items/drill_use.ogg'
-	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
+	materials = list(/datum/material/iron=150,/datum/material/silver=50,/datum/material/titanium=25)
  //done for balance reasons, making them high value for research, but harder to get
 	force = 8 //might or might not be too high, subject to change
 	w_class = WEIGHT_CLASS_SMALL
@@ -108,3 +103,10 @@
 	user.dust()
 
 	return OXYLOSS
+
+/obj/item/wrench/cyborg
+	name = "hydraulic wrench"
+	desc = "An advanced robotic wrench, powered by internal hydraulics. Twice as fast as the handheld version."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "wrench_cyborg"
+	toolspeed = 0.5

@@ -344,7 +344,7 @@
 		updateappearance(icon_update=0)
 
 	if(LAZYLEN(mutation_index))
-		dna.mutation_index = mutation_index
+		dna.mutation_index = mutation_index.Copy()
 		domutcheck()
 
 	if(mrace || newfeatures || ui)
@@ -588,7 +588,7 @@
 				physiology.damage_resistance = -20000
 			if(5)
 				to_chat(src, "<span class='notice'>Oh, I actually feel quite alright!</span>")
-				reagents.add_reagent("mutationtoxin2", 10)
+				reagents.add_reagent(/datum/reagent/aslimetoxin, 10)
 			if(6)
 				apply_status_effect(STATUS_EFFECT_GO_AWAY)
 			if(7)
@@ -649,4 +649,4 @@
 		eyes.Remove(src)
 		qdel(eyes)
 		visible_message("<span class='notice'>[src] looks up and their eyes melt away!</span>", "<span class>='userdanger'>I understand now.</span>")
-		addtimer(CALLBACK(src, .proc/adjustBrainLoss, 200), 20)
+		addtimer(CALLBACK(src, .proc/adjustOrganLoss, ORGAN_SLOT_BRAIN, 200), 20)

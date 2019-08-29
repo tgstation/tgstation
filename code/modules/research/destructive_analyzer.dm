@@ -63,7 +63,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	if(storage) //Also sends salvaged materials to a linked protolathe, if any.
 		for(var/material in thing.materials)
 			var/can_insert = min((storage.max_amount - storage.total_amount), (max(thing.materials[material]*(decon_mod/10), thing.materials[material])))
-			storage.insert_amount(can_insert, material)
+			storage.insert_amount_mat(can_insert, material)
 			. += can_insert
 		if (.)
 			linked_console.linked_lathe.materials.silo_log(src, "reclaimed", 1, "[thing.name]", thing.materials)

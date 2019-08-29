@@ -21,13 +21,6 @@
 		if(mmi.brainmob)
 			mmi.brainmob.suiciding = suicide_state
 
-/mob/living/carbon/human/virtual_reality/set_suicide(suicide_state)
-	return
-
-/mob/living/carbon/human/virtual_reality/canSuicide()
-	to_chat(src, "<span class='warning'>I'm sorry [first_name()], I'm afraid you can't do that.</span>")
-	return
-
 /mob/living/carbon/human/verb/suicide()
 	set hidden = 1
 	if(!canSuicide())
@@ -39,19 +32,21 @@
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
+		set_suicide(TRUE) //need to be called before calling suicide_act as fuck knows what suicide_act will do with your suicider
 		var/obj/item/held_item = get_active_held_item()
 		if(held_item)
 			var/damagetype = held_item.suicide_act(src)
 			if(damagetype)
 				if(damagetype & SHAME)
 					adjustStaminaLoss(200)
+					set_suicide(FALSE)
 					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "shameful_suicide", /datum/mood_event/shameful_suicide)
 					return
 
 				if(damagetype & MANUAL_SUICIDE_NONLETHAL) //Make sure to call the necessary procs if it does kill later
+					set_suicide(FALSE)
 					return
 
-				set_suicide(TRUE)
 				suicide_log()
 
 				var/damage_mod = 0
@@ -105,7 +100,6 @@
 
 		visible_message("<span class='danger'>[suicide_message]</span>", "<span class='userdanger'>[suicide_message]</span>")
 
-		set_suicide(TRUE)
 		suicide_log()
 
 		adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
@@ -230,27 +224,27 @@
 		death(FALSE)
 
 /mob/living/proc/suicide_log()
-	log_game("[key_name(src)] committed suicide at [AREACOORD(src)] as [src.type].")
+	log_message("[key_name(src)] committed suicide at [AREACOORD(src)] as [src.type].", LOG_ATTACK)
 
 /mob/living/carbon/human/suicide_log()
-	log_game("[key_name(src)] (job: [src.job ? "[src.job]" : "None"]) committed suicide at [AREACOORD(src)].")
+	log_message("[key_name(src)] (job: [src.job ? "[src.job]" : "None"]) committed suicide at [AREACOORD(src)].", LOG_ATTACK)
 
 /mob/living/proc/canSuicide()
 	switch(stat)
 		if(CONSCIOUS)
 			return TRUE
 		if(SOFT_CRIT)
-			to_chat(src, "You can't commit suicide while in a critical condition!")
+			to_chat(src, "<span class='warning'>You can't commit suicide while in a critical condition!</span>")
 		if(UNCONSCIOUS)
-			to_chat(src, "You need to be conscious to commit suicide!")
+			to_chat(src, "<span class='warning'>You need to be conscious to commit suicide!</span>")
 		if(DEAD)
-			to_chat(src, "You're already dead!")
+			to_chat(src, "<span class='warning'>You're already dead!</span>")
 	return
 
 /mob/living/carbon/canSuicide()
 	if(!..())
 		return
 	if(!(mobility_flags & MOBILITY_USE))	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
-		to_chat(src, "You can't commit suicide whilst immobile! ((You can type Ghost instead however.))")
+		to_chat(src, "<span class='warning'>You can't commit suicide whilst immobile! ((You can type Ghost instead however.))</span>")
 		return
 	return TRUE

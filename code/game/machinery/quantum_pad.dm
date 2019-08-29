@@ -119,7 +119,7 @@
 	doteleport(user, target_pad)
 
 /obj/machinery/quantumpad/proc/sparks()
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+	var/datum/effect_system/spark_spread/quantum/s = new /datum/effect_system/spark_spread/quantum
 	s.set_up(5, 1, get_turf(src))
 	s.start()
 

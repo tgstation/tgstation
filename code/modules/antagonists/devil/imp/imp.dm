@@ -13,7 +13,7 @@
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "imp"
 	icon_living = "imp"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speed = 1
 	a_intent = INTENT_HARM
 	stop_automated_movement = 1
@@ -33,6 +33,9 @@
 	melee_damage_upper = 15
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	del_on_death = TRUE
+	deathmessage = "screams in agony as it sublimates into a sulfurous smoke."
+	deathsound = 'sound/magic/demon_dies.ogg'
 	var/boost = 0
 	bloodcrawl = BLOODCRAWL_EAT
 	var/list/consumed_mobs = list()
@@ -41,23 +44,9 @@
 							of intentionally harming a fellow devil.</B>"
 
 /mob/living/simple_animal/imp/Initialize()
-	..()
-	boost = world.time + 30
-
-/mob/living/simple_animal/imp/Life()
-	..()
-	if(boost<world.time)
-		speed = 1
-	else
-		speed = 0
-
-/mob/living/simple_animal/imp/death()
-	..(1)
-	playsound(get_turf(src),'sound/magic/demon_dies.ogg', 200, 1)
-	visible_message("<span class='danger'>[src] screams in agony as it sublimates into a sulfurous smoke.</span>")
-	ghostize()
-	qdel(src)
-
+	. = ..()
+	set_varspeed(1)
+	addtimer(CALLBACK(src, /mob/living/simple_animal/proc/set_varspeed, 0), 30)
 
 /datum/antagonist/imp
 	name = "Imp"

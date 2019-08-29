@@ -49,7 +49,6 @@
 /area/ruin/space/has_grav/deepstorage/crusher)
 "an" = (
 /obj/machinery/conveyor{
-	dir = 2;
 	id = "bunkerrecycle"
 	},
 /turf/open/floor/plating,
@@ -131,7 +130,6 @@
 /area/ruin/space/has_grav/deepstorage/crusher)
 "aE" = (
 /obj/machinery/power/apc/away{
-	dir = 2;
 	name = "Recycling APC";
 	pixel_y = -23
 	},
@@ -186,9 +184,6 @@
 /obj/item/storage/box/zipties,
 /obj/item/switchblade,
 /obj/effect/turf_decal/delivery,
-/obj/item/gps{
-	gpstag = "DEEP"
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/storage)
@@ -665,7 +660,6 @@
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bN" = (
 /obj/machinery/power/apc/away{
-	dir = 2;
 	name = "Kitchen APC";
 	pixel_y = -23
 	},
@@ -706,25 +700,25 @@
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "bT" = (
 /obj/effect/turf_decal/delivery,
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = -2
 	},
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = 5
 	},
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = 1;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = 8;
 	pixel_y = -3
 	},
@@ -739,25 +733,25 @@
 /area/ruin/space/has_grav/deepstorage/storage)
 "bU" = (
 /obj/effect/turf_decal/delivery,
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = -2
 	},
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = 5
 	},
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = 1;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = 8;
 	pixel_y = -3
 	},
@@ -1587,7 +1581,6 @@
 	dir = 4
 	},
 /obj/machinery/power/apc/away{
-	dir = 2;
 	name = "Main Area APC";
 	pixel_y = -23
 	},
@@ -1912,7 +1905,7 @@
 	pixel_y = 4
 	},
 /obj/item/storage/firstaid/toxin,
-/obj/item/storage/pill_bottle/charcoal,
+/obj/item/storage/pill_bottle/multiver,
 /obj/machinery/light,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/deepstorage/armory)

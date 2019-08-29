@@ -110,7 +110,7 @@
 				brainmob = null
 			if(violent_removal && prob(rand(80, 100))) //ghetto surgery can damage the brain.
 				to_chat(user, "<span class='warning'>[brain] was damaged in the process!</span>")
-				brain.damaged_brain = TRUE
+				brain.setOrganDamage(brain.maxHealth)
 			brain.forceMove(T)
 			brain = null
 			update_icon_dropped()

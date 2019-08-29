@@ -1,7 +1,9 @@
+#define C2NAMEREAGENT	"[initial(reagent.name)] (Has Side-Effects)"
 /*
 Contains:
 Borg Hypospray
 Borg Shaker
+Borg Beaker Storage Apparatus
 Nothing to do with hydroponics in here. Sorry to dissapoint you.
 */
 
@@ -26,7 +28,7 @@ Borg Hypospray
 	var/bypass_protection = 0 //If the hypospray can go through armor or thick material
 
 	var/list/datum/reagents/reagent_list = list()
-	var/list/reagent_ids = list(/datum/reagent/medicine/dexalin, /datum/reagent/medicine/kelotane, /datum/reagent/medicine/bicaridine, /datum/reagent/medicine/antitoxin, /datum/reagent/medicine/epinephrine, /datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/salglu_solution)
+	var/list/reagent_ids = list(/datum/reagent/medicine/C2/convermol, /datum/reagent/medicine/C2/libital, /datum/reagent/medicine/C2/multiver, /datum/reagent/medicine/C2/aiuri, /datum/reagent/medicine/epinephrine, /datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/salglu_solution)
 	var/accepts_reagent_upgrades = TRUE //If upgrades can increase number of reagents dispensed.
 	var/list/modes = list() //Basically the inverse of reagent_ids. Instead of having numbers as "keys" and strings as values it has strings as keys and numbers as values.
 								//Used as list for input() in shakers.
@@ -67,11 +69,18 @@ Borg Hypospray
 	R.add_reagent(reagent, 30)
 
 	modes[reagent] = modes.len + 1
-	reagent_names[initial(reagent.name)] = reagent
+
+	if(initial(reagent.harmful))
+		reagent_names[C2NAMEREAGENT] = reagent
+	else
+		reagent_names[initial(reagent.name)] = reagent
 
 /obj/item/reagent_containers/borghypo/proc/del_reagent(datum/reagent/reagent)
 	reagent_ids -= reagent
-	reagent_names -= initial(reagent.name)
+	if(istype(reagent, /datum/reagent/medicine/C2))
+		reagent_names -= C2NAMEREAGENT
+	else
+		reagent_names -= initial(reagent.name)
 	var/datum/reagents/RG
 	var/datum/reagents/TRG
 	for(var/i in 1 to reagent_ids.len)
@@ -98,17 +107,15 @@ Borg Hypospray
 /obj/item/reagent_containers/borghypo/attack(mob/living/carbon/M, mob/user)
 	var/datum/reagents/R = reagent_list[mode]
 	if(!R.total_volume)
-		to_chat(user, "<span class='notice'>The injector is empty.</span>")
+		to_chat(user, "<span class='warning'>The injector is empty!</span>")
 		return
 	if(!istype(M))
 		return
 	if(R.total_volume && M.can_inject(user, 1, user.zone_selected,bypass_protection))
 		to_chat(M, "<span class='warning'>You feel a tiny prick!</span>")
 		to_chat(user, "<span class='notice'>You inject [M] with the injector.</span>")
-		var/fraction = min(amount_per_transfer_from_this/R.total_volume, 1)
-		R.reaction(M, INJECT, fraction)
 		if(M.reagents)
-			var/trans = R.trans_to(M, amount_per_transfer_from_this, transfered_by = user)
+			var/trans = R.trans_to(M, amount_per_transfer_from_this, transfered_by = user, method = INJECT)
 			to_chat(user, "<span class='notice'>[trans] unit\s injected.  [R.total_volume] unit\s remaining.</span>")
 
 	var/list/injected = list()
@@ -129,6 +136,8 @@ Borg Hypospray
 /obj/item/reagent_containers/borghypo/examine(mob/user)
 	. = ..()
 	. += DescribeContents()	//Because using the standardized reagents datum was just too cool for whatever fuckwit wrote this
+	var/datum/reagent/loaded = modes[mode]
+	. += "Currently loaded: [initial(loaded.name)]. [initial(loaded.description)]"
 
 /obj/item/reagent_containers/borghypo/proc/DescribeContents()
 	. = list()
@@ -254,3 +263,116 @@ Borg Shaker
 	desc = "An advanced chemical synthesizer and injection system, designed to stabilize patients."
 	reagent_ids = list(/datum/reagent/medicine/epinephrine)
 	accepts_reagent_upgrades = FALSE
+
+//////////////////////
+//borg beaker holder//
+//////////////////////
+
+/**An arm that only holds beakers. Can drop them, place them into machines, or onto tables. Attacks made by the arm, or
+to the arm are passed onto a stored beaker, if one exists. */
+
+/obj/item/borg_beaker_holder
+	name = "beaker storage apparatus"
+	desc = "A special apparatus for carrying beakers without spilling the contents. Alt-Z or right-click to drop the beaker."
+	icon = 'icons/mob/robot_items.dmi'
+	icon_state = "borg_beaker_apparatus"
+	var/obj/item/reagent_containers/stored
+
+/obj/item/borg_beaker_holder/Initialize()
+	. = ..()
+	stored = new /obj/item/reagent_containers/glass/beaker/large(src)
+	RegisterSignal(stored, COMSIG_OBJ_UPDATE_ICON, .proc/update_icon)
+	update_icon()
+	RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, .proc/safedecon)
+
+/obj/item/borg_beaker_holder/Destroy()
+	if(stored)
+		stored.SplashReagents(get_turf(src))
+		qdel(stored)
+	. = ..()
+
+///If we're safely deconstructed, we put the beaker neatly onto the ground, rather than spilling it everywhere.
+/obj/item/borg_beaker_holder/proc/safedecon()
+	if(stored)
+		stored.forceMove(get_turf(src))
+		stored = null
+
+/obj/item/borg_beaker_holder/examine()
+	. = ..()
+	if(stored)
+		. += "The apparatus currently has [stored] secured, which contains:"
+		if(length(stored.reagents.reagent_list))
+			for(var/datum/reagent/R in stored.reagents.reagent_list)
+				. += "[R.volume] units of [R.name]"
+		else
+			. += "Nothing."
+
+/obj/item/borg_beaker_holder/update_icon()
+	cut_overlays()
+	if(stored)
+		COMPILE_OVERLAYS(stored)
+		stored.pixel_x = 0
+		stored.pixel_y = 0
+		var/image/img = image("icon"=stored, "layer"=FLOAT_LAYER)
+		var/image/arm = image("icon"="borg_beaker_apparatus_arm", "layer"=FLOAT_LAYER)
+		if(istype(stored, /obj/item/reagent_containers/glass/beaker))
+			arm.pixel_y = arm.pixel_y - 3
+		img.plane = FLOAT_PLANE
+		add_overlay(img)
+		add_overlay(arm)
+	else
+		var/image/arm = image("icon"="borg_beaker_apparatus_arm", "layer"=FLOAT_LAYER)
+		arm.pixel_y = arm.pixel_y - 5
+		add_overlay(arm)
+
+/obj/item/borg_beaker_holder/Exited(atom/A)
+	if(A == stored) //sanity check
+		UnregisterSignal(stored, COMSIG_OBJ_UPDATE_ICON)
+		stored = null
+	update_icon()
+	. = ..()
+
+///A right-click verb, for those not using hotkey mode.
+/obj/item/borg_beaker_holder/verb/verb_dropbeaker()
+	set category = "Object"
+	set name = "Drop Beaker"
+
+	if(usr != loc || !stored)
+		return
+	stored.forceMove(get_turf(usr))
+	return
+
+/obj/item/borg_beaker_holder/attack_self(mob/living/silicon/robot/user)
+	if(!stored)
+		return ..()
+	if(user.client?.keys_held["Alt"])
+		stored.forceMove(get_turf(user))
+		return
+	if(user.a_intent == "help")
+		stored.attack_self(user)
+		return
+	else
+		stored.SplashReagents(get_turf(user))
+		loc.visible_message("<span class='notice'>[user] spills the contents of the [stored] all over the floor.</span>")
+
+/obj/item/borg_beaker_holder/pre_attack(atom/A, mob/living/user, params)
+	if(istype(A, /obj/item/reagent_containers/glass/beaker) || istype(A, /obj/item/reagent_containers/glass/bottle))
+		if(!stored)
+			var/obj/item/reagent_containers/container = A
+			container.forceMove(src)
+			stored = container
+			RegisterSignal(stored, COMSIG_OBJ_UPDATE_ICON, .proc/update_icon)
+			update_icon()
+			return
+	if(stored)
+		stored.melee_attack_chain(user, A, params)
+		return
+	. = ..()
+
+/obj/item/borg_beaker_holder/attackby(obj/item/W, mob/user, params)
+	if(stored)
+		W.melee_attack_chain(user, stored, params)
+		return
+	. = ..()
+  
+#undef C2NAMEREAGENT

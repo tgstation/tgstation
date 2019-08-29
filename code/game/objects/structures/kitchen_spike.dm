@@ -52,7 +52,7 @@
 
 /obj/structure/kitchenspike/crowbar_act(mob/living/user, obj/item/I)
 	if(has_buckled_mobs())
-		to_chat(user, "<span class='notice'>You can't do that while something's on the spike!</span>")
+		to_chat(user, "<span class='warning'>You can't do that while something's on the spike!</span>")
 		return TRUE
 
 	if(I.use_tool(src, user, 20, volume=100))
@@ -98,20 +98,17 @@
 	if(buckled_mob)
 		var/mob/living/M = buckled_mob
 		if(M != user)
-			M.visible_message(\
-				"[user] tries to pull [M] free of [src]!",\
+			M.visible_message("<span class='notice'>[user] tries to pull [M] free of [src]!</span>",\
 				"<span class='notice'>[user] is trying to pull you off [src], opening up fresh wounds!</span>",\
 				"<span class='italics'>You hear a squishy wet noise.</span>")
 			if(!do_after(user, 300, target = src))
 				if(M && M.buckled)
-					M.visible_message(\
-					"[user] fails to free [M]!",\
+					M.visible_message("<span class='notice'>[user] fails to free [M]!</span>",\
 					"<span class='notice'>[user] fails to pull you off of [src].</span>")
 				return
 
 		else
-			M.visible_message(\
-			"<span class='warning'>[M] struggles to break free from [src]!</span>",\
+			M.visible_message("<span class='warning'>[M] struggles to break free from [src]!</span>",\
 			"<span class='notice'>You struggle to break free from [src], exacerbating your wounds! (Stay still for two minutes.)</span>",\
 			"<span class='italics'>You hear a wet squishing noise..</span>")
 			M.adjustBruteLoss(30)

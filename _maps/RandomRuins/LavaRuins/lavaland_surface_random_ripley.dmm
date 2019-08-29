@@ -16,7 +16,7 @@
 /area/lavaland/surface/outdoors)
 "e" = (
 /obj/item/clothing/shoes/workboots/mining,
-/obj/item/clothing/under/rank/miner/lavaland,
+/obj/item/clothing/under/rank/cargo/miner/lavaland,
 /obj/effect/decal/remains/human,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)

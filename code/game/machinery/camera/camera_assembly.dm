@@ -8,7 +8,7 @@
 	desc = "The basic construction for Nanotrasen-Always-Watching-You cameras."
 	icon = 'icons/obj/machines/camera.dmi'
 	icon_state = "cameracase"
-	materials = list(MAT_METAL=400, MAT_GLASS=250)
+	materials = list(/datum/material/iron=400, /datum/material/glass=250)
 	result_path = /obj/structure/camera_assembly
 
 /obj/structure/camera_assembly
@@ -239,8 +239,9 @@
 	return TRUE
 
 /obj/structure/camera_assembly/wirecutter_act(mob/user, obj/item/I)
+	. = ..()
 	if(state != STATE_WIRED)
-		return FALSE
+		return
 
 	new /obj/item/stack/cable_coil(drop_location(), 2)
 	I.play_tool_sound(src)
@@ -249,8 +250,9 @@
 	return TRUE
 
 /obj/structure/camera_assembly/wrench_act(mob/user, obj/item/I)
+	. = ..()
 	if(state != STATE_WRENCHED)
-		return FALSE
+		return
 	I.play_tool_sound(src)
 	to_chat(user, "<span class='notice'>You detach [src] from its place.</span>")
 	new /obj/item/wallframe/camera(drop_location())

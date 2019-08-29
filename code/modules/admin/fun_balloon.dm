@@ -1,7 +1,7 @@
 /obj/effect/fun_balloon
 	name = "fun balloon"
 	desc = "This is going to be a laugh riot."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/balloons.dmi'
 	icon_state = "syndballoon"
 	anchored = TRUE
 	var/popped = FALSE
@@ -27,7 +27,7 @@
 	return
 
 /obj/effect/fun_balloon/proc/pop()
-	visible_message("[src] pops!")
+	visible_message("<span class='notice'>[src] pops!</span>")
 	playsound(get_turf(src), 'sound/items/party_horn.ogg', 50, 1, -1)
 	qdel(src)
 
@@ -158,10 +158,11 @@
 	var/mob/living/M = AM
 	M.forceMove(get_turf(LA))
 	to_chat(M, "<span class='reallybig redtext'>You're trapped in a deadly arena! To escape, you'll need to drag a severed head to the escape portals.</span>")
-	spawn()
-		var/obj/effect/mine/pickup/bloodbath/B = new (M)
-		B.mineEffect(M)
+	INVOKE_ASYNC(src, .proc/do_bloodbath, M)
 
+/obj/effect/forcefield/arena_shuttle_entrance/proc/do_bloodbath(mob/living/L)
+	var/obj/effect/mine/pickup/bloodbath/B = new (L)
+	B.mineEffect(L)
 
 /area/shuttle_arena
 	name = "arena"

@@ -49,7 +49,7 @@
 		RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/HandRot)
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
 	if(rotation_flags & ROTATION_WRENCH)
-		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/WrenchRot)
+		RegisterSignal(parent, COMSIG_ATOM_WRENCH_ACT, .proc/WrenchRot)
 
 /datum/component/simple_rotation/proc/add_verbs()
 	if(rotation_flags & ROTATION_VERBS)
@@ -110,9 +110,8 @@
 /datum/component/simple_rotation/proc/WrenchRot(datum/source, obj/item/I, mob/living/user)
 	if(!can_be_rotated.Invoke(user,default_rotation_direction) || !can_user_rotate.Invoke(user,default_rotation_direction))
 		return
-	if(I.tool_behaviour == TOOL_WRENCH)
-		BaseRot(user,default_rotation_direction)
-		return COMPONENT_NO_AFTERATTACK
+	BaseRot(user,default_rotation_direction)
+	return COMPONENT_BLOCK_TOOL_ATTACK
 
 /datum/component/simple_rotation/proc/BaseRot(mob/user,rotation_type)
 	var/atom/movable/AM = parent

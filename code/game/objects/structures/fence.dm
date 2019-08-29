@@ -60,7 +60,7 @@
 /obj/structure/fence/attackby(obj/item/W, mob/user)
 	if(W.tool_behaviour == TOOL_WIRECUTTER)
 		if(!cuttable)
-			to_chat(user, "<span class='notice'>This section of the fence can't be cut.</span>")
+			to_chat(user, "<span class='warning'>This section of the fence can't be cut!</span>")
 			return
 		if(invulnerable)
 			to_chat(user, "<span class='notice'>This fence is too strong to cut through.</span>")

@@ -35,10 +35,10 @@
 		to_chat(user, "<span class='danger'>Access denied.</span>")
 		return
 	if(!uses)
-		to_chat(user, "<span class='danger'>[src] is out of foam and cannot be activated.</span>")
+		to_chat(user, "<span class='warning'>[src] is out of foam and cannot be activated!</span>")
 		return
 	if(cooldown_time > world.time)
-		to_chat(user, "<span class='danger'>[src] cannot be activated for <b>[DisplayTimeText(world.time - cooldown_time)]</b>.</span>")
+		to_chat(user, "<span class='warning'>[src] cannot be activated for <b>[DisplayTimeText(world.time - cooldown_time)]</b>!</span>")
 		return
 	new /obj/effect/particle_effect/foam(loc)
 	uses--

@@ -461,7 +461,7 @@
 
 /obj/item/clothing/suit/gothcoat
 	name = "gothic coat"
-	desc = "Perfect for those who want stalk in a corner of a bar."
+	desc = "Perfect for those who want to stalk around a corner of a bar."
 	icon_state = "gothcoat"
 	item_state = "gothcoat"
 

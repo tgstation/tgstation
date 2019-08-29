@@ -13,6 +13,10 @@
 	climb_time = 10 //real fast, because let's be honest stepping into or onto a crate is easy
 	climb_stun = 0 //climbing onto crates isn't hard, guys
 	delivery_icon = "deliverycrate"
+	open_sound = 'sound/machines/crate_open.ogg'
+	close_sound = 'sound/machines/crate_close.ogg'
+	open_sound_volume = 35
+	close_sound_volume = 50
 	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
 
 /obj/structure/closet/crate/Initialize()
@@ -72,6 +76,10 @@
 	max_integrity = 70
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 5
+	open_sound = 'sound/machines/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound_volume = 25
+	close_sound_volume = 50
 
 /obj/structure/closet/crate/internals
 	desc = "An internals crate."
@@ -92,6 +100,27 @@
 	desc = "A freezer."
 	name = "freezer"
 	icon_state = "freezer"
+
+//Snowflake organ freezer code
+//Order is important, since we check source, we need to do the check whenever we have all the organs in the crate
+
+/obj/structure/closet/crate/freezer/open()
+	recursive_organ_check(src)
+	..()
+
+/obj/structure/closet/crate/freezer/close()
+	..()
+	recursive_organ_check(src)
+
+/obj/structure/closet/crate/freezer/Destroy()
+	recursive_organ_check(src)
+	..()
+
+/obj/structure/closet/crate/freezer/Initialize()
+	. = ..()
+	recursive_organ_check(src)
+
+
 
 /obj/structure/closet/crate/freezer/blood
 	name = "blood freezer"

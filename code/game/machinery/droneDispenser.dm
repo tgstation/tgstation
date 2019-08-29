@@ -30,7 +30,7 @@
 	var/cooldownTime = 1800 //3 minutes
 	var/production_time = 30
 	//The item the dispenser will create
-	var/dispense_type = /obj/item/drone_shell
+	var/dispense_type = /obj/effect/mob_spawn/drone
 
 	// The maximum number of "idle" drone shells it will make before
 	// ceasing production. Set to 0 for infinite.
@@ -50,10 +50,10 @@
 
 /obj/machinery/droneDispenser/Initialize()
 	. = ..()
-	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, TRUE, /obj/item/stack)
-	materials.insert_amount(starting_amount)
+	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, TRUE, /obj/item/stack)
+	materials.insert_amount_mat(starting_amount)
 	materials.precise_insertion = TRUE
-	using_materials = list(MAT_METAL=metal_cost, MAT_GLASS=glass_cost)
+	using_materials = list(/datum/material/iron = metal_cost, /datum/material/glass = glass_cost)
 
 /obj/machinery/droneDispenser/preloaded
 	starting_amount = 5000
@@ -61,7 +61,7 @@
 /obj/machinery/droneDispenser/syndrone //Please forgive me
 	name = "syndrone shell dispenser"
 	desc = "A suspicious machine that will create Syndicate exterminator drones when supplied with metal and glass. Disgusting."
-	dispense_type = /obj/item/drone_shell/syndrone
+	dispense_type = /obj/effect/mob_spawn/drone/syndrone
 	//If we're gonna be a jackass, go the full mile - 10 second recharge timer
 	cooldownTime = 100
 	end_create_message = "dispenses a suspicious drone shell."
@@ -70,14 +70,14 @@
 /obj/machinery/droneDispenser/syndrone/badass //Please forgive me
 	name = "badass syndrone shell dispenser"
 	desc = "A suspicious machine that will create Syndicate exterminator drones when supplied with metal and glass. Disgusting. This one seems ominous."
-	dispense_type = /obj/item/drone_shell/syndrone/badass
+	dispense_type = /obj/effect/mob_spawn/drone/syndrone/badass
 	end_create_message = "dispenses an ominous suspicious drone shell."
 
 // I don't need your forgiveness, this is awesome.
 /obj/machinery/droneDispenser/snowflake
 	name = "snowflake drone shell dispenser"
 	desc = "A hefty machine that, when supplied with metal and glass, will periodically create a snowflake drone shell. Does not need to be manually operated."
-	dispense_type = /obj/item/drone_shell/snowflake
+	dispense_type = /obj/effect/mob_spawn/drone/snowflake
 	end_create_message = "dispenses a snowflake drone shell."
 	// Those holoprojectors aren't cheap
 	metal_cost = 2000
@@ -168,7 +168,7 @@
 			update_icon()
 
 		if(DRONE_PRODUCTION)
-			materials.use_amount(using_materials)
+			materials.use_materials(using_materials)
 			if(power_used)
 				use_power(power_used)
 

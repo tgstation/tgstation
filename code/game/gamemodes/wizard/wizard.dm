@@ -59,6 +59,11 @@
 
 	return TRUE
 
+/datum/game_mode/wizard/check_finished()
+	. = ..()
+	if(.)
+		finished = TRUE
+
 /datum/game_mode/wizard/set_round_result()
 	..()
 	if(finished)

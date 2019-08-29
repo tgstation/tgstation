@@ -17,6 +17,10 @@
 	var/broken_type = /obj/structure/grille/broken
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
+/obj/structure/grille/Destroy()
+	update_cable_icons_on_turf(get_turf(src))
+	return ..()
+
 /obj/structure/grille/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	update_icon()
@@ -92,11 +96,10 @@
 /obj/structure/grille/hulk_damage()
 	return 60
 
-/obj/structure/grille/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
-	if(user.a_intent == INTENT_HARM)
-		if(!shock(user, 70))
-			..(user, 1)
-		return TRUE
+/obj/structure/grille/attack_hulk(mob/living/carbon/human/user)
+	if(shock(user, 70))
+		return
+	. = ..()
 
 /obj/structure/grille/attack_hand(mob/living/user)
 	. = ..()

@@ -40,6 +40,7 @@
 		add_overlay(stack_overlays)
 
 /obj/item/stack/ore/welder_act(mob/living/user, obj/item/I)
+	..()
 	if(!refined_type)
 		return TRUE
 
@@ -69,7 +70,7 @@
 	item_state = "Uranium ore"
 	singular_name = "uranium ore chunk"
 	points = 30
-	materials = list(MAT_URANIUM=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/uranium=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 
 /obj/item/stack/ore/iron
@@ -78,7 +79,7 @@
 	item_state = "Iron ore"
 	singular_name = "iron ore chunk"
 	points = 1
-	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/metal
 
 /obj/item/stack/ore/glass
@@ -87,13 +88,14 @@
 	item_state = "Glass ore"
 	singular_name = "sand pile"
 	points = 1
-	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/glass
 	w_class = WEIGHT_CLASS_TINY
 
 GLOBAL_LIST_INIT(sand_recipes, list(\
-		new /datum/stack_recipe("sandstone", /obj/item/stack/sheet/mineral/sandstone, 1, 1, 50)\
-		))
+		new /datum/stack_recipe("sandstone", /obj/item/stack/sheet/mineral/sandstone, 1, 1, 50),\
+		new /datum/stack_recipe("aesthetic volcanic floor tile", /obj/item/stack/tile/basalt, 2, 1, 50)\
+))
 
 /obj/item/stack/ore/glass/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.sand_recipes
@@ -129,7 +131,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	item_state = "Plasma ore"
 	singular_name = "plasma ore chunk"
 	points = 15
-	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 
 /obj/item/stack/ore/plasma/welder_act(mob/living/user, obj/item/I)
@@ -143,7 +145,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	item_state = "Silver ore"
 	singular_name = "silver ore chunk"
 	points = 16
-	materials = list(MAT_SILVER=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/silver=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
 
 /obj/item/stack/ore/gold
@@ -152,7 +154,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "Gold ore"
 	singular_name = "gold ore chunk"
 	points = 18
-	materials = list(MAT_GOLD=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/gold=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/gold
 
 /obj/item/stack/ore/diamond
@@ -161,7 +163,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	item_state = "Diamond ore"
 	singular_name = "diamond ore chunk"
 	points = 50
-	materials = list(MAT_DIAMOND=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/diamond=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 
 /obj/item/stack/ore/bananium
@@ -170,7 +172,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	item_state = "Bananium ore"
 	singular_name = "bananium ore chunk"
 	points = 60
-	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/bananium=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 
 /obj/item/stack/ore/titanium
@@ -179,7 +181,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	item_state = "Titanium ore"
 	singular_name = "titanium ore chunk"
 	points = 50
-	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/titanium=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/titanium
 
 /obj/item/stack/ore/slag
@@ -210,7 +212,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/twohanded/required/gibtonite/attackby(obj/item/I, mob/user, params)
 	if(!wires && istype(I, /obj/item/assembly/igniter))
-		user.visible_message("[user] attaches [I] to [src].", "<span class='notice'>You attach [I] to [src].</span>")
+		user.visible_message("<span class='notice'>[user] attaches [I] to [src].</span>", "<span class='notice'>You attach [I] to [src].</span>")
 		wires = new /datum/wires/explosive/gibtonite(src)
 		attacher = key_name(user)
 		qdel(I)
@@ -230,7 +232,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 			primed = FALSE
 			if(det_timer)
 				deltimer(det_timer)
-			user.visible_message("The chain reaction was stopped! ...The ore's quality looks diminished.", "<span class='notice'>You stopped the chain reaction. ...The ore's quality looks diminished.</span>")
+			user.visible_message("<span class='notice'>The chain reaction was stopped! ...The ore's quality looks diminished.</span>", "<span class='notice'>You stopped the chain reaction. ...The ore's quality looks diminished.</span>")
 			icon_state = "Gibtonite ore"
 			quality = GIBTONITE_QUALITY_LOW
 			return
@@ -351,7 +353,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	cmineral = "gold"
 	icon_state = "coin_gold_heads"
 	value = 25
-	materials = list(MAT_GOLD = MINERAL_MATERIAL_AMOUNT*0.2)
+	materials = list(/datum/material/gold = MINERAL_MATERIAL_AMOUNT*0.2)
 	grind_results = list(/datum/reagent/gold = 4)
 
 /obj/item/coin/silver
@@ -359,7 +361,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	cmineral = "silver"
 	icon_state = "coin_silver_heads"
 	value = 10
-	materials = list(MAT_SILVER = MINERAL_MATERIAL_AMOUNT*0.2)
+	materials = list(/datum/material/silver = MINERAL_MATERIAL_AMOUNT*0.2)
 	grind_results = list(/datum/reagent/silver = 4)
 
 /obj/item/coin/diamond
@@ -367,7 +369,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	cmineral = "diamond"
 	icon_state = "coin_diamond_heads"
 	value = 100
-	materials = list(MAT_DIAMOND = MINERAL_MATERIAL_AMOUNT*0.2)
+	materials = list(/datum/material/diamond = MINERAL_MATERIAL_AMOUNT*0.2)
 	grind_results = list(/datum/reagent/carbon = 4)
 
 /obj/item/coin/iron
@@ -375,7 +377,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	cmineral = "iron"
 	icon_state = "coin_iron_heads"
 	value = 1
-	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT*0.2)
+	materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT*0.2)
 	grind_results = list(/datum/reagent/iron = 4)
 
 /obj/item/coin/plasma
@@ -383,7 +385,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	cmineral = "plasma"
 	icon_state = "coin_plasma_heads"
 	value = 40
-	materials = list(MAT_PLASMA = MINERAL_MATERIAL_AMOUNT*0.2)
+	materials = list(/datum/material/plasma = MINERAL_MATERIAL_AMOUNT*0.2)
 	grind_results = list(/datum/reagent/toxin/plasma = 4)
 
 /obj/item/coin/uranium
@@ -391,7 +393,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	cmineral = "uranium"
 	icon_state = "coin_uranium_heads"
 	value = 25
-	materials = list(MAT_URANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
+	materials = list(/datum/material/uranium = MINERAL_MATERIAL_AMOUNT*0.2)
 	grind_results = list(/datum/reagent/uranium = 4)
 
 /obj/item/coin/bananium
@@ -399,7 +401,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	cmineral = "bananium"
 	icon_state = "coin_bananium_heads"
 	value = 200 //makes the clown cry
-	materials = list(MAT_BANANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
+	materials = list(/datum/material/bananium = MINERAL_MATERIAL_AMOUNT*0.2)
 	grind_results = list(/datum/reagent/consumable/banana = 4)
 
 /obj/item/coin/adamantine
@@ -419,7 +421,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "coin_iron_heads"
 	desc = "Hey, this coin's the same on both sides!"
 	sideslist = list("heads")
-	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT*0.2)
+	materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT*0.2)
 	value = 1
 	grind_results = list(/datum/reagent/iron = 4)
 
@@ -450,6 +452,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		..()
 
 /obj/item/coin/wirecutter_act(mob/living/user, obj/item/I)
+	..()
 	if(!string_attached)
 		return TRUE
 
@@ -472,7 +475,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		var/oldloc = loc
 		sleep(15)
 		if(loc == oldloc && user && !user.incapacitated())
-			user.visible_message("[user] has flipped [src]. It lands on [coinflip].", \
+			user.visible_message("<span class='notice'>[user] has flipped [src]. It lands on [coinflip].</span>", \
  							 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
 							 "<span class='italics'>You hear the clattering of loose change.</span>")
 	return TRUE//did the coin flip? useful for suicide_act

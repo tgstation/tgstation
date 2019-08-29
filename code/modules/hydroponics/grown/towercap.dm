@@ -50,7 +50,7 @@
 	/obj/item/reagent_containers/food/snacks/grown/wheat))
 
 /obj/item/grown/log/attackby(obj/item/W, mob/user, params)
-	if(W.sharpness)
+	if(W.is_sharp())
 		user.show_message("<span class='notice'>You make [plank_name] out of \the [src]!</span>", 1)
 		var/seed_modifier = 0
 		if(seed)
@@ -75,7 +75,7 @@
 			qdel(src)
 			return
 		else
-			to_chat(usr, "<span class ='warning'>You must dry this first!</span>")
+			to_chat(usr, "<span class='warning'>You must dry this first!</span>")
 	else
 		return ..()
 
@@ -100,7 +100,7 @@
 
 /obj/item/seeds/bamboo
 	name = "pack of bamboo seeds"
-	desc = "Plant known for their flexible and resistant logs."
+	desc = "A plant known for its flexible and resistant logs."
 	icon_state = "seed-bamboo"
 	species = "bamboo"
 	plantname = "Bamboo"
@@ -119,7 +119,7 @@
 /obj/item/grown/log/bamboo
 	seed = /obj/item/seeds/bamboo
 	name = "bamboo log"
-	desc = "An long and resistant bamboo log."
+	desc = "A long and resistant bamboo log."
 	icon_state = "bamboo"
 	plank_type = /obj/item/stack/sheet/mineral/bamboo
 	plank_name = "bamboo sticks"
@@ -129,7 +129,7 @@
 
 /obj/structure/punji_sticks
 	name = "punji sticks"
-	desc = "Dont step on this."
+	desc = "Don't step on this."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "punji"
 	resistance_flags = FLAMMABLE
@@ -230,7 +230,7 @@
 		var/turf/open/O = loc
 		if(O.air)
 			var/loc_gases = O.air.gases
-			if(loc_gases[/datum/gas/oxygen][MOLES] > 13)
+			if(loc_gases[/datum/gas/oxygen][MOLES] >= 5)
 				return TRUE
 	return FALSE
 

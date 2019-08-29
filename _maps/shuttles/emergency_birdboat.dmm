@@ -112,6 +112,13 @@
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"w" = (
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed";
+	use_power = 0
+	},
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
 "x" = (
 /obj/structure/table,
 /obj/machinery/recharger{
@@ -189,13 +196,12 @@
 "K" = (
 /obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile/emergency{
-	dheight = 0;
 	dir = 8;
 	dwidth = 6;
 	height = 18;
+	name = "Birdboat emergency escape shuttle";
 	port_direction = 4;
-	width = 14;
-	name = "Birdboat emergency escape shuttle"
+	width = 14
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -284,9 +290,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "X" = (
-/obj/machinery/sleeper{
-	dir = 1
-	},
+/obj/machinery/stasis,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "Y" = (
@@ -496,7 +500,7 @@ b
 h
 C
 C
-h
+w
 b
 A
 c

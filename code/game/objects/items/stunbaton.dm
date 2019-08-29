@@ -12,7 +12,10 @@
 	attack_verb = list("beaten")
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 
-	var/stunforce = 140
+	var/cooldown_check = 0
+
+	var/cooldown = (2.5 SECONDS)
+	var/stunforce = (5 SECONDS)
 	var/status = 0
 	var/obj/item/stock_parts/cell/cell
 	var/hitcost = 1000
@@ -39,7 +42,7 @@
 	..()
 	//Only mob/living types have stun handling
 	if(status && prob(throw_hit_chance) && iscarbon(hit_atom))
-		baton_stun(hit_atom)
+		baton_effect(hit_atom)
 
 /obj/item/melee/baton/loaded //this one starts with a cell pre-installed.
 	preload_cell_type = /obj/item/stock_parts/cell/high
@@ -115,7 +118,7 @@
 	if(status && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
-		user.Paralyze(stunforce*3)
+		user.Knockdown(stunforce*3)
 		deductcharge(hitcost)
 		return
 
@@ -131,19 +134,23 @@
 
 	if(user.a_intent != INTENT_HARM)
 		if(status)
-			if(baton_stun(M, user))
-				user.do_attack_animation(M)
-				return
+			if(cooldown_check <= world.time)
+				if(baton_effect(M, user))
+					user.do_attack_animation(M)
+					return
+			else 
+				to_chat(user, "<span class='danger'>The baton is still charging!</span>")
 		else
 			M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
 							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
 	else
 		if(status)
-			baton_stun(M, user)
+			if(cooldown_check <= world.time)
+				baton_effect(M, user)
 		..()
 
 
-/obj/item/melee/baton/proc/baton_stun(mob/living/L, mob/user)
+/obj/item/melee/baton/proc/baton_effect(mob/living/L, mob/user)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK)) //No message; check_shields() handles that
@@ -157,9 +164,16 @@
 		if(!deductcharge(hitcost))
 			return 0
 
-	L.Paralyze(stunforce)
-	L.apply_effect(EFFECT_STUTTER, stunforce)
+	/// After a target is hit, we do a chunk of stamina damage, along with other effects.
+	/// After a period of time, we then check to see what stun duration we give.
+	L.Jitter(20)
+	L.confused = max(10, L.confused)
+	L.stuttering = max(8, L.stuttering)
+	L.adjustStaminaLoss(60)
+
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
+	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, L), 2 SECONDS)
+
 	if(user)
 		L.lastattacker = user.real_name
 		L.lastattackerckey = user.ckey
@@ -173,8 +187,19 @@
 		var/mob/living/carbon/human/H = L
 		H.forcesay(GLOB.hit_appends)
 
+	cooldown_check = world.time + cooldown
 
 	return 1
+
+/// After the initial stun period, we check to see if the target needs to have the stun applied.
+/obj/item/melee/baton/proc/apply_stun_effect_end(mob/living/target)
+	var/trait_check = HAS_TRAIT(target, TRAIT_STUNRESISTANCE) //var since we check it in out to_chat as well as determine stun duration
+	if(trait_check)
+		target.Knockdown(stunforce * 0.1)
+	else
+		target.Knockdown(stunforce)
+	if(!target.IsKnockdown())
+		to_chat(target, "<span class='warning'>You muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]</span>")
 
 /obj/item/melee/baton/emp_act(severity)
 	. = ..()
@@ -192,7 +217,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 3
 	throwforce = 5
-	stunforce = 100
+	stunforce = (5 SECONDS)
 	hitcost = 2000
 	throw_hit_chance = 10
 	slot_flags = ITEM_SLOT_BACK
@@ -202,6 +227,6 @@
 	. = ..()
 	sparkler = new (src)
 
-/obj/item/melee/baton/cattleprod/baton_stun()
+/obj/item/melee/baton/cattleprod/baton_effect()
 	if(sparkler.activate())
 		..()

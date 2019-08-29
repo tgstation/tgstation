@@ -78,7 +78,7 @@
 			if(!O.tool_start_check(user, amount=0))
 				return
 
-			user.visible_message("[user] begins repairing [src].", \
+			user.visible_message("<span class='notice'>[user] begins repairing [src].</span>", \
 				"<span class='notice'>You begin repairing [src]...</span>", \
 				"<span class='italics'>You hear welding.</span>")
 
@@ -118,7 +118,7 @@
 		eject_part(user)
 
 	else
-		to_chat(user, "<span class='notice'>\The [src] is empty.</span>")
+		to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
 
 /obj/machinery/aug_manipulator/proc/eject_part(mob/living/user)
 	if(storedpart)
@@ -126,7 +126,7 @@
 		storedpart = null
 		update_icon()
 	else
-		to_chat(user, "<span class='notice'>[src] is empty.</span>")
+		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
 /obj/machinery/aug_manipulator/AltClick(mob/living/user)
 	..()

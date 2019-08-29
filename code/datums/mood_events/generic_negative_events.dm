@@ -8,11 +8,11 @@
 
 /datum/mood_event/on_fire
 	description = "<span class='boldwarning'>I'M ON FIRE!!!</span>\n"
-	mood_change = -8
+	mood_change = -12
 
 /datum/mood_event/suffocation
 	description = "<span class='boldwarning'>CAN'T... BREATHE...</span>\n"
-	mood_change = -6
+	mood_change = -12
 
 /datum/mood_event/burnt_thumb
 	description = "<span class='warning'>I shouldn't play with lighters...</span>\n"
@@ -21,11 +21,11 @@
 
 /datum/mood_event/cold
 	description = "<span class='warning'>It's way too cold in here.</span>\n"
-	mood_change = -2
+	mood_change = -5
 
 /datum/mood_event/hot
 	description = "<span class='warning'>It's getting hot in here.</span>\n"
-	mood_change = -2
+	mood_change = -5
 
 /datum/mood_event/creampie
 	description = "<span class='warning'>I've been creamed. Tastes like pie flavor.</span>\n"
@@ -49,18 +49,18 @@
 
 /datum/mood_event/depression
 	description = "<span class='warning'>I feel sad for no particular reason.</span>\n"
-	mood_change = -9
+	mood_change = -12
 	timeout = 2 MINUTES
 
 /datum/mood_event/shameful_suicide //suicide_acts that return SHAME, like sord
   description = "<span class='boldwarning'>I can't even end it all!</span>\n"
-  mood_change = -10
+  mood_change = -15
   timeout = 60 SECONDS
 
 /datum/mood_event/dismembered
   description = "<span class='boldwarning'>AHH! I WAS USING THAT LIMB!</span>\n"
-  mood_change = -8
-  timeout = 4 MINUTES
+  mood_change = -10
+  timeout = 8 MINUTES
 
 /datum/mood_event/tased
 	description = "<span class='warning'>There's no \"z\" in \"taser\". It's in the zap.</span>\n"

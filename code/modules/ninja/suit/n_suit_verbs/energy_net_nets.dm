@@ -34,7 +34,7 @@ It is possible to destroy the net by the occupant or someone else.
 /obj/structure/energy_net/Destroy()
 	if(!success)
 		if(!QDELETED(affecting))
-			affecting.visible_message("[affecting.name] was recovered from the energy net!", "You were recovered from the energy net!", "<span class='italics'>You hear a grunt.</span>")
+			affecting.visible_message("<span class='notice'>[affecting.name] was recovered from the energy net!</span>", "<span class='notice'>You were recovered from the energy net!</span>", "<span class='italics'>You hear a grunt.</span>")
 		if(!QDELETED(master))//As long as they still exist.
 			to_chat(master, "<span class='userdanger'>ERROR</span>: unable to initiate transport protocol. Procedure terminated.")
 	return ..()
@@ -59,10 +59,13 @@ It is possible to destroy the net by the occupant or someone else.
 				continue
 			H.dropItemToGround(W)
 
+		// After we remove items, at least give them what they need to live.
+		H.dna.species.give_important_for_life(H)
+
 	playsound(affecting, 'sound/effects/sparks4.ogg', 50, 1)
 	new /obj/effect/temp_visual/dir_setting/ninja/phase/out(affecting.drop_location(), affecting.dir)
 
-	visible_message("[affecting] suddenly vanishes!")
+	visible_message("<span class='notice'>[affecting] suddenly vanishes!</span>")
 	affecting.forceMove(pick(GLOB.holdingfacility)) //Throw mob in to the holding facility.
 	to_chat(affecting, "<span class='danger'>You appear in a strange place!</span>")
 

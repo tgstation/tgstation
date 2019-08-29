@@ -37,8 +37,8 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 
 /obj/item/stack/marker_beacon/examine(mob/user)
 	. = ..()
-	. += {"<span class='notice'>Use in-hand to place a [singular_name].\n
-	Alt-click to select a color. Current color is [picked_color].</span>"}
+	. += "<span class='notice'>Use in-hand to place a [singular_name].\n"+\
+	"Alt-click to select a color. Current color is [picked_color].</span>"
 
 /obj/item/stack/marker_beacon/update_icon()
 	icon_state = "[initial(icon_state)][lowertext(picked_color)]"

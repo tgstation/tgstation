@@ -112,15 +112,15 @@
 #define NOZOMBIE		9
 #define DIGITIGRADE		10	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
 #define NO_UNDERWEAR	11
-#define NOLIVER			12
-#define NOSTOMACH		13
-#define NO_DNA_COPY     14
-#define DRINKSBLOOD		15
-#define NOFLASH			16
-#define DYNCOLORS		17 //Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
-#define AGENDER			18
-#define NOEYESPRITES	19 //Do not draw eyes or eyeless overlay
+#define NOSTOMACH		12
+#define NO_DNA_COPY     13
+#define DRINKSBLOOD		14
+#define NOFLASH			15
+#define DYNCOLORS		16 //Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
+#define AGENDER			17
+#define NOEYESPRITES	18 //Do not draw eyes or eyeless overlay
 
+//organ slots
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_APPENDIX "appendix"
 #define ORGAN_SLOT_RIGHT_ARM_AUG "r_arm_device"
@@ -145,6 +145,10 @@
 #define ORGAN_SLOT_TAIL "tail"
 #define ORGAN_SLOT_PARASITE_EGG "parasite_egg"
 
+//organ defines
+#define STANDARD_ORGAN_THRESHOLD 	100
+#define STANDARD_ORGAN_HEALING 		0.001
+#define STANDARD_ORGAN_DECAY		0.00222		//designed to fail organs when left to decay for ~15 minutes
 
 //used for the can_chromosome var on mutations
 #define CHROMOSOME_NEVER 0

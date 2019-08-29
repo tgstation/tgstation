@@ -706,7 +706,12 @@ world
 		((hi3 >= 65 ? hi3-55 : hi3-48)<<4) | (lo3 >= 65 ? lo3-55 : lo3-48),
 		((hi4 >= 65 ? hi4-55 : hi4-48)<<4) | (lo4 >= 65 ? lo4-55 : lo4-48))
 
-// Creates a single icon from a given /atom or /image.  Only the first argument is required.
+/// Create a single [/icon] from a given [/atom] or [/image].
+///
+/// Very low-performance. Should usually only be used for HTML, where BYOND's
+/// appearance system (overlays/underlays, etc.) is not available.
+///
+/// Only the first argument is required.
 /proc/getFlatIcon(image/A, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE)
 	//Define... defines.
 	var/static/icon/flat_template = icon('icons/effects/effects.dmi', "nothing")
@@ -1200,32 +1205,3 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 
 	var/icon/I = getFlatIcon(thing)
 	return icon2html(I, target)
-
-//If you are using icons, consider using /icon/UseAlphaMask instead
-/proc/apply_alpha_mask(image/target, image/mask)
-	var/target_old_color = target.color
-	var/target_old_blend_mode = target.blend_mode
-	var/target_old_appearance_flags = target.appearance_flags
-	var/mask_old_color = mask.color
-	var/mask_old_appearance_flags = mask.appearance_flags
-
-	target.color = list(0,0,0,0, 0,0,0,0, 0,0,0,0, 1,0,0,0, 0,0,0,1)
-	target.blend_mode = BLEND_MULTIPLY
-	target.appearance_flags |= KEEP_TOGETHER
-	mask.color = list(0,0,0,1, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,0)
-	mask.appearance_flags |= KEEP_TOGETHER
-
-	var/image/together = new()
-	together.appearance_flags |= KEEP_TOGETHER
-
-	mask.add_overlay(target)
-	target.color = target_old_color
-	together.overlays = list(mask, target)
-
-	target.blend_mode = target_old_blend_mode
-	target.appearance_flags = target_old_appearance_flags
-	mask.color = mask_old_color
-	mask.appearance_flags = mask_old_appearance_flags
-	mask.cut_overlay(target)
-
-	return together

@@ -25,16 +25,16 @@
 
 /datum/surgery_step/fix_brain/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin to fix [target]'s brain...</span>",
-		"[user] begins to fix [target]'s brain.",
-		"[user] begins to perform surgery on [target]'s brain.")
+		"<span class='notice'>[user] begins to fix [target]'s brain.</span>",
+		"<span class='notice'>[user] begins to perform surgery on [target]'s brain.</span>")
 
 /datum/surgery_step/fix_brain/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You succeed in fixing [target]'s brain.</span>",
-		"[user] successfully fixes [target]'s brain!",
-		"[user] completes the surgery on [target]'s brain.")
+		"<span class='notice'>[user] successfully fixes [target]'s brain!</span>",
+		"<span class='notice'>[user] completes the surgery on [target]'s brain.</span>")
 	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/brainwashed))
 		target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
-	target.adjustBrainLoss(-60)
+	target.setOrganLoss(ORGAN_SLOT_BRAIN, target.getOrganLoss(ORGAN_SLOT_BRAIN) - 60)	//we set damage in this case in order to clear the "failing" flag
 	target.cure_all_traumas(TRAUMA_RESILIENCE_SURGERY)
 	return TRUE
 
@@ -42,8 +42,8 @@
 	if(target.getorganslot(ORGAN_SLOT_BRAIN))
 		display_results(user, target, "<span class='warning'>You screw up, causing more damage!</span>",
 			"<span class='warning'>[user] screws up, causing brain damage!</span>",
-			"[user] completes the surgery on [target]'s brain.")
-		target.adjustBrainLoss(60)
+			"<span class='notice'>[user] completes the surgery on [target]'s brain.</span>")
+		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60)
 		target.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
 	else
 		user.visible_message("<span class='warning'>[user] suddenly notices that the brain [user.p_they()] [user.p_were()] working on is not there anymore.", "<span class='warning'>You suddenly notice that the brain you were working on is not there anymore.</span>")

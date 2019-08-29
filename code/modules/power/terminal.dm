@@ -60,7 +60,7 @@
 	if(master && !master.can_terminal_dismantle())
 		return
 
-	user.visible_message("[user.name] dismantles the power terminal from [master].",
+	user.visible_message("<span class='notice'>[user.name] dismantles the power terminal from [master].</span>",
 		"<span class='notice'>You begin to cut the cables...</span>")
 
 	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
@@ -77,5 +77,6 @@
 		qdel(src)
 
 /obj/machinery/power/terminal/wirecutter_act(mob/living/user, obj/item/I)
+	..()
 	dismantle(user, I)
 	return TRUE

@@ -7,10 +7,18 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 	var/member_name = "member"
 	var/list/objectives = list() //common objectives, these won't be added or removed automatically, subtypes handle this, this is here for bookkeeping purposes.
 	var/show_roundend_report = TRUE
+	var/has_hud = FALSE /// Does the team have its own HUD?
+	var/hud_icon_state = "traitor" /// Default icon
+	var/datum/atom_hud/antag/team/team_hud = new /// HUD datum
 
 /datum/team/New(starting_members)
 	. = ..()
 	GLOB.antagonist_teams += src
+
+	if (has_hud)
+		team_hud.self_visible = TRUE
+		GLOB.huds += team_hud
+
 	if(starting_members)
 		if(islist(starting_members))
 			for(var/datum/mind/M in starting_members)
@@ -26,9 +34,17 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 	return members.len == 1
 
 /datum/team/proc/add_member(datum/mind/new_member)
+	if (has_hud)
+		team_hud.join_hud(new_member.current)
+		set_antag_hud(new_member.current, hud_icon_state, TRUE)
+
 	members |= new_member
 
 /datum/team/proc/remove_member(datum/mind/member)
+	if (has_hud)
+		team_hud.leave_hud(member.current)
+		set_antag_hud(member.current, null, TRUE)
+
 	members -= member
 
 //Display members/victory/failure/objectives for the team

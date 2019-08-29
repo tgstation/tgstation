@@ -103,3 +103,9 @@
 	if(istype(loc, /obj/item/organ/brain))
 		var/obj/item/organ/brain/B = loc
 		. = B.traumas
+
+/mob/living/brain/get_policy_keywords()
+	. = ..()
+
+	if(container)
+		. += "[container.type]"
