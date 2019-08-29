@@ -47,15 +47,9 @@
 /proc/sanitize_filename(t)
 	return sanitize_simple(t, list("\n"="", "\t"="", "/"="", "\\"="", "?"="", "%"="", "*"="", ":"="", "|"="", "\""="", "<"="", ">"=""))
 
-///proc to check whether a string contains anything in the OOC in IC filter, returns true if there is such a filter and it does
-/proc/contains_ic_filtered_words(t)
-	if(config.ic_filter_regex && findtext(t, config.ic_filter_regex))
-		return TRUE
-	return FALSE
-
 ///returns nothing with an alert instead of the message if it contains something in the ic filter, and sanitizes normally if the name is fine. It returns nothing so it backs out of the input the same way as if you had entered nothing.
 /proc/sanitize_name(t,list/repl_chars = null)
-	if(contains_ic_filtered_words(t))
+	if(CHAT_FILTER_CHECK(t))
 		alert("You cannot set a name that contains a word prohibited in IC chat!")
 		return ""
 	if(t == "space" || t == "floor" || t == "wall" || t == "r-wall" || t == "monkey" || t == "unknown" || t == "inactive ai")	//prevents these common metagamey names
