@@ -20,7 +20,7 @@
 	var/fair_market_projectile = /obj/item/projectile/bullet/c38 // For shooting the worst scumbags of all: the poor
 	do_footstep = TRUE
 
-/mob/living/simple_animal/bot/secbot/ed209/Initialize(mapload,created_name,created_lasercolor)
+/mob/living/simple_animal/bot/secbot/ed209/Initialize(mapload)
 	. = ..()
 	set_weapon() //giving it the right projectile and firing sound.
 
