@@ -334,20 +334,19 @@ All foods are distributed among various categories. Use common sense.
 
 /obj/item/reagent_containers/food/snacks/afterattack(obj/item/reagent_containers/M, mob/user, proximity)
 	. = ..()
-	if(!dunkable)
+	if(!dunkable || !proximity)
 		return
 	if(istype(M, /obj/item/reagent_containers/glass) || istype(M, /obj/item/reagent_containers/food/drinks))	//you can dunk dunkable snacks into beakers or drinks
-		if(istype(M, /obj/item/reagent_containers/food/drinks/soda_cans)) //to prevent dunkage through soda can lids
-			if(!M.spillable)
-				to_chat(user, "<spane class='warning'>[M] is unopened!</span>")
-				return
+		if(!M.is_drainable())
+			to_chat(user, "<span class='warning'>[M] is unable to be dunked in!</span>")
+			return
 		if(M.reagents.trans_to(src, dunk_amount, transfered_by = user))	//if reagents were transfered, show the message
 			to_chat(user, "<span class='notice'>You dunk \the [src] into \the [M].</span>")
-		else			//if not, either the beaker was empty, or the snack was full
-			if(!M.reagents.total_volume)
-				to_chat(user, "<span class='warning'>[M] is empty!</span>")
-			else
-				to_chat(user, "<span class='warning'>[src] is full!</span>")
+			return
+		if(!M.reagents.total_volume)
+			to_chat(user, "<span class='warning'>[M] is empty!</span>")
+		else
+			to_chat(user, "<span class='warning'>[src] is full!</span>")
 
 // //////////////////////////////////////////////Store////////////////////////////////////////
 /// All the food items that can store an item inside itself, like bread or cake.
