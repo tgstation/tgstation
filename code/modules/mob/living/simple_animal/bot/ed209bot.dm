@@ -17,23 +17,12 @@
 	var/shot_delay = 15
 	var/shoot_sound = 'sound/weapons/laser.ogg'
 	var/projectile = /obj/item/projectile/beam/disabler
-	var/cell_type = /obj/item/stock_parts/cell
 	var/fair_market_projectile = /obj/item/projectile/bullet/c38 // For shooting the worst scumbags of all: the poor
 	do_footstep = TRUE
 
 /mob/living/simple_animal/bot/secbot/ed209/Initialize(mapload,created_name,created_lasercolor)
 	. = ..()
-	icon_state = "ed209[on]"
 	set_weapon() //giving it the right projectile and firing sound.
-
-/mob/living/simple_animal/bot/secbot/ed209/turn_on()
-	. = ..()
-	icon_state = "ed209[on]"
-	mode = BOT_IDLE
-
-/mob/living/simple_animal/bot/secbot/ed209/turn_off()
-	..()
-	icon_state = "ed209[on]"
 
 /mob/living/simple_animal/bot/secbot/ed209/bot_reset()
 	..()
@@ -71,14 +60,14 @@
 	switch(mode)
 	..()
 
-/mob/living/simple_animal/bot/ed209/proc/set_weapon()  //used to update the projectile type and firing sound
+/mob/living/simple_animal/bot/secbot/ed209/proc/set_weapon()  //used to update the projectile type and firing sound
 	shoot_sound = 'sound/weapons/laser.ogg'
 	if(emagged == 2)
 		projectile = /obj/item/projectile/beam
 	else
 		projectile = /obj/item/projectile/beam/disabler
 
-/mob/living/simple_animal/bot/ed209/proc/shootAt(mob/target)
+/mob/living/simple_animal/bot/secbot/ed209/proc/shootAt(mob/target)
 	if(world.time <= lastfired + shot_delay)
 		return
 	lastfired = world.time
@@ -97,7 +86,7 @@
 	A.preparePixelProjectile(target, src)
 	A.fire()
 
-/mob/living/simple_animal/bot/ed209/emp_act(severity)
+/mob/living/simple_animal/bot/secbot/ed209/emp_act(severity)
 	if(severity == 2 && prob(70))
 		severity = 1
 	. = ..()
@@ -130,7 +119,7 @@
 						target = toarrest
 						mode = BOT_HUNT
 
-/mob/living/simple_animal/bot/ed209/RangedAttack(atom/A)
+/mob/living/simple_animal/bot/secbot/ed209/RangedAttack(atom/A)
 	if(!on)
 		return
 	shootAt(A)
