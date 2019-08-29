@@ -237,8 +237,8 @@
 	var/datum/brain_trauma/mild/muscle_weakness/U
 
 /datum/reagent/medicine/C2/musiver/on_mob_life(mob/living/carbon/M)
-	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.2)
-	M.adjustToxLoss(-2*REM, 0)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.1)
+	M.adjustToxLoss(-1*REM, 0)
 	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.type,1)
 	..()
