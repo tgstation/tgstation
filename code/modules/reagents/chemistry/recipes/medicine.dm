@@ -230,5 +230,5 @@
 	name = "Granibitaluri"
 	id = /datum/reagent/medicine/granibitaluri
 	results = list(/datum/reagent/medicine/granibitaluri = 1)
-	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/medicine/sterilizine = 1) //haha guys totally not some sort of saline reference!
+	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/space_cleaner/sterilizine = 1) //haha guys totally not some sort of saline reference!
 	required_temp = 373
