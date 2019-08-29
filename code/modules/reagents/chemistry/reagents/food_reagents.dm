@@ -368,8 +368,8 @@
 
 /datum/reagent/consumable/coco/on_mob_add(mob/living/carbon/M)
 	if(iscatperson(M))
-			to_chat(M, "<span class='warning'>Your insides revolt at the presence of lethal chocolate!</span>")
-			M.vomit(20)
+		to_chat(M, "<span class='warning'>Your insides revolt at the presence of lethal chocolate!</span>")
+		M.vomit(20)
 	..()
 
 /datum/reagent/consumable/hot_coco
