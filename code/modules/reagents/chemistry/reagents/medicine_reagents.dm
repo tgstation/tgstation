@@ -1235,7 +1235,7 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/badstims  //These are bad for combat on purpose. Can be used in mixtures to promote non-combat use.
+/datum/reagent/medicine/badstims  //These are bad for combat on purpose. Used in adrenal implant.
 	name = "Experimental Stimulants"
 	description = "Experimental Stimulants designed to get you away from trouble."
 	reagent_state = LIQUID
@@ -1247,7 +1247,7 @@
 		var/obj/item/I = M.get_active_held_item()
 		if(I && M.dropItemToGround(I))
 			to_chat(M, "<span class='notice'>Your hands spaz out and you drop what you were holding!</span>")
-	if(prob(50))
+	if(prob(40))
 		M.losebreath++
 		M.adjustOxyLoss(1, 0)
 	M.adjustStaminaLoss(-10, 0)
