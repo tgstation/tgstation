@@ -297,10 +297,14 @@
 			victim.confused = max(M.confused, 3)
 			victim.damageoverlaytemp = 60
 			victim.Paralyze(60)
+			victim.adjustStaminaLoss(40)
 			return
 		else if ( eyes_covered ) // Eye cover is better than mouth cover
 			victim.blur_eyes(3)
+			victim.confused = max(M.confused, 1)
 			victim.damageoverlaytemp = 30
+			victim.Paralyze(10)
+			victim.adjustStaminaLoss(20)
 			return
 		else // Oh dear :D
 			if(prob(5))
@@ -310,6 +314,7 @@
 			victim.confused = max(M.confused, 6)
 			victim.damageoverlaytemp = 75
 			victim.Paralyze(100)
+			victim.adjustStaminaLoss(60)
 		victim.update_damage_hud()
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M)
