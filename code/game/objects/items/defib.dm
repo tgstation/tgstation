@@ -23,6 +23,7 @@
 	var/obj/item/stock_parts/cell/high/cell
 	var/combat = FALSE //can we revive through space suits?
 	var/grab_ghost = FALSE // Do we pull the ghost back into their body?
+	var/cooldown_duration = 5 SECONDS//how long does it take to recharge
 
 /obj/item/defibrillator/get_cell()
 	return cell
@@ -231,10 +232,7 @@
 			return FALSE
 
 /obj/item/defibrillator/proc/cooldowncheck(mob/user)
-	if(!/obj/item/defibrillator/compact/combat)
-		addtimer(CALLBACK(src, .proc/finish_charging), 5 SECONDS)
-	else
-		addtimer(CALLBACK(src, .proc/finish_charging), 2.5 SECONDS)
+		addtimer(CALLBACK(src, .proc/finish_charging), cooldown_duration)
 
 /obj/item/defibrillator/proc/finish_charging()
 	if(cell)
@@ -272,6 +270,7 @@
 	item_state = "defibcombat"
 	combat = TRUE
 	safety = FALSE
+	cooldown_duration = 2.5 SECONDS
 
 /obj/item/defibrillator/compact/combat/loaded/Initialize()
 	. = ..()
