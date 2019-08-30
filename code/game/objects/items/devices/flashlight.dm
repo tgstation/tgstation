@@ -347,12 +347,71 @@
 	desc = "An old lantern that has seen plenty of use."
 	brightness_on = 4
 
+/datum/component/hypnotic
+
+/datum/component/hypnotic/Initialize()
+	if(!isitem(parent))
+		return COMPONENT_INCOMPATIBLE
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
+
+/datum/component/hypnotic/proc/examine(datum/source, mob/user, list/examine_list)
+	if(istype(parent, /obj/item/flashlight/lantern/syndicate))
+		/obj/item/flashlight/lantern/syndicate/lamp = parent
+			
+
 /obj/item/flashlight/lantern/syndicate
-	name = "suspicious lantern"
-	desc = "A suspicious looking lantern."
+	name = "suspicious-looking lantern"
+	desc = "A suspicious-looking lantern."
 	icon_state = "syndilantern"
 	item_state = "syndilantern"
 	brightness_on = 10
+	strength = 0 //at 0, this will only affect people with a NEGATIVE net eye protection value (protection-less moths, protection-less people with thermals or NVG on, etc.)
+	godlamp = 0 
+
+/obj/item/lantern/attack(mob/living/L, mob/user) //you won't be able to attack anything with this/check peoples' mouths with this item, but I don't think that that feature on this item will be missed much.
+	L.visible_message("<span class='passive'>[user] is trying to show [L] [src].</span>", \
+							"<span class='userdanger'>[user] is trying to show you [src].</span>")
+	if(do_mob(user, L, 30))
+		if(!on) //you forgot to turn the lantern on, you doofus
+			L.visible_message("<span class='passive'>[user] shows [L] [src].</span>" , \
+			"<span class='passive'>[user] shows you [src]. You don't see what all the fuss is about. Perhaps it's because [src] isn't on?</span>")
+			return FALSE
+		else
+			if(L.flash_act(strength, godlamp, godlamp, 1) && (iscarbon(L) || (godlamp && issilicon(L)))
+				if(godlamp || !HAS_TRAIT(C, TRAIT_MINDSHIELD))
+					if(godlamp) //the lamp of domination exacts a (temporary) price: it mutes people near it for 20 seconds (the length that the trances from it should last for) whenever it hypnotizes someone, to reduce the effectiveness/ease of use of "Serve XYZ as best as you are able to." shenanigans that can be done with it (there are still possible, but they're slightly harder to do with this in place)
+						var/list/mob/targets = get_hearers_in_view(3, get_turf(src))
+						for(var/mob/living/V in targets)
+							V.silent = max(V.silent, 20)
+					L.visible_message("<span class='passive'>[user] shows [L] [src], and [L] is completely fascinated by it.</span>" , \
+			"<span class='passive'>[user] shows you [src], and you stare deeply into it...</span>")
+					M.apply_status_effect(/datum/status_effect/trance, 200, TRUE) //yes, this bypasses the hypnosis_vulnerable test that the hypnotic flash performs; this is intentional, as the syndicate lamp has its own restrictions already
+					return TRUE
+			L.visible_message("<span class='passive'>[user] shows [L] [src].</span>" , \
+			"<span class='passive'>[user] shows you [src]. You don't see what all the fuss is about.</span>")
+			return FALSE
+	else
+		to_chat(user, "<span class='warning'>You fail to show [M] [src]!</span>")
+		return FALSE
+	
+
+/obj/item/flashlight/lantern/syndicate/verysusp
+	name = "VERY suspicious-looking lantern"
+	desc = "A VERY suspicious-looking lantern."
+	strength = 1 //will affect any carbon a normal flash could stun
+
+/obj/item/flashlight/lantern/syndicate/ohno
+	name = "lantern of domination"
+	desc = "Don't look a- <span class='hypnophrase'>too late.</span>"
+	icon_state = "lantern" //it looks like a normal lantern, so as to better worm its way into your trust
+	item_state = "lantern" //if someone TC trades for this, then examines their new lantern to see if it's legit and accidentally hypnotizes themself while doing so, I am going to laugh so hard
+	brightness_on = 10
+	strength = 10  //not even a welding helmet will save you
+	godlamp = 1 //nor will being blind or being a silicon
+	
+			
+			
+
 
 /obj/item/flashlight/slime
 	gender = PLURAL
