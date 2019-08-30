@@ -182,6 +182,7 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	Stop()
+	addtimer(CALLBACK(src, .proc/Restart), 20 SECONDS)
 
 /obj/item/organ/heart/cybernetic/on_life()
 	. = ..()
