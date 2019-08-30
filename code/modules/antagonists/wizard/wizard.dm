@@ -13,6 +13,7 @@
 	var/outfit_type = /datum/outfit/wizard
 	var/wiz_age = WIZARD_AGE_MIN /* Wizards by nature cannot be too young. */
 	can_hijack = HIJACK_HIJACKER
+	ghost_text = "The old wizard in a prison trick? I did that when my beard only reached to my bellybutton!"
 
 /datum/antagonist/wizard/on_gain()
 	register()

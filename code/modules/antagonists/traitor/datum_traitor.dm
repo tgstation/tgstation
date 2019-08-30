@@ -15,6 +15,7 @@
 	var/traitor_kind = TRAITOR_HUMAN //Set on initial assignment
 	var/datum/contractor_hub/contractor_hub
 	can_hijack = HIJACK_HIJACKER
+	ghost_text = "The syndicate does not take kindly to those who abandon their mission."
 
 /datum/antagonist/traitor/on_gain()
 	if(owner.current && isAI(owner.current))

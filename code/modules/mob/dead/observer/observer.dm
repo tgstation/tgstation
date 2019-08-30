@@ -285,7 +285,22 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(stat == DEAD)
 		ghostize(1)
 	else
-		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you may not play again this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
+		var/ghost_text = "Are you -sure- you want to ghost?"
+
+		// Check if we are an antag and either stuck in prison or cuffed
+		if(mind?.antag_datums && mind.antag_datums.len && (is_type_in_list(get_area(src), list(/area/security/brig, /area/security/prison)) || is_cuffed()))
+			var/list/possible_ghost_texts = list()
+
+			for(var/datum/antagonist/A in mind.antag_datums)
+				
+				if(A.ghost_text)
+					possible_ghost_texts += A.ghost_text		
+
+			// Still here? Time to make someone feel bad if possible
+			if(possible_ghost_texts.len)
+				ghost_text = pick(possible_ghost_texts)
+
+		var/response = alert(src, ghost_text + "\n(You are alive. If you ghost whilst still alive you may not play again this round! You can't change your mind so choose wisely!!)" ,"Are you sure you want to ghost?","Ghost","Stay in body")
 		if(response != "Ghost")
 			return	//didn't want to ghost after-all
 		ghostize(0)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3

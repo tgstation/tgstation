@@ -12,6 +12,7 @@
 	var/ignore_implant = FALSE
 	var/give_equipment = FALSE
 	var/datum/team/cult/cult_team
+	ghost_text = "You disappoint me mortal. Giving up so easily? I chose you for a reason."
 
 
 /datum/antagonist/cult/get_team()

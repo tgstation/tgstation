@@ -1029,3 +1029,6 @@
 	if(mood)
 		if(mood.sanity < SANITY_UNSTABLE)
 			return TRUE
+
+/mob/living/carbon/is_cuffed()
+	return handcuffed ? TRUE : FALSE
