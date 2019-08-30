@@ -514,6 +514,11 @@ generate/load female uniform sprites matching all previously decided variables
 	if(!file2use)
 		file2use = default_icon_file
 
+	//Check for an alternate spritesheet path in the species datum
+	var/mob/living/carbon/human/H = loc
+	if(!isinhands && H.dna && H.dna.species.alternate_spritesheets[file2use])
+		file2use = H.dna.species.alternate_spritesheets[file2use]
+
 	//Find a valid layer from variables+arguments
 	var/layer2use
 	if(alternate_worn_layer)
