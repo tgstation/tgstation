@@ -145,9 +145,9 @@
 	for(var/i = 1 to max(1, CONFIG_GET(number/brother_objectives_amount) + (members.len > 2) - is_hijacker))
 		forge_single_objective()
 	if(is_hijacker)
-		if(!locate(/datum/objective/hijack) in objectives)
+		if(!(locate(/datum/objective/hijack) in objectives))
 			add_objective(new/datum/objective/hijack)
-	else if(!locate(/datum/objective/escape) in objectives)
+	else if(!(locate(/datum/objective/escape) in objectives))
 		add_objective(new/datum/objective/escape)
 
 /datum/team/brother_team/proc/forge_single_objective()

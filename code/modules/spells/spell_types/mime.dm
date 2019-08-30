@@ -229,7 +229,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(!locate(/obj/effect/proc_holder/spell/targeted/mime/speak) in user.mind.spell_list)
+	if(!(locate(/obj/effect/proc_holder/spell/targeted/mime/speak) in user.mind.spell_list))
 		user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak)
 
 /obj/item/book/granter/spell/mimery_guns
@@ -244,5 +244,5 @@
 	. = ..()
 	if(!.)
 		return
-	if(!locate(/obj/effect/proc_holder/spell/targeted/mime/speak) in user.mind.spell_list)
+	if(!(locate(/obj/effect/proc_holder/spell/targeted/mime/speak) in user.mind.spell_list))
 		user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak)

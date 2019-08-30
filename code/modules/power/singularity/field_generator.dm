@@ -297,7 +297,7 @@ field_generator power level display
 	for(var/dist in 0 to steps) // creates each field tile
 		var/field_dir = get_dir(T,get_step(G.loc, NSEW))
 		T = get_step(T, NSEW)
-		if(!locate(/obj/machinery/field/containment) in T)
+		if(!(locate(/obj/machinery/field/containment) in T))
 			var/obj/machinery/field/containment/CF = new(T)
 			CF.set_master(src,G)
 			CF.setDir(field_dir)

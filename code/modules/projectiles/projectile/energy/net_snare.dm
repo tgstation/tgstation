@@ -13,7 +13,7 @@
 /obj/item/projectile/energy/net/on_hit(atom/target, blocked = FALSE)
 	if(isliving(target))
 		var/turf/Tloc = get_turf(target)
-		if(!locate(/obj/effect/nettingportal) in Tloc)
+		if(!(locate(/obj/effect/nettingportal) in Tloc))
 			new /obj/effect/nettingportal(Tloc)
 	..()
 

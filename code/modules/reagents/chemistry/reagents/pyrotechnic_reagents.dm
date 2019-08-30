@@ -56,7 +56,7 @@
 			F.burn_tile()
 		if(isfloorturf(F))
 			for(var/turf/turf in range(1,F))
-				if(!locate(/obj/effect/hotspot) in turf)
+				if(!(locate(/obj/effect/hotspot) in turf))
 					new /obj/effect/hotspot(F)
 	if(iswallturf(T))
 		var/turf/closed/wall/W = T
@@ -68,7 +68,7 @@
 		if(method != INGEST && method != INJECT)
 			M.adjust_fire_stacks(min(reac_volume/5, 10))
 			M.IgniteMob()
-			if(!locate(/obj/effect/hotspot) in M.loc)
+			if(!(locate(/obj/effect/hotspot) in M.loc))
 				new /obj/effect/hotspot(M.loc)
 
 /datum/reagent/sorium
