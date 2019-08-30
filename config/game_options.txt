@@ -257,9 +257,6 @@ MAX_TICKETS_PER_ROLL 100
 ## Uncomment to enable dynamic ruleset config file.
 DYNAMIC_CONFIG_ENABLED
 
-## Dynamic ruleset config file location.
-DYNAMIC_CONFIG_FILE "config/dynamic.json"
-
 ## RANDOM EVENTS ###
 ## Comment this out to disable random events during the round.
 ALLOW_RANDOM_EVENTS
