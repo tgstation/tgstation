@@ -32,7 +32,7 @@
 //Bang
 	if(!distance || loc == M || loc == M.loc)	//Stop allahu akbarring rooms with this.
 		M.Paralyze(20)
-		M.Knockdown(100)
+		M.Knockdown(200)
 		M.soundbang_act(1, 200, 10, 15)
 	else
 		if(distance <= 1)
