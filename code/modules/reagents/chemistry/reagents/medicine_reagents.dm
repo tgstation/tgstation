@@ -936,18 +936,14 @@
 	var/mob/living/carbon/human/hippie = L
 	if(!istype(L))
 		return ..()
-	var/resi = NONE
+	var/resi = 0
 	switch(current_cycle + ODcycle)
-		if(0-20) //i'm a (benevolent) god sweet nerevar
-			resi = NONE
 		if(21 to 30)
 			resi = TRAUMA_RESILIENCE_BASIC //plant-friendly zone
 		if(31 to 55)
 			resi = TRAUMA_RESILIENCE_SURGERY
-		if(56 to 100)
+		if(56 to INFINITY)
 			resi = TRAUMA_RESILIENCE_LOBOTOMY
-		else
-			resi = TRAUMA_RESILIENCE_MAGIC
 	if(!resi)
 		return ..()
 
