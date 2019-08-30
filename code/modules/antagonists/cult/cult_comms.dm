@@ -21,7 +21,7 @@
 	if(!input || !IsAvailable())
 		return
 	if(CHAT_FILTER_CHECK(input))
-		to_chat(owner, "<span class='warning'>You cannot send a message that contains a word prohibited in IC chat!</span>")
+		to_chat(usr, "<span class='warning'>You cannot send a message that contains a word prohibited in IC chat!</span>")
 		return
 	cultist_commune(usr, input)
 
