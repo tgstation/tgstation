@@ -1242,11 +1242,14 @@
 	overdose_threshold = 50
 	metabolization_rate = 0.2 //same as C2s
 
-/datum/reagent/medicine/granibitaluri/on_mob_life(mob/living/carbon/M) //
-	if(M.getBruteLoss() <= 10)
+/datum/reagent/medicine/granibitaluri/on_mob_life(mob/living/carbon/M)
+	var/tdamage = M.getBruteLoss //1 var + 2 proccall < 4 proccalls
+	if(tdamage && tdamage <= 10)
 		M.adjustBruteLoss(-0.1)
-	else if(M.getFireLoss() <= 10)
-		M.adjustFireLoss(-0.1)
+	else
+		tdamage = M.getFireLoss()
+		if(tdamage && tdamage <= 10)
+			M.adjustFireLoss(-0.1)
 	..()
 	return TRUE
 
