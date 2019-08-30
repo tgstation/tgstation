@@ -53,7 +53,10 @@
 	display_results(user, target, "<span class='notice'>You succeed in fixing some of [target]'s wounds.</span>",
 		"<span class='notice'>[user] fixes some of [target]'s wounds.</span>",
 		"<span class='notice'>[user] fixes some of [target]'s wounds.</span>")
-	target.heal_bodypart_damage(brutehealing,burnhealing)
+	if(target.stat == DEAD)
+		target.heal_bodypart_damage(brutehealing*1.5,burnhealing*1.5)
+	else
+		target.heal_bodypart_damage(brutehealing,burnhealing)
 	if(istype(surgery, /datum/surgery/healing))
 		var/datum/surgery/healing/the_surgery = surgery
 		the_surgery.antispam = TRUE
