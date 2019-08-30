@@ -374,7 +374,9 @@
 					return
 		C.add_hiddenprint(user)
 		if(istagger)
-			C.AddComponent(/datum/component/art, 30)
+			C.AddComponent(/datum/component/art, GOOD_ART)
+		else
+			C.AddComponent(/datum/component/art, BAD_ART)
 
 	if(!instant)
 		to_chat(user, "<span class='notice'>You finish drawing \the [temp].</span>")
