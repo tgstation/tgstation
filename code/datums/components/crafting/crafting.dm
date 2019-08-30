@@ -223,7 +223,7 @@
 					var/obj/item/reagent_containers/RC = locate() in surroundings
 					RG = RC.reagents.get_reagent(A)
 					if(RG)
-						if(!(locate(RG.type) in Deletion))
+						if(!locate(RG.type) in Deletion)
 							Deletion += new RG.type()
 						if(RG.volume > amt)
 							RG.volume -= amt
@@ -251,7 +251,7 @@
 				while(amt > 0)
 					S = locate(A) in surroundings
 					if(S.amount >= amt)
-						if(!(locate(S.type) in Deletion))
+						if(!locate(S.type) in Deletion)
 							SD = new S.type()
 							Deletion += SD
 						S.use(amt)
@@ -260,7 +260,7 @@
 						continue main_loop
 					else
 						amt -= S.amount
-						if(!(locate(S.type) in Deletion))
+						if(!locate(S.type) in Deletion)
 							Deletion += S
 						else
 							data = S.amount

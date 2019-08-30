@@ -28,7 +28,7 @@
 
 /turf/open/space/transit/Entered(atom/movable/AM, atom/OldLoc)
 	..()
-	if(!(locate(/obj/structure/lattice) in src))
+	if(!locate(/obj/structure/lattice) in src)
 		throw_atom(AM)
 
 /turf/open/space/transit/proc/throw_atom(atom/movable/AM)

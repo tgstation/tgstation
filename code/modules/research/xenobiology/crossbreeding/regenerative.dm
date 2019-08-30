@@ -44,7 +44,7 @@ Regenerative extracts:
 /obj/item/slimecross/regenerative/orange/core_effect_before(mob/living/target, mob/user)
 	target.visible_message("<span class='warning'>The [src] boils over!</span>")
 	for(var/turf/turf in range(1,target))
-		if(!(locate(/obj/effect/hotspot) in turf))
+		if(!locate(/obj/effect/hotspot) in turf)
 			new /obj/effect/hotspot(turf)
 
 /obj/item/slimecross/regenerative/purple
