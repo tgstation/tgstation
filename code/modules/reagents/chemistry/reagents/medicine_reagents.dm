@@ -905,21 +905,24 @@
 	taste_description = "shag carpeting and rock"
 	var/ODcycle = 0 //adds to current_cycle in calculation. 5 cycles while OD = 1 "normal" cycle (basically you're getting 1.2 instead of 2 cycles during OD)
 
-/datum/reagent/medicine/earthsblood/on_transfer(atom/A, method=INJECT, trans_volume)
-	if(method == INJECT && trans_volume < 5)
-		return
-	..()
-
 /datum/reagent/medicine/earthsblood/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-5 * REM, 0)
-	M.adjustFireLoss(-5 * REM, 0)
-	M.adjustOxyLoss(-3 * REM, 0)
-	M.adjustToxLoss(-3 * REM, 0)
-	M.adjustCloneLoss(-1 * REM, 0)
-	M.adjustStaminaLoss(-3 * REM, 0)
-	M.jitteriness = min(max(0, M.jitteriness + 3), 30)
+	if(current_cycle <= 20) //5u has to be processed before u get into THE FUN ZONE
+		M.adjustBruteLoss(-1 * REM, 0)
+		M.adjustFireLoss(-1 * REM, 0)
+		M.adjustOxyLoss(-0.5 * REM, 0)
+		M.adjustToxLoss(-0.5 * REM, 0)
+		M.adjustCloneLoss(-0.1 * REM, 0)
+		M.adjustStaminaLoss(-0.5 * REM, 0)
+	else
+		M.adjustBruteLoss(-5 * REM, 0)
+		M.adjustFireLoss(-5 * REM, 0)
+		M.adjustOxyLoss(-3 * REM, 0)
+		M.adjustToxLoss(-3 * REM, 0)
+		M.adjustCloneLoss(-1 * REM, 0)
+		M.adjustStaminaLoss(-3 * REM, 0)
+		M.jitteriness = min(max(0, M.jitteriness + 3), 30)
+		metabolization_rate += 0.2
 	M.druggy = min(max(0, M.druggy + 10), 15) //See above
-	metabolization_rate += 0.2
 	..()
 	. = 1
 
@@ -935,13 +938,13 @@
 		return ..()
 	var/resi = NONE
 	switch(current_cycle + ODcycle)
-		if(0)
-			resi = NONE //i'm a god sweet nerevar
-		if(1 to 10)
+		if(0-20) //i'm a (benevolent) god sweet nerevar
+			resi = NONE
+		if(21 to 30)
 			resi = TRAUMA_RESILIENCE_BASIC //plant-friendly zone
-		if(11 to 50)
+		if(31 to 55)
 			resi = TRAUMA_RESILIENCE_SURGERY
-		if(51 to 100)
+		if(56 to 100)
 			resi = TRAUMA_RESILIENCE_LOBOTOMY
 		else
 			resi = TRAUMA_RESILIENCE_MAGIC
