@@ -904,7 +904,7 @@
 	overdose_threshold = 25
 
 /datum/reagent/medicine/earthsblood/on_mob_life(mob/living/carbon/M)
-	if(current_cycle <= 25) //5u has to be processed before u get into THE FUN ZONE
+	if(current_cycle <= 25) //10u has to be processed before u get into THE FUN ZONE
 		M.adjustBruteLoss(-1 * REM, 0)
 		M.adjustFireLoss(-1 * REM, 0)
 		M.adjustOxyLoss(-0.5 * REM, 0)
@@ -921,7 +921,6 @@
 		M.adjustStaminaLoss(-3 * REM, 0)
 		M.jitteriness = min(max(0, M.jitteriness + 3), 30)
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM, 150)
-		metabolization_rate += 0.2 //unfortunately, you can't just keep yourself doped up on divine ichor forever
 	M.druggy = min(max(0, M.druggy + 10), 15) //See above (this refers to the comment two comments above this one, not the comment directly above this one)
 	..()
 	. = 1
