@@ -210,20 +210,13 @@
 /datum/chemical_reaction/slime/slimefoam
 	name = "Slime Foam"
 	id = "m_foam"
-	//results = list(/datum/reagent/fluorosurfactant = 20, /datum/reagent/water = 20)
 	required_reagents = list(/datum/reagent/water = 5)
 	required_container = /obj/item/slime_extract/blue
 	required_other = TRUE
 
 /datum/chemical_reaction/slime/slimefoam/on_reaction(datum/reagents/holder)
-	var/location = get_turf(holder.my_atom)
-	for(var/mob/M in viewers(5, location))
-		to_chat(M, "<span class='danger'>The solution spews out foam!</span>")
-	var/datum/effect_system/foam_spread/s = new()
-	s.set_up(80, location, holder)
-	s.start()
-	holder.clear_reagents()
-	return
+	var/datum/effect_system/foam_spread/foam = new()
+	create_foam(foam,holder,80)
 
 //Dark Blue
 /datum/chemical_reaction/slime/slimefreeze
