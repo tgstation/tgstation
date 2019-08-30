@@ -26,7 +26,7 @@
 				<b>Important Notes:</b> <font color='red'>Illegal</font><BR>
 				<HR>
 				<b>Implant Details:</b> Subjects injected with implant can activate an injection of medical cocktails.<BR>
-				<b>Function:</b> Removes stuns, increases speed, and has a mild healing effect.<BR>
+				<b>Function:</b> Pushes the body past the normal limits, assisting in escape from sticky situations.<BR>
 				<b>Integrity:</b> Implant can only be used three times before reserves are depleted."}
 	return dat
 
