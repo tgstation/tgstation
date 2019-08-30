@@ -182,10 +182,7 @@
 		dump_contents()
 	update_icon()
 
-/**
-  * Drops all contents of the unit onto the ground.
-*/
-/obj/machinery/suit_storage_unit/proc/dump_contents()
+/obj/machinery/suit_storage_unit/dump_contents()
 	dropContents()
 	helmet = null
 	suit = null
