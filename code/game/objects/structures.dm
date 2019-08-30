@@ -10,7 +10,6 @@
 	var/climbable = FALSE
 	var/mob/living/structureclimber
 	var/broken = 0 //similar to machinery's stat BROKEN
-	var/drag_slowdown //If the structure causes slowdown when dragged
 
 
 /obj/structure/Initialize()
