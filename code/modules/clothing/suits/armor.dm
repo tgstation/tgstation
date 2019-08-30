@@ -1,4 +1,6 @@
 /obj/item/clothing/suit/armor
+	icon = 'icons/obj/clothing/suit/armor.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/armor.dmi'
 	allowed = null
 	body_parts_covered = CHEST
 	cold_protection = CHEST|GROIN
