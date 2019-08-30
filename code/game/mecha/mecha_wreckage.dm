@@ -165,7 +165,7 @@
 				/obj/item/mecha_parts/part/ripley_right_arm,
 				/obj/item/mecha_parts/part/ripley_left_leg,
 				/obj/item/mecha_parts/part/ripley_right_leg,
-				/obj/item/clothing/suit/fire)
+				/obj/item/clothing/suit/utility/fire)
 
 /obj/structure/mecha_wreckage/ripley/deathripley
 	name = "\improper Death-Ripley wreckage"

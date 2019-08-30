@@ -70,7 +70,7 @@
 /datum/export/gear/biosuit
 	cost = 100
 	unit_name = "biosuit"
-	export_types = list(/obj/item/clothing/suit/bio_suit)
+	export_types = list(/obj/item/clothing/suit/utility/bio_suit)
 
 /datum/export/gear/bombhelmet
 	cost = 50
@@ -80,7 +80,7 @@
 /datum/export/gear/bombsuit
 	cost = 100
 	unit_name = "bomb suit"
-	export_types = list(/obj/item/clothing/suit/bomb_suit)
+	export_types = list(/obj/item/clothing/suit/utility/bomb_suit)
 
 /datum/export/gear/lizardboots
 	cost = 350

@@ -94,7 +94,7 @@
 	new /obj/item/analyzer(src)
 	new /obj/item/holosign_creator/atmos(src)
 	new /obj/item/watertank/atmos(src)
-	new /obj/item/clothing/suit/fire/atmos(src)
+	new /obj/item/clothing/suit/utility/fire/atmos(src)
 	new /obj/item/clothing/head/hardhat/atmos(src)
 	new /obj/item/clothing/glasses/meson/engine/tray(src)
 	new /obj/item/extinguisher/advanced(src)

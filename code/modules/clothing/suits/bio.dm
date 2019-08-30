@@ -10,7 +10,7 @@
 	resistance_flags = ACID_PROOF
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
-/obj/item/clothing/suit/bio_suit
+/obj/item/clothing/suit/utility/bio_suit
 	name = "bio suit"
 	desc = "A suit that protects against biological contamination."
 	icon_state = "bio"
@@ -32,7 +32,7 @@
 /obj/item/clothing/head/bio_hood/general
 	icon_state = "bio_general"
 
-/obj/item/clothing/suit/bio_suit/general
+/obj/item/clothing/suit/utility/bio_suit/general
 	icon_state = "bio_general"
 
 
@@ -40,7 +40,7 @@
 /obj/item/clothing/head/bio_hood/virology
 	icon_state = "bio_virology"
 
-/obj/item/clothing/suit/bio_suit/virology
+/obj/item/clothing/suit/utility/bio_suit/virology
 	icon_state = "bio_virology"
 
 
@@ -49,7 +49,7 @@
 	armor = list("melee" = 25, "bullet" = 15, "laser" = 25, "energy" = 10, "bomb" = 25, "bio" = 100, "rad" = 80, "fire" = 30, "acid" = 100)
 	icon_state = "bio_security"
 
-/obj/item/clothing/suit/bio_suit/security
+/obj/item/clothing/suit/utility/bio_suit/security
 	armor = list("melee" = 25, "bullet" = 15, "laser" = 25, "energy" = 10, "bomb" = 25, "bio" = 100, "rad" = 80, "fire" = 30, "acid" = 100)
 	icon_state = "bio_security"
 
@@ -58,7 +58,7 @@
 /obj/item/clothing/head/bio_hood/janitor
 	icon_state = "bio_janitor"
 
-/obj/item/clothing/suit/bio_suit/janitor
+/obj/item/clothing/suit/utility/bio_suit/janitor
 	icon_state = "bio_janitor"
 	allowed = list(/obj/item/storage/bag/trash)
 
@@ -66,12 +66,12 @@
 /obj/item/clothing/head/bio_hood/scientist
 	icon_state = "bio_scientist"
 
-/obj/item/clothing/suit/bio_suit/scientist
+/obj/item/clothing/suit/utility/bio_suit/scientist
 	icon_state = "bio_scientist"
 
 
 //CMO's biosuit, blue stripe
-/obj/item/clothing/suit/bio_suit/cmo
+/obj/item/clothing/suit/utility/bio_suit/cmo
 	icon_state = "bio_cmo"
 
 /obj/item/clothing/head/bio_hood/cmo
@@ -79,7 +79,7 @@
 
 
 //Plague Dr mask can be found in clothing/masks/gasmask.dm
-/obj/item/clothing/suit/bio_suit/plaguedoctorsuit
+/obj/item/clothing/suit/utility/bio_suit/plaguedoctorsuit
 	name = "plague doctor suit"
 	desc = "It protected doctors from the Black Death, back then. You bet your arse it's gonna help you against viruses."
 	icon_state = "plaguedoctor"

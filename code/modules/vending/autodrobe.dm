@@ -40,7 +40,7 @@
 					/obj/item/cane = 1,
 					/obj/item/clothing/under/suit/sl = 1,
 					/obj/item/clothing/mask/fakemoustache = 1,
-					/obj/item/clothing/suit/bio_suit/plaguedoctorsuit = 1,
+					/obj/item/clothing/suit/utility/bio_suit/plaguedoctorsuit = 1,
 					/obj/item/clothing/head/plaguedoctorhat = 1,
 					/obj/item/clothing/mask/gas/plaguedoctor = 1,
 					/obj/item/clothing/suit/toggle/owlwings = 1,

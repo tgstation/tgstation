@@ -84,7 +84,7 @@
 /obj/effect/spawner/bundle/costume/plaguedoctor
 	name = "plague doctor costume spawner"
 	items = list(
-		/obj/item/clothing/suit/bio_suit/plaguedoctorsuit,
+		/obj/item/clothing/suit/utility/bio_suit/plaguedoctorsuit,
 		/obj/item/clothing/head/plaguedoctorhat,
 		/obj/item/clothing/mask/gas/plaguedoctor)
 

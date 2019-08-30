@@ -3,7 +3,7 @@
 	name = "\improper Toximate 3000"
 	desc = "All the fine parts you need in one vending machine!"
 	products = list(/obj/item/clothing/under/rank/rnd/scientist = 6,
-		            /obj/item/clothing/suit/bio_suit = 6,
+		            /obj/item/clothing/suit/utility/bio_suit = 6,
 		            /obj/item/clothing/head/bio_hood = 6,
 					/obj/item/transfer_valve = 6,
 					/obj/item/assembly/timer = 6,

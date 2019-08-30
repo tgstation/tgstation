@@ -71,8 +71,8 @@
 	cost = 2000
 	contains = list(/obj/item/clothing/head/bio_hood,
 					/obj/item/clothing/head/bio_hood,
-					/obj/item/clothing/suit/bio_suit,
-					/obj/item/clothing/suit/bio_suit,
+					/obj/item/clothing/suit/utility/bio_suit,
+					/obj/item/clothing/suit/utility/bio_suit,
 					/obj/item/storage/bag/bio,
 					/obj/item/reagent_containers/syringe/antiviral,
 					/obj/item/reagent_containers/syringe/antiviral,
@@ -106,7 +106,7 @@
 	desc = "Science gone bonkers? Beeping behind the airlock? Buy now and be the hero the station des... I mean needs! (time not included)"
 	cost = 1500
 	contains = list(/obj/item/clothing/head/bomb_hood,
-					/obj/item/clothing/suit/bomb_suit,
+					/obj/item/clothing/suit/utility/bomb_suit,
 					/obj/item/clothing/mask/gas,
 					/obj/item/screwdriver,
 					/obj/item/wirecutters,
@@ -117,8 +117,8 @@
 	name = "Firefighting Crate"
 	desc = "Only you can prevent station fires. Partner up with two firefighter suits, gas masks, flashlights, large oxygen tanks, extinguishers, and hardhats!"
 	cost = 1000
-	contains = list(/obj/item/clothing/suit/fire/firefighter,
-					/obj/item/clothing/suit/fire/firefighter,
+	contains = list(/obj/item/clothing/suit/utility/fire/firefighter,
+					/obj/item/clothing/suit/utility/fire/firefighter,
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/mask/gas,
 					/obj/item/flashlight,

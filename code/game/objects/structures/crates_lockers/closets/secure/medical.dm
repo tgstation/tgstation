@@ -53,7 +53,7 @@
 	..()
 	new /obj/item/clothing/neck/cloak/cmo(src)
 	new /obj/item/storage/backpack/duffelbag/med(src)
-	new /obj/item/clothing/suit/bio_suit/cmo(src)
+	new /obj/item/clothing/suit/utility/bio_suit/cmo(src)
 	new /obj/item/clothing/head/bio_hood/cmo(src)
 	new /obj/item/clothing/suit/toggle/labcoat/cmo(src)
 	new /obj/item/clothing/under/rank/medical/chief_medical_officer(src)

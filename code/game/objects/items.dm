@@ -15,7 +15,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 
 	///Icon file for mob worn overlays. 
-	///no var for state because it should *always* be the same as icon_state
+	///no var for state because it should *always* be the same as icon_state Actually now we're using this to define alternate spritesheets
 	var/icon/mob_overlay_icon
 	//Forced mob worn layer instead of the standard preferred ssize.
 	var/alternate_worn_layer

@@ -8,8 +8,12 @@
 /*
  * Fire protection
  */
+/obj/item/clothing/suit/utility/
+	icon = 'icons/obj/clothing/suit/utility.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/utility.dmi'
 
-/obj/item/clothing/suit/fire
+
+/obj/item/clothing/suit/utility/fire
 	name = "emergency firesuit"
 	desc = "A suit that helps protect against fire and heat."
 	icon_state = "fire"
@@ -31,19 +35,19 @@
 	equip_delay_other = 60
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/suit/fire/firefighter
+/obj/item/clothing/suit/utility/fire/firefighter
 	icon_state = "firesuit"
 	item_state = "firefighter"
 
 
-/obj/item/clothing/suit/fire/heavy
+/obj/item/clothing/suit/utility/fire/heavy
 	name = "heavy firesuit"
 	desc = "An old, bulky thermal protection suit."
 	icon_state = "thermal"
 	item_state = "ro_suit"
 	slowdown = 1.5
 
-/obj/item/clothing/suit/fire/atmos
+/obj/item/clothing/suit/utility/fire/atmos
 	name = "firesuit"
 	desc = "An expensive firesuit that protects against even the most deadly of station fires. Designed to protect even if the wearer is set aflame."
 	icon_state = "atmos_firesuit"
@@ -72,7 +76,7 @@
 	resistance_flags = NONE
 
 
-/obj/item/clothing/suit/bomb_suit
+/obj/item/clothing/suit/utility/bomb_suit
 	name = "bomb suit"
 	desc = "A suit designed for safety when handling explosives."
 	icon_state = "bombsuit"
@@ -98,7 +102,7 @@
 	icon_state = "bombsuit_sec"
 	item_state = "bombsuit_sec"
 
-/obj/item/clothing/suit/bomb_suit/security
+/obj/item/clothing/suit/utility/bomb_suit/security
 	icon_state = "bombsuit_sec"
 	item_state = "bombsuit_sec"
 	allowed = list(/obj/item/gun/energy, /obj/item/melee/baton, /obj/item/restraints/handcuffs)
@@ -108,7 +112,7 @@
 	icon_state = "bombsuit_white"
 	item_state = "bombsuit_white"
 
-/obj/item/clothing/suit/bomb_suit/white
+/obj/item/clothing/suit/utility/bomb_suit/white
 	icon_state = "bombsuit_white"
 	item_state = "bombsuit_white"
 
