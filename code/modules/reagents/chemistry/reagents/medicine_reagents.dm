@@ -952,11 +952,13 @@
 		return ..()
 
 	var/datum/brain_trauma/severe/pacifism/PBT = hippiebrain.has_trauma_type(/datum/brain_trauma/severe/pacifism)
-	if(!PBT)
-		PBT = hippiebrain.gain_trauma(/datum/brain_trauma/severe/pacifism)
-	if(PBT.resilience >= resi)
-		return ..()
-	PBT.resilience = resi
+	if(PBT?.resilience >= resi)
+		return //they have same or better
+	if(PBT)
+		PBT.resilience = resi
+	else
+		hippiebrain.gain_trauma(/datum/brain_trauma/severe/pacifism, resi)
+	return ..()
 
 
 
