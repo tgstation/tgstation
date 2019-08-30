@@ -105,6 +105,10 @@
 /obj/machinery/computer/shuttle,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
+"s" = (
+/obj/machinery/vending/cola/random,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
 "t" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 30
@@ -147,9 +151,12 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "z" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
+/obj/machinery/cell_charger{
+	pixel_y = 3
 	},
+/obj/structure/table/wood,
+/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high/plus,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "A" = (
@@ -205,6 +212,13 @@
 /obj/machinery/light/small,
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
+"J" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
+	},
+/obj/machinery/vending/snack/random,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
 "K" = (
 /obj/machinery/door/airlock/titanium,
 /obj/structure/fans/tiny,
@@ -237,6 +251,22 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"P" = (
+/obj/structure/closet/crate,
+/obj/item/vending_refill/hydronutrients,
+/obj/item/vending_refill/hydronutrients,
+/obj/item/vending_refill/hydronutrients,
+/obj/item/vending_refill/hydroseeds,
+/obj/item/vending_refill/hydroseeds,
+/obj/item/vending_refill/hydroseeds,
+/obj/item/vending_refill/games,
+/obj/item/vending_refill/games,
+/obj/item/vending_refill/games,
+/obj/item/vending_refill/coffee,
+/obj/item/vending_refill/coffee,
+/obj/item/vending_refill/coffee,
+/turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "Q" = (
 /obj/machinery/light/small,
@@ -389,7 +419,7 @@ l
 l
 j
 f
-F
+P
 b
 "}
 (8,1,1) = {"
@@ -469,14 +499,14 @@ b
 c
 I
 b
+s
+l
+O
 l
 l
 O
 l
-l
-O
-l
-z
+J
 b
 V
 F
@@ -559,7 +589,7 @@ T
 f
 f
 b
-l
+z
 l
 p
 l
