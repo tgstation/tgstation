@@ -123,8 +123,8 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 /obj/structure/bodycontainer/proc/open()
 	recursive_organ_check(src)
-	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
-	playsound(src, 'sound/effects/roll.ogg', 5, 1)
+	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/roll.ogg', 5, TRUE)
 	var/turf/T = get_step(src, dir)
 	connected.setDir(dir)
 	for(var/atom/movable/AM in src)
@@ -132,8 +132,8 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	update_icon()
 
 /obj/structure/bodycontainer/proc/close()
-	playsound(src, 'sound/effects/roll.ogg', 5, 1)
-	playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+	playsound(src, 'sound/effects/roll.ogg', 5, TRUE)
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	for(var/atom/movable/AM in connected.loc)
 		if(!AM.anchored || AM == connected)
 			if(ismob(AM) && !isliving(AM))
@@ -192,7 +192,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 					icon_state = "morgue4" // Cloneable
 					if(mob_occupant.stat == DEAD && beeper)
 						if(world.time > next_beep)
-							playsound(src, 'sound/weapons/smg_empty_alarm.ogg', 50, 0) //Clone them you blind fucks
+							playsound(src, 'sound/weapons/smg_empty_alarm.ogg', 50, FALSE) //Clone them you blind fucks
 							next_beep = world.time + beep_cooldown
 					break
 
@@ -287,7 +287,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		if(!QDELETED(src))
 			locked = FALSE
 			update_icon()
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1) //you horrible people
+			playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE) //you horrible people
 
 /obj/structure/bodycontainer/crematorium/creamatorium
 	name = "creamatorium"

@@ -37,7 +37,7 @@
 	if(floor_tile == /obj/item/stack/tile/plasteel)
 		new floor_tile(src)
 		make_plating()
-		playsound(src, 'sound/items/crowbar.ogg', 10, 1) //clink
+		playsound(src, 'sound/items/crowbar.ogg', 10, TRUE) //clink
 	return list("operation_time" = 30, "new_obj_type" = /turf/open/floor/clockwork, "power_cost" = POWER_FLOOR, "spawn_dir" = SOUTH)
 
 /turf/open/floor/plating/asteroid/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
@@ -241,7 +241,7 @@
 			break
 		obj_integrity = CLAMP(obj_integrity + repair_values["healing_for_cycle"], 0, max_integrity)
 		adjust_clockwork_power(-repair_values["power_required"])
-		playsound(src, 'sound/machines/click.ogg', 50, 1)
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
 	if(fabricator)
 		fabricator.repairing = null
@@ -263,7 +263,7 @@
 			break
 		fabricator_heal_tick(repair_values["healing_for_cycle"])
 		adjust_clockwork_power(-repair_values["power_required"])
-		playsound(src, 'sound/machines/click.ogg', 50, 1)
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
 	if(fabricator)
 		fabricator.repairing = null
