@@ -1243,7 +1243,7 @@
 	metabolization_rate = 0.2 //same as C2s
 
 /datum/reagent/medicine/granibitaluri/on_mob_life(mob/living/carbon/M)
-	var/tdamage = M.getBruteLoss //1 var + 2 proccall < 4 proccalls
+	var/tdamage = M.getBruteLoss() //1 var + 2 proccall < 4 proccalls
 	if(tdamage && tdamage <= 10)
 		M.adjustBruteLoss(-0.1)
 	else
