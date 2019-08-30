@@ -238,19 +238,19 @@
 /datum/symptom/heal/coma/on_stage_change(new_stage, datum/disease/advance/A)  //mostly copy+pasted from the code for self-respiration's TRAIT_NOBREATH stuff
 	if(!..())
 		return FALSE
-	var/mob/living/carbon/M = A.affected_mob
-	if(A.stage <= 3)
-		REMOVE_TRAIT(M, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
+	if(A.stage <= 3 && HAS_TRAIT_FROM(A.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT))
+		REMOVE_TRAIT(A.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
 	return TRUE
 
 /datum/symptom/heal/coma/End(datum/disease/advance/A)
 	if(!..())
 		return
-	REMOVE_TRAIT(A.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
+	if(HAS_TRAIT_FROM(A.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT))
+		REMOVE_TRAIT(A.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
 
 /datum/symptom/heal/coma/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
-	if(stabilize && !HAS_TRAIT_FROM(src, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
+	if(stabilize && !HAS_TRAIT_FROM(M, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT))
 		ADD_TRAIT(M, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
 	if(HAS_TRAIT(M, TRAIT_DEATHCOMA))
 		return power
