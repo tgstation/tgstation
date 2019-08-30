@@ -119,11 +119,11 @@
 				for(var/datum/data/record/R in GLOB.data_core.security)
 					if(R.fields["name"] == authenticated)
 						current = R
-				playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
+				playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
 		if("Logout")
 			current = null
 			authenticated = null
-			playsound(src, 'sound/machines/terminal_off.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_off.ogg', 50, FALSE)
 
 		if("Pay")
 			for(var/datum/data/crime/p in current.fields["citation"])
@@ -141,7 +141,7 @@
 								investigate_log("Citation Paid off: <strong>[p.crimeName]</strong> Fine: [p.fine] | Paid off by [key_name(usr)]", INVESTIGATE_RECORDS)
 								to_chat(M, "<span class='notice'>The fine has been paid in full</span>")
 							qdel(C)
-							playsound(src, "terminal_type", 25, 0)
+							playsound(src, "terminal_type", 25, FALSE)
 					else
 						to_chat(M, "<span class='warning'>Fines can only be paid with holochips</span>")
 	updateUsrDialog()

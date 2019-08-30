@@ -105,7 +105,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		return
 	if(stat & BROKEN)
 		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
-		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
+		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, TRUE)
 		return
 
 
@@ -123,7 +123,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		return
 	if(stat & BROKEN)
 		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
-		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
+		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, TRUE)
 		return
 
 	if(href_list["ArrivalTopic"])
