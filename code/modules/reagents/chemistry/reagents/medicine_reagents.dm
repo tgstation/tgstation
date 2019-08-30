@@ -899,28 +899,62 @@
 
 /datum/reagent/medicine/earthsblood //Created by ambrosia gaia plants
 	name = "Earthsblood"
-	description = "Ichor from an extremely powerful plant. Great for restoring wounds, but it's a little heavy on the brain."
+	description = "Ichor from an extremely powerful plant. Some conspiracy theorists INSISTS this plant was used by Centcom during Plasmastock to minimize any chance of rioting."
 	color = rgb(255, 175, 0)
 	overdose_threshold = 25
+	taste_description = "shag carpeting and rock"
+	var/ODcycle = 0 //adds to current_cycle in calculation. 5 cycles while OD = 1 "normal" cycle (basically you're getting 1.2 instead of 2 cycles during OD)
 
 /datum/reagent/medicine/earthsblood/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-3 * REM, 0)
-	M.adjustFireLoss(-3 * REM, 0)
-	M.adjustOxyLoss(-15 * REM, 0)
+	M.adjustBruteLoss(-5 * REM, 0)
+	M.adjustFireLoss(-5 * REM, 0)
+	M.adjustOxyLoss(-3 * REM, 0)
 	M.adjustToxLoss(-3 * REM, 0)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM, 150) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
 	M.adjustCloneLoss(-1 * REM, 0)
-	M.adjustStaminaLoss(-30 * REM, 0)
+	M.adjustStaminaLoss(-3 * REM, 0)
 	M.jitteriness = min(max(0, M.jitteriness + 3), 30)
 	M.druggy = min(max(0, M.druggy + 10), 15) //See above
+	metabolization_rate += 0.2
 	..()
 	. = 1
 
 /datum/reagent/medicine/earthsblood/overdose_process(mob/living/M)
 	M.hallucination = min(max(0, M.hallucination + 5), 60)
 	M.adjustToxLoss(5 * REM, 0)
+	ODcycle += 0.2
 	..()
 	. = 1
+/datum/reagent/medicine/earthsblood/on_mob_end_metabolize(mob/living/L)
+	var/mob/living/carbon/human/hippie = L
+	if(!istype(L))
+		return ..()
+	var/resi = NONE
+	switch(current_cycle + ODcycle)
+		if(0)
+			resi = NONE //i'm a god sweet nerevar
+		if(1 to 10)
+			resi = TRAUMA_RESILIENCE_BASIC //plant-friendly zone
+		if(11 to 50)
+			resi = TRAUMA_RESILIENCE_SURGERY
+		if(51 to 100)
+			resi = TRAUMA_RESILIENCE_LOBOTOMY
+		else
+			resi = TRAUMA_RESILIENCE_MAGIC
+	if(!resi)
+		return ..()
+
+	var/obj/item/organ/brain/hippiebrain = hippie?.getorganslot(ORGAN_SLOT_BRAIN)
+	if(!hippiebrain)
+		return ..()
+
+	var/datum/brain_trauma/severe/pacifism/PBT = hippiebrain.has_trauma_type(/datum/brain_trauma/severe/pacifism)
+	if(!PBT)
+		PBT = hippiebrain.gain_trauma(/datum/brain_trauma/severe/pacifism)
+	if(PBT.resilience >= resi)
+		return ..()
+	PBT.resilience = resi
+
+
 
 /datum/reagent/medicine/haloperidol
 	name = "Haloperidol"
@@ -1197,7 +1231,7 @@
 	M.adjustFireLoss(3*REM, 0.)
 	M.adjust_bodytemperature(-35 * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
 	..()
-  
+
 /datum/reagent/medicine/silibinin/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, -2)//Add a chance to cure liver trauma once implemented.
 	..()
