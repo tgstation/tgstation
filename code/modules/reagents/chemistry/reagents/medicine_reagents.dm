@@ -899,26 +899,53 @@
 
 /datum/reagent/medicine/earthsblood //Created by ambrosia gaia plants
 	name = "Earthsblood"
-	description = "Ichor from an extremely powerful plant. Great for restoring wounds, but it's a little heavy on the brain."
+	description = "Ichor from an extremely powerful plant. Great for restoring wounds, but it's a little heavy on the brain. For some strange reason, it also induces temporary pacifism in those who imbibe it and semi-permanent pacifism in those who overdose on it."
 	color = rgb(255, 175, 0)
 	overdose_threshold = 25
 
 /datum/reagent/medicine/earthsblood/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-3 * REM, 0)
-	M.adjustFireLoss(-3 * REM, 0)
-	M.adjustOxyLoss(-15 * REM, 0)
-	M.adjustToxLoss(-3 * REM, 0)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM, 150) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
-	M.adjustCloneLoss(-1 * REM, 0)
-	M.adjustStaminaLoss(-30 * REM, 0)
-	M.jitteriness = min(max(0, M.jitteriness + 3), 30)
-	M.druggy = min(max(0, M.druggy + 10), 15) //See above
+	if(current_cycle <= 25) //5u has to be processed before u get into THE FUN ZONE
+		M.adjustBruteLoss(-1 * REM, 0)
+		M.adjustFireLoss(-1 * REM, 0)
+		M.adjustOxyLoss(-0.5 * REM, 0)
+		M.adjustToxLoss(-0.5 * REM, 0)
+		M.adjustCloneLoss(-0.1 * REM, 0)
+		M.adjustStaminaLoss(-0.5 * REM, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM, 150) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
+	else
+		M.adjustBruteLoss(-5 * REM, 0) //slow to start, but very quick healing once it gets going
+		M.adjustFireLoss(-5 * REM, 0)
+		M.adjustOxyLoss(-3 * REM, 0)
+		M.adjustToxLoss(-3 * REM, 0)
+		M.adjustCloneLoss(-1 * REM, 0)
+		M.adjustStaminaLoss(-3 * REM, 0)
+		M.jitteriness = min(max(0, M.jitteriness + 3), 30)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM, 150)
+		metabolization_rate += 0.2 //unfortunately, you can't just keep yourself doped up on divine ichor forever
+	M.druggy = min(max(0, M.druggy + 10), 15) //See above (this refers to the comment two comments above this one, not the comment directly above this one)
 	..()
 	. = 1
+
+/datum/reagent/medicine/earthsblood/on_mob_metabolize(mob/living/L)
+	..()
+	ADD_TRAIT(L, TRAIT_PACIFISM, type)
+
+/datum/reagent/medicine/earthsblood/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_PACIFISM, type)
+	..()
 
 /datum/reagent/medicine/earthsblood/overdose_process(mob/living/M)
 	M.hallucination = min(max(0, M.hallucination + 5), 60)
 	M.adjustToxLoss(5 * REM, 0)
+	if(ishuman(M)) //monkeys get a free pass, since they're closer to nature or something. I mean, they still take the tox damage and stuff, but they don't get a pacifism brain trauma upon ODing.
+		var/mob/living/carbon/human/hippie = M
+		var/obj/item/organ/brain/hippiebrain = hippie?.getorganslot(ORGAN_SLOT_BRAIN)
+		if(hippiebrain)
+			var/datum/brain_trauma/severe/pacifism/PBT = hippiebrain.has_trauma_type(/datum/brain_trauma/severe/pacifism)
+			if(!PBT)
+				hippiebrain.gain_trauma(/datum/brain_trauma/severe/pacifism, TRAUMA_RESILIENCE_SURGERY) //if you don't have a pacifism brain trauma, this will give you one
+			else if(PBT.resilience < TRAUMA_RESILIENCE_SURGERY)
+				PBT.resilience = TRAUMA_RESILIENCE_SURGERY  //bumps up your pacifism brain trauma's resilience up to the surgery tier, but won't lower its resilience if it was of a higher tier than that
 	..()
 	. = 1
 
