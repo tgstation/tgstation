@@ -211,7 +211,7 @@
 
 /datum/symptom/heal/coma
 	name = "Regenerative Coma"
-	desc = "The virus causes the host to fall into a death-like coma when severely damaged, then rapidly fixes the damage. The virus also stabilizes the host while they are in critical condition."
+	desc = "The virus causes the host to fall into a death-like coma when severely damaged, then rapidly fixes the damage."
 	stealth = 0
 	resistance = 2
 	stage_speed = -3
@@ -219,8 +219,10 @@
 	level = 8
 	passive_message = "<span class='notice'>The pain from your wounds makes you feel oddly sleepy...</span>"
 	var/deathgasp = FALSE
+	var/stabilize = FALSE
 	var/active_coma = FALSE //to prevent multiple coma procs
 	threshold_desc = "<b>Stealth 2:</b> Host appears to die when falling into a coma.<br>\
+					  <b>Resistance 4:</b> The virus also stabilizes the host while they are in critical condition.<br>\
 					  <b>Stage Speed 7:</b> Increases healing speed."
 
 /datum/symptom/heal/coma/Start(datum/disease/advance/A)
@@ -228,11 +230,28 @@
 		return
 	if(A.properties["stage_rate"] >= 7)
 		power = 1.5
+	if(A.properties["resistance"] >= 4)
+		stabilize = TRUE
 	if(A.properties["stealth"] >= 2)
 		deathgasp = TRUE
 
+/datum/symptom/heal/coma/on_stage_change(new_stage, datum/disease/advance/A)  //mostly copy+pasted from the code for self-respiration's TRAIT_NOBREATH stuff
+	if(!..())
+		return FALSE
+	var/mob/living/carbon/M = A.affected_mob
+	if(A.stage <= 3)
+		REMOVE_TRAIT(M, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
+	return TRUE
+
+/datum/symptom/heal/coma/End(datum/disease/advance/A)
+	if(!..())
+		return
+	REMOVE_TRAIT(A.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
+
 /datum/symptom/heal/coma/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
+	if(stabilize && !HAS_TRAIT_FROM(src, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
+		ADD_TRAIT(M, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
 	if(HAS_TRAIT(M, TRAIT_DEATHCOMA))
 		return power
 	else if(M.IsUnconscious() || M.stat == UNCONSCIOUS)
