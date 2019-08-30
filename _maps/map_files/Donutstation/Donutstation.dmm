@@ -16618,7 +16618,8 @@
 /area/medical/morgue)
 "aSA" = (
 /obj/machinery/atmospherics/components/unary/tank/toxins{
-	dir = 4
+	dir = 4;
+	initialize_directions = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -16673,6 +16674,9 @@
 "aSI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
+	},
+/obj/machinery/computer/atmos_control/incinerator{
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/effect/decal/cleanable/dirt,
@@ -16789,7 +16793,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "aSX" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -16797,7 +16801,8 @@
 "aSY" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Incinerator Output Pump"
+	name = "Incinerator Output Pump";
+	target_pressure = 4500
 	},
 /turf/open/space/basic,
 /area/maintenance/disposal/incinerator)
@@ -16822,11 +16827,11 @@
 /area/maintenance/disposal/incinerator)
 "aTc" = (
 /obj/machinery/igniter/incinerator_atmos,
-/obj/machinery/air_sensor{
+/obj/structure/cable,
+/obj/machinery/air_sensor/atmos/incinerator_tank{
 	pixel_x = -32;
 	pixel_y = -32
 	},
-/obj/structure/cable,
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "aTd" = (
@@ -23964,6 +23969,7 @@
 /obj/item/radio/intercom{
 	pixel_x = 29
 	},
+/obj/item/reagent_containers/dropper,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bkl" = (
@@ -43095,6 +43101,10 @@
 /obj/effect/landmark/start/station_engineer,
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
+"ejv" = (
+/obj/machinery/air_sensor/atmos/toxins_mixing_tank,
+/turf/open/floor/engine/vacuum,
+/area/science/mixing)
 "ekG" = (
 /mob/living/simple_animal/hostile/lizard/space{
 	name = "Builds-the-Room"
@@ -47380,6 +47390,7 @@
 /obj/item/radio/intercom{
 	pixel_y = 29
 	},
+/obj/machinery/computer/atmos_control/toxinsmix,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "oPe" = (
@@ -72000,7 +72011,7 @@ tTh
 aal
 acm
 acr
-acr
+ejv
 ada
 adU
 adD

@@ -1,6 +1,0 @@
-author: "Skoglol & Naloac"
-delete-after: True
-changes: 
-  - tweak: "Make Kosmicheskaya Stantsiya 13 great again! No I mean it, go do it. The derelict has gotten a slight overhaul, and it is now more feasible."
-  - tweak: "Derelict drones has had their laws laxed slightly while on the derelict. It should now be harder to be forced into breaking them."
-  - refactor: "Drone shells are now mob spawners and show up in the ghost spawner window."

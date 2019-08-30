@@ -5,6 +5,8 @@
 	item_state = "b_suit"
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
+	icon = 'icons/obj/clothing/under/captain.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/under/captain.dmi'
 
 /obj/item/clothing/under/rank/captain/skirt
 	name = "captain's jumpskirt"
