@@ -211,7 +211,7 @@
 
 /datum/symptom/heal/coma
 	name = "Regenerative Coma"
-	desc = "The virus causes the host to fall into a death-like coma when severely damaged, then rapidly fixes the damage."
+	desc = "The virus causes the host to fall into a death-like coma when severely damaged, then rapidly fixes the damage. The virus also stabilizes the host while they are in critical condition."
 	stealth = 0
 	resistance = 2
 	stage_speed = -3
