@@ -192,15 +192,15 @@
 	icon_state = "heart-c-u"
 
 	var/dose_available = TRUE
-	var/list/cybernetic_reagents = list(/datum/reagent/medicine/salbutamol = 15, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/atropine = 10, /datum/reagent/medicine/ephedrine = 5)
+	var/list/cybernetic_reagents = list( /datum/reagent/medicine/atropine = 15, /datum/reagent/medicine/omnizine = 10, /datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/ephedrine = 10) // associative list
 
 /obj/item/organ/heart/cybernetic/upgraded/on_life()
 	. = ..()
 	if(dose_available && owner.health <= owner.crit_threshold)
-		var/reagent
-		for(reagent in cybernetic_reagents)
-			owner.reagents.add_reagent(reagent, cybernetic_reagents[reagent]) // add every reagent to the owner of the heart
-	used_dose()
+		var/cybernetic_reagent
+		for(cybernetic_reagent in cybernetic_reagents)
+			owner.reagents.add_reagent(cybernetic_reagent, cybernetic_reagents[cybernetic_reagent]) // add every reagent to the owner of the heart
+		used_dose()
 
 /obj/item/organ/heart/cybernetic/upgraded/proc/used_dose()
 	dose_available = FALSE
