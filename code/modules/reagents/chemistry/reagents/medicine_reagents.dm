@@ -903,10 +903,11 @@
 	color = rgb(255, 175, 0)
 	overdose_threshold = 25
 	taste_description = "shag carpeting and rock"
+	metabolization_rate = 0.5
 	var/ODcycle = 0 //adds to current_cycle in calculation. 5 cycles while OD = 1 "normal" cycle (basically you're getting 1.2 instead of 2 cycles during OD)
 
 /datum/reagent/medicine/earthsblood/on_mob_life(mob/living/carbon/M)
-	if(current_cycle <= 20) //5u has to be processed before u get into THE FUN ZONE
+	if(current_cycle <= 25) //5u has to be processed before u get into THE FUN ZONE
 		M.adjustBruteLoss(-1 * REM, 0)
 		M.adjustFireLoss(-1 * REM, 0)
 		M.adjustOxyLoss(-0.5 * REM, 0)
@@ -938,11 +939,11 @@
 		return ..()
 	var/resi = 0
 	switch(current_cycle + ODcycle)
-		if(21 to 30)
+		if(25 to 40)
 			resi = TRAUMA_RESILIENCE_BASIC //plant-friendly zone
-		if(31 to 55)
+		if(41 to 60)
 			resi = TRAUMA_RESILIENCE_SURGERY
-		if(56 to INFINITY)
+		if(61 to INFINITY)
 			resi = TRAUMA_RESILIENCE_LOBOTOMY
 	if(!resi)
 		return ..()
