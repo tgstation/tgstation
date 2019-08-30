@@ -921,7 +921,7 @@
 		M.adjustStaminaLoss(-3 * REM, 0)
 		M.jitteriness = min(max(0, M.jitteriness + 3), 30)
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM, 150)
-	M.druggy = min(max(0, M.druggy + 10), 15) //See above (this refers to the comment two comments above this one, not the comment directly above this one)
+	M.druggy = min(max(0, M.druggy + 10), 15) //See above
 	..()
 	. = 1
 
