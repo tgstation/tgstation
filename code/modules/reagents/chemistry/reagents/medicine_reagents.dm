@@ -905,6 +905,11 @@
 	taste_description = "shag carpeting and rock"
 	var/ODcycle = 0 //adds to current_cycle in calculation. 5 cycles while OD = 1 "normal" cycle (basically you're getting 1.2 instead of 2 cycles during OD)
 
+/datum/reagent/medicine/earthsblood/on_transfer(atom/A, method=INJECT, trans_volume)
+	if(method == INJECT && trans_volume < 5)
+		return
+	..()
+
 /datum/reagent/medicine/earthsblood/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-5 * REM, 0)
 	M.adjustFireLoss(-5 * REM, 0)
