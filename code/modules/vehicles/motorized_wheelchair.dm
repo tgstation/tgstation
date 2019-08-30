@@ -22,7 +22,7 @@
 	for(var/obj/item/stock_parts/capacitor/C in contents)
 		power_efficiency = C.rating
 	var/datum/component/riding/D = GetComponent(/datum/component/riding)
-	D.vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * 6.7) / speed
+	D.vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * delay_multiplier) / speed
 
 /obj/vehicle/ridden/wheelchair/motorized/obj_destruction(damage_flag)
 	var/turf/T = get_turf(src)
@@ -82,18 +82,18 @@
 		user.visible_message("<span class='notice'>[user] [panel_open ? "opens" : "closes"] the maintenance panel on [src].</span>", "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>")
 		return
 	if(panel_open)
+		if(istype(I, /obj/item/stock_parts/cell))
+			if(power_cell)
+				to_chat(user, "<span class='warning'>There is a power cell already installed.</span>")
+			else
+				I.forceMove(src)
+				power_cell = I
+				to_chat(user, "<span class='notice'>You install the [I].</span>")
+			refresh_parts()
+			return
 		if(istype(I, /obj/item/stock_parts))
-			if(istype(I, /obj/item/stock_parts/cell))
-				if(power_cell)
-					to_chat(user, "<span class='warning'>There is a power cell already installed.</span>")
-				else
-					I.forceMove(src)
-					power_cell = I
-					to_chat(user, "<span class='notice'>You install the [I].</span>")
-				refresh_parts()
-				return
 			var/obj/item/stock_parts/B = I
-			var/P 
+			var/P
 			for(var/obj/item/stock_parts/A in contents)
 				for(var/D in required_parts)
 					if(ispath(A.type, D))
@@ -142,8 +142,8 @@
 		explosion(src, -1, 1, 3, 2, 0)
 		visible_message("<span class='boldwarning'>[src] explodes!!</span>")
 		return
-	// If the speed is higher than 6.7 throw the person on the wheelchair away
-	if(M.density && speed > 6.7 && has_buckled_mobs())
+	// If the speed is higher than delay_multiplier throw the person on the wheelchair away
+	if(M.density && speed > delay_multiplier && has_buckled_mobs())
 		var/mob/living/H = buckled_mobs[1]
 		var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
 		unbuckle_mob(H)
