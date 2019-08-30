@@ -231,7 +231,7 @@
 			return FALSE
 
 /obj/item/defibrillator/proc/cooldowncheck(mob/user)
-	if(!obj/item/defibrillator/compact/combat)
+	if(!/obj/item/defibrillator/compact/combat)
 		addtimer(CALLBACK(src, .proc/finish_charging), 5 SECONDS)
 	else
 		addtimer(CALLBACK(src, .proc/finish_charging), 2.5 SECONDS)
@@ -312,6 +312,7 @@
 	var/combat = FALSE //If it penetrates armor and gives additional functionality
 	var/grab_ghost = FALSE
 	var/tlimit = DEFIB_TIME_LIMIT * 10
+	var/base_icon_state = "defibpaddles"
 
 /obj/item/twohanded/shockpaddles/Destroy()
 	defib = null
@@ -366,7 +367,7 @@
 
 /obj/item/twohanded/shockpaddles/update_icon()
 	icon_state = "[base_icon_state][wielded]"
-	item_state = "[base_icon_state][wielded]"
+	item_state = icon_state
 	if(cooldown)
 		icon_state = "[base_icon_state][wielded]_cooldown"
 	if(iscarbon(loc))
@@ -690,6 +691,7 @@
 	icon_state = "syndiepaddles0"
 	item_state = "syndiepaddles0"
 	req_defib = TRUE
+	base_icon_state = "syndiepaddles"
 
 /obj/item/twohanded/shockpaddles/syndicate/cyborg
 	req_defib = FALSE
