@@ -204,7 +204,7 @@
 
 /obj/item/organ/heart/cybernetic/upgraded/proc/used_dose()
 	dose_available = FALSE
-	addtimer(VARSET_CALLBACK(src, dose_available, TRUE), 10 MINUTES)
+	addtimer(VARSET_CALLBACK(src, dose_available, TRUE), 5 MINUTES)
 
 /obj/item/organ/heart/freedom
 	name = "heart of freedom"
