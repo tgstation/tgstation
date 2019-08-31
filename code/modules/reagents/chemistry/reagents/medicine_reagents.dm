@@ -1239,19 +1239,18 @@
 	overdose_threshold = 40
 
 /datum/reagent/medicine/mitocholide/overdose_process(mob/living/carbon/M)
-	M.adjustOxyLoss(1) //lungs¨
-	M.adjustStaminaLoss(1) //heart
+	M.adjustOxyLoss(2) //lungs¨
+	M.adjustStaminaLoss(2) //heart
 	if(prob(50))
-		M.Dizzy(2) //brain
+		M.Dizzy(4) //brain
 	for(var/datum/reagent/medicine/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.type,1) //liver
-	if(prob(5))
+	if(prob(8))
 		to_chat(M, "<span class='danger'>Your stomach rumbles!</span>")
 		M.adjust_disgust(10) //stomach
 	if(prob(8))
 		to_chat(M, "<span class='danger'>Your ears start ringing!</span>") //ears
-	if(prob(50))
-		M.blur_eyes(2) //eyes
+		M.blur_eyes(4) //eyes
 	..()
 	. = 1
 
