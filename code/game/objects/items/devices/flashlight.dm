@@ -354,8 +354,13 @@
 	icon_state = "syndilantern"
 	item_state = "syndilantern"
 	brightness_on = 10
-	strength = 0 //at 0, this will only affect carbons with a NEGATIVE net eye protection value (protection-less mothmen, protection-less people with thermals or NVG on, etc.)
-	
+	strength = 0 //because strength is equal to 0, this will only affect carbons with a NEGATIVE net eye protection value (protection-less mothmen, protection-less people with thermals or NVG on, etc.)
+
+/obj/item/flashlight/lantern/syndicate/verysusp
+	name = "VERY suspicious-looking lantern"
+	desc = "A VERY suspicious-looking lantern."
+	strength = 1 //this will affect any carbons that could get stunned by a normal flash (and any carbons who would get stunned by a flash if they weren't immune to stuns)
+
 /obj/item/flashlight/lantern/syndicate/examine(mob/user)
 	. = ..()
 	if(on)
@@ -370,11 +375,6 @@
 			else
 				if(!HAS_TRAIT(C, TRAIT_MINDSHIELD)) //if you have both a mindshield AND eye protection, the lantern's mind-affecting effects on you are almost entirely negated, so you don't notice them
 					to_chat(C, "<span class='passive'>You think you see something in the flames of [src], but you can't quite get a good look at it. Perhaps lowering your resistance to the effects of brigh lights would let you see it more clearly?</span>") //no, lowering your eye protection to better see something in the flames of the lantern doesn't make sense, but this message is a sublte attempt by the lantern to persuade you to lower your eye protection, not a conclusion that your character is making on their own. Side note: I wanted to say "flashing lights" instead of "bright lights" (because the NOFLASH trait is a thing that a few races have), but decided against it because doing that would have made this message sound a little bit more malicious than I had wanted it to be.
-
-/obj/item/flashlight/lantern/syndicate/verysusp
-	name = "VERY suspicious-looking lantern"
-	desc = "A VERY suspicious-looking lantern."
-	strength = 1 //this will affect any carbons that could get stunned by a normal flash (and any carbons who would get stunned by a flash if they weren't immune to stuns)
 
 /obj/item/flashlight/slime
 	gender = PLURAL
