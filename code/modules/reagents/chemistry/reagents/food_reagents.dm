@@ -293,27 +293,26 @@
 			if(prob(5))
 				victim.emote("scream")
 			victim.blur_eyes(3)
-			victim.blind_eyes(2)
+			victim.blind_eyes(180 SECONDS)
 			victim.confused = max(M.confused, 3)
-			victim.damageoverlaytemp = 30
-			victim.Knockdown(0.5 SECONDS) // 1/3 of stun baton time
-			victim.adjustStaminaLoss(15) // bit more than  1/3 stun baton stam loss due to eyes importance
+			if(	SEND_SIGNAL(victim, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK))
+				victim.set_blindness(0)
+		
 			return
 		else if ( eyes_covered ) // Eye cover is better than mouth cover
 			victim.blur_eyes(3)
-			victim.damageoverlaytemp = 20
-			victim.Knockdown(0.3 SECONDS) // 1/5 stun baton time 
-			victim.adjustStaminaLoss(10) 
+			victim.Knockdown(3 SECONDS) // 3 * stun baton time 
+		
 			return
 		else // Oh dear :D
 			if(prob(5))
 				victim.emote("scream")
 			victim.blur_eyes(5)
-			victim.blind_eyes(3)
+			victim.blind_eyes(180.0 SECONDS) // 3 minutes unless they wash themselves
 			victim.confused = max(M.confused, 6)
-			victim.damageoverlaytemp = 40
-			victim.Knockdown(1.0 SECONDS) // 2/3 of stun baton time
-			victim.adjustStaminaLoss(25)  // 2/3 of stun baton stam loss
+			victim.Knockdown(5.0 SECONDS) 
+			if(	SEND_SIGNAL(victim, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK))
+				victim.set_blindness(0)
 		victim.update_damage_hud()
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M)
