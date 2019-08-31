@@ -1266,3 +1266,14 @@
 	//If organ traumas are implemented I suggest giving this a chance to cure low level trauma.
 	..()
 	. = 1
+
+/datum/reagent/medicine/mitocholide/reaction_obj(obj/O, reac_volume)
+	if(!istype(O, /obj/item/organ))
+		return
+	var/obj/item/organ/treatedorgan = O
+	if(treatedorgan.organ_flags & ORGAN_SYNTHETIC)
+		return
+	O.visible_message("<span class='notice'>The mitocholide soaks into [O].</span>")
+	treatedorgan.damage = max(0, treatedorgan.damage - reac_volume * 8)
+	..()
+	. = 1
