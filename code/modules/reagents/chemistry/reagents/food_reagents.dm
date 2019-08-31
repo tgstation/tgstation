@@ -292,8 +292,8 @@
 		else if ( mouth_covered )	// Reduced effects if partially protected
 			if(prob(5))
 				victim.emote("scream")
-			victim.blur_eyes(2.5) // 5 seconds
-			victim.blind_eyes(5) // 10 seconds
+			victim.blur_eyes(3) // 6 seconds
+			victim.blind_eyes(0.5) // 10 seconds
 			victim.confused = max(M.confused, 2.5)
 			
 			
@@ -301,18 +301,16 @@
 		else if ( eyes_covered ) // Eye cover is better than mouth cover
 			victim.blur_eyes(2) // 4 seconds
 			victim.Knockdown(3 SECONDS) 
-			 victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.10, blacklisted_movetypes=(FLYING|FLOATING))
-			 addtimer(CALLBACK(victim, /mob.proc/remove_movespeed_modifier, MOVESPEED_ID_PEPPER_SPRAY), 10 SECONDS)
+			
 			return
 		else // Oh dear :D
 			if(prob(5))
 				victim.emote("scream")
-			victim.blur_eyes(4) // 8 seconds
-			victim.blind_eyes(3) // 5 seconds
+			victim.blur_eyes(5) // 10 seconds
+			victim.blind_eyes(0.5) // 2 seconds
 			victim.confused = max(M.confused, 2.5) // 5 seconds
-			victim.Knockdown(3.0 SECONDS) 
-			 victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.10, blacklisted_movetypes=(FLYING|FLOATING))
-			 addtimer(CALLBACK(victim, /mob.proc/remove_movespeed_modifier, MOVESPEED_ID_PEPPER_SPRAY), 10 SECONDS)
+			victim.Knockdown(3 SECONDS) 
+			
 		victim.update_damage_hud()
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M)
