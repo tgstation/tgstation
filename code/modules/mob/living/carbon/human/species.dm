@@ -15,9 +15,20 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/hair_color	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
 
-	var/list/alternate_spritesheets = list() // this is an association list, put in a spritesheet path matched with an alternate sheet to swap out the spritesheet for this species for an alternative one
-											 // currently works with clothing only.
-
+	/*!
+	alternate_iconbases takes the following format to switch between source iconbases on a species by species basis
+	\`\`\`example format for the alternate spritesheet list:
+			list('icons/mob/iconbase1' = 'icon/mob/species_x/iconbase1',
+                'icons/mob/iconbase2' = 'icons/mob/species_x/iconbase2')
+	\`\`\`
+        > in this example, wheen update_icons() loads a clothing sprite
+            for species_x that draws from icons/mob/iconbase1, it will instead draw from icons/mob/species_x/iconbase1
+            any valid filepath can be used, but please keep the filestructure sensible
+	this list is currently used by the following procs
+	* get_species_iconbase()
+		> currently this only works with clothing, and directly checks for species id
+	*/
+	var/list/alternate_iconbases = list()
 	var/use_skintones = 0	// does it use skintones or not? (spoiler alert this is only used by humans)
 	var/exotic_blood = ""	// If your race wants to bleed something other than bog standard blood, change this to reagent id.
 	var/exotic_bloodtype = "" //If your race uses a non standard bloodtype (A+, O-, AB-, etc)
