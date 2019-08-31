@@ -1211,13 +1211,13 @@
 /datum/reagent/colorful_reagent/powder
 	name = "Crayon Powder"
 	var/colorname = "none"
-	description = "A powder made by grinding down crayons, good for colouring chemical reagents."
+	description = "A powder good for colouring chemical reagents."
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 207, 54, 0
 	taste_description = "the back of class"
 
 /datum/reagent/colorful_reagent/powder/New()
-	description = "\an [colorname] powder made by grinding down crayons, good for colouring chemical reagents."
+	description = "\an [colorname] powder good for colouring chemical reagents."
 
 
 /datum/reagent/colorful_reagent/powder/red
