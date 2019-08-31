@@ -143,7 +143,7 @@
 		return
 	use_power(1000)
 	audible_message("<span class='italics'>You hear a loud squelchy grinding sound.</span>")
-	playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
+	playsound(src.loc, 'sound/machines/juicer.ogg', 50, TRUE)
 	operating = TRUE
 	update_icon()
 
@@ -203,7 +203,7 @@
 	addtimer(CALLBACK(src, .proc/make_meat, skin, allmeat, meat_produced, gibtype, diseases), gibtime)
 
 /obj/machinery/gibber/proc/make_meat(obj/item/stack/sheet/animalhide/skin, list/obj/item/reagent_containers/food/snacks/meat/slab/allmeat, meat_produced, gibtype, list/datum/disease/diseases)
-	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE)
 	operating = FALSE
 	var/turf/T = get_turf(src)
 	var/list/turf/nearby_turfs = RANGE_TURFS(3,T) - T

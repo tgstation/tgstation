@@ -111,7 +111,7 @@
 
 /obj/item/organ/heart/cursed/attack(mob/living/carbon/human/H, mob/living/carbon/human/user, obj/target)
 	if(H == user && istype(H))
-		playsound(user,'sound/effects/singlebeat.ogg',40,1)
+		playsound(user,'sound/effects/singlebeat.ogg',40,TRUE)
 		user.temporarilyRemoveItemFromInventory(src, TRUE)
 		Insert(user)
 	else
@@ -153,7 +153,7 @@
 			return
 
 		cursed_heart.last_pump = world.time
-		playsound(owner,'sound/effects/singlebeat.ogg',40,1)
+		playsound(owner,'sound/effects/singlebeat.ogg',40,TRUE)
 		to_chat(owner, "<span class='notice'>Your heart beats.</span>")
 
 		var/mob/living/carbon/human/H = owner

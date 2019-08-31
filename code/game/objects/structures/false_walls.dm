@@ -110,18 +110,15 @@
 	else if(W.tool_behaviour == TOOL_WELDER)
 		if(W.use_tool(src, user, 0, volume=50))
 			dismantle(user, TRUE)
-	else if(istype(W, /obj/item/pickaxe/drill/jackhammer))
-		W.play_tool_sound(src)
-		dismantle(user, TRUE)
 	else
 		return ..()
 
 /obj/structure/falsewall/proc/dismantle(mob/user, disassembled=TRUE, obj/item/tool = null)
-	user.visible_message("[user] dismantles the false wall.", "<span class='notice'>You dismantle the false wall.</span>")
+	user.visible_message("<span class='notice'>[user] dismantles the false wall.</span>", "<span class='notice'>You dismantle the false wall.</span>")
 	if(tool)
 		tool.play_tool_sound(src, 100)
 	else
-		playsound(src, 'sound/items/welder.ogg', 100, 1)
+		playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 	deconstruct(disassembled)
 
 /obj/structure/falsewall/deconstruct(disassembled = TRUE)
@@ -246,7 +243,7 @@
 		return ..()
 
 /obj/structure/falsewall/plasma/proc/burnbabyburn(user)
-	playsound(src, 'sound/items/welder.ogg', 100, 1)
+	playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 	atmos_spawn_air("plasma=400;TEMP=1000")
 	new /obj/structure/girder/displaced(loc)
 	qdel(src)

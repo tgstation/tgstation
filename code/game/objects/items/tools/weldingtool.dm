@@ -194,7 +194,7 @@
 	if(welding)
 		if(get_fuel() >= 1)
 			to_chat(user, "<span class='notice'>You switch [src] on.</span>")
-			playsound(loc, acti_sound, 50, 1)
+			playsound(loc, acti_sound, 50, TRUE)
 			force = 15
 			damtype = "fire"
 			hitsound = 'sound/items/welder.ogg'
@@ -205,7 +205,7 @@
 			switched_off(user)
 	else
 		to_chat(user, "<span class='notice'>You switch [src] off.</span>")
-		playsound(loc, deac_sound, 50, 1)
+		playsound(loc, deac_sound, 50, TRUE)
 		switched_off(user)
 
 //Switches the welder off
@@ -299,18 +299,20 @@
 	max_fuel = 40
 	materials = list(/datum/material/glass=60)
 
+/obj/item/weldingtool/largetank/flamethrower_screwdriver()
+	return
+
 /obj/item/weldingtool/largetank/cyborg
 	name = "integrated welding tool"
-	desc = "An advanced welder designed to be used in robotic systems."
+	desc = "An advanced welder designed to be used in robotic systems. Custom framework doubles the speed of welding."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "indwelder_cyborg"
 	toolspeed = 0.5
 
 /obj/item/weldingtool/largetank/cyborg/cyborg_unequip(mob/user)
 	if(!isOn())
 		return
 	switched_on(user)
-
-/obj/item/weldingtool/largetank/flamethrower_screwdriver()
-	return
 
 
 /obj/item/weldingtool/mini

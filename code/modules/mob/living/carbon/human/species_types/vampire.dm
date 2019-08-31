@@ -4,7 +4,7 @@
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,DRINKSBLOOD)
 	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
-	inherent_biotypes = list(MOB_UNDEAD, MOB_HUMANOID)
+	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
 	exotic_bloodtype = "U"
@@ -109,7 +109,7 @@
 			var/drained_blood = min(victim.blood_volume, VAMP_DRAIN_AMOUNT, blood_volume_difference)
 			to_chat(victim, "<span class='danger'>[H] is draining your blood!</span>")
 			to_chat(H, "<span class='notice'>You drain some blood!</span>")
-			playsound(H, 'sound/items/drink.ogg', 30, 1, -2)
+			playsound(H, 'sound/items/drink.ogg', 30, TRUE, -2)
 			victim.blood_volume = CLAMP(victim.blood_volume - drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
 			H.blood_volume = CLAMP(H.blood_volume + drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
 			if(!victim.blood_volume)

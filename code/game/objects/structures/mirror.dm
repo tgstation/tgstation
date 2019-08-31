@@ -55,7 +55,7 @@
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		icon_state = "mirror_broke"
 		if(!mapload)
-			playsound(src, "shatter", 70, 1)
+			playsound(src, "shatter", 70, TRUE)
 		if(desc == initial(desc))
 			desc = "Oh no, seven years of bad luck!"
 		broken = TRUE
@@ -89,9 +89,9 @@
 /obj/structure/mirror/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
 		if(BURN)
-			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
 
 
 /obj/structure/mirror/magic
@@ -135,7 +135,7 @@
 
 	switch(choice)
 		if("name")
-			var/newname = copytext(sanitize(input(H, "Who are we again?", "Name change", H.name) as null|text),1,MAX_NAME_LEN)
+			var/newname = copytext(sanitize_name(input(H, "Who are we again?", "Name change", H.name) as null|text),1,MAX_NAME_LEN)
 
 			if(!newname)
 				return

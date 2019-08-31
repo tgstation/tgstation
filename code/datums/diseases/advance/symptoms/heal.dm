@@ -247,9 +247,7 @@
 		addtimer(CALLBACK(src, .proc/coma, M), 60)
 
 /datum/symptom/heal/coma/proc/coma(mob/living/M)
-	if(deathgasp)
-		M.emote("deathgasp")
-	M.fakedeath("regenerative_coma")
+	M.fakedeath("regenerative_coma", !deathgasp)
 	M.update_stat()
 	M.update_mobility()
 	addtimer(CALLBACK(src, .proc/uncoma, M), 300)
@@ -372,7 +370,7 @@
 		environment = M.loc.return_air()
 	if(environment)
 		gases = environment.gases
-		if(gases["plasma"] && gases["plasma"][MOLES] > gases["plasma"][GAS_META][META_GAS_MOLES_VISIBLE]) //if there's enough plasma in the air to see
+		if(gases[/datum/gas/plasma] && gases[/datum/gas/plasma][MOLES] > gases[/datum/gas/plasma][GAS_META][META_GAS_MOLES_VISIBLE]) //if there's enough plasma in the air to see
 			. += power * 0.5
 	if(M.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
 		. +=  power * 0.75

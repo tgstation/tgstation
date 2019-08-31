@@ -330,7 +330,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		new /obj/item/clockwork/slab(get_turf(src))
 		to_chat(user, "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a strange metal tablet sitting on the desk. You don't even remember where it came from...</span>")
 
-	user.visible_message("[user] stares at the blank screen for a few moments, [user.p_their()] expression frozen in fear. When [user.p_they()] finally awaken[user.p_s()] from it, [user.p_they()] look[user.p_s()] a lot older.", 2)
+	user.visible_message("<span class='warning'>[user] stares at the blank screen for a few moments, [user.p_their()] expression frozen in fear. When [user.p_they()] finally awaken[user.p_s()] from it, [user.p_they()] look[user.p_s()] a lot older.</span>", 2)
 
 /obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/barcodescanner))
@@ -478,7 +478,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 					B.author = author
 					B.dat = content
 					B.icon_state = "book[rand(1,8)]"
-					visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
+					visible_message("<span class='notice'>[src]'s printer hums as it produces a completely bound book. How did it do that?</span>")
 				break
 			qdel(query_library_print)
 	if(href_list["printbible"])
@@ -586,14 +586,14 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		return
 	if(!user.transferItemToLoc(P, src))
 		return
-	user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
-	audible_message("[src] begins to hum as it warms up its printing drums.")
+	user.visible_message("<span class='notice'>[user] loads some paper into [src].</span>", "<span class='notice'>You load some paper into [src].</span>")
+	audible_message("<span class='italics'>[src] begins to hum as it warms up its printing drums.</span>")
 	busy = TRUE
 	sleep(rand(200,400))
 	busy = FALSE
 	if(P)
 		if(!stat)
-			visible_message("[src] whirs as it prints and binds a new book.")
+			visible_message("<span class='notice'>[src] whirs as it prints and binds a new book.</span>")
 			var/obj/item/book/B = new(src.loc)
 			B.dat = P.info
 			B.name = "Print Job #" + "[rand(100, 999)]"

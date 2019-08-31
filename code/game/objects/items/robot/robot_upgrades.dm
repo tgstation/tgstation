@@ -37,7 +37,7 @@
 	one_use = TRUE
 
 /obj/item/borg/upgrade/rename/attack_self(mob/user)
-	heldname = stripped_input(user, "Enter new robot name", "Cyborg Reclassification", heldname, MAX_NAME_LEN)
+	heldname = sanitize_name(stripped_input(user, "Enter new robot name", "Cyborg Reclassification", heldname, MAX_NAME_LEN))
 
 /obj/item/borg/upgrade/rename/action(mob/living/silicon/robot/R)
 	. = ..()
@@ -61,7 +61,7 @@
 
 	if(R.mind)
 		R.mind.grab_ghost()
-		playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
+		playsound(loc, 'sound/voice/liveagain.ogg', 75, TRUE)
 
 	R.revive()
 
@@ -513,7 +513,7 @@
 		smoke.start()
 		sleep(2)
 		for(var/i in 1 to 4)
-			playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, 1, -1)
+			playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
 			sleep(12)
 		if(!prev_lockcharge)
 			R.SetLockdown(0)

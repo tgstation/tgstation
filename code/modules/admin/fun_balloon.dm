@@ -27,8 +27,8 @@
 	return
 
 /obj/effect/fun_balloon/proc/pop()
-	visible_message("[src] pops!")
-	playsound(get_turf(src), 'sound/items/party_horn.ogg', 50, 1, -1)
+	visible_message("<span class='notice'>[src] pops!</span>")
+	playsound(get_turf(src), 'sound/items/party_horn.ogg', 50, TRUE, -1)
 	qdel(src)
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE

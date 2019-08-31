@@ -4,7 +4,7 @@
 	id = "iron golem"
 	species_traits = list(NOBLOOD,MUTCOLORS,NO_UNDERWEAR)
 	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
-	inherent_biotypes = list(MOB_INORGANIC, MOB_HUMANOID)
+	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
 	mutant_organs = list(/obj/item/organ/adamantine_resonator)
 	speedmod = 2
 	armor = 55
@@ -284,16 +284,7 @@
 	special_names = list("Bark", "Willow", "Catalpa", "Woody", "Oak", "Sap", "Twig", "Branch", "Maple", "Birch", "Elm", "Basswood", "Cottonwood", "Larch", "Aspen", "Ash", "Beech", "Buckeye", "Cedar", "Chestnut", "Cypress", "Fir", "Hawthorn", "Hazel", "Hickory", "Ironwood", "Juniper", "Leaf", "Mangrove", "Palm", "Pawpaw", "Pine", "Poplar", "Redwood", "Redbud", "Sassafras", "Spruce", "Sumac", "Trunk", "Walnut", "Yew")
 	human_surname_chance = 0
 	special_name_chance = 100
-
-/datum/species/golem/wood/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	. = ..()
-	C.faction |= "plants"
-	C.faction |= "vines"
-
-/datum/species/golem/wood/on_species_loss(mob/living/carbon/C)
-	. = ..()
-	C.faction -= "plants"
-	C.faction -= "vines"
+	inherent_factions = list("plants", "vines")
 
 /datum/species/golem/wood/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD)
@@ -366,7 +357,7 @@
 /datum/species/golem/sand/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
 	if(!(P.original == H && P.firer == H))
 		if(P.flag == "bullet" || P.flag == "bomb")
-			playsound(H, 'sound/effects/shovel_dig.ogg', 70, 1)
+			playsound(H, 'sound/effects/shovel_dig.ogg', 70, TRUE)
 			H.visible_message("<span class='danger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>", \
 			"<span class='userdanger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>")
 			return BULLET_ACT_BLOCK
@@ -387,7 +378,7 @@
 	special_names = list("Lens", "Prism", "Fiber", "Bead")
 
 /datum/species/golem/glass/spec_death(gibbed, mob/living/carbon/human/H)
-	playsound(H, "shatter", 70, 1)
+	playsound(H, "shatter", 70, TRUE)
 	H.visible_message("<span class='danger'>[H] shatters!</span>")
 	for(var/obj/item/W in H)
 		H.dropItemToGround(W)
@@ -428,7 +419,7 @@
 /datum/species/golem/bluespace/proc/reactive_teleport(mob/living/carbon/human/H)
 	H.visible_message("<span class='warning'>[H] teleports!</span>", "<span class='danger'>You destabilize and teleport!</span>")
 	new /obj/effect/particle_effect/sparks(get_turf(H))
-	playsound(get_turf(H), "sparks", 50, 1)
+	playsound(get_turf(H), "sparks", 50, TRUE)
 	do_teleport(H, get_turf(H), 6, asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 	last_teleport = world.time
 
@@ -486,7 +477,7 @@
 /datum/action/innate/unstable_teleport/Activate()
 	var/mob/living/carbon/human/H = owner
 	H.visible_message("<span class='warning'>[H] starts vibrating!</span>", "<span class='danger'>You start charging your bluespace core...</span>")
-	playsound(get_turf(H), 'sound/weapons/flash.ogg', 25, 1)
+	playsound(get_turf(H), 'sound/weapons/flash.ogg', 25, TRUE)
 	addtimer(CALLBACK(src, .proc/teleport, H), 15)
 
 /datum/action/innate/unstable_teleport/proc/teleport(mob/living/carbon/human/H)
@@ -572,14 +563,14 @@
 	if(!active)
 		if(world.time > last_honk + honkooldown)
 			active = 1
-			playsound(get_turf(H), 'sound/items/bikehorn.ogg', 50, 1)
+			playsound(get_turf(H), 'sound/items/bikehorn.ogg', 50, TRUE)
 			last_honk = world.time
 			honkooldown = rand(20, 80)
 			active = null
 	..()
 
 /datum/species/golem/bananium/spec_death(gibbed, mob/living/carbon/human/H)
-	playsound(get_turf(H), 'sound/misc/sadtrombone.ogg', 70, 0)
+	playsound(get_turf(H), 'sound/misc/sadtrombone.ogg', 70, FALSE)
 
 /datum/species/golem/bananium/proc/handle_speech(datum/source, list/speech_args)
 	speech_args[SPEECH_SPANS] |= SPAN_CLOWN
@@ -593,6 +584,7 @@
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES,NOFLASH) //no mutcolors
 	prefix = "Runic"
 	special_names = null
+	inherent_factions = list("cult")
 
 	var/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/golem/phase_shift
 	var/obj/effect/proc_holder/spell/targeted/abyssal_gaze/abyssal_gaze
@@ -606,7 +598,6 @@
 
 /datum/species/golem/runic/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	C.faction |= "cult"
 	phase_shift = new
 	phase_shift.charge_counter = 0
 	C.AddSpell(phase_shift)
@@ -619,7 +610,6 @@
 
 /datum/species/golem/runic/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	C.faction -= "cult"
 	if(phase_shift)
 		C.RemoveSpell(phase_shift)
 	if(abyssal_gaze)
@@ -645,7 +635,7 @@
 	limbs_id = "clockgolem"
 	info_text = "<span class='bold alloy'>As a </span><span class='bold brass'>Clockwork Golem</span><span class='bold alloy'>, you are faster than other types of golems. On death, you will break down into scrap.</span>"
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES,NOFLASH)
-	inherent_biotypes = list(MOB_ROBOTIC, MOB_HUMANOID)
+	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	armor = 20 //Reinforced, but much less so to allow for fast movement
 	attack_verb = "smash"
 	attack_sound = 'sound/magic/clockwork/anima_fragment_attack.ogg'
@@ -655,16 +645,14 @@
 	damage_overlay_type = "synth"
 	prefix = "Clockwork"
 	special_names = list("Remnant", "Relic", "Scrap", "Vestige") //RIP Ratvar
+	inherent_factions = list("ratvar")
 	var/has_corpse
 
 /datum/species/golem/clockwork/on_species_gain(mob/living/carbon/human/H)
 	. = ..()
-	H.faction |= "ratvar"
 	RegisterSignal(H, COMSIG_MOB_SAY, .proc/handle_speech)
 
 /datum/species/golem/clockwork/on_species_loss(mob/living/carbon/human/H)
-	if(!is_servant_of_ratvar(H))
-		H.faction -= "ratvar"
 	UnregisterSignal(H, COMSIG_MOB_SAY)
 	. = ..()
 
@@ -701,7 +689,7 @@
 	Being made of cloth, your body is magic resistant and faster than that of other golems, but weaker and less resilient."
 	species_traits = list(NOBLOOD,NO_UNDERWEAR) //no mutcolors, and can burn
 	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_NOBREATH,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_CHUNKYFINGERS)
-	inherent_biotypes = list(MOB_UNDEAD, MOB_HUMANOID)
+	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	armor = 15 //feels no pain, but not too resistant
 	burnmod = 2 // don't get burned
 	speedmod = 1 // not as heavy as stone
@@ -976,7 +964,7 @@
 	liked_food = GROSS | MEAT | RAW
 	toxic_food = null
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES,NOFLASH)
-	inherent_biotypes = list(MOB_UNDEAD, MOB_HUMANOID)
+	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutanttongue = /obj/item/organ/tongue/bone
 	sexes = FALSE
 	fixed_mut_color = null
@@ -1038,7 +1026,7 @@
 	else
 		playsound(get_turf(owner),'sound/magic/RATTLEMEBONES.ogg', 100)
 	for(var/mob/living/L in orange(7, get_turf(owner)))
-		if((MOB_UNDEAD in L.mob_biotypes) || isgolem(L) || HAS_TRAIT(L, TRAIT_RESISTCOLD))
+		if((L.mob_biotypes & MOB_UNDEAD) || isgolem(L) || HAS_TRAIT(L, TRAIT_RESISTCOLD))
 			return //Do not affect our brothers
 
 		to_chat(L, "<span class='cultlarge'>A spine-chilling sound chills you to the bone!</span>")
@@ -1088,7 +1076,7 @@
 	target.adjust_nutrition(40)
 
 /datum/species/golem/capitalist/proc/handle_speech(datum/source, list/speech_args)
-	playsound(source, 'sound/misc/mymoney.ogg', 25, 0)
+	playsound(source, 'sound/misc/mymoney.ogg', 25, FALSE)
 	speech_args[SPEECH_MESSAGE] = "Hello, I like money!"
 
 /datum/species/golem/soviet
@@ -1130,5 +1118,5 @@
 	target.adjust_nutrition(-40)
 
 /datum/species/golem/soviet/proc/handle_speech(datum/source, list/speech_args)
-	playsound(source, 'sound/misc/Cyka Blyat.ogg', 25, 0)
+	playsound(source, 'sound/misc/Cyka Blyat.ogg', 25, FALSE)
 	speech_args[SPEECH_MESSAGE] = "Cyka Blyat"

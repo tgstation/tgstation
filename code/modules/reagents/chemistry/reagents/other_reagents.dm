@@ -106,6 +106,18 @@
 	if(istype(data))
 		src.data |= data.Copy()
 
+/datum/reagent/vaccine/fungal_tb
+
+/datum/reagent/vaccine/fungal_tb/New(data)
+	. = ..()
+	var/list/cached_data
+	if(!data)
+		cached_data = list()
+	else
+		cached_data = data
+	cached_data |= "[/datum/disease/tuberculosis]"
+	src.data = cached_data
+
 /datum/reagent/water
 	name = "Water"
 	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen."
@@ -419,31 +431,30 @@
 	name = "Stable Mutation Toxin"
 	description = "A humanizing toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	metabolization_rate = INFINITY //So it instantly removes all of itself
+	metabolization_rate = 0 //Doesn't metabolize. Gets destroyed on a timer.
 	taste_description = "slime"
-	var/datum/species/race = /datum/species/human
+	var/race = /datum/species/human
 	var/mutationtext = "<span class='danger'>The pain subsides. You feel... human.</span>"
 
-/datum/reagent/mutationtoxin/on_mob_life(mob/living/carbon/human/H)
-	..()
+/datum/reagent/mutationtoxin/on_mob_add(mob/living/carbon/human/H)
+	. = ..()
 	if(!istype(H))
+		qdel(src)
 		return
 	to_chat(H, "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>")
 	H.visible_message("<b>[H]</b> falls to the ground and screams as [H.p_their()] skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
 	H.Paralyze(60)
 	addtimer(CALLBACK(src, .proc/mutate, H), 30)
-	return
 
 /datum/reagent/mutationtoxin/proc/mutate(mob/living/carbon/human/H)
 	if(QDELETED(H))
 		return
-	var/current_species = H.dna.species.type
-	var/datum/species/mutation = race
-	if(mutation && mutation != current_species)
+	if(race != H.dna.species.type)
 		to_chat(H, mutationtext)
-		H.set_species(mutation)
+		H.set_species(race)
 	else
 		to_chat(H, "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>")
+	H.reagents.del_reagent(type)
 
 /datum/reagent/mutationtoxin/classic //The one from plasma on green slimes
 	name = "Mutation Toxin"
@@ -564,7 +575,7 @@
 	..()
 	if(!istype(H))
 		return
-	if(!H.dna || !H.dna.species || !(MOB_ORGANIC in H.mob_biotypes))
+	if(!H.dna || !H.dna.species || !(H.mob_biotypes & MOB_ORGANIC))
 		return
 
 	if(isjellyperson(H))
@@ -1354,7 +1365,7 @@
 /datum/reagent/carpet/reaction_turf(turf/T, reac_volume)
 	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
 		var/turf/open/floor/F = T
-		F.PlaceOnTop(/turf/open/floor/carpet)
+		F.PlaceOnTop(/turf/open/floor/carpet, flags = CHANGETURF_INHERIT_AIR)
 	..()
 
 /datum/reagent/bromine
@@ -1773,7 +1784,8 @@
 	else
 		var/yuck_cycles = current_cycle - yuck_cycle
 		if(yuck_cycles % YUCK_PUKE_CYCLES == 0)
-			holder.remove_reagent(type, 5)
+			if(yuck_cycles >= YUCK_PUKE_CYCLES * YUCK_PUKES_TO_STUN)
+				holder.remove_reagent(type, 5)
 			C.vomit(rand(14, 26), stun = yuck_cycles >= YUCK_PUKE_CYCLES * YUCK_PUKES_TO_STUN)
 	if(holder)
 		return ..()
@@ -1782,4 +1794,14 @@
 
 /datum/reagent/yuck/on_mob_end_metabolize(mob/living/L)
 	yuck_cycle = 0 // reset vomiting
+	return ..()
+
+/datum/reagent/yuck/on_transfer(atom/A, method=TOUCH, trans_volume)
+	if(method == INGEST || !iscarbon(A))
+		return ..()
+
+	A.reagents.remove_reagent(type, trans_volume)
+	A.reagents.add_reagent(/datum/reagent/fuel, trans_volume * 0.75)
+	A.reagents.add_reagent(/datum/reagent/water, trans_volume * 0.25)
+
 	return ..()

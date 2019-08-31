@@ -155,7 +155,10 @@
 			var/target_rank = ""
 			if (contract.contract.target)
 				var/datum/data/record/record = find_record("name", contract.contract.target.current.real_name, GLOB.data_core.general)
-				target_rank = record.fields["rank"]
+				if (record)
+					target_rank = record.fields["rank"]
+				else 
+					target_rank = "Unknown"
 
 			data["contracts"] += list(list(
 				"target" = contract.contract.target,

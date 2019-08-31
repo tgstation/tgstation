@@ -119,7 +119,7 @@
 
 /obj/item/melee/sabre/proc/suicide_dismember(mob/living/user, obj/item/bodypart/affecting)
 	if(!QDELETED(affecting) && affecting.dismemberable && affecting.owner == user && !QDELETED(user))
-		playsound(user, hitsound, 25, 1)
+		playsound(user, hitsound, 25, TRUE)
 		affecting.dismember(BRUTE)
 		user.adjustBruteLoss(20)
 
@@ -156,7 +156,7 @@
 
 /obj/item/melee/beesword/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is stabbing [user.p_them()]self in the throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(get_turf(src), hitsound, 75, 1, -1)
+	playsound(get_turf(src), hitsound, 75, TRUE, -1)
 	return TOXLOSS
 
 /obj/item/melee/classic_baton
@@ -174,13 +174,14 @@
 	var/cooldown_check = 0 // Used interally, you don't want to modify
 
 	var/cooldown = 40 // Default wait time until can stun again.
-	var/stun_time_carbon = 60 // How long we stun for - 6 seconds.
-	var/stun_time_silicon = 0.60 // Multiplier for stunning silicons; if enabled, is 60% of human stun time.
+	var/knockdown_time_carbon = (1.5 SECONDS) // Knockdown length for carbons.
+	var/stun_time_silicon = (5 SECONDS) // If enabled, how long do we stun silicons.
+	var/stamina_damage = 55 // Do we deal stamina damage.
 	var/affect_silicon = FALSE // Does it stun silicons.
 	var/on_sound // "On" sound, played when switching between able to stun or not.
 	var/on_stun_sound = "sound/effects/woodhit.ogg" // Default path to sound for when we stun.
 	var/stun_animation = TRUE // Do we animate the "hit" when stunning.
-	var/on = TRUE // Are we on or off
+	var/on = TRUE // Are we on or off.
 
 	var/on_icon_state // What is our sprite when turned on
 	var/off_icon_state // What is our sprite when turned off
@@ -188,12 +189,6 @@
 	var/force_on // Damage when on - not stunning
 	var/force_off // Damage when off - not stunning
 	var/weight_class_on // What is the new size class when turned on
-
-/obj/item/melee/classic_baton/Initialize()
-	. = ..()
-
-	// Derive stun time from multiplier.
-	stun_time_silicon = stun_time_carbon * stun_time_silicon
 
 // Description for trying to stun when still on cooldown.
 /obj/item/melee/classic_baton/proc/get_wait_description()
@@ -241,7 +236,10 @@
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, "<span class ='danger'>You hit yourself over the head.</span>")
-		user.Paralyze(stun_time_carbon * force)
+
+		user.Paralyze(knockdown_time_carbon * force)
+		user.adjustStaminaLoss(stamina_damage)
+		
 		additional_effects_carbon(user) // user is the target here
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -290,8 +288,9 @@
 			if (stun_animation)
 				user.do_attack_animation(target)
 
-			playsound(get_turf(src), on_stun_sound, 75, 1, -1)
-			target.Paralyze(stun_time_carbon)
+			playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
+			target.Knockdown(knockdown_time_carbon)
+			target.adjustStaminaLoss(stamina_damage)
 			additional_effects_carbon(target, user)
 
 			log_combat(user, target, "stunned", src)
@@ -339,7 +338,7 @@
 	if(!on)
 		src.attack_self(user)
 	else
-		playsound(src, on_sound, 50, 1)
+		playsound(src, on_sound, 50, TRUE)
 		add_fingerprint(user)
 	sleep(3)
 	if (!QDELETED(H))
@@ -369,7 +368,7 @@
 		force = force_off
 		attack_verb = list("hit", "poked")
 
-	playsound(src.loc, on_sound, 50, 1)
+	playsound(src.loc, on_sound, 50, TRUE)
 	add_fingerprint(user)
 
 /obj/item/melee/classic_baton/telescopic/contractor_baton
@@ -385,9 +384,9 @@
 	item_flags = NONE
 	force = 5
 
-	cooldown = 20
-	stun_time_carbon = 85
-	affect_silicon = TRUE
+	cooldown = 25
+	stamina_damage = 85
+	affect_silicon = TRUE 
 	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
 
@@ -491,10 +490,10 @@
 
 /obj/item/melee/supermatter_sword/proc/consume_turf(turf/T)
 	var/oldtype = T.type
-	var/turf/newT = T.ScrapeAway()
+	var/turf/newT = T.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	if(newT.type == oldtype)
 		return
-	playsound(T, 'sound/effects/supermatter.ogg', 50, 1)
+	playsound(T, 'sound/effects/supermatter.ogg', 50, TRUE)
 	T.visible_message("<span class='danger'>[T] smacks into [src] and rapidly flashes to ash.</span>",\
 	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
 	shard.Consume()
@@ -553,7 +552,7 @@
 			return
 		retract(user)
 
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
 	add_fingerprint(user)
 
 /obj/item/melee/roastingstick/attackby(atom/target, mob/user)
@@ -612,22 +611,22 @@
 			return
 		if (istype(target, /obj/singularity) && get_dist(user, target) < 10)
 			to_chat(user, "You send [held_sausage] towards [target].")
-			playsound(src, 'sound/items/rped.ogg', 50, 1)
+			playsound(src, 'sound/items/rped.ogg', 50, TRUE)
 			beam = user.Beam(target,icon_state="rped_upgrade",time=100)
 		else if (user.Adjacent(target))
 			to_chat(user, "You extend [src] towards [target].")
-			playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+			playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
 		else
 			return
 		if(do_after(user, 100, target = user))
 			finish_roasting(user, target)
 		else
 			QDEL_NULL(beam)
-			playsound(src, 'sound/weapons/batonextend.ogg', 50, 1)
+			playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 
 /obj/item/melee/roastingstick/proc/finish_roasting(user, atom/target)
 	to_chat(user, "You finish roasting [held_sausage]")
-	playsound(src,'sound/items/welder2.ogg',50,1)
+	playsound(src,'sound/items/welder2.ogg',50,TRUE)
 	held_sausage.add_atom_colour(rgb(103,63,24), FIXED_COLOUR_PRIORITY)
 	held_sausage.name = "[target.name]-roasted [held_sausage.name]"
 	held_sausage.desc = "[held_sausage.desc] It has been cooked to perfection on \a [target]."

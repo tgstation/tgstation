@@ -182,18 +182,19 @@
 	return dna.species.spec_attacked_by(I, user, affecting, a_intent, src)
 
 
-/mob/living/carbon/human/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
-	if(user.a_intent == INTENT_HARM)
-		var/hulk_verb = pick("smash","pummel")
-		if(check_shields(user, 15, "the [hulk_verb]ing"))
-			return
-		..(user, 1)
-		playsound(loc, user.dna.species.attack_sound, 25, 1, -1)
-		var/message = "[user] has [hulk_verb]ed [src]!"
-		visible_message("<span class='danger'>[message]</span>", \
-								"<span class='userdanger'>[message]</span>")
-		adjustBruteLoss(15)
-		return 1
+/mob/living/carbon/human/attack_hulk(mob/living/carbon/human/user)
+	. = ..()
+	if(!.)
+		return
+	var/hulk_verb = pick("smash","pummel")
+	if(check_shields(user, 15, "the [hulk_verb]ing"))
+		return
+	..()
+	playsound(loc, user.dna.species.attack_sound, 25, TRUE, -1)
+	var/message = "[user] has [hulk_verb]ed [src]!"
+	visible_message("<span class='danger'>[message]</span>", \
+							"<span class='userdanger'>[message]</span>")
+	adjustBruteLoss(15)
 
 /mob/living/carbon/human/attack_hand(mob/user)
 	if(..())	//to allow surgery to return properly.
@@ -214,11 +215,11 @@
 	if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stunned instead.
 		var/obj/item/I = get_active_held_item()
 		if(I && dropItemToGround(I))
-			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
+			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
 			visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
 					"<span class='userdanger'>[M] disarmed you!</span>")
 		else if(!M.client || prob(5)) // only natural monkeys get to stun reliably, (they only do it occasionaly)
-			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
+			playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
 			if (src.IsKnockdown() && !src.IsParalyzed())
 				Paralyze(40)
 				log_combat(M, src, "pinned")
@@ -254,7 +255,7 @@
 				w_uniform.add_fingerprint(M)
 			var/damage = prob(90) ? 20 : 0
 			if(!damage)
-				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
+				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, TRUE, -1)
 				visible_message("<span class='danger'>[M] lunges at [src]!</span>", \
 					"<span class='userdanger'>[M] lunges at you!</span>")
 				return 0
@@ -263,7 +264,7 @@
 				affecting = get_bodypart(BODY_ZONE_CHEST)
 			var/armor_block = run_armor_check(affecting, "melee","","",10)
 
-			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
+			playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
 			visible_message("<span class='danger'>[M] slashes at [src]!</span>", \
 				"<span class='userdanger'>[M] slashes at you!</span>")
 			log_combat(M, src, "attacked")
@@ -274,11 +275,11 @@
 		if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stun instead.
 			var/obj/item/I = get_active_held_item()
 			if(I && dropItemToGround(I))
-				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
+				playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
 				visible_message("<span class='danger'>[M] disarms [src]!</span>", \
 						"<span class='userdanger'>[M] disarms you!</span>")
 			else
-				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
+				playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
 				Paralyze(100)
 				log_combat(M, src, "tackled")
 				visible_message("<span class='danger'>[M] tackles [src] down!</span>", \
@@ -347,13 +348,15 @@
 			var/dmg = rand(M.force/2, M.force)
 			switch(M.damtype)
 				if("brute")
-					if(M.force > 20)
+					if(M.force > 35) // durand and other heavy mechas
 						Unconscious(20)
+					else if(M.force > 20 && !IsKnockdown()) // lightweight mechas like gygax
+						Knockdown(40)
 					update |= temp.receive_damage(dmg, 0)
-					playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
+					playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
 				if("fire")
 					update |= temp.receive_damage(0, dmg)
-					playsound(src, 'sound/items/welder.ogg', 50, 1)
+					playsound(src, 'sound/items/welder.ogg', 50, TRUE)
 				if("tox")
 					M.mech_toxin_damage(src)
 				else
@@ -376,47 +379,50 @@
 	..()
 	if (!severity)
 		return
-	var/b_loss = 0
-	var/f_loss = 0
+	var/brute_loss = 0
+	var/burn_loss = 0
 	var/bomb_armor = getarmor(null, "bomb")
 
+//200 max knockdown for EXPLODE_HEAVY
+//160 max knockdown for EXPLODE_LIGHT
+
+
 	switch (severity)
-		if (1)
-			if(prob(bomb_armor))
-				b_loss = 500
-				var/atom/throw_target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
-				throw_at(throw_target, 200, 4)
-				damage_clothes(400 - bomb_armor, BRUTE, "bomb")
-			else
+		if (EXPLODE_DEVASTATE)
+			if(bomb_armor < EXPLODE_GIB_THRESHOLD) //gibs the mob if their bomb armor is lower than EXPLODE_GIB_THRESHOLD
 				for(var/I in contents)
 					var/atom/A = I
 					A.ex_act(severity)
 				gib()
 				return
+			else
+				brute_loss = 500
+				var/atom/throw_target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
+				throw_at(throw_target, 200, 4)
+				damage_clothes(400 - bomb_armor, BRUTE, "bomb")
 
-		if (2)
-			b_loss = 60
-			f_loss = 60
+		if (EXPLODE_HEAVY)
+			brute_loss = 60
+			burn_loss = 60
 			if(bomb_armor)
-				b_loss = 30*(2 - round(bomb_armor*0.01, 0.05))
-				f_loss = b_loss
+				brute_loss = 30*(2 - round(bomb_armor*0.01, 0.05))
+				burn_loss = brute_loss				//damage gets reduced from 120 to up to 60 combined brute+burn
 			damage_clothes(200 - bomb_armor, BRUTE, "bomb")
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)
-			if (prob(max(70 - (bomb_armor * 0.5), 0)))
-				Unconscious(200)
+			Unconscious(20)							//short amount of time for follow up attacks against elusive enemies like wizards
+			Knockdown(200 - (bomb_armor * 1.6)) 	//between ~4 and ~20 seconds of knockdown depending on bomb armor
 
-		if(3)
-			b_loss = 30
+		if(EXPLODE_LIGHT)
+			brute_loss = 30
 			if(bomb_armor)
-				b_loss = 15*(2 - round(bomb_armor*0.01, 0.05))
+				brute_loss = 15*(2 - round(bomb_armor*0.01, 0.05))
 			damage_clothes(max(50 - bomb_armor, 0), BRUTE, "bomb")
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(15,60)
-			if (prob(max(50 - (bomb_armor * 0.5), 0)))
-				Unconscious(160)
+			Knockdown(160 - (bomb_armor * 1.6))		//100 bomb armor will prevent knockdown altogether
 
-	take_overall_damage(b_loss,f_loss)
+	take_overall_damage(brute_loss,burn_loss)
 
 	//attempt to dismember bodyparts
 	if(severity <= 2 || !bomb_armor)
@@ -662,15 +668,19 @@
 		..()
 
 /mob/living/carbon/human/proc/check_self_for_injuries()
-	visible_message("[src] examines [p_them()]self.", \
+	visible_message("<span class='notice'>[src] examines [p_them()]self.</span>", \
 		"<span class='notice'>You check yourself for injuries.</span>")
 
 	var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/LB = X
 		missing -= LB.body_zone
 		if(LB.is_pseudopart) //don't show injury text for fake bodyparts; ie chainsaw arms or synthetic armblades
 			continue
+		var/self_aware = FALSE
+		if(HAS_TRAIT(src, TRAIT_SELF_AWARE))
+			self_aware = TRUE
 		var/limb_max_damage = LB.max_damage
 		var/status = ""
 		var/brutedamage = LB.brute_dam
@@ -708,7 +718,14 @@
 		var/no_damage
 		if(status == "OK" || status == "no damage")
 			no_damage = TRUE
-		to_chat(src, "\t <span class='[no_damage ? "notice" : "warning"]'>Your [LB.name] [HAS_TRAIT(src, TRAIT_SELF_AWARE) ? "has" : "is"] [status].</span>")
+		var/isdisabled = " "
+		if(LB.is_disabled())
+			isdisabled = " is disabled "
+			if(no_damage)
+				isdisabled += " but otherwise "
+			else
+				isdisabled += " and "
+		to_chat(src, "\t <span class='[no_damage ? "notice" : "warning"]'>Your [LB.name][isdisabled][self_aware ? " has " : " is "][status].</span>")
 
 		for(var/obj/item/I in LB.embedded_objects)
 			to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
@@ -784,7 +801,7 @@
 		//Put the items in that list into a string of text
 		for(var/B in broken)
 			broken_message += B
-		to_chat(src, "<span class='warning'> Your [broken_message] [broken_plural ? "are" : "is"] non-functional!</span>")
+		to_chat(src, "<span class='warning'>Your [broken_message] [broken_plural ? "are" : "is"] non-functional!</span>")
 	if(damaged.len)
 		if(damaged.len > 1)
 			damaged.Insert(damaged.len, "and ")

@@ -14,7 +14,7 @@
 	. = ..()
 	can_head = _can_head
 	if(head_icon)
-		alternate_worn_icon = head_icon
+		mob_overlay_icon = head_icon
 	if(_worn_state)
 		item_state = _worn_state
 	if(lh_icon)

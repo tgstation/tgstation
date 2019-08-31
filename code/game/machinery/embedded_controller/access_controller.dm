@@ -31,7 +31,7 @@
 	obj_flags |= EMAGGED
 	req_access = list()
 	req_one_access = list()
-	playsound(src, "sparks", 100, 1)
+	playsound(src, "sparks", 100, TRUE)
 	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 
 /obj/machinery/doorButtons/proc/removeMe()

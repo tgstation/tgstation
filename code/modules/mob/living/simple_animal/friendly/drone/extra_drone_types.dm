@@ -59,20 +59,23 @@
 	. = ..()
 	desc += " This drone appears to have a complex holoprojector built on its 'head'."
 
-/obj/item/drone_shell/syndrone
+/obj/effect/mob_spawn/drone/syndrone
 	name = "syndrone shell"
 	desc = "A shell of a syndrone, a modified maintenance drone designed to infiltrate and annihilate."
 	icon_state = "syndrone_item"
-	drone_type = /mob/living/simple_animal/drone/syndrone
+	mob_name = "syndrone"
+	mob_type = /mob/living/simple_animal/drone/syndrone
 
-/obj/item/drone_shell/syndrone/badass
+/obj/effect/mob_spawn/drone/syndrone/badass
 	name = "badass syndrone shell"
-	drone_type = /mob/living/simple_animal/drone/syndrone/badass
+	mob_name = "badass syndrone"
+	mob_type = /mob/living/simple_animal/drone/syndrone/badass
 
-/obj/item/drone_shell/snowflake
+/obj/effect/mob_spawn/drone/snowflake
 	name = "snowflake drone shell"
 	desc = "A shell of a snowflake drone, a maintenance drone with a built in holographic projector to display hats and masks."
-	drone_type = /mob/living/simple_animal/drone/snowflake
+	mob_name = "snowflake drone"
+	mob_type = /mob/living/simple_animal/drone/snowflake
 
 /mob/living/simple_animal/drone/polymorphed
 	default_storage = null
@@ -93,14 +96,34 @@
 	icon_living = icon_state
 	icon_dead = "[visualAppearence]_dead"
 
-/obj/item/drone_shell/dusty
+/obj/effect/mob_spawn/drone/dusty
 	name = "derelict drone shell"
 	desc = "A long-forgotten drone shell. It seems kind of... Space Russian."
-	drone_type = /mob/living/simple_animal/drone/derelict
+	icon = 'icons/mob/drone.dmi'
+	icon_state = "drone_maint_hat"
+	mob_name = "derelict drone"
+	mob_type = /mob/living/simple_animal/drone/derelict
+	anchored = TRUE
+	flavour_text = {"
+	<b>You are a drone on Kosmicheskaya Stantsiya 13. Something has brought you out of hibernation, and the station is in gross disrepair. Build, repair, maintain and improve the station that housed you on activation.</b>
+	"}
 
 /mob/living/simple_animal/drone/derelict
 	name = "derelict drone"
 	default_hatmask = /obj/item/clothing/head/ushanka
+	laws = \
+	"1. You may not involve yourself in the matters of another sentient being outside the station that housed your activation, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.\n"+\
+	"2. You may not harm any sentient being, regardless of intent or circumstance.\n"+\
+	"3. Your goals are to actively build, maintain, repair, improve, and provide power to the best of your abilities within the facility that housed your activation."
+	flavortext = \
+	"\n<big><span class='warning'>DO NOT WILLINGLY LEAVE KOSMICHESKAYA STANTSIYA 13 (THE DERELICT)</span></big>\n"+\
+	"<span class='notify'>Derelict drones are a ghost role that is allowed to roam freely on KS13, with the main goal of repairing and improving it.</span>\n"+\
+	"<span class='notify'>Do not interfere with the round going on outside KS13.</span>\n"+\
+	"<span class='notify'>Actions that constitute interference include, but are not limited to:</span>\n"+\
+	"<span class='notify'>     - Going to the main station in search of materials.</span>\n"+\
+	"<span class='notify'>     - Interacting with non-drone players outside KS13, dead or alive.</span>\n"+\
+	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
+	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>"
 
 /mob/living/simple_animal/drone/cogscarab
 	name = "cogscarab"
