@@ -363,7 +363,7 @@
 			mob/living/carbon/C = user
 			if(C.flash_act(strength, 0, 0, 1))
 				if(!HAS_TRAIT(C, TRAIT_MINDSHIELD))
-					C.visible_message("<span class='attack'>[C] looks deeply into [src], completely fascinated by it.</span>" , \"<span class='hypnophrase'>[src] is more interesting than anything else that you've ever seen before. You could stare into it forever...</span>") //would "gazes" work better than "looks" here? I dunno
+					C.visible_message("<span class='warning'>[C] stands still as [C.p_their()] eyes seem to focus on [src].</span>" , \"<span class='hypnophrase'>[src] is more interesting than anything else that you've ever seen before. You could stare into it forever...</span>") //would "gazes" work better than "looks" here? I dunno
 					C.apply_status_effect(/datum/status_effect/trance, 200, TRUE, FALSE) //yes, this bypasses the hypnosis_vulnerable test that the hypnotic flash checks; this is intentional, as the syndicate lantern has its own restrictions already
 				else
 					to_chat(C, "<span class='boldwarning'>For a moment, you feel a strong compulsion to continue examining [src], but it quickly fades away.</span>")
