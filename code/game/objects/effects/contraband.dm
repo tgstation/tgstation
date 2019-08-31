@@ -610,8 +610,10 @@
 	name = "maintenance note"
 	icon_state = "maint_paper"
 	item_state = "maint_paper"
+	custom = TRUE
 
 /obj/item/paper/maintnote/Initialize()
 	info = pick(world.file2list("strings/ic_tips.txt"))
+	..()
 
 #undef PLACE_SPEED

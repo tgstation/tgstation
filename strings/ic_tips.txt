@@ -1,9 +1,10 @@
 To crack the safe in the vault, use a stethoscope or three plastic explosives on it.
-Interacting with a windoor rather then bumping into it will keep it open, you can interact with it again to close it.
-You can spray a fire extinguisher, throw items or fire a gun while floating through space to change your direction. Simply fire opposite to where you want to go.
+Interacting with a windoor rather than bumping into it will keep it open; you can interact with it again to close it.
+You can spray a fire extinguisher, throw items, or fire a gun while floating through space to change your direction. Simply fire in the opposite direction of where you want to go.
 Firesuits and winter coats offer mild protection from the cold, allowing you to spend longer periods of time near breaches and space than if wearing nothing at all.
-Glass shards can be welded to make glass, and metal rods can be welded to make metal. Ores can be welded too, but this takes a lot of fuel.
-If you need to drag multiple people either to safety or to space, bring a locker or crate over and stuff them all in before hauling them off.
+Drinking coffee will heat us up - perfect for our space adventures...
+Glass shards can be welded to make glass, with metal rods and floor tiles being able to be welded to make metal. Ores can be welded too, but this takes a lot of fuel. 
+If you need to drag multiple people either to safety or to space, bring a locker or crate over and stuff them all in before hauling them off. Can only stuff three in though.
 Resisting will allow you to resist out of handcuffs, being buckled to a chair or bed, out of locked lockers and more. Whenever you're stuck, try resisting!
 You can move an item out of the way by dragging it and then clicking on an adjacent tile with an empty hand.
 You can recolor certain items like jumpsuits and gloves in washing machines by also throwing in a crayon.
@@ -11,18 +12,21 @@ Maintenance is full of equipment that is different every shift. Look around and 
 There are many places around the station to hide contraband. A few for starters: linen boxes, toilet cisterns, body bags. Experiment to find more!
 You can use a machine in the vault to deposit cash or rob Cargo's department funds.
 You can screwdriver any non-chemical grenade to shorten fuses from 5 seconds, to 3 seconds, to 1 second, to instant boom! Nobody ever expects this.
-If you find yourself in a fistfight with another player, staying on the offensive is usually the smart move. Running away often won't accomplish much.
-Different weapons have different strengths. Some weapons, such as spears, floor tiles, and throwing stars, deal more damage when thrown compared to when attacked normally.
+Different weapons have different strengths. Some weapons, such as spears, floor tiles, and throwing stars, deal more damage when thrown compared to when attacking in-hand.
+Hey - remember to bring your spear... We need to open that locked locker in the cap's office...
 A thrown glass of water can make a slippery tile, allowing you to slow down your pursuers in a pinch.
-When dealing with security, you can often get your sentence negated entirely through cooperation and deception.
 The P2P chat function found on tablet computers allows for a stealthy way to communicate with people.
 Experiment with different setups of the supermatter engine to maximize output, but don't risk the crew's safety to do so!
-On most clothing items that go in the exosuit slot, you can put certain small items into your suit storage, such as a spraycan, your emergency oxygen tank, or a flashlight.
 Most job-related exosuit clothing can fit job-related items into it, such as the atmospheric technician's hardsuit/winter coat holding an RPD, or labcoats holding most medicine.
-Felinids get temporarily distracted by laser pointers. Use this to your advantage when being pursued by one.
+Felinids get temporarily distracted by laser pointers. Use this to your advantage when being pursued by one. They can even be upgraded for better effects.
 You can swap floor tiles by holding a crowbar in one hand and a stack of tiles in the other.
-When hacking doors, cutting and mending a "test light wire" will restore power to the door.
-When crafting most items, you can either manually combine parts or use the crafting menu.
+When hacking doors, cutting and mending the test light wire will restore power to the door.
+Hope you remembered your tools, we need to get hack past the ID checks on the APC to cut power... 
 Suit storage units not only remove blood and dirt from clothing, but also radiation!
-Remote devices will work when used through cameras. For example: Bluespace RPEDs and door remotes.
 You can light a cigar on a supermatter crystal.
+Some fucko took my insulated gloves, but I found an extra pair in a yellow toolbox.
+This fuck called grey ugly so I deepfried his entire office with a backpack mister and cooking oil.
+This morbidly obese fucking clown ate all my food so I gave him a mint.
+help a wizard turned me into paper
+Iii tttooooook tttoooooo mmmaaannnyyy pppooowwweeerrrsss aaannnddd bbbeeecccaaammmeee aaa sssnnnaaaiiilll
+DONT BELIEVE EVERYTHING CENTCOM TELLS YOU YOU CAN ABSOLUTELY MOVE THE SUPERMATTER WITH TELEKINESIS

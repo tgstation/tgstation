@@ -31,6 +31,7 @@
 	var/spam_flag = 0
 	var/contact_poison // Reagent ID to transfer on contact
 	var/contact_poison_volume = 0
+	var/custom = FALSE // Custom paper - ignores checks like reskinning based on text existing
 
 
 /obj/item/paper/pickup(user)
@@ -52,14 +53,15 @@
 
 
 /obj/item/paper/update_icon()
-
 	if(resistance_flags & ON_FIRE)
 		icon_state = "paper_onfire"
 		return
 	if(info)
-		icon_state = "paper_words"
+		if (!custom)
+			icon_state = "paper_words"
 		return
-	icon_state = "paper"
+	if (!custom)
+		icon_state = "paper"
 
 
 /obj/item/paper/examine(mob/user)
