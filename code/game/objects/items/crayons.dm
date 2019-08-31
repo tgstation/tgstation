@@ -481,7 +481,7 @@
 	desc = "A very sad-looking crayon."
 	paint_color = "#FFFFFF"
 	crayon_color = "mime"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/invisible = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/powder/invisible = 1)
 	charges = -1
 	dye_color = DYE_MIME
 
