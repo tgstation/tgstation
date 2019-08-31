@@ -86,20 +86,10 @@
 	for(var/obj/effect/proc_holder/spell/aspell in user.mind.spell_list)
 		if(initial(S.name) == initial(aspell.name))
 			spell_levels = aspell.spell_level
-			CheckTouchSpells(user, aspell)
 			user.mind.spell_list.Remove(aspell)
 			qdel(S)
 			return cost * (spell_levels+1)
 	return -1
-
-// Removes hand attacks for touch spells (ei nath, etc.) so the wiz doesn't get a free use if they refund the spell.
-/datum/spellbook_entry/proc/CheckTouchSpells(mob/living/carbon/human/user, obj/effect/proc_holder/spell/aspell)
-	if (istype(aspell, /obj/effect/proc_holder/spell/targeted/touch))
-		var/obj/effect/proc_holder/spell/targeted/touch/touchspell = aspell
-		for(var/obj/item/melee/touch_attack/T in user.contents)
-			if (istype(T, touchspell.hand_path))
-				qdel(T)
-				to_chat(user, "<span class='notice'>Your hand loses its charge.</span>")
 
 /datum/spellbook_entry/proc/GetInfo()
 	if(!S)
