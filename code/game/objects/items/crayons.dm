@@ -664,8 +664,7 @@
 
 	if(isobj(target))
 		if(actually_paints)
-
-			if(color_hex2num(chosen_colour) < 350 && !istype(target, /obj/structure/window)) //Colors too dark are rejected
+			if(color_hex2num(paint_color) < 350 && !istype(target, /obj/structure/window)) //Colors too dark are rejected
 				to_chat(usr, "<span class='warning'>A colour that dark on an object like this? Surely not...</span>")
 				return FALSE
 				
