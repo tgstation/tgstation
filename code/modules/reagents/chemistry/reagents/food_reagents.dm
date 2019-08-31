@@ -293,28 +293,28 @@
 			if(prob(5))
 				victim.emote("scream")
 			victim.blur_eyes(3)
-			victim.blind_eyes(180 SECONDS)
+			victim.blind_eyes(10 SECONDS)
 			victim.confused = max(M.confused, 3)
 			
-			addtimer
+			
 			return
 		else if ( eyes_covered ) // Eye cover is better than mouth cover
 			victim.blur_eyes(3)
 			victim.Knockdown(3 SECONDS) // 3 * stun baton time 
-			victim.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=0.50, blacklisted_movetypes=(FLYING|FLOATING))
-			addtimer(CALLBACK(L, .proc/remove_speed_modifier, type), 30 SECONDS)
+			victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.50, blacklisted_movetypes=(FLYING|FLOATING))
+			addtimer(CALLBACK(victim, .proc/remove_speed_modifier, MOVESPEED_ID_PEPPER_SPRAY), 30 SECONDS)
 			 
 			return
 		else // Oh dear :D
 			if(prob(5))
 				victim.emote("scream")
 			victim.blur_eyes(5)
-			victim.blind_eyes(180.0 SECONDS) // 3 minutes unless they wash themselves
+			victim.blind_eyes(10 SECONDS) 
 			victim.confused = max(M.confused, 6)
 			victim.Knockdown(5.0 SECONDS) 
 			
-			victim.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=0.50, blacklisted_movetypes=(FLYING|FLOATING))
-			addtimer(CALLBACK(L, .proc/remove_speed_modifier, type), 30 SECONDS)
+			victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.50, blacklisted_movetypes=(FLYING|FLOATING))
+			addtimer(CALLBACK(victim, .proc/remove_speed_modifier, MOVESPEED_ID_PEPPER_SPRAY), 30 SECONDS)
 			 
 		victim.update_damage_hud()
 
