@@ -8,10 +8,8 @@
 	range = -1
 
 /obj/effect/proc_holder/spell/targeted/touch/Destroy()
-	for(var/obj/item/melee/touch_attack/T in usr.contents)
-		if (istype(T, hand_path))
-			qdel(T)
-			to_chat(usr, "<span class='notice'>The power of the spell dissipates from your hand.</span>")
+	remove_hand()
+	..()
 
 /obj/effect/proc_holder/spell/targeted/touch/proc/remove_hand(recharge = FALSE)
 	QDEL_NULL(attached_hand)

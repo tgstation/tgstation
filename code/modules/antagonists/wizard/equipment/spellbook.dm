@@ -90,7 +90,6 @@
 			qdel(S)
 			return cost * (spell_levels+1)
 	return -1
-
 /datum/spellbook_entry/proc/GetInfo()
 	if(!S)
 		S = new spell_type()
