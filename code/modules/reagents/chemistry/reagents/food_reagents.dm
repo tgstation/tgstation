@@ -295,8 +295,7 @@
 			victim.blur_eyes(3)
 			victim.blind_eyes(180 SECONDS)
 			victim.confused = max(M.confused, 3)
-			if(	SEND_SIGNAL(victim, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK))
-				victim.set_blindness(0)
+			
 			addtimer
 			return
 		else if ( eyes_covered ) // Eye cover is better than mouth cover
@@ -313,8 +312,7 @@
 			victim.blind_eyes(180.0 SECONDS) // 3 minutes unless they wash themselves
 			victim.confused = max(M.confused, 6)
 			victim.Knockdown(5.0 SECONDS) 
-			if(	SEND_SIGNAL(victim, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK))
-				victim.set_blindness(0)
+			
 			victim.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=0.50, blacklisted_movetypes=(FLYING|FLOATING))
 			addtimer(CALLBACK(L, .proc/remove_speed_modifier, type), 30 SECONDS)
 			 
