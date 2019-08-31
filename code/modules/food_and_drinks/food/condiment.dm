@@ -7,7 +7,7 @@
 //Food items that aren't eaten normally and leave an empty container behind.
 /obj/item/reagent_containers/food/condiment
 	name = "condiment bottle"
-	desc = "An empty condiment bottle."
+	desc = "Just your average condiment bottle."
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "emptycondiment"
 	reagent_flags = OPENCONTAINER
@@ -38,24 +38,42 @@
 
 /obj/item/reagent_containers/food/condiment/update_icon()
 	cut_overlays()
-	if(reagents.total_volume && !customsprite)
-		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[icon_state]-10")
 
-		var/percent = round((reagents.total_volume / volume) * 100)
-		switch(percent)
-			if(0 to 9)
-				filling.icon_state = "[icon_state]-10"
-			if(10 to 29)
-				filling.icon_state = "[icon_state]25"
-			if(30 to 49)
-				filling.icon_state = "[icon_state]50"
-			if(50 to 69)
-				filling.icon_state = "[icon_state]75"
-			if(70 to INFINITY)
-				filling.icon_state = "[icon_state]100"
+	if(reagents.reagent_list.len > 0)
+		var/main_reagent = reagents.get_master_reagent_id()
+		if(main_reagent in possible_states)
+			var/list/temp_list = possible_states[main_reagent]
+			icon_state = temp_list[1]
+			name = temp_list[2]
+			desc = temp_list[3]
+			customsprite = TRUE
+		else
+			customsprite = FALSE
 
-		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		add_overlay(filling)
+		if(!customsprite)
+			var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[icon_state]-10")
+
+			var/percent = round((reagents.total_volume / volume) * 100)
+			switch(percent)
+				if(0 to 24)
+					filling.icon_state = "[icon_state]-10"
+				if(25 to 49)
+					filling.icon_state = "[icon_state]25"
+				if(50 to 74)
+					filling.icon_state = "[icon_state]50"
+				if(75 to 99)
+					filling.icon_state = "[icon_state]75"
+				if(100 to INFINITY)
+					filling.icon_state = "[icon_state]100"
+
+			filling.color = mix_color_from_reagents(reagents.reagent_list)
+			add_overlay(filling)
+
+	else
+		icon_state = "emptycondiment"
+		name = "condiment bottle"
+		desc = "Just your average condiment bottle."
+		customsprite = FALSE
 	. = ..()
 
 /obj/item/reagent_containers/food/condiment/suicide_act(mob/living/carbon/user)
@@ -120,21 +138,6 @@
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the condiment to [target].</span>")
 
 /obj/item/reagent_containers/food/condiment/on_reagent_change(changetype)
-	if(!possible_states.len)
-		return
-	if(reagents.reagent_list.len > 0)
-		var/main_reagent = reagents.get_master_reagent_id()
-		if(main_reagent in possible_states)
-			var/list/temp_list = possible_states[main_reagent]
-			icon_state = temp_list[1]
-			name = temp_list[2]
-			desc = temp_list[3]
-			customsprite = TRUE
-	else
-		icon_state = "emptycondiment"
-		name = "condiment bottle"
-		desc = "An empty condiment bottle."
-		customsprite = FALSE
 	update_icon()
 
 /obj/item/reagent_containers/food/condiment/enzyme
