@@ -294,7 +294,7 @@
 				victim.emote("scream")
 			victim.blur_eyes(3) // 6 seconds
 			victim.blind_eyes(2) // 10 seconds
-			victim.confused = max(M.confused, 2.5)
+			victim.confused = max(M.confused, 5)
 			
 			
 			return
