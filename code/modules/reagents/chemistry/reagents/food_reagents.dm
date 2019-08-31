@@ -295,12 +295,16 @@
 			victim.blur_eyes(3)
 			victim.blind_eyes(2)
 			victim.confused = max(M.confused, 3)
-			victim.damageoverlaytemp = 60
-			victim.Paralyze(60)
+			victim.damageoverlaytemp = 40
+			victim.Knockdown(0.5 SECONDS) // 1/3 of stun baton time
+			victim.adjustStaminaLoss(25) // bit more than  1/3 stun baton stam loss due to eyes importance
 			return
 		else if ( eyes_covered ) // Eye cover is better than mouth cover
 			victim.blur_eyes(3)
-			victim.damageoverlaytemp = 30
+			victim.damageoverlaytemp = 25
+			victim.confused = max(M.confused, 1)
+			victim.Knockdown(0.3 SECONDS)
+			victim.adjustStaminaLoss(15) 
 			return
 		else // Oh dear :D
 			if(prob(5))
@@ -308,8 +312,9 @@
 			victim.blur_eyes(5)
 			victim.blind_eyes(3)
 			victim.confused = max(M.confused, 6)
-			victim.damageoverlaytemp = 75
-			victim.Paralyze(100)
+			victim.damageoverlaytemp = 50
+			victim.Knockdown(1.0 SECONDS) // 2/3 of stun baton time
+			victim.adjustStaminaLoss(40)  // 2/3 of stun baton stam loss
 		victim.update_damage_hud()
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M)
