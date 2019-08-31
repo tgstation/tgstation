@@ -50,7 +50,7 @@
 /obj/machinery/ticket_machine/proc/increment()
 	if(current_number >= ticket_number)
 		return
-	playsound(src, 'sound/misc/announce_dig.ogg', 50, 0)
+	playsound(src, 'sound/misc/announce_dig.ogg', 50, FALSE)
 	if(current_number && !(obj_flags & EMAGGED) && tickets[current_number])
 		tickets[current_number].visible_message("<span class='notice'>\the [tickets[current_number]] disperses!</span>")
 		qdel(tickets[current_number])
@@ -170,7 +170,7 @@
 	if((user in ticket_holders) && !(obj_flags & EMAGGED))
 		to_chat(user, "You already have a ticket!")
 		return
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 100, 0)
+	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 100, FALSE)
 	ticket_number ++
 	to_chat(user, "<span class='notice'>You take a ticket from [src], looks like you're ticket number #[ticket_number]...</span>")
 	var/obj/item/ticket_machine_ticket/theirticket = new /obj/item/ticket_machine_ticket(get_turf(src))

@@ -114,19 +114,19 @@
 			to_chat(user, "<span class='warning'>There's not enough mannitol in [O] to restore [src]!</span>")
 			return
 
-		user.visible_message("[user] starts to pour the contents of [O] onto [src].", "<span class='notice'>You start to slowly pour the contents of [O] onto [src].</span>")
+		user.visible_message("<span class='notice'>[user] starts to pour the contents of [O] onto [src].</span>", "<span class='notice'>You start to slowly pour the contents of [O] onto [src].</span>")
 		if(!do_after(user, 60, TRUE, src))
 			to_chat(user, "<span class='warning'>You failed to pour [O] onto [src]!</span>")
 			return
 
-		user.visible_message("[user] pours the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink.", "<span class='notice'>You pour the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink.</span>")
+		user.visible_message("<span class='notice'>[user] pours the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink.</span>", "<span class='notice'>You pour the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink.</span>")
 		setOrganDamage(damage - (0.05 * maxHealth))	//heals a small amount, and by using "setorgandamage", we clear the failing variable if that was up
 		O.reagents.clear_reagents()
 		return
 
 	if(brainmob) //if we aren't trying to heal the brain, pass the attack onto the brainmob.
 		O.attack(brainmob, user) //Oh noooeeeee
-    
+
   if(O.force != 0 && !(O.item_flags & NOBLUDGEON))
 	  setOrganDamage(maxHealth) //fails the brain as the brain was attacked, they're pretty fragile.
 

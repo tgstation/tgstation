@@ -124,6 +124,7 @@
 
 			needs_update = 1
 
+
 //Nutrients//////////////////////////////////////////////////////////////
 			// Nutrients deplete slowly
 			if(prob(50))
@@ -175,8 +176,27 @@
 
 //Pests & Weeds//////////////////////////////////////////////////////////
 
-			else if(pestlevel >= 5)
-				adjustHealth(-1 / rating)
+			if(pestlevel >= 8)
+				if(!myseed.get_gene(/datum/plant_gene/trait/plant_type/carnivory))
+					adjustHealth(-2 / rating)
+
+				else
+					adjustHealth(2 / rating)
+					adjustPests(-1 / rating)
+
+			else if(pestlevel >= 4)
+				if(!myseed.get_gene(/datum/plant_gene/trait/plant_type/carnivory))
+					adjustHealth(-1 / rating)
+
+				else
+					adjustHealth(1 / rating)
+					if(prob(50))
+						adjustPests(-1 / rating)
+
+			else if(pestlevel < 4 && myseed.get_gene(/datum/plant_gene/trait/plant_type/carnivory))
+				adjustHealth(-2 / rating)
+				if(prob(5))
+					adjustPests(-1 / rating)
 
 			// If it's a weed, it doesn't stunt the growth
 			if(weedlevel >= 5 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
@@ -216,6 +236,12 @@
 			needs_update = 1
 		if (needs_update)
 			update_icon()
+
+		if(myseed && prob(5 * (11-myseed.production)))
+			for(var/g in myseed.genes)
+				if(istype(g, /datum/plant_gene/trait))
+					var/datum/plant_gene/trait/selectedtrait = g
+					selectedtrait.on_grow(src)
 	return
 
 /obj/machinery/hydroponics/proc/nutrimentMutation()
@@ -514,8 +540,8 @@
 			to_chat(user, "<span class='notice'>[src] warms as it might on a spring day under a genuine Sun.</span>")
 
 	// Antitoxin binds shit pretty well. So the tox goes significantly down
-	if(S.has_reagent(/datum/reagent/medicine/charcoal, 1))
-		adjustToxic(-round(S.get_reagent_amount(/datum/reagent/medicine/charcoal) * 2))
+	if(S.has_reagent(/datum/reagent/medicine/C2/multiver, 1))
+		adjustToxic(-round(S.get_reagent_amount(/datum/reagent/medicine/C2/multiver) * 2))
 
 	// NIGGA, YOU JUST WENT ON FULL RETARD.
 	if(S.has_reagent(/datum/reagent/toxin, 1))
@@ -724,14 +750,14 @@
 					syr.mode = 0
 			else if(istype(reagent_source, /obj/item/reagent_containers/spray/))
 				visi_msg="[user] sprays [target] with [reagent_source]"
-				playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
+				playsound(loc, 'sound/effects/spray3.ogg', 50, TRUE, -6)
 				irrigate = 1
 			else if(transfer_amount) // Droppers, cans, beakers, what have you.
 				visi_msg="[user] uses [reagent_source] on [target]"
 				irrigate = 1
 			// Beakers, bottles, buckets, etc.
 			if(reagent_source.is_drainable())
-				playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+				playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 
 		if(irrigate && transfer_amount > 30 && reagent_source.reagents.total_volume >= 30 && using_irrigation)
 			trays = FindConnected()
@@ -805,7 +831,7 @@
 
 	else if(istype(O, /obj/item/cultivator))
 		if(weedlevel > 0)
-			user.visible_message("[user] uproots the weeds.", "<span class='notice'>You remove the weeds from [src].</span>")
+			user.visible_message("<span class='notice'>[user] uproots the weeds.</span>", "<span class='notice'>You remove the weeds from [src].</span>")
 			weedlevel = 0
 			update_icon()
 		else

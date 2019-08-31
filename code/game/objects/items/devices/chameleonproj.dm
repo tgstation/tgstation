@@ -52,7 +52,7 @@
 	if(iseffect(target))
 		if(!(istype(target, /obj/effect/decal))) //be a footprint
 			return
-	playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
+	playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, TRUE, -6)
 	to_chat(user, "<span class='notice'>Scanned [target].</span>")
 	var/obj/temp = new/obj()
 	temp.appearance = target.appearance
@@ -70,13 +70,13 @@
 		return
 	if(active_dummy)
 		eject_all()
-		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
+		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, TRUE, -6)
 		qdel(active_dummy)
 		active_dummy = null
 		to_chat(user, "<span class='notice'>You deactivate \the [src].</span>")
 		new /obj/effect/temp_visual/emp/pulse(get_turf(src))
 	else
-		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
+		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, TRUE, -6)
 		var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(user.drop_location())
 		C.activate(user, saved_appearance, src)
 		to_chat(user, "<span class='notice'>You activate \the [src].</span>")

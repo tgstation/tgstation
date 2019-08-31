@@ -280,7 +280,7 @@
 /obj/item/clothing/head/helmet/plate/crusader/prophet
 	name = "Prophet's Hat"
 	desc = "A religious-looking hat."
-	alternate_worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	mob_overlay_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	flags_1 = 0
 	armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 50, "bomb" = 70, "bio" = 50, "rad" = 50, "fire" = 60, "acid" = 60) //religion protects you from disease and radiation, honk.
 	worn_x_dimension = 64
@@ -308,7 +308,7 @@
 	. = ..()
 	if(staffcooldown + staffwait > world.time)
 		return
-	user.visible_message("[user] chants deeply and waves [user.p_their()] staff!")
+	user.visible_message("<span class='notice'>[user] chants deeply and waves [user.p_their()] staff!</span>")
 	if(do_after(user, 20,1,src))
 		target.add_atom_colour(conversion_color, WASHABLE_COLOUR_PRIORITY) //wololo
 	staffcooldown = world.time

@@ -38,9 +38,7 @@
 			if(HAS_TRAIT(H.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM) && !HAS_TRAIT(H, TRAIT_AGEUSIA))
 				to_chat(H,"<span class='notice'>I love this taste!</span>")
 				H.adjust_disgust(-5 + -2.5 * fraction)
-				var/datum/component/mood/mood = H.GetComponent(/datum/component/mood)
-				if(mood)
-					mood.add_event(null, "fav_food", /datum/mood_event/favorite_food)
+				SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "fav_food", /datum/mood_event/favorite_food)
 				last_check_time = world.time
 				return
 	..()

@@ -21,7 +21,7 @@
 	sleep(20)
 	user.visible_message("<span class='suicide'>[user] climbs into an imaginary oven!</span>")
 	user.say("BOOORK!", forced = "chef hat suicide")
-	playsound(user, 'sound/machines/ding.ogg', 50, 1)
+	playsound(user, 'sound/machines/ding.ogg', 50, TRUE)
 	return(FIRELOSS)
 
 //Captain
@@ -133,7 +133,6 @@
 	name = "durathread beret"
 	desc =  "A beret made from durathread, its resilient fibres provide some protection to the wearer."
 	icon_state = "beretdurathread"
-	item_color = null
 	armor = list("melee" = 15, "bullet" = 5, "laser" = 15, "energy" = 5, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 5)
 
 //Security

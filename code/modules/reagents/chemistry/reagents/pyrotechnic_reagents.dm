@@ -47,7 +47,7 @@
 	if(isplatingturf(T))
 		var/turf/open/floor/plating/F = T
 		if(prob(10 + F.burnt + 5*F.broken)) //broken or burnt plating is more susceptible to being destroyed
-			F.ScrapeAway()
+			F.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	if(isfloorturf(T))
 		var/turf/open/floor/F = T
 		if(prob(reac_volume))
@@ -214,7 +214,7 @@
 	if(shock_timer >= rand(5,30)) //Random shocks are wildly unpredictable
 		shock_timer = 0
 		M.electrocute_act(rand(5,20), "Teslium in their body", 1, 1) //Override because it's caused from INSIDE of you
-		playsound(M, "sparks", 50, 1)
+		playsound(M, "sparks", 50, TRUE)
 	..()
 
 /datum/reagent/teslium/on_mob_metabolize(mob/living/carbon/human/L)

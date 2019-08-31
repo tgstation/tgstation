@@ -69,7 +69,7 @@
 	M.applied++
 	qdel(src)
 	to_chat(user, "<span class='notice'>You feed the slime [src], [M.applied == 1 ? "starting to mutate its core." : "further mutating its core."]</span>")
-	playsound(M, 'sound/effects/attackblob.ogg', 50, 1)
+	playsound(M, 'sound/effects/attackblob.ogg', 50, TRUE)
 
 	if(M.applied >= SLIME_EXTRACT_CROSSING_REQUIRED)
 		M.spawn_corecross()
@@ -86,14 +86,14 @@
 			var/obj/item/reagent_containers/food/snacks/monkeycube/M = new
 			if(!user.put_in_active_hand(M))
 				M.forceMove(user.drop_location())
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			to_chat(user, "<span class='notice'>You spit out a monkey cube.</span>")
 			return 120
 		if(SLIME_ACTIVATE_MAJOR)
 			to_chat(user, "<span class='notice'>Your [name] starts pulsing...</span>")
 			if(do_after(user, 40, target = user))
 				var/mob/living/simple_animal/slime/S = new(get_turf(user), "grey")
-				playsound(user, 'sound/effects/splat.ogg', 50, 1)
+				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 				to_chat(user, "<span class='notice'>You spit out [S].</span>")
 				return 350
 			else
@@ -112,7 +112,7 @@
 			if(do_after(user, 40, target = user))
 				var/mob/living/simple_animal/S = create_random_mob(user.drop_location(), FRIENDLY_SPAWN)
 				S.faction |= "neutral"
-				playsound(user, 'sound/effects/splat.ogg', 50, 1)
+				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 				user.visible_message("<span class='warning'>[user] spits out [S]!</span>", "<span class='notice'>You spit out [S]!</span>")
 				return 300
 
@@ -124,7 +124,7 @@
 					S.faction |= "neutral"
 				else
 					S.faction |= "slime"
-				playsound(user, 'sound/effects/splat.ogg', 50, 1)
+				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 				user.visible_message("<span class='warning'>[user] spits out [S]!</span>", "<span class='warning'>You spit out [S]!</span>")
 				return 600
 
@@ -141,7 +141,7 @@
 			var/obj/O = new food_type
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
 			return 200
 		if(SLIME_ACTIVATE_MAJOR)
@@ -149,7 +149,7 @@
 			var/obj/O = new drink_type
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
 			return 200
 
@@ -165,7 +165,7 @@
 			var/obj/item/stack/sheet/glass/O = new(null, 5)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
 			return 150
 
@@ -173,7 +173,7 @@
 			var/obj/item/stack/sheet/metal/O = new(null, 5)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
 			return 200
 
@@ -208,7 +208,7 @@
 			var/obj/item/stack/sheet/mineral/plasma/O = new(null, 1)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
 			return 150
 
@@ -393,7 +393,7 @@
 			var/obj/item/slimepotion/slime/renaming/O = new(null, 1)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
 			return 150
 
@@ -401,7 +401,7 @@
 			var/obj/item/slimepotion/slime/sentience/O = new(null, 1)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
 			return 450
 
@@ -436,7 +436,7 @@
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			to_chat(user, "<span class='warning'>You vomit slippery oil.</span>")
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			new /obj/effect/decal/cleanable/oil/slippery(get_turf(user))
 			return 450
 
@@ -527,7 +527,7 @@
 			var/obj/item/O = new chosen(null)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
 			return 150
 
@@ -536,7 +536,7 @@
 			var/obj/item/O = new chosen(null)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
 			return 250
 
@@ -572,7 +572,7 @@
 			var/obj/item/camera/O = new(null, 1)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
 			return 150
 
@@ -602,7 +602,7 @@
 			var/obj/item/O = new chosen(null)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
 			return 150
 

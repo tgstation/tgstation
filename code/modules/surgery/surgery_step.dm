@@ -93,19 +93,19 @@
 
 /datum/surgery_step/proc/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin to perform surgery on [target]...</span>",
-		"[user] begins to perform surgery on [target].",
-		"[user] begins to perform surgery on [target].")
+		"<span class='notice'>[user] begins to perform surgery on [target].</span>",
+		"<span class='notice'>[user] begins to perform surgery on [target].</span>")
 
 /datum/surgery_step/proc/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You succeed.</span>",
-		"[user] succeeds!",
-		"[user] finishes.")
+		"<span class='notice'>[user] succeeds!</span>",
+		"<span class='notice'>[user] finishes.</span>")
 	return TRUE
 
 /datum/surgery_step/proc/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='warning'>You screw up!</span>",
 		"<span class='warning'>[user] screws up!</span>",
-		"[user] finishes.", TRUE) //By default the patient will notice if the wrong thing has been cut
+		"<span class='notice'>[user] finishes.</span>", TRUE) //By default the patient will notice if the wrong thing has been cut
 	return FALSE
 
 /datum/surgery_step/proc/tool_check(mob/user, obj/item/tool)

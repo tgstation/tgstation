@@ -22,12 +22,6 @@
 /obj/machinery/computer/med_data/syndie
 	icon_keyboard = "syndie_key"
 
-/obj/machinery/computer/med_data/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/card/id))
-		id_insert_scan(user)
-	else
-		return ..()
-
 /obj/machinery/computer/med_data/ui_interact(mob/user)
 	. = ..()
 	if(isliving(user))
@@ -169,11 +163,6 @@
 						var/turf/bl = get_turf(M)
 						if(bl)	//if it can't find a turf for the medibot, then it probably shouldn't be showing up
 							bdat += "[M.name] - <b>\[[bl.x],[bl.y]\]</b> - [M.on ? "Online" : "Offline"]<br>"
-							if((!isnull(M.reagent_glass)) && M.use_beaker)
-								bdat += "Reservoir: \[[M.reagent_glass.reagents.total_volume]/[M.reagent_glass.reagents.maximum_volume]\]<br>"
-							else
-								bdat += "Using Internal Synthesizer.<br>"
-
 					if(!bdat)
 						dat += "<br><center>None detected</center>"
 					else
@@ -516,7 +505,7 @@
 				if(!( printing ))
 					printing = 1
 					GLOB.data_core.medicalPrintCount++
-					playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
+					playsound(loc, 'sound/items/poster_being_created.ogg', 100, TRUE)
 					sleep(30)
 					var/obj/item/paper/P = new /obj/item/paper( loc )
 					P.info = "<CENTER><B>Medical Record - (MR-[GLOB.data_core.medicalPrintCount])</B></CENTER><BR>"

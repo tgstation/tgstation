@@ -106,6 +106,18 @@
 	if(istype(data))
 		src.data |= data.Copy()
 
+/datum/reagent/vaccine/fungal_tb
+
+/datum/reagent/vaccine/fungal_tb/New(data)
+	. = ..()
+	var/list/cached_data
+	if(!data)
+		cached_data = list()
+	else
+		cached_data = data
+	cached_data |= "[/datum/disease/tuberculosis]"
+	src.data = cached_data
+
 /datum/reagent/water
 	name = "Water"
 	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen."
@@ -442,7 +454,7 @@
 		H.set_species(race)
 	else
 		to_chat(H, "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>")
-	qdel(src)
+	H.reagents.del_reagent(type)
 
 /datum/reagent/mutationtoxin/classic //The one from plasma on green slimes
 	name = "Mutation Toxin"
@@ -563,7 +575,7 @@
 	..()
 	if(!istype(H))
 		return
-	if(!H.dna || !H.dna.species || !(MOB_ORGANIC in H.mob_biotypes))
+	if(!H.dna || !H.dna.species || !(H.mob_biotypes & MOB_ORGANIC))
 		return
 
 	if(isjellyperson(H))
@@ -1353,7 +1365,7 @@
 /datum/reagent/carpet/reaction_turf(turf/T, reac_volume)
 	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
 		var/turf/open/floor/F = T
-		F.PlaceOnTop(/turf/open/floor/carpet)
+		F.PlaceOnTop(/turf/open/floor/carpet, flags = CHANGETURF_INHERIT_AIR)
 	..()
 
 /datum/reagent/bromine
@@ -1772,7 +1784,8 @@
 	else
 		var/yuck_cycles = current_cycle - yuck_cycle
 		if(yuck_cycles % YUCK_PUKE_CYCLES == 0)
-			holder.remove_reagent(type, 5)
+			if(yuck_cycles >= YUCK_PUKE_CYCLES * YUCK_PUKES_TO_STUN)
+				holder.remove_reagent(type, 5)
 			C.vomit(rand(14, 26), stun = yuck_cycles >= YUCK_PUKE_CYCLES * YUCK_PUKES_TO_STUN)
 	if(holder)
 		return ..()
@@ -1781,4 +1794,14 @@
 
 /datum/reagent/yuck/on_mob_end_metabolize(mob/living/L)
 	yuck_cycle = 0 // reset vomiting
+	return ..()
+
+/datum/reagent/yuck/on_transfer(atom/A, method=TOUCH, trans_volume)
+	if(method == INGEST || !iscarbon(A))
+		return ..()
+
+	A.reagents.remove_reagent(type, trans_volume)
+	A.reagents.add_reagent(/datum/reagent/fuel, trans_volume * 0.75)
+	A.reagents.add_reagent(/datum/reagent/water, trans_volume * 0.25)
+
 	return ..()

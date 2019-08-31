@@ -72,16 +72,16 @@
 		if(on)
 			to_chat(user, "<span class='notice'>Your helmet's torch can't pass through your welding visor!</span>")
 			on = FALSE
-			playsound(src, 'sound/mecha/mechmove03.ogg', 50, 1) //Visors don't just come from nothing
+			playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
 			update_icon()
 		else
-			playsound(src, 'sound/mecha/mechmove03.ogg', 50, 1) //Visors don't just come from nothing
+			playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
 			update_icon()
 
 /obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(isinhands)
 	. = ..()
 	if(!isinhands && !up)
-		. += mutable_appearance('icons/mob/head.dmi', visor_icon)
+		. += mutable_appearance('icons/mob/clothing/head.dmi', visor_icon)
 	else
 		cut_overlays()
 
@@ -109,11 +109,11 @@
 /obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(isinhands)
 	. = ..()
 	if(!isinhands && smile)
-		var/mutable_appearance/M = mutable_appearance('icons/mob/head.dmi', smile_state)
+		var/mutable_appearance/M = mutable_appearance('icons/mob/clothing/head.dmi', smile_state)
 		M.color = smile_color
 		. += M
 	if(!isinhands && !up)
-		. += mutable_appearance('icons/mob/head.dmi', visor_icon)
+		. += mutable_appearance('icons/mob/clothing/head.dmi', visor_icon)
 	else
 		cut_overlays()
 

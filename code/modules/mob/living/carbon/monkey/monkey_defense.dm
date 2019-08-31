@@ -42,7 +42,7 @@
 				visible_message("<span class='danger'>[M] punches [name]!</span>", \
 						"<span class='userdanger'>[M] punches you!</span>", null, COMBAT_MESSAGE_RANGE)
 
-				playsound(loc, "punch", 25, 1, -1)
+				playsound(loc, "punch", 25, TRUE, -1)
 				var/damage = rand(5, 10)
 				if(prob(40))
 					damage = rand(10, 15)
@@ -57,7 +57,7 @@
 				log_combat(M, src, "attacked")
 
 			else
-				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
 				visible_message("<span class='danger'>[M]'s punch misses [name]!</span>", \
 					"<span class='userdanger'>[M]'s punch misses you!</span>", null, COMBAT_MESSAGE_RANGE)
 		if("disarm")
@@ -65,12 +65,12 @@
 				M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 				if (prob(25))
 					Paralyze(40)
-					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 					log_combat(M, src, "pushed")
 					visible_message("<span class='danger'>[M] pushes [src] down!</span>", \
 						"<span class='userdanger'>[M] pushes you down!</span>")
 				else if(dropItemToGround(get_active_held_item()))
-					playsound(src, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+					playsound(src, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 					visible_message("<span class='danger'>[M] disarms [src]!</span>", \
 						"<span class='userdanger'>[M] disarms you!</span>", null, COMBAT_MESSAGE_RANGE)
 
@@ -78,7 +78,7 @@
 	if(..()) //if harm or disarm intent.
 		if (M.a_intent == INTENT_HARM)
 			if ((prob(95) && health > 0))
-				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
+				playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
 				var/damage = rand(15, 30)
 				if (damage >= 25)
 					damage = rand(20, 40)
@@ -99,13 +99,13 @@
 				apply_damage(damage, BRUTE, affecting)
 
 			else
-				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
+				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, TRUE, -1)
 				visible_message("<span class='danger'>[M]'s lunge misses [name]!</span>", \
 						"<span class='userdanger'>[M]'s lunge misses you!</span>", null, COMBAT_MESSAGE_RANGE)
 
 		if (M.a_intent == INTENT_DISARM)
 			var/obj/item/I = null
-			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
+			playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
 			if(prob(95))
 				Paralyze(20)
 				visible_message("<span class='danger'>[M] tackles [name] down!</span>", \

@@ -42,7 +42,7 @@
 		user.visible_message("<span class='suicide'>[user] puts [user.p_their()] head into \the [src], and begins closing it! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		myhead.dismember()
 		myhead.forceMove(src)//force your enemies to kill themselves with your head collection box!
-		playsound(user,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
+		playsound(user, "desceration-01.ogg", 50, TRUE, -1)
 		return BRUTELOSS
 	user.visible_message("<span class='suicide'>[user] beating [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
@@ -555,6 +555,15 @@
 	for(var/i in 1 to 5)
 		new /obj/item/firing_pin(src)
 
+/obj/item/storage/box/firingpins/paywall
+	name = "box of paywall firing pins"
+	desc = "A box full of paywall firing pins, to allow newly-developed firearms to operate behind a custom-set paywall."
+	illustration = "id"
+
+/obj/item/storage/box/firingpins/paywall/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/firing_pin/paywall(src)
+
 /obj/item/storage/box/lasertagpins
 	name = "box of laser tag firing pins"
 	desc = "A box full of laser tag firing pins, to allow newly-developed firearms to require wearing brightly coloured plastic armor before being able to be used."
@@ -740,7 +749,7 @@
 /obj/item/storage/box/hug/attack_self(mob/user)
 	..()
 	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(loc, "rustle", 50, 1, -5)
+	playsound(loc, "rustle", 50, TRUE, -5)
 	user.visible_message("<span class='notice'>[user] hugs \the [src].</span>","<span class='notice'>You hug \the [src].</span>")
 
 /////clown box & honkbot assembly
@@ -1053,7 +1062,7 @@
 
 /obj/item/storage/box/silver_sulf/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
+		new /obj/item/reagent_containers/pill/patch/aiuri(src)
 
 /obj/item/storage/box/fountainpens
 	name = "box of fountain pens"

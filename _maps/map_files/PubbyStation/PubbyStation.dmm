@@ -3872,7 +3872,7 @@
 /obj/item/reagent_containers/syringe{
 	name = "steel point"
 	},
-/obj/item/reagent_containers/glass/bottle/charcoal,
+/obj/item/reagent_containers/glass/bottle/multiver,
 /obj/item/reagent_containers/glass/bottle/epinephrine,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -19299,7 +19299,7 @@
 "aYm" = (
 /obj/structure/closet/crate/wooden/toy,
 /obj/item/lipstick/random,
-/obj/item/clothing/gloves/color/rainbow/clown,
+/obj/item/clothing/gloves/color/rainbow,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -33694,6 +33694,9 @@
 	dir = 1;
 	pixel_y = -24
 	},
+/obj/machinery/computer/atmos_control/toxinsmix{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing/chamber)
 "bGt" = (
@@ -33970,7 +33973,7 @@
 /area/medical/medbay/central)
 "bHb" = (
 /obj/structure/closet/crate/freezer/surplus_limbs,
-/obj/item/reagent_containers/glass/beaker/synthflesh,
+/obj/item/reagent_containers/glass/beaker/instabitaluri,
 /obj/machinery/newscaster/security_unit{
 	pixel_y = 32
 	},
@@ -36284,6 +36287,9 @@
 /obj/machinery/igniter{
 	id = "toxigniter";
 	luminosity = 2
+	},
+/obj/machinery/air_sensor/atmos/toxins_mixing_tank{
+	pixel_y = -32
 	},
 /turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
@@ -39567,7 +39573,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "bUc" = (
-/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/canned/beans,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "bUd" = (
@@ -41733,6 +41739,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/computer/atmos_control/incinerator,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/disposal/incinerator)
 "bZg" = (
@@ -42426,7 +42433,10 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/components/unary/tank/toxins,
+/obj/machinery/atmospherics/components/unary/tank/toxins{
+	dir = 4;
+	initialize_directions = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/maintenance/disposal/incinerator)
 "cbC" = (
@@ -43189,7 +43199,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "ceA" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -43567,7 +43577,6 @@
 /area/engine/engineering)
 "cfT" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 1
 	},
@@ -43577,6 +43586,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cfV" = (
@@ -48968,9 +48978,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "dir" = (
@@ -50066,7 +50074,6 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "gkz" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
@@ -50994,10 +51001,8 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "imB" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1;
-	frequency = 1441;
-	id = "inc_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -51127,6 +51132,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "iCV" = (
@@ -53094,6 +53100,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
+"nzq" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
 "nzD" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -53103,10 +53115,10 @@
 	},
 /area/maintenance/department/science)
 "nAs" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8
-	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "nBw" = (
@@ -54241,9 +54253,8 @@
 /turf/closed/wall,
 /area/crew_quarters/bar)
 "qbp" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -55585,7 +55596,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
-/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "tIT" = (
@@ -56008,8 +56019,8 @@
 /area/science/explab)
 "uBs" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
+/obj/machinery/meter,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "uCS" = (
@@ -56436,7 +56447,7 @@
 /turf/open/floor/plasteel/dark,
 /area/library)
 "vPX" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/engine,
@@ -56739,8 +56750,8 @@
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "wza" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -86933,7 +86944,7 @@ nAs
 cfT
 uBs
 gkz
-qbp
+sWj
 bXk
 bXk
 bXk
@@ -87443,7 +87454,7 @@ xsB
 orZ
 qFu
 cet
-ulY
+qbp
 cfV
 cgu
 cgU
@@ -90013,7 +90024,7 @@ xsB
 vjH
 qFu
 cet
-ulY
+nzq
 flQ
 cgx
 sWU

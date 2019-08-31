@@ -120,7 +120,7 @@
 	health = maxHealth
 	name = "blob zombie"
 	desc = "A shambling corpse animated by the blob."
-	mob_biotypes += MOB_HUMANOID
+	mob_biotypes |= MOB_HUMANOID
 	melee_damage_lower += 8
 	melee_damage_upper += 11
 	movement_type = GROUND
