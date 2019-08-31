@@ -292,9 +292,9 @@
 		else if ( mouth_covered )	// Reduced effects if partially protected
 			if(prob(5))
 				victim.emote("scream")
-			victim.blur_eyes(5 SECONDS)
-			victim.blind_eyes(10 SECONDS)
-			victim.confused = max(M.confused, 5)
+			victim.blur_eyes(2.5) // 5 seconds
+			victim.blind_eyes(5) // 10 seconds
+			victim.confused = max(M.confused, 2.5)
 			
 			
 			return
@@ -308,9 +308,9 @@
 		else // Oh dear :D
 			if(prob(5))
 				victim.emote("scream")
-			victim.blur_eyes(7.5 SECONDS)
-			victim.blind_eyes(5 SECONDS) 
-			victim.confused = max(M.confused, 10)
+			victim.blur_eyes(4) // 8 seconds
+			victim.blind_eyes(2.5) // 5 seconds
+			victim.confused = max(M.confused, 2.5) // 5 seconds
 			victim.Knockdown(3.0 SECONDS) 
 			
 			victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.25, blacklisted_movetypes=(FLYING|FLOATING))
