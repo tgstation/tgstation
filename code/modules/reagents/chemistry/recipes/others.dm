@@ -354,8 +354,7 @@
 	mob_react = FALSE
 
 /datum/chemical_reaction/foam/on_reaction(datum/reagents/holder, created_volume)
-	var/datum/effect_system/foam_spread/foam = new()
-	create_foam(foam,holder,2*created_volume)
+	holder.create_foam(2*created_volume,notification="<span class='danger'>The solution spews out foam!</span>")
 
 /datum/chemical_reaction/metalfoam
 	name = "Metal Foam"
@@ -364,8 +363,7 @@
 	mob_react = FALSE
 
 /datum/chemical_reaction/metalfoam/on_reaction(datum/reagents/holder, created_volume)
-	var/datum/effect_system/foam_spread/metal/foam = new()
-	create_foam(foam,holder,5*created_volume,1,"<span class='danger'>The solution spews out a metallic foam!</span>")
+	holder.create_foam(5*created_volume,1,"<span class='danger'>The solution spews out a metallic foam!</span>")
 
 /datum/chemical_reaction/smart_foam
 	name = "Smart Metal Foam"
@@ -374,8 +372,7 @@
 	mob_react = TRUE
 
 /datum/chemical_reaction/smart_foam/on_reaction(datum/reagents/holder, created_volume)
-	var/datum/effect_system/foam_spread/metal/smart/foam = new()
-	create_foam(foam,holder,5*created_volume,1,"<span class='danger'>The solution spews out metallic foam!</span>")
+	holder.create_foam(5*created_volume,1,"<span class='danger'>The solution spews out metallic foam!</span>")
 
 /datum/chemical_reaction/ironfoam
 	name = "Iron Foam"
@@ -384,8 +381,7 @@
 	mob_react = FALSE
 
 /datum/chemical_reaction/ironfoam/on_reaction(datum/reagents/holder, created_volume)
-	var/datum/effect_system/foam_spread/metal/foam = new()
-	create_foam(foam,holder,5*created_volume,2,"<span class='danger'>The solution spews out a metallic foam!</span>")
+	holder.create_foam(5*created_volume,2,"<span class='danger'>The solution spews out a metallic foam!</span>")
 
 /datum/chemical_reaction/foaming_agent
 	name = "Foaming Agent"
