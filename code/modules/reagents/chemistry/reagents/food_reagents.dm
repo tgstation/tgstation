@@ -293,7 +293,7 @@
 			if(prob(5))
 				victim.emote("scream")
 			victim.blur_eyes(3) // 6 seconds
-			victim.blind_eyes(0.5) // 10 seconds
+			victim.blind_eyes(2) // 10 seconds
 			victim.confused = max(M.confused, 2.5)
 			
 			
@@ -307,8 +307,8 @@
 			if(prob(5))
 				victim.emote("scream")
 			victim.blur_eyes(5) // 10 seconds
-			victim.blind_eyes(0.5) // 2 seconds
-			victim.confused = max(M.confused, 2.5) // 5 seconds
+			victim.blind_eyes(2) // 4 seconds
+			victim.confused = max(M.confused, 5) // 10 seconds
 			victim.Knockdown(3 SECONDS) 
 			
 		victim.update_damage_hud()
