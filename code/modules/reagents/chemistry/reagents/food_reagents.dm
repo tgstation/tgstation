@@ -302,7 +302,6 @@
 		else if ( eyes_covered ) // Eye cover is better than mouth cover
 			victim.blur_eyes(3)
 			victim.damageoverlaytemp = 25
-			victim.confused = max(M.confused, 1)
 			victim.Knockdown(0.3 SECONDS)
 			victim.adjustStaminaLoss(15) 
 			return
