@@ -225,3 +225,10 @@
 	id  = /datum/reagent/medicine/trophazole
 	results = list(/datum/reagent/medicine/trophazole = 4)
 	required_reagents = list(/datum/reagent/copper = 1, /datum/reagent/acetone = 2,  /datum/reagent/phosphorus = 1)
+
+/datum/chemical_reaction/mitocholide
+	name = "Mitocholide"
+	id = /datum/reagent/medicine/mitocholide
+	results = list(/datum/reagent/medicine/mitocholide = 3)
+	required_reagents = list(/datum/reagent/medicine/polypyr = 1, /datum/reagent/medicine/omnizine = 1, /datum/reagent/toxin/formaldehyde = 1)
+	required_temp = 382

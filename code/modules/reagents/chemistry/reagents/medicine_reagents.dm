@@ -1226,18 +1226,36 @@
 			H.facial_hair_color = "92f"
 			H.update_hair()
 
-/datum/reagent/medicine/polypyr/overdose_process(mob/living/M)
+/datum/reagent/medicine/polypyr/overdose_process(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5)
 	..()
 	. = 1
 
 /datum/reagent/medicine/mitocholide
 	name = "Mitocholide"
-	description = "A functionalized omnizine derrivative that is used to support the regeneration of damaged organs.The compound's polycationic tail provides selective retention to damaged tissue.
+	description = "A functionalized omnizine derivative that is used to support the regeneration of damaged organs. The compound's polycationic tail provides selective retention to damaged tissue."
 	color = "#C8A5DC"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	overdose_threshold = 40
 
-/datum/reagent/medicine/mitocholide(mob/living/carbon/M)
+/datum/reagent/medicine/mitocholide/overdose_process(mob/living/carbon/M)
+	M.adjustOxyLoss(1) //lungs¨
+	M.adjustStaminaLoss(1) //heart
+	if(prob(50))
+		M.Dizzy(2) //brain
+	for(var/datum/reagent/medicine/R in M.reagents.reagent_list)
+		M.reagents.remove_reagent(R.type,1) //liver
+	if(prob(5))
+		to_chat(M, "<span class='danger'>Your stomach rumbles!</span>")
+		M.adjust_disgust(10) //stomach
+	if(prob(8))
+		to_chat(M, "<span class='danger'>Your ears start ringing!</span>") //ears
+	if(prob(50))
+		M.blur_eyes(2) //eyes
+	..()
+	. = 1
+
+/datum/reagent/medicine/mitocholide/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, -0.5)
 	M.adjustOrganLoss(ORGAN_SLOT_HEART, -0.5)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.5)
