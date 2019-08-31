@@ -1208,7 +1208,7 @@
 //For colouring in /proc/mix_color_from_reagents
 
 
-/datum/reagent/colorful_reagent/crayonpowder
+/datum/reagent/colorful_reagent/powder
 	name = "Crayon Powder"
 	var/colorname = "none"
 	description = "A powder made by grinding down crayons, good for colouring chemical reagents."
