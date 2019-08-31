@@ -292,17 +292,17 @@
 		else if ( mouth_covered )	// Reduced effects if partially protected
 			if(prob(5))
 				victim.emote("scream")
-			victim.blur_eyes(3)
+			victim.blur_eyes(5)
 			victim.blind_eyes(10 SECONDS)
-			victim.confused = max(M.confused, 3)
+			victim.confused = max(M.confused, 5)
 			
 			
 			return
 		else if ( eyes_covered ) // Eye cover is better than mouth cover
 			victim.blur_eyes(3)
 			victim.Knockdown(3 SECONDS) // 3 * stun baton time 
-			victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.50, blacklisted_movetypes=(FLYING|FLOATING))
-			addtimer(CALLBACK(victim, .proc/remove_movespeed_modifier, MOVESPEED_ID_PEPPER_SPRAY), 30 SECONDS)
+			victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.25, blacklisted_movetypes=(FLYING|FLOATING))
+			addtimer(CALLBACK(victim, mob.proc/remove_movespeed_modifier, MOVESPEED_ID_PEPPER_SPRAY), 10 SECONDS)
 			 
 			return
 		else // Oh dear :D
@@ -310,11 +310,11 @@
 				victim.emote("scream")
 			victim.blur_eyes(5)
 			victim.blind_eyes(10 SECONDS) 
-			victim.confused = max(M.confused, 6)
+			victim.confused = max(M.confused, 10)
 			victim.Knockdown(5.0 SECONDS) 
 			
-			victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.50, blacklisted_movetypes=(FLYING|FLOATING))
-			addtimer(CALLBACK(victim, .proc/remove_movespeed_modifier, MOVESPEED_ID_PEPPER_SPRAY), 30 SECONDS)
+			victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.25, blacklisted_movetypes=(FLYING|FLOATING))
+			addtimer(CALLBACK(victim, mob.proc/remove_movespeed_modifier, MOVESPEED_ID_PEPPER_SPRAY), 10 SECONDS)
 			
 		victim.update_damage_hud()
 
