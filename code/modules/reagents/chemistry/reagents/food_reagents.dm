@@ -302,7 +302,7 @@
 			victim.blur_eyes(3)
 			victim.Knockdown(3 SECONDS) // 3 * stun baton time 
 			victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.50, blacklisted_movetypes=(FLYING|FLOATING))
-			addtimer(CALLBACK(victim, .proc/remove_speed_modifier, MOVESPEED_ID_PEPPER_SPRAY), 30 SECONDS)
+			addtimer(CALLBACK(victim, .proc/remove_movespeed_modifier, MOVESPEED_ID_PEPPER_SPRAY), 30 SECONDS)
 			 
 			return
 		else // Oh dear :D
@@ -314,8 +314,8 @@
 			victim.Knockdown(5.0 SECONDS) 
 			
 			victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.50, blacklisted_movetypes=(FLYING|FLOATING))
-			addtimer(CALLBACK(victim, .proc/remove_speed_modifier, MOVESPEED_ID_PEPPER_SPRAY), 30 SECONDS)
-			 
+			addtimer(CALLBACK(victim, .proc/remove_movespeed_modifier, MOVESPEED_ID_PEPPER_SPRAY), 30 SECONDS)
+			
 		victim.update_damage_hud()
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M)
