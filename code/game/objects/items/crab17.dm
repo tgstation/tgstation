@@ -88,17 +88,17 @@
 	sleep(10)
 	if(QDELETED(src))
 		return
-	playsound(src, 'sound/machines/click.ogg', 15, 1, -3)
+	playsound(src, 'sound/machines/click.ogg', 15, TRUE, -3)
 	cut_overlay("flaps")
 	sleep(10)
 	if(QDELETED(src))
 		return
-	playsound(src, 'sound/machines/click.ogg', 15, 1, -3)
+	playsound(src, 'sound/machines/click.ogg', 15, TRUE, -3)
 	cut_overlay("hatch")
 	sleep(30)
 	if(QDELETED(src))
 		return
-	playsound(src,'sound/machines/twobeep.ogg',50,0)
+	playsound(src,'sound/machines/twobeep.ogg',50,FALSE)
 	var/mutable_appearance/hologram = mutable_appearance(icon, "hologram")
 	hologram.pixel_y = 16
 	add_overlay(hologram)
@@ -130,7 +130,7 @@
 	sleep(5)
 	if(QDELETED(src))
 		return
-	playsound(src,'sound/machines/triple_beep.ogg',50,0)
+	playsound(src,'sound/machines/triple_beep.ogg',50,FALSE)
 	add_overlay("text")
 	sleep(10)
 	if(QDELETED(src))
@@ -218,13 +218,13 @@
 	dump = new /obj/structure/checkoutmachine(null, bogdanoff)
 	priority_announce("The spacecoin bubble has popped! Get to the credit deposit machine at [get_area(src)] and cash out before you lose all of your funds!", sender_override = "CRAB-17 Protocol")
 	animate(DF, pixel_z = -8, time = 5, , easing = LINEAR_EASING)
-	playsound(src,  'sound/weapons/mortar_whistle.ogg', 70, 1, 6)
+	playsound(src,  'sound/weapons/mortar_whistle.ogg', 70, TRUE, 6)
 	addtimer(CALLBACK(src, .proc/endLaunch), 5, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 
 
 
 /obj/effect/dumpeetTarget/proc/endLaunch()
 	QDEL_NULL(DF) //Delete the falling machine effect, because at this point its animation is over. We dont use temp_visual because we want to manually delete it as soon as the pod appears
-	playsound(src, "explosion", 80, 1)
+	playsound(src, "explosion", 80, TRUE)
 	dump.forceMove(get_turf(src))
 	qdel(src) //The target's purpose is complete. It can rest easy now

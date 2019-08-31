@@ -56,7 +56,7 @@
 		var/light_amount = T.get_lumcount()
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
 			H.visible_message("<span class='danger'>[H] dances in the shadows, evading [P]!</span>")
-			playsound(T, "bullet_miss", 75, 1)
+			playsound(T, "bullet_miss", 75, TRUE)
 			return BULLET_ACT_FORCE_PIERCE
 	return ..()
 
@@ -103,7 +103,7 @@
 		return ..()
 	user.visible_message("<span class='warning'>[user] raises [src] to [user.p_their()] mouth and tears into it with [user.p_their()] teeth!</span>", \
 						 "<span class='danger'>[src] feels unnaturally cold in your hands. You raise [src] your mouth and devour it!</span>")
-	playsound(user, 'sound/magic/demon_consume.ogg', 50, 1)
+	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
 
 
 	user.visible_message("<span class='warning'>Blood erupts from [user]'s arm as it reforms into a weapon!</span>", \
@@ -138,7 +138,7 @@
 		var/light_amount = T.get_lumcount()
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
 			respawn_progress++
-			playsound(owner,'sound/effects/singlebeat.ogg',40,1)
+			playsound(owner,'sound/effects/singlebeat.ogg',40,TRUE)
 	if(respawn_progress >= HEART_RESPAWN_THRESHHOLD)
 		owner.revive(full_heal = TRUE)
 		if(!(owner.dna.species.id == "shadow" || owner.dna.species.id == "nightmare"))
@@ -149,7 +149,7 @@
 			to_chat(owner, "<span class='userdanger'>You feel the shadows invade your skin, leaping into the center of your chest! You're alive!</span>")
 			SEND_SOUND(owner, sound('sound/effects/ghost.ogg'))
 		owner.visible_message("<span class='warning'>[owner] staggers to [owner.p_their()] feet!</span>")
-		playsound(owner, 'sound/hallucinations/far_noise.ogg', 50, 1)
+		playsound(owner, 'sound/hallucinations/far_noise.ogg', 50, TRUE)
 		respawn_progress = 0
 
 //Weapon
@@ -210,7 +210,7 @@
 	else
 		visible_message("<span class='danger'>[O] is disintegrated by [src]!</span>")
 		O.burn()
-	playsound(src, 'sound/items/welder.ogg', 50, 1)
+	playsound(src, 'sound/items/welder.ogg', 50, TRUE)
 
 #undef HEART_SPECIAL_SHADOWIFY
 #undef HEART_RESPAWN_THRESHHOLD

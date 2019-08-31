@@ -194,7 +194,7 @@
 	if(welding)
 		if(get_fuel() >= 1)
 			to_chat(user, "<span class='notice'>You switch [src] on.</span>")
-			playsound(loc, acti_sound, 50, 1)
+			playsound(loc, acti_sound, 50, TRUE)
 			force = 15
 			damtype = "fire"
 			hitsound = 'sound/items/welder.ogg'
@@ -205,7 +205,7 @@
 			switched_off(user)
 	else
 		to_chat(user, "<span class='notice'>You switch [src] off.</span>")
-		playsound(loc, deac_sound, 50, 1)
+		playsound(loc, deac_sound, 50, TRUE)
 		switched_off(user)
 
 //Switches the welder off

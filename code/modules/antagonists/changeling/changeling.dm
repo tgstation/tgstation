@@ -150,6 +150,14 @@
 		if(istype(S) && S.needs_button)
 			S.Grant(owner.current)
 
+///Handles stinging without verbs.
+/datum/antagonist/changeling/proc/stingAtom(mob/living/carbon/ling, atom/A)
+	if(!chosen_sting || A == ling || !istype(ling) || ling.stat)
+		return
+	chosen_sting.try_to_sting(ling, A)
+	ling.changeNext_move(CLICK_CD_MELEE)
+	return COMSIG_MOB_CANCEL_CLICKON
+
 /datum/antagonist/changeling/proc/has_sting(datum/action/changeling/power)
 	for(var/P in purchasedpowers)
 		var/datum/action/changeling/otherpower = P
@@ -351,12 +359,12 @@
 		if(B)
 			B.organ_flags &= ~ORGAN_VITAL
 			B.decoy_override = TRUE
+		RegisterSignal(C, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/stingAtom)
 	update_changeling_icons_added()
-	return
 
 /datum/antagonist/changeling/remove_innate_effects()
 	update_changeling_icons_removed()
-	return
+	UnregisterSignal(owner.current, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
 
 
 /datum/antagonist/changeling/greet()

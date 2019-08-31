@@ -10,7 +10,7 @@
 		var/damage = 20
 		if (prob(90))
 			log_combat(M, src, "attacked")
-			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
+			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
 			visible_message("<span class='danger'>[M] slashes at [src]!</span>", \
 							"<span class='userdanger'>[M] slashes at you!</span>")
 			if(prob(8))
@@ -19,7 +19,7 @@
 			adjustBruteLoss(damage)
 			updatehealth()
 		else
-			playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
+			playsound(loc, 'sound/weapons/slashmiss.ogg', 25, TRUE, -1)
 			visible_message("<span class='danger'>[M]'s swipe misses [src]!</span>", \
 							"<span class='userdanger'>[M]'s swipe misses you!</span>")
 
@@ -59,7 +59,7 @@
 	if(!.)
 		return
 	adjustBruteLoss(rand(10, 15))
-	playsound(loc, "punch", 25, 1, -1)
+	playsound(loc, "punch", 25, TRUE, -1)
 	visible_message("<span class='danger'>[user] punches [src]!</span>", \
 			"<span class='userdanger'>[user] punches you!</span>", null, COMBAT_MESSAGE_RANGE)
 
@@ -76,7 +76,7 @@
 			grabbedby(M)
 		else
 			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-			playsound(src.loc, 'sound/effects/bang.ogg', 10, 1)
+			playsound(src.loc, 'sound/effects/bang.ogg', 10, TRUE)
 			visible_message("<span class='danger'>[M] punches [src], but doesn't leave a dent!</span>", \
 				"<span class='warning'>[M] punches you, but doesn't leave a dent!</span>", null, COMBAT_MESSAGE_RANGE)
 
