@@ -298,7 +298,7 @@
 		else if ( eyes_covered ) // Eye cover is better than mouth cover
 			victim.blur_eyes(2) // 4 seconds
 			victim.Knockdown(3 SECONDS) 
-			victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.10, blacklisted_movetypes=(FLYING|FLOATING))
+			victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.25, blacklisted_movetypes=(FLYING|FLOATING))
 			addtimer(CALLBACK(victim, /mob.proc/remove_movespeed_modifier, MOVESPEED_ID_PEPPER_SPRAY), 10 SECONDS)	
 			return
 		else // Oh dear :D
@@ -308,7 +308,7 @@
 			victim.blind_eyes(3) // 6 seconds
 			victim.confused = max(M.confused, 5) // 10 seconds
 			victim.Knockdown(3 SECONDS) 
-			victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.10, blacklisted_movetypes=(FLYING|FLOATING))
+			victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.25, blacklisted_movetypes=(FLYING|FLOATING))
 			addtimer(CALLBACK(victim, /mob.proc/remove_movespeed_modifier, MOVESPEED_ID_PEPPER_SPRAY), 10 SECONDS)
 		victim.update_damage_hud()
 
