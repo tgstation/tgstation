@@ -138,9 +138,9 @@
 				to_chat(user, "<span class='info'>You put [O.name] in [src.name]</span>")
 		return TRUE //no afterattack
 	else if (istype(O, /obj/item/disk/design_disk))
-		user.visible_message("[user] begins to load \the [O] in \the [src]...",
-			"You begin to load a design from \the [O]...",
-			"You hear the chatter of a floppy drive.")
+		user.visible_message("<span class='notice'>[user] begins to load \the [O] in \the [src]...</span>",
+			"<span class='notice'>You begin to load a design from \the [O]...</span>",
+			"<span class='italics'>You hear the chatter of a floppy drive.</span>")
 		processing = TRUE
 		var/obj/item/disk/design_disk/D = O
 		if(do_after(user, 10, target = src))
@@ -223,7 +223,7 @@
 		processing = TRUE
 		update_icon()
 		updateUsrDialog()
-		playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
+		playsound(src.loc, 'sound/machines/blender.ogg', 50, TRUE)
 		use_power(S*30)
 		sleep(S+15/productivity)
 		processing = FALSE

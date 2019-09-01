@@ -229,7 +229,7 @@
 	foodtype = RAW | MEAT | TOXIC
 
 /obj/item/reagent_containers/food/snacks/meat/slab/goliath/burn()
-	visible_message("[src] finishes cooking!")
+	visible_message("<span class='notice'>[src] finishes cooking!</span>")
 	new /obj/item/reagent_containers/food/snacks/meat/steak/goliath(loc)
 	qdel(src)
 
@@ -287,6 +287,27 @@
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/penguin
 	filling_color = "#B22222"
 	tastes = list("beef" = 1, "cod fish" = 1)
+
+/obj/item/reagent_containers/food/snacks/meat/rawcrab
+	name = "raw crab meat"
+	desc = "A pile of raw crab meat."
+	icon_state = "crabmeatraw"
+	cooked_type = /obj/item/reagent_containers/food/snacks/meat/crab
+	bitesize = 3
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/cooking_oil = 3)
+	filling_color = "#EAD079"
+	tastes = list("raw crab" = 1)
+	foodtype = RAW | MEAT
+
+/obj/item/reagent_containers/food/snacks/meat/crab
+	name = "crab meat"
+	desc = "Some deliciously cooked crab meat."
+	icon_state = "crabmeat"
+	list_reagents = list("nutriment" = 2)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/cooking_oil = 2)
+	filling_color = "#DFB73A"
+	tastes = list("crab" = 1)
+	foodtype = MEAT
 
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
 

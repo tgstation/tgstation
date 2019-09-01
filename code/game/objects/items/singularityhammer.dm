@@ -66,7 +66,7 @@
 			if(istype(A, /mob/living/))
 				var/mob/living/Z = A
 				Z.take_bodypart_damage(20,0)
-			playsound(user, 'sound/weapons/marauder.ogg', 50, 1)
+			playsound(user, 'sound/weapons/marauder.ogg', 50, TRUE)
 			var/turf/target = get_turf(A)
 			vortex(target,user)
 
@@ -100,7 +100,7 @@
 /obj/item/twohanded/mjollnir/attack(mob/living/M, mob/user)
 	..()
 	if(wielded)
-		playsound(src.loc, "sparks", 50, 1)
+		playsound(src.loc, "sparks", 50, TRUE)
 		shock(M)
 
 /obj/item/twohanded/mjollnir/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

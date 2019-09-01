@@ -302,7 +302,7 @@
 				vitality_drained = L.maxHealth
 				var/obj/effect/temp_visual/ratvar/sigil/vitality/V = new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
 				animate(V, alpha = 0, transform = matrix()*2, time = 8)
-				playsound(L, 'sound/magic/wandodeath.ogg', 50, 1)
+				playsound(L, 'sound/magic/wandodeath.ogg', 50, TRUE)
 				L.visible_message("<span class='warning'>[L] collapses in on [L.p_them()]self as [src] flares bright blue!</span>")
 				to_chat(L, "<span class='inathneq_large'>\"[text2ratvar("Your life will not be wasted.")]\"</span>")
 				for(var/obj/item/W in L)
@@ -336,7 +336,7 @@
 						L.revive(1, 1)
 						var/obj/effect/temp_visual/ratvar/sigil/vitality/V = new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
 						animate(V, alpha = 0, transform = matrix()*2, time = 8)
-						playsound(L, 'sound/magic/staff_healing.ogg', 50, 1)
+						playsound(L, 'sound/magic/staff_healing.ogg', 50, TRUE)
 						to_chat(L, "<span class='inathneq'>\"[text2ratvar("You will be okay, child.")]\"</span>")
 						L.apply_status_effect(STATUS_EFFECT_ICHORIAL_STAIN)
 						GLOB.clockwork_vitality -= revival_cost
@@ -352,7 +352,7 @@
 					L.key = C.key
 					var/obj/effect/temp_visual/ratvar/sigil/vitality/V = new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
 					animate(V, alpha = 0, transform = matrix()*2, time = 8)
-					playsound(L, 'sound/magic/staff_healing.ogg', 50, 1)
+					playsound(L, 'sound/magic/staff_healing.ogg', 50, TRUE)
 					L.visible_message("<span class='warning'>[L]'s eyes suddenly open wide, gleaming with renewed vigor for the cause!</span>", "<span class='inathneq'>\"[text2ratvar("Awaken!")]\"</span>")
 					break
 			var/vitality_for_cycle = 3

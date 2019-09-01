@@ -294,4 +294,4 @@
 			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1)
 			H.updatehealth()
 		visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
-		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)

@@ -108,7 +108,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 				H.update_damage_overlays()
 		H.visible_message("<span class='notice'>[user] heals [H] with the power of [deity_name]!</span>")
 		to_chat(H, "<span class='boldnotice'>May the power of [deity_name] compel you to be healed!</span>")
-		playsound(src.loc, "punch", 25, 1, -1)
+		playsound(src.loc, "punch", 25, TRUE, -1)
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return 1
 
@@ -154,12 +154,12 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		if(smack)
 			M.visible_message("<span class='danger'>[user] beats [M] over the head with [src]!</span>", \
 					"<span class='userdanger'>[user] beats [M] over the head with [src]!</span>")
-			playsound(src.loc, "punch", 25, 1, -1)
+			playsound(src.loc, "punch", 25, TRUE, -1)
 			log_combat(user, M, "attacked", src)
 
 	else
 		M.visible_message("<span class='danger'>[user] smacks [M]'s lifeless corpse with [src].</span>")
-		playsound(src.loc, "punch", 25, 1, -1)
+		playsound(src.loc, "punch", 25, TRUE, -1)
 
 /obj/item/storage/book/bible/afterattack(atom/A, mob/user, proximity)
 	. = ..()
@@ -190,9 +190,9 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	if(istype(A, /obj/item/twohanded/required/cult_bastard) && !iscultist(user))
 		var/obj/item/twohanded/required/cult_bastard/sword = A
 		to_chat(user, "<span class='notice'>You begin to exorcise [sword].</span>")
-		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,1)
+		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
 		if(do_after(user, 40, target = sword))
-			playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
+			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
 			for(var/obj/item/soulstone/SS in sword.contents)
 				SS.usability = TRUE
 				for(var/mob/living/simple_animal/shade/EX in SS)
@@ -210,15 +210,17 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		if(SS.purified)
 			return
 		to_chat(user, "<span class='notice'>You begin to exorcise [SS].</span>")
-		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,1)
+		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
 		if(do_after(user, 40, target = SS))
-			playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
+			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
 			SS.usability = TRUE
 			SS.purified = TRUE
 			SS.icon_state = "purified_soulstone"
 			for(var/mob/M in SS.contents)
 				if(M.mind)
 					SS.icon_state = "purified_soulstone2"
+					if(iscultist(M))
+						SSticker.mode.remove_cultist(M.mind, FALSE, FALSE)
 			for(var/mob/living/simple_animal/shade/EX in SS)
 				EX.icon_state = "ghost1"
 				EX.name = "Purified [initial(EX.name)]"
@@ -248,7 +250,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		H.mind.isholy = TRUE
 		uses -= 1
 		to_chat(H, "<span class='userdanger'>You try to open the book AND IT BITES YOU!</span>")
-		playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
+		playsound(src.loc, 'sound/effects/snap.ogg', 50, TRUE)
 		H.apply_damage(5, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 		to_chat(H, "<span class='notice'>Your name appears on the inside cover, in blood.</span>")
 		var/ownername = H.real_name

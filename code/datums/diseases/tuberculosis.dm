@@ -3,7 +3,7 @@
 	name = "Fungal tuberculosis"
 	max_stages = 5
 	spread_text = "Airborne"
-	cure_text = "Spaceacillin & Perfluorodecalin"
+	cure_text = "Spaceacillin & Convermol"
 	cures = list(/datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/C2/convermol)
 	agent = "Fungal Tubercle bacillus Cosmosis"
 	viable_mobtypes = list(/mob/living/carbon/human)

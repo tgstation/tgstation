@@ -12,7 +12,7 @@
 
 /datum/status_effect/shadow_mend/on_apply()
 	owner.visible_message("<span class='notice'>Violet light wraps around [owner]'s body!</span>", "<span class='notice'>Violet light wraps around your body!</span>")
-	playsound(owner, 'sound/magic/teleport_app.ogg', 50, 1)
+	playsound(owner, 'sound/magic/teleport_app.ogg', 50, TRUE)
 	return ..()
 
 /datum/status_effect/shadow_mend/tick()
@@ -21,7 +21,7 @@
 
 /datum/status_effect/shadow_mend/on_remove()
 	owner.visible_message("<span class='warning'>The violet light around [owner] glows black!</span>", "<span class='warning'>The tendrils around you cinch tightly and reap their toll...</span>")
-	playsound(owner, 'sound/magic/teleport_diss.ogg', 50, 1)
+	playsound(owner, 'sound/magic/teleport_diss.ogg', 50, TRUE)
 	owner.apply_status_effect(STATUS_EFFECT_VOID_PRICE)
 
 
@@ -131,14 +131,14 @@
 	owner.status_flags |= GODMODE
 	animate(owner, color = oldcolor, time = 150, easing = EASE_IN)
 	addtimer(CALLBACK(owner, /atom/proc/update_atom_colour), 150)
-	playsound(owner, 'sound/magic/ethereal_enter.ogg', 50, 1)
+	playsound(owner, 'sound/magic/ethereal_enter.ogg', 50, TRUE)
 	return ..()
 
 /datum/status_effect/inathneqs_endowment/on_remove()
 	owner.log_message("lost Inath-neq's invulnerability", LOG_ATTACK)
 	owner.visible_message("<span class='warning'>The light around [owner] flickers and dissipates!</span>", "<span class='boldwarning'>You feel Inath-neq's power fade from your body!</span>")
 	owner.status_flags &= ~GODMODE
-	playsound(owner, 'sound/magic/ethereal_exit.ogg', 50, 1)
+	playsound(owner, 'sound/magic/ethereal_exit.ogg', 50, TRUE)
 
 
 /datum/status_effect/cyborg_power_regen
@@ -162,7 +162,7 @@
 	if(!istype(cyborg) || !cyborg.cell)
 		qdel(src)
 		return
-	playsound(cyborg, 'sound/effects/light_flicker.ogg', 50, 1)
+	playsound(cyborg, 'sound/effects/light_flicker.ogg', 50, TRUE)
 	cyborg.cell.give(power_to_give)
 
 /datum/status_effect/his_grace
@@ -405,12 +405,12 @@
 	owner.spin(duration,1)
 	animate(owner, color = oldcolor, time = duration, easing = EASE_IN)
 	addtimer(CALLBACK(owner, /atom/proc/update_atom_colour), duration)
-	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, 0)
+	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
 	return ..()
 
 
 /datum/status_effect/sword_spin/tick()
-	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, 0)
+	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
 	var/obj/item/slashy
 	slashy = owner.get_active_held_item()
 	for(var/mob/living/M in orange(1,owner))
@@ -485,7 +485,7 @@
 		if(deathTick < 4)
 			deathTick += 1
 		else
-			owner.visible_message("[owner]'s soul is absorbed into the rod, relieving the previous snake of its duty.")
+			owner.visible_message("<span class='notice'>[owner]'s soul is absorbed into the rod, relieving the previous snake of its duty.</span>")
 			var/mob/living/simple_animal/hostile/retaliate/poison/snake/healSnake = new(owner.loc)
 			var/list/chems = list(/datum/reagent/medicine/sal_acid, /datum/reagent/medicine/C2/convermol, /datum/reagent/medicine/oxandrolone)
 			healSnake.poison_type = pick(chems)
@@ -591,7 +591,7 @@
 	owner.visible_message("<span class='notice'>[owner] is coated with a dull aura!</span>")
 	ADD_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
 	//glowing wings overlay
-	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, 0)
+	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
 	return ..()
 
 /datum/status_effect/antimagic/on_remove()

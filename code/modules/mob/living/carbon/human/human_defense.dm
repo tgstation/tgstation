@@ -190,7 +190,7 @@
 	if(check_shields(user, 15, "the [hulk_verb]ing"))
 		return
 	..()
-	playsound(loc, user.dna.species.attack_sound, 25, 1, -1)
+	playsound(loc, user.dna.species.attack_sound, 25, TRUE, -1)
 	var/message = "[user] has [hulk_verb]ed [src]!"
 	visible_message("<span class='danger'>[message]</span>", \
 							"<span class='userdanger'>[message]</span>")
@@ -215,11 +215,11 @@
 	if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stunned instead.
 		var/obj/item/I = get_active_held_item()
 		if(I && dropItemToGround(I))
-			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
+			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
 			visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
 					"<span class='userdanger'>[M] disarmed you!</span>")
 		else if(!M.client || prob(5)) // only natural monkeys get to stun reliably, (they only do it occasionaly)
-			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
+			playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
 			if (src.IsKnockdown() && !src.IsParalyzed())
 				Paralyze(40)
 				log_combat(M, src, "pinned")
@@ -255,7 +255,7 @@
 				w_uniform.add_fingerprint(M)
 			var/damage = prob(90) ? 20 : 0
 			if(!damage)
-				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
+				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, TRUE, -1)
 				visible_message("<span class='danger'>[M] lunges at [src]!</span>", \
 					"<span class='userdanger'>[M] lunges at you!</span>")
 				return 0
@@ -264,7 +264,7 @@
 				affecting = get_bodypart(BODY_ZONE_CHEST)
 			var/armor_block = run_armor_check(affecting, "melee","","",10)
 
-			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
+			playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
 			visible_message("<span class='danger'>[M] slashes at [src]!</span>", \
 				"<span class='userdanger'>[M] slashes at you!</span>")
 			log_combat(M, src, "attacked")
@@ -275,11 +275,11 @@
 		if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stun instead.
 			var/obj/item/I = get_active_held_item()
 			if(I && dropItemToGround(I))
-				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
+				playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
 				visible_message("<span class='danger'>[M] disarms [src]!</span>", \
 						"<span class='userdanger'>[M] disarms you!</span>")
 			else
-				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
+				playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
 				Paralyze(100)
 				log_combat(M, src, "tackled")
 				visible_message("<span class='danger'>[M] tackles [src] down!</span>", \
@@ -353,10 +353,10 @@
 					else if(M.force > 20 && !IsKnockdown()) // lightweight mechas like gygax
 						Knockdown(40)
 					update |= temp.receive_damage(dmg, 0)
-					playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
+					playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
 				if("fire")
 					update |= temp.receive_damage(0, dmg)
-					playsound(src, 'sound/items/welder.ogg', 50, 1)
+					playsound(src, 'sound/items/welder.ogg', 50, TRUE)
 				if("tox")
 					M.mech_toxin_damage(src)
 				else
@@ -668,7 +668,7 @@
 		..()
 
 /mob/living/carbon/human/proc/check_self_for_injuries()
-	visible_message("[src] examines [p_them()]self.", \
+	visible_message("<span class='notice'>[src] examines [p_them()]self.</span>", \
 		"<span class='notice'>You check yourself for injuries.</span>")
 
 	var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
@@ -801,7 +801,7 @@
 		//Put the items in that list into a string of text
 		for(var/B in broken)
 			broken_message += B
-		to_chat(src, "<span class='warning'> Your [broken_message] [broken_plural ? "are" : "is"] non-functional!</span>")
+		to_chat(src, "<span class='warning'>Your [broken_message] [broken_plural ? "are" : "is"] non-functional!</span>")
 	if(damaged.len)
 		if(damaged.len > 1)
 			damaged.Insert(damaged.len, "and ")

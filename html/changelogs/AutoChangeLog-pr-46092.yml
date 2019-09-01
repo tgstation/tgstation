@@ -1,0 +1,4 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - balance: "The Mutate spell's effects are now permanent (until/unless you forget or otherwise lose the spell) if you purchase it five times."
