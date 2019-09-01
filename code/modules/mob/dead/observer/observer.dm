@@ -738,9 +738,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if((!client) || (!client.prefs))
 		return
 
-	if(client.prefs.random_name)
+	if(client.prefs.randomise["name"])
 		client.prefs.real_name = random_unique_name(gender)
-	if(client.prefs.random_body)
+	if(client.prefs.randomise["body"])
 		client.prefs.random_character(gender)
 
 	if(HAIR in client.prefs.pref_species.species_traits)
