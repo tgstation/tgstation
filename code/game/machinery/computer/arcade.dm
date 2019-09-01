@@ -372,7 +372,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 						   ORION_TRAIL_MALFUNCTION	= 2,
 						   ORION_TRAIL_COLLISION	= 1,
 						   ORION_TRAIL_SPACEPORT	= 2,
-						   ORION_TRAIL_OLDSHIP		= 2
+						   ORION_TRAIL_OLDSHIP		= 3
 						   )
 	var/list/stops = list()
 	var/list/stopblurbs = list()
@@ -597,7 +597,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			settlers = list("Harry","Larry","Bob")
 	else if(href_list["search"]) //search old ship
 		if(event == ORION_TRAIL_OLDSHIP)
-			event = "Old Ship Search"
+			event = ORION_TRAIL_SEARCH
 			event()
 	else if(href_list["slow"]) //slow down
 		if(event == ORION_TRAIL_FLUX)
@@ -821,30 +821,21 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				eventdat += "<br>As you look through it you find some supplies and a living person!"
 				eventdat += "<br>[rescued] was rescued from the abandoned ship!"
 				eventdat += "<br>You found [oldfood] <b>Food</b> and [oldfuel] <b>Fuel</b>."
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>"
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
-				canContinueEvent = 1
 			else if(prob(20))
 				var/lfuel = rand(4,7)
 				var/deadname = remove_crewmember()
 				fuel -= lfuel
 				eventdat += "<br>[deadname] was lost deep in the wreckage, and your own vessel lost [lfuel] <b>Fuel</b> maneuvering to the the abandoned ship."
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>"
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
-				canContinueEvent = 1
 			else if(prob(40))
 				var/oldfood = rand(5,11)
 				food += oldfood
 				engine++
 				eventdat += "<br>You found [oldfood] <b>Food</b> and some parts amongst the wreck."
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>"
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
-				canContinueEvent = 1
 			else
 				eventdat += "<br>As you look through the wreck you cannot find much of use."
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>"
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
-				canContinueEvent = 1
+			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>"
+			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+			canContinueEvent = 1
 
 		if(ORION_TRAIL_ILLNESS)
 			eventdat += "A deadly illness has been contracted!"
