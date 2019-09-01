@@ -40,7 +40,7 @@
 			else
 				R.add_reagent(pick(saferChems), reagentsAmount)
 
-			R.create_foam(200)
+			R.create_foam(/datum/effect_system/foam_spread,200)
 
 			var/cockroaches = prob(33) ? 3 : 0
 			while(cockroaches)

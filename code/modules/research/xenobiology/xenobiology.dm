@@ -298,7 +298,7 @@
 			return 250
 
 		if(SLIME_ACTIVATE_MAJOR)
-			user.reagents.create_foam(20)
+			user.reagents.create_foam(/datum/effect_system/foam_spread,20)
 			user.visible_message("<span class='danger'>Foam spews out from [user]'s skin!</span>", "<span class='warning'>You activate [src], and foam bursts out of your skin!</span>")
 			return 600
 

@@ -215,7 +215,7 @@
 	required_other = TRUE
 
 /datum/chemical_reaction/slime/slimefoam/on_reaction(datum/reagents/holder)
-	holder.create_foam(80, "<span class='danger'>[src] spews out foam!</span>")
+	holder.create_foam(/datum/effect_system/foam_spread,80, "<span class='danger'>[src] spews out foam!</span>")
 
 //Dark Blue
 /datum/chemical_reaction/slime/slimefreeze
