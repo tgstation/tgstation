@@ -1,0 +1,7 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - tweak: "Nars-Ians no longer eat each other's souls"
+  - tweak: "The chance per tick of Life() that Nars-Ian will try to eat the soul of another pet near it has been increased from 5% to 100%."
+  - tweak: "When Nars-Ian eats a pet's soul, they will now set that pet's hasSoul value to FALSE."
+  - tweak: "Added another comma to one of Ian's possible descriptions."
