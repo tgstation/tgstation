@@ -294,6 +294,6 @@
 	name = "crab burger"
 	desc = "A delicious patty of the crabby kind, slapped in between a bun."
 	icon_state = "crabburger"
-	bonus_reagents = list("nutriment" = 2, "vitamin" = 3)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("bun" = 2, "crab meat" = 4)
 	foodtype = GRAIN | MEAT

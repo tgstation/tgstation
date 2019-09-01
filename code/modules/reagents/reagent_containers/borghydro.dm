@@ -128,7 +128,7 @@ Borg Hypospray
 	if(!chosen_reagent)
 		return
 	mode = chosen_reagent
-	playsound(loc, 'sound/effects/pop.ogg', 50, 0)
+	playsound(loc, 'sound/effects/pop.ogg', 50, FALSE)
 	var/datum/reagent/R = GLOB.chemical_reagents_list[reagent_ids[mode]]
 	to_chat(user, "<span class='notice'>[src] is now dispensing '[R.name]'.</span>")
 	return
@@ -385,5 +385,5 @@ to the arm are passed onto a stored beaker, if one exists. */
 		W.melee_attack_chain(user, stored, params)
 		return
 	. = ..()
-
+  
 #undef C2NAMEREAGENT

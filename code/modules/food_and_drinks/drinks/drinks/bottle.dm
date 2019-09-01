@@ -34,7 +34,7 @@
 		if(prob(33))
 			var/obj/item/shard/S = new(drop_location())
 			target.Bumped(S)
-		playsound(src, "shatter", 70, 1)
+		playsound(src, "shatter", 70, TRUE)
 	else
 		B.force = 0
 		B.throwforce = 0

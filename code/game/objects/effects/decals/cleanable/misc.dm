@@ -124,7 +124,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(isflyperson(H))
-			playsound(get_turf(src), 'sound/items/drink.ogg', 50, 1) //slurp
+			playsound(get_turf(src), 'sound/items/drink.ogg', 50, TRUE) //slurp
 			H.visible_message("<span class='alert'>[H] extends a small proboscis into the vomit pool, sucking it with a slurping sound.</span>")
 			if(reagents)
 				for(var/datum/reagent/R in reagents.reagent_list)

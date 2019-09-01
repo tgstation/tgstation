@@ -1,0 +1,4 @@
+author: "Kurgis"
+delete-after: True
+changes: 
+  - rscadd: "Beepsky now bumps around on its wheels when patrolling for crime."

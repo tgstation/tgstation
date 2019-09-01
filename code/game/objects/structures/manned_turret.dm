@@ -30,7 +30,7 @@
 //BUCKLE HOOKS
 
 /obj/machinery/manned_turret/unbuckle_mob(mob/living/buckled_mob,force = FALSE)
-	playsound(src,'sound/mecha/mechmove01.ogg', 50, 1)
+	playsound(src,'sound/mecha/mechmove01.ogg', 50, TRUE)
 	for(var/obj/item/I in buckled_mob.held_items)
 		if(istype(I, /obj/item/gun_control))
 			qdel(I)
@@ -62,7 +62,7 @@
 	M.pixel_y = 14
 	layer = ABOVE_MOB_LAYER
 	setDir(SOUTH)
-	playsound(src,'sound/mecha/mechmove01.ogg', 50, 1)
+	playsound(src,'sound/mecha/mechmove01.ogg', 50, TRUE)
 	anchored = TRUE
 	if(M.client)
 		M.client.change_view(view_range)
@@ -132,7 +132,7 @@
 	if(world.time < cooldown)
 		if(!warned && world.time > (cooldown - cooldown_duration + rate_of_fire*number_of_shots)) // To capture the window where one is done firing
 			warned = TRUE
-			playsound(src, 'sound/weapons/sear.ogg', 100, 1)
+			playsound(src, 'sound/weapons/sear.ogg', 100, TRUE)
 		return
 	else
 		cooldown = world.time + cooldown_duration
@@ -155,7 +155,7 @@
 	P.starting = targets_from
 	P.firer = user
 	P.original = target
-	playsound(src, 'sound/weapons/gunshot_smg.ogg', 75, 1)
+	playsound(src, 'sound/weapons/gunshot_smg.ogg', 75, TRUE)
 	P.xo = target.x - targets_from.x
 	P.yo = target.y - targets_from.y
 	P.Angle = calculated_projectile_vars[1] + rand(-9, 9)

@@ -337,7 +337,7 @@
 
 	if(pre_noise)
 		audible_message("<span class='notice'>You hear spraying.</span>")
-		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+		playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 
 	var/wait_time = 50
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
@@ -387,7 +387,7 @@
 
 	if(post_noise)
 		audible_message("<span class='notice'>You hear spraying.</span>")
-		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+		playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 
 	var/fraction = min(1, . / reagents.maximum_volume)
 	if(affected_turfs.len)
@@ -633,7 +633,7 @@
 
 	if(iscarbon(target))
 		if(pre_noise || post_noise)
-			playsound(user.loc, 'sound/effects/spray.ogg', 25, 1, 5)
+			playsound(user.loc, 'sound/effects/spray.ogg', 25, TRUE, 5)
 
 		var/mob/living/carbon/C = target
 		user.visible_message("<span class='danger'>[user] sprays [src] into the face of [target]!</span>")
@@ -671,7 +671,7 @@
 		reagents.trans_to(target, ., volume_multiplier, transfered_by = user)
 
 		if(pre_noise || post_noise)
-			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+			playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 		user.visible_message("<span class='notice'>[user] coats [target] with spray paint!</span>", "<span class='notice'>You coat [target] with spray paint.</span>")
 		return
 

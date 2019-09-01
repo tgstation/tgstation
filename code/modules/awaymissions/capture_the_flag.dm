@@ -628,7 +628,7 @@
 				qdel(G)
 			O.equip(M)
 			to_chat(M, "<span class='notice'>Ammunition reloaded!</span>")
-			playsound(get_turf(M), 'sound/weapons/shotgunpump.ogg', 50, 1, -1)
+			playsound(get_turf(M), 'sound/weapons/shotgunpump.ogg', 50, TRUE, -1)
 			qdel(src)
 			break
 

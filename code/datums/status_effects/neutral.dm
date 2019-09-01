@@ -97,7 +97,7 @@
 
 /datum/status_effect/bounty/on_apply()
 	to_chat(owner, "<span class='boldnotice'>You hear something behind you talking...</span> <span class='notice'>You have been marked for death by [rewarded]. If you die, they will be rewarded.</span>")
-	playsound(owner, 'sound/weapons/shotgunpump.ogg', 75, 0)
+	playsound(owner, 'sound/weapons/shotgunpump.ogg', 75, FALSE)
 	return ..()
 
 /datum/status_effect/bounty/tick()
@@ -108,7 +108,7 @@
 /datum/status_effect/bounty/proc/rewards()
 	if(rewarded && rewarded.mind && rewarded.stat != DEAD)
 		to_chat(owner, "<span class='boldnotice'>You hear something behind you talking...</span> <span class='notice'>Bounty claimed.</span>")
-		playsound(owner, 'sound/weapons/shotgunshot.ogg', 75, 0)
+		playsound(owner, 'sound/weapons/shotgunshot.ogg', 75, FALSE)
 		to_chat(rewarded, "<span class='greentext'>You feel a surge of mana flow into you!</span>")
 		for(var/obj/effect/proc_holder/spell/spell in rewarded.mind.spell_list)
 			spell.charge_counter = spell.charge_max
