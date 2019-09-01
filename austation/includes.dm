@@ -6,6 +6,7 @@
 #include "code\datums\ai_laws.dm"
 #include "code\game\objects\items\AI_modules.dm"
 #include "code\game\objects\items\robot\robot_upgrades.dm"
+#include "code\game\objects\effects\decals\turfdecal\markings.dm"
 #include "code\modules\food_and_drinks\drinks\drinks.dm"
 #include "code\modules\reagents\chemistry\reagents\other_reagents.dm"
 #include "code\modules\reagents\chemistry\recipes\others.dm"

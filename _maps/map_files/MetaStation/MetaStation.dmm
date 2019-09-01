@@ -22633,18 +22633,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/plaque{
-	icon_state = "L1"
-	},
+/obj/effect/turf_decal/austation/au1,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aXL" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/plaque{
-	icon_state = "L3"
-	},
+/obj/effect/turf_decal/austation/au3,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aXM" = (
@@ -22652,44 +22648,34 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/turf_decal/plaque{
-	icon_state = "L5"
-	},
+/obj/effect/turf_decal/austation/au5,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aXN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/plaque{
-	icon_state = "L7"
-	},
 /obj/structure/cable,
+/obj/effect/turf_decal/austation/au7,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aXO" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/effect/turf_decal/plaque{
-	icon_state = "L9"
-	},
+/obj/effect/turf_decal/austation/au9,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aXP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/plaque{
-	icon_state = "L11"
-	},
+/obj/effect/turf_decal/austation/au11,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aXQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/plaque{
-	icon_state = "L13"
-	},
+/obj/effect/turf_decal/austation/au13,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aXR" = (
@@ -23213,17 +23199,13 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aZg" = (
-/obj/effect/turf_decal/plaque{
-	icon_state = "L2"
-	},
 /obj/structure/cable,
+/obj/effect/turf_decal/austation/au2,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aZh" = (
-/obj/effect/turf_decal/plaque{
-	icon_state = "L4"
-	},
 /obj/structure/cable,
+/obj/effect/turf_decal/austation/au4,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aZi" = (
@@ -23232,31 +23214,23 @@
 	codes_txt = "patrol;next_patrol=2.1-Storage";
 	location = "1.5-Fore-Central"
 	},
-/obj/effect/turf_decal/plaque{
-	icon_state = "L6"
-	},
 /obj/structure/cable,
+/obj/effect/turf_decal/austation/au6,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aZk" = (
-/obj/effect/turf_decal/plaque{
-	icon_state = "L10"
-	},
 /obj/structure/cable,
+/obj/effect/turf_decal/austation/au10,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aZl" = (
-/obj/effect/turf_decal/plaque{
-	icon_state = "L12"
-	},
 /obj/structure/cable,
+/obj/effect/turf_decal/austation/au12,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aZm" = (
-/obj/effect/turf_decal/plaque{
-	icon_state = "L14"
-	},
 /obj/structure/cable,
+/obj/effect/turf_decal/austation/au14,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aZn" = (
@@ -44827,17 +44801,13 @@
 /area/hallway/primary/central)
 "bVe" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/turf_decal/plaque{
-	icon_state = "L1"
-	},
 /obj/structure/cable,
+/obj/effect/turf_decal/austation/au1,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bVf" = (
-/obj/effect/turf_decal/plaque{
-	icon_state = "L3"
-	},
 /obj/structure/cable,
+/obj/effect/turf_decal/austation/au3,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bVg" = (
@@ -44845,17 +44815,13 @@
 	codes_txt = "patrol;next_patrol=10.2-Aft-Port-Corner";
 	location = "10.1-Central-from-Aft"
 	},
-/obj/effect/turf_decal/plaque{
-	icon_state = "L5"
-	},
 /obj/structure/cable,
+/obj/effect/turf_decal/austation/au5,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bVh" = (
-/obj/effect/turf_decal/plaque{
-	icon_state = "L7"
-	},
 /obj/structure/cable,
+/obj/effect/turf_decal/austation/au7,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bVi" = (
@@ -44864,24 +44830,18 @@
 	location = "8-Central-to-Aft"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/turf_decal/plaque{
-	icon_state = "L9"
-	},
 /obj/structure/cable,
+/obj/effect/turf_decal/austation/au9,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bVj" = (
-/obj/effect/turf_decal/plaque{
-	icon_state = "L11"
-	},
 /obj/structure/cable,
+/obj/effect/turf_decal/austation/au11,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bVk" = (
-/obj/effect/turf_decal/plaque{
-	icon_state = "L13"
-	},
 /obj/structure/cable,
+/obj/effect/turf_decal/austation/au13,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bVm" = (
@@ -45389,37 +45349,29 @@
 /area/hallway/primary/central)
 "bWr" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/effect/turf_decal/plaque{
-	icon_state = "L2"
-	},
+/obj/effect/turf_decal/austation/au2,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bWs" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/plaque{
-	icon_state = "L4"
-	},
+/obj/effect/turf_decal/austation/au4,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bWt" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/obj/effect/turf_decal/plaque{
-	icon_state = "L6"
-	},
+/obj/effect/turf_decal/austation/au6,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bWu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/plaque{
-	icon_state = "L8"
-	},
 /obj/structure/cable,
+/obj/effect/turf_decal/austation/au8,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bWv" = (
@@ -45427,27 +45379,21 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/turf_decal/plaque{
-	icon_state = "L10"
-	},
+/obj/effect/turf_decal/austation/au10,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bWw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/plaque{
-	icon_state = "L12"
-	},
+/obj/effect/turf_decal/austation/au12,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bWx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/plaque{
-	icon_state = "L14"
-	},
+/obj/effect/turf_decal/austation/au14,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bWy" = (
@@ -72315,10 +72261,8 @@
 /area/hallway/secondary/entry)
 "djB" = (
 /obj/effect/landmark/observer_start,
-/obj/effect/turf_decal/plaque{
-	icon_state = "L8"
-	},
 /obj/structure/cable,
+/obj/effect/turf_decal/austation/au8,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "djC" = (
