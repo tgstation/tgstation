@@ -828,7 +828,6 @@
 /obj/item/borg/apparatus/beaker
 	name = "beaker storage apparatus"
 	desc = "A special apparatus for carrying beakers without spilling the contents. Alt-Z or right-click to drop the beaker."
-	icon = 'icons/mob/robot_items.dmi'
 	icon_state = "borg_beaker_apparatus"
 	storable = list(/obj/item/reagent_containers/glass/beaker,
 				/obj/item/reagent_containers/glass/bottle)
@@ -894,10 +893,9 @@
 /obj/item/borg/apparatus/circuit
 	name = "circuit manipulation apparatus"
 	desc = "A special apparatus for carrying and manipulating circuit boards. Alt-Z or right-click to drop the stored object."
-	icon = 'icons/mob/robot_items.dmi'
 	icon_state = "borg_hardware_apparatus"
 	storable = list(/obj/item/circuitboard,
-				/obj/item/electronics/)
+				/obj/item/electronics)
 
 /obj/item/borg/apparatus/circuit/Initialize()
 	. = ..()
@@ -927,7 +925,7 @@
 	if(stored)
 		. += "The apparatus currently has [stored] secured."
 
-/obj/item/borg/apparatus/pre_attack(atom/A, mob/living/user, params)
+/obj/item/borg/apparatus/circuit/pre_attack(atom/A, mob/living/user, params)
 	. = ..()
 	if(istype(A, /obj/item/aiModule) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
 		to_chat(user, "<span class='warning'>This circuit board doesn't seem to have standard robot apparatus pin holes. You're unable to pick it up.</span>")
