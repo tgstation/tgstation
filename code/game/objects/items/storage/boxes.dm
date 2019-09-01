@@ -140,7 +140,7 @@
 	new /obj/item/clothing/mask/gas/explorer(src)
 	new /obj/item/crowbar/red(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-	
+
 	if(!isplasmaman(loc))
 		new /obj/item/tank/internals/emergency_oxygen(src)
 	else
@@ -150,7 +150,7 @@
 /obj/item/storage/box/engineer/PopulateContents()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-		
+
 	if(!isplasmaman(loc))
 		new /obj/item/tank/internals/emergency_oxygen/engi(src)
 	else
@@ -163,7 +163,7 @@
 // Syndie survival box
 /obj/item/storage/box/syndie/PopulateContents()
 	new /obj/item/clothing/mask/gas/syndicate(src)
-	
+
 	if(!isplasmaman(loc))
 		new /obj/item/tank/internals/emergency_oxygen/engi(src)
 	else
@@ -173,7 +173,7 @@
 /obj/item/storage/box/security/PopulateContents()
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-	
+
 	if(!isplasmaman(loc))
 		new /obj/item/tank/internals/emergency_oxygen(src)
 	else
@@ -283,6 +283,17 @@
 		/obj/item/dnainjector/h2m = 3,
 		/obj/item/dnainjector/m2h = 3)
 	generate_items_inside(items_inside,src)
+
+/obj/item/storage/box/surgery
+  name = "Field Surgery Kit"
+  desc = "A box containing surgical drapes, sterilizine spray, a scalpel, and a hemostat."
+  illustration = "surgery"
+
+/obj/item/storage/box/surgery/PopulateContents()
+  new /obj/item/surgical_drapes(src)
+  new /obj/item/reagent_containers/medigel/sterilizine(src)
+  new /obj/item/scalpel(src)
+  new /obj/item/hemostat(src)
 
 /obj/item/storage/box/flashbangs
 	name = "box of flashbangs (WARNING)"
@@ -783,7 +794,7 @@
 /obj/item/storage/box/hug/survival/PopulateContents()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-	
+
 	if(!isplasmaman(loc))
 		new /obj/item/tank/internals/emergency_oxygen(src)
 	else
