@@ -372,7 +372,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 						   ORION_TRAIL_MALFUNCTION	= 2,
 						   ORION_TRAIL_COLLISION	= 1,
 						   ORION_TRAIL_SPACEPORT	= 2,
-						   ORION_TRAIL_OLDSHIP		= 3
+						   ORION_TRAIL_OLDSHIP		= 2
 						   )
 	var/list/stops = list()
 	var/list/stopblurbs = list()
@@ -812,27 +812,28 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];search=1'>Search it</a><a href='byond://?src=[REF(src)];eventclose=1'>Leave it</a></P><P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
 
 		if(ORION_TRAIL_SEARCH)
-			if(prob(20))
-				var/rescued = add_crewmember()
-				var/oldfood = rand(1,7)
-				var/oldfuel = rand(4,10)
-				food += oldfood
-				fuel += oldfuel
-				eventdat += "<br>As you look through it you find some supplies and a living person!"
-				eventdat += "<br>[rescued] was rescued from the abandoned ship!"
-				eventdat += "<br>You found [oldfood] <b>Food</b> and [oldfuel] <b>Fuel</b>."
-			else if(prob(20))
-				var/lfuel = rand(4,7)
-				var/deadname = remove_crewmember()
-				fuel -= lfuel
-				eventdat += "<br>[deadname] was lost deep in the wreckage, and your own vessel lost [lfuel] <b>Fuel</b> maneuvering to the the abandoned ship."
-			else if(prob(40))
-				var/oldfood = rand(5,11)
-				food += oldfood
-				engine++
-				eventdat += "<br>You found [oldfood] <b>Food</b> and some parts amongst the wreck."
-			else
-				eventdat += "<br>As you look through the wreck you cannot find much of use."
+			switch(rand(100))
+				if(0 to 15)
+					var/rescued = add_crewmember()
+					var/oldfood = rand(1,7)
+					var/oldfuel = rand(4,10)
+					food += oldfood
+					fuel += oldfuel
+					eventdat += "<br>As you look through it you find some supplies and a living person!"
+					eventdat += "<br>[rescued] was rescued from the abandoned ship!"
+					eventdat += "<br>You found [oldfood] <b>Food</b> and [oldfuel] <b>Fuel</b>."
+				if(15 to 35)
+					var/lfuel = rand(4,7)
+					var/deadname = remove_crewmember()
+					fuel -= lfuel
+					eventdat += "<br>[deadname] was lost deep in the wreckage, and your own vessel lost [lfuel] <b>Fuel</b> maneuvering to the the abandoned ship."
+				if(35 to 65)
+					var/oldfood = rand(5,11)
+					food += oldfood
+					engine++
+					eventdat += "<br>You found [oldfood] <b>Food</b> and some parts amongst the wreck."
+				else
+					eventdat += "<br>As you look through the wreck you cannot find much of use."
 			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>"
 			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
 			canContinueEvent = 1
