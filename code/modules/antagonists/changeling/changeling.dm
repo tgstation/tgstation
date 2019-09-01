@@ -303,6 +303,7 @@
 			prof.appearance_list[slot] = I.appearance
 			prof.flags_cover_list[slot] = I.flags_cover
 			prof.item_state_list[slot] = I.item_state
+			prof.mob_overlay_icon_list[slot] = I.mob_overlay_icon
 			prof.exists_list[slot] = 1
 		else
 			continue
@@ -518,6 +519,7 @@
 	var/list/flags_cover_list = list()
 	var/list/exists_list = list()
 	var/list/item_state_list = list()
+	var/list/mob_overlay_icon_list = list()
 
 	var/underwear
 	var/undershirt
@@ -540,6 +542,7 @@
 	newprofile.underwear = underwear
 	newprofile.undershirt = undershirt
 	newprofile.socks = socks
+	newprofile.mob_overlay_icon_list = mob_overlay_icon_list.Copy()
 
 
 /datum/antagonist/changeling/xenobio
