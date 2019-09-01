@@ -6,7 +6,6 @@
 	color = "#878687"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/metal
-	coin_type = /obj/item/coin/iron
 
 ///Breaks extremely easily but is transparent.
 /datum/material/glass
@@ -19,7 +18,6 @@
 	integrity_modifier = 0.1
 	sheet_type = /obj/item/stack/sheet/glass
 
-
 ///Has no special properties. Could be good against vampires in the future perhaps.
 /datum/material/silver
 	name = "silver"
@@ -28,7 +26,6 @@
 	color = "#bdbebf"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/silver
-	coin_type = /obj/item/coin/silver
 
 ///Slight force increase
 /datum/material/gold
@@ -39,7 +36,6 @@
 	strength_modifier = 1.2
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/gold
-	coin_type = /obj/item/coin/gold
 
 ///Has no special properties
 /datum/material/diamond
@@ -49,7 +45,6 @@
 	color = "#22c2d4"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
-	coin_type = /obj/item/coin/diamond
 
 ///Is slightly radioactive
 /datum/material/uranium
@@ -59,7 +54,6 @@
 	color = "#1fb83b"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
-	coin_type = /obj/item/coin/uranium
 
 /datum/material/uranium/on_applied(atom/source, amount, material_flags)
 	. = ..()
@@ -78,7 +72,6 @@
 	color = "#c716b8"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
-	coin_type = /obj/item/coin/plasma
 
 /datum/material/plasma/on_applied(atom/source, amount, material_flags)
 	. = ..()
@@ -108,7 +101,6 @@
 	color = "#fff263"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
-	coin_type = /obj/item/coin/bananium
 
 /datum/material/bananium/on_applied(atom/source, amount, material_flags)
 	. = ..()
