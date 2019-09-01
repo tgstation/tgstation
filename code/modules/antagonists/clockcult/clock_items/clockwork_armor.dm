@@ -61,6 +61,7 @@
 	name = "clockwork cuirass"
 	desc = "A bulky cuirass made of brass."
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/antagonist.dmi'
 	icon_state = "clockwork_cuirass"
 	w_class = WEIGHT_CLASS_BULKY
 	body_parts_covered = CHEST|GROIN|LEGS

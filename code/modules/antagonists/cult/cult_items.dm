@@ -290,6 +290,8 @@
 	desc = "A ragged, dusty set of robes. Strange letters line the inside."
 	icon_state = "cultrobes"
 	item_state = "cultrobes"
+	icon = 'icons/obj/clothing/suit/antagonist.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/antagonist.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
 	armor = list("melee" = 40, "bullet" = 30, "laser" = 40,"energy" = 20, "bomb" = 25, "bio" = 10, "rad" = 0, "fire" = 10, "acid" = 10)
@@ -336,6 +338,8 @@
 	desc = "A set of armored robes worn by the followers of Nar'Sie."
 	icon_state = "magusred"
 	item_state = "magusred"
+	icon = 'icons/obj/clothing/suit/antagonist.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/antagonist.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
 	armor = list("melee" = 50, "bullet" = 30, "laser" = 50,"energy" = 20, "bomb" = 25, "bio" = 10, "rad" = 0, "fire" = 10, "acid" = 10)
@@ -354,6 +358,8 @@
 	name = "\improper Nar'Sien hardened armor"
 	icon_state = "cult_armor"
 	item_state = "cult_armor"
+	icon = 'icons/obj/clothing/suit/antagonist.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/antagonist.dmi'
 	desc = "A heavily-armored exosuit worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
 	w_class = WEIGHT_CLASS_BULKY
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade, /obj/item/tank/internals/)

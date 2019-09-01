@@ -5503,7 +5503,7 @@
 	invoke_damage = 60;
 	name = "ice rune"
 	},
-/obj/item/clothing/suit/snowman{
+/obj/item/clothing/suit/costume/snowman{
 	desc = "The dead body of a snowman. There's holes to stick your own body in it.";
 	name = "snowman corpse"
 	},

@@ -82,7 +82,7 @@
 
 	uniform = /obj/item/clothing/under/costume/pirate
 	shoes = /obj/item/clothing/shoes/sneakers/brown
-	suit = /obj/item/clothing/suit/pirate
+	suit = /obj/item/clothing/suit/costume/pirate
 	head = /obj/item/clothing/head/bandana
 	glasses = /obj/item/clothing/glasses/eyepatch
 
@@ -316,7 +316,7 @@
 	gloves = /obj/item/clothing/gloves/combat
 	ears = /obj/item/radio/headset/headset_cent
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
-	suit = /obj/item/clothing/suit/pirate/captain
+	suit = /obj/item/clothing/suit/costume/pirate/captain
 	back = /obj/item/storage/backpack/satchel/leather
 	belt = /obj/item/gun/ballistic/revolver/mateba
 

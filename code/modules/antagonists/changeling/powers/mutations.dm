@@ -471,6 +471,8 @@
 /obj/item/clothing/suit/space/changeling
 	name = "flesh mass"
 	icon_state = "lingspacesuit"
+	icon = 'icons/obj/clothing/suit/antagonist.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/antagonist.dmi'
 	desc = "A huge, bulky mass of pressure and temperature-resistant organic tissue, evolved to facilitate space travel."
 	item_flags = DROPDEL
 	clothing_flags = STOPSPRESSUREDAMAGE //Not THICKMATERIAL because it's organic tissue, so if somebody tries to inject something into it, it still ends up in your blood. (also balance but muh fluff)
@@ -514,7 +516,6 @@
 	dna_cost = 1
 	req_human = 1
 	recharge_slowdown = 0.25
-
 	suit_type = /obj/item/clothing/suit/armor/changeling
 	helmet_type = /obj/item/clothing/head/helmet/changeling
 	suit_name_simple = "armor"
@@ -524,6 +525,8 @@
 	name = "chitinous mass"
 	desc = "A tough, hard covering of black chitin."
 	icon_state = "lingarmor"
+	icon = 'icons/obj/clothing/suit/antagonist.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/antagonist.dmi'
 	item_flags = DROPDEL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor = list("melee" = 40, "bullet" = 40, "laser" = 40, "energy" = 20, "bomb" = 10, "bio" = 4, "rad" = 0, "fire" = 90, "acid" = 90)

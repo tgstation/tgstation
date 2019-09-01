@@ -133,7 +133,7 @@
 /obj/structure/closet/radiation/PopulateContents()
 	..()
 	new /obj/item/geiger_counter(src)
-	new /obj/item/clothing/suit/radiation(src)
+	new /obj/item/clothing/suit/utility/radiation(src)
 	new /obj/item/clothing/head/radiation(src)
 
 /*

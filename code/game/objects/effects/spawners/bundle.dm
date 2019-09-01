@@ -17,7 +17,7 @@
 /obj/effect/spawner/bundle/costume/chicken
 	name = "chicken costume spawner"
 	items = list(
-		/obj/item/clothing/suit/chickensuit,
+		/obj/item/clothing/suit/costume/chickensuit,
 		/obj/item/clothing/head/chicken,
 		/obj/item/reagent_containers/food/snacks/egg)
 
@@ -91,14 +91,14 @@
 /obj/effect/spawner/bundle/costume/nightowl
 	name = "night owl costume spawner"
 	items = list(
-		/obj/item/clothing/suit/toggle/owlwings,
+		/obj/item/clothing/suit/toggle/costume/owlwings,
 		/obj/item/clothing/under/costume/owl,
 		/obj/item/clothing/mask/gas/owl_mask)
 
 /obj/effect/spawner/bundle/costume/griffin
 	name = "griffin costume spawner"
 	items = list(
-		/obj/item/clothing/suit/toggle/owlwings/griffinwings,
+		/obj/item/clothing/suit/toggle/costume/owlwings/griffinwings,
 		/obj/item/clothing/shoes/griffin,
 		/obj/item/clothing/under/costume/griffin,
 		/obj/item/clothing/head/griffin)
@@ -114,7 +114,7 @@
 	name = "pirate costume spawner"
 	items = list(
 		/obj/item/clothing/under/costume/pirate,
-		/obj/item/clothing/suit/pirate,
+		/obj/item/clothing/suit/costume/pirate,
 		/obj/effect/spawner/lootdrop/minor/pirate_or_bandana,
 		/obj/item/clothing/glasses/eyepatch)
 
@@ -127,7 +127,7 @@
 /obj/effect/spawner/bundle/costume/imperium_monk
 	name = "imperium monk costume spawner"
 	items = list(
-		/obj/item/clothing/suit/imperium_monk,
+		/obj/item/clothing/suit/costume/imperium_monk,
 		/obj/effect/spawner/lootdrop/minor/twentyfive_percent_cyborg_mask)
 
 /obj/effect/spawner/bundle/costume/holiday_priest

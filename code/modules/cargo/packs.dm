@@ -196,8 +196,8 @@
 	cost = 1000
 	contains = list(/obj/item/clothing/head/radiation,
 					/obj/item/clothing/head/radiation,
-					/obj/item/clothing/suit/radiation,
-					/obj/item/clothing/suit/radiation,
+					/obj/item/clothing/suit/utility/radiation,
+					/obj/item/clothing/suit/utility/radiation,
 					/obj/item/geiger_counter,
 					/obj/item/geiger_counter,
 					/obj/item/reagent_containers/food/drinks/bottle/vodka,
@@ -1605,9 +1605,9 @@
 	desc = "Bee business booming? Better be benevolent and boost botany by bestowing bi-Beekeeper-suits! Contains two beekeeper suits and matching headwear."
 	cost = 1000
 	contains = list(/obj/item/clothing/head/beekeeper_head,
-					/obj/item/clothing/suit/beekeeper_suit,
+					/obj/item/clothing/suit/utility/beekeeper_suit,
 					/obj/item/clothing/head/beekeeper_head,
-					/obj/item/clothing/suit/beekeeper_suit)
+					/obj/item/clothing/suit/utility/beekeeper_suit)
 	crate_name = "beekeeper suits"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
@@ -1621,7 +1621,7 @@
 					/obj/item/honey_frame,
 					/obj/item/queen_bee/bought,
 					/obj/item/clothing/head/beekeeper_head,
-					/obj/item/clothing/suit/beekeeper_suit,
+					/obj/item/clothing/suit/utility/beekeeper_suit,
 					/obj/item/melee/flyswatter)
 	crate_name = "beekeeping starter crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
@@ -2143,18 +2143,18 @@
 	desc = "Reenact Shakespearean plays with this assortment of outfits. Contains eight different costumes!"
 	cost = 1000
 	contains = list(/obj/item/clothing/head/snowman,
-					/obj/item/clothing/suit/snowman,
+					/obj/item/clothing/suit/costume/snowman,
 					/obj/item/clothing/head/chicken,
-					/obj/item/clothing/suit/chickensuit,
+					/obj/item/clothing/suit/costume/chickensuit,
 					/obj/item/clothing/mask/gas/monkeymask,
-					/obj/item/clothing/suit/monkeysuit,
+					/obj/item/clothing/suit/costume/monkeysuit,
 					/obj/item/clothing/head/cardborg,
-					/obj/item/clothing/suit/cardborg,
+					/obj/item/clothing/suit/costume/cardborg,
 					/obj/item/clothing/head/xenos,
-					/obj/item/clothing/suit/xenos,
-					/obj/item/clothing/suit/hooded/ian_costume,
-					/obj/item/clothing/suit/hooded/carp_costume,
-					/obj/item/clothing/suit/hooded/bee_costume)
+					/obj/item/clothing/suit/costume/xenos,
+					/obj/item/clothing/suit/hooded/costume/ian_costume,
+					/obj/item/clothing/suit/hooded/costume/carp_costume,
+					/obj/item/clothing/suit/hooded/costume/bee_costume)
 	crate_name = "original costume crate"
 	crate_type = /obj/structure/closet/crate/wooden
 

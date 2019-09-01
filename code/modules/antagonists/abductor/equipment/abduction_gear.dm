@@ -10,6 +10,7 @@
 	name = "agent vest"
 	desc = "A vest outfitted with advanced stealth technology. It has two modes - combat and stealth."
 	icon = 'icons/obj/abductor.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/antagonist.dmi'
 	icon_state = "vest_stealth"
 	item_state = "armor"
 	blood_overlay_type = "armor"

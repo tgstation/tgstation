@@ -23,6 +23,8 @@
 	desc = "An advanced spacesuit equipped with time-bluespace teleportation and anti-compression technology."
 	icon_state = "chronosuit"
 	item_state = "chronosuit"
+	icon = 'icons/obj/clothing/suit/antagonist.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/antagonist.dmi'
 	actions_types = list(/datum/action/item_action/toggle)
 	armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 60, "bomb" = 30, "bio" = 90, "rad" = 90, "fire" = 100, "acid" = 1000)
 	resistance_flags = FIRE_PROOF | ACID_PROOF

@@ -251,6 +251,8 @@
 	name = "Crusader's Armour"
 	desc = "Armour that's comprised of metal and cloth."
 	icon_state = "crusader"
+	icon = 'icons/obj/clothing/suit/armor_primitive.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/armor_primitive.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 2.0 //gotta pretend we're balanced.
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS

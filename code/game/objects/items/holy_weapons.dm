@@ -97,6 +97,11 @@
 	icon_state = "knight_ancient"
 	item_state = "knight_ancient"
 
+/obj/item/clothing/suit/armor/riot/chaplain
+	name = "chaplain armor"
+	icon = 'icons/obj/clothing/suit/chaplain.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/chaplain.dmi'
+
 /obj/item/clothing/suit/armor/riot/chaplain/ancient
 	name = "ancient armour"
 	desc = "Defend the treasure..."
@@ -139,6 +144,8 @@
 	desc = "Hoodie made for acolytes of the chaplain."
 	icon_state = "chaplain_hoodie"
 	item_state = "chaplain_hoodie"
+	icon = 'icons/obj/clothing/suit/chaplain.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/chaplain.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood

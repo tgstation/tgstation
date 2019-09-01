@@ -1,4 +1,7 @@
-
+/*
+ * Contains:
+ *		Beekeeper suit
+ */
 /obj/item/clothing/head/beekeeper_head
 	name = "beekeeper hat"
 	desc = "Keeps the lil buzzing buggers out of your eyes."
@@ -7,7 +10,7 @@
 	clothing_flags = THICKMATERIAL | SNUG_FIT
 
 
-/obj/item/clothing/suit/beekeeper_suit
+/obj/item/clothing/suit/utility/beekeeper_suit
 	name = "beekeeper suit"
 	desc = "Keeps the lil buzzing buggers away from your squishy bits."
 	icon_state = "beekeeper"

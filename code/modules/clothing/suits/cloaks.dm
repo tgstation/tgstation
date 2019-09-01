@@ -1,3 +1,11 @@
+/*
+ * Contains:
+ *		Neck worn cloaks
+ *		Lavaland cloaks
+ */
+
+
+
 //Cloaks. No, not THAT kind of cloak.
 
 /obj/item/clothing/neck/cloak
@@ -48,6 +56,11 @@
 	name = "head of personnel's cloak"
 	desc = "Worn by the Head of Personnel. It smells faintly of bureaucracy."
 	icon_state = "hopcloak"
+
+//lavaland cloaks
+/obj/item/clothing/suit/hooded/cloak
+	icon = 'icons/obj/clothing/suit/armor_primitive.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/armor_primitive.dmi'
 
 /obj/item/clothing/suit/hooded/cloak/goliath
 	name = "goliath cloak"

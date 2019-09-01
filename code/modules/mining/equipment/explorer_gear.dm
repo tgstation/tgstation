@@ -4,6 +4,8 @@
 	desc = "An armoured suit for exploring harsh environments."
 	icon_state = "explorer"
 	item_state = "explorer"
+	icon = 'icons/obj/clothing/suit/job.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/job.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	cold_protection = CHEST|GROIN|LEGS|ARMS

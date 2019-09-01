@@ -6939,7 +6939,7 @@
 /area/engine/atmospherics_engine)
 "asC" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/suit/radiation,
+/obj/item/clothing/suit/utility/radiation,
 /obj/item/clothing/head/radiation,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -64390,7 +64390,7 @@
 /area/crew_quarters/heads/hop)
 "cpB" = (
 /obj/structure/closet/secure_closet/hop,
-/obj/item/clothing/suit/ianshirt,
+/obj/item/clothing/suit/shirt/ianshirt,
 /obj/item/bedsheet/ian,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/hop)
@@ -89270,7 +89270,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
-/obj/item/clothing/suit/toggle/owlwings,
+/obj/item/clothing/suit/toggle/costume/owlwings,
 /obj/item/clothing/under/costume/owl,
 /obj/item/clothing/mask/gas/owl_mask,
 /turf/open/floor/plating,
@@ -101367,7 +101367,7 @@
 /area/crew_quarters/theatre/abandoned)
 "dGK" = (
 /obj/structure/table/wood,
-/obj/item/clothing/suit/justice,
+/obj/item/clothing/suit/costume/justice,
 /obj/item/clothing/head/helmet/justice/escape{
 	name = "justice helmet"
 	},
@@ -103986,7 +103986,7 @@
 /area/crew_quarters/theatre/abandoned)
 "dLv" = (
 /obj/structure/table/wood,
-/obj/item/clothing/suit/cardborg,
+/obj/item/clothing/suit/costume/cardborg,
 /obj/item/clothing/head/cardborg,
 /obj/machinery/light/small{
 	dir = 4

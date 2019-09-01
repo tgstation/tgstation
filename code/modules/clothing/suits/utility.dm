@@ -4,15 +4,12 @@
  *		Bomb protection
  *		Radiation protection
  */
-
-/*
- * Fire protection
- */
 /obj/item/clothing/suit/utility/
 	icon = 'icons/obj/clothing/suit/utility.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/suit/utility.dmi'
-
-
+/*
+ * Fire protection
+ */
 /obj/item/clothing/suit/utility/fire
 	name = "emergency firesuit"
 	desc = "A suit that helps protect against fire and heat."
@@ -133,7 +130,7 @@
 	resistance_flags = NONE
 	rad_flags = RAD_PROTECT_CONTENTS
 
-/obj/item/clothing/suit/radiation
+/obj/item/clothing/suit/utility/radiation
 	name = "radiation suit"
 	desc = "A suit that protects against radiation. The label reads, 'Made with lead. Please do not consume insulation.'"
 	icon_state = "rad"

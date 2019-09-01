@@ -27,6 +27,8 @@
 	desc = "A suit that protects against low pressure environments. Has a big 13 on the back."
 	icon_state = "spaceold"
 	item_state = "s_suit"
+	icon = 'icons/obj/clothing/suit/space.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/space.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02

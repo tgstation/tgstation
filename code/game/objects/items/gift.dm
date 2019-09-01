@@ -84,7 +84,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 		/obj/item/clothing/suit/poncho,
 		/obj/item/clothing/suit/poncho/green,
 		/obj/item/clothing/suit/poncho/red,
-		/obj/item/clothing/suit/snowman,
+		/obj/item/clothing/suit/costume/snowman,
 		/obj/item/clothing/head/snowman,
 		/obj/item/trash/coal)
 

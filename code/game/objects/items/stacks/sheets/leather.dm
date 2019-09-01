@@ -50,7 +50,7 @@ GLOBAL_LIST_INIT(gondola_recipes, list ( \
 	return ..()
 
 GLOBAL_LIST_INIT(corgi_recipes, list ( \
-	new/datum/stack_recipe("corgi costume", /obj/item/clothing/suit/hooded/ian_costume, 3), \
+	new/datum/stack_recipe("corgi costume", /obj/item/clothing/suit/hooded/costume/ian_costume, 3), \
 	))
 
 /obj/item/stack/sheet/animalhide/corgi/Initialize(mapload, new_amount, merge = TRUE)
@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(corgi_recipes, list ( \
 
 GLOBAL_LIST_INIT(monkey_recipes, list ( \
 	new/datum/stack_recipe("monkey mask", /obj/item/clothing/mask/gas/monkeymask, 1), \
-	new/datum/stack_recipe("monkey suit", /obj/item/clothing/suit/monkeysuit, 2), \
+	new/datum/stack_recipe("monkey suit", /obj/item/clothing/suit/costume/monkeysuit, 2), \
 	))
 
 /obj/item/stack/sheet/animalhide/monkey/Initialize(mapload, new_amount, merge = TRUE)
@@ -96,7 +96,7 @@ GLOBAL_LIST_INIT(monkey_recipes, list ( \
 
 GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	new/datum/stack_recipe("alien helmet", /obj/item/clothing/head/xenos, 1), \
-	new/datum/stack_recipe("alien suit", /obj/item/clothing/suit/xenos, 2), \
+	new/datum/stack_recipe("alien suit", /obj/item/clothing/suit/costume/xenos, 2), \
 	))
 
 /obj/item/stack/sheet/animalhide/xeno/Initialize(mapload, new_amount, merge = TRUE)

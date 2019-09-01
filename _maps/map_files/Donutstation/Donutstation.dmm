@@ -6667,7 +6667,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "asK" = (
-/obj/item/clothing/suit/ianshirt,
+/obj/item/clothing/suit/shirt/ianshirt,
 /turf/open/floor/plating,
 /area/engine/atmos)
 "asL" = (
@@ -43349,7 +43349,7 @@
 	name = "2maintenance loot spawner"
 	},
 /obj/item/clothing/head/cardborg,
-/obj/item/clothing/suit/cardborg,
+/obj/item/clothing/suit/costume/cardborg,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "eKx" = (

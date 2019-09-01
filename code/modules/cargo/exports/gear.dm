@@ -60,7 +60,7 @@
 /datum/export/gear/radsuit
 	cost = 100
 	unit_name = "radsuit"
-	export_types = list(/obj/item/clothing/suit/radiation)
+	export_types = list(/obj/item/clothing/suit/utility/radiation)
 
 /datum/export/gear/biohood
 	cost = 50

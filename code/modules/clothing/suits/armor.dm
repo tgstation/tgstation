@@ -130,6 +130,8 @@
 	desc = "A tribal armor plate, crafted from animal bone."
 	icon_state = "bonearmor"
 	item_state = "bonearmor"
+	icon = 'icons/obj/clothing/suit/armor_primitive.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/armor_primitive.dmi'
 	blood_overlay_type = "armor"
 	armor = list("melee" = 35, "bullet" = 25, "laser" = 25, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
@@ -222,10 +224,12 @@
 	icon_state = "tdgreen"
 	item_state = "tdgreen"
 
-
+///
 /obj/item/clothing/suit/armor/riot/knight
 	name = "plate armour"
 	desc = "A classic suit of plate armour, highly effective at stopping melee attacks."
+	icon = 'icons/obj/clothing/suit/armor_primitive.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/armor_primitive.dmi'
 	icon_state = "knight_green"
 	item_state = "knight_green"
 

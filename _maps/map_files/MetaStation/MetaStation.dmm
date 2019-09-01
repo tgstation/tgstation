@@ -4444,8 +4444,8 @@
 	},
 /obj/item/kitchen/rollingpin,
 /obj/structure/closet/crate,
-/obj/item/clothing/suit/xenos,
-/obj/item/clothing/suit/monkeysuit,
+/obj/item/clothing/suit/costume/xenos,
+/obj/item/clothing/suit/costume/monkeysuit,
 /obj/item/clothing/head/xenos,
 /obj/item/clothing/mask/gas/monkeymask,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -58531,7 +58531,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cxT" = (
-/obj/item/clothing/suit/ianshirt,
+/obj/item/clothing/suit/shirt/ianshirt,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cxU" = (

@@ -47005,9 +47005,9 @@
 /obj/structure/closet{
 	name = "beekeeping wardrobe"
 	},
-/obj/item/clothing/suit/beekeeper_suit,
-/obj/item/clothing/suit/beekeeper_suit,
-/obj/item/clothing/suit/beekeeper_suit,
+/obj/item/clothing/suit/utility/beekeeper_suit,
+/obj/item/clothing/suit/utility/beekeeper_suit,
+/obj/item/clothing/suit/utility/beekeeper_suit,
 /obj/item/clothing/head/beekeeper_head,
 /obj/item/clothing/head/beekeeper_head,
 /obj/item/clothing/head/beekeeper_head,

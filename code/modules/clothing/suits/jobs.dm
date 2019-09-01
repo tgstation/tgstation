@@ -8,6 +8,8 @@
 	desc = "A basic blue apron."
 	icon_state = "apron"
 	item_state = "apron"
+	icon = 'icons/obj/clothing/suit/job.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/job.dmi'
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN
 	allowed = list(/obj/item/reagent_containers/spray/plantbgone, /obj/item/plant_analyzer, /obj/item/seeds, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/cultivator, /obj/item/reagent_containers/spray/pestspray, /obj/item/hatchet, /obj/item/storage/bag/plants)
@@ -18,6 +20,8 @@
 	desc = "Worn by a Captain to show their class."
 	icon_state = "captunic"
 	item_state = "bio_suit"
+	icon = 'icons/obj/clothing/suit/job.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/job.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
 	allowed = list(/obj/item/disk, /obj/item/stamp, /obj/item/reagent_containers/food/drinks/flask, /obj/item/melee, /obj/item/storage/lockbox/medal, /obj/item/assembly/flash/handheld, /obj/item/storage/box/matches, /obj/item/lighter, /obj/item/clothing/mask/cigarette, /obj/item/storage/fancy/cigarettes, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
@@ -28,6 +32,8 @@
 	desc = "An apron-jacket used by a high class chef."
 	icon_state = "chef"
 	item_state = "chef"
+	icon = 'icons/obj/clothing/suit/job.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/job.dmi'
 	gas_transfer_coefficient = 0.9
 	permeability_coefficient = 0.5
 	body_parts_covered = CHEST|GROIN|ARMS
@@ -50,6 +56,8 @@
 	desc = "An 18th-century multi-purpose trenchcoat. Someone who wears this means serious business."
 	icon_state = "detective"
 	item_state = "det_suit"
+	icon = 'icons/obj/clothing/suit/security.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/security.dmi'
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	armor = list("melee" = 25, "bullet" = 10, "laser" = 25, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 45)
@@ -78,6 +86,8 @@
 	desc = "A high-visibility vest used in work zones."
 	icon_state = "hazard"
 	item_state = "hazard"
+	icon = 'icons/obj/clothing/suit/job.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/job.dmi'
 	blood_overlay_type = "armor"
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/t_scanner, /obj/item/radio)
 	resistance_flags = NONE
@@ -88,6 +98,8 @@
 	desc = "A snappy dress jacket."
 	icon_state = "suitjacket_blue"
 	item_state = "suitjacket_blue"
+	icon = 'icons/obj/clothing/suit/jacket.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/jacket.dmi'
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 	togglename = "buttons"
@@ -110,10 +122,15 @@
 	name = "suspenders"
 	desc = "They suspend the illusion of the mime's play."
 	icon = 'icons/obj/clothing/belts.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/job.dmi'
 	icon_state = "suspenders"
 	blood_overlay_type = "armor" //it's the less thing that I can put here
 
 //Security
+/obj/item/clothing/suit/security
+	icon = 'icons/obj/clothing/suit/security.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/security.dmi'
+
 /obj/item/clothing/suit/security/officer
 	name = "security officer's jacket"
 	desc = "This jacket is for those special occasions when a security officer isn't required to wear their armor."
@@ -148,6 +165,8 @@
 	desc = "Both fashionable and lightly armoured, this jacket is favoured by treasure hunters the galaxy over."
 	icon_state = "curator"
 	item_state = "curator"
+	icon = 'icons/obj/clothing/suit/jacket.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/jacket.dmi'
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 	allowed = list(/obj/item/tank/internals, /obj/item/melee/curator_whip)
@@ -163,6 +182,8 @@
 	desc = "For those who REALLY love their toasters."
 	icon_state = "techpriest"
 	item_state = "techpriest"
+	icon = 'icons/obj/clothing/suit/job.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/job.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/techpriest
 	

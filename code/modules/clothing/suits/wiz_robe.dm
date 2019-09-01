@@ -58,12 +58,14 @@
 	icon_state = "santahat"
 	flags_inv = HIDEHAIR|HIDEFACIALHAIR
 	dog_fashion = null
-
+///
 /obj/item/clothing/suit/wizrobe
 	name = "wizard robe"
 	desc = "A magnificent, gem-lined robe that seems to radiate power."
 	icon_state = "wizard"
 	item_state = "wizrobe"
+	icon = 'icons/obj/clothing/suit/antagonist.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/antagonist.dmi'
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
@@ -110,10 +112,12 @@
 	icon_state = "magusred"
 	item_state = "magusred"
 
-
+///
 /obj/item/clothing/suit/wizrobe/santa
 	name = "Santa's suit"
 	desc = "Festive!"
+	icon = 'icons/obj/clothing/suit/costume.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/costume.dmi'
 	icon_state = "santa"
 	item_state = "santa"
 

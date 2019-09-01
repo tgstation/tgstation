@@ -21499,7 +21499,7 @@
 /area/bridge/meeting_room)
 "bdL" = (
 /obj/effect/landmark/blobstart,
-/obj/item/clothing/suit/ianshirt,
+/obj/item/clothing/suit/shirt/ianshirt,
 /obj/structure/closet,
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -42174,7 +42174,7 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced,
-/obj/item/clothing/suit/radiation,
+/obj/item/clothing/suit/utility/radiation,
 /obj/item/clothing/head/radiation,
 /obj/item/clothing/glasses/meson,
 /obj/item/geiger_counter,
@@ -47629,7 +47629,7 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced,
-/obj/item/clothing/suit/radiation,
+/obj/item/clothing/suit/utility/radiation,
 /obj/item/clothing/head/radiation,
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/glasses/meson,

@@ -98,6 +98,8 @@
 	desc = "Hop Hop Hop!"
 	icon_state = "bunnysuit"
 	item_state = "bunnysuit"
+	icon = 'icons/obj/clothing/suit/costume.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/costume.dmi'
 	slowdown = -1
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
