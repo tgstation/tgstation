@@ -1754,7 +1754,6 @@
 	taste_description = "upside down"
 	can_synth = FALSE
 
-
 /// Improvised reagent that induces vomiting. Created by dipping a dead mouse in welder fluid.
 /datum/reagent/yuck
 	name = "Organic Slurry"
