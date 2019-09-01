@@ -947,7 +947,7 @@
 ///////////////////////////
 
 /datum/sprite_accessory/underwear
-	icon = 'icons/mob/underwear.dmi'
+	icon = 'icons/mob/clothing/underwear.dmi'
 	use_static = FALSE
 
 
@@ -1124,7 +1124,7 @@
 ////////////////////////////
 
 /datum/sprite_accessory/undershirt
-	icon = 'icons/mob/underwear.dmi'
+	icon = 'icons/mob/clothing/underwear.dmi'
 
 /datum/sprite_accessory/undershirt/nude
 	name = "Nude"
@@ -1408,7 +1408,7 @@
 ///////////////////////
 
 /datum/sprite_accessory/socks
-	icon = 'icons/mob/underwear.dmi'
+	icon = 'icons/mob/clothing/underwear.dmi'
 
 /datum/sprite_accessory/socks/nude
 	name = "Nude"
@@ -1685,11 +1685,11 @@
 	name = "None"
 	icon_state = "none"
 
-/datum/sprite_accessory/wings_open
-	icon = 'icons/mob/wings.dmi'
-
 /datum/sprite_accessory/wings
-	icon = 'icons/mob/wings.dmi'
+	icon = 'icons/mob/clothing/wings.dmi'
+
+/datum/sprite_accessory/wings_open
+	icon = 'icons/mob/clothing/wings.dmi'
 
 /datum/sprite_accessory/wings/angel
 	name = "Angel"

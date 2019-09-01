@@ -185,14 +185,14 @@
 	name = "salicyclic acid medipen"
 	desc = "A autoinjector containing salicyclic acid, used to treat severe brute damage."
 	icon_state = "salacid"
-	item_state = "salacid"	
+	item_state = "salacid"
 	list_reagents = list(/datum/reagent/medicine/sal_acid = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/salbutamol
 	name = "salbutamol medipen"
 	desc = "A autoinjector containing salbutamol, used to heal oxygen damage quickly."
 	icon_state = "salpen"
-	item_state = "salpen"	
+	item_state = "salpen"
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure
@@ -200,9 +200,9 @@
 	desc = "Bio Virus Antidote Kit autoinjector. Has a two use system for yourself, and someone else. Inject when infected."
 	icon_state = "tbpen"
 	item_state = "tbpen"
-	volume = 60
-	amount_per_transfer_from_this = 30
-	list_reagents = list(/datum/reagent/medicine/atropine = 10, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/omnizine = 20, /datum/reagent/medicine/C2/convermol = 15, /datum/reagent/medicine/spaceacillin = 20)
+	volume = 20
+	amount_per_transfer_from_this = 10
+	list_reagents = list(/datum/reagent/vaccine/fungal_tb = 20)
 
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure/update_icon()
 	if(reagents.total_volume > 30)
@@ -246,7 +246,7 @@
 	list_reagents = list(/datum/reagent/magillitis = 5)
 
 /obj/item/reagent_containers/hypospray/medipen/pumpup
-	name = "maintanance pump-up"
+	name = "maintenance pump-up"
 	desc = "A ghetto looking autoinjector filled with a cheap adrenaline shot... Great for shrugging off the effects of stunbatons."
 	volume = 15
 	amount_per_transfer_from_this = 15

@@ -99,5 +99,5 @@
 		else if(burnt_out)
 			to_chat(L, "<span class='caution'>[charged_item] doesn't seem to be reacting to the spell...</span>")
 		else
-			playsound(get_turf(L), 'sound/magic/charge.ogg', 50, 1)
+			playsound(get_turf(L), 'sound/magic/charge.ogg', 50, TRUE)
 			to_chat(L, "<span class='notice'>[charged_item] suddenly feels very warm!</span>")

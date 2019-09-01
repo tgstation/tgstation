@@ -83,7 +83,7 @@
 	var/sound = 'sound/items/bikehorn.ogg'
 
 /obj/effect/mine/sound/mineEffect(mob/victim)
-	playsound(loc, sound, 100, 1)
+	playsound(loc, sound, 100, TRUE)
 
 
 /obj/effect/mine/sound/bwoink
