@@ -267,7 +267,7 @@ Borg Shaker
 //////////////////////
 
 /**An arm that only holds beakers. Can drop them, place them into machines, or onto tables. Attacks made by the arm, or
-to the arm are passed onto a stored beaker, if one exists. */
+to the arm are passed onto a stored beaker, if one exists.
 
 /obj/item/borg_beaker_holder
 	name = "beaker storage apparatus"
@@ -371,6 +371,6 @@ to the arm are passed onto a stored beaker, if one exists. */
 	if(stored)
 		W.melee_attack_chain(user, stored, params)
 		return
-	. = ..()
-  
+	. = ..()*/
+
 #undef C2NAMEREAGENT
