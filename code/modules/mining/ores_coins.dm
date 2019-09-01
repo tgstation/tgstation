@@ -396,6 +396,13 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	materials = list(/datum/material/uranium = MINERAL_MATERIAL_AMOUNT*0.2)
 	grind_results = list(/datum/reagent/uranium = 4)
 
+/obj/item/coin/titanium
+	name = "titanium coin"
+	cmineral = "titanium"
+	icon_state = "coin_silver_heads"
+	value = 30
+	materials = list(/datum/material/titanium = MINERAL_MATERIAL_AMOUNT*0.2)
+
 /obj/item/coin/bananium
 	name = "bananium coin"
 	cmineral = "bananium"
