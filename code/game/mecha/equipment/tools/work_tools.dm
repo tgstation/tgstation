@@ -365,6 +365,9 @@
 	if(M.occupant) //We're actualy making a new mech and swapping things over, it might get weird if players are involved
 		to_chat(loc, "<span class='warning'>[M] must be unoccupied before this conversion kit can be applied.</span>")
 		return FALSE
+	if(!M.cell) //Turns out things break if the cell is missing
+		to_chat(loc, "<span class='warning'>The conversion process requires a cell installed.</span>")
+		return FALSE
 	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade/attach(obj/mecha/M)
