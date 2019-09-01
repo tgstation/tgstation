@@ -597,7 +597,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			settlers = list("Harry","Larry","Bob")
 	else if(href_list["search"]) //search old ship
 		if(event == ORION_TRAIL_OLDSHIP)
-			event = "Old Ship Search"
+			event = ORION_TRAIL_SEARCH
 			event()
 	else if(href_list["slow"]) //slow down
 		if(event == ORION_TRAIL_FLUX)
