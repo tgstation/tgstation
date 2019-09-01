@@ -192,7 +192,11 @@
 				babies += M
 				M.mutation_chance = CLAMP(mutation_chance+(rand(5,-5)),0,100)
 				SSblackbox.record_feedback("tally", "slime_babies_born", 1, M.colour)
-
+				if(src.GetComponent(/datum/component/nanites))
+					var/datum/component/nanites/original_nanites = src.GetComponent(/datum/component/nanites)
+					//copying over nanite programs/cloud sync with 25% of the original slime's saturation in each slime
+					M.AddComponent(/datum/component/nanites, original_nanites.nanite_volume*0.25)
+					SEND_SIGNAL(M, COMSIG_NANITE_SYNC, original_nanites)
 			var/mob/living/simple_animal/slime/new_slime = pick(babies)
 			new_slime.a_intent = INTENT_HARM
 			if(src.mind)
