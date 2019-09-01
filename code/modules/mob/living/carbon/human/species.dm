@@ -25,7 +25,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
             for species_x that draws from icons/mob/iconbase1, it will instead draw from icons/mob/species_x/iconbase1
             any valid filepath can be used, but please keep the filestructure sensible
 	this list is currently used by the following procs
-	* get_species_iconbase()
+	* build_worn_icon()
 		> currently this only works with clothing, and directly checks for species id
 	*/
 	var/list/alternate_iconbases = list()
