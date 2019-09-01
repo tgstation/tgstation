@@ -53,14 +53,10 @@
 /datum/surgery_step/heal/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/umsg = "You succeed in fixing some of [target]'s wounds"
 	var/tmsg = "[user] fixes some of [target]'s wounds"
-	if((target.stat == DEAD) && (!get_location_accessible(target, target_zone)))
-		target.heal_bodypart_damage(brutehealing*0.9,burnhealing*0.9)
-		umsg += " as best as you can while they have clothing on" //space please, no period
-		tmsg += " as best as they can while [target] has clothing on"
 	if(target.stat == DEAD)
 		if(get_location_accessible(target, target_zone))
 			target.heal_bodypart_damage(brutehealing*1.5,burnhealing*1.5) //1.5x times as effective on dead people
-		else 
+		else
 			target.heal_bodypart_damage(brutehealing*0.9,burnhealing*0.9) //60% less healing if with clothes.
 			umsg += " as best as you can while they have clothing on" //space please, no period
 			tmsg += " as best as they can while [target] has clothing on
