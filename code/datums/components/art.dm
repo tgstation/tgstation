@@ -1,7 +1,3 @@
-#define BAD_ART 12.5
-#define GOOD_ART 25
-#define GREAT_ART 50
-
 /datum/component/art
 	var/impressiveness = 0
 
