@@ -283,13 +283,12 @@
 	var/mob/living/carbon/victim = M
 	if(method == TOUCH || method == VAPOR)
 		//check for protection
-		var/mouth_covered = victim.is_mouth_covered()
 		var/eyes_covered = victim.is_eyes_covered()
 		
 		//actually handle the pepperspray effects
-		if (eyes_covered && istype(victim.mask, /obj/item/clothing/mask/gas))
+		if (eyes_covered && istype(victim.wear_mask, /obj/item/clothing/mask/gas))
 			return
-		else if(istype(victim.mask, /obj/item/clothing/mask/gas))	// Reduced effects if partially protected
+		else if(istype(victim.wear_mask, /obj/item/clothing/mask/gas))	// Reduced effects if partially protected
 			if(prob(5))
 				victim.emote("scream")
 			victim.blur_eyes(3) // 6 seconds
