@@ -475,6 +475,7 @@ covers:
  centering large appearances
  layering appearances on custom layers
  building appearances from custom icon files
+ custom icon files from species/datum
 
 By Remie Richards (yes I'm taking credit because this just removed 90% of the copypaste in update_icons())
 
@@ -507,17 +508,15 @@ generate/load female uniform sprites matching all previously decided variables
 	if(!t_icon)
 		t_icon = default_icon_file
 
-	//Find a valid icon file from variables+arguments
+	//Find a valid icon file from variables+arguments and datum/species
 	var/file2use
-	if(!isinhands && mob_overlay_icon)
-		file2use = mob_overlay_icon
-	if(!file2use)
+	if(!isinhands)
+		file2use = mob_overlay_icon ? mob_overlay_icon : default_icon_file
+    	var/mob/living/carbon/human/H = loc
+   		if(istype(H) && H.dna.species.alternate_iconbases.len)
+	    	file2use = H.dna.species.alternate_iconbases[file2use] ? H.dna.species.alternate_iconbases[file2use] : file2use
+	else
 		file2use = default_icon_file
-
-	//Check for an alternate spritesheet path in the species datum
-    var/mob/living/carbon/human/H = loc
-    if(istype(H))
-	    file2use = get_species_iconbase(file2use, isinhands)
 
 	//Find a valid layer from variables+arguments
 	var/layer2use
@@ -672,26 +671,3 @@ generate/load female uniform sprites matching all previously decided variables
 
 	update_inv_head()
 	update_inv_wear_mask()
-
-/*! Explanation of alternate species iconbase system
-This proc checks for alternate iconbases defined in alternate_iconbases, found in datum/species
-This gives us the ability to swap out sprites for a species via a simple edit to their species datum.
-I've only added this to the proc responsible for building clothing icons, but this could be used virtually anywhere
-in species level spriting; ie you could change what the mob effects in icons/mob/human look like
-in order to for example make it so gibing for a lizard shows a lizard sprite instead of a human during the gibbing animation
-	> Added proc
-* get_species_iconbase
-	> arguments for get_species_iconbase
-* spritesheet : the original iconbase's file path
-* isinhands : whether the object is held in the mob's hands, we don't want species specific sprite paths for held items
-	> output of get_species_iconbase
-returns the original iconbase's file path, or an alternate path if one was found in species datum and the item isn't currently being held
-	> usage of get_species_iconbase
-currently used in the following procs: build_worn_icon
-*/
-/mob/living/carbon/human/proc/get_species_iconbase(iconbase, isinhands = FALSE)
-	if(dna && dna.species.alternate_iconbases.len && dna.species.alternate_iconbases[iconbase])
-		return isinhands? iconbase : dna.species.alternate_iconbases[iconbase]
-	else
-		return iconbase
-	
