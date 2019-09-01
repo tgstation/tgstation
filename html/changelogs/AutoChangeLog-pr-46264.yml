@@ -1,0 +1,5 @@
+author: "bobbahbrown"
+delete-after: True
+changes: 
+  - bugfix: "Dynamic mode ruleset will now respect your player preferences when selecting antag candidates"
+  - code_imp: "Fixed 9 instances of incorrect not-in-list expressions."
