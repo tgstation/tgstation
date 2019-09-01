@@ -28,9 +28,9 @@
 	new /obj/item/storage/backpack/duffelbag(src)
 	new /obj/item/storage/backpack/explorer(src)
 	new /obj/item/storage/backpack/satchel/explorer(src)
-	new /obj/item/clothing/under/rank/miner/lavaland(src)
-	new /obj/item/clothing/under/rank/miner/lavaland(src)
-	new /obj/item/clothing/under/rank/miner/lavaland(src)
+	new /obj/item/clothing/under/rank/cargo/miner/lavaland(src)
+	new /obj/item/clothing/under/rank/cargo/miner/lavaland(src)
+	new /obj/item/clothing/under/rank/cargo/miner/lavaland(src)
 	new /obj/item/clothing/shoes/workboots/mining(src)
 	new /obj/item/clothing/shoes/workboots/mining(src)
 	new /obj/item/clothing/shoes/workboots/mining(src)
@@ -81,6 +81,14 @@
 		dumb_rev_heads += user.mind
 		return
 	. = ..()
+
+/obj/machinery/computer/shuttle/mining/common
+	name = "lavaland shuttle console"
+	desc = "Used to call and send the lavaland shuttle."
+	circuit = /obj/item/circuitboard/computer/mining_shuttle/common
+	shuttleId = "mining_common"
+	possible_destinations = "whiteship_home;lavaland_common_away;landing_zone_dock;mining_public"
+
 
 /**********************Mining car (Crate like thing, not the rail car)**************************/
 

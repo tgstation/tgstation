@@ -118,7 +118,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("meat" = 1)
-	foodtype = MEAT
+	foodtype = MEAT | BREAKFAST
 	var/roasted = FALSE
 
 /obj/item/reagent_containers/food/snacks/sausage/Initialize()

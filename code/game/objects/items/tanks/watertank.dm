@@ -161,6 +161,8 @@
 	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list()
+	current_range = 5
+	spray_range = 5
 
 /obj/item/watertank/janitor/make_noz()
 	return new /obj/item/reagent_containers/spray/mister/janitor(src)
@@ -274,14 +276,12 @@
 		R.remove_any(100)
 		var/obj/effect/resin_container/A = new (get_turf(src))
 		log_game("[key_name(user)] used Resin Launcher at [AREACOORD(user)].")
-		playsound(src,'sound/items/syringeproj.ogg',40,1)
+		playsound(src,'sound/items/syringeproj.ogg',40,TRUE)
 		for(var/a=0, a<5, a++)
 			step_towards(A, target)
 			sleep(2)
 		A.Smoke()
-		spawn(100)
-			if(src)
-				resin_cooldown = FALSE
+		addtimer(VARSET_CALLBACK(src, resin_cooldown, FALSE), 10 SECONDS)
 		return
 	if(nozzle_mode == RESIN_FOAM)
 		if(!Adj|| !isturf(target))
@@ -312,7 +312,7 @@
 /obj/effect/resin_container/proc/Smoke()
 	var/obj/effect/particle_effect/foam/metal/resin/S = new /obj/effect/particle_effect/foam/metal/resin(get_turf(loc))
 	S.amount = 4
-	playsound(src,'sound/effects/bamf.ogg',100,1)
+	playsound(src,'sound/effects/bamf.ogg',100,TRUE)
 	qdel(src)
 
 #undef EXTINGUISHER

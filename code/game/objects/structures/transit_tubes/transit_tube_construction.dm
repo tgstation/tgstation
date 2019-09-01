@@ -21,7 +21,7 @@
 	for(var/obj/structure/transit_tube/tube in source_turf)
 		existing_tubes +=1
 		if(existing_tubes >= 2)
-			to_chat(user, "<span class='warning'>You cannot wrench anymore transit tubes!</span> ")
+			to_chat(user, "<span class='warning'>You cannot wrench any more transit tubes!</span> ")
 			return FALSE
 	return TRUE
 
@@ -41,6 +41,7 @@
 		icon_state = "[base_icon][flipped]"
 
 /obj/structure/c_transit_tube/wrench_act(mob/living/user, obj/item/I)
+	..()
 	if(!can_wrench_in_loc(user))
 		return
 	to_chat(user, "<span class='notice'>You start attaching the [name]...</span>")

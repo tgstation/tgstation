@@ -29,7 +29,7 @@
 	if(charging)
 		. += "Current charge: [round(charging.percent(), 1)]%."
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Charge rate at <b>[charge_rate]J</b> per cycle.<span>"
+		. += "<span class='notice'>The status display reads: Charge rate at <b>[charge_rate]J</b> per cycle.</span>"
 
 /obj/machinery/cell_charger/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/cell) && !panel_open)
@@ -53,7 +53,7 @@
 				return
 
 			charging = W
-			user.visible_message("[user] inserts a cell into [src].", "<span class='notice'>You insert a cell into [src].</span>")
+			user.visible_message("<span class='notice'>[user] inserts a cell into [src].</span>", "<span class='notice'>You insert a cell into [src].</span>")
 			chargelevel = -1
 			update_icon()
 	else
@@ -90,7 +90,7 @@
 	user.put_in_hands(charging)
 	charging.add_fingerprint(user)
 
-	user.visible_message("[user] removes [charging] from [src].", "<span class='notice'>You remove [charging] from [src].</span>")
+	user.visible_message("<span class='notice'>[user] removes [charging] from [src].</span>", "<span class='notice'>You remove [charging] from [src].</span>")
 
 	removecell()
 

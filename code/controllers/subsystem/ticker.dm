@@ -367,8 +367,8 @@ SUBSYSTEM_DEF(ticker)
 				captainless=0
 			if(player.mind.assigned_role != player.mind.special_role)
 				SSjob.EquipRank(N, player.mind.assigned_role, 0)
-			if(CONFIG_GET(flag/roundstart_traits) && ishuman(N.new_character))
-				SSquirks.AssignQuirks(N.new_character, N.client, TRUE)
+				if(CONFIG_GET(flag/roundstart_traits) && ishuman(N.new_character))
+					SSquirks.AssignQuirks(N.new_character, N.client, TRUE)
 		CHECK_TICK
 	if(captainless)
 		for(var/mob/dead/new_player/N in GLOB.player_list)
@@ -642,7 +642,8 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/its_only_game.ogg',
 		'sound/roundend/yeehaw.ogg',
 		'sound/roundend/disappointed.ogg',
-		'sound/roundend/scrunglartiy.ogg'\
+		'sound/roundend/scrunglartiy.ogg',
+		'sound/roundend/petersondisappointed.ogg'\
 		)
 
 	SEND_SOUND(world, sound(round_end_sound))

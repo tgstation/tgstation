@@ -45,8 +45,8 @@
 
 /obj/effect/immovablerod/wizard/penetrate(mob/living/L)
 	if(L.anti_magic_check())
-		L.visible_message("<span class='danger'>[src] hits [L], but it bounces back, then vanishes!</span>" , "<span class='userdanger'>[src] hits you... but it bounces back, then vanishes!</span>" , "<span class ='danger'>You hear a weak, sad, CLANG.</span>")
+		L.visible_message("<span class='danger'>[src] hits [L], but it bounces back, then vanishes!</span>" , "<span class='userdanger'>[src] hits you... but it bounces back, then vanishes!</span>" , "<span class='danger'>You hear a weak, sad, CLANG.</span>")
 		qdel(src)
 		return
-	L.visible_message("<span class='danger'>[L] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class ='danger'>You hear a CLANG!</span>")
+	L.visible_message("<span class='danger'>[L] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class='danger'>You hear a CLANG!</span>")
 	L.adjustBruteLoss(70 + damage_bonus)

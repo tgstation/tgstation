@@ -13,6 +13,10 @@
 	var/mob/living/split_personality/owner_backseat
 
 /datum/brain_trauma/severe/split_personality/on_gain()
+	var/mob/living/M = owner
+	if(M.stat == DEAD)	//No use assigning people to a corpse
+		qdel(src)
+		return
 	..()
 	make_backseats()
 	get_ghost()

@@ -119,7 +119,7 @@
 
 	if(!silent)
 		to_chat(H, "Something is nya~t right.")
-		playsound(get_turf(H), 'sound/effects/meow1.ogg', 50, 1, -1)
+		playsound(get_turf(H), 'sound/effects/meow1.ogg', 50, TRUE, -1)
 
 /proc/purrbation_remove(mob/living/carbon/human/H, silent = FALSE)
 	if(!ishuman(H) || !iscatperson(H))

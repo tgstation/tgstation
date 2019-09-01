@@ -37,6 +37,8 @@
 	maptext_height = 26
 	maptext_width = 32
 	maptext_y = -1
+	ui_x = 300
+	ui_y = 200
 
 /obj/machinery/door_timer/Initialize()
 	. = ..()
@@ -150,7 +152,7 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "brig_timer", name, 300, 200, master_ui, state)
+		ui = new(user, src, ui_key, "brig_timer", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 //icon update function

@@ -88,8 +88,8 @@
 		var/obj/item/stack/S = I
 
 		if(is_type_in_list(S, list(/obj/item/stack/sheet/metal, /obj/item/stack/rods, /obj/item/stack/tile/plasteel)))
-			if(S.materials[MAT_METAL])
-				S.cost = S.materials[MAT_METAL] * 0.25
+			if(S.materials[/datum/material/iron])
+				S.cost = S.materials[/datum/material/iron] * 0.25
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/metal)
 
 		else if(istype(S, /obj/item/stack/sheet/glass))
@@ -112,6 +112,10 @@
 		else if(istype(S, /obj/item/stack/marker_beacon))
 			S.cost = 1
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/beacon)
+
+		else if(istype(S, /obj/item/stack/pipe_cleaner_coil))
+			S.cost = 1
+			S.source = get_or_create_estorage(/datum/robot_energy_storage/pipe_cleaner)
 
 		if(S && S.source)
 			S.materials = list()
@@ -219,7 +223,7 @@
 	R.anchored = TRUE
 	sleep(1)
 	for(var/i in 1 to 4)
-		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, 1, -1)
+		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
 		sleep(7)
 	if(!prev_lockcharge)
 		R.SetLockdown(0)
@@ -264,7 +268,7 @@
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/healthanalyzer,
 		/obj/item/reagent_containers/borghypo,
-		/obj/item/reagent_containers/glass/beaker/large,
+		/obj/item/borg_beaker_holder,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/surgical_drapes,
@@ -480,7 +484,8 @@
 		/obj/item/lighter,
 		/obj/item/storage/bag/tray,
 		/obj/item/reagent_containers/borghypo/borgshaker,
-		/obj/item/borg/lollipop)
+		/obj/item/borg/lollipop,
+		/obj/item/stack/pipe_cleaner_coil/cyborg)
 	emag_modules = list(/obj/item/reagent_containers/borghypo/borgshaker/hacked)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/service,
 		/obj/item/borg/sight/xray/truesight_lens)
@@ -616,6 +621,7 @@
 		/obj/item/borg/sight/thermal,
 		/obj/item/construction/rcd/borg/syndicate,
 		/obj/item/pipe_dispenser,
+		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/extinguisher,
 		/obj/item/weldingtool/largetank/cyborg,
 		/obj/item/screwdriver/nuke,
@@ -687,3 +693,8 @@
 	max_energy = 30
 	recharge_rate = 1
 	name = "Marker Beacon Storage"
+
+/datum/robot_energy_storage/pipe_cleaner
+	max_energy = 50
+	recharge_rate = 2
+	name = "Pipe Cleaner Synthesizer"

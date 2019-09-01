@@ -1,0 +1,5 @@
+author: "Dawson1917"
+delete-after: True
+changes: 
+  - rscadd: "ED-209's will retaliate when you throw things at them."
+  - balance: "ED-209's no longer take damage from electricity."

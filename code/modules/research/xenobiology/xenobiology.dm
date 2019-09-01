@@ -46,7 +46,7 @@
 
 //Effect when activated by a Luminescent. Separated into a minor and major effect. Returns cooldown in deciseconds.
 /obj/item/slime_extract/proc/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
-	to_chat(user, "<span class='notice'>Nothing happened... This slime extract cannot be activated this way.</span>")
+	to_chat(user, "<span class='warning'>Nothing happened... This slime extract cannot be activated this way.</span>")
 	return 0
 
 //Core-crossing: Feeding adult slimes extracts to obtain a much more powerful, single extract.
@@ -69,7 +69,7 @@
 	M.applied++
 	qdel(src)
 	to_chat(user, "<span class='notice'>You feed the slime [src], [M.applied == 1 ? "starting to mutate its core." : "further mutating its core."]</span>")
-	playsound(M, 'sound/effects/attackblob.ogg', 50, 1)
+	playsound(M, 'sound/effects/attackblob.ogg', 50, TRUE)
 
 	if(M.applied >= SLIME_EXTRACT_CROSSING_REQUIRED)
 		M.spawn_corecross()
@@ -86,14 +86,14 @@
 			var/obj/item/reagent_containers/food/snacks/monkeycube/M = new
 			if(!user.put_in_active_hand(M))
 				M.forceMove(user.drop_location())
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			to_chat(user, "<span class='notice'>You spit out a monkey cube.</span>")
 			return 120
 		if(SLIME_ACTIVATE_MAJOR)
 			to_chat(user, "<span class='notice'>Your [name] starts pulsing...</span>")
 			if(do_after(user, 40, target = user))
 				var/mob/living/simple_animal/slime/S = new(get_turf(user), "grey")
-				playsound(user, 'sound/effects/splat.ogg', 50, 1)
+				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 				to_chat(user, "<span class='notice'>You spit out [S].</span>")
 				return 350
 			else
@@ -112,7 +112,7 @@
 			if(do_after(user, 40, target = user))
 				var/mob/living/simple_animal/S = create_random_mob(user.drop_location(), FRIENDLY_SPAWN)
 				S.faction |= "neutral"
-				playsound(user, 'sound/effects/splat.ogg', 50, 1)
+				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 				user.visible_message("<span class='warning'>[user] spits out [S]!</span>", "<span class='notice'>You spit out [S]!</span>")
 				return 300
 
@@ -124,7 +124,7 @@
 					S.faction |= "neutral"
 				else
 					S.faction |= "slime"
-				playsound(user, 'sound/effects/splat.ogg', 50, 1)
+				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 				user.visible_message("<span class='warning'>[user] spits out [S]!</span>", "<span class='warning'>You spit out [S]!</span>")
 				return 600
 
@@ -141,7 +141,7 @@
 			var/obj/O = new food_type
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
 			return 200
 		if(SLIME_ACTIVATE_MAJOR)
@@ -149,7 +149,7 @@
 			var/obj/O = new drink_type
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
 			return 200
 
@@ -165,7 +165,7 @@
 			var/obj/item/stack/sheet/glass/O = new(null, 5)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
 			return 150
 
@@ -173,7 +173,7 @@
 			var/obj/item/stack/sheet/metal/O = new(null, 5)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
 			return 200
 
@@ -208,7 +208,7 @@
 			var/obj/item/stack/sheet/mineral/plasma/O = new(null, 1)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
 			return 150
 
@@ -393,7 +393,7 @@
 			var/obj/item/slimepotion/slime/renaming/O = new(null, 1)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
 			return 150
 
@@ -401,7 +401,7 @@
 			var/obj/item/slimepotion/slime/sentience/O = new(null, 1)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
 			return 450
 
@@ -436,7 +436,7 @@
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			to_chat(user, "<span class='warning'>You vomit slippery oil.</span>")
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			new /obj/effect/decal/cleanable/oil/slippery(get_turf(user))
 			return 450
 
@@ -527,7 +527,7 @@
 			var/obj/item/O = new chosen(null)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
 			return 150
 
@@ -536,7 +536,7 @@
 			var/obj/item/O = new chosen(null)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
 			return 250
 
@@ -572,7 +572,7 @@
 			var/obj/item/camera/O = new(null, 1)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
 			return 150
 
@@ -602,7 +602,7 @@
 			var/obj/item/O = new chosen(null)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
-			playsound(user, 'sound/effects/splat.ogg', 50, 1)
+			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			user.visible_message("<span class='warning'>[user] spits out [O]!</span>", "<span class='notice'>You spit out [O]!</span>")
 			return 150
 
@@ -616,7 +616,7 @@
 /obj/item/slimepotion/afterattack(obj/item/reagent_containers/target, mob/user , proximity)
 	. = ..()
 	if (istype(target))
-		to_chat(user, "<span class='notice'>You cannot transfer [src] to [target]! It appears the potion must be given directly to a slime to absorb.</span>" )
+		to_chat(user, "<span class='warning'>You cannot transfer [src] to [target]! It appears the potion must be given directly to a slime to absorb.</span>" )
 		return
 
 /obj/item/slimepotion/slime/docility
@@ -642,7 +642,7 @@
 	M.set_nutrition(700)
 	to_chat(M, "<span class='warning'>You absorb the potion and feel your intense desire to feed melt away.</span>")
 	to_chat(user, "<span class='notice'>You feed the slime the potion, removing its hunger and calming it.</span>")
-	var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
+	var/newname = copytext(sanitize_name(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
 
 	if (!newname)
 		newname = "pet slime"
@@ -978,9 +978,10 @@
 	singular_name = "floor tile"
 	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds."
 	icon_state = "tile-bluespace"
+	item_state = "tile-bluespace"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
-	materials = list(MAT_METAL=500)
+	materials = list(/datum/material/iron=500)
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
@@ -994,9 +995,10 @@
 	singular_name = "floor tile"
 	desc = "Time seems to flow very slowly around these tiles."
 	icon_state = "tile-sepia"
+	item_state = "tile-sepia"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
-	materials = list(MAT_METAL=500)
+	materials = list(/datum/material/iron=500)
 	throwforce = 10
 	throw_speed = 0.1
 	throw_range = 28

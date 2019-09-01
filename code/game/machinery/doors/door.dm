@@ -84,6 +84,7 @@
 	return ..()
 
 /obj/machinery/door/Bumped(atom/movable/AM)
+	. = ..()
 	if(operating || (obj_flags & EMAGGED))
 		return
 	if(ismob(AM))
@@ -211,13 +212,13 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(glass)
-				playsound(loc, 'sound/effects/glasshit.ogg', 90, 1)
+				playsound(loc, 'sound/effects/glasshit.ogg', 90, TRUE)
 			else if(damage_amount)
-				playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+				playsound(loc, 'sound/weapons/smash.ogg', 50, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
+				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
 /obj/machinery/door/emp_act(severity)
 	. = ..()
@@ -275,8 +276,7 @@
 	air_update_turf(1)
 	update_freelook_sight()
 	if(autoclose)
-		spawn(autoclose)
-			close()
+		addtimer(CALLBACK(src, .proc/close), autoclose)
 	return 1
 
 /obj/machinery/door/proc/close()
@@ -333,8 +333,10 @@
 		var/turf/location = get_turf(src)
 		//add_blood doesn't work for borgs/xenos, but add_blood_floor does.
 		L.add_splatter_floor(location)
+		log_combat(src, L, "crushed")
 	for(var/obj/mecha/M in get_turf(src))
 		M.take_damage(DOOR_CRUSH_DAMAGE)
+		log_combat(src, M, "crushed")
 
 /obj/machinery/door/proc/autoclose()
 	if(!QDELETED(src) && !density && !operating && !locked && !welded && autoclose)

@@ -26,6 +26,7 @@
 		pinnedLoc.forceMove(loc)
 
 /obj/item/target/welder_act(mob/living/user, obj/item/I)
+	..()
 	if(I.use_tool(src, user, 0, volume=40))
 		removeOverlays()
 		to_chat(user, "<span class='notice'>You slice off [src]'s uneven chunks of aluminium and scorch marks.</span>")
@@ -61,7 +62,7 @@
 
 /obj/item/target/clown/bullet_act(obj/item/projectile/P)
 	. = ..()
-	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
 
 /obj/item/target/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/bullet/reusable)) // If it's a foam dart, don't bother with any of this other shit

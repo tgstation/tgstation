@@ -292,12 +292,11 @@
 /datum/crafting_recipe/improvisedslug
 	name = "Improvised Shotgun Shell"
 	result = /obj/item/ammo_casing/shotgun/improvised
-	reqs = list(/obj/item/grenade/chem_grenade = 1,
-				/obj/item/stack/sheet/metal = 1,
+	reqs = list(/obj/item/stack/sheet/metal = 2,
 				/obj/item/stack/cable_coil = 1,
 				/datum/reagent/fuel = 10)
 	tools = list(TOOL_SCREWDRIVER)
-	time = 5
+	time = 12
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
 
@@ -471,7 +470,7 @@
 	result = /obj/item/bombcore/chemical
 	reqs = list(
 		/obj/item/stock_parts/matter_bin = 1,
-		/obj/item/grenade/plastic/c4 = 1,
+		/obj/item/grenade/c4 = 1,
 		/obj/item/grenade/chem_grenade = 2
 	)
 	parts = list(/obj/item/stock_parts/matter_bin = 1, /obj/item/grenade/chem_grenade = 2)
@@ -646,7 +645,7 @@
 
 
 /datum/crafting_recipe/rcl
-	name = "Makeshift Rapid Cable Layer"
+	name = "Makeshift Rapid Pipe Cleaner Layer"
 	result = /obj/item/twohanded/rcl/ghetto
 	time = 40
 	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
@@ -663,7 +662,7 @@
 
 /datum/crafting_recipe/mummy/body
 	name = "Mummification Bandages (Body)"
-	result = /obj/item/clothing/under/mummy
+	result = /obj/item/clothing/under/costume/mummy
 	reqs = list(/obj/item/stack/sheet/cloth = 5)
 
 /datum/crafting_recipe/chaplain_hood
@@ -708,6 +707,6 @@
 	name = "Improvised Jetpack"
 	result = /obj/item/tank/jetpack/improvised
 	time = 30
-	reqs = list(/obj/item/tank/internals/oxygen/red = 2, /obj/item/extinguisher = 1, /obj/item/pipe = 3, /obj/item/stack/cable_coil = 30)//red oxygen tank so it looks right
+	reqs = list(/obj/item/tank/internals/oxygen = 2, /obj/item/extinguisher = 1, /obj/item/pipe = 3, /obj/item/stack/cable_coil = MAXCOIL)
 	category = CAT_MISC
 	tools = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)

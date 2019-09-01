@@ -49,7 +49,7 @@
 			var/datum/surgery/S = available_surgeries[P]
 
 			for(var/datum/surgery/other in M.surgeries)
-				if(other.location == S.location)
+				if(other.location == selected_zone)
 					return //during the input() another surgery was started at the same location.
 
 			//we check that the surgery is still doable after the input() wait.
@@ -69,7 +69,7 @@
 
 			if(S.ignore_clothes || get_location_accessible(M, selected_zone))
 				var/datum/surgery/procedure = new S.type(M, selected_zone, affecting)
-				user.visible_message("[user] drapes [I] over [M]'s [parse_zone(selected_zone)] to prepare for surgery.", \
+				user.visible_message("<span class='notice'>[user] drapes [I] over [M]'s [parse_zone(selected_zone)] to prepare for surgery.</span>", \
 					"<span class='notice'>You drape [I] over [M]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name].</span>")
 
 				log_combat(user, M, "operated on", null, "(OPERATION TYPE: [procedure.name]) (TARGET AREA: [selected_zone])")
@@ -79,13 +79,13 @@
 	else if(!current_surgery.step_in_progress)
 		attempt_cancel_surgery(current_surgery, I, M, user)
 
-	return 1
+	return TRUE
 
 /proc/attempt_cancel_surgery(datum/surgery/S, obj/item/I, mob/living/M, mob/user)
 	var/selected_zone = user.zone_selected
 	if(S.status == 1)
 		M.surgeries -= S
-		user.visible_message("[user] removes [I] from [M]'s [parse_zone(selected_zone)].", \
+		user.visible_message("<span class='notice'>[user] removes [I] from [M]'s [parse_zone(selected_zone)].</span>", \
 			"<span class='notice'>You remove [I] from [M]'s [parse_zone(selected_zone)].</span>")
 		qdel(S)
 	else if(S.can_cancel)
@@ -99,7 +99,7 @@
 				var/mob/living/carbon/human/H = M
 				H.bleed_rate = max( (H.bleed_rate - 3), 0)
 			M.surgeries -= S
-			user.visible_message("[user] closes [M]'s [parse_zone(selected_zone)] with [close_tool] and removes [I].", \
+			user.visible_message("<span class='notice'>[user] closes [M]'s [parse_zone(selected_zone)] with [close_tool] and removes [I].</span>", \
 				"<span class='notice'>You close [M]'s [parse_zone(selected_zone)] with [close_tool] and remove [I].</span>")
 			qdel(S)
 		else

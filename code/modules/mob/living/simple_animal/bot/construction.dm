@@ -17,7 +17,7 @@
 		return
 
 /obj/item/bot_assembly/proc/rename_bot()
-	var/t = stripped_input(usr, "Enter new robot name", name, created_name,MAX_NAME_LEN)
+	var/t = sanitize_name(stripped_input(usr, "Enter new robot name", name, created_name,MAX_NAME_LEN))
 	if(!t)
 		return
 	if(!in_range(src, usr) && loc != usr)
@@ -163,7 +163,7 @@
 					if(!istype(W, /obj/item/gun/energy/laser/redtag))
 						return
 				if("")
-					if(!istype(W, /obj/item/gun/energy/e_gun/dragnet))
+					if(!istype(W, /obj/item/gun/energy/disabler))
 						return
 				else
 					return
@@ -258,11 +258,10 @@
 	var/healthanalyzer = /obj/item/healthanalyzer
 	var/firstaid = /obj/item/storage/firstaid
 
-/obj/item/bot_assembly/medbot/Initialize()
-	. = ..()
-	spawn(5)
-		if(skin)
-			add_overlay("kit_skin_[skin]")
+/obj/item/bot_assembly/medbot/proc/set_skin(skin)
+	src.skin = skin
+	if(skin)
+		add_overlay("kit_skin_[skin]")
 
 /obj/item/bot_assembly/medbot/attackby(obj/item/W, mob/user, params)
 	..()
@@ -428,6 +427,7 @@
 				to_chat(user, "<span class='notice'>You remove [dropped_arm] from [src].</span>")
 				build_step--
 				if(toyswordamt > 0 || toyswordamt)
+					toyswordamt = 0
 					icon_state = initial(icon_state)
 					to_chat(user, "<span class='notice'>The superglue binding [src]'s toy swords to its chassis snaps!</span>")
 					for(var/IS in 1 to toyswordamt)
@@ -455,6 +455,7 @@
 					qdel(src)
 			else if(I.tool_behaviour == TOOL_SCREWDRIVER) //deconstruct
 				build_step--
+				swordamt = 0
 				icon_state = initial(icon_state)
 				to_chat(user, "<span class='notice'>You unbolt [src]'s energy swords</span>")
 				for(var/IS in 1 to swordamt)

@@ -23,6 +23,8 @@
 /obj/item/paper/bounty_printout/Initialize()
 	. = ..()
 	info = "<h2>Nanotrasen Cargo Bounties</h2></br>"
+	update_icon()
+
 	for(var/datum/bounty/B in GLOB.bounties_list)
 		if(B.claimed)
 			continue
@@ -89,6 +91,6 @@
 				B.claim()
 
 	if(href_list["refresh"])
-		playsound(src, "terminal_type", 25, 0)
+		playsound(src, "terminal_type", 25, FALSE)
 
 	updateUsrDialog()

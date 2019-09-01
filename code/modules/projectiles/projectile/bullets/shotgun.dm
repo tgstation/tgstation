@@ -67,6 +67,11 @@
 	damage = 3
 	stamina = 11
 
+/obj/item/projectile/bullet/pellet/shotgun_incapacitate
+	name = "incapacitating pellet"
+	damage = 1
+	stamina = 6
+
 /obj/item/projectile/bullet/pellet/Range()
 	..()
 	if(damage > 0)

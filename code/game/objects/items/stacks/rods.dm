@@ -17,7 +17,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
-	materials = list(MAT_METAL=1000)
+	materials = list(/datum/material/iron=1000)
 	max_amount = 50
 	attack_verb = list("hit", "bludgeoned", "whacked")
 	hitsound = 'sound/weapons/grenadelaunch.ogg'
@@ -48,7 +48,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 		if(W.use_tool(src, user, 0, volume=40))
 			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
-			user.visible_message("[user.name] shaped [src] into metal with [W].", \
+			user.visible_message("<span class='notice'>[user.name] shaped [src] into metal with [W].</span>", \
 						 "<span class='notice'>You shape [src] into metal with [W].</span>", \
 						 "<span class='italics'>You hear welding.</span>")
 			var/obj/item/stack/rods/R = src

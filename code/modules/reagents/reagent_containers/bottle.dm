@@ -38,6 +38,7 @@
 
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(filling)
+	. = ..()
 
 
 /obj/item/reagent_containers/glass/bottle/epinephrine
@@ -77,10 +78,10 @@
 	desc = "A small bottle of Mannitol. Useful for healing brain damage."
 	list_reagents = list(/datum/reagent/medicine/mannitol = 30)
 
-/obj/item/reagent_containers/glass/bottle/charcoal
-	name = "charcoal bottle"
-	desc = "A small bottle of charcoal, which removes toxins and other chemicals from the bloodstream."
-	list_reagents = list(/datum/reagent/medicine/charcoal = 30)
+/obj/item/reagent_containers/glass/bottle/multiver
+	name = "multiver bottle"
+	desc = "A small bottle of multiver, which removes toxins and other chemicals from the bloodstream but causes shortness of breath. All effects scale with the amount of reagents in the patient."
+	list_reagents = list(/datum/reagent/medicine/C2/multiver = 30)
 
 /obj/item/reagent_containers/glass/bottle/mutagen
 	name = "unstable mutagen bottle"
@@ -143,7 +144,7 @@
 /obj/item/reagent_containers/glass/bottle/traitor/Initialize()
 	. = ..()
 	extra_reagent = pick(/datum/reagent/toxin/polonium, /datum/reagent/toxin/histamine, /datum/reagent/toxin/formaldehyde, /datum/reagent/toxin/venom, /datum/reagent/toxin/fentanyl, /datum/reagent/toxin/cyanide)
-	reagents.add_reagent("[extra_reagent]", 3)
+	reagents.add_reagent(extra_reagent, 3)
 
 /obj/item/reagent_containers/glass/bottle/polonium
 	name = "polonium bottle"
@@ -306,7 +307,7 @@
 /obj/item/reagent_containers/glass/bottle/tuberculosiscure
 	name = "BVAK bottle"
 	desc = "A small bottle containing Bio Virus Antidote Kit."
-	list_reagents = list(/datum/reagent/medicine/atropine = 5, /datum/reagent/medicine/epinephrine = 5, /datum/reagent/medicine/perfluorodecalin = 10, /datum/reagent/medicine/spaceacillin = 10)
+	list_reagents = list(/datum/reagent/vaccine/fungal_tb = 30)
 
 //Oldstation.dmm chemical storage bottles
 

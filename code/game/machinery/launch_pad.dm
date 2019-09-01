@@ -49,7 +49,7 @@
 /obj/machinery/launchpad/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Maximum range: <b>[range]</b> units.<span>"
+		. += "<span class='notice'>The status display reads: Maximum range: <b>[range]</b> units.</span>"
 
 /obj/machinery/launchpad/attackby(obj/item/I, mob/user, params)
 	if(stationary)
@@ -70,6 +70,15 @@
 			return
 
 	return ..()
+
+/obj/machinery/launchpad/attack_ghost(mob/dead/observer/ghost)
+	. = ..()
+	if(.)
+		return
+	var/target_x = x + x_offset
+	var/target_y = y + y_offset
+	var/turf/target = locate(target_x, target_y, z)
+	ghost.forceMove(target)
 
 /obj/machinery/launchpad/proc/isAvailable()
 	if(stat & NOPOWER)
@@ -114,7 +123,7 @@
 		indicator_icon = "launchpad_pull"
 	update_indicator()
 
-	playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, 1)
+	playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, TRUE)
 	teleporting = TRUE
 
 
@@ -140,26 +149,24 @@
 		source = dest
 		dest = target
 
-	playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, 1)
+	playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, TRUE)
 	var/first = TRUE
 	for(var/atom/movable/ROI in source)
 		if(ROI == src)
 			continue
-		// if it's anchored, don't teleport
+		if(!istype(ROI) || isdead(ROI) || iscameramob(ROI) || istype(ROI, /obj/effect/dummy/phased_mob))
+			continue//don't teleport these
 		var/on_chair = ""
-		if(ROI.anchored)
+		if(ROI.anchored)// if it's anchored, don't teleport
 			if(isliving(ROI))
 				var/mob/living/L = ROI
 				if(L.buckled)
 					// TP people on office chairs
 					if(L.buckled.anchored)
 						continue
-
 					on_chair = " (on a chair)"
 				else
 					continue
-			else if(!isobserver(ROI))
-				continue
 		if(!first)
 			log_msg += ", "
 		if(ismob(ROI))

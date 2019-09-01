@@ -16,7 +16,7 @@
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 50))
 			user.visible_message("<span class='notice'>[user] disassembles [src]!</span>", "<span class='notice'>You break down [src] into scrap metal.</span>")
-			playsound(user, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(user, 'sound/items/deconstruct.ogg', 50, TRUE)
 			new/obj/item/stack/sheet/metal(drop_location())
 			qdel(src)
 		return
@@ -104,7 +104,7 @@
 	icon_state = "driverseat"
 
 /obj/structure/fluff/bus/passable/seat/driver/attack_hand(mob/user)
-	playsound(src, 'sound/items/carhorn.ogg', 50, 1)
+	playsound(src, 'sound/items/carhorn.ogg', 50, TRUE)
 	. = ..()
 
 /obj/structure/fluff/paper
@@ -167,3 +167,60 @@
 	desc = "A crudely-made sign with the words 'fok of' written in some sort of red paint."
 	icon = 'icons/obj/fluff.dmi'
 	icon_state = "fokof"
+
+/obj/structure/fluff/big_chain
+	name = "giant chain"
+	desc = "A towering link of chains leading up to the ceiling."
+	icon = 'icons/effects/32x96.dmi'
+	icon_state = "chain"
+	layer = ABOVE_OBJ_LAYER
+	anchored = TRUE
+	density = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/railing
+	name = "railing"
+	desc = "Basic railing meant to protect idiots like you from falling."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "railing"
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/railing/corner
+	icon_state = "railing_corner"
+	density = FALSE
+
+/obj/structure/fluff/beach_towel
+	name = "beach towel"
+	desc = "A towel decorated in various beach-themed designs."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "railing"
+	density = FALSE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/beach_umbrella
+	name = "beach umbrella"
+	desc = "A fancy umbrella designed to keep the sun off beach-goers."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "brella"
+	density = FALSE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/beach_umbrella/security
+	icon_state = "hos_brella"
+
+/obj/structure/fluff/beach_umbrella/science
+	icon_state = "rd_brella"
+
+/obj/structure/fluff/beach_umbrella/engine
+	icon_state = "ce_brella"
+
+/obj/structure/fluff/beach_umbrella/cap
+	icon_state = "cap_brella"
+
+/obj/structure/fluff/beach_umbrella/syndi
+	icon_state = "syndi_brella"
+

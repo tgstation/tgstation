@@ -10,7 +10,7 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	strip_delay = 60
-	resistance_flags = NONE
+	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR
 
@@ -98,7 +98,7 @@
 	toggle_message = "You pull the visor down on"
 	alt_toggle_message = "You push the visor up on"
 	can_toggle = 1
-	armor = list("melee" = 45, "bullet" = 15, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 2, "rad" = 0, "fire" = 50, "acid" = 50)
+	armor = list("melee" = 50, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 	flags_inv = HIDEEARS|HIDEFACE
 	strip_delay = 80
 	actions_types = list(/datum/action/item_action/toggle)
@@ -180,7 +180,7 @@
 	flags_inv = HIDEEARS|HIDEHAIR
 	icon_state = "thunderdome"
 	item_state = "thunderdome"
-	armor = list("melee" = 40, "bullet" = 30, "laser" = 25,"energy" = 10, "bomb" = 25, "bio" = 10, "rad" = 0, "fire" = 50, "acid" = 50)
+	armor = list("melee" = 80, "bullet" = 80, "laser" = 50, "energy" = 50, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 90)
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -248,7 +248,7 @@
 	desc = "A classic metal helmet."
 	icon_state = "knight_green"
 	item_state = "knight_green"
-	armor = list("melee" = 41, "bullet" = 15, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 2, "rad" = 0, "fire" = 0, "acid" = 50)
+	armor = list("melee" = 50, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
@@ -277,7 +277,7 @@
 	desc = "An intimidating tribal helmet, it doesn't look very comfortable."
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	flags_cover = HEADCOVERSEYES
-	armor = list("melee" = 25, "bullet" = 25, "laser" = 25, "energy" = 10, "bomb" = 10, "bio" = 5, "rad" = 20, "fire" = 40, "acid" = 20)
+	armor = list("melee" = 35, "bullet" = 25, "laser" = 25, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	icon_state = "skull"
 	item_state = "skull"
 	strip_delay = 100
@@ -287,7 +287,8 @@
 	desc = "A helmet made from durathread and leather."
 	icon_state = "durathread"
 	item_state = "durathread"
-	armor = list("melee" = 25, "bullet" = 10, "laser" = 20,"energy" = 10, "bomb" = 30, "bio" = 15, "rad" = 20, "fire" = 100, "acid" = 50)
+	resistance_flags = FLAMMABLE
+	armor = list("melee" = 20, "bullet" = 10, "laser" = 30, "energy" = 5, "bomb" = 15, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 50)
 	strip_delay = 60
 
 /obj/item/clothing/head/helmet/rus_helmet
@@ -295,7 +296,7 @@
 	desc = "It can hold a bottle of vodka."
 	icon_state = "rus_helmet"
 	item_state = "rus_helmet"
-	armor = list("melee" = 30, "bullet" = 25, "laser" = 20,"energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 20, "fire" = 30, "acid" = 50)
+	armor = list("melee" = 25, "bullet" = 30, "laser" = 0, "energy" = 15, "bomb" = 10, "bio" = 0, "rad" = 20, "fire" = 20, "acid" = 50)
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/helmet
 
 /obj/item/clothing/head/helmet/rus_ushanka
@@ -306,7 +307,7 @@
 	body_parts_covered = HEAD
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	armor = list("melee" = 10, "bullet" = 5, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 50, "rad" = 20, "fire" = -10, "acid" = 0)
+	armor = list("melee" = 25, "bullet" = 20, "laser" = 20, "energy" = 10, "bomb" = 20, "bio" = 50, "rad" = 20, "fire" = -10, "acid" = 50)
 
 //LightToggle
 
@@ -349,7 +350,7 @@
 	return ..()
 
 /obj/item/clothing/head/helmet/screwdriver_act(mob/living/user, obj/item/I)
-	..()
+	. = ..()
 	if(can_flashlight && attached_light) //if it has a light but can_flashlight is false, the light is permanently attached.
 		I.play_tool_sound(src)
 		to_chat(user, "<span class='notice'>You unscrew [attached_light] from [src].</span>")

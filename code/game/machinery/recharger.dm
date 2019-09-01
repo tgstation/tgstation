@@ -32,11 +32,11 @@
 		<span class='notice'>- \A [charging].</span>"}
 
 	if(!(stat & (NOPOWER|BROKEN)))
-		. += "<span class='notice'>The status display reads:<span>"
-		. += "<span class='notice'>- Recharging <b>[recharge_coeff*10]%</b> cell charge per cycle.<span>"
+		. += "<span class='notice'>The status display reads:</span>"
+		. += "<span class='notice'>- Recharging <b>[recharge_coeff*10]%</b> cell charge per cycle.</span>"
 		if(charging)
 			var/obj/item/stock_parts/cell/C = charging.get_cell()
-			. += "<span class='notice'>- \The [charging]'s cell is at <b>[C.percent()]%</b>.<span>"
+			. += "<span class='notice'>- \The [charging]'s cell is at <b>[C.percent()]%</b>.</span>"
 
 
 /obj/machinery/recharger/proc/setCharging(new_charging)

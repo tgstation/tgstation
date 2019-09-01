@@ -23,6 +23,8 @@
 	var/area_type
 	var/hidden = FALSE //are we invisible to shuttle navigation computers?
 
+	var/delete_after = FALSE ///Delete this port after ship fly off.
+
 	//these objects are indestructible
 /obj/docking_port/Destroy(force)
 	// unless you assert that you know what you're doing. Horrible things
@@ -202,10 +204,10 @@
 
 		roundstart_template = SSmapping.shuttle_templates[sid]
 		if(!roundstart_template)
-			CRASH("Invalid path ([roundstart_template]) passed to docking port.")
+			CRASH("Invalid path ([sid]/[roundstart_template]) passed to docking port.")
 
 	if(roundstart_template)
-		SSshuttle.manipulator.action_load(roundstart_template, src)
+		SSshuttle.action_load(roundstart_template, src)
 
 //returns first-found touching shuttleport
 /obj/docking_port/stationary/get_docked()
@@ -432,7 +434,10 @@
 		if(initiate_docking(S1) != DOCKING_SUCCESS)
 			WARNING("shuttle \"[id]\" could not enter transit space. Docked at [S0 ? S0.id : "null"]. Transit dock [S1 ? S1.id : "null"].")
 		else
-			previous = S0
+			if(S0.delete_after)
+				qdel(S0, TRUE)
+			else
+				previous = S0
 	else
 		WARNING("shuttle \"[id]\" could not enter transit space. S0=[S0 ? S0.id : "null"] S1=[S1 ? S1.id : "null"]")
 
@@ -786,8 +791,8 @@
 	current_engines = max(0,current_engines + mod)
 	if(in_flight())
 		var/delta_coeff = engine_coeff / old_coeff
-		modTimer(delta_coeff) 
- 
+		modTimer(delta_coeff)
+
 /obj/docking_port/mobile/proc/count_engines()
 	. = 0
 	for(var/thing in shuttle_areas)

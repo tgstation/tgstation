@@ -26,7 +26,7 @@
 	action_background_icon_state = "bg_cult"
 
 /obj/effect/proc_holder/spell/aoe_turf/area_conversion/cast(list/targets, mob/user = usr)
-	playsound(get_turf(user), 'sound/items/welder.ogg', 75, 1)
+	playsound(get_turf(user), 'sound/items/welder.ogg', 75, TRUE)
 	for(var/turf/T in targets)
 		T.narsie_act(FALSE, TRUE, 100 - (get_dist(user, T) * 25))
 
@@ -102,7 +102,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult/purified
 	summon_type = list(/obj/item/soulstone/anybody/purified)
-	
+
 /obj/effect/proc_holder/spell/targeted/forcewall/cult
 	name = "Shield"
 	desc = "This spell creates a temporary forcefield to shield yourself and allies from incoming fire."
@@ -197,14 +197,14 @@
 
 /obj/effect/proc_holder/spell/targeted/abyssal_gaze/cast(list/targets, mob/user = usr)
 	if(!LAZYLEN(targets))
-		to_chat(user, "<span class='notice'>No target found in range.</span>")
+		to_chat(user, "<span class='warning'>No target found in range!</span>")
 		revert_cast()
 		return
 
 	var/mob/living/carbon/target = targets[1]
 
 	if(!(target in oview(range)))
-		to_chat(user, "<span class='notice'>[target] is too far away!</span>")
+		to_chat(user, "<span class='warning'>[target] is too far away!</span>")
 		revert_cast()
 		return
 
@@ -266,13 +266,13 @@
 		return
 
 	if(!(S in oview(range)))
-		to_chat(user, "<span class='notice'>[S] is too far away!</span>")
+		to_chat(user, "<span class='warning'>[S] is too far away!</span>")
 		revert_cast()
 		return
 
 	S.add_atom_colour("#990000", FIXED_COLOUR_PRIORITY)
 	S.faction = list("cult")
-	playsound(get_turf(S), 'sound/effects/ghost.ogg', 100, 1)
+	playsound(get_turf(S), 'sound/effects/ghost.ogg', 100, TRUE)
 	new /obj/effect/temp_visual/cult/sac(get_turf(S))
 
 /obj/effect/proc_holder/spell/targeted/dominate/can_target(mob/living/target)

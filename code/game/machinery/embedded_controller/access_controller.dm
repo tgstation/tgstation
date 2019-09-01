@@ -31,7 +31,7 @@
 	obj_flags |= EMAGGED
 	req_access = list()
 	req_one_access = list()
-	playsound(src, "sparks", 100, 1)
+	playsound(src, "sparks", 100, TRUE)
 	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 
 /obj/machinery/doorButtons/proc/removeMe()
@@ -209,11 +209,13 @@
 		goIdle(TRUE)
 		return
 	A.unbolt()
-	spawn()
-		if(A && A.open())
-			if(stat | (NOPOWER) && !lostPower && A && !QDELETED(A))
-				A.bolt()
-		goIdle(TRUE)
+	INVOKE_ASYNC(src, .proc/do_openDoor, A)
+
+/obj/machinery/doorButtons/airlock_controller/proc/do_openDoor(obj/machinery/door/airlock/A)
+	if(A && A.open())
+		if(stat | (NOPOWER) && !lostPower && A && !QDELETED(A))
+			A.bolt()
+	goIdle(TRUE)
 
 /obj/machinery/doorButtons/airlock_controller/proc/goIdle(update)
 	lostPower = FALSE

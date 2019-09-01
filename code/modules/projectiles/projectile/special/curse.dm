@@ -38,7 +38,7 @@
 		arm.End()
 		arm = null
 	if(CHECK_BITFIELD(movement_type, UNSTOPPABLE))
-		playsound(src, 'sound/effects/curse3.ogg', 25, 1, -1)
+		playsound(src, 'sound/effects/curse3.ogg', 25, TRUE, -1)
 	var/turf/T = get_step(src, dir)
 	new/obj/effect/temp_visual/dir_setting/curse/hand(T, dir, handedness)
 	for(var/obj/effect/temp_visual/dir_setting/curse/grasp_portal/G in starting)

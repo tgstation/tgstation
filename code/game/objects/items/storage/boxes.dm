@@ -42,7 +42,7 @@
 		user.visible_message("<span class='suicide'>[user] puts [user.p_their()] head into \the [src], and begins closing it! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		myhead.dismember()
 		myhead.forceMove(src)//force your enemies to kill themselves with your head collection box!
-		playsound(user,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
+		playsound(user, "desceration-01.ogg", 50, TRUE, -1)
 		return BRUTELOSS
 	user.visible_message("<span class='suicide'>[user] beating [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
@@ -124,25 +124,37 @@
 // Ordinary survival box
 /obj/item/storage/box/survival/PopulateContents()
 	new /obj/item/clothing/mask/breath(src)
-	new /obj/item/tank/internals/emergency_oxygen(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
+
+	if(!isplasmaman(loc))
+		new /obj/item/tank/internals/emergency_oxygen(src)
+	else
+		new /obj/item/tank/internals/plasmaman/belt(src)
 
 /obj/item/storage/box/survival/radio/PopulateContents()
 	..() // we want the survival stuff too.
 	new /obj/item/radio/off(src)
 
+// Mining survival box
 /obj/item/storage/box/survival_mining/PopulateContents()
 	new /obj/item/clothing/mask/gas/explorer(src)
-	new /obj/item/tank/internals/emergency_oxygen(src)
 	new /obj/item/crowbar/red(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-
+	
+	if(!isplasmaman(loc))
+		new /obj/item/tank/internals/emergency_oxygen(src)
+	else
+		new /obj/item/tank/internals/plasmaman/belt(src)
 
 // Engineer survival box
 /obj/item/storage/box/engineer/PopulateContents()
 	new /obj/item/clothing/mask/breath(src)
-	new /obj/item/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
+		
+	if(!isplasmaman(loc))
+		new /obj/item/tank/internals/emergency_oxygen/engi(src)
+	else
+		new /obj/item/tank/internals/plasmaman/belt(src)
 
 /obj/item/storage/box/engineer/radio/PopulateContents()
 	..() // we want the regular items too.
@@ -151,13 +163,21 @@
 // Syndie survival box
 /obj/item/storage/box/syndie/PopulateContents()
 	new /obj/item/clothing/mask/gas/syndicate(src)
-	new /obj/item/tank/internals/emergency_oxygen/engi(src)
+	
+	if(!isplasmaman(loc))
+		new /obj/item/tank/internals/emergency_oxygen/engi(src)
+	else
+		new /obj/item/tank/internals/plasmaman/belt(src)
 
 // Security survival box
 /obj/item/storage/box/security/PopulateContents()
 	new /obj/item/clothing/mask/gas/sechailer(src)
-	new /obj/item/tank/internals/emergency_oxygen(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
+	
+	if(!isplasmaman(loc))
+		new /obj/item/tank/internals/emergency_oxygen(src)
+	else
+		new /obj/item/tank/internals/plasmaman/belt(src)
 
 /obj/item/storage/box/security/radio/PopulateContents()
 	..() // we want the regular stuff too
@@ -246,13 +266,13 @@
 	new /obj/item/reagent_containers/glass/beaker/noreact(src)
 	new /obj/item/reagent_containers/glass/beaker/bluespace(src)
 
-/obj/item/storage/box/medsprays
-	name = "box of medical sprayers"
-	desc = "A box full of medical sprayers, with unscrewable caps and precision spray heads."
+/obj/item/storage/box/medigels
+	name = "box of medical gels"
+	desc = "A box full of medical gel applicators, with unscrewable caps and precision spray heads."
 
-/obj/item/storage/box/medsprays/PopulateContents()
+/obj/item/storage/box/medigels/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/reagent_containers/medspray( src )
+		new /obj/item/reagent_containers/medigel( src )
 
 /obj/item/storage/box/injectors
 	name = "box of DNA injectors"
@@ -535,6 +555,15 @@
 	for(var/i in 1 to 5)
 		new /obj/item/firing_pin(src)
 
+/obj/item/storage/box/firingpins/paywall
+	name = "box of paywall firing pins"
+	desc = "A box full of paywall firing pins, to allow newly-developed firearms to operate behind a custom-set paywall."
+	illustration = "id"
+
+/obj/item/storage/box/firingpins/paywall/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/firing_pin/paywall(src)
+
 /obj/item/storage/box/lasertagpins
 	name = "box of laser tag firing pins"
 	desc = "A box full of laser tag firing pins, to allow newly-developed firearms to require wearing brightly coloured plastic armor before being able to be used."
@@ -720,7 +749,7 @@
 /obj/item/storage/box/hug/attack_self(mob/user)
 	..()
 	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(loc, "rustle", 50, 1, -5)
+	playsound(loc, "rustle", 50, TRUE, -5)
 	user.visible_message("<span class='notice'>[user] hugs \the [src].</span>","<span class='notice'>You hug \the [src].</span>")
 
 /////clown box & honkbot assembly
@@ -750,10 +779,15 @@
 	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 
+// Clown survival box
 /obj/item/storage/box/hug/survival/PopulateContents()
 	new /obj/item/clothing/mask/breath(src)
-	new /obj/item/tank/internals/emergency_oxygen(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
+	
+	if(!isplasmaman(loc))
+		new /obj/item/tank/internals/emergency_oxygen(src)
+	else
+		new /obj/item/tank/internals/plasmaman/belt(src)
 
 /obj/item/storage/box/rubbershot
 	name = "box of rubber shots"
@@ -1028,7 +1062,7 @@
 
 /obj/item/storage/box/silver_sulf/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
+		new /obj/item/reagent_containers/pill/patch/aiuri(src)
 
 /obj/item/storage/box/fountainpens
 	name = "box of fountain pens"
@@ -1071,4 +1105,20 @@
 		/obj/item/stock_parts/manipulator/femto = 3,
 		/obj/item/stock_parts/micro_laser/quadultra = 3,
 		/obj/item/stock_parts/matter_bin/bluespace = 3)
+	generate_items_inside(items_inside,src)
+
+/obj/item/storage/box/dishdrive
+	name = "DIY Dish Drive Kit"
+	desc = "Contains everything you need to build your own Dish Drive!"
+	custom_premium_price = 200
+
+/obj/item/storage/box/dishdrive/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/stack/sheet/metal/five = 1,
+		/obj/item/stack/cable_coil/five = 1,
+		/obj/item/circuitboard/machine/dish_drive = 1,
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/matter_bin = 2,
+		/obj/item/screwdriver = 1)
 	generate_items_inside(items_inside,src)

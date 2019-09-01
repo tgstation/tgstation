@@ -14,7 +14,7 @@
 	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 7), TEXT_EAST = list(-12, 7), TEXT_WEST = list( 12, 7)))
 
 	if(floorbuffer)
-		AddComponent(/datum/component/cleaning)
+		AddElement(/datum/element/cleaning)
 
 /obj/vehicle/ridden/janicart/Destroy()
 	if(mybag)
@@ -50,7 +50,7 @@
 		floorbuffer = TRUE
 		qdel(I)
 		to_chat(user, "<span class='notice'>You upgrade [src] with the floor buffer.</span>")
-		AddComponent(/datum/component/cleaning)
+		AddElement(/datum/element/cleaning)
 		update_icon()
 	else
 		return ..()

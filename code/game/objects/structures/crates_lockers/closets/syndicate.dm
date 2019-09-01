@@ -9,6 +9,7 @@
 /obj/structure/closet/syndicate/personal/PopulateContents()
 	..()
 	new /obj/item/clothing/under/syndicate(src)
+	new /obj/item/clothing/under/syndicate/skirt(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/radio/headset/syndicate(src)
 	new /obj/item/ammo_box/magazine/m10mm(src)

@@ -151,6 +151,7 @@
 		return ..()
 
 /obj/item/bodypart/chest/robot/wirecutter_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(!wired)
 		return
 	. = TRUE
@@ -179,8 +180,8 @@
 	else
 		. += "<span class='info'>It has an empty port for a <b>power cell</b>.</span>"
 	if(wired)
-		. += {"Its all wired up[cell ? " and ready for usage" : ""].\n
-		<span class='info'>You can use <b>wirecutters</b> to remove the wiring.</span>"}
+		. += "Its all wired up[cell ? " and ready for usage" : ""].\n"+\
+		"<span class='info'>You can use <b>wirecutters</b> to remove the wiring.</span>"
 	else
 		. += "<span class='info'>It has a couple spots that still need to be <b>wired</b>.</span>"
 
@@ -265,6 +266,7 @@
 	return ..()
 
 /obj/item/bodypart/head/robot/crowbar_act(mob/living/user, obj/item/I)
+	..()
 	if(flash1 || flash2)
 		I.play_tool_sound(src)
 		to_chat(user, "<span class='notice'>You remove the flash from [src].</span>")

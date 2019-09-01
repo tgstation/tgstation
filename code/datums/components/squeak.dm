@@ -42,9 +42,9 @@
 /datum/component/squeak/proc/play_squeak()
 	if(prob(squeak_chance))
 		if(!override_squeak_sounds)
-			playsound(parent, pickweight(default_squeak_sounds), volume, 1, -1)
+			playsound(parent, pickweight(default_squeak_sounds), volume, TRUE, -1)
 		else
-			playsound(parent, pickweight(override_squeak_sounds), volume, 1, -1)
+			playsound(parent, pickweight(override_squeak_sounds), volume, TRUE, -1)
 
 /datum/component/squeak/proc/step_squeak()
 	if(steps > step_delay)

@@ -49,7 +49,7 @@
 
 /obj/item/gun/magic/wand/proc/zap_self(mob/living/user)
 	user.visible_message("<span class='danger'>[user] zaps [user.p_them()]self with [src].</span>")
-	playsound(user, fire_sound, 50, 1)
+	playsound(user, fire_sound, 50, TRUE)
 	user.log_message("zapped [user.p_them()]self with a <b>[src]</b>", LOG_ATTACK)
 
 
@@ -94,14 +94,17 @@
 	max_charges = 10 //10, 5, 5, 4
 
 /obj/item/gun/magic/wand/resurrection/zap_self(mob/living/user)
+	..()
+	charges--
+	if(user.anti_magic_check())
+		user.visible_message("<span class='warning'>[src] has no effect on [user]!</span>")
+		return
 	user.revive(full_heal = 1)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.regenerate_limbs()
 		C.regenerate_organs()
 	to_chat(user, "<span class='notice'>You feel great!</span>")
-	charges--
-	..()
 
 /obj/item/gun/magic/wand/resurrection/debug //for testing
 	desc = "Is it possible for something to be even more powerful than regular magic? This wand is."

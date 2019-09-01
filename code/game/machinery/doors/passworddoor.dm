@@ -52,13 +52,13 @@
 	switch(animation)
 		if("opening")
 			flick("opening", src)
-			playsound(src, 'sound/machines/blastdoor.ogg', 30, 1)
+			playsound(src, 'sound/machines/blastdoor.ogg', 30, TRUE)
 		if("closing")
 			flick("closing", src)
-			playsound(src, 'sound/machines/blastdoor.ogg', 30, 1)
+			playsound(src, 'sound/machines/blastdoor.ogg', 30, TRUE)
 		if("deny")
 			//Deny animation would be nice to have.
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 
 /obj/machinery/door/password/proc/ask_for_pass(mob/user)
 	var/guess = stripped_input(user,"Enter the password:", "Password", "")

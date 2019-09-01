@@ -71,10 +71,11 @@ All foods are distributed among various categories. Use common sense.
 	if(!eater)
 		return
 	if(!reagents.total_volume)
-		var/obj/item/trash_item = generate_trash(eater)
+		var/mob/living/location = loc
+		var/obj/item/trash_item = generate_trash(location)
 		qdel(src)
-		eater.put_in_hands(trash_item)
-
+		if(istype(location))
+			location.put_in_hands(trash_item)
 
 /obj/item/reagent_containers/food/snacks/attack_self(mob/user)
 	return
@@ -86,7 +87,7 @@ All foods are distributed among various categories. Use common sense.
 	if(!eatverb)
 		eatverb = pick("bite","chew","nibble","gnaw","gobble","chomp")
 	if(!reagents.total_volume)						//Shouldn't be needed but it checks to see if it has anything left in it.
-		to_chat(user, "<span class='notice'>None of [src] left, oh no!</span>")
+		to_chat(user, "<span class='warning'>None of [src] left, oh no!</span>")
 		qdel(src)
 		return FALSE
 	if(iscarbon(M))
@@ -99,7 +100,7 @@ All foods are distributed among various categories. Use common sense.
 
 		if(M == user)								//If you're eating it yourself.
 			if(junkiness && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 && !HAS_TRAIT(user, TRAIT_VORACIOUS))
-				to_chat(M, "<span class='notice'>You don't feel like eating any more junk food at the moment.</span>")
+				to_chat(M, "<span class='warning'>You don't feel like eating any more junk food at the moment!</span>")
 				return FALSE
 			else if(fullness <= 50)
 				user.visible_message("<span class='notice'>[user] hungrily [eatverb]s \the [src], gobbling it down!</span>", "<span class='notice'>You hungrily [eatverb] \the [src], gobbling it down!</span>")
@@ -118,17 +119,17 @@ All foods are distributed among various categories. Use common sense.
 			if(!isbrain(M))		//If you're feeding it to someone else.
 				if(fullness <= (600 * (1 + M.overeatduration / 1000)))
 					M.visible_message("<span class='danger'>[user] attempts to feed [M] [src].</span>", \
-										"<span class='userdanger'>[user] attempts to feed [M] [src].</span>")
+										"<span class='userdanger'>[user] attempts to feed you [src].</span>")
 				else
 					M.visible_message("<span class='warning'>[user] cannot force any more of [src] down [M]'s throat!</span>", \
-										"<span class='warning'>[user] cannot force any more of [src] down [M]'s throat!</span>")
+										"<span class='warning'>[user] cannot force any more of [src] down your throat!</span>")
 					return FALSE
 
 				if(!do_mob(user, M))
 					return
 				log_combat(user, M, "fed", reagents.log_list())
-				M.visible_message("<span class='danger'>[user] forces [M] to eat [src].</span>", \
-									"<span class='userdanger'>[user] forces [M] to eat [src].</span>")
+				M.visible_message("<span class='danger'>[user] forces [M] to eat [src]!</span>", \
+									"<span class='userdanger'>[user] forces you to eat [src]!</span>")
 
 			else
 				to_chat(user, "<span class='warning'>[M] doesn't seem to have a mouth!</span>")
@@ -137,12 +138,11 @@ All foods are distributed among various categories. Use common sense.
 		if(reagents)								//Handle ingestion of the reagent.
 			if(M.satiety > -200)
 				M.satiety -= junkiness
-			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
 			if(reagents.total_volume)
 				SEND_SIGNAL(src, COMSIG_FOOD_EATEN, M, user)
 				var/fraction = min(bitesize / reagents.total_volume, 1)
-				reagents.reaction(M, INGEST, fraction)
-				reagents.trans_to(M, bitesize, transfered_by = user)
+				reagents.trans_to(M, bitesize, transfered_by = user, method = INGEST)
 				bitecount++
 				On_Consume(M)
 				checkLiked(fraction, M)
@@ -152,15 +152,16 @@ All foods are distributed among various categories. Use common sense.
 
 /obj/item/reagent_containers/food/snacks/examine(mob/user)
 	. = ..()
-	switch (bitecount)
-		if (0)
-			return
-		if(1)
-			. += "[src] was bitten by someone!"
-		if(2,3)
-			. += "[src] was bitten [bitecount] times!"
-		else
-			. += "[src] was bitten multiple times!"
+	if(!in_container)
+		switch (bitecount)
+			if (0)
+				return
+			if(1)
+				. += "[src] was bitten by someone!"
+			if(2,3)
+				. += "[src] was bitten [bitecount] times!"
+			else
+				. += "[src] was bitten multiple times!"
 
 /obj/item/reagent_containers/food/snacks/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/storage))

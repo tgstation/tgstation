@@ -20,9 +20,6 @@
 	var/active_sound = null
 	var/toggle_cooldown = null
 	var/cooldown = 0
-	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
-
-	var/blocks_shove_knockdown = FALSE //Whether wearing the clothing item blocks the ability for shove to knock down.
 
 	var/clothing_flags = NONE
 
@@ -38,6 +35,7 @@
 	// THESE OVERRIDE THE HIDEHAIR FLAGS
 	var/dynamic_hair_suffix = ""//head > mask for head hair
 	var/dynamic_fhair_suffix = ""//mask > head for facial hair
+
 
 
 /obj/item/clothing/Initialize()
@@ -178,7 +176,7 @@ BLIND     // can't see anything
 
 /proc/generate_female_clothing(index,t_color,icon,type)
 	var/icon/female_clothing_icon	= icon("icon"=icon, "icon_state"=t_color)
-	var/icon/female_s				= icon("icon"='icons/mob/uniform.dmi', "icon_state"="[(type == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
+	var/icon/female_s				= icon("icon"='icons/mob/clothing/under/masking_helpers.dmi', "icon_state"="[(type == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
 	female_clothing_icon.Blend(female_s, ICON_MULTIPLY)
 	female_clothing_icon 			= fcopy_rsc(female_clothing_icon)
 	GLOB.female_clothing_icons[index] = female_clothing_icon
@@ -300,6 +298,15 @@ BLIND     // can't see anything
 	if(visor_vars_to_toggle & VISOR_TINT)
 		tint ^= initial(tint)
 
+/obj/item/clothing/head/helmet/space/plasmaman/visor_toggling() //handles all the actual toggling of flags
+	up = !up
+	clothing_flags ^= visor_flags
+	flags_inv ^= visor_flags_inv
+	icon_state = "[initial(icon_state)]"
+	if(visor_vars_to_toggle & VISOR_FLASHPROTECT)
+		flash_protect ^= initial(flash_protect)
+	if(visor_vars_to_toggle & VISOR_TINT)
+		tint ^= initial(tint)
 
 /obj/item/clothing/proc/can_use(mob/user)
 	if(user && ismob(user))

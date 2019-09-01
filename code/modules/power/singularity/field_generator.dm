@@ -74,7 +74,7 @@ field_generator power level display
 				to_chat(user, "<span class='warning'>You are unable to turn off [src] once it is online!</span>")
 				return 1
 			else
-				user.visible_message("[user] turns on [src].", \
+				user.visible_message("<span class='notice'>[user] turns on [src].</span>", \
 					"<span class='notice'>You turn on [src].</span>", \
 					"<span class='italics'>You hear heavy droning.</span>")
 				turn_on()
@@ -106,10 +106,12 @@ field_generator power level display
 			state = FG_UNSECURED
 
 /obj/machinery/field/generator/wrench_act(mob/living/user, obj/item/I)
+	..()
 	default_unfasten_wrench(user, I)
 	return TRUE
 
 /obj/machinery/field/generator/welder_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(active)
 		to_chat(user, "<span class='warning'>[src] needs to be off!</span>")
 		return TRUE
@@ -121,7 +123,7 @@ field_generator power level display
 		if(FG_SECURED)
 			if(!I.tool_start_check(user, amount=0))
 				return TRUE
-			user.visible_message("[user] starts to weld [src] to the floor.", \
+			user.visible_message("<span class='notice'>[user] starts to weld [src] to the floor.</span>", \
 				"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
 				"<span class='italics'>You hear welding.</span>")
 			if(I.use_tool(src, user, 20, volume=50) && state == FG_SECURED)
@@ -131,7 +133,7 @@ field_generator power level display
 		if(FG_WELDED)
 			if(!I.tool_start_check(user, amount=0))
 				return TRUE
-			user.visible_message("[user] starts to cut [src] free from the floor.", \
+			user.visible_message("<span class='notice'>[user] starts to cut [src] free from the floor.</span>", \
 				"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
 				"<span class='italics'>You hear welding.</span>")
 			if(I.use_tool(src, user, 20, volume=50) && state == FG_WELDED)
@@ -335,6 +337,7 @@ field_generator power level display
 					var/turf/T = get_turf(src)
 					message_admins("A singulo exists and a containment field has failed at [ADMIN_VERBOSEJMP(T)].")
 					investigate_log("has <font color='red'>failed</font> whilst a singulo exists at [AREACOORD(T)].", INVESTIGATE_SINGULO)
+					notify_ghosts("IT'S LOOSE", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, ghost_sound = 'sound/machines/warning-buzzer.ogg', header = "IT'S LOOSE", notify_volume = 75)
 			O.last_warning = world.time
 
 	move_resist = initial(move_resist)

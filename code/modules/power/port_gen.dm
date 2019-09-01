@@ -7,6 +7,8 @@
 	density = TRUE
 	anchored = FALSE
 	use_power = NO_POWER_USE
+	ui_x = 450
+	ui_y = 340
 
 	var/active = FALSE
 	var/power_gen = 5000
@@ -122,7 +124,7 @@
 	if(anchored)
 		. += "<span class='notice'>It is anchored to the ground.</span>"
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Fuel efficiency increased by <b>[(consumption*100)-100]%</b>.<span>"
+		. += "<span class='notice'>The status display reads: Fuel efficiency increased by <b>[(consumption*100)-100]%</b>.</span>"
 
 /obj/machinery/power/port_gen/pacman/HasFuel()
 	if(sheets >= 1 / (time_per_sheet / power_output) - sheet_left)
@@ -194,7 +196,7 @@
 				disconnect_from_network()
 				to_chat(user, "<span class='notice'>You unsecure the generator from the floor.</span>")
 
-			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			return
 		else if(O.tool_behaviour == TOOL_SCREWDRIVER)
 			panel_open = !panel_open
@@ -224,7 +226,7 @@
 												datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "portable_generator", name, 450, 340, master_ui, state)
+		ui = new(user, src, ui_key, "portable_generator", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/power/port_gen/pacman/ui_data()

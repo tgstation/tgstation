@@ -138,20 +138,16 @@
 	. = ..()
 
 	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
-		if(src.dna.check_mutation(HULK))
+		if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS))
 			to_chat(src, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
 			return FALSE
-		if(HAS_TRAIT(src, TRAIT_NOGUNS))
-			to_chat(src, "<span class='warning'>Your fingers don't fit in the trigger guard!</span>")
-			return FALSE
-	if(mind)
-		if(mind.martial_art && mind.martial_art.no_guns) //great dishonor to famiry
-			to_chat(src, "<span class='warning'>Use of ranged weaponry would bring dishonor to the clan.</span>")
-			return FALSE
-
+	if(HAS_TRAIT(src, TRAIT_NOGUNS))
+		to_chat(src, "<span class='warning'>You can't bring yourself to use a ranged weapon!</span>")
+		return FALSE
 	return .
 
 /mob/living/carbon/human/proc/get_bank_account()
+	RETURN_TYPE(/datum/bank_account)
 	var/datum/bank_account/account
 	var/obj/item/card/id/I = get_idcard()
 
@@ -164,3 +160,14 @@
 /mob/living/carbon/human/get_policy_keywords()
 	. = ..()
 	. += "[dna.species.type]"
+
+/mob/living/carbon/human/can_see_reagents()
+	. = ..()
+	if(.) //No need to run through all of this if it's already true.
+		return
+	if(isclothing(glasses) && (glasses.clothing_flags & SCAN_REAGENTS))
+		return TRUE
+	if(isclothing(head) && (head.clothing_flags & SCAN_REAGENTS))
+		return TRUE
+	if(isclothing(wear_mask) && (wear_mask.clothing_flags & SCAN_REAGENTS))
+		return TRUE

@@ -295,7 +295,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class='warning'>You short out [src]'s threat assessment circuits.</span>")
-	visible_message("[src] hums oddly...")
+	visible_message("<span class='italics'>[src] hums oddly...</span>")
 	obj_flags |= EMAGGED
 	controllock = TRUE
 	on = FALSE //turns off the turret temporarily
@@ -552,11 +552,11 @@
 	if(mode == TURRET_STUN)
 		use_power(reqpower)
 		A = new stun_projectile(T)
-		playsound(loc, stun_projectile_sound, 75, 1)
+		playsound(loc, stun_projectile_sound, 75, TRUE)
 	else
 		use_power(reqpower * 2)
 		A = new lethal_projectile(T)
-		playsound(loc, lethal_projectile_sound, 75, 1)
+		playsound(loc, lethal_projectile_sound, 75, TRUE)
 
 
 	//Shooting Code:
@@ -887,7 +887,7 @@
 	. = ..()
 	if ( get_dist(src, user) > 0 )
 		if ( !(issilicon(user) || IsAdminGhost(user)) )
-			to_chat(user, "<span class='notice'>You are too far away.</span>")
+			to_chat(user, "<span class='warning'>You are too far away!</span>")
 			user.unset_machine()
 			user << browse(null, "window=turretid")
 			return
@@ -958,7 +958,7 @@
 	desc = "Used for building turret control panels."
 	icon_state = "apc"
 	result_path = /obj/machinery/turretid
-	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
 
 /obj/item/gun/proc/get_turret_properties()
 	. = list()
