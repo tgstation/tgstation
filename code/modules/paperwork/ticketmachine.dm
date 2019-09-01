@@ -38,7 +38,7 @@
 	obj_flags |= EMAGGED
 	if(tickets.len)
 		for(var/obj/item/ticket_machine_ticket/ticket in tickets)
-			to_chat(viewers(3,get_turf(tickets[current_number].loc)), "<span class='notice'>\the [ticket] disperses!</span>")
+			ticket.audible_message("<span class='notice'>\the [ticket] disperses!</span>")
 			qdel(ticket)
 		tickets.Cut()
 	update_icon()
@@ -51,14 +51,14 @@
 	if(current_number > ticket_number)
 		return
 	if(current_number && !(obj_flags & EMAGGED) && tickets[current_number])
-		to_chat(viewers(3,get_turf(tickets[current_number].loc)), "<span class='notice'>\the [tickets[current_number]] disperses!</span>")
+		tickets[current_number].audible_message("<span class='notice'>\the [tickets[current_number]] disperses!</span>")
 		qdel(tickets[current_number])
 	if(current_number < ticket_number)
 		current_number ++ //Increment the one we're serving.
 		playsound(src, 'sound/misc/announce_dig.ogg', 50, 0)
 		say("Now serving ticket #[current_number]!")
 		if(!(obj_flags & EMAGGED) && tickets[current_number])
-			to_chat(viewers(3,get_turf(tickets[current_number].loc)), "<span class='notice'>\the [tickets[current_number]] vibrates!</span>")
+			tickets[current_number].audible_message("<span class='notice'>\the [tickets[current_number]] vibrates!</span>")
 		update_icon() //Update our icon here rather than when they take a ticket to show the current ticket number being served
 
 /obj/machinery/button/ticket_machine
@@ -150,7 +150,7 @@
 			current_number = 0
 			if(tickets.len)
 				for(var/obj/item/ticket_machine_ticket/ticket in tickets)
-					to_chat(viewers(3,get_turf(ticket.loc)), "<span class='notice'>\the [ticket] disperses!</span>")
+					ticket.audible_message("<span class='notice'>\the [ticket] disperses!</span>")
 					qdel(ticket)
 				tickets.Cut()
 			max_number = initial(max_number)
