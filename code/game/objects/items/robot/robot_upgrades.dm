@@ -652,6 +652,6 @@
 /obj/item/borg/upgrade/beaker_app/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		var/obj/item/borg/apparatus/circuit/E = locate() in R.module
+		var/obj/item/borg/apparatus/beaker/extra/E = locate() in R.module
 		if (E)
 			R.module.remove_module(E, TRUE)
