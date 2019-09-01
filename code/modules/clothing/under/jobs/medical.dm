@@ -1,3 +1,7 @@
+/obj/item/clothing/under/rank/medical
+	icon = 'icons/obj/clothing/under/medical.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/under/medical.dmi'
+
 /obj/item/clothing/under/rank/medical/chief_medical_officer
 	desc = "It's a jumpsuit worn by those with the experience to be \"Chief Medical Officer\". It provides minor biological protection."
 	name = "chief medical officer's jumpsuit"

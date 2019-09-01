@@ -1,5 +1,9 @@
 //Alphabetical order of civilian jobs.
 
+/obj/item/clothing/under/rank/civilian
+	icon = 'icons/obj/clothing/under/civilian.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/under/civilian.dmi'
+
 /obj/item/clothing/under/rank/civilian/bartender
 	desc = "It looks like it could use some more flair."
 	name = "bartender's uniform"

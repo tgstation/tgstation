@@ -263,7 +263,7 @@ Auto Patrol: []"},
 	if(!C.handcuffed)
 		C.handcuffed = new /obj/item/restraints/handcuffs/cable/zipties/used(C)
 		C.update_handcuffed()
-		playsound(src, "law", 50, 0)
+		playsound(src, "law", 50, FALSE)
 		back_to_idle()
 
 /mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/C, var/harm = FALSE)

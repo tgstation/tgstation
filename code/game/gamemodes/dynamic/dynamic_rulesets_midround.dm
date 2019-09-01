@@ -450,7 +450,7 @@
 	player_mind.add_antag_datum(/datum/antagonist/nightmare)
 	S.set_species(/datum/species/shadow/nightmare)
 
-	playsound(S, 'sound/magic/ethereal_exit.ogg', 50, 1, -1)
+	playsound(S, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Nightmare by the midround ruleset.")
 	log_game("DYNAMIC: [key_name(S)] was spawned as a Nightmare by the midround ruleset.")
 	return S

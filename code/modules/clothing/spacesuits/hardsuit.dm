@@ -307,7 +307,7 @@
 		flags_inv &= ~visor_flags_inv
 		cold_protection &= ~HEAD
 	update_icon()
-	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
+	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 	toggle_hardsuit_mode(user)
 	user.update_inv_head()
 	if(iscarbon(user))
@@ -627,7 +627,7 @@
 	if(!istype(H) || H.wear_suit != src)
 		return
 	if(footstep > 1)
-		playsound(src, 'sound/effects/servostep.ogg', 100, 1)
+		playsound(src, 'sound/effects/servostep.ogg', 100, TRUE)
 		footstep = 0
 	else
 		footstep++
@@ -702,9 +702,9 @@
 /obj/item/clothing/suit/space/hardsuit/shielded/process()
 	if(world.time > recharge_cooldown && current_charges < max_charges)
 		current_charges = CLAMP((current_charges + recharge_rate), 0, max_charges)
-		playsound(loc, 'sound/magic/charge.ogg', 50, 1)
+		playsound(loc, 'sound/magic/charge.ogg', 50, TRUE)
 		if(current_charges == max_charges)
-			playsound(loc, 'sound/machines/ding.ogg', 50, 1)
+			playsound(loc, 'sound/machines/ding.ogg', 50, TRUE)
 			STOP_PROCESSING(SSobj, src)
 		shield_state = "[shield_on]"
 		if(ishuman(loc))
@@ -788,7 +788,25 @@
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/melee/transforming/energy/sword/saber, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi
 	slowdown = 0
+	shield_state = "shield-red"
+	shield_on = "shield-red"
 
+/obj/item/clothing/suit/space/hardsuit/shielded/syndi/multitool_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(shield_state == "broken")
+		to_chat(user, "<span class='warning'>You can't interface with the hardsuit's software if the shield's broken!</span>")
+		return
+	
+	if(shield_state == "shield-red")
+		shield_state = "shield-old"
+		shield_on = "shield-old"
+		to_chat(user, "<span class='warning'>You roll back the hardsuit's software, changing the shield's color!</span>")
+
+	else
+		shield_state = "shield-red"
+		shield_on = "shield-red"
+		to_chat(user, "<span class='warning'>You update the hardsuit's hardware, changing back the shield's color to red.</span>")
+	user.update_inv_wear_suit()
 
 /obj/item/clothing/suit/space/hardsuit/shielded/syndi/Initialize()
 	jetpack = new /obj/item/tank/jetpack/suit(src)

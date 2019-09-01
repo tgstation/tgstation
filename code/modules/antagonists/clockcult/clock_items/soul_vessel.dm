@@ -98,8 +98,8 @@
 		return
 	if(brainmob.suiciding)
 		brainmob.set_suicide(FALSE)
-	playsound(H, 'sound/misc/splort.ogg', 60, 1, -1)
-	playsound(H, 'sound/magic/clockwork/anima_fragment_attack.ogg', 40, 1, -1)
+	playsound(H, 'sound/misc/splort.ogg', 60, TRUE, -1)
+	playsound(H, 'sound/magic/clockwork/anima_fragment_attack.ogg', 40, TRUE, -1)
 	H.fakedeath("soul_vessel") //we want to make sure they don't deathgasp and maybe possibly explode
 	H.death()
 	H.cure_fakedeath("soul_vessel")

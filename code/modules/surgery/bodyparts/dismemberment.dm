@@ -55,7 +55,7 @@
 	var/organ_spilled = 0
 	var/turf/T = get_turf(C)
 	C.add_splatter_floor(T)
-	playsound(get_turf(C), 'sound/misc/splort.ogg', 80, 1)
+	playsound(get_turf(C), 'sound/misc/splort.ogg', 80, TRUE)
 	for(var/X in C.internal_organs)
 		var/obj/item/organ/O = X
 		var/org_zone = check_zone(O.zone)

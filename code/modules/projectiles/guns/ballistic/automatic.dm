@@ -48,7 +48,7 @@
 		fire_delay = initial(fire_delay)
 		to_chat(user, "<span class='notice'>You switch to [burst_size]-rnd burst.</span>")
 
-	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
 	update_icon()
 	for(var/X in actions)
 		var/datum/action/A = X
@@ -173,7 +173,7 @@
 			burst_size = 1
 			fire_delay = 0
 			to_chat(user, "<span class='notice'>You switch to semi-auto.</span>")
-	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
 	update_icon()
 	return
 
@@ -243,9 +243,9 @@
 	cover_open = !cover_open
 	to_chat(user, "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>")
 	if(cover_open)
-		playsound(user, 'sound/weapons/sawopen.ogg', 60, 1)
+		playsound(user, 'sound/weapons/sawopen.ogg', 60, TRUE)
 	else
-		playsound(user, 'sound/weapons/sawopen.ogg', 60, 1)
+		playsound(user, 'sound/weapons/sawopen.ogg', 60, TRUE)
 	update_icon()
 
 
