@@ -65,12 +65,10 @@
 		return TRUE
 	for(var/M in H.dna.mutations)//check for conflicting powers
 		var/datum/mutation/human/mewtayshun = M
-		if(LAZYLEN(mewtayshun.conflicts))
-			for(var/cons in mewtayshun.conflicts)
-				var/datum/mutation/human/conflicter = cons
-				if(conflicter == type)
-					to_chat(H, "<span class='warning'>You feel your genes resisting something.</span>")
-					return TRUE
+		if(!(mewtayshun.type in conflicts) && !(type in mewtayshun.conflicts))
+			continue
+		to_chat(H, "<span class='warning'>You feel your genes resisting something.</span>")
+		return TRUE
 	owner = H
 	dna = H.dna
 	dna.mutations += src
@@ -89,9 +87,6 @@
 		addtimer(CALLBACK(src, .proc/modify, 5)) //gonna want children calling ..() to run first
 
 /datum/mutation/human/proc/get_visual_indicator()
-	return
-
-/datum/mutation/human/proc/on_attack_hand( atom/target, proximity)
 	return
 
 /datum/mutation/human/proc/on_life()

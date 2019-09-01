@@ -93,7 +93,7 @@
 				return
 			if(P.tool_behaviour == TOOL_SCREWDRIVER && !anchored)
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
-									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
+									"<span class='notice'>You start to disassemble the frame...</span>", "<span class='italics'>You hear banging and clanking.</span>")
 				if(P.use_tool(src, user, 40, volume=50))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You disassemble the frame.</span>")
@@ -124,7 +124,7 @@
 					return
 				if(!user.transferItemToLoc(B, src))
 					return
-				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 				to_chat(user, "<span class='notice'>You add the circuit board to the frame.</span>")
 				circuit = B
 				icon_state = "box_2"

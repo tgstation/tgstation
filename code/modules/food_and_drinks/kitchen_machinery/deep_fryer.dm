@@ -116,7 +116,7 @@ God bless America.
 		cook_time += fry_speed
 		if(cook_time >= 30 && !frying_fried)
 			frying_fried = TRUE //frying... frying... fried
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+			playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)
 			audible_message("<span class='notice'>[src] dings!</span>")
 		else if (cook_time >= 60 && !frying_burnt)
 			frying_burnt = TRUE

@@ -68,7 +68,7 @@
 	if(istype(core))
 		STOP_PROCESSING(SSobj, core)
 		icon_state = "core_container_sealed"
-		playsound(src, 'sound/items/deconstruct.ogg', 60, 1)
+		playsound(src, 'sound/items/deconstruct.ogg', 60, TRUE)
 		if(ismob(loc))
 			to_chat(loc, "<span class='warning'>[src] is permanently sealed, [core]'s radiation is contained.</span>")
 
@@ -85,7 +85,7 @@
 //snowflake screwdriver, works as a key to start nuke theft, traitor only
 /obj/item/screwdriver/nuke
 	name = "screwdriver"
-	desc = "A screwdriver with an ultra thin tip."
+	desc = "A screwdriver with an ultra thin tip that's carefully designed to boost screwing speed."
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "screwdriver_nuke"
 	item_state = "screwdriver_nuke"
@@ -145,7 +145,7 @@
 	else
 		to_chat(user, "<span class='notice'>As it touches \the [src], both \the [src] and \the [W] burst into dust!</span>")
 		radiation_pulse(user, 100)
-		playsound(src, 'sound/effects/supermatter.ogg', 50, 1)
+		playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 		qdel(W)
 		qdel(src)
 
@@ -158,7 +158,7 @@
 			"<span class='userdanger'>You reach for [src] with your hands. That was dumb.</span>",\
 			"<span class='italics'>Everything suddenly goes silent.</span>")
 	radiation_pulse(user, 500, 2)
-	playsound(get_turf(user), 'sound/effects/supermatter.ogg', 50, 1)
+	playsound(get_turf(user), 'sound/effects/supermatter.ogg', 50, TRUE)
 	ded.dust()
 
 /obj/item/nuke_core_container/supermatter
@@ -186,7 +186,7 @@
 	if(istype(sliver))
 		STOP_PROCESSING(SSobj, sliver)
 		icon_state = "core_container_sealed"
-		playsound(src, 'sound/items/Deconstruct.ogg', 60, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', 60, TRUE)
 		if(ismob(loc))
 			to_chat(loc, "<span class='warning'>[src] is permanently sealed, [sliver] is safely contained.</span>")
 
@@ -260,6 +260,6 @@
 			"<span class='italics'>Everything suddenly goes silent.</span>")
 		user.dust()
 	radiation_pulse(src, 500, 2)
-	playsound(src, 'sound/effects/supermatter.ogg', 50, 1)
+	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 	QDEL_NULL(sliver)
 	update_icon()

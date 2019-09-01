@@ -138,7 +138,7 @@ All foods are distributed among various categories. Use common sense.
 		if(reagents)								//Handle ingestion of the reagent.
 			if(M.satiety > -200)
 				M.satiety -= junkiness
-			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
 			if(reagents.total_volume)
 				SEND_SIGNAL(src, COMSIG_FOOD_EATEN, M, user)
 				var/fraction = min(bitesize / reagents.total_volume, 1)
@@ -152,15 +152,16 @@ All foods are distributed among various categories. Use common sense.
 
 /obj/item/reagent_containers/food/snacks/examine(mob/user)
 	. = ..()
-	switch (bitecount)
-		if (0)
-			return
-		if(1)
-			. += "[src] was bitten by someone!"
-		if(2,3)
-			. += "[src] was bitten [bitecount] times!"
-		else
-			. += "[src] was bitten multiple times!"
+	if(!in_container)
+		switch (bitecount)
+			if (0)
+				return
+			if(1)
+				. += "[src] was bitten by someone!"
+			if(2,3)
+				. += "[src] was bitten [bitecount] times!"
+			else
+				. += "[src] was bitten multiple times!"
 
 /obj/item/reagent_containers/food/snacks/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/storage))

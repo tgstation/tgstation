@@ -73,6 +73,7 @@
 #define VV_HK_EXPOSE "expose"
 #define VV_HK_CALLPROC "proc_call"
 #define VV_HK_MARK "mark"
+#define VV_HK_ADDCOMPONENT "addcomponent"
 #define VV_HK_MODIFY_TRAITS "modtraits"
 
 // /atom
@@ -110,6 +111,7 @@
 
 // /mob/living/carbon/human
 #define VV_HK_COPY_OUTFIT "copy_outfit"
+#define VV_HK_MOD_MUTATIONS "quirkmut"
 #define VV_HK_MOD_QUIRKS "quirkmod"
 #define VV_HK_MAKE_MONKEY "human_monkify"
 #define VV_HK_MAKE_CYBORG "human_cyborgify"
@@ -120,7 +122,3 @@
 
 // misc
 #define VV_HK_SPACEVINE_PURGE "spacevine_purge"
-
-
-
-

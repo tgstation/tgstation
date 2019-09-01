@@ -84,7 +84,7 @@
 
 	if(!(stat & (NOPOWER|BROKEN)))
 		. += "<span class='notice'>The status display reads:</span>\n"+\
-		"<span class='notice'>- Capacity: <b>[max_n_of_items]</b> items.<span>\n"+\
+		"<span class='notice'>- Capacity: <b>[max_n_of_items]</b> items.</span>\n"+\
 		"<span class='notice'>- Cook time reduced by <b>[(efficiency - 1) * 25]%</b>.</span>"
 
 /obj/machinery/microwave/update_icon()
@@ -118,14 +118,14 @@
 
 	if(broken > 0)
 		if(broken == 2 && O.tool_behaviour == TOOL_WIRECUTTER) // If it's broken and they're using a screwdriver
-			user.visible_message("[user] starts to fix part of \the [src].", "<span class='notice'>You start to fix part of \the [src]...</span>")
+			user.visible_message("<span class='notice'>[user] starts to fix part of \the [src].</span>", "<span class='notice'>You start to fix part of \the [src]...</span>")
 			if(O.use_tool(src, user, 20))
-				user.visible_message("[user] fixes part of \the [src].", "<span class='notice'>You fix part of \the [src].</span>")
+				user.visible_message("<span class='notice'>[user] fixes part of \the [src].</span>", "<span class='notice'>You fix part of \the [src].</span>")
 				broken = 1 // Fix it a bit
 		else if(broken == 1 && O.tool_behaviour == TOOL_WELDER) // If it's broken and they're doing the wrench
-			user.visible_message("[user] starts to fix part of \the [src].", "<span class='notice'>You start to fix part of \the [src]...</span>")
+			user.visible_message("<span class='notice'>[user] starts to fix part of \the [src].</span>", "<span class='notice'>You start to fix part of \the [src]...</span>")
 			if(O.use_tool(src, user, 20))
-				user.visible_message("[user] fixes \the [src].", "<span class='notice'>You fix \the [src].</span>")
+				user.visible_message("<span class='notice'>[user] fixes \the [src].</span>", "<span class='notice'>You fix \the [src].</span>")
 				broken = 0
 				update_icon()
 				return FALSE //to use some fuel
@@ -138,8 +138,8 @@
 		var/obj/item/reagent_containers/spray/clean_spray = O
 		if(clean_spray.reagents.has_reagent(/datum/reagent/space_cleaner, clean_spray.amount_per_transfer_from_this))
 			clean_spray.reagents.remove_reagent(/datum/reagent/space_cleaner, clean_spray.amount_per_transfer_from_this,1)
-			playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
-			user.visible_message("[user] has cleaned \the [src].", "<span class='notice'>You clean \the [src].</span>")
+			playsound(loc, 'sound/effects/spray3.ogg', 50, TRUE, -6)
+			user.visible_message("<span class='notice'>[user] has cleaned \the [src].</span>", "<span class='notice'>You clean \the [src].</span>")
 			dirty = 0
 			update_icon()
 		else
@@ -148,9 +148,9 @@
 
 	if(istype(O, /obj/item/soap))
 		var/obj/item/soap/P = O
-		user.visible_message("[user] starts to clean \the [src].", "<span class='notice'>You start to clean \the [src]...</span>")
+		user.visible_message("<span class='notice'>[user] starts to clean \the [src].</span>", "<span class='notice'>You start to clean \the [src]...</span>")
 		if(do_after(user, P.cleanspeed, target = src))
-			user.visible_message("[user] has cleaned \the [src].", "<span class='notice'>You clean \the [src].</span>")
+			user.visible_message("<span class='notice'>[user] has cleaned \the [src].</span>", "<span class='notice'>You clean \the [src].</span>")
 			dirty = 0
 			update_icon()
 		return TRUE
@@ -182,7 +182,7 @@
 			return FALSE
 
 		ingredients += O
-		user.visible_message("[user] has added \a [O] to \the [src].", "<span class='notice'>You add [O] to \the [src].</span>")
+		user.visible_message("<span class='notice'>[user] has added \a [O] to \the [src].</span>", "<span class='notice'>You add [O] to \the [src].</span>")
 		return
 
 	..()
@@ -237,7 +237,7 @@
 
 	if(wire_disabled)
 		audible_message("[src] buzzes.")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		return
 
 	if(prob(max((5 / efficiency) - 5, dirty * 5))) //a clean unupgraded microwave has no risk of failure
@@ -253,7 +253,7 @@
 	start()
 
 /obj/machinery/microwave/proc/turn_on()
-	visible_message("\The [src] turns on.", "<span class='italics'>You hear a microwave humming.</span>")
+	visible_message("<span class='notice'>\The [src] turns on.</span>", null, "<span class='italics'>You hear a microwave humming.</span>")
 	operating = TRUE
 
 	set_light(1.5)
@@ -280,7 +280,7 @@
 
 /obj/machinery/microwave/proc/muck()
 	turn_on()
-	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE)
 	dirty_anim_playing = TRUE
 	update_icon()
 	loop(MICROWAVE_MUCK, 4)

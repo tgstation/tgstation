@@ -65,7 +65,7 @@
 	attack_verb_on = list("slipped")
 	clumsy_check = FALSE
 	sharpness = IS_BLUNT
-	item_color = "yellow"
+	sword_color = "yellow"
 	heat = 0
 	light_color = "#ffff00"
 	var/next_trombone_allowed = 0
@@ -194,7 +194,7 @@
 
 /obj/item/grown/bananapeel/bombanana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is deliberately slipping on the [src.name]! It looks like \he's trying to commit suicide.</span>")
-	playsound(loc, 'sound/misc/slip.ogg', 50, 1, -1)
+	playsound(loc, 'sound/misc/slip.ogg', 50, TRUE, -1)
 	bomb.preprime(user, 0, FALSE)
 	return (BRUTELOSS)
 

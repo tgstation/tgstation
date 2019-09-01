@@ -371,6 +371,14 @@
 					/obj/item/storage/box/firingpins)
 	crate_name = "firing pins crate"
 
+/datum/supply_pack/security/firingpins/paywall
+	name = "Paywall Firing Pins Crate"
+	desc = "Specialized firing pins with a built-in configurable paywall. Requires Security access to open."
+	cost = 2500
+	contains = list(/obj/item/storage/box/firingpins/paywall,
+					/obj/item/storage/box/firingpins/paywall)
+	crate_name = "paywall firing pins crate"
+
 /datum/supply_pack/security/justiceinbound
 	name = "Standard Justice Enforcer Crate"
 	desc = "This is it. The Bee's Knees. The Creme of the Crop. The Pick of the Litter. The best of the best of the best. The Crown Jewel of Nanotrasen. The Alpha and the Omega of security headwear. Guaranteed to strike fear into the hearts of each and every criminal aboard the station. Also comes with a security gasmask. Requires Security access to open."
@@ -1218,7 +1226,7 @@
 	name = "Medical Supplies Crate"
 	desc = "Contains several medical supplies. German doctor not included."
 	cost = 2000
-	contains = list(/obj/item/reagent_containers/glass/bottle/charcoal,
+	contains = list(/obj/item/reagent_containers/glass/bottle/multiver,
 					/obj/item/reagent_containers/glass/bottle/epinephrine,
 					/obj/item/reagent_containers/glass/bottle/morphine,
 					/obj/item/reagent_containers/glass/bottle/toxin,

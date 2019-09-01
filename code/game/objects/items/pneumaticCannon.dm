@@ -126,7 +126,10 @@
 	else
 		I.forceMove(src)
 	loadedItems += I
-	loadedWeightClass += I.w_class
+	if(isitem(I))
+		loadedWeightClass += I.w_class
+	else
+		loadedWeightClass++
 	return TRUE
 
 /obj/item/pneumatic_cannon/afterattack(atom/target, mob/living/user, flag, params)
@@ -167,7 +170,7 @@
 				    		 "<span class='danger'>You fire \the [src]!</span>")
 	log_combat(user, target, "fired at", src)
 	var/turf/T = get_target(target, get_turf(src))
-	playsound(src, fire_sound, 50, 1)
+	playsound(src, fire_sound, 50, TRUE)
 	fire_items(T, user)
 	if(pressureSetting >= 3 && iscarbon(user))
 		var/mob/living/carbon/C = user
@@ -183,7 +186,7 @@
 		for(var/i in 1 to throw_amount)
 			if(!loadedItems.len)
 				break
-			var/obj/item/I
+			var/atom/movable/I
 			if(fire_mode == PCANNON_FILO)
 				I = loadedItems[loadedItems.len]
 			else
@@ -191,13 +194,17 @@
 			if(!throw_item(target, I, user))
 				break
 
-/obj/item/pneumatic_cannon/proc/throw_item(turf/target, obj/item/I, mob/user)
-	if(!istype(I))
+/obj/item/pneumatic_cannon/proc/throw_item(turf/target, atom/movable/AM, mob/user)
+	if(!istype(AM))
 		return FALSE
-	loadedItems -= I
-	loadedWeightClass -= I.w_class
-	I.forceMove(get_turf(src))
-	I.throw_at(target, pressureSetting * 10 * range_multiplier, pressureSetting * 2, user, spin_item)
+	loadedItems -= AM
+	if(isitem(AM))
+		var/obj/item/I = AM
+		loadedWeightClass -= I.w_class
+	else
+		loadedWeightClass--
+	AM.forceMove(get_turf(src))
+	AM.throw_at(target, pressureSetting * 10 * range_multiplier, pressureSetting * 2, user, spin_item)
 	return TRUE
 
 /obj/item/pneumatic_cannon/proc/get_target(turf/target, turf/starting)
@@ -214,7 +221,10 @@
 	. = ..()
 	if (loadedItems.Remove(A))
 		var/obj/item/I = A
-		loadedWeightClass -= I.w_class
+		if(istype(I))
+			loadedWeightClass -= I.w_class
+		else
+			loadedWeightClass--
 	else if (A == tank)
 		tank = null
 		update_icon()

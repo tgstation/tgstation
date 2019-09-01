@@ -59,11 +59,11 @@
 	action_icon_state = "alien_egg"
 
 /obj/effect/proc_holder/alien/lay_egg/fire(mob/living/carbon/user)
-	if(locate(/obj/structure/alien/egg) in get_turf(user))
-		to_chat(user, "<span class='alertalien'>There's already an egg here.</span>")
+	if(!check_vent_block(user))
 		return FALSE
 
-	if(!check_vent_block(user))
+	if(locate(/obj/structure/alien/egg) in get_turf(user))
+		to_chat(user, "<span class='alertalien'>There's already an egg here.</span>")
 		return FALSE
 
 	user.visible_message("<span class='alertalien'>[user] has laid an egg!</span>")

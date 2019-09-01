@@ -84,6 +84,20 @@
 	resistance_flags = NONE
 	grind_results = list(/datum/reagent/aluminium = 10)
 
+/obj/item/trash/can/food/peaches
+	name = "canned peaches"
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "peachcan_empty"
+
+/obj/item/trash/can/food/peaches/maint
+	name = "Maintenance Peaches"
+	icon_state = "peachcanmaint_empty"
+
+/obj/item/trash/can/food/beans
+	name = "tin of beans"
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "beans_empty"
+
 /obj/item/trash/can/Initialize()
 	. = ..()
 	pixel_x = rand(-4,4)
@@ -100,6 +114,6 @@
 	grind_results = list(/datum/reagent/carbon = 20)
 
 /obj/item/trash/coal/burn()
-	visible_message("[src] fuses into a diamond! Someone wasn't so naughty after all...")
+	visible_message("<span class='warning'>[src] fuses into a diamond! Someone wasn't so naughty after all...</span>")
 	new /obj/item/stack/ore/diamond(loc)
 	qdel(src)

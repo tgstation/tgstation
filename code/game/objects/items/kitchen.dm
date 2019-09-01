@@ -31,7 +31,7 @@
 
 /obj/item/kitchen/fork/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] stabs \the [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to take a bite out of [user.p_them()]self!</span>")
-	playsound(src, 'sound/items/eatfood.ogg', 50, 1)
+	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
 	return BRUTELOSS
 
 /obj/item/kitchen/fork/attack(mob/living/carbon/M, mob/living/carbon/user)
@@ -149,7 +149,7 @@
 /obj/item/kitchen/knife/combat/cyborg
 	name = "cyborg knife"
 	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "knife"
+	icon_state = "knife_cyborg"
 	desc = "A cyborg-mounted plasteel knife. Extremely sharp and durable."
 
 /obj/item/kitchen/knife/carrotshiv

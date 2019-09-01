@@ -12,7 +12,7 @@
 	maxHealth = 250
 	health = 250
 	gender = NEUTER
-	mob_biotypes = list(MOB_INORGANIC)
+	mob_biotypes = NONE
 
 	harm_intent_damage = 5
 	melee_damage_lower = 8

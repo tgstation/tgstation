@@ -32,8 +32,8 @@
 
 /obj/item/wallframe/proc/attach(turf/on_wall, mob/user)
 	if(result_path)
-		playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
-		user.visible_message("[user.name] attaches [src] to the wall.",
+		playsound(src.loc, 'sound/machines/click.ogg', 75, TRUE)
+		user.visible_message("<span class='notice'>[user.name] attaches [src] to the wall.</span>",
 			"<span class='notice'>You attach [src] to the wall.</span>",
 			"<span class='italics'>You hear clicking.</span>")
 		var/ndir = get_dir(on_wall,user)
@@ -92,7 +92,7 @@
 	if(!..())
 		return
 	var/turf/T = get_turf(on_wall) //the user is not where it needs to be.
-	var/area/A = get_area(T)
+	var/area/A = get_area(user)
 	if(A.get_apc())
 		to_chat(user, "<span class='warning'>This area already has an APC!</span>")
 		return //only one APC per area

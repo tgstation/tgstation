@@ -115,7 +115,7 @@
 			to_chat(user, "<span class='notice'>[A] is fully charged!</span>")
 			recharging = FALSE
 			return TRUE
-		user.visible_message("[user] starts recharging [A] with [src].","<span class='notice'>You start recharging [A] with [src].</span>")
+		user.visible_message("<span class='notice'>[user] starts recharging [A] with [src].</span>", "<span class='notice'>You start recharging [A] with [src].</span>")
 		while(C.charge < C.maxcharge)
 			if(do_after(user, 10, target = user) && cell.charge)
 				done_any = TRUE
@@ -126,7 +126,7 @@
 			else
 				break
 		if(done_any) // Only show a message if we succeeded at least once
-			user.visible_message("[user] recharged [A]!","<span class='notice'>You recharged [A]!</span>")
+			user.visible_message("<span class='notice'>[user] recharged [A]!</span>", "<span class='notice'>You recharged [A]!</span>")
 		recharging = FALSE
 		return TRUE
 	recharging = FALSE
@@ -146,7 +146,7 @@
 
 /obj/item/inducer/attack_self(mob/user)
 	if(opened && cell)
-		user.visible_message("[user] removes [cell] from [src]!","<span class='notice'>You remove [cell].</span>")
+		user.visible_message("<span class='notice'>[user] removes [cell] from [src]!</span>", "<span class='notice'>You remove [cell].</span>")
 		cell.update_icon()
 		user.put_in_hands(cell)
 		cell = null
