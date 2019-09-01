@@ -72,6 +72,8 @@
 		if ("help")
 			M.visible_message("<span class='notice'>[M] pets [src].</span>", \
 							"<span class='notice'>You pet [src].</span>")
+			if(M.job in list("Research Director", "Scientist", "Roboticist")) //Only true men know taste
+				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "pet_borg", /datum/mood_event/pet_borg)
 		if("grab")
 			grabbedby(M)
 		else
