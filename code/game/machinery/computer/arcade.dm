@@ -372,7 +372,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 						   ORION_TRAIL_MALFUNCTION	= 2,
 						   ORION_TRAIL_COLLISION	= 1,
 						   ORION_TRAIL_SPACEPORT	= 2,
-						   ORION_TRAIL_OLDSHIP		= 3
+						   ORION_TRAIL_OLDSHIP		= 2
 						   )
 	var/list/stops = list()
 	var/list/stopblurbs = list()
