@@ -75,6 +75,16 @@
 	material_id = /datum/material/mythril
 	message = "cm3 of mythril"
 
+/datum/export/material/bscrystal
+	cost = 300
+	message = "of bluespace crystals"
+	material_id = /datum/material/bluespace
+
+/datum/export/material/plastic
+	cost = 75
+	message = "cm3 of plastic"
+	material_id = /datum/material/plastic
+
 /datum/export/material/metal
 	cost = 5
 	message = "cm3 of metal"
@@ -89,8 +99,3 @@
 	material_id = /datum/material/glass
 	export_types = list(/obj/item/stack/sheet/glass, /obj/item/stack/ore,
 		/obj/item/shard)
-
-/datum/export/material/bscrystal
-	cost = 300
-	message = "of bluespace crystals"
-	material_id = /datum/material/bluespace
