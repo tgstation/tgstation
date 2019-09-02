@@ -104,7 +104,7 @@
 
 /mob/living/simple_animal/mouse/Edmin
 	name = "Edmin"
-	desc = "Seems like he's won an election of some sort. Even has a cute little janitor hat."
+	desc = "Seems like he won an election of some sort. Even has a cute little janitor hat."
 	body_color = "white"
 	icon_state = "mouse_white"
 	response_help  = "pets"
