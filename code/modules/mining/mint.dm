@@ -85,7 +85,7 @@
 			return
 
 		while(coinsToProduce > 0 && materials.use_amount_mat(coin_mat, chosen))
-			create_coins(M.coin_type)
+			create_coins(M)
 			coinsToProduce--
 			newCoins++
 			src.updateUsrDialog()
@@ -102,6 +102,7 @@
 	if(T)
 		var/obj/item/O = new P(src)
 		var/obj/item/storage/bag/money/M = locate(/obj/item/storage/bag/money, T)
+		O.set_custom_materials()
 		if(!M)
 			M = new /obj/item/storage/bag/money(src)
 			unload_mineral(M)
