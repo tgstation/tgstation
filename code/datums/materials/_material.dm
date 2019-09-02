@@ -48,8 +48,12 @@ Simple datum which is instanced once per type and is used for every object of sa
 	o.throwforce *= strength_modifier
 
 	var/list/temp_armor_list = list() //Time to add armor modifiers!
-	for(var/i in o.armor)
-		temp_armor_list[i] = o.armor[i] * armor_modifiers[i]
+	var/list/current_armor = o.armor.getList()
+
+	for(var/i in current_armor)
+		message_admins("[current_armor[i]][armor_modifiers[i]]")
+		temp_armor_list[i] = current_armor[i] * armor_modifiers[i]
+		message_admins("[temp_armor_list[i]]")
 	o.armor = getArmor(arglist(temp_armor_list))
 
 ///This proc is called when the material is removed from an object.

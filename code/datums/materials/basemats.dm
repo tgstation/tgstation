@@ -40,7 +40,7 @@
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 	coin_type = /obj/item/coin/gold
-	armor_modifiers = list("melee" = 1.2, "bullet" = 1.2, "laser" = 1.3, "energy" = 1.2, "bomb" = 1, "bio" = 1, "rad" = 1, "fire" = 0.7, "acid" = 1.2)
+	armor_modifiers = list("melee" = 1.1, "bullet" = 1.1, "laser" = 1.15, "energy" = 1.15, "bomb" = 1, "bio" = 1, "rad" = 1, "fire" = 0.7, "acid" = 1.1)
 
 ///Has no special properties
 /datum/material/diamond
@@ -51,7 +51,7 @@
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
 	coin_type = /obj/item/coin/diamond
-	armor_modifiers = list("melee" = 1.4, "bullet" = 1.4, "laser" = 0.7, "energy" = 1, "bomb" = 1.4, "bio" = 1, "rad" = 1, "fire" = 1, "acid" = 1)
+	armor_modifiers = list("melee" = 1.3, "bullet" = 1.3, "laser" = 0.6, "energy" = 1, "bomb" = 1.2, "bio" = 1, "rad" = 1, "fire" = 1, "acid" = 1)
 
 ///Is slightly radioactive
 /datum/material/uranium
@@ -66,7 +66,7 @@
 
 /datum/material/uranium/on_applied(atom/source, amount, material_flags)
 	. = ..()
-	source.AddComponent(/datum/component/radioactive, amount / 10, source, 0) //half-life of 0 because we keep on going.
+	source.AddComponent(/datum/component/radioactive, amount / 20, source, 0) //half-life of 0 because we keep on going.
 
 /datum/material/uranium/on_removed(atom/source, material_flags)
 	. = ..()
@@ -82,13 +82,13 @@
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	coin_type = /obj/item/coin/plasma
-	armor_modifiers = list("melee" = 1.5, "bullet" = 0.7, "laser" = 0, "energy" = 1.2, "bomb" = 0, "bio" = 1.2, "rad" = 1, "fire" = 0, "acid" = 0.5)
+	armor_modifiers = list("melee" = 1.4, "bullet" = 0.7, "laser" = 0, "energy" = 1.2, "bomb" = 0, "bio" = 1.2, "rad" = 1, "fire" = 0, "acid" = 0.5)
 
 /datum/material/plasma/on_applied(atom/source, amount, material_flags)
-	. = ..()
+	. = ..()F
 	if(ismovableatom(source))
 		source.AddElement(/datum/element/firestacker)
-		source.AddComponent(/datum/component/explodable, 0, 0, amount / 1000, amount / 500)
+		source.AddComponent(/datum/component/explodable, 0, 0, amount / 2500, amount / 1250)
 
 /datum/material/plasma/on_removed(atom/source, material_flags)
 	. = ..()
@@ -120,11 +120,16 @@
 	source.AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50)
 	source.AddComponent(/datum/component/slippery, min(amount / 10, 80))
 
+/datum/material/bananium/on_applied_obj(var/obj/o, amount, material_flags)
+	o.AddComponent(/datum/component/wearertargeting/wearer_crosser, list(SLOT_HEAD, SLOT_SHOES, SLOT_BACK, SLOT_W_UNIFORM, SLOT_WEAR_SUIT))
+
 /datum/material/bananium/on_removed(atom/source, amount, material_flags)
 	. = ..()
 	qdel(source.GetComponent(/datum/component/slippery))
 	qdel(source.GetComponent(/datum/component/squeak))
 
+/datum/material/bananium/on_removed_obj(var/obj/o, amount, material_flags)
+	qdel(o.GetComponent(/datum/component/wearertargeting/wearer_crosser))
 
 ///Mediocre force increase
 /datum/material/titanium
@@ -135,7 +140,7 @@
 	strength_modifier = 1.3
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
-	armor_modifiers = list("melee" = 1.5, "bullet" = 1.5, "laser" = 1.3, "energy" = 1.3, "bomb" = 1.3, "bio" = 1, "rad" = 1, "fire" = 0.7, "acid" = 1)
+	armor_modifiers = list("melee" = 1.35, "bullet" = 1.3, "laser" = 1.3, "energy" = 1.25, "bomb" = 1.25, "bio" = 1, "rad" = 1, "fire" = 0.7, "acid" = 1)
 
 ///Force decrease
 /datum/material/plastic
