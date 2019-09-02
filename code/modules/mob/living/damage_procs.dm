@@ -131,8 +131,6 @@
 	if(immobilize)
 		apply_effect(immobilize, EFFECT_IMMOBILIZE, blocked)
 	if(irradiate)
-		send_to_playing_players(irradiate)
-		send_to_playing_players(blocked)
 		apply_effect(irradiate, EFFECT_IRRADIATE, blocked)
 	if(slur)
 		apply_effect(slur, EFFECT_SLUR, blocked)
