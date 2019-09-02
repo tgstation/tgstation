@@ -285,8 +285,8 @@
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/surgery
-  name = "Field Surgery Kit"
-  desc = "A box containing surgical drapes, sterilizine spray, a scalpel, and a hemostat."
+  name = "Emergency Surgery Kit"
+  desc = "A box containing the bare necessities for healing a patients wounds."
   illustration = "surgery"
 
 /obj/item/storage/box/surgery/PopulateContents()
@@ -294,6 +294,7 @@
   new /obj/item/reagent_containers/medigel/sterilizine(src)
   new /obj/item/scalpel(src)
   new /obj/item/hemostat(src)
+  new /obj/item/cautery(src)
 
 /obj/item/storage/box/flashbangs
 	name = "box of flashbangs (WARNING)"
