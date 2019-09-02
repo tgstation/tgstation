@@ -112,8 +112,6 @@
 				jitteriness = max(jitteriness,(effect * hit_percent))
 		if(EFFECT_PARALYZE)
 			Paralyze(effect * hit_percent)
-		if(EFFECT_IMMOBILIZE)
-			Immobilize(effect * hit_percent)
 	return 1
 
 
