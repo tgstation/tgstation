@@ -75,9 +75,13 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/pop_per_requirement = 6
 	/// The requirement used for checking if a second rule should be selected.
 	var/list/second_rule_req = list(100, 100, 80, 70, 60, 50, 30, 20, 10, 0)
+	/// The probability for a second ruleset with index being every ten threat.
+	var/list/second_rule_prob = list(0,0,20,30,40,60,80,90,100)
 	/// The requirement used for checking if a third rule should be selected.
 	var/list/third_rule_req = list(100, 100, 100, 90, 80, 70, 60, 50, 40, 30)
-	/// Threat requirement for a second ruleset when high pop override is in effect.
+	/// The probability for a third ruleset with index being every ten threat.
+	var/list/third_rule_prob = list(0,0,0,0,20,40,60,80,100)
+	/// Threat requirement for a second ruleset when high pop override is in effect. 
 	var/high_pop_second_rule_req = 40
 	/// Threat requirement for a third ruleset when high pop override is in effect.
 	var/high_pop_third_rule_req = 60
@@ -388,9 +392,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				if (threat_level > high_pop_third_rule_req)
 					extra_rulesets_amount++
 		else
-			if (threat_level >= second_rule_req[indice_pop])
+			if (threat_level >= second_rule_req[indice_pop] && prob(second_rule_prob[min(10, threat_level ? 0 : threat_level/10)]))
 				extra_rulesets_amount++
-				if (threat_level >= third_rule_req[indice_pop])
+				if (threat_level >= third_rule_req[indice_pop] && prob(third_rule_prob[min(10, threat_level ? 0 : threat_level/10)]))
 					extra_rulesets_amount++
 
 	if (drafted_rules.len > 0 && picking_roundstart_rule(drafted_rules))
