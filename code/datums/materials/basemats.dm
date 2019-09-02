@@ -139,3 +139,22 @@
 	desc = "Organic matter"
 	color = "#735b4d"
 	strength_modifier = 0.8
+
+///Stronk force increase
+/datum/material/adamantine
+	name = "adamantine"
+	id = "adamantine"
+	desc = "Adamantine"
+	color = "#6d7e8e"
+	strength_modifier = 1.5
+	categories = list(MAT_CATEGORY_RIGID = TRUE)
+	sheet_type = /obj/item/stack/sheet/mineral/adamantine
+
+///No special effect. (Admin only)
+/datum/material/mythril
+	name = "mythril"
+	id = "mythril"
+	desc = "Mythril"
+	color = "#ffedee"
+	categories = list(MAT_CATEGORY_RIGID = TRUE)
+	sheet_type = /obj/item/stack/sheet/mineral/mythril
