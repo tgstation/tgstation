@@ -272,6 +272,11 @@
 	icon_state = "knight_red"
 	item_state = "knight_red"
 
+/obj/item/clothing/head/helmet/knight/greyscale
+	icon_state = "knight_greyscale"
+	item_state = "knight_greyscale"
+	material_flags = NONE //Can change color
+
 /obj/item/clothing/head/helmet/skull
 	name = "skull helmet"
 	desc = "An intimidating tribal helmet, it doesn't look very comfortable."

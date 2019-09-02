@@ -239,6 +239,12 @@
 	icon_state = "knight_red"
 	item_state = "knight_red"
 
+/obj/item/clothing/suit/armor/riot/knight/greyscale
+	icon_state = "knight_greyscale"
+	item_state = "knight_greyscale"
+	material_flags = NONE //Can change color
+	armor = list("melee" = 50, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
+
 /obj/item/clothing/suit/armor/vest/durathread
 	name = "durathread vest"
 	desc = "A vest made of durathread with strips of leather acting as trauma plates."

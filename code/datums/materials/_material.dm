@@ -24,6 +24,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/strength_modifier = 1
 	///This is a modifier for integrity, and resembles the strength of the material
 	var/integrity_modifier = 1
+	///Armor modifiers, multiplies an items normal armor vars by these amounts.
+	var/armor_modifiers = list("melee" = 1, "bullet" = 1, "laser" = 1, "energy" = 1, "bomb" = 1, "bio" = 1, "rad" = 1, "fire" = 1, "acid" = 1)
 
 ///This proc is called when the material is added to an object.
 /datum/material/proc/on_applied(atom/source, amount, material_flags)
@@ -45,6 +47,10 @@ Simple datum which is instanced once per type and is used for every object of sa
 	o.force *= strength_modifier
 	o.throwforce *= strength_modifier
 
+	var/temp_armor_list = list() //Time to add armor modifiers!
+	for(var/i in o.armor)
+		temp_armor_list[i] = o.armor[i] * armor_modifiers[i]
+	o.armor = temp_armor_list
 
 ///This proc is called when the material is removed from an object.
 /datum/material/proc/on_removed(atom/source, material_flags)

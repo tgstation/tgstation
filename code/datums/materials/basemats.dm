@@ -7,7 +7,7 @@
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/metal
 	coin_type = /obj/item/coin/iron
-
+	
 ///Breaks extremely easily but is transparent.
 /datum/material/glass
 	name = "glass"
@@ -18,7 +18,7 @@
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	integrity_modifier = 0.1
 	sheet_type = /obj/item/stack/sheet/glass
-
+	armor_modifiers = list("melee" = 0.2, "bullet" = 0.2, "laser" = 0, "energy" = 1, "bomb" = 0, "bio" = 0.2, "rad" = 0.2, "fire" = 1, "acid" = 0.2) // yeah ok retard
 
 ///Has no special properties. Could be good against vampires in the future perhaps.
 /datum/material/silver
@@ -40,6 +40,7 @@
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 	coin_type = /obj/item/coin/gold
+	armor_modifiers = list("melee" = 1.2, "bullet" = 1.2, "laser" = 1.3, "energy" = 1.2, "bomb" = 1, "bio" = 1, "rad" = 1, "fire" = 0.7, "acid" = 1.2)
 
 ///Has no special properties
 /datum/material/diamond
@@ -50,6 +51,7 @@
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
 	coin_type = /obj/item/coin/diamond
+	armor_modifiers = list("melee" = 1.4, "bullet" = 1.4, "laser" = 0.7, "energy" = 1, "bomb" = 1.4, "bio" = 1, "rad" = 1, "fire" = 1, "acid" = 1)
 
 ///Is slightly radioactive
 /datum/material/uranium
@@ -60,6 +62,7 @@
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 	coin_type = /obj/item/coin/uranium
+	armor_modifiers = list("melee" = 2, "bullet" = 2, "laser" = 0.5, "energy" = 0.5, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 1, "acid" = 1)
 
 /datum/material/uranium/on_applied(atom/source, amount, material_flags)
 	. = ..()
@@ -75,10 +78,11 @@
 	name = "plasma"
 	id = "plasma"
 	desc = "Isn't plasma a state of matter? Oh whatever."
-	color = "#c716b8"
+	color = "#eb80f2"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	coin_type = /obj/item/coin/plasma
+	armor_modifiers = list("melee" = 1.5, "bullet" = 0.7, "laser" = 0, "energy" = 1.2, "bomb" = 0, "bio" = 1.2, "rad" = 1, "fire" = 0, "acid" = 0.5)
 
 /datum/material/plasma/on_applied(atom/source, amount, material_flags)
 	. = ..()
@@ -109,6 +113,7 @@
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
 	coin_type = /obj/item/coin/bananium
+	armor_modifiers = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 100, "bio" = 0, "rad" = 0, "fire" = 10, "acid" = 0) //Clowns cant be blown away.
 
 /datum/material/bananium/on_applied(atom/source, amount, material_flags)
 	. = ..()
@@ -130,6 +135,7 @@
 	strength_modifier = 1.3
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
+	armor_modifiers = list("melee" = 1.5, "bullet" = 1.5, "laser" = 1.3, "energy" = 1.3, "bomb" = 1.3, "bio" = 1, "rad" = 1, "fire" = 0.7, "acid" = 1)
 
 ///Force decrease
 /datum/material/plastic
