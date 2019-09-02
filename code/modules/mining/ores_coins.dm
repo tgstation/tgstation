@@ -404,6 +404,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	material_flags = MATERIAL_NO_COLOR
 	customsprite = valid
 
+/obj/item/coin/iron //used for maps
+
 /obj/item/coin/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
