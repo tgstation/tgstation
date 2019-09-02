@@ -81,7 +81,7 @@
 	material_id = /datum/material/bluespace
 
 /datum/export/material/plastic
-	cost = 75
+	cost = 25
 	message = "cm3 of plastic"
 	material_id = /datum/material/plastic
 
