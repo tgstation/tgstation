@@ -138,9 +138,9 @@
 		combatant_state = SEEDLING_STATE_ACTIVE
 		living_target.apply_status_effect(/datum/status_effect/seedling_beam_indicator, src)
 		beam_debuff_target = living_target
-		playsound(src,'sound/effects/seedling_chargeup.ogg', 100, 0)
+		playsound(src,'sound/effects/seedling_chargeup.ogg', 100, FALSE)
 		if(get_dist(src,living_target) > 7)
-			playsound(living_target,'sound/effects/seedling_chargeup.ogg', 100, 0)
+			playsound(living_target,'sound/effects/seedling_chargeup.ogg', 100, FALSE)
 		solar_beam_identifier = world.time
 		addtimer(CALLBACK(src, .proc/Beamu, living_target, solar_beam_identifier), 35)
 
@@ -161,7 +161,7 @@
 			living_target.adjustFireLoss(30)
 			living_target.adjust_fire_stacks(0.2)//Just here for the showmanship
 			living_target.IgniteMob()
-			playsound(living_target,'sound/weapons/sear.ogg', 50, 1)
+			playsound(living_target,'sound/weapons/sear.ogg', 50, TRUE)
 			addtimer(CALLBACK(src, .proc/AttackRecovery), 5)
 			return
 	AttackRecovery()
@@ -184,7 +184,7 @@
 		var/obj/item/projectile/seedling/readied_shot = new /obj/item/projectile/seedling(our_turf)
 		readied_shot.preparePixelProjectile(target, src, null, rand(-10, 10))
 		readied_shot.fire()
-		playsound(src, projectilesound, 100, 1)
+		playsound(src, projectilesound, 100, TRUE)
 
 /mob/living/simple_animal/hostile/jungle/seedling/proc/AttackRecovery()
 	if(combatant_state == SEEDLING_STATE_ACTIVE)

@@ -1,8 +1,3 @@
-
-#define BAD_ART 12.5
-#define GOOD_ART 25
-#define GREAT_ART 50
-
 /obj/structure/statue
 	name = "statue"
 	desc = "Placeholder. Yell at Firecage if you SOMEHOW see this."
@@ -255,7 +250,7 @@
 /obj/structure/statue/bananium/proc/honk()
 	if(!spam_flag)
 		spam_flag = TRUE
-		playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
 		addtimer(VARSET_CALLBACK(src, spam_flag, FALSE), 2 SECONDS)
 
 /////////////////////sandstone/////////////////////////////////////////

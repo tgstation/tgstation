@@ -8,6 +8,7 @@
 	hud_type = /datum/hud/infection_spore
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	crystal_color = "#ff8c00"
+	obj_damage = 40
 	// respawn time for the slime
 	var/respawn_time = 600
 	// the time left to respawn
@@ -278,6 +279,7 @@
 	health = 100
 	maxHealth = 100
 	speed = 5
+	obj_damage = 80
 	crystal_color = "#4169e1"
 	transform = matrix(1.5, 0, 0, 0, 1.5, 0)
 	environment_smash = ENVIRONMENT_SMASH_RWALLS

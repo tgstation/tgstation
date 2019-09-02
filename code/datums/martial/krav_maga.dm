@@ -91,7 +91,7 @@
 		return 0
 	D.visible_message("<span class='warning'>[A] leg sweeps [D]!</span>", \
 					  	"<span class='userdanger'>[A] leg sweeps you!</span>")
-	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, 1, -1)
+	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	D.apply_damage(5, BRUTE)
 	D.Paralyze(40)
 	log_combat(A, D, "leg sweeped")
@@ -100,7 +100,7 @@
 /datum/martial_art/krav_maga/proc/quick_choke(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)//is actually lung punch
 	D.visible_message("<span class='warning'>[A] pounds [D] on the chest!</span>", \
 				  	"<span class='userdanger'>[A] slams your chest! You can't breathe!</span>", null, COMBAT_MESSAGE_RANGE)
-	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, 1, -1)
+	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
 	if(D.losebreath <= 10)
 		D.losebreath = CLAMP(D.losebreath + 5, 0, 10)
 	D.adjustOxyLoss(10)
@@ -110,7 +110,7 @@
 /datum/martial_art/krav_maga/proc/neck_chop(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	D.visible_message("<span class='warning'>[A] karate chops [D]'s neck!</span>", \
 				  	"<span class='userdanger'>[A] karate chops your neck, rendering you unable to speak!</span>", null, COMBAT_MESSAGE_RANGE)
-	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, 1, -1)
+	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
 	D.apply_damage(5, A.dna.species.attack_type)
 	if(D.silent <= 10)
 		D.silent = CLAMP(D.silent + 10, 0, 10)
@@ -135,10 +135,10 @@
 	D.apply_damage(bonus_damage, A.dna.species.attack_type)
 	if(picked_hit_type == "kicks" || picked_hit_type == "stomps on")
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
-		playsound(get_turf(D), 'sound/effects/hit_kick.ogg', 50, 1, -1)
+		playsound(get_turf(D), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	else
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
-		playsound(get_turf(D), 'sound/effects/hit_punch.ogg', 50, 1, -1)
+		playsound(get_turf(D), 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
 	D.visible_message("<span class='danger'>[A] [picked_hit_type] [D]!</span>", \
 					  "<span class='userdanger'>[A] [picked_hit_type] you!</span>", null, COMBAT_MESSAGE_RANGE)
 	log_combat(A, D, "[picked_hit_type] with [name]")
@@ -155,11 +155,11 @@
 				A.put_in_hands(I)
 		D.visible_message("<span class='danger'>[A] disarms [D]!</span>", \
 							"<span class='userdanger'>[A] disarms you!</span>", null, COMBAT_MESSAGE_RANGE)
-		playsound(D, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+		playsound(D, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	else
 		D.visible_message("<span class='danger'>[A] fails to disarm [D]!</span>", \
 							"<span class='userdanger'>[A] fails to disarm you!</span>", null, COMBAT_MESSAGE_RANGE)
-		playsound(D, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+		playsound(D, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
 	log_combat(A, D, "disarmed (Krav Maga)", "[I ? " removing \the [I]" : ""]")
 	return 1
 

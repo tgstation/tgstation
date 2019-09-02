@@ -294,7 +294,7 @@
 	icon_state = "crabmeatraw"
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/crab
 	bitesize = 3
-	list_reagents = list("nutriment" = 1, "cooking_oil" = 3)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/cooking_oil = 3)
 	filling_color = "#EAD079"
 	tastes = list("raw crab" = 1)
 	foodtype = RAW | MEAT
@@ -304,7 +304,7 @@
 	desc = "Some deliciously cooked crab meat."
 	icon_state = "crabmeat"
 	list_reagents = list("nutriment" = 2)
-	bonus_reagents = list("nutriment" = 3, "vitamin" = 2, "cooking_oil" = 2)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/cooking_oil = 2)
 	filling_color = "#DFB73A"
 	tastes = list("crab" = 1)
 	foodtype = MEAT

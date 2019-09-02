@@ -106,6 +106,18 @@
 	if(istype(data))
 		src.data |= data.Copy()
 
+/datum/reagent/vaccine/fungal_tb
+
+/datum/reagent/vaccine/fungal_tb/New(data)
+	. = ..()
+	var/list/cached_data
+	if(!data)
+		cached_data = list()
+	else
+		cached_data = data
+	cached_data |= "[/datum/disease/tuberculosis]"
+	src.data = cached_data
+
 /datum/reagent/water
 	name = "Water"
 	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen."
@@ -1782,4 +1794,14 @@
 
 /datum/reagent/yuck/on_mob_end_metabolize(mob/living/L)
 	yuck_cycle = 0 // reset vomiting
+	return ..()
+
+/datum/reagent/yuck/on_transfer(atom/A, method=TOUCH, trans_volume)
+	if(method == INGEST || !iscarbon(A))
+		return ..()
+
+	A.reagents.remove_reagent(type, trans_volume)
+	A.reagents.add_reagent(/datum/reagent/fuel, trans_volume * 0.75)
+	A.reagents.add_reagent(/datum/reagent/water, trans_volume * 0.25)
+
 	return ..()

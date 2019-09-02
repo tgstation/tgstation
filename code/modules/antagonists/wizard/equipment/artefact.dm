@@ -422,7 +422,7 @@
 	on_cooldown = TRUE
 	last_user = user
 	var/turf/T = get_turf(user)
-	playsound(T,'sound/magic/warpwhistle.ogg', 200, 1)
+	playsound(T,'sound/magic/warpwhistle.ogg', 200, TRUE)
 	user.mobility_flags &= ~MOBILITY_MOVE
 	new /obj/effect/temp_visual/tornado(T)
 	sleep(20)

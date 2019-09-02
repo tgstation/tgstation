@@ -4,6 +4,8 @@
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	custom_price = 20
+	icon = 'icons/obj/clothing/under/shorts_pants.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/under/shorts_pants.dmi'
 
 /obj/item/clothing/under/pants/classicjeans
 	name = "classic jeans"

@@ -5,7 +5,7 @@
 	desc = "Deus Vult."
 	icon_state = "knight_templar"
 	item_state = "knight_templar"
-	armor = list("melee" = 41, "bullet" = 15, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 2, "rad" = 0, "fire" = 0, "acid" = 50)
+	armor = list("melee" = 50, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
@@ -28,7 +28,7 @@
 	if(user.mind && user.mind.isholy)
 		return ..()
 	else
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, 1)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, TRUE)
 		return FALSE
 
 /obj/item/choice_beacon/holy/generate_display_names()
@@ -44,7 +44,7 @@
 /obj/item/choice_beacon/holy/spawn_option(obj/choice,mob/living/M)
 	if(!GLOB.holy_armor_type)
 		..()
-		playsound(src, 'sound/effects/pray_chaplain.ogg', 40, 1)
+		playsound(src, 'sound/effects/pray_chaplain.ogg', 40, TRUE)
 		SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
 		GLOB.holy_armor_type = choice
 	else
