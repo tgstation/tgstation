@@ -304,7 +304,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin
 	icon = 'icons/obj/economy.dmi'
 	name = "coin"
-	icon_state = "[coin_state]_[coinflip]"
+	icon_state = "coin_[coinflip]"
 	flags_1 = CONDUCT_1
 	force = 1
 	throwforce = 2
@@ -315,17 +315,16 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/cooldown = 0
 	var/value
 	var/coinflip
-	var/coin_state
+
+/obj/item/coin/Initialize()
+	. = ..()
+	coinflip = pick(sideslist)
+	icon_state = "coin_[coinflip]"
 
 /obj/item/coin/set_custom_materials()
 	. = ..()
-	coinflip = pick(sideslist)
 	for(var/i in custom_materials)
 		var/datum/material/M = i
-		coin_state = M.coin_sprite
-		if(M.coin_sprite != "standard")
-			material_flags = MATERIAL_NO_COLOR
-		icon_state = "[coin_state]_[coinflip]"
 		value += M.value_per_unit * custom_materials[M]
 
 /obj/item/coin/get_item_credit_value()
@@ -395,6 +394,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	name = "antag token"
 	desc = "A novelty coin that helps the heart know what hard evidence cannot prove."
 	sideslist = list("valid", "salad")
+	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/coin/iron
 
@@ -433,8 +433,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 			return FALSE//do not flip the coin
 		coinflip = pick(sideslist)
 		cooldown = world.time + 15
-		flick("coin_[customsprite]_flip", src)
-		icon_state = "coin_[customsprite]_[coinflip]"
+		flick("coin_[coinflip]_flip", src)
+		icon_state = "coin_[coinflip]"
 		playsound(user.loc, 'sound/items/coinflip.ogg', 50, TRUE)
 		var/oldloc = loc
 		sleep(15)
