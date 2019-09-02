@@ -110,7 +110,6 @@
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
 	value_per_unit = 0.5
-	coin_sprite = "bananium"
 
 /datum/material/bananium/on_applied(atom/source, amount, material_flags)
 	. = ..()
@@ -163,7 +162,6 @@
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/adamantine
 	value_per_unit = 0.25
-	coin_sprite = "adamantine"
 
 ///RPG Magic. (Admin only)
 /datum/material/mythril
@@ -174,7 +172,6 @@
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/mythril
 	value_per_unit = 0.75
-	coin_sprite = "mythril"
 
 /datum/material/mythril/on_applied_obj(atom/source, amount, material_flags)
 	. = ..()
