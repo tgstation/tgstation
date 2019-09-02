@@ -24,8 +24,6 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/integrity_modifier = 1
 	///This is the amount of value per 1 unit of the material
 	var/value_per_unit = 0
-	///This is the sprite the coin uses
-	var/coin_sprite = "standard"
 
 ///This proc is called when the material is added to an object.
 /datum/material/proc/on_applied(atom/source, amount, material_flags)
