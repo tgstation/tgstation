@@ -349,97 +349,52 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		. += "<span class='info'>It's worth [value] credit\s.</span>"
 
 /obj/item/coin/gold
-	name = "gold coin"
-	cmineral = "gold"
-	icon_state = "coin_gold_heads"
-	value = 25
 	materials = list(/datum/material/gold = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list(/datum/reagent/gold = 4)
 
 /obj/item/coin/silver
-	name = "silver coin"
-	cmineral = "silver"
-	icon_state = "coin_silver_heads"
-	value = 10
 	materials = list(/datum/material/silver = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list(/datum/reagent/silver = 4)
 
 /obj/item/coin/diamond
-	name = "diamond coin"
-	cmineral = "diamond"
-	icon_state = "coin_diamond_heads"
-	value = 100
 	materials = list(/datum/material/diamond = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list(/datum/reagent/carbon = 4)
 
 /obj/item/coin/iron
-	name = "iron coin"
-	cmineral = "iron"
-	icon_state = "coin_iron_heads"
-	value = 1
 	materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list(/datum/reagent/iron = 4)
 
 /obj/item/coin/plasma
-	name = "plasma coin"
-	cmineral = "plasma"
-	icon_state = "coin_plasma_heads"
-	value = 40
 	materials = list(/datum/material/plasma = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list(/datum/reagent/toxin/plasma = 4)
 
 /obj/item/coin/uranium
-	name = "uranium coin"
-	cmineral = "uranium"
-	icon_state = "coin_uranium_heads"
-	value = 25
 	materials = list(/datum/material/uranium = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list(/datum/reagent/uranium = 4)
 
 /obj/item/coin/titanium
-	name = "titanium coin"
-	cmineral = "titanium"
-	icon_state = "coin_silver_heads"
-	value = 30
 	materials = list(/datum/material/titanium = MINERAL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/coin/bananium
-	name = "bananium coin"
-	cmineral = "bananium"
 	icon_state = "coin_bananium_heads"
-	value = 200 //makes the clown cry
 	materials = list(/datum/material/bananium = MINERAL_MATERIAL_AMOUNT*0.2)
-	grind_results = list(/datum/reagent/consumable/banana = 4)
+	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/coin/adamantine
-	name = "adamantine coin"
-	cmineral = "adamantine"
 	icon_state = "coin_adamantine_heads"
-	value = 100
+	materials = list(/datum/material/adamantine = MINERAL_MATERIAL_AMOUNT*0.2)
+	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/coin/mythril
-	name = "mythril coin"
-	cmineral = "mythril"
 	icon_state = "coin_mythril_heads"
-	value = 300
+	materials = list(/datum/material/adamantine = MINERAL_MATERIAL_AMOUNT*0.2)
+	material_flags = MATERIAL_NO_COLOR
 
-/obj/item/coin/twoheaded
-	cmineral = "iron"
-	icon_state = "coin_iron_heads"
+/obj/item/coin/iron/twoheaded
 	desc = "Hey, this coin's the same on both sides!"
 	sideslist = list("heads")
-	materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT*0.2)
-	value = 1
-	grind_results = list(/datum/reagent/iron = 4)
 
-/obj/item/coin/antagtoken
+/obj/item/coin/iron/antagtoken
 	name = "antag token"
 	icon_state = "coin_valid_valid"
-	cmineral = "valid"
 	desc = "A novelty coin that helps the heart know what hard evidence cannot prove."
 	sideslist = list("valid", "salad")
-	value = 0
 	grind_results = list(/datum/reagent/consumable/sodiumchloride = 4)
+	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/coin/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/cable_coil))
