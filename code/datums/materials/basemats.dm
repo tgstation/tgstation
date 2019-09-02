@@ -7,7 +7,7 @@
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/metal
 	coin_type = /obj/item/coin/iron
-	
+
 ///Breaks extremely easily but is transparent.
 /datum/material/glass
 	name = "glass"
@@ -85,7 +85,7 @@
 	armor_modifiers = list("melee" = 1.4, "bullet" = 0.7, "laser" = 0, "energy" = 1.2, "bomb" = 0, "bio" = 1.2, "rad" = 1, "fire" = 0, "acid" = 0.5)
 
 /datum/material/plasma/on_applied(atom/source, amount, material_flags)
-	. = ..()F
+	. = ..()
 	if(ismovableatom(source))
 		source.AddElement(/datum/element/firestacker)
 		source.AddComponent(/datum/component/explodable, 0, 0, amount / 2500, amount / 1250)
@@ -141,6 +141,14 @@
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	armor_modifiers = list("melee" = 1.35, "bullet" = 1.3, "laser" = 1.3, "energy" = 1.25, "bomb" = 1.25, "bio" = 1, "rad" = 1, "fire" = 0.7, "acid" = 1)
+
+/datum/material/runite
+	name = "runite"
+	id = "runite"
+	desc = "Runite"
+	color = "#3F9995"
+	strength_modifier = 1.3
+	armor_modifiers = list("melee" = 1.35, "bullet" = 2, "laser" = 0.5, "energy" = 1.25, "bomb" = 1.25, "bio" = 1, "rad" = 1, "fire" = 1.4, "acid" = 1) //rune is weak against magic lasers but strong against bullets. This is the combat triangle.
 
 ///Force decrease
 /datum/material/plastic

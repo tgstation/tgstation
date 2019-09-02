@@ -421,23 +421,14 @@
 
 /datum/design/knight_helmet
 	name = "Knight Helmet"
-	desc = "A royal knight's favorite hat. If you hold it upside down it's actually a bucket.."
+	desc = "A royal knight's favorite hat. If you hold it upside down it's actually a bucket."
 	id = "knight_helmet"
 	build_type = AUTOLATHE
-	materials = list(MAT_CATEGORY_RIGID = 10000)
+	materials = list(MAT_CATEGORY_RIGID = 5000)
 	build_path = /obj/item/clothing/head/helmet/knight/greyscale
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL //Anyone can be a knight if they try hard enough
 
-/obj/item/disk/design_disk/adv/knight_gear
-	name = "Magic Disk of Smithing"
-
-/obj/item/disk/design_disk/adv/knight_gear/Initialize()
-	. = ..()
-	var/datum/design/knight_armour/A = new
-	var/datum/design/knight_helmet/H = new
-	blueprints[1] = A
-	blueprints[2] = H
 
 
 /////////////////////////////////////////

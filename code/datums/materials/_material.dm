@@ -35,6 +35,9 @@ Simple datum which is instanced once per type and is used for every object of sa
 		if(alpha)
 			source.alpha = alpha
 
+	if(material_flags & MATERIAL_ADD_PREFIX)
+		source.name = "[name] [source.name]"
+
 	if(istype(source, /obj)) //objs
 		on_applied_obj(source, amount, material_flags)
 
@@ -62,6 +65,9 @@ Simple datum which is instanced once per type and is used for every object of sa
 		if(color)
 			source.remove_atom_colour(FIXED_COLOUR_PRIORITY, color)
 		source.alpha = initial(source.alpha)
+
+	if(material_flags & MATERIAL_ADD_PREFIX)
+		source.name = initial(source.name)
 	
 	if(istype(source, /obj)) //objs
 		on_removed_obj(source, material_flags)
