@@ -416,7 +416,7 @@
 						targets += C
 						continue
 					else 
-						if (C.get_id_name( in list("Captain", "Head of Security", "Research Director", "Chief Engineer", "Chief Medical Officer", "Head of Personnel")))
+						if (C.get_id_name in list("Captain", "Head of Security", "Research Director", "Chief Engineer", "Chief Medical Officer", "Head of Personnel"))
 							continue
 						else 
 							targets += C
