@@ -6,6 +6,7 @@
 	color = "#878687"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/metal
+	value_per_unit = 0.0025
 
 ///Breaks extremely easily but is transparent.
 /datum/material/glass
@@ -17,6 +18,7 @@
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	integrity_modifier = 0.1
 	sheet_type = /obj/item/stack/sheet/glass
+	value_per_unit = 0.0025
 
 ///Has no special properties. Could be good against vampires in the future perhaps.
 /datum/material/silver
@@ -26,6 +28,7 @@
 	color = "#bdbebf"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/silver
+	value_per_unit = 0.025
 
 ///Slight force increase
 /datum/material/gold
@@ -36,6 +39,7 @@
 	strength_modifier = 1.2
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/gold
+	value_per_unit = 0.0625
 
 ///Has no special properties
 /datum/material/diamond
@@ -45,6 +49,7 @@
 	color = "#22c2d4"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
+	value_per_unit = 0.25
 
 ///Is slightly radioactive
 /datum/material/uranium
@@ -54,6 +59,7 @@
 	color = "#1fb83b"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
+	value_per_unit = 0.05
 
 /datum/material/uranium/on_applied(atom/source, amount, material_flags)
 	. = ..()
@@ -72,6 +78,7 @@
 	color = "#c716b8"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
+	value_per_unit = 0.1
 
 /datum/material/plasma/on_applied(atom/source, amount, material_flags)
 	. = ..()
@@ -92,6 +99,7 @@
 	color = "#506bc7"
 	categories = list(MAT_CATEGORY_ORE = TRUE)
 	sheet_type = /obj/item/stack/sheet/bluespace_crystal
+	value_per_unit = 0.15
 
 ///Honks and slips
 /datum/material/bananium
@@ -101,6 +109,7 @@
 	color = "#fff263"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
+	value_per_unit = 0.5
 
 /datum/material/bananium/on_applied(atom/source, amount, material_flags)
 	. = ..()
@@ -122,6 +131,7 @@
 	strength_modifier = 1.3
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
+	value_per_unit = 0.0625
 
 ///Force decrease
 /datum/material/plastic
@@ -131,6 +141,7 @@
 	color = "#caccd9"
 	strength_modifier = 0.85
 	sheet_type = /obj/item/stack/sheet/plastic
+	value_per_unit = 0.0375
 
 ///Force decrease and mushy sound effect. (Not yet implemented)
 /datum/material/biomass
@@ -139,6 +150,7 @@
 	desc = "Organic matter"
 	color = "#735b4d"
 	strength_modifier = 0.8
+	value_per_unit = 0.0375
 
 ///Stronk force increase
 /datum/material/adamantine
@@ -149,6 +161,7 @@
 	strength_modifier = 1.5
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/adamantine
+	value_per_unit = 0.25
 
 ///RPG Magic. (Admin only)
 /datum/material/mythril
@@ -158,6 +171,7 @@
 	color = "#ffedee"
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/mythril
+	value_per_unit = 0.75
 
 /datum/material/mythril/on_applied_obj(atom/source, amount, material_flags)
 	. = ..()
