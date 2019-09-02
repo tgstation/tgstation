@@ -71,7 +71,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/equip_delay_other = 20 //In deciseconds, how long an item takes to put on another person
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
 	var/breakouttime = 0
-	var/list/materials //materials in this object, and the amount
+	var/list/materials //materials in this object, and the amount. -- This should be deprecated by custom_materials from /atom!
 
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
@@ -130,8 +130,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			var/datum/material/M = getmaterialref(i)
 			temp_list[M] = amount
 		materials = temp_list
-	
-	set_custom_materials (temp_list)
+		if(!custom_materials) //Make sure we aren't already using custom_materials given to us
+			custom_materials = materials // Set custom_materials to whatever materials is.
 
 	if (attack_verb)
 		attack_verb = typelist("attack_verb", attack_verb)
