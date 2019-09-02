@@ -7,6 +7,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items_and_weapons.dmi'
+	///Set material flags to MATERIAL_NO_COLOR to prevent accidental re-colors on pre-existing sprites.
+	material_flags = MATERIAL_NO_COLOR
 	///icon state name for inhanf overlays
 	var/item_state = null
 	///Icon file for left hand inhand overlays
@@ -128,6 +130,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			var/datum/material/M = getmaterialref(i)
 			temp_list[M] = amount
 		materials = temp_list
+	
+	set_custom_materials (temp_list)
 
 	if (attack_verb)
 		attack_verb = typelist("attack_verb", attack_verb)

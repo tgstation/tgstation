@@ -15,8 +15,10 @@
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
 	custom_materials = list(/datum/material/iron = 500) //Toolboxes by default use iron as their core, custom material.
+	material_flags = NONE //We have greyscale toolboxes, so we don't need to no_color flag.
 	var/latches = "single_latch"
 	var/has_latches = TRUE
+	
 
 /obj/item/storage/toolbox/Initialize()
 	. = ..()
