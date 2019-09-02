@@ -67,7 +67,7 @@
 	return ..()
 
 /datum/status_effect/incapacitating/sleeping/tick()
-	if(owner.health > owner.crit_threshold)
+	if(owner.health < 85 && owner.health > 0)
 		var/healing = -0.2
 		if((locate(/obj/structure/bed) in owner.loc))
 			healing -= 0.3
