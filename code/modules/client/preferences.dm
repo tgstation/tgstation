@@ -65,7 +65,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/list/features = list("mcolor" = "FFF", "ethcolor" = "9c3030", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain", "moth_markings" = "None")
-	var/list/randomise = list("name" = 0, "body" = 0, "species" = 0, "gender" = 0, "age" = 0, "underwear" = 1, "underwear_color" = 1, "undershirt" = 1, "socks" = 1, "backpack" = 1, "jumpsuit_style" = 1, "hairstyle" = 1, "hair_color" = 1, "facial_hairstyle" = 1, "facial_hair_color" = 1, "skin_tone" = 1, "eye_color" = 1)
+	var/list/randomise = list(NAME = FALSE, BODY = FALSE, SPECIES = FALSE, GENDER = FALSE, AGE = FALSE, UNDERWEAR = TRUE, UNDERWEAR_COLOR = TRUE, UNDERSHIRT = TRUE, SOCKS = TRUE, BACKPACK = TRUE, JUMPSUIT_STYLE = TRUE, HAIRSTYLE = TRUE, HAIR_COLOR = TRUE, FACIAL_HAIRSTYLE = TRUE, FACIAL_HAIR_COLOR = TRUE, SKIN_TONE = TRUE, EYE_COLOR = TRUE)
 	var/list/genders = list(MALE, FEMALE, PLURAL)
 	var/list/friendlyGenders = list("Male" = "male", "Female" = "female", "Other" = "plural")
 
@@ -181,7 +181,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(is_banned_from(user.ckey, "Appearance"))
 				dat += "<b>You are banned from using custom names and appearances. You can continue to adjust your characters, but you will be randomised once you join the game.</b><br>"
 			dat += "<a href='?_src_=prefs;preference=name;task=random'>Random Name</A> "
-			dat += "<a href='?_src_=prefs;preference=name'>Always Random Name: [randomise["name"] ? "Yes" : "No"]</a><BR>"
+			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[NAME]'>Always Random Name: [randomise[NAME] ? "Yes" : "No"]</a><BR>"
 			dat += "<b>Name:</b> "
 			dat += "<a href='?_src_=prefs;preference=name;task=input'>[real_name]</a><BR>"
 
@@ -194,10 +194,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				else
 					dispGender = "Other"
 				dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[dispGender]</a>"
-				dat += "<a href='?_src_=prefs;preference=rand_gender'>Random Gender: [randomise["gender"] ? "Yes" : "No"]</A>"
+				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[GENDER]'>Always Random Gender: [randomise[GENDER] ? "Yes" : "No"]</A>"
 
 			dat += "<br><b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a>"
-			dat += "<a href='?_src_=prefs;preference=rand_age'>Random Age: [randomise["age"] ? "Yes" : "No"]</A>"
+			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[AGE]'>Always Random Age: [randomise[AGE] ? "Yes" : "No"]</A>"
 
 			dat += "<br><br><b>Special Names:</b><BR>"
 			var/old_group
@@ -219,34 +219,34 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<h2>Body</h2>"
 			dat += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A> "
-			dat += "<a href='?_src_=prefs;preference=all'>Always Random Body: [randomise["body"] ? "Yes" : "No"]</A><br>"
+			dat += "<a href='?_src_=prefs;preference=all'>Always Random Body: [randomise[BODY] ? "Yes" : "No"]</A><br>"
 
 			dat += "<table width='100%'><tr><td width='24%' valign='top'>"
 
 			dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
-			dat += "<a href='?_src_=prefs;preference=rand_species;task=random_race'>Random Species</A> "
-			dat += "<a href='?_src_=prefs;preference=rand_species'>Always Random Species: [randomise["species"] ? "Yes" : "No"]</A><br>"
+			dat += "<a href='?_src_=prefs;preference=species;task=random'>Random Species</A> "
+			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RACE]'>Always Random Species: [randomise[SPECIES] ? "Yes" : "No"]</A><br>"
 
 			dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a>"
-			dat += "<a href='?_src_=prefs;preference=rand_underwear'>[randomise["underwear"] ? "Lock" : "Unlock"]</A>"
+			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[UNDERWEAR]'>[randomise[UNDERWEAR] ? "Lock" : "Unlock"]</A>"
 
 			dat += "<br><b>Underwear Color:</b><BR><span style='border: 1px solid #161616; background-color: #[underwear_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=underwear_color;task=input'>Change</a>"
-			dat += "<a href='?_src_=prefs;preference=rand_underwear_color'>[randomise["underwear_color"] ? "Lock" : "Unlock"]</A>"
+			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[UNDERWEAR_COLOR]'>[randomise[UNDERWEAR_COLOR] ? "Lock" : "Unlock"]</A>"
 
 			dat += "<BR><b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a>"
-			dat += "<a href='?_src_=prefs;preference=rand_undershirt'>[randomise["undershirt"] ? "Lock" : "Unlock"]</A>"
+			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[UNDERSHIRT]'>[randomise[UNDERSHIRT] ? "Lock" : "Unlock"]</A>"
 
 
 			dat += "<br><b>Socks:</b><BR><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a>"
-			dat += "<a href='?_src_=prefs;preference=rand_socks'>[randomise["socks"] ? "Lock" : "Unlock"]</A>"
+			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[SOCKS]'>[randomise[SOCKS] ? "Lock" : "Unlock"]</A>"
 
 
 			dat += "<br><b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backpack]</a>"
-			dat += "<a href='?_src_=prefs;preference=rand_bag'>[randomise["backpack"] ? "Lock" : "Unlock"]</A>"
+			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[BACKPACK]'>[randomise[BACKPACK] ? "Lock" : "Unlock"]</A>"
 
 
 			dat += "<br><b>Jumpsuit Style:</b><BR><a href ='?_src_=prefs;preference=suit;task=input'>[jumpsuit_style]</a>"
-			dat += "<a href='?_src_=prefs;preference=rand_suit'>[randomise["jumpsuit_style"] ? "Lock" : "Unlock"]</A>"
+			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[JUMPSUIT_STYLE]'>[randomise[JUMPSUIT_STYLE] ? "Lock" : "Unlock"]</A>"
 
 
 			dat += "<br><b>Uplink Spawn Location:</b><BR><a href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a><BR></td>"
@@ -259,7 +259,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<h3>Skin Tone</h3>"
 
 				dat += "<a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a>"
-				dat += "<a href='?_src_=prefs;preference=rand_s_tone'>[randomise["skin_tone"] ? "Lock" : "Unlock"]</A>"
+				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[SKIN_TONE]'>[randomise[SKIN_TONE] ? "Lock" : "Unlock"]</A>"
 				dat += "<br>"
 
 			var/mutant_colors
@@ -291,7 +291,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "<h3>Eye Color</h3>"
 				dat += "<span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a>"
-				dat += "<a href='?_src_=prefs;preference=rand_eye_color'>[randomise["eye_color"] ? "Lock" : "Unlock"]</A>"
+				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[EYE_COLOR]'>[randomise[EYE_COLOR] ? "Lock" : "Unlock"]</A>"
 
 				dat += "<br></td>"
 			else if(use_skintones || mutant_colors)
@@ -305,19 +305,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "<a href='?_src_=prefs;preference=hairstyle;task=input'>[hairstyle]</a>"
 				dat += "<a href='?_src_=prefs;preference=previous_hairstyle;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_hairstyle;task=input'>&gt;</a>"
-				dat += "<a href='?_src_=prefs;preference=rand_hairstyle'>[randomise["hairstyle"] ? "Lock" : "Unlock"]</A>"
+				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[HAIRSTYLE]'>[randomise[HAIRSTYLE] ? "Lock" : "Unlock"]</A>"
 
 				dat += "<br><span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a>"
-				dat += "<a href='?_src_=prefs;preference=rand_hair_color'>[randomise["hair_color"] ? "Lock" : "Unlock"]</A>"
+				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[HAIR_COLOR]'>[randomise[HAIR_COLOR] ? "Lock" : "Unlock"]</A>"
 
 				dat += "<BR><h3>Facial Hairstyle</h3>"
 
 				dat += "<a href='?_src_=prefs;preference=facial_hairstyle;task=input'>[facial_hairstyle]</a>"
 				dat += "<a href='?_src_=prefs;preference=previous_facehairstyle;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_facehairstyle;task=input'>&gt;</a>"
-				dat += "<a href='?_src_=prefs;preference=rand_facial_hairstyle'>[randomise["facial_hairstyle"] ? "Lock" : "Unlock"]</A>"
+				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[FACIAL_HAIRSTYLE]'>[randomise[FACIAL_HAIRSTYLE] ? "Lock" : "Unlock"]</A>"
 
 				dat += "<br><span style='border: 1px solid #161616; background-color: #[facial_hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a>"
-				dat += "<a href='?_src_=prefs;preference=rand_facial_hair_color'>[randomise["facial_hair_color"] ? "Same as Hair" : "Random"]</A>"
+				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[FACIAL_HAIR_COLOR]'>[randomise[FACIAL_HAIR_COLOR] ? "Same as Hair" : "Random"]</A>"
 				dat += "<br></td>"
 
 			//Mutant stuff
@@ -1027,9 +1027,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return TRUE
 
 	switch(href_list["task"])
-		if ("random_race")
-			random_species()
-
 		if("random")
 			switch(href_list["preference"])
 				if("name")
@@ -1056,6 +1053,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					eye_color = random_eye_color()
 				if("s_tone")
 					skin_tone = random_skin_tone()
+				if("species")
+					random_species()
 				if("bag")
 					backpack = pick(GLOB.backpacklist)
 				if("suit")
@@ -1228,7 +1227,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/temp_hsv = RGBtoHSV(features["mcolor"])
 						if(features["mcolor"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3]))
 							features["mcolor"] = pref_species.default_color
-						if(randomise["name"])
+						if(randomise[NAME])
 							real_name = pref_species.random_name(gender)
 
 				if("mutant_color")
@@ -1463,58 +1462,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					else
 						be_special += be_special_type
 
-				if("rand_gender")
-					randomise["gender"] = !randomise["gender"]
-
-				if("rand_age")
-					randomise["age"] = !randomise["age"]
-
-				if("rand_species")
-					randomise["species"] = !randomise["species"]
-
-				if("rand_underwear")
-					randomise["underwear"] = !randomise["underwear"]
-
-				if("rand_underwear_color")
-					randomise["underwear_color"] = !randomise["underwear_color"]
-
-				if("rand_undershirt")
-					randomise["undershirt"] = !randomise["undershirt"]
-
-				if("rand_socks")
-					randomise["socks"] = !randomise["socks"]
-
-				if("rand_bag")
-					randomise["backpack"] = !randomise["backpack"]
-
-				if("rand_suit")
-					randomise["jumpsuit_style"] = !randomise["jumpsuit_style"]
-
-				if("rand_s_tone")
-					randomise["skin_tone"] = !randomise["skin_tone"]
-
-				if("rand_eye_color")
-					randomise["eye_color"] = !randomise["eye_color"]
-
-				if("rand_hairstyle")
-					randomise["hairstyle"] = !randomise["hairstyle"]
-
-				if("rand_hair_color")
-					randomise["hair_color"] = !randomise["hair_color"]
-
-				if("rand_facial_hairstyle")
-					randomise["facial_hairstyle"] = !randomise["facial_hairstyle"]
-
-				if("rand_facial_hair_color")
-					randomise["facial_hair_color"] = !randomise["facial_hair_color"]
-					if(!randomise["facial_hair_color"])
-						facial_hair_color = hair_color
-
-				if("name")
-					randomise["name"] = !randomise["name"]
-
-				if("all")
-					randomise["body"] = !randomise["body"]
+				if("toggle_random")
+					var/random_type = href_list["random_type"]
+					if(random_type in randomise)
+						randomise[random_type] = !randomise[random_type]
+						if(!randomise[FACIAL_HAIR_COLOR])
+							facial_hair_color = hair_color
 
 				if("hear_midis")
 					toggles ^= SOUND_MIDI
@@ -1598,13 +1551,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE)
 
-	if(randomise["species"] && !character_setup)
+	if(randomise[SPECIES] && !character_setup)
 		random_species()
 
-	if(randomise["body"] && !character_setup)
+	if(randomise[BODY] && !character_setup)
 		random_character(gender)
 
-	if(randomise["name"] && !character_setup)
+	if(randomise[NAME] && !character_setup)
 		real_name = pref_species.random_name(gender)
 
 	if(roundstart_checks)

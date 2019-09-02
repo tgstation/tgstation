@@ -284,38 +284,22 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Character
 	S["real_name"]			>> real_name
-	S["name_is_always_random"] >> randomise["name"]
-	S["body_is_always_random"] >> randomise["body"]
-	S["species_is_always_random"] >> randomise["species"]
 	S["gender"]				>> gender
-	S["gender_is_always_random"] >> randomise["gender"]
 	S["age"]				>> age
-	S["age_is_always_random"] >> randomise["age"]
 	S["hair_color"]			>> hair_color
-	S["hair_color_is_always_random"] >> randomise["hair_color"]
 	S["facial_hair_color"]	>> facial_hair_color
-	S["facial_hair_color_is_always_random"]	>> randomise["facial_hair_color"]
 	S["eye_color"]			>> eye_color
-	S["eye_color_is_always_random"]	>> randomise["eye_color"]
 	S["skin_tone"]			>> skin_tone
-	S["skin_tone_is_always_random"]	>> randomise["skin_tone"]
 	S["hairstyle_name"]	>> hairstyle
-	S["hairstyle_name_is_always_random"] >> randomise["hairstyle"]
 	S["facial_style_name"]	>> facial_hairstyle
-	S["facial_style_name_is_always_random"] >> randomise["facial_hairstyle"]
 	S["underwear"]			>> underwear
-	S["underwear_is_always_random"] >> randomise["underwear"]
 	S["underwear_color"]	>> underwear_color
-	S["underwear_color_is_always_random"] >> randomise["underwear_color"]
 	S["undershirt"]			>> undershirt
-	S["undershirt_is_always_random"] >> randomise["undershirt"]
 	S["socks"]				>> socks
-	S["socks_is_always_random"] >> randomise["socks"]
 	S["backpack"]			>> backpack
-	S["backpack_is_always_random"] >> randomise["backpack"]
 	S["jumpsuit_style"]		>> jumpsuit_style
-	S["jumpsuit_style_is_always_random"] >> randomise["jumpsuit_style"]
 	S["uplink_loc"]			>> uplink_spawn_loc
+	S["randomise"]	>>  randomise
 	S["feature_mcolor"]					>> features["mcolor"]
 	S["feature_ethcolor"]					>> features["ethcolor"]
 	S["feature_lizard_tail"]			>> features["tail_lizard"]
@@ -373,23 +357,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!features["ethcolor"] || features["ethcolor"] == "#000")
 		features["ethcolor"] = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)]
 
-	randomise["name"]	= sanitize_integer(randomise["name"], 0, 1, initial(randomise["name"]))
-	randomise["body"]	= sanitize_integer(randomise["body"], 0, 1, initial(randomise["body"]))
-	randomise["species"]	= sanitize_integer(randomise["species"], 0, 1, initial(randomise["species"]))
-	randomise["gender"] = sanitize_integer(randomise["gender"], 0, 1, initial(randomise["gender"]))
-	randomise["age"] = sanitize_integer(randomise["age"], 0, 1, initial(randomise["age"]))
-	randomise["underwear"]	= sanitize_integer(randomise["underwear"], 0, 1, initial(randomise["underwear"]))
-	randomise["underwear_color"]	= sanitize_integer(randomise["underwear_color"], 0, 1, initial(randomise["underwear_color"]))
-	randomise["undershirt"]	= sanitize_integer(randomise["undershirt"], 0, 1, initial(randomise["undershirt"]))
-	randomise["socks"]	= sanitize_integer(randomise["socks"], 0, 1, initial(randomise["socks"]))
-	randomise["backpack"]	= sanitize_integer(randomise["backpack"], 0, 1, initial(randomise["backpack"]))
-	randomise["jumpsuit_style"]	= sanitize_integer(randomise["jumpsuit_style"], 0, 1, initial(randomise["jumpsuit_style"]))
-	randomise["hairstyle"]	= sanitize_integer(randomise["hairstyle"], 0, 1, initial(randomise["hairstyle"]))
-	randomise["facial_hairstyle"]	= sanitize_integer(randomise["facial_hairstyle"], 0, 1, initial(randomise["facial_hairstyle"]))
-	randomise["hair_color"]	= sanitize_integer(randomise["hair_color"], 0, 1, initial(randomise["hair_color"]))
-	randomise["facial_hair_color"]	= sanitize_integer(randomise["facial_hair_color"], 0, 1, initial(randomise["facial_hair_color"]))
-	randomise["skin_tone"]	= sanitize_integer(randomise["skin_tone"], 0, 1, initial(randomise["skin_tone"]))
-	randomise["eye_color"]	= sanitize_integer(randomise["eye_color"], 0, 1, initial(randomise["eye_color"]))
+//	randomise = SANITIZE_LIST(randomise)
 
 	if(gender == MALE)
 		hairstyle			= sanitize_inlist(hairstyle, GLOB.hairstyles_male_list)
@@ -406,7 +374,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		facial_hairstyle			= sanitize_inlist(facial_hairstyle, GLOB.facial_hairstyles_list)
 		underwear		= sanitize_inlist(underwear, GLOB.underwear_list)
 		undershirt 		= sanitize_inlist(undershirt, GLOB.undershirt_list)
-
 
 	socks			= sanitize_inlist(socks, GLOB.socks_list)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
@@ -454,38 +421,22 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Character
 	WRITE_FILE(S["real_name"]			, real_name)
-	WRITE_FILE(S["name_is_always_random"]			, randomise["name"])
-	WRITE_FILE(S["body_is_always_random"]			, randomise["body"])
-	WRITE_FILE(S["species_is_always_random"]			, randomise["species"])
 	WRITE_FILE(S["gender"]			, gender)
-	WRITE_FILE(S["gender_is_always_random"]			, randomise["gender"])
 	WRITE_FILE(S["age"]			, age)
-	WRITE_FILE(S["age_is_always_random"]			, randomise["age"])
 	WRITE_FILE(S["hair_color"]			, hair_color)
-	WRITE_FILE(S["hair_color_is_always_random"]			, randomise["hair_color"])
 	WRITE_FILE(S["facial_hair_color"]			, facial_hair_color)
-	WRITE_FILE(S["facial_hair_color_is_always_random"]			, randomise["facial_hair_color"])
 	WRITE_FILE(S["eye_color"]			, eye_color)
-	WRITE_FILE(S["eye_color_is_always_random"]			, randomise["eye_color"])
 	WRITE_FILE(S["skin_tone"]			, skin_tone)
-	WRITE_FILE(S["skin_tone_is_always_random"]			, randomise["skin_tone"])
 	WRITE_FILE(S["hairstyle_name"]			, hairstyle)
-	WRITE_FILE(S["hairstyle_name_is_always_random"]			, randomise["hairstyle"])
 	WRITE_FILE(S["facial_style_name"]			, facial_hairstyle)
-	WRITE_FILE(S["facial_style_name_is_always_random"]			, randomise["facial_hairstyle"])
 	WRITE_FILE(S["underwear"]			, underwear)
-	WRITE_FILE(S["underwear_is_always_random"]			, randomise["underwear"])
 	WRITE_FILE(S["underwear_color"]			, underwear_color)
-	WRITE_FILE(S["underwear_color_is_always_random"]			, randomise["underwear_color"])
 	WRITE_FILE(S["undershirt"]			, undershirt)
-	WRITE_FILE(S["undershirt_is_always_random"]			, randomise["undershirt"])
 	WRITE_FILE(S["socks"]			, socks)
-	WRITE_FILE(S["socks_is_always_random"]			, randomise["socks"])
 	WRITE_FILE(S["backpack"]			, backpack)
-	WRITE_FILE(S["backpack_is_always_random"]			, randomise["backpack"])
 	WRITE_FILE(S["jumpsuit_style"]			, jumpsuit_style)
-	WRITE_FILE(S["jumpsuit_style_is_always_random"]			, randomise["jumpsuit_style"])
 	WRITE_FILE(S["uplink_loc"]			, uplink_spawn_loc)
+	WRITE_FILE(S["randomise"]		, randomise)
 	WRITE_FILE(S["species"]			, pref_species.id)
 	WRITE_FILE(S["feature_mcolor"]					, features["mcolor"])
 	WRITE_FILE(S["feature_ethcolor"]					, features["ethcolor"])

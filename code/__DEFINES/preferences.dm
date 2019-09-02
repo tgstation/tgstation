@@ -82,3 +82,23 @@
 #define JP_LOW 1
 #define JP_MEDIUM 2
 #define JP_HIGH 3
+
+//randomised elements
+#define NAME "name"
+#define BODY "body"
+#define SPECIES "species"
+#define RACE "race"
+#define GENDER "gender"
+#define AGE "age"
+#define UNDERWEAR "underwear"
+#define UNDERWEAR_COLOR "underwear_color"
+#define UNDERSHIRT "undershirt"
+#define SOCKS "socks"
+#define BACKPACK "backpack"
+#define JUMPSUIT_STYLE "jumpsuit_style"
+#define HAIRSTYLE "hairstyle"
+#define HAIR_COLOR "hair_color"
+#define FACIAL_HAIR_COLOR "facial_hair_color"
+#define FACIAL_HAIRSTYLE "facial_hairstyle"
+#define SKIN_TONE "skin_tone"
+#define EYE_COLOR "eye_color"
