@@ -333,6 +333,8 @@
 	desc = "A slim armored vest that protects against most types of damage."
 	icon_state = "armor"
 	item_state = "armor"
+	icon = 'icons/obj/clothing/suit/armor.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/armor.dmi'
 	blood_overlay_type = "armor"
 	resistance_flags = NONE
 	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)

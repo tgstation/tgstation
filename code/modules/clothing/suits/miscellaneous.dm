@@ -231,14 +231,14 @@
 	desc = "Your classic, non-racist poncho."
 	icon_state = "classicponcho"
 	item_state = "classicponcho"
+	icon = 'icons/obj/clothing/suit/poncho.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/suit/poncho.dmi'
 
 /obj/item/clothing/suit/poncho/green
 	name = "green poncho"
 	desc = "Your classic, non-racist poncho. This one is green."
 	icon_state = "greenponcho"
 	item_state = "greenponcho"
-	icon = 'icons/obj/clothing/suit/poncho.dmi'
-	mob_overlay_icon = 'icons/mob/clothing/suit/poncho.dmi'
 
 /obj/item/clothing/suit/poncho/red
 	name = "red poncho"
