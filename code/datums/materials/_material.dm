@@ -47,10 +47,10 @@ Simple datum which is instanced once per type and is used for every object of sa
 	o.force *= strength_modifier
 	o.throwforce *= strength_modifier
 
-	var/temp_armor_list = list() //Time to add armor modifiers!
+	var/list/temp_armor_list = list() //Time to add armor modifiers!
 	for(var/i in o.armor)
 		temp_armor_list[i] = o.armor[i] * armor_modifiers[i]
-	o.armor = temp_armor_list
+	o.armor = getArmor(arglist(temp_armor_list))
 
 ///This proc is called when the material is removed from an object.
 /datum/material/proc/on_removed(atom/source, material_flags)
