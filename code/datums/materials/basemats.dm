@@ -141,7 +141,7 @@
 	color = "#caccd9"
 	strength_modifier = 0.85
 	sheet_type = /obj/item/stack/sheet/plastic
-	value_per_unit = 0.0375
+	value_per_unit = 0.0125
 
 ///Force decrease and mushy sound effect. (Not yet implemented)
 /datum/material/biomass
@@ -150,7 +150,7 @@
 	desc = "Organic matter"
 	color = "#735b4d"
 	strength_modifier = 0.8
-	value_per_unit = 0.0375
+	value_per_unit = 0.025
 
 ///Stronk force increase
 /datum/material/adamantine
