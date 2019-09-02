@@ -304,7 +304,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin
 	icon = 'icons/obj/economy.dmi'
 	name = "coin"
-	icon_state = "coin_[coinflip]"
+	icon_state = "coin"
 	flags_1 = CONDUCT_1
 	force = 1
 	throwforce = 2
@@ -356,8 +356,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/coin/examine(mob/user)
 	. = ..()
-	if(value)
-		. += "<span class='info'>It's worth [value] credit\s.</span>"
+	. += "<span class='info'>It's worth [value] credit\s.</span>"
 
 /obj/item/coin/gold
 	custom_materials = list(/datum/material/gold = 400)
