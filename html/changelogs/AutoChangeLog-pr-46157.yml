@@ -1,0 +1,7 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - balance: "The toxin healing from the fiziver chem has been brought down to a much more sane level and metabs 25% as fast as previous."
+  - balance: "The fiziver chem's damage-multiplying effect now gains potency at a much faster rate (under most normal/sane circumstances), but caps out at making you take 3x as much brute, burn, oxygen, and stamina damage as you normally would."
+  - bugfix: "The fiziver chem now properly undoes its modifications to the stamina_mod value. Before this change, taking a 10u pill of fiziver could render your body over 2.5x as vulnerable to stamina damage for the rest of the round."
+  - balance: "The fiziver chem's overdose effect is no longer incredibly pathetic. Instead of dealing a pitiful amount of damage and then completely purging the fiziver chem from your system, the fiziver chem's overdose effect now has a 50% chance each tick to deal 0.2 brute damage and 0.2 burn damage (which will, of course, be amplified by the normal damage-increasing effect of fivizer)."

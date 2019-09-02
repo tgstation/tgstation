@@ -88,7 +88,7 @@
 		if(anchored)
 			to_chat(user, "<span class='warning'>Unweld [src] from the floor first!</span>")
 			return
-		user.visible_message("[user] starts to dismantle [src].", "<span class='notice'>You start to dismantle [src]...</span>")
+		user.visible_message("<span class='notice'>[user] starts to dismantle [src].</span>", "<span class='notice'>You start to dismantle [src]...</span>")
 		if(W.use_tool(src, user, 80, volume=50))
 			to_chat(user, "<span class='notice'>You dismantle [src].</span>")
 			new framebuildstacktype(drop_location(), framebuildstackamount)
@@ -100,19 +100,19 @@
 			if(!W.tool_start_check(user, amount=0))
 				return
 
-			user.visible_message("[user] starts to repair [src].",
+			user.visible_message("<span class='notice'>[user] starts to repair [src].</span>",
 								"<span class='notice'>You begin repairing [src]...</span>",
 								"<span class='italics'>You hear welding.</span>")
 			if(W.use_tool(src, user, 40, volume=40))
 				obj_integrity = max_integrity
-				user.visible_message("[user] has repaired [src].", \
+				user.visible_message("<span class='notice'>[user] has repaired [src].</span>", \
 									"<span class='notice'>You finish repairing [src].</span>")
 
 		else if(!anchored)
 			if(!W.tool_start_check(user, amount=0))
 				return
 
-			user.visible_message("[user] starts to weld [src] to the floor.",
+			user.visible_message("<span class='notice'>[user] starts to weld [src] to the floor.</span>",
 								"<span class='notice'>You start to weld [src] to the floor...</span>",
 								"<span class='italics'>You hear welding.</span>")
 			if (W.use_tool(src, user, 20, volume=50))
@@ -122,7 +122,7 @@
 			if(!W.tool_start_check(user, amount=0))
 				return
 
-			user.visible_message("[user] starts to cut [src] free from the floor.",
+			user.visible_message("<span class='notice'>[user] starts to cut [src] free from the floor.</span>",
 								"<span class='notice'>You start to cut [src] free from the floor...</span>",
 								"<span class='italics'>You hear welding.</span>")
 			if (W.use_tool(src, user, 20, volume=50))

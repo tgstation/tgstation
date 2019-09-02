@@ -1,0 +1,4 @@
+author: "JJRcop"
+delete-after: True
+changes: 
+  - tweak: "Organic Slurry reduces back to welder fuel if not consumed by the affected mob."

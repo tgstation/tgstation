@@ -95,13 +95,13 @@
 		if(!user.transferItemToLoc(I, src))
 			return
 		cell = I
-		visible_message("[user] inserts a cell into [src].",
+		visible_message("<span class='notice'>[user] inserts a cell into [src].</span>",
 						"<span class='notice'>You insert the new cell into [src].</span>")
 	else if(I.tool_behaviour == TOOL_CROWBAR && open && cell)
 		cell.add_fingerprint(usr)
 		cell.forceMove(loc)
 		cell = null
-		visible_message("[user] crowbars out the power cell from [src].",
+		visible_message("<span class='notice'>[user] crowbars out the power cell from [src].</span>",
 						"<span class='notice'>You pry the powercell out of [src].</span>")
 	else if(is_wire_tool(I) && open)
 		return attack_hand(user)
@@ -744,7 +744,7 @@
 
 /mob/living/simple_animal/bot/mulebot/insertpai(mob/user, obj/item/paicard/card)
 	if(..())
-		visible_message("[src] safeties are locked on.")
+		visible_message("<span class='notice'>[src] safeties are locked on.</span>")
 
 /mob/living/simple_animal/bot/mulebot/paranormal//allows ghosts only unless hacked to actually be useful
 	name = "paranormal MULEbot"

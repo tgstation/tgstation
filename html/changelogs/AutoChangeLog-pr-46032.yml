@@ -1,5 +1,0 @@
-author: "MacBlaze1"
-delete-after: True
-changes: 
-  - rscadd: "New explosion for the strength of 1 and above, weaker than the maximum explosion right now."
-  - tweak: "Made strength 2 the threshold for the maximum explosion for single tanks."

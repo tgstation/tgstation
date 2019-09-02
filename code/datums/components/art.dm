@@ -17,7 +17,7 @@
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/apply_moodlet)
 
 /datum/component/art/proc/apply_moodlet(mob/M, impress)
-	M.visible_message("[M] stops to admire [parent].", \
+	M.visible_message("<span class='notice'>[M] stops to admire [parent].</span>", \
 						 "<span class='notice'>You take in [parent], admiring the fine craftsmanship.</span>")
 	switch(impress)
 		if(GREAT_ART to INFINITY)

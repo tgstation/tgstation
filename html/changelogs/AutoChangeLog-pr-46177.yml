@@ -1,0 +1,4 @@
+author: "Shirbu"
+delete-after: True
+changes: 
+  - balance: "replaces Sanguibital's bleed rate stacks with bleed damage instead"
