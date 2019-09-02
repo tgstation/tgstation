@@ -64,7 +64,7 @@
 
 	var/on = TRUE				//determines if the turret is on
 
-	var/list/faction = list("turret") // Same faction mobs will never be shot at, no matter the other settings
+	var/list/faction = list("turret", "silicon") // Same faction mobs will never be shot at, no matter the other settings
 
 	var/datum/effect_system/spark_spread/spark_system	//the spark system, used for generating... sparks?
 
@@ -470,7 +470,7 @@
 
 /obj/machinery/porta_turret/proc/assess_perp(mob/living/carbon/human/perp)
 	var/threatcount = 0	//the integer returned
-
+	
 	if(obj_flags & EMAGGED)
 		return 10	//if emagged, always return 10.
 
@@ -498,7 +498,7 @@
 			threatcount += 4
 
 	if(shoot_unloyal)
-		if (!HAS_TRAIT(perp, TRAIT_MINDSHIELD))
+		if (!HAS_TRAIT(perp, TRAIT_MINDSHIELD) || !(perp.get_id_name() in list("Research Director", "Head of Security", "Research Director", "Chief Engineer", "Chief Medical Officer", "Head of Personnel")))
 			threatcount += 4
 
 	return threatcount
