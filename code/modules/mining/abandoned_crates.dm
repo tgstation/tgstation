@@ -215,6 +215,8 @@
 	return ..()
 
 /obj/structure/closet/secure/loot/dive_into(mob/living/user)
+	if(!locked)
+		return ..()
 	to_chat(user, "<span class='notice'>That seems like a stupid idea.</span>")
 	return FALSE
 
