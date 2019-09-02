@@ -58,13 +58,13 @@
 	var/auth_weapons = 0	//checks if it can shoot people that have a weapon they aren't authorized to have
 	var/stun_all = 0		//if this is active, the turret shoots everything that isn't security or head of staff
 	var/check_anomalies = 1	//checks if it can shoot at unidentified lifeforms (ie xenos)
-	var/shoot_unloyal = 0	//checks if it can shoot people that aren't loyalty implantd
-
+	var/shoot_unloyal = 0	//checks if it can shoot people that aren't loyalty implanted and who arent heads
+	var/shoot_borgs = 0 // checks if it can shoot people that are cyborgs
 	var/attacked = 0		//if set to 1, the turret gets pissed off and shoots at people nearby (unless they have sec access!)
 
 	var/on = TRUE				//determines if the turret is on
 
-	var/list/faction = list("turret", "silicon") // Same faction mobs will never be shot at, no matter the other settings
+	var/list/faction = list("turret", ) // Same faction mobs will never be shot at, no matter the other settings
 
 	var/datum/effect_system/spark_spread/spark_system	//the spark system, used for generating... sparks?
 
@@ -171,6 +171,7 @@
 		dat += "Neutralize All Non-Security and Non-Command Personnel: <A href='?src=[REF(src)];operation=shootall'>[stun_all ? "Yes" : "No"]</A><BR>"
 		dat += "Neutralize All Unidentified Life Signs: <A href='?src=[REF(src)];operation=checkxenos'>[check_anomalies ? "Yes" : "No"]</A><BR>"
 		dat += "Neutralize All Non-Loyalty Implanted Personnel: <A href='?src=[REF(src)];operation=checkloyal'>[shoot_unloyal ? "Yes" : "No"]</A><BR>"
+		dat += "Neutralize All Cyborgs: <A href = '?src=[REF(src)];operation=shootborgs'>[shoot_cyborgs ? "Yes" : "No" :]</A><BR>"
 	if(issilicon(user))
 		if(!manual_control)
 			var/mob/living/silicon/S = user
@@ -212,9 +213,12 @@
 				check_anomalies = !check_anomalies
 			if("checkloyal")
 				shoot_unloyal = !shoot_unloyal
+			if ("shootborgs")
+				shoot_cyborgs = !shoot_cyborgs
 			if("manual")
 				if(issilicon(usr) && !manual_control)
 					give_control(usr)
+			
 		interact(usr)
 
 /obj/machinery/porta_turret/power_change()
@@ -500,7 +504,9 @@
 	if(shoot_unloyal)
 		if (!HAS_TRAIT(perp, TRAIT_MINDSHIELD) || !(perp.get_id_name() in list("Research Director", "Head of Security", "Research Director", "Chief Engineer", "Chief Medical Officer", "Head of Personnel")))
 			threatcount += 4
-
+	if (shoot_cyborgs)
+		if (iscyborg(perp))
+			threatcount +=4
 	return threatcount
 
 
