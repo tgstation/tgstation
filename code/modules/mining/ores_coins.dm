@@ -304,7 +304,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin
 	icon = 'icons/obj/economy.dmi'
 	name = "coin"
-	icon_state = "coin_[coinflip]"
+	icon_state = "[coin_state]_[coinflip]"
 	flags_1 = CONDUCT_1
 	force = 1
 	throwforce = 2
@@ -315,18 +315,17 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/cooldown = 0
 	var/value
 	var/coinflip
-
-/obj/item/coin/Initialize()
-	. = ..()
-	coinflip = pick(sideslist)
-	icon_state = "coin_[customsprite]_[coinflip]"
+	var/coin_state
 
 /obj/item/coin/set_custom_materials()
 	. = ..()
+	coinflip = pick(sideslist)
 	for(var/i in custom_materials)
 		var/datum/material/M = i
-		if(M.coin_sprite)
+		coin_state = M.coin_sprite
+		if(M.coin_sprite != "standard")
 			material_flags = MATERIAL_NO_COLOR
+		icon_state = "[coin_state]_[coinflip]"
 		value += M.value_per_unit * custom_materials[M]
 
 /obj/item/coin/get_item_credit_value()
