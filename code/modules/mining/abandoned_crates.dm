@@ -214,6 +214,10 @@
 			return
 	return ..()
 
+/obj/structure/closet/secure/loot/dive_into(mob/living/user)
+	to_chat(user, "<span class='notice'>That seems like a stupid idea.</span>")
+	return FALSE
+
 /obj/structure/closet/crate/secure/loot/emag_act(mob/user)
 	if(locked)
 		boom(user)
