@@ -411,12 +411,13 @@
 
 			//if the target is a human and not in our faction, analyze threat level
 			if(ishuman(C) && !in_faction(C))
+				var/obj/item/card/id/I = C.get_idcard(TRUE)
 				if(assess_perp(C) >= 4)
 					if(shoot_heads_of_staff)
 						targets += C
 						continue
 					else 
-						if (C.get_id_name in list("Captain", "Head of Security", "Research Director", "Chief Engineer", "Chief Medical Officer", "Head of Personnel"))
+						if (I.assignment in list("Captain", "Head of Security", "Research Director", "Chief Engineer", "Chief Medical Officer", "Head of Personnel"))
 							continue
 						else 
 							targets += C
