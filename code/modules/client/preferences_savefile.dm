@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	24
+#define SAVEFILE_VERSION_MAX	25
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -112,6 +112,22 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 24)
 		if (!(underwear in GLOB.underwear_list))
 			underwear = "Nude"
+	if(current_version < 25)
+		if(!(randomise.len))
+			randomise += list(RANDOM_NAME = FALSE, RANDOM_BODY = FALSE, RANDOM_SPECIES = FALSE, RANDOM_GENDER = FALSE, RANDOM_AGE = FALSE, RANDOM_UNDERWEAR = TRUE, RANDOM_UNDERWEAR_COLOR = TRUE, RANDOM_UNDERSHIRT = TRUE, RANDOM_SOCKS = TRUE, RANDOM_BACKPACK = TRUE, RANDOM_JUMPSUIT_STYLE = TRUE, RANDOM_HAIRSTYLE = TRUE, RANDOM_HAIR_COLOR = TRUE, RANDOM_FACIAL_HAIRSTYLE = TRUE, RANDOM_FACIAL_HAIR_COLOR = TRUE, RANDOM_SKIN_TONE = TRUE, RANDOM_EYE_COLOR = TRUE)
+
+		if(S["name_is_always_random"])
+			randomise[RANDOM_NAME] = TRUE
+		if(S["body_is_always_random"])
+			randomise[RANDOM_BODY] = TRUE
+		if(S["species_is_always_random"])
+			randomise[RANDOM_BODY] = TRUE
+		if(S["backbag"])
+			S["backbag"]	>> backpack
+		if(S["hair_style_name"])
+			S["hair_style_name"]	>> hairstyle
+		if(S["facial_style_name"])
+			S["facial_style_name"]	>> facial_hairstyle
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
@@ -357,7 +373,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!features["ethcolor"] || features["ethcolor"] == "#000")
 		features["ethcolor"] = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)]
 
-//	randomise = SANITIZE_LIST(randomise)
+	randomise = SANITIZE_LIST(randomise)
 
 	if(gender == MALE)
 		hairstyle			= sanitize_inlist(hairstyle, GLOB.hairstyles_male_list)

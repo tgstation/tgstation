@@ -207,7 +207,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	if(ghost_accs == GHOST_ACCS_FULL && icon_state in GLOB.ghost_forms_with_accessories_list) //check if this form supports accessories and if the client wants to show them
 		var/datum/sprite_accessory/S
 		if(facial_hairstyle)
-			S = GLOB.facial_hairstyles_list[FACIAL_HAIRSTYLE]
+			S = GLOB.facial_hairstyles_list[facial_hairstyle]
 			if(S)
 				facial_hair_overlay = mutable_appearance(S.icon, "[S.icon_state]", -HAIR_LAYER)
 				if(facial_hair_color)
@@ -215,7 +215,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 				facial_hair_overlay.alpha = 200
 				add_overlay(facial_hair_overlay)
 		if(hairstyle)
-			S = GLOB.hairstyles_list[HAIRSTYLE]
+			S = GLOB.hairstyles_list[hairstyle]
 			if(S)
 				hair_overlay = mutable_appearance(S.icon, "[S.icon_state]", -HAIR_LAYER)
 				if(hair_color)
@@ -738,9 +738,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if((!client) || (!client.prefs))
 		return
 
-	if(client.prefs.randomise[NAME])
+	if(client.prefs.randomise[RANDOM_NAME])
 		client.prefs.real_name = random_unique_name(gender)
-	if(client.prefs.randomise[BODY])
+	if(client.prefs.randomise[RANDOM_BODY])
 		client.prefs.random_character(gender)
 
 	if(HAIR in client.prefs.pref_species.species_traits)
