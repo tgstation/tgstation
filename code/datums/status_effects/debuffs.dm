@@ -67,17 +67,19 @@
 	return ..()
 
 /datum/status_effect/incapacitating/sleeping/tick()
-	if(owner.health < 85 && owner.health > 0)
-		var/healing = -0.2
-		if((locate(/obj/structure/bed) in owner.loc))
-			healing -= 0.3
-		else
-			if((locate(/obj/structure/table) in owner.loc))
-				healing -= 0.1
-		owner.adjustBruteLoss(healing)
-		owner.adjustFireLoss(healing)
-		owner.adjustToxLoss(healing, TRUE, TRUE)
-		owner.adjustStaminaLoss(healing)
+	if(owner.maxHealth != 0)
+		var/health_ratio = owner.health / owner.maxhealth
+		if(health_ratio > 0.8)
+			var/healing = -0.2
+			if((locate(/obj/structure/bed) in owner.loc))
+				healing -= 0.3
+			else
+				if((locate(/obj/structure/table) in owner.loc))
+					healing -= 0.1
+			owner.adjustBruteLoss(healing)
+			owner.adjustFireLoss(healing)
+			owner.adjustToxLoss(healing, TRUE, TRUE)
+			owner.adjustStaminaLoss(healing)
 	if(human_owner && human_owner.drunkenness)
 		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
 	if(prob(20))
