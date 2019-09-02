@@ -304,7 +304,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin
 	icon = 'icons/obj/economy.dmi'
 	name = "coin"
-	icon_state = "coin_[customsprite]_[coinflip]"
+	icon_state = "coin_[coinflip]"
 	flags_1 = CONDUCT_1
 	force = 1
 	throwforce = 2
@@ -315,7 +315,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/cooldown = 0
 	var/value
 	var/coinflip
-	var/customsprite = "standard"
 
 /obj/item/coin/Initialize()
 	. = ..()
@@ -326,6 +325,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	. = ..()
 	for(var/i in custom_materials)
 		var/datum/material/M = i
+		if(M.coin_sprite)
+			material_flags = MATERIAL_NO_COLOR
 		value += M.value_per_unit * custom_materials[M]
 
 /obj/item/coin/get_item_credit_value()
@@ -380,15 +381,12 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/coin/bananium
 	custom_materials = list(/datum/material/bananium = 400)
-	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/coin/adamantine
 	custom_materials = list(/datum/material/adamantine = 400)
-	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/coin/mythril
 	custom_materials = list(/datum/material/mythril = 400)
-	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/coin/twoheaded
 	desc = "Hey, this coin's the same on both sides!"
@@ -398,9 +396,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	name = "antag token"
 	desc = "A novelty coin that helps the heart know what hard evidence cannot prove."
 	sideslist = list("valid", "salad")
-	material_flags = MATERIAL_NO_COLOR
 
-/obj/item/coin/iron //used for maps
+/obj/item/coin/iron
 
 /obj/item/coin/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/cable_coil))
