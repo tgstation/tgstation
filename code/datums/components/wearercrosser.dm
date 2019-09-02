@@ -10,5 +10,9 @@
 	item = parent
 	valid_slots = _valid_slots
 
+/datum/component/wearertargeting/wearer_crosser/Destroy()
+	. = ..()
+	item = null
+
 /datum/component/wearertargeting/wearer_crosser/proc/propogate_crossed(datum/source, atom/movable/AM)
 	item.Crossed(AM)
