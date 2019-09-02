@@ -562,6 +562,7 @@
 		R.use(1)
 		if(!R && replace)
 			user.put_in_hands(new_item)
+		qdel(src)
 
 /obj/item/reagent_containers/food/snacks/butter/on_a_stick //there's something so special about putting it on a stick.
 	name = "butter on a stick"
