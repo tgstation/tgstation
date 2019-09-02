@@ -281,30 +281,15 @@
 /mob/proc/RestrainedClickOn(atom/A)
 	return
 
-/*
-	Middle click
-	Only used for swapping hands
-*/
+/**
+  *Middle click
+  *Mainly used for swapping hands
+  */
 /mob/proc/MiddleClickOn(atom/A)
-	return
-
-/mob/living/carbon/MiddleClickOn(atom/A)
-	if(!stat && mind && iscarbon(A) && A != src)
-		var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(C && C.chosen_sting)
-			C.chosen_sting.try_to_sting(src,A)
-			next_click = world.time + 5
-			return
+	. = SEND_SIGNAL(src, COMSIG_MOB_MIDDLECLICKON, A)
+	if(. & COMSIG_MOB_CANCEL_CLICKON)
+		return
 	swap_hand()
-
-/mob/living/simple_animal/drone/MiddleClickOn(atom/A)
-	swap_hand()
-
-// In case of use break glass
-/*
-/atom/proc/MiddleClick(mob/M as mob)
-	return
-*/
 
 /*
 	Shift click
@@ -349,17 +334,10 @@
 	Unused except for AI
 */
 /mob/proc/AltClickOn(atom/A)
+	. = SEND_SIGNAL(src, COMSIG_MOB_ALTCLICKON, A)
+	if(. & COMSIG_MOB_CANCEL_CLICKON)
+		return
 	A.AltClick(src)
-	return
-
-/mob/living/carbon/AltClickOn(atom/A)
-	if(!stat && mind && iscarbon(A) && A != src)
-		var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(C && C.chosen_sting)
-			C.chosen_sting.try_to_sting(src,A)
-			next_click = world.time + 5
-			return
-	..()
 
 /atom/proc/AltClick(mob/user)
 	SEND_SIGNAL(src, COMSIG_CLICK_ALT, user)

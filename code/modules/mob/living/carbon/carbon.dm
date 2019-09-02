@@ -93,7 +93,7 @@
 			Paralyze(20)
 			visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>",\
 				"<span class='userdanger'>You violently crash into [victim]!</span>")
-		playsound(src,'sound/weapons/punch1.ogg',50,1)
+		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
 
 
 //Throwing stuff
@@ -456,7 +456,7 @@
 	if(stun)
 		Paralyze(80)
 
-	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, TRUE)
 	var/turf/T = get_turf(src)
 	if(!blood)
 		adjust_nutrition(-lost_nutrition)

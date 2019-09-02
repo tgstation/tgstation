@@ -101,7 +101,7 @@
 /obj/item/organ/heart/gland/heal/proc/replace_eyes(obj/item/organ/eyes/eyes)
 	if(eyes)
 		owner.visible_message("<span class='warning'>[owner]'s [eyes.name] fall out of their sockets!</span>", "<span class='userdanger'>Your [eyes.name] fall out of their sockets!</span>")
-		playsound(owner, 'sound/effects/splat.ogg', 50, 1)
+		playsound(owner, 'sound/effects/splat.ogg', 50, TRUE)
 		eyes.Remove(owner)
 		eyes.forceMove(owner.drop_location())
 	else
@@ -120,7 +120,7 @@
 /obj/item/organ/heart/gland/heal/proc/replace_limb(body_zone, obj/item/bodypart/limb)
 	if(limb)
 		owner.visible_message("<span class='warning'>[owner]'s [limb.name] suddenly detaches from [owner.p_their()] body!</span>", "<span class='userdanger'>Your [limb.name] suddenly detaches from your body!</span>")
-		playsound(owner,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
+		playsound(owner, "desceration", 50, TRUE, -1)
 		limb.drop_limb()
 	else
 		to_chat(owner, "<span class='warning'>You feel a weird tingle in your [parse_zone(body_zone)]... even if you don't have one.</span>")
@@ -131,7 +131,7 @@
 	owner.visible_message("<span class='warning'>With a loud snap, [owner]'s [parse_zone(body_zone)] rapidly grows back from [owner.p_their()] body!</span>",
 	"<span class='userdanger'>With a loud snap, your [parse_zone(body_zone)] rapidly grows back from your body!</span>",
 	"<span class='warning'>Your hear a loud snap.</span>")
-	playsound(owner, 'sound/magic/demon_consume.ogg', 50, 1)
+	playsound(owner, 'sound/magic/demon_consume.ogg', 50, TRUE)
 	owner.regenerate_limb(body_zone)
 
 /obj/item/organ/heart/gland/heal/proc/replace_blood()
@@ -160,14 +160,14 @@
 /obj/item/organ/heart/gland/heal/proc/replace_chest(obj/item/bodypart/chest/chest)
 	if(chest.status == BODYPART_ROBOTIC)
 		owner.visible_message("<span class='warning'>[owner]'s [chest.name] rapidly expels its mechanical components, replacing them with flesh!</span>", "<span class='userdanger'>Your [chest.name] rapidly expels its mechanical components, replacing them with flesh!</span>")
-		playsound(owner, 'sound/magic/clockwork/anima_fragment_attack.ogg', 50, 1)
+		playsound(owner, 'sound/magic/clockwork/anima_fragment_attack.ogg', 50, TRUE)
 		var/list/dirs = GLOB.alldirs.Copy()
 		for(var/i in 1 to 3)
 			var/obj/effect/decal/cleanable/robot_debris/debris = new(get_turf(owner))
 			debris.streak(dirs)
 	else
 		owner.visible_message("<span class='warning'>[owner]'s [chest.name] sheds off its damaged flesh, rapidly replacing it!</span>", "<span class='warning'>Your [chest.name] sheds off its damaged flesh, rapidly replacing it!</span>")
-		playsound(owner, 'sound/effects/splat.ogg', 50, 1)
+		playsound(owner, 'sound/effects/splat.ogg', 50, TRUE)
 		var/list/dirs = GLOB.alldirs.Copy()
 		for(var/i in 1 to 3)
 			var/obj/effect/decal/cleanable/blood/gibs/gibs = new(get_turf(owner))

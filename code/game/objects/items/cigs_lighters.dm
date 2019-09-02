@@ -570,7 +570,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/lighter/suicide_act(mob/living/carbon/user)
 	if (lit)
 		user.visible_message("<span class='suicide'>[user] begins holding \the [src]'s flame up to [user.p_their()] face! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-		playsound(src, 'sound/items/welder.ogg', 50, 1)
+		playsound(src, 'sound/items/welder.ogg', 50, TRUE)
 		return FIRELOSS
 	else
 		user.visible_message("<span class='suicide'>[user] begins whacking [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -904,7 +904,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		s.start()
 		vapetime = 0
 		if(prob(5))//small chance for the vape to break and deal damage if it's emagged
-			playsound(get_turf(src), 'sound/effects/pop_expl.ogg', 50, 0)
+			playsound(get_turf(src), 'sound/effects/pop_expl.ogg', 50, FALSE)
 			M.apply_damage(20, BURN, BODY_ZONE_HEAD)
 			M.Paralyze(300, 1, 0)
 			var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread

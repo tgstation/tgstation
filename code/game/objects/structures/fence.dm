@@ -137,7 +137,7 @@
 			open = FALSE
 
 	update_door_status()
-	playsound(src, 'sound/machines/click.ogg', 100, 1)
+	playsound(src, 'sound/machines/click.ogg', 100, TRUE)
 
 /obj/structure/fence/door/proc/update_door_status()
 	switch(open)

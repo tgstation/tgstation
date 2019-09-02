@@ -1,0 +1,10 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - imageadd: "Added condiment bottle reagent overlays for reagents without special bottle sprites"
+  - rscadd: "Made it so you can rename or change the description of condiment bottles with a pen"
+  - balance: "You can no longer tell the main or only reagent in a condiment bottle through the description. This is in line with other reagent containers."
+  - spellcheck: "Fixed some typos/punched descriptions up a little"
+  - tweak: "Sprites of roundstart condiment containers (e.g. salt, milk, flour) are no longer static and change based on the reagent with the largest volume as well now"
+  - tweak: "Sugar comes in a bag rather than a bottle"
+  - tweak: "Bottles will turn into flour, rice, milk or soymilk containers if they are the largest reagent in them"

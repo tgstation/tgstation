@@ -31,7 +31,7 @@
 	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return TRUE
 	else
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, 1)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, TRUE)
 		return FALSE
 
 /obj/item/choice_beacon/proc/generate_options(mob/living/M)
@@ -143,5 +143,5 @@
 	user.visible_message("<span class='suicide'>[user] has declared themself as anti-skub! The skub tears them apart!</span>")
 
 	user.gib()
-	playsound(src, 'sound/items/eatfood.ogg', 50, 1, -1)
+	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE, -1)
 	return MANUAL_SUICIDE

@@ -81,7 +81,7 @@
 
 	owner.transferItemToLoc(holder, src, TRUE)
 	holder = null
-	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, 1)
+	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/organ/cyberimp/arm/proc/Extend(var/obj/item/item)
 	if(!(item in src))
@@ -121,7 +121,7 @@
 	owner.visible_message("<span class='notice'>[owner] extends [holder] from [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
 		"<span class='notice'>You extend [holder] from your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
 		"<span class='italics'>You hear a short mechanical noise.</span>")
-	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, 1)
+	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/organ/cyberimp/arm/ui_action_click()
 	if((organ_flags & ORGAN_FAILING) || (!holder && !contents.len))
@@ -151,7 +151,7 @@
 	if(prob(30/severity) && owner && !(organ_flags & ORGAN_FAILING))
 		Retract()
 		owner.visible_message("<span class='danger'>A loud bang comes from [owner]\'s [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm!</span>")
-		playsound(get_turf(owner), 'sound/weapons/flashbang.ogg', 100, 1)
+		playsound(get_turf(owner), 'sound/weapons/flashbang.ogg', 100, TRUE)
 		to_chat(owner, "<span class='userdanger'>You feel an explosion erupt inside your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm as your implant breaks!</span>")
 		owner.adjust_fire_stacks(20)
 		owner.IgniteMob()
