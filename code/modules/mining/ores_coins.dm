@@ -381,17 +381,14 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin/bananium
 	custom_materials = list(/datum/material/bananium = 400)
 	material_flags = MATERIAL_NO_COLOR
-	customsprite = "bananium"
 
 /obj/item/coin/adamantine
 	custom_materials = list(/datum/material/adamantine = 400)
 	material_flags = MATERIAL_NO_COLOR
-	customsprite = "adamantine"
 
 /obj/item/coin/mythril
 	custom_materials = list(/datum/material/mythril = 400)
 	material_flags = MATERIAL_NO_COLOR
-	customsprite = "mythril"
 
 /obj/item/coin/twoheaded
 	desc = "Hey, this coin's the same on both sides!"
@@ -402,7 +399,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	desc = "A novelty coin that helps the heart know what hard evidence cannot prove."
 	sideslist = list("valid", "salad")
 	material_flags = MATERIAL_NO_COLOR
-	customsprite = "valid"
 
 /obj/item/coin/iron //used for maps
 
