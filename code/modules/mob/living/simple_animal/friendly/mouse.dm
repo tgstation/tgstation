@@ -99,8 +99,27 @@
 	desc = "Jerry the cat is not amused."
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
-	response_harm   = "splats"
+	response_harm = "splats"
 	gold_core_spawnable = NO_SPAWN
+
+/mob/living/simple_animal/mouse/Edmin
+	name = "Edmin"
+	desc = "Seems like he's won an election of some sort. Even has a cute little janitor hat."
+	body_color = "white"
+	icon_state = "mouse_white"
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "demotes"
+	gold_core_spawnable = NO_SPAWN
+
+/mob/living/simple_animal/mouse/Edmin/Initialize()
+	. = ..()
+	add_overlay(mutable_appearance('icons/mob/animal.dmi', "mouse_jani_hat"))
+
+/mob/living/simple_animal/mouse/Edmin/death(gibbed, toast)
+	name = "Dedmin"
+	. = ..()
+	cut_overlays()
 
 /obj/item/reagent_containers/food/snacks/deadmouse
 	name = "dead mouse"
