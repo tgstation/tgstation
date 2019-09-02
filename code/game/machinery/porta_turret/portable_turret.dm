@@ -414,9 +414,13 @@
 				if(assess_perp(C) >= 4)
 					if(shoot_heads_of_staff)
 						targets += C
+						continue
 					else 
-						if (C.get_id_name!( in list("Captain", "Head of Security", "Research Director", "Chief Engineer", "Chief Medical Officer", "Head of Personnel")))
+						if (C.get_id_name( in list("Captain", "Head of Security", "Research Director", "Chief Engineer", "Chief Medical Officer", "Head of Personnel")))
 							continue
+						else 
+							targets += C
+							continue 
 			else if(check_anomalies) //non humans who are not simple animals (xenos etc)
 				if(!in_faction(C))
 					targets += C
@@ -510,7 +514,9 @@
 	if(shoot_unloyal)
 		if (!HAS_TRAIT(perp, TRAIT_MINDSHIELD))
 			if (!shoot_heads_of_staff)
-				if (!(perp.get_id_name() in list("Captain", "Head of Security", "Research Director", "Chief Engineer", "Chief Medical Officer", "Head of Personnel")))
+				if ((perp.get_id_name() in list("Captain", "Head of Security", "Research Director", "Chief Engineer", "Chief Medical Officer", "Head of Personnel")))
+					return 0
+				else 
 					threatcount += 4
 			else
 				threatcount += 4
