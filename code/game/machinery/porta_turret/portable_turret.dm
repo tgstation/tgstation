@@ -59,7 +59,7 @@
 	var/stun_all = 0		//if this is active, the turret shoots everything that isn't security or head of staff
 	var/check_anomalies = 1	//checks if it can shoot at unidentified lifeforms (ie xenos)
 	var/shoot_unloyal = 0	//checks if it can shoot people that aren't loyalty implanted and who arent heads
-	var/shoot_borgs = 0 // checks if it can shoot people that are cyborgs
+	var/shoot_cyborgs = 0 // checks if it can shoot people that are cyborgs
 	var/attacked = 0		//if set to 1, the turret gets pissed off and shoots at people nearby (unless they have sec access!)
 
 	var/on = TRUE				//determines if the turret is on
