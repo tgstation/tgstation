@@ -159,12 +159,12 @@
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/mythril
 
-/datum/material/mythril/on_applied(atom/source, amount, material_flags)
+/datum/material/mythril/on_applied_obj(atom/source, amount, material_flags)
 	. = ..()
-	if(istype(src, /obj/item)
-		add_compnent(/datum/component/fantasy)
+	if(istype(source, /obj/item)
+		source.AddComponent(/datum/component/fantasy)
 
-/datum/material/mythril/on_removed(atom/source, material_flags)
+/datum/material/mythril/on_removed_obj(atom/source, material_flags)
 	. = ..()
-	if(istype(src, /obj/item)
-		add_compnent(/datum/component/fantasy)
+	if(istype(source, /obj/item)
+		qdel(source.GetComponent(/datum/component/fantasy))
