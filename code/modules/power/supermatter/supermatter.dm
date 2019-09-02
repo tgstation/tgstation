@@ -460,7 +460,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(power > POWER_PENALTY_THRESHOLD || damage > damage_penalty_point)
 
 		if(power > POWER_PENALTY_THRESHOLD)
-			playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, 1, extrarange = 10)
+			playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
 			supermatter_zap(src, 5, min(power*2, 20000))
 			supermatter_zap(src, 5, min(power*2, 20000))
 			if(power > SEVERE_POWER_PENALTY_THRESHOLD)
@@ -468,7 +468,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				if(power > CRITICAL_POWER_PENALTY_THRESHOLD)
 					supermatter_zap(src, 5, min(power*2, 20000))
 		else if (damage > damage_penalty_point && prob(20))
-			playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, 1, extrarange = 10)
+			playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
 			supermatter_zap(src, 5, CLAMP(power*2, 4000, 20000))
 
 		if(prob(15) && power > POWER_PENALTY_THRESHOLD)
@@ -542,7 +542,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/blob_act(obj/structure/blob/B)
 	if(B && !isspaceturf(loc)) //does nothing in space
-		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
 		damage += B.obj_integrity * 0.5 //take damage equal to 50% of remaining blob health before it tried to eat us
 		if(B.obj_integrity > 100)
 			B.visible_message("<span class='danger'>\The [B] strikes at \the [src] and flinches away!</span>",\
@@ -603,7 +603,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		cause = "contact"
 	nom.visible_message(vis_msg, mob_msg, "<span class='italics'>You hear an unearthly noise as a wave of heat washes over you.</span>")
 	investigate_log("has been attacked ([cause]) by [key_name(nom)]", INVESTIGATE_SUPERMATTER)
-	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
 	Consume(nom)
 
 /obj/machinery/power/supermatter_crystal/attackby(obj/item/W, mob/living/user, params)
@@ -622,13 +622,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			dust_arm.dismember()
 			user.visible_message("<span class='danger'>The [W] flashes out of existence on contact with \the [src], resonating with a horrible sound...</span>",\
 				"<span class='danger'>Oops! The [W] flashes out of existence on contact with \the [src], taking your arm with it! That was clumsy of you!</span>")
-			playsound(src, 'sound/effects/supermatter.ogg', 150, 1)
+			playsound(src, 'sound/effects/supermatter.ogg', 150, TRUE)
 			Consume(dust_arm)
 			qdel(W)
 			return
 		if(cig.lit || user.a_intent != INTENT_HELP)
 			user.visible_message("<span class='danger'>A hideous sound echoes as [W] is ashed out on contact with \the [src]. That didn't seem like a good idea...</span>")
-			playsound(src, 'sound/effects/supermatter.ogg', 150, 1)
+			playsound(src, 'sound/effects/supermatter.ogg', 150, TRUE)
 			Consume(W)
 			radiation_pulse(src, 150, 4)
 			return ..()
@@ -636,7 +636,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			cig.light()
 			user.visible_message("<span class='danger'>As [user] lights \their [W] on \the [src], silence fills the room...</span>",\
 				"<span class='danger'>Time seems to slow to a crawl as you touch \the [src] with \the [W].</span>\n<span class='notice'>\The [W] flashes alight with an eerie energy as you nonchalantly lift your hand away from \the [src]. Damn.</span>")
-			playsound(src, 'sound/effects/supermatter.ogg', 50, 1)
+			playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 			radiation_pulse(src, 50, 3)
 			return
 	if(istype(W, /obj/item/scalpel/supermatter))
@@ -658,7 +658,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			"<span class='italics'>Everything suddenly goes silent.</span>")
 		investigate_log("has been attacked ([W]) by [key_name(user)]", INVESTIGATE_SUPERMATTER)
 		Consume(W)
-		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
 
 		radiation_pulse(src, 150, 4)
 
@@ -679,7 +679,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	else
 		return
 
-	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
 
 	Consume(AM)
 
@@ -757,7 +757,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	icon_state = "darkmatter"
 
 /obj/machinery/power/supermatter_crystal/proc/supermatter_pull(turf/center, pull_range = 10)
-	playsound(src.loc, 'sound/weapons/marauder.ogg', 100, 1, extrarange = 7)
+	playsound(src.loc, 'sound/weapons/marauder.ogg', 100, TRUE, extrarange = 7)
 	for(var/atom/movable/P in orange(pull_range,center))
 		if(P.anchored || P.move_resist >= MOVE_FORCE_EXTREMELY_STRONG) //move resist memes.
 			return

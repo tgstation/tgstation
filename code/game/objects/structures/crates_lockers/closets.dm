@@ -136,7 +136,7 @@
 /obj/structure/closet/proc/open(mob/living/user)
 	if(opened || !can_open(user))
 		return
-	playsound(loc, open_sound, open_sound_volume, 1, -3)
+	playsound(loc, open_sound, open_sound_volume, TRUE, -3)
 	opened = TRUE
 	if(!dense_when_open)
 		density = FALSE
@@ -190,7 +190,7 @@
 	if(!opened || !can_close(user))
 		return FALSE
 	take_contents()
-	playsound(loc, close_sound, close_sound_volume, 1, -3)
+	playsound(loc, close_sound, close_sound_volume, TRUE, -3)
 	climb_time = initial(climb_time)
 	opened = FALSE
 	density = TRUE
@@ -441,7 +441,7 @@
 		user.visible_message("<span class='warning'>Sparks fly from [src]!</span>",
 						"<span class='warning'>You scramble [src]'s lock, breaking it open!</span>",
 						"<span class='italics'>You hear a faint electrical spark.</span>")
-		playsound(src, "sparks", 50, 1)
+		playsound(src, "sparks", 50, TRUE)
 		broken = TRUE
 		locked = FALSE
 		update_icon()

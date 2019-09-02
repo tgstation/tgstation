@@ -75,7 +75,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 		return
 	qdel(target)
 	to_chat(user, "<span class='notice'>You stuff the monkey into the machine.</span>")
-	playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
+	playsound(src.loc, 'sound/machines/juicer.ogg', 50, TRUE)
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	use_power(500)
@@ -86,7 +86,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 /obj/machinery/monkey_recycler/interact(mob/user)
 	if(stored_matter >= 1)
 		to_chat(user, "<span class='notice'>The machine hisses loudly as it condenses the ground monkey meat. After a moment, it dispenses a brand new monkey cube.</span>")
-		playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
+		playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
 		for(var/i in 1 to FLOOR(stored_matter, 1))
 			new /obj/item/reagent_containers/food/snacks/monkeycube(src.loc)
 			stored_matter--

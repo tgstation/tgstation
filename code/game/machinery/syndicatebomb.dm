@@ -71,7 +71,7 @@
 				volume = 10
 			else
 				volume = 5
-		playsound(loc, beepsound, volume, 0)
+		playsound(loc, beepsound, volume, FALSE)
 		next_beep = world.time + 10
 
 	if(active && ((detonation_timer <= world.time) || explode_now))
@@ -187,7 +187,7 @@
 	countdown.start()
 	next_beep = world.time + 10
 	detonation_timer = world.time + (timer_set * 10)
-	playsound(loc, 'sound/machines/click.ogg', 30, 1)
+	playsound(loc, 'sound/machines/click.ogg', 30, TRUE)
 	notify_ghosts("\A [src] has been activated at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Bomb Planted")
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
@@ -417,14 +417,14 @@
 				reactants += S.reagents
 
 	if(!chem_splash(get_turf(src), spread_range, reactants, temp_boost))
-		playsound(loc, 'sound/items/screwdriver2.ogg', 50, 1)
+		playsound(loc, 'sound/items/screwdriver2.ogg', 50, TRUE)
 		return // The Explosion didn't do anything. No need to log, or disappear.
 
 	if(adminlog)
 		message_admins(adminlog)
 		log_game(adminlog)
 
-	playsound(loc, 'sound/effects/bamf.ogg', 75, 1, 5)
+	playsound(loc, 'sound/effects/bamf.ogg', 75, TRUE, 5)
 
 	if(loc && istype(loc, /obj/machinery/syndicatebomb/))
 		qdel(loc)
@@ -513,7 +513,7 @@
 				B.detonation_timer = world.time + BUTTON_DELAY
 				detonated++
 			existent++
-		playsound(user, 'sound/machines/click.ogg', 20, 1)
+		playsound(user, 'sound/machines/click.ogg', 20, TRUE)
 		to_chat(user, "<span class='notice'>[existent] found, [detonated] triggered.</span>")
 		if(detonated)
 			detonated--

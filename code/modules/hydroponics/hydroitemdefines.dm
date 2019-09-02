@@ -100,7 +100,7 @@
 
 /obj/item/hatchet/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(src, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	playsound(src, 'sound/weapons/bladeslice.ogg', 50, TRUE, -1)
 	return (BRUTELOSS)
 
 /obj/item/hatchet/wooden
@@ -138,7 +138,7 @@
 		var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 		if(BP)
 			BP.drop_limb()
-			playsound(src,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
+			playsound(src, "desceration" ,50, TRUE, -1)
 	return (BRUTELOSS)
 
 /obj/item/scythe/pre_attack(atom/A, mob/living/user, params)

@@ -640,7 +640,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 			if(replay_holo)
 				replay_holo.say(message)
 		if(HOLORECORD_SOUND)
-			playsound(src,entry[2],50,1)
+			playsound(src,entry[2],50,TRUE)
 		if(HOLORECORD_DELAY)
 			addtimer(CALLBACK(src,.proc/replay_entry,entry_number+1),entry[2])
 			return

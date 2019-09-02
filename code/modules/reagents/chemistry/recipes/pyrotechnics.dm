@@ -57,7 +57,7 @@
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom/on_reaction(datum/reagents/holder, created_volume)
 	if(created_volume >= 150)
-		playsound(get_turf(holder.my_atom), 'sound/effects/pray.ogg', 80, 0, round(created_volume/48))
+		playsound(get_turf(holder.my_atom), 'sound/effects/pray.ogg', 80, FALSE, round(created_volume/48))
 		strengthdiv = 8
 		for(var/mob/living/simple_animal/revenant/R in get_hearers_in_view(7,get_turf(holder.my_atom)))
 			var/deity
@@ -287,7 +287,7 @@
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect_system/smoke_spread/chem/S = new
 	S.attach(location)
-	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+	playsound(location, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 	if(S)
 		S.set_up(holder, smoke_radius, location, 0)
 		S.start()
@@ -306,7 +306,7 @@
 	var/smoke_radius = round(sqrt(created_volume / 2), 1)
 	var/datum/effect_system/smoke_spread/chem/S = new
 	S.attach(location)
-	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+	playsound(location, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 	if(S)
 		S.set_up(holder, smoke_radius, location, 0)
 		S.start()
@@ -324,7 +324,7 @@
 		return
 	holder.remove_reagent(/datum/reagent/sonic_powder, created_volume*3)
 	var/location = get_turf(holder.my_atom)
-	playsound(location, 'sound/effects/bang.ogg', 25, 1)
+	playsound(location, 'sound/effects/bang.ogg', 25, TRUE)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
 		C.soundbang_act(1, 100, rand(0, 5))
 
@@ -336,7 +336,7 @@
 
 /datum/chemical_reaction/sonic_powder_deafen/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
-	playsound(location, 'sound/effects/bang.ogg', 25, 1)
+	playsound(location, 'sound/effects/bang.ogg', 25, TRUE)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
 		C.soundbang_act(1, 100, rand(0, 5))
 
@@ -433,15 +433,15 @@
 	sleep(5)
 	if(created_volume >= 75)
 		tesla_zap(holder.my_atom, 7, T1, tesla_flags)
-		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
+		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
 		sleep(15)
 	if(created_volume >= 40)
 		tesla_zap(holder.my_atom, 7, T2, tesla_flags)
-		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
+		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
 		sleep(15)
 	if(created_volume >= 10)			//10 units minimum for lightning, 40 units for secondary blast, 75 units for tertiary blast.
 		tesla_zap(holder.my_atom, 7, T3, tesla_flags)
-		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
+		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
 	..()
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/heat

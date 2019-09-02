@@ -34,7 +34,7 @@
 	return ..()
 
 /obj/structure/destructible/clockwork/taunting_trail/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(src, 'sound/items/welder.ogg', 50, 1)
+	playsound(src, 'sound/items/welder.ogg', 50, TRUE)
 
 /obj/structure/destructible/clockwork/taunting_trail/CanPass(atom/movable/mover, turf/target)
 	return TRUE

@@ -12,12 +12,12 @@
 		if(destT && bagT && bagT.z == destT.z && get_dist(M, dumping_location) < dumping_range)
 			if(dumping_location.storage_contents_dump_act(src, M))
 				if(alt_sound && prob(1))
-					playsound(src, alt_sound, 40, 1)
+					playsound(src, alt_sound, 40, TRUE)
 				else
-					playsound(src, dumping_sound, 40, 1)
+					playsound(src, dumping_sound, 40, TRUE)
 				M.Beam(dumping_location, icon_state="rped_upgrade", time=5)
 				return TRUE
 		to_chat(M, "The [A.name] buzzes.")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 	return FALSE
 

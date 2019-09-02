@@ -42,9 +42,9 @@
 		return
 	if(M.environment_smash & ENVIRONMENT_SMASH_RWALLS)
 		dismantle_wall(1)
-		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	else
-		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 		to_chat(M, "<span class='warning'>This wall is far too strong for you to destroy.</span>")
 
 /turf/closed/wall/r_wall/try_decon(obj/item/W, mob/user, turf/T)

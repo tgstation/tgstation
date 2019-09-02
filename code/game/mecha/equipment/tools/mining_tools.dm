@@ -44,11 +44,11 @@
 		while(do_after_mecha(target, drill_delay))
 			if(isliving(target))
 				drill_mob(target, chassis.occupant)
-				playsound(src,'sound/weapons/drill.ogg',40,1)
+				playsound(src,'sound/weapons/drill.ogg',40,TRUE)
 			else if(isobj(target))
 				var/obj/O = target
 				O.take_damage(15, BRUTE, 0, FALSE, get_dir(chassis, target))
-				playsound(src,'sound/weapons/drill.ogg',40,1)
+				playsound(src,'sound/weapons/drill.ogg',40,TRUE)
 			else
 				set_ready_state(TRUE)
 				return

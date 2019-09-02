@@ -20,7 +20,7 @@
 
 /obj/item/wrench/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
+	playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1)
 	return (BRUTELOSS)
 
 /obj/item/wrench/brass
@@ -56,7 +56,7 @@
 	toolspeed = 0.7
 
 /obj/item/wrench/power/attack_self(mob/user)
-	playsound(get_turf(user),'sound/items/change_drill.ogg',50,1)
+	playsound(get_turf(user),'sound/items/change_drill.ogg',50,TRUE)
 	var/obj/item/wirecutters/power/s_drill = new /obj/item/screwdriver/power(drop_location())
 	to_chat(user, "<span class='notice'>You attach the screw driver bit to [src].</span>")
 	qdel(src)
@@ -82,7 +82,7 @@
 
 	// Stun stops them from wandering off
 	user.Stun(100, ignore_canstun = TRUE)
-	playsound(loc, 'sound/effects/pray.ogg', 50, 1, -1)
+	playsound(loc, 'sound/effects/pray.ogg', 50, TRUE, -1)
 
 	// Let the sound effect finish playing
 	sleep(20)

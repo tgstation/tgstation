@@ -58,7 +58,7 @@
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
 	if(!allowed(user))
 		to_chat(user, "<span class='warning'>Error - Unauthorized User</span>")
-		playsound(src, 'sound/misc/compiler-failure.ogg', 50, 1)
+		playsound(src, 'sound/misc/compiler-failure.ogg', 50, TRUE)
 		return
 	..()
 
@@ -320,7 +320,7 @@
 
 	stat |= BROKEN
 	density = FALSE
-	playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
+	playsound(src.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	update_icon()
 	investigate_log("was destroyed.", INVESTIGATE_ATMOS)
 

@@ -98,7 +98,7 @@
 /obj/item/bodypart/head/drop_organs(mob/user, violent_removal)
 	var/turf/T = get_turf(src)
 	if(status != BODYPART_ROBOTIC)
-		playsound(T, 'sound/misc/splort.ogg', 50, 1, -1)
+		playsound(T, 'sound/misc/splort.ogg', 50, TRUE, -1)
 	for(var/obj/item/I in src)
 		if(I == brain)
 			if(user)

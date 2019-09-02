@@ -1,0 +1,5 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - rscadd: "All mobs can now switch hands with middle click. This mostly affects gorillas, dexterous stands and monky."
+  - code_imp: "Ling sting code has been migrated over to signals."

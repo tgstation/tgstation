@@ -264,7 +264,7 @@
 			var/list/messagevoice = list("Hey, [H.name]! Hold on, I'm coming." = 'sound/voice/medbot/coming.ogg',"Wait [H.name]! I want to help!" = 'sound/voice/medbot/help.ogg',"[H.name], you appear to be injured!" = 'sound/voice/medbot/injured.ogg')
 			var/message = pick(messagevoice)
 			speak(message)
-			playsound(src, messagevoice[message], 50, 0)
+			playsound(src, messagevoice[message], 50, FALSE)
 			last_newpatient_speak = world.time
 		return H
 	else

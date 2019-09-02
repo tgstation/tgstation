@@ -18,7 +18,7 @@
 		else
 			reagents.trans_to(I, 5, transfered_by = user)
 			to_chat(user, "<span class='notice'>You wet [I] in [src].</span>")
-			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+			playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 			update_icon()
 	else
 		. = ..()
