@@ -60,11 +60,12 @@
 	var/check_anomalies = 1	//checks if it can shoot at unidentified lifeforms (ie xenos)
 	var/shoot_unloyal = 0	//checks if it can shoot people that aren't loyalty implanted and who arent heads
 	var/shoot_cyborgs = 0 // checks if it can shoot people that are cyborgs
+	var/shoot_heads_of_staff = 0 // checks if it can shoot at heads of staff
 	var/attacked = 0		//if set to 1, the turret gets pissed off and shoots at people nearby (unless they have sec access!)
-
+	
 	var/on = TRUE				//determines if the turret is on
 
-	var/list/faction = list("turret", ) // Same faction mobs will never be shot at, no matter the other settings
+	var/list/faction = list("turret" ) // Same faction mobs will never be shot at, no matter the other settings
 
 	var/datum/effect_system/spark_spread/spark_system	//the spark system, used for generating... sparks?
 
@@ -170,8 +171,9 @@
 		dat += "Neutralize Identified Criminals: <A href='?src=[REF(src)];operation=shootcrooks'>[criminals ? "Yes" : "No"]</A><BR>"
 		dat += "Neutralize All Non-Security and Non-Command Personnel: <A href='?src=[REF(src)];operation=shootall'>[stun_all ? "Yes" : "No"]</A><BR>"
 		dat += "Neutralize All Unidentified Life Signs: <A href='?src=[REF(src)];operation=checkxenos'>[check_anomalies ? "Yes" : "No"]</A><BR>"
-		dat += "Neutralize All Non-Loyalty Implanted Personnel: <A href='?src=[REF(src)];operation=checkloyal'>[shoot_unloyal ? "Yes" : "No"]</A><BR>"
+		dat += "Neutralize All Non-Mindshielded Personnel: <A href='?src=[REF(src)];operation=checkloyal'>[shoot_unloyal ? "Yes" : "No"]</A><BR>"
 		dat += "Neutralize All Cyborgs: <A href='?src=[REF(src)];operation=shootborgs'>[shoot_cyborgs ? "Yes" : "No"]</A><BR>"
+		dat += "Ignore Heads Of Staff: <A href='?src=[REF(src)];operation=shootheads'>[shoot_heads_of_staff ? "Yes" : "No"]</A><BR>"
 	if(issilicon(user))
 		if(!manual_control)
 			var/mob/living/silicon/S = user
@@ -215,6 +217,8 @@
 				shoot_unloyal = !shoot_unloyal
 			if ("shootborgs")
 				shoot_cyborgs = !shoot_cyborgs
+			if ("shootheads")
+				shoot_heads_of_staff = !shoot_heads_of_staff
 			if("manual")
 				if(issilicon(usr) && !manual_control)
 					give_control(usr)
@@ -391,9 +395,9 @@
 				var/mob/living/silicon/robot/sillyconerobot = A
 				if(LAZYLEN(faction) && (ROLE_SYNDICATE in faction) && sillyconerobot.emagged == TRUE)
 					continue
-
-			targets += sillycone
-			continue
+			if (shoot_cyborgs)
+				targets += sillycone
+				continue
 
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
@@ -408,8 +412,11 @@
 			//if the target is a human and not in our faction, analyze threat level
 			if(ishuman(C) && !in_faction(C))
 				if(assess_perp(C) >= 4)
-					targets += C
-
+					if(shoot_heads_of_staff)
+						targets += C
+					else 
+						if (C.get_id_name!( in list("Captain", "Head of Security", "Research Director", "Chief Engineer", "Chief Medical Officer", "Head of Personnel")))
+							continue
 			else if(check_anomalies) //non humans who are not simple animals (xenos etc)
 				if(!in_faction(C))
 					targets += C
@@ -488,7 +495,6 @@
 
 			if(allowed(perp)) //if the perp has security access, return 0
 				return 0
-
 			if(perp.is_holding_item_of_type(/obj/item/gun) ||  perp.is_holding_item_of_type(/obj/item/melee/baton))
 				threatcount += 4
 
@@ -502,8 +508,12 @@
 			threatcount += 4
 
 	if(shoot_unloyal)
-		if (!HAS_TRAIT(perp, TRAIT_MINDSHIELD) || !(perp.get_id_name() in list("Research Director", "Head of Security", "Research Director", "Chief Engineer", "Chief Medical Officer", "Head of Personnel")))
-			threatcount += 4
+		if (!HAS_TRAIT(perp, TRAIT_MINDSHIELD))
+			if (!shoot_heads_of_staff)
+				if (!(perp.get_id_name() in list("Captain", "Head of Security", "Research Director", "Chief Engineer", "Chief Medical Officer", "Head of Personnel")))
+					threatcount += 4
+			else
+				threatcount += 4
 	if (shoot_cyborgs)
 		if (iscyborg(perp))
 			threatcount +=4
