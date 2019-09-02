@@ -140,8 +140,8 @@
 		var/mob/living/user = A
 		to_chat(user, "<span class='warning'><b>You pass through [src] and appear elsewhere!</b></span>")
 	linked_gateway.visible_message("<span class='warning'>A shape appears in [linked_gateway] before emerging!</span>")
-	playsound(src, 'sound/effects/empulse.ogg', 50, 1)
-	playsound(linked_gateway, 'sound/effects/empulse.ogg', 50, 1)
+	playsound(src, 'sound/effects/empulse.ogg', 50, TRUE)
+	playsound(linked_gateway, 'sound/effects/empulse.ogg', 50, TRUE)
 	transform = matrix() * 1.5
 	linked_gateway.transform = matrix() * 1.5
 

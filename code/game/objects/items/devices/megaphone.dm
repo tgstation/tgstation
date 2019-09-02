@@ -33,7 +33,7 @@
 		if(spamcheck > world.time)
 			to_chat(user, "<span class='warning'>\The [src] needs to recharge!</span>")
 		else
-			playsound(loc, 'sound/items/megaphone.ogg', 100, 0, 1)
+			playsound(loc, 'sound/items/megaphone.ogg', 100, FALSE, TRUE)
 			spamcheck = world.time + 50
 			speech_args[SPEECH_SPANS] |= voicespan
 

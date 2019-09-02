@@ -197,6 +197,6 @@
 /obj/machinery/computer/rdservercontrol/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
-	playsound(src, "sparks", 75, 1)
+	playsound(src, "sparks", 75, TRUE)
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You disable the security protocols.</span>")

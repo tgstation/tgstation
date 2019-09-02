@@ -79,7 +79,7 @@
 	if (tasty.foodtype & GROSS)
 		visible_message("<span class='notice'>[src] hungrily gobbles up \the [tasty]!</span>")
 		tasty.forceMove(src)
-		playsound(src,'sound/items/eatfood.ogg', 70, 1)
+		playsound(src,'sound/items/eatfood.ogg', 70, TRUE)
 		vomitCoefficient += 3
 		vomitTimeBonus += 2
 	else
@@ -91,7 +91,7 @@
 	if (prob(50) && consumed)
 		barf_food(consumed)
 	else
-		playsound(T, 'sound/effects/splat.ogg', 50, 1)
+		playsound(T, 'sound/effects/splat.ogg', 50, TRUE)
 		T.add_vomit_floor(src)
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/barf_food(var/atom/A, var/hard = FALSE)
@@ -108,7 +108,7 @@
 		return
 	currentTurf = get_turf(consumed)
 	currentTurf.add_vomit_floor(src)
-	playsound(currentTurf, 'sound/effects/splat.ogg', 50, 1)
+	playsound(currentTurf, 'sound/effects/splat.ogg', 50, TRUE)
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_prestart(duration)
 	flick("vomit_start",src)

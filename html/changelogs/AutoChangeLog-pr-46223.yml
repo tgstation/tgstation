@@ -1,0 +1,4 @@
+author: "Cobby"
+delete-after: True
+changes: 
+  - rscadd: "Operating computers can now be built to sync with all nearby stasis beds within it's LoS and provide them with advanced surgeries."
