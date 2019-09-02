@@ -80,7 +80,7 @@
 		icon_state = "coinpress1"
 		var/coin_mat = MINERAL_MATERIAL_AMOUNT * 0.2
 		var/datum/material/M = chosen
-		if(!M || !M.coin_type)
+		if(!M)
 			updateUsrDialog()
 			return
 
