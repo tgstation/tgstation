@@ -148,6 +148,7 @@
 	desc = "Runite"
 	color = "#3F9995"
 	strength_modifier = 1.3
+	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	armor_modifiers = list("melee" = 1.35, "bullet" = 2, "laser" = 0.5, "energy" = 1.25, "bomb" = 1.25, "bio" = 1, "rad" = 1, "fire" = 1.4, "acid" = 1) //rune is weak against magic lasers but strong against bullets. This is the combat triangle.
 
 ///Force decrease
