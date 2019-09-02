@@ -16,17 +16,17 @@
 	// self explanatory, no reason to add this if you have a stored item type
 	var/remove_on_death
 
-/datum/component/superpowers/Initialize(speedboost=0, stuns=TRUE, pushable=TRUE, attack_item_type, stored_item_type, remove_on_death=FALSE)
+/datum/component/superpowers/Initialize(_speedboost=0, _stuns=TRUE, _pushable=TRUE, _attack_item_type, _stored_item_type, _remove_on_death=FALSE)
 	if(!ishuman(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/mob/living/carbon/human/H = parent
 
-	src.speedboost = speedboost
-	src.stuns = stuns
-	src.pushable = pushable
-	src.attack_item_type = attack_item_type
-	src.stored_item_type = stored_item_type
-	src.remove_on_death = remove_on_death
+	speedboost = _speedboost
+	stuns = _stuns
+	pushable = _pushable
+	attack_item_type = _attack_item_type
+	stored_item_type = _stored_item_type
+	remove_on_death = _remove_on_death
 
 	if(!stuns)
 		ADD_TRAIT(H, TRAIT_STUNIMMUNE, COMPONENT_SUPERPOWERS_TRAIT)

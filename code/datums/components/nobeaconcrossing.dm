@@ -30,11 +30,11 @@
 	var/facingdir = closest.dir
 	if(facingdir == NORTH && edge.y <= parentatom.y)
 		kill_parent()
-	if(facingdir == SOUTH && edge.y >= parentatom.y)
+	else if(facingdir == SOUTH && edge.y >= parentatom.y)
 		kill_parent()
-	if(facingdir == EAST && edge.x >= parentatom.x)
+	else if(facingdir == EAST && edge.x >= parentatom.x)
 		kill_parent()
-	if(facingdir == WEST && edge.x <= parentatom.x)
+	else if(facingdir == WEST && edge.x <= parentatom.x)
 		kill_parent()
 
 /*

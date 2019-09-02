@@ -216,7 +216,7 @@
 
 /mob/living/simple_animal/hostile/infection/infectionspore/sentient/proc/create_respawn_mob(var/turf/T)
 	if(respawnmob)
-		qdel(respawnmob)
+		QDEL_NULL(respawnmob)
 	respawnmob = new /mob/camera/infectionslime(T)
 	forceMove(respawnmob)
 	client.images |= image('icons/mob/cameramob.dmi', respawnmob, "marker")

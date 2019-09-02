@@ -8,12 +8,12 @@
 	// forcibly changes the range of the projectile
 	var/override_projectile_range
 
-/datum/component/homing/Initialize(turning_speed=10, override_projectile_range)
+/datum/component/homing/Initialize(_turning_speed=10, _override_projectile_range)
 	if(!isgun(parent) && !ismachinery(parent) && !isstructure(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	src.turning_speed = turning_speed
-	src.override_projectile_range = override_projectile_range
+	turning_speed = _turning_speed
+	override_projectile_range = _override_projectile_range
 
 /datum/component/homing/RegisterWithParent()
 	if(ismachinery(parent) || isstructure(parent) || isgun(parent)) // turrets, etc

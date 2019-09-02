@@ -32,9 +32,9 @@
 #define BLOB_REFLECTOR_COST 15
 
 //Infection
-#define DOOM_CLOCK_EVENT_DELAY 4500 // 7 minutes 30 seconds per event
-#define CORE_CONVERSION_TIME 600 // time to convert corpses near the core to slimes
-#define CORE_AUTOPLACE_TIME 3000 // 5 minutes
+#define DOOM_CLOCK_EVENT_DELAY 4500 // time between doom events in deciseconds (7 minutes 30 seconds)
+#define CORE_CONVERSION_TIME 600 // time to convert corpses into slimes near the core in deciseconds (60 seconds)
+#define CORE_AUTOPLACE_TIME 3000 // time for core placement in deciseconds (5 minutes)
 
 //ERT Types
 #define ERT_BLUE "Blue"
