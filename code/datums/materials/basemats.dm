@@ -127,7 +127,7 @@
 /datum/material/plastic
 	name = "plastic"
 	id = "plastic"
-	desc = "plastic"
+	desc = "Plastic"
 	color = "#caccd9"
 	strength_modifier = 0.85
 	sheet_type = /obj/item/stack/sheet/plastic
@@ -144,7 +144,7 @@
 /datum/material/adamantine
 	name = "adamantine"
 	id = "adamantine"
-	desc = "Adamantine"
+	desc = "How this exists is even beyond me"
 	color = "#6d7e8e"
 	strength_modifier = 1.5
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
