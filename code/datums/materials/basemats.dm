@@ -121,7 +121,8 @@
 	source.AddComponent(/datum/component/slippery, min(amount / 10, 80))
 
 /datum/material/bananium/on_applied_obj(var/obj/o, amount, material_flags)
-	o.AddComponent(/datum/component/wearertargeting/wearer_crosser, list(SLOT_HEAD, SLOT_SHOES, SLOT_BACK, SLOT_W_UNIFORM, SLOT_WEAR_SUIT))
+	if(isitem(o))
+		o.AddComponent(/datum/component/wearertargeting/wearer_crosser, list(SLOT_HEAD, SLOT_SHOES, SLOT_BACK, SLOT_W_UNIFORM, SLOT_WEAR_SUIT))
 
 /datum/material/bananium/on_removed(atom/source, amount, material_flags)
 	. = ..()
