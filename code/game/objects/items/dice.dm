@@ -48,6 +48,9 @@
 	var/rigged = DICE_NOT_RIGGED
 	var/rigged_value
 
+	var/dice_spawn = null //fulp
+	var/owner = null //fulp
+
 /obj/item/dice/Initialize()
 	. = ..()
 	if(!result)
@@ -194,6 +197,8 @@
 							 "<span class='italics'>You hear [src] rolling, it sounds like a [fake_result].</span>")
 	else if(!src.throwing) //Dice was thrown and is coming to rest
 		visible_message("<span class='notice'>[src] rolls to a stop, landing on [result]. [comment]</span>")
+	if(dice_spawn) //fulp
+		dicespawn(dice_spawn) //fulp
 
 /obj/item/dice/update_icon()
 	cut_overlays()
