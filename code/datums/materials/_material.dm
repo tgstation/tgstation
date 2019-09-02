@@ -22,6 +22,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/strength_modifier = 1
 	///This is a modifier for integrity, and resembles the strength of the material
 	var/integrity_modifier = 1
+	///This is the amount of value per 1 unit of the material
+	var/value_per_unit = 0
 
 ///This proc is called when the material is added to an object.
 /datum/material/proc/on_applied(atom/source, amount, material_flags)
