@@ -9858,10 +9858,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/mob/living/simple_animal/hostile/lizard{
-	name = "Eats-The-Roaches";
-	real_name = "Wags-His-Tail"
-	},
+/mob/living/simple_animal/mouse/Edmin,
 /turf/open/floor/plasteel,
 /area/janitor)
 "axY" = (
