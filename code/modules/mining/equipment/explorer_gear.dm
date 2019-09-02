@@ -22,7 +22,7 @@
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
-	armor = list("melee" = 30, "bullet" = 10, "laser" = 10, "energy" = 20, "bomb" = 50, "bio" = 100, "rad" = 50, "fire" = 50, "acid" = 50)
+	armor = list("melee" = 30, "bullet" = 10, "laser" = 10, "energy" = 20, "bomb" = 50, "bio" = 100, "rad" = 80, "fire" = 50, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/suit/hooded/explorer/Initialize()
