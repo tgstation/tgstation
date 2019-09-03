@@ -1,4 +1,5 @@
 /datum/component/squeak
+	delete_on_signal = TRUE
 	var/static/list/default_squeak_sounds = list('sound/items/toysqueak1.ogg'=1, 'sound/items/toysqueak2.ogg'=1, 'sound/items/toysqueak3.ogg'=1)
 	var/list/override_squeak_sounds
 

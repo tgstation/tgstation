@@ -43,7 +43,7 @@
 /datum/component/wet_floor/Destroy()
 	STOP_PROCESSING(SSwet_floors, src)
 	var/turf/T = parent
-	qdel(T.GetComponent(/datum/component/slippery))
+	SEND_SIGNAL(T, COMSIG_DELETE_COMPONENT(/datum/component/slippery))
 	if(istype(T))		//If this is false there is so many things wrong with it.
 		T.cut_overlay(current_overlay)
 	else
@@ -92,7 +92,7 @@
 			intensity = 120
 			lube_flags = SLIDE | GALOSHES_DONT_HELP | SLIP_WHEN_CRAWLING
 		else
-			qdel(parent.GetComponent(/datum/component/slippery))
+			SEND_SIGNAL(parent, COMSIG_DELETE_COMPONENT(/datum/component/slippery))
 			return
 
 	parent.LoadComponent(/datum/component/slippery, intensity, lube_flags, CALLBACK(src, .proc/AfterSlip))
@@ -147,7 +147,7 @@
 	O.cut_overlay(current_overlay)
 	//That turf is no longer slippery, we're out of here
 	//Slippery components don't transfer due to callbacks
-	qdel(O.GetComponent(/datum/component/slippery))
+	SEND_SIGNAL(O, COMSIG_DELETE_COMPONENT(/datum/component/slippery))
 
 /datum/component/wet_floor/PostTransfer()
 	if(!isopenturf(parent))

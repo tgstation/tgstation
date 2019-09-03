@@ -67,8 +67,7 @@
 
 /datum/material/uranium/on_removed(atom/source, material_flags)
 	. = ..()
-	qdel(source.GetComponent(/datum/component/radioactive))
-
+	SEND_SIGNAL(source, COMSIG_DELETE_COMPONENT(/datum/component/radioactive))
 
 ///Adds firestacks on hit (Still needs support to turn into gas on destruction)
 /datum/material/plasma
@@ -89,7 +88,7 @@
 /datum/material/plasma/on_removed(atom/source, material_flags)
 	. = ..()
 	source.RemoveElement(/datum/element/firestacker)
-	qdel(source.GetComponent(/datum/component/explodable))
+	SEND_SIGNAL(source, COMSIG_DELETE_COMPONENT(/datum/component/explodable))
 
 ///Can cause bluespace effects on use. (Teleportation) (Not yet implemented)
 /datum/material/bluespace
@@ -117,8 +116,8 @@
 
 /datum/material/bananium/on_removed(atom/source, amount, material_flags)
 	. = ..()
-	qdel(source.GetComponent(/datum/component/slippery))
-	qdel(source.GetComponent(/datum/component/squeak))
+	SEND_SIGNAL(source, COMSIG_DELETE_COMPONENT(/datum/component/slippery))
+	SEND_SIGNAL(source, COMSIG_DELETE_COMPONENT(/datum/component/squeak))
 
 
 ///Mediocre force increase

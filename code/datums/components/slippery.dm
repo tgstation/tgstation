@@ -1,4 +1,5 @@
 /datum/component/slippery
+	delete_on_signal = TRUE
 	var/force_drop_items = FALSE
 	var/knockdown_time = 0
 	var/paralyze_time = 0

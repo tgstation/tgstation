@@ -43,8 +43,7 @@
 
 /datum/component/forensics/proc/wipe_blood_DNA()
 	blood_DNA = null
-	if(isitem(parent))
-		qdel(parent.GetComponent(/datum/component/decal/blood))
+	SEND_SIGNAL(parent, COMSIG_DELETE_COMPONENT(/datum/component/decal/blood))
 	return TRUE
 
 /datum/component/forensics/proc/wipe_fibers()

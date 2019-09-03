@@ -1,5 +1,6 @@
 /datum/component/decal/blood
 	dupe_mode = COMPONENT_DUPE_UNIQUE
+	delete_on_signal = TRUE
 
 /datum/component/decal/blood/Initialize(_icon, _icon_state, _dir, _cleanable=CLEAN_STRENGTH_BLOOD, _color, _layer=ABOVE_OBJ_LAYER)
 	if(!isitem(parent))

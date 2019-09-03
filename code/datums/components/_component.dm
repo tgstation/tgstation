@@ -6,6 +6,7 @@
 	//At a minimum RegisterWithParent and UnregisterFromParent should be used
 	//Make sure you also implement PostTransfer for any post transfer handling
 	var/can_transfer = FALSE
+	var/delete_on_signal = FALSE
 
 /datum/component/New(datum/P, ...)
 	parent = P
@@ -49,11 +50,14 @@
 		else	//only component of this type, no list
 			dc[I] = src
 
+
+
 	RegisterWithParent()
 
 // If you want/expect to be moving the component around between parents, use this to register on the parent for signals
 /datum/component/proc/RegisterWithParent()
-	return
+	if(delete_on_signal)
+		RegisterSignal(parent, COMSIG_DELETE_COMPONENT(type), .proc/on_delete_signal)
 
 /datum/component/proc/Initialize(...)
 	return
@@ -85,7 +89,8 @@
 	UnregisterFromParent()
 
 /datum/component/proc/UnregisterFromParent()
-	return
+	if(delete_on_signal)
+		UnregisterSignal(parent, COMSIG_DELETE_COMPONENT(type))
 
 /datum/proc/RegisterSignal(datum/target, sig_type_or_types, proctype, override = FALSE)
 	if(QDELETED(src) || QDELETED(target))
@@ -309,6 +314,15 @@
 		var/datum/component/C = comps
 		if(C.can_transfer)
 			target.TakeComponent(comps)
+
+/**
+  *Deletes the component upon receiving the corresponding signal.
+  *This is a proc so components can override it should there be multiple and a specific one is supposed to be deleted.
+  *Makes it easy to implement a system for sources
+  */
+/datum/proc/on_delete_signal(datum/source)
+	qdel(src)
+	return COMPONENT_DELETED_SUCCESSFULLY
 
 /datum/component/ui_host()
 	return parent
