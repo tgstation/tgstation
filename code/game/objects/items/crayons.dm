@@ -233,8 +233,13 @@
 				paint_mode = PAINT_NORMAL
 		if("select_colour")
 			if(can_change_colour)
-				paint_color = input(usr,"","Choose Color",paint_color) as color|null
-				. = TRUE
+				var/chosen_colour = input(usr,"","Choose Color",paint_color) as color|null
+
+				if (!isnull(chosen_colour))
+					paint_color = chosen_colour
+					. = TRUE
+				else 
+					. = FALSE
 		if("enter_text")
 			var/txt = stripped_input(usr,"Choose what to write.",
 				"Scribbles",default = text_buffer)
@@ -661,12 +666,18 @@
 
 	if(isobj(target))
 		if(actually_paints)
+			if(color_hex2num(paint_color) < 350 && !istype(target, /obj/structure/window)) //Colors too dark are rejected
+				to_chat(usr, "<span class='warning'>A colour that dark on an object like this? Surely not...</span>")
+				return FALSE
+				
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
+
 			if(istype(target, /obj/structure/window))
 				if(color_hex2num(paint_color) < 255)
 					target.set_opacity(255)
 				else
 					target.set_opacity(initial(target.opacity))
+
 		. = use_charges(user, 2)
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.reaction(target, TOUCH, fraction * volume_multiplier)
