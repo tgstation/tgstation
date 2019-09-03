@@ -113,15 +113,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if (!(underwear in GLOB.underwear_list))
 			underwear = "Nude"
 	if(current_version < 25)
-		if(!(randomise.len))
-			randomise += list(RANDOM_NAME = FALSE, RANDOM_BODY = FALSE, RANDOM_SPECIES = FALSE, RANDOM_GENDER = FALSE, RANDOM_AGE = FALSE, RANDOM_UNDERWEAR = TRUE, RANDOM_UNDERWEAR_COLOR = TRUE, RANDOM_UNDERSHIRT = TRUE, RANDOM_SOCKS = TRUE, RANDOM_BACKPACK = TRUE, RANDOM_JUMPSUIT_STYLE = TRUE, RANDOM_HAIRSTYLE = TRUE, RANDOM_HAIR_COLOR = TRUE, RANDOM_FACIAL_HAIRSTYLE = TRUE, RANDOM_FACIAL_HAIR_COLOR = TRUE, RANDOM_SKIN_TONE = TRUE, RANDOM_EYE_COLOR = TRUE)
-
-		if(S["name_is_always_random"])
-			randomise[RANDOM_NAME] = TRUE
-		if(S["body_is_always_random"])
-			randomise[RANDOM_BODY] = TRUE
-		if(S["species_is_always_random"])
-			randomise[RANDOM_BODY] = TRUE
+		if(S["name_is_always_random"] == 1)
+			randomise += RANDOM_NAME
+		if(S["body_is_always_random"] == 1)
+			randomise += RANDOM_BODY
+		if(S["species_is_always_random"] == 1)
+			randomise += RANDOM_SPECIES
 		if(S["backbag"])
 			S["backbag"]	>> backpack
 		if(S["hair_style_name"])

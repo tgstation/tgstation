@@ -65,7 +65,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/list/features = list("mcolor" = "FFF", "ethcolor" = "9c3030", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain", "moth_markings" = "None")
-	var/list/randomise = list(RANDOM_NAME = FALSE, RANDOM_BODY = FALSE, RANDOM_SPECIES = FALSE, RANDOM_GENDER = FALSE, RANDOM_AGE = FALSE, RANDOM_UNDERWEAR = TRUE, RANDOM_UNDERWEAR_COLOR = TRUE, RANDOM_UNDERSHIRT = TRUE, RANDOM_SOCKS = TRUE, RANDOM_BACKPACK = TRUE, RANDOM_JUMPSUIT_STYLE = TRUE, RANDOM_HAIRSTYLE = TRUE, RANDOM_HAIR_COLOR = TRUE, RANDOM_FACIAL_HAIRSTYLE = TRUE, RANDOM_FACIAL_HAIR_COLOR = TRUE, RANDOM_SKIN_TONE = TRUE, RANDOM_EYE_COLOR = TRUE)
+	var/list/randomise = list()
 	var/list/genders = list(MALE, FEMALE, PLURAL)
 	var/list/friendlyGenders = list("Male" = "male", "Female" = "female", "Other" = "plural")
 
@@ -181,7 +181,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(is_banned_from(user.ckey, "Appearance"))
 				dat += "<b>You are banned from using custom names and appearances. You can continue to adjust your characters, but you will be randomised once you join the game.</b><br>"
 			dat += "<a href='?_src_=prefs;preference=name;task=random'>Random Name</A> "
-			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_NAME]'>Always Random Name: [randomise[RANDOM_NAME] ? "Yes" : "No"]</a><BR>"
+			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_NAME]'>Always Random Name: [(RANDOM_NAME in randomise) ? "Yes" : "No"]</a><BR>"
 			dat += "<b>Name:</b> "
 			dat += "<a href='?_src_=prefs;preference=name;task=input'>[real_name]</a><BR>"
 
@@ -194,10 +194,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				else
 					dispGender = "Other"
 				dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[dispGender]</a>"
-				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_GENDER]'>Always Random Gender: [randomise[RANDOM_GENDER] ? "Yes" : "No"]</A>"
+				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_GENDER]'>Always Random Gender: [(RANDOM_GENDER in randomise) ? "Yes" : "No"]</A>"
 
 			dat += "<br><b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a>"
-			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_AGE]'>Always Random Age: [randomise[RANDOM_AGE] ? "Yes" : "No"]</A>"
+			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_AGE]'>Always Random Age: [(RANDOM_AGE in randomise) ? "Yes" : "No"]</A>"
 
 			dat += "<br><br><b>Special Names:</b><BR>"
 			var/old_group
@@ -219,34 +219,34 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<h2>Body</h2>"
 			dat += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A> "
-			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_BODY]'>Always Random Body: [randomise[RANDOM_BODY] ? "Yes" : "No"]</A><br>"
+			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_BODY]'>Always Random Body: [(RANDOM_BODY in randomise) ? "Yes" : "No"]</A><br>"
 
 			dat += "<table width='100%'><tr><td width='24%' valign='top'>"
 
 			dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
 			dat += "<a href='?_src_=prefs;preference=species;task=random'>Random Species</A> "
-			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SPECIES]'>Always Random Species: [randomise[RANDOM_SPECIES] ? "Yes" : "No"]</A><br>"
+			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SPECIES]'>Always Random Species: [(RANDOM_SPECIES in randomise) ? "Yes" : "No"]</A><br>"
 
 			dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a>"
-			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_UNDERWEAR]'>[randomise[RANDOM_UNDERWEAR] ? "Lock" : "Unlock"]</A>"
+			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_UNDERWEAR]'>[(RANDOM_UNDERWEAR in randomise) ? "Lock" : "Unlock"]</A>"
 
 			dat += "<br><b>Underwear Color:</b><BR><span style='border: 1px solid #161616; background-color: #[underwear_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=underwear_color;task=input'>Change</a>"
-			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_UNDERWEAR_COLOR]'>[randomise[RANDOM_UNDERWEAR_COLOR] ? "Lock" : "Unlock"]</A>"
+			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_UNDERWEAR_COLOR]'>[(RANDOM_UNDERWEAR_COLOR in randomise) ? "Lock" : "Unlock"]</A>"
 
 			dat += "<BR><b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a>"
-			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_UNDERSHIRT]'>[randomise[RANDOM_UNDERSHIRT] ? "Lock" : "Unlock"]</A>"
+			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_UNDERSHIRT]'>[(RANDOM_UNDERSHIRT in randomise) ? "Lock" : "Unlock"]</A>"
 
 
 			dat += "<br><b>Socks:</b><BR><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a>"
-			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SOCKS]'>[randomise[RANDOM_SOCKS] ? "Lock" : "Unlock"]</A>"
+			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SOCKS]'>[(RANDOM_SOCKS in randomise) ? "Lock" : "Unlock"]</A>"
 
 
 			dat += "<br><b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backpack]</a>"
-			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_BACKPACK]'>[randomise[RANDOM_BACKPACK] ? "Lock" : "Unlock"]</A>"
+			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_BACKPACK]'>[(RANDOM_BACKPACK in randomise) ? "Lock" : "Unlock"]</A>"
 
 
 			dat += "<br><b>Jumpsuit Style:</b><BR><a href ='?_src_=prefs;preference=suit;task=input'>[jumpsuit_style]</a>"
-			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_JUMPSUIT_STYLE]'>[randomise[RANDOM_JUMPSUIT_STYLE] ? "Lock" : "Unlock"]</A>"
+			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_JUMPSUIT_STYLE]'>[(RANDOM_JUMPSUIT_STYLE in randomise) ? "Lock" : "Unlock"]</A>"
 
 
 			dat += "<br><b>Uplink Spawn Location:</b><BR><a href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a><BR></td>"
@@ -259,7 +259,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<h3>Skin Tone</h3>"
 
 				dat += "<a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a>"
-				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SKIN_TONE]'>[randomise[RANDOM_SKIN_TONE] ? "Lock" : "Unlock"]</A>"
+				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SKIN_TONE]'>[(RANDOM_SKIN_TONE in randomise) ? "Lock" : "Unlock"]</A>"
 				dat += "<br>"
 
 			var/mutant_colors
@@ -291,7 +291,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "<h3>Eye Color</h3>"
 				dat += "<span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a>"
-				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_EYE_COLOR]'>[randomise[RANDOM_EYE_COLOR] ? "Lock" : "Unlock"]</A>"
+				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_EYE_COLOR]'>[(RANDOM_EYE_COLOR in randomise) ? "Lock" : "Unlock"]</A>"
 
 				dat += "<br></td>"
 			else if(use_skintones || mutant_colors)
@@ -305,19 +305,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "<a href='?_src_=prefs;preference=hairstyle;task=input'>[hairstyle]</a>"
 				dat += "<a href='?_src_=prefs;preference=previous_hairstyle;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_hairstyle;task=input'>&gt;</a>"
-				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_HAIRSTYLE]'>[randomise[RANDOM_HAIRSTYLE] ? "Lock" : "Unlock"]</A>"
+				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_HAIRSTYLE]'>[(RANDOM_HAIRSTYLE in randomise) ? "Lock" : "Unlock"]</A>"
 
 				dat += "<br><span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a>"
-				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_HAIR_COLOR]'>[randomise[RANDOM_HAIR_COLOR] ? "Lock" : "Unlock"]</A>"
+				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_HAIR_COLOR]'>[(RANDOM_HAIR_COLOR in randomise) ? "Lock" : "Unlock"]</A>"
 
 				dat += "<BR><h3>Facial Hairstyle</h3>"
 
 				dat += "<a href='?_src_=prefs;preference=facial_hairstyle;task=input'>[facial_hairstyle]</a>"
 				dat += "<a href='?_src_=prefs;preference=previous_facehairstyle;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_facehairstyle;task=input'>&gt;</a>"
-				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_FACIAL_HAIRSTYLE]'>[randomise[RANDOM_FACIAL_HAIRSTYLE] ? "Lock" : "Unlock"]</A>"
+				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_FACIAL_HAIRSTYLE]'>[(RANDOM_FACIAL_HAIRSTYLE in randomise) ? "Lock" : "Unlock"]</A>"
 
 				dat += "<br><span style='border: 1px solid #161616; background-color: #[facial_hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a>"
-				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_FACIAL_HAIR_COLOR]'>[randomise[RANDOM_FACIAL_HAIR_COLOR] ? "Lock" : "Unlock"]</A>"
+				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_FACIAL_HAIR_COLOR]'>[(RANDOM_FACIAL_HAIR_COLOR in randomise) ? "Lock" : "Unlock"]</A>"
 				dat += "<br></td>"
 
 			//Mutant stuff
@@ -1227,7 +1227,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/temp_hsv = RGBtoHSV(features["mcolor"])
 						if(features["mcolor"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3]))
 							features["mcolor"] = pref_species.default_color
-						if(randomise[RANDOM_NAME])
+						if(RANDOM_NAME in randomise)
 							real_name = pref_species.random_name(gender)
 
 				if("mutant_color")
@@ -1465,7 +1465,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("toggle_random")
 					var/random_type = href_list["random_type"]
 					if(random_type in randomise)
-						randomise[random_type] = !randomise[random_type]
+						randomise -= random_type
+					else
+						randomise += random_type
 
 				if("hear_midis")
 					toggles ^= SOUND_MIDI
@@ -1549,13 +1551,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE)
 
-	if(randomise[RANDOM_SPECIES] && !character_setup)
+	if((RANDOM_SPECIES in randomise) && !character_setup)
 		random_species()
 
-	if(randomise[RANDOM_BODY] && !character_setup)
+	if((RANDOM_BODY in randomise) && !character_setup)
 		random_character(gender)
 
-	if(randomise[RANDOM_NAME] && !character_setup)
+	if((RANDOM_NAME in randomise) && !character_setup)
 		real_name = pref_species.random_name(gender)
 
 	if(roundstart_checks)
