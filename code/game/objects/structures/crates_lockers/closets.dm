@@ -120,7 +120,7 @@
 			return FALSE
 	return TRUE
 
-/obj/structure/closet/proc/dump_contents()
+/obj/structure/closet/dump_contents()
 	var/atom/L = drop_location()
 	for(var/atom/movable/AM in src)
 		AM.forceMove(L)
