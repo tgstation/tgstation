@@ -988,6 +988,8 @@
 	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
 	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
 	L.unignore_slowdown(type)
+	M.Dizzy(0)
+	M.Jitter(0)
 
 /datum/reagent/medicine/changelingadrenaline/overdose_process(mob/living/M as mob)
 	M.adjustToxLoss(1, 0)
@@ -1282,3 +1284,5 @@
 	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
 	L.remove_movespeed_modifier(type)
 	L.unignore_slowdown(type)
+	M.Dizzy(0)
+	M.Jitter(0)
