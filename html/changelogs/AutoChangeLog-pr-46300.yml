@@ -1,6 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - bugfix: "Antiglow now properly antiglows."
-  - bugfix: "You can now mix antiglow"
-  - bugfix: "Glowy now glowies correctly."

@@ -25,8 +25,8 @@
 		<td valign='top'>
 			<div align='center'><font size='3'><b>Traditional Games Space Station 13</b></font></div>
 			
-			<p><div align='center'><font size='3'><a href="http://www.tgstation13.org/phpBB/">Forum</a> | <a href="http://www.tgstation13.org/wiki/Main_Page">Wiki</a> | <a href="https://github.com/tgstation/-tg-station">Source</a></font></div></p>
-			<font size='2'><b>Visit our IRC channel:</b> #tgstation13 on irc.rizon.net</font>
+			<p><div align='center'><font size='3'><a href="http://www.tgstation13.org/phpBB/">Forum</a> | <a href="http://www.tgstation13.org/wiki/Main_Page">Wiki</a> | <a href="https://github.com/tgstation/tgstation">Source Code</a></font></div></p>
+			<font size='2'><b>Join our <a href="https://tgstation13.org/phpBB/viewforum.php?f=60">Discord channel</a></b></font>
 			</td>
 	</tr>
 </table>
@@ -34,15 +34,11 @@
 <table align='center' class="top">
 	<tr>
 		<td valign='top'>
-			<font size='2'><b>Current Project Maintainers:</b> <a href='https://github.com/tgstation?tab=members'>-Click Here-</a><br></font>
-			<font size='2'><b>Currently Active GitHub contributor list:</b> <a href='https://github.com/tgstation/-tg-station/graphs/contributors'>-Click Here-</a><br></font>
-			<font size='2'><b>Coders:</b> TLE, NEO, Errorage, muskets, veryinky, Skie, Noise, Numbers, Agouri, Noka, Urist McDorf, Uhangi, Darem, Mport, rastaf0, Doohl, Superxpdude, Rockdtben, ConstantA, Petethegoat, Kor, Polymorph, Carn, Nodrak, Donkie, Sieve, Giacom, Ikarrus, trubble_bass, Aranclanos, Cael_Aislinn, Cheridan, Intigracy, Malkevin, SuperSayu, DumpDavidson, Tastyfish, Yvar, Elo001, Fleure, ManeaterMildred, Miauw, MrPerson<br></font> 
-			<font size='2'><b>Spriters:</b> Agouri, Cheridan, Cruazy Guest, Deeaych, Deuryn, Matty406, Microwave, ShiftyEyesShady, Skie, Uhangi, Veyveyr, Petethegoat, Kor, Ricotez, Ausops, TankNut, Pewtershmitz, Firecage, Nienhaus2<br></font>
-			<font size='2'><b>Sounds:</b> Skie, Lasty/Vinyl<br></font>
-			<font size='2'><b>Main Testers:</b> Tenebrosity, Anyone who has submitted a bug to the issue tracker<br></font>
-			<font size='2'><b>Thanks to:</b> Baystation 12, /vg/station, NTstation, CDK Station devs, FacepunchStation, GoonStation devs, the original SpaceStation developers and Invisty for the title image.<br> Also a thanks to anybody who has contributed who is not listed here :( Ask to be added here on irc.</font>
-			<font size='2' color='red'><b><br>Have a bug to report?</b> Visit our <a href="https://github.com/tgstation/-tg-station/issues?labels=Bug&state=open">Issue Tracker</a>.<br></font>
-			<font size='2'>Please ensure that the bug has not already been reported and <u><a href="https://github.com/tgstation/-tg-station/issues/724"><b>use the template provided here</b></a></u>.</font>
+			<font size='2'><b><a href='https://github.com/tgstation?tab=members'>Current Project Maintainers</a></b><br></font>
+			<font size='2'><b><a href='https://github.com/tgstation/tgstation/pulse/monthly'>Recent GitHub contributors</a></b><br></font>
+			<font size='2'><b>Thanks to:</b> Baystation 12, /vg/station, NTstation, CDK Station devs, FacepunchStation, GoonStation devs, the original Space Station 13 developers, Invisty for the title image and the countless others who have contributed to the game, issue tracker or wiki over the years.</font>
+			<font size='2' color='red'><b><br>Have a bug to report?</b> Visit our <a href="https://github.com/tgstation/-tg-station/issues">Issue Tracker</a>.<br></font>
+			<font size='2'>Please search first to ensure that the bug has not already been reported.</font>
 		</td>
 	</tr>
 </table>
@@ -55,6 +51,92 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">03 September 2019</h2>
+			<h3 class="author">ATH1909 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">The regenerative coma symptom has a new resistance 4 threshold effect! Said threshold effect will give hosts of the symptom's virus the TRAIT_STABLECRIT trait if its threshold is met.</li>
+				<li class="bugfix">An obscure, probably never reported before bug that may or may not exist involving sentient diseases and the self-respiration symptom should be fixed now (if it even existed in the first place).</li>
+			</ul>
+			<h3 class="author">ATHAHTH updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">Androids and synths have been added to the lists of races available from pride mirrors and magic mirrors.</li>
+			</ul>
+			<h3 class="author">ATHATH updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">The confusion symptom now noticeably confuses you.</li>
+				<li class="tweak">The confusion symptom's transmission 6 threshold effect now actually affects how much the symptom increases your confused value by (instead of affecting the cap that the symptom can bring it to, which is plenty high enough by default).</li>
+				<li class="tweak">The dizziness symptom now actually makes you noticeably dizzy (and has a cap for how dizzy it can make you).</li>
+				<li class="tweak">The dizziness symptom's transmission 6 threshold effect now makes your screen look "druggy" all of the time (only once its virus reaches a high enough stage, of course), instead of only occasionally.</li>
+				<li class="tweak">The hallucigen symptom's stealth 4 threshold effect now continues to give you positive messages instead of bad ones at stage 5. Before this tweak, meeting that stealth threshold would actually cause bad messages to appear MORE often at stage 5 than if you hadn't met it.</li>
+				<li class="tweak">Pretty much completely reworked the narcolepsy symptom so that it now uses the "drowsyness" (yes, that's how it's spelled in the code; no, I don't know why it's misspelled like that in the code) status effect instead of a confusing mess of ticking counters that rarely actually put you to sleep.</li>
+				<li class="tweak">The narcolepsy symptom's transmission 7 threshold effect now only requires transmission 4 no longer causes its virus to occasionally deal negligible amounts of stamina damage. Instead, it now causes the host to periodically yawn, spreading its virus whenever they do so.</li>
+				<li class="tweak">The narcolepsy symptom's resistance 10 threshold effect is now a stage speed 10 threshold effect.</li>
+				<li class="tweak">The narcolepsy symptom's activation frequencies have been tweaked a bit to make the symptom less threatening (albeit still quite potent) without its stage speed 10 (formerly a resistance 10) threshold effect.</li>
+				<li class="balance">The nacrolepsy symptom now adds 0 to its virus's transmission stat (upped from -4).</li>
+				<li class="bugfix">Fixed a bug that could cause the confusion symptom to lower your confusion value if you had a high confusion value when it activated.</li>
+			</ul>
+			<h3 class="author">Akrilla updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscdel">Removes crayon eating colour changes from the crayons in crayon packs. Rainbow/mime unaffected.</li>
+				<li class="tweak">Sprays cans have a cap on how dark you can make objects. Art is uneffected.</li>
+			</ul>
+			<h3 class="author">AnturK updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Voting boxes are now buildable from 15 metal sheets.</li>
+			</ul>
+			<h3 class="author">Dingo-Dongler updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Some foods can now be dunked in drinks. Dip your breakfast donut in some robust coffee today!</li>
+			</ul>
+			<h3 class="author">Fhaxaris updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">riot darts now do stamina damage again</li>
+				<li class="code_imp">removed duplicate code</li>
+			</ul>
+			<h3 class="author">Fikou updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">You can now create snow golems! They have ice powers, but take more damage from burns, heat and fire.</li>
+				<li class="tweak">The Chaplain and Geneticst now have family heirlooms, forgotten no longer!</li>
+			</ul>
+			<h3 class="author">Skoglol updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">Removed the static spawn maint sunglasses from metastation.</li>
+				<li class="balance">Pulling a locker now slows you down.</li>
+			</ul>
+			<h3 class="author">TheChosenEvilOne updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">added passive vent to the arsenal of atmospheric devices.</li>
+			</ul>
+			<h3 class="author">Time-Green updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">A pill press, reaction chamber and splitter have been added to the not-yet-existing plumbing arsenal.</li>
+			</ul>
+			<h3 class="author">Trilbyspaceclone updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Chameleon neckties/cloaks</li>
+			</ul>
+			<h3 class="author">cacogen updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="code_imp">Updated changelog header</li>
+				<li class="spellcheck">Made Pax chems' descriptions read better</li>
+			</ul>
+			<h3 class="author">nemvar updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="refactor">refactored digital camo into an element.</li>
+				<li class="bugfix">Antiglow now properly antiglows.</li>
+				<li class="bugfix">You can now mix antiglow</li>
+				<li class="bugfix">Glowy now glowies correctly.</li>
+				<li class="bugfix">AIs can track people again.</li>
+			</ul>
+			<h3 class="author">qustinnus updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">missing techpriest icon added</li>
+			</ul>
+			<h3 class="author">zxaber updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">fixed being able to Convert a Ripley MK-I to MK-II without a battery and breaking things.</li>
+			</ul>
+
 			<h2 class="date">02 September 2019</h2>
 			<h3 class="author">ATHATH updated:</h3>
 			<ul class="changes bgimages16">
