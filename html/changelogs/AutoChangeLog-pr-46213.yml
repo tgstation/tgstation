@@ -1,0 +1,4 @@
+author: "Akrilla"
+delete-after: True
+changes: 
+  - tweak: "Sprays cans have a cap on how dark you can make objects. Art is uneffected."
