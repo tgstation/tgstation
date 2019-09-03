@@ -1,0 +1,5 @@
+author: "ATH1909"
+delete-after: True
+changes: 
+  - rscadd: "The regenerative coma symptom has a new resistance 4 threshold effect! Said threshold effect will give hosts of the symptom's virus the TRAIT_STABLECRIT trait if its threshold is met."
+  - bugfix: "An obscure, probably never reported before bug that may or may not exist involving sentient diseases and the self-respiration symptom should be fixed now (if it even existed in the first place)."

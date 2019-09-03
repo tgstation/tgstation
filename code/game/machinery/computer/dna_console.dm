@@ -37,10 +37,20 @@
 	var/radduration = 2
 	var/radstrength = 1
 	var/max_chromosomes = 6
-
+	///Amount of mutations we can store
 	var/list/buffer[NUMBER_OF_BUFFERS]
+	///mutations we have stored
 	var/list/stored_mutations = list()
+	///chromosomes we have stored
 	var/list/stored_chromosomes = list()
+	///combinations of injectors for the 'injector selection'. format is list("Elsa" = list(Cryokinesis, Geladikinesis), "The Hulk" = list(Hulk, Gigantism), etc) Glowy and the gang being an initialized datum
+	var/list/injector_selection = list()
+	///max amount of selections you can make
+	var/max_injector_selections = 2
+	///hard-cap on the advanced dna injector
+	var/max_injector_mutations = 10
+	///the max instability of the advanced injector.
+	var/max_injector_instability = 50
 
 	var/injectorready = 0	//world timer cooldown var
 	var/jokerready = 0
@@ -215,6 +225,10 @@
 		buttons += "<span class='linkOff'>Unique Identifiers</span>"
 	else
 		buttons += "<a href='?src=[REF(src)];task=screen;text=ui;'>Unique Identifiers</a>"
+	if(current_screen == "advinjector")
+		buttons += "<span class='linkOff'>Adv. Injectors</span>"
+	else
+		buttons += "<a href='?src=[REF(src)];task=screen;text=advinjector;'>Adv. Injectors</a>"
 
 	switch(current_screen)
 		if("working")
@@ -370,6 +384,31 @@
 				var/obj/item/chromosome/CM = stored_chromosomes[i]
 				temp_html += "<td><a href='?src=[REF(src)];task=ejectchromosome;num=[i]'>[CM.name]</a></td><br>"
 			temp_html += "</table>"
+		if("advinjector")
+			temp_html += status
+			temp_html += buttons
+			temp_html += "<div class='line'><div class='statusLabel'><b>Advanced Injectors:</b></div></div><br>"
+			temp_html += "<div class='statusLine'><a href='?src=[REF(src)];task=add_advinjector;'>New Selection</a></div>"
+			for(var/A in injector_selection)
+				temp_html += "<div class='statusDisplay'><b>[A]</b>"
+				var/list/true_selection = injector_selection[A]
+				temp_html += "<br>"
+				for(var/B in true_selection)
+					var/datum/mutation/human/HM = B
+					var/mutcolor
+					switch(HM.quality)
+						if(POSITIVE)
+							mutcolor = "good"
+						if(MINOR_NEGATIVE)
+							mutcolor = "average"
+						if(NEGATIVE)
+							mutcolor = "bad"
+					temp_html += "<div class='statusLine'><span class='[mutcolor]'>[HM.name] </span>"
+					temp_html += "<a href='?src=[REF(src)];task=remove_from_advinjector;injector=[A];path=[HM.type];'>Remove</a></div>"
+				temp_html += "<div class='statusLine'> <a href='?src=[REF(src)];task=advinjector;injector=[A];'>Print Advanced Injector</a>"
+				temp_html += "<a href='?src=[REF(src)];task=remove_advinjector;injector=[A];'>Remove Injector</a></div>"
+				temp_html += "<br></div>"
+
 		else
 			temp_html += status
 			temp_html += buttons
@@ -506,6 +545,7 @@
 		temp_html += "<a href='?src=[REF(src)];task=screen;text=mutations;'>Back</a>"
 	else if(active && !scrambled)
 		temp_html += "<a href='?src=[REF(src)];task=savemut;path=[mutation];'>Store</a>"
+		temp_html += "<a href='?src=[REF(src)];task=expand_advinjector;path=[mutation];'>Adv. Injector</a>"
 	if(extra || scrambled)
 		temp_html += "<a href='?src=[REF(src)];task=nullify;'>Nullify</a>"
 	else
@@ -732,9 +772,28 @@
 						I.name = "[HM.name] injector"
 						if(connected)
 							I.damage_coeff = connected.damage_coeff
-							injectorready = world.time + INJECTOR_TIMEOUT*5 * (1 - 0.1 * connected.precision_coeff)
+							injectorready = world.time + INJECTOR_TIMEOUT * 5 * (1 - 0.1 * connected.precision_coeff)
 						else
-							injectorready = world.time + INJECTOR_TIMEOUT *5
+							injectorready = world.time + INJECTOR_TIMEOUT * 5
+
+		if("advinjector")
+			var/selection = href_list["injector"]
+			if(injectorready < world.time)
+				if(injector_selection.Find(selection))
+					var/list/true_selection = injector_selection[selection]
+					if(LAZYLEN(injector_selection))
+						var/obj/item/dnainjector/activator/I = new /obj/item/dnainjector/activator(loc)
+						for(var/A in true_selection)
+							var/datum/mutation/human/HM = A
+							I.add_mutations += new HM.type (copymut = HM)
+						I.doitanyway = TRUE
+						I.name = "Advanced [selection] injector"
+						if(connected)
+							I.damage_coeff = connected.damage_coeff
+							injectorready = world.time + INJECTOR_TIMEOUT * 8 * (1 - 0.1 * connected.precision_coeff)
+						else
+							injectorready = world.time + INJECTOR_TIMEOUT * 8
+
 		if("nullify")
 			if(viable_occupant)
 				var/datum/mutation/human/A = viable_occupant.dna.get_mutation(current_mutation)
@@ -826,6 +885,46 @@
 						to_chat(usr, "<span class='notice'>You apply [CM] to [HM.name].</span>")
 						stored_chromosomes -= CM
 						CM.apply(HM)
+		if("expand_advinjector")
+			var/mutation = text2path(href_list["path"])
+			var/datum/mutation/human/HM = get_valid_mutation(mutation)
+			if(HM && LAZYLEN(injector_selection))
+				var/which_injector = input(usr, "Select Adv. Injector", "Advanced Injectors") as null|anything in injector_selection
+				if(injector_selection.Find(which_injector))
+					var/list/true_selection = injector_selection[which_injector]
+					var/total_instability
+					for(var/B in true_selection)
+						var/datum/mutation/human/mootacion = B
+						total_instability += mootacion.instability
+					total_instability += HM.instability
+					if((total_instability > max_injector_instability) || (true_selection.len + 1) > max_injector_mutations)
+						to_chat(usr, "<span class='warning'>Adding more mutations would make the advanced injector too unstable!</span>")
+					else
+						true_selection += HM //reminder that this works. because I keep forgetting this works
+		if("remove_from_advinjector")
+			var/mutation = text2path(href_list["path"])
+			var/selection = href_list["injector"]
+			if(injector_selection.Find(selection))
+				var/list/true_selection = injector_selection[selection]
+				for(var/B in true_selection)
+					var/datum/mutation/human/HM = B
+					if(HM.type == mutation)
+						true_selection -= HM
+					break
+
+		if("remove_advinjector")
+			var/selection = href_list["injector"]
+			for(selection in injector_selection)
+				if(selection == selection)
+					injector_selection.Remove(selection)
+
+		if("add_advinjector")
+			if(LAZYLEN(injector_selection) < max_injector_selections)
+				var/new_selection = input(usr, "Enter Adv. Injector name", "Advanced Injectors") as text|null
+				if(new_selection && !(new_selection in injector_selection))
+					injector_selection[new_selection] = list()
+
+
 
 	ui_interact(usr,last_change)
 

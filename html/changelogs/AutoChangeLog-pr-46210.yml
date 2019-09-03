@@ -1,0 +1,4 @@
+author: "Akrilla"
+delete-after: True
+changes: 
+  - rscdel: "Removes crayon eating colour changes from the crayons in crayon packs. Rainbow/mime unaffected."

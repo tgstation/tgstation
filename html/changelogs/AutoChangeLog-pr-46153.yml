@@ -1,0 +1,4 @@
+author: "AnturK"
+delete-after: True
+changes: 
+  - rscadd: "Voting boxes are now buildable from 15 metal sheets."
