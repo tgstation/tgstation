@@ -901,7 +901,7 @@
 	name = "Earthsblood"
 	description = "Ichor from an extremely powerful plant. Great for restoring wounds, but it's a little heavy on the brain. For some strange reason, it also induces temporary pacifism in those who imbibe it and semi-permanent pacifism in those who overdose on it."
 	color = rgb(255, 175, 0)
-	metabolization_rate = REAGENTS_METABOLISM //Even though metabolization_rate is already REAGENTS_METABOLISM by default, I was asked told to redefine it here, so I did. It's just one redundant line; it can't hurt much, can it?
+	metabolization_rate = 0.4 //Math is based on specific metab rate so we want this to be static AKA if define or medicine metab rate changes, we want this to stay until we can rework calculations.
 	overdose_threshold = 25
 
 /datum/reagent/medicine/earthsblood/on_mob_life(mob/living/carbon/M)
