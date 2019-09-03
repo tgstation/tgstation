@@ -173,6 +173,10 @@
 			var/list/babies = list()
 			var/new_nutrition = round(nutrition * 0.9)
 			var/new_powerlevel = round(powerlevel / 4)
+			var/list/L = list()
+			SEND_SIGNAL(src, COMSIG_NANITE_GET_VOLUME, L) //Getting nanite volume before loop to only do it once
+			var/new_nanite_volume = L[1] * 0.5
+
 			for(var/i=1,i<=4,i++)
 				var/child_colour
 				if(mutation_chance >= 100)
@@ -192,11 +196,11 @@
 				babies += M
 				M.mutation_chance = CLAMP(mutation_chance+(rand(5,-5)),0,100)
 				SSblackbox.record_feedback("tally", "slime_babies_born", 1, M.colour)
-				if(src.GetComponent(/datum/component/nanites))
-					var/datum/component/nanites/original_nanites = src.GetComponent(/datum/component/nanites)
-					//copying over nanite programs/cloud sync with 25% of the original slime's saturation in each slime
-					M.AddComponent(/datum/component/nanites, original_nanites.nanite_volume*0.25)
-					SEND_SIGNAL(M, COMSIG_NANITE_SYNC, original_nanites)
+
+				if(new_nanite_volume) //If original slime had nanites, copy over and sync with 25% of the original volume
+					M.AddComponent(/datum/component/nanites, new_nanite_volume)
+					SEND_SIGNAL(M, COMSIG_NANITE_SYNC, src)
+
 			var/mob/living/simple_animal/slime/new_slime = pick(babies)
 			new_slime.a_intent = INTENT_HARM
 			if(src.mind)
