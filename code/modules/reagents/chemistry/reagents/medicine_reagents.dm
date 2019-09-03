@@ -970,10 +970,24 @@
 	overdose_threshold = 30
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/M as mob)
-	M.AdjustAllImmobility(-20, FALSE)
-	M.adjustStaminaLoss(-1, 0)
 	..()
+	M.AdjustAllImmobility(-30, FALSE)
+	M.adjustStaminaLoss(-10, 0)
+	M.Jitter(10)
+	M.Dizzy(10)
 	return TRUE
+
+/datum/reagent/medicine/changelingadrenaline/on_mob_metabolize(mob/living/L)
+	..()
+	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	L.ignore_slowdown(type)
+
+/datum/reagent/medicine/changelingadrenaline/on_mob_end_metabolize(mob/living/L)
+	..()
+	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	L.unignore_slowdown(type)
 
 /datum/reagent/medicine/changelingadrenaline/overdose_process(mob/living/M as mob)
 	M.adjustToxLoss(1, 0)
