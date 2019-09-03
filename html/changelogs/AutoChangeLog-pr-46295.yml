@@ -1,0 +1,4 @@
+author: "qustinnus"
+delete-after: True
+changes: 
+  - bugfix: "missing techpriest icon added"
