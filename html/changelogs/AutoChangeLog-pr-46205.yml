@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - rscadd: "You can now create snow golems! They have ice powers, but take more damage from burns, heat and fire."
