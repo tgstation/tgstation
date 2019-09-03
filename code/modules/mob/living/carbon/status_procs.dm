@@ -14,7 +14,6 @@
 	if(!IsParalyzed())
 		to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 	stam_paralyzed = TRUE
-	Paralyze(50)
 
 /mob/living/carbon/adjust_drugginess(amount)
 	druggy = max(druggy+amount, 0)
