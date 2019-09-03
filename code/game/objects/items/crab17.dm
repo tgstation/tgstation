@@ -64,7 +64,7 @@
 		if(do_after(user, 40, target = src))
 			if(!card.registered_account.being_dumped)
 				return
-			to_chat(user, "<span class='warning'>You quickly cash out your funds to a more secure banking location. Funds are safu.</span>")
+			to_chat(user, "<span class='warning'>You quickly cash out your funds to a more secure banking location. Funds are safu.</span>") // This is a reference and not a typo
 			card.registered_account.being_dumped = FALSE
 			card.registered_account.withdrawDelay = 0
 			if(check_if_finished())
