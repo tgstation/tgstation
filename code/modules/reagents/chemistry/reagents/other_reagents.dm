@@ -1661,7 +1661,7 @@
 
 /datum/reagent/pax
 	name = "Pax"
-	description = "A colorless liquid that suppresses violence on the subjects."
+	description = "A colorless liquid that suppresses violence in its subjects."
 	color = "#AAAAAA55"
 	taste_description = "water"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
@@ -1697,8 +1697,8 @@
 	return ..()
 
 /datum/reagent/pax/peaceborg
-	name = "synth-pax"
-	description = "A colorless liquid that suppresses violence on the subjects. Cheaper to synthetize, but wears out faster than normal Pax."
+	name = "synthpax"
+	description = "A colorless liquid that suppresses violence in its subjects. Cheaper to synthesize than normal Pax, but wears off faster."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 /datum/reagent/peaceborg
