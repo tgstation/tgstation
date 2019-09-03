@@ -83,6 +83,7 @@
 
 /******OXY******/
 /*Suffix: -mol*/
+#define	CONVERMOL_RATIO 5		//# Oxygen damage to result in 1 tox
 
 /datum/reagent/medicine/C2/convermol
 	name = "Convermol"
@@ -93,11 +94,11 @@
 	overdose_threshold = 35 // at least 2 full syringes +some, this stuff is nasty if left in for long
 
 /datum/reagent/medicine/C2/convermol/on_mob_life(mob/living/carbon/human/M)
-	var/oxycalc = 2.5*REM*current_cycle
+	var/oxycalc = CONVERMOL_RATIO*REM*current_cycle
 	if(!overdosed)
-		oxycalc = min(oxycalc,M.getOxyLoss()+min(current_cycle*0.1,3)) //if NOT overdosing, we lower our toxdamage to only the damage we actually healed with a minimum of 0.1*current_cycle. IE if we only heal 10 oxygen damage but we COULD have healed 20, we will only take toxdamage for the 10. We would take the toxdamage for the extra 10 if we were overdosing.
+		oxycalc = min(oxycalc,M.getOxyLoss()+0.5,3)) //if NOT overdosing, we lower our toxdamage to only the damage we actually healed with a minimum of 0.1*current_cycle. IE if we only heal 10 oxygen damage but we COULD have healed 20, we will only take toxdamage for the 10. We would take the toxdamage for the extra 10 if we were overdosing.
 	M.adjustOxyLoss(-oxycalc, 0)
-	M.adjustToxLoss(oxycalc/2.5, 0)
+	M.adjustToxLoss(oxycalc/CONVERMOL_RATIO, 0)
 	if(prob(current_cycle) && M.losebreath)
 		M.losebreath--
 	..()
@@ -107,6 +108,8 @@
 	metabolization_rate += 1
 	..()
 	return TRUE
+
+#undef	CONVERMOL_RATIO
 
 /datum/reagent/medicine/C2/tirimol
 	name = "Tirimol"
