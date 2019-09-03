@@ -515,7 +515,9 @@
 
 	if(shoot_unloyal)
 		if (!HAS_TRAIT(perp, TRAIT_MINDSHIELD))
+
 			if (!shoot_heads_of_staff)
+			
 				if ((perp.get_id_name() in list("Captain", "Head of Security", "Research Director", "Chief Engineer", "Chief Medical Officer", "Head of Personnel")))
 					return 0
 				else 
