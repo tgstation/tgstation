@@ -13785,7 +13785,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/external{
-	name = "Escape Airlock"
+	name = "Escape Airlock";
+	safety_mode = 1
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
@@ -13808,7 +13809,8 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/external{
-	name = "Escape Airlock"
+	name = "Escape Airlock";
+	safety_mode = 1
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
@@ -33064,6 +33066,16 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/explab)
+"bFg" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock";
+	safety_mode = 1
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/exit/departure_lounge)
 "bFh" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -49941,7 +49953,8 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/external{
-	name = "Cargo Escape Airlock"
+	name = "Cargo Escape Airlock";
+	safety_mode = 1
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
@@ -50126,6 +50139,16 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
+"glR" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock";
+	safety_mode = 1
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/exit/departure_lounge)
 "gmp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -54437,7 +54460,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/external{
-	name = "Cargo Escape Airlock"
+	name = "Cargo Escape Airlock";
+	safety_mode = 1
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
@@ -54970,6 +54994,16 @@
 /obj/structure/girder,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
+"sbw" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock";
+	safety_mode = 1
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/exit/departure_lounge)
 "sbY" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/wood,
@@ -56114,6 +56148,16 @@
 "uRk" = (
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
+"uRx" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock";
+	safety_mode = 1
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/exit/departure_lounge)
 "uTI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -74533,15 +74577,15 @@ aaa
 aaa
 aaa
 aHA
-aKy
+bFg
 xee
-aKy
+bFg
 aHA
 aaa
 aaa
 aaa
 aHA
-aKy
+bFg
 xee
 qIC
 aHA
@@ -75561,15 +75605,15 @@ aiu
 aiu
 aHz
 xee
-aKB
+sbw
 nYn
-aKB
+sbw
 xee
 aHA
 aHA
 aHA
 xee
-aKB
+sbw
 nYn
 fTY
 xee
