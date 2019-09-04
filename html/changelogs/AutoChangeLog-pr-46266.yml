@@ -1,0 +1,6 @@
+author: "Fhaxaris"
+delete-after: True
+changes: 
+  - tweak: "cybernetic heart will restart after 20 seconds instead of stopping forever"
+  - tweak: "cybernetic heart takes damage from emp like other cybernetics"
+  - tweak: "heart injects epinephrine on crit instead of unconsciousness"

@@ -30,5 +30,5 @@
 	result = SHOCKTOUCH
 
 /datum/generecipe/antiglow
-	required = "/datum/mutatin/human/glow; /datum/mutation/human/void"
+	required = "/datum/mutation/human/glow; /datum/mutation/human/void"
 	result = ANTIGLOWY
