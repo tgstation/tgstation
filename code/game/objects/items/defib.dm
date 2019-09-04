@@ -21,7 +21,7 @@
 	var/powered = FALSE //if there's a cell in the defib with enough power for a revive, blocks paddles from reviving otherwise
 	var/obj/item/twohanded/shockpaddles/paddles
 	var/obj/item/stock_parts/cell/high/cell
-	var/combat = FALSE //if true, revive through hardsuits and allow for combat shocking
+	var/combat = FALSE //if true, revive through hardsuits, allow for combat shocking, and tint paddles syndicate colors
 	var/grab_ghost = FALSE // Do we pull the ghost back into their body?
 	var/cooldown_duration = 5 SECONDS//how long does it take to recharge
 
