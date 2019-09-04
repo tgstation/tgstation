@@ -1032,19 +1032,19 @@
 
 /mob/living/carbon/human/updatehealth()
 	. = ..()
-	if(!HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN))
-		var/health_deficiency = max((maxHealth - health), staminaloss)
-		if(health_deficiency >= 40)
-			if(movement_type & FLYING)
-				add_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN, override = TRUE, multiplicative_slowdown = (health_deficiency / 75))
-			else
-				add_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN, override = TRUE, multiplicative_slowdown = (health_deficiency / 25))
+	dna?.species.spec_updatehealth(src)
+	if(HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN))
+		remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN)
+		return
+	var/health_deficiency = max((maxHealth - health), staminaloss)
+	if(health_deficiency >= 40)
+		if(movement_type & FLYING)
+			add_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN, override = TRUE, multiplicative_slowdown = (health_deficiency / 75), blacklisted_movetypes = FLOATING)
 		else
-			remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN)
+			add_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN, override = TRUE, multiplicative_slowdown = (health_deficiency / 25), blacklisted_movetypes = FLOATING)
 	else
 		remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN)
 
-	dna?.species.spec_updatehealth(src)
 
 /mob/living/carbon/human/adjust_nutrition(var/change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
