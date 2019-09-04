@@ -293,6 +293,8 @@ GLOBAL_VAR(medibot_unique_id_gen)
 /mob/living/simple_animal/bot/medbot/proc/assess_patient(mob/living/carbon/C)
 	. = FALSE
 	//Time to see if they need medical help!
+	if(stationary_mode && !Adjacent(C)) //YOU come to ME, BRO
+		return FALSE
 	if(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_FAKEDEATH)))
 		return FALSE	//welp too late for them!
 
@@ -419,8 +421,8 @@ GLOBAL_VAR(medibot_unique_id_gen)
 			if(!tending)
 				visible_message("[src] places its tools back into itself.")
 			update_icon()
-			soft_reset()
 			REMOVE_TRAIT(patient,TRAIT_MEDIBOTCOMINGTHROUGH,medibot_counter)
+			soft_reset()
 		else
 			tending = FALSE
 
