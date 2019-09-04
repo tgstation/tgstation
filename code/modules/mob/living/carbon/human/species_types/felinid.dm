@@ -103,6 +103,7 @@
 		if(prob(15))
 			var/obj/item/organ/guts = pick(M.internal_organs)
 			guts.applyOrganDamage(15)
+		M.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
 		return TRUE
 
 
