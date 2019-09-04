@@ -6,7 +6,7 @@
 	name = "Bicaridine"
 	id = /datum/reagent/medicine/CF/bicaridine
 	results = list(/datum/reagent/medicine/CF/bicaridine = 3)
-	required_reagents = list(/datum/reagent/oxygen = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/carbon = 1, /datum/reagent/trekamol = 1)
+	required_reagents = list(/datum/reagent/oxygen = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/CF/trekamol = 1)
 	mix_message = "The solution warps and turns into a red, space-worthy liquid."
 
 //**BURN**
@@ -15,7 +15,7 @@
 	name = "Kelotane"
 	id = /datum/reagent/medicine/CF/kelotane
 	results = list(/datum/reagent/medicine/CF/kelotane = 3)
-	required_reagents = list(/datum/reagent/carbon = 1, /datum/reagent/silicon = 1, /datum/reagent/trekamol = 1)
+	required_reagents = list(/datum/reagent/carbon = 1, /datum/reagent/silicon = 1, /datum/reagent/medicine/CF/trekamol = 1)
 	mix_message = "The solution warps and turns into a lime-colored, space-worthy liquid."
 
 //**Toxin**
@@ -24,14 +24,14 @@
 	name = "Anti-Toxin"
 	id = /datum/reagent/medicine/CF/antitoxin
 	results = list(/datum/reagent/medicine/CF/antitoxin = 3)
-	required_reagents = list(/datum/reagent/nitrogen = 1, /datum/reagent/silicon = 1, /datum/reagent/potassium = 1, /datum/reagent/trekamol = 1)
+	required_reagents = list(/datum/reagent/nitrogen = 1, /datum/reagent/silicon = 1, /datum/reagent/potassium = 1, /datum/reagent/medicine/CF/trekamol = 1)
 	mix_message = "The solution warps and turns into a green, space-worthy liquid."
 
 /datum/chemical_reaction/charcoal
 	name = "Charcoal"
 	id = /datum/reagent/medicine/CF/charcoal
 	results = list(/datum/reagent/medicine/CF/charcoal = 2)
-	required_reagent = list(/datum/reagent/sodiumchloride = 1, /datum/reagent/ash = 1)
+	required_reagents = list(/datum/reagent/sodiumchloride = 1, /datum/reagent/ash = 1)
 	required_temp = 400
 	mix_message = "The solution burns into a black, chalky substance.... oh it's just charcoal."
 

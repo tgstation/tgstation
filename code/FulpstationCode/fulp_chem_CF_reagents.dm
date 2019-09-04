@@ -1,3 +1,5 @@
+#define REM REAGENTS_EFFECT_MULTIPLIER
+
 //FulpChem rework/addition of old chems to fix the potatofarm that is tg development -Love, Saliferous
 /datum/reagent/medicine/CF
 	harmful = FALSE
@@ -179,3 +181,7 @@
 	..()
 	return TRUE
 */
+
+/datum/reagent/medicine/CF/trekamol
+	name = "Trekamol"
+	description = "A space-worthy activator for advanced chemicals."
