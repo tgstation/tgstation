@@ -103,7 +103,7 @@
 		if(prob(15))
 			var/obj/item/organ/guts = pick(M.internal_organs)
 			guts.applyOrganDamage(15)
-		return TRUE
+		return FALSE
 
 
 /proc/mass_purrbation()
