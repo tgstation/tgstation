@@ -89,7 +89,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		var/shuttle_error = SSshuttle.moveShuttle(shuttleId, href_list["move"], 1)
 		if(launch_warning)
 			say("<span class='danger'>Launch sequence activated! Prepare for drop!!</span>")
-			playsound(loc, 'sound/machines/warning-buzzer.ogg', 70, 0)
+			playsound(loc, 'sound/machines/warning-buzzer.ogg', 70, FALSE)
 			launch_warning = FALSE
 		else if(!shuttle_error)
 			say("Shuttle request uploaded. Please stand away from the doors.")
@@ -362,7 +362,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	aux_base_console.set_mining_mode() //Lets the colony park the shuttle there, now that it has a dock.
 	to_chat(user, "<span class='notice'>Mining shuttle calibration successful! Shuttle interface available at base console.</span>")
 	anchored = TRUE //Locks in place to mark the landing zone.
-	playsound(loc, 'sound/machines/ping.ogg', 50, 0)
+	playsound(loc, 'sound/machines/ping.ogg', 50, FALSE)
 
 /obj/structure/mining_shuttle_beacon/proc/clear_cooldown()
 	anti_spam_cd = 0

@@ -62,7 +62,7 @@
 				to_chat(user, "<span class='warning'>[src] requires <b>[DisplayPower(POWER_WALL_TOTAL)]</b> of power to produce brass sheets!</span>")
 				return
 			adjust_clockwork_power(-POWER_WALL_TOTAL)
-		playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 		new/obj/item/stack/tile/brass(user.loc, 5)
 		to_chat(user, "<span class='brass'>You use [get_clockwork_power() ? "some":"all"] of [src]'s power to produce <b>5</b> brass sheets. It now has access to <b>[DisplayPower(get_clockwork_power())]</b> of power.</span>")
 
@@ -105,7 +105,7 @@
 
 	fabrication_values["operation_time"] *= speed_multiplier
 
-	playsound(target, 'sound/machines/click.ogg', 50, 1)
+	playsound(target, 'sound/machines/click.ogg', 50, TRUE)
 	if(fabrication_values["operation_time"])
 		if(!silent)
 			var/atom/A = fabrication_values["new_obj_type"]
@@ -135,7 +135,7 @@
 				user.visible_message("<span class='warning'>[user]'s [name] rapidly consumes [target]!</span>", \
 				"<span class='brass'>Your [name] consumes [target].</span>")
 
-	playsound(target, 'sound/items/deconstruct.ogg', 50, 1)
+	playsound(target, 'sound/items/deconstruct.ogg', 50, TRUE)
 	var/new_thing_type = fabrication_values["new_obj_type"]
 	if(isturf(target)) //if our target is a turf, we're just going to ChangeTurf it and assume it'll work out.
 		var/turf/T = target

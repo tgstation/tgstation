@@ -52,7 +52,7 @@
 			A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 
 	if(!damage)
-		playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
+		playsound(D.loc, A.dna.species.miss_sound, 25, TRUE, -1)
 		D.visible_message("<span class='warning'>[A]'s [atk_verb] misses [D]!</span>", \
 			"<span class='userdanger'>[A]'s [atk_verb] misses you!</span>", null, COMBAT_MESSAGE_RANGE)
 		log_combat(A, D, "attempted to [atk_verb]")
@@ -61,7 +61,7 @@
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
 	var/armor_block = D.run_armor_check(affecting, "melee")
 
-	playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
+	playsound(D.loc, A.dna.species.attack_sound, 25, TRUE, -1)
 	D.visible_message("<span class='danger'>[A] [atk_verb]ed [D]!</span>", \
 			"<span class='userdanger'>[A] [atk_verb]ed you!</span>", null, COMBAT_MESSAGE_RANGE)
 

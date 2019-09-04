@@ -182,10 +182,7 @@
 		dump_contents()
 	update_icon()
 
-/**
-  * Drops all contents of the unit onto the ground.
-*/
-/obj/machinery/suit_storage_unit/proc/dump_contents()
+/obj/machinery/suit_storage_unit/dump_contents()
 	dropContents()
 	helmet = null
 	suit = null
@@ -261,7 +258,7 @@
 		locked = FALSE
 		if(uv_super)
 			visible_message("<span class='warning'>[src]'s door creaks open with a loud whining noise. A cloud of foul black smoke escapes from its chamber.</span>")
-			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50, 1)
+			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
 			helmet = null
 			qdel(helmet)
 			suit = null
@@ -277,7 +274,7 @@
 				visible_message("<span class='notice'>[src]'s door slides open. The glowing yellow lights dim to a gentle green.</span>")
 			else
 				visible_message("<span class='warning'>[src]'s door slides open, barraging you with the nauseating smell of charred flesh.</span>")
-			playsound(src, 'sound/machines/airlockclose.ogg', 25, 1)
+			playsound(src, 'sound/machines/airlockclose.ogg', 25, TRUE)
 			var/list/things_to_clear = list() //Done this way since using GetAllContents on the SSU itself would include circuitry and such.
 			if(suit)
 				things_to_clear += suit

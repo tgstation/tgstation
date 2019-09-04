@@ -138,6 +138,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	pixel_y = 4
 	max_integrity = 10000
 	obj_integrity = 10000
+	anchored = TRUE
 	var/obj/mecha/combat/durand/chassis ///Our link back to the durand
 	var/switching = FALSE ///To keep track of things during the animation
 

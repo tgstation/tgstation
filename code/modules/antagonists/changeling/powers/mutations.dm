@@ -31,7 +31,7 @@
 	if(istype(hand_item, weapon_type))
 		user.temporarilyRemoveItemFromInventory(hand_item, TRUE) //DROPDEL will delete the item
 		if(!silent)
-			playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
+			playsound(user, 'sound/effects/blobattack.ogg', 30, TRUE)
 			user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms [user.p_their()] [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
 		user.update_inv_hands()
 		return 1
@@ -53,7 +53,7 @@
 	var/obj/item/W = new weapon_type(user, silent)
 	user.put_in_hands(W)
 	if(!silent)
-		playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
+		playsound(user, 'sound/effects/blobattack.ogg', 30, TRUE)
 	return W
 
 /datum/action/changeling/weapon/Remove(mob/user)
@@ -99,7 +99,7 @@
 
 		if(blood_on_castoff)
 			H.add_splatter_floor()
-			playsound(H.loc, 'sound/effects/splat.ogg', 50, 1) //So real sounds
+			playsound(H.loc, 'sound/effects/splat.ogg', 50, TRUE) //So real sounds
 
 		changeling.chem_recharge_slowdown -= recharge_slowdown
 		return 1
@@ -198,7 +198,7 @@
 		if(A.hasPower())
 			user.visible_message("<span class='warning'>[user] jams [src] into the airlock and starts prying it open!</span>", "<span class='warning'>We start forcing the [A] open.</span>", \
 			"<span class='italics'>You hear a metal screeching sound.</span>")
-			playsound(A, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
+			playsound(A, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
 			if(!do_after(user, 100, target = A))
 				return
 		//user.say("Heeeeeeeeeerrre's Johnny!")
@@ -331,7 +331,7 @@
 				C.apply_damage(I.force, BRUTE, BODY_ZONE_CHEST)
 				H.do_item_attack_animation(C, used_item = I)
 				H.add_mob_blood(C)
-				playsound(get_turf(H),I.hitsound,75,1)
+				playsound(get_turf(H),I.hitsound,75,TRUE)
 				return
 
 /obj/item/projectile/tentacle/on_hit(atom/target, blocked = FALSE)

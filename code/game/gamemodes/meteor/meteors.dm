@@ -135,7 +135,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 /obj/effect/meteor/Bump(atom/A)
 	if(A)
 		ram_turf(get_turf(A))
-		playsound(src.loc, meteorsound, 40, 1)
+		playsound(src.loc, meteorsound, 40, TRUE)
 		get_hit()
 
 /obj/effect/meteor/proc/ram_turf(turf/T)
