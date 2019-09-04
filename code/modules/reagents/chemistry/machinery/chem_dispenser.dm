@@ -71,8 +71,13 @@
 		/datum/reagent/ash,
 		/datum/reagent/diethylamine,
 		/datum/reagent/oil,
-		/datum/reagent/saltpetre
+		/datum/reagent/saltpetre,
+		/datum/reagent/trekamol
 	)
+	//available with T5 manipulator
+	/*var/list/upgrade2_reagents = list(
+		/datum/reagent/trekamol
+	)*/
 	var/list/emagged_reagents = list(
 		/datum/reagent/toxin/carpotoxin,
 		/datum/reagent/medicine/mine_salve,
