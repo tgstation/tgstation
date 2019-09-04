@@ -193,7 +193,11 @@
 		A.UpdateButtonIcon()
 
 /obj/item/defibrillator/proc/make_paddles()
-	return new /obj/item/twohanded/shockpaddles(src)
+	if(!combat)
+		return new /obj/item/twohanded/shockpaddles(src)
+	else
+		return new /obj/item/twohanded/shockpaddles/syndicate(src)
+
 
 /obj/item/defibrillator/equipped(mob/user, slot)
 	..()
@@ -276,9 +280,6 @@
 	. = ..()
 	cell = new /obj/item/stock_parts/cell/infinite(src)
 	update_icon()
-
-/obj/item/defibrillator/compact/combat/make_paddles()
-	return new /obj/item/twohanded/shockpaddles/syndicate(src)
 
 /obj/item/defibrillator/compact/combat/loaded/attackby(obj/item/W, mob/user, params)
 	if(W == paddles)
@@ -689,7 +690,6 @@
 	icon = 'icons/obj/defib.dmi'
 	icon_state = "syndiepaddles0"
 	item_state = "syndiepaddles0"
-	req_defib = TRUE
 	base_icon_state = "syndiepaddles"
 
 /obj/item/twohanded/shockpaddles/syndicate/cyborg
