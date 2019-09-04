@@ -176,7 +176,7 @@ GLOBAL_VAR(medibot_unique_id_gen)
 				continue
 			tech_boosters++
 		if(tech_boosters)
-			heal_amount = (round(tech_boosters/2,0.1)*initial(heal_amount))+initial(heal_amount) //every 2 tend wounds tech gives you an extra 100% healing, adjusting for unique branches (combo is bonus)
+			heal_amount = (round(tech_boosters/4,0.1)*initial(heal_amount))+initial(heal_amount) //every 4 tend wounds tech gives you an extra 100% healing, adjusting for unique branches (combo is bonus).
 			if(oldheal_amount < heal_amount)
 				speak("Surgerical Knowledge Found! Efficiency is increased by [round(heal_amount/oldheal_amount*100)]%!")
 	update_controls()

@@ -641,40 +641,60 @@
 
 /datum/design/surgery/healing/brute_upgrade
 	name = "Tend Wounds (Brute) Upgrade"
-	surgery = /datum/surgery/healing/brute/upgraded
+	surgery = /datum/surgery/heal/four_damages/brute/upgraded
 	id = "surgery_heal_brute_upgrade"
 
 /datum/design/surgery/healing/brute_upgrade_2
 	name = "Tend Wounds (Brute) Upgrade"
-	surgery = /datum/surgery/healing/brute/upgraded/femto
+	surgery = /datum/surgery/heal/four_damages/brute/upgraded/femto
 	id = "surgery_heal_brute_upgrade_femto"
 
 /datum/design/surgery/healing/burn_upgrade
 	name = "Tend Wounds (Burn) Upgrade"
-	surgery = /datum/surgery/healing/burn/upgraded
+	surgery = /datum/surgery/heal/four_damages/burn/upgraded
 	id = "surgery_heal_burn_upgrade"
 
 /datum/design/surgery/healing/burn_upgrade_2
 	name = "Tend Wounds (Burn) Upgrade"
-	surgery = /datum/surgery/healing/brute/upgraded/femto
+	surgery = /datum/surgery/heal/four_damages/brute/upgraded/femto
 	id = "surgery_heal_burn_upgrade_femto"
 
 /datum/design/surgery/healing/combo
 	name = "Tend Wounds (Physical)"
 	desc = "A surgical procedure that repairs both bruises and burns. Repair efficiency is not as high as the individual surgeries but it is faster."
-	surgery = /datum/surgery/healing/combo
+	surgery = /datum/surgery/heal/four_damages/combo
 	id = "surgery_heal_combo"
 
 /datum/design/surgery/healing/combo_upgrade
 	name = "Tend Wounds (Physical) Upgrade"
-	surgery = /datum/surgery/healing/combo/upgraded
+	surgery = /datum/surgery/heal/four_damages/combo/upgraded
 	id = "surgery_heal_combo_upgrade"
 
 /datum/design/surgery/healing/combo_upgrade_2
 	name = "Tend Wounds (Physical) Upgrade"
 	desc = "A surgical procedure that repairs both bruises and burns faster than their individual counterparts. It is more effective than both the individual surgeries."
-	surgery = /datum/surgery/healing/combo/upgraded/femto
+	surgery = /datum/surgery/heal/four_damages/combo/upgraded/femto
 	id = "surgery_heal_combo_upgrade_femto"
+
+/datum/design/surgery/healing/tox_upgrade
+	name = "Cleanse Patient (Tox) Upgrade"
+	surgery = /datum/surgery/heal/four_damages/tox/upgraded
+	id = "surgery_heal_tox_upgrade"
+
+/datum/design/surgery/healing/brute_upgrade_2
+	name = "Cleanse Patient (Tox) Upgrade"
+	surgery = /datum/surgery/heal/four_damages/tox/upgraded/femto
+	id = "surgery_heal_tox_upgrade_femto"
+
+/datum/design/surgery/healing/tox_upgrade
+	name = "Breathe Life (Oxy) Upgrade"
+	surgery = /datum/surgery/heal/four_damages/oxy/upgraded
+	id = "surgery_heal_oxy_upgrade"
+
+/datum/design/surgery/healing/brute_upgrade_2
+	name = "Breathe Life (Oxy) Upgrade"
+	surgery = /datum/surgery/heal/four_damages/oxy/upgraded/femto
+	id = "surgery_heal_oxy_upgrade_femto"
 
 /datum/design/surgery/revival
 	name = "Revival"

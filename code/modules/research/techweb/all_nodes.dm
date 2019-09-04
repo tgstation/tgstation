@@ -98,14 +98,46 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 	export_price = 4000
 
+/datum/techweb_node/imp_cp_surgery
+	id = "imp_cp_surgery"
+	display_name = "Improved Cleanse Patient Procedure"
+	description = "Allows for better removal of patient toxicity, but not the kind <i>that</i> crewman has. 'Cleanse Patient' will now removes reagents from the bloodstream!"
+	prereq_ids = list("adv_surgery")
+	design_ids = list("surgery_heal_tox_upgrade")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
+
+/datum/techweb_node/imp_bl_surgery
+	id = "imp_bl_surgery"
+	display_name = "Improved Breathe Life Procedure"
+	description = "The chef has provided some... 'choice' items from his freezer, which he said would open ANYONE'S airways. Turns out, he's right! 'Cleanse Patient' now helps with breathing!"
+	prereq_ids = list("adv_surgery")
+	design_ids = list("surgery_heal_oxy_upgrade")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
+
 /datum/techweb_node/exp_surgery
 	id = "exp_surgery"
 	display_name = "Experimental Surgery"
 	description = "When evolution isn't fast enough."
-	prereq_ids = list("adv_surgery")
+	prereq_ids = list("adv_surgery","imp_bl_surgery","imp_cp_surgery")
 	design_ids = list("surgery_pacify","surgery_vein_thread","surgery_muscled_veins","surgery_nerve_splice","surgery_nerve_ground","surgery_ligament_hook","surgery_ligament_reinforcement","surgery_viral_bond", "surgery_heal_combo_upgrade", "surgery_exp_dissection")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
 	export_price = 5000
+
+/datum/techweb_node/imp_cp_surgery2
+	id = "imp_cp_surgery2"
+	display_name = "Improved Cleanse Patient Procedure"
+	description = "Further improves the 'Cleanse Patient' procedure, increasing healing as well as only purging reagents with harmful effects (primary or side-effects)."
+	prereq_ids = list("exp_surgery")
+	design_ids = list("surgery_heal_tox_upgrade_femto")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1250)
+
+/datum/techweb_node/imp_bl_surgery2
+	id = "imp_bl_surgery2"
+	display_name = "Improved Breathe Life Procedure"
+	description = "Further improves the 'Breathe Life' procedure, increasing healing as well as faster breathing correction."
+	prereq_ids = list("exp_surgery")
+	design_ids = list("surgery_heal_oxy_upgrade_femto")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1250)
 
 /datum/techweb_node/alien_surgery
 	id = "alien_surgery"
