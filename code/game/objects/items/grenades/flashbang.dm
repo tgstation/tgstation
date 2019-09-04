@@ -35,7 +35,7 @@
 		M.Knockdown(200)
 		M.soundbang_act(1, 200, 10, 15)
 	else
-		if(distance <= 1)
+		if(distance <= 1) // Adds more stun as to not prime n' pull (#45381)
 			M.Paralyze(5)
 			M.Knockdown(30)
 		M.soundbang_act(1, max(200/max(1,distance), 60), rand(0, 5))
