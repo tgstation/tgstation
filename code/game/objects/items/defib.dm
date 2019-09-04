@@ -195,8 +195,7 @@
 /obj/item/defibrillator/proc/make_paddles()
 	if(!combat)
 		return new /obj/item/twohanded/shockpaddles(src)
-	else
-		return new /obj/item/twohanded/shockpaddles/syndicate(src)
+	return new /obj/item/twohanded/shockpaddles/syndicate(src)
 
 
 /obj/item/defibrillator/equipped(mob/user, slot)
