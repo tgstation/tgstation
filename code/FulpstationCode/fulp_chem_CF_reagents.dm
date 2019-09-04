@@ -144,7 +144,8 @@
 	return TRUE
 
 //Perfluorodecalin Re-add (Oxy Heal) Retains old recipe
-/datum/reagent/medicine/CF/perfluorodecalin
+//**Commented-out as Convermol is just Perfluorodecalin with a new name**
+/*/datum/reagent/medicine/CF/perfluorodecalin
 	name = "Perfuorodecalin"
 	description = "Converts 5u of Suffocation damage to 2u of Toxin damage per tick, also gives 0.2u of Toxin damage per tick."
 	reagent_state = LIQUID
@@ -177,4 +178,4 @@
 			M.adjustToxLoss(1*REM, 0)
 	..()
 	return TRUE
-	
+*/

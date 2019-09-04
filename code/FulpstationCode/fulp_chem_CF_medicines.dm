@@ -37,18 +37,20 @@
 
 //**OXY**
 
-/datum/chemical_reaction/perfluorodecalin
+/*/datum/chemical_reaction/perfluorodecalin
 	name = "Perfuorodecalin"
 	id = /datum/reagent/medicine/CF/perfluorodecalin
 	results = list(/datum/reagent/medicine/CF/perfluorodecalin = 3)
 	required_reagents = list(/datum/reagent/oil = 1, /datum/reagent/fluorine = 1, /datum/reagent/hydrogen = 1)
 	required_temp = 370
 	mix_message = "The solution boils into a thick, red liquid."
+*/
+
 //**ALL**
 
 /datum/chemical_reaction/tricordrazine
 	name = "Tricordrazine"
 	id = /datum/reagent/medicine/CF/tricordrazine
 	results = list(/datum/reagent/medicine/CF/tricordrazine = 3)
-	required_reagents = list(/datum/reagent/medicine/CF/bicaridine = 1, /datum/reagent/medicine/CF/kelotane = 1, /datum/reagent/medicine/CF/antitoxin = 1, /datum/reagent/medicine/)
+	required_reagents = list(/datum/reagent/medicine/CF/bicaridine = 1, /datum/reagent/medicine/CF/kelotane = 1, /datum/reagent/medicine/CF/antitoxin = 1, /datum/reagent/medicine/C2/convermol = 1, /datum/reagent/medicine/CF/trekamol = 1)
 	mix_message = "The solution warps into a superior gold, space-worthy liquid."
