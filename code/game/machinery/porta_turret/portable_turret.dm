@@ -418,7 +418,7 @@
 						continue
 					else 
 						var/obj/item/card/id/I = C.get_idcard(TRUE)
-						if (I.assignment in list("Captain", "Head of Security", "Research Director", "Chief Engineer", "Chief Medical Officer", "Head of Personnel"))
+						if (I.assignment in GLOB.command_positions)
 							continue
 						else 
 							targets += C
@@ -518,7 +518,7 @@
 
 			if (!shoot_heads_of_staff)
 			
-				if ((perp.get_id_name() in list("Captain", "Head of Security", "Research Director", "Chief Engineer", "Chief Medical Officer", "Head of Personnel")))
+				if (perp.get_id_name() in GLOB.command_positions)
 					return 0
 				else 
 					threatcount += 4
