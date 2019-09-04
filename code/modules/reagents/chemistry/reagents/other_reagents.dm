@@ -1221,15 +1221,15 @@
 
 
 /datum/reagent/colorful_reagent/powder
-	name = "Colourful Powder" //the name's a bit similar to the name of colorful reagent, but hey, they're practically the same chem anyway
+	name = "Colorful Powder" //the name's a bit similar to the name of colorful reagent, but hey, they're practically the same chem anyway
 	var/colorname = "none"
-	description = "A powder good for colouring chemical reagents."
+	description = "A powder that is used for coloring things."
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 207, 54, 0
 	taste_description = "the back of class"
 
 /datum/reagent/colorful_reagent/powder/New()
-	description = "\an [colorname] powder good for coloring things." //BEGONE, EUROPEAN!
+	description = "\an [colorname] powder, used for coloring things [colorname]."
 
 
 /datum/reagent/colorful_reagent/powder/red
