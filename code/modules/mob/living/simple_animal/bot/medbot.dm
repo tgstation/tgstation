@@ -293,6 +293,13 @@ GLOBAL_VAR(medibot_unique_id_gen)
 /mob/living/simple_animal/bot/medbot/proc/assess_patient(mob/living/carbon/C)
 	. = FALSE
 	//Time to see if they need medical help!
+
+	if(QDELETED(C)) //it seems you've blown up during the assessment sir
+		return FALSE
+
+	if(stationary_mode && !Adjacent(C)) //sorry i can't move
+		return FALSE
+
 	if(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_FAKEDEATH)))
 		return FALSE	//welp too late for them!
 
@@ -357,7 +364,7 @@ GLOBAL_VAR(medibot_unique_id_gen)
 		soft_reset()
 		return
 
-	if(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_FAKEDEATH)))
+	if(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_FAKEDEATH)) || QDELETED(C))
 		var/list/messagevoice = list("No! Stay with me!" = 'sound/voice/medbot/no.ogg',"Live, damnit! LIVE!" = 'sound/voice/medbot/live.ogg',"I...I've never lost a patient before. Not today, I mean." = 'sound/voice/medbot/lost.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
@@ -369,6 +376,8 @@ GLOBAL_VAR(medibot_unique_id_gen)
 	var/tending = TRUE
 	while(tending)
 		var/treatment_method = null
+		if(QDELETED(C))
+			break
 
 		if(C.getBruteLoss() >= heal_threshold)
 			treatment_method = BRUTE
