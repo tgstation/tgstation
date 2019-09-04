@@ -681,17 +681,17 @@
 	surgery = /datum/surgery/heal/four_damages/tox/upgraded
 	id = "surgery_heal_tox_upgrade"
 
-/datum/design/surgery/healing/brute_upgrade_2
+/datum/design/surgery/healing/tox_upgrade_2
 	name = "Cleanse Patient (Tox) Upgrade"
 	surgery = /datum/surgery/heal/four_damages/tox/upgraded/femto
 	id = "surgery_heal_tox_upgrade_femto"
 
-/datum/design/surgery/healing/tox_upgrade
+/datum/design/surgery/healing/oxy_upgrade
 	name = "Breathe Life (Oxy) Upgrade"
 	surgery = /datum/surgery/heal/four_damages/oxy/upgraded
 	id = "surgery_heal_oxy_upgrade"
 
-/datum/design/surgery/healing/brute_upgrade_2
+/datum/design/surgery/healing/oxy_upgrade_2
 	name = "Breathe Life (Oxy) Upgrade"
 	surgery = /datum/surgery/heal/four_damages/oxy/upgraded/femto
 	id = "surgery_heal_oxy_upgrade_femto"
