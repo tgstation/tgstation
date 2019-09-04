@@ -122,6 +122,8 @@
 	var/obj/item/projectile/P = hitby
 	if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(15))
 		owner.visible_message("<span class='danger'>[attack_text] hits [owner]'s [src], setting it off! What a shot!</span>")
+		log_game("A grenade was detonated by a laser")
+		message_admins("A grenade was detonated by a laser")
 		prime()
 		return TRUE //It hit the grenade, not them
 
