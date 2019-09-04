@@ -173,38 +173,40 @@
 
 /obj/item/organ/heart/cybernetic
 	name = "cybernetic heart"
-	desc = "An electronic device designed to mimic the functions of an organic human heart."
+	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma."
 	icon_state = "heart-c"
 	organ_flags = ORGAN_SYNTHETIC
+	maxHealth = 1.1 * STANDARD_ORGAN_THRESHOLD
 
-/obj/item/organ/heart/cybernetic/emp_act()
+	var/dose_available = TRUE
+	var/rid = /datum/reagent/medicine/epinephrine
+	var/ramount = 10
+
+/obj/item/organ/heart/cybernetic/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
 	Stop()
-	addtimer(CALLBACK(src, .proc/Restart), 20 SECONDS)
+	addtimer(CALLBACK(src, .proc/Restart), 20/severity SECONDS)
+	damage += 100/severity
 
 /obj/item/organ/heart/cybernetic/on_life()
 	. = ..()
+	if(dose_available && owner.health <= owner.crit_threshold && !owner.reagents.has_reagent(rid))
+		owner.reagents.add_reagent(rid, ramount)
+		used_dose()
+
+/obj/item/organ/heart/cybernetic/proc/used_dose()
+	dose_available = FALSE
 
 /obj/item/organ/heart/cybernetic/upgraded
 	name = "upgraded cybernetic heart"
-	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of medicine, used automatically after facing severe trauma. It can regenerate its dose in 5 minutes."
+	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma. This upgraded model can regenerate its dose after use."
 	icon_state = "heart-c-u"
+	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 
-	var/dose_available = TRUE
-	var/list/cybernetic_reagents = list( /datum/reagent/medicine/atropine = 15, /datum/reagent/medicine/omnizine = 10, /datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/ephedrine = 10) // associative list
-
-/obj/item/organ/heart/cybernetic/upgraded/on_life()
+/obj/item/organ/heart/cybernetic/upgraded/used_dose()
 	. = ..()
-	if(dose_available && owner.health <= owner.crit_threshold)
-		var/cybernetic_reagent
-		for(cybernetic_reagent in cybernetic_reagents)
-			owner.reagents.add_reagent(cybernetic_reagent, cybernetic_reagents[cybernetic_reagent]) // add every reagent to the owner of the heart
-		used_dose()
-
-/obj/item/organ/heart/cybernetic/upgraded/proc/used_dose()
-	dose_available = FALSE
 	addtimer(VARSET_CALLBACK(src, dose_available, TRUE), 5 MINUTES)
 
 /obj/item/organ/heart/freedom
