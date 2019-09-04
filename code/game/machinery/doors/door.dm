@@ -155,8 +155,8 @@
 	. = ..()
 	if(.)
 		return
-	if(safety_mode && !hasPower() && !density)
-		to_chat(user, "<span class='notice'>You begin unlock the airlock safety mechanism...</span>")
+	if(safety_mode && !hasPower() && density)
+		to_chat(user, "<span class='notice'>You begin unlocking the airlock safety mechanism...</span>")
 		if(do_after(user, 200, target = src))
 			try_to_crowbar(null, user)
 			return
