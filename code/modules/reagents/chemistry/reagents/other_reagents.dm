@@ -1221,7 +1221,7 @@
 
 
 /datum/reagent/colorful_reagent/powder
-	name = "Colorful Powder" //the name's a bit similar to the name of colorful reagent, but hey, they're practically the same chem anyway
+	name = "Mundane Powder" //the name's a bit similar to the name of colorful reagent, but hey, they're practically the same chem anyway
 	var/colorname = "none"
 	description = "A powder that is used for coloring things."
 	reagent_state = SOLID
@@ -1229,7 +1229,12 @@
 	taste_description = "the back of class"
 
 /datum/reagent/colorful_reagent/powder/New()
-	description = "\an [colorname] powder, used for coloring things [colorname]."
+	if(colorname == "none")
+		description = "A rather mundane-looking powder. It doesn't look like it'd color much of anything..."
+	else if(colorname == "invisible")
+		description = "An invisible powder. Unfortunately, since it's invisible, it doesn't look like it'd color much of anything..."
+	else
+		description = "\an [colorname] powder, used for coloring things [colorname]."
 
 
 /datum/reagent/colorful_reagent/powder/red
