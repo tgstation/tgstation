@@ -27,7 +27,7 @@ Bonus
 	base_message_chance = 50
 	symptom_delay_min = 60
 	symptom_delay_max = 100
-	var/nopositives = FALSE
+	var/excludemuts = FALSE
 	var/no_reset = FALSE
 	var/mutadone_proof = FALSE
 	threshold_desc = "<b>Resistance 8:</b> The mutations caused by the virus are mutadone-proof (but will still be undone when the virus is cured if the resistance 14 threshold is not met).<br>\
@@ -39,7 +39,7 @@ Bonus
 	if(!..())
 		return
 	if(A.properties["stealth"] >= 5) //only give them bad mutations
-		nopositives = TRUE
+		excludemuts = POSITIVE
 	if(A.properties["stage_rate"] >= 10) //activate dormant mutations more often at around twice the pace
 		symptom_delay_max = 60
 	if(A.properties["resistance"] >= 8) //mutadone won't save you now
@@ -56,7 +56,7 @@ Bonus
 	switch(A.stage)
 		if(4, 5)
 			to_chat(C, "<span class='warning'>[pick("Your skin feels itchy.", "You feel light headed.")]</span>")
-			C.easy_randmut(NEGATIVE + MINOR_NEGATIVE + POSITIVE - nopositives, TRUE, TRUE, TRUE, mutadone_proof)
+			C.easy_randmut(NEGATIVE + MINOR_NEGATIVE + POSITIVE - excludemuts, TRUE, TRUE, TRUE, mutadone_proof)
 
 /datum/symptom/genetic_mutation/End(datum/disease/advance/A)
 	if(!..())
