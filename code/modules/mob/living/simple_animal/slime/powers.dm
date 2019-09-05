@@ -173,9 +173,9 @@
 			var/list/babies = list()
 			var/new_nutrition = round(nutrition * 0.9)
 			var/new_powerlevel = round(powerlevel / 4)
-			var/list/L = list()
+			var/list/L[1]
 			SEND_SIGNAL(src, COMSIG_NANITE_GET_VOLUME, L) //Getting nanite volume before loop to only do it once
-			var/new_nanite_volume = L[1] * 0.5
+			var/new_nanite_volume = L[1] * 0.25
 
 			for(var/i=1,i<=4,i++)
 				var/child_colour

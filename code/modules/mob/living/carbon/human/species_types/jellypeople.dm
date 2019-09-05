@@ -224,24 +224,15 @@
 	spare.domutcheck()
 	spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
 
-	var/list/L = list()
-	to_chat(owner, "<span class='warning'>list definition worked</span>")
+	var/list/L[1]
 	var/nanite_volume_new = 0
-	to_chat(owner, "<span class='warning'>nanvol worked</span>")
 	SEND_SIGNAL(owner, COMSIG_NANITE_GET_VOLUME, L)
-	to_chat(owner, "<span class='warning'>get volume sig worked worked</span>")
 	if(L[1] > 0)
-		to_chat(owner, "<span class='warning'>L check true</span>")
 		nanite_volume_new = L[1] * 0.5 //Copying over nanites with 50% of volume to each party
-		to_chat(owner, "<span class='warning'>change nan vol worked</span>")
 	if(nanite_volume_new > 0)
-		to_chat(owner, "<span class='warning'>nan vol check true</span>")
 		SEND_SIGNAL(owner, COMSIG_NANITE_SET_VOLUME, nanite_volume_new)
-		to_chat(owner, "<span class='warning'>owner set volume worked worked</span>")
 		spare.AddComponent(/datum/component/nanites, nanite_volume_new)
-		to_chat(owner, "<span class='warning'>add component worked</span>")
 		SEND_SIGNAL(spare, COMSIG_NANITE_SYNC, owner)
-		to_chat(owner, "<span class='warning'>sync worked</span>")
 
 	H.blood_volume *= 0.45
 	H.notransform = 0
