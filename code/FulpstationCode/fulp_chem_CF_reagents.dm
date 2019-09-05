@@ -93,7 +93,7 @@
 	metabolization_rate = 0.4
 	overdose_threshold = 40 * REAGENTS_METABOLISM
 
-/datum/reagent/medicine/CF/tricordrazine/on_mob_living(mob/living/M, method=INJECT, show_message = 1)
+/datum/reagent/medicine/CF/tricordrazine/on_mob_life(mob/living/M, method=INJECT, show_message = 1)
 	if(iscarbon(M))
 		if(M.stat == DEAD)
 			show_message = 0
