@@ -130,7 +130,7 @@
 	form = null
 	alpha = initial(alpha)
 	color = initial(color)
-	animate_movement = initial(animate_movement)
+	animate_movement = SLIDE_STEPS
 	maptext = null
 
 	visible_message("<span class='warning'>[src] suddenly collapses in on itself, dissolving into a pile of green flesh!</span>", \
