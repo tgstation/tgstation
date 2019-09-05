@@ -29,18 +29,29 @@
 			var/air_temperature = (environment.temperature > 0) ? environment.temperature : airs[1].temperature
 			var/transfer_moles = (pressure_delta * environment.volume) / (air_temperature * R_IDEAL_GAS_EQUATION)
 			var/datum/gas_mixture/removed = airs[1].remove(transfer_moles)
-			loc.assume_air(removed)
-			air_update_turf()
+			environment.merge(removed)
 		else
 			var/air_temperature = (airs[1].temperature > 0) ? airs[1].temperature : environment.temperature
-			var/output_volume = airs[1].volume
-			var/transfer_moles = (pressure_delta * output_volume) / (air_temperature * R_IDEAL_GAS_EQUATION)
+			var/transfer_moles = (pressure_delta * airs[1].volume) / (air_temperature * R_IDEAL_GAS_EQUATION)
 			transfer_moles = min(transfer_moles, environment.total_moles()*airs[1].volume/environment.volume)
-			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
+			var/datum/gas_mixture/removed = environment.remove(transfer_moles)
 			if(isnull(removed))
 				return
 			airs[1].merge(removed)
-			air_update_turf()
+		air_update_turf()
+	
+	if(environment.temperature || airs[1].temperature)
+		var/temp_delta = abs(environment.temperature - airs[1].temperature)
+		if(temp_delta < 0.1)
+			return
+		var/combined_heat_capacity = environment.heat_capacity() + airs[1].heat_capacity()
+		var/combined_energy = environment.thermal_energy() + airs[1].thermal_energy()
+
+		var/final_temperature = combined_energy / combined_heat_capacity
+		environment.temperature = final_temperature
+		airs[1].temperature = final_temperature
+		air_update_turf()
+	
 	update_parents()
 
 /obj/machinery/atmospherics/components/unary/passive_vent/can_crawl_through()
