@@ -68,7 +68,7 @@
 
 /datum/status_effect/incapacitating/sleeping/tick()
 	if(owner.maxHealth != 0)
-		var/health_ratio = owner.health / owner.maxhealth
+		var/health_ratio = owner.health / owner.maxHealth
 		if(health_ratio > 0.8)
 			var/healing = -0.2
 			if((locate(/obj/structure/bed) in owner.loc))
