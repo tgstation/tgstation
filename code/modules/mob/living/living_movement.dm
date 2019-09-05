@@ -42,22 +42,12 @@
 		remove_movespeed_modifier(MOVESPEED_ID_LIVING_TURF_SPEEDMOD)
 
 /mob/living/proc/update_pull_movespeed()
-	if(pulling)
-		if(isliving(pulling))
-			var/mob/living/L = pulling
-			if(!slowed_by_drag || (L.mobility_flags & MOBILITY_STAND) || L.buckled || grab_state >= GRAB_AGGRESSIVE)
-				remove_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING)
-				return
-			add_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING, multiplicative_slowdown = PULL_PRONE_SLOWDOWN)
+	if(pulling && isliving(pulling))
+		var/mob/living/L = pulling
+		if(drag_slowdown && !(L.mobility_flags & MOBILITY_STAND) && !L.buckled && grab_state < GRAB_AGGRESSIVE)
+			add_movespeed_modifier(MOVESPEED_ID_PRONE_DRAGGING, multiplicative_slowdown = PULL_PRONE_SLOWDOWN)
 			return
-		if(isobj(pulling))
-			var/obj/structure/S = pulling
-			if(!slowed_by_drag || !S.drag_slowdown)
-				remove_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING)
-				return
-			add_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING, multiplicative_slowdown = S.drag_slowdown)
-			return
-	remove_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING)
+	remove_movespeed_modifier(MOVESPEED_ID_PRONE_DRAGGING)
 
 /mob/living/can_zFall(turf/T, levels)
 	return ..()
