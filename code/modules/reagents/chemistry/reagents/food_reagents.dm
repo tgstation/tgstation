@@ -279,14 +279,14 @@
 /datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!ishuman(M) && !ismonkey(M))
 		return
-
+	
 	var/mob/living/carbon/victim = M
 	if(method == TOUCH || method == VAPOR)
+	var/mouth_covered = victim.is_mouth_covered()
+	var/eyes_covered = victim.is_eyes_covered()
 		//check for protection
 		//actually handle the pepperspray effects
-		if (istype(victim.wear_mask, /obj/item/clothing/mask/gas)) // gas mask is sunglasses but for pepperspray
-
-		else // Oh dear :D All or nothing
+		if (!(eyes_covered && mouth_covered)) // you need both eye and mouth protection
 			if(prob(5))
 				victim.emote("scream")
 			victim.blur_eyes(5) // 10 seconds
@@ -296,7 +296,7 @@
 			victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.25, blacklisted_movetypes=(FLYING|FLOATING))
 			addtimer(CALLBACK(victim, /mob.proc/remove_movespeed_modifier, MOVESPEED_ID_PEPPER_SPRAY), 10 SECONDS)
 		victim.update_damage_hud()
-
+			
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
 		M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
