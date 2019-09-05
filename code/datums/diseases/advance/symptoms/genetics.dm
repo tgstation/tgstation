@@ -30,7 +30,7 @@ Bonus
 	var/excludemuts = FALSE
 	var/no_reset = FALSE
 	var/mutadone_proof = FALSE
-	threshold_desc = "<b>Resistance 8:</b> The mutations caused by the virus are mutadone-proof (but will still be undone when the virus is cured if the resistance 14 threshold is not met).<br>\
+	threshold_desc = "<b>Resistance 8:</b> The negative and mildly negative mutations caused by the virus are mutadone-proof (but will still be undone when the virus is cured if the resistance 14 threshold is not met).<br>\
 					  <b>Resistance 14:</b> The host's genetic alterations are not undone when the virus is cured.<br>\
 					  <b>Stage Speed 10:</b> The virus activates dormant mutations at a much faster rate.<br>\
 					  <b>Stealth 5:</b> Only activates negative mutations in hosts."
@@ -56,7 +56,7 @@ Bonus
 	switch(A.stage)
 		if(4, 5)
 			to_chat(C, "<span class='warning'>[pick("Your skin feels itchy.", "You feel light headed.")]</span>")
-			C.easy_randmut(NEGATIVE + MINOR_NEGATIVE + POSITIVE - excludemuts, TRUE, TRUE, TRUE, mutadone_proof)
+			C.easy_randmut(NEGATIVE + MINOR_NEGATIVE + POSITIVE - excludemuts, TRUE, TRUE, TRUE, mutadone_proof, POSITIVE)
 
 /datum/symptom/genetic_mutation/End(datum/disease/advance/A)
 	if(!..())
