@@ -67,3 +67,7 @@
 #define MOVESPEED_ID_BULKY_DRAGGING                     "BULKY_DRAG"
 #define MOVESPEED_ID_HUMAN_CARRYING                     "HUMAN_CARRY"
 #define MOVESPEED_ID_SHRINK_RAY							"SHRUNKEN_SPEED_MODIFIER"
+<<<<<<< HEAD
+=======
+#define MOVESPEED_ID_PEPPER_SPRAY                       "PEPPER_SPRAYED"
+>>>>>>> parent of 1a62a4ae53... wew
