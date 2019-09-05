@@ -251,7 +251,7 @@
 	name = "Soul Tap"
 	spell_type = /obj/effect/proc_holder/spell/self/tap
 	category = "Assistance"
-	cost = 1
+	cost = 3
 
 /datum/spellbook_entry/spacetime_dist
 	name = "Spacetime Distortion"

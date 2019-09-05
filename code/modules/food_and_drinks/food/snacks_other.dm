@@ -98,7 +98,6 @@
 	filling_color = "#FFD700"
 	tastes = list("fries" = 3, "salt" = 1)
 	foodtype = VEGETABLES | GRAIN | FRIED
-	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/tatortot
 	name = "tator tot"
@@ -108,7 +107,6 @@
 	filling_color = "FFD700"
 	tastes = list("potato" = 3, "valids" = 1)
 	foodtype = FRIED | VEGETABLES
-	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/soydope
 	name = "soy dope"
@@ -130,7 +128,6 @@
 	filling_color = "#FFD700"
 	tastes = list("fries" = 3, "cheese" = 1)
 	foodtype = VEGETABLES | GRAIN
-	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/badrecipe
 	name = "burned mess"
@@ -149,7 +146,6 @@
 	filling_color = "#FFA500"
 	tastes = list("carrots" = 3, "salt" = 1)
 	foodtype = VEGETABLES
-	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/candiedapple
 	name = "candied apple"
