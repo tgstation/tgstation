@@ -1,0 +1,14 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - tweak: "The confusion symptom now noticeably confuses you."
+  - tweak: "The confusion symptom's transmission 6 threshold effect now actually affects how much the symptom increases your confused value by (instead of affecting the cap that the symptom can bring it to, which is plenty high enough by default)."
+  - tweak: "The dizziness symptom now actually makes you noticeably dizzy (and has a cap for how dizzy it can make you)."
+  - tweak: "The dizziness symptom's transmission 6 threshold effect now makes your screen look \"druggy\" all of the time (only once its virus reaches a high enough stage, of course), instead of only occasionally."
+  - tweak: "The hallucigen symptom's stealth 4 threshold effect now continues to give you positive messages instead of bad ones at stage 5. Before this tweak, meeting that stealth threshold would actually cause bad messages to appear MORE often at stage 5 than if you hadn't met it."
+  - tweak: "Pretty much completely reworked the narcolepsy symptom so that it now uses the \"drowsyness\" (yes, that's how it's spelled in the code; no, I don't know why it's misspelled like that in the code) status effect instead of a confusing mess of ticking counters that rarely actually put you to sleep."
+  - tweak: "The narcolepsy symptom's transmission 7 threshold effect now only requires transmission 4 no longer causes its virus to occasionally deal negligible amounts of stamina damage. Instead, it now causes the host to periodically yawn, spreading its virus whenever they do so."
+  - tweak: "The narcolepsy symptom's resistance 10 threshold effect is now a stage speed 10 threshold effect."
+  - tweak: "The narcolepsy symptom's activation frequencies have been tweaked a bit to make the symptom less threatening (albeit still quite potent) without its stage speed 10 (formerly a resistance 10) threshold effect."
+  - balance: "The nacrolepsy symptom now adds 0 to its virus's transmission stat (upped from -4)."
+  - bugfix: "Fixed a bug that could cause the confusion symptom to lower your confusion value if you had a high confusion value when it activated."

@@ -199,7 +199,16 @@
 #define COMSIG_LIVING_STATUS_SLEEP "living_sleeping"			//from base of mob/living/Sleeping() (amount, update, ignore)
 	#define COMPONENT_NO_STUN 1			//For all of them
 #define COMSIG_LIVING_CAN_TRACK "mob_cantrack"					//from base of /mob/living/can_track(): (mob/user)
+<<<<<<< HEAD
 	#define COMPONENT_CANT_TRACK 1
+<<<<<<< HEAD
+=======
+>>>>>>> parent of e99e21b608... Merge branch 'master' into Pepperspray-rework
+=======
+	#define COMPONENT_CANT_TRACK "mob_cant_track"
+>>>>>>> parent of 1a62a4ae53... wew
+=======
+>>>>>>> parent of 769a376b66... wew
 
 // /mob/living/carbon signals
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"					//from base of mob/living/carbon/soundbang_act(): (list(intensity))
