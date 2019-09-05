@@ -279,38 +279,38 @@
 /datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!ishuman(M) && !ismonkey(M))
 		return
-	var/mob/living/carbon/victim = M
-    if(method == TOUCH || method == VAPOR)
-        //check for protection
-        var/eyes_covered = victim.is_eyes_covered()
 
-        //actually handle the pepperspray effects
-        if (eyes_covered && istype(victim.wear_mask, /obj/item/clothing/mask/gas))
-            return
-        else if(istype(victim.wear_mask, /obj/item/clothing/mask/gas))    // Reduced effects if partially protected
-            if(prob(5))
-                victim.emote("scream")
-            victim.blur_eyes(3) // 6 seconds
-            victim.blind_eyes(3) // 6 seconds
-            victim.confused = max(M.confused, 5)
-            return
-        else if ( eyes_covered ) // Eye cover is better than mouth cover
-            victim.blur_eyes(2) // 4 seconds
-            victim.Knockdown(3 SECONDS) 
-            victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.25, blacklisted_movetypes=(FLYING|FLOATING))
-            addtimer(CALLBACK(victim, /mob.proc/remove_movespeed_modifier, MOVESPEED_ID_PEPPER_SPRAY), 10 SECONDS)
-            return
-        else // Oh dear :D
-            if(prob(5))
-                victim.emote("scream")
-            victim.blur_eyes(5) // 10 seconds
-            victim.blind_eyes(3) // 6 seconds
-            victim.confused = max(M.confused, 5) // 10 seconds
-            victim.Knockdown(3 SECONDS) 
-            victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.25, blacklisted_movetypes=(FLYING|FLOATING))
-            addtimer(CALLBACK(victim, /mob.proc/remove_movespeed_modifier, MOVESPEED_ID_PEPPER_SPRAY), 10 SECONDS)
-        victim.update_damage_hud()
-	
+	var/mob/living/carbon/victim = M
+	if(method == TOUCH || method == VAPOR)
+		//check for protection
+		var/eyes_covered = victim.is_eyes_covered()
+
+		//actually handle the pepperspray effects
+		if (eyes_covered && istype(victim.wear_mask, /obj/item/clothing/mask/gas))
+			return
+		else if(istype(victim.wear_mask, /obj/item/clothing/mask/gas))	// Reduced effects if partially protected
+			if(prob(5))
+				victim.emote("scream")
+			victim.blur_eyes(3) // 6 seconds
+			victim.blind_eyes(3) // 6 seconds
+			victim.confused = max(M.confused, 5)
+			return
+		else if ( eyes_covered ) // Eye cover is better than mouth cover
+			victim.blur_eyes(2) // 4 seconds
+			victim.Knockdown(3 SECONDS)
+			victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.25, blacklisted_movetypes=(FLYING|FLOATING))
+			addtimer(CALLBACK(victim, /mob.proc/remove_movespeed_modifier, MOVESPEED_ID_PEPPER_SPRAY), 10 SECONDS)
+			return
+		else // Oh dear :D
+			if(prob(5))
+				victim.emote("scream")
+			victim.blur_eyes(5) // 10 seconds
+			victim.blind_eyes(3) // 6 seconds
+			victim.confused = max(M.confused, 5) // 10 seconds
+			victim.Knockdown(3 SECONDS)
+			victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.25, blacklisted_movetypes=(FLYING|FLOATING))
+			addtimer(CALLBACK(victim, /mob.proc/remove_movespeed_modifier, MOVESPEED_ID_PEPPER_SPRAY), 10 SECONDS)
+		victim.update_damage_hud()
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
@@ -351,13 +351,6 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "bitterness"
-
-/datum/reagent/consumable/coco/on_mob_add(mob/living/carbon/M)
-	.=..()
-	if(iscatperson(M))
-		to_chat(M, "<span class='warning'>Your insides revolt at the presence of lethal chocolate!</span>")
-		M.vomit(20)
-
 
 /datum/reagent/consumable/hot_coco
 	name = "Hot Chocolate"
