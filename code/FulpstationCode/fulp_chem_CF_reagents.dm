@@ -21,9 +21,8 @@
 		if(method in list(INJECT))
 			if(show_message)
 				to_chat(M, "<span class='notice'>You hear a distant comms chirp as your bruises heal.</span>")
-			for(bicaridine in M.reagents.reagent_list)
-				M.adjustBruteLoss(-2*REMF)
-			
+			for(var/datum/reagent/medicine/CF/bicaridine/bicar in M.reagents.reagent_list)
+				M.adjustBruteLoss(-2*REMF)	
 	..()
 	. = 1
 
@@ -136,6 +135,7 @@
 	return TRUE
 
 //Synthflesh Re-add, combo brute/burn. Retains old recipe.
+/*
 /datum/reagent/medicine/CF/instabitaluri
 	name = "Synthflesh (Instabitaluri)"
 	description = "Has a 100% chance of instantly healing brute and burn damage at the cost of toxicity (75% of damage healed). Touch application only."
@@ -156,7 +156,7 @@
 			SEND_SIGNAL(Carbies, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
 	..()
 	return TRUE
-
+*/
 //Perfluorodecalin Re-add (Oxy Heal) Retains old recipe
 //**Commented-out as Convermol is just Perfluorodecalin with a new name**
 /*/datum/reagent/medicine/CF/perfluorodecalin
