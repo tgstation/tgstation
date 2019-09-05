@@ -78,7 +78,7 @@
 
 	current_user = null
 	user.unset_machine()
-	playsound(src, 'sound/machines/terminal_off.ogg', 25, 0)
+	playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 
 /obj/machinery/computer/camera_advanced/check_eye(mob/user)
 	if( (stat & (NOPOWER|BROKEN)) || (!Adjacent(user) && !user.has_unlimited_silicon_privilege) || user.eye_blind || user.incapacitated() )
@@ -269,17 +269,17 @@
 		if (tempnetwork.len)
 			T["[netcam.c_tag][netcam.can_use() ? null : " (Deactivated)"]"] = netcam
 
-	playsound(origin, 'sound/machines/terminal_prompt.ogg', 25, 0)
+	playsound(origin, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
 	var/camera = input("Choose which camera you want to view", "Cameras") as null|anything in T
 	var/obj/machinery/camera/final = T[camera]
-	playsound(src, "terminal_type", 25, 0)
+	playsound(src, "terminal_type", 25, FALSE)
 	if(final)
-		playsound(origin, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
+		playsound(origin, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
 		remote_eye.setLoc(get_turf(final))
 		C.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/static)
 		C.clear_fullscreen("flash", 3) //Shorter flash than normal since it's an ~~advanced~~ console!
 	else
-		playsound(origin, 'sound/machines/terminal_prompt_deny.ogg', 25, 0)
+		playsound(origin, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
 
 
 //Used by servants of Ratvar! They let you beam to the station.

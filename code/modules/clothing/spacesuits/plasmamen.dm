@@ -72,10 +72,10 @@
 		if(on)
 			to_chat(user, "<span class='notice'>Your helmet's torch can't pass through your welding visor!</span>")
 			on = FALSE
-			playsound(src, 'sound/mecha/mechmove03.ogg', 50, 1) //Visors don't just come from nothing
+			playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
 			update_icon()
 		else
-			playsound(src, 'sound/mecha/mechmove03.ogg', 50, 1) //Visors don't just come from nothing
+			playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
 			update_icon()
 
 /obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(isinhands)

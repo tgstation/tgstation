@@ -85,7 +85,7 @@
 	if(!target)
 		if(validtargets.len)
 			target = pick(validtargets)
-			playsound(src,'sound/machines/clockcult/ocularwarden-target.ogg',50,1)
+			playsound(src,'sound/machines/clockcult/ocularwarden-target.ogg',50,TRUE)
 			visible_message("<span class='warning'>[src] swivels to face [target]!</span>")
 			if(isliving(target))
 				var/mob/living/L = target

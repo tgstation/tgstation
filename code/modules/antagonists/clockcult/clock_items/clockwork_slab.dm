@@ -141,7 +141,7 @@
 	if(iscultist(user))
 		to_chat(user, "<span class='heavy_brass'>\"You reek of blood. You've got a lot of nerve to even look at that slab.\"</span>")
 		user.visible_message("<span class='warning'>A sizzling sound comes from [user]'s hands!</span>", "<span class='userdanger'>[src] suddenly grows extremely hot in your hands!</span>")
-		playsound(get_turf(user), 'sound/weapons/sear.ogg', 50, 1)
+		playsound(get_turf(user), 'sound/weapons/sear.ogg', 50, TRUE)
 		user.dropItemToGround(src)
 		user.emote("scream")
 		user.apply_damage(5, BURN, BODY_ZONE_L_ARM)

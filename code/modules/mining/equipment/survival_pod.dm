@@ -57,7 +57,7 @@
 			used = FALSE
 			return
 
-		playsound(src, 'sound/effects/phasein.ogg', 100, 1)
+		playsound(src, 'sound/effects/phasein.ogg', 100, TRUE)
 
 		var/turf/T = deploy_location
 		if(!is_mining_level(T.z)) //only report capsules away from the mining/lavaland level

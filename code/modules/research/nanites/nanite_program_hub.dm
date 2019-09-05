@@ -34,7 +34,7 @@
 			eject(user)
 		if(user.transferItemToLoc(N, src))
 			to_chat(user, "<span class='notice'>You insert [N] into [src]</span>")
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 			disk = N
 	else
 		..()
@@ -103,7 +103,7 @@
 				qdel(disk.program)
 			disk.program = new downloaded.program_type
 			disk.name = "[initial(disk.name)] \[[disk.program.name]\]"
-			playsound(src, 'sound/machines/terminal_prompt.ogg', 25, 0)
+			playsound(src, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
 			. = TRUE
 		if("set_category")
 			var/new_category = params["category"]

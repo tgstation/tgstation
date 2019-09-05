@@ -1,6 +1,7 @@
 /obj/item/clothing/under
-	icon = 'icons/obj/clothing/uniforms.dmi'
 	name = "under"
+	icon = 'icons/obj/clothing/under/default.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/under/default.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	permeability_coefficient = 0.9
 	slot_flags = ITEM_SLOT_ICLOTHING

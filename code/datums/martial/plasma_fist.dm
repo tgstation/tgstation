@@ -29,7 +29,7 @@
 		if(!A)
 			break
 		A.setDir(i)
-		playsound(A.loc, 'sound/weapons/punch1.ogg', 15, 1, -1)
+		playsound(A.loc, 'sound/weapons/punch1.ogg', 15, TRUE, -1)
 		sleep(1)
 
 /datum/martial_art/plasma_fist/proc/Tornado(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -46,7 +46,7 @@
 /datum/martial_art/plasma_fist/proc/Throwback(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	D.visible_message("<span class='danger'>[A] hits [D] with Plasma Punch!</span>", \
 								"<span class='userdanger'>[A] hits you with Plasma Punch!</span>")
-	playsound(D.loc, 'sound/weapons/punch1.ogg', 50, 1, -1)
+	playsound(D.loc, 'sound/weapons/punch1.ogg', 50, TRUE, -1)
 	var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
 	D.throw_at(throw_target, 200, 4,A)
 	A.say("HYAH!", forced="plasma fist")
@@ -55,7 +55,7 @@
 
 /datum/martial_art/plasma_fist/proc/Plasma(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
-	playsound(D.loc, 'sound/weapons/punch1.ogg', 50, 1, -1)
+	playsound(D.loc, 'sound/weapons/punch1.ogg', 50, TRUE, -1)
 	A.say("PLASMA FIST!", forced="plasma fist")
 	D.visible_message("<span class='danger'>[A] hits [D] with THE PLASMA FIST TECHNIQUE!</span>", \
 								"<span class='userdanger'>[A] hits you with THE PLASMA FIST TECHNIQUE!</span>")

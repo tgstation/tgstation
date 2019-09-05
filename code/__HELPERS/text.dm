@@ -49,7 +49,7 @@
 
 ///returns nothing with an alert instead of the message if it contains something in the ic filter, and sanitizes normally if the name is fine. It returns nothing so it backs out of the input the same way as if you had entered nothing.
 /proc/sanitize_name(t,list/repl_chars = null)
-	if(config.ic_filter_regex && findtext(t, config.ic_filter_regex))
+	if(CHAT_FILTER_CHECK(t))
 		alert("You cannot set a name that contains a word prohibited in IC chat!")
 		return ""
 	if(t == "space" || t == "floor" || t == "wall" || t == "r-wall" || t == "monkey" || t == "unknown" || t == "inactive ai")	//prevents these common metagamey names

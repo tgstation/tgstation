@@ -1,6 +1,3 @@
-#define PILL_STYLE_COUNT 22 //Update this if you add more pill icons or you die
-#define RANDOM_PILL_STYLE 22 //Dont change this one though
-
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
 	desc = "Used to separate chemicals and distribute them in a variety of forms."
@@ -405,6 +402,3 @@
 	name = "CondiMaster 3000"
 	desc = "Used to create condiments and other cooking supplies."
 	condi = TRUE
-
-#undef PILL_STYLE_COUNT
-#undef RANDOM_PILL_STYLE
