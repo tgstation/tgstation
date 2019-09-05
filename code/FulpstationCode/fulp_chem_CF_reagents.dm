@@ -11,17 +11,19 @@
 	description = "Advanced Brute Healing. Injection only, Scotty."
 	reagent_state = LIQUID
 	color = "#FF1744"
-	metabolization_rate = 0.4
+	metabolization_rate = 0.2
 	overdose_threshold = 30 * REAGENTS_METABOLISM
 
-/datum/reagent/medicine/CF/bicaridine/reaction_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
+/datum/reagent/medicine/CF/bicaridine/on_mob_life(mob/living/M, method=INJECT, show_message = 1)
 	if(iscarbon(M))
 		if(M.stat == DEAD)
 			show_message = 0
 		if(method in list(INJECT))
-			M.adjustBruteLoss(-2.0*REMF, 0)
-		if(show_message)
-			to_chat(M, "<span class='notice'>You hear a distant comms chirp as your bruises heal.</span>")
+			if(show_message)
+				to_chat(M, "<span class='notice'>You hear a distant comms chirp as your bruises heal.</span>")
+			for(/datum/reagent/medicine/CF/bicaridine in M.reagent.reagents_list)
+				M.adjustBruteLoss(-2*REMF)
+			
 	..()
 	. = 1
 
@@ -36,7 +38,7 @@
 	description = "Advanced Burn Healing. Injection only, Scotty."
 	reagent_state = LIQUID
 	color = "C7fB34"
-	metabolization_rate = 0.4
+	metabolization_rate = 0.2
 	overdose_threshold = 30 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/CF/kelotane/reaction_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
@@ -44,7 +46,7 @@
 		if(M.stat == DEAD)
 			show_message = 0
 		if(method in list(INJECT))
-			M.adjustFireLoss(-2.0*REMF, 0)
+			M.adjustFireLoss(-2*REMF, 0)
 		if(show_message)
 			to_chat(M, "<span class='notice'>You hear a distant comms chirp as your burns heal.</span>")
 	..()
