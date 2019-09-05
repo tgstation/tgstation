@@ -6,6 +6,8 @@
 	has_sensor = NO_SENSORS
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 40)
 	alt_covers_chest = TRUE
+	icon = 'icons/obj/clothing/under/syndicate.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/under/syndicate.dmi'
 
 /obj/item/clothing/under/syndicate/skirt
 	name = "tactical skirtleneck"

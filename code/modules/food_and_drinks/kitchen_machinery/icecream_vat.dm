@@ -145,7 +145,7 @@
 		if(R.type in icecream_vat_reagents)
 			beaker.reagents.trans_id_to(src, R.type, R.volume)
 			say("Internalizing reagent.")
-			playsound(src, 'sound/items/drink.ogg', 25, 1)
+			playsound(src, 'sound/items/drink.ogg', 25, TRUE)
 	return
 
 

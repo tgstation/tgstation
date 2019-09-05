@@ -498,7 +498,7 @@
 	var/datum/effect_system/spark_spread/S = new
 	S.set_up(4,0,get_turf(target))
 	S.start()
-	playsound(src,'sound/effects/sparks4.ogg',50,1)
+	playsound(src,'sound/effects/sparks4.ogg',50,TRUE)
 	do_teleport(target, F, 0, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /mob/living/simple_animal/hostile/swarmer/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = FALSE, tesla_shock = FALSE, illusion = FALSE, stun = TRUE)
@@ -541,7 +541,7 @@
 
 /obj/effect/temp_visual/swarmer/disintegration/Initialize()
 	. = ..()
-	playsound(loc, "sparks", 100, 1)
+	playsound(loc, "sparks", 100, TRUE)
 
 /obj/effect/temp_visual/swarmer/dismantle
 	icon_state = "dismantle"
@@ -571,9 +571,9 @@
 /obj/structure/swarmer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src, 'sound/weapons/egloves.ogg', 80, 1)
+			playsound(src, 'sound/weapons/egloves.ogg', 80, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 100, 1)
+			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 
 /obj/structure/swarmer/emp_act()
 	. = ..()
@@ -592,7 +592,7 @@
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!istype(L, /mob/living/simple_animal/hostile/swarmer))
-			playsound(loc,'sound/effects/snap.ogg',50, 1, -1)
+			playsound(loc,'sound/effects/snap.ogg',50, TRUE, -1)
 			L.electrocute_act(0, src, 1, 1, 1)
 			if(iscyborg(L))
 				L.Paralyze(100)
@@ -650,7 +650,7 @@
 	if(do_mob(src, src, 100))
 		var/createtype = SwarmerTypeToCreate()
 		if(createtype && Fabricate(createtype, 50))
-			playsound(loc,'sound/items/poster_being_created.ogg',50, 1, -1)
+			playsound(loc,'sound/items/poster_being_created.ogg',50, TRUE, -1)
 
 
 /mob/living/simple_animal/hostile/swarmer/proc/SwarmerTypeToCreate()

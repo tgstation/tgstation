@@ -3,6 +3,8 @@
 
 /obj/item/clothing/under/trek
 	can_adjust = FALSE
+	icon = 'icons/obj/clothing/under/trek.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/under/trek.dmi'
 
 
 //TOS

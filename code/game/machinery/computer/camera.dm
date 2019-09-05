@@ -81,7 +81,7 @@
 		if(!(user in watchers))
 			user.unset_machine() // no usable camera on the network, we disconnect the user from the computer.
 			return
-	playsound(src, 'sound/machines/terminal_prompt.ogg', 25, 0)
+	playsound(src, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
 	use_camera_console(user)
 
 /obj/machinery/computer/security/proc/use_camera_console(mob/user)
@@ -91,14 +91,14 @@
 		return
 	if(!t)
 		user.unset_machine()
-		playsound(src, 'sound/machines/terminal_off.ogg', 25, 0)
+		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 		return
 
 	var/obj/machinery/camera/C = camera_list[t]
 
 	if(t == "Cancel")
 		user.unset_machine()
-		playsound(src, 'sound/machines/terminal_off.ogg', 25, 0)
+		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 		return
 	if(C)
 		var/camera_fail = 0
@@ -115,7 +115,7 @@
 			user.unset_machine()
 			return 0
 
-		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
+		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
 		if(isAI(user))
 			var/mob/living/silicon/ai/A = user
 			A.eyeobj.setLoc(get_turf(C))

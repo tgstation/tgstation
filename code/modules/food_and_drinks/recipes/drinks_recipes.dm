@@ -178,7 +178,7 @@
 	name = "Green Beer"
 	id = /datum/reagent/consumable/ethanol/beer/green
 	results = list(/datum/reagent/consumable/ethanol/beer/green = 10)
-	required_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/green = 1, /datum/reagent/consumable/ethanol/beer = 10)
+	required_reagents = list(/datum/reagent/colorful_reagent/powder/green = 1, /datum/reagent/consumable/ethanol/beer = 10)
 
 /datum/chemical_reaction/hooch
 	name = "Hooch"

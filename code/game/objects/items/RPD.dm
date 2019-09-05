@@ -31,6 +31,7 @@ GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 		new /datum/pipe_info/pipe("Volume Pump",		/obj/machinery/atmospherics/components/binary/volume_pump),
 		new /datum/pipe_info/pipe("Scrubber",			/obj/machinery/atmospherics/components/unary/vent_scrubber),
 		new /datum/pipe_info/pipe("Injector",			/obj/machinery/atmospherics/components/unary/outlet_injector),
+		new /datum/pipe_info/pipe("Passive Vent",		/obj/machinery/atmospherics/components/unary/passive_vent),
 		new /datum/pipe_info/meter("Meter"),
 		new /datum/pipe_info/pipe("Gas Filter",			/obj/machinery/atmospherics/components/trinary/filter),
 		new /datum/pipe_info/pipe("Gas Mixer",			/obj/machinery/atmospherics/components/trinary/mixer),
@@ -249,8 +250,8 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 
 /obj/item/pipe_dispenser/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide...</span>")
-	playsound(get_turf(user), 'sound/machines/click.ogg', 50, 1)
-	playsound(get_turf(user), 'sound/items/deconstruct.ogg', 50, 1)
+	playsound(get_turf(user), 'sound/machines/click.ogg', 50, TRUE)
+	playsound(get_turf(user), 'sound/items/deconstruct.ogg', 50, TRUE)
 	return(BRUTELOSS)
 
 /obj/item/pipe_dispenser/ui_base_html(html)
@@ -349,7 +350,7 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 
 	if(playeffect)
 		spark_system.start()
-		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
+		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, FALSE)
 
 /obj/item/pipe_dispenser/pre_attack(atom/A, mob/user)
 	if(!user.IsAdvancedToolUser() || istype(A, /turf/open/space/transit))
@@ -370,7 +371,7 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 
 	if((mode&DESTROY_MODE) && istype(A, /obj/item/pipe) || istype(A, /obj/structure/disposalconstruct) || istype(A, /obj/structure/c_transit_tube) || istype(A, /obj/structure/c_transit_tube_pod) || istype(A, /obj/item/pipe_meter))
 		to_chat(user, "<span class='notice'>You start destroying a pipe...</span>")
-		playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 		if(do_after(user, destroy_speed, target = A))
 			activate()
 			qdel(A)
@@ -380,7 +381,7 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 		if(istype(A, /obj/machinery/atmospherics/pipe) && !istype(A, /obj/machinery/atmospherics/pipe/layer_manifold))
 			var/obj/machinery/atmospherics/pipe/P = A
 			to_chat(user, "<span class='notice'>You start painting \the [P] [paint_color]...</span>")
-			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 			if(do_after(user, paint_speed, target = A))
 				P.paint(GLOB.pipe_paint_colors[paint_color]) //paint the pipe
 				user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
@@ -388,7 +389,7 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 		var/obj/item/pipe/P = A
 		if(istype(P) && findtext("[P.pipe_type]", "/obj/machinery/atmospherics/pipe") && !findtext("[P.pipe_type]", "layer_manifold"))
 			to_chat(user, "<span class='notice'>You start painting \the [A] [paint_color]...</span>")
-			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 			if(do_after(user, paint_speed, target = A))
 				A.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY) //paint the pipe
 				user.visible_message("<span class='notice'>[user] paints \the [A] [paint_color].</span>","<span class='notice'>You paint \the [A] [paint_color].</span>")
@@ -399,7 +400,7 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 			if(ATMOS_CATEGORY) //Making pipes
 				if(!can_make_pipe)
 					return ..()
-				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 				if (recipe.type == /datum/pipe_info/meter)
 					to_chat(user, "<span class='notice'>You start building a meter...</span>")
 					if(do_after(user, atmos_build_speed, target = A))
@@ -436,7 +437,7 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 					to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
 					return
 				to_chat(user, "<span class='notice'>You start building a disposals pipe...</span>")
-				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 				if(do_after(user, disposal_build_speed, target = A))
 					var/obj/structure/disposalconstruct/C = new (A, queued_p_type, queued_p_dir, queued_p_flipped)
 
@@ -461,7 +462,7 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 					to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
 					return
 				to_chat(user, "<span class='notice'>You start building a transit tube...</span>")
-				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 				if(do_after(user, transit_build_speed, target = A))
 					activate()
 					if(queued_p_type == /obj/structure/c_transit_tube_pod)
@@ -490,7 +491,7 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 					to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
 					return
 				to_chat(user, "<span class='notice'>You start building a fluid duct...</span>")
-				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 				if(do_after(user, plumbing_build_speed, target = A))
 					var/obj/machinery/duct/D
 					if(recipe.type == /datum/pipe_info/plumbing/multilayer)
@@ -508,7 +509,7 @@ GLOBAL_LIST_INIT(fluid_duct_recipes, list(
 				return ..()
 
 /obj/item/pipe_dispenser/proc/activate()
-	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
 
 /obj/item/pipe_dispenser/plumbing
 	name = "Plumberinator"

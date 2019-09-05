@@ -122,7 +122,7 @@
 	if(user)
 		to_chat(user, "<span class='notice'>Locked In.</span>")
 		new droptype( user.loc )
-		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
+		playsound(src, 'sound/effects/pop.ogg', 100, TRUE, TRUE)
 		qdel(src)
 	return
 

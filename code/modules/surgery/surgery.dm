@@ -75,6 +75,14 @@
 		if(type in table.computer.advanced_surgeries)
 			return TRUE
 
+	var/obj/machinery/stasis/the_stasis_bed = locate(/obj/machinery/stasis, T)
+	if(the_stasis_bed?.op_computer)
+		if(the_stasis_bed.op_computer.stat & (NOPOWER|BROKEN))
+			return .
+		if(replaced_by in the_stasis_bed.op_computer.advanced_surgeries)
+			return FALSE
+		if(type in the_stasis_bed.op_computer.advanced_surgeries)
+			return TRUE
 
 /datum/surgery/proc/next_step(mob/user, intent)
 	if(location != user.zone_selected)

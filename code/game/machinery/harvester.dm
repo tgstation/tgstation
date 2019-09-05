@@ -67,15 +67,15 @@
 			var/obj/item/I = A
 			if(!(HAS_TRAIT(I, TRAIT_NODROP)))
 				say("Subject may not have abiotic items on.")
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
+				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 				return
 	if(!(C.mob_biotypes & MOB_ORGANIC))
 		say("Subject is not organic.")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		return
 	if(!allow_living && !(C.stat == DEAD || HAS_TRAIT(C, TRAIT_FAKEDEATH)))     //I mean, the machines scanners arent advanced enough to tell you're alive
 		say("Subject is still alive.")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		return
 	return TRUE
 
@@ -94,7 +94,7 @@
 	update_icon()
 	if(!harvesting || state_open || !powered(EQUIP) || !occupant || !iscarbon(occupant))
 		return
-	playsound(src, 'sound/machines/juicer.ogg', 20, 1)
+	playsound(src, 'sound/machines/juicer.ogg', 20, TRUE)
 	var/mob/living/carbon/C = occupant
 	if(!LAZYLEN(operation_order)) //The list is empty, so we're done here
 		end_harvesting()
@@ -128,7 +128,7 @@
 	harvesting = FALSE
 	open_machine()
 	say("Subject has been successfully harvested.")
-	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, 0)
+	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 
 /obj/machinery/harvester/screwdriver_act(mob/living/user, obj/item/I)
 	. = TRUE

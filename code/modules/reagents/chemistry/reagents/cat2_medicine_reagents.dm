@@ -17,15 +17,15 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.bleed_rate)
-			H.adjustBruteLoss(-0.5*H.bleed_rate*REM)
-			H.bleed_rate += 2
+			H.bleed(2)
+			H.adjustBruteLoss(round(10*((H.blood_volume/BLOOD_VOLUME_NORMAL)-1),0.1),TRUE) //More Blood Loss = More Healing upto <5 brute per tick
 	..()
 	return TRUE
 
 /datum/reagent/medicine/C2/sanguibital/overdose_process(mob/living/carbon/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.bleed_rate += 2
+		H.bleed(2)
 	..()
 	return TRUE
 
@@ -76,7 +76,7 @@
 
 /datum/reagent/medicine/C2/aiuri/on_mob_life(mob/living/carbon/M)
 	M.adjustFireLoss(-0.5*REM)
-	M.adjustOrganLoss(ORGAN_SLOT_EYES,1*REM)
+	M.adjustOrganLoss(ORGAN_SLOT_EYES,0.25*REM)
 	..()
 	return TRUE
 
@@ -132,43 +132,43 @@
 /******TOXIN******/
 /*Suffix: -iver*/
 
-#define FIZ_WEAKRATE	0.005
-
 /datum/reagent/medicine/C2/fiziver //fiz = phys ok?
   name = "Fiziver"
-  description = "An antitoxin that temporarily weakens the user, making them susceptible to other forms of damage. Weakness and toxin healing scales with exposure."
-  overdose_threshold = 11 // Scales every damage so naturally quite abusable. Luckily the OD purges the chem which resets the damage mod *wink*
-  var/reset_mods = 0 //amount, not bool
+  description = "An antitoxin that temporarily weakens the user, making them susceptible to other forms of damage. Weakness and toxin healing scales with length of exposure."
+  overdose_threshold = 11
+  metabolization_rate = 0.25 * REAGENTS_METABOLISM //so that the weakness from a 10u pill will last for around 3 minutes or so
+  var/weak_mod = 1
 
 /datum/reagent/medicine/C2/fiziver/on_mob_life(mob/living/carbon/human/M)
-	var/maths = FIZ_WEAKRATE * current_cycle
-	reset_mods += maths
 	var/datum/physiology/phis = M.physiology
-	phis.brute_mod += maths
-	phis.burn_mod += maths
-	phis.oxy_mod += maths
-	phis.stamina_mod += maths
-	M.adjustToxLoss(round(reset_mods*-1000,0.01)) //Math is fun!
+	phis.brute_mod /= weak_mod
+	phis.burn_mod /= weak_mod
+	phis.oxy_mod /= weak_mod
+	phis.stamina_mod /= weak_mod
+	weak_mod = min(3, (1+(current_cycle*0.04)))
+	phis.brute_mod *= weak_mod
+	phis.burn_mod *= weak_mod
+	phis.oxy_mod *= weak_mod
+	phis.stamina_mod *= weak_mod
+	M.adjustToxLoss(-0.2*weak_mod) //Math is fun if you your PR doesn't accidentally get testmerged before you can test the effects of your equations!
 	..()
 	return TRUE
 
-/datum/reagent/medicine/C2/fiziver/on_mob_delete(mob/living/carbon/human/M)
+/datum/reagent/medicine/C2/fiziver/on_mob_delete(mob/living/carbon/human/M) //I was considering adding an on_mob_add counterpart to this, but it shouldn't ever be needed... right?
 	var/datum/physiology/phis = M.physiology
-	phis.brute_mod = max(phis.brute_mod - reset_mods, 1)
-	phis.burn_mod = max(phis.burn_mod - reset_mods, 1)
-	phis.oxy_mod = max(phis.oxy_mod - reset_mods, 1)
+	phis.brute_mod /= weak_mod //apparently, physiology stats are independent of species stats, so nothing bad should happen if someone changes race or something while this chem is in their system... hopefully
+	phis.burn_mod /= weak_mod
+	phis.oxy_mod /= weak_mod
+	phis.stamina_mod /= weak_mod
 	return ..()
 
 /datum/reagent/medicine/C2/fiziver/overdose_process(mob/living/carbon/human/M)
-	var/maths = reset_mods*3
-	M.adjustBruteLoss(maths)
-	M.adjustFireLoss(maths)
-	M.adjustOxyLoss(maths)
+	if(prob(50))
+		M.adjustBruteLoss(0.2) //the damage from these will, of course, be increased by the brute_mod and burn_mod adjustments
+		M.adjustFireLoss(0.2)
 	..()
-	M.reagents.del_reagent(type)
 	return TRUE
 
-#undef FIZ_WEAKRATE
 
 /datum/reagent/medicine/C2/multiver //made up chem, it's a PALLETTE cleanser hehe
 	name = "Multiver"
@@ -275,7 +275,7 @@
 		if(method in list(PATCH, TOUCH))
 			var/harmies = min(Carbies.getBruteLoss(),Carbies.adjustBruteLoss(-1.25 * reac_volume)*-1)
 			var/burnies = min(Carbies.getFireLoss(),Carbies.adjustFireLoss(-1.25 * reac_volume)*-1)
-			Carbies.adjustToxLoss((harmies+burnies)*0.75)
+			Carbies.adjustToxLoss((harmies+burnies)*0.66)
 			if(show_message)
 				to_chat(Carbies, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
 			SEND_SIGNAL(Carbies, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
