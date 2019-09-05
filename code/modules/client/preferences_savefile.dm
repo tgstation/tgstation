@@ -113,6 +113,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if (!(underwear in GLOB.underwear_list))
 			underwear = "Nude"
 	if(current_version < 25)
+		randomise = list()
+		randomise += RANDOM_UNDERWEAR
+		randomise += RANDOM_UNDERWEAR_COLOR
+		randomise += RANDOM_UNDERSHIRT
+		randomise += RANDOM_SOCKS
+		randomise += RANDOM_BACKPACK
+		randomise += RANDOM_JUMPSUIT_STYLE
+		randomise += RANDOM_HAIRSTYLE
+		randomise += RANDOM_HAIR_COLOR
+		randomise += RANDOM_FACIAL_HAIR_COLOR
+		randomise += RANDOM_FACIAL_HAIRSTYLE
+		randomise += RANDOM_SKIN_TONE
+		randomise += RANDOM_EYE_COLOR
 		if(S["name_is_always_random"] == 1)
 			randomise += RANDOM_NAME
 		if(S["body_is_always_random"] == 1)
