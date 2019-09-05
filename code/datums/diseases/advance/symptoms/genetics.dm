@@ -57,9 +57,9 @@ Bonus
 		if(4, 5)
 			to_chat(C, "<span class='warning'>[pick("Your skin feels itchy.", "You feel light headed.")]</span>")
 			if(badtothebone)
-				C.easyrandmut(NEGATIVE + MINOR_NEGATIVE, TRUE, TRUE, TRUE, mutadone_proof)
+				C.easy_randmut(NEGATIVE + MINOR_NEGATIVE, TRUE, TRUE, TRUE, mutadone_proof)
 			else
-				C.easyrandmut(NEGATIVE + MINOR_NEGATIVE + POSITIVE, TRUE, TRUE, TRUE, mutadone_proof)
+				C.easy_randmut(NEGATIVE + MINOR_NEGATIVE + POSITIVE, TRUE, TRUE, TRUE, mutadone_proof)
 
 /datum/symptom/genetic_mutation/End(datum/disease/advance/A)
 	if(!..())
