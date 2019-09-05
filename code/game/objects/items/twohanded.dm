@@ -253,7 +253,7 @@
 	if(wielded) //destroys windows and grilles in one hit
 		if(istype(A, /obj/structure/window))
 			var/obj/structure/window/W = A
-			W.take_damage(200, BRUTE, "melee", 0)
+			W.take_damage(5000, BRUTE, "melee", 0)
 		else if(istype(A, /obj/structure/grille))
 			var/obj/structure/grille/G = A
 			G.take_damage(40, BRUTE, "melee", 0)
