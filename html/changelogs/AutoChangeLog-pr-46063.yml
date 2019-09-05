@@ -1,8 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - tweak: "Made the alkali perspiration symptom's water reaction explosion effect much easier to proc."
-  - balance: "The alkali perspiration symptom's stage speed 8 threshold effect now also increases the potency of the explosion effect to a \"heavy\" level on the host's tile, in addition to its previous effect(s)."
-  - balance: "The alkali perspiration symptom's water reaction explosion effect can now occur in both stage 4 and in stage 5 (instead of only in stage 5)."
-  - bugfix: "Fixes a bug that would cause the alkali perspiration symptom's water reaction explosion effect to trigger the alkali perspiration symptom's Alkali_fire_stage_5() effect a second time in a single cycle."
-  - tweak: "Slightly modifies the alkali perspiration symptom's threshold effect descriptions to be slightly more clear about what its threshold effects actually do."
