@@ -1,5 +1,3 @@
-#define REM REAGENTS_EFFECT_MULTIPLIER
-
 //FulpChem rework/addition of old chems to fix the potatofarm that is tg development -Love, Saliferous
 /datum/reagent/medicine/CF
 	harmful = FALSE
@@ -18,8 +16,10 @@
 	if(iscarbon(M))
 		if(M.stat == DEAD)
 			show_message = 0
-		if(method in list(SYRINGE_INJECT, INJECT))
+		if(method in list(INJECT))
 			M.adjustBruteLoss(-2.0*REM, 0)
+		if(show_message)
+				to_chat(M, "<span class='notice'>You hear a distant comms chirp as your bruises heal.</span>")
 	..()
 	. = 1
 
@@ -41,8 +41,10 @@
 	if(iscarbon(M))
 		if(M.stat == DEAD)
 			show_message = 0
-		if(method in list(SYRINGE_INJECT, INJECT))
+		if(method in list(INJECT))
 			M.adjustFireLoss(-2.0*REM, 0)
+		if(show_message)
+				to_chat(M, "<span class='notice'>You hear a distant comms chirp as your burns heal.</span>")
 	..()
 	. = 1
 
@@ -64,8 +66,10 @@
 	if(iscarbon(M))
 		if(M.stat == DEAD)
 			show_message = 0
-		if(method in list(SYRINGE_INJECT, INJECT))
+		if(method in list(INJECT))
 			M.adjustToxLoss(-2.0*REM, 0)
+		if(show_message)
+				to_chat(M, "<span class='notice'>You hear a distant comms chirp as your body purges itself of toxins.</span>")
 	..()
 	. = 1
 
@@ -87,11 +91,13 @@
 	if(iscarbon(M))
 		if(M.stat == DEAD)
 			show_message = 0
-		if(method in list(SYRINGE_INJECT, INJECT))
+		if(method in list(INJECT))
 			M.adjustBruteLoss(-2.0*REM, 0)
 			M.adjustFireLoss(-2.0*REM, 0)
 			M.adjustToxLoss(-2.0*REM, 0)
 			M.adjustOxyLoss(-2.0*REM, 0)
+		if(show_message)
+				to_chat(M, "<span class='notice'>You hear a distant comms chirp as your body heals all wounds.</span>")
 	..()
 	. = 1
 
@@ -116,10 +122,12 @@
 	if(iscarbon(M))
 		if(M.stat == DEAD)
 			show_message = 0
-		if(method in list(RANDOM_PILL_STYLE, INGEST))
+		if(method in list(INGEST))
 			M.adjustToxLoss(-2.0*REM, 0)
 			for(var/datum/reagent/R in M.reagents.reagent_list)
 				M.reagents.remove_reagent(R.type, 0.5)
+		if(show_message)
+				to_chat(M, "<span class='notice'>You taste chalky powder, it isn't great...</span>")
 	..()
 	return TRUE
 
