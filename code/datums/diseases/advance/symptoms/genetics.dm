@@ -27,7 +27,7 @@ Bonus
 	base_message_chance = 50
 	symptom_delay_min = 60
 	symptom_delay_max = 100
-	var/badtothebone = FALSE
+	var/nopositives = FALSE
 	var/no_reset = FALSE
 	var/mutadone_proof = FALSE
 	threshold_desc = "<b>Resistance 8:</b> The mutations caused by the virus are mutadone-proof (but will still be undone when the virus is cured if the resistance 14 threshold is not met).<br>\
