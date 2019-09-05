@@ -14,7 +14,7 @@
 	metabolization_rate = 0.4
 	overdose_threshold = 30 * REAGENTS_METABOLISM
 
-/datum/reagent/medicine/CF/bicaridine/on_mob_life(mob/living/M, method=INJECT, show_message = 1)
+/datum/reagent/medicine/CF/bicaridine/reaction_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
 	if(iscarbon(M))
 		if(M.stat == DEAD)
 			show_message = 0
@@ -32,7 +32,7 @@
 	. = 1
 
 //Kelotane (Burn Heal)
-/datum/reagent/medicine/CF/Kelotane
+/datum/reagent/medicine/CF/kelotane
 	name = "Kelotane"
 	description = "Advanced Burn Healing. Injection only, Scotty."
 	reagent_state = LIQUID
@@ -40,7 +40,7 @@
 	metabolization_rate = 0.4
 	overdose_threshold = 30 * REAGENTS_METABOLISM
 
-/datum/reagent/medicine/CF/kelotane/on_mob_life(mob/living/M, method=INJECT, show_message = 1)
+/datum/reagent/medicine/CF/kelotane/reaction_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
 	if(iscarbon(M))
 		if(M.stat == DEAD)
 			show_message = 0
@@ -66,7 +66,7 @@
 	metabolization_rate = 0.4
 	overdose_threshold = 30 * REAGENTS_METABOLISM
 
-/datum/reagent/medicine/CF/antitoxin/on_mob_life(mob/living/M, method=INJECT, show_message = 1)
+/datum/reagent/medicine/CF/antitoxin/reaction_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
 	if(iscarbon(M))
 		if(M.stat == DEAD)
 			show_message = 0
@@ -93,7 +93,7 @@
 	metabolization_rate = 0.4
 	overdose_threshold = 40 * REAGENTS_METABOLISM
 
-/datum/reagent/medicine/CF/tricordrazine/on_mob_life(mob/living/M, method=INJECT, show_message = 1)
+/datum/reagent/medicine/CF/tricordrazine/reaction_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
 	if(iscarbon(M))
 		if(M.stat == DEAD)
 			show_message = 0
@@ -199,6 +199,8 @@
 	return TRUE
 */
 
+//REEE-starting those trek chems here
+//Trekamol, that locking reagent required to make any of the trek chems
 /datum/reagent/medicine/CF/trekamol
 	name = "Trekamol"
 	description = "A space-worthy activator for advanced chemicals."
