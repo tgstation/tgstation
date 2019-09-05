@@ -209,3 +209,27 @@
 /obj/structure/transit_tube/station/reverse/flipped/init_tube_dirs()
 	..()
 	boarding_dir = dir
+
+/obj/structure/transit_tube/station/dispenser
+	name = "station tube pod dispenser"
+	icon_state = "closed_station0"
+	desc = "The lynchpin of the transit system."
+	exit_delay = 1
+	enter_delay = 2
+
+/obj/structure/transit_tube/station/dispenser/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>This station will create a pod for you to ride, no need to wait for one.</span>"
+
+/obj/structure/transit_tube/station/dispenser/Bumped(atom/movable/AM)
+	if(!(open_status == STATION_TUBE_OPEN && ismob(AM) && AM.dir == boarding_dir))
+		return
+	playsound(src, 'sound/weapons/emitter2.ogg', 50, TRUE)
+	var/obj/structure/transit_tube_pod/dispensed/pod = new(src)
+	AM.forceMove(pod)
+	pod.update_icon()
+	launch_pod()
+
+/obj/structure/transit_tube/station/dispenser/pod_stopped(obj/structure/transit_tube_pod/pod, from_dir)
+	playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
+	qdel(pod)

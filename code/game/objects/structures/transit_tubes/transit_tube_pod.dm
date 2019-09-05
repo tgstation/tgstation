@@ -186,3 +186,9 @@
 
 /obj/structure/transit_tube_pod/return_temperature()
 	return air_contents.temperature
+
+//special pod made by the dispenser, it fizzles away when reaching a station.
+
+/obj/structure/transit_tube_pod/dispensed
+	name = "temporary pod"
+	desc = "Hits the skrrrt (tube station), then hits the dirt (nonexistence). You know how it is."
