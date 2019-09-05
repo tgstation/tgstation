@@ -307,7 +307,8 @@ GLOBAL_VAR(medibot_unique_id_gen)
 	if(emagged == 2) //Everyone needs our medicine. (Our medicine is toxins)
 		return TRUE
 
-	if(HAS_TRAIT(C,TRAIT_MEDIBOTCOMINGTHROUGH) && !HAS_TRAIT_FROM(C,TRAIT_MEDIBOTCOMINGTHROUGH,medibot_counter)) //someone is healing them already sweetie
+	if(HAS_TRAIT(C,TRAIT_MEDIBOTCOMINGTHROUGH) && !HAS_TRAIT_FROM(C,TRAIT_MEDIBOTCOMINGTHROUGH,medibot_counter)) //romance of the three medbots
+		REMOVE_TRAIT(C,TRAIT_MEDIBOTCOMINGTHROUGH) //casus belli
 		return FALSE
 
 	if(ishuman(C))
