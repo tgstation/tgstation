@@ -1,3 +1,5 @@
+#define REMF REAGENTS_EFFECT_MULTIPLIER
+
 //FulpChem rework/addition of old chems to fix the potatofarm that is tg development -Love, Saliferous
 /datum/reagent/medicine/CF
 	harmful = FALSE
@@ -17,14 +19,14 @@
 		if(M.stat == DEAD)
 			show_message = 0
 		if(method in list(INJECT))
-			M.adjustBruteLoss(-2.0*REM, 0)
+			M.adjustBruteLoss(-2.0*REMF, 0)
 		if(show_message)
 			to_chat(M, "<span class='notice'>You hear a distant comms chirp as your bruises heal.</span>")
 	..()
 	. = 1
 
 /datum/reagent/medicine/CF/bicaridine/overdose_process(mob/living/M)	
-	M.adjustBruteLoss(2*REM, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustBruteLoss(2*REMF, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
 
@@ -42,14 +44,14 @@
 		if(M.stat == DEAD)
 			show_message = 0
 		if(method in list(INJECT))
-			M.adjustFireLoss(-2.0*REM, 0)
+			M.adjustFireLoss(-2.0*REMF, 0)
 		if(show_message)
 			to_chat(M, "<span class='notice'>You hear a distant comms chirp as your burns heal.</span>")
 	..()
 	. = 1
 
 /datum/reagent/medicine/CF/kelotane/overdose_process(mob/living/M)	
-	M.adjustFireLoss(2*REM, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustFireLoss(2*REMF, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
 		
@@ -67,14 +69,14 @@
 		if(M.stat == DEAD)
 			show_message = 0
 		if(method in list(INJECT))
-			M.adjustToxLoss(-2.0*REM, 0)
+			M.adjustToxLoss(-2.0*REMF, 0)
 		if(show_message)
 			to_chat(M, "<span class='notice'>You hear a distant comms chirp as your body purges itself of toxins.</span>")
 	..()
 	. = 1
 
 /datum/reagent/medicine/CF/antitoxin/overdose_process(mob/living/M)	
-	M.adjustToxLoss(2*REM, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustToxLoss(2*REMF, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
 
@@ -92,20 +94,20 @@
 		if(M.stat == DEAD)
 			show_message = 0
 		if(method in list(INJECT))
-			M.adjustBruteLoss(-2.0*REM, 0)
-			M.adjustFireLoss(-2.0*REM, 0)
-			M.adjustToxLoss(-2.0*REM, 0)
-			M.adjustOxyLoss(-2.0*REM, 0)
+			M.adjustBruteLoss(-2.0*REMF, 0)
+			M.adjustFireLoss(-2.0*REMF, 0)
+			M.adjustToxLoss(-2.0*REMF, 0)
+			M.adjustOxyLoss(-2.0*REMF, 0)
 		if(show_message)
 			to_chat(M, "<span class='notice'>You hear a distant comms chirp as your body heals all wounds.</span>")
 	..()
 	. = 1
 
 /datum/reagent/medicine/CF/tricordrazine/overdose_process(mob/living/M)	
-	M.adjustBruteLoss(2.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
-	M.adjustFireLoss(2.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
-	M.adjustToxLoss(2.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
-	M.adjustOxyLoss(2.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustBruteLoss(2.5*REMF, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustFireLoss(2.5*REMF, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustToxLoss(2.5*REMF, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustOxyLoss(2.5*REMF, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
 
@@ -123,7 +125,7 @@
 		if(M.stat == DEAD)
 			show_message = 0
 		if(method in list(INGEST))
-			M.adjustToxLoss(-2.0*REM, 0)
+			M.adjustToxLoss(-2.0*REMF, 0)
 			for(var/datum/reagent/R in M.reagents.reagent_list)
 				M.reagents.remove_reagent(R.type, 0.5)
 		if(show_message)
@@ -166,26 +168,26 @@
 /datum/reagent/medicine/CF/perfluorodecalin/on_mob_life(mob/living/carbon/human/M)
 	if(iscarbon(M))
 		for(OXYLOSS >= 5)
-			M.adjustOxyLoss(-5.0*REM, 0)
-			M.adjustToxLoss(2.0*REM, 0)
-			M.adjustToxLoss(0.2*REM, 0)
+			M.adjustOxyLoss(-5.0*REMF, 0)
+			M.adjustToxLoss(2.0*REMF, 0)
+			M.adjustToxLoss(0.2*REMF, 0)
 		for(OXYLOSS < 5)
-			M.adjustOxyLoss(-5.0*REM, 0)
-			M.adjustToxLoss((OXYLOSS/2.5)*REM, 0)
-			M.adjustToxLoss(0.2*REM, 0)
+			M.adjustOxyLoss(-5.0*REMF, 0)
+			M.adjustToxLoss((OXYLOSS/2.5)*REMF, 0)
+			M.adjustToxLoss(0.2*REMF, 0)
 	..()
 	return TRUE
 
 /datum/reagent/medicine/CF/perfluorodecalin/overdose_process(mob/living/M)
 	if(iscarbon(M))
 		for(OXYLOSS >= 5)
-			M.adjustOxyLoss(-5.0*REM, 0)
-			M.adjustToxLoss(2.0*REM, 0)
-			M.adjustToxLoss(1*REM, 0)
+			M.adjustOxyLoss(-5.0*REMF, 0)
+			M.adjustToxLoss(2.0*REMF, 0)
+			M.adjustToxLoss(1*REMF, 0)
 		for(OXYLOSS < 5)
-			M.adjustOxyLoss(-5.0*REM, 0)
-			M.adjustToxLoss((OXYLOSS/2.5)*REM, 0)
-			M.adjustToxLoss(1*REM, 0)
+			M.adjustOxyLoss(-5.0*REMF, 0)
+			M.adjustToxLoss((OXYLOSS/2.5)*REMF, 0)
+			M.adjustToxLoss(1*REMF, 0)
 	..()
 	return TRUE
 */
