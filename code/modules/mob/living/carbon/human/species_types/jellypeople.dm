@@ -225,6 +225,7 @@
 	spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var/list/L[1]
 	var/nanite_volume_new = 0
 	SEND_SIGNAL(owner, COMSIG_NANITE_GET_VOLUME, L)
@@ -235,6 +236,8 @@
 		spare.AddComponent(/datum/component/nanites, nanite_volume_new)
 		SEND_SIGNAL(spare, COMSIG_NANITE_SYNC, owner)
 
+=======
+>>>>>>> parent of 54d7285416... Makes nanites be passed down when jellypeople and slimes split
 =======
 >>>>>>> parent of 54d7285416... Makes nanites be passed down when jellypeople and slimes split
 	H.blood_volume *= 0.45

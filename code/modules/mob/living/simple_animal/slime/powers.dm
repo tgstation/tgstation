@@ -198,10 +198,13 @@
 				SSblackbox.record_feedback("tally", "slime_babies_born", 1, M.colour)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 				if(new_nanite_volume) //If original slime had nanites, copy over and sync with 25% of the original volume
 					M.AddComponent(/datum/component/nanites, new_nanite_volume)
 					SEND_SIGNAL(M, COMSIG_NANITE_SYNC, src)
 
+=======
+>>>>>>> parent of 54d7285416... Makes nanites be passed down when jellypeople and slimes split
 =======
 >>>>>>> parent of 54d7285416... Makes nanites be passed down when jellypeople and slimes split
 			var/mob/living/simple_animal/slime/new_slime = pick(babies)
