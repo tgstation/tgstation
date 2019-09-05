@@ -38,7 +38,7 @@
 	obj_flags |= EMAGGED
 	if(tickets.len)
 		for(var/obj/item/ticket_machine_ticket/ticket in tickets)
-			ticket.visible_message("<span class='notice'>\the [ticket] disperses!</span>")
+			ticket.audible_message("<span class='notice'>\the [ticket] disperses!</span>")
 			qdel(ticket)
 		tickets.Cut()
 	update_icon()
@@ -48,17 +48,18 @@
 	update_icon()
 
 /obj/machinery/ticket_machine/proc/increment()
-	if(current_number >= ticket_number)
+	if(current_number > ticket_number)
 		return
-	playsound(src, 'sound/misc/announce_dig.ogg', 50, FALSE)
 	if(current_number && !(obj_flags & EMAGGED) && tickets[current_number])
-		tickets[current_number].visible_message("<span class='notice'>\the [tickets[current_number]] disperses!</span>")
+		tickets[current_number].audible_message("<span class='notice'>\the [tickets[current_number]] disperses!</span>")
 		qdel(tickets[current_number])
-	current_number ++ //Increment the one we're serving.
-	say("Now serving ticket #[current_number]!")
-	if(!(obj_flags & EMAGGED) && tickets[current_number])
-		tickets[current_number].visible_message("<span class='notice'>\the [tickets[current_number]] vibrates!</span>")
-	update_icon() //Update our icon here rather than when they take a ticket to show the current ticket number being served
+	if(current_number < ticket_number)
+		current_number ++ //Increment the one we're serving.
+		playsound(src, 'sound/misc/announce_dig.ogg', 50, FALSE)
+		say("Now serving ticket #[current_number]!")
+		if(!(obj_flags & EMAGGED) && tickets[current_number])
+			tickets[current_number].audible_message("<span class='notice'>\the [tickets[current_number]] vibrates!</span>")
+		update_icon() //Update our icon here rather than when they take a ticket to show the current ticket number being served
 
 /obj/machinery/button/ticket_machine
 	name = "increment ticket counter"
@@ -149,7 +150,7 @@
 			current_number = 0
 			if(tickets.len)
 				for(var/obj/item/ticket_machine_ticket/ticket in tickets)
-					ticket.visible_message("<span class='notice'>\the [ticket] disperses!</span>")
+					ticket.audible_message("<span class='notice'>\the [ticket] disperses!</span>")
 					qdel(ticket)
 				tickets.Cut()
 			max_number = initial(max_number)

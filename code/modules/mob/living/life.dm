@@ -2,9 +2,6 @@
 	set waitfor = FALSE
 	set invisibility = 0
 
-	if(digitalinvis)
-		handle_diginvis() //AI becomes unable to see mob
-
 	if((movement_type & FLYING) && !(movement_type & FLOATING))	//TODO: Better floating
 		float(on = TRUE)
 
@@ -82,14 +79,6 @@
 
 /mob/living/proc/handle_diseases()
 	return
-
-/mob/living/proc/handle_diginvis()
-	if(!digitaldisguise)
-		src.digitaldisguise = image(loc = src)
-	src.digitaldisguise.override = 1
-	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
-		AI.client.images |= src.digitaldisguise
-
 
 /mob/living/proc/handle_random_events()
 	return

@@ -68,6 +68,13 @@
 #define MOVESPEED_ID_HUMAN_CARRYING                     "HUMAN_CARRY"
 #define MOVESPEED_ID_SHRINK_RAY							"SHRUNKEN_SPEED_MODIFIER"
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define MOVESPEED_ID_PEPPER_SPRAY                       "PEPPER_SPRAYED"
 >>>>>>> parent of 1a62a4ae53... wew
+=======
+#define MOVESPEED_ID_PEPPER_SPRAY                       "PEPPER_SPRAYED"
+=======
+#define MOVESPEED_ID_PEPPER_SPRAY                       "PEPPER_SPRAYED"
+>>>>>>> 37a037dc7519dba8f8c9788aa9a94926686ab983
+>>>>>>> parent of 769a376b66... wew

@@ -20,6 +20,7 @@
 		expand_blob(T)
 
 /mob/camera/blob/MiddleClickOn(atom/A) //Rally spores
+	. = ..()
 	var/turf/T = get_turf(A)
 	if(T)
 		rally_spores(T)

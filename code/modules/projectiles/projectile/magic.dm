@@ -688,7 +688,7 @@
 	icon_state = "ice_2"
 	damage = 0
 	damage_type = BURN
-	nodamage = TRUE
+	nodamage = FALSE
 	armour_penetration = 100
 	temperature = 50
 	flag = "magic"
