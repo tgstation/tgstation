@@ -21,7 +21,7 @@
 		if(method in list(INJECT))
 			if(show_message)
 				to_chat(M, "<span class='notice'>You hear a distant comms chirp as your bruises heal.</span>")
-			for(/datum/reagent/medicine/CF/bicaridine in M.reagent.reagents_list)
+			for(bicaridine in M.reagents.reagent_list)
 				M.adjustBruteLoss(-2*REMF)
 			
 	..()
