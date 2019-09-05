@@ -16,8 +16,8 @@ Bonus
 */
 
 /datum/symptom/genetic_mutation
-	name = "Deoxyribonucleic Acid Saboteur"
-	desc = "The virus bonds with the DNA of the host, activating random dormant mutations within their DNA. When the virus is cured, all of the mutations in the host's DNA are made dormant (again)."
+	name = "Mutation"
+	desc = "The virus bonds with the DNA of the host, activating random dormant mutations within their DNA. When the virus is cured, the host's genetic alterations are undone."
 	stealth = -2
 	resistance = -3
 	stage_speed = 0
@@ -26,13 +26,13 @@ Bonus
 	severity = 4
 	base_message_chance = 50
 	symptom_delay_min = 60
-	symptom_delay_max = 90
+	symptom_delay_max = 100
 	var/badtothebone = FALSE
 	var/no_reset = FALSE
 	var/mutadone_proof = FALSE
-	threshold_desc = "<b>Resistance 8:</b> The host's mutations aren't cleansed when the virus leaves the host.<br>\
-					  <b>Resistance 14:</b> The negative mutations caused by this virus are mutadone-proof.<br>\
-					  <b>Stage Speed 10:</b> The virus activates dormant mutations more often.<br>\
+	threshold_desc = "<b>Resistance 8:</b> The mutations caused by the virus are mutadone-proof (but will still be undone when the virus is cured if the resistance 14 threshold is not met).<br>\
+					  <b>Resistance 14:</b> The host's genetic alterations are not undone when the virus is cured.<br>\
+					  <b>Stage Speed 10:</b> The virus activates dormant mutations at a much faster rate.<br>\
 					  <b>Stealth 5:</b> Only activates negative mutations in hosts."
 
 /datum/symptom/genetic_mutation/Start(datum/disease/advance/A)
@@ -40,13 +40,12 @@ Bonus
 		return
 	if(A.properties["stealth"] >= 5) //only give them bad mutations
 		badtothebone = TRUE
-	if(A.properties["stage_rate"] >= 10) //activate dormant mutations more often
-		symptom_delay_min = 20
+	if(A.properties["stage_rate"] >= 10) //activate dormant mutations more often at around twice the pace
 		symptom_delay_max = 60
-	if(A.properties["resistance"] >= 8) //the mutations won't go away when the virus is cured
-		no_reset = TRUE
-	if(A.properties["resistance"] >= 14) //if the virus's resistance stat meets this threshold, may God help you
+	if(A.properties["resistance"] >= 8) //mutadone won't save you now
 		mutadone_proof = TRUE
+	if(A.properties["resistance"] >= 14) //one does not simply escape Nurgle's grasp
+		no_reset = TRUE
 
 /datum/symptom/genetic_mutation/Activate(datum/disease/advance/A)
 	if(!..())
