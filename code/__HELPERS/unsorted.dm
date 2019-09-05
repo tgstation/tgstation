@@ -1474,6 +1474,39 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	else
 		D.vars[var_name] = var_value
 
+#define	TRAIT_CALLBACK_ADD(target, trait, source) CALLBACK(GLOBAL_PROC, /proc/___TraitAdd, ##target, ##trait, ##source)
+#define	TRAIT_CALLBACK_REMOVE(target, trait, source) CALLBACK(GLOBAL_PROC, /proc/___TraitRemove, ##target, ##trait, ##source)
+
+/proc/___TraitAdd(target,trait,source)
+	if(!target || !trait || !source)
+		return
+	if(islist(target))
+		for(var/i in target)
+			if(!isatom(i))
+				continue
+			var/atom/the_atom = i
+			ADD_TRAIT(the_atom,trait,source)
+	else if(!isatom(target))
+		return
+	else
+		var/atom/the_atom2 = target
+		ADD_TRAIT(the_atom2,trait,source)
+
+/proc/___TraitRemove(target,trait,source)
+	if(!target || !trait || !source)
+		return
+	if(islist(target))
+		for(var/i in target)
+			if(!isatom(i))
+				continue
+			var/atom/the_atom = i
+			REMOVE_TRAIT(the_atom,trait,source)
+	else if(!isatom(target))
+		return
+	else
+		var/atom/the_atom2 = target
+		REMOVE_TRAIT(the_atom2,trait,source)
+
 /proc/get_random_food()
 	var/list/blocked = list(/obj/item/reagent_containers/food/snacks/store/bread,
 		/obj/item/reagent_containers/food/snacks/breadslice,
