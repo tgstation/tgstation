@@ -31,7 +31,7 @@
 	name = "Charcoal"
 	id = /datum/reagent/medicine/CF/charcoal
 	results = list(/datum/reagent/medicine/CF/charcoal = 2)
-	required_reagents = list(/datum/reagent/sodiumchloride = 1, /datum/reagent/ash = 1)
+	required_reagents = list(/datum/reagent/consumable/sodiumchloride = 1, /datum/reagent/ash = 1)
 	required_temp = 400
 	mix_message = "The solution burns into a black, chalky substance.... oh it's just charcoal."
 

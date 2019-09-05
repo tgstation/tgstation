@@ -42,12 +42,12 @@
 		if(M.stat == DEAD)
 			show_message = 0
 		if(method in list(SYRINGE_INJECT, INJECT))
-			M.adjustBurnLoss(-2.0*REM, 0)
+			M.adjustFireLoss(-2.0*REM, 0)
 	..()
 	. = 1
 
 /datum/reagent/medicine/CF/kelotane/overdose_process(mob/living/M)	
-	M.adjustBurnLoss(2*REM, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustFireLoss(2*REM, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
 		
@@ -89,15 +89,15 @@
 			show_message = 0
 		if(method in list(SYRINGE_INJECT, INJECT))
 			M.adjustBruteLoss(-2.0*REM, 0)
-			M.adjustBurnLoss(-2.0*REM, 0)
+			M.adjustFireLoss(-2.0*REM, 0)
 			M.adjustToxLoss(-2.0*REM, 0)
 			M.adjustOxyLoss(-2.0*REM, 0)
 	..()
 	. = 1
 
-/datum/reagent/medicine/CF/antitoxin/overdose_process(mob/living/M)	
+/datum/reagent/medicine/CF/tricordrazine/overdose_process(mob/living/M)	
 	M.adjustBruteLoss(2.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
-	M.adjustBurnLoss(2.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustFireLoss(2.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
 	M.adjustToxLoss(2.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
 	M.adjustOxyLoss(2.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
