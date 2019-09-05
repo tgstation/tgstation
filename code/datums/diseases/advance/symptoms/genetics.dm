@@ -16,7 +16,7 @@ Bonus
 */
 
 /datum/symptom/genetic_mutation
-	name = "Mutation"
+	name = "Viral DNA Activator"
 	desc = "The virus bonds with the DNA of the host, activating random dormant mutations within their DNA. When the virus is cured, the host's genetic alterations are undone."
 	stealth = -2
 	resistance = -3
