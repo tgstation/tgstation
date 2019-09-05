@@ -316,48 +316,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/value
 	var/coinflip
 
-/obj/item/coin/Initialize()
-	. = ..()
-	coinflip = pick(sideslist)
-	icon_state = "coin_[coinflip]"
-
-/obj/item/coin/set_custom_materials()
-	. = ..()
-	for(var/i in custom_materials)
-		var/datum/material/M = i
-		value += M.value_per_unit * custom_materials[M]
-
-/obj/item/coin/get_item_credit_value()
-	return value
-
-/obj/item/coin/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] contemplates suicide with \the [src]!</span>")
-	if (!attack_self(user))
-		user.visible_message("<span class='suicide'>[user] couldn't flip \the [src]!</span>")
-		return SHAME
-	addtimer(CALLBACK(src, .proc/manual_suicide, user), 10)//10 = time takes for flip animation
-	return MANUAL_SUICIDE_NONLETHAL
-
-/obj/item/coin/proc/manual_suicide(mob/living/user)
-	var/index = sideslist.Find(coinflip)
-	if (index==2)//tails
-		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] promptly falls over, dead!</span>")
-		user.adjustOxyLoss(200)
-		user.death(0)
-		user.set_suicide(TRUE)
-		user.suicide_log()
-	else
-		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] keeps on living!</span>")
-
-/obj/item/coin/Initialize()
-	. = ..()
-	pixel_x = rand(0,16)-8
-	pixel_y = rand(0,8)-8
-
-/obj/item/coin/examine(mob/user)
-	. = ..()
-	. += "<span class='info'>It's worth [value] credit\s.</span>"
-
 /obj/item/coin/gold
 	custom_materials = list(/datum/material/gold = 400)
 
@@ -399,6 +357,48 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	material_flags = MATERIAL_NO_COLOR
 
 /obj/item/coin/iron
+
+/obj/item/coin/Initialize()
+	. = ..()
+	coinflip = pick(sideslist)
+	icon_state = "coin_[coinflip]"
+
+/obj/item/coin/set_custom_materials()
+	. = ..()
+	for(var/i in custom_materials)
+		var/datum/material/M = i
+		value += M.value_per_unit * custom_materials[M]
+
+/obj/item/coin/get_item_credit_value()
+	return value
+
+/obj/item/coin/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] contemplates suicide with \the [src]!</span>")
+	if (!attack_self(user))
+		user.visible_message("<span class='suicide'>[user] couldn't flip \the [src]!</span>")
+		return SHAME
+	addtimer(CALLBACK(src, .proc/manual_suicide, user), 10)//10 = time takes for flip animation
+	return MANUAL_SUICIDE_NONLETHAL
+
+/obj/item/coin/proc/manual_suicide(mob/living/user)
+	var/index = sideslist.Find(coinflip)
+	if (index==2)//tails
+		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] promptly falls over, dead!</span>")
+		user.adjustOxyLoss(200)
+		user.death(0)
+		user.set_suicide(TRUE)
+		user.suicide_log()
+	else
+		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] keeps on living!</span>")
+
+/obj/item/coin/Initialize()
+	. = ..()
+	pixel_x = rand(0,16)-8
+	pixel_y = rand(0,8)-8
+
+/obj/item/coin/examine(mob/user)
+	. = ..()
+	. += "<span class='info'>It's worth [value] credit\s.</span>"
 
 /obj/item/coin/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/cable_coil))
