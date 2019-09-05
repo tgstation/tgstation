@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - bugfix: "fixed being able to Convert a Ripley MK-I to MK-II without a battery and breaking things."
