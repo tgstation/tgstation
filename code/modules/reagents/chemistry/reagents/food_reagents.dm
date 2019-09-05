@@ -282,8 +282,8 @@
 	
 	var/mob/living/carbon/victim = M
 	if(method == TOUCH || method == VAPOR)
-	var/mouth_covered = victim.is_mouth_covered()
-	var/eyes_covered = victim.is_eyes_covered()
+		var/mouth_covered = victim.is_mouth_covered()
+		var/eyes_covered = victim.is_eyes_covered()
 		//check for protection
 		//actually handle the pepperspray effects
 		if (!(eyes_covered && mouth_covered)) // you need both eye and mouth protection
