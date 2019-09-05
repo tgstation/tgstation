@@ -1,0 +1,8 @@
+<ui-display title='Splitter' button> 
+	<ui-section>
+		<span>The splitter constantly switches between the port and the amount it sends, and only continues when it has succeeded. <br></span>
+		<span>The splitter outputs at a forced amount. Avoid putting multiple demanding machines on one output, as it strains it's effectiveness. <br></span>
+		<ui-button action='set_amount' params='{"target": "straight"}'>Straight {{data.straight}}</ui-button>
+		<ui-button action='set_amount' params='{"target": "side"}'>Side {{data.side}}</ui-button>
+	</ui-section>
+</ui-display>

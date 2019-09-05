@@ -1,8 +1,3 @@
-
-#define BAD_ART 12.5
-#define GOOD_ART 25
-#define GREAT_ART 50
-
 /obj/structure/statue
 	name = "statue"
 	desc = "Placeholder. Yell at Firecage if you SOMEHOW see this."

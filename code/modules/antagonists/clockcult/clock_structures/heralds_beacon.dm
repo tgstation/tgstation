@@ -78,7 +78,7 @@
 			return
 		voters += user.key
 	else
-		if(!user.key in voters)
+		if(!(user.key in voters))
 			return
 		voters -= user.key
 	var/votes_left = votes_needed - voters.len

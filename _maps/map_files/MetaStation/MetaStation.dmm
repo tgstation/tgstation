@@ -9911,7 +9911,6 @@
 "auz" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas,
-/obj/item/clothing/glasses/sunglasses,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
@@ -57714,7 +57713,6 @@
 /area/maintenance/port/aft)
 "cwn" = (
 /obj/structure/rack,
-/obj/item/clothing/glasses/sunglasses,
 /obj/item/flashlight/pen,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
@@ -66639,7 +66637,6 @@
 "cOA" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas,
-/obj/item/clothing/glasses/sunglasses,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/light/small{
 	dir = 4
@@ -72272,13 +72269,13 @@
 	c_tag = "Chapel - Funeral Parlour";
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "djk" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/closed/wall,
 /area/chapel/main)
 "djq" = (
@@ -96602,7 +96599,7 @@ cLa
 cPF
 cQb
 djj
-djr
+cQb
 cRq
 cPA
 aaa

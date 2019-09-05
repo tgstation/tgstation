@@ -17,7 +17,7 @@
 				candidates.Remove(P)
 				continue
 		else 
-			if(!antag_flag in P.client.prefs.be_special || is_banned_from(P.ckey, list(antag_flag, ROLE_SYNDICATE)))
+			if(!(antag_flag in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag, ROLE_SYNDICATE)))
 				candidates.Remove(P)
 				continue
 		if (P.mind.assigned_role in restricted_roles) // Does their job allow for it?
