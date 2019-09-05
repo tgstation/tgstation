@@ -285,7 +285,7 @@
 		//check for protection
 		//actually handle the pepperspray effects
 		if (istype(victim.wear_mask, /obj/item/clothing/mask/gas)) // gas mask is sunglasses but for pepperspray
-			
+
 		else // Oh dear :D All or nothing
 			if(prob(5))
 				victim.emote("scream")
@@ -336,14 +336,14 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "bitterness"
-/datum/reagent/consumable/coco/on_mob_add(mob/living/M)
+/datum/reagent/consumable/coco/on_mob_add(mob/living/carbon/M)
 	.=..()
 	if(iscatperson(M))
 		to_chat(M, "<span class='warning'>Your insides revolt at the presence of lethal chocolate!</span>")
 		M.vomit(20)
 
 
-		
+
 /datum/reagent/consumable/hot_coco
 	name = "Hot Chocolate"
 	description = "Made with love! And coco beans."
