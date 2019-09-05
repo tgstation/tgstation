@@ -116,7 +116,7 @@
 	if(iscarbon(M))
 		if(M.stat == DEAD)
 			show_message = 0
-		if(method in list(PILL, INGEST))
+		if(method in list(RANDOM_PILL_STYLE, INGEST))
 			M.adjustToxLoss(-2.0*REM, 0)
 			for(var/datum/reagent/R in M.reagents.reagent_list)
 				M.reagents.remove_reagent(R.type, 0.5)
@@ -185,3 +185,5 @@
 /datum/reagent/medicine/CF/trekamol
 	name = "Trekamol"
 	description = "A space-worthy activator for advanced chemicals."
+	reagent_state = LIQUID
+	color = "00F9FF"
