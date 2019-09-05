@@ -147,7 +147,10 @@
 
 	var/obj/structure/transit_tube/TT = locate(/obj/structure/transit_tube) in loc
 	if(!TT || (!(dir in TT.tube_dirs) && !(turn(dir,180) in TT.tube_dirs)))	//landed on a turf without transit tube or not in our direction
-		deconstruct(FALSE)	//we automatically deconstruct the pod
+		outside_tube()
+
+/obj/structure/transit_tube_pod/proc/outside_tube()
+	deconstruct(FALSE)//we automatically deconstruct the pod
 
 /obj/structure/transit_tube_pod/return_air()
 	return air_contents
@@ -190,5 +193,8 @@
 //special pod made by the dispenser, it fizzles away when reaching a station.
 
 /obj/structure/transit_tube_pod/dispensed
-	name = "temporary pod"
+	name = "temporary transit tube pod"
 	desc = "Hits the skrrrt (tube station), then hits the dirt (nonexistence). You know how it is."
+
+/obj/structure/transit_tube_pod/dispensed/outside_tube()
+	qdel(src)
