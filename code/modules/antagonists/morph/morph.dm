@@ -115,7 +115,7 @@
 	//Morphed is weaker
 	melee_damage_lower = melee_damage_disguised
 	melee_damage_upper = melee_damage_disguised
-	speed = 0
+	set_varspeed(0)
 
 	morph_time = world.time + MORPH_COOLDOWN
 	med_hud_set_health()
@@ -143,7 +143,7 @@
 	//Baseline stats
 	melee_damage_lower = initial(melee_damage_lower)
 	melee_damage_upper = initial(melee_damage_upper)
-	speed = initial(speed)
+	set_varspeed(initial(speed))
 
 	morph_time = world.time + MORPH_COOLDOWN
 	med_hud_set_health()
