@@ -418,7 +418,7 @@
 						continue
 					else 
 						var/obj/item/card/id/I = C.get_idcard(TRUE)
-						if (I.assignment in GLOB.command_positions)
+						if (I.assignment != null & I.assignment in GLOB.command_positions)
 							continue
 						else 
 							targets += C
