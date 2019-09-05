@@ -878,23 +878,25 @@
 
 /mob/living/proc/can_track(mob/living/user)
 	//basic fast checks go first. When overriding this proc, I recommend calling ..() at the end.
-	if(SEND_SIGNAL(src, COMSIG_LIVING_CAN_TRACK, args) & COMPONENT_CANT_TRACK)
-		return FALSE
 	var/turf/T = get_turf(src)
 	if(!T)
-		return FALSE
+		return 0
 	if(is_centcom_level(T.z)) //dont detect mobs on centcom
-		return FALSE
+		return 0
 	if(is_away_level(T.z))
-		return FALSE
+		return 0
 	if(user != null && src == user)
-		return FALSE
+		return 0
 	if(invisibility || alpha == 0)//cloaked
-		return FALSE
+		return 0
+	if(digitalcamo || digitalinvis)
+		return 0
+
 	// Now, are they viewable by a camera? (This is last because it's the most intensive check)
 	if(!near_camera(src))
-		return FALSE
-	return TRUE
+		return 0
+
+	return 1
 
 //used in datum/reagents/reaction() proc
 /mob/living/proc/get_permeability_protection(list/target_zones)

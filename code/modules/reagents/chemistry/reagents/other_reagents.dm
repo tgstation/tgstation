@@ -1220,67 +1220,67 @@
 //For colouring in /proc/mix_color_from_reagents
 
 
-/datum/reagent/colorful_reagent/powder
+/datum/reagent/colorful_reagent/crayonpowder
 	name = "Crayon Powder"
 	var/colorname = "none"
-	description = "A powder good for colouring chemical reagents."
+	description = "A powder made by grinding down crayons, good for colouring chemical reagents."
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 207, 54, 0
 	taste_description = "the back of class"
 
-/datum/reagent/colorful_reagent/powder/New()
-	description = "\an [colorname] powder good for colouring chemical reagents."
+/datum/reagent/colorful_reagent/crayonpowder/New()
+	description = "\an [colorname] powder made by grinding down crayons, good for colouring chemical reagents."
 
 
-/datum/reagent/colorful_reagent/powder/red
+/datum/reagent/colorful_reagent/crayonpowder/red
 	name = "Red Crayon Powder"
 	colorname = "red"
 	color = "#DA0000" // red
-	random_color_list = list("#FC7474")
+	random_color_list = list("#DA0000")
 
-/datum/reagent/colorful_reagent/powder/orange
+/datum/reagent/colorful_reagent/crayonpowder/orange
 	name = "Orange Crayon Powder"
 	colorname = "orange"
 	color = "#FF9300" // orange
 	random_color_list = list("#FF9300")
 
-/datum/reagent/colorful_reagent/powder/yellow
+/datum/reagent/colorful_reagent/crayonpowder/yellow
 	name = "Yellow Crayon Powder"
 	colorname = "yellow"
 	color = "#FFF200" // yellow
 	random_color_list = list("#FFF200")
 
-/datum/reagent/colorful_reagent/powder/green
+/datum/reagent/colorful_reagent/crayonpowder/green
 	name = "Green Crayon Powder"
 	colorname = "green"
 	color = "#A8E61D" // green
 	random_color_list = list("#A8E61D")
 
-/datum/reagent/colorful_reagent/powder/blue
+/datum/reagent/colorful_reagent/crayonpowder/blue
 	name = "Blue Crayon Powder"
 	colorname = "blue"
 	color = "#00B7EF" // blue
 	random_color_list = list("#71CAE5")
 
-/datum/reagent/colorful_reagent/powder/purple
+/datum/reagent/colorful_reagent/crayonpowder/purple
 	name = "Purple Crayon Powder"
 	colorname = "purple"
 	color = "#DA00FF" // purple
-	random_color_list = list("#BD8FC4")
+	random_color_list = list("#DA00FF")
 
-/datum/reagent/colorful_reagent/powder/invisible
+/datum/reagent/colorful_reagent/crayonpowder/invisible
 	name = "Invisible Crayon Powder"
 	colorname = "invisible"
 	color = "#FFFFFF00" // white + no alpha
 	random_color_list = list(null)	//because using the powder color turns things invisible
 
-/datum/reagent/colorful_reagent/powder/black
+/datum/reagent/colorful_reagent/crayonpowder/black
 	name = "Black Crayon Powder"
 	colorname = "black"
 	color = "#1C1C1C" // not quite black
 	random_color_list = list("#8D8D8D")	//more grey than black, not enough to hide your true colors
 
-/datum/reagent/colorful_reagent/powder/white
+/datum/reagent/colorful_reagent/crayonpowder/white
 	name = "White Crayon Powder"
 	colorname = "white"
 	color = "#FFFFFF" // white
@@ -1661,7 +1661,7 @@
 
 /datum/reagent/pax
 	name = "Pax"
-	description = "A colorless liquid that suppresses violence in its subjects."
+	description = "A colorless liquid that suppresses violence on the subjects."
 	color = "#AAAAAA55"
 	taste_description = "water"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
@@ -1697,8 +1697,8 @@
 	return ..()
 
 /datum/reagent/pax/peaceborg
-	name = "synthpax"
-	description = "A colorless liquid that suppresses violence in its subjects. Cheaper to synthesize than normal Pax, but wears off faster."
+	name = "synth-pax"
+	description = "A colorless liquid that suppresses violence on the subjects. Cheaper to synthetize, but wears out faster than normal Pax."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 /datum/reagent/peaceborg
