@@ -45,7 +45,7 @@ var/tri1 = 0
 	. = ..()
 
 /datum/reagent/medicine/CF/bicaridine/on_mob_life(mob/living/carbon/M)
-	if(l_1=1 && bic1=1)
+	if(l_1 == 1 && bic1 == 1)
 		M.adjustBruteLoss(-2*REMF, 0)
 	. = ..()
 
