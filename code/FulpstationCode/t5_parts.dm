@@ -71,7 +71,7 @@
 	id = "quantumbeaker"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 1)
-	build_path = /obj/reagent_containers/glass/beaker/quantum
+	build_path = /obj/item/reagent_containers/glass/beaker/quantum
 	category = list("Stock Parts") //Needs proper location
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
@@ -124,6 +124,15 @@
 	rating = 5
 	materials = list(/datum/material/iron=100)
 
+/obj/item/reagent_containers/glass/beaker/quantum
+	name = "quantum entangled beaker"
+	desc = "A quantum entangled beaker, capable of holding a massive 400 units of any reagent."
+	icon_state = "beakerbluespace"
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 5000, /datum/material/plasma = 3000, /datum/material/diamond = 1500, /datum/material/bluespace = 1500)
+	volume = 400
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
+
 ///T5 RPED
 /obj/item/storage/part_replacer/bluespace/tier5
 
@@ -134,13 +143,4 @@
 		new /obj/item/stock_parts/manipulator/quantummanip(src)
 		new /obj/item/stock_parts/micro_laser/quantumlaser(src)
 		new /obj/item/stock_parts/matter_bin/quantumbin(src)
-
-//T5 beaker
-/obj/item/reagent_containers/glass/beaker/quantum
-	name = "quantum entangled beaker"
-	desc = "A quantum entangled beaker, capable of holding a massive 400 units of any reagent."
-	icon_state = "beakerbluespace"
-	materials = list(/datum/material/glass = 5000, /datum/material/plasma = 3000, /datum/material/diamond = 1000, /datum/material/bluespace = 1000)
-	volume = 400
-	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
+		new /obj/item/reagent_containers/glass/beaker/quantum(src)
