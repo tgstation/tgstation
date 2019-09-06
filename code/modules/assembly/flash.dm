@@ -14,10 +14,11 @@
 	var/flashing_overlay = "flash-f"
 	var/times_used = 0 //Number of times it's been used.
 	var/burnt_out = FALSE     //Is the flash burnt out?
-	var/burnout_resistance = 0
+	var/burn_out_resistance = 0
 	var/last_used = 0 //last world.time it was used.
 	var/cooldown = 0
 	var/last_trigger = 0 //Last time it was successfully triggered.
+	var/aoe_range = 3
 
 /obj/item/assembly/flash/suicide_act(mob/living/user)
 	if(burnt_out)
@@ -66,7 +67,7 @@
 		times_used--
 	last_used = world.time
 	times_used = max(0, times_used) //sanity
-	if(max(0, prob(times_used * 3) - burnout_resistance)) //The more often it's used in a short span of time the more likely it will burn out
+	if(max(0, prob((times_used * 3) - burn_out_resistance))) //The more often it's used in a short span of time the more likely it will burn out
 		burn_out()
 		return FALSE
 	return TRUE
@@ -160,7 +161,7 @@
 /obj/item/assembly/flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	if(holder)
 		return FALSE
-	if(!AOE_flash(FALSE, 3, 5, FALSE, user))
+	if(!AOE_flash(FALSE, aoe_range, 5, FALSE, user))
 		return FALSE
 	to_chat(user, "<span class='danger'>[src] emits a blinding light!</span>")
 
@@ -170,13 +171,13 @@
 		return
 	if(!try_use_flash())
 		return
-	AOE_flash()
+	AOE_flash(FALSE, aoe_range)
 	burn_out()
 
 /obj/item/assembly/flash/activate()//AOE flash on signal received
 	if(!..())
 		return
-	AOE_flash()
+	AOE_flash(FALSE, aoe_range)
 
 /obj/item/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/H, mob/user)
 	if(istype(H) && H.stat != DEAD)
@@ -295,3 +296,12 @@
 		M.dizziness += min(M.dizziness + 4, 20)
 		M.drowsyness += min(M.drowsyness + 4, 20)
 		M.apply_status_effect(STATUS_EFFECT_PACIFY, 40)
+
+/obj/item/assembly/flash/peacekeeper
+	description = "A powerful and versatile flashbulb device, with applications ranging from disorienting attackers to acting as visual receptors in robot production. This one has been modified to give it better burn out resistance and to greatly increase the range of area of effect flashings performed by it."
+	burn_out_resistance = 10
+	aoe_range = 7
+
+/obj//obj/item/assembly/flash/peacekeeper/Initialize()
+	add_atom_colour("#71CAE5", FIXED_COLOUR_PRIORITY)
+	..()
