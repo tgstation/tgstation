@@ -370,9 +370,9 @@
 		/obj/item/reagent_containers/borghypo/peace,
 		/obj/item/holosign_creator/cyborg,
 		/obj/item/borg/cyborghug/peacekeeper,
-		/obj/item/extinguisher/mini,
+		/obj/item/extinguisher,
 		/obj/item/borg/projectile_dampen,
-		/obj/item/weldingtool/mini/peacekeeper,  //for repairing yourself after bodyblocking the shotgun pellets from an overzealous officer's unilateral execution attempt
+		/obj/item/weldingtool/mini,  //for repairing yourself after bodyblocking the shotgun pellets from an overzealous officer's unilateral execution attempt
 		/obj/item/stack/medical/gauze/cyborg, //for pausing bleeding so that you can safely drag the victims of harmbatonning/reckless shotgunning to Medbay
 		/obj/item/reagent_containers/spray/pepper) //gives you a stun option in case you've been EMP'd since you last visited a recharging station (it's also quite in-theme for a riot-control cyborg)
 	emag_modules = list(/obj/item/reagent_containers/borghypo/peace/hacked)
@@ -459,7 +459,7 @@
 		/obj/item/picket_sign/cyborg,
 		/obj/item/reagent_containers/borghypo/clown,
 		/obj/item/extinguisher/mini,
-		/obj/item/weldingtool/mini/peacekeeper) //for healing yourself after you get lynched
+		/obj/item/weldingtool/mini) //for healing yourself after you get lynched
 	emag_modules = list(
 		/obj/item/reagent_containers/borghypo/clown/hacked,
 		/obj/item/reagent_containers/spray/waterflower/cyborg/hacked)
