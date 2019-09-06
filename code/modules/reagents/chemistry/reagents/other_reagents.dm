@@ -406,8 +406,8 @@
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/N = M
-		N.hair_style = "Spiky"
-		N.facial_hair_style = "Shaved"
+		N.hairstyle = "Spiky"
+		N.facial_hairstyle = "Shaved"
 		N.facial_hair_color = "000"
 		N.hair_color = "000"
 		if(!(HAIR in N.dna.species.species_traits)) //No hair? No problem!
@@ -1450,10 +1450,10 @@
 	if(method == TOUCH || method == VAPOR)
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/datum/sprite_accessory/hair/picked_hair = pick(GLOB.hair_styles_list)
-			var/datum/sprite_accessory/facial_hair/picked_beard = pick(GLOB.facial_hair_styles_list)
-			H.hair_style = picked_hair
-			H.facial_hair_style = picked_beard
+			var/datum/sprite_accessory/hair/picked_hair = pick(GLOB.hairstyles_list)
+			var/datum/sprite_accessory/facial_hair/picked_beard = pick(GLOB.facial_hairstyles_list)
+			H.hairstyle = picked_hair
+			H.facial_hairstyle = picked_beard
 			H.update_hair()
 
 /datum/reagent/concentrated_barbers_aid
@@ -1467,8 +1467,8 @@
 	if(method == TOUCH || method == VAPOR)
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.hair_style = "Very Long Hair"
-			H.facial_hair_style = "Beard (Very Long)"
+			H.hairstyle = "Very Long Hair"
+			H.facial_hairstyle = "Beard (Very Long)"
 			H.update_hair()
 
 /datum/reagent/saltpetre

@@ -391,8 +391,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(M.flags_inv & HIDEFACIALHAIR)
 			facialhair_hidden = TRUE
 
-	if(H.facial_hair_style && (FACEHAIR in species_traits) && (!facialhair_hidden || dynamic_fhair_suffix))
-		S = GLOB.facial_hair_styles_list[H.facial_hair_style]
+	if(H.facial_hairstyle && (FACEHAIR in species_traits) && (!facialhair_hidden || dynamic_fhair_suffix))
+		S = GLOB.facial_hairstyles_list[H.facial_hairstyle]
 		if(S)
 
 			//List of all valid dynamic_fhair_suffixes
@@ -450,8 +450,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				hair_overlay.icon = 'icons/mob/human_face.dmi'
 				hair_overlay.icon_state = "debrained"
 
-		else if(H.hair_style && (HAIR in species_traits))
-			S = GLOB.hair_styles_list[H.hair_style]
+		else if(H.hairstyle && (HAIR in species_traits))
+			S = GLOB.hairstyles_list[H.hairstyle]
 			if(S)
 
 				//List of all valid dynamic_hair_suffixes
@@ -1118,15 +1118,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.domutcheck()
 
 	if(radiation > RAD_MOB_HAIRLOSS)
-		if(prob(15) && !(H.hair_style == "Bald") && (HAIR in species_traits))
+		if(prob(15) && !(H.hairstyle == "Bald") && (HAIR in species_traits))
 			to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
 			addtimer(CALLBACK(src, .proc/go_bald, H), 50)
 
 /datum/species/proc/go_bald(mob/living/carbon/human/H)
 	if(QDELETED(H))	//may be called from a timer
 		return
-	H.facial_hair_style = "Shaved"
-	H.hair_style = "Bald"
+	H.facial_hairstyle = "Shaved"
+	H.hairstyle = "Bald"
 	H.update_hair()
 
 ////////////////
