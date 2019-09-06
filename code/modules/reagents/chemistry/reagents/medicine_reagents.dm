@@ -937,6 +937,7 @@
 	..()
 
 /datum/reagent/medicine/earthsblood/overdose_process(mob/living/M)
+	M.hallucination = min(max(0, M.hallucination + 5), 60)
 	M.adjustToxLoss(5 * REM, 0)
 	if(ishuman(M)) //monkeys get a free pass, since they're closer to nature or something. I mean, they still take the tox damage and stuff, but they don't get a pacifism brain trauma upon ODing.
 		var/mob/living/carbon/human/hippie = M
