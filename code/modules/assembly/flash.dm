@@ -301,7 +301,4 @@
 	description = "A powerful and versatile flashbulb device, with applications ranging from disorienting attackers to acting as visual receptors in robot production. This one has been modified to give it better burn out resistance and to greatly increase the range of area of effect flashings performed by it."
 	burn_out_resistance = 10
 	aoe_range = 7
-
-/obj//obj/item/assembly/flash/peacekeeper/Initialize()
-	add_atom_colour("#71CAE5", FIXED_COLOUR_PRIORITY)
-	..()
+	color = "#71CAE5"
