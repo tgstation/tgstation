@@ -857,6 +857,8 @@
 	return english_list(out, "something indescribable")
 
 /datum/reagents/proc/expose_temperature(var/temperature, var/coeff=0.02)
+	if(reagent_flags & NO_REACT) //stasis holders IE cryobeaker
+		return
 	var/temp_delta = (temperature - chem_temp) * coeff
 	if(temp_delta > 0)
 		chem_temp = min(chem_temp + max(temp_delta, 1), temperature)
