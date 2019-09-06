@@ -863,6 +863,9 @@
 	else
 		chem_temp = max(chem_temp + min(temp_delta, -1), temperature)
 	chem_temp = round(chem_temp)
+	for(var/i in reagent_list)
+		var/datum/reagent/R = i
+		R.on_temp_change()
 	handle_reactions()
 
 ///////////////////////////////////////////////////////////////////////////////////

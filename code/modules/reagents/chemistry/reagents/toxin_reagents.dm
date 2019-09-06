@@ -51,6 +51,8 @@
 	C.apply_effect(5,EFFECT_IRRADIATE,0)
 	return ..()
 
+#define	LIQUID_PLASMA_BP (50+T0C)
+
 /datum/reagent/toxin/plasma
 	name = "Plasma"
 	description = "Plasma in its liquid form."
@@ -66,17 +68,27 @@
 	C.adjustPlasma(20)
 	return ..()
 
+/datum/reagent/toxin/plasma/on_temp_change()
+	if(holder.chem_temp < LIQUID_PLASMA_BP)
+		return
+	if(holder.my_atom)
+		var/atom/A = holder.my_atom
+		A.atmos_spawn_air("plasma=[volume];TEMP=[holder.chem_temp]")
+		holder.del_reagent(type)
+
 /datum/reagent/toxin/plasma/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
 	var/temp = holder ? holder.chem_temp : T20C
-	O.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
+	if(temp >= LIQUID_PLASMA_BP)
+		O.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
 
 /datum/reagent/toxin/plasma/reaction_turf(turf/open/T, reac_volume)
-	if(istype(T))
-		var/temp = holder ? holder.chem_temp : T20C
+	if(!istype(T))
+		return
+	var/temp = holder ? holder.chem_temp : T20C
+	if(temp >= LIQUID_PLASMA_BP)
 		T.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
-	return
 
 /datum/reagent/toxin/plasma/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!
 	if(method == TOUCH || method == VAPOR)
