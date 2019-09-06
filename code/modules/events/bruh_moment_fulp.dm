@@ -13,6 +13,7 @@
 	for(var/mob/B in shuffle(GLOB.alive_mob_list))
 		if (ismob(B) && get_turf(B)) 	// SWAIN fix: on sleep(), ANYTHING can happen before the next character talks. Need to check if he exists or is in a location still, or else errors.
 			B.say(";bruh")				// ALSO: alive_mob_list seems to contain mobs with no location, so this is doubly important.
+			B.say("bruh")
 			sleep(0.2)
 
 /datum/round_event/bruh_moment/announce()

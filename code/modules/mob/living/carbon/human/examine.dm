@@ -228,6 +228,11 @@
 
 	if(bleedsuppress)
 		msg += "[t_He] [t_is] bandaged with something.\n"
+	else if (istype(dna) && istype(dna.species, /datum/species/beefman)) // FULP: Beefmen don't "bleed" perse. They let out juice based on temperature, not wounds.
+		if (bleed_rate >= 4)
+			msg += "<B>[t_His] natural juices are gushing out uncontrollably!</B>\n"
+		else if (bleed_rate >= 1)
+			msg += "<b>[t_His] natural juices are seeping from [t_his] meat.</b>\n"
 	else if(bleed_rate)
 		if(reagents.has_reagent(/datum/reagent/toxin/heparin, needs_metabolizing = TRUE))
 			msg += "<b>[t_He] [t_is] bleeding uncontrollably!</b>\n"
@@ -293,9 +298,6 @@
 				msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely.</span>\n"
 			else if(!client)
 				msg += "[t_He] [t_has] a blank, absent-minded stare and appears completely unresponsive to anything. [t_He] may snap out of it soon.\n"
-
-		if(digitalcamo)
-			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
 
 	if (length(msg))
 		. += "<span class='warning'>[msg.Join("")]</span>"

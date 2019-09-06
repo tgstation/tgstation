@@ -1,8 +1,3 @@
-
-#define BAD_ART 12.5
-#define GOOD_ART 25
-#define GREAT_ART 50
-
 /obj/structure/statue
 	name = "statue"
 	desc = "Placeholder. Yell at Firecage if you SOMEHOW see this."
@@ -29,10 +24,10 @@
 			if(!W.tool_start_check(user, amount=0))
 				return FALSE
 
-			user.visible_message("[user] is slicing apart the [name].", \
+			user.visible_message("<span class='notice'>[user] is slicing apart the [name].</span>", \
 								"<span class='notice'>You are slicing apart the [name]...</span>")
 			if(W.use_tool(src, user, 40, volume=50))
-				user.visible_message("[user] slices apart the [name].", \
+				user.visible_message("<span class='notice'>[user] slices apart the [name].</span>", \
 									"<span class='notice'>You slice apart the [name]!</span>")
 				deconstruct(TRUE)
 			return
@@ -255,7 +250,7 @@
 /obj/structure/statue/bananium/proc/honk()
 	if(!spam_flag)
 		spam_flag = TRUE
-		playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
 		addtimer(VARSET_CALLBACK(src, spam_flag, FALSE), 2 SECONDS)
 
 /////////////////////sandstone/////////////////////////////////////////

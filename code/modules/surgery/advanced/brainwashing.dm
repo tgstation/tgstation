@@ -36,8 +36,8 @@
 	if(!objective)
 		return -1
 	display_results(user, target, "<span class='notice'>You begin to brainwash [target]...</span>",
-		"[user] begins to fix [target]'s brain.",
-		"[user] begins to perform surgery on [target]'s brain.")
+		"<span class='notice'>[user] begins to fix [target]'s brain.</span>",
+		"<span class='notice'>[user] begins to perform surgery on [target]'s brain.</span>")
 
 /datum/surgery_step/brainwash/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(!target.mind)
@@ -47,8 +47,8 @@
 		to_chat(user, "<span class='warning'>You hear a faint buzzing from a device inside [target]'s brain, and the brainwashing is erased.</span>")
 		return FALSE
 	display_results(user, target, "<span class='notice'>You succeed in brainwashing [target].</span>",
-		"[user] successfully fixes [target]'s brain!",
-		"[user] completes the surgery on [target]'s brain.")
+		"<span class='notice'>[user] successfully fixes [target]'s brain!</span>",
+		"<span class='notice'>[user] completes the surgery on [target]'s brain.</span>")
 	to_chat(target, "<span class='userdanger'>A new compulsion fills your mind... you feel forced to obey it!</span>")
 	brainwash(target, objective)
 	message_admins("[ADMIN_LOOKUPFLW(user)] surgically brainwashed [ADMIN_LOOKUPFLW(target)] with the objective '[objective]'.")
@@ -59,7 +59,7 @@
 	if(target.getorganslot(ORGAN_SLOT_BRAIN))
 		display_results(user, target, "<span class='warning'>You screw up, bruising the brain tissue!</span>",
 			"<span class='warning'>[user] screws up, causing brain damage!</span>",
-			"[user] completes the surgery on [target]'s brain.")
+			"<span class='notice'>[user] completes the surgery on [target]'s brain.</span>")
 		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 40)
 	else
 		user.visible_message("<span class='warning'>[user] suddenly notices that the brain [user.p_they()] [user.p_were()] working on is not there anymore.", "<span class='warning'>You suddenly notice that the brain you were working on is not there anymore.</span>")

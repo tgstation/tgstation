@@ -72,7 +72,7 @@
 			else if(anchored)
 				to_chat(user,"<span class='notice'>You unsecure and disconnect [src].</span>")
 				setAnchored(FALSE)
-			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			return
 	return ..()
 
@@ -95,7 +95,7 @@
 		return
 	if(!songs.len)
 		to_chat(user,"<span class='warning'>Error: No music tracks have been authorized for your station. Petition Central Command to resolve this issue.</span>")
-		playsound(src,'sound/misc/compiler-failure.ogg', 25, 1)
+		playsound(src,'sound/misc/compiler-failure.ogg', 25, TRUE)
 		return
 	var/list/dat = list()
 	dat +="<div class='statusDisplay' style='text-align:center'>"
@@ -120,7 +120,7 @@
 			if(!active)
 				if(stop > world.time)
 					to_chat(usr, "<span class='warning'>Error: The device is still resetting from the last activation, it will be ready again in [DisplayTimeText(stop-world.time)].</span>")
-					playsound(src, 'sound/misc/compiler-failure.ogg', 50, 1)
+					playsound(src, 'sound/misc/compiler-failure.ogg', 50, TRUE)
 					return
 				activate_music()
 				START_PROCESSING(SSobj, src)
@@ -452,7 +452,7 @@
 		active = FALSE
 		STOP_PROCESSING(SSobj, src)
 		dance_over()
-		playsound(src,'sound/machines/terminal_off.ogg',50,1)
+		playsound(src,'sound/machines/terminal_off.ogg',50,TRUE)
 		update_icon()
 		stop = world.time + 100
 

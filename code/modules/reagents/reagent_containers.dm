@@ -43,7 +43,7 @@
 				return
 
 /obj/item/reagent_containers/attack(mob/M, mob/user, def_zone)
-	if(user.a_intent == INTENT_HARM)
+	if(user.a_intent == INTENT_HARM || attack_from_any_intent) // FULP Addition (so Food can pass thru this filter)
 		return ..()
 
 /obj/item/reagent_containers/proc/canconsume(mob/eater, mob/user)

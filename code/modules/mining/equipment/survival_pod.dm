@@ -57,7 +57,7 @@
 			used = FALSE
 			return
 
-		playsound(src, 'sound/effects/phasein.ogg', 100, 1)
+		playsound(src, 'sound/effects/phasein.ogg', 100, TRUE)
 
 		var/turf/T = deploy_location
 		if(!is_mining_level(T.z)) //only report capsules away from the mining/lavaland level
@@ -173,7 +173,7 @@
 		return TRUE
 
 	user.visible_message("<span class='warning'>[user] disassembles [src].</span>",
-		"<span class='notice'>You start to disassemble [src]...</span>", "You hear clanking and banging noises.")
+		"<span class='notice'>You start to disassemble [src]...</span>", "<span class='italics'>You hear clanking and banging noises.</span>")
 	if(I.use_tool(src, user, 20, volume=50))
 		new /obj/item/gps(loc)
 		qdel(src)
@@ -253,7 +253,7 @@
 		return TRUE
 
 	user.visible_message("<span class='warning'>[user] disassembles [src].</span>",
-		"<span class='notice'>You start to disassemble [src]...</span>", "You hear clanking and banging noises.")
+		"<span class='notice'>You start to disassemble [src]...</span>", "<span class='italics'>You hear clanking and banging noises.</span>")
 	if(I.use_tool(src, user, 20, volume=50))
 		deconstruct()
 	return TRUE

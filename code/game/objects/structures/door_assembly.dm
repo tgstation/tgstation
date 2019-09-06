@@ -64,7 +64,7 @@
 
 		if(mineral)
 			var/obj/item/stack/sheet/mineral/mineral_path = text2path("/obj/item/stack/sheet/mineral/[mineral]")
-			user.visible_message("[user] welds the [mineral] plating off the airlock assembly.", "You start to weld the [mineral] plating off the airlock assembly...")
+			user.visible_message("<span class='notice'>[user] welds the [mineral] plating off the airlock assembly.</span>", "<span class='notice'>You start to weld the [mineral] plating off the airlock assembly...</span>")
 			if(W.use_tool(src, user, 40, volume=50))
 				to_chat(user, "<span class='notice'>You weld the [mineral] plating off.</span>")
 				new mineral_path(loc, 2)
@@ -72,7 +72,7 @@
 				transfer_assembly_vars(src, PA)
 
 		else if(glass)
-			user.visible_message("[user] welds the glass panel out of the airlock assembly.", "You start to weld the glass panel out of the airlock assembly...")
+			user.visible_message("<span class='notice'>[user] welds the glass panel out of the airlock assembly.</span>", "<span class='notice'>You start to weld the glass panel out of the airlock assembly...</span>")
 			if(W.use_tool(src, user, 40, volume=50))
 				to_chat(user, "<span class='notice'>You weld the glass panel out.</span>")
 				if(heat_proof_finished)
@@ -83,7 +83,7 @@
 				glass = 0
 		else if(!anchored)
 			user.visible_message("<span class='warning'>[user] disassembles the airlock assembly.</span>", \
-								"You start to disassemble the airlock assembly...")
+								"<span class='notice'>You start to disassemble the airlock assembly...</span>")
 			if(W.use_tool(src, user, 40, volume=50))
 				to_chat(user, "<span class='notice'>You disassemble the airlock assembly.</span>")
 				deconstruct(TRUE)
@@ -97,7 +97,7 @@
 					break
 
 			if(door_check)
-				user.visible_message("[user] secures the airlock assembly to the floor.", \
+				user.visible_message("<span class='notice'>[user] secures the airlock assembly to the floor.</span>", \
 									 "<span class='notice'>You start to secure the airlock assembly to the floor...</span>", \
 									 "<span class='italics'>You hear wrenching.</span>")
 
@@ -111,7 +111,7 @@
 				to_chat(user, "There is another door here!")
 
 		else
-			user.visible_message("[user] unsecures the airlock assembly from the floor.", \
+			user.visible_message("<span class='notice'>[user] unsecures the airlock assembly from the floor.</span>", \
 								 "<span class='notice'>You start to unsecure the airlock assembly from the floor...</span>", \
 								 "<span class='italics'>You hear wrenching.</span>")
 			if(W.use_tool(src, user, 40, volume=100))
@@ -125,7 +125,7 @@
 		if(!W.tool_start_check(user, amount=1))
 			return
 
-		user.visible_message("[user] wires the airlock assembly.", \
+		user.visible_message("<span class='notice'>[user] wires the airlock assembly.</span>", \
 							"<span class='notice'>You start to wire the airlock assembly...</span>")
 		if(W.use_tool(src, user, 40, amount=1))
 			if(state != AIRLOCK_ASSEMBLY_NEEDS_WIRES)
@@ -135,7 +135,7 @@
 			name = "wired airlock assembly"
 
 	else if((W.tool_behaviour == TOOL_WIRECUTTER) && state == AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS )
-		user.visible_message("[user] cuts the wires from the airlock assembly.", \
+		user.visible_message("<span class='notice'>[user] cuts the wires from the airlock assembly.</span>", \
 							"<span class='notice'>You start to cut the wires from the airlock assembly...</span>")
 
 		if(W.use_tool(src, user, 40, volume=100))
@@ -148,7 +148,7 @@
 
 	else if(istype(W, /obj/item/electronics/airlock) && state == AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS )
 		W.play_tool_sound(src, 100)
-		user.visible_message("[user] installs the electronics into the airlock assembly.", \
+		user.visible_message("<span class='notice'>[user] installs the electronics into the airlock assembly.</span>", \
 							"<span class='notice'>You start to install electronics into the airlock assembly...</span>")
 		if(do_after(user, 40, target = src))
 			if( state != AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS )
@@ -163,7 +163,7 @@
 
 
 	else if((W.tool_behaviour == TOOL_CROWBAR) && state == AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER )
-		user.visible_message("[user] removes the electronics from the airlock assembly.", \
+		user.visible_message("<span class='notice'>[user] removes the electronics from the airlock assembly.</span>", \
 								"<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
 
 		if(W.use_tool(src, user, 40, volume=100))
@@ -187,8 +187,8 @@
 				if(!noglass)
 					if(!glass)
 						if(istype(G, /obj/item/stack/sheet/rglass) || istype(G, /obj/item/stack/sheet/glass))
-							playsound(src, 'sound/items/crowbar.ogg', 100, 1)
-							user.visible_message("[user] adds [G.name] to the airlock assembly.", \
+							playsound(src, 'sound/items/crowbar.ogg', 100, TRUE)
+							user.visible_message("<span class='notice'>[user] adds [G.name] to the airlock assembly.</span>", \
 												"<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
 							if(do_after(user, 40, target = src))
 								if(G.get_amount() < 1 || glass)
@@ -206,8 +206,8 @@
 						if(istype(G, /obj/item/stack/sheet/mineral) && G.sheettype)
 							var/M = G.sheettype
 							if(G.get_amount() >= 2)
-								playsound(src, 'sound/items/crowbar.ogg', 100, 1)
-								user.visible_message("[user] adds [G.name] to the airlock assembly.", \
+								playsound(src, 'sound/items/crowbar.ogg', 100, TRUE)
+								user.visible_message("<span class='notice'>[user] adds [G.name] to the airlock assembly.</span>", \
 												 "<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
 								if(do_after(user, 40, target = src))
 									if(G.get_amount() < 2 || mineral)
@@ -225,7 +225,7 @@
 					to_chat(user, "<span class='warning'>You cannot add [G] to [src]!</span>")
 
 	else if((W.tool_behaviour == TOOL_SCREWDRIVER) && state == AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER )
-		user.visible_message("[user] finishes the airlock.", \
+		user.visible_message("<span class='notice'>[user] finishes the airlock.</span>", \
 							 "<span class='notice'>You start finishing the airlock...</span>")
 
 		if(W.use_tool(src, user, 40, volume=100))

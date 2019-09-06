@@ -1,6 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - tweak: "Canned peaches and beans have to be opened before they can be eaten. When finished they leave an empty can, which is useless trash. Canned food no longer says it's been bitten when examined."
-  - soundadd: "Added a sound for opening canned food."
-  - imageadd: "Added Kryson's unused unopened/open/empty bean and peach can sprites."

@@ -83,7 +83,7 @@
 
 /obj/item/gun/magic/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is twisting [src] above [user.p_their()] head, releasing a magical blast! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(loc, fire_sound, 50, 1, -1)
+	playsound(loc, fire_sound, 50, TRUE, -1)
 	return (FIRELOSS)
 
 /obj/item/gun/magic/vv_edit_var(var_name, var_value)
