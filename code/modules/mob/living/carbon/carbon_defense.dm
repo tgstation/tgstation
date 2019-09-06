@@ -31,16 +31,11 @@
 		return wear_mask
 	if(check_glasses && glasses && (glasses.flags_cover & GLASSESCOVERSEYES))
 		return glasses
-/mob/living/carbon/is_mouth_pepper_proof(check_head = TRUE, check_mask = TRUE)
+/mob/living/carbon/is_pepper_proof(check_head = TRUE, check_mask = TRUE)
 	if(check_head && head && (head.flags_cover & HEADPEPPERPROOF))
 		return head
 	if(check_mask && wear_mask && (wear_mask.flags_cover & MASKPEPPERPROOF))
 		return wear_mask
-/mob/living/carbon/is_eyes_pepper_proof(check_head = TRUE, check_glasses = TRUE)
-	if(check_head && head && (head.flags_cover & HEADPEPPERPROOF))
-		return head
-	if(check_glasses && glasses && (glasses.flags_cover & EYESPEPPERPROOF))
-		return glasses
 	
 /mob/living/carbon/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
