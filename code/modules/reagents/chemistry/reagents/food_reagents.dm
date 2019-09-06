@@ -282,11 +282,11 @@
 		
 	var/mob/living/carbon/victim = M
 	if(method == TOUCH || method == VAPOR)
-		var/pepper_proof = victim.is_pepper_proof()
-	
+		var/mouth_pepper_proof = victim.is_mouth_pepper_proof()
+		var/eyes_pepper_proof  = victim.is_eyes_pepper_proof()
 		//check for protection
 		//actually handle the pepperspray effects
-		if (!(pepper_proof)) // you need both eye and mouth protection
+		if (!(eyes_pepper_proof && mouth_pepper_proof)) // you need both eye and mouth protection
 			if(prob(5))
 				victim.emote("scream")
 			victim.blur_eyes(5) // 10 seconds
