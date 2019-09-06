@@ -1486,9 +1486,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 				continue
 			var/atom/the_atom = i
 			ADD_TRAIT(the_atom,trait,source)
-	else if(!isatom(target))
-		return
-	else
+	else if(isatom(target))
 		var/atom/the_atom2 = target
 		ADD_TRAIT(the_atom2,trait,source)
 
@@ -1501,9 +1499,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 				continue
 			var/atom/the_atom = i
 			REMOVE_TRAIT(the_atom,trait,source)
-	else if(!isatom(target))
-		return
-	else
+	else if(isatom(target))
 		var/atom/the_atom2 = target
 		REMOVE_TRAIT(the_atom2,trait,source)
 
