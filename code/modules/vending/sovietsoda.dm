@@ -6,6 +6,7 @@
 	products = list(/obj/item/reagent_containers/food/drinks/drinkingglass/filled/soda = 30)
 	contraband = list(/obj/item/reagent_containers/food/drinks/drinkingglass/filled/cola = 20)
 	resistance_flags = FIRE_PROOF
+	refill_canister = /obj/item/vending_refill/sovietsoda
 	default_price = 1
 	extra_price = 1
 	payment_department = NO_FREEBIES

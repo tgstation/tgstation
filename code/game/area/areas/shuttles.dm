@@ -127,6 +127,11 @@
 	name = "Mining Shuttle"
 	blob_allowed = FALSE
 
+/area/shuttle/mining/large
+	name = "Mining Shuttle"
+	blob_allowed = FALSE
+	requires_power = TRUE
+
 /area/shuttle/labor
 	name = "Labor Camp Shuttle"
 	blob_allowed = FALSE

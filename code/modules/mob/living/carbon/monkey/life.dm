@@ -9,7 +9,7 @@
 	if (notransform)
 		return
 
-	if(..())
+	if(..() && !IS_IN_STASIS(src))
 
 		if(!client)
 			if(stat == CONSCIOUS)

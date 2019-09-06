@@ -36,7 +36,6 @@
 	//regarding the requirements lists: the minimum or maximum requirements must be non-zero.
 	//when in doubt, use MINIMUM_MOLE_COUNT.
 	var/list/min_requirements
-	var/list/max_requirements
 	var/exclude = FALSE //do it this way to allow for addition/removal of reactions midmatch in the future
 	var/priority = 100 //lower numbers are checked/react later than higher numbers. if two reactions have the same priority they may happen in either order
 	var/name = "reaction"
@@ -79,6 +78,43 @@
 	else if(location && location.water_vapor_gas_act())
 		air.gases[/datum/gas/water_vapor][MOLES] -= MOLES_GAS_VISIBLE
 		. = REACTING
+
+//tritium combustion: combustion of oxygen and tritium (treated as hydrocarbons). creates hotspots. exothermic
+/datum/gas_reaction/nitrous_decomp
+	priority = 0
+	name = "Nitrous Oxide Decomposition"
+	id = "nitrous_decomp"
+
+/datum/gas_reaction/nitrous_decomp/init_reqs()
+	min_requirements = list(
+		"TEMP" = N2O_DECOMPOSITION_MIN_ENERGY,
+		/datum/gas/nitrous_oxide = MINIMUM_MOLE_COUNT
+	)
+
+/datum/gas_reaction/nitrous_decomp/react(datum/gas_mixture/air, datum/holder)
+	var/energy_released = 0
+	var/old_heat_capacity = air.heat_capacity()
+	var/list/cached_gases = air.gases //this speeds things up because accessing datum vars is slow
+	var/temperature = air.temperature
+	var/burned_fuel = 0
+
+
+	burned_fuel = max(0,0.00002*(temperature-(0.00001*(temperature**2))))*cached_gases[/datum/gas/nitrous_oxide][MOLES]
+	cached_gases[/datum/gas/nitrous_oxide][MOLES] -= burned_fuel
+
+	if(burned_fuel)
+		energy_released += (N2O_DECOMPOSITION_ENERGY_RELEASED * burned_fuel)
+
+		ASSERT_GAS(/datum/gas/oxygen, air)
+		cached_gases[/datum/gas/oxygen][MOLES] += burned_fuel/2
+		ASSERT_GAS(/datum/gas/nitrogen, air)
+		cached_gases[/datum/gas/nitrogen][MOLES] += burned_fuel
+
+		var/new_heat_capacity = air.heat_capacity()
+		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+			air.temperature = (temperature*old_heat_capacity + energy_released)/new_heat_capacity
+		return REACTING
+	return NO_REACTION
 
 //tritium combustion: combustion of oxygen and tritium (treated as hydrocarbons). creates hotspots. exothermic
 /datum/gas_reaction/tritfire

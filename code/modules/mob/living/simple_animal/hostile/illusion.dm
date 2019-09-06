@@ -6,7 +6,7 @@
 	icon_living = "static"
 	icon_dead = "null"
 	gender = NEUTER
-	mob_biotypes = list()
+	mob_biotypes = NONE
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	a_intent = INTENT_HARM
@@ -44,7 +44,7 @@
 
 /mob/living/simple_animal/hostile/illusion/examine(mob/user)
 	if(parent_mob)
-		parent_mob.examine(user)
+		return parent_mob.examine(user)
 	else
 		return ..()
 

@@ -3,7 +3,7 @@
 	max_stages = 3
 	spread_text = "Airborne"
 	cure_text = "Spaceacillin"
-	cures = list("spaceacillin")
+	cures = list(/datum/reagent/medicine/spaceacillin)
 	cure_chance = 10
 	agent = "H13N1 flu virion"
 	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)

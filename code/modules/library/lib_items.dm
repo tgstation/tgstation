@@ -25,18 +25,18 @@
 	var/list/allowed_books = list(/obj/item/book, /obj/item/spellbook, /obj/item/storage/book) //Things allowed in the bookcase
 
 /obj/structure/bookcase/examine(mob/user)
-	..()
+	. = ..()
 	if(!anchored)
-		to_chat(user, "<span class='notice'>The <i>bolts</i> on the bottom are unsecured.</span>")
-	if(anchored)
-		to_chat(user, "<span class='notice'>It's secured in place with <b>bolts</b>.</span>")
+		. += "<span class='notice'>The <i>bolts</i> on the bottom are unsecured.</span>"
+	else
+		. += "<span class='notice'>It's secured in place with <b>bolts</b>.</span>"
 	switch(state)
 		if(0)
-			to_chat(user, "<span class='notice'>There's a <b>small crack</b> visible on the back panel.</span>")
+			. += "<span class='notice'>There's a <b>small crack</b> visible on the back panel.</span>"
 		if(1)
-			to_chat(user, "<span class='notice'>There's space inside for a <i>wooden</i> shelf.</span>")
+			. += "<span class='notice'>There's space inside for a <i>wooden</i> shelf.</span>"
 		if(2)
-			to_chat(user, "<span class='notice'>There's a <b>small crack</b> visible on the shelf.</span>")
+			. += "<span class='notice'>There's a <b>small crack</b> visible on the shelf.</span>"
 
 /obj/structure/bookcase/Initialize(mapload)
 	. = ..()
@@ -78,7 +78,7 @@
 				state = 0
 
 		if(2)
-			GET_COMPONENT_FROM(STR, /datum/component/storage, I)
+			var/datum/component/storage/STR = I.GetComponent(/datum/component/storage)
 			if(is_type_in_list(I, allowed_books))
 				if(!user.transferItemToLoc(I, src))
 					return
@@ -203,7 +203,7 @@
 		return
 	if(dat)
 		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
-		user.visible_message("[user] opens a book titled \"[title]\" and begins reading intently.")
+		user.visible_message("<span class='notice'>[user] opens a book titled \"[title]\" and begins reading intently.</span>")
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_nerd", /datum/mood_event/book_nerd)
 		onclose(user, "book")
 	else
@@ -213,7 +213,7 @@
 /obj/item/book/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/pen))
 		if(is_blind(user))
-			to_chat(user, "<span class='warning'> As you are trying to write on the book, you suddenly feel very stupid!</span>")
+			to_chat(user, "<span class='warning'>As you are trying to write on the book, you suddenly feel very stupid!</span>")
 			return
 		if(unique)
 			to_chat(user, "<span class='warning'>These pages don't seem to take the ink well! Looks like you can't modify it.</span>")

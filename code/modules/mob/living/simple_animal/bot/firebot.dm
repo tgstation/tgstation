@@ -132,7 +132,7 @@
 		extinguish_people = TRUE
 
 		internal_ext = new /obj/item/extinguisher(src)
-		internal_ext.chem = "clf3" //Refill the internal extinguisher with liquid fire
+		internal_ext.chem = /datum/reagent/clf3 //Refill the internal extinguisher with liquid fire
 		internal_ext.power = 3
 		internal_ext.safety = FALSE
 		internal_ext.precision = FALSE
@@ -209,10 +209,10 @@
 		if((speech_cooldown + SPEECH_INTERVAL) < world.time)
 			if(ishuman(target_fire))
 				speak("Stop, drop and roll!")
-				playsound(src, "sound/voice/firebot/stopdropnroll.ogg", 50, 0)
+				playsound(src, "sound/voice/firebot/stopdropnroll.ogg", 50, FALSE)
 			else
 				speak("Extinguishing!")
-				playsound(src, "sound/voice/firebot/extinguishing.ogg", 50, 0)
+				playsound(src, "sound/voice/firebot/extinguishing.ogg", 50, FALSE)
 			speech_cooldown = world.time
 
 			flick("firebot1_use", src)
@@ -265,7 +265,7 @@
 	if(is_burning(scan_target))
 		if((detected_cooldown + DETECTED_VOICE_INTERVAL) < world.time)
 			speak("Fire detected!")
-			playsound(src, "sound/voice/firebot/detected.ogg", 50, 0)
+			playsound(src, "sound/voice/firebot/detected.ogg", 50, FALSE)
 			detected_cooldown = world.time
 		result = scan_target
 

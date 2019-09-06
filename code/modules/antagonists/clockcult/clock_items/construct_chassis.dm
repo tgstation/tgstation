@@ -27,7 +27,7 @@
 
 /obj/item/clockwork/construct_chassis/examine(mob/user)
 	clockwork_desc = "[clockwork_desc]<br>[construct_desc]"
-	..()
+	. = ..()
 	clockwork_desc = initial(clockwork_desc)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
@@ -99,12 +99,6 @@
 	if(infinite_resources)
 		//During rounds where they can't interact with the station, let them experiment with builds
 		construct_type = /mob/living/simple_animal/drone/cogscarab/ratvar
-	if(!seasonal_hat)
-		var/obj/item/drone_shell/D = locate() in GLOB.poi_list
-		if(D && D.possible_seasonal_hats.len)
-			seasonal_hat = pick(D.possible_seasonal_hats)
-		else
-			seasonal_hat = "none"
 
 /obj/item/clockwork/construct_chassis/cogscarab/post_spawn(mob/living/construct)
 	if(infinite_resources) //Allow them to build stuff and recite scripture

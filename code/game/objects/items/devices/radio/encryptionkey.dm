@@ -21,7 +21,7 @@
 		for(var/i in channels)
 			examine_text_list += "[GLOB.channel_tokens[i]] - [lowertext(i)]"
 
-		to_chat(user, "<span class='notice'>It can access the following channels; [jointext(examine_text_list, ", ")].</span>")
+		. += "<span class='notice'>It can access the following channels; [jointext(examine_text_list, ", ")].</span>"
 
 /obj/item/encryptionkey/syndicate
 	name = "syndicate encryption key"

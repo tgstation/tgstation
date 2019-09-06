@@ -181,6 +181,15 @@
 		return
 	SEND_SIGNAL(host_mob, COMSIG_NANITE_SIGNAL, code, source)
 
+/datum/nanite_program/relay/proc/relay_comm_signal(comm_code, relay_code, comm_message)
+	if(!activated)
+		return
+	if(!host_mob)
+		return
+	if(relay_code != relay_channel)
+		return
+	SEND_SIGNAL(host_mob, COMSIG_NANITE_COMM_SIGNAL, comm_code, comm_message)
+
 /datum/nanite_program/metabolic_synthesis
 	name = "Metabolic Synthesis"
 	desc = "The nanites use the metabolic cycle of the host to speed up their replication rate, using their extra nutrition as fuel."
@@ -237,7 +246,7 @@
 	if(prob(10))
 		var/list/mob/living/target_hosts = list()
 		for(var/mob/living/L in oview(5, host_mob))
-			if(!(MOB_ORGANIC in L.mob_biotypes) && !(MOB_UNDEAD in L.mob_biotypes))
+			if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
 				continue
 			target_hosts += L
 		if(!target_hosts.len)
@@ -261,7 +270,7 @@
 		return
 	var/rep_rate = round(nanites.nanite_volume / 50, 1) //0.5 per 50 nanite volume
 	rep_rate *= 0.5
-	nanites.adjust_nanites(rep_rate)
+	nanites.adjust_nanites(null, rep_rate)
 	if(prob(rep_rate))
 		var/datum/nanite_program/fault = pick(nanites.programs)
 		if(fault == src)

@@ -5,7 +5,6 @@
 	unanchored_icon = "wall_gear"
 	climbable = TRUE
 	max_integrity = 100
-	layer = BELOW_OBJ_LAYER
 	construction_value = 3
 	desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, or just climb over it."
 	break_message = "<span class='warning'>The gear breaks apart into shards of alloy!</span>"
@@ -60,7 +59,7 @@
 				if(anchored)
 					T.PlaceOnTop(/turf/closed/wall/clockwork)
 				else
-					T.PlaceOnTop(/turf/open/floor/clockwork)
+					T.PlaceOnTop(/turf/open/floor/clockwork, flags = CHANGETURF_INHERIT_AIR)
 					new /obj/structure/falsewall/brass(T)
 				qdel(src)
 			else

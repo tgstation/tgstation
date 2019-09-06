@@ -12,6 +12,7 @@
 	say_mod = "poofs" //what does a mushroom sound like
 	species_traits = list(MUTCOLORS, NOEYESPRITES,NOFLASH, NO_UNDERWEAR)
 	inherent_traits = list(TRAIT_NOBREATH)
+	inherent_factions = list("mushroom")
 	speedmod = 1.5 //faster than golems but not by much
 
 	punchdamagelow = 6
@@ -40,20 +41,18 @@
 		if(!H.dna.features["caps"])
 			H.dna.features["caps"] = "Round"
 			handle_mutant_bodyparts(H)
-		H.faction |= "mushroom"
 		mush = new(null)
 		mush.teach(H)
 
 /datum/species/mush/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	C.faction -= "mushroom"
 	mush.remove(C)
 	QDEL_NULL(mush)
 
 /datum/species/mush/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.id == "weedkiller")
+	if(chem.type == /datum/reagent/toxin/plantbgone/weedkiller)
 		H.adjustToxLoss(3)
-		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
+		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
 		return TRUE
 
 /datum/species/mush/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)

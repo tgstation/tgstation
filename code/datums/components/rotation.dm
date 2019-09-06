@@ -49,7 +49,7 @@
 		RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/HandRot)
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
 	if(rotation_flags & ROTATION_WRENCH)
-		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/WrenchRot)
+		RegisterSignal(parent, COMSIG_ATOM_WRENCH_ACT, .proc/WrenchRot)
 
 /datum/component/simple_rotation/proc/add_verbs()
 	if(rotation_flags & ROTATION_VERBS)
@@ -98,9 +98,9 @@
 	remove_verbs()
 	. = ..()
 
-/datum/component/simple_rotation/proc/ExamineMessage(datum/source, mob/user)
+/datum/component/simple_rotation/proc/ExamineMessage(datum/source, mob/user, list/examine_list)
 	if(rotation_flags & ROTATION_ALTCLICK)
-		to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
+		examine_list += "<span class='notice'>Alt-click to rotate it clockwise.</span>"
 
 /datum/component/simple_rotation/proc/HandRot(datum/source, mob/user, rotation = default_rotation_direction)
 	if(!can_be_rotated.Invoke(user, rotation) || !can_user_rotate.Invoke(user, rotation))
@@ -110,9 +110,8 @@
 /datum/component/simple_rotation/proc/WrenchRot(datum/source, obj/item/I, mob/living/user)
 	if(!can_be_rotated.Invoke(user,default_rotation_direction) || !can_user_rotate.Invoke(user,default_rotation_direction))
 		return
-	if(I.tool_behaviour == TOOL_WRENCH)
-		BaseRot(user,default_rotation_direction)
-		return COMPONENT_NO_AFTERATTACK
+	BaseRot(user,default_rotation_direction)
+	return COMPONENT_BLOCK_TOOL_ATTACK
 
 /datum/component/simple_rotation/proc/BaseRot(mob/user,rotation_type)
 	var/atom/movable/AM = parent
@@ -143,7 +142,7 @@
 	set name = "Rotate Clockwise"
 	set category = "Object"
 	set src in oview(1)
-	GET_COMPONENT(rotcomp,/datum/component/simple_rotation)
+	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
 	if(rotcomp)
 		rotcomp.HandRot(null,usr,ROTATION_CLOCKWISE)
 
@@ -151,7 +150,7 @@
 	set name = "Rotate Counter-Clockwise"
 	set category = "Object"
 	set src in oview(1)
-	GET_COMPONENT(rotcomp,/datum/component/simple_rotation)
+	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
 	if(rotcomp)
 		rotcomp.HandRot(null,usr,ROTATION_COUNTERCLOCKWISE)
 
@@ -159,6 +158,6 @@
 	set name = "Flip"
 	set category = "Object"
 	set src in oview(1)
-	GET_COMPONENT(rotcomp,/datum/component/simple_rotation)
+	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
 	if(rotcomp)
 		rotcomp.HandRot(null,usr,ROTATION_FLIP)

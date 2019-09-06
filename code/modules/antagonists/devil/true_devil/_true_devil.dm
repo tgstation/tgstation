@@ -64,26 +64,25 @@
 
 
 /mob/living/carbon/true_devil/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is [icon2html(src, user)] <b>[src]</b>!\n"
+	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] <b>[src]</b>!")
 
 	//Left hand items
 	for(var/obj/item/I in held_items)
 		if(!(I.item_flags & ABSTRACT))
-			msg += "It is holding [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))].\n"
+			. += "It is holding [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))]."
 
 	//Braindead
 	if(!client && stat != DEAD)
-		msg += "The devil seems to be in deep contemplation.\n"
+		. += "The devil seems to be in deep contemplation."
 
 	//Damaged
 	if(stat == DEAD)
-		msg += "<span class='deadsay'>The hellfire seems to have been extinguished, for now at least.</span>\n"
+		. += "<span class='deadsay'>The hellfire seems to have been extinguished, for now at least.</span>"
 	else if(health < (maxHealth/10))
-		msg += "<span class='warning'>You can see hellfire inside its gaping wounds.</span>\n"
+		. += "<span class='warning'>You can see hellfire inside its gaping wounds.</span>"
 	else if(health < (maxHealth/2))
-		msg += "<span class='warning'>You can see hellfire inside its wounds.</span>\n"
-	msg += "*---------*</span>"
-	to_chat(user, msg)
+		. += "<span class='warning'>You can see hellfire inside its wounds.</span>"
+	. += "*---------*</span>"
 
 /mob/living/carbon/true_devil/IsAdvancedToolUser()
 	return 1
@@ -165,9 +164,9 @@
 		switch(M.a_intent)
 			if ("harm")
 				var/damage = rand(1, 5)
-				playsound(loc, "punch", 25, 1, -1)
-				visible_message("<span class='danger'>[M] has punched [src]!</span>", \
-						"<span class='userdanger'>[M] has punched [src]!</span>")
+				playsound(loc, "punch", 25, TRUE, -1)
+				visible_message("<span class='danger'>[M] punches [src]!</span>", \
+						"<span class='userdanger'>[M] punches you!</span>")
 				adjustBruteLoss(damage)
 				log_combat(M, src, "attacked")
 				updatehealth()
@@ -175,19 +174,20 @@
 				if (!(mobility_flags & MOBILITY_STAND) && !ascended) //No stealing the arch devil's pitchfork.
 					if (prob(5))
 						Unconscious(40)
-						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 						log_combat(M, src, "pushed")
-						visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
-							"<span class='userdanger'>[M] has pushed down [src]!</span>")
+						visible_message("<span class='danger'>[M] pushes [src] down!</span>", \
+							"<span class='userdanger'>[M] pushes you down!</span>")
 					else
 						if (prob(25))
 							dropItemToGround(get_active_held_item())
-							playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-							visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
-							"<span class='userdanger'>[M] has disarmed [src]!</span>")
+							playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+							visible_message("<span class='danger'>[M] disarms [src]!</span>", \
+							"<span class='userdanger'>[M] disarms you!</span>")
 						else
-							playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-							visible_message("<span class='danger'>[M] has attempted to disarm [src]!</span>")
+							playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
+							visible_message("<span class='danger'>[M] fails to disarm [src]!</span>", \
+							"<span class='userdanger'>[M] fails to disarm you!</span>")
 
 /mob/living/carbon/true_devil/handle_breathing()
 	// devils do not need to breathe
@@ -199,11 +199,11 @@
 	if(!ascended)
 		var/b_loss
 		switch (severity)
-			if (1)
+			if (EXPLODE_DEVASTATE)
 				b_loss = 500
-			if (2)
+			if (EXPLODE_HEAVY)
 				b_loss = 150
-			if(3)
+			if (EXPLODE_LIGHT)
 				b_loss = 30
 		if(has_bane(BANE_LIGHT))
 			b_loss *=2

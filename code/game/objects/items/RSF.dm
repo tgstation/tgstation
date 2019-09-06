@@ -20,8 +20,8 @@ RSF
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/rsf/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>It currently holds [matter]/30 fabrication-units.</span>")
+	. = ..()
+	. += "<span class='notice'>It currently holds [matter]/30 fabrication-units.</span>"
 
 /obj/item/rsf/cyborg
 	matter = 30
@@ -33,13 +33,13 @@ RSF
 			return
 		qdel(W)
 		matter += 10
-		playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
+		playsound(src.loc, 'sound/machines/click.ogg', 10, TRUE)
 		to_chat(user, "The RSF now holds [matter]/30 fabrication-units.")
 	else
 		return ..()
 
 /obj/item/rsf/attack_self(mob/user)
-	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+	playsound(src.loc, 'sound/effects/pop.ogg', 50, FALSE)
 	switch(mode)
 		if(5)
 			mode = 1
@@ -75,7 +75,7 @@ RSF
 		return
 
 	var/turf/T = get_turf(A)
-	playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
+	playsound(src.loc, 'sound/machines/click.ogg', 10, TRUE)
 	switch(mode)
 		if(1)
 			to_chat(user, "Dispensing Drinking Glass...")
@@ -120,8 +120,8 @@ RSF
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/cookiesynth/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>It currently holds [matter]/10 cookie-units.</span>")
+	. = ..()
+	. += "<span class='notice'>It currently holds [matter]/10 cookie-units.</span>"
 
 /obj/item/cookiesynth/attackby()
 	return
@@ -169,11 +169,11 @@ RSF
 			to_chat(user, "<span class='warning'>You do not have enough power to use [src].</span>")
 			return
 	var/turf/T = get_turf(A)
-	playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
+	playsound(src.loc, 'sound/machines/click.ogg', 10, TRUE)
 	to_chat(user, "Fabricating Cookie..")
 	var/obj/item/reagent_containers/food/snacks/cookie/S = new /obj/item/reagent_containers/food/snacks/cookie(T)
 	if(toxin)
-		S.reagents.add_reagent("chloralhydratedelayed", 10)
+		S.reagents.add_reagent(/datum/reagent/toxin/chloralhydrate, 10)
 	if (iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		R.cell.charge -= 100

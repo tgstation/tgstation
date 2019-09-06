@@ -8,8 +8,8 @@
 	var/unres_sides = 0 //unrestricted sides, or sides of the airlock that will open regardless of access
 
 /obj/item/electronics/airlock/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Has a neat <i>selection menu</i> for modifying airlock access levels.</span>")
+	. = ..()
+	. += "<span class='notice'>Has a neat <i>selection menu</i> for modifying airlock access levels.</span>"
 
 /obj/item/electronics/airlock/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 													datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)

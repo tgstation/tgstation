@@ -9,7 +9,7 @@
 	disease_amount = 0
 	volume = 10
 	amount_per_transfer_from_this = 0
-	list_reagents = list("honey" = 5)
+	list_reagents = list(/datum/reagent/consumable/honey = 5)
 	grind_results = list()
 	var/honey_color = ""
 
@@ -22,7 +22,7 @@
 
 /obj/item/reagent_containers/honeycomb/update_icon()
 	cut_overlays()
-	var/mutable_appearance/honey_overlay = mutable_appearance(icon, "honey")
+	var/mutable_appearance/honey_overlay = mutable_appearance(icon, /datum/reagent/consumable/honey)
 	if(honey_color)
 		honey_overlay.icon_state = "greyscale_honey"
 		honey_overlay.color = honey_color
@@ -34,7 +34,7 @@
 	if(istype(R))
 		name = "honeycomb ([R.name])"
 		honey_color = R.color
-		reagents.add_reagent(R.id,5)
+		reagents.add_reagent(R.type,5)
 	else
 		honey_color = ""
 	update_icon()

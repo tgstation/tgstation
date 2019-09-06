@@ -2,7 +2,7 @@
 	name = "Inflict Handler"
 	desc = "This spell blinds and/or destroys/damages/heals and/or knockdowns/stuns the target."
 
-	var/amt_knockdown = 0
+	var/amt_paralyze = 0
 	var/amt_unconscious = 0
 	var/amt_stun = 0
 
@@ -27,7 +27,7 @@
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/cast(list/targets,mob/user = usr)
 	for(var/mob/living/target in targets)
-		playsound(target,sound, 50,1)
+		playsound(target,sound, 50,TRUE)
 		if(target.anti_magic_check(check_anti_magic, check_holy))
 			return
 		switch(destroys)
@@ -44,7 +44,7 @@
 		target.adjustToxLoss(amt_dam_tox)
 		target.adjustOxyLoss(amt_dam_oxy)
 		//disabling
-		target.Paralyze(amt_knockdown)
+		target.Paralyze(amt_paralyze)
 		target.Unconscious(amt_unconscious)
 		target.Stun(amt_stun)
 

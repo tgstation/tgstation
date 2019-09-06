@@ -5,6 +5,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 	))
 
 /proc/DuplicateObject(atom/original, perfectcopy = TRUE, sameloc, atom/newloc = null, nerf, holoitem)
+	RETURN_TYPE(original.type)
 	if(!original)
 		return
 	var/atom/O

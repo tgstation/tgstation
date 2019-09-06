@@ -25,7 +25,7 @@
 	return ..()
 
 /mob/living/carbon/human/experience_pressure_difference()
-	playsound(src, 'sound/effects/space_wind.ogg', 50, 1)
+	playsound(src, 'sound/effects/space_wind.ogg', 50, TRUE)
 	if(shoes && istype(shoes, /obj/item/clothing))
 		var/obj/item/clothing/S = shoes
 		if (S.clothing_flags & NOSLIP)
@@ -43,8 +43,6 @@
 
 /mob/living/carbon/human/Move(NewLoc, direct)
 	. = ..()
-	for(var/datum/mutation/human/HM in dna.mutations)
-		HM.on_move(NewLoc)
 
 	if(shoes)
 		if(mobility_flags & MOBILITY_STAND)

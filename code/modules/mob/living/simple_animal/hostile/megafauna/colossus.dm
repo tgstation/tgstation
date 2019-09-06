@@ -37,26 +37,67 @@ Difficulty: Very Hard
 	armour_penetration = 40
 	melee_damage_lower = 40
 	melee_damage_upper = 40
-	speed = 1
+	speed = 10
 	move_to_delay = 10
-	ranged = 1
+	ranged = TRUE
 	pixel_x = -32
-	del_on_death = 1
-	internal_type = /obj/item/gps/internal/colossus
+	del_on_death = TRUE
+	gps_name = "Angelic Signal"
 	medal_type = BOSS_MEDAL_COLOSSUS
 	score_type = COLOSSUS_SCORE
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/colossus/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/colossus)
 	deathmessage = "disintegrates, leaving a glowing core in its wake."
 	deathsound = 'sound/magic/demon_dies.ogg'
+	attack_action_types = list(/datum/action/innate/megafauna_attack/spiral_attack,
+							   /datum/action/innate/megafauna_attack/aoe_attack,
+							   /datum/action/innate/megafauna_attack/shotgun,
+							   /datum/action/innate/megafauna_attack/alternating_cardinals)
+	small_sprite_type = /datum/action/small_sprite/megafauna/colossus
 
-/mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/L)
-	visible_message("<span class='colossus'>[src] disintegrates [L]!</span>")
-	L.dust()
+/datum/action/innate/megafauna_attack/spiral_attack
+	name = "Spiral Shots"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "sniper_zoom"
+	chosen_message = "<span class='colossus'>You are now firing in a spiral.</span>"
+	chosen_attack_num = 1
+
+/datum/action/innate/megafauna_attack/aoe_attack
+	name = "All Directions"
+	icon_icon = 'icons/effects/effects.dmi'
+	button_icon_state = "at_shield2"
+	chosen_message = "<span class='colossus'>You are now firing in all directions.</span>"
+	chosen_attack_num = 2
+
+/datum/action/innate/megafauna_attack/shotgun
+	name = "Shotgun Fire"
+	icon_icon = 'icons/obj/guns/projectile.dmi'
+	button_icon_state = "shotgun"
+	chosen_message = "<span class='colossus'>You are now firing shotgun shots where you aim.</span>"
+	chosen_attack_num = 3
+
+/datum/action/innate/megafauna_attack/alternating_cardinals
+	name = "Alternating Shots"
+	icon_icon = 'icons/obj/guns/projectile.dmi'
+	button_icon_state = "pistol"
+	chosen_message = "<span class='colossus'>You are now firing in alternating cardinal directions.</span>"
+	chosen_attack_num = 4
 
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
 	anger_modifier = CLAMP(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + 120
+
+	if(client)
+		switch(chosen_attack)
+			if(1)
+				select_spiral_attack()
+			if(2)
+				random_shots()
+			if(3)
+				blast()
+			if(4)
+				alternating_dir_shots()
+		return
 
 	if(enrage(target))
 		if(move_to_delay == initial(move_to_delay))
@@ -70,24 +111,112 @@ Difficulty: Very Hard
 		move_to_delay = initial(move_to_delay)
 
 	if(prob(20+anger_modifier)) //Major attack
-		telegraph()
-
-		if(health < maxHealth/3)
-			double_spiral()
-		else
-			visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
-			INVOKE_ASYNC(src, .proc/spiral_shoot, pick(TRUE, FALSE))
-
+		select_spiral_attack()
 	else if(prob(20))
-		ranged_cooldown = world.time + 30
 		random_shots()
 	else
 		if(prob(70))
-			ranged_cooldown = world.time + 20
 			blast()
 		else
-			ranged_cooldown = world.time + 40
-			INVOKE_ASYNC(src, .proc/alternating_dir_shots)
+			alternating_dir_shots()
+
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/enrage(mob/living/L)
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(H.mind)
+			if(istype(H.mind.martial_art, /datum/martial_art/the_sleeping_carp))
+				. = TRUE
+
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
+	ranged_cooldown = world.time + 40
+	dir_shots(GLOB.diagonals)
+	SLEEP_CHECK_DEATH(10)
+	dir_shots(GLOB.cardinals)
+	SLEEP_CHECK_DEATH(10)
+	dir_shots(GLOB.diagonals)
+	SLEEP_CHECK_DEATH(10)
+	dir_shots(GLOB.cardinals)
+
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/select_spiral_attack()
+	telegraph()
+	if(health < maxHealth/3)
+		return double_spiral()
+	visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
+	return spiral_shoot()
+
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/double_spiral()
+	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
+
+	SLEEP_CHECK_DEATH(10)
+	INVOKE_ASYNC(src, .proc/spiral_shoot, FALSE)
+	INVOKE_ASYNC(src, .proc/spiral_shoot, TRUE)
+
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/spiral_shoot(negative = pick(TRUE, FALSE), counter_start = 8)
+	var/turf/start_turf = get_step(src, pick(GLOB.alldirs))
+	var/counter = counter_start
+	for(var/i in 1 to 80)
+		if(negative)
+			counter--
+		else
+			counter++
+		if(counter > 16)
+			counter = 1
+		if(counter < 1)
+			counter = 16
+		shoot_projectile(start_turf, counter * 22.5)
+		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
+		SLEEP_CHECK_DEATH(1)
+
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/shoot_projectile(turf/marker, set_angle)
+	if(!isnum(set_angle) && (!marker || marker == loc))
+		return
+	var/turf/startloc = get_turf(src)
+	var/obj/item/projectile/P = new /obj/item/projectile/colossus(startloc)
+	P.preparePixelProjectile(marker, startloc)
+	P.firer = src
+	if(target)
+		P.original = target
+	P.fire(set_angle)
+
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/random_shots()
+	ranged_cooldown = world.time + 30
+	var/turf/U = get_turf(src)
+	playsound(U, 'sound/magic/clockwork/invoke_general.ogg', 300, TRUE, 5)
+	for(var/T in RANGE_TURFS(12, U) - U)
+		if(prob(5))
+			shoot_projectile(T)
+
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/blast(set_angle)
+	ranged_cooldown = world.time + 20
+	var/turf/target_turf = get_turf(target)
+	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 200, TRUE, 2)
+	newtonian_move(get_dir(target_turf, src))
+	var/angle_to_target = Get_Angle(src, target_turf)
+	if(isnum(set_angle))
+		angle_to_target = set_angle
+	var/static/list/colossus_shotgun_shot_angles = list(12.5, 7.5, 2.5, -2.5, -7.5, -12.5)
+	for(var/i in colossus_shotgun_shot_angles)
+		shoot_projectile(target_turf, angle_to_target + i)
+
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/dir_shots(list/dirs)
+	if(!islist(dirs))
+		dirs = GLOB.alldirs.Copy()
+	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 200, TRUE, 2)
+	for(var/d in dirs)
+		var/turf/E = get_step(src, d)
+		shoot_projectile(E)
+
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/telegraph()
+	for(var/mob/M in range(10,src))
+		if(M.client)
+			flash_color(M.client, "#C80000", 1)
+			shake_camera(M, 4, 3)
+	playsound(src, 'sound/magic/clockwork/narsie_attack.ogg', 200, TRUE)
+
+
+/mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/L)
+	visible_message("<span class='colossus'>[src] disintegrates [L]!</span>")
+	L.dust()
 
 /obj/effect/temp_visual/at_shield
 	name = "anti-toolbox field"
@@ -114,91 +243,6 @@ Difficulty: Very Hard
 		AT.pixel_y += random_y
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/enrage(mob/living/L)
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		if(H.mind)
-			if(H.mind.martial_art && prob(H.mind.martial_art.deflection_chance))
-				. = TRUE
-
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
-	dir_shots(GLOB.diagonals)
-	sleep(10)
-	dir_shots(GLOB.cardinals)
-	sleep(10)
-	dir_shots(GLOB.diagonals)
-	sleep(10)
-	dir_shots(GLOB.cardinals)
-
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/double_spiral()
-	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
-
-	sleep(10)
-	INVOKE_ASYNC(src, .proc/spiral_shoot)
-	INVOKE_ASYNC(src, .proc/spiral_shoot, TRUE)
-
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/spiral_shoot(negative = FALSE, counter_start = 8)
-	var/turf/start_turf = get_step(src, pick(GLOB.alldirs))
-	var/counter = counter_start
-	for(var/i in 1 to 80)
-		if(negative)
-			counter--
-		else
-			counter++
-		if(counter > 16)
-			counter = 1
-		if(counter < 1)
-			counter = 16
-		shoot_projectile(start_turf, counter * 22.5)
-		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, 1)
-		sleep(1)
-
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/shoot_projectile(turf/marker, set_angle)
-	if(!isnum(set_angle) && (!marker || marker == loc))
-		return
-	var/turf/startloc = get_turf(src)
-	var/obj/item/projectile/P = new /obj/item/projectile/colossus(startloc)
-	P.preparePixelProjectile(marker, startloc)
-	P.firer = src
-	if(target)
-		P.original = target
-	P.fire(set_angle)
-
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/random_shots()
-	var/turf/U = get_turf(src)
-	playsound(U, 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
-	for(var/T in RANGE_TURFS(12, U) - U)
-		if(prob(5))
-			shoot_projectile(T)
-
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/blast(set_angle)
-	var/turf/target_turf = get_turf(target)
-	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
-	newtonian_move(get_dir(target_turf, src))
-	var/angle_to_target = Get_Angle(src, target_turf)
-	if(isnum(set_angle))
-		angle_to_target = set_angle
-	var/static/list/colossus_shotgun_shot_angles = list(12.5, 7.5, 2.5, -2.5, -7.5, -12.5)
-	for(var/i in colossus_shotgun_shot_angles)
-		shoot_projectile(target_turf, angle_to_target + i)
-
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/dir_shots(list/dirs)
-	if(!islist(dirs))
-		dirs = GLOB.alldirs.Copy()
-	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
-	for(var/d in dirs)
-		var/turf/E = get_step(src, d)
-		shoot_projectile(E)
-
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/telegraph()
-	for(var/mob/M in range(10,src))
-		if(M.client)
-			flash_color(M.client, "#C80000", 1)
-			shake_camera(M, 4, 3)
-	playsound(src, 'sound/magic/clockwork/narsie_attack.ogg', 200, 1)
-
-
-
 /obj/item/projectile/colossus
 	name ="death bolt"
 	icon_state= "chronobolt"
@@ -213,13 +257,6 @@ Difficulty: Very Hard
 	. = ..()
 	if(isturf(target) || isobj(target))
 		target.ex_act(EXPLODE_HEAVY)
-
-
-/obj/item/gps/internal/colossus
-	icon_state = null
-	gpstag = "Angelic Signal"
-	desc = "Get in the fucking robot."
-	invisibility = 100
 
 
 
@@ -368,8 +405,8 @@ Difficulty: Very Hard
 /obj/machinery/anomalous_crystal/examine(mob/user)
 	. = ..()
 	if(isobserver(user))
-		to_chat(user, observer_desc)
-		to_chat(user, "It is activated by [activation_method].")
+		. += observer_desc
+		. += "It is activated by [activation_method]."
 
 /obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
 	..()
@@ -404,7 +441,7 @@ Difficulty: Very Hard
 	if(method != activation_method)
 		return FALSE
 	last_use_timer = (world.time + cooldown_add)
-	playsound(user, activation_sound, 100, 1)
+	playsound(user, activation_sound, 100, TRUE)
 	return TRUE
 
 /obj/machinery/anomalous_crystal/Bumped(atom/movable/AM)
@@ -481,10 +518,7 @@ Difficulty: Very Hard
 				if(isturf(Stuff))
 					var/turf/T = Stuff
 					if((isspaceturf(T) || isfloorturf(T)) && NewTerrainFloors)
-						var/turf/open/O = T.ChangeTurf(NewTerrainFloors)
-						if(O.air)
-							var/datum/gas_mixture/G = O.air
-							G.copy_from_turf(O)
+						var/turf/open/O = T.ChangeTurf(NewTerrainFloors, flags = CHANGETURF_INHERIT_AIR)
 						if(prob(florachance) && NewFlora.len && !is_blocked_turf(O, TRUE))
 							var/atom/Picked = pick(NewFlora)
 							new Picked(O)
@@ -570,7 +604,7 @@ Difficulty: Very Hard
 	if(..() && !ready_to_deploy)
 		GLOB.poi_list |= src
 		ready_to_deploy = TRUE
-		notify_ghosts("An anomalous crystal has been activated in [get_area(src)]! This crystal can always be used by ghosts hereafter.", enter_link = "<a href=?src=[REF(src)];ghostjoin=1>(Click to enter)</a>", ghost_sound = 'sound/effects/ghost2.ogg', source = src, action = NOTIFY_ATTACK)
+		notify_ghosts("An anomalous crystal has been activated in [get_area(src)]! This crystal can always be used by ghosts hereafter.", enter_link = "<a href=?src=[REF(src)];ghostjoin=1>(Click to enter)</a>", ghost_sound = 'sound/effects/ghost2.ogg', source = src, action = NOTIFY_ATTACK, header = "Anomalous crystal activated")
 
 /obj/machinery/anomalous_crystal/helpers/attack_ghost(mob/dead/observer/user)
 	. = ..()
@@ -626,7 +660,7 @@ Difficulty: Very Hard
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	AIStatus = AI_OFF
-	stop_automated_movement = 1
+	stop_automated_movement = TRUE
 	var/heal_power = 5
 
 /mob/living/simple_animal/hostile/lightgeist/Initialize()
@@ -679,13 +713,13 @@ Difficulty: Very Hard
 /obj/machinery/anomalous_crystal/possessor/ActivationReaction(mob/user, method)
 	if(..())
 		if(ishuman(user))
-			var/mobcheck = 0
+			var/mobcheck = FALSE
 			for(var/mob/living/simple_animal/A in range(1, src))
 				if(A.melee_damage_upper > 5 || A.mob_size >= MOB_SIZE_LARGE || A.ckey || A.stat)
 					break
 				var/obj/structure/closet/stasis/S = new /obj/structure/closet/stasis(A)
 				user.forceMove(S)
-				mobcheck = 1
+				mobcheck = TRUE
 				break
 			if(!mobcheck)
 				new /mob/living/simple_animal/cockroach(get_step(src,dir)) //Just in case there aren't any animals on the station, this will leave you with a terrible option to possess if you feel like it
@@ -750,7 +784,7 @@ Difficulty: Very Hard
 	invocation_type = "none"
 	max_targets = 1
 	range = -1
-	include_user = 1
+	include_user = TRUE
 	selection_type = "view"
 	action_icon = 'icons/mob/actions/actions_spells.dmi'
 	action_icon_state = "exit_possession"

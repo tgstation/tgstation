@@ -143,9 +143,9 @@ Possible to do for anyone motivated enough:
 	holo_range = holograph_range
 
 /obj/machinery/holopad/examine(mob/user)
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Current projection range: <b>[holo_range]</b> units.<span>")
+		. += "<span class='notice'>The status display reads: Current projection range: <b>[holo_range]</b> units.</span>"
 
 /obj/machinery/holopad/attackby(obj/item/P, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", P))
@@ -640,7 +640,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 			if(replay_holo)
 				replay_holo.say(message)
 		if(HOLORECORD_SOUND)
-			playsound(src,entry[2],50,1)
+			playsound(src,entry[2],50,TRUE)
 		if(HOLORECORD_DELAY)
 			addtimer(CALLBACK(src,.proc/replay_entry,entry_number+1),entry[2])
 			return

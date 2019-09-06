@@ -35,16 +35,16 @@
 	dat += "Portion: <a href='?src=[REF(src)];portion=1'>[portion]</a><br>"
 	for(var/datum/reagent/R in reagents.reagent_list)
 		dat += "[R.name]: [R.volume] "
-		dat += "<a href='?src=[REF(src)];disposeI=[R.id]'>Purge</a>"
+		dat += "<a href='?src=[REF(src)];disposeI=[R.type]'>Purge</a>"
 		if (glasses > 0)
-			dat += "<a href='?src=[REF(src)];pour=[R.id]'>Pour in a glass</a>"
-		dat += "<a href='?src=[REF(src)];mix=[R.id]'>Add to the mixer</a><br>"
+			dat += "<a href='?src=[REF(src)];pour=[R.type]'>Pour in a glass</a>"
+		dat += "<a href='?src=[REF(src)];mix=[R.type]'>Add to the mixer</a><br>"
 	dat += "</div><br><b>MIXER CONTENTS</b><br><div class='statusDisplay'>"
 	for(var/datum/reagent/R in mixer.reagents.reagent_list)
 		dat += "[R.name]: [R.volume] "
-		dat += "<a href='?src=[REF(src)];transfer=[R.id]'>Transfer back</a>"
+		dat += "<a href='?src=[REF(src)];transfer=[R.type]'>Transfer back</a>"
 		if (glasses > 0)
-			dat += "<a href='?src=[REF(src)];m_pour=[R.id]'>Pour in a glass</a>"
+			dat += "<a href='?src=[REF(src)];m_pour=[R.type]'>Pour in a glass</a>"
 		dat += "<br>"
 	dat += "</div><br><b>STORED FOOD</b><br><div class='statusDisplay'>"
 	for(var/V in stored_food)
@@ -121,7 +121,10 @@
 					break
 
 	if(href_list["portion"])
-		portion = CLAMP(input("How much drink do you want to dispense per glass?") as num, 0, 50)
+		portion = CLAMP(input("How much drink do you want to dispense per glass?") as num|null, 0, 50)
+		
+		if (isnull(portion))
+			return
 
 	if(href_list["pour"] || href_list["m_pour"])
 		if(glasses-- <= 0)

@@ -8,25 +8,25 @@
 	Returns
 	standard 0 if fail
 */
-/mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE)
+/mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE)
+	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
 	var/hit_percent = (100-blocked)/100
-	if(!damage || (hit_percent <= 0))
+	if(!damage || (!forced && hit_percent <= 0))
 		return 0
+	var/damage_amount =  forced ? damage : damage * hit_percent
 	switch(damagetype)
 		if(BRUTE)
-			adjustBruteLoss(damage * hit_percent)
+			adjustBruteLoss(damage_amount, forced = forced)
 		if(BURN)
-			adjustFireLoss(damage * hit_percent)
+			adjustFireLoss(damage_amount, forced = forced)
 		if(TOX)
-			adjustToxLoss(damage * hit_percent)
+			adjustToxLoss(damage_amount, forced = forced)
 		if(OXY)
-			adjustOxyLoss(damage * hit_percent)
+			adjustOxyLoss(damage_amount, forced = forced)
 		if(CLONE)
-			adjustCloneLoss(damage * hit_percent)
+			adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
-			adjustStaminaLoss(damage * hit_percent)
-		if(BRAIN)
-			adjustBrainLoss(damage * hit_percent)
+			adjustStaminaLoss(damage_amount, forced = forced)
 	return 1
 
 /mob/living/proc/apply_damage_type(damage = 0, damagetype = BRUTE) //like apply damage except it always uses the damage procs
@@ -43,8 +43,6 @@
 			return adjustCloneLoss(damage)
 		if(STAMINA)
 			return adjustStaminaLoss(damage)
-		if(BRAIN)
-			return adjustBrainLoss(damage)
 
 /mob/living/proc/get_damage_amount(damagetype = BRUTE)
 	switch(damagetype)
@@ -60,8 +58,6 @@
 			return getCloneLoss()
 		if(STAMINA)
 			return getStaminaLoss()
-		if(BRAIN)
-			return getBrainLoss()
 
 
 /mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = FALSE, stamina = 0, brain = 0)
@@ -114,10 +110,6 @@
 		if(EFFECT_JITTER)
 			if((status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE))
 				jitteriness = max(jitteriness,(effect * hit_percent))
-		if(EFFECT_PARALYZE)
-			Paralyze(effect * hit_percent)
-		if(EFFECT_IMMOBILIZE)
-			Immobilize(effect * hit_percent)
 	return 1
 
 
@@ -230,13 +222,13 @@
 		updatehealth()
 	return amount
 
-/mob/living/proc/getBrainLoss()
-	. = 0
-
-/mob/living/proc/adjustBrainLoss(amount, maximum = BRAIN_DAMAGE_DEATH)
+/mob/living/proc/adjustOrganLoss(slot, amount, maximum)
 	return
 
-/mob/living/proc/setBrainLoss(amount)
+/mob/living/proc/setOrganLoss(slot, amount, maximum)
+	return
+
+/mob/living/proc/getOrganLoss(slot)
 	return
 
 /mob/living/proc/getStaminaLoss()

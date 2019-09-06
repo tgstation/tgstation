@@ -131,6 +131,8 @@
 	light_range = 3
 	light_power = 1.5
 	light_color = LIGHT_COLOR_CYAN
+	ui_x = 350
+	ui_y = 400
 
 
 	//High defaults so it's not completed automatically if there's no station goal
@@ -179,7 +181,7 @@
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		roll_powers(user)
-		ui = new(user, src, ui_key, "dna_vault", name, 350, 400, master_ui, state)
+		ui = new(user, src, ui_key, "dna_vault", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 
