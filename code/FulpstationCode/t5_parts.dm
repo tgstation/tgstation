@@ -139,6 +139,15 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
 
+/obj/item/stock_parts/cell/quantum
+	name = "quantum power cell"
+	desc = "A rechargeable, entangled power cell."
+	icon_state = "bscell"
+	//icon_state = "quantumcell"
+	//icon = 'icons/Fulpicons/quantumcell_fulp.dmi'	maxcharge = 50000
+	materials = list(/datum/material/glass=600)
+	chargerate = 5000
+
 ///T5 RPED
 /obj/item/storage/part_replacer/bluespace/tier5
 
