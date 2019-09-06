@@ -56,6 +56,9 @@
 /obj/effect/turf_decal/trimline/white/end
 	icon_state = "trimline_end"
 
+/obj/effect/turf_decal/trimline/white/filled
+	icon_state = "trimline_box_fill"
+
 /obj/effect/turf_decal/trimline/white/filled/line
 	icon_state = "trimline_fill"
 
@@ -76,6 +79,9 @@
 
 /obj/effect/turf_decal/trimline/red/end
 	icon_state = "trimline_end"
+
+/obj/effect/turf_decal/trimline/red/filled
+	icon_state = "trimline_box_fill"
 
 /obj/effect/turf_decal/trimline/red/filled/line
 	icon_state = "trimline_fill"
@@ -98,6 +104,9 @@
 /obj/effect/turf_decal/trimline/green/end
 	icon_state = "trimline_end"
 
+/obj/effect/turf_decal/trimline/green/filled
+	icon_state = "trimline_box_fill"
+
 /obj/effect/turf_decal/trimline/green/filled/line
 	icon_state = "trimline_fill"
 
@@ -118,6 +127,9 @@
 
 /obj/effect/turf_decal/trimline/blue/end
 	icon_state = "trimline_end"
+
+/obj/effect/turf_decal/trimline/blue/filled
+	icon_state = "trimline_box_fill"
 
 /obj/effect/turf_decal/trimline/blue/filled/line
 	icon_state = "trimline_fill"
@@ -140,6 +152,9 @@
 /obj/effect/turf_decal/trimline/yellow/end
 	icon_state = "trimline_end"
 
+/obj/effect/turf_decal/trimline/yellow/filled
+	icon_state = "trimline_box_fill"
+
 /obj/effect/turf_decal/trimline/yellow/filled/line
 	icon_state = "trimline_fill"
 
@@ -161,13 +176,16 @@
 /obj/effect/turf_decal/trimline/purple/end
 	icon_state = "trimline_end"
 
+/obj/effect/turf_decal/trimline/purple/filled
+	icon_state = "trimline_box_fill"
+
 /obj/effect/turf_decal/trimline/purple/filled/line
 	icon_state = "trimline_fill"
 
 /obj/effect/turf_decal/trimline/purple/filled/corner
 	icon_state = "trimline_corner_fill"
 
-/obj/effect/turf_decal/trimline/yellow/filled/end
+/obj/effect/turf_decal/trimline/purple/filled/end
 	icon_state = "trimline_end_fill"
 
 /obj/effect/turf_decal/trimline/brown
@@ -181,6 +199,9 @@
 
 /obj/effect/turf_decal/trimline/brown/end
 	icon_state = "trimline_end"
+
+/obj/effect/turf_decal/trimline/brown/filled
+	icon_state = "trimline_box_fill"
 
 /obj/effect/turf_decal/trimline/brown/filled/line
 	icon_state = "trimline_fill"
@@ -203,6 +224,9 @@
 
 /obj/effect/turf_decal/trimline/neutral/end
 	icon_state = "trimline_end"
+
+/obj/effect/turf_decal/trimline/neutral/filled
+	icon_state = "trimline_box_fill"
 
 /obj/effect/turf_decal/trimline/neutral/filled/line
 	icon_state = "trimline_fill"
