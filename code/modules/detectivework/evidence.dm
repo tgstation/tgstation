@@ -47,7 +47,7 @@
 			return
 
 	user.visible_message("<span class='notice'>[user] puts [I] into [src].</span>", "<span class='notice'>You put [I] inside [src].</span>",\
-	"<span class='italics'>You hear a rustle as someone puts something into a plastic bag.</span>")
+	"<span class='hear'>You hear a rustle as someone puts something into a plastic bag.</span>")
 
 	icon_state = "evidence"
 
@@ -68,7 +68,7 @@
 	if(contents.len)
 		var/obj/item/I = contents[1]
 		user.visible_message("<span class='notice'>[user] takes [I] out of [src].</span>", "<span class='notice'>You take [I] out of [src].</span>",\
-		"<span class='italics'>You hear someone rustle around in a plastic bag, and remove something.</span>")
+		"<span class='hear'>You hear someone rustle around in a plastic bag, and remove something.</span>")
 		cut_overlays()	//remove the overlays
 		user.put_in_hands(I)
 		w_class = WEIGHT_CLASS_TINY
