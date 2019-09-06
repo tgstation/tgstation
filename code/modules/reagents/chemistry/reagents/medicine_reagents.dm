@@ -937,14 +937,16 @@
 	..()
 
 /datum/reagent/medicine/earthsblood/overdose_process(mob/living/M)
-	M.hallucination = min(max(0, M.hallucination + 5), 60)
-	if(current_cycle > 25)
-		M.adjustToxLoss(4 * REM, 0)
-		if(current_cycle > 100) //podpeople get out reeeeeeeeeeeeeeeeeeeee
-			M.adjustToxLoss(6 * REM, 0)
-	if(iscarbon(M))
-		var/mob/living/carbon/hippie = M
-		hippie.gain_trauma(/datum/brain_trauma/severe/pacifism)
+	M.adjustToxLoss(5 * REM, 0)
+	if(ishuman(M)) //monkeys get a free pass, since they're closer to nature or something. I mean, they still take the tox damage and stuff, but they don't get a pacifism brain trauma upon ODing.
+		var/mob/living/carbon/human/hippie = M
+		var/obj/item/organ/brain/hippiebrain = hippie?.getorganslot(ORGAN_SLOT_BRAIN)
+		if(hippiebrain)
+			var/datum/brain_trauma/severe/pacifism/PBT = hippiebrain.has_trauma_type(/datum/brain_trauma/severe/pacifism)
+			if(!PBT)
+				hippiebrain.gain_trauma(/datum/brain_trauma/severe/pacifism, TRAUMA_RESILIENCE_SURGERY) //if you don't have a pacifism brain trauma, this will give you one
+			else if(PBT.resilience < TRAUMA_RESILIENCE_SURGERY)
+				PBT.resilience = TRAUMA_RESILIENCE_SURGERY  //bumps up your pacifism brain trauma's resilience up to the surgery tier, but won't lower its resilience if it was of a higher tier than that
 	..()
 	. = 1
 
