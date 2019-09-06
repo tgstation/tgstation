@@ -10,6 +10,7 @@
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	force = 3
+	weldingforce = 15
 	throwforce = 5
 	hitsound = "swing_hit"
 	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
@@ -62,7 +63,7 @@
 /obj/item/weldingtool/process()
 	switch(welding)
 		if(0)
-			force = 3
+			force = initial(force)
 			damtype = "brute"
 			update_icon()
 			if(!can_off_process)
@@ -70,7 +71,7 @@
 			return
 	//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
-			force = 15
+			force = weldingforce
 			damtype = "fire"
 			++burned_fuel_for
 			if(burned_fuel_for >= WELDER_FUEL_BURN_INTERVAL)
@@ -319,6 +320,7 @@
 	name = "emergency welding tool"
 	desc = "A miniature welder used during emergencies."
 	icon_state = "miniwelder"
+	weldingforce = 10
 	max_fuel = 10
 	w_class = WEIGHT_CLASS_TINY
 	materials = list(/datum/material/iron=30, /datum/material/glass=10)
