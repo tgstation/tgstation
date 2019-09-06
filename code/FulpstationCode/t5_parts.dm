@@ -92,42 +92,48 @@
 /obj/item/stock_parts/capacitor/quantumcap
 	name = "Quantum Capacitor"
 	desc = "A capacitor engineered with a mix of bluespace and quantum technologies."
-	icon_state = "quadratic_capacitor"
+	icon_state = "quantumcap"
+	icon = 'icons/Fulpicons/quantumcap_fulp.dmi'
 	rating = 5
-	materials = list(/datum/material/iron=55)
+	materials = list(/datum/material/iron = 225, /datum/material/glass = 180, /datum/material/gold = 135, /datum/material/diamond = 90)
 
 /obj/item/stock_parts/scanning_module/quantumscan
 	name = "quantum field scanning module"
 	desc = "A special scanning module using a mix of bluespace and quantum tech to scan even sub-atomic materials."
-	icon_state = "triphasic_scan_module"
+	icon_state = "quantumscan"
+	icon = 'icons/Fulpicons/quantumscan_fulp.dmi'
 	rating = 5
-	materials = list(/datum/material/iron=70)
+	materials = list(/datum/material/iron= 225, /datum/material/glass = 180, /datum/material/diamond = 54, /datum/material/bluespace = 54)
 
 /obj/item/stock_parts/manipulator/quantummanip
 	name = "quantum field manipulator"
 	desc = "A strange, almost intangible manipulator that uses bluespace tech to manipulate and fold quantum states."
-	icon_state = "femto_mani"
+	icon_state = "quantummanip"
+	icon = 'icons/Fulpicons/quantummanip_fulp.dmi'
 	rating = 5
-	materials = list(/datum/material/iron=50)
+	materials = list(/datum/material/iron= 180, /datum/material/diamond = 27, /datum/material/titanium = 27, /datum/material/uranium = 27)
 
 /obj/item/stock_parts/micro_laser/quantumlaser
 	name = "quantum micro-laser"
 	desc = "A modified quadultra micro-laser designed to make use of newly discovered quantum tech."
-	icon_state = "quadultra_micro_laser"
+	icon_state = "quantumlaser"
+	icon = 'icons/Fulpicons/quantumlaser_fulp.dmi'
 	rating = 5
-	materials = list(/datum/material/iron=15, /datum/material/glass = 25)
+	materials = list(/datum/material/iron= 180, /datum/material/glass = 180, /datum/material/uranium = 90, /datum/material/diamond = 90)
 
 /obj/item/stock_parts/matter_bin/quantumbin
 	name = "entangled matter bin"
 	desc = "A bluespace matter bin that makes use of entangled particles to store states of materials as energy."
-	icon_state = "bluespace_matter_bin"
+	icon_state = "quantumbin"
+	icon = 'icons/Fulpicons/quantumbin_fulp.dmi'
 	rating = 5
-	materials = list(/datum/material/iron=100)
+	materials = list(/datum/material/iron= 225, /datum/material/diamond = 90, /datum/material/bluespace = 135)
 
 /obj/item/reagent_containers/glass/beaker/quantum
 	name = "quantum entangled beaker"
 	desc = "A quantum entangled beaker, capable of holding a massive 400 units of any reagent."
-	icon_state = "beakerbluespace"
+	icon_state = "quantumbeaker"
+	icon = 'icons/Fulpicons/quantumbeaker_fulp.dmi'
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 5000, /datum/material/plasma = 3000, /datum/material/diamond = 1500, /datum/material/bluespace = 1500)
 	volume = 400
 	amount_per_transfer_from_this = 10
@@ -144,3 +150,5 @@
 		new /obj/item/stock_parts/micro_laser/quantumlaser(src)
 		new /obj/item/stock_parts/matter_bin/quantumbin(src)
 		new /obj/item/reagent_containers/glass/beaker/quantum(src)
+
+///Chem dispenser t5 manip reagents list
