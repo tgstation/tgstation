@@ -279,14 +279,14 @@
 /datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!ishuman(M) && !ismonkey(M))
 		return
-	
+		
 	var/mob/living/carbon/victim = M
 	if(method == TOUCH || method == VAPOR)
-		var/mouth_covered = victim.is_mouth_covered()
-		var/eyes_covered = victim.is_eyes_covered()
+		var/pepper_proof = victim.is_pepper_proof()
+	
 		//check for protection
 		//actually handle the pepperspray effects
-		if (!(eyes_covered && mouth_covered)) // you need both eye and mouth protection
+		if (!(pepper_proof)) // you need both eye and mouth protection
 			if(prob(5))
 				victim.emote("scream")
 			victim.blur_eyes(5) // 10 seconds
