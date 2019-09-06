@@ -26,7 +26,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	actions_types = list(/datum/action/item_action/toggle)
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
-	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | HEADPEPPERPROOF
+	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = FIRE_PROOF
 	clothing_flags = SNUG_FIT
 
