@@ -276,7 +276,7 @@
 		R.remove_any(100)
 		var/obj/effect/resin_container/A = new (get_turf(src))
 		log_game("[key_name(user)] used Resin Launcher at [AREACOORD(user)].")
-		playsound(src,'sound/items/syringeproj.ogg',40,1)
+		playsound(src,'sound/items/syringeproj.ogg',40,TRUE)
 		for(var/a=0, a<5, a++)
 			step_towards(A, target)
 			sleep(2)
@@ -312,7 +312,7 @@
 /obj/effect/resin_container/proc/Smoke()
 	var/obj/effect/particle_effect/foam/metal/resin/S = new /obj/effect/particle_effect/foam/metal/resin(get_turf(loc))
 	S.amount = 4
-	playsound(src,'sound/effects/bamf.ogg',100,1)
+	playsound(src,'sound/effects/bamf.ogg',100,TRUE)
 	qdel(src)
 
 #undef EXTINGUISHER

@@ -112,7 +112,7 @@
 	if(user)
 		user.visible_message("<span class='warning'>Sparks fly out of [src]!</span>",
 							"<span class='notice'>You emag [src], disabling its thermal sensors.</span>")
-	playsound(src, "sparks", 50, 1)
+	playsound(src, "sparks", 50, TRUE)
 
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if((temperature > T0C + 200 || temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && (last_alarm+FIREALARM_COOLDOWN < world.time) && !(obj_flags & EMAGGED) && detecting && !stat)
@@ -183,9 +183,9 @@
 				if(W.tool_behaviour == TOOL_MULTITOOL)
 					detecting = !detecting
 					if (src.detecting)
-						user.visible_message("[user] has reconnected [src]'s detecting unit!", "<span class='notice'>You reconnect [src]'s detecting unit.</span>")
+						user.visible_message("<span class='notice'>[user] has reconnected [src]'s detecting unit!</span>", "<span class='notice'>You reconnect [src]'s detecting unit.</span>")
 					else
-						user.visible_message("[user] has disconnected [src]'s detecting unit!", "<span class='notice'>You disconnect [src]'s detecting unit.</span>")
+						user.visible_message("<span class='notice'>[user] has disconnected [src]'s detecting unit!</span>", "<span class='notice'>You disconnect [src]'s detecting unit.</span>")
 					return
 
 				else if(W.tool_behaviour == TOOL_WIRECUTTER)
@@ -216,7 +216,7 @@
 					return
 
 				else if(W.tool_behaviour == TOOL_CROWBAR)
-					user.visible_message("[user.name] removes the electronics from [src.name].", \
+					user.visible_message("<span class='notice'>[user.name] removes the electronics from [src.name].</span>", \
 										"<span class='notice'>You start prying out the circuit...</span>")
 					if(W.use_tool(src, user, 20, volume=50))
 						if(buildstage == 1)
@@ -248,7 +248,7 @@
 					return
 
 				else if(W.tool_behaviour == TOOL_WRENCH)
-					user.visible_message("[user] removes the fire alarm assembly from the wall.", \
+					user.visible_message("<span class='notice'>[user] removes the fire alarm assembly from the wall.</span>", \
 										 "<span class='notice'>You remove the fire alarm assembly from the wall.</span>")
 					var/obj/item/wallframe/firealarm/frame = new /obj/item/wallframe/firealarm()
 					frame.forceMove(user.drop_location())
@@ -260,7 +260,7 @@
 
 /obj/machinery/firealarm/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if((buildstage == 0) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
-		return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 20, "cost" = 1)	
+		return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 20, "cost" = 1)
 	return FALSE
 
 /obj/machinery/firealarm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)

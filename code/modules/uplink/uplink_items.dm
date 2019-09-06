@@ -529,8 +529,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/stealthy_weapons/combatglovesplus
 	name = "Combat Gloves Plus"
-	desc = "A pair of gloves that are fireproof and shock resistant, however unlike the regular Combat Gloves this one uses nanotechnology \
-			to learn the abilities of krav maga to the wearer."
+	desc = "A pair of gloves that are fireproof and electrically insulated, however unlike the regular Combat Gloves these use nanotechnology \
+			to teach the martial art of krav maga to the wearer."
 	item = /obj/item/clothing/gloves/krav_maga/combatglovesplus
 	cost = 5
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
@@ -1399,7 +1399,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Stimpack"
 	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about \
 			5 minutes after injection."
-	item = /obj/item/reagent_containers/syringe/stimulants
+	item = /obj/item/reagent_containers/hypospray/medipen/stimulants
 	cost = 5
 	surplus = 90
 

@@ -82,7 +82,7 @@
 			ready = FALSE
 			addtimer(CALLBACK(src,"set_ready"),injection_cooldown)
 	else
-		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, 1)
+		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, TRUE)
 	update_icon()
 
 /obj/machinery/implantchair/proc/implant_action(mob/living/M)

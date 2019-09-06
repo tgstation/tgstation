@@ -34,7 +34,7 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	energy_drain = 20
-	range = MELEE
+	range = MECHA_MELEE
 	equip_cooldown = 20
 	var/mob/living/carbon/patient = null
 	var/inject_amount = 10
@@ -84,7 +84,7 @@
 	if(!patient)
 		return
 	patient.forceMove(get_turf(src))
-	occupant_message("[patient] ejected. Life support functions disabled.")
+	occupant_message("<span class='notice'>[patient] ejected. Life support functions disabled.</span>")
 	log_message("[patient] ejected. Life support functions disabled.", LOG_MECHA)
 	STOP_PROCESSING(SSobj, src)
 	patient = null
@@ -194,7 +194,7 @@
 		return 0
 	var/to_inject = min(R.volume, inject_amount)
 	if(to_inject && patient.reagents.get_reagent_amount(R.type) + to_inject <= inject_amount*2)
-		occupant_message("Injecting [patient] with [to_inject] units of [R.name].")
+		occupant_message("<span class='notice'>Injecting [patient] with [to_inject] units of [R.name].</span>")
 		log_message("Injecting [patient] with [to_inject] units of [R.name].", LOG_MECHA)
 		log_combat(chassis.occupant, patient, "injected", "[name] ([R] - [to_inject] units)")
 		SG.reagents.trans_id_to(patient,R.type,to_inject)
@@ -219,7 +219,7 @@
 	if(!chassis.has_charge(energy_drain))
 		set_ready_state(1)
 		log_message("Deactivated.", LOG_MECHA)
-		occupant_message("[src] deactivated - no power.")
+		occupant_message("<span class='warning'>[src] deactivated - no power.</span>")
 		STOP_PROCESSING(SSobj, src)
 		return
 	var/mob/living/carbon/M = patient
@@ -256,7 +256,7 @@
 	var/synth_speed = 5 //[num] reagent units per cycle
 	energy_drain = 10
 	var/mode = 0 //0 - fire syringe, 1 - analyze reagents.
-	range = MELEE|RANGED
+	range = MECHA_MELEE|MECHA_RANGED
 	equip_cooldown = 10
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/Initialize()
@@ -310,7 +310,7 @@
 	syringes -= mechsyringe
 	mechsyringe.icon = 'icons/obj/chemical.dmi'
 	mechsyringe.icon_state = "syringeproj"
-	playsound(chassis, 'sound/items/syringeproj.ogg', 50, 1)
+	playsound(chassis, 'sound/items/syringeproj.ogg', 50, TRUE)
 	log_message("Launched [mechsyringe] from [src], targeting [target].", LOG_MECHA)
 	var/mob/originaloccupant = chassis.occupant
 	spawn(0)
@@ -373,7 +373,7 @@
 			message += " added to production"
 			START_PROCESSING(SSobj, src)
 			occupant_message(message)
-			occupant_message("Reagent processing started.")
+			occupant_message("<span class='notice'>Reagent processing started.</span>")
 			log_message("Reagent processing started.", LOG_MECHA)
 		return
 	if (href_list["show_reagents"])
@@ -450,38 +450,38 @@
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/load_syringe(obj/item/reagent_containers/syringe/S)
 	if(syringes.len<max_syringes)
 		if(get_dist(src,S) >= 2)
-			occupant_message("The syringe is too far away.")
+			occupant_message("<span class='warning'>The syringe is too far away!</span>")
 			return 0
 		for(var/obj/structure/D in S.loc)//Basic level check for structures in the way (Like grilles and windows)
 			if(!(D.CanPass(S,src.loc)))
-				occupant_message("Unable to load syringe.")
+				occupant_message("<span class='warning'>Unable to load syringe!</span>")
 				return 0
 		for(var/obj/machinery/door/D in S.loc)//Checks for doors
 			if(!(D.CanPass(S,src.loc)))
-				occupant_message("Unable to load syringe.")
+				occupant_message("<span class='warning'>Unable to load syringe!</span>")
 				return 0
 		S.reagents.trans_to(src, S.reagents.total_volume, transfered_by = chassis.occupant)
 		S.forceMove(src)
 		syringes += S
-		occupant_message("Syringe loaded.")
+		occupant_message("<span class='notice'>Syringe loaded.</span>")
 		update_equip_info()
 		return 1
-	occupant_message("[src]'s syringe chamber is full.")
+	occupant_message("<span class='warning'>[src]'s syringe chamber is full!</span>")
 	return 0
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/analyze_reagents(atom/A)
 	if(get_dist(src,A) >= 4)
-		occupant_message("The object is too far away.")
+		occupant_message("<span class='notice'>The object is too far away!</span>")
 		return 0
 	if(!A.reagents || ismob(A))
-		occupant_message("<span class=\"alert\">No reagent info gained from [A].</span>")
+		occupant_message("<span class='warning'>No reagent info gained from [A].</span>")
 		return 0
-	occupant_message("Analyzing reagents...")
+	occupant_message("<span class='notice'>Analyzing reagents...</span>")
 	for(var/datum/reagent/R in A.reagents.reagent_list)
 		if(R.can_synth && add_known_reagent(R.type,R.name))
-			occupant_message("Reagent analyzed, identified as [R.name] and added to database.")
+			occupant_message("<span class='notice'>Reagent analyzed, identified as [R.name] and added to database.</span>")
 			send_byjax(chassis.occupant,"msyringegun.browser","reagents_form",get_reagents_form())
-	occupant_message("Analyzis complete.")
+	occupant_message("<span class='notice'>Analyzis complete.</span>")
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/add_known_reagent(r_id,r_name)
@@ -524,7 +524,7 @@
 	desc = "Equipment for medical exosuits. Generates a focused beam of medical nanites."
 	icon_state = "mecha_medigun"
 	energy_drain = 10
-	range = MELEE|RANGED
+	range = MECHA_MELEE|MECHA_RANGED
 	equip_cooldown = 0
 	var/obj/item/gun/medbeam/mech/medigun
 	materials = list(/datum/material/iron = 15000, /datum/material/glass = 8000, /datum/material/plasma = 3000, /datum/material/gold = 8000, /datum/material/diamond = 2000)

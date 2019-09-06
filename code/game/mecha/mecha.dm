@@ -1,17 +1,3 @@
-#define MECHA_INT_FIRE			(1<<0)
-#define MECHA_INT_TEMP_CONTROL	(1<<1)
-#define MECHA_INT_SHORT_CIRCUIT	(1<<2)
-#define MECHA_INT_TANK_BREACH	(1<<3)
-#define MECHA_INT_CONTROL_LOST	(1<<4)
-
-#define MELEE 1
-#define RANGED 2
-
-#define FRONT_ARMOUR 1
-#define SIDE_ARMOUR 2
-#define BACK_ARMOUR 3
-
-
 /obj/mecha
 	name = "mecha"
 	desc = "Exosuit"
@@ -36,10 +22,10 @@
 	max_integrity = 300 //max_integrity is base health
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	armor = list("melee" = 20, "bullet" = 10, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
-	var/list/facing_modifiers = list(FRONT_ARMOUR = 1.5, SIDE_ARMOUR = 1, BACK_ARMOUR = 0.5)
+	var/list/facing_modifiers = list(MECHA_FRONT_ARMOUR = 1.5, MECHA_SIDE_ARMOUR = 1, MECHA_BACK_ARMOUR = 0.5)
 	var/equipment_disabled = 0 //disabled due to EMP
 	var/obj/item/stock_parts/cell/cell
-	var/state = 0
+	var/construction_state = MECHA_LOCKED
 	var/last_message = 0
 	var/add_req_access = 1
 	var/maint_access = 0
@@ -475,7 +461,7 @@
 		return
 	if(user.incapacitated())
 		return
-	if(state)
+	if(construction_state)
 		occupant_message("<span class='warning'>Maintenance protocols in effect.</span>")
 		return
 	if(!get_charge())
@@ -558,7 +544,7 @@
 			occupant_message("<span class='warning'>Unable to move while connected to the air system port!</span>")
 			last_message = world.time
 		return 0
-	if(state)
+	if(construction_state)
 		occupant_message("<span class='danger'>Maintenance protocols in effect.</span>")
 		return
 	return domove(direction)
@@ -572,7 +558,7 @@
 		return 0
 	if(zoom_mode)
 		if(world.time - last_message > 20)
-			occupant_message("Unable to move while in zoom mode.")
+			occupant_message("<span class='warning'>Unable to move while in zoom mode!</span>")
 			last_message = world.time
 		return 0
 
@@ -593,7 +579,7 @@
 /obj/mecha/proc/mechturn(direction)
 	setDir(direction)
 	if(turnsound)
-		playsound(src,turnsound,40,1)
+		playsound(src,turnsound,40,TRUE)
 	return 1
 
 /obj/mecha/proc/mechstep(direction)
@@ -602,13 +588,13 @@
 	if(strafe)
 		setDir(current_dir)
 	if(result && stepsound)
-		playsound(src,stepsound,40,1)
+		playsound(src,stepsound,40,TRUE)
 	return result
 
 /obj/mecha/proc/mechsteprand()
 	var/result = step_rand(src)
 	if(result && stepsound)
-		playsound(src,stepsound,40,1)
+		playsound(src,stepsound,40,TRUE)
 	return result
 
 /obj/mecha/Bump(var/atom/obstacle)
@@ -722,7 +708,7 @@
  //Transfer from core or card to mech. Proc is called by mech.
 	switch(interaction)
 		if(AI_TRANS_TO_CARD) //Upload AI from mech to AI card.
-			if(!state) //Mech must be in maint mode to allow carding.
+			if(!construction_state) //Mech must be in maint mode to allow carding.
 				to_chat(user, "<span class='warning'>[name] must have maintenance protocols active in order to allow a transfer.</span>")
 				return
 			AI = occupant
@@ -780,7 +766,7 @@
 	silicon_pilot = TRUE
 	icon_state = initial(icon_state)
 	update_icon()
-	playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
+	playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
 	if(!internal_damage)
 		SEND_SOUND(occupant, sound('sound/mecha/nominal.ogg',volume=50))
 	AI.cancel_camera()
@@ -880,7 +866,7 @@
 		log_message("Permission denied (Attached mobs).", LOG_MECHA)
 		return
 
-	visible_message("[user] starts to climb into [name].")
+	visible_message("<span class='notice'>[user] starts to climb into [name].</span>")
 
 	if(do_after(user, enter_delay, target = src))
 		if(obj_integrity <= 0)
@@ -908,7 +894,7 @@
 		log_message("[H] moved in as pilot.", LOG_MECHA)
 		icon_state = initial(icon_state)
 		setDir(dir_in)
-		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
+		playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
 		if(!internal_damage)
 			SEND_SOUND(occupant, sound('sound/mecha/nominal.ogg',volume=50))
 		return 1
@@ -1129,7 +1115,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 						gun.projectiles = gun.projectiles + ammo_needed
 					else
 						gun.projectiles_cache = gun.projectiles_cache + ammo_needed
-					playsound(get_turf(user),A.load_audio,50,1)
+					playsound(get_turf(user),A.load_audio,50,TRUE)
 					to_chat(user, "<span class='notice'>You add [ammo_needed] [A.round_term][ammo_needed > 1?"s":""] to the [gun.name]</span>")
 					A.rounds = A.rounds - ammo_needed
 					A.update_name()
@@ -1140,7 +1126,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 						gun.projectiles = gun.projectiles + A.rounds
 					else
 						gun.projectiles_cache = gun.projectiles_cache + A.rounds
-					playsound(get_turf(user),A.load_audio,50,1)
+					playsound(get_turf(user),A.load_audio,50,TRUE)
 					to_chat(user, "<span class='notice'>You add [A.rounds] [A.round_term][A.rounds > 1?"s":""] to the [gun.name]</span>")
 					A.rounds = 0
 					A.update_name()

@@ -1,0 +1,5 @@
+author: "Dingo-Dongler"
+delete-after: True
+changes: 
+  - bugfix: "Fixes uranium/holy water and small plasma activation of self-sustaining rainbow slime extracts"
+  - bugfix: "injecting blue slime extracts with water now creates foam, not fluorosurfactant"

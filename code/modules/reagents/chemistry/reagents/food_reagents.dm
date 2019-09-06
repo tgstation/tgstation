@@ -352,6 +352,13 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "bitterness"
 
+/datum/reagent/consumable/coco/on_mob_add(mob/living/carbon/M)
+	.=..()
+	if(iscatperson(M))
+		to_chat(M, "<span class='warning'>Your insides revolt at the presence of lethal chocolate!</span>")
+		M.vomit(20)
+
+
 /datum/reagent/consumable/hot_coco
 	name = "Hot Chocolate"
 	description = "Made with love! And coco beans."
@@ -702,7 +709,7 @@
 /datum/reagent/consumable/liquidelectricity/on_mob_life(mob/living/carbon/M)
 	if(prob(25) && !isethereal(M))
 		M.electrocute_act(rand(10,15), "Liquid Electricity in their body", 1) //lmao at the newbs who eat energy bars
-		playsound(M, "sparks", 50, 1)
+		playsound(M, "sparks", 50, TRUE)
 	return ..()
 
 /datum/reagent/consumable/astrotame

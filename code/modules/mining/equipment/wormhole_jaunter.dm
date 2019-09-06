@@ -47,7 +47,7 @@
 	var/obj/effect/portal/jaunt_tunnel/J = new (get_turf(src), src, 100, null, FALSE, get_turf(chosen_beacon))
 	if(adjacent)
 		try_move_adjacent(J)
-	playsound(src,'sound/effects/sparks4.ogg',50,1)
+	playsound(src,'sound/effects/sparks4.ogg',50,TRUE)
 	qdel(src)
 
 /obj/item/wormhole_jaunter/emp_act(power)
@@ -90,7 +90,7 @@
 	. = ..()
 	if(.)
 		// KERPLUNK
-		playsound(M,'sound/weapons/resonator_blast.ogg',50,1)
+		playsound(M,'sound/weapons/resonator_blast.ogg',50,TRUE)
 		if(iscarbon(M))
 			var/mob/living/carbon/L = M
 			L.Paralyze(60)

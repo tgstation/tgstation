@@ -20,7 +20,7 @@
 
 /obj/item/grenade/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] primes [src], then eats it! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(src, 'sound/items/eatfood.ogg', 50, 1)
+	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
 	preprime(user, det_time)
 	user.transferItemToLoc(src, user, TRUE)//>eat a grenade set to 5 seconds >rush captain
 	sleep(det_time)//so you dont die instantly
@@ -70,7 +70,7 @@
 		add_fingerprint(user)
 		if(msg)
 			to_chat(user, "<span class='warning'>You prime [src]! [capitalize(DisplayTimeText(det_time))]!</span>")
-	playsound(src, 'sound/weapons/armbomb.ogg', volume, 1)
+	playsound(src, 'sound/weapons/armbomb.ogg', volume, TRUE)
 	active = TRUE
 	icon_state = initial(icon_state) + "_active"
 	addtimer(CALLBACK(src, .proc/prime), isnull(delayoverride)? det_time : delayoverride)
