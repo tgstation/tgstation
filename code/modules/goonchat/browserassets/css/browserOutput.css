@@ -315,6 +315,7 @@ h1.alert, h2.alert		{color: #000000;}
 .info					{color: #6685f5;}
 .notice					{color: #6685f5;}
 .boldnotice				{color: #6685f5;	font-weight: bold;}
+.hear					{color: #6685f5;	font-style: italic;}
 .adminnotice			{color: #6685f5;}
 .adminhelp				{color: #ff0000;	font-weight: bold;}
 .unconscious			{color: #a4bad6;	font-weight: bold;}
