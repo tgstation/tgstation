@@ -2,8 +2,9 @@
 //////////FULPCODE///////////
 
 /datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
 	var/current_job = J.title
-	var/datum/outfit/digitigrade/O = new /datum/outfit/digitigrade
+	var/datum/outfit/digitigrade/O
 	if(!(DIGITIGRADE in H.dna.species.species_traits))
 		return //not sure this is neccessary since its 'equip or delete', but removes redundancy
 	switch(current_job)
@@ -24,9 +25,11 @@
 
 		if("Clown")
 			O = new /datum/outfit/digitigrade/clown
-		
+
 		if("Captain")
 			O = new /datum/outfit/digitigrade/combats
 
+		else // Backup (none selected, get defaults)
+			O = new /datum/outfit/digitigrade
+
 	H.equipOutfit(O, visualsOnly)
-	return 0

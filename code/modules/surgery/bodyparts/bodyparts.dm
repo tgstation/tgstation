@@ -396,7 +396,7 @@
 
 	if(is_organic_limb())
 		if(should_draw_greyscale)
-			limb.icon = 'icons/mob/human_parts_greyscale.dmi'
+			limb.icon = icon_greyscale // 'icons/mob/human_parts_greyscale.dmi' //   FULP // This REALLY should be a reference. Temporarily added to beefmen.dm
 			if(should_draw_gender)
 				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
 			else if(use_digitigrade)
@@ -404,7 +404,7 @@
 			else
 				limb.icon_state = "[species_id]_[body_zone]"
 		else
-			limb.icon = 'icons/mob/human_parts.dmi'
+			limb.icon = icon  //'icons/mob/human_parts.dmi'//    FULP // Why the fuck give a bodypart the icon value and not reference it??
 			if(should_draw_gender)
 				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
 			else
@@ -412,7 +412,6 @@
 		if(aux_zone)
 			aux = image(limb.icon, "[species_id]_[aux_zone]", -aux_layer, image_dir)
 			. += aux
-
 	else
 		limb.icon = icon
 		if(should_draw_gender)

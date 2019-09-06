@@ -228,6 +228,11 @@
 
 	if(bleedsuppress)
 		msg += "[t_He] [t_is] bandaged with something.\n"
+	else if (istype(dna) && istype(dna.species, /datum/species/beefman)) // FULP: Beefmen don't "bleed" perse. They let out juice based on temperature, not wounds.
+		if (bleed_rate >= 4)
+			msg += "<B>[t_His] natural juices are gushing out uncontrollably!</B>\n"
+		else if (bleed_rate >= 1)
+			msg += "<b>[t_His] natural juices are seeping from [t_his] meat.</b>\n"
 	else if(bleed_rate)
 		if(reagents.has_reagent(/datum/reagent/toxin/heparin, needs_metabolizing = TRUE))
 			msg += "<b>[t_He] [t_is] bleeding uncontrollably!</b>\n"

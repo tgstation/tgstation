@@ -663,6 +663,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					S = GLOB.horns_list[H.dna.features["horns"]]
 				if("ears")
 					S = GLOB.ears_list[H.dna.features["ears"]]
+				if("beefeyes") // FULP
+					if (H.getorganslot(ORGAN_SLOT_EYES)) // Only draw eyes if we got em
+						S = GLOB.eyes_beefman[H.dna.features["beefeyes"]]
+				if("beefmouth") // FULP
+					S = GLOB.mouths_beefman[H.dna.features["beefmouth"]]
 				if("body_markings")
 					S = GLOB.body_markings_list[H.dna.features["body_markings"]]
 				if("wings")
@@ -819,9 +824,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return FALSE
 			if(num_legs < 2)
 				return FALSE
-			if((DIGITIGRADE in species_traits) == !(I.flags_inv & FULL_DIGITIGRADE)) //fulp
+			if((DIGITIGRADE in species_traits) == !(I.flags_inv & FULL_DIGITIGRADE)) //fulp change
 				if(!disable_warning)
-					to_chat(H, "<span class='warning'>These shoes aren't compatible with your feet!</span>") //fulp
+					to_chat(H, "<span class='warning'>These shoes aren't compatible with your feet!</span>") //fulp change
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(SLOT_BELT)

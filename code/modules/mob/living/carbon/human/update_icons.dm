@@ -129,10 +129,10 @@ There are several things that need to be remembered:
 		if(dna && dna.species.sexes)
 			var/G = (gender == FEMALE) ? "f" : "m"
 			if(G == "f" && U.fitted != NO_FEMALE_UNIFORM)
-				uniform_overlay = U.build_worn_icon(state = "[t_color]", default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/uniform.dmi', isinhands = FALSE, femaleuniform = U.fitted)
+				uniform_overlay = U.build_worn_icon(state = "[t_color]", default_layer = UNIFORM_LAYER, default_icon_file = U.worn_icon, isinhands = FALSE, femaleuniform = U.fitted) // FULP: Replaced 'icons/mob/uniform.dmi' with ref
 
 		if(!uniform_overlay)
-			uniform_overlay = U.build_worn_icon(state = "[t_color]", default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/uniform.dmi', isinhands = FALSE)
+			uniform_overlay = U.build_worn_icon(state = "[t_color]", default_layer = UNIFORM_LAYER, default_icon_file = U.worn_icon, isinhands = FALSE) // FULP: Replaced 'icons/mob/uniform.dmi' with ref
 
 
 		if(OFFSET_UNIFORM in dna.species.offset_features)

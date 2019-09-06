@@ -282,6 +282,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!S["feature_ethcolor"] || S["feature_ethcolor"] == "#000")
 		WRITE_FILE(S["feature_ethcolor"]	, "9c3030")
 
+	if(!S["feature_beefcolor"] || S["feature_beefcolor"] == "") // FULP
+		WRITE_FILE(S["feature_beefcolor"]	, "e73f4e")
+	if(!S["feature_beefeyes"] || S["feature_beefeyes"] == "") // FULP
+		WRITE_FILE(S["feature_beefeyes"]	, "Olives")
+	if(!S["feature_beefmouth"] || S["feature_beefmouth"] == "") // FULP
+		WRITE_FILE(S["feature_beefmouth"]	, "Smile1")
+
 	//Character
 	S["real_name"]			>> real_name
 	S["name_is_always_random"] >> be_random_name
@@ -304,6 +311,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["uplink_loc"]			>> uplink_spawn_loc
 	S["feature_mcolor"]					>> features["mcolor"]
 	S["feature_ethcolor"]					>> features["ethcolor"]
+	S["feature_beefcolor"]					>> features["beefcolor"] // FULP
+	S["feature_beefeyes"]					>> features["beefeyes"] // FULP
+	S["feature_beefmouth"]					>> features["beefmouth"] // FULP
 	S["feature_lizard_tail"]			>> features["tail_lizard"]
 	S["feature_lizard_snout"]			>> features["snout"]
 	S["feature_lizard_horns"]			>> features["horns"]
@@ -359,6 +369,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!features["ethcolor"] || features["ethcolor"] == "#000")
 		features["ethcolor"] = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)]
 
+	if(!features["beefcolor"] || features["beefcolor"] == "") // FULP
+		features["beefcolor"] = GLOB.color_list_beefman[pick(GLOB.color_list_beefman)]
+	if(!features["beefeyes"] || features["beefeyes"] == "") // FULP
+		features["beefeyes"] = pick(GLOB.eyes_beefman)
+	if(!features["beefmouth"] || features["beefmouth"] == "") // FULP
+		features["beefmouth"] = pick(GLOB.mouths_beefman)
+
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	be_random_body	= sanitize_integer(be_random_body, 0, 1, initial(be_random_body))
 	be_random_species	= sanitize_integer(be_random_species, 0, 1, initial(be_random_species))
@@ -392,6 +409,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))
 	features["mcolor"]	= sanitize_hexcolor(features["mcolor"], 3, 0)
 	features["ethcolor"]	= copytext(features["ethcolor"],1,7)
+	features["beefcolor"]	= copytext(features["beefcolor"],1,7) // FULP
+	features["beefeyes"]	= sanitize_inlist(features["beefeyes"], GLOB.eyes_beefman) // FULP
+	features["beefmouth"]	= sanitize_inlist(features["beefmouth"], GLOB.mouths_beefman) // FULP
 	features["tail_lizard"]	= sanitize_inlist(features["tail_lizard"], GLOB.tails_list_lizard)
 	features["tail_human"] 	= sanitize_inlist(features["tail_human"], GLOB.tails_list_human, "None")
 	features["snout"]	= sanitize_inlist(features["snout"], GLOB.snouts_list)
@@ -447,6 +467,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["species"]			, pref_species.id)
 	WRITE_FILE(S["feature_mcolor"]					, features["mcolor"])
 	WRITE_FILE(S["feature_ethcolor"]					, features["ethcolor"])
+	WRITE_FILE(S["feature_beefcolor"]					, features["beefcolor"]) // FULP
+	WRITE_FILE(S["feature_beefeyes"]					, features["beefeyes"]) // FULP
+	WRITE_FILE(S["feature_beefmouth"]					, features["beefmouth"]) // FULP
 	WRITE_FILE(S["feature_lizard_tail"]			, features["tail_lizard"])
 	WRITE_FILE(S["feature_human_tail"]				, features["tail_human"])
 	WRITE_FILE(S["feature_lizard_snout"]			, features["snout"])

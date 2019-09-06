@@ -17,15 +17,17 @@ $include antag_rep.txt
 SERVERNAME Fulpstation
 
 ## Server Caption: Shows next to the server name in the BYOND hub.
-SERVERCAPTION The Problems of the Future, Today!
-#SERVERCAPTION The Crew that Flies Together, Dies Together!
+#SERVERCAPTION The Problems of the Future, Today!
+#SERVERCAPTION The Crew that Flies Together, Dies Together
 #SERVERCAPTION 100% Crash-Free since 2019!
-#SERVERCAPTION We have a Vampire problem...
+SERVERCAPTION We have a Vampire problem...
 #SERVERCAPTION More Crashes than a Boeing 737
 #SERVERCAPTION Not Your Grandpappy's TG Server...!
 #SERVERCAPTION Rimmy Fans Welcome! (O'LORD SAVE US)
 #SERVERCAPTION Home of the Orignal Cringe
 #SERVERCAPTION Come for the Vampires, Stay for the Suck
+#SERVERCAPTION All the Good Players Are Taken
+
 
 ## Server SQL name: This is the name used to identify the server to the SQL DB, distinct from SERVERNAME as it must be at most 32 characters.
 SERVERSQLNAME fulpstation
@@ -282,7 +284,7 @@ DISCORDURL https://discord.gg/SVu782A
 
 ## In-game features
 ##Toggle for having jobs load up from the .txt
-# LOAD_JOBS_FROM_TXT
+LOAD_JOBS_FROM_TXT
 
 ## Uncomment this to forbid admins from possessing the singularity.
 #FORBID_SINGULO_POSSESSION

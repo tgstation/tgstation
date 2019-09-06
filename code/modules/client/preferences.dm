@@ -267,8 +267,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "<span style='border: 1px solid #161616; background-color: #[features["ethcolor"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=color_ethereal;task=input'>Change</a><BR>"
 
+			if(istype(pref_species, /datum/species/beefman)) // FULP yeah we did the same as Ethereal so sue us
+				if(!use_skintones)
+					dat += APPEARANCE_CATEGORY_COLUMN
+				// Fill Empties
+				proof_beefman_features(features) // <--- This is so we don't have to mess with any other lines of code!
+				dat += "<h3>Doneness</h3>"
+				dat += "<span style='border: 1px solid #161616; background-color: #[features["beefcolor"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=color_beef;task=input'>Change</a><BR>"
+				dat += "<h3>Eyes</h3>"
+				dat += "<a href='?_src_=prefs;preference=eyes_beef;task=input'>[features["beefeyes"]]</a><BR>"
+				dat += "<h3>Mouth</h3>"
+				dat += "<a href='?_src_=prefs;preference=mouth_beef;task=input'>[features["beefmouth"]]</a><BR>"
 
-			if((EYECOLOR in pref_species.species_traits) && !(NOEYESPRITES in pref_species.species_traits))
+			if((EYECOLOR in pref_species.species_traits)) // FULP Edit: If we want Eye Color, let it show eye color. Maybe we want eye color to affect something else? (Beef Eyes) && !(NOEYESPRITES in pref_species.species_traits))
 
 				if(!use_skintones && !mutant_colors)
 					dat += APPEARANCE_CATEGORY_COLUMN
@@ -1224,6 +1235,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_etherealcolor)
 						features["ethcolor"] = GLOB.color_list_ethereal[new_etherealcolor]
 
+				if("color_beef") // FULP We are copying Ethereal
+					var/new_beefcolor = input(user, "Select your doneness:", "Character Preference") as null|anything in GLOB.color_list_beefman
+					if(new_beefcolor)
+						features["beefcolor"] = GLOB.color_list_beefman[new_beefcolor]
+				if("eyes_beef")
+					var/new_eyes = input(user, "Choose your Eyes:", "Character Preference")  as null|anything in GLOB.eyes_beefman
+					if(new_eyes)
+						features["beefeyes"] = new_eyes
+				if("mouth_beef")
+					var/new_mouth = input(user, "Choose your Mouth:", "Character Preference")  as null|anything in GLOB.mouths_beefman
+					if(new_mouth)
+						features["beefmouth"] = new_mouth
 
 				if("tail_lizard")
 					var/new_tail
@@ -1534,7 +1557,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(be_random_species)
 		be_random_name = 1
 		random_species()
-		
+
 	if(be_random_name)
 		real_name = pref_species.random_name(gender)
 
