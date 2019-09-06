@@ -4,6 +4,14 @@
 /datum/reagent/medicine/CF
 	harmful = FALSE
 
+var/l_1 = 0
+var/bic1 = 0
+var/l_2 = 0
+var/kel1 = 0
+var/l_3 = 0
+var/tox1 = 0
+var/l_4 = 0
+var/tri1 = 0
 //Trekkie Chems :  Uses discarded recipes with new lock-reagent to keep it T4/5
 //Bicaridine (Brute Heal)
 /datum/reagent/medicine/CF/bicaridine
@@ -21,13 +29,28 @@
 		if(method in list(INJECT))
 			if(show_message)
 				to_chat(M, "<span class='notice'>You hear a distant comms chirp as your bruises heal.</span>")
-			for(var/datum/reagent/medicine/CF/bicaridine/bicar in M.reagents.reagent_list)
-				M.adjustBruteLoss(-2*REMF, 0)	
+			l_1 = 1
+			//for(var/datum/reagent/medicine/CF/bicaridine/bicar in M.reagents.reagent_list)
+
 	..()
 	. = 1
 
+/datum/reagent/medicine/CF/bicaridine/on_mob_metabolize(mob/living/M)
+		bic1 = 1
+	. = ..()
+
+/datum/reagent/medicine/CF/bicaridine/on_mob_end_metabolize(mob/living/M)
+		bic1 = 0
+		l_1 = 0
+	. = ..()
+
+/datum/reagent/medicine/CF/bicaridine/on_mob_life(mob/living/carbon/M)
+	if(l_1 = 1 && bic1 = 1)
+		M.adjustBruteLoss(-2*REMF, 0)
+	. = ..()
+
 /datum/reagent/medicine/CF/bicaridine/overdose_process(mob/living/M)	
-	M.adjustBruteLoss(2*REMF, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustBruteLoss(2.5*REMF, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
 
