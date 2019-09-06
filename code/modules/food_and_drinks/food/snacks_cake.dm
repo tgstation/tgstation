@@ -188,6 +188,26 @@
 	tastes = list("cake" = 5, "sweetness" = 1)
 	foodtype = GRAIN | DAIRY | JUNKFOOD | SUGAR
 
+/obj/item/reagent_containers/food/snacks/store/cake/birthday/energy
+	name = "energy cake"
+	desc = "Just enough calories for a whole nuclear operative squad."
+	icon_state = "energycake"
+	force = 5
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/birthday/energy
+	list_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/sprinkles = 10, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/pwr_game = 10)
+	tastes = list("cake" = 3, "a Vlad's Salad" = 1)
+
+/obj/item/reagent_containers/food/snacks/cakeslice/birthday/energy
+	name = "energy cake slice"
+	desc = "For the traitor on the go."
+	icon_state = "energycakeslice"
+	force = 2
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	filling_color = "#00FF00"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sprinkles = 2, /datum/reagent/consumable/nutriment/vitamin = 1,  /datum/reagent/consumable/pwr_game = 2)
+	tastes = list("cake" = 3, "a Vlad's Salad" = 1)
+
 /obj/item/reagent_containers/food/snacks/store/cake/apple
 	name = "apple cake"
 	desc = "A cake centred with Apple."
