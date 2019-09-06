@@ -16,6 +16,11 @@
 	max_equip = 3
 	step_energy_drain = 3
 
+/obj/mecha/combat/gygax/mechturn(direction)
+	. = ..()
+	if(!strafe && !occupant.client.keys_held["Alt"])
+		mechstep(direction) //agile mechs get to move and turn in the same step
+
 /obj/mecha/combat/gygax/dark
 	desc = "A lightweight exosuit, painted in a dark scheme. This model appears to have some modifications."
 	name = "\improper Dark Gygax"
@@ -67,4 +72,3 @@
 /obj/mecha/combat/gygax/dark/RemoveActions(mob/living/user, human_occupant = 0)
 	..()
 	thrusters_action.Remove(user)
-
