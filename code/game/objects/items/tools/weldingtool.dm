@@ -233,13 +233,13 @@
 // When welding is about to start, run a normal tool_use_check, then flash a mob if it succeeds.
 /obj/item/weldingtool/tool_start_check(mob/living/user, amount=0)
 	. = tool_use_check(user, amount)
-	if(. && user)
+	if(. && user && get_dist(get_turf(src), get_turf(user)) <= 1)
 		user.flash_act(light_intensity)
 
 // Flash the user during welding progress
 /obj/item/weldingtool/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
 	. = ..()
-	if(. && user)
+	if(. && user && get_dist(get_turf(src), get_turf(user)) <= 1)
 		if (progress_flash_divisor == 0)
 			user.flash_act(min(light_intensity,1))
 			progress_flash_divisor = initial(progress_flash_divisor)
@@ -299,18 +299,20 @@
 	max_fuel = 40
 	materials = list(/datum/material/glass=60)
 
+/obj/item/weldingtool/largetank/flamethrower_screwdriver()
+	return
+
 /obj/item/weldingtool/largetank/cyborg
 	name = "integrated welding tool"
-	desc = "An advanced welder designed to be used in robotic systems."
+	desc = "An advanced welder designed to be used in robotic systems. Custom framework doubles the speed of welding."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "indwelder_cyborg"
 	toolspeed = 0.5
 
 /obj/item/weldingtool/largetank/cyborg/cyborg_unequip(mob/user)
 	if(!isOn())
 		return
 	switched_on(user)
-
-/obj/item/weldingtool/largetank/flamethrower_screwdriver()
-	return
 
 
 /obj/item/weldingtool/mini

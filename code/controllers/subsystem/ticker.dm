@@ -639,11 +639,8 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/newroundsexy.ogg',
 		'sound/roundend/apcdestroyed.ogg',
 		'sound/roundend/bangindonk.ogg',
-		'sound/roundend/leavingtg.ogg',
-		'sound/roundend/its_only_game.ogg',
-		'sound/roundend/yeehaw.ogg',
-		'sound/roundend/disappointed.ogg',
-		'sound/roundend/scrunglartiy.ogg'\
+		'sound/roundend/imaghoul.ogg'\
+		// FULP: There USED TO be a \ after scrunglartiy, in case we run into issues here later. We moved it to imaghoul
 		)
 
 	SEND_SOUND(world, sound(round_end_sound))

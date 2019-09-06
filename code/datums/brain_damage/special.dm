@@ -98,10 +98,11 @@
 	image_layer = ABOVE_MOB_LAYER
 	var/obj/effect/hallucination/simple/bluespace_stream/linked_to
 	var/mob/living/carbon/seer
+	var/exist_length = 300 // FULP
 
 /obj/effect/hallucination/simple/bluespace_stream/Initialize()
 	. = ..()
-	QDEL_IN(src, 300)
+	QDEL_IN(src, exist_length) // FULP CHANGE
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/effect/hallucination/simple/bluespace_stream/attack_hand(mob/user)

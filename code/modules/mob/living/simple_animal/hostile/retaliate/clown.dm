@@ -6,7 +6,7 @@
 	icon_living = "clown"
 	icon_dead = "clown_dead"
 	icon_gib = "clown_gib"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	turns_per_move = 5
 	response_help = "pokes"
 	response_disarm = "gently pushes aside"
@@ -73,11 +73,9 @@
 	emote_see = list("bubbles", "oozes")
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/particle_effect/foam)
 
-/mob/living/simple_animal/hostile/retaliate/clown/lube/Life()
+/mob/living/simple_animal/hostile/retaliate/clown/lube/Initialize()
 	. = ..()
-	var/turf/open/OT = get_turf(src)
-	if(isopenturf(OT))
-		OT.MakeSlippery(TURF_WET_LUBE, 100)
+	AddElement(/datum/element/snailcrawl)
 
 /mob/living/simple_animal/hostile/retaliate/clown/banana
 	name = "Clownana"

@@ -58,11 +58,11 @@
 		brainmob.forceMove(src)
 		brainmob.container = src
 		var/fubar_brain = newbrain.brain_death && newbrain.suicided && brainmob.suiciding //brain is damaged beyond repair or from a suicider
-		if(!fubar_brain && !newbrain.damaged_brain) // the brain organ hasn't been beaten to death, nor was from a suicider.
+		if(!fubar_brain && !(newbrain.organ_flags & ORGAN_FAILING)) // the brain organ hasn't been beaten to death, nor was from a suicider.
 			brainmob.stat = CONSCIOUS //we manually revive the brain mob
 			GLOB.dead_mob_list -= brainmob
 			GLOB.alive_mob_list += brainmob
-		else if(!fubar_brain && newbrain.damaged_brain) // the brain is damaged, but not from a suicider
+		else if(!fubar_brain && newbrain.organ_flags & ORGAN_FAILING) // the brain is damaged, but not from a suicider
 			to_chat(user, "<span class='warning'>[src]'s indicator light turns yellow and its brain integrity alarm beeps softly. Perhaps you should check [newbrain] for damage.</span>")
 			playsound(src, "sound/machines/synth_no.ogg", 5, TRUE)
 		else
@@ -71,6 +71,7 @@
 
 		brainmob.reset_perspective()
 		brain = newbrain
+		brain.organ_flags |= ORGAN_FROZEN
 
 		name = "[initial(name)]: [brainmob.real_name]"
 		update_icon()
@@ -107,6 +108,7 @@
 		user.put_in_hands(brain) //puts brain in the user's hand or otherwise drops it on the user's turf
 	else
 		brain.forceMove(get_turf(src))
+	brain.organ_flags &= ~ORGAN_FROZEN
 	brain = null //No more brain in here
 
 
@@ -130,6 +132,7 @@
 	else if(!brain)
 		brain = new(src)
 		brain.name = "[L.real_name]'s brain"
+	brain.organ_flags |= ORGAN_FROZEN
 
 	name = "[initial(name)]: [brainmob.real_name]"
 	update_icon()

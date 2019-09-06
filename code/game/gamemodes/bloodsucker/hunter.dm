@@ -5,7 +5,7 @@
 /datum/game_mode/proc/assign_monster_hunters(monster_count = 4, guaranteed_hunters = FALSE, list/datum/mind/exclude_from_hunter)
 
 	// Not all game modes GUARANTEE a hunter
-	if (rand(0,1) == 0) // 50% of the time, we get fewer or NO Hunters
+	if (rand(0,2) == 0) // 50% of the time, we get fewer or NO Hunters
 		if (!guaranteed_hunters)
 			return
 		else

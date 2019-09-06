@@ -12,35 +12,35 @@ Chief Medical Officer=1,1
 Assistant=-1,-1
 
 Quartermaster=1,1
-Cargo Technician=3,2
-Shaft Miner=3,3
+Cargo Technician=6,2
+Shaft Miner=15,3
 
-Bartender=1,1
-Cook=2,1
-Botanist=3,2
-Janitor=2,1
+Bartender=2,1
+Cook=3,1
+Botanist=4,2
+Janitor=4,1
 
-Clown=1,1
-Mime=1,1
-Curator=1,1
-Lawyer=2,2
+Clown=2,1
+Mime=2,1
+Curator=2,1
+Lawyer=4,2
 
-Chaplain=1,1
+Chaplain=2,1
 
-Station Engineer=5,5
-Atmospheric Technician=3,2
+Station Engineer=10,5
+Atmospheric Technician=6,2
 
-Medical Doctor=5,3
-Chemist=2,2
-Geneticist=2,2
-Virologist=1,1
+Medical Doctor=10,3
+Chemist=4,2
+Geneticist=4,2
+Virologist=2,1
 
-Scientist=5,3
-Roboticist=2,2
+Scientist=10,3
+Roboticist=5,2
 
-Warden=1,1
-Detective=1,1
-Security Officer=5,5
+Warden=2,1
+Detective=3,1
+Security Officer=15,5
 
 AI=0,1
-Cyborg=0,1
+Cyborg=0,2

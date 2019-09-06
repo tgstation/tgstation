@@ -53,7 +53,6 @@
 	if(.)
 		. *= booster_damage_modifier
 
-
 /obj/mecha/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
@@ -66,7 +65,6 @@
 
 /obj/mecha/attack_paw(mob/user as mob)
 	return attack_hand(user)
-
 
 /obj/mecha/attack_alien(mob/living/user)
 	log_message("Attack by alien. Attacker - [user].", LOG_MECHA, color="red")
@@ -87,8 +85,8 @@
 		if(user.obj_damage)
 			animal_damage = user.obj_damage
 		animal_damage = min(animal_damage, 20*user.environment_smash)
-		attack_generic(user, animal_damage, user.melee_damage_type, "melee", play_soundeffect)
 		log_combat(user, src, "attacked")
+		attack_generic(user, animal_damage, user.melee_damage_type, "melee", play_soundeffect)
 		return 1
 
 
@@ -102,6 +100,7 @@
 		log_combat(user, src, "punched", "hulk powers")
 
 /obj/mecha/blob_act(obj/structure/blob/B)
+	log_message("Attack by blob. Attacker - [B].", LOG_MECHA, color="red")
 	take_damage(30, BRUTE, "melee", 0, get_dir(src, B))
 
 /obj/mecha/attack_tk()
@@ -110,7 +109,6 @@
 /obj/mecha/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum) //wrapper
 	log_message("Hit by [AM].", LOG_MECHA, color="red")
 	. = ..()
-
 
 /obj/mecha/bullet_act(obj/item/projectile/Proj) //wrapper
 	if (!enclosed && occupant && !silicon_pilot && !Proj.force_hit && (Proj.def_zone == BODY_ZONE_HEAD || Proj.def_zone == BODY_ZONE_CHEST)) //allows bullets to hit the pilot of open-canopy mechs

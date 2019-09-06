@@ -168,7 +168,7 @@
 
 	owner.current.adjustStaminaLoss(-5 * (regenRate * 4) * mult, 0) // Humans lose stamina damage really quickly. Vamps should heal more.
 	owner.current.adjustCloneLoss(-1 * (regenRate * 4) * mult, 0)
-	owner.current.adjustBrainLoss(-1 * (regenRate * 4) * mult, 0)
+	owner.current.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * (regenRate * 4) * mult) //adjustBrainLoss(-1 * (regenRate * 4) * mult, 0)
 
 	owner.current.setOxyLoss(0)
 	owner.current.setToxLoss(0)
@@ -261,9 +261,15 @@
 
 
 /datum/antagonist/bloodsucker/proc/CureDisabilities()
-	owner.current.cure_blind(list(EYE_DAMAGE))//()
-	owner.current.cure_nearsighted(EYE_DAMAGE)
 	var/mob/living/carbon/C = owner.current
+
+	C.cure_blind(list(EYE_DAMAGE))//()
+	C.cure_nearsighted(EYE_DAMAGE)
+	C.set_blindness(0) 	// Added 9/2/19
+	C.set_blurriness(0) // Added 9/2/19
+	C.update_tint() 	// Added 9/2/19
+	C.update_sight() 	// Added 9/2/19
+
 	for(var/O in C.internal_organs) //owner.current.adjust_eye_damage(-100)  // This was removed by TG
 		var/obj/item/organ/organ = O
 		organ.setOrganDamage(0)
@@ -401,11 +407,15 @@
 	var/mob/living/carbon/C = owner.current
 	C.remove_all_embedded_objects()
 
+	// Make me UN-CLONEABLE
+	owner.current.hellbound = TRUE // This was done during creation, but let's do it again one more time...to make SURE this guy stays dead.
+
+
 	// Free my Vassals!
 	FreeAllVassals()
 
 	// Elders get Dusted
-	if (vamptitle)
+	if (vamplevel >= 4) // (vamptitle)
 		owner.current.visible_message("<span class='warning'>[owner.current]'s skin crackles and dries, their skin and bones withering to dust. A hollow cry whips from what is now a sandy pile of remains.</span>", \
 			 "<span class='userdanger'>Your soul escapes your withering body as the abyss welcomes you to your Final Death.</span>", \
 			 "<span class='italics'>You hear a dry, crackling sound.</span>")

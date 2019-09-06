@@ -31,7 +31,7 @@
 	for(var/datum/mind/wiz in wizards)
 		wiz.current.forceMove(pick(GLOB.wizardstart))
 	// FULPSTATION: Assign Hunters (as many as monsters, plus one)
-	assign_monster_hunters(wizards.len + 2)	// FULP
+	assign_monster_hunters(wizards.len * 2 + 1, TRUE, wizards)	// FULP
 	return TRUE
 
 
@@ -60,6 +60,11 @@
 		SSevents.resetFrequency()
 
 	return TRUE
+
+/datum/game_mode/wizard/check_finished()
+	. = ..()
+	if(.)
+		finished = TRUE
 
 /datum/game_mode/wizard/set_round_result()
 	..()

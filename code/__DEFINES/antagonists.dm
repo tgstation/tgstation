@@ -51,13 +51,6 @@
 #define HIJACK_HIJACKER 1 //Needs to be present for shuttle to be hijacked
 #define HIJACK_PREVENT 2 //Prevents hijacking same way as non-antags
 
-//Assimilation
-#define TRACKER_DEFAULT_TIME 900
-#define TRACKER_MINDSHIELD_TIME 1200
-#define TRACKER_AWAKENED_TIME	3000
-#define TRACKER_BONUS_LARGE 300
-#define TRACKER_BONUS_SMALL 100
-
 //Syndicate Contracts
 #define CONTRACT_STATUS_INACTIVE 1
 #define CONTRACT_STATUS_ACTIVE 2

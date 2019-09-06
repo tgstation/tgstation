@@ -2,7 +2,7 @@
 #define NUMBER_OF_BUFFERS 3
 #define SCRAMBLE_TIMEOUT 600
 #define JOKER_TIMEOUT 12000					//20 minutes
-#define JOKER_UPGRADE 1800
+#define JOKER_UPGRADE 3000
 
 #define RADIATION_STRENGTH_MAX 15
 #define RADIATION_STRENGTH_MULTIPLIER 1			//larger has more range
@@ -406,11 +406,11 @@
 	if(mutation == current_mutation)
 		class = "selected"
 	if(location > DNA_MUTATION_BLOCKS)
-		temp_html += "<a class='clean' href='?src=[REF(src)];task=inspect;num=[location];'><img class='[class]' src='dna_extra.png' width = '65'  alt='Extra Mutation'></a>"
+		temp_html += "<a class='clean' href='?src=[REF(src)];task=inspect;num=[location];'><img class='[class]' src='dna_extra.gif' width = '65'  alt='Extra Mutation'></a>"
 	else if(mutation in stored_research.discovered_mutations)
-		temp_html += "<a class='clean' href='?src=[REF(src)];task=inspect;num=[location];'><img class='[class]' src='dna_discovered.png' width = '65'  alt='Discovered Mutation'></a>"
+		temp_html += "<a class='clean' href='?src=[REF(src)];task=inspect;num=[location];'><img class='[class]' src='dna_discovered.gif' width = '65'  alt='Discovered Mutation'></a>"
 	else
-		temp_html += "<a class='clean' clean href='?src=[REF(src)];task=inspect;num=[location];'><img class='[class]' src='dna_undiscovered.png' width = '65' alt=Undiscovered Mutation'></a>"
+		temp_html += "<a class='clean' clean href='?src=[REF(src)];task=inspect;num=[location];'><img class='[class]' src='dna_undiscovered.gif' width = '65' alt=Undiscovered Mutation'></a>"
 	return temp_html
 
 /obj/machinery/computer/scan_consolenew/proc/display_sequence(mutation, storage_slot) //Storage slot is for when viewing from the stored mutations
@@ -717,7 +717,7 @@
 						I.research = TRUE
 						if(connected)
 							I.damage_coeff = connected.damage_coeff*4
-							injectorready = world.time + INJECTOR_TIMEOUT * (1 - 0.1 * connected.precision_coeff) //precision_coeff being the manipulator rating
+							injectorready = world.time + INJECTOR_TIMEOUT * (1 - 0.1 * connected.precision_coeff) //precision_coeff being the matter bin rating
 						else
 							injectorready = world.time + INJECTOR_TIMEOUT
 		if("mutator")

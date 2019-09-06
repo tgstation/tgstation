@@ -17,9 +17,17 @@ $include antag_rep.txt
 SERVERNAME Fulpstation
 
 ## Server Caption: Shows next to the server name in the BYOND hub.
-SERVERCAPTION The Problems of the Future, Today!
-#SERVERCAPTION The Crew that Flies Together, Dies Together!
+#SERVERCAPTION The Problems of the Future, Today!
+#SERVERCAPTION The Crew that Flies Together, Dies Together
 #SERVERCAPTION 100% Crash-Free since 2019!
+SERVERCAPTION We have a Vampire problem...
+#SERVERCAPTION More Crashes than a Boeing 737
+#SERVERCAPTION Not Your Grandpappy's TG Server...!
+#SERVERCAPTION Rimmy Fans Welcome! (O'LORD SAVE US)
+#SERVERCAPTION Home of the Orignal Cringe
+#SERVERCAPTION Come for the Vampires, Stay for the Suck
+#SERVERCAPTION All the Good Players Are Taken
+
 
 ## Server SQL name: This is the name used to identify the server to the SQL DB, distinct from SERVERNAME as it must be at most 32 characters.
 SERVERSQLNAME fulpstation
@@ -74,7 +82,7 @@ USE_EXP_RESTRICTIONS_HEADS_HOURS 20
 ## Unhash this to change head jobs' playtime requirements so that they're based on department playtime, rather than crew playtime.
 USE_EXP_RESTRICTIONS_HEADS_DEPARTMENT
 ## Unhash this to enable playtime requirements for certain non-head jobs, like Engineer and Scientist.
-#USE_EXP_RESTRICTIONS_OTHER
+USE_EXP_RESTRICTIONS_OTHER
 ## Allows admins to bypass job playtime requirements.
 USE_EXP_RESTRICTIONS_ADMIN_BYPASS
 
@@ -169,11 +177,8 @@ ID_CONSOLE_JOBSLOT_DELAY 30
 ## allow players to initiate a restart vote
 #ALLOW_VOTE_RESTART
 
-## allow players to initiate a mode-change vote
+## allow players to initate a mode-change start
 #ALLOW_VOTE_MODE
-
-## allow players to initiate a map-change vote
-#ALLOW_VOTE_MAP
 
 ## min delay (deciseconds) between voting sessions (default 10 minutes)
 VOTE_DELAY 6000
@@ -279,7 +284,7 @@ DISCORDURL https://discord.gg/SVu782A
 
 ## In-game features
 ##Toggle for having jobs load up from the .txt
-# LOAD_JOBS_FROM_TXT
+LOAD_JOBS_FROM_TXT
 
 ## Uncomment this to forbid admins from possessing the singularity.
 #FORBID_SINGULO_POSSESSION
@@ -306,10 +311,10 @@ TICKLAG 0.5
 #FPS 20
 
 ## Comment this out to disable automuting
-#AUTOMUTE_ON
+AUTOMUTE_ON
 
 ## Uncomment this to let players see their own notes (they can still be set by admins only)
-#SEE_OWN_NOTES
+SEE_OWN_NOTES
 
 ### Comment these two out to prevent notes fading out over time for admins.
 ## Notes older then this will start fading out.
@@ -380,7 +385,7 @@ ANNOUNCE_ADMIN_LOGOUT
 MAPROTATION
 
 ## Map voting
-## Allows players to vote with their preffered map setting
+## Allows players to vote for their preffered map
 ## When it's set to zero, the map will be randomly picked each round
 PREFERENCE_MAP_VOTING 1
 
@@ -460,7 +465,7 @@ MINUTE_CLICK_LIMIT 400
 ## If using TGS4, the string option can be set as a chat channel tag to limit the message to channels of that tag type (case-sensitive)
 ## i.e. CHAT_ANNOUNCE_NEW_GAME chat_channel_tag
 
-## Send a message with the station name starting a new game. Also required for the notify function
+## Send a message with the station name starting a new game
 #CHAT_ANNOUNCE_NEW_GAME
 
 
@@ -494,14 +499,8 @@ DISABLE_HIGH_POP_MC_MODE_AMOUNT 60
 #ROUNDS_UNTIL_HARD_RESTART 10
 
 
-##Default view size, in tiles.
-##	By default, this is 15x15, which gets simplified to 7 by byond
-##  15x15 would be the standard square view. 21x15 is what goonstation uses for widescreen.
-##  Setting this to something different from DEFAULT_VIEW_SQUARE will enable widescreen toggles
+##Default screen resolution, in tiles.
+##	By default, this is 15x15, which gets simplified to 7 by BYOND, as it is a 1:1 screen ratio.
+##	For reference, Goonstation uses a resolution of 21x15 for it's widescreen mode.
 ##	Do note that changing this value will affect the title screen. The title screen will have to be updated manually if this is changed.
 DEFAULT_VIEW 15x15
-
-##Default view size, in tiles. Should *always* be square.
-## The alternative square viewport size if you're using a widescreen view size
-## You probably shouldn't ever be changing this, but it's here if you want to.
-DEFAULT_VIEW_SQUARE 15x15

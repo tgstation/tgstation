@@ -24,7 +24,7 @@
 		if(user.a_intent == INTENT_HARM)
 			var/R
 			M.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [M]!</span>", \
-							"<span class='userdanger'>[user] splashes the contents of [src] onto [M]!</span>")
+							"<span class='userdanger'>[user] splashes the contents of [src] onto you!</span>")
 			if(reagents)
 				for(var/datum/reagent/A in reagents.reagent_list)
 					R += "[A] ([num2text(A.volume)]),"
@@ -37,13 +37,14 @@
 			reagents.clear_reagents()
 		else
 			if(M != user)
-				M.visible_message("<span class='danger'>[user] attempts to feed something to [M].</span>", \
-							"<span class='userdanger'>[user] attempts to feed something to you.</span>")
+				M.visible_message("<span class='danger'>[user] attempts to feed [M] something.</span>", \
+							"<span class='userdanger'>[user] attempts to feed you something.</span>")
 				if(!do_mob(user, M))
 					return
 				if(!reagents || !reagents.total_volume)
 					return // The drink might be empty after the delay, such as by spam-feeding
-				M.visible_message("<span class='danger'>[user] feeds something to [M].</span>", "<span class='userdanger'>[user] feeds something to you.</span>")
+				M.visible_message("<span class='danger'>[user] feeds [M] something.</span>", \
+							"<span class='userdanger'>[user] feeds you something.</span>")
 				log_combat(user, M, "fed", reagents.log_list())
 			else
 				to_chat(user, "<span class='notice'>You swallow a gulp of [src].</span>")
@@ -151,6 +152,7 @@
 
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(filling)
+	. = ..()
 
 /obj/item/reagent_containers/glass/beaker/jar
 	name = "honey jar"
@@ -220,24 +222,24 @@
 /obj/item/reagent_containers/glass/beaker/slime
 	list_reagents = list(/datum/reagent/toxin/slimejelly = 50)
 
-/obj/item/reagent_containers/glass/beaker/large/styptic
-	name = "styptic reserve tank"
-	list_reagents = list(/datum/reagent/medicine/styptic_powder = 50)
+/obj/item/reagent_containers/glass/beaker/large/libital
+	name = "libital reserve tank"
+	list_reagents = list(/datum/reagent/medicine/C2/libital = 50)
 
-/obj/item/reagent_containers/glass/beaker/large/silver_sulfadiazine
-	name = "silver sulfadiazine reserve tank"
-	list_reagents = list(/datum/reagent/medicine/silver_sulfadiazine = 50)
+/obj/item/reagent_containers/glass/beaker/large/aiuri
+	name = "aiuri reserve tank"
+	list_reagents = list(/datum/reagent/medicine/C2/aiuri = 50)
 
-/obj/item/reagent_containers/glass/beaker/large/charcoal
-	name = "charcoal reserve tank"
-	list_reagents = list(/datum/reagent/medicine/charcoal = 50)
+/obj/item/reagent_containers/glass/beaker/large/multiver
+	name = "multiver reserve tank"
+	list_reagents = list(/datum/reagent/medicine/C2/multiver = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/epinephrine
 	name = "epinephrine reserve tank"
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 50)
 
-/obj/item/reagent_containers/glass/beaker/synthflesh
-	list_reagents = list(/datum/reagent/medicine/synthflesh = 50)
+/obj/item/reagent_containers/glass/beaker/instabitaluri
+	list_reagents = list(/datum/reagent/medicine/C2/instabitaluri = 50)
 
 /obj/item/reagent_containers/glass/bucket
 	name = "bucket"

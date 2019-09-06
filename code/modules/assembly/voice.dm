@@ -71,6 +71,7 @@
 				. = TRUE
 
 /obj/item/assembly/voice/multitool_act(mob/living/user, obj/item/I)
+	..()
 	mode %= modes.len
 	mode++
 	to_chat(user, "<span class='notice'>You set [src] into [modes[mode]] mode.</span>")

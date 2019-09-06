@@ -78,6 +78,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 	var/heat = 0
+	///All items with sharpness of IS_SHARP or higher will automatically get the butchering component.
 	var/sharpness = IS_BLUNT
 
 	var/tool_behaviour = NONE
@@ -110,7 +111,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	materials =	typelist("materials", materials)
 
 	if(materials) //Otherwise, use the instances already provided.
-		var/list/temp_list = list() 
+		var/list/temp_list = list()
 		for(var/i in materials) //Go through all of our materials, get the subsystem instance, and then replace the list.
 			var/amount = materials[i]
 			var/datum/material/M = getmaterialref(i)
@@ -143,6 +144,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		embedding = getEmbeddingBehavior(arglist(embedding))
 	else if (!istype(embedding, /datum/embedding_behavior))
 		stack_trace("Invalid type [embedding.type] found in .embedding during /obj/item Initialize()")
+
+	if(sharpness) //give sharp objects butchering functionality, for consistency
+		AddComponent(/datum/component/butchering, 80 * toolspeed)
 
 /obj/item/Destroy()
 	item_flags &= ~DROPDEL	//prevent reqdels
@@ -629,7 +633,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return
 
 /obj/item/attack_hulk(mob/living/carbon/human/user)
-	return 0
+	return FALSE
 
 /obj/item/attack_animal(mob/living/simple_animal/M)
 	if (obj_flags & CAN_BE_HIT)

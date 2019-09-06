@@ -38,6 +38,7 @@
 		return TRUE
 
 /obj/structure/plasticflaps/wirecutter_act(mob/living/user, obj/item/W)
+	. = ..()
 	if(!anchored)
 		user.visible_message("<span class='warning'>[user] cuts apart [src].</span>", "<span class='notice'>You start to cut apart [src].</span>", "You hear cutting.")
 		if(W.use_tool(src, user, 50, volume=100))
@@ -47,9 +48,7 @@
 			var/obj/item/stack/sheet/plastic/five/P = new(loc)
 			P.add_fingerprint(user)
 			qdel(src)
-			return TRUE
-		else
-			return TRUE
+		return TRUE
 
 /obj/structure/plasticflaps/proc/check_anchored_state(check_anchored)
 	if(anchored != check_anchored)

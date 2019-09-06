@@ -13,7 +13,7 @@
 	///Plumbing machinery is always gonna need reagents, so we might aswell put it here
 	var/buffer = 50
 	///Flags for reagents, like INJECTABLE, TRANSPARENT bla bla everything thats in DEFINES/reagents.dm
-	var/reagent_flags
+	var/reagent_flags = TRANSPARENT
 
 /obj/machinery/plumbing/Initialize(mapload)
 	. = ..()
@@ -31,6 +31,7 @@
 	AddComponent(/datum/component/plumbing/simple_supply)
 
 /obj/machinery/plumbing/input/wrench_act(mob/living/user, obj/item/I)
+	..()
 	default_unfasten_wrench(user, I)
 	return TRUE
 
@@ -46,5 +47,6 @@
 	AddComponent(/datum/component/plumbing/simple_demand)
 
 /obj/machinery/plumbing/output/wrench_act(mob/living/user, obj/item/I)
+	..()
 	default_unfasten_wrench(user, I)
 	return TRUE

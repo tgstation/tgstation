@@ -8,7 +8,7 @@
 	},
 /obj/item/clothing/head/collectable/pirate,
 /obj/item/clothing/suit/pirate,
-/obj/item/clothing/under/pirate,
+/obj/item/clothing/under/costume/pirate,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/clothing/head/bandana,
 /turf/open/floor/plasteel/dark/side{
@@ -335,7 +335,7 @@
 	},
 /obj/item/clothing/head/collectable/pirate,
 /obj/item/clothing/suit/pirate,
-/obj/item/clothing/under/pirate,
+/obj/item/clothing/under/costume/pirate,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/clothing/head/bandana,
 /obj/effect/turf_decal/tile/red{

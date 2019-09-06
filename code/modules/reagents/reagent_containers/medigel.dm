@@ -49,13 +49,13 @@
 	else
 		log_combat(user, M, "attempted to apply", src, reagents.log_list())
 		M.visible_message("<span class='danger'>[user] attempts to [apply_method] [src] on [M].</span>", \
-							"<span class='userdanger'>[user] attempts to [apply_method] [src] on [M].</span>")
+							"<span class='userdanger'>[user] attempts to [apply_method] [src] on you.</span>")
 		if(!do_mob(user, M))
 			return
 		if(!reagents || !reagents.total_volume)
 			return
 		M.visible_message("<span class='danger'>[user] [apply_method]s [M] down with [src].</span>", \
-							"<span class='userdanger'>[user] [apply_method]s [M] down with [src].</span>")
+							"<span class='userdanger'>[user] [apply_method]s you down with [src].</span>")
 
 	if(!reagents || !reagents.total_volume)
 		return
@@ -66,23 +66,23 @@
 		reagents.trans_to(M, amount_per_transfer_from_this, transfered_by = user, method = apply_type)
 	return
 
-/obj/item/reagent_containers/medigel/styptic
-	name = "medical gel (styptic powder)"
-	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains styptic powder, for treating cuts and bruises."
+/obj/item/reagent_containers/medigel/libital
+	name = "medical gel (libital)"
+	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains libital, for treating cuts and bruises. Libital does minor liver damage."
 	icon_state = "brutegel"
-	list_reagents = list(/datum/reagent/medicine/styptic_powder = 60)
+	list_reagents = list(/datum/reagent/medicine/C2/libital = 60)
 
-/obj/item/reagent_containers/medigel/silver_sulf
-	name = "medical gel (silver sulfadiazine)"
-	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains silver sulfadiazine, useful for treating burns."
+/obj/item/reagent_containers/medigel/aiuri
+	name = "medical gel (aiuri)"
+	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains aiuri, useful for treating burns. Aiuri does minor eye damage."
 	icon_state = "burngel"
-	list_reagents = list(/datum/reagent/medicine/silver_sulfadiazine = 60)
+	list_reagents = list(/datum/reagent/medicine/C2/aiuri = 60)
 
-/obj/item/reagent_containers/medigel/synthflesh
-	name = "medical gel (synthflesh)"
-	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains synthflesh, an apex brute and burn healing agent."
+/obj/item/reagent_containers/medigel/instabitaluri
+	name = "medical gel (instabitaluri)"
+	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains instabitaluri, a brute and burn healing agent."
 	icon_state = "synthgel"
-	list_reagents = list(/datum/reagent/medicine/synthflesh = 60)
+	list_reagents = list(/datum/reagent/medicine/C2/instabitaluri = 60)
 	custom_price = 80
 
 /obj/item/reagent_containers/medigel/sterilizine

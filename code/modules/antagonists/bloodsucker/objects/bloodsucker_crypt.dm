@@ -140,9 +140,19 @@
 	if (!anchored && user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 		to_chat(user, "<span class='danger'>Until this rack is secured in place, it cannot serve its purpose.</span>")
 		return
-	//user.visible_message("<span class='notice'>[user] lifts [O] up onto the rack!</span>", \
-	//				  "<span class='notice'>You lift [O] up onto the rack.</span>")
+
+	// PULL TARGET: Remember if I was pullin this guy, so we can restore this
+	var/waspulling = (O == owner.pulling)
+	var/wasgrabstate = owner.grab_state
+	// 		* MOVE! *
 	O.forceMove(drop_location())
+	// PULL TARGET: Restore?
+	if (waspulling)
+		owner.start_pulling(O, wasgrabstate, TRUE)
+		// NOTE: in bs_lunge.dm, we use [target.grabbedby(owner)], which simulates doing a grab action. We don't want that though...we're cutting directly back to where we were in a grab.
+
+
+	// Do Action!
 	useLock = TRUE
 	if(do_mob(user, O, 50))
 		attach_victim(O,user)
@@ -539,8 +549,8 @@
 				 )
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 3,
 				/obj/item/stack/sheet/metal = 2,
-				/obj/item/restraints/handcuffs/cable = 1,
-				/obj/item/storage/belt = 1
+				/obj/item/restraints/handcuffs/cable = 2,
+				///obj/item/storage/belt = 1
 				///obj/item/stack/sheet/animalhide = 1, // /obj/item/stack/sheet/leather = 1,
 				///obj/item/stack/sheet/plasteel = 5
 				)

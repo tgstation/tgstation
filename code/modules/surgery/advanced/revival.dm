@@ -28,6 +28,7 @@
 /datum/surgery_step/revive
 	name = "shock body"
 	implements = list(/obj/item/twohanded/shockpaddles = 100, /obj/item/melee/baton = 75, /obj/item/gun/energy = 60)
+	repeatable = TRUE
 	time = 120
 
 /datum/surgery_step/revive/tool_check(mob/user, obj/item/tool)
@@ -66,7 +67,7 @@
 	if(target.revive())
 		target.visible_message("...[target] wakes up, alive and aware!")
 		target.emote("gasp")
-		target.adjustBrainLoss(50, 199) //MAD SCIENCE
+		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50, 199) //MAD SCIENCE
 		return TRUE
 	else
 		target.visible_message("...[target.p_they()] convulses, then lies still.")
@@ -77,5 +78,5 @@
 		"[user] send a powerful shock to [target]'s brain with [tool], but [target.p_they()] doesn't react.",
 		"[user] send a powerful shock to [target]'s brain with [tool], but [target.p_they()] doesn't react.")
 	playsound(get_turf(target), 'sound/magic/lightningbolt.ogg', 50, 1)
-	target.adjustBrainLoss(15, 199)
+	target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 180)
 	return FALSE

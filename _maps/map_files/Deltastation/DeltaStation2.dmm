@@ -42,12 +42,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/starboard/fore)
-"aah" = (
-/obj/machinery/button/ticket_machine{
-	pixel_y = 8
-	},
-/turf/closed/wall/r_wall,
-/area/crew_quarters/heads/hop)
 "aao" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
@@ -4106,7 +4100,7 @@
 	},
 /obj/item/wirerod,
 /obj/item/wrench,
-/obj/item/clothing/under/waiter,
+/obj/item/clothing/under/suit/waiter,
 /obj/item/clothing/accessory/waistcoat,
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = -32
@@ -4393,7 +4387,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint)
 "anx" = (
-/obj/machinery/computer/prisoner{
+/obj/machinery/computer/prisoner/management{
 	dir = 8
 	},
 /obj/machinery/status_display/evac{
@@ -13407,13 +13401,6 @@
 /area/crew_quarters/bar)
 "aEZ" = (
 /obj/structure/table/wood,
-/obj/item/storage/fancy/cigarettes/cigars{
-	pixel_y = 6
-	},
-/obj/item/storage/fancy/cigarettes/cigars/cohiba{
-	pixel_y = 3
-	},
-/obj/item/storage/fancy/cigarettes/cigars/havana,
 /obj/item/radio/intercom{
 	pixel_y = 26
 	},
@@ -13426,6 +13413,14 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/item/storage/photo_album/bar{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/storage/fancy/cigarettes/cigars/havana,
+/obj/item/storage/fancy/cigarettes/cigars/cohiba{
+	pixel_y = 3
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
@@ -17205,7 +17200,6 @@
 /turf/open/floor/plating,
 /area/security/prison)
 "aMf" = (
-/obj/structure/easel,
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = 32
 	},
@@ -17213,10 +17207,17 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/canvas/twentythreeXtwentythree,
-/obj/item/canvas/twentythreeXtwentythree,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
+	},
+/obj/structure/table,
+/obj/item/storage/photo_album/prison{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/camera{
+	pixel_x = -2;
+	pixel_y = -2
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -19112,7 +19113,7 @@
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
 /obj/item/folder/yellow,
-/obj/item/reagent_containers/pill/patch/silver_sulf,
+/obj/item/reagent_containers/pill/patch/aiuri,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -32313,7 +32314,7 @@
 /obj/structure/table/glass,
 /obj/item/storage/firstaid/regular,
 /obj/item/reagent_containers/glass/bottle/epinephrine,
-/obj/item/reagent_containers/glass/bottle/charcoal,
+/obj/item/reagent_containers/glass/bottle/multiver,
 /obj/item/reagent_containers/syringe,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -33390,7 +33391,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/hos)
 "boc" = (
-/obj/machinery/computer/prisoner{
+/obj/machinery/computer/prisoner/management{
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
@@ -36303,7 +36304,7 @@
 /turf/open/floor/plasteel/dark,
 /area/security/execution/transfer)
 "bth" = (
-/obj/machinery/computer/gulag_teleporter_computer{
+/obj/machinery/computer/prisoner/gulag_teleporter_computer{
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment{
@@ -36607,7 +36608,7 @@
 /obj/structure/closet/secure_closet/hos,
 /obj/item/clothing/head/HoS/beret,
 /obj/item/clothing/suit/armor/hos/trenchcoat,
-/obj/item/clothing/under/rank/head_of_security/grey,
+/obj/item/clothing/under/rank/security/head_of_security/grey,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -38989,7 +38990,7 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "byk" = (
-/obj/machinery/computer/prisoner,
+/obj/machinery/computer/prisoner/management,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -45864,9 +45865,7 @@
 /obj/item/clothing/suit/det_suit{
 	icon_state = "curator"
 	},
-/obj/item/clothing/under/rank/det{
-	icon_state = "curator"
-	},
+/obj/item/clothing/under/rank/security/detective,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -51641,7 +51640,7 @@
 /turf/open/floor/plasteel,
 /area/security/warden)
 "bTh" = (
-/obj/machinery/computer/prisoner{
+/obj/machinery/computer/prisoner/management{
 	dir = 8
 	},
 /obj/machinery/power/apc{
@@ -52226,7 +52225,7 @@
 /obj/item/cartridge/engineering{
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/pill/patch/silver_sulf,
+/obj/item/reagent_containers/pill/patch/aiuri,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -54172,6 +54171,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/machinery/button/ticket_machine{
+	pixel_y = 40
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hop)
@@ -56936,7 +56938,7 @@
 /area/security/warden)
 "cbF" = (
 /obj/structure/closet/secure_closet/warden,
-/obj/item/clothing/under/rank/warden/grey,
+/obj/item/clothing/under/rank/security/warden/grey,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -62771,6 +62773,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
+/obj/effect/mapping_helpers/ianbirthday,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "cmB" = (
@@ -64902,10 +64905,10 @@
 /area/library)
 "cqQ" = (
 /obj/structure/table/wood,
-/obj/item/storage/briefcase,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/storage/photo_album/library,
 /turf/open/floor/plasteel/grimy,
 /area/library)
 "cqR" = (
@@ -66925,7 +66928,7 @@
 /area/maintenance/starboard)
 "cuG" = (
 /obj/structure/table,
-/obj/item/clothing/under/rank/security,
+/obj/item/clothing/under/rank/security/officer,
 /obj/item/restraints/handcuffs,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small,
@@ -70648,7 +70651,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/syringe/charcoal,
+/obj/item/reagent_containers/syringe/multiver,
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
 	use_power = 0
@@ -71121,7 +71124,7 @@
 	pixel_x = 26;
 	pixel_y = 26
 	},
-/obj/item/clothing/under/kilt,
+/obj/item/clothing/under/costume/kilt,
 /obj/item/clothing/head/beret,
 /obj/machinery/airalarm{
 	pixel_y = 23
@@ -71158,7 +71161,7 @@
 /obj/item/clothing/head/fedora{
 	icon_state = "detective"
 	},
-/obj/item/clothing/under/geisha,
+/obj/item/clothing/under/costume/geisha,
 /obj/item/clothing/head/fedora{
 	icon_state = "curator"
 	},
@@ -71166,7 +71169,7 @@
 	desc = "This looks awfully familiar...";
 	icon_state = "curator"
 	},
-/obj/item/clothing/under/rank/curator/treasure_hunter,
+/obj/item/clothing/under/rank/civilian/curator/treasure_hunter,
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
@@ -73390,10 +73393,7 @@
 "cGo" = (
 /obj/structure/table/wood,
 /obj/item/folder/blue,
-/obj/item/clothing/under/rank/centcom_commander{
-	desc = "A replica of a jumpsuit worn by the highest ranking commanders under Nanotrasen's central command.";
-	name = "Replica CentCom officer's jumpsuit"
-	},
+/obj/item/clothing/under/rank/centcom/commander,
 /obj/item/clothing/head/centhat{
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0);
 	desc = "A replica hat of a Central Commander's attire. It has a small tag on it saying, 'It's good to be emperor.'";
@@ -78108,7 +78108,7 @@
 /area/medical/medbay/central)
 "cPq" = (
 /obj/structure/table,
-/obj/item/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/multiver{
 	pixel_x = 6
 	},
 /obj/item/reagent_containers/glass/bottle/epinephrine,
@@ -80318,9 +80318,7 @@
 /area/crew_quarters/fitness/recreation)
 "cTg" = (
 /obj/structure/table,
-/obj/item/clothing/under/sl_suit{
-	name = "referee suit"
-	},
+/obj/item/clothing/under/suit/sl,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -81416,7 +81414,7 @@
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/item/clothing/suit/jacket/letterman_nanotrasen,
 /obj/item/clothing/suit/toggle/lawyer,
-/obj/item/clothing/under/maid,
+/obj/item/clothing/under/costume/maid,
 /obj/item/clothing/head/kitty,
 /obj/machinery/airalarm{
 	dir = 1;
@@ -81444,7 +81442,7 @@
 /obj/item/clothing/head/fedora{
 	icon_state = "detective"
 	},
-/obj/item/clothing/under/lawyer/female,
+/obj/item/clothing/under/rank/civilian/lawyer/female,
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
@@ -81468,7 +81466,7 @@
 	pixel_y = -32
 	},
 /obj/item/clothing/head/fedora,
-/obj/item/clothing/under/redeveninggown,
+/obj/item/clothing/under/dress/redeveninggown,
 /obj/item/clothing/head/rabbitears,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/dorms)
@@ -83884,7 +83882,7 @@
 "cZy" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/multiver{
 	pixel_x = 6
 	},
 /obj/item/reagent_containers/glass/bottle/epinephrine,
@@ -84299,7 +84297,7 @@
 /area/crew_quarters/fitness/recreation)
 "dae" = (
 /obj/structure/table,
-/obj/item/clothing/under/suit_jacket/really_black,
+/obj/item/clothing/under/suit/black_really,
 /obj/item/cane,
 /obj/item/clothing/head/bowler{
 	pixel_y = 5
@@ -87261,7 +87259,7 @@
 /obj/item/stack/sheet/mineral/plasma,
 /obj/item/stack/sheet/mineral/plasma,
 /obj/item/stack/sheet/mineral/plasma,
-/obj/item/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/multiver{
 	pixel_x = 6
 	},
 /obj/item/reagent_containers/glass/bottle/epinephrine,
@@ -89269,7 +89267,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
 /obj/item/clothing/suit/toggle/owlwings,
-/obj/item/clothing/under/owl,
+/obj/item/clothing/under/costume/owl,
 /obj/item/clothing/mask/gas/owl_mask,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
@@ -97235,6 +97233,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/smartfridge/organ,
 /turf/open/floor/plasteel/dark,
 /area/medical/surgery)
 "dyK" = (
@@ -100524,7 +100523,7 @@
 /area/medical/medbay/central)
 "dFk" = (
 /obj/structure/table/wood,
-/obj/item/clothing/under/maid,
+/obj/item/clothing/under/costume/maid,
 /obj/item/clothing/head/kitty,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
@@ -101297,7 +101296,7 @@
 /area/maintenance/department/medical/morgue)
 "dGw" = (
 /obj/structure/closet/secure_closet/CMO,
-/obj/item/clothing/under/rank/nursesuit,
+/obj/item/clothing/under/rank/medical/doctor,
 /obj/item/clothing/head/nursehat,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -103398,7 +103397,7 @@
 /area/crew_quarters/theatre/abandoned)
 "dKr" = (
 /obj/structure/table/wood,
-/obj/item/clothing/under/geisha,
+/obj/item/clothing/under/costume/geisha,
 /obj/item/clothing/shoes/sandal,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -109035,7 +109034,7 @@
 /obj/item/radio/intercom{
 	pixel_x = -26
 	},
-/obj/item/clothing/under/burial,
+/obj/item/clothing/under/misc/burial,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -110167,7 +110166,7 @@
 /area/library/abandoned)
 "dYm" = (
 /obj/structure/table/wood,
-/obj/item/clothing/under/rank/curator,
+/obj/item/clothing/under/rank/civilian/curator,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/wood,
 /area/library/abandoned)
@@ -113713,8 +113712,7 @@
 /area/chapel/office)
 "efZ" = (
 /obj/structure/table/wood,
-/obj/item/folder/red,
-/obj/item/pen,
+/obj/item/storage/photo_album/chapel,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "ega" = (
@@ -113830,7 +113828,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/escape)
 "egj" = (
-/obj/machinery/computer/prisoner{
+/obj/machinery/computer/prisoner/management{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red,
@@ -152393,7 +152391,7 @@ bMp
 bOy
 bQz
 bSz
-aah
+bUB
 bWQ
 bYZ
 caN

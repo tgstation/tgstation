@@ -46,8 +46,8 @@
 		if(U.job in list("Curator")) // the curator is both faster, and more accurate than normal crew members at research
 			speed = 100
 			correctness = 100
-		correctness -= U.getBrainLoss() *0.5 //Brain damage makes researching hard.
-		speed += U.getBrainLoss() * 3
+		correctness -= U.getOrganLoss(ORGAN_SLOT_BRAIN) * 0.5 //Brain damage makes researching hard.
+		speed += U.getOrganLoss(ORGAN_SLOT_BRAIN) * 3
 	if(do_after(user, speed, 0, user))
 		var/usedName = devilName
 		if(!prob(correctness))

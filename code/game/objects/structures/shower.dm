@@ -49,6 +49,7 @@
 		return ..()
 
 /obj/machinery/shower/wrench_act(mob/living/user, obj/item/I)
+	..()
 	to_chat(user, "<span class='notice'>You begin to adjust the temperature valve with \the [I]...</span>")
 	if(I.use_tool(src, user, 50))
 		switch(current_temperature)

@@ -404,10 +404,12 @@
 		return ..()
 
 /obj/structure/curtain/wrench_act(mob/living/user, obj/item/I)
+	..()
 	default_unfasten_wrench(user, I, 50)
 	return TRUE
 
 /obj/structure/curtain/wirecutter_act(mob/living/user, obj/item/I)
+	..()
 	if(anchored)
 		return TRUE
 

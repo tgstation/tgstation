@@ -207,24 +207,28 @@
 	balance -= SPIN_PRICE
 	money += SPIN_PRICE
 	plays += 1
-	working = 1
+	working = TRUE
 
 	toggle_reel_spin(1)
 	update_icon()
 	updateDialog()
 
-	spawn(0)
-		while(working)
-			randomize_reels()
-			updateDialog()
-			sleep(2)
+	var/spin_loop = addtimer(CALLBACK(src, .proc/do_spin), 2, TIMER_LOOP|TIMER_STOPPABLE)
 
-	spawn(SPIN_TIME - (REEL_DEACTIVATE_DELAY * reels.len)) //WARNING: no sanity checking for user since it's not needed and would complicate things (machine should still spin even if user is gone), be wary of this if you're changing this code.
-		toggle_reel_spin(0, REEL_DEACTIVATE_DELAY)
-		working = 0
-		give_prizes(the_name, user)
-		update_icon()
-		updateDialog()
+	addtimer(CALLBACK(src, .proc/finish_spinning, spin_loop, user, the_name), SPIN_TIME - (REEL_DEACTIVATE_DELAY * reels.len))
+	//WARNING: no sanity checking for user since it's not needed and would complicate things (machine should still spin even if user is gone), be wary of this if you're changing this code.
+
+/obj/machinery/computer/slot_machine/proc/do_spin()
+	randomize_reels()
+	updateDialog()
+
+/obj/machinery/computer/slot_machine/proc/finish_spinning(spin_loop, mob/user, the_name)
+	toggle_reel_spin(0, REEL_DEACTIVATE_DELAY)
+	working = FALSE
+	deltimer(spin_loop)
+	give_prizes(the_name, user)
+	update_icon()
+	updateDialog()
 
 /obj/machinery/computer/slot_machine/proc/can_spin(mob/user)
 	if(stat & NOPOWER)

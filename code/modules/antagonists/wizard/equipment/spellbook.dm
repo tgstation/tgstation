@@ -120,7 +120,7 @@
 	category = "Defensive"
 
 /datum/spellbook_entry/disintegrate
-	name = "Disintegrate"
+	name = "Smite"
 	spell_type = /obj/effect/proc_holder/spell/targeted/touch/disintegrate
 
 /datum/spellbook_entry/disabletech

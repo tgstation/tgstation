@@ -39,6 +39,11 @@ Include =
 Exclude = AUTOADMIN
 Edit =
 
+Name = Mentor
+Include = MENTOR
+Exclude =
+Edit =
+
 Name = Moderator
 Include = ADMIN
 Exclude =
@@ -50,7 +55,7 @@ Exclude =
 Edit =
 
 Name = Admin Jr.
-Include = @ SPAWN VAREDIT
+Include = @ SPAWN VAREDIT FUN
 Exclude =
 Edit =
 
