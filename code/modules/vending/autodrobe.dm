@@ -124,7 +124,12 @@
 					  /obj/item/gun/magic/wand = 2,
 					  /obj/item/clothing/glasses/sunglasses/garb = 2,
 					  /obj/item/clothing/glasses/blindfold = 1,
-					  /obj/item/clothing/mask/muzzle = 2)
+					  /obj/item/clothing/mask/muzzle = 2,
+					  /obj/item/clothing/under/costume/diojumpsuit = 1,
+					  /obj/item/clothing/suit/diojacket = 1,
+					  /obj/item/clothing/shoes/dioshoes = 1,
+					  /obj/item/clothing/head/dioband = 1,
+					  /obj/item/clothing/gloves/diowristbands = 1) // Fulp Code = true
 	premium = list(/obj/item/clothing/suit/pirate/captain = 2,
 				   /obj/item/clothing/head/pirate/captain = 2,
 				   /obj/item/clothing/under/rank/civilian/clown/rainbow = 1,
