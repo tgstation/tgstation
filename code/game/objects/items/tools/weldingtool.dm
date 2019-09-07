@@ -10,7 +10,7 @@
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	force = 3
-	weldingforce = 15
+	var/weldingforce = 15
 	throwforce = 5
 	hitsound = "swing_hit"
 	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
