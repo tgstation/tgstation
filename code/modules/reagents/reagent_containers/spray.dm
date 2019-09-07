@@ -215,6 +215,9 @@
 		return
 	. = ..()
 
+/obj/item/reagent_containers/spray/pepper/peacekeeper
+	volume = 20
+
 //water flower
 /obj/item/reagent_containers/spray/waterflower
 	name = "water flower"
