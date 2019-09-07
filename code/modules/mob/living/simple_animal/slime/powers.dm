@@ -173,9 +173,9 @@
 			var/list/babies = list()
 			var/new_nutrition = round(nutrition * 0.9)
 			var/new_powerlevel = round(powerlevel / 4)
-			var/list/L[1]
-			SEND_SIGNAL(src, COMSIG_NANITE_GET_VOLUME, L) //Getting nanite volume before loop to only do it once
-			var/new_nanite_volume = L[1] * 0.25
+			var/datum/component/nanites/original_nanites
+			if(GetComponent(/datum/component/nanites))
+				original_nanites = GetComponent(/datum/component/nanites)
 
 			for(var/i=1,i<=4,i++)
 				var/child_colour
@@ -197,16 +197,10 @@
 				M.mutation_chance = CLAMP(mutation_chance+(rand(5,-5)),0,100)
 				SSblackbox.record_feedback("tally", "slime_babies_born", 1, M.colour)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-				if(new_nanite_volume) //If original slime had nanites, copy over and sync with 25% of the original volume
-					M.AddComponent(/datum/component/nanites, new_nanite_volume)
-					SEND_SIGNAL(M, COMSIG_NANITE_SYNC, src)
+				if(original_nanites)
+					M.AddComponent(/datum/component/nanites, original_nanites.nanite_volume*0.25)
+					SEND_SIGNAL(M, COMSIG_NANITE_SYNC, original_nanites, TRUE, TRUE) //The trues are to copy activation as well
 
-=======
->>>>>>> parent of 54d7285416... Makes nanites be passed down when jellypeople and slimes split
-=======
->>>>>>> parent of 54d7285416... Makes nanites be passed down when jellypeople and slimes split
 			var/mob/living/simple_animal/slime/new_slime = pick(babies)
 			new_slime.a_intent = INTENT_HARM
 			if(src.mind)

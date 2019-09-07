@@ -224,22 +224,13 @@
 	spare.domutcheck()
 	spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	var/list/L[1]
-	var/nanite_volume_new = 0
-	SEND_SIGNAL(owner, COMSIG_NANITE_GET_VOLUME, L)
-	if(L[1] > 0)
-		nanite_volume_new = L[1] * 0.5 //Copying over nanites with 50% of volume to each party
-	if(nanite_volume_new > 0)
-		SEND_SIGNAL(owner, COMSIG_NANITE_SET_VOLUME, nanite_volume_new)
-		spare.AddComponent(/datum/component/nanites, nanite_volume_new)
-		SEND_SIGNAL(spare, COMSIG_NANITE_SYNC, owner)
+	if(H.GetComponent(/datum/component/nanites))
+		var/datum/component/nanites/owner_nanites = H.GetComponent(/datum/component/nanites)
+		//copying over nanite programs/cloud sync with 50% saturation in host and spare
+		owner_nanites.nanite_volume *= 0.5
+		spare.AddComponent(/datum/component/nanites, owner_nanites.nanite_volume)
+		SEND_SIGNAL(spare, COMSIG_NANITE_SYNC, owner_nanites, TRUE, TRUE) //The trues are to copy activation as well
 
-=======
->>>>>>> parent of 54d7285416... Makes nanites be passed down when jellypeople and slimes split
-=======
->>>>>>> parent of 54d7285416... Makes nanites be passed down when jellypeople and slimes split
 	H.blood_volume *= 0.45
 	H.notransform = 0
 

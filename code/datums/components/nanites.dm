@@ -37,7 +37,6 @@
 	RegisterSignal(parent, COMSIG_HAS_NANITES, .proc/confirm_nanites)
 	RegisterSignal(parent, COMSIG_NANITE_UI_DATA, .proc/nanite_ui_data)
 	RegisterSignal(parent, COMSIG_NANITE_GET_PROGRAMS, .proc/get_programs)
-	RegisterSignal(parent, COMSIG_NANITE_GET_VOLUME, .proc/get_volume)
 	RegisterSignal(parent, COMSIG_NANITE_SET_VOLUME, .proc/set_volume)
 	RegisterSignal(parent, COMSIG_NANITE_ADJUST_VOLUME, .proc/adjust_nanites)
 	RegisterSignal(parent, COMSIG_NANITE_SET_MAX_VOLUME, .proc/set_max_volume)
@@ -62,7 +61,6 @@
 	UnregisterSignal(parent, list(COMSIG_HAS_NANITES,
 								COMSIG_NANITE_UI_DATA,
 								COMSIG_NANITE_GET_PROGRAMS,
-								COMSIG_NANITE_GET_VOLUME,
 								COMSIG_NANITE_SET_VOLUME,
 								COMSIG_NANITE_ADJUST_VOLUME,
 								COMSIG_NANITE_SET_MAX_VOLUME,
@@ -220,9 +218,6 @@
 		else
 			return FALSE
 	return FALSE
-
-/datum/component/nanites/proc/get_volume(datum/source, list/L)
-	L[1] += nanite_volume
 
 /datum/component/nanites/proc/set_volume(datum/source, amount)
 	nanite_volume = CLAMP(amount, 0, max_nanites)
