@@ -12,6 +12,13 @@ var/l_3 = 0
 var/tox1 = 0
 var/l_4 = 0
 var/tri1 = 0
+var/l_5 = 0
+var/chr1 = 0
+
+var/bicarHeal = 2
+var/keloHeal = 2
+var/toxHeal = 2
+var/tricHeal = 2.5
 //Trekkie Chems :  Uses discarded recipes with new lock-reagent to keep it T4/5
 //Bicaridine (Brute Heal)
 /datum/reagent/medicine/CF/bicaridine
@@ -46,11 +53,11 @@ var/tri1 = 0
 
 /datum/reagent/medicine/CF/bicaridine/on_mob_life(mob/living/carbon/M)
 	if(l_1 == 1 && bic1 == 1)
-		M.adjustBruteLoss(-2*REMF, 0)
+		M.adjustBruteLoss(-bicarHeal*REMF, 0)
 	. = ..()
 
 /datum/reagent/medicine/CF/bicaridine/overdose_process(mob/living/M)	
-	M.adjustBruteLoss(2.5*REMF, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustBruteLoss(bicarHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
 
@@ -70,13 +77,26 @@ var/tri1 = 0
 		if(method in list(INJECT))
 			if(show_message)
 				to_chat(M, "<span class='notice'>You hear a distant comms chirp as your burns heal.</span>")
-			for(var/datum/reagent/medicine/CF/kelotane/kelo in M.reagents.reagent_list)
-				M.adjustFireLoss(-2*REMF, 0)
+			l_2 = 1
 	..()
 	. = 1
 
+/datum/reagent/medicine/CF/kelotane/on_mob_metabolize(mob/living/M)
+	kel1 = 1
+	. = ..()
+
+/datum/reagent/medicine/CF/kelotane/on_mob_end_metabolize(mob/living/M)
+	kel1 = 0
+	l_1 = 0
+	. = ..()
+
+/datum/reagent/medicine/CF/kelotane/on_mob_life(mob/living/carbon/M)
+	if(l_2 == 1 && kel1 == 1)
+		M.adjustFireLoss(-keloHeal*REMF, 0)
+	. = ..()
+
 /datum/reagent/medicine/CF/kelotane/overdose_process(mob/living/M)	
-	M.adjustFireLoss(2*REMF, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustFireLoss(keloHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
 		
@@ -96,14 +116,26 @@ var/tri1 = 0
 		if(method in list(INJECT))
 			if(show_message)
 				to_chat(M, "<span class='notice'>You hear a distant comms chirp as your body purges itself of toxins.</span>")
-			for(var/datum/reagent/medicine/CF/antitoxin/antitox in M.reagents.reagent_list)
-				M.adjustToxLoss(-2.0*REMF, 0)
-		
+			l_3 = 1
 	..()
 	. = 1
 
+/datum/reagent/medicine/CF/antitoxin/on_mob_metabolize(mob/living/M)
+	tox1 = 1
+	. = ..()
+
+/datum/reagent/medicine/CF/antitoxin/on_mob_end_metabolize(mob/living/M)
+	tox1 = 0
+	l_3 = 0
+	. = ..()
+
+/datum/reagent/medicine/CF/antitoxin/on_mob_life(mob/living/carbon/M)
+	if(l_3 == 1 && tox1 == 1)
+		M.adjustToxLoss(-toxHeal*REMF, 0)
+	. = ..()
+
 /datum/reagent/medicine/CF/antitoxin/overdose_process(mob/living/M)	
-	M.adjustToxLoss(2*REMF, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustToxLoss(toxHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
 
@@ -123,20 +155,33 @@ var/tri1 = 0
 		if(method in list(INJECT))
 			if(show_message)
 				to_chat(M, "<span class='notice'>You hear a distant comms chirp as your body heals all wounds.</span>")
-			for(var/datum/reagent/medicine/CF/tricordrazine/trico in M.reagents.reagent_list)
-				M.adjustBruteLoss(-2.5*REMF, 0)
-				M.adjustFireLoss(-2.5*REMF, 0)
-				M.adjustToxLoss(-2.5*REMF, 0)
-				M.adjustOxyLoss(-2.5*REMF, 0)
+			l_4 = 1
 		
 	..()
 	. = 1
 
+/datum/reagent/medicine/CF/tricordrazine/on_mob_metabolize(mob/living/M)
+	tri1 = 1
+	. = ..()
+
+/datum/reagent/medicine/CF/bicaridine/on_mob_end_metabolize(mob/living/M)
+	tri1 = 0
+	l_4 = 0
+	. = ..()
+
+/datum/reagent/medicine/CF/bicaridine/on_mob_life(mob/living/carbon/M)
+	if(l_4 == 1 && tri1 == 1)
+		M.adjustBruteLoss(-tricHeal*REMF, 0)
+		M.adjustFireLoss(-tricHeal*REMF, 0)
+		M.adjustToxLoss(-tricHeal*REMF, 0)
+		M.adjustOxyLoss(-tricHeal*REMF, 0)
+	. = ..()
+
 /datum/reagent/medicine/CF/tricordrazine/overdose_process(mob/living/M)	
-	M.adjustBruteLoss(2.5*REMF, FALSE, FALSE, BODYPART_ORGANIC)
-	M.adjustFireLoss(2.5*REMF, FALSE, FALSE, BODYPART_ORGANIC)
-	M.adjustToxLoss(2.5*REMF, FALSE, FALSE, BODYPART_ORGANIC)
-	M.adjustOxyLoss(2.5*REMF, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustBruteLoss(tricHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustFireLoss(tricHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustToxLoss(tricHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustOxyLoss(tricHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
 
@@ -153,14 +198,27 @@ var/tri1 = 0
 	if(iscarbon(M))
 		if(M.stat == DEAD)
 			show_message = 0
-		if(method in list(INGEST))
-			M.adjustToxLoss(-2.0*REMF, 0)
-			for(var/datum/reagent/R in M.reagents.reagent_list)
-				M.reagents.remove_reagent(R.type, 0.5)
 		if(show_message)
 			to_chat(M, "<span class='notice'>You taste chalky powder, it isn't great...</span>")
+		l_5 = 1
 	..()
 	return TRUE
+
+/datum/reagent/medicine/CF/charcoal/on_mob_metabolize(mob/living/M)
+	chr1 = 1
+	. = ..()
+
+/datum/reagent/medicine/CF/charcoal/on_mob_end_metabolize(mob/living/M)
+	chr1 = 0
+	l_5 = 0
+	. = ..()
+
+/datum/reagent/medicine/CF/charcoal/on_mob_life(mob/living/carbon/M)
+	if(l_5 == 1 && chr1 == 1)
+		M.adjustToxLoss(-2.0*REMF, 0)
+		for(var/datum/reagent/R in M.reagents.reagent_list)
+			M.reagents.remove_reagent(R.type, 0.5)
+	. = ..()
 
 //Synthflesh Re-add, combo brute/burn. Retains old recipe.
 /*
