@@ -10,6 +10,7 @@
 	strip_delay = 70
 	equip_delay_other = 70
 	resistance_flags = FIRE_PROOF
+	shoe_steal_speed = 50
 
 /obj/item/clothing/shoes/magboots/verb/toggle()
 	set name = "Toggle Magboots"
@@ -51,9 +52,11 @@
 	magboot_state = "advmag"
 	slowdown_active = SHOES_SLOWDOWN
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	shoe_steal_speed = 70
 
 /obj/item/clothing/shoes/magboots/syndie
 	desc = "Reverse-engineered magnetic boots that have a heavy magnetic pull. Property of Gorlex Marauders."
 	name = "blood-red magboots"
 	icon_state = "syndiemag0"
 	magboot_state = "syndiemag"
+	shoe_steal_speed = 70

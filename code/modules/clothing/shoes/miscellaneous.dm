@@ -17,6 +17,7 @@
 	resistance_flags = NONE
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	shoe_steal_speed = 30
 
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
 	name = "\improper SWAT boots"
@@ -32,6 +33,7 @@
 	strip_delay = 50
 	equip_delay_other = 50
 	permeability_coefficient = 0.9
+	shoe_steal_speed = 5
 
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic black shoes."
@@ -56,6 +58,7 @@
 	resistance_flags = NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 75)
 	can_be_bloody = FALSE
+	shoe_steal_speed = 30
 	custom_price = 100
 
 /obj/item/clothing/shoes/galoshes/dry
@@ -125,6 +128,7 @@
 	resistance_flags = NONE
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	shoe_steal_speed = 30
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
@@ -152,6 +156,7 @@
 	strip_delay = 40
 	equip_delay_other = 40
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	shoe_steal_speed = 20
 
 /obj/item/clothing/shoes/workboots/mining
 	name = "mining boots"
@@ -216,6 +221,7 @@
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	actions_types = list(/datum/action/item_action/bhop)
 	permeability_coefficient = 0.05
+	shoe_steal_speed = 30
 	var/jumpdistance = 5 //-1 from to see the actual distance, e.g 4 goes over 3 tiles
 	var/jumpspeed = 3
 	var/recharging_rate = 60 //default 6 seconds between each dash
