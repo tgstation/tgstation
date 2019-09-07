@@ -974,28 +974,28 @@ $(function() {
 	});
 
 	$('#decreaseFont').click(function(e) {
-		savedConfig.fontsize = (parseInt(savedConfig.fontsize || 12) - 1) + 'px';
+		savedConfig.fontsize = Math.max(parseInt(savedConfig.fontsize || 13) - 1, 1) + 'px';
 		$messages.css({'font-size': savedConfig.fontsize});
 		setCookie('fontsize', savedConfig.fontsize, 365);
 		internalOutput('<span class="internal boldnshit">Font size set to '+savedConfig.fontsize+'</span>', 'internal');
 	});
 
 	$('#increaseFont').click(function(e) {
-		savedConfig.fontsize = (parseInt(savedConfig.fontsize || 12) + 1) + 'px';
+		savedConfig.fontsize = (parseInt(savedConfig.fontsize || 13) + 1) + 'px';
 		$messages.css({'font-size': savedConfig.fontsize});
 		setCookie('fontsize', savedConfig.fontsize, 365);
 		internalOutput('<span class="internal boldnshit">Font size set to '+savedConfig.fontsize+'</span>', 'internal');
 	});
 
 	$('#decreaseLineHeight').click(function(e) {
-		savedConfig.lineheight = (parseFloat(savedConfig.lineheight || 1) - 0.1).toFixed(1);
+		savedConfig.lineheight = Math.max(parseFloat(savedConfig.lineheight || 1.2) - 0.1, 0.1).toFixed(1);
 		$("body").css({'line-height': savedConfig.lineheight});
 		setCookie('lineheight', savedConfig.lineheight, 365);
 		internalOutput('<span class="internal boldnshit">Line height set to '+savedConfig.lineheight+'</span>', 'internal');
 	});
 
 	$('#increaseLineHeight').click(function(e) {
-		savedConfig.lineheight = (parseFloat(savedConfig.lineheight || 1) + 0.1).toFixed(1);
+		savedConfig.lineheight = (parseFloat(savedConfig.lineheight || 1.2) + 0.1).toFixed(1);
 		$("body").css({'line-height': savedConfig.lineheight});
 		setCookie('lineheight', savedConfig.lineheight, 365);
 		internalOutput('<span class="internal boldnshit">Line height set to '+savedConfig.lineheight+'</span>', 'internal');
