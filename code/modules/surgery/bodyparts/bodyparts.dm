@@ -268,9 +268,9 @@
 
 	if(change_icon_to_default)
 		if(status == BODYPART_ORGANIC)
-			icon = DEFAULT_BODYPART_ICON_ORGANIC
+			icon = icon_greyscale // DEFAULT_BODYPART_ICON_ORGANIC				// FULP Another Icon ref swap
 		else if(status == BODYPART_ROBOTIC)
-			icon = DEFAULT_BODYPART_ICON_ROBOTIC
+			icon = icon_greyscale_robotic // DEFAULT_BODYPART_ICON_ROBOTIC 		// FULP
 
 	if(owner)
 		owner.updatehealth()
@@ -413,7 +413,7 @@
 			aux = image(limb.icon, "[species_id]_[aux_zone]", -aux_layer, image_dir)
 			. += aux
 	else
-		limb.icon = icon
+		limb.icon = icon_greyscale_robotic // icon	 //	  FULP // Same as above
 		if(should_draw_gender)
 			limb.icon_state = "[body_zone]_[icon_gender]"
 		else

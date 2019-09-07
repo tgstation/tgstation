@@ -509,6 +509,11 @@
 ////////  Movement procs  ////////
 //////////////////////////////////
 
+///Plays the mech step sound effect. Split from movement procs so that other mechs (HONK) can override this one specific part.
+/obj/mecha/proc/play_stepsound()
+	if(stepsound)
+		playsound(src,stepsound,40,1)
+
 /obj/mecha/Move(atom/newloc, direct)
 	. = ..()
 	if (internal_tank?.disconnect()) // Something moved us and broke connection
@@ -587,14 +592,14 @@
 	var/result = step(src,direction)
 	if(strafe)
 		setDir(current_dir)
-	if(result && stepsound)
-		playsound(src,stepsound,40,TRUE)
+	if(result)
+		play_stepsound()
 	return result
 
 /obj/mecha/proc/mechsteprand()
 	var/result = step_rand(src)
-	if(result && stepsound)
-		playsound(src,stepsound,40,TRUE)
+	if(result)
+		play_stepsound()
 	return result
 
 /obj/mecha/Bump(var/atom/obstacle)
