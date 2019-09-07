@@ -126,7 +126,7 @@
 		pushed_mob.pass_flags &= ~PASSTABLE
 	if(pushed_mob.loc != loc) //Something prevented the tabling
 		return
-	pushed_mob.Knockdown(40)
+	pushed_mob.Knockdown(20)
 	pushed_mob.adjustBruteLoss(30)
 	pushed_mob.adjustStaminaLoss(30)
 	playsound(pushed_mob, "sound/effects/tableslam.ogg", 30, TRUE)
