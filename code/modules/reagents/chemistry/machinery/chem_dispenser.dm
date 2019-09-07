@@ -74,8 +74,8 @@
 		/datum/reagent/saltpetre,
 		/datum/reagent/medicine/CF/trekamol
 	)
-	//available with T5 manipulator
-	/*var/list/upgrade2_reagents = list(
+	//available with T5 manipulator (Quantum) [XEON Code]
+	/*var/list/T5_reagents = list(
 		/datum/reagent/mecicine/CF/trekamol
 	)*/
 	var/list/emagged_reagents = list(
@@ -97,6 +97,8 @@
 		emagged_reagents = sortList(emagged_reagents, /proc/cmp_reagents_asc)
 	if(upgrade_reagents)
 		upgrade_reagents = sortList(upgrade_reagents, /proc/cmp_reagents_asc)
+	/*if(t5_reagents) //FULP [XEON]
+		t5_reagents = sortList(t5_reagents, /proc/cmp_reagents_asc)*/
 	update_icon()
 
 /obj/machinery/chem_dispenser/Destroy()

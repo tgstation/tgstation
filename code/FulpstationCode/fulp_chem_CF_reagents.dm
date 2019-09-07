@@ -222,13 +222,13 @@ var/tricHeal = 2.5
 
 //Synthflesh Re-add, combo brute/burn. Retains old recipe.
 /*
-/datum/reagent/medicine/CF/instabitaluri
-	name = "Synthflesh (Instabitaluri)"
+/datum/reagent/medicine/CF/synthflesh
+	name = "Synthflesh"
 	description = "Has a 100% chance of instantly healing brute and burn damage at the cost of toxicity (75% of damage healed). Touch application only."
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 
-/datum/reagent/medicine/CF/instabitaluri/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
+/datum/reagent/medicine/CF/synthflesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
 	if(iscarbon(M))
 		var/mob/living/carbon/Carbies = M
 		if (Carbies.stat == DEAD)
