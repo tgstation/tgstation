@@ -17,10 +17,10 @@ $include antag_rep.txt
 SERVERNAME Fulpstation
 
 ## Server Caption: Shows next to the server name in the BYOND hub.
-#SERVERCAPTION The Problems of the Future, Today!
+SERVERCAPTION The Problems of the Future, Today!
 #SERVERCAPTION The Crew that Flies Together, Dies Together
 #SERVERCAPTION 100% Crash-Free since 2019!
-SERVERCAPTION We have a Vampire problem...
+#SERVERCAPTION We have a Vampire problem...
 #SERVERCAPTION More Crashes than a Boeing 737
 #SERVERCAPTION Not Your Grandpappy's TG Server...!
 #SERVERCAPTION Rimmy Fans Welcome! (O'LORD SAVE US)
