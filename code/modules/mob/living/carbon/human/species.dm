@@ -1212,12 +1212,22 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(target.check_block())
 		target.visible_message("<span class='warning'>[target] blocks [user]'s grab attempt!</span>", \
 							"<span class='userdanger'>You block [user]'s grab attempt!</span>")
-		return 0
+		return FALSE
 	if(attacker_style && attacker_style.grab_act(user,target))
-		return 1
+		return TRUE
 	else
+		//Steal them shoes
+		if(!(target.mobility_flags & MOBILITY_STAND) && (user.zone_selected == BODY_ZONE_PRECISE_L_FOOT || user.zone_selected == BODY_ZONE_PRECISE_R_FOOT) && target.shoes)
+			user.visible_message("<span class='warning'>[user] starts stealing [target]'s shoes!</span>",
+								"<span class='warning'>You start stealing [target]'s shoes!</span>")
+			var/obj/item/clothing/shoes/S = target.shoes
+			if(do_after(user, S.shoe_steal_speed, TRUE, target, TRUE))
+				target.dropItemToGround(S, TRUE)
+				user.put_in_hands(S)
+				user.visible_message("<span class='warning'>[user] stole your [S]!</span>",
+									"<span class='warning'>You steal [target]'s [S]!</span>")
 		target.grabbedby(user)
-		return 1
+		return TRUE
 
 ///This proc handles punching damage. IMPORTANT: Our owner is the TARGET and not the USER in this proc. For whatever reason...
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)

@@ -15,6 +15,7 @@
 	var/offset = 0
 	var/equipped_before_drop = FALSE
 	var/can_be_bloody = TRUE
+	var/shoe_steal_speed = 10
 
 /obj/item/clothing/shoes/ComponentInitialize()
 	. = ..()
