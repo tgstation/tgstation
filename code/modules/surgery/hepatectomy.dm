@@ -1,4 +1,4 @@
-/datum/surgery/liver_healies
+/datum/surgery/hepatectomy
 	name = "Hepatectomy"
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_CHEST)
@@ -12,12 +12,12 @@
 		/datum/surgery_step/close
 		)
 
-/datum/surgery/lobectomy/can_start(mob/user, mob/living/carbon/target)
+/datum/surgery/hepatectomy/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/liver/L = target.getorganslot(ORGAN_SLOT_LIVER)
-	if(L)
-		if(L.damage > 70)
-			return 0
-	return 1
+	if(L.damage > 50 && !(L.organ_flags & ORGAN_FAILING))
+		return TRUE
+	else
+		return FALSE
 
 ////hepatectomy, removes damaged parts of the liver so that the liver may regenerate properly
 //95% chance of success, not 100 because organs are delicate
