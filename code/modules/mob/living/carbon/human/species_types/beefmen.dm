@@ -4,6 +4,10 @@
 //
 // Death Sound
 //
+/datum/species/
+	var/bruising_desc = "bruising"
+	var/burns_desc = "burns"
+	var/cellulardamage_desc = "cellular damage"
 
 /datum/species/beefman
 	name = "Beefman"
@@ -40,6 +44,12 @@
 	var/list/datum/brain_trauma/startTraumas = list( /datum/brain_trauma/mild/hallucinations, /datum/brain_trauma/mild/phobia/strangers )
 	    // list( /datum/brain_trauma/mild/phobia/strangers, /datum/brain_trauma/mild/phobia/doctors, /datum/brain_trauma/mild/phobia/authority )
 
+	// Take care of your meat, everybody
+	bruising_desc = "tenderization"
+	burns_desc = "searing"
+	cellulardamage_desc = "meat degradation"
+
+
 
 
 /proc/proof_beefman_features(var/list/inFeatures)
@@ -62,12 +72,7 @@
 	if(ishuman(C)) // Taken DIRECTLY from ethereal!
 		var/mob/living/carbon/human/H = C
 
-		// 1) COLOR: Default to Medium Rare
-		//if (H.dna.features["beefcolor"] == null || H.dna.features["beefcolor"] == "")
-		//	fixed_mut_color =  GLOB.color_list_beefman["Medium Rare"]
-		//else
-		fixed_mut_color = H.dna.features["beefcolor"]
-		default_color = fixed_mut_color // "#" +
+		set_beef_color(H)
 
 		// 2) BODYPARTS
 		C.part_default_head = /obj/item/bodypart/head/beef
@@ -87,6 +92,14 @@
 	C.gain_trauma(pick(startTraumas))
 	C.gain_trauma(/datum/brain_trauma/special/bluespace_prophet/phobetor)
 	// NOTE: To remove, use cure_trauma_type()
+
+/datum/species/proc/set_beef_color(mob/living/carbon/human/H)
+	return // Do Nothing
+/datum/species/beefman/set_beef_color(mob/living/carbon/human/H)
+	// Called on Assign, or on Color Change (or any time proof_beefman_features() is used, such as in bs_veil.dm)
+	fixed_mut_color = H.dna.features["beefcolor"]
+	default_color = fixed_mut_color
+
 
 
 /mob/living/carbon/proc/ReassignForeignBodyparts()
@@ -312,9 +325,9 @@
 				return FALSE
 			// Attach the part!
 			var/obj/item/bodypart/newBP = H.newBodyPart(target_zone, FALSE)
+			H.visible_message("The meat sprouts digits and becomes [H]'s new [newBP.name]!", "<span class='notice'>The meat sprouts digits and becomes your new [newBP.name]!</span>")
 			newBP.attach_limb(H)
 			newBP.give_meat(H, I)
-			H.visible_message("The meat sprouts digits and becomes [H]'s new [newBP.name]!", "<span class='notice'>The meat sprouts digits and becomes your new [newBP.name]!</span>")
 			playsound(get_turf(H), 'sound/Fulpsounds/beef_grab.ogg', 50, 1)
 
 			return FALSE
@@ -414,8 +427,14 @@
 			inMeatObj.reagents.remove_reagent(R.type, R.volume)
 	inMeatObj.reagents.update_total()
 	// Set Health:
-	var/percentHealth = 1 - amountCurrent / amountOriginal
-	receive_damage(brute = max_damage * percentHealth)
+	var/percentDamage = 1 - amountCurrent / amountOriginal
+	receive_damage(brute = max_damage * percentDamage)
+	if (percentDamage >= 0.9)
+		to_chat(owner, "<span class='alert'>It's almost completely useless. That [inMeatObj.name] was no good!</span>")
+	else if (percentDamage > 0.5)
+		to_chat(owner, "<span class='alert'>It's riddled with holes and bite marks.</span>")
+	else if (percentDamage > 0)
+		to_chat(owner, "<span class='alert'>It looks a little eaten away, but it'll do.</span>")
 
 	// Apply meat's Reagents to Me
 	if(inMeatObj.reagents && inMeatObj.reagents.total_volume)
@@ -566,10 +585,10 @@
 	name = "body sash"
 	desc = "A simple body sash, slung from shoulder to hip."
 	icon = 'icons/Fulpicons/fulpclothing.dmi'
+	mob_overlay_icon =  'icons/Fulpicons/fulpclothing_worn.dmi' // worn_icon
 	icon_state = "assistant" // Inventory Icon
-	item_color = "assistant" // The worn item Icon
+	//item_color = "assistant" // The worn item Icon
 	item_state = "sash" // In-hand Icon
-	worn_icon = 'icons/Fulpicons/fulpclothing_worn.dmi'
 	body_parts_covered = CHEST // |GROIN|ARMS
 	lefthand_file = 'icons/Fulpicons/fulpclothing_hold_left.dmi'
 	righthand_file = 'icons/Fulpicons/fulpclothing_hold_right.dmi'
@@ -577,41 +596,41 @@
 /obj/item/clothing/under/bodysash/security
 	name = "security sash"
 	icon_state = "security"
-	item_color = "security" // The worn item state
+	//item_color = "security" // The worn item state
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small
 /obj/item/clothing/under/bodysash/medical
 	name = "medical sash"
 	icon_state = "medical"
-	item_color = "medical" // The worn item state
+	//item_color = "medical" // The worn item state
 /obj/item/clothing/under/bodysash/science
 	name = "science sash"
 	icon_state = "science"
-	item_color = "science" // The worn item state
+	//item_color = "science" // The worn item state
 /obj/item/clothing/under/bodysash/cargo
 	name = "cargo sash"
 	icon_state = "cargo"
-	item_color = "cargo" // The worn item state
+	//item_color = "cargo" // The worn item state
 /obj/item/clothing/under/bodysash/engineer
 	name = "engineer sash"
 	icon_state = "engineer"
-	item_color = "engineer" // The worn item state
+	//item_color = "engineer" // The worn item state
 /obj/item/clothing/under/bodysash/civilian
 	name = "civilian sash"
 	icon_state = "civilian"
-	item_color = "civilian" // The worn item state
+	//item_color = "civilian" // The worn item state
 /obj/item/clothing/under/bodysash/command
 	name = "command sash"
 	icon_state = "command"
-	item_color = "command" // The worn item state
+	//item_color = "command" // The worn item state
 /obj/item/clothing/under/bodysash/clown
 	name = "clown sash"
 	icon_state = "clown"
-	item_color = "clown" // The worn item state
+	//item_color = "clown" // The worn item state
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small
 /obj/item/clothing/under/bodysash/mime
 	name = "mime sash"
 	icon_state = "mime"
-	item_color = "mime" // The worn item state
+	//item_color = "mime" // The worn item state
 
 
 
@@ -657,6 +676,8 @@
 		second.linked_to = first
 		first.seer = owner
 		second.seer = owner
+		first.desc += " This one leads to [get_area(second)]."
+		second.desc += " This one leads to [get_area(first)]."
 
 
 /obj/effect/hallucination/simple/bluespace_stream
