@@ -126,7 +126,10 @@
 		pushed_mob.pass_flags &= ~PASSTABLE
 	if(pushed_mob.loc != loc) //Something prevented the tabling
 		return
-	pushed_mob.Paralyze(40)
+	pushed_mob.Knockdown(40)
+	pushed_mob.adjustBruteLoss(20)
+	pushed_mob.adjustStaminaLoss(20)
+	playsound(pushed_mob, "sound/effects/tableslam.ogg", 30, TRUE)
 	pushed_mob.visible_message("<span class='danger'>[user] slams [pushed_mob] onto [src]!</span>", \
 								"<span class='userdanger'>[user] slams you onto [src]!</span>")
 	log_combat(user, pushed_mob, "tabled", null, "onto [src]")
