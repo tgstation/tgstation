@@ -272,7 +272,7 @@ DISCORDURL https://discord.gg/SVu782A
 # GITHUBREPOID 3234987
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
-# BANAPPEALS http://justanotherday.example.com
+BANAPPEALS https://fulpstation.com/forumdisplay.php?fid=3
 
 ## System command that invokes youtube-dl, used by Play Internet Sound.
 ## You can install youtube-dl with

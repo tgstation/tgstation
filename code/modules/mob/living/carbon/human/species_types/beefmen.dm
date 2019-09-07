@@ -45,7 +45,7 @@
 	    // list( /datum/brain_trauma/mild/phobia/strangers, /datum/brain_trauma/mild/phobia/doctors, /datum/brain_trauma/mild/phobia/authority )
 
 	// Take care of your meat, everybody
-	bruising_desc = "tenderization"
+	bruising_desc = "tenderizing"
 	burns_desc = "searing"
 	cellulardamage_desc = "meat degradation"
 
@@ -284,6 +284,12 @@
 
 		if ((target_zone in allowedList) && affecting)
 
+			// Robot Arms Fail
+			if (affecting.status != BODYPART_ORGANIC)
+				to_chat(user, "That thing is on there good. It's not coming off with a gentle tug.")
+				return FALSE
+
+			// Pry it off...
 			user.visible_message("[user] grabs onto [p_their()] own [affecting.name] and pulls.", \
 					 	 "<span class='notice'>You grab hold of your [affecting.name] and yank hard.</span>")
 			if (!do_mob(user,target))
@@ -293,8 +299,8 @@
 			playsound(get_turf(user), 'sound/Fulpsounds/beef_hit.ogg', 40, 1)
 
 			// Destroy Limb, Drop Meat, Pick Up
-			var/obj/item/I = affecting.drop_limb() //  <--- This will return a meat vis drop_meat(), even if only Beefman limbs return anything.
-			if (I)
+			var/obj/item/I = affecting.drop_limb() //  <--- This will return a meat vis drop_meat(), even if only Beefman limbs return anything. If this was another species' limb, it just comes off.
+			if (istype(I, /obj/item/reagent_containers/food/snacks/meat/slab))
 				user.put_in_hands(I)
 
 			return FALSE
@@ -306,11 +312,10 @@
 		target.add_mob_blood(user) //  from atoms.dm, this is how you bloody something!
 	return ..()
 
-
 /datum/species/beefman/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
 
 	// MEAT LIMBS: If our limb is missing, and we're using meat, stick it in!
-	if (!affecting && intent == INTENT_DISARM && istype(I, /obj/item/reagent_containers/food/snacks/meat/slab))// /obj/item/bodypart))
+	if (H.stat < DEAD && !affecting && intent == INTENT_DISARM && istype(I, /obj/item/reagent_containers/food/snacks/meat/slab))// /obj/item/bodypart))
 		var/target_zone = user.zone_selected
 		var/list/allowedList = list ( BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG )
 
@@ -377,7 +382,8 @@
 	race = /datum/species/beefman
 
 /obj/item/bodypart/
-	var/icon/icon_greyscale = 'icons/mob/human_parts_greyscale.dmi'
+	var/icon/icon_greyscale = 'icons/mob/human_parts_greyscale.dmi' // Keep an eye on _DEFINES/mobs.dm to see if DEFAULT_BODYPART_ICON_ORGANIC / _ROBOTIC change.
+	var/icon/icon_greyscale_robotic = 'icons/mob/augmentation/augments.dmi'
 	var/obj/item/reagent_containers/food/snacks/meat/slab/myMeatType = /obj/item/reagent_containers/food/snacks/meat/slab // For remembering what kind of meat this was made of. Default is base meat slab.
 	var/amCondemned = FALSE // I'm about to be destroyed. Don't add blood to me, and throw null error crap next tick.
 /obj/item/bodypart/add_mob_blood(mob/living/M) // Cancel adding blood if I'm deleting.
@@ -432,9 +438,9 @@
 	if (percentDamage >= 0.9)
 		to_chat(owner, "<span class='alert'>It's almost completely useless. That [inMeatObj.name] was no good!</span>")
 	else if (percentDamage > 0.5)
-		to_chat(owner, "<span class='alert'>It's riddled with holes and bite marks.</span>")
+		to_chat(owner, "<span class='alert'>It's riddled with [inMeatObj.bitecount > 0 ? "bite marks":"gaping holes"].</span>")
 	else if (percentDamage > 0)
-		to_chat(owner, "<span class='alert'>It looks a little eaten away, but it'll do.</span>")
+		to_chat(owner, "<span class='alert'>It looks a little [inMeatObj.bitecount > 0 ? "eaten away":"torn up"], but it'll do.</span>")
 
 	// Apply meat's Reagents to Me
 	if(inMeatObj.reagents && inMeatObj.reagents.total_volume)
@@ -445,6 +451,11 @@
 
 
 /obj/item/bodypart/proc/drop_meat(mob/inOwner)
+
+	// Not Organic? ABORT! Robotic stays robotic, desnt delete and turn to meat.
+	if (status != BODYPART_ORGANIC)
+		return FALSE
+
 	// If owner is NOT inside of something (cloner)
 	if (myMeatType != null)
 		var/obj/item/reagent_containers/food/snacks/meat/slab/newMeat =	new myMeatType(src.loc)///obj/item/reagent_containers/food/snacks/meat/slab(src.loc)
@@ -468,15 +479,23 @@
 /obj/item/bodypart/head/beef
 	icon = 'icons/Fulpicons/fulp_bodyparts.dmi'
 	icon_greyscale = 'icons/Fulpicons/fulp_bodyparts.dmi'
+	icon_greyscale_robotic = 'icons/Fulpicons/fulp_bodyparts_robotic.dmi'
+	heavy_brute_msg = "mincemeat"
+	heavy_burn_msg = "burned to a crisp"
 
 /obj/item/bodypart/chest/beef
 	icon = 'icons/Fulpicons/fulp_bodyparts.dmi'
 	icon_greyscale = 'icons/Fulpicons/fulp_bodyparts.dmi'
+	icon_greyscale_robotic = 'icons/Fulpicons/fulp_bodyparts_robotic.dmi'
+	heavy_brute_msg = "mincemeat"
+	heavy_burn_msg = "burned to a crisp"
 
 /obj/item/bodypart/r_arm/beef
 	icon = 'icons/Fulpicons/fulp_bodyparts.dmi'
 	icon_greyscale = 'icons/Fulpicons/fulp_bodyparts.dmi'
-	//aux_layer = HANDS_LAYER // Default in bodyparts.dm is HANDS_PART_LAYER. We want hands to just...appear on top
+	icon_greyscale_robotic = 'icons/Fulpicons/fulp_bodyparts_robotic.dmi'
+	heavy_brute_msg = "mincemeat"
+	heavy_burn_msg = "burned to a crisp"
 /obj/item/bodypart/r_arm/beef/drop_limb(special) // from dismemberment.dm
 	amCondemned = TRUE
 	var/mob/owner_cache = owner
@@ -486,7 +505,9 @@
 /obj/item/bodypart/l_arm/beef
 	icon = 'icons/Fulpicons/fulp_bodyparts.dmi'
 	icon_greyscale = 'icons/Fulpicons/fulp_bodyparts.dmi'
-	//aux_layer = HANDS_LAYER // Default in bodyparts.dm is HANDS_PART_LAYER. We want hands to just...appear on top
+	icon_greyscale_robotic = 'icons/Fulpicons/fulp_bodyparts_robotic.dmi'
+	heavy_brute_msg = "mincemeat"
+	heavy_burn_msg = "burned to a crisp"
 /obj/item/bodypart/l_arm/beef/drop_limb(special) // from dismemberment.dm
 	amCondemned = TRUE
 	var/mob/owner_cache = owner
@@ -496,6 +517,9 @@
 /obj/item/bodypart/r_leg/beef
 	icon = 'icons/Fulpicons/fulp_bodyparts.dmi'
 	icon_greyscale = 'icons/Fulpicons/fulp_bodyparts.dmi'
+	icon_greyscale_robotic = 'icons/Fulpicons/fulp_bodyparts_robotic.dmi'
+	heavy_brute_msg = "mincemeat"
+	heavy_burn_msg = "burned to a crisp"
 /obj/item/bodypart/r_leg/beef/drop_limb(special) // from dismemberment.dm
 	amCondemned = TRUE
 	var/mob/owner_cache = owner
@@ -505,6 +529,9 @@
 /obj/item/bodypart/l_leg/beef
 	icon = 'icons/Fulpicons/fulp_bodyparts.dmi'
 	icon_greyscale = 'icons/Fulpicons/fulp_bodyparts.dmi'
+	icon_greyscale_robotic = 'icons/Fulpicons/fulp_bodyparts_robotic.dmi'
+	heavy_brute_msg = "mincemeat"
+	heavy_burn_msg = "burned to a crisp"
 /obj/item/bodypart/l_leg/beef/drop_limb(special) // from dismemberment.dm
 	amCondemned = TRUE
 	var/mob/owner_cache = owner
