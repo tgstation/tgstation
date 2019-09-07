@@ -297,7 +297,7 @@
 		M.drowsyness += min(M.drowsyness + 4, 20)
 		M.apply_status_effect(STATUS_EFFECT_PACIFY, 40)
 
-/obj/item/assembly/flash/peacekeeper
+/obj/item/assembly/flash/cyborg/peacekeeper
 	name = "advanced flash"
 	description = "A powerful and versatile flashbulb device, with applications ranging from disorienting attackers to acting as visual receptors in robot production. This one has been modified to give it better burn out resistance and to greatly increase the range of area of effect flashings performed by it."
 	burnout_resistance = 10
