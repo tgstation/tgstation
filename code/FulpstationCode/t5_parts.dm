@@ -142,9 +142,8 @@
 /obj/item/stock_parts/cell/quantum
 	name = "quantum power cell"
 	desc = "A rechargeable, entangled power cell."
-	icon_state = "bscell"
-	//icon_state = "quantumcell"
-	//icon = 'icons/Fulpicons/quantumcell_fulp.dmi'	maxcharge = 50000
+	icon_state = "quantumcell"
+	icon = 'icons/Fulpicons/quantumcell_fulp.dmi'	maxcharge = 50000
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 5500, /datum/material/plasma = 3500, /datum/material/diamond = 1000, /datum/material/bluespace = 1000)
 	chargerate = 5000
 
