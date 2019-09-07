@@ -14,7 +14,7 @@
 	layer = EDGED_TURF_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/amount = 3
-	animate_movement = 0
+	animate_movement = NO_STEPS
 	var/metal = 0
 	var/lifetime = 40
 	var/reagent_divisor = 7
