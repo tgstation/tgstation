@@ -132,9 +132,9 @@
 	if(awakening || isspaceturf(user.loc))
 		return
 	to_chat(user, "<span class='notice'>You begin to awaken the Killer Tomato...</span>")
-	awakening = 1
-
+	awakening = TRUE
 	addtimer(CALLBACK(src, .proc/awaken), 3 SECONDS)
+	log_game("[key_name(user)] awakened a killer tomato at [AREACOORD(user)].")
 
 /obj/item/reagent_containers/food/snacks/grown/tomato/killer/proc/awaken()
 	if(QDELETED(src))
