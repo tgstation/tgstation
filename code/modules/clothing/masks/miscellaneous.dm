@@ -92,7 +92,7 @@
 /obj/item/clothing/mask/pig/cursed/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
-	playsound(get_turf(src), 'sound/magic/pighead_curse.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/magic/pighead_curse.ogg', 50, TRUE)
 
 ///frog mask - reeee!!
 /obj/item/clothing/mask/frog
@@ -127,7 +127,6 @@
 
 /obj/item/clothing/mask/cowmask
 	name = "cow mask"
-	icon = 'icons/mob/mask.dmi'
 	icon_state = "cowmask"
 	item_state = "cowmask"
 	clothing_flags = VOICEBOX_TOGGLABLE
@@ -148,7 +147,7 @@
 /obj/item/clothing/mask/cowmask/cursed/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
-	playsound(get_turf(src), 'sound/magic/cowhead_curse.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/magic/cowhead_curse.ogg', 50, TRUE)
 
 /obj/item/clothing/mask/horsehead
 	name = "horse head mask"
@@ -172,7 +171,7 @@
 /obj/item/clothing/mask/horsehead/cursed/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
-	playsound(get_turf(src), 'sound/magic/horsehead_curse.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/magic/horsehead_curse.ogg', 50, TRUE)
 
 /obj/item/clothing/mask/rat
 	name = "rat mask"

@@ -123,7 +123,7 @@
 		indicator_icon = "launchpad_pull"
 	update_indicator()
 
-	playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, 1)
+	playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, TRUE)
 	teleporting = TRUE
 
 
@@ -149,7 +149,7 @@
 		source = dest
 		dest = target
 
-	playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, 1)
+	playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, TRUE)
 	var/first = TRUE
 	for(var/atom/movable/ROI in source)
 		if(ROI == src)

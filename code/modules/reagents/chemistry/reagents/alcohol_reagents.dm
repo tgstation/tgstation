@@ -1061,7 +1061,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/syndicatebomb/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
-		playsound(get_turf(M), 'sound/effects/explosionfar.ogg', 100, 1)
+		playsound(get_turf(M), 'sound/effects/explosionfar.ogg', 100, TRUE)
 	return ..()
 
 /datum/reagent/consumable/ethanol/erikasurprise
@@ -2011,7 +2011,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 				if(N.age > 100)
 					N.become_nearsighted(type)
 					if(N.gender == MALE)
-						N.facial_hair_style = "Beard (Very Long)"
+						N.facial_hairstyle = "Beard (Very Long)"
 						N.update_hair()
 
 				if(N.age > 969) //Best not let people get older than this or i might incur G-ds wrath

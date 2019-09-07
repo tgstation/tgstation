@@ -90,7 +90,7 @@
 	//if (name_override != null)
 	//	returnString += "<span class='suicide'> ([real_name] in disguise!) </span>"
 
-	returnString += "\n"
+	//returnString += "\n"  Don't need spacers. Using . += "" in examine.dm does this on its own.
 	return returnIcon + returnString
 
 
@@ -125,7 +125,7 @@
 		returnString += "[p_they(TRUE)] bears the mark of another Bloodsucker"
 		returnIcon = "[icon2html('icons/Fulpicons/fulpicons_small.dmi', world, "vassal_grey")]"
 
-	returnString += "</span>\]\n"
+	returnString += "</span>\]" // \n"  Don't need spacers. Using . += "" in examine.dm does this on its own.
 	return returnIcon + returnString
 
 

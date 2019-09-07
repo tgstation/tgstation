@@ -110,7 +110,7 @@
 	return TRUE
 
 /obj/item/organ/vocal_cords/colossus/handle_speech(message)
-	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
+	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 300, TRUE, 5)
 	return //voice of god speaks for us
 
 /obj/item/organ/vocal_cords/colossus/speak_with(message)

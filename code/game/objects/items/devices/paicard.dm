@@ -127,7 +127,7 @@
 	src.pai = personality
 	src.add_overlay("pai-null")
 
-	playsound(loc, 'sound/effects/pai_boot.ogg', 50, 1, -1)
+	playsound(loc, 'sound/effects/pai_boot.ogg', 50, TRUE, -1)
 	audible_message("\The [src] plays a cheerful startup noise!")
 
 /obj/item/paicard/proc/setEmotion(emotion)

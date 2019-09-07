@@ -167,7 +167,7 @@ Difficulty: Medium
 	SLEEP_CHECK_DEATH(0)
 	for(var/i = 1 to times)
 		SetRecoveryTime(50)
-		playsound(get_turf(src),'sound/magic/fireball.ogg', 200, 1)
+		playsound(get_turf(src),'sound/magic/fireball.ogg', 200, TRUE)
 		var/increment = 360 / spiral_count
 		for(var/j = 1 to spiral_count)
 			var/list/turfs = line_target(j * increment + i * increment / 2, range, src)
@@ -235,7 +235,7 @@ Difficulty: Medium
 	light_range = initial(light_range)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_cone(var/atom/at = target, var/meteors = TRUE)
-	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, 1)
+	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, TRUE)
 	SLEEP_CHECK_DEATH(0)
 	if(prob(50) && meteors)
 		INVOKE_ASYNC(src, .proc/fire_rain)
@@ -353,7 +353,7 @@ Difficulty: Medium
 	swooping &= ~SWOOP_INVULNERABLE
 	mouse_opacity = initial(mouse_opacity)
 	icon_state = "dragon"
-	playsound(loc, 'sound/effects/meteorimpact.ogg', 200, 1)
+	playsound(loc, 'sound/effects/meteorimpact.ogg', 200, TRUE)
 	for(var/mob/living/L in orange(1, src))
 		if(L.stat)
 			visible_message("<span class='warning'>[src] slams down on [L], crushing [L.p_them()]!</span>")
@@ -428,9 +428,9 @@ Difficulty: Medium
 
 /obj/effect/temp_visual/lava_warning/proc/fall(var/reset_time)
 	var/turf/T = get_turf(src)
-	playsound(T,'sound/magic/fleshtostone.ogg', 80, 1)
+	playsound(T,'sound/magic/fleshtostone.ogg', 80, TRUE)
 	sleep(duration)
-	playsound(T,'sound/magic/fireball.ogg', 200, 1)
+	playsound(T,'sound/magic/fireball.ogg', 200, TRUE)
 
 	for(var/mob/living/L in T.contents)
 		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
@@ -546,13 +546,13 @@ obj/effect/temp_visual/fireball
 
 /obj/effect/temp_visual/target/proc/fall(list/flame_hit)
 	var/turf/T = get_turf(src)
-	playsound(T,'sound/magic/fleshtostone.ogg', 80, 1)
+	playsound(T,'sound/magic/fleshtostone.ogg', 80, TRUE)
 	new /obj/effect/temp_visual/fireball(T)
 	sleep(duration)
 	if(ismineralturf(T))
 		var/turf/closed/mineral/M = T
 		M.gets_drilled()
-	playsound(T, "explosion", 80, 1)
+	playsound(T, "explosion", 80, TRUE)
 	new /obj/effect/hotspot(T)
 	T.hotspot_expose(700, 50, 1)
 	for(var/mob/living/L in T.contents)
@@ -628,7 +628,7 @@ obj/effect/temp_visual/fireball
 	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/proc/fire_stream(var/atom/at = target)
-	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, 1)
+	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, TRUE)
 	SLEEP_CHECK_DEATH(0)
 	var/range = 20
 	var/list/turfs = list()
@@ -660,7 +660,7 @@ obj/effect/temp_visual/fireball
 /obj/effect/proc_holder/spell/aoe_turf/repulse/spacedragon/cast(list/targets,mob/user = usr)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		playsound(C.loc,'sound/effects/hit_punch.ogg', 80, 1, 1)
+		playsound(C.loc,'sound/effects/hit_punch.ogg', 80, TRUE, TRUE)
 		C.spin(6,1)
 	..(targets, user, 60)
 

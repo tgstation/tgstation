@@ -307,10 +307,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 	if(sacrificial)
 		if(iscyborg(sacrificial))
-			playsound(sacrificial, 'sound/magic/disable_tech.ogg', 100, 1)
+			playsound(sacrificial, 'sound/magic/disable_tech.ogg', 100, TRUE)
 			sacrificial.dust() //To prevent the MMI from remaining
 		else
-			playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, 1)
+			playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, TRUE)
 			sacrificial.gib()
 	return TRUE
 
@@ -868,7 +868,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		new_human.apply_status_effect(STATUS_EFFECT_SUMMONEDGHOST) //ghosts can't summon more ghosts
 		new_human.see_invisible = SEE_INVISIBLE_OBSERVER
 		ghosts++
-		playsound(src, 'sound/magic/exit_blood.ogg', 50, 1)
+		playsound(src, 'sound/magic/exit_blood.ogg', 50, TRUE)
 		visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man.</span>")
 		to_chat(user, "<span class='cultitalic'>Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely...</span>")
 		var/obj/structure/emergency_shield/invoker/N = new(T)
@@ -969,7 +969,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			intensity++
 	intensity = max(60, 360 - (360*(intensity/GLOB.player_list.len + 0.3)**2)) //significantly lower intensity for "winning" cults
 	var/duration = intensity*10
-	playsound(T, 'sound/magic/enter_blood.ogg', 100, 1)
+	playsound(T, 'sound/magic/enter_blood.ogg', 100, TRUE)
 	visible_message("<span class='warning'>A colossal shockwave of energy bursts from the rune, disintegrating it in the process!</span>")
 	for(var/mob/living/L in range(src, 3))
 		L.Paralyze(30)

@@ -142,9 +142,9 @@
 				H.Move(targloc)
 				log_combat(user, H, "moved with a laser pointer",src)
 			else
-				H.visible_message("<span class='notice'>[H] looks briefly distracted by the light.</span>","<span class='warning'> You're briefly tempted by the shiny light... </span>")
+				H.visible_message("<span class='notice'>[H] looks briefly distracted by the light.</span>", "<span class='warning'>You're briefly tempted by the shiny light...</span>")
 		else
-			H.visible_message("<span class='notice'>[H] stares at the light</span>","<span class='warning'> You stare at the light... </span>")
+			H.visible_message("<span class='notice'>[H] stares at the light.</span>", "<span class='warning'>You stare at the light...</span>")
 
 	//cats!
 	for(var/mob/living/simple_animal/pet/cat/C in view(1,targloc))

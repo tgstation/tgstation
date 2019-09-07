@@ -30,7 +30,7 @@
 	var/cooldownTime = 1800 //3 minutes
 	var/production_time = 30
 	//The item the dispenser will create
-	var/dispense_type = /obj/item/drone_shell
+	var/dispense_type = /obj/effect/mob_spawn/drone
 
 	// The maximum number of "idle" drone shells it will make before
 	// ceasing production. Set to 0 for infinite.
@@ -61,7 +61,7 @@
 /obj/machinery/droneDispenser/syndrone //Please forgive me
 	name = "syndrone shell dispenser"
 	desc = "A suspicious machine that will create Syndicate exterminator drones when supplied with metal and glass. Disgusting."
-	dispense_type = /obj/item/drone_shell/syndrone
+	dispense_type = /obj/effect/mob_spawn/drone/syndrone
 	//If we're gonna be a jackass, go the full mile - 10 second recharge timer
 	cooldownTime = 100
 	end_create_message = "dispenses a suspicious drone shell."
@@ -70,14 +70,14 @@
 /obj/machinery/droneDispenser/syndrone/badass //Please forgive me
 	name = "badass syndrone shell dispenser"
 	desc = "A suspicious machine that will create Syndicate exterminator drones when supplied with metal and glass. Disgusting. This one seems ominous."
-	dispense_type = /obj/item/drone_shell/syndrone/badass
+	dispense_type = /obj/effect/mob_spawn/drone/syndrone/badass
 	end_create_message = "dispenses an ominous suspicious drone shell."
 
 // I don't need your forgiveness, this is awesome.
 /obj/machinery/droneDispenser/snowflake
 	name = "snowflake drone shell dispenser"
 	desc = "A hefty machine that, when supplied with metal and glass, will periodically create a snowflake drone shell. Does not need to be manually operated."
-	dispense_type = /obj/item/drone_shell/snowflake
+	dispense_type = /obj/effect/mob_spawn/drone/snowflake
 	end_create_message = "dispenses a snowflake drone shell."
 	// Those holoprojectors aren't cheap
 	metal_cost = 2000
@@ -162,7 +162,7 @@
 			if(begin_create_message)
 				visible_message("<span class='notice'>[src] [begin_create_message]</span>")
 			if(work_sound)
-				playsound(src, work_sound, 50, 1)
+				playsound(src, work_sound, 50, TRUE)
 			mode = DRONE_PRODUCTION
 			timer = world.time + production_time
 			update_icon()
@@ -176,7 +176,7 @@
 			A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 
 			if(create_sound)
-				playsound(src, create_sound, 50, 1)
+				playsound(src, create_sound, 50, TRUE)
 			if(end_create_message)
 				visible_message("<span class='notice'>[src] [end_create_message]</span>")
 
@@ -186,7 +186,7 @@
 
 		if(DRONE_RECHARGING)
 			if(recharge_sound)
-				playsound(src, recharge_sound, 50, 1)
+				playsound(src, recharge_sound, 50, TRUE)
 			if(recharge_message)
 				visible_message("<span class='notice'>[src] [recharge_message]</span>")
 
@@ -247,7 +247,7 @@
 			if(break_message)
 				audible_message("<span class='warning'>[src] [break_message]</span>")
 			if(break_sound)
-				playsound(src, break_sound, 50, 1)
+				playsound(src, break_sound, 50, TRUE)
 			stat |= BROKEN
 			update_icon()
 

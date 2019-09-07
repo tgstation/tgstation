@@ -125,13 +125,13 @@
 	force_replace = TRUE
 
 /obj/item/firing_pin/clown/pin_auth(mob/living/user)
-	playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
+	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
 	return FALSE
 
 // Ultra-honk pin, clown's deadly joke item.
 // A gun with ultra-honk pin is useful for clown and useless for everyone else.
 /obj/item/firing_pin/clown/ultra/pin_auth(mob/living/user)
-	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
 	if(user && (!(HAS_TRAIT(user, TRAIT_CLUMSY)) && !(user.mind && user.mind.assigned_role == "Clown")))
 		return FALSE
 	return TRUE

@@ -312,7 +312,7 @@
 					if(!dispensable_reagents.Find(reagent_id))
 						visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
 						to_chat(usr, "<span class ='danger'>[src] cannot find <b>[reagent]</b>!</span>")
-						playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
+						playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
 						return
 				saved_recipes[name] = recording_recipe
 				recording_recipe = null

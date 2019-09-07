@@ -51,7 +51,7 @@
 			end_syphon()
 			return
 
-		playsound(src, 'sound/items/poster_being_created.ogg', 100, 1)
+		playsound(src, 'sound/items/poster_being_created.ogg', 100, TRUE)
 		syphoning_credits += 200
 		D.adjust_money(-200)
 		if(next_warning < world.time && prob(15))

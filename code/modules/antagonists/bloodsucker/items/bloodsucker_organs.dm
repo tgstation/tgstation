@@ -8,7 +8,7 @@
 	O = owner.current.getorganslot(ORGAN_SLOT_HEART)
 	if (!istype(O, /obj/item/organ/heart/vampheart))
 		qdel(O)
-		var/obj/item/organ/heart/vampheart/H = new()
+		var/obj/item/organ/heart/vampheart/H = new
 		H.Insert(owner.current)
 		H.Stop() // Now...stop beating!
 
@@ -16,17 +16,17 @@
 	O = owner.current.getorganslot(ORGAN_SLOT_EYES)
 	if (!istype(O, /obj/item/organ/eyes/vampeyes))
 		qdel(O)
-		var/obj/item/organ/eyes/vampeyes/E = new()
+		var/obj/item/organ/eyes/vampeyes/E = new
 		E.Insert(owner.current)
 
 
 /datum/antagonist/bloodsucker/proc/RemoveVampOrgans()
 
 	// Heart
-	var/obj/item/organ/heart/H = new()
+	var/obj/item/organ/heart/H = new
 		H.Insert(owner.current)
 	// Eyes
-	var/obj/item/organ/eyes/E = new()
+	var/obj/item/organ/eyes/E = new
 		E.Insert(owner.current)
 
 
