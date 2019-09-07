@@ -14,7 +14,7 @@
 	var/flashing_overlay = "flash-f"
 	var/times_used = 0 //Number of times it's been used.
 	var/burnt_out = FALSE     //Is the flash burnt out?
-	var/burn_out_resistance = 0
+	var/burnout_resistance = 0
 	var/last_used = 0 //last world.time it was used.
 	var/cooldown = 0
 	var/last_trigger = 0 //Last time it was successfully triggered.
@@ -67,7 +67,7 @@
 		times_used--
 	last_used = world.time
 	times_used = max(0, times_used) //sanity
-	if(max(0, prob((times_used * 3) - burn_out_resistance))) //The more often it's used in a short span of time the more likely it will burn out
+	if(max(0, prob((times_used * 3) - burnout_resistance))) //The more often it's used in a short span of time the more likely it will burn out
 		burn_out()
 		return FALSE
 	return TRUE
@@ -299,6 +299,6 @@
 
 /obj/item/assembly/flash/peacekeeper
 	description = "A powerful and versatile flashbulb device, with applications ranging from disorienting attackers to acting as visual receptors in robot production. This one has been modified to give it better burn out resistance and to greatly increase the range of area of effect flashings performed by it."
-	burn_out_resistance = 10
+	burnout_resistance = 10
 	aoe_range = 7
 	color = "#71CAE5"
