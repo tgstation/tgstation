@@ -363,10 +363,10 @@ to the arm are passed onto a stored beaker, if one exists. */
 			stored = container
 			RegisterSignal(stored, COMSIG_OBJ_UPDATE_ICON, .proc/update_icon)
 			update_icon()
-			return
+			return TRUE
 	if(stored)
 		stored.melee_attack_chain(user, A, params)
-		return
+		return TRUE
 	. = ..()
 
 /obj/item/borg_beaker_holder/attackby(obj/item/W, mob/user, params)
@@ -374,5 +374,5 @@ to the arm are passed onto a stored beaker, if one exists. */
 		W.melee_attack_chain(user, stored, params)
 		return
 	. = ..()
-  
+
 #undef C2NAMEREAGENT
