@@ -1,0 +1,5 @@
+author: "carlarctg"
+delete-after: True
+changes: 
+  - tweak: "halved syndicate combat defib recharge time"
+  - imageadd: "it also has new sprites"

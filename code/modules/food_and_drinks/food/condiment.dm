@@ -265,6 +265,9 @@
 		/datum/reagent/consumable/astrotame = list("condi_astrotame", "Astrotame", "The sweetness of a thousand sugars but none of the calories."),
 		)
 
+/obj/item/reagent_containers/food/condiment/pack/update_icon()
+	return
+
 /obj/item/reagent_containers/food/condiment/pack/attack(mob/M, mob/user, def_zone) //Can't feed these to people directly.
 	return
 
