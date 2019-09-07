@@ -38,6 +38,33 @@
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
 
+/obj/item/storage/firstaid/medical
+	name = "medical aid kit"
+	icon_state = "firstaid_surgery"
+	item_state = "firstaid"
+	desc = "A high capacity aid kit for doctors, full of medical supplies and basic surgical equipment"
+
+/obj/item/storage/firstaid/medical/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 12
+	STR.max_combined_w_class = 24
+
+/obj/item/storage/firstaid/medical/PopulateContents()
+	if(empty)
+		return
+	var/static/items_inside = list(
+		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/bruise_pack = 2,
+		/obj/item/stack/medical/ointment = 2,
+		/obj/item/reagent_containers/hypospray/medipen = 1,
+		/obj/item/healthanalyzer = 1,
+		/obj/item/surgical_drapes = 1,
+		/obj/item/scalpel = 1,
+		/obj/item/hemostat = 1,
+		/obj/item/cautery = 1)
+	generate_items_inside(items_inside,src)
+
 /obj/item/storage/firstaid/ancient
 	icon_state = "firstaid"
 	desc = "A first aid kit with the ability to heal common types of injuries."
