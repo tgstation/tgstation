@@ -7,6 +7,7 @@
 		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/saw,
 		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/incise,
 		/datum/surgery_step/hepatectomy,
 		/datum/surgery_step/close
 		)
@@ -14,18 +15,14 @@
 /datum/surgery/lobectomy/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/liver/L = target.getorganslot(ORGAN_SLOT_LIVER)
 	if(L)
-		if(L.damage < 70)
-			return TRUE
-		else
-			to_chat(user, "<span class='warning'>[target]'s liver is far too damaged for this surgery to work!</span>")
-			return FALSE
-	return FALSE
+		if(L.damage > 70)
+			return 0
+	return 1
 
 ////hepatectomy, removes damaged parts of the liver so that the liver may regenerate properly
 //95% chance of success, not 100 because organs are delicate
 /datum/surgery_step/hepatectomy
 	name = "remove damaged liver section"
-	repeatable = TRUE
 	implements = list(/obj/item/scalpel = 95, /obj/item/melee/transforming/energy/sword = 65, /obj/item/kitchen/knife = 45,
 		/obj/item/shard = 35)
 	time = 52
@@ -38,7 +35,7 @@
 /datum/surgery_step/hepatectomy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		H.adjustOrganLoss(ORGAN_SLOT_LIVER, -20)
+		H.setOrganLoss(ORGAN_SLOT_LIVER, 10) //not bad, not great
 		display_results(user, target, "<span class='notice'>You successfully remove the damaged part of [target]'s liver.</span>",
 			"<span class='notice'>[user] successfullly removes the damaged part of [target]'s liver.",
 			"<span class='notice'>[user] successfullly removes the damaged part of [target]'s liver.")
@@ -47,7 +44,7 @@
 /datum/surgery_step/hepatectomy/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery)
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		H.adjustOrganLoss(ORGAN_SLOT_LIVER, 10)
+		H.adjustOrganLoss(ORGAN_SLOT_LIVER, 15)
 		display_results(user, target, "<span class='warning'>You cut the wrong part of [target]'s liver!</span>",
 			"<span class='warning'>[user] cuts the wrong part of [target]'s liver!",
 			"<span class='warning'>[user] cuts the wrong part of [target]'s liver!")
