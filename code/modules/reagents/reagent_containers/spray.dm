@@ -217,6 +217,7 @@
 
 /obj/item/reagent_containers/spray/pepper/peacekeeper
 	volume = 20
+	list_reagents = list(/datum/reagent/consumable/condensedcapsaicin = 20)
 
 //water flower
 /obj/item/reagent_containers/spray/waterflower
