@@ -424,7 +424,7 @@
 					/obj/item/clothing/suit/armor/bulletproof,
 					/obj/item/clothing/suit/armor/bulletproof)
 	crate_name = "bulletproof armor crate"
-	
+
 /datum/supply_pack/security/armory/bullethelmets
 	name = "Bulletproof Helmets Crate"
 	desc = "Contains three bulletproof helmets. Requires Armory access to open."
@@ -1221,6 +1221,15 @@
 	cost = 1000
 	contains = list(/obj/machinery/iv_drip)
 	crate_name = "iv drip crate"
+
+/datum/supply_pack/medical/disability_support
+	name = "Disability Support Crate"
+	desc = "Contains two roller beds and a wheelchair. Not an excuse to leave legs unattached!"
+	cost = 3000
+	contains = list(/obj/vehicle/ridden/wheelchair,
+					/obj/item/roller,
+					/obj/item/roller)
+	crate_name = "disability support crate"
 
 /datum/supply_pack/medical/supplies
 	name = "Medical Supplies Crate"
