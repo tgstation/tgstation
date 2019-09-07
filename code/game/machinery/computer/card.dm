@@ -482,7 +482,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		if("return")
 			//DISPLAY MAIN MENU
 			mode = 3;
-			playsound(src, "terminal_type", 25, 0)
+			playsound(src, "terminal_type", 25, FALSE)
 
 		if("make_job_available")
 			// MAKE ANOTHER JOB POSITION AVAILABLE FOR LATE JOINERS

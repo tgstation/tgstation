@@ -198,6 +198,8 @@
 				T.health = T.maxHealth
 				if(purified)
 					icon_state = "purified_soulstone2"
+					if(iscultist(T))
+						SSticker.mode.remove_cultist(T.mind, FALSE, FALSE)
 				else
 					icon_state = "soulstone2"
 				name = "soulstone: Shade of [T.real_name]"

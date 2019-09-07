@@ -220,9 +220,9 @@
 	target.desc = initial(picked_item.desc)
 	target.icon_state = initial(picked_item.icon_state)
 	if(isitem(target))
-		var/obj/item/I = target
+		var/obj/item/clothing/I = target
 		I.item_state = initial(picked_item.item_state)
-		I.item_color = initial(picked_item.item_color)
+		I.mob_overlay_icon = initial(picked_item.mob_overlay_icon)
 		if(istype(I, /obj/item/clothing) && istype(initial(picked_item), /obj/item/clothing))
 			var/obj/item/clothing/CL = I
 			var/obj/item/clothing/PCL = picked_item
@@ -255,21 +255,23 @@
 
 /datum/action/item_action/chameleon/change/id/update_item(obj/item/picked_item)
 	..()
-	var/obj/item/card/id/agent_card = target
+	var/obj/item/card/id/syndicate/agent_card = target
 	if(istype(agent_card))
 		var/obj/item/card/id/copied_card = picked_item
-		if(istype(copied_card))
-			agent_card.uses_overlays = copied_card.uses_overlays
-			agent_card.id_type_name = copied_card.id_type_name
-		else
-			agent_card.uses_overlays = FALSE
-			agent_card.id_type_name = copied_card.name
+		agent_card.uses_overlays = initial(copied_card.uses_overlays)
+		agent_card.id_type_name = initial(copied_card.id_type_name)
+		if(!agent_card.forged)
+			agent_card.registered_name = initial(copied_card.registered_name)
+			agent_card.assignment = initial(copied_card.assignment)
 		agent_card.update_label()
+		if(!agent_card.forged)
+			agent_card.name = initial(copied_card.name) //e.g. captain's spare ID, not Captain's ID Card (Captain)
 
 /datum/action/item_action/chameleon/change/id/apply_job_data(datum/job/job_datum)
 	..()
-	var/obj/item/card/id/agent_card = target
+	var/obj/item/card/id/syndicate/agent_card = target
 	if(istype(agent_card) && istype(job_datum))
+		agent_card.forged = TRUE
 		agent_card.assignment = job_datum.title
 
 /datum/action/item_action/chameleon/change/pda/update_item(obj/item/picked_item)
@@ -289,9 +291,10 @@
 /obj/item/clothing/under/chameleon
 //starts off as black
 	name = "black jumpsuit"
+	icon = 'icons/obj/clothing/under/color.dmi'
 	icon_state = "black"
 	item_state = "bl_suit"
-	item_color = "black"
+	mob_overlay_icon = 'icons/mob/clothing/under/color.dmi'
 	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
 	sensor_mode = SENSOR_OFF //Hey who's this guy on the Syndicate Shuttle??
 	random_sensor = FALSE
@@ -304,9 +307,10 @@
 /obj/item/clothing/under/chameleon/ratvar
 	name = "ratvarian engineer's jumpsuit"
 	desc = "A tough jumpsuit woven from alloy threads. It can take on the appearance of other jumpsuits."
+	icon = 'icons/obj/clothing/under/engineering.dmi'
 	icon_state = "engine"
 	item_state = "engi_suit"
-	item_color = "engine"
+	mob_overlay_icon = 'icons/mob/clothing/under/engineering.dmi'
 
 /obj/item/clothing/under/chameleon/Initialize()
 	. = ..()
@@ -416,7 +420,6 @@
 	name = "grey cap"
 	desc = "It's a baseball hat in a tasteful grey colour."
 	icon_state = "greysoft"
-	item_color = "grey"
 
 	resistance_flags = NONE
 	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
@@ -517,7 +520,6 @@
 /obj/item/clothing/shoes/chameleon
 	name = "black shoes"
 	icon_state = "black"
-	item_color = "black"
 	desc = "A pair of black shoes."
 	permeability_coefficient = 0.05
 	resistance_flags = NONE
@@ -543,7 +545,6 @@
 /obj/item/clothing/shoes/chameleon/noslip
 	name = "black shoes"
 	icon_state = "black"
-	item_color = "black"
 	desc = "A pair of black shoes."
 	clothing_flags = NOSLIP
 	can_be_bloody = FALSE
@@ -657,3 +658,26 @@
 /obj/item/stamp/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
+
+/obj/item/clothing/neck/cloak/chameleon
+	name = "black tie"
+	desc = "A neosilk clip-on tie."
+	icon_state = "blacktie"
+	resistance_flags = NONE
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+
+/obj/item/clothing/neck/cloak/chameleon
+	var/datum/action/item_action/chameleon/change/chameleon_action
+
+/obj/item/clothing/neck/cloak/chameleon/Initialize()
+	. = ..()
+	chameleon_action = new(src)
+	chameleon_action.chameleon_type = /obj/item/clothing/neck
+	chameleon_action.chameleon_name = "Cloak"
+	chameleon_action.initialize_disguises()
+
+/obj/item/clothing/neck/cloak/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	chameleon_action.emp_randomise()

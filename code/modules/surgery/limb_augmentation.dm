@@ -12,8 +12,8 @@
 
 /datum/surgery_step/replace/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin to sever the muscles on [target]'s [parse_zone(user.zone_selected)]...</span>",
-		"[user] begins to sever the muscles on [target]'s [parse_zone(user.zone_selected)].",
-		"[user] begins an incision on [target]'s [parse_zone(user.zone_selected)].")
+		"<span class='notice'>[user] begins to sever the muscles on [target]'s [parse_zone(user.zone_selected)].</span>",
+		"<span class='notice'>[user] begins an incision on [target]'s [parse_zone(user.zone_selected)].</span>")
 
 /datum/surgery_step/replace_limb
 	name = "replace limb"
@@ -35,10 +35,10 @@
 	L = surgery.operated_bodypart
 	if(L)
 		display_results(user, target, "<span class='notice'>You begin to augment [target]'s [parse_zone(user.zone_selected)]...</span>",
-			"[user] begins to augment [target]'s [parse_zone(user.zone_selected)] with [aug].",
-			"[user] begins to augment [target]'s [parse_zone(user.zone_selected)].")
+			"<span class='notice'>[user] begins to augment [target]'s [parse_zone(user.zone_selected)] with [aug].</span>",
+			"<span class='notice'>[user] begins to augment [target]'s [parse_zone(user.zone_selected)].</span>")
 	else
-		user.visible_message("[user] looks for [target]'s [parse_zone(user.zone_selected)].", "<span class='notice'>You look for [target]'s [parse_zone(user.zone_selected)]...</span>")
+		user.visible_message("<span class='notice'>[user] looks for [target]'s [parse_zone(user.zone_selected)].</span>", "<span class='notice'>You look for [target]'s [parse_zone(user.zone_selected)]...</span>")
 
 
 //ACTUAL SURGERIES
@@ -62,8 +62,8 @@
 		if(istype(tool) && user.temporarilyRemoveItemFromInventory(tool))
 			tool.replace_limb(target, TRUE)
 		display_results(user, target, "<span class='notice'>You successfully augment [target]'s [parse_zone(target_zone)].</span>",
-			"[user] successfully augments [target]'s [parse_zone(target_zone)] with [tool]!",
-			"[user] successfully augments [target]'s [parse_zone(target_zone)]!")
+			"<span class='notice'>[user] successfully augments [target]'s [parse_zone(target_zone)] with [tool]!</span>",
+			"<span class='notice'>[user] successfully augments [target]'s [parse_zone(target_zone)]!</span>")
 		log_combat(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
 	else
 		to_chat(user, "<span class='warning'>[target] has no organic [parse_zone(target_zone)] there!</span>")

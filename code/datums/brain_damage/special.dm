@@ -44,7 +44,7 @@
 		else
 			message = pick_list_replacements(BRAIN_DAMAGE_FILE, "god_neutral")
 
-	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 5)
+	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 200, TRUE, 5)
 	voice_of_god(message, owner, list("colossus","yell"), 2.5, include_owner, FALSE)
 
 /datum/brain_trauma/special/bluespace_prophet
@@ -98,10 +98,11 @@
 	image_layer = ABOVE_MOB_LAYER
 	var/obj/effect/hallucination/simple/bluespace_stream/linked_to
 	var/mob/living/carbon/seer
+	var/exist_length = 300 // FULP
 
 /obj/effect/hallucination/simple/bluespace_stream/Initialize()
 	. = ..()
-	QDEL_IN(src, 300)
+	QDEL_IN(src, exist_length) // FULP CHANGE
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/effect/hallucination/simple/bluespace_stream/attack_hand(mob/user)

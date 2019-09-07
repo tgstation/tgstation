@@ -189,7 +189,7 @@
 
 		D.visible_message("<span class='danger'><B>[A] throws [D]!</B></span>", \
 						"<span class='userdanger'>[A] throws you!</span>")
-		playsound(A.loc, "swing_hit", 50, 1)
+		playsound(A.loc, "swing_hit", 50, TRUE)
 		var/turf/T = get_edge_target_turf(A, A.dir)
 		if (T && isturf(T))
 			if (!D.stat)
@@ -289,7 +289,7 @@
 
 		D.visible_message("<span class='danger'><B>[A] [fluff] [D]!</B></span>", \
 						"<span class='userdanger'>[A] [fluff] you!</span>", null, COMBAT_MESSAGE_RANGE)
-		playsound(A.loc, "swing_hit", 50, 1)
+		playsound(A.loc, "swing_hit", 50, TRUE)
 		if (!D.stat)
 			D.emote("scream")
 			D.Paralyze(40)
@@ -334,7 +334,7 @@
 		D.visible_message("<span class='danger'><B>[A] headbutts [D]!</B></span>", \
 						"<span class='userdanger'>[A] headbutts you!</span>", null, COMBAT_MESSAGE_RANGE)
 		D.adjustBruteLoss(rand(10,20))
-		playsound(A.loc, "swing_hit", 50, 1)
+		playsound(A.loc, "swing_hit", 50, TRUE)
 		D.Unconscious(20)
 	log_combat(A, D, "headbutted")
 
@@ -347,7 +347,7 @@
 
 	D.visible_message("<span class='danger'><B>[A] roundhouse-kicks [D]!</B></span>", \
 					"<span class='userdanger'>[A] roundhouse-kicks you!</span>", null, COMBAT_MESSAGE_RANGE)
-	playsound(A.loc, "swing_hit", 50, 1)
+	playsound(A.loc, "swing_hit", 50, TRUE)
 	D.adjustBruteLoss(rand(10,20))
 
 	var/turf/T = get_edge_target_turf(A, get_dir(A, get_step_away(D, A)))
@@ -412,7 +412,7 @@
 
 		D.visible_message("<span class='danger'><B>[A] leg-drops [D]!</B></span>", \
 									"<span class='userdanger'>[A] leg-drops you!</span>")
-		playsound(A.loc, "swing_hit", 50, 1)
+		playsound(A.loc, "swing_hit", 50, TRUE)
 		A.emote("scream")
 
 		if (falling == 1)

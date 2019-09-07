@@ -1,0 +1,5 @@
+author: "actioninja"
+delete-after: True
+changes: 
+  - bugfix: "fixed an issue where the random jumpsuits was occasionally rolling an invalid item resulting in a broken item"
+  - bugfix: "fixed the generic red suit not having correct icons"

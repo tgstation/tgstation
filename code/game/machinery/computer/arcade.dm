@@ -179,7 +179,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			blocked = TRUE
 			var/attackamt = rand(2,6)
 			temp = "You attack for [attackamt] damage!"
-			playsound(loc, 'sound/arcade/hit.ogg', 50, 1, extrarange = -3, falloff = 10)
+			playsound(loc, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 			updateUsrDialog()
 			if(turtle > 0)
 				turtle--
@@ -193,7 +193,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			var/pointamt = rand(1,3)
 			var/healamt = rand(6,8)
 			temp = "You use [pointamt] magic to heal for [healamt] damage!"
-			playsound(loc, 'sound/arcade/heal.ogg', 50, 1, extrarange = -3, falloff = 10)
+			playsound(loc, 'sound/arcade/heal.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 			updateUsrDialog()
 			turtle++
 
@@ -208,7 +208,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			blocked = TRUE
 			var/chargeamt = rand(4,7)
 			temp = "You regain [chargeamt] points"
-			playsound(loc, 'sound/arcade/mana.ogg', 50, 1, extrarange = -3, falloff = 10)
+			playsound(loc, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 			player_mp += chargeamt
 			if(turtle > 0)
 				turtle--
@@ -243,7 +243,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if(!gameover)
 			gameover = TRUE
 			temp = "[enemy_name] has fallen! Rejoice!"
-			playsound(loc, 'sound/arcade/win.ogg', 50, 1, extrarange = -3, falloff = 10)
+			playsound(loc, 'sound/arcade/win.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 
 			if(obj_flags & EMAGGED)
 				new /obj/effect/spawner/newbomb/timer/syndicate(loc)
@@ -260,13 +260,13 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	else if ((obj_flags & EMAGGED) && (turtle >= 4))
 		var/boomamt = rand(5,10)
 		temp = "[enemy_name] throws a bomb, exploding you for [boomamt] damage!"
-		playsound(loc, 'sound/arcade/boom.ogg', 50, 1, extrarange = -3, falloff = 10)
+		playsound(loc, 'sound/arcade/boom.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 		player_hp -= boomamt
 
 	else if ((enemy_mp <= 5) && (prob(70)))
 		var/stealamt = rand(2,3)
 		temp = "[enemy_name] steals [stealamt] of your power!"
-		playsound(loc, 'sound/arcade/steal.ogg', 50, 1, extrarange = -3, falloff = 10)
+		playsound(loc, 'sound/arcade/steal.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 		player_mp -= stealamt
 		updateUsrDialog()
 
@@ -274,27 +274,27 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			gameover = TRUE
 			sleep(10)
 			temp = "You have been drained! GAME OVER"
-			playsound(loc, 'sound/arcade/lose.ogg', 50, 1, extrarange = -3, falloff = 10)
+			playsound(loc, 'sound/arcade/lose.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 			if(obj_flags & EMAGGED)
 				usr.gib()
 			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "mana", (obj_flags & EMAGGED ? "emagged":"normal")))
 
 	else if ((enemy_hp <= 10) && (enemy_mp > 4))
 		temp = "[enemy_name] heals for 4 health!"
-		playsound(loc, 'sound/arcade/heal.ogg', 50, 1, extrarange = -3, falloff = 10)
+		playsound(loc, 'sound/arcade/heal.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 		enemy_hp += 4
 		enemy_mp -= 4
 
 	else
 		var/attackamt = rand(3,6)
 		temp = "[enemy_name] attacks for [attackamt] damage!"
-		playsound(loc, 'sound/arcade/hit.ogg', 50, 1, extrarange = -3, falloff = 10)
+		playsound(loc, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 		player_hp -= attackamt
 
 	if ((player_mp <= 0) || (player_hp <= 0))
 		gameover = TRUE
 		temp = "You have been crushed! GAME OVER"
-		playsound(loc, 'sound/arcade/lose.ogg', 50, 1, extrarange = -3, falloff = 10)
+		playsound(loc, 'sound/arcade/lose.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 		if(obj_flags & EMAGGED)
 			usr.gib()
 		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
@@ -340,6 +340,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 #define ORION_TRAIL_COLLISION	"Collision"
 #define ORION_TRAIL_SPACEPORT	"Spaceport"
 #define ORION_TRAIL_BLACKHOLE	"BlackHole"
+#define ORION_TRAIL_OLDSHIP		"Old Ship"
+#define ORION_TRAIL_SEARCH		"Old Ship Search"
 
 #define ORION_STATUS_START		1
 #define ORION_STATUS_NORMAL		2
@@ -369,7 +371,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 						   ORION_TRAIL_LING			= 3,
 						   ORION_TRAIL_MALFUNCTION	= 2,
 						   ORION_TRAIL_COLLISION	= 1,
-						   ORION_TRAIL_SPACEPORT	= 2
+						   ORION_TRAIL_SPACEPORT	= 2,
+						   ORION_TRAIL_OLDSHIP		= 2
 						   )
 	var/list/stops = list()
 	var/list/stopblurbs = list()
@@ -527,7 +530,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 						else
 							to_chat(usr, "<span class='userdanger'>Something strikes you from behind! It hurts like hell and feel like a blunt weapon, but nothing is there...</span>")
 							M.take_bodypart_damage(30)
-							playsound(loc, 'sound/weapons/genhit2.ogg', 100, 1)
+							playsound(loc, 'sound/weapons/genhit2.ogg', 100, TRUE)
 					if(ORION_TRAIL_ILLNESS)
 						var/severity = rand(1,3) //pray to RNGesus. PRAY, PIGS
 						if(severity == 1)
@@ -545,12 +548,12 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 							M.Paralyze(60)
 							say("A sudden gust of powerful wind slams [M] into the floor!")
 							M.take_bodypart_damage(25)
-							playsound(loc, 'sound/weapons/genhit.ogg', 100, 1)
+							playsound(loc, 'sound/weapons/genhit.ogg', 100, TRUE)
 						else
 							to_chat(M, "<span class='userdanger'>A violent gale blows past you, and you barely manage to stay standing!</span>")
 					if(ORION_TRAIL_COLLISION) //by far the most damaging event
 						if(prob(90))
-							playsound(loc, 'sound/effects/bang.ogg', 100, 1)
+							playsound(loc, 'sound/effects/bang.ogg', 100, TRUE)
 							var/turf/open/floor/F
 							for(F in orange(1, src))
 								F.ScrapeAway()
@@ -558,15 +561,15 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 							if(hull)
 								sleep(10)
 								say("A new floor suddenly appears around [src]. What the hell?")
-								playsound(loc, 'sound/weapons/genhit.ogg', 100, 1)
+								playsound(loc, 'sound/weapons/genhit.ogg', 100, TRUE)
 								var/turf/open/space/T
 								for(T in orange(1, src))
 									T.PlaceOnTop(/turf/open/floor/plating)
 						else
 							say("Something slams into the floor around [src] - luckily, it didn't get through!")
-							playsound(loc, 'sound/effects/bang.ogg', 50, 1)
+							playsound(loc, 'sound/effects/bang.ogg', 50, TRUE)
 					if(ORION_TRAIL_MALFUNCTION)
-						playsound(loc, 'sound/effects/empulse.ogg', 50, 1)
+						playsound(loc, 'sound/effects/empulse.ogg', 50, TRUE)
 						visible_message("<span class='danger'>[src] malfunctions, randomizing in-game stats!</span>")
 						var/oldfood = food
 						var/oldfuel = fuel
@@ -580,7 +583,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 								audible_message("<span class='danger'>[src] lets out a somehow ominous chime.</span>")
 							food = oldfood
 							fuel = oldfuel
-							playsound(loc, 'sound/machines/chime.ogg', 50, 1)
+							playsound(loc, 'sound/machines/chime.ogg', 50, TRUE)
 
 	else if(href_list["newgame"]) //Reset everything
 		if(gameStatus == ORION_STATUS_START)
@@ -592,6 +595,10 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			food = 80
 			fuel = 60
 			settlers = list("Harry","Larry","Bob")
+	else if(href_list["search"]) //search old ship
+		if(event == ORION_TRAIL_OLDSHIP)
+			event = ORION_TRAIL_SEARCH
+			event()
 	else if(href_list["slow"]) //slow down
 		if(event == ORION_TRAIL_FLUX)
 			food -= (alive+lings_aboard)*2
@@ -632,7 +639,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				event = ORION_TRAIL_BLACKHOLE
 				event()
 				if(obj_flags & EMAGGED)
-					playsound(loc, 'sound/effects/supermatter.ogg', 100, 1)
+					playsound(loc, 'sound/effects/supermatter.ogg', 100, TRUE)
 					say("A miniature black hole suddenly appears in front of [src], devouring [usr] alive!")
 					if(isliving(usr))
 						var/mob/living/L = usr
@@ -654,7 +661,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	else if(href_list["killcrew"]) //shoot a crewmember
 		if(gameStatus == ORION_STATUS_NORMAL || event == ORION_TRAIL_LING)
 			var/sheriff = remove_crewmember() //I shot the sheriff
-			playsound(loc,'sound/weapons/gunshot.ogg', 100, 1)
+			playsound(loc,'sound/weapons/gunshot.ogg', 100, TRUE)
 
 			if(settlers.len == 0 || alive == 0)
 				say("The last crewmember [sheriff], shot themselves, GAME OVER!")
@@ -799,6 +806,37 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			eventdat += "<br>What will you do?"
 			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];slow=1'>Slow Down</a> <a href='byond://?src=[REF(src)];keepspeed=1'>Continue</a></P>"
 			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+
+		if(ORION_TRAIL_OLDSHIP)
+			eventdat += "<br>Your crew spots an old ship floating through space. It might have some supplies, but then again it looks rather unsafe."
+			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];search=1'>Search it</a><a href='byond://?src=[REF(src)];eventclose=1'>Leave it</a></P><P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+
+		if(ORION_TRAIL_SEARCH)
+			switch(rand(100))
+				if(0 to 15)
+					var/rescued = add_crewmember()
+					var/oldfood = rand(1,7)
+					var/oldfuel = rand(4,10)
+					food += oldfood
+					fuel += oldfuel
+					eventdat += "<br>As you look through it you find some supplies and a living person!"
+					eventdat += "<br>[rescued] was rescued from the abandoned ship!"
+					eventdat += "<br>You found [oldfood] <b>Food</b> and [oldfuel] <b>Fuel</b>."
+				if(15 to 35)
+					var/lfuel = rand(4,7)
+					var/deadname = remove_crewmember()
+					fuel -= lfuel
+					eventdat += "<br>[deadname] was lost deep in the wreckage, and your own vessel lost [lfuel] <b>Fuel</b> maneuvering to the the abandoned ship."
+				if(35 to 65)
+					var/oldfood = rand(5,11)
+					food += oldfood
+					engine++
+					eventdat += "<br>You found [oldfood] <b>Food</b> and some parts amongst the wreck."
+				else
+					eventdat += "<br>As you look through the wreck you cannot find much of use."
+			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>"
+			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+			canContinueEvent = 1
 
 		if(ORION_TRAIL_ILLNESS)
 			eventdat += "A deadly illness has been contracted!"
@@ -1102,14 +1140,14 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	to_chat(user, "<span class='warning'>You flip the switch on the underside of [src].</span>")
 	active = 1
 	visible_message("<span class='notice'>[src] softly beeps and whirs to life!</span>")
-	playsound(loc, 'sound/machines/defib_SaftyOn.ogg', 25, 1)
+	playsound(loc, 'sound/machines/defib_SaftyOn.ogg', 25, TRUE)
 	say("This is ship ID #[rand(1,1000)] to Orion Port Authority. We're coming in for landing, over.")
 	sleep(20)
 	visible_message("<span class='warning'>[src] begins to vibrate...</span>")
 	say("Uh, Port? Having some issues with our reactor, could you check it out? Over.")
 	sleep(30)
 	say("Oh, God! Code Eight! CODE EIGHT! IT'S GONNA BL-")
-	playsound(loc, 'sound/machines/buzz-sigh.ogg', 25, 1)
+	playsound(loc, 'sound/machines/buzz-sigh.ogg', 25, TRUE)
 	sleep(3.6)
 	visible_message("<span class='userdanger'>[src] explodes!</span>")
 	explosion(loc, 2,4,8, flame_range = 16)
@@ -1132,14 +1170,14 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	to_chat(c_user, "<span class='warning'>You move your hand towards the machine, and begin to hesitate as a bloodied guillotine emerges from inside of it...</span>")
 	if(do_after(c_user, 50, target = src))
 		to_chat(c_user, "<span class='userdanger'>The guillotine drops on your arm, and the machine sucks it in!</span>")
-		playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
+		playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
 		var/which_hand = BODY_ZONE_L_ARM
 		if(!(c_user.active_hand_index % 2))
 			which_hand = BODY_ZONE_R_ARM
 		var/obj/item/bodypart/chopchop = c_user.get_bodypart(which_hand)
 		chopchop.dismember()
 		qdel(chopchop)
-		playsound(loc, 'sound/arcade/win.ogg', 50, 1, extrarange = -3, falloff = 10)
+		playsound(loc, 'sound/arcade/win.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 		for(var/i=1; i<=rand(3,5); i++)
 			prizevend(user)
 	else
@@ -1156,6 +1194,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 #undef ORION_TRAIL_COLLISION
 #undef ORION_TRAIL_SPACEPORT
 #undef ORION_TRAIL_BLACKHOLE
+#undef ORION_TRAIL_OLDSHIP
+#undef ORION_TRAIL_SEARCH
 
 #undef ORION_STATUS_START
 #undef ORION_STATUS_NORMAL

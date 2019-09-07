@@ -1,9 +1,0 @@
-author: "Medibotby"
-delete-after: True
-changes: 
-  - balance: "Medibot no longer works off chems and instead performs a lesser equivalent to Tend wounds"
-  - balance: "They still heal all 4 base damages and use same clothing restrictions as previously"
-  - rscdel: "Medibot Beaker Holding / Virus Treating no longer exists"
-  - rscadd: "Medibots scale with Tend Wound research (1 tend wound surgery researched = 50% more healing)"
-  - rscadd: "Medibots heal more of a specific damage if the medkit used to make them was oriented around that damage (a tox medkit medibot will heal toxin better)"
-  - tweak: "Emagged Medibots now pretend to tend your wounds, actually damaging you and applying 5u chloral per step."

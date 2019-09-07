@@ -16,16 +16,16 @@ Cargo Technician=6,2
 Shaft Miner=15,3
 
 Bartender=2,1
-Cook=4,1
-Botanist=5,2
+Cook=3,1
+Botanist=4,2
 Janitor=4,1
 
-Clown=3,1
-Mime=3,1
-Curator=3,1
-Lawyer=5,2
+Clown=2,1
+Mime=2,1
+Curator=2,1
+Lawyer=4,2
 
-Chaplain=3,1
+Chaplain=2,1
 
 Station Engineer=10,5
 Atmospheric Technician=6,2

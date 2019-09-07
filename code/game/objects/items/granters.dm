@@ -11,7 +11,7 @@
 	var/used = FALSE //only really matters if oneuse but it might be nice to know if someone's used it for admin investigations perhaps
 
 /obj/item/book/granter/proc/turn_page(mob/user)
-	playsound(user, pick('sound/effects/pageturn1.ogg','sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg'), 30, 1)
+	playsound(user, pick('sound/effects/pageturn1.ogg','sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg'), 30, TRUE)
 	if(do_after(user,50, user))
 		if(remarks.len)
 			to_chat(user, "<span class='notice'>[pick(remarks)]</span>")
@@ -352,7 +352,7 @@
 
 /obj/item/book/granter/martial/cqc/recoil(mob/living/carbon/user)
 	to_chat(user, "<span class='warning'>[src] explodes!</span>")
-	playsound(src,'sound/effects/explosion1.ogg',40,1)
+	playsound(src,'sound/effects/explosion1.ogg',40,TRUE)
 	user.flash_act(1, 1)
 	user.adjustBruteLoss(6)
 	user.adjustFireLoss(6)

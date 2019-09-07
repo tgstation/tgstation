@@ -223,7 +223,7 @@
 		to_chat(user, "<span class='notice'>[src] can only hold body parts!</span>")
 		return
 
-	user.visible_message("[user] puts [I] into [src].", "<span class='notice'>You put [I] inside [src].</span>")
+	user.visible_message("<span class='notice'>[user] puts [I] into [src].</span>", "<span class='notice'>You put [I] inside [src].</span>")
 	icon_state = "evidence"
 	var/xx = I.pixel_x
 	var/yy = I.pixel_y
@@ -242,7 +242,7 @@
 /obj/item/organ_storage/attack_self(mob/user)
 	if(contents.len)
 		var/obj/item/I = contents[1]
-		user.visible_message("[user] dumps [I] from [src].", "<span class='notice'>You dump [I] from [src].</span>")
+		user.visible_message("<span class='notice'>[user] dumps [I] from [src].</span>", "<span class='notice'>You dump [I] from [src].</span>")
 		cut_overlays()
 		I.forceMove(get_turf(src))
 		icon_state = "evidenceobj"
@@ -292,7 +292,7 @@
 	set_light(1)
 
 /obj/item/scalpel/advanced/attack_self(mob/user)
-	playsound(get_turf(user),'sound/machines/click.ogg',50,1)
+	playsound(get_turf(user),'sound/machines/click.ogg',50,TRUE)
 	var/obj/item/circular_saw/advanced/saw = new /obj/item/circular_saw/advanced(drop_location())
 	to_chat(user, "<span class='notice'>You incease the power, now it can cut bones.</span>")
 	qdel(src)
@@ -314,7 +314,7 @@
 	set_light(2)
 
 /obj/item/circular_saw/advanced/attack_self(mob/user)
-	playsound(get_turf(user),'sound/machines/click.ogg',50,1)
+	playsound(get_turf(user),'sound/machines/click.ogg',50,TRUE)
 	var/obj/item/scalpel/advanced/scalpel = new /obj/item/scalpel/advanced(drop_location())
 	to_chat(user, "<span class='notice'>You lower the power.</span>")
 	qdel(src)
@@ -328,7 +328,7 @@
 	toolspeed = 0.7
 
 /obj/item/retractor/advanced/attack_self(mob/user)
-	playsound(get_turf(user),'sound/items/change_drill.ogg',50,1)
+	playsound(get_turf(user),'sound/items/change_drill.ogg',50,TRUE)
 	var/obj/item/hemostat/advanced/hemostat = new /obj/item/hemostat/advanced(drop_location())
 	to_chat(user, "<span class='notice'>You set the [src] to hemostat mode.</span>")
 	qdel(src)
@@ -342,7 +342,7 @@
 	toolspeed = 0.7
 
 /obj/item/hemostat/advanced/attack_self(mob/user)
-	playsound(get_turf(user),'sound/items/change_drill.ogg',50,1)
+	playsound(get_turf(user),'sound/items/change_drill.ogg',50,TRUE)
 	var/obj/item/retractor/advanced/retractor = new /obj/item/retractor/advanced(drop_location())
 	to_chat(user, "<span class='notice'>You set the [src] to retractor mode.</span>")
 	qdel(src)
@@ -362,7 +362,7 @@
 	set_light(1)
 
 /obj/item/surgicaldrill/advanced/attack_self(mob/user)
-	playsound(get_turf(user),'sound/weapons/tap.ogg',50,1)
+	playsound(get_turf(user),'sound/weapons/tap.ogg',50,TRUE)
 	var/obj/item/cautery/advanced/cautery = new /obj/item/cautery/advanced(drop_location())
 	to_chat(user, "<span class='notice'>You dilate the lenses, setting it to mending mode.</span>")
 	qdel(src)
@@ -383,7 +383,7 @@
 	set_light(1)
 
 /obj/item/cautery/advanced/attack_self(mob/user)
-	playsound(get_turf(user),'sound/items/welderdeactivate.ogg',50,1)
+	playsound(get_turf(user),'sound/items/welderdeactivate.ogg',50,TRUE)
 	var/obj/item/surgicaldrill/advanced/surgicaldrill = new /obj/item/surgicaldrill/advanced(drop_location())
 	to_chat(user, "<span class='notice'>You focus the lensess, it is now set to drilling mode.</span>")
 	qdel(src)

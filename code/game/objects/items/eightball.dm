@@ -206,7 +206,7 @@
 	switch(action)
 		if("vote")
 			var/selected_answer = params["answer"]
-			if(!selected_answer in possible_answers)
+			if(!(selected_answer in possible_answers))
 				return
 			else
 				votes[user.ckey] = selected_answer

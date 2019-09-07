@@ -62,7 +62,7 @@
 			if(do_after(user, 30, target = src))
 				if (R.get_amount() >= 2 && !istype(src, /turf/open/floor/engine))
 					PlaceOnTop(/turf/open/floor/engine, flags = CHANGETURF_INHERIT_AIR)
-					playsound(src, 'sound/items/deconstruct.ogg', 80, 1)
+					playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
 					R.use(2)
 					to_chat(user, "<span class='notice'>You reinforce the floor.</span>")
 				return
@@ -81,7 +81,7 @@
 				var/obj/item/stack/tile/light/L = W
 				var/turf/open/floor/light/F = T
 				F.state = L.state
-			playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
+			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 		else
 			to_chat(user, "<span class='warning'>This section is too damaged to support a tile! Use a welder to fix the damage.</span>")
 

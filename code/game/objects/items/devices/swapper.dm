@@ -51,9 +51,9 @@
 	if(QDELETED(linked_swapper))
 		to_chat(user, "<span class='warning'>[src] is not linked with another swapper.</span>")
 		return
-	playsound(src, 'sound/weapons/flash.ogg', 25, 1)
+	playsound(src, 'sound/weapons/flash.ogg', 25, TRUE)
 	to_chat(user, "<span class='notice'>You activate [src].</span>")
-	playsound(linked_swapper, 'sound/weapons/flash.ogg', 25, 1)
+	playsound(linked_swapper, 'sound/weapons/flash.ogg', 25, TRUE)
 	if(ismob(linked_swapper.loc))
 		var/mob/holder = linked_swapper.loc
 		to_chat(holder, "<span class='notice'>[linked_swapper] starts buzzing.</span>")

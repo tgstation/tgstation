@@ -55,7 +55,7 @@
 	checkLiked(fraction, M)
 	reagents.reaction(M, INGEST, fraction)
 	reagents.trans_to(M, gulp_size, transfered_by = user)
-	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	return 1
 
 /obj/item/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)
@@ -126,7 +126,7 @@
 	if(prob(33))
 		var/obj/item/shard/S = new(drop_location())
 		target.Bumped(S)
-	playsound(src, "shatter", 70, 1)
+	playsound(src, "shatter", 70, TRUE)
 	transfer_fingerprints_to(B)
 	qdel(src)
 	target.Bumped(B)
@@ -420,14 +420,14 @@
 		open_soda()
 		sleep(10)
 	H.visible_message("<span class='suicide'>[H] takes a big sip from [src]! It looks like [H.p_theyre()] trying to commit suicide!</span>")
-	playsound(H,'sound/items/drink.ogg', 80, 1)
+	playsound(H,'sound/items/drink.ogg', 80, TRUE)
 	reagents.trans_to(H, src.reagents.total_volume, transfered_by = H) //a big sip
 	sleep(5)
 	H.say(pick("Now, Outbomb Cuban Pete, THAT was a game.", "All these new fangled arcade games are too slow. I prefer the classics.", "They don't make 'em like Orion Trail anymore.", "You know what they say. Worst day of spess carp fishing is better than the best day at work.", "They don't make 'em like good old fashioned singularity engines anymore."))
 	if(H.age >= 30)
 		H.Stun(50)
 		sleep(50)
-		playsound(H,'sound/items/drink.ogg', 80, 1)
+		playsound(H,'sound/items/drink.ogg', 80, TRUE)
 		H.say(pick("Another day, another dollar.", "I wonder if I should hold?", "Diversifying is for young'ns.", "Yeap, times were good back then."))
 		return MANUAL_SUICIDE_NONLETHAL
 	sleep(20) //dramatic pause
@@ -436,7 +436,7 @@
 /obj/item/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
 	if(M == user && !src.reagents.total_volume && user.a_intent == INTENT_HARM && user.zone_selected == BODY_ZONE_HEAD)
 		user.visible_message("<span class='warning'>[user] crushes the can of [src] on [user.p_their()] forehead!</span>", "<span class='notice'>You crush the can of [src] on your forehead.</span>")
-		playsound(user.loc,'sound/weapons/pierce.ogg', rand(10,50), 1)
+		playsound(user.loc,'sound/weapons/pierce.ogg', rand(10,50), TRUE)
 		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(user.loc)
 		crushed_can.icon_state = icon_state
 		qdel(src)
@@ -455,7 +455,7 @@
 /obj/item/reagent_containers/food/drinks/soda_cans/proc/open_soda(mob/user)
 	to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.") //Ahhhhhhhh
 	ENABLE_BITFIELD(reagents.flags, OPENCONTAINER)
-	playsound(src, "can_open", 50, 1)
+	playsound(src, "can_open", 50, TRUE)
 	spillable = TRUE
 
 /obj/item/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)

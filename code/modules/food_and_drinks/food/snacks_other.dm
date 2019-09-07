@@ -98,6 +98,7 @@
 	filling_color = "#FFD700"
 	tastes = list("fries" = 3, "salt" = 1)
 	foodtype = VEGETABLES | GRAIN | FRIED
+	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/tatortot
 	name = "tator tot"
@@ -107,6 +108,7 @@
 	filling_color = "FFD700"
 	tastes = list("potato" = 3, "valids" = 1)
 	foodtype = FRIED | VEGETABLES
+	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/soydope
 	name = "soy dope"
@@ -128,6 +130,7 @@
 	filling_color = "#FFD700"
 	tastes = list("fries" = 3, "cheese" = 1)
 	foodtype = VEGETABLES | GRAIN
+	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/badrecipe
 	name = "burned mess"
@@ -146,6 +149,7 @@
 	filling_color = "#FFA500"
 	tastes = list("carrots" = 3, "salt" = 1)
 	foodtype = VEGETABLES
+	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/candiedapple
 	name = "candied apple"
@@ -549,6 +553,31 @@
 	tastes = list("butter" = 1)
 	foodtype = DAIRY
 
+/obj/item/reagent_containers/food/snacks/butter/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>If you had a rod you could make <b>butter on a stick</b>.</span>"
+
+/obj/item/reagent_containers/food/snacks/butter/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = W
+		if(!R.use(1))//borgs can still fail this if they have no metal
+			to_chat(user, "<span class='warning'>You do not have enough metal to put [src] on a stick!</span>")
+			return ..()
+		to_chat(user, "<span class='notice'>You stick the rod into the stick of butter.</span>")
+		var/obj/item/reagent_containers/food/snacks/butter/on_a_stick/new_item = new(usr.loc)
+		var/replace = (user.get_inactive_held_item() == R)
+		if(!R && replace)
+			user.put_in_hands(new_item)
+		qdel(src)
+		return TRUE
+	..()
+
+/obj/item/reagent_containers/food/snacks/butter/on_a_stick //there's something so special about putting it on a stick.
+	name = "butter on a stick"
+	desc = "delicious, golden, fatty goodness on a stick."
+	icon_state = "butteronastick"
+	trash = /obj/item/stack/rods
+
 /obj/item/reagent_containers/food/snacks/onionrings
 	name = "onion rings"
 	desc = "Onion slices coated in batter."
@@ -632,3 +661,13 @@
 	icon_state = "peachcanmaint"
 	trash = /obj/item/trash/can/food/peaches/maint
 	tastes = list("peaches" = 1, "tin" = 7)
+
+/obj/item/reagent_containers/food/snacks/crab_rangoon
+	name = "Crab Rangoon"
+	desc = "Has many names, like crab puffs, cheese wontons, crab dumplings? Whatever you call them, they're a fabulous blast of cream cheesy crab."
+	icon_state = "crabrangoon"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
+	filling_color = "#f2efdc"
+	w_class = WEIGHT_CLASS_SMALL
+	tastes = list("cream cheese" = 4, "crab" = 3, "crispiness" = 2)
+	foodtype = MEAT | DAIRY | GRAIN

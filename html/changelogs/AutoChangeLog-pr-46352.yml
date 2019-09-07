@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed DNA scanners breaking if you spammed the print injector button during it's cooldown."
