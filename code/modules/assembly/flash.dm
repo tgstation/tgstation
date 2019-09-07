@@ -299,7 +299,7 @@
 
 /obj/item/assembly/flash/cyborg/peacekeeper
 	name = "advanced flash"
-	description = "A powerful and versatile flashbulb device, with applications ranging from disorienting attackers to acting as visual receptors in robot production. This one has been modified to give it better burn out resistance and to greatly increase the range of area of effect flashings performed by it."
+	desc = "A powerful and versatile flashbulb device, with applications ranging from disorienting attackers to acting as visual receptors in robot production. This one has been modified to give it better burn out resistance and to greatly increase the range of area of effect flashings performed by it."
 	burnout_resistance = 10
 	aoe_range = 7
 	color = "#71CAE5"
