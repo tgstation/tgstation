@@ -37,6 +37,9 @@
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
 	var/anchorable = TRUE
 	var/icon_welded = "welded"
+	var/cooldown
+	var/spam_ticks = 600
+	var/alt_open_sound_prob = 1
 
 
 /obj/structure/closet/Initialize(mapload)
@@ -139,6 +142,11 @@
 	if(opened || !can_open(user))
 		return
 	playsound(loc, open_sound, open_sound_volume, TRUE, -3)
+	if(cooldown < world.time)
+		for(var/mob/living/carbon/human/H in contents)
+			if(prob(alt_open_sound_prob))
+				playsound(H.loc, 'sound/machines/closet_open_alt.ogg', open_sound_volume, FALSE)
+			cooldown = world.time + spam_ticks
 	opened = TRUE
 	if(!dense_when_open)
 		density = FALSE

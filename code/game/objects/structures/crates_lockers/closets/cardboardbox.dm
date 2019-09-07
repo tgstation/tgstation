@@ -15,6 +15,7 @@
 	anchorable = FALSE
 	open_sound = 'sound/machines/cardboard_box.ogg'
 	close_sound = 'sound/machines/cardboard_box.ogg'
+	var/alert_sound = 'sound/machines/chime.ogg'
 	open_sound_volume = 35
 	close_sound_volume = 35
 	var/move_speed_multiplier = 1
@@ -52,7 +53,7 @@
 				if(!L.incapacitated(ignore_restraints = 1))
 					L.face_atom(src)
 				L.do_alert_animation(L)
-		playsound(loc, 'sound/machines/chime.ogg', 50, FALSE, -5)
+		playsound(loc, alert_sound, 50, FALSE, -5)
 
 /mob/living/proc/do_alert_animation(atom/A)
 	var/image/I = image('icons/obj/closet.dmi', A, "cardboard_special", A.layer+1)
@@ -75,6 +76,12 @@
 	open_sound_volume = 35
 	close_sound_volume = 50
 	material_drop = /obj/item/stack/sheet/plasteel
+
+/obj/structure/closet/cardboard/metal/closet
+	name = "closet"
+	desc = "It's a basic storage unit."
+	icon_state = "generic"
+	alert_sound = 'sound/machines/closet_open_alt.ogg'
 #undef SNAKE_SPAM_TICKS
 
 /obj/structure/closet/cardboard/relaymove(mob/living/user, direction)
