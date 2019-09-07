@@ -162,6 +162,8 @@
 	update_icon()
 
 /obj/machinery/recycler/proc/crush_living(mob/living/L)
+	if(isguardian(L))
+		return
 
 	L.forceMove(loc)
 
