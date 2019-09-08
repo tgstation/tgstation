@@ -7,7 +7,7 @@
 	species_traits = list(EYECOLOR,NO_UNDERWEAR,NOBLOOD,ABSTRACT_HEAD)
 	default_features = list("mcolor" = "FFF")
 	skinned_type = /obj/item/paper
-	changesource_flags = VARDROPDOWN | EVENTRACE //absolutely no way to get the race even for admins, it's completely out of theme of ss13
+	changesource_flags = EVENTRACE //absolutely no way to get the race even for admins, it's completely out of theme of ss13
 	damage_overlay_type = "" //no blood
 	missing_eye_state = "montheyes_missing"
 	offset_features = list(OFFSET_UNIFORM = list(0,0), OFFSET_ID = list(0,0), OFFSET_GLOVES = list(0,0), OFFSET_GLASSES = list(0,0), OFFSET_EARS = list(0,-7), OFFSET_SHOES = list(0,0), OFFSET_S_STORE = list(0,0), OFFSET_FACEMASK = list(0,0), OFFSET_HEAD = list(0,-6), OFFSET_FACE = list(0,0), OFFSET_BELT = list(0,0), OFFSET_BACK = list(0,0), OFFSET_SUIT = list(0,0), OFFSET_NECK = list(0,0))
@@ -32,11 +32,8 @@
 	var/month = pick(list("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"))
 	var/days_in_that_month = 31
 	switch(month)
-		if("February")//hey look the FUCK month where i have to calculate leap years
-			if(isLeap(text2num(time2text(world.timeofday, "YY"))))
-				days_in_that_month = 29
-			else
-				days_in_that_month = 28
+		if("February")
+			days_in_that_month = 29
 		if("April", "June", "September", "November")
 			days_in_that_month = 30
 
@@ -60,28 +57,14 @@
 	..()
 
 /datum/species/monthmen/equipped_something(obj/item/I, mob/living/carbon/human/H, just_adjust = FALSE)
-	var/blocked = FALSE
-	if(istype(I, /obj/item/storage/backpack))
-		blocked = TRUE //straps go over eyes, ouch
-		if(istype(I, /obj/item/storage/backpack/satchel) || istype(I, /obj/item/storage/backpack/duffelbag))
-			blocked = FALSE //we're good again these don't do that. we put the check down here so we don't have to do this for every item equipped
 	if(!get_location_accessible(H, BODY_ZONE_CHEST))
-		blocked = TRUE
-	if(blocked)//you put something over your eyes
 		to_chat(H, "<span class='warning'>The [I] is blocking you from seeing anything!</span>")
-		become_blind("blocked vision") //not eyes covered because that is for tints and other things, which are for GLASSES level blinding
+		H.become_blind("blocked vision") //not eyes covered because that is for tints and other things, which are for GLASSES level blinding
 
 /datum/species/monthmen/unequipped_something(obj/item/I, mob/living/carbon/human/H, just_adjust = FALSE)
-	var/blocked = FALSE
-	if(istype(I, /obj/item/storage/backpack))
-		blocked = TRUE
-		if(istype(I, /obj/item/storage/backpack/satchel) || istype(I, /obj/item/storage/backpack/duffelbag))
-			blocked = FALSE
-	if(!get_location_accessible(H, BODY_ZONE_CHEST))
-		blocked = TRUE
-	if(!blocked)//you took off whatever was covering your eyes
+	if(get_location_accessible(H, BODY_ZONE_CHEST))
 		to_chat(H, "<span class='notice'>You can see again!</span>")
-		cure_blind("blocked vision")
+		H.cure_blind("blocked vision")
 
 //all the organs, just abstract copies (may change?)
 /obj/item/organ/brain/monthmen

@@ -253,13 +253,13 @@ BLIND     // can't see anything
 		H = user
 		userspecies = H.dna?.species
 	if(toggle_jumpsuit_adjust())
+		to_chat(usr, "<span class='notice'>You adjust the suit to wear it more casually.</span>")
 		if(userspecies)
 			userspecies.unequipped_something(src, H, TRUE)	
-		to_chat(usr, "<span class='notice'>You adjust the suit to wear it more casually.</span>")
 	else
+		to_chat(usr, "<span class='notice'>You adjust the suit back to normal.</span>")
 		if(userspecies)
 			userspecies.equipped_something(src, H, TRUE)			
-		to_chat(usr, "<span class='notice'>You adjust the suit back to normal.</span>")
 	if(H)
 		H.update_inv_w_uniform()
 		H.update_body()
