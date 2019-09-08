@@ -84,7 +84,7 @@
 // Used in attack logs for reagents in pills and such
 // external list is list of reagent types = amounts
 /datum/reagents/proc/log_list(external_list)
-	if(!length(reagent_list))
+	if((external_list && !length(external_list)) || !length(reagent_list))
 		return "no reagents"
 
 	var/list/data = list()
