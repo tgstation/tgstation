@@ -913,7 +913,7 @@
 		var/list/sanitized_races = list()
 		for(var/thing in GLOB.species_list)
 			var/datum/species/S = GLOB.species_list[thing]
-			if(initial(S.changesource_flags) & ADMIN)
+			if(initial(S.changesource_flags) & VARDROPDOWN)
 				sanitized_races += thing
 		var/result = input(usr, "Please choose a new species","Species") as null|anything in sanitized_races
 		if(result)
