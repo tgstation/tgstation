@@ -895,7 +895,7 @@
 			to_chat(user, "<span class='danger'>You feel like you could walk straight through lava now.</span>")
 			H.weather_immunities |= "lava"
 
-	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
+	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	qdel(src)
 
 /datum/disease/transformation/dragon
@@ -967,7 +967,7 @@
 					message_admins("[ADMIN_LOOKUPFLW(user)] fired the lava staff at [ADMIN_VERBOSEJMP(T)]")
 					log_game("[key_name(user)] fired the lava staff at [AREACOORD(T)].")
 					timer = world.time + create_cooldown
-					playsound(T,'sound/magic/fireball.ogg', 200, 1)
+					playsound(T,'sound/magic/fireball.ogg', 200, TRUE)
 			else
 				timer = world.time
 			qdel(L)
@@ -976,7 +976,7 @@
 			if(T.TerraformTurf(reset_turf_type, flags = CHANGETURF_INHERIT_AIR))
 				user.visible_message("<span class='danger'>[user] turns \the [old_name] into [reset_string]!</span>")
 				timer = world.time + reset_cooldown
-				playsound(T,'sound/magic/fireball.ogg', 200, 1)
+				playsound(T,'sound/magic/fireball.ogg', 200, TRUE)
 
 /obj/effect/temp_visual/lavastaff
 	icon_state = "lavastaff_warn"
@@ -1016,7 +1016,7 @@
 		var/obj/effect/mine/pickup/bloodbath/B = new(H)
 		INVOKE_ASYNC(B, /obj/effect/mine/pickup/bloodbath/.proc/mineEffect, H)
 	to_chat(user, "<span class='notice'>You shatter the bottle!</span>")
-	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
+	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, TRUE)
 	message_admins("<span class='adminnotice'>[ADMIN_LOOKUPFLW(user)] has activated a bottle of mayhem!</span>")
 	log_combat(user, null, "activated a bottle of mayhem", src)
 	qdel(src)
@@ -1207,7 +1207,7 @@
 			INVOKE_ASYNC(src, .proc/prepare_icon_update)
 			if(do_after(user, 50, target = user) && !beacon)
 				var/turf/T = get_turf(user)
-				playsound(T,'sound/magic/blind.ogg', 200, 1, -4)
+				playsound(T,'sound/magic/blind.ogg', 200, TRUE, -4)
 				new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
 				beacon = new/obj/effect/hierophant(T)
 				user.update_action_buttons_icon()
@@ -1250,8 +1250,8 @@
 			return
 		new /obj/effect/temp_visual/hierophant/telegraph(T, user)
 		new /obj/effect/temp_visual/hierophant/telegraph(source, user)
-		playsound(T,'sound/magic/wand_teleport.ogg', 200, 1)
-		playsound(source,'sound/machines/airlockopen.ogg', 200, 1)
+		playsound(T,'sound/magic/wand_teleport.ogg', 200, TRUE)
+		playsound(source,'sound/machines/airlockopen.ogg', 200, TRUE)
 		if(!do_after(user, 3, target = user) || !user || !beacon || QDELETED(beacon)) //no walking away shitlord
 			teleporting = FALSE
 			if(user)
@@ -1322,7 +1322,7 @@
 	if(!T)
 		return
 	new /obj/effect/temp_visual/hierophant/telegraph/cardinal(T, user)
-	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
+	playsound(T,'sound/effects/bin_close.ogg', 200, TRUE)
 	sleep(2)
 	var/obj/effect/temp_visual/hierophant/blast/B = new(T, user, friendly_fire_check)
 	B.damage = HIEROPHANT_CLUB_CARDINAL_DAMAGE
@@ -1349,7 +1349,7 @@
 	if(!T)
 		return
 	new /obj/effect/temp_visual/hierophant/telegraph(T, user)
-	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
+	playsound(T,'sound/effects/bin_close.ogg', 200, TRUE)
 	sleep(2)
 	for(var/t in RANGE_TURFS(1, T))
 		var/obj/effect/temp_visual/hierophant/blast/B = new(t, user, friendly_fire_check)

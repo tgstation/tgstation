@@ -528,7 +528,7 @@
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Dwarf Beards"))
 			for(var/mob/living/carbon/human/B in GLOB.carbon_list)
-				B.facial_hair_style = "Dward Beard"
+				B.facial_hairstyle = "Dward Beard"
 				B.update_hair()
 			message_admins("[key_name_admin(usr)] activated dorf mode")
 
@@ -752,4 +752,4 @@
 			H.equipOutfit(humanoutfit)
 	var/turf/T = get_step(loc, SOUTHWEST)
 	flick_overlay_static(portal_appearance, T, 15)
-	playsound(T, 'sound/magic/lightningbolt.ogg', rand(80, 100), 1)
+	playsound(T, 'sound/magic/lightningbolt.ogg', rand(80, 100), TRUE)

@@ -5,6 +5,7 @@
 	var/hud_type = null
 	///Used for topic calls. Just because you have a HUD display doesn't mean you should be able to interact with stuff.
 	var/hud_trait = null
+	
 
 /obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
 	..()

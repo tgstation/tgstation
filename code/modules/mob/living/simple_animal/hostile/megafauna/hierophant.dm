@@ -273,7 +273,7 @@ Difficulty: Hard
 		new /obj/effect/temp_visual/hierophant/telegraph/diagonal(T, src)
 	else
 		new /obj/effect/temp_visual/hierophant/telegraph(T, src)
-	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
+	playsound(T,'sound/effects/bin_close.ogg', 200, TRUE)
 	SLEEP_CHECK_DEATH(2)
 	new /obj/effect/temp_visual/hierophant/blast(T, src, FALSE)
 	for(var/d in directions)
@@ -321,8 +321,8 @@ Difficulty: Hard
 	var/turf/source = get_turf(src)
 	new /obj/effect/temp_visual/hierophant/telegraph(T, src)
 	new /obj/effect/temp_visual/hierophant/telegraph(source, src)
-	playsound(T,'sound/magic/wand_teleport.ogg', 200, 1)
-	playsound(source,'sound/machines/airlockopen.ogg', 200, 1)
+	playsound(T,'sound/magic/wand_teleport.ogg', 200, TRUE)
+	playsound(source,'sound/machines/airlockopen.ogg', 200, TRUE)
 	blinking = TRUE
 	SLEEP_CHECK_DEATH(2) //short delay before we start...
 	new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, src)
@@ -354,14 +354,14 @@ Difficulty: Hard
 	if(!T)
 		return
 	new /obj/effect/temp_visual/hierophant/telegraph(T, src)
-	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
+	playsound(T,'sound/effects/bin_close.ogg', 200, TRUE)
 	SLEEP_CHECK_DEATH(2)
 	for(var/t in RANGE_TURFS(1, T))
 		new /obj/effect/temp_visual/hierophant/blast(t, src, FALSE)
 
 //expanding square
 /proc/hierophant_burst(mob/caster, turf/original, burst_range, spread_speed = 0.5)
-	playsound(original,'sound/machines/airlockopen.ogg', 200, 1)
+	playsound(original,'sound/machines/airlockopen.ogg', 200, TRUE)
 	var/last_dist = 0
 	for(var/t in spiral_range_turfs(burst_range, original))
 		var/turf/T = t
@@ -470,7 +470,7 @@ Difficulty: Hard
 	if(!stat && .)
 		var/obj/effect/temp_visual/hierophant/squares/HS = new(oldLoc)
 		HS.setDir(movement_dir)
-		playsound(src, 'sound/mecha/mechmove04.ogg', 150, 1, -4)
+		playsound(src, 'sound/mecha/mechmove04.ogg', 150, TRUE, -4)
 		if(target)
 			arena_trap(target)
 
@@ -649,7 +649,7 @@ Difficulty: Hard
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
-	playsound(T,'sound/magic/blind.ogg', 125, 1, -5) //make a sound
+	playsound(T,'sound/magic/blind.ogg', 125, TRUE, -5) //make a sound
 	sleep(6) //wait a little
 	bursting = TRUE
 	do_damage(T) //do damage and mark us as bursting
@@ -670,7 +670,7 @@ Difficulty: Hard
 			continue
 		if(L.client)
 			flash_color(L.client, "#660099", 1)
-		playsound(L,'sound/weapons/sear.ogg', 50, 1, -4)
+		playsound(L,'sound/weapons/sear.ogg', 50, TRUE, -4)
 		to_chat(L, "<span class='userdanger'>You're struck by a [name]!</span>")
 		var/limb_to_hit = L.get_bodypart(pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 		var/armor = L.run_armor_check(limb_to_hit, "melee", "Your armor absorbs [src]!", "Your armor blocks part of [src]!", 50, "Your armor was penetrated by [src]!")
@@ -693,7 +693,7 @@ Difficulty: Hard
 			if(friendly_fire_check && caster && caster.faction_check_mob(M.occupant))
 				continue
 			to_chat(M.occupant, "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>")
-		playsound(M,'sound/weapons/sear.ogg', 50, 1, -4)
+		playsound(M,'sound/weapons/sear.ogg', 50, TRUE, -4)
 		M.take_damage(damage, BURN, 0, 0)
 
 /obj/effect/hierophant
@@ -718,7 +718,7 @@ Difficulty: Hard
 			H.timer = world.time + 51
 			INVOKE_ASYNC(H, /obj/item/hierophant_club.proc/prepare_icon_update)
 			if(do_after(user, 50, target = src))
-				playsound(src,'sound/magic/blind.ogg', 200, 1, -4)
+				playsound(src,'sound/magic/blind.ogg', 200, TRUE, -4)
 				new /obj/effect/temp_visual/hierophant/telegraph/teleport(get_turf(src), user)
 				to_chat(user, "<span class='hierophant_warning'>You collect [src], reattaching it to the club!</span>")
 				H.beacon = null

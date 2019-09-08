@@ -1,6 +1,6 @@
 
 /obj
-	animate_movement = 2
+	animate_movement = SLIDE_STEPS
 	speech_span = SPAN_ROBOT
 	var/obj_flags = CAN_BE_HIT
 	var/set_obj_flags // ONLY FOR MAPPING: Sets flags from a string list, handled in Initialize. Usage: set_obj_flags = "EMAGGED;!CAN_BE_HIT" to set EMAGGED and clear CAN_BE_HIT.
@@ -30,6 +30,8 @@
 	var/req_one_access_txt = "0"
 
 	var/renamedByPlayer = FALSE //set when a player uses a pen on a renamable object
+
+	var/drag_slowdown // Amont of multiplicative slowdown applied if pulled. >1 makes you slower, <1 makes you faster.
 
 /obj/vv_edit_var(vname, vval)
 	switch(vname)
@@ -324,4 +326,9 @@
 	return ..()
 
 /obj/proc/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
+	return
+
+// Should move all contained objects to it's location.
+/obj/proc/dump_contents()
+	CRASH("Unimplemented.")
 	return

@@ -398,7 +398,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	messages += "[header][sending]"
 
 	if(!silenced)
-		playsound(src, 'sound/machines/twobeep_high.ogg', 50, 1)
+		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
 		say(alert)
 
 	if(radio_freq)

@@ -48,7 +48,7 @@
 	if(!bitcoinmining)
 		if(!loaded_tank.air_contents.gases[/datum/gas/plasma])
 			investigate_log("<font color='red'>out of fuel</font>.", INVESTIGATE_SINGULO)
-			playsound(src, 'sound/machines/ding.ogg', 50, 1)
+			playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
 			eject()
 		else
 			var/gasdrained = min(powerproduction_drain*drainratio,loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES])
@@ -62,7 +62,7 @@
 			stored_energy-=power_produced
 	else if(is_station_level(z) && SSresearch.science_tech)
 		if(!loaded_tank.air_contents.gases[/datum/gas/tritium] || !loaded_tank.air_contents.gases[/datum/gas/oxygen])
-			playsound(src, 'sound/machines/ding.ogg', 50, 1)
+			playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
 			eject()
 		else
 			var/gasdrained = bitcoinproduction_drain*drainratio

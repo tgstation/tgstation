@@ -239,6 +239,6 @@
 	name = "bisque"
 	desc = "A classic entree from Space-France."
 	icon_state = "bisque"
-	bonus_reagents = list("nutriment" = 4, "vitamin" = 6)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("creamy texture" = 1, "crab" = 4)
 	foodtype = MEAT

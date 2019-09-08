@@ -12,6 +12,7 @@
 	filling_color = "#D2691E"
 	tastes = list("donut" = 1)
 	foodtype = JUNKFOOD | GRAIN | FRIED | SUGAR | BREAKFAST
+	dunkable = TRUE
 	var/frosted_icon = "donut2"
 	var/is_frosted = FALSE
 	var/extra_reagent = null
@@ -38,9 +39,7 @@
 			if(HAS_TRAIT(H.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM) && !HAS_TRAIT(H, TRAIT_AGEUSIA))
 				to_chat(H,"<span class='notice'>I love this taste!</span>")
 				H.adjust_disgust(-5 + -2.5 * fraction)
-				var/datum/component/mood/mood = H.GetComponent(/datum/component/mood)
-				if(mood)
-					mood.add_event(null, "fav_food", /datum/mood_event/favorite_food)
+				SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "fav_food", /datum/mood_event/favorite_food)
 				last_check_time = world.time
 				return
 	..()
@@ -94,7 +93,6 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/ketchup = 2)
 	tastes = list("meat" = 1)
 	foodtype = JUNKFOOD | MEAT | GROSS | FRIED | BREAKFAST
-
 
 ////////////////////////////////////////////MUFFINS////////////////////////////////////////////
 
@@ -192,6 +190,7 @@
 	filling_color = "#F0E68C"
 	tastes = list("cookie" = 1)
 	foodtype = GRAIN | SUGAR
+	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/donkpocket
 	name = "\improper Donk-pocket"
@@ -312,6 +311,7 @@
 	filling_color = "#CD853F"
 	tastes = list("sweetness" = 1)
 	foodtype = GRAIN | JUNKFOOD | SUGAR
+	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/chococornet
 	name = "chocolate cornet"
@@ -332,6 +332,7 @@
 	filling_color = "#D2691E"
 	tastes = list("cookie" = 2, "oat" = 1)
 	foodtype = GRAIN
+	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/raisincookie
 	name = "raisin cookie"
@@ -342,6 +343,7 @@
 	filling_color = "#F0E68C"
 	tastes = list("cookie" = 1, "raisins" = 1)
 	foodtype = GRAIN | FRUIT
+	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/cherrycupcake
 	name = "cherry cupcake"

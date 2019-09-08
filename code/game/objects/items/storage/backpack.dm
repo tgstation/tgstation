@@ -59,7 +59,7 @@
 	user.dropItemToGround(src, TRUE)
 	user.Stun(100, ignore_canstun = TRUE)
 	sleep(20)
-	playsound(src, "rustle", 50, 1, -5)
+	playsound(src, "rustle", 50, TRUE, -5)
 	qdel(user)
 
 /obj/item/storage/backpack/holding/singularity_act(current_size)

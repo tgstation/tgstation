@@ -246,7 +246,7 @@
 	if(locked)
 		return
 	locked = TRUE
-	playsound(src,boltDown,30,0,3)
+	playsound(src,boltDown,30,FALSE,3)
 	audible_message("<span class='italics'>You hear a click from the bottom of the door.</span>", null,  1)
 	update_icon()
 
@@ -257,7 +257,7 @@
 	if(!locked)
 		return
 	locked = FALSE
-	playsound(src,boltUp,30,0,3)
+	playsound(src,boltUp,30,FALSE,3)
 	audible_message("<span class='italics'>You hear a click from the bottom of the door.</span>", null,  1)
 	update_icon()
 
@@ -621,7 +621,7 @@
 		if("deny")
 			if(!stat)
 				update_icon(AIRLOCK_DENY)
-				playsound(src,doorDeni,50,0,3)
+				playsound(src,doorDeni,50,FALSE,3)
 				sleep(6)
 				update_icon(AIRLOCK_CLOSED)
 
@@ -1049,7 +1049,7 @@
 		if(obj_flags & EMAGGED)
 			return FALSE
 		use_power(50)
-		playsound(src, doorOpen, 30, 1)
+		playsound(src, doorOpen, 30, TRUE)
 		if(closeOther != null && istype(closeOther, /obj/machinery/door/airlock/) && !closeOther.density)
 			closeOther.close()
 	else
@@ -1249,7 +1249,7 @@
 	var/time_to_open = 5
 	if(hasPower())
 		time_to_open = 50 //Powered airlocks take longer to open, and are loud.
-		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
+		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
 
 
 	if(do_after(user, time_to_open, TRUE, src))

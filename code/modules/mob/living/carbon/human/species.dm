@@ -392,8 +392,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(M.flags_inv & HIDEFACIALHAIR)
 			facialhair_hidden = TRUE
 
-	if(H.facial_hair_style && (FACEHAIR in species_traits) && (!facialhair_hidden || dynamic_fhair_suffix))
-		S = GLOB.facial_hair_styles_list[H.facial_hair_style]
+	if(H.facial_hairstyle && (FACEHAIR in species_traits) && (!facialhair_hidden || dynamic_fhair_suffix))
+		S = GLOB.facial_hairstyles_list[H.facial_hairstyle]
 		if(S)
 
 			//List of all valid dynamic_fhair_suffixes
@@ -451,8 +451,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				hair_overlay.icon = 'icons/mob/human_face.dmi'
 				hair_overlay.icon_state = "debrained"
 
-		else if(H.hair_style && (HAIR in species_traits))
-			S = GLOB.hair_styles_list[H.hair_style]
+		else if(H.hairstyle && (HAIR in species_traits))
+			S = GLOB.hairstyles_list[H.hairstyle]
 			if(S)
 
 				//List of all valid dynamic_hair_suffixes
@@ -1119,15 +1119,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.domutcheck()
 
 	if(radiation > RAD_MOB_HAIRLOSS)
-		if(prob(15) && !(H.hair_style == "Bald") && (HAIR in species_traits))
+		if(prob(15) && !(H.hairstyle == "Bald") && (HAIR in species_traits))
 			to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
 			addtimer(CALLBACK(src, .proc/go_bald, H), 50)
 
 /datum/species/proc/go_bald(mob/living/carbon/human/H)
 	if(QDELETED(H))	//may be called from a timer
 		return
-	H.facial_hair_style = "Shaved"
-	H.hair_style = "Bald"
+	H.facial_hairstyle = "Shaved"
+	H.hairstyle = "Bald"
 	H.update_hair()
 
 ////////////////
@@ -1259,7 +1259,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				miss_chance = min((user.dna.species.punchdamagehigh/user.dna.species.punchdamagelow) + user.getStaminaLoss() + (user.getBruteLoss()*0.5), 100) //old base chance for a miss + various damage. capped at 100 to prevent weirdness in prob()
 
 		if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
-			playsound(target.loc, user.dna.species.miss_sound, 25, 1, -1)
+			playsound(target.loc, user.dna.species.miss_sound, 25, TRUE, -1)
 			target.visible_message("<span class='danger'>[user]'s [atk_verb] misses [target]!</span>",\
 			"<span class='userdanger'>[user]'s [atk_verb] misses you!</span>", null, COMBAT_MESSAGE_RANGE)
 			log_combat(user, target, "attempted to punch")
@@ -1267,7 +1267,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		var/armor_block = target.run_armor_check(affecting, "melee")
 
-		playsound(target.loc, user.dna.species.attack_sound, 25, 1, -1)
+		playsound(target.loc, user.dna.species.attack_sound, 25, TRUE, -1)
 
 		target.visible_message("<span class='danger'>[user] [atk_verb]ed [target]!</span>", \
 					"<span class='userdanger'>[user] [atk_verb]ed you!</span>", null, COMBAT_MESSAGE_RANGE)
@@ -1475,7 +1475,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(prob(probability) || (HAS_TRAIT(H, TRAIT_EASYDISMEMBER) && prob(probability))) //try twice
 		if(affecting.dismember(I.damtype))
 			I.add_mob_blood(H)
-			playsound(get_turf(H), I.get_dismember_sound(), 80, 1)
+			playsound(get_turf(H), I.get_dismember_sound(), 80, TRUE)
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))

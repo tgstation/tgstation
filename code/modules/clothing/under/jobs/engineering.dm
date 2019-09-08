@@ -1,4 +1,9 @@
 //Contains: Engineering department jumpsuits
+
+/obj/item/clothing/under/rank/engineering
+	icon = 'icons/obj/clothing/under/engineering.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/under/engineering.dmi'
+
 /obj/item/clothing/under/rank/engineering/chief_engineer
 	desc = "It's a high visibility jumpsuit given to those engineers insane enough to achieve the rank of \"Chief Engineer\". It has minor radiation shielding."
 	name = "chief engineer's jumpsuit"

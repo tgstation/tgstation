@@ -26,7 +26,7 @@
 		if(bad_effects)
 			try_use_power(MIN_CLOCKCULT_POWER*4)
 		visible_message("<span class='warning'>[src] hums loudly, then the sockets at its base fall dark!</span>")
-		playsound(src, 'sound/effects/screech.ogg', 40, 1)
+		playsound(src, 'sound/effects/screech.ogg', 40, TRUE)
 		toggle()
 		return TRUE
 

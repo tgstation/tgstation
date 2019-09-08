@@ -1,16 +1,18 @@
+/obj/item/clothing/under/misc
+	icon = 'icons/obj/clothing/under/misc.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/under/misc.dmi'
+
 /obj/item/clothing/under/misc/pj
 	name = "\improper PJs"
 	desc = "A comfy set of sleepwear, for taking naps or being lazy instead of working."
+	can_adjust = FALSE
+	item_state = "w_suit"
 
 /obj/item/clothing/under/misc/pj/red
 	icon_state = "red_pyjamas"
-	item_state = "w_suit"
-	can_adjust = FALSE
 
 /obj/item/clothing/under/misc/pj/blue
 	icon_state = "blue_pyjamas"
-	item_state = "w_suit"
-	can_adjust = FALSE
 
 /obj/item/clothing/under/misc/patriotsuit
 	name = "Patriotic Suit"
@@ -40,8 +42,10 @@
 
 /obj/item/clothing/under/misc/adminsuit
 	name = "administrative cybernetic jumpsuit"
+	icon = 'icons/obj/clothing/under/syndicate.dmi'
 	icon_state = "syndicate"
 	item_state = "bl_suit"
+	mob_overlay_icon = 'icons/mob/clothing/under/syndicate.dmi'
 	desc = "A cybernetically enhanced jumpsuit used for administrative duties."
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
@@ -82,6 +86,8 @@
 	desc = "A special containment suit that allows plasma-based lifeforms to exist safely in an oxygenated environment, and automatically extinguishes them in a crisis. Despite being airtight, it's not spaceworthy."
 	icon_state = "plasmaman"
 	item_state = "plasmaman"
+	icon = 'icons/obj/clothing/under/plasmaman.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/under/plasmaman.dmi'
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 95, "acid" = 95)
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	can_adjust = FALSE
