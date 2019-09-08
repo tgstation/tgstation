@@ -97,8 +97,8 @@
 		emagged_reagents = sortList(emagged_reagents, /proc/cmp_reagents_asc)
 	if(upgrade_reagents)
 		upgrade_reagents = sortList(upgrade_reagents, /proc/cmp_reagents_asc)
-	/*if(t5_reagents) //FULP [XEON]
-		t5_reagents = sortList(t5_reagents, /proc/cmp_reagents_asc)*/
+	if(t5_reagents) //FULP [XEON]
+		t5_reagents = sortList(t5_reagents, /proc/cmp_reagents_asc)
 	update_icon()
 
 /obj/machinery/chem_dispenser/Destroy()
@@ -386,8 +386,10 @@
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		recharge_amount *= C.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		if (M.rating > 3)
+		if (M.rating > 3 && M.rating < 5)
 			dispensable_reagents |= upgrade_reagents
+		if (M.rating > 4)
+			dispensable_reagents |= t5_reagents
 	powerefficiency = round(newpowereff, 0.01)
 
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
