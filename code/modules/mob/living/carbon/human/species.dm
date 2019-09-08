@@ -500,11 +500,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	H.remove_overlay(BODY_LAYER)
 
 	var/list/standing = list()
-
+	to_chat(world, "running handle_body")
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
 
-	if(HD && !(HAS_TRAIT(H, TRAIT_HUSK)))
+	if((HD || (ABSTRACT_HEAD in species_traits)) && !(HAS_TRAIT(src, TRAIT_HUSK)))
 		// lipstick
+		to_chat(world, "passed, adding eyes and lips")
 		if(H.lip_style && (LIPS in species_traits))
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[H.lip_style]", -BODY_LAYER)
 			lip_overlay.color = H.lip_color
@@ -518,8 +519,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			var/obj/item/organ/eyes/E = H.getorganslot(ORGAN_SLOT_EYES)
 			var/mutable_appearance/eye_overlay
 			if(!E)
-				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
+				to_chat(world, "no eyes")
+				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', missing_eye_state, -BODY_LAYER)
 			else
+				to_chat(world, "eyes")
 				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', E.eye_icon_state, -BODY_LAYER)
 			if((EYECOLOR in species_traits) && E)
 				eye_overlay.color = "#" + H.eye_color

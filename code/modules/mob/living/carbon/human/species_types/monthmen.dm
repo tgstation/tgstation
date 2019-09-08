@@ -7,7 +7,7 @@
 	species_traits = list(EYECOLOR,NO_UNDERWEAR,NOBLOOD,ABSTRACT_HEAD)
 	default_features = list("mcolor" = "FFF")
 	skinned_type = /obj/item/paper
-	changesource_flags = EVENTRACE //absolutely no way to get the race even for admins, it's completely out of theme of ss13
+	changesource_flags = VARDROPDOWN | EVENTRACE //absolutely no way to get the race even for admins, it's completely out of theme of ss13
 	damage_overlay_type = "" //no blood
 	missing_eye_state = "montheyes_missing"
 	offset_features = list(OFFSET_UNIFORM = list(0,0), OFFSET_ID = list(0,0), OFFSET_GLOVES = list(0,0), OFFSET_GLASSES = list(0,0), OFFSET_EARS = list(0,-7), OFFSET_SHOES = list(0,0), OFFSET_S_STORE = list(0,0), OFFSET_FACEMASK = list(0,0), OFFSET_HEAD = list(0,-6), OFFSET_FACE = list(0,0), OFFSET_BELT = list(0,0), OFFSET_BACK = list(0,0), OFFSET_SUIT = list(0,0), OFFSET_NECK = list(0,0))

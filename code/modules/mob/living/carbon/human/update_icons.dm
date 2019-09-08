@@ -638,7 +638,7 @@ generate/load female uniform sprites matching all previously decided variables
 	add_overlay(HD.get_limb_icon())
 	update_damage_overlays()
 
-	if((!HD && !(ABSTRACT_HEAD in dna.species.species_traits)) && !(HAS_TRAIT(src, TRAIT_HUSK)))
+	if((HD || ABSTRACT_HEAD in dna.species.species_traits) && HAS_TRAIT(src, TRAIT_HUSK))
 		// lipstick
 		if(lip_style && (LIPS in dna.species.species_traits))
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[lip_style]", -BODY_LAYER)
