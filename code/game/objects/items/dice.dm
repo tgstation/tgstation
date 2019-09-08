@@ -48,7 +48,6 @@
 	var/rigged = DICE_NOT_RIGGED
 	var/rigged_value
 
-
 /obj/item/dice/Initialize()
 	. = ..()
 	if(!result)
