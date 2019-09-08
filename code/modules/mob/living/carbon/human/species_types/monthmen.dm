@@ -59,6 +59,29 @@
 		H.adjust_fire_stacks(1) //always prone to burning
 	..()
 
+/datum/species/monthmen/equipped_something(obj/item/I, mob/living/carbon/human/H, just_adjust = FALSE)
+	var/blocked = FALSE
+	if(istype(I, /obj/item/storage/backpack))
+		blocked = TRUE //straps go over eyes, ouch
+		if(istype(I, /obj/item/storage/backpack/satchel) || istype(I, /obj/item/storage/backpack/duffelbag))
+			blocked = FALSE //we're good again these don't do that. we put the check down here so we don't have to do this for every item equipped
+	if(!get_location_accessible(H, BODY_ZONE_CHEST))
+		blocked = TRUE
+	if(blocked)//you put something over your eyes
+		to_chat(H, "<span class='warning'>The [I] is blocking you from seeing anything!</span>")
+		become_blind("blocked vision") //not eyes covered because that is for tints and other things, which are for GLASSES level blinding
+
+/datum/species/monthmen/unequipped_something(obj/item/I, mob/living/carbon/human/H, just_adjust = FALSE)
+	var/blocked = FALSE
+	if(istype(I, /obj/item/storage/backpack))
+		blocked = TRUE
+		if(istype(I, /obj/item/storage/backpack/satchel) || istype(I, /obj/item/storage/backpack/duffelbag))
+			blocked = FALSE
+	if(!get_location_accessible(H, BODY_ZONE_CHEST))
+		blocked = TRUE
+	if(!blocked)//you took off whatever was covering your eyes
+		to_chat(H, "<span class='notice'>You can see again!</span>")
+		cure_blind("blocked vision")
 
 //all the organs, just abstract copies (may change?)
 /obj/item/organ/brain/monthmen

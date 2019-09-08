@@ -233,7 +233,7 @@ BLIND     // can't see anything
 		if(attached_accessory)
 			remove_accessory(user)
 		else
-			rolldown()
+			rolldown(user)
 
 /obj/item/clothing/under/verb/jumpsuit_adjust()
 	set name = "Adjust Jumpsuit Style"
@@ -241,18 +241,26 @@ BLIND     // can't see anything
 	set src in usr
 	rolldown()
 
-/obj/item/clothing/under/proc/rolldown()
-	if(!can_use(usr))
+/obj/item/clothing/under/proc/rolldown(mob/user)
+	if(!can_use(user))
 		return
 	if(!can_adjust)
-		to_chat(usr, "<span class='warning'>You cannot wear this suit any differently!</span>")
+		to_chat(user, "<span class='warning'>You cannot wear this suit any differently!</span>")
 		return
+	var/mob/living/carbon/human/H
+	var/datum/species/userspecies
+	if(ishuman(user))
+		H = user
+		userspecies = H.dna?.species
 	if(toggle_jumpsuit_adjust())
+		if(userspecies)
+			userspecies.unequipped_something(src, H, TRUE)	
 		to_chat(usr, "<span class='notice'>You adjust the suit to wear it more casually.</span>")
 	else
+		if(userspecies)
+			userspecies.equipped_something(src, H, TRUE)			
 		to_chat(usr, "<span class='notice'>You adjust the suit back to normal.</span>")
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
+	if(H)
 		H.update_inv_w_uniform()
 		H.update_body()
 

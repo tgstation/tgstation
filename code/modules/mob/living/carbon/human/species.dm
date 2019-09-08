@@ -986,6 +986,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	H.visible_message("<span class='notice'>[H] start putting on [I]...</span>", "<span class='notice'>You start putting on [I]...</span>")
 	return do_after(H, I.equip_delay_self, target = H)
 
+/datum/species/proc/equipped_something(obj/item/I, mob/living/carbon/human/H)
+	return
+
+/datum/species/proc/unequipped_something(obj/item/I, mob/living/carbon/human/H, just_adjust = FALSE)
+	return
+
 /datum/species/proc/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	return
 

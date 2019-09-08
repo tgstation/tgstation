@@ -81,6 +81,7 @@
 /mob/living/carbon/human/equip_to_slot(obj/item/I, slot)
 	if(!..()) //a check failed or the item has already found its slot
 		return
+	var/datum/species/species = dna?.species
 
 	var/not_handled = FALSE //Added in case we make this type path deeper one day
 	switch(slot)
@@ -136,6 +137,8 @@
 			update_inv_s_store()
 		else
 			to_chat(src, "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>")
+	if(species)
+		species.equipped_something(I, src)
 
 	//Item is handled and in slot, valid to call callback, for this proc should always be true
 	if(!not_handled)
@@ -148,7 +151,8 @@
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
 	if(!. || !I)
 		return
-	if(index && !QDELETED(src) && dna.species.mutanthands) //hand freed, fill with claws, skip if we're getting deleted.
+	var/datum/species/species = dna?.species
+	if(index && !QDELETED(src) && species.mutanthands) //hand freed, fill with claws, skip if we're getting deleted.
 		put_in_hand(new dna.species.mutanthands(), index)
 	if(I == wear_suit)
 		if(s_store && invdrop)
@@ -222,6 +226,8 @@
 		s_store = null
 		if(!QDELETED(src))
 			update_inv_s_store()
+	if(species)
+		species.unequipped_something(I, src)
 
 /mob/living/carbon/human/wear_mask_update(obj/item/I, toggle_off = 1)
 	if((I.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(I.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))
