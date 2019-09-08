@@ -67,7 +67,7 @@
 	return ..()
 
 /datum/status_effect/incapacitating/sleeping/tick()
-	if(owner.maxHealth != 0)
+	if(owner.maxHealth)
 		var/health_ratio = owner.health / owner.maxHealth
 		if(health_ratio > 0.8)
 			var/healing = -0.2
