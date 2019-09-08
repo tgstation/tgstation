@@ -138,6 +138,7 @@ Borg Hypospray
 	. += DescribeContents()	//Because using the standardized reagents datum was just too cool for whatever fuckwit wrote this
 	var/datum/reagent/loaded = modes[mode]
 	. += "Currently loaded: [initial(loaded.name)]. [initial(loaded.description)]"
+	. += "<span class='notice'><i>Alt+Click</i> to change transfer amount. Currently set to [amount_per_transfer_from_this == 5 ? "dose normally (5u)" : "microdose (2u)"].</span>"
 
 /obj/item/reagent_containers/borghypo/proc/DescribeContents()
 	. = list()
@@ -151,6 +152,16 @@ Borg Hypospray
 
 	if(empty)
 		. += "<span class='warning'>It is currently empty! Allow some time for the internal synthesizer to produce more.</span>"
+
+/obj/item/reagent_containers/borghypo/AltClick(mob/living/user)
+	. = ..()
+	if(user.stat == DEAD || user != loc)
+		return //IF YOU CAN HEAR ME SET MY TRANSFER AMOUNT TO 1
+	if(amount_per_transfer_from_this == 5)
+		amount_per_transfer_from_this = 2
+	else
+		amount_per_transfer_from_this = 5
+	to_chat(user,"<span class='notice'>[src] is now set to [amount_per_transfer_from_this == 5 ? "dose normally" : "microdose"].</span>")
 
 /obj/item/reagent_containers/borghypo/hacked
 	icon_state = "borghypo_s"

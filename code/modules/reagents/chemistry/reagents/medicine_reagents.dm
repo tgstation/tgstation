@@ -1223,7 +1223,7 @@
 	M.adjustFireLoss(3*REM, 0.)
 	M.adjust_bodytemperature(-35 * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
 	..()
-  
+
 /datum/reagent/medicine/silibinin/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, -2)//Add a chance to cure liver trauma once implemented.
 	..()
@@ -1260,3 +1260,27 @@
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5)
 	..()
 	. = 1
+
+/datum/reagent/medicine/granibitaluri
+	name = "Granibitaluri" //achieve "GRANular" amounts of C2
+	description = "A chemical solution useful as a diluent for more potent medicine. Especially useful when combined with brute/burn medication. Large amounts can cause fluid to appear in both the lungs and the heart."
+	reagent_state = LIQUID
+	overdose_threshold = 50
+	metabolization_rate = 0.2 //same as C2s
+
+/datum/reagent/medicine/granibitaluri/on_mob_life(mob/living/carbon/M)
+	var/tdamage = M.getBruteLoss() //1 var + 2 proccall < 4 proccalls
+	if(tdamage && tdamage <= 10)
+		M.adjustBruteLoss(-0.1)
+	else
+		tdamage = M.getFireLoss()
+		if(tdamage && tdamage <= 10)
+			M.adjustFireLoss(-0.1)
+	..()
+	return TRUE
+
+/datum/reagent/medicine/granibitaluri/overdose_process(mob/living/M)
+	. = TRUE
+	M.adjustOrganLoss(ORGAN_SLOT_HEART,0.2)
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS,0.2)
+	..()
