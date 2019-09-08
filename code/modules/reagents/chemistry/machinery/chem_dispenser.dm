@@ -71,13 +71,12 @@
 		/datum/reagent/ash,
 		/datum/reagent/diethylamine,
 		/datum/reagent/oil,
-		/datum/reagent/saltpetre,
-		/datum/reagent/medicine/CF/trekamol
+		/datum/reagent/saltpetre
 	)
 	//available with T5 manipulator (Quantum) [XEON Code]
-	/*var/list/T5_reagents = list(
-		/datum/reagent/mecicine/CF/trekamol
-	)*/
+	var/list/t5_reagents = list(
+		/datum/reagent/mecicine/CF/trekamol //FULP [Saliferous]
+	)
 	var/list/emagged_reagents = list(
 		/datum/reagent/toxin/carpotoxin,
 		/datum/reagent/medicine/mine_salve,
@@ -388,7 +387,7 @@
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		if (M.rating > 3 && M.rating < 5)
 			dispensable_reagents |= upgrade_reagents
-		if (M.rating > 4)
+		if (M.rating > 4) //FULP [Saliferous]
 			dispensable_reagents |= t5_reagents
 	powerefficiency = round(newpowereff, 0.01)
 
