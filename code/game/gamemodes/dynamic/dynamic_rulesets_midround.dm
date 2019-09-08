@@ -313,14 +313,14 @@
 	cost = 35
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	high_population_requirement = 10
-	var/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
+	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
 	var/datum/team/nuclear/nuke_team
 	flags = HIGHLANDER_RULESET
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/acceptable(population=0, threat=0)
 	if (locate(/datum/dynamic_ruleset/roundstart/nuclear) in mode.executed_rules)
 		return FALSE // Unavailable if nuke ops were already sent at roundstart
-	var/indice_pop = min(10,round(living_players.len/5)+1)
+	var/indice_pop = min(operative_cap.len, round(living_players.len/5)+1)
 	required_candidates = operative_cap[indice_pop]
 	return ..()
 
