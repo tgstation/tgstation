@@ -316,52 +316,12 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/value
 	var/coinflip
 
-/obj/item/coin/gold
-	custom_materials = list(/datum/material/gold = 400)
-
-/obj/item/coin/silver
-	custom_materials = list(/datum/material/silver = 400)
-
-/obj/item/coin/diamond
-	custom_materials = list(/datum/material/diamond = 400)
-
-/obj/item/coin/plasma
-	custom_materials = list(/datum/material/plasma = 400)
-
-/obj/item/coin/uranium
-	custom_materials = list(/datum/material/uranium = 400)
-
-/obj/item/coin/titanium
-	custom_materials = list(/datum/material/titanium = 400)
-
-/obj/item/coin/bananium
-	custom_materials = list(/datum/material/bananium = 400)
-
-/obj/item/coin/adamantine
-	custom_materials = list(/datum/material/adamantine = 400)
-
-/obj/item/coin/mythril
-	custom_materials = list(/datum/material/mythril = 400)
-
-/obj/item/coin/plastic
-	custom_materials = list(/datum/material/plastic = 400)
-
-/obj/item/coin/twoheaded
-	desc = "Hey, this coin's the same on both sides!"
-	sideslist = list("heads")
-
-/obj/item/coin/antagtoken
-	name = "antag token"
-	desc = "A novelty coin that helps the heart know what hard evidence cannot prove."
-	sideslist = list("valid", "salad")
-	material_flags = MATERIAL_NO_COLOR
-
-/obj/item/coin/iron
-
 /obj/item/coin/Initialize()
 	. = ..()
 	coinflip = pick(sideslist)
 	icon_state = "coin_[coinflip]"
+	pixel_x = rand(0,16)-8
+	pixel_y = rand(0,8)-8
 
 /obj/item/coin/set_custom_materials()
 	. = ..()
@@ -390,11 +350,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		user.suicide_log()
 	else
 		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] keeps on living!</span>")
-
-/obj/item/coin/Initialize()
-	. = ..()
-	pixel_x = rand(0,16)-8
-	pixel_y = rand(0,8)-8
 
 /obj/item/coin/examine(mob/user)
 	. = ..()
@@ -446,5 +401,46 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 							 "<span class='italics'>You hear the clattering of loose change.</span>")
 	return TRUE//did the coin flip? useful for suicide_act
 
+/obj/item/coin/gold
+	custom_materials = list(/datum/material/gold = 400)
+
+/obj/item/coin/silver
+	custom_materials = list(/datum/material/silver = 400)
+
+/obj/item/coin/diamond
+	custom_materials = list(/datum/material/diamond = 400)
+
+/obj/item/coin/plasma
+	custom_materials = list(/datum/material/plasma = 400)
+
+/obj/item/coin/uranium
+	custom_materials = list(/datum/material/uranium = 400)
+
+/obj/item/coin/titanium
+	custom_materials = list(/datum/material/titanium = 400)
+
+/obj/item/coin/bananium
+	custom_materials = list(/datum/material/bananium = 400)
+
+/obj/item/coin/adamantine
+	custom_materials = list(/datum/material/adamantine = 400)
+
+/obj/item/coin/mythril
+	custom_materials = list(/datum/material/mythril = 400)
+
+/obj/item/coin/plastic
+	custom_materials = list(/datum/material/plastic = 400)
+
+/obj/item/coin/twoheaded
+	desc = "Hey, this coin's the same on both sides!"
+	sideslist = list("heads")
+
+/obj/item/coin/antagtoken
+	name = "antag token"
+	desc = "A novelty coin that helps the heart know what hard evidence cannot prove."
+	sideslist = list("valid", "salad")
+	material_flags = MATERIAL_NO_COLOR
+
+/obj/item/coin/iron
 
 #undef ORESTACK_OVERLAYS_MAX
