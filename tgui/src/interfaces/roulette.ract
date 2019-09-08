@@ -117,9 +117,9 @@
 <ui-button class="image_button" action='ChangeBetType' params='{"type": "19-36"}'></ui-button>
 </span>
 <span style="float:left; margin-top:160px;">
-<ui-button class="image_button" action='ChangeBetType' params='{"type": "red"}'>{{{red}}}</ui-button>
+<ui-button class="image_button" action='ChangeBetType' params='{"type": "red"}'>{{{data.red}}}</ui-button>
 <br>
-<ui-button class="image_button" action='ChangeBetType' params='{"type": "black"}'>{{{black}}}</ui-button>
+<ui-button class="image_button" action='ChangeBetType' params='{"type": "black"}'>{{{data.black}}}</ui-button>
 </span>
 
 <div style="text-align:right;">

@@ -14,7 +14,7 @@
 /obj/machinery/roulette/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/roulette)
+		var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/roulette)
 		assets.send(user)
 		ui = new(user, src, ui_key, "roulette", name, 455, 520, master_ui, state)
 		ui.open()
@@ -27,7 +27,7 @@
 	data["HouseBalance"] = house_balance
 	data["AccountBalance"] = account_balance
 
-	var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/roulette)
+	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/roulette)
 	data["black"] = assets.icon_tag("black")
 	data["red"] = assets.icon_tag("red")
 	data["even"] = assets.icon_tag("even")
