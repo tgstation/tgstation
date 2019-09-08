@@ -1,0 +1,5 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - balance: "The OD effect of the earthsblood chemical now deals no damage before cycle 26, a net 1 point of toxin damage per tick (factoring in the toxin healing from earthsblood's normal effect(s)) from cycles 26 to 100, and a net 3 points of toxin damage per tick (factoring in the toxin healing from earthsblood's normal effect(s)) after cycle 100."
+  - bugfix: "The pacifism trauma application part of OD effect of the earthsblood chemical is less shitcode-y now and should now work on monkeys (and other carbons with brains) too (instead of just on humans)."

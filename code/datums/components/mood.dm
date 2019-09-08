@@ -30,6 +30,11 @@
 		modify_hud()
 		var/datum/hud/hud = owner.hud_used
 		hud.show_hud(hud.hud_version)
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	if(H.mind?.assigned_role in list("Research Director", "Scientist", "Roboticist"))
+		RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT_RND, .proc/add_event) //Only for RnD members
 
 /datum/component/mood/Destroy()
 	STOP_PROCESSING(SSmood, src)
