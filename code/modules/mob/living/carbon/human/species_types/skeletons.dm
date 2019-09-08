@@ -14,7 +14,7 @@
 	disliked_food = NONE
 	liked_food = GROSS | MEAT | RAW
 	//They can technically be in an ERT
-	changesource_flags = EVENTRACE | ADMIN | MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
+	changesource_flags = EVENTRACE | VARDROPDOWN | MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 /datum/species/skeleton/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])

@@ -294,7 +294,7 @@
 //no spawn, but tells the unit tests this can spawn from events. add it if they are enabled roundstart on holidays or other ways they are available
 #define EVENTRACE (1<<0)
 //VV dropdown menu
-#define ADMIN (1<<1)
+#define VARDROPDOWN (1<<1)
 //Badmin magic mirror
 #define MIRROR_BADMIN (1<<2)
 //Standard magic mirror (wizard)

@@ -15,7 +15,7 @@
 	disliked_food = FRUIT | GROSS
 	toxic_food = MEAT | RAW
 	mutanteyes = /obj/item/organ/eyes/moth
-	changesource_flags = EVENTRACE | ADMIN | MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
+	changesource_flags = EVENTRACE | VARDROPDOWN | MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 
 /datum/species/moth/check_roundstart_eligible() //replaced by monthmen every april fools
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
