@@ -85,6 +85,11 @@
 			description =  "<span class='nicegreen'>They want to play on the table!</span>\n"
 			mood_change = 2
 
+/datum/mood_event/table_headsmash
+	description = "<span class='warning'>My fucking head, that hurt...</span>"
+	mood_change = -3
+	timeout = 3 MINUTES
+
 /datum/mood_event/brain_damage
   mood_change = -3
 
