@@ -75,7 +75,7 @@
 	)
 	//available with T5 manipulator (Quantum) [XEON Code]
 	var/list/t5_reagents = list(
-		/datum/reagent/mecicine/CF/trekamol //FULP [Saliferous]
+		/datum/reagent/medicine/CF/trekamol //FULP [Saliferous]
 	)
 	var/list/emagged_reagents = list(
 		/datum/reagent/toxin/carpotoxin,
