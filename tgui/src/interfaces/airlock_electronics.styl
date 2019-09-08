@@ -1,0 +1,20 @@
+&.airlock_electronics
+    table
+        width: 100%
+        border-spacing: 2px
+    th
+        text-align: left
+    td
+        vertical-align: top
+        .button
+            margin-top: 4px
+
+    //This is unfortunate effect of styles but if you want to override component variables you need to import them again.
+    button-color-normal       = #5F380E
+    button-color-disabled     = #2D1400
+    button-color-selected     = #CFBA47
+    button-color-caution      = yellow-orange
+    button-color-danger       = yellow
+    button-color-border       = #170800
+    @import "util/*"
+    @import "components/*"
