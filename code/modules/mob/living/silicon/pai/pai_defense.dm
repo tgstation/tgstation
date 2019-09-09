@@ -8,10 +8,24 @@
 		return
 	take_holo_damage(50/severity)
 	Paralyze(400/severity)
-	silent = max(30/severity, silent)
+	// silent = max(30/severity, silent)
 	if(holoform)
 		fold_in(force = TRUE)
 	//Need more effects that aren't instadeath or permanent law corruption.
+	//Ask and you shall receive
+	switch(rand(1, 3))
+		if(1)
+			stuttering = 1
+			to_chat(src, "<span class='danger'>Warning: Speech synthesis module damaged.</span>")
+		if(2)
+			slurring = 1
+			to_chat(src, "<span class='danger'>Warning: Speech synthesis module damaged.</span>")
+		if(3)
+			derpspeech = 1
+			to_chat(src, "<span class='danger'>Warning: Speech synthesis module damaged.</span>")
+	if(prob(40))
+		mind.language_holder.selected_default_language = pick(mind.language_holder.languages)
+
 
 /mob/living/silicon/pai/ex_act(severity, target)
 	take_holo_damage(severity * 50)
