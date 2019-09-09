@@ -148,6 +148,11 @@
 	mood_change = 6
 	timeout = 5 MINUTES
 
+/datum/mood_event/pet_borg
+	description = "<span class='nicegreen'>I just love my robotical friends!</span>\n"
+	mood_change = 3
+	timeout = 5 MINUTES
+
 /datum/mood_event/area
 	description = "" //Fill this out in the area
 	mood_change = 0

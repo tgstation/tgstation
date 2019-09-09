@@ -9,8 +9,8 @@
 
 _maps/RandomZLevels/blackmarketpackers.dmm
 _maps/RandomZLevels/spacebattle.dmm
-_maps/RandomZLevels/TheBeach.dmm
-_maps/RandomZLevels/Academy.dmm
+#_maps/RandomZLevels/TheBeach.dmm
+#_maps/RandomZLevels/Academy.dmm
 _maps/RandomZLevels/wildwest.dmm
 _maps/RandomZLevels/challenge.dmm
 _maps/RandomZLevels/centcomAway.dmm
@@ -20,4 +20,4 @@ _maps/RandomZLevels/caves.dmm
 _maps/RandomZLevels/snowdin.dmm
 _maps/RandomZLevels/research.dmm
 _maps/RandomZLevels/SnowCabin.dmm
-_maps/RandomZLevels/VR/snowdin_VR.dmm
+#_maps/RandomZLevels/VR/snowdin_VR.dmm

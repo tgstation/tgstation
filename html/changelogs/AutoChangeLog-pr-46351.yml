@@ -1,0 +1,4 @@
+author: "Tlaltecuhtli"
+delete-after: True
+changes: 
+  - bugfix: "Loading items into the custom vending machine is possible again."

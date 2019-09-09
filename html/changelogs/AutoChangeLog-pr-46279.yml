@@ -1,0 +1,5 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - bugfix: "Strafe mode now works correctly on Honk and Odysseus mechs"
+  - rscadd: "Odysseus and Gygax mechs can now move and turn in one step if they're not set to strafe mode. This can be overridden with Alt to turn in place."

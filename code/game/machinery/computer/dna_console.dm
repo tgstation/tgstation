@@ -214,9 +214,9 @@
 	else
 		buttons += "<span class='linkOff'>Disk</span>"
 	if(current_screen == "mutations")
-		buttons += "<span class='linkOff'>Mutations</span>"
+		buttons += "<br><span class='linkOff'>Mutations</span>"
 	else
-		buttons += "<a href='?src=[REF(src)];task=screen;text=mutations;'>Mutations</a>"
+		buttons += "<br><a href='?src=[REF(src)];task=screen;text=mutations;'>Mutations</a>"
 	if((current_screen == "mainmenu") || !current_screen)
 		buttons += "<span class='linkOff'>Genetic Sequencer</span>"
 	else
@@ -405,7 +405,10 @@
 							mutcolor = "bad"
 					temp_html += "<div class='statusLine'><span class='[mutcolor]'>[HM.name] </span>"
 					temp_html += "<a href='?src=[REF(src)];task=remove_from_advinjector;injector=[A];path=[HM.type];'>Remove</a></div>"
-				temp_html += "<div class='statusLine'> <a href='?src=[REF(src)];task=advinjector;injector=[A];'>Print Advanced Injector</a>"
+				if(injectorready < world.time)
+					temp_html += "<div class='statusLine'> <a href='?src=[REF(src)];task=advinjector;injector=[A];'>Print Advanced Injector</a>"
+				else
+					temp_html += "<div class='statusLine'> <span class='linkOff'>Printer ready in [DisplayTimeText(injectorready - world.time, 1)]</span>"
 				temp_html += "<a href='?src=[REF(src)];task=remove_advinjector;injector=[A];'>Remove Injector</a></div>"
 				temp_html += "<br></div>"
 
