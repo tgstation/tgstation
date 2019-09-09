@@ -45,7 +45,7 @@
 		to_chat(user, "<span class='notice'>You start unsecuring [name]...</span>")
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 60))
-			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 			to_chat(user, "<span class='notice'>You unsecure [name].</span>")
 			deconstruct(TRUE)
 		return
@@ -80,7 +80,7 @@
 		stored_extinguisher = null
 		if(!opened)
 			opened = 1
-			playsound(loc, 'sound/machines/click.ogg', 15, 1, -3)
+			playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 		update_icon()
 	else
 		toggle_cabinet(user)
@@ -92,7 +92,7 @@
 		to_chat(user, "<span class='notice'>You telekinetically remove [stored_extinguisher] from [src].</span>")
 		stored_extinguisher = null
 		opened = 1
-		playsound(loc, 'sound/machines/click.ogg', 15, 1, -3)
+		playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 		update_icon()
 	else
 		toggle_cabinet(user)
@@ -110,7 +110,7 @@
 	if(opened && broken)
 		to_chat(user, "<span class='warning'>[src] is broken open.</span>")
 	else
-		playsound(loc, 'sound/machines/click.ogg', 15, 1, -3)
+		playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 		opened = !opened
 		update_icon()
 

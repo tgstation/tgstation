@@ -70,8 +70,4 @@
 						english_right -= chem_name
 						right -= chem_id
 
-/obj/machinery/plumbing/filter/proc/get_chem_id(chem_name)
-	for(var/A in GLOB.chemical_reagents_list)
-		var/datum/reagent/R = GLOB.chemical_reagents_list[A]
-		if(chem_name == ckey(R.name))
-			return R.type
+

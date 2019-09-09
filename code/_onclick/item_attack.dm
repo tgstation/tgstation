@@ -1,19 +1,26 @@
-
+/**
+  *This is the proc that handles the order of an item_attack.
+  *The order of procs called is:
+  *tool_act on the target. If it returns TRUE, the chain will be stopped.
+  *pre_attack() on src. If this returns TRUE, the chain will be stopped.
+  *attackby on the target. If it returns TRUE, the chain will be stopped.
+  *and lastly
+  *afterattack. The return value does not matter.
+  */
 /obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
-	if(!tool_attack_chain(user, target) && pre_attack(target, user, params))
-		// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-		var/resolved = target.attackby(src, user, params)
-		if(!resolved && target && !QDELETED(src))
-			afterattack(target, user, 1, params) // 1: clicking something Adjacent
-
-
-//Checks if the item can work as a tool, calling the appropriate tool behavior on the target
-/obj/item/proc/tool_attack_chain(mob/user, atom/target)
-	if(!tool_behaviour)
-		return FALSE
-
-	return target.tool_act(user, src, tool_behaviour)
-
+	if(tool_behaviour && target.tool_act(user, src, tool_behaviour))
+		return
+	if(pre_attack(target, user, params))
+		return
+	if(target.attackby(src,user, params))
+		return
+	if(QDELETED(src))
+		stack_trace("An item got deleted while performing an item attack and did not stop melee_attack_chain.")
+		return
+	if(QDELETED(target))
+		stack_trace("The target of an item attack got deleted and melee_attack_chain was not stopped.")
+		return
+	afterattack(target, user, TRUE, params)
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
@@ -23,8 +30,8 @@
 
 /obj/item/proc/pre_attack(atom/A, mob/living/user, params) //do stuff before attackby!
 	if(SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK, A, user, params) & COMPONENT_NO_ATTACK)
-		return FALSE
-	return TRUE //return FALSE to avoid calling attackby after this proc does stuff
+		return TRUE
+	return FALSE //return TRUE to avoid calling attackby after this proc does stuff
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
@@ -54,9 +61,9 @@
 		return
 
 	if(!force)
-		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), 1, -1)
+		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
 	else if(hitsound)
-		playsound(loc, hitsound, get_clamped_volume(), 1, -1)
+		playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
 
 	M.lastattacker = user.real_name
 	M.lastattackerckey = user.ckey
@@ -104,7 +111,7 @@
 
 /mob/living/simple_animal/attacked_by(obj/item/I, mob/living/user)
 	if(I.force < force_threshold || I.damtype == STAMINA)
-		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), 1, -1)
+		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), TRUE, -1)
 	else
 		return ..()
 

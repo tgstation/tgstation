@@ -175,7 +175,7 @@
 		B.obj_integrity = min(B.obj_integrity, B.max_integrity)
 		B.update_icon()
 		B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
-		playsound(B.loc, 'sound/effects/splat.ogg', 50, 1)
+		playsound(B.loc, 'sound/effects/splat.ogg', 50, TRUE)
 		var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
 		flick("blobbernaut_produce", blobber)
 		B.naut = blobber
@@ -296,7 +296,7 @@
 				OB = pick(diagonalblobs)
 				if(attacksuccess)
 					OB.blob_attack_animation(T, src)
-					playsound(OB, 'sound/effects/splat.ogg', 50, 1)
+					playsound(OB, 'sound/effects/splat.ogg', 50, TRUE)
 					add_points(BLOB_ATTACK_REFUND)
 				else
 					add_points(BLOB_SPREAD_COST) //if we're attacking diagonally and didn't hit anything, refund

@@ -340,7 +340,7 @@
 		return
 	user.put_in_hands(gun)
 	gun = null
-	playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	gun_properties = list()
 	set_projectile()
 	return TRUE

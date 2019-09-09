@@ -132,7 +132,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
 	add_fingerprint(user)
-	playsound(src, 'sound/effects/Glassknock.ogg', 50, 1)
+	playsound(src, 'sound/effects/Glassknock.ogg', 50, TRUE)
 
 /obj/structure/window/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(!can_be_reached(user))
@@ -149,7 +149,7 @@
 	user.visible_message("<span class='notice'>[user] knocks on [src].</span>", \
 		"<span class='notice'>You knock on [src].</span>")
 	add_fingerprint(user)
-	playsound(src, 'sound/effects/Glassknock.ogg', 50, 1)
+	playsound(src, 'sound/effects/Glassknock.ogg', 50, TRUE)
 
 /obj/structure/window/attack_paw(mob/user)
 	return attack_hand(user)
@@ -242,18 +242,18 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src, hitsound, 75, 1)
+				playsound(src, hitsound, 75, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
+				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src, 'sound/items/Welder.ogg', 100, TRUE)
 
 
 /obj/structure/window/deconstruct(disassembled = TRUE)
 	if(QDELETED(src))
 		return
 	if(!disassembled)
-		playsound(src, breaksound, 70, 1)
+		playsound(src, breaksound, 70, TRUE)
 		if(!(flags_1 & NODECONSTRUCT_1))
 			for(var/obj/item/shard/debris in spawnDebris(drop_location()))
 				transfer_fingerprints_to(debris) // transfer fingerprints to shards only
@@ -838,10 +838,10 @@
 	if(user.a_intent != INTENT_HARM)
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.visible_message("<span class='notice'>[user] knocks on [src].</span>")
-		playsound(src, "pageturn", 50, 1)
+		playsound(src, "pageturn", 50, TRUE)
 	else
 		take_damage(4,BRUTE,"melee", 0)
-		playsound(src, hitsound, 50, 1)
+		playsound(src, hitsound, 50, TRUE)
 		if(!QDELETED(src))
 			user.visible_message("<span class='danger'>[user] tears a hole in [src].</span>")
 			update_icon()

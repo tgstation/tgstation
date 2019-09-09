@@ -1,0 +1,6 @@
+author: "TheChosenEvilOne"
+delete-after: True
+changes: 
+  - rscadd: "Dynamic now loads server specific configurations from a defined configuration file."
+  - bugfix: "Antagonist preferences and bans work correctly again in dynamic."
+  - config: "DYNAMIC_CONFIG_ENABLED has been added to game_options."

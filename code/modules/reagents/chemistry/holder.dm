@@ -473,7 +473,7 @@
 			if(cached_my_atom)
 				if(!ismob(cached_my_atom)) // No bubbling mobs
 					if(selected_reaction.mix_sound)
-						playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, 1)
+						playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, TRUE)
 
 					for(var/mob/M in seen)
 						to_chat(M, "<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
@@ -857,12 +857,19 @@
 	return english_list(out, "something indescribable")
 
 /datum/reagents/proc/expose_temperature(var/temperature, var/coeff=0.02)
+	if(istype(my_atom,/obj/item/reagent_containers))
+		var/obj/item/reagent_containers/RCs = my_atom
+		if(RCs.reagent_flags & NO_REACT) //stasis holders IE cryobeaker
+			return
 	var/temp_delta = (temperature - chem_temp) * coeff
 	if(temp_delta > 0)
 		chem_temp = min(chem_temp + max(temp_delta, 1), temperature)
 	else
 		chem_temp = max(chem_temp + min(temp_delta, -1), temperature)
 	chem_temp = round(chem_temp)
+	for(var/i in reagent_list)
+		var/datum/reagent/R = i
+		R.on_temp_change()
 	handle_reactions()
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -885,3 +892,9 @@
 				random_reagents += R
 	var/picked_reagent = pick(random_reagents)
 	return picked_reagent
+
+/proc/get_chem_id(chem_name)
+	for(var/A in GLOB.chemical_reagents_list)
+		var/datum/reagent/R = GLOB.chemical_reagents_list[A]
+		if(chem_name == ckey(R.name))
+			return R.type

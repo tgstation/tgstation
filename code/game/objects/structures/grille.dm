@@ -208,11 +208,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src, 'sound/effects/grillehit.ogg', 80, 1)
+				playsound(src, 'sound/effects/grillehit.ogg', 80, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
+				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 80, 1)
+			playsound(src, 'sound/items/welder.ogg', 80, TRUE)
 
 
 /obj/structure/grille/deconstruct(disassembled = TRUE)
@@ -268,7 +268,7 @@
 				var/turf/T = get_turf(src)
 				var/obj/structure/cable/C = T.get_cable_node()
 				if(C)
-					playsound(src, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
+					playsound(src, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 					tesla_zap(src, 3, C.newavail() * 0.01, TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE | TESLA_MOB_STUN | TESLA_ALLOW_DUPLICATES) //Zap for 1/100 of the amount of power. At a million watts in the grid, it will be as powerful as a tesla revolver shot.
 					C.add_delayedload(C.newavail() * 0.0375) // you can gain up to 3.5 via the 4x upgrades power is halved by the pole so thats 2x then 1X then .5X for 3.5x the 3 bounces shock.
 	return ..()

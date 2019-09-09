@@ -170,7 +170,7 @@
 	return
 
 /obj/effect/clockwork/judicial_marker/proc/judicialblast()
-	playsound(src, 'sound/magic/magic_missile.ogg', 50, 1, 1, 1)
+	playsound(src, 'sound/magic/magic_missile.ogg', 50, TRUE, TRUE, TRUE)
 	flick("judicial_marker", src)
 	for(var/mob/living/carbon/C in range(1, src))
 		var/datum/status_effect/belligerent/B = C.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
@@ -185,7 +185,7 @@
 	sleep(13)
 	name = "judicial explosion"
 	var/targetsjudged = 0
-	playsound(src, 'sound/effects/explosion_distant.ogg', 100, 1, 1, 1)
+	playsound(src, 'sound/effects/explosion_distant.ogg', 100, TRUE, TRUE, TRUE)
 	set_light(0)
 	for(var/mob/living/L in range(1, src))
 		if(is_servant_of_ratvar(L))

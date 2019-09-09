@@ -129,7 +129,7 @@
 						new /obj/item/stack/sheet/metal(drop_location(), sheets_refunded)
 						user.visible_message("<span class='notice'>[user.name] deconstructs [src].</span>", \
 							"<span class='notice'>You deconstruct [src].</span>", "<span class='italics'>You hear a ratchet.</span>")
-						playsound(src, 'sound/items/deconstruct.ogg', 75, 1)
+						playsound(src, 'sound/items/deconstruct.ogg', 75, TRUE)
 						qdel(src)
 					return
 
@@ -273,6 +273,7 @@
 
 /obj/machinery/light/small/built
 	icon_state = "bulb-empty"
+	start_with_cell = FALSE
 
 /obj/machinery/light/small/built/Initialize()
 	. = ..()
@@ -547,13 +548,13 @@
 		if(BRUTE)
 			switch(status)
 				if(LIGHT_EMPTY)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+					playsound(loc, 'sound/weapons/smash.ogg', 50, TRUE)
 				if(LIGHT_BROKEN)
-					playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, 1)
+					playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, TRUE)
 				else
-					playsound(loc, 'sound/effects/glasshit.ogg', 90, 1)
+					playsound(loc, 'sound/effects/glasshit.ogg', 90, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
 // returns if the light has power /but/ is manually turned off
 // if a light is turned off, it won't activate emergency power
@@ -707,7 +708,7 @@
 
 	if(!skip_sound_and_sparks)
 		if(status == LIGHT_OK || status == LIGHT_BURNED)
-			playsound(src.loc, 'sound/effects/glasshit.ogg', 75, 1)
+			playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
 		if(on)
 			do_sparks(3, TRUE, src)
 	status = LIGHT_BROKEN
@@ -830,9 +831,9 @@
 	. = ..()
 	if(istype(L) && has_gravity(loc))
 		if(HAS_TRAIT(L, TRAIT_LIGHT_STEP))
-			playsound(loc, 'sound/effects/glass_step.ogg', 30, 1)
+			playsound(loc, 'sound/effects/glass_step.ogg', 30, TRUE)
 		else
-			playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
+			playsound(loc, 'sound/effects/glass_step.ogg', 50, TRUE)
 		if(status == LIGHT_BURNED || status == LIGHT_OK)
 			shatter()
 
@@ -867,7 +868,7 @@
 		visible_message("<span class='danger'>[src] shatters.</span>","<span class='italics'>You hear a small glass object shatter.</span>")
 		status = LIGHT_BROKEN
 		force = 5
-		playsound(src.loc, 'sound/effects/glasshit.ogg', 75, 1)
+		playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
 		if(rigged)
 			atmos_spawn_air("plasma=5") //5u of plasma are required to rig a light bulb/tube
 		update()

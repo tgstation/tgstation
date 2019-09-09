@@ -23,26 +23,6 @@
 /obj/item/vending_refill/snack
 	machine_name = "Getmore Chocolate Corp"
 
-/obj/machinery/vending/snack/canLoadItem(obj/item/I,mob/user)
-	. = FALSE
-	if(istype(I,/obj/item/reagent_containers/food/snacks))
-		var/obj/item/reagent_containers/food/snacks/snacki = I
-		if(snacki.junkiness)
-			return FALSE
-		return TRUE
-
-/obj/machinery/vending/snack/Destroy()
-	for(var/obj/item/reagent_containers/food/snacks/S in contents)
-		S.forceMove(get_turf(src))
-	return ..()
-
-/obj/machinery/vending/snack/proc/food_load(obj/item/reagent_containers/food/snacks/S)
-	if(vending_machine_input[S.name])
-		vending_machine_input[S.name]++
-	else
-		vending_machine_input[S.name] = 1
-	sortList(vending_machine_input)
-
 /obj/machinery/vending/snack/random
 	name = "\improper Random Snackies"
 	icon_state = "random_snack"

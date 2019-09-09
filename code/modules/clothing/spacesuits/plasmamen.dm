@@ -54,7 +54,7 @@
 	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_welding_screen/plasmaman)
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	flags_cover = HEADCOVERSMOUTH|HEADCOVERSEYES
+	flags_cover = HEADCOVERSMOUTH|HEADCOVERSEYES | PEPPERPROOF
 	visor_flags_inv = HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 
 /obj/item/clothing/head/helmet/space/plasmaman/Initialize()
@@ -72,10 +72,10 @@
 		if(on)
 			to_chat(user, "<span class='notice'>Your helmet's torch can't pass through your welding visor!</span>")
 			on = FALSE
-			playsound(src, 'sound/mecha/mechmove03.ogg', 50, 1) //Visors don't just come from nothing
+			playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
 			update_icon()
 		else
-			playsound(src, 'sound/mecha/mechmove03.ogg', 50, 1) //Visors don't just come from nothing
+			playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
 			update_icon()
 
 /obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(isinhands)

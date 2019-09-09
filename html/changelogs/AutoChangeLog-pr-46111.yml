@@ -1,4 +1,0 @@
-author: "stylemistake"
-delete-after: True
-changes: 
-  - bugfix: "fixed wonky window dragging when using fancy tgui in some special cases"

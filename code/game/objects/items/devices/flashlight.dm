@@ -190,7 +190,7 @@
 
 /obj/effect/temp_visual/medical_holosign/Initialize(mapload, creator)
 	. = ..()
-	playsound(loc, 'sound/machines/ping.ogg', 50, 0) //make some noise!
+	playsound(loc, 'sound/machines/ping.ogg', 50, FALSE) //make some noise!
 	if(creator)
 		visible_message("<span class='danger'>[creator] created a medical hologram!</span>")
 
