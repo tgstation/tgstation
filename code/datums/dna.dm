@@ -284,7 +284,7 @@
 	return
 
 /mob/living/brain/set_species(datum/species/mrace, icon_update = 1)
-	if(mrace)
+	if(mrace && initial(mrace.changesource_flags) & VARDROPDOWN)
 		if(ispath(mrace))
 			stored_dna.species = new mrace()
 		else
@@ -292,7 +292,7 @@
 
 
 /mob/living/carbon/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
-	if(mrace && has_dna())
+	if(mrace && has_dna() && initial(mrace.changesource_flags) & VARDROPDOWN)
 		var/datum/species/new_race
 		if(ispath(mrace))
 			new_race = new mrace

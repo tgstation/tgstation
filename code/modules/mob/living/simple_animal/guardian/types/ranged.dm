@@ -59,6 +59,11 @@
 		if(namedatum)
 			P.color = namedatum.colour
 
+/mob/living/simple_animal/hostile/guardian/ranged/AttackingTarget(atom/targeted_atom)
+	if(!toggled)
+		return
+	..()
+
 /mob/living/simple_animal/hostile/guardian/ranged/ToggleLight()
 	var/msg
 	switch(lighting_alpha)
