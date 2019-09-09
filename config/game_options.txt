@@ -259,7 +259,7 @@ MAX_TICKETS_PER_ROLL 100
 #SHOW_GAME_TYPE_ODDS
 
 ## Uncomment to enable dynamic ruleset config file.
-DYNAMIC_CONFIG_ENABLED
+#DYNAMIC_CONFIG_ENABLED
 
 ## RANDOM EVENTS ###
 ## Comment this out to disable random events during the round.

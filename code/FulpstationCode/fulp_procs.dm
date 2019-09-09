@@ -13,7 +13,6 @@
 		// B) Check for Viewers
 		for(var/mob/living/M in viewers(T))
 			if(M != subject && isliving(M) && M.mind && !M.has_unlimited_silicon_privilege && !M.eye_blind) // M.client <--- add this in after testing!
-				message_admins("Seen Test: [subject] [M]")
 				return TRUE
 	return FALSE
 
