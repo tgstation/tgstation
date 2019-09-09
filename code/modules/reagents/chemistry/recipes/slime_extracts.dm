@@ -49,7 +49,7 @@
 /datum/chemical_reaction/slime/slimemutate
 	name = "Mutation Toxin"
 	id = "slimetoxin"
-	results = list(/datum/reagent/slime_toxin = 1)
+	results = list(/datum/reagent/mutationtoxin/jelly = 1)
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_other = TRUE
 	required_container = /obj/item/slime_extract/green
