@@ -132,7 +132,7 @@
 
 	playing = TRUE
 
-	var/rolled_number = rand(35, 36)
+	var/rolled_number = rand(0, 36)
 
 	playsound(src, 'sound/machines/chime.ogg', 50)
 	playsound(src, 'sound/machines/roulettewheel.ogg', 50)
@@ -242,4 +242,7 @@
 		return
 	loc.visible_message("<span class='warning'>\The [src] begins to beep loudly!</span>")
 	used = TRUE
-	new /obj/effect/DPtarget(drop_location(), FALSE, /obj/structure/closet/supplypod, /obj/machinery/roulette)
+	addtimer(CALLBACK(src, .proc/launch_payload), 40)
+
+/obj/item/roulette_wheel_beacon/proc/launch_payload()	
+	new /obj/effect/DPtarget(drop_location(), /obj/structure/closet/supplypod/centcompod, /obj/machinery/roulette)

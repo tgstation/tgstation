@@ -28,7 +28,10 @@
   height: 72px;
   font-size: 16px;
   margin: 4px;
-  border: none
+  border: none;
+  position:absolute;
+  top:px;
+  left:px;
 } 
 
 .amount {
@@ -106,15 +109,15 @@
 <ui-button class="number_red" action='ChangeBetType' params='{"type": 36}'>36</ui-button>
 </span>
 <span style="float:left; margin-top:40px;">
-<ui-button class="image_button" action='ChangeBetType' params='{"type": "s1-18"}'></ui-button>
+<ui-button class="image_button" action='ChangeBetType' params='{"type": "s1-18"}'>{{{data.s1-18}}}</ui-button>
 <br>
-<ui-button class="image_button" action='ChangeBetType' params='{"type": "even"}'></ui-button>
+<ui-button class="image_button" action='ChangeBetType' params='{"type": "even"}'>{{{data.even}}}</ui-button>
 <br>
-<ui-button class="image_button" action='ChangeBetType' params='{"type": 0}'></ui-button>
+<ui-button class="image_button" action='ChangeBetType' params='{"type": 0}'>{{{data.0}}}</ui-button>
 <br>
-<ui-button class="image_button" action='ChangeBetType' params='{"type": "odd"}'></ui-button>
+<ui-button class="image_button" action='ChangeBetType' params='{"type": "odd"}'>{{{data.odd}}}</ui-button>
 <br>
-<ui-button class="image_button" action='ChangeBetType' params='{"type": "s19-36"}'></ui-button>
+<ui-button class="image_button" action='ChangeBetType' params='{"type": "s19-36"}'>{{{data.s19-36}}}</ui-button>
 </span>
 <span style="float:left; margin-top:160px;">
 <ui-button class="image_button" action='ChangeBetType' params='{"type": "red"}'>{{{data.red}}}</ui-button>
