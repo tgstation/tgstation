@@ -50,7 +50,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/looping_sound/jackpot
-	mid_length = 56
+	mid_length = 11
 	mid_sounds = list('sound/machines/roulettejackpot.ogg')
-	volume = 11
+	volume = 85
 	vary = TRUE
