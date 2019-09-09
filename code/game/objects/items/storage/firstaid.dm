@@ -50,7 +50,7 @@
 	STR.max_w_class = WEIGHT_CLASS_BULKY //holds the same equipment as a medibelt
 	STR.max_items = 12
 	STR.max_combined_w_class = 24
-		STR.set_holdable(list(
+	STR.set_holdable(list(
 		/obj/item/healthanalyzer,
 		/obj/item/dnainjector,
 		/obj/item/reagent_containers/dropper,
