@@ -8,7 +8,7 @@
 		return
 	take_holo_damage(50/severity)
 	Paralyze(400/severity)
-	// silent = max(30/severity, silent)
+	silent = max(20/severity, silent)
 	if(holoform)
 		fold_in(force = TRUE)
 	//Need more effects that aren't instadeath or permanent law corruption.
