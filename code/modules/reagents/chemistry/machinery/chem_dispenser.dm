@@ -74,7 +74,7 @@
 		/datum/reagent/saltpetre
 	)
 	//available with T5 manipulator (Quantum) [XEON Code]
-	var/list/t5_reagents = list(
+	var/list/t5_reagents = list( //FULP
 		/datum/reagent/medicine/CF/trekamol //FULP [Saliferous]
 	)
 	var/list/emagged_reagents = list(
@@ -97,7 +97,7 @@
 	if(upgrade_reagents)
 		upgrade_reagents = sortList(upgrade_reagents, /proc/cmp_reagents_asc)
 	if(t5_reagents) //FULP [XEON]
-		t5_reagents = sortList(t5_reagents, /proc/cmp_reagents_asc)
+		t5_reagents = sortList(t5_reagents, /proc/cmp_reagents_asc) //FULP
 	update_icon()
 
 /obj/machinery/chem_dispenser/Destroy()
@@ -385,10 +385,10 @@
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		recharge_amount *= C.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		if (M.rating > 3 && M.rating < 5)
+		if (M.rating > 3 && M.rating < 5) //FULP
 			dispensable_reagents |= upgrade_reagents
 		if (M.rating > 4) //FULP [Saliferous]
-			dispensable_reagents |= t5_reagents
+			dispensable_reagents |= t5_reagents //FULP
 	powerefficiency = round(newpowereff, 0.01)
 
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
