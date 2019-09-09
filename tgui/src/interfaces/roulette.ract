@@ -106,7 +106,7 @@
 <ui-button class="number_red" action='ChangeBetType' params='{"type": 36}'>36</ui-button>
 </span>
 <span style="float:left; margin-top:40px;">
-<ui-button class="image_button" action='ChangeBetType' params='{"type": "1-18"}'></ui-button>
+<ui-button class="image_button" action='ChangeBetType' params='{"type": "s1-18"}'></ui-button>
 <br>
 <ui-button class="image_button" action='ChangeBetType' params='{"type": "even"}'></ui-button>
 <br>
@@ -114,7 +114,7 @@
 <br>
 <ui-button class="image_button" action='ChangeBetType' params='{"type": "odd"}'></ui-button>
 <br>
-<ui-button class="image_button" action='ChangeBetType' params='{"type": "19-36"}'></ui-button>
+<ui-button class="image_button" action='ChangeBetType' params='{"type": "s19-36"}'></ui-button>
 </span>
 <span style="float:left; margin-top:160px;">
 <ui-button class="image_button" action='ChangeBetType' params='{"type": "red"}'>{{{data.red}}}</ui-button>
@@ -144,6 +144,8 @@ Current bet: {{data.BetAmount}}₵ on {{data.BetType}}
 <ui-button class="amount" action='ChangeBetAmount' params='{"amount": 250}'>Bet 250₵</ui-button>
 <br>
 <ui-button class="amount" action='ChangeBetAmount' params='{"amount": 500}'>Bet 500₵</ui-button>
+<br>
+<ui-button class="amount" action='ChangeBetAmountCustom' >Bet a custom amount</ui-button>
 <br>
 <ui-button class="amount" action='anchor'>{{data.IsAnchored ? "Unbolt" : "Bolt"}}</ui-button>
 </div>
