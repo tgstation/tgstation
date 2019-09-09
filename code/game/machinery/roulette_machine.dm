@@ -15,6 +15,7 @@
 	icon_state = "autolathe"
 	density = TRUE
 	use_power = IDLE_POWER_USE
+	anchored = FALSE
 	idle_power_usage = 10
 	active_power_usage = 100
 	var/static/list/numbers = list("0" = "green", "1" = "red", "3" = "red", "5" = "red", "7" = "red", "9" = "red", "12" = "red", "14" = "red", "16" = "red",\
@@ -229,3 +230,16 @@
 	audible_message("<span class='warning'>The bank account of [my_card.registered_account.account_holder] does not have enough funds to pay out the potential prize, contact them to fill up their account or lower your bet!</span>")
 	playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
 	return FALSE
+
+
+/obj/item/roulette_wheel_beacon
+	name = "roulette wheel beacon"
+	desc = "N.T. approved roulette wheel beacon, toss it down and you will have a complementary roulette wheel delivered to you."
+	var/used
+
+/obj/item/roulette_wheel_beacon/attack_self()
+	if(used)
+		return
+	loc.visible_message("<span class='warning'>\The [src] begins to beep loudly!</span>")
+	used = TRUE
+	new /obj/effect/DPtarget(drop_location(), FALSE, /obj/structure/closet/supplypod, /obj/machinery/roulette)
