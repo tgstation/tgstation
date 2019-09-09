@@ -2,7 +2,7 @@
 	name = "Orange Wristbands"
 	desc = "You feel like if you were to put these on you'd have an urge to rant on about futility and uselessness."
 	fulp_item = TRUE
-	icon = 'icons/Fulpicons/fulpclothing.dmi'
+	icon = 'icons/Fulpicons/dio_clothing.dmi'
 	icon_state = "diobands"
 	mob_overlay_icon = 'icons/mob/clothing_dio.dmi'
 
@@ -10,7 +10,7 @@
 	name = "Green-heart Headband"
 	desc = "Mysterious headband that most certainly belongs to a powerful stand user."
 	fulp_item = TRUE
-	icon = 'icons/Fulpicons/fulpclothing.dmi'
+	icon = 'icons/Fulpicons/dio_clothing.dmi'
 	icon_state = "dio_headband"
 	mob_overlay_icon = 'icons/mob/clothing_dio.dmi'
 	clothing_flags = SNUG_FIT
@@ -20,7 +20,7 @@
 	name = "Fabulous Shoes"
 	desc = "Odd-looking shoes that are surprisingly comfortable despite their strange shape."
 	fulp_item = TRUE
-	icon = 'icons/Fulpicons/fulpclothing.dmi'
+	icon = 'icons/Fulpicons/dio_clothing.dmi'
 	icon_state = "dio_shoes"
 	mob_overlay_icon = 'icons/mob/clothing_dio.dmi'
 
@@ -28,7 +28,7 @@
 	name = "Menacing Jacket"
 	desc = "Strange looking jacket that most certainly belongs to a powerful stand user."
 	fulp_item = TRUE
-	icon = 'icons/Fulpicons/fulpclothing.dmi'
+	icon = 'icons/Fulpicons/dio_clothing.dmi'
 	icon_state = "dio_jacket"
 	mob_overlay_icon = 'icons/mob/clothing_dio.dmi'
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
@@ -38,7 +38,7 @@
 	name = "Menacing Jumpsuit"
 	desc = "Just looking at this makes you want to wry..."
 	fulp_item = TRUE
-	icon = 'icons/Fulpicons/fulpclothing.dmi'
+	icon = 'icons/Fulpicons/dio_clothing.dmi'
 	icon_state = "dio_jumpsuit"
 	mob_overlay_icon = 'icons/mob/clothing_dio.dmi'
 
