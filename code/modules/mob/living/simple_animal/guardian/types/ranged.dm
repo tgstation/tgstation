@@ -1,4 +1,4 @@
-code//Ranged
+//Ranged
 /obj/item/projectile/guardian
 	name = "crystal spray"
 	icon_state = "guardian"
