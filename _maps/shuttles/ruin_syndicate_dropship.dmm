@@ -306,7 +306,7 @@
 /obj/structure/closet/syndicate{
 	anchored = 1
 	},
-/obj/item/gun/ballistic/automatic/pistol,
+/obj/item/storage/box/syndie_kit/chameleon,
 /obj/item/crowbar/red,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)

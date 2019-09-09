@@ -13,7 +13,7 @@
 	var/datum/species/fake_species //a species to do most of our work for us, unless we're damaged
 	var/list/initial_species_traits //for getting these values back for assume_disguise()
 	var/list/initial_inherent_traits
-	changesource_flags = MIRROR_BADMIN | WABBAJACK
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 
 /datum/species/synth/New()
 	initial_species_traits = species_traits.Copy()
@@ -28,6 +28,7 @@
 	punchdamagehigh = 19
 	punchstunthreshold = 14 //about 50% chance to stun
 	disguise_fail_health = 50
+	changesource_flags = MIRROR_BADMIN | WABBAJACK
 
 /datum/species/synth/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	..()

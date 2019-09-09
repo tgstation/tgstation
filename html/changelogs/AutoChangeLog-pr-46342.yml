@@ -1,0 +1,9 @@
+author: "MacBlaze1"
+delete-after: True
+changes: 
+  - balance: "increased volume of pepper sprays to 50"
+  - tweak: "adds knockdown of 3 second for no protection, 3 for no mouth protection"
+  - tweak: "Changes bluring and blindness of eyes"
+  - balance: "Replaces Paralysis with blind"
+  - balance: "vastly decreased the scope of pepperspray protection."
+  - rscadd: "New variable for pepperspray protection, PEPPERPROOF, decides if you can be pepperproof with certain equipment"

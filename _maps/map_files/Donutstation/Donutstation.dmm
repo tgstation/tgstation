@@ -240,7 +240,6 @@
 /area/teleporter)
 "aaQ" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -279,7 +278,6 @@
 /area/hallway/secondary/exit/departure_lounge)
 "aaX" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -323,7 +321,6 @@
 /area/space)
 "abd" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -410,21 +407,18 @@
 /area/quartermaster/storage)
 "abk" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 9
 	},
 /turf/open/floor/plating,
 /area/quartermaster/miningdock)
 "abl" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/quartermaster/miningdock)
 "abm" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 9
 	},
 /turf/open/floor/plating,
@@ -439,14 +433,12 @@
 /area/quartermaster/miningdock)
 "abo" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "abp" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -457,7 +449,6 @@
 /area/hallway/secondary/entry)
 "abr" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -733,7 +724,6 @@
 /area/science/storage)
 "aci" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -886,7 +876,6 @@
 /area/medical/storage)
 "acO" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -1014,14 +1003,12 @@
 /area/science/storage)
 "adk" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/science/explab)
 "adl" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -1137,7 +1124,6 @@
 /area/science/lab)
 "adz" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -1577,7 +1563,6 @@
 /area/science/server)
 "aeQ" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -1980,7 +1965,6 @@
 /area/maintenance/solars/starboard/fore)
 "afR" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -2182,7 +2166,6 @@
 /area/hallway/secondary/exit/departure_lounge)
 "agq" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -2195,7 +2178,6 @@
 /area/hallway/secondary/exit/departure_lounge)
 "ags" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -2234,7 +2216,6 @@
 /area/quartermaster/storage)
 "agw" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -2254,7 +2235,6 @@
 /area/chapel/office)
 "agy" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 10
 	},
 /turf/open/floor/plating,
@@ -2363,14 +2343,12 @@
 "agJ" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hor)
 "agK" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -2409,7 +2387,6 @@
 /area/science/test_area)
 "agQ" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -2607,7 +2584,6 @@
 "aht" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -2753,7 +2729,6 @@
 /area/crew_quarters/heads/hor)
 "ahO" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -2848,7 +2823,6 @@
 /area/crew_quarters/heads/captain/private)
 "aie" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -3030,7 +3004,6 @@
 /area/quartermaster/storage)
 "aiG" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -3050,14 +3023,12 @@
 /area/quartermaster/storage)
 "aiJ" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 10
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "aiK" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -3096,7 +3067,6 @@
 "aiS" = (
 /obj/machinery/conveyor/inverted{
 	dir = 8;
-	icon_state = "conveyor_map_inverted";
 	id = "QMLoad"
 	},
 /turf/open/floor/plating,
@@ -3246,7 +3216,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -3345,7 +3314,6 @@
 /area/crew_quarters/heads/hop)
 "ajy" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -3401,7 +3369,6 @@
 "ajI" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -3409,7 +3376,6 @@
 "ajJ" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -3430,7 +3396,6 @@
 /area/bridge)
 "ajM" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -3488,7 +3453,6 @@
 /area/science/mixing)
 "ajW" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -4256,7 +4220,6 @@
 /area/science/robotics/lab)
 "amf" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -4281,7 +4244,6 @@
 /area/hallway/primary/central)
 "amk" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -4307,7 +4269,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -4826,7 +4787,6 @@
 "aof" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
 	dir = 1
 	},
 /obj/structure/cable,
@@ -5005,7 +4965,6 @@
 /area/hydroponics)
 "aoA" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -5030,14 +4989,12 @@
 /area/hydroponics)
 "aoE" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 10
 	},
 /turf/open/floor/plating,
 /area/hydroponics)
 "aoF" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -5104,7 +5061,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -5267,7 +5223,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -5593,7 +5548,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -5713,7 +5667,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -5721,7 +5674,6 @@
 "aqw" = (
 /obj/machinery/conveyor/inverted{
 	dir = 9;
-	icon_state = "conveyor_map_inverted";
 	id = "QMLoad2"
 	},
 /turf/open/floor/plating,
@@ -5989,7 +5941,6 @@
 /area/maintenance/department/security)
 "ard" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -6038,14 +5989,12 @@
 /area/storage/tools)
 "ari" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/storage/tools)
 "arj" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -6079,7 +6028,6 @@
 /area/vacant_room/commissary)
 "aro" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -6322,7 +6270,6 @@
 /area/hallway/secondary/entry)
 "arY" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -6408,7 +6355,6 @@
 /area/crew_quarters/fitness/recreation)
 "ash" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -6451,7 +6397,6 @@
 /area/science/lab)
 "asl" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 10
 	},
 /turf/open/floor/plating,
@@ -6506,7 +6451,6 @@
 "asq" = (
 /obj/machinery/conveyor/inverted{
 	dir = 8;
-	icon_state = "conveyor_map_inverted";
 	id = "QMLoad2"
 	},
 /turf/open/floor/plating,
@@ -6565,7 +6509,6 @@
 /area/storage/tools)
 "asv" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -6627,7 +6570,6 @@
 /area/ai_monitored/turret_protected/aisat/foyer)
 "asD" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -6702,7 +6644,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -6754,7 +6695,6 @@
 /area/security/brig)
 "asX" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -6843,7 +6783,6 @@
 /area/crew_quarters/bar)
 "atg" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -6989,7 +6928,6 @@
 /area/hallway/secondary/exit/departure_lounge)
 "atx" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -6999,7 +6937,6 @@
 /area/hallway/secondary/entry)
 "atz" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -7017,7 +6954,6 @@
 /area/engine/atmos)
 "atC" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -7084,7 +7020,6 @@
 	name = "privacy shutters"
 	},
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -7153,7 +7088,6 @@
 /area/tcommsat/computer)
 "atX" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /obj/structure/cable,
@@ -7416,7 +7350,6 @@
 /area/ai_monitored/security/armory)
 "auC" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /obj/structure/cable,
@@ -7618,7 +7551,6 @@
 /area/ai_monitored/storage/eva)
 "ave" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -7800,7 +7732,6 @@
 /area/engine/atmos)
 "avA" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -7868,7 +7799,6 @@
 /area/bridge)
 "avK" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -7893,7 +7823,6 @@
 /area/engine/atmos)
 "avO" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -7951,7 +7880,6 @@
 	dir = 4
 	},
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -8086,7 +8014,6 @@
 /area/engine/atmos)
 "awq" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -9914,7 +9841,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -10296,28 +10222,24 @@
 /area/maintenance/fore)
 "aBD" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aBE" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 9
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aBF" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 6
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aBG" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -10446,7 +10368,6 @@
 /area/space/nearstation)
 "aCb" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -10528,14 +10449,12 @@
 /area/crew_quarters/dorms)
 "aCk" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 9
 	},
 /turf/open/floor/plating,
 /area/tcommsat/server)
 "aCl" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -10567,7 +10486,6 @@
 /area/space/nearstation)
 "aCr" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -10653,11 +10571,9 @@
 "aCH" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end,
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -12085,7 +12001,6 @@
 /area/medical/genetics/cloning)
 "aFO" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -12096,7 +12011,6 @@
 /area/medical/genetics/cloning)
 "aFQ" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -12106,7 +12020,6 @@
 /area/medical/genetics/cloning)
 "aFS" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -12117,7 +12030,6 @@
 /area/medical/genetics)
 "aFU" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -12228,7 +12140,6 @@
 /area/medical/genetics/cloning)
 "aGi" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -12260,14 +12171,12 @@
 /area/medical/medbay/central)
 "aGl" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/medical/storage)
 "aGm" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -12479,7 +12388,6 @@
 	name = "Chemistry Privacy Shutters"
 	},
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -12493,7 +12401,6 @@
 	name = "Chemistry Privacy Shutters"
 	},
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -12561,14 +12468,12 @@
 /area/science/research)
 "aHc" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/medical/medbay/lobby)
 "aHd" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -12594,7 +12499,6 @@
 /area/crew_quarters/heads/hor)
 "aHf" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -12645,7 +12549,6 @@
 	name = "Chemistry Privacy Shutters"
 	},
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -12685,7 +12588,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -12724,7 +12626,6 @@
 /area/hallway/primary/central)
 "aHx" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -13005,14 +12906,12 @@
 /area/medical/sleeper)
 "aIv" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/medical/cryo)
 "aIw" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -13180,7 +13079,6 @@
 /area/medical/virology)
 "aIV" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -13232,7 +13130,6 @@
 /area/medical/sleeper)
 "aJc" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -13506,7 +13403,6 @@
 /area/medical/chemistry)
 "aJI" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -13517,7 +13413,6 @@
 /area/medical/surgery)
 "aJK" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -13547,7 +13442,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -14195,7 +14089,6 @@
 /area/maintenance/port/fore)
 "aLw" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -14206,7 +14099,6 @@
 /area/library)
 "aLy" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -14430,7 +14322,6 @@
 	},
 /obj/structure/sign/directions/evac{
 	dir = 1;
-	icon_state = "direction_evac";
 	pixel_x = -32;
 	pixel_y = -4
 	},
@@ -14495,7 +14386,6 @@
 /area/hallway/secondary/entry)
 "aMp" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -14509,7 +14399,6 @@
 /area/hydroponics/garden)
 "aMt" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -14519,14 +14408,12 @@
 /area/hydroponics/garden)
 "aMv" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 10
 	},
 /turf/open/floor/plating,
 /area/hydroponics/garden)
 "aMw" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -14543,28 +14430,24 @@
 /area/hydroponics/garden)
 "aMz" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 9
 	},
 /turf/open/floor/plating,
 /area/hydroponics/garden)
 "aMA" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 6
 	},
 /turf/open/floor/plating,
 /area/hydroponics/garden)
 "aMB" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/hydroponics/garden)
 "aMC" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -14985,7 +14868,6 @@
 /area/engine/engine_room/external)
 "aNU" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -15009,7 +14891,6 @@
 /area/security/main)
 "aNY" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -15244,7 +15125,6 @@
 /area/security/brig)
 "aOH" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -15311,7 +15191,6 @@
 /area/security/courtroom)
 "aOQ" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -15943,7 +15822,6 @@
 	name = "privacy shutters"
 	},
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -15954,7 +15832,6 @@
 	name = "privacy shutters"
 	},
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 9
 	},
 /turf/open/floor/plating,
@@ -15972,7 +15849,6 @@
 	name = "privacy shutters"
 	},
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -16020,7 +15896,6 @@
 /area/maintenance/starboard)
 "aQC" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -16190,7 +16065,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -16724,6 +16598,10 @@
 	dir = 1;
 	pixel_y = -30
 	},
+/obj/machinery/computer/turbine_computer{
+	dir = 1;
+	id = "incineratorturbine"
+	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "aSN" = (
@@ -16917,7 +16795,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/end{
-	icon_state = "warn_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -17485,14 +17362,12 @@
 /area/medical/chemistry)
 "aUC" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/engine/gravity_generator)
 "aUD" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -17803,7 +17678,6 @@
 /area/construction/mining/aux_base)
 "aVs" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -17898,7 +17772,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -18050,7 +17923,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -18209,7 +18081,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 9
 	},
 /turf/open/floor/plating,
@@ -18221,7 +18092,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -18715,7 +18585,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/end{
-	icon_state = "warn_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -18742,7 +18611,6 @@
 	dir = 4
 	},
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -20519,7 +20387,6 @@
 /area/crew_quarters/bar)
 "bcc" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -21561,7 +21428,6 @@
 "beN" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -21816,7 +21682,6 @@
 	dir = 4
 	},
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 10
 	},
 /turf/open/floor/plating,
@@ -22024,7 +21889,6 @@
 	dir = 4
 	},
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -22970,7 +22834,6 @@
 "bhY" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -23334,7 +23197,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -23346,7 +23208,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -23912,7 +23773,6 @@
 "bkf" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -24028,7 +23888,6 @@
 "bkq" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -24840,7 +24699,6 @@
 /area/maintenance/department/security)
 "bmh" = (
 /obj/effect/spawner/structure/window/hollow/plasma/end{
-	icon_state = "phwindow_spawner_end";
 	dir = 1
 	},
 /obj/structure/cable,
@@ -26372,7 +26230,6 @@
 /area/science/xenobiology)
 "bqy" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
-	icon_state = "freezer_1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/white/side{
@@ -26926,7 +26783,6 @@
 /area/maintenance/solars/starboard/aft)
 "brJ" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -27203,7 +27059,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -27543,7 +27398,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -28957,7 +28811,6 @@
 /area/hallway/secondary/exit/departure_lounge)
 "bwd" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /obj/structure/cable,
@@ -29578,14 +29431,12 @@
 /area/library)
 "bxz" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
 /area/ai_monitored/storage/eva)
 "bxA" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 9
 	},
 /turf/open/floor/plating,
@@ -29596,7 +29447,6 @@
 /area/ai_monitored/storage/eva)
 "bxC" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -29982,7 +29832,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 10
 	},
 /turf/open/floor/plating,
@@ -29994,7 +29843,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -30085,14 +29933,12 @@
 /area/hydroponics)
 "byR" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/quartermaster/qm)
 "byS" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -30126,7 +29972,6 @@
 /area/chapel/office)
 "byX" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -30204,7 +30049,6 @@
 /area/quartermaster/qm)
 "bzf" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -30682,7 +30526,6 @@
 /area/quartermaster/qm)
 "bAg" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -31308,7 +31151,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/end{
-	icon_state = "warn_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -31484,7 +31326,6 @@
 	dir = 4
 	},
 /obj/effect/spawner/structure/window/hollow/plasma/end{
-	icon_state = "phwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -31693,7 +31534,6 @@
 "bCt" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -32399,7 +32239,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -32494,7 +32333,6 @@
 /area/quartermaster/qm)
 "bEk" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
@@ -32941,7 +32779,6 @@
 /area/quartermaster/office)
 "bFf" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -34647,7 +34484,6 @@
 /area/tcommsat/computer)
 "bIP" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -35231,7 +35067,6 @@
 "bKB" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -35961,7 +35796,6 @@
 /area/maintenance/department/security)
 "bMq" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -37264,7 +37098,6 @@
 /area/maintenance/port/aft)
 "bQf" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -37279,7 +37112,6 @@
 /area/maintenance/fore)
 "bQi" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -37676,7 +37508,6 @@
 "bRo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
 	dir = 6
 	},
 /obj/structure/cable,
@@ -38356,7 +38187,6 @@
 /area/medical/storage)
 "bSW" = (
 /obj/effect/spawner/structure/window/hollow/directional{
-	icon_state = "hwindow_spawner_directional";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -38800,7 +38630,6 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/end{
-	icon_state = "warn_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -38846,7 +38675,6 @@
 /area/maintenance/port/aft)
 "bUd" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
-	icon_state = "connector_map-2";
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister,
@@ -38983,10 +38811,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light,
-/obj/machinery/computer/turbine_computer{
-	dir = 1;
-	id = "incineratorturbine"
-	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bUu" = (
@@ -39062,7 +38886,6 @@
 /area/engine/gravity_generator)
 "bUG" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -39096,7 +38919,6 @@
 /area/quartermaster/office)
 "bUK" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
@@ -39614,7 +39436,6 @@
 /area/maintenance/port/aft)
 "bWK" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -39879,7 +39700,6 @@
 /area/maintenance/port/aft)
 "bXJ" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -39911,7 +39731,6 @@
 /area/maintenance/port)
 "bXP" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -39942,7 +39761,6 @@
 /area/maintenance/port/aft)
 "bXT" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -39971,7 +39789,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/white/corner{
-	icon_state = "warninglinecorner_white";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -40419,7 +40236,6 @@
 "bZP" = (
 /obj/structure/girder,
 /obj/effect/spawner/structure/window/hollow/directional{
-	icon_state = "hwindow_spawner_directional";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -41454,7 +41270,6 @@
 /area/maintenance/disposal)
 "ccR" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 10
 	},
 /turf/open/floor/plating,
@@ -41946,7 +41761,6 @@
 /area/science/research)
 "cee" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -42351,7 +42165,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -42376,7 +42189,6 @@
 /area/medical/cryo)
 "cmL" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -42509,7 +42321,6 @@
 	dir = 4
 	},
 /obj/vehicle/ridden/wheelchair{
-	icon_state = "wheelchair";
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
@@ -42550,7 +42361,6 @@
 /area/ai_monitored/turret_protected/ai)
 "cKV" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
-	icon_state = "filter_off_f";
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery/white,
@@ -42634,7 +42444,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/end{
-	icon_state = "warn_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -42658,7 +42467,6 @@
 "cUf" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/caution{
-	icon_state = "caution";
 	dir = 1
 	},
 /obj/structure/cable,
@@ -42707,7 +42515,6 @@
 /area/science/xenobiology)
 "deJ" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 1
 	},
 /obj/structure/girder,
@@ -42900,7 +42707,6 @@
 "dyz" = (
 /obj/machinery/camera{
 	c_tag = "Research - Xenobiology Main 3";
-	dir = 2;
 	network = list("ss13","Research")
 	},
 /turf/open/floor/plasteel/white,
@@ -43119,7 +42925,6 @@
 /area/quartermaster/miningdock)
 "elX" = (
 /obj/effect/spawner/structure/window/hollow/plasma/reinforced/end{
-	icon_state = "phrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -43400,7 +43205,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/end{
-	icon_state = "warn_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -43474,7 +43278,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/end{
-	icon_state = "warn_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -43489,7 +43292,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/engine,
@@ -43537,7 +43339,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /obj/vehicle/ridden/wheelchair{
-	icon_state = "wheelchair";
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
@@ -43568,7 +43369,6 @@
 /area/security/warden)
 "eZE" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "maintenance access";
 	req_access_txt = "10"
 	},
 /turf/open/floor/plating,
@@ -43724,7 +43524,6 @@
 /area/maintenance/port/aft)
 "ftY" = (
 /obj/effect/turf_decal/stripes/white/corner{
-	icon_state = "warninglinecorner_white";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -43783,7 +43582,6 @@
 /area/science/research)
 "fzp" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -43884,7 +43682,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/engine,
@@ -43979,7 +43776,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/end{
-	icon_state = "warn_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -44104,7 +43900,6 @@
 /area/maintenance/department/security)
 "gqb" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -44277,7 +44072,6 @@
 /area/medical/virology)
 "gFA" = (
 /obj/effect/spawner/structure/window/hollow/plasma/reinforced/end{
-	icon_state = "phrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -44670,7 +44464,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/white/corner{
-	icon_state = "warninglinecorner_white";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -45141,7 +44934,6 @@
 /area/medical/cryo)
 "iIq" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -45758,7 +45550,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/end{
-	icon_state = "warn_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -45777,7 +45568,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/end{
-	icon_state = "warn_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -45794,7 +45584,6 @@
 /area/engine/engine_room/external)
 "kNb" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -45862,7 +45651,6 @@
 /area/hallway/secondary/exit/departure_lounge)
 "kZr" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -45884,8 +45672,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/stripes/line{
-	dir = 4;
-	icon_state = "warningline"
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
@@ -46044,7 +45831,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/white/corner{
-	icon_state = "warninglinecorner_white";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -46098,7 +45884,6 @@
 /area/crew_quarters/heads/hos)
 "lHe" = (
 /obj/effect/turf_decal/caution/white{
-	icon_state = "caution_white";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -46250,11 +46035,9 @@
 "mbn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/holohoop{
-	icon_state = "hoop";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -46275,7 +46058,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
 	dir = 10
 	},
 /turf/open/floor/plating,
@@ -46348,7 +46130,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/end{
-	icon_state = "warn_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -46501,7 +46282,6 @@
 /area/maintenance/port/fore)
 "mBk" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -46968,7 +46748,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/end{
-	icon_state = "warn_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -47023,7 +46802,6 @@
 /area/engine/engineering)
 "nUq" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
-	icon_state = "connector_map-2";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -47241,7 +47019,6 @@
 /area/maintenance/port/fore)
 "oug" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -47550,7 +47327,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/end{
-	icon_state = "warn_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -47584,7 +47360,6 @@
 /area/security/checkpoint/medical)
 "pmD" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -47666,14 +47441,12 @@
 "pEW" = (
 /obj/structure/girder,
 /obj/effect/spawner/structure/window/hollow/directional{
-	icon_state = "hwindow_spawner_directional";
 	dir = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "pFw" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -47731,7 +47504,6 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/end{
-	icon_state = "warn_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -48152,7 +47924,6 @@
 /area/maintenance/port/aft)
 "qUx" = (
 /obj/effect/spawner/structure/window/hollow/plasma/end{
-	icon_state = "phwindow_spawner_end";
 	dir = 1
 	},
 /obj/structure/cable,
@@ -48160,7 +47931,6 @@
 /area/medical/virology)
 "qVo" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -48182,7 +47952,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/end{
-	icon_state = "warn_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -48648,7 +48417,6 @@
 	dir = 4
 	},
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -48669,7 +48437,6 @@
 /area/maintenance/aft)
 "svg" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -48838,7 +48605,6 @@
 /area/maintenance/aft)
 "sSZ" = (
 /obj/effect/spawner/structure/window/hollow/plasma/reinforced/end{
-	icon_state = "phrwindow_spawner_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -48868,7 +48634,6 @@
 /area/engine/engineering)
 "taQ" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -48892,7 +48657,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/end{
-	icon_state = "warn_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -48945,7 +48709,6 @@
 /area/ai_monitored/turret_protected/ai)
 "tjW" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
-	icon_state = "connector_map-2";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -48996,7 +48759,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -49142,7 +48904,6 @@
 /area/engine/engine_room/external)
 "tKp" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	icon_state = "hrwindow_spawner_directional";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -49161,7 +48922,6 @@
 "tMN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple/dark/hidden/layer1{
@@ -49292,7 +49052,6 @@
 /area/solar/starboard)
 "ufq" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -49456,7 +49215,6 @@
 "uwS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/dark/hidden/layer1,
@@ -49484,7 +49242,6 @@
 	pixel_x = -25
 	},
 /obj/effect/turf_decal/stripes/end{
-	icon_state = "warn_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -49543,7 +49300,6 @@
 "uJC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
 	dir = 10
 	},
 /obj/structure/cable,
@@ -49668,7 +49424,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/end{
-	icon_state = "warn_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -49866,7 +49621,6 @@
 /area/crew_quarters/heads/captain/private)
 "vsg" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -49896,7 +49650,6 @@
 /area/engine/engine_room/external)
 "vvN" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -49988,7 +49741,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/end{
-	icon_state = "warn_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -50078,7 +49830,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/end{
-	icon_state = "warn_end";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -50338,7 +50089,6 @@
 "wpG" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -50483,7 +50233,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -50570,7 +50319,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/end{
-	icon_state = "warn_end";
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -50631,7 +50379,6 @@
 /area/engine/engine_room)
 "xaO" = (
 /obj/effect/spawner/structure/window/hollow/directional{
-	icon_state = "hwindow_spawner_directional";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -50761,7 +50508,6 @@
 /area/science/mixing)
 "xwC" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
-	icon_state = "hrwindow_spawner_end";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -50961,7 +50707,6 @@
 "yaX" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/caution{
-	icon_state = "caution";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -50976,7 +50721,6 @@
 "yck" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/dark/hidden/layer1{

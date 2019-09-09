@@ -233,8 +233,13 @@
 				paint_mode = PAINT_NORMAL
 		if("select_colour")
 			if(can_change_colour)
-				paint_color = input(usr,"","Choose Color",paint_color) as color|null
-				. = TRUE
+				var/chosen_colour = input(usr,"","Choose Color",paint_color) as color|null
+
+				if (!isnull(chosen_colour))
+					paint_color = chosen_colour
+					. = TRUE
+				else 
+					. = FALSE
 		if("enter_text")
 			var/txt = stripped_input(usr,"Choose what to write.",
 				"Scribbles",default = text_buffer)
@@ -426,56 +431,56 @@
 	icon_state = "crayonred"
 	paint_color = "#DA0000"
 	crayon_color = "red"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/red = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1)
 	dye_color = DYE_RED
 
 /obj/item/toy/crayon/orange
 	icon_state = "crayonorange"
 	paint_color = "#FF9300"
 	crayon_color = "orange"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/orange = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1)
 	dye_color = DYE_ORANGE
 
 /obj/item/toy/crayon/yellow
 	icon_state = "crayonyellow"
 	paint_color = "#FFF200"
 	crayon_color = "yellow"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/yellow = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1)
 	dye_color = DYE_YELLOW
 
 /obj/item/toy/crayon/green
 	icon_state = "crayongreen"
 	paint_color = "#A8E61D"
 	crayon_color = "green"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/green = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1)
 	dye_color = DYE_GREEN
 
 /obj/item/toy/crayon/blue
 	icon_state = "crayonblue"
 	paint_color = "#00B7EF"
 	crayon_color = "blue"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/blue = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1)
 	dye_color = DYE_BLUE
 
 /obj/item/toy/crayon/purple
 	icon_state = "crayonpurple"
 	paint_color = "#DA00FF"
 	crayon_color = "purple"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/purple = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1)
 	dye_color = DYE_PURPLE
 
 /obj/item/toy/crayon/black
 	icon_state = "crayonblack"
 	paint_color = "#1C1C1C" //Not completely black because total black looks bad. So Mostly Black.
 	crayon_color = "black"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/black = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1)
 	dye_color = DYE_BLACK
 
 /obj/item/toy/crayon/white
 	icon_state = "crayonwhite"
 	paint_color = "#FFFFFF"
 	crayon_color = "white"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/white = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1)
 	dye_color = DYE_WHITE
 
 /obj/item/toy/crayon/mime
@@ -483,7 +488,7 @@
 	desc = "A very sad-looking crayon."
 	paint_color = "#FFFFFF"
 	crayon_color = "mime"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/invisible = 1)
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/powder/invisible = 1)
 	charges = -1
 	dye_color = DYE_MIME
 
@@ -661,12 +666,18 @@
 
 	if(isobj(target))
 		if(actually_paints)
+			if(color_hex2num(paint_color) < 350 && !istype(target, /obj/structure/window)) //Colors too dark are rejected
+				to_chat(usr, "<span class='warning'>A colour that dark on an object like this? Surely not...</span>")
+				return FALSE
+				
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
+
 			if(istype(target, /obj/structure/window))
 				if(color_hex2num(paint_color) < 255)
 					target.set_opacity(255)
 				else
 					target.set_opacity(initial(target.opacity))
+
 		. = use_charges(user, 2)
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.reaction(target, TOUCH, fraction * volume_multiplier)

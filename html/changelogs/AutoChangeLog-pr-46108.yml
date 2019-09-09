@@ -1,0 +1,11 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - rscadd: "Can lock attributes on character creation (e.g. hair style, eye color) screen so when character is randomised on the screen using \"Random Body\" or spawns randomised using \"Always Random Body\" they stay the same"
+  - rscdel: "Removed random name enforcement when using \"Always Random Species\" as it discourages its use and manually chosen species don't have this naming restriction"
+  - tweak: "Having \"Always Random Body\" on on the character creation screen won't constantly refresh your character anytime you change an attribute. Same for \"Always Random Name\" for your name and \"Always Random Species\" for your species."
+  - rscadd: "Can selectively spawn with random gender, age, backpack style, jumpsuit style (i.e. suit or skirt), maybe a couple of other shits I forgot that weren't previously affected by \"Always Random Body\""
+  - spellcheck: "Changed all instances of the word hairstyle as multiple words in the code to a single word due to autism and because I think it's more intuitive as a coder for the word to be spelled properly"
+  - code_imp: "Adds defines for all randomisable features"
+  - code_imp: "Changes/shortens some character creation variables for clarity and ease of repetition"
+  - code_imp: "The existing \"Always Random\" stuff is now part of a list that covers all randomisation"

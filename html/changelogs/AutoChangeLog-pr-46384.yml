@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "Clicking \"increase line height\" once will no longer forever ruin the chat for Wine users."
