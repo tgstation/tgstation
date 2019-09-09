@@ -857,12 +857,19 @@
 	return english_list(out, "something indescribable")
 
 /datum/reagents/proc/expose_temperature(var/temperature, var/coeff=0.02)
+	if(istype(my_atom,/obj/item/reagent_containers))
+		var/obj/item/reagent_containers/RCs = my_atom
+		if(RCs.reagent_flags & NO_REACT) //stasis holders IE cryobeaker
+			return
 	var/temp_delta = (temperature - chem_temp) * coeff
 	if(temp_delta > 0)
 		chem_temp = min(chem_temp + max(temp_delta, 1), temperature)
 	else
 		chem_temp = max(chem_temp + min(temp_delta, -1), temperature)
 	chem_temp = round(chem_temp)
+	for(var/i in reagent_list)
+		var/datum/reagent/R = i
+		R.on_temp_change()
 	handle_reactions()
 
 ///////////////////////////////////////////////////////////////////////////////////

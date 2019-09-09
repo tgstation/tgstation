@@ -17,7 +17,7 @@
 	name = "welding helmet"
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye."
 	icon_state = "welding"
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH 
 	item_state = "welding"
 	materials = list(/datum/material/iron=1750, /datum/material/glass=400)
 	flash_protect = 2
@@ -26,7 +26,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	actions_types = list(/datum/action/item_action/toggle)
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
-	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = FIRE_PROOF
 	clothing_flags = SNUG_FIT
 

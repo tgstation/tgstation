@@ -30,7 +30,7 @@ Patrick10ghost = Admin
 DrachenKlaue = Admin
 ChocolateJ = Admin
 Axolotl123 = Admin
-Qustinnus = Admin
+#Qustinnus = Admin removing this abusive boy
 Idontcareacount = Admin
 Ss4gogeta0 = Fulp Crew
 Windarkata = Fulp Crew
@@ -59,8 +59,9 @@ shlomobergerstein = Admin Jr.
 #Malgover = Moderator
 Misdoubtful = Admin Jr.
 Shadowflame909 = Admin Jr.
-Glubtok = Moderator
+Glubtok = Admin Candidate
 BringTheBoom = Moderator
+Heliocintrini = Moderator
 
 #TRIAL ADMINS
 BLANK = Admin Jr.

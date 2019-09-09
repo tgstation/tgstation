@@ -107,6 +107,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/highlander_executed = FALSE
 	/// If a only ruleset has been executed.
 	var/only_ruleset_executed = FALSE
+	/// Dynamic configuration, loaded on pre_setup
+	var/list/configuration = null
 
 /datum/game_mode/dynamic/admin_panel()
 	var/list/dat = list("<html><head><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
@@ -287,6 +289,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	return TRUE
 
 /datum/game_mode/dynamic/pre_setup()
+	if(CONFIG_GET(flag/dynamic_config_enabled))
+		var/json_file = file("config/dynamic.json")
+		if(fexists(json_file))
+			configuration = json_decode(file2text(json_file))
 	for (var/rule in subtypesof(/datum/dynamic_ruleset))
 		var/datum/dynamic_ruleset/ruleset = new rule()
 		// Simple check if the ruleset should be added to the lists.
@@ -300,6 +306,17 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			if ("Midround")
 				if (ruleset.weight)
 					midround_rules += ruleset
+		if(configuration)
+			if(!configuration[ruleset.ruletype])
+				continue
+			if(!configuration[ruleset.ruletype][ruleset.name])
+				continue
+			var/rule_conf = configuration[ruleset.ruletype][ruleset.name]
+			for(var/variable in rule_conf)
+				if(!ruleset.vars[variable])
+					stack_trace("Invalid dynamic configuration variable [variable] in [ruleset.ruletype] [ruleset.name]")
+				ruleset.vars[variable] = rule_conf[variable]
+	
 	for(var/mob/dead/new_player/player in GLOB.player_list)
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
 			roundstart_pop_ready++

@@ -41,7 +41,6 @@
 	grab_sound = 'sound/Fulpsounds/beef_grab.ogg'//Special sound for grabbing
 
 	var/dehydrate = 0
-	var/list/datum/brain_trauma/startTraumas = list( /datum/brain_trauma/mild/hallucinations, /datum/brain_trauma/mild/phobia/strangers )
 	    // list( /datum/brain_trauma/mild/phobia/strangers, /datum/brain_trauma/mild/phobia/doctors, /datum/brain_trauma/mild/phobia/authority )
 
 	// Take care of your meat, everybody
@@ -89,9 +88,10 @@
 	C.selected_default_language = /datum/language/russian
 
 	// Be Spooked but Educated
-	C.gain_trauma(pick(startTraumas))
+	//C.gain_trauma(pick(startTraumas))
+	C.gain_trauma(/datum/brain_trauma/mild/phobia/strangers)
+	C.gain_trauma(/datum/brain_trauma/mild/hallucinations)
 	C.gain_trauma(/datum/brain_trauma/special/bluespace_prophet/phobetor)
-	// NOTE: To remove, use cure_trauma_type()
 
 /datum/species/proc/set_beef_color(mob/living/carbon/human/H)
 	return // Do Nothing
@@ -134,9 +134,10 @@
 	C.part_default_r_leg = /obj/item/bodypart/r_leg
 	C.ReassignForeignBodyparts()
 
+	// Resolve Trauma
 	C.cure_trauma_type(/datum/brain_trauma/special/bluespace_prophet/phobetor)
-
-
+	C.cure_trauma_type(/datum/brain_trauma/mild/phobia/strangers)
+	C.cure_trauma_type(/datum/brain_trauma/mild/hallucinations)
 
 
 
@@ -611,14 +612,14 @@
 /obj/item/clothing/under/bodysash/
 	name = "body sash"
 	desc = "A simple body sash, slung from shoulder to hip."
-	icon = 'icons/Fulpicons/fulpclothing.dmi'
-	mob_overlay_icon =  'icons/Fulpicons/fulpclothing_worn.dmi' // worn_icon
+	icon = 'icons/Fulpicons/fulpclothing.dmi' // item icon
+	mob_overlay_icon =  'icons/Fulpicons/fulpclothing_worn.dmi' // mob worn icon
 	icon_state = "assistant" // Inventory Icon
 	//item_color = "assistant" // The worn item Icon
-	item_state = "sash" // In-hand Icon
 	body_parts_covered = CHEST // |GROIN|ARMS
 	lefthand_file = 'icons/Fulpicons/fulpclothing_hold_left.dmi'
 	righthand_file = 'icons/Fulpicons/fulpclothing_hold_right.dmi'
+	item_state = "sash" // In-hand Icon
 
 /obj/item/clothing/under/bodysash/security
 	name = "security sash"
