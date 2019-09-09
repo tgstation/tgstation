@@ -78,7 +78,7 @@
 					healing -= 0.1
 			owner.adjustBruteLoss(healing)
 			owner.adjustFireLoss(healing)
-			owner.adjustToxLoss(healing, TRUE, TRUE)
+			owner.adjustToxLoss(healing * 0.5, TRUE, TRUE)
 			owner.adjustStaminaLoss(healing)
 	if(human_owner && human_owner.drunkenness)
 		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
