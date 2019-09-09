@@ -275,7 +275,7 @@
 /obj/item/reagent_containers/food/snacks/cakeslice/bscc
 	name = "blackberry and strawberry chocolate cake slice"
 	desc = "Just a slice of cake  filled with assortment of blackberries and strawberries!"
-	icon_state = "blackbarry_strawberries_cake_coco_cake_slice"
+	icon_state = "blackbarry_strawberries_cake_coco_slice"
 	filling_color = "#FFD700"
 	tastes = list("blackberry" = 2, "strawberries" = 2, "chocolate" = 2, "sweetness" = 2,"cake" = 3)
 	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
