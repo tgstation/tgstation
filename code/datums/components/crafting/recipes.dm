@@ -392,6 +392,14 @@
 				/obj/item/stack/rods = 12)
 	category = CAT_MISC
 
+/datum/crafting_recipe/rollerbed
+	name = "Roller Bed"
+	result = /obj/structure/bed/roller
+	reqs = list(/obj/item/stack/sheet/metal = 2,
+				/obj/item/stack/rods = 2)
+	time = 70
+	category = CAT_MISC
+
 /datum/crafting_recipe/wheelchair
 	name = "Wheelchair"
 	result = /obj/vehicle/ridden/wheelchair

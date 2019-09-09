@@ -75,6 +75,11 @@
 	else
 		return ..()
 
+/obj/structure/bed/roller/deconstruct(disassembled = TRUE)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		new /obj/item/stack/rods(loc,2)
+	..()
+
 /obj/structure/bed/roller/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr && Adjacent(usr))
