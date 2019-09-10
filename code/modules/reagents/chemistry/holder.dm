@@ -525,6 +525,7 @@
 	total_volume = 0
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
+		R.volume = round(R.volume, 0.05) //floating point errors are great (not)
 		if(R.volume < 0.1)
 			del_reagent(R.type)
 		else
@@ -894,7 +895,7 @@
 	return picked_reagent
 
 /proc/get_chem_id(chem_name)
-	for(var/A in GLOB.chemical_reagents_list)
-		var/datum/reagent/R = GLOB.chemical_reagents_list[A]
-		if(chem_name == ckey(R.name))
-			return R.type
+	for(var/X in GLOB.chemical_reagents_list)
+		var/datum/reagent/R = GLOB.chemical_reagents_list[X]
+		if(chem_name == replacetext(lowertext(R.name), " ", ""))
+			return X
