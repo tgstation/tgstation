@@ -8,7 +8,7 @@
 /datum/reagent/medicine/C2/helbital //only REALLY a C2 if you heal the other damages but not being able to outright heal the other guys is close enough to damaging
 	name = "Helbital"
 	description = "Named after the norse goddess Hel, this medicine heals the patient's bruises the closer they are to death. Burns, toxins, and asphyxition will increase healing but these damages must be maintained while the drug is being metabolized or the drug will react negatively."
-	color = "#ECEC8D" // rgb: 236	236	141
+	color = "#9400D3"
 	taste_description = "cold and lifeless"
 	overdose_threshold = 35
 	reagent_state = SOLID
