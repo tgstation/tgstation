@@ -86,6 +86,14 @@
 		spark_system = null
 	return ..()
 
+/obj/machinery/door/proc/try_safety_unlock(mob/user)
+	if(safety_mode && !hasPower() && density)
+		to_chat(user, "<span class='notice'>You begin unlocking the airlock safety mechanism...</span>")
+		if(do_after(user, 200, target = src))
+			try_to_crowbar(null, user)
+			return TRUE
+	return FALSE
+
 /obj/machinery/door/Bumped(atom/movable/AM)
 	. = ..()
 	if(operating || (obj_flags & EMAGGED))
@@ -100,6 +108,8 @@
 				return	//Can bump-open one airlock per second. This is to prevent shock spam.
 			M.last_bumped = world.time
 			if(M.restrained() && !check_access(null))
+				return
+			if(try_safety_unlock(M))
 				return
 			bumpopen(M)
 			return
@@ -155,11 +165,8 @@
 	. = ..()
 	if(.)
 		return
-	if(safety_mode && !hasPower() && density)
-		to_chat(user, "<span class='notice'>You begin unlocking the airlock safety mechanism...</span>")
-		if(do_after(user, 200, target = src))
-			try_to_crowbar(null, user)
-			return
+	if(try_safety_unlock(user))	
+		return
 	return try_to_activate_door(user)
 
 /obj/machinery/door/attack_tk(mob/user)
