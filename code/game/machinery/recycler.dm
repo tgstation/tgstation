@@ -115,7 +115,7 @@
 		if(istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /mob/living/brain))
 			emergency_stop(AM)
 		else if(isliving(AM))
-			if((obj_flags & EMAGGED)||!ishuman(AM))
+			if((obj_flags & EMAGGED)||!ishuman(AM)||!isguardian(AM))
 				crush_living(AM)
 			else
 				emergency_stop(AM)
@@ -162,8 +162,6 @@
 	update_icon()
 
 /obj/machinery/recycler/proc/crush_living(mob/living/L)
-	if(isguardian(L))
-		return
 
 	L.forceMove(loc)
 
