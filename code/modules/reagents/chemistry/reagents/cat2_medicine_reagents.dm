@@ -37,7 +37,7 @@
 		to_chat(M, "<span class='hierophant'>Malevolent spirits appear before you, barting your life in a 'friendly' game of rock, paper, scissors. Which do you choose?</span>")
 		var/timeisticking = world.time
 		var/RPSchoice = input(M, "Janken Time! You have 60 Seconds to Choose!", "Rock Paper Scissors",null) as null|anything in RockPaperScissors
-		if(QDELETED(M) || (timeisticking+(1.1 MINUTE) < world.time))
+		if(QDELETED(M) || (timeisticking+(1.1 MINUTES) < world.time))
 			return //good job, you ruined it
 		if(!RPSchoice)
 			to_chat(M, "<span class='hierophant'>You decide to not press your luck, but the spirits remain... hopefully they'll go away soon.</span>")
