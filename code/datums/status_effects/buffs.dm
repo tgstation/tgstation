@@ -285,7 +285,7 @@
 /datum/status_effect/blooddrunk/on_apply()
 	. = ..()
 	if(.)
-		ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "blooddrunk");
+		ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "blooddrunk")
 		owner.maxHealth *= 10
 		owner.bruteloss *= 10
 		owner.fireloss *= 10
