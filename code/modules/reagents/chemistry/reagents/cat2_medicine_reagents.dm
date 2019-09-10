@@ -32,7 +32,7 @@
 
 	if(healed_this_iteration && !reaping && prob(0.0001)) //janken with the grim reaper!
 		reaping = TRUE
-		var/static/list/RockPaperScissors = list("rock" = "paper", "paper" = "scissors", "scissors" = "rock") //choice = loses to
+		var/list/RockPaperScissors = list("rock" = "paper", "paper" = "scissors", "scissors" = "rock") //choice = loses to
 		helbent = M.apply_status_effect(/datum/status_effect/necropolis_curse,CURSE_BLINDING)
 		to_chat(M, "<span class='hierophant'>Malevolent spirits appear before you, barting your life in a 'friendly' game of rock, paper, scissors. Which do you choose?</span>")
 		var/timeisticking = world.time
