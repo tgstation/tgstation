@@ -50,6 +50,3 @@
 	else
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artbad", /datum/mood_event/artbad)
 
-#undef BAD_ART
-#undef GOOD_ART
-#undef GREAT_ART
