@@ -1,0 +1,6 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - rscadd: "The font size of all text in the chat window now scales"
+  - tweak: "High volume is a slightly smaller"
+  - tweak: "Admins have slightly larger OOC text"
