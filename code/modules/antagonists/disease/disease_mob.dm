@@ -42,7 +42,7 @@ the new instance inside the host to be updated to the template's stats.
 	var/move_delay = 1
 
 	var/next_adaptation_time = 0
-	var/adaptation_cooldown = 1200
+	var/adaptation_cooldown = 600
 
 	var/list/purchased_abilities
 	var/list/unpurchased_abilities
