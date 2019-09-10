@@ -37,25 +37,8 @@
   * Will apply the blind alerts if needed
   */
 /mob/proc/adjust_blindness(amount)
-	if(amount>0)
-		var/old_eye_blind = eye_blind
-		eye_blind += amount
-		if(!old_eye_blind)
-			if(stat == CONSCIOUS || stat == SOFT_CRIT)
-				throw_alert("blind", /obj/screen/alert/blind)
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-	else if(eye_blind)
-		var/blind_minimum = 0
-		if((stat != CONSCIOUS && stat != SOFT_CRIT))
-			blind_minimum = 1
-		if(isliving(src))
-			var/mob/living/L = src
-			if(HAS_TRAIT(L, TRAIT_BLIND))
-				blind_minimum = 1
-		eye_blind = max(eye_blind+amount, blind_minimum)
-		if(!eye_blind)
-			clear_alert("blind")
-			clear_fullscreen("blind")
+	set_blindness(eye_blind + amount)
+
 /**
   * Force set the blindness of a mob to some level
   */
