@@ -12,10 +12,10 @@
 	enter_delay = 2
 	tube_construction = /obj/structure/c_transit_tube/station
 	var/open_status = STATION_TUBE_CLOSED
-	var/pod_moving = 0
+	var/pod_moving = FALSE
 	var/cooldown_delay = 50
 	var/launch_cooldown = 0
-	var/reverse_launch = 0
+	var/reverse_launch = FALSE
 	var/base_icon = "station0"
 	var/boarding_dir //from which direction you can board the tube
 
@@ -31,7 +31,7 @@
 	return ..()
 
 /obj/structure/transit_tube/station/should_stop_pod(pod, from_dir)
-	return 1
+	return TRUE
 
 /obj/structure/transit_tube/station/Bumped(atom/movable/AM)
 	if(!pod_moving && open_status == STATION_TUBE_OPEN && ismob(AM) && AM.dir == boarding_dir)
@@ -130,28 +130,28 @@
 		return
 	for(var/obj/structure/transit_tube_pod/pod in loc)
 		if(!pod.moving)
-			pod_moving = 1
+			pod_moving = TRUE
 			close_animation()
 			sleep(CLOSE_DURATION + 2)
 			if(open_status == STATION_TUBE_CLOSED && pod && pod.loc == loc)
 				pod.follow_tube()
-			pod_moving = 0
-			return 1
-	return 0
+			pod_moving = FALSE
+			return TRUE
+	return FALSE
 
 /obj/structure/transit_tube/station/process()
 	if(!pod_moving)
 		launch_pod()
 
 /obj/structure/transit_tube/station/pod_stopped(obj/structure/transit_tube_pod/pod, from_dir)
-	pod_moving = 1
+	pod_moving = TRUE
 	spawn(5)
 		if(reverse_launch)
 			pod.setDir(tube_dirs[1]) //turning the pod around for next launch.
 		launch_cooldown = world.time + cooldown_delay
 		open_animation()
 		sleep(OPEN_DURATION + 2)
-		pod_moving = 0
+		pod_moving = FALSE
 		if(!QDELETED(pod))
 			var/datum/gas_mixture/floor_mixture = loc.return_air()
 			floor_mixture.archive()
@@ -185,7 +185,7 @@
 // Stations which will send the tube in the opposite direction after their stop.
 /obj/structure/transit_tube/station/reverse
 	tube_construction = /obj/structure/c_transit_tube/station/reverse
-	reverse_launch = 1
+	reverse_launch = TRUE
 	icon_state = "closed_terminus0"
 	base_icon = "terminus0"
 
@@ -264,7 +264,7 @@
 
 /obj/structure/transit_tube/station/dispenser/reverse
 	tube_construction = /obj/structure/c_transit_tube/station/dispenser/reverse
-	reverse_launch = 1
+	reverse_launch = TRUE
 	icon_state = "closed_terminusdispenser0"
 	base_icon = "terminusdispenser0"
 
