@@ -24,7 +24,7 @@
 	if(cccombo >= beginning_combo)
 		M.adjustBruteLoss(floor(cccombo/-30,0.1)) //every 3 damage adds 0.1 per tick
 	else
-		M.adjustToxLoss(max(beginning_combo*0.1,0.2)) //If you are just healing instead of converting the damage we'll KINDLY do it for you AND make it the most difficult!
+		M.adjustToxLoss(max(beginning_combo*0.1,0.1)) //If you are just healing instead of converting the damage we'll KINDLY do it for you AND make it the most difficult!
 	..()
 	return TRUE
 
