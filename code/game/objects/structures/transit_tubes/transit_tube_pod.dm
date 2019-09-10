@@ -6,6 +6,7 @@
 	density = TRUE
 	var/moving = 0
 	var/datum/gas_mixture/air_contents = new()
+	var/occupied_icon_state = "pod_occupied"
 
 
 /obj/structure/transit_tube_pod/Initialize()
@@ -22,9 +23,9 @@
 
 /obj/structure/transit_tube_pod/update_icon()
 	if(contents.len)
-		icon_state = "pod_occupied"
+		icon_state = occupied_icon_state
 	else
-		icon_state = "pod"
+		icon_state = initial(icon_state)
 
 /obj/structure/transit_tube_pod/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_CROWBAR)
@@ -195,6 +196,8 @@
 /obj/structure/transit_tube_pod/dispensed
 	name = "temporary transit tube pod"
 	desc = "Hits the skrrrt (tube station), then hits the dirt (nonexistence). You know how it is."
+	icon_state = "temppod"
+	occupied_icon_state = "temppod_occupied"
 
 /obj/structure/transit_tube_pod/dispensed/outside_tube()
 	qdel(src)
