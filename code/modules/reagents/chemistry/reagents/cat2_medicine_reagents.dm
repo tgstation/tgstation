@@ -5,29 +5,39 @@
 /******BRUTE******/
 /*Suffix: -bital*/
 
-/datum/reagent/medicine/C2/sanguibital
-	name = "Sanguibital"
-	description = "A unique medicine that heals bruises, scaling with the rate at which one is bleeding out. Dilates blood streams, increasing the amount of blood lost. Overdosing further increases blood loss."
+/datum/reagent/medicine/C2/helbital //only REALLY a C2 if you heal the other damages but not being able to outright heal the other guys is close enough to damaging
+	name = "Helbital"
+	description = "Named after the norse goddess Hel, this medicine heals the patient's bruises the closer they are to death. Burns, toxins, and asphyxition will increase healing but these damages must be maintained while the drug is being metabolized or the drug will react negatively."
 	color = "#ECEC8D" // rgb: 236	236	141
-	taste_description = "whatever vampires would eat"
+	taste_description = "cold and lifeless"
 	overdose_threshold = 35
 	reagent_state = SOLID
+	var/datum/status_effect/necropolis_curse/helbent
+	var/beginning_combo = 0
 
-/datum/reagent/medicine/C2/sanguibital/on_mob_life(mob/living/carbon/M)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.bleed_rate)
-			H.bleed(2)
-			H.adjustBruteLoss(round(10*((H.blood_volume/BLOOD_VOLUME_NORMAL)-1),0.1),TRUE) //More Blood Loss = More Healing upto <5 brute per tick
+/datum/reagent/medicine/C2/helbital/on_mob_metabolize(mob/living/carbon/M)
+	beginning_combo = M.getToxLoss() + M.getOxyLoss() + M.getFireLoss() //This DOES mean you can cure Tox/Oxy and then do burn to maintain the brute healing that way.
+	return ..()
+
+/datum/reagent/medicine/C2/helbital/on_mob_life(mob/living/carbon/M)
+	var/cccombo = M.getToxLoss() + M.getOxyLoss() + M.getFireLoss()
+	if(cccombo >= beginning_combo)
+		M.adjustBruteLoss(floor(cccombo/-30,0.1)) //every 3 damage adds 0.1 per tick
+	else
+		M.adjustToxLoss(max(beginning_combo*0.1,0.2)) //If you are just healing instead of converting the damage we'll KINDLY do it for you AND make it the most difficult!
 	..()
 	return TRUE
 
-/datum/reagent/medicine/C2/sanguibital/overdose_process(mob/living/carbon/M)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.bleed(2)
+/datum/reagent/medicine/C2/helbital/overdose_process(mob/living/carbon/M)
+	helbent = apply_necropolis_curse(CURSE_WASTING | CURSE_BLINDING)
 	..()
 	return TRUE
+
+/datum/reagent/medicine/C2/helbital/on_mob_delete
+	if(helbent) //TODO check if datums can Qdel
+		helbent.Destroy()
+		helbent = null
+	..()
 
 /datum/reagent/medicine/C2/libital //messes with your liber
 	name = "Libital"
