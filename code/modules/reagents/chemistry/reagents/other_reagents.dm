@@ -435,7 +435,7 @@
 	name = "Stable Mutation Toxin"
 	description = "A humanizing toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	metabolization_rate = 0.2 //Doesn't metabolize. Gets destroyed on a timer.
+	metabolization_rate = 0.2 //metabolizes to prevent micro-dosage
 	taste_description = "slime"
 	var/race = /datum/species/human
 	var/list/mutationtexts = list( "You don't feel very well." = MUT_MSG_IMMEDIATE,
