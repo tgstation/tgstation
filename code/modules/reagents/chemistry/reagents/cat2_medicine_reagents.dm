@@ -67,7 +67,7 @@
 	return TRUE
 
 /datum/reagent/medicine/C2/helbital/on_mob_delete(mob/living/L)
-	if(helbent) //check if datums can Qdel
+	if(helbent)
 		L.remove_status_effect(helbent.type)
 	..()
 
