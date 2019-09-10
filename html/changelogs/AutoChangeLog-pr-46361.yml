@@ -1,0 +1,8 @@
+author: "ExcessiveUseOfCobblestone"
+delete-after: True
+changes: 
+  - rscadd: "Plasma now \"boils\" at 50C. This means you will need to heat the liquid form up to make it into a gas (previously you could just splash it)"
+  - tweak: "containers that halt reactions (IE cryostasis beakers) will keep reagents at a set temperature."
+  - bugfix: "Plasma will no longer summon gas whenever transferring via syringe. AKA you can now do xenobio again."
+  - bugfix: "Plasma can no longer be cheesed grenade-style by heating the beaker. It will now require reaction/pyrotechnics."
+  - code_imp: "Reagents now have the framework to perform different effects on temperature change."

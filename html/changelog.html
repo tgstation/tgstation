@@ -51,6 +51,43 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">06 September 2019</h2>
+			<h3 class="author">ATHATH and ExcessiveUseOfCobblestone updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">Earthsblood's healing has been changed; its burn and brute healing rates have been increased, but its oxygen, stamina and clone healing rates have been lowered.</li>
+				<li class="balance">Earthsblood heals you less before its 26th cycle in you, but also deals less brain damage to you before its 26th cycle in you as well.</li>
+				<li class="balance">Earthsblood now gives you the pacifism trait temporarily while it is in your system.</li>
+				<li class="balance">If you are a human, the earthsblood overdose effect now, in addition to its previous effects, gives you a pacifism brain trauma with a resilience of TRAUMA_RESILIENCE_SURGERY. If you already had a pacifism brain trauma with a resilience of TRAUMA_RESILIENCE_BASIC (for some reason), it will increase the resilience of that brain trauma to TRAUMA_RESILIENCE_SURGERY. This pacifism brain trauma is NOT taken away when the earthsblood chem leaves your system.</li>
+				<li class="rscadd">After its 25th cycle in you, earthsblood has a 10% chance per tick of on_mob_life to make you say a random hippie-related message.</li>
+			</ul>
+			<h3 class="author">Dawson1917 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Tweaked combat glove descriptions to more clearly state that they're shockproof.</li>
+			</ul>
+			<h3 class="author">Fhaxaris updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">cybernetic heart will restart after 20 seconds instead of stopping forever</li>
+				<li class="tweak">cybernetic heart takes damage from emp like other cybernetics</li>
+				<li class="tweak">heart injects epinephrine on crit instead of unconsciousness</li>
+			</ul>
+			<h3 class="author">GuyonBroadway updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">Felinids now have a very adverse reaction to chocolate products.</li>
+				<li class="bugfix">You no longer purge your entire system of food in a single puke</li>
+			</ul>
+			<h3 class="author">Qustinnus updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">you can no longer exploit the pet park for unlimited happiness</li>
+			</ul>
+			<h3 class="author">plapatin updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">mime's invisible box lasts for twice as long now</li>
+			</ul>
+			<h3 class="author">zxaber updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">It's no longer possible to pull the Durand shield away from the Durand.</li>
+			</ul>
+
 			<h2 class="date">03 September 2019</h2>
 			<h3 class="author">ATH1909 updated:</h3>
 			<ul class="changes bgimages16">
@@ -2079,211 +2116,6 @@
 			<ul class="changes bgimages16">
 				<li class="imageadd">Animated speech bubbles.</li>
 				<li class="rscadd">Seashells have been added to the game.</li>
-			</ul>
-
-			<h2 class="date">05 July 2019</h2>
-			<h3 class="author">Akrilla updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Contract kit comes with a contractor baton - a unique, lightly electrified weapon to help complete your contracts.</li>
-				<li class="tweak">Finalized payment system for contracts; much more balanced for contractors. No more extremely low paying contract sets.</li>
-				<li class="tweak">Generated contracts will all have unique targets, no more duplicates.</li>
-				<li class="tweak">Extraction droppod explosion has been removed, it'll only damage the tile it lands on.</li>
-				<li class="bugfix">Extraction pods get sent to the jail immediately again.</li>
-				<li class="refactor">Refactored classic_baton code.</li>
-			</ul>
-			<h3 class="author">ArcaneMusic updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">NT staff have added new laser focusing rings onto all BSA equipment, so now it looks more like a massive deadly laser, and fires more accurately.</li>
-			</ul>
-			<h3 class="author">Atlanta Ned updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Security can now issue citations! Spot someone committing a minor crime? Fine them for it!</li>
-				<li class="rscadd">Got a citation? You can view and pay it at any security warrant consoles, located near the brig, your local law office, or the courtroom!</li>
-			</ul>
-			<h3 class="author">Fikou updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Reports say the cult of Nar'Sie has gotten stronger, and can now convert the captain when he doesn't have his mindshield. To prepare against this, the CentCom religious division has trained their special holy people against conversions</li>
-			</ul>
-			<h3 class="author">Floyd / Qustinnus updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">The Nanotrasen Physological department has realized that working at a metal deathbox is more stressful than it currently is. Mood has been slightly rebalanced</li>
-			</ul>
-			<h3 class="author">Garen updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixes being able to pull from belt/backpack when you are stunned or cuffed.</li>
-			</ul>
-			<h3 class="author">Krysonism updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Trophazole - a new hearty brute medicine.</li>
-				<li class="rscadd">Rhigoxane -- a new chilly burn medicine.</li>
-				<li class="rscadd">Thializid - a new high-stakes tox medicine.</li>
-				<li class="rscdel">The 3 basic trek chems are now unmixable.</li>
-				<li class="rscadd">IV medicine bags and blood packs are available in the medlathe.</li>
-				<li class="rscadd">suspicious spray bottles have been added to the chemdrobe contraband compartment.</li>
-				<li class="rscadd">The medical lathe can now print spray bottles.</li>
-				<li class="rscdel">Removed the charcoal syringes from the medkits.</li>
-				<li class="balance">There is now slightly less charcoal available roundstart.</li>
-				<li class="imageadd">Added new spray bottle & iv bag sprites.</li>
-				<li class="code_imp">trans_to can now react the reagents if you want.</li>
-			</ul>
-			<h3 class="author">Lett1 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added a new contraband about free syndicate keys</li>
-			</ul>
-			<h3 class="author">Mickyan updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="imageadd">Coming into contact with -HONK- may have additional effects, do not be alarmed</li>
-				<li class="tweak">For safety reasons, the administration of -HONK- may only be performed by trained professionals</li>
-				<li class="bugfix">Self-application of -HONK- is now forbidden</li>
-			</ul>
-			<h3 class="author">RandolfTheMeh updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="code_imp">Universal Organ Damage variables and procs</li>
-			</ul>
-			<h3 class="author">Time-Green updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Clones no longer have their genetic sequence quantum garble fucked together</li>
-			</ul>
-			<h3 class="author">WJohnston updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Redesigned boxstation's SMES room. It is now part of engineering power storage like it once was instead of being strangely separated from the station.</li>
-			</ul>
-			<h3 class="author">XDTM updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Abductors can now buy a special chem dispenser for 2 points. The machine is delivered as a beacon which can be used when standing on any free tile to spawn it.</li>
-			</ul>
-			<h3 class="author">actioninja updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">The sabre sheath properly plays sounds again after who knows how long</li>
-				<li class="bugfix">smeses no longer link to themselves non-visibly</li>
-				<li class="soundadd">Add match strike sound.</li>
-				<li class="bugfix">Fixed a disconnected APC on the meta map satellite.</li>
-				<li class="rscadd">Added a scrubber to the meta engineering lobby.</li>
-				<li class="bugfix">cables now actually function again (I'm so sorry)</li>
-			</ul>
-			<h3 class="author">bandit updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Nanotrasen chefs and botanists have finally learned to stop composting or grinding bowls and the like along with the food they come with.</li>
-				<li class="bugfix">After years of arduous training, Nanotrasen crew can now tell whether an animal is dead by examining it.</li>
-			</ul>
-			<h3 class="author">blargety, Onule updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added departmental sprites for circuit boards commonly used within a department. For example, a SMES will have a orange base.</li>
-				<li class="imageadd">Adds 8 new icons for circuit boards, based on department colors.</li>
-				<li class="refactor">Reorganizes computer_circuits.dm and machine_circuitboard.dm based on an alphabetical order divided by department.</li>
-			</ul>
-			<h3 class="author">granpawalton updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Breakfast foods such as eggs, donuts, coffee and so on now give a long but weak positive moodie when eaten within 15 minutes of the start of a shift</li>
-			</ul>
-			<h3 class="author">nemvar updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Mobs with negative armor no longer get damage decreased by armor penetration.</li>
-				<li class="tweak">Various cosmetic and gameplay related changes to hivebots. Player controlled hivebots can change their look by changing their intent to harm.</li>
-				<li class="bugfix">Humans now always use the correct value for limb armor.</li>
-				<li class="bugfix">Negative armor on objects now increases damage taken.</li>
-				<li class="rscadd">All chainsaws,  including the null rod variants, can now be used to saw off guns.</li>
-				<li class="code_imp">Refactored the visibility of reagents for mobs.</li>
-				<li class="bugfix">The air injector of the delta station incinerator now works.</li>
-				<li class="bugfix">Antimagic now gets used up properly</li>
-			</ul>
-			<h3 class="author">ninjanomnom updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Reproductive crossbreed extracts can be fed from the bio bag again</li>
-			</ul>
-			<h3 class="author">pireamaineach updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added mime envirosuits, nothing special here.</li>
-				<li class="rscadd">Added clown envirosuits, which release space lube when they extinguish the clown.</li>
-				<li class="rscdel">Removes code that theoretically limits plasmamen from being clowns and mimes, but actually doesn't.</li>
-				<li class="tweak">I guess the roles now spawning with these suits is kind of notable.</li>
-				<li class="tweak">Reverts unlisted changes to the grey detective suit from https://github.com/tgstation/tgstation/pull/44776.</li>
-			</ul>
-			<h3 class="author">wesoda25 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">You can no longer infinitely purify a soulstone.</li>
-				<li class="bugfix">Cultists can't use purified soulstones anymore.</li>
-			</ul>
-			<h3 class="author">zxaber updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">The R&D Server Controller console now lists the entire research history, including names of people who researched each item and locations it was done from.</li>
-				<li class="rscadd">The R&D Server Controller console can now be used to disable the servers if someone makes the RD upset.</li>
-				<li class="bugfix">Fixed the R&D servers working without power.</li>
-				<li class="imageadd">R&D server sprites are now slightly animated, and new sprites have been added for when the server is disabled or off.</li>
-			</ul>
-
-			<h2 class="date">03 July 2019</h2>
-			<h3 class="author">AcapitalA updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Night Vision Goggles and certain Thermal Optics are **slightly** more sensitive to bright lights.</li>
-			</ul>
-			<h3 class="author">CPTANT updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Added OD to styptic and sulfur sulfadiazine, consuming too much will give you slight toxin damage on top of slight brute/burn damage.</li>
-				<li class="balance">oxandrolone and salicyclic acid have the threshold for their superior healing capacity lowered.</li>
-			</ul>
-			<h3 class="author">Denton updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Delta: Atmospheric technicians are now able to lock/unlock the SM engine's rad collectors with their IDs.</li>
-				<li class="bugfix">Donut: Added a missing SciDrobe vending machine to the RnD "Excess Storage" area.</li>
-				<li class="bugfix">Meta: Fixed the AIsat being connected to the station's power grid by round start. Fixed Medbay intercoms with faulty presets. Removed a duplicate windoor in the cargo bay that kept MULEbots from leaving their area.</li>
-				<li class="bugfix">Mining station: Fixed unconnected air supply pipes.</li>
-				<li class="bugfix">Replaced the CentCom admin storage vault door with bomb-proof shutters (require CentCom Captain level access to open). Removed broken intercoms from the wizard shuttle and replaced them with two headsets.</li>
-				<li class="bugfix">Deleted random duplicate and broken atmos piping in most maps.</li>
-				<li class="bugfix">Donutstation: The AI chamber SMES is now correctly connected to the AI APC.</li>
-				<li class="tweak">CentCom: Made the ERT pod doors and vault shutters bomb proof. Replaced loose CentCom ID cards with a box of IDs.</li>
-			</ul>
-			<h3 class="author">Dorsidwarf updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Nanotrasen washing machines can now extract the raw power of the cosmos from bluespace crystals.</li>
-			</ul>
-			<h3 class="author">MadoFrog updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Red, white, and blue mech pilot jumpsuits now available in the Mech Pilot's Suits Crate, under Costumes & Toys.</li>
-			</ul>
-			<h3 class="author">Skoglol updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Added lots of new virus cures, made cure difficulty scale more consistently. Cures are now picked from a list of possible cures per resistance level, multiple diseases at the same level no longer always share a cure. Looking at you table salt.</li>
-			</ul>
-			<h3 class="author">SpacePrius updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added empty boxes.</li>
-				<li class="bugfix">Fixed bug where hivemind vessel awakening would not be logged.</li>
-				<li class="bugfix">Fixed bug where awoken hivemind vessel objectives would not be logged.</li>
-				<li class="tweak">slightly modified the deadchat text for awakening.</li>
-			</ul>
-			<h3 class="author">Tlaltecuhtli updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">limbs are now small</li>
-			</ul>
-			<h3 class="author">XDTM updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Engineering closets now start with a construction bag, which can hold machine components, circuits, electronics, and cable coils.</li>
-			</ul>
-			<h3 class="author">actioninja updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">cables are no longer lag generators when being cut</li>
-			</ul>
-			<h3 class="author">bandit updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Nanotrasen's clowns have begun to preserve their images by stamping eggs with their NT-issued clown stamps. This is fine and normal.</li>
-			</ul>
-			<h3 class="author">kingofkosmos updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">the russian revolver's chamber can be spun again</li>
-			</ul>
-			<h3 class="author">nemvar updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">You can now craft white jumpskirts with cloth.</li>
-			</ul>
-			<h3 class="author">nervere updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="admin">There is now a CTF button in the check antags panel.</li>
-				<li class="admin">There is now a Reboot World button in the check antags panel.</li>
-			</ul>
-			<h3 class="author">zxaber updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Dead AI players will now get a notification if they are being restored while outside their body.</li>
 			</ul>
 		</div>
 

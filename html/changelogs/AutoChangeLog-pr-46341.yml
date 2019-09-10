@@ -1,0 +1,5 @@
+author: "Medbotby"
+delete-after: True
+changes: 
+  - bugfix: "Medbots do not idle while stationary because they see a hot babe across the medbay"
+  - bugfix: "Medbots do not take you down with them upon deletion, resulting in no heals from the little buggers for the rest of the round"

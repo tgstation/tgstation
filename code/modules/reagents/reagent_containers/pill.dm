@@ -116,9 +116,9 @@
 
 /obj/item/reagent_containers/pill/multiver
 	name = "multiver pill"
-	desc = "Neutralizes many common toxins."
+	desc = "Neutralizes many common toxins and scales with unique medicine in the system. Diluted with granibitaluri."
 	icon_state = "pill17"
-	list_reagents = list(/datum/reagent/medicine/C2/multiver = 10)
+	list_reagents = list(/datum/reagent/medicine/C2/multiver = 2, /datum/reagent/medicine/granibitaluri = 8)
 	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/epinephrine

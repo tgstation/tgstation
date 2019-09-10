@@ -1,0 +1,5 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - bugfix: "Fixes chameleon ID card job overlays not showing up after selecting an ID that doesn't use them"
+  - tweak: "You can reset (delete) the forged name/assignment on an ID so you can chameleon change to IDs with a generic name instead (e.g. captain's spare ID)."
