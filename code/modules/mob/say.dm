@@ -36,6 +36,18 @@
 
 	usr.emote("me",1,message,TRUE)
 
+/mob/verb/spin_verb()
+	set name = "Spin"
+	set category = "IC"
+
+	usr.emote("spin")
+
+/mob/verb/flip_verb()
+	set name = "Flip"
+	set category = "IC"
+
+	usr.emote("flip")
+
 ///Speak as a dead person (ghost etc)
 /mob/proc/say_dead(var/message)
 	var/name = real_name
