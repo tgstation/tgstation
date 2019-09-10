@@ -182,7 +182,7 @@
 					else
 						for(var/obj/item/W in T)
 							T.dropItemToGround(W)
-						init_shade(T, user, vic = 1)
+						init_shade(T, user, message_user = 1)
 						qdel(T)
 				else
 					to_chat(user, "<span class='userdanger'>Capture failed!</span>: Kill or maim the victim first!")
