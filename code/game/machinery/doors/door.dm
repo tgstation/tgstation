@@ -89,7 +89,7 @@
 /obj/machinery/door/proc/try_safety_unlock(mob/user)
 	if(safety_mode && !hasPower() && density)
 		to_chat(user, "<span class='notice'>You begin unlocking the airlock safety mechanism...</span>")
-		if(do_after(user, 200, target = src))
+		if(do_after(user, 15 SECONDS, target = src))
 			try_to_crowbar(null, user)
 			return TRUE
 	return FALSE
