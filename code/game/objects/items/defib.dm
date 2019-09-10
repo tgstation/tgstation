@@ -16,12 +16,13 @@
 	actions_types = list(/datum/action/item_action/toggle_paddles)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 
+	var/obj/item/twohanded/shockpaddles/paddle_type = /obj/item/twohanded/shockpaddles
 	var/on = FALSE //if the paddles are equipped (1) or on the defib (0)
 	var/safety = TRUE //if you can zap people with the defibs on harm mode
 	var/powered = FALSE //if there's a cell in the defib with enough power for a revive, blocks paddles from reviving otherwise
 	var/obj/item/twohanded/shockpaddles/paddles
 	var/obj/item/stock_parts/cell/high/cell
-	var/combat = FALSE //if true, revive through hardsuits, allow for combat shocking, and tint paddles syndicate colors
+	var/combat = FALSE //if true, revive through hardsuits, allow for combat shocking
 	var/grab_ghost = FALSE // Do we pull the ghost back into their body?
 	var/cooldown_duration = 5 SECONDS//how long does it take to recharge
 
@@ -30,7 +31,7 @@
 
 /obj/item/defibrillator/Initialize() //starts without a cell for rnd
 	. = ..()
-	paddles = make_paddles()
+	paddles = new paddle_type(src)
 	update_icon()
 	return
 
@@ -192,11 +193,6 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/defibrillator/proc/make_paddles()
-	if(!combat)
-		return new /obj/item/twohanded/shockpaddles(src)
-	return new /obj/item/twohanded/shockpaddles/syndicate(src)
-
 
 /obj/item/defibrillator/equipped(mob/user, slot)
 	..()
@@ -274,6 +270,7 @@
 	combat = TRUE
 	safety = FALSE
 	cooldown_duration = 2.5 SECONDS
+	paddle_type = /obj/item/twohanded/shockpaddles/syndicate
 
 /obj/item/defibrillator/compact/combat/loaded/Initialize()
 	. = ..()
