@@ -87,6 +87,8 @@
 
 /obj/structure/grille/attack_animal(mob/user)
 	. = ..()
+	if(!.)
+		return
 	if(!shock(user, 70))
 		take_damage(rand(5,10), BRUTE, "melee", 1)
 
