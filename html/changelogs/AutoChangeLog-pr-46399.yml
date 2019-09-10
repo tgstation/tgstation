@@ -1,0 +1,4 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - balance: "The cooldown time between each removal or addition of a symptom for sentient diseases has been brought down from an agonizingly long 2 minutes to a more reasonable 1 minute."
