@@ -16,13 +16,13 @@
 	switch(rand(1, 3))
 		if(1)
 			stuttering = 1
-			to_chat(src, "<span class='danger'>Warning: Speech synthesis module damaged.</span>")
+			to_chat(src, "<span class='danger'>Warning: Feedback loop detected in speech module.</span>")
 		if(2)
 			slurring = 1
-			to_chat(src, "<span class='danger'>Warning: Speech synthesis module damaged.</span>")
+			to_chat(src, "<span class='danger'>Warning: Audio synthesizer CPU stuck.</span>")
 		if(3)
 			derpspeech = 1
-			to_chat(src, "<span class='danger'>Warning: Speech synthesis module damaged.</span>")
+			to_chat(src, "<span class='danger'>Warning: Vocabulary databank corrupted.</span>")
 	if(prob(40))
 		mind.language_holder.selected_default_language = pick(mind.language_holder.languages)
 
