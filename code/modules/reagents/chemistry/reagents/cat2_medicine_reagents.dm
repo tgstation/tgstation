@@ -34,7 +34,7 @@
 		reaping = TRUE
 		var/list/RockPaperScissors = list("rock" = "paper", "paper" = "scissors", "scissors" = "rock") //choice = loses to
 		helbent = M.apply_status_effect(/datum/status_effect/necropolis_curse,CURSE_BLINDING)
-		to_chat(M, "<span class='hierophant'>Malevolent spirits appear before you, barting your life in a 'friendly' game of rock, paper, scissors. Which do you choose?</span>")
+		to_chat(M, "<span class='hierophant'>Malevolent spirits appear before you, bartering your life in a 'friendly' game of rock, paper, scissors. Which do you choose?</span>")
 		var/timeisticking = world.time
 		var/RPSchoice = input(M, "Janken Time! You have 60 Seconds to Choose!", "Rock Paper Scissors",null) as null|anything in RockPaperScissors
 		if(QDELETED(M) || (timeisticking+(1.1 MINUTES) < world.time))
