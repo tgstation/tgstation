@@ -1477,7 +1477,8 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 #define	TRAIT_CALLBACK_ADD(target, trait, source) CALLBACK(GLOBAL_PROC, /proc/___TraitAdd, ##target, ##trait, ##source)
 #define	TRAIT_CALLBACK_REMOVE(target, trait, source) CALLBACK(GLOBAL_PROC, /proc/___TraitRemove, ##target, ##trait, ##source)
 
-/proc/___TraitAdd(target,trait,source)
+//DO NOT USE ___TraitAdd OR ___TraitRemove as a replacement for ADD_TRAIT / REMOVE_TRAIT defines. To be used explicitly for callback only
+/proc/___TraitAdd(target,trait,source) 
 	if(!target || !trait || !source)
 		return
 	if(islist(target))
