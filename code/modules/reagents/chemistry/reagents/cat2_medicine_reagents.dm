@@ -14,29 +14,58 @@
 	reagent_state = SOLID
 	var/datum/status_effect/necropolis_curse/helbent
 	var/beginning_combo = 0
+	var/reaping = FALSE
 
 /datum/reagent/medicine/C2/helbital/on_mob_metabolize(mob/living/carbon/M)
 	beginning_combo = M.getToxLoss() + M.getOxyLoss() + M.getFireLoss() //This DOES mean you can cure Tox/Oxy and then do burn to maintain the brute healing that way.
 	return ..()
 
 /datum/reagent/medicine/C2/helbital/on_mob_life(mob/living/carbon/M)
+	. = TRUE
 	var/cccombo = M.getToxLoss() + M.getOxyLoss() + M.getFireLoss()
+	var/healed_this_iteration = FALSE
 	if(cccombo >= beginning_combo)
-		M.adjustBruteLoss(floor(cccombo/-30,0.1)) //every 3 damage adds 0.1 per tick
+		M.adjustBruteLoss(FLOOR(cccombo/-30,0.1)) //every 3 damage adds 0.1 per tick
+		healed_this_iteration = TRUE
 	else
-		M.adjustToxLoss(max(beginning_combo*0.1,0.1)) //If you are just healing instead of converting the damage we'll KINDLY do it for you AND make it the most difficult!
+		M.adjustToxLoss((beginning_combo-cccombo)*0.1) //If you are just healing instead of converting the damage we'll KINDLY do it for you AND make it the most difficult!
+
+	if(healed_this_iteration && !reaping && prob(0.0001)) //janken with the grim reaper!
+		reaping = TRUE
+		var/static/list/RockPaperScissors = list("rock" = "paper", "paper" = "scissors", "scissors" = "rock") //choice = loses to
+		helbent = M.apply_status_effect(/datum/status_effect/necropolis_curse,CURSE_BLINDING)
+		to_chat(M, "<span class='hierophant'>Malevolent spirits appear before you, barting your life in a 'friendly' game of rock, paper, scissors. Which do you choose?</span>")
+		var/RPSchoice = input(M, "Janken Time!", "Rock Paper Scissors",null) as null|anything in RockPaperScissors
+		if(!RPSchoice)
+			to_chat(M, "<span class='hierophant'>You decide to not press your luck, but the spirits remain... hopefully they'll go away soon.</span>")
+			reaping = FALSE
+			return
+		var/grim = pick(RockPaperScissors)
+		if(grim == RPSchoice) //You Tied!
+			to_chat(M, "<span class='hierophant'>You tie, and the malevolent spirits disappear... for now.</span>")
+			reaping = FALSE
+		else if(RockPaperScissors[RPSchoice] == grim) //You lost!
+			to_chat(M, "<span class='hierophant'>You lose, and the malevolent spirits smirk eerily as they surround your body.</span>")
+			M.dust()
+			return
+		else //VICTORY ROYALE
+			to_chat(M, "<span class='hierophant'>You win, and the malevolent spirits fade away as well as your wounds.</span>")
+			SSmedals.UnlockMedal(MEDAL_HELBITALJANKEN,M.client)
+			M.revive(TRUE)
+			M.reagents.del_reagent(type)
+			return
+
 	..()
-	return TRUE
+	return
 
 /datum/reagent/medicine/C2/helbital/overdose_process(mob/living/carbon/M)
-	helbent = apply_necropolis_curse(CURSE_WASTING | CURSE_BLINDING)
+	helbent = M.apply_necropolis_curse(CURSE_WASTING | CURSE_BLINDING)
 	..()
 	return TRUE
 
-/datum/reagent/medicine/C2/helbital/on_mob_delete
-	if(helbent) //TODO check if datums can Qdel
-		helbent.Destroy()
-		helbent = null
+/datum/reagent/medicine/C2/helbital/on_mob_delete(mob/living/L)
+	if(helbent) //check if datums can Qdel
+		L.remove_status_effect(helbent.type)
 	..()
 
 /datum/reagent/medicine/C2/libital //messes with your liber
