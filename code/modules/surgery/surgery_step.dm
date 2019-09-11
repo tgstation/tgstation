@@ -76,13 +76,16 @@
 			prob_chance = implements[implement_type]
 		prob_chance *= surgery.get_propability_multiplier()
 
-		if((prob(prob_chance) || (iscyborg(user) && !silicons_obey_prob)) && chem_check(target) && !try_to_fail)
+		var/chem_check_result = chem_check(target)
+		if((prob(prob_chance) || (iscyborg(user) && !silicons_obey_prob)) && chem_check_result && !try_to_fail)
 			if(success(user, target, target_zone, tool, surgery))
 				advance = TRUE
 		else
 			if(failure(user, target, target_zone, tool, surgery))
 				advance = TRUE
-
+			if(chem_check_result)
+				if(.(user, target, target_zone, tool, surgery, try_to_fail)) //automatically re-attempt if failed for reason other than lack of required chemical
+					advance = TRUE
 		if(advance && !repeatable)
 			surgery.status++
 			if(surgery.status > surgery.steps.len)
