@@ -388,9 +388,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		if(string_attached) //does the coin have a wire attached
 			to_chat(user, "<span class='warning'>The coin won't flip very well with something attached!</span>" )
 			return FALSE//do not flip the coin
-		coinflip = pick(sideslist)
 		cooldown = world.time + 15
 		flick("coin_[coinflip]_flip", src)
+		coinflip = pick(sideslist)
 		icon_state = "coin_[coinflip]"
 		playsound(user.loc, 'sound/items/coinflip.ogg', 50, TRUE)
 		var/oldloc = loc
