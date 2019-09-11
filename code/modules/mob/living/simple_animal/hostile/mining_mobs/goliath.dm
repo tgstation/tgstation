@@ -154,9 +154,11 @@
 	icon_state = "Goliath_tentacle_spawn"
 	layer = BELOW_MOB_LAYER
 	var/mob/living/spawner
+	var/checkFaction = TRUE
 
-/obj/effect/temp_visual/goliath_tentacle/Initialize(mapload, mob/living/new_spawner)
+/obj/effect/temp_visual/goliath_tentacle/Initialize(mapload, mob/living/new_spawner, doFactionCheck = TRUE)
 	. = ..()
+	checkFaction = doFactionCheck
 	for(var/obj/effect/temp_visual/goliath_tentacle/T in loc)
 		if(T != src)
 			return INITIALIZE_HINT_QDEL
@@ -168,14 +170,14 @@
 	deltimer(timerid)
 	timerid = addtimer(CALLBACK(src, .proc/tripanim), 7, TIMER_STOPPABLE)
 
-/obj/effect/temp_visual/goliath_tentacle/original/Initialize(mapload, new_spawner)
+/obj/effect/temp_visual/goliath_tentacle/original/Initialize(mapload, new_spawner, doFactionCheck = TRUE)
 	. = ..()
 	var/list/directions = GLOB.cardinals.Copy()
 	for(var/i in 1 to 3)
 		var/spawndir = pick_n_take(directions)
 		var/turf/T = get_step(src, spawndir)
 		if(T)
-			new /obj/effect/temp_visual/goliath_tentacle(T, spawner)
+			new /obj/effect/temp_visual/goliath_tentacle(T, spawner, doFactionCheck)
 
 /obj/effect/temp_visual/goliath_tentacle/proc/tripanim()
 	icon_state = "Goliath_tentacle_wiggle"
@@ -185,7 +187,7 @@
 /obj/effect/temp_visual/goliath_tentacle/proc/trip()
 	var/latched = FALSE
 	for(var/mob/living/L in loc)
-		if((!QDELETED(spawner) && spawner.faction_check_mob(L)) || L.stat == DEAD)
+		if((!QDELETED(spawner) && (checkFaction && spawner.faction_check_mob(L))) || L.stat == DEAD)
 			continue
 		visible_message("<span class='danger'>[src] grabs hold of [L]!</span>")
 		L.Stun(100)

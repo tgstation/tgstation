@@ -973,3 +973,87 @@ datum/status_effect/stabilized/blue/on_remove()
 				qdel(src)
 				qdel(linked_extract)
 	return ..()
+
+///////////////////////////////////////////////////////
+//////////////////DESTABILIZED EXTRACTS//////////////////
+///////////////////////////////////////////////////////
+
+/obj/screen/alert/status_effect/caged
+	name = "Caged"
+	desc = "You are trapped in a cage. Resist to escape."
+	icon_state = "slime_metal_cage"
+
+/datum/status_effect/cageTrapped
+	id = "slime_metal_cage"
+	status_type = STATUS_EFFECT_UNIQUE
+	duration = -1 //Will remove self when cage breaks.
+	alert_type = /obj/screen/alert/status_effect/caged
+	var/obj/structure/metalCage/cage
+
+/datum/status_effect/cageTrapped/on_apply()
+	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/breakCage)
+	cage = new /obj/structure/metalCage(get_turf(owner))
+	owner.forceMove(cage)
+	return ..()
+
+/datum/status_effect/cageTrapped/tick()
+	if(!cage || owner.loc != cage)
+		owner.remove_status_effect(src)
+
+/datum/status_effect/cageTrapped/proc/breakCage()
+	if(do_after(owner, 450, FALSE, cage))
+		owner.remove_status_effect(src)
+
+/datum/status_effect/cageTrapped/on_remove()
+	if(cage)
+		qdel(cage)
+	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
+
+/datum/status_effect/freon/destabilized
+	can_melt = FALSE
+
+/obj/screen/alert/status_effect/heavyBleeding
+	name = "Heavy Bleeding"
+	desc = "You are bleeding profusely. Only time can cure this."
+	icon_state = "slime_heavy_bleeding"
+
+/datum/status_effect/heavyBleeding
+	id = "heavy_bleeding"
+	duration = 150
+	alert_type = /obj/screen/alert/status_effect/heavyBleeding
+
+/datum/status_effect/heavyBleeding/tick()
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			if(H.bleed_rate < 5)
+				H.bleed_rate = 5
+			if(H.bleedsuppress)
+				H.resume_bleeding()
+		else
+			C.bleed(5)
+
+/datum/status_effect/heavyBleeding/on_remove()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		H.bleed_rate = 0
+
+/obj/screen/alert/status_effect/cellularDestabilization
+	name = "Cellular Destabilization"
+	desc = "Your cells are slowly starting to deteriorate away! Perhaps a compressed carbon lifeform can cure it..."
+	icon_state = "slime_cell_destab"
+
+/datum/status_effect/cellularDestabilization
+	id = "cellular_destabilization"
+	status_type = STATUS_EFFECT_UNIQUE
+	duration = -1
+	alert_type = /obj/screen/alert/status_effect/cellularDestabilization
+
+/datum/status_effect/cellularDestabilization/tick()
+	if(istype(owner.get_active_held_item(), /obj/item/reagent_containers/food/snacks/monkeycube))
+		qdel(owner.get_active_held_item())
+		to_chat(owner, "<span class='notice'>The monkey cube is absorbed into your body, bringing the cellular destabilization to a halt.</span>")
+		qdel(src)
+	else	
+		owner.adjustCloneLoss(0.5)

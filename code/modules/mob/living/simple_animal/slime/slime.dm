@@ -424,13 +424,15 @@
 	visible_message("<span class='danger'>[src] shudders, its mutated core consuming the rest of its body!</span>")
 	playsound(src, 'sound/magic/smoke.ogg', 50, TRUE)
 	var/crosspath
+	var/obj/item/slimecross/S
 	for(var/X in crossbreeds)
-		var/obj/item/slimecross/S = X
+		S = X
 		if(initial(S.colour) == colour && initial(S.effect) == effectmod)
 			crosspath = S
 			break
 	if(crosspath)
-		new crosspath(loc)
+		for(var/i = 0, i < initial(S.amountToCreate), i++)
+			new crosspath(loc)
 	else
 		visible_message("<span class='warning'>The mutated core shudders, and collapses into a puddle, unable to maintain its form.</span>")
 	qdel(src)

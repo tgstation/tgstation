@@ -37,6 +37,7 @@ To add a crossbreed:
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 6
+	var/amountToCreate = 1 //Amount of crossbred extracts that are created.
 
 /obj/item/slimecross/examine(mob/user)
 	. = ..()

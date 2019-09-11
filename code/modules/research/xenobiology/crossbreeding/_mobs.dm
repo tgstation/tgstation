@@ -43,3 +43,52 @@ Slimecrossing Mobs
 	speak_emote = list("blorbles", "bubbles", "borks")
 	emote_hear = list("bubbles!", "splorts.", "splops!")
 	emote_see = list("gets goop everywhere.", "flops.", "jiggles!")
+
+//Hostile Copy - Destabilized Cerulean
+/mob/living/simple_animal/hostile/clone
+	name = "hostile clone"
+	real_name = "hostile clone"
+	desc = "How familiar..."
+	maxHealth = 100
+	health = 100
+	melee_damage_lower = 0 //Human punch damage range
+	melee_damage_upper = 9
+	obj_damage = 5
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
+	var/atom/movable/form = null
+
+/mob/living/simple_animal/hostile/clone/Initialize(mapload, atom/movable/target, mob/creator)
+	. = ..()
+	adaptForm(target)
+	friends += creator
+
+/mob/living/simple_animal/hostile/clone/examine(mob/user)
+	if(form)
+		form.examine(user)
+		if(get_dist(user,src)<=3)
+			to_chat(user, "<span class='warning'>It doesn't look quite right...</span>")
+	else
+		..()
+	return
+
+/mob/living/simple_animal/hostile/clone/proc/adaptForm(atom/movable/target)
+	form = target
+	appearance = target.appearance
+	copy_overlays(target)
+	alpha = max(alpha, 150)
+	transform = initial(transform)
+	pixel_y = initial(pixel_y)
+	pixel_x = initial(pixel_x)
+
+/mob/living/simple_animal/hostile/clone/death(gibbed)
+	. = ..()
+	if(!gibbed)
+		var/mob/living/simple_animal/hostile/morph/M = new(get_turf(src))
+		M.gib()
+		qdel(src)
+
+/mob/living/simple_animal/hostile/clone/CanAttack(atom/the_target)
+	. = ..()
+	for(var/atom/A in friends)
+		if(the_target == A)
+			return FALSE
