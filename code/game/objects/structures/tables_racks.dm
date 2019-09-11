@@ -132,6 +132,8 @@
 	pushed_mob.Knockdown(30)
 	pushed_mob.apply_damage(10, BRUTE)
 	pushed_mob.apply_damage(40, STAMINA)
+	if(user.mind?.martial_art)
+		deconstruct(FALSE)
 	playsound(pushed_mob, "sound/effects/tableslam.ogg", 90, TRUE)
 	pushed_mob.visible_message("<span class='danger'>[user] slams [pushed_mob] onto \the [src]!</span>", \
 								"<span class='userdanger'>[user] slams you onto \the [src]!</span>")
@@ -145,6 +147,9 @@
 	pushed_mob.Knockdown(30)
 	pushed_mob.apply_damage(40, BRUTE, BODY_ZONE_HEAD)
 	pushed_mob.apply_damage(30, STAMINA)
+	take_damage(50)
+	if(user.mind?.martial_art)
+		deconstruct(FALSE)
 	playsound(pushed_mob, "sound/effects/tableheadsmash.ogg", 90, TRUE)
 	pushed_mob.visible_message("<span class='danger'>[user] smashes [pushed_mob]'s head against \the [src]!</span>",
 								"<span class='userdanger'>[user] smashes your head against \the [src]</span>")
@@ -152,7 +157,7 @@
 	if(!ishuman(pushed_mob))
 		return
 	var/mob/living/carbon/human/H = pushed_mob
-	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
+	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table_headsmash)
 
 /obj/structure/table/attackby(obj/item/I, mob/user, params)
 	if(!(flags_1 & NODECONSTRUCT_1) && user.a_intent != INTENT_HELP)
