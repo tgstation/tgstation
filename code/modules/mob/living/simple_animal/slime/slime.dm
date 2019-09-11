@@ -431,7 +431,7 @@
 			crosspath = S
 			break
 	if(crosspath)
-		for(var/i = 0, i < initial(S.amountToCreate), i++)
+		for(var/i in 1 to initial(S.amountToCreate))
 			new crosspath(loc)
 	else
 		visible_message("<span class='warning'>The mutated core shudders, and collapses into a puddle, unable to maintain its form.</span>")

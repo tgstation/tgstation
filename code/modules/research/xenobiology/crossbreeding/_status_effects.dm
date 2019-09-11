@@ -1006,7 +1006,7 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/cageTrapped/on_remove()
 	if(cage)
-		qdel(cage)
+		QDEL_NULL(cage)
 	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
 
 /datum/status_effect/freon/destabilized
@@ -1023,16 +1023,15 @@ datum/status_effect/stabilized/blue/on_remove()
 	alert_type = /obj/screen/alert/status_effect/heavyBleeding
 
 /datum/status_effect/heavyBleeding/tick()
-	if(iscarbon(owner))
-		var/mob/living/carbon/C = owner
-		if(ishuman(C))
-			var/mob/living/carbon/human/H = C
-			if(H.bleed_rate < 5)
-				H.bleed_rate = 5
-			if(H.bleedsuppress)
-				H.resume_bleeding()
-		else
-			C.bleed(5)
+	var/mob/living/carbon/C = owner
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		if(H.bleed_rate < 5)
+			H.bleed_rate = 5
+		if(H.bleedsuppress)
+			H.resume_bleeding()
+	else
+		C.bleed(5)
 
 /datum/status_effect/heavyBleeding/on_remove()
 	if(ishuman(owner))
@@ -1051,8 +1050,9 @@ datum/status_effect/stabilized/blue/on_remove()
 	alert_type = /obj/screen/alert/status_effect/cellularDestabilization
 
 /datum/status_effect/cellularDestabilization/tick()
-	if(istype(owner.get_active_held_item(), /obj/item/reagent_containers/food/snacks/monkeycube))
-		qdel(owner.get_active_held_item())
+	var/atom/handItem = owner.get_active_held_item()
+	if(istype(handItem, /obj/item/reagent_containers/food/snacks/monkeycube))
+		qdel(handItem)
 		to_chat(owner, "<span class='notice'>The monkey cube is absorbed into your body, bringing the cellular destabilization to a halt.</span>")
 		qdel(src)
 	else	

@@ -312,12 +312,11 @@ Slimecrossing Items
 //Metal Cage - Destabilized Metal
 /obj/structure/metalCage
 	name = "metal cage"
-	desc = "A large, sturdy, metal cage. It's dark and empty. How depressing..."
+	desc = "A large, sturdy, metal cage. How depressing."
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "cage"
 	density = TRUE
 	max_integrity = 100
-	var/empty = TRUE
 
 /obj/structure/metalCage/Initialize()
 	. = ..()
@@ -329,14 +328,9 @@ Slimecrossing Items
 	playsound(src, 'sound/magic/clockwork/anima_fragment_death.ogg', 50, 1)
 	return ..()
 
-/obj/structure/metalCage/Entered(atom/movable/AM, atom/oldLoc)
-	. = ..()
-	if(empty)
-		empty = FALSE
-		desc = "A large, sturdy, metal cage. It's dark, but you can just make out someone or something inside. How depressing..."
-
-/obj/structure/metalCage/Exited(atom/movable/AM, atom/newLoc)
-	. = ..()
+/obj/structure/metalCage/examine(mob/user)
+	. += ..()
 	if(!contents)
-		empty = TRUE
-		desc = "A large, sturdy, metal cage. It's dark and empty. How depressing..." 
+		. += "It's dark and empty."
+	else
+		. += "It's dark, but you can just make out someone or something inside..."

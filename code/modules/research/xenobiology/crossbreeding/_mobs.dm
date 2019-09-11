@@ -60,7 +60,7 @@ Slimecrossing Mobs
 /mob/living/simple_animal/hostile/clone/Initialize(mapload, atom/movable/target, mob/creator)
 	. = ..()
 	adaptForm(target)
-	friends += creator
+	faction += REF(creator)
 
 /mob/living/simple_animal/hostile/clone/examine(mob/user)
 	if(form)

@@ -53,10 +53,10 @@ Destabilized extracts:
 	. = ..()
 	if(isliving(A))
 		var/mob/living/L = A
-		L.reagents.add_reagent("regen_jelly", 50)
+		L.reagents.add_reagent(/datum/reagent/medicine/regen_jelly, 50)
 	else
 		var/datum/reagents/R = new/datum/reagents(50)
-		R.add_reagent("regen_jelly", 50)
+		R.add_reagent(/datum/reagent/medicine/regen_jelly, 50)
 		var/datum/effect_system/smoke_spread/chem/smoke = new
 		smoke.set_up(R, 1, get_turf(A))
 		smoke.start()
@@ -67,12 +67,12 @@ Destabilized extracts:
 /obj/item/slimecross/destabilized/blue/hitEffect(atom/A, mob/thrower)
 	. = ..()
 	var/datum/reagents/R = new/datum/reagents(50)
-	R.add_reagent("water", 50)
+	R.add_reagent(/datum/reagent/water, 50)
 	R.reaction(get_turf(A), TOUCH, 50)
 	qdel(R) //Reaction doesnt use up the reagents
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
-		C.slip(100, src, FALSE, 20, FALSE)
+		C.slip(100, src, NONE, 20, FALSE)
 
 /obj/item/slimecross/destabilized/metal
 	colour = "metal"
@@ -93,7 +93,7 @@ Destabilized extracts:
 	. = ..()
 	if(isliving(A))
 		var/mob/living/L = A
-		L.electrocute_act(rand(5,20), src, 1, 1)
+		L.electrocute_act(rand(5,20), src, 1, TRUE)
 		playsound(L, "sparks", 50, 1)
 	else
 		empulse(get_turf(A), 1, 1)
@@ -184,9 +184,9 @@ Destabilized extracts:
 
 /obj/item/slimecross/destabilized/red/hitEffect(atom/A, mob/thrower)
 	. = ..()
-	if(isliving(A))
-		var/mob/living/L = A
-		L.apply_status_effect(/datum/status_effect/heavyBleeding)
+	if(iscarbon(A))
+		var/mob/living/carbon/C = A
+		C.apply_status_effect(/datum/status_effect/heavyBleeding)
 	else
 		new /obj/effect/decal/cleanable/blood(get_turf(A))
 
@@ -207,11 +207,11 @@ Destabilized extracts:
 			if(iscarbon(LTarget))
 				var/mob/living/carbon/CTarget = LTarget
 				CTarget.apply_damage_type(damageToDeal, damageType)
-			else
-				LTarget.adjustBruteLoss(damageToDeal)
-		else
-			damageToDeal = -(LThrower.adjustBruteLoss(-25))
+				return
 			LTarget.adjustBruteLoss(damageToDeal)
+			return
+		damageToDeal = -(LThrower.adjustBruteLoss(-25))
+		LTarget.adjustBruteLoss(damageToDeal)
 
 /obj/item/slimecross/destabilized/green/proc/findBiggestLoss(mob/living/carbon/C)
 	var/damageType = BRUTE
@@ -295,7 +295,7 @@ Destabilized extracts:
 	. = ..()
 	if(isliving(A))
 		var/mob/living/L = A
-		L.reagents.add_reagent("pax", 5)
+		L.reagents.add_reagent(/datum/reagent/pax, 5)
 	else
 		new /obj/effect/decal/cleanable/crayon(get_turf(A), "#[rand_hex_color()]", "peace")
 
@@ -310,7 +310,7 @@ Destabilized extracts:
 		var/mob/living/carbon/human/H = A
 		var/obj/item/targetShoes = H.get_item_by_slot(SLOT_SHOES)
 		if(targetShoes)
-			H.doUnEquip(targetShoes, FALSE, get_turf(H))
+			H.dropItemToGround(targetShoes)
 
 /obj/item/slimecross/destabilized/rainbow
 	colour = "rainbow"
