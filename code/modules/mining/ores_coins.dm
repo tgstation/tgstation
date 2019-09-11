@@ -325,9 +325,10 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/coin/set_custom_materials()
 	. = ..()
+	value = 0
 	for(var/i in custom_materials)
 		var/datum/material/M = i
-		value += M.value_per_unit * custom_materials[M]
+		value += M.value_per_unit * custom_materials
 
 /obj/item/coin/get_item_credit_value()
 	return value
