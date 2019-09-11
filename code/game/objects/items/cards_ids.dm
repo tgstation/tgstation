@@ -92,6 +92,12 @@
 	log_combat(user, A, "attempted to emag")
 	A.emag_act(user)
 
+/obj/item/card/emag/emag_act(mob/user)
+	if(item_flags & EMAGGED)
+		return
+	item_flags |= EMAGGED
+	icon_state = "emag_alt"
+
 /obj/item/card/emagfake
 	desc = "It's a card with a magnetic strip attached to some circuitry. Closer inspection shows that this card is a poorly made replica, with a \"DonkCo\" logo stamped on the back."
 	name = "cryptographic sequencer"
