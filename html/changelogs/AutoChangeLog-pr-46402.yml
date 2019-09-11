@@ -1,5 +1,0 @@
-author: "Twaticus"
-delete-after: True
-changes: 
-  - bugfix: "missing plasma spear inhand"
-  - imageadd: "plasma spear back sprite"

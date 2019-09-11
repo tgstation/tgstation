@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - bugfix: "Mechs removed from the game via means other than damage no longer leave a wreckage."
