@@ -1220,12 +1220,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(!(target.mobility_flags & MOBILITY_STAND) && (user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG) && user.a_intent == INTENT_GRAB && target.shoes)
 			user.visible_message("<span class='warning'>[user] starts stealing [target]'s shoes!</span>",
 								"<span class='warning'>You start stealing [target]'s shoes!</span>")
-			var/obj/item/clothing/shoes/S = target.shoes
-			if(do_after(user, S.shoe_steal_speed, TRUE, target, TRUE))
-				target.dropItemToGround(S, TRUE)
-				user.put_in_hands(S)
-				user.visible_message("<span class='warning'>[user] stole your [S]!</span>",
-									"<span class='warning'>You steal [target]'s [S]!</span>")
+			var/obj/item/I = target.shoes
+			if(do_after(user, I.strip_delay, TRUE, target, TRUE))
+				target.dropItemToGround(I, TRUE)
+				user.put_in_hands(I)
+				user.visible_message("<span class='warning'>[user] stole your [I]!</span>",
+									"<span class='warning'>You steal [target]'s [I]!</span>")
 		target.grabbedby(user)
 		return TRUE
 
