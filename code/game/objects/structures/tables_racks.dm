@@ -146,7 +146,7 @@
 /obj/structure/table/proc/tableheadsmash(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.Knockdown(30)
 	pushed_mob.apply_damage(40, BRUTE, BODY_ZONE_HEAD)
-	pushed_mob.apply_damage(30, STAMINA)
+	pushed_mob.apply_damage(60, STAMINA)
 	take_damage(50)
 	if(user.mind?.martial_art)
 		deconstruct(FALSE)
