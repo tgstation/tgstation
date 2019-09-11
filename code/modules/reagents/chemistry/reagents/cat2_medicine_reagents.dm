@@ -25,7 +25,7 @@
 	var/cccombo = M.getToxLoss() + M.getOxyLoss() + M.getFireLoss()
 	var/healed_this_iteration = FALSE
 	if(cccombo >= beginning_combo)
-		M.adjustBruteLoss(FLOOR(cccombo/-30,0.1)) //every 3 damage adds 0.1 per tick
+		M.adjustBruteLoss(FLOOR(cccombo/-15,0.1)) //every 15 damage adds 1 per tick
 		healed_this_iteration = TRUE
 	else
 		M.adjustToxLoss((beginning_combo-cccombo)*0.1) //If you are just healing instead of converting the damage we'll KINDLY do it for you AND make it the most difficult!
@@ -38,6 +38,7 @@
 		var/timeisticking = world.time
 		var/RPSchoice = input(M, "Janken Time! You have 60 Seconds to Choose!", "Rock Paper Scissors",null) as null|anything in RockPaperScissors
 		if(QDELETED(M) || (timeisticking+(1.1 MINUTES) < world.time))
+			reaping = FALSE
 			return //good job, you ruined it
 		if(!RPSchoice)
 			to_chat(M, "<span class='hierophant'>You decide to not press your luck, but the spirits remain... hopefully they'll go away soon.</span>")
