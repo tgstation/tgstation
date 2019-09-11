@@ -1,0 +1,21 @@
+<ui-display title='Materials'>
+  {{#each data.inserted_materials}}
+    <div style="margin-bottom:5px">
+      {{material}} amount: {{amount}}cm<sup>3</sup>
+      {{#if data.chosen_material != material}}
+        <ui-button action='changematerial' params='{"material_name": "{{material}}"}'>Select</ui-button>
+      {{/if}}
+    </div>
+  {{/each}}
+</ui-display>
+<div style="margin-bottom:15px">
+  Pressed {{data.produced_coins}} coins this cycle.
+</div>
+
+<div style="margin-bottom:15px">
+  <span><ui-button action='startpress'>Press</ui-button></span>
+  <span><ui-button action='stoppress'>Stop</ui-button></span>
+</div>
+<div> 
+  Status: <span>{{#if data.processing}}PRESSING{{else}}STOPPED{{/if}}</span>
+</div>
