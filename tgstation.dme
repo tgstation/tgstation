@@ -1641,6 +1641,7 @@
 #include "code\modules\client\verbs\who.dm"
 #include "code\modules\clothing\chameleon.dm"
 #include "code\modules\clothing\clothing.dm"
+#include "code\modules\clothing\dio_fulp.dm"
 #include "code\modules\clothing\ears\_ears.dm"
 #include "code\modules\clothing\glasses\_glasses.dm"
 #include "code\modules\clothing\glasses\engine_goggles.dm"
