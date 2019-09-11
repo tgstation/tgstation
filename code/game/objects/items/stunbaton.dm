@@ -14,8 +14,8 @@
 
 	var/cooldown_check = 0
 
-	var/cooldown = (2 SECONDS)
-	var/stunforce = 100
+	var/cooldown = (2.5 SECONDS)
+	var/stunforce = (5 SECONDS)
 	var/status = 0
 	var/obj/item/stock_parts/cell/cell
 	var/hitcost = 1000
@@ -42,7 +42,7 @@
 	..()
 	//Only mob/living types have stun handling
 	if(status && prob(throw_hit_chance) && iscarbon(hit_atom))
-		baton_stun(hit_atom)
+		baton_effect(hit_atom)
 
 /obj/item/melee/baton/loaded //this one starts with a cell pre-installed.
 	preload_cell_type = /obj/item/stock_parts/cell/high
@@ -56,7 +56,7 @@
 			//we're below minimum, turn off
 			status = 0
 			update_icon()
-			playsound(loc, "sparks", 75, 1, -1)
+			playsound(loc, "sparks", 75, TRUE, -1)
 
 
 /obj/item/melee/baton/update_icon()
@@ -104,7 +104,7 @@
 	if(cell && cell.charge > hitcost)
 		status = !status
 		to_chat(user, "<span class='notice'>[src] is now [status ? "on" : "off"].</span>")
-		playsound(loc, "sparks", 75, 1, -1)
+		playsound(loc, "sparks", 75, TRUE, -1)
 	else
 		status = 0
 		if(!cell)
@@ -118,7 +118,7 @@
 	if(status && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
-		user.Paralyze(stunforce*3)
+		user.Knockdown(stunforce*3)
 		deductcharge(hitcost)
 		return
 
@@ -135,7 +135,7 @@
 	if(user.a_intent != INTENT_HARM)
 		if(status)
 			if(cooldown_check <= world.time)
-				if(baton_stun(M, user))
+				if(baton_effect(M, user))
 					user.do_attack_animation(M)
 					return
 			else 
@@ -146,15 +146,15 @@
 	else
 		if(status)
 			if(cooldown_check <= world.time)
-				baton_stun(M, user)
+				baton_effect(M, user)
 		..()
 
 
-/obj/item/melee/baton/proc/baton_stun(mob/living/L, mob/user)
+/obj/item/melee/baton/proc/baton_effect(mob/living/L, mob/user)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK)) //No message; check_shields() handles that
-			playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
+			playsound(L, 'sound/weapons/genhit.ogg', 50, TRUE)
 			return 0
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/R = loc
@@ -167,12 +167,12 @@
 	/// After a target is hit, we do a chunk of stamina damage, along with other effects.
 	/// After a period of time, we then check to see what stun duration we give.
 	L.Jitter(20)
-	L.confused = max(8, L.confused)
-	L.apply_effect(EFFECT_STUTTER, stunforce)
+	L.confused = max(10, L.confused)
+	L.stuttering = max(8, L.stuttering)
 	L.adjustStaminaLoss(60)
 
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
-	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, L), 2.5 SECONDS)
+	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, L), 2 SECONDS)
 
 	if(user)
 		L.lastattacker = user.real_name
@@ -181,7 +181,7 @@
 								"<span class='userdanger'>[user] has stunned you with [src]!</span>")
 		log_combat(user, L, "stunned")
 
-	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
+	playsound(loc, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
@@ -195,10 +195,10 @@
 /obj/item/melee/baton/proc/apply_stun_effect_end(mob/living/target)
 	var/trait_check = HAS_TRAIT(target, TRAIT_STUNRESISTANCE) //var since we check it in out to_chat as well as determine stun duration
 	if(trait_check)
-		target.Paralyze(stunforce * 0.1)
+		target.Knockdown(stunforce * 0.1)
 	else
-		target.Paralyze(stunforce)
-	if(!target.IsParalyzed())
+		target.Knockdown(stunforce)
+	if(!target.IsKnockdown())
 		to_chat(target, "<span class='warning'>You muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]</span>")
 
 /obj/item/melee/baton/emp_act(severity)
@@ -217,7 +217,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 3
 	throwforce = 5
-	stunforce = 100
+	stunforce = (5 SECONDS)
 	hitcost = 2000
 	throw_hit_chance = 10
 	slot_flags = ITEM_SLOT_BACK
@@ -227,6 +227,6 @@
 	. = ..()
 	sparkler = new (src)
 
-/obj/item/melee/baton/cattleprod/baton_stun()
+/obj/item/melee/baton/cattleprod/baton_effect()
 	if(sparkler.activate())
 		..()

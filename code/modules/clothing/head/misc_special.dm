@@ -17,7 +17,7 @@
 	name = "welding helmet"
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye."
 	icon_state = "welding"
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH 
 	item_state = "welding"
 	materials = list(/datum/material/iron=1750, /datum/material/glass=400)
 	flash_protect = 2
@@ -26,7 +26,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	actions_types = list(/datum/action/item_action/toggle)
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
-	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = FIRE_PROOF
 	clothing_flags = SNUG_FIT
 
@@ -42,7 +42,7 @@
 	desc = "You put the cake on your head. Brilliant."
 	icon_state = "hardhat0_cakehat"
 	item_state = "hardhat0_cakehat"
-	item_color = "cakehat"
+	hat_type = "cakehat"
 	hitsound = 'sound/weapons/tap.ogg'
 	flags_inv = HIDEEARS|HIDEHAIR
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
@@ -113,7 +113,7 @@
 	desc = "A jack o' lantern! Believed to ward off evil spirits."
 	icon_state = "hardhat0_pumpkin"
 	item_state = "hardhat0_pumpkin"
-	item_color = "pumpkin"
+	hat_type = "pumpkin"
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
@@ -151,7 +151,7 @@
 	desc = "Some fake antlers and a very fake red nose."
 	icon_state = "hardhat0_reindeer"
 	item_state = "hardhat0_reindeer"
-	item_color = "reindeer"
+	hat_type = "reindeer"
 	flags_inv = 0
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	brightness_on = 1 //luminosity when on
@@ -192,7 +192,7 @@
 	item_state = "pwig"
 	flags_inv = HIDEHAIR
 	color = "#000"
-	var/hair_style = "Very Long Hair"
+	var/hairstyle = "Very Long Hair"
 	var/adjustablecolor = TRUE //can color be changed manually?
 
 /obj/item/clothing/head/wig/Initialize(mapload)
@@ -200,7 +200,7 @@
 	update_icon()
 
 /obj/item/clothing/head/wig/update_icon()
-	var/datum/sprite_accessory/S = GLOB.hair_styles_list[hair_style]
+	var/datum/sprite_accessory/S = GLOB.hairstyles_list[hairstyle]
 	if(!S)
 		icon = 'icons/obj/clothing/hats.dmi'
 		icon_state = "pwig"
@@ -211,7 +211,7 @@
 /obj/item/clothing/head/wig/worn_overlays(isinhands = FALSE, file2use)
 	. = list()
 	if(!isinhands)
-		var/datum/sprite_accessory/S = GLOB.hair_styles_list[hair_style]
+		var/datum/sprite_accessory/S = GLOB.hairstyles_list[hairstyle]
 		if(!S)
 			return
 		var/mutable_appearance/M = mutable_appearance(S.icon, S.icon_state,layer = -HAIR_LAYER)
@@ -220,18 +220,18 @@
 		. += M
 
 /obj/item/clothing/head/wig/attack_self(mob/user)
-	var/new_style = input(user, "Select a hair style", "Wig Styling")  as null|anything in (GLOB.hair_styles_list - "Bald")
+	var/new_style = input(user, "Select a hairstyle", "Wig Styling")  as null|anything in (GLOB.hairstyles_list - "Bald")
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
-	if(new_style && new_style != hair_style)
-		hair_style = new_style
+	if(new_style && new_style != hairstyle)
+		hairstyle = new_style
 		user.visible_message("<span class='notice'>[user] changes \the [src]'s hairstyle to [new_style].</span>", "<span class='notice'>You change \the [src]'s hairstyle to [new_style].</span>")
 	if(adjustablecolor)
 		color = input(usr,"","Choose Color",color) as color|null
 	update_icon()
 
 /obj/item/clothing/head/wig/random/Initialize(mapload)
-	hair_style = pick(GLOB.hair_styles_list - "Bald") //Don't want invisible wig
+	hairstyle = pick(GLOB.hairstyles_list - "Bald") //Don't want invisible wig
 	color = "#[random_short_color()]"
 	. = ..()
 
@@ -243,7 +243,7 @@
 	custom_price = 25
 
 /obj/item/clothing/head/wig/natural/Initialize(mapload)
-	hair_style = pick(GLOB.hair_styles_list - "Bald")
+	hairstyle = pick(GLOB.hairstyles_list - "Bald")
 	. = ..()
 
 /obj/item/clothing/head/wig/natural/equipped(mob/living/carbon/human/user, slot)

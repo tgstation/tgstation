@@ -33,7 +33,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 				log_combat(M, src, "pushed")
 				visible_message("<span class='danger'>[M] has forced back [src]!</span>", \
 					"<span class='userdanger'>[M] has forced back [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-			playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
+			playsound(loc, 'sound/weapons/pierce.ogg', 50, TRUE, -1)
 	else
 		..()
 	return

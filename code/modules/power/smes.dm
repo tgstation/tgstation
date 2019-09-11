@@ -129,7 +129,7 @@
 			return
 
 		to_chat(user, "<span class='notice'>You start building the power terminal...</span>")
-		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 
 		if(do_after(user, 20, target = src))
 			if(C.get_amount() < 10 || !C)
@@ -140,8 +140,7 @@
 				return
 			if(!terminal)
 				C.use(10)
-				user.visible_message(\
-					"[user.name] has built a power terminal.",\
+				user.visible_message("<span class='notice'>[user.name] has built a power terminal.</span>",\
 					"<span class='notice'>You build the power terminal.</span>")
 
 				//build the terminal and link it to the network

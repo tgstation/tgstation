@@ -212,7 +212,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/twohanded/required/gibtonite/attackby(obj/item/I, mob/user, params)
 	if(!wires && istype(I, /obj/item/assembly/igniter))
-		user.visible_message("[user] attaches [I] to [src].", "<span class='notice'>You attach [I] to [src].</span>")
+		user.visible_message("<span class='notice'>[user] attaches [I] to [src].</span>", "<span class='notice'>You attach [I] to [src].</span>")
 		wires = new /datum/wires/explosive/gibtonite(src)
 		attacher = key_name(user)
 		qdel(I)
@@ -232,7 +232,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 			primed = FALSE
 			if(det_timer)
 				deltimer(det_timer)
-			user.visible_message("The chain reaction was stopped! ...The ore's quality looks diminished.", "<span class='notice'>You stopped the chain reaction. ...The ore's quality looks diminished.</span>")
+			user.visible_message("<span class='notice'>The chain reaction was stopped! ...The ore's quality looks diminished.</span>", "<span class='notice'>You stopped the chain reaction. ...The ore's quality looks diminished.</span>")
 			icon_state = "Gibtonite ore"
 			quality = GIBTONITE_QUALITY_LOW
 			return
@@ -254,7 +254,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/twohanded/required/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by = 0)
 	if(!primed)
 		primed = TRUE
-		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,1)
+		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,TRUE)
 		icon_state = "Gibtonite active"
 		var/notify_admins = FALSE
 		if(z != 5)//Only annoy the admins ingame if we're triggered off the mining zlevel
@@ -471,11 +471,11 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		cooldown = world.time + 15
 		flick("coin_[cmineral]_flip", src)
 		icon_state = "coin_[cmineral]_[coinflip]"
-		playsound(user.loc, 'sound/items/coinflip.ogg', 50, 1)
+		playsound(user.loc, 'sound/items/coinflip.ogg', 50, TRUE)
 		var/oldloc = loc
 		sleep(15)
 		if(loc == oldloc && user && !user.incapacitated())
-			user.visible_message("[user] has flipped [src]. It lands on [coinflip].", \
+			user.visible_message("<span class='notice'>[user] has flipped [src]. It lands on [coinflip].</span>", \
  							 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
 							 "<span class='italics'>You hear the clattering of loose change.</span>")
 	return TRUE//did the coin flip? useful for suicide_act

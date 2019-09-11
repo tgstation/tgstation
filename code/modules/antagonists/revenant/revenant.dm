@@ -225,7 +225,7 @@
 	notransform = TRUE
 	revealed = TRUE
 	invisibility = 0
-	playsound(src, 'sound/effects/screech.ogg', 100, 1)
+	playsound(src, 'sound/effects/screech.ogg', 100, TRUE)
 	visible_message("<span class='warning'>[src] lets out a waning screech as violet mist swirls around its dissolving body!</span>")
 	icon_state = "revenant_draining"
 	for(var/i = alpha, i > 0, i -= 10)

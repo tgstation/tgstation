@@ -92,7 +92,7 @@
 		return (threat_level >= high_population_requirement)
 	else
 		pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
-		var/indice_pop = min(10,round(population/pop_per_requirement)+1)
+		var/indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
 		return (threat_level >= requirements[indice_pop])
 
 /// This is called if persistent variable is true everytime SSTicker ticks.
@@ -164,11 +164,11 @@
 			candidates.Remove(P)
 			continue
 		if(antag_flag_override)
-			if(!antag_flag_override in P.client.prefs.be_special || is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
+			if(!(antag_flag_override in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
 				candidates.Remove(P)
 				continue
 		else
-			if(!antag_flag in P.client.prefs.be_special || is_banned_from(P.ckey, list(antag_flag, ROLE_SYNDICATE)))
+			if(!(antag_flag in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag, ROLE_SYNDICATE)))
 				candidates.Remove(P)
 				continue
 

@@ -132,7 +132,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
 	add_fingerprint(user)
-	playsound(src, 'sound/effects/Glassknock.ogg', 50, 1)
+	playsound(src, 'sound/effects/Glassknock.ogg', 50, TRUE)
 
 /obj/structure/window/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(!can_be_reached(user))
@@ -149,7 +149,7 @@
 	user.visible_message("<span class='notice'>[user] knocks on [src].</span>", \
 		"<span class='notice'>You knock on [src].</span>")
 	add_fingerprint(user)
-	playsound(src, 'sound/effects/Glassknock.ogg', 50, 1)
+	playsound(src, 'sound/effects/Glassknock.ogg', 50, TRUE)
 
 /obj/structure/window/attack_paw(mob/user)
 	return attack_hand(user)
@@ -187,7 +187,7 @@
 				to_chat(user, "<span class='notice'>You [anchored ? "fasten the window to":"unfasten the window from"] the floor.</span>")
 			return
 		else if(I.tool_behaviour == TOOL_WRENCH && !anchored)
-			to_chat(user, "<span class='notice'> You begin to disassemble [src]...</span>")
+			to_chat(user, "<span class='notice'>You begin to disassemble [src]...</span>")
 			if(I.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 				var/obj/item/stack/sheet/G = new glass_type(user.loc, glass_amount)
 				G.add_fingerprint(user)
@@ -242,18 +242,18 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src, hitsound, 75, 1)
+				playsound(src, hitsound, 75, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
+				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src, 'sound/items/Welder.ogg', 100, TRUE)
 
 
 /obj/structure/window/deconstruct(disassembled = TRUE)
 	if(QDELETED(src))
 		return
 	if(!disassembled)
-		playsound(src, breaksound, 70, 1)
+		playsound(src, breaksound, 70, TRUE)
 		if(!(flags_1 & NODECONSTRUCT_1))
 			for(var/obj/item/shard/debris in spawnDebris(drop_location()))
 				transfer_fingerprints_to(debris) // transfer fingerprints to shards only
@@ -366,7 +366,7 @@
 	icon_state = "rwindow"
 	reinf = TRUE
 	heat_resistance = 1600
-	armor = list("melee" = 90, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
+	armor = list("melee" = 80, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
 	max_integrity = 75
 	explosion_block = 1
 	damage_deflection = 11
@@ -382,7 +382,7 @@
 			if(I.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HARM)
 				user.visible_message("<span class='notice'>[user] holds \the [I] to the security screws on \the [src]...</span>",
 										"<span class='notice'>You begin heating the security screws on \the [src]...</span>")
-				if(I.use_tool(src, user, 180, volume = 100))
+				if(I.use_tool(src, user, 150, volume = 100))
 					to_chat(user, "<span class='notice'>The security bolts are glowing white hot and look ready to be removed.</span>")
 					state = RWINDOW_BOLTS_HEATED
 					addtimer(CALLBACK(src, .proc/cool_bolts), 300)
@@ -391,7 +391,7 @@
 			if(I.tool_behaviour == TOOL_SCREWDRIVER)
 				user.visible_message("<span class='notice'>[user] digs into the heated security screws and starts removing them...</span>",
 										"<span class='notice'>You dig into the heated screws hard and they start turning...</span>")
-				if(I.use_tool(src, user, 80, volume = 50))
+				if(I.use_tool(src, user, 50, volume = 50))
 					state = RWINDOW_BOLTS_OUT
 					to_chat(user, "<span class='notice'>The screws come out, and a gap forms around the edge of the pane.</span>")
 				return
@@ -399,7 +399,7 @@
 			if(I.tool_behaviour == TOOL_CROWBAR)
 				user.visible_message("<span class='notice'>[user] wedges \the [I] into the gap in the frame and starts prying...</span>",
 										"<span class='notice'>You wedge \the [I] into the gap in the frame and start prying...</span>")
-				if(I.use_tool(src, user, 50, volume = 50))
+				if(I.use_tool(src, user, 40, volume = 50))
 					state = RWINDOW_POPPED
 					to_chat(user, "<span class='notice'>The panel pops out of the frame, exposing some thin metal bars that looks like they can be cut.</span>")
 				return
@@ -407,7 +407,7 @@
 			if(I.tool_behaviour == TOOL_WIRECUTTER)
 				user.visible_message("<span class='notice'>[user] starts cutting the exposed bars on \the [src]...</span>",
 										"<span class='notice'>You start cutting the exposed bars on \the [src]</span>")
-				if(I.use_tool(src, user, 30, volume = 50))
+				if(I.use_tool(src, user, 20, volume = 50))
 					state = RWINDOW_BARS_CUT
 					to_chat(user, "<span class='notice'>The panels falls out of the way exposing the frame bolts.</span>")
 				return
@@ -415,18 +415,18 @@
 			if(I.tool_behaviour == TOOL_WRENCH)
 				user.visible_message("<span class='notice'>[user] starts unfastening \the [src] from the frame...</span>",
 					"<span class='notice'>You start unfastening the bolts from the frame...</span>")
-				if(I.use_tool(src, user, 50, volume = 50))
+				if(I.use_tool(src, user, 40, volume = 50))
 					to_chat(user, "<span class='notice'>You unscrew the bolts from the frame and the window pops loose.</span>")
 					state = WINDOW_OUT_OF_FRAME
 					setAnchored(FALSE)
 				return
 	return ..()
-	
+
 /obj/structure/window/proc/cool_bolts()
 	if(state == RWINDOW_BOLTS_HEATED)
 		state = RWINDOW_SECURE
 		visible_message("<span class='notice'>The bolts on \the [src] look like they've cooled off...</span>")
-	
+
 /obj/structure/window/reinforced/examine(mob/user)
 	. = ..()
 	switch(state)
@@ -460,7 +460,7 @@
 	icon_state = "plasmawindow"
 	reinf = FALSE
 	heat_resistance = 25000
-	armor = list("melee" = 90, "bullet" = 5, "laser" = 0, "energy" = 0, "bomb" = 45, "bio" = 100, "rad" = 100, "fire" = 99, "acid" = 100)
+	armor = list("melee" = 80, "bullet" = 5, "laser" = 0, "energy" = 0, "bomb" = 45, "bio" = 100, "rad" = 100, "fire" = 99, "acid" = 100)
 	max_integrity = 200
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/plasmaglass
@@ -493,7 +493,7 @@
 	icon_state = "plasmarwindow"
 	reinf = TRUE
 	heat_resistance = 50000
-	armor = list("melee" = 90, "bullet" = 20, "laser" = 0, "energy" = 0, "bomb" = 60, "bio" = 100, "rad" = 100, "fire" = 99, "acid" = 100)
+	armor = list("melee" = 80, "bullet" = 20, "laser" = 0, "energy" = 0, "bomb" = 60, "bio" = 100, "rad" = 100, "fire" = 99, "acid" = 100)
 	max_integrity = 500
 	damage_deflection = 21
 	explosion_block = 2
@@ -546,7 +546,7 @@
 					setAnchored(FALSE)
 				return
 	return ..()
-	
+
 /obj/structure/window/plasma/reinforced/examine(mob/user)
 	. = ..()
 	switch(state)
@@ -837,11 +837,11 @@
 	add_fingerprint(user)
 	if(user.a_intent != INTENT_HARM)
 		user.changeNext_move(CLICK_CD_MELEE)
-		user.visible_message("[user] knocks on [src].")
-		playsound(src, "pageturn", 50, 1)
+		user.visible_message("<span class='notice'>[user] knocks on [src].</span>")
+		playsound(src, "pageturn", 50, TRUE)
 	else
 		take_damage(4,BRUTE,"melee", 0)
-		playsound(src, hitsound, 50, 1)
+		playsound(src, hitsound, 50, TRUE)
 		if(!QDELETED(src))
 			user.visible_message("<span class='danger'>[user] tears a hole in [src].</span>")
 			update_icon()
@@ -865,11 +865,11 @@
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 	if(istype(W, /obj/item/paper) && obj_integrity < max_integrity)
-		user.visible_message("[user] starts to patch the holes in \the [src].")
+		user.visible_message("<span class='notice'>[user] starts to patch the holes in \the [src].</span>")
 		if(do_after(user, 20, target = src))
 			obj_integrity = min(obj_integrity+4,max_integrity)
 			qdel(W)
-			user.visible_message("[user] patches some of the holes in \the [src].")
+			user.visible_message("<span class='notice'>[user] patches some of the holes in \the [src].</span>")
 			if(obj_integrity == max_integrity)
 				update_icon()
 			return

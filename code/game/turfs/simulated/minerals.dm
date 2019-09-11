@@ -80,7 +80,7 @@
 		flags = CHANGETURF_DEFER_CHANGE
 	ScrapeAway(null, flags)
 	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
-	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
+	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
 
 /turf/closed/mineral/attack_animal(mob/living/simple_animal/user)
 	if((user.environment_smash & ENVIRONMENT_SMASH_WALLS) || (user.environment_smash & ENVIRONMENT_SMASH_RWALLS))
@@ -89,7 +89,7 @@
 
 /turf/closed/mineral/attack_alien(mob/living/carbon/alien/M)
 	to_chat(M, "<span class='notice'>You start digging into the rock...</span>")
-	playsound(src, 'sound/effects/break_stone.ogg', 50, 1)
+	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE)
 	if(do_after(M, 40, target = src))
 		to_chat(M, "<span class='notice'>You tunnel into the rock.</span>")
 		gets_drilled(M)
@@ -487,7 +487,7 @@
 
 /turf/closed/mineral/gibtonite/gets_drilled(mob/user, triggered_by_explosion = 0)
 	if(stage == GIBTONITE_UNSTRUCK && mineralAmt >= 1) //Gibtonite deposit is activated
-		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,1)
+		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,TRUE)
 		explosive_reaction(user, triggered_by_explosion)
 		return
 	if(stage == GIBTONITE_ACTIVE && mineralAmt >= 1) //Gibtonite deposit goes kaboom

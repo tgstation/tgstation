@@ -11,7 +11,7 @@
 
 /obj/structure/spider/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BURN)//the stickiness of the web mutes all attack sounds except fire damage type
-		playsound(loc, 'sound/items/welder.ogg', 100, 1)
+		playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
 
 
 /obj/structure/spider/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
@@ -215,7 +215,7 @@
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	to_chat(user, "<span class='notice'>You struggle against the tight bonds... (This will take about [DisplayTimeText(breakout_time)].)</span>")
-	visible_message("You see something struggling and writhing in \the [src]!")
+	visible_message("<span class='notice'>You see something struggling and writhing in \the [src]!</span>")
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src)
 			return

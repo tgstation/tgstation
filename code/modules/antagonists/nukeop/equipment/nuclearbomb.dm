@@ -233,7 +233,7 @@
 			explode()
 		else
 			var/volume = (get_time_left() <= 20 ? 30 : 5)
-			playsound(loc, 'sound/items/timer.ogg', volume, 0)
+			playsound(loc, 'sound/items/timer.ogg', volume, FALSE)
 
 /obj/machinery/nuclearbomb/ui_interact(mob/user, ui_key="main", datum/tgui/ui=null, force_open=0, datum/tgui/master_ui=null, datum/ui_state/state=GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -637,7 +637,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/disk/nuclear/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is going delta! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(src, 'sound/machines/alarm.ogg', 50, -1, 1)
+	playsound(src, 'sound/machines/alarm.ogg', 50, -1, TRUE)
 	for(var/i in 1 to 100)
 		addtimer(CALLBACK(user, /atom/proc/add_atom_colour, (i % 2)? "#00FF00" : "#FF0000", ADMIN_COLOUR_PRIORITY), i)
 	addtimer(CALLBACK(src, .proc/manual_suicide, user), 101)

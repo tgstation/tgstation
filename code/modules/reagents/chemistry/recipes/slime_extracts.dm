@@ -158,7 +158,7 @@
 	//BORK BORK BORK
 	var/turf/T = get_turf(holder.my_atom)
 
-	playsound(T, 'sound/effects/phasein.ogg', 100, 1)
+	playsound(T, 'sound/effects/phasein.ogg', 100, TRUE)
 
 	for(var/mob/living/carbon/C in viewers(T, null))
 		C.flash_act()
@@ -210,10 +210,12 @@
 /datum/chemical_reaction/slime/slimefoam
 	name = "Slime Foam"
 	id = "m_foam"
-	results = list(/datum/reagent/fluorosurfactant = 20, /datum/reagent/water = 20)
 	required_reagents = list(/datum/reagent/water = 5)
 	required_container = /obj/item/slime_extract/blue
 	required_other = TRUE
+
+/datum/chemical_reaction/slime/slimefoam/on_reaction(datum/reagents/holder)
+	holder.create_foam(/datum/effect_system/foam_spread,80, "<span class='danger'>[src] spews out foam!</span>")
 
 //Dark Blue
 /datum/chemical_reaction/slime/slimefreeze

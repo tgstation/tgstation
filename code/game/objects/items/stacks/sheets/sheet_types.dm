@@ -90,6 +90,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	null, \
 	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("floodlight frame", /obj/structure/floodlight_frame, 5, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("voting box", /obj/structure/votebox, 15, time = 50)
 ))
 
 /obj/item/stack/sheet/metal
@@ -438,7 +439,7 @@ GLOBAL_LIST_INIT(cardboard_recipes, list (														\
 	if(istype(I, /obj/item/stamp/clown) && !istype(loc, /obj/item/storage))
 		var/atom/droploc = drop_location()
 		if(use(1))
-			playsound(I, 'sound/items/bikehorn.ogg', 50, 1, -1)
+			playsound(I, 'sound/items/bikehorn.ogg', 50, TRUE, -1)
 			to_chat(user, "<span class='notice'>You stamp the cardboard! It's a clown box! Honk!</span>")
 			if (amount >= 0)
 				new/obj/item/storage/box/clown(droploc) //bugfix

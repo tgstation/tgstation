@@ -254,6 +254,9 @@ MAX_TICKETS_PER_ROLL 100
 ## Uncomment to allow players to see the set odds of different rounds in secret/random in the get server revision screen. This will NOT tell the current roundtype.
 #SHOW_GAME_TYPE_ODDS
 
+## Uncomment to enable dynamic ruleset config file.
+DYNAMIC_CONFIG_ENABLED
+
 ## RANDOM EVENTS ###
 ## Comment this out to disable random events during the round.
 ALLOW_RANDOM_EVENTS

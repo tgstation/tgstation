@@ -136,7 +136,7 @@
 /obj/machinery/scanner_gate/proc/alarm_beep()
 	if(next_beep <= world.time)
 		next_beep = world.time + 20
-		playsound(src, 'sound/machines/scanbuzz.ogg', 100, 0)
+		playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
 	var/image/I = image(icon, src, "alarm_light", layer+1)
 	flick_overlay_view(I, src, 20)
 	set_scanline("alarm", 20)

@@ -279,39 +279,24 @@
 /datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!ishuman(M) && !ismonkey(M))
 		return
-
+		
 	var/mob/living/carbon/victim = M
 	if(method == TOUCH || method == VAPOR)
+		var/pepper_proof = victim.is_pepper_proof()
+	
 		//check for protection
-		var/mouth_covered = victim.is_mouth_covered()
-		var/eyes_covered = victim.is_eyes_covered()
-
 		//actually handle the pepperspray effects
-		if ( eyes_covered && mouth_covered )
-			return
-		else if ( mouth_covered )	// Reduced effects if partially protected
+		if (!(pepper_proof)) // you need both eye and mouth protection
 			if(prob(5))
 				victim.emote("scream")
-			victim.blur_eyes(3)
-			victim.blind_eyes(2)
-			victim.confused = max(M.confused, 3)
-			victim.damageoverlaytemp = 60
-			victim.Paralyze(60)
-			return
-		else if ( eyes_covered ) // Eye cover is better than mouth cover
-			victim.blur_eyes(3)
-			victim.damageoverlaytemp = 30
-			return
-		else // Oh dear :D
-			if(prob(5))
-				victim.emote("scream")
-			victim.blur_eyes(5)
-			victim.blind_eyes(3)
-			victim.confused = max(M.confused, 6)
-			victim.damageoverlaytemp = 75
-			victim.Paralyze(100)
+			victim.blur_eyes(5) // 10 seconds
+			victim.blind_eyes(3) // 6 seconds
+			victim.confused = max(M.confused, 5) // 10 seconds
+			victim.Knockdown(3 SECONDS)
+			victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.25, blacklisted_movetypes=(FLYING|FLOATING))
+			addtimer(CALLBACK(victim, /mob.proc/remove_movespeed_modifier, MOVESPEED_ID_PEPPER_SPRAY), 10 SECONDS)
 		victim.update_damage_hud()
-
+			
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
 		M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
@@ -702,7 +687,7 @@
 /datum/reagent/consumable/liquidelectricity/on_mob_life(mob/living/carbon/M)
 	if(prob(25) && !isethereal(M))
 		M.electrocute_act(rand(10,15), "Liquid Electricity in their body", 1) //lmao at the newbs who eat energy bars
-		playsound(M, "sparks", 50, 1)
+		playsound(M, "sparks", 50, TRUE)
 	return ..()
 
 /datum/reagent/consumable/astrotame

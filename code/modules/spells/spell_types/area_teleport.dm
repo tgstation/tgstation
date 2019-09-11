@@ -35,7 +35,7 @@
 	return thearea
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/cast(list/targets,area/thearea,mob/user = usr)
-	playsound(get_turf(user), sound1, 50,1)
+	playsound(get_turf(user), sound1, 50,TRUE)
 	for(var/mob/living/target in targets)
 		var/list/L = list()
 		for(var/turf/T in get_area_turfs(thearea.type))
@@ -69,7 +69,7 @@
 
 		if(!success)
 			do_teleport(target, L, forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
-			playsound(get_turf(user), sound2, 50,1)
+			playsound(get_turf(user), sound2, 50,TRUE)
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/invocation(area/chosenarea = null,mob/living/user = usr)
 	if(!invocation_area || !chosenarea)
@@ -85,8 +85,8 @@
 			if("shout")
 				user.say(words, forced = "spell")
 				if(user.gender==MALE)
-					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
+					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, TRUE)
 				else
-					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
+					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, TRUE)
 			if("whisper")
 				user.whisper(words, forced = "spell")
