@@ -8,9 +8,11 @@
 #define ANTAG_DATUM_HUNTER				/datum/antagonist/vamphunter
 
 // TRAITS
-#define TRAIT_COLDBLOODED		"coldblooded"
-#define TRAIT_NONATURALHEAL		"nonaturalheal"
-#define TRAIT_NORUNNING			"norunning"
+#define TRAIT_COLDBLOODED		"coldblooded"	// Your body is literal room temperature. Does not make you immune to the temp.
+#define TRAIT_NONATURALHEAL		"nonaturalheal"	// Only Admins can heal you. NOTHING else does it unless it's given the god tag.
+#define TRAIT_NORUNNING			"norunning"		// You walk!
+#define TRAIT_NOMARROW			"nomarrow"		// You don't make blood.
+#define TRAIT_NOPULSE			"nopulse"		// You don't pump blood.
 
 // HUD
 //#define ANTAG_HUD_BLOODSUCKER		26  // MOVED TO atom_hud.dm, so we can get a conflict error and update if anything changes. // Check atom_hud.dm to see what the current top number is.

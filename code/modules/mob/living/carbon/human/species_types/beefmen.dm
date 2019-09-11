@@ -34,6 +34,7 @@
 	armor = -2		// overall defense for the race... or less defense, if it's negative.
 	punchdamagelow = 1       //lowest possible punch damage. if this is set to 0, punches will always miss
 	punchdamagehigh = 5 // 10      //highest possible punch damage
+	siemens_coeff = 0.7 // Due to lack of density.   //base electrocution coefficient
 	inert_mutation = MUTATE // in DNA.dm
 	deathsound = 'sound/Fulpsounds/beef_die.ogg'
 	attack_sound = 'sound/Fulpsounds/beef_hit.ogg'
@@ -162,8 +163,8 @@
 		H.bleed_rate += 2
 		dehydrate -= 0.5
 
-	// Replenish Blood Faster!
-	if (dehydrate <= 0 && H.bleed_rate <= 0 && H.blood_volume < BLOOD_VOLUME_NORMAL)
+	// Replenish Blood Faster! (But only if you actually make blood)
+	if (dehydrate <= 0 && H.bleed_rate <= 0 && H.blood_volume < BLOOD_VOLUME_NORMAL && !HAS_TRAIT(H, TRAIT_NOMARROW))
 		H.blood_volume += 2
 
 // TO-DO // Drop lots of meat on gib?
@@ -285,6 +286,10 @@
 
 		if ((target_zone in allowedList) && affecting)
 
+			if (user.handcuffed)
+				to_chat(user, "<span class='alert'>You can't get a good enough grip with your hands bound.</span>")
+				return FALSE
+
 			// Robot Arms Fail
 			if (affecting.status != BODYPART_ORGANIC)
 				to_chat(user, "That thing is on there good. It's not coming off with a gentle tug.")
@@ -352,7 +357,7 @@
 
 // taken from _HELPERS/names.dm
 /proc/beefman_name(gender)
-	return "[pick(GLOB.experiment_names)] \Roman[rand(1,49)]: '[pick(GLOB.russian_names)]'"
+	return "[pick(GLOB.experiment_names)] \Roman[rand(1,49)] '[pick(GLOB.russian_names)]'"
 
 
 
