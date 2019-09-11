@@ -194,6 +194,7 @@
 
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 	var/trans_data = null
+	var/transfer_log = list()
 	if(!round_robin)
 		var/part = amount / src.total_volume
 		for(var/reagent in cached_reagents)
@@ -209,10 +210,6 @@
 				T.on_transfer(target_atom, method, transfer_amount * multiplier)
 			remove_reagent(T.type, transfer_amount)
 			transfer_log[T.type] = transfer_amount
-
-			if(transfered_by && target_atom)
-				target_atom.add_hiddenprint(transfered_by) //log prints so admins can figure out who touched it last.
-				log_combat(transfered_by, target_atom, "transferred reagents ([log_list(transfer_log)]) from [my_atom] to")
 	else
 		var/to_transfer = amount
 		for(var/reagent in cached_reagents)
@@ -233,25 +230,6 @@
 				T.on_transfer(target_atom, method, transfer_amount * multiplier)
 			remove_reagent(T.type, transfer_amount)
 			transfer_log[T.type] = transfer_amount
-
-			if(transfered_by && target_atom)
-				target_atom.add_hiddenprint(transfered_by) //log prints so admins can figure out who touched it last.
-				log_combat(transfered_by, target_atom, "transferred reagents ([log_list(transfer_log)]) from [my_atom] to")
-
-	var/transfer_log = list()
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/T = reagent
-		if(remove_blacklisted && !T.can_synth)
-			continue
-		var/transfer_amount = T.volume * part
-		if(preserve_data)
-			trans_data = copy_data(T)
-		R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
-		if(method)
-			R.react_single(T, target_atom, method, part, show_message)
-			T.on_transfer(target_atom, method, transfer_amount * multiplier)
-		remove_reagent(T.type, transfer_amount)
-		transfer_log[T.type] = transfer_amount
 
 	if(transfered_by && target_atom)
 		target_atom.add_hiddenprint(transfered_by) //log prints so admins can figure out who touched it last.
