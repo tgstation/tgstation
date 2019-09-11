@@ -27,7 +27,7 @@
 	var/minimum_fire_delay = 20
 	var/last_shot = 0
 	var/shot_number = 0
-	var/state = EMITTER_UNWRENCHED
+	var/state = EMITTER_WRENCHED
 	var/locked = FALSE
 	var/allow_switch_interact = TRUE
 
