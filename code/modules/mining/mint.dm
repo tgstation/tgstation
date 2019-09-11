@@ -103,7 +103,7 @@
 	if(T)
 		var/obj/item/O = new P(src)
 		var/obj/item/storage/bag/money/M = locate(/obj/item/storage/bag/money, T)
-		O.set_custom_materials(chosen, 0.2)
+		O.set_custom_materials(list(chosen = 400))
 		if(!M)
 			M = new /obj/item/storage/bag/money(src)
 			unload_mineral(M)
