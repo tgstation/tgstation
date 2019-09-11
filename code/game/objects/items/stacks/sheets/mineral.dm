@@ -365,7 +365,6 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
 	icon_state = "sheet-adamantine"
 	item_state = "sheet-adamantine"
 	singular_name = "adamantine sheet"
-	sheettype = "adamantine"
 	materials = list(/datum/material/adamantine=MINERAL_MATERIAL_AMOUNT)
 	point_value = 50
 	merge_type = /obj/item/stack/sheet/mineral/adamantine
@@ -383,7 +382,6 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
 	item_state = "sheet-mythril"
 	singular_name = "mythril sheet"
 	novariants = TRUE
-	sheettype = "mythril"
 	materials = list(/datum/material/mythril=MINERAL_MATERIAL_AMOUNT)
 	point_value = 100
 	merge_type = /obj/item/stack/sheet/mineral/mythril
