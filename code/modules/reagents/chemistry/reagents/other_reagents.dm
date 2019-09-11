@@ -443,6 +443,7 @@
 									"Your limbs begin to take on a different shape." = MUT_MSG_EXTENDED,
 									"Your appendages begin morphing." = MUT_MSG_EXTENDED,
 									"You feel as though you're about to change at any moment!" = MUT_MSG_ABOUT2TURN)
+	var/cycles_to_turn = 20 //the current_cycle threshold / iterations needed before one can transform
 
 /datum/reagent/mutationtoxin/on_mob_life(mob/living/carbon/human/H)
 	. = TRUE
@@ -454,21 +455,19 @@
 	if(prob(10))
 		var/list/pick_ur_fav = list()
 		var/filter = NONE
-		switch(current_cycle)
-			if(1 to 6)
-				filter = MUT_MSG_IMMEDIATE
-			if(7 to 12)
-				filter = MUT_MSG_EXTENDED
-			if(13 to INFINITY)
-				filter = MUT_MSG_ABOUT2TURN
-		if(!filter)
-			return //0 current_cycle, impressive
+		if(current_cycle <= (cycles_to_turn*0.3))
+			filter = MUT_MSG_IMMEDIATE
+		else if(current_cycle <= (cycles_to_turn*0.8))
+			filter = MUT_MSG_EXTENDED
+		else
+			filter = MUT_MSG_ABOUT2TURN
+			
 		for(var/i in mutationtexts)
 			if(mutationtexts[i] == filter)
 				pick_ur_fav += i
 		to_chat(H, "<span class='warning'>[pick(pick_ur_fav)]</span>")
 
-	if(current_cycle >= 20)
+	if(current_cycle >= cycles_to_turn)
 		var/datum/species/species_type = race
 		H.set_species(species_type)
 		H.reagents.del_reagent(type)
@@ -529,7 +528,7 @@
 		H.set_species(species_type)
 		H.reagents.del_reagent(type)
 		return TRUE
-	if(current_cycle >= 20) //overwrite since we want subtypes of jelly
+	if(current_cycle >= cycles_to_turn) //overwrite since we want subtypes of jelly
 		var/datum/species/species_type = pick(subtypesof(race))
 		H.set_species(species_type)
 		H.reagents.del_reagent(type)
