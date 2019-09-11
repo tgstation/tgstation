@@ -101,7 +101,7 @@
 /obj/machinery/mineral/mint/proc/create_coins(P)
 	var/turf/T = get_step(src,output_dir)
 	if(T)
-		var/obj/item/O = new P(src)
+		var/obj/item/O = new /obj/item/coin(src)
 		var/obj/item/storage/bag/money/M = locate(/obj/item/storage/bag/money, T)
 		O.set_custom_materials(list(chosen = 400))
 		if(!M)
