@@ -124,8 +124,8 @@
 	set waitfor = FALSE
 	var/list/living_crew = list()
 
-	for(var/mob/Player in GLOB.mob_list)
-		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) && !isbrain(Player) && Player.client)
+	for(var/mob/Player in GLOB.player_list)
+		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) && !isbrain(Player))
 			living_crew += Player
 	var/malc = CONFIG_GET(number/midround_antag_life_check)
 	if(living_crew.len / GLOB.joined_player_list.len <= malc) //If a lot of the player base died, we start fresh

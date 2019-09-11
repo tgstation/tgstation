@@ -20,6 +20,7 @@ GLOBAL_LIST_EMPTY(joined_player_list)		//all clients that have joined the game a
 GLOBAL_LIST_EMPTY(silicon_mobs)				//all silicon mobs
 GLOBAL_LIST_EMPTY(mob_living_list)				//all instances of /mob/living and subtypes
 GLOBAL_LIST_EMPTY(carbon_list)				//all instances of /mob/living/carbon and subtypes, notably does not contain brains or simple animals
+GLOBAL_LIST_EMPTY(human_list)				//all instances of /mob/living/carbon/human and subtypes
 GLOBAL_LIST_EMPTY(ai_list)
 GLOBAL_LIST_EMPTY(pai_list)
 GLOBAL_LIST_EMPTY(available_ai_shells)
