@@ -156,7 +156,6 @@
 		var/temp_list = list()
 		for(var/i in custom_materials)
 			temp_list[getmaterialref(i)] = custom_materials[i] //Get the proper instanced version
-			message_admins("[temp_list[i]][i]")
 
 		custom_materials = null //Null the list to prepare for applying the materials properly
 		set_custom_materials(temp_list)
