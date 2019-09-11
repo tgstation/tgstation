@@ -117,6 +117,8 @@
 					if(toarrest)
 						target = toarrest
 						mode = BOT_HUNT
+
+/mob/living/simple_animal/bot/secbot/ed209/RangedAttack(atom/A)
 	if(!on)
 		return
 	shootAt(A)
