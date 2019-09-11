@@ -1,0 +1,4 @@
+author: "Twaticus"
+delete-after: True
+changes: 
+  - imageadd: "Byond membership ghosts now have directional sprites"
