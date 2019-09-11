@@ -572,7 +572,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	null,
 	new/datum/stack_recipe("bronze chair", /obj/structure/chair/bronze, 1, time = 0, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("Marx Bust", /obj/structure/statue/bronze/marx, 15, one_per_turf = 1, on_floor = 1), \
-))f
+))
 
 /obj/item/stack/tile/bronze
 	name = "brass"
