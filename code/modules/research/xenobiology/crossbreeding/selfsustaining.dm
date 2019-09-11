@@ -45,7 +45,7 @@ Self-sustaining extracts:
 		reagentselect = "plasma"
 	if(reagentselect == "holy water and uranium")
 		reagentselect = /datum/reagent/water/holywater
-		secondary = "uranium"
+		secondary = /datum/reagent/uranium
 	extract.forceMove(user.drop_location())
 	qdel(src)
 	user.put_in_active_hand(extract)
