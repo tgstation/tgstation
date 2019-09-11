@@ -325,6 +325,8 @@
 			forceMove(O)
 			O.robot_suit = src
 
+			log_game("[key_name(user)] has put an MMI containing the brain of [key_name(brainmob)] into a cyborg shell at [AREACOORD(src)]")
+
 			if(!locomotion)
 				O.lockcharge = TRUE
 				O.update_mobility()
