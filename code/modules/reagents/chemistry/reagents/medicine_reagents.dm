@@ -997,7 +997,7 @@
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/M as mob)
 	M.AdjustAllImmobility(-20, FALSE)
-	M.adjustStaminaLoss(-1, 0)
+	M.adjustStaminaLoss(-10, 0)
 	..()
 	return TRUE
 
