@@ -39,7 +39,7 @@
 	result = /obj/item/twohanded/spear
 	reqs = list(/obj/item/twohanded/spear = 1,
 				/obj/item/grenade = 1)
-	blacklist = list(/obj/item/twohanded/spear/explosive)
+	blacklist = list(/obj/item/twohanded/spear/explosive, /obj/item/twohanded/spear/bonespear)
 	parts = list(/obj/item/twohanded/spear = 1,
 				/obj/item/grenade = 1)
 	time = 15
