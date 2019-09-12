@@ -853,7 +853,7 @@
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/M)
 	if(M.dna.species.type == /datum/species/skeleton)
-			self_consuming = TRUE //so that skeletons can process this reagent and get hurt by it (plasmamen can process this reagent anyway)
+			self_consuming = TRUE //so that skeletons without livers can process this reagent and get hurt by it (plasmamen can process this reagent anyway)
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_metabolize(mob/living/carbon/M)
 	M.say("oof ouch my bones", forced = /datum/reagent/toxin/bonehurtingjuice)
