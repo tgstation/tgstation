@@ -10,10 +10,11 @@
 	var/material_drop_type = /obj/item/stack/sheet/metal
 	var/impressiveness = 15
 	CanAtmosPass = ATMOS_PASS_DENSITY
+	var/art_type = /datum/component/art
 
 /obj/structure/statue/Initialize()
 	. = ..()
-	AddComponent(/datum/component/art, impressiveness)
+	AddComponent(art_type, impressiveness)
 
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
@@ -287,3 +288,14 @@
     name = "snowlegion"
     desc = "Looks like that weird kid with the tiger plushie has been round here again."
     icon_state = "snowlegion"
+
+///////////////////////////////bronze///////////////////////////////////
+
+/obj/structure/statue/bronze
+	material_drop_type = /obj/item/stack/tile/bronze
+
+/obj/structure/statue/bronze/marx
+	name = "\improper Karl Marx bust"
+	desc = "A bust depicting a certain 19th century economist. You get the feeling a specter is haunting the station."
+	icon_state = "marx"
+	art_type = /datum/component/art/rev
