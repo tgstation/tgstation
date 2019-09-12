@@ -1,0 +1,5 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - imageadd: "Added inhand sprites for photo albums"
+  - spellcheck: "Fixed a grammar mistake with the photographer quirk's photo albums"

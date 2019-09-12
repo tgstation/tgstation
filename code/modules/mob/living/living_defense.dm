@@ -38,7 +38,8 @@
 
 /mob/living/proc/is_eyes_covered(check_glasses = 1, check_head = 1, check_mask = 1)
 	return FALSE
-
+/mob/living/proc/is_pepper_proof(check_head = TRUE, check_mask = TRUE)
+	return FALSE
 /mob/living/proc/on_hit(obj/item/projectile/P)
 	return BULLET_ACT_HIT
 
