@@ -39,11 +39,10 @@
 		var/coin_mat = MINERAL_MATERIAL_AMOUNT
 
 		for (var/sheets = 0; sheets < 2; sheets++)
-			if (materials.get_material_amount(M) >= coin_mat)
+			if (materials.use_amount_mat(coin_mat, chosen))
 				for (var/coin_to_make = 0; coin_to_make < 5; coin_to_make++)
 					create_coins(M.coin_type)
 					produced_coins++
-				materials.use_amount_mat(coin_mat, chosen)
 			else 
 				var/found_new = FALSE
 				for(var/datum/material/inserted_material in materials.materials)
