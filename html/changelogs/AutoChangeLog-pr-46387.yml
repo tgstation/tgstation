@@ -1,4 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - soundadd: "support for equip sounds, with jumpsuits and toolbelts serving as a proof of concept"
