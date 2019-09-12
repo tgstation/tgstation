@@ -786,10 +786,10 @@
 	icon_state = "bone_spear0"
 	name = "bone spear"
 	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
-	force = 11
-	force_unwielded = 11
-	force_wielded = 19
-	throwforce = 21
+	force = 12
+	force_unwielded = 12
+	force_wielded = 20
+	throwforce = 22
 	armour_penetration = 15				//Enhanced armor piercing
 
 /obj/item/twohanded/bonespear/update_icon()
