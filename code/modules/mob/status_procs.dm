@@ -30,6 +30,8 @@
 			if(stat == CONSCIOUS || stat == SOFT_CRIT)
 				throw_alert("blind", /obj/screen/alert/blind)
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+			// You are blind why should you be able to make out details like color, only shapes near you
+			src.add_client_colour(/datum/client_colour/monochrome)
 
 /**
   * Adjust a mobs blindness by an amount
@@ -44,6 +46,7 @@
 			if(stat == CONSCIOUS || stat == SOFT_CRIT)
 				throw_alert("blind", /obj/screen/alert/blind)
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+			src.add_client_colour(/datum/client_colour/monochrome)
 	else if(eye_blind)
 		var/blind_minimum = 0
 		if((stat != CONSCIOUS && stat != SOFT_CRIT))
@@ -56,6 +59,7 @@
 		if(!eye_blind)
 			clear_alert("blind")
 			clear_fullscreen("blind")
+			src.remove_client_colour(/datum/client_colour/monochrome)
 /**
   * Force set the blindness of a mob to some level
   */
@@ -67,6 +71,7 @@
 			if(stat == CONSCIOUS || stat == SOFT_CRIT)
 				throw_alert("blind", /obj/screen/alert/blind)
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+			src.add_client_colour(/datum/client_colour/monochrome)
 	else if(eye_blind)
 		var/blind_minimum = 0
 		if(stat != CONSCIOUS && stat != SOFT_CRIT)
@@ -79,6 +84,7 @@
 		if(!eye_blind)
 			clear_alert("blind")
 			clear_fullscreen("blind")
+			src.remove_client_colour(/datum/client_colour/monochrome)
 
 /**
   * Make the mobs vision blurry
