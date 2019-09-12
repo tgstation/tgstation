@@ -636,7 +636,7 @@
 	reqs = list(/obj/item/twohanded/spear/bonespear = 1,
 				/obj/item/bodypart/head = 1)
 	parts = list(/obj/item/bodypart/head = 1,
-			//obj/item/twohanded/spear/bonespear = 1)
+			/obj/item/twohanded/spear/bonespear = 1)
 	result = /obj/structure/headpike/bone
 	category = CAT_PRIMAL
 
