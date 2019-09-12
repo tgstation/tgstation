@@ -198,8 +198,15 @@
 	glass_icon_state = "glass_white"
 	glass_name = "glass of milk"
 	glass_desc = "White and nutritious goodness!"
+	self_consuming = TRUE //if this wasn't true, skeletons wouldn't be able to process this chem (unless they got a liver somehow)
 
 /datum/reagent/consumable/milk/on_mob_life(mob/living/carbon/M)
+	if(M.dna.species.type == /datum/species/skeleton || M.dna.species.type == /datum/species/plasmaman) //I mostly copied this check from bone hurting juice (and then modified it to check to see if you ARE a skeleton or a plasmaman instead of if you AREN'T a skeleton or a plasmaman)
+		if(chem.volume > 10)
+			M.reagents.remove_reagent(chem.type, chem.volume - 10)
+			to_chat(M, "<span class='warning'>The excess milk is dripping off your bones!</span>")
+		M.heal_bodypart_damage(1,1, 0)
+		. = 1
 	if(M.getBruteLoss() && prob(20))
 		M.heal_bodypart_damage(1,0, 0)
 		. = 1
