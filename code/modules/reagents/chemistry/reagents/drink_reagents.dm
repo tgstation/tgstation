@@ -203,6 +203,11 @@
 	if(M.dna.species.type == /datum/species/skeleton)
 			self_consuming = TRUE //so that skeletons (without livers) can process this reagent and get healed by it (plasmamen can process this reagent anyway)
 
+/datum/reagent/consumable/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(M.dna.species.type == /datum/species/skeleton)
+		self_consuming = TRUE //so that if you become a skeleton while you have milk in your system, you can begin to process milk without a liver again by drinking (or splashing yourself with) more of it (this is kind of a hacky fix, but this is an edge case anyway)
+	return ..()
+
 /datum/reagent/consumable/milk/on_mob_life(mob/living/carbon/M)
 	if(M.dna.species.type == /datum/species/skeleton || M.dna.species.type == /datum/species/plasmaman) //I mostly copied this check from bone hurting juice (and then modified it to check to see if you ARE a skeleton or a plasmaman instead of if you AREN'T a skeleton or a plasmaman)
 		if(chem.volume > 10)
