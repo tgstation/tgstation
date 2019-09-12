@@ -120,17 +120,12 @@
 	source.AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50)
 	source.AddComponent(/datum/component/slippery, min(amount / 10, 80))
 
-/datum/material/bananium/on_applied_obj(var/obj/o, amount, material_flags)
-	if(isitem(o))
-		o.AddComponent(/datum/component/wearertargeting/wearer_crosser, list(SLOT_HEAD, SLOT_SHOES, SLOT_BACK, SLOT_W_UNIFORM, SLOT_WEAR_SUIT))
 
 /datum/material/bananium/on_removed(atom/source, amount, material_flags)
 	. = ..()
 	qdel(source.GetComponent(/datum/component/slippery))
 	qdel(source.GetComponent(/datum/component/squeak))
 
-/datum/material/bananium/on_removed_obj(var/obj/o, amount, material_flags)
-	qdel(o.GetComponent(/datum/component/wearertargeting/wearer_crosser))
 
 ///Mediocre force increase
 /datum/material/titanium
