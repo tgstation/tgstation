@@ -543,6 +543,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		if("Gravitokinetic")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/gravitokinetic
 
+	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/bloodsucker)) //FULP
+		pickedtype = /mob/living/simple_animal/hostile/guardian/timestop
+
 	var/list/guardians = user.hasparasites()
 	if(guardians.len && !allowmultiple)
 		to_chat(user, "<span class='holoparasite'>You already have a [mob_name]!</span>" )
@@ -602,7 +605,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	name = "Holoparasite Guide"
 	icon_state = "paper_words"
 	info = {"<b>A list of Holoparasite Types</b><br>
-
  <br>
  <b>Assassin</b>: Does medium damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth.<br>
  <br>
@@ -630,7 +632,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /obj/item/paper/guides/antag/guardian/wizard
 	name = "Guardian Guide"
 	info = {"<b>A list of Guardian Types</b><br>
-
  <br>
  <b>Assassin</b>: Does medium damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth.<br>
  <br>
