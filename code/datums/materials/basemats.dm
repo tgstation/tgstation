@@ -156,7 +156,7 @@
 /datum/material/adamantine
 	name = "adamantine"
 	id = "adamantine"
-	desc = "A powerful material made out of slime cores"
+	desc = "A powerful material made out of magic, I mean science!"
 	color = "#6d7e8e"
 	strength_modifier = 1.5
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
