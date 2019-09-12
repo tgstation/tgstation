@@ -85,6 +85,9 @@
 	update_limb(1)
 	C.bodyparts -= src
 
+	if (status == BODYPART_ORGANIC) // FULP: This limb is now LOCKED to the type of its previous owner!
+		organicDropLocked = TRUE
+
 	if(held_index)
 		C.dropItemToGround(owner.get_item_for_held_index(held_index), 1)
 		C.hand_bodyparts[held_index] = null
