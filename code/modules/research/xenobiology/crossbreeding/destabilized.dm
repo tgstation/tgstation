@@ -9,12 +9,14 @@ Destabilized extracts:
 	effect = "destabilized"
 	icon_state = "destabilized"
 	amountToCreate = 5
+	var/reusable = FALSE
 
-/obj/item/slimecross/destabilized/throw_impact(atom/A, var/datum/thrownthing/T)
+/obj/item/slimecross/destabilized/throw_impact(atom/A, datum/thrownthing/T)
 	if(!..()) //For those tactical catches
 		if(hitEffect(A, T.thrower))
 			playsound(get_turf(A), 'sound/misc/splort.ogg', get_volume_by_throwforce_and_or_w_class(), 1, -1)
-			qdel(src)
+			if(!reusable)
+				qdel(src)
 
 /obj/item/slimecross/destabilized/proc/hitEffect(atom/A, mob/thrower)
 	return TRUE //But nothing happens...
@@ -244,11 +246,12 @@ Destabilized extracts:
 
 /obj/item/slimecross/destabilized/pink
 	colour = "pink"
+	reusable = TRUE //Hugs are hard enough to come by as is.
 
 /obj/item/slimecross/destabilized/pink/hitEffect(atom/A, mob/thrower)
 	. = ..()
 	if(!isliving(A) || !iscarbon(thrower))
-		return FALSE //Don't use up the extract unless it lands a hit on a eligible mob.
+		return FALSE //Don't play the noise unless it lands a hit on a eligible mob.
 	var/mob/living/carbon/CThrower = thrower
 	if(iscarbon(A))
 		var/mob/living/carbon/CTarget = A
@@ -295,9 +298,18 @@ Destabilized extracts:
 	. = ..()
 	if(isliving(A))
 		var/mob/living/L = A
-		L.reagents.add_reagent(/datum/reagent/pax, 5)
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			C.reagents.add_reagent(/datum/reagent/pax, 5)
+		else
+			var/oldFaction = L.faction
+			L.faction |= thrower.faction
+			addtimer(CALLBACK(src, .proc/depacify, L, oldFaction), 50)
 	else
 		new /obj/effect/decal/cleanable/crayon(get_turf(A), "#[rand_hex_color()]", "peace")
+
+/obj/item/slimecross/destabilized/lightpink/proc/depacify(mob/living/M, var/oldFaction)
+	M.faction = oldFaction
 
 /obj/item/slimecross/destabilized/adamantine
 	colour = "adamantine"
