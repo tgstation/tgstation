@@ -246,7 +246,6 @@
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
-
 //T-Comms devices
 /datum/design/subspace_ansible
 	name = "Subspace Ansible"

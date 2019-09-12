@@ -147,6 +147,11 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 5500, /datum/material/plasma = 3500, /datum/material/diamond = 1000, /datum/material/bluespace = 1000)
 	chargerate = 5000
 
+/obj/item/stock_parts/cell/quantum/empty/Initialize()
+	. = ..()
+	charge = 0
+	update_icon()
+
 ///T5 RPED
 /obj/item/storage/part_replacer/bluespace/tier5
 
@@ -159,4 +164,3 @@
 		new /obj/item/stock_parts/matter_bin/quantumbin(src)
 		new /obj/item/reagent_containers/glass/beaker/quantum(src)
 
-///Chem dispenser t5 manip reagents list

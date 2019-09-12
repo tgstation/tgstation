@@ -268,11 +268,6 @@
 	charge = 0
 	update_icon()
 
-/obj/item/stock_parts/cell/quantum/empty/Initialize()
-	. = ..()
-	charge = 0
-	update_icon()
-
 /obj/item/stock_parts/cell/infinite
 	name = "infinite-capacity power cell!"
 	icon_state = "icell"
