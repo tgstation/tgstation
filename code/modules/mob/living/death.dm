@@ -80,7 +80,7 @@
 
 	. = ..()
 
-	if (client)
+	if (client && !was_dead_before)
 		client.move_delay = initial(client.move_delay)
 
 	for(var/s in ownedSoullinks)
