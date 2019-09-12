@@ -850,13 +850,7 @@
 	toxpwr = 0
 	taste_description = "bone hurting"
 	overdose_threshold = 50
-
-/datum/reagent/consumable/reaction_mob(mob/living/M, method=TOUCH, reac_volume) //this is in reaction_mob instead of on_mob_add so that if you become a skeleton while you have bone hurting juice in your system, you can begin to process bone hurting juice (again) without a liver by drinking (or even splashing or spraying yourself with) more of it (this is kind of a hacky fix, but this is an edge case anyway)
-	if(M.dna.species.type == /datum/species/skeleton)
-		self_consuming = TRUE //so that skeletons can process bone hurting juice without a liver
-	else
-		self_consuming = FALSE
-	return ..()
+	self_consuming = TRUE //so that skeletons can process bone hurting juice without a liver
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_metabolize(mob/living/carbon/M)
 	M.say("oof ouch my bones", forced = /datum/reagent/toxin/bonehurtingjuice)
