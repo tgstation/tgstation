@@ -189,6 +189,7 @@
 /datum/status_effect/his_grace/on_apply()
 	owner.log_message("gained His Grace's stun immunity", LOG_ATTACK)
 	owner.add_stun_absorption("hisgrace", INFINITY, 3, null, "His Grace protects you from the stun!")
+	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_HISGRACE)
 	return ..()
 
 /datum/status_effect/his_grace/tick()
@@ -214,6 +215,7 @@
 	owner.log_message("lost His Grace's stun immunity", LOG_ATTACK)
 	if(islist(owner.stun_absorption) && owner.stun_absorption["hisgrace"])
 		owner.stun_absorption -= "hisgrace"
+		REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_HISGRACE)
 
 
 /datum/status_effect/wish_granters_gift //Fully revives after ten seconds.
