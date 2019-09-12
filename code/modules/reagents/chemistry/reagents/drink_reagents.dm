@@ -206,6 +206,8 @@
 /datum/reagent/consumable/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(M.dna.species.type == /datum/species/skeleton)
 		self_consuming = TRUE //so that if you become a skeleton while you have milk in your system, you can begin to process milk without a liver again by drinking (or splashing yourself with) more of it (this is kind of a hacky fix, but this is an edge case anyway)
+	else
+		self_consuming = FALSE
 	return ..()
 
 /datum/reagent/consumable/milk/on_mob_life(mob/living/carbon/M)
