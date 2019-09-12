@@ -855,11 +855,20 @@
 	if(M.dna.species.type == /datum/species/skeleton)
 			self_consuming = TRUE //so that skeletons without livers can process this reagent and get hurt by it (plasmamen can process this reagent anyway)
 
+/datum/reagent/consumable/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(M.dna.species.type == /datum/species/skeleton)
+		self_consuming = TRUE //so that if you become a skeleton while you have bone hurting juice in your system, you can begin to process bone hurting juice without a liver again by drinking (or splashing yourself with) more of it (this is kind of a hacky fix, but this is an edge case anyway)
+	else
+		self_consuming = FALSE
+	return ..()
+
 /datum/reagent/toxin/bonehurtingjuice/on_mob_metabolize(mob/living/carbon/M)
 	M.say("oof ouch my bones", forced = /datum/reagent/toxin/bonehurtingjuice)
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/M)
 	M.adjustStaminaLoss(7.5, 0)
+	if(M.dna.species.type == /datum/species/skeleton || M.dna.species.type == /datum/species/plasmaman)
+		M.adjustBruteLoss(0.5, 0)
 	if(prob(20))
 		switch(rand(1, 3))
 			if(1)
