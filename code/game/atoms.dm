@@ -944,7 +944,11 @@
 	return L.AllowDrop() ? L : L.drop_location()
 
 /atom/proc/vv_auto_rename(newname)
+	var/oldname = name
 	name = newname
+	var/msg = "[key_name(usr)] renamed [src] from [oldname] to [newname] with vv_auto_rename."
+	log_admin(msg)
+	message_admins(msg)
 
 /**
   * An atom has entered this atom's contents
