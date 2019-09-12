@@ -29,9 +29,6 @@
   font-size: 16px;
   margin: 4px;
   border: none;
-  position:absolute;
-  top:px;
-  left:px;
 } 
 
 .amount {
