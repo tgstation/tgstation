@@ -792,7 +792,7 @@
 	throwforce = 22
 	armour_penetration = 15				//Enhanced armor piercing
 
-/obj/item/twohanded/bonespear/update_icon()
+/obj/item/twohanded/spear/bonespear/update_icon()
 	icon_state = "bone_spear[wielded]"
 
 /obj/item/twohanded/binoculars
