@@ -59,7 +59,8 @@
 		if(!eye_blind)
 			clear_alert("blind")
 			clear_fullscreen("blind")
-			src.remove_client_colour(/datum/client_colour/monochrome)
+			if(!HAS_TRAIT(src, TRAIT_MONOCHROMATIC))
+				src.remove_client_colour(/datum/client_colour/monochrome)
 /**
   * Force set the blindness of a mob to some level
   */
@@ -84,7 +85,8 @@
 		if(!eye_blind)
 			clear_alert("blind")
 			clear_fullscreen("blind")
-			src.remove_client_colour(/datum/client_colour/monochrome)
+			if(!HAS_TRAIT(src, TRAIT_MONOCHROMATIC))
+				src.remove_client_colour(/datum/client_colour/monochrome)
 
 /**
   * Make the mobs vision blurry

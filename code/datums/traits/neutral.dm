@@ -97,6 +97,7 @@
 	name = "Monochromacy"
 	desc = "You suffer from full colorblindness, and perceive nearly the entire world in blacks and whites."
 	value = 0
+	mob_trait = TRAIT_MONOCHROMATIC				
 	medical_record_text = "Patient is afflicted with almost complete color blindness."
 
 /datum/quirk/monochromatic/add()
