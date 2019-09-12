@@ -278,9 +278,9 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 
 	. = ..()	//calls mob.Login()
-	if (length(stickybanadminexemptions))
-		stickybanadminexemptions -= ckey
-		if (!length(stickybanadminexemptions))
+	if (length(GLOB.stickybanadminexemptions))
+		GLOB.stickybanadminexemptions -= ckey
+		if (!length(GLOB.stickybanadminexemptions))
 			restore_stickybans()
 
 	if (byond_version >= 512)

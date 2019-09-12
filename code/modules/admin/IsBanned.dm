@@ -5,9 +5,7 @@
 #define STICKYBAN_MAX_MATCHES 15
 #define STICKYBAN_MAX_EXISTING_USER_MATCHES 3 //ie, users who were connected before the ban triggered
 #define STICKYBAN_MAX_ADMIN_MATCHES 1
-var/list/stickybanadminexemptions = list()
-var/list/stickybanadmintexts = list()
-var/stickbanadminexemptiontimerid
+
 /world/IsBanned(key, address, computer_id, type, real_bans_only=FALSE)
 	debug_world_log("isbanned(): '[args.Join("', '")]'")
 	if (!key || (!real_bans_only && (!address || !computer_id)))
@@ -98,15 +96,15 @@ var/stickbanadminexemptiontimerid
 		//oh boy, so basically, because of a bug in byond, sometimes stickyban matches don't trigger here, so we can't exempt admins.
 		//	Whitelisting the ckey with the byond whitelist field doesn't work.
 		//	So we instead have to remove every stickyban than later re-add them.
-		if (!length(stickybanadminexemptions))
+		if (!length(GLOB.stickybanadminexemptions))
 			for (var/banned_ckey in world.GetConfig("ban"))
-				stickybanadmintexts[banned_ckey] = world.GetConfig("ban", banned_ckey)
+				GLOB.stickybanadmintexts[banned_ckey] = world.GetConfig("ban", banned_ckey)
 				world.SetConfig("ban", banned_ckey, null)
 		if (!SSstickyban.initialized)
 			return
-		stickybanadminexemptions[ckey] = world.time
+		GLOB.stickybanadminexemptions[ckey] = world.time
 		stoplag() // sleep a byond tick
-		stickbanadminexemptiontimerid = addtimer(CALLBACK(GLOBAL_PROC, /proc/restore_stickybans), 5 SECONDS, TIMER_STOPPABLE|TIMER_UNIQUE|TIMER_OVERRIDE)
+		GLOB.stickbanadminexemptiontimerid = addtimer(CALLBACK(GLOBAL_PROC, /proc/restore_stickybans), 5 SECONDS, TIMER_STOPPABLE|TIMER_UNIQUE|TIMER_OVERRIDE)
 		return
 	var/list/ban = ..()	//default pager ban stuff
 
@@ -218,13 +216,13 @@ var/stickbanadminexemptiontimerid
 	return .
 
 /proc/restore_stickybans()
-	for (var/banned_ckey in stickybanadmintexts)
-		world.SetConfig("ban", banned_ckey, stickybanadmintexts[banned_ckey])
-	stickybanadminexemptions = list()
-	stickybanadmintexts = list()
-	if (stickbanadminexemptiontimerid)
-		deltimer(stickbanadminexemptiontimerid)
-	stickbanadminexemptiontimerid = null
+	for (var/banned_ckey in GLOB.stickybanadmintexts)
+		world.SetConfig("ban", banned_ckey, GLOB.stickybanadmintexts[banned_ckey])
+	GLOB.stickybanadminexemptions = list()
+	GLOB.stickybanadmintexts = list()
+	if (GLOB.stickbanadminexemptiontimerid)
+		deltimer(GLOB.stickbanadminexemptiontimerid)
+	GLOB.stickbanadminexemptiontimerid = null
 
 #undef STICKYBAN_MAX_MATCHES
 #undef STICKYBAN_MAX_EXISTING_USER_MATCHES
