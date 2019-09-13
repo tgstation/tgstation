@@ -1,4 +1,5 @@
 // GLOBAL_LIST_INIT(color_list_beefman, list("Very Rare" = "c62461", "Rare" = "c91745", "Medium Rare" = "e73f4e", "Medium" = "fd7f8b", "Medium Well" = "e7a5ab", "Well Done" = "b9a6a8" ))
+	//message_admins("DEBUG3")
 
 // TO DO:
 //
@@ -34,6 +35,7 @@
 	armor = -2		// overall defense for the race... or less defense, if it's negative.
 	punchdamagelow = 1       //lowest possible punch damage. if this is set to 0, punches will always miss
 	punchdamagehigh = 5 // 10      //highest possible punch damage
+	siemens_coeff = 0.7 // Due to lack of density.   //base electrocution coefficient
 	inert_mutation = MUTATE // in DNA.dm
 	deathsound = 'sound/Fulpsounds/beef_die.ogg'
 	attack_sound = 'sound/Fulpsounds/beef_hit.ogg'
@@ -41,7 +43,6 @@
 	grab_sound = 'sound/Fulpsounds/beef_grab.ogg'//Special sound for grabbing
 
 	var/dehydrate = 0
-	var/list/datum/brain_trauma/startTraumas = list( /datum/brain_trauma/mild/hallucinations, /datum/brain_trauma/mild/phobia/strangers )
 	    // list( /datum/brain_trauma/mild/phobia/strangers, /datum/brain_trauma/mild/phobia/doctors, /datum/brain_trauma/mild/phobia/authority )
 
 	// Take care of your meat, everybody
@@ -89,9 +90,11 @@
 	C.selected_default_language = /datum/language/russian
 
 	// Be Spooked but Educated
-	C.gain_trauma(pick(startTraumas))
-	C.gain_trauma(/datum/brain_trauma/special/bluespace_prophet/phobetor)
-	// NOTE: To remove, use cure_trauma_type()
+	//C.gain_trauma(pick(startTraumas))
+	if (SStraumas.phobia_words && SStraumas.phobia_words.len) // NOTE: ONLY if phobias have been defined! For some reason, sometimes this gets FUCKED??
+		C.gain_trauma(/datum/brain_trauma/mild/phobia/strangers)
+		C.gain_trauma(/datum/brain_trauma/mild/hallucinations)
+		C.gain_trauma(/datum/brain_trauma/special/bluespace_prophet/phobetor)
 
 /datum/species/proc/set_beef_color(mob/living/carbon/human/H)
 	return // Do Nothing
@@ -134,9 +137,10 @@
 	C.part_default_r_leg = /obj/item/bodypart/r_leg
 	C.ReassignForeignBodyparts()
 
+	// Resolve Trauma
 	C.cure_trauma_type(/datum/brain_trauma/special/bluespace_prophet/phobetor)
-
-
+	C.cure_trauma_type(/datum/brain_trauma/mild/phobia/strangers)
+	C.cure_trauma_type(/datum/brain_trauma/mild/hallucinations)
 
 
 
@@ -161,8 +165,8 @@
 		H.bleed_rate += 2
 		dehydrate -= 0.5
 
-	// Replenish Blood Faster!
-	if (dehydrate <= 0 && H.bleed_rate <= 0 && H.blood_volume < BLOOD_VOLUME_NORMAL)
+	// Replenish Blood Faster! (But only if you actually make blood)
+	if (dehydrate <= 0 && H.bleed_rate <= 0 && H.blood_volume < BLOOD_VOLUME_NORMAL && !HAS_TRAIT(H, TRAIT_NOMARROW))
 		H.blood_volume += 2
 
 // TO-DO // Drop lots of meat on gib?
@@ -284,6 +288,10 @@
 
 		if ((target_zone in allowedList) && affecting)
 
+			if (user.handcuffed)
+				to_chat(user, "<span class='alert'>You can't get a good enough grip with your hands bound.</span>")
+				return FALSE
+
 			// Robot Arms Fail
 			if (affecting.status != BODYPART_ORGANIC)
 				to_chat(user, "That thing is on there good. It's not coming off with a gentle tug.")
@@ -293,7 +301,7 @@
 			user.visible_message("[user] grabs onto [p_their()] own [affecting.name] and pulls.", \
 					 	 "<span class='notice'>You grab hold of your [affecting.name] and yank hard.</span>")
 			if (!do_mob(user,target))
-				return FALSE
+				return TRUE
 
 			user.visible_message("[user]'s [affecting.name] comes right off in their hand.", "<span class='notice'>Your [affecting.name] pops right off.</span>")
 			playsound(get_turf(user), 'sound/Fulpsounds/beef_hit.ogg', 40, 1)
@@ -303,7 +311,7 @@
 			if (istype(I, /obj/item/reagent_containers/food/snacks/meat/slab))
 				user.put_in_hands(I)
 
-			return FALSE
+			return TRUE
 	return ..()
 
 /datum/species/beefman/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
@@ -326,16 +334,19 @@
 			else
 				user.visible_message("[user] begins mashing [I] into [H]'s torso.", \
 						 	 "<span class='notice'>You begin mashing [I] into [H]'s torso.</span>")
-			if (!do_mob(user,H))
-				return FALSE
-			// Attach the part!
-			var/obj/item/bodypart/newBP = H.newBodyPart(target_zone, FALSE)
-			H.visible_message("The meat sprouts digits and becomes [H]'s new [newBP.name]!", "<span class='notice'>The meat sprouts digits and becomes your new [newBP.name]!</span>")
-			newBP.attach_limb(H)
-			newBP.give_meat(H, I)
-			playsound(get_turf(H), 'sound/Fulpsounds/beef_grab.ogg', 50, 1)
 
-			return FALSE
+			// Leave Melee Chain (so deleting the meat doesn't throw an error) <--- aka, deleting the meat that called this very proc.
+			spawn(1)
+				if (!do_mob(user,H))
+					return TRUE
+				// Attach the part!
+				var/obj/item/bodypart/newBP = H.newBodyPart(target_zone, FALSE)
+				H.visible_message("The meat sprouts digits and becomes [H]'s new [newBP.name]!", "<span class='notice'>The meat sprouts digits and becomes your new [newBP.name]!</span>")
+				newBP.attach_limb(H)
+				newBP.give_meat(H, I)
+				playsound(get_turf(H), 'sound/Fulpsounds/beef_grab.ogg', 50, 1)
+
+			return TRUE // True CANCELS the sequence.
 
 	return ..() // TRUE FALSE
 
@@ -351,12 +362,7 @@
 
 // taken from _HELPERS/names.dm
 /proc/beefman_name(gender)
-	return "[pick(GLOB.experiment_names)] \Roman[rand(1,49)]: '[pick(GLOB.russian_names)]'"
-
-
-
-
-
+	return "[pick(GLOB.experiment_names)] \Roman[rand(1,49)] '[pick(GLOB.russian_names)]'"
 
 
 
@@ -378,6 +384,37 @@
 
 			// INTEGRATION //
 
+// NOTE: the proc for a bodypart appearing on a mob is get_limb_icon() in bodypart.dm    !! We tracked it from limb_augmentation.dm -> carbon/update_icons.dm -> bodyparts.dm
+
+
+// Return what the robot part should look like on the current mob.
+/obj/item/bodypart/proc/ReturnLocalAugmentIcon()
+	// Default: No Owner  --> use default
+	if (!owner)
+		return icon_greyscale_robotic
+
+	// Return Part
+	var/obj/item/bodypart/bpType
+	if (body_zone == BODY_ZONE_HEAD)
+		bpType = owner.part_default_head
+	if (body_zone == BODY_ZONE_CHEST)
+		bpType = owner.part_default_chest
+	if (body_zone == BODY_ZONE_L_ARM)
+		bpType = owner.part_default_l_arm
+	if (body_zone == BODY_ZONE_R_ARM)
+		bpType = owner.part_default_r_arm
+	if (body_zone == BODY_ZONE_L_LEG)
+		bpType = owner.part_default_l_leg
+	if (body_zone == BODY_ZONE_R_LEG)
+		bpType = owner.part_default_r_leg
+
+	if (bpType)
+		return initial(bpType.icon_greyscale_robotic)
+
+	// Fail? Default
+	return icon_greyscale_robotic
+
+
 /mob/living/carbon/human/species/beefman
 	race = /datum/species/beefman
 
@@ -386,7 +423,14 @@
 	var/icon/icon_greyscale_robotic = 'icons/mob/augmentation/augments.dmi'
 	var/obj/item/reagent_containers/food/snacks/meat/slab/myMeatType = /obj/item/reagent_containers/food/snacks/meat/slab // For remembering what kind of meat this was made of. Default is base meat slab.
 	var/amCondemned = FALSE // I'm about to be destroyed. Don't add blood to me, and throw null error crap next tick.
-/obj/item/bodypart/add_mob_blood(mob/living/M) // Cancel adding blood if I'm deleting.
+
+	//var/species_id_original = "human" 	// So we know to whom we originally belonged. This swaps freely until the DROP LOCK below is set.
+	var/organicDropLocked = FALSE   	// When set to TRUE, that means this part has been CLAIMED by the race that dropped it.
+	var/prevOrganicState				// Remember each organic icon as you build it; if this limb drops, its stuck with that forever.
+	var/prevOrganicState_Aux			// The hand sprite
+	var/prevOrganicIcon
+
+/obj/item/bodypart/add_mob_blood(mob/living/M) // Cancel adding blood if I'm deletin (throws errors)
 	if (!amCondemned)
 		..()
 
@@ -456,13 +500,14 @@
 	if (status != BODYPART_ORGANIC)
 		return FALSE
 
-	// If owner is NOT inside of something (cloner)
-	if (myMeatType != null)
+	// If not 0% health, let's do it!
+	var/percentHealth = 1 - (brute_dam + burn_dam) / max_damage
+	if (myMeatType != null && percentHealth > 0)
+
+		// Create Meat
 		var/obj/item/reagent_containers/food/snacks/meat/slab/newMeat =	new myMeatType(src.loc)///obj/item/reagent_containers/food/snacks/meat/slab(src.loc)
 
-			// Adjust Reagents by Health Percent
-
-		var/percentHealth = 1 - (brute_dam + burn_dam) / max_damage
+		// Adjust Reagents by Health Percent
 		for (var/datum/reagent/R in newMeat.reagents.reagent_list)
 			R.volume *= percentHealth
 		newMeat.reagents.update_total()
@@ -475,6 +520,7 @@
 		. = newMeat // Return MEAT
 
 	qdel(src)
+	//QDEL_IN(src,1) // Delete later. If we do it now, we screw up the "attack chain" that called this meat to attack the Beefman's stump.
 
 /obj/item/bodypart/head/beef
 	icon = 'icons/Fulpicons/fulp_bodyparts.dmi'
@@ -482,6 +528,11 @@
 	icon_greyscale_robotic = 'icons/Fulpicons/fulp_bodyparts_robotic.dmi'
 	heavy_brute_msg = "mincemeat"
 	heavy_burn_msg = "burned to a crisp"
+/obj/item/bodypart/head/beef/drop_limb(special) // from dismemberment.dm
+	amCondemned = TRUE
+	var/mob/owner_cache = owner
+	..() // Create Meat, Remove Limb
+	return drop_meat(owner_cache)
 
 /obj/item/bodypart/chest/beef
 	icon = 'icons/Fulpicons/fulp_bodyparts.dmi'
@@ -489,6 +540,11 @@
 	icon_greyscale_robotic = 'icons/Fulpicons/fulp_bodyparts_robotic.dmi'
 	heavy_brute_msg = "mincemeat"
 	heavy_burn_msg = "burned to a crisp"
+/obj/item/bodypart/chest/beef/drop_limb(special) // from dismemberment.dm
+	amCondemned = TRUE
+	var/mob/owner_cache = owner
+	..() // Create Meat, Remove Limb
+	return drop_meat(owner_cache)
 
 /obj/item/bodypart/r_arm/beef
 	icon = 'icons/Fulpicons/fulp_bodyparts.dmi'
@@ -673,7 +729,11 @@
 	gain_text = "<span class='notice'>Your mind snaps, and you wake up. You <i>really</i> wake up.</span>"
 	lose_text = "<span class='warning'>You succumb once more to the sleepless dream of the unwoken.</span>"
 
+	var/list/created_firsts = list()
+
 /datum/brain_trauma/special/bluespace_prophet/phobetor/on_life()
+
+	// Make Next Portal
 	if(world.time > next_portal)
 		next_portal = world.time + 100
 
@@ -696,8 +756,8 @@
 		if(!second_turf)
 			return
 
-		var/obj/effect/hallucination/simple/bluespace_stream/phobetor/first = new (first_turf, owner)
-		var/obj/effect/hallucination/simple/bluespace_stream/phobetor/second = new (second_turf, owner)
+		var/obj/effect/hallucination/simple/phobetor/first = new (first_turf, owner)
+		var/obj/effect/hallucination/simple/phobetor/second = new (second_turf, owner)
 
 		first.linked_to = second
 		second.linked_to = first
@@ -706,11 +766,22 @@
 		first.desc += " This one leads to [get_area(second)]."
 		second.desc += " This one leads to [get_area(first)]."
 
+		// Remember this Portal...it's gonna get checked for deletion.
+		created_firsts += first
 
-/obj/effect/hallucination/simple/bluespace_stream
-	use_without_hands = TRUE // A Swain addition.
+	// Delete Next Portal if it's time (it will remove its partner)
+	if (created_firsts.len && world.time >= created_firsts[1].created_on + created_firsts[1].exist_length)
+		var/targetGate = created_firsts[1]
+		created_firsts -= targetGate
+		qdel(targetGate)
 
-/obj/effect/hallucination/simple/bluespace_stream/phobetor
+//Called when removed from a mob
+/datum/brain_trauma/special/bluespace_prophet/phobetor/on_lose(silent)
+	for (var/BT in created_firsts)
+		qdel(BT)
+
+
+/obj/effect/hallucination/simple/phobetor
 	name = "phobetor tear"
 	desc = "A subdimensional rip in reality, which gives extra-spacial passage to those who have woken from the sleepless dream."
 	/*light_color = "#FF88AA"
@@ -719,9 +790,13 @@
 	image_icon = 'icons/Fulpicons/fulp_effects.dmi'
 	image_state = "phobetor_tear"
 	image_layer = ABOVE_LIGHTING_LAYER // Place this above shadows so it always glows.
-	exist_length = 500
+	var/exist_length = 500
+	var/created_on
+	use_without_hands = TRUE // A Swain addition.
+	var/obj/effect/hallucination/simple/phobetor/linked_to
+	var/mob/living/carbon/seer
 
-/obj/effect/hallucination/simple/bluespace_stream/phobetor/attack_hand(mob/user)
+/obj/effect/hallucination/simple/phobetor/attack_hand(mob/user)
 	if(user != seer || !linked_to)
 		return
 	if (user.loc != src.loc)
@@ -741,6 +816,15 @@
 	//new /obj/effect/temp_visual/bluespace_fissure(get_turf(linked_to))
 	user.forceMove(get_turf(linked_to))
 
+/obj/effect/hallucination/simple/phobetor/Initialize()
+	. = ..()
+	created_on = world.time
+	//QDEL_IN(src, 300)
 
-
-
+/obj/effect/hallucination/simple/phobetor/Destroy()
+	// Remove Linked (if exists)
+	if (linked_to)
+		linked_to.linked_to = null
+		qdel(linked_to)
+		// WHY DO THIS?	Because our trauma only gets rid of all the FIRST gates created.
+	. = ..()
