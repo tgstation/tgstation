@@ -94,12 +94,6 @@
 	else
 		return ..()
 
-/obj/machinery/aug_manipulator/obj_break(damage_flag)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(!(stat & BROKEN))
-			stat |= BROKEN
-			update_icon()
-
 /obj/machinery/aug_manipulator/attack_hand(mob/user)
 	. = ..()
 	if(.)

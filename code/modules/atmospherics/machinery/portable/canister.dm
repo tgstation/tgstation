@@ -318,10 +318,9 @@
 	T.assume_air(expelled_gas)
 	air_update_turf()
 
-	stat |= BROKEN
+	obj_break()
 	density = FALSE
 	playsound(src.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
-	update_icon()
 	investigate_log("was destroyed.", INVESTIGATE_ATMOS)
 
 	if(holding)
