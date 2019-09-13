@@ -572,6 +572,7 @@
 #include "code\FulpstationCode\fulp_procs.dm"
 #include "code\FulpstationCode\fulp_ticker.dm"
 #include "code\FulpstationCode\fulp_world.dm"
+#include "code\FulpstationCode\t5_parts.dm"
 #include "code\game\alternate_appearance.dm"
 #include "code\game\atoms.dm"
 #include "code\game\atoms_movable.dm"
