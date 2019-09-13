@@ -115,7 +115,7 @@
 	//Morphed is weaker
 	melee_damage_lower = melee_damage_disguised
 	melee_damage_upper = melee_damage_disguised
-	speed = 0
+	set_varspeed(0)
 
 	morph_time = world.time + MORPH_COOLDOWN
 	med_hud_set_health()
@@ -130,7 +130,7 @@
 	form = null
 	alpha = initial(alpha)
 	color = initial(color)
-	animate_movement = initial(animate_movement)
+	animate_movement = SLIDE_STEPS
 	maptext = null
 
 	visible_message("<span class='warning'>[src] suddenly collapses in on itself, dissolving into a pile of green flesh!</span>", \
@@ -143,7 +143,7 @@
 	//Baseline stats
 	melee_damage_lower = initial(melee_damage_lower)
 	melee_damage_upper = initial(melee_damage_upper)
-	speed = initial(speed)
+	set_varspeed(initial(speed))
 
 	morph_time = world.time + MORPH_COOLDOWN
 	med_hud_set_health()

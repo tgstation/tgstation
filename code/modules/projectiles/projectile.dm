@@ -42,7 +42,7 @@
 	var/original_angle = 0		//Angle at firing
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
 	var/spread = 0			//amount (in degrees) of projectile spread
-	animate_movement = 0	//Use SLIDE_STEPS in conjunction with legacy
+	animate_movement = NO_STEPS	//Use SLIDE_STEPS in conjunction with legacy
 	var/ricochets = 0
 	var/ricochets_max = 2
 	var/ricochet_chance = 30

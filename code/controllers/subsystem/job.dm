@@ -412,6 +412,9 @@ SUBSYSTEM_DEF(job)
 
 	H.job = rank
 
+	SEND_SIGNAL(H, COMSIG_JOB_RECEIVED, H.job)
+		
+
 	//If we joined at roundstart we should be positioned at our workstation
 	if(!joined_late)
 		var/obj/S = null

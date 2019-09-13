@@ -558,14 +558,19 @@
 	. += "<span class='notice'>If you had a rod you could make <b>butter on a stick</b>.</span>"
 
 /obj/item/reagent_containers/food/snacks/butter/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/rods))//they will always have at least one if they are holding it.
-		to_chat(user, "<span class='notice'>You stick the rod into the stick of butter.</span>")
+	if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = W
+		if(!R.use(1))//borgs can still fail this if they have no metal
+			to_chat(user, "<span class='warning'>You do not have enough metal to put [src] on a stick!</span>")
+			return ..()
+		to_chat(user, "<span class='notice'>You stick the rod into the stick of butter.</span>")
 		var/obj/item/reagent_containers/food/snacks/butter/on_a_stick/new_item = new(usr.loc)
 		var/replace = (user.get_inactive_held_item() == R)
-		R.use(1)
 		if(!R && replace)
 			user.put_in_hands(new_item)
+		qdel(src)
+		return TRUE
+	..()
 
 /obj/item/reagent_containers/food/snacks/butter/on_a_stick //there's something so special about putting it on a stick.
 	name = "butter on a stick"
@@ -660,7 +665,7 @@
 /obj/item/reagent_containers/food/snacks/crab_rangoon
 	name = "Crab Rangoon"
 	desc = "Has many names, like crab puffs, cheese wontons, crab dumplings? Whatever you call them, they're a fabulous blast of cream cheesy crab."
-	icon_state = "crabrangoon1"
+	icon_state = "crabrangoon"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	filling_color = "#f2efdc"
 	w_class = WEIGHT_CLASS_SMALL

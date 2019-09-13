@@ -104,7 +104,7 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	visor_flags_inv = HIDEEYES | HIDEFACE
-	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
 /obj/item/clothing/head/hardhat/weldhat/Initialize()
 	. = ..()

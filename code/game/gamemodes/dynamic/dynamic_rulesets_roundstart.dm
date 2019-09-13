@@ -200,16 +200,16 @@
 	requirements = list(100,90,80,60,40,30,10,10,10,10)
 	high_population_requirement = 10
 	flags = HIGHLANDER_RULESET
-	var/cultist_cap = list(2,2,2,3,3,4,4,4,4,4)
+	var/list/cultist_cap = list(2,2,2,3,3,4,4,4,4,4)
 	var/datum/team/cult/main_cult
 
 /datum/dynamic_ruleset/roundstart/bloodcult/ready(forced = FALSE)
-	var/indice_pop = min(10,round(mode.roundstart_pop_ready/pop_per_requirement)+1)
+	var/indice_pop = min(cultist_cap.len, round(mode.roundstart_pop_ready/pop_per_requirement)+1)
 	required_candidates = cultist_cap[indice_pop]
 	. = ..()
 
 /datum/dynamic_ruleset/roundstart/bloodcult/pre_execute()
-	var/indice_pop = min(10,round(mode.roundstart_pop_ready/pop_per_requirement)+1)
+	var/indice_pop = min(cultist_cap.len, round(mode.roundstart_pop_ready/pop_per_requirement)+1)
 	var/cultists = cultist_cap[indice_pop]
 	for(var/cultists_number = 1 to cultists)
 		if(candidates.len <= 0)
@@ -258,18 +258,18 @@
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	high_population_requirement = 10
 	flags = HIGHLANDER_RULESET
-	var/operative_cap = list(2,2,2,3,3,3,4,4,5,5)
+	var/list/operative_cap = list(2,2,2,3,3,3,4,4,5,5)
 	var/datum/team/nuclear/nuke_team
 
 /datum/dynamic_ruleset/roundstart/nuclear/ready(forced = FALSE)
-	var/indice_pop = min(10,round(mode.roundstart_pop_ready/pop_per_requirement)+1)
+	var/indice_pop = min(operative_cap.len,round(mode.roundstart_pop_ready/pop_per_requirement)+1)
 	required_candidates = operative_cap[indice_pop]
 	. = ..()
 
 /datum/dynamic_ruleset/roundstart/nuclear/pre_execute()
 	// If ready() did its job, candidates should have 5 or more members in it
 
-	var/indice_pop = min(10,round(mode.roundstart_pop_ready/5)+1)
+	var/indice_pop = min(operative_cap.len, round(mode.roundstart_pop_ready/5)+1)
 	var/operatives = operative_cap[indice_pop]
 	for(var/operatives_number = 1 to operatives)
 		if(candidates.len <= 0)
