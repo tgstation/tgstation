@@ -537,8 +537,7 @@
 /mob/living/Crossed(atom/movable/AM)
 	. = ..()
 	for(var/i in get_equipped_items())
-		var/obj/item/item = i
-		item.Crossed(AM)
+		SEND_SIGNAL(i, COMSIG_ITEM_WEARERCROSSED, AM)
 
 
 
