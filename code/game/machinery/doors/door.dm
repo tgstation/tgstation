@@ -74,10 +74,6 @@
 	else
 		layer = initial(layer)
 
-/obj/machinery/door/power_change()
-	..()
-	update_icon()
-
 /obj/machinery/door/Destroy()
 	update_freelook_sight()
 	GLOB.airlocks -= src

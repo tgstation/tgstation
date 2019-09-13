@@ -112,12 +112,13 @@
 /obj/machinery/proc/power_change()		// called whenever the power settings of the containing area change
 										// by default, check equipment channel & set flag
 										// can override if needed
+	if(stat & BROKEN)
+		return
 	if(powered(power_channel))
 		stat &= ~NOPOWER
 	else
-
 		stat |= NOPOWER
-	return
+	update_icon()
 
 // connect the machine to a powernet if a node cable or a terminal is present on the turf
 /obj/machinery/power/proc/connect_to_network()
