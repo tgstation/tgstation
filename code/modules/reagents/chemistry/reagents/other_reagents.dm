@@ -1234,7 +1234,7 @@
 	else if(colorname == "invisible")
 		description = "An invisible powder. Unfortunately, since it's invisible, it doesn't look like it'd color much of anything..."
 	else
-		description = "\an [colorname] powder, used for coloring things [colorname]."
+		description = "\An [colorname] powder, used for coloring things [colorname]."
 
 
 /datum/reagent/colorful_reagent/powder/red
