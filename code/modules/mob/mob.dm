@@ -103,7 +103,7 @@
 			if(HUD_LIST_LIST)
 				hud_list[hud] = list()
 			else
-				var/image/I = image('icons/mob/hud.dmi', src, "")
+				var/image/I = image('icons/Fulpicons/icon_mirrors/hud_mirror.dmi', src, "") //FULP - hack solution, I just made a copy and added our icons
 				I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
 				hud_list[hud] = I
 

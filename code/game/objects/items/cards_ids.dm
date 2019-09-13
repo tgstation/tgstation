@@ -45,7 +45,7 @@
 	cut_overlays()
 	if(detail_color == COLOR_FLOORTILE_GRAY)
 		return
-	var/mutable_appearance/detail_overlay = mutable_appearance('icons/obj/card.dmi', "[icon_state]-color")
+	var/mutable_appearance/detail_overlay = mutable_appearance('icons/Fulpicons/icon_mirrors/hud_mirror.dmi', "[icon_state]-color") //FULP - edited icon dmi file location for custom jobs
 	detail_overlay.color = detail_color
 	add_overlay(detail_overlay)
 
