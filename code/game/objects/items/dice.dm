@@ -78,7 +78,7 @@
 
 /obj/item/dice/d4/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/caltrop, 4)
+	AddComponent(/datum/component/caltrop, 1, 4) //1d4 damage
 
 /obj/item/dice/d6
 	name = "d6"
