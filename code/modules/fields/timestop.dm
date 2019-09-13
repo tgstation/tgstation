@@ -127,14 +127,14 @@
 	A.move_resist = frozen_things[A]
 	frozen_things -= A
 	global_frozen_atoms -= A
-
+	
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_mecha(obj/mecha/M)
 	M.completely_disabled = TRUE
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_mecha(obj/mecha/M)
 	M.completely_disabled = FALSE
-
+	
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_throwing(atom/movable/AM)
 	var/datum/thrownthing/T = AM.throwing
