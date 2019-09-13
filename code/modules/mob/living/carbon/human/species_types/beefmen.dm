@@ -91,9 +91,10 @@
 
 	// Be Spooked but Educated
 	//C.gain_trauma(pick(startTraumas))
-	C.gain_trauma(/datum/brain_trauma/mild/phobia/strangers)
-	C.gain_trauma(/datum/brain_trauma/mild/hallucinations)
-	C.gain_trauma(/datum/brain_trauma/special/bluespace_prophet/phobetor)
+	if (SStraumas.phobia_words && SStraumas.phobia_words.len) // NOTE: ONLY if phobias have been defined! For some reason, sometimes this gets FUCKED??
+		C.gain_trauma(/datum/brain_trauma/mild/phobia/strangers)
+		C.gain_trauma(/datum/brain_trauma/mild/hallucinations)
+		C.gain_trauma(/datum/brain_trauma/special/bluespace_prophet/phobetor)
 
 /datum/species/proc/set_beef_color(mob/living/carbon/human/H)
 	return // Do Nothing
@@ -300,7 +301,7 @@
 			user.visible_message("[user] grabs onto [p_their()] own [affecting.name] and pulls.", \
 					 	 "<span class='notice'>You grab hold of your [affecting.name] and yank hard.</span>")
 			if (!do_mob(user,target))
-				return FALSE
+				return TRUE
 
 			user.visible_message("[user]'s [affecting.name] comes right off in their hand.", "<span class='notice'>Your [affecting.name] pops right off.</span>")
 			playsound(get_turf(user), 'sound/Fulpsounds/beef_hit.ogg', 40, 1)
@@ -310,7 +311,7 @@
 			if (istype(I, /obj/item/reagent_containers/food/snacks/meat/slab))
 				user.put_in_hands(I)
 
-			return FALSE
+			return TRUE
 	return ..()
 
 /datum/species/beefman/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
@@ -337,7 +338,7 @@
 			// Leave Melee Chain (so deleting the meat doesn't throw an error) <--- aka, deleting the meat that called this very proc.
 			spawn(1)
 				if (!do_mob(user,H))
-					return FALSE
+					return TRUE
 				// Attach the part!
 				var/obj/item/bodypart/newBP = H.newBodyPart(target_zone, FALSE)
 				H.visible_message("The meat sprouts digits and becomes [H]'s new [newBP.name]!", "<span class='notice'>The meat sprouts digits and becomes your new [newBP.name]!</span>")
@@ -345,7 +346,7 @@
 				newBP.give_meat(H, I)
 				playsound(get_turf(H), 'sound/Fulpsounds/beef_grab.ogg', 50, 1)
 
-			return FALSE
+			return TRUE // True CANCELS the sequence.
 
 	return ..() // TRUE FALSE
 
@@ -499,13 +500,14 @@
 	if (status != BODYPART_ORGANIC)
 		return FALSE
 
-	// If owner is NOT inside of something (cloner)
-	if (myMeatType != null)
+	// If not 0% health, let's do it!
+	var/percentHealth = 1 - (brute_dam + burn_dam) / max_damage
+	if (myMeatType != null && percentHealth > 0)
+
+		// Create Meat
 		var/obj/item/reagent_containers/food/snacks/meat/slab/newMeat =	new myMeatType(src.loc)///obj/item/reagent_containers/food/snacks/meat/slab(src.loc)
 
-			// Adjust Reagents by Health Percent
-
-		var/percentHealth = 1 - (brute_dam + burn_dam) / max_damage
+		// Adjust Reagents by Health Percent
 		for (var/datum/reagent/R in newMeat.reagents.reagent_list)
 			R.volume *= percentHealth
 		newMeat.reagents.update_total()
