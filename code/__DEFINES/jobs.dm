@@ -13,7 +13,7 @@
 #define AI_JF			(1<<9)
 #define CYBORG			(1<<10)
 
-#define DEPUTY			(1<<11) //FULP
+#define DEPUTY			(1<<69) //FULP - nice
 
 #define MEDSCI			(1<<1)
 
