@@ -98,6 +98,8 @@
 
 ///Handles setting ownership and the betting itself.
 /obj/machinery/roulette/attackby(obj/item/W, mob/user, params)
+	if(playing)
+		return
 	playsound(src, 'sound/machines/card_slide.ogg', 50, TRUE)
 	if(istype(W, /obj/item/card/id))
 		if(my_card)
