@@ -71,10 +71,8 @@
 						/datum/reagent/drug/bath_salts = 0.15,
 						/datum/reagent/drug/crank = 0.15,
 						/datum/reagent/drug/krokodil = 0.15,
-						/datum/reagent/drug/pumpup = 0.15,
 						/datum/reagent/toxin/lipolicide = 0.15,
-						/datum/reagent/drug/nicotine = 0.1,
-						/datum/reagent/medicine/ephedrine = 0.1)
+						/datum/reagent/drug/nicotine = 0.1)
 	rarity = 69
 
 
