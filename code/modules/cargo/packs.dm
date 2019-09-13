@@ -88,11 +88,11 @@
 					/mob/living/simple_animal/bot/floorbot,
 					/mob/living/simple_animal/bot/medbot,
 					/mob/living/simple_animal/bot/medbot,
-					/obj/item/tank/internals/air,
-					/obj/item/tank/internals/air,
-					/obj/item/tank/internals/air,
-					/obj/item/tank/internals/air,
-					/obj/item/tank/internals/air,
+					/obj/item/tank/internals/emergency_oxygen,
+					/obj/item/tank/internals/emergency_oxygen,
+					/obj/item/tank/internals/emergency_oxygen,
+					/obj/item/tank/internals/emergency_oxygen,
+					/obj/item/tank/internals/emergency_oxygen,
 					/obj/item/clothing/mask/breath,
 					/obj/item/clothing/mask/breath,
 					/obj/item/clothing/mask/breath,
@@ -153,9 +153,9 @@
 					/obj/item/tank/internals/emergency_oxygen,
 					/obj/item/tank/internals/emergency_oxygen,
 					/obj/item/tank/internals/emergency_oxygen,
-					/obj/item/tank/internals/air,
-					/obj/item/tank/internals/air,
-					/obj/item/tank/internals/air)
+					/obj/item/tank/internals/oxygen,
+					/obj/item/tank/internals/oxygen,
+					/obj/item/tank/internals/oxygen)
 	crate_name = "internals crate"
 	crate_type = /obj/structure/closet/crate/internals
 
