@@ -86,7 +86,6 @@
 /obj/machinery/stasis/power_change()
 	. = ..()
 	play_power_sound()
-	update_icon()
 
 /obj/machinery/stasis/proc/chill_out(mob/living/target)
 	if(target != occupant)

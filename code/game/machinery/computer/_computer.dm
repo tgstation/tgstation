@@ -71,8 +71,6 @@
 		set_light(0)
 	else
 		set_light(brightness_on)
-	update_icon()
-	return
 
 /obj/machinery/computer/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())

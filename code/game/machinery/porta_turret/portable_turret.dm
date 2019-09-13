@@ -950,10 +950,6 @@
 		aTurret.setState(enabled, lethal)
 	update_icon()
 
-/obj/machinery/turretid/power_change()
-	..()
-	update_icon()
-
 /obj/machinery/turretid/update_icon()
 	..()
 	if(stat & NOPOWER)
