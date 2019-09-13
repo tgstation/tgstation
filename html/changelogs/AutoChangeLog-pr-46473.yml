@@ -1,0 +1,4 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - balance: "The base damage dealt (before modifiers) by stepping on a d4 without shoes on is now 1d4 damage (dropped from just a flat 4 damage)."

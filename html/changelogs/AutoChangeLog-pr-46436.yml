@@ -1,4 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a bug where refunding Lightning bolt wizard spell did not also remove relevant mob properties connected with the spell."
