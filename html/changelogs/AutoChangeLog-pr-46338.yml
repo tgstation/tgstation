@@ -1,0 +1,6 @@
+author: "ATH1909"
+delete-after: True
+changes: 
+  - tweak: "Changed the default name of /datum/reagent/colorful_reagent/powder to \"mundane powder\" (from \"crayon powder\"), to better reflect that it can't color anything (its subtypes still can, of course) and that /datum/reagent/colorful_reagent/powder isn't found in most crayons anymore."
+  - tweak: "Changed the names of the subtypes of /datum/reagent/colorful_reagent/powder so that they no longer mention crayons/\"crayon powder\"."
+  - tweak: "Changes the wordings of the descriptions of /datum/reagent/colorful_reagent/powder and its subtypes to be less weird (and to mention that invisible powder and mundane powder can't color anything). This change should also make the description of mundane powder no longer state that it can color things the \"none\" color."
