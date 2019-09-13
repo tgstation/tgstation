@@ -12,7 +12,7 @@
 	var/list/immune = list() // the one who creates the timestop is immune, which includes wizards and the dead slime you murdered to make this chronofield
 	var/turf/target
 	var/freezerange = 2
-	var/duration = 140
+	var/duration = 150 // changed by fulp for balance concerns, wizard timestop remains the same, one extra second wont do much and I like my values easily understood and calculatable.
 	var/datum/proximity_monitor/advanced/timestop/chronofield
 	alpha = 125
 	var/check_anti_magic = FALSE
@@ -32,6 +32,11 @@
 	for(var/mob/living/simple_animal/hostile/guardian/G in GLOB.parasites)
 		if(G.summoner && locate(/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop) in G.summoner.mind.spell_list) //It would only make sense that a person's stand would also be immune.
 			immune[G] = TRUE
+
+		if(G.summoner && locate(/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop/guardian) in G.mob_spell_list) //Stolen Hippie code = YES, Fulp_Ownership = TRUE
+			immune[G] = TRUE
+			immune[G.summoner] = TRUE
+
 	if(start)
 		timestop()
 
