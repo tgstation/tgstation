@@ -537,7 +537,8 @@
 /mob/living/Crossed(atom/movable/AM)
 	. = ..()
 	for(var/i in get_equipped_items())
-		SEND_SIGNAL(i, COMSIG_ITEM_WEARERCROSSED, AM)
+		var/obj/item/item = i
+		SEND_SIGNAL(item, COMSIG_ITEM_WEARERCROSSED, AM)
 
 
 
