@@ -207,6 +207,10 @@
 	. = ..()
 	energy_bite(M, user)
 
+/obj/item/reagent_containers/food/snacks/store/cake/birthday/energy/microwave_act(obj/machinery/microwave/M) //super sekriter club
+	new /obj/item/clothing/head/hardhat/cakehat/energycake(get_turf(src))
+	qdel(src)
+
 /obj/item/reagent_containers/food/snacks/cakeslice/birthday/energy
 	name = "energy cake slice"
 	desc = "For the traitor on the go."
