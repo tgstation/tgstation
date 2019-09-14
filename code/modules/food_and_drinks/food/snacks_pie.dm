@@ -41,7 +41,7 @@
 	new/obj/effect/decal/cleanable/food/pie_smudge(T)
 	if(reagents && reagents.total_volume)
 		reagents.reaction(hit_atom, TOUCH)
-	if(ishuman(hit_atom))
+	if(isliving(hit_atom))
 		hit_atom.AddComponent(/datum/component/creamed, src, stunning)
 	qdel(src)
 
