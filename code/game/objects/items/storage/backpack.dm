@@ -333,6 +333,10 @@
 /obj/item/storage/backpack/satchel/flat/empty/PopulateContents()
 	return
 
+/obj/item/storage/backpack/satchel/flat/miracle
+	desc = "A magical satchel that can easily fit into the very fabric of space."
+	secret = TRUE
+
 /obj/item/storage/backpack/satchel/flat/miracle/PopulateContents()
 	new /obj/item/gun/energy/pulse/prize(src)
 
