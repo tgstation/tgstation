@@ -12,7 +12,7 @@
 	taste_description = "cold and lifeless"
 	overdose_threshold = 35
 	reagent_state = SOLID
-	var/datum/status_effect/necropolis_curse/helbent
+	var/helbent = FALSE
 	var/beginning_combo = 0
 	var/reaping = FALSE
 
@@ -33,7 +33,8 @@
 	if(healed_this_iteration && !reaping && prob(0.0001)) //janken with the grim reaper!
 		reaping = TRUE
 		var/list/RockPaperScissors = list("rock" = "paper", "paper" = "scissors", "scissors" = "rock") //choice = loses to
-		helbent = M.apply_status_effect(/datum/status_effect/necropolis_curse,CURSE_BLINDING)
+		if(M.apply_status_effect(/datum/status_effect/necropolis_curse,CURSE_BLINDING))
+			helbent = TRUE
 		to_chat(M, "<span class='hierophant'>Malevolent spirits appear before you, bartering your life in a 'friendly' game of rock, paper, scissors. Which do you choose?</span>")
 		var/timeisticking = world.time
 		var/RPSchoice = input(M, "Janken Time! You have 60 Seconds to Choose!", "Rock Paper Scissors",null) as null|anything in RockPaperScissors
@@ -63,13 +64,15 @@
 	return
 
 /datum/reagent/medicine/C2/helbital/overdose_process(mob/living/carbon/M)
-	helbent = M.apply_necropolis_curse(CURSE_WASTING | CURSE_BLINDING)
+	if(!helbent)
+		M.apply_necropolis_curse(CURSE_WASTING | CURSE_BLINDING)
+		helbent = TRUE
 	..()
 	return TRUE
 
 /datum/reagent/medicine/C2/helbital/on_mob_delete(mob/living/L)
 	if(helbent)
-		L.remove_status_effect(helbent.type)
+		L.remove_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE)
 	..()
 
 /datum/reagent/medicine/C2/libital //messes with your liber
