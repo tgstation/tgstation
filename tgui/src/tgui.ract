@@ -30,6 +30,7 @@ component.exports = {
     const interfaces = require('interfaces/**/*.ract', { mode: 'hash' })
     if (requested in interfaces) {
       this.components.interface = interfaces[requested] // Use the interface specified in the config...
+      document.body.classList.add(requested) //Name of the interface class for interface-level css
     } else {
       this.components.interface = interfaces.error // ...unless it does not exist.
     }
