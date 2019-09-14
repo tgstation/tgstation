@@ -172,7 +172,7 @@
 
 	playing = FALSE
 	update_icon(potential_payout, color, rolled_number, is_winner)
-	handle_color_light()
+	handle_color_light(color)
 
 	if(!is_winner)
 		audible_message("<span class='warning'>You lost! Better luck next time</span>")
