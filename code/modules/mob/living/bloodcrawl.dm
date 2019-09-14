@@ -134,7 +134,7 @@
 	bloodcrawl_swallow(victim)
 	return TRUE
 
-/mob/living/proc/bloodcrawl_swallow(var/mob/living/victim)
+/mob/living/proc/bloodcrawl_swallow(mob/living/victim)
 	qdel(victim)
 
 /obj/item/bloodcrawl
@@ -168,13 +168,12 @@
 		return
 	forceMove(B.loc)
 	client.eye = src
-	visible_message("<span class='warning'><B>[src] rises out of the pool of blood!</B></span>")
+	visible_message("<span class='boldwarning'><B>[src] rises out of the pool of blood!</B></span>")
 	exit_blood_effect(B)
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
 		for(var/obj/item/bloodcrawl/BC in C)
 			BC.flags_1 = null
 			qdel(BC)
-	qdel(holder)
-	holder = null
+	QDEL_NULL(holder)
 	return TRUE
