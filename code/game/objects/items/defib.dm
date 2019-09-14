@@ -287,6 +287,23 @@
 		update_icon()
 		return
 
+/obj/item/defibrillator/compact/combat/syndicate
+	name = "syndicate defibrillator"
+	desc = "A belt-equipped blood-red defibrillator. Can revive through spacesuits, has an experimental self-recharging battery, and can be utilized in combat via applying the paddles in a disarming or agressive manner."
+	icon_state = "defibcombat" //still needs defib inhand sprites
+	item_state = "defibcombat"
+
+/obj/item/defibrillator/compact/combat/syndicate/loaded/Initialize()
+	. = ..()
+	cell = new /obj/item/stock_parts/cell/infinite(src)
+
+/obj/item/defibrillator/compact/combat/syndicate/loaded/attackby(obj/item/W, mob/user, params)
+	if(W == paddles)
+		paddles.unwield()
+		toggle_paddles()
+		update_icon()
+		return
+
 //paddles
 
 /obj/item/twohanded/shockpaddles
