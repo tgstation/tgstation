@@ -173,9 +173,7 @@
 			var/list/babies = list()
 			var/new_nutrition = round(nutrition * 0.9)
 			var/new_powerlevel = round(powerlevel / 4)
-			var/datum/component/nanites/original_nanites
-			if(GetComponent(/datum/component/nanites))
-				original_nanites = GetComponent(/datum/component/nanites)
+			var/datum/component/nanites/original_nanites = GetComponent(/datum/component/nanites)
 
 			for(var/i=1,i<=4,i++)
 				var/child_colour

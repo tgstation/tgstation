@@ -224,8 +224,9 @@
 	spare.domutcheck()
 	spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
 
-	if(H.GetComponent(/datum/component/nanites))
-		var/datum/component/nanites/owner_nanites = H.GetComponent(/datum/component/nanites)
+
+	var/datum/component/nanites/owner_nanites = H.GetComponent(/datum/component/nanites)
+	if(owner_nanites)
 		//copying over nanite programs/cloud sync with 50% saturation in host and spare
 		owner_nanites.nanite_volume *= 0.5
 		spare.AddComponent(/datum/component/nanites, owner_nanites.nanite_volume)
