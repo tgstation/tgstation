@@ -8,11 +8,14 @@
 #define ROULETTE_BET_BLACK "black"
 #define ROULETTE_BET_RED "red"
 
+#define ROULETTE_JACKPOT_AMOUNT 1000
+
 ///Machine that lets you play roulette. Odds are pre-defined to be the same as European Roulette without the "En Prison" rule
 /obj/machinery/roulette
 	name = "Roulette Table"
 	desc = "A computerized roulette table."
-	icon_state = "autolathe"
+	icon = 'icons/obj/machines/roulette.dmi'
+	icon_state = "idle"
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	anchored = FALSE
@@ -30,6 +33,7 @@
 	var/obj/item/card/id/my_card
 	var/playing = FALSE
 	var/locked = FALSE
+	var/drop_dir = SOUTH
 	var/list/coin_values = list(/obj/item/coin/diamond = 100, /obj/item/coin/gold = 25, /obj/item/coin/silver = 10, /obj/item/coin/iron = 1) //Make sure this is ordered from left to right.
 	var/list/coins_to_dispense = list()
 	var/datum/looping_sound/jackpot/jackpot_loop
@@ -110,8 +114,20 @@
 				return FALSE
 			if(playing) //Prevents double playing
 				return FALSE
-			if(chosen_bet_amount && !isnull(chosen_bet_type))
-				play(user, player_card, chosen_bet_type, chosen_bet_amount)
+			if(!chosen_bet_amount || isnull(chosen_bet_type))
+				return FALSE
+
+			var/potential_payout = text2num(chosen_bet_type) ? chosen_bet_amount * ROULETTE_SINGLES_PAYOUT : chosen_bet_amount * ROULETTE_SIMPLE_PAYOUT
+
+			if(!check_bartender_funds(potential_payout))
+				return FALSE	 //bartender is too poor
+
+			icon_state = "rolling" //Prepare the new icon state for rolling before hand.
+			flick("flick_up", src)
+			playsound(src, 'sound/machines/piston_raise.ogg', 70)
+			playsound(src, 'sound/machines/chime.ogg', 50)
+
+			addtimer(CALLBACK(src, .proc/play, user, player_card, chosen_bet_type, chosen_bet_amount, potential_payout), 4) //Animation first
 		else
 			var/obj/item/card/id/new_card = W
 			if(new_card.registered_account)
@@ -119,30 +135,35 @@
 				if(!msg)
 					return
 				name = msg
-				desc = "Owned by [new_card.registered_account.account_holder], draws directly into [user.p_their()] account."
+				desc = "Owned by [new_card.registered_account.account_holder], draws directly from [user.p_their()] account."
 				my_card = new_card
 				to_chat(user, "You link the wheel to your account.")
 				return
 
 ///Proc called when player is going to try and play
-/obj/machinery/roulette/proc/play(mob/user, obj/item/card/id/player_id, bet_type, bet_amount)
-	var/potential_payout = text2num(bet_type) ? bet_amount * ROULETTE_SINGLES_PAYOUT : bet_amount * ROULETTE_SIMPLE_PAYOUT
-	if(!check_bartender_funds(potential_payout))
-		return FALSE	 //bartender is too poor
+/obj/machinery/roulette/proc/play(mob/user, obj/item/card/id/player_id, bet_type, bet_amount, potential_payout)
+	var/payout = potential_payout
 
 	my_card.registered_account.transfer_money(player_id.registered_account, bet_amount)
 
 	playing = TRUE
+	update_icon()
+	set_light(0)
 
 	var/rolled_number = rand(0, 36)
 
-	playsound(src, 'sound/machines/chime.ogg', 50)
 	playsound(src, 'sound/machines/roulettewheel.ogg', 50)
-	addtimer(CALLBACK(src, .proc/finish_play, player_id, bet_type, bet_amount, potential_payout, rolled_number), 30)
+	addtimer(CALLBACK(src, .proc/finish_play, player_id, bet_type, bet_amount, payout, rolled_number), 34) //4 deciseconds more so the animation can play
+	addtimer(CALLBACK(src, .proc/finish_play_animation), 30)
 
+/obj/machinery/roulette/proc/finish_play_animation()
+	icon_state = "idle"
+	flick("flick_down", src)
+	playsound(src, 'sound/machines/piston_lower.ogg', 70)
 
 ///Ran after a while to check if the player won or not.
 /obj/machinery/roulette/proc/finish_play(obj/item/card/id/player_id, bet_type, bet_amount, potential_payout, rolled_number)
+
 	var/is_winner = check_win(bet_type, bet_amount, rolled_number) //Predetermine if we won
 	var/color = numbers["[rolled_number]"] //Weird syntax, but dict uses strings.
 	var/result = "[rolled_number] [color]" //e.g. 31 black
@@ -150,6 +171,9 @@
 	audible_message("<span class='notice'>The result is: [result]</span>")
 
 	playing = FALSE
+	update_icon(potential_payout, color, rolled_number, is_winner)
+	handle_color_light()
+
 	if(!is_winner)
 		audible_message("<span class='warning'>You lost! Better luck next time</span>")
 		playsound(src, 'sound/machines/synth_no.ogg', 50)
@@ -159,12 +183,11 @@
 	playsound(src, 'sound/machines/synth_yes.ogg', 50)
 
 	dispense_prize(potential_payout)
-		
 
 ///Fills a list of coins that should be dropped.
 /obj/machinery/roulette/proc/dispense_prize(payout)
 
-	if(payout >= 1000)
+	if(payout >= ROULETTE_JACKPOT_AMOUNT)
 		jackpot_loop.start()
 
 	var/remaining_payout = payout
@@ -199,7 +222,8 @@
 
 	coins_to_dispense[coin_to_drop] -= 1
 
-	var/obj/item/cash = new coin_to_drop(loc)
+	var/turf/drop_loc = get_step(loc, drop_dir)
+	var/obj/item/cash = new coin_to_drop(drop_loc)
 	playsound(cash, pick(list('sound/machines/coindrop.ogg', 'sound/machines/coindrop2.ogg')), 40, TRUE)
 
 	addtimer(CALLBACK(src, .proc/drop_coin), 3) //Recursion time
@@ -234,6 +258,44 @@
 	return FALSE
 
 
+
+/obj/machinery/roulette/update_icon(payout, color, rolled_number, is_winner = FALSE)
+	cut_overlays()
+	if(playing)
+		add_overlay("random_numbers")
+
+	if(!payout || !color || isnull(rolled_number)) //Don't fall for tricks.
+		return
+
+	//Overlay for ring
+	if(is_winner && payout >= ROULETTE_JACKPOT_AMOUNT)
+		add_overlay("jackpot")
+	else
+		add_overlay(color)
+		
+	var/numberright = rolled_number % 10 //Right hand number
+	var/numberleft = (rolled_number - numberright) / 10 //Left hand number
+
+	var/shift_amount = 2 //How much the icon moves left/right
+
+	if(numberleft != 0) //Don't make the number if we are 0.
+		var/mutable_appearance/number1 = mutable_appearance(icon, "[numberleft]")
+		number1.pixel_x = -shift_amount
+		add_overlay(number1)
+	else
+		shift_amount = 0 //We can stay centered.
+
+	var/mutable_appearance/number2 = mutable_appearance(icon, "[numberright]")
+	number2.pixel_x = shift_amount
+	add_overlay(number2)
+
+/obj/machinery/roulette/proc/handle_color_light(color)
+	switch(color)
+		if("green")
+			set_light(3,4, LIGHT_COLOR_GREEN)
+		if("red")
+			set_light(3,4, LIGHT_COLOR_RED)
+
 /obj/item/roulette_wheel_beacon
 	name = "roulette wheel beacon"
 	desc = "N.T. approved roulette wheel beacon, toss it down and you will have a complementary roulette wheel delivered to you."
@@ -248,3 +310,15 @@
 
 /obj/item/roulette_wheel_beacon/proc/launch_payload()	
 	new /obj/effect/DPtarget(drop_location(), /obj/structure/closet/supplypod/centcompod, /obj/machinery/roulette)
+
+#undef ROULETTE_SINGLES_PAYOUT
+#undef ROULETTE_SIMPLE_PAYOUT
+
+#undef ROULETTE_BET_ODD
+#undef ROULETTE_BET_EVEN
+#undef ROULETTE_BET_1TO18
+#undef ROULETTE_BET_19TO36
+#undef ROULETTE_BET_BLACK
+#undef ROULETTE_BET_RED
+
+#undef ROULETTE_JACKPOT_AMOUNT
