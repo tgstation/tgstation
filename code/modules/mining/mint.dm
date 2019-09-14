@@ -26,7 +26,8 @@
 		/datum/material/bananium,
 		/datum/material/adamantine,
 		/datum/material/mythril,
-		/datum/material/plastic
+		/datum/material/plastic,
+		/datum/material/runite
 	), MINERAL_MATERIAL_AMOUNT * 50, FALSE, /obj/item/stack)
 	chosen = getmaterialref(chosen)
 
