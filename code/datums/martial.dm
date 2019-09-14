@@ -54,7 +54,8 @@
 	if(!damage)
 		playsound(D.loc, A.dna.species.miss_sound, 25, TRUE, -1)
 		D.visible_message("<span class='warning'>[A]'s [atk_verb] misses [D]!</span>", \
-			"<span class='userdanger'>[A]'s [atk_verb] misses you!</span>", null, COMBAT_MESSAGE_RANGE)
+						"<span class='userdanger'>[A]'s [atk_verb] misses you!</span>", null, COMBAT_MESSAGE_RANGE, A)
+		to_chat(A, "<span class='warning'>Your [atk_verb] misses [D]!</span>")
 		log_combat(A, D, "attempted to [atk_verb]")
 		return 0
 
@@ -63,7 +64,8 @@
 
 	playsound(D.loc, A.dna.species.attack_sound, 25, TRUE, -1)
 	D.visible_message("<span class='danger'>[A] [atk_verb]ed [D]!</span>", \
-			"<span class='userdanger'>[A] [atk_verb]ed you!</span>", null, COMBAT_MESSAGE_RANGE)
+					"<span class='userdanger'>You're [atk_verb]ed by [A]!</span>", null, COMBAT_MESSAGE_RANGE, A)
+	to_chat(A, "<span class='danger'>You [atk_verb] [D]!</span>")
 
 	D.apply_damage(damage, A.dna.species.attack_type, affecting, armor_block)
 
@@ -71,7 +73,8 @@
 
 	if((D.stat != DEAD) && damage >= A.dna.species.punchstunthreshold)
 		D.visible_message("<span class='danger'>[A] knocks [D] down!!</span>", \
-								"<span class='userdanger'>[A] knocks you down!</span>")
+						"<span class='userdanger'>[A] knocks you down!</span>", null, null, A)
+		to_chat(A, "<span class='danger'>You knock [D] down!</span>")
 		D.apply_effect(40, EFFECT_KNOCKDOWN, armor_block)
 		D.forcesay(GLOB.hit_appends)
 	else if(!(D.mobility_flags & MOBILITY_STAND))
