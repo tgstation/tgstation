@@ -87,7 +87,7 @@
 
 /datum/export/material/runite
 	cost = 600
-	message = "cm<sup>3</sup> of runite
+	message = "cm<sup>3</sup> of runite"
 	material_id = /datum/material/runite
 
 /datum/export/material/metal
