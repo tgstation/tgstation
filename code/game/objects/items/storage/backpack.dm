@@ -291,7 +291,7 @@
 	icon_state = "satchel-flat"
 	w_class = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
 	level = 1
-	secret = FALSE
+	var/secret = FALSE
 
 /obj/item/storage/backpack/satchel/flat/ComponentInitialize()
 	. = ..()
