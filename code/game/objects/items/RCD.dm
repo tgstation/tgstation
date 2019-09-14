@@ -646,6 +646,9 @@ RLD
 	var/ammoamt = 40
 
 /obj/item/rcd_ammo/large
+	name = "super-compressed matter cartridge"
+	desc = "Very highly compressed matter for the RCD."
+	w_class = WEIGHT_CLASS_SMALL
 	materials = list(/datum/material/iron=48000, /datum/material/glass=32000)
 	ammoamt = 160
 

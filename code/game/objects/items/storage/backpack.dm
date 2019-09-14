@@ -182,28 +182,6 @@
 	icon_state = "viropack"
 	item_state = "viropack"
 
-/obj/item/storage/backpack/ert
-	name = "emergency response team commander backpack"
-	desc = "A spacious backpack with lots of pockets, worn by the Commander of an Emergency Response Team."
-	icon_state = "ert_commander"
-	item_state = "securitypack"
-	resistance_flags = FIRE_PROOF
-
-/obj/item/storage/backpack/ert/security
-	name = "emergency response team security backpack"
-	desc = "A spacious backpack with lots of pockets, worn by Security Officers of an Emergency Response Team."
-	icon_state = "ert_security"
-
-/obj/item/storage/backpack/ert/medical
-	name = "emergency response team medical backpack"
-	desc = "A spacious backpack with lots of pockets, worn by Medical Officers of an Emergency Response Team."
-	icon_state = "ert_medical"
-
-/obj/item/storage/backpack/ert/engineer
-	name = "emergency response team engineer backpack"
-	desc = "A spacious backpack with lots of pockets, worn by Engineers of an Emergency Response Team."
-	icon_state = "ert_engineering"
-
 /*
  * Satchel Types
  */
@@ -344,6 +322,29 @@
 	desc = "A large duffel bag for holding extra captainly goods."
 	icon_state = "duffel-captain"
 	item_state = "duffel-captain"
+
+/obj/item/storage/backpack/duffelbag/ert
+	name = "emergency response team commander backpack"
+	desc = "A spacious backpack with lots of pockets, worn by the Commander of an Emergency Response Team."
+	icon_state = "ert_commander"
+	item_state = "securitypack"
+	slowdown = 0
+	resistance_flags = FIRE_PROOF
+
+/obj/item/storage/backpack/duffelbag/ert/security
+	name = "emergency response team security backpack"
+	desc = "A spacious backpack with lots of pockets, worn by Security Officers of an Emergency Response Team."
+	icon_state = "ert_security"
+
+/obj/item/storage/backpack/duffelbag/ert/medical
+	name = "emergency response team medical backpack"
+	desc = "A spacious backpack with lots of pockets, worn by Medical Officers of an Emergency Response Team."
+	icon_state = "ert_medical"
+
+/obj/item/storage/backpack/duffelbag/ert/engineer
+	name = "emergency response team engineer backpack"
+	desc = "A spacious backpack with lots of pockets, worn by Engineers of an Emergency Response Team."
+	icon_state = "ert_engineering"
 
 /obj/item/storage/backpack/duffelbag/med
 	name = "medical duffel bag"

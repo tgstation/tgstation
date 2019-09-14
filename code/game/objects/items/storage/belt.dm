@@ -172,6 +172,15 @@
 		/obj/item/holosign_creator/medical
 		))
 
+/obj/item/storage/belt/medical/ert/PopulateContents()
+	new	/obj/item/surgical_drapes(src)
+	new	/obj/item/reagent_containers/medigel/sterilizine/extended(src) //laugh at the drill, for being USELESS
+	new	/obj/item/scalpel(src)
+	new	/obj/item/hemostat(src)
+	new	/obj/item/cautery(src)
+	new	/obj/item/retractor(src)
+	new	/obj/item/circular_saw(src)
+
 /obj/item/storage/belt/security
 	name = "security belt"
 	desc = "Can hold security gear like handcuffs and flashes."

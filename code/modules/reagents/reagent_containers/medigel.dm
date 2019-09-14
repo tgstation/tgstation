@@ -72,11 +72,19 @@
 	icon_state = "brutegel"
 	list_reagents = list(/datum/reagent/medicine/C2/libital = 20, /datum/reagent/medicine/granibitaluri = 40)
 
+/obj/item/reagent_containers/medigel/libital/extended
+	volume = 100
+	list_reagents = list(/datum/reagent/medicine/C2/libital = 34, /datum/reagent/medicine/granibitaluri = 66)
+
 /obj/item/reagent_containers/medigel/aiuri
 	name = "medical gel (aiuri)"
 	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains aiuri, useful for treating burns. Aiuri does minor eye damage. Diluted with Granibitaluri"
 	icon_state = "burngel"
 	list_reagents = list(/datum/reagent/medicine/C2/aiuri = 20, /datum/reagent/medicine/granibitaluri = 40)
+
+/obj/item/reagent_containers/medigel/aiuri/extended
+	volume = 100
+	list_reagents = list(/datum/reagent/medicine/C2/aiuri = 34, /datum/reagent/medicine/granibitaluri = 66)
 
 /obj/item/reagent_containers/medigel/instabitaluri
 	name = "medical gel (instabitaluri)"
@@ -85,7 +93,15 @@
 	list_reagents = list(/datum/reagent/medicine/C2/instabitaluri = 60)
 	custom_price = 80
 
+/obj/item/reagent_containers/medigel/instabitaluri/extended
+	volume = 100
+	list_reagents = list(/datum/reagent/medicine/C2/instabitaluri = 100)
+
 /obj/item/reagent_containers/medigel/sterilizine
 	name = "sterilizer gel"
 	desc = "gel bottle loaded with non-toxic sterilizer. Useful in preparation for surgery."
 	list_reagents = list(/datum/reagent/space_cleaner/sterilizine = 60)
+
+/obj/item/reagent_containers/medigel/sterilizine/extended
+	volume = 100
+	list_reagents = list(/datum/reagent/space_cleaner/sterilizine = 100)

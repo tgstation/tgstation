@@ -160,6 +160,16 @@
 	..() // we want the regular items too.
 	new /obj/item/radio/off(src)
 
+
+/obj/item/storage/box/ert/PopulateContents()
+	new /obj/item/clothing/mask/gas/sechailer(src)
+	new /obj/item/tank/internals/emergency_oxygen/double(src)
+	new /obj/item/reagent_containers/hypospray/medipen/atropine(src)
+	new /obj/item/extinguisher/mini(src)
+	new /obj/item/crowbar/red(src)
+	new /obj/item/weldingtool/mini(src)
+	new /obj/item/restraints/handcuffs/cable/zipties(src)
+
 // Syndie survival box
 /obj/item/storage/box/syndie/PopulateContents()
 	new /obj/item/clothing/mask/gas/syndicate(src)
@@ -686,6 +696,25 @@
 	STR.max_combined_w_class = 21
 	STR.click_gather = FALSE //temp workaround to re-enable filling the light replacer with the box
 
+/obj/item/storage/box/metal
+	name = "standard sheet box"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "secbox"
+	desc = "This box is custom-shaped, and can fit a decent amount of standard sheets, but nothing else."
+
+/obj/item/storage/box/metal/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 4
+	STR.set_holdable(/obj/item/stack/sheet)
+	STR.max_combined_w_class = 4
+
+/obj/item/storage/box/metal/PopulateContents()
+	new /obj/item/stack/sheet/metal/fifty
+	new /obj/item/stack/sheet/metal/fifty
+	new /obj/item/stack/sheet/glass/fifty
+	new /obj/item/stack/sheet/plasteel/twenty
+
 /obj/item/storage/box/lights/bulbs/PopulateContents()
 	for(var/i in 1 to 21)
 		new /obj/item/light/bulb(src)
@@ -734,6 +763,24 @@
 /obj/item/storage/box/smart_metal_foam/PopulateContents()
 	for(var/i in 1 to 7)
 		new/obj/item/grenade/chem_grenade/smart_metal_foam(src)
+
+/obj/item/storage/box/matter
+	name = "box of RCD cartridges"
+	desc = "Full of compressed matter cartridges."
+	illustration = "id"
+
+/obj/item/storage/box/matter/PopulateContents()
+	for(var/i in 1 to 7)
+		new/obj/item/rcd_ammo(src)
+
+/obj/item/storage/box/matter/large/PopulateContents()
+	for(var/i in 1 to 7)
+		new/obj/item/rcd_ammo/large(src)
+
+/obj/item/storage/box/matter/large
+	name = "box of RCD cartridges"
+	desc = "Full of compressed matter cartridges."
+	illustration = "id"
 
 /obj/item/storage/box/hug
 	name = "box of hugs"

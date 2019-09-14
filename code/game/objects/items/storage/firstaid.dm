@@ -172,6 +172,17 @@
 		/obj/item/storage/pill_bottle/penacid = 1)
 	generate_items_inside(items_inside,src)
 
+/obj/item/storage/firstaid/advanced/ert/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/reagent_containers/medigel/instabitaluri/extended = 1,
+		/obj/item/storage/pill_bottle/fiziver = 1,
+		/obj/item/reagent_containers/medigel/libital/extended = 1,
+		/obj/item/reagent_containers/medigel/aiuri/extended = 1,
+		/obj/item/storage/pill_bottle/oculisiate = 1,
+		/obj/item/healthanalyzer/advanced = 1,
+		/obj/item/storage/pill_bottle/potassiodide = 1)
+	generate_items_inside(items_inside,src)
+
 /obj/item/storage/firstaid/tactical
 	name = "combat medical kit"
 	desc = "I hope you've got insurance."
@@ -253,6 +264,15 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/multiver(src)
 
+/obj/item/storage/pill_bottle/fiziver
+	color = "#4CFF00"
+	name = "bottle of fiziver pills"
+	desc = "Contains pills used to counter toxins. Temporarily physically weakens the user."
+
+/obj/item/storage/pill_bottle/fiziver/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/fiziver(src)
+
 /obj/item/storage/pill_bottle/multiver/less
 
 /obj/item/storage/pill_bottle/multiver/less/PopulateContents()
@@ -276,12 +296,28 @@
 		new /obj/item/reagent_containers/pill/mutadone(src)
 
 /obj/item/storage/pill_bottle/potassiodide
+	color = "#007F0E"
 	name = "bottle of potassium iodide pills"
 	desc = "Contains pills used to reduce radiation damage."
 
 /obj/item/storage/pill_bottle/potassiodide/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/pill/potassiodide(src)
+
+/obj/item/storage/pill_bottle/potassiodide/full/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/potassiodide(src)
+
+/obj/item/storage/pill_bottle/oculisiate
+	color = "007F7F"
+	name = "bottle of oculine and inacusiate pills"
+	desc = "Contains pills used to reduce eye and ear damage."
+
+/obj/item/storage/pill_bottle/oculisiate/PopulateContents()
+	for(var/i in 1 to 4)
+		new /obj/item/reagent_containers/pill/oculine(src)
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/pill/inacusiate(src)
 
 /obj/item/storage/pill_bottle/trophazole
 	name = "bottle of trophazole pills"

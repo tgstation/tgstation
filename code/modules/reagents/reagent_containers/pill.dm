@@ -121,6 +121,13 @@
 	list_reagents = list(/datum/reagent/medicine/C2/multiver = 2, /datum/reagent/medicine/granibitaluri = 8)
 	rename_with_volume = TRUE
 
+/obj/item/reagent_containers/pill/fiziver
+	name = "multiver pill"
+	desc = "Toxins healer that physically weakens the user while in the system. Diluted with granibitaluri."
+	icon_state = "pill13"
+	list_reagents = list(/datum/reagent/medicine/C2/fiziver = 5, /datum/reagent/medicine/granibitaluri = 5)
+	rename_with_volume = TRUE
+
 /obj/item/reagent_containers/pill/epinephrine
 	name = "epinephrine pill"
 	desc = "Used to stabilize patients."
@@ -133,6 +140,20 @@
 	desc = "Used to treat brain damage."
 	icon_state = "pill17"
 	list_reagents = list(/datum/reagent/medicine/mannitol = 50)
+	rename_with_volume = TRUE
+
+/obj/item/reagent_containers/pill/oculine
+	name = "oculine pill"
+	desc = "Used to treat eye damage."
+	icon_state = "pill7"
+	list_reagents = list(/datum/reagent/medicine/oculine = 10)
+	rename_with_volume = TRUE
+
+/obj/item/reagent_containers/pill/inacusiate
+	name = "inacusiate pill"
+	desc = "Used to treat ear damage."
+	icon_state = "pill15"
+	list_reagents = list(/datum/reagent/medicine/inacusiate = 10)
 	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/mutadone
