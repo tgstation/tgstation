@@ -51,6 +51,30 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">14 September 2019</h2>
+			<h3 class="author">ATH1909 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Changed the default name of /datum/reagent/colorful_reagent/powder to "mundane powder" (from "crayon powder"), to better reflect that it can't color anything (its subtypes still can, of course) and that /datum/reagent/colorful_reagent/powder isn't found in most crayons anymore.</li>
+				<li class="tweak">Changed the names of the subtypes of /datum/reagent/colorful_reagent/powder so that they no longer mention crayons/"crayon powder".</li>
+				<li class="tweak">Changes the wordings of the descriptions of /datum/reagent/colorful_reagent/powder and its subtypes to be less weird (and to mention that invisible powder and mundane powder can't color anything). This change should also make the description of mundane powder no longer state that it can color things the "none" color.</li>
+			</ul>
+			<h3 class="author">ATHATH updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">Omega weed has lost its haloperidol, capsaicin, barber's aid, itching powder, and histamine chemical production traits. In exchange, it's received the nicotine production trait as an additional chemical production trait. The chemical production traits that were in omega weed before this change but were not mentioned in the above list are still in omega weed.</li>
+				<li class="balance">The list of chemical production traits of rainbow weed has been changed from 15% mindbreaker toxin and 35% lipolicide to 5% colorful reagent, 3% psicodine, 10% happiness, 10% mindbreaker toxin, and 15% lipolicide. This should make ingesting rainbow weed change your character's color, but should also make 100 potency rainbow weed highly addictive.</li>
+				<li class="balance">The extradimensional orange has received the 15% haloperidol chemical production trait that omega weed used to have.</li>
+				<li class="balance">The base damage dealt (before modifiers) by stepping on a d4 without shoes on is now 1d4 damage (dropped from just a flat 4 damage).</li>
+			</ul>
+			<h3 class="author">Fikou updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">the bone spear is an itty bitty tiny bit stronger</li>
+			</ul>
+			<h3 class="author">Mickyan updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Medical staff now spawns with a first aid kit with increased capacity and basic surgery tools</li>
+				<li class="bugfix">Fixes fire extinguisher being able to be emptied from storage slots</li>
+			</ul>
+
 			<h2 class="date">12 September 2019</h2>
 			<h3 class="author">Arkatos updated:</h3>
 			<ul class="changes bgimages16">
@@ -2098,116 +2122,6 @@
 				<li class="imagedel">Some unused/duplicate changeling icons.</li>
 				<li class="code_imp">Improved the take_damage proc for objs.</li>
 				<li class="rscdel">Removed the VTEC borg module.</li>
-			</ul>
-
-			<h2 class="date">13 July 2019</h2>
-			<h3 class="author">DaxDupont updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">You can no longer turn the burial garb into nudity with pixel text.</li>
-			</ul>
-			<h3 class="author">Dennok updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">some runtimes</li>
-				<li class="bugfix">Debug surgery disk work again.</li>
-				<li class="bugfix">shuttle_manipulator now can load shuttles</li>
-			</ul>
-			<h3 class="author">Fikou updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Department budgets now are in their respective heads' lockers instead of their backpacks.</li>
-			</ul>
-			<h3 class="author">Garen7 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Mindshield implants are properly used up when injecting a headrev/hivemind with one.</li>
-			</ul>
-			<h3 class="author">YPOQ updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed gravitokinetic guardian's gravity effect remaining forever if the guardian dies.</li>
-			</ul>
-			<h3 class="author">cacogen updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Adds stat tracking for the creation/destruction of trash and cleanable decals (e.g. blood)</li>
-			</ul>
-			<h3 class="author">nemvar updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="code_imp">Slight changes the self-repair borg module. It no longer references the borg that owns it.</li>
-			</ul>
-
-			<h2 class="date">12 July 2019</h2>
-			<h3 class="author">Akrilla updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">PDAs in backpacks etc accept ID cards.</li>
-			</ul>
-			<h3 class="author">DeeDubya updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Decreased the cost of the BYOS from 5000 to 2500, and removed the time limit for purchasing.</li>
-			</ul>
-			<h3 class="author">Mickyan updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added the Pushover and Frail negative quirks</li>
-			</ul>
-			<h3 class="author">Naksu updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">fixed experimental dissection techweb node ci: travis will now fail tests on branches with invalid nodes</li>
-			</ul>
-			<h3 class="author">O2by updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Lexorin now requires Salbutamol instead of Oxygen (FIX YOUR MACROS)</li>
-			</ul>
-			<h3 class="author">Qustinnus / Floyd updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Studies show that starvation does not affect mental health as much as we thought.</li>
-			</ul>
-			<h3 class="author">Skoglol updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Disease cures should now stay the same for all infected mobs.</li>
-				<li class="rscdel">Removed Bubblegums ability to summon slaughterlings.</li>
-				<li class="tweak">Mining conscription kits now cost 1500, but has a PKA and a survival knife. Cargo cost reduced to 2000.</li>
-				<li class="tweak">Added public mining vendor to lavaland base.</li>
-				<li class="bugfix">Inorganic Biology and Necrotic Metabolism virus symptoms now take effect immediately, allowing for direct infection of the relevant species.</li>
-				<li class="rscadd">Kinetic crusher can now be one-hand carried. You'll still need two hand to use it.</li>
-			</ul>
-			<h3 class="author">StonebayKyle updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added science goggles to virology lab.</li>
-			</ul>
-			<h3 class="author">TheChosenEvilOne updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Swappers can no longer be sent on the cargo shuttle.</li>
-			</ul>
-			<h3 class="author">XDTM updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Abductor healing glands, instead of healing a flat amount of each damage, now actively (and gruesomely) replace damaged organs and bodyparts. It will also reject robotic implants, organs and limbs.</li>
-				<li class="bugfix">Fixed a bug where nearsightedness and blindness from eye damage would persist after losing the eyes.</li>
-			</ul>
-			<h3 class="author">YakumoChen updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Back slot jetpacks are less fast, but still faster than inbuilt/improvised ones.</li>
-			</ul>
-			<h3 class="author">actioninja updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">fixed an issue where bolas could get teleported back to someone if their remove timer finished after someone else had already removed it</li>
-			</ul>
-			<h3 class="author">nemvar updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">A new ruin has been added to lavaland. Go explore!</li>
-				<li class="rscdel">The animal hospital on lavaland collapsed into a lavastream in an unfortunate accident. NT promised to send aid to the many goliath babies that can't get proper medical care now.</li>
-				<li class="imageadd">Some drinks have new icons or slightly altered icons. In particular Wizz Fizz, Bug Spray, Jack Rose, Champagne and Applejack.</li>
-				<li class="imageadd">Added short intro animations for the cyborg module HUD icons.</li>
-				<li class="tweak">Slightly changed how explosive holoparasite bombs work. Actual gameplay impact should be minimal.</li>
-				<li class="balance">The distance requirement for finding bombs on examine has been removed.</li>
-			</ul>
-			<h3 class="author">peoplearestrange updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">PKM examine tells you to use a crowbar for modules</li>
-			</ul>
-			<h3 class="author">pireamaineach updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Nuclear particles irradiate more, but no longer deal toxin damage directly, and roll for rad protection.</li>
-				<li class="balance">X-ray beams now roll for rad-armour, meaning they penetrate laser armour but are completely negated by rad-suits.</li>
-			</ul>
-			<h3 class="author">willox updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Borgs can use non-surgical tools on people who are in surgery while using help-intent</li>
 			</ul>
 		</div>
 

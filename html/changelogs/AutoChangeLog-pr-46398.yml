@@ -1,4 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - bugfix: "Fixes fire extinguisher being able to be emptied from storage slots"
