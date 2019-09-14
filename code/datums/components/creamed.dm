@@ -1,3 +1,9 @@
+GLOBAL_LIST_INIT(creamable, typecacheof(list(
+	/mob/living/carbon/human,
+	/mob/living/carbon/monkey,
+	/mob/living/simple_animal/pet/dog/corgi,
+	/mob/living/silicon/ai)))
+
 /**
   * # Creamed component
   *
@@ -6,28 +12,42 @@
 /datum/component/creamed
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
+	var/mutable_appearance/creamface
+
 /datum/component/creamed/Initialize(datum/source, stunning)
-	if(!istype(parent, /mob/living/carbon/human))
+	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	var/mob/living/carbon/human/H = parent
-	var/mutable_appearance/creamoverlay = mutable_appearance('icons/effects/creampie.dmi')
-	if(H.dna.species.limbs_id == "lizard")
-		creamoverlay.icon_state = "creampie_lizard"
-	else
-		creamoverlay.icon_state = "creampie_human"
-	pie_hit(source, stunning)
+	if(is_type_in_typecache(parent, GLOB.creamable))
+		creamface = mutable_appearance('icons/effects/creampie.dmi')
 
-	H.add_overlay(creamoverlay)
-	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "creampie", /datum/mood_event/creampie)
+		if(ishuman(parent))
+			var/mob/living/carbon/human/H = parent
+			if(H.dna.species.limbs_id == "lizard")
+				creamface.icon_state = "creampie_lizard"
+			else
+				creamface.icon_state = "creampie_human"
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "creampie", /datum/mood_event/creampie)
+		else if(ismonkey(parent))
+			creamface.icon_state = "creampie_monkey"
+		else if(iscorgi(parent))
+			creamface.icon_state = "creampie_corgi"
+		else if(isAI(parent))
+			creamface.icon_state = "creampie_ai"
+
+		var/atom/A = parent
+		A.add_overlay(creamface)
+
+	pie_hit(source, stunning)
 
 /datum/component/creamed/InheritComponent(datum/component/C, i_am_original, datum/source, stunning)
 	pie_hit(source, stunning)
 
 /datum/component/creamed/Destroy(force, silent)
-	var/mob/living/carbon/human/H = parent
-	H.cut_overlay(mutable_appearance('icons/effects/creampie.dmi', "creampie_lizard"))
-	H.cut_overlay(mutable_appearance('icons/effects/creampie.dmi', "creampie_human"))
+	if(is_type_in_typecache(parent, GLOB.creamable))
+		var/atom/A = parent
+		A.cut_overlay(creamface)
+		qdel(creamface)
 	return ..()
 
 /**
@@ -38,12 +58,12 @@
   * * stunning if it should apply a stun
   */
 /datum/component/creamed/proc/pie_hit(datum/source, stunning)
-	var/mob/living/carbon/human/H = parent
+	var/mob/living/L = parent
 	if(stunning)
-		H.Paralyze(20) //splat!
-	H.adjust_blurriness(1)
-	H.visible_message("<span class='warning'>[H] is creamed by [source]!</span>", "<span class='userdanger'>You've been creamed by [source]!</span>")
-	playsound(H, "desceration", 50, TRUE)
+		L.Paralyze(20) //splat!
+	L.adjust_blurriness(1)
+	L.visible_message("<span class='warning'>[L] is creamed by [source]!</span>", "<span class='userdanger'>You've been creamed by [source]!</span>")
+	playsound(L, "desceration", 50, TRUE)
 
 /datum/component/creamed/RegisterWithParent()
 	RegisterSignal(parent, list(
