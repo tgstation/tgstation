@@ -150,6 +150,27 @@
 	result = /obj/item/reagent_containers/food/snacks/store/cake/bsvc
 	subcategory = CAT_CAKE
 
+/datum/crafting_recipe/food/clowncake
+	name = "clown cake"
+	always_availible = FALSE
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/store/cake/plain = 1,
+		/obj/item/reagent_containers/food/snacks/sundae = 2,
+		/obj/item/reagent_containers/food/snacks/grown/banana = 5
+	)
+	result = /obj/item/reagent_containers/food/snacks/store/cake/clown_cake
+	subcategory = CAT_CAKE
+
+/datum/crafting_recipe/food/vanillacake
+	name = "vanilla cake"
+	always_availible = FALSE
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/store/cake/plain = 1,
+		/obj/item/reagent_containers/food/snacks/grown/vanillapod = 2
+	)
+	result = /obj/item/reagent_containers/food/snacks/store/cake/vanilla_cake
+	subcategory = CAT_CAKE
+
 /datum/crafting_recipe/food/cak
 	name = "Living cat/cake hybrid"
 	reqs = list(

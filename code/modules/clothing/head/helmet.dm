@@ -25,10 +25,6 @@
 	if(attached_light)
 		alight = new(src)
 
-/obj/item/clothing/head/helmet/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_HEAD))
-
 /obj/item/clothing/head/helmet/examine(mob/user)
 	. = ..()
 	if(attached_light)
@@ -104,8 +100,8 @@
 	actions_types = list(/datum/action/item_action/toggle)
 	visor_flags_inv = HIDEFACE
 	toggle_cooldown = 0
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	dog_fashion = null
 
 /obj/item/clothing/head/helmet/attack_self(mob/user)

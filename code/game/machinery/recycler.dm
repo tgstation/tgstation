@@ -115,7 +115,7 @@
 		if(istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /mob/living/brain))
 			emergency_stop(AM)
 		else if(isliving(AM))
-			if((obj_flags & EMAGGED)||!ishuman(AM))
+			if(obj_flags & EMAGGED)
 				crush_living(AM)
 			else
 				emergency_stop(AM)
@@ -170,7 +170,6 @@
 	else
 		playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 
-	// By default, the emagged recycler will gib all non-carbons. (human simple animal mobs don't count)
 	if(iscarbon(L))
 		if(L.stat == CONSCIOUS)
 			L.say("ARRRRRRRRRRRGH!!!", forced="recycler grinding")
