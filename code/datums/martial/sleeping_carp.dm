@@ -51,20 +51,20 @@
 
 /datum/martial_art/the_sleeping_carp/proc/backKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.IsParalyzed())
-		if(A.dir == D.dir)
-			log_combat(A, D, "back-kicked (Sleeping Carp)")
-			A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
-			D.visible_message("<span class='warning'>[A] kicks [D] in the back!</span>", \
-								"<span class='userdanger'>[A] kicks you in the back, making you stumble and fall!</span>")
-			step_to(D,get_step(D,D.dir),1)
-			D.Paralyze(80)
-			playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, TRUE, -1)
-			return TRUE
-		else
+		if(A.dir != D.dir)
 			log_combat(A, D, "missed a back-kick (Sleeping Carp) on")
 			D.visible_message("<span class='warning'>[A] tries to kick [D] in the back, but misses!</span>", \
-								"<span class='userdanger'>[A] tries to kick you in the back, but misses!</span>")
-	return TRUE
+						"<span class='userdanger'>[A] tries to kick you in the back, but misses!</span>")
+			return TRUE
+		log_combat(A, D, "back-kicked (Sleeping Carp)")
+		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+		D.visible_message("<span class='warning'>[A] kicks [D] in the back!</span>", \
+					"<span class='userdanger'>[A] kicks you in the back, making you stumble and fall!</span>")
+		step_to(D,get_step(D,D.dir),1)
+		D.Paralyze(80)
+		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, TRUE, -1)
+		return TRUE
+	return FALSE
 
 /datum/martial_art/the_sleeping_carp/proc/kneeStomach(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.IsParalyzed())
