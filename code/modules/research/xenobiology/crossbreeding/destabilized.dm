@@ -23,6 +23,7 @@ Destabilized extracts:
 
 /obj/item/slimecross/destabilized/grey
 	colour = "grey"
+	effect_desc = "Spawns an angry slime that is friends with the thrower on top of the hit creature."
 
 /obj/item/slimecross/destabilized/grey/hitEffect(atom/A, mob/thrower)
 	. = ..()
@@ -37,6 +38,7 @@ Destabilized extracts:
 
 /obj/item/slimecross/destabilized/orange
 	colour = "orange"
+	effect_desc = "Ignites the tile or creature it lands on."
 
 /obj/item/slimecross/destabilized/orange/hitEffect(atom/A, mob/thrower)
 	. = ..()
@@ -50,6 +52,7 @@ Destabilized extracts:
 
 /obj/item/slimecross/destabilized/purple
 	colour = "purple"
+	effect_desc = "Doses the hit creature with regen jelly, or makes a small cloud of it."
 
 /obj/item/slimecross/destabilized/purple/hitEffect(atom/A, mob/thrower)
 	. = ..()
@@ -65,6 +68,7 @@ Destabilized extracts:
 
 /obj/item/slimecross/destabilized/blue
 	colour = "blue"
+	effect_desc = "Wets the floor under the hit creature, causing them to slip."
 
 /obj/item/slimecross/destabilized/blue/hitEffect(atom/A, mob/thrower)
 	. = ..()
@@ -78,6 +82,7 @@ Destabilized extracts:
 
 /obj/item/slimecross/destabilized/metal
 	colour = "metal"
+	effect_desc = "Traps the hit creature in a metal cage."
 
 /obj/item/slimecross/destabilized/metal/hitEffect(atom/A, mob/thrower)
 	. = ..()
@@ -90,6 +95,7 @@ Destabilized extracts:
 
 /obj/item/slimecross/destabilized/yellow
 	colour = "yellow"
+	effect_desc = "Gives the hit creature an electric shock, or EMP's the tile."
 
 /obj/item/slimecross/destabilized/yellow/hitEffect(atom/A, mob/thrower)
 	. = ..()
@@ -102,6 +108,7 @@ Destabilized extracts:
 
 /obj/item/slimecross/destabilized/darkpurple
 	colour = "dark purple"
+	effect_desc = "Makes the hit creature highly flammable, or creates a plasma cloud."
 
 /obj/item/slimecross/destabilized/darkpurple/hitEffect(atom/A, mob/thrower)
 	. = ..()
@@ -118,6 +125,7 @@ Destabilized extracts:
 
 /obj/item/slimecross/destabilized/darkblue
 	colour = "dark blue"
+	effect_desc = "Freezes the hit creature in a block of solid ice."
 
 /obj/item/slimecross/destabilized/darkblue/hitEffect(atom/A, mob/thrower)
 	. = ..()
@@ -127,6 +135,7 @@ Destabilized extracts:
 
 /obj/item/slimecross/destabilized/silver
 	colour = "silver"
+	effect_desc = "Feeds the hit creature an unhealthy amount."
 
 /obj/item/slimecross/destabilized/silver/hitEffect(atom/A, mob/thrower)
 	. = ..()
@@ -137,6 +146,7 @@ Destabilized extracts:
 
 /obj/item/slimecross/destabilized/bluespace
 	colour = "bluespace"
+	effect_desc = "Teleports the hit creature next to the thrower."
 
 /obj/item/slimecross/destabilized/bluespace/hitEffect(atom/A, mob/thrower)
 	. = ..()
@@ -149,6 +159,7 @@ Destabilized extracts:
 
 /obj/item/slimecross/destabilized/sepia
 	colour = "sepia"
+	effect_desc = "Briefly stops time for the hit creature, or temporaily stops time on the hit tile."
 
 /obj/item/slimecross/destabilized/sepia/hitEffect(atom/A, mob/thrower)
 	. = ..()
@@ -163,6 +174,7 @@ Destabilized extracts:
 
 /obj/item/slimecross/destabilized/cerulean
 	colour = "cerulean"
+	effect_desc = "Creates a weak, hostile, copy of the hit creature or the thrower if nothing is hit."
 
 /obj/item/slimecross/destabilized/cerulean/hitEffect(atom/A, mob/thrower)
 	. = ..()
@@ -173,6 +185,7 @@ Destabilized extracts:
 
 /obj/item/slimecross/destabilized/pyrite
 	colour = "pyrite"
+	effect_desc = "Randomly colors everthing on the tile it hits."
 
 /obj/item/slimecross/destabilized/pyrite/hitEffect(atom/A, mob/thrower)
 	. = ..()
@@ -183,6 +196,7 @@ Destabilized extracts:
 
 /obj/item/slimecross/destabilized/red
 	colour = "red"
+	effect_desc = "Causes temporary heavy bleeding for the hit creature, or creates a puddle of blood."
 
 /obj/item/slimecross/destabilized/red/hitEffect(atom/A, mob/thrower)
 	. = ..()
@@ -194,6 +208,7 @@ Destabilized extracts:
 
 /obj/item/slimecross/destabilized/green
 	colour = "green"
+	effect_desc = "Transfers some of the thrower's wounds to the hit creature."
 
 /obj/item/slimecross/destabilized/green/hitEffect(atom/A, mob/thrower)
 	. = ..()
@@ -247,6 +262,7 @@ Destabilized extracts:
 /obj/item/slimecross/destabilized/pink
 	colour = "pink"
 	reusable = TRUE //Hugs are hard enough to come by as is.
+	effect_desc = "Allows the thrower to hug another individual from far away. Just as the joyful feeling of hugs lasts forever, so do these extracts!"
 
 /obj/item/slimecross/destabilized/pink/hitEffect(atom/A, mob/thrower)
 	. = ..()
@@ -265,6 +281,7 @@ Destabilized extracts:
 
 /obj/item/slimecross/destabilized/gold
 	colour = "gold"
+	effect_desc = "Causes goliath-like tendrils to shoot up out of the ground at the tile that was hit."
 
 /obj/item/slimecross/destabilized/gold/hitEffect(atom/A, mob/thrower)
 	. = ..()
@@ -272,6 +289,7 @@ Destabilized extracts:
 
 /obj/item/slimecross/destabilized/oil
 	colour = "oil"
+	effect_desc = "Causes an IED-style explosion at the impacted tile."
 
 /obj/item/slimecross/destabilized/oil/hitEffect(atom/A, mob/thrower)
 	. = ..()
@@ -279,6 +297,7 @@ Destabilized extracts:
 
 /obj/item/slimecross/destabilized/black
 	colour = "black"
+	effect_desc = "Temporarily blinds the hit creature, or creates a smoke cloud."
 
 /obj/item/slimecross/destabilized/black/hitEffect(atom/A, mob/thrower)
 	. = ..()
@@ -293,6 +312,7 @@ Destabilized extracts:
 
 /obj/item/slimecross/destabilized/lightpink
 	colour = "light pink"
+	effect_desc = "Makes the hit creature briefly passive, or leaves behind a symbol of peace."
 
 /obj/item/slimecross/destabilized/lightpink/hitEffect(atom/A, mob/thrower)
 	. = ..()
@@ -313,6 +333,7 @@ Destabilized extracts:
 
 /obj/item/slimecross/destabilized/adamantine
 	colour = "adamantine"
+	effect_desc = "Surrounds the hit person with shards of glass and knocks off their shoes. How evil..."
 
 /obj/item/slimecross/destabilized/adamantine/hitEffect(atom/A, mob/thrower)
 	. = ..()
@@ -326,6 +347,7 @@ Destabilized extracts:
 
 /obj/item/slimecross/destabilized/rainbow
 	colour = "rainbow"
+	effect_desc = "Gives the hit creature a debilitating condition that slowly deteriorates their cells. Perhaps the condensed form of a common ancestor, such as a monkey, can cure the condition..."
 
 /obj/item/slimecross/destabilized/rainbow/hitEffect(atom/A, mob/thrower)
 	. = ..()
