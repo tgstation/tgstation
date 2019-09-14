@@ -59,7 +59,7 @@
 	desc = "Probably better than the last captain."
 
 /datum/dog_fashion/head/kitty
-	name = "Runtime"
+	name = "Eddie"
 	emote_see = list("coughs up a furball", "stretches")
 	emote_hear = list("purrs")
 	speak = list("Purrr", "Meow!", "MAOOOOOW!", "HISSSSS", "MEEEEEEW")

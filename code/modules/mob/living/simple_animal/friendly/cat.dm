@@ -82,7 +82,7 @@
 
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
 /mob/living/simple_animal/pet/cat/Runtime
-	name = "Runtime"
+	name = "Eddie"
 	desc = "GCAT"
 	icon_state = "cat"
 	icon_living = "cat"

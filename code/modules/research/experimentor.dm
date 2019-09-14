@@ -508,10 +508,10 @@
 			if(trackedRuntime)
 				throwSmoke(trackedRuntime.loc)
 				trackedRuntime.forceMove(drop_location())
-				investigate_log("Experimentor has stolen Runtime!", INVESTIGATE_EXPERIMENTOR)
+				investigate_log("Experimentor has stolen Eddie!", INVESTIGATE_EXPERIMENTOR)
 			else
 				new /mob/living/simple_animal/pet/cat(loc)
-				investigate_log("Experimentor failed to steal runtime, and instead spawned a new cat.", INVESTIGATE_EXPERIMENTOR)
+				investigate_log("Experimentor failed to steal Eddie, and instead spawned a new cat.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
 		if(globalMalf > 76)
 			visible_message("<span class='warning'>[src] begins to smoke and hiss, shaking violently!</span>")

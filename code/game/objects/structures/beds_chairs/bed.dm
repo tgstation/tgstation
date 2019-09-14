@@ -187,7 +187,7 @@
 
 /obj/structure/bed/dogbed/runtime
 	desc = "A comfy-looking cat bed. You can even strap your pet in, in case the gravity turns off."
-	name = "Runtime's bed"
+	name = "Eddie's bed"
 	anchored = TRUE
 
 /obj/structure/bed/dogbed/proc/update_owner(mob/living/M)
