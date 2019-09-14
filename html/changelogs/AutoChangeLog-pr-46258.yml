@@ -1,8 +1,0 @@
-author: "ATHATH and ExcessiveUseOfCobblestone"
-delete-after: True
-changes: 
-  - balance: "Earthsblood's healing has been changed; its burn and brute healing rates have been increased, but its oxygen, stamina and clone healing rates have been lowered."
-  - balance: "Earthsblood heals you less before its 26th cycle in you, but also deals less brain damage to you before its 26th cycle in you as well."
-  - balance: "Earthsblood now gives you the pacifism trait temporarily while it is in your system."
-  - balance: "If you are a human, the earthsblood overdose effect now, in addition to its previous effects, gives you a pacifism brain trauma with a resilience of TRAUMA_RESILIENCE_SURGERY. If you already had a pacifism brain trauma with a resilience of TRAUMA_RESILIENCE_BASIC (for some reason), it will increase the resilience of that brain trauma to TRAUMA_RESILIENCE_SURGERY. This pacifism brain trauma is NOT taken away when the earthsblood chem leaves your system."
-  - rscadd: "After its 25th cycle in you, earthsblood has a 10% chance per tick of on_mob_life to make you say a random hippie-related message."

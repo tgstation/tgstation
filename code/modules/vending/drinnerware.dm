@@ -14,7 +14,8 @@
 					/obj/item/reagent_containers/food/condiment/peppermill = 5,
 					/obj/item/clothing/suit/apron/chef = 2,
 					/obj/item/kitchen/rollingpin = 2,
-					/obj/item/kitchen/knife = 2)
+					/obj/item/kitchen/knife = 2,
+					/obj/item/book/granter/crafting_recipe/cooking_sweets_101 = 2)
 	contraband = list(/obj/item/kitchen/rollingpin = 2,
 					  /obj/item/kitchen/knife/butcher = 2)
 	refill_canister = /obj/item/vending_refill/dinnerware

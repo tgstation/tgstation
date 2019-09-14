@@ -139,7 +139,7 @@
 	H.equip_in_one_of_slots(photo_album, album_slots , qdel_on_fail = TRUE)
 	photo_album.persistence_id = "personal_[H.mind.key]" // this is a persistent album, the ID is tied to the account's key to avoid tampering
 	photo_album.persistence_load()
-	photo_album.name = "\improper [H.real_name]'s photo album"
+	photo_album.name = "[H.real_name]'s photo album"
 	var/obj/item/camera/camera = new(get_turf(H))
 	var/list/camera_slots = list (
 		"neck" = SLOT_NECK,

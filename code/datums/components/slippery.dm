@@ -11,7 +11,7 @@
 	force_drop_items = _force_drop
 	lube_flags = _lube_flags
 	callback = _callback
-	RegisterSignal(parent, list(COMSIG_MOVABLE_CROSSED, COMSIG_ATOM_ENTERED), .proc/Slip)
+	RegisterSignal(parent, list(COMSIG_MOVABLE_CROSSED, COMSIG_ATOM_ENTERED, COMSIG_ITEM_WEARERCROSSED), .proc/Slip)
 
 /datum/component/slippery/proc/Slip(datum/source, atom/movable/AM)
 	var/mob/victim = AM

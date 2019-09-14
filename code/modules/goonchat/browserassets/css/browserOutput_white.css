@@ -12,7 +12,7 @@ html, body {
 body {
 	background: #fff;
     font-family: Verdana, sans-serif;
-    font-size: 9pt;
+    font-size: 13px;
     line-height: 1.2;
 	overflow-x: hidden;
 	overflow-y: scroll;
@@ -262,7 +262,7 @@ em						{font-style: normal;	font-weight: bold;}
 
 .ooc					{color: #002eb8;	font-weight: bold;}
 .adminobserverooc		{color: #0099cc;	font-weight: bold;}
-.adminooc				{color: #700038;	font-weight: bold;}
+.adminooc				{color: #700038;	font-weight: bold; font-size: 110%}
 
 .adminsay   				{color: #ff4500;	font-weight: bold;}
 .admin					{color: #4473ff;	font-weight: bold;}
@@ -300,7 +300,7 @@ h1.alert, h2.alert		{color: #000000;}
 .disarm					{color: #990000;}
 .passive				{color: #660000;}
 
-.userdanger				{color: #ff0000;	font-weight: bold; font-size: 24px;}
+.userdanger				{color: #ff0000;	font-weight: bold; font-size: 185%;}
 .danger					{color: #ff0000;}
 .warning				{color: #ff0000;	font-style: italic;}
 .alertwarning           {color: #FF0000;    font-weight: bold}
@@ -325,12 +325,12 @@ h1.alert, h2.alert		{color: #000000;}
 
 .cultitalic				{color: #960000;	font-style: italic;}
 .cultbold				{color: #960000; font-style: italic; font-weight: bold;}
-.cultboldtalic				{color: #960000; font-weight: bold; font-size: 24px;}
+.cultboldtalic				{color: #960000; font-weight: bold; font-size: 185%;}
 
-.cultlarge				{color: #960000; font-weight: bold; font-size: 24px;}
-.narsie					{color: #960000; font-weight: bold; font-size: 120px;}
-.narsiesmall			{color: #960000; font-weight: bold; font-size: 48px;}
-.colossus				{color: #7F282A; font-size: 40px;}
+.cultlarge				{color: #960000; font-weight: bold; font-size: 185%;}
+.narsie					{color: #960000; font-weight: bold; font-size: 925%;}
+.narsiesmall			{color: #960000; font-weight: bold; font-size: 370%;}
+.colossus				{color: #7F282A; font-size: 310%;}
 .hierophant				{color: #660099; font-weight: bold; font-style: italic;}
 .hierophant_warning		{color: #660099; font-style: italic;}
 .purple					{color: #5e2d79;}
@@ -338,36 +338,36 @@ h1.alert, h2.alert		{color: #000000;}
 
 .revennotice			{color: #1d2953;}
 .revenboldnotice		{color: #1d2953;	font-weight: bold;}
-.revenbignotice			{color: #1d2953;	font-weight: bold; font-size: 24px;}
+.revenbignotice			{color: #1d2953;	font-weight: bold; font-size: 185%;}
 .revenminor				{color: #823abb}
 .revenwarning			{color: #760fbb;	font-style: italic;}
-.revendanger			{color: #760fbb;	font-weight: bold; font-size: 24px;}
+.revendanger			{color: #760fbb;	font-weight: bold; font-size: 185%;}
 .umbra					{color: #5000A0;}
 .umbra_emphasis			{color: #5000A0;	font-weight: bold;	font-style: italic;}
-.umbra_large			{color: #5000A0; font-size: 24px; font-weight: bold; font-style: italic;}
+.umbra_large			{color: #5000A0; font-size: 185%; font-weight: bold; font-style: italic;}
 
-.deconversion_message	{color: #5000A0; font-size: 24px; font-style: italic;}
+.deconversion_message	{color: #5000A0; font-size: 185%; font-style: italic;}
 
 .brass					{color: #BE8700;}
 .heavy_brass			{color: #BE8700; font-weight: bold; font-style: italic;}
-.large_brass			{color: #BE8700; font-size: 24px;}
-.big_brass				{color: #BE8700; font-size: 24px; font-weight: bold; font-style: italic;}
-.ratvar					{color: #BE8700; font-size: 48px; font-weight: bold; font-style: italic;}
+.large_brass			{color: #BE8700; font-size: 185%;}
+.big_brass				{color: #BE8700; font-size: 185%; font-weight: bold; font-style: italic;}
+.ratvar					{color: #BE8700; font-size: 370%; font-weight: bold; font-style: italic;}
 .alloy					{color: #42474D;}
 .heavy_alloy			{color: #42474D; font-weight: bold; font-style: italic;}
-.nezbere_large			{color: #42474D; font-size: 24px; font-weight: bold; font-style: italic;}
+.nezbere_large			{color: #42474D; font-size: 185%; font-weight: bold; font-style: italic;}
 .nezbere				{color: #42474D; font-weight: bold; font-style: italic;}
 .nezbere_small			{color: #42474D;}
-.sevtug_large			{color: #AF0AAF; font-size: 24px; font-weight: bold; font-style: italic;}
+.sevtug_large			{color: #AF0AAF; font-size: 185%; font-weight: bold; font-style: italic;}
 .sevtug					{color: #AF0AAF; font-weight: bold; font-style: italic;}
 .sevtug_small			{color: #AF0AAF;}
-.inathneq_large			{color: #1E8CE1; font-size: 24px; font-weight: bold; font-style: italic;}
+.inathneq_large			{color: #1E8CE1; font-size: 185%; font-weight: bold; font-style: italic;}
 .inathneq				{color: #1E8CE1; font-weight: bold; font-style: italic;}
 .inathneq_small			{color: #1E8CE1;}
-.nzcrentr_large			{color: #DAAA18; font-size: 24px; font-weight: bold; font-style: italic;}
+.nzcrentr_large			{color: #DAAA18; font-size: 185%; font-weight: bold; font-style: italic;}
 .nzcrentr				{color: #DAAA18; font-weight: bold; font-style: italic;}
 .nzcrentr_small			{color: #DAAA18;}
-.neovgre_large			{color: #6E001A; font-size: 24px; font-weight: bold; font-style: italic;}
+.neovgre_large			{color: #6E001A; font-size: 185%; font-weight: bold; font-style: italic;}
 .neovgre				{color: #6E001A; font-weight: bold; font-style: italic;}
 .neovgre_small			{color: #6E001A;}
 
@@ -378,9 +378,9 @@ h1.alert, h2.alert		{color: #000000;}
 .noticealien			{color: #00c000;}
 .alertalien				{color: #00c000;	font-weight: bold;}
 .changeling				{color: #800080;	font-style: italic;}
-.alertsyndie			{color: #FF0000;	font-size: 24px ; font-weight: bold;}
+.alertsyndie			{color: #FF0000;	font-size: 185% ; font-weight: bold;}
 
-.spider					{color: #4d004d; font-weight: bold; font-size: 24px;}
+.spider					{color: #4d004d; font-weight: bold; font-size: 185%;}
 
 .interface				{color: #330033;}
 
@@ -388,14 +388,14 @@ h1.alert, h2.alert		{color: #000000;}
 .papyrus				{font-family: "Papyrus", cursive, sans-serif;}
 .robot					{font-family: "Courier New", cursive, sans-serif;}
 
-.command_headset		{font-weight: bold; font-size: 24px;}
-.small					{font-size: 8px;}
-.big					{font-size: 24px;}
-.reallybig				{font-size: 32px;}
-.extremelybig			{font-size: 40px;}
-.greentext				{color: #00FF00;	font-size: 24px;}
-.redtext				{color: #FF0000;	font-size: 24px;}
-.clown					{color: #FF69Bf;	font-size: 24px; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold;}
+.command_headset		{font-weight: bold; font-size: 160%;}
+.small					{font-size: 60%;}
+.big					{font-size: 185%;}
+.reallybig				{font-size: 245%;}
+.extremelybig			{font-size: 310%;}
+.greentext				{color: #00FF00;	font-size: 185%;}
+.redtext				{color: #FF0000;	font-size: 185%;}
+.clown					{color: #FF69Bf;	font-size: 160%; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold;}
 .his_grace				{color: #15D512;	font-family: "Courier New", cursive, sans-serif; font-style: italic;}
 .hypnophrase			{color: #0d0d0d;	font-weight: bold; animation: hypnocolor 1500ms infinite;}
 @keyframes hypnocolor {
@@ -416,9 +416,9 @@ h1.alert, h2.alert		{color: #000000;}
 .icon 					{height: 1em;	width: auto;}
 
 .memo					{color: #638500;	text-align: center;}
-.memoedit				{text-align: center;	font-size: 16px;}
+.memoedit				{text-align: center;	font-size: 125%;}
 .abductor				{color: #800080; font-style: italic;}
-.mind_control				{color: #A00D6F; font-size: 3; font-weight: bold; font-style: italic;}
+.mind_control				{color: #A00D6F; font-size: 100%; font-weight: bold; font-style: italic;}
 .slime					{color: #00CED1;}
 .drone					{color: #848482;}
 .monkey					{color: #975032;}
@@ -426,7 +426,7 @@ h1.alert, h2.alert		{color: #000000;}
 .resonate				{color: #298F85;}
 
 .monkeyhive				{color: #774704;}
-.monkeylead				{color: #774704;	font-size: 2;}
+.monkeylead				{color: #774704;	font-size: 80%;}
 
 .connectionClosed, .fatalError {background: red; color: white; padding: 5px;}
 .connectionClosed.restored {background: green;}

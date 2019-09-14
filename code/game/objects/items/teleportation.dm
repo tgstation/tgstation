@@ -139,7 +139,7 @@
 
 /obj/item/hand_tele/pre_attack(atom/target, mob/user, params)
 	if(try_dispel_portal(target, user))
-		return FALSE
+		return TRUE
 	return ..()
 
 /obj/item/hand_tele/proc/try_dispel_portal(atom/target, mob/user)
