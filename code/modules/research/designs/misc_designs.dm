@@ -409,6 +409,28 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
+/datum/design/knight_armour
+	name = "Knight Armour"
+	desc = "A royal knight's favorite garments. Can be trimmed by any friendly person."
+	id = "knight_armour"
+	build_type = AUTOLATHE
+	materials = list(MAT_CATEGORY_RIGID = 10000)
+	build_path = /obj/item/clothing/suit/armor/riot/knight/greyscale
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ALL //Anyone can be a knight if they try hard enough
+
+/datum/design/knight_helmet
+	name = "Knight Helmet"
+	desc = "A royal knight's favorite hat. If you hold it upside down it's actually a bucket."
+	id = "knight_helmet"
+	build_type = AUTOLATHE
+	materials = list(MAT_CATEGORY_RIGID = 5000)
+	build_path = /obj/item/clothing/head/helmet/knight/greyscale
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ALL //Anyone can be a knight if they try hard enough
+
+
+
 /////////////////////////////////////////
 /////////////Security////////////////////
 /////////////////////////////////////////
