@@ -111,13 +111,13 @@
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/mineral/mint/proc/create_coins(P)
+/obj/machinery/mineral/mint/proc/create_coins(M)
 	var/turf/T = get_step(src,output_dir)
 	if(T)
 		var/obj/item/O = new /obj/item/coin(src)
-		var/obj/item/storage/bag/money/M = locate(/obj/item/storage/bag/money, T)
-		O.set_custom_materials(list(chosen = 400))
-		if(!M)
-			M = new /obj/item/storage/bag/money(src)
+		var/obj/item/storage/bag/money/bag = locate(/obj/item/storage/bag/money, T)
+		O.set_custom_materials(list(M = 400))
+		if(!bag)
+			bag = new /obj/item/storage/bag/money(src)
 			unload_mineral(M)
 		O.forceMove(M)
