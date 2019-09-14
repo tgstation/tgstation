@@ -42,21 +42,7 @@
 	if(reagents && reagents.total_volume)
 		reagents.reaction(hit_atom, TOUCH)
 	if(ishuman(hit_atom))
-		var/mob/living/carbon/human/H = hit_atom
-		var/mutable_appearance/creamoverlay = mutable_appearance('icons/effects/creampie.dmi')
-		if(H.dna.species.limbs_id == "lizard")
-			creamoverlay.icon_state = "creampie_lizard"
-		else
-			creamoverlay.icon_state = "creampie_human"
-		if(stunning)
-			H.Paralyze(20) //splat!
-		H.adjust_blurriness(1)
-		H.visible_message("<span class='warning'>[H] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
-		playsound(H, "desceration", 50, TRUE)
-		if(!H.creamed) // one layer at a time
-			H.add_overlay(creamoverlay)
-			H.creamed = TRUE
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "creampie", /datum/mood_event/creampie)
+		hit_atom.AddComponent(/datum/component/creamed, src, stunning)
 	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/pie/cream/nostun
