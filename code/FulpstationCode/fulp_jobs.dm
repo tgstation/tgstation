@@ -1,9 +1,12 @@
 // Commented out cos it doesnt work atm; intended to be used in sec_hud_sec_id()
 // Leaving here in case I can figure it out, because this would be preferable to the solution I came up with
 
+/*
 /obj/proc/fulp_icon_update()
 	return
+*/
 
+/*
 /obj/item/card/fulp_icon_update()
 	var/icon_holder
 	var/obj/item/card/id/C = src
@@ -15,6 +18,7 @@
 	else
 		icon_holder = 'icons/obj/card.dmi'
 	return icon_holder
+*/	
 
 
 /*

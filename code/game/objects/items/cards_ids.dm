@@ -304,9 +304,9 @@
 	var/job = assignment ? ckey(GetJobName()) : null
 	var/list/add_overlays = list()
 	if(!blank)
-		add_overlays += mutable_appearance(fulp_icon_update(), "assigned") //FULP - switched out 'icon' for proc that returns fulp or tg dmi resectively
+		add_overlays += mutable_appearance(job_icon, "assigned") //FULP - switched out 'icon' for proc that returns fulp or tg dmi resectively
 	if(job)
-		add_overlays += mutable_appearance(fulp_icon_update(), "id[job]") //FULP - ditto
+		add_overlays += mutable_appearance(job_icon, "id[job]") //FULP - ditto
 	add_overlay(add_overlays)
 	update_in_wallet(add_overlays)
 

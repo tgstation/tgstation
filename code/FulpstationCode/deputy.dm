@@ -7,7 +7,7 @@
 	faction = "Station"
 	total_positions = 4 //Kept in for posterity
 	spawn_positions = 4 //ditto
-	supervisors = "the head of security, and the head of your assigned department."
+	supervisors = "the head of security, and the head of your assigned department"
 	selection_color = "#ffeeee"
 	minimal_player_age = 1
 	exp_requirements = 50
@@ -74,6 +74,7 @@
 	belt = /obj/item/pda/security
 	ears = /obj/item/radio/headset/headset_sec
 	uniform = /obj/item/clothing/under/rank/security/mallcop
+	accessory = /obj/item/clothing/accessory/armband/deputy
 	shoes = /obj/item/clothing/shoes/jackboots
 	l_pocket = /obj/item/restraints/handcuffs/cable/zipties
 	r_pocket = /obj/item/assembly/flash/handheld
@@ -109,7 +110,6 @@ GLOBAL_LIST_INIT(available_deputy_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MED
 			department = pick_n_take(GLOB.available_deputy_depts)
 	var/ears = null
 	var/head = null
-	var/accessory = /obj/item/clothing/accessory/armband/deputy
 	var/list/dep_access = null
 	var/destination = null
 	var/spawn_point = null
@@ -139,9 +139,6 @@ GLOBAL_LIST_INIT(available_deputy_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MED
 			destination = /area/security/checkpoint/science
 			spawn_point = get_fulp_spawn(destination)
 
-	if(accessory)
-		var/obj/item/clothing/under/U = H.w_uniform
-		U.attach_accessory(new accessory)
 	if(ears)
 		if(H.ears)
 			qdel(H.ears)
@@ -153,6 +150,9 @@ GLOBAL_LIST_INIT(available_deputy_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MED
 
 	var/obj/item/card/id/W = H.wear_id
 	W.access |= dep_access
+	W.access |= dep_access
+	W.job_icon = 'icons/fulpicons/cards.dmi'
+	W.update_icon()
 
 	var/teleport = 0
 	if(!CONFIG_GET(flag/sec_start_brig))
