@@ -310,6 +310,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	throwforce = 2
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron = 400)
+	material_flags = MATERIAL_ADD_PREFIX
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
 	var/cooldown = 0
@@ -431,6 +432,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/coin/plastic
 	custom_materials = list(/datum/material/plastic = 400)
+
+/obj/item/coin/runite
+	custom_materials = list(/datum/material/runite = 400)
 
 /obj/item/coin/twoheaded
 	desc = "Hey, this coin's the same on both sides!"
