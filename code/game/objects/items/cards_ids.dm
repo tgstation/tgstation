@@ -45,7 +45,7 @@
 	cut_overlays()
 	if(detail_color == COLOR_FLOORTILE_GRAY)
 		return
-	var/mutable_appearance/detail_overlay = mutable_appearance('icons/Fulpicons/icon_mirrors/hud_mirror.dmi', "[icon_state]-color") //FULP - edited icon dmi file location for custom jobs
+	var/mutable_appearance/detail_overlay = mutable_appearance('icons/obj/card.dmi', "[icon_state]-color")
 	detail_overlay.color = detail_color
 	add_overlay(detail_overlay)
 
@@ -304,9 +304,9 @@
 	var/job = assignment ? ckey(GetJobName()) : null
 	var/list/add_overlays = list()
 	if(!blank)
-		add_overlays += mutable_appearance(icon, "assigned")
+		add_overlays += mutable_appearance(fulp_icon_update(), "assigned") //FULP - switched out 'icon' for proc that returns fulp or tg dmi resectively
 	if(job)
-		add_overlays += mutable_appearance(icon, "id[job]")
+		add_overlays += mutable_appearance(fulp_icon_update(), "id[job]") //FULP - ditto
 	add_overlay(add_overlays)
 	update_in_wallet(add_overlays)
 
