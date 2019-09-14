@@ -291,6 +291,7 @@
 	icon_state = "satchel-flat"
 	w_class = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
 	level = 1
+	secret = FALSE
 
 /obj/item/storage/backpack/satchel/flat/ComponentInitialize()
 	. = ..()
@@ -300,15 +301,20 @@
 
 /obj/item/storage/backpack/satchel/flat/hide(intact)
 	if(intact)
-		invisibility = INVISIBILITY_OBSERVER
+		if(secret)
+			invisibility = INVISIBILITY_MAXIMUM
+		else
+			invisibility = INVISIBILITY_OBSERVER
 		anchored = TRUE //otherwise you can start pulling, cover it, and drag around an invisible backpack.
 		icon_state = "[initial(icon_state)]2"
-		ADD_TRAIT(src, TRAIT_T_RAY_VISIBLE, TRAIT_GENERIC)
+		if(!secret)
+			ADD_TRAIT(src, TRAIT_T_RAY_VISIBLE, TRAIT_GENERIC)
 	else
 		invisibility = initial(invisibility)
 		anchored = FALSE
 		icon_state = initial(icon_state)
-		REMOVE_TRAIT(src, TRAIT_T_RAY_VISIBLE, TRAIT_GENERIC)
+		if(!secret)
+			REMOVE_TRAIT(src, TRAIT_T_RAY_VISIBLE, TRAIT_GENERIC)
 
 /obj/item/storage/backpack/satchel/flat/PopulateContents()
 	var/datum/supply_pack/costumes_toys/randomised/contraband/C = new
@@ -326,6 +332,9 @@
 
 /obj/item/storage/backpack/satchel/flat/empty/PopulateContents()
 	return
+
+/obj/item/storage/backpack/satchel/flat/miracle/PopulateContents()
+	new /obj/item/gun/energy/pulse/prize(src)
 
 /obj/item/storage/backpack/duffelbag
 	name = "duffel bag"
