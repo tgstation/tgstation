@@ -72,6 +72,7 @@
 		if ("help")
 			M.visible_message("<span class='notice'>[M] pets [src].</span>", \
 							"<span class='notice'>You pet [src].</span>")
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT_RND, "pet_borg", /datum/mood_event/pet_borg)
 		if("grab")
 			grabbedby(M)
 		else

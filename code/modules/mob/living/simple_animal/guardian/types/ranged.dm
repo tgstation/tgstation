@@ -131,3 +131,8 @@
 	// To stop scout mode from moving when recalled
 	incorporeal_move = FALSE
 	. = ..()
+
+/mob/living/simple_animal/hostile/guardian/ranged/AttackingTarget()
+	if(toggle)
+		return
+	..()

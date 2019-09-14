@@ -21,8 +21,9 @@
 	var/powered = FALSE //if there's a cell in the defib with enough power for a revive, blocks paddles from reviving otherwise
 	var/obj/item/twohanded/shockpaddles/paddles
 	var/obj/item/stock_parts/cell/high/cell
-	var/combat = FALSE //can we revive through space suits?
+	var/combat = FALSE //if true, revive through hardsuits, allow for combat shocking, and tint paddles syndicate colors
 	var/grab_ghost = FALSE // Do we pull the ghost back into their body?
+	var/cooldown_duration = 5 SECONDS//how long does it take to recharge
 
 /obj/item/defibrillator/get_cell()
 	return cell
@@ -192,7 +193,10 @@
 		A.UpdateButtonIcon()
 
 /obj/item/defibrillator/proc/make_paddles()
-	return new /obj/item/twohanded/shockpaddles(src)
+	if(!combat)
+		return new /obj/item/twohanded/shockpaddles(src)
+	return new /obj/item/twohanded/shockpaddles/syndicate(src)
+
 
 /obj/item/defibrillator/equipped(mob/user, slot)
 	..()
@@ -231,7 +235,7 @@
 			return FALSE
 
 /obj/item/defibrillator/proc/cooldowncheck(mob/user)
-	addtimer(CALLBACK(src, .proc/finish_charging), 5 SECONDS)
+		addtimer(CALLBACK(src, .proc/finish_charging), cooldown_duration)
 
 /obj/item/defibrillator/proc/finish_charging()
 	if(cell)
@@ -264,9 +268,12 @@
 
 /obj/item/defibrillator/compact/combat
 	name = "combat defibrillator"
-	desc = "A belt-equipped blood-red defibrillator that can be rapidly deployed. Does not have the restrictions or safeties of conventional defibrillators and can revive through space suits."
+	desc = "A belt-equipped blood-red defibrillator. Can revive through spacesuits, has an experimental self-recharging battery, and can be utilized in combat via applying the paddles in a disarming or agressive manner."
+	icon_state = "defibcombat" //needs defib inhand sprites
+	item_state = "defibcombat"
 	combat = TRUE
 	safety = FALSE
+	cooldown_duration = 2.5 SECONDS
 
 /obj/item/defibrillator/compact/combat/loaded/Initialize()
 	. = ..()
@@ -304,6 +311,7 @@
 	var/combat = FALSE //If it penetrates armor and gives additional functionality
 	var/grab_ghost = FALSE
 	var/tlimit = DEFIB_TIME_LIMIT * 10
+	var/base_icon_state = "defibpaddles"
 
 /obj/item/twohanded/shockpaddles/Destroy()
 	defib = null
@@ -357,10 +365,10 @@
 		update_icon()
 
 /obj/item/twohanded/shockpaddles/update_icon()
-	icon_state = "defibpaddles[wielded]"
-	item_state = "defibpaddles[wielded]"
+	icon_state = "[base_icon_state][wielded]"
+	item_state = icon_state
 	if(cooldown)
-		icon_state = "defibpaddles[wielded]_cooldown"
+		icon_state = "[base_icon_state][wielded]_cooldown"
 	if(iscarbon(loc))
 		var/mob/living/carbon/C = loc
 		C.update_inv_hands()
@@ -676,11 +684,14 @@
 
 /obj/item/twohanded/shockpaddles/syndicate
 	name = "syndicate defibrillator paddles"
-	desc = "A pair of paddles used to revive deceased operatives. It possesses both the ability to penetrate armor and to deliver powerful shocks offensively."
+	desc = "A pair of paddles used to revive deceased operatives. It possesses both the ability to penetrate armor and to deliver powerful or disabling shocks offensively."
 	combat = TRUE
 	icon = 'icons/obj/defib.dmi'
-	icon_state = "defibpaddles0"
-	item_state = "defibpaddles0"
+	icon_state = "syndiepaddles0"
+	item_state = "syndiepaddles0"
+	base_icon_state = "syndiepaddles"
+
+/obj/item/twohanded/shockpaddles/syndicate/cyborg
 	req_defib = FALSE
 
 #undef HALFWAYCRITDEATH

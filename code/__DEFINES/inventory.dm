@@ -156,6 +156,7 @@
 #define HEADCOVERSEYES		(1<<2)		// feel free to realloc these numbers for other purposes
 #define MASKCOVERSMOUTH		(1<<3)		// on other items, these are just for mask/head
 #define HEADCOVERSMOUTH		(1<<4)
+#define PEPPERPROOF			(1<<5)	//protects against pepperspray
 
 #define TINT_DARKENED 2			//Threshold of tint level to apply weld mask overlay
 #define TINT_BLIND 3			//Threshold of tint level to obscure vision fully

@@ -1,5 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - tweak: "HoP can now delete the latest ticket"
-  - bugfix: "HoP ticket messages should now be visible when the ticket is held"
