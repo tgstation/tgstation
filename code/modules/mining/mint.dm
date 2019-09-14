@@ -111,7 +111,8 @@
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/mineral/mint/proc/create_coins(M)
+/obj/machinery/mineral/mint/proc/create_coins(material)
+	var/datum/material/M = material
 	var/turf/T = get_step(src,output_dir)
 	if(T)
 		var/obj/item/O = new /obj/item/coin(src)
@@ -119,5 +120,5 @@
 		O.set_custom_materials(list(M = 400))
 		if(!bag)
 			bag = new /obj/item/storage/bag/money(src)
-			unload_mineral(M)
+			unload_mineral(bag)
 		O.forceMove(M)
