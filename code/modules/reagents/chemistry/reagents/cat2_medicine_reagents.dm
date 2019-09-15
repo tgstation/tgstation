@@ -30,18 +30,34 @@
 	..()
 	return TRUE
 
+#define	LIBITAL_STAMINA_RATIO 0.5		//# Brute damage needed for each unit of Stamina loss
+#define	LIBITAL_NUTRITION_RATIO 0.33	//# Brute damage needed for each unit of nutrition loss
+#define	LIBITAL_MIN_VALUE 0.5		//# Min value that brutecalc can be
+
 /datum/reagent/medicine/C2/libital //messes with your liber
 	name = "Libital"
-	description = "A bruise reliever. Does minor liver damage."
+	description = "A bruise reliever. Heavily utilizes nutrition and drains stamina to remove brute damage. Causes toxin damage if administered to starving patient."
 	color = "#ECEC8D" // rgb: 236	236	141
 	taste_description = "bitter with a hint of alcohol"
 	reagent_state = SOLID
 
 /datum/reagent/medicine/C2/libital/on_mob_life(mob/living/carbon/M)
-	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.3*REM)
-	M.adjustBruteLoss(-3*REM)
+	var/brutecalc = 3*REM
+	brutecalc = min(brutecalc,M.getBruteLoss() + LIBITAL_MIN_VALUE) //Only heal damage the target actually has.
+	M.adjustBruteLoss(-brutecalc)
+	M.adjustStaminaLoss(brutecalc/LIBITAL_STAMINA_RATIO, 0)
+	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
+		M.adjustToxLoss(brutecalc/LIBITAL_NUTRITION_RATIO, 0)
+	M.adjust_nutrition(-brutecalc/LIBITAL_NUTRITION_RATIO)
+	M.overeatduration = 0
+	if(overdosed) //Damage the liver if overdosed
+		M.adjustOrganLoss(ORGAN_SLOT_LIVER, brutecalc)
 	..()
 	return TRUE
+
+#undef	LIBITAL_STAMINA_RATIO
+#undef	LIBITAL_NUTRITION_RATIO
+#undef	LIBITAL_MIN_VALUE
 
 /******BURN******/
 /*Suffix: -uri*/
@@ -67,19 +83,37 @@
 	..()
 	return TRUE
 
+#define	AIURI_STAMINA_RATIO 0.25		//# Burn damage needed for each unit of Stamina loss
+#define	AIURI_NUTRITION_RATIO 0.66		//# Burn damage needed for each unit of Nutrition loss
+#define	AIURI_MIN_VALUE 0.5		//# Min value that burncalc can be
+
 /datum/reagent/medicine/C2/aiuri
 	name = "Aiuri"
-	description = "Used to treat burns. Does minor eye damage."
+	description = "Used to treat burns. Utilizes nutrition and heavily drains stamina when healing burns. Causes toxin damage if administered to starving patient. Painful."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	var/resetting_probability = 0
 	var/message_cd = 0
 
 /datum/reagent/medicine/C2/aiuri/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss(-2*REM)
-	M.adjustOrganLoss(ORGAN_SLOT_EYES,0.25*REM)
+	var/burncalc = 2*REM
+	burncalc = min(burncalc,M.getFireLoss() + AIURI_MIN_VALUE) //Only heal damage the target actually has.
+	M.adjustFireLoss(-burncalc)
+	M.adjustStaminaLoss(burncalc/AIURI_STAMINA_RATIO, 0)
+	if(burncalc > AIURI_MIN_VALUE)
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
+	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
+		M.adjustToxLoss(burncalc/AIURI_NUTRITION_RATIO, 0)
+	M.adjust_nutrition(-burncalc/AIURI_NUTRITION_RATIO)
+	M.overeatduration = 0
+	if(overdosed) //Damage the liver if overdosed
+		M.adjustOrganLoss(ORGAN_SLOT_EYES, burncalc)
 	..()
 	return TRUE
+
+#undef	AIURI_STAMINA_RATIO
+#undef	AIURI_NUTRITION_RATIO
+#undef	AIURI_MIN_VALUE
 
 /******OXY******/
 /*Suffix: -mol*/
@@ -173,23 +207,38 @@
 	..()
 	return TRUE
 
+#define	MULTIVER_STAMINA_RATIO 0.33		//# Tox damage needed for each unit of Stamina loss
+#define	MULTIVER_NUTRITION_RATIO 0.5		//# Tox damage needed for each unit of Nutrition loss
+#define	MULTIVER_MIN_VALUE 0.5		//# Min value that toxcalc can be
 
 /datum/reagent/medicine/C2/multiver //amplified with MULTIple medicines
 	name = "Multiver"
-	description = "An antitoxin that scales with the more unique medicines in the body as well as purges chems (including itself). Causes lung damage."
+	description = "An antitoxin that scales with the more unique medicines in the body as well as purges chems (including itself). Drains stamina and nutrition in proportion to damage healed."
 
 /datum/reagent/medicine/C2/multiver/on_mob_life(mob/living/carbon/human/M)
 	var/medibonus = 0 //it will always have itself which makes it REALLY start @ 1
+	var/toxcalc = 0
 	for(var/r in M.reagents.reagent_list)
 		var/datum/reagent/the_reagent = r
 		if(istype(the_reagent, /datum/reagent/medicine))
 			medibonus += 1
-	M.adjustToxLoss(-0.5 * medibonus)
-	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, medibonus)
+	toxcalc = min(MULTIVER_MIN_VALUE * medibonus, M.getToxLoss() + MULTIVER_MIN_VALUE) //Only heal damage the target actually has.
+	M.adjustToxLoss(-toxcalc)
+	M.adjustStaminaLoss(toxcalc/MULTIVER_STAMINA_RATIO, 0)
+	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
+		M.adjustToxLoss(toxcalc/MULTIVER_NUTRITION_RATIO, 0)
+	M.adjust_nutrition(-toxcalc/MULTIVER_NUTRITION_RATIO)
+	M.overeatduration = 0
+	if(overdosed) //Damage the lungs if overdosed
+		M.adjustOrganLoss(ORGAN_SLOT_LUNGS, toxcalc)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
-		M.reagents.remove_reagent(R.type, medibonus*0.5)
+		M.reagents.remove_reagent(R.type, toxcalc)
 	..()
 	return TRUE
+
+#undef	MULTIVER_STAMINA_RATIO
+#undef	MULTIVER_NUTRITION_RATIO
+#undef	MULTIVER_MIN_VALUE
 
 /datum/reagent/medicine/C2/syriniver //Inject >> SYRINge
 	name = "Syriniver"
