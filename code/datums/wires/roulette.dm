@@ -15,15 +15,15 @@
 /datum/wires/roulette/interactable(mob/user)
 	. = FALSE
 	var/obj/machinery/roulette/R = holder
-	if(R.stat & MAINT && R.my_card)
+	if(R.stat & MAINT)
 		. = TRUE
 
-/datum/wires/airlock/get_status()
+/datum/wires/roulette/get_status()
 	var/obj/machinery/roulette/R = holder
 	var/list/status = list()
-	status += "The machines bolts [R.anchored ? "look up." : "have fallen!"]"
+	status += "The machines bolts [R.anchored ? "have fallen!" : "look up."]"
 	status += "The main circuit is [R.stat & NOPOWER ? "off" : "on"]."
-	status += "The main system lock appears [R.locked ? "on" : "off"]."
+	status += "The main system lock appears to be [R.locked ? "on" : "off"]."
 	status += "The account balance system appears to be [R.my_card ? "connected to [R.my_card.registered_account.account_holder]" : "disconnected"]."
 	return status
 

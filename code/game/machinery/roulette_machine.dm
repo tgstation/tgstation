@@ -52,6 +52,8 @@
 	. = ..()
 
 /obj/machinery/roulette/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	if(stat & MAINT)
+		return
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/roulette)
@@ -111,6 +113,9 @@
 
 ///Handles setting ownership and the betting itself.
 /obj/machinery/roulette/attackby(obj/item/W, mob/user, params)
+	if(stat & MAINT && is_wire_tool(W))
+		wires.interact(user)
+		return
 	if(playing)
 		return
 	if(stat & MAINT || stat & NOPOWER || locked)
@@ -154,7 +159,7 @@
 /obj/machinery/roulette/proc/play(mob/user, obj/item/card/id/player_id, bet_type, bet_amount, potential_payout)
 	if(last_anti_spam > world.time) //do not cheat me
 		return FALSE
-		
+
 	last_anti_spam = world.time + anti_spam_cooldown
 
 	var/payout = potential_payout
