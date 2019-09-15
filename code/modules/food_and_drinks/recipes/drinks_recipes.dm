@@ -785,5 +785,5 @@
 /datum/chemical_reaction/mauna_loa
 	name = "Mauna Loa"
 	id = /datum/reagent/consumable/ethanol/mauna_loa
-	results = list(/datum/reagent/consumable/ethanol/patron = 25)
+	results = list(/datum/reagent/consumable/ethanol/mauna_loa = 25)
 	required_reagents = list(/datum/reagent/consumable/capsaicin = 10, /datum/reagent/consumable/ethanol/kahlua = 5, /datum/reagent/consumable/ethanol/bahama_mama = 10)
