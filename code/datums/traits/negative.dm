@@ -553,7 +553,7 @@
 /datum/quirk/phobia
 	name = "Phobia"
 	desc = "You are irrationally afraid of something."
-	value = 0
+	value = -1
 	medical_record_text = "Patient has an irrational fear of something."
 	
 /datum/quirk/phobia/add()
