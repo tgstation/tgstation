@@ -2110,4 +2110,3 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if (prob(1))
 		M.IgniteMob()
 	..()
-	..()
