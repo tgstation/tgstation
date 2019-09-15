@@ -300,8 +300,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				for(var/variable in configuration["Dynamic"]) 
 					if(!vars[variable])
 						stack_trace("Invalid dynamic configuration variable [variable] in game mode variable changes.")
+						continue
 					vars[variable] = configuration["dynamic"][variable]
-					
+
 	for (var/rule in subtypesof(/datum/dynamic_ruleset))
 		var/datum/dynamic_ruleset/ruleset = new rule()
 		// Simple check if the ruleset should be added to the lists.
@@ -324,6 +325,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			for(var/variable in rule_conf)
 				if(!ruleset.vars[variable])
 					stack_trace("Invalid dynamic configuration variable [variable] in [ruleset.ruletype] [ruleset.name].")
+					continue
 				ruleset.vars[variable] = rule_conf[variable]
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
