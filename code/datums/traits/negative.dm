@@ -549,18 +549,3 @@
 	gain_text = "<span class='danger'>There's a lot on your mind right now.</span>"
 	lose_text = "<span class='notice'>Your mind finally feels calm.</span>"
 	medical_record_text = "Patient's mind is in a vulnerable state, and cannot recover from traumatic events."
-
-/datum/quirk/phobia
-	name = "Phobia"
-	desc = "You are irrationally afraid of something."
-	value = 0
-	medical_record_text = "Patient has an irrational fear of something."
-	
-/datum/quirk/phobia/add()
-	var/mob/living/carbon/human/H = quirk_holder
-	H.gain_trauma(new /datum/brain_trauma/mild/phobia(H.client.prefs.phobia), TRAUMA_RESILIENCE_ABSOLUTE)
-	
-/datum/quirk/phobia/remove()
-	var/mob/living/carbon/human/H = quirk_holder
-	if(H)
-		H.cure_trauma_type(/datum/brain_trauma/mild/phobia, TRAUMA_RESILIENCE_ABSOLUTE)
