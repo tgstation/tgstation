@@ -823,6 +823,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(loaded_items >= max_loaded_items)
 		say("There are too many items in stock.")
 		return
+	if(istype(I, /obj/item/stack))
+		say("Loose items may cause problems, try use it inside wrapping paper.")
+		return
 	if(I.custom_price)
 		return TRUE
 
@@ -831,7 +834,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	///what we are selling
 	var/obj/S
 
-	if((href_list["dispense"]) && (vend_ready))
+	if(href_list["dispense"] && vend_ready)
 		var/N = href_list["dispense"]
 		vend_ready = 0
 		if(ishuman(usr))
@@ -853,23 +856,26 @@ GLOBAL_LIST_EMPTY(vending_products)
 				if(O.name == N)
 					S = O
 					break
-			if(!account.has_money(S.custom_price))
-				say("You do not possess the funds to purchase this.")
-			else
-				account.adjust_money(-S.custom_price)
-				var/datum/bank_account/owner = private_a
-				if(owner)
-					owner.adjust_money(S.custom_price)
-				use_power(5)
-				vending_machine_input[N] = max(vending_machine_input[N] - 1, 0)
-				if(last_shopper != usr || purchase_message_cooldown < world.time)
-					say("Thank you for buying local and purchasing [S]!")
-					purchase_message_cooldown = world.time + 5 SECONDS
-					last_shopper = usr
-				S.forceMove(drop_location())
-				loaded_items--
-				vend_ready = 1
-	updateUsrDialog()
+			if(S)
+				if(!account.has_money(S.custom_price))
+					say("You do not possess the funds to purchase this.")
+					vend_ready = 1
+					return
+				else
+					account.adjust_money(-S.custom_price)
+					var/datum/bank_account/owner = private_a
+					if(owner)
+						owner.adjust_money(S.custom_price)
+					vending_machine_input[N] = max(vending_machine_input[N] - 1, 0)
+					if(last_shopper != usr || purchase_message_cooldown < world.time)
+						say("Thank you for buying local and purchasing [S]!")
+						purchase_message_cooldown = world.time + 5 SECONDS
+						last_shopper = usr
+					S.forceMove(drop_location())
+					loaded_items--
+					use_power(5)
+		vend_ready = 1
+		updateUsrDialog()
 
 /obj/machinery/vending/custom/ui_interact(mob/user)
 	var/list/dat = list()
