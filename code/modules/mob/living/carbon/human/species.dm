@@ -1166,7 +1166,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					. += hungry / 50
 			else if(isethereal(H))
 				var/datum/species/ethereal/E = H.dna.species
-				var/charge = E.get_charge()
+				var/charge = E.get_charge(H)
 				if(charge <= ETHEREAL_CHARGE_NORMAL)
 					. += 1.5 * (1 - charge / 100)
 
