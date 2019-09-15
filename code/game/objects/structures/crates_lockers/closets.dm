@@ -384,23 +384,23 @@
 	if(!welded && !locked)
 		open()
 		return
-
-	//okay, so the closet is either welded or locked... resist!!!
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user.visible_message("<span class='warning'>[src] begins to shake violently!</span>", \
-		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='italics'>You hear banging from [src].</span>")
-	if(do_after(user,(breakout_time), target = src))
-		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded) )
-			return
-		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
-		user.visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>",
-							"<span class='notice'>You successfully break out of [src]!</span>")
-		bust_open()
-	else
-		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
-			to_chat(user, "<span class='warning'>You fail to break out of [src]!</span>")
+	if(world.time > user.last_special)
+		//okay, so the closet is either welded or locked... resist!!!
+		user.changeNext_move(CLICK_CD_BREAKOUT)
+		user.last_special = world.time + CLICK_CD_BREAKOUT
+		user.visible_message("<span class='warning'>[src] begins to shake violently!</span>", \
+			"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
+			"<span class='italics'>You hear banging from [src].</span>")
+		if(do_after(user,(breakout_time), target = src))
+			if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded) )
+				return
+			//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
+			user.visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>",
+								"<span class='notice'>You successfully break out of [src]!</span>")
+			bust_open()
+		else
+			if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
+				to_chat(user, "<span class='warning'>You fail to break out of [src]!</span>")
 
 /obj/structure/closet/proc/bust_open()
 	welded = FALSE //applies to all lockers
