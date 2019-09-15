@@ -54,8 +54,3 @@
 
 	chameleon_extras = /obj/item/gun/ballistic/shotgun/automatic/combat/compact
 
-/datum/outfit/job/warden/pre_equip(mob/living/carbon/human/H)
-	. = ..()
-	if(isplasmaman(H))
-		box = /obj/item/storage/box/security_plasma
-

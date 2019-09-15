@@ -52,11 +52,6 @@
 	pda_slot = SLOT_L_STORE
 	chameleon_extras = /obj/item/stamp/ce
 
-/datum/outfit/job/ce/pre_equip(mob/living/carbon/human/H)
-	. = ..()
-	if(isplasmaman(H))
-		box = /obj/item/storage/box/survival_plasma
-
 /datum/outfit/job/ce/rig
 	name = "Chief Engineer (Hardsuit)"
 

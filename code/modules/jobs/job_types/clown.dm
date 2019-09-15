@@ -46,14 +46,9 @@
 	satchel = /obj/item/storage/backpack/clown
 	duffelbag = /obj/item/storage/backpack/duffelbag/clown //strangely has a duffel
 
-	box = /obj/item/storage/box/hug/survival_plasma
+	box = /obj/item/storage/box/hug/survival
 
 	chameleon_extras = /obj/item/stamp/clown
-
-/datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H)
-	. = ..()
-	if(isplasmaman(H))
-		box = /obj/item/storage/box/security_plasma
 
 /datum/outfit/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()

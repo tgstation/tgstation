@@ -59,11 +59,6 @@
 
 	chameleon_extras = list(/obj/item/gun/energy/e_gun/hos, /obj/item/stamp/hos)
 
-/datum/outfit/job/hos/pre_equip(mob/living/carbon/human/H)
-	. = ..()
-	if(isplasmaman(H))
-		box = /obj/item/storage/box/security_plasma
-
 /datum/outfit/job/hos/hardsuit
 	name = "Head of Security (Hardsuit)"
 

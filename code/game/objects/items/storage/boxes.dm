@@ -127,25 +127,13 @@
 	new /obj/item/tank/internals/emergency_oxygen(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 
-/obj/item/storage/box/survival_plasma/PopulateContents()
-	new /obj/item/clothing/mask/breath(src)
-	new /obj/item/tank/internals/plasmaman/belt(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
-
 /obj/item/storage/box/survival/radio/PopulateContents()
 	..() // we want the survival stuff too.
 	new /obj/item/radio/off(src)
 
-// Mining survival box
 /obj/item/storage/box/survival_mining/PopulateContents()
 	new /obj/item/clothing/mask/gas/explorer(src)
 	new /obj/item/tank/internals/emergency_oxygen(src)
-	new /obj/item/crowbar/red(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
-
-/obj/item/storage/box/survival_mining_plasma/PopulateContents()
-	new /obj/item/clothing/mask/gas/explorer(src)
-	new /obj/item/tank/internals/plasmaman/belt(src)
 	new /obj/item/crowbar/red(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 
@@ -164,20 +152,11 @@
 /obj/item/storage/box/syndie/PopulateContents()
 	new /obj/item/clothing/mask/gas/syndicate(src)
 	new /obj/item/tank/internals/emergency_oxygen/engi(src)
-	
-/obj/item/storage/box/syndie_plasma/PopulateContents()
-	new /obj/item/clothing/mask/gas/syndicate(src)
-	new /obj/item/tank/internals/plasmaman/belt(src)
 
 // Security survival box
 /obj/item/storage/box/security/PopulateContents()
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/tank/internals/emergency_oxygen(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
-
-/obj/item/storage/box/security_plasma/PopulateContents()
-	new /obj/item/clothing/mask/gas/sechailer(src)
-	new /obj/item/tank/internals/plasmaman/belt(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 
 /obj/item/storage/box/security/radio/PopulateContents()
@@ -771,15 +750,9 @@
 	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 
-// Clown survival box
 /obj/item/storage/box/hug/survival/PopulateContents()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/tank/internals/emergency_oxygen(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
-
-/obj/item/storage/box/hug/survival_plasma/PopulateContents()
-	new /obj/item/clothing/mask/breath(src)
-	new /obj/item/tank/internals/plasmaman/belt(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 
 /obj/item/storage/box/rubbershot

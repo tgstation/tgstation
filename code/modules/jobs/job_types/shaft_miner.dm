@@ -57,11 +57,6 @@
 		/obj/item/gun/energy/kinetic_accelerator=1,\
 		/obj/item/stack/marker_beacon/ten=1)
 
-/datum/outfit/job/miner/pre_equip(mob/living/carbon/human/H)
-	. = ..()
-	if(isplasmaman(H))
-		box = /obj/item/storage/box/survival_mining_plasma
-
 /datum/outfit/job/miner/equipped/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 	if(visualsOnly)
