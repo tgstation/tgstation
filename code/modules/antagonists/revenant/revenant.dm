@@ -39,6 +39,7 @@
 	maxbodytemp = INFINITY
 	harm_intent_damage = 0
 	friendly = "touches"
+	friendly2 = "touch"
 	status_flags = 0
 	wander = FALSE
 	density = FALSE

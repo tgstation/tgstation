@@ -15,6 +15,7 @@
 	melee_damage_lower = 12
 	melee_damage_upper = 12
 	attacktext = "slashes"
+	attacktext2 = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	weather_immunities = list("lava")
 	movement_type = FLYING
@@ -53,6 +54,7 @@
 		melee_damage_upper = 25
 		melee_damage_lower = 25
 		attacktext = "devastates"
+		attacktext2 = "devastate"
 		speed = -1
 		obj_damage = 100
 		max_shield_health = INFINITY
@@ -60,6 +62,7 @@
 		melee_damage_upper = 15
 		melee_damage_lower = 15
 		attacktext = "carves"
+		attacktext2 = "carve"
 		obj_damage = 50
 		max_shield_health = 4
 

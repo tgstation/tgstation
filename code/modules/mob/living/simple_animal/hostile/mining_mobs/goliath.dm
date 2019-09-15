@@ -14,6 +14,7 @@
 	ranged = 1
 	ranged_cooldown_time = 120
 	friendly = "wails at"
+	friendly2 = "wail at"
 	speak_emote = list("bellows")
 	vision_range = 4
 	speed = 3
@@ -24,6 +25,7 @@
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	attacktext = "pulverizes"
+	attacktext2 = "pulverize"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	throw_message = "does nothing to the rocky hide of the"
 	vision_range = 5

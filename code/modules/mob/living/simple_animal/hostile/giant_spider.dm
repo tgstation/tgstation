@@ -43,6 +43,7 @@
 	move_to_delay = 6
 	ventcrawler = VENTCRAWLER_ALWAYS
 	attacktext = "bites"
+	attacktext2 = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	unique_name = 1
 	gold_core_spawnable = HOSTILE_SPAWN

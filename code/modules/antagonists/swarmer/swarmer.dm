@@ -82,8 +82,10 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	attacktext = "shocks"
+	attacktext2 = "shock"
 	attack_sound = 'sound/effects/empulse.ogg'
 	friendly = "pinches"
+	friendly2 = "pinch"
 	speed = 0
 	faction = list("swarmer")
 	AIStatus = AI_OFF

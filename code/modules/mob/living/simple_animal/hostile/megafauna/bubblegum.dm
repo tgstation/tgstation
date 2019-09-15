@@ -33,11 +33,13 @@ Difficulty: Hard
 	health = 2500
 	maxHealth = 2500
 	attacktext = "rends"
+	attacktext2 = "rend"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	icon_state = "bubblegum"
 	icon_living = "bubblegum"
 	icon_dead = ""
 	friendly = "stares down"
+	friendly2 = "stare down"
 	icon = 'icons/mob/lavaland/96x96megafauna.dmi'
 	speak_emote = list("gurgles")
 	armour_penetration = 40

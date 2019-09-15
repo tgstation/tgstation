@@ -25,6 +25,7 @@
 	melee_damage_lower = 12
 	melee_damage_upper = 12
 	attacktext = "bites into"
+	attacktext2 = "bite into"
 	a_intent = INTENT_HARM
 	speak_emote = list("chitters")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
@@ -72,6 +73,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attacktext = "impales"
+	attacktext2 = "impale"
 	a_intent = INTENT_HARM
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/bladeslice.ogg'

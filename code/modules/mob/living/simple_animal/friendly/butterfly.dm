@@ -13,6 +13,7 @@
 	health = 2
 	harm_intent_damage = 1
 	friendly = "nudges"
+	friendly2 = "nudge"
 	density = FALSE
 	movement_type = FLYING
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB

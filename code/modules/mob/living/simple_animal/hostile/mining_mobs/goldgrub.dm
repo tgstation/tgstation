@@ -13,12 +13,14 @@
 	aggro_vision_range = 9
 	move_to_delay = 5
 	friendly = "harmlessly rolls into"
+	friendly2 = "harmlessly roll into"
 	maxHealth = 45
 	health = 45
 	harm_intent_damage = 5
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	attacktext = "barrels into"
+	attacktext2 = "barrel into"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	a_intent = INTENT_HELP
 	speak_emote = list("screeches")

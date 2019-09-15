@@ -9,6 +9,7 @@
 /mob/living/simple_animal/hostile/guardian/ranged
 	a_intent = INTENT_HELP
 	friendly = "quietly assesses"
+	friendly2 = "quietly assess"
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	damage_coeff = list(BRUTE = 0.9, BURN = 0.9, TOX = 0.9, CLONE = 0.9, STAMINA = 0, OXY = 0.9)
@@ -131,8 +132,3 @@
 	// To stop scout mode from moving when recalled
 	incorporeal_move = FALSE
 	. = ..()
-
-/mob/living/simple_animal/hostile/guardian/ranged/AttackingTarget()
-	if(toggle)
-		return
-	..()

@@ -20,6 +20,7 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 25
 	attacktext = "blinks at"
+	attacktext2 = "blink at"
 	attack_sound = 'sound/weapons/pierce.ogg'
 	movement_type = FLYING
 

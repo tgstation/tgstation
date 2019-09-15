@@ -36,12 +36,14 @@ Difficulty: Medium
 	health = 2500
 	maxHealth = 2500
 	attacktext = "chomps"
+	attacktext2 = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
 	icon_state = "dragon"
 	icon_living = "dragon"
 	icon_dead = "dragon_dead"
 	friendly = "stares down"
+	friendly2 = "stare down"
 	speak_emote = list("roars")
 	armour_penetration = 40
 	melee_damage_lower = 40

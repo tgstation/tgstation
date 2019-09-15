@@ -25,6 +25,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attacktext = "grips"
+	attacktext2 = "grip"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	speak_emote = list("growls")
 

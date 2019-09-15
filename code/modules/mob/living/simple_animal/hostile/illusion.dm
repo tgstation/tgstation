@@ -11,6 +11,7 @@
 	melee_damage_upper = 5
 	a_intent = INTENT_HARM
 	attacktext = "gores"
+	attacktext2 = "gore"
 	maxHealth = 100
 	health = 100
 	speed = 0

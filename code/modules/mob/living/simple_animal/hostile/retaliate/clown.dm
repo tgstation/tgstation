@@ -21,7 +21,6 @@
 	harm_intent_damage = 8
 	melee_damage_lower = 10
 	melee_damage_upper = 10
-	attacktext = "attacks"
 	attack_sound = 'sound/items/bikehorn.ogg'
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
@@ -105,6 +104,7 @@
 	melee_damage_lower = 1
 	melee_damage_upper = 1
 	attacktext = "cheers up"
+	attacktext2 = "cheer up"
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/item/soap, /obj/item/seeds/banana/bluespace)
 	banana_type = /obj/item/grown/bananapeel
 	attack_reagent = /datum/reagent/consumable/laughter
@@ -127,6 +127,7 @@
 	speed = -5
 	melee_damage_upper = 15
 	attacktext = "limply slaps"
+	attacktext2 = "limply slap"
 	obj_damage = 5
 	loot = list(/obj/item/clothing/suit/hooded/bloated_human, /obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/item/soap)
 
@@ -150,6 +151,7 @@
 	harm_intent_damage = 5
 	melee_damage_lower = 5
 	attacktext = "YA-HONKs"
+	attacktext2 = "YA-HONK"
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/item/soap)
 
 /mob/living/simple_animal/hostile/retaliate/clown/clownhulk
@@ -172,6 +174,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	attacktext = "pummels"
+	attacktext2 = "pummel"
 	obj_damage = 30
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/item/soap)
@@ -191,6 +194,7 @@
 	speed = -2
 	armour_penetration = 20
 	attacktext = "steals the girlfriend of"
+	attacktext2 = "steal the girlfriend of"
 	attack_sound = 'sound/items/airhorn2.ogg'
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/effect/particle_effect/foam, /obj/item/soap)
 
@@ -211,6 +215,7 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 10
 	attacktext = "ferociously mauls"
+	attacktext2 = "ferociously maul"
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/xeno/bodypartless, /obj/effect/particle_effect/foam, /obj/item/soap)
 	attack_reagent = /datum/reagent/peaceborg/confuse
@@ -232,6 +237,7 @@
 	armour_penetration = 30
 	stat_attack = UNCONSCIOUS
 	attacktext = "acts out divine vengeance on"
+	attacktext2 = "act out divine vengeance on"
 	obj_damage = 50
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/effect/particle_effect/foam, /obj/item/soap)
@@ -257,6 +263,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 20
 	attacktext = "awkwardly flails at"
+	attacktext2 = "awkwardly flail at"
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/xeno/bodypartless, /obj/item/soap, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless, /obj/effect/gibspawner/human)
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/blob
@@ -270,5 +277,6 @@
 	mob_size = MOB_SIZE_LARGE
 	speed = 20
 	attacktext = "bounces off of"
+	attacktext2 = "bounce off of"
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/xeno/bodypartless, /obj/effect/particle_effect/foam, /obj/item/soap, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless, /obj/effect/gibspawner/human)
 	attack_reagent = /datum/reagent/toxin/mindbreaker

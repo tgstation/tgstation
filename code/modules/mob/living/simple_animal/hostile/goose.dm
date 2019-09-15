@@ -22,6 +22,7 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	attacktext = "pecks"
+	attacktext2 = "peck"
 	attack_sound = "goose"
 	speak_emote = list("honks")
 	faction = list("neutral")

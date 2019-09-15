@@ -28,6 +28,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	attacktext = "punches"
+	attacktext2 = "punch"
 	maxHealth = INFINITY //The spirit itself is invincible
 	health = INFINITY
 	healable = FALSE //don't brusepack the guardian
@@ -111,6 +112,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		desc = "A mysterious fish that stands by its charge, ever vigilant."
 
 		attacktext = "bites"
+		attacktext2 = "bite"
 		attack_sound = 'sound/weapons/bite.ogg'
 
 

@@ -28,8 +28,10 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 30
 	attacktext = "claws"
+	attacktext2 = "claw"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	friendly = "bear hugs"
+	friendly2 = "bear hug"
 
 	//Space bears aren't affected by cold.
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -98,27 +100,3 @@
 		A.update_icons()
 		to_chat(user, "<span class='info'>You strap the armor plating to [A] and sharpen [A.p_their()] claws with the nail filer. This was a great idea.</span>")
 		qdel(src)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

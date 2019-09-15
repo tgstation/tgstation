@@ -20,6 +20,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attacktext = "slashes at"
+	attacktext2 = "slash at"
 	attack_sound = 'sound/weapons/circsawhit.ogg'
 	a_intent = INTENT_HARM
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID

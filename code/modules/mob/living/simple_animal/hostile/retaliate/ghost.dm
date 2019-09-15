@@ -21,6 +21,7 @@
 	del_on_death = 1
 	emote_see = list("weeps silently", "groans", "mumbles")
 	attacktext = "grips"
+	attacktext2 = "grip"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	speak_emote = list("weeps")
 	deathmessage = "wails, disintegrating into a pile of ectoplasm!"

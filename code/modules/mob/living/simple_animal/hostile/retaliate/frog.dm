@@ -14,6 +14,7 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	attacktext = "bites"
+	attacktext2 = "bite"
 	response_help  = "pets"
 	response_disarm = "pokes"
 	response_harm   = "splats"

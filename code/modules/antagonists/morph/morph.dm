@@ -29,6 +29,7 @@
 	vision_range = 1 // Only attack when target is close
 	wander = FALSE
 	attacktext = "glomps"
+	attacktext2 = "glomp"
 	attack_sound = 'sound/effects/blobattack.ogg'
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2)
 

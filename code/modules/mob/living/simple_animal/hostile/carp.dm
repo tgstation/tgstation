@@ -27,6 +27,7 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	attacktext = "bites"
+	attacktext2 = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	speak_emote = list("gnashes")
 

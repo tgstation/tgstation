@@ -25,6 +25,7 @@
 	obj_damage = 20
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	attacktext = "pummels"
+	attacktext2 = "pummel"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	dextrous = TRUE
 	held_items = list(null, null)
@@ -107,4 +108,3 @@
 	if(oogas >= rand(2,6))
 		playsound(src, 'sound/creatures/gorilla.ogg', 50)
 		oogas = 0
-

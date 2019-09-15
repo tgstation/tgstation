@@ -86,6 +86,7 @@
 	obj_damage = 20
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	attacktext = "hits"
+	attacktext2 = "hit"
 	attack_sound = 'sound/weapons/genhit1.ogg'
 	movement_type = FLYING
 	del_on_death = 1
@@ -205,6 +206,7 @@
 	melee_damage_upper = 20
 	obj_damage = 60
 	attacktext = "slams"
+	attacktext2 = "slam"
 	attack_sound = 'sound/effects/blobattack.ogg'
 	verb_say = "gurgles"
 	verb_ask = "demands"

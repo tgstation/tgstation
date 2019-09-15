@@ -20,6 +20,7 @@
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	attacktext = "slashes"
+	attacktext2 = "slash"
 	speak_emote = list("hisses")
 	bubble_icon = "alien"
 	a_intent = INTENT_HARM
@@ -159,6 +160,7 @@
 	melee_damage_upper = 0
 	a_intent = INTENT_HELP
 	friendly = "caresses"
+	friendly2 = "caress"
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	gold_core_spawnable = HOSTILE_SPAWN

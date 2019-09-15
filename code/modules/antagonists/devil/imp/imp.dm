@@ -24,6 +24,7 @@
 	maxbodytemp = INFINITY
 	faction = list("hell")
 	attacktext = "wildly tears into"
+	attacktext2 = "wildly tear into"
 	maxHealth = 200
 	health = 200
 	healable = 0

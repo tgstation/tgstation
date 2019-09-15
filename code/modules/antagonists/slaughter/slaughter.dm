@@ -25,6 +25,7 @@
 	maxbodytemp = INFINITY
 	faction = list("slaughter")
 	attacktext = "wildly tears into"
+	attacktext2 = "wildly tear into"
 	maxHealth = 200
 	health = 200
 	healable = 0
@@ -117,6 +118,7 @@
 	emote_hear = list("guffaws","laughs")
 	response_help  = "hugs"
 	attacktext = "wildly tickles"
+	attacktext2 = "wildly tickle"
 
 	attack_sound = 'sound/items/bikehorn.ogg'
 	feast_sound = 'sound/spookoween/scary_horn2.ogg'

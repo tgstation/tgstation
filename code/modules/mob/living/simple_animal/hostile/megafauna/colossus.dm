@@ -27,11 +27,13 @@ Difficulty: Very Hard
 	health = 2500
 	maxHealth = 2500
 	attacktext = "judges"
+	attacktext2 = "judge"
 	attack_sound = 'sound/magic/clockwork/ratvar_attack.ogg'
 	icon_state = "eva"
 	icon_living = "eva"
 	icon_dead = ""
 	friendly = "stares down"
+	friendly2 = "stare down"
 	icon = 'icons/mob/lavaland/96x96megafauna.dmi'
 	speak_emote = list("roars")
 	armour_penetration = 40
@@ -638,6 +640,7 @@ Difficulty: Very Hard
 	health = 2
 	harm_intent_damage = 1
 	friendly = "mends"
+	friendly2 = "mend"
 	density = FALSE
 	movement_type = FLYING
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB

@@ -56,7 +56,9 @@
 	stop_automated_movement = 1
 	a_intent = INTENT_HARM //parrots now start "aggressive" since only player parrots will nuzzle.
 	attacktext = "chomps"
+	attacktext2 = "chomp"
 	friendly = "grooms"
+	friendly2 = "groom"
 	mob_size = MOB_SIZE_SMALL
 	movement_type = FLYING
 	gold_core_spawnable = FRIENDLY_SPAWN
@@ -575,6 +577,7 @@
 				return
 
 			attacktext = pick("claws at", "chomps")
+			attacktext2 = pick("claw at", "chomp")
 			L.attack_animal(src)//Time for the hurt to begin!
 		//Otherwise, fly towards the mob!
 		else

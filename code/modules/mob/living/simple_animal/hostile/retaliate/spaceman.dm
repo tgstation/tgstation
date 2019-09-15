@@ -19,6 +19,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	attacktext = "hits"
+	attacktext2 = "hit"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
@@ -48,6 +49,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	attacktext = "punches"
+	attacktext2 = "punch"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	faction = list("nanotrasenprivate")
 	a_intent = INTENT_HARM

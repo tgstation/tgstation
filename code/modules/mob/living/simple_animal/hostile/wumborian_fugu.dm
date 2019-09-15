@@ -12,6 +12,7 @@
 	mouse_opacity = MOUSE_OPACITY_ICON
 	move_to_delay = 5
 	friendly = "floats near"
+	friendly2 = "float near"
 	speak_emote = list("puffs")
 	vision_range = 5
 	speed = 0
@@ -23,6 +24,7 @@
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	attacktext = "chomps"
+	attacktext2 = "chomp"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	throw_message = "is avoided by the"
 	vision_range = 5

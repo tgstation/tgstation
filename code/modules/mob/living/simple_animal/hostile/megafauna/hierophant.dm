@@ -40,10 +40,12 @@ Difficulty: Hard
 	health = 2500
 	maxHealth = 2500
 	attacktext = "clubs"
+	attacktext2 = "club"
 	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	icon_state = "hierophant"
 	icon_living = "hierophant"
 	friendly = "stares down"
+	friendly2 = "stare down"
 	icon = 'icons/mob/lavaland/hierophant_new.dmi'
 	faction = list("boss") //asteroid mobs? get that shit out of my beautiful square house
 	speak_emote = list("preaches")
