@@ -156,7 +156,7 @@
 
 	var/location = get_step(src,(dir))
 	var/obj/item/I = new D.build_path(location)
-	I.materials = res_coef
+	I.set_custom_materials(res_coef)
 	say("\The [I] is complete.")
 	being_built = null
 

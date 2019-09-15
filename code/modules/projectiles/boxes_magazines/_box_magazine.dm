@@ -8,7 +8,7 @@
 	item_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	materials = list(/datum/material/iron = 30000)
+	custom_materials = list(/datum/material/iron = 30000)
 	throwforce = 2
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
@@ -35,8 +35,8 @@
 /obj/item/ammo_box/Initialize()
 	. = ..()
 	if (!bullet_cost)
-		for (var/material in materials)
-			var/material_amount = materials[material]
+		for (var/material in custom_materials)
+			var/material_amount = custom_materials[material]
 			LAZYSET(base_cost, material, (material_amount * 0.10))
 
 			material_amount *= 0.90 // 10% for the container
@@ -133,7 +133,8 @@
 	for (var/material in bullet_cost)
 		var/material_amount = bullet_cost[material]
 		material_amount = (material_amount*stored_ammo.len) + base_cost[material]
-		materials[material] = material_amount
+		custom_materials[material] = material_amount
+	set_custom_materials(custom_materials)//make sure we setup the correct properties again
 
 ///Count of number of bullets in the magazine
 /obj/item/ammo_box/magazine/proc/ammo_count(countempties = TRUE)

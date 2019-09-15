@@ -130,9 +130,9 @@
 	var/primary_mat
 	var/max_mat_value = 0
 	for(var/MAT in materials)
-		materials[MAT] += I.materials[MAT] * multiplier
-		total_amount += I.materials[MAT] * multiplier
-		if(I.materials[MAT] > max_mat_value)
+		materials[MAT] += I.custom_materials[MAT] * multiplier
+		total_amount += I.custom_materials[MAT] * multiplier
+		if(I.custom_materials[MAT] > max_mat_value)
 			primary_mat = MAT
 	return primary_mat
 
@@ -342,7 +342,7 @@
 		return FALSE
 	var/material_amount = 0
 	for(var/MAT in materials)
-		material_amount += I.materials[MAT]
+		material_amount += I.custom_materials[MAT]
 	return material_amount
 
 /// Returns the amount of a specific material in this container.

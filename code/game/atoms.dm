@@ -153,13 +153,9 @@
 		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
 
 	if(custom_materials && custom_materials.len)
-		var/temp_list = list()
-		for(var/i in custom_materials)
-			var/datum/material/material = getmaterialref(i) || i
-			temp_list[material] = custom_materials[material] //Get the proper instanced version
-
-		custom_materials = null //Null the list to prepare for applying the materials properly
-		set_custom_materials(temp_list)
+		var/temp_mats = custom_materials.Copy()
+		custom_materials = null
+		set_custom_materials(temp_mats)
 
 
 	ComponentInitialize()
@@ -1171,13 +1167,13 @@
 /atom/proc/set_custom_materials(var/list/materials, multiplier = 1)
 	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
 		for(var/i in custom_materials)
-			var/datum/material/custom_material = i
+			var/datum/material/custom_material = getmaterialref(i)
 			custom_material.on_removed(src, material_flags) //Remove the current materials
 
 	custom_materials = list() //Reset the list
 
 	for(var/x in materials)
-		var/datum/material/custom_material = x
+		var/datum/material/custom_material = getmaterialref(x)
 
 		custom_material.on_applied(src, materials[custom_material] * multiplier, material_flags)
 		custom_materials[custom_material] += materials[custom_material] * multiplier

@@ -48,16 +48,17 @@
 	return ..()
 
 /obj/Initialize()
-	. = ..()
 	if (islist(armor))
 		armor = getArmor(arglist(armor))
 	else if (!armor)
 		armor = getArmor()
 	else if (!istype(armor, /datum/armor))
 		stack_trace("Invalid type [armor.type] found in .armor during /obj Initialize()")
-
 	if(obj_integrity == null)
 		obj_integrity = max_integrity
+
+	. = ..() //Do this after, else mat datums is mad.
+
 	if (set_obj_flags)
 		var/flagslist = splittext(set_obj_flags,";")
 		var/list/string_to_objflag = GLOB.bitfields["obj_flags"]

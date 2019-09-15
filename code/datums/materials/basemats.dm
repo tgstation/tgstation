@@ -66,12 +66,17 @@
 
 /datum/material/uranium/on_applied(atom/source, amount, material_flags)
 	. = ..()
+	if(stable) //Don't give me cancer, research items!
+		return
 	source.AddComponent(/datum/component/radioactive, amount / 20, source, 0) //half-life of 0 because we keep on going.
 
 /datum/material/uranium/on_removed(atom/source, material_flags)
 	. = ..()
 	qdel(source.GetComponent(/datum/component/radioactive))
 
+///Safe version of uranium
+/datum/material/uranium/stable
+	stable = TRUE
 
 ///Adds firestacks on hit (Still needs support to turn into gas on destruction)
 /datum/material/plasma
@@ -86,7 +91,7 @@
 
 /datum/material/plasma/on_applied(atom/source, amount, material_flags)
 	. = ..()
-	if(ismovableatom(source))
+	if(ismovableatom(source) && !stable)
 		source.AddElement(/datum/element/firestacker)
 		source.AddComponent(/datum/component/explodable, 0, 0, amount / 2500, amount / 1250)
 
@@ -94,6 +99,10 @@
 	. = ..()
 	source.RemoveElement(/datum/element/firestacker)
 	qdel(source.GetComponent(/datum/component/explodable))
+
+///Plasma mat thats used in protolathe items
+/datum/material/plasma/stable
+	stable = TRUE
 
 ///Can cause bluespace effects on use. (Teleportation) (Not yet implemented)
 /datum/material/bluespace

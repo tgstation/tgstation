@@ -77,7 +77,7 @@
 		unload_mineral(O)
 
 	else
-		var/mats = O.materials & mat_container.materials
+		var/mats = O.custom_materials & mat_container.materials
 		var/amount = O.amount
 		mat_container.insert_item(O, sheet_per_ore) //insert it
 		materials.silo_log(src, "smelted", amount, "someone", mats)

@@ -8,6 +8,9 @@
 /*
  * Stacks
  */
+
+GLOBAL_LIST_INIT(rigid_recipes, list(new/datum/stack_recipe("chair", /obj/structure/chair/greyscale, one_per_turf = TRUE, on_floor = TRUE, applies_mats = TRUE)))
+
 /obj/item/stack
 	icon = 'icons/obj/stack_objects.dmi'
 	gender = PLURAL
@@ -21,6 +24,8 @@
 	var/merge_type = null // This path and its children should merge with this stack, defaults to src.type
 	var/full_w_class = WEIGHT_CLASS_NORMAL //The weight class the stack should have at amount > 2/3rds max_amount
 	var/novariants = TRUE //Determines whether the item should update it's sprites based on amount.
+	///Datum material type that this stack is made of
+	var/material_type
 	//NOTE: When adding grind_results, the amounts should be for an INDIVIDUAL ITEM - these amounts will be multiplied by the stack size in on_grind()
 
 /obj/item/stack/on_grind()
@@ -34,7 +39,6 @@
 	return TRUE
 
 /obj/item/stack/Initialize(mapload, new_amount, merge = TRUE)
-	. = ..()
 	if(new_amount != null)
 		amount = new_amount
 	while(amount > max_amount)
@@ -42,12 +46,27 @@
 		new type(loc, max_amount, FALSE)
 	if(!merge_type)
 		merge_type = type
+	if(material_type)
+		set_custom_materials(list(getmaterialref(material_type) = (MINERAL_MATERIAL_AMOUNT * amount)))
+	. = ..()
 	if(merge)
 		for(var/obj/item/stack/S in loc)
 			if(S.merge_type == merge_type)
 				merge(S)
+	recipes = get_main_recipes().Copy()
+	if(custom_materials?.len == 1) //Refactor shit like plastitanium into materials before we do this, else we get stupid edgecases where plastitanium chairs are made out of one of its pre-reqs.
+		var/datum/material/M = custom_materials[1] //First/main material
+		for(var/i in M.categories)
+			message_admins("[i]")
+			switch(i)
+				if(MAT_CATEGORY_RIGID)
+					var/list/temp = Glob.rigid_recipes.Copy()
+					recipes += temp
 	update_weight()
 	update_icon()
+
+/obj/item/stack/proc/get_main_recipes()
+	return list()//empty list
 
 /obj/item/stack/proc/update_weight()
 	if(amount <= (max_amount * (1/3)))
@@ -56,6 +75,7 @@
 		w_class = CLAMP(full_w_class-1, WEIGHT_CLASS_TINY, full_w_class)
 	else
 		w_class = full_w_class
+
 
 /obj/item/stack/update_icon()
 	if(novariants)
@@ -201,6 +221,9 @@
 		if(O)
 			O.setDir(usr.dir)
 		use(R.req_amount * multiplier)
+	
+		if(R.applies_mats && material_type)
+			O.set_custom_materials(list(getmaterialref(material_type) = (R.req_amount * MINERAL_MATERIAL_AMOUNT)))
 
 		//START: oh fuck i'm so sorry
 		if(istype(O, /obj/structure/windoor_assembly))
@@ -332,6 +355,8 @@
 	S.copy_evidences(src)
 	use(transfer, TRUE)
 	S.add(transfer)
+	if(material_type)
+		S.set_custom_materials(list(getmaterialref(material_type) = (MINERAL_MATERIAL_AMOUNT * S.amount))) //Make sure we add our custom mats
 	return transfer
 
 /obj/item/stack/Crossed(obj/o)
@@ -421,8 +446,9 @@
 	var/on_floor = FALSE
 	var/window_checks = FALSE
 	var/placement_checks = FALSE
+	var/applies_mats = FALSE
 
-/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1,time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE, placement_checks = FALSE )
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1,time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE, placement_checks = FALSE, applies_mats = FALSE)
 
 
 	src.title = title
@@ -435,6 +461,7 @@
 	src.on_floor = on_floor
 	src.window_checks = window_checks
 	src.placement_checks = placement_checks
+	src.applies_mats = applies_mats
 /*
  * Recipe list datum
  */

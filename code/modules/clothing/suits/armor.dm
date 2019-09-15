@@ -242,7 +242,7 @@
 /obj/item/clothing/suit/armor/riot/knight/greyscale
 	icon_state = "knight_greyscale"
 	item_state = "knight_greyscale"
-	material_flags = MATERIAL_ADD_PREFIX //Can change color and add prefix
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR//Can change color and add prefix
 	armor = list("melee" = 35, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 10, "bio" = 10, "rad" = 10, "fire" = 40, "acid" = 40)
 
 /obj/item/clothing/suit/armor/vest/durathread
