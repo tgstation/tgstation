@@ -99,7 +99,7 @@
 			return
 
 		while(coinsToProduce > 0 && materials.use_amount_mat(coin_mat, chosen))
-			create_coins()
+			create_coins(M)
 			coinsToProduce--
 			newCoins++
 			src.updateUsrDialog()
@@ -111,12 +111,13 @@
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/mineral/mint/proc/create_coins()
+/obj/machinery/mineral/mint/proc/create_coins(material)
+	var/datum/material/M = material
 	var/turf/T = get_step(src,output_dir)
 	if(T)
 		var/obj/item/O = new /obj/item/coin(src)
 		var/obj/item/storage/bag/money/B = locate(/obj/item/storage/bag/money, T)
-		O.set_custom_materials(list(chosen = 400))
+		O.set_custom_materials(M = 400)
 		if(!B)
 			B = new /obj/item/storage/bag/money(src)
 			unload_mineral(B)
