@@ -136,7 +136,8 @@
 		speed = 0.8
 	else if(locate(/obj/structure/bed, T))
 		speed = 0.7
-
+	else
+		speed = 0.25
 	return speed + success_multiplier
 
 /datum/surgery/advanced
