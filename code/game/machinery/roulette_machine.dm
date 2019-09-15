@@ -32,6 +32,8 @@
 	var/house_balance = 3500 //placeholder
 	var/account_balance = 100 //placeholder
 	var/chosen_bet_type = 0
+	var/last_anti_spam = 0
+	var/anti_spam_cooldown = 20
 	var/obj/item/card/id/my_card
 	var/playing = FALSE
 	var/locked = FALSE
@@ -150,6 +152,11 @@
 
 ///Proc called when player is going to try and play
 /obj/machinery/roulette/proc/play(mob/user, obj/item/card/id/player_id, bet_type, bet_amount, potential_payout)
+	if(last_anti_spam > world.time) //do not cheat me
+		return FALSE
+		
+	last_anti_spam = world.time + anti_spam_cooldown
+
 	var/payout = potential_payout
 
 	my_card.registered_account.transfer_money(player_id.registered_account, bet_amount)
@@ -331,7 +338,16 @@
 			stat |= MAINT
 			icon_state = "open"
 
-
+/obj/machinery/roulette/proc/shock(mob/user, prb)
+	if(stat & NOPOWER)		// unpowered, no shock
+		return FALSE
+	if(!prob(prb))
+		return FALSE //you lucked out, no shock for you
+	do_sparks(5, TRUE, src)
+	if(electrocute_mob(user, get_area(src), src, 1, TRUE))
+		return TRUE
+	else
+		return FALSE
 
 /obj/item/roulette_wheel_beacon
 	name = "roulette wheel beacon"

@@ -32,18 +32,18 @@
 	switch(wire)
 		if(WIRE_SHOCK)
 			if(isliving(usr))
-				A.shock(usr, 50)
+				R.shock(usr, 50)
 		if(WIRE_BOLTS) // Pulse to toggle bolts (but only raise if power is on).
-			if(stat & NOPOWER)
+			if(R.stat & NOPOWER)
 				return
 			R.anchored = !R.anchored
 		if(WIRE_RESETOWNER)
-			my_card = null
+			R.my_card = null
 			R.audible_message("<span class='warning'>Owner reset!</span>")
 			R.locked = FALSE
 		if(WIRE_PRIZEVEND)
 			if(isliving(usr))
-				A.shock(usr, 60)
+				R.shock(usr, 70)
 			if(R.locked)
 				return
 			R.audible_message("<span class='warning'>Unauthorized prize vend detected! Locking down machine!</span>")
@@ -54,21 +54,21 @@
 	switch(wire)
 		if(WIRE_SHOCK)
 			if(isliving(usr))
-				A.shock(usr, 50)
+				R.shock(usr, 60)
 			if(mend)
-				stat &= ~NOPOWER
+				R.stat &= ~NOPOWER
 			else
 				R.stat |= NOPOWER
 		if(WIRE_BOLTS) // Always drop
-			if(stat & NOPOWER)
+			if(R.stat & NOPOWER)
 				return
 			R.anchored = TRUE
 		if(WIRE_RESETOWNER)
 			if(isliving(usr))
-				A.shock(usr, 50)
+				R.shock(usr, 70)
 		if(WIRE_PRIZEVEND)
 			if(isliving(usr))
-				A.shock(usr, 60)
+				R.shock(usr, 75)
 			if(R.locked)
 				return
 			R.audible_message("<span class='warning'>Unauthorized prize vend detected! Locking down machine!</span>")
