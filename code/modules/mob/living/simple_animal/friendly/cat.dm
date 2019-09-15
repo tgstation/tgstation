@@ -84,10 +84,10 @@
 /mob/living/simple_animal/pet/cat/Runtime
 	name = "Eddie"
 	desc = "GCAT"
-	icon_state = "cat"
-	icon_living = "cat"
-	icon_dead = "cat_dead"
-	gender = FEMALE
+	icon_state = "cate"
+	icon_living = "cate"
+	icon_dead = "cate_dead"
+	gender = MALE
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
 	var/list/family = list()//var restored from savefile, has count of each child type
