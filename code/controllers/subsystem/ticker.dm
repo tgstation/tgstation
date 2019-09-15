@@ -635,15 +635,29 @@ SUBSYSTEM_DEF(ticker)
 	update_everything_flag_in_db()
 	if(!round_end_sound)
 		round_end_sound = pick(\
-		'sound/roundend/newroundsexy.ogg',
-		'sound/roundend/apcdestroyed.ogg',
-		'sound/roundend/bangindonk.ogg',
-		'sound/roundend/leavingtg.ogg',
-		'sound/roundend/its_only_game.ogg',
-		'sound/roundend/yeehaw.ogg',
-		'sound/roundend/disappointed.ogg',
-		'sound/roundend/scrunglartiy.ogg',
-		'sound/roundend/petersondisappointed.ogg'\
+		'sound/roundend/2loud4me.ogg',
+		'sound/roundend/aaaaaaaaaaah.ogg',
+		'sound/roundend/aneurism.ogg',
+		'sound/roundend/ayayaclean.ogg',
+		'sound/roundend/dayton.ogg',
+		'sound/roundend/firstofall.ogg',
+		'sound/roundend/fuckingassholebitch.ogg',
+		'sound/roundend/godfkingdamnit.ogg',
+		'sound/roundend/imnotfuckingbald.ogg',
+		'sound/roundend/isthispoop.ogg',
+		'sound/roundend/lul.ogg',
+		'sound/roundend/maldd.ogg',
+		'sound/roundend/mango.ogg',
+		'sound/roundend/moon2l.ogg',
+		'sound/roundend/moonsconfession.ogg',
+		'sound/roundend/mooonscream.ogg',
+		'sound/roundend/noice.ogg',
+		'sound/roundend/nooooooooooooo.ogg',
+		'sound/roundend/poggers.ogg',
+		'sound/roundend/skrrrt.ogg',
+		'sound/roundend/smile.ogg',
+		'sound/roundend/twentyfourninetynine.ogg',
+		'sound/roundend/youregrounded.ogg'\
 		)
 
 	SEND_SOUND(world, sound(round_end_sound))
