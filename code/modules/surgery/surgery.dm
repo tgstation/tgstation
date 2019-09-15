@@ -125,7 +125,7 @@
 	return probability + success_multiplier
 
 /datum/surgery/proc/get_speed_multiplier()
-	var/speed = 1.0
+	var/speed = 0.25
 	var/turf/T = get_turf(target)
 
 	if(locate(/obj/structure/table/optable, T))
@@ -136,8 +136,7 @@
 		speed = 0.8
 	else if(locate(/obj/structure/bed, T))
 		speed = 0.7
-	else
-		speed = 0.25
+		
 	return speed + success_multiplier
 
 /datum/surgery/advanced
