@@ -628,6 +628,7 @@
 	messages = list("You won't get away this time, Griffin!", "Stop right there, criminal!", "Hoot! Hoot!", "I am the night!")
 	chattering = TRUE
 	phomeme = "owl"
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/toy/talking/griffin
 	name = "griffin action figure"
@@ -636,6 +637,7 @@
 	messages = list("You can't stop me, Owl!", "My plan is flawless! The vault is mine!", "Caaaawwww!", "You will never catch me!")
 	chattering = TRUE
 	phomeme = "griffin"
+	w_class = WEIGHT_CLASS_SMALL
 
 /*
 || A Deck of Cards for playing various games of chance ||
