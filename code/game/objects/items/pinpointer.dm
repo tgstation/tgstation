@@ -120,7 +120,8 @@
 	var/list/name_counts = list()
 	var/list/names = list()
 
-	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+	for(var/i in GLOB.human_list)
+		var/mob/living/carbon/human/H = i
 		if(!trackable(H))
 			continue
 
