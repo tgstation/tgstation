@@ -121,13 +121,6 @@
 	list_reagents = list(/datum/reagent/medicine/C2/multiver = 10)
 	rename_with_volume = TRUE
 
-/obj/item/reagent_containers/pill/charcoal	//FULP [Saliferous]
-	name = "charcoal pill"	//FULP
-	desc = "Purges chemicals and toxins"	//FULP
-	icon_state = "pill17"	//FULP
-	list_reagents = list(/datum/reagent/medicine/CF/charcoal = 10)	//FULP
-	rename_with_volume = TRUE	//FULP
-
 /obj/item/reagent_containers/pill/epinephrine
 	name = "epinephrine pill"
 	desc = "Used to stabilize patients."
