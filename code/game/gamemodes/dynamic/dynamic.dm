@@ -429,7 +429,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			starting_rule = pickweight(drafted_rules)
 		// Check if the ruleset is highlander and if a highlander ruleset has been executed
 		else if(starting_rule.flags & HIGHLANDER_RULESET)
-			if(threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+			if(threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
 				if(highlander_executed)
 					drafted_rules -= starting_rule
 					if(drafted_rules.len <= 0)
@@ -484,7 +484,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			rule = pickweight(drafted_rules)
 		// Check if the ruleset is highlander and if a highlander ruleset has been executed
 		else if(rule.flags & HIGHLANDER_RULESET)
-			if(threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+			if(threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
 				if(highlander_executed)
 					drafted_rules -= rule
 					if(drafted_rules.len <= 0)
@@ -539,7 +539,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			return FALSE
 		// Check if the ruleset is highlander and if a highlander ruleset has been executed
 		else if(new_rule.flags & HIGHLANDER_RULESET)
-			if(threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+			if(threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
 				if(highlander_executed)
 					return FALSE
 
@@ -697,7 +697,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
 					continue
 				// No stacking : only one round-enter, unless > stacking_limit threat.
-				if (threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+				if (threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
 					if(rule.flags & HIGHLANDER_RULESET && highlander_executed)
 						continue
 
