@@ -94,6 +94,7 @@ GLOBAL_LIST_INIT(ai_core_display_screens, list(
 	"House",
 	"Inverted",
 	"Matrix",
+  "Moon2S",
 	"Monochrome",
 	"Murica",
 	"Nanotrasen",
