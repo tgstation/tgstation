@@ -24,6 +24,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/glass
 	grind_results = list(/datum/reagent/silicon = 20)
+	material_type = /datum/material/glass
 	point_value = 1
 
 /obj/item/stack/sheet/glass/suicide_act(mob/living/carbon/user)

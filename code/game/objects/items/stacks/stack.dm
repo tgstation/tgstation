@@ -47,7 +47,7 @@ GLOBAL_LIST_INIT(rigid_recipes, list(new/datum/stack_recipe("chair", /obj/struct
 	if(!merge_type)
 		merge_type = type
 	if(material_type)
-		set_custom_materials(list(getmaterialref(material_type) = (MINERAL_MATERIAL_AMOUNT * amount)))
+		custom_materials = list(getmaterialref(material_type) = (MINERAL_MATERIAL_AMOUNT * amount))
 	. = ..()
 	if(merge)
 		for(var/obj/item/stack/S in loc)
