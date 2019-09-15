@@ -53,7 +53,8 @@ GLOBAL_LIST_INIT(rigid_recipes, list(new/datum/stack_recipe("chair", /obj/struct
 		for(var/obj/item/stack/S in loc)
 			if(S.merge_type == merge_type)
 				merge(S)
-	recipes = get_main_recipes().Copy()
+	var/list/temp_recipes = get_main_recipes()
+	recipes = temp_recipes.Copy()
 	if(material_type)
 		var/datum/material/M = getmaterialref(material_type) //First/main material
 		for(var/i in M.categories)
