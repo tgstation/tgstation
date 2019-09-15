@@ -534,6 +534,14 @@
 	if(should_update_mobility)
 		update_mobility()
 
+/mob/living/Crossed(atom/movable/AM)
+	. = ..()
+	for(var/i in get_equipped_items())
+		var/obj/item/item = i
+		SEND_SIGNAL(item, COMSIG_ITEM_WEARERCROSSED, AM, src)
+
+
+
 //proc used to completely heal a mob.
 /mob/living/proc/fully_heal(admin_revive = 0)
 	restore_blood()

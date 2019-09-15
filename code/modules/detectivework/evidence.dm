@@ -32,6 +32,10 @@
 		to_chat(user, "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>")
 		return 1 //now this is podracing
 
+	if(loc in I.GetAllContents()) // fixes tg #39452, evidence bags could store their own location, causing I to be stored in the bag while being present inworld still, and able to be teleported when removed.
+		to_chat(user, "<span class='notice'>You find putting [I] in [src] while it's still inside it quite difficult.</span>")
+		return
+
 	if(I.w_class > WEIGHT_CLASS_NORMAL)
 		to_chat(user, "<span class='notice'>[I] won't fit in [src].</span>")
 		return
@@ -47,7 +51,7 @@
 			return
 
 	user.visible_message("<span class='notice'>[user] puts [I] into [src].</span>", "<span class='notice'>You put [I] inside [src].</span>",\
-	"<span class='italics'>You hear a rustle as someone puts something into a plastic bag.</span>")
+	"<span class='hear'>You hear a rustle as someone puts something into a plastic bag.</span>")
 
 	icon_state = "evidence"
 
@@ -68,7 +72,7 @@
 	if(contents.len)
 		var/obj/item/I = contents[1]
 		user.visible_message("<span class='notice'>[user] takes [I] out of [src].</span>", "<span class='notice'>You take [I] out of [src].</span>",\
-		"<span class='italics'>You hear someone rustle around in a plastic bag, and remove something.</span>")
+		"<span class='hear'>You hear someone rustle around in a plastic bag, and remove something.</span>")
 		cut_overlays()	//remove the overlays
 		user.put_in_hands(I)
 		w_class = WEIGHT_CLASS_TINY

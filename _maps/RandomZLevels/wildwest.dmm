@@ -456,7 +456,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "bU" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -464,7 +464,7 @@
 	},
 /area/awaymission/wildwest/mines)
 "bV" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -675,7 +675,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cE" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -810,13 +810,13 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "da" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "db" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -1590,7 +1590,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "fv" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -1612,7 +1612,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/wildwest/mines)
 "fx" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -1765,7 +1765,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "fT" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -1846,7 +1846,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "gh" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -1906,7 +1906,7 @@
 /area/awaymission/wildwest/mines)
 "gu" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
