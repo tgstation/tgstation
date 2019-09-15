@@ -30,3 +30,7 @@
 	//var/worn_icon = 'icon/mob/clothing/under/default.dmi' // 'icons/mob/uniform.dmi'  // We created this to add to the sprite! (human/update_icons.dm)
 	// REMOVED They did it for us.
 
+		//	ID CARDS	//
+
+/obj/item/card
+	var/job_icon = 'icons/obj/card.dmi'

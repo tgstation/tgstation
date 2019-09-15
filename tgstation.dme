@@ -568,6 +568,8 @@
 #include "code\datums\wires\syndicatebomb.dm"
 #include "code\datums\wires\tesla_coil.dm"
 #include "code\datums\wires\vending.dm"
+#include "code\FulpstationCode\deputy.dm"
+#include "code\FulpstationCode\fulp_global_vars.dm"
 #include "code\FulpstationCode\fulp_integration.dm"
 #include "code\FulpstationCode\fulp_procs.dm"
 #include "code\FulpstationCode\fulp_ticker.dm"
