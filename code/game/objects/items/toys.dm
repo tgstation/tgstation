@@ -590,6 +590,7 @@
 	name = "toy AI"
 	desc = "A little toy model AI core with real law announcing action!"
 	icon_state = "AI"
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/toy/talking/AI/generate_messages()
 	return list(generate_ion_law())
