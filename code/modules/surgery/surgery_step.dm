@@ -68,7 +68,8 @@
 
 	if(tool)
 		speed_mod = tool.toolspeed
-
+	speed_mod /= surgery.get_speed_multiplier()
+	
 	if(do_after(user, time * speed_mod, target = target))
 		var/prob_chance = 100
 

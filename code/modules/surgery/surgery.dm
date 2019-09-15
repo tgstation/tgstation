@@ -109,19 +109,24 @@
 	qdel(src)
 
 /datum/surgery/proc/get_propability_multiplier()
-	var/propability = 0.5
+	var/propability = 1.0
+
+	return propability + success_multiplier
+
+/datum/surgery/proc/get_speed_multiplier()
+	var/speed = 1.0
 	var/turf/T = get_turf(target)
 
 	if(locate(/obj/structure/table/optable, T))
-		propability = 1
+		speed = 1
 	else if(locate(/obj/machinery/stasis, T))
-		propability = 0.9
+		speed = 0.9
 	else if(locate(/obj/structure/table, T))
-		propability = 0.8
+		speed = 0.8
 	else if(locate(/obj/structure/bed, T))
-		propability = 0.7
+		speed = 0.7
 
-	return propability + success_multiplier
+	return speed + success_multiplier
 
 /datum/surgery/advanced
 	name = "advanced surgery"
