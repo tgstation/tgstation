@@ -32,6 +32,10 @@
 		to_chat(user, "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>")
 		return 1 //now this is podracing
 
+	if(loc in I.GetAllContents()) // fixes tg #39452, evidence bags could store their own location, causing I to be stored in the bag while being present inworld still, and able to be teleported when removed.
+		to_chat(user, "<span class='notice'>You find putting [I] in [src] while it's still inside it quite difficult.</span>")
+		return
+
 	if(I.w_class > WEIGHT_CLASS_NORMAL)
 		to_chat(user, "<span class='notice'>[I] won't fit in [src].</span>")
 		return
