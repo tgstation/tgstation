@@ -2103,10 +2103,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "mauna_loa"
 	glass_name = "Mauna Loa"
 	glass_desc = "Lavaland, in a drink...mug...volanco...thing."
-	
+
 /datum/reagent/consumable/ethanol/mauna_loa/on_mob_life(mob/living/carbon/M)
 	// Heats the user up while the reagent is in the body. Occasionally makes you burst into flames.
-	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT)
+	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT)
 	if (prob(1))
 		M.IgniteMob()
 	..()
