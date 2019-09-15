@@ -229,7 +229,7 @@
 		cycleOpen(interiorAirlock)
 
 /obj/machinery/doorButtons/airlock_controller/power_change()
-	..()
+	. = ..()
 	if(stat & NOPOWER)
 		lostPower = TRUE
 	else

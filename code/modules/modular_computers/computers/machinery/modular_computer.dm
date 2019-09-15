@@ -130,8 +130,7 @@
 		stat &= ~NOPOWER
 		update_icon()
 		return
-	..()
-	update_icon()
+	. = ..()
 
 /obj/machinery/modular_computer/attackby(var/obj/item/W as obj, mob/user)
 	if(cpu && !(flags_1 & NODECONSTRUCT_1))

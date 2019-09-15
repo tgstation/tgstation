@@ -41,17 +41,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	update_move_direction()
 
 /obj/machinery/conveyor/auto/update()
-	if(stat & BROKEN)
-		icon_state = "conveyor-broken"
-		operating = FALSE
-		return
-	else if(!operable)
-		operating = FALSE
-	else if(stat & NOPOWER)
-		operating = FALSE
-	else
-		operating = TRUE
-	icon_state = "conveyor[operating * verted]"
+	. = ..()
+	operating = .
 
 // create a conveyor
 /obj/machinery/conveyor/Initialize(mapload, newdir, newid)
@@ -116,16 +107,17 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		movedir = backwards
 	update()
 
-/obj/machinery/conveyor/proc/update()
+/obj/machinery/conveyor/update_icon()
 	if(stat & BROKEN)
 		icon_state = "conveyor-broken"
+	else
+		icon_state = "conveyor[operating * verted]"
+
+/obj/machinery/conveyor/proc/update()
+	if(stat & BROKEN || !operable || stat & NOPOWER)
 		operating = FALSE
-		return
-	if(!operable)
-		operating = FALSE
-	if(stat & NOPOWER)
-		operating = FALSE
-	icon_state = "conveyor[operating * verted]"
+		return FALSE
+	return TRUE
 
 	// machine process
 	// move items to the target location
@@ -210,7 +202,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		C.set_operable(stepdir, id, op)
 
 /obj/machinery/conveyor/power_change()
-	..()
+	. = ..()
 	update()
 
 // the conveyor control switch
