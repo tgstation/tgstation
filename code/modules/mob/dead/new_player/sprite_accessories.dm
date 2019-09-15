@@ -699,6 +699,10 @@
 	name = "Spiky 3"
 	icon_state = "hair_spiky2"
 
+/datum/sprite_accessory/hair/strappingboomer
+	name = "Strapping Boomer"
+	icon_state = "hair_strappingboomer"
+
 /datum/sprite_accessory/hair/swept
 	name = "Swept Back Hair"
 	icon_state = "hair_swept"
