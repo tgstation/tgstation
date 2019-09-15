@@ -21,6 +21,8 @@
 	anchored = FALSE
 	idle_power_usage = 10
 	active_power_usage = 100
+	max_integrity = 500
+	armor = list("melee" = 45, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 10, "bio" = 30, "rad" = 30, "fire" = 30, "acid" = 30)
 	var/static/list/numbers = list("0" = "green", "1" = "red", "3" = "red", "5" = "red", "7" = "red", "9" = "red", "12" = "red", "14" = "red", "16" = "red",\
 	"18" = "red", "19" = "red", "21" = "red", "23" = "red", "25" = "red", "27" = "red", "30" = "red", "32" = "red", "34" = "red", "36" = "red",\
 	"2" = "black", "4" = "black", "6" = "black", "8" = "black", "10" = "black", "11" = "black", "13" = "black", "15" = "black", "17" = "black", "20" = "black",\
@@ -41,6 +43,11 @@
 /obj/machinery/roulette/Initialize()
 	. = ..()
 	jackpot_loop = new(list(src), FALSE)
+	wires = new /datum/wires/roulette
+
+/obj/machinery/roulette/obj_break(damage_flag)
+	prize_theft(0.05)
+	. = ..()
 
 /obj/machinery/roulette/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -104,6 +111,9 @@
 /obj/machinery/roulette/attackby(obj/item/W, mob/user, params)
 	if(playing)
 		return
+	if(stat & MAINT || stat & NOPOWER || locked)
+		to_chat(user, "<span class='notice'>The machine appears to be disabled.</span>")
+		return
 	playsound(src, 'sound/machines/card_slide.ogg', 50, TRUE)
 	if(istype(W, /obj/item/card/id))
 		if(my_card)
@@ -111,8 +121,6 @@
 			if(player_card.registered_account.account_balance <= chosen_bet_amount) //Does the player have enough funds
 				audible_message("<span class='warning'>You do not have the funds to play! Lower your bet or get more money.</span>")
 				playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
-				return FALSE
-			if(playing) //Prevents double playing
 				return FALSE
 			if(!chosen_bet_amount || isnull(chosen_bet_type))
 				return FALSE
@@ -137,7 +145,7 @@
 				name = msg
 				desc = "Owned by [new_card.registered_account.account_holder], draws directly from [user.p_their()] account."
 				my_card = new_card
-				to_chat(user, "You link the wheel to your account.")
+				to_chat(user, "<span class='notice'>You link the wheel to your account.</span>")
 				return
 
 ///Proc called when player is going to try and play
@@ -228,6 +236,16 @@
 
 	addtimer(CALLBACK(src, .proc/drop_coin), 3) //Recursion time
 
+
+///Fills a list of coins that should be dropped.
+/obj/machinery/roulette/proc/prize_theft(percentage)
+	if(locked)
+		return
+	locked = TRUE
+	var/stolen_cash = my_card.registered_account.account_balance * percentage
+	dispense_prize(stolen_cash)
+	
+
 ///Returns TRUE if the player bet correctly.
 /obj/machinery/roulette/proc/check_win(bet_type, bet_amount, rolled_number)
 	var/actual_bet_number = text2num(bet_type) //Only returns the numeric bet types, AKA singles.
@@ -257,10 +275,12 @@
 	playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
 	return FALSE
 
-
-
 /obj/machinery/roulette/update_icon(payout, color, rolled_number, is_winner = FALSE)
 	cut_overlays()
+
+	if(stat & MAINT)
+		return
+
 	if(playing)
 		add_overlay("random_numbers")
 
@@ -292,9 +312,26 @@
 /obj/machinery/roulette/proc/handle_color_light(color)
 	switch(color)
 		if("green")
-			set_light(3,4, LIGHT_COLOR_GREEN)
+			set_light(2,2, LIGHT_COLOR_GREEN)
 		if("red")
-			set_light(3,4, LIGHT_COLOR_RED)
+			set_light(2,2, LIGHT_COLOR_RED)
+
+/obj/machinery/roulette/welder_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(stat & MAINT)
+		to_chat(user, "<span class='notice'>You start re-attaching the top section of [src]...</span>")
+		if(I.use_tool(src, user, 30, volume=50))
+			to_chat(user, "<span class='notice'>You re-attach the top section of [src].</span>")
+			stat &= ~MAINT
+			icon_state = "idle"
+	else
+		to_chat(user, "<span class='notice'>You start welding the top section from [src]...</span>")
+		if(I.use_tool(src, user, 30, volume=50))
+			to_chat(user, "<span class='notice'>You removed the top section of [src].</span>")
+			stat |= MAINT
+			icon_state = "open"
+
+
 
 /obj/item/roulette_wheel_beacon
 	name = "roulette wheel beacon"
