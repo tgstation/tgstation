@@ -696,7 +696,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				// Classic secret : only autotraitor/minor roles
 				if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
 					continue
-				// No stacking : only one round-enter, unless > stacking_limit threat.
+				// No stacking : only one round-ender, unless threat level > stacking_limit.
 				if (threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
 					if(rule.flags & HIGHLANDER_RULESET && highlander_executed)
 						continue
