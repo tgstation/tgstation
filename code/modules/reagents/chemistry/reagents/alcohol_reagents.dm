@@ -2098,11 +2098,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "Extremely hot; not for the faint of heart!"
 	boozepwr = 40
 	color = "#fe8308" // 254, 131, 8
-	quality = DRINK_GOOD
+	quality = DRINK_FANTASTIC
 	taste_description = "firey, with an aftertaste of burnt flesh"
 	glass_icon_state = "mauna_loa"
 	glass_name = "Mauna Loa"
-	glass_desc = "Lavaland, in a drink...mug...volanco...thing."
+	glass_desc = "Lavaland, in a drink...mug...volcano...thing."
 
 /datum/reagent/consumable/ethanol/mauna_loa/on_mob_life(mob/living/carbon/M)
 	// Heats the user up while the reagent is in the body. Occasionally makes you burst into flames.
