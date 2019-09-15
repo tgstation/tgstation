@@ -786,4 +786,4 @@
 	name = "Mauna Loa"
 	id = /datum/reagent/consumable/ethanol/mauna_loa
 	results = list(/datum/reagent/consumable/ethanol/mauna_loa = 25)
-	required_reagents = list(/datum/reagent/consumable/capsaicin = 10, /datum/reagent/consumable/ethanol/kahlua = 5, /datum/reagent/consumable/ethanol/bahama_mama = 10)
+	required_reagents = list(/datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/ethanol/kahlua = 1, /datum/reagent/consumable/ethanol/bahama_mama = 2)
