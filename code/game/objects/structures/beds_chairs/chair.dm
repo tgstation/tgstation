@@ -125,7 +125,7 @@
 ///Material chair
 /obj/structure/chair/greyscale
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
-	item_chair = /obj/item/chair
+	item_chair = /obj/item/chair/greyscale
 	
 
 /obj/structure/chair/wood
@@ -302,6 +302,7 @@
 
 	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>You right \the [name].</span>")
 	var/obj/structure/chair/C = new origin_type(get_turf(loc))
+	C.set_custom_materials(custom_materials)
 	TransferComponents(C)
 	C.setDir(dir)
 	qdel(src)
@@ -342,6 +343,7 @@
 
 /obj/item/chair/greyscale
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	origin_type = /obj/structure/chair/greyscale
 
 /obj/item/chair/stool
 	name = "stool"

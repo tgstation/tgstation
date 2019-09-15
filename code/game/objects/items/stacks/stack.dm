@@ -60,7 +60,7 @@ GLOBAL_LIST_INIT(rigid_recipes, list(new/datum/stack_recipe("chair", /obj/struct
 			message_admins("[i]")
 			switch(i)
 				if(MAT_CATEGORY_RIGID)
-					var/list/temp = Glob.rigid_recipes.Copy()
+					var/list/temp = GLOB.rigid_recipes.Copy()
 					recipes += temp
 	update_weight()
 	update_icon()
