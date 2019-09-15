@@ -54,10 +54,9 @@ GLOBAL_LIST_INIT(rigid_recipes, list(new/datum/stack_recipe("chair", /obj/struct
 			if(S.merge_type == merge_type)
 				merge(S)
 	recipes = get_main_recipes().Copy()
-	if(custom_materials?.len == 1) //Refactor shit like plastitanium into materials before we do this, else we get stupid edgecases where plastitanium chairs are made out of one of its pre-reqs.
-		var/datum/material/M = custom_materials[1] //First/main material
+	if(material_type)
+		var/datum/material/M = getmaterialref(material_type) //First/main material
 		for(var/i in M.categories)
-			message_admins("[i]")
 			switch(i)
 				if(MAT_CATEGORY_RIGID)
 					var/list/temp = GLOB.rigid_recipes.Copy()

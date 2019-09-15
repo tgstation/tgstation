@@ -36,14 +36,6 @@
 		to_chat(user, "<span class='notice'>You start adding [P] to [src]...</span>")
 		if(do_after(user, 50, target = src) && P.use(1))
 			make_new_table(/obj/structure/table/reinforced)
-	else if(istype(I, /obj/item/stack/sheet/metal))
-		var/obj/item/stack/sheet/metal/M = I
-		if(M.get_amount() < 1)
-			to_chat(user, "<span class='warning'>You need one metal sheet to do this!</span>")
-			return
-		to_chat(user, "<span class='notice'>You start adding [M] to [src]...</span>")
-		if(do_after(user, 20, target = src) && M.use(1))
-			make_new_table(/obj/structure/table)
 	else if(istype(I, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = I
 		if(G.get_amount() < 1)
@@ -84,14 +76,27 @@
 		to_chat(user, "<span class='notice'>You start adding [B] to [src]...</span>")
 		if(do_after(user, 20, target = src) && B.use(1))
 			make_new_table(/obj/structure/table/bronze)
+	else if(istype(I, /obj/item/stack/sheet))
+		var/obj/item/stack/sheet/M = I
+		if(M.get_amount() < 1)
+			to_chat(user, "<span class='warning'>You need one metal sheet to do this!</span>")
+			return
+		to_chat(user, "<span class='notice'>You start adding [M] to [src]...</span>")
+		if(do_after(user, 20, target = src) && M.use(1))
+			var/list/material_list
+			if(M.material_type)
+				material_list = list(M.material_type = MINERAL_MATERIAL_AMOUNT)
+			make_new_table(/obj/structure/table/greyscale, material_list)
 	else
 		return ..()
 
-/obj/structure/table_frame/proc/make_new_table(table_type) //makes sure the new table made retains what we had as a frame
+/obj/structure/table_frame/proc/make_new_table(table_type, var/list/custom_materials) //makes sure the new table made retains what we had as a frame
 	var/obj/structure/table/T = new table_type(loc)
 	T.frame = type
 	T.framestack = framestack
 	T.framestackamount = framestackamount
+	if(custom_materials)
+		T.set_custom_materials(custom_materials)
 	qdel(src)
 
 /obj/structure/table_frame/deconstruct(disassembled = TRUE)

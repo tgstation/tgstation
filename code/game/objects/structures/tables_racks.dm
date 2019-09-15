@@ -29,10 +29,11 @@
 	var/buildstackamount = 1
 	var/framestackamount = 2
 	var/deconstruction_ready = 1
+	custom_materials = list(/datum/material/iron = 2000)
 	max_integrity = 100
 	integrity_failure = 30
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/table, /obj/structure/table/reinforced)
+	canSmoothWith = list(/obj/structure/table, /obj/structure/table/reinforced, /obj/structure/table/greyscale)
 
 /obj/structure/table/examine(mob/user)
 	. = ..()
@@ -181,6 +182,10 @@
 		else
 			new framestack(T, framestackamount)
 	qdel(src)
+
+
+/obj/structure/table/greyscale
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 
 
 /*
