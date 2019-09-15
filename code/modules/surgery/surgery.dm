@@ -109,9 +109,9 @@
 	qdel(src)
 
 /datum/surgery/proc/get_propability_multiplier()
-	var/propability = 1.0
+	var/probability = 1.0
 
-	return propability + success_multiplier
+	return probability + success_multiplier
 
 /datum/surgery/proc/get_speed_multiplier()
 	var/speed = 1.0
