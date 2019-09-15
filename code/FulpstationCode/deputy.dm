@@ -48,7 +48,7 @@
 	fulp_item = TRUE
 
 /obj/item/clothing/head/beret/sec/medical
-	name = "engineering deputy beret"
+	name = "medical deputy beret"
 	desc = "This proud white-blue beret is a welcome sight when the greytide descends on chemistry."
 	mob_overlay_icon = 'icons/fulpicons/mith_stash/clothing/head_worn.dmi'
 	icon = 'icons/fulpicons/mith_stash/clothing/head_icons.dmi'
@@ -56,7 +56,7 @@
 	fulp_item = TRUE
 
 /obj/item/clothing/head/beret/sec/science
-	name = "engineering deputy beret"
+	name = "science deputy beret"
 	desc = "This loud purple beret screams 'Dont mess with his matter manipulator!'"
 	mob_overlay_icon = 'icons/fulpicons/mith_stash/clothing/head_worn.dmi'
 	icon = 'icons/fulpicons/mith_stash/clothing/head_icons.dmi'
@@ -64,7 +64,7 @@
 	fulp_item = TRUE
 
 /obj/item/clothing/head/beret/sec/supply
-	name = "engineering deputy beret"
+	name = "supply deputy beret"
 	desc = "The headwear for only the most eagle-eyed Deputy, able to watch both Cargo and Mining."
 	mob_overlay_icon = 'icons/fulpicons/mith_stash/clothing/head_worn.dmi'
 	icon = 'icons/fulpicons/mith_stash/clothing/head_icons.dmi'
@@ -206,3 +206,4 @@ GLOBAL_LIST_INIT(available_deputy_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MED
 /obj/item/radio/headset/headset_sec/department/sci
 	keyslot = new /obj/item/encryptionkey/headset_sec
 	keyslot2 = new /obj/item/encryptionkey/headset_sci
+
