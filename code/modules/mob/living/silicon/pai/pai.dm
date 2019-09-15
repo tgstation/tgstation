@@ -269,7 +269,7 @@
 	if(cable)
 		if(get_dist(src, cable) > 1)
 			var/turf/T = get_turf(src)
-			T.visible_message("<span class='warning'>[cable] rapidly retracts back into its spool.</span>", "<span class='italics'>You hear a click and the sound of wire spooling rapidly.</span>")
+			T.visible_message("<span class='warning'>[cable] rapidly retracts back into its spool.</span>", "<span class='hear'>You hear a click and the sound of wire spooling rapidly.</span>")
 			QDEL_NULL(cable)
 	if(hacking)
 		process_hack()
