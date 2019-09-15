@@ -76,7 +76,7 @@ field_generator power level display
 			else
 				user.visible_message("<span class='notice'>[user] turns on [src].</span>", \
 					"<span class='notice'>You turn on [src].</span>", \
-					"<span class='italics'>You hear heavy droning.</span>")
+					"<span class='hear'>You hear heavy droning.</span>")
 				turn_on()
 				investigate_log("<font color='green'>activated</font> by [key_name(user)].", INVESTIGATE_SINGULO)
 
@@ -125,7 +125,7 @@ field_generator power level display
 				return TRUE
 			user.visible_message("<span class='notice'>[user] starts to weld [src] to the floor.</span>", \
 				"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
-				"<span class='italics'>You hear welding.</span>")
+				"<span class='hear'>You hear welding.</span>")
 			if(I.use_tool(src, user, 20, volume=50) && state == FG_SECURED)
 				state = FG_WELDED
 				to_chat(user, "<span class='notice'>You weld the field generator to the floor.</span>")
@@ -135,7 +135,7 @@ field_generator power level display
 				return TRUE
 			user.visible_message("<span class='notice'>[user] starts to cut [src] free from the floor.</span>", \
 				"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
-				"<span class='italics'>You hear welding.</span>")
+				"<span class='hear'>You hear welding.</span>")
 			if(I.use_tool(src, user, 20, volume=50) && state == FG_WELDED)
 				state = FG_SECURED
 				to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
@@ -206,7 +206,7 @@ field_generator power level display
 		check_power_level()
 		return 1
 	else
-		visible_message("<span class='danger'>The [name] shuts down!</span>", "<span class='italics'>You hear something shutting down.</span>")
+		visible_message("<span class='danger'>The [name] shuts down!</span>", "<span class='hear'>You hear something shutting down.</span>")
 		turn_off()
 		investigate_log("ran out of power and <font color='red'>deactivated</font>", INVESTIGATE_SINGULO)
 		power = 0

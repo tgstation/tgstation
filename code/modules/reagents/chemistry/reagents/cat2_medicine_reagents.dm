@@ -1,6 +1,7 @@
 // Category 2 medicines are medicines that have an ill effect regardless of volume/OD to dissuade doping. Mostly used as emergency chemicals OR to convert damage (and heal a bit in the process). The type is used to prompt borgs that the medicine is harmful.
 /datum/reagent/medicine/C2
 	harmful = TRUE
+	metabolization_rate = 0.2
 
 /******BRUTE******/
 /*Suffix: -bital*/
@@ -37,8 +38,8 @@
 	reagent_state = SOLID
 
 /datum/reagent/medicine/C2/libital/on_mob_life(mob/living/carbon/M)
-	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 1*REM)
-	M.adjustBruteLoss(-1*REM)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.3*REM)
+	M.adjustBruteLoss(-3*REM)
 	..()
 	return TRUE
 
@@ -75,13 +76,14 @@
 	var/message_cd = 0
 
 /datum/reagent/medicine/C2/aiuri/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss(-0.5*REM)
+	M.adjustFireLoss(-2*REM)
 	M.adjustOrganLoss(ORGAN_SLOT_EYES,0.25*REM)
 	..()
 	return TRUE
 
 /******OXY******/
 /*Suffix: -mol*/
+#define	CONVERMOL_RATIO 5		//# Oxygen damage to result in 1 tox
 
 /datum/reagent/medicine/C2/convermol
 	name = "Convermol"
@@ -94,9 +96,9 @@
 /datum/reagent/medicine/C2/convermol/on_mob_life(mob/living/carbon/human/M)
 	var/oxycalc = 2.5*REM*current_cycle
 	if(!overdosed)
-		oxycalc = min(oxycalc,M.getOxyLoss()+(current_cycle*0.1)) //if NOT overdosing, we lower our toxdamage to only the damage we actually healed with a minimum of 0.1*current_cycle. IE if we only heal 10 oxygen damage but we COULD have healed 20, we will only take toxdamage for the 10. We would take the toxdamage for the extra 10 if we were overdosing.
+		oxycalc = min(oxycalc,M.getOxyLoss()+0.5) //if NOT overdosing, we lower our toxdamage to only the damage we actually healed with a minimum of 0.1*current_cycle. IE if we only heal 10 oxygen damage but we COULD have healed 20, we will only take toxdamage for the 10. We would take the toxdamage for the extra 10 if we were overdosing.
 	M.adjustOxyLoss(-oxycalc, 0)
-	M.adjustToxLoss(oxycalc/2.5, 0)
+	M.adjustToxLoss(oxycalc/CONVERMOL_RATIO, 0)
 	if(prob(current_cycle) && M.losebreath)
 		M.losebreath--
 	..()
@@ -107,6 +109,8 @@
 	..()
 	return TRUE
 
+#undef	CONVERMOL_RATIO
+
 /datum/reagent/medicine/C2/tirimol
 	name = "Tirimol"
 	description = "An oxygen deprivation medication that causes fatigue. Prolonged exposure causes the patient to fall asleep once the medicine metabolizes."
@@ -114,7 +118,7 @@
 	var/drowsycd = 0
 
 /datum/reagent/medicine/C2/tirimol/on_mob_life(mob/living/carbon/human/M)
-	M.adjustOxyLoss(-1)
+	M.adjustOxyLoss(-3)
 	M.adjustStaminaLoss(2)
 	if(drowsycd && (world.time > drowsycd))
 		M.drowsyness += 10
@@ -126,7 +130,7 @@
 
 /datum/reagent/medicine/C2/tirimol/on_mob_end_metabolize(mob/living/L)
 	if(current_cycle > 20)
-		L.Sleeping(200)
+		L.Sleeping(10 SECONDS)
 	..()
 
 /******TOXIN******/
@@ -170,7 +174,7 @@
 	return TRUE
 
 
-/datum/reagent/medicine/C2/multiver //made up chem, it's a PALLETTE cleanser hehe
+/datum/reagent/medicine/C2/multiver //amplified with MULTIple medicines
 	name = "Multiver"
 	description = "An antitoxin that scales with the more unique medicines in the body as well as purges chems (including itself). Causes lung damage."
 
@@ -187,7 +191,7 @@
 	..()
 	return TRUE
 
-/datum/reagent/medicine/C2/syriniver
+/datum/reagent/medicine/C2/syriniver //Inject >> SYRINge
 	name = "Syriniver"
 	description = "A potent antidote for intravenous use with a narrow therapeutic index, it is considered an active prodrug of musiver."
 	reagent_state = LIQUID
@@ -226,7 +230,7 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/C2/musiver
+/datum/reagent/medicine/C2/musiver //MUScles
 	name = "Musiver"
 	description = "The active metabolite of syriniver. Causes muscle weakness on overdose"
 	reagent_state = LIQUID

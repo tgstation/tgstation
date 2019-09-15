@@ -913,7 +913,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 	popup.open()
 
 /obj/machinery/vending/custom/attackby(obj/item/I, mob/user, params)
-
 	if(!private_a)
 		var/mob/living/carbon/human/H
 		var/obj/item/card/id/C
@@ -942,9 +941,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 		return
 
 	return ..()
-
-/obj/machinery/vending/custom/compartmentLoadAccessCheck(mob/user)
-	return FALSE
 
 /obj/machinery/vending/custom/crowbar_act(mob/living/user, obj/item/I)
 	return FALSE

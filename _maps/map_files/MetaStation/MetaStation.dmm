@@ -9728,7 +9728,7 @@
 	},
 /area/maintenance/fore)
 "aud" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 1
 	},
 /turf/open/floor/wood,
@@ -15643,7 +15643,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "aHT" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/wood,
