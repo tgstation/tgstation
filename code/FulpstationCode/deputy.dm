@@ -23,6 +23,11 @@
 
 	display_order = JOB_DISPLAY_ORDER_SECURITY_OFFICER
 
+	// FULP Integration Vars
+	id_icon = 'icons/fulpicons/cards.dmi'	// Overlay on your ID
+	hud_icon = 'icons/fulpicons/fulphud.dmi'		 	// Sec Huds see this
+
+
 /obj/item/clothing/under/rank/security/mallcop
 	name = "deputy shirt"
 	desc = "An awe-inspiring tactical shirt-and-pants combo; because safety never takes a holiday."
@@ -150,9 +155,9 @@ GLOBAL_LIST_INIT(available_deputy_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MED
 
 	var/obj/item/card/id/W = H.wear_id
 	W.access |= dep_access
-	W.access |= dep_access
-	W.job_icon = 'icons/fulpicons/cards.dmi'
-	W.update_icon()
+	// SWAIN: Cards now link to their job, which contains id_icon and hud_icon (see above in Deputy's vars). We don't have to assign it here anymore <3
+	//W.job_icon = 'icons/fulpicons/cards.dmi'
+	//W.update_icon()
 
 	var/teleport = 0
 	if(!CONFIG_GET(flag/sec_start_brig))

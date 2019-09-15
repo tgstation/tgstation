@@ -304,9 +304,9 @@
 	var/job = assignment ? ckey(GetJobName()) : null
 	var/list/add_overlays = list()
 	if(!blank)
-		add_overlays += mutable_appearance(job_icon, "assigned") //FULP - switched out 'icon' for proc that returns fulp or tg dmi resectively
+		add_overlays += mutable_appearance(icon, "assigned") // FULP: Swain Update - "assigned" is just a blank-ish icon in card.dmi. Let's let it just keep calling from there.
 	if(job)
-		add_overlays += mutable_appearance(job_icon, "id[job]") //FULP - ditto
+		add_overlays += mutable_appearance(return_icon_job(), "id[job]") //FULP: Temporarily using a return proc that points to your job's icon. Was "job_icon", but this is moved to the job itself as "id_icon"
 	add_overlay(add_overlays)
 	update_in_wallet(add_overlays)
 
