@@ -968,7 +968,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if(!M)
 			continue
 
-		M.audible_message("<span class='italics'>...wabbajack...wabbajack...</span>")
+		M.audible_message("<span class='hear'>...wabbajack...wabbajack...</span>")
 		playsound(M.loc, 'sound/magic/staff_change.ogg', 50, TRUE, -1)
 
 		wabbajack(M)

@@ -349,7 +349,7 @@
 	visible_message(
 		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
-		"<span class='italics'>You hear a heavy electrical crack.</span>" \
+		"<span class='hear'>You hear a heavy electrical crack.</span>" \
 	)
 	return shock_damage
 
