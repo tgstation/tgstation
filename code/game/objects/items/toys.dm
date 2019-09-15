@@ -454,6 +454,7 @@
 	var/timer = 0
 	var/cooldown = 30
 	var/quiet = 0
+	w_class = WEIGHT_CLASS_SMALL
 
 //all credit to skasi for toy mech fun ideas
 /obj/item/toy/prize/attack_self(mob/user)
