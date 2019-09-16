@@ -62,7 +62,7 @@
 				targets += C
 
 	if(!targets.len)
-		stat |= BROKEN
+		obj_break()
 	update_icon()
 
 
