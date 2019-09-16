@@ -35,9 +35,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	obj_flags = NONE
 	var/item_flags = NONE
 
-	var/hitsound = null
-	var/usesound = null
-	var/throwhitsound = null
+	var/hitsound
+	var/usesound
+	var/throwhitsound
+	///Sound used when equipping the item into a valid slot
+	var/equip_sound
+
 	var/w_class = WEIGHT_CLASS_NORMAL
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
@@ -116,6 +119,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	//Grinder vars
 	var/list/grind_results //A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
 	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
+
 
 /obj/item/Initialize()
 
@@ -412,14 +416,16 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // user is mob that equipped it
 // slot uses the slot_X defines found in setup.dm
 // for items that can be placed in multiple slots
-// note this isn't called during the initial dressing of a player
-/obj/item/proc/equipped(mob/user, slot)
+// Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
+/obj/item/proc/equipped(mob/user, slot, initial = FALSE)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	for(var/X in actions)
 		var/datum/action/A = X
 		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
 			A.Grant(user)
 	item_flags |= IN_INVENTORY
+	if(equip_sound && !initial &&(slot_flags & slotdefine2slotbit(slot)))
+		playsound(src, equip_sound, EQUIP_SOUND_VOLUME, TRUE, ignore_walls = FALSE)
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user)

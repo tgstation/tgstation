@@ -82,15 +82,20 @@
 	my_atom = null
 
 // Used in attack logs for reagents in pills and such
-/datum/reagents/proc/log_list()
-	if(!length(reagent_list))
+// external list is list of reagent types = amounts
+/datum/reagents/proc/log_list(external_list)
+	if((external_list && !length(external_list)) || !length(reagent_list))
 		return "no reagents"
 
 	var/list/data = list()
-	for(var/r in reagent_list) //no reagents will be left behind
-		var/datum/reagent/R = r
-		data += "[R.type] ([round(R.volume, 0.1)]u)"
-		//Using IDs because SOME chemicals (I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
+	if(external_list)
+		for(var/r in external_list)
+			data += "[r] ([round(external_list[r], 0.1)]u)"
+	else
+		for(var/r in reagent_list) //no reagents will be left behind
+			var/datum/reagent/R = r
+			data += "[R.type] ([round(R.volume, 0.1)]u)"
+			//Using types because SOME chemicals (I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
 	return english_list(data)
 
 /datum/reagents/proc/remove_any(amount = 1)
@@ -186,13 +191,10 @@
 		R = target.reagents
 		target_atom = target
 
-	if(transfered_by && target_atom)
-		target_atom.add_hiddenprint(transfered_by) //log prints so admins can figure out who touched it last.
-		log_combat(transfered_by, target_atom, "transferred reagents ([log_list()]) from [my_atom] to")
-
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 	var/part = amount / src.total_volume
 	var/trans_data = null
+	var/transfer_log = list()
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/T = reagent
 		if(remove_blacklisted && !T.can_synth)
@@ -205,6 +207,12 @@
 			R.react_single(T, target_atom, method, part, show_message)
 			T.on_transfer(target_atom, method, transfer_amount * multiplier)
 		remove_reagent(T.type, transfer_amount)
+		transfer_log[T.type] = transfer_amount
+
+	if(transfered_by && target_atom)
+		target_atom.add_hiddenprint(transfered_by) //log prints so admins can figure out who touched it last.
+		log_combat(transfered_by, target_atom, "transferred reagents ([log_list(transfer_log)]) from [my_atom] to")
+	
 
 	update_total()
 	R.update_total()
