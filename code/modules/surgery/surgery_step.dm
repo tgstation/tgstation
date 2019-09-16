@@ -8,7 +8,6 @@
 	var/repeatable = FALSE				//can this step be repeated? Make shure it isn't last step, or it used in surgery with `can_cancel = 1`. Or surgion will be stuck in the loop
 	var/list/chems_needed = list()  //list of chems needed to complete the step. Even on success, the step will have no effect if there aren't the chems required in the mob.
 	var/require_all_chems = TRUE    //any on the list or all on the list?
-	var/silicons_obey_prob = FALSE
 
 /datum/surgery_step/proc/try_op(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	var/success = FALSE
@@ -68,21 +67,18 @@
 
 	if(tool)
 		speed_mod = tool.toolspeed
-	speed_mod /= surgery.get_speed_multiplier()
+
+	var/implement_speed_penalty = 1
+
+	if(implement_type)	//this means it isn't a require hand or any item step.
+		implement_speed_penalty = implements[implement_type]
+
+	speed_mod /= (get_location_modifier(target) * (1 + surgery.success_multiplier) * implement_speed_penalty)
 	
 	if(do_after(user, time * speed_mod, target = target))
-		var/prob_chance = 100
-
-		if(implement_type)	//this means it isn't a require hand or any item step.
-			prob_chance = implements[implement_type]
-		prob_chance *= surgery.get_propability_multiplier()
-
-		if((prob(prob_chance) || (iscyborg(user) && !silicons_obey_prob)) && chem_check(target) && !try_to_fail)
-			if(success(user, target, target_zone, tool, surgery))
-				advance = TRUE
-		else
-			if(failure(user, target, target_zone, tool, surgery))
-				advance = TRUE
+		
+		success(user, target, target_zone, tool, surgery)
+		advance = TRUE
 
 		if(advance && !repeatable)
 			surgery.status++
@@ -102,12 +98,6 @@
 		"[user] succeeds!",
 		"[user] finishes.")
 	return TRUE
-
-/datum/surgery_step/proc/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='warning'>You screw up!</span>",
-		"<span class='warning'>[user] screws up!</span>",
-		"[user] finishes.", TRUE) //By default the patient will notice if the wrong thing has been cut
-	return FALSE
 
 /datum/surgery_step/proc/tool_check(mob/user, obj/item/tool)
 	return TRUE

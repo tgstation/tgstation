@@ -108,26 +108,6 @@
 	SSblackbox.record_feedback("tally", "surgeries_completed", 1, type)
 	qdel(src)
 
-/datum/surgery/proc/get_propability_multiplier()
-	var/probability = 1.0
-
-	return probability + success_multiplier
-
-/datum/surgery/proc/get_speed_multiplier()
-	var/speed = 0.25
-	var/turf/T = get_turf(target)
-
-	if(locate(/obj/structure/table/optable, T))
-		speed = 1
-	else if(locate(/obj/machinery/stasis, T))
-		speed = 0.9
-	else if(locate(/obj/structure/table, T))
-		speed = 0.8
-	else if(locate(/obj/structure/bed, T))
-		speed = 0.7
-		
-	return speed + success_multiplier
-
 /datum/surgery/advanced
 	name = "advanced surgery"
 	requires_tech = TRUE

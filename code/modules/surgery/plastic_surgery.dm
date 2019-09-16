@@ -43,10 +43,3 @@
 		var/mob/living/carbon/human/H = target
 		H.sec_hud_set_ID()
 	return TRUE
-
-/datum/surgery_step/reshape_face/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='warning'>You screw up, leaving [target]'s appearance disfigured!</span>",
-		"[user] screws up, disfiguring [target]'s appearance!",
-		"[user] finishes the operation on [target]'s face.")
-	ADD_TRAIT(target, TRAIT_DISFIGURED, TRAIT_GENERIC)
-	return FALSE
