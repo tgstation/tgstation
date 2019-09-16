@@ -412,7 +412,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // user is mob that equipped it
 // slot uses the slot_X defines found in setup.dm
 // for items that can be placed in multiple slots
-// note this isn't called during the initial dressing of a player
+// note that this ***IS*** called during the initial dressing of a player
 /obj/item/proc/equipped(mob/user, slot)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	for(var/X in actions)
