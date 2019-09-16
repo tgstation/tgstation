@@ -1,6 +1,9 @@
 // GLOBAL_LIST_INIT(color_list_beefman, list("Very Rare" = "c62461", "Rare" = "c91745", "Medium Rare" = "e73f4e", "Medium" = "fd7f8b", "Medium Well" = "e7a5ab", "Well Done" = "b9a6a8" ))
 	//message_admins("DEBUG3")
 
+#define isbeefman(A) (is_species(A,/datum/species/beefman))
+
+
 // TO DO:
 //
 // Death Sound
@@ -49,8 +52,6 @@
 	bruising_desc = "tenderizing"
 	burns_desc = "searing"
 	cellulardamage_desc = "meat degradation"
-
-
 
 
 /proc/proof_beefman_features(var/list/inFeatures)
