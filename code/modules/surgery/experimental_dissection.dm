@@ -96,4 +96,4 @@
 	requires_tech = TRUE
 	replaced_by = null
 
-#undef EXPDIS_FAIL_MSG
+#undef BASE_HUMAN_REWARD
