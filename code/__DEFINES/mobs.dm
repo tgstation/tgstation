@@ -219,6 +219,10 @@
 
 #define MAX_CHICKENS 50
 
+#define SHOCK_NOGLOVES (1 << 0)
+#define SHOCK_TESLA (1 << 1)
+#define SHOCK_ILLUSION (1 << 2)
+#define SHOCK_NOSTUN (1 << 3)
 
 #define INCORPOREAL_MOVE_BASIC 1
 #define INCORPOREAL_MOVE_SHADOW 2 // leaves a trail of shadows
