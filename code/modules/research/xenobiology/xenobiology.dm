@@ -528,7 +528,7 @@
 			return 150
 
 		if(SLIME_ACTIVATE_MAJOR)
-			var/chosen = pick(subtypesof(/obj/item/toy/crayon/spraycan))
+			var/chosen = pick(subtypesof(/obj/item/toy/crayon/spraycan) - /obj/item/toy/crayon/spraycan/borg)
 			var/obj/item/O = new chosen(null)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())

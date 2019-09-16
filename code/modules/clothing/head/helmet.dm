@@ -269,6 +269,8 @@
 	item_state = "knight_red"
 
 /obj/item/clothing/head/helmet/knight/greyscale
+	name = "knight helmet"
+	desc = "A classic medieval helmet, if you hold it upside down you could see that it's actually a bucket."
 	icon_state = "knight_greyscale"
 	item_state = "knight_greyscale"
 	armor = list("melee" = 35, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 10, "bio" = 10, "rad" = 10, "fire" = 40, "acid" = 40)
