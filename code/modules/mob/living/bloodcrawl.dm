@@ -126,7 +126,7 @@
 		return TRUE
 
 	to_chat(src, "<span class='danger'>You devour [victim]. Your health is fully restored.</span>")
-	revive(full_heal = 1)
+	revive(full_heal = TRUE)
 
 	// No defib possible after laughter
 	victim.adjustBruteLoss(1000)
