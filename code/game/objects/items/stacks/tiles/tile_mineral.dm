@@ -95,4 +95,4 @@
 	icon_state = "tile_snow"
 	item_state = "tile-silver"
 	turf_type = /turf/open/floor/grass/snow/safe
-	mineralType = "snow"	
+	mineralType = "snow"
