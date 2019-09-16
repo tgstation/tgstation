@@ -123,23 +123,15 @@ While using this makes the system rely on OnFire, it still gives options for tim
 						elitemind = pick(candidates)
 						SEND_SOUND(elitemind, sound('sound/effects/magic.ogg'))
 						to_chat(elitemind, "<b>You have been chosen to play as a Lavaland Elite.\nIn a few seconds, you will be summoned on Lavaland as a monster to fight your activator, in a fight to the death.\nYour attacks can be switched using the buttons on the top left of the HUD, and used by clicking on targets or tiles similar to a gun.\nWhile the opponent might have an upper hand with  powerful mining equipment and tools, you have great power normally limited by AI mobs.\nIf you want to win, you'll have to use your powers in creative ways to ensure the kill.  It's suggested you try using them all as soon as possible.\nShould you win, you'll receive extra information regarding what to do after.  Good luck!</b>")
-						addtimer(100)
+						addtimer(CALLBACK(src, .proc/spawn_elite, elitemind), 100)
+						return
 					else
 						visible_message("<span class='boldwarning'>The stirring stops, and nothing emerges.  Perhaps try again later.</span>")
 						activity = CREVICE_INACTIVE
 						activator = null
 						return
 				else
-					addtimer(30)
-				var/selectedspawn = pick(potentialspawns)
-				mychild = new selectedspawn(loc, src)
-				mychild.myparent = src
-				visible_message("<span class='boldwarning'>[mychild] emerges from the crevice!</span>")
-				playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
-				if(boosted)
-					mychild.key = elitemind.key
-					mychild.sentience_act()
-				INVOKE_ASYNC(src, .proc/arena_trap)
+					addtimer(CALLBACK(src, .proc/spawn_elite), 30)
 				return
 		if(CREVICE_PASSIVE)
 			if(istype(user, /mob/living/carbon/human))
@@ -150,17 +142,32 @@ While using this makes the system rely on OnFire, it still gives options for tim
 				if(boosted)
 					SEND_SOUND(mychild, sound('sound/effects/magic.ogg'))
 					to_chat(mychild, "<b>Someone has activated your crevice.  You will be returned to fight shortly, get ready!</b>")
-					addtimer(40)
-				addtimer(30)
-				mychild.forceMove(loc)
-				visible_message("<span class='boldwarning'>[mychild] emerges from the crevice!</span>")
-				playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
-				mychild.revive(full_heal = TRUE, admin_revive = TRUE)
-				if(boosted)
-					mychild.maxHealth = mychild.maxHealth * 2
-					mychild.health = mychild.maxHealth
+				addtimer(CALLBACK(src, .proc/return_elite), 30)
 				return
-			
+
+				
+obj/structure/elite_crevice/proc/spawn_elite(var/mob/dead/observer/elitemind)
+	var/selectedspawn = pick(potentialspawns)
+	mychild = new selectedspawn(loc, src)
+	mychild.myparent = src
+	visible_message("<span class='boldwarning'>[mychild] emerges from the crevice!</span>")
+	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
+	if(boosted)
+		mychild.key = elitemind.key
+		mychild.sentience_act()
+	INVOKE_ASYNC(src, .proc/arena_trap)
+	return
+
+obj/structure/elite_crevice/proc/return_elite()
+	mychild.forceMove(loc)
+	visible_message("<span class='boldwarning'>[mychild] emerges from the crevice!</span>")
+	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
+	mychild.revive(full_heal = TRUE, admin_revive = TRUE)
+	if(boosted)
+		mychild.maxHealth = mychild.maxHealth * 2
+		mychild.health = mychild.maxHealth
+	return
+		
 /obj/structure/elite_crevice/Initialize()
 	. = ..()
 	AddComponent(/datum/component/gps, "Menacing Signal")
@@ -184,12 +191,15 @@ While using this makes the system rely on OnFire, it still gives options for tim
 				newwall = new /obj/effect/temp_visual/elite_crevice_wall(t, src)
 				newwall.activator = src.activator
 				newwall.ourelite = src.mychild
-		addtimer(100)
-		if(src) //Checking to see if we still exist
-			INVOKE_ASYNC(src, .proc/arena_trap)  //Gets another arena trap queued up for when this one runs out.
-			INVOKE_ASYNC(src, .proc/border_check)  //Checks to see if our fighters got out of the arena somehow.
+		addtimer(CALLBACK(src, .proc/arena_checks), 100)
 		return
 
+/obj/structure/elite_crevice/proc/arena_checks()
+	if(src) //Checking to see if we still exist
+		INVOKE_ASYNC(src, .proc/arena_trap)  //Gets another arena trap queued up for when this one runs out.
+		INVOKE_ASYNC(src, .proc/border_check)  //Checks to see if our fighters got out of the arena somehow.
+	return
+		
 /obj/effect/temp_visual/elite_crevice_wall
 	name = "magic wall"
 	icon = 'icons/turf/walls/hierophant_wall_temp.dmi'

@@ -147,7 +147,9 @@
 	color = rgb(150,0,0)
 	src.set_varspeed(0)
 	src.move_to_delay = 3
-	addtimer(50)
+	addtimer(CALLBACK(src, .proc/reset_rage), 50)
+	
+/mob/living/simple_animal/hostile/asteroid/elite/goliath/proc/reset_rage()
 	color = rgb(255, 255, 255)
 	src.set_varspeed(2)
 	src.move_to_delay = 5
@@ -172,7 +174,9 @@
 		M.gets_drilled()
 	playsound(src, 'sound/effects/bamf.ogg', 100, 1)
 	icon_state = "explosive_shroom_activate"
-	addtimer(20)
+	addtimer(CALLBACK(src, .proc/arm_shroom), 20)
+	
+/obj/structure/explosive_shroom/proc/arm_shroom()
 	icon_state = "explosive_shroom_active"
 	armed = 1
 	QDEL_IN(src, 600)
