@@ -35,16 +35,6 @@
 			H.adjustBruteLoss(10)
 	return TRUE
 
-/datum/surgery_step/incise_heart/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		display_results(user, target, "<span class='warning'>You screw up, cutting too deeply into the heart!</span>",
-			"<span class='warning'>[user] screws up, causing blood to spurt out of [H]'s chest!</span>",
-			"<span class='warning'>[user] screws up, causing blood to spurt out of [H]'s chest!</span>")
-		H.bleed_rate += 20
-		H.adjustOrganLoss(ORGAN_SLOT_HEART, 10)
-		H.adjustBruteLoss(10)
-
 //grafts a coronary bypass onto the individual's heart, success chance is 90% base again
 /datum/surgery_step/coronary_bypass
 	name = "graft coronary bypass"
@@ -65,13 +55,3 @@
 			"<span class='notice'>[user] finishes grafting something onto [target]'s heart.</span>",
 			"<span class='notice'>[user] finishes grafting something onto [target]'s heart.</span>")
 	return TRUE
-
-/datum/surgery_step/coronary_bypass/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		display_results(user, target, "<span class='warning'>You screw up in attaching the graft, and it tears off, tearing part of the heart!</span>",
-			"<span class='warning'>[user] screws up, causing blood to spurt out of [H]'s chest profusely!</span>",
-			"<span class='warning'>[user] screws up, causing blood to spurt out of [H]'s chest profusely!</span>")
-		H.adjustOrganLoss(ORGAN_SLOT_HEART, 20)
-		H.bleed_rate += 30
-	return FALSE

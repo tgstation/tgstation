@@ -1,5 +1,4 @@
 #define BASE_HUMAN_REWARD 500
-#define EXPDIS_FAIL_MSG "<span class='notice'>You dissect [target], but do not find anything particularly interesting.</span>"
 
 /datum/surgery/advanced/experimental_dissection
 	name = "Dissection"
@@ -25,9 +24,8 @@
 
 /datum/surgery_step/dissection
 	name = "dissection"
-	implements = list(/obj/item/scalpel/augment = 75, /obj/item/scalpel/advanced = 60, /obj/item/scalpel = 45, /obj/item/kitchen/knife = 20, /obj/item/shard = 10)// special tools not only cut down time but also improve probability
+	implements = list(/obj/item/scalpel/augment = 75, /obj/item/scalpel/advanced = 60, /obj/item/scalpel = 45, /obj/item/kitchen/knife = 20, /obj/item/shard = 10)// special tools cut down time
 	time = 125
-	silicons_obey_prob = TRUE
 	repeatable = TRUE
 
 /datum/surgery_step/dissection/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -80,13 +78,6 @@
 	repeatable = FALSE
 	return TRUE
 
-/datum/surgery_step/dissection/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("<span class='notice'>[user] dissects [target]!</span>", EXPDIS_FAIL_MSG)
-	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = (round(check_value(target, surgery) * 0.01))))
-	var/obj/item/bodypart/L = target.get_bodypart(BODY_ZONE_CHEST)
-	target.apply_damage(80, BRUTE, L)
-	return TRUE
-
 /datum/surgery/advanced/experimental_dissection/adv
 	name = "Thorough Dissection"
 	value_multiplier = 2
@@ -105,6 +96,4 @@
 	requires_tech = TRUE
 	replaced_by = null
 
-
-#undef BASE_HUMAN_REWARD
 #undef EXPDIS_FAIL_MSG

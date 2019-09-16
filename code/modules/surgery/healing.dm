@@ -66,14 +66,6 @@
 		var/datum/surgery/healing/the_surgery = surgery
 		the_surgery.antispam = TRUE
 	return TRUE
-
-/datum/surgery_step/heal/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='warning'>You screwed up!</span>",
-		"<span class='warning'>[user] screws up!</span>",
-		"<span class='notice'>[user] fixes some of [target]'s wounds.</span>", TRUE)
-	target.take_bodypart_damage(brutehealing*0.8,burnhealing*0.8)
-	return FALSE
-
 /***************************BRUTE***************************/
 /datum/surgery/healing/brute
 	name = "Tend Wounds (Bruises)"
