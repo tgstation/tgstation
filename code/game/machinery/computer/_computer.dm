@@ -67,8 +67,6 @@
 
 /obj/machinery/computer/power_change()
 	. = ..()
-	if(!.)
-		return // reduce unneeded light changes
 	if(stat & NOPOWER)
 		set_light(0)
 	else
