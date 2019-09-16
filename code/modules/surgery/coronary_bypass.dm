@@ -11,8 +11,6 @@
 			return TRUE
 	return FALSE
 
-
-//an incision but with greater bleed, and a 90% base success chance
 /datum/surgery_step/incise_heart
 	name = "incise heart"
 	implements = list(/obj/item/scalpel = 90, /obj/item/melee/transforming/energy/sword = 45, /obj/item/kitchen/knife = 45,
@@ -35,7 +33,6 @@
 			H.adjustBruteLoss(10)
 	return TRUE
 
-//grafts a coronary bypass onto the individual's heart, success chance is 90% base again
 /datum/surgery_step/coronary_bypass
 	name = "graft coronary bypass"
 	implements = list(/obj/item/hemostat = 90, TOOL_WIRECUTTER = 35, /obj/item/stack/packageWrap = 15, /obj/item/stack/cable_coil = 5)

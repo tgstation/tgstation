@@ -817,7 +817,6 @@
 		for(var/s in C.surgeries)
 			var/datum/surgery/S = s
 			S.speed_modifier = max(0.2, S.speed_modifier)
-			// +20% success propability on each step, useful while operating in less-than-perfect conditions
 	..()
 
 /datum/reagent/iron
