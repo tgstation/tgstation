@@ -53,3 +53,6 @@
 /datum/job
 	var/id_icon = 'icons/obj/card.dmi'	// Overlay on your ID
 	var/hud_icon = 'icons/mob/hud.dmi'	// Sec Huds see this
+
+
+
