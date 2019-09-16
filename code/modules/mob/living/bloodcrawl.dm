@@ -168,7 +168,7 @@
 		return
 	forceMove(B.loc)
 	client.eye = src
-	visible_message("<span class='boldwarning'><B>[src] rises out of the pool of blood!</B></span>")
+	visible_message("<span class='boldwarning'>[src] rises out of the pool of blood!</span>")
 	exit_blood_effect(B)
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
