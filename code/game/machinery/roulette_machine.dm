@@ -58,7 +58,6 @@
 	if(!ui)
 		var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/roulette)
 		assets.send(user)
-		
 		ui = new(user, src, ui_key, "roulette", name, 455, 520, master_ui, state)
 		ui.open()
 
@@ -82,9 +81,9 @@
 	data["red"] = assets.icon_tag("red")
 	data["even"] = assets.icon_tag("even")
 	data["odd"] = assets.icon_tag("odd")
-	data["1-18"] = assets.icon_tag("1-18")
-	data["19-36"] = assets.icon_tag("19-36")
-	data["0"] = assets.icon_tag("0")
+	data["low"] = assets.icon_tag("low")
+	data["high"] = assets.icon_tag("high")
+	data["zero"] = assets.icon_tag("zero")
 	data["nano"] = assets.icon_tag("nano")
 	return data
 
@@ -304,7 +303,7 @@
 		add_overlay("jackpot")
 	else
 		add_overlay(color)
-		
+
 	var/numberright = rolled_number % 10 //Right hand number
 	var/numberleft = (rolled_number - numberright) / 10 //Left hand number
 
@@ -368,7 +367,7 @@
 	used = TRUE
 	addtimer(CALLBACK(src, .proc/launch_payload), 40)
 
-/obj/item/roulette_wheel_beacon/proc/launch_payload()	
+/obj/item/roulette_wheel_beacon/proc/launch_payload()
 	new /obj/effect/DPtarget(drop_location(), /obj/structure/closet/supplypod/centcompod, /obj/machinery/roulette)
 
 #undef ROULETTE_SINGLES_PAYOUT

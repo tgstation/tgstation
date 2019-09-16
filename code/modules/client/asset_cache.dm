@@ -604,9 +604,10 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"red" = 'icons/UI_Icons/Roulette/red.png',
 		"odd" = 'icons/UI_Icons/Roulette/odd.png',
 		"even" = 'icons/UI_Icons/Roulette/even.png',
-		"s1-18" = 'icons/UI_Icons/Roulette/1-18.png',
-		"s19-36" = 'icons/UI_Icons/Roulette/19-36.png',
+		"low" = 'icons/UI_Icons/Roulette/1-18.png',
+		"high" = 'icons/UI_Icons/Roulette/19-36.png',
 		"nano" = 'icons/UI_Icons/Roulette/nano.png',
+		"zero" = 'icons/UI_Icons/Roulette/0.png'
 
 	)
 

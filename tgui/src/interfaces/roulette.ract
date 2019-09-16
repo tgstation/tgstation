@@ -1,154 +1,95 @@
-<html>
-<head>
-<title>Page Title</title>
-<style>
-.number_red {
-  color: white;
-  width: 32px;
-  height: 32px;
-  font-size: 16px;
-  margin: 4px;
-  background-color:#aa1818;
-  border: none;
-} 
+<div style>
+	<span style="float:left;">
+		<span class="number red"><ui-button action='ChangeBetType' params='{"type": 1}'>1</ui-button></span>
+		<span class="number black"><ui-button action='ChangeBetType' params='{"type": 2}'>2</ui-button></span>
+		<span class="number red"><ui-button action='ChangeBetType' params='{"type": 3}'>3</ui-button></span>
+		<br>
+		<span class="number black"><ui-button action='ChangeBetType' params='{"type": 4}'>4</ui-button></span>
+		<span class="number red"><ui-button action='ChangeBetType' params='{"type": 5}'>5</ui-button></span>
+		<span class="number black"><ui-button action='ChangeBetType' params='{"type": 6}'>6</ui-button></span>
+		<br>
+		<span class="number red"><ui-button action='ChangeBetType' params='{"type": 7}'>7</ui-button></span>
+		<span class="number black"><ui-button action='ChangeBetType' params='{"type": 8}'>8</ui-button></span>
+		<span class="number red"><ui-button action='ChangeBetType' params='{"type": 9}'>9</ui-button></span>
+		<br>
+		<span class="number black"><ui-button action='ChangeBetType' params='{"type": 10}'>10</ui-button></span>
+		<span class="number black"><ui-button action='ChangeBetType' params='{"type": 11}'>11</ui-button></span>
+		<span class="number red"><ui-button action='ChangeBetType' params='{"type": 12}'>12</ui-button></span>
+		<br>
+		<span class="number black"><ui-button action='ChangeBetType' params='{"type": 13}'>13</ui-button></span>
+		<span class="number red"><ui-button action='ChangeBetType' params='{"type": 14 }'>14</ui-button></span>
+		<span class="number black"><ui-button action='ChangeBetType' params='{"type": 15}'>15</ui-button></span>
+		<br>
+		<span class="number red"><ui-button action='ChangeBetType' params='{"type": 16}'>16</ui-button></span>
+		<span class="number black"><ui-button action='ChangeBetType' params='{"type": 17}'>17</ui-button></span>
+		<span class="number red"><ui-button action='ChangeBetType' params='{"type": 18}'>18</ui-button></span>
+		<br>
+		<span class="number red"><ui-button action='ChangeBetType' params='{"type": 19}'>19</ui-button></span>
+		<span class="number black"><ui-button action='ChangeBetType' params='{"type": 20}'>20</ui-button></span>
+		<span class="number red"><ui-button action='ChangeBetType' params='{"type": 21}'>21</ui-button></span>
+		<br>
+		<span class="number black"><ui-button action='ChangeBetType' params='{"type": 22}'>22</ui-button></span>
+		<span class="number red"><ui-button action='ChangeBetType' params='{"type": 23}'>23</ui-button></span>
+		<span class="number black"><ui-button action='ChangeBetType' params='{"type": 24}'>24</ui-button></span>
+		<br>
+		<span class="number red"><ui-button action='ChangeBetType' params='{"type": 25}'>25</ui-button></span>
+		<span class="number black"><ui-button action='ChangeBetType' params='{"type": 26}'>26</ui-button></span>
+		<span class="number red"><ui-button action='ChangeBetType' params='{"type": 27}'>27</ui-button></span>
+		<br>
+		<span class="number black"><ui-button action='ChangeBetType' params='{"type": 28}'>28</ui-button></span>
+		<span class="number black"><ui-button  action='ChangeBetType' params='{"type": 29}'>29</ui-button></span>
+		<span class="number red"><ui-button  action='ChangeBetType' params='{"type": 30}'>30</ui-button></span>
+		<br>
+		<span class="number black"><ui-button action='ChangeBetType' params='{"type": 31}'>31</ui-button></span>
+		<span class="number red"><ui-button  action='ChangeBetType' params='{"type": 32}'>32</ui-button></span>
+		<span class="number black"><ui-button action='ChangeBetType' params='{"type": 33}'>33</ui-button></span>
+		<br>
+		<span class="number red"><ui-button action='ChangeBetType' params='{"type": 34}'>34</ui-button></span>
+		<span class="number black"><ui-button action='ChangeBetType' params='{"type": 35}'>35</ui-button></span>
+		<span class="number red"><ui-button action='ChangeBetType' params='{"type": 36}'>36</ui-button></span>
+	</span>
+	<span style="float:left; margin-top:40px;">
+		<ui-button class="image_button" action='ChangeBetType' params='{"type": "s1-18"}'>{{{data.low}}}</ui-button>
+		<br>
+		<ui-button class="image_button" action='ChangeBetType' params='{"type": "even"}'>{{{data.even}}}</ui-button>
+		<br>
+		<ui-button class="image_button" action='ChangeBetType' params='{"type": 0}'>{{{data.zero}}}</ui-button>
+		<br>
+		<ui-button class="image_button" action='ChangeBetType' params='{"type": "odd"}'>{{{data.odd}}}</ui-button>
+		<br>
+		<ui-button class="image_button" action='ChangeBetType' params='{"type": "s19-36"}'>{{{data.high}}}</ui-button>
+	</span>
+	<span style="float:left; margin-top:160px;">
+		<ui-button class="image_button" action='ChangeBetType' params='{"type": "red"}'>{{{data.red}}}</ui-button>
+		<br>
+		<ui-button class="image_button" action='ChangeBetType' params='{"type": "black"}'>{{{data.black}}}</ui-button>
+	</span>
 
-.number_black {
-  color: white;
-  width: 32px;
-  height: 32px;
-  font-size: 16px;
-  margin: 4px;
-  background-color:#1a1a1a; 
-  border: none;
-} 
-
-.image_button {
-  color: none;
-  width: 32px;
-  height: 72px;
-  font-size: 16px;
-  margin: 4px;
-  border: none;
-} 
-
-.amount {
-
-	width: 90%;
-    height: 32px;
-	margin-top: 8px;
-	border-style: ridge;
-    color: white;
-    background-color:#146630;
-    border-color:#06541f;
-}
-
-.display {
-	padding:4px;
-	margin:8px;
-    width: 200px;
-	border-style: ridge;
-    color: white;
-	background-color:#097a2d;
-    border-color: #06541f;
-}
-
-</style>
-</head>
-<body style="background-color:#146630;">
-<span>
-<span style="float:left;">
-<ui-button class="number_red" action='ChangeBetType' params='{"type": 1}'>1</ui-button>
-<ui-button class="number_black" action='ChangeBetType' params='{"type": 2}'>2</ui-button>
-<ui-button class="number_red" action='ChangeBetType' params='{"type": 3}'>3</ui-button>
-<br>
-<ui-button class="number_black" action='ChangeBetType' params='{"type": 4}'>4</ui-button>
-<ui-button class="number_red" action='ChangeBetType' params='{"type": 5}'>5</ui-button>
-<ui-button class="number_black" action='ChangeBetType' params='{"type": 6}'>6</ui-button>
-<br>
-<ui-button class="number_red" action='ChangeBetType' params='{"type": 7}'>7</ui-button>
-<ui-button class="number_black" action='ChangeBetType' params='{"type": 8}'>8</ui-button>
-<ui-button class="number_red" action='ChangeBetType' params='{"type": 9}'>9</ui-button>
-<br>
-<ui-button class="number_black" action='ChangeBetType' params='{"type": 10}'>10</ui-button>
-<ui-button class="number_black" action='ChangeBetType' params='{"type": 11}'>11</ui-button>
-<ui-button class="number_red" action='ChangeBetType' params='{"type": 12}'>12</ui-button>
-<br>
-<ui-button class="number_black" action='ChangeBetType' params='{"type": 13}'>13</ui-button>
-<ui-button class="number_red" action='ChangeBetType' params='{"type": 14 }'>14</ui-button>
-<ui-button class="number_black" action='ChangeBetType' params='{"type": 15}'>15</ui-button>
-<br>
-<ui-button class="number_red" action='ChangeBetType' params='{"type": 16}'>16</ui-button>
-<ui-button class="number_black" action='ChangeBetType' params='{"type": 17}'>17</ui-button>
-<ui-button class="number_red" action='ChangeBetType' params='{"type": 18}'>18</ui-button>
-<br>
-<ui-button class="number_red" action='ChangeBetType' params='{"type": 19}'>19</ui-button>
-<ui-button class="number_black" action='ChangeBetType' params='{"type": 20}'>20</ui-button>
-<ui-button class="number_red" action='ChangeBetType' params='{"type": 21}'>21</ui-button>
-<br>
-<ui-button class="number_black" action='ChangeBetType' params='{"type": 22}'>22</ui-button>
-<ui-button class="number_red" action='ChangeBetType' params='{"type": 23}'>23</ui-button>
-<ui-button class="number_black" action='ChangeBetType' params='{"type": 24}'>24</ui-button>
-<br>
-<ui-button class="number_red" action='ChangeBetType' params='{"type": 25}'>25</ui-button>
-<ui-button class="number_black" action='ChangeBetType' params='{"type": 26}'>26</ui-button>
-<ui-button class="number_red" action='ChangeBetType' params='{"type": 27}'>27</ui-button>
-<br>
-<ui-button class="number_black" action='ChangeBetType' params='{"type": 28}'>28</ui-button>
-<ui-button class="number_black"  action='ChangeBetType' params='{"type": 29}'>29</ui-button>
-<ui-button class="number_red"  action='ChangeBetType' params='{"type": 30}'>30</ui-button>
-<br>
-<ui-button class="number_black" action='ChangeBetType' params='{"type": 31}'>31</ui-button>
-<ui-button class="number_red"  action='ChangeBetType' params='{"type": 32}'>32</ui-button>
-<ui-button class="number_black" action='ChangeBetType' params='{"type": 33}'>33</ui-button>
-<br>
-<ui-button class="number_red" action='ChangeBetType' params='{"type": 34}'>34</ui-button>
-<ui-button class="number_black" action='ChangeBetType' params='{"type": 35}'>35</ui-button>
-<ui-button class="number_red" action='ChangeBetType' params='{"type": 36}'>36</ui-button>
-</span>
-<span style="float:left; margin-top:40px;">
-<ui-button class="image_button" action='ChangeBetType' params='{"type": "s1-18"}'>{{{data.s1-18}}}</ui-button>
-<br>
-<ui-button class="image_button" action='ChangeBetType' params='{"type": "even"}'>{{{data.even}}}</ui-button>
-<br>
-<ui-button class="image_button" action='ChangeBetType' params='{"type": 0}'>{{{data.0}}}</ui-button>
-<br>
-<ui-button class="image_button" action='ChangeBetType' params='{"type": "odd"}'>{{{data.odd}}}</ui-button>
-<br>
-<ui-button class="image_button" action='ChangeBetType' params='{"type": "s19-36"}'>{{{data.s19-36}}}</ui-button>
-</span>
-<span style="float:left; margin-top:160px;">
-<ui-button class="image_button" action='ChangeBetType' params='{"type": "red"}'>{{{data.red}}}</ui-button>
-<br>
-<ui-button class="image_button" action='ChangeBetType' params='{"type": "black"}'>{{{data.black}}}</ui-button>
-</span>
-
-<div style="text-align:right;">
-<img src="nano.png">
+	<div style="text-align:right;">
+		<span>{{{data.nano}}}</span>
+	</div>
+	<span class="display" style="float:right;">
+		<div>
+			House balance: {{data.HouseBalance}}₵
+			<br>
+			Account balance: {{data.AccountBalance}}₵
+			<br>
+			Current bet: {{data.BetAmount}}₵ on {{data.BetType}}
+		</div>
+		<div class="amount" style="text-align:center;">
+			<ui-button action='ChangeBetAmount' params='{"amount": 10}'>Bet 10₵</ui-button>
+			<br>
+			<ui-button action='ChangeBetAmount' params='{"amount": 50}'>Bet 50₵</ui-button>
+			<br>
+			<ui-button action='ChangeBetAmount' params='{"amount": 100}'>Bet 100₵</ui-button>
+			<br>
+			<ui-button action='ChangeBetAmount' params='{"amount": 250}'>Bet 250₵</ui-button>
+			<br>
+			<ui-button action='ChangeBetAmount' params='{"amount": 500}'>Bet 500₵</ui-button>
+			<br>
+			<ui-button action='ChangeBetAmountCustom' >Bet a custom amount</ui-button>
+			<br>
+			<ui-button action='anchor'>{{data.IsAnchored ? "Unbolt" : "Bolt"}}</ui-button>
+		</div>
+	</span>
 </div>
-<span class="display" style="float:right;">
-<ui-display>
-House balance: {{data.HouseBalance}}₵
-<br>
-Account balance: {{data.AccountBalance}}₵
-<br>
-Current bet: {{data.BetAmount}}₵ on {{data.BetType}}
-<br>
-</ui-display>
-<div style="text-align:center;">
-<ui-button class="amount" action='ChangeBetAmount' params='{"amount": 10}'>Bet 10₵</ui-button>
-<br>
-<ui-button class="amount" action='ChangeBetAmount' params='{"amount": 50}'>Bet 50₵</ui-button>
-<br>
-<ui-button class="amount" action='ChangeBetAmount' params='{"amount": 100}'>Bet 100₵</ui-button>
-<br>
-<ui-button class="amount" action='ChangeBetAmount' params='{"amount": 250}'>Bet 250₵</ui-button>
-<br>
-<ui-button class="amount" action='ChangeBetAmount' params='{"amount": 500}'>Bet 500₵</ui-button>
-<br>
-<ui-button class="amount" action='ChangeBetAmountCustom' >Bet a custom amount</ui-button>
-<br>
-<ui-button class="amount" action='anchor'>{{data.IsAnchored ? "Unbolt" : "Bolt"}}</ui-button>
-</div>
-</span>
-</body>
-</html>
