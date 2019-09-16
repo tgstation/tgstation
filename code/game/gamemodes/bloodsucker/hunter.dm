@@ -15,7 +15,7 @@
 
 	// Set Restricted Jobs
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
-		no_hunter_jobs += list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Deputy")
+		no_hunter_jobs += list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		no_hunter_jobs += "Assistant"
