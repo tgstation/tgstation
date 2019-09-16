@@ -68,22 +68,22 @@
 	if(tool)
 		speed_mod = tool.toolspeed
 
-	var/implement_speed_penalty = 1
+	var/implement_speed_modifier = 1
 
 	if(implement_type)	//this means it isn't a require hand or any item step.
-		implement_speed_penalty = implements[implement_type]
+		implement_speed_modifier = implements[implement_type] / 100.0
 
-	speed_mod /= (get_location_modifier(target) * (1 + surgery.success_multiplier) * implement_speed_penalty)
-	
+	speed_mod /= (get_location_modifier(target) * (1 + surgery.speed_modifier) * implement_speed_modifier)
+
 	if(do_after(user, time * speed_mod, target = target))
-		
-		success(user, target, target_zone, tool, surgery)
-		advance = TRUE
+		if(chem_check(target))
+			if(success(user, target, target_zone, tool, surgery))
+				advance = TRUE
 
-		if(advance && !repeatable)
-			surgery.status++
-			if(surgery.status > surgery.steps.len)
-				surgery.complete()
+			if(advance && !repeatable)
+				surgery.status++
+				if(surgery.status > surgery.steps.len)
+					surgery.complete()
 
 	surgery.step_in_progress = FALSE
 	return advance

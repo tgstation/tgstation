@@ -13,7 +13,7 @@
 	var/mob/living/carbon/target							//Operation target mob
 	var/obj/item/bodypart/operated_bodypart					//Operable body part
 	var/requires_bodypart = TRUE							//Surgery available only when a bodypart is present, or only when it is missing.
-	var/success_multiplier = 0								//Step success propability multiplier
+	var/speed_modifier = 0								//Step success propability multiplier
 	var/requires_real_bodypart = FALSE							//Some surgeries don't work on limbs that don't really exist
 	var/lying_required = TRUE								//Does the vicitm needs to be lying down.
 	var/self_operable = FALSE								//Can the surgery be performed on yourself.
