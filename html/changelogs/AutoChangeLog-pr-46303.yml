@@ -1,5 +1,0 @@
-author: "MacBlaze1"
-delete-after: True
-changes: 
-  - bugfix: "fixed turrets firing at silicons constantly"
-  - bugfix: "fixed turrets shooting at heads when on loyalty check"

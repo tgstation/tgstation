@@ -109,15 +109,28 @@
 /obj/machinery/proc/removeStaticPower(value, powerchannel)
 	addStaticPower(-value, powerchannel)
 
-/obj/machinery/proc/power_change()		// called whenever the power settings of the containing area change
-										// by default, check equipment channel & set flag
-										// can override if needed
+/**
+  * Called whenever the power settings of the containing area change
+  *
+  * by default, check equipment channel & set flag, can override if needed
+  *
+  * Returns TRUE if the NOPOWER flag was toggled
+  */
+/obj/machinery/proc/power_change()
+	if(stat & BROKEN)
+		return
 	if(powered(power_channel))
+		if(stat & NOPOWER)
+			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_RESTORED)
+			. = TRUE
 		stat &= ~NOPOWER
 	else
-
+		if(!(stat & NOPOWER))
+			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_LOST)
+			. = TRUE
 		stat |= NOPOWER
-	return
+	if(.)
+		update_icon()
 
 // connect the machine to a powernet if a node cable or a terminal is present on the turf
 /obj/machinery/power/proc/connect_to_network()

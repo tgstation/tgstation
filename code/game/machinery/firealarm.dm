@@ -52,10 +52,6 @@
 	LAZYREMOVE(myarea.firealarms, src)
 	return ..()
 
-/obj/machinery/firealarm/power_change()
-	..()
-	update_icon()
-
 /obj/machinery/firealarm/update_icon()
 	cut_overlays()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
@@ -286,10 +282,11 @@
 	..()
 
 /obj/machinery/firealarm/obj_break(damage_flag)
-	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1) && buildstage != 0) //can't break the electronics if there isn't any inside.
+	if(buildstage == 0) //can't break the electronics if there isn't any inside.
+		return
+	. = ..()
+	if(.)
 		LAZYREMOVE(myarea.firealarms, src)
-		stat |= BROKEN
-		update_icon()
 
 /obj/machinery/firealarm/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

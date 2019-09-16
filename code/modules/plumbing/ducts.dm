@@ -212,7 +212,7 @@ All the important duct code:
 		user.visible_message( \
 		"[user] unfastens \the [src].", \
 		"<span class='notice'>You unfasten \the [src].</span>", \
-		"<span class='italics'>You hear ratcheting.</span>")
+		"<span class='hear'>You hear ratcheting.</span>")
 		disconnect_duct()
 	else if(can_anchor())
 		anchored = TRUE
@@ -220,7 +220,7 @@ All the important duct code:
 		user.visible_message( \
 		"[user] fastens \the [src].", \
 		"<span class='notice'>You fasten \the [src].</span>", \
-		"<span class='italics'>You hear ratcheting.</span>")
+		"<span class='hear'>You hear ratcheting.</span>")
 		attempt_connect()
 	return TRUE
 ///collection of all the sanity checks to prevent us from stacking ducts that shouldnt be stacked

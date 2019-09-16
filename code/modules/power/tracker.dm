@@ -69,9 +69,9 @@
 	return TRUE
 
 /obj/machinery/power/tracker/obj_break(damage_flag)
-	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
+	. = ..()
+	if(.)
 		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
-		stat |= BROKEN
 		unset_control()
 
 /obj/machinery/power/solar/deconstruct(disassembled = TRUE)

@@ -176,7 +176,7 @@
 		add_overlay("human")
 
 /obj/machinery/suit_storage_unit/power_change()
-	..()
+	. = ..()
 	if(!is_operational() && state_open)
 		open_machine()
 		dump_contents()
@@ -326,7 +326,7 @@
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", \
 		"<span class='notice'>You start kicking against the doors... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='italics'>You hear a thump from [src].</span>")
+		"<span class='hear'>You hear a thump from [src].</span>")
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return

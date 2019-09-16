@@ -73,7 +73,7 @@
 
 	owner.visible_message("<span class='notice'>[owner] retracts [holder] back into [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
 		"<span class='notice'>[holder] snaps back into your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
-		"<span class='italics'>You hear a short mechanical noise.</span>")
+		"<span class='hear'>You hear a short mechanical noise.</span>")
 
 	if(istype(holder, /obj/item/assembly/flash/armimplant))
 		var/obj/item/assembly/flash/F = holder
@@ -98,7 +98,7 @@
 		var/obj/item/assembly/flash/F = holder
 		F.set_light(7)
 
-	var/side = zone == BODY_ZONE_R_ARM? "r" : "l"
+	var/side = zone == BODY_ZONE_R_ARM? RIGHT_HANDS : LEFT_HANDS
 	var/hand = owner.get_empty_held_index_for_side(side)
 	if(hand)
 		owner.put_in_hand(holder, hand)
@@ -120,7 +120,7 @@
 			return
 	owner.visible_message("<span class='notice'>[owner] extends [holder] from [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
 		"<span class='notice'>You extend [holder] from your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
-		"<span class='italics'>You hear a short mechanical noise.</span>")
+		"<span class='hear'>You hear a short mechanical noise.</span>")
 	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/organ/cyberimp/arm/ui_action_click()

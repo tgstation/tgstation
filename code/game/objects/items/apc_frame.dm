@@ -35,7 +35,7 @@
 		playsound(src.loc, 'sound/machines/click.ogg', 75, TRUE)
 		user.visible_message("<span class='notice'>[user.name] attaches [src] to the wall.</span>",
 			"<span class='notice'>You attach [src] to the wall.</span>",
-			"<span class='italics'>You hear clicking.</span>")
+			"<span class='hear'>You hear clicking.</span>")
 		var/ndir = get_dir(on_wall,user)
 		if(inverse)
 			ndir = turn(ndir, 180)
