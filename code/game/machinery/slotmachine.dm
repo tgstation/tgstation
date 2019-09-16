@@ -78,10 +78,6 @@
 	else
 		icon_state = "slots1"
 
-/obj/machinery/computer/slot_machine/power_change()
-	..()
-	update_icon()
-
 /obj/machinery/computer/slot_machine/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/coin))
 		var/obj/item/coin/C = I

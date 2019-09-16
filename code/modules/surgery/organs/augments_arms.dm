@@ -98,7 +98,7 @@
 		var/obj/item/assembly/flash/F = holder
 		F.set_light(7)
 
-	var/side = zone == BODY_ZONE_R_ARM? "r" : "l"
+	var/side = zone == BODY_ZONE_R_ARM? RIGHT_HANDS : LEFT_HANDS
 	var/hand = owner.get_empty_held_index_for_side(side)
 	if(hand)
 		owner.put_in_hand(holder, hand)

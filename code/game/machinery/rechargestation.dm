@@ -97,10 +97,6 @@
 	else
 		icon_state = (state_open ? "borgcharger-u0" : "borgcharger-u1")
 
-/obj/machinery/recharge_station/power_change()
-	..()
-	update_icon()
-
 /obj/machinery/recharge_station/proc/process_occupant()
 	if(!occupant)
 		return

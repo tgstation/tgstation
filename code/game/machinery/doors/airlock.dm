@@ -118,6 +118,8 @@
 		diag_hud.add_to_hud(src)
 	diag_hud_set_electrified()
 
+	RegisterSignal(src, COMSIG_MACHINERY_BROKEN, .proc/on_break)
+
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/door/airlock/LateInitialize()
@@ -988,17 +990,14 @@
 	return !operating && density
 
 /obj/machinery/door/airlock/try_to_crowbar(obj/item/I, mob/living/user)
-	var/beingcrowbarred = null
-	if(I.tool_behaviour == TOOL_CROWBAR )
-		beingcrowbarred = 1
-	else
-		beingcrowbarred = 0
-	if(!security_level && (beingcrowbarred && panel_open && ((obj_flags & EMAGGED) || (density && welded && !operating && !hasPower() && !locked))))
-		user.visible_message("<span class='notice'>[user] removes the electronics from the airlock assembly.</span>", \
-							 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
-		if(I.use_tool(src, user, 40, volume=100))
-			deconstruct(TRUE, user)
-			return
+	if(I)
+		var/beingcrowbarred = (I.tool_behaviour == TOOL_CROWBAR)
+		if(!security_level && (beingcrowbarred && panel_open && ((obj_flags & EMAGGED) || (density && welded && !operating && !hasPower() && !locked))))
+			user.visible_message("<span class='notice'>[user] removes the electronics from the airlock assembly.</span>", \
+							 	"<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
+			if(I.use_tool(src, user, 40, volume=100))
+				deconstruct(TRUE, user)
+				return
 	else if(hasPower())
 		to_chat(user, "<span class='warning'>The airlock's motors resist your efforts to force it!</span>")
 	else if(locked)
@@ -1277,13 +1276,10 @@
 		safe = TRUE
 
 
-/obj/machinery/door/airlock/obj_break(damage_flag)
-	if(!(flags_1 & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
-		stat |= BROKEN
-		if(!panel_open)
-			panel_open = TRUE
-		wires.cut_all()
-		update_icon()
+/obj/machinery/door/airlock/proc/on_break()
+	if(!panel_open)
+		panel_open = TRUE
+	wires.cut_all()
 
 /obj/machinery/door/airlock/proc/set_electrified(seconds, mob/user)
 	secondsElectrified = seconds
