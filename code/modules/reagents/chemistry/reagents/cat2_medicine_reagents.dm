@@ -67,7 +67,7 @@
 /datum/reagent/medicine/C2/lenturi/proc/on_moved()
 	step_counter++
 /datum/reagent/medicine/C2/lenturi/proc/calculate_healing()
-	return max(2, 3 - (step_counter*0.1))
+	return max(-2, -(3 - (step_counter*0.1)))
 /datum/reagent/medicine/C2/aiuri
 	name = "Aiuri"
 	description = "Used to treat burns. Does minor eye damage."
