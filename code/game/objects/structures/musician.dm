@@ -19,6 +19,7 @@
 	var/obj/instrumentObj = null	// the associated obj playing the sound
 	var/last_hearcheck = 0
 	var/list/hearing_mobs
+	var/play_volume = 50 //FULP // instrument playing volume
 
 /datum/song/New(dir, obj, ext = "ogg")
 	tempo = sanitize_tempo(tempo)
@@ -78,7 +79,7 @@
 			L.apply_status_effect(STATUS_EFFECT_GOOD_MUSIC)
 		if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
 			continue
-		M.playsound_local(source, null, 100, falloff = 5, S = music_played)
+		M.playsound_local(source, null, play_volume, falloff = 5, S = music_played)
 
 /datum/song/proc/updateDialog(mob/user)
 	instrumentObj.updateDialog()		// assumes it's an object in world, override if otherwise
@@ -153,6 +154,11 @@
 			dat += " [repeat] times "
 			dat += repeat < max_repeats ? "<A href='?src=[REF(src)];repeat=1'>+</A><A href='?src=[REF(src)];repeat=10'>+</A>" : "<SPAN CLASS='linkOff'>+</SPAN><SPAN CLASS='linkOff'>+</SPAN>"
 			dat += "<BR>"
+			dat += "Volume: "	//FULP
+			dat += play_volume > 0 ? "<A href='?src=[REF(src)];play_volume-10'>-</A>" : "<SPAN CLASS='linkoff'>-</SPAN>"	//FULP
+			dat += " [play_volume] "	//FULP
+			dat += play_volume < 100 ? "<A href='?src=[REF(src)];play_volume+10'>+</A>" : "<SPAN CLASS='linkoff'>+</SPAN>"	//FULP
+			dat += "<BR>" //FULP
 		else
 			dat += "<SPAN CLASS='linkOn'>Play</SPAN> <A href='?src=[REF(src)];stop=1'>Stop</A><BR>"
 			dat += "Repeats left: <B>[repeat]</B><BR>"
@@ -300,6 +306,13 @@
 	else if(href_list["stop"])
 		playing = FALSE
 		hearing_mobs = null
+
+	else if(href_list["play_volume"])	//FULP
+		var/new_volume = round(text2num(href_list["play_volume"]))	//FULP
+		if(isnull(new_volume))	//FULP
+			return	//FULP
+		new_volume = CLAMP(new_volume, 0, 100)	//FULP
+		play_volume = new_volume	//FULP
 
 	updateDialog(usr)
 	return
