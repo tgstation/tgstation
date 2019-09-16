@@ -41,6 +41,7 @@
 	var/list/coin_values = list(/obj/item/coin/diamond = 100, /obj/item/coin/gold = 25, /obj/item/coin/silver = 10, /obj/item/coin/iron = 1) //Make sure this is ordered from left to right.
 	var/list/coins_to_dispense = list()
 	var/datum/looping_sound/jackpot/jackpot_loop
+	var/datum/asset/spritesheet/simple/assets
 
 /obj/machinery/roulette/Initialize()
 	. = ..()
@@ -76,7 +77,8 @@
 			data["AccountBalance"] = 0
 		data["CanUnbolt"] = (H.get_idcard() == my_card)
 
-	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/roulette)
+	if(!assets)
+		assets = get_asset_datum(/datum/asset/spritesheet/simple/roulette)
 	data["black"] = assets.icon_tag("black")
 	data["red"] = assets.icon_tag("red")
 	data["even"] = assets.icon_tag("even")
