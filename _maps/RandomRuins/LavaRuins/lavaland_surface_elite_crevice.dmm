@@ -1,0 +1,15 @@
+"a" = (/turf/template_noop,/area/lavaland/surface/outdoors)
+"b" = (/obj/structure/elite_crevice,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"c" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+
+(1,1,1) = {"
+aaaaaaaaa
+aaaaaaaaa
+aaaaaaaaa
+aaacccaaa
+aaacbcaaa
+aaacccaaa
+aaaaaaaaa
+aaaaaaaaa
+aaaaaaaaa
+"}
