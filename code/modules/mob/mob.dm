@@ -680,7 +680,12 @@
 	. = ..()
 	if(ismob(dropping) && dropping != user)
 		var/mob/M = dropping
-		M.show_inv(user)
+		if(ismob(user))
+			var/mob/U = user
+			if(!iscyborg(U) || U.a_intent == INTENT_HARM)
+				M.show_inv(U)
+		else
+			M.show_inv(user)
 
 ///Is the mob muzzled (default false)
 /mob/proc/is_muzzled()
