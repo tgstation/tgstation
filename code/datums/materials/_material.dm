@@ -31,6 +31,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 ///This proc is called when the material is added to an object.
 /datum/material/proc/on_applied(atom/source, amount, material_flags)
+	amount *= source.material_modifier
 	if(material_flags & MATERIAL_COLOR) //Prevent changing things with pre-set colors, to keep colored toolboxes their looks for example
 		if(color) //Do we have a custom color?
 			source.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
