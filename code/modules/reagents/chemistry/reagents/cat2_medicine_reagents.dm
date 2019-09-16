@@ -59,7 +59,7 @@
 			var/health_deficiency = max(H.maxHealth - H.health, H.staminaloss)
 			if(health_deficiency >= 40)
 					slowdown_healing += (health_deficiency / 25)
-		M.adjustFireLoss(-slowdown_healing*REM)
+			M.adjustFireLoss(-slowdown_healing*REM)
 	..()
 	return TRUE
 
