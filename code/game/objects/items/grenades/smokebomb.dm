@@ -11,7 +11,7 @@
 	item_state = "smoke"
 	slot_flags = ITEM_SLOT_BELT
 	///It's extremely important to keep this list up to date. It helps to generate the insightful description of the smokebomb
-	var/static/list/bruh_moment = list("Dank", "Hip", "Lit", "Based", "Robust", "Bruh", "Nyagger")
+	var/static/list/bruh_moment = list("Dank", "Hip", "Lit", "Based", "Robust", "Bruh", "Poop", "POGGERS", "NaM")
 
 ///Here we generate the extremely insightful description.
 /obj/item/grenade/smokebomb/Initialize()
