@@ -33,7 +33,7 @@
 	if(istype(O, /obj/item/disk/surgery))
 		user.visible_message("<span class='notice'>[user] begins to load \the [O] in \the [src]...</span>", \
 			"<span class='notice'>You begin to load a surgery protocol from \the [O]...</span>", \
-			"<span class='italics'>You hear the chatter of a floppy drive.</span>")
+			"<span class='hear'>You hear the chatter of a floppy drive.</span>")
 		var/obj/item/disk/surgery/D = O
 		if(do_after(user, 10, target = src))
 			advanced_surgeries |= D.surgeries

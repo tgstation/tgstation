@@ -69,10 +69,6 @@
 	src.equipment_path = path
 	src.cost = cost
 
-/obj/machinery/mineral/equipment_vendor/power_change()
-	..()
-	update_icon()
-
 /obj/machinery/mineral/equipment_vendor/update_icon()
 	if(powered())
 		icon_state = initial(icon_state)

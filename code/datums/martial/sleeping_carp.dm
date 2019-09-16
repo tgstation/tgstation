@@ -48,26 +48,25 @@
 		D.Stun(60)
 		return TRUE
 
-	return basic_hit(A,D)
+	return FALSE
 
 /datum/martial_art/the_sleeping_carp/proc/backKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.IsParalyzed())
-		if(A.dir == D.dir)
-			log_combat(A, D, "back-kicked (Sleeping Carp)")
-			A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
-			D.visible_message("<span class='danger'>[A] kicks [D] in the back!</span>", \
-							"<span class='userdanger'>You're kicked in the back by [A], making you stumble and fall!</span>", null, null, A)
-			to_chat(A, "<span class='danger'>You kick [D] in the back, making [D.p_them()] stumble and fall!</span>")
-			step_to(D,get_step(D,D.dir),1)
-			D.Paralyze(80)
-			playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, TRUE, -1)
-			return TRUE
-		else
+		if(A.dir != D.dir)
 			log_combat(A, D, "missed a back-kick (Sleeping Carp) on")
 			D.visible_message("<span class='warning'>[A] tries to kick [D] in the back, but misses!</span>", \
-							"<span class='userdanger'>You nearly avoid a kick in the back by [A]!</span>", null, null, A)
-			to_chat(A, "<span class='warning'>You try to kick [D] in the back, but you miss!</span>")
-	return basic_hit(A,D)
+						"<span class='userdanger'>[A] tries to kick you in the back, but misses!</span>")
+			return TRUE
+		log_combat(A, D, "back-kicked (Sleeping Carp)")
+		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+		D.visible_message("<span class='warning'>[A] kicks [D] in the back!</span>", \
+						"<span class='userdanger'>You nearly avoid a kick in the back by [A]!</span>", null, null, A)
+		to_chat(A, "<span class='warning'>You try to kick [D] in the back, but you miss!</span>")
+		step_to(D,get_step(D,D.dir),1)
+		D.Paralyze(80)
+		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, TRUE, -1)
+		return TRUE
+	return FALSE
 
 /datum/martial_art/the_sleeping_carp/proc/kneeStomach(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.IsParalyzed())
@@ -80,7 +79,7 @@
 		D.Stun(40)
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, TRUE, -1)
 		return TRUE
-	return basic_hit(A,D)
+	return FALSE
 
 /datum/martial_art/the_sleeping_carp/proc/headKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.IsParalyzed())
@@ -94,7 +93,7 @@
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, TRUE, -1)
 		D.Stun(80)
 		return TRUE
-	return basic_hit(A,D)
+	return FALSE
 
 /datum/martial_art/the_sleeping_carp/proc/elbowDrop(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!(D.mobility_flags & MOBILITY_STAND))
@@ -108,7 +107,7 @@
 		D.apply_damage(50, A.dna.species.attack_type, BODY_ZONE_CHEST)
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 75, TRUE, -1)
 		return TRUE
-	return basic_hit(A,D)
+	return FALSE
 
 /datum/martial_art/the_sleeping_carp/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(A.a_intent == INTENT_GRAB && A!=D) // A!=D prevents grabbing yourself
@@ -125,8 +124,7 @@
 							"<span class='userdanger'>You're violently grabbed by [A]!</span>", null, null, A)
 			to_chat(A, "<span class='danger'>You violently grab [D]!</span>")
 		return TRUE
-	else
-		return FALSE
+	return FALSE
 
 /datum/martial_art/the_sleeping_carp/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("H",D)

@@ -1133,7 +1133,7 @@
 
 /mob/living/silicon/robot/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
-	if(!(M in buckled_mobs) && isliving(M))
+	if(!(M in buckled_mobs) && isliving(M) && ((user!=src)||(src.a_intent != INTENT_HARM)))
 		buckle_mob(M)
 
 /mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
