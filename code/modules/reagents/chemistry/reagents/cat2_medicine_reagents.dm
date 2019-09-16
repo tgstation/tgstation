@@ -59,6 +59,12 @@
 		var/health_deficiency = max(M.maxHealth - M.health, M.staminaloss)
 		if(health_deficiency >= 40)
 			slowdown_healing += (health_deficiency / 25)
+	if(SANITY_INSANE to SANITY_CRAZY)
+		slowdown_healing += 1
+	if(SANITY_CRAZY to SANITY_UNSTABLE)
+		slowdown_healing += 0.5
+	if(SANITY_UNSTABLE to SANITY_DISTURBED)	
+		slowdown_healing += 0.25
 	M.adjustFireLoss(-slowdown_healing*REM)
 	..()
 	return TRUE
