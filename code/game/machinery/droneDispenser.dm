@@ -133,14 +133,6 @@
 	if((mode == DRONE_RECHARGING) && !stat && recharging_text)
 		. += "<span class='warning'>[recharging_text]</span>"
 
-/obj/machinery/droneDispenser/power_change()
-	..()
-	if(powered())
-		stat &= ~NOPOWER
-	else
-		stat |= NOPOWER
-	update_icon()
-
 /obj/machinery/droneDispenser/process()
 	..()
 	if((stat & (NOPOWER|BROKEN)) || !anchored)
@@ -242,14 +234,13 @@
 		return ..()
 
 /obj/machinery/droneDispenser/obj_break(damage_flag)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(!(stat & BROKEN))
-			if(break_message)
-				audible_message("<span class='warning'>[src] [break_message]</span>")
-			if(break_sound)
-				playsound(src, break_sound, 50, TRUE)
-			stat |= BROKEN
-			update_icon()
+	. = ..()
+	if(!.)
+		return
+	if(break_message)
+		audible_message("<span class='warning'>[src] [break_message]</span>")
+	if(break_sound)
+		playsound(src, break_sound, 50, TRUE)
 
 /obj/machinery/droneDispenser/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

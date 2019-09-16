@@ -307,7 +307,8 @@
 	return TRUE
 
 /obj/machinery/portable_atmospherics/canister/obj_break(damage_flag)
-	if((stat & BROKEN) || (flags_1 & NODECONSTRUCT_1))
+	. = ..()
+	if(!.)
 		return
 	canister_break()
 
@@ -318,10 +319,9 @@
 	T.assume_air(expelled_gas)
 	air_update_turf()
 
-	stat |= BROKEN
+	obj_break()
 	density = FALSE
 	playsound(src.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
-	update_icon()
 	investigate_log("was destroyed.", INVESTIGATE_ATMOS)
 
 	if(holding)

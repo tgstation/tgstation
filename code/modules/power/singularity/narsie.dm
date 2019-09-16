@@ -171,8 +171,6 @@
 
 	//no living humans, follow a ghost instead.
 	for(var/mob/dead/observer/ghost in GLOB.player_list)
-		if(!ghost.client)
-			continue
 		var/turf/pos = get_turf(ghost)
 		if(!pos || (pos.z != z))
 			continue

@@ -114,11 +114,8 @@
 
 
 /obj/machinery/shieldgen/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(!(stat && BROKEN))
-			stat |= BROKEN
-			locked = pick(0,1)
-			update_icon()
+	obj_break()
+	locked = pick(0,1)
 
 /obj/machinery/shieldgen/interact(mob/user)
 	. = ..()
