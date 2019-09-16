@@ -385,7 +385,7 @@
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		recharge_amount *= C.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		if (M.rating > 3 && M.rating < 5) //FULP
+		if (M.rating > 3) //FULP
 			dispensable_reagents |= upgrade_reagents
 		if (M.rating > 4) //FULP [Saliferous]
 			dispensable_reagents |= t5_reagents //FULP
