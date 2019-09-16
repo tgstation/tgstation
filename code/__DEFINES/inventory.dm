@@ -128,10 +128,6 @@
 #define NECK		(1<<11)
 #define FULL_BODY	(~0)
 
-//defines for the index of hands
-#define LEFT_HANDS 1
-#define RIGHT_HANDS 2
-
 //flags for female outfits: How much the game can safely "take off" the uniform without it looking weird
 #define NO_FEMALE_UNIFORM			0
 #define FEMALE_UNIFORM_FULL			1
@@ -156,7 +152,6 @@
 #define HEADCOVERSEYES		(1<<2)		// feel free to realloc these numbers for other purposes
 #define MASKCOVERSMOUTH		(1<<3)		// on other items, these are just for mask/head
 #define HEADCOVERSMOUTH		(1<<4)
-#define PEPPERPROOF			(1<<5)	//protects against pepperspray
 
 #define TINT_DARKENED 2			//Threshold of tint level to apply weld mask overlay
 #define TINT_BLIND 3			//Threshold of tint level to obscure vision fully

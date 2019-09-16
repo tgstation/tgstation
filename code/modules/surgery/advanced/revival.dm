@@ -28,7 +28,6 @@
 /datum/surgery_step/revive
 	name = "shock body"
 	implements = list(/obj/item/twohanded/shockpaddles = 100, /obj/item/melee/baton = 75, /obj/item/gun/energy = 60)
-	repeatable = TRUE
 	time = 120
 
 /datum/surgery_step/revive/tool_check(mob/user, obj/item/tool)
@@ -53,22 +52,22 @@
 
 /datum/surgery_step/revive/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You prepare to give [target]'s brain the spark of life with [tool].</span>",
-		"<span class='notice'>[user] prepares to shock [target]'s brain with [tool].</span>",
-		"<span class='notice'>[user] prepares to shock [target]'s brain with [tool].</span>")
+		"[user] prepares to shock [target]'s brain with [tool].",
+		"[user] prepares to shock [target]'s brain with [tool].")
 	target.notify_ghost_cloning("Someone is trying to zap your brain. Re-enter your corpse if you want to be revived!", source = target)
 
 /datum/surgery_step/revive/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You successfully shock [target]'s brain with [tool]...</span>",
-		"<span class='notice'>[user] send a powerful shock to [target]'s brain with [tool]...</span>",
-		"<span class='notice'>[user] send a powerful shock to [target]'s brain with [tool]...</span>")
-	playsound(get_turf(target), 'sound/magic/lightningbolt.ogg', 50, TRUE)
+		"[user] send a powerful shock to [target]'s brain with [tool]...",
+		"[user] send a powerful shock to [target]'s brain with [tool]...")
+	playsound(get_turf(target), 'sound/magic/lightningbolt.ogg', 50, 1)
 	target.adjustOxyLoss(-50, 0)
 	target.updatehealth()
 	if(target.revive())
-		target.visible_message("<span class='notice'>...[target] wakes up, alive and aware!</span>")
+		target.visible_message("...[target] wakes up, alive and aware!")
 		target.emote("gasp")
 		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50, 199) //MAD SCIENCE
 		return TRUE
 	else
-		target.visible_message("<span class='warning'>...[target.p_they()] convulses, then lies still.</span>")
+		target.visible_message("...[target.p_they()] convulses, then lies still.")
 		return FALSE

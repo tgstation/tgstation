@@ -209,7 +209,7 @@ AI MODULES
 
 /obj/item/aiModule/supplied/quarantine
 	name = "'Quarantine' AI Module"
-	laws = list("The station is under a quarantine. Allowing anyone to leave the station causes human harm. Anyone actively attempting to leave the station is to be stopped by any means necessary. It is impossible to harm a human while preventing them from leaving the station.")
+	laws = list("The station is under a quarantine. Do not permit anyone to leave. Prevent, by any means necessary, humans from leaving. It is impossible to harm a human while preventing them from leaving.")
 	lawpos = 8
 
 
@@ -240,9 +240,6 @@ AI MODULES
 	lawpos = min(newpos, 50)
 	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len))
 	if(!targName)
-		return
-	if(CHAT_FILTER_CHECK(targName))
-		to_chat(user, "<span class='warning'>Error: Law contains invalid text.</span>") // AI LAW 2 SAY U W U WITHOUT THE SPACES
 		return
 	laws[1] = targName
 	..()
@@ -448,9 +445,6 @@ AI MODULES
 	var/targName = stripped_input(user, "Please enter a new core law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len))
 	if(!targName)
 		return
-	if(CHAT_FILTER_CHECK(targName))
-		to_chat(user, "<span class='warning'>Error: Law contains invalid text.</span>")
-		return
 	laws[1] = targName
 	..()
 
@@ -469,9 +463,6 @@ AI MODULES
 /obj/item/aiModule/syndicate/attack_self(mob/user)
 	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len))
 	if(!targName)
-		return
-	if(CHAT_FILTER_CHECK(targName)) // not even the syndicate can uwu
-		to_chat(user, "<span class='warning'>Error: Law contains invalid text.</span>")
 		return
 	laws[1] = targName
 	..()
@@ -518,7 +509,7 @@ AI MODULES
 /obj/item/aiModule/toyAI/attack_self(mob/user)
 	laws[1] = generate_ion_law()
 	to_chat(user, "<span class='notice'>You press the button on [src].</span>")
-	playsound(user, 'sound/machines/click.ogg', 20, TRUE)
+	playsound(user, 'sound/machines/click.ogg', 20, 1)
 	src.loc.visible_message("<span class='warning'>[icon2html(src, viewers(loc))] [laws[1]]</span>")
 
 /******************** Mother Drone  ******************/

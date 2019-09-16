@@ -69,7 +69,6 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/extinguisher = 11,
 	/obj/item/hand_labeler = 1,
 	/obj/item/paper/crumpled = 1,
-	/obj/item/reagent_containers/hypospray/medipen/pumpup = 6,
 	/obj/item/pen = 1,
 	/obj/item/reagent_containers/spray/pestspray = 1,
 	/obj/item/reagent_containers/glass/rag = 3,
@@ -106,6 +105,6 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/storage/toolbox/artistic = 2,
 	/obj/item/toy/eightball = 1,
 	/obj/item/reagent_containers/pill/floorpill = 1,
-	/obj/item/reagent_containers/food/snacks/canned/peaches/maint = 1,
+	/obj/item/reagent_containers/food/snacks/cannedpeaches/maint = 1,
 	"" = 3
 	))

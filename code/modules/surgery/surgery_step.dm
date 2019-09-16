@@ -90,13 +90,13 @@
 
 /datum/surgery_step/proc/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin to perform surgery on [target]...</span>",
-		"<span class='notice'>[user] begins to perform surgery on [target].</span>",
-		"<span class='notice'>[user] begins to perform surgery on [target].</span>")
+		"[user] begins to perform surgery on [target].",
+		"[user] begins to perform surgery on [target].")
 
 /datum/surgery_step/proc/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You succeed.</span>",
-		"<span class='notice'>[user] succeeds!</span>",
-		"<span class='notice'>[user] finishes.</span>")
+		"[user] succeeds!",
+		"[user] finishes.")
 	return TRUE
 
 /datum/surgery_step/proc/tool_check(mob/user, obj/item/tool)

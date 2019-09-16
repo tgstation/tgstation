@@ -13,7 +13,7 @@
 	var/turf/pointer_loc
 	var/energy = 5
 	var/max_energy = 5
-	var/effectchance = 25
+	var/effectchance = 33
 	var/recharging = 0
 	var/recharge_locked = FALSE
 	var/obj/item/stock_parts/micro_laser/diode //used for upgrading!
@@ -137,18 +137,18 @@
 			continue
 		if(user.mobility_flags & MOBILITY_STAND)
 			H.setDir(get_dir(H,targloc)) // kitty always looks at the light
-			if(prob(effectchance * diode.rating))
+			if(prob(effectchance))
 				H.visible_message("<span class='warning'>[H] makes a grab for the light!</span>","<span class='userdanger'>LIGHT!</span>")
 				H.Move(targloc)
 				log_combat(user, H, "moved with a laser pointer",src)
 			else
-				H.visible_message("<span class='notice'>[H] looks briefly distracted by the light.</span>", "<span class='warning'>You're briefly tempted by the shiny light...</span>")
+				H.visible_message("<span class='notice'>[H] looks briefly distracted by the light.</span>","<span class='warning'> You're briefly tempted by the shiny light... </span>")
 		else
-			H.visible_message("<span class='notice'>[H] stares at the light.</span>", "<span class='warning'>You stare at the light...</span>")
+			H.visible_message("<span class='notice'>[H] stares at the light</span>","<span class='warning'> You stare at the light... </span>")
 
 	//cats!
 	for(var/mob/living/simple_animal/pet/cat/C in view(1,targloc))
-		if(prob(effectchance * diode.rating))
+		if(prob(50))
 			C.visible_message("<span class='notice'>[C] pounces on the light!</span>","<span class='warning'>LIGHT!</span>")
 			C.Move(targloc)
 			C.set_resting(TRUE, FALSE)

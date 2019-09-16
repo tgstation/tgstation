@@ -93,14 +93,14 @@
 	if(..())
 		return
 	owner.transform = owner.transform.Scale(1, 0.8)
-	passtable_on(owner, GENETIC_MUTATION)
+	owner.pass_flags |= PASSTABLE
 	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>", "<span class='notice'>Everything around you seems to grow..</span>")
 
 /datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	owner.transform = owner.transform.Scale(1, 1.25)
-	passtable_off(owner, GENETIC_MUTATION)
+	owner.pass_flags &= ~PASSTABLE
 	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>", "<span class='notice'>Everything around you seems to shrink..</span>")
 
 
@@ -188,37 +188,23 @@
 	text_gain_indication = "<span class='notice'>Your skin begins to glow softly.</span>"
 	instability = 5
 	var/obj/effect/dummy/luminescent_glow/glowth //shamelessly copied from luminescents
-	var/glow = 2.5
-	var/range = 2.5
+	var/glow = 1.5
 	power_coeff = 1
-	conflicts = list(/datum/mutation/human/glow/anti)
 
 /datum/mutation/human/glow/on_acquiring(mob/living/carbon/human/owner)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	glowth = new(owner)
-	modify()
+	glowth.set_light(glow, glow, dna.features["mcolor"])
 
-/datum/mutation/human/glow/modify()
-	if(!glowth)
-		return
-	var/power = GET_MUTATION_POWER(src)
-	glowth.set_light(range * power, glow * power, "#[dna.features["mcolor"]]")
+/datum/mutation/human/glow/modify(mob/living/carbon/human/owner)
+	if(glowth)
+		glowth.set_light(glow + GET_MUTATION_POWER(src) , glow + GET_MUTATION_POWER(src), dna.features["mcolor"])
 
 /datum/mutation/human/glow/on_losing(mob/living/carbon/human/owner)
-	. = ..()
-	if(.)
+	if(..())
 		return
-	QDEL_NULL(glowth)
-
-/datum/mutation/human/glow/anti
-	name = "Anti-Glow"
-	desc = "Your skin seems to attract and absorb nearby light creating 'darkness' around you."
-	text_gain_indication = "<span class='notice'>Your light around you seems to disappear.</span>"
-	glow = -3.5 //Slightly stronger, since negating light tends to be harder than making it.
-	conflicts = list(/datum/mutation/human/glow)
-	locked = TRUE
+	qdel(glowth)
 
 /datum/mutation/human/strong
 	name = "Strength"
@@ -318,7 +304,7 @@
 		if(prob(15))
 			owner.acid_act(rand(30,50), 10)
 			owner.visible_message("<span class='warning'>[owner]'s skin bubbles and pops.</span>", "<span class='userdanger'>Your bubbling flesh pops! It burns!</span>")
-			playsound(owner,'sound/weapons/sear.ogg', 50, TRUE)
+			playsound(owner,'sound/weapons/sear.ogg', 50, 1)
 
 /datum/mutation/human/gigantism
 	name = "Gigantism"//negative version of dwarfism

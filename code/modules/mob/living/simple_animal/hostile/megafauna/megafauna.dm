@@ -7,7 +7,7 @@
 	a_intent = INTENT_HARM
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
-	mob_biotypes = MOB_ORGANIC|MOB_EPIC
+	mob_biotypes = list(MOB_ORGANIC, MOB_EPIC)
 	obj_damage = 400
 	light_range = 3
 	faction = list("mining", "boss")
@@ -125,13 +125,13 @@
 
 /mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
 	switch (severity)
-		if (EXPLODE_DEVASTATE)
+		if (1)
 			adjustBruteLoss(250)
 
-		if (EXPLODE_HEAVY)
+		if (2)
 			adjustBruteLoss(100)
 
-		if (EXPLODE_LIGHT)
+		if(3)
 			adjustBruteLoss(50)
 
 /mob/living/simple_animal/hostile/megafauna/proc/SetRecoveryTime(buffer_time)

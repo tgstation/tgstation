@@ -8,8 +8,7 @@
 
 /datum/round_event/spooky/start()
 	..()
-	for(var/i in GLOB.human_list)
-		var/mob/living/carbon/human/H = i
+	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
 		var/obj/item/storage/backpack/b = locate() in H.contents
 		if(b)
 			new /obj/item/storage/spooky(b)

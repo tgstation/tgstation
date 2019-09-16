@@ -36,7 +36,7 @@ In all, this is a lot like the monkey code. /N
 		else
 			if(health > 0)
 				M.do_attack_animation(src, ATTACK_EFFECT_BITE)
-				playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
+				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
 						"<span class='userdanger'>[M.name] bites you!</span>", null, COMBAT_MESSAGE_RANGE)
 				adjustBruteLoss(1)
@@ -107,15 +107,15 @@ In all, this is a lot like the monkey code. /N
 		return
 	..()
 	switch (severity)
-		if (EXPLODE_DEVASTATE)
+		if (1)
 			gib()
 			return
 
-		if (EXPLODE_HEAVY)
+		if (2)
 			take_overall_damage(60, 60)
 			adjustEarDamage(30,120)
 
-		if(EXPLODE_LIGHT)
+		if(3)
 			take_overall_damage(30,0)
 			if(prob(50))
 				Unconscious(20)

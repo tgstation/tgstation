@@ -93,7 +93,7 @@
 			Paralyze(20)
 			visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>",\
 				"<span class='userdanger'>You violently crash into [victim]!</span>")
-		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
+		playsound(src,'sound/weapons/punch1.ogg',50,1)
 
 
 //Throwing stuff
@@ -456,7 +456,7 @@
 	if(stun)
 		Paralyze(80)
 
-	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, TRUE)
+	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 	var/turf/T = get_turf(src)
 	if(!blood)
 		adjust_nutrition(-lost_nutrition)
@@ -809,7 +809,6 @@
 		if(D.severity != DISEASE_SEVERITY_POSITIVE)
 			D.cure(FALSE)
 	if(admin_revive)
-		suiciding = FALSE
 		regenerate_limbs()
 		regenerate_organs()
 		handcuffed = initial(handcuffed)

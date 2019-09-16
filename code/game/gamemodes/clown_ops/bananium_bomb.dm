@@ -34,8 +34,7 @@
 
 /obj/machinery/nuclearbomb/syndicate/bananium/really_actually_explode(off_station)
 	Cinematic(get_cinematic_type(off_station), world)
-	for(var/i in GLOB.human_list)
-		var/mob/living/carbon/human/H = i
+	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
 		var/turf/T = get_turf(H)
 		if(!T || T.z != z)
 			continue

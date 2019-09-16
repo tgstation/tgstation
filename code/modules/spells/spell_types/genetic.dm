@@ -28,8 +28,7 @@
 		for(var/A in traits)
 			ADD_TRAIT(target, A, GENETICS_SPELL)
 		active_on += target
-		if(duration < charge_max)
-			addtimer(CALLBACK(src, .proc/remove, target), duration, TIMER_OVERRIDE|TIMER_UNIQUE)
+		addtimer(CALLBACK(src, .proc/remove, target), duration)
 
 /obj/effect/proc_holder/spell/targeted/genetic/Destroy()
 	. = ..()

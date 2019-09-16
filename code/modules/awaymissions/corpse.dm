@@ -26,7 +26,7 @@
 	var/mob_color //Change the mob's color
 	var/assignedrole
 	var/show_flavour = TRUE
-	var/banType = ROLE_LAVALAND
+	var/banType = "lavaland"
 	var/ghost_usable = TRUE
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
@@ -69,13 +69,10 @@
 /obj/effect/mob_spawn/proc/equip(mob/M)
 	return
 
-/obj/effect/mob_spawn/proc/create(ckey, newname)
+/obj/effect/mob_spawn/proc/create(ckey, name)
 	var/mob/living/M = new mob_type(get_turf(src)) //living mobs only
-	if(!random || newname)
-		if(newname)
-			M.real_name = newname
-		else
-			M.real_name = mob_name ? mob_name : M.name
+	if(!random)
+		M.real_name = mob_name ? mob_name : M.name
 		if(!mob_gender)
 			mob_gender = pick(MALE, FEMALE)
 		M.gender = mob_gender
@@ -109,13 +106,12 @@
 				A.objectives += O
 		if(assignedrole)
 			M.mind.assigned_role = assignedrole
-		special(M)
+		special(M, name)
 		MM.name = M.real_name
 	if(uses > 0)
 		uses--
 	if(!permanent && !uses)
 		qdel(src)
-	return M
 
 // Base version - place these on maps/templates.
 /obj/effect/mob_spawn/human
@@ -153,8 +149,8 @@
 	var/backpack_contents = -1
 	var/suit_store = -1
 
-	var/hairstyle
-	var/facial_hairstyle
+	var/hair_style
+	var/facial_hair_style
 	var/skin_tone
 
 /obj/effect/mob_spawn/human/Initialize()
@@ -174,14 +170,14 @@
 	H.underwear = "Nude"
 	H.undershirt = "Nude"
 	H.socks = "Nude"
-	if(hairstyle)
-		H.hairstyle = hairstyle
+	if(hair_style)
+		H.hair_style = hair_style
 	else
-		H.hairstyle = random_hairstyle(gender)
-	if(facial_hairstyle)
-		H.facial_hairstyle = facial_hairstyle
+		H.hair_style = random_hair_style(gender)
+	if(facial_hair_style)
+		H.facial_hair_style = facial_hair_style
 	else
-		H.facial_hairstyle = random_facial_hairstyle(gender)
+		H.facial_hair_style = random_facial_hair_style(gender)
 	if(skin_tone)
 		H.skin_tone = skin_tone
 	else

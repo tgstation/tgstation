@@ -78,9 +78,9 @@
 			if(!O.tool_start_check(user, amount=0))
 				return
 
-			user.visible_message("<span class='notice'>[user] begins repairing [src].</span>", \
+			user.visible_message("[user] begins repairing [src].", \
 				"<span class='notice'>You begin repairing [src]...</span>", \
-				"<span class='hear'>You hear welding.</span>")
+				"<span class='italics'>You hear welding.</span>")
 
 			if(O.use_tool(src, user, 40, volume=50))
 				if(!(stat & BROKEN))

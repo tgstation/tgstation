@@ -114,11 +114,11 @@
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 30)
 	rename_with_volume = TRUE
 
-/obj/item/reagent_containers/pill/multiver
-	name = "multiver pill"
-	desc = "Neutralizes many common toxins and scales with unique medicine in the system. Diluted with granibitaluri."
+/obj/item/reagent_containers/pill/charcoal
+	name = "charcoal pill"
+	desc = "Neutralizes many common toxins."
 	icon_state = "pill17"
-	list_reagents = list(/datum/reagent/medicine/C2/multiver = 2, /datum/reagent/medicine/granibitaluri = 8)
+	list_reagents = list(/datum/reagent/medicine/charcoal = 10)
 	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/epinephrine
@@ -216,7 +216,7 @@
 
 /obj/item/reagent_containers/pill/aranesp
 	name = "smooth pill"
-	desc = "This blue pill feels slightly moist."
+	desc = "This blue pill is feels slightly moist."
 	list_reagents = list(/datum/reagent/drug/aranesp = 10)
 	icon_state = "pill3"
 

@@ -95,8 +95,8 @@
 /obj/structure/speaking_tile/attack_paw(mob/user)
 	return interact(user)
 
-/obj/structure/speaking_tile/attack_hulk(mob/user)
-	return
+/obj/structure/speaking_tile/attack_hulk(mob/user, does_attack_animation = 0)
+	return interact(user)
 
 /obj/structure/speaking_tile/attack_larva(mob/user)
 	return interact(user)
@@ -139,7 +139,7 @@
 	..()
 
 /obj/item/rupee/equipped(mob/user, slot)
-	playsound(get_turf(loc), 'sound/misc/server-ready.ogg', 50, TRUE, -1)
+	playsound(get_turf(loc), 'sound/misc/server-ready.ogg', 50, 1, -1)
 	..()
 
 /obj/effect/landmark/error

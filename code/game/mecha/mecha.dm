@@ -1,3 +1,17 @@
+#define MECHA_INT_FIRE			(1<<0)
+#define MECHA_INT_TEMP_CONTROL	(1<<1)
+#define MECHA_INT_SHORT_CIRCUIT	(1<<2)
+#define MECHA_INT_TANK_BREACH	(1<<3)
+#define MECHA_INT_CONTROL_LOST	(1<<4)
+
+#define MELEE 1
+#define RANGED 2
+
+#define FRONT_ARMOUR 1
+#define SIDE_ARMOUR 2
+#define BACK_ARMOUR 3
+
+
 /obj/mecha
 	name = "mecha"
 	desc = "Exosuit"
@@ -22,10 +36,10 @@
 	max_integrity = 300 //max_integrity is base health
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	armor = list("melee" = 20, "bullet" = 10, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
-	var/list/facing_modifiers = list(MECHA_FRONT_ARMOUR = 1.5, MECHA_SIDE_ARMOUR = 1, MECHA_BACK_ARMOUR = 0.5)
+	var/list/facing_modifiers = list(FRONT_ARMOUR = 1.5, SIDE_ARMOUR = 1, BACK_ARMOUR = 0.5)
 	var/equipment_disabled = 0 //disabled due to EMP
 	var/obj/item/stock_parts/cell/cell
-	var/construction_state = MECHA_LOCKED
+	var/state = 0
 	var/last_message = 0
 	var/add_req_access = 1
 	var/maint_access = 0
@@ -60,6 +74,7 @@
 	var/list/equipment = new
 	var/obj/item/mecha_parts/mecha_equipment/selected
 	var/max_equip = 3
+	var/datum/events/events
 
 	var/stepsound = 'sound/mecha/mechstep.ogg'
 	var/turnsound = 'sound/mecha/mechturn.ogg'
@@ -118,6 +133,7 @@
 
 /obj/mecha/Initialize()
 	. = ..()
+	events = new
 	icon_state += "-open"
 	add_radio()
 	add_cabin()
@@ -158,15 +174,33 @@
 			AI = M //AIs are loaded into the mech computer itself. When the mech dies, so does the AI. They can be recovered with an AI card from the wreck.
 		else
 			M.forceMove(loc)
-	for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
-		E.detach(loc)
-		qdel(E)
-	if(cell)
-		qdel(cell)
-	if(internal_tank)
-		qdel(internal_tank)
-	if(AI)
-		AI.gib() //No wreck, no AI to recover
+	if(wreckage)
+		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, AI)
+		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
+			if(E.salvageable && prob(30))
+				WR.crowbar_salvage += E
+				E.detach(WR) //detaches from src into WR
+				E.equip_ready = 1
+			else
+				E.detach(loc)
+				qdel(E)
+		if(cell)
+			WR.crowbar_salvage += cell
+			cell.forceMove(WR)
+			cell.charge = rand(0, cell.charge)
+		if(internal_tank)
+			WR.crowbar_salvage += internal_tank
+			internal_tank.forceMove(WR)
+	else
+		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
+			E.detach(loc)
+			qdel(E)
+		if(cell)
+			qdel(cell)
+		if(internal_tank)
+			qdel(internal_tank)
+		if(AI)
+			AI.gib() //No wreck, no AI to recover
 	STOP_PROCESSING(SSobj, src)
 	GLOB.poi_list.Remove(src)
 	equipment.Cut()
@@ -443,7 +477,7 @@
 		return
 	if(user.incapacitated())
 		return
-	if(construction_state)
+	if(state)
 		occupant_message("<span class='warning'>Maintenance protocols in effect.</span>")
 		return
 	if(!get_charge())
@@ -491,13 +525,10 @@
 ////////  Movement procs  ////////
 //////////////////////////////////
 
-///Plays the mech step sound effect. Split from movement procs so that other mechs (HONK) can override this one specific part.
-/obj/mecha/proc/play_stepsound()
-	if(stepsound)
-		playsound(src,stepsound,40,1)
-
 /obj/mecha/Move(atom/newloc, direct)
 	. = ..()
+	if(.)
+		events.fireEvent("onMove",get_turf(src))
 	if (internal_tank?.disconnect()) // Something moved us and broke connection
 		occupant_message("<span class='warning'>Air port connection has been severed!</span>")
 		log_message("Lost connection to gas port.", LOG_MECHA)
@@ -531,7 +562,7 @@
 			occupant_message("<span class='warning'>Unable to move while connected to the air system port!</span>")
 			last_message = world.time
 		return 0
-	if(construction_state)
+	if(state)
 		occupant_message("<span class='danger'>Maintenance protocols in effect.</span>")
 		return
 	return domove(direction)
@@ -545,7 +576,7 @@
 		return 0
 	if(zoom_mode)
 		if(world.time - last_message > 20)
-			occupant_message("<span class='warning'>Unable to move while in zoom mode!</span>")
+			occupant_message("Unable to move while in zoom mode.")
 			last_message = world.time
 		return 0
 
@@ -566,7 +597,7 @@
 /obj/mecha/proc/mechturn(direction)
 	setDir(direction)
 	if(turnsound)
-		playsound(src,turnsound,40,TRUE)
+		playsound(src,turnsound,40,1)
 	return 1
 
 /obj/mecha/proc/mechstep(direction)
@@ -574,14 +605,14 @@
 	var/result = step(src,direction)
 	if(strafe)
 		setDir(current_dir)
-	if(result)
-		play_stepsound()
+	if(result && stepsound)
+		playsound(src,stepsound,40,1)
 	return result
 
 /obj/mecha/proc/mechsteprand()
 	var/result = step_rand(src)
-	if(result)
-		play_stepsound()
+	if(result && stepsound)
+		playsound(src,stepsound,40,1)
 	return result
 
 /obj/mecha/Bump(var/atom/obstacle)
@@ -695,7 +726,7 @@
  //Transfer from core or card to mech. Proc is called by mech.
 	switch(interaction)
 		if(AI_TRANS_TO_CARD) //Upload AI from mech to AI card.
-			if(!construction_state) //Mech must be in maint mode to allow carding.
+			if(!state) //Mech must be in maint mode to allow carding.
 				to_chat(user, "<span class='warning'>[name] must have maintenance protocols active in order to allow a transfer.</span>")
 				return
 			AI = occupant
@@ -753,7 +784,7 @@
 	silicon_pilot = TRUE
 	icon_state = initial(icon_state)
 	update_icon()
-	playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
+	playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 	if(!internal_damage)
 		SEND_SOUND(occupant, sound('sound/mecha/nominal.ogg',volume=50))
 	AI.cancel_camera()
@@ -853,7 +884,7 @@
 		log_message("Permission denied (Attached mobs).", LOG_MECHA)
 		return
 
-	visible_message("<span class='notice'>[user] starts to climb into [name].</span>")
+	visible_message("[user] starts to climb into [name].")
 
 	if(do_after(user, enter_delay, target = src))
 		if(obj_integrity <= 0)
@@ -881,7 +912,7 @@
 		log_message("[H] moved in as pilot.", LOG_MECHA)
 		icon_state = initial(icon_state)
 		setDir(dir_in)
-		playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 		if(!internal_damage)
 			SEND_SOUND(occupant, sound('sound/mecha/nominal.ogg',volume=50))
 		return 1
@@ -1102,7 +1133,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 						gun.projectiles = gun.projectiles + ammo_needed
 					else
 						gun.projectiles_cache = gun.projectiles_cache + ammo_needed
-					playsound(get_turf(user),A.load_audio,50,TRUE)
+					playsound(get_turf(user),A.load_audio,50,1)
 					to_chat(user, "<span class='notice'>You add [ammo_needed] [A.round_term][ammo_needed > 1?"s":""] to the [gun.name]</span>")
 					A.rounds = A.rounds - ammo_needed
 					A.update_name()
@@ -1113,7 +1144,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 						gun.projectiles = gun.projectiles + A.rounds
 					else
 						gun.projectiles_cache = gun.projectiles_cache + A.rounds
-					playsound(get_turf(user),A.load_audio,50,TRUE)
+					playsound(get_turf(user),A.load_audio,50,1)
 					to_chat(user, "<span class='notice'>You add [A.rounds] [A.round_term][A.rounds > 1?"s":""] to the [gun.name]</span>")
 					A.rounds = 0
 					A.update_name()

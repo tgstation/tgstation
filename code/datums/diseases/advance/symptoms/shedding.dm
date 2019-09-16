@@ -38,18 +38,18 @@ BONUS
 		var/mob/living/carbon/human/H = M
 		switch(A.stage)
 			if(3, 4)
-				if(!(H.hairstyle == "Bald") && !(H.hairstyle == "Balding Hair"))
+				if(!(H.hair_style == "Bald") && !(H.hair_style == "Balding Hair"))
 					to_chat(H, "<span class='warning'>Your hair starts to fall out in clumps...</span>")
 					addtimer(CALLBACK(src, .proc/Shed, H, FALSE), 50)
 			if(5)
-				if(!(H.facial_hairstyle == "Shaved") || !(H.hairstyle == "Bald"))
+				if(!(H.facial_hair_style == "Shaved") || !(H.hair_style == "Bald"))
 					to_chat(H, "<span class='warning'>Your hair starts to fall out in clumps...</span>")
 					addtimer(CALLBACK(src, .proc/Shed, H, TRUE), 50)
 
 /datum/symptom/shedding/proc/Shed(mob/living/carbon/human/H, fullbald)
 	if(fullbald)
-		H.facial_hairstyle = "Shaved"
-		H.hairstyle = "Bald"
+		H.facial_hair_style = "Shaved"
+		H.hair_style = "Bald"
 	else
-		H.hairstyle = "Balding Hair"
+		H.hair_style = "Balding Hair"
 	H.update_hair()

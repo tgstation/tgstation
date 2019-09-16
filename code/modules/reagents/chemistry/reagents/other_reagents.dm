@@ -106,18 +106,6 @@
 	if(istype(data))
 		src.data |= data.Copy()
 
-/datum/reagent/vaccine/fungal_tb
-
-/datum/reagent/vaccine/fungal_tb/New(data)
-	. = ..()
-	var/list/cached_data
-	if(!data)
-		cached_data = list()
-	else
-		cached_data = data
-	cached_data |= "[/datum/disease/tuberculosis]"
-	src.data = cached_data
-
 /datum/reagent/water
 	name = "Water"
 	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen."
@@ -406,8 +394,8 @@
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/N = M
-		N.hairstyle = "Spiky"
-		N.facial_hairstyle = "Shaved"
+		N.hair_style = "Spiky"
+		N.facial_hair_style = "Shaved"
 		N.facial_hair_color = "000"
 		N.hair_color = "000"
 		if(!(HAIR in N.dna.species.species_traits)) //No hair? No problem!
@@ -431,30 +419,31 @@
 	name = "Stable Mutation Toxin"
 	description = "A humanizing toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	metabolization_rate = 0 //Doesn't metabolize. Gets destroyed on a timer.
+	metabolization_rate = INFINITY //So it instantly removes all of itself
 	taste_description = "slime"
-	var/race = /datum/species/human
+	var/datum/species/race = /datum/species/human
 	var/mutationtext = "<span class='danger'>The pain subsides. You feel... human.</span>"
 
-/datum/reagent/mutationtoxin/on_mob_add(mob/living/carbon/human/H)
-	. = ..()
+/datum/reagent/mutationtoxin/on_mob_life(mob/living/carbon/human/H)
+	..()
 	if(!istype(H))
-		qdel(src)
 		return
 	to_chat(H, "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>")
 	H.visible_message("<b>[H]</b> falls to the ground and screams as [H.p_their()] skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
 	H.Paralyze(60)
 	addtimer(CALLBACK(src, .proc/mutate, H), 30)
+	return
 
 /datum/reagent/mutationtoxin/proc/mutate(mob/living/carbon/human/H)
 	if(QDELETED(H))
 		return
-	if(race != H.dna.species.type)
+	var/current_species = H.dna.species.type
+	var/datum/species/mutation = race
+	if(mutation && mutation != current_species)
 		to_chat(H, mutationtext)
-		H.set_species(race)
+		H.set_species(mutation)
 	else
 		to_chat(H, "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>")
-	H.reagents.del_reagent(type)
 
 /datum/reagent/mutationtoxin/classic //The one from plasma on green slimes
 	name = "Mutation Toxin"
@@ -575,7 +564,7 @@
 	..()
 	if(!istype(H))
 		return
-	if(!H.dna || !H.dna.species || !(H.mob_biotypes & MOB_ORGANIC))
+	if(!H.dna || !H.dna.species || !(MOB_ORGANIC in H.mob_biotypes))
 		return
 
 	if(isjellyperson(H))
@@ -1216,77 +1205,72 @@
 	L.remove_movespeed_modifier(type)
 	..()
 
-/////////////////////////Colorful Powder////////////////////////////
+/////////////////////////Coloured Crayon Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
 
 
-/datum/reagent/colorful_reagent/powder
-	name = "Mundane Powder" //the name's a bit similar to the name of colorful reagent, but hey, they're practically the same chem anyway
+/datum/reagent/colorful_reagent/crayonpowder
+	name = "Crayon Powder"
 	var/colorname = "none"
-	description = "A powder that is used for coloring things."
+	description = "A powder made by grinding down crayons, good for colouring chemical reagents."
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 207, 54, 0
 	taste_description = "the back of class"
 
-/datum/reagent/colorful_reagent/powder/New()
-	if(colorname == "none")
-		description = "A rather mundane-looking powder. It doesn't look like it'd color much of anything..."
-	else if(colorname == "invisible")
-		description = "An invisible powder. Unfortunately, since it's invisible, it doesn't look like it'd color much of anything..."
-	else
-		description = "\An [colorname] powder, used for coloring things [colorname]."
+/datum/reagent/colorful_reagent/crayonpowder/New()
+	description = "\an [colorname] powder made by grinding down crayons, good for colouring chemical reagents."
 
 
-/datum/reagent/colorful_reagent/powder/red
-	name = "Red Powder"
+/datum/reagent/colorful_reagent/crayonpowder/red
+	name = "Red Crayon Powder"
 	colorname = "red"
 	color = "#DA0000" // red
-	random_color_list = list("#FC7474")
+	random_color_list = list("#DA0000")
 
-/datum/reagent/colorful_reagent/powder/orange
-	name = "Orange Powder"
+/datum/reagent/colorful_reagent/crayonpowder/orange
+	name = "Orange Crayon Powder"
 	colorname = "orange"
 	color = "#FF9300" // orange
 	random_color_list = list("#FF9300")
 
-/datum/reagent/colorful_reagent/powder/yellow
-	name = "Yellow Powder"
+/datum/reagent/colorful_reagent/crayonpowder/yellow
+	name = "Yellow Crayon Powder"
 	colorname = "yellow"
 	color = "#FFF200" // yellow
 	random_color_list = list("#FFF200")
 
-/datum/reagent/colorful_reagent/powder/green
-	name = "Green Powder"
+/datum/reagent/colorful_reagent/crayonpowder/green
+	name = "Green Crayon Powder"
 	colorname = "green"
 	color = "#A8E61D" // green
 	random_color_list = list("#A8E61D")
 
-/datum/reagent/colorful_reagent/powder/blue
-	name = "Blue Powder"
+/datum/reagent/colorful_reagent/crayonpowder/blue
+	name = "Blue Crayon Powder"
 	colorname = "blue"
 	color = "#00B7EF" // blue
 	random_color_list = list("#71CAE5")
 
-/datum/reagent/colorful_reagent/powder/purple
-	name = "Purple Powder"
+/datum/reagent/colorful_reagent/crayonpowder/purple
+	name = "Purple Crayon Powder"
 	colorname = "purple"
 	color = "#DA00FF" // purple
-	random_color_list = list("#BD8FC4")
+	random_color_list = list("#DA00FF")
 
-/datum/reagent/colorful_reagent/powder/invisible
-	name = "Invisible Powder"
+/datum/reagent/colorful_reagent/crayonpowder/invisible
+	name = "Invisible Crayon Powder"
 	colorname = "invisible"
 	color = "#FFFFFF00" // white + no alpha
 	random_color_list = list(null)	//because using the powder color turns things invisible
 
-/datum/reagent/colorful_reagent/powder/black
-	name = "Black Powder"
+/datum/reagent/colorful_reagent/crayonpowder/black
+	name = "Black Crayon Powder"
 	colorname = "black"
 	color = "#1C1C1C" // not quite black
 	random_color_list = list("#8D8D8D")	//more grey than black, not enough to hide your true colors
 
-/datum/reagent/colorful_reagent/powder/white
-	name = "White Powder"
+/datum/reagent/colorful_reagent/crayonpowder/white
+	name = "White Crayon Powder"
 	colorname = "white"
 	color = "#FFFFFF" // white
 	random_color_list = list("#FFFFFF") //doesn't actually change appearance at all
@@ -1370,7 +1354,7 @@
 /datum/reagent/carpet/reaction_turf(turf/T, reac_volume)
 	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
 		var/turf/open/floor/F = T
-		F.PlaceOnTop(/turf/open/floor/carpet, flags = CHANGETURF_INHERIT_AIR)
+		F.PlaceOnTop(/turf/open/floor/carpet)
 	..()
 
 /datum/reagent/bromine
@@ -1455,10 +1439,10 @@
 	if(method == TOUCH || method == VAPOR)
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/datum/sprite_accessory/hair/picked_hair = pick(GLOB.hairstyles_list)
-			var/datum/sprite_accessory/facial_hair/picked_beard = pick(GLOB.facial_hairstyles_list)
-			H.hairstyle = picked_hair
-			H.facial_hairstyle = picked_beard
+			var/datum/sprite_accessory/hair/picked_hair = pick(GLOB.hair_styles_list)
+			var/datum/sprite_accessory/facial_hair/picked_beard = pick(GLOB.facial_hair_styles_list)
+			H.hair_style = picked_hair
+			H.facial_hair_style = picked_beard
 			H.update_hair()
 
 /datum/reagent/concentrated_barbers_aid
@@ -1472,8 +1456,8 @@
 	if(method == TOUCH || method == VAPOR)
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.hairstyle = "Very Long Hair"
-			H.facial_hairstyle = "Beard (Very Long)"
+			H.hair_style = "Very Long Hair"
+			H.facial_hair_style = "Beard (Very Long)"
 			H.update_hair()
 
 /datum/reagent/saltpetre
@@ -1666,7 +1650,7 @@
 
 /datum/reagent/pax
 	name = "Pax"
-	description = "A colorless liquid that suppresses violence in its subjects."
+	description = "A colorless liquid that suppresses violence on the subjects."
 	color = "#AAAAAA55"
 	taste_description = "water"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
@@ -1702,8 +1686,8 @@
 	return ..()
 
 /datum/reagent/pax/peaceborg
-	name = "synthpax"
-	description = "A colorless liquid that suppresses violence in its subjects. Cheaper to synthesize than normal Pax, but wears off faster."
+	name = "synth-pax"
+	description = "A colorless liquid that suppresses violence on the subjects. Cheaper to synthetize, but wears out faster than normal Pax."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 /datum/reagent/peaceborg
@@ -1789,8 +1773,7 @@
 	else
 		var/yuck_cycles = current_cycle - yuck_cycle
 		if(yuck_cycles % YUCK_PUKE_CYCLES == 0)
-			if(yuck_cycles >= YUCK_PUKE_CYCLES * YUCK_PUKES_TO_STUN)
-				holder.remove_reagent(type, 5)
+			holder.remove_reagent(type, 5)
 			C.vomit(rand(14, 26), stun = yuck_cycles >= YUCK_PUKE_CYCLES * YUCK_PUKES_TO_STUN)
 	if(holder)
 		return ..()
@@ -1799,14 +1782,4 @@
 
 /datum/reagent/yuck/on_mob_end_metabolize(mob/living/L)
 	yuck_cycle = 0 // reset vomiting
-	return ..()
-
-/datum/reagent/yuck/on_transfer(atom/A, method=TOUCH, trans_volume)
-	if(method == INGEST || !iscarbon(A))
-		return ..()
-
-	A.reagents.remove_reagent(type, trans_volume)
-	A.reagents.add_reagent(/datum/reagent/fuel, trans_volume * 0.75)
-	A.reagents.add_reagent(/datum/reagent/water, trans_volume * 0.25)
-
 	return ..()

@@ -72,7 +72,7 @@
 	if(safety_mode)
 		safety_mode = FALSE
 		update_icon()
-	playsound(src, "sparks", 75, TRUE, -1)
+	playsound(src, "sparks", 75, 1, -1)
 	to_chat(user, "<span class='notice'>You use the cryptographic sequencer on [src].</span>")
 
 /obj/machinery/recycler/update_icon()
@@ -115,7 +115,7 @@
 		if(istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /mob/living/brain))
 			emergency_stop(AM)
 		else if(isliving(AM))
-			if(obj_flags & EMAGGED)
+			if((obj_flags & EMAGGED)||!ishuman(AM))
 				crush_living(AM)
 			else
 				emergency_stop(AM)
@@ -123,9 +123,9 @@
 			recycle_item(AM)
 			items_recycled++
 		else
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
 	if(items_recycled && sound)
-		playsound(src, item_recycle_sound, 50, TRUE)
+		playsound(src, item_recycle_sound, 50, 1)
 
 /obj/machinery/recycler/proc/recycle_item(obj/item/I)
 
@@ -150,14 +150,14 @@
 
 
 /obj/machinery/recycler/proc/emergency_stop(mob/living/L)
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
 	safety_mode = TRUE
 	update_icon()
 	L.forceMove(loc)
 	addtimer(CALLBACK(src, .proc/reboot), SAFETY_COOLDOWN)
 
 /obj/machinery/recycler/proc/reboot()
-	playsound(src, 'sound/machines/ping.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/ping.ogg', 50, 0)
 	safety_mode = FALSE
 	update_icon()
 
@@ -166,10 +166,11 @@
 	L.forceMove(loc)
 
 	if(issilicon(L))
-		playsound(src, 'sound/items/welder.ogg', 50, TRUE)
+		playsound(src, 'sound/items/welder.ogg', 50, 1)
 	else
-		playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
+		playsound(src, 'sound/effects/splat.ogg', 50, 1)
 
+	// By default, the emagged recycler will gib all non-carbons. (human simple animal mobs don't count)
 	if(iscarbon(L))
 		if(L.stat == CONSCIOUS)
 			L.say("ARRRRRRRRRRRGH!!!", forced="recycler grinding")

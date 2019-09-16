@@ -216,13 +216,6 @@
 	allow_duplicates = FALSE
 	cost = 5
 
-/datum/map_template/ruin/lavaland/dark_wizards
-	name = "Dark Wizard Altar"
-	id = "dark_wizards"
-	description = "A ruin with dark wizards. What secret do they guard?"
-	suffix = "lavaland_surface_wizard.dmm"
-	cost = 5
-
 /datum/map_template/ruin/lavaland/puzzle
 	name = "Ancient Puzzle"
 	id = "puzzle"

@@ -42,10 +42,10 @@ Self-sustaining extracts:
 		return
 	if(reagentselect == "lesser plasma")
 		amount = 4
-		reagentselect = /datum/reagent/toxin/plasma
+		reagentselect = "plasma"
 	if(reagentselect == "holy water and uranium")
 		reagentselect = /datum/reagent/water/holywater
-		secondary = /datum/reagent/uranium
+		secondary = "uranium"
 	extract.forceMove(user.drop_location())
 	qdel(src)
 	user.put_in_active_hand(extract)

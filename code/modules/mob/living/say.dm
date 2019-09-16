@@ -89,7 +89,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/static/list/one_character_prefix = list(MODE_HEADSET = TRUE, MODE_ROBOT = TRUE, MODE_WHISPER = TRUE)
 
 	var/ic_blocked = FALSE
-	if(client && !forced && CHAT_FILTER_CHECK(message))
+	if(client && !forced && config.ic_filter_regex && findtext(message, config.ic_filter_regex))
 		//The filter doesn't act on the sanitized message, but the raw message.
 		ic_blocked = TRUE
 
@@ -370,12 +370,12 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		if(MODE_WHISPER)
 			return ITALICS
 		if(MODE_R_HAND)
-			for(var/obj/item/r_hand in get_held_items_for_side(RIGHT_HANDS, all = TRUE))
+			for(var/obj/item/r_hand in get_held_items_for_side("r", all = TRUE))
 				if (r_hand)
 					return r_hand.talk_into(src, message, , spans, language)
 				return ITALICS | REDUCE_RANGE
 		if(MODE_L_HAND)
-			for(var/obj/item/l_hand in get_held_items_for_side(LEFT_HANDS, all = TRUE))
+			for(var/obj/item/l_hand in get_held_items_for_side("l", all = TRUE))
 				if (l_hand)
 					return l_hand.talk_into(src, message, , spans, language)
 				return ITALICS | REDUCE_RANGE

@@ -11,11 +11,8 @@
 	output_dir = SOUTH
 	req_access = list(ACCESS_MINERAL_STOREROOM)
 	speed_process = TRUE
-	layer = BELOW_OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/ore_redemption
-	ui_x = 440
-	ui_y = 550
-
+	layer = BELOW_OBJ_LAYER
 	var/points = 0
 	var/ore_pickup_rate = 15
 	var/sheet_per_ore = 1
@@ -205,7 +202,7 @@
 /obj/machinery/mineral/ore_redemption/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "ore_redemption_machine", "Ore Redemption Machine", ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "ore_redemption_machine", "Ore Redemption Machine", 440, 550, master_ui, state)
 		ui.open()
 
 /obj/machinery/mineral/ore_redemption/ui_data(mob/user)
@@ -254,10 +251,10 @@
 			var/mob/M = usr
 			var/obj/item/card/id/I = M.get_idcard(TRUE)
 			if(points)
-				if(I?.registered_account?.adjust_money(points))
+				if(I && I.registered_account.adjust_money(points))
 					points = 0
 				else
-					to_chat(usr, "<span class='warning'>No valid ID detected.</span>")
+					to_chat(usr, "<span class='warning'>No ID detected.</span>")
 			else
 				to_chat(usr, "<span class='warning'>No points to claim.</span>")
 			return TRUE
@@ -321,9 +318,7 @@
 				return
 			var/alloy_id = params["id"]
 			var/datum/design/alloy = stored_research.isDesignResearchedID(alloy_id)
-			var/mob/M = usr
-			var/obj/item/card/id/I = M.get_idcard(TRUE)
-			if((check_access(I) || allowed(usr)) && alloy)
+			if((check_access(inserted_scan_id) || allowed(usr)) && alloy)
 				var/smelt_amount = can_smelt_alloy(alloy)
 				var/desired = 0
 				if (params["sheets"])

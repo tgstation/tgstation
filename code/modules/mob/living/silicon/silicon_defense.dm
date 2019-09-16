@@ -10,7 +10,7 @@
 		var/damage = 20
 		if (prob(90))
 			log_combat(M, src, "attacked")
-			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
+			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] slashes at [src]!</span>", \
 							"<span class='userdanger'>[M] slashes at you!</span>")
 			if(prob(8))
@@ -19,7 +19,7 @@
 			adjustBruteLoss(damage)
 			updatehealth()
 		else
-			playsound(loc, 'sound/weapons/slashmiss.ogg', 25, TRUE, -1)
+			playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M]'s swipe misses [src]!</span>", \
 							"<span class='userdanger'>[M]'s swipe misses you!</span>")
 
@@ -52,16 +52,17 @@
 
 /mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L)
 	if(L.a_intent == INTENT_HELP)
-		visible_message("<span class='notice'>[L.name] rubs its head against [src].</span>")
+		visible_message("[L.name] rubs its head against [src].")
 
-/mob/living/silicon/attack_hulk(mob/living/carbon/human/user)
-	. = ..()
-	if(!.)
-		return
-	adjustBruteLoss(rand(10, 15))
-	playsound(loc, "punch", 25, TRUE, -1)
-	visible_message("<span class='danger'>[user] punches [src]!</span>", \
-			"<span class='userdanger'>[user] punches you!</span>", null, COMBAT_MESSAGE_RANGE)
+/mob/living/silicon/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+	if(user.a_intent == INTENT_HARM)
+		..(user, 1)
+		adjustBruteLoss(rand(10, 15))
+		playsound(loc, "punch", 25, 1, -1)
+		visible_message("<span class='danger'>[user] punches [src]!</span>", \
+				"<span class='userdanger'>[user] punches you!</span>", null, COMBAT_MESSAGE_RANGE)
+		return 1
+	return 0
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/silicon/attack_hand(mob/living/carbon/human/M)
@@ -70,14 +71,13 @@
 		. = TRUE
 	switch(M.a_intent)
 		if ("help")
-			M.visible_message("<span class='notice'>[M] pets [src].</span>", \
+			M.visible_message("[M] pets [src].", \
 							"<span class='notice'>You pet [src].</span>")
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT_RND, "pet_borg", /datum/mood_event/pet_borg)
 		if("grab")
 			grabbedby(M)
 		else
 			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-			playsound(src.loc, 'sound/effects/bang.ogg', 10, TRUE)
+			playsound(src.loc, 'sound/effects/bang.ogg', 10, 1)
 			visible_message("<span class='danger'>[M] punches [src], but doesn't leave a dent!</span>", \
 				"<span class='warning'>[M] punches you, but doesn't leave a dent!</span>", null, COMBAT_MESSAGE_RANGE)
 

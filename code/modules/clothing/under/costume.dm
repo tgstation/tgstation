@@ -1,11 +1,8 @@
-/obj/item/clothing/under/costume
-	icon = 'icons/obj/clothing/under/costume.dmi'
-	mob_overlay_icon =  'icons/mob/clothing/under/costume.dmi'
-
 /obj/item/clothing/under/costume/roman
 	name = "\improper Roman armor"
 	desc = "Ancient Roman armor. Made of metallic and leather straps."
 	icon_state = "roman"
+	item_color = "roman"
 	item_state = "armor"
 	can_adjust = FALSE
 	strip_delay = 100
@@ -16,25 +13,37 @@
 	desc = "The leather club is two sectors down."
 	icon_state = "darkholme"
 	item_state = "darkholme"
+	item_color = "darkholme"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/owl
 	name = "owl uniform"
 	desc = "A soft brown jumpsuit made of synthetic feathers and strong conviction."
 	icon_state = "owl"
+	item_color = "owl"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/griffin
 	name = "griffon uniform"
 	desc = "A soft brown jumpsuit with a white feather collar made of synthetic feathers and a lust for mayhem."
 	icon_state = "griffin"
+	item_color = "griffin"
 	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/cloud
+	name = "cloud costume"
+	desc = "A costume made to resemble a fluffy cloud. Hopefully concealing any naughty bits the children might see."
+	icon_state = "cloud"
+	item_color = "cloud"
+	can_adjust = FALSE
+
 
 /obj/item/clothing/under/costume/schoolgirl
 	name = "blue schoolgirl uniform"
 	desc = "It's just like one of my Japanese animes!"
 	icon_state = "schoolgirl"
 	item_state = "schoolgirl"
+	item_color = "schoolgirl"
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
@@ -43,22 +52,26 @@
 	name = "red schoolgirl uniform"
 	icon_state = "schoolgirlred"
 	item_state = "schoolgirlred"
+	item_color = "schoolgirlred"
 
 /obj/item/clothing/under/costume/schoolgirl/green
 	name = "green schoolgirl uniform"
 	icon_state = "schoolgirlgreen"
 	item_state = "schoolgirlgreen"
+	item_color = "schoolgirlgreen"
 
 /obj/item/clothing/under/costume/schoolgirl/orange
 	name = "orange schoolgirl uniform"
 	icon_state = "schoolgirlorange"
 	item_state = "schoolgirlorange"
+	item_color = "schoolgirlorange"
 
 /obj/item/clothing/under/costume/pirate
 	name = "pirate outfit"
 	desc = "Yarr."
 	icon_state = "pirate"
 	item_state = "pirate"
+	item_color = "pirate"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/soviet
@@ -66,6 +79,7 @@
 	desc = "For the Motherland!"
 	icon_state = "soviet"
 	item_state = "soviet"
+	item_color = "soviet"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/redcoat
@@ -73,6 +87,7 @@
 	desc = "Looks old."
 	icon_state = "redcoat"
 	item_state = "redcoat"
+	item_color = "redcoat"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/kilt
@@ -80,6 +95,7 @@
 	desc = "Includes shoes and plaid."
 	icon_state = "kilt"
 	item_state = "kilt"
+	item_color = "kilt"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
@@ -96,6 +112,7 @@
 	desc = "Are you not entertained? Is that not why you are here?"
 	icon_state = "gladiator"
 	item_state = "gladiator"
+	item_color = "gladiator"
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
@@ -110,6 +127,7 @@
 	desc = "Maid in China."
 	icon_state = "maid"
 	item_state = "maid"
+	item_color = "maid"
 	body_parts_covered = CHEST|GROIN
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
@@ -123,6 +141,7 @@
 	name = "geisha suit"
 	desc = "Cute space ninja senpai not included."
 	icon_state = "geisha"
+	item_color = "geisha"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 
@@ -130,6 +149,7 @@
 	name = "villain suit"
 	desc = "A change of wardrobe is necessary if you ever want to catch a real superhero."
 	icon_state = "villain"
+	item_color = "villain"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/sailor
@@ -137,6 +157,7 @@
 	desc = "Skipper's in the wardroom drinkin gin'."
 	icon_state = "sailor"
 	item_state = "b_suit"
+	item_color = "sailor"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/singer
@@ -149,12 +170,14 @@
 	name = "yellow performer's outfit"
 	icon_state = "ysing"
 	item_state = "ysing"
+	item_color = "ysing"
 	fitted = NO_FEMALE_UNIFORM
 
 /obj/item/clothing/under/costume/singer/blue
 	name = "blue performer's outfit"
 	icon_state = "bsing"
 	item_state = "bsing"
+	item_color = "bsing"
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/costume/mummy
@@ -162,6 +185,7 @@
 	desc = "Return the slab or suffer my stale references."
 	icon_state = "mummy"
 	item_state = "mummy"
+	item_color = "mummy"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
@@ -172,6 +196,7 @@
 	desc = "Perfect camouflage for hiding in botany."
 	icon_state = "scarecrow"
 	item_state = "scarecrow"
+	item_color = "scarecrow"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
@@ -182,6 +207,7 @@
 	desc = "A dress inspired by the ancient \"Victorian\" era."
 	icon_state = "draculass"
 	item_state = "draculass"
+	item_color = "draculass"
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
@@ -191,6 +217,7 @@
 	desc = "A modified scientist jumpsuit to look extra cool."
 	icon_state = "drfreeze"
 	item_state = "drfreeze"
+	item_color = "drfreeze"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/lobster
@@ -198,6 +225,7 @@
 	desc = "Who beheaded the college mascot?"
 	icon_state = "lobster"
 	item_state = "lobster"
+	item_color = "lobster"
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 
@@ -206,6 +234,7 @@
 	desc = "Now you're cooking."
 	icon_state = "gondola"
 	item_state = "lb_suit"
+	item_color = "gondola"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/skeleton
@@ -213,6 +242,7 @@
 	desc = "A black jumpsuit with a white bone pattern printed on it. Spooky!"
 	icon_state = "skeleton"
 	item_state = "skeleton"
+	item_color = "skeleton"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
@@ -246,6 +276,7 @@
 	desc = "The latest in fashionable russian outfits."
 	icon_state = "hostanclothes"
 	item_state = "hostanclothes"
+	item_color = "hostanclothes"
 	alt_covers_chest = TRUE
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30)
 	strip_delay = 50

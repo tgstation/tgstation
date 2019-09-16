@@ -182,7 +182,7 @@
 					else
 						for(var/obj/item/W in T)
 							T.dropItemToGround(W)
-						init_shade(T, user, message_user = 1)
+						init_shade(T, user, vic = 1)
 						qdel(T)
 				else
 					to_chat(user, "<span class='userdanger'>Capture failed!</span>: Kill or maim the victim first!")
@@ -198,8 +198,6 @@
 				T.health = T.maxHealth
 				if(purified)
 					icon_state = "purified_soulstone2"
-					if(iscultist(T))
-						SSticker.mode.remove_cultist(T.mind, FALSE, FALSE)
 				else
 					icon_state = "soulstone2"
 				name = "soulstone: Shade of [T.real_name]"
@@ -273,9 +271,7 @@
 	newstruct.cancel_camera()
 
 
-/obj/item/soulstone/proc/init_shade(mob/living/carbon/human/T, mob/user, message_user = 0 , mob/shade_controller)
-	if(!shade_controller)
-		shade_controller = T
+/obj/item/soulstone/proc/init_shade(mob/living/carbon/human/T, mob/U, vic = 0)
 	new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton
 	T.stop_sound_channel(CHANNEL_HEARTBEAT)
 	T.invisibility = INVISIBILITY_ABSTRACT
@@ -285,11 +281,11 @@
 	S.mobility_flags = NONE //Can't move out of the soul stone
 	S.name = "Shade of [T.real_name]"
 	S.real_name = "Shade of [T.real_name]"
-	S.key = shade_controller.key
-	S.language_holder = user.language_holder.copy(S)
-	if(user)
-		S.faction |= "[REF(user)]" //Add the master as a faction, allowing inter-mob cooperation
-	if(user && iscultist(user))
+	S.key = T.key
+	S.language_holder = U.language_holder.copy(S)
+	if(U)
+		S.faction |= "[REF(U)]" //Add the master as a faction, allowing inter-mob cooperation
+	if(U && iscultist(U))
 		SSticker.mode.add_cultist(S.mind, 0)
 	S.cancel_camera()
 	name = "soulstone: Shade of [T.real_name]"
@@ -297,32 +293,36 @@
 		icon_state = "purified_soulstone2"
 	else
 		icon_state = "soulstone2"
-	if(user && (iswizard(user) || usability))
-		to_chat(S, "Your soul has been captured! You are now bound to [user.real_name]'s will. Help [user.p_them()] succeed in [user.p_their()] goals at all costs.")
-	else if(user && iscultist(user))
+	if(U && (iswizard(U) || usability))
+		to_chat(S, "Your soul has been captured! You are now bound to [U.real_name]'s will. Help [U.p_them()] succeed in [U.p_their()] goals at all costs.")
+	else if(U && iscultist(U))
 		to_chat(S, "Your soul has been captured! You are now bound to the cult's will. Help them succeed in their goals at all costs.")
-	if(message_user && user)
-		to_chat(user, "<span class='info'><b>Capture successful!</b>:</span> [T.real_name]'s soul has been ripped from [T.p_their()] body and stored within the soul stone.")
+	if(vic && U)
+		to_chat(U, "<span class='info'><b>Capture successful!</b>:</span> [T.real_name]'s soul has been ripped from [T.p_their()] body and stored within the soul stone.")
 
 
-/obj/item/soulstone/proc/getCultGhost(mob/living/carbon/human/T, mob/user)
+/obj/item/soulstone/proc/getCultGhost(mob/living/carbon/human/T, mob/U)
 	var/mob/dead/observer/chosen_ghost
 
-	chosen_ghost = T.get_ghost(TRUE,TRUE) //Try to grab original owner's ghost first
+	for(var/mob/dead/observer/ghost in GLOB.player_list) //We put them back in their body
+		if(ghost.mind && ghost.mind.current == T && ghost.client)
+			chosen_ghost = ghost
+			break
 
-	if(!chosen_ghost || !chosen_ghost.client)	//Failing that, we grab a ghosts
+	if(!chosen_ghost)	//Failing that, we grab a ghost
 		var/list/consenting_candidates = pollGhostCandidates("Would you like to play as a Shade?", "Cultist", null, ROLE_CULTIST, 50, POLL_IGNORE_SHADE)
 		if(consenting_candidates.len)
 			chosen_ghost = pick(consenting_candidates)
 	if(!T)
 		return FALSE
-	if(!chosen_ghost || !chosen_ghost.client)
-		to_chat(user, "<span class='danger'>There were no spirits willing to become a shade.</span>")
+	if(!chosen_ghost)
+		to_chat(U, "<span class='danger'>There were no spirits willing to become a shade.</span>")
 		return FALSE
 	if(contents.len) //If they used the soulstone on someone else in the meantime
 		return FALSE
+	T.ckey = chosen_ghost.ckey
 	for(var/obj/item/W in T)
 		T.dropItemToGround(W)
-	init_shade(T, user , shade_controller = chosen_ghost)
+	init_shade(T, U)
 	qdel(T)
 	return TRUE

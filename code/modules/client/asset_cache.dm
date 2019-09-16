@@ -690,13 +690,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 			if (!isnull(c) && c != "#FFFFFF")
 				I.Blend(c, ICON_MULTIPLY)
 		else
-			var/icon_states_string
-			for (var/an_icon_state in icon_states_list)
-				if (!icon_states_string)
-					icon_states_string = "[json_encode(an_icon_state)](\ref[an_icon_state])"
-				else
-					icon_states_string += ", [json_encode(an_icon_state)](\ref[an_icon_state])"
-			stack_trace("[item] does not have a valid icon state, icon=[icon_file], icon_state=[json_encode(icon_state)](\ref[icon_state]), icon_states=[icon_states_string]")
+			stack_trace("[item] does not have a valid icon state, icon=[icon_file], icon_state=[json_encode(icon_state)], icon_states=[json_encode(icon_states_list)]")
 			I = icon('icons/turf/floors.dmi', "", SOUTH)
 
 		var/imgid = replacetext(replacetext("[item]", "/obj/item/", ""), "/", "-")
@@ -706,7 +700,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /datum/asset/simple/genetics
 	assets = list(
-		"dna_discovered.gif"	= 'html/dna_discovered.gif',
-		"dna_undiscovered.gif"	= 'html/dna_undiscovered.gif',
-		"dna_extra.gif" 		= 'html/dna_extra.gif'
+		"dna_discovered.png"	= 'html/dna_discovered.png',
+		"dna_undiscovered.png"	= 'html/dna_undiscovered.png',
+		"dna_extra.png" 		= 'html/dna_extra.png'
 	)

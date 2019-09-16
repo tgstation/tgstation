@@ -21,6 +21,13 @@
 		if(mmi.brainmob)
 			mmi.brainmob.suiciding = suicide_state
 
+/mob/living/carbon/human/virtual_reality/set_suicide(suicide_state)
+	return
+
+/mob/living/carbon/human/virtual_reality/canSuicide()
+	to_chat(src, "<span class='warning'>I'm sorry [first_name()], I'm afraid you can't do that.</span>")
+	return
+
 /mob/living/carbon/human/verb/suicide()
 	set hidden = 1
 	if(!canSuicide())
@@ -199,7 +206,7 @@
 		set_suicide(TRUE)
 		visible_message("<span class='danger'>[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide.</span>", \
 				"<span class='userdanger'>[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide.</span>", \
-				"<span class='hear'>You hear thrashing.</span>")
+				"<span class='italics'>You hear thrashing.</span>")
 
 		suicide_log()
 

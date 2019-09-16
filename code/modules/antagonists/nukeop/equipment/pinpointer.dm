@@ -25,7 +25,7 @@
 			if(bomb.timing)
 				if(!alert)
 					alert = TRUE
-					playsound(src, 'sound/items/nuke_toy_lowpower.ogg', 50, FALSE)
+					playsound(src, 'sound/items/nuke_toy_lowpower.ogg', 50, 0)
 					if(isliving(loc))
 						var/mob/living/L = loc
 						to_chat(L, "<span class='userdanger'>Your [name] vibrates and lets out a tinny alarm. Uh oh.</span>")
@@ -53,7 +53,7 @@
 	if(isliving(loc))
 		var/mob/living/L = loc
 		to_chat(L, "<span class='userdanger'>Your [name] beeps as it reconfigures it's tracking algorithms.</span>")
-		playsound(L, 'sound/machines/triple_beep.ogg', 50, TRUE)
+		playsound(L, 'sound/machines/triple_beep.ogg', 50, 1)
 	mode = new_mode
 	scan_for_target()
 

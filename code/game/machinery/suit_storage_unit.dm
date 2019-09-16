@@ -6,8 +6,6 @@
 	icon_state = "close"
 	density = TRUE
 	max_integrity = 250
-	ui_x = 400
-	ui_y = 305
 
 	var/obj/item/clothing/suit/space/suit = null
 	var/obj/item/clothing/head/helmet/space/helmet = null
@@ -182,7 +180,10 @@
 		dump_contents()
 	update_icon()
 
-/obj/machinery/suit_storage_unit/dump_contents()
+/**
+  * Drops all contents of the unit onto the ground.
+*/
+/obj/machinery/suit_storage_unit/proc/dump_contents()
 	dropContents()
 	helmet = null
 	suit = null
@@ -258,7 +259,7 @@
 		locked = FALSE
 		if(uv_super)
 			visible_message("<span class='warning'>[src]'s door creaks open with a loud whining noise. A cloud of foul black smoke escapes from its chamber.</span>")
-			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
+			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50, 1)
 			helmet = null
 			qdel(helmet)
 			suit = null
@@ -274,7 +275,7 @@
 				visible_message("<span class='notice'>[src]'s door slides open. The glowing yellow lights dim to a gentle green.</span>")
 			else
 				visible_message("<span class='warning'>[src]'s door slides open, barraging you with the nauseating smell of charred flesh.</span>")
-			playsound(src, 'sound/machines/airlockclose.ogg', 25, TRUE)
+			playsound(src, 'sound/machines/airlockclose.ogg', 25, 1)
 			var/list/things_to_clear = list() //Done this way since using GetAllContents on the SSU itself would include circuitry and such.
 			if(suit)
 				things_to_clear += suit
@@ -326,7 +327,7 @@
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", \
 		"<span class='notice'>You start kicking against the doors... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='hear'>You hear a thump from [src].</span>")
+		"<span class='italics'>You hear a thump from [src].</span>")
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return
@@ -419,7 +420,7 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "suit_storage_unit", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "suit_storage_unit", name, 400, 305, master_ui, state)
 		ui.open()
 
 /obj/machinery/suit_storage_unit/ui_data()

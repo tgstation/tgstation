@@ -44,7 +44,7 @@
 	if(W.tool_behaviour == TOOL_SCREWDRIVER && user.a_intent != INTENT_HARM)
 		user.visible_message("<span class='warning'>[usr.name] deactivates [src].</span>",
 			"<span class='notice'>After some fiddling, you find a way to disable [src]'s power source.</span>",
-			"<span class='hear'>You hear clicking.</span>")
+			"<span class='italics'>You hear clicking.</span>")
 		new /obj/item/deactivated_swarmer(get_turf(src))
 		qdel(src)
 	else
@@ -60,7 +60,7 @@
 	speak_emote = list("tones")
 	initial_language_holder = /datum/language_holder/swarmer
 	bubble_icon = "swarmer"
-	mob_biotypes = MOB_ROBOTIC
+	mob_biotypes = list(MOB_ROBOTIC)
 	health = 40
 	maxHealth = 40
 	status_flags = CANPUSH
@@ -498,7 +498,7 @@
 	var/datum/effect_system/spark_spread/S = new
 	S.set_up(4,0,get_turf(target))
 	S.start()
-	playsound(src,'sound/effects/sparks4.ogg',50,TRUE)
+	playsound(src,'sound/effects/sparks4.ogg',50,1)
 	do_teleport(target, F, 0, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /mob/living/simple_animal/hostile/swarmer/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = FALSE, tesla_shock = FALSE, illusion = FALSE, stun = TRUE)
@@ -541,7 +541,7 @@
 
 /obj/effect/temp_visual/swarmer/disintegration/Initialize()
 	. = ..()
-	playsound(loc, "sparks", 100, TRUE)
+	playsound(loc, "sparks", 100, 1)
 
 /obj/effect/temp_visual/swarmer/dismantle
 	icon_state = "dismantle"
@@ -571,9 +571,9 @@
 /obj/structure/swarmer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src, 'sound/weapons/egloves.ogg', 80, TRUE)
+			playsound(src, 'sound/weapons/egloves.ogg', 80, 1)
 		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src, 'sound/items/welder.ogg', 100, 1)
 
 /obj/structure/swarmer/emp_act()
 	. = ..()
@@ -592,7 +592,7 @@
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!istype(L, /mob/living/simple_animal/hostile/swarmer))
-			playsound(loc,'sound/effects/snap.ogg',50, TRUE, -1)
+			playsound(loc,'sound/effects/snap.ogg',50, 1, -1)
 			L.electrocute_act(0, src, 1, 1, 1)
 			if(iscyborg(L))
 				L.Paralyze(100)
@@ -650,7 +650,7 @@
 	if(do_mob(src, src, 100))
 		var/createtype = SwarmerTypeToCreate()
 		if(createtype && Fabricate(createtype, 50))
-			playsound(loc,'sound/items/poster_being_created.ogg',50, TRUE, -1)
+			playsound(loc,'sound/items/poster_being_created.ogg',50, 1, -1)
 
 
 /mob/living/simple_animal/hostile/swarmer/proc/SwarmerTypeToCreate()

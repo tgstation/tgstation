@@ -36,8 +36,8 @@
 	if(!objective)
 		return -1
 	display_results(user, target, "<span class='notice'>You begin to brainwash [target]...</span>",
-		"<span class='notice'>[user] begins to fix [target]'s brain.</span>",
-		"<span class='notice'>[user] begins to perform surgery on [target]'s brain.</span>")
+		"[user] begins to fix [target]'s brain.",
+		"[user] begins to perform surgery on [target]'s brain.")
 
 /datum/surgery_step/brainwash/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(!target.mind)
@@ -47,8 +47,8 @@
 		to_chat(user, "<span class='warning'>You hear a faint buzzing from a device inside [target]'s brain, and the brainwashing is erased.</span>")
 		return FALSE
 	display_results(user, target, "<span class='notice'>You succeed in brainwashing [target].</span>",
-		"<span class='notice'>[user] successfully fixes [target]'s brain!</span>",
-		"<span class='notice'>[user] completes the surgery on [target]'s brain.</span>")
+		"[user] successfully fixes [target]'s brain!",
+		"[user] completes the surgery on [target]'s brain.")
 	to_chat(target, "<span class='userdanger'>A new compulsion fills your mind... you feel forced to obey it!</span>")
 	brainwash(target, objective)
 	message_admins("[ADMIN_LOOKUPFLW(user)] surgically brainwashed [ADMIN_LOOKUPFLW(target)] with the objective '[objective]'.")

@@ -3,9 +3,6 @@
 	desc = "Used to order supplies, approve requests, and control the shuttle."
 	icon_screen = "supply"
 	circuit = /obj/item/circuitboard/computer/cargo
-	ui_x = 750
-	ui_y = 850
-
 	var/requestonly = FALSE
 	var/contraband = FALSE
 	var/self_paid = FALSE
@@ -13,10 +10,6 @@
 		cannot transport live organisms, human remains, classified nuclear weaponry, \
 		homing beacons or machinery housing any form of artificial intelligence."
 	var/blockade_warning = "Bluespace instability detected. Shuttle movement impossible."
-	/// radio used by the console to send messages on supply channel
-	var/obj/item/radio/headset/radio
-	/// var that tracks message cooldown
-	var/message_cooldown
 
 	light_color = "#E2853D"//orange
 
@@ -29,17 +22,12 @@
 
 /obj/machinery/computer/cargo/Initialize()
 	. = ..()
-	radio = new /obj/item/radio/headset/headset_cargo(src)
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	contraband = board.contraband
 	if (board.obj_flags & EMAGGED)
 		obj_flags |= EMAGGED
 	else
 		obj_flags &= ~EMAGGED
-
-/obj/machinery/computer/cargo/Destroy()
-	QDEL_NULL(radio)
-	..()
 
 /obj/machinery/computer/cargo/proc/get_export_categories()
 	var/cat = EXPORT_CARGO
@@ -66,7 +54,7 @@
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "cargo", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "cargo", name, 750, 850, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/cargo/ui_data()
@@ -211,9 +199,6 @@
 				SSshuttle.shoppinglist += SO
 				if(self_paid)
 					say("Order processed. The price will be charged to [account.account_holder]'s bank account on delivery.")
-			if(requestonly && message_cooldown < world.time)
-				radio.talk_into(src, "A new order has been requested.", RADIO_CHANNEL_SUPPLY)
-				message_cooldown = world.time + 30 SECONDS
 			. = TRUE
 		if("remove")
 			var/id = text2num(params["id"])
@@ -243,7 +228,7 @@
 		if("denyall")
 			SSshuttle.requestlist.Cut()
 			. = TRUE
-		if("toggleprivate")
+		if("toggleprivate")	
 			self_paid = !self_paid
 	if(.)
 		post_signal("supply")

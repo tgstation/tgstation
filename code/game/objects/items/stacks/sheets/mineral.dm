@@ -372,20 +372,6 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
 	. = ..()
 
 /*
- * Runite
- */
-
-/obj/item/stack/sheet/mineral/runite
-	name = "Runite"
-	desc = "Rare material found in distant lands."
-	singular_name = "runite bar"
-	icon_state = "sheet-runite"
-	item_state = "sheet-runite"
-	materials = list(/datum/material/runite=MINERAL_MATERIAL_AMOUNT)
-	merge_type = /obj/item/stack/sheet/mineral/runite
-
-
-/*
  * Mythril
  */
 /obj/item/stack/sheet/mineral/mythril

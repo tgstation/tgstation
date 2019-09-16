@@ -947,7 +947,7 @@
 ///////////////////////////
 
 /datum/sprite_accessory/underwear
-	icon = 'icons/mob/clothing/underwear.dmi'
+	icon = 'icons/mob/underwear.dmi'
 	use_static = FALSE
 
 
@@ -970,16 +970,6 @@
 /datum/sprite_accessory/underwear/male_stripe
 	name = "Men's Striped Boxer"
 	icon_state = "male_stripe"
-	gender = MALE
-
-/datum/sprite_accessory/underwear/male_midway
-	name = "Men's Midway Boxer"
-	icon_state = "male_midway"
-	gender = MALE
-
-/datum/sprite_accessory/underwear/male_longjohns
-	name = "Men's Long Johns"
-	icon_state = "male_longjohns"
 	gender = MALE
 
 /datum/sprite_accessory/underwear/male_kinky
@@ -1078,11 +1068,6 @@
 	icon_state = "swim_stripe"
 	gender = FEMALE
 
-/datum/sprite_accessory/underwear/swimsuit_halter
-	name = "Ladies' Halter Swimsuit"
-	icon_state = "swim_halter"
-	gender = FEMALE
-
 /datum/sprite_accessory/underwear/female_white_neko
 	name = "Ladies' White Neko"
 	icon_state = "female_neko_white"
@@ -1124,7 +1109,7 @@
 ////////////////////////////
 
 /datum/sprite_accessory/undershirt
-	icon = 'icons/mob/clothing/underwear.dmi'
+	icon = 'icons/mob/underwear.dmi'
 
 /datum/sprite_accessory/undershirt/nude
 	name = "Nude"
@@ -1408,7 +1393,7 @@
 ///////////////////////
 
 /datum/sprite_accessory/socks
-	icon = 'icons/mob/clothing/underwear.dmi'
+	icon = 'icons/mob/underwear.dmi'
 
 /datum/sprite_accessory/socks/nude
 	name = "Nude"
@@ -1685,20 +1670,8 @@
 	name = "None"
 	icon_state = "none"
 
-/datum/sprite_accessory/wings
-	icon = 'icons/mob/clothing/wings.dmi'
-
 /datum/sprite_accessory/wings_open
-	icon = 'icons/mob/clothing/wings.dmi'
-
-/datum/sprite_accessory/wings/angel
-	name = "Angel"
-	icon_state = "angel"
-	color_src = 0
-	dimension_x = 46
-	center = TRUE
-	dimension_y = 34
-	locked = TRUE
+	icon = 'icons/mob/wings.dmi'
 
 /datum/sprite_accessory/wings_open/angel
 	name = "Angel"
@@ -1708,20 +1681,17 @@
 	center = TRUE
 	dimension_y = 34
 
-/datum/sprite_accessory/wings/dragon
-	name = "Dragon"
-	icon_state = "dragon"
-	dimension_x = 96
-	center = TRUE
-	dimension_y = 32
-	locked = TRUE
+/datum/sprite_accessory/wings
+	icon = 'icons/mob/wings.dmi'
 
-/datum/sprite_accessory/wings_open/dragon
-	name = "Dragon"
-	icon_state = "dragon"
-	dimension_x = 96
+/datum/sprite_accessory/wings/angel
+	name = "Angel"
+	icon_state = "angel"
+	color_src = 0
+	dimension_x = 46
 	center = TRUE
-	dimension_y = 32
+	dimension_y = 34
+	locked = TRUE
 
 /datum/sprite_accessory/frills
 	icon = 'icons/mob/mutant_bodyparts.dmi'
@@ -1814,7 +1784,7 @@
 	icon_state = "round"
 
 /datum/sprite_accessory/moth_wings
-	icon = 'icons/mob/moth_wings.dmi'
+	icon = 'icons/mob/wings.dmi'
 	color_src = null
 
 /datum/sprite_accessory/moth_wings/plain

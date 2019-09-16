@@ -2,7 +2,7 @@
 	name = "storage implant"
 	desc = "Stores up to two big items in a bluespace pocket."
 	icon_state = "storage"
-	implant_color = "r"
+	item_color = "r"
 	var/max_slot_stacking = 4
 
 /obj/item/implant/storage/activate()

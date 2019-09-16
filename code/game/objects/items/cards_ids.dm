@@ -102,7 +102,7 @@
 
 /obj/item/card/emagfake/afterattack()
 	. = ..()
-	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
+	playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
 
 /obj/item/card/id
 	name = "identification card"
@@ -158,15 +158,6 @@
 	else if(istype(W, /obj/item/coin))
 		insert_money(W, user, TRUE)
 		return
-	else if(istype(W, /obj/item/storage/bag/money))
-		var/obj/item/storage/bag/money/money_bag = W
-		var/list/money_contained = money_bag.contents
-
-		var/money_added = mass_insert_money(money_contained, user)
-
-		if (money_added)
-			to_chat(user, "<span class='notice'>You stuff the contents into the card! They disappear in a puff of bluespace smoke, adding [money_added] worth of credits to the linked account.</span>")
-		return
 	else
 		return ..()
 
@@ -189,22 +180,6 @@
 	to_chat(user, "<span class='notice'>The linked account now reports a balance of $[registered_account.account_balance].</span>")
 	qdel(I)
 
-/obj/item/card/id/proc/mass_insert_money(list/money, mob/user)
-	if (!money || !money.len)
-		return FALSE
-
-	var/total = 0
-
-	for (var/obj/item/physical_money in money)
-		var/cash_money = physical_money.get_item_credit_value()
-
-		total += cash_money
-
-		registered_account.adjust_money(cash_money)
-
-	QDEL_LIST(money)
-
-	return total
 
 /obj/item/card/id/proc/alt_click_can_use_id(mob/living/user)
 	if(!isliving(user))
@@ -219,10 +194,7 @@
 	. = FALSE
 	var/datum/bank_account/old_account = registered_account
 
-	var/new_bank_id = input(user, "Enter your account ID number.", "Account Reclamation", 111111) as num | null
-
-	if (isnull(new_bank_id))
-		return
+	var/new_bank_id = input(user, "Enter your account ID number.", "Account Reclamation", 111111) as num
 
 	if(!alt_click_can_use_id(user))
 		return
@@ -260,9 +232,10 @@
 		registered_account.bank_card_talk("<span class='warning'>ERROR: UNABLE TO LOGIN DUE TO SCHEDULED MAINTENANCE. MAINTENANCE IS SCHEDULED TO COMPLETE IN [(registered_account.withdrawDelay - world.time)/10] SECONDS.</span>", TRUE)
 		return
 
-	var/amount_to_remove =  FLOOR(input(user, "How much do you want to withdraw? Current Balance: [registered_account.account_balance]", "Withdraw Funds", 5) as num|null, 1)
+	var/amount_to_remove =  FLOOR(input(user, "How much do you want to withdraw? Current Balance: [registered_account.account_balance]", "Withdraw Funds", 5) as num, 1)
 
 	if(!amount_to_remove || amount_to_remove < 0)
+		to_chat(user, "<span class='warning'>You're pretty sure that's not how money works.</span>")
 		return
 	if(!alt_click_can_use_id(user))
 		return
@@ -367,7 +340,6 @@ update_label()
 	name = "agent card"
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE)
 	var/anyone = FALSE //Can anyone forge the ID or just syndicate?
-	var/forged = FALSE //have we set a custom name and job assignment, or will we use what we're given when we chameleon change?
 
 /obj/item/card/id/syndicate/Initialize()
 	. = ..()
@@ -395,42 +367,24 @@ update_label()
 			else
 				return ..()
 
-		var/popup_input = alert(user, "Choose Action", "Agent ID", "Show", "Forge/Reset", "Change Account ID")
+		var/popup_input = alert(user, "Action", "Agent ID", "Show", "Forge", "Change Account ID")
 		if(user.incapacitated())
 			return
-		if(popup_input == "Forge/Reset" && !forged)
-			var/input_text = input(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name))as text | null
-
-			if (isnull(input_text))
-				return
-
-			var/t = copytext(sanitize(input_text), 1, 26)
+		if(popup_input == "Forge")
+			var/t = copytext(sanitize(input(user, "What name would you like to put on this card?", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name))as text | null),1,26)
 			if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/dead/new_player/prefrences.dm
-				if (ishuman(user))
-					var/mob/living/carbon/human/human_agent = user
+				if (t)
+					alert("Invalid name.")
+				return
+			registered_name = t
 
-					// Invalid/blank names give a randomly generated one.
-					if (human_agent.gender == "male")
-						registered_name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
-					else if (human_agent.gender == "female")
-						registered_name = "[pick(GLOB.first_names_female)] [pick(GLOB.last_names)]"
-					else
-						registered_name = "[pick(GLOB.first_names)] [pick(GLOB.last_names)]"
-				else
-					alert ("Invalid name.")
-					return
-			else
-				registered_name = t
-
-			var/u = copytext(sanitize(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", assignment ? assignment : "Assistant") as text | null),1,MAX_MESSAGE_LEN)
+			var/u = copytext(sanitize(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant")as text | null),1,MAX_MESSAGE_LEN)
 			if(!u)
 				registered_name = ""
 				return
 			assignment = u
 			update_label()
-			forged = TRUE
 			to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
-
 
 			// First time use automatically sets the account id to the user.
 			if (first_use && !registered_account)
@@ -443,13 +397,6 @@ update_label()
 							account.bank_cards += src
 							registered_account = account
 							to_chat(user, "<span class='notice'>Your account number has been automatically assigned.</span>")
-			return
-		else if (popup_input == "Forge/Reset" && forged)
-			registered_name = initial(registered_name)
-			assignment = initial(assignment)
-			update_label()
-			forged = FALSE
-			to_chat(user, "<span class='notice'>You successfully reset the ID card.</span>")
 			return
 		else if (popup_input == "Change Account ID")
 			set_new_account(user)

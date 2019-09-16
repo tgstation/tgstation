@@ -59,34 +59,23 @@
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		var/obj/item/surgical_processor/SP = locate() in R.module.modules
-		if(SP) //no early return for !SP since we want to check optable should this not exist.
-			if(replaced_by in SP.advanced_surgeries)
-				return FALSE
-			if(type in SP.advanced_surgeries)
-				return TRUE
+		if(!SP || (replaced_by in SP.advanced_surgeries))
+			return .
+		if(type in SP.advanced_surgeries)
+			return TRUE
 
 	var/turf/T = get_turf(patient)
 	var/obj/structure/table/optable/table = locate(/obj/structure/table/optable, T)
 	if(table)
-		if(table.computer.stat & (NOPOWER|BROKEN))
+		if(!table.computer)
 			return .
-		if(replaced_by in table.computer.advanced_surgeries)
-			return FALSE
+		if(table.computer.stat & (NOPOWER|BROKEN) || (replaced_by in table.computer.advanced_surgeries))
+			return .
 		if(type in table.computer.advanced_surgeries)
 			return TRUE
 
-	var/obj/machinery/stasis/the_stasis_bed = locate(/obj/machinery/stasis, T)
-	if(the_stasis_bed?.op_computer)
-		if(the_stasis_bed.op_computer.stat & (NOPOWER|BROKEN))
-			return .
-		if(replaced_by in the_stasis_bed.op_computer.advanced_surgeries)
-			return FALSE
-		if(type in the_stasis_bed.op_computer.advanced_surgeries)
-			return TRUE
 
 /datum/surgery/proc/next_step(mob/user, intent)
-	if(location != user.zone_selected)
-		return FALSE
 	if(step_in_progress)
 		return TRUE
 

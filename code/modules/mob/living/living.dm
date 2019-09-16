@@ -269,7 +269,7 @@
 				sound_to_play = H.dna.species.grab_sound
 			if(HAS_TRAIT(H, TRAIT_STRONG_GRABBER))
 				sound_to_play = null
-		playsound(src.loc, sound_to_play, 50, TRUE, -1)
+		playsound(src.loc, sound_to_play, 50, 1, -1)
 	update_pull_hud_icon()
 
 	if(ismob(AM))
@@ -533,14 +533,6 @@
 	SetUnconscious(0, FALSE)
 	if(should_update_mobility)
 		update_mobility()
-
-/mob/living/Crossed(atom/movable/AM)
-	. = ..()
-	for(var/i in get_equipped_items())
-		var/obj/item/item = i
-		SEND_SIGNAL(item, COMSIG_ITEM_WEARERCROSSED, AM, src)
-
-
 
 //proc used to completely heal a mob.
 /mob/living/proc/fully_heal(admin_revive = 0)
@@ -886,23 +878,25 @@
 
 /mob/living/proc/can_track(mob/living/user)
 	//basic fast checks go first. When overriding this proc, I recommend calling ..() at the end.
-	if(SEND_SIGNAL(src, COMSIG_LIVING_CAN_TRACK, args) & COMPONENT_CANT_TRACK)
-		return FALSE
 	var/turf/T = get_turf(src)
 	if(!T)
-		return FALSE
+		return 0
 	if(is_centcom_level(T.z)) //dont detect mobs on centcom
-		return FALSE
+		return 0
 	if(is_away_level(T.z))
-		return FALSE
+		return 0
 	if(user != null && src == user)
-		return FALSE
+		return 0
 	if(invisibility || alpha == 0)//cloaked
-		return FALSE
+		return 0
+	if(digitalcamo || digitalinvis)
+		return 0
+
 	// Now, are they viewable by a camera? (This is last because it's the most intensive check)
 	if(!near_camera(src))
-		return FALSE
-	return TRUE
+		return 0
+
+	return 1
 
 //used in datum/reagents/reaction() proc
 /mob/living/proc/get_permeability_protection(list/target_zones)

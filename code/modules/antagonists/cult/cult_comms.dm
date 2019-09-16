@@ -20,9 +20,7 @@
 	var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
 	if(!input || !IsAvailable())
 		return
-	if(CHAT_FILTER_CHECK(input))
-		to_chat(usr, "<span class='warning'>You cannot send a message that contains a word prohibited in IC chat!</span>")
-		return
+
 	cultist_commune(usr, input)
 
 /datum/action/innate/cult/comm/proc/cultist_commune(mob/living/user, message)
@@ -169,15 +167,15 @@
 					switch(i)
 						if(1)
 							new /obj/effect/temp_visual/cult/sparks(mobloc, B.current.dir)
-							playsound(mobloc, "sparks", 50, TRUE)
+							playsound(mobloc, "sparks", 50, 1)
 						if(2)
 							new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, B.current.dir)
-							playsound(mobloc, "sparks", 75, TRUE)
+							playsound(mobloc, "sparks", 75, 1)
 						if(3)
 							new /obj/effect/temp_visual/dir_setting/cult/phase(mobloc, B.current.dir)
-							playsound(mobloc, "sparks", 100, TRUE)
+							playsound(mobloc, "sparks", 100, 1)
 						if(4)
-							playsound(mobloc, 'sound/magic/exit_blood.ogg', 100, TRUE)
+							playsound(mobloc, 'sound/magic/exit_blood.ogg', 100, 1)
 							if(B.current != owner)
 								var/turf/final = pick(destinations)
 								if(istype(B.current.loc, /obj/item/soulstone))
@@ -201,13 +199,13 @@
 			owner.say("C'arta forbici!", language = /datum/language/common, forced = "cult invocation")
 		if(2)
 			owner.say("Pleggh e'ntrath!", language = /datum/language/common, forced = "cult invocation")
-			playsound(get_turf(owner),'sound/magic/clockwork/narsie_attack.ogg', 50, TRUE)
+			playsound(get_turf(owner),'sound/magic/clockwork/narsie_attack.ogg', 50, 1)
 		if(3)
 			owner.say("Barhah hra zar'garis!", language = /datum/language/common, forced = "cult invocation")
-			playsound(get_turf(owner),'sound/magic/clockwork/narsie_attack.ogg', 75, TRUE)
+			playsound(get_turf(owner),'sound/magic/clockwork/narsie_attack.ogg', 75, 1)
 		if(4)
 			owner.say("N'ath reth sh'yro eth d'rekkathnor!!!", language = /datum/language/common, forced = "cult invocation")
-			playsound(get_turf(owner),'sound/magic/clockwork/narsie_attack.ogg', 100, TRUE)
+			playsound(get_turf(owner),'sound/magic/clockwork/narsie_attack.ogg', 100, 1)
 
 /datum/action/innate/cult/master/cultmark
 	name = "Mark Target"

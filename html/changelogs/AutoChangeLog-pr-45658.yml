@@ -1,0 +1,4 @@
+author: "StonebayKyle"
+delete-after: True
+changes: 
+  - rscadd: "There is now a randomize species button in the character settings/preview screen."

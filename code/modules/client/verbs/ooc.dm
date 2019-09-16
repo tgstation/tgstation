@@ -300,8 +300,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	var/selection = input("Please, select a player!", "Ignore", null, null) as null|anything in choices
 	if(!selection || !(selection in choices))
 		return
-	displayed_choicename = selection // ckey string
-	selection = choices[selection] // client
+	selection = choices[selection]
 	if(selection == src)
 		to_chat(src, "You can't ignore yourself.")
 		return

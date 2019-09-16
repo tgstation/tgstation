@@ -108,8 +108,7 @@
 			return
 
 /datum/datacore/proc/manifest()
-	for(var/i in GLOB.new_player_list)
-		var/mob/dead/new_player/N = i
+	for(var/mob/dead/new_player/N in GLOB.player_list)
 		if(N.new_character)
 			log_manifest(N.ckey,N.new_character.mind,N.new_character)
 		if(ishuman(N.new_character))

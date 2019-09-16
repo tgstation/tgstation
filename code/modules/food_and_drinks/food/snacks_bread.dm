@@ -5,7 +5,7 @@
 	slices_num = 5
 	tastes = list("bread" = 10)
 	foodtype = GRAIN
-	dunkable = TRUE
+
 
 /obj/item/reagent_containers/food/snacks/breadslice
 	icon = 'icons/obj/food/burgerbread.dmi'
@@ -16,7 +16,6 @@
 	slot_flags = ITEM_SLOT_HEAD
 	customfoodfilling = 0 //to avoid infinite bread-ception
 	foodtype = GRAIN
-	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/store/bread/plain
 	name = "bread"
@@ -218,8 +217,6 @@
 	species_exception = fried.species_exception
 	item_flags = fried.item_flags
 	obj_flags = fried.obj_flags
-	inhand_x_dimension = fried.inhand_x_dimension
-	inhand_y_dimension = fried.inhand_y_dimension
 
 	if(istype(fried, /obj/item/reagent_containers/food/snacks))
 		fried.reagents.trans_to(src, fried.reagents.total_volume)

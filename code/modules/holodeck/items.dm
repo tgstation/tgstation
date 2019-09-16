@@ -25,15 +25,15 @@
 	hitsound = "swing_hit"
 	armour_penetration = 50
 	var/active = 0
-	var/saber_color
 
 /obj/item/holo/esword/green/Initialize()
 	. = ..()
-	saber_color = "green"
+	item_color = "green"
+
 
 /obj/item/holo/esword/red/Initialize()
 	. = ..()
-	saber_color = "red"
+	item_color = "red"
 
 /obj/item/holo/esword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(active)
@@ -45,23 +45,23 @@
 
 /obj/item/holo/esword/Initialize()
 	. = ..()
-	saber_color = pick("red","blue","green","purple")
+	item_color = pick("red","blue","green","purple")
 
 /obj/item/holo/esword/attack_self(mob/living/user as mob)
 	active = !active
 	if (active)
 		force = 30
-		icon_state = "sword[saber_color]"
+		icon_state = "sword[item_color]"
 		w_class = WEIGHT_CLASS_BULKY
 		hitsound = 'sound/weapons/blade1.ogg'
-		playsound(user, 'sound/weapons/saberon.ogg', 20, TRUE)
+		playsound(user, 'sound/weapons/saberon.ogg', 20, 1)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
 	else
 		force = 3
 		icon_state = "sword0"
 		w_class = WEIGHT_CLASS_SMALL
 		hitsound = "swing_hit"
-		playsound(user, 'sound/weapons/saberoff.ogg', 20, TRUE)
+		playsound(user, 'sound/weapons/saberoff.ogg', 20, 1)
 		to_chat(user, "<span class='warning'>[src] can now be concealed.</span>")
 	return
 
@@ -85,7 +85,7 @@
 	..()
 	if((ishuman(hit_atom)))
 		var/mob/living/carbon/M = hit_atom
-		playsound(src, 'sound/items/dodgeball.ogg', 50, TRUE)
+		playsound(src, 'sound/items/dodgeball.ogg', 50, 1)
 		M.apply_damage(10, STAMINA)
 		if(prob(5))
 			M.Paralyze(60)
@@ -106,7 +106,7 @@
 /obj/structure/holohoop/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(get_dist(src,user)<2)
 		if(user.transferItemToLoc(W, drop_location()))
-			visible_message("<span class='warning'>[user] dunks [W] into \the [src]!</span>")
+			visible_message("<span class='warning'> [user] dunks [W] into \the [src]!</span>")
 
 /obj/structure/holohoop/attack_hand(mob/user)
 	. = ..()

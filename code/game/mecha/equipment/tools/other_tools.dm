@@ -10,7 +10,7 @@
 	icon_state = "mecha_teleport"
 	equip_cooldown = 150
 	energy_drain = 1000
-	range = MECHA_RANGED
+	range = RANGED
 
 /obj/item/mecha_parts/mecha_equipment/teleporter/action(atom/target)
 	if(!action_checks(target) || is_centcom_level(loc.z))
@@ -30,7 +30,7 @@
 	icon_state = "mecha_wholegen"
 	equip_cooldown = 50
 	energy_drain = 300
-	range = MECHA_RANGED
+	range = RANGED
 
 
 /obj/item/mecha_parts/mecha_equipment/wormhole_generator/action(atom/target)
@@ -73,7 +73,7 @@
 	icon_state = "mecha_teleport"
 	equip_cooldown = 10
 	energy_drain = 100
-	range = MECHA_MELEE|MECHA_RANGED
+	range = MELEE|RANGED
 	var/atom/movable/locked
 	var/mode = 1 //1 - gravsling 2 - gravpush
 
@@ -85,15 +85,15 @@
 		if(1)
 			if(!locked)
 				if(!istype(target) || target.anchored || target.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)
-					occupant_message("<span class='warning'>Unable to lock on [target]!</span>")
+					occupant_message("Unable to lock on [target]")
 					return
 				if(ismob(target))
 					var/mob/M = target
 					if(M.mob_negates_gravity())
-						occupant_message("<span class='warning'>Unable to lock on [target]!</span>")
+						occupant_message("Unable to lock on [target]")
 						return
 				locked = target
-				occupant_message("<span class='notice'>Locked on [target].</span>")
+				occupant_message("Locked on [target]")
 				send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
 			else if(target!=locked)
 				if(locked in view(chassis))
@@ -106,7 +106,7 @@
 					return TRUE
 				else
 					locked = null
-					occupant_message("<span class='notice'>Lock on [locked] disengaged.</span>")
+					occupant_message("Lock on [locked] disengaged.")
 					send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
 		if(2)
 			var/list/atoms = list()
@@ -336,7 +336,7 @@
 	if(isnull(cur_charge) || !chassis.cell)
 		STOP_PROCESSING(SSobj, src)
 		set_ready_state(1)
-		occupant_message("<span class='notice'>No powercell detected.</span>")
+		occupant_message("No powercell detected.")
 		return
 	if(cur_charge < chassis.cell.maxcharge)
 		var/area/A = get_area(chassis)
@@ -361,7 +361,7 @@
 	name = "exosuit plasma converter"
 	desc = "An exosuit module that generates power using solid plasma as fuel. Pollutes the environment."
 	icon_state = "tesla"
-	range = MECHA_MELEE
+	range = MELEE
 	var/coeff = 100
 	var/obj/item/stack/sheet/fuel
 	var/max_fuel = 150000
@@ -414,10 +414,10 @@
 			var/units = min(max(round(to_load / P.perunit),1),P.amount)
 			fuel.amount += units
 			P.use(units)
-			occupant_message("<span class='notice'>[units] unit\s of [fuel] successfully loaded.</span>")
+			occupant_message("[units] unit\s of [fuel] successfully loaded.")
 			return units
 		else
-			occupant_message("<span class='notice'>Unit is full.</span>")
+			occupant_message("Unit is full.")
 			return 0
 	else
 		occupant_message("<span class='warning'>[fuel] traces in target minimal! [P] cannot be used as fuel.</span>")
@@ -439,7 +439,7 @@
 	var/cur_charge = chassis.get_charge()
 	if(isnull(cur_charge))
 		set_ready_state(1)
-		occupant_message("<span class='notice'>No powercell detected.</span>")
+		occupant_message("No powercell detected.")
 		log_message("Deactivated.", LOG_MECHA)
 		STOP_PROCESSING(SSobj, src)
 		return

@@ -55,9 +55,9 @@
 /obj/structure/displaycase/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
+			playsound(src.loc, 'sound/effects/glasshit.ogg', 75, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/structure/displaycase/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -72,7 +72,7 @@
 		density = FALSE
 		broken = 1
 		new /obj/item/shard( src.loc )
-		playsound(src, "shatter", 70, TRUE)
+		playsound(src, "shatter", 70, 1)
 		update_icon()
 		trigger_alarm()
 
@@ -81,7 +81,7 @@
 	if(alert)
 		var/area/alarmed = get_area(src)
 		alarmed.burglaralert(src)
-		playsound(src, 'sound/effects/alert.ogg', 50, TRUE)
+		playsound(src, 'sound/effects/alert.ogg', 50, 1)
 
 /obj/structure/displaycase/update_icon()
 	var/icon/I
@@ -172,9 +172,6 @@
 	    //prevents remote "kicks" with TK
 		if (!Adjacent(user))
 			return
-		if (user.a_intent == INTENT_HELP)
-			user.examinate(src)
-			return
 		user.visible_message("<span class='danger'>[user] kicks the display case.</span>", null, null, COMBAT_MESSAGE_RANGE)
 		log_combat(user, src, "kicks")
 		user.do_attack_animation(src, ATTACK_EFFECT_KICK)
@@ -195,7 +192,7 @@
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 30))
-			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 			new /obj/item/stack/sheet/mineral/wood(get_turf(src), 5)
 			qdel(src)
 

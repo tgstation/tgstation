@@ -213,9 +213,9 @@
 		var/turf/T = safepick(validturfs)
 		if(T)
 			if(istype(T, /turf/open/floor/plating))
-				T.PlaceOnTop(/turf/open/floor/engine/cult, flags = CHANGETURF_INHERIT_AIR)
+				T.PlaceOnTop(/turf/open/floor/engine/cult)
 			else
-				T.ChangeTurf(/turf/open/floor/engine/cult, flags = CHANGETURF_INHERIT_AIR)
+				T.ChangeTurf(/turf/open/floor/engine/cult)
 		else
 			var/turf/open/floor/engine/cult/F = safepick(cultturfs)
 			if(F)

@@ -235,7 +235,9 @@ Slimecrossing Items
 			var/mob/living/carbon/human/H = M
 			if(H.mind && !HAS_TRAIT(H, TRAIT_AGEUSIA))
 				to_chat(H,"<span class='notice'>That didn't taste very good...</span>") //No disgust, though. It's just not good tasting.
-				SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "gross_food", /datum/mood_event/gross_food)
+				var/datum/component/mood/mood = H.GetComponent(/datum/component/mood)
+				if(mood)
+					mood.add_event(null,"gross_food", /datum/mood_event/gross_food)
 				last_check_time = world.time
 				return
 	..()
@@ -252,12 +254,12 @@ Slimecrossing Items
 
 /obj/structure/ice_stasis/Initialize()
 	. = ..()
-	playsound(src, 'sound/magic/ethereal_exit.ogg', 50, TRUE)
+	playsound(src, 'sound/magic/ethereal_exit.ogg', 50, 1)
 
 /obj/structure/ice_stasis/Destroy()
 	for(var/atom/movable/M in contents)
 		M.forceMove(loc)
-	playsound(src, 'sound/effects/glassbr3.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/glassbr3.ogg', 50, 1)
 	return ..()
 
 //Gold capture device - Chilling Gold

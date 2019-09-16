@@ -54,7 +54,7 @@
 	return TRUE
 ///called from in process(). only calls process_request(), but can be overwritten for children with special behaviour
 /datum/component/plumbing/proc/send_request(dir)
-	process_request(amount = MACHINE_REAGENT_TRANSFER, reagent = null, dir = dir)
+	process_request(amount = 10, reagent = null, dir = dir)
 ///check who can give us what we want, and how many each of them will give us
 /datum/component/plumbing/proc/process_request(amount, reagent, dir)
 	var/list/valid_suppliers = list()
@@ -71,14 +71,12 @@
 		give.transfer_to(src, amount / valid_suppliers.len, reagent, net)
 ///returns TRUE when they can give the specified amount and reagent. called by process request
 /datum/component/plumbing/proc/can_give(amount, reagent, datum/ductnet/net)
-	if(amount <= 0)
+	if(!reagents || amount <= 0)
 		return
 
 	if(reagent) //only asked for one type of reagent
-		for(var/A in reagents.reagent_list)
-			var/datum/reagent/R = A
-			if(R.type == reagent)
-				return TRUE
+		if(reagent in reagents.reagent_list)
+			return TRUE
 	else if(reagents.total_volume > 0) //take whatever
 		return TRUE
 ///this is where the reagent is actually transferred and is thus the finish point of our process()

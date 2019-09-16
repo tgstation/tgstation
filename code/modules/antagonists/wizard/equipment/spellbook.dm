@@ -219,10 +219,6 @@
 	. = ..()
 	user.flags_1 |= TESLA_IGNORE_1
 
-/datum/spellbook_entry/lightningbolt/Refund(mob/living/carbon/human/user, obj/item/spellbook/book)
-	. = ..()
-	user.flags_1 &= ~TESLA_IGNORE_1
-
 /datum/spellbook_entry/infinite_guns
 	name = "Lesser Summon Guns"
 	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns/gun
@@ -255,7 +251,7 @@
 	name = "Soul Tap"
 	spell_type = /obj/effect/proc_holder/spell/self/tap
 	category = "Assistance"
-	cost = 1
+	cost = 3
 
 /datum/spellbook_entry/spacetime_dist
 	name = "Spacetime Distortion"
@@ -482,7 +478,7 @@
 	new /datum/round_event/wizard/ghost()
 	active = TRUE
 	to_chat(user, "<span class='notice'>You have cast summon ghosts!</span>")
-	playsound(get_turf(user), 'sound/effects/ghost2.ogg', 50, TRUE)
+	playsound(get_turf(user), 'sound/effects/ghost2.ogg', 50, 1)
 	return TRUE
 
 /datum/spellbook_entry/summon/guns
@@ -498,7 +494,7 @@
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	rightandwrong(SUMMON_GUNS, user, 10)
 	active = TRUE
-	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, TRUE)
+	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You have cast summon guns!</span>")
 	return TRUE
 
@@ -515,7 +511,7 @@
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	rightandwrong(SUMMON_MAGIC, user, 10)
 	active = TRUE
-	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, TRUE)
+	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You have cast summon magic!</span>")
 	return TRUE
 
@@ -533,7 +529,7 @@
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	summonevents()
 	times++
-	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, TRUE)
+	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You have cast summon events.</span>")
 	return TRUE
 
@@ -556,7 +552,7 @@
 		return FALSE
 	curse_of_madness(user, message)
 	to_chat(user, "<span class='notice'>You have cast the curse of insanity!</span>")
-	playsound(user, 'sound/magic/mandswap.ogg', 50, TRUE)
+	playsound(user, 'sound/magic/mandswap.ogg', 50, 1)
 	return TRUE
 
 /obj/item/spellbook

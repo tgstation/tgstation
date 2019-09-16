@@ -77,7 +77,6 @@
 
 /obj/structure/closet/lawcloset/PopulateContents()
 	..()
-	new /obj/item/clothing/under/suit/blacktwopiece(src)
 	new /obj/item/clothing/under/rank/civilian/lawyer/female(src)
 	new /obj/item/clothing/under/rank/civilian/lawyer/black(src)
 	new /obj/item/clothing/under/rank/civilian/lawyer/red(src)

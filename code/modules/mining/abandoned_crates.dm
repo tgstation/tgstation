@@ -154,7 +154,7 @@
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
 	if(locked)
 		to_chat(user, "<span class='notice'>The crate is locked with a Deca-code lock.</span>")
-		var/input = input(usr, "Enter [codelen] digits. All digits must be unique.", "Deca-Code Lock", "") as text|null
+		var/input = input(usr, "Enter [codelen] digits. All digits must be unique.", "Deca-Code Lock", "") as text
 		if(user.canUseTopic(src, BE_CLOSE))
 			var/list/sanitised = list()
 			var/sanitycheck = 1
@@ -213,12 +213,6 @@
 				to_chat(user, "<span class='notice'>Last code attempt, [lastattempt], had [bulls] correct digits at correct positions and [cows] correct digits at incorrect positions.</span>")
 			return
 	return ..()
-
-/obj/structure/closet/secure/loot/dive_into(mob/living/user)
-	if(!locked)
-		return ..()
-	to_chat(user, "<span class='notice'>That seems like a stupid idea.</span>")
-	return FALSE
 
 /obj/structure/closet/crate/secure/loot/emag_act(mob/user)
 	if(locked)

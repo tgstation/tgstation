@@ -40,7 +40,7 @@
 
 /obj/item/pinpointer/proc/toggle_on()
 	active = !active
-	playsound(src, 'sound/items/screwdriver2.ogg', 50, TRUE)
+	playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
 	if(active)
 		START_PROCESSING(SSfastprocess, src)
 	else
@@ -120,8 +120,7 @@
 	var/list/name_counts = list()
 	var/list/names = list()
 
-	for(var/i in GLOB.human_list)
-		var/mob/living/carbon/human/H = i
+	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
 		if(!trackable(H))
 			continue
 

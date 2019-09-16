@@ -6,7 +6,7 @@
 	icon_living = "clown"
 	icon_dead = "clown_dead"
 	icon_gib = "clown_gib"
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	turns_per_move = 5
 	response_help = "pokes"
 	response_disarm = "gently pushes aside"
@@ -45,7 +45,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/clown/attack_hand(mob/living/carbon/human/M)
 	..()
-	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
+	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
 
 /mob/living/simple_animal/hostile/retaliate/clown/Life()
 	. = ..()

@@ -18,7 +18,7 @@
 	flash_protect = 2
 	strip_delay = 50
 	equip_delay_other = 50
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = NONE
 	dog_fashion = null
 

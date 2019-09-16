@@ -24,7 +24,8 @@
 	var/traitor_scaling_coeff = 10 - max(0,round(mode.threat_level/10)-5) // Above 50 threat level, coeff goes down by 1 for every 10 levels
 	var/num_traitors = min(round(mode.candidates.len / traitor_scaling_coeff) + 1, candidates.len)
 	for (var/i = 1 to num_traitors)
-		var/mob/M = pick_n_take(candidates)
+		var/mob/M = pick(candidates)
+		candidates -= M
 		assigned += M.mind
 		M.mind.special_role = ROLE_TRAITOR
 		M.mind.restricted_roles = restricted_roles
@@ -64,7 +65,7 @@
 	var/num_teams = team_amount
 	var/bsc = CONFIG_GET(number/brother_scaling_coeff)
 	if(bsc)
-		num_teams = max(1, round(mode.roundstart_pop_ready / bsc))
+		num_teams = max(1, round(num_players() / bsc))
 
 	for(var/j = 1 to num_teams)
 		if(candidates.len < min_team_size || candidates.len < required_candidates)
@@ -72,7 +73,8 @@
 		var/datum/team/brother_team/team = new
 		var/team_size = prob(10) ? min(3, candidates.len) : 2
 		for(var/k = 1 to team_size)
-			var/mob/bro = pick_n_take(candidates)
+			var/mob/bro = pick(candidates)
+			candidates -= bro
 			assigned += bro.mind
 			team.add_member(bro.mind)
 			bro.mind.special_role = "brother"
@@ -112,7 +114,8 @@
 /datum/dynamic_ruleset/roundstart/changeling/pre_execute()
 	var/num_changelings = min(round(mode.candidates.len / 10) + 1, candidates.len)
 	for (var/i = 1 to num_changelings)
-		var/mob/M = pick_n_take(candidates)
+		var/mob/M = pick(candidates)
+		candidates -= M
 		assigned += M.mind
 		M.mind.restricted_roles = restricted_roles
 		M.mind.special_role = ROLE_CHANGELING
@@ -168,8 +171,9 @@
 	if(GLOB.wizardstart.len == 0)
 		return FALSE
 	
-	var/mob/M = pick_n_take(candidates)
+	var/mob/M = pick(candidates)
 	if (M)
+		candidates -= M
 		assigned += M.mind
 		M.mind.assigned_role = ROLE_WIZARD
 		M.mind.special_role = ROLE_WIZARD
@@ -200,21 +204,22 @@
 	requirements = list(100,90,80,60,40,30,10,10,10,10)
 	high_population_requirement = 10
 	flags = HIGHLANDER_RULESET
-	var/list/cultist_cap = list(2,2,2,3,3,4,4,4,4,4)
+	var/cultist_cap = list(2,2,2,3,3,4,4,4,4,4)
 	var/datum/team/cult/main_cult
 
 /datum/dynamic_ruleset/roundstart/bloodcult/ready(forced = FALSE)
-	var/indice_pop = min(cultist_cap.len, round(mode.roundstart_pop_ready/pop_per_requirement)+1)
+	var/indice_pop = min(10,round(mode.roundstart_pop_ready/pop_per_requirement)+1)
 	required_candidates = cultist_cap[indice_pop]
 	. = ..()
 
 /datum/dynamic_ruleset/roundstart/bloodcult/pre_execute()
-	var/indice_pop = min(cultist_cap.len, round(mode.roundstart_pop_ready/pop_per_requirement)+1)
+	var/indice_pop = min(10,round(mode.roundstart_pop_ready/pop_per_requirement)+1)
 	var/cultists = cultist_cap[indice_pop]
 	for(var/cultists_number = 1 to cultists)
 		if(candidates.len <= 0)
 			break
-		var/mob/M = pick_n_take(candidates)
+		var/mob/M = pick(candidates)
+		candidates -= M
 		assigned += M.mind
 		M.mind.special_role = ROLE_CULTIST
 		M.mind.restricted_roles = restricted_roles
@@ -258,23 +263,24 @@
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	high_population_requirement = 10
 	flags = HIGHLANDER_RULESET
-	var/list/operative_cap = list(2,2,2,3,3,3,4,4,5,5)
+	var/operative_cap = list(2,2,2,3,3,3,4,4,5,5)
 	var/datum/team/nuclear/nuke_team
 
 /datum/dynamic_ruleset/roundstart/nuclear/ready(forced = FALSE)
-	var/indice_pop = min(operative_cap.len,round(mode.roundstart_pop_ready/pop_per_requirement)+1)
+	var/indice_pop = min(10,round(mode.roundstart_pop_ready/pop_per_requirement)+1)
 	required_candidates = operative_cap[indice_pop]
 	. = ..()
 
 /datum/dynamic_ruleset/roundstart/nuclear/pre_execute()
 	// If ready() did its job, candidates should have 5 or more members in it
 
-	var/indice_pop = min(operative_cap.len, round(mode.roundstart_pop_ready/5)+1)
+	var/indice_pop = min(10,round(mode.roundstart_pop_ready/5)+1)
 	var/operatives = operative_cap[indice_pop]
 	for(var/operatives_number = 1 to operatives)
 		if(candidates.len <= 0)
 			break
-		var/mob/M = pick_n_take(candidates)
+		var/mob/M = pick(candidates)
+		candidates -= M
 		assigned += M.mind
 		M.mind.assigned_role = "Nuclear Operative"
 		M.mind.special_role = "Nuclear Operative"
@@ -332,7 +338,7 @@
 //                                          //
 //////////////////////////////////////////////
 
-/datum/dynamic_ruleset/roundstart/revs
+/datum/dynamic_ruleset/roundstart/delayed/revs
 	name = "Revolution"
 	persistent = TRUE
 	antag_flag = ROLE_REV_HEAD
@@ -342,48 +348,47 @@
 	restricted_roles = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director")
 	required_candidates = 3
 	weight = 2
-	delay = 7 MINUTES
 	cost = 35
 	requirements = list(101,101,70,40,30,20,10,10,10,10)
 	high_population_requirement = 10
+	delay = 5 MINUTES
 	flags = HIGHLANDER_RULESET
 	// I give up, just there should be enough heads with 35 players...
 	minimum_players = 35
 	var/datum/team/revolution/revolution
 	var/finished = 0
 
-/datum/dynamic_ruleset/roundstart/revs/pre_execute()
-	var/max_canditates = 3
+/datum/dynamic_ruleset/roundstart/delayed/revs/execute()
+	var/max_canditates = 4
+	revolution = new()
 	for(var/i = 1 to max_canditates)
 		if(candidates.len <= 0)
 			break
-		var/mob/M = pick_n_take(candidates)
+		var/mob/M = pick(candidates)
+		candidates -= M
 		assigned += M.mind
 		M.mind.restricted_roles = restricted_roles
 		M.mind.special_role = antag_flag
-	return TRUE
-
-/datum/dynamic_ruleset/roundstart/revs/execute()
-	revolution = new()
-	for(var/datum/mind/M in assigned)
 		var/datum/antagonist/rev/head/new_head = new antag_datum()
 		new_head.give_flash = TRUE
 		new_head.give_hud = TRUE
 		new_head.remove_clumsy = TRUE
-		M.add_antag_datum(new_head,revolution)
+		M.mind.add_antag_datum(new_head,revolution)
+
 	revolution.update_objectives()
 	revolution.update_heads()
 	SSshuttle.registerHostileEnvironment(src)
+
 	return TRUE
 	
-/datum/dynamic_ruleset/roundstart/revs/rule_process()
+/datum/dynamic_ruleset/roundstart/delayed/revs/rule_process()
 	if(check_rev_victory())
 		finished = 1
 	else if(check_heads_victory())
 		finished = 2
 	return
 
-/datum/dynamic_ruleset/roundstart/revs/check_finished()
+/datum/dynamic_ruleset/roundstart/delayed/revs/check_finished()
 	if(CONFIG_GET(keyed_list/continuous)["revolution"])
 		if(finished)
 			SSshuttle.clearHostileEnvironment(src)
@@ -393,13 +398,13 @@
 	else
 		return ..()
 
-/datum/dynamic_ruleset/roundstart/revs/proc/check_rev_victory()
+/datum/dynamic_ruleset/roundstart/delayed/revs/proc/check_rev_victory()
 	for(var/datum/objective/mutiny/objective in revolution.objectives)
 		if(!(objective.check_completion()))
 			return FALSE
 	return TRUE
 
-/datum/dynamic_ruleset/roundstart/revs/proc/check_heads_victory()
+/datum/dynamic_ruleset/roundstart/delayed/revs/proc/check_heads_victory()
 	for(var/datum/mind/rev_mind in revolution.head_revolutionaries())
 		var/turf/T = get_turf(rev_mind.current)
 		if(!considered_afk(rev_mind) && considered_alive(rev_mind) && is_station_level(T.z))
@@ -407,7 +412,7 @@
 				return FALSE
 	return TRUE
 
-/datum/dynamic_ruleset/roundstart/revs/round_result()
+/datum/dynamic_ruleset/roundstart/delayed/revs/round_result()
 	if(finished == 1)
 		SSticker.mode_result = "win - heads killed"
 		SSticker.news_report = REVS_WIN
@@ -470,13 +475,14 @@
 		PM.initTemplateBounds()
 
 	var/starter_servants = 4
-	var/number_players = mode.roundstart_pop_ready
+	var/number_players = num_players()
 	if(number_players > 30)
 		number_players -= 30
 		starter_servants += round(number_players / 10)
 	starter_servants = min(starter_servants, 8)
 	for (var/i in 1 to starter_servants)
-		var/mob/servant = pick_n_take(candidates)
+		var/mob/servant = pick(candidates)
+		candidates -= servant
 		assigned += servant.mind
 		servant.mind.assigned_role = ROLE_SERVANT_OF_RATVAR
 		servant.mind.special_role = ROLE_SERVANT_OF_RATVAR
@@ -590,15 +596,16 @@
 	var/num_devils = 1
 
 	if(tsc)
-		num_devils = max(required_candidates, min(round(mode.roundstart_pop_ready / (tsc * 3)) + 2, round(mode.roundstart_pop_ready / (tsc * 1.5))))
+		num_devils = max(required_candidates, min(round(num_players() / (tsc * 3)) + 2, round(num_players() / (tsc * 1.5))))
 	else
-		num_devils = max(required_candidates, min(mode.roundstart_pop_ready, devil_limit))
+		num_devils = max(required_candidates, min(num_players(), devil_limit))
 
 	for(var/j = 0, j < num_devils, j++)
 		if (!candidates.len)
 			break
-		var/mob/devil = pick_n_take(candidates)
-		assigned += devil.mind
+		var/mob/devil = pick(candidates)
+		assigned += devil
+		candidates -= devil
 		devil.mind.special_role = ROLE_DEVIL
 		devil.mind.restricted_roles = restricted_roles
 
@@ -646,12 +653,13 @@
 	var/datum/team/monkey/monkey_team
 
 /datum/dynamic_ruleset/roundstart/monkey/pre_execute()
-	var/carriers_to_make = max(round(mode.roundstart_pop_ready / players_per_carrier, 1), 1)
+	var/carriers_to_make = max(round(num_players()/players_per_carrier, 1), 1)
 
 	for(var/j = 0, j < carriers_to_make, j++)
 		if (!candidates.len)
 			break
-		var/mob/carrier = pick_n_take(candidates)
+		var/mob/carrier = pick(candidates)
+		candidates -= carrier
 		assigned += carrier.mind
 		carrier.mind.special_role = "Monkey Leader"
 		carrier.mind.restricted_roles = restricted_roles

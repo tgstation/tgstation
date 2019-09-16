@@ -14,9 +14,6 @@
 	construction_type = /obj/item/pipe/trinary/flippable
 	pipe_state = "filter"
 
-	ui_x = 475
-	ui_y = 195
-
 /obj/machinery/atmospherics/components/trinary/filter/CtrlClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		on = !on
@@ -129,7 +126,7 @@
 																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_filter", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "atmos_filter", name, 475, 195, master_ui, state)
 		ui.open()
 
 /obj/machinery/atmospherics/components/trinary/filter/ui_data()

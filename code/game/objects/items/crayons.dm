@@ -26,7 +26,7 @@
 	var/icon_uncapped
 	var/use_overlays = FALSE
 
-	var/crayon_color = "red"
+	item_color = "red"
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("attacked", "coloured")
 	grind_results = list()
@@ -80,9 +80,7 @@
 	. = ..()
 	// Makes crayons identifiable in things like grinders
 	if(name == "crayon")
-		name = "[crayon_color] crayon"
-
-	dye_color = crayon_color
+		name = "[item_color] crayon"
 
 	drawtype = pick(all_drawables)
 
@@ -233,13 +231,8 @@
 				paint_mode = PAINT_NORMAL
 		if("select_colour")
 			if(can_change_colour)
-				var/chosen_colour = input(usr,"","Choose Color",paint_color) as color|null
-
-				if (!isnull(chosen_colour))
-					paint_color = chosen_colour
-					. = TRUE
-				else 
-					. = FALSE
+				paint_color = input(usr,"","Choose Color",paint_color) as color|null
+				. = TRUE
 		if("enter_text")
 			var/txt = stripped_input(usr,"Choose what to write.",
 				"Scribbles",default = text_buffer)
@@ -342,7 +335,7 @@
 
 	if(pre_noise)
 		audible_message("<span class='notice'>You hear spraying.</span>")
-		playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
+		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 
 	var/wait_time = 50
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
@@ -379,9 +372,7 @@
 					return
 		C.add_hiddenprint(user)
 		if(istagger)
-			C.AddComponent(/datum/component/art, GOOD_ART)
-		else
-			C.AddComponent(/datum/component/art, BAD_ART)
+			C.AddComponent(/datum/component/art, 30)
 
 	if(!instant)
 		to_chat(user, "<span class='notice'>You finish drawing \the [temp].</span>")
@@ -394,7 +385,7 @@
 
 	if(post_noise)
 		audible_message("<span class='notice'>You hear spraying.</span>")
-		playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
+		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 
 	var/fraction = min(1, . / reagents.maximum_volume)
 	if(affected_turfs.len)
@@ -406,16 +397,6 @@
 
 /obj/item/toy/crayon/attack(mob/M, mob/user)
 	if(edible && (M == user))
-		if(iscarbon(M))
-			var/mob/living/carbon/C = M
-			var/covered = ""
-			if(C.is_mouth_covered(head_only = 1))
-				covered = "headgear"
-			else if(C.is_mouth_covered(mask_only = 1))
-				covered = "mask"
-			if(covered)
-				to_chat(C, "<span class='warning'>You have to remove your [covered] first!</span>")
-				return
 		to_chat(user, "You take a bite of the [src.name]. Delicious!")
 		var/eaten = use_charges(user, 5, FALSE)
 		if(check_empty(user)) //Prevents divsion by zero
@@ -430,76 +411,67 @@
 /obj/item/toy/crayon/red
 	icon_state = "crayonred"
 	paint_color = "#DA0000"
-	crayon_color = "red"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1)
-	dye_color = DYE_RED
+	item_color = "red"
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/red = 1)
 
 /obj/item/toy/crayon/orange
 	icon_state = "crayonorange"
 	paint_color = "#FF9300"
-	crayon_color = "orange"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1)
-	dye_color = DYE_ORANGE
+	item_color = "orange"
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/orange = 1)
 
 /obj/item/toy/crayon/yellow
 	icon_state = "crayonyellow"
 	paint_color = "#FFF200"
-	crayon_color = "yellow"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1)
-	dye_color = DYE_YELLOW
+	item_color = "yellow"
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/yellow = 1)
 
 /obj/item/toy/crayon/green
 	icon_state = "crayongreen"
 	paint_color = "#A8E61D"
-	crayon_color = "green"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1)
-	dye_color = DYE_GREEN
+	item_color = "green"
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/green = 1)
 
 /obj/item/toy/crayon/blue
 	icon_state = "crayonblue"
 	paint_color = "#00B7EF"
-	crayon_color = "blue"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1)
-	dye_color = DYE_BLUE
+	item_color = "blue"
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/blue = 1)
 
 /obj/item/toy/crayon/purple
 	icon_state = "crayonpurple"
 	paint_color = "#DA00FF"
-	crayon_color = "purple"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1)
-	dye_color = DYE_PURPLE
+	item_color = "purple"
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/purple = 1)
 
 /obj/item/toy/crayon/black
 	icon_state = "crayonblack"
 	paint_color = "#1C1C1C" //Not completely black because total black looks bad. So Mostly Black.
-	crayon_color = "black"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1)
-	dye_color = DYE_BLACK
+	item_color = "black"
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/black = 1)
 
 /obj/item/toy/crayon/white
 	icon_state = "crayonwhite"
 	paint_color = "#FFFFFF"
-	crayon_color = "white"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1)
-	dye_color = DYE_WHITE
+	item_color = "white"
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/white = 1)
 
 /obj/item/toy/crayon/mime
 	icon_state = "crayonmime"
 	desc = "A very sad-looking crayon."
 	paint_color = "#FFFFFF"
-	crayon_color = "mime"
-	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/powder/invisible = 1)
+	item_color = "mime"
+	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent/crayonpowder/invisible = 1)
 	charges = -1
-	dye_color = DYE_MIME
 
 /obj/item/toy/crayon/rainbow
 	icon_state = "crayonrainbow"
 	paint_color = "#FFF000"
-	crayon_color = "rainbow"
+	item_color = "rainbow"
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent = 1)
 	drawtype = RANDOM_ANY // just the default starter.
+
 	charges = -1
-	dye_color = DYE_RAINBOW
 
 /obj/item/toy/crayon/rainbow/afterattack(atom/target, mob/user, proximity, params)
 	paint_color = rgb(rand(0,255), rand(0,255), rand(0,255))
@@ -535,12 +507,12 @@
 /obj/item/storage/crayons/update_icon()
 	cut_overlays()
 	for(var/obj/item/toy/crayon/crayon in contents)
-		add_overlay(mutable_appearance('icons/obj/crayons.dmi', crayon.crayon_color))
+		add_overlay(mutable_appearance('icons/obj/crayons.dmi', crayon.item_color))
 
 /obj/item/storage/crayons/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/C = W
-		switch(C.crayon_color)
+		switch(C.item_color)
 			if("mime")
 				to_chat(usr, "This crayon is too sad to be contained in this box.")
 				return
@@ -640,7 +612,7 @@
 
 	if(iscarbon(target))
 		if(pre_noise || post_noise)
-			playsound(user.loc, 'sound/effects/spray.ogg', 25, TRUE, 5)
+			playsound(user.loc, 'sound/effects/spray.ogg', 25, 1, 5)
 
 		var/mob/living/carbon/C = target
 		user.visible_message("<span class='danger'>[user] sprays [src] into the face of [target]!</span>")
@@ -666,26 +638,20 @@
 
 	if(isobj(target))
 		if(actually_paints)
-			if(color_hex2num(paint_color) < 350 && !istype(target, /obj/structure/window)) //Colors too dark are rejected
-				to_chat(usr, "<span class='warning'>A colour that dark on an object like this? Surely not...</span>")
-				return FALSE
-				
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
-
 			if(istype(target, /obj/structure/window))
 				if(color_hex2num(paint_color) < 255)
 					target.set_opacity(255)
 				else
 					target.set_opacity(initial(target.opacity))
-
 		. = use_charges(user, 2)
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.reaction(target, TOUCH, fraction * volume_multiplier)
 		reagents.trans_to(target, ., volume_multiplier, transfered_by = user)
 
 		if(pre_noise || post_noise)
-			playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
-		user.visible_message("<span class='notice'>[user] coats [target] with spray paint!</span>", "<span class='notice'>You coat [target] with spray paint.</span>")
+			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+		user.visible_message("[user] coats [target] with spray paint!", "<span class='notice'>You coat [target] with spray paint.</span>")
 		return
 
 	. = ..()

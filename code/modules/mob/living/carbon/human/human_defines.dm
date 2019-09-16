@@ -5,14 +5,14 @@
 	pressure_resistance = 25
 	can_buckle = TRUE
 	buckle_lying = FALSE
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	//Hair colour and style
 	var/hair_color = "000"
-	var/hairstyle = "Bald"
+	var/hair_style = "Bald"
 
 	//Facial hair colour and style
 	var/facial_hair_color = "000"
-	var/facial_hairstyle = "Shaved"
+	var/facial_hair_style = "Shaved"
 
 	//Eye colour
 	var/eye_color = "000"
@@ -28,7 +28,7 @@
 	var/underwear_color = "000"
 	var/undershirt = "Nude" //Which undershirt the player wants
 	var/socks = "Nude" //Which socks the player wants
-	var/backpack = DBACKPACK		//Which backpack type the player has chosen.
+	var/backbag = DBACKPACK		//Which backpack type the player has chosen.
 	var/jumpsuit_style = PREF_SUIT		//suit/skirt
 
 	//Equipment slots

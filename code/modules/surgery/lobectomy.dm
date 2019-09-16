@@ -21,8 +21,8 @@
 
 /datum/surgery_step/lobectomy/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin to make an incision in [target]'s lungs...</span>",
-		"<span class='notice'>[user] begins to make an incision in [target].</span>",
-		"<span class='notice'>[user] begins to make an incision in [target].</span>")
+		"[user] begins to make an incision in [target].",
+		"[user] begins to make an incision in [target].")
 
 /datum/surgery_step/lobectomy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(ishuman(target))
@@ -31,6 +31,6 @@
 		L.operated = TRUE
 		H.setOrganLoss(ORGAN_SLOT_LUNGS, 60)
 		display_results(user, target, "<span class='notice'>You successfully excise [H]'s most damaged lobe.</span>",
-			"<span class='notice'>Successfully removes a piece of [H]'s lungs.</span>",
+			"Successfully removes a piece of [H]'s lungs.",
 			"")
 	return TRUE
