@@ -98,7 +98,7 @@
 			chosen_bet_amount = CLAMP(text2num(params["amount"]), 10, 500)
 			. = TRUE
 		if("ChangeBetAmountCustom")
-			var/amount = input(usr, "Bet amount:") as num|null
+			var/amount = input(usr, "Bet amount between 10 and 500:") as num|null
 			if(amount)
 				chosen_bet_amount = CLAMP(amount, 10, 500)
 		if("ChangeBetType")
@@ -136,6 +136,11 @@
 			if(!check_bartender_funds(potential_payout))
 				return FALSE	 //bartender is too poor
 
+			if(last_anti_spam > world.time) //do not cheat me
+				return FALSE
+
+			last_anti_spam = world.time + anti_spam_cooldown
+
 			icon_state = "rolling" //Prepare the new icon state for rolling before hand.
 			flick("flick_up", src)
 			playsound(src, 'sound/machines/piston_raise.ogg', 70)
@@ -156,10 +161,6 @@
 
 ///Proc called when player is going to try and play
 /obj/machinery/roulette/proc/play(mob/user, obj/item/card/id/player_id, bet_type, bet_amount, potential_payout)
-	if(last_anti_spam > world.time) //do not cheat me
-		return FALSE
-
-	last_anti_spam = world.time + anti_spam_cooldown
 
 	var/payout = potential_payout
 
@@ -169,7 +170,7 @@
 	update_icon()
 	set_light(0)
 
-	var/rolled_number = rand(0, 36)
+	var/rolled_number = rand(0, 1)
 
 	playsound(src, 'sound/machines/roulettewheel.ogg', 50)
 	addtimer(CALLBACK(src, .proc/finish_play, player_id, bet_type, bet_amount, payout, rolled_number), 34) //4 deciseconds more so the animation can play
@@ -260,7 +261,7 @@
 ///Returns TRUE if the player bet correctly.
 /obj/machinery/roulette/proc/check_win(bet_type, bet_amount, rolled_number)
 	var/actual_bet_number = text2num(bet_type) //Only returns the numeric bet types, AKA singles.
-	if(actual_bet_number) //This means we're playing singles
+	if(rolled_number) //This means we're playing singles
 		return rolled_number == actual_bet_number
 
 	switch(bet_type) //Otherwise, we are playing a "special" game, switch on all the cases so we can check.
@@ -276,6 +277,8 @@
 			return "black" == numbers["[rolled_number]"]//Check if our number is black in the numbers dict
 		if(ROULETTE_BET_RED)
 			return "red" == numbers["[rolled_number]"] //Check if our number is black in the numbers dict
+		if("0")
+			return "0" == "rolled_number" //Check if our number is 0
 
 
 ///Returns TRUE if the owner has enough funds to payout
