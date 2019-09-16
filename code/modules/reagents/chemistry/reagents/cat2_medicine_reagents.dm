@@ -55,8 +55,8 @@
 
 /datum/reagent/medicine/C2/lenturi/on_mob_life(mob/living/carbon/M)
 	var/slowdown_healing = 0
-	if(!HAS_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN))
-		var/health_deficiency = max(H.maxHealth - H.health, H.staminaloss)
+	if(!HAS_TRAIT(M, TRAIT_IGNOREDAMAGESLOWDOWN))
+		var/health_deficiency = max(M.maxHealth - M.health, M.staminaloss)
 		if(health_deficiency >= 40)
 			slowdown_healing += (health_deficiency / 25)
 	M.adjustFireLoss(-slowdown_healing*REM)
