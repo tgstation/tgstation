@@ -30,6 +30,12 @@
 
 	. = ..()
 
+	GLOB.new_player_list += src
+
+/mob/dead/new_player/Destroy()
+	GLOB.new_player_list -= src
+	return ..()
+
 /mob/dead/new_player/prepare_huds()
 	return
 
