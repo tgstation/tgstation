@@ -229,3 +229,12 @@
 	description = "Mystery to be solved."
 	suffix = "lavaland_surface_puzzle.dmm"
 	cost = 5
+	
+/datum/map_template/ruin/lavaland/elite_crevice
+	name = "Glowing Crevice"
+	id = "crevice"
+	description = "A strange crevice which houses a powerful beast..."
+	suffix = "lavaland_surface_elite_crevice.dmm"
+	cost = 0
+	always_place = TRUE
+	allow_duplicates = TRUE
