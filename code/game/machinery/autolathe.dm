@@ -62,7 +62,7 @@
 	/datum/material/runite,
 	/datum/material/plastic,
 	/datum/material/adamantine,
-	/datum/material/mythril,
+	/datum/material/mythril
 	), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 
@@ -445,4 +445,3 @@
 //Has a reference to the autolathe so you can do !!FUN!! things with hacked lathes
 /obj/item/proc/autolathe_crafted(obj/machinery/autolathe/A)
 	return
->>>>>>> Stashed changes
