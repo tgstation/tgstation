@@ -1,19 +1,23 @@
 /obj/item/projectile/bullet/shotgun_slug
 	name = "12g shotgun slug"
 	damage = 60
+	embed_damage = 3
 
 /obj/item/projectile/bullet/shotgun_beanbag
 	name = "beanbag slug"
 	damage = 5
 	stamina = 55
+	embed_target = FALSE
 
 /obj/item/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"
 	damage = 20
+	embed_target = FALSE
 
 /obj/item/projectile/bullet/incendiary/shotgun/dragonsbreath
 	name = "dragonsbreath pellet"
 	damage = 5
+	embed_target = FALSE
 
 /obj/item/projectile/bullet/shotgun_stunslug
 	name = "stunslug"
@@ -22,6 +26,7 @@
 	stutter = 5
 	jitter = 20
 	range = 7
+	embed_target = FALSE
 	icon_state = "spark"
 	color = "#FFFF00"
 
@@ -31,6 +36,7 @@
 	icon_state = "dust"
 	damage = 20
 	paralyze = 80
+	embed_target = FALSE
 	hitsound = 'sound/effects/meteorimpact.ogg'
 
 /obj/item/projectile/bullet/shotgun_meteorslug/on_hit(atom/target, blocked = FALSE)
@@ -48,6 +54,7 @@
 	name ="frag12 slug"
 	damage = 25
 	paralyze = 50
+	embed_target = FALSE
 
 /obj/item/projectile/bullet/shotgun_frag12/on_hit(atom/target, blocked = FALSE)
 	..()
@@ -66,11 +73,13 @@
 	name = "rubbershot pellet"
 	damage = 3
 	stamina = 11
+	embed_target = FALSE
 
 /obj/item/projectile/bullet/pellet/shotgun_incapacitate
 	name = "incapacitating pellet"
 	damage = 1
 	stamina = 6
+	embed_target = FALSE
 
 /obj/item/projectile/bullet/pellet/Range()
 	..()

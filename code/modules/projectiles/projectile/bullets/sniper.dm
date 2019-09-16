@@ -4,6 +4,7 @@
 	name =".50 bullet"
 	speed = 0.4
 	damage = 70
+	embed_damage = 5
 	paralyze = 100
 	dismemberment = 50
 	armour_penetration = 50
@@ -21,6 +22,7 @@
 	damage = 0
 	dismemberment = 0
 	paralyze = 0
+	embed_target = FALSE
 	breakthings = FALSE
 
 /obj/item/projectile/bullet/p50/soporific/on_hit(atom/target, blocked = FALSE)
@@ -36,6 +38,7 @@
 	damage = 60
 	movement_type = FLYING | UNSTOPPABLE
 	dismemberment = 0 //It goes through you cleanly.
+	embed_target = FALSE
 	paralyze = 0
 	breakthings = FALSE
 

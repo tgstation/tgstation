@@ -88,6 +88,8 @@
 	var/decayedRange			//stores original range
 	var/reflect_range_decrease = 5			//amount of original range that falls off when reflecting, so it doesn't go forever
 	var/reflectable = NONE // Can it be reflected or not?
+	var/embed_target = FALSE // Does the projectile embed into the target?
+	var/embed_damage = 0 // How much damage does the embedded projectile do?
 		//Effects
 	var/stun = 0
 	var/knockdown = 0
@@ -104,9 +106,8 @@
 	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
 	var/impact_effect_type //what type of impact effect to show when hitting something
 	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
-
 	var/temporary_unstoppable_movement = FALSE
-
+	
 /obj/item/projectile/Initialize()
 	. = ..()
 	permutated = list()

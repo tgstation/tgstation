@@ -3,6 +3,7 @@
 	icon_state = "syringeproj"
 	var/obj/item/dnainjector/injector
 	damage = 5
+	embed_target = FALSE
 	hitsound_wall = "shatter"
 
 /obj/item/projectile/bullet/dnainjector/on_hit(atom/target, blocked = FALSE)

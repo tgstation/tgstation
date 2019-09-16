@@ -50,7 +50,18 @@
 		apply_effects(P.stun, P.knockdown, P.unconscious, P.irradiate, P.slur, P.stutter, P.eyeblur, P.drowsy, FALSE, P.stamina, P.jitter, P.paralyze, P.immobilize)
 		if(P.dismemberment)
 			check_projectile_dismemberment(P, def_zone)
+		if(P.embed_target && ishuman(src)) // you can only embed humans
+			embed_projectile(P, def_zone)
 	return on_hit_state ? BULLET_ACT_HIT : BULLET_ACT_BLOCK
+
+/mob/living/proc/embed_projectile(obj/item/projectile/P, def_zone)
+	var/mob/living/carbon/human/H = src
+	throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
+	var/obj/item/bullet_embedded/B = new /obj/item/bullet_embedded
+	B.embedding.embedded_pain_multiplier = P.embed_damage
+	H.def_zone.embedded_objects |= B
+	B.forceMove(src)
+	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
 
 /mob/living/proc/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
 	return 0

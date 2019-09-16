@@ -3,6 +3,7 @@
 /obj/item/projectile/bullet/c45
 	name = ".45 bullet"
 	damage = 30
+	embed_damage = 1.5
 
 // 4.6x30mm (Autorifles)
 
@@ -19,3 +20,4 @@
 	name = "4.6x30mm incendiary bullet"
 	damage = 10
 	fire_stacks = 1
+	embed_target = FALSE

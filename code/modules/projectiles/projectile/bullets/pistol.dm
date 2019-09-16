@@ -13,7 +13,8 @@
 	name = "9mm incendiary bullet"
 	damage = 10
 	fire_stacks = 1
-
+	embed_target = FALSE
+	
 // 10mm (Stechkin)
 
 /obj/item/projectile/bullet/c10mm
@@ -29,8 +30,10 @@
 	name = "10mm hollow-point bullet"
 	damage = 40
 	armour_penetration = -50
+	embed_damage = 2 // hollow point rounds are very bad for your health
 
 /obj/item/projectile/bullet/incendiary/c10mm
 	name = "10mm incendiary bullet"
 	damage = 15
 	fire_stacks = 2
+	embed_target = FALSE
