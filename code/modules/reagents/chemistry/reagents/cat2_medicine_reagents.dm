@@ -45,25 +45,21 @@
 
 /******BURN******/
 /*Suffix: -uri*/
-/datum/reagent/medicine/C2/ichiyuri
-	name = "Ichiyuri"
-	description = "Used to treat serious burns. Prolonged exposure can cause burns to itch."
+/datum/reagent/medicine/C2/lenturi
+	name = "Lenturi"
+	description = "Used to treat serious burns. Heals better when slow"
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	var/resetting_probability = 0
 	var/spammer = 0
 
-/datum/reagent/medicine/C2/ichiyuri/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss(-2*REM)
-	if(prob(resetting_probability) && !(M.restrained() || M.incapacitated()))
-		if(spammer < world.time)
-			to_chat(M,"<span class='warning'>You can't help but to itch the burn.</span>")
-			spammer = world.time + (10 SECONDS)
-		var/scab = rand(1,7)
-		M.adjustBruteLoss(scab*REM)
-		M.bleed(scab)
-		resetting_probability = 0
-	resetting_probability += (5*(current_cycle/10)) // 10 iterations = >51% to itch
+/datum/reagent/medicine/C2/lenturi/on_mob_life(mob/living/carbon/M)
+	var/slowdown_healing = 0
+	if(!HAS_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN))
+			var/health_deficiency = max(H.maxHealth - H.health, H.staminaloss)
+			if(health_deficiency >= 40)
+					slowdown_healing += (health_deficiency / 25)
+		M.adjustFireLoss(-slowdown_healing*REM)
 	..()
 	return TRUE
 
