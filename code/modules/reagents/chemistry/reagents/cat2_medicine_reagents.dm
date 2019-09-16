@@ -55,15 +55,15 @@
 
 /datum/reagent/medicine/C2/lenturi/on_mob_life(mob/living/carbon/M)
 	var/slowdown_healing = 0.5
-	var/step_counter
-	on_mob_metabolize(M)
-    	RegisterSignal(M, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-	on_end_metabolize(M)
-    	UnregisterSignal(M, COMSIG_MOVABLE_MOVED)
-		step_counter = 0
+	var/step_counter = 0
 	M.adjustFireLoss(calculate_healing(stepcounter, slowdown_healing))
 	..()
 	return TRUE
+/datum/reagent/medicine/C2/lenturi/on_mob_metabolize(M)
+		RegisterSignal(M, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+/datum/reagent/medicine/C2/lenturi/on_end_metabolize(M)
+    	UnregisterSignal(M, COMSIG_MOVABLE_MOVED)
+		step_counter = 0
 /datum/reagent/medicine/C2/lenturi/proc/on_moved()
 	step_counter++
 /datum/reagent/medicine/C2/lenturi/proc/calculate_healing()
