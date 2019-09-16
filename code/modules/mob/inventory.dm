@@ -166,6 +166,7 @@
 		update_inv_hands()
 		I.pixel_x = initial(I.pixel_x)
 		I.pixel_y = initial(I.pixel_y)
+		SEND_SIGNAL(I, COMSIG_ITEM_AFTER_PICKUP, src)
 		return hand_index || TRUE
 	return FALSE
 
