@@ -165,10 +165,6 @@
 	broadcast_status()
 	update_icon()
 
-/obj/machinery/atmospherics/components/binary/pump/power_change()
-	..()
-	update_icon()
-
 /obj/machinery/atmospherics/components/binary/pump/can_unwrench(mob/user)
 	. = ..()
 	if(. && on && is_operational())

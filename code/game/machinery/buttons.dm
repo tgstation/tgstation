@@ -178,11 +178,6 @@
 
 	addtimer(CALLBACK(src, .proc/update_icon), 15)
 
-/obj/machinery/button/power_change()
-	..()
-	update_icon()
-
-
 /obj/machinery/button/door
 	name = "door button"
 	desc = "A door remote control switch."

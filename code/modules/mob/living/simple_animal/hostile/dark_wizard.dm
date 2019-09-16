@@ -32,7 +32,7 @@
 	loot = list(/obj/effect/decal/remains/human)
 
 /obj/item/projectile/temp/earth_bolt
-	name = "earth_bolt"
+	name = "earth bolt"
 	icon_state = "declone"
 	damage = 4
 	damage_type = BURN

@@ -530,7 +530,7 @@
 	if(chambered && chambered.BB)
 		chambered.BB.damage *= 5
 
-	process_fire(target, user, TRUE, params)
+	process_fire(target, user, TRUE, params, BODY_ZONE_HEAD)
 
 /obj/item/gun/proc/unlock() //used in summon guns and as a convience for admins
 	if(pin)

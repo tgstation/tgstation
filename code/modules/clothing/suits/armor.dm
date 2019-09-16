@@ -240,6 +240,8 @@
 	item_state = "knight_red"
 
 /obj/item/clothing/suit/armor/riot/knight/greyscale
+	name = "knight armour"
+	desc = "A classic suit of armour, able to be made from many different materials."
 	icon_state = "knight_greyscale"
 	item_state = "knight_greyscale"
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR//Can change color and add prefix

@@ -94,7 +94,7 @@
 			T = get_turf(AT)
 		else
 			T = get_turf(src)
-		T.visible_message("<span class='danger'>[src] bursts!</span>","<span class='italics'>You hear a pop and a splash.</span>")
+		T.visible_message("<span class='danger'>[src] bursts!</span>","<span class='hear'>You hear a pop and a splash.</span>")
 		reagents.reaction(T)
 		for(var/atom/A in T)
 			reagents.reaction(A)
@@ -234,7 +234,7 @@
 	src.bullets--
 	user.visible_message("<span class='danger'>[user] fires [src] at [target]!</span>", \
 						"<span class='danger'>You fire [src] at [target]!</span>", \
-						 "<span class='italics'>You hear a gunshot!</span>")
+						 "<span class='hear'>You hear a gunshot!</span>")
 
 /obj/item/toy/ammo/gun
 	name = "capgun ammo"
@@ -432,7 +432,7 @@
 	s.start()
 	new ash_type(loc)
 	visible_message("<span class='warning'>[src] explodes!</span>",
-		"<span class='italics'>You hear a snap!</span>")
+		"<span class='hear'>You hear a snap!</span>")
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 	qdel(src)
 
@@ -1031,7 +1031,7 @@
 /obj/item/toy/nuke/attack_self(mob/user)
 	if (cooldown < world.time)
 		cooldown = world.time + 1800 //3 minutes
-		user.visible_message("<span class='warning'>[user] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='italics'>You hear the click of a button.</span>")
+		user.visible_message("<span class='warning'>[user] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='hear'>You hear the click of a button.</span>")
 		sleep(5)
 		icon_state = "nuketoy"
 		playsound(src, 'sound/machines/alarm.ogg', 100, FALSE)
@@ -1076,7 +1076,7 @@
 /obj/item/toy/redbutton/attack_self(mob/user)
 	if (cooldown < world.time)
 		cooldown = (world.time + 300) // Sets cooldown at 30 seconds
-		user.visible_message("<span class='warning'>[user] presses the big red button.</span>", "<span class='notice'>You press the button, it plays a loud noise!</span>", "<span class='italics'>The button clicks loudly.</span>")
+		user.visible_message("<span class='warning'>[user] presses the big red button.</span>", "<span class='notice'>You press the button, it plays a loud noise!</span>", "<span class='hear'>The button clicks loudly.</span>")
 		playsound(src, 'sound/effects/explosionfar.ogg', 50, FALSE)
 		for(var/mob/M in urange(10, src)) // Checks range
 			if(!M.stat && !isAI(M)) // Checks to make sure whoever's getting shaken is alive/not the AI
@@ -1138,7 +1138,7 @@
 /obj/item/toy/clockwork_watch/attack_self(mob/user)
 	if (cooldown < world.time)
 		cooldown = world.time + 1800 //3 minutes
-		user.visible_message("<span class='warning'>[user] rotates a cogwheel on [src].</span>", "<span class='notice'>You rotate a cogwheel on [src], it plays a loud noise!</span>", "<span class='italics'>You hear cogwheels turning.</span>")
+		user.visible_message("<span class='warning'>[user] rotates a cogwheel on [src].</span>", "<span class='notice'>You rotate a cogwheel on [src], it plays a loud noise!</span>", "<span class='hear'>You hear cogwheels turning.</span>")
 		playsound(src, 'sound/magic/clockwork/ark_activation.ogg', 50, FALSE)
 	else
 		to_chat(user, "<span class='alert'>The cogwheels are already turning!</span>")

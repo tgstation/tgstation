@@ -212,6 +212,7 @@
 /obj/item/gun/energy/plasmacutter/adv
 	name = "advanced plasma cutter"
 	icon_state = "adv_plasmacutter"
+	item_state = "adv_plasmacutter"
 	force = 15
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
 

@@ -416,8 +416,7 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_CATEGORY_RIGID = 10000)
 	build_path = /obj/item/clothing/suit/armor/riot/knight/greyscale
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL //Anyone can be a knight if they try hard enough
+	category = list("Imported")
 
 /datum/design/knight_helmet
 	name = "Knight Helmet"
@@ -426,8 +425,7 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_CATEGORY_RIGID = 5000)
 	build_path = /obj/item/clothing/head/helmet/knight/greyscale
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL //Anyone can be a knight if they try hard enough
+	category = list("Imported")
 
 
 
