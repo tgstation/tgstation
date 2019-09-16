@@ -1,5 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - balance: "Reinforced windows take 9 less seconds total to deconstruct"
-  - balance: "Reinforced windows now have 80 armor instead of 90, which is approximately one minute of sustained beating with a toolbox."

@@ -1,4 +1,0 @@
-author: "4dplanner"
-delete-after: True
-changes: 
-  - bugfix: "blood drunk eye slowdown nullification should work properly on the first step now"

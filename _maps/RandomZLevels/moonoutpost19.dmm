@@ -1616,7 +1616,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "dh" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -23;
@@ -5403,7 +5403,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/machinery/airalarm/unlocked{
 	dir = 8;
 	pixel_x = 23;
@@ -5895,7 +5895,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "mz" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/carpet{

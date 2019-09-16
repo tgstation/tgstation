@@ -132,7 +132,7 @@
 
 
 /obj/machinery/particle_accelerator/control_box/power_change()
-	..()
+	. = ..()
 	if(stat & NOPOWER)
 		active = FALSE
 		use_power = NO_POWER_USE
