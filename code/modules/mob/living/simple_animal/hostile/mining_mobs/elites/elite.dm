@@ -15,6 +15,7 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE  //This is to prevent elites smashing up the mining station, we'll make sure we can smash minerals fine below.
 	harm_intent_damage = 0 //Punching elites gets you nowhere
 	var/obj/structure/elite_crevice/myparent = null
+	var/can_talk = 0
 	stat_attack = UNCONSCIOUS
 	sentience_type = SENTIENCE_BOSS
 	
@@ -37,8 +38,11 @@
 		var/turf/closed/mineral/M = target
 		M.gets_drilled()
 		
-//Elites can't talk!
+//Elites can't talk (normally)!
 /mob/living/simple_animal/hostile/asteroid/elite/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	if(can_talk == 1)
+		. = ..()
+		return
 	return 0
 		
 /*Basic setup for elite attacks, based on Whoneedspace's megafauna attack setup.
@@ -46,7 +50,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 
 /datum/action/innate/elite_attack
 	name = "Elite Attack"
-	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	icon_icon = 'icons/mob/actions/actions_elite.dmi'
 	button_icon_state = ""
 	var/mob/living/simple_animal/hostile/asteroid/elite/M
 	var/chosen_message
@@ -108,7 +112,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 			activator = user
 			if(boosted == 1)
 				visible_message("<span class='boldwarning'>Something within the crevice stirs...</span>")
-				var/list/candidates = pollCandidatesForMob("Do you want to play as a lavaland elite?", null, null, null, 50, src)
+				var/list/candidates = pollCandidatesForMob("Do you want to play as a lavaland elite?", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, src, POLL_IGNORE_SENTIENCE_POTION)
 				if(candidates.len)
 					visible_message("<span class='boldwarning'>The stirring sounds increase in volume!</span>")
 					elitemind = pick(candidates)
@@ -276,23 +280,25 @@ obj/structure/elite_crevice/proc/onEliteWon()
 	. = ..()
 	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite) && proximity_flag)
 		var/mob/living/simple_animal/hostile/asteroid/elite/E = target
-		if(E.stat == DEAD)
+		if(E.stat == DEAD && E.sentience_type == SENTIENCE_BOSS)
 			if(E.key)
 				E.faction = list("neutral")
 				E.revive(full_heal = 1, admin_revive = 1)
 				user.visible_message("<span class='notice'>[user] stabs [E] with [src], reviving it.</span>")
 				E.mind.enslave_mind_to_creator(user)
 				SEND_SOUND(E, sound('sound/effects/magic.ogg'))
-				to_chat(E, "<span class='userdanger'>You have been revived by [user].  While you can't speak to them, you owe [user] a great debt.  Assist [user.p_them()] in achieving their goals, regardless of risk.</span")
+				to_chat(E, "<span class='userdanger'>You have been revived by [user].  While you can't speak to them, you owe [user] a great debt.  Assist [user.p_them()] in achieving [user.p_their()] goals, regardless of risk.</span")
 				E.maxHealth = E.maxHealth * 0.5
 				E.health = E.maxHealth
+				E.desc = "[E.desc]  However, this one appears appears less wild in nature, and calmer around people."
+				E.sentience_type = SENTIENCE_ORGANIC
 				qdel(src)
 				return
 			else
 				user.visible_message("<span class='notice'>It appears [E] is unable to be revived right now.  Perhaps try again later.</span>")
 				return
 		else
-			to_chat(user, "<span class='info'>[src] only works on a dead, sentient lavaland elite.</span>")
+			to_chat(user, "<span class='info'>[src] only works on a dead, sentient lavaland elite.  If this one's been revived before, perhaps try a lazarus injection.</span>")
 			return
 	else
 		to_chat(user, "<span class='info'>[src] only works on a sentient lavaland elite.</span>")

@@ -51,29 +51,25 @@ variant has potential to be very robust, manipulating the target with tentacles 
 	
 /datum/action/innate/elite_attack/tentacle_square
 	name = "Tentacle Square"
-	icon_icon = 'icons/obj/wizard.dmi'
-	button_icon_state = ""
+	button_icon_state = "tentacle_square"
 	chosen_message = "<span class='colossus'>You are now attacking with a 3x3 of tentacles.</span>"
 	chosen_attack_num = 1
 	
 /datum/action/innate/elite_attack/tentacle_line
 	name = "Tentacle Line"
-	icon_icon = 'icons/obj/wizard.dmi'
-	button_icon_state = ""
+	button_icon_state = "tentacle_line"
 	chosen_message = "<span class='colossus'>You are now attacking with a line of tentacles.</span>"
 	chosen_attack_num = 2
 	
 /datum/action/innate/elite_attack/rage
 	name = "Rage"
-	icon_icon = 'icons/obj/wizard.dmi'
-	button_icon_state = ""
+	button_icon_state = "rage"
 	chosen_message = "<span class='colossus'>You will temporarily increase your movement speed.</span>"
 	chosen_attack_num = 3
 	
 /datum/action/innate/elite_attack/explosive_shroom
 	name = "Spawn Explosive Shrooms"
-	icon_icon = 'icons/obj/wizard.dmi'
-	button_icon_state = ""
+	button_icon_state = "explosive_shroom"
 	chosen_message = "<span class='colossus'>You will spawn 3 random explosive shrooms by the target.</span>"
 	chosen_attack_num = 4
 	
@@ -197,7 +193,13 @@ variant has potential to be very robust, manipulating the target with tentacles 
 	sleep(20)
 	icon_state = "explosive_shroom_active"
 	armed = 1
+	INVOKE_ASYNC(src, .proc/delete_self)
 
+
+obj/structure/explosive_shroom/proc/delete_self()
+	sleep(600)
+	if(src)
+		qdel(src)
 	
 /obj/structure/explosive_shroom/deconstruct(disassembled)
 	if(armed)
@@ -224,7 +226,7 @@ variant has potential to be very robust, manipulating the target with tentacles 
 	if(health < maxHealth * 0.5 && rand_tent < world.time && stat != DEAD)
 		rand_tent = world.time + 30
 		var/tentacle_amount = 4
-		if(health < maxHealth * 0.5)
+		if(health < maxHealth * 0.25)
 			tentacle_amount = 8
 		var/tentacle_loc = spiral_range_turfs(5, get_turf(src))
 		for(var/i in 1 to tentacle_amount)
