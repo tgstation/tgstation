@@ -1,3 +1,7 @@
+#define CREVICE_INACTIVE 0
+#define CREVICE_ACTIVE 1
+#define CREVICE_PASSIVE 2
+
 //Elite mining mobs
 /mob/living/simple_animal/hostile/asteroid/elite
 	name = "elite"
@@ -40,10 +44,10 @@
 		
 //Elites can't talk (normally)!
 /mob/living/simple_animal/hostile/asteroid/elite/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
-	if(can_talk == 1)
+	if(can_talk)
 		. = ..()
-		return
-	return 0
+		return TRUE
+	return FALSE
 		
 /*Basic setup for elite attacks, based on Whoneedspace's megafauna attack setup.
 While using this makes the system rely on OnFire, it still gives options for timers not tied to OnFire, and it makes using attacks consistent accross the board for player-controlled elites.*/
@@ -70,12 +74,12 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	. = ..()
 	if(isturf(loc))
 		for(var/obj/structure/elite_crevice/crevice in loc)
-			if(crevice == myparent && myparent.activity == 2)
+			if(crevice == myparent && myparent.activity == CREVICE_PASSIVE)
 				adjustHealth(-maxHealth*0.05)
 				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src))
 				H.color = "#FF0000"
 	if(myparent)
-		if(myparent.activity == 1 && myparent.activator.stat == DEAD)
+		if(myparent.activity == CREVICE_ACTIVE && myparent.activator.stat == DEAD)
 			myparent.onEliteWon()
 
 /mob/living/simple_animal/hostile/asteroid/elite/death()
@@ -89,9 +93,9 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	name = "glowing crevice"
 	desc = "A glowing, red hole which doesn't seem to have a bottom.  You feel pressured to reach your hand out towards it..."
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
-	max_integrity = 10000
-	var/activity = 0
-	var/boosted = 0
+	resistance_flags = INDESTRUCTIBLE
+	var/activity = CREVICE_INACTIVE
+	var/boosted = FALSE
 	var/times_won = 0
 	var/mob/living/carbon/human/activator = null
 	var/mob/living/simple_animal/hostile/asteroid/elite/mychild = null
@@ -104,86 +108,83 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	density = FALSE
 	
 /obj/structure/elite_crevice/attack_hand(mob/user)
-	if(activity == 0)
-		if(istype(user, /mob/living/carbon/human))
-			activity = 1
-			var/mob/dead/observer/elitemind = null
-			visible_message("<span class='boldwarning'>The crevice glows.  Your instincts tell you to step back.</span>")
-			activator = user
-			if(boosted == 1)
-				visible_message("<span class='boldwarning'>Something within the crevice stirs...</span>")
-				var/list/candidates = pollCandidatesForMob("Do you want to play as a lavaland elite?", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, src, POLL_IGNORE_SENTIENCE_POTION)
-				if(candidates.len)
-					visible_message("<span class='boldwarning'>The stirring sounds increase in volume!</span>")
-					elitemind = pick(candidates)
-					SEND_SOUND(elitemind, sound('sound/effects/magic.ogg'))
-					to_chat(elitemind, "<b>You have been chosen to play as a Lavaland Elite.</b>")
-					to_chat(elitemind, "<b>In a few seconds, you will be summoned on Lavaland as a monster to fight your activator, in a fight to the death.</b>")
-					to_chat(elitemind, "<b>Your attacks can be switched using the buttons on the top left of the HUD, and used by clicking on targets or tiles similar to a gun.</b>")
-					to_chat(elitemind, "<b>While the opponent might have an upper hand with  powerful mining equipment and tools, you have great power normally limited by AI mobs.</b>")
-					to_chat(elitemind, "<b>If you want to win, you'll have to use your powers in creative ways to ensure the kill.  It's suggested you try using them all as soon as possible.</b>")
-					to_chat(elitemind, "<b>Should you win, you'll receive extra information regarding what to do after.  Good luck!</b>")
-					sleep(100)
+	switch(activity)
+		if(CREVICE_INACTIVE)
+			if(istype(user, /mob/living/carbon/human))
+				activity = CREVICE_ACTIVE
+				var/mob/dead/observer/elitemind = null
+				visible_message("<span class='boldwarning'>The crevice glows.  Your instincts tell you to step back.</span>")
+				activator = user
+				if(boosted)
+					visible_message("<span class='boldwarning'>Something within the crevice stirs...</span>")
+					var/list/candidates = pollCandidatesForMob("Do you want to play as a lavaland elite?", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, src, POLL_IGNORE_SENTIENCE_POTION)
+					if(candidates.len)
+						audible_message("<span class='boldwarning'>The stirring sounds increase in volume!</span>")
+						elitemind = pick(candidates)
+						SEND_SOUND(elitemind, sound('sound/effects/magic.ogg'))
+						to_chat(elitemind, "<b>You have been chosen to play as a Lavaland Elite.\nIn a few seconds, you will be summoned on Lavaland as a monster to fight your activator, in a fight to the death.\nYour attacks can be switched using the buttons on the top left of the HUD, and used by clicking on targets or tiles similar to a gun.\nWhile the opponent might have an upper hand with  powerful mining equipment and tools, you have great power normally limited by AI mobs.\nIf you want to win, you'll have to use your powers in creative ways to ensure the kill.  It's suggested you try using them all as soon as possible.\nShould you win, you'll receive extra information regarding what to do after.  Good luck!</b>")
+						addtimer(100)
+					else
+						visible_message("<span class='boldwarning'>The stirring stops, and nothing emerges.  Perhaps try again later.</span>")
+						activity = CREVICE_INACTIVE
+						activator = null
+						return
 				else
-					visible_message("<span class='boldwarning'>The stirring stops, and nothing emerges.  Perhaps try again later.</span>")
-					activity = 0
-					activator = null
-					return
-			else
-				sleep(30)
-			var/selectedspawn = pick(potentialspawns)
-			mychild = new selectedspawn(loc, src)
-			mychild.myparent = src
-			visible_message("<span class='boldwarning'>[mychild] emerges from the crevice!</span>")
-			playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, 1, 1)
-			if(boosted == 1)
-				mychild.key = elitemind.key
-				mychild.sentience_act()
-			INVOKE_ASYNC(src, .proc/arena_trap)
-			return
-	if(activity == 2)
-		if(istype(user, /mob/living/carbon/human))
-			activity = 1
-			visible_message("<span class='boldwarning'>The crevice glows as your arm enters its radius.  Your instincts tell you to step back.</span>")
-			activator = user
-			INVOKE_ASYNC(src, .proc/arena_trap)
-			if(boosted == 1)
-				SEND_SOUND(mychild, sound('sound/effects/magic.ogg'))
-				to_chat(mychild, "<b>Someone has activated your crevice.  You will be returned to fight shortly, get ready!</b>")
-				sleep(40)
-			sleep(30)
-			mychild.forceMove(loc)
-			visible_message("<span class='boldwarning'>[mychild] emerges from the crevice!</span>")
-			playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, 1, 1)
-			mychild.revive(full_heal = 1, admin_revive = 1)
-			if(boosted == 1)
-				mychild.maxHealth = mychild.maxHealth * 2
-				mychild.health = mychild.maxHealth
-			
-			return
+					addtimer(30)
+				var/selectedspawn = pick(potentialspawns)
+				mychild = new selectedspawn(loc, src)
+				mychild.myparent = src
+				visible_message("<span class='boldwarning'>[mychild] emerges from the crevice!</span>")
+				playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
+				if(boosted)
+					mychild.key = elitemind.key
+					mychild.sentience_act()
+				INVOKE_ASYNC(src, .proc/arena_trap)
+				return
+		if(CREVICE_PASSIVE)
+			if(istype(user, /mob/living/carbon/human))
+				activity = CREVICE_ACTIVE
+				visible_message("<span class='boldwarning'>The crevice glows as your arm enters its radius.  Your instincts tell you to step back.</span>")
+				activator = user
+				INVOKE_ASYNC(src, .proc/arena_trap)
+				if(boosted)
+					SEND_SOUND(mychild, sound('sound/effects/magic.ogg'))
+					to_chat(mychild, "<b>Someone has activated your crevice.  You will be returned to fight shortly, get ready!</b>")
+					addtimer(40)
+				addtimer(30)
+				mychild.forceMove(loc)
+				visible_message("<span class='boldwarning'>[mychild] emerges from the crevice!</span>")
+				playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
+				mychild.revive(full_heal = TRUE, admin_revive = TRUE)
+				if(boosted)
+					mychild.maxHealth = mychild.maxHealth * 2
+					mychild.health = mychild.maxHealth
+				return
 			
 /obj/structure/elite_crevice/Initialize()
 	. = ..()
 	AddComponent(/datum/component/gps, "Menacing Signal")
 		
 /obj/structure/elite_crevice/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/organ/regenerative_core) && activity == 0 && boosted == 0)
+	. = ..()
+	if(istype(W, /obj/item/organ/regenerative_core) && activity == CREVICE_INACTIVE && !boosted)
 		var/obj/item/organ/regenerative_core/core = W
-		if(core.preserved == 1)
+		if(core.preserved)
 			visible_message("<span class='boldwarning'>As [user] drops the core into the crevice, the red light intensifies for a brief moment, then returns to normal.</span>")
-			boosted = 1
+			boosted = TRUE
 			qdel(core)
+			return TRUE
 			
 /obj/structure/elite_crevice/proc/arena_trap()
 	var/turf/T = get_turf(src)
-	if(T && activity == 1)
+	if(T && activity == CREVICE_ACTIVE)
 		for(var/t in RANGE_TURFS(12, T))
 			if(t && get_dist(t, T) == 12)
 				var/obj/effect/temp_visual/elite_crevice_wall/newwall
 				newwall = new /obj/effect/temp_visual/elite_crevice_wall(t, src)
 				newwall.activator = src.activator
 				newwall.ourelite = src.mychild
-		sleep(100)
+		addtimer(100)
 		if(src) //Checking to see if we still exist
 			INVOKE_ASYNC(src, .proc/arena_trap)  //Gets another arena trap queued up for when this one runs out.
 			INVOKE_ASYNC(src, .proc/border_check)  //Checks to see if our fighters got out of the arena somehow.
@@ -219,26 +220,26 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		return TRUE
 		
 /obj/structure/elite_crevice/proc/border_check()
-	if(activity == 1)
+	if(activity == CREVICE_ACTIVE)
 		if(activator != null && get_dist(src, activator) >= 12)
 			if(loc)
 				activator.forceMove(loc)
 				visible_message("<span class='boldwarning'>[activator] suddenly reappears above the crevice!</span>")
-				playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, 1, 1)
+				playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 		if(mychild != null && get_dist(src, mychild) >= 12)
 			if(loc)
 				mychild.forceMove(loc)
 				visible_message("<span class='boldwarning'>[mychild] suddenly appears above the crevice!</span>")
-				playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, 1, 1)
+				playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 	
 obj/structure/elite_crevice/proc/onEliteLoss()
-	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, 0, 50, 1, 1)
+	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, 0, 50, TRUE, TRUE)
 	visible_message("<span class='boldwarning'>The glowing crevice wanes and dims, before beginning to close.</span>")
 	mychild.myparent = null
-	if(activity == 1)
+	if(activity == CREVICE_ACTIVE)
 		visible_message("<span class='boldwarning'>As the crevice closes, something is forced out from down below.</span>")
 		new /obj/structure/closet/crate/necropolis/tendril(loc)
-		if(boosted == 1)
+		if(boosted)
 			var/lootpick = rand(1, 4)
 			if(lootpick == 1)
 				new /obj/item/crevice_shard(loc)
@@ -248,20 +249,16 @@ obj/structure/elite_crevice/proc/onEliteLoss()
 	
 obj/structure/elite_crevice/proc/onEliteWon()
 	times_won++
-	activity = 2
+	activity = CREVICE_PASSIVE
 	activator = null
-	mychild.revive(full_heal = 1, admin_revive = 1)
-	if(boosted == 1)
+	mychild.revive(full_heal = TRUE, admin_revive = TRUE)
+	if(boosted)
 		mychild.maxHealth = mychild.maxHealth * 0.5
 		mychild.health = mychild.maxHealth
 		if(times_won == 1)
 			SEND_SOUND(mychild, sound('sound/effects/magic.ogg'))
-			to_chat(mychild, "<span class='boldwarning'>As the life in the activator's eyes fade, the forcefield around you dies out and you feel your power subside.</span>")
-			to_chat(mychild, "<span class='boldwarning'>Despite this inferno being your home, you feel as if you aren't welcome here anymore.</span>")
-			to_chat(mychild, "<span class='boldwarning'>Without any guidance, your purpose is now for you to decide.</span>")
-			to_chat(mychild, "<b>Your max health has been halved, but can now heal by standing on your crevice.  Note, it's your only way to heal.</b>")
-			to_chat(mychild, "<b>Bear in mind, if anyone interacts with your crevice, you'll be resummoned here to carry out another fight.  In such a case, you will regain your full max health.</b>")
-			to_chat(mychild, "<b>Also, be weary of your fellow inhabitants, they likely won't be happy to see you!</b>")
+			to_chat(mychild, "<span class='boldwarning'>As the life in the activator's eyes fade, the forcefield around you dies out and you feel your power subside.\nDespite this inferno being your home, you feel as if you aren't welcome here anymore.\nWithout any guidance, your purpose is now for you to decide.</span>")
+			to_chat(mychild, "<b>Your max health has been halved, but can now heal by standing on your crevice.  Note, it's your only way to heal.\nBear in mind, if anyone interacts with your crevice, you'll be resummoned here to carry out another fight.  In such a case, you will regain your full max health.\nAlso, be weary of your fellow inhabitants, they likely won't be happy to see you!</b>")
 			
 /obj/item/crevice_shard
 	name = "crevice shard"
@@ -283,9 +280,8 @@ obj/structure/elite_crevice/proc/onEliteWon()
 		if(E.stat == DEAD && E.sentience_type == SENTIENCE_BOSS)
 			if(E.key)
 				E.faction = list("neutral")
-				E.revive(full_heal = 1, admin_revive = 1)
+				E.revive(full_heal = TRUE, admin_revive = TRUE)
 				user.visible_message("<span class='notice'>[user] stabs [E] with [src], reviving it.</span>")
-				E.mind.enslave_mind_to_creator(user)
 				SEND_SOUND(E, sound('sound/effects/magic.ogg'))
 				to_chat(E, "<span class='userdanger'>You have been revived by [user].  While you can't speak to them, you owe [user] a great debt.  Assist [user.p_them()] in achieving [user.p_their()] goals, regardless of risk.</span")
 				E.maxHealth = E.maxHealth * 0.5

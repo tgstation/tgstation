@@ -1,26 +1,8 @@
-/*
-
-Elite goliath
-
-The elite goliath is a simple test of keeping a constant eye on the foe and your surrondings.  His attacks are as follows:
-
-- The elite goliath's tentacles deal 10 ticks of stun and 20 to 25 damage, balancing how often they're used.
-- 3x3 of tentacles spawn underneath the target, giving 1.5 seconds of OnFire cooldown.
-- A line of tentacles go from the goliath to the target at max range of 7, also giving 1.5 seconds of OnFire cooldown.
-- The goliath turns red and emits a sound, suddenly becoming much faster than before.  This effect lasts for 5 seconds with a 7 second OnFire cooldown.
-- The goliath brings up 3 fragile, explosive mushrooms one after another by the target area.  The mushrooms have an arming time of 2 seconds, any attack which destroys them afterwards will cause a fiery explosion in a 5x5 radius.
-The elite goliath's tentacles will also detonate them.  This attack has a 4 second onFire cooldown.
-- Does 30 damage in melee.
-- Once below half health, every 3 seconds 4 random tentacles will attempt to spawn in a 5-tile radius around the goliath.  If below 25%, 8 random tentacles will spawn.
-
-While one of the more basic elites, this fight encourages keeping an eye out for the goliath's tentacles, while making sure not to stray too close to the goliath in case of a rage.  Simple enough to fight
-without too much knowledge of the mechanics, with low health tentacles adding extra things to dodge later into the fight.  Considering the official fight happens in an enclosed space, one must make sure the goliath doesn't
-corner their movement options with mushrooms.
-
-The AI version isn't too complicated of a fight, as the AI can't consistently capitalize on the player's mistakes nor place tentacles with foresight of the player's movements, however, the player-controlled
-variant has potential to be very robust, manipulating the target with tentacles to bait them into a mushroom setup or a rage.
-
-*/
+/**
+  * # Elite Goliath
+  *
+  * An elite mob which boils down to a simple test of keeping a constant eye on the foe and your surrondings.
+  */
 
 /mob/living/simple_animal/hostile/asteroid/elite/goliath
 	name = "elite goliath"
@@ -165,7 +147,7 @@ variant has potential to be very robust, manipulating the target with tentacles 
 	color = rgb(150,0,0)
 	src.set_varspeed(0)
 	src.move_to_delay = 3
-	sleep(50)
+	addtimer(50)
 	color = rgb(255, 255, 255)
 	src.set_varspeed(2)
 	src.move_to_delay = 5
@@ -190,16 +172,10 @@ variant has potential to be very robust, manipulating the target with tentacles 
 		M.gets_drilled()
 	playsound(src, 'sound/effects/bamf.ogg', 100, 1)
 	icon_state = "explosive_shroom_activate"
-	sleep(20)
+	addtimer(20)
 	icon_state = "explosive_shroom_active"
 	armed = 1
-	INVOKE_ASYNC(src, .proc/delete_self)
-
-
-obj/structure/explosive_shroom/proc/delete_self()
-	sleep(600)
-	if(src)
-		qdel(src)
+	QDEL_IN(src, 600)
 	
 /obj/structure/explosive_shroom/deconstruct(disassembled)
 	if(armed)
@@ -208,7 +184,7 @@ obj/structure/explosive_shroom/proc/delete_self()
 	else
 		playsound(src, 'sound/effects/hit_kick.ogg', 100, 1)
 	. = ..()
-		
+
 /mob/living/simple_animal/hostile/asteroid/elite/goliath/proc/explosive_shroom(var/target)	
 	ranged_cooldown = world.time + 40
 	var/tturf = get_turf(target)
