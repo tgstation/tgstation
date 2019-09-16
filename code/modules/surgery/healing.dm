@@ -44,7 +44,7 @@
 		"<span class='notice'>[user] attempts to patch some of [target]'s [woundtype].</span>",
 		"<span class='notice'>[user] attempts to patch some of [target]'s [woundtype].</span>")
 
-/datum/surgery_step/heal/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
+/datum/surgery_step/heal/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(..())
 		while((brutehealing && target.getBruteLoss()) || (burnhealing && target.getFireLoss()))
 			if(!..())

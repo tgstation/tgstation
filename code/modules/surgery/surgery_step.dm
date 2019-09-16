@@ -9,7 +9,7 @@
 	var/list/chems_needed = list()  //list of chems needed to complete the step. Even on success, the step will have no effect if there aren't the chems required in the mob.
 	var/require_all_chems = TRUE    //any on the list or all on the list?
 
-/datum/surgery_step/proc/try_op(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
+/datum/surgery_step/proc/try_op(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/success = FALSE
 	if(accept_hand)
 		if(!tool)
@@ -39,7 +39,7 @@
 	if(success)
 		if(target_zone == surgery.location)
 			if(get_location_accessible(target, target_zone) || surgery.ignore_clothes)
-				initiate(user, target, target_zone, tool, surgery, try_to_fail)
+				initiate(user, target, target_zone, tool, surgery)
 			else
 				to_chat(user, "<span class='warning'>You need to expose [target]'s [parse_zone(target_zone)] to perform surgery on it!</span>")
 			return TRUE	//returns TRUE so we don't stab the guy in the dick or wherever.
@@ -56,7 +56,7 @@
 	return FALSE
 
 
-/datum/surgery_step/proc/initiate(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
+/datum/surgery_step/proc/initiate(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	surgery.step_in_progress = TRUE
 	var/speed_mod = 1
 	var/advance = FALSE
