@@ -35,15 +35,3 @@
 	target.blur_eyes(35)	//this will fix itself slowly.
 	E.setOrganDamage(0)
 	return TRUE
-
-/datum/surgery_step/fix_eyes/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(target.getorgan(/obj/item/organ/brain))
-		display_results(user, target, "<span class='warning'>You accidentally stab [target] right in the brain!</span>",
-			"<span class='warning'>[user] accidentally stabs [target] right in the brain!</span>",
-			"<span class='warning'>[user] accidentally stabs [target] right in the brain!</span>")
-		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 70)
-	else
-		display_results(user, target, "<span class='warning'>You accidentally stab [target] right in the brain! Or would have, if [target] had a brain.</span>",
-			"<span class='warning'>[user] accidentally stabs [target] right in the brain! Or would have, if [target] had a brain.</span>",
-			"<span class='warning'>[user] accidentally stabs [target] right in the brain!</span>")
-	return FALSE

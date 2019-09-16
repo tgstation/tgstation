@@ -72,11 +72,3 @@
 	else
 		target.visible_message("<span class='warning'>...[target.p_they()] convulses, then lies still.</span>")
 		return FALSE
-
-/datum/surgery_step/revive/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='notice'>You shock [target]'s brain with [tool], but [target.p_they()] doesn't react.</span>",
-		"<span class='notice'>[user] send a powerful shock to [target]'s brain with [tool], but [target.p_they()] doesn't react.</span>",
-		"<span class='notice'>[user] send a powerful shock to [target]'s brain with [tool], but [target.p_they()] doesn't react.</span>")
-	playsound(get_turf(target), 'sound/magic/lightningbolt.ogg', 50, TRUE)
-	target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 180)
-	return FALSE
