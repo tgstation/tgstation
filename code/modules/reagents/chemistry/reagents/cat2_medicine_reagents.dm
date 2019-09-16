@@ -60,10 +60,10 @@
 	..()
 	return TRUE
 /datum/reagent/medicine/C2/lenturi/on_mob_metabolize(M)
-		RegisterSignal(M, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	RegisterSignal(M, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 /datum/reagent/medicine/C2/lenturi/on_end_metabolize(M)
-    	UnregisterSignal(M, COMSIG_MOVABLE_MOVED)
-		step_counter = 0
+    UnregisterSignal(M, COMSIG_MOVABLE_MOVED)
+	step_counter = 0
 /datum/reagent/medicine/C2/lenturi/proc/on_moved()
 	step_counter++
 /datum/reagent/medicine/C2/lenturi/proc/calculate_healing()
