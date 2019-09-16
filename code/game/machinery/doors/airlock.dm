@@ -988,17 +988,14 @@
 	return !operating && density
 
 /obj/machinery/door/airlock/try_to_crowbar(obj/item/I, mob/living/user)
-	var/beingcrowbarred = null
-	if(I.tool_behaviour == TOOL_CROWBAR )
-		beingcrowbarred = 1
-	else
-		beingcrowbarred = 0
-	if(!security_level && (beingcrowbarred && panel_open && ((obj_flags & EMAGGED) || (density && welded && !operating && !hasPower() && !locked))))
-		user.visible_message("<span class='notice'>[user] removes the electronics from the airlock assembly.</span>", \
-							 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
-		if(I.use_tool(src, user, 40, volume=100))
-			deconstruct(TRUE, user)
-			return
+	if(I)
+		var/beingcrowbarred = (I.tool_behaviour == TOOL_CROWBAR)
+		if(!security_level && (beingcrowbarred && panel_open && ((obj_flags & EMAGGED) || (density && welded && !operating && !hasPower() && !locked))))
+			user.visible_message("<span class='notice'>[user] removes the electronics from the airlock assembly.</span>", \
+							 	"<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
+			if(I.use_tool(src, user, 40, volume=100))
+				deconstruct(TRUE, user)
+				return
 	else if(hasPower())
 		to_chat(user, "<span class='warning'>The airlock's motors resist your efforts to force it!</span>")
 	else if(locked)
