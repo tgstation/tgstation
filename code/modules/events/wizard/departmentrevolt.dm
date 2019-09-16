@@ -38,7 +38,8 @@
 	var/datum/team/nation/nation = new
 	nation.name = nation_name
 
-	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+	for(var/i in GLOB.human_list)
+		var/mob/living/carbon/human/H = i
 		if(H.mind)
 			var/datum/mind/M = H.mind
 			if(M.assigned_role && !(M.has_antag_datum(/datum/antagonist)))

@@ -17,21 +17,21 @@
 	foodtype = GRAIN | DAIRY
 
 /obj/item/reagent_containers/food/snacks/store/cake/plain
-	name = "vanilla cake"
+	name = "plain cake"
 	desc = "A plain cake, not a lie."
 	icon_state = "plaincake"
 	custom_food_type = /obj/item/reagent_containers/food/snacks/customizable/cake
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 2)
-	tastes = list("vanilla" = 1, "sweetness" = 2,"cake" = 5)
+	tastes = list("sweetness" = 2,"cake" = 5)
 	foodtype = GRAIN | DAIRY | SUGAR
 
 /obj/item/reagent_containers/food/snacks/cakeslice/plain
-	name = "vanilla cake slice"
+	name = "plain cake slice"
 	desc = "Just a slice of cake, it is enough for everyone."
 	icon_state = "plaincake_slice"
 	filling_color = "#FFD700"
 	customfoodfilling = 1
-	tastes = list("vanilla" = 1, "sweetness" = 2,"cake" = 5)
+	tastes = list("sweetness" = 2,"cake" = 5)
 	foodtype = GRAIN | DAIRY | SUGAR
 
 /obj/item/reagent_containers/food/snacks/store/cake/carrot
@@ -275,7 +275,7 @@
 /obj/item/reagent_containers/food/snacks/cakeslice/bscc
 	name = "blackberry and strawberry chocolate cake slice"
 	desc = "Just a slice of cake  filled with assortment of blackberries and strawberries!"
-	icon_state = "blackbarry_strawberries_cake_coco_cake_slice"
+	icon_state = "blackbarry_strawberries_cake_coco_slice"
 	filling_color = "#FFD700"
 	tastes = list("blackberry" = 2, "strawberries" = 2, "chocolate" = 2, "sweetness" = 2,"cake" = 3)
 	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
@@ -331,3 +331,37 @@
 	filling_color = "#00FFFF"
 	tastes = list("acid" = 3, "metal" = 4, "glass" = 5)
 	foodtype = GRAIN | GROSS
+
+/obj/item/reagent_containers/food/snacks/store/cake/vanilla_cake
+	name = "vanilla cake"
+	desc = "A vanilla frosted cake."
+	icon_state = "vanillacake"
+	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/vanilla_slice
+	bonus_reagents = list(/datum/reagent/consumable/sugar = 15, /datum/reagent/consumable/vanilla = 15)
+	tastes = list("cake" = 1, "sugar" = 1, "vanilla" = 10)
+	foodtype = GRAIN | SUGAR | DAIRY
+
+/obj/item/reagent_containers/food/snacks/cakeslice/vanilla_slice
+	name = "vanilla cake slice"
+	desc = "A slice of vanilla frosted cake."
+	icon_state = "vanillacake_slice"
+	filling_color = "#00FFFF"
+	tastes = list("cake" = 1, "sugar" = 1, "vanilla" = 10)
+	foodtype = GRAIN | SUGAR | DAIRY
+
+/obj/item/reagent_containers/food/snacks/store/cake/clown_cake
+	name = "clown cake"
+	desc = "A funny cake with a clown face on it."
+	icon_state = "clowncake"
+	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/clown_slice
+	bonus_reagents = list(/datum/reagent/consumable/sugar = 15)
+	tastes = list("cake" = 1, "sugar" = 1, "joy" = 10)
+	foodtype = GRAIN | SUGAR | DAIRY
+
+/obj/item/reagent_containers/food/snacks/cakeslice/clown_slice
+	name = "clown cake slice"
+	desc = "A slice of bad jokes, and silly props."
+	icon_state = "clowncake_slice"
+	filling_color = "#00FFFF"
+	tastes = list("cake" = 1, "sugar" = 1, "joy" = 10)
+	foodtype = GRAIN | SUGAR | DAIRY 
