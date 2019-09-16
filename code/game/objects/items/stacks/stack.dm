@@ -14,6 +14,7 @@ GLOBAL_LIST_INIT(rigid_recipes, list(new/datum/stack_recipe("chair", /obj/struct
 /obj/item/stack
 	icon = 'icons/obj/stack_objects.dmi'
 	gender = PLURAL
+	material_modifier = 0.10 //Only 10% as effective in a stack, to prevent deathstacks.
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
 	var/amount = 1
