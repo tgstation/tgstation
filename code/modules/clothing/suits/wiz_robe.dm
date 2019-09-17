@@ -196,7 +196,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/shielded/wizard/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/personalshield, recharge_rate = 0, max_charges = INFINITY, current_charges = 15, recharge_cooldown = INFINITY, shield_on = "shield-red", item_rechargable = list(/obj/item/wizard_armour_charge))
+	AddComponent(/datum/component/personalshield, INFINITY, 15, INFINITY, INFINITY, 0, TRUE, "shield-red", list(/obj/item/wizard_armour_charge))
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard
 	name = "battlemage helmet"

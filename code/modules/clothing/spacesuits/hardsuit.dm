@@ -693,7 +693,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/shielded/ctf/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/personalshield, max_charges = 5)
+	AddComponent(/datum/component/personalshield, 5)
 
 /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
 	name = "red shielded hardsuit"
@@ -704,7 +704,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/personalshield, max_charges = 5, shield_on = "shield-red")
+	AddComponent(/datum/component/personalshield, 5, null, 20 SECONDS, 2 SECONDS, 1, TRUE, shield_on = "shield-red")
 
 /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
 	name = "blue shielded hardsuit"
@@ -755,7 +755,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/shielded/syndi/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/personalshield, shield_on = "shield-red", togglable_states = list("shield-red", "shield-old"))
+	AddComponent(/datum/component/personalshield, 3, null, 20 SECONDS, 2 SECONDS, 1, TRUE, "shield-red", list("shield-red", "shield-old"))
 
 /obj/item/clothing/suit/space/hardsuit/shielded/syndi/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -788,7 +788,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/shielded/swat/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/personalshield, max_charges = 4, recharge_delay = 15 SECONDS)
+	AddComponent(/datum/component/personalshield, 4, null, 15 SECONDS)
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/swat
 	name = "death commando helmet"

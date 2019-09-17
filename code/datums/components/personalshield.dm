@@ -16,13 +16,14 @@
 	var/mob/living/carbon/wearer
 	/// icon state of activated shield overlay
 	var/shield_on = "shield-old"
+	var/shield_broken = "broken"
 	/// items that can recharge this
 	var/list/item_rechargable
 	/// icon_states that can be toggled between
 	var/list/togglable_states
 	var/toggle_state = 1
 
-/datum/component/personalshield/Initialize(max_charges = 3, current_charges, recharge_delay = 20 SECONDS, recharge_speed = 2 SECONDS, recharge_rate = 1, must_be_worn_or_held = FALSE, shield_on = "shield-old", list/item_rechargable, list/togglable_states)
+/datum/component/personalshield/Initialize(max_charges = 3, current_charges, recharge_delay = 20 SECONDS, recharge_speed = 2 SECONDS, recharge_rate = 1, must_be_worn_or_held = TRUE, shield_on = "shield-old", list/item_rechargable, list/togglable_states, shield_broken = "broken")
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 	src.max_charges = max_charges
@@ -38,6 +39,7 @@
 	if(item_rechargable)
 		src.item_rechargable = typecacheof(item_rechargable)
 	src.togglable_states = togglable_states
+	src.shield_broken = shield_broken
 
 /datum/component/personalshield/RegisterWithParent()
 	. = ..()
@@ -73,7 +75,7 @@
 
 	wearer = user
 	wearer.remove_overlay(SHIELD_LAYER)
-	if(state == "off")
+	if(state == "off" || !shield_broken)
 		return
 	var/iconstate = "broken"
 	if(state == "on")
