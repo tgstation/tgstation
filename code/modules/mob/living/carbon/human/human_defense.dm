@@ -156,6 +156,15 @@
 
 	return ..()
 
+/mob/living/carbon/human/proc/embed_projectile(obj/item/projectile/P, def_zone)
+	throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
+	var/obj/item/bodypart/L = get_bodypart(check_zone(def_zone))
+	var/obj/item/bullet_embedded/B = new /obj/item/bullet_embedded
+	B.embedding.embedded_pain_multiplier = P.embed_damage
+	L.embedded_objects |= B
+	B.forceMove(src)
+	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
+
 /mob/living/carbon/human/grippedby(mob/living/user, instant = FALSE)
 	if(w_uniform)
 		w_uniform.add_fingerprint(user)
