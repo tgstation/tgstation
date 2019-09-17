@@ -366,5 +366,5 @@
 		/datum/reagent/blood = 50,
 		/datum/reagent/teslium = 1 //To shock the whole thing into life
 	)
-	result = mob/living/simple_animal/hostile/bear/butter
+	result = /mob/living/simple_animal/hostile/bear/butter
 	subcategory = CAT_MISCFOOD
