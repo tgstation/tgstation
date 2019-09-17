@@ -144,7 +144,7 @@
 
 /datum/component/personalshield/proc/hit_reaction(datum/source, mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance, damage, attack_type)
 	if(current_charges <= 0)
-		return FALSE
+		return NONE
 	var/datum/effect_system/spark_spread/s = new
 	s.set_up(2, 1, parent)
 	s.start()
