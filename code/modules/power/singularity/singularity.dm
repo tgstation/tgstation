@@ -468,9 +468,9 @@
 	light_color = rgb(0, 255, 0)
 
 /obj/singularity/vomit/consume(atom/A)
-	var/turf/Tgoose = get_turf(src)
 	if (istype(A, /obj/effect/decal/cleanable/vomit))
 		return
+	var/turf/Tgoose = get_turf(src)
 	var/turf/spawnloc = isturf(A) ? A : get_turf(A)
 	playsound(Tgoose, 'sound/effects/splat.ogg', 50, 1)
 	new /obj/effect/decal/cleanable/vomit(spawnloc)
