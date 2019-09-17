@@ -94,11 +94,13 @@
 	taste_description = "salt"
 
 /datum/reagent/blackpowder/on_mob_life(mob/living/carbon/M)
+	. = TRUE
 	..()
-	if(isplasmaman(M))
-		M.set_drugginess(15)
-		if(M.hallucination < volume)
-			M.hallucination += 5
+	if(!isplasmaman(M))
+    	return
+	M.set_drugginess(15)
+	if(M.hallucination < volume)
+    	M.hallucination += 5
 
 /datum/reagent/blackpowder/on_ex_act()
 	var/location = get_turf(holder.my_atom)
