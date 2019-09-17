@@ -187,17 +187,16 @@
 	desc = "Not all wizards are afraid of getting up close and personal."
 	icon_state = "battlemage"
 	item_state = "battlemage"
-	recharge_rate = 0
-	current_charges = 15
-	recharge_cooldown = INFINITY
-	shield_state = "shield-red"
-	shield_on = "shield-red"
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard
 	armor = list("melee" = 30, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 20, "bio" = 20, "rad" = 20, "fire" = 100, "acid" = 100)
 	slowdown = 0
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/suit/space/hardsuit/shielded/wizard/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/personalshield, recharge_rate = 0, max_charges = INFINITY, current_charges = 15, recharge_cooldown = INFINITY, shield_on = "shield-red", item_rechargable = list(/obj/item/wizard_armour_charge))
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard
 	name = "battlemage helmet"
@@ -221,11 +220,7 @@
 
 /obj/item/wizard_armour_charge/afterattack(obj/item/clothing/suit/space/hardsuit/shielded/wizard/W, mob/user, proximity)
 	. = ..()
-	if(!proximity)
+	if(SEND_SIGNAL(W, COMPONENT_RECHARGE_SHIELD, user, 8))
+		qdel(src)
 		return
-	if(!istype(W))
-		to_chat(user, "<span class='warning'>The rune can only be used on battlemage armour!</span>")
-		return
-	W.current_charges += 8
-	to_chat(user, "<span class='notice'>You charge \the [W]. It can now absorb [W.current_charges] hits.</span>")
-	qdel(src)
+	to_chat(user, "<span class='warning'>The rune can only be used on battlemage armour!</span>")
