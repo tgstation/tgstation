@@ -1022,6 +1022,7 @@
 					if(density && !open(2))
 						to_chat(user, "<span class='warning'>Despite your attempts, [src] refuses to open.</span>")
 				prying_so_hard = FALSE
+				return
 		to_chat(user, "<span class='warning'>The airlock's motors resist your efforts to force it!</span>")
 		return
 
