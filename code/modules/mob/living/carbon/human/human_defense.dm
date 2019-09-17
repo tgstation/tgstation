@@ -161,6 +161,7 @@
 	var/obj/item/bodypart/L = get_bodypart(check_zone(def_zone))
 	var/obj/item/bullet_embedded/B = new /obj/item/bullet_embedded
 	B.embedding.embedded_pain_multiplier = P.embed_damage
+	B.embedding.embedded_unsafe_removal_pain_multiplier = 0.25
 	L.embedded_objects |= B
 	B.forceMove(src)
 	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)

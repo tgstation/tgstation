@@ -93,4 +93,3 @@
 	icon_state = "embedded"
 	desc = "A metal projectile. It looks quite deformed."
 	embedding = list("embedded_pain_multiplier" = 0, "embed_chance" = 0, "embedded_fall_chance" = 0)
-	sharpness = IS_SHARP

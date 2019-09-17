@@ -25,7 +25,7 @@
 /mob/living/proc/getarmor(def_zone, type)
 	return 0
 
-//this returns the mob's protection against eye damage (number between -1 and 2) from bright lights
+//this returns the mob's protection against eye damage (number between -1 and 2) from bright lights	
 /mob/living/proc/get_eye_protection()
 	return 0
 
@@ -50,7 +50,7 @@
 		apply_effects(P.stun, P.knockdown, P.unconscious, P.irradiate, P.slur, P.stutter, P.eyeblur, P.drowsy, FALSE, P.stamina, P.jitter, P.paralyze, P.immobilize)
 		if(P.dismemberment)
 			check_projectile_dismemberment(P, def_zone)
-		if(P.embed_target && ishuman(src)) // you can only embed humans
+		if(P.embed_target && ishuman(src) && armor <= 10) // Only embed if armor is reduced enough by penetration. Value is 10 so non-sec hardsuits won't stop imbedding
 			var/mob/living/carbon/human/H = src
 			H.embed_projectile(P, def_zone)
 	return on_hit_state ? BULLET_ACT_HIT : BULLET_ACT_BLOCK

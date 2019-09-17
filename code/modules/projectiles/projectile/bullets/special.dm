@@ -9,6 +9,7 @@
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "banana"
 	range = 200
+	embed_target = FALSE
 
 /obj/item/projectile/bullet/honker/Initialize()
 	. = ..()
@@ -24,6 +25,7 @@
 
 /obj/item/projectile/bullet/mime
 	damage = 40
+	embed_target = FALSE // that would be very weird
 
 /obj/item/projectile/bullet/mime/on_hit(atom/target, blocked = FALSE)
 	. = ..()
