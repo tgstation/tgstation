@@ -27,7 +27,7 @@
 	if(E)
 		if(!active)
 			E.sight_flags |= SEE_MOBS | SEE_OBJS | SEE_TURFS //Add sight flags to the user's eyes
-			E.flash_protect = -1 //Adjust the user's eyes' flash protection
+			E.flash_protect = FLASH_PROTECTION_SENSITIVE //Adjust the user's eyes' flash protection
 			to_chat(user, "We adjust our eyes to sense prey through walls.")
 			active = TRUE //Defined in code/modules/spells/spell.dm
 		else

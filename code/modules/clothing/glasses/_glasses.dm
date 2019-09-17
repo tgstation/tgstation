@@ -192,7 +192,7 @@
 	icon_state = "sun"
 	item_state = "sunglasses"
 	darkness_view = 1
-	flash_protect = 1
+	flash_protect = FLASH_PROTECTION_FLASH
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 	dog_fashion = /datum/dog_fashion/head
