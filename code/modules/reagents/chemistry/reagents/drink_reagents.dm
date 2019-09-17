@@ -206,10 +206,10 @@
 			M.reagents.remove_reagent(type, volume - 10)
 			to_chat(M, "<span class='warning'>The excess milk is dripping off your bones!</span>")
 		M.heal_bodypart_damage(1,1, 0)
-		. = 1
+		. = TRUE
 	if(M.getBruteLoss() && prob(20))
 		M.heal_bodypart_damage(1,0, 0)
-		. = 1
+		. = TRUE
 	if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
 		holder.remove_reagent(/datum/reagent/consumable/capsaicin, 2)
 	..()
