@@ -147,7 +147,7 @@
 /datum/chemical_reaction/toxins_special
 	name = "Toxins Special"
 	id = /datum/chemical_reaction/toxins_special
-	results = list(/datum/chemical_reaction/toxins_special = 5)
+	results = list(/datum/reagent/consumable/ethanol/toxins_special = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 2, /datum/reagent/consumable/ethanol/vermouth = 1, /datum/reagent/toxin/plasma = 2)
 
 /datum/chemical_reaction/beepsky_smash
@@ -178,7 +178,7 @@
 	name = "Green Beer"
 	id = /datum/reagent/consumable/ethanol/beer/green
 	results = list(/datum/reagent/consumable/ethanol/beer/green = 10)
-	required_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/green = 1, /datum/reagent/consumable/ethanol/beer = 10)
+	required_reagents = list(/datum/reagent/colorful_reagent/powder/green = 1, /datum/reagent/consumable/ethanol/beer = 10)
 
 /datum/chemical_reaction/hooch
 	name = "Hooch"
@@ -781,3 +781,9 @@
 	id = /datum/reagent/consumable/red_queen
 	results = list(/datum/reagent/consumable/red_queen = 10)
 	required_reagents = list(/datum/reagent/consumable/tea = 6, /datum/reagent/mercury = 2, /datum/reagent/consumable/blackpepper = 1, /datum/reagent/growthserum = 1)
+
+/datum/chemical_reaction/mauna_loa
+	name = "Mauna Loa"
+	id = /datum/reagent/consumable/ethanol/mauna_loa
+	results = list(/datum/reagent/consumable/ethanol/mauna_loa = 5)
+	required_reagents = list(/datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/ethanol/kahlua = 1, /datum/reagent/consumable/ethanol/bahama_mama = 2)

@@ -13,8 +13,8 @@ Industrial extracts:
 	var/itemamount = 1 //How many items to spawn
 
 /obj/item/slimecross/industrial/examine(mob/user)
-	..()
-	to_chat(user, "It currently has [plasmaabsorbed] units of plasma floating inside the outer shell, out of [plasmarequired] units.")
+	. = ..()
+	. += "It currently has [plasmaabsorbed] units of plasma floating inside the outer shell, out of [plasmarequired] units."
 
 /obj/item/slimecross/industrial/proc/do_after_spawn(obj/item/spawned)
 	return
@@ -40,12 +40,12 @@ Industrial extracts:
 		plasmaabsorbed += 1
 
 	if(plasmaabsorbed >= plasmarequired)
-		playsound(src, 'sound/effects/attackblob.ogg', 50, 1)
+		playsound(src, 'sound/effects/attackblob.ogg', 50, TRUE)
 		plasmaabsorbed -= plasmarequired
 		for(var/i = 0, i < itemamount, i++)
 			do_after_spawn(new itempath(get_turf(src)))
 	else if(IsWorking)
-		playsound(src, 'sound/effects/bubbles.ogg', 5, 1)
+		playsound(src, 'sound/effects/bubbles.ogg', 5, TRUE)
 	if(IsWorking)
 		icon_state = "industrial"
 	else

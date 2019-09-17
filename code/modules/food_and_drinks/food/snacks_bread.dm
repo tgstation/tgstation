@@ -5,7 +5,7 @@
 	slices_num = 5
 	tastes = list("bread" = 10)
 	foodtype = GRAIN
-
+	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/breadslice
 	icon = 'icons/obj/food/burgerbread.dmi'
@@ -16,6 +16,7 @@
 	slot_flags = ITEM_SLOT_HEAD
 	customfoodfilling = 0 //to avoid infinite bread-ception
 	foodtype = GRAIN
+	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/store/bread/plain
 	name = "bread"
@@ -217,6 +218,8 @@
 	species_exception = fried.species_exception
 	item_flags = fried.item_flags
 	obj_flags = fried.obj_flags
+	inhand_x_dimension = fried.inhand_x_dimension
+	inhand_y_dimension = fried.inhand_y_dimension
 
 	if(istype(fried, /obj/item/reagent_containers/food/snacks))
 		fried.reagents.trans_to(src, fried.reagents.total_volume)
@@ -256,17 +259,6 @@
 	filling_color = color
 	foodtype |= FRIED
 
-/obj/item/reagent_containers/food/snacks/butteredtoast
-	name = "buttered toast"
-	desc = "Butter lightly spread over a piece of toast."
-	icon = 'icons/obj/food/food.dmi'
-	icon_state = "butteredtoast"
-	bitesize = 3
-	filling_color = "#FFA500"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 4)
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
-	tastes = list("butter" = 1, "toast" = 1)
-
 /obj/item/reagent_containers/food/snacks/butterbiscuit
 	name = "butter biscuit"
 	desc = "Well butter my biscuit!"
@@ -276,6 +268,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("butter" = 1, "biscuit" = 1)
+	foodtype = GRAIN | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/butterdog
 	name = "butterdog"

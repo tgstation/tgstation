@@ -140,7 +140,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
                         if(ismob(A))
                             var/mob/M = A
                             if(M.mind)
-                                to_chat(M, "<span class='warning'>As the sphere breaks apart, you're suddenly ejected into the depths of space!")
+                                to_chat(M, "<span class='warning'>As the sphere breaks apart, you're suddenly ejected into the depths of space!</span>")
                         var/max = world.maxx-TRANSITIONEDGE
                         var/min = 1+TRANSITIONEDGE
                         var/list/possible_transtitons = list()
@@ -263,7 +263,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 /turf/closed/indestructible/hoteldoor/attack_paw(mob/user)
     promptExit(user)
 
-/turf/closed/indestructible/hoteldoor/attack_hulk(mob/living/carbon/human/user, does_attack_animation)
+/turf/closed/indestructible/hoteldoor/attack_hulk(mob/living/carbon/human/user)
     promptExit(user)
 
 /turf/closed/indestructible/hoteldoor/attack_larva(mob/user)
@@ -452,7 +452,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     id_access_list = list(ACCESS_AWAY_GENERIC3, ACCESS_RESEARCH)
     instant = TRUE
     id = /obj/item/card/id/silver
-    uniform = /obj/item/clothing/under/rank/research_director
+    uniform = /obj/item/clothing/under/rank/rnd/research_director
     shoes = /obj/item/clothing/shoes/sneakers/brown
     back = /obj/item/storage/backpack/satchel/leather
     suit = /obj/item/clothing/suit/toggle/labcoat

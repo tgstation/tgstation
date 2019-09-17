@@ -106,9 +106,9 @@
 
 /obj/item/tk_grab/examine(user)
 	if (focus)
-		focus.examine(user)
+		return focus.examine(user)
 	else
-		..()
+		return ..()
 
 /obj/item/tk_grab/attack_self(mob/user)
 	if(!focus)
@@ -151,7 +151,7 @@
 /proc/tkMaxRangeCheck(mob/user, atom/target)
 	var/d = get_dist(user, target)
 	if(d > TK_MAXRANGE)
-		to_chat(user, "<span class ='warning'>Your mind won't reach that far.</span>")
+		to_chat(user, "<span class='warning'>Your mind won't reach that far.</span>")
 		return
 	return TRUE
 

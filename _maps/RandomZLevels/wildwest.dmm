@@ -50,9 +50,7 @@
 /turf/open/floor/circuit/off,
 /area/awaymission/wildwest/vault)
 "an" = (
-/turf/open/floor/plasteel/cult{
-	name = "engraved floor"
-	},
+/turf/open/floor/plasteel/cult,
 /area/awaymission/wildwest/vault)
 "ao" = (
 /turf/open/floor/circuit/green/off,
@@ -162,9 +160,7 @@
 /area/awaymission/wildwest/vault)
 "aL" = (
 /obj/item/paper/fluff/awaymissions/wildwest/grinder,
-/turf/open/floor/plasteel/cult{
-	name = "engraved floor"
-	},
+/turf/open/floor/plasteel/cult,
 /area/awaymission/wildwest/vault)
 "aM" = (
 /turf/closed/mineral/silver,
@@ -174,9 +170,7 @@
 /area/awaymission/wildwest/mines)
 "aO" = (
 /obj/effect/mob_spawn/human/corpse/syndicatecommando,
-/turf/open/floor/plasteel/cult{
-	name = "engraved floor"
-	},
+/turf/open/floor/plasteel/cult,
 /area/awaymission/wildwest/vault)
 "aP" = (
 /obj/effect/decal/cleanable/blood/splatter,
@@ -462,7 +456,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "bU" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -470,7 +464,7 @@
 	},
 /area/awaymission/wildwest/mines)
 "bV" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -681,7 +675,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cE" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -816,13 +810,13 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "da" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "db" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -1596,7 +1590,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "fv" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -1618,7 +1612,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/wildwest/mines)
 "fx" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -1771,7 +1765,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "fT" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -1852,7 +1846,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "gh" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -1912,7 +1906,7 @@
 /area/awaymission/wildwest/mines)
 "gu" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},

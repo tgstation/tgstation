@@ -33,8 +33,8 @@
 /obj/item/survivalcapsule/examine(mob/user)
 	. = ..()
 	get_template()
-	to_chat(user, "This capsule has the [template.name] stored.")
-	to_chat(user, template.description)
+	. += "This capsule has the [template.name] stored."
+	. += template.description
 
 /obj/item/survivalcapsule/attack_self()
 	//Can't grab when capsule is New() because templates aren't loaded then
@@ -57,7 +57,7 @@
 			used = FALSE
 			return
 
-		playsound(src, 'sound/effects/phasein.ogg', 100, 1)
+		playsound(src, 'sound/effects/phasein.ogg', 100, TRUE)
 
 		var/turf/T = deploy_location
 		if(!is_mining_level(T.z)) //only report capsules away from the mining/lavaland level
@@ -67,10 +67,17 @@
 		new /obj/effect/particle_effect/smoke(get_turf(src))
 		qdel(src)
 
+//Non-default pods
+
 /obj/item/survivalcapsule/luxury
 	name = "luxury bluespace shelter capsule"
 	desc = "An exorbitantly expensive luxury suite stored within a pocket of bluespace."
 	template_id = "shelter_beta"
+
+/obj/item/survivalcapsule/luxuryelite
+	name = "luxury elite bar capsule"
+	desc = "A luxury bar in a capsule. Bartender required and not included."
+	template_id = "shelter_charlie"
 
 //Pod objects
 
@@ -151,13 +158,6 @@
 /obj/machinery/stasis/survival_pod/update_icon()
 	return
 
-//NanoMed
-/obj/machinery/vending/wallmed/survival_pod
-	name = "survival pod medical supply"
-	desc = "Wall-mounted Medical Equipment dispenser. This one seems just a tiny bit smaller."
-	refill_canister = null
-	onstation = FALSE
-
 //Computer
 /obj/item/gps/computer
 	name = "pod computer"
@@ -168,11 +168,12 @@
 	pixel_y = -32
 
 /obj/item/gps/computer/wrench_act(mob/living/user, obj/item/I)
+	..()
 	if(flags_1 & NODECONSTRUCT_1)
 		return TRUE
 
 	user.visible_message("<span class='warning'>[user] disassembles [src].</span>",
-		"<span class='notice'>You start to disassemble [src]...</span>", "You hear clanking and banging noises.")
+		"<span class='notice'>You start to disassemble [src]...</span>", "<span class='hear'>You hear clanking and banging noises.</span>")
 	if(I.use_tool(src, user, 20, volume=50))
 		new /obj/item/gps(loc)
 		qdel(src)
@@ -247,11 +248,12 @@
 	qdel(src)
 
 /obj/structure/fans/wrench_act(mob/living/user, obj/item/I)
+	..()
 	if(flags_1 & NODECONSTRUCT_1)
 		return TRUE
 
 	user.visible_message("<span class='warning'>[user] disassembles [src].</span>",
-		"<span class='notice'>You start to disassemble [src]...</span>", "You hear clanking and banging noises.")
+		"<span class='notice'>You start to disassemble [src]...</span>", "<span class='hear'>You hear clanking and banging noises.</span>")
 	if(I.use_tool(src, user, 20, volume=50))
 		deconstruct()
 	return TRUE

@@ -236,7 +236,7 @@
 		if(usr)
 			query.show_next_to_key = usr.ckey
 		waiting_queue += query
-		if(query.options && SDQL2_OPTION_SEQUENTIAL)
+		if(query.options & SDQL2_OPTION_SEQUENTIAL)
 			sequential = TRUE
 
 	if(sequential) //Start first one

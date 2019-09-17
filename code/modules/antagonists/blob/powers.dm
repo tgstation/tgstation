@@ -71,7 +71,7 @@
 		var/list/nodes = list()
 		for(var/i in 1 to GLOB.blob_nodes.len)
 			var/obj/structure/blob/node/B = GLOB.blob_nodes[i]
-			nodes["Blob Node #[i] ([B.overmind ? "[B.overmind.blobstrain.name]":"No Strain"])"] = B
+			nodes["Blob Node #[i] ([get_area_name(B)])"] = B
 		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") in nodes
 		var/obj/structure/blob/node/chosen_node = nodes[node_name]
 		if(chosen_node)
@@ -175,7 +175,7 @@
 		B.obj_integrity = min(B.obj_integrity, B.max_integrity)
 		B.update_icon()
 		B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
-		playsound(B.loc, 'sound/effects/splat.ogg', 50, 1)
+		playsound(B.loc, 'sound/effects/splat.ogg', 50, TRUE)
 		var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
 		flick("blobbernaut_produce", blobber)
 		B.naut = blobber
@@ -296,7 +296,7 @@
 				OB = pick(diagonalblobs)
 				if(attacksuccess)
 					OB.blob_attack_animation(T, src)
-					playsound(OB, 'sound/effects/splat.ogg', 50, 1)
+					playsound(OB, 'sound/effects/splat.ogg', 50, TRUE)
 					add_points(BLOB_ATTACK_REFUND)
 				else
 					add_points(BLOB_SPREAD_COST) //if we're attacking diagonally and didn't hit anything, refund
@@ -326,7 +326,7 @@
 	set category = "Blob"
 	set name = "Blob Broadcast"
 	set desc = "Speak with your blob spores and blobbernauts as your mouthpieces."
-	var/speak_text = input(src, "What would you like to say with your minions?", "Blob Broadcast", null) as text
+	var/speak_text = input(src, "What would you like to say with your minions?", "Blob Broadcast", null) as text|null
 	if(!speak_text)
 		return
 	else

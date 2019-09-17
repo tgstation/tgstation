@@ -63,4 +63,9 @@
 #define MOVESPEED_ID_SLAUGHTER                          "SLAUGHTER"
 #define MOVESPEED_ID_DIE_OF_FATE                        "DIE_OF_FATE"
 
-#define MOVESPEED_ID_SHOVE 								"SHOVE"
+#define MOVESPEED_ID_SHOVE                              "SHOVE"
+#define MOVESPEED_ID_BULKY_DRAGGING                     "BULKY_DRAG"
+#define MOVESPEED_ID_HUMAN_CARRYING                     "HUMAN_CARRY"
+#define MOVESPEED_ID_SHRINK_RAY							"SHRUNKEN_SPEED_MODIFIER"
+#define MOVESPEED_ID_PEPPER_SPRAY                       "PEPPER_SPRAYED"
+

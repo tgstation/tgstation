@@ -21,7 +21,7 @@
 	growthstages = 4
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
-	reagents_add = list(/datum/reagent/medicine/morphine = 0.35, /datum/reagent/medicine/charcoal = 0.35, /datum/reagent/consumable/nutriment = 0)
+	reagents_add = list(/datum/reagent/medicine/morphine = 0.35, /datum/reagent/medicine/C2/multiver = 0.35, /datum/reagent/consumable/nutriment = 0)
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/reishi
 	seed = /obj/item/seeds/reishi
@@ -191,6 +191,7 @@
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
+	mutatelist = list(/obj/item/seeds/chanterelle/jupitercup)
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle
 	seed = /obj/item/seeds/chanter
@@ -199,6 +200,34 @@
 	icon_state = "chanterelle"
 	filling_color = "#FFA500"
 
+//Jupiter Cup
+/obj/item/seeds/chanterelle/jupitercup
+	name = "pack of jupiter cup mycelium"
+	desc = "This mycelium grows into jupiter cups. Zeus would be envious at the power at your fingertips."
+	icon_state = "mycelium-jupitercup"
+	species = "jupitercup"
+	plantname = "Jupiter Cups"
+	product = /obj/item/reagent_containers/food/snacks/grown/mushroom/jupitercup
+	lifespan = 40
+	production = 4
+	endurance = 8
+	yield = 4
+	growthstages = 2
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/reagent/liquidelectricity, /datum/plant_gene/trait/plant_type/carnivory)
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
+
+/obj/item/seeds/chanterelle/jupitercup/Initialize()
+	..()
+	unset_mutability(/datum/plant_gene/reagent/liquidelectricity, PLANT_GENE_EXTRACTABLE)
+	unset_mutability(/datum/plant_gene/trait/plant_type/carnivory, PLANT_GENE_REMOVABLE)
+
+/obj/item/reagent_containers/food/snacks/grown/mushroom/jupitercup
+	seed = /obj/item/seeds/chanterelle/jupitercup
+	name = "jupiter cup"
+	desc = "A strange red mushroom, its surface is moist and slick. You wonder how many tiny worms have met their fate inside."
+	icon_state = "jupitercup"
+	filling_color = "#B5003D"
 
 // Glowshroom
 /obj/item/seeds/glowshroom
@@ -305,67 +334,3 @@
 	. = ..()
 	if(.)
 		investigate_log("was planted by [key_name(user)] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
-
-//// LAVALAND MUSHROOMS ////
-
-// Bracket (Shaving mushroom)
-
-/obj/item/seeds/lavaland
-	name = "lavaland seeds"
-	desc = "You should never see this."
-	lifespan = 50
-	endurance = 25
-	maturation = 7
-	production = 4
-	yield = 4
-	potency = 15
-	growthstages = 3
-	rarity = 20
-	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
-	resistance_flags = FIRE_PROOF
-
-/obj/item/seeds/lavaland/polypore
-	name = "pack of polypore mycelium"
-	desc = "This mycelium grows into bracket mushrooms, also known as polypores. Woody and firm, shaft miners often use them for makeshift crafts."
-	icon_state = "mycelium-polypore"
-	species = "polypore"
-	plantname = "Polypore Mushrooms"
-	product = /obj/item/reagent_containers/food/snacks/grown/ash_flora/shavings
-	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
-	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
-
-// Porcini (Leafy mushroom)
-
-/obj/item/seeds/lavaland/porcini
-	name = "pack of porcini mycelium"
-	desc = "This mycelium grows into Boletus edulus, also known as porcini. Native to the late Earth, but discovered on Lavaland. Has culinary, medicinal and relaxant effects."
-	icon_state = "mycelium-porcini"
-	species = "porcini"
-	plantname = "Porcini Mushrooms"
-	product = /obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_leaf
-	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
-	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
-
-// Inocybe (Mushroom caps)
-
-/obj/item/seeds/lavaland/inocybe
-	name = "pack of inocybe mycelium"
-	desc = "This mycelium grows into an inocybe mushroom, a species of Lavaland origin with hallucinatory and toxic effects."
-	icon_state = "mycelium-inocybe"
-	species = "inocybe"
-	plantname = "Inocybe Mushrooms"
-	product = /obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_cap
-	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
-	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
-
-// Embershroom (Mushroom stem)
-
-/obj/item/seeds/lavaland/ember
-	name = "pack of embershroom mycelium"
-	desc = "This mycelium grows into embershrooms, a species of bioluminescent mushrooms native to Lavaland."
-	icon_state = "mycelium-ember"
-	species = "ember"
-	plantname = "Embershroom Mushrooms"
-	product = /obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_stem
-	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/glow)
-	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'

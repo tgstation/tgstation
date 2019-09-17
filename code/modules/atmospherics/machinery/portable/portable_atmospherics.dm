@@ -100,10 +100,10 @@
 		replace_tank(user, TRUE)
 
 /obj/machinery/portable_atmospherics/examine(mob/user)
-	..()
+	. = ..()
 	if(holding)
-		to_chat(user, "<span class='notice'>\The [src] contains [holding]. Alt-click [src] to remove it.</span>")
-		to_chat(user, "<span class='notice'>Click [src] with another gas tank to hot swap [holding].</span>")
+		. += "<span class='notice'>\The [src] contains [holding]. Alt-click [src] to remove it.</span>"+\
+			"<span class='notice'>Click [src] with another gas tank to hot swap [holding].</span>"
 
 /obj/machinery/portable_atmospherics/proc/replace_tank(mob/living/user, close_valve, obj/item/tank/new_tank)
 	if(holding)
@@ -134,7 +134,7 @@
 				user.visible_message( \
 					"[user] disconnects [src].", \
 					"<span class='notice'>You unfasten [src] from the port.</span>", \
-					"<span class='italics'>You hear a ratchet.</span>")
+					"<span class='hear'>You hear a ratchet.</span>")
 				update_icon()
 				return
 			else
@@ -149,7 +149,7 @@
 				user.visible_message( \
 					"[user] connects [src].", \
 					"<span class='notice'>You fasten [src] to the port.</span>", \
-					"<span class='italics'>You hear a ratchet.</span>")
+					"<span class='hear'>You hear a ratchet.</span>")
 				update_icon()
 	else
 		return ..()

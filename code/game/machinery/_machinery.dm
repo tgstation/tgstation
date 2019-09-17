@@ -105,6 +105,8 @@ Class Procs:
 	var/active_power_usage = 0
 	var/power_channel = EQUIP
 		//EQUIP,ENVIRON or LIGHT
+	var/wire_compatible = FALSE
+
 	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
 	var/panel_open = FALSE
 	var/state_open = FALSE
@@ -113,12 +115,14 @@ Class Procs:
 	var/atom/movable/occupant = null
 	var/speed_process = FALSE // Process as fast as possible?
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
-	var/damage_deflection = 0
 
 	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
 	var/fair_market_price = 69
 	var/market_verb = "Customer"
 	var/payment_department = ACCOUNT_ENG
+
+	var/ui_x	//For storing and overriding ui dimensions
+	var/ui_y
 
 /obj/machinery/Initialize()
 	if(!armor)
@@ -134,11 +138,16 @@ Class Procs:
 		START_PROCESSING(SSmachines, src)
 	else
 		START_PROCESSING(SSfastprocess, src)
-	power_change()
-	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/power_change)
 
 	if (occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/LateInitialize()
+	. = ..()
+	power_change()
+	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/power_change)
 
 /obj/machinery/Destroy()
 	GLOB.machines.Remove(src)
@@ -366,8 +375,11 @@ Class Procs:
 	M.icon_state = "box_1"
 
 /obj/machinery/obj_break(damage_flag)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
 		stat |= BROKEN
+		SEND_SIGNAL(src, COMSIG_MACHINERY_BROKEN, damage_flag)
+		update_icon()
+		return TRUE
 
 /obj/machinery/contents_explosion(severity, target)
 	if(occupant)
@@ -378,11 +390,6 @@ Class Procs:
 		occupant = null
 		update_icon()
 		updateUsrDialog()
-
-/obj/machinery/run_obj_armor(damage_amount, damage_type, damage_flag = NONE, attack_dir)
-	if(damage_flag == "melee" && damage_amount < damage_deflection)
-		return 0
-	return ..()
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/I)
 	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_SCREWDRIVER)
@@ -395,8 +402,8 @@ Class Procs:
 			panel_open = FALSE
 			icon_state = icon_state_closed
 			to_chat(user, "<span class='notice'>You close the maintenance hatch of [src].</span>")
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/I)
 	if(panel_open && I.tool_behaviour == TOOL_WRENCH)
@@ -425,7 +432,8 @@ Class Procs:
 		if(I.use_tool(src, user, time, extra_checks = CALLBACK(src, .proc/unfasten_wrench_check, prev_anchored, user)))
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
 			setAnchored(!anchored)
-			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+			SEND_SIGNAL(src, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, anchored)
 			return SUCCESSFUL_UNFASTEN
 		return FAILED_UNFASTEN
 	return CANT_UNFASTEN
@@ -448,7 +456,7 @@ Class Procs:
 			var/obj/item/circuitboard/machine/CB = locate(/obj/item/circuitboard/machine) in component_parts
 			var/P
 			if(W.works_from_distance)
-				display_parts(user)
+				to_chat(user, display_parts(user))
 			for(var/obj/item/A in component_parts)
 				for(var/D in CB.req_components)
 					if(ispath(A.type, D))
@@ -476,34 +484,36 @@ Class Procs:
 							break
 			RefreshParts()
 		else
-			display_parts(user)
+			to_chat(user, display_parts(user))
 		if(shouldplaysound)
 			W.play_rped_sound()
 		return TRUE
 	return FALSE
 
 /obj/machinery/proc/display_parts(mob/user)
-	to_chat(user, "<span class='notice'>It contains the following parts:</span>")
+	. = list()
+	. += "<span class='notice'>It contains the following parts:</span>"
 	for(var/obj/item/C in component_parts)
-		to_chat(user, "<span class='notice'>[icon2html(C, user)] \A [C].</span>")
+		. += "<span class='notice'>[icon2html(C, user)] \A [C].</span>"
+	. = jointext(., "")
 
 /obj/machinery/examine(mob/user)
-	..()
+	. = ..()
 	if(stat & BROKEN)
-		to_chat(user, "<span class='notice'>It looks broken and non-functional.</span>")
+		. += "<span class='notice'>It looks broken and non-functional.</span>"
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(resistance_flags & ON_FIRE)
-			to_chat(user, "<span class='warning'>It's on fire!</span>")
+			. += "<span class='warning'>It's on fire!</span>"
 		var/healthpercent = (obj_integrity/max_integrity) * 100
 		switch(healthpercent)
 			if(50 to 99)
-				to_chat(user,  "It looks slightly damaged.")
+				. += "It looks slightly damaged."
 			if(25 to 50)
-				to_chat(user,  "It appears heavily damaged.")
+				. += "It appears heavily damaged."
 			if(0 to 25)
-				to_chat(user,  "<span class='warning'>It's falling apart!</span>")
+				. += "<span class='warning'>It's falling apart!</span>"
 	if(user.research_scanner && component_parts)
-		display_parts(user)
+		. += display_parts(user, TRUE)
 
 //called on machinery construction (i.e from frame to machinery) but not on initialization
 /obj/machinery/proc/on_construction()

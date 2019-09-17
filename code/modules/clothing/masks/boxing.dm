@@ -18,9 +18,11 @@
 	item_state = "luchag"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_SMALL
+	modifies_speech = TRUE
 
-/obj/item/clothing/mask/luchador/speechModification(message)
-	if(copytext(message, 1, 2) != "*")
+/obj/item/clothing/mask/luchador/handle_speech(datum/source, list/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*")
 		message = replacetext(message, "captain", "CAPITÁN")
 		message = replacetext(message, "station", "ESTACIÓN")
 		message = replacetext(message, "sir", "SEÑOR")
@@ -40,7 +42,7 @@
 		message = uppertext(message)	//Things end up looking better this way (no mixed cases), and it fits the macho wrestler image.
 		if(prob(25))
 			message += " OLE!"
-	return message
+	speech_args[SPEECH_MESSAGE] = message
 
 /obj/item/clothing/mask/luchador/tecnicos
 	name = "Tecnicos Mask"
@@ -62,4 +64,3 @@
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_SMALL
-

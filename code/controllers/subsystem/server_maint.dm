@@ -8,6 +8,7 @@ SUBSYSTEM_DEF(server_maint)
 	init_order = INIT_ORDER_SERVER_MAINT
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	var/list/currentrun
+	var/cleanup_ticker = 0
 
 /datum/controller/subsystem/server_maint/PreInit()
 	world.hub_password = "" //quickly! before the hubbies see us.
@@ -22,6 +23,32 @@ SUBSYSTEM_DEF(server_maint)
 		if(listclearnulls(GLOB.clients))
 			log_world("Found a null in clients list!")
 		src.currentrun = GLOB.clients.Copy()
+
+		switch (cleanup_ticker) // do only one of these at a time, once per 5 fires
+			if (0)
+				if(listclearnulls(GLOB.player_list))
+					log_world("Found a null in player_list!")
+				cleanup_ticker++
+			if (5)
+				if(listclearnulls(GLOB.mob_list))
+					log_world("Found a null in mob_list!")
+				cleanup_ticker++
+			if (10)
+				if(listclearnulls(GLOB.alive_mob_list))
+					log_world("Found a null in alive_mob_list!")
+				cleanup_ticker++
+			if (15)
+				if(listclearnulls(GLOB.suicided_mob_list))
+					log_world("Found a null in suicided_mob_list!")
+				cleanup_ticker++
+			if (20)
+				if(listclearnulls(GLOB.dead_mob_list))
+					log_world("Found a null in dead_mob_list!")
+				cleanup_ticker++
+			if (25)
+				cleanup_ticker = 0
+			else
+				cleanup_ticker++
 
 	var/list/currentrun = src.currentrun
 	var/round_started = SSticker.HasRoundStarted()

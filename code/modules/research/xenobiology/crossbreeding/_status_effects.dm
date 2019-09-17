@@ -64,10 +64,9 @@
 	var/interrupted = FALSE
 	var/mob/target
 	var/icon/bluespace
-	var/datum/weakref/redirect_component
 
 /datum/status_effect/slimerecall/on_apply()
-	redirect_component = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/resistField))))
+	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/resistField)
 	to_chat(owner, "<span class='danger'>You feel a sudden tug from an unknown force, and feel a pull to bluespace!</span>")
 	to_chat(owner, "<span class='notice'>Resist if you wish avoid the force!</span>")
 	bluespace = icon('icons/effects/effects.dmi',"chronofield")
@@ -78,8 +77,7 @@
 	interrupted = TRUE
 	owner.remove_status_effect(src)
 /datum/status_effect/slimerecall/on_remove()
-	qdel(redirect_component.resolve())
-	redirect_component = null
+	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
 	owner.cut_overlay(bluespace)
 	if(interrupted || !ismob(target))
 		to_chat(owner, "<span class='warning'>The bluespace tug fades away, and you feel that the force has passed you by.</span>")
@@ -98,10 +96,9 @@
 	duration = -1 //Will remove self when block breaks.
 	alert_type = /obj/screen/alert/status_effect/freon/stasis
 	var/obj/structure/ice_stasis/cube
-	var/datum/weakref/redirect_component
 
 /datum/status_effect/frozenstasis/on_apply()
-	redirect_component = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/breakCube))))
+	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/breakCube)
 	cube = new /obj/structure/ice_stasis(get_turf(owner))
 	owner.forceMove(cube)
 	owner.status_flags |= GODMODE
@@ -118,8 +115,7 @@
 	if(cube)
 		qdel(cube)
 	owner.status_flags &= ~GODMODE
-	qdel(redirect_component.resolve())
-	redirect_component = null
+	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
 
 /datum/status_effect/slime_clone
 	id = "slime_cloned"

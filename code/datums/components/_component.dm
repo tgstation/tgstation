@@ -1,3 +1,13 @@
+/**
+  * # Component
+  *
+  * The component datum
+  *
+  * a component should be a single standalone unit
+  * of functionality, that works by receiving signals from it's parent
+  * object to provide some single functionality (i.e a slippery component)
+  * that makes the object it's attached to cause people to slip over
+  */
 /datum/component
 	var/dupe_mode = COMPONENT_DUPE_HIGHLANDER
 	var/dupe_type
@@ -6,7 +16,12 @@
 	//At a minimum RegisterWithParent and UnregisterFromParent should be used
 	//Make sure you also implement PostTransfer for any post transfer handling
 	var/can_transfer = FALSE
-
+/**
+  * Create a new component
+  *
+  * Arguments:
+  * * datum/P the parent datum this component reacts to signals from
+  */
 /datum/component/New(datum/P, ...)
 	parent = P
 	var/list/arguments = args.Copy(2)
@@ -52,6 +67,13 @@
 	RegisterWithParent()
 
 // If you want/expect to be moving the component around between parents, use this to register on the parent for signals
+/**
+  * Register the components signals with the parent object
+  *
+  * Use this proc to register signals with your parent object
+  * this is called when an object is created, or is transferred
+  * between objects
+  */
 /datum/component/proc/RegisterWithParent()
 	return
 
@@ -84,10 +106,30 @@
 
 	UnregisterFromParent()
 
+/**
+  * Unregister signals from our parent object
+  *
+  * Use this proc to unregister for signals from your parent object
+  * this is called when an object is destroyed, or is transferred
+  * between objects
+  * *
+  */
 /datum/component/proc/UnregisterFromParent()
 	return
 
-/datum/proc/RegisterSignal(datum/target, sig_type_or_types, proc_or_callback, override = FALSE)
+/**
+  * Register to listen for a signal from the passed in target
+  *
+  * This sets up a listening relationship such that when the target object emits a signal
+  * the source datum this proc is called upon, will recieve a callback to the given proctype
+  *
+  * Arguments:
+  * * datum/target The target to listen for signals from
+  * * sig_type_or_types Either a string signal name, or a list of signal names (strings)
+  * * proctype The proc to call back when the signal is emitted
+  * * override TODO, chase ninja to ask
+  */
+/datum/proc/RegisterSignal(datum/target, sig_type_or_types, proctype, override = FALSE)
 	if(QDELETED(src) || QDELETED(target))
 		return
 
@@ -100,15 +142,12 @@
 	if(!lookup)
 		target.comp_lookup = lookup = list()
 
-	if(!istype(proc_or_callback, /datum/callback)) //if it wasnt a callback before, it is now
-		proc_or_callback = CALLBACK(src, proc_or_callback)
-
 	var/list/sig_types = islist(sig_type_or_types) ? sig_type_or_types : list(sig_type_or_types)
 	for(var/sig_type in sig_types)
 		if(!override && procs[target][sig_type])
 			stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
 
-		procs[target][sig_type] = proc_or_callback
+		procs[target][sig_type] = proctype
 
 		if(!lookup[sig_type]) // Nothing has registered here yet
 			lookup[sig_type] = src
@@ -121,7 +160,15 @@
 			lookup[sig_type][src] = TRUE
 
 	signal_enabled = TRUE
-
+/**
+  * Stop listening to a given signal from target
+  *
+  * Breaks the relationship between target and source datum, removing the callback when the signal fires
+  *
+  * Arguments:
+  * * datum/target Datum to stop listening to signals from
+  * * sig_typeor_types Signal string key or list of signal keys to stop listening to specifically
+  */
 /datum/proc/UnregisterSignal(datum/target, sig_type_or_types)
 	var/list/lookup = target.comp_lookup
 	if(!signal_procs || !signal_procs[target] || !lookup)
@@ -153,10 +200,20 @@
 
 /datum/component/proc/InheritComponent(datum/component/C, i_am_original)
 	return
-
+/**
+  * Callback Just before this component is transferred
+  *
+  * Use this to do any special cleanup you might need to do before being deregged from an object
+  *
+  */
 /datum/component/proc/PreTransfer()
 	return
-
+/**
+  * Callback Just after a component is transferred
+  *
+  * Use this to do any special setup you need to do after being moved to a new object
+  *
+  */
 /datum/component/proc/PostTransfer()
 	return COMPONENT_INCOMPATIBLE //Do not support transfer by default as you must properly support it
 
@@ -175,17 +232,27 @@
 		var/datum/C = target
 		if(!C.signal_enabled)
 			return NONE
-		var/datum/callback/CB = C.signal_procs[src][sigtype]
-		return CB.InvokeAsync(arglist(arguments))
+		var/proctype = C.signal_procs[src][sigtype]
+		return NONE | CallAsync(C, proctype, arguments)
 	. = NONE
 	for(var/I in target)
 		var/datum/C = I
 		if(!C.signal_enabled)
 			continue
-		var/datum/callback/CB = C.signal_procs[src][sigtype]
-		. |= CB.InvokeAsync(arglist(arguments))
+		var/proctype = C.signal_procs[src][sigtype]
+		. |= CallAsync(C, proctype, arguments)
 
-/datum/proc/GetComponent(c_type)
+// The type arg is casted so initial works, you shouldn't be passing a real instance into this
+/**
+  * Return any component assigned to this datum of the given type
+  *
+  * Arguments:
+  * * datum/component/c_type The typepath of the component you want to get a reference to
+  */
+/datum/proc/GetComponent(datum/component/c_type)
+	RETURN_TYPE(c_type)
+	if(initial(c_type.dupe_mode) == COMPONENT_DUPE_ALLOWED)
+		stack_trace("GetComponent was called to get a component of which multiple copies could be on an object. This can easily break and should be changed. Type: \[[c_type]\]")
 	var/list/dc = datum_components
 	if(!dc)
 		return null
@@ -205,6 +272,12 @@
 			return C
 	return null
 
+/**
+  * Get all components of a given type that are attached to this datum
+  *
+  * Arguments:
+  * * c_type The component type path
+  */
 /datum/proc/GetComponents(c_type)
 	var/list/dc = datum_components
 	if(!dc)
@@ -265,11 +338,22 @@
 		return new_comp
 	return old_comp
 
+/**
+  * Get existing component of type, or create it and return a reference to it
+  *
+  * Use this if the item needs to exist at the time of this call, but may not have been created before now
+  *
+  * Arguments:
+  * * component_type The typepath of the component to create or return
+  * * ... additional arguments to be passed when creating the component if it does not exist
+  */
 /datum/proc/LoadComponent(component_type, ...)
 	. = GetComponent(component_type)
 	if(!.)
 		return AddComponent(arglist(args))
-
+/**
+  * Remove this component from it's parent
+  */
 /datum/component/proc/RemoveComponent()
 	if(!parent)
 		return
@@ -279,6 +363,14 @@
 	parent = null
 	SEND_SIGNAL(old_parent, COMSIG_COMPONENT_REMOVING, src)
 
+/**
+  * Transfer this component to another parent
+  *
+  * Component is taken from source datum
+  *
+  * Arguments:
+  * * datum/component/target Target datum to transfer to
+  */
 /datum/proc/TakeComponent(datum/component/target)
 	if(!target || target.parent == src)
 		return
@@ -294,7 +386,14 @@
 
 	if(target == AddComponent(target))
 		target._JoinParent()
-
+/**
+  * Transfer all components to target
+  *
+  * All components from source datum are taken
+  *
+  * Arguments:
+  * * /datum/target the target to move the components to
+  */
 /datum/proc/TransferComponents(datum/target)
 	var/list/dc = datum_components
 	if(!dc)
@@ -308,6 +407,6 @@
 		var/datum/component/C = comps
 		if(C.can_transfer)
 			target.TakeComponent(comps)
-
+///Return the object that is the host of any UI's that this component has
 /datum/component/ui_host()
 	return parent

@@ -46,7 +46,7 @@
 
 	if(do_spin())
 		playsound(usr, "revolver_spin", 30, FALSE)
-		usr.visible_message("[usr] spins [src]'s chamber.", "<span class='notice'>You spin [src]'s chamber.</span>")
+		usr.visible_message("<span class='notice'>[usr] spins [src]'s chamber.</span>", "<span class='notice'>You spin [src]'s chamber.</span>")
 	else
 		verbs -= /obj/item/gun/ballistic/revolver/verb/spin
 
@@ -66,11 +66,11 @@
 	return boolets
 
 /obj/item/gun/ballistic/revolver/examine(mob/user)
-	..()
+	. = ..()
 	var/live_ammo = get_ammo(FALSE, FALSE)
-	to_chat(user, "[live_ammo ? live_ammo : "None"] of those are live rounds.")
+	. += "[live_ammo ? live_ammo : "None"] of those are live rounds."
 	if (current_skin)
-		to_chat(user, "It can be spun with <b>alt+click</b>")
+		. += "It can be spun with <b>alt+click</b>"
 
 /obj/item/gun/ballistic/revolver/detective
 	name = "\improper Colt Detective Special"
@@ -167,8 +167,9 @@
 	var/spun = FALSE
 
 /obj/item/gun/ballistic/revolver/russian/do_spin()
-	..()
-	spun = TRUE
+	. = ..()
+	if(.)
+		spun = TRUE
 
 /obj/item/gun/ballistic/revolver/russian/attackby(obj/item/A, mob/user, params)
 	..()
@@ -218,7 +219,7 @@
 				if(zone == BODY_ZONE_HEAD || zone == BODY_ZONE_PRECISE_EYES || zone == BODY_ZONE_PRECISE_MOUTH)
 					shoot_self(user, affecting)
 				else
-					user.visible_message("<span class='danger'>[user.name] cowardly fires [src] at [user.p_their()] [affecting.name]!</span>", "<span class='userdanger'>You cowardly fire [src] at your [affecting.name]!</span>", "<span class='italics'>You hear a gunshot!</span>")
+					user.visible_message("<span class='danger'>[user.name] cowardly fires [src] at [user.p_their()] [affecting.name]!</span>", "<span class='userdanger'>You cowardly fire [src] at your [affecting.name]!</span>", "<span class='hear'>You hear a gunshot!</span>")
 				chambered = null
 				return
 
@@ -232,7 +233,7 @@
 
 /obj/item/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = BODY_ZONE_HEAD)
 	user.apply_damage(300, BRUTE, affecting)
-	user.visible_message("<span class='danger'>[user.name] fires [src] at [user.p_their()] head!</span>", "<span class='userdanger'>You fire [src] at your head!</span>", "<span class='italics'>You hear a gunshot!</span>")
+	user.visible_message("<span class='danger'>[user.name] fires [src] at [user.p_their()] head!</span>", "<span class='userdanger'>You fire [src] at your head!</span>", "<span class='hear'>You hear a gunshot!</span>")
 
 /obj/item/gun/ballistic/revolver/russian/soul
 	name = "cursed Russian revolver"

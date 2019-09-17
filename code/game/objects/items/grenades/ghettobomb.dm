@@ -56,5 +56,5 @@
 	qdel(src)
 
 /obj/item/grenade/iedcasing/examine(mob/user)
-	..()
-	to_chat(user, "You can't tell when it will explode!")
+	. = ..()
+	. += "You can't tell when it will explode!"

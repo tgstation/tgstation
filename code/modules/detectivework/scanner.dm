@@ -78,7 +78,7 @@
 
 		scanning = 1
 
-		user.visible_message("\The [user] points the [src.name] at \the [A] and performs a forensic scan.")
+		user.visible_message("<span class='notice'>\The [user] points the [src.name] at \the [A] and performs a forensic scan.</span>")
 		to_chat(user, "<span class='notice'>You scan \the [A]. The scanner is now analysing the results...</span>")
 
 
@@ -199,9 +199,9 @@
 	log = list()
 
 /obj/item/detective_scanner/examine(mob/user)
-	..()
+	. = ..()
 	if(LAZYLEN(log) && !scanning)
-		to_chat(user, "<span class='notice'>Alt-click to clear scanner logs.</span>")
+		. += "<span class='notice'>Alt-click to clear scanner logs.</span>"
 
 /obj/item/detective_scanner/proc/displayDetectiveScanResults(mob/living/user)
 	// No need for can-use checks since the action button should do proper checks

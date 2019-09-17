@@ -114,7 +114,7 @@
 	else if(floorturf)
 		target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
 
-	playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+	playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, FALSE)
 	for(var/A in H)
 		var/atom/movable/AM = A
 		AM.forceMove(get_turf(src))
@@ -140,6 +140,7 @@
 
 //welding tool: unfasten and convert to obj/disposalconstruct
 /obj/structure/disposalpipe/welder_act(mob/living/user, obj/item/I)
+	..()
 	if(!can_be_deconstructed(user))
 		return TRUE
 

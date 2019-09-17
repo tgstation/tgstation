@@ -323,7 +323,7 @@ Code:
 
 			if(active1 in GLOB.data_core.general)
 				menu += "Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>"
-				menu += "Sex: [active1.fields["sex"]]<br>"
+				menu += "Gender: [active1.fields["gender"]]<br>"
 				menu += "Age: [active1.fields["age"]]<br>"
 				menu += "Rank: [active1.fields["rank"]]<br>"
 				menu += "Fingerprint: [active1.fields["fingerprint"]]<br>"
@@ -367,7 +367,7 @@ Code:
 
 			if(active1 in GLOB.data_core.general)
 				menu += "Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>"
-				menu += "Sex: [active1.fields["sex"]]<br>"
+				menu += "Gender: [active1.fields["gender"]]<br>"
 				menu += "Age: [active1.fields["age"]]<br>"
 				menu += "Rank: [active1.fields["rank"]]<br>"
 				menu += "Fingerprint: [active1.fields["fingerprint"]]<br>"
@@ -657,14 +657,14 @@ Code:
 			if("botlist")
 				active_bot = null
 			if("summon") //Args are in the correct order, they are stated here just as an easy reminder.
-				active_bot.bot_control(command= "summon", user_turf= get_turf(usr), user_access= host_pda.GetAccess())
+				active_bot.bot_control("summon", usr, host_pda.GetAccess())
 			else //Forward all other bot commands to the bot itself!
-				active_bot.bot_control(command= href_list["op"], user= usr)
+				active_bot.bot_control(href_list["op"], usr)
 
 	if(href_list["mule"]) //MULEbots are special snowflakes, and need different args due to how they work.
 		var/mob/living/simple_animal/bot/mulebot/mule = active_bot
 		if (istype(mule))
-			mule.bot_control(command=href_list["mule"], user=usr, pda=TRUE)
+			mule.bot_control(href_list["mule"], usr, pda=TRUE)
 
 	if(!host_pda)
 		return

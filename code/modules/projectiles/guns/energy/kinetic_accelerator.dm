@@ -26,12 +26,13 @@
 	var/recharge_timerid
 
 /obj/item/gun/energy/kinetic_accelerator/examine(mob/user)
-	..()
+	. = ..()
 	if(max_mod_capacity)
-		to_chat(user, "<b>[get_remaining_mod_capacity()]%</b> mod capacity remaining.")
+		. += "<b>[get_remaining_mod_capacity()]%</b> mod capacity remaining."
+		. += "<span class='info'>You can use a <b>crowbar</b> to remove modules.</span>"
 		for(var/A in get_modkits())
 			var/obj/item/borg/upgrade/modkit/M = A
-			to_chat(user, "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>")
+			. += "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>"
 
 /obj/item/gun/energy/kinetic_accelerator/crowbar_act(mob/living/user, obj/item/I)
 	. = TRUE
@@ -137,7 +138,7 @@
 /obj/item/gun/energy/kinetic_accelerator/proc/reload()
 	cell.give(cell.maxcharge)
 	if(!suppressed)
-		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, TRUE)
 	else
 		to_chat(loc, "<span class='warning'>[src] silently charges up.</span>")
 	update_icon()
@@ -235,8 +236,8 @@
 	var/minebot_exclusive = FALSE
 
 /obj/item/borg/upgrade/modkit/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Occupies <b>[cost]%</b> of mod capacity.</span>")
+	. = ..()
+	. += "<span class='notice'>Occupies <b>[cost]%</b> of mod capacity.</span>"
 
 /obj/item/borg/upgrade/modkit/attackby(obj/item/A, mob/user)
 	if(istype(A, /obj/item/gun/energy/kinetic_accelerator) && !issilicon(user))
@@ -273,7 +274,7 @@
 			if(!user.transferItemToLoc(src, KA))
 				return
 			to_chat(user, "<span class='notice'>You install the modkit.</span>")
-			playsound(loc, 'sound/items/screwdriver.ogg', 100, 1)
+			playsound(loc, 'sound/items/screwdriver.ogg', 100, TRUE)
 			KA.modkits += src
 		else
 			to_chat(user, "<span class='notice'>The modkit you're trying to install would conflict with an already installed modkit. Use a crowbar to remove existing modkits.</span>")

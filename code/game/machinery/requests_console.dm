@@ -69,10 +69,6 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	max_integrity = 300
 	armor = list("melee" = 70, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 
-/obj/machinery/requests_console/power_change()
-	..()
-	update_icon()
-
 /obj/machinery/requests_console/update_icon()
 	if(stat & NOPOWER)
 		set_light(0)
@@ -290,7 +286,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 					emergency = "Medical"
 			if(radio_freq)
 				Radio.set_frequency(radio_freq)
-				Radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq,get_spans(),get_default_language())
+				Radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq)
 				update_icon()
 				addtimer(CALLBACK(src, .proc/clear_emergency), 5 MINUTES)
 
@@ -398,12 +394,12 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	messages += "[header][sending]"
 
 	if(!silenced)
-		playsound(src, 'sound/machines/twobeep_high.ogg', 50, 1)
+		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
 		say(alert)
 
 	if(radio_freq)
 		Radio.set_frequency(radio_freq)
-		Radio.talk_into(src, "[alert]: <i>[message]</i>", radio_freq, get_spans(), get_default_language())
+		Radio.talk_into(src, "[alert]: <i>[message]</i>", radio_freq)
 
 /obj/machinery/requests_console/attackby(obj/item/O, mob/user, params)
 	if(O.tool_behaviour == TOOL_CROWBAR)

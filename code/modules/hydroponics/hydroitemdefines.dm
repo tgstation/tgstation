@@ -9,7 +9,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
-	materials = list(MAT_METAL=30, MAT_GLASS=20)
+	materials = list(/datum/material/iron=30, /datum/material/glass=20)
 
 // *************************************
 // Hydroponics Tools
@@ -57,13 +57,23 @@
 	force = 5
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=50)
+	materials = list(/datum/material/iron=50)
 	attack_verb = list("slashed", "sliced", "cut", "clawed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/cultivator/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is scratching [user.p_their()] back as hard as [user.p_they()] can with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
+
+/obj/item/cultivator/rake
+	name = "rake"
+	icon_state = "rake"
+	w_class = WEIGHT_CLASS_NORMAL
+	attack_verb = list("slashed", "sliced", "bashed", "clawed")
+	hitsound = null
+	materials = null
+	flags_1 = NONE
+	resistance_flags = FLAMMABLE
 
 /obj/item/hatchet
 	name = "hatchet"
@@ -79,7 +89,7 @@
 	throwforce = 15
 	throw_speed = 3
 	throw_range = 4
-	materials = list(MAT_METAL = 15000)
+	materials = list(/datum/material/iron = 15000)
 	attack_verb = list("chopped", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
@@ -90,8 +100,14 @@
 
 /obj/item/hatchet/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(src, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	playsound(src, 'sound/weapons/bladeslice.ogg', 50, TRUE, -1)
 	return (BRUTELOSS)
+
+/obj/item/hatchet/wooden
+	desc = "A crude axe blade upon a short wooden handle."
+	icon_state = "woodhatchet"
+	materials = null
+	flags_1 = NONE
 
 /obj/item/scythe
 	icon_state = "scythe0"
@@ -122,23 +138,23 @@
 		var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 		if(BP)
 			BP.drop_limb()
-			playsound(src,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
+			playsound(src, "desceration" ,50, TRUE, -1)
 	return (BRUTELOSS)
 
 /obj/item/scythe/pre_attack(atom/A, mob/living/user, params)
 	if(swiping || !istype(A, /obj/structure/spacevine) || get_turf(A) == get_turf(user))
 		return ..()
-	else
-		var/turf/user_turf = get_turf(user)
-		var/dir_to_target = get_dir(user_turf, get_turf(A))
-		swiping = TRUE
-		var/static/list/scythe_slash_angles = list(0, 45, 90, -45, -90)
-		for(var/i in scythe_slash_angles)
-			var/turf/T = get_step(user_turf, turn(dir_to_target, i))
-			for(var/obj/structure/spacevine/V in T)
-				if(user.Adjacent(V))
-					melee_attack_chain(user, V)
-		swiping = FALSE
+	var/turf/user_turf = get_turf(user)
+	var/dir_to_target = get_dir(user_turf, get_turf(A))
+	swiping = TRUE
+	var/static/list/scythe_slash_angles = list(0, 45, 90, -45, -90)
+	for(var/i in scythe_slash_angles)
+		var/turf/T = get_step(user_turf, turn(dir_to_target, i))
+		for(var/obj/structure/spacevine/V in T)
+			if(user.Adjacent(V))
+				melee_attack_chain(user, V)
+	swiping = FALSE
+	return TRUE
 
 // *************************************
 // Nutrient defines for hydroponics

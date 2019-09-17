@@ -1,6 +1,3 @@
-#define PILL_STYLE_COUNT 22 //Update this if you add more pill icons or you die
-#define RANDOM_PILL_STYLE 22 //Dont change this one though
-
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
 	desc = "Used to separate chemicals and distribute them in a variety of forms."
@@ -12,6 +9,9 @@
 	idle_power_usage = 20
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_master
+	ui_x = 500
+	ui_y = 550
+
 	var/obj/item/reagent_containers/beaker = null
 	var/obj/item/storage/pill_bottle/bottle = null
 	var/mode = 1
@@ -146,7 +146,7 @@
 		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
 		assets.send(user)
 
-		ui = new(user, src, ui_key, "chem_master", name, 500, 550, master_ui, state)
+		ui = new(user, src, ui_key, "chem_master", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 //Insert our custom spritesheet css link into the html
@@ -166,7 +166,7 @@
 	data["chosenPillStyle"] = chosenPillStyle
 	data["isPillBottleLoaded"] = bottle ? 1 : 0
 	if(bottle)
-		GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
+		var/datum/component/storage/STRB = bottle.GetComponent(/datum/component/storage)
 		data["pillBotContent"] = bottle.contents.len
 		data["pillBotMaxContent"] = STRB.max_items
 
@@ -248,7 +248,7 @@
 				var/target_loc = drop_location()
 				var/drop_threshold = INFINITY
 				if(bottle)
-					GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
+					var/datum/component/storage/STRB = bottle.GetComponent(/datum/component/storage)
 					if(STRB)
 						drop_threshold = STRB.max_items - bottle.contents.len
 
@@ -402,6 +402,3 @@
 	name = "CondiMaster 3000"
 	desc = "Used to create condiments and other cooking supplies."
 	condi = TRUE
-
-#undef PILL_STYLE_COUNT
-#undef RANDOM_PILL_STYLE

@@ -49,7 +49,7 @@
 /datum/chemical_reaction/slime/slimemutate
 	name = "Mutation Toxin"
 	id = "slimetoxin"
-	results = list(/datum/reagent/slime_toxin = 1)
+	results = list(/datum/reagent/mutationtoxin/jelly = 1)
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_other = TRUE
 	required_container = /obj/item/slime_extract/green
@@ -136,6 +136,16 @@
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
 	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 1, "Friendly Gold Slime", FRIENDLY_SPAWN, "neutral"), 50)
 
+/datum/chemical_reaction/slime/slimemobspawn/spider
+	name = "Slime Crit Traitor Spider"
+	id = "m_tele6"
+	required_reagents = list(/datum/reagent/spider_extract = 1)
+
+/datum/chemical_reaction/slime/slimemobspawn/spider/summon_mobs(datum/reagents/holder, turf/T)
+	T.visible_message("<span class='danger'>The slime extract begins to vibrate crikey-ingly!</span>")
+	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 3, "Traitor Spider Slime", /mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife, "neutral", FALSE), 50)
+
+
 //Silver
 /datum/chemical_reaction/slime/slimebork
 	name = "Slime Bork"
@@ -148,7 +158,7 @@
 	//BORK BORK BORK
 	var/turf/T = get_turf(holder.my_atom)
 
-	playsound(T, 'sound/effects/phasein.ogg', 100, 1)
+	playsound(T, 'sound/effects/phasein.ogg', 100, TRUE)
 
 	for(var/mob/living/carbon/C in viewers(T, null))
 		C.flash_act()
@@ -200,10 +210,12 @@
 /datum/chemical_reaction/slime/slimefoam
 	name = "Slime Foam"
 	id = "m_foam"
-	results = list(/datum/reagent/fluorosurfactant = 20, /datum/reagent/water = 20)
 	required_reagents = list(/datum/reagent/water = 5)
 	required_container = /obj/item/slime_extract/blue
 	required_other = TRUE
+
+/datum/chemical_reaction/slime/slimefoam/on_reaction(datum/reagents/holder)
+	holder.create_foam(/datum/effect_system/foam_spread,80, "<span class='danger'>[src] spews out foam!</span>")
 
 //Dark Blue
 /datum/chemical_reaction/slime/slimefreeze
@@ -216,7 +228,7 @@
 
 /datum/chemical_reaction/slime/slimefreeze/on_reaction(datum/reagents/holder)
 	var/turf/T = get_turf(holder.my_atom)
-	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
+	T.visible_message("<span class='danger'>The slime extract starts to feel extremely cold!</span>")
 	addtimer(CALLBACK(src, .proc/freeze, holder), 50)
 	var/obj/item/slime_extract/M = holder.my_atom
 	deltimer(M.qdel_timer)
@@ -227,7 +239,8 @@
 	if(holder && holder.my_atom)
 		var/turf/open/T = get_turf(holder.my_atom)
 		if(istype(T))
-			T.atmos_spawn_air("nitrogen=50;TEMP=2.7")
+			var/datum/gas/gastype = /datum/gas/nitrogen
+			T.atmos_spawn_air("[initial(gastype.id)]=50;TEMP=2.7")
 
 /datum/chemical_reaction/slime/slimefireproof
 	name = "Slime Fireproof"
@@ -370,6 +383,11 @@
 
 /datum/chemical_reaction/slime/slimebloodlust/on_reaction(datum/reagents/holder)
 	for(var/mob/living/simple_animal/slime/slime in viewers(get_turf(holder.my_atom), null))
+		if(slime.docile) //Undoes docility, but doesn't make rabid.
+			slime.visible_message("<span class='danger'>[slime] forgets its training, becoming wild once again!</span>")
+			slime.docile = FALSE
+			slime.update_name()
+			continue
 		slime.rabid = 1
 		slime.visible_message("<span class='danger'>The [slime] is driven into a frenzy!</span>")
 	..()

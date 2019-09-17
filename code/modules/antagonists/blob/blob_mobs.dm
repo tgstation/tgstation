@@ -57,7 +57,7 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/blob/proc/blob_chat(msg)
-	var/spanned_message = say_quote(msg, get_spans())
+	var/spanned_message = say_quote(msg)
 	var/rendered = "<font color=\"#EE4000\"><b>\[Blob Telepathy\] [real_name]</b> [spanned_message]</font>"
 	for(var/M in GLOB.mob_list)
 		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
@@ -120,14 +120,14 @@
 	health = maxHealth
 	name = "blob zombie"
 	desc = "A shambling corpse animated by the blob."
-	mob_biotypes += MOB_HUMANOID
+	mob_biotypes |= MOB_HUMANOID
 	melee_damage_lower += 8
 	melee_damage_upper += 11
 	movement_type = GROUND
 	death_cloud_size = 0
 	icon = H.icon
 	icon_state = "zombie"
-	H.hair_style = null
+	H.hairstyle = null
 	H.update_hair()
 	H.forceMove(src)
 	oldguy = H

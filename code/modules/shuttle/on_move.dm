@@ -286,10 +286,10 @@ All ShuttleMove procs go here
 
 /obj/item/storage/pod/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
-	// If the pod was launched, the storage will always open. The CentCom check
-	// ignores the movement of the shuttle from the staging area on CentCom to
+	// If the pod was launched, the storage will always open. The reserved_level check
+	// ignores the movement of the shuttle from the transit level to
 	// the station as it is loaded in.
-	if (oldT && !is_centcom_level(oldT.z))
+	if (oldT && !is_reserved_level(oldT.z))
 		unlocked = TRUE
 
 /************************************Mob move procs************************************/
@@ -349,8 +349,8 @@ All ShuttleMove procs go here
 	var/turf/T = loc
 	if(level==1)
 		hide(T.intact)
-	mergeConnectedNetworks(d1)
-	mergeConnectedNetworks(d2)
+	connect_wire(TRUE)
+	propogate_if_no_network()
 
 /obj/structure/shuttle/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()

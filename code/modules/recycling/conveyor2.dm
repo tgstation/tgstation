@@ -41,17 +41,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	update_move_direction()
 
 /obj/machinery/conveyor/auto/update()
-	if(stat & BROKEN)
-		icon_state = "conveyor-broken"
-		operating = FALSE
-		return
-	else if(!operable)
-		operating = FALSE
-	else if(stat & NOPOWER)
-		operating = FALSE
-	else
-		operating = TRUE
-	icon_state = "conveyor[operating * verted]"
+	. = ..()
+	operating = .
 
 // create a conveyor
 /obj/machinery/conveyor/Initialize(mapload, newdir, newid)
@@ -116,16 +107,17 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		movedir = backwards
 	update()
 
-/obj/machinery/conveyor/proc/update()
+/obj/machinery/conveyor/update_icon()
 	if(stat & BROKEN)
 		icon_state = "conveyor-broken"
+	else
+		icon_state = "conveyor[operating * verted]"
+
+/obj/machinery/conveyor/proc/update()
+	if(stat & BROKEN || !operable || stat & NOPOWER)
 		operating = FALSE
-		return
-	if(!operable)
-		operating = FALSE
-	if(stat & NOPOWER)
-		operating = FALSE
-	icon_state = "conveyor[operating * verted]"
+		return FALSE
+	return TRUE
 
 	// machine process
 	// move items to the target location
@@ -184,7 +176,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 // make the conveyor broken
 // also propagate inoperability to any connected conveyor with the same ID
 /obj/machinery/conveyor/proc/broken()
-	stat |= BROKEN
+	obj_break()
 	update()
 
 	var/obj/machinery/conveyor/C = locate() in get_step(src, dir)
@@ -210,7 +202,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		C.set_operable(stepdir, id, op)
 
 /obj/machinery/conveyor/power_change()
-	..()
+	. = ..()
 	update()
 
 // the conveyor control switch
@@ -352,7 +344,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		return
 	var/cdir = get_dir(A, user)
 	if(A == user.loc)
-		to_chat(user, "<span class='notice'>You cannot place a conveyor belt under yourself.</span>")
+		to_chat(user, "<span class='warning'>You cannot place a conveyor belt under yourself!</span>")
 		return
 	var/obj/machinery/conveyor/C = new/obj/machinery/conveyor(A, cdir, id)
 	transfer_fingerprints_to(C)
@@ -369,6 +361,11 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/item/conveyor_switch_construct/Initialize()
 	. = ..()
 	id = "[rand()]" //this couldn't possibly go wrong
+
+/obj/item/conveyor_switch_construct/attack_self(mob/user)
+	for(var/obj/item/conveyor_construct/C in view())
+		C.id = id
+	to_chat(user, "<span class='notice'>You have linked all nearby conveyor belt assemblies to this switch.</span>")
 
 /obj/item/conveyor_switch_construct/afterattack(atom/A, mob/user, proximity)
 	. = ..()

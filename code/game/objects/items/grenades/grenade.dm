@@ -20,7 +20,7 @@
 
 /obj/item/grenade/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] primes [src], then eats it! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(src, 'sound/items/eatfood.ogg', 50, 1)
+	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
 	preprime(user, det_time)
 	user.transferItemToLoc(src, user, TRUE)//>eat a grenade set to 5 seconds >rush captain
 	sleep(det_time)//so you dont die instantly
@@ -47,12 +47,12 @@
 
 
 /obj/item/grenade/examine(mob/user)
-	..()
+	. = ..()
 	if(display_timer)
 		if(det_time > 0)
-			to_chat(user, "The timer is set to [DisplayTimeText(det_time)].")
+			. += "The timer is set to [DisplayTimeText(det_time)]."
 		else
-			to_chat(user, "\The [src] is set for instant detonation.")
+			. += "\The [src] is set for instant detonation."
 
 
 /obj/item/grenade/attack_self(mob/user)
@@ -70,7 +70,7 @@
 		add_fingerprint(user)
 		if(msg)
 			to_chat(user, "<span class='warning'>You prime [src]! [capitalize(DisplayTimeText(det_time))]!</span>")
-	playsound(src, 'sound/weapons/armbomb.ogg', volume, 1)
+	playsound(src, 'sound/weapons/armbomb.ogg', volume, TRUE)
 	active = TRUE
 	icon_state = initial(icon_state) + "_active"
 	addtimer(CALLBACK(src, .proc/prime), isnull(delayoverride)? det_time : delayoverride)
@@ -97,7 +97,7 @@
 			to_chat(user, "<span class='notice'>You modify the time delay. It's set for [DisplayTimeText(det_time)].</span>")
 	else
 		return ..()
-		
+
 /obj/item/grenade/proc/change_det_time(time) //Time uses real time.
 	if(time != null)
 		if(time < 3)
@@ -122,9 +122,12 @@
 	var/obj/item/projectile/P = hitby
 	if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(15))
 		owner.visible_message("<span class='danger'>[attack_text] hits [owner]'s [src], setting it off! What a shot!</span>")
+		var/turf/T = get_turf(src)
+		log_game("A projectile ([hitby]) detonated a grenade held by [key_name(owner)] at [COORD(T)]")
+		message_admins("A projectile ([hitby]) detonated a grenade held by [key_name_admin(owner)] at [ADMIN_COORDJMP(T)]")
 		prime()
 		return TRUE //It hit the grenade, not them
-		
+
 /obj/item/grenade/afterattack(atom/target, mob/user)
 	. = ..()
 	if(active)

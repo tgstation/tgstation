@@ -1,4 +1,0 @@
-author: "kriskog"
-delete-after: True
-changes: 
-  - bugfix: "windoors can now be closed manually after bumping open without having them close again."

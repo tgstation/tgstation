@@ -47,7 +47,7 @@
 				successfulshocks = 0
 			if(shockallchains())
 				successfulshocks++
-			sleep(3)
+			SLEEP_CHECK_DEATH(3)
 
 /mob/living/simple_animal/hostile/guardian/beam/Recall()
 	. = ..()
@@ -115,7 +115,7 @@
 					L.visible_message(
 						"<span class='danger'>[L] was shocked by the lightning chain!</span>", \
 						"<span class='userdanger'>You are shocked by the lightning chain!</span>", \
-						"<span class='italics'>You hear a heavy electrical crack.</span>" \
+						"<span class='hear'>You hear a heavy electrical crack.</span>" \
 					)
 				L.adjustFireLoss(1.2) //adds up very rapidly
 				. = 1

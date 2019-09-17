@@ -124,7 +124,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(isflyperson(H))
-			playsound(get_turf(src), 'sound/items/drink.ogg', 50, 1) //slurp
+			playsound(get_turf(src), 'sound/items/drink.ogg', 50, TRUE) //slurp
 			H.visible_message("<span class='alert'>[H] extends a small proboscis into the vomit pool, sucking it with a slurping sound.</span>")
 			if(reagents)
 				for(var/datum/reagent/R in reagents.reagent_list)
@@ -200,3 +200,10 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "xfloor1"
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
+
+/obj/effect/decal/cleanable/confetti
+	name = "confetti"
+	desc = "Tiny bits of colored paper thrown about for the janitor to enjoy!"
+	icon = 'icons/effects/confetti_and_decor.dmi'
+	icon_state = "confetti"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT //the confetti itself might be annoying enough

@@ -312,7 +312,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aW" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/escape)
 "aX" = (
@@ -331,7 +331,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aZ" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/plasteel/grimy,
@@ -417,9 +417,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "br" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
+/obj/machinery/stasis,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bs" = (
@@ -520,7 +518,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/escape)
 "bK" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
@@ -560,7 +558,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/escape)
 "bQ" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 1
 	},
 /turf/open/floor/plasteel/grimy,
@@ -659,13 +657,18 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "cb" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/machinery/stasis,
 /turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Yn" = (
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed";
+	use_power = 0
+	},
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -829,7 +832,7 @@ aN
 aN
 aE
 ca
-ae
+Yn
 ab
 ab
 ab

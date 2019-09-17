@@ -51,7 +51,7 @@
 		M.hallucination = max(0, M.hallucination - 10)
 
 	if(A.stage >= 5)
-		M.adjustBrainLoss(-3)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3)
 		if(trauma_heal_mild && iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(prob(10))
@@ -100,8 +100,8 @@
 				else if(M.eye_blind || M.eye_blurry)
 					M.set_blindness(0)
 					M.set_blurriness(0)
-				else if(eyes.eye_damage > 0)
-					M.adjust_eye_damage(-1)
+				else if(eyes.damage > 0)
+					eyes.applyOrganDamage(-1)
 		else
 			if(prob(base_message_chance))
 				to_chat(M, "<span class='notice'>[pick("Your eyes feel great.","You feel like your eyes can focus more clearly.", "You don't feel the need to blink.","Your ears feel great.","Your healing feels more acute.")]</span>")

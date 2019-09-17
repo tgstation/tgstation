@@ -5,6 +5,8 @@
 	desc = "A canister for the storage of gas."
 	icon_state = "yellow"
 	density = TRUE
+	ui_x = 420
+	ui_y = 405
 
 	var/valve_open = FALSE
 	var/obj/machinery/atmospherics/components/binary/passive_gate/pump
@@ -56,7 +58,7 @@
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
 	if(!allowed(user))
 		to_chat(user, "<span class='warning'>Error - Unauthorized User</span>")
-		playsound(src, 'sound/misc/compiler-failure.ogg', 50, 1)
+		playsound(src, 'sound/misc/compiler-failure.ogg', 50, TRUE)
 		return
 	..()
 
@@ -217,13 +219,13 @@
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 	air_contents.gases[/datum/gas/nitrogen][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 
-#define HOLDING		(1<<0)
-#define CONNECTED	(1<<1)
-#define EMPTY		(1<<2)
-#define LOW			(1<<3)
-#define MEDIUM		(1<<4)
-#define FULL		(1<<5)
-#define DANGER		(1<<6)
+#define CANISTER_UPDATE_HOLDING		(1<<0)
+#define CANISTER_UPDATE_CONNECTED	(1<<1)
+#define CANISTER_UPDATE_EMPTY		(1<<2)
+#define CANISTER_UPDATE_LOW			(1<<3)
+#define CANISTER_UPDATE_MEDIUM		(1<<4)
+#define CANISTER_UPDATE_FULL		(1<<5)
+#define CANISTER_UPDATE_DANGER		(1<<6)
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if(stat & BROKEN)
 		cut_overlays()
@@ -234,44 +236,44 @@
 	update = 0
 
 	if(holding)
-		update |= HOLDING
+		update |= CANISTER_UPDATE_HOLDING
 	if(connected_port)
-		update |= CONNECTED
+		update |= CANISTER_UPDATE_CONNECTED
 	var/pressure = air_contents.return_pressure()
 	if(pressure < 10)
-		update |= EMPTY
+		update |= CANISTER_UPDATE_EMPTY
 	else if(pressure < 5 * ONE_ATMOSPHERE)
-		update |= LOW
+		update |= CANISTER_UPDATE_LOW
 	else if(pressure < 10 * ONE_ATMOSPHERE)
-		update |= MEDIUM
+		update |= CANISTER_UPDATE_MEDIUM
 	else if(pressure < 40 * ONE_ATMOSPHERE)
-		update |= FULL
+		update |= CANISTER_UPDATE_FULL
 	else
-		update |= DANGER
+		update |= CANISTER_UPDATE_DANGER
 
 	if(update == last_update)
 		return
 
 	cut_overlays()
-	if(update & HOLDING)
+	if(update & CANISTER_UPDATE_HOLDING)
 		add_overlay("can-open")
-	if(update & CONNECTED)
+	if(update & CANISTER_UPDATE_CONNECTED)
 		add_overlay("can-connector")
-	if(update & LOW)
+	if(update & CANISTER_UPDATE_LOW)
 		add_overlay("can-o0")
-	else if(update & MEDIUM)
+	else if(update & CANISTER_UPDATE_MEDIUM)
 		add_overlay("can-o1")
-	else if(update & FULL)
+	else if(update & CANISTER_UPDATE_FULL)
 		add_overlay("can-o2")
-	else if(update & DANGER)
+	else if(update & CANISTER_UPDATE_DANGER)
 		add_overlay("can-o3")
-#undef HOLDING
-#undef CONNECTED
-#undef EMPTY
-#undef LOW
-#undef MEDIUM
-#undef FULL
-#undef DANGER
+#undef CANISTER_UPDATE_HOLDING
+#undef CANISTER_UPDATE_CONNECTED
+#undef CANISTER_UPDATE_EMPTY
+#undef CANISTER_UPDATE_LOW
+#undef CANISTER_UPDATE_MEDIUM
+#undef CANISTER_UPDATE_FULL
+#undef CANISTER_UPDATE_DANGER
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
@@ -289,6 +291,7 @@
 	qdel(src)
 
 /obj/machinery/portable_atmospherics/canister/welder_act(mob/living/user, obj/item/I)
+	..()
 	if(user.a_intent == INTENT_HARM)
 		return FALSE
 
@@ -299,12 +302,13 @@
 		if(I.use_tool(src, user, 30, volume=50))
 			deconstruct(TRUE)
 	else
-		to_chat(user, "<span class='notice'>You cannot slice [src] apart when it isn't broken.</span>")
+		to_chat(user, "<span class='warning'>You cannot slice [src] apart when it isn't broken!</span>")
 
 	return TRUE
 
 /obj/machinery/portable_atmospherics/canister/obj_break(damage_flag)
-	if((stat & BROKEN) || (flags_1 & NODECONSTRUCT_1))
+	. = ..()
+	if(!.)
 		return
 	canister_break()
 
@@ -315,10 +319,9 @@
 	T.assume_air(expelled_gas)
 	air_update_turf()
 
-	stat |= BROKEN
+	obj_break()
 	density = FALSE
-	playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
-	update_icon()
+	playsound(src.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	investigate_log("was destroyed.", INVESTIGATE_ATMOS)
 
 	if(holding)
@@ -361,7 +364,7 @@
 															datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "canister", name, 420, 405, master_ui, state)
+		ui = new(user, src, ui_key, "canister", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/portable_atmospherics/canister/ui_data()

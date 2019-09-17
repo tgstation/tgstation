@@ -42,9 +42,9 @@
 
 /obj/machinery/fat_sucker/examine(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>Alt-Click to toggle the safety hatch.</span>")
-	to_chat(user, "<span class='notice'>Removing [bite_size] nutritional units per operation.</span>")
-	to_chat(user, "<span class='notice'>Requires [nutrient_to_meat] nutritional units per meat slab.</span>")
+	. += {"<span class='notice'>Alt-Click to toggle the safety hatch.</span>
+				<span class='notice'>Removing [bite_size] nutritional units per operation.</span>
+				<span class='notice'>Requires [nutrient_to_meat] nutritional units per meat slab.</span>"}
 
 /obj/machinery/fat_sucker/close_machine(mob/user)
 	if(panel_open)
@@ -75,7 +75,7 @@
 		user.last_special = world.time + CLICK_CD_BREAKOUT
 		user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
 			"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-			"<span class='italics'>You hear a metallic creaking from [src].</span>")
+			"<span class='hear'>You hear a metallic creaking from [src].</span>")
 		if(do_after(user, breakout_time, target = src))
 			if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 				return

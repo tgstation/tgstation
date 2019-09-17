@@ -1,5 +1,0 @@
-author: "4dplanner"
-delete-after: True
-changes: 
-  - bugfix: "thrown objects (but not mobs) no longer hit the thrower"
-  - bugfix: "mirror shield rebound no longer depends on the original thrower's momentum"

@@ -2,7 +2,7 @@
 	name = "storage implant"
 	desc = "Stores up to two big items in a bluespace pocket."
 	icon_state = "storage"
-	item_color = "r"
+	implant_color = "r"
 	var/max_slot_stacking = 4
 
 /obj/item/implant/storage/activate()
@@ -25,7 +25,7 @@
 	for(var/X in target.implants)
 		if(istype(X, type))
 			var/obj/item/implant/storage/imp_e = X
-			GET_COMPONENT_FROM(STR, /datum/component/storage, imp_e)
+			var/datum/component/storage/STR = imp_e.GetComponent(/datum/component/storage)
 			if(!STR || (STR && STR.max_items < max_slot_stacking))
 				imp_e.AddComponent(/datum/component/storage/concrete/implant)
 				qdel(src)

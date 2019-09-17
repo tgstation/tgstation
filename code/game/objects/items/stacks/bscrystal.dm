@@ -5,8 +5,9 @@
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "bluespace_crystal"
 	singular_name = "bluespace crystal"
+	dye_color = DYE_COSMIC
 	w_class = WEIGHT_CLASS_TINY
-	materials = list(MAT_BLUESPACE=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/bluespace=MINERAL_MATERIAL_AMOUNT)
 	points = 50
 	var/blink_range = 8 // The teleport range when crushed/thrown at someone.
 	refined_type = /obj/item/stack/sheet/bluespace_crystal
@@ -28,7 +29,7 @@
 /obj/item/stack/ore/bluespace_crystal/attack_self(mob/user)
 	user.visible_message("<span class='warning'>[user] crushes [src]!</span>", "<span class='danger'>You crush [src]!</span>")
 	new /obj/effect/particle_effect/sparks(loc)
-	playsound(loc, "sparks", 50, 1)
+	playsound(loc, "sparks", 50, TRUE)
 	blink_mob(user)
 	use(1)
 
@@ -40,7 +41,7 @@
 		visible_message("<span class='notice'>[src] fizzles and disappears upon impact!</span>")
 		var/turf/T = get_turf(hit_atom)
 		new /obj/effect/particle_effect/sparks(T)
-		playsound(loc, "sparks", 50, 1)
+		playsound(loc, "sparks", 50, TRUE)
 		if(isliving(hit_atom))
 			blink_mob(hit_atom)
 		use(1)
@@ -49,7 +50,7 @@
 /obj/item/stack/ore/bluespace_crystal/artificial
 	name = "artificial bluespace crystal"
 	desc = "An artificially made bluespace crystal, it looks delicate."
-	materials = list(MAT_BLUESPACE=MINERAL_MATERIAL_AMOUNT*0.5)
+	materials = list(/datum/material/bluespace=MINERAL_MATERIAL_AMOUNT*0.5)
 	blink_range = 4 // Not as good as the organic stuff!
 	points = 0 //nice try
 	refined_type = null
@@ -63,7 +64,7 @@
 	item_state = "sheet-polycrystal"
 	singular_name = "bluespace polycrystal"
 	desc = "A stable polycrystal, made of fused-together bluespace crystals. You could probably break one off."
-	materials = list(MAT_BLUESPACE=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/bluespace=MINERAL_MATERIAL_AMOUNT)
 	attack_verb = list("bluespace polybashed", "bluespace polybattered", "bluespace polybludgeoned", "bluespace polythrashed", "bluespace polysmashed")
 	novariants = TRUE
 	grind_results = list(/datum/reagent/bluespace = 20)

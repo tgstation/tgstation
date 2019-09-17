@@ -41,6 +41,8 @@
 			board.one_access = 1
 			board.accesses = req_one_access
 
+	setup_device()
+
 
 /obj/machinery/button/update_icon()
 	cut_overlays()
@@ -92,7 +94,7 @@
 			if(W.use_tool(src, user, 40))
 				to_chat(user, "<span class='notice'>You unsecure the button frame.</span>")
 				transfer_fingerprints_to(new /obj/item/wallframe/button(get_turf(src)))
-				playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
+				playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 				qdel(src)
 
 		update_icon()
@@ -108,7 +110,7 @@
 		return
 	req_access = list()
 	req_one_access = list()
-	playsound(src, "sparks", 100, 1)
+	playsound(src, "sparks", 100, TRUE)
 	obj_flags |= EMAGGED
 
 /obj/machinery/button/attack_ai(mob/user)
@@ -123,6 +125,11 @@
 		var/obj/item/assembly/control/A = device
 		A.id = id
 	initialized_button = 1
+
+/obj/machinery/button/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	if(id && istype(device, /obj/item/assembly/control))
+		var/obj/item/assembly/control/A = device
+		A.id = "[idnum][id]"
 
 /obj/machinery/button/attack_hand(mob/user)
 	. = ..()
@@ -170,11 +177,6 @@
 		device.pulsed()
 
 	addtimer(CALLBACK(src, .proc/update_icon), 15)
-
-/obj/machinery/button/power_change()
-	..()
-	update_icon()
-
 
 /obj/machinery/button/door
 	name = "door button"
@@ -283,4 +285,4 @@
 	desc = "Used for building buttons."
 	icon_state = "button"
 	result_path = /obj/machinery/button
-	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)

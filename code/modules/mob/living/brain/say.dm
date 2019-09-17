@@ -6,18 +6,15 @@
 			if(prob(10))//10% chane to drop the message entirely
 				return
 			else
-				message = Gibberish(message, (emp_damage*6))//scrambles the message, gets worse when emp_damage is higher
+				message = Gibberish(message, emp_damage >= 12)//scrambles the message, gets worse when emp_damage is higher
 
 		..()
-
-/mob/living/brain/get_spans()
-	return ..() | SPAN_ROBOT
 
 /mob/living/brain/radio(message, message_mode, list/spans, language)
 	if(message_mode == MODE_HEADSET && istype(container, /obj/item/mmi))
 		var/obj/item/mmi/R = container
 		if(R.radio)
-			R.radio.talk_into(src, message, , get_spans(), language)
+			R.radio.talk_into(src, message, language = language)
 			return ITALICS | REDUCE_RANGE
 	else
 		return ..()

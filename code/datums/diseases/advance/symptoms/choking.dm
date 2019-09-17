@@ -22,7 +22,7 @@ Bonus
 	stealth = -3
 	resistance = -2
 	stage_speed = -2
-	transmittable = -4
+	transmittable = -2
 	level = 3
 	severity = 3
 	base_message_chance = 15
@@ -144,5 +144,5 @@ Bonus
 /datum/symptom/asphyxiation/proc/Asphyxiate_death(mob/living/M, datum/disease/advance/A)
 	var/get_damage = rand(25,35) * power
 	M.adjustOxyLoss(get_damage)
-	M.adjustBrainLoss(get_damage/2)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, get_damage/2)
 	return 1

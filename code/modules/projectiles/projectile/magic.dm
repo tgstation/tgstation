@@ -119,7 +119,7 @@
 /obj/item/projectile/magic/door/proc/CreateDoor(turf/T)
 	var/door_type = pick(door_types)
 	var/obj/structure/mineral_door/D = new door_type(T)
-	T.ChangeTurf(/turf/open/floor/plating)
+	T.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	D.Open()
 
 /obj/item/projectile/magic/door/proc/OpenDoor(var/obj/machinery/door/D)
@@ -278,7 +278,7 @@
 
 	to_chat(new_mob, "<span class='warning'>Your form morphs into that of a [randomize].</span>")
 
-	var/poly_msg = CONFIG_GET(keyed_list/policy)["polymorph"]
+	var/poly_msg = get_policy(POLICY_POLYMORPH)
 	if(poly_msg)
 		to_chat(new_mob, poly_msg)
 
@@ -366,7 +366,7 @@
 		if(M.anti_magic_check())
 			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			qdel(src)
-			return
+			return BULLET_ACT_BLOCK
 	. = ..()
 
 
@@ -400,12 +400,11 @@
 /obj/item/projectile/magic/locker/on_hit(target)
 	if(created)
 		return ..()
-	var/obj/structure/closet/C = new locker_temp_instance(get_turf(src))
 	if(LAZYLEN(contents))
 		for(var/atom/movable/AM in contents)
-			C.insert(AM)
-		C.welded = weld
-		C.update_icon()
+			locker_temp_instance.insert(AM)
+		locker_temp_instance.welded = weld
+		locker_temp_instance.update_icon()
 	created = TRUE
 	return ..()
 
@@ -689,7 +688,7 @@
 	icon_state = "ice_2"
 	damage = 0
 	damage_type = BURN
-	nodamage = TRUE
+	nodamage = FALSE
 	armour_penetration = 100
 	temperature = 50
 	flag = "magic"

@@ -13,6 +13,7 @@
 	var/should_give_codewords = TRUE
 	var/should_equip = TRUE
 	var/traitor_kind = TRAITOR_HUMAN //Set on initial assignment
+	var/datum/contractor_hub/contractor_hub
 	can_hijack = HIJACK_HIJACKER
 
 /datum/antagonist/traitor/on_gain()
@@ -24,6 +25,7 @@
 	if(give_objectives)
 		forge_traitor_objectives()
 	finalize_traitor()
+	RegisterSignal(owner.current, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
 	..()
 
 /datum/antagonist/traitor/apply_innate_effects()
@@ -48,12 +50,18 @@
 		A.verbs -= /mob/living/silicon/ai/proc/choose_modules
 		A.malf_picker.remove_malf_verbs(A)
 		qdel(A.malf_picker)
-
+	UnregisterSignal(owner.current, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
 	SSticker.mode.traitors -= owner
 	if(!silent && owner.current)
-		to_chat(owner.current,"<span class='userdanger'> You are no longer the [special_role]! </span>")
+		to_chat(owner.current,"<span class='userdanger'>You are no longer the [special_role]!</span>")
 	owner.special_role = null
 	..()
+
+/datum/antagonist/traitor/proc/handle_hearing(datum/source, list/hearing_args)
+	var/message = hearing_args[HEARING_MESSAGE]
+	message = GLOB.syndicate_code_phrase_regex.Replace(message, "<span class='blue'>$1</span>")
+	message = GLOB.syndicate_code_response_regex.Replace(message, "<span class='red'>$1</span>")
+	hearing_args[HEARING_MESSAGE] = message
 
 /datum/antagonist/traitor/proc/add_objective(datum/objective/O)
 	objectives += O
@@ -197,7 +205,7 @@
 			.=2
 
 /datum/antagonist/traitor/greet()
-	to_chat(owner.current, "<B><font size=3 color=red>You are the [owner.special_role].</font></B>")
+	to_chat(owner.current, "<span class='alertsyndie'>You are the [owner.special_role].</span>")
 	owner.announce_objectives()
 	if(should_give_codewords)
 		give_codewords()
@@ -349,6 +357,9 @@
 
 	var/special_role_text = lowertext(name)
 
+	if (contractor_hub)
+		result += contractor_round_end()
+
 	if(traitorwin)
 		result += "<span class='greentext'>The [special_role_text] was successful!</span>"
 	else
@@ -357,12 +368,51 @@
 
 	return result.Join("<br>")
 
+/// Proc detailing contract kit buys/completed contracts/additional info
+/datum/antagonist/traitor/proc/contractor_round_end()
+	var result = ""
+	var total_spent_rep = 0
+
+	var/completed_contracts = 0
+	var/tc_total = contractor_hub.contract_TC_payed_out + contractor_hub.contract_TC_to_redeem
+	for (var/datum/syndicate_contract/contract in contractor_hub.assigned_contracts)
+		if (contract.status == CONTRACT_STATUS_COMPLETE)
+			completed_contracts++
+
+	var/contractor_item_icons = "" // Icons of purchases
+	var/contractor_support_unit = "" // Set if they had a support unit - and shows appended to their contracts completed
+
+	/// Get all the icons/total cost for all our items bought
+	for (var/datum/contractor_item/contractor_purchase in contractor_hub.purchased_items)
+		contractor_item_icons += "<span class='tooltip_container'>\[ <i class=\"fas [contractor_purchase.item_icon]\"></i><span class='tooltip_hover'><b>[contractor_purchase.name] - [contractor_purchase.cost] Rep</b><br><br>[contractor_purchase.desc]</span> \]</span>"
+
+		total_spent_rep += contractor_purchase.cost
+
+		/// Special case for reinforcements, we want to show their ckey and name on round end.
+		if (istype(contractor_purchase, /datum/contractor_item/contractor_partner))
+			var/datum/contractor_item/contractor_partner/partner = contractor_purchase
+			contractor_support_unit += "<br><b>[partner.partner_mind.key]</b> played <b>[partner.partner_mind.current.name]</b>, their contractor support unit."
+
+	if (contractor_hub.purchased_items.len)
+		result += "<br>(used [total_spent_rep] Rep) "
+		result += contractor_item_icons
+	result += "<br>"
+	if (completed_contracts > 0)
+		var/pluralCheck = "contract"
+		if (completed_contracts > 1)
+			pluralCheck = "contracts"
+
+		result += "Completed <span class='greentext'>[completed_contracts]</span> [pluralCheck] for a total of \
+					<span class='greentext'>[tc_total] TC</span>![contractor_support_unit]<br>"
+
+	return result
+
 /datum/antagonist/traitor/roundend_report_footer()
 	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
 	var/responses = jointext(GLOB.syndicate_code_response, ", ")
 
 	var message = "<br><b>The code phrases were:</b> <span class='bluetext'>[phrases]</span><br>\
-								<b>The code responses were:</b> <span class='redtext'>[responses]</span><br>"
+					<b>The code responses were:</b> <span class='redtext'>[responses]</span><br>"
 
 	return message
 

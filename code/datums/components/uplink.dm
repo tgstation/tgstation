@@ -107,7 +107,8 @@ GLOBAL_LIST_EMPTY(uplinks)
 			var/cost = UI.refund_amount || UI.cost
 			if(I.type == path && UI.refundable && I.check_uplink_validity())
 				telecrystals += cost
-				purchase_log.total_spent -= cost
+				if(purchase_log)
+					purchase_log.total_spent -= cost
 				to_chat(user, "<span class='notice'>[I] refunded.</span>")
 				qdel(I)
 				return
