@@ -228,6 +228,11 @@
 		fried.forceMove(src)
 		trash = fried
 
+/obj/item/reagent_containers/food/snacks/deepfryholder/generate_trash(atom/location)
+	if(trash)
+		QDEL_NULL(trash)
+	. = ..()
+	
 /obj/item/reagent_containers/food/snacks/deepfryholder/Destroy()
 	if(trash)
 		QDEL_NULL(trash)
