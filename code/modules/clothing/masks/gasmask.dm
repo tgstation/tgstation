@@ -31,6 +31,9 @@
 /obj/item/clothing/mask/gas/welding/attack_self(mob/user)
 	weldingvisortoggle(user)
 
+/obj/item/clothing/mask/gas/welding/up/equipped(mob/user, slot)
+	..()
+	weldingvisortoggle(user)	
 
 // ********************************************************************
 
