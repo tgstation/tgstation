@@ -440,9 +440,10 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	desc = "Hey, this coin's the same on both sides!"
 	sideslist = list("heads")
 
-/obj/item/coin/plastic/antagtoken
+/obj/item/coin/antagtoken
 	name = "antag token"
 	desc = "A novelty coin that helps the heart know what hard evidence cannot prove."
+	custom_materials = list(/datum/material/plastic = 400)
 	sideslist = list("valid", "salad")
 	material_flags = MATERIAL_NO_COLOR
 
