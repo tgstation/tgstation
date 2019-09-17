@@ -105,6 +105,7 @@ mob/living/simple_animal/hostile/bear/butter //The mighty companion to Cak. Seve
 	icon_living = "butterbear"
 	icon_dead = "butterbear_dead"
 	desc = "I can't believe its not a bear!"
+	faction = list("neutral")
 	obj_damage = 0
 	melee_damage_lower = 5
 	melee_damage_upper = 10
@@ -146,7 +147,8 @@ mob/living/simple_animal/hostile/bear/butter/AttackingTarget() //Makes some atta
 	if(isliving(target))
 		if(prob(25))
 			var/mob/living/L = target
-			L.Knockdown(150)
+			L.Knockdown(20)
+			playsound(loc, 'sound/misc/slip.ogg', 15)
 			L.visible_message("<span class='danger'>[L] slips on butter!</span>")
 
 
