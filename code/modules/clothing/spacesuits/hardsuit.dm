@@ -704,7 +704,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/personalshield, 5, null, 20 SECONDS, 2 SECONDS, 1, TRUE, shield_on = "shield-red")
+	AddComponent(/datum/component/personalshield, 5, null, 20 SECONDS, 2 SECONDS, 1, TRUE, "shield-red")
 
 /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
 	name = "blue shielded hardsuit"
