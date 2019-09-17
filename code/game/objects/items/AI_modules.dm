@@ -241,6 +241,9 @@ AI MODULES
 	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len))
 	if(!targName)
 		return
+	if(CHAT_FILTER_CHECK(targName))
+		to_chat(user, "<span class='warning'>Error: Law contains invalid text.</span>") // AI LAW 2 SAY U W U WITHOUT THE SPACES
+		return
 	laws[1] = targName
 	..()
 
@@ -445,6 +448,9 @@ AI MODULES
 	var/targName = stripped_input(user, "Please enter a new core law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len))
 	if(!targName)
 		return
+	if(CHAT_FILTER_CHECK(targName))
+		to_chat(user, "<span class='warning'>Error: Law contains invalid text.</span>")
+		return
 	laws[1] = targName
 	..()
 
@@ -463,6 +469,9 @@ AI MODULES
 /obj/item/aiModule/syndicate/attack_self(mob/user)
 	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len))
 	if(!targName)
+		return
+	if(CHAT_FILTER_CHECK(targName)) // not even the syndicate can uwu
+		to_chat(user, "<span class='warning'>Error: Law contains invalid text.</span>")
 		return
 	laws[1] = targName
 	..()
@@ -509,7 +518,7 @@ AI MODULES
 /obj/item/aiModule/toyAI/attack_self(mob/user)
 	laws[1] = generate_ion_law()
 	to_chat(user, "<span class='notice'>You press the button on [src].</span>")
-	playsound(user, 'sound/machines/click.ogg', 20, 1)
+	playsound(user, 'sound/machines/click.ogg', 20, TRUE)
 	src.loc.visible_message("<span class='warning'>[icon2html(src, viewers(loc))] [laws[1]]</span>")
 
 /******************** Mother Drone  ******************/

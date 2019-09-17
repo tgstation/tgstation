@@ -434,9 +434,11 @@
 /datum/reagent/medicine/ephedrine/on_mob_metabolize(mob/living/L)
 	..()
 	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.85, blacklisted_movetypes=(FLYING|FLOATING))
+	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
 
 /datum/reagent/medicine/ephedrine/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(type)
+	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
 	..()
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/carbon/M)
@@ -804,9 +806,11 @@
 /datum/reagent/medicine/stimulants/on_mob_metabolize(mob/living/L)
 	..()
 	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
 
 /datum/reagent/medicine/stimulants/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(type)
+	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
 	..()
 
 /datum/reagent/medicine/stimulants/on_mob_life(mob/living/carbon/M)
@@ -895,26 +899,52 @@
 
 /datum/reagent/medicine/earthsblood //Created by ambrosia gaia plants
 	name = "Earthsblood"
-	description = "Ichor from an extremely powerful plant. Great for restoring wounds, but it's a little heavy on the brain."
+	description = "Ichor from an extremely powerful plant. Great for restoring wounds, but it's a little heavy on the brain. For some strange reason, it also induces temporary pacifism in those who imbibe it and semi-permanent pacifism in those who overdose on it."
 	color = rgb(255, 175, 0)
+	metabolization_rate = 0.4 //Math is based on specific metab rate so we want this to be static AKA if define or medicine metab rate changes, we want this to stay until we can rework calculations.
 	overdose_threshold = 25
 
 /datum/reagent/medicine/earthsblood/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-3 * REM, 0)
-	M.adjustFireLoss(-3 * REM, 0)
-	M.adjustOxyLoss(-15 * REM, 0)
-	M.adjustToxLoss(-3 * REM, 0)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM, 150) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
-	M.adjustCloneLoss(-1 * REM, 0)
-	M.adjustStaminaLoss(-30 * REM, 0)
-	M.jitteriness = min(max(0, M.jitteriness + 3), 30)
+	if(current_cycle <= 25) //10u has to be processed before u get into THE FUN ZONE
+		M.adjustBruteLoss(-1 * REM, 0)
+		M.adjustFireLoss(-1 * REM, 0)
+		M.adjustOxyLoss(-0.5 * REM, 0)
+		M.adjustToxLoss(-0.5 * REM, 0)
+		M.adjustCloneLoss(-0.1 * REM, 0)
+		M.adjustStaminaLoss(-0.5 * REM, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM, 150) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
+	else
+		M.adjustBruteLoss(-5 * REM, 0) //slow to start, but very quick healing once it gets going
+		M.adjustFireLoss(-5 * REM, 0)
+		M.adjustOxyLoss(-3 * REM, 0)
+		M.adjustToxLoss(-3 * REM, 0)
+		M.adjustCloneLoss(-1 * REM, 0)
+		M.adjustStaminaLoss(-3 * REM, 0)
+		M.jitteriness = min(max(0, M.jitteriness + 3), 30)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM, 150)
+		if(prob(10))
+			M.say(pick("Yeah, well, you know, that's just, like, uh, your opinion, man.", "Am I glad he's frozen in there and that we're out here, and that he's the sheriff and that we're frozen out here, and that we're in there, and I just remembered, we're out here. What I wanna know is: Where's the caveman?", "It ain't me, it ain't me...", "Make love, not war!", "Stop, hey, what's that sound? Everybody look what's going down...", "Do you believe in magic in a young girl's heart?"), forced = /datum/reagent/medicine/earthsblood)
 	M.druggy = min(max(0, M.druggy + 10), 15) //See above
 	..()
 	. = 1
 
+/datum/reagent/medicine/earthsblood/on_mob_metabolize(mob/living/L)
+	..()
+	ADD_TRAIT(L, TRAIT_PACIFISM, type)
+
+/datum/reagent/medicine/earthsblood/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_PACIFISM, type)
+	..()
+
 /datum/reagent/medicine/earthsblood/overdose_process(mob/living/M)
 	M.hallucination = min(max(0, M.hallucination + 5), 60)
-	M.adjustToxLoss(5 * REM, 0)
+	if(current_cycle > 25)
+		M.adjustToxLoss(4 * REM, 0)
+		if(current_cycle > 100) //podpeople get out reeeeeeeeeeeeeeeeeeeee
+			M.adjustToxLoss(6 * REM, 0)
+	if(iscarbon(M))
+		var/mob/living/carbon/hippie = M
+		hippie.gain_trauma(/datum/brain_trauma/severe/pacifism)
 	..()
 	. = 1
 
@@ -966,10 +996,26 @@
 	overdose_threshold = 30
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/M as mob)
-	M.AdjustAllImmobility(-20, FALSE)
-	M.adjustStaminaLoss(-1, 0)
 	..()
+	M.AdjustAllImmobility(-20, FALSE)
+	M.adjustStaminaLoss(-10, 0)
+	M.Jitter(10)
+	M.Dizzy(10)
 	return TRUE
+
+/datum/reagent/medicine/changelingadrenaline/on_mob_metabolize(mob/living/L)
+	..()
+	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	L.ignore_slowdown(type)
+
+/datum/reagent/medicine/changelingadrenaline/on_mob_end_metabolize(mob/living/L)
+	..()
+	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	L.unignore_slowdown(type)
+	L.Dizzy(0)
+	L.Jitter(0)
 
 /datum/reagent/medicine/changelingadrenaline/overdose_process(mob/living/M as mob)
 	M.adjustToxLoss(1, 0)
@@ -1193,7 +1239,7 @@
 	M.adjustFireLoss(3*REM, 0.)
 	M.adjust_bodytemperature(-35 * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
 	..()
-  
+
 /datum/reagent/medicine/silibinin/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, -2)//Add a chance to cure liver trauma once implemented.
 	..()
@@ -1230,3 +1276,62 @@
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5)
 	..()
 	. = 1
+
+/datum/reagent/medicine/granibitaluri
+	name = "Granibitaluri" //achieve "GRANular" amounts of C2
+	description = "A chemical solution useful as a diluent for more potent medicine. Especially useful when combined with brute/burn medication. Large amounts can cause fluid to appear in both the lungs and the heart."
+	reagent_state = LIQUID
+	overdose_threshold = 50
+	metabolization_rate = 0.2 //same as C2s
+
+/datum/reagent/medicine/granibitaluri/on_mob_life(mob/living/carbon/M)
+	var/tdamage = M.getBruteLoss() //1 var + 2 proccall < 4 proccalls
+	if(tdamage && tdamage <= 10)
+		M.adjustBruteLoss(-0.1)
+	else
+		tdamage = M.getFireLoss()
+		if(tdamage && tdamage <= 10)
+			M.adjustFireLoss(-0.1)
+	..()
+	return TRUE
+
+/datum/reagent/medicine/granibitaluri/overdose_process(mob/living/M)
+	. = TRUE
+	M.adjustOrganLoss(ORGAN_SLOT_HEART,0.2)
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS,0.2)
+	..()
+
+/datum/reagent/medicine/badstims  //These are bad for combat on purpose. Used in adrenal implant.
+	name = "Experimental Stimulants"
+	description = "Experimental Stimulants designed to get you away from trouble."
+	reagent_state = LIQUID
+	color = "#F5F5F5"
+
+/datum/reagent/medicine/badstims/on_mob_life(mob/living/carbon/M)
+	..()
+	if(prob(30) && iscarbon(M))
+		var/obj/item/I = M.get_active_held_item()
+		if(I && M.dropItemToGround(I))
+			to_chat(M, "<span class='notice'>Your hands spaz out and you drop what you were holding!</span>")
+	if(prob(33))
+		M.losebreath++
+		M.adjustOxyLoss(1, 0)
+	M.adjustStaminaLoss(-10, 0)
+	M.Jitter(10)
+	M.Dizzy(15)
+
+/datum/reagent/medicine/badstims/on_mob_metabolize(mob/living/L)
+	..()
+	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.35, blacklisted_movetypes=(FLYING|FLOATING))
+	L.ignore_slowdown(type)
+
+/datum/reagent/medicine/badstims/on_mob_end_metabolize(mob/living/L)
+	..()
+	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	L.remove_movespeed_modifier(type)
+	L.unignore_slowdown(type)
+	L.Dizzy(0)
+	L.Jitter(0)

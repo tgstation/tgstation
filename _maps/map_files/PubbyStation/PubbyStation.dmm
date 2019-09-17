@@ -9639,7 +9639,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "azs" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/carpet,
@@ -11071,7 +11071,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/dorms)
 "aDc" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
@@ -13785,7 +13785,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/external{
-	name = "Escape Airlock"
+	name = "Escape Airlock";
+	safety_mode = 1
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
@@ -13808,7 +13809,8 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/external{
-	name = "Escape Airlock"
+	name = "Escape Airlock";
+	safety_mode = 1
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
@@ -16543,7 +16545,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aRR" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /obj/item/clothing/under/rank/civilian/janitor/maid,
@@ -19299,7 +19301,7 @@
 "aYm" = (
 /obj/structure/closet/crate/wooden/toy,
 /obj/item/lipstick/random,
-/obj/item/clothing/gloves/color/rainbow/clown,
+/obj/item/clothing/gloves/color/rainbow,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -20274,7 +20276,7 @@
 	pixel_x = 32;
 	pixel_y = 1
 	},
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -20717,7 +20719,7 @@
 	},
 /area/crew_quarters/bar)
 "bbp" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/carpet{
@@ -20739,7 +20741,7 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
 "bbr" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/carpet{
@@ -21102,7 +21104,7 @@
 /area/crew_quarters/bar)
 "bcr" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -21886,7 +21888,7 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
 "bey" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
@@ -21907,7 +21909,7 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
 "beA" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /obj/machinery/light{
@@ -21926,7 +21928,7 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
 "beC" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /obj/machinery/light{
@@ -21957,7 +21959,7 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
 "beE" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -33064,6 +33066,16 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/explab)
+"bFg" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock";
+	safety_mode = 1
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/exit/departure_lounge)
 "bFh" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -33693,6 +33705,9 @@
 /obj/machinery/airalarm/mixingchamber{
 	dir = 1;
 	pixel_y = -24
+	},
+/obj/machinery/computer/atmos_control/toxinsmix{
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing/chamber)
@@ -36284,6 +36299,9 @@
 /obj/machinery/igniter{
 	id = "toxigniter";
 	luminosity = 2
+	},
+/obj/machinery/air_sensor/atmos/toxins_mixing_tank{
+	pixel_y = -32
 	},
 /turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
@@ -41373,13 +41391,13 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "bYA" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /turf/open/floor/plasteel/chapel{
 	dir = 8
 	},
 /area/chapel/main/monastery)
 "bYB" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /turf/open/floor/plasteel/chapel,
 /area/chapel/main/monastery)
 "bYC" = (
@@ -41733,6 +41751,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/computer/atmos_control/incinerator,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/disposal/incinerator)
 "bZg" = (
@@ -41767,13 +41786,13 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "bZl" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /turf/open/floor/plasteel/chapel{
 	dir = 1
 	},
 /area/chapel/main/monastery)
 "bZm" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /turf/open/floor/plasteel/chapel{
 	dir = 4
 	},
@@ -42426,7 +42445,10 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/components/unary/tank/toxins,
+/obj/machinery/atmospherics/components/unary/tank/toxins{
+	dir = 4;
+	initialize_directions = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/maintenance/disposal/incinerator)
 "cbC" = (
@@ -42450,7 +42472,7 @@
 /turf/open/floor/plating,
 /area/chapel/office)
 "cbK" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
@@ -42865,7 +42887,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cdC" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cdD" = (
@@ -43189,7 +43211,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "ceA" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -43567,7 +43589,6 @@
 /area/engine/engineering)
 "cfT" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 1
 	},
@@ -43577,6 +43598,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cfV" = (
@@ -44014,7 +44036,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main/monastery)
 "chL" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -44517,7 +44539,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/asteroid/nearstation/bomb_site)
 "cku" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -44576,7 +44598,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/chapel/monastery)
 "ckD" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = -28
@@ -44722,7 +44744,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/chapel/monastery)
 "clg" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
@@ -46311,7 +46333,7 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "crg" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "crh" = (
@@ -46461,14 +46483,14 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "crL" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel/chapel{
 	dir = 4
 	},
 /area/chapel/main/monastery)
 "crM" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel/chapel{
 	dir = 1
@@ -46590,7 +46612,7 @@
 /turf/open/floor/carpet/black,
 /area/chapel/office)
 "csp" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/carpet/black,
@@ -46658,7 +46680,7 @@
 /area/maintenance/department/engine)
 "csB" = (
 /obj/effect/landmark/start/chaplain,
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/carpet/black,
@@ -46734,7 +46756,7 @@
 	c_tag = "Chapel Starboard Access";
 	network = list("ss13","monastery")
 	},
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "csU" = (
@@ -47068,7 +47090,7 @@
 /turf/open/floor/plasteel,
 /area/chapel/main/monastery)
 "cuv" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -47095,7 +47117,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cuy" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -47299,13 +47321,13 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cvd" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cve" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -47462,7 +47484,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cvB" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -47470,7 +47492,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cvC" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
@@ -47585,16 +47607,16 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cvS" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cvT" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /turf/open/floor/carpet,
 /area/chapel/main/monastery)
 "cvV" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
@@ -48156,7 +48178,7 @@
 /turf/open/floor/plasteel/dark,
 /area/library)
 "czl" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /turf/open/floor/carpet,
 /area/library)
 "czo" = (
@@ -48199,7 +48221,7 @@
 /turf/open/floor/plasteel/dark,
 /area/library)
 "czv" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -48241,7 +48263,7 @@
 /turf/open/floor/plasteel/dark,
 /area/library)
 "czI" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 1
 	},
 /turf/open/floor/carpet,
@@ -48968,9 +48990,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "dir" = (
@@ -49933,7 +49953,8 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/external{
-	name = "Cargo Escape Airlock"
+	name = "Cargo Escape Airlock";
+	safety_mode = 1
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
@@ -50066,7 +50087,6 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "gkz" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
@@ -50119,6 +50139,16 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
+"glR" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock";
+	safety_mode = 1
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/exit/departure_lounge)
 "gmp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -50994,10 +51024,8 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "imB" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1;
-	frequency = 1441;
-	id = "inc_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -51127,6 +51155,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "iCV" = (
@@ -52916,7 +52945,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/science)
 "new" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -53094,6 +53123,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
+"nzq" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
 "nzD" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -53103,10 +53138,10 @@
 	},
 /area/maintenance/department/science)
 "nAs" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8
-	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "nBw" = (
@@ -54241,9 +54276,8 @@
 /turf/closed/wall,
 /area/crew_quarters/bar)
 "qbp" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -54426,7 +54460,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/external{
-	name = "Cargo Escape Airlock"
+	name = "Cargo Escape Airlock";
+	safety_mode = 1
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
@@ -54959,6 +54994,16 @@
 /obj/structure/girder,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
+"sbw" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock";
+	safety_mode = 1
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/exit/departure_lounge)
 "sbY" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/wood,
@@ -55585,7 +55630,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
-/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "tIT" = (
@@ -56008,8 +56053,8 @@
 /area/science/explab)
 "uBs" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
+/obj/machinery/meter,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "uCS" = (
@@ -56103,6 +56148,16 @@
 "uRk" = (
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
+"uRx" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock";
+	safety_mode = 1
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/exit/departure_lounge)
 "uTI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -56373,7 +56428,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "vFZ" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 1
 	},
 /obj/item/radio/intercom{
@@ -56436,7 +56491,7 @@
 /turf/open/floor/plasteel/dark,
 /area/library)
 "vPX" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/engine,
@@ -56605,7 +56660,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "whH" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/item/radio/intercom{
 	broadcasting = 1;
 	frequency = 1481;
@@ -56739,8 +56794,8 @@
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "wza" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -74522,15 +74577,15 @@ aaa
 aaa
 aaa
 aHA
-aKy
+bFg
 xee
-aKy
+bFg
 aHA
 aaa
 aaa
 aaa
 aHA
-aKy
+bFg
 xee
 qIC
 aHA
@@ -75550,15 +75605,15 @@ aiu
 aiu
 aHz
 xee
-aKB
+sbw
 nYn
-aKB
+sbw
 xee
 aHA
 aHA
 aHA
 xee
-aKB
+sbw
 nYn
 fTY
 xee
@@ -86933,7 +86988,7 @@ nAs
 cfT
 uBs
 gkz
-qbp
+sWj
 bXk
 bXk
 bXk
@@ -87443,7 +87498,7 @@ xsB
 orZ
 qFu
 cet
-ulY
+qbp
 cfV
 cgu
 cgU
@@ -90013,7 +90068,7 @@ xsB
 vjH
 qFu
 cet
-ulY
+nzq
 flQ
 cgx
 sWU

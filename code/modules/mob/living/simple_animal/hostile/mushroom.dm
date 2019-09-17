@@ -94,7 +94,7 @@
 	if(istype(L, /mob/living/simple_animal/hostile/mushroom) && stat == DEAD)
 		var/mob/living/simple_animal/hostile/mushroom/M = L
 		if(faint_ticker < 2)
-			M.visible_message("[M] chews a bit on [src].")
+			M.visible_message("<span class='notice'>[M] chews a bit on [src].</span>")
 			faint_ticker++
 			return TRUE
 		M.visible_message("<span class='warning'>[M] devours [src]!</span>")
@@ -128,7 +128,7 @@
 		add_overlay(cap_living)
 
 /mob/living/simple_animal/hostile/mushroom/proc/Recover()
-	visible_message("[src] slowly begins to recover.")
+	visible_message("<span class='notice'>[src] slowly begins to recover.</span>")
 	faint_ticker = 0
 	revive(full_heal = 1)
 	UpdateMushroomCap()
@@ -150,7 +150,7 @@
 
 /mob/living/simple_animal/hostile/mushroom/proc/Bruise()
 	if(!bruised && !stat)
-		src.visible_message("The [src.name] was bruised!")
+		src.visible_message("<span class='notice'>The [src.name] was bruised!</span>")
 		bruised = 1
 
 /mob/living/simple_animal/hostile/mushroom/attackby(obj/item/I, mob/user, params)

@@ -31,7 +31,7 @@
 		return
 	storedorgan.Insert(user)//insert stored organ into the user
 	user.visible_message("<span class='notice'>[user] presses a button on [src], and you hear a short mechanical noise.</span>", "<span class='notice'>You feel a sharp sting as [src] plunges into your body.</span>")
-	playsound(get_turf(user), 'sound/weapons/circsawhit.ogg', 50, 1)
+	playsound(get_turf(user), 'sound/weapons/circsawhit.ogg', 50, TRUE)
 	storedorgan = null
 	name = initial(name)
 	if(uses != INFINITE)

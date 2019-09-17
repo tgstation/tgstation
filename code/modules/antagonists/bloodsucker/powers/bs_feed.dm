@@ -178,12 +178,12 @@
 		//if (!iscarbon(target))
 		//	user.visible_message("<span class='notice'>[user] shifts [target] closer to [user.p_their()] mouth.</span>", \
 		//					 	 "<span class='notice'>You secretly slip your fangs into [target]'s flesh.</span>", \
-		//					 	 vision_distance = 2, ignored_mob=target) // Only people who AREN'T the target will notice this action.
+		//					 	 vision_distance = 2, ignored_mobs=target) // Only people who AREN'T the target will notice this action.
 		//else
 		var/deadmessage = target.stat == DEAD ? "" : " <i>[target.p_they(TRUE)] looks dazed, and will not remember this.</i>"
 		user.visible_message("<span class='notice'>[user] puts [target]'s wrist up to [user.p_their()] mouth.</span>", \
 						 	 "<span class='notice'>You secretly slip your fangs into [target]'s wrist.[deadmessage]</span>", \
-						 	 vision_distance = notice_range, ignored_mob=target) // Only people who AREN'T the target will notice this action.
+						 	 vision_distance = notice_range, ignored_mobs=target) // Only people who AREN'T the target will notice this action.
 		// Warn Feeder about Witnesses...
 		var/was_unnoticed = TRUE
 		for(var/mob/living/M in viewers(notice_range, owner))
@@ -195,7 +195,7 @@
 		else
 			to_chat(user, "<span class='warning'>Someone may have noticed...</span>")
 
-	else						 // /atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mob)
+	else						 // /atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mobs)
 		user.visible_message("<span class='warning'>[user] closes [user.p_their()] mouth around [target]'s neck!</span>", \
 						 "<span class='warning'>You sink your fangs into [target]'s neck.</span>")
 
@@ -240,7 +240,7 @@
 					var/mob/living/carbon/human/H = target
 					H.bleed_rate += 5
 				target.add_splatter_floor(get_turf(target))
-				user.add_mob_blood(target)
+				user.add_mob_blood(target) // Put target's blood on us. The donor goes in the ( )
 				target.add_mob_blood(target)
 				target.take_overall_damage(10,0)
 				target.emote("scream")

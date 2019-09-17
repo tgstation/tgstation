@@ -31,6 +31,7 @@
 #define ELVIS		/datum/mutation/human/elvis
 #define RADIOACTIVE	/datum/mutation/human/radioactive
 #define GLOWY		/datum/mutation/human/glow
+#define ANTIGLOWY	/datum/mutation/human/glow/anti
 #define TELEPATHY	/datum/mutation/human/telepathy
 #define FIREBREATH	/datum/mutation/human/firebreath
 #define VOID		/datum/mutation/human/void
@@ -77,8 +78,8 @@
 #define DNA_SKIN_TONE_BLOCK			3
 #define DNA_EYE_COLOR_BLOCK			4
 #define DNA_GENDER_BLOCK			5
-#define DNA_FACIAL_HAIR_STYLE_BLOCK	6
-#define DNA_HAIR_STYLE_BLOCK		7
+#define DNA_FACIAL_HAIRSTYLE_BLOCK	6
+#define DNA_HAIRSTYLE_BLOCK		7
 
 #define DNA_SEQUENCE_LENGTH			4
 #define DNA_MUTATION_BLOCKS			8
@@ -144,6 +145,7 @@
 #define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
 #define ORGAN_SLOT_TAIL "tail"
 #define ORGAN_SLOT_PARASITE_EGG "parasite_egg"
+#define ORGAN_SLOT_REGENERATIVE_CORE "hivecore"
 
 //organ defines
 #define STANDARD_ORGAN_THRESHOLD 	100

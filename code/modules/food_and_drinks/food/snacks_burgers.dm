@@ -147,7 +147,7 @@
 	desc = "Perfect for hiding the fact it's burnt to a crisp."
 	icon_state = "cburger"
 	color = "#DA0000FF"
-	bonus_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/red = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
+	bonus_reagents = list(/datum/reagent/colorful_reagent/powder/red = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/burger/orange
@@ -155,7 +155,7 @@
 	desc = "Contains 0% juice."
 	icon_state = "cburger"
 	color = "#FF9300FF"
-	bonus_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/orange = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
+	bonus_reagents = list(/datum/reagent/colorful_reagent/powder/orange = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/burger/yellow
@@ -163,7 +163,7 @@
 	desc = "Bright to the last bite."
 	icon_state = "cburger"
 	color = "#FFF200FF"
-	bonus_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/yellow = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
+	bonus_reagents = list(/datum/reagent/colorful_reagent/powder/yellow = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/burger/green
@@ -171,7 +171,7 @@
 	desc = "It's not tainted meat, it's painted meat!"
 	icon_state = "cburger"
 	color = "#A8E61DFF"
-	bonus_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/green = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
+	bonus_reagents = list(/datum/reagent/colorful_reagent/powder/green = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/burger/blue
@@ -179,7 +179,7 @@
 	desc = "Is this blue rare?"
 	icon_state = "cburger"
 	color = "#00B7EFFF"
-	bonus_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/blue = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
+	bonus_reagents = list(/datum/reagent/colorful_reagent/powder/blue = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/burger/purple
@@ -187,7 +187,7 @@
 	desc = "Regal and low class at the same time."
 	icon_state = "cburger"
 	color = "#DA00FFFF"
-	bonus_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/purple = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
+	bonus_reagents = list(/datum/reagent/colorful_reagent/powder/purple = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/burger/black
@@ -195,7 +195,7 @@
 	desc = "This is overcooked."
 	icon_state = "cburger"
 	color = "#1C1C1C"
-	bonus_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/black = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
+	bonus_reagents = list(/datum/reagent/colorful_reagent/powder/black = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/burger/white
@@ -203,7 +203,7 @@
 	desc = "Delicous Titanium!"
 	icon_state = "cburger"
 	color = "#FFFFFF"
-	bonus_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/white = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
+	bonus_reagents = list(/datum/reagent/colorful_reagent/powder/white = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/burger/spell
@@ -289,3 +289,11 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/liquidelectricity = 5)
 	tastes = list("bun" = 2, "pure electricity" = 4)
 	foodtype = GRAIN | TOXIC
+
+/obj/item/reagent_containers/food/snacks/burger/crab
+	name = "crab burger"
+	desc = "A delicious patty of the crabby kind, slapped in between a bun."
+	icon_state = "crabburger"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("bun" = 2, "crab meat" = 4)
+	foodtype = GRAIN | MEAT

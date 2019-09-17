@@ -224,16 +224,20 @@
 			// Heal Missing
 			var/list/missing = owner.current.get_missing_limbs()
 			if (missing.len)
-				// 1) Find ONE Limb and regenerate it.
-				var/targetLimbZone = pick(missing)
-				owner.current.regenerate_limb(targetLimbZone, 0)		// regenerate_limbs() <--- If you want to EXCLUDE certain parts, do it like this ----> regenerate_limbs(0, list("head"))
-				// 2) Limb returns Damaged
-				var/obj/item/bodypart/L = owner.current.get_bodypart( targetLimbZone )
-				AddBloodVolume(20 * costMult)	// Costs blood to heal
-				L.brute_dam = 60
-				to_chat(owner.current, "<span class='notice'>Your flesh knits as it regrows [L]!</span>")
-				playsound(owner.current, 'sound/magic/demon_consume.ogg', 50, 1)
-				// DONE! After regenerating a limb, we stop here.
+				// Cycle through ALL limbs and regen them!
+				for (var/targetLimbZone in missing)
+					// 1) Find ONE Limb and regenerate it.
+					//var/targetLimbZone = pick(missing)
+					owner.current.regenerate_limb(targetLimbZone, 0)		// regenerate_limbs() <--- If you want to EXCLUDE certain parts, do it like this ----> regenerate_limbs(0, list("head"))
+					// 2) Limb returns Damaged
+					var/obj/item/bodypart/L = owner.current.get_bodypart( targetLimbZone )
+					AddBloodVolume(20 * costMult)	// Costs blood to heal
+					L.brute_dam = 60
+					to_chat(owner.current, "<span class='notice'>Your flesh knits as it regrows [L]!</span>")
+					playsound(owner.current, 'sound/magic/demon_consume.ogg', 50, 1)
+
+
+				// DONE! After regenerating ANY number of limbs, we stop here.
 				return TRUE
 
 			/*else // REMOVED: For now, let's just leave prosthetics on. Maybe you WANT to be a robovamp.
@@ -261,9 +265,15 @@
 
 
 /datum/antagonist/bloodsucker/proc/CureDisabilities()
-	owner.current.cure_blind(list(EYE_DAMAGE))//()
-	owner.current.cure_nearsighted(EYE_DAMAGE)
 	var/mob/living/carbon/C = owner.current
+
+	C.cure_blind(list(EYE_DAMAGE))//()
+	C.cure_nearsighted(EYE_DAMAGE)
+	C.set_blindness(0) 	// Added 9/2/19
+	C.set_blurriness(0) // Added 9/2/19
+	C.update_tint() 	// Added 9/2/19
+	C.update_sight() 	// Added 9/2/19
+
 	for(var/O in C.internal_organs) //owner.current.adjust_eye_damage(-100)  // This was removed by TG
 		var/obj/item/organ/organ = O
 		organ.setOrganDamage(0)

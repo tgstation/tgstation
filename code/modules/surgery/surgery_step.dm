@@ -76,13 +76,16 @@
 			prob_chance = implements[implement_type]
 		prob_chance *= surgery.get_propability_multiplier()
 
-		if((prob(prob_chance) || (iscyborg(user) && !silicons_obey_prob)) && chem_check(target) && !try_to_fail)
+		var/chem_check_result = chem_check(target)
+		if((prob(prob_chance) || (iscyborg(user) && !silicons_obey_prob)) && chem_check_result && !try_to_fail)
 			if(success(user, target, target_zone, tool, surgery))
 				advance = TRUE
 		else
 			if(failure(user, target, target_zone, tool, surgery))
 				advance = TRUE
-
+			if(chem_check_result)
+				if(.(user, target, target_zone, tool, surgery, try_to_fail)) //automatically re-attempt if failed for reason other than lack of required chemical
+					advance = TRUE
 		if(advance && !repeatable)
 			surgery.status++
 			if(surgery.status > surgery.steps.len)
@@ -93,19 +96,19 @@
 
 /datum/surgery_step/proc/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin to perform surgery on [target]...</span>",
-		"[user] begins to perform surgery on [target].",
-		"[user] begins to perform surgery on [target].")
+		"<span class='notice'>[user] begins to perform surgery on [target].</span>",
+		"<span class='notice'>[user] begins to perform surgery on [target].</span>")
 
 /datum/surgery_step/proc/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You succeed.</span>",
-		"[user] succeeds!",
-		"[user] finishes.")
+		"<span class='notice'>[user] succeeds!</span>",
+		"<span class='notice'>[user] finishes.</span>")
 	return TRUE
 
 /datum/surgery_step/proc/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='warning'>You screw up!</span>",
 		"<span class='warning'>[user] screws up!</span>",
-		"[user] finishes.", TRUE) //By default the patient will notice if the wrong thing has been cut
+		"<span class='notice'>[user] finishes.</span>", TRUE) //By default the patient will notice if the wrong thing has been cut
 	return FALSE
 
 /datum/surgery_step/proc/tool_check(mob/user, obj/item/tool)

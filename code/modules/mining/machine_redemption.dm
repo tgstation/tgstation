@@ -254,10 +254,10 @@
 			var/mob/M = usr
 			var/obj/item/card/id/I = M.get_idcard(TRUE)
 			if(points)
-				if(I && I.registered_account.adjust_money(points))
+				if(I?.registered_account?.adjust_money(points))
 					points = 0
 				else
-					to_chat(usr, "<span class='warning'>No ID detected.</span>")
+					to_chat(usr, "<span class='warning'>No valid ID detected.</span>")
 			else
 				to_chat(usr, "<span class='warning'>No points to claim.</span>")
 			return TRUE
@@ -346,10 +346,6 @@
 /obj/machinery/mineral/ore_redemption/ex_act(severity, target)
 	do_sparks(5, TRUE, src)
 	..()
-
-/obj/machinery/mineral/ore_redemption/power_change()
-	..()
-	update_icon()
 
 /obj/machinery/mineral/ore_redemption/update_icon()
 	if(powered())

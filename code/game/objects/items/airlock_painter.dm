@@ -25,7 +25,7 @@
 /obj/item/airlock_painter/proc/use_paint(mob/user)
 	if(can_use(user))
 		ink.charges--
-		playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1)
+		playsound(src.loc, 'sound/effects/spray2.ogg', 50, TRUE)
 		return 1
 	else
 		return 0
@@ -74,7 +74,7 @@
 		// TODO maybe add some colorful vomit?
 
 		user.visible_message("<span class='suicide'>[user] vomits out [user.p_their()] [L]!</span>")
-		playsound(user.loc, 'sound/effects/splat.ogg', 50, 1)
+		playsound(user.loc, 'sound/effects/splat.ogg', 50, TRUE)
 
 		L.forceMove(T)
 
@@ -114,13 +114,13 @@
 			return
 		to_chat(user, "<span class='notice'>You install [W] into [src].</span>")
 		ink = W
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	else
 		return ..()
 
 /obj/item/airlock_painter/attack_self(mob/user)
 	if(ink)
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 		ink.forceMove(user.drop_location())
 		user.put_in_hands(ink)
 		to_chat(user, "<span class='notice'>You remove [ink] from [src].</span>")
