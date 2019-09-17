@@ -26,6 +26,7 @@
 	var/target = null //its target. moves towards the target if it has one
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/last_warning
+	var/CanSupermatter = 1 //can it actually eat the supermatter
 	var/consumedSupermatter = 0 //If the singularity has eaten a supermatter shard and can go to stage six
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
@@ -289,7 +290,7 @@
 /obj/singularity/proc/consume(atom/A)
 	var/gain = A.singularity_act(current_size, src)
 	src.energy += gain
-	if(istype(A, /obj/machinery/power/supermatter_crystal) && !consumedSupermatter)
+	if (CanSupermatter == 1 && istype(A, /obj/machinery/power/supermatter_crystal) && !consumedSupermatter)
 		desc = "[initial(desc)] It glows fiercely with inner fire."
 		name = "supermatter-charged [initial(name)]"
 		consumedSupermatter = 1
@@ -446,3 +447,37 @@
 	explosion(src.loc,(dist),(dist*2),(dist*4))
 	qdel(src)
 	return(gain)
+
+/obj/singularity/vomit
+	name = "vomit-charged singularity"
+	desc = "It's a gravitational singularity made out of vomit. There appears to be a giant goose stuck inside."
+	icon = 'icons/obj/gooseularity.dmi'
+	icon_state = "gooseularity"
+	pixel_x = -96
+	pixel_y = -96
+	density = FALSE
+	current_size = 9 //It moves/eats like a max-size singulo, aside from range.
+	contained = 0 //Are we going to move around?
+	dissipate = 0 //Do we lose energy over time?
+	move_self = 1 //Do we move on our own?
+	grav_pull = 0 //How many tiles out do we pull?
+	consume_range = 5 //How many tiles out do we eat
+	CanSupermatter = 0
+	light_power = 0.7
+	light_range = 7
+	light_color = rgb(0, 255, 0)
+
+/obj/singularity/vomit/consume(atom/A)
+	var/turf/Tgoose = get_turf(src)
+	if (istype(A, /obj/effect/decal/cleanable/vomit))
+		return
+	var/turf/spawnloc = isturf(A) ? A : get_turf(A)
+	playsound(Tgoose, 'sound/effects/splat.ogg', 50, 1)
+	new /obj/effect/decal/cleanable/vomit(spawnloc)
+	..()
+
+/obj/singularity/vomit/expand(force_size = 0)
+	return //this prevents the gooseulo from reverting to a stage 1 immediately upon spawning
+
+/obj/singularity/vomit/singularity_act()
+	return //prevents gooseulo from violently exploding as soon as it's spawned
