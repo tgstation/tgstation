@@ -1,0 +1,27 @@
+<div class='display'>
+	<section>
+		<span class='label'>State:</span>
+		<div class='content' id="full_pressure">@{full_pressure}</div>
+	</section>
+    <section>
+		<span class='label'>Pressure:</span>
+		<div class='content'>
+			<div class='progressBar' id='per'>
+				<div class='progressFill' style="width: @{per}"></div>
+				<div class='progressLabel'>@{per}</div>
+			</div>
+		</div>
+	</section>
+    <section>
+		<span class='label'>Handle:</span>
+		<div class='content' id="flush">@{flush}</div>
+	</section>
+	<section>
+		<span class='label'>Eject:</span>
+		<div class='content' id="contents">@{contents}</div>
+	</section>
+	<section>
+		<span class='label'>Compressor:</span>
+		<div class='content' id="pressure_charging">@{pressure_charging}</div>
+	</section>
+</div>

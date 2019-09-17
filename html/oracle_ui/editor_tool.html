@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>OracleUI IDE</title>
+	<style>
+	html, body {
+	    margin: 0;
+	    height: 100%;
+	}
+	h1 {
+		margin: 5px;
+	}
+	#template_src_container {
+		position: absolute;
+		left: 10px;
+		top: 0px;
+		width: 50%;
+		height: 75%;
+	}
+	#template_src {
+		position: absolute;
+		top: 50px;
+		left: 0px;
+		width: 100%;
+		height: calc(100% - 60px);
+	}
+	#data_src_container {
+		position: absolute;
+		left: 10px;
+		top: 75%;
+		width: 50%;
+		height: calc(25% - 20px);
+	}
+	#data_src {
+		position: absolute;
+		top: 50px;
+		left: 0px;
+		width: 100%;
+		height: calc(100% - 50px);
+	}
+	#output_container {
+		position: absolute;
+		left: calc(50% + 20px);
+		top: 0%;
+		width: calc(50% - 50px);
+		height: calc(100% - 20px);
+	}
+	#output_frame {
+		position: absolute;
+		top: 50px;
+		left: 10px;
+		width: 100%;
+		height: calc(100% - 50px);
+	}
+	</style>
+</head>
+<body>
+	<div id="template_src_container">
+		<h1>Content Template:</h1>
+		<textarea id="template_src" onchange="updateBody();" onkeyup="updateBody();" onpaste="updateBody();">
+<div class='display'>
+	<section>
+		<span class='label'>Key:</span>
+		<div class='content' id="key">@{key}</div>
+	</section>
+</div>
+		</textarea>
+	</div>
+	<div id="data_src_container">
+		<h1>Data:</h1>
+		<textarea id="data_src" onchange="updateData();" onkeyup="updateData();" onpaste="updateData();">{"key":"value"}</textarea>
+	</div>
+	<div id="output_container">
+		<h1>Output:</h1>
+		<iframe name="output_frame" id="output_frame" onload="updateBody();"></iframe>
+	</div>
+</body>
+<script type="text/javascript">
+	function updateBody() {
+		var body = document.getElementById('template_src').value
+		var fields = JSON.parse(document.getElementById('data_src').value);
+		for (var key in fields) {
+			let value = fields[key];
+			body = body.replace("@{" + key + "}", value)
+		}
+		var targetFrame = document.getElementById('output_frame')
+		targetFrame.contentWindow.replaceContent(body);
+		updateData();
+	}
+	function updateData() {
+		var targetFrame = document.getElementById('output_frame');
+		var json = document.getElementById('data_src').value;
+		if(JSON.parse(json)) {
+			targetFrame.contentWindow.updateFields(json);
+		}
+	}
+	var url = document.URL,
+	shortUrl=url.substring(0,url.lastIndexOf("/"));
+	window.open(shortUrl + "/themes/nano/index.html", "output_frame");
+</script>
+</html>
