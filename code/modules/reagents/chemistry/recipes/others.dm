@@ -130,7 +130,7 @@
 	name = "Mulligan"
 	id = /datum/reagent/mulligan
 	results = list(/datum/reagent/mulligan = 1)
-	required_reagents = list(/datum/reagent/slime_toxin = 1, /datum/reagent/toxin/mutagen = 1)
+	required_reagents = list(/datum/reagent/mutationtoxin/jelly = 1, /datum/reagent/toxin/mutagen = 1)
 
 
 ////////////////////////////////// VIROLOGY //////////////////////////////////////////

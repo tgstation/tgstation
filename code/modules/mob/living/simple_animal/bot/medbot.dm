@@ -343,6 +343,8 @@
 
 /mob/living/simple_animal/bot/medbot/proc/assess_patient(mob/living/carbon/C)
 	//Time to see if they need medical help!
+	if(stationary_mode && !Adjacent(C)) //YOU come to ME, BRO
+		return FALSE
 	if(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_FAKEDEATH)))
 		return FALSE	//welp too late for them!
 
@@ -354,6 +356,9 @@
 
 	if(emagged == 2) //Everyone needs our medicine. (Our medicine is toxins)
 		return TRUE
+
+	if(HAS_TRAIT(C,TRAIT_MEDIBOTCOMINGTHROUGH) && !HAS_TRAIT_FROM(C,TRAIT_MEDIBOTCOMINGTHROUGH,tag)) //the early medbot gets the worm (or in this case the patient)
+		return FALSE
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
@@ -504,6 +509,8 @@
 					log_combat(src, patient, "injected", "internal synthesizer", "[reagent_id]:[injection_amount]")
 				C.visible_message("<span class='danger'>[src] injects [patient] with its syringe!</span>", \
 					"<span class='userdanger'>[src] injects you with its syringe!</span>")
+				ADD_TRAIT(patient,TRAIT_MEDIBOTCOMINGTHROUGH,tag)
+				addtimer(TRAIT_CALLBACK_REMOVE(patient, TRAIT_MEDIBOTCOMINGTHROUGH, tag), (30 SECONDS))
 			else
 				failed = TRUE
 		else

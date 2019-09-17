@@ -8,12 +8,14 @@
 	var/special_screen_replace = TRUE //if false, it will be an overlay instead
 	var/mob/owner
 
-/datum/mood_event/New(mob/M, param)
+/datum/mood_event/New(mob/M, ...)
 	owner = M
-	add_effects(param)
+	var/list/params = args.Copy(2)
+	add_effects(arglist(params))
 
 /datum/mood_event/Destroy()
 	remove_effects()
+	owner = null
 	return ..()
 
 /datum/mood_event/proc/add_effects(param)

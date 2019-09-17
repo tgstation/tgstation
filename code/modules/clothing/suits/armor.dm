@@ -239,6 +239,14 @@
 	icon_state = "knight_red"
 	item_state = "knight_red"
 
+/obj/item/clothing/suit/armor/riot/knight/greyscale
+	name = "knight armour"
+	desc = "A classic suit of armour, able to be made from many different materials."
+	icon_state = "knight_greyscale"
+	item_state = "knight_greyscale"
+	armor = list("melee" = 35, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 10, "bio" = 10, "rad" = 10, "fire" = 40, "acid" = 40)
+	material_flags = MATERIAL_ADD_PREFIX //Can change color and add prefix
+
 /obj/item/clothing/suit/armor/vest/durathread
 	name = "durathread vest"
 	desc = "A vest made of durathread with strips of leather acting as trauma plates."

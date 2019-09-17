@@ -1,0 +1,6 @@
+PLEASE NOTE:
+Major changes have been made to medbot.dm, Sleeper.dm, borghydro.dm and several reagent code files (code/modules/reagents), and will most likely continue to be made.
+Several other code files not listed may have edits from the revert including premade medicines, vendors, mapping and medkits.
+These changes were made primarily to revert cobbychem.
+Changes in these files are mostly unmarked, do not update to tgstation upstream versions of these files without consulting Terra first.
+Honestly, why does /tg/ have to make shitty changes that are hard to revert and maintain?

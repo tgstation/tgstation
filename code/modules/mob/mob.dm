@@ -11,11 +11,11 @@
   * Unsets the focus var
   *
   * Clears alerts for this mob
-  * 
+  *
   * Resets all the observers perspectives to the tile this mob is on
-  * 
+  *
   * qdels any client colours in place on this mob
-  * 
+  *
   * Ghostizes the client attached to this mob
   *
   * Parent call
@@ -48,7 +48,7 @@
   *
   * Sends global signal COMSIG_GLOB_MOB_CREATED
   *
-  * Adds to global lists 
+  * Adds to global lists
   * * GLOB.mob_list
   * * GLOB.mob_directory (by tag)
   * * GLOB.dead_mob_list - if mob is dead
@@ -134,7 +134,7 @@
 /mob/proc/get_photo_description(obj/item/camera/camera)
 	return "a ... thing?"
 
-/** 
+/**
   * Show a message to this mob (visual)
   */
 /mob/proc/show_message(msg, type, alt_msg, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
@@ -169,7 +169,7 @@
 
 /**
   * Generate a visible message from this atom
-  * 
+  *
   * Show a message to all player mobs who sees this atom
   *
   * Show a message to the src mob (if the src is a mob)
@@ -299,8 +299,10 @@
   * set disable_warning to disable the 'you are unable to equip that' warning.
   *
   * unset redraw_mob to prevent the mob icons from being redrawn at the end.
+  *
+  * Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
   */
-/mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE)
+/mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE, initial = FALSE)
 	if(!istype(W))
 		return FALSE
 	if(!W.mob_can_equip(src, null, slot, disable_warning, bypass_equip_delay_self))
@@ -310,7 +312,7 @@
 			if(!disable_warning)
 				to_chat(src, "<span class='warning'>You are unable to equip that!</span>")
 		return FALSE
-	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
+	equip_to_slot(W, slot, redraw_mob, initial) //This proc should not ever fail.
 	return TRUE
 
 /**
@@ -325,15 +327,16 @@
 	return
 
 /**
-  * Equip an item to the slot or delete 
+  * Equip an item to the slot or delete
   *
   * This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to
   * equip people when the round starts and when events happen and such.
   *
   * Also bypasses equip delay checks, since the mob isn't actually putting it on.
+  * Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
   */
-/mob/proc/equip_to_slot_or_del(obj/item/W, slot)
-	return equip_to_slot_if_possible(W, slot, TRUE, TRUE, FALSE, TRUE)
+/mob/proc/equip_to_slot_or_del(obj/item/W, slot, initial = FALSE)
+	return equip_to_slot_if_possible(W, slot, TRUE, TRUE, FALSE, TRUE, initial)
 
 /**
   * Auto equip the passed in item the appropriate slot based on equipment priority
@@ -542,7 +545,7 @@
 		memory_throttle_time = world.time + 5 SECONDS
 		msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 		msg = sanitize(msg)
-		
+
 		mind.store_memory(msg)
 	else
 		to_chat(src, "You don't have a mind datum for some reason, so you can't add a note to it.")
@@ -671,7 +674,7 @@
 		return
 	if(isAI(M))
 		return
-/** 
+/**
   * Handle the result of a click drag onto this mob
   *
   * For mobs this just shows the inventory
@@ -680,7 +683,12 @@
 	. = ..()
 	if(ismob(dropping) && dropping != user)
 		var/mob/M = dropping
-		M.show_inv(user)
+		if(ismob(user))
+			var/mob/U = user
+			if(!iscyborg(U) || U.a_intent == INTENT_HARM)
+				M.show_inv(U)
+		else
+			M.show_inv(user)
 
 ///Is the mob muzzled (default false)
 /mob/proc/is_muzzled()
@@ -688,7 +696,7 @@
 
 /**
   * Output an update to the stat panel for the client
-  * 
+  *
   * calculates client ping, round id, server time, time dilation and other data about the round
   * and puts it in the mob status panel on a regular loop
   */
@@ -1006,7 +1014,7 @@
   * Fully update the name of a mob
   *
   * This will update a mob's name, real_name, mind.name, GLOB.data_core records, pda, id and traitor text
-  * 
+  *
   * Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
   */
 /mob/proc/fully_replace_character_name(oldname,newname)
@@ -1196,6 +1204,10 @@
 		if("logging")
 			return debug_variable(var_name, logging, 0, src, FALSE)
 	. = ..()
+
+/mob/vv_auto_rename(new_name)
+	//Do not do parent's actions, as we *usually* do this differently.
+	fully_replace_character_name(real_name, new_name)
 
 ///Show the language menu for this mob
 /mob/verb/open_language_menu()
