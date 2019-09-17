@@ -24,9 +24,9 @@
 	armor = list("melee" = 20, "bullet" = 10, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	var/list/facing_modifiers = list(MECHA_FRONT_ARMOUR = 1.5, MECHA_SIDE_ARMOUR = 1, MECHA_BACK_ARMOUR = 0.5)
 	var/equipment_disabled = 0 //disabled due to EMP
-	var/obj/item/stock_parts/cell/cell
-	var/obj/item/stock_parts/scanning_module/scanmod
-	var/obj/item/stock_parts/capacitor/capacitor
+	var/obj/item/stock_parts/cell/cell ///Keeps track of the mech's cell
+	var/obj/item/stock_parts/scanning_module/scanmod ///Keeps track of the mech's scanning module
+	var/obj/item/stock_parts/capacitor/capacitor ///Keeps track of the mech's capacitor
 	var/construction_state = MECHA_LOCKED
 	var/last_message = 0
 	var/add_req_access = 1
@@ -210,9 +210,12 @@
 	capacitor = locate(/obj/item/stock_parts/capacitor) in contents
 	update_part_values()
 
-/obj/mecha/proc/update_part_values()
+/obj/mecha/proc/update_part_values() ///Updates the values given by scanning module and capacitor tier, called when a part is removed or inserted.
 	if(scanmod)
 		normal_step_energy_drain = 20 - (5 * scanmod.rating) //10 is normal, so on lowest part its worse, on second its ok and on higher its real good up to 0 on best
+		step_energy_drain = normal_step_energy_drain
+	else
+		normal_step_energy_drain = 500
 		step_energy_drain = normal_step_energy_drain
 	if(capacitor)
 		armor = armor.modifyRating(energy = (capacitor.rating * 5)) //Each level of capacitor protects the mech against emp by 5%
@@ -228,21 +231,27 @@
 	internal_tank = new /obj/machinery/portable_atmospherics/canister/air(src)
 	return internal_tank
 
+///Adds a cell, for use in Map-spawned mechs, Nuke Ops mechs, and admin-spawned mechs. Mechs built by hand will replace this.
 /obj/mecha/proc/add_cell(var/obj/item/stock_parts/cell/C=null)
+	QDEL_NULL(cell)
 	if(C)
 		C.forceMove(src)
 		cell = C
 		return
 	cell = new /obj/item/stock_parts/cell/high/plus(src)
 
+///Adds a scanning module, for use in Map-spawned mechs, Nuke Ops mechs, and admin-spawned mechs. Mechs built by hand will replace this.
 /obj/mecha/proc/add_scanmod(var/obj/item/stock_parts/scanning_module/sm=null)
+	QDEL_NULL(scanmod)
 	if(sm)
 		sm.forceMove(src)
 		scanmod = sm
 		return
 	scanmod = new /obj/item/stock_parts/scanning_module(src)
 
+///Adds a capacitor, for use in Map-spawned mechs, Nuke Ops mechs, and admin-spawned mechs. Mechs built by hand will replace this.
 /obj/mecha/proc/add_capacitor(var/obj/item/stock_parts/capacitor/cap=null)
+	QDEL_NULL(capacitor)
 	if(cap)
 		cap.forceMove(src)
 		capacitor = cap
