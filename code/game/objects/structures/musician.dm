@@ -79,7 +79,7 @@
 			L.apply_status_effect(STATUS_EFFECT_GOOD_MUSIC)
 		if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
 			continue
-		M.playsound_local(source, null, play_volume, falloff = 5, S = music_played)
+		M.playsound_local(source, null, play_volume, falloff = 5, S = music_played)	//FULP
 
 /datum/song/proc/updateDialog(mob/user)
 	instrumentObj.updateDialog()		// assumes it's an object in world, override if otherwise
