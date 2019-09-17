@@ -26,7 +26,7 @@
 	var/target = null //its target. moves towards the target if it has one
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/last_warning
-	var/CanSupermatter = 1 //can it actually eat the supermatter
+	var/CanSupermatter = TRUE //can it actually eat the supermatter
 	var/consumedSupermatter = 0 //If the singularity has eaten a supermatter shard and can go to stage six
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
@@ -290,7 +290,7 @@
 /obj/singularity/proc/consume(atom/A)
 	var/gain = A.singularity_act(current_size, src)
 	src.energy += gain
-	if (CanSupermatter == 1 && istype(A, /obj/machinery/power/supermatter_crystal) && !consumedSupermatter)
+	if (CanSupermatter == TRUE && istype(A, /obj/machinery/power/supermatter_crystal) && !consumedSupermatter)
 		desc = "[initial(desc)] It glows fiercely with inner fire."
 		name = "supermatter-charged [initial(name)]"
 		consumedSupermatter = 1
@@ -462,7 +462,7 @@
 	move_self = 1 //Do we move on our own?
 	grav_pull = 0 //How many tiles out do we pull?
 	consume_range = 5 //How many tiles out do we eat
-	CanSupermatter = 0
+	CanSupermatter = FALSE
 	light_power = 0.7
 	light_range = 7
 	light_color = rgb(0, 255, 0)
