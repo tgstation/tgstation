@@ -440,7 +440,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	desc = "Hey, this coin's the same on both sides!"
 	sideslist = list("heads")
 
-/obj/item/coin/antagtoken
+/obj/item/coin/plastic/antagtoken
 	name = "antag token"
 	desc = "A novelty coin that helps the heart know what hard evidence cannot prove."
 	sideslist = list("valid", "salad")
