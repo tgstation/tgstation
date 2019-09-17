@@ -100,7 +100,7 @@
 		qdel(src)
 
 mob/living/simple_animal/hostile/bear/butter //The mighty companion to Cak. Several functions used from it.
-	name = "Kerrygold"
+	name = "Terrygold"
 	icon_state = "butterbear"
 	icon_living = "butterbear"
 	icon_dead = "butterbear_dead"
