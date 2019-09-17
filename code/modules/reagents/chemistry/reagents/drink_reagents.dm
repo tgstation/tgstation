@@ -201,7 +201,7 @@
 	self_consuming = TRUE //so that skeletons can process milk without a liver
 
 /datum/reagent/consumable/milk/on_mob_life(mob/living/carbon/M)
-	if(M.dna.species.type == /datum/species/skeleton || M.dna.species.type == /datum/species/plasmaman) //I mostly copied this check from bone hurting juice (and then modified it to check to see if you ARE a skeleton or a plasmaman instead of if you AREN'T a skeleton or a plasmaman)
+	if(isskeleton(M) || isplasmaman(M))
 		if(volume > 10)
 			M.reagents.remove_reagent(type, volume - 10)
 			to_chat(M, "<span class='warning'>The excess milk is dripping off your bones!</span>")
