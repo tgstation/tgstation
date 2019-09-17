@@ -19,8 +19,6 @@
 	var/mutantrace_variation = NO_MUTANTRACE_VARIATION //Are there special sprites for specific situations? Don't use this unless you need to.
 	var/freshly_laundered = FALSE
 
-	var/fulp_digisuit = FALSE //FULP - set to TRUE by initialize() based on GLOB.digisuits
-
 /obj/item/clothing/under/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
@@ -54,9 +52,7 @@
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS, SENSOR_COORDS)
-	if(src.type in GLOB.digisuits) //FULP - checks type path vs a list of digi-compatible jumpsuits
-		fulp_digisuit = TRUE //FULP - will take icon from _fulp dmi file and use _f suffix
-		mutantrace_variation = MUTANTRACE_VARIATION //FULP - makes it display diff on digilegs
+	digisuit_var_update() //FULP
 
 /obj/item/clothing/under/emp_act()
 	. = ..()

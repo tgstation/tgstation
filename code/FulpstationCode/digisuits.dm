@@ -16,4 +16,21 @@ GLOBAL_LIST_INIT(digisuits, list(
 	/obj/item/clothing/under/rank/security/head_of_security, /obj/item/clothing/under/rank/security/head_of_security/alt,
 	/obj/item/clothing/under/rank/prisoner, /obj/item/clothing/under/rank/cargo/qm,
 	/obj/item/clothing/under/rank/cargo/miner/lavaland
-	))
+	)) //Add any extra non-fulp items with digitigrade variant sprites to this list
+
+
+
+/obj/item/clothing/under/proc/digisuit_var_update() //Updates vars for all the above items - seems cleaner than having a huge list of redefines and less invasive than manually adding
+	if(src.type in GLOB.digisuits)
+		fulp_digisuit = TRUE
+		mutantrace_variation = MUTANTRACE_VARIATION
+
+/datum/species/proc/digisuit_icon_check(var/obj/item/clothing/under/U) //checks for digi variant
+	if(U.mutantrace_variation == !MUTANTRACE_VARIATION)
+		return TRUE
+	else
+		return FALSE
+
+/mob/living/carbon/human/proc/digisuit_icon_update(var/obj/item/clothing/under/U)
+	if(U.fulp_digisuit)
+		U.mob_overlay_icon = 'icons/fulpicons/mith_stash/clothing/under_worn.dmi'
