@@ -196,7 +196,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/shielded/wizard/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/personalshield, INFINITY, 15, INFINITY, INFINITY, 0, TRUE, "shield-red", list(/obj/item/wizard_armour_charge))
+	AddComponent(/datum/component/personalshield, INFINITY, 15, INFINITY, INFINITY, 0, TRUE, "shield-red", list(/obj/item/wizard_armour_charge), null, "broken", 8)
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard
 	name = "battlemage helmet"
@@ -220,7 +220,4 @@
 
 /obj/item/wizard_armour_charge/afterattack(obj/item/clothing/suit/space/hardsuit/shielded/wizard/W, mob/user, proximity)
 	. = ..()
-	if(SEND_SIGNAL(W, COMPONENT_RECHARGE_SHIELD, user, 8))
-		qdel(src)
-		return
 	to_chat(user, "<span class='warning'>The rune can only be used on battlemage armour!</span>")

@@ -757,10 +757,6 @@
 	. = ..()
 	AddComponent(/datum/component/personalshield, 3, null, 20 SECONDS, 2 SECONDS, 1, TRUE, "shield-red", list("shield-red", "shield-old"))
 
-/obj/item/clothing/suit/space/hardsuit/shielded/syndi/multitool_act(mob/living/user, obj/item/I)
-	. = ..()
-	SEND_SIGNAL(src, COMPONENT_SHIELD_TOGGLE_COLOR, user)
-
 /obj/item/clothing/suit/space/hardsuit/shielded/syndi/Initialize()
 	jetpack = new /obj/item/tank/jetpack/suit(src)
 	. = ..()

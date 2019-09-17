@@ -22,12 +22,13 @@
 	/// icon_states that can be toggled between
 	var/list/togglable_states
 	var/toggle_state = 1
+	var/recharge_item_amount
 
-/datum/component/personalshield/Initialize(max_charges = 3, current_charges, recharge_delay = 20 SECONDS, recharge_speed = 2 SECONDS, recharge_rate = 1, must_be_worn_or_held = TRUE, shield_on = "shield-old", list/item_rechargable, list/togglable_states, shield_broken = "broken")
+/datum/component/personalshield/Initialize(max_charges = 3, current_charges, recharge_delay = 20 SECONDS, recharge_speed = 2 SECONDS, recharge_rate = 1, must_be_worn_or_held = TRUE, shield_on = "shield-old", list/item_rechargable, list/togglable_states, shield_broken = "broken", recharge_item_amount = 0)
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 	src.max_charges = max_charges
-	if(!current_charges)
+	if(!isnull(current_charges))
 		src.current_charges = max_charges
 	else
 		src.current_charges = current_charges
@@ -40,13 +41,17 @@
 		src.item_rechargable = typecacheof(item_rechargable)
 	src.togglable_states = togglable_states
 	src.shield_broken = shield_broken
+	src.recharge_item_amount = recharge_item_amount
 
 /datum/component/personalshield/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/equipped)
 	RegisterSignal(parent, COMSIG_ITEM_AFTER_PICKUP, .proc/pickup)
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/dropped)
-	RegisterSignal(parent, COMPONENT_SHIELD_TOGGLE_COLOR, .proc/toggle_shield_color)
+	if(length(togglable_states) > 1)
+		RegisterSignal(parent, COMSIG_ATOM_MULTITOOL_ACT, .proc/toggle_shield_color)
+	if(!isnull(item_rechargable))
+		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/item_recharge)
 
 /datum/component/personalshield/UnregisterFromParent()
 	. = ..()
@@ -54,7 +59,9 @@
 		COMSIG_ITEM_EQUIPPED, 
 		COMSIG_ITEM_AFTER_PICKUP, 
 		COMSIG_ITEM_DROPPED,
-		COMPONENT_SHIELD_TOGGLE_COLOR))
+		COMSIG_ATOM_MULTITOOL_ACT,
+		COMSIG_PARENT_ATTACKBY))
+	dropped(null, wearer)
 
 /datum/component/personalshield/proc/toggle_shield_color(datum/source, mob/user)
 	if(wearer != user)
@@ -96,16 +103,17 @@
 /datum/component/personalshield/proc/start_recharge()
 	if(recharge_timer)
 		deltimer(recharge_timer)
+	recharge_timer = null
 	if(recharge_delay == INFINITY || !recharge_rate) // don't recharge
 		return
 	recharge_timer = addtimer(CALLBACK(src, .proc/recharge), recharge_delay, TIMER_STOPPABLE)
 
-/datum/component/personalshield/proc/item_recharge(datum/source, mob/user, add_charges)
+/datum/component/personalshield/proc/item_recharge(datum/source, mob/user)
 	if(!is_type_in_typecache(source.type, item_rechargable))
-		return FALSE
-	current_charges = CLAMP((current_charges + add_charges), 0, max_charges)
+		return NONE
+	current_charges = CLAMP((current_charges + recharge_item_amount), 0, max_charges)
 	to_chat(user, "<span class='notice'>You charge \the [parent]. It can now absorb [current_charges] hits.</span>")
-	return TRUE
+	return COMPONENT_NO_AFTERATTACK
 
 /datum/component/personalshield/proc/shield_activate(mob/user)
 	RegisterSignal(parent, COMSIG_ITEM_HIT_REACT, .proc/hit_reaction)
