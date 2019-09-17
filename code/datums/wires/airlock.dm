@@ -1,6 +1,7 @@
 /datum/wires/airlock
 	holder_type = /obj/machinery/door/airlock
 	proper_name = "Airlock"
+	var/next_shock // because this isnt electrified its just zapping people touching live wires
 
 /datum/wires/airlock/secure
 	randomize = TRUE
@@ -18,8 +19,6 @@
 
 /datum/wires/airlock/interactable(mob/user)
 	var/obj/machinery/door/airlock/A = holder
-	if(!issilicon(user) && A.isElectrified() && A.shock(user, 100))
-		return FALSE
 	if(A.panel_open)
 		return TRUE
 
@@ -76,8 +75,7 @@
 				else if(A.aiControlDisabled == 2)
 					A.aiControlDisabled = -1
 		if(WIRE_SHOCK) // Pulse to shock the door for 10 ticks.
-			if(!A.secondsElectrified)
-				A.set_electrified(MACHINE_DEFAULT_ELECTRIFY_TIME, usr)
+			A.set_electrified(MACHINE_ELECTRIFIED_TEMPORARY, usr, 10)
 		if(WIRE_SAFETY)
 			A.safe = !A.safe
 			if(!A.density)
@@ -96,15 +94,15 @@
 				A.regainMainPower()
 			else
 				A.loseMainPower()
-			if(isliving(usr))
-				A.shock(usr, 50)
+			if(isliving(usr) && world.time > next_shock && A.shock(usr, 50))
+				next_shock = world.time + 1 SECONDS
 		if(WIRE_BACKUP1, WIRE_BACKUP2) // Cut to loose backup power, repair all to gain backup power.
 			if(mend && !is_cut(WIRE_BACKUP1) && !is_cut(WIRE_BACKUP2))
 				A.regainBackupPower()
 			else
 				A.loseBackupPower()
-			if(isliving(usr))
-				A.shock(usr, 50)
+			if(isliving(usr) && world.time > next_shock && A.shock(usr, 50))
+				next_shock = world.time + 1 SECONDS
 		if(WIRE_BOLTS) // Cut to drop bolts, mend does nothing.
 			if(!mend)
 				A.bolt()
@@ -121,11 +119,9 @@
 					A.aiControlDisabled = 2
 		if(WIRE_SHOCK) // Cut to shock the door, mend to unshock.
 			if(mend)
-				if(A.secondsElectrified)
-					A.set_electrified(MACHINE_NOT_ELECTRIFIED, usr)
+				A.set_electrified(MACHINE_NOT_ELECTRIFIED, usr)
 			else
-				if(A.secondsElectrified != MACHINE_ELECTRIFIED_PERMANENT)
-					A.set_electrified(MACHINE_ELECTRIFIED_PERMANENT, usr)
+				A.set_electrified(MACHINE_ELECTRIFIED_PERMANENT, usr)
 		if(WIRE_SAFETY) // Cut to disable safeties, mend to re-enable.
 			A.safe = mend
 		if(WIRE_TIMING) // Cut to disable auto-close, mend to re-enable.
@@ -136,5 +132,5 @@
 			A.lights = mend
 			A.update_icon()
 		if(WIRE_ZAP1, WIRE_ZAP2) // Ouch.
-			if(isliving(usr))
-				A.shock(usr, 50)
+			if(isliving(usr) && world.time > next_shock && A.shock(usr, 50))
+				next_shock = world.time + 1 SECONDS

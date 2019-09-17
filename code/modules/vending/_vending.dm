@@ -109,8 +109,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/icon_vend
 	///Icon to flash when user is denied a vend
 	var/icon_deny
-	///World ticks the machine is electified for
-	var/seconds_electrified = MACHINE_NOT_ELECTRIFIED
 	///When this is TRUE, we fire items at customers! We're broken!
 	var/shoot_inventory = 0
 	///How likely this is to happen (prob 100)
@@ -497,9 +495,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 	to_chat(user, "<span class='notice'>You short out the product lock on [src].</span>")
 
 /obj/machinery/vending/_try_interact(mob/user)
-	if(seconds_electrified && !(stat & NOPOWER))
-		if(shock(user, 100))
-			return
+	if(SEND_SIGNAL(src, COMSIG_VENDING_TRY_INTERACT, user) & COMSIG_ELECTRIFIED_SHOCK)
+		return
 	return ..()
 
 /obj/machinery/vending/ui_interact(mob/user)
@@ -692,9 +689,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(!active)
 		return
 
-	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
-		seconds_electrified--
-
 	//Pitch to the people!  Really sell it!
 	if(last_slogan + slogan_delay <= world.time && slogan_list.len > 0 && !shut_up && prob(5))
 		var/slogan = pick(slogan_list)
@@ -720,16 +714,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 	say(message)
 
 /obj/machinery/vending/power_change()
-	if(stat & BROKEN)
-		return
-
+	. = ..()
 	if(powered())
-		stat &= ~NOPOWER
 		START_PROCESSING(SSmachines, src)
-	else
-		stat |= NOPOWER
-
-	update_icon()
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
 /**

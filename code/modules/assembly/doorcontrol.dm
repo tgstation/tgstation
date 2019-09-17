@@ -58,10 +58,7 @@
 					D.locked = !D.locked
 					D.update_icon()
 			if(specialfunctions & SHOCK)
-				if(D.secondsElectrified)
-					D.set_electrified(MACHINE_ELECTRIFIED_PERMANENT, usr)
-				else
-					D.set_electrified(MACHINE_NOT_ELECTRIFIED, usr)
+				D.AddComponent(/datum/component/electrified/machinery, MACHINE_ELECTRIFIED_PERM_TOGGLE, usr)
 			if(specialfunctions & SAFE)
 				D.safe = !D.safe
 

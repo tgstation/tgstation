@@ -121,6 +121,8 @@ Class Procs:
 	var/market_verb = "Customer"
 	var/payment_department = ACCOUNT_ENG
 
+	var/shockedby // for electrified component logging
+
 	var/ui_x	//For storing and overriding ui dimensions
 	var/ui_y
 

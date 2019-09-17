@@ -46,7 +46,6 @@
 	integrity_failure = 70
 	damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_N
 	autoclose = TRUE
-	secondsElectrified = MACHINE_NOT_ELECTRIFIED //How many seconds remain until the door is no longer electrified. -1/MACHINE_ELECTRIFIED_PERMANENT = permanently electrified until someone fixes it.
 	assemblytype = /obj/structure/door_assembly
 	normalspeed = 1
 	explosion_block = 1
@@ -65,9 +64,7 @@
 	var/aiHacking = FALSE
 	var/closeOtherId //Cyclelinking for airlocks that aren't on the same x or y coord as the target.
 	var/obj/machinery/door/airlock/closeOther
-	var/justzap = FALSE
 	var/obj/item/electronics/airlock/electronics
-	var/shockCooldown = FALSE //Prevents multiple shocks from happening
 	var/obj/item/note //Any papers pinned to the airlock
 	var/detonated = FALSE
 	var/abandoned = FALSE
@@ -117,8 +114,7 @@
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_to_hud(src)
 	diag_hud_set_electrified()
-
-	RegisterSignal(src, COMSIG_MACHINERY_BROKEN, .proc/on_break)
+	RegisterSignal(src, COMSIG_ELECTRIFICATION_CHANGE, .proc/electrification_changed)
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -314,14 +310,8 @@
 
 /obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
 	if(!issilicon(usr))
-		if(isElectrified())
-			if(!justzap)
-				if(shock(user, 100))
-					justzap = TRUE
-					addtimer(VARSET_CALLBACK(src, justzap, FALSE) , 10)
-					return
-			else
-				return
+		if(SEND_SIGNAL(src, COMSIG_AIRLOCK_BUMPOPEN, user) & COMSIG_ELECTRIFIED_SHOCK)
+			return
 		else if(user.hallucinating() && ishuman(user) && prob(1) && !operating)
 			var/mob/living/carbon/human/H = user
 			if(H.gloves)
@@ -336,11 +326,6 @@
 			else
 				addtimer(CALLBACK(cyclelinkedairlock, .proc/close), 2)
 	..()
-
-/obj/machinery/door/airlock/proc/isElectrified()
-	if(secondsElectrified != MACHINE_NOT_ELECTRIFIED)
-		return TRUE
-	return FALSE
 
 /obj/machinery/door/airlock/proc/canAIControl(mob/user)
 	return ((aiControlDisabled != 1) && !isAllPowerCut())
@@ -413,14 +398,11 @@
 /obj/machinery/door/airlock/proc/shock(mob/user, prb)
 	if(!hasPower())		// unpowered, no shock
 		return FALSE
-	if(shockCooldown > world.time)
-		return FALSE	//Already shocked someone recently?
 	if(!prob(prb))
 		return FALSE //you lucked out, no shock for you
 	do_sparks(5, TRUE, src)
 	var/check_range = TRUE
 	if(electrocute_mob(user, get_area(src), src, 1, check_range))
-		shockCooldown = world.time + 10
 		return TRUE
 	else
 		return FALSE
@@ -661,9 +643,10 @@
 			. += "It looks very robust."
 
 	if(issilicon(user) && (!stat & BROKEN))
+		var/datum/component/electrified/E = GetComponent(/datum/component/electrified)
 		. += "<span class='notice'>Shift-click [src] to [ density ? "open" : "close"] it.</span>"
 		. += "<span class='notice'>Ctrl-click [src] to [ locked ? "raise" : "drop"] its bolts.</span>"
-		. += "<span class='notice'>Alt-click [src] to [ secondsElectrified ? "un-electrify" : "permanently electrify"] it.</span>"
+		. += "<span class='notice'>Alt-click [src] to [ E.electrification_state != MACHINE_NOT_ELECTRIFIED ? "un-electrify" : "permanently electrify"] it.</span>"
 		. += "<span class='notice'>Ctrl-Shift-click [src] to [ emergency ? "disable" : "enable"] emergency access.</span>"
 
 /obj/machinery/door/airlock/attack_ai(mob/user)
@@ -729,11 +712,6 @@
 		if(user)
 			attack_ai(user)
 
-/obj/machinery/door/airlock/attack_animal(mob/user)
-	. = ..()
-	if(isElectrified())
-		shock(user, 100)
-
 /obj/machinery/door/airlock/attack_paw(mob/user)
 	return attack_hand(user)
 
@@ -741,10 +719,6 @@
 	. = ..()
 	if(.)
 		return
-	if(!(issilicon(user) || IsAdminGhost(user)))
-		if(isElectrified())
-			if(shock(user, 100))
-				return
 
 	if(ishuman(user) && prob(40) && density)
 		var/mob/living/carbon/human/H = user
@@ -763,21 +737,6 @@
 		to_chat(user, "<span class='warning'>Wires are protected!</span>")
 		return WIRE_INTERACTION_FAIL
 	return ..()
-
-/obj/machinery/door/airlock/proc/electrified_loop()
-	while (secondsElectrified > MACHINE_NOT_ELECTRIFIED)
-		sleep(10)
-		if(QDELETED(src))
-			return
-
-		secondsElectrified--
-		updateDialog()
-	// This is to protect against changing to permanent, mid loop.
-	if(secondsElectrified == MACHINE_NOT_ELECTRIFIED)
-		set_electrified(MACHINE_NOT_ELECTRIFIED)
-	else
-		set_electrified(MACHINE_ELECTRIFIED_PERMANENT)
-	updateDialog()
 
 /obj/machinery/door/airlock/Topic(href, href_list, var/nowindow = 0)
 	// If you add an if(..()) check you must first remove the var/nowindow parameter.
@@ -799,10 +758,10 @@
 
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user, params)
-	if(!issilicon(user) && !IsAdminGhost(user))
-		if(isElectrified())
-			if(shock(user, 75))
-				return
+	if(prob(75))
+		if(SEND_SIGNAL(src, COMSIG_AIRLOCK_ATTACKBY_CONDUCTIVE, user) & COMSIG_ELECTRIFIED_SHOCK)
+			return
+
 	add_fingerprint(user)
 
 	if(panel_open)
@@ -1006,9 +965,8 @@
 		return
 	if(hasPower())
 		if(forced)
-			if(isElectrified())
-				shock(user,100)//it's like sticking a forck in a power socket
-				return
+			if(SEND_SIGNAL(src, COMSIG_AIRLOCK_ATTACKBY_POWERCROWBAR, user) & COMSIG_ELECTRIFIED_SHOCK)
+				return //it's like sticking a forck in a power socket
 
 			if(!density)//already open
 				return
@@ -1231,9 +1189,8 @@
 
 /obj/machinery/door/airlock/attack_alien(mob/living/carbon/alien/humanoid/user)
 	add_fingerprint(user)
-	if(isElectrified())
-		shock(user, 100) //Mmm, fried xeno!
-		return
+	if(SEND_SIGNAL(src, COMSIG_AIRLOCK_ATTACK_ALIEN, user) & COMSIG_ELECTRIFIED_SHOCK)
+		return //Mmm, fried xeno!
 	if(!density) //Already open
 		return
 	if(locked || welded) //Extremely generic, as aliens only understand the basics of how airlocks work.
@@ -1259,10 +1216,7 @@
 		safe = FALSE //DOOR CRUSH
 		close()
 		bolt() //Bolt it!
-		set_electrified(MACHINE_ELECTRIFIED_PERMANENT)  //Shock it!
-		if(origin)
-			LAZYADD(shockedby, "\[[time_stamp()]\] [key_name(origin)]")
-
+		set_electrified(MACHINE_ELECTRIFIED_PERMANENT, origin)  //Shock it!
 
 /obj/machinery/door/airlock/disable_lockdown()
 	// Must be powered and have working AI wire.
@@ -1273,29 +1227,20 @@
 		safe = TRUE
 
 
-/obj/machinery/door/airlock/proc/on_break()
-	if(!panel_open)
-		panel_open = TRUE
-	wires.cut_all()
+/obj/machinery/door/airlock/obj_break(damage_flag)
+	. = ..()
+	if(.)
+		if(!panel_open)
+			panel_open = TRUE
+		wires?.cut_all()
+		update_icon()
 
-/obj/machinery/door/airlock/proc/set_electrified(seconds, mob/user)
-	secondsElectrified = seconds
-	diag_hud_set_electrified()
-	if(secondsElectrified > MACHINE_NOT_ELECTRIFIED)
-		INVOKE_ASYNC(src, .proc/electrified_loop)
+/obj/machinery/door/airlock/proc/set_electrified(electype, mob/user, time)
+	AddComponent(/datum/component/electrified/machinery, electype, user, time)
 
-	if(user)
-		var/message
-		switch(secondsElectrified)
-			if(MACHINE_ELECTRIFIED_PERMANENT)
-				message = "permanently shocked"
-			if(MACHINE_NOT_ELECTRIFIED)
-				message = "unshocked"
-			else
-				message = "temp shocked for [secondsElectrified] seconds"
-		LAZYADD(shockedby, text("\[[time_stamp()]\] [key_name(user)] - ([uppertext(message)])"))
-		log_combat(user, src, message)
-		add_hiddenprint(user)
+/obj/machinery/door/airlock/proc/electrification_changed(datum/source, electrified=FALSE)
+	updateDialog()
+	diag_hud_set_electrified(electrified)
 
 /obj/machinery/door/airlock/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -1387,8 +1332,13 @@
 	power["backup"] = secondsBackupPowerLost ? 0 : 2 // boolean
 	power["backup_timeleft"] = secondsBackupPowerLost
 	data["power"] = power
-
-	data["shock"] = secondsElectrified == MACHINE_NOT_ELECTRIFIED ? 2 : 0
+	var/datum/component/electrified/E = GetComponent(/datum/component/electrified)
+	data["shock"] = E.electrification_state == MACHINE_NOT_ELECTRIFIED ? 2 : 0
+	var/secondsElectrified = 0
+	if(E.duration_timer)
+		secondsElectrified = timeleft(E.duration_timer)
+	else
+		secondsElectrified = E.duration
 	data["shock_timeleft"] = secondsElectrified
 	data["id_scanner"] = !aiDisabledIdScanner
 	data["emergency"] = emergency // access
@@ -1534,7 +1484,7 @@
 		return
 	if(wires.is_cut(WIRE_SHOCK))
 		to_chat(user, "Can't un-electrify the airlock - The electrification wire is cut.")
-	else if(isElectrified())
+	else
 		set_electrified(MACHINE_NOT_ELECTRIFIED, user)
 
 /obj/machinery/door/airlock/proc/shock_temp(mob/user)
@@ -1543,7 +1493,7 @@
 	if(wires.is_cut(WIRE_SHOCK))
 		to_chat(user, "The electrification wire has been cut")
 	else
-		set_electrified(MACHINE_DEFAULT_ELECTRIFY_TIME, user)
+		set_electrified(MACHINE_ELECTRIFIED_TEMPORARY, user)
 
 /obj/machinery/door/airlock/proc/shock_perm(mob/user)
 	if(!user_allowed(user))

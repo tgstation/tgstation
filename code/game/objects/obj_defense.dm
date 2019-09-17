@@ -104,6 +104,7 @@
 		playsound(src.loc, 'sound/weapons/slash.ogg', 100, TRUE)
 
 /obj/attack_animal(mob/living/simple_animal/M)
+	SEND_SIGNAL(src, COMSIG_OBJ_ATTACK_ANIMAL, M)
 	if(!M.melee_damage_upper && !M.obj_damage)
 		M.emote("custom", message = "[M.friendly] [src].")
 		return 0

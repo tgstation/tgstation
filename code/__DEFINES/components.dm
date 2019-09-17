@@ -213,11 +213,22 @@
 #define COMSIG_OBJ_SETANCHORED "obj_setanchored"				//called in /obj/structure/setAnchored(): (value)
 #define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH "obj_default_unfasten_wrench"	//from base of code/game/machinery
 #define COMSIG_OBJ_UPDATE_ICON	"obj_update_icon"				//Called by obj to itself whenever update_icon is run. Useful for containers that want to detect this change
+#define COMSIG_OBJ_ATTACK_ANIMAL "obj_attack_animal"			//from base obj/attack_animal()
 
 // /obj/machinery signals
 #define COMSIG_MACHINERY_BROKEN "machinery_broken"				//from /obj/machinery/obj_break(damage_flag): (damage_flag)
 #define COMSIG_MACHINERY_POWER_LOST "machinery_power_lost"			//from base power_change() when power is lost
 #define COMSIG_MACHINERY_POWER_RESTORED "machinery_power_restored"	//from base power_change() when power is restored
+#define COMSIG_AIRLOCK_BUMPOPEN "airlock_bumpopen"					//from airlock bumpopen()
+	#define COMSIG_ELECTRIFIED_SHOCK 1
+#define COMSIG_AIRLOCK_ATTACKBY_CONDUCTIVE "airlock_attackby_conductive" //from airlock attackby()
+#define COMSIG_AIRLOCK_ATTACKBY_POWERCROWBAR "airlock_attackby_powercrowbar"
+#define COMSIG_AIRLOCK_ATTACK_ALIEN "airlock_attack_alien"
+#define COMSIG_ELECTRIFICATION_CHANGE "electrification_change"
+#define COMSIG_AIRLOCK_AI_ALTCLICK "airlock_ai_altclick"
+#define COMSIG_AIRLOCK_WIRES_INTERACT "airlock_wires_interact"
+
+#define COMSIG_VENDING_TRY_INTERACT "vending_try_interact"
 
 // /obj/item signals
 #define COMSIG_ITEM_ATTACK "item_attack"						//from base of obj/item/attack(): (/mob/living/target, /mob/living/user)
@@ -340,6 +351,10 @@
 // /datum/action signals
 #define COMSIG_ACTION_TRIGGER "action_trigger"						//from base of datum/action/proc/Trigger(): (datum/action)
 	#define COMPONENT_ACTION_BLOCK_TRIGGER 1
+
+// /datum/wire signals
+#define COMSIG_WIRE_INTERACT "wire_interact"					//from /datum/wires/interact(): (user)
+	#define COMPONENT_NO_WIRE_INTERACT 1
 
 /*******Non-Signal Component Related Defines*******/
 

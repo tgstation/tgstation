@@ -202,6 +202,8 @@
 // End Overridable Procs
 
 /datum/wires/proc/interact(mob/user)
+	if(SEND_SIGNAL(holder, COMSIG_WIRE_INTERACT, user) & COMPONENT_NO_WIRE_INTERACT)
+		return
 	if(!interactable(user))
 		return
 	ui_interact(user)

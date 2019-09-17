@@ -12,15 +12,13 @@
 
 /datum/wires/vending/interactable(mob/user)
 	var/obj/machinery/vending/V = holder
-	if(!issilicon(user) && V.seconds_electrified && V.shock(user, 100))
-		return FALSE
 	if(V.panel_open)
 		return TRUE
 
 /datum/wires/vending/get_status()
 	var/obj/machinery/vending/V = holder
 	var/list/status = list()
-	status += "The orange light is [V.seconds_electrified ? "on" : "off"]."
+	status += "The orange light is [V.GetComponent(/datum/component/electrified/machinery) ? "on" : "off"]."
 	status += "The red light is [V.shoot_inventory ? "off" : "blinking"]."
 	status += "The green light is [V.extended_inventory ? "on" : "off"]."
 	status += "A [V.scan_id ? "purple" : "yellow"] light is on."
@@ -35,7 +33,7 @@
 		if(WIRE_CONTRABAND)
 			V.extended_inventory = !V.extended_inventory
 		if(WIRE_SHOCK)
-			V.seconds_electrified = MACHINE_DEFAULT_ELECTRIFY_TIME
+			V.AddComponent(/datum/component/electrified/machinery, MACHINE_ELECTRIFIED_TEMPORARY, usr)
 		if(WIRE_IDSCAN)
 			V.scan_id = !V.scan_id
 		if(WIRE_SPEAKER)
@@ -50,9 +48,9 @@
 			V.extended_inventory = FALSE
 		if(WIRE_SHOCK)
 			if(mend)
-				V.seconds_electrified = MACHINE_NOT_ELECTRIFIED
+				V.AddComponent(/datum/component/electrified/machinery, MACHINE_NOT_ELECTRIFIED, usr)
 			else
-				V.seconds_electrified = MACHINE_ELECTRIFIED_PERMANENT
+				V.AddComponent(/datum/component/electrified/machinery, MACHINE_ELECTRIFIED_PERMANENT, usr)
 		if(WIRE_IDSCAN)
 			V.scan_id = mend
 		if(WIRE_SPEAKER)
