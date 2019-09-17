@@ -476,6 +476,7 @@
 	var/timer = 0
 	var/cooldown = 30
 	var/quiet = 0
+	w_class = WEIGHT_CLASS_SMALL
 
 //all credit to skasi for toy mech fun ideas
 /obj/item/toy/prize/attack_self(mob/user)
@@ -612,6 +613,7 @@
 	name = "toy AI"
 	desc = "A little toy model AI core with real law announcing action!"
 	icon_state = "AI"
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/toy/talking/AI/generate_messages()
 	return list(generate_ion_law())
@@ -649,6 +651,7 @@
 	messages = list("You won't get away this time, Griffin!", "Stop right there, criminal!", "Hoot! Hoot!", "I am the night!")
 	chattering = TRUE
 	phomeme = "owl"
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/toy/talking/griffin
 	name = "griffin action figure"
@@ -657,6 +660,7 @@
 	messages = list("You can't stop me, Owl!", "My plan is flawless! The vault is mine!", "Caaaawwww!", "You will never catch me!")
 	chattering = TRUE
 	phomeme = "griffin"
+	w_class = WEIGHT_CLASS_SMALL
 
 /*
 || A Deck of Cards for playing various games of chance ||
@@ -1212,6 +1216,7 @@
 	var/cooldown = 0
 	var/toysay = "What the fuck did you do?"
 	var/toysound = 'sound/machines/click.ogg'
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/toy/figure/Initialize()
 	. = ..()
