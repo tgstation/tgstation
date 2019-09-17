@@ -25,6 +25,8 @@
 	var/list/facing_modifiers = list(MECHA_FRONT_ARMOUR = 1.5, MECHA_SIDE_ARMOUR = 1, MECHA_BACK_ARMOUR = 0.5)
 	var/equipment_disabled = 0 //disabled due to EMP
 	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/scanning_module/scanmod
+	var/obj/item/stock_parts/capacitor/capacitor
 	var/construction_state = MECHA_LOCKED
 	var/last_message = 0
 	var/add_req_access = 1
@@ -128,6 +130,8 @@
 	smoke_system.set_up(3, src)
 	smoke_system.attach(src)
 	add_cell()
+	add_scanmod()
+	add_capacitor()
 	START_PROCESSING(SSobj, src)
 	GLOB.poi_list |= src
 	log_message("[src.name] created.", LOG_MECHA)
@@ -163,6 +167,10 @@
 		qdel(E)
 	if(cell)
 		qdel(cell)
+	if(scanmod)
+		qdel(scanmod)
+	if(capacitor)
+		qdel(capacitor)
 	if(internal_tank)
 		qdel(internal_tank)
 	if(AI)
@@ -171,6 +179,8 @@
 	GLOB.poi_list.Remove(src)
 	equipment.Cut()
 	cell = null
+	scanmod = null
+	capacitor = null
 	internal_tank = null
 	if(loc)
 		loc.assume_air(cabin_air)
@@ -196,15 +206,19 @@
 /obj/mecha/CheckParts(list/parts_list)
 	..()
 	cell = locate(/obj/item/stock_parts/cell) in contents
-	var/obj/item/stock_parts/scanning_module/SM = locate() in contents
-	var/obj/item/stock_parts/capacitor/CP = locate() in contents
-	if(SM)
-		normal_step_energy_drain = 20 - (5 * SM.rating) //10 is normal, so on lowest part its worse, on second its ok and on higher its real good up to 0 on best
+	scanmod = locate(/obj/item/stock_parts/scanning_module) in contents
+	capacitor = locate(/obj/item/stock_parts/capacitor) in contents
+	update_part_values()
+
+/obj/mecha/proc/update_part_values()
+	if(scanmod)
+		normal_step_energy_drain = 20 - (5 * scanmod.rating) //10 is normal, so on lowest part its worse, on second its ok and on higher its real good up to 0 on best
 		step_energy_drain = normal_step_energy_drain
-		qdel(SM)
-	if(CP)
-		armor = armor.modifyRating(energy = (CP.rating * 5)) //Each level of capacitor protects the mech against emp by 5%
-		qdel(CP)
+	if(capacitor)
+		armor = armor.modifyRating(energy = (capacitor.rating * 5)) //Each level of capacitor protects the mech against emp by 5%
+	else //because we can still be hit without a cap, even if we can't move
+		armor = armor.setRating(energy = 0)
+
 
 ////////////////////////
 ////// Helpers /////////
@@ -220,6 +234,20 @@
 		cell = C
 		return
 	cell = new /obj/item/stock_parts/cell/high/plus(src)
+
+/obj/mecha/proc/add_scanmod(var/obj/item/stock_parts/scanning_module/sm=null)
+	if(sm)
+		sm.forceMove(src)
+		scanmod = sm
+		return
+	scanmod = new /obj/item/stock_parts/scanning_module(src)
+
+/obj/mecha/proc/add_capacitor(var/obj/item/stock_parts/capacitor/cap=null)
+	if(cap)
+		cap.forceMove(src)
+		capacitor = cap
+		return
+	capacitor = new /obj/item/stock_parts/capacitor(src)
 
 /obj/mecha/proc/add_cabin()
 	cabin_air = new
@@ -532,7 +560,9 @@
 			last_message = world.time
 		return 0
 	if(construction_state)
-		occupant_message("<span class='danger'>Maintenance protocols in effect.</span>")
+		if(world.time - last_message > 20)
+			occupant_message("<span class='danger'>Maintenance protocols in effect.</span>")
+			last_message = world.time
 		return
 	return domove(direction)
 
@@ -546,6 +576,16 @@
 	if(zoom_mode)
 		if(world.time - last_message > 20)
 			occupant_message("<span class='warning'>Unable to move while in zoom mode!</span>")
+			last_message = world.time
+		return 0
+	if(!cell)
+		if(world.time - last_message > 20)
+			occupant_message("<span class='warning'>Missing power cell.</span>")
+			last_message = world.time
+		return 0
+	if(!scanmod || !capacitor)
+		if(world.time - last_message > 20)
+			occupant_message("<span class='warning'>Missing [scanmod? "capacitor" : "scanning module"].</span>")
 			last_message = world.time
 		return 0
 
@@ -957,6 +997,19 @@
 /obj/mecha/Exited(atom/movable/M, atom/newloc)
 	if(occupant && occupant == M) // The occupant exited the mech without calling go_out()
 		go_out(TRUE, newloc)
+	
+	if(cell && cell == M)
+		cell = null
+		return
+	if(scanmod && scanmod == M)
+		scanmod = null
+		update_part_values()
+		return
+	if(capacitor && capacitor == M)
+		armor = armor.modifyRating(energy = (capacitor.rating * -5)) //lose the energy armor if we lose this cap
+		capacitor = null
+		update_part_values()
+		return
 
 /obj/mecha/proc/go_out(forced, atom/newloc = loc)
 	if(!occupant)
