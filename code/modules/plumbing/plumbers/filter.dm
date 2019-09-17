@@ -12,6 +12,9 @@
 	///whitelist of chems but their name instead of path
 	var/list/english_right = list()
 
+	ui_x = 500
+	ui_y = 300
+
 
 /obj/machinery/plumbing/filter/Initialize()
 	. = ..()
@@ -24,7 +27,7 @@
 /obj/machinery/plumbing/filter/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "chemical_filter", name, 500, 300, master_ui, state)
+		ui = new(user, src, ui_key, "chemical_filter", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/plumbing/filter/ui_data(mob/user)
@@ -67,8 +70,4 @@
 						english_right -= chem_name
 						right -= chem_id
 
-/obj/machinery/plumbing/filter/proc/get_chem_id(chem_name)
-	for(var/A in GLOB.chemical_reagents_list)
-		var/datum/reagent/R = GLOB.chemical_reagents_list[A]
-		if(chem_name == ckey(R.name))
-			return R.type
+

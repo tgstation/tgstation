@@ -91,6 +91,6 @@
 				B.claim()
 
 	if(href_list["refresh"])
-		playsound(src, "terminal_type", 25, 0)
+		playsound(src, "terminal_type", 25, FALSE)
 
 	updateUsrDialog()

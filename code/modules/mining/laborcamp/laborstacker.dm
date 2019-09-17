@@ -8,6 +8,9 @@ GLOBAL_LIST(labor_sheet_values)
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
 	density = FALSE
+	ui_x = 450
+	ui_y = 475
+	
 	var/obj/machinery/mineral/stacking_machine/laborstacker/stacking_machine = null
 	var/machinedir = SOUTH
 	var/obj/machinery/door/airlock/release_door
@@ -36,7 +39,7 @@ GLOBAL_LIST(labor_sheet_values)
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "labor_claim_console", name, 450, 475, master_ui, state)
+		ui = new(user, src, ui_key, "labor_claim_console", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/mineral/labor_claim_console/ui_data(mob/user)

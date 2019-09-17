@@ -507,7 +507,7 @@
 		cached = get_turf(target)
 	if(nodamage)
 		return FALSE
-	playsound(cached, 'sound/effects/explosion3.ogg', 100, 1)
+	playsound(cached, 'sound/effects/explosion3.ogg', 100, TRUE)
 	AOE(cached)
 	if(!QDELETED(target))
 		handle_impact(target)

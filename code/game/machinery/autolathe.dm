@@ -48,7 +48,19 @@
 							)
 
 /obj/machinery/autolathe/Initialize()
-	AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass, /datum/material/gold, /datum/material/silver, /datum/material/diamond, /datum/material/uranium, /datum/material/plasma, /datum/material/bluespace, /datum/material/bananium, /datum/material/titanium), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
+	AddComponent(/datum/component/material_container,
+	list(/datum/material/iron,
+	/datum/material/glass,
+	/datum/material/gold,
+	/datum/material/silver,
+	/datum/material/diamond,
+	/datum/material/uranium,
+	/datum/material/plasma,
+	/datum/material/bluespace,
+	/datum/material/bananium,
+	/datum/material/titanium,
+	/datum/material/runite),
+	0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 
 	wires = new /datum/wires/autolathe(src)
@@ -108,9 +120,9 @@
 		return TRUE
 
 	if(istype(O, /obj/item/disk/design_disk))
-		user.visible_message("[user] begins to load \the [O] in \the [src]...",
-			"You begin to load a design from \the [O]...",
-			"You hear the chatter of a floppy drive.")
+		user.visible_message("<span class='notice'>[user] begins to load \the [O] in \the [src]...</span>",
+			"<span class='notice'>You begin to load a design from \the [O]...</span>",
+			"<span class='hear'>You hear the chatter of a floppy drive.</span>")
 		busy = TRUE
 		var/obj/item/disk/design_disk/D = O
 		if(do_after(user, 14.4, target = src))
@@ -163,7 +175,7 @@
 
 			var/coeff = (is_stack ? 1 : prod_coeff) //stacks are unaffected by production coefficient
 			var/total_amount = 0
-			
+
 			for(var/MAT in being_built.materials)
 				total_amount += being_built.materials[MAT]
 

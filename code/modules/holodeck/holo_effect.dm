@@ -74,6 +74,7 @@
 	if(islist(mobtype))
 		mobtype = pick(mobtype)
 	mob = new mobtype(loc)
+	mob.flags_1 |= HOLOGRAM_1
 
 	// these vars are not really standardized but all would theoretically create stuff on death
 	for(var/v in list("butcher_results","corpse","weapon1","weapon2","blood_volume") & mob.vars)

@@ -14,7 +14,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.check_shields(src, 0, "[M]'s [name]", MELEE_ATTACK))
-			playsound(M, 'sound/weapons/genhit.ogg', 50, 1)
+			playsound(M, 'sound/weapons/genhit.ogg', 50, TRUE)
 			return FALSE
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
@@ -28,7 +28,7 @@
 	M.visible_message("<span class='danger'>[user] has prodded [M] with [src]!</span>", \
 					"<span class='userdanger'>[user] has prodded you with [src]!</span>")
 
-	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
+	playsound(loc, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 
 	log_combat(user, M, "stunned", src, "(INTENT: [uppertext(user.a_intent)])")
 
@@ -74,7 +74,7 @@
 					user.visible_message("<span class='notice'>[user] playfully boops [M] on the head!</span>", \
 									"<span class='notice'>You playfully boop [M] on the head!</span>")
 					user.do_attack_animation(M, ATTACK_EFFECT_BOOP)
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1, -1)
+					playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE, -1)
 				else if(ishuman(M))
 					if(!(user.mobility_flags & MOBILITY_STAND))
 						user.visible_message("<span class='notice'>[user] shakes [M] trying to get [M.p_them()] up!</span>", \
@@ -87,7 +87,7 @@
 				else
 					user.visible_message("<span class='notice'>[user] pets [M]!</span>", \
 							"<span class='notice'>You pet [M]!</span>")
-				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 		if(1)
 			if(M.health >= 0)
 				if(ishuman(M))
@@ -106,7 +106,7 @@
 				else
 					user.visible_message("<span class='warning'>[user] bops [M] on the head!</span>", \
 							"<span class='warning'>You bop [M] on the head!</span>")
-				playsound(loc, 'sound/weapons/tap.ogg', 50, 1, -1)
+				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE, -1)
 		if(2)
 			if(scooldown < world.time)
 				if(M.health >= 0)
@@ -123,7 +123,7 @@
 						else
 							user.visible_message("<span class='userdanger'>[user] shocks [M]. It does not seem to have an effect</span>", \
 								"<span class='danger'>You shock [M] to no effect.</span>")
-					playsound(loc, 'sound/effects/sparks2.ogg', 50, 1, -1)
+					playsound(loc, 'sound/effects/sparks2.ogg', 50, TRUE, -1)
 					user.cell.charge -= 500
 					scooldown = world.time + 20
 		if(3)
@@ -135,7 +135,7 @@
 					else
 						user.visible_message("<span class='userdanger'>[user] crushes [M]!</span>", \
 								"<span class='danger'>You crush [M]!</span>")
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1, -1)
+					playsound(loc, 'sound/weapons/smash.ogg', 50, TRUE, -1)
 					M.adjustBruteLoss(15)
 					user.cell.charge -= 300
 					ccooldown = world.time + 10
@@ -408,11 +408,11 @@
 	check_amount()
 
 	if(into_hands)
-		user.visible_message("<span class='notice'>[user] dispenses a treat into the hands of [A].</span>", "<span class='notice'>You dispense a treat into the hands of [A].</span>", "<span class='italics'>You hear a click.</span>")
+		user.visible_message("<span class='notice'>[user] dispenses a treat into the hands of [A].</span>", "<span class='notice'>You dispense a treat into the hands of [A].</span>", "<span class='hear'>You hear a click.</span>")
 	else
-		user.visible_message("<span class='notice'>[user] dispenses a treat.</span>", "<span class='notice'>You dispense a treat.</span>", "<span class='italics'>You hear a click.</span>")
+		user.visible_message("<span class='notice'>[user] dispenses a treat.</span>", "<span class='notice'>You dispense a treat.</span>", "<span class='hear'>You hear a click.</span>")
 
-	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	return TRUE
 
 /obj/item/borg/lollipop/proc/shootL(atom/target, mob/living/user, params)
@@ -425,7 +425,7 @@
 	if(hitdamage)
 		A.BB.nodamage = FALSE
 	A.BB.speed = 0.5
-	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	A.fire_casing(target, user, params, 0, 0, null, 0, src)
 	user.visible_message("<span class='warning'>[user] blasts a flying lollipop at [target]!</span>")
 	check_amount()
@@ -441,7 +441,7 @@
 		A.BB.nodamage = FALSE
 	A.BB.speed = 0.5
 	A.BB.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
-	playsound(src.loc, 'sound/weapons/bulletflyby3.ogg', 50, 1)
+	playsound(src.loc, 'sound/weapons/bulletflyby3.ogg', 50, TRUE)
 	A.fire_casing(target, user, params, 0, 0, null, 0, src)
 	user.visible_message("<span class='warning'>[user] shoots a high-velocity gumball at [target]!</span>")
 	check_amount()
@@ -741,3 +741,191 @@
 /obj/item/borg/sight/hud/sec/Initialize()
 	. = ..()
 	hud = new /obj/item/clothing/glasses/hud/security(src)
+
+
+/**********************************************************************
+						Borg apparatus
+***********************************************************************/
+//These are tools that can hold only specific items. For example, the mediborg gets one that can only hold beakers and bottles.
+
+/obj/item/borg/apparatus/
+	name = "unknown storage apparatus"
+	desc = "This device seems nonfunctional."
+	icon = 'icons/mob/robot_items.dmi'
+	icon_state = "hugmodule"
+	var/obj/item/stored
+	var/list/storable = list()
+
+/obj/item/borg/apparatus/Initialize()
+	. = ..()
+	RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, .proc/safedecon)
+
+/obj/item/borg/apparatus/Destroy()
+	if(stored)
+		qdel(stored)
+	. = ..()
+
+///If we're safely deconstructed, we put the item neatly onto the ground, rather than deleting it.
+/obj/item/borg/apparatus/proc/safedecon()
+	if(stored)
+		stored.forceMove(get_turf(src))
+		stored = null
+
+/obj/item/borg/apparatus/Exited(atom/A)
+	if(A == stored) //sanity check
+		UnregisterSignal(stored, COMSIG_OBJ_UPDATE_ICON)
+		stored = null
+	update_icon()
+	. = ..()
+
+///A right-click verb, for those not using hotkey mode.
+/obj/item/borg/apparatus/verb/verb_dropHeld()
+	set category = "Object"
+	set name = "Drop"
+
+	if(usr != loc || !stored)
+		return
+	stored.forceMove(get_turf(usr))
+	return
+
+/obj/item/borg/apparatus/attack_self(mob/living/silicon/robot/user)
+	if(!stored)
+		return ..()
+	if(user.client?.keys_held["Alt"])
+		stored.forceMove(get_turf(user))
+		return
+	stored.attack_self(user)
+
+/obj/item/borg/apparatus/pre_attack(atom/A, mob/living/user, params)
+	if(!stored)
+		var/itemcheck = FALSE
+		for(var/i in storable)
+			if(istype(A, i))
+				itemcheck = TRUE
+				break
+		if(itemcheck)
+			var/obj/item/O = A
+			O.forceMove(src)
+			stored = O
+			RegisterSignal(stored, COMSIG_OBJ_UPDATE_ICON, .proc/update_icon)
+			update_icon()
+			return
+	else
+		stored.melee_attack_chain(user, A, params)
+		return
+	. = ..()
+
+/obj/item/borg/apparatus/attackby(obj/item/W, mob/user, params)
+	if(stored)
+		W.melee_attack_chain(user, stored, params)
+		return
+	. = ..()
+
+/////////////////
+//beaker holder//
+/////////////////
+
+/obj/item/borg/apparatus/beaker
+	name = "beaker storage apparatus"
+	desc = "A special apparatus for carrying beakers without spilling the contents. Alt-Z or right-click to drop the beaker."
+	icon_state = "borg_beaker_apparatus"
+	storable = list(/obj/item/reagent_containers/glass/beaker,
+				/obj/item/reagent_containers/glass/bottle)
+
+/obj/item/borg/apparatus/beaker/Initialize()
+	. = ..()
+	stored = new /obj/item/reagent_containers/glass/beaker/large(src)
+	RegisterSignal(stored, COMSIG_OBJ_UPDATE_ICON, .proc/update_icon)
+	update_icon()
+
+/obj/item/borg/apparatus/beaker/Destroy()
+	if(stored)
+		var/obj/item/reagent_containers/C = stored
+		C.SplashReagents(get_turf(src))
+		qdel(stored)
+	. = ..()
+
+/obj/item/borg/apparatus/beaker/examine()
+	. = ..()
+	if(stored)
+		var/obj/item/reagent_containers/C = stored
+		. += "The apparatus currently has [C] secured, which contains:"
+		if(length(C.reagents.reagent_list))
+			for(var/datum/reagent/R in C.reagents.reagent_list)
+				. += "[R.volume] units of [R.name]"
+		else
+			. += "Nothing."
+
+/obj/item/borg/apparatus/beaker/update_icon()
+	cut_overlays()
+	if(stored)
+		COMPILE_OVERLAYS(stored)
+		stored.pixel_x = 0
+		stored.pixel_y = 0
+		var/image/img = image("icon"=stored, "layer"=FLOAT_LAYER)
+		var/image/arm = image("icon"="borg_beaker_apparatus_arm", "layer"=FLOAT_LAYER)
+		if(istype(stored, /obj/item/reagent_containers/glass/beaker))
+			arm.pixel_y = arm.pixel_y - 3
+		img.plane = FLOAT_PLANE
+		add_overlay(img)
+		add_overlay(arm)
+	else
+		var/image/arm = image("icon"="borg_beaker_apparatus_arm", "layer"=FLOAT_LAYER)
+		arm.pixel_y = arm.pixel_y - 5
+		add_overlay(arm)
+
+/obj/item/borg/apparatus/beaker/attack_self(mob/living/silicon/robot/user)
+	if(stored && !user.client?.keys_held["Alt"] && user.a_intent != "help")
+		var/obj/item/reagent_containers/C = stored
+		C.SplashReagents(get_turf(user))
+		loc.visible_message("<span class='notice'>[user] spills the contents of the [C] all over the floor.</span>")
+		return
+	. = ..()
+
+/obj/item/borg/apparatus/beaker/extra
+	name = "secondary beaker storage apparatus"
+	desc = "A supplementary beaker storage apparatus."
+
+////////////////////
+//engi part holder//
+////////////////////
+
+/obj/item/borg/apparatus/circuit
+	name = "circuit manipulation apparatus"
+	desc = "A special apparatus for carrying and manipulating circuit boards. Alt-Z or right-click to drop the stored object."
+	icon_state = "borg_hardware_apparatus"
+	storable = list(/obj/item/circuitboard,
+				/obj/item/electronics)
+
+/obj/item/borg/apparatus/circuit/Initialize()
+	. = ..()
+	update_icon()
+
+/obj/item/borg/apparatus/circuit/update_icon()
+	cut_overlays()
+	if(stored)
+		COMPILE_OVERLAYS(stored)
+		stored.pixel_x = -3
+		stored.pixel_y = 0
+		var/image/arm
+		if(istype(stored, /obj/item/circuitboard))
+			arm = image("icon"="borg_hardware_apparatus_arm1", "layer"=FLOAT_LAYER)
+		else
+			arm = image("icon"="borg_hardware_apparatus_arm2", "layer"=FLOAT_LAYER)
+		var/image/img = image("icon"=stored, "layer"=FLOAT_LAYER)
+		img.plane = FLOAT_PLANE
+		add_overlay(arm)
+		add_overlay(img)
+	else
+		var/image/arm = image("icon"="borg_hardware_apparatus_arm1", "layer"=FLOAT_LAYER)
+		add_overlay(arm)
+
+/obj/item/borg/apparatus/circuit/examine()
+	. = ..()
+	if(stored)
+		. += "The apparatus currently has [stored] secured."
+
+/obj/item/borg/apparatus/circuit/pre_attack(atom/A, mob/living/user, params)
+	. = ..()
+	if(istype(A, /obj/item/aiModule) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
+		to_chat(user, "<span class='warning'>This circuit board doesn't seem to have standard robot apparatus pin holes. You're unable to pick it up.</span>")
