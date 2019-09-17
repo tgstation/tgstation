@@ -38,6 +38,7 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 	fulp_item = TRUE
+	mutantrace_variation = DIGITIGRADE_STYLE
 
 /obj/item/clothing/head/beret/sec/engineering
 	name = "engineering deputy beret"
