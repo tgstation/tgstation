@@ -26,7 +26,10 @@
 
 		//  CLOTHING  //
 
-///obj/item/clothing
+/obj/item/clothing
+
+	var/fulp_item = FALSE
+
 	// icon =  'icons/mob/uniforms.dmi'   <--- This already exists! This is for the item on the floor, NOT the sprite.
 	//var/worn_icon = 'icon/mob/clothing/under/default.dmi' // 'icons/mob/uniform.dmi'  // We created this to add to the sprite! (human/update_icons.dm)
 	// REMOVED They did it for us.

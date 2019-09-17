@@ -7,6 +7,8 @@
 	can overwrite it here!
 
 		WHY DO THIS?
+
+	So we don't have to overwrite the variables defined in TG code.
 */
 
 
