@@ -25,6 +25,8 @@
 	RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/on_revive)
 
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
+	RegisterSignal(parent, COMSIG_JOB_RECEIVED, .proc/register_job_signals)
+
 	var/mob/living/owner = parent
 	if(owner.hud_used)
 		modify_hud()
@@ -36,16 +38,20 @@
 	unmodify_hud()
 	return ..()
 
+/datum/component/mood/proc/register_job_signals(datum/source, job)
+	if(job in list("Research Director", "Scientist", "Roboticist"))
+		RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT_RND, .proc/add_event) //Mood events that are only for RnD members
+
 /datum/component/mood/proc/print_mood(mob/user)
 	var/msg = "<span class='info'>*---------*\n<EM>Your current mood</EM>\n"
 	msg += "<span class='notice'>My mental status: </span>" //Long term
 	switch(sanity)
 		if(SANITY_GREAT to INFINITY)
-			msg += "<span class='nicegreen'>My mind feels like a temple!<span>\n"
+			msg += "<span class='nicegreen'>My mind feels like a temple!</span>\n"
 		if(SANITY_NEUTRAL to SANITY_GREAT)
-			msg += "<span class='nicegreen'>I have been feeling great lately!<span>\n"
+			msg += "<span class='nicegreen'>I have been feeling great lately!</span>\n"
 		if(SANITY_DISTURBED to SANITY_NEUTRAL)
-			msg += "<span class='nicegreen'>I have felt quite decent lately.<span>\n"
+			msg += "<span class='nicegreen'>I have felt quite decent lately.</span>\n"
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
 			msg += "<span class='warning'>I'm feeling a little bit unhinged...</span>\n"
 		if(SANITY_CRAZY to SANITY_UNSTABLE)
@@ -56,23 +62,23 @@
 	msg += "<span class='notice'>My current mood: </span>" //Short term
 	switch(mood_level)
 		if(1)
-			msg += "<span class='boldwarning'>I wish I was dead!<span>\n"
+			msg += "<span class='boldwarning'>I wish I was dead!</span>\n"
 		if(2)
-			msg += "<span class='boldwarning'>I feel terrible...<span>\n"
+			msg += "<span class='boldwarning'>I feel terrible...</span>\n"
 		if(3)
-			msg += "<span class='boldwarning'>I feel very upset.<span>\n"
+			msg += "<span class='boldwarning'>I feel very upset.</span>\n"
 		if(4)
-			msg += "<span class='boldwarning'>I'm a bit sad.<span>\n"
+			msg += "<span class='boldwarning'>I'm a bit sad.</span>\n"
 		if(5)
-			msg += "<span class='nicegreen'>I'm alright.<span>\n"
+			msg += "<span class='nicegreen'>I'm alright.</span>\n"
 		if(6)
-			msg += "<span class='nicegreen'>I feel pretty okay.<span>\n"
+			msg += "<span class='nicegreen'>I feel pretty okay.</span>\n"
 		if(7)
-			msg += "<span class='nicegreen'>I feel pretty good.<span>\n"
+			msg += "<span class='nicegreen'>I feel pretty good.</span>\n"
 		if(8)
-			msg += "<span class='nicegreen'>I feel amazing!<span>\n"
+			msg += "<span class='nicegreen'>I feel amazing!</span>\n"
 		if(9)
-			msg += "<span class='nicegreen'>I love life!<span>\n"
+			msg += "<span class='nicegreen'>I love life!</span>\n"
 
 	msg += "<span class='notice'>Moodlets:\n</span>"//All moodlets
 	if(mood_events.len)
@@ -80,7 +86,7 @@
 			var/datum/mood_event/event = mood_events[i]
 			msg += event.description
 	else
-		msg += "<span class='nicegreen'>I don't have much of a reaction to anything right now.<span>\n"
+		msg += "<span class='nicegreen'>I don't have much of a reaction to anything right now.</span>\n"
 	to_chat(user || parent, msg)
 
 ///Called after moodevent/s have been added/removed.
@@ -243,7 +249,7 @@
 	master.crit_threshold = (master.crit_threshold - insanity_effect) + newval
 	insanity_effect = newval
 
-/datum/component/mood/proc/add_event(datum/source, category, type, param) //Category will override any events in the same category, should be unique unless the event is based on the same thing like hunger.
+/datum/component/mood/proc/add_event(datum/source, category, type, ...) //Category will override any events in the same category, should be unique unless the event is based on the same thing like hunger.
 	var/datum/mood_event/the_event
 	if(!istext(category))
 		category = REF(category)
@@ -255,7 +261,9 @@
 			if(the_event.timeout)
 				addtimer(CALLBACK(src, .proc/clear_event, null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 			return 0 //Don't have to update the event.
-	the_event = new type(src, param)
+	var/list/params = args.Copy(4)
+	params.Insert(1, parent)
+	the_event = new type(arglist(params))
 
 	mood_events[category] = the_event
 	the_event.category = category
@@ -346,7 +354,7 @@
 
 /datum/component/mood/proc/check_area_mood(datum/source, var/area/A)
 	if(A.mood_bonus)
-		add_event(null, "area", /datum/mood_event/area, list(A.mood_bonus, A.mood_message))
+		add_event(null, "area", /datum/mood_event/area, A.mood_bonus, A.mood_message)
 	else
 		clear_event(null, "area")
 

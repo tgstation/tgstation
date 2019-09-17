@@ -88,7 +88,7 @@
 ///HTML for internal damage.
 /obj/mecha/proc/report_internal_damage()
 	. = ""
-	var/static/list/dam_reports = list(
+	var/list/dam_reports = list(
 		"[MECHA_INT_FIRE]" = "<span class='userdanger'>INTERNAL FIRE</span>",
 		"[MECHA_INT_TEMP_CONTROL]" = "<span class='userdanger'>LIFE SUPPORT SYSTEM MALFUNCTION</span>",
 		"[MECHA_INT_TANK_BREACH]" = "<span class='userdanger'>GAS TANK BREACH</span>",
@@ -201,8 +201,8 @@
 			</head>
 			<body>
 				[add_req_access?"<a href='?src=[REF(src)];req_access=1;id_card=[REF(id_card)];user=[REF(user)]'>Edit operation keycodes</a>":null]
-				[maint_access?"<a href='?src=[REF(src)];maint_access=1;id_card=[REF(id_card)];user=[REF(user)]'>[(state>0) ? "Terminate" : "Initiate"] maintenance protocol</a>":null]
-				[(state>0) ?"<a href='?src=[REF(src)];set_internal_tank_valve=1;user=[REF(user)]'>Set Cabin Air Pressure</a>":null]
+				[maint_access?"<a href='?src=[REF(src)];maint_access=1;id_card=[REF(id_card)];user=[REF(user)]'>[(construction_state > MECHA_LOCKED) ? "Terminate" : "Initiate"] maintenance protocol</a>":null]
+				[(construction_state > MECHA_LOCKED) ?"<a href='?src=[REF(src)];set_internal_tank_valve=1;user=[REF(user)]'>Set Cabin Air Pressure</a>":null]
 			</body>
 		</html>"}
 	user << browse(., "window=exosuit_maint_console")
@@ -240,15 +240,15 @@
 					return
 				output_access_dialog(id_card,usr)
 				return
-        
+
 			if(href_list["maint_access"])
 				if(!maint_access)
 					return
-				if(state==0)
-					state = 1
+				if(construction_state == MECHA_LOCKED)
+					construction_state = MECHA_SECURE_BOLTS
 					to_chat(usr, "The securing bolts are now exposed.")
-				else if(state==1)
-					state = 0
+				else if(construction_state == MECHA_SECURE_BOLTS)
+					construction_state = MECHA_LOCKED
 					to_chat(usr, "The securing bolts are now hidden.")
 				output_maintenance_dialog(id_card,usr)
 				return
@@ -275,9 +275,9 @@
 			return
 
 		//Set pressure.
-		if(href_list["set_internal_tank_valve"] && state)
+		if(href_list["set_internal_tank_valve"] && construction_state)
 			var/new_pressure = input(usr,"Input new output pressure","Pressure setting",internal_tank_valve) as num|null
-			if(isnull(new_pressure) || usr.incapacitated() || !state)
+			if(isnull(new_pressure) || usr.incapacitated() || !construction_state)
 				return
 			internal_tank_valve = new_pressure
 			to_chat(usr, "<span class='notice'>The internal pressure valve has been set to [internal_tank_valve]kPa.</span>")
@@ -297,8 +297,8 @@
 		if(!equip || !equip.selectable)
 			return
 		selected = equip
-		occupant_message("You switch to [equip]")
-		visible_message("[src] raises [equip]")
+		occupant_message("<span class='notice'>You switch to [equip].</span>")
+		visible_message("<span class='notice'>[src] raises [equip].</span>")
 		send_byjax(usr, "exosuit.browser", "eq_list", get_equipment_list())
 		return
 
@@ -339,7 +339,7 @@
 
 	//Toggles main access.
 	if(href_list["toggle_maint_access"])
-		if(state)
+		if(construction_state)
 			occupant_message("<span class='danger'>Maintenance protocols in effect</span>")
 			return
 		maint_access = !maint_access
@@ -350,7 +350,7 @@
 	if (href_list["toggle_port_connection"])
 		if(internal_tank.connected_port)
 			if(internal_tank.disconnect())
-				occupant_message("Disconnected from the air system port.")
+				occupant_message("<span class='notice'>Disconnected from the air system port.</span>")
 				log_message("Disconnected from gas port.", LOG_MECHA)
 			else
 				occupant_message("<span class='warning'>Unable to disconnect from the air system port!</span>")
@@ -358,7 +358,7 @@
 		else
 			var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate() in loc
 			if(internal_tank.connect(possible_port))
-				occupant_message("Connected to the air system port.")
+				occupant_message("<span class='notice'>Connected to the air system port.</span>")
 				log_message("Connected to gas port.", LOG_MECHA)
 			else
 				occupant_message("<span class='warning'>Unable to connect with air system port!</span>")
@@ -369,10 +369,10 @@
 	//Turns on the DNA lock
 	if(href_list["dna_lock"])
 		if(!iscarbon(occupant) || !occupant.dna)
-			occupant_message("You feel a prick as the needle takes your DNA sample.")
+			occupant_message("<span class='notice'>You feel a prick as the needle takes your DNA sample.</span>")
 			return
 		dna_lock = occupant.dna.unique_enzymes
-		occupant_message("You feel a prick as the needle takes your DNA sample.")
+		occupant_message("<span class='notice'>You feel a prick as the needle takes your DNA sample.</span>")
 		return
 
 	//Resets the DNA lock
@@ -382,7 +382,7 @@
 
 	//Repairs internal damage
 	if(href_list["repair_int_control_lost"])
-		occupant_message("Recalibrating coordination system...")
+		occupant_message("<span class='notice'>Recalibrating coordination system...</span>")
 		log_message("Recalibration of coordination system started.", LOG_MECHA)
 		addtimer(CALLBACK(src, .proc/stationary_repair, loc), 100, TIMER_UNIQUE)
 

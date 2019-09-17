@@ -11,7 +11,8 @@
 	var/equip_ready = 1 //whether the equipment is ready for use. (or deactivated/activated for static stuff)
 	var/energy_drain = 0
 	var/obj/mecha/chassis = null
-	var/range = MELEE //bitFflags
+	///Bitflag. Determines the range of the equipment.
+	var/range = MECHA_MELEE
 	var/salvageable = 1
 	var/selectable = 1	// Set to 0 for passive equipment such as mining scanner or armor plates
 	var/harmful = FALSE //Controls if equipment can be used to attack by a pacifist.
@@ -48,7 +49,7 @@
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return FALSE
 		attach(M)
-		user.visible_message("[user] attaches [src] to [M].", "<span class='notice'>You attach [src] to [M].</span>")
+		user.visible_message("<span class='notice'>[user] attaches [src] to [M].</span>", "<span class='notice'>You attach [src] to [M].</span>")
 		return TRUE
 	to_chat(user, "<span class='warning'>You are unable to attach [src] to [M]!</span>")
 	return FALSE
@@ -67,10 +68,10 @@
 	return txt
 
 /obj/item/mecha_parts/mecha_equipment/proc/is_ranged()//add a distance restricted equipment. Why not?
-	return range&RANGED
+	return range&MECHA_RANGED
 
 /obj/item/mecha_parts/mecha_equipment/proc/is_melee()
-	return range&MELEE
+	return range&MECHA_MELEE
 
 
 /obj/item/mecha_parts/mecha_equipment/proc/action_checks(atom/target)

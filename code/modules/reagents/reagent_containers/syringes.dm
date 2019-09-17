@@ -88,7 +88,7 @@
 						return
 				busy = FALSE
 				if(L.transfer_blood_to(src, drawn_amount))
-					user.visible_message("[user] takes a blood sample from [L].")
+					user.visible_message("<span class='notice'>[user] takes a blood sample from [L].</span>")
 				else
 					to_chat(user, "<span class='warning'>You are unable to draw any blood from [L]!</span>")
 
@@ -181,13 +181,13 @@
 
 /obj/item/reagent_containers/syringe/multiver
 	name = "syringe (multiver)"
-	desc = "Contains multiver."
-	list_reagents = list(/datum/reagent/medicine/C2/multiver = 15)
+	desc = "Contains multiver. Diluted with granibitaluri."
+	list_reagents = list(/datum/reagent/medicine/C2/multiver = 6, /datum/reagent/medicine/granibitaluri = 9)
 
 /obj/item/reagent_containers/syringe/convermol
 	name = "syringe (convermol)"
-	desc = "Contains convermol."
-	list_reagents = list(/datum/reagent/medicine/C2/convermol = 15)
+	desc = "Contains convermol. Diluted with granibitaluri."
+	list_reagents = list(/datum/reagent/medicine/C2/convermol = 6, /datum/reagent/medicine/granibitaluri = 9)
 
 /obj/item/reagent_containers/syringe/antiviral
 	name = "syringe (spaceacillin)"

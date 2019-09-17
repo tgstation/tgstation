@@ -146,7 +146,7 @@
 		if(I.tool_behaviour == TOOL_WRENCH && deconstruction_ready)
 			to_chat(user, "<span class='notice'>You start deconstructing [src]...</span>")
 			if(I.use_tool(src, user, 40, volume=50))
-				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 				deconstruct(TRUE, 1)
 			return
 
@@ -154,7 +154,7 @@
 		var/obj/item/storage/bag/tray/T = I
 		if(T.contents.len > 0) // If the tray isn't empty
 			SEND_SIGNAL(I, COMSIG_TRY_STORAGE_QUICK_EMPTY, drop_location())
-			user.visible_message("[user] empties [I] on [src].")
+			user.visible_message("<span class='notice'>[user] empties [I] on [src].</span>")
 			return
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
@@ -231,7 +231,7 @@
 	visible_message("<span class='warning'>[src] breaks!</span>",
 		"<span class='danger'>You hear breaking glass.</span>")
 	var/turf/T = get_turf(src)
-	playsound(T, "shatter", 50, 1)
+	playsound(T, "shatter", 50, TRUE)
 	for(var/I in debris)
 		var/atom/movable/AM = I
 		AM.forceMove(T)
@@ -248,7 +248,7 @@
 			return
 		else
 			var/turf/T = get_turf(src)
-			playsound(T, "shatter", 50, 1)
+			playsound(T, "shatter", 50, TRUE)
 			for(var/X in debris)
 				var/atom/movable/AM = X
 				AM.forceMove(T)
@@ -514,11 +514,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(loc, 'sound/items/dodgeball.ogg', 80, 1)
+				playsound(loc, 'sound/items/dodgeball.ogg', 80, TRUE)
 			else
-				playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 40, 1)
+			playsound(loc, 'sound/items/welder.ogg', 40, TRUE)
 
 /*
  * Rack destruction

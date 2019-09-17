@@ -49,7 +49,7 @@
 			else
 				to_chat(user, "<span class='notice'>You swallow a gulp of [src].</span>")
 			addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, 5, TRUE, TRUE, FALSE, user, FALSE, INGEST), 5)
-			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 
 /obj/item/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
 	. = ..()
@@ -223,19 +223,19 @@
 	list_reagents = list(/datum/reagent/toxin/slimejelly = 50)
 
 /obj/item/reagent_containers/glass/beaker/large/libital
-	name = "libital reserve tank"
-	list_reagents = list(/datum/reagent/medicine/C2/libital = 50)
+	name = "libital reserve tank (diluted)"
+	list_reagents = list(/datum/reagent/medicine/C2/libital = 10,/datum/reagent/medicine/granibitaluri = 40)
 
 /obj/item/reagent_containers/glass/beaker/large/aiuri
-	name = "aiuri reserve tank"
-	list_reagents = list(/datum/reagent/medicine/C2/aiuri = 50)
+	name = "aiuri reserve tank (diluted)"
+	list_reagents = list(/datum/reagent/medicine/C2/aiuri = 10, /datum/reagent/medicine/granibitaluri = 40)
 
 /obj/item/reagent_containers/glass/beaker/large/multiver
-	name = "multiver reserve tank"
-	list_reagents = list(/datum/reagent/medicine/C2/multiver = 50)
+	name = "multiver reserve tank (diluted)"
+	list_reagents = list(/datum/reagent/medicine/C2/multiver = 10, /datum/reagent/medicine/granibitaluri = 40)
 
 /obj/item/reagent_containers/glass/beaker/large/epinephrine
-	name = "epinephrine reserve tank"
+	name = "epinephrine reserve tank (diluted)"
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 50)
 
 /obj/item/reagent_containers/glass/beaker/instabitaluri
@@ -284,7 +284,7 @@
 		else
 			reagents.trans_to(O, 5, transfered_by = user)
 			to_chat(user, "<span class='notice'>You wet [O] in [src].</span>")
-			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+			playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 	else if(isprox(O)) //This works with wooden buckets for now. Somewhat unintended, but maybe someone will add sprites for it soon(TM)
 		to_chat(user, "<span class='notice'>You add [O] to [src].</span>")
 		qdel(O)

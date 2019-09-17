@@ -51,7 +51,7 @@
 		var/mob/living/brain/B = newbrain.brainmob
 		if(!B.key)
 			B.notify_ghost_cloning("Someone has put your brain in a MMI!", source = src)
-		user.visible_message("[user] sticks \a [newbrain] into [src].", "<span class='notice'>[src]'s indicator light turn on as you insert [newbrain].</span>")
+		user.visible_message("<span class='notice'>[user] sticks \a [newbrain] into [src].</span>", "<span class='notice'>[src]'s indicator light turn on as you insert [newbrain].</span>")
 
 		brainmob = newbrain.brainmob
 		newbrain.brainmob = null
@@ -78,6 +78,8 @@
 
 		SSblackbox.record_feedback("amount", "mmis_filled", 1)
 
+		log_game("[key_name(user)] has put the brain of [key_name(brainmob)] into an MMI at [AREACOORD(src)]")
+
 	else if(brainmob)
 		O.attack(brainmob, user) //Oh noooeeeee
 	else
@@ -103,6 +105,7 @@
 	GLOB.alive_mob_list -= brainmob //Get outta here
 	GLOB.dead_mob_list |= brainmob
 	brain.brainmob = brainmob //Set the brain to use the brainmob
+	log_game("[key_name(user)] has ejected the brain of [key_name(brainmob)] from an MMI at [AREACOORD(src)]")
 	brainmob = null //Set mmi brainmob var to null
 	if(user)
 		user.put_in_hands(brain) //puts brain in the user's hand or otherwise drops it on the user's turf
@@ -110,7 +113,6 @@
 		brain.forceMove(get_turf(src))
 	brain.organ_flags &= ~ORGAN_FROZEN
 	brain = null //No more brain in here
-
 
 /obj/item/mmi/proc/transfer_identity(mob/living/L) //Same deal as the regular brain proc. Used for human-->robot people.
 	if(!brainmob)

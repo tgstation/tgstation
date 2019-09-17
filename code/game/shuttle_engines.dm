@@ -48,9 +48,9 @@
 			if(!I.tool_start_check(user, amount=0))
 				return TRUE
 
-			user.visible_message("[user.name] starts to weld the [name] to the floor.", \
+			user.visible_message("<span class='notice'>[user.name] starts to weld the [name] to the floor.</span>", \
 				"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
-				"<span class='italics'>You hear welding.</span>")
+				"<span class='hear'>You hear welding.</span>")
 
 			if(I.use_tool(src, user, ENGINE_WELDTIME, volume=50))
 				state = ENGINE_WELDED
@@ -61,9 +61,9 @@
 			if(!I.tool_start_check(user, amount=0))
 				return TRUE
 
-			user.visible_message("[user.name] starts to cut the [name] free from the floor.", \
+			user.visible_message("<span class='notice'>[user.name] starts to cut the [name] free from the floor.</span>", \
 				"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
-				"<span class='italics'>You hear welding.</span>")
+				"<span class='hear'>You hear welding.</span>")
 
 			if(I.use_tool(src, user, ENGINE_WELDTIME, volume=50))
 				state = ENGINE_WRENCHED

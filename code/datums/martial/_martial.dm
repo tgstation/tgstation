@@ -10,13 +10,13 @@
 	var/allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	return 0
+	return FALSE
 
 /datum/martial_art/proc/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	return 0
+	return FALSE
 
 /datum/martial_art/proc/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	return 0
+	return FALSE
 
 /datum/martial_art/proc/can_use(mob/living/carbon/human/H)
 	return TRUE
@@ -27,56 +27,10 @@
 	streak = streak+element
 	if(length(streak) > max_streak_length)
 		streak = copytext(streak,2)
-	return
 
 /datum/martial_art/proc/reset_streak(mob/living/carbon/human/new_target)
 	current_target = new_target
 	streak = ""
-
-/datum/martial_art/proc/basic_hit(mob/living/carbon/human/A,mob/living/carbon/human/D)
-
-	var/damage = rand(A.dna.species.punchdamagelow, A.dna.species.punchdamagehigh)
-
-	var/atk_verb = A.dna.species.attack_verb
-	if(!(D.mobility_flags & MOBILITY_STAND))
-		atk_verb = "kick"
-
-	switch(atk_verb)
-		if("kick")
-			A.do_attack_animation(D, ATTACK_EFFECT_KICK)
-		if("slash")
-			A.do_attack_animation(D, ATTACK_EFFECT_CLAW)
-		if("smash")
-			A.do_attack_animation(D, ATTACK_EFFECT_SMASH)
-		else
-			A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
-
-	if(!damage)
-		playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
-		D.visible_message("<span class='warning'>[A]'s [atk_verb] misses [D]!</span>", \
-			"<span class='userdanger'>[A]'s [atk_verb] misses you!</span>", null, COMBAT_MESSAGE_RANGE)
-		log_combat(A, D, "attempted to [atk_verb]")
-		return 0
-
-	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
-	var/armor_block = D.run_armor_check(affecting, "melee")
-
-	playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
-	D.visible_message("<span class='danger'>[A] [atk_verb]ed [D]!</span>", \
-			"<span class='userdanger'>[A] [atk_verb]ed you!</span>", null, COMBAT_MESSAGE_RANGE)
-
-	D.apply_damage(damage, A.dna.species.attack_type, affecting, armor_block)
-
-	log_combat(A, D, "punched")
-
-	if((D.stat != DEAD) && damage >= A.dna.species.punchstunthreshold)
-		D.visible_message("<span class='danger'>[A] knocks [D] down!!</span>", \
-								"<span class='userdanger'>[A] knocks you down!</span>")
-		D.apply_effect(40, EFFECT_KNOCKDOWN, armor_block)
-		D.forcesay(GLOB.hit_appends)
-	else if(!(D.mobility_flags & MOBILITY_STAND))
-		D.forcesay(GLOB.hit_appends)
-	return 1
 
 /datum/martial_art/proc/teach(mob/living/carbon/human/H,make_temporary=FALSE)
 	if(!istype(H) || !H.mind)

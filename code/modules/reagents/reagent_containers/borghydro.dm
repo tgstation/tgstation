@@ -3,7 +3,6 @@
 Contains:
 Borg Hypospray
 Borg Shaker
-Borg Beaker Storage Apparatus
 Nothing to do with hydroponics in here. Sorry to dissapoint you.
 */
 
@@ -128,7 +127,7 @@ Borg Hypospray
 	if(!chosen_reagent)
 		return
 	mode = chosen_reagent
-	playsound(loc, 'sound/effects/pop.ogg', 50, 0)
+	playsound(loc, 'sound/effects/pop.ogg', 50, FALSE)
 	var/datum/reagent/R = GLOB.chemical_reagents_list[reagent_ids[mode]]
 	to_chat(user, "<span class='notice'>[src] is now dispensing '[R.name]'.</span>")
 	return
@@ -136,6 +135,9 @@ Borg Hypospray
 /obj/item/reagent_containers/borghypo/examine(mob/user)
 	. = ..()
 	. += DescribeContents()	//Because using the standardized reagents datum was just too cool for whatever fuckwit wrote this
+	var/datum/reagent/loaded = modes[mode]
+	. += "Currently loaded: [initial(loaded.name)]. [initial(loaded.description)]"
+	. += "<span class='notice'><i>Alt+Click</i> to change transfer amount. Currently set to [amount_per_transfer_from_this == 5 ? "dose normally (5u)" : "microdose (2u)"].</span>"
 
 /obj/item/reagent_containers/borghypo/proc/DescribeContents()
 	. = list()
@@ -149,6 +151,16 @@ Borg Hypospray
 
 	if(empty)
 		. += "<span class='warning'>It is currently empty! Allow some time for the internal synthesizer to produce more.</span>"
+
+/obj/item/reagent_containers/borghypo/AltClick(mob/living/user)
+	. = ..()
+	if(user.stat == DEAD || user != loc)
+		return //IF YOU CAN HEAR ME SET MY TRANSFER AMOUNT TO 1
+	if(amount_per_transfer_from_this == 5)
+		amount_per_transfer_from_this = 2
+	else
+		amount_per_transfer_from_this = 5
+	to_chat(user,"<span class='notice'>[src] is now set to [amount_per_transfer_from_this == 5 ? "dose normally" : "microdose"].</span>")
 
 /obj/item/reagent_containers/borghypo/hacked
 	icon_state = "borghypo_s"
@@ -262,115 +274,4 @@ Borg Shaker
 	reagent_ids = list(/datum/reagent/medicine/epinephrine)
 	accepts_reagent_upgrades = FALSE
 
-//////////////////////
-//borg beaker holder//
-//////////////////////
-
-/**An arm that only holds beakers. Can drop them, place them into machines, or onto tables. Attacks made by the arm, or
-to the arm are passed onto a stored beaker, if one exists. */
-
-/obj/item/borg_beaker_holder
-	name = "beaker storage apparatus"
-	desc = "A special apparatus for carrying beakers without spilling the contents. Alt-Z or right-click to drop the beaker."
-	icon = 'icons/mob/robot_items.dmi'
-	icon_state = "borg_beaker_apparatus"
-	var/obj/item/reagent_containers/stored
-
-/obj/item/borg_beaker_holder/Initialize()
-	. = ..()
-	stored = new /obj/item/reagent_containers/glass/beaker/large(src)
-	RegisterSignal(stored, COMSIG_OBJ_UPDATE_ICON, .proc/update_icon)
-	update_icon()
-	RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, .proc/safedecon)
-
-/obj/item/borg_beaker_holder/Destroy()
-	if(stored)
-		stored.SplashReagents(get_turf(src))
-		qdel(stored)
-	. = ..()
-
-///If we're safely deconstructed, we put the beaker neatly onto the ground, rather than spilling it everywhere.
-/obj/item/borg_beaker_holder/proc/safedecon()
-	if(stored)
-		stored.forceMove(get_turf(src))
-		stored = null
-
-/obj/item/borg_beaker_holder/examine()
-	. = ..()
-	if(stored)
-		. += "The apparatus currently has [stored] secured, which contains:"
-		if(length(stored.reagents.reagent_list))
-			for(var/datum/reagent/R in stored.reagents.reagent_list)
-				. += "[R.volume] units of [R.name]"
-		else
-			. += "Nothing."
-
-/obj/item/borg_beaker_holder/update_icon()
-	cut_overlays()
-	if(stored)
-		COMPILE_OVERLAYS(stored)
-		stored.pixel_x = 0
-		stored.pixel_y = 0
-		var/image/img = image("icon"=stored, "layer"=FLOAT_LAYER)
-		var/image/arm = image("icon"="borg_beaker_apparatus_arm", "layer"=FLOAT_LAYER)
-		if(istype(stored, /obj/item/reagent_containers/glass/beaker))
-			arm.pixel_y = arm.pixel_y - 3
-		img.plane = FLOAT_PLANE
-		add_overlay(img)
-		add_overlay(arm)
-	else
-		var/image/arm = image("icon"="borg_beaker_apparatus_arm", "layer"=FLOAT_LAYER)
-		arm.pixel_y = arm.pixel_y - 5
-		add_overlay(arm)
-
-/obj/item/borg_beaker_holder/Exited(atom/A)
-	if(A == stored) //sanity check
-		UnregisterSignal(stored, COMSIG_OBJ_UPDATE_ICON)
-		stored = null
-	update_icon()
-	. = ..()
-
-///A right-click verb, for those not using hotkey mode.
-/obj/item/borg_beaker_holder/verb/verb_dropbeaker()
-	set category = "Object"
-	set name = "Drop Beaker"
-
-	if(usr != loc || !stored)
-		return
-	stored.forceMove(get_turf(usr))
-	return
-
-/obj/item/borg_beaker_holder/attack_self(mob/living/silicon/robot/user)
-	if(!stored)
-		return ..()
-	if(user.client?.keys_held["Alt"])
-		stored.forceMove(get_turf(user))
-		return
-	if(user.a_intent == "help")
-		stored.attack_self(user)
-		return
-	else
-		stored.SplashReagents(get_turf(user))
-		loc.visible_message("<span class='notice'>[user] spills the contents of the [stored] all over the floor.</span>")
-
-/obj/item/borg_beaker_holder/pre_attack(atom/A, mob/living/user, params)
-	if(istype(A, /obj/item/reagent_containers/glass/beaker) || istype(A, /obj/item/reagent_containers/glass/bottle))
-		if(!stored)
-			var/obj/item/reagent_containers/container = A
-			container.forceMove(src)
-			stored = container
-			RegisterSignal(stored, COMSIG_OBJ_UPDATE_ICON, .proc/update_icon)
-			update_icon()
-			return
-	if(stored)
-		stored.melee_attack_chain(user, A, params)
-		return
-	. = ..()
-
-/obj/item/borg_beaker_holder/attackby(obj/item/W, mob/user, params)
-	if(stored)
-		W.melee_attack_chain(user, stored, params)
-		return
-	. = ..()
-  
 #undef C2NAMEREAGENT

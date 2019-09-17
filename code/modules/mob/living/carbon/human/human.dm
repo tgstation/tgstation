@@ -28,6 +28,8 @@
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_blood)
 	AddComponent(/datum/component/personal_crafting)
 
+	GLOB.human_list += src
+
 /mob/living/carbon/human/proc/setup_human_dna()
 	//initialize dna. for spawned humans; overwritten by other code
 	create_dna(src)
@@ -41,6 +43,7 @@
 
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
+	GLOB.human_list -= src
 	return ..()
 
 
@@ -227,7 +230,7 @@
 			I.forceMove(get_turf(src))
 			usr.put_in_hands(I)
 			usr.emote("scream")
-			usr.visible_message("[usr] successfully rips [I] out of [usr.p_their()] [L.name]!","<span class='notice'>You successfully remove [I] from your [L.name].</span>")
+			usr.visible_message("<span class='notice'>[usr] successfully rips [I] out of [usr.p_their()] [L.name]!</span>", "<span class='notice'>You successfully remove [I] from your [L.name].</span>")
 			if(!has_embedded_objects())
 				clear_alert("embeddedobject")
 				SEND_SIGNAL(usr, COMSIG_CLEAR_MOOD_EVENT, "embedded")
@@ -597,10 +600,10 @@
 //Used for new human mobs created by cloning/goleming/podding
 /mob/living/carbon/human/proc/set_cloned_appearance()
 	if(gender == MALE)
-		facial_hair_style = "Full Beard"
+		facial_hairstyle = "Full Beard"
 	else
-		facial_hair_style = "Shaved"
-	hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
+		facial_hairstyle = "Shaved"
+	hairstyle = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 	underwear = "Nude"
 	update_body()
 	update_hair()
@@ -640,7 +643,7 @@
 		if(C.health > C.crit_threshold)
 			return
 
-		src.visible_message("[src] performs CPR on [C.name]!", "<span class='notice'>You perform CPR on [C.name].</span>")
+		src.visible_message("<span class='notice'>[src] performs CPR on [C.name]!</span>", "<span class='notice'>You perform CPR on [C.name].</span>")
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "perform_cpr", /datum/mood_event/perform_cpr)
 		C.cpr_time = world.time
 		log_combat(src, C, "CPRed")
@@ -1140,6 +1143,9 @@
 
 /mob/living/carbon/human/species/golem/durathread
 	race = /datum/species/golem/durathread
+	
+/mob/living/carbon/human/species/golem/snow
+	race = /datum/species/golem/snow
 
 /mob/living/carbon/human/species/golem/clockwork
 	race = /datum/species/golem/clockwork

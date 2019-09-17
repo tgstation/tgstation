@@ -51,7 +51,7 @@
 		else
 			to_chat(user, "<span class='notice'>You are now carrying [src] with one hand.</span>")
 	if(unwieldsound)
-		playsound(loc, unwieldsound, 50, 1)
+		playsound(loc, unwieldsound, 50, TRUE)
 	var/obj/item/twohanded/offhand/O = user.get_inactive_held_item()
 	if(O && istype(O))
 		O.unwield()
@@ -79,7 +79,7 @@
 	else
 		to_chat(user, "<span class='notice'>You grab [src] with both hands.</span>")
 	if (wieldsound)
-		playsound(loc, wieldsound, 50, 1)
+		playsound(loc, wieldsound, 50, TRUE)
 	var/obj/item/twohanded/offhand/O = new(user) ////Let's reserve his other hand~
 	O.name = "[name] - offhand"
 	O.desc = "Your second grip on [src]."
@@ -251,12 +251,9 @@
 	if(!proximity)
 		return
 	if(wielded) //destroys windows and grilles in one hit
-		if(istype(A, /obj/structure/window))
-			var/obj/structure/window/W = A
-			W.take_damage(200, BRUTE, "melee", 0)
-		else if(istype(A, /obj/structure/grille))
-			var/obj/structure/grille/G = A
-			G.take_damage(40, BRUTE, "melee", 0)
+		if(istype(A, /obj/structure/window) || istype(A, /obj/structure/grille))
+			var/obj/structure/W = A
+			W.obj_destruction("fireaxe")
 
 
 /*
@@ -281,7 +278,7 @@
 	unwieldsound = 'sound/weapons/saberoff.ogg'
 	hitsound = "swing_hit"
 	armour_penetration = 35
-	item_color = "green"
+	var/saber_color = "green"
 	light_color = "#00ff00"//green
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 75
@@ -320,8 +317,8 @@
 /obj/item/twohanded/dualsaber/Initialize()
 	. = ..()
 	if(LAZYLEN(possible_colors))
-		item_color = pick(possible_colors)
-		switch(item_color)
+		saber_color = pick(possible_colors)
+		switch(saber_color)
 			if("red")
 				light_color = LIGHT_COLOR_RED
 			if("green")
@@ -337,7 +334,7 @@
 
 /obj/item/twohanded/dualsaber/update_icon()
 	if(wielded)
-		icon_state = "dualsaber[item_color][wielded]"
+		icon_state = "dualsaber[saber_color][wielded]"
 	else
 		icon_state = "dualsaber0"
 	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
@@ -417,7 +414,7 @@
 		if(C.wear_mask)
 			in_mouth = ", barely missing [user.p_their()] nose"
 	. = "<span class='warning'>[user] swings [user.p_their()] [name][in_mouth]. [user.p_they(TRUE)] light[user.p_s()] [user.p_their()] [A.name] in the process.</span>"
-	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
+	playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
 	add_fingerprint(user)
 	// Light your candles while spinning around the room
 	INVOKE_ASYNC(src, .proc/jedi_spin, user)
@@ -439,7 +436,7 @@
 		if(!hacked)
 			hacked = TRUE
 			to_chat(user, "<span class='warning'>2XRNBW_ENGAGE</span>")
-			item_color = "rainbow"
+			saber_color = "rainbow"
 			update_icon()
 		else
 			to_chat(user, "<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")
@@ -582,13 +579,13 @@
 /obj/item/twohanded/required/chainsaw/suicide_act(mob/living/carbon/user)
 	if(on)
 		user.visible_message("<span class='suicide'>[user] begins to tear [user.p_their()] head off with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-		playsound(src, 'sound/weapons/chainsawhit.ogg', 100, 1)
+		playsound(src, 'sound/weapons/chainsawhit.ogg', 100, TRUE)
 		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
 		if(myhead)
 			myhead.dismember()
 	else
 		user.visible_message("<span class='suicide'>[user] smashes [src] into [user.p_their()] neck, destroying [user.p_their()] esophagus! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-		playsound(src, 'sound/weapons/genhit1.ogg', 100, 1)
+		playsound(src, 'sound/weapons/genhit1.ogg', 100, TRUE)
 	return(BRUTELOSS)
 
 /obj/item/twohanded/required/chainsaw/attack_self(mob/user)
@@ -624,19 +621,16 @@
 /obj/item/twohanded/required/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
 		owner.visible_message("<span class='danger'>Ranged attacks just make [owner] angrier!</span>")
-		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
+		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
 		return 1
 	return 0
 
 //GREY TIDE
 /obj/item/twohanded/spear/grey_tide
-	icon_state = "spearglass0"
 	name = "\improper Grey Tide"
 	desc = "Recovered from the aftermath of a revolt aboard Defense Outpost Theta Aegis, in which a seemingly endless tide of Assistants caused heavy casualities among Nanotrasen military forces."
 	force_unwielded = 15
 	force_wielded = 25
-	throwforce = 20
-	throw_speed = 4
 	attack_verb = list("gored")
 
 /obj/item/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
@@ -727,7 +721,7 @@
 	if(iswallturf(target))
 		var/turf/closed/wall/W = target
 		user.visible_message("<span class='danger'>[user] blasts \the [target] with \the [src]!</span>")
-		playsound(target, 'sound/magic/disintegrate.ogg', 100, 1)
+		playsound(target, 'sound/magic/disintegrate.ogg', 100, TRUE)
 		W.break_wall()
 		W.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 		return
@@ -763,7 +757,7 @@
 		if(prob(final_block_chance))
 			if(attack_type == PROJECTILE_ATTACK)
 				owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
-				playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
+				playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
 				return 1
 			else
 				owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
@@ -788,26 +782,17 @@
 /*
  * Bone Spear
  */
-/obj/item/twohanded/bonespear	//Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
+/obj/item/twohanded/spear/bonespear	//Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
 	icon_state = "bone_spear0"
-	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	name = "bone spear"
 	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
-	force = 11
-	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = ITEM_SLOT_BACK
-	force_unwielded = 11
-	force_wielded = 20					//I have no idea how to balance
+	force = 12
+	force_unwielded = 12
+	force_wielded = 20
 	throwforce = 22
-	throw_speed = 4
-	embedding = list("embedded_impact_pain_multiplier" = 3)
 	armour_penetration = 15				//Enhanced armor piercing
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
-	sharpness = IS_SHARP
 
-/obj/item/twohanded/bonespear/update_icon()
+/obj/item/twohanded/spear/bonespear/update_icon()
 	icon_state = "bone_spear[wielded]"
 
 /obj/item/twohanded/binoculars
@@ -833,7 +818,7 @@
 		return
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/unwield)
 	listeningTo = user
-	user.visible_message("[user] holds [src] up to [user.p_their()] eyes.","You hold [src] up to your eyes.")
+	user.visible_message("<span class='notice'>[user] holds [src] up to [user.p_their()] eyes.</span>", "<span class='notice'>You hold [src] up to your eyes.</span>")
 	item_state = "binoculars_wielded"
 	user.regenerate_icons()
 	if(!user?.client)
@@ -858,7 +843,7 @@
 	. = ..()
 	UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 	listeningTo = null
-	user.visible_message("[user] lowers [src].","You lower [src].")
+	user.visible_message("<span class='notice'>[user] lowers [src].</span>", "<span class='notice'>You lower [src].</span>")
 	item_state = "binoculars"
 	user.regenerate_icons()
 	if(user && user.client)

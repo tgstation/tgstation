@@ -36,7 +36,7 @@ In all, this is a lot like the monkey code. /N
 		else
 			if(health > 0)
 				M.do_attack_animation(src, ATTACK_EFFECT_BITE)
-				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+				playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
 				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
 						"<span class='userdanger'>[M.name] bites you!</span>", null, COMBAT_MESSAGE_RANGE)
 				adjustBruteLoss(1)

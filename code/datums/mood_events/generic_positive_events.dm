@@ -148,10 +148,15 @@
 	mood_change = 6
 	timeout = 5 MINUTES
 
+/datum/mood_event/pet_borg
+	description = "<span class='nicegreen'>I just love my robotical friends!</span>\n"
+	mood_change = 3
+	timeout = 5 MINUTES
+
 /datum/mood_event/area
 	description = "" //Fill this out in the area
 	mood_change = 0
 
-/datum/mood_event/area/add_effects(list/param)
-	mood_change = param[1]
-	description = param[2]
+/datum/mood_event/area/add_effects(_mood_change, _description)
+	mood_change = _mood_change
+	description = _description

@@ -118,6 +118,8 @@
 		diag_hud.add_to_hud(src)
 	diag_hud_set_electrified()
 
+	RegisterSignal(src, COMSIG_MACHINERY_BROKEN, .proc/on_break)
+
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/door/airlock/LateInitialize()
@@ -246,8 +248,8 @@
 	if(locked)
 		return
 	locked = TRUE
-	playsound(src,boltDown,30,0,3)
-	audible_message("<span class='italics'>You hear a click from the bottom of the door.</span>", null,  1)
+	playsound(src,boltDown,30,FALSE,3)
+	audible_message("<span class='hear'>You hear a click from the bottom of the door.</span>", null,  1)
 	update_icon()
 
 /obj/machinery/door/airlock/unlock()
@@ -257,8 +259,8 @@
 	if(!locked)
 		return
 	locked = FALSE
-	playsound(src,boltUp,30,0,3)
-	audible_message("<span class='italics'>You hear a click from the bottom of the door.</span>", null,  1)
+	playsound(src,boltUp,30,FALSE,3)
+	audible_message("<span class='hear'>You hear a click from the bottom of the door.</span>", null,  1)
 	update_icon()
 
 /obj/machinery/door/airlock/narsie_act()
@@ -621,7 +623,7 @@
 		if("deny")
 			if(!stat)
 				update_icon(AIRLOCK_DENY)
-				playsound(src,doorDeni,50,0,3)
+				playsound(src,doorDeni,50,FALSE,3)
 				sleep(6)
 				update_icon(AIRLOCK_CLOSED)
 
@@ -846,7 +848,7 @@
 							return
 						user.visible_message("<span class='notice'>[user] cuts through \the [src]'s shielding.</span>",
 										"<span class='notice'>You cut through \the [src]'s shielding.</span>",
-										"<span class='italics'>You hear welding.</span>")
+										"<span class='hear'>You hear welding.</span>")
 						security_level = AIRLOCK_SECURITY_NONE
 						spawn_atom_to_turf(/obj/item/stack/sheet/metal, user.loc, 2)
 						update_icon()
@@ -878,7 +880,7 @@
 							return
 						user.visible_message("<span class='notice'>[user] cuts through \the [src]'s shielding.</span>",
 										"<span class='notice'>You cut through \the [src]'s shielding.</span>",
-										"<span class='italics'>You hear welding.</span>")
+										"<span class='hear'>You hear welding.</span>")
 						security_level = AIRLOCK_SECURITY_PLASTEEL_I_S
 					return
 			if(AIRLOCK_SECURITY_PLASTEEL_O_S)
@@ -904,7 +906,7 @@
 							return
 						user.visible_message("<span class='notice'>[user] cuts through \the [src]'s shielding.</span>",
 										"<span class='notice'>You cut through \the [src]'s shielding.</span>",
-										"<span class='italics'>You hear welding.</span>")
+										"<span class='hear'>You hear welding.</span>")
 						security_level = AIRLOCK_SECURITY_PLASTEEL_O_S
 					return
 			if(AIRLOCK_SECURITY_PLASTEEL)
@@ -960,25 +962,25 @@
 		if(user.a_intent != INTENT_HELP)
 			if(!W.tool_start_check(user, amount=0))
 				return
-			user.visible_message("[user] is [welded ? "unwelding":"welding"] the airlock.", \
+			user.visible_message("<span class='notice'>[user] is [welded ? "unwelding":"welding"] the airlock.</span>", \
 							"<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>", \
-							"<span class='italics'>You hear welding.</span>")
+							"<span class='hear'>You hear welding.</span>")
 			if(W.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
 				welded = !welded
-				user.visible_message("[user.name] has [welded? "welded shut":"unwelded"] [src].", \
+				user.visible_message("<span class='notice'>[user.name] has [welded? "welded shut":"unwelded"] [src].</span>", \
 									"<span class='notice'>You [welded ? "weld the airlock shut":"unweld the airlock"].</span>")
 				update_icon()
 		else
 			if(obj_integrity < max_integrity)
 				if(!W.tool_start_check(user, amount=0))
 					return
-				user.visible_message("[user] is welding the airlock.", \
+				user.visible_message("<span class='notice'>[user] is welding the airlock.</span>", \
 								"<span class='notice'>You begin repairing the airlock...</span>", \
-								"<span class='italics'>You hear welding.</span>")
+								"<span class='hear'>You hear welding.</span>")
 				if(W.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
 					obj_integrity = max_integrity
 					stat &= ~BROKEN
-					user.visible_message("[user.name] has repaired [src].", \
+					user.visible_message("<span class='notice'>[user.name] has repaired [src].</span>", \
 										"<span class='notice'>You finish repairing the airlock.</span>")
 					update_icon()
 			else
@@ -988,22 +990,21 @@
 	return !operating && density
 
 /obj/machinery/door/airlock/try_to_crowbar(obj/item/I, mob/living/user)
-	var/beingcrowbarred = null
-	if(I.tool_behaviour == TOOL_CROWBAR )
-		beingcrowbarred = 1
-	else
-		beingcrowbarred = 0
-	if(!security_level && (beingcrowbarred && panel_open && ((obj_flags & EMAGGED) || (density && welded && !operating && !hasPower() && !locked))))
-		user.visible_message("[user] removes the electronics from the airlock assembly.", \
-							 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
-		if(I.use_tool(src, user, 40, volume=100))
-			deconstruct(TRUE, user)
-			return
-	else if(hasPower())
+	if(I)
+		var/beingcrowbarred = (I.tool_behaviour == TOOL_CROWBAR)
+		if(!security_level && (beingcrowbarred && panel_open && ((obj_flags & EMAGGED) || (density && welded && !operating && !hasPower() && !locked))))
+			user.visible_message("<span class='notice'>[user] removes the electronics from the airlock assembly.</span>", \
+							 	"<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
+			if(I.use_tool(src, user, 40, volume=100))
+				deconstruct(TRUE, user)
+				return
+	if(hasPower())
 		to_chat(user, "<span class='warning'>The airlock's motors resist your efforts to force it!</span>")
-	else if(locked)
+		return
+	if(locked)
 		to_chat(user, "<span class='warning'>The airlock's bolts prevent it from being forced!</span>")
-	else if( !welded && !operating)
+		return
+	if( !welded && !operating)
 		if(istype(I, /obj/item/twohanded/fireaxe)) //being fireaxe'd
 			var/obj/item/twohanded/fireaxe/F = I
 			if(!F.wielded)
@@ -1049,7 +1050,7 @@
 		if(obj_flags & EMAGGED)
 			return FALSE
 		use_power(50)
-		playsound(src, doorOpen, 30, 1)
+		playsound(src, doorOpen, 30, TRUE)
 		if(closeOther != null && istype(closeOther, /obj/machinery/door/airlock/) && !closeOther.density)
 			closeOther.close()
 	else
@@ -1249,7 +1250,7 @@
 	var/time_to_open = 5
 	if(hasPower())
 		time_to_open = 50 //Powered airlocks take longer to open, and are loud.
-		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
+		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
 
 
 	if(do_after(user, time_to_open, TRUE, src))
@@ -1277,13 +1278,10 @@
 		safe = TRUE
 
 
-/obj/machinery/door/airlock/obj_break(damage_flag)
-	if(!(flags_1 & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
-		stat |= BROKEN
-		if(!panel_open)
-			panel_open = TRUE
-		wires.cut_all()
-		update_icon()
+/obj/machinery/door/airlock/proc/on_break()
+	if(!panel_open)
+		panel_open = TRUE
+	wires.cut_all()
 
 /obj/machinery/door/airlock/proc/set_electrified(seconds, mob/user)
 	secondsElectrified = seconds

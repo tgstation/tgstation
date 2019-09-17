@@ -13,7 +13,7 @@
 
 /obj/machinery/power/apc/power_drain(clockcult_user)
 	if(cell && cell.charge)
-		playsound(src, "sparks", 50, 1)
+		playsound(src, "sparks", 50, TRUE)
 		flick("apc-spark", src)
 		. = min(cell.charge, MIN_CLOCKCULT_POWER*3)
 		cell.use(.) //Better than a power sink!
