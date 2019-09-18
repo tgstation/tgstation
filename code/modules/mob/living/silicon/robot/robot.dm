@@ -242,15 +242,6 @@
 		return //won't work if dead
 	robot_alerts()
 
-/mob/living/silicon/robot/proc/cmd_robot_crewmonitor()
-	set category = "Robot Commands"
-	set name = "Crew Monitor"
-	if(usr.stat == DEAD)
-		to_chat(src, "<span class='userdanger'>Alert: You are dead.</span>")
-		return //won't work if dead
-	var/mob/living/silicon/robot/Cyborg = usr
-	GLOB.crewmonitor.show(Cyborg,Cyborg)
-
 /mob/living/silicon/robot/proc/robot_alerts()
 	var/dat = ""
 	for (var/cat in alarms)

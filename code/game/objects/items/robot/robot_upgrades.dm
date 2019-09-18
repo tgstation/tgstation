@@ -582,7 +582,6 @@
 		R.module.add_module(PP, FALSE, TRUE)
 		crew_monitor = new /datum/action/item_action/crew_monitor(src)
 		crew_monitor.Grant(R)
-		R.verbs += /mob/living/silicon/robot/proc/cmd_robot_crewmonitor
 		icon_state = "scanner"
 
 
@@ -592,7 +591,6 @@
 		icon_state = "pinpointer_crew"
 		crew_monitor.Remove(R)
 		QDEL_NULL(crew_monitor)
-		R.verbs -= /mob/living/silicon/robot/proc/cmd_robot_crewmonitor
 		var/obj/item/pinpointer/crew/PP = locate() in R.module
 		R.module.remove_module(PP, TRUE)
 
