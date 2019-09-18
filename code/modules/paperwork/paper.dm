@@ -72,11 +72,11 @@
 
 	if(in_range(user, src) || isobserver(user))
 		if(user.is_literate())
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE>[extra_headers]</HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]")
-			onclose(user, "[name]")
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE>[extra_headers]</HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=paper[md5(name)]")
+			onclose(user, "paper[md5(name)]")
 		else
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE>[extra_headers]</HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
-			onclose(user, "[name]")
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE>[extra_headers]</HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=paper[md5(name)]")
+			onclose(user, "paper[md5(name)]")
 	else
 		. += "<span class='warning'>You're too far away to read it!</span>"
 
