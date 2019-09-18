@@ -24,7 +24,7 @@
     "fg-loadcss": "1.0.0-0",
     "gulp": "^4.0.2",
     "gulp-bytediff": "1.0.0",
-    "gulp-if": "2.0.0",
+    "gulp-if": "3.0.0",
     "gulp-load-plugins": "^1.6.0",
     "gulp-postcss": "6.1.0",
     "gulp-size": "2.0.0",
