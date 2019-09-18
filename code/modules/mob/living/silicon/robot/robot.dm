@@ -1135,7 +1135,7 @@
 	. = ..()
 	if(can_buckle && isliving(M) && !(M in buckled_mobs) && ((user!=src)||(a_intent != INTENT_HARM)))
 		if(buckle_mob(M))
-			return 1
+			return TRUE
 
 /mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!is_type_in_typecache(M, can_ride_typecache))
