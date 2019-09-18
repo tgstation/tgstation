@@ -10,8 +10,8 @@
 					/obj/item/reagent_containers/pill/multiver = 2,
 					/obj/item/reagent_containers/medigel/libital = 2,
 					/obj/item/reagent_containers/medigel/aiuri = 2,
-					/obj/item/reagent_containers/patch/stypticpowder = 5,	//FULP
-					/obj/item/reagent_containers/patch/silversulfadiazine = 5,	//FULP
+					/obj/item/reagent_containers/pill/patch/stypticpowder = 5,	//FULP
+					/obj/item/reagent_containers/pill/patch/silversulfadiazine = 5,	//FULP
 					/obj/item/reagent_containers/medigel/sterilizine = 1)
 	contraband = list(/obj/item/reagent_containers/pill/tox = 2,
 	                  /obj/item/reagent_containers/pill/morphine = 2)
@@ -30,6 +30,6 @@
 	products = list(/obj/item/reagent_containers/syringe = 3,
 					/obj/item/reagent_containers/pill/patch/libital = 1,
 					/obj/item/reagent_containers/pill/patch/aiuri = 1,
-					/obj/item/reagent_containers/patch/stypticpowder = 2,	//FULP
-					/obj/item/reagent_containers/patch/silversulfadiazine = 2,	//FULP
+					/obj/item/reagent_containers/pill/patch/stypticpowder = 2,	//FULP
+					/obj/item/reagent_containers/pill/patch/silversulfadiazine = 2,	//FULP
 					/obj/item/reagent_containers/medigel/sterilizine = 1)

@@ -24,8 +24,8 @@
 					/obj/item/reagent_containers/medigel/aiuri = 2,
 					/obj/item/reagent_containers/medigel/sterilizine = 1,
 					/obj/item/sensor_device = 2,
-					/obj/item/reagent_containers/patch/stypticpowder = 5,	//FULP
-					/obj/item/reagent_containers/patch/silversulfadiazine = 5,	//FULP
+					/obj/item/reagent_containers/pill/patch/stypticpowder = 5,	//FULP
+					/obj/item/reagent_containers/pill/patch/silversulfadiazine = 5,	//FULP
 					/obj/item/pinpointer/crew = 2)
 	contraband = list(/obj/item/reagent_containers/pill/tox = 3,
 		              /obj/item/reagent_containers/pill/morphine = 4,

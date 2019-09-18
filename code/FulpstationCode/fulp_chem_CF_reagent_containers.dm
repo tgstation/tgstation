@@ -8,13 +8,13 @@
 
 //Patches
 
-/obj/item/reagent_containers/patch/stypticpowder
+/obj/item/reagent_containers/pill/patch/stypticpowder
 	name = "Styptic Powder Patch"
 	desc = "Heals bruises"
 	list_reagents = list(/datum/reagent/medicine/CF/styptic = 10)
 	icon_state = "bandaid_brute"
 
-/obj/item/reagent_containers/patch/silversulfadiazine
+/obj/item/reagent_containers/pill/patch/silversulfadiazine
 	name = "Silver Sulfadiazine Patch"
 	desc = "Heals burns"
 	list_reagents = list(/datum/reagent/medicine/CF/silver_sulfadiazine = 10)
@@ -24,13 +24,13 @@
 /obj/item/reagent_containers/medigel/stypticpowder
 	name = "medical gel (styptic)"
 	desc = "Heals bruises"
-	list_reagents = list(/datum/reagent/medicine/CF/styptic = 20)
+	list_reagents = list(/datum/reagent/medicine/CF/styptic = 60)
 	icon_state = "brutegel"
 
 /obj/item/reagent_containers/medigel/silversulfadiazine
 	name = "medical gel (silver sulf)"
 	desc = "Heals burns"
-	list_reagents = list(/datum/reagent/medicine/CF/silver_sulfadiazine = 20)
+	list_reagents = list(/datum/reagent/medicine/CF/silver_sulfadiazine = 60)
 	icon_state = "burngel"
 
 //Syringes
@@ -60,17 +60,17 @@
 /obj/item/reagent_containers/hypospray/medipen/bicaridine
 	name = "Bicaridine medipen"
 	desc = "Advanced Brute Healing"
-	list_reagents = list(/datum/reagent/medicine/CF/bicaridine = 10)
+	list_reagents = list(/datum/reagent/medicine/CF/bicaridine = 20)
 
 /obj/item/reagent_containers/hypospray/medipen/kelotane
 	name = "Kelotane medipen"
 	desc = "Advanced Burn Healing"
-	list_reagents = list(/datum/reagent/medicine/CF/kelotane = 10)
+	list_reagents = list(/datum/reagent/medicine/CF/kelotane = 20)
 
 /obj/item/reagent_containers/hypospray/medipen/antitoxin
 	name = "AntiToxin medipen"
 	desc = "Advanced Toxin Healing"
-	list_reagents = list(/datum/reagent/medicine/CF/antitoxin = 10)
+	list_reagents = list(/datum/reagent/medicine/CF/antitoxin = 20)
 
 /obj/item/reagent_containers/hypospray/tricordrazine
 	name = "Tricordrazine Hypospray"
