@@ -42,7 +42,14 @@
 	if(reagents && reagents.total_volume)
 		reagents.reaction(hit_atom, TOUCH)
 	if(isliving(hit_atom))
-		hit_atom.AddComponent(/datum/component/creamed, src, stunning)
+		var/mob/living/L = hit_atom
+		if(stunning)
+			L.Paralyze(20) //splat!
+		L.adjust_blurriness(1)
+		L.visible_message("<span class='warning'>[L] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
+		playsound(L, "desceration", 50, TRUE)
+	if(is_type_in_typecache(hit_atom, GLOB.creamable))
+		hit_atom.AddComponent(/datum/component/creamed, src)
 	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/pie/cream/nostun
