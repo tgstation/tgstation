@@ -595,8 +595,6 @@
 		R.verbs -= /mob/living/silicon/robot/proc/cmd_robot_crewmonitor
 		var/obj/item/pinpointer/crew/PP = locate() in R.module
 		R.module.remove_module(PP, TRUE)
-		to_chat(world, "<span class='warning'>crew_monitor: [crew_monitor].</span>")
-
 
 /obj/item/borg/upgrade/pinpointer/ui_action_click()
 	if(..())
