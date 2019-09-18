@@ -23,8 +23,9 @@
 /atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
 	if(can_buckle && istype(M) && istype(user))
-		if(user_buckle_mob(M, user))
-			return 1
+		if((!iscyborg(M))||(!(M in buckled_mobs) && ((user!=src)||(src.a_intent != INTENT_HARM))))
+			if(user_buckle_mob(M, user))
+				return 1
 
 /atom/movable/proc/has_buckled_mobs()
 	if(!buckled_mobs)
