@@ -90,6 +90,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	name = "syndicate comms headset"
 	desc = "A syndicate headset that can be used to hear all radio frequencies and AI binary. Protects ears from flashbangs."
 	keyslot2 = new /obj/item/encryptionkey/binary
+	command = TRUE
 
 /obj/item/radio/headset/syndicate/alt/ComponentInitialize()
 	. = ..()
