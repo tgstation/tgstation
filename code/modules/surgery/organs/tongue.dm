@@ -223,6 +223,22 @@
 /obj/item/organ/tongue/robot/handle_speech(datum/source, list/speech_args)
 	speech_args[SPEECH_SPANS] |= SPAN_ROBOT
 
+/obj/item/organ/tongue/robot/togglable
+	name = "togglable robotic voicebox"
+	var/active = FALSE
+	actions_types = list(/datum/action/item_action/organ_action/toggle)
+
+/obj/item/organ/tongue/robot/togglable/handle_speech(datum/source, list/speech_args)
+	if(active)
+		speech_args[SPEECH_SPANS] |= SPAN_ROBOT
+
+/obj/item/organ/tongue/robot/togglable/ui_action_click()
+	active = !active
+	if(active)
+		to_chat(owner, "<span class='notice'>You activate the robotic voicebox.</span>")
+	else
+		to_chat(owner, "<span class='notice'>You disable the robotic voicebox.</span>")
+
 /obj/item/organ/tongue/snail
 	name = "snailtongue"
 	modifies_speech = TRUE
