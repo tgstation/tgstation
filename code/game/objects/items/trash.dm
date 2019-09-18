@@ -113,7 +113,7 @@
 	desc = "Someone's gotten on the naughty list."
 	grind_results = list(/datum/reagent/carbon = 20)
 
-/obj/item/stack/trash/coal/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/trash/coal/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
 		if(prob(1))
 			visible_message("<span class='warning'>[src] fuses into a diamond! Someone wasn't so naughty after all...</span>")
