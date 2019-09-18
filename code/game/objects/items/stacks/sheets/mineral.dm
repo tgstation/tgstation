@@ -42,8 +42,9 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 	sheettype = "sandstone"
 	merge_type = /obj/item/stack/sheet/mineral/sandstone
 
-/obj/item/stack/sheet/mineral/sandstone/get_main_recipes()
-	return GLOB.sandstone_recipes
+/obj/item/stack/sheet/mineral/sandstone/obj/item/stack/rods/get_main_recipes()
+	. = ..()
+	. += GLOB.sandstone_recipes
 
 /obj/item/stack/sheet/mineral/sandstone/thirty
 	amount = 30
@@ -64,8 +65,9 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	new/datum/stack_recipe("sandbags", /obj/structure/barricade/sandbags, 1, time = 25, one_per_turf = 1, on_floor = 1), \
 	))
 
-/obj/item/stack/sheet/mineral/sandbags/get_main_recipes()
-	return GLOB.sandbag_recipes
+/obj/item/stack/sheet/mineral/sandbags/obj/item/stack/rods/get_main_recipes()
+	. = ..()
+	. += GLOB.sandbag_recipes
 
 /obj/item/emptysandbag
 	name = "empty sandbag"
@@ -110,8 +112,9 @@ GLOBAL_LIST_INIT(diamond_recipes, list ( \
 	new/datum/stack_recipe("AI Core Statue", /obj/structure/statue/diamond/ai2, 5, one_per_turf = 1, on_floor = 1), \
 	))
 
-/obj/item/stack/sheet/mineral/diamond/get_main_recipes()
-	return GLOB.diamond_recipes
+/obj/item/stack/sheet/mineral/diamond/obj/item/stack/rods/get_main_recipes()
+	. = ..()
+	. += GLOB.diamond_recipes
 /*
  * Uranium
  */
@@ -135,8 +138,9 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 	new/datum/stack_recipe("Engineer Statue", /obj/structure/statue/uranium/eng, 5, one_per_turf = 1, on_floor = 1), \
 	))
 
-/obj/item/stack/sheet/mineral/uranium/get_main_recipes()
-	return GLOB.uranium_recipes
+/obj/item/stack/sheet/mineral/uranium/obj/item/stack/rods/get_main_recipes()
+	. = ..()
+	. += GLOB.uranium_recipes
 
 /*
  * Plasma
@@ -165,8 +169,9 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 	new/datum/stack_recipe("Scientist Statue", /obj/structure/statue/plasma/scientist, 5, one_per_turf = 1, on_floor = 1), \
 	))
 
-/obj/item/stack/sheet/mineral/plasma/get_main_recipes()
-	return GLOB.plasma_recipes
+/obj/item/stack/sheet/mineral/plasma/obj/item/stack/rods/get_main_recipes()
+	. = ..()
+	. += GLOB.plasma_recipes
 
 /obj/item/stack/sheet/mineral/plasma/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
@@ -207,8 +212,9 @@ GLOBAL_LIST_INIT(gold_recipes, list ( \
 	new/datum/stack_recipe("CMO Statue", /obj/structure/statue/gold/cmo, 5, one_per_turf = 1, on_floor = 1), \
 	))
 
-/obj/item/stack/sheet/mineral/gold/get_main_recipes()
-	return GLOB.gold_recipes
+/obj/item/stack/sheet/mineral/gold/obj/item/stack/rods/get_main_recipes()
+	. = ..()
+	. += GLOB.gold_recipes
 
 /*
  * Silver
@@ -235,8 +241,9 @@ GLOBAL_LIST_INIT(silver_recipes, list ( \
 	new/datum/stack_recipe("Med Borg Statue", /obj/structure/statue/silver/medborg, 5, one_per_turf = 1, on_floor = 1), \
 	))
 
-/obj/item/stack/sheet/mineral/silver/get_main_recipes()
-	return GLOB.silver_recipes
+/obj/item/stack/sheet/mineral/silver/obj/item/stack/rods/get_main_recipes()
+	. = ..()
+	. += GLOB.silver_recipes
 
 /* Clown
  */
@@ -258,8 +265,9 @@ GLOBAL_LIST_INIT(bananium_recipes, list ( \
 	new/datum/stack_recipe("Clown Statue", /obj/structure/statue/bananium/clown, 5, one_per_turf = 1, on_floor = 1), \
 	))
 
-/obj/item/stack/sheet/mineral/bananium/get_main_recipes()
-	return GLOB.bananium_recipes
+/obj/item/stack/sheet/mineral/bananium/obj/item/stack/rods/get_main_recipes()
+	. = ..()
+	. += GLOB.bananium_recipes
 
 /* titanium */
 /obj/item/stack/sheet/mineral/titanium
@@ -282,8 +290,9 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	new/datum/stack_recipe("titanium tile", /obj/item/stack/tile/mineral/titanium, 1, 4, 20), \
 	))
 
-/obj/item/stack/sheet/mineral/titanium/get_main_recipes()
-	return GLOB.titanium_recipes
+/obj/item/stack/sheet/mineral/titanium/obj/item/stack/rods/get_main_recipes()
+	. = ..()
+	. += GLOB.titanium_recipes
 
 /obj/item/stack/sheet/mineral/titanium/fifty
 	amount = 50
@@ -310,8 +319,9 @@ GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 	new/datum/stack_recipe("plastitanium tile", /obj/item/stack/tile/mineral/plastitanium, 1, 4, 20), \
 	))
 
-/obj/item/stack/sheet/mineral/plastitanium/get_main_recipes()
-	return GLOB.plastitanium_recipes
+/obj/item/stack/sheet/mineral/plastitanium/obj/item/stack/rods/get_main_recipes()
+	. = ..()
+	. += GLOB.plastitanium_recipes
 
 
 /*
@@ -334,8 +344,9 @@ GLOBAL_LIST_INIT(snow_recipes, list ( \
 	new/datum/stack_recipe("Snow tile", /obj/item/stack/tile/mineral/snow, 1, 4, 20), \
 	))
 
-/obj/item/stack/sheet/mineral/snow/get_main_recipes()
-	return GLOB.snow_recipes
+/obj/item/stack/sheet/mineral/snow/obj/item/stack/rods/get_main_recipes()
+	. = ..()
+	. += GLOB.snow_recipes
 
 /****************************** Others ****************************/
 
@@ -353,11 +364,12 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
 	icon_state = "sheet-adamantine"
 	item_state = "sheet-adamantine"
 	singular_name = "adamantine sheet"
-	materials = list(/datum/material/adamantine=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/adamantine=MINERAL_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/mineral/adamantine
 
-/obj/item/stack/sheet/mineral/adamantine/get_main_recipes()
-	return GLOB.adamantine_recipes
+/obj/item/stack/sheet/mineral/adamantine/obj/item/stack/rods/get_main_recipes()
+	. = ..()
+	. += GLOB.adamantine_recipes
 
 /*
  * Runite
@@ -383,7 +395,7 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
 	item_state = "sheet-mythril"
 	singular_name = "mythril sheet"
 	novariants = TRUE
-	materials = list(/datum/material/mythril=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/mythril=MINERAL_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/mineral/mythril
 
 /*
@@ -407,5 +419,6 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 	new/datum/stack_recipe("alien floor tile", /obj/item/stack/tile/mineral/abductor, 1, 4, 20), \
 	))
 
-/obj/item/stack/sheet/mineral/abductor/get_main_recipes()
-	return GLOB.abductor_recipes
+/obj/item/stack/sheet/mineral/abductor/obj/item/stack/rods/get_main_recipes()
+	. = ..()
+	. += GLOB.abductor_recipes

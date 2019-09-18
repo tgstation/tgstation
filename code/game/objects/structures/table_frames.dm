@@ -90,7 +90,7 @@
 	else
 		return ..()
 
-/obj/structure/table_frame/proc/make_new_table(table_type, var/list/custom_materials) //makes sure the new table made retains what we had as a frame
+/obj/structure/table_frame/proc/make_new_table(table_type, list/custom_materials) //makes sure the new table made retains what we had as a frame
 	var/obj/structure/table/T = new table_type(loc)
 	T.frame = type
 	T.framestack = framestack

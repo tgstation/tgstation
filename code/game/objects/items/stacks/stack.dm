@@ -9,7 +9,6 @@
  * Stacks
  */
 
-GLOBAL_LIST_INIT(rigid_recipes, list(new/datum/stack_recipe("chair", /obj/structure/chair/greyscale, one_per_turf = TRUE, on_floor = TRUE, applies_mats = TRUE)))
 
 /obj/item/stack
 	icon = 'icons/obj/stack_objects.dmi'
@@ -67,6 +66,7 @@ GLOBAL_LIST_INIT(rigid_recipes, list(new/datum/stack_recipe("chair", /obj/struct
 	update_icon()
 
 /obj/item/stack/proc/get_main_recipes()
+	SHOULD_CALL_PARENT(1)
 	return list()//empty list
 
 /obj/item/stack/proc/update_weight()

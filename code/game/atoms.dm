@@ -87,7 +87,7 @@
   * We also generate a tag here if the DF_USE_TAG flag is set on the atom
   */
 /atom/New(loc, ...)
-	//atom creation method that preloads variables at creation
+	//atom creation method that preloads variables at crea tion
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		world.preloader_load(src)
 

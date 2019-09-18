@@ -18,8 +18,6 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/list/categories = list()
 	///The type of sheet this material creates. This should be replaced as soon as possible by greyscale sheets.
 	var/sheet_type
-	///Use this to make versions of materials that aren't as dangerous.
-	var/stable = FALSE
 	///This is a modifier for force, and resembles the strength of the material
 	var/strength_modifier = 1
 	///This is a modifier for integrity, and resembles the strength of the material
@@ -32,6 +30,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 ///This proc is called when the material is added to an object.
 /datum/material/proc/on_applied(atom/source, amount, material_flags)
 	amount *= source.material_modifier
+	if(material_flags & MATERIAL_NO_EFFECTS)
+		return //we do naffin
 	if(material_flags & MATERIAL_COLOR) //Prevent changing things with pre-set colors, to keep colored toolboxes their looks for example
 		if(color) //Do we have a custom color?
 			source.add_atom_colour(color, FIXED_COLOUR_PRIORITY)

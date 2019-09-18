@@ -5,6 +5,8 @@ These materials call on_applied() on whatever item they are applied to, common e
 
 */
 
+	GLOBAL_LIST_INIT(rigid_recipes, list(new/datum/stack_recipe("chair", /obj/structure/chair/greyscale, one_per_turf = TRUE, on_floor = TRUE, applies_mats = TRUE)))
+
 SUBSYSTEM_DEF(materials)
 	name = "Materials"
 	flags = SS_NO_FIRE
