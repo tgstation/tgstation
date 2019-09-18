@@ -132,7 +132,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	is_cyborg = 1
 	cost = 500
 
-/obj/item/stack/sheet/metal/obj/item/stack/rods/get_main_recipes()
+/obj/item/stack/sheet/metal/get_main_recipes()
 	. = ..()
 	. += GLOB.metal_recipes
 
@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	grind_results = list(/datum/reagent/iron = 20, /datum/reagent/toxin/plasma = 20)
 	point_value = 23
 
-/obj/item/stack/sheet/plasteel/obj/item/stack/rods/get_main_recipes()
+/obj/item/stack/sheet/plasteel/get_main_recipes()
 	. = ..()
 	. += GLOB.plasteel_recipes
 
@@ -234,7 +234,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	novariants = TRUE
 	grind_results = list(/datum/reagent/carbon = 20)
 
-/obj/item/stack/sheet/mineral/wood/obj/item/stack/rods/get_main_recipes()
+/obj/item/stack/sheet/mineral/wood/get_main_recipes()
 	. = ..()
 	. += GLOB.wood_recipes
 
@@ -263,7 +263,7 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/mineral/bamboo
 	grind_results = list("carbon" = 5)
 
-/obj/item/stack/sheet/mineral/bamboo/obj/item/stack/rods/get_main_recipes()
+/obj/item/stack/sheet/mineral/bamboo/get_main_recipes()
 	. = ..()
 	. += GLOB.bamboo_recipes
 
@@ -309,7 +309,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cloth
 
-/obj/item/stack/sheet/cloth/obj/item/stack/rods/get_main_recipes()
+/obj/item/stack/sheet/cloth/get_main_recipes()
 	. = ..()
 	. += GLOB.cloth_recipes
 
@@ -337,7 +337,7 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/durathread
 
-/obj/item/stack/sheet/durathread/obj/item/stack/rods/get_main_recipes()
+/obj/item/stack/sheet/durathread/get_main_recipes()
 	. = ..()
 	. += GLOB.durathread_recipes
 
@@ -427,7 +427,7 @@ GLOBAL_LIST_INIT(cardboard_recipes, list (														\
 	merge_type = /obj/item/stack/sheet/cardboard
 	novariants = TRUE
 
-/obj/item/stack/sheet/cardboard/obj/item/stack/rods/get_main_recipes()
+/obj/item/stack/sheet/cardboard/get_main_recipes()
 	. = ..()
 	. += GLOB.cardboard_recipes
 
@@ -486,7 +486,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 		return FALSE
 	return ..()
 
-/obj/item/stack/sheet/runed_metal/obj/item/stack/rods/get_main_recipes()
+/obj/item/stack/sheet/runed_metal/get_main_recipes()
 	. = ..()
 	. += GLOB.runed_metal_recipes
 
@@ -549,7 +549,7 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 		return
 	..()
 
-/obj/item/stack/tile/brass/obj/item/stack/rods/get_main_recipes()
+/obj/item/stack/tile/brass/get_main_recipes()
 	. = ..()
 	. += GLOB.brass_recipes
 
@@ -598,7 +598,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 		to_chat(user, "<span class='danger'>Wha... what is this cheap imitation crap? This isn't brass at all!</span>")
 	..()
 
-/obj/item/stack/tile/bronze/obj/item/stack/rods/get_main_recipes()
+/obj/item/stack/tile/bronze/get_main_recipes()
 	. = ..()
 	. += GLOB.bronze_recipes
 
@@ -671,7 +671,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 /obj/item/stack/sheet/plastic/five
 	amount = 5
 
-/obj/item/stack/sheet/plastic/obj/item/stack/rods/get_main_recipes()
+/obj/item/stack/sheet/plastic/get_main_recipes()
 	. = ..()
 	. += GLOB.plastic_recipes
 
@@ -689,7 +689,7 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/paperframes
 
-/obj/item/stack/sheet/paperframes/obj/item/stack/rods/get_main_recipes()
+/obj/item/stack/sheet/paperframes/get_main_recipes()
 	. = ..()
 	. += GLOB.paperframe_recipes
 /obj/item/stack/sheet/paperframes/five

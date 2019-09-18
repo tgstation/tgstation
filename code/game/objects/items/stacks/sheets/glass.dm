@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 /obj/item/stack/sheet/glass/fifty
 	amount = 50
 
-/obj/item/stack/sheet/glass/obj/item/stack/rods/get_main_recipes()
+/obj/item/stack/sheet/glass/get_main_recipes()
 	. = ..()
 	. += GLOB.glass_recipes
 
@@ -94,7 +94,7 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 /obj/item/stack/sheet/plasmaglass/fifty
 	amount = 50
 
-/obj/item/stack/sheet/plasmaglass/obj/item/stack/rods/get_main_recipes()
+/obj/item/stack/sheet/plasmaglass/get_main_recipes()
 	. = ..()
 	. += GLOB.pglass_recipes
 
@@ -166,7 +166,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	source.add_charge(amount * metcost)
 	glasource.add_charge(amount * glacost)
 
-/obj/item/stack/sheet/rglass/obj/item/stack/rods/get_main_recipes()
+/obj/item/stack/sheet/rglass/get_main_recipes()
 	. = ..()
 	. += GLOB.reinforced_glass_recipes
 
@@ -189,7 +189,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10, /datum/reagent/iron = 10)
 	point_value = 23
 
-/obj/item/stack/sheet/plasmarglass/obj/item/stack/rods/get_main_recipes()
+/obj/item/stack/sheet/plasmarglass/get_main_recipes()
 	. = ..()
 	. += GLOB.prglass_recipes
 
@@ -208,7 +208,7 @@ GLOBAL_LIST_INIT(titaniumglass_recipes, list(
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/titaniumglass
 
-/obj/item/stack/sheet/titaniumglass/obj/item/stack/rods/get_main_recipes()
+/obj/item/stack/sheet/titaniumglass/get_main_recipes()
 	. = ..()
 	. += GLOB.titaniumglass_recipes
 
@@ -228,7 +228,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/plastitaniumglass
 
-/obj/item/stack/sheet/plastitaniumglass/obj/item/stack/rods/get_main_recipes()
+/obj/item/stack/sheet/plastitaniumglass/get_main_recipes()
 	. = ..()
 	. += GLOB.plastitaniumglass_recipes
 
