@@ -1,6 +1,6 @@
-#define AUTOLATHE_MAIN_MENU       1
-#define AUTOLATHE_CATEGORY_MENU   2
-#define AUTOLATHE_SEARCH_MENU     3
+#define AUTOLATHE_MAIN_MENU		1
+#define AUTOLATHE_CATEGORY_MENU	2
+#define AUTOLATHE_SEARCH_MENU	3
 
 /obj/machinery/autolathe
 	name = "autolathe"
@@ -59,8 +59,11 @@
 	/datum/material/bluespace,
 	/datum/material/bananium,
 	/datum/material/titanium,
-	/datum/material/runite),
-	0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
+	/datum/material/runite,
+	/datum/material/plastic,
+	/datum/material/adamantine,
+	/datum/material/mythril
+	), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 
 	wires = new /datum/wires/autolathe(src)

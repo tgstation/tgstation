@@ -20,12 +20,12 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/sheet_type
 	///Use this to make versions of materials that aren't as dangerous.
 	var/stable = FALSE
-	///The type of coin this material spawns. This should be replaced as soon as possible by greyscale coins.
-	var/coin_type
 	///This is a modifier for force, and resembles the strength of the material
 	var/strength_modifier = 1
 	///This is a modifier for integrity, and resembles the strength of the material
 	var/integrity_modifier = 1
+	///This is the amount of value per 1 unit of the material
+	var/value_per_unit = 0
 	///Armor modifiers, multiplies an items normal armor vars by these amounts.
 	var/armor_modifiers = list("melee" = 1, "bullet" = 1, "laser" = 1, "energy" = 1, "bomb" = 1, "bio" = 1, "rad" = 1, "fire" = 1, "acid" = 1)
 
