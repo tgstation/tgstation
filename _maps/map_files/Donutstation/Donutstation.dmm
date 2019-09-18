@@ -44180,7 +44180,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/structure/cable,
-/turf/open/space/basic,
+/turf/open/floor/plating,
 /area/ai_monitored/nuke_storage)
 "gNl" = (
 /obj/machinery/atmospherics/components/binary/pump{
