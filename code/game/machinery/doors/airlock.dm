@@ -989,7 +989,7 @@
 /obj/machinery/door/airlock/proc/weld_checks(obj/item/weldingtool/W, mob/user)
 	return !operating && density
 
-/obj/machinery/door/airlock/try_to_crowbar(obj/item/I, mob/living/user)
+/obj/machinery/door/airlock/try_to_crowbar(obj/item/I, mob/living/user, forced = FALSE)
 	if(I)
 		var/beingcrowbarred = (I.tool_behaviour == TOOL_CROWBAR)
 		if(!security_level && (beingcrowbarred && panel_open && ((obj_flags & EMAGGED) || (density && welded && !operating && !hasPower() && !locked))))
@@ -998,44 +998,41 @@
 			if(I.use_tool(src, user, 40, volume=100))
 				deconstruct(TRUE, user)
 				return
-	else if(hasPower())
-		to_chat(user, "<span class='warning'>The airlock's motors resist your efforts to force it!</span>")
-	else if(locked)
+	if(locked)
 		to_chat(user, "<span class='warning'>The airlock's bolts prevent it from being forced!</span>")
-	else if( !welded && !operating)
+		return
+	if(welded)
+		to_chat(user, "<span class='warning'>It's welded, it won't budge!</span>")
+		return
+	if(hasPower())
+		if(forced)
+			if(isElectrified())
+				shock(user,100)//it's like sticking a forck in a power socket
+				return
+
+			if(!density)//already open
+				return
+
+			if(!prying_so_hard)
+				var/time_to_open = 50
+				playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE) //is it aliens or just the CE being a dick?
+				prying_so_hard = TRUE
+				if(do_after(user, time_to_open, TRUE, src))
+					open(2)
+					if(density && !open(2))
+						to_chat(user, "<span class='warning'>Despite your attempts, [src] refuses to open.</span>")
+				prying_so_hard = FALSE
+				return
+		to_chat(user, "<span class='warning'>The airlock's motors resist your efforts to force it!</span>")
+		return
+
+	if(!operating)
 		if(istype(I, /obj/item/twohanded/fireaxe)) //being fireaxe'd
 			var/obj/item/twohanded/fireaxe/F = I
 			if(!F.wielded)
 				to_chat(user, "<span class='warning'>You need to be wielding the fire axe to do that!</span>")
 				return
 		INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
-
-	if(istype(I, /obj/item/crowbar/power))
-		if(isElectrified())
-			shock(user,100)//it's like sticking a forck in a power socket
-			return
-
-		if(!density)//already open
-			return
-
-		if(locked)
-			to_chat(user, "<span class='warning'>The bolts are down, it won't budge!</span>")
-			return
-
-		if(welded)
-			to_chat(user, "<span class='warning'>It's welded, it won't budge!</span>")
-			return
-
-		var/time_to_open = 5
-		if(hasPower() && !prying_so_hard)
-			time_to_open = 50
-			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE) //is it aliens or just the CE being a dick?
-			prying_so_hard = TRUE
-			if(do_after(user, time_to_open, TRUE, src))
-				open(2)
-				if(density && !open(2))
-					to_chat(user, "<span class='warning'>Despite your attempts, [src] refuses to open.</span>")
-			prying_so_hard = FALSE
 
 
 /obj/machinery/door/airlock/open(forced=0)

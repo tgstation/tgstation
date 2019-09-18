@@ -93,7 +93,7 @@
 			else
 				if(!user.temporarilyRemoveItemFromInventory(C))
 					return
-				to_chat(user, "<span class='notice'>You insert a [C.cmineral] coin into [src]'s slot!</span>")
+				to_chat(user, "<span class='notice'>You insert [C] into [src]'s slot!</span>")
 				balance += C.value
 				qdel(C)
 		else
