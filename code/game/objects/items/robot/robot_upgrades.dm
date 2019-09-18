@@ -561,17 +561,18 @@
 
 /obj/item/borg/upgrade/pinpointer
 	name = "medical cyborg crew pinpointer"
-	desc = "A crew pinpointer module for the medical cyborg."
+	desc = "A crew pinpointer module for the medical cyborg. Permits remote access to the crew monitor."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "pinpointer_crew"
 	require_module = TRUE
 	module_type = /obj/item/robot_module/medical
+	var/datum/action/crew_monitor
 
 /obj/item/borg/upgrade/pinpointer/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
 
-		var/obj/item/pinpointer/crew/PP = locate() in R
+		var/obj/item/pinpointer/crew/PP = locate() in R.module
 		if(PP)
 			to_chat(user, "<span class='warning'>This unit is already equipped with a pinpointer module.</span>")
 			return FALSE
@@ -579,43 +580,25 @@
 		PP = new(R.module)
 		R.module.basic_modules += PP
 		R.module.add_module(PP, FALSE, TRUE)
+		crew_monitor = new /datum/action/item_action/crew_monitor(src)
+		crew_monitor.Grant(R)
+		R.verbs += /mob/living/silicon/robot/proc/cmd_robot_crewmonitor
+		icon_state = "scanner"
+
 
 /obj/item/borg/upgrade/pinpointer/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		var/obj/item/pinpointer/crew/PP = locate() in R.module
-		if (PP)
-			R.module.remove_module(PP, TRUE)
-
-
-/obj/item/borg/upgrade/crew_monitor
-	name = "medical cyborg crew monitor"
-	desc = "A crew monitor module for the medical cyborg."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "scanner"
-	require_module = TRUE
-	module_type = /obj/item/robot_module/medical
-	var/datum/action/crew_monitor
-
-/obj/item/borg/upgrade/crew_monitor/action(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if(.)
-		var/obj/item/borg/upgrade/crew_monitor/U = locate() in R
-		if(U)
-			to_chat(user, "<span class='warning'>This unit is already equipped with a self-repair module.</span>")
-			return FALSE
-
-		crew_monitor = new /datum/action/item_action/toggle(src)
-		crew_monitor.Grant(R)
-
-/obj/item/borg/upgrade/crew_monitor/deactivate(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if (.)
+		icon_state = "pinpointer_crew"
 		crew_monitor.Remove(R)
 		QDEL_NULL(crew_monitor)
+		R.verbs -= /mob/living/silicon/robot/proc/cmd_robot_crewmonitor
+		var/obj/item/pinpointer/crew/PP = locate() in R.module
+		R.module.remove_module(PP, TRUE)
+		to_chat(world, "<span class='warning'>crew_monitor: [crew_monitor].</span>")
 
 
-/obj/item/borg/upgrade/crew_monitor/ui_action_click()
+/obj/item/borg/upgrade/pinpointer/ui_action_click()
 	if(..())
 		return
 	var/mob/living/silicon/robot/Cyborg = usr
