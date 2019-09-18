@@ -768,6 +768,15 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/borg_upgrade_crewmonitor
+	name = "Cyborg Upgrade (Crew monitor)"
+	id = "borg_upgrade_monitor"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/crew_monitor
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
 //Misc
 /datum/design/mecha_tracking
 	name = "Exosuit Tracking Beacon"

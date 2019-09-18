@@ -587,6 +587,41 @@
 		if (PP)
 			R.module.remove_module(PP, TRUE)
 
+
+/obj/item/borg/upgrade/crew_monitor
+	name = "medical cyborg crew monitor"
+	desc = "A crew monitor module for the medical cyborg."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "scanner"
+	require_module = TRUE
+	module_type = /obj/item/robot_module/medical
+	var/datum/action/crew_monitor
+
+/obj/item/borg/upgrade/crew_monitor/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		var/obj/item/borg/upgrade/crew_monitor/U = locate() in R
+		if(U)
+			to_chat(user, "<span class='warning'>This unit is already equipped with a self-repair module.</span>")
+			return FALSE
+
+		crew_monitor = new /datum/action/item_action/toggle(src)
+		crew_monitor.Grant(R)
+
+/obj/item/borg/upgrade/crew_monitor/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if (.)
+		crew_monitor.Remove(R)
+		QDEL_NULL(crew_monitor)
+
+
+/obj/item/borg/upgrade/crew_monitor/ui_action_click()
+	if(..())
+		return
+	var/mob/living/silicon/robot/Cyborg = usr
+	GLOB.crewmonitor.show(Cyborg,Cyborg)
+
+
 /obj/item/borg/upgrade/transform
 	name = "borg module picker (Standard)"
 	desc = "Allows you to to turn a cyborg into a standard cyborg."
