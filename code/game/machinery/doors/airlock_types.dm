@@ -547,6 +547,7 @@
 	damage_deflection = 30
 	normal_integrity = 240
 	var/construction_state = GEAR_SECURE //Pinion airlocks have custom deconstruction
+	flags_1 = PREVENT_CLICK_UNDER_1|NODECONSTRUCT_1
 
 /obj/machinery/door/airlock/clockwork/Initialize()
 	. = ..()
@@ -597,9 +598,6 @@
 
 /obj/machinery/door/airlock/clockwork/hasPower()
 	return TRUE //yes we do have power
-
-/obj/machinery/door/airlock/clockwork/obj_break(damage_flag)
-	return
 
 /obj/machinery/door/airlock/clockwork/deconstruct(disassembled = TRUE)
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
