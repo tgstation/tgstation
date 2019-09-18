@@ -246,18 +246,6 @@ GLOBAL_LIST_EMPTY(allCasters)
 		else
 			add_overlay("crack3")
 
-
-/obj/machinery/newscaster/power_change()
-	if(stat & BROKEN)
-		return
-	if(powered())
-		stat &= ~NOPOWER
-		update_icon()
-	else
-		spawn(rand(0, 15))
-			stat |= NOPOWER
-			update_icon()
-
 /obj/machinery/newscaster/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	update_icon()
@@ -738,7 +726,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				return
 			user.visible_message("<span class='notice'>[user] is repairing [src].</span>", \
 							"<span class='notice'>You begin repairing [src]...</span>", \
-							"<span class='italics'>You hear welding.</span>")
+							"<span class='hear'>You hear welding.</span>")
 			if(I.use_tool(src, user, 40, volume=50))
 				if(!(stat & BROKEN))
 					return
@@ -769,11 +757,10 @@ GLOBAL_LIST_EMPTY(allCasters)
 		new /obj/item/shard(loc)
 	qdel(src)
 
-/obj/machinery/newscaster/obj_break()
-	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
-		stat |= BROKEN
+/obj/machinery/newscaster/obj_break(damage_flag)
+	. = ..()
+	if(.)
 		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
-		update_icon()
 
 
 /obj/machinery/newscaster/attack_paw(mob/user)

@@ -48,7 +48,7 @@
 	var/on_hit_state = P.on_hit(src, armor)
 	if(!P.nodamage && on_hit_state != BULLET_ACT_BLOCK)
 		apply_damage(P.damage, P.damage_type, def_zone, armor)
-		apply_effects(P.stun, P.knockdown, P.unconscious, P.irradiate, P.slur, P.stutter, P.eyeblur, P.drowsy, FALSE, P.stamina, P.jitter, P.paralyze, P.immobilize)
+		apply_effects(P.stun, P.knockdown, P.unconscious, P.irradiate, P.slur, P.stutter, P.eyeblur, P.drowsy, armor, P.stamina, P.jitter, P.paralyze, P.immobilize)
 		if(P.dismemberment)
 			check_projectile_dismemberment(P, def_zone)
 	return on_hit_state ? BULLET_ACT_HIT : BULLET_ACT_BLOCK
@@ -349,7 +349,7 @@
 	visible_message(
 		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
-		"<span class='italics'>You hear a heavy electrical crack.</span>" \
+		"<span class='hear'>You hear a heavy electrical crack.</span>" \
 	)
 	return shock_damage
 

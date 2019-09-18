@@ -245,10 +245,6 @@
 		air1.gases[/datum/gas/oxygen][MOLES] = max(0,air1.gases[/datum/gas/oxygen][MOLES] - 0.5 / efficiency) // Magically consume gas? Why not, we run on cryo magic.
 		air1.garbage_collect()
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/power_change()
-	..()
-	update_icon()
-
 /obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user)
 	if(message_cooldown <= world.time)
 		message_cooldown = world.time + 50
@@ -277,7 +273,7 @@
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the glass of [src]!</span>", \
 		"<span class='notice'>You struggle inside [src], kicking the release with your foot... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='italics'>You hear a thump from [src].</span>")
+		"<span class='hear'>You hear a thump from [src].</span>")
 	if(do_after(user, breakout_time, target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return

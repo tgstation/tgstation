@@ -144,12 +144,12 @@
 			// If the beaker is full, ping
 			if(!amount)
 				if(prob(5))
-					visible_message("<span class='italics'>[src] pings.</span>")
+					visible_message("<span class='hear'>[src] pings.</span>")
 				return
 
 			// If the human is losing too much blood, beep.
 			if(attached.blood_volume < BLOOD_VOLUME_SAFE && prob(5))
-				visible_message("<span class='italics'>[src] beeps loudly.</span>")
+				visible_message("<span class='hear'>[src] beeps loudly.</span>")
 				playsound(loc, 'sound/machines/twobeep_high.ogg', 50, TRUE)
 			attached.transfer_blood_to(beaker, amount)
 			update_icon()

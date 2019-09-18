@@ -587,7 +587,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	if(!user.transferItemToLoc(P, src))
 		return
 	user.visible_message("<span class='notice'>[user] loads some paper into [src].</span>", "<span class='notice'>You load some paper into [src].</span>")
-	audible_message("<span class='italics'>[src] begins to hum as it warms up its printing drums.</span>")
+	audible_message("<span class='hear'>[src] begins to hum as it warms up its printing drums.</span>")
 	busy = TRUE
 	sleep(rand(200,400))
 	busy = FALSE

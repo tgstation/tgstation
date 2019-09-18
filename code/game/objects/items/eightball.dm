@@ -54,7 +54,7 @@
 		to_chat(user, "<span class='warning'>[src] was shaken recently, it needs time to settle.</span>")
 		return
 
-	user.visible_message("<span class='notice'>[user] starts shaking [src].</span>", "<span class='notice'>You start shaking [src].</span>", "<span class='italics'>You hear shaking and sloshing.</span>")
+	user.visible_message("<span class='notice'>[user] starts shaking [src].</span>", "<span class='notice'>You start shaking [src].</span>", "<span class='hear'>You hear shaking and sloshing.</span>")
 
 	shaking = TRUE
 

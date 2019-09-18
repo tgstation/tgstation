@@ -781,3 +781,9 @@
 	id = /datum/reagent/consumable/red_queen
 	results = list(/datum/reagent/consumable/red_queen = 10)
 	required_reagents = list(/datum/reagent/consumable/tea = 6, /datum/reagent/mercury = 2, /datum/reagent/consumable/blackpepper = 1, /datum/reagent/growthserum = 1)
+
+/datum/chemical_reaction/mauna_loa
+	name = "Mauna Loa"
+	id = /datum/reagent/consumable/ethanol/mauna_loa
+	results = list(/datum/reagent/consumable/ethanol/mauna_loa = 5)
+	required_reagents = list(/datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/ethanol/kahlua = 1, /datum/reagent/consumable/ethanol/bahama_mama = 2)

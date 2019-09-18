@@ -140,7 +140,7 @@
 	new /obj/item/clothing/mask/gas/explorer(src)
 	new /obj/item/crowbar/red(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-	
+
 	if(!isplasmaman(loc))
 		new /obj/item/tank/internals/emergency_oxygen(src)
 	else
@@ -150,7 +150,7 @@
 /obj/item/storage/box/engineer/PopulateContents()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-		
+
 	if(!isplasmaman(loc))
 		new /obj/item/tank/internals/emergency_oxygen/engi(src)
 	else
@@ -163,7 +163,7 @@
 // Syndie survival box
 /obj/item/storage/box/syndie/PopulateContents()
 	new /obj/item/clothing/mask/gas/syndicate(src)
-	
+
 	if(!isplasmaman(loc))
 		new /obj/item/tank/internals/emergency_oxygen/engi(src)
 	else
@@ -173,7 +173,7 @@
 /obj/item/storage/box/security/PopulateContents()
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-	
+
 	if(!isplasmaman(loc))
 		new /obj/item/tank/internals/emergency_oxygen(src)
 	else
@@ -783,7 +783,7 @@
 /obj/item/storage/box/hug/survival/PopulateContents()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-	
+
 	if(!isplasmaman(loc))
 		new /obj/item/tank/internals/emergency_oxygen(src)
 	else
@@ -882,12 +882,12 @@
 	else if(W.is_sharp())
 		if(!contents.len)
 			if(item_state == "paperbag_None")
-				user.show_message("<span class='notice'>You cut eyeholes into [src].</span>", 1)
+				user.show_message("<span class='notice'>You cut eyeholes into [src].</span>", MSG_VISUAL)
 				new /obj/item/clothing/head/papersack(user.loc)
 				qdel(src)
 				return 0
 			else if(item_state == "paperbag_SmileyFace")
-				user.show_message("<span class='notice'>You cut eyeholes into [src] and modify the design.</span>", 1)
+				user.show_message("<span class='notice'>You cut eyeholes into [src] and modify the design.</span>", MSG_VISUAL)
 				new /obj/item/clothing/head/papersack/smiley(user.loc)
 				qdel(src)
 				return 0

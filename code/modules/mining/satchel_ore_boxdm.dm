@@ -22,7 +22,7 @@
 	if(I.use_tool(src, user, 50, volume=50))
 		user.visible_message("<span class='notice'>[user] pries \the [src] apart.</span>",
 			"<span class='notice'>You pry apart \the [src].</span>",
-			"<span class='italics'>You hear splitting wood.</span>")
+			"<span class='hear'>You hear splitting wood.</span>")
 		deconstruct(TRUE, user)
 	return TRUE
 

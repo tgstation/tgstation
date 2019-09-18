@@ -51,7 +51,7 @@
 
 /obj/item/grown/log/attackby(obj/item/W, mob/user, params)
 	if(W.is_sharp())
-		user.show_message("<span class='notice'>You make [plank_name] out of \the [src]!</span>", 1)
+		user.show_message("<span class='notice'>You make [plank_name] out of \the [src]!</span>", MSG_VISUAL)
 		var/seed_modifier = 0
 		if(seed)
 			seed_modifier = round(seed.potency / 25)
@@ -180,14 +180,14 @@
 				R.use(1)
 				can_buckle = TRUE
 				buckle_requires_restraints = TRUE
-				to_chat(user, "<span class='italics'>You add a rod to \the [src].</span>")
+				to_chat(user, "<span class='notice'>You add a rod to \the [src].</span>")
 				var/mutable_appearance/rod_underlay = mutable_appearance('icons/obj/hydroponics/equipment.dmi', "bonfire_rod")
 				rod_underlay.pixel_y = 16
 				underlays += rod_underlay
 			if("Grill")
 				R.use(1)
 				grill = TRUE
-				to_chat(user, "<span class='italics'>You add a grill to \the [src].</span>")
+				to_chat(user, "<span class='notice'>You add a grill to \the [src].</span>")
 				add_overlay("bonfire_grill")
 			else
 				return ..()
