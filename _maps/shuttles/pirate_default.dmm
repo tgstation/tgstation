@@ -863,7 +863,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/pirate)
 "dy" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},

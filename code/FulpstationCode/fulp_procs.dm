@@ -13,7 +13,6 @@
 		// B) Check for Viewers
 		for(var/mob/living/M in viewers(T))
 			if(M != subject && isliving(M) && M.mind && !M.has_unlimited_silicon_privilege && !M.eye_blind) // M.client <--- add this in after testing!
-				message_admins("Seen Test: [subject] [M]")
 				return TRUE
 	return FALSE
 
@@ -42,3 +41,11 @@
 		if(clear)
 			possible_turfs += T
 	return possible_turfs
+
+
+// Return a xeno_spawn location in an area - use for additional jobspawns
+//
+proc/get_fulp_spawn(area/dept)
+	for(var/obj/effect/landmark/S in GLOB.xeno_spawn)
+		if(get_area(S) == dept)
+			return S

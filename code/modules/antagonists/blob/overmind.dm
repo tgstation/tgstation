@@ -136,7 +136,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			continue
 
 		if(!(ROLE_BLOB in L.faction))
-			playsound(L, 'sound/effects/splat.ogg', 50, 1)
+			playsound(L, 'sound/effects/splat.ogg', 50, TRUE)
 			L.death()
 			new/mob/living/simple_animal/hostile/blob/blobspore(T)
 		else

@@ -4,7 +4,6 @@
 	icon = 'icons/obj/clothing/accessories.dmi'
 	icon_state = "plasma"
 	item_state = ""	//no inhands
-	item_color = "plasma" //On accessories, this controls the worn sprite. That's a bit weird.
 	slot_flags = 0
 	w_class = WEIGHT_CLASS_SMALL
 	var/above_suit = FALSE
@@ -90,7 +89,6 @@
 	desc = "For some classy, murderous fun."
 	icon_state = "waistcoat"
 	item_state = "waistcoat"
-	item_color = "waistcoat"
 	minimize_when_attached = FALSE
 	attachment_slot = null
 
@@ -99,7 +97,6 @@
 	desc = "The best part of a maid costume."
 	icon_state = "maidapron"
 	item_state = "maidapron"
-	item_color = "maidapron"
 	minimize_when_attached = FALSE
 	attachment_slot = null
 
@@ -111,7 +108,6 @@
 	name = "bronze medal"
 	desc = "A bronze medal."
 	icon_state = "bronze"
-	item_color = "bronze"
 	materials = list(/datum/material/iron=1000)
 	resistance_flags = FIRE_PROOF
 	var/medaltype = "medal" //Sprite used for medalbox
@@ -132,7 +128,7 @@
 			if(user == M)
 				delay = 0
 			else
-				user.visible_message("[user] is trying to pin [src] on [M]'s chest.", \
+				user.visible_message("<span class='notice'>[user] is trying to pin [src] on [M]'s chest.</span>", \
 									 "<span class='notice'>You try to pin [src] on [M]'s chest.</span>")
 			var/input
 			if(!commended && user != M)
@@ -142,7 +138,7 @@
 					if(user == M)
 						to_chat(user, "<span class='notice'>You attach [src] to [U].</span>")
 					else
-						user.visible_message("[user] pins \the [src] on [M]'s chest.", \
+						user.visible_message("<span class='notice'>[user] pins \the [src] on [M]'s chest.</span>", \
 											 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
 						if(input)
 							SSblackbox.record_feedback("associative", "commendation", 1, list("commender" = "[user.real_name]", "commendee" = "[M.real_name]", "medal" = "[src]", "reason" = input))
@@ -170,7 +166,6 @@
 	name = "ribbon"
 	desc = "A ribbon"
 	icon_state = "cargo"
-	item_color = "cargo"
 
 /obj/item/clothing/accessory/medal/ribbon/cargo
 	name = "\"cargo tech of the shift\" award"
@@ -180,7 +175,6 @@
 	name = "silver medal"
 	desc = "A silver medal."
 	icon_state = "silver"
-	item_color = "silver"
 	medaltype = "medal-silver"
 	materials = list(/datum/material/silver=1000)
 
@@ -200,7 +194,6 @@
 	name = "gold medal"
 	desc = "A prestigious golden medal."
 	icon_state = "gold"
-	item_color = "gold"
 	medaltype = "medal-gold"
 	materials = list(/datum/material/gold=1000)
 
@@ -217,7 +210,6 @@
 	name = "plasma medal"
 	desc = "An eccentric medal made of plasma."
 	icon_state = "plasma"
-	item_color = "plasma"
 	medaltype = "medal-plasma"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = -10, "acid" = 0) //It's made of plasma. Of course it's flammable.
 	materials = list(/datum/material/plasma=1000)
@@ -225,7 +217,7 @@
 /obj/item/clothing/accessory/medal/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
 		atmos_spawn_air("plasma=20;TEMP=[exposed_temperature]")
-		visible_message("<span class='danger'> \The [src] bursts into flame!</span>","<span class='userdanger'>Your [src] bursts into flame!</span>")
+		visible_message("<span class='danger'>\The [src] bursts into flame!</span>", "<span class='userdanger'>Your [src] bursts into flame!</span>")
 		qdel(src)
 
 /obj/item/clothing/accessory/medal/plasma/nobel_science
@@ -242,7 +234,6 @@
 	name = "red armband"
 	desc = "An fancy red armband!"
 	icon_state = "redband"
-	item_color = "redband"
 	attachment_slot = null
 
 /obj/item/clothing/accessory/armband/deputy
@@ -253,37 +244,31 @@
 	name = "cargo bay guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is brown."
 	icon_state = "cargoband"
-	item_color = "cargoband"
 
 /obj/item/clothing/accessory/armband/engine
 	name = "engineering guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is orange with a reflective strip!"
 	icon_state = "engieband"
-	item_color = "engieband"
 
 /obj/item/clothing/accessory/armband/science
 	name = "science guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is purple."
 	icon_state = "rndband"
-	item_color = "rndband"
 
 /obj/item/clothing/accessory/armband/hydro
 	name = "hydroponics guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is green and blue."
 	icon_state = "hydroband"
-	item_color = "hydroband"
 
 /obj/item/clothing/accessory/armband/med
 	name = "medical guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white."
 	icon_state = "medband"
-	item_color = "medband"
 
 /obj/item/clothing/accessory/armband/medblue
 	name = "medical guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white and blue."
 	icon_state = "medblueband"
-	item_color = "medblueband"
 
 //////////////
 //OBJECTION!//
@@ -293,12 +278,11 @@
 	name = "attorney's badge"
 	desc = "Fills you with the conviction of JUSTICE. Lawyers tend to want to show it to everyone they meet."
 	icon_state = "lawyerbadge"
-	item_color = "lawyerbadge"
 
 /obj/item/clothing/accessory/lawyers_badge/attack_self(mob/user)
 	if(prob(1))
 		user.say("The testimony contradicts the evidence!", forced = "attorney's badge")
-	user.visible_message("[user] shows [user.p_their()] attorney's badge.", "<span class='notice'>You show your attorney's badge.</span>")
+	user.visible_message("<span class='notice'>[user] shows [user.p_their()] attorney's badge.</span>", "<span class='notice'>You show your attorney's badge.</span>")
 
 /obj/item/clothing/accessory/lawyers_badge/on_uniform_equip(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
@@ -317,7 +301,6 @@
 	name = "pocket protector"
 	desc = "Can protect your clothing from ink stains, but you'll look like a nerd if you're using one."
 	icon_state = "pocketprotector"
-	item_color = "pocketprotector"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/pocketprotector
 
 /obj/item/clothing/accessory/pocketprotector/full/Initialize()
@@ -339,7 +322,6 @@
 	name = "bone talisman"
 	desc = "A hunter's talisman, some say the old gods smile on those who wear it."
 	icon_state = "talisman"
-	item_color = "talisman"
 	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 20, "bio" = 20, "rad" = 5, "fire" = 0, "acid" = 25)
 	attachment_slot = null
 
@@ -347,7 +329,6 @@
 	name = "skull codpiece"
 	desc = "A skull shaped ornament, intended to protect the important things in life."
 	icon_state = "skull"
-	item_color = "skull"
 	above_suit = TRUE
 	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 20, "bio" = 20, "rad" = 5, "fire" = 0, "acid" = 25)
 	attachment_slot = GROIN

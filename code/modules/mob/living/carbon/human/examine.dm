@@ -15,8 +15,12 @@
 
 	. = list("<span class='info'>*---------*\nThis is <EM>[!obscure_name ? name : "Unknown"]</EM>!")
 
-	. += ReturnVampExamine(user) // FULPSTATION: Vamps recognize the names of other vamps.
-	. += ReturnVassalExamine(user) // FULPSTATION: Vassals recognize each other's marks.
+	var/vampDesc = ReturnVampExamine(user) // FULPSTATION: Vamps recognize the names of other vamps.
+	var/vassDesc = ReturnVassalExamine(user) // FULPSTATION: Vassals recognize each other's marks.
+	if (vampDesc != "") // UPDATE 9/6/19 - If we don't do it this way, we add a blank space to the string...something to do with this -->  . += ""
+		. += vampDesc
+	if (vassDesc != "")
+		. += vassDesc
 
 	var/list/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
@@ -174,29 +178,29 @@
 	if(!(user == src && src.hal_screwyhud == SCREWYHUD_HEALTHY)) //fake healthy
 		if(temp)
 			if(temp < 25)
-				msg += "[t_He] [t_has] minor bruising.\n"
+				msg += "[t_He] [t_has] minor [dna.species.bruising_desc].\n"	// FULP: Species Descriptors
 			else if(temp < 50)
-				msg += "[t_He] [t_has] <b>moderate</b> bruising!\n"
+				msg += "[t_He] [t_has] <b>moderate</b> [dna.species.bruising_desc]!\n"
 			else
-				msg += "<B>[t_He] [t_has] severe bruising!</B>\n"
+				msg += "<B>[t_He] [t_has] severe [dna.species.bruising_desc]!</B>\n"
 
 		temp = getFireLoss()
 		if(temp)
 			if(temp < 25)
-				msg += "[t_He] [t_has] minor burns.\n"
+				msg += "[t_He] [t_has] minor [dna.species.burns_desc].\n"	// FULP: Species Descriptors
 			else if (temp < 50)
-				msg += "[t_He] [t_has] <b>moderate</b> burns!\n"
+				msg += "[t_He] [t_has] <b>moderate</b> [dna.species.burns_desc]!\n"
 			else
-				msg += "<B>[t_He] [t_has] severe burns!</B>\n"
+				msg += "<B>[t_He] [t_has] severe [dna.species.burns_desc]!</B>\n"
 
 		temp = getCloneLoss()
 		if(temp)
 			if(temp < 25)
-				msg += "[t_He] [t_has] minor cellular damage.\n"
+				msg += "[t_He] [t_has] minor [dna.species.cellulardamage_desc].\n"	 // FULP: Species Descriptors
 			else if(temp < 50)
-				msg += "[t_He] [t_has] <b>moderate</b> cellular damage!\n"
+				msg += "[t_He] [t_has] <b>moderate</b> [dna.species.cellulardamage_desc]!\n"
 			else
-				msg += "<b>[t_He] [t_has] severe cellular damage!</b>\n"
+				msg += "<b>[t_He] [t_has] severe [dna.species.cellulardamage_desc]!</b>\n"
 
 
 	if(fire_stacks > 0)
@@ -298,9 +302,6 @@
 				msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely.</span>\n"
 			else if(!client)
 				msg += "[t_He] [t_has] a blank, absent-minded stare and appears completely unresponsive to anything. [t_He] may snap out of it soon.\n"
-
-		if(digitalcamo)
-			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
 
 	if (length(msg))
 		. += "<span class='warning'>[msg.Join("")]</span>"

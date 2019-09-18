@@ -24,6 +24,8 @@
 					/obj/item/reagent_containers/medigel/aiuri = 2,
 					/obj/item/reagent_containers/medigel/sterilizine = 1,
 					/obj/item/sensor_device = 2,
+					/obj/item/reagent_containers/pill/patch/stypticpowder = 5,	//FULP
+					/obj/item/reagent_containers/pill/patch/silversulfadiazine = 5,	//FULP
 					/obj/item/pinpointer/crew = 2)
 	contraband = list(/obj/item/reagent_containers/pill/tox = 3,
 		              /obj/item/reagent_containers/pill/morphine = 4,
@@ -33,7 +35,10 @@
 		           /obj/item/storage/pill_bottle/psicodine = 2,
 		           /obj/item/reagent_containers/hypospray/medipen = 3,
 		           /obj/item/storage/belt/medical = 3,
+				   /obj/item/reagent_containers/medigel/stypticpowder = 5,	//FULP
+				   /obj/item/reagent_containers/medigel/silversulfadiazine = 5,	//FULP
 		           /obj/item/wrench/medical = 1,
+
 		           /obj/item/storage/firstaid/advanced = 2)
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF

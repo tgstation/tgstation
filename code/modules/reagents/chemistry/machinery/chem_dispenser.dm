@@ -73,6 +73,10 @@
 		/datum/reagent/oil,
 		/datum/reagent/saltpetre
 	)
+	//available with T5 manipulator (Quantum) [XEON Code]
+	var/list/t5_reagents = list( //FULP
+		/datum/reagent/medicine/CF/trekamol //FULP [Saliferous]
+	)
 	var/list/emagged_reagents = list(
 		/datum/reagent/toxin/carpotoxin,
 		/datum/reagent/medicine/mine_salve,
@@ -92,6 +96,8 @@
 		emagged_reagents = sortList(emagged_reagents, /proc/cmp_reagents_asc)
 	if(upgrade_reagents)
 		upgrade_reagents = sortList(upgrade_reagents, /proc/cmp_reagents_asc)
+	if(t5_reagents) //FULP [XEON]
+		t5_reagents = sortList(t5_reagents, /proc/cmp_reagents_asc) //FULP
 	update_icon()
 
 /obj/machinery/chem_dispenser/Destroy()
@@ -129,12 +135,9 @@
 	if(working_state)
 		flick(working_state,src)
 
-/obj/machinery/chem_dispenser/power_change()
-	..()
-	icon_state = "[(nopower_state && !powered()) ? nopower_state : initial(icon_state)]"
-
 /obj/machinery/chem_dispenser/update_icon()
 	cut_overlays()
+	icon_state = "[(nopower_state && !powered()) ? nopower_state : initial(icon_state)]"
 	if(has_panel_overlay && panel_open)
 		add_overlay(mutable_appearance(icon, "[initial(icon_state)]_panel-o"))
 
@@ -310,9 +313,9 @@
 				for(var/reagent in recording_recipe)
 					var/reagent_id = GLOB.name2reagent[translate_legacy_chem_id(reagent)]
 					if(!dispensable_reagents.Find(reagent_id))
-						visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
+						visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='hear'>You hear a faint buzz.</span>")
 						to_chat(usr, "<span class ='danger'>[src] cannot find <b>[reagent]</b>!</span>")
-						playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
+						playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
 						return
 				saved_recipes[name] = recording_recipe
 				recording_recipe = null
@@ -381,6 +384,8 @@
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		if (M.rating > 3)
 			dispensable_reagents |= upgrade_reagents
+		if (M.rating > 4) //FULP [Saliferous]
+			dispensable_reagents |= t5_reagents //FULP
 	powerefficiency = round(newpowereff, 0.01)
 
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)

@@ -71,19 +71,19 @@
 
 	else if(trapped == SPOOKY_SKELETON)
 		visible_message("<span class='userdanger'><font size='5'>BOO!</font></span>")
-		playsound(loc, 'sound/spookoween/girlscream.ogg', 300, 1)
+		playsound(loc, 'sound/spookoween/girlscream.ogg', 300, TRUE)
 		trapped = 0
 		QDEL_IN(trapped_mob, 90)
 
 	else if(trapped == HOWLING_GHOST)
 		visible_message("<span class='userdanger'><font size='5'>[pick("OooOOooooOOOoOoOOooooOOOOO", "BooOOooOooooOOOO", "BOO!", "WoOOoOoooOooo")]</font></span>")
-		playsound(loc, 'sound/spookoween/ghosty_wind.ogg', 300, 1)
+		playsound(loc, 'sound/spookoween/ghosty_wind.ogg', 300, TRUE)
 		new /mob/living/simple_animal/shade/howling_ghost(loc)
 		trapped = 0
 
 	else if(trapped == SCARY_BATS)
 		visible_message("<span class='userdanger'><font size='5'>Protect your hair!</font></span>")
-		playsound(loc, 'sound/spookoween/bats.ogg', 300, 1)
+		playsound(loc, 'sound/spookoween/bats.ogg', 300, TRUE)
 		var/number = rand(1,3)
 		for(var/i=0,i < number,i++)
 			new /mob/living/simple_animal/hostile/retaliate/bat(loc)
@@ -92,14 +92,14 @@
 	else if(trapped == ANGRY_FAITHLESS)
 		visible_message("<span class='userdanger'>The closet bursts open!</span>")
 		visible_message("<span class='userdanger'><font size='5'>THIS BEING RADIATES PURE EVIL! YOU BETTER RUN!!!</font></span>")
-		playsound(loc, 'sound/hallucinations/wail.ogg', 300, 1)
+		playsound(loc, 'sound/hallucinations/wail.ogg', 300, TRUE)
 		var/mob/living/simple_animal/hostile/faithless/F = new(loc)
 		trapped = 0
 		QDEL_IN(F, 120)
 
 	else if(trapped == INSANE_CLOWN)
 		visible_message("<span class='userdanger'><font size='5'>...</font></span>")
-		playsound(loc, 'sound/spookoween/scary_clown_appear.ogg', 300, 1)
+		playsound(loc, 'sound/spookoween/scary_clown_appear.ogg', 300, TRUE)
 		spawn_atom_to_turf(/mob/living/simple_animal/hostile/clown_insane, loc, 1, FALSE)
 		trapped = 0
 
@@ -156,7 +156,7 @@
 
 /mob/living/simple_animal/shade/howling_ghost/proc/spooky_ghosty()
 	if(prob(20)) //haunt
-		playsound(loc, pick('sound/spookoween/ghosty_wind.ogg','sound/spookoween/ghost_whisper.ogg','sound/spookoween/chain_rattling.ogg'), 300, 1)
+		playsound(loc, pick('sound/spookoween/ghosty_wind.ogg','sound/spookoween/ghost_whisper.ogg','sound/spookoween/chain_rattling.ogg'), 300, TRUE)
 	if(prob(10)) //flickers
 		var/obj/machinery/light/L = locate(/obj/machinery/light) in view(5, src)
 		if(L)
@@ -245,13 +245,13 @@
 /mob/living/simple_animal/hostile/clown_insane/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = 0
 	if(prob(5))
-		playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)
+		playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, TRUE)
 
 /mob/living/simple_animal/hostile/clown_insane/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/nullrod))
 		if(prob(5))
-			visible_message("[src] finally found the peace it deserves. <i>You hear honks echoing off into the distance.</i>")
-			playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)
+			visible_message("<span class='notice'>[src] finally found the peace it deserves. <i>You hear honks echoing off into the distance.</i></span>")
+			playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, TRUE)
 			qdel(src)
 		else
 			visible_message("<span class='danger'>[src] seems to be resisting the effect!</span>")

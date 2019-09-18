@@ -171,7 +171,7 @@
 			M.adjustFireLoss(shockdamage)
 			M.visible_message("<span class='danger'>[M] was shocked by \the [name]!</span>", \
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
-		"<span class='italics'>You hear a heavy electrical crack.</span>")
+		"<span class='hear'>You hear a heavy electrical crack.</span>")
 
 /obj/effect/anomaly/flux/detonate()
 	if(explosive)
@@ -215,7 +215,7 @@
 			var/turf/FROM = T // the turf of origin we're travelling FROM
 			var/turf/TO = get_turf(chosen) // the turf of origin we're travelling TO
 
-			playsound(TO, 'sound/effects/phasein.ogg', 100, 1)
+			playsound(TO, 'sound/effects/phasein.ogg', 100, TRUE)
 			priority_announce("Massive bluespace translocation detected.", "Anomaly Alert")
 
 			var/list/flashers = list()

@@ -70,7 +70,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 
 /obj/machinery/doppler_array/proc/rot_message(mob/user)
 	to_chat(user, "<span class='notice'>You adjust [src]'s dish to face to the [dir2text(dir)].</span>")
-	playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
+	playsound(src, 'sound/items/screwdriver2.ogg', 50, TRUE)
 
 /obj/machinery/doppler_array/proc/sense_explosion(turf/epicenter,devastation_range,heavy_impact_range,light_impact_range,
 												  took,orig_dev_range,orig_heavy_range,orig_light_range)
@@ -112,16 +112,18 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	LAZYADD(message_log, messages.Join(" "))
 	return TRUE
 
-/obj/machinery/doppler_array/power_change()
+/obj/machinery/doppler_array/powered()
+	if(!anchored)
+		return FALSE
+	return ..()
+
+/obj/machinery/doppler_array/update_icon()
 	if(stat & BROKEN)
 		icon_state = "[initial(icon_state)]-broken"
+	else if(powered())
+		icon_state = initial(icon_state)
 	else
-		if(powered() && anchored)
-			icon_state = initial(icon_state)
-			stat &= ~NOPOWER
-		else
-			icon_state = "[initial(icon_state)]-off"
-			stat |= NOPOWER
+		icon_state = "[initial(icon_state)]-off"
 
 //Portable version, built into EOD equipment. It simply provides an explosion's three damage levels.
 /obj/machinery/doppler_array/integrated

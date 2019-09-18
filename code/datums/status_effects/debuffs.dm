@@ -67,8 +67,19 @@
 	return ..()
 
 /datum/status_effect/incapacitating/sleeping/tick()
-	if(owner.getStaminaLoss())
-		owner.adjustStaminaLoss(-0.5) //reduce stamina loss by 0.5 per tick, 10 per 2 seconds
+	if(owner.maxHealth)
+		var/health_ratio = owner.health / owner.maxHealth
+		if(health_ratio > 0.8)
+			var/healing = -0.2
+			if((locate(/obj/structure/bed) in owner.loc))
+				healing -= 0.3
+			else
+				if((locate(/obj/structure/table) in owner.loc))
+					healing -= 0.1
+			owner.adjustBruteLoss(healing)
+			owner.adjustFireLoss(healing)
+			owner.adjustToxLoss(healing * 0.5, TRUE, TRUE)
+			owner.adjustStaminaLoss(healing)
 	if(human_owner && human_owner.drunkenness)
 		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
 	if(prob(20))
@@ -470,7 +481,7 @@
 		wasting_effect.transform = owner.transform //if the owner has been stunned the overlay should inherit that position
 		wasting_effect.alpha = 255
 		animate(wasting_effect, alpha = 0, time = 32)
-		playsound(owner, 'sound/effects/curse5.ogg', 20, 1, -1)
+		playsound(owner, 'sound/effects/curse5.ogg', 20, TRUE, -1)
 		owner.adjustFireLoss(0.75)
 	if(effect_last_activation <= world.time)
 		effect_last_activation = world.time + effect_cooldown
@@ -493,7 +504,7 @@
 /datum/status_effect/necropolis_curse/proc/grasp(turf/spawn_turf)
 	set waitfor = FALSE
 	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
-	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, 1, -1)
+	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, TRUE, -1)
 	var/turf/ownerloc = get_turf(owner)
 	var/obj/item/projectile/curse_hand/C = new (spawn_turf)
 	C.preparePixelProjectile(ownerloc, spawn_turf)

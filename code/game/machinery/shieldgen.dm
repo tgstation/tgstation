@@ -34,9 +34,9 @@
 /obj/structure/emergency_shield/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BURN)
-			playsound(loc, 'sound/effects/empulse.ogg', 75, 1)
+			playsound(loc, 'sound/effects/empulse.ogg', 75, TRUE)
 		if(BRUTE)
-			playsound(loc, 'sound/effects/empulse.ogg', 75, 1)
+			playsound(loc, 'sound/effects/empulse.ogg', 75, TRUE)
 
 /obj/structure/emergency_shield/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -114,11 +114,8 @@
 
 
 /obj/machinery/shieldgen/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(!(stat && BROKEN))
-			stat |= BROKEN
-			locked = pick(0,1)
-			update_icon()
+	obj_break()
+	locked = pick(0,1)
 
 /obj/machinery/shieldgen/interact(mob/user)
 	. = ..()
@@ -132,15 +129,15 @@
 		return
 
 	if (active)
-		user.visible_message("[user] deactivated \the [src].", \
+		user.visible_message("<span class='notice'>[user] deactivated \the [src].</span>", \
 			"<span class='notice'>You deactivate \the [src].</span>", \
-			"<span class='italics'>You hear heavy droning fade out.</span>")
+			"<span class='hear'>You hear heavy droning fade out.</span>")
 		shields_down()
 	else
 		if(anchored)
-			user.visible_message("[user] activated \the [src].", \
+			user.visible_message("<span class='notice'>[user] activated \the [src].</span>", \
 				"<span class='notice'>You activate \the [src].</span>", \
-				"<span class='italics'>You hear heavy droning.</span>")
+				"<span class='hear'>You hear heavy droning.</span>")
 			shields_up()
 		else
 			to_chat(user, "<span class='warning'>The device must first be secured to the floor!</span>")
@@ -203,7 +200,7 @@
 		return
 	obj_flags |= EMAGGED
 	locked = FALSE
-	playsound(src, "sparks", 100, 1)
+	playsound(src, "sparks", 100, TRUE)
 	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 
 /obj/machinery/shieldgen/update_icon()
@@ -273,7 +270,7 @@
 		else
 			visible_message("<span class='danger'>The [src.name] shuts down due to lack of power!</span>", \
 				"If this message is ever seen, something is wrong.",
-				"<span class='italics'>You hear heavy droning fade out.</span>")
+				"<span class='hear'>You hear heavy droning fade out.</span>")
 			icon_state = "shield_wall_gen"
 			active = FALSE
 			for(var/d in GLOB.cardinals)
@@ -375,14 +372,14 @@
 		return
 
 	if(active)
-		user.visible_message("[user] turned \the [src] off.", \
+		user.visible_message("<span class='notice'>[user] turned \the [src] off.</span>", \
 			"<span class='notice'>You turn off \the [src].</span>", \
-			"<span class='italics'>You hear heavy droning fade out.</span>")
+			"<span class='hear'>You hear heavy droning fade out.</span>")
 		active = FALSE
 	else
-		user.visible_message("[user] turned \the [src] on.", \
+		user.visible_message("<span class='notice'>[user] turned \the [src] on.</span>", \
 			"<span class='notice'>You turn on \the [src].</span>", \
-			"<span class='italics'>You hear heavy droning.</span>")
+			"<span class='hear'>You hear heavy droning.</span>")
 		active = ACTIVE_SETUPFIELDS
 	add_fingerprint(user)
 
@@ -392,7 +389,7 @@
 		return
 	obj_flags |= EMAGGED
 	locked = FALSE
-	playsound(src, "sparks", 100, 1)
+	playsound(src, "sparks", 100, TRUE)
 	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 
 //////////////Containment Field START
@@ -435,9 +432,9 @@
 /obj/machinery/shieldwall/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BURN)
-			playsound(loc, 'sound/effects/empulse.ogg', 75, 1)
+			playsound(loc, 'sound/effects/empulse.ogg', 75, TRUE)
 		if(BRUTE)
-			playsound(loc, 'sound/effects/empulse.ogg', 75, 1)
+			playsound(loc, 'sound/effects/empulse.ogg', 75, TRUE)
 
 //the shield wall is immune to damage but it drains the stored power of the generators.
 /obj/machinery/shieldwall/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)

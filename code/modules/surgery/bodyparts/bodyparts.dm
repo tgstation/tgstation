@@ -104,7 +104,7 @@
 		if(!contents.len)
 			to_chat(user, "<span class='warning'>There is nothing left inside [src]!</span>")
 			return
-		playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
+		playsound(loc, 'sound/weapons/slice.ogg', 50, TRUE, -1)
 		user.visible_message("<span class='warning'>[user] begins to cut open [src].</span>",\
 			"<span class='notice'>You begin to cut open [src]...</span>")
 		if(do_after(user, 54, target = src))
@@ -115,7 +115,7 @@
 /obj/item/bodypart/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	if(status != BODYPART_ROBOTIC)
-		playsound(get_turf(src), 'sound/misc/splort.ogg', 50, 1, -1)
+		playsound(get_turf(src), 'sound/misc/splort.ogg', 50, TRUE, -1)
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3)
 
@@ -123,7 +123,7 @@
 /obj/item/bodypart/proc/drop_organs(mob/user, violent_removal)
 	var/turf/T = get_turf(src)
 	if(status != BODYPART_ROBOTIC)
-		playsound(T, 'sound/misc/splort.ogg', 50, 1, -1)
+		playsound(T, 'sound/misc/splort.ogg', 50, TRUE, -1)
 	for(var/obj/item/I in src)
 		I.forceMove(T)
 
@@ -268,9 +268,9 @@
 
 	if(change_icon_to_default)
 		if(status == BODYPART_ORGANIC)
-			icon = DEFAULT_BODYPART_ICON_ORGANIC
+			icon = icon_greyscale // DEFAULT_BODYPART_ICON_ORGANIC				// FULP Another Icon ref swap
 		else if(status == BODYPART_ROBOTIC)
-			icon = DEFAULT_BODYPART_ICON_ROBOTIC
+			icon = icon_greyscale_robotic // DEFAULT_BODYPART_ICON_ROBOTIC 		// FULP
 
 	if(owner)
 		owner.updatehealth()
@@ -409,15 +409,33 @@
 				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
 			else
 				limb.icon_state = "[species_id]_[body_zone]"
+
+		// FULP: Did we have a fixed species yet? Use that. Otherwise, use this.
+		var/aux_state = "[species_id]_[aux_zone]"
+		if (species_id != "husk")
+			// Load Stored Value
+			if (organicDropLocked && prevOrganicState != null && prevOrganicIcon != null)
+				limb.icon_state = prevOrganicState
+				limb.icon = prevOrganicIcon
+				aux_state = prevOrganicState_Aux
+			// Save Current Value
+			else
+				prevOrganicState_Aux = aux_state
+				prevOrganicState = limb.icon_state
+				prevOrganicIcon = limb.icon
+		//message_admins("[organicDropLocked?"*L ":""][owner] getting [src]: [limb.icon_state] from icon [limb.icon] [should_draw_greyscale ? " (GREYSCALE)" :""]")
+		// FULP: End
+
 		if(aux_zone)
-			aux = image(limb.icon, "[species_id]_[aux_zone]", -aux_layer, image_dir)
+			aux = image(limb.icon, aux_state, -aux_layer, image_dir) // FULP EDIT: Added var/aux_state, was "[species_id]_[aux_zone]"
 			. += aux
 	else
-		limb.icon = icon
+		limb.icon = ReturnLocalAugmentIcon() // <-- We now return what the part would look like on the current mob with its current parts // on_greyscale_robotic // icon	 //	  FULP // Same as above
 		if(should_draw_gender)
 			limb.icon_state = "[body_zone]_[icon_gender]"
 		else
 			limb.icon_state = "[body_zone]"
+
 		if(aux_zone)
 			aux = image(limb.icon, "[aux_zone]", -aux_layer, image_dir)
 			. += aux

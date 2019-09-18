@@ -34,13 +34,13 @@
 
 /datum/surgery_step/lobotomize/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin to perform a lobotomy on [target]'s brain...</span>",
-		"[user] begins to perform a lobotomy on [target]'s brain.",
-		"[user] begins to perform surgery on [target]'s brain.")
+		"<span class='notice'>[user] begins to perform a lobotomy on [target]'s brain.</span>",
+		"<span class='notice'>[user] begins to perform surgery on [target]'s brain.</span>")
 
 /datum/surgery_step/lobotomize/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You succeed in lobotomizing [target].</span>",
-			"[user] successfully lobotomizes [target]!",
-			"[user] completes the surgery on [target]'s brain.")
+			"<span class='notice'>[user] successfully lobotomizes [target]!</span>",
+			"<span class='notice'>[user] completes the surgery on [target]'s brain.</span>")
 	target.cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
 	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/brainwashed))
 		target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
@@ -57,8 +57,8 @@
 	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
 	if(B)
 		display_results(user, target, "<span class='warning'>You remove the wrong part, causing more damage!</span>",
-			"[user] successfully lobotomizes [target]!",
-			"[user] completes the surgery on [target]'s brain.")
+			"<span class='notice'>[user] successfully lobotomizes [target]!</span>",
+			"<span class='notice'>[user] completes the surgery on [target]'s brain.</span>")
 		B.applyOrganDamage(80)
 		switch(rand(1,3))
 			if(1)

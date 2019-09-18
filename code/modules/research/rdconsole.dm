@@ -59,7 +59,7 @@ Nothing else in the console has ID requirements.
 	else if(GLOB.chemical_reagents_list[ID])
 		var/datum/reagent/reagent = GLOB.chemical_reagents_list[ID]
 		return reagent.name
-	return "ERROR: Report This"
+	return ID
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
 	for(var/obj/machinery/rnd/D in oview(3,src))
@@ -192,7 +192,7 @@ Nothing else in the console has ID requirements.
 /obj/machinery/computer/rdconsole/emag_act(mob/user)
 	if(!(obj_flags & EMAGGED))
 		to_chat(user, "<span class='notice'>You disable the security protocols[locked? " and unlock the console":""].</span>")
-		playsound(src, "sparks", 75, 1)
+		playsound(src, "sparks", 75, TRUE)
 		obj_flags |= EMAGGED
 		locked = FALSE
 	return ..()

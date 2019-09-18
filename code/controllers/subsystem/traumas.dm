@@ -37,7 +37,7 @@ SUBSYSTEM_DEF(traumas)
 					   )
 
 	phobia_mobs = list("spiders"  = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),
-					   "security" = typecacheof(list(/mob/living/simple_animal/bot/secbot, /mob/living/simple_animal/bot/ed209)),
+					   "security" = typecacheof(list(/mob/living/simple_animal/bot/secbot)),
 					   "lizards"  = typecacheof(list(/mob/living/simple_animal/hostile/lizard)),
 					   "skeletons" = typecacheof(list(/mob/living/simple_animal/hostile/skeleton)),
 					   "snakes"   = typecacheof(list(/mob/living/simple_animal/hostile/retaliate/poison/snake)),
@@ -48,7 +48,7 @@ SUBSYSTEM_DEF(traumas)
 					   /mob/living/simple_animal/hostile/clockwork, /mob/living/simple_animal/drone/cogscarab,
 					   /mob/living/simple_animal/revenant, /mob/living/simple_animal/shade)),
 					   "aliens"   = typecacheof(list(/mob/living/carbon/alien, /mob/living/simple_animal/slime)),
-					   "conspiracies" = typecacheof(list(/mob/living/simple_animal/bot/secbot, /mob/living/simple_animal/bot/ed209, /mob/living/simple_animal/drone,
+					   "conspiracies" = typecacheof(list(/mob/living/simple_animal/bot/secbot, /mob/living/simple_animal/drone,
 					   /mob/living/simple_animal/pet/penguin)),
 					   "birds" = typecacheof(list(/mob/living/simple_animal/parrot, /mob/living/simple_animal/chick, /mob/living/simple_animal/chicken,
 					   /mob/living/simple_animal/pet/penguin)),

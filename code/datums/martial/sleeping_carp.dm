@@ -40,31 +40,31 @@
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='warning'>[A] grabs [D]'s wrist and wrenches it sideways!</span>", \
 						  "<span class='userdanger'>[A] grabs your wrist and violently wrenches it to the side!</span>")
-		playsound(get_turf(A), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+		playsound(get_turf(A), 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 		D.emote("scream")
 		D.dropItemToGround(D.get_active_held_item())
 		D.apply_damage(5, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 		D.Stun(60)
 		return TRUE
 
-	return basic_hit(A,D)
+	return FALSE
 
 /datum/martial_art/the_sleeping_carp/proc/backKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.IsParalyzed())
-		if(A.dir == D.dir)
-			log_combat(A, D, "back-kicked (Sleeping Carp)")
-			A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
-			D.visible_message("<span class='warning'>[A] kicks [D] in the back!</span>", \
-								"<span class='userdanger'>[A] kicks you in the back, making you stumble and fall!</span>")
-			step_to(D,get_step(D,D.dir),1)
-			D.Paralyze(80)
-			playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
-			return TRUE
-		else
+		if(A.dir != D.dir)
 			log_combat(A, D, "missed a back-kick (Sleeping Carp) on")
 			D.visible_message("<span class='warning'>[A] tries to kick [D] in the back, but misses!</span>", \
-								"<span class='userdanger'>[A] tries to kick you in the back, but misses!</span>")
-	return basic_hit(A,D)
+						"<span class='userdanger'>[A] tries to kick you in the back, but misses!</span>")
+			return TRUE
+		log_combat(A, D, "back-kicked (Sleeping Carp)")
+		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+		D.visible_message("<span class='warning'>[A] kicks [D] in the back!</span>", \
+					"<span class='userdanger'>[A] kicks you in the back, making you stumble and fall!</span>")
+		step_to(D,get_step(D,D.dir),1)
+		D.Paralyze(80)
+		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, TRUE, -1)
+		return TRUE
+	return FALSE
 
 /datum/martial_art/the_sleeping_carp/proc/kneeStomach(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.IsParalyzed())
@@ -75,9 +75,9 @@
 		D.audible_message("<b>[D]</b> gags!")
 		D.losebreath += 3
 		D.Stun(40)
-		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
+		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, TRUE, -1)
 		return TRUE
-	return basic_hit(A,D)
+	return FALSE
 
 /datum/martial_art/the_sleeping_carp/proc/headKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.IsParalyzed())
@@ -87,10 +87,10 @@
 						  "<span class='userdanger'>[A] kicks you in the jaw!</span>")
 		D.apply_damage(20, A.dna.species.attack_type, BODY_ZONE_HEAD)
 		D.drop_all_held_items()
-		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
+		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, TRUE, -1)
 		D.Stun(80)
 		return TRUE
-	return basic_hit(A,D)
+	return FALSE
 
 /datum/martial_art/the_sleeping_carp/proc/elbowDrop(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!(D.mobility_flags & MOBILITY_STAND))
@@ -101,9 +101,9 @@
 		if(D.stat)
 			D.death() //FINISH HIM!
 		D.apply_damage(50, A.dna.species.attack_type, BODY_ZONE_CHEST)
-		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 75, 1, -1)
+		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 75, TRUE, -1)
 		return TRUE
-	return basic_hit(A,D)
+	return FALSE
 
 /datum/martial_art/the_sleeping_carp/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(A.a_intent == INTENT_GRAB && A!=D) // A!=D prevents grabbing yourself
@@ -119,8 +119,7 @@
 			D.visible_message("<span class='warning'>[A] violently grabs [D]!</span>", \
 								"<span class='userdanger'>[A] violently grabs you!</span>")
 		return TRUE
-	else
-		return FALSE
+	return FALSE
 
 /datum/martial_art/the_sleeping_carp/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("H",D)
@@ -131,7 +130,7 @@
 	D.visible_message("<span class='danger'>[A] [atk_verb] [D]!</span>", \
 					  "<span class='userdanger'>[A] [atk_verb] you!</span>")
 	D.apply_damage(rand(10,15), BRUTE)
-	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, 1, -1)
+	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 	if(prob(D.getBruteLoss()) && (D.mobility_flags & MOBILITY_STAND))
 		D.visible_message("<span class='warning'>[D] stumbles and falls!</span>", "<span class='userdanger'>The blow sends you to the ground!</span>")
 		D.Paralyze(80)
@@ -156,7 +155,7 @@
 	if(!isturf(A.loc)) //NO MOTHERFLIPPIN MECHS!
 		return BULLET_ACT_HIT
 	A.visible_message("<span class='danger'>[A] deflects the projectile; [A.p_they()] can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
-	playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
+	playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
 	P.firer = A
 	P.setAngle(rand(0, 360))//SHING
 	return BULLET_ACT_FORCE_PIERCE
@@ -239,7 +238,7 @@
 									  "[user] twirls and slams [H] with [src]!")
 		H.visible_message("<span class='warning'>[pick(fluffmessages)]</span>", \
 							   "<span class='userdanger'>[pick(fluffmessages)]</span>")
-		playsound(get_turf(user), 'sound/effects/woodhit.ogg', 75, 1, -1)
+		playsound(get_turf(user), 'sound/effects/woodhit.ogg', 75, TRUE, -1)
 		H.adjustStaminaLoss(rand(13,20))
 		if(prob(10))
 			H.visible_message("<span class='warning'>[H] collapses!</span>", \

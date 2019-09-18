@@ -23,11 +23,39 @@
 /obj/item/reagent_containers/food
 	attack_from_any_intent = TRUE
 
+
 		//  CLOTHING  //
 
 /obj/item/clothing
+
+	var/fulp_item = FALSE
+
 	// icon =  'icons/mob/uniforms.dmi'   <--- This already exists! This is for the item on the floor, NOT the sprite.
-	var/worn_icon = 'icons/mob/uniform.dmi'  // We created this to add to the sprite!
+	//var/worn_icon = 'icon/mob/clothing/under/default.dmi' // 'icons/mob/uniform.dmi'  // We created this to add to the sprite! (human/update_icons.dm)
+	// REMOVED They did it for us.
+
+
+		//	ID CARDS	//
+
+/obj/item/card
+	var/datum/job/linkedJobType         // This is a TYPE, not a ref to a particular instance. We'll use this for finding the job and hud icon of each job.
+	//var/job_icon = 'icons/obj/card.dmi' // This is now stored on the job.
+
+/obj/item/card/id/proc/return_icon_job()
+	if (!linkedJobType || assignment == "Unassigned")
+		return 'icons/obj/card.dmi'
+	return initial(linkedJobType.id_icon)
+/obj/item/card/id/proc/return_icon_hud()
+	if (!linkedJobType || assignment == "Unassigned")
+		return 'icons/mob/hud.dmi'
+	return initial(linkedJobType.hud_icon)
+
+
+		//	JOBS	//
+
+/datum/job
+	var/id_icon = 'icons/obj/card.dmi'	// Overlay on your ID
+	var/hud_icon = 'icons/mob/hud.dmi'	// Sec Huds see this
 
 
 

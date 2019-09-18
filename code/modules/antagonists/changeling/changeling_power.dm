@@ -35,13 +35,25 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 		return
 	try_to_sting(user)
 
+/**
+  *Contrary to the name, this proc isn't just used by changeling stings. It handles the activation of the action and the deducation of its cost.
+  *The order of the proc chain is:
+  *can_sting(). Should this fail, the process gets aborted early.
+  *sting_action(). This proc usually handles the actual effect of the action.
+  *Should sting_action succeed the following will be done:
+  *sting_feedback(). Produces feedback on the performed action. Don't ask me why this isn't handled in sting_action()
+  *The deduction of the cost of this power.
+  *Returns TRUE on a successful activation.
+  */
 /datum/action/changeling/proc/try_to_sting(mob/user, mob/target)
 	if(!can_sting(user, target))
-		return
+		return FALSE
 	var/datum/antagonist/changeling/c = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(sting_action(user, target))
 		sting_feedback(user, target)
 		c.chem_charges -= chemical_cost
+		return TRUE
+	return FALSE
 
 /datum/action/changeling/proc/sting_action(mob/user, mob/target)
 	SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("[name]"))

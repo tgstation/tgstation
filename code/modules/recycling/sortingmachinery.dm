@@ -9,7 +9,7 @@
 	var/sortTag = 0
 
 /obj/structure/bigDelivery/interact(mob/user)
-	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	qdel(src)
 
 /obj/structure/bigDelivery/Destroy()
@@ -30,7 +30,7 @@
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[O.currTag])
 			to_chat(user, "<span class='notice'>*[tag]*</span>")
 			sortTag = O.currTag
-			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, 1)
+			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 
 	else if(istype(W, /obj/item/pen))
 		if(!user.is_literate())
@@ -42,13 +42,13 @@
 		if(!str || !length(str))
 			to_chat(user, "<span class='warning'>Invalid text!</span>")
 			return
-		user.visible_message("[user] labels [src] as [str].")
+		user.visible_message("<span class='notice'>[user] labels [src] as [str].</span>")
 		name = "[name] ([str])"
 
 	else if(istype(W, /obj/item/stack/wrapping_paper) && !giftwrapped)
 		var/obj/item/stack/wrapping_paper/WP = W
 		if(WP.use(3))
-			user.visible_message("[user] wraps the package in festive paper!")
+			user.visible_message("<span class='notice'>[user] wraps the package in festive paper!</span>")
 			giftwrapped = TRUE
 			icon_state = "gift[icon_state]"
 		else
@@ -67,7 +67,7 @@
 			return
 		to_chat(user, "<span class='notice'>You successfully removed [O]'s wrapping !</span>")
 		O.forceMove(loc)
-		playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 		qdel(src)
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
@@ -92,7 +92,7 @@
 	for(var/X in contents)
 		var/atom/movable/AM = X
 		user.put_in_hands(AM)
-	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	qdel(src)
 
 /obj/item/smallDelivery/attack_self_tk(mob/user)
@@ -106,7 +106,7 @@
 		for(var/X in contents)
 			var/atom/movable/AM = X
 			AM.forceMove(src.loc)
-	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	qdel(src)
 
 /obj/item/smallDelivery/attackby(obj/item/W, mob/user, params)
@@ -117,7 +117,7 @@
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[O.currTag])
 			to_chat(user, "<span class='notice'>*[tag]*</span>")
 			sortTag = O.currTag
-			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, 1)
+			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 
 	else if(istype(W, /obj/item/pen))
 		if(!user.is_literate())
@@ -129,7 +129,7 @@
 		if(!str || !length(str))
 			to_chat(user, "<span class='warning'>Invalid text!</span>")
 			return
-		user.visible_message("[user] labels [src] as [str].")
+		user.visible_message("<span class='notice'>[user] labels [src] as [str].</span>")
 		name = "[name] ([str])"
 
 	else if(istype(W, /obj/item/stack/wrapping_paper) && !giftwrapped)
@@ -137,7 +137,7 @@
 		if(WP.use(1))
 			icon_state = "gift[icon_state]"
 			giftwrapped = 1
-			user.visible_message("[user] wraps the package in festive paper!")
+			user.visible_message("<span class='notice'>[user] wraps the package in festive paper!</span>")
 		else
 			to_chat(user, "<span class='warning'>You need more paper!</span>")
 
@@ -166,7 +166,7 @@
 		to_chat(user, "<span class='notice'>*HELL*</span>")//lizard nerf
 	else
 		to_chat(user, "<span class='notice'>*HEAVEN*</span>")
-	playsound(src, 'sound/machines/twobeep_high.ogg', 100, 1)
+	playsound(src, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 	return BRUTELOSS
 
 /obj/item/destTagger/proc/openwindow(mob/user)

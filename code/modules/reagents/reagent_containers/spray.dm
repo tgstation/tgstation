@@ -47,7 +47,7 @@
 
 	spray(A, user)
 
-	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+	playsound(src.loc, 'sound/effects/spray2.ogg', 50, TRUE, -6)
 	user.changeNext_move(CLICK_CD_RANGE*2)
 	user.newtonian_move(get_dir(A, user))
 
@@ -197,10 +197,10 @@
 	item_state = "pepperspray"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	volume = 40
+	volume = 50
 	stream_range = 4
 	amount_per_transfer_from_this = 5
-	list_reagents = list(/datum/reagent/consumable/condensedcapsaicin = 40)
+	list_reagents = list(/datum/reagent/consumable/condensedcapsaicin = 50)
 
 /obj/item/reagent_containers/spray/pepper/empty //for protolathe printing
 	list_reagents = null

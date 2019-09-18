@@ -66,8 +66,8 @@
 	// Store Prev Appearance
 	prev_gender = H.gender
 	prev_skin_tone = H.skin_tone
-	prev_hair_style = H.hair_style
-	prev_facial_hair_style = H.facial_hair_style
+	prev_hair_style = H.hairstyle
+	prev_facial_hair_style = H.facial_hairstyle
 	prev_hair_color = H.hair_color
 	prev_facial_hair_color = H.facial_hair_color
 	prev_underwear = H.underwear
@@ -80,8 +80,8 @@
 	// Change Appearance
 	H.gender = pick(MALE, FEMALE)
 	H.skin_tone = random_skin_tone()
-	H.hair_style = random_hair_style(H.gender)
-	H.facial_hair_style = pick(random_facial_hair_style(H.gender),"Shaved")
+	H.hairstyle = random_hairstyle(H.gender)
+	H.facial_hairstyle = pick(random_facial_hairstyle(H.gender),"Shaved")
 	H.hair_color = random_short_color()
 	H.facial_hair_color = H.hair_color
 	H.underwear = random_underwear(H.gender)
@@ -90,6 +90,11 @@
 	//H.eye_color = random_eye_color()
 	REMOVE_TRAIT(H, TRAIT_DISFIGURED, null) //
 	H.dna.features = random_features()
+
+	// Beefmen
+	proof_beefman_features(H.dna.features)
+	H.dna.species.set_beef_color(H)
+
 
 	// Apply Appearance
 	H.update_body() // Outfit and underware, also body.
@@ -121,8 +126,8 @@
 		// Revert Appearance
 		H.gender = prev_gender
 		H.skin_tone = prev_skin_tone
-		H.hair_style = prev_hair_style
-		H.facial_hair_style = prev_facial_hair_style
+		H.hairstyle = prev_hair_style
+		H.facial_hairstyle = prev_facial_hair_style
 		H.hair_color = prev_hair_color
 		H.facial_hair_color = prev_facial_hair_color
 		H.underwear = prev_underwear

@@ -60,10 +60,10 @@
 	if(master && !master.can_terminal_dismantle())
 		return
 
-	user.visible_message("[user.name] dismantles the power terminal from [master].",
+	user.visible_message("<span class='notice'>[user.name] dismantles the power terminal from [master].</span>",
 		"<span class='notice'>You begin to cut the cables...</span>")
 
-	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 	if(I.use_tool(src, user, 50))
 		if(master && !master.can_terminal_dismantle())
 			return

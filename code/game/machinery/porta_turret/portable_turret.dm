@@ -58,13 +58,14 @@
 	var/auth_weapons = 0	//checks if it can shoot people that have a weapon they aren't authorized to have
 	var/stun_all = 0		//if this is active, the turret shoots everything that isn't security or head of staff
 	var/check_anomalies = 1	//checks if it can shoot at unidentified lifeforms (ie xenos)
-	var/shoot_unloyal = 0	//checks if it can shoot people that aren't loyalty implantd
-
+	var/shoot_unloyal = 0	//checks if it can shoot people that aren't loyalty implanted and who arent heads
+	var/shoot_cyborgs = 0 // checks if it can shoot people that are cyborgs
+	var/shoot_heads_of_staff = 0 // checks if it can shoot at heads of staff
 	var/attacked = 0		//if set to 1, the turret gets pissed off and shoots at people nearby (unless they have sec access!)
-
+	
 	var/on = TRUE				//determines if the turret is on
 
-	var/list/faction = list("turret") // Same faction mobs will never be shot at, no matter the other settings
+	var/list/faction = list("turret" ) // Same faction mobs will never be shot at, no matter the other settings
 
 	var/datum/effect_system/spark_spread/spark_system	//the spark system, used for generating... sparks?
 
@@ -170,7 +171,9 @@
 		dat += "Neutralize Identified Criminals: <A href='?src=[REF(src)];operation=shootcrooks'>[criminals ? "Yes" : "No"]</A><BR>"
 		dat += "Neutralize All Non-Security and Non-Command Personnel: <A href='?src=[REF(src)];operation=shootall'>[stun_all ? "Yes" : "No"]</A><BR>"
 		dat += "Neutralize All Unidentified Life Signs: <A href='?src=[REF(src)];operation=checkxenos'>[check_anomalies ? "Yes" : "No"]</A><BR>"
-		dat += "Neutralize All Non-Loyalty Implanted Personnel: <A href='?src=[REF(src)];operation=checkloyal'>[shoot_unloyal ? "Yes" : "No"]</A><BR>"
+		dat += "Neutralize All Non-Mindshielded Personnel: <A href='?src=[REF(src)];operation=checkloyal'>[shoot_unloyal ? "Yes" : "No"]</A><BR>"
+		dat += "Neutralize All Cyborgs: <A href='?src=[REF(src)];operation=shootborgs'>[shoot_cyborgs ? "Yes" : "No"]</A><BR>"
+		dat += "Ignore Heads Of Staff: <A href='?src=[REF(src)];operation=shootheads'>[shoot_heads_of_staff ? "Yes" : "No"]</A><BR>"
 	if(issilicon(user))
 		if(!manual_control)
 			var/mob/living/silicon/S = user
@@ -212,29 +215,21 @@
 				check_anomalies = !check_anomalies
 			if("checkloyal")
 				shoot_unloyal = !shoot_unloyal
+			if ("shootborgs")
+				shoot_cyborgs = !shoot_cyborgs
+			if ("shootheads")
+				shoot_heads_of_staff = !shoot_heads_of_staff
 			if("manual")
 				if(issilicon(usr) && !manual_control)
 					give_control(usr)
+			
 		interact(usr)
 
 /obj/machinery/porta_turret/power_change()
-	if(!anchored)
+	. = ..()
+	if(!anchored || (stat & BROKEN) || !powered())
 		update_icon()
 		remove_control()
-		return
-	if(stat & BROKEN)
-		update_icon()
-		remove_control()
-	else
-		if( powered() )
-			stat &= ~NOPOWER
-			update_icon()
-		else
-			spawn(rand(0, 15))
-				stat |= NOPOWER
-				remove_control()
-				update_icon()
-
 
 /obj/machinery/porta_turret/attackby(obj/item/I, mob/user, params)
 	if(stat & BROKEN)
@@ -295,7 +290,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class='warning'>You short out [src]'s threat assessment circuits.</span>")
-	visible_message("[src] hums oddly...")
+	visible_message("<span class='hear'>[src] hums oddly...</span>")
 	obj_flags |= EMAGGED
 	controllock = TRUE
 	on = FALSE //turns off the turret temporarily
@@ -339,8 +334,8 @@
 	qdel(src)
 
 /obj/machinery/porta_turret/obj_break(damage_flag)
-	if(!(flags_1 & NODECONSTRUCT_1) && !(stat & BROKEN))
-		stat |= BROKEN	//enables the BROKEN bit
+	. = ..()
+	if(.)
 		power_change()
 		invisibility = 0
 		spark_system.start()	//creates some sparks because they look cool
@@ -387,9 +382,9 @@
 				var/mob/living/silicon/robot/sillyconerobot = A
 				if(LAZYLEN(faction) && (ROLE_SYNDICATE in faction) && sillyconerobot.emagged == TRUE)
 					continue
-
-			targets += sillycone
-			continue
+			if (shoot_cyborgs)
+				targets += sillycone
+				continue
 
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
@@ -403,9 +398,18 @@
 
 			//if the target is a human and not in our faction, analyze threat level
 			if(ishuman(C) && !in_faction(C))
+				
 				if(assess_perp(C) >= 4)
-					targets += C
-
+					if(shoot_heads_of_staff)
+						targets += C
+						continue
+					else 
+						var/obj/item/card/id/I = C.get_idcard(TRUE)
+						if (I?.assignment in GLOB.command_positions)
+							continue
+						else 
+							targets += C
+							continue 
 			else if(check_anomalies) //non humans who are not simple animals (xenos etc)
 				if(!in_faction(C))
 					targets += C
@@ -470,7 +474,7 @@
 
 /obj/machinery/porta_turret/proc/assess_perp(mob/living/carbon/human/perp)
 	var/threatcount = 0	//the integer returned
-
+	
 	if(obj_flags & EMAGGED)
 		return 10	//if emagged, always return 10.
 
@@ -484,7 +488,6 @@
 
 			if(allowed(perp)) //if the perp has security access, return 0
 				return 0
-
 			if(perp.is_holding_item_of_type(/obj/item/gun) ||  perp.is_holding_item_of_type(/obj/item/melee/baton))
 				threatcount += 4
 
@@ -499,8 +502,18 @@
 
 	if(shoot_unloyal)
 		if (!HAS_TRAIT(perp, TRAIT_MINDSHIELD))
-			threatcount += 4
 
+			if (!shoot_heads_of_staff)
+			
+				if (perp.get_id_name() in GLOB.command_positions)
+					return 0
+				else 
+					threatcount += 4
+			else
+				threatcount += 4
+	if (shoot_cyborgs)
+		if (iscyborg(perp))
+			threatcount +=4
 	return threatcount
 
 
@@ -552,11 +565,11 @@
 	if(mode == TURRET_STUN)
 		use_power(reqpower)
 		A = new stun_projectile(T)
-		playsound(loc, stun_projectile_sound, 75, 1)
+		playsound(loc, stun_projectile_sound, 75, TRUE)
 	else
 		use_power(reqpower * 2)
 		A = new lethal_projectile(T)
-		playsound(loc, lethal_projectile_sound, 75, 1)
+		playsound(loc, lethal_projectile_sound, 75, TRUE)
 
 
 	//Shooting Code:
@@ -935,10 +948,6 @@
 /obj/machinery/turretid/proc/updateTurrets()
 	for (var/obj/machinery/porta_turret/aTurret in turrets)
 		aTurret.setState(enabled, lethal)
-	update_icon()
-
-/obj/machinery/turretid/power_change()
-	..()
 	update_icon()
 
 /obj/machinery/turretid/update_icon()

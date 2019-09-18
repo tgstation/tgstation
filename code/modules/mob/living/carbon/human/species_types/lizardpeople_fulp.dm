@@ -14,7 +14,7 @@
 		if("Curator", "Bartender", "Lawyer", "Detective", "Head of Personnel", "Research Director")
 			O = new /datum/outfit/digitigrade/laceups
 
-		if("Security Officer", "Warden", "Head of Security")
+		if("Security Officer", "Warden", "Head of Security", "Deputy")
 			O = new /datum/outfit/digitigrade/jackboots
 
 		if("Cargo Technician", "Quartermaster", "Shaft Miner", "Station Engineer", "Atmospheric Technician", "Chief Engineer")

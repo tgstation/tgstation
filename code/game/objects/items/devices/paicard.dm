@@ -52,6 +52,7 @@
 			var/mob/living/carbon/human/H = user
 			if(H.real_name == pai.master || H.dna.unique_enzymes == pai.master_dna)
 				dat += "<A href='byond://?src=[REF(src)];toggle_holo=1'>\[[pai.canholo? "Disable" : "Enable"] holomatrix projectors\]</a><br>"
+		dat += "<A href='byond://?src=[REF(src)];fix_speech=1'>\[Reset speech synthesis module\]</a><br>"
 		dat += "<A href='byond://?src=[REF(src)];wipe=1'>\[Wipe current pAI personality\]</a><br>"
 	else
 		dat += "No personality installed.<br>"
@@ -92,6 +93,10 @@
 					to_chat(pai, "<span class='userdanger'>Your mental faculties leave you.</span>")
 					to_chat(pai, "<span class='rose'>oblivion... </span>")
 					qdel(pai)
+		if(href_list["fix_speech"])
+			pai.stuttering = 0
+			pai.slurring = 0
+			pai.derpspeech = 0
 		if(href_list["toggle_transmit"] || href_list["toggle_receive"])
 			var/transmitting = href_list["toggle_transmit"] //it can't be both so if we know it's not transmitting it must be receiving. 
 			var/transmit_holder = (transmitting ? WIRE_TX : WIRE_RX)
@@ -127,7 +132,7 @@
 	src.pai = personality
 	src.add_overlay("pai-null")
 
-	playsound(loc, 'sound/effects/pai_boot.ogg', 50, 1, -1)
+	playsound(loc, 'sound/effects/pai_boot.ogg', 50, TRUE, -1)
 	audible_message("\The [src] plays a cheerful startup noise!")
 
 /obj/item/paicard/proc/setEmotion(emotion)
