@@ -277,7 +277,7 @@
 			return TRUE
 		else
 			visible_message("<span class='danger'>[M.name]'s bite misses [src]!</span>", \
-							"<span class='userdanger'>[M.name]'s bite misses you!</span>", null, COMBAT_MESSAGE_RANGE, M)
+							"<span class='danger'>You avoid [M.name]'s bite!</span>", null, COMBAT_MESSAGE_RANGE, M)
 			to_chat(M, "<span class='warning'>Your bite misses [src]!</span>")
 	return FALSE
 
@@ -304,7 +304,7 @@
 				return TRUE
 			else
 				visible_message("<span class='danger'>[L.name]'s bite misses [src]!</span>", \
-								"<span class='userdanger'>[L.name]'s bite misses you!</span>", null, COMBAT_MESSAGE_RANGE, L)
+								"<span class='danger'>You avoid [L.name]'s bite!</span>", null, COMBAT_MESSAGE_RANGE, L)
 				to_chat(L, "<span class='warning'>Your bite misses [src]!</span>")
 	return FALSE
 

@@ -35,7 +35,7 @@
 				else
 					playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
 					visible_message("<span class='danger'>[M]'s punch misses [src]!</span>", \
-									"<span class='userdanger'>[M]'s punch misses you!</span>", null, COMBAT_MESSAGE_RANGE, M)
+									"<span class='danger'>You avoid [M]'s punch!</span>", null, COMBAT_MESSAGE_RANGE, M)
 					to_chat(M, "<span class='warning'>Your punch misses [src]!</span>")
 
 			if ("disarm")

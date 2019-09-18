@@ -147,7 +147,7 @@
 				ML.ForceContractDisease(D)
 		else
 			ML.visible_message("<span class='danger'>[src]'s bite misses [ML]!</span>", \
-							"<span class='danger'>[src]'s bite misses you!</span>", null, COMBAT_MESSAGE_RANGE, src)
+							"<span class='danger'>You avoid [src]'s bite!</span>", null, COMBAT_MESSAGE_RANGE, src)
 			to_chat(src, "<span class='danger'>Your bite misses [ML]!</span>")
 
 /*

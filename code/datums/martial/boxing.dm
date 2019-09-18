@@ -20,7 +20,7 @@
 	if(!damage)
 		playsound(D.loc, A.dna.species.miss_sound, 25, TRUE, -1)
 		D.visible_message("<span class='warning'>[A]'s [atk_verb] misses [D]!</span>", \
-						"<span class='userdanger'>You nearly avoid [A]'s [atk_verb]!</span>", null, COMBAT_MESSAGE_RANGE, A)
+						"<span class='danger'>You avoid [A]'s [atk_verb]!</span>", null, COMBAT_MESSAGE_RANGE, A)
 		to_chat(A, "<span class='warning'>Your [atk_verb] misses [D]!</span>")
 		log_combat(A, D, "attempted to hit", atk_verb)
 		return 0

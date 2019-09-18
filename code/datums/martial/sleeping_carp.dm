@@ -60,8 +60,8 @@
 		log_combat(A, D, "back-kicked (Sleeping Carp)")
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='warning'>[A] kicks [D] in the back!</span>", \
-						"<span class='userdanger'>You nearly avoid a kick in the back by [A]!</span>", null, null, A)
-		to_chat(A, "<span class='warning'>You try to kick [D] in the back, but you miss!</span>")
+						"<span class='danger'>You avoid a kick in the back by [A]!</span>", null, null, A)
+		to_chat(A, "<span class='warning'>Your kick to [D]'s back misses!</span>")
 		step_to(D,get_step(D,D.dir),1)
 		D.Paralyze(80)
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, TRUE, -1)

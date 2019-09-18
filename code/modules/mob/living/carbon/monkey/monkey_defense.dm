@@ -61,7 +61,7 @@
 			else
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
 				visible_message("<span class='danger'>[M]'s punch misses [name]!</span>", \
-								"<span class='userdanger'>[M]'s punch misses you!</span>", null, COMBAT_MESSAGE_RANGE, M)
+								"<span class='danger'>You avoid [M]'s punch!</span>", null, COMBAT_MESSAGE_RANGE, M)
 				to_chat(M, "<span class='warning'>Your punch misses [name]!</span>")
 		if("disarm")
 			if(!IsUnconscious())
@@ -108,7 +108,7 @@
 			else
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, TRUE, -1)
 				visible_message("<span class='danger'>[M]'s lunge misses [name]!</span>", \
-								"<span class='userdanger'>[M]'s lunge misses you!</span>", null, COMBAT_MESSAGE_RANGE, M)
+								"<span class='danger'>You avoid [M]'s lunge!</span>", null, COMBAT_MESSAGE_RANGE, M)
 				to_chat(M, "<span class='warning'>Your lunge misses [name]!</span>")
 
 		if (M.a_intent == INTENT_DISARM)
