@@ -88,10 +88,10 @@
 	ui_update(FALSE)
 	return ..()
 
-/datum/component/electrified/InheritComponent(datum/component/C, i_am_original, electrification_state, mob/user, duration)
-	switch(electrification_state)
+/datum/component/electrified/InheritComponent(datum/component/C, i_am_original, list/arguments)
+	switch(arguments[1])
 		if(MACHINE_NOT_ELECTRIFIED, MACHINE_ELECTRIFIED_PERM_TOGGLE)
-			end_electrification(null, user)
+			end_electrification(null, arguments[2])
 		if(MACHINE_ELECTRIFIED_PERMANENT) // always overrides other states
 			clear_timer(FALSE)
 			src.electrification_state = MACHINE_ELECTRIFIED_PERMANENT
