@@ -28,7 +28,7 @@
 						Unconscious(40)
 						visible_message("<span class='danger'>[M] knocks [src] down!</span>", \
 										"<span class='userdanger'>[M] knocks you down!</span>", null, null, M)
-						to_chat(M, "<span class='danger'>You knock [M] down!</span>")
+						to_chat(M, "<span class='danger'>You knock [src] down!</span>")
 					var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 					apply_damage(damage, BRUTE, affecting)
 					log_combat(M, src, "attacked")
