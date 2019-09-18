@@ -1134,7 +1134,8 @@
 /mob/living/silicon/robot/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
 	if(can_buckle && isliving(M) && !(M in buckled_mobs) && ((user!=src)||(a_intent != INTENT_HARM)))
-		buckle_mob(M)
+		if(buckle_mob(M))
+			return 1
 
 /mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!is_type_in_typecache(M, can_ride_typecache))
