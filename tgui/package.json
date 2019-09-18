@@ -30,7 +30,7 @@
     "gulp-size": "2.0.0",
     "gulp-sourcemaps": "1.6.0",
     "gulp-stylus": "2.7.0",
-    "gulp-uglify": "1.5.2",
+    "gulp-uglify": "3.0.2",
     "gulplog": "1.0.0",
     "html5shiv": "3.7.3",
     "ie8": "0.8.0",
