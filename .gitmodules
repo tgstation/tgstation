@@ -1,0 +1,3 @@
+[submodule "tools/whitelist-bot"]
+	path = tools/whitelist-bot
+	url = https://github.com/MOONMOONOSS/ss13-whitelister
