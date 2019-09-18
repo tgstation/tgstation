@@ -154,7 +154,8 @@
 /datum/antagonist/changeling/proc/stingAtom(mob/living/carbon/ling, atom/A)
 	if(!chosen_sting || A == ling || !istype(ling) || ling.stat)
 		return
-	chosen_sting.try_to_sting(ling, A)
+	if(!chosen_sting.try_to_sting(ling, A))
+		return
 	ling.changeNext_move(CLICK_CD_MELEE)
 	return COMSIG_MOB_CANCEL_CLICKON
 

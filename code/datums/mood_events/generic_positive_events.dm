@@ -157,6 +157,6 @@
 	description = "" //Fill this out in the area
 	mood_change = 0
 
-/datum/mood_event/area/add_effects(list/param)
-	mood_change = param[1]
-	description = param[2]
+/datum/mood_event/area/add_effects(_mood_change, _description)
+	mood_change = _mood_change
+	description = _description

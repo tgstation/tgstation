@@ -1925,16 +1925,6 @@
 	},
 /turf/open/floor/plating,
 /area/storage/primary)
-"gh" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/computer/shuttle/mining,
-/turf/open/floor/plasteel,
-/area/quartermaster/miningoffice)
 "gi" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -2073,6 +2063,9 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "gE" = (
@@ -2298,6 +2291,9 @@
 /turf/open/floor/plating,
 /area/storage/primary)
 "vy" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "vP" = (
@@ -4260,7 +4256,7 @@ II
 II
 Td
 II
-gh
+II
 gl
 gD
 kj
