@@ -60,7 +60,7 @@
 		for(var/i in M.categories)
 			switch(i)
 				if(MAT_CATEGORY_RIGID)
-					var/list/temp = GLOB.SSmaterials.rigid_stack_recipes.Copy()
+					var/list/temp = SSmaterials.rigid_stack_recipes.Copy()
 					recipes += temp
 	update_weight()
 	update_icon()
