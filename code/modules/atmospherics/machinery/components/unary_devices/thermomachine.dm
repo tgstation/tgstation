@@ -80,10 +80,6 @@
 		active_power_usage = idle_power_usage
 	return 1
 
-/obj/machinery/atmospherics/components/unary/thermomachine/power_change()
-	..()
-	update_icon()
-
 /obj/machinery/atmospherics/components/unary/thermomachine/attackby(obj/item/I, mob/user, params)
 	if(!on)
 		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, I))

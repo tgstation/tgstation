@@ -627,13 +627,10 @@
 
 //GREY TIDE
 /obj/item/twohanded/spear/grey_tide
-	icon_state = "spearglass0"
 	name = "\improper Grey Tide"
 	desc = "Recovered from the aftermath of a revolt aboard Defense Outpost Theta Aegis, in which a seemingly endless tide of Assistants caused heavy casualities among Nanotrasen military forces."
 	force_unwielded = 15
 	force_wielded = 25
-	throwforce = 20
-	throw_speed = 4
 	attack_verb = list("gored")
 
 /obj/item/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
@@ -785,26 +782,17 @@
 /*
  * Bone Spear
  */
-/obj/item/twohanded/bonespear	//Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
+/obj/item/twohanded/spear/bonespear	//Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
 	icon_state = "bone_spear0"
-	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	name = "bone spear"
 	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
-	force = 11
-	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = ITEM_SLOT_BACK
-	force_unwielded = 11
-	force_wielded = 20					//I have no idea how to balance
+	force = 12
+	force_unwielded = 12
+	force_wielded = 20
 	throwforce = 22
-	throw_speed = 4
-	embedding = list("embedded_impact_pain_multiplier" = 3)
 	armour_penetration = 15				//Enhanced armor piercing
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
-	sharpness = IS_SHARP
 
-/obj/item/twohanded/bonespear/update_icon()
+/obj/item/twohanded/spear/bonespear/update_icon()
 	icon_state = "bone_spear[wielded]"
 
 /obj/item/twohanded/binoculars

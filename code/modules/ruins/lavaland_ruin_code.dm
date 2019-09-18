@@ -3,6 +3,18 @@
 /obj/structure/fans/tiny/invisible //For blocking air in ruin doorways
 	invisibility = INVISIBILITY_ABSTRACT
 
+
+///Wizard tower item
+/obj/item/disk/design_disk/adv/knight_gear
+	name = "Magic Disk of Smithing"
+
+/obj/item/disk/design_disk/adv/knight_gear/Initialize()
+	. = ..()
+	var/datum/design/knight_armour/A = new
+	var/datum/design/knight_helmet/H = new
+	blueprints[1] = A
+	blueprints[2] = H
+
 //lavaland_surface_seed_vault.dmm
 //Seed Vault
 
