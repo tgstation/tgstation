@@ -39,7 +39,7 @@ In all, this is a lot like the monkey code. /N
 				playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
 				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
 								"<span class='userdanger'>[M.name] bites you!</span>", null, COMBAT_MESSAGE_RANGE, M)
-				to_chat(M, "<span class='danger'>You bite [M.name]!</span>")
+				to_chat(M, "<span class='danger'>You bite [src]!</span>")
 				adjustBruteLoss(1)
 				log_combat(M, src, "attacked")
 				updatehealth()
