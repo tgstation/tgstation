@@ -147,7 +147,7 @@
 	if(obj_flags & EMAGGED)
 		return
 
-	if(!SEND_SIGNAL(src, COMSIG_AIRLOCK_AI_ALTCLICK))
+	if(!SEND_SIGNAL(src, COMSIG_AIRLOCK_SILICON_ELECTRIFY))
 		shock_perm(usr)
 	else
 		shock_restore(usr)

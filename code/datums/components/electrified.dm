@@ -1,5 +1,3 @@
-GLOBAL_LIST_INIT(unelectrifiable_machines, typecacheof(list(/obj/machinery/door/airlock/cult)))
-
 /**
   * # Electrified Component
   *
@@ -35,7 +33,7 @@ GLOBAL_LIST_INIT(unelectrifiable_machines, typecacheof(list(/obj/machinery/door/
 		duration_timer = addtimer(CALLBACK(src, .proc/end_electrification), duration, TIMER_STOPPABLE|TIMER_OVERRIDE)
 
 /datum/component/electrified/machinery/Initialize(electrification_state, mob/user, duration)
-	if(!istype(parent, /obj/machinery) || is_type_in_typecache(parent.type, GLOB.unelectrifiable_machines)) // relies on parent having powered()
+	if(!istype(parent, /obj/machinery) || is_type_in_typecache(parent.type, typecacheof(list(/obj/machinery/door/airlock/cult)))) // relies on parent having powered()
 		return COMPONENT_INCOMPATIBLE
 
 	. = ..()
@@ -66,7 +64,7 @@ GLOBAL_LIST_INIT(unelectrifiable_machines, typecacheof(list(/obj/machinery/door/
 	. = ..()
 	RegisterSignal(src, COMSIG_MACHINERY_POWER_RESTORED, .proc/power_restored)
 	RegisterSignal(src, COMSIG_MACHINERY_POWER_LOST, .proc/power_loss)
-	RegisterSignal(parent, COMSIG_AIRLOCK_AI_ALTCLICK, .proc/electrified)
+	RegisterSignal(parent, COMSIG_AIRLOCK_SILICON_ELECTRIFY, .proc/electrified)
 	RegisterSignal(parent, COMSIG_MACHINERY_BROKEN, .proc/end_electrification)
 
 /datum/component/electrified/UnregisterFromParent()
@@ -78,7 +76,7 @@ GLOBAL_LIST_INIT(unelectrifiable_machines, typecacheof(list(/obj/machinery/door/
 	UnregisterSignal(parent, list(
 		COMSIG_MACHINERY_POWER_RESTORED,
 		COMSIG_MACHINERY_POWER_LOST,
-		COMSIG_AIRLOCK_AI_ALTCLICK,
+		COMSIG_AIRLOCK_SILICON_ELECTRIFY,
 		COMSIG_MACHINERY_BROKEN
 	))
 

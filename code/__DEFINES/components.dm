@@ -225,7 +225,7 @@
 #define COMSIG_AIRLOCK_ATTACKBY_POWERCROWBAR "airlock_attackby_powercrowbar"
 #define COMSIG_AIRLOCK_ATTACK_ALIEN "airlock_attack_alien"
 #define COMSIG_ELECTRIFICATION_CHANGE "electrification_change"
-#define COMSIG_AIRLOCK_AI_ALTCLICK "airlock_ai_altclick"
+#define COMSIG_AIRLOCK_SILICON_ELECTRIFY "airlock_silicon_electrify"
 #define COMSIG_AIRLOCK_WIRES_INTERACT "airlock_wires_interact"
 
 #define COMSIG_VENDING_TRY_INTERACT "vending_try_interact"
