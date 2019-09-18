@@ -8,13 +8,13 @@
 
 //Patches
 
-/obj/item/reagent_containers/patch/stypticpowder
+/obj/item/reagent_containers/pill/patch/stypticpowder
 	name = "Styptic Powder Patch"
 	desc = "Heals bruises"
 	list_reagents = list(/datum/reagent/medicine/CF/styptic = 10)
 	icon_state = "bandaid_brute"
 
-/obj/item/reagent_containers/patch/silversulfadiazine
+/obj/item/reagent_containers/pill/patch/silversulfadiazine
 	name = "Silver Sulfadiazine Patch"
 	desc = "Heals burns"
 	list_reagents = list(/datum/reagent/medicine/CF/silver_sulfadiazine = 10)

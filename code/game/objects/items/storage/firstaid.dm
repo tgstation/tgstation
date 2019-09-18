@@ -73,7 +73,7 @@
 		/obj/item/reagent_containers/pill/patch/aiuri = 3,
 		/obj/item/reagent_containers/spray/rhigoxane = 1,
 		/obj/item/reagent_containers/hypospray/medipen/oxandrolone = 1,
-		/obj/item/reagent_containers/patch/silversulfadiazine = 3,	//FULP
+		/obj/item/reagent_containers/pill/patch/silversulfadiazine = 3,	//FULP
 		/obj/item/reagent_containers/hypospray/medipen = 1,
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
@@ -153,7 +153,7 @@
 		/obj/item/reagent_containers/pill/patch/libital = 3,
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/storage/pill_bottle/trophazole = 1,
-		/obj/item/reagent_containers/patch/stypticpowder = 3,	//FULP
+		/obj/item/reagent_containers/pill/patch/stypticpowder = 3,	//FULP
 		/obj/item/reagent_containers/hypospray/medipen/salacid = 1,
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
