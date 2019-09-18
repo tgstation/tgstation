@@ -20,9 +20,11 @@
 		CRASH("join_hud(): [M] ([M.type]) is not a mob!")
 	if(mind_hud) //note: please let this runtime if a mob has no mind, as mindless mobs shouldn't be getting antagged
 		mind_hud.leave_hud(M)
-	add_to_hud(M)
-	if(self_visible)
-		add_hud_to(M)
+
+	if(ANTAG_HUD in M.hud_possible) //Current mob does not support antag huds ie newplayer
+		add_to_hud(M)
+		if(self_visible)
+			add_hud_to(M)
 
 	if (!team_hud)
 		M.mind.antag_hud = src
