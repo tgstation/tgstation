@@ -24,7 +24,7 @@
 	update_icon()
 
 /obj/machinery/light_switch/update_icon()
-	if(stat & NOPOWER || area != get_area(src))
+	if(stat & NOPOWER)
 		icon_state = "light-p"
 	else
 		if(area.lightswitch)
@@ -46,6 +46,11 @@
 		L.update_icon()
 
 	area.power_change()
+
+/obj/machinery/light_switch/power_change()
+	SHOULD_CALL_PARENT(0)
+	if(area == get_area(src))
+		return ..()
 
 /obj/machinery/light_switch/emp_act(severity)
 	. = ..()
