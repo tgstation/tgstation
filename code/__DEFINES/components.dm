@@ -5,17 +5,21 @@
 #define COMPONENT_INCOMPATIBLE 1
 #define COMPONENT_NOTRANSFER 2
 
-#define ELEMENT_INCOMPATIBLE 1 // Return value to cancel attaching
+/// Return value to cancel attaching
+#define ELEMENT_INCOMPATIBLE 1
 
-// /datum/element flags
+/// /datum/element flags
 #define ELEMENT_DETACH		(1 << 0)
 
 // How multiple components of the exact same type are handled in the same datum
-
-#define COMPONENT_DUPE_HIGHLANDER		0	//old component is deleted (default)
-#define COMPONENT_DUPE_ALLOWED			1	//duplicates allowed
-#define COMPONENT_DUPE_UNIQUE			2	//new component is deleted
-#define COMPONENT_DUPE_UNIQUE_PASSARGS	4	//old component is given the initialization args of the new
+/// old component is deleted (default)
+#define COMPONENT_DUPE_HIGHLANDER		0
+/// duplicates allowed
+#define COMPONENT_DUPE_ALLOWED			1
+/// new component is deleted
+#define COMPONENT_DUPE_UNIQUE			2
+/// old component is given the initialization args of the new
+#define COMPONENT_DUPE_UNIQUE_PASSARGS	4
 
 // All signals. Format:
 // When the signal is called: (signal arguments)
@@ -24,20 +28,30 @@
 // global signals
 // These are signals which can be listened to by any component on any parent
 // start global signals with "!", this used to be necessary but now it's just a formatting choice
-#define COMSIG_GLOB_NEW_Z "!new_z"								//from base of datum/controller/subsystem/mapping/proc/add_new_zlevel(): (list/args)
-#define COMSIG_GLOB_VAR_EDIT "!var_edit"						//called after a successful var edit somewhere in the world: (list/args)
-#define COMSIG_GLOB_MOB_CREATED "!mob_created"					//mob was created somewhere : (mob)
-#define COMSIG_GLOB_MOB_DEATH "!mob_death"						//mob died somewhere : (mob , gibbed)
-#define COMSIG_GLOB_LIVING_SAY_SPECIAL "!say_special"			//global living say plug - use sparingly: (mob/speaker , message)
+/// from base of datum/controller/subsystem/mapping/proc/add_new_zlevel(): (list/args)
+#define COMSIG_GLOB_NEW_Z "!new_z"
+/// called after a successful var edit somewhere in the world: (list/args)
+#define COMSIG_GLOB_VAR_EDIT "!var_edit"
+/// mob was created somewhere : (mob)
+#define COMSIG_GLOB_MOB_CREATED "!mob_created"
+/// mob died somewhere : (mob , gibbed)
+#define COMSIG_GLOB_MOB_DEATH "!mob_death"
+/// global living say plug - use sparingly: (mob/speaker , message)
+#define COMSIG_GLOB_LIVING_SAY_SPECIAL "!say_special"
 
 //////////////////////////////////////////////////////////////////
 
 // /datum signals
-#define COMSIG_COMPONENT_ADDED "component_added"				//when a component is added to a datum: (/datum/component)
-#define COMSIG_COMPONENT_REMOVING "component_removing"			//before a component is removed from a datum because of RemoveComponent: (/datum/component)
-#define COMSIG_PARENT_PREQDELETED "parent_preqdeleted"			//before a datum's Destroy() is called: (force), returning a nonzero value will cancel the qdel operation
-#define COMSIG_PARENT_QDELETING "parent_qdeleting"				//just before a datum's Destroy() is called: (force), at this point none of the other components chose to interrupt qdel and Destroy will be called
-#define COMSIG_TOPIC "handle_topic"                             //generic topic handler (usr, href_list)
+/// when a component is added to a datum: (/datum/component)
+#define COMSIG_COMPONENT_ADDED "component_added"
+/// before a component is removed from a datum because of RemoveComponent: (/datum/component)
+#define COMSIG_COMPONENT_REMOVING "component_removing"
+/// before a datum's Destroy() is called: (force), returning a nonzero value will cancel the qdel operation
+#define COMSIG_PARENT_PREQDELETED "parent_preqdeleted"
+/// just before a datum's Destroy() is called: (force), at this point none of the other components chose to interrupt qdel and Destroy will be called
+#define COMSIG_PARENT_QDELETING "parent_qdeleting"
+/// generic topic handler (usr, href_list)
+#define COMSIG_TOPIC "handle_topic"
 
 // /atom signals
 #define COMSIG_PARENT_ATTACKBY "atom_attackby"			        //from base of atom/attackby(): (/obj/item, /mob/living, params)
