@@ -86,10 +86,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	icon_state = "syndie_headset"
 	item_state = "syndie_headset"
 
-/obj/item/radio/headset/syndicate/alt/comms_agent
+/obj/item/radio/headset/comms_agent
 	name = "syndicate comms headset"
 	desc = "A syndicate headset that can be used to hear all radio frequencies and AI binary. Protects ears from flashbangs."
-	keyslot2 = new /obj/item/encryptionkey/binary
+	icon_state = "syndie_headset"
+	item_state = "syndie_headset"
+	keyslot = new /obj/item/encryptionkey/syndicate/comms_agent
 	command = TRUE
 
 /obj/item/radio/headset/syndicate/alt/ComponentInitialize()

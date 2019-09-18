@@ -162,7 +162,7 @@
 	r_hand = /obj/item/melee/transforming/energy/sword/saber
 	mask = /obj/item/clothing/mask/chameleon/gps
 	suit = /obj/item/clothing/suit/armor/vest
-	ears = /obj/item/radio/headset/syndicate/alt/comms_agent
+	ears = /obj/item/radio/headset/comms_agent
 	l_pocket = /obj/item/autosurgeon/comms_agent
 
 /obj/item/clothing/mask/chameleon/gps/Initialize()
