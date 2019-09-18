@@ -25,7 +25,7 @@
 	if(!iscyborg(src)) //the code for buckling things to cyborgs is inside of robot.dmm, since cyborgs have different conditions for buckling things than most other buckle-able things do
 		if(can_buckle && istype(M) && istype(user))
 			if(user_buckle_mob(M, user))
-				return 1
+				return TRUE
 
 /atom/movable/proc/has_buckled_mobs()
 	if(!buckled_mobs)
