@@ -1798,6 +1798,7 @@
 #include "code\modules\food_and_drinks\kitchen_machinery\deep_fryer.dm"
 #include "code\modules\food_and_drinks\kitchen_machinery\food_cart.dm"
 #include "code\modules\food_and_drinks\kitchen_machinery\gibber.dm"
+#include "code\modules\food_and_drinks\kitchen_machinery\grill.dm"
 #include "code\modules\food_and_drinks\kitchen_machinery\icecream_vat.dm"
 #include "code\modules\food_and_drinks\kitchen_machinery\microwave.dm"
 #include "code\modules\food_and_drinks\kitchen_machinery\monkeyrecycler.dm"
