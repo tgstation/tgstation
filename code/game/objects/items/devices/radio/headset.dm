@@ -86,6 +86,11 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	icon_state = "syndie_headset"
 	item_state = "syndie_headset"
 
+/obj/item/radio/headset/syndicate/alt/comms_agent
+	name = "syndicate comms headset"
+	desc = "A syndicate headset that can be used to hear all radio frequencies and AI binary. Protects ears from flashbangs."
+	keyslot2 = new /obj/item/encryptionkey/binary
+
 /obj/item/radio/headset/syndicate/alt/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
@@ -99,6 +104,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	make_syndie()
 
 /obj/item/radio/headset/binary
+
 /obj/item/radio/headset/binary/Initialize()
 	. = ..()
 	qdel(keyslot)

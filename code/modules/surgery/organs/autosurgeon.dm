@@ -94,3 +94,6 @@
 
 /obj/item/autosurgeon/reviver
 	starting_organ = /obj/item/organ/cyberimp/chest/reviver
+
+/obj/item/autosurgeon/comms_agent
+	starting_organ = /obj/item/organ/tongue/robot/togglable
