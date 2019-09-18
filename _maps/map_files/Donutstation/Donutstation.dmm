@@ -31332,7 +31332,7 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "/area/lawoffice";
-	dir = 4;
+	dir = 8;
 	name = "Lawyer's Office APC";
 	pixel_x = -24
 	},
