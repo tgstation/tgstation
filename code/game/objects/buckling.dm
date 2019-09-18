@@ -22,15 +22,10 @@
 
 /atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
-	if(can_buckle && istype(M) && istype(user))
-		if(!iscyborg(src))
+	if(!iscyborg(src)) //the code for buckling things to cyborgs is inside of robot.dmm, since cyborgs have different conditions for buckling things than most other buckle-able things do
+		if(can_buckle && istype(M) && istype(user))
 			if(user_buckle_mob(M, user))
 				return 1
-		else
-			var/mob/living/silicon/robot/R = src
-			if(!(M in buckled_mobs) && ((user!=R)||(R.a_intent != INTENT_HARM)))
-				if(user_buckle_mob(M, user))
-					return 1
 
 /atom/movable/proc/has_buckled_mobs()
 	if(!buckled_mobs)
