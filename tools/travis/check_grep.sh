@@ -39,6 +39,7 @@ if grep '^/*var/' code/**/*.dm; then
 fi;
 if grep '(^(?!(.*\n)).*$)' code/**/*.dm; then
     echo "No newline at end of file detected"
+    st=1
 fi;
 if grep -P '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' code/**/*.dm; then
     echo "changed files contains proc argument starting with 'var'"
