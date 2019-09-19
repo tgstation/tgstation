@@ -37,6 +37,22 @@ if grep '^/*var/' code/**/*.dm; then
     echo "Unmanaged global var use detected in code, please use the helpers."
     st=1
 fi;
+if grep '^ ' code/**/*.dm; then
+    echo "space indentation detected"
+    exit 1
+fi;
+if grep '^\t* ' code/**/*.dm; then
+    echo "mixed <tab><space> indentation detected"
+    exit 1
+fi;
+if grep '(^(?!(.*\n)).*$)' code/**/*.dm; then
+    echo "No newline at end of file detected"
+    exit 1
+fi;
+if grep -P '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' code/**/*.dm; then
+    echo "changed files contains proc argument starting with 'var'"
+    exit 1
+fi;
 if grep -i 'centcomm' code/**/*.dm; then
     echo "Misspelling(s) of CENTCOM detected in code, please remove the extra M(s)."
     st=1
