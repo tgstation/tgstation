@@ -510,7 +510,7 @@
 			var/datum/mutation/human/HM = dna.get_mutation(mutation)
 			if(HM)
 				HM.scrambled = TRUE
-				if(resilient && (HM.quality >= resilient)) 
+				if(HM.quality & resilient) 
 					HM.mutadone_proof = TRUE
 		return TRUE
 
