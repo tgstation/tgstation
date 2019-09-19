@@ -185,8 +185,8 @@ field_generator power level display
 /obj/machinery/field/generator/proc/cool_down()
 	if(active || warming_up <= 0)
 		return
-			warming_up--
-			update_icon()
+	warming_up--
+	update_icon()
 	if(warming_up > 0)
 		addtimer(CALLBACK(src, .proc/cool_down), 50)
 
@@ -197,10 +197,10 @@ field_generator power level display
 /obj/machinery/field/generator/proc/warm_up()
 	if(!active)
 		return
-			warming_up++
-			update_icon()
-			if(warming_up >= 3)
-				start_fields()
+	warming_up++
+	update_icon()
+	if(warming_up >= 3)
+		start_fields()
 	else
 		addtimer(CALLBACK(src, .proc/warm_up), 50)
 
@@ -334,16 +334,16 @@ field_generator power level display
 	move_resist = initial(move_resist)
 
 /obj/machinery/field/generator/proc/notify_admins()
-		var/temp = 1 //stops spam
-		for(var/obj/singularity/O in GLOB.singularities)
-			if(O.last_warning && temp)
-				if((world.time - O.last_warning) > 50) //to stop message-spam
-					temp = 0
-					var/turf/T = get_turf(src)
-					message_admins("A singulo exists and a containment field has failed at [ADMIN_VERBOSEJMP(T)].")
-					investigate_log("has <font color='red'>failed</font> whilst a singulo exists at [AREACOORD(T)].", INVESTIGATE_SINGULO)
-					notify_ghosts("IT'S LOOSE", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, ghost_sound = 'sound/machines/warning-buzzer.ogg', header = "IT'S LOOSE", notify_volume = 75)
-			O.last_warning = world.time
+	var/temp = 1 //stops spam
+	for(var/obj/singularity/O in GLOB.singularities)
+		if(O.last_warning && temp)
+			if((world.time - O.last_warning) > 50) //to stop message-spam
+				temp = 0
+				var/turf/T = get_turf(src)
+				message_admins("A singulo exists and a containment field has failed at [ADMIN_VERBOSEJMP(T)].")
+				investigate_log("has <font color='red'>failed</font> whilst a singulo exists at [AREACOORD(T)].", INVESTIGATE_SINGULO)
+				notify_ghosts("IT'S LOOSE", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, ghost_sound = 'sound/machines/warning-buzzer.ogg', header = "IT'S LOOSE", notify_volume = 75)
+		O.last_warning = world.time
 
 /obj/machinery/field/generator/shock(mob/living/user)
 	if(fields.len)

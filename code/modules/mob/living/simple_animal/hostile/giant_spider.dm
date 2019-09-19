@@ -250,15 +250,15 @@
 		return 1
 
 /mob/living/simple_animal/hostile/poison/giant_spider/proc/do_action()
-				stop_automated_movement = 0
-				walk(src,0)
+	stop_automated_movement = 0
+	walk(src,0)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/proc/GiveUp(C)
-		if(busy == MOVING_TO_TARGET)
-			if(cocoon_target == C && get_dist(src,cocoon_target) > 1)
-				cocoon_target = null
-			busy = FALSE
-			stop_automated_movement = 0
+	if(busy == MOVING_TO_TARGET)
+		if(cocoon_target == C && get_dist(src,cocoon_target) > 1)
+			cocoon_target = null
+		busy = FALSE
+		stop_automated_movement = 0
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/handle_automated_action()
 	if(..())
