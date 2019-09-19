@@ -27,7 +27,8 @@
 /turf/open/lava/acid_act(acidpwr, acid_volume)
 	return
 
-/turf/open/lava/MakeDry(wet_setting = TURF_WET_WATER)
+/turf/open/lava/MakeDry(wet_setting = TURF_WET_WATER, immediate = FALSE, amount = INFINITY)
+	SHOULD_CALL_PARENT(0)
 	return
 
 /turf/open/lava/airless

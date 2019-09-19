@@ -1,4 +1,5 @@
 /mob/living/silicon/pai/death(gibbed)
+	SHOULD_CALL_PARENT(0)
 	if(stat == DEAD)
 		return
 	stat = DEAD

@@ -934,7 +934,7 @@
 
 	if(see_override)
 		see_invisible = see_override
-	sync_lighting_plane_alpha()
+	return ..()
 
 /mob/living/silicon/robot/update_stat()
 	if(status_flags & GODMODE)

@@ -349,6 +349,7 @@
 	update_total()
 
 /datum/reagents/proc/remove_addiction(datum/reagent/R)
+	SHOULD_CALL_PARENT(1)
 	to_chat(my_atom, "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>")
 	SEND_SIGNAL(my_atom, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
 	addiction_list.Remove(R)

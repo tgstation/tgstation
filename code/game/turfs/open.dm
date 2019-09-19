@@ -205,6 +205,7 @@
 	return 1
 
 /turf/open/proc/water_vapor_gas_act()
+	SHOULD_CALL_PARENT(1)
 	MakeSlippery(TURF_WET_WATER, min_wet_time = 100, wet_time_to_add = 50)
 
 	for(var/mob/living/simple_animal/slime/M in src)
@@ -264,6 +265,7 @@
 	AddComponent(/datum/component/wet_floor, wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 
 /turf/open/proc/MakeDry(wet_setting = TURF_WET_WATER, immediate = FALSE, amount = INFINITY)
+	SHOULD_CALL_PARENT(1)
 	SEND_SIGNAL(src, COMSIG_TURF_MAKE_DRY, wet_setting, immediate, amount)
 
 /turf/open/get_dumping_location()

@@ -50,7 +50,8 @@
 /turf/open/floor/plating/asteroid/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
 
-/turf/open/floor/plating/asteroid/MakeDry()
+/turf/open/floor/plating/asteroid/MakeDry(wet_setting = TURF_WET_WATER, immediate = FALSE, amount = INFINITY)
+	SHOULD_CALL_PARENT(0)
 	return
 
 /turf/open/floor/plating/asteroid/attackby(obj/item/W, mob/user, params)

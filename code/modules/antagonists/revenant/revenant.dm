@@ -219,6 +219,7 @@
 	death()
 
 /mob/living/simple_animal/revenant/death()
+	SHOULD_CALL_PARENT(0)
 	if(!revealed || stasis) //Revenants cannot die if they aren't revealed //or are already dead
 		return 0
 	stasis = TRUE

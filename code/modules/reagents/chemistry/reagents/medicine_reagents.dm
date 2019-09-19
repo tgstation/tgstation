@@ -1100,6 +1100,7 @@
 	..()
 
 /datum/reagent/medicine/modafinil/overdose_start(mob/living/M)
+	. = ..()
 	to_chat(M, "<span class='userdanger'>You feel awfully out of breath and jittery!</span>")
 	metabolization_rate = 0.025 * REAGENTS_METABOLISM // sets metabolism to 0.01 per tick on overdose
 
@@ -1203,6 +1204,7 @@
 	overdose_threshold = 10
 
 /datum/reagent/medicine/metafactor/overdose_start(mob/living/carbon/M)
+	. = ..()
 	metabolization_rate = 2  * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/metafactor/overdose_process(mob/living/carbon/M)
