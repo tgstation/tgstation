@@ -29,8 +29,6 @@
 	"22" = "black", "24" = "black", "26" = "black", "28" = "black", "29" = "black", "31" = "black", "33" = "black", "35" = "black")
 
 	var/chosen_bet_amount = 10
-	var/house_balance = 3500 //placeholder
-	var/account_balance = 100 //placeholder
 	var/chosen_bet_type = 0
 	var/last_anti_spam = 0
 	var/anti_spam_cooldown = 20
@@ -79,14 +77,6 @@
 
 	if(!assets)
 		assets = get_asset_datum(/datum/asset/spritesheet/simple/roulette)
-	data["black"] = assets.icon_tag("black")
-	data["red"] = assets.icon_tag("red")
-	data["even"] = assets.icon_tag("even")
-	data["odd"] = assets.icon_tag("odd")
-	data["low"] = assets.icon_tag("low")
-	data["high"] = assets.icon_tag("high")
-	data["zero"] = assets.icon_tag("zero")
-	data["nano"] = assets.icon_tag("nano")
 	return data
 
 /obj/machinery/roulette/ui_act(action, params)
@@ -258,7 +248,7 @@
 	locked = TRUE
 	var/stolen_cash = my_card.registered_account.account_balance * percentage
 	dispense_prize(stolen_cash)
-	
+
 
 ///Returns TRUE if the player bet correctly.
 /obj/machinery/roulette/proc/check_win(bet_type, bet_amount, rolled_number)

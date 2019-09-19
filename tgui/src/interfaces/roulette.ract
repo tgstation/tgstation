@@ -49,24 +49,24 @@
 		<span class="number red"><ui-button action='ChangeBetType' params='{"type": 36}'>36</ui-button></span>
 	</span>
 	<span style="float:left; margin-top:40px;">
-		<ui-button class="image_button" action='ChangeBetType' params='{"type": "s1-18"}'>{{{data.low}}}</ui-button>
+		<ui-button class="image_button" action='ChangeBetType' params='{"type": "s1-18"}'><span class="roulette32x72 low"></ui-button>
 		<br>
-		<ui-button class="image_button" action='ChangeBetType' params='{"type": "even"}'>{{{data.even}}}</ui-button>
+		<ui-button class="image_button" action='ChangeBetType' params='{"type": "even"}'><span class="roulette32x72 even"></ui-button>
 		<br>
-		<ui-button class="image_button" action='ChangeBetType' params='{"type": 0}'>{{{data.zero}}}</ui-button>
+		<ui-button class="image_button" action='ChangeBetType' params='{"type": 0}'><span class="roulette32x72 zero"></ui-button>
 		<br>
-		<ui-button class="image_button" action='ChangeBetType' params='{"type": "odd"}'>{{{data.odd}}}</ui-button>
+		<ui-button class="image_button" action='ChangeBetType' params='{"type": "odd"}'><span class="roulette32x72 odd"></ui-button>
 		<br>
-		<ui-button class="image_button" action='ChangeBetType' params='{"type": "s19-36"}'>{{{data.high}}}</ui-button>
+		<ui-button class="image_button" action='ChangeBetType' params='{"type": "s19-36"}'><span class="roulette32x72 high"></ui-button>
 	</span>
 	<span style="float:left; margin-top:160px;">
-		<ui-button class="image_button" action='ChangeBetType' params='{"type": "red"}'>{{{data.red}}}</ui-button>
+		<ui-button class="image_button" action='ChangeBetType' params='{"type": "red"}'><span class="roulette32x72 red"></span></ui-button>
 		<br>
-		<ui-button class="image_button" action='ChangeBetType' params='{"type": "black"}'>{{{data.black}}}</ui-button>
+		<ui-button class="image_button" action='ChangeBetType' params='{"type": "black"}'><span class="roulette32x72 black"></span></ui-button>
 	</span>
 
 	<div style="text-align:right;">
-		<span>{{{data.nano}}}</span>
+		<span class="roulette64x64 nano"></span> 
 	</div>
 	<span class="display" style="float:right;">
 		<div>
