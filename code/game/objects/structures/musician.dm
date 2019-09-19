@@ -155,14 +155,14 @@
 			dat += repeat < max_repeats ? "<A href='?src=[REF(src)];repeat=1'>+</A><A href='?src=[REF(src)];repeat=10'>+</A>" : "<SPAN CLASS='linkOff'>+</SPAN><SPAN CLASS='linkOff'>+</SPAN>"
 			dat += "<BR>"
 			dat += "Volume: "	//FULP
-			dat += play_volume > 0 ? "<A href='?src=[REF(src)];play_volume=-10'>-</A>" : "<SPAN CLASS='linkoff'>-</SPAN>"	//FULP
+			dat += play_volume > 10 ? "<A href='?src=[REF(src)];play_volume=-10'>-</A>" : "<SPAN CLASS='linkoff'>-</SPAN>"	//FULP
 			dat += " [play_volume] "	//FULP
 			dat += play_volume < 100 ? "<A href='?src=[REF(src)];play_volume=+10'>+</A>" : "<SPAN CLASS='linkoff'>+</SPAN>"	//FULP
 			dat += "<BR>" //FULP
 		else
 			dat += "<SPAN CLASS='linkOn'>Play</SPAN> <A href='?src=[REF(src)];stop=1'>Stop</A><BR>"
 			dat += "Repeats left: <B>[repeat]</B><BR>"
-			dat += play_volume > 0 ? "<A href='?src=[REF(src)];play_volume=-10'>-</A>" : "<SPAN CLASS='linkoff'>-</SPAN>"	//FULP
+			dat += play_volume > 10 ? "<A href='?src=[REF(src)];play_volume=-10'>-</A>" : "<SPAN CLASS='linkoff'>-</SPAN>"	//FULP
 			dat += " [play_volume] "	//FULP
 			dat += play_volume < 100 ? "<A href='?src=[REF(src)];play_volume=+10'>+</A>" : "<SPAN CLASS='linkoff'>+</SPAN>"	//FULP
 			dat += "<BR>" //FULP
@@ -313,9 +313,9 @@
 
 	else if(href_list["play_volume"])	//FULP
 		play_volume += round(text2num(href_list["play_volume"]))	//FULP
-		if(play_volume < 0)	//FULP
-			play_volume = 0	//FULP
-		if(play_volume > 100)	//FULP
+		if(play_volume < 10)	//FULP : min play volume is 10
+			play_volume = 10	//FULP
+		if(play_volume > 100)	//FULP : max play volume is 100
 			play_volume = 100	//FULP
 
 	updateDialog(usr)
