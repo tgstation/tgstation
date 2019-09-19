@@ -246,13 +246,14 @@
 		if(!busy && prob(1))
 			stop_automated_movement = 1
 			Goto(pick(urange(20, src, 1)), move_to_delay)
-			spawn(50)
-				stop_automated_movement = 0
-				walk(src,0)
+			addtimer(CALLBACK(src, .proc/do_action), 5 SECONDS)
 		return 1
 
+/mob/living/simple_animal/hostile/poison/giant_spider/proc/do_action()
+				stop_automated_movement = 0
+				walk(src,0)
+
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/proc/GiveUp(C)
-	spawn(100)
 		if(busy == MOVING_TO_TARGET)
 			if(cocoon_target == C && get_dist(src,cocoon_target) > 1)
 				cocoon_target = null
@@ -270,7 +271,7 @@
 					busy = MOVING_TO_TARGET
 					Goto(C, move_to_delay)
 					//give up if we can't reach them after 10 seconds
-					GiveUp(C)
+					addtimer(CALLBACK(src, .proc/GiveUp, C), 10 SECONDS)
 					return
 
 			//second, spin a sticky spiderweb on this tile
@@ -294,7 +295,7 @@
 							stop_automated_movement = 1
 							Goto(O, move_to_delay)
 							//give up if we can't reach them after 10 seconds
-							GiveUp(O)
+							addtimer(CALLBACK(src, .proc/GiveUp, O), 10 SECONDS)
 
 		else if(busy == MOVING_TO_TARGET && cocoon_target)
 			if(get_dist(src, cocoon_target) <= 1)

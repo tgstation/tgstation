@@ -479,8 +479,7 @@
 			return
 		target.mech_melee_attack(src)
 		melee_can_hit = 0
-		spawn(melee_cooldown)
-			melee_can_hit = 1
+		addtimer(VARSET_CALLBACK(src, melee_can_hit, 1), melee_cooldown)
 
 
 /obj/mecha/proc/range_action(atom/target)

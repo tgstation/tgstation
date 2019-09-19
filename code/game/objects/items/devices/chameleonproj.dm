@@ -96,7 +96,7 @@
 			qdel(active_dummy)
 		active_dummy = null
 		can_use = 0
-		spawn(50) can_use = 1
+		addtimer(VARSET_CALLBACK(src, can_use, 1), 5 SECONDS)
 
 /obj/item/chameleon/proc/eject_all()
 	for(var/atom/movable/A in active_dummy)

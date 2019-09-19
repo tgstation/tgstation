@@ -208,8 +208,7 @@
 		chassis.smoke_system.start()
 		chassis.smoke--
 		chassis.smoke_ready = 0
-		spawn(chassis.smoke_cooldown)
-			chassis.smoke_ready = 1
+		addtimer(VARSET_CALLBACK(chassis, smoke_ready, 1), chassis.smoke_cooldown)
 
 
 /datum/action/innate/mecha/mech_zoom
