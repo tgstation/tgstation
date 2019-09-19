@@ -59,23 +59,23 @@
 	if(created_volume >= 150)
 		playsound(get_turf(holder.my_atom), 'sound/effects/pray.ogg', 80, FALSE, round(created_volume/48))
 		strengthdiv = 8
+		var/deity
+		if(GLOB.deity)
+			deity = GLOB.deity
+		else
+			deity = "Christ"
 		for(var/mob/living/simple_animal/revenant/R in get_hearers_in_view(7,get_turf(holder.my_atom)))
-			var/deity
-			if(GLOB.deity)
-				deity = GLOB.deity
-			else
-				deity = "Christ"
 			to_chat(R, "<span class='userdanger'>The power of [deity] compels you!</span>")
-			R.stun(20)
+			R.stun(30)
 			R.reveal(100)
 			R.adjustHealth(50)
-		sleep(20)
-		for(var/mob/living/carbon/C in get_hearers_in_view(round(created_volume/48,1),get_turf(holder.my_atom)))
+		for(var/mob/living/carbon/C in get_hearers_in_view(7,get_turf(holder.my_atom)))
 			if(iscultist(C))
-				to_chat(C, "<span class='userdanger'>The divine explosion sears you!</span>")
+				to_chat(C, "<span class='userdanger'>The power of [deity] compels you!</span>")
 				C.Paralyze(40)
 				C.adjust_fire_stacks(5)
 				C.IgniteMob()
+		sleep(20)
 	..()
 
 
