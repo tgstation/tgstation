@@ -416,6 +416,7 @@
   * Default behaviour is to send the COMSIG_ATOM_BULLET_ACT and then call on_hit() on the projectile
   */
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
+	SHOULD_CALL_PARENT(1)
 	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, P, def_zone)
 	. = P.on_hit(src, 0, def_zone)
 

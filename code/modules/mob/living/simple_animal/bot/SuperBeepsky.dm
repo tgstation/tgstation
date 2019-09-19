@@ -20,6 +20,7 @@
 	weapon_force = 0
 
 /mob/living/simple_animal/bot/secbot/grievous/bullet_act(obj/item/projectile/P)
+	. = ..()
 	visible_message("<span class='warning'>[src] deflects [P] with its energy swords!</span>")
 	playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE)
 	return BULLET_ACT_BLOCK

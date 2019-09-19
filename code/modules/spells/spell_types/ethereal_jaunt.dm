@@ -101,4 +101,5 @@
 	return
 
 /obj/effect/dummy/phased_mob/spell_jaunt/bullet_act(blah)
+	. = ..()
 	return BULLET_ACT_FORCE_PIERCE

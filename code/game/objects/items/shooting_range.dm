@@ -65,6 +65,7 @@
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
 
 /obj/item/target/bullet_act(obj/item/projectile/P)
+	. = ..()
 	if(istype(P, /obj/item/projectile/bullet/reusable)) // If it's a foam dart, don't bother with any of this other shit
 		return P.on_hit(src, 0)
 	var/p_x = P.p_x + pick(0,0,0,0,0,-1,1) // really ugly way of coding "sometimes offset P.p_x!"

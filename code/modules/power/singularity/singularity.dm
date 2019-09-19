@@ -113,6 +113,7 @@
 
 
 /obj/singularity/bullet_act(obj/item/projectile/P)
+	SHOULD_CALL_PARENT(0)
 	qdel(P)
 	return BULLET_ACT_HIT //Will there be an impact? Who knows.  Will we see it? No.
 

@@ -239,6 +239,7 @@
 		qdel(src)
 
 /obj/structure/chrono_field/bullet_act(obj/item/projectile/P)
+	. = ..()
 	if(istype(P, /obj/item/projectile/energy/chrono_beam))
 		var/obj/item/projectile/energy/chrono_beam/beam = P
 		var/obj/item/gun/energy/chrono_gun/Pgun = beam.gun

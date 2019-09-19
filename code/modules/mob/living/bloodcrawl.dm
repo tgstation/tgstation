@@ -15,6 +15,7 @@
 	return
 
 /obj/effect/dummy/phased_mob/slaughter/bullet_act()
+	. = ..()
 	return BULLET_ACT_FORCE_PIERCE
 
 /obj/effect/dummy/phased_mob/slaughter/singularity_act()

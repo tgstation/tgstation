@@ -66,6 +66,7 @@
 			push_over()
 
 /obj/item/cardboard_cutout/bullet_act(obj/item/projectile/P)
+	. = ..()
 	if(istype(P, /obj/item/projectile/bullet/reusable))
 		P.on_hit(src, 0)
 	visible_message("<span class='danger'>[src] is hit by [P]!</span>")
