@@ -785,7 +785,7 @@
 	base_icon_state = "syndie"
 	faction = list("neutral","silicon","turret")
 	mode = TURRET_LETHAL
-
+	
 /obj/machinery/porta_turret/centcom_shuttle/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
@@ -817,8 +817,7 @@
 	density = FALSE
 	var/enabled = 1
 	var/lethal = 0
-	var/shoot_cyborgs = 1
-	var/shoot_heads_of_staff = 1
+	
 	var/locked = TRUE
 	var/control_area = null //can be area name, path or nothing.
 	var/ailock = 0 // AI cannot use this
@@ -855,7 +854,9 @@
 	for(var/obj/machinery/porta_turret/T in control_area)
 		turrets |= T
 		T.cp = src
-
+	for (var/obj/machinery/porta_turret/T in control_area)
+		T.shoot_heads_of_staff = 1
+		T.shoot_cyborgs = 1
 /obj/machinery/turretid/examine(mob/user)
 	. += ..()
 	if(issilicon(user) && (!stat & BROKEN))
