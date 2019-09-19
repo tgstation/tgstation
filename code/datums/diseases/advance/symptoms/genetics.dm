@@ -43,7 +43,7 @@ Bonus
 	if(A.properties["stage_rate"] >= 10) //activate dormant mutations more often at around twice the pace
 		symptom_delay_max = 60
 	if(A.properties["resistance"] >= 8) //mutadone won't save you now
-		mutadone_proof = TRUE
+		mutadone_proof = NEGATIVE+MINOR_NEGATIVE
 	if(A.properties["resistance"] >= 14) //one does not simply escape Nurgle's grasp
 		no_reset = TRUE
 
@@ -56,7 +56,7 @@ Bonus
 	switch(A.stage)
 		if(4, 5)
 			to_chat(C, "<span class='warning'>[pick("Your skin feels itchy.", "You feel light headed.")]</span>")
-			C.easy_randmut(NEGATIVE + MINOR_NEGATIVE + POSITIVE - excludemuts, TRUE, TRUE, TRUE, NEGATIVE+MINOR_NEGATIVE)
+			C.easy_randmut(NEGATIVE + MINOR_NEGATIVE + POSITIVE - excludemuts, TRUE, TRUE, TRUE, mutadone_proof)
 
 /datum/symptom/genetic_mutation/End(datum/disease/advance/A)
 	if(!..())
