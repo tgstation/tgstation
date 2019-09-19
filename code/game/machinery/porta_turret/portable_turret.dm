@@ -854,9 +854,7 @@
 	for(var/obj/machinery/porta_turret/T in control_area)
 		turrets |= T
 		T.cp = src
-	for (var/obj/machinery/porta_turret/T in control_area)
 		T.shoot_heads_of_staff = 1
-		T.shoot_cyborgs = 1
 /obj/machinery/turretid/examine(mob/user)
 	. += ..()
 	if(issilicon(user) && (!stat & BROKEN))
