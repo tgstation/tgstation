@@ -36,7 +36,5 @@
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Deputy")
 
 
-	//DIGISUITS//
 
-/obj/item/clothing/under
-	var/fulp_digisuit = FALSE //FULP - set to TRUE by initialize() based on GLOB.digisuits
+
