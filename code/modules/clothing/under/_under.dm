@@ -52,6 +52,7 @@
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS, SENSOR_COORDS)
+	digisuit_var_update() //FULP
 
 /obj/item/clothing/under/emp_act()
 	. = ..()
