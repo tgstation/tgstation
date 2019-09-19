@@ -817,7 +817,6 @@
 	density = FALSE
 	var/enabled = 1
 	var/lethal = 0
-	
 	var/locked = TRUE
 	var/control_area = null //can be area name, path or nothing.
 	var/ailock = 0 // AI cannot use this
