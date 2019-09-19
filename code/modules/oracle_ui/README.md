@@ -128,6 +128,18 @@ You now need to hook in and ensure oracle_ui is invoked upon clicking. `render` 
 
 You should have a functional UI at this point. Some additional odds and ends can be discovered throughout `code/modules/recycling/disposal-unit.dm`. For a full diff of the changes made to it, refer to [the original pull request on GitHub](https://github.com/OracleStation/OracleStation/pull/702/files#diff-4b6c20ec7d37222630e7524d9577e230).
 
+
+### Live IDE
+
+Oracle UI features a live IDE at `D:\ss13\tgstation\html\oracle_ui\editor_tool.html`
+
+Unforuntately due to issues with XSS protection in modern browsers, it needs to actually be hosted through a web server vs just the local html file being opened. It still works fine even as a local web server, it just needs to be an actual server providing the file.
+
+affectedark07 has helpfully provided a hosted version here: https://affectedarc07.co.uk/oui_ide/
+
+If you're reading this in the distant future and that link is dead, sorry, local server is the only way it works.
+
+
 ### API Reference
 
 #### `/datum/oracle_ui`
