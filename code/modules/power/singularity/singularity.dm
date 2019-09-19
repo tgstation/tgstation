@@ -123,6 +123,7 @@
 
 
 /obj/singularity/Bumped(atom/movable/AM)
+	SHOULD_CALL_PARENT(0)
 	consume(AM)
 
 

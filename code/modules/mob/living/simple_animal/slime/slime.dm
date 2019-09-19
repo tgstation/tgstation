@@ -444,6 +444,7 @@
 	return
 
 /mob/living/simple_animal/slime/examine(mob/user)
+	SHOULD_CALL_PARENT(0)
 	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>!")
 	if (stat == DEAD)
 		. += "<span class='deadsay'>It is limp and unresponsive.</span>"

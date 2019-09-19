@@ -135,7 +135,7 @@
 	Bumped(AM)
 
 /obj/effect/meatgrinder/Bumped(atom/movable/AM)
-
+	SHOULD_CALL_PARENT(0)
 	if(triggered)
 		return
 	if(!ishuman(AM))

@@ -367,6 +367,7 @@
 // and due to an oversight in turf/Enter() were going through walls.  That
 // should be independently resolved, but this is also an interesting twist.
 /obj/structure/closet/Exit(atom/movable/AM)
+	. = ..()
 	open()
 	if(AM.loc == src)
 		return 0

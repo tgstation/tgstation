@@ -116,6 +116,7 @@
 		warp_points += exit
 
 /obj/effect/forcefield/arena_shuttle/Bumped(atom/movable/AM)
+	SHOULD_CALL_PARENT(0)
 	if(!isliving(AM))
 		return
 
@@ -147,6 +148,7 @@
 	var/list/warp_points = list()
 
 /obj/effect/forcefield/arena_shuttle_entrance/Bumped(atom/movable/AM)
+	SHOULD_CALL_PARENT(0)
 	if(!isliving(AM))
 		return
 

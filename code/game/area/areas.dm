@@ -571,6 +571,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   */
 /area/Entered(atom/movable/M)
 	set waitfor = FALSE
+	. = ..()
 	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, M)
 	SEND_SIGNAL(M, COMSIG_ENTER_AREA, src) //The atom that enters the area
 	if(!isliving(M))
@@ -602,6 +603,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   * Sends signals COMSIG_AREA_EXITED and COMSIG_EXIT_AREA (to the atom)
   */
 /area/Exited(atom/movable/M)
+	SHOULD_CALL_PARENT(1)
+	. = ..()
 	SEND_SIGNAL(src, COMSIG_AREA_EXITED, M)
 	SEND_SIGNAL(M, COMSIG_EXIT_AREA, src) //The atom that exits the area
 

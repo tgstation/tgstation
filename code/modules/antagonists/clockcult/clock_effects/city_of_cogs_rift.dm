@@ -41,6 +41,7 @@
 	beckon(AM)
 
 /obj/effect/clockwork/city_of_cogs_rift/Bumped(atom/movable/AM)
+	SHOULD_CALL_PARENT(0)
 	if(!QDELETED(AM))
 		if(isliving(AM))
 			var/mob/living/L = AM

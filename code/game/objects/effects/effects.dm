@@ -23,6 +23,7 @@
 	return
 
 /obj/effect/attack_hulk(mob/living/carbon/human/user)
+	SHOULD_CALL_PARENT(0)
 	return FALSE
 
 /obj/effect/experience_pressure_difference()

@@ -228,6 +228,7 @@
 	var/input_dir = NORTH
 
 /obj/machinery/gibber/autogibber/Bumped(atom/movable/AM)
+	SHOULD_CALL_PARENT(0)
 	var/atom/input = get_step(src, input_dir)
 	if(ismob(AM))
 		var/mob/M = AM

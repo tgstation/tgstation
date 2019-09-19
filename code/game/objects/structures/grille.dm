@@ -80,6 +80,7 @@
 	qdel(src)
 
 /obj/structure/grille/Bumped(atom/movable/AM)
+	. = ..()
 	if(!ismob(AM))
 		return
 	var/mob/M = AM

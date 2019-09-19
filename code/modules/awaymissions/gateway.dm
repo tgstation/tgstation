@@ -135,6 +135,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 
 //okay, here's the good teleporting stuff
 /obj/machinery/gateway/centerstation/Bumped(atom/movable/AM)
+	SHOULD_CALL_PARENT(0)
 	if(!active)
 		return
 	if(!detect())
@@ -209,6 +210,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	return FALSE
 
 /obj/machinery/gateway/centeraway/Bumped(atom/movable/AM)
+	SHOULD_CALL_PARENT(0)
 	if(!detect())
 		return
 	if(!active)

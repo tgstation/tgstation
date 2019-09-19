@@ -66,6 +66,7 @@
 		close()
 
 /obj/machinery/door/window/Bumped(atom/movable/AM)
+	. = ..()
 	if( operating || !density )
 		return
 	if (!( ismob(AM) ))

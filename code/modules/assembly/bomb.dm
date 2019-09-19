@@ -17,6 +17,7 @@
 	return TRUE
 
 /obj/item/onetankbomb/examine(mob/user)
+	SHOULD_CALL_PARENT(0)
 	return bombtank.examine(user)
 
 /obj/item/onetankbomb/update_icon()

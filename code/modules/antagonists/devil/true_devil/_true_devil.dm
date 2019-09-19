@@ -64,6 +64,7 @@
 
 
 /mob/living/carbon/true_devil/examine(mob/user)
+	SHOULD_CALL_PARENT(0)
 	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] <b>[src]</b>!")
 
 	//Left hand items

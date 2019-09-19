@@ -264,6 +264,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     promptExit(user)
 
 /turf/closed/indestructible/hoteldoor/attack_hulk(mob/living/carbon/human/user)
+    SHOULD_CALL_PARENT(0)
     promptExit(user)
 
 /turf/closed/indestructible/hoteldoor/attack_larva(mob/user)

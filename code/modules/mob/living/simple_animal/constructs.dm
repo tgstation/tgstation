@@ -68,6 +68,7 @@
 	to_chat(src, playstyle_string)
 
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
+	SHOULD_CALL_PARENT(0)
 	var/t_He = p_they(TRUE)
 	var/t_s = p_s()
 	. = list("<span class='cult'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!\n[desc]")

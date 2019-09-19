@@ -561,6 +561,7 @@
 	alpha = 255
 
 /obj/structure/trap/ctf/examine(mob/user)
+	SHOULD_CALL_PARENT(0)
 	return
 
 /obj/structure/trap/ctf/trap_effect(mob/living/L)
@@ -615,6 +616,7 @@
 	reload(AM)
 
 /obj/effect/ctf/ammo/Bumped(atom/movable/AM)
+	SHOULD_CALL_PARENT(0)
 	reload(AM)
 
 /obj/effect/ctf/ammo/proc/reload(mob/living/M)

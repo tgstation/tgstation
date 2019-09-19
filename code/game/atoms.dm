@@ -300,6 +300,7 @@
 
 ///This atom has been hit by a hulkified mob in hulk mode (user)
 /atom/proc/attack_hulk(mob/living/carbon/human/user)
+	SHOULD_CALL_PARENT(1)
 	SEND_SIGNAL(src, COMSIG_ATOM_HULK_ATTACK, user)
 
 /**
@@ -359,6 +360,7 @@
 
 /atom/proc/Bumped(atom/movable/AM)
 	set waitfor = FALSE
+	SHOULD_CALL_PARENT(1)
 	SEND_SIGNAL(src, COMSIG_ATOM_BUMPED, AM)
 
 /// Convenience proc to see if a container is open for chemistry handling
@@ -454,6 +456,7 @@
   * Produces a signal COMSIG_PARENT_EXAMINE
   */
 /atom/proc/examine(mob/user)
+	SHOULD_CALL_PARENT(1)
 	. = list("[get_examine_string(user, TRUE)].")
 
 	if(desc)
@@ -764,6 +767,7 @@
   * Not recommended to use, listen for the COMSIG_ATOM_DIR_CHANGE signal instead (sent by this proc)
   */
 /atom/proc/setDir(newdir)
+	SHOULD_CALL_PARENT(1)
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
 
@@ -951,6 +955,8 @@
   * Default behaviour is to send the COMSIG_ATOM_ENTERED
   */
 /atom/Entered(atom/movable/AM, atom/oldLoc)
+	SHOULD_CALL_PARENT(1)
+	. = ..()
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
 
 /**
@@ -962,6 +968,7 @@
   * otherwise leave value the result of the parent call
   */
 /atom/Exit(atom/movable/AM, atom/newLoc)
+	SHOULD_CALL_PARENT(1)
 	. = ..()
 	if(SEND_SIGNAL(src, COMSIG_ATOM_EXIT, AM, newLoc) & COMPONENT_ATOM_BLOCK_EXIT)
 		return FALSE
@@ -972,6 +979,8 @@
   * Default behaviour is to send the COMSIG_ATOM_EXITED
   */
 /atom/Exited(atom/movable/AM, atom/newLoc)
+	SHOULD_CALL_PARENT(1)
+	. = ..()
 	SEND_SIGNAL(src, COMSIG_ATOM_EXITED, AM, newLoc)
 
 ///Return atom temperature

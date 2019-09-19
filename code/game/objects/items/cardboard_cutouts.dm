@@ -181,6 +181,7 @@
 	return 1
 
 /obj/item/cardboard_cutout/setDir(newdir)
+	SHOULD_CALL_PARENT(0)
 	dir = SOUTH
 
 /obj/item/cardboard_cutout/adaptive //Purchased by Syndicate agents, these cutouts are indistinguishable from normal cutouts but aren't discolored when their appearance is changed

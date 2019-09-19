@@ -27,6 +27,7 @@
 	return
 
 /obj/effect/bump_teleporter/Bumped(atom/movable/AM)
+	SHOULD_CALL_PARENT(0)
 	if(!ismob(AM))
 		return
 	if(!id_target)

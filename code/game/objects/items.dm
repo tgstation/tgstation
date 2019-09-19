@@ -650,6 +650,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return
 
 /obj/item/attack_hulk(mob/living/carbon/human/user)
+	SHOULD_CALL_PARENT(0)
 	return FALSE
 
 /obj/item/attack_animal(mob/living/simple_animal/M)

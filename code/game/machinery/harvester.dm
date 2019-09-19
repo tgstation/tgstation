@@ -173,6 +173,7 @@
 		to_chat(user,"<span class='warning'>[src] is active and can't be opened!</span>") //rip
 
 /obj/machinery/harvester/Exited(atom/movable/user)
+	. = ..()
 	if (!state_open && user == occupant)
 		container_resist(user)
 

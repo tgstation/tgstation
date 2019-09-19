@@ -40,6 +40,7 @@
 				AM.forceMove(pod)
 				pod.update_icon()
 				return
+	return ..()
 
 
 //pod insertion
@@ -238,6 +239,7 @@
 	. += "<span class='notice'>This station will create a pod for you to ride, no need to wait for one.</span>"
 
 /obj/structure/transit_tube/station/dispenser/Bumped(atom/movable/AM)
+	SHOULD_CALL_PARENT(0)
 	if(!(istype(AM) && AM.dir == boarding_dir))
 		return
 	var/obj/structure/transit_tube_pod/dispensed/pod = new(loc)

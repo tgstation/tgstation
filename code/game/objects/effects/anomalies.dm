@@ -110,6 +110,7 @@
 	gravShock(A)
 
 /obj/effect/anomaly/grav/Bumped(atom/movable/AM)
+	SHOULD_CALL_PARENT(0)
 	gravShock(AM)
 
 /obj/effect/anomaly/grav/proc/gravShock(mob/living/A)
@@ -156,6 +157,7 @@
 	mobShock(M)
 
 /obj/effect/anomaly/flux/Bumped(atom/movable/AM)
+	SHOULD_CALL_PARENT(0)
 	mobShock(AM)
 
 /obj/effect/anomaly/flux/proc/mobShock(mob/living/M)
@@ -194,6 +196,7 @@
 		do_teleport(M, locate(M.x, M.y, M.z), 4, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /obj/effect/anomaly/bluespace/Bumped(atom/movable/AM)
+	SHOULD_CALL_PARENT(0)
 	if(isliving(AM))
 		do_teleport(AM, locate(AM.x, AM.y, AM.z), 8, channel = TELEPORT_CHANNEL_BLUESPACE)
 

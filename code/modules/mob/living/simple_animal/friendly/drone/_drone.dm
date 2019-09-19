@@ -171,6 +171,7 @@
 
 
 /mob/living/simple_animal/drone/examine(mob/user)
+	SHOULD_CALL_PARENT(0)
 	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!")
 
 	//Hands

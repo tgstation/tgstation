@@ -30,6 +30,7 @@
 	return ..()
 
 /obj/item/pet_carrier/Exited(atom/movable/occupant)
+	. = ..()
 	if(occupant in occupants && isliving(occupant))
 		var/mob/living/L = occupant
 		occupants -= occupant

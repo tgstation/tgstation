@@ -127,6 +127,7 @@
 	dust_mobs(A)
 
 /obj/singularity/energy_ball/Bumped(atom/movable/AM)
+	SHOULD_CALL_PARENT(0)
 	dust_mobs(AM)
 
 /obj/singularity/energy_ball/attack_tk(mob/user)

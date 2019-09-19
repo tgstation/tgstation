@@ -454,6 +454,7 @@
 		flush()
 
 /obj/machinery/disposal/deliveryChute/Bumped(atom/movable/AM) //Go straight into the chute
+	SHOULD_CALL_PARENT(0)
 	if(QDELETED(AM) || !AM.CanEnterDisposals())
 		return
 	switch(dir)

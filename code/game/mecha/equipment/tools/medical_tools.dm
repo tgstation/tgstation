@@ -46,6 +46,7 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/Exit(atom/movable/O)
+	SHOULD_CALL_PARENT(0)
 	return 0
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/action(mob/living/carbon/target)

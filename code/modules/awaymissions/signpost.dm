@@ -37,6 +37,7 @@
 	return interact(user)
 
 /obj/structure/signpost/attack_hulk(mob/user)
+	SHOULD_CALL_PARENT(0)
 	return
 
 /obj/structure/signpost/attack_larva(mob/user)

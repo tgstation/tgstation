@@ -96,6 +96,7 @@
 	return interact(user)
 
 /obj/structure/speaking_tile/attack_hulk(mob/user)
+	SHOULD_CALL_PARENT(0)
 	return
 
 /obj/structure/speaking_tile/attack_larva(mob/user)

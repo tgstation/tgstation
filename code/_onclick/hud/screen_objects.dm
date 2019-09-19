@@ -25,6 +25,7 @@
 	return ..()
 
 /obj/screen/examine(mob/user)
+	SHOULD_CALL_PARENT(0)
 	return list()
 
 /obj/screen/orbit()

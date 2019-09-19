@@ -173,6 +173,7 @@
 			addtimer(CALLBACK(src, .proc/cooldown), 5)
 
 /obj/structure/holosign/barrier/cyborg/hacked/Bumped(atom/movable/AM)
+	SHOULD_CALL_PARENT(0)
 	if(shockcd)
 		return
 

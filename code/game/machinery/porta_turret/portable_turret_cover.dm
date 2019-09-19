@@ -82,6 +82,7 @@
 	parent_turret.attack_animal(user)
 
 /obj/machinery/porta_turret_cover/attack_hulk(mob/living/carbon/human/user)
+	SHOULD_CALL_PARENT(0)
 	return parent_turret.attack_hulk(user)
 
 /obj/machinery/porta_turret_cover/can_be_overridden()

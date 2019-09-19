@@ -41,6 +41,7 @@
 	return 0 //ouch, my metal-unlikely-to-be-damaged-by-electricity-body
 
 /mob/living/simple_animal/hostile/clockwork/examine(mob/user)
+	SHOULD_CALL_PARENT(0)
 	var/t_He = p_they(TRUE)
 	var/t_s = p_s()
 	var/msg = "<span class='brass'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!\n"
