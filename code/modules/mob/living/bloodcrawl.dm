@@ -12,6 +12,7 @@
 	forceMove(get_step(src,direction))
 
 /obj/effect/dummy/phased_mob/slaughter/ex_act()
+	SHOULD_CALL_PARENT(0)
 	return
 
 /obj/effect/dummy/phased_mob/slaughter/bullet_act()

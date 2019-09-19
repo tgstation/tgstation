@@ -40,6 +40,7 @@
 	setDir(pick(GLOB.cardinals))
 
 /obj/effect/decal/cleanable/glass/ex_act()
+	. = ..()
 	qdel(src)
 
 /obj/effect/decal/cleanable/glass/plasma
@@ -80,6 +81,7 @@
 	light_color = LIGHT_COLOR_GREEN
 
 /obj/effect/decal/cleanable/greenglow/ex_act()
+	SHOULD_CALL_PARENT(0)
 	return
 
 /obj/effect/decal/cleanable/greenglow/filled/Initialize()
@@ -159,6 +161,7 @@
 	mergeable_decal = FALSE
 
 /obj/effect/decal/cleanable/shreds/ex_act(severity, target)
+	. = ..()
 	if(severity == 1) //so shreds created during an explosion aren't deleted by the explosion.
 		qdel(src)
 

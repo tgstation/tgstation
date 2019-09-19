@@ -45,6 +45,7 @@
 	return
 
 /obj/machinery/power/emitter/energycannon/magical/ex_act(severity)
+	SHOULD_CALL_PARENT(0)
 	return
 
 /obj/machinery/power/emitter/energycannon/magical/emag_act(mob/user)

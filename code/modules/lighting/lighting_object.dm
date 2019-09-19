@@ -130,6 +130,7 @@
 // Variety of overrides so the overlays don't get affected by weird things.
 
 /atom/movable/lighting_object/ex_act(severity)
+	SHOULD_CALL_PARENT(0)
 	return 0
 
 /atom/movable/lighting_object/singularity_act()

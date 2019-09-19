@@ -141,6 +141,7 @@
 	return
 
 /mob/living/simple_animal/bot/mulebot/ex_act(severity)
+	. = ..()
 	unload(0)
 	switch(severity)
 		if(1)

@@ -157,4 +157,5 @@
 	lightr = max(lightr - 1, 0)
 
 /obj/item/projectile/blastwave/ex_act()
+	SHOULD_CALL_PARENT(0)
 	return

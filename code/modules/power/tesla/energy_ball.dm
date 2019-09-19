@@ -30,6 +30,7 @@
 		set_light(10, 7, "#EEEEFF")
 
 /obj/singularity/energy_ball/ex_act(severity, target)
+	SHOULD_CALL_PARENT(0)
 	return
 
 /obj/singularity/energy_ball/Destroy()

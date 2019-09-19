@@ -36,6 +36,7 @@
 			break
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/ex_act()
+	SHOULD_CALL_PARENT(0)
 	return
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/up

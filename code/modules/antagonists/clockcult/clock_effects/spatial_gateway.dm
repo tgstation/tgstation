@@ -97,6 +97,7 @@
 	return ..()
 
 /obj/effect/clockwork/spatial_gateway/ex_act(severity)
+	. = ..()
 	if(severity == 1 && uses)
 		uses = 0
 		visible_message("<span class='warning'>[src] is disrupted!</span>")

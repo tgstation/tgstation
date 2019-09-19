@@ -150,6 +150,7 @@
 	. = ..()
 
 /mob/living/simple_animal/slaughter/laughter/ex_act(severity)
+	. = ..()
 	switch(severity)
 		if(1)
 			death()

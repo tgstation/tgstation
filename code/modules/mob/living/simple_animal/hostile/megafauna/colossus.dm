@@ -450,6 +450,7 @@ Difficulty: Very Hard
 		ActivationReaction(AM, ACTIVATE_MOB_BUMP)
 
 /obj/machinery/anomalous_crystal/ex_act()
+	. = ..()
 	ActivationReaction(null, ACTIVATE_BOMB)
 
 /obj/machinery/anomalous_crystal/honk //Strips and equips you as a clown. I apologize for nothing
@@ -775,6 +776,7 @@ Difficulty: Very Hard
 	return
 
 /obj/structure/closet/stasis/ex_act()
+	SHOULD_CALL_PARENT(0)
 	return
 
 /obj/effect/proc_holder/spell/targeted/exit_possession

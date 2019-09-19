@@ -101,6 +101,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	return TRUE
 
 /obj/effect/immovablerod/ex_act(severity, target)
+	SHOULD_CALL_PARENT(0)
 	return 0
 
 /obj/effect/immovablerod/singularity_act()

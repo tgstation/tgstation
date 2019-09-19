@@ -206,6 +206,7 @@
 	var/obj/machinery/parent
 
 /obj/structure/filler/ex_act()
+	SHOULD_CALL_PARENT(0)
 	return
 
 /obj/machinery/computer/bsa_control

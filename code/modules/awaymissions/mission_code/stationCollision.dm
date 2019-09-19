@@ -154,4 +154,5 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 		mezzer()
 
 /obj/singularity/narsie/mini/ex_act()
+	SHOULD_CALL_PARENT(0)
 	return

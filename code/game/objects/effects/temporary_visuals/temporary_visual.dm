@@ -26,6 +26,7 @@
 	return
 
 /obj/effect/temp_visual/ex_act()
+	SHOULD_CALL_PARENT(0)
 	return
 
 /obj/effect/temp_visual/dir_setting

@@ -162,6 +162,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 		qdel(src)
 
 /obj/effect/meteor/ex_act()
+	SHOULD_CALL_PARENT(0)
 	return
 
 /obj/effect/meteor/examine(mob/user)

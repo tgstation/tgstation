@@ -267,6 +267,7 @@
 	var/range_flame = 17
 
 /obj/item/bombcore/ex_act(severity, target) // Little boom can chain a big boom.
+	. = ..()
 	detonate()
 
 

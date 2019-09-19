@@ -169,6 +169,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	return TRUE
 
 /mob/living/silicon/robot/ex_act(severity, target)
+	. = ..()
 	switch(severity)
 		if(1)
 			gib()

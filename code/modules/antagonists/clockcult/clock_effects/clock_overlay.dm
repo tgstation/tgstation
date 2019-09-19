@@ -10,6 +10,7 @@
 		return ..()
 
 /obj/effect/clockwork/overlay/ex_act()
+	SHOULD_CALL_PARENT(0)
 	return FALSE
 
 /obj/effect/clockwork/overlay/singularity_act()

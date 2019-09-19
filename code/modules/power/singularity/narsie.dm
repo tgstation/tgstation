@@ -139,6 +139,7 @@
 
 
 /obj/singularity/narsie/ex_act() //No throwing bombs at her either.
+	SHOULD_CALL_PARENT(0)
 	return
 
 

@@ -203,7 +203,8 @@
 	var/obj/structure/checkoutmachine/dump
 	var/mob/living/carbon/human/bogdanoff
 
-/obj/effect/ex_act()
+/obj/effect/dumpeetTarget/ex_act()
+	SHOULD_CALL_PARENT(0)
 	return
 
 /obj/effect/dumpeetTarget/Initialize(mapload, user)

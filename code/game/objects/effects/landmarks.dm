@@ -12,6 +12,7 @@
 
 // Please stop bombing the Observer-Start landmark.
 /obj/effect/landmark/ex_act()
+	SHOULD_CALL_PARENT(0)
 	return
 
 /obj/effect/landmark/singularity_pull()

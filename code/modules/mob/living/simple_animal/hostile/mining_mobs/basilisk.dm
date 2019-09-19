@@ -50,6 +50,7 @@
 			OpenFire(target)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
+	. = ..()
 	switch(severity)
 		if(1)
 			gib()

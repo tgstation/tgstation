@@ -61,6 +61,7 @@
 	. = ..()
 
 /obj/effect/countdown/ex_act(severity, target) //immune to explosions
+	SHOULD_CALL_PARENT(0)
 	return
 
 /obj/effect/countdown/singularity_pull()

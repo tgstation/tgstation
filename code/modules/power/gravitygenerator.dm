@@ -32,6 +32,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	return FALSE
 
 /obj/machinery/gravity_generator/ex_act(severity, target)
+	. = ..()
 	if(severity == 1) // Very sturdy.
 		set_broken()
 

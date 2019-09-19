@@ -167,6 +167,7 @@
 //Immunities
 
 /mob/living/simple_animal/revenant/ex_act(severity, target)
+	SHOULD_CALL_PARENT(0)
 	return 1 //Immune to the effects of explosions.
 
 /mob/living/simple_animal/revenant/blob_act(obj/structure/blob/B)

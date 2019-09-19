@@ -133,6 +133,7 @@
 		M.dropItemToGround(src)
 
 /obj/item/reagent_containers/food/snacks/grown/firelemon/ex_act(severity)
+	. = ..()
 	qdel(src) //Ensuring that it's deleted by its own explosion
 
 /obj/item/reagent_containers/food/snacks/grown/firelemon/proc/prime()

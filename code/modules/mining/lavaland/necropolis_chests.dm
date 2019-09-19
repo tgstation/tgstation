@@ -386,6 +386,7 @@
 	anchored = TRUE
 
 /obj/effect/warp_cube/ex_act(severity, target)
+	SHOULD_CALL_PARENT(0)
 	return
 
 //Meat Hook
@@ -522,6 +523,7 @@
 	return
 
 /obj/effect/immortality_talisman/ex_act()
+	SHOULD_CALL_PARENT(0)
 	return
 
 /obj/effect/immortality_talisman/singularity_pull()

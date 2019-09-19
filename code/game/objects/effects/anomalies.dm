@@ -62,6 +62,7 @@
 	return
 
 /obj/effect/anomaly/ex_act(severity, target)
+	. = ..()
 	if(severity == 1)
 		qdel(src)
 

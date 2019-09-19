@@ -27,6 +27,7 @@
 			break
 
 /obj/effect/decal/cleanable/robot_debris/ex_act()
+	SHOULD_CALL_PARENT(0)
 	return
 
 /obj/effect/decal/cleanable/robot_debris/limb

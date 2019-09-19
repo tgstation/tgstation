@@ -18,6 +18,7 @@
 	return isclosedturf(T) || isgroundlessturf(T)
 
 /obj/effect/decal/ex_act(severity, target)
+	. = ..()
 	qdel(src)
 
 /obj/effect/decal/fire_act(exposed_temperature, exposed_volume)

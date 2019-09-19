@@ -37,6 +37,7 @@
 	. = ..()
 
 /obj/effect/clockwork/sigil/ex_act(severity)
+	. = ..()
 	visible_message("<span class='warning'>[src] scatters into thousands of particles.</span>")
 	qdel(src)
 

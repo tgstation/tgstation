@@ -116,9 +116,6 @@
 /turf/open/floor/plating/beach/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
 
-/turf/open/floor/plating/beach/ex_act(severity, target)
-	contents_explosion(severity, target)
-
 /turf/open/floor/plating/beach/sand
 	gender = PLURAL
 	name = "sand"

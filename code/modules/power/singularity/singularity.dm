@@ -97,6 +97,7 @@
 		qdel(rip_u)
 
 /obj/singularity/ex_act(severity, target)
+	. = ..()
 	switch(severity)
 		if(1)
 			if(current_size <= STAGE_TWO)

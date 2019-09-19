@@ -106,6 +106,7 @@
 		..()
 
 /obj/structure/closet/supplypod/ex_act() //Explosions dont do SHIT TO US! This is because supplypods create explosions when they land.
+	SHOULD_CALL_PARENT(0)
 	return
 
 /obj/structure/closet/supplypod/contents_explosion() //Supplypods also protect their contents from the harmful effects of fucking exploding.
@@ -295,7 +296,8 @@
 	var/obj/effect/temp_visual/fallingPod //Temporary "falling pod" that we animate
 	var/obj/structure/closet/supplypod/pod //The supplyPod that will be landing ontop of this target
 
-/obj/effect/ex_act()
+/obj/effect/DPtarget/ex_act()
+	SHOULD_CALL_PARENT(0)
 	return
 
 /obj/effect/DPtarget/Initialize(mapload, podParam, var/single_order = null)

@@ -225,6 +225,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		update_health_hud()
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
+	. = ..()
 	switch(severity)
 		if(1)
 			gib()

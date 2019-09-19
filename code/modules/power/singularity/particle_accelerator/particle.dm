@@ -49,6 +49,7 @@
 
 
 /obj/effect/accelerated_particle/ex_act(severity, target)
+	. = ..()
 	qdel(src)
 
 /obj/effect/accelerated_particle/singularity_pull()

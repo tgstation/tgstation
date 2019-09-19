@@ -215,4 +215,5 @@
 	qdel(src)
 
 /obj/effect/clockwork/judicial_marker/ex_act(severity)
+	SHOULD_CALL_PARENT(0)
 	return

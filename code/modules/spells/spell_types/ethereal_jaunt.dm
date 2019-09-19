@@ -98,6 +98,7 @@
 	forceMove(newLoc)
 
 /obj/effect/dummy/phased_mob/spell_jaunt/ex_act(blah)
+	SHOULD_CALL_PARENT(0)
 	return
 
 /obj/effect/dummy/phased_mob/spell_jaunt/bullet_act(blah)
