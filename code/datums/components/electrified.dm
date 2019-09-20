@@ -33,7 +33,7 @@
 		duration_timer = addtimer(CALLBACK(src, .proc/end_electrification), duration, TIMER_STOPPABLE|TIMER_OVERRIDE)
 
 /datum/component/electrified/machinery/Initialize(electrification_state, mob/user, duration)
-	if(!istype(parent, /obj/machinery) || istype(parent, /obj/machinery/door/airlock/cult)) // relies on parent having powered()
+	if(!istype(parent, /obj/machinery) || SEND_SIGNAL(parent, COMSIG_CAN_ELECTRIFY) & COMSIG_NOT_ELECTRIFIABLE) // relies on parent having powered()
 		return COMPONENT_INCOMPATIBLE
 
 	. = ..()

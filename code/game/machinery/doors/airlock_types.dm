@@ -446,6 +446,10 @@
 /obj/machinery/door/airlock/cult/Initialize()
 	. = ..()
 	new openingoverlaytype(loc)
+	RegisterSignal(src, COMSIG_CAN_ELECTRIFY, .proc/dont_electrify)
+
+/obj/machinery/door/airlock/cult/proc/dont_electrify()
+	return COMSIG_NOT_ELECTRIFIABLE
 
 /obj/machinery/door/airlock/cult/canAIControl(mob/user)
 	return (iscultist(user) && !isAllPowerCut())

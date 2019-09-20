@@ -227,6 +227,8 @@
 #define COMSIG_ELECTRIFICATION_CHANGE "electrification_change"
 #define COMSIG_AIRLOCK_SILICON_ELECTRIFY "airlock_silicon_electrify"
 #define COMSIG_AIRLOCK_WIRES_INTERACT "airlock_wires_interact"
+#define COMSIG_CAN_ELECTRIFY "can_electrify"
+	#define COMSIG_NOT_ELECTRIFIABLE 1
 
 #define COMSIG_VENDING_TRY_INTERACT "vending_try_interact"
 
