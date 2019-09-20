@@ -1,0 +1,28 @@
+<ui-display title='Health kiosk'>
+  <ui-section>Hello {{data.patient_name}}.</ui-section>
+  <ui-section>
+    <ui-button icon='power-off' state='{{data.active_status  ? 'disabled' : null}}' action='beginScan'>Begin Scan (Cost: 5 Credits)</ui-button><br/>
+  </ui-section>
+  {{#if data.active_status == active_status}}
+    <ui-section title='Medical Report'>
+      <ui-section label='Brute levels'>
+	<ui-bar min='0' max='100' value='{{100 - data.brute_health}}' state={{"good"}}> {{100 - data.brute_health}}%</ui-bar>
+      </ui-section>
+      <ui-section label='Burn levels'>
+	<ui-bar min='0' max='100' value='{{100 - data.burn_health}}' state={{"good"}}> {{100 - data.burn_health}}%</ui-bar>
+      </ui-section>
+      <ui-section label='Toxin levels'>
+	<ui-bar min='0' max='100' value='{{100 - data.toxin_health}}' state="good"}}> {{100 - data.toxin_health}}%</ui-bar>
+      </ui-section>
+      <ui-section label='Suffocation levels'>
+	<ui-bar min='0' max='100' value='{{100 - data.suffocation_health}}' state="good"}}> {{100 - data.suffocation_health}}%</ui-bar>
+      </ui-section>
+      <ui-section label='Patient status'>
+        {{data.patient_status}}
+      </ui-section>
+      <ui-section label='Disease status'>
+        {{data.patient_illness}}
+      </ui-section>
+    </ui-section>
+  {{/if}}
+</ui-display> 
