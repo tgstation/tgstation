@@ -131,7 +131,7 @@
 
 	//These are always reachable.
 	//User itself, current loc, and user inventory
-	var/proximity = !loc.AllowClick() ? CanReach(A,W) : FALSE
+	var/proximity = loc.AllowClick() ? CanReach(A,W) : FALSE
 
 	if(proximity || A in DirectAccess())
 		if(W)
