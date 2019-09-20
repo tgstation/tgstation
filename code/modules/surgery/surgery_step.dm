@@ -77,7 +77,7 @@
 	speed_mod /= (get_location_modifier(target) * (1 + surgery.speed_modifier) * implement_speed_mod)
 	var/modded_time = time * speed_mod
 
-	fail_prob = max(0, modded_time - (time * 2))//if modded_time > time * 2, then fail_prob = modded_time - time*2
+	fail_prob = min(max(0, modded_time - (time * 2)),100)//if modded_time > time * 2, then fail_prob = modded_time - time*2. starts at 0, caps at 100
 	modded_time = min(modded_time, time * 2)//also if that, then cap modded_time at time*2
 
 	if(do_after(user, modded_time, target = target))
