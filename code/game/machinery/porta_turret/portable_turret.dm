@@ -62,7 +62,7 @@
 	var/shoot_cyborgs = 0 // checks if it can shoot people that are cyborgs
 	var/shoot_heads_of_staff = 0 // checks if it can shoot at heads of staff
 	var/attacked = 0		//if set to 1, the turret gets pissed off and shoots at people nearby (unless they have sec access!)
-	
+
 	var/on = TRUE				//determines if the turret is on
 
 	var/list/faction = list("turret" ) // Same faction mobs will never be shot at, no matter the other settings
@@ -222,7 +222,7 @@
 			if("manual")
 				if(issilicon(usr) && !manual_control)
 					give_control(usr)
-			
+
 		interact(usr)
 
 /obj/machinery/porta_turret/power_change()
@@ -411,18 +411,18 @@
 
 			//if the target is a human and not in our faction, analyze threat level
 			if(ishuman(C) && !in_faction(C))
-				
+
 				if(assess_perp(C) >= 4)
 					if(shoot_heads_of_staff)
 						targets += C
 						continue
-					else 
+					else
 						var/obj/item/card/id/I = C.get_idcard(TRUE)
 						if (I?.assignment in GLOB.command_positions)
 							continue
-						else 
+						else
 							targets += C
-							continue 
+							continue
 			else if(check_anomalies) //non humans who are not simple animals (xenos etc)
 				if(!in_faction(C))
 					targets += C
@@ -487,7 +487,7 @@
 
 /obj/machinery/porta_turret/proc/assess_perp(mob/living/carbon/human/perp)
 	var/threatcount = 0	//the integer returned
-	
+
 	if(obj_flags & EMAGGED)
 		return 10	//if emagged, always return 10.
 
@@ -517,10 +517,10 @@
 		if (!HAS_TRAIT(perp, TRAIT_MINDSHIELD))
 
 			if (!shoot_heads_of_staff)
-			
+
 				if (perp.get_id_name() in GLOB.command_positions)
 					return 0
-				else 
+				else
 					threatcount += 4
 			else
 				threatcount += 4
@@ -785,7 +785,7 @@
 	base_icon_state = "syndie"
 	faction = list("neutral","silicon","turret")
 	mode = TURRET_LETHAL
-	
+
 /obj/machinery/porta_turret/centcom_shuttle/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
@@ -927,7 +927,7 @@
 			t += "<div class='notice icon'>Swipe ID card to lock interface</div>"
 		t += "Turrets [enabled?"activated":"deactivated"] - <A href='?src=[REF(src)];toggleOn=1'>[enabled?"Disable":"Enable"]?</a><br>"
 		t += "Currently set for [lethal?"lethal":"stun repeatedly"] - <A href='?src=[REF(src)];toggleLethal=1'>Change to [lethal?"Stun repeatedly":"Lethal"]?</a><br>"
-
+		t += "Target Cyborgs [shoot_cyborgs?"Yes":"No"] - <A href='?src=[REF(src)];shoot_silicons=1'>Change to [shoot_cyborgs?"Shoot Borgs":"Dont Shoot Borgs"]?</a><br>"
 	var/datum/browser/popup = new(user, "turretid", "Turret Control Panel ([get_area_name(src, TRUE)])")
 	popup.set_content(t)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -955,12 +955,16 @@
 /obj/machinery/turretid/proc/toggle_on(mob/user)
 	enabled = !enabled
 	add_hiddenprint(user)
-	log_combat(user, src, "[enabled ? "enabled" : "disabled"] shooting borgs")
+	log_combat(user, src, "[enabled ? "enabled" : "disabled"]")
 	updateTurrets()
-
+/obj/machinery/turretid/proc/shoot_silicons(mob/user)
+	shoot_cyborgs = !shoot_cyborgs
+	add_hiddenprint(user)
+	log_combat(user, src, "[shoot_cyborgs ? "Shooting Borgs" : "Not Shooting Borgs"]")
+	updateTurrets()
 /obj/machinery/turretid/proc/updateTurrets()
 	for (var/obj/machinery/porta_turret/aTurret in turrets)
-		aTurret.setState(enabled, lethal)
+		aTurret.setState(enabled, lethal, shoot_cyborgs)
 	update_icon()
 
 /obj/machinery/turretid/power_change()
