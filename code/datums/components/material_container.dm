@@ -157,7 +157,7 @@
 
 	
 
-	last_inserted_id = insert_item_materials(S,amt * multiplier)
+	last_inserted_id = insert_item_materials(S,multiplier)
 	S.use(amt)
 	return amt
 
