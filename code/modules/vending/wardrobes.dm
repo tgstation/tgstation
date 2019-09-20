@@ -7,8 +7,11 @@
 	payment_department = NO_FREEBIES
 	input_display_header = "Returned Clothing"
 
-/obj/machinery/vending/wardrobe/canLoadItem(obj/item/I,mob/user)
-	return (I.type in products)
+/obj/machinery/vending/wardrobe/cantLoadItem(obj/item/I,mob/user)
+	. = ..()
+	if(.)
+		return
+	return !(I.type in products)
 
 /obj/machinery/vending/wardrobe/sec_wardrobe
 	name = "\improper SecDrobe"

@@ -136,8 +136,11 @@
 				   /obj/item/skub = 1)
 	refill_canister = /obj/item/vending_refill/autodrobe
 
-/obj/machinery/vending/autodrobe/canLoadItem(obj/item/I,mob/user)
-	return (I.type in products)
+/obj/machinery/vending/autodrobe/cantLoadItem(obj/item/I,mob/user)
+	. = ..()
+	if(.)
+		return
+	return !(I.type in products)
 
 	default_price = 50
 	extra_price = 75

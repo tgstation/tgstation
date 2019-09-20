@@ -12,6 +12,7 @@
 	RegisterSignal(parent, list(COMSIG_PARENT_PREQDELETED), .proc/check_deletion)
 	RegisterSignal(parent, list(COMSIG_ITEM_IMBUE_SOUL), .proc/check_soul_imbue)
 	RegisterSignal(parent, list(COMSIG_ITEM_MARK_RETRIEVAL), .proc/check_mark_retrieval)
+	RegisterSignal(parent, list(COMSIG_ITEM_TRY_VENDOR_LOADING), .proc/try_load_vendor)
 	src.inform_admins = inform_admins
 	src.allow_death = allow_death
 	check_in_bounds() // Just in case something is being created outside of station/centcom
@@ -88,3 +89,6 @@
 			message_admins("[parent] has been destroyed in [ADMIN_VERBOSEJMP(T)]. Moving it to [ADMIN_VERBOSEJMP(targetturf)].")
 		return TRUE
 	return FALSE
+
+/datum/component/stationloving/proc/try_load_vendor(datum/source)
+	return COMPONENT_CANT_VENDOR_LOAD

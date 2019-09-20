@@ -391,7 +391,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 					to_chat(user, "<span class='warning'>There's nothing to restock!</span>")
 			return
 	if(compartmentLoadAccessCheck(user))
-		if(canLoadItem(I))
+		if(!cantLoadItem(I))
 			loadingAttempt(I,user)
 			updateUsrDialog() //can't put this on the proc above because we spam it below
 
@@ -403,7 +403,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 				if(contents.len >= MAX_VENDING_INPUT_AMOUNT) // no more than 30 item can fit inside, legacy from snack vending although not sure why it exists
 					to_chat(user, "<span class='warning'>[src]'s compartment is full.</span>")
 					break
-				if(canLoadItem(the_item) && loadingAttempt(the_item,user))
+				if(!cantLoadItem(the_item) && loadingAttempt(the_item,user))
 					SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, the_item, src, TRUE)
 					loaded++
 				else
@@ -789,9 +789,11 @@ GLOBAL_LIST_EMPTY(vending_products)
   * Arguments:
   * * I - the item being loaded
   * * user - the user doing the loading
+  *
+  * Returning nothing means that the item can be loaded.
   */
-/obj/machinery/vending/proc/canLoadItem(obj/item/I, mob/user)
-	return FALSE
+/obj/machinery/vending/proc/cantLoadItem(obj/item/I, mob/user)
+	return SEND_SIGNAL(I, COMSIG_ITEM_TRY_VENDOR_LOADING, src, user)
 
 /obj/machinery/vending/onTransitZ()
 	return
@@ -818,13 +820,15 @@ GLOBAL_LIST_EMPTY(vending_products)
 		if(C?.registered_account && C.registered_account == private_a)
 			return TRUE
 
-/obj/machinery/vending/custom/canLoadItem(obj/item/I, mob/user)
-	. = FALSE
+/obj/machinery/vending/custom/cantLoadItem(obj/item/I, mob/user)
+	. = ..()
+	if(. & COMPONENT_CANT_VENDOR_LOAD)
+		return
 	if(loaded_items >= max_loaded_items)
 		say("There are too many items in stock.")
-		return
-	if(I.custom_price)
 		return TRUE
+	if(I.custom_price)
+		return FALSE
 
 /obj/machinery/vending/custom/Topic(href, href_list)
 	usr.set_machine(src)
@@ -931,7 +935,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			last_slogan = world.time + rand(0, slogan_delay)
 			return
 
-		if(canLoadItem(I))
+		if(!cantLoadItem(I))
 			loadingAttempt(I,user)
 			updateUsrDialog()
 			return

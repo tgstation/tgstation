@@ -232,6 +232,8 @@
 	#define COMPONENT_BLOCK_MARK_RETRIEVAL 1
 #define COMSIG_ITEM_HIT_REACT "item_hit_react"					//from base of obj/item/hit_reaction(): (list/args)
 #define COMSIG_ITEM_WEARERCROSSED "wearer_crossed"                //called on item when crossed by something (): (/atom/movable)
+#define COMSIG_ITEM_TRY_VENDOR_LOADING "try_vendor_load"		//from base of /obj/machinery/vending/cantLoadItem ():  (/obj/machinery/vending/vendor, mob/user)
+	#define COMPONENT_CANT_VENDOR_LOAD 1
 
 // /obj/item/clothing signals
 #define COMSIG_SHOES_STEP_ACTION "shoes_step_action"			//from base of obj/item/clothing/shoes/proc/step_action(): ()
