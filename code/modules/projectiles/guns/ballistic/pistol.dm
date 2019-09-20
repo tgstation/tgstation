@@ -12,7 +12,7 @@
 	fire_sound = 'sound/weapons/gun/pistol/shot.ogg'
 	suppressed_sound = 'sound/weapons/gun/pistol/shot_suppressed.ogg'
 	vary_fire_sound = FALSE
-	fire_sound_volume = 80
+	fire_sound_volume = 90
 	rack_sound = 'sound/weapons/gun/pistol/rack.ogg'
 	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
 	bolt_drop_sound = "sound/weapons/gun/pistol/slide_drop.ogg"
