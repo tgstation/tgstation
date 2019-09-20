@@ -88,7 +88,7 @@
 			if(success(user, target, target_zone, tool, surgery))
 				advance = TRUE
 		else
-			if(failure(user, target, target_zone, tool, surgery))
+			if(failure(user, target, target_zone, tool, surgery, fail_prob))
 				advance = TRUE
 			if(chem_check_result)
 				if(.(user, target, target_zone, tool, surgery, try_to_fail)) //automatically re-attempt if failed for reason other than lack of required chemical
@@ -112,8 +112,19 @@
 		"<span class='notice'>[user] finishes.</span>")
 	return TRUE
 
-/datum/surgery_step/proc/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='warning'>You screw up!</span>",
+/datum/surgery_step/proc/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, var/fail_prob = 0)
+	var/screwedmessage = ""
+	switch(fail_prob)
+		if(0 to 24)
+			screwedmessage = " You almost had it, though."
+		if(50 to 74)//25 to 49 = no extra text
+			screwedmessage = " This is hard to get right in these conditions..."
+		if(75 to 99)
+			screwedmessage = " This is practically impossible in these conditions..."
+		if(100)
+			screwedmessage = " This is definitely not possible in these conditions."
+
+	display_results(user, target, "<span class='warning'>You screw up![screwedmessage]</span>",
 		"<span class='warning'>[user] screws up!</span>",
 		"<span class='notice'>[user] finishes.</span>", TRUE) //By default the patient will notice if the wrong thing has been cut
 	return FALSE
