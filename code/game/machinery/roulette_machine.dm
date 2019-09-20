@@ -44,7 +44,7 @@
 /obj/machinery/roulette/Initialize()
 	. = ..()
 	jackpot_loop = new(list(src), FALSE)
-	wires = new /datum/wires/roulette
+	wires = new /datum/wires/roulette(src)
 
 /obj/machinery/roulette/obj_break(damage_flag)
 	prize_theft(0.05)
