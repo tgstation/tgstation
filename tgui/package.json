@@ -42,7 +42,7 @@
     "postcss-color-rgba-fallback": "2.2.0",
     "postcss-filter-gradient": "0.2.2",
     "postcss-font-weights": "2.0.1",
-    "postcss-opacity": "3.0.0",
+    "postcss-opacity": "5.0.0",
     "ractive": "0.7.3",
     "ractive-componentify": "0.2.4",
     "ractive-events-keys": "0.2.1",
