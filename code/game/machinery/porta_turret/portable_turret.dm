@@ -820,7 +820,7 @@
 	var/locked = TRUE
 	var/control_area = null //can be area name, path or nothing.
 	var/ailock = 0 // AI cannot use this
-	shoot_cyborgs = 0
+	var/shoot_cyborgs = 0
 	req_access = list(ACCESS_AI_UPLOAD)
 	var/list/obj/machinery/porta_turret/turrets = list()
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -966,7 +966,8 @@
 	updateTurrets()
 /obj/machinery/turretid/proc/updateTurrets()
 	for (var/obj/machinery/porta_turret/aTurret in turrets)
-		aTurret.setState(enabled, lethal, shoot_cyborgs)
+		aTurret.setState(enabled, lethal)
+		aTurret.shoot_cyborgs = shoot_cyborgs
 	update_icon()
 
 /obj/machinery/turretid/power_change()
