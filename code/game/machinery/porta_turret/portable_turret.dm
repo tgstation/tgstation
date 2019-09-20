@@ -53,15 +53,15 @@
 	var/shot_delay = 15		//ticks until next shot (1.5 ?)
 
 
-	var/check_records = 1	//checks if it can use the security records
-	var/criminals = 1		//checks if it can shoot people on arrest
-	var/auth_weapons = 0	//checks if it can shoot people that have a weapon they aren't authorized to have
-	var/stun_all = 0		//if this is active, the turret shoots everything that isn't security or head of staff
-	var/check_anomalies = 1	//checks if it can shoot at unidentified lifeforms (ie xenos)
-	var/shoot_unloyal = 0	//checks if it can shoot people that aren't loyalty implanted and who arent heads
-	var/shoot_cyborgs = 0 // checks if it can shoot people that are cyborgs
-	var/shoot_heads_of_staff = 0 // checks if it can shoot at heads of staff
-	var/attacked = 0		//if set to 1, the turret gets pissed off and shoots at people nearby (unless they have sec access!)
+	var/check_records = TRUE	//checks if it can use the security records
+	var/criminals = TRUE	//checks if it can shoot people on arrest
+	var/auth_weapons = FALSE	//checks if it can shoot people that have a weapon they aren't authorized to have
+	var/stun_all = FALSE		//if this is active, the turret shoots everything that isn't security or head of staff
+	var/check_anomalies = TRUE	//checks if it can shoot at unidentified lifeforms (ie xenos)
+	var/shoot_unloyal = FALSE	//checks if it can shoot people that aren't loyalty implanted and who arent heads
+	var/shoot_cyborgs = TRUE // checks if it can shoot people that are cyborgs
+	var/shoot_heads_of_staff = FALSE // checks if it can shoot at heads of staff
+	var/attacked = FALSE	//if set to 1, the turret gets pissed off and shoots at people nearby (unless they have sec access!)
 
 	var/on = TRUE				//determines if the turret is on
 
@@ -592,7 +592,7 @@
 	A.fire()
 	return A
 
-/obj/machinery/porta_turret/proc/setState(on, mode)
+/obj/machinery/porta_turret/proc/setState(on, mode, shoot_cyborgs)
 	if(controllock)
 		return
 	src.on = on
@@ -600,7 +600,7 @@
 		popDown()
 	src.mode = mode
 	power_change()
-
+	src.shoot_cyborgs = shoot_cyborgs
 
 /datum/action/turret_toggle
 	name = "Toggle Mode"
@@ -820,7 +820,7 @@
 	var/locked = TRUE
 	var/control_area = null //can be area name, path or nothing.
 	var/ailock = 0 // AI cannot use this
-	var/shoot_cyborgs = 0
+	var/shoot_cyborgs = FALSE
 	req_access = list(ACCESS_AI_UPLOAD)
 	var/list/obj/machinery/porta_turret/turrets = list()
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -854,7 +854,7 @@
 	for(var/obj/machinery/porta_turret/T in control_area)
 		turrets |= T
 		T.cp = src
-		T.shoot_heads_of_staff = 1
+		T.shoot_heads_of_staff = TRUE
 		
 /obj/machinery/turretid/examine(mob/user)
 	. += ..()
@@ -966,8 +966,7 @@
 	updateTurrets()
 /obj/machinery/turretid/proc/updateTurrets()
 	for (var/obj/machinery/porta_turret/aTurret in turrets)
-		aTurret.setState(enabled, lethal)
-		aTurret.shoot_cyborgs = shoot_cyborgs
+		aTurret.setState(enabled, lethal, shoot_cyborgs)
 	update_icon()
 
 /obj/machinery/turretid/power_change()
