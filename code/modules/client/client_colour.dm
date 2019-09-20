@@ -27,7 +27,7 @@
 	colour_type - a typepath (subtyped from /datum/client_colour)
 */
 /mob/proc/add_client_colour(colour_type)
-	if(!ispath(colour_type, /datum/client_colour))
+	if(!ispath(colour_type, /datum/client_colour) || !islist(client_colours)) // If colours isn't list - /mob/Destroy() was called no need to add any colours
 		return
 
 	var/datum/client_colour/CC = new colour_type()
