@@ -26,7 +26,7 @@
     "gulp-bytediff": "1.0.0",
     "gulp-if": "3.0.0",
     "gulp-load-plugins": "^1.6.0",
-    "gulp-postcss": "6.1.0",
+    "gulp-postcss": "8.0.0",
     "gulp-size": "2.0.0",
     "gulp-sourcemaps": "1.6.0",
     "gulp-stylus": "2.7.0",
