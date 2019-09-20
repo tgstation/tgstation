@@ -19,7 +19,7 @@
     "bundle-collapser": "1.2.1",
     "cached-path-relative": "1.0.2",
     "cssnano": "^4.1.10",
-    "dom4": "1.7.0",
+    "dom4": "2.1.5",
     "es3ify": "0.2.1",
     "fg-loadcss": "1.0.0-0",
     "gulp": "^4.0.2",
