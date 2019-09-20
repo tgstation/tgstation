@@ -600,8 +600,7 @@
 		held_sausage = null
 		update_icon()
 
-/obj/item/melee/roastingstick/afterattack(atom/target, mob/user)
-	. = ..()
+/obj/item/melee/roastingstick/proc/handle_roasting(atom/target, mob/user)
 	if (!on)
 		return
 	if (is_type_in_typecache(target, ovens))
@@ -612,7 +611,7 @@
 			to_chat(user, "You send [held_sausage] towards [target].")
 			playsound(src, 'sound/items/rped.ogg', 50, TRUE)
 			beam = user.Beam(target,icon_state="rped_upgrade",time=100)
-		else if (user.Adjacent(target))
+		else if(user.Adjacent(target))
 			to_chat(user, "You extend [src] towards [target].")
 			playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
 		else
@@ -622,6 +621,14 @@
 		else
 			QDEL_NULL(beam)
 			playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+
+/obj/item/melee/roastingstick/ranged_attack(atom/target, mob/user)
+	. = ..()
+	handle_roasting(target, user)
+
+/obj/item/melee/roastingstick/afterattack(atom/target, mob/user)
+	. = ..()
+	handle_roasting(target, user)
 
 /obj/item/melee/roastingstick/proc/finish_roasting(user, atom/target)
 	to_chat(user, "You finish roasting [held_sausage]")
