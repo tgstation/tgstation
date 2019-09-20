@@ -218,7 +218,7 @@
 	brightness_on = 5
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
-	custom_materials = list()
+	custom_materials = null
 	on = TRUE
 
 
@@ -363,7 +363,7 @@
 	item_state = "slime"
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
-	custom_materials = list()
+	custom_materials = null
 	brightness_on = 6 //luminosity when on
 
 /obj/item/flashlight/emp

@@ -105,7 +105,7 @@
 	item_state = "buckler"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
-	custom_materials = list()
+	custom_materials = null
 	resistance_flags = FLAMMABLE
 	block_chance = 30
 	transparent = FALSE

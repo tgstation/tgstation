@@ -15,7 +15,7 @@
 /obj/item/disk/tech_disk/debug
 	name = "\improper CentCom technology disk"
 	desc = "A debug item for research"
-	custom_materials = list()
+	custom_materials = null
 
 /obj/item/disk/tech_disk/debug/Initialize()
 	. = ..()

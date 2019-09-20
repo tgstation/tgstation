@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	return BRUTELOSS
 
 /obj/item/stack/sheet/glass/cyborg
-	custom_materials = list()
+	custom_materials = null
 	is_cyborg = 1
 	cost = 500
 
@@ -148,7 +148,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	..()
 
 /obj/item/stack/sheet/rglass/cyborg
-	custom_materials = list()
+	custom_materials = null
 	var/datum/robot_energy_storage/glasource
 	var/metcost = 250
 	var/glacost = 500

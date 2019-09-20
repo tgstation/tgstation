@@ -128,7 +128,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	amount = 5
 
 /obj/item/stack/sheet/metal/cyborg
-	custom_materials = list()
+	custom_materials = null
 	is_cyborg = 1
 	cost = 500
 

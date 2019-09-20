@@ -144,7 +144,7 @@
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 35, "embedded_fall_chance" = 10)
 	force = 15
 	throwforce = 15
-	custom_materials = list()
+	custom_materials = null
 
 /obj/item/kitchen/knife/combat/cyborg
 	name = "cyborg knife"
@@ -161,7 +161,7 @@
 	desc = "Unlike other carrots, you should probably keep this far away from your eyes."
 	force = 8
 	throwforce = 12//fuck git
-	custom_materials = list()
+	custom_materials = null
 	attack_verb = list("shanked", "shivved")
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 

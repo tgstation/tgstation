@@ -229,6 +229,6 @@
 
 /obj/item/stack/tile/plasteel/cyborg
 	desc = "The ground you walk on." //Not the usual floor tile desc as that refers to throwing, Cyborgs can't do that - RR
-	custom_materials = list() // All other Borg versions of items have no Metal or Glass - RR
+	custom_materials = null // All other Borg versions of items have no Metal or Glass - RR
 	is_cyborg = 1
 	cost = 125

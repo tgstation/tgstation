@@ -298,7 +298,7 @@
 	icon_state = "potato"
 	charge = 100
 	maxcharge = 300
-	custom_materials = list()
+	custom_materials = null
 	grown_battery = TRUE //it has the overlays for wires
 
 /obj/item/stock_parts/cell/high/slime
@@ -306,7 +306,7 @@
 	desc = "A yellow slime core infused with plasma, it crackles with power."
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "yellow slime extract"
-	custom_materials = list()
+	custom_materials = null
 	rating = 5 //self-recharge makes these desirable
 	self_recharge = 1 // Infused slime cores self-recharge, over time
 

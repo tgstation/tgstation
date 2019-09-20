@@ -385,7 +385,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 /obj/item/stack/cable_coil/cyborg
 	is_cyborg = 1
-	custom_materials = list()
+	custom_materials = null
 	cost = 1
 
 /obj/item/stack/cable_coil/cyborg/attack_self(mob/user)

@@ -205,7 +205,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/item/stack/pipe_cleaner_coil/cyborg
 	is_cyborg = 1
-	custom_materials = list()
+	custom_materials = null
 	cost = 1
 
 /obj/item/stack/pipe_cleaner_coil/cyborg/attack_self(mob/user)

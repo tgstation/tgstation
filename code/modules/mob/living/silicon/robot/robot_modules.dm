@@ -118,7 +118,7 @@
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/pipe_cleaner)
 
 		if(S && S.source)
-			S.custom_materials = list()
+			S.custom_materials = null
 			S.is_cyborg = 1
 
 	if(I.loc != src)

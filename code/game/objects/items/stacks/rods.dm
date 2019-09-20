@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 		return ..()
 
 /obj/item/stack/rods/cyborg
-	custom_materials = list()
+	custom_materials = null
 	is_cyborg = 1
 	cost = 250
 
