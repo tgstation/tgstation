@@ -90,10 +90,14 @@
 	if(step_in_progress)
 		return TRUE
 
+	var/try_to_fail = FALSE
+	if(intent == INTENT_DISARM)
+		try_to_fail = TRUE
+
 	var/datum/surgery_step/S = get_surgery_step()
 	if(S)
 		var/obj/item/tool = user.get_active_held_item()
-		if(S.try_op(user, target, user.zone_selected, tool, src))
+		if(S.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
 			return TRUE
 		if(tool?.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
 			to_chat(user, "<span class='warning'>This step requires a different tool!</span>")

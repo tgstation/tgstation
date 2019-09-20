@@ -8,8 +8,9 @@
 	var/repeatable = FALSE				//can this step be repeated? Make shure it isn't last step, or it used in surgery with `can_cancel = 1`. Or surgion will be stuck in the loop
 	var/list/chems_needed = list()  //list of chems needed to complete the step. Even on success, the step will have no effect if there aren't the chems required in the mob.
 	var/require_all_chems = TRUE    //any on the list or all on the list?
+	var/silicons_obey_prob = FALSE
 
-/datum/surgery_step/proc/try_op(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/proc/try_op(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	var/success = FALSE
 	if(accept_hand)
 		if(!tool)
@@ -39,7 +40,7 @@
 	if(success)
 		if(target_zone == surgery.location)
 			if(get_location_accessible(target, target_zone) || surgery.ignore_clothes)
-				initiate(user, target, target_zone, tool, surgery)
+				initiate(user, target, target_zone, tool, surgery, try_to_fail)
 			else
 				to_chat(user, "<span class='warning'>You need to expose [target]'s [parse_zone(target_zone)] to perform surgery on it!</span>")
 			return TRUE	//returns TRUE so we don't stab the guy in the dick or wherever.
@@ -56,7 +57,7 @@
 	return FALSE
 
 
-/datum/surgery_step/proc/initiate(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/proc/initiate(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	surgery.step_in_progress = TRUE
 	var/speed_mod = 1
 	var/advance = FALSE
@@ -79,7 +80,7 @@
 		if(chem_check(target))
 			if(success(user, target, target_zone, tool, surgery))
 				advance = TRUE
-		
+
 		if(advance && !repeatable)
 			surgery.status++
 			if(surgery.status > surgery.steps.len)
@@ -98,6 +99,12 @@
 		"<span class='notice'>[user] succeeds!</span>",
 		"<span class='notice'>[user] finishes.</span>")
 	return TRUE
+
+/datum/surgery_step/proc/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	display_results(user, target, "<span class='warning'>You screw up!</span>",
+		"<span class='warning'>[user] screws up!</span>",
+		"<span class='notice'>[user] finishes.</span>", TRUE) //By default the patient will notice if the wrong thing has been cut
+	return FALSE
 
 /datum/surgery_step/proc/tool_check(mob/user, obj/item/tool)
 	return TRUE
