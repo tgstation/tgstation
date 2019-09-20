@@ -9,9 +9,6 @@
 	allow_objects = TRUE
 	allow_dense = TRUE
 	dense_when_open = TRUE
-	climbable = TRUE
-	climb_time = 10 //real fast, because let's be honest stepping into or onto a crate is easy
-	climb_stun = 0 //climbing onto crates isn't hard, guys
 	delivery_icon = "deliverycrate"
 	open_sound = 'sound/machines/crate_open.ogg'
 	close_sound = 'sound/machines/crate_close.ogg'
@@ -24,6 +21,7 @@
 	. = ..()
 	if(icon_state == "[initial(icon_state)]open")
 		opened = TRUE
+	AddComponent(/datum/component/climbable, 10, 0)
 	update_icon()
 
 /obj/structure/closet/crate/CanPass(atom/movable/mover, turf/target)

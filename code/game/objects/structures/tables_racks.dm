@@ -20,7 +20,6 @@
 	density = TRUE
 	anchored = TRUE
 	layer = TABLE_LAYER
-	climbable = TRUE
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.")
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
@@ -33,6 +32,10 @@
 	integrity_failure = 30
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/table, /obj/structure/table/reinforced)
+
+/obj/structure/table/Initialize()
+	. = ..()
+	AddComponent(/datum/component/climbable)
 
 /obj/structure/table/examine(mob/user)
 	. = ..()

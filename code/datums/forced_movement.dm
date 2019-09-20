@@ -87,7 +87,5 @@
 
 /mob/Bump(atom/A)
 	. = ..()
-	if(force_moving && force_moving.allow_climbing && isstructure(A))
-		var/obj/structure/S = A
-		if(S.climbable)
-			S.do_climb(src)
+	if(force_moving) //this should be turned into a component.
+		SEND_SIGNAL(A, COMSIG_ATOM_FORCED_MOVEMENT_BUMPED, src, force_moving)

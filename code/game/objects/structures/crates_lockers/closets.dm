@@ -138,11 +138,11 @@
 /obj/structure/closet/proc/open(mob/living/user)
 	if(opened || !can_open(user))
 		return
+	SEND_SIGNAL(src, COMSIG_CLOSET_OPEN, user)
 	playsound(loc, open_sound, open_sound_volume, TRUE, -3)
 	opened = TRUE
 	if(!dense_when_open)
 		density = FALSE
-	climb_time *= 0.5 //it's faster to climb onto an open thing
 	dump_contents()
 	update_icon()
 	return 1
@@ -191,9 +191,9 @@
 /obj/structure/closet/proc/close(mob/living/user)
 	if(!opened || !can_close(user))
 		return FALSE
+	SEND_SIGNAL(src, COMSIG_CLOSET_CLOSE, user)
 	take_contents()
 	playsound(loc, close_sound, close_sound_volume, TRUE, -3)
-	climb_time = initial(climb_time)
 	opened = FALSE
 	density = TRUE
 	update_icon()
