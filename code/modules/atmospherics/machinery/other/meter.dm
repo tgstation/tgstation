@@ -120,7 +120,7 @@
 		user.visible_message(
 			"[user] unfastens \the [src].",
 			"<span class='notice'>You unfasten \the [src].</span>",
-			"<span class='italics'>You hear ratchet.</span>")
+			"<span class='hear'>You hear ratchet.</span>")
 		deconstruct()
 	return TRUE
 
