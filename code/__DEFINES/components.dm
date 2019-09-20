@@ -8,7 +8,6 @@
 /// Return value to cancel attaching
 #define ELEMENT_INCOMPATIBLE 1
 
-
 /// /datum/element flags
 #define ELEMENT_DETACH		(1 << 0)
 
@@ -22,7 +21,6 @@
 /// old component is given the initialization args of the new
 #define COMPONENT_DUPE_UNIQUE_PASSARGS	4
 
-
 // All signals. Format:
 // When the signal is called: (signal arguments)
 // All signals send the source datum of the signal as the first argument
@@ -30,7 +28,6 @@
 // global signals
 // These are signals which can be listened to by any component on any parent
 // start global signals with "!", this used to be necessary but now it's just a formatting choice
-
 /// from base of datum/controller/subsystem/mapping/proc/add_new_zlevel(): (list/args)
 #define COMSIG_GLOB_NEW_Z "!new_z"
 /// called after a successful var edit somewhere in the world: (list/args)
@@ -45,7 +42,6 @@
 //////////////////////////////////////////////////////////////////
 
 // /datum signals
-)
 /// when a component is added to a datum: (/datum/component)
 #define COMSIG_COMPONENT_ADDED "component_added"
 /// before a component is removed from a datum because of RemoveComponent: (/datum/component)
