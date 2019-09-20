@@ -43,7 +43,7 @@
     "postcss-filter-gradient": "0.2.2",
     "postcss-font-weights": "2.0.1",
     "postcss-opacity": "5.0.0",
-    "ractive": "0.7.3",
+    "ractive": "0.8.14",
     "ractive-componentify": "0.2.4",
     "ractive-events-keys": "0.2.1",
     "ractive-transitions-fade": "0.3.1",
