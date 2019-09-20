@@ -135,7 +135,7 @@
 
 /datum/crafting_recipe/ed209
 	name = "ED209"
-	result = /mob/living/simple_animal/bot/ed209
+	result = /mob/living/simple_animal/bot/secbot/ed209
 	reqs = list(/obj/item/robot_suit = 1,
 				/obj/item/clothing/head/helmet = 1,
 				/obj/item/clothing/suit/armor/vest = 1,
@@ -143,8 +143,7 @@
 				/obj/item/bodypart/r_leg/robot = 1,
 				/obj/item/stack/sheet/metal = 1,
 				/obj/item/stack/cable_coil = 1,
-				/obj/item/gun/energy/e_gun/dragnet = 1,
-				/obj/item/stock_parts/cell = 1,
+				/obj/item/gun/energy/disabler = 1,
 				/obj/item/assembly/prox_sensor = 1)
 	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER)
 	time = 60

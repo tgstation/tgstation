@@ -38,6 +38,7 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 	fulp_item = TRUE
+	mutantrace_variation = DIGITIGRADE_STYLE
 
 /obj/item/clothing/head/beret/sec/engineering
 	name = "engineering deputy beret"
@@ -48,7 +49,7 @@
 	fulp_item = TRUE
 
 /obj/item/clothing/head/beret/sec/medical
-	name = "engineering deputy beret"
+	name = "medical deputy beret"
 	desc = "This proud white-blue beret is a welcome sight when the greytide descends on chemistry."
 	mob_overlay_icon = 'icons/fulpicons/mith_stash/clothing/head_worn.dmi'
 	icon = 'icons/fulpicons/mith_stash/clothing/head_icons.dmi'
@@ -56,7 +57,7 @@
 	fulp_item = TRUE
 
 /obj/item/clothing/head/beret/sec/science
-	name = "engineering deputy beret"
+	name = "science deputy beret"
 	desc = "This loud purple beret screams 'Dont mess with his matter manipulator!'"
 	mob_overlay_icon = 'icons/fulpicons/mith_stash/clothing/head_worn.dmi'
 	icon = 'icons/fulpicons/mith_stash/clothing/head_icons.dmi'
@@ -64,7 +65,7 @@
 	fulp_item = TRUE
 
 /obj/item/clothing/head/beret/sec/supply
-	name = "engineering deputy beret"
+	name = "supply deputy beret"
 	desc = "The headwear for only the most eagle-eyed Deputy, able to watch both Cargo and Mining."
 	mob_overlay_icon = 'icons/fulpicons/mith_stash/clothing/head_worn.dmi'
 	icon = 'icons/fulpicons/mith_stash/clothing/head_icons.dmi'
@@ -118,37 +119,44 @@ GLOBAL_LIST_INIT(available_deputy_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MED
 	var/list/dep_access = null
 	var/destination = null
 	var/spawn_point = null
+	var/head_p
 	switch(department)
 		if(SEC_DEPT_SUPPLY)
 			ears = /obj/item/radio/headset/headset_sec/department/supply
 			head = /obj/item/clothing/head/beret/sec/supply
+			head_p = /obj/item/clothing/head/helmet/space/plasmaman/cargo
 			dep_access = list(ACCESS_MAINT_TUNNELS, ACCESS_CARGO, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM, ACCESS_MINING, ACCESS_MECH_MINING, ACCESS_MINING_STATION)
 			destination = /area/security/checkpoint/supply
 			spawn_point = get_fulp_spawn(destination)
 		if(SEC_DEPT_ENGINEERING)
 			ears = /obj/item/radio/headset/headset_sec/department/engi
 			head = /obj/item/clothing/head/beret/sec/engineering
+			head_p = /obj/item/clothing/head/helmet/space/plasmaman/engineering
 			dep_access = list(ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_TECH_STORAGE, ACCESS_MAINT_TUNNELS, ACCESS_MECH_ENGINE, ACCESS_CONSTRUCTION, ACCESS_ATMOSPHERICS)
 			destination = /area/security/checkpoint/engineering
 			spawn_point = get_fulp_spawn(destination)
 		if(SEC_DEPT_MEDICAL)
 			ears = /obj/item/radio/headset/headset_sec/department/med
 			head = /obj/item/clothing/head/beret/sec/medical
-			dep_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CLONING, ACCESS_MECH_MEDICAL, ACCESS_GENETICS)
+			head_p = /obj/item/clothing/head/helmet/space/plasmaman/medical
+			dep_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CLONING, ACCESS_MECH_MEDICAL, ACCESS_GENETICS, ACCESS_CHEMISTRY)
 			destination = /area/security/checkpoint/medical
 			spawn_point = get_fulp_spawn(destination)
 		if(SEC_DEPT_SCIENCE)
 			ears = /obj/item/radio/headset/headset_sec/department/sci
 			head = /obj/item/clothing/head/beret/sec/science
+			head_p = /obj/item/clothing/head/helmet/space/plasmaman/science
 			dep_access = list(ACCESS_TOX, ACCESS_TOX_STORAGE, ACCESS_RESEARCH, ACCESS_XENOBIOLOGY, ACCESS_MECH_SCIENCE)
 			destination = /area/security/checkpoint/science
 			spawn_point = get_fulp_spawn(destination)
-
+	
 	if(ears)
 		if(H.ears)
 			qdel(H.ears)
 		H.equip_to_slot_or_del(new ears(H),SLOT_EARS)
 	if(head)
+		if(isplasmaman(H))
+			head = head_p
 		if(H.head)
 			qdel(H.head)
 		H.equip_to_slot_or_del(new head(H),SLOT_HEAD)
@@ -206,3 +214,4 @@ GLOBAL_LIST_INIT(available_deputy_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MED
 /obj/item/radio/headset/headset_sec/department/sci
 	keyslot = new /obj/item/encryptionkey/headset_sec
 	keyslot2 = new /obj/item/encryptionkey/headset_sci
+

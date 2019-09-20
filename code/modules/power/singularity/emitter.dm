@@ -124,10 +124,6 @@
 	else
 		icon_state = initial(icon_state)
 
-/obj/machinery/power/emitter/power_change()
-	. = ..()
-	update_icon()
-
 /obj/machinery/power/emitter/interact(mob/user)
 	add_fingerprint(user)
 	if(state == EMITTER_WELDED)

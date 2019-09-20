@@ -1,6 +1,9 @@
 // GLOBAL_LIST_INIT(color_list_beefman, list("Very Rare" = "c62461", "Rare" = "c91745", "Medium Rare" = "e73f4e", "Medium" = "fd7f8b", "Medium Well" = "e7a5ab", "Well Done" = "b9a6a8" ))
 	//message_admins("DEBUG3")
 
+#define isbeefman(A) (is_species(A,/datum/species/beefman))
+
+
 // TO DO:
 //
 // Death Sound
@@ -49,8 +52,6 @@
 	bruising_desc = "tenderizing"
 	burns_desc = "searing"
 	cellulardamage_desc = "meat degradation"
-
-
 
 
 /proc/proof_beefman_features(var/list/inFeatures)
@@ -495,6 +496,12 @@
 
 
 /obj/item/bodypart/proc/drop_meat(mob/inOwner)
+
+	//Checks tile for cloning pod, if found then limb stays limb. Stops cloner from breaking beefmen making them useless after being cloned.
+	var/turf/T = get_turf(src)
+	for(var/obj/machinery/M in T)
+		if(istype(M,/obj/machinery/clonepod))
+			return FALSE
 
 	// Not Organic? ABORT! Robotic stays robotic, desnt delete and turn to meat.
 	if (status != BODYPART_ORGANIC)
