@@ -35,7 +35,7 @@
 	///whether eject sound should vary
 	var/eject_sound_vary = TRUE
 	///sound of dropping the bolt or releasing a slide
-	var/bolt_drop_sound = 'sound/weapons/gun/general/chamber_round.ogg'
+	var/bolt_drop_sound = 'sound/weapons/gun/general/bolt_drop.ogg'
 	///volume of bolt drop/slide release
 	var/bolt_drop_sound_volume = 60
 	///empty alarm sound (if enabled)
