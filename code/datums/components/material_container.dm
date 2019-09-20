@@ -147,13 +147,15 @@
 	if(amt > S.amount)
 		amt = S.amount
 
-	var/material_amt = get_item_material_amount(S)
+	var/material_amt = get_item_material_amount(S) / amt
 	if(!material_amt)
 		return FALSE
 
 	amt = min(amt, round(((max_amount - total_amount) / material_amt)))
 	if(!amt)
 		return FALSE
+
+	
 
 	last_inserted_id = insert_item_materials(S,amt * multiplier)
 	S.use(amt)
