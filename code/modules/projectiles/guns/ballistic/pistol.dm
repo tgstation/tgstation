@@ -9,11 +9,13 @@
 	fire_delay = 0
 	actions_types = list()
 	bolt_type = BOLT_TYPE_LOCKING
-	fire_sound = "sound/weapons/gunshot.ogg"
+	fire_sound = 'sound/weapons/gun/pistol/shot.ogg'
+	suppressed_sound = 'sound/weapons/gun/pistol/shot_suppressed.ogg'
 	vary_fire_sound = FALSE
 	fire_sound_volume = 80
-	rack_sound = "sound/weapons/pistolrack.ogg"
-	bolt_drop_sound = "sound/weapons/pistolslidedrop.ogg"
+	rack_sound = 'sound/weapons/gun/pistol/rack.ogg'
+	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
+	bolt_drop_sound = "sound/weapons/gun/pistol/slide_drop.ogg"
 	bolt_wording = "slide"
 
 /obj/item/gun/ballistic/automatic/pistol/no_mag
@@ -31,6 +33,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	mag_type = /obj/item/ammo_box/magazine/m45
 	can_suppress = FALSE
+	fire_sound = 'sound/weapons/gun/pistol/shot_alt.ogg'
 
 /obj/item/gun/ballistic/automatic/pistol/m1911/no_mag
 	spawnwithmagazine = FALSE

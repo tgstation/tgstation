@@ -6,10 +6,11 @@
 	fire_delay = 2
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 	semi_auto = TRUE
-	fire_sound = "sound/weapons/smgshot.ogg"
+	fire_sound = 'sound/weapons/gun/smg/shot.ogg'
 	fire_sound_volume = 80
 	vary_fire_sound = FALSE
-	rack_sound = "sound/weapons/smgrack.ogg"
+	rack_sound = 'sound/weapons/gun/smg/smgrack.ogg'
+	suppressed_sound = 'sound/weapons/gun/smg/shot_suppressed.ogg'
 
 /obj/item/gun/ballistic/automatic/proto
 	name = "\improper Nanotrasen Saber SMG"
@@ -225,8 +226,9 @@
 	mag_display = TRUE
 	mag_display_ammo = TRUE
 	tac_reloads = FALSE
-	fire_sound = 'sound/weapons/rifleshot.ogg'
-	rack_sound = 'sound/weapons/chunkyrack.ogg'
+	fire_sound = 'sound/weapons/gun/l6/shot.ogg'
+	rack_sound = 'sound/weapons/gun/l6/l6_rack.ogg'
+	suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
 
 /obj/item/gun/ballistic/automatic/l6_saw/unrestricted
 	pin = /obj/item/firing_pin
@@ -242,10 +244,7 @@
 /obj/item/gun/ballistic/automatic/l6_saw/AltClick(mob/user)
 	cover_open = !cover_open
 	to_chat(user, "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>")
-	if(cover_open)
-		playsound(user, 'sound/weapons/sawopen.ogg', 60, TRUE)
-	else
-		playsound(user, 'sound/weapons/sawopen.ogg', 60, TRUE)
+	playsound(user, 'sound/weapons/gun/l6/l6_door.ogg', 60, TRUE)
 	update_icon()
 
 
@@ -287,11 +286,12 @@
 	desc = "A long ranged weapon that does significant damage. No, you can't quickscope."
 	icon_state = "sniper"
 	item_state = "sniper"
-	fire_sound = "sound/weapons/sniper_shot.ogg"
+	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	fire_sound_volume = 90
 	vary_fire_sound = FALSE
-	load_sound = "sound/weapons/sniper_mag_insert.ogg"
-	rack_sound = "sound/weapons/sniper_rack.ogg"
+	load_sound = 'sound/weapons/gun/sniper/mag_insert.ogg'
+	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
+	suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
 	recoil = 2
 	weapon_weight = WEAPON_HEAVY
 	mag_type = /obj/item/ammo_box/magazine/sniper_rounds

@@ -7,39 +7,39 @@
 	w_class = WEIGHT_CLASS_NORMAL
 
 	///sound when inserting magazine
-	var/load_sound = "gun_insert_full_magazine"
+	var/load_sound = 'sound/weapons/gun/general/magazine_insert_full.ogg'
 	///sound when inserting an empty magazine
-	var/load_empty_sound = "gun_insert_empty_magazine"
+	var/load_empty_sound = 'sound/weapons/gun/general/magazine_insert_empty.ogg'
 	///volume of loading sound
 	var/load_sound_volume = 40
 	///whether loading sound should vary
 	var/load_sound_vary = TRUE
 	///sound of racking
-	var/rack_sound = "gun_slide_lock"
+	var/rack_sound = 'sound/weapons/gun/general/bolt_rack.ogg'
 	///volume of racking
 	var/rack_sound_volume = 60
 	///whether racking sound should vary
 	var/rack_sound_vary = TRUE
 	///sound of when the bolt is locked back manually
-	var/lock_back_sound = "sound/weapons/pistollock.ogg"
+	var/lock_back_sound = 'sound/weapons/gun/general/slide_lock_1.ogg'
 	///volume of lock back
 	var/lock_back_sound_volume = 60
 	///whether lock back varies
 	var/lock_back_sound_vary = TRUE
 	///Sound of ejecting a magazine
-	var/eject_sound = "gun_remove_empty_magazine"
+	var/eject_sound = 'sound/weapons/gun/general/magazine_remove_full.ogg'
 	///sound of ejecting an empty magazine
-	var/eject_empty_sound = "gun_remove_full_magazine"
+	var/eject_empty_sound = 'sound/weapons/gun/general/magazine_remove_empty.ogg'
 	///volume of ejecting a magazine
 	var/eject_sound_volume = 40
 	///whether eject sound should vary
 	var/eject_sound_vary = TRUE
 	///sound of dropping the bolt or releasing a slide
-	var/bolt_drop_sound = 'sound/weapons/gun_chamber_round.ogg'
+	var/bolt_drop_sound = 'sound/weapons/gun/general/chamber_round.ogg'
 	///volume of bolt drop/slide release
 	var/bolt_drop_sound_volume = 60
 	///empty alarm sound (if enabled)
-	var/empty_alarm_sound = 'sound/weapons/smg_empty_alarm.ogg'
+	var/empty_alarm_sound = 'sound/weapons/gun/general/empty_alarm.ogg'
 	///empty alarm volume sound
 	var/empty_alarm_volume = 70
 	///whether empty alarm sound varies
