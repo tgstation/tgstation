@@ -29,6 +29,9 @@
 	item_state = "zapper"
 
 /obj/item/melee/touch_attack/shock/afterattack(atom/target, mob/living/carbon/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(C.electrocute_act(15, user, 1, FALSE, FALSE, FALSE, FALSE, FALSE))//doesnt stun. never let this stun
@@ -36,15 +39,15 @@
 			C.dropItemToGround(C.get_inactive_held_item())
 			C.confused += 15
 			C.visible_message("<span class='danger'>[user] electrocutes [target]!</span>","<span class='userdanger'>[user] electrocutes you!</span>")
-			return ..()
+			return
 		else
 			user.visible_message("<span class='warning'>[user] fails to electrocute [target]!</span>")
-			return ..()
+			return
 	else if(isliving(target))
 		var/mob/living/L = target
 		L.electrocute_act(15, user, 1, FALSE, FALSE, FALSE, FALSE)
 		L.visible_message("<span class='danger'>[user] electrocutes [target]!</span>","<span class='userdanger'>[user] electrocutes you!</span>")
-		return ..()
+		return
 	else
 		to_chat(user,"<span class='warning'>The electricity doesn't seem to affect [target]...</span>")
-		return ..()
+		return
