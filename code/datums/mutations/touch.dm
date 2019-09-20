@@ -29,7 +29,6 @@
 	item_state = "zapper"
 
 /obj/item/melee/touch_attack/shock/afterattack(atom/target, mob/living/carbon/user, proximity)
-	. = ..()
 	if(!proximity)
 		return
 	if(iscarbon(target))
