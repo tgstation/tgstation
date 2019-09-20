@@ -955,7 +955,7 @@
 /obj/machinery/turretid/proc/toggle_on(mob/user)
 	enabled = !enabled
 	add_hiddenprint(user)
-	log_combat(user, src, "[enabled ? "enabled" : "disabled"]")
+	log_combat(user, src, "[enabled ? "enabled" : "disabled"] shooting borgs")
 	updateTurrets()
 
 /obj/machinery/turretid/proc/updateTurrets()
