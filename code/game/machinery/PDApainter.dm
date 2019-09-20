@@ -70,7 +70,7 @@
 				return
 			user.visible_message("<span class='notice'>[user] is repairing [src].</span>", \
 							"<span class='notice'>You begin repairing [src]...</span>", \
-							"<span class='italics'>You hear welding.</span>")
+							"<span class='hear'>You hear welding.</span>")
 			if(O.use_tool(src, user, 40, volume=50))
 				if(!(stat & BROKEN))
 					return
@@ -100,10 +100,7 @@
 		return ..()
 
 /obj/machinery/pdapainter/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(!(stat & BROKEN))
-			stat |= BROKEN
-			update_icon()
+	obj_break()
 
 /obj/machinery/pdapainter/attack_hand(mob/user)
 	. = ..()
@@ -145,8 +142,3 @@
 		update_icon()
 	else
 		to_chat(usr, "<span class='warning'>[src] is empty!</span>")
-
-
-/obj/machinery/pdapainter/power_change()
-	..()
-	update_icon()

@@ -91,7 +91,7 @@
 	
 	master.force = max(0, master.force + quality)
 	master.throwforce = max(0, master.throwforce + quality)
-	master.armor = master.armor.modifyAllRatings(quality)
+	master.armor = master.armor?.modifyAllRatings(quality)
 
 	var/newName = originalName
 	for(var/i in affixes)
@@ -122,7 +122,7 @@
 
 	master.force = max(0, master.force - quality)
 	master.throwforce = max(0, master.throwforce - quality)
-	master.armor = master.armor.modifyAllRatings(-quality)
+	master.armor = master.armor?.modifyAllRatings(-quality)
 
 	master.name = originalName
 

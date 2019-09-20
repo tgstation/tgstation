@@ -167,7 +167,8 @@ the new instance inside the host to be updated to the template's stats.
 		return FALSE
 	var/list/possible_hosts = list()
 	var/list/afk_possible_hosts = list()
-	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+	for(var/i in GLOB.human_list)
+		var/mob/living/carbon/human/H = i
 		var/turf/T = get_turf(H)
 		if((H.stat != DEAD) && T && is_station_level(T.z) && H.CanContractDisease(disease_template))
 			if(H.client && !H.client.is_afk())

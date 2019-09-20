@@ -828,7 +828,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "ds" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 1
 	},
 /turf/open/floor/wood,
@@ -1584,7 +1584,7 @@
 	},
 /area/awaymission/academy/classrooms)
 "gd" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /turf/open/floor/wood,
 /area/awaymission/academy/classrooms)
 "ge" = (
@@ -3189,7 +3189,7 @@
 /turf/open/floor/light,
 /area/awaymission/academy/academyengine)
 "my" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /turf/open/floor/wood,
 /area/awaymission/academy/academyengine)
 "mz" = (
@@ -3198,7 +3198,7 @@
 /turf/open/floor/wood,
 /area/awaymission/academy/academyengine)
 "mA" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -3208,7 +3208,7 @@
 /turf/open/floor/wood,
 /area/awaymission/academy/academyengine)
 "mC" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -3251,7 +3251,7 @@
 /turf/open/floor/wood,
 /area/awaymission/academy/academyengine)
 "mM" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 1
 	},
 /turf/open/floor/wood,

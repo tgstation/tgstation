@@ -41,10 +41,6 @@ The console is located at computer/gulag_teleporter.dm
 		linked_reclaimer.linked_teleporter = null
 	return ..()
 
-/obj/machinery/gulag_teleporter/power_change()
-	..()
-	update_icon()
-
 /obj/machinery/gulag_teleporter/interact(mob/user)
 	. = ..()
 	if(locked)
@@ -105,7 +101,7 @@ The console is located at computer/gulag_teleporter.dm
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
 		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='italics'>You hear a metallic creaking from [src].</span>")
+		"<span class='hear'>You hear a metallic creaking from [src].</span>")
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
 			return

@@ -21,8 +21,10 @@
 /obj/item/clothing/under/rank/civilian/curator/treasure_hunter
 	name = "treasure hunter uniform"
 	desc = "A rugged uniform suitable for treasure hunting."
+	icon = 'icons/obj/clothing/under/civilian.dmi'
 	icon_state = "curator"
 	item_state = "curator"
+	mob_overlay_icon = 'icons/mob/clothing/under/civilian.dmi'
 
 /obj/item/clothing/under/rank/civilian/curator/nasa
 	name = "\improper NASA jumpsuit"

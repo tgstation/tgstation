@@ -222,6 +222,9 @@
 /obj/item/extinguisher/AltClick(mob/user)
 	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
+	if(!user.is_holding(src))
+		to_chat(user, "<span class='notice'>You must be holding the [src] in your hands do this!</span>")
+		return
 	EmptyExtinguisher(user)
 
 /obj/item/extinguisher/proc/EmptyExtinguisher(var/mob/user)
