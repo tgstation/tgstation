@@ -32,11 +32,14 @@
 	dash_toggled = !dash_toggled
 	to_chat(user, "<span class='notice'>You [dash_toggled ? "enable" : "disable"] the dash function on [src].</span>")
 
-/obj/item/energy_katana/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/energy_katana/ranged_attack(atom/target, mob/user, click_parameters)
 	. = ..()
 	if(dash_toggled)
 		jaunt.Teleport(user, target)
-	if(proximity_flag && (isobj(target) || issilicon(target)))
+
+/obj/item/energy_katana/afterattack(atom/target, mob/user, click_parameters)
+	. = ..()
+	if(isobj(target) || issilicon(target))
 		spark_system.start()
 		playsound(user, "sparks", 50, TRUE)
 		playsound(user, 'sound/weapons/blade1.ogg', 50, TRUE)

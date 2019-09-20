@@ -319,10 +319,8 @@
 		return 1
 	return 0
 
-/obj/item/chair/afterattack(atom/target, mob/living/carbon/user, proximity)
+/obj/item/chair/afterattack(atom/target, mob/living/carbon/user)
 	. = ..()
-	if(!proximity)
-		return
 	if(prob(break_chance))
 		user.visible_message("<span class='danger'>[user] smashes \the [src] to pieces against \the [target]</span>")
 		if(iscarbon(target))

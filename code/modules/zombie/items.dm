@@ -27,11 +27,9 @@
 	else
 		icon_state = icon_right
 
-/obj/item/zombie_hand/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/zombie_hand/afterattack(atom/target, mob/user)
 	. = ..()
-	if(!proximity_flag)
-		return
-	else if(isliving(target))
+	if(isliving(target))
 		if(ishuman(target))
 			try_to_zombie_infect(target)
 		else

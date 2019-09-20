@@ -147,7 +147,7 @@
 	attack_verb = list("slashed", "stung", "prickled", "poked")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 
-/obj/item/melee/beesword/afterattack(atom/target, mob/user, proximity = TRUE)
+/obj/item/melee/beesword/afterattack(atom/target, mob/user)
 	. = ..()
 	user.changeNext_move(CLICK_CD_RAPID)
 	if(iscarbon(target))
@@ -239,7 +239,7 @@
 
 		user.Paralyze(knockdown_time_carbon * force)
 		user.adjustStaminaLoss(stamina_damage)
-		
+
 		additional_effects_carbon(user) // user is the target here
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -386,7 +386,7 @@
 
 	cooldown = 25
 	stamina_damage = 85
-	affect_silicon = TRUE 
+	affect_silicon = TRUE
 	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
 
@@ -440,12 +440,11 @@
 		if(!isspaceturf(T))
 			consume_turf(T)
 
-/obj/item/melee/supermatter_sword/afterattack(target, mob/user, proximity_flag)
+/obj/item/melee/supermatter_sword/afterattack(target, mob/user)
 	. = ..()
 	if(user && target == user)
 		user.dropItemToGround(src)
-	if(proximity_flag)
-		consume_everything(target)
+	consume_everything(target)
 
 /obj/item/melee/supermatter_sword/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
@@ -515,9 +514,9 @@
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 	hitsound = 'sound/weapons/whip.ogg'
 
-/obj/item/melee/curator_whip/afterattack(target, mob/user, proximity_flag)
+/obj/item/melee/curator_whip/afterattack(target, mob/user)
 	. = ..()
-	if(ishuman(target) && proximity_flag)
+	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.drop_all_held_items()
 		H.visible_message("<span class='danger'>[user] disarms [H]!</span>", "<span class='userdanger'>[user] disarmed you!</span>")
@@ -601,7 +600,7 @@
 		held_sausage = null
 		update_icon()
 
-/obj/item/melee/roastingstick/afterattack(atom/target, mob/user, proximity)
+/obj/item/melee/roastingstick/afterattack(atom/target, mob/user)
 	. = ..()
 	if (!on)
 		return

@@ -334,7 +334,7 @@ All foods are distributed among various categories. Use common sense.
 
 /obj/item/reagent_containers/food/snacks/afterattack(obj/item/reagent_containers/M, mob/user, proximity)
 	. = ..()
-	if(!dunkable || !proximity)
+	if(!dunkable)
 		return
 	if(istype(M, /obj/item/reagent_containers/glass) || istype(M, /obj/item/reagent_containers/food/drinks))	//you can dunk dunkable snacks into beakers or drinks
 		if(!M.is_drainable())

@@ -58,10 +58,8 @@ RSF
 			to_chat(user, "Changed dispensing mode to 'Cigarette'")
 	// Change mode
 
-/obj/item/rsf/afterattack(atom/A, mob/user, proximity)
+/obj/item/rsf/afterattack(atom/A, mob/user)
 	. = ..()
-	if(!proximity)
-		return
 	if (!(istype(A, /obj/structure/table) || isfloorturf(A)))
 		return
 
@@ -152,11 +150,9 @@ RSF
 	if(matter < 10)
 		matter++
 
-/obj/item/cookiesynth/afterattack(atom/A, mob/user, proximity)
+/obj/item/cookiesynth/afterattack(atom/A, mob/user)
 	. = ..()
 	if(cooldown > world.time)
-		return
-	if(!proximity)
 		return
 	if (!(istype(A, /obj/structure/table) || isfloorturf(A)))
 		return

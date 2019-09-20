@@ -60,10 +60,8 @@
 /obj/item/smallDelivery/can_be_package_wrapped()
 	return 0
 
-/obj/item/stack/packageWrap/afterattack(obj/target, mob/user, proximity)
+/obj/item/stack/packageWrap/afterattack(obj/target, mob/user)
 	. = ..()
-	if(!proximity)
-		return
 	if(!istype(target))
 		return
 	if(target.anchored)

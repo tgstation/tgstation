@@ -208,9 +208,16 @@
 	M.attacked_by(src, user)
 	add_fingerprint(user)
 
-/obj/item/gun_control/afterattack(atom/targeted_atom, mob/user, flag, params)
+/obj/item/gun_control/afterattack(atom/A, mob/user, params)
 	. = ..()
-	var/obj/machinery/manned_turret/E = user.buckled
+	set_turret_values(user.buckled, user, A, params)
+
+/obj/item/gun_control/ranged_attack(atom/A, mob/user, params)
+	. = ..()
+	set_turret_values(user.buckled, user, A, params)
+
+///I have no trust in this actually working out fine.
+/obj/item/gun_control/proc/set_turret_values(obj/machinery/manned_turret/E, mob/user, atom/targeted_atom, params)
 	E.calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(user, params)
 	E.direction_track(user, targeted_atom)
 	E.checkfire(targeted_atom, user)

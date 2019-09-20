@@ -16,8 +16,15 @@
 	var/list/current_fields
 	var/field_distance_limit = 7
 
-/obj/item/forcefield_projector/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/forcefield_projector/ranged_attack(atom/target, mob/user)
 	. = ..()
+	generate_forcefield(target, user)
+
+/obj/item/forcefield_projector/afterattack(atom/target, mob/user)
+	. = ..()
+	generate_forcefield(target, user)
+
+/obj/item/forcefield_projector/proc/generate_forcefield(atom/target, mob/user)
 	if(!check_allowed_items(target, 1))
 		return
 	if(istype(target, /obj/structure/projected_forcefield))

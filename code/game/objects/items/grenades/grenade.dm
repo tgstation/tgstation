@@ -128,7 +128,7 @@
 		prime()
 		return TRUE //It hit the grenade, not them
 
-/obj/item/grenade/afterattack(atom/target, mob/user)
+/obj/item/grenade/ranged_attack(atom/target, mob/user)
 	. = ..()
 	if(active)
 		user.throw_item(target)

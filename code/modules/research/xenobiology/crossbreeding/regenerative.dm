@@ -14,9 +14,9 @@ Regenerative extracts:
 /obj/item/slimecross/regenerative/proc/core_effect_before(mob/living/carbon/human/target, mob/user)
 	return
 
-/obj/item/slimecross/regenerative/afterattack(atom/target,mob/user,prox)
+/obj/item/slimecross/regenerative/afterattack(atom/target,mob/user)
 	. = ..()
-	if(!prox || !isliving(target))
+	if(!isliving(target))
 		return
 	var/mob/living/H = target
 	if(H.stat == DEAD)

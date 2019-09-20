@@ -137,8 +137,6 @@
 
 /obj/item/kitchen/knife/envy/afterattack(atom/movable/AM, mob/living/carbon/human/user, proximity)
 	. = ..()
-	if(!proximity)
-		return
 	if(!istype(user))
 		return
 	if(ishuman(AM))

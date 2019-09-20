@@ -237,10 +237,8 @@
 			message_admins("[ADMIN_LOOKUPFLW(user)] set [ADMIN_LOOKUPFLW(M)] on fire with [src] at [AREACOORD(user)]")
 			log_game("[key_name(user)] set [key_name(M)] on fire with [src] at [AREACOORD(user)]")
 
-/obj/item/grown/novaflower/afterattack(atom/A as mob|obj, mob/user,proximity)
+/obj/item/grown/novaflower/afterattack(atom/A, mob/user)
 	. = ..()
-	if(!proximity)
-		return
 	if(force > 0)
 		force -= rand(1, (force / 3) + 1)
 	else

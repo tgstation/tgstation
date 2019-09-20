@@ -129,8 +129,8 @@
 	else
 		return ..()
 
-/obj/item/reagent_containers/food/snacks/deadmouse/afterattack(obj/target, mob/living/user, proximity_flag)
-	if(proximity_flag && reagents && target.is_open_container())
+/obj/item/reagent_containers/food/snacks/deadmouse/afterattack(obj/target, mob/living/user)
+	if(reagents && target.is_open_container())
 		// is_open_container will not return truthy if target.reagents doesn't exist
 		var/datum/reagents/target_reagents = target.reagents
 		var/trans_amount = reagents.maximum_volume - reagents.total_volume * (4 / 3)

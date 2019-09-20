@@ -61,7 +61,7 @@
 	The most common are:
 	* mob/UnarmedAttack(atom,adjacent) - used here only when adjacent, with no item in hand; in the case of humans, checks gloves
 	* atom/attackby(item,user) - used only when adjacent
-	* item/afterattack(atom,user,adjacent,params) - used both ranged and adjacent
+	* item/ranged_attack(atom,user,params) - used for ranged
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
 /mob/proc/ClickOn( atom/A, params )
@@ -131,32 +131,21 @@
 
 	//These are always reachable.
 	//User itself, current loc, and user inventory
-	if(A in DirectAccess())
+	var/proximity = !loc.AllowClick() ? CanReach(A,W) : FALSE
+
+	if(proximity || A in DirectAccess())
 		if(W)
 			W.melee_attack_chain(src, A, params)
-		else
-			if(ismob(A))
-				changeNext_move(CLICK_CD_MELEE)
-			UnarmedAttack(A)
+			return
+		if(ismob(A))
+			changeNext_move(CLICK_CD_MELEE)
+		UnarmedAttack(A, proximity)
 		return
 
-	//Can't reach anything else in lockers or other weirdness
-	if(!loc.AllowClick())
+	if(W)
+		W.ranged_attack(A, src, params)
 		return
-
-	//Standard reach turf to turf or reaching inside storage
-	if(CanReach(A,W))
-		if(W)
-			W.melee_attack_chain(src, A, params)
-		else
-			if(ismob(A))
-				changeNext_move(CLICK_CD_MELEE)
-			UnarmedAttack(A,1)
-	else
-		if(W)
-			W.afterattack(A,src,0,params)
-		else
-			RangedAttack(A,params)
+	RangedAttack(A, params)
 
 //Is the atom obscured by a PREVENT_CLICK_UNDER_1 object above it
 /atom/proc/IsObscured()

@@ -18,23 +18,22 @@
 	if(istype(newloc, /obj/item/gun))
 		gun = newloc
 
-/obj/item/firing_pin/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/firing_pin/afterattack(atom/target, mob/user)
 	. = ..()
-	if(proximity_flag)
-		if(istype(target, /obj/item/gun))
-			var/obj/item/gun/G = target
-			if(G.pin && (force_replace || G.pin.pin_removeable))
-				G.pin.forceMove(get_turf(G))
-				G.pin.gun_remove(user)
-				to_chat(user, "<span class='notice'>You remove [G]'s old pin.</span>")
+	if(istype(target, /obj/item/gun))
+		var/obj/item/gun/G = target
+		if(G.pin && (force_replace || G.pin.pin_removeable))
+			G.pin.forceMove(get_turf(G))
+			G.pin.gun_remove(user)
+			to_chat(user, "<span class='notice'>You remove [G]'s old pin.</span>")
 
-			if(!G.pin)
-				if(!user.temporarilyRemoveItemFromInventory(src))
-					return
-				gun_insert(user, G)
-				to_chat(user, "<span class='notice'>You insert [src] into [G].</span>")
-			else
-				to_chat(user, "<span class='notice'>This firearm already has a firing pin installed.</span>")
+		if(!G.pin)
+			if(!user.temporarilyRemoveItemFromInventory(src))
+				return
+			gun_insert(user, G)
+			to_chat(user, "<span class='notice'>You insert [src] into [G].</span>")
+		else
+			to_chat(user, "<span class='notice'>This firearm already has a firing pin installed.</span>")
 
 /obj/item/firing_pin/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -159,9 +158,9 @@
 	fail_message = "<span class='warning'>DNA CHECK FAILED.</span>"
 	var/unique_enzymes = null
 
-/obj/item/firing_pin/dna/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/firing_pin/dna/afterattack(atom/target, mob/user)
 	. = ..()
-	if(proximity_flag && iscarbon(target))
+	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		if(M.dna && M.dna.unique_enzymes)
 			unique_enzymes = M.dna.unique_enzymes
@@ -220,7 +219,7 @@
 		return
 	gun.desc += "<span class='notice'> This [gun.name] has a license permit cost of [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""].</span>"
 	return
-	
+
 
 /obj/item/firing_pin/paywall/gun_remove(mob/living/user)
 	gun.desc = initial(desc)
@@ -246,12 +245,12 @@
 			to_chat(user, "<span class='warning'>ERROR: Invalid amount designated.</span>")
 			return
 		if(!transaction_amount)
-			return	
+			return
 		pin_owner = id
 		owned = TRUE
 		payment_amount = transaction_amount
 		gun_owners += user
-		to_chat(user, "<span class='notice'>You link the card to the firing pin.</span>")		
+		to_chat(user, "<span class='notice'>You link the card to the firing pin.</span>")
 
 /obj/item/firing_pin/paywall/pin_auth(mob/living/user)
 	if(!istype(user))//nice try commie
@@ -266,9 +265,9 @@
 				if(credit_card_details.adjust_money(-payment_amount))
 					pin_owner.registered_account.adjust_money(payment_amount)
 					return TRUE
-				to_chat(user, "<span class='warning'>ERROR: User balance insufficent for successful transaction!</span>")	
-				return FALSE	
-			return TRUE				
+				to_chat(user, "<span class='warning'>ERROR: User balance insufficent for successful transaction!</span>")
+				return FALSE
+			return TRUE
 		if(credit_card_details && !active_prompt)
 			var/license_request = alert(usr, "Do you wish to pay [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""] for [( multi_payment ) ? "each shot of [gun.name]" : "usage license of [gun.name]"]?", "Weapon Purchase", "Yes", "No")
 			active_prompt = TRUE

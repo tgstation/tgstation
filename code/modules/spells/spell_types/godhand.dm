@@ -29,7 +29,7 @@
 		return
 	..()
 
-/obj/item/melee/touch_attack/afterattack(atom/target, mob/user, proximity)
+/obj/item/melee/touch_attack/afterattack(atom/target, mob/user)
 	. = ..()
 	user.say(catchphrase, forced = "spell")
 	playsound(get_turf(user), on_use_sound,50,TRUE)
@@ -50,8 +50,8 @@
 	icon_state = "disintegrate"
 	item_state = "disintegrate"
 
-/obj/item/melee/touch_attack/disintegrate/afterattack(atom/target, mob/living/carbon/user, proximity)
-	if(!proximity || target == user || !ismob(target) || !iscarbon(user) || !(user.mobility_flags & MOBILITY_USE)) //exploding after touching yourself would be bad
+/obj/item/melee/touch_attack/disintegrate/afterattack(atom/target, mob/living/carbon/user)
+	if(target == user || !ismob(target) || !iscarbon(user) || !(user.mobility_flags & MOBILITY_USE)) //exploding after touching yourself would be bad
 		return
 	if(!user.can_speak_vocal())
 		to_chat(user, "<span class='warning'>You can't get the words out!</span>")
@@ -89,8 +89,8 @@
 	icon_state = "fleshtostone"
 	item_state = "fleshtostone"
 
-/obj/item/melee/touch_attack/fleshtostone/afterattack(atom/target, mob/living/carbon/user, proximity)
-	if(!proximity || target == user || !isliving(target) || !iscarbon(user)) //getting hard after touching yourself would also be bad
+/obj/item/melee/touch_attack/fleshtostone/afterattack(atom/target, mob/living/carbon/user)
+	if(target == user || !isliving(target) || !iscarbon(user)) //getting hard after touching yourself would also be bad
 		return
 	if(!(user.mobility_flags & MOBILITY_USE))
 		to_chat(user, "<span class='warning'>You can't reach out!</span>")

@@ -79,8 +79,6 @@
 
 /obj/item/dna_probe/afterattack(atom/target, mob/user, proximity)
 	. = ..()
-	if(!proximity || !target)
-		return
 	//tray plants
 	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/H = target

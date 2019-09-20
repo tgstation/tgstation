@@ -89,8 +89,7 @@
 
 /obj/item/organ/regenerative_core/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
-	if(proximity_flag)
-		applyto(target, user)
+	applyto(target, user)
 
 /obj/item/organ/regenerative_core/attack_self(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))

@@ -372,9 +372,6 @@
 			source.UpdateButtonIcon()
 	..()
 
-/obj/item/melee/blood_magic/attack_self(mob/living/user)
-	afterattack(user, user, TRUE)
-
 /obj/item/melee/blood_magic/attack(mob/living/M, mob/living/carbon/user)
 	if(!iscarbon(user) || !iscultist(user))
 		uses = 0
@@ -384,7 +381,19 @@
 	M.lastattacker = user.real_name
 	M.lastattackerckey = user.ckey
 
+/obj/item/melee/blood_magic/attack_self(mob/living/user)
+	. = ..()
+	spell_effect(user, user, TRUE)
+
 /obj/item/melee/blood_magic/afterattack(atom/target, mob/living/carbon/user, proximity)
+	. = ..()
+	spell_effect(user, user, TRUE)
+
+/obj/item/melee/blood_magic/ranged_attack(atom/target, mob/living/carbon/user, proximity)
+	. = ..()
+	spell_effect(user, user, FALSE)
+
+/obj/item/melee/blood_magic/proc/spell_effect(atom/target, mob/living/carbon/user, proximity)
 	. = ..()
 	if(invocation)
 		user.whisper(invocation, language = /datum/language/common)
@@ -407,7 +416,7 @@
 	color = RUNE_COLOR_RED
 	invocation = "Fuu ma'jin!"
 
-/obj/item/melee/blood_magic/stun/afterattack(atom/target, mob/living/carbon/user, proximity)
+/obj/item/melee/blood_magic/stun/spell_effect(atom/target, mob/living/carbon/user, proximity)
 	if(!isliving(target) || !proximity)
 		return
 	var/mob/living/L = target
@@ -459,7 +468,7 @@
 	desc = "Will teleport a cultist to a teleport rune on contact."
 	invocation = "Sas'so c'arta forbici!"
 
-/obj/item/melee/blood_magic/teleport/afterattack(atom/target, mob/living/carbon/user, proximity)
+/obj/item/melee/blood_magic/teleport/spell_effect(atom/target, mob/living/carbon/user, proximity)
 	if(!iscultist(target) || !proximity)
 		to_chat(user, "<span class='warning'>You can only teleport adjacent cultists with this spell!</span>")
 		return
@@ -505,7 +514,7 @@
 	invocation = "In'totum Lig'abis!"
 	color = "#000000" // black
 
-/obj/item/melee/blood_magic/shackles/afterattack(atom/target, mob/living/carbon/user, proximity)
+/obj/item/melee/blood_magic/shackles/spell_effect(atom/target, mob/living/carbon/user, proximity)
 	if(iscultist(user) && iscarbon(target) && proximity)
 		var/mob/living/carbon/C = target
 		if(C.get_num_arms(FALSE) >= 2 || C.get_arm_ignore())
@@ -565,7 +574,7 @@
 	Cyborg shells into construct shells\n
 	Airlocks into brittle runed airlocks after a delay (harm intent)"}
 
-/obj/item/melee/blood_magic/construction/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/melee/blood_magic/construction/spell_effect(atom/target, mob/user, proximity_flag, click_parameters)
 	if(proximity_flag && iscultist(user))
 		if(channeling)
 			to_chat(user, "<span class='cultitalic'>You are already invoking twisted construction!</span>")
@@ -653,7 +662,7 @@
 	desc = "Will equipt cult combat gear onto a cultist on contact."
 	color = "#33cc33" // green
 
-/obj/item/melee/blood_magic/armor/afterattack(atom/target, mob/living/carbon/user, proximity)
+/obj/item/melee/blood_magic/armor/spell_effect(atom/target, mob/living/carbon/user, proximity)
 	if(iscarbon(target) && proximity)
 		uses--
 		var/mob/living/carbon/C = target
@@ -677,7 +686,7 @@
 	. = ..()
 	. += "Blood spear, blood bolt barrage, and blood beam cost [BLOOD_SPEAR_COST], [BLOOD_BARRAGE_COST], and [BLOOD_BEAM_COST] charges respectively."
 
-/obj/item/melee/blood_magic/manipulator/afterattack(atom/target, mob/living/carbon/human/user, proximity)
+/obj/item/melee/blood_magic/manipulator/spell_effect(atom/target, mob/living/carbon/human/user, proximity)
 	if(proximity)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target

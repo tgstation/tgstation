@@ -40,7 +40,15 @@
 	disk = null
 	program = null
 
-/obj/item/nanite_hijacker/afterattack(atom/target, mob/user, etc)
+/obj/item/nanite_hijacker/ranged_attack(atom/target, mob/user, params)
+	. = ..()
+	try_to_add_program(target, user)
+
+/obj/item/nanite_hijacker/afterattack(atom/target, mob/user, params)
+	. = ..()
+	try_to_add_program(target, user)
+
+/obj/item/nanite_hijacker/proc/try_to_add_program(atom/target, mob/user)
 	if(!disk || !disk.program)
 		return
 	if(isliving(target))

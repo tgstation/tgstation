@@ -170,17 +170,16 @@
 	brightness_on = 2
 	var/holo_cooldown = 0
 
-/obj/item/flashlight/pen/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/flashlight/pen/ranged_attack(atom/target, mob/user)
 	. = ..()
-	if(!proximity_flag)
-		if(holo_cooldown > world.time)
-			to_chat(user, "<span class='warning'>[src] is not ready yet!</span>")
-			return
-		var/T = get_turf(target)
-		if(locate(/mob/living) in T)
-			new /obj/effect/temp_visual/medical_holosign(T,user) //produce a holographic glow
-			holo_cooldown = world.time + 100
-			return
+	if(holo_cooldown > world.time)
+		to_chat(user, "<span class='warning'>[src] is not ready yet!</span>")
+		return
+	var/T = get_turf(target)
+	if(locate(/mob/living) in T)
+		new /obj/effect/temp_visual/medical_holosign(T,user) //produce a holographic glow
+		holo_cooldown = world.time + 100
+		return
 
 /obj/effect/temp_visual/medical_holosign
 	name = "medical holosign"
@@ -392,10 +391,8 @@
 		..()
 	return
 
-/obj/item/flashlight/emp/afterattack(atom/movable/A, mob/user, proximity)
+/obj/item/flashlight/emp/afterattack(atom/movable/A, mob/user)
 	. = ..()
-	if(!proximity)
-		return
 
 	if(emp_cur_charges > 0)
 		emp_cur_charges -= 1

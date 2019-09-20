@@ -747,11 +747,8 @@ GENE SCANNER
 /obj/item/sequence_scanner/attack_self_tk(mob/user)
 	return
 
-/obj/item/sequence_scanner/afterattack(obj/O, mob/user, proximity)
+/obj/item/sequence_scanner/afterattack(obj/O, mob/user)
 	. = ..()
-	if(!istype(O) || !proximity)
-		return
-
 	if(istype(O, /obj/machinery/computer/scan_consolenew))
 		var/obj/machinery/computer/scan_consolenew/C = O
 		if(C.stored_research)

@@ -85,9 +85,9 @@
 		to_chat(user, "<span class='warning'>[src] crumbles into tiny bits!</span>")
 		qdel(src)
 
-/obj/item/soap/afterattack(atom/target, mob/user, proximity)
+/obj/item/soap/afterattack(atom/target, mob/user)
 	. = ..()
-	if(!proximity || !check_allowed_items(target))
+	if(!check_allowed_items(target))
 		return
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn

@@ -27,9 +27,11 @@ Slimecrossing Weapons
 	throwforce = 15
 	damtype = BRUTE
 
-/obj/item/kitchen/knife/rainbowknife/afterattack(atom/O, mob/user, proximity)
-	if(proximity && istype(O, /mob/living))
-		damtype = pick(BRUTE, BURN, TOX, OXY, CLONE)
+/obj/item/kitchen/knife/rainbowknife/afterattack(atom/O, mob/user)
+	. = ..()
+	if(!istype(O, /mob/living))
+		return
+	damtype = pick(BRUTE, BURN, TOX, OXY, CLONE)
 	switch(damtype)
 		if(BRUTE)
 			hitsound = 'sound/weapons/bladeslice.ogg'
@@ -46,7 +48,6 @@ Slimecrossing Weapons
 		if(CLONE)
 			hitsound = 'sound/items/geiger/ext1.ogg'
 			attack_verb = list("irradiated","mutated","maligned")
-	return ..()
 
 //Adamantine shield - Chilling Adamantine
 /obj/item/twohanded/required/adamantineshield

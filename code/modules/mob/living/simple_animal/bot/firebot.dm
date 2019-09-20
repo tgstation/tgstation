@@ -62,7 +62,7 @@
 	if(!on)
 		return
 	if(internal_ext)
-		internal_ext.afterattack(A, src)
+		internal_ext.spray_load(A, src)
 	else
 		return ..()
 
@@ -70,7 +70,7 @@
 	if(!on)
 		return
 	if(internal_ext)
-		internal_ext.afterattack(A, src)
+		internal_ext.spray_load(A, src)
 	else
 		return ..()
 
@@ -282,7 +282,7 @@
 		flick("firebots_use", user)
 	else
 		flick("firebot1_use", user)
-	internal_ext.afterattack(target, user, null)
+	internal_ext.spray_load(target, user)
 
 /mob/living/simple_animal/bot/firebot/update_icon()
 	if(!on)

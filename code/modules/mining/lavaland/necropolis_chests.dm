@@ -941,8 +941,15 @@
 	var/timer = 0
 	var/static/list/banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
 
-/obj/item/lava_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/lava_staff/afterattack(atom/target, mob/user, params)
 	. = ..()
+	staff_effect(target, user, params)
+
+/obj/item/lava_staff/ranged_attack(atom/target, mob/user, params)
+	. = ..()
+	staff_effect(target, user, params)
+
+/obj/item/lava_staff/proc/staff_effect(atom/target, mob/user, params)
 	if(timer > world.time)
 		return
 
@@ -1133,34 +1140,41 @@
 	user.dropItemToGround(src) //Drop us last, so it goes on top of their stuff
 	qdel(user)
 
-/obj/item/hierophant_club/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/hierophant_club/afterattack(atom/target, mob/user, click_parameters)
 	. = ..()
 	var/turf/T = get_turf(target)
 	if(!T || timer > world.time)
 		return
 	calculate_anger_mod(user)
 	timer = world.time + CLICK_CD_MELEE //by default, melee attacks only cause melee blasts, and have an accordingly short cooldown
-	if(proximity_flag)
-		INVOKE_ASYNC(src, .proc/aoe_burst, T, user)
-		log_combat(user, target, "fired 3x3 blast at", src)
-	else
-		if(ismineralturf(target) && get_dist(user, target) < 6) //target is minerals, we can hit it(even if we can't see it)
-			INVOKE_ASYNC(src, .proc/cardinal_blasts, T, user)
-			timer = world.time + cooldown_time
-		else if(target in view(5, get_turf(user))) //if the target is in view, hit it
-			timer = world.time + cooldown_time
-			if(isliving(target) && chaser_timer <= world.time) //living and chasers off cooldown? fire one!
-				chaser_timer = world.time + chaser_cooldown
-				var/obj/effect/temp_visual/hierophant/chaser/C = new(get_turf(user), user, target, chaser_speed, friendly_fire_check)
-				C.damage = 30
-				C.monster_damage_boost = FALSE
-				log_combat(user, target, "fired a chaser at", src)
-			else
-				INVOKE_ASYNC(src, .proc/cardinal_blasts, T, user) //otherwise, just do cardinal blast
-				log_combat(user, target, "fired cardinal blast at", src)
+	INVOKE_ASYNC(src, .proc/aoe_burst, T, user)
+	log_combat(user, target, "fired 3x3 blast at", src)
+	INVOKE_ASYNC(src, .proc/prepare_icon_update)
+
+/obj/item/hierophant_club/ranged_attack(atom/target, mob/user, click_parameters)
+	. = ..()
+	var/turf/T = get_turf(target)
+	if(!T || timer > world.time)
+		return
+	calculate_anger_mod(user)
+	timer = world.time + CLICK_CD_MELEE //by default, melee attacks only cause melee blasts, and have an accordingly short cooldown
+	if(ismineralturf(target) && get_dist(user, target) < 6) //target is minerals, we can hit it(even if we can't see it)
+		INVOKE_ASYNC(src, .proc/cardinal_blasts, T, user)
+		timer = world.time + cooldown_time
+	else if(target in view(5, get_turf(user))) //if the target is in view, hit it
+		timer = world.time + cooldown_time
+		if(isliving(target) && chaser_timer <= world.time) //living and chasers off cooldown? fire one!
+			chaser_timer = world.time + chaser_cooldown
+			var/obj/effect/temp_visual/hierophant/chaser/C = new(get_turf(user), user, target, chaser_speed, friendly_fire_check)
+			C.damage = 30
+			C.monster_damage_boost = FALSE
+			log_combat(user, target, "fired a chaser at", src)
 		else
-			to_chat(user, "<span class='warning'>That target is out of range!</span>" )
-			timer = world.time
+			INVOKE_ASYNC(src, .proc/cardinal_blasts, T, user) //otherwise, just do cardinal blast
+			log_combat(user, target, "fired cardinal blast at", src)
+	else
+		to_chat(user, "<span class='warning'>That target is out of range!</span>" )
+		timer = world.time
 	INVOKE_ASYNC(src, .proc/prepare_icon_update)
 
 /obj/item/hierophant_club/proc/calculate_anger_mod(mob/user) //we get stronger as the user loses health

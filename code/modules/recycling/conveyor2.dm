@@ -346,9 +346,9 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		var/obj/item/conveyor_switch_construct/C = I
 		id = C.id
 
-/obj/item/conveyor_construct/afterattack(atom/A, mob/user, proximity)
+/obj/item/conveyor_construct/afterattack(atom/A, mob/user)
 	. = ..()
-	if(!proximity || user.stat || !isfloorturf(A) || istype(A, /area/shuttle))
+	if(user.stat || !isfloorturf(A) || istype(A, /area/shuttle))
 		return
 	var/cdir = get_dir(A, user)
 	if(A == user.loc)
@@ -375,9 +375,9 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		C.id = id
 	to_chat(user, "<span class='notice'>You have linked all nearby conveyor belt assemblies to this switch.</span>")
 
-/obj/item/conveyor_switch_construct/afterattack(atom/A, mob/user, proximity)
+/obj/item/conveyor_switch_construct/afterattack(atom/A, mob/user)
 	. = ..()
-	if(!proximity || user.stat || !isfloorturf(A) || istype(A, /area/shuttle))
+	if(user.stat || !isfloorturf(A) || istype(A, /area/shuttle))
 		return
 	var/found = 0
 	for(var/obj/machinery/conveyor/C in view())

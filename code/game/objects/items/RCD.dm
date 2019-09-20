@@ -167,12 +167,6 @@ RLD
 	else
 		return TRUE
 
-/obj/item/construction/proc/prox_check(proximity)
-	if(proximity)
-		return TRUE
-	else
-		return FALSE
-
 
 /obj/item/construction/rcd
 	name = "rapid-construction-device (RCD)"
@@ -556,10 +550,8 @@ RLD
 	else
 		return FALSE
 
-/obj/item/construction/rcd/afterattack(atom/A, mob/user, proximity)
+/obj/item/construction/rcd/afterattack(atom/A, mob/user)
 	. = ..()
-	if(!prox_check(proximity))
-		return
 	rcd_create(A, user)
 
 /obj/item/construction/rcd/proc/detonate_pulse()
@@ -670,14 +662,13 @@ RLD
 	item_state = "oldrcd"
 	has_ammobar = FALSE
 
-/obj/item/construction/rcd/arcd/afterattack(atom/A, mob/user)
+/obj/item/construction/rcd/arcd/ranged_attack(atom/A, mob/user)
 	. = ..()
 	if(!range_check(A,user))
 		return
 	if(target_check(A,user))
 		user.Beam(A,icon_state="rped_upgrade",time=30)
 	rcd_create(A,user)
-
 
 
 // RAPID LIGHTING DEVICE
@@ -741,10 +732,17 @@ RLD
 			. |= dupe
 
 
-/obj/item/construction/rld/afterattack(atom/A, mob/user)
+/obj/item/construction/rld/ranged_attack(atom/A, mob/user)
 	. = ..()
 	if(!range_check(A,user))
 		return
+	rld_create(A, user)
+
+/obj/item/construction/rld/afterattack(atom/A, mob/user)
+	. = ..()
+	rld_create(A, user)
+
+/obj/item/construction/rld/proc/rld_create(atom/A, mob/user)
 	var/turf/start = get_turf(src)
 	switch(mode)
 		if(REMOVE_MODE)

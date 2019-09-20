@@ -126,9 +126,9 @@
 	layer = MOB_LAYER
 	var/list/banned_mobs
 
-/obj/item/fugu_gland/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/fugu_gland/afterattack(atom/target, mob/user)
 	. = ..()
-	if(proximity_flag && isanimal(target))
+	if(isanimal(target))
 		var/mob/living/simple_animal/A = target
 		if(A.buffed || (A.type in banned_mobs) || A.stat)
 			to_chat(user, "<span class='warning'>Something's interfering with [src]'s effects. It's no use.</span>")

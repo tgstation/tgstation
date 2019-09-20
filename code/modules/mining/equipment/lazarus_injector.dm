@@ -15,11 +15,11 @@
 	var/malfunctioning = 0
 	var/revive_type = SENTIENCE_ORGANIC //So you can't revive boss monsters or robots with it
 
-/obj/item/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/lazarus_injector/afterattack(atom/target, mob/user)
 	. = ..()
 	if(!loaded)
 		return
-	if(isliving(target) && proximity_flag)
+	if(isliving(target))
 		if(isanimal(target))
 			var/mob/living/simple_animal/M = target
 			if(M.sentience_type != revive_type)

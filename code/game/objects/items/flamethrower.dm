@@ -65,10 +65,8 @@
 		M.update_inv_hands()
 	return
 
-/obj/item/flamethrower/afterattack(atom/target, mob/user, flag)
+/obj/item/flamethrower/ranged_attack(atom/target, mob/user)
 	. = ..()
-	if(flag)
-		return // too close
 	if(ishuman(user))
 		if(!can_trigger_gun(user))
 			return

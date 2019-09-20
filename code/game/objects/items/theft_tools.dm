@@ -230,11 +230,11 @@
 	else
 		icon_state = "supermatter_tongs"
 
-/obj/item/hemostat/supermatter/afterattack(atom/O, mob/user, proximity)
+/obj/item/hemostat/supermatter/afterattack(atom/O, mob/user)
 	. = ..()
 	if(!sliver)
 		return
-	if(proximity && ismovableatom(O) && O != sliver)
+	if(ismovableatom(O) && O != sliver)
 		Consume(O, user)
 
 /obj/item/hemostat/supermatter/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum) // no instakill supermatter javelins

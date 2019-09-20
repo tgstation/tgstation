@@ -40,9 +40,9 @@
 	var/can_backfire = TRUE
 	var/uses = 1
 
-/obj/item/upgradescroll/afterattack(obj/item/target, mob/user , proximity)
+/obj/item/upgradescroll/afterattack(obj/item/target, mob/user)
 	. = ..()
-	if(!proximity || !istype(target))
+	if(!istype(target))
 		return
 
 	target.AddComponent(/datum/component/fantasy, upgrade_amount, null, null, can_backfire, TRUE)

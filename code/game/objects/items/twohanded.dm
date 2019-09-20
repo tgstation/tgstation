@@ -246,10 +246,8 @@
 	user.visible_message("<span class='suicide'>[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
-/obj/item/twohanded/fireaxe/afterattack(atom/A, mob/user, proximity)
+/obj/item/twohanded/fireaxe/afterattack(atom/A, mob/user)
 	. = ..()
-	if(!proximity)
-		return
 	if(wielded) //destroys windows and grilles in one hit
 		if(istype(A, /obj/structure/window) || istype(A, /obj/structure/grille))
 			var/obj/structure/W = A
@@ -541,10 +539,8 @@
 			if(input)
 				src.war_cry = input
 
-/obj/item/twohanded/spear/explosive/afterattack(atom/movable/AM, mob/user, proximity)
+/obj/item/twohanded/spear/explosive/afterattack(atom/movable/AM, mob/user)
 	. = ..()
-	if(!proximity)
-		return
 	if(wielded)
 		user.say("[war_cry]", forced="spear warcry")
 		explosive.forceMove(AM)
@@ -633,10 +629,8 @@
 	force_wielded = 25
 	attack_verb = list("gored")
 
-/obj/item/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
+/obj/item/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user)
 	. = ..()
-	if(!proximity)
-		return
 	user.faction |= "greytide([REF(user)])"
 	if(isliving(AM))
 		var/mob/living/L = AM
@@ -714,9 +708,9 @@
 		user.apply_damage(rand(force/2, force), BURN, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 	..()
 
-/obj/item/twohanded/pitchfork/demonic/ascended/afterattack(atom/target, mob/user, proximity)
+/obj/item/twohanded/pitchfork/demonic/ascended/afterattack(atom/target, mob/user)
 	. = ..()
-	if(!proximity || !wielded)
+	if(!wielded)
 		return
 	if(iswallturf(target))
 		var/turf/closed/wall/W = target

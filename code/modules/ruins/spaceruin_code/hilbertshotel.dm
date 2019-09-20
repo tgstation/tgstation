@@ -419,12 +419,9 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     desc = "A hand-held environmental scanner which reports current gas levels. This one seems custom rigged to additionally be able to analyze some sort of bluespace device."
     icon_state = "hilbertsanalyzer"
 
-/obj/item/analyzer/hilbertsanalyzer/afterattack(atom/target, mob/user, proximity)
+/obj/item/analyzer/hilbertsanalyzer/afterattack(atom/target, mob/user)
     . = ..()
     if(istype(target, /obj/item/hilbertshotel))
-        if(!proximity)
-            to_chat(user, "<span class='warning'>It's to far away to scan!</span>")
-            return
         var/obj/item/hilbertshotel/sphere = target
         if(sphere.activeRooms.len)
             to_chat(user, "Currently Occupied Rooms:")

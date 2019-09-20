@@ -149,6 +149,10 @@
 		return TRUE
 	return FALSE
 
+/obj/item/hand_tele/ranged_attack(atom/target, mob/user)
+	. = ..()
+	try_dispel_portal(target, user)
+
 /obj/item/hand_tele/afterattack(atom/target, mob/user)
 	try_dispel_portal(target, user)
 	. = ..()

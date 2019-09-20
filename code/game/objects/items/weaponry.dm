@@ -631,17 +631,16 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	))
 
 
-/obj/item/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/melee/flyswatter/afterattack(atom/target, mob/user)
 	. = ..()
-	if(proximity_flag)
-		if(is_type_in_typecache(target, strong_against))
-			new /obj/effect/decal/cleanable/insectguts(target.drop_location())
-			to_chat(user, "<span class='warning'>You easily splat the [target].</span>")
-			if(istype(target, /mob/living/))
-				var/mob/living/bug = target
-				bug.death(1)
-			else
-				qdel(target)
+	if(is_type_in_typecache(target, strong_against))
+		new /obj/effect/decal/cleanable/insectguts(target.drop_location())
+		to_chat(user, "<span class='warning'>You easily splat the [target].</span>")
+		if(istype(target, /mob/living/))
+			var/mob/living/bug = target
+			bug.death(1)
+		else
+			qdel(target)
 
 /obj/item/circlegame
 	name = "circled hand"

@@ -180,24 +180,25 @@
 			return TRUE
 	return FALSE
 
-/obj/item/twohanded/required/cult_bastard/afterattack(atom/target, mob/user, proximity, click_parameters)
+/obj/item/twohanded/required/cult_bastard/ranged_attack(atom/target, mob/user, click_parameters)
 	. = ..()
-	if(dash_toggled && !proximity)
+	if(dash_toggled)
 		jaunt.Teleport(user, target)
 		return
-	if(proximity)
-		if(ishuman(target))
-			var/mob/living/carbon/human/H = target
-			if(H.stat != CONSCIOUS)
-				var/obj/item/soulstone/SS = new /obj/item/soulstone(src)
-				SS.attack(H, user)
-				if(!LAZYLEN(SS.contents))
-					qdel(SS)
-		if(istype(target, /obj/structure/constructshell) && contents.len)
-			var/obj/item/soulstone/SS = contents[1]
-			if(istype(SS))
-				SS.transfer_soul("CONSTRUCT",target,user)
+
+/obj/item/twohanded/required/cult_bastard/afterattack(atom/target, mob/user, click_parameters)
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(H.stat != CONSCIOUS)
+			var/obj/item/soulstone/SS = new /obj/item/soulstone(src)
+			SS.attack(H, user)
+			if(!LAZYLEN(SS.contents))
 				qdel(SS)
+	if(istype(target, /obj/structure/constructshell) && contents.len)
+		var/obj/item/soulstone/SS = contents[1]
+		if(istype(SS))
+			SS.transfer_soul("CONSTRUCT",target,user)
+			qdel(SS)
 
 /datum/action/innate/dash/cult
 	name = "Rend the Veil"
@@ -593,9 +594,7 @@
 	on = TRUE
 	var/charges = 5
 
-/obj/item/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user, proximity)
-	if(!proximity)
-		return
+/obj/item/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user)
 	if(!iscultist(user))
 		to_chat(user, "That doesn't seem to do anything useful.")
 		return
@@ -803,7 +802,11 @@
 	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
 
-/obj/item/blood_beam/afterattack(atom/A, mob/living/user, flag, params)
+/obj/item/blood_beam/afterattack(atom/A, mob/user, params)
+	. = ..()
+	ranged_attack(A, user, params)
+
+/obj/item/blood_beam/ranged_attack(atom/A, mob/living/user, params)
 	. = ..()
 	if(firing || charging)
 		return

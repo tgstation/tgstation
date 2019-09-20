@@ -63,7 +63,7 @@
 /obj/item/extinguisher/suicide_act(mob/living/carbon/user)
 	if (!safety && (reagents.total_volume >= 1))
 		user.visible_message("<span class='suicide'>[user] puts the nozzle to [user.p_their()] mouth. It looks like [user.p_theyre()] trying to extinguish the spark of life!</span>")
-		afterattack(user,user)
+		spray_load(user,user)
 		return OXYLOSS
 	else if (safety && (reagents.total_volume >= 1))
 		user.visible_message("<span class='warning'>[user] puts the nozzle to [user.p_their()] mouth... The safety's still on!</span>")
@@ -120,13 +120,19 @@
 	else
 		return 0
 
-/obj/item/extinguisher/afterattack(atom/target, mob/user , flag)
+/obj/item/extinguisher/afterattack(atom/target, mob/user)
 	. = ..()
 	// Make it so the extinguisher doesn't spray yourself when you click your inventory items
 	if (target.loc == user)
 		return
-	//TODO; Add support for reagents in water.
+	spray_load(target, user)
 
+/obj/item/extinguisher/ranged_attack(atom/target, mob/user)
+	. = ..()
+	spray_load(target, user)
+
+/obj/item/extinguisher/proc/spray_load(atom/target, mob/user)
+	//TODO; Add support for reagents in water.
 	if(refilling)
 		refilling = FALSE
 		return

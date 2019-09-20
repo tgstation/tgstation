@@ -206,9 +206,9 @@
 	desc = "A small card, that when used on any ID, will add mining access."
 	icon_state = "data_1"
 
-/obj/item/card/mining_access_card/afterattack(atom/movable/AM, mob/user, proximity)
+/obj/item/card/mining_access_card/afterattack(atom/movable/AM, mob/user)
 	. = ..()
-	if(istype(AM, /obj/item/card/id) && proximity)
+	if(istype(AM, /obj/item/card/id))
 		var/obj/item/card/id/I = AM
 		I.access |=	ACCESS_MINING
 		I.access |= ACCESS_MINING_STATION

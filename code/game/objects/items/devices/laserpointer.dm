@@ -64,7 +64,11 @@
 		else
 			. += "<span class='notice'>A class <b>[diode.rating]</b> laser diode is installed. It is <i>screwed</i> in place.</span>"
 
-/obj/item/laser_pointer/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/laser_pointer/afterattack(atom/target, mob/living/user, params)
+	. = ..()
+	laser_act(target, user, params)
+
+/obj/item/laser_pointer/ranged_attack(atom/target, mob/user, params)
 	. = ..()
 	laser_act(target, user, params)
 

@@ -73,24 +73,24 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
-	var/prox_check = TRUE //If the emag requires you to be in range
+
+/obj/item/card/emag/attack()
+	return
+
+/obj/item/card/emag/afterattack(atom/target, mob/user)
+	. = ..()
+	log_combat(user, target, "attempted to emag")
+	target.emag_act(user)
 
 /obj/item/card/emag/bluespace
 	name = "bluespace cryptographic sequencer"
 	desc = "It's a blue card with a magnetic strip attached to some circuitry. It appears to have some sort of transmitter attached to it."
 	color = rgb(40, 130, 255)
-	prox_check = FALSE
 
-/obj/item/card/emag/attack()
-	return
-
-/obj/item/card/emag/afterattack(atom/target, mob/user, proximity)
+/obj/item/card/emag/bluespace/ranged_attack(atom/target, mob/user)
 	. = ..()
-	var/atom/A = target
-	if(!proximity && prox_check)
-		return
-	log_combat(user, A, "attempted to emag")
-	A.emag_act(user)
+	log_combat(user, target, "attempted to bluespace emag") //Technically not duplicate code.
+	target.emag_act(user)
 
 /obj/item/card/emagfake
 	desc = "It's a card with a magnetic strip attached to some circuitry. Closer inspection shows that this card is a poorly made replica, with a \"DonkCo\" logo stamped on the back."
@@ -376,9 +376,7 @@ update_label()
 	chameleon_action.chameleon_name = "ID Card"
 	chameleon_action.initialize_disguises()
 
-/obj/item/card/id/syndicate/afterattack(obj/item/O, mob/user, proximity)
-	if(!proximity)
-		return
+/obj/item/card/id/syndicate/afterattack(obj/item/O, mob/user)
 	if(istype(O, /obj/item/card/id))
 		var/obj/item/card/id/I = O
 		src.access |= I.access

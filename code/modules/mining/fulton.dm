@@ -38,7 +38,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		beacon = A
 		to_chat(user, "You link the extraction pack to the beacon system.")
 
-/obj/item/extraction_pack/afterattack(atom/movable/A, mob/living/carbon/human/user, flag, params)
+/obj/item/extraction_pack/afterattack(atom/movable/A, mob/living/carbon/human/user, params)
 	. = ..()
 	if(!beacon)
 		to_chat(user, "<span class='warning'>[src] is not linked to a beacon, and cannot be used!</span>")
@@ -48,8 +48,6 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		if(!area.outdoors)
 			to_chat(user, "<span class='warning'>[src] can only be used on things that are outdoors!</span>")
 			return
-	if(!flag)
-		return
 	if(!istype(A))
 		return
 	else

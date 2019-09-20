@@ -55,7 +55,7 @@
 		return
 
 	var/desired_y = input(user, "How wide do you want the camera to shoot, between [picture_size_y_min] and [picture_size_y_max]?", "Zoom", picture_size_y) as num|null
-	
+
 	if (isnull(desired_y))
 		return
 
@@ -116,7 +116,15 @@
 			return FALSE
 	return TRUE
 
-/obj/item/camera/afterattack(atom/target, mob/user, flag)
+/obj/item/camera/ranged_attack(atom/target, mob/user)
+	. = ..()
+	try_to_take_picture(target, user, FALSE)
+
+/obj/item/camera/afterattack(atom/target, mob/user)
+	. = ..()
+	try_to_take_picture(target, user, TRUE)
+
+/obj/item/camera/proc/try_to_take_picture(atom/target, mob/user, proximity)
 	if (disk)
 		if(ismob(target))
 			if (disk.record)
@@ -130,7 +138,7 @@
 			to_chat(user, "<span class='warning'>Invalid holodisk target.</span>")
 			return
 
-	if(!can_target(target, user, flag))
+	if(!can_target(target, user, proximity))
 		return
 
 	on = FALSE
@@ -143,7 +151,7 @@
 
 	icon_state = state_off
 
-	INVOKE_ASYNC(src, .proc/captureimage, target, user, flag, picture_size_x - 1, picture_size_y - 1)
+	INVOKE_ASYNC(src, .proc/captureimage, target, user, proximity, picture_size_x - 1, picture_size_y - 1)
 
 
 /obj/item/camera/proc/cooldown()

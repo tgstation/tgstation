@@ -172,10 +172,8 @@
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	AddComponent(/datum/component/butchering, 80, 70)
 
-/obj/item/light_eater/afterattack(atom/movable/AM, mob/user, proximity)
+/obj/item/light_eater/afterattack(atom/movable/AM, mob/user)
 	. = ..()
-	if(!proximity)
-		return
 	if(isopenturf(AM)) //So you can actually melee with it
 		return
 	if(isliving(AM))

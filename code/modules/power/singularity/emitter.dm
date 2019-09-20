@@ -468,8 +468,15 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
-/obj/item/turret_control/afterattack(atom/targeted_atom, mob/user, proxflag, clickparams)
+/obj/item/turret_control/afterattack(atom/target, mob/user, params)
 	. = ..()
+	on_click_target(target, user, params)
+
+/obj/item/turret_control/ranged_attack(atom/target, mob/user, params)
+	. = ..()
+	on_click_target(target, user, params)
+
+/obj/item/turret_control/proc/on_click_target(atom/targeted_atom, mob/user, clickparams)
 	var/obj/machinery/power/emitter/E = user.buckled
 	E.setDir(get_dir(E,targeted_atom))
 	user.setDir(E.dir)

@@ -134,7 +134,7 @@
 		destination = tank
 	..()
 
-/obj/item/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
+/obj/item/reagent_containers/spray/mister/ranged_attack(obj/target, mob/user)
 	if(target.loc == loc) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it
 		return
 	..()
@@ -255,7 +255,7 @@
 			return
 	return
 
-/obj/item/extinguisher/mini/nozzle/afterattack(atom/target, mob/user)
+/obj/item/extinguisher/mini/nozzle/spray_load(atom/target, mob/user)
 	if(nozzle_mode == EXTINGUISHER)
 		..()
 		return

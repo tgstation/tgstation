@@ -132,7 +132,7 @@ Slimecrossing Items
 
 
 
-/obj/item/camera/rewind/afterattack(atom/target, mob/user, flag)
+/obj/item/camera/rewind/try_to_take_picture(atom/target, mob/user)
 	if(!on || !pictures_left || !isturf(target.loc))
 		return
 	if(!used)//selfie time
@@ -157,7 +157,7 @@ Slimecrossing Items
 	pictures_max = 1
 	var/used = FALSE
 
-/obj/item/camera/timefreeze/afterattack(atom/target, mob/user, flag)
+/obj/item/camera/timefreeze/try_to_take_picture(atom/target, mob/user)
 	if(!on || !pictures_left || !isturf(target.loc))
 		return
 	if(!used) //refilling the film does not refill the timestop

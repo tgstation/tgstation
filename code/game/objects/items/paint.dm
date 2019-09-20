@@ -80,8 +80,6 @@
 
 /obj/item/paint/afterattack(atom/target, mob/user, proximity)
 	. = ..()
-	if(!proximity)
-		return
 	if(paintleft <= 0)
 		icon_state = "paint_empty"
 		return
@@ -98,8 +96,6 @@
 
 /obj/item/paint/paint_remover/afterattack(atom/target, mob/user, proximity)
 	. = ..()
-	if(!proximity)
-		return
 	if(!isturf(target) || !isobj(target))
 		return
 	if(target.color != initial(target.color))

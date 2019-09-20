@@ -10,9 +10,7 @@ Prismatic extracts:
 	icon_state = "prismatic"
 	var/paintcolor = "#FFFFFF"
 
-/obj/item/slimecross/prismatic/afterattack(turf/target, mob/user, proximity)
-	if(!proximity)
-		return
+/obj/item/slimecross/prismatic/afterattack(turf/target, mob/user)
 	if(!istype(target) || isspaceturf(target))
 		return
 	target.add_atom_colour(paintcolor, WASHABLE_COLOUR_PRIORITY)
@@ -22,10 +20,8 @@ Prismatic extracts:
 	colour = "grey"
 	desc = "It's constantly wet with a pungent-smelling, clear chemical."
 
-/obj/item/slimecross/prismatic/grey/afterattack(turf/target, mob/user, proximity)
+/obj/item/slimecross/prismatic/grey/afterattack(turf/target, mob/user)
 	. = ..()
-	if(!proximity)
-		return
 	if(istype(target) && target.color != initial(target.color))
 		target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 		playsound(target, 'sound/effects/slosh.ogg', 20, TRUE)

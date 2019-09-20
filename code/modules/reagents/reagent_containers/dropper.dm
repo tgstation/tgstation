@@ -10,8 +10,6 @@
 
 /obj/item/reagent_containers/dropper/afterattack(obj/target, mob/user , proximity)
 	. = ..()
-	if(!proximity)
-		return
 	if(!target.reagents)
 		return
 

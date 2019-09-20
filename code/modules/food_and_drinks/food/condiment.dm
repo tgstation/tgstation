@@ -112,10 +112,8 @@
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	return 1
 
-/obj/item/reagent_containers/food/condiment/afterattack(obj/target, mob/user , proximity)
+/obj/item/reagent_containers/food/condiment/afterattack(obj/target, mob/user)
 	. = ..()
-	if(!proximity)
-		return
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
 		if(!target.reagents.total_volume)
@@ -175,10 +173,8 @@
 	desc = "Salt. From dead crew, presumably."
 	return (TOXLOSS)
 
-/obj/item/reagent_containers/food/condiment/saltshaker/afterattack(obj/target, mob/living/user, proximity)
+/obj/item/reagent_containers/food/condiment/saltshaker/afterattack(obj/target, mob/living/user)
 	. = ..()
-	if(!proximity)
-		return
 	if(isturf(target))
 		if(!reagents.has_reagent(/datum/reagent/consumable/sodiumchloride, 2))
 			to_chat(user, "<span class='warning'>You don't have enough salt to make a pile!</span>")
@@ -271,10 +267,8 @@
 /obj/item/reagent_containers/food/condiment/pack/attack(mob/M, mob/user, def_zone) //Can't feed these to people directly.
 	return
 
-/obj/item/reagent_containers/food/condiment/pack/afterattack(obj/target, mob/user , proximity)
+/obj/item/reagent_containers/food/condiment/pack/afterattack(obj/target, mob/user)
 	. = ..()
-	if(!proximity)
-		return
 
 	//You can tear the bag open above food to put the condiments on it, obviously.
 	if(istype(target, /obj/item/reagent_containers/food/snacks))

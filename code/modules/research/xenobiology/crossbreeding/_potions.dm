@@ -11,11 +11,10 @@ Slimecrossing Potions
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potpurple"
 
-/obj/item/slimepotion/extract_cloner/afterattack(obj/item/target, mob/user , proximity)
-	if(!proximity)
-		return
+/obj/item/slimepotion/extract_cloner/afterattack(obj/item/target, mob/user)
+	. = ..()
 	if(istype(target, /obj/item/reagent_containers))
-		return ..(target, user, proximity)
+		return
 	if(istype(target, /obj/item/slimecross))
 		to_chat(user, "<span class='warning'>[target] is too complex for the potion to clone!</span>")
 		return
@@ -108,12 +107,10 @@ Slimecrossing Potions
 	icon_state = "potblue"
 	var/uses = 2
 
-/obj/item/slimepotion/spaceproof/afterattack(obj/item/clothing/C, mob/user, proximity)
+/obj/item/slimepotion/spaceproof/afterattack(obj/item/clothing/C, mob/user)
 	. = ..()
 	if(!uses)
 		qdel(src)
-		return
-	if(!proximity)
 		return
 	if(!istype(C))
 		to_chat(user, "<span class='warning'>The potion can only be used on clothing!</span>")
@@ -148,16 +145,14 @@ Slimecrossing Potions
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	var/uses = 2
 
-/obj/item/slimepotion/lavaproof/afterattack(obj/item/C, mob/user, proximity)
+/obj/item/slimepotion/lavaproof/afterattack(obj/item/C, mob/user)
 	. = ..()
 	if(!uses)
 		qdel(src)
-		return ..()
-	if(!proximity)
-		return ..()
+		return
 	if(!istype(C))
 		to_chat(user, "<span class='warning'>You can't coat this with lavaproofing fluid!</span>")
-		return ..()
+		return
 	to_chat(user, "<span class='notice'>You slather the red gunk over the [C], making it lavaproof.</span>")
 	C.name = "lavaproof [C.name]"
 	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)

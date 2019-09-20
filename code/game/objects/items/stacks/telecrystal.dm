@@ -20,7 +20,7 @@
 	else
 		return ..()
 
-/obj/item/stack/telecrystal/afterattack(obj/item/I, mob/user, proximity)
+/obj/item/stack/telecrystal/afterattack(obj/item/I, mob/user)
 	. = ..()
 	if(istype(I, /obj/item/cartridge/virus/frame))
 		var/obj/item/cartridge/virus/frame/cart = I

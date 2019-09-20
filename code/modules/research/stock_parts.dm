@@ -24,8 +24,8 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 		return TRUE
 	return ..()
 
-/obj/item/storage/part_replacer/afterattack(obj/machinery/T, mob/living/user, adjacent, params)
-	if(adjacent || !istype(T) || !T.component_parts)
+/obj/item/storage/part_replacer/afterattack(obj/machinery/T, mob/living/user, params)
+	if(!istype(T) || !T.component_parts)
 		return ..()
 	if(works_from_distance)
 		user.Beam(T, icon_state = "rped_upgrade", time = 5)

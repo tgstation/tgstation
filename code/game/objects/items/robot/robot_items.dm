@@ -169,9 +169,9 @@
 	to_chat(user, "<span class='notice'>You toggle [src] to \"[mode]\" mode.</span>")
 	update_icon()
 
-/obj/item/borg/charger/afterattack(obj/item/target, mob/living/silicon/robot/user, proximity_flag)
+/obj/item/borg/charger/afterattack(obj/item/target, mob/living/silicon/robot/user)
 	. = ..()
-	if(!proximity_flag || !iscyborg(user))
+	if(!iscyborg(user))
 		return
 	if(mode == "draw")
 		if(is_type_in_list(target, charge_machines))
@@ -446,8 +446,15 @@
 	user.visible_message("<span class='warning'>[user] shoots a high-velocity gumball at [target]!</span>")
 	check_amount()
 
-/obj/item/borg/lollipop/afterattack(atom/target, mob/living/user, proximity, click_params)
+/obj/item/borg/lollipop/afterattack(atom/target, mob/living/user, params)
 	. = ..()
+	do_candy_attack(target, user, TRUE, params)
+
+/obj/item/borg/lollipop/ranged_attack(atom/target, mob/living/user, params)
+	. = ..()
+	do_candy_attack(target, user, FALSE, params)
+
+/obj/item/borg/lollipop/proc/do_candy_attack(atom/target, mob/living/user, proximity, click_params)
 	check_amount()
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user

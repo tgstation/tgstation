@@ -238,7 +238,7 @@
 				if (!isnull(chosen_colour))
 					paint_color = chosen_colour
 					. = TRUE
-				else 
+				else
 					. = FALSE
 		if("enter_text")
 			var/txt = stripped_input(usr,"Choose what to write.",
@@ -253,9 +253,9 @@
 	var/static/regex/crayon_r = new /regex(@"[^\w!?,.=%#&+\/\-]")
 	return replacetext(lowertext(text), crayon_r, "")
 
-/obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/toy/crayon/afterattack(atom/target, mob/user, params)
 	. = ..()
-	if(!proximity || !check_allowed_items(target))
+	if(!check_allowed_items(target))
 		return
 
 	var/static/list/punctuation = list("!","?",".",",","/","+","-","=","%","#","&")
@@ -501,7 +501,7 @@
 	charges = -1
 	dye_color = DYE_RAINBOW
 
-/obj/item/toy/crayon/rainbow/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/toy/crayon/rainbow/afterattack(atom/target, mob/user, params)
 	paint_color = rgb(rand(0,255), rand(0,255), rand(0,255))
 	. = ..()
 
@@ -627,9 +627,7 @@
 		. += "It is empty."
 	. += "<span class='notice'>Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"].</span>"
 
-/obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity)
-		return
+/obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, params)
 
 	if(is_capped)
 		to_chat(user, "<span class='warning'>Take the cap off first!</span>")
@@ -669,7 +667,7 @@
 			if(color_hex2num(paint_color) < 350 && !istype(target, /obj/structure/window)) //Colors too dark are rejected
 				to_chat(usr, "<span class='warning'>A colour that dark on an object like this? Surely not...</span>")
 				return FALSE
-				
+
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 
 			if(istype(target, /obj/structure/window))
@@ -703,8 +701,8 @@
 	desc = "A metallic container containing shiny synthesised paint."
 	charges = -1
 
-/obj/item/toy/crayon/spraycan/borg/afterattack(atom/target,mob/user,proximity, params)
-	var/diff = ..()
+/obj/item/toy/crayon/spraycan/borg/afterattack(atom/target,mob/user, params)
+	. = ..()
 	if(!iscyborg(user))
 		to_chat(user, "<span class='notice'>How did you get this?</span>")
 		qdel(src)
@@ -712,11 +710,11 @@
 
 	var/mob/living/silicon/robot/borgy = user
 
-	if(!diff)
+	if(!.)
 		return
 	// 25 is our cost per unit of paint, making it cost 25 energy per
 	// normal tag, 50 per window, and 250 per attack
-	var/cost = diff * 25
+	var/cost = . * 25
 	// Cyborgs shouldn't be able to use modules without a cell. But if they do
 	// it's free.
 	if(borgy.cell)

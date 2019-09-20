@@ -117,9 +117,9 @@
 		return
 	..()
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/afterattack(obj/target, mob/user, proximity)
+/obj/item/reagent_containers/food/drinks/drinkingglass/afterattack(obj/target, mob/user)
 	. = ..()
-	if((!proximity) || !check_allowed_items(target,target_self=1))
+	if(!check_allowed_items(target,target_self=1))
 		return
 
 	else if(reagents.total_volume && user.a_intent == INTENT_HARM)

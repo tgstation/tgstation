@@ -10,10 +10,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	item_flags = NOBLUDGEON
 
-/obj/item/anomaly_neutralizer/afterattack(atom/target, mob/user, proximity)
+/obj/item/anomaly_neutralizer/afterattack(atom/target, mob/user)
 	..()
-	if(!proximity || !target)
-		return
 	if(istype(target, /obj/effect/anomaly))
 		var/obj/effect/anomaly/A = target
 		to_chat(user, "<span class='notice'>The circuitry of [src] fries from the strain of neutralizing [A]!</span>")

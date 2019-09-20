@@ -119,10 +119,8 @@
 		return ..()
 
 
-/obj/item/weldingtool/afterattack(atom/O, mob/user, proximity)
+/obj/item/weldingtool/afterattack(atom/O, mob/user)
 	. = ..()
-	if(!proximity)
-		return
 	if(!status && O.is_refillable())
 		reagents.trans_to(O, reagents.total_volume, transfered_by = user)
 		to_chat(user, "<span class='notice'>You empty [src]'s fuel tank into [O].</span>")

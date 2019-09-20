@@ -82,9 +82,9 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "bear_armor_upgrade"
 
-/obj/item/bear_armor/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/bear_armor/afterattack(atom/target, mob/user)
 	. = ..()
-	if(istype(target, /mob/living/simple_animal/hostile/bear) && proximity_flag)
+	if(istype(target, /mob/living/simple_animal/hostile/bear))
 		var/mob/living/simple_animal/hostile/bear/A = target
 		if(A.armored)
 			to_chat(user, "<span class='warning'>[A] has already been armored up!</span>")

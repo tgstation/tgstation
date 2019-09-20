@@ -30,10 +30,14 @@
 			mode = WAND_OPEN
 	to_chat(user, "Now in mode: [mode].")
 
+/obj/item/door_remote/ranged_attack(atom/A, mob/user)
+	. = ..()
+	afterattack(A, user)
+
 // Airlock remote works by sending NTNet packets to whatever it's pointed at.
 /obj/item/door_remote/afterattack(atom/A, mob/user)
 	. = ..()
-	var/datum/component/ntnet_interface/target_interface = A.GetComponent(/datum/component/ntnet_interface)
+	var/datum/component/ntnet_interface/target_interface = A.GetComponent(/datum/component/ntnet_interface) //OOF
 
 	if(!target_interface)
 		return

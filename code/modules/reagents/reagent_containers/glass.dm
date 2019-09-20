@@ -51,9 +51,9 @@
 			addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, 5, TRUE, TRUE, FALSE, user, FALSE, INGEST), 5)
 			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 
-/obj/item/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
+/obj/item/reagent_containers/glass/afterattack(obj/target, mob/user)
 	. = ..()
-	if((!proximity) || !check_allowed_items(target,target_self=1))
+	if(!check_allowed_items(target,target_self=1))
 		return
 
 	if(!spillable)

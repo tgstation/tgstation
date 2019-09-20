@@ -212,10 +212,8 @@
 	icon_state = "evidenceobj"
 	item_flags = SURGICAL_TOOL
 
-/obj/item/organ_storage/afterattack(obj/item/I, mob/user, proximity)
+/obj/item/organ_storage/afterattack(obj/item/I, mob/user)
 	. = ..()
-	if(!proximity)
-		return
 	if(contents.len)
 		to_chat(user, "<span class='notice'>[src] already has something inside it.</span>")
 		return
@@ -259,10 +257,8 @@
 	item_flags = NOBLUDGEON
 	var/list/advanced_surgeries = list()
 
-/obj/item/surgical_processor/afterattack(obj/item/O, mob/user, proximity)
+/obj/item/surgical_processor/afterattack(obj/item/O, mob/user)
 	. = ..()
-	if(!proximity)
-		return
 	if(istype(O, /obj/item/disk/surgery))
 		to_chat(user, "<span class='notice'>You load the surgery protocol from [O] into [src].</span>")
 		var/obj/item/disk/surgery/D = O

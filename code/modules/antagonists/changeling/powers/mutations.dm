@@ -174,10 +174,8 @@
 		can_drop = TRUE
 	AddComponent(/datum/component/butchering, 60, 80)
 
-/obj/item/melee/arm_blade/afterattack(atom/target, mob/user, proximity)
+/obj/item/melee/arm_blade/afterattack(atom/target, mob/user)
 	. = ..()
-	if(!proximity)
-		return
 	if(istype(target, /obj/structure/table))
 		var/obj/structure/table/T = target
 		T.deconstruct(FALSE)

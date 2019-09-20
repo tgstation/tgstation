@@ -119,8 +119,16 @@
 	focus.attack_self_tk(user)
 	update_icon()
 
-/obj/item/tk_grab/afterattack(atom/target, mob/living/carbon/user, proximity, params)//TODO: go over this
+/obj/item/tk_grab/ranged_attack(atom/target, mob/living/carbon/user, params)
 	. = ..()
+	tk_attack(target, user, params)
+
+/obj/item/tk_grab/pre_attack(atom/target, mob/living/carbon/user, params)
+	..()
+	tk_attack(target, user, params)
+	return TRUE
+
+/obj/item/tk_grab/proc/tk_attack(atom/target, mob/living/carbon/user, params)
 	if(!target || !user)
 		return
 
@@ -134,7 +142,6 @@
 		target.attack_self_tk(user)
 		update_icon()
 		return
-
 
 	if(!isturf(target) && isitem(focus) && target.Adjacent(focus))
 		apply_focus_overlay()

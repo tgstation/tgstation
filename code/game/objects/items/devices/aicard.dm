@@ -26,10 +26,8 @@
 	user.visible_message("<span class='suicide'>[user] is trying to upload [user.p_them()]self into [src]! That's not going to work out well!</span>")
 	return BRUTELOSS
 
-/obj/item/aicard/afterattack(atom/target, mob/user, proximity)
+/obj/item/aicard/afterattack(atom/target, mob/user)
 	. = ..()
-	if(!proximity || !target)
-		return
 	if(AI) //AI is on the card, implies user wants to upload it.
 		log_combat(user, AI, "uploaded", src, "to [target].")
 		target.transfer_ai(AI_TRANS_FROM_CARD, user, AI, src)

@@ -975,10 +975,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 	price = max(1, round(input(user,"set price","price") as num|null, 1))
 	to_chat(user, "<span class='notice'> The [src] will now give things an $[price] tag.</span>")
 
-/obj/item/price_tagger/afterattack(atom/target, mob/user, proximity)
+/obj/item/price_tagger/afterattack(atom/target, mob/user)
 	. = ..()
-	if(!proximity)
-		return
 	if(isitem(target))
 		var/obj/item/I = target
 		I.custom_price = price

@@ -66,10 +66,8 @@
 	to_chat(C, "<span class='userdanger'>The nettle burns your bare hand!</span>")
 	return TRUE
 
-/obj/item/reagent_containers/food/snacks/grown/nettle/afterattack(atom/A as mob|obj, mob/user,proximity)
+/obj/item/reagent_containers/food/snacks/grown/nettle/afterattack(atom/A, mob/user)
 	. = ..()
-	if(!proximity)
-		return
 	if(force > 0)
 		force -= rand(1, (force / 3) + 1) // When you whack someone with it, leaves fall off
 	else

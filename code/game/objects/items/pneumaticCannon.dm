@@ -132,12 +132,14 @@
 		loadedWeightClass++
 	return TRUE
 
-/obj/item/pneumatic_cannon/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/pneumatic_cannon/afterattack(atom/target, mob/living/user, params)
 	. = ..()
-	if(flag && user.a_intent == INTENT_HARM) //melee attack
+	if(user.a_intent == INTENT_HARM) //melee attack
 		return
-	if(!istype(user))
-		return
+	Fire(user, target)
+
+/obj/item/pneumatic_cannon/ranged_attack(atom/target, mob/living/user)
+	. = ..()
 	Fire(user, target)
 
 /obj/item/pneumatic_cannon/proc/Fire(mob/living/user, var/atom/target)

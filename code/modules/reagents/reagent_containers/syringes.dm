@@ -47,11 +47,9 @@
 /obj/item/reagent_containers/syringe/attackby(obj/item/I, mob/user, params)
 	return
 
-/obj/item/reagent_containers/syringe/afterattack(atom/target, mob/user , proximity)
+/obj/item/reagent_containers/syringe/afterattack(atom/target, mob/user)
 	. = ..()
 	if(busy)
-		return
-	if(!proximity)
 		return
 	if(!target.reagents)
 		return

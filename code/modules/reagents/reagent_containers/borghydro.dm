@@ -219,12 +219,10 @@ Borg Shaker
 					R.cell.use(charge_cost)
 					RG.add_reagent(reagent_ids[valueofi], 5)
 
-/obj/item/reagent_containers/borghypo/borgshaker/afterattack(obj/target, mob/user, proximity)
+/obj/item/reagent_containers/borghypo/borgshaker/afterattack(obj/target, mob/user)
 	. = ..()
-	if(!proximity)
-		return
 
-	else if(target.is_refillable())
+	if(target.is_refillable())
 		var/datum/reagents/R = reagent_list[mode]
 		if(!R.total_volume)
 			to_chat(user, "<span class='warning'>[src] is currently out of this ingredient! Please allow some time for the synthesizer to produce more.</span>")

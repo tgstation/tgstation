@@ -11,7 +11,7 @@
 	force = 0 //You can't hit stuff unless wielded
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	force_unwielded = 0 
+	force_unwielded = 0
 	force_wielded = 20
 	throwforce = 5
 	throw_speed = 4
@@ -76,11 +76,11 @@
 	if(!QDELETED(C) && !QDELETED(target))
 		C.total_damage += target_health - target.health //we did some damage, but let's not assume how much we did
 
-/obj/item/twohanded/kinetic_crusher/afterattack(atom/target, mob/living/user, proximity_flag, clickparams)
+/obj/item/twohanded/kinetic_crusher/ranged_attack(atom/target, mob/living/user, clickparams)
 	. = ..()
 	if(!wielded)
 		return
-	if(!proximity_flag && charged)//Mark a target, or mine a tile.
+	if(charged)//Mark a target, or mine a tile.
 		var/turf/proj_turf = user.loc
 		if(!isturf(proj_turf))
 			return
@@ -97,7 +97,10 @@
 		update_icon()
 		addtimer(CALLBACK(src, .proc/Recharge), charge_time)
 		return
-	if(proximity_flag && isliving(target))
+
+/obj/item/twohanded/kinetic_crusher/afterattack(atom/target, mob/living/user, clickparams)
+	. = ..()
+	if(isliving(target))
 		var/mob/living/L = target
 		var/datum/status_effect/crusher_mark/CM = L.has_status_effect(STATUS_EFFECT_CRUSHERMARK)
 		if(!CM || CM.hammer_synced != src || !L.remove_status_effect(STATUS_EFFECT_CRUSHERMARK))

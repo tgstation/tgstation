@@ -82,7 +82,7 @@
 				W.melee_attack_chain(src, A, params)
 				return
 			else
-				W.afterattack(A, src, 0, params)
+				W.ranged_attack(A, src, params)
 				return
 
 //Middle click cycles through selected modules.

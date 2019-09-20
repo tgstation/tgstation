@@ -18,11 +18,9 @@
 	if(remaining_uses != -1)
 		. += "It has [remaining_uses] uses left."
 
-/obj/item/soapstone/afterattack(atom/target, mob/user, proximity)
+/obj/item/soapstone/afterattack(atom/target, mob/user)
 	. = ..()
 	var/turf/T = get_turf(target)
-	if(!proximity)
-		return
 
 	var/obj/structure/chisel_message/existing_message = locate() in T
 

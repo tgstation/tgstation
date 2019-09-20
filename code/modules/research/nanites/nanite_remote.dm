@@ -53,7 +53,15 @@
 	if(locked)
 		add_overlay("nanite_remote_locked")
 
-/obj/item/nanite_remote/afterattack(atom/target, mob/user, etc)
+/obj/item/nanite_remote/ranged_attack(atom/target, mob/user, params)
+	. = ..()
+	perform_remote_action(target, user)
+
+/obj/item/nanite_remote/afterattack(atom/target, mob/user, params)
+	. = ..()
+	perform_remote_action(target, user)
+
+/obj/item/nanite_remote/proc/perform_remote_action(atom/target, mob/user)
 	switch(mode)
 		if(REMOTE_MODE_OFF)
 			return
@@ -172,7 +180,7 @@
 	var/comm_code = 0
 	var/comm_message = ""
 
-/obj/item/nanite_remote/comm/afterattack(atom/target, mob/user, etc)
+/obj/item/nanite_remote/comm/perform_remote_action(atom/target, mob/user, etc)
 	switch(mode)
 		if(REMOTE_MODE_OFF)
 			return

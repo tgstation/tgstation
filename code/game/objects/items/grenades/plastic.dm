@@ -67,7 +67,7 @@
 
 /obj/item/grenade/c4/attack_self(mob/user)
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num|null
-	
+
 	if (isnull(newtime))
 		return
 
@@ -76,11 +76,9 @@
 		det_time = newtime
 		to_chat(user, "Timer set for [det_time] seconds.")
 
-/obj/item/grenade/c4/afterattack(atom/movable/AM, mob/user, flag)
+/obj/item/grenade/c4/afterattack(atom/movable/AM, mob/user)
 	. = ..()
 	aim_dir = get_dir(user,AM)
-	if(!flag)
-		return
 
 	to_chat(user, "<span class='notice'>You start planting [src]. The timer is set to [det_time]...</span>")
 

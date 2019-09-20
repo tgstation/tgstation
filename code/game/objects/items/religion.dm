@@ -303,8 +303,11 @@
 	var/staffcooldown = 0
 	var/staffwait = 30
 
+/obj/item/godstaff/afterattack(atom/target, mob/user, click_parameters)
+	. = ..()
+	ranged_attack(target, user, click_parameters)
 
-/obj/item/godstaff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/godstaff/ranged_attack(atom/target, mob/user, click_parameters)
 	. = ..()
 	if(staffcooldown + staffwait > world.time)
 		return

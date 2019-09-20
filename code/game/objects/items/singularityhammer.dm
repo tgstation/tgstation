@@ -56,10 +56,8 @@
 				step_towards(H,pull)
 	return
 
-/obj/item/twohanded/singularityhammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
+/obj/item/twohanded/singularityhammer/afterattack(atom/A, mob/user)
 	. = ..()
-	if(!proximity)
-		return
 	if(wielded)
 		if(charged == 5)
 			charged = 0

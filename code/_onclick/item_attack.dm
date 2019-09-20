@@ -20,7 +20,7 @@
 	if(QDELETED(target))
 		stack_trace("The target of an item attack got deleted and melee_attack_chain was not stopped.")
 		return
-	afterattack(target, user, TRUE, params)
+	afterattack(target, user, params)
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
@@ -115,12 +115,14 @@
 	else
 		return ..()
 
-// Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
-// Click parameters is the params string from byond Click() code, see that documentation.
-/obj/item/proc/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
-	SEND_SIGNAL(user, COMSIG_MOB_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
+///Called as the last part of the melee_attack_chain
+/obj/item/proc/afterattack(atom/target, mob/user, click_parameters)
+	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target, user, click_parameters)
+	SEND_SIGNAL(user, COMSIG_MOB_ITEM_AFTERATTACK, target, user, click_parameters)
 
+///Called when trying to click something that you can not reach.
+/obj/item/proc/ranged_attack(atom/target, mob/user, click_parameters)
+	SEND_SIGNAL(src, COMSIG_ITEM_RANGEDATTACK, target, user, click_parameters)
 
 /obj/item/proc/get_clamped_volume()
 	if(w_class)

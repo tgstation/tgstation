@@ -196,10 +196,8 @@
 			mark(M, user)
 
 
-/obj/item/abductor/gizmo/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/abductor/gizmo/ranged_attack(atom/target, mob/living/user, params)
 	. = ..()
-	if(flag)
-		return
 	if(!ScientistCheck(user))
 		return
 	if(!console)
@@ -253,10 +251,8 @@
 		return
 	radio_off(M, user)
 
-/obj/item/abductor/silencer/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/abductor/silencer/ranged_attack(atom/target, mob/living/user, params)
 	. = ..()
-	if(flag)
-		return
 	if(!AbductorCheck(user))
 		return
 	radio_off(target, user)
@@ -304,7 +300,7 @@
 		icon_state = "mind_device_message"
 	to_chat(user, "<span class='notice'>You switch the device to [mode==MIND_DEVICE_MESSAGE? "TRANSMISSION": "COMMAND"] MODE</span>")
 
-/obj/item/abductor/mind_device/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/abductor/mind_device/ranged_attack(atom/target, mob/living/user, params)
 	. = ..()
 	if(!ScientistCheck(user))
 		return

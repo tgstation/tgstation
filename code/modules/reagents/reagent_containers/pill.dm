@@ -59,8 +59,6 @@
 
 /obj/item/reagent_containers/pill/afterattack(obj/target, mob/user , proximity)
 	. = ..()
-	if(!proximity)
-		return
 	if(!dissolvable || !target.is_refillable())
 		return
 	if(target.is_drainable() && !target.reagents.total_volume)

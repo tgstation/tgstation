@@ -161,10 +161,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		M.visible_message("<span class='danger'>[user] smacks [M]'s lifeless corpse with [src].</span>")
 		playsound(src.loc, "punch", 25, TRUE, -1)
 
-/obj/item/storage/book/bible/afterattack(atom/A, mob/user, proximity)
+/obj/item/storage/book/bible/afterattack(atom/A, mob/user)
 	. = ..()
-	if(!proximity)
-		return
 	if(isfloorturf(A))
 		to_chat(user, "<span class='notice'>You hit the floor with the bible.</span>")
 		if(user.mind && (user.mind.isholy))

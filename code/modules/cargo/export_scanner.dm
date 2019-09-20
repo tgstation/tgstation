@@ -16,9 +16,9 @@
 	if(!cargo_console)
 		. += "<span class='notice'>[src] is not currently linked to a cargo console.</span>"
 
-/obj/item/export_scanner/afterattack(obj/O, mob/user, proximity)
+/obj/item/export_scanner/afterattack(obj/O, mob/user)
 	. = ..()
-	if(!istype(O) || !proximity)
+	if(!istype(O))
 		return
 
 	if(istype(O, /obj/machinery/computer/cargo))

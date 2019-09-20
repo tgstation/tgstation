@@ -35,10 +35,8 @@
 	else
 		to_chat(user, "<span class='warning'>You can't use [src] while inside something!</span>")
 
-/obj/item/chameleon/afterattack(atom/target, mob/user , proximity)
+/obj/item/chameleon/afterattack(atom/target, mob/user)
 	. = ..()
-	if(!proximity)
-		return
 	if(!check_sprite(target))
 		return
 	if(active_dummy)//I now present you the blackli(f)st

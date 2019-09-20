@@ -50,10 +50,8 @@
 /obj/item/toy/waterballoon/attack(mob/living/carbon/human/M, mob/user)
 	return
 
-/obj/item/toy/waterballoon/afterattack(atom/A as mob|obj, mob/user, proximity)
+/obj/item/toy/waterballoon/afterattack(atom/A, mob/user)
 	. = ..()
-	if(!proximity)
-		return
 	if (istype(A, /obj/structure/reagent_dispensers))
 		var/obj/structure/reagent_dispensers/RD = A
 		if(RD.reagents.total_volume <= 0)
@@ -218,10 +216,8 @@
 	else
 		return ..()
 
-/obj/item/toy/gun/afterattack(atom/target as mob|obj|turf|area, mob/user, flag)
+/obj/item/toy/gun/ranged_attack(atom/target, mob/user)
 	. = ..()
-	if (flag)
-		return
 	if (!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
@@ -1097,10 +1093,9 @@
 	icon_state = "snowball"
 	throwforce = 12 //pelt your enemies to death with lumps of snow
 
-/obj/item/toy/snowball/afterattack(atom/target as mob|obj|turf|area, mob/user)
+/obj/item/toy/snowball/ranged_attack(atom/target, mob/user)
 	. = ..()
-	if(user.dropItemToGround(src))
-		throw_at(target, throw_range, throw_speed)
+	user.throw_item(target)
 
 /obj/item/toy/snowball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
@@ -1117,10 +1112,9 @@
 	item_state = "beachball"
 	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
 
-/obj/item/toy/beach_ball/afterattack(atom/target as mob|obj|turf|area, mob/user)
+/obj/item/toy/beach_ball/ranged_attack(atom/target, mob/user)
 	. = ..()
-	if(user.dropItemToGround(src))
-		throw_at(target, throw_range, throw_speed)
+	user.throw_item(target)
 
 /*
  * Clockwork Watch

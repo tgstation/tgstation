@@ -967,7 +967,7 @@ datum/status_effect/stabilized/blue/on_remove()
 		var/obj/item/slimecross/stabilized/rainbow/X = linked_extract
 		if(istype(X))
 			if(X.regencore)
-				X.regencore.afterattack(owner,owner,TRUE)
+				X.regencore.afterattack(owner,owner)
 				X.regencore = null
 				owner.visible_message("<span class='warning'>[owner] flashes a rainbow of colors, and [owner.p_their()] skin is coated in a milky regenerative goo!</span>")
 				qdel(src)

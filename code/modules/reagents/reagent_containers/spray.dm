@@ -25,6 +25,10 @@
 
 /obj/item/reagent_containers/spray/afterattack(atom/A, mob/user)
 	. = ..()
+	ranged_attack(A, user)
+
+/obj/item/reagent_containers/spray/ranged_attack(atom/A, mob/user)
+	. = ..()
 	if(istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart) || istype(A, /obj/machinery/hydroponics))
 		return
 
@@ -210,7 +214,7 @@
 	return OXYLOSS
 
 // Fix pepperspraying yourself
-/obj/item/reagent_containers/spray/pepper/afterattack(atom/A as mob|obj, mob/user)
+/obj/item/reagent_containers/spray/pepper/afterattack(atom/A, mob/user)
 	if (A.loc == user)
 		return
 	. = ..()
@@ -296,7 +300,7 @@
 	amount_per_transfer_from_this = 10
 	volume = 600
 
-/obj/item/reagent_containers/spray/chemsprayer/afterattack(atom/A as mob|obj, mob/user)
+/obj/item/reagent_containers/spray/chemsprayer/afterattack(atom/A, mob/user)
 	// Make it so the bioterror spray doesn't spray yourself when you click your inventory items
 	if (A.loc == user)
 		return

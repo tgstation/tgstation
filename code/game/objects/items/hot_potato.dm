@@ -92,9 +92,9 @@
 	if(active)
 		to_chat(user, "<span class='userdanger'>You have a really bad feeling about [src]!</span>")
 
-/obj/item/hot_potato/afterattack(atom/target, mob/user, adjacent, params)
+/obj/item/hot_potato/afterattack(atom/target, mob/user, params)
 	. = ..()
-	if(!adjacent || !ismob(target))
+	if(!ismob(target))
 		return
 	force_onto(target, user)
 

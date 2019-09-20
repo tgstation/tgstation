@@ -99,9 +99,9 @@
 	resistance_flags = FLAMMABLE
 	var/sign_path = /obj/structure/sign/basic //the type of sign that will be created when placed on a turf
 
-/obj/item/sign_backing/afterattack(atom/target, mob/user, proximity)
+/obj/item/sign_backing/afterattack(atom/target, mob/user)
 	. = ..()
-	if(isturf(target) && proximity)
+	if(isturf(target))
 		var/turf/T = target
 		user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
 							 "<span class='notice'>You attach the sign to [T].</span>")
