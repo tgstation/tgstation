@@ -60,6 +60,7 @@
 /datum/surgery_step/proc/initiate(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	surgery.step_in_progress = TRUE
 	var/speed_mod = 1
+	var/fail_prob = 0//100 - fail_prob = success_prob
 	var/advance = FALSE
 
 	if(preop(user, target, target_zone, tool, surgery) == -1)
@@ -74,13 +75,24 @@
 		implement_speed_mod = implements[implement_type] / 100.0
 
 	speed_mod /= (get_location_modifier(target) * (1 + surgery.speed_modifier) * implement_speed_mod)
+	var/modded_time = time * speed_mod
 
-	if(do_after(user, time * speed_mod, target = target))
+	fail_prob = max(0, modded_time - (time * 2))//if modded_time > time * 2, then fail_prob = modded_time - time*2
+	modded_time = min(modded_time, time * 2)//also if that, then cap modded_time at time*2
 
-		if(chem_check(target))
+	if(do_after(user, modded_time, target = target))
+
+		var/chem_check_result = chem_check(target)
+		if((prob(100-fail_prob) || (iscyborg(user) && !silicons_obey_prob)) && chem_check_result && !try_to_fail)
+
 			if(success(user, target, target_zone, tool, surgery))
 				advance = TRUE
-
+		else
+			if(failure(user, target, target_zone, tool, surgery))
+				advance = TRUE
+			if(chem_check_result)
+				if(.(user, target, target_zone, tool, surgery, try_to_fail)) //automatically re-attempt if failed for reason other than lack of required chemical
+					advance = TRUE
 		if(advance && !repeatable)
 			surgery.status++
 			if(surgery.status > surgery.steps.len)
