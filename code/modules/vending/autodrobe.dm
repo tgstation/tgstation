@@ -138,9 +138,7 @@
 
 /obj/machinery/vending/autodrobe/cantLoadItem(obj/item/I,mob/user)
 	. = ..()
-	if(.)
-		return
-	return !(I.type in products)
+	return ((I.type in products) ? (. & ~VENDOR_DEFAULT_CANT_LOAD) : (. | VENDOR_PRODUCT_CANT_LOAD))
 
 	default_price = 50
 	extra_price = 75

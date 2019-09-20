@@ -28,3 +28,8 @@
 #define ACCOUNT_SEC_NAME "Defense Budget"
 
 #define NO_FREEBIES "commies go home"
+
+#define VENDOR_DEFAULT_CANT_LOAD (1 << 0)
+//#define COMPONENT_CANT_VENDOR_LOAD (1 << 1) //defined in _defines/components.dm
+#define VENDOR_FULL_CANT_LOAD (1 << 2)
+#define VENDOR_PRODUCT_CANT_LOAD (1 << 3)

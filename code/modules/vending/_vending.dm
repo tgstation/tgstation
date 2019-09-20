@@ -791,9 +791,10 @@ GLOBAL_LIST_EMPTY(vending_products)
   * * user - the user doing the loading
   *
   * Returning nothing means that the item can be loaded.
+  * This returns a bitflag.
   */
 /obj/machinery/vending/proc/cantLoadItem(obj/item/I, mob/user)
-	return SEND_SIGNAL(I, COMSIG_ITEM_TRY_VENDOR_LOADING, src, user)
+	return VENDOR_DEFAULT_CANT_LOAD | SEND_SIGNAL(I, COMSIG_ITEM_TRY_VENDOR_LOADING, src, user)
 
 /obj/machinery/vending/onTransitZ()
 	return
@@ -822,13 +823,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 /obj/machinery/vending/custom/cantLoadItem(obj/item/I, mob/user)
 	. = ..()
-	if(. & COMPONENT_CANT_VENDOR_LOAD)
-		return
 	if(loaded_items >= max_loaded_items)
 		say("There are too many items in stock.")
-		return TRUE
+		return . | VENDOR_FULL_CANT_LOAD
 	if(I.custom_price)
-		return FALSE
+		return . & ~VENDOR_DEFAULT_CANT_LOAD
 
 /obj/machinery/vending/custom/Topic(href, href_list)
 	usr.set_machine(src)
