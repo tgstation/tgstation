@@ -6,9 +6,10 @@
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
 	density = TRUE
 	var/scan_active = null
+	payment_department = ACCOUNT_MED
 
 /obj/machinery/my_machine/proc/inUse()
-  scan_active = TRUE
+  scan_active = 0
   icon_state = "kiosk_active"
   return
 
@@ -17,7 +18,7 @@
   if(!ui)
     ui = new(user, src, ui_key, "my_machine", name, 500, 300, master_ui, state)
     ui.open()
-    scan_active = null
+    scan_active = 1
     icon_state = "kiosk_off"
 
 /obj/machinery/my_machine/ui_data(mob/living/carbon/human/user)
@@ -40,7 +41,7 @@
   data["suffocation_health"] = oxy_loss
   data["patient_status"] = patient_status
   data["patient_illness"] = sickness
-  data["active_status"] = scan_active ? TRUE : FALSE
+  data["active_status"] = scan_active ? 0 : 1
 
   if(user.stat == DEAD || HAS_TRAIT(user, TRAIT_FAKEDEATH))
     patient_status = "Dead."

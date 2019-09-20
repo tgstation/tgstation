@@ -1,9 +1,9 @@
 <ui-display title='Health kiosk'>
-  <ui-section>Hello {{data.patient_name}}.</ui-section>
+  <ui-section>Sup {{data.patient_name}}.</ui-section>
   <ui-section>
     <ui-button icon='power-off' state='{{data.active_status  ? 'disabled' : null}}' action='beginScan'>Begin Scan (Cost: 5 Credits)</ui-button><br/>
   </ui-section>
-  {{#if data.active_status == active_status}}
+  {{#if data.active_status == 1}}
     <ui-section title='Medical Report'>
       <ui-section label='Brute levels'>
 	<ui-bar min='0' max='100' value='{{100 - data.brute_health}}' state={{"good"}}> {{100 - data.brute_health}}%</ui-bar>
