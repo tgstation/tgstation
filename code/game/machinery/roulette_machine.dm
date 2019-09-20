@@ -108,7 +108,7 @@
 		wires.interact(user)
 		return
 	if(playing)
-		return
+		return ..()
 	if(istype(W, /obj/item/card/id))
 		playsound(src, 'sound/machines/card_slide.ogg', 50, TRUE)
 
