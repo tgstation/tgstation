@@ -47,27 +47,23 @@
 /*Suffix: -uri*/
 /datum/reagent/medicine/C2/lenturi
 	name = "Lenturi"
-	description = "Used to treat burns. Heals better when you are slowed down."
+	description = "Used to treat burns. Heals better when you are slower."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	var/resetting_probability = 0
 	var/spammer = 0
-	var/step_counter = 0
+
 /datum/reagent/medicine/C2/lenturi/on_mob_life(mob/living/carbon/M)
-	var/slowdown_healing = 0.5
-	
-	M.adjustFireLoss(calculate_healing(step_counter, slowdown_healing))
-	..()
-	return TRUE
+		M.adjustFireLoss(-3 * REM)
+		..()
+		return TRUE
 /datum/reagent/medicine/C2/lenturi/on_mob_metabolize(M)
-	RegisterSignal(M, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	M.add_movespeed_modifier(MOVESPEED_ID, update=TRUE, priority=100, multiplicative_slowdown=1.50, blacklisted_movetypes=(FLYING|FLOATING))
+	. = ..()
 /datum/reagent/medicine/C2/lenturi/on_mob_end_metabolize(M)
-	UnregisterSignal(M, COMSIG_MOVABLE_MOVED)
-	step_counter = 0
-/datum/reagent/medicine/C2/lenturi/proc/on_moved()
-	step_counter++
-/datum/reagent/medicine/C2/lenturi/proc/calculate_healing()
-	return max(-2, -(3 - (step_counter*0.1)))
+    M.remove_movespeed_modifier(MOVESPEED_ID_LENTURI)
+	. = ..()
+	
 /datum/reagent/medicine/C2/aiuri
 	name = "Aiuri"
 	description = "Used to treat burns. Does minor eye damage."

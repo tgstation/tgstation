@@ -68,4 +68,4 @@
 #define MOVESPEED_ID_HUMAN_CARRYING                     "HUMAN_CARRY"
 #define MOVESPEED_ID_SHRINK_RAY							"SHRUNKEN_SPEED_MODIFIER"
 #define MOVESPEED_ID_PEPPER_SPRAY                       "PEPPER_SPRAYED"
-
+#define MOVESPEED_ID_LENTURI                            "LENTURI_SLOWDOWN"
