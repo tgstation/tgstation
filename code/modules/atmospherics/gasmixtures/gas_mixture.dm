@@ -338,7 +338,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 		if(new_sharer_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			sharer.temperature = (old_sharer_heat_capacity*sharer.temperature-heat_capacity_sharer_to_self*sharer.temperature_archived + heat_capacity_self_to_sharer*temperature_archived)/new_sharer_heat_capacity
-			sharer.garbage_collect()
 		//thermal energy of the system (self and sharer) is unchanged
 
 			if(abs(old_sharer_heat_capacity) > MINIMUM_HEAT_CAPACITY)
@@ -374,6 +373,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			sharer_temperature = max(sharer_temperature + heat/sharer_heat_capacity, TCMB)
 			if(sharer)
 				sharer.temperature = sharer_temperature
+				sharer.garbage_collect()
 	return sharer_temperature
 	//thermal energy of the system (self and sharer) is unchanged
 
