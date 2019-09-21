@@ -2506,7 +2506,6 @@
 /area/quartermaster/storage)
 "agd" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "age" = (
@@ -14429,18 +14428,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/security/processing)
-"aNV" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard)
 "aNX" = (
 /obj/structure/table,
 /obj/machinery/recharger,
@@ -15942,7 +15929,6 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "aSs" = (
@@ -17947,13 +17933,6 @@
 /area/medical/patients_rooms/room_a{
 	name = "Surgery B"
 	})
-"aXJ" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/stripes/end{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/maintenance/port)
 "aXL" = (
 /obj/machinery/holopad,
 /turf/open/floor/plasteel,
@@ -21002,15 +20981,6 @@
 /obj/item/toy/figure/warden,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
-"bfl" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
-/turf/open/floor/plating,
-/area/maintenance/port)
 "bfm" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 10
@@ -27319,7 +27289,6 @@
 	lootcount = 4;
 	name = "4maintenance loot spawner"
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "buB" = (
@@ -39624,6 +39593,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "cbI" = (
@@ -41401,6 +41371,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/engine_room/external)
+"dpq" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "dpT" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
 	dir = 4
@@ -44988,6 +44965,18 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"lAT" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 5
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/camera{
+	c_tag = "Engine -External Midright";
+	dir = 4;
+	network = list("ss13","Engineering","Engine")
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "lBd" = (
 /obj/structure/closet,
 /obj/item/clothing/suit/hazardvest,
@@ -47960,6 +47949,26 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
+"smv" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/camera{
+	c_tag = "Engine -External Topright";
+	dir = 4;
+	network = list("ss13","Engineering","Engine")
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
+"smN" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/structure/grille/broken,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "snW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -49612,7 +49621,7 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "vPT" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/machinery/camera,
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "vQd" = (
@@ -67796,8 +67805,8 @@ aeS
 bof
 aeS
 aeS
-bTU
-bXN
+bQW
+smN
 rxd
 bWX
 cdT
@@ -68818,7 +68827,7 @@ aeS
 aeS
 aeS
 aeS
-bTU
+bQW
 bQt
 agU
 bnM
@@ -71427,10 +71436,10 @@ aGE
 aGE
 bMs
 bfm
-bdv
+ovO
 aCd
-bdv
-bfl
+ovO
+ilI
 acB
 acB
 acB
@@ -71683,10 +71692,10 @@ aGE
 bTY
 bXh
 rEa
-aXJ
 rEa
-rEa
-rEa
+bMs
+bMs
+bMs
 bfq
 acB
 bMn
@@ -72950,9 +72959,9 @@ bXO
 bRh
 bXQ
 bMs
-rEa
-rEa
-rEa
+bMs
+bMs
+bMs
 cbF
 bRf
 aGQ
@@ -73208,8 +73217,8 @@ bRl
 ovO
 ovO
 ovO
-bdv
-bdv
+ovO
+dpq
 cbH
 bTE
 aGQ
@@ -89125,7 +89134,7 @@ aug
 aug
 aug
 aug
-aug
+smv
 aug
 uwV
 osG
@@ -89658,9 +89667,9 @@ uwV
 aug
 aug
 aal
-aaa
-aaa
-aaa
+aal
+aal
+aal
 aal
 aaa
 aad
@@ -89913,7 +89922,7 @@ aug
 aug
 rPx
 aug
-aaa
+aal
 aal
 aaa
 aaa
@@ -90167,8 +90176,8 @@ jQo
 uwV
 jsm
 aal
-aaa
-aaa
+aal
+aal
 aal
 aal
 aal
@@ -90677,7 +90686,7 @@ pZA
 xbA
 pZA
 xbA
-pZA
+lAT
 jcA
 icc
 aal
@@ -94486,11 +94495,11 @@ aQo
 aQk
 agh
 bAD
-aup
-aup
-aup
-aup
-aup
+bAD
+bAD
+bAD
+bAD
+bAD
 asj
 fir
 bAY
@@ -94743,10 +94752,10 @@ bVd
 aQk
 agh
 agd
-bAD
-bAD
-bAD
-bAD
+aup
+aup
+aup
+aup
 bAD
 asj
 bVG
@@ -95000,10 +95009,10 @@ agh
 agh
 agh
 asj
-aup
-asj
-asj
 aRV
+asj
+asj
+asj
 bAD
 asj
 bzq
@@ -95261,8 +95270,8 @@ aup
 aup
 aAw
 asj
-aup
 bAD
+aup
 aup
 aup
 aup
@@ -95518,7 +95527,7 @@ aup
 aup
 aop
 asj
-aup
+bAD
 bAD
 bAD
 bAD
@@ -95533,7 +95542,7 @@ bSl
 bSm
 bAD
 bAD
-aNV
+bta
 asj
 bKW
 asj
@@ -95789,8 +95798,8 @@ afQ
 afQ
 afQ
 afQ
-bAD
-aNV
+aup
+bta
 asj
 bLi
 asj
@@ -96046,8 +96055,8 @@ ahd
 asN
 awC
 aDd
-bAD
-aNV
+aup
+bta
 asj
 asj
 asj
@@ -96303,8 +96312,8 @@ aqm
 asR
 atc
 aDe
-bAD
-aNV
+aup
+bta
 asj
 bQk
 aRV
@@ -96561,7 +96570,7 @@ atc
 awP
 afQ
 aSr
-aNV
+bta
 asj
 bBB
 aRV
@@ -96817,8 +96826,8 @@ asD
 aur
 asD
 afQ
-bAD
-aNV
+aup
+bta
 asj
 bQO
 aRV
@@ -97075,7 +97084,7 @@ atc
 asD
 aFz
 mtv
-aNV
+bta
 asj
 bKz
 aRV
@@ -97331,8 +97340,8 @@ asD
 uww
 asD
 aFz
-bAD
-aNV
+aup
+bta
 asj
 asj
 asj
