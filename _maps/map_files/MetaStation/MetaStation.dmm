@@ -9602,9 +9602,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "atJ" = (
-/obj/machinery/sparker/toxmix{
-	pixel_x = 25
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -62324,9 +62321,6 @@
 	},
 /area/science/research)
 "cGj" = (
-/obj/machinery/sparker/toxmix{
-	pixel_x = 25
-	},
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxins_mixing_input{
 	dir = 4
 	},
@@ -73511,16 +73505,6 @@
 /obj/structure/grille/broken,
 /turf/open/space/basic,
 /area/space/nearstation)
-"dUb" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/machinery/door/airlock/external{
-	name = "Arrival Airlock";
-	safety_mode = 1
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "dYu" = (
 /obj/machinery/door/airlock/external{
 	name = "Auxiliary Airlock"
@@ -73663,14 +73647,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab/range)
-"fEb" = (
-/obj/effect/turf_decal/delivery,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/door/airlock/external{
-	name = "Departure Lounge Airlock"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/exit/departure_lounge)
 "fEQ" = (
 /turf/closed/wall,
 /area/science/nanite)
@@ -73681,14 +73657,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
-"fFQ" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/door/airlock/external{
-	name = "Arrival Airlock";
-	safety_mode = 1
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "fGz" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -73717,16 +73685,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"fRZ" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/machinery/door/airlock/external{
-	name = "Arrival Airlock";
-	safety_mode = 1
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "fUt" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -73746,14 +73704,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/research)
-"gkB" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/door/airlock/external{
-	name = "Arrival Airlock";
-	safety_mode = 1
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "gnd" = (
 /turf/closed/wall,
 /area/maintenance/department/science/central)
@@ -73999,14 +73949,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/main)
-"iRJ" = (
-/obj/effect/turf_decal/delivery,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/door/airlock/external{
-	name = "Departure Lounge Airlock"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/exit/departure_lounge)
 "jah" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -74018,16 +73960,6 @@
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
-"jpT" = (
-/obj/effect/turf_decal/delivery,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/machinery/door/airlock/external{
-	name = "Departure Lounge Airlock"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/exit/departure_lounge)
 "jrE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -74917,14 +74849,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
-"szO" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/door/airlock/external{
-	name = "Arrival Airlock";
-	safety_mode = 1
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "sFv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -75038,16 +74962,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/hydroponics)
-"tSW" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/machinery/door/airlock/external{
-	name = "Arrival Airlock";
-	safety_mode = 1
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "tVY" = (
 /obj/structure/closet/crate,
 /obj/item/target/alien,
@@ -75079,14 +74993,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
-"ujO" = (
-/obj/effect/turf_decal/delivery,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/door/airlock/external{
-	name = "Departure Lounge Airlock"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/exit/departure_lounge)
 "urv" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/security/prison)
@@ -75136,16 +75042,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/department/science)
-"uKC" = (
-/obj/effect/turf_decal/delivery,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/machinery/door/airlock/external{
-	name = "Departure Lounge Airlock"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/exit/departure_lounge)
 "uLY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -75205,6 +75101,10 @@
 	dir = 8
 	},
 /area/engine/storage_shared)
+"vIO" = (
+/obj/machinery/igniter/incinerator_toxmix,
+/turf/open/floor/engine/vacuum,
+/area/science/mixing/chamber)
 "vKx" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -86095,9 +85995,9 @@ aDb
 aDb
 aVu
 aWU
-fFQ
+djz
 aZZ
-tSW
+djC
 aaa
 aaa
 aaa
@@ -86105,9 +86005,9 @@ aaa
 aaa
 aaa
 aaa
-fFQ
+djz
 bsk
-tSW
+djC
 aVu
 bxu
 aRA
@@ -87894,9 +87794,9 @@ aSL
 aDb
 cZq
 aWZ
-fFQ
+djz
 aZZ
-tSW
+djC
 aaa
 aaa
 aaa
@@ -87904,9 +87804,9 @@ aaa
 aaa
 aaa
 aaa
-fFQ
+djz
 bsk
-tSW
+djC
 bvH
 bMw
 aRA
@@ -100564,7 +100464,7 @@ cMV
 cPO
 cQm
 cQJ
-ujO
+cQY
 cRs
 kzn
 aaa
@@ -101078,9 +100978,9 @@ cLm
 cPP
 cQo
 cQL
-ujO
+cQY
 cQK
-uKC
+eCT
 aaa
 aaa
 aaa
@@ -102620,9 +102520,9 @@ cPs
 cPU
 cQp
 cQN
-ujO
+cQY
 cQK
-uKC
+eCT
 cYJ
 aaa
 aaa
@@ -103134,9 +103034,9 @@ cPu
 cPV
 cQq
 cQP
-ujO
+cQY
 cRt
-uKC
+eCT
 aaa
 aaa
 aaa
@@ -107486,7 +107386,7 @@ cBu
 cCv
 wQA
 cEs
-cFn
+vIO
 cFn
 cHe
 cIc
