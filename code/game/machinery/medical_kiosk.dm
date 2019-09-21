@@ -1,3 +1,5 @@
+//The Medical Kiosk is designed to act as a low access alernative to  a medical analyzer, and doesn't require breaking into medical. Self Diagnose at your heart's content! ...For a fee.
+
 /obj/machinery/medical_kiosk
 	name = "medical kiosk"
 	desc = "A freestanding medical kiosk, which can provide your basic medical status. Less effective than a medical analyzer."
@@ -33,6 +35,12 @@
   say("Thank you for your patronage!")
   return
 
+/obj/machinery/medical_kiosk/update_icon()
+	if(is_operational())
+		icon_state = "bus"
+	else
+		icon_state = "bus_off"
+
 /obj/machinery/medical_kiosk/wrench_act(mob/living/user, obj/item/I) //Allows for wrenching/unwrenching the machine.
 	..()
 	default_unfasten_wrench(user, I, time = 10)
@@ -63,6 +71,12 @@
     var/datum/disease/D = thing
     if(!(D.visibility_flags & HIDDEN_SCANNER))
       sickness = "Warning: Patient is harboring some form of viral disease. Seek further medical attention."
+  if(user.stat == DEAD || HAS_TRAIT(user, TRAIT_FAKEDEATH))
+    patient_status = "Dead."
+  if((brute_loss+fire_loss+tox_loss+oxy_loss) >= 50)
+    patient_status = "Injured"
+  if((brute_loss+fire_loss+tox_loss+oxy_loss) >= 80)
+    patient_status = "Gravely Injured"
   data["patient_name"] = patient_name
   data["brute_health"] = brute_loss
   data["burn_health"] = fire_loss
@@ -72,8 +86,6 @@
   data["patient_illness"] = sickness
   data["active_status"] = scan_active ? 0 : 1
 
-  if(user.stat == DEAD || HAS_TRAIT(user, TRAIT_FAKEDEATH))
-    patient_status = "Dead."
   return data
 
 /obj/machinery/medical_kiosk/ui_act(action,active)
