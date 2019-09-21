@@ -78,27 +78,40 @@
   var/tox_loss = user.getToxLoss()
   var/oxy_loss = user.getOxyLoss()
   var/clone_loss = user.getCloneLoss()
+  var/combined_
   var/brain_loss = user.getOrganLoss(ORGAN_SLOT_BRAIN)
+  var/brain_status = "Brain patterns normal."
   var/sickness = "Patient does not show signs of disease."
   for(var/thing in user.diseases)
     var/datum/disease/D = thing
     if(!(D.visibility_flags & HIDDEN_SCANNER))
       sickness = "Warning: Patient is harboring some form of viral disease. Seek further medical attention."
+
   if(user.stat == DEAD || HAS_TRAIT(user, TRAIT_FAKEDEATH))
     patient_status = "Dead."
-  if((brute_loss+fire_loss+tox_loss+oxy_loss) >= 20)
-    patient_status = "Lightly Injured"
+  if((brute_loss+fire_loss+tox_loss+oxy_loss) >= 80)
+    patient_status = "Gravely Injured"
   else if((brute_loss+fire_loss+tox_loss+oxy_loss) >= 40)
     patient_status = "Injured"
-  else if((brute_loss+fire_loss+tox_loss+oxy_loss) >= 80)
-    patient_status = "Gravely Injured"
+  else if((brute_loss+fire_loss+tox_loss+oxy_loss) >= 20)
+    patient_status = "Lightly Injured"
+
+  if((brain_loss) >= 100)
+    brain_status = "Grave brain damage detected."
+  else if((brain_loss) >= 50)
+    brain_status = "Severe brain damage detected."
+  else if((brain_loss) >= 20)
+    brain_status = "Brain damage detected."
+  else if((brain_loss) >= 1)
+    brain_status = "Mild brain damage detected."  //You may have a miiiild case of severe brain damage.
+
   data["patient_name"] = patient_name
   data["brute_health"] = brute_loss
   data["burn_health"] = fire_loss
   data["toxin_health"] = tox_loss
   data["suffocation_health"] = oxy_loss
   data["clone_health"] = clone_loss
-  data["brain_health"] = brain_loss
+  data["brain_health"] = brain_status
   data["patient_status"] = patient_status
   data["patient_illness"] = sickness
   data["active_status"] = scan_active ? 0 : 1
