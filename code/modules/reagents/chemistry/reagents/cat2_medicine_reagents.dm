@@ -61,7 +61,7 @@
 	M.add_movespeed_modifier(MOVESPEED_ID, update=TRUE, priority=100, multiplicative_slowdown=1.50, blacklisted_movetypes=(FLYING|FLOATING))
 	. = ..()
 /datum/reagent/medicine/C2/lenturi/on_mob_end_metabolize(M)
-    M.remove_movespeed_modifier(MOVESPEED_ID_LENTURI)
+	M.remove_movespeed_modifier(MOVESPEED_ID_LENTURI)
 	. = ..()
 	
 /datum/reagent/medicine/C2/aiuri
