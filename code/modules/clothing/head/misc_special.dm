@@ -17,7 +17,7 @@
 	name = "welding helmet"
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye."
 	icon_state = "welding"
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH 
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	item_state = "welding"
 	materials = list(/datum/material/iron=1750, /datum/material/glass=400)
 	flash_protect = 2
@@ -76,7 +76,7 @@
 	hitsound = 'sound/weapons/tap.ogg'
 	STOP_PROCESSING(SSobj, src)
 
-/obj/item/clothing/head/hardhat/cakehat/is_hot()
+/obj/item/clothing/head/hardhat/cakehat/get_temperature()
 	return on * heat
 /*
  * Ushanka
