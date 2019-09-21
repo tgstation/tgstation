@@ -24,7 +24,7 @@
     return
   else
     account.adjust_money(-default_price)
-    var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SRV)
+    var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_MED)
     if(D)
       D.adjust_money(default_price)
     use_power(20)
