@@ -267,7 +267,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /datum/gas_mixture/parse_gas_string(gas_string)
 	gas_string = SSair.preprocess_gas_string(gas_string)
-	
+
 	var/list/gases = src.gases
 	var/list/gas = params2list(gas_string)
 	if(gas["TEMP"])
@@ -338,6 +338,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 		if(new_sharer_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			sharer.temperature = (old_sharer_heat_capacity*sharer.temperature-heat_capacity_sharer_to_self*sharer.temperature_archived + heat_capacity_self_to_sharer*temperature_archived)/new_sharer_heat_capacity
+			sharer.garbage_collect()
 		//thermal energy of the system (self and sharer) is unchanged
 
 			if(abs(old_sharer_heat_capacity) > MINIMUM_HEAT_CAPACITY)
@@ -432,7 +433,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 					continue reaction_loop
 
 			//at this point, all requirements for the reaction are satisfied. we can now react()
-			
+
 			. |= reaction.react(src, holder)
 			if (. & STOP_REACTIONS)
 				break
