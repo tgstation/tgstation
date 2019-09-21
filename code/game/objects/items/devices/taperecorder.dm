@@ -224,8 +224,8 @@
 	P.info = t1
 	P.name = "paper- 'Transcript'"
 	usr.put_in_hands(P)
-	canprint = 0
-	addtimer(VARSET_CALLBACK(src, canprint, 1), 30 SECONDS)
+	canprint = FALSE
+	addtimer(VARSET_CALLBACK(src, canprint, TRUE), 30 SECONDS)
 
 
 //empty tape recorders
