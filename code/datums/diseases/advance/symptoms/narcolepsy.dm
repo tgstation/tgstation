@@ -63,7 +63,7 @@ Bonus
 		if(5)
 			if(prob(50))
 				to_chat(M, "<span class='warning'>[pick("So tired...","You feel very sleepy.","You have a hard time keeping your eyes open.","You try to stay awake.")]</span>")
-			M.drowsyness = CLAMP(M.drowsyness, M.drowsyness + 40, 70)
+			M.drowsyness = min(M.drowsyness + 40, 70)
 			if(yawning)
 				M.emote("yawn")
 				if(M.CanSpreadAirborneDisease())
