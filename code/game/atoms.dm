@@ -154,11 +154,12 @@
 	if (canSmoothWith)
 		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
 
-	if(custom_materials && custom_materials.len)
-		var/temp_mats = custom_materials.Copy()
-		custom_materials = null
-		set_custom_materials(temp_mats)
+	var/temp_list = list()
+	for(var/i in custom_materials)
+		temp_list[getmaterialref(i)] = custom_materials[i] //Get the proper instanced version
 
+	custom_materials = null //Null the list to prepare for applying the materials properly
+	set_custom_materials(temp_list)
 
 	ComponentInitialize()
 

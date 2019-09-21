@@ -114,8 +114,6 @@
 /datum/component/material_container/proc/insert_item(obj/item/I, var/multiplier = 1, stack_amt)
 	if(!I)
 		return FALSE
-	if(istype(I, /obj/item/stack))
-		return insert_stack(I, stack_amt, multiplier)
 
 	multiplier = CEILING(multiplier, 0.01)
 
@@ -135,31 +133,6 @@
 		if(I.custom_materials[MAT] > max_mat_value)
 			primary_mat = MAT
 	return primary_mat
-
-/// Proc for putting a stack inside of the container
-/datum/component/material_container/proc/insert_stack(obj/item/stack/S, amt, multiplier = 1) 
-	if(isnull(amt))
-		amt = S.amount
-
-	if(amt <= 0)
-		return FALSE
-
-	if(amt > S.amount)
-		amt = S.amount
-
-	var/material_amt = get_item_material_amount(S) / amt
-	if(!material_amt)
-		return FALSE
-
-	amt = min(amt, round(((max_amount - total_amount) / material_amt)))
-	if(!amt)
-		return FALSE
-
-	
-
-	last_inserted_id = insert_item_materials(S,multiplier)
-	S.use(amt)
-	return amt
 
 /// For inserting an amount of material
 /datum/component/material_container/proc/insert_amount_mat(amt, var/datum/material/mat) 

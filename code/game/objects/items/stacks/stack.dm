@@ -46,7 +46,7 @@
 		new type(loc, max_amount, FALSE)
 	if(!merge_type)
 		merge_type = type
-	if(material_type)
+	if(custom_materials && custom_materials.len)
 		custom_materials = list(getmaterialref(material_type) = (MINERAL_MATERIAL_AMOUNT * amount))
 	. = ..()
 	if(merge)
