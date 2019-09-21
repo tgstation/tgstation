@@ -57,10 +57,10 @@
 		M.adjustFireLoss(-3 * REM)
 		..()
 		return TRUE
-/datum/reagent/medicine/C2/lenturi/on_mob_metabolize(M)
-	M.add_movespeed_modifier(MOVESPEED_ID, update=TRUE, priority=100, multiplicative_slowdown=1.50, blacklisted_movetypes=(FLYING|FLOATING))
+/datum/reagent/medicine/C2/lenturi/on_mob_metabolize(mob/living/carbon/M)
+	M.add_movespeed_modifier(MOVESPEED_ID_LENTURI, update=TRUE, priority=100, multiplicative_slowdown=1.50, blacklisted_movetypes=(FLYING|FLOATING))
 	. = ..()
-/datum/reagent/medicine/C2/lenturi/on_mob_end_metabolize(M)
+/datum/reagent/medicine/C2/lenturi/on_mob_end_metabolize(mob/living/carbon/M)
 	M.remove_movespeed_modifier(MOVESPEED_ID_LENTURI)
 	. = ..()
 	
