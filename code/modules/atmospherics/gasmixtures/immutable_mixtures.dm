@@ -43,6 +43,11 @@
 	. = ..()
 	temperature = initial_temperature
 
+/datum/gas_mixture/immutable/temperature_share(datum/gas_mixture/immutable/sharer, conduction_coefficient, sharer_temperature, sharer_heat_capacity)
+	. = ..()
+	if(sharer)
+		sharer.temperature = sharer.initial_temperature
+
 //used by space tiles
 /datum/gas_mixture/immutable/space
 	initial_temperature = TCMB
