@@ -713,6 +713,7 @@
 
 /obj/structure/window/reinforced/plastitanium/unanchored
 	anchored = FALSE
+	state = WINDOW_OUT_OF_FRAME
 
 /obj/structure/window/reinforced/clockwork
 	name = "brass window"
