@@ -20,12 +20,22 @@
       <ui-section label='Suffocation levels'>
 	<ui-bar min='0' max='100' value='{{100 - data.suffocation_health}}' state="good"}}> {{100 - data.suffocation_health}}%</ui-bar>
       </ui-section>
+      {{#if data.adv_active_status == 1}}
+      <ui-section label='Genetics levels'>
+	<ui-bar min='0' max='100' value='{{100 - data.clone_health}}' state="good"}}> {{100 - data.suffocation_health}}%</ui-bar>
+      </ui-section>
+      {{/if}}
       <ui-section label='Patient status'>
         {{data.patient_status}}
       </ui-section>
       <ui-section label='Disease status'>
         {{data.patient_illness}}
       </ui-section>
+      {{#if data.adv_active_status == 1}}
+      <ui-section label='Brain status'>
+        {{data.brain_health}}
+      </ui-section>   
+      {{/if}}
     </ui-section>
   {{/if}}
 </ui-display> 

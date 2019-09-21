@@ -7,16 +7,17 @@
 	icon_state = "kiosk"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
-	var/scan_active = null  //Shows if the machine is being used. resets upon new newer.
-	var/datum/bank_account/account  //payer's account.
-	var/mob/living/carbon/human/H
-	var/obj/item/card/id/C
 	circuit = /obj/item/circuitboard/machine/medical_kiosk
 	payment_department = ACCOUNT_MED
 	var/default_price = 5  //I'm defaulting to a low price on this, but in the future I wouldn't have an issue making it more or less expensive.
+	var/scan_active = null  //Shows if the machine is being used. resets upon new viewer.
+	var/adv_scan_active = null  //Shows if the machine has upgraded functionality
+	var/datum/bank_account/account  //payer's account.
+	var/mob/living/carbon/human/H   //the person using the console in each instance.
+	var/obj/item/card/id/C    //the account of the person using the console.
 
-/obj/machinery/medical_kiosk/proc/inUse()  //Verifies that the user can use the interface, followed by showing medical information.
-  if(C && C.registered_account)
+/obj/machinery/medical_kiosk/proc/inuse()  //Verifies that the user can use the interface, followed by showing medical information.
+  if(C.registered_account)
     account = C.registered_account
   else
     say("No account detected.")  //No homeless crew.
@@ -33,6 +34,8 @@
   scan_active = 0
   icon_state = "kiosk_active"
   say("Thank you for your patronage!")
+  adv_scan_active = 0
+  RefreshParts()
   return
 
 /obj/machinery/medical_kiosk/update_icon()
@@ -46,6 +49,14 @@
 	default_unfasten_wrench(user, I, time = 10)
 	return TRUE
 
+/obj/machinery/medicak_kiosk/RefreshParts()
+  var/A
+  for(var/obj/item/stock_parts/scanning_module/S in component_parts)
+    A += S.rating
+  if(A >=3)
+    adv_scan_active = 1
+  return
+
 /obj/machinery/medical_kiosk/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
   ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
   if(!ui)
@@ -57,7 +68,6 @@
     H = user
     C = H.get_idcard(TRUE)
 
-
 /obj/machinery/medical_kiosk/ui_data(mob/living/carbon/human/user)
   var/list/data = list()
   var/patient_name = user.name
@@ -66,6 +76,8 @@
   var/fire_loss = user.getFireLoss()
   var/tox_loss = user.getToxLoss()
   var/oxy_loss = user.getOxyLoss()
+  var/clone_loss = user.getCloneLoss()
+  var/brain_loss = user.getOrganLoss(ORGAN_SLOT_BRAIN)
   var/sickness = "Patient does not show signs of disease."
   for(var/thing in user.diseases)
     var/datum/disease/D = thing
@@ -73,18 +85,23 @@
       sickness = "Warning: Patient is harboring some form of viral disease. Seek further medical attention."
   if(user.stat == DEAD || HAS_TRAIT(user, TRAIT_FAKEDEATH))
     patient_status = "Dead."
-  if((brute_loss+fire_loss+tox_loss+oxy_loss) >= 50)
+  if((brute_loss+fire_loss+tox_loss+oxy_loss) >= 20)
+    patient_status = "Lightly Injured"
+  else if((brute_loss+fire_loss+tox_loss+oxy_loss) >= 40)
     patient_status = "Injured"
-  if((brute_loss+fire_loss+tox_loss+oxy_loss) >= 80)
+  else if((brute_loss+fire_loss+tox_loss+oxy_loss) >= 80)
     patient_status = "Gravely Injured"
   data["patient_name"] = patient_name
   data["brute_health"] = brute_loss
   data["burn_health"] = fire_loss
   data["toxin_health"] = tox_loss
   data["suffocation_health"] = oxy_loss
+  data["clone_health"] = clone_loss
+  data["brain_health"] = brain_loss
   data["patient_status"] = patient_status
   data["patient_illness"] = sickness
   data["active_status"] = scan_active ? 0 : 1
+  data["adv_active_status"] = adv_scan_active ? 0 : 1
 
   return data
 
@@ -93,5 +110,5 @@
     return
   switch(action)
     if("beginScan")
-      inUse()
+      inuse()
       . = TRUE
