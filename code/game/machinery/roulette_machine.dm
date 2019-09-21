@@ -118,7 +118,7 @@
 
 		if(my_card)
 			var/obj/item/card/id/player_card = W
-			if(player_card.registered_account.account_balance <= chosen_bet_amount) //Does the player have enough funds
+			if(player_card.registered_account.account_balance < chosen_bet_amount) //Does the player have enough funds
 				audible_message("<span class='warning'>You do not have the funds to play! Lower your bet or get more money.</span>")
 				playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
 				return FALSE
