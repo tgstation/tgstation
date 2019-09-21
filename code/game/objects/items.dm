@@ -570,7 +570,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			if (throwforce > 0)
 				if (mob_throw_hit_sound)
 					playsound(hit_atom, mob_throw_hit_sound, volume, TRUE, -1)
-				else if(hitsound).
+				else if(hitsound)
 					playsound(hit_atom, hitsound, volume, TRUE, -1)
 				else
 					playsound(hit_atom, 'sound/weapons/genhit.ogg',volume, TRUE, -1)
