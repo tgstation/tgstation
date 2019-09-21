@@ -244,13 +244,13 @@
 	if(AIStatus == AI_IDLE)
 		//1% chance to skitter madly away
 		if(!busy && prob(1))
-			stop_automated_movement = 1
+			stop_automated_movement = TRUE
 			Goto(pick(urange(20, src, 1)), move_to_delay)
 			addtimer(CALLBACK(src, .proc/do_action), 5 SECONDS)
 		return 1
 
 /mob/living/simple_animal/hostile/poison/giant_spider/proc/do_action()
-	stop_automated_movement = 0
+	stop_automated_movement = FALSE
 	walk(src,0)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/proc/GiveUp(C)
@@ -258,7 +258,7 @@
 		if(cocoon_target == C && get_dist(src,cocoon_target) > 1)
 			cocoon_target = null
 		busy = FALSE
-		stop_automated_movement = 0
+		stop_automated_movement = FALSE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/handle_automated_action()
 	if(..())

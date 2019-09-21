@@ -334,11 +334,11 @@ field_generator power level display
 	move_resist = initial(move_resist)
 
 /obj/machinery/field/generator/proc/notify_admins()
-	var/temp = 1 //stops spam
+	var/temp = TRUE //stops spam
 	for(var/obj/singularity/O in GLOB.singularities)
 		if(O.last_warning && temp)
 			if((world.time - O.last_warning) > 50) //to stop message-spam
-				temp = 0
+				temp = FALSE
 				var/turf/T = get_turf(src)
 				message_admins("A singulo exists and a containment field has failed at [ADMIN_VERBOSEJMP(T)].")
 				investigate_log("has <font color='red'>failed</font> whilst a singulo exists at [AREACOORD(T)].", INVESTIGATE_SINGULO)
