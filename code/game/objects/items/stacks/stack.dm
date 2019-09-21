@@ -47,7 +47,9 @@
 	if(!merge_type)
 		merge_type = type
 	if(custom_materials && custom_materials.len)
-		custom_materials = list(getmaterialref(material_type) = (MINERAL_MATERIAL_AMOUNT * amount))
+		for(var/i in custom_materials)
+			message_admins("[i]")
+			custom_materials[getmaterialref(i)] = MINERAL_MATERIAL_AMOUNT * amount
 	. = ..()
 	if(merge)
 		for(var/obj/item/stack/S in loc)
@@ -223,8 +225,11 @@
 			O.setDir(usr.dir)
 		use(R.req_amount * multiplier)
 	
-		if(R.applies_mats && material_type)
-			O.set_custom_materials(list(getmaterialref(material_type) = (R.req_amount * MINERAL_MATERIAL_AMOUNT)))
+		if(R.applies_mats && custom_materials && custom_materials.len)
+			var/list/used_materials = list()
+			for(var/i in custom_materials)
+				used_materials[getmaterialref(i)] = R.req_amount * (MINERAL_MATERIAL_AMOUNT / custom_materials.len)
+			O.set_custom_materials(used_materials)
 
 		//START: oh fuck i'm so sorry
 		if(istype(O, /obj/structure/windoor_assembly))
@@ -340,6 +345,10 @@
 		source.add_charge(amount * cost)
 	else
 		src.amount += amount
+	if(custom_materials && custom_materials.len)
+		for(var/i in custom_materials)
+			custom_materials[getmaterialref(i)] = (MINERAL_MATERIAL_AMOUNT * amount)
+		set_custom_materials() //Refresh
 	update_icon()
 	update_weight()
 
@@ -356,8 +365,6 @@
 	S.copy_evidences(src)
 	use(transfer, TRUE)
 	S.add(transfer)
-	if(material_type)
-		S.set_custom_materials(list(getmaterialref(material_type) = (MINERAL_MATERIAL_AMOUNT * S.amount))) //Make sure we add our custom mats
 	return transfer
 
 /obj/item/stack/Crossed(obj/o)
