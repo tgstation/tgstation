@@ -34,7 +34,7 @@
   scan_active = 0
   icon_state = "kiosk_active"
   say("Thank you for your patronage!")
-  adv_scan_active = 0
+  adv_scan_active = 1
   RefreshParts()
   return
 
@@ -49,12 +49,13 @@
 	default_unfasten_wrench(user, I, time = 10)
 	return TRUE
 
-/obj/machinery/medicak_kiosk/RefreshParts()
+/obj/machinery/medical_kiosk/RefreshParts()
   var/A
   for(var/obj/item/stock_parts/scanning_module/S in component_parts)
     A += S.rating
   if(A >=3)
-    adv_scan_active = 1
+    adv_scan_active = 0
+    return
   return
 
 /obj/machinery/medical_kiosk/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
