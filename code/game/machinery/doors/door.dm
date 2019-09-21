@@ -203,14 +203,18 @@
 
 /obj/machinery/door/attackby(obj/item/I, mob/user, params)
 	if(user.a_intent != INTENT_HARM && (I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/twohanded/fireaxe)))
-		try_to_crowbar(I, user)
-		return 1
+		var/forced_open = FALSE
+		if(istype(I, /obj/item/crowbar))
+			var/obj/item/crowbar/C = I
+			forced_open = C.force_opens
+		try_to_crowbar(I, user, forced_open)
+		return TRUE
 	else if(I.tool_behaviour == TOOL_WELDER)
 		try_to_weld(I, user)
-		return 1
+		return TRUE
 	else if(!(I.item_flags & NOBLUDGEON) && user.a_intent != INTENT_HARM)
 		try_to_activate_door(user)
-		return 1
+		return TRUE
 	return ..()
 
 /obj/machinery/door/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)

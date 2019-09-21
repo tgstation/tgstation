@@ -66,7 +66,7 @@
 /obj/item/clothing/head/helmet/space/hardsuit/proc/display_visor_message(var/msg)
 	var/mob/wearer = loc
 	if(msg && ishuman(wearer))
-		wearer.show_message("[icon2html(src, wearer)]<b><span class='robot'>[msg]</span></b>", 1)
+		wearer.show_message("[icon2html(src, wearer)]<b><span class='robot'>[msg]</span></b>", MSG_VISUAL)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rad_act(severity)
 	. = ..()
@@ -797,7 +797,7 @@
 	if(shield_state == "broken")
 		to_chat(user, "<span class='warning'>You can't interface with the hardsuit's software if the shield's broken!</span>")
 		return
-	
+
 	if(shield_state == "shield-red")
 		shield_state = "shield-old"
 		shield_on = "shield-old"
