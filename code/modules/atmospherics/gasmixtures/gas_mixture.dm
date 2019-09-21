@@ -374,7 +374,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			if(sharer)
 				sharer.temperature = sharer_temperature
 				if (initial(sharer.gc_share)) 
- 					sharer.garbage_collect() 
+					sharer.garbage_collect() 
 	return sharer_temperature
 	//thermal energy of the system (self and sharer) is unchanged
 
