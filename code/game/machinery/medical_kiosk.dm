@@ -4,7 +4,7 @@
 	name = "medical kiosk"
 	desc = "A freestanding medical kiosk, which can provide your basic medical status. Less effective than a medical analyzer."
 	icon = 'icons/obj/machines/medical_kiosk.dmi'
-	icon_state = "kiosk_off"
+	icon_state = "kiosk"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
 	var/scan_active = null  //Shows if the machine is being used. resets upon new newer.
@@ -37,9 +37,9 @@
 
 /obj/machinery/medical_kiosk/update_icon()
 	if(is_operational())
-		icon_state = "bus"
+		icon_state = "kiosk_off"
 	else
-		icon_state = "bus_off"
+		icon_state = "kiosk"
 
 /obj/machinery/medical_kiosk/wrench_act(mob/living/user, obj/item/I) //Allows for wrenching/unwrenching the machine.
 	..()
