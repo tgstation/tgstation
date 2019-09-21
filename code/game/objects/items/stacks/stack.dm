@@ -48,7 +48,6 @@
 		merge_type = type
 	if(custom_materials && custom_materials.len)
 		for(var/i in custom_materials)
-			message_admins("[i]")
 			custom_materials[getmaterialref(i)] = MINERAL_MATERIAL_AMOUNT * amount
 	. = ..()
 	if(merge)
@@ -347,7 +346,7 @@
 		src.amount += amount
 	if(custom_materials && custom_materials.len)
 		for(var/i in custom_materials)
-			custom_materials[getmaterialref(i)] = (MINERAL_MATERIAL_AMOUNT * amount)
+			custom_materials[getmaterialref(i)] = MINERAL_MATERIAL_AMOUNT * src.amount
 		set_custom_materials() //Refresh
 	update_icon()
 	update_weight()
