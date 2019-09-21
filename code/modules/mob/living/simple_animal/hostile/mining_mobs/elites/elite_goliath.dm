@@ -1,12 +1,20 @@
 /**
   * # Elite Goliath
   *
-  * An elite mob which boils down to a simple test of keeping a constant eye on the foe and your surrondings.
+  * A stronger, faster variation of the goliath.  Has the ability to manipulate explosive mushrooms, which can deny areas of the arena to the opponent.
+  * When it's health is below half, tendrils will spawn randomly around it.  When it is below a quarter of health, this effect is doubled.
+  * It's attacks are as follows:
+  * - Brings up a line of tentacles immediately between the goliath and the target.
+  * - Spawns a 3x3 box of tentacles on the target
+  * - The goliath lets out a noise, and is able to move faster for 5 seconds.
+  * - Spawns 3 explosive mushrooms by the target.  These will light up after 2 seconds.  If destroyed before this occurs, nothing will happen, but destroying them once activated will leave a fire explosion behind.
+  * Elite goliath is a straightforward fight, which requires the combatant be attentive of explosive mushrooms, the goliath, and any tentacles it spawns.  Usually leaving one of these ignored can lead to a lost fight.
   */
 
 /mob/living/simple_animal/hostile/asteroid/elite/goliath
 	name = "elite goliath"
 	desc = "A hulking, armor-plated beast with long tendrils arching from its back.  This one seems extra tough."
+	icon = 'icons/mob/lavaland/elite_lavaland_monsters.dmi'
 	icon_state = "elite_goliath"
 	icon_living = "elite_goliath"
 	icon_aggro = "elite_goliath"
@@ -23,6 +31,8 @@
 	move_to_delay = 5
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/bone = 2)
+	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/goliath_hide = 1)
 
 	attack_action_types = list(/datum/action/innate/elite_attack/tentacle_square,
 								/datum/action/innate/elite_attack/tentacle_line,

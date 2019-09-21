@@ -54,7 +54,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 
 /datum/action/innate/elite_attack
 	name = "Elite Attack"
-	icon_icon = 'icons/mob/actions/actions_elite.dmi'
+	icon_icon = 'icons/mob/actions/actions_elites.dmi'
 	button_icon_state = ""
 	var/mob/living/simple_animal/hostile/asteroid/elite/M
 	var/chosen_message
@@ -99,7 +99,8 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	var/times_won = 0
 	var/mob/living/carbon/human/activator = null
 	var/mob/living/simple_animal/hostile/asteroid/elite/mychild = null
-	var/potentialspawns = list(/mob/living/simple_animal/hostile/asteroid/elite/goliath)
+	var/potentialspawns = list(/mob/living/simple_animal/hostile/asteroid/elite/goliath,
+								/mob/living/simple_animal/hostile/asteroid/elite/pandora)
 	icon = 'icons/mob/lavaland/elite_lavaland_monsters.dmi'
 	icon_state = "elite_crevice"
 	light_color = LIGHT_COLOR_RED
@@ -148,7 +149,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 				
 obj/structure/elite_crevice/proc/spawn_elite(var/mob/dead/observer/elitemind)
 	var/selectedspawn = pick(potentialspawns)
-	mychild = new selectedspawn(loc, src)
+	mychild = new selectedspawn(loc)
 	mychild.myparent = src
 	visible_message("<span class='boldwarning'>[mychild] emerges from the crevice!</span>")
 	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
