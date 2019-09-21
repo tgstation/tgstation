@@ -33,7 +33,7 @@
     "gulp-uglify": "3.0.2",
     "gulplog": "1.0.0",
     "html5shiv": "3.7.3",
-    "ie8": "0.8.0",
+    "ie8": "0.8.1",
     "lodash": "^4.17.15",
     "minimist": "1.2.0",
     "paths-js": "0.4.10",
