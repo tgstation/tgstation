@@ -46,3 +46,11 @@
 	mid_length = 10
 	end_sound = 'sound/machines/microwave/microwave-end.ogg'
 	volume = 90
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/datum/looping_sound/jackpot
+	mid_length = 11
+	mid_sounds = list('sound/machines/roulettejackpot.ogg')
+	volume = 85
+	vary = TRUE

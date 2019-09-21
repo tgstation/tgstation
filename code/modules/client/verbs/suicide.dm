@@ -199,7 +199,7 @@
 		set_suicide(TRUE)
 		visible_message("<span class='danger'>[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide.</span>", \
 				"<span class='userdanger'>[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide.</span>", \
-				"<span class='italics'>You hear thrashing.</span>")
+				"<span class='hear'>You hear thrashing.</span>")
 
 		suicide_log()
 
