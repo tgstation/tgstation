@@ -78,7 +78,6 @@
   var/tox_loss = user.getToxLoss()
   var/oxy_loss = user.getOxyLoss()
   var/clone_loss = user.getCloneLoss()
-  var/combined_
   var/brain_loss = user.getOrganLoss(ORGAN_SLOT_BRAIN)
   var/brain_status = "Brain patterns normal."
   var/sickness = "Patient does not show signs of disease."
