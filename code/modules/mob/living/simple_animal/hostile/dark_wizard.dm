@@ -27,7 +27,7 @@
 	do_footstep = TRUE
 	weather_immunities = list("lava","ash")
 	minbodytemp = 0
-	maxbodytemp = INFINITY	
+	maxbodytemp = INFINITY
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	loot = list(/obj/effect/decal/remains/human)
 
@@ -35,4 +35,5 @@
 	name = "earth bolt"
 	icon_state = "declone"
 	damage = 4
-	damage_type = BURN	flag = "energy"
+	damage_type = BURN
+	flag = "energy"
