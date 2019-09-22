@@ -177,7 +177,7 @@
 		if(T.throwforce)
 			Bruise()
 
-/mob/living/simple_animal/hostile/mushroom/bullet_act(obj/item/projectile/P)
+/mob/living/simple_animal/hostile/mushroom/bullet_act(obj/projectile/P)
 	. = ..()
 	if(P.nodamage)
 		Bruise()

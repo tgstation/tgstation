@@ -312,7 +312,7 @@
 				do_sparks(5, TRUE, src)
 			..()
 
-/mob/living/simple_animal/bot/bullet_act(obj/item/projectile/Proj)
+/mob/living/simple_animal/bot/bullet_act(obj/projectile/Proj)
 	if(Proj && (Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		if(prob(75) && Proj.damage > 0)
 			do_sparks(5, TRUE, src)

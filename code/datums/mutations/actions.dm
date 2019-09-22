@@ -120,7 +120,7 @@
 	charge_max = 600
 	clothes_req = FALSE
 	range = 20
-	projectile_type = /obj/item/projectile/magic/aoe/fireball/firebreath
+	projectile_type = /obj/projectile/magic/aoe/fireball/firebreath
 	base_icon_state = "fireball"
 	action_icon_state = "fireball0"
 	sound = 'sound/magic/demon_dies.ogg' //horrifying lizard noises
@@ -138,10 +138,10 @@
 			to_chat(C,"<span class='warning'>Something in front of your mouth caught fire!</span>")
 			return FALSE
 
-/obj/effect/proc_holder/spell/aimed/firebreath/ready_projectile(obj/item/projectile/P, atom/target, mob/user, iteration)
-	if(!istype(P, /obj/item/projectile/magic/aoe/fireball))
+/obj/effect/proc_holder/spell/aimed/firebreath/ready_projectile(obj/projectile/P, atom/target, mob/user, iteration)
+	if(!istype(P, /obj/projectile/magic/aoe/fireball))
 		return
-	var/obj/item/projectile/magic/aoe/fireball/F = P
+	var/obj/projectile/magic/aoe/fireball/F = P
 	switch(strength)
 		if(1 to 3)
 			F.exp_light = strength-1
@@ -149,7 +149,7 @@
 			F.exp_heavy = strength-3
 	F.exp_fire += strength
 
-/obj/item/projectile/magic/aoe/fireball/firebreath
+/obj/projectile/magic/aoe/fireball/firebreath
 	name = "fire breath"
 	exp_heavy = 0
 	exp_light = 0

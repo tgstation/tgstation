@@ -512,7 +512,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	return 1
 
-/obj/machinery/power/supermatter_crystal/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/power/supermatter_crystal/bullet_act(obj/projectile/Proj)
 	var/turf/L = loc
 	if(!istype(L))
 		return FALSE

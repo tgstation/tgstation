@@ -10,11 +10,11 @@
 	range = 7
 	cooldown_min = 60 //35 deciseconds reduction per rank
 	max_targets = 0
-	proj_type = /obj/item/projectile/magic/spell/magic_missile
+	proj_type = /obj/projectile/magic/spell/magic_missile
 	action_icon_state = "magicm"
 	sound = 'sound/magic/magic_missile.ogg'
 
-/obj/item/projectile/magic/spell/magic_missile
+/obj/projectile/magic/spell/magic_missile
 	name = "magic missile"
 	icon_state = "magicm"
 	range = 20
@@ -29,7 +29,7 @@
 	trail_lifespan = 5
 	trail_icon_state = "magicmd"
 
-/obj/item/projectile/magic/spell/magic_missile/on_hit(target)
+/obj/projectile/magic/spell/magic_missile/on_hit(target)
 	. = ..()
 	if(ismob(target))
 		var/mob/M = target
