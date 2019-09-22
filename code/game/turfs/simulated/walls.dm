@@ -147,7 +147,7 @@
 		add_dent(WALL_DENT_HIT)
 		user.visible_message("<span class='danger'>[user] smashes \the [src]!</span>", \
 					"<span class='danger'>You smash \the [src]!</span>", \
-					"<span class='italics'>You hear a booming smash!</span>")
+					"<span class='hear'>You hear a booming smash!</span>")
 	return TRUE
 
 /turf/closed/wall/attack_hand(mob/user)
