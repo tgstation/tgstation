@@ -1120,11 +1120,6 @@
 	item_state = "beachball"
 	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
 
-/obj/item/toy/beach_ball/afterattack(atom/target as mob|obj|turf|area, mob/user)
-	. = ..()
-	if(user.dropItemToGround(src))
-		throw_at(target, throw_range, throw_speed)
-
 /*
  * Clockwork Watch
  */
