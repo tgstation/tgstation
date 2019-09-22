@@ -67,6 +67,10 @@
 		return
 	if(!AM.has_gravity())
 		return
+	if(ismob(AM))
+		var/mob/M = AM
+		if(M.is_flying())
+			return
 	var/atom/current_parent = parent
 	if(isturf(current_parent.loc))
 		play_squeak()
