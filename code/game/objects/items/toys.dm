@@ -227,7 +227,7 @@
 		return
 	src.add_fingerprint(user)
 	if (src.bullets < 1)
-		user.show_message("<span class='warning'>*click*</span>", 2)
+		user.show_message("<span class='warning'>*click*</span>", MSG_AUDIBLE)
 		playsound(src, 'sound/weapons/gun_dry_fire.ogg', 30, TRUE)
 		return
 	playsound(user, 'sound/weapons/gunshot.ogg', 100, TRUE)
@@ -582,8 +582,7 @@
 		INVOKE_ASYNC(src, .proc/do_toy_talk, user)
 
 		cooldown = TRUE
-		spawn(recharge_time)
-			cooldown = FALSE
+		addtimer(VARSET_CALLBACK(src, cooldown, FALSE), recharge_time)
 		return
 	..()
 
@@ -1120,11 +1119,6 @@
 	name = "beach ball"
 	item_state = "beachball"
 	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
-
-/obj/item/toy/beach_ball/afterattack(atom/target as mob|obj|turf|area, mob/user)
-	. = ..()
-	if(user.dropItemToGround(src))
-		throw_at(target, throw_range, throw_speed)
 
 /*
  * Clockwork Watch

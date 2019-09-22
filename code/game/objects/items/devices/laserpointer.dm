@@ -11,9 +11,9 @@
 	materials = list(/datum/material/iron=500, /datum/material/glass=500)
 	w_class = WEIGHT_CLASS_SMALL
 	var/turf/pointer_loc
-	var/energy = 5
-	var/max_energy = 5
-	var/effectchance = 25
+	var/energy = 10
+	var/max_energy = 10
+	var/effectchance = 30
 	var/recharging = 0
 	var/recharge_locked = FALSE
 	var/obj/item/stock_parts/micro_laser/diode //used for upgrading!
@@ -186,7 +186,7 @@
 	icon_state = "pointer"
 
 /obj/item/laser_pointer/process()
-	if(prob(20 - recharge_locked*5))
+	if(prob(20 + diode.rating*20 - recharge_locked*2)) //t1 is 20, 2 40
 		energy += 1
 		if(energy >= max_energy)
 			energy = max_energy

@@ -42,7 +42,9 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/machinery/conveyor/auto/update()
 	. = ..()
-	operating = .
+	if(.)
+		operating = TRUE
+		update_icon()
 
 // create a conveyor
 /obj/machinery/conveyor/Initialize(mapload, newdir, newid)
@@ -116,6 +118,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor/proc/update()
 	if(stat & BROKEN || !operable || stat & NOPOWER)
 		operating = FALSE
+		update_icon()
 		return FALSE
 	return TRUE
 
