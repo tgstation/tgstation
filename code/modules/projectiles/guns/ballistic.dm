@@ -59,8 +59,6 @@
 	var/empty_alarm = FALSE
 	///Whether the gun supports multiple special mag types
 	var/special_mags = FALSE
-	///Whether the gun is currently alarmed to prevent it from spamming sounds
-	var/alarmed = FALSE
 	///The bolt type of the gun, affects quite a bit of functionality, see combat.dm defines for bolt types: BOLT_TYPE_STANDARD; BOLT_TYPE_LOCKING; BOLT_TYPE_OPEN; BOLT_TYPE_NO_BOLT
 	var/bolt_type = BOLT_TYPE_STANDARD
  	///Used for locking bolt and open bolt guns. Set a bit differently for the two but prevents firing when true for both.
@@ -320,20 +318,19 @@
 			update_icon()
 
 ///postfire empty checks for bolt locking and sound alarms
-/obj/item/gun/ballistic/proc/postfire_empty_checks()
+/obj/item/gun/ballistic/proc/postfire_empty_checks(last_shot_succeeded)
 	if (!chambered && !get_ammo())
-		if (!alarmed && empty_alarm)
+		if (empty_alarm && last_shot_succeeded)
 			playsound(src, empty_alarm_sound, empty_alarm_volume, empty_alarm_vary)
-			alarmed = TRUE
 			update_icon()
-		if (bolt_type == BOLT_TYPE_LOCKING)
+		if (last_shot_succeeded && bolt_type == BOLT_TYPE_LOCKING)
 			bolt_locked = TRUE
 			update_icon()
 
 /obj/item/gun/ballistic/afterattack()
 	prefire_empty_checks()
 	. = ..() //The gun actually firing
-	postfire_empty_checks()
+	postfire_empty_checks(.)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/gun/ballistic/attack_hand(mob/user)

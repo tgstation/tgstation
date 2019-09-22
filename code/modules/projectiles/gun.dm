@@ -226,7 +226,7 @@
 				loop_counter++
 				addtimer(CALLBACK(G, /obj/item/gun.proc/process_fire, target, user, TRUE, params, null, bonus_spread), loop_counter)
 
-	process_fire(target, user, TRUE, params, null, bonus_spread)
+	return process_fire(target, user, TRUE, params, null, bonus_spread)
 
 
 
