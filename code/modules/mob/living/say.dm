@@ -108,7 +108,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/message_mode = get_message_mode(message)
 	var/original_message = message
 	var/in_critical = InCritical()
-	var/mob/living/speaker = M
 	if(one_character_prefix[message_mode])
 		message = copytext(message, 2)
 	else if(message_mode || saymode)
@@ -253,8 +252,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/static/list/eavesdropping_modes = list(MODE_WHISPER = TRUE, MODE_WHISPER_CRIT = TRUE)
 	var/eavesdrop_range = 0
 	var/list/better_listeners = list()
-		if (ismoth(M))
-			better_listeners += M
 	if(eavesdropping_modes[message_mode])
 		eavesdrop_range = EAVESDROP_EXTRA_RANGE
 	var/list/listening = get_hearers_in_view(message_range+eavesdrop_range, source)
