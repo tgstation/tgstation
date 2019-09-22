@@ -154,6 +154,22 @@
 	message = "gasps!"
 	emote_type = EMOTE_AUDIBLE
 	stat_allowed = UNCONSCIOUS
+	only_forced_audio = TRUE
+	vary = TRUE
+
+/datum/emote/living/gasp/get_sound(mob/living/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(H.mind?.miming)
+		return
+	if(ishumanbasic(H) || iscatperson(H))
+		if(user.gender == FEMALE)
+			return pick('sound/voice/human/gasps/femalegasp1.ogg', 'sound/voice/human/gasps/femalegasp2.ogg', 'sound/voice/human/gasps/femalegasp3.ogg', 'sound/voice/human/gasps/femalegasp4.ogg', 'sound/voice/human/gasps/femalegasp5.ogg')
+		else
+			return pick('sound/voice/human/gasps/malegasp1.ogg', 'sound/voice/human/gasps/malegasp2.ogg', 'sound/voice/human/gasps/malegasp3.ogg', 'sound/voice/human/gasps/malegasp4.ogg')
+
+
 
 /datum/emote/living/giggle
 	key = "giggle"
