@@ -5,7 +5,7 @@
 	desc = "A freestanding medical kiosk, which can provide your basic medical status. Less effective than a medical analyzer."
 	icon = 'icons/obj/machines/medical_kiosk.dmi'
 	icon_state = "kiosk"
-	layer = BELOW_OBJ_LAYER
+	layer = ABOVE_MOB_LAYER
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/medical_kiosk
 	payment_department = ACCOUNT_MED
@@ -68,6 +68,16 @@
   if(ishuman(user))
     H = user
     C = H.get_idcard(TRUE)
+
+/obj/machinery/medical_kiosk/attackby(obj/item/O, mob/user, params)
+  if(default_deconstruction_screwdriver(user, "kiosk_open", "kiosk", O))
+    return
+
+  if(default_pry_open(O))
+    return
+
+  if(default_deconstruction_crowbar(O))
+    return
 
 /obj/machinery/medical_kiosk/ui_data(mob/living/carbon/human/user)
   var/list/data = list()
