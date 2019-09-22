@@ -171,7 +171,7 @@
 	starting_node = FALSE
 	display_name = "Quantum Power Technology"
 	description = "Quantum based power technologies, making apt use of Bluespace Folds and Quantum Tears"
-	design_ids = list("quantumcapacitor","quantumcell")
+	design_ids = list("quantumcap","quantumcell")
 	prereq_ids = list("bluespace_power")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	export_price = 5000
