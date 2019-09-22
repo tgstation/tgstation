@@ -17,15 +17,11 @@
 	var/owner = null
 	dice_spawn = /mob/living/simple_animal/hostile/carp
 
-obj/item/dice/encounter/attack_self(mob/user)
-	diceroll(user)
 
-obj/item/dice/encounter/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	diceroll(thrownby)
-
-
-/obj/item/dice/encounter/diceroll(mob/roller) //copied wholesale from viscerator grenade code
+/obj/item/dice/encounter/diceroll(mob/user) //copied wholesale from viscerator grenade code
 	..()
+	if(!owner)
+		owner = usr
 	update_mob()
 	var/turf/T = get_turf(src)
 	playsound(T, 'sound/effects/phasein.ogg', 100, 1)
@@ -37,14 +33,12 @@ obj/item/dice/encounter/throw_impact(atom/hit_atom, datum/thrownthing/throwingda
 	var/list/spawned = spawn_and_random_walk(dice_spawn, T, result, walk_chance=50, admin_spawn=((flags_1 & ADMIN_SPAWNED_1) ? TRUE : FALSE)) //doing it this way seems important somehow so I'll leave it
 	afterspawn(spawned)
 
-	if(!owner)
-		owner = roller
-
 	for(var/mob/living/M in spawned)
-		if(owner)
-			var/mob/living/carbon/H = owner
-			M.faction += H.faction
-			M.faction -= "neutral"
+		if(!src.owner)
+			src.owner = usr
+		var/mob/living/carbon/H = src.owner
+		M.faction += H.faction
+		M.faction -= "neutral"
 	qdel(src)
 
 /obj/item/dice/proc/afterspawn(list/mob/spawned)
