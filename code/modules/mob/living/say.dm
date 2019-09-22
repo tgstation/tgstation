@@ -108,7 +108,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/message_mode = get_message_mode(message)
 	var/original_message = message
 	var/in_critical = InCritical()
-
+	var/mob/living/speaker = M
 	if(one_character_prefix[message_mode])
 		message = copytext(message, 2)
 	else if(message_mode || saymode)
@@ -165,8 +165,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(!can_speak_vocal(message))
 		to_chat(src, "<span class='warning'>You find yourself unable to speak!</span>")
 		return
-
 	var/message_range = 7
+	
+
+	
 
 	var/succumbed = FALSE
 
@@ -250,6 +252,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 /mob/living/send_speech(message, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language=null, message_mode)
 	var/static/list/eavesdropping_modes = list(MODE_WHISPER = TRUE, MODE_WHISPER_CRIT = TRUE)
 	var/eavesdrop_range = 0
+	var/list/better_listeners = list()
+		if (ismoth(M))
+			better_listeners += M
 	if(eavesdropping_modes[message_mode])
 		eavesdrop_range = EAVESDROP_EXTRA_RANGE
 	var/list/listening = get_hearers_in_view(message_range+eavesdrop_range, source)
@@ -265,6 +270,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 				continue
 			if(!(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
 				continue
+		if(get_dist(M, src) < 12 || M.z != z) 
+			if (ismoth(M))
+				better_listeners |= M
 		listening |= M
 		the_dead[M] = TRUE
 
@@ -282,7 +290,13 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		else
 			AM.Hear(rendered, src, message_language, message, , spans, message_mode)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message)
-
+	for (var/_AM in better_listeners)
+		var/atom/movable/AM = _AM
+		if(eavesdrop_range && get_dist(source, AM) > message_range && !(the_dead[AM]))
+			AM.Hear(eavesrendered, src, message_language, eavesdropping, , spans, message_mode)
+		else
+			AM.Hear(rendered, src, message_language, message, , spans, message_mode)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message)
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in listening)
