@@ -251,13 +251,19 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 /mob/living/send_speech(message, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language=null, message_mode)
 	var/static/list/eavesdropping_modes = list(MODE_WHISPER = TRUE, MODE_WHISPER_CRIT = TRUE)
 	var/eavesdrop_range = 0
-	var/list/better_listeners = list()
+	
 	if(eavesdropping_modes[message_mode])
 		eavesdrop_range = EAVESDROP_EXTRA_RANGE
 	var/list/listening = get_hearers_in_view(message_range+eavesdrop_range, source)
 	var/list/the_dead = list()
 	for(var/_M in GLOB.player_list)
 		var/mob/M = _M
+		if(M.stat != DEAD)
+			if (ismoth(M))
+				if(get_dist(M, src) < 12 || M.z != z) 
+					listening |= M
+					the_dead[M] = TRUE
+
 		if(M.stat != DEAD) //not dead, not important
 			continue
 		if(!M.client || !client) //client is so that ghosts don't have to listen to mice
@@ -267,9 +273,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 				continue
 			if(!(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
 				continue
-		if(get_dist(M, src) < 12 || M.z != z) 
-			if (ismoth(M))
-				better_listeners |= M
+	
 		listening |= M
 		the_dead[M] = TRUE
 
@@ -281,13 +285,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	var/rendered = compose_message(src, message_language, message, , spans, message_mode)
 	for(var/_AM in listening)
-		var/atom/movable/AM = _AM
-		if(eavesdrop_range && get_dist(source, AM) > message_range && !(the_dead[AM]))
-			AM.Hear(eavesrendered, src, message_language, eavesdropping, , spans, message_mode)
-		else
-			AM.Hear(rendered, src, message_language, message, , spans, message_mode)
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message)
-	for (var/_AM in better_listeners)
 		var/atom/movable/AM = _AM
 		if(eavesdrop_range && get_dist(source, AM) > message_range && !(the_dead[AM]))
 			AM.Hear(eavesrendered, src, message_language, eavesdropping, , spans, message_mode)
