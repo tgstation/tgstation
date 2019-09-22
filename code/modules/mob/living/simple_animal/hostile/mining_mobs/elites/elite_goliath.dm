@@ -33,6 +33,7 @@
 	mouse_opacity = MOUSE_OPACITY_ICON
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/bone = 2)
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/goliath_hide = 1)
+	deathmessage = "staggers before a moment, before collapsing onto the ground."
 
 	attack_action_types = list(/datum/action/innate/elite_attack/tentacle_square,
 								/datum/action/innate/elite_attack/tentacle_line,
@@ -44,25 +45,25 @@
 /datum/action/innate/elite_attack/tentacle_square
 	name = "Tentacle Square"
 	button_icon_state = "tentacle_square"
-	chosen_message = "<span class='colossus'>You are now attacking with a 3x3 of tentacles.</span>"
+	chosen_message = "<span class='boldwarning'>You are now attacking with a 3x3 of tentacles.</span>"
 	chosen_attack_num = 1
 	
 /datum/action/innate/elite_attack/tentacle_line
 	name = "Tentacle Line"
 	button_icon_state = "tentacle_line"
-	chosen_message = "<span class='colossus'>You are now attacking with a line of tentacles.</span>"
+	chosen_message = "<span class='boldwarning'>You are now attacking with a line of tentacles.</span>"
 	chosen_attack_num = 2
 	
 /datum/action/innate/elite_attack/rage
 	name = "Rage"
 	button_icon_state = "rage"
-	chosen_message = "<span class='colossus'>You will temporarily increase your movement speed.</span>"
+	chosen_message = "<span class='boldwarning'>You will temporarily increase your movement speed.</span>"
 	chosen_attack_num = 3
 	
 /datum/action/innate/elite_attack/explosive_shroom
 	name = "Spawn Explosive Shrooms"
 	button_icon_state = "explosive_shroom"
-	chosen_message = "<span class='colossus'>You will spawn 3 random explosive shrooms by the target.</span>"
+	chosen_message = "<span class='boldwarning'>You will spawn 3 random explosive shrooms by the target.</span>"
 	chosen_attack_num = 4
 	
 /mob/living/simple_animal/hostile/asteroid/elite/goliath/OpenFire()
@@ -166,6 +167,7 @@
 	
 /obj/structure/explosive_shroom
 	name = "explosive shroom"
+	desc = "A very unstable-looking mushroom.  One hit might just make it explode..."
 	icon = 'icons/mob/lavaland/elite_lavaland_monsters.dmi'
 	icon_state = "explosive_shroom_active"
 	max_integrity = 5
@@ -215,9 +217,9 @@
 	. = ..()	
 	if(health < maxHealth * 0.5 && rand_tent < world.time && stat != DEAD)
 		rand_tent = world.time + 30
-		var/tentacle_amount = 4
+		var/tentacle_amount = 5
 		if(health < maxHealth * 0.25)
-			tentacle_amount = 8
+			tentacle_amount = 10
 		var/tentacle_loc = spiral_range_turfs(5, get_turf(src))
 		for(var/i in 1 to tentacle_amount)
 			var/turf/t = pick_n_take(tentacle_loc)

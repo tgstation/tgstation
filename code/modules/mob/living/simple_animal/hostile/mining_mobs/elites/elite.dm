@@ -7,7 +7,7 @@
 	name = "elite"
 	desc = "An elite monster, found in one of the strange glowing crevices on lavaland."
 	icon = 'icons/mob/lavaland/elite_lavaland_monsters.dmi'
-	faction = list("mining_elite")
+	faction = list("boss")
 	robust_searching = TRUE
 	ranged_ignores_vision = TRUE
 	ranged = 1
@@ -21,6 +21,7 @@
 	var/obj/structure/elite_crevice/myparent = null
 	var/can_talk = 0
 	stat_attack = UNCONSCIOUS
+	layer = LARGE_MOB_LAYER
 	sentience_type = SENTIENCE_BOSS
 	
 		
@@ -35,7 +36,7 @@
 /mob/living/simple_animal/hostile/asteroid/elite/AttackingTarget()
 	if(istype(target, /mob/living/simple_animal/hostile))
 		var/mob/living/simple_animal/hostile/M = target
-		if(M.faction == src.faction)
+		if(faction_check_mob(M))
 			return FALSE
 	. = ..()
 	if(ismineralturf(target))
@@ -100,7 +101,8 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	var/mob/living/carbon/human/activator = null
 	var/mob/living/simple_animal/hostile/asteroid/elite/mychild = null
 	var/potentialspawns = list(/mob/living/simple_animal/hostile/asteroid/elite/goliath,
-								/mob/living/simple_animal/hostile/asteroid/elite/pandora)
+								/mob/living/simple_animal/hostile/asteroid/elite/pandora,
+								/mob/living/simple_animal/hostile/asteroid/elite/legionnaire)
 	icon = 'icons/mob/lavaland/elite_lavaland_monsters.dmi'
 	icon_state = "elite_crevice"
 	light_color = LIGHT_COLOR_RED
