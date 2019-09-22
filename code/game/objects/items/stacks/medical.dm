@@ -13,6 +13,7 @@
 	novariants = FALSE
 	item_flags = NOBLUDGEON
 	var/self_delay = 50
+	var/other_delay = 0
 
 /obj/item/stack/medical/attack(mob/living/M, mob/user)
 	. = ..()
@@ -22,6 +23,11 @@
 		user.visible_message("<span class='notice'>[user] starts to apply \the [src] on [user.p_them()]self...</span>", "<span class='notice'>You begin applying \the [src] on yourself...</span>")
 		if(!do_mob(user, M, self_delay, extra_checks=CALLBACK(M, /mob/living/proc/can_inject, user, TRUE)))
 			return
+	else if(other_delay)
+		user.visible_message("<span class='notice'>[user] starts to apply \the [src] on [M].</span>", "<span class='notice'>You begin applying \the [src] on yourself...</span>")
+		if(!do_mob(user, M, other_delay, extra_checks=CALLBACK(M, /mob/living/proc/can_inject, user, TRUE)))
+			return
+
 	if(heal(M, user))
 		log_combat(user, M, "healed", src.name)
 		use(1)
@@ -149,3 +155,36 @@
 /obj/item/stack/medical/ointment/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is squeezing \the [src] into [user.p_their()] mouth! [user.p_do(TRUE)]n't [user.p_they()] know that stuff is toxic?</span>")
 	return TOXLOSS
+
+/obj/item/stack/medical/suture
+	name = "suture"
+	desc = "Sterile sutures used to seal up cuts and lacerations."
+	gender = PLURAL
+	singular_name = "suture"
+	icon_state = "suture
+	var/heal_brute = 10
+	self_delay = 30
+	other_delay = 10
+	amount = 15
+	max_amount = 15
+
+ /obj/item/stack/medical/mesh //figure how on how to make them autorepeat if there are stacks left and the limb is damaged.
+	name = "regenerative mesh"
+	desc = "A bacteriostatic mesh used to dress burns."
+	gender = PLURAL
+	singular_name = "regenerative mesh"
+	icon_state = "regen_mesh"
+	var/heal_burn = 10
+	self_delay = 30
+	other_delay = 10
+	amount = 15
+	max_amount = 15
+
+	/*
+	The idea is for these medical devices to work like a hybrid of the old brute packs and tend wounds,
+	they heal a little at a time, have reduced healing density and does not allow for rapid healing while in combat.
+	However they provice graunular control of where the healing is directed, this makes them better for curing work-related cuts and scrapes.
+
+	The interesting limb targeting mechanic is retained and i still believe they will be a strong choice, especially when healing others in the field.
+	 */
+
