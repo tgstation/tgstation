@@ -14,6 +14,6 @@
 	icon_state = "syndiebox"
 
 /obj/item/storage/box/syndieballoons/PopulateContents()
- new /obj/item/toy/balloon/syndicate/gold
- new /obj/item/toy/balloon/syndicate/gold
- new /obj/item/toy/balloon/syndicate/gold
+ new /obj/item/toy/balloon/syndicate/gold(src)
+ new /obj/item/toy/balloon/syndicate/gold(src)
+ new /obj/item/toy/balloon/syndicate/gold(src)
