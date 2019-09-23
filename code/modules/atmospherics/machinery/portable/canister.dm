@@ -239,7 +239,7 @@
 		update |= CANISTER_UPDATE_HOLDING
 	if(connected_port)
 		update |= CANISTER_UPDATE_CONNECTED
-	var/pressure = air_contents ? air_contents.return_pressure() : 0
+	var/pressure = air_contents.return_pressure()
 	if(pressure < 10)
 		update |= CANISTER_UPDATE_EMPTY
 	else if(pressure < 5 * ONE_ATMOSPHERE)
