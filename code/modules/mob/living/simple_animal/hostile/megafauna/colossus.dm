@@ -420,7 +420,7 @@ Difficulty: Very Hard
 	ActivationReaction(user, ACTIVATE_TOUCH)
 
 /obj/machinery/anomalous_crystal/attackby(obj/item/I, mob/user, params)
-	if(I.is_hot())
+	if(I.get_temperature())
 		ActivationReaction(user, ACTIVATE_HEAT)
 	else
 		ActivationReaction(user, ACTIVATE_WEAPON)

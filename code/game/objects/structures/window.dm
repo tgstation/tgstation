@@ -859,8 +859,8 @@
 
 
 /obj/structure/window/paperframe/attackby(obj/item/W, mob/user)
-	if(W.is_hot())
-		fire_act(W.is_hot())
+	if(W.get_temperature())
+		fire_act(W.get_temperature())
 		return
 	if(user.a_intent == INTENT_HARM)
 		return ..()
