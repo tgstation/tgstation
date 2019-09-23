@@ -595,12 +595,13 @@
 /obj/machinery/porta_turret/proc/setState(on, mode, shoot_cyborgs)
 	if(controllock)
 		return
+	src.shoot_cyborgs = shoot_cyborgs
 	src.on = on
 	if(!on)
 		popDown()
 	src.mode = mode
 	power_change()
-	src.shoot_cyborgs = shoot_cyborgs
+	
 
 /datum/action/turret_toggle
 	name = "Toggle Mode"
