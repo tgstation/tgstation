@@ -90,7 +90,7 @@
 	name = "Shadowperson Mutation Toxin"
 	id = "shadowmuttoxin"
 	results = list(/datum/reagent/mutationtoxin/shadow = 1)
-	required_reagents = list(/datum/reagent/consumable/liquid_dark_matter = 1)
+	required_reagents = list(/datum/reagent/liquid_dark_matter = 1)
 	required_other = TRUE
 	required_container = /obj/item/slime_extract/green
 
