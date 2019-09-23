@@ -490,14 +490,17 @@
 		Feedstop(silent = TRUE) //we unbuckle the slime from the mob it latched onto.
 
 	SStun = world.time + rand(20,60)
-	spawn(0)
-		mobility_flags &= ~MOBILITY_MOVE
-		if(user)
-			step_away(src,user,15)
-		sleep(3)
-		if(user)
-			step_away(src,user,15)
-		update_mobility()
+
+	mobility_flags &= ~MOBILITY_MOVE
+	if(user)
+		step_away(src,user,15)
+
+	addtimer(CALLBACK(src, .proc/slime_move, user), 3)
+
+/mob/living/simple_animal/slime/proc/slime_move(mob/user)
+	if(user)
+		step_away(src,user,15)
+	update_mobility()
 
 /mob/living/simple_animal/slime/pet
 	docile = 1

@@ -22,8 +22,8 @@
 	var/pressureSetting = 1 //How powerful the cannon is - higher pressure = more gas but more powerful throws
 	var/checktank = TRUE
 	var/range_multiplier = 1
-	var/throw_amount = 20	//How many items to throw per fire
-	var/fire_mode = PCANNON_FIREALL
+	var/throw_amount = 1	//How many items to throw per fire
+	var/fire_mode = PCANNON_FIFO
 	var/automatic = FALSE
 	var/clumsyCheck = TRUE
 	var/list/allowed_typecache		//Leave as null to allow all.
@@ -235,6 +235,7 @@
 	force = 5
 	maxWeightClass = 7
 	gasPerThrow = 5
+	maxWeightClass = 10
 
 /obj/item/pneumatic_cannon/proc/updateTank(obj/item/tank/internals/thetank, removing = 0, mob/living/carbon/human/user)
 	if(removing)

@@ -314,9 +314,7 @@
 		on = FALSE
 		remove_control()
 
-		spawn(rand(60,600))
-			if(!on)
-				on = TRUE
+		addtimer(VARSET_CALLBACK(src, on, TRUE), rand(60,600))
 
 /obj/machinery/porta_turret/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	. = ..()
@@ -1088,10 +1086,8 @@
 		if(team_color == "blue")
 			if(istype(P, /obj/item/projectile/beam/lasertag/redtag))
 				on = FALSE
-				spawn(100)
-					on = TRUE
+				addtimer(VARSET_CALLBACK(src, on, TRUE), 10 SECONDS)
 		else if(team_color == "red")
 			if(istype(P, /obj/item/projectile/beam/lasertag/bluetag))
 				on = FALSE
-				spawn(100)
-					on = TRUE
+				addtimer(VARSET_CALLBACK(src, on, TRUE), 10 SECONDS)

@@ -29,6 +29,8 @@
 	item_state = "zapper"
 
 /obj/item/melee/touch_attack/shock/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!proximity)
+		return
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(C.electrocute_act(15, user, 1, FALSE, FALSE, FALSE, FALSE, FALSE))//doesnt stun. never let this stun
