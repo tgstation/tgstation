@@ -70,6 +70,38 @@
 	required_other = TRUE
 	required_container = /obj/item/slime_extract/green
 
+/datum/chemical_reaction/slime/slimeandroid
+	name = "Android Mutation Toxin"
+	id = "androidmuttoxin"
+	results = list(/datum/reagent/mutationtoxin/android = 1)
+	required_reagents = list(/datum/reagent/silicon = 1)
+	required_other = TRUE
+	required_container = /obj/item/slime_extract/green
+
+/datum/chemical_reaction/slime/slimepod
+	name = "Podperson Mutation Toxin"
+	id = "podmuttoxin"
+	results = list(/datum/reagent/mutationtoxin/pod = 1)
+	required_reagents = list(/datum/reagent/consumable/nutriment = 1)
+	required_other = TRUE
+	required_container = /obj/item/slime_extract/green
+
+/datum/chemical_reaction/slime/slimeshadow
+	name = "Shadowperson Mutation Toxin"
+	id = "shadowmuttoxin"
+	results = list(/datum/reagent/mutationtoxin/shadow = 1)
+	required_reagents = list(/datum/reagent/consumable/liquid_dark_matter = 1)
+	required_other = TRUE
+	required_container = /obj/item/slime_extract/green
+
+/datum/chemical_reaction/slime/slimeplasma
+	name = "Plasmaman Mutation Toxin"
+	id = "plasmamuttoxin"
+	results = list(/datum/reagent/mutationtoxin/plasma = 1)
+	required_reagents = list(/datum/reagent/phlogiston = 1)
+	required_other = TRUE
+	required_container = /obj/item/slime_extract/green
+	
 //Metal
 /datum/chemical_reaction/slime/slimemetal
 	name = "Slime Metal"
