@@ -1,7 +1,7 @@
 /mob/living/simple_animal/bot/secbot/ed209
 	name = "\improper ED-209 Security Robot"
 	desc = "A security robot. He looks less than thrilled."
-	icon_state = "ed2090"
+	icon_state = "ed209"
 	density = TRUE
 	health = 100
 	maxHealth = 100
