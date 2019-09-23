@@ -1,9 +1,9 @@
 /obj/item/toy/balloon/syndicate/gold
 	name = "gold syndicate balloon"
-	desc = "This is a balloon made out of pure gold. How it floats, nobody knows.
-  random_color = FALSE
-  icon = 'icons/fulpicons/phoenix_nest/balloon.dmi'
-  icon_state = "syndballoongold"
+	desc = "This is a balloon made out of pure gold. How it floats, nobody knows."
+	random_color = FALSE
+	icon = 'icons/fulpicons/phoenix_nest/balloon.dmi'
+	icon_state = "syndballoongold"
 	item_state = "syndballoongold"
 	lefthand_file = 'icons/fulpicons/phoenix_nest/balloons_lefthand.dmi'
 	righthand_file = 'icons/fulpicons/phoenix_nest/balloons_righthand.dmi'
