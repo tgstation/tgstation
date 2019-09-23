@@ -8,8 +8,8 @@
 	limited_stock = 1 //for testing at least
 
 
-/datum/uplink_item/badass/balloon
-	name = "Syndicate Balloon"
+/datum/uplink_item/badass/balloongold
+	name = "Golden Syndicate Balloons"
 	desc = "For showing that you and two other Syndies are true genuine 100% BAD ASS SYNDIES."
 	item = /obj/item/storage/box/syndieballoons
 	cost = 60
