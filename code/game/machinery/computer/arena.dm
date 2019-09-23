@@ -1,6 +1,11 @@
+#define ARENA_RED_TEAM "red"
+#define ARENA_GREEN_TEAM "green"
+#define ARENA_DEFAULT_ID "arena_default"
+
 /obj/effect/landmark/arena
 	name = "arena landmark"
 	var/landmark_tag
+	var/arena_id = ARENA_DEFAULT_ID
 
 /obj/effect/landmark/arena/start
 	name = "arena lower left corner"
@@ -12,9 +17,16 @@
 
 /obj/machinery/computer/arena
 	name = "arena controller"
+	var/arena_id = ARENA_DEFAULT_ID
+	var/ready_to_spawn = FALSE //Enables/disables spawning
 	var/list/arena_templates = list()
 	var/current_arena_template = "None"
-	var/empty_turf_type = /turf/open/indestructible
+	var/empty_turf_type = /turf/open/indestructible //What turf arena resets to.
+	var/list/teams = list(ARENA_RED_TEAM,ARENA_GREEN_TEAM)
+
+	var/list/team_keys = list() // team_keys["red"] = list(ckey1,ckey2,ckey3)
+	var/list/outfits = list() // outfits["red"] = outfit datum/outfit datum type
+	var/default_outfit = /datum/outfit/job/assistant
 
 	var/loading = FALSE
 
@@ -32,7 +44,7 @@
 
 /obj/machinery/computer/arena/proc/get_landmark_turf(landmark_tag)
 	for(var/obj/effect/landmark/arena/L in GLOB.landmarks_list)
-		if(L.landmark_tag == landmark_tag && isturf(L.loc))
+		if(L.arena_id == arena_id && L.landmark_tag == landmark_tag && isturf(L.loc))
 			return L.loc
 
 /obj/machinery/computer/arena/proc/clear_arena()
@@ -75,9 +87,42 @@
 
 	arena_templates[T.name] = T
 
+/obj/machinery/computer/arena/proc/add_team_member(mob/user,team)
+	var/list/keys = list()
+	for(var/mob/M in GLOB.player_list)
+		keys += M.client
+	var/client/selection = input("Please, select a player!", "Team member", null, null) as null|anything in sortKey(keys)
+	//Could be freeform if you want to add disconnected i guess
+	if(!selection)
+		return
+	if(!team_keys[team])
+		team_keys[team] = list(selection.ckey)
+	else
+		team_keys[team] |= selection.ckey
+	to_chat(user,"[selection.ckey] added to [team] team.")
+
+/obj/machinery/computer/arena/proc/remove_member(mob/user,ckey,team)
+	team_keys[team] -= ckey
+	to_chat(user,"[ckey] removed from [team] team.")
+
+/obj/machinery/computer/arena/proc/spawn_member(obj/machinery/arena_spawn/spawnpoint,ckey,team)
+	var/mob/oldbody = get_mob_by_key(ckey)
+	if(!isobserver(oldbody))
+		return
+	var/mob/living/carbon/human/M = new/mob/living/carbon/human(get_turf(spawnpoint))
+	oldbody.client.prefs.copy_to(M)
+	M.set_species(/datum/species/human) //Might set per team
+	M.equipOutfit(outfits[team] ? outfits[team] : default_outfit)
+	M.faction += team //In case anyone wants to add team based stuff to arenas
+	M.key = ckey
+	
+
+/obj/machinery/computer/arena/proc/change_outfit(mob/user,team)
+	outfits[team] = user.client.robust_dress_shop()
+
 /obj/machinery/computer/arena/Topic(href, href_list)
 	. = ..()
-	var/user = usr
+	var/mob/user = usr
 
 	if(!user.client.holder) //These things are dangerous enough
 		return
@@ -86,6 +131,15 @@
 		add_new_arena_template(user)
 	if(href_list["change_arena"])
 		load_arena(href_list["change_arena"],user)
+	if(href_list["toggle_spawn"])
+		toggle_spawn(user)
+	if(href_list["team_action"])
+		var/team = href_list["team"]
+		switch(href_list["team_action"])
+			if("addmember")
+				add_team_member(user,team)
+			if("outfit")
+				change_outfit(user,team)
 	if(href_list["special"])
 		switch(href_list["special"])
 			if("reset")
@@ -95,6 +149,12 @@
 				kill_everyone_in_arena()
 			if("spawntrophy")
 				trophy_for_last_man_standing()
+	if(href_list["member_action"])
+		var/ckey = href_list["ckey"]
+		var/team = href_list["team"]
+		switch(href_list["member_action"])
+			if("remove")
+				remove_member(user,ckey,team)
 	updateUsrDialog()
 
 /obj/machinery/computer/arena/proc/kill_everyone_in_arena()
@@ -103,6 +163,11 @@
 	for(var/mob/living/L in GLOB.mob_living_list)
 		if(get_turf(L) in arena_turfs)
 			L.death()
+
+/obj/machinery/computer/arena/proc/toggle_spawn(mob/user)
+	ready_to_spawn = !ready_to_spawn
+	to_chat(user,"You [ready_to_spawn ? "enable" : "disable"] the spawners.")
+	//Could use update_icon on spawnpoints to show they're on
 
 /obj/machinery/computer/arena/proc/trophy_for_last_man_standing()
 	var/arena_turfs = block(get_landmark_turf("arena_start"),get_landmark_turf("arena_end"))
@@ -114,6 +179,30 @@
 /obj/machinery/computer/arena/ui_interact(mob/user, ui_key, datum/tgui/ui, force_open, datum/tgui/master_ui, datum/ui_state/state)
 	. = ..()
 	var/list/dat = list()
+	dat += "<div>Spawning is currently [ready_to_spawn ? "<span class='good'>enabled</span>" : "<span class='bad'>disabled</span>"] <a href='?src=[REF(src)];toggle_spawn=1'>Toggle</a></div>"
+	for(var/team in teams)
+		dat += "<h2>[capitalize(team)] team:</h2>"
+		dat += "<ul>"
+		for(var/ckey in team_keys[team])
+			var/player_status = "Not Present"
+			var/mob/M = get_mob_by_key(ckey)
+			if(M)
+				//Should define waiting room upper/lower corner and check if they're there instead of generic live/dead check
+				if(isobserver(M))
+					player_status = "Ghosted"
+				else
+					player_status = M.stat == DEAD ? "Dead" : "Alive"
+				dat += "<li>[ckey] - [player_status] - "
+				dat += "<a href='?_src_=holder;[HrefToken(TRUE)];adminplayerobservefollow=[REF(M)]'>FLW</a>"
+				dat += "<a href='?src=[REF(src)];member_action=remove;team=[team];ckey=[ckey]'>Remove</a>"
+				//Add more per player features here
+				dat += "</li>"
+		dat += "</ul>"
+		dat += "<div> Team Outfit : [outfits[team]]</div>"
+		dat += "<a href='?src=[REF(src)];team_action=addmember;team=[team]'>Add member</a>"
+		dat += "<a href='?src=[REF(src)];team_action=outfit;team=[team]'>Change Outfit</a>"
+		//Add more per team features here
+
 	dat += "Current arena: [current_arena_template]"
 	dat += "<h2>Arena List:</h2>"
 	for(var/A in arena_templates)
@@ -129,3 +218,39 @@
 	var/datum/browser/popup = new(user, "arena controller", "Arena Controller", 300, 300)
 	popup.set_content(dat.Join())
 	popup.open()
+
+/obj/machinery/arena_spawn
+	name = "Arena Spawnpoint"
+	icon = 'icons/obj/device.dmi'
+	icon_state = "syndbeacon"
+	resistance_flags = INDESTRUCTIBLE
+	var/arena_id = ARENA_DEFAULT_ID //In case we have multiple arena controllers at once.
+	var/team = "default"
+	var/obj/machinery/computer/arena/_controller //only exist to cut down on glob.machines lookups
+
+/obj/machinery/arena_spawn/red
+	name = "Red Team Spawnpoint"
+	team = ARENA_RED_TEAM
+
+/obj/machinery/arena_spawn/green
+	name = "Green Team Spawnpoint"
+	team = ARENA_GREEN_TEAM
+
+/obj/machinery/arena_spawn/proc/get_controller()
+	if(_controller && !QDELETED(_controller) && _controller.arena_id == arena_id)
+		return _controller
+	for(var/obj/machinery/computer/arena/A in GLOB.machines)
+		if(A.arena_id == arena_id)
+			_controller = A
+			return _controller
+
+/obj/machinery/arena_spawn/attack_ghost(mob/user)
+	var/obj/machinery/computer/arena/C = get_controller()
+	if(!C) //Unlinked spawn
+		return
+	if(C.ready_to_spawn)
+		var/list/allowed_keys = C.team_keys[team]
+		if(!(user.ckey in allowed_keys))
+			to_chat(user,"<span class='warning'>You're not on the team list.</span>")
+			return
+		C.spawn_member(src,user.ckey,team)
