@@ -492,15 +492,6 @@
 		icon_prefix = "spearplasma"
 	update_icon()
 	qdel(tip)
-	var/obj/item/grenade/G = locate() in parts_list
-	if(G)
-		var/obj/item/twohanded/spear/explosive/lance = new /obj/item/twohanded/spear/explosive(src.loc, G)
-		lance.force_wielded = force_wielded
-		lance.force_unwielded = force_unwielded
-		lance.throwforce = throwforce
-		lance.icon_prefix = icon_prefix
-		parts_list -= G
-		qdel(src)
 	..()
 
 
@@ -516,6 +507,21 @@
 	explosive = G
 	desc = "A makeshift spear with [G] attached to it"
 	update_icon()
+
+
+/obj/item/twohanded/spear/explosive/CheckParts(list/parts_list)
+	var/obj/item/grenade/G = locate() in parts_list
+	if(G)
+		var/obj/item/twohanded/spear/lancePart = locate() in parts_list
+		force_wielded = lancePart.force_wielded
+		force_unwielded = lancePart.force_unwielded
+		throwforce = lancePart.throwforce
+		icon_prefix = lancePart.icon_prefix
+		parts_list -= G
+		parts_list -= lancePart
+		Initialize(src.loc, G)
+		qdel(lancePart)
+	..()
 
 /obj/item/twohanded/spear/explosive/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
