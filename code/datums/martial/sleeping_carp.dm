@@ -39,7 +39,7 @@
 		log_combat(A, D, "wrist wrenched (Sleeping Carp)")
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='danger'>[A] grabs [D]'s wrist and wrenches it sideways!</span>", \
-						"<span class='userdanger'>Your wrist is grabbed by [A] while simultaneously wrenched it to the side!</span>", null, null, A)
+						"<span class='userdanger'>Your wrist is grabbed by [A] while simultaneously wrenched it to the side!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, A)
 		to_chat(A, "<span class='danger'>You grab [D]'s wrist and wrench it sideways!</span>")
 		playsound(get_turf(A), 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 		D.emote("scream")
@@ -55,13 +55,14 @@
 		if(A.dir != D.dir)
 			log_combat(A, D, "missed a back-kick (Sleeping Carp) on")
 			D.visible_message("<span class='warning'>[A] tries to kick [D] in the back, but misses!</span>", \
-						"<span class='userdanger'>[A] tries to kick you in the back, but misses!</span>")
+							"<span class='danger'>You avoid a kick in the back by [A]!</span>", "<span class='hear'>You hear a swoosh!</span>", null, A)
+			to_chat(A, "<span class='warning'>Your kick to [D]'s back misses!</span>")
 			return TRUE
 		log_combat(A, D, "back-kicked (Sleeping Carp)")
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='warning'>[A] kicks [D] in the back!</span>", \
-						"<span class='danger'>You avoid a kick in the back by [A]!</span>", null, null, A)
-		to_chat(A, "<span class='warning'>Your kick to [D]'s back misses!</span>")
+						"<span class='danger'>You're kicked in the back by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, A)
+		to_chat(A, "<span class='danger'>You kick [D] in the back!</span>")
 		step_to(D,get_step(D,D.dir),1)
 		D.Paralyze(80)
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, TRUE, -1)
@@ -73,7 +74,7 @@
 		log_combat(A, D, "stomach kneed (Sleeping Carp)")
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		D.visible_message("<span class='danger'>[A] knees [D] in the stomach!</span>", \
-						"<span class='userdanger'>Your stomach is kneed by [A], making you gag!</span>", null, null, A)
+						"<span class='userdanger'>Your stomach is kneed by [A], making you gag!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, A)
 		to_chat(A, "<span class='danger'>You knee [D] in the stomach, [D.p_them()] them gag!</span>")
 		D.losebreath += 3
 		D.Stun(40)
@@ -86,7 +87,7 @@
 		log_combat(A, D, "head kicked (Sleeping Carp)")
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head!</span>", \
-						"<span class='userdanger'>Your jaw is kicked by [A]!</span>", null, null, A)
+						"<span class='userdanger'>Your jaw is kicked by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, A)
 		to_chat(A, "<span class='danger'>You kick [D] in the jaw!</span>")
 		D.apply_damage(20, A.dna.species.attack_type, BODY_ZONE_HEAD)
 		D.drop_all_held_items()
@@ -100,7 +101,7 @@
 		log_combat(A, D, "elbow dropped (Sleeping Carp)")
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='danger'>[A] elbow drops [D]!</span>", \
-						"<span class='userdanger'>You're piledrived by [A] with [A.p_their()] elbow!</span>", null, null, A)
+						"<span class='userdanger'>You're piledrived by [A] with [A.p_their()] elbow!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, A)
 		to_chat(A, "<span class='danger'>You piledrive [D] with your elbow!</span>")
 		if(D.stat)
 			D.death() //FINISH HIM!
@@ -121,7 +122,7 @@
 			A.grab_state = GRAB_AGGRESSIVE //Instant agressive grab if on grab intent
 			log_combat(A, D, "grabbed", addition="aggressively")
 			D.visible_message("<span class='warning'>[A] violently grabs [D]!</span>", \
-							"<span class='userdanger'>You're violently grabbed by [A]!</span>", null, null, A)
+							"<span class='userdanger'>You're violently grabbed by [A]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, A)
 			to_chat(A, "<span class='danger'>You violently grab [D]!</span>")
 		return TRUE
 	return FALSE
@@ -238,7 +239,7 @@
 		var/mob/living/carbon/human/H = target
 		var/list/fluffmessages = list("club", "smack", "broadside", "beat", "slam")
 		H.visible_message("<span class='warning'>[user] [pick(fluffmessages)]s [H] with [src]!</span>", \
-						"<span class='userdanger'>[user] [pick(fluffmessages)]s you with [src]!</span>", null, null, user)
+						"<span class='userdanger'>[user] [pick(fluffmessages)]s you with [src]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, user)
 		to_chat(user, "<span class='danger'>You [pick(fluffmessages)] [H] with [src]!</span>")
 		playsound(get_turf(user), 'sound/effects/woodhit.ogg', 75, TRUE, -1)
 		H.adjustStaminaLoss(rand(13,20))
@@ -250,7 +251,7 @@
 			var/total_health = (H.health - H.staminaloss)
 			if(total_health <= HEALTH_THRESHOLD_CRIT && !H.stat)
 				H.visible_message("<span class='warning'>[user] delivers a heavy hit to [H]'s head, knocking [H.p_them()] out cold!</span>", \
-								"<span class='userdanger'>You're knocked unconscious by [user]!</span>", null, null, user)
+								"<span class='userdanger'>You're knocked unconscious by [user]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, user)
 				to_chat(user, "<span class='danger'>You deliver a heavy hit to [H]'s head, knocking [H.p_them()] out cold!</span>")
 				H.SetSleeping(600)
 				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 150)

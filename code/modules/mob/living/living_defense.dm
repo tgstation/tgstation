@@ -118,14 +118,14 @@
 				return
 		updatehealth()
 		visible_message("<span class='danger'>[M.name] hits [src]!</span>", \
-						"<span class='userdanger'>[M.name] hits you!</span>", null, COMBAT_MESSAGE_RANGE, M)
+						"<span class='userdanger'>[M.name] hits you!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, M)
 		to_chat(M, "<span class='danger'>You hit [src]!</span>")
 		log_combat(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 	else
 		step_away(src,M)
 		log_combat(M.occupant, src, "pushed", M)
 		visible_message("<span class='warning'>[M] pushes [src] out of the way.</span>", \
-						"<span class='warning'>[M] pushes you out of the way.</span>", null, 5, M)
+						"<span class='warning'>[M] pushes you out of the way.</span>", "<span class='hear'>You hear aggressive shuffling!</span>", 5, M)
 		to_chat(M, "<span class='danger'>You push [src] out of the way.</span>")
 
 /mob/living/fire_act()
@@ -163,7 +163,7 @@
 			var/old_grab_state = user.grab_state
 			var/grab_upgrade_time = instant ? 0 : 30
 			visible_message("<span class='danger'>[user] starts to tighten [user.p_their()] grip on [src]!</span>", \
-							"<span class='userdanger'>[user] starts to tighten [user.p_their()] grip on you!</span>", null, null, user)
+							"<span class='userdanger'>[user] starts to tighten [user.p_their()] grip on you!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, user)
 			to_chat(user, "<span class='danger'>You start to tighten your grip on [src]!</span>")
 			switch(user.grab_state)
 				if(GRAB_AGGRESSIVE)
@@ -183,12 +183,12 @@
 				var/add_log = ""
 				if(HAS_TRAIT(user, TRAIT_PACIFISM))
 					visible_message("<span class='danger'>[user] firmly grips [src]!</span>",
-									"<span class='danger'>[user] firmly grips you!</span>", null, null, user)
+									"<span class='danger'>[user] firmly grips you!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, user)
 					to_chat(user, "<span class='danger'>You firmly grip [src]!</span>")
 					add_log = " (pacifist)"
 				else
 					visible_message("<span class='danger'>[user] grabs [src] aggressively!</span>", \
-									"<span class='userdanger'>[user] grabs you aggressively!</span>", null, null, user)
+									"<span class='userdanger'>[user] grabs you aggressively!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, user)
 					to_chat(user, "<span class='danger'>You grab [src] aggressively!</span>")
 					drop_all_held_items()
 				stop_pulling()
@@ -196,7 +196,7 @@
 			if(GRAB_NECK)
 				log_combat(user, src, "grabbed", addition="neck grab")
 				visible_message("<span class='danger'>[user] grabs [src] by the neck!</span>",\
-								"<span class='userdanger'>[user] grabs you by the neck!</span>", null, null, user)
+								"<span class='userdanger'>[user] grabs you by the neck!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, user)
 				to_chat(user, "<span class='danger'>You grab [src] by the neck!</span>")
 				update_mobility() //we fall down
 				if(!buckled && !density)
@@ -204,7 +204,7 @@
 			if(GRAB_KILL)
 				log_combat(user, src, "strangled", addition="kill grab")
 				visible_message("<span class='danger'>[user] is strangling [src]!</span>", \
-								"<span class='userdanger'>[user] is strangling you!</span>", null, null, user)
+								"<span class='userdanger'>[user] is strangling you!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, user)
 				to_chat(user, "<span class='danger'>You're strangling [src]!</span>")
 				update_mobility() //we fall down
 				if(!buckled && !density)
@@ -231,7 +231,7 @@
 		log_combat(M, src, "attacked")
 		M.do_attack_animation(src)
 		visible_message("<span class='danger'>\The [M.name] glomps [src]!</span>", \
-						"<span class='userdanger'>\The [M.name] glomps you!</span>", null, COMBAT_MESSAGE_RANGE, M)
+						"<span class='userdanger'>\The [M.name] glomps you!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, M)
 		to_chat(M, "<span class='danger'>You glomp [src]!</span>")
 		return TRUE
 
@@ -272,12 +272,12 @@
 			log_combat(M, src, "attacked")
 			playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
 			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-							"<span class='userdanger'>[M.name] bites you!</span>", null, COMBAT_MESSAGE_RANGE, M)
+							"<span class='userdanger'>[M.name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, M)
 			to_chat(M, "<span class='danger'>You bite [src]!</span>")
 			return TRUE
 		else
 			visible_message("<span class='danger'>[M.name]'s bite misses [src]!</span>", \
-							"<span class='danger'>You avoid [M.name]'s bite!</span>", null, COMBAT_MESSAGE_RANGE, M)
+							"<span class='danger'>You avoid [M.name]'s bite!</span>", "<span class='hear'>You hear the sound of jaws snapping shut!</span>", COMBAT_MESSAGE_RANGE, M)
 			to_chat(M, "<span class='warning'>Your bite misses [src]!</span>")
 	return FALSE
 
@@ -298,13 +298,13 @@
 			if(prob(90))
 				log_combat(L, src, "attacked")
 				visible_message("<span class='danger'>[L.name] bites [src]!</span>", \
-								"<span class='userdanger'>[L.name] bites you!</span>", null, COMBAT_MESSAGE_RANGE, L)
+								"<span class='userdanger'>[L.name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, L)
 				to_chat(L, "<span class='danger'>You bite [src]!</span>")
 				playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
 				return TRUE
 			else
 				visible_message("<span class='danger'>[L.name]'s bite misses [src]!</span>", \
-								"<span class='danger'>You avoid [L.name]'s bite!</span>", null, COMBAT_MESSAGE_RANGE, L)
+								"<span class='danger'>You avoid [L.name]'s bite!</span>", "<span class='hear'>You hear the sound of jaws snapping shut!</span>", COMBAT_MESSAGE_RANGE, L)
 				to_chat(L, "<span class='warning'>Your bite misses [src]!</span>")
 	return FALSE
 

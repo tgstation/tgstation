@@ -136,7 +136,7 @@
 
 	D.Stun(80)
 	D.visible_message("<span class='danger'>[A] starts spinning around with [D]!</span>", \
-					"<span class='userdanger'>You're spun around by [A]!</span>", null, null, A)
+					"<span class='userdanger'>You're spun around by [A]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, A)
 	to_chat(A, "<span class='danger'>You start spinning around with [D]!</span>")
 	A.emote("scream")
 
@@ -189,7 +189,7 @@
 		D.forceMove(A.loc) // Maybe this will help with the wallthrowing bug.
 
 		D.visible_message("<span class='danger'>[A] throws [D]!</span>", \
-						"<span class='userdanger'>You're thrown by [A]!</span>", null, null, A)
+						"<span class='userdanger'>You're thrown by [A]!</span>", "<span class='hear'>You hear aggressive shuffling and a loud thud!</span>", null, A)
 		to_chat(A, "<span class='danger'>You throw [D]!</span>")
 		playsound(A.loc, "swing_hit", 50, TRUE)
 		var/turf/T = get_edge_target_turf(A, A.dir)
@@ -219,7 +219,7 @@
 	D.setDir(get_dir(D, A))
 
 	D.visible_message("<span class='danger'>[A] lifts [D] up!</span>", \
-					"<span class='userdanger'>You're lifted up by [A]!</span>", null, null, A)
+					"<span class='userdanger'>You're lifted up by [A]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, A)
 	to_chat(A, "<span class='danger'>You lift [D] up!</span>")
 
 	FlipAnimation()
@@ -291,7 +291,7 @@
 				fluff = "atomic [fluff]"
 
 		D.visible_message("<span class='danger'>[A] [fluff] [D]!</span>", \
-						"<span class='userdanger'>You're [fluff]ed by [A]!</span>", null, COMBAT_MESSAGE_RANGE, A)
+						"<span class='userdanger'>You're [fluff]ed by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 		to_chat(A, "<span class='danger'>You [fluff] [D]!</span>")
 		playsound(A.loc, "swing_hit", 50, TRUE)
 		if (!D.stat)
@@ -336,7 +336,7 @@
 		addtimer(CALLBACK(src, .proc/CheckStrikeTurf, A, T), 4)
 
 		D.visible_message("<span class='danger'>[A] headbutts [D]!</span>", \
-						"<span class='userdanger'>You're headbutted by [A]!</span>", null, COMBAT_MESSAGE_RANGE, A)
+						"<span class='userdanger'>You're headbutted by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 		to_chat(A, "<span class='danger'>You headbutt [D]!</span>")
 		D.adjustBruteLoss(rand(10,20))
 		playsound(A.loc, "swing_hit", 50, TRUE)
@@ -351,7 +351,7 @@
 	A.setDir(turn(A.dir, 90))
 
 	D.visible_message("<span class='danger'>[A] roundhouse-kicks [D]!</span>", \
-					"<span class='userdanger'>You're roundhouse-kicked by [A]!</span>", null, COMBAT_MESSAGE_RANGE, A)
+					"<span class='userdanger'>You're roundhouse-kicked by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 	to_chat(A, "<span class='danger'>You roundhouse-kick [D]!</span>")
 	playsound(A.loc, "swing_hit", 50, TRUE)
 	D.adjustBruteLoss(rand(10,20))
@@ -417,7 +417,7 @@
 		A.forceMove(D.loc)
 
 		D.visible_message("<span class='danger'>[A] leg-drops [D]!</span>", \
-						"<span class='userdanger'>You're leg-dropped by [A]!</span>", null, null, A)
+						"<span class='userdanger'>You're leg-dropped by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, A)
 		to_chat(A, "<span class='danger'>You leg-drop [D]!</span>")
 		playsound(A.loc, "swing_hit", 50, TRUE)
 		A.emote("scream")
@@ -453,7 +453,7 @@
 		return 1
 	A.start_pulling(D)
 	D.visible_message("<span class='danger'>[A] gets [D] in a cinch!</span>", \
-					"<span class='userdanger'>You're put into a cinch by [A]!</span>", null, COMBAT_MESSAGE_RANGE, A)
+					"<span class='userdanger'>You're put into a cinch by [A]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, A)
 	to_chat(A, "<span class='danger'>You get [D] in a cinch!</span>")
 	D.Stun(rand(60,100))
 	log_combat(A, D, "cinched")
