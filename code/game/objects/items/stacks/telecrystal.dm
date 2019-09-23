@@ -22,6 +22,8 @@
 
 /obj/item/stack/telecrystal/afterattack(obj/item/I, mob/user, proximity)
 	. = ..()
+	if(!proximity)
+		return
 	if(istype(I, /obj/item/cartridge/virus/frame))
 		var/obj/item/cartridge/virus/frame/cart = I
 		if(!cart.charges)
