@@ -1234,6 +1234,11 @@
 	else
 		description = "\An [colorname] powder, used for coloring things [colorname]."
 
+/datum/reagent/colorful_reagent/powder/on_mob_life(mob/living/carbon/M)
+	return
+
+/datum/reagent/colorful_reagent/powder/reaction_mob(mob/living/M, reac_volume)
+	return
 
 /datum/reagent/colorful_reagent/powder/red
 	name = "Red Powder"
