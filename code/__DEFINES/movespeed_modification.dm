@@ -69,3 +69,11 @@
 #define MOVESPEED_ID_SHRINK_RAY							"SHRUNKEN_SPEED_MODIFIER"
 #define MOVESPEED_ID_PEPPER_SPRAY                       "PEPPER_SPRAYED"
 
+#define MOVESPEED_ID_FAT                                "FAT"
+
+#define MOVESPEED_ID_COLD                               "COLD"
+
+#define MOVESPEED_ID_HUNGRY                             "HUNGRY"
+
+#define MOVESPEED_ID_DAMAGE_SLOWDOWN                    "DAMAGE"
+#define MOVESPEED_ID_DAMAGE_SLOWDOWN_FLYING				"FLYING"
