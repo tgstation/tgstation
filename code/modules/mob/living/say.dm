@@ -261,7 +261,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		if(eavesdropping_modes[message_mode])
 			if (HAS_TRAIT(M, TRAIT_SUPER_HEARING))
 				if(M.stat != DEAD)			
-					if(get_dist(M, src) < 12 || M.z != z) 
+					if(get_dist(M, src) < 9 || M.z != z) 
 						listening |= M
 						the_dead[M] = TRUE
 
