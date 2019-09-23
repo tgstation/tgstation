@@ -58,12 +58,12 @@
 	barefootstep = null
 	clawfootstep = null
 	heavyfootstep = null
-	var/sound
+	var/list/sound = list()
 
 /turf/open/indestructible/sound/Entered(var/mob/AM)
 	..()
 	if(istype(AM))
-		playsound(src,sound,50,TRUE)
+		playsound(src,pick(sound),50,TRUE)
 
 /turf/open/indestructible/necropolis
 	name = "necropolis floor"

@@ -14,6 +14,7 @@
 #_maps/RandomRuins/SpaceRuins/bus.dmm
 #_maps/RandomRuins/SpaceRuins/caravanambush.dmm
 #_maps/RandomRuins/SpaceRuins/cloning_facility.dmm
+#_maps/RandomRuins/SpaceRuins/clownplanet.dmm
 #_maps/RandomRuins/SpaceRuins/crashedclownship.dmm
 #_maps/RandomRuins/SpaceRuins/crashedship.dmm
 #_maps/RandomRuins/SpaceRuins/deepstorage.dmm

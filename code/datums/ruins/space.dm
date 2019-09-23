@@ -195,6 +195,12 @@
 	description = "For centuries the promise of a new clown homeworld has been the siren call for countless clown vessels. \
 	Alas, the clown's lust for shenanigans means that successful voyages are almost unheard of, with most vessels falling to hilarious consequences almost immediately."
 
+/datum/map_template/ruin/space/clownplanet
+	id = "clownplanet"
+	suffix = "clownplanet.dmm"
+	name = "Clown Planet"
+	description = "Thought lost in 2552, this minor planet has recently been rediscovered."
+
 /datum/map_template/ruin/space/crashedship
 	id = "crashedship"
 	suffix = "crashedship.dmm"
