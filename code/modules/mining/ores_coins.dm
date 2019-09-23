@@ -70,6 +70,7 @@
 	item_state = "Uranium ore"
 	singular_name = "uranium ore chunk"
 	points = 30
+	material_flags = MATERIAL_NO_EFFECTS
 	custom_materials = list(/datum/material/uranium=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 
