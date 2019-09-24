@@ -105,3 +105,22 @@
 
 /datum/mutation/human/mindreader/get_visual_indicator()
 	return visual_indicators[type][1]
+	
+/datum/mutation/human/superhearing
+	name = "Mind Reader"
+	desc = "This person has superhearing and can hear incredibly quiet sounds from afar."
+	quality = POSITIVE
+	text_gain_indication = "<span class='notice'>You hear whispers and coughs.</span>"
+	text_lose_indication = "<span class='notice'>The whispers fade away, and stop.</span>"
+	instability = 30
+	difficulty = 8
+	locked = TRUE
+/datum/mutation/human/superhearing/on_acquiring(mob/living/carbon/human/owner)
+		if(..())
+		return
+	ADD_TRAIT(owner, TRAIT_SUPER_HEARING, GENETIC_MUTATION)
+	
+/datum/mutation/human/superhearing/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	REMOVE_TRAIT(owner, TRAIT_SUPER_HEARING, GENETIC_MUTATION)

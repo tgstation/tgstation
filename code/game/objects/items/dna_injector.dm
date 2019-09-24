@@ -439,6 +439,13 @@
 /obj/item/dnainjector/removeantiglow
 	name = "\improper DNA injector (Anti-Antiglowy)"
 	remove_mutations = list(ANTIGLOWY)
+/obj/item/dnainjector/superhearing
+	name = "\improper DNA injector (Superhearing)"
+	add_mutations = list(SUPERHEARING)
+
+/obj/item/dnainjector/superhearing
+	name = "\improper DNA injector (Anti-Superhearing)"
+	remove_mutations = list(SUPERHEARING)
 
 /obj/item/dnainjector/timed
 	var/duration = 600
