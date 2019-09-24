@@ -16,7 +16,7 @@
 	vision_range = 6
 	aggro_vision_range = 18
 	var/list/attack_action_types = list()
-	environment_smash = ENVIRONMENT_SMASH_NONE  //This is to prevent elites smashing up the mining station, we'll make sure we can smash minerals fine below.
+	environment_smash = ENVIRONMENT_SMASH_NONE  //This is to prevent elites smashing up the mining station, we'll make sure they can smash minerals fine below.
 	harm_intent_damage = 0 //Punching elites gets you nowhere
 	var/obj/structure/elite_crevice/myparent = null
 	var/can_talk = 0
@@ -102,7 +102,8 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	var/mob/living/simple_animal/hostile/asteroid/elite/mychild = null
 	var/potentialspawns = list(/mob/living/simple_animal/hostile/asteroid/elite/goliath,
 								/mob/living/simple_animal/hostile/asteroid/elite/pandora,
-								/mob/living/simple_animal/hostile/asteroid/elite/legionnaire)
+								/mob/living/simple_animal/hostile/asteroid/elite/legionnaire,
+								/mob/living/simple_animal/hostile/asteroid/elite/herald)
 	icon = 'icons/mob/lavaland/elite_lavaland_monsters.dmi'
 	icon_state = "elite_crevice"
 	light_color = LIGHT_COLOR_RED

@@ -35,11 +35,11 @@
 
 	attack_action_types = list(/datum/action/innate/elite_attack/legionnaire_charge,
 								/datum/action/innate/elite_attack/head_detach,
-								/datum/action/innate/elite_attack/bonepile_teleport,
+								/datum/action/innate/elite_attack/bonfire_teleport,
 								/datum/action/innate/elite_attack/spew_smoke)
 								
 	var/mob/living/simple_animal/hostile/asteroid/elite/legionnairehead/myhead = null
-	var/obj/structure/legionnaire_bonepile/mypile = null
+	var/obj/structure/legionnaire_bonfire/mypile = null
 	var/has_head = TRUE
 	
 /datum/action/innate/elite_attack/legionnaire_charge
@@ -54,10 +54,10 @@
 	chosen_message = "<span class='boldwarning'>You will now detach your head or kill it if it is already released.</span>"
 	chosen_attack_num = 2
 	
-/datum/action/innate/elite_attack/bonepile_teleport
-	name = "Bone Pile Teleport"
-	button_icon_state = "bonepile_teleport"
-	chosen_message = "<span class='boldwarning'>You will leave a bone pile.  Second use will let you swap positions with it indefintiely.  Using it on the same tile as an active bone pile removes it.</span>"
+/datum/action/innate/elite_attack/bonfire_teleport
+	name = "Bonfire Teleport"
+	button_icon_state = "bonfire_teleport"
+	chosen_message = "<span class='boldwarning'>You will leave a bonfire.  Second use will let you swap positions with it indefintiely.  Using it on the same tile as an active bonfire removes it.</span>"
 	chosen_attack_num = 3
 	
 /datum/action/innate/elite_attack/spew_smoke
@@ -74,7 +74,7 @@
 			if(2)
 				head_detach(target)
 			if(3)
-				bonepile_teleport()
+				bonfire_teleport()
 			if(4)
 				spew_smoke()
 		return
@@ -85,7 +85,7 @@
 		if(2)
 			head_detach(target)
 		if(3)
-			bonepile_teleport()
+			bonfire_teleport()
 		if(4)
 			spew_smoke()
 		
@@ -206,29 +206,40 @@
 	visible_message("<span class='boldwarning'>The top of [src]'s spine leaks a black liquid, forming into a skull!</span>")
 	return
 	
-/obj/structure/legionnaire_bonepile
+/obj/structure/legionnaire_bonfire
 	name = "bone pile"
 	desc = "A pile of bones which seems to occasionally move a little.  It's probably a good idea to smash them."
-	icon = 'icons/mob/lavaland/legionnaire.dmi'
-	icon_state = "legionnaire_dead"
+	icon = 'icons/mob/lavaland/legionnaire_bonfire.dmi'
+	icon_state = "bonfire"
 	max_integrity = 100
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	anchored = TRUE
 	density = FALSE
+	light_range = 4
+	light_color = LIGHT_COLOR_RED
 	var/mob/living/simple_animal/hostile/asteroid/elite/legionnaire/myowner = null
 	
-/obj/structure/legionnaire_bonepile/deconstruct(disassembled)
+	
+/obj/structure/legionnaire_bonfire/CanPass(atom/movable/mover, turf/target)
+	if(isliving(mover))
+		var/mob/living/L = mover
+		L.adjust_fire_stacks(3)
+		L.IgniteMob()
+	. = ..()
+	
+/obj/structure/legionnaire_bonfire/deconstruct(disassembled)
 	if(myowner != null)
 		myowner.mypile = null
 	. = ..()
 
-/mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/bonepile_teleport()
+/mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/bonfire_teleport()
 	ranged_cooldown = world.time + 5
 	if(mypile == null)
-		var/obj/structure/legionnaire_bonepile/newpile = new /obj/structure/legionnaire_bonepile(loc)
+		var/obj/structure/legionnaire_bonfire/newpile = new /obj/structure/legionnaire_bonfire(loc)
 		mypile = newpile
 		mypile.myowner = src
-		visible_message("<span class='boldwarning'>[src] sheds a pile of bones onto the floor!</span>")
+		playsound(get_turf(src),'sound/items/fultext_deploy.ogg', 200, 1)
+		visible_message("<span class='boldwarning'>[src] summons a bonfire on [get_turf(src)]!</span>")
 		return
 	else
 		var/turf/legionturf = get_turf(src)
@@ -239,9 +250,9 @@
 			return
 		playsound(pileturf,'sound/items/fultext_deploy.ogg', 200, 1)
 		playsound(legionturf,'sound/items/fultext_deploy.ogg', 200, 1)
-		visible_message("<span class='boldwarning'>[src] collapses into a pile of bones!</span>")
+		visible_message("<span class='boldwarning'>[src] melts down into a burning pile of bones!</span>")
 		forceMove(pileturf)
-		visible_message("<span class='boldwarning'>[src] forms from the pile of bones!</span>")
+		visible_message("<span class='boldwarning'>[src] forms from the bonfire!</span>")
 		mypile.forceMove(legionturf)
 		return
 		
