@@ -23,6 +23,9 @@
 	var/current_arena_template = "None"
 	var/empty_turf_type = /turf/open/indestructible //What turf arena resets to.
 	var/list/teams = list(ARENA_RED_TEAM,ARENA_GREEN_TEAM)
+	var/static/list/team_huds = list()
+	var/static/list/team_colors = list(ARENA_RED_TEAM = "red", ARENA_GREEN_TEAM = "green") //Hud colorsGLOB
+	var/static/list/team_hud_index = list() //hud rewrite is needed
 
 	var/list/team_keys = list() // team_keys["red"] = list(ckey1,ckey2,ckey3)
 	var/list/outfits = list() // outfits["red"] = outfit datum/outfit datum type
@@ -33,6 +36,18 @@
 /obj/machinery/computer/arena/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 	LoadDefaultArenas()
+	GenerateAntagHuds()
+
+
+/obj/machinery/computer/arena/proc/GenerateAntagHuds()
+	for(var/team in teams)
+		var/datum/atom_hud/antag/teamhud = team_huds[team]
+		if(!teamhud) //These will be shared between areas because this stuff is expensive and cross arena fighting is not a thing anyway
+			teamhud = new
+			teamhud.icon_color = team //change to lookup table
+			GLOB.huds += teamhud
+			team_huds[team] = teamhud
+			team_hud_index[team] = length(GLOB.huds)
 
 /obj/machinery/computer/arena/proc/LoadDefaultArenas()
 	var/arena_dir = "[global.config.directory]/arenas/"
@@ -115,6 +130,10 @@
 	M.equipOutfit(outfits[team] ? outfits[team] : default_outfit)
 	M.faction += team //In case anyone wants to add team based stuff to arenas
 	M.key = ckey
+	
+	var/datum/atom_hud/antag/team_hud = team_huds[team]
+	team_hud.join_hud(M)
+	set_antag_hud(M,"brother",team_hud_index[team]) //Add new icon or whatever
 	
 
 /obj/machinery/computer/arena/proc/change_outfit(mob/user,team)
