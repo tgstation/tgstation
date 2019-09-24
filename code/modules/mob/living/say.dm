@@ -260,7 +260,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		var/mob/M = _M
 			if(HAS_TRAIT(M, TRAIT_SUPER_HEARING))
 				if(M.stat != DEAD)			
-					if(get_dist(M, src) < 8 || M.z != z) 
+					if(get_dist(M, src) < 8 && M.z != z) 
 						listening |= M
 						the_dead[M] = TRUE
 
