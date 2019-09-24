@@ -662,8 +662,8 @@
 	mode = TURRET_LETHAL
 	stun_projectile = /obj/item/projectile/bullet
 	lethal_projectile = /obj/item/projectile/bullet
-	lethal_projectile_sound = 'sound/weapons/gunshot.ogg'
-	stun_projectile_sound = 'sound/weapons/gunshot.ogg'
+	lethal_projectile_sound = 'sound/weapons/gun/pistol/shot.ogg'
+	stun_projectile_sound = 'sound/weapons/gun/pistol/shot.ogg'
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
 	faction = list(ROLE_SYNDICATE)
@@ -714,8 +714,8 @@
 	shot_delay = 3
 	stun_projectile = /obj/item/projectile/bullet/p50/penetrator/shuttle
 	lethal_projectile = /obj/item/projectile/bullet/p50/penetrator/shuttle
-	lethal_projectile_sound = 'sound/weapons/gunshot_smg.ogg'
-	stun_projectile_sound = 'sound/weapons/gunshot_smg.ogg'
+	lethal_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
+	stun_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
 	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 80, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 
 /obj/machinery/porta_turret/syndicate/shuttle/target(atom/movable/target)
