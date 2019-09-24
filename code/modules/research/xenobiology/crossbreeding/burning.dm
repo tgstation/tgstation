@@ -210,7 +210,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/green
 	colour = "green"
-	effect_desc = "The user gets a dull arm blade in the hand it is used in."
+	effect_desc = "The user gets a permanent arm blade formed from their flesh in the hand it is used in."
 
 /obj/item/slimecross/burning/green/do_effect(mob/user)
 	var/which_hand = "l_hand"
