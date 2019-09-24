@@ -17,8 +17,6 @@
 	var/obj/item/organ/ears/E = getorganslot(ORGAN_SLOT_EARS)
 	if(!E)
 		return INFINITY
-	else if (HAS_TRAIT(src, TRAIT_SUPER_HEARING))
-		return 0
 	else
 		. += E.bang_protect
 
