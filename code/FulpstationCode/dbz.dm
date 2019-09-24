@@ -1,6 +1,6 @@
 fulp_dbz
 
-/obj/item/clothing/under/costumesaiyan
+/obj/item/clothing/under/costume/saiyan
 	name = "saiyan"
 	desc = "Standard gear given by Freeza's army."
 	mob_overlay_icon = 'icons/saiyan.dmi'
