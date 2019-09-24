@@ -33,5 +33,5 @@
 	required = "/datum/mutation/human/glow; /datum/mutation/human/void"
 	result = ANTIGLOWY
 /datum/generecipe/superhearing
-	required "/datum/mutation/human/antenna; /datum/mutation/human/radioactive"
+	required = "/datum/mutation/human/antenna; /datum/mutation/human/radioactive"
 	result = SUPERHEARING
