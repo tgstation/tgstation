@@ -239,13 +239,13 @@
   * All atoms still inside at the end of all cycles are ejected from the unit.
 */
 /obj/machinery/suit_storage_unit/proc/cook()
+	var/mob/living/mob_occupant = occupant
 	if(uv_cycles)
 		uv_cycles--
 		uv = TRUE
 		locked = TRUE
 		update_icon()
 		if(occupant)
-			var/mob/living/mob_occupant = occupant
 			if(uv_super)
 				mob_occupant.adjustFireLoss(rand(20, 36))
 			else
@@ -296,6 +296,7 @@
 				var/datum/component/radioactive/contamination = AM.GetComponent(/datum/component/radioactive)
 				if(contamination)
 					qdel(contamination)
+			mob_occupant.radiation = 0
 		open_machine(FALSE)
 		if(occupant)
 			dump_contents()
