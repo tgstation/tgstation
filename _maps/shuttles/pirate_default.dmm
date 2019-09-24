@@ -951,7 +951,7 @@
 	id = "piratebridge"
 	},
 /obj/structure/grille,
-/obj/structure/window/reinforced/plastitanium,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "ez" = (

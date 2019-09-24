@@ -692,7 +692,7 @@
 /obj/structure/window/shuttle/unanchored
 	anchored = FALSE
 
-/obj/structure/window/reinforced/plastitanium
+/obj/structure/window/plasma/reinforced/plastitanium
 	name = "plastitanium window"
 	desc = "A durable looking window made of an alloy of of plasma and titanium."
 	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
@@ -707,11 +707,13 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	explosion_block = 3
+	damage_deflection = 11 //The same as normal reinforced windows.
 	level = 3
 	glass_type = /obj/item/stack/sheet/plastitaniumglass
 	glass_amount = 2
+	rad_insulation = RAD_HEAVY_INSULATION
 
-/obj/structure/window/reinforced/plastitanium/unanchored
+/obj/structure/window/plasma/reinforced/plastitanium/unanchored
 	anchored = FALSE
 	state = WINDOW_OUT_OF_FRAME
 
