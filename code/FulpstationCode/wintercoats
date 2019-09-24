@@ -1,0 +1,36 @@
+// HEAD OF STAFF WINTER COATS
+// Sprites designed by Papaporo Paprito, code done by Cosmic Phoenix.
+
+
+/obj/item/clothing/suit/hooded/wintercoat/heads
+	name = "winter coat"
+	desc = "A heavy jacket made from 'synthetic' animal furs."
+  icon = 'icons/obj/clothing/suits.dmi' // [PAPRITO]
+	icon_state = "coatwinter"
+	item_state = "coatwinter"
+	body_parts_covered = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 10, "rad" = 0, "fire" = 0, "acid" = 0)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
+
+/obj/item/clothing/head/hooded/winterhood/heads
+	name = "winter hood"
+	desc = "A hood attached to a heavy winter jacket."
+	icon_state = "winterhood"
+	body_parts_covered = HEAD
+	cold_protection = HEAD
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	flags_inv = HIDEHAIR|HIDEEARS
+
+
+/obj/item/clothing/suit/hooded/wintercoat/heads/security
+	name = "\improper Head of Security's winter coat"
+  desc = "this is the Head of Security's armored winter coat."
+	icon_state = "coatsecurity"
+	item_state = "coatsecurity"
+	armor = list("melee" = 30, "bullet" = 30, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 90) // Same as the HoS trench coat
+  cold_protection = CHEST|GROIN|LEGS|ARMS // Alright, so *technically* the coat doesn't actually cover the legs, but this has to be as good as the HoS trench coat otherwise it will never be used.
+  heat_protection = CHEST|GROIN|LEGS|ARMS
+  strip_delay = 80
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/security
