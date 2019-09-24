@@ -3,6 +3,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 ///GPS component. Atoms that have this show up on gps. Pretty simple stuff.
 /datum/component/gps
 	var/gpstag = "COM0"
+	var/turf/locked_location
 	var/tracking = TRUE
 	var/emped = FALSE
 
@@ -101,6 +102,8 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	if(!tracking || emped) //Do not bother scanning if the GPS is off or EMPed
 		return data
 
+	locked_location = get_turf(parent)
+
 	var/turf/curr = get_turf(parent)
 	data["current"] = "[get_area_name(curr, TRUE)] ([curr.x], [curr.y], [curr.z])"
 
@@ -138,7 +141,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		if("rename")
 			var/atom/parentasatom = parent
 			var/a = input("Please enter desired tag.", parentasatom.name, gpstag) as text|null
-			
+
 			if (!a)
 				return
 

@@ -5,6 +5,7 @@
 	icon_keyboard = "teleport_key"
 	light_color = LIGHT_COLOR_BLUE
 	circuit = /obj/item/circuitboard/computer/teleporter
+	var/obj/item/gps/gps
 	var/regime_set = "Teleporter"
 	var/id
 	var/obj/machinery/teleport/station/power_station
@@ -31,6 +32,18 @@
 			break
 	return power_station
 
+/obj/machinery/computer/teleporter/attackby(obj/I, mob/living/user, params)
+	if(istype(I, /obj/item/gps))
+		gps = I
+
+		if(!(stat & (NOPOWER|BROKEN)))
+			if(!user.transferItemToLoc(I, src))
+				to_chat(user, "<span class='warning'>\the [I] is stuck to your hand, you cannot put it in \the [src]!</span>")
+				return
+			to_chat(user, "<span class='caution'>You insert the GPS device into the [name]'s slot.</span>")
+	else
+		return ..()
+
 /obj/machinery/computer/teleporter/ui_interact(mob/user)
 	. = ..()
 	var/data = "<h3>Teleporter Status</h3>"
@@ -52,6 +65,13 @@
 		data += "<A href='?src=[REF(src)];regimeset=1'>Change regime</A><BR>"
 		data += "<A href='?src=[REF(src)];settarget=1'>Set target</A><BR>"
 
+		if(gps)
+			data += "<BR><A href='?src=[REF(src)];locked=1'>Get target from memory</A><BR>"
+			data += "<A href='?src=[REF(src)];eject=1'>Eject GPS device</A><BR>"
+		else
+			data += "<BR><span class='linkOff'>Get target from memory</span><BR>"
+			data += "<span class='linkOff'>Eject GPS device</span><BR>"
+
 		data += "<BR><A href='?src=[REF(src)];calibrate=1'>Calibrate Hub</A>"
 
 	var/datum/browser/popup = new(user, "teleporter", name, 400, 400)
@@ -60,6 +80,11 @@
 
 /obj/machinery/computer/teleporter/Topic(href, href_list)
 	if(..())
+		return
+
+	if(href_list["eject"])
+		eject()
+		updateDialog()
 		return
 
 	if(!check_hub_connection())
@@ -79,6 +104,13 @@
 		power_station.teleporter_hub.update_icon()
 		power_station.teleporter_hub.calibrated = 0
 		set_target(usr)
+	if(href_list["locked"])
+		power_station.engaged = 0
+		power_station.teleporter_hub.update_icon()
+		power_station.teleporter_hub.calibrated = 0
+
+		var/datum/component/gps/gpsc = gps.GetComponent(/datum/component/gps/item)
+		target = get_turf(gpsc.locked_location)
 	if(href_list["calibrate"])
 		if(!target)
 			say("Error: No target set to calibrate to.")
@@ -115,6 +147,11 @@
 		regime_set = "Gate"
 	else
 		regime_set = "Teleporter"
+
+/obj/machinery/computer/teleporter/proc/eject()
+	if(gps)
+		usr.put_in_hands(gps)
+		gps = null
 
 /obj/machinery/computer/teleporter/proc/set_target(mob/user)
 	var/list/L = list()
