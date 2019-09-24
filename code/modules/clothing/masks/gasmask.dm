@@ -11,6 +11,24 @@
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 
+/obj/item/clothing/mask/gas/atmos
+	name = "atmospheric gas mask"
+	desc = "Improved fireproof mask utilized by atmospheric technicians. Still not very good at blocking gas flow, but it's flameproof."
+	icon_state = "gas_atmos"
+	w_class = WEIGHT_CLASS_SMALL
+	item_state = "gas_atmos"
+	gas_transfer_coefficient = 0
+	permeability_coefficient = 0 //it gooder
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/mask/gas/atmos/captain
+	name = "captain's gas mask"
+	desc = "Nanotrasen cut corners and repainted a spare atmospheric gas mask, but don't tell anyone."
+	icon_state = "gas_cap"
+	w_class = WEIGHT_CLASS_SMALL
+	item_state = "gas_cap"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
 // **** Welding gas mask ****
 
 /obj/item/clothing/mask/gas/welding
