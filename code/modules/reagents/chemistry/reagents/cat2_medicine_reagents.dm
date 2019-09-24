@@ -90,7 +90,6 @@
 	description = "Restores oxygen deprivation while producing a lesser amount of toxic byproducts. Both scale with exposure to the drug and current amount of oxygen deprivation. Overdose causes toxic byproducts regardless of oxygen deprivation."
 	reagent_state = LIQUID
 	color = "#FF6464"
-	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 35 // at least 2 full syringes +some, this stuff is nasty if left in for long
 
 /datum/reagent/medicine/C2/convermol/on_mob_life(mob/living/carbon/human/M)
@@ -154,7 +153,7 @@
 	phis.burn_mod *= weak_mod
 	phis.oxy_mod *= weak_mod
 	phis.stamina_mod *= weak_mod
-	M.adjustToxLoss(-0.2*weak_mod) //Math is fun if you your PR doesn't accidentally get testmerged before you can test the effects of your equations!
+	M.adjustToxLoss(-0.3*weak_mod) //Math is fun if you your PR doesn't accidentally get testmerged before you can test the effects of your equations!
 	..()
 	return TRUE
 

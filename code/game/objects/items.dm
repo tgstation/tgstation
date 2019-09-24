@@ -14,7 +14,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	///Icon file for right inhand overlays
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 
-	///Icon file for mob worn overlays. 
+	///Icon file for mob worn overlays.
 	///no var for state because it should *always* be the same as icon_state
 	var/icon/mob_overlay_icon
 	//Forced mob worn layer instead of the standard preferred ssize.
@@ -416,15 +416,15 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // user is mob that equipped it
 // slot uses the slot_X defines found in setup.dm
 // for items that can be placed in multiple slots
-// note this isn't called during the initial dressing of a player
-/obj/item/proc/equipped(mob/user, slot)
+// Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
+/obj/item/proc/equipped(mob/user, slot, initial = FALSE)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	for(var/X in actions)
 		var/datum/action/A = X
 		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
 			A.Grant(user)
 	item_flags |= IN_INVENTORY
-	if(equip_sound && (slot_flags & slotdefine2slotbit(slot)))
+	if(equip_sound && !initial &&(slot_flags & slotdefine2slotbit(slot)))
 		playsound(src, equip_sound, EQUIP_SOUND_VOLUME, TRUE, ignore_walls = FALSE)
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
@@ -548,7 +548,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(hit_atom && !QDELETED(hit_atom))
 		SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
-		if(is_hot() && isliving(hit_atom))
+		if(get_temperature() && isliving(hit_atom))
 			var/mob/living/L = hit_atom
 			L.IgniteMob()
 		var/itempush = 1
@@ -611,10 +611,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(flags & ITEM_SLOT_NECK)
 		owner.update_inv_neck()
 
-/obj/item/proc/is_hot()
+///Returns the temperature of src. If you want to know if an item is hot use this proc.
+/obj/item/proc/get_temperature()
 	return heat
 
-/obj/item/proc/is_sharp()
+///Returns the sharpness of src. If you want to get the sharpness of an item use this.
+/obj/item/proc/get_sharpness()
 	return sharpness
 
 /obj/item/proc/get_dismemberment_chance(obj/item/bodypart/affecting)
@@ -641,7 +643,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		location.hotspot_expose(flame_heat, 5)
 
 /obj/item/proc/ignition_effect(atom/A, mob/user)
-	if(is_hot())
+	if(get_temperature())
 		. = "<span class='notice'>[user] lights [A] with [src].</span>"
 	else
 		. = ""

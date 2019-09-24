@@ -24,7 +24,7 @@
 
 /datum/component/butchering/proc/onItemAttack(obj/item/source, mob/living/M, mob/living/user)
 	if(user.a_intent == INTENT_HARM && M.stat == DEAD && (M.butcher_results || M.guaranteed_butcher_results)) //can we butcher it?
-		if(butchering_enabled && (can_be_blunt || source.is_sharp()))
+		if(butchering_enabled && (can_be_blunt || source.get_sharpness()))
 			INVOKE_ASYNC(src, .proc/startButcher, source, M, user)
 			return COMPONENT_ITEM_NO_ATTACK
 

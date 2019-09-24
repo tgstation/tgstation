@@ -9602,9 +9602,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "atJ" = (
-/obj/machinery/sparker/toxmix{
-	pixel_x = 25
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -62324,9 +62321,6 @@
 	},
 /area/science/research)
 "cGj" = (
-/obj/machinery/sparker/toxmix{
-	pixel_x = 25
-	},
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxins_mixing_input{
 	dir = 4
 	},
@@ -67599,11 +67593,11 @@
 	},
 /area/chapel/main)
 "cQY" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
 	name = "Departure Lounge Airlock"
 	},
-/obj/effect/turf_decal/delivery,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "cQZ" = (
@@ -72313,7 +72307,8 @@
 "djz" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
-	name = "Arrival Airlock"
+	name = "Arrival Airlock";
+	safety_mode = 1
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
@@ -72330,7 +72325,8 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock/external{
-	name = "Arrival Airlock"
+	name = "Arrival Airlock";
+	safety_mode = 1
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
@@ -73552,6 +73548,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
+"eCT" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external{
+	name = "Departure Lounge Airlock"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
 "eFN" = (
 /obj/structure/bodycontainer/crematorium{
 	dir = 1;
@@ -75095,6 +75101,10 @@
 	dir = 8
 	},
 /area/engine/storage_shared)
+"vIO" = (
+/obj/machinery/igniter/incinerator_toxmix,
+/turf/open/floor/engine/vacuum,
+/area/science/mixing/chamber)
 "vKx" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -100970,7 +100980,7 @@ cQo
 cQL
 cQY
 cQK
-kzn
+eCT
 aaa
 aaa
 aaa
@@ -102512,7 +102522,7 @@ cQp
 cQN
 cQY
 cQK
-kzn
+eCT
 cYJ
 aaa
 aaa
@@ -103026,7 +103036,7 @@ cQq
 cQP
 cQY
 cRt
-kzn
+eCT
 aaa
 aaa
 aaa
@@ -107376,7 +107386,7 @@ cBu
 cCv
 wQA
 cEs
-cFn
+vIO
 cFn
 cHe
 cIc
