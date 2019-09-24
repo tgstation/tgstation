@@ -197,8 +197,6 @@
 	pump.stat = 0
 	pump.build_network()
 
-	update_icon()
-
 /obj/machinery/portable_atmospherics/canister/Destroy()
 	qdel(pump)
 	pump = null
