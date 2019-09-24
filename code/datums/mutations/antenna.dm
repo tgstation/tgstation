@@ -107,7 +107,7 @@
 	return visual_indicators[type][1]
 
 /datum/mutation/human/superhearing
-	name = "Mind Reader"
+	name = "Super Hearing"
 	desc = "This person has superhearing and can hear incredibly quiet sounds from afar."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>You hear whispers and coughs.</span>"
