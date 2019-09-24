@@ -4,5 +4,5 @@ fulp_dbz
     name = "saiyan"
     desc = "Standard gear given by Freeza's army."
 mob_overlay_icon = "freez_armor"
-icon = 'icons/Saiyan.dmi'
+icon = 'icons/saiyan.dmi'
 icon_state = "freez_armor"
