@@ -133,13 +133,14 @@
 
 /obj/item/clothing/head/helmet/chaplain/adept
 	name = "adept hood"
-	desc = "Its only heretical when others do it"
+	desc = "Its only heretical when others do it."
 	icon_state = "crusader"
 	item_state = "crusader"
+	flags_cover = HEADCOVERSEYES
 
 /obj/item/clothing/suit/armor/riot/chaplain/adept
 	name = "adept robes"
-	desc = "The ideal outfit for burning the unfaithful"
+	desc = "The ideal outfit for burning the unfaithful."
 	icon_state = "crusader"
 	item_state = "crusader"
 
