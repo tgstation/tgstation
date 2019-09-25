@@ -8,8 +8,8 @@
 	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
 	icon_state = "wintercoat_hos"
 	item_state = "wintercoat_hos"
-	lefthand_file = 'icons/mob/inhands/wintercoat_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/wintercoat_righthand.dmi'
+	lefthand_file = 'icons/fulpicons/phoenix_nest/wintercoat_lefthand.dmi'
+	righthand_file = 'icons/fulpicons/phoenix_nest/wintercoat_righthand.dmi'
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 90) // Same as the HoS trench coat
 	cold_protection = CHEST|GROIN|LEGS|ARMS // Alright, so *technically* the coat doesn't actually cover the legs, but this has to be as good as the HoS trench coat otherwise it will never be used.
 	heat_protection = CHEST|GROIN|LEGS|ARMS // This may or may not kill the game.
@@ -17,7 +17,8 @@
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/security/head
 
 /obj/item/clothing/head/hooded/winterhood/security/head
-	icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
+	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
+	icon = 'icons/fulpicons/phoenix_nest/wintercoathoods.dmi'
 	icon_state = "winterhood_hos"
 
 
@@ -27,14 +28,15 @@
 	icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
 	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
 	icon_state = "wintercoat_cmo"
-	item_state = "wintercoat_cmo
-	lefthand_file = 'icons/mob/inhands/wintercoat_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/wintercoat_righthand.dmi'
+	item_state = "wintercoat_cmo"
+	lefthand_file = 'icons/fulpicons/phoenix_nest/wintercoat_lefthand.dmi'
+	righthand_file = 'icons/fulpicons/phoenix_nest/wintercoat_righthand.dmi'
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 50, "rad" = 0, "fire" = 50, "acid" = 50) // Same as CMO's labcoat.
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/head
 
 /obj/item/clothing/head/hooded/winterhood/medical/head
-	icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
+	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
+	icon = 'icons/fulpicons/phoenix_nest/wintercoathoods.dmi'
 	icon_state = "winterhood_cmo"
 
 
@@ -45,13 +47,14 @@
 	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
 	icon_state = "wintercoat_rd"
 	item_state = "wintercoat_rd"
-	lefthand_file = 'icons/mob/inhands/wintercoat_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/wintercoat_righthand.dmi'
+	lefthand_file = 'icons/fulpicons/phoenix_nest/wintercoat_lefthand.dmi'
+	righthand_file = 'icons/fulpicons/phoenix_nest/wintercoat_righthand.dmi'
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 40, "rad" = 0, "fire" = 40, "acid" = 40) // -10 from normal labcoat, +10 to bomb from Sci winter coat.
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/science/head
 
 /obj/item/clothing/head/hooded/winterhood/science/head
-	icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
+	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
+	icon = 'icons/fulpicons/phoenix_nest/wintercoathoods.dmi'
 	icon_state = "winterhood_rd"
 
 /obj/item/clothing/suit/hooded/wintercoat/engineering/head
@@ -61,14 +64,15 @@
 	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
 	icon_state = "wintercoat_ce"
 	item_state = "wintercoat_ce"
-	lefthand_file = 'icons/mob/inhands/wintercoat_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/wintercoat_righthand.dmi'
+	lefthand_file = 'icons/fulpicons/phoenix_nest/wintercoat_lefthand.dmi'
+	righthand_file = 'icons/fulpicons/phoenix_nest/wintercoat_righthand.dmi'
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 40, "fire" = 30, "acid" = 45) // 20 extra rad protection. Why not?
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/t_scanner, /obj/item/construction/rcd, /obj/item/pipe_dispenser, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering/head
 
 /obj/item/clothing/head/hooded/winterhood/engineering/head
-	icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
+	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
+	icon = 'icons/fulpicons/phoenix_nest/wintercoathoods.dmi'
 	icon_state = "winterhood_ce"
 
 
@@ -79,13 +83,14 @@
 	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
 	icon_state = "wintercoat_hop"
 	item_state = "wintercoat_hop"
-	lefthand_file = 'icons/mob/inhands/wintercoat_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/wintercoat_righthand.dmi'
+	lefthand_file = 'icons/fulpicons/phoenix_nest/wintercoat_lefthand.dmi'
+	righthand_file = 'icons/fulpicons/phoenix_nest/wintercoat_righthand.dmi'
 	armor = list("melee" = 25, "bullet" = 25, "laser" = 25, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50) // Weaker armor vest. (-5% Melee, Bullet, Laser)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/captain/hop
 
 /obj/item/clothing/head/hooded/winterhood/captain/hop
-	icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
+	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
+	icon = 'icons/fulpicons/phoenix_nest/wintercoathoods.dmi'
 	icon_state = "winterhood_hop"
 
 /obj/item/clothing/suit/hooded/wintercoat/cargo/head
