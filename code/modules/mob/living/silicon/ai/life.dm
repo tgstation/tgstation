@@ -80,7 +80,6 @@
 			return
 		else if(stat == UNCONSCIOUS)
 			stat = CONSCIOUS
-			adjust_blindness(-1)
 	diag_hud_set_status()
 
 /mob/living/silicon/ai/update_sight()
