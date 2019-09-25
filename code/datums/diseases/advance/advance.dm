@@ -239,7 +239,7 @@
 			SetSpread(DISEASE_SPREAD_AIRBORNE)
 		else if(properties["transmittable"]>=7)
 			SetSpread(DISEASE_SPREAD_CONTACT_SKIN)
-		else if(properties["transmittable"]>=4)
+		else if(properties["transmittable"]>=3)
 			SetSpread(DISEASE_SPREAD_CONTACT_FLUIDS)
 		else
 			SetSpread(DISEASE_SPREAD_BLOOD)
