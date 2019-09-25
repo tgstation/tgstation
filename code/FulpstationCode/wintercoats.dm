@@ -77,7 +77,7 @@
 
 
 /obj/item/clothing/suit/hooded/wintercoat/captain/hop
-	name = "captain's winter coat"
+	name = "\improper Head of Personel's winter coat"
 	desc = "this is the Head of Personel's personal winter coat. It has a small armor vest woven inside."
 	icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
 	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
@@ -95,7 +95,7 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/cargo/head
 	name = "\improper Quarter Master's cargo winter coat"
-	desc = "It looks like a regular cargo winter coat... it seems the Quarter Master still isn't a head of staff..."
+	desc = "It's just a regular cargo winter coat... it seems the Quarter Master still isn't a head of staff..."
 
 /* Commented out for now. This'll go into the QM's locker on Halloween or something.
 /obj/item/clothing/suit/cardborg/qm
