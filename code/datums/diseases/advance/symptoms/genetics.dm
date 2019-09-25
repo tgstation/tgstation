@@ -8,8 +8,8 @@
 	level = 6
 	severity = 4
 	base_message_chance = 50
-	symptom_delay_min = 60
-	symptom_delay_max = 100
+	symptom_delay_min = 30
+	symptom_delay_max = 60
 	var/excludemuts = NONE
 	var/no_reset = FALSE
 	var/mutadone_proof = NONE
@@ -23,8 +23,9 @@
 		return
 	if(A.properties["stealth"] >= 5) //only give them bad mutations
 		excludemuts = POSITIVE
-	if(A.properties["stage_rate"] >= 10) //activate dormant mutations more often at around twice the pace
-		symptom_delay_max = 60
+	if(A.properties["stage_rate"] >= 10) //activate dormant mutations more often at around 1.5x the pace
+		symptom_delay_min = 20		
+		symptom_delay_max = 40
 	if(A.properties["resistance"] >= 8) //mutadone won't save you now
 		mutadone_proof = (NEGATIVE | MINOR_NEGATIVE)
 	if(A.properties["resistance"] >= 14) //one does not simply escape Nurgle's grasp
