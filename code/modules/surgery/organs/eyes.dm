@@ -58,7 +58,6 @@
 	M.cure_nearsighted(EYE_DAMAGE)
 	M.set_blindness(0)
 	M.set_blurriness(0)
-	M.update_tint()
 	M.update_sight()
 
 

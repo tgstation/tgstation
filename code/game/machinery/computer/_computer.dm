@@ -66,13 +66,11 @@
 	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir, alpha=128)
 
 /obj/machinery/computer/power_change()
-	..()
+	. = ..()
 	if(stat & NOPOWER)
 		set_light(0)
 	else
 		set_light(brightness_on)
-	update_icon()
-	return
 
 /obj/machinery/computer/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
@@ -94,12 +92,12 @@
 			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
 /obj/machinery/computer/obj_break(damage_flag)
-	if(circuit && !(flags_1 & NODECONSTRUCT_1)) //no circuit, no breaking
-		if(!(stat & BROKEN))
-			playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
-			stat |= BROKEN
-			update_icon()
-			set_light(0)
+	if(!circuit) //no circuit, no breaking
+		return
+	. = ..()
+	if(.)
+		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
+		set_light(0)
 
 /obj/machinery/computer/emp_act(severity)
 	. = ..()

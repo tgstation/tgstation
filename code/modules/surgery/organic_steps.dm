@@ -12,7 +12,7 @@
 		"<span class='notice'>[user] begins to make an incision in [target]'s [parse_zone(target_zone)].</span>")
 
 /datum/surgery_step/incise/tool_check(mob/user, obj/item/tool)
-	if(implement_type == /obj/item && !tool.is_sharp())
+	if(implement_type == /obj/item && !tool.get_sharpness())
 		return FALSE
 
 	return TRUE
@@ -83,7 +83,7 @@
 
 /datum/surgery_step/close/tool_check(mob/user, obj/item/tool)
 	if(implement_type == TOOL_WELDER || implement_type == /obj/item)
-		return tool.is_hot()
+		return tool.get_temperature()
 
 	return TRUE
 

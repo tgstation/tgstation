@@ -119,7 +119,7 @@
 		. += "<span class='warning'>It's dripping with fuel and smells terrible.</span>"
 
 /obj/item/reagent_containers/food/snacks/deadmouse/attackby(obj/item/I, mob/user, params)
-	if(I.is_sharp() && user.a_intent == INTENT_HARM)
+	if(I.get_sharpness() && user.a_intent == INTENT_HARM)
 		if(isturf(loc))
 			new /obj/item/reagent_containers/food/snacks/meat/slab/mouse(loc)
 			to_chat(user, "<span class='notice'>You butcher [src].</span>")

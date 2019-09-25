@@ -144,7 +144,7 @@ SUBSYSTEM_DEF(pai)
 	if(!ghost_spam)
 		ghost_spam = TRUE
 		for(var/mob/dead/observer/G in GLOB.player_list)
-			if(!G.key || !G.client)
+			if(!G.key)
 				continue
 			if(!(ROLE_PAI in G.client.prefs.be_special))
 				continue
