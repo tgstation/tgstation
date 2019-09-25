@@ -1,22 +1,5 @@
-/*
-//////////////////////////////////////
-
-DNA Saboteur
-
-	Very noticable.
-	Lowers resistance tremendously.
-	No changes to stage speed.
-	Decreases transmittablity tremendously.
-	Fatal Level.
-
-Bonus
-	Cleans the DNA of a person and then randomly gives them a trait.
-
-//////////////////////////////////////
-*/
-
 /datum/symptom/genetic_mutation
-	name = "Viral DNA Activator"
+	name = "Dormant DNA Activator"
 	desc = "The virus bonds with the DNA of the host, activating random dormant mutations within their DNA. When the virus is cured, the host's genetic alterations are undone."
 	stealth = -2
 	resistance = -3
