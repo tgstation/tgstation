@@ -1176,4 +1176,42 @@
 		/obj/item/stock_parts/micro_laser = /obj/item/stock_parts/micro_laser/quadultra,
 		/obj/item/stock_parts/scanning_module = /obj/item/stock_parts/scanning_module/triphasic)
 
+/obj/item/circuitboard/machine/plumbing
+	name = "bugged board good job"
+	def_components = list(/obj/item/reagent_containers/glass/beaker) //machine construction might already be excessive
 
+/obj/item/circuitboard/machine/plumbing/synthesizer
+	name = "synthesizer board (Plumbing Chemical Synthesizer)"
+	build_path = /obj/machinery/plumbing/synthesizer
+
+/obj/item/circuitboard/machine/plumbing/reaction_chamber
+	name = "reaction chamber board (Plumbing Reaction Chamber)"
+	build_path = /obj/machinery/plumbing/reaction_chamber
+
+/obj/item/circuitboard/machine/plumbing/acclimator
+	name = "acclimator board (Plumbing Chemical Acclimator)"
+	build_path = /obj/machinery/plumbing/acclimator
+
+/obj/item/circuitboard/machine/plumbing/disposer
+	name = "reagent disposer (Plumbing Disposer)"
+	build_path = /obj/machinery/plumbing/disposer
+
+/obj/item/circuitboard/machine/plumbing/splitter
+	name = "splitter board (Plumbing Chemical Splitter)"
+	build_path = /obj/machinery/plumbing/splitter
+
+/obj/item/circuitboard/machine/plumbing/filter
+	name = "filter board (Plumbing Chemical Filter)"
+	build_path = /obj/machinery/plumbing/filter
+
+/obj/item/circuitboard/machine/plumbing/pill_press
+	name = "pill press board (Plumbing Pill Press)"
+	build_path = /obj/machinery/plumbing/pill_press
+
+/obj/item/circuitboard/machine/plumbing/output
+	name = "plumbing output board (Plumbing Output)"
+	build_path = /obj/machinery/plumbing/synthesizer
+
+/obj/item/circuitboard/machine/plumbing/input
+	name = "plumbing input board (Plumbing Input)"
+	build_path = /obj/machinery/plumbing/input

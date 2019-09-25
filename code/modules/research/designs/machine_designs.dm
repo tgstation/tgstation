@@ -602,3 +602,75 @@
 	build_path = /obj/item/circuitboard/machine/medical_kiosk
 	category = list ("Medical Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/board/synthesizer
+	name = "Machine Design (Plumbing Chemical Synthesizer)"
+	desc = "The circuit board for a chemical synthesizer."
+	id = "plumbing_synthesizer"
+	build_path = /obj/item/circuitboard/machine/plumbing/synthesizer
+	category = list ("Medical Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/board/reaction_chamber
+	name = "Machine Design (Plumbing Reaction Chamber)"
+	desc = "The circuit board for a reaction chamber."
+	id = "plumbing_reaction_chamber"
+	build_path = /obj/item/circuitboard/machine/plumbing/reaction_chamber
+	category = list ("Medical Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/board/acclimator
+	name = "Machine Design (Plumbing Chemical Acclimator)"
+	desc = "The circuit board for a chemical acclimator."
+	id = "plumbing_acclimator"
+	build_path = /obj/item/circuitboard/machine/plumbing/acclimator
+	category = list ("Medical Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/board/disposer
+	name = "Machine Design (Plumbing Disposer)"
+	desc = "The circuit board for a chemical disposer."
+	id = "plumbing_disposer"
+	build_path = /obj/item/circuitboard/machine/plumbing/disposer
+	category = list ("Medical Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/board/splitter
+	name = "Machine Design (Plumbing Splitter)"
+	desc = "The circuit board for a splitter."
+	id = "plumbing_splitter"
+	build_path = /obj/item/circuitboard/machine/plumbing/splitter
+	category = list ("Medical Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/board/filter
+	name = "Machine Design (Plumbing Chemical Filter)"
+	desc = "The circuit board for a filter."
+	id = "plumbing_filter"
+	build_path = /obj/item/circuitboard/machine/plumbing/filter
+	category = list ("Medical Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/board/pill_press
+	name = "Machine Design (Plumbing Pill Press)"
+	desc = "The circuit board for a pill press."
+	id = "plumbing_pill_press"
+	build_path = /obj/item/circuitboard/machine/plumbing/pill_press
+	category = list ("Medical Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/board/output
+	name = "Machine Design (Plumbing Output)"
+	desc = "The circuit board for a plumbing output."
+	id = "plumbing_output"
+	build_path = /obj/item/circuitboard/machine/plumbing/output
+	category = list ("Medical Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/board/input
+	name = "Machine Design (Plumbing Input)"
+	desc = "The circuit board for a reaction chamber."
+	id = "plumbing_input"
+	build_path = /obj/item/circuitboard/machine/plumbing/input
+	category = list ("Medical Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL

@@ -33,6 +33,8 @@ All the important duct code:
 	var/active = TRUE
 	///track ducts we're connected to. Mainly for ducts we connect to that we normally wouldn't, like different layers and colors, for when we regenerate the ducts
 	var/list/neighbours = list()
+	///wheter we just unanchored or drop whatever is in the variable. either is safe
+	var/drop_on_wrench = /obj/item/stack/ducts
 
 /obj/machinery/duct/Initialize(mapload, no_anchor, color_of_duct, layer_of_duct = DUCT_LAYER_DEFAULT, force_connects)
 	. = ..()
@@ -214,6 +216,9 @@ All the important duct code:
 		"<span class='notice'>You unfasten \the [src].</span>", \
 		"<span class='hear'>You hear ratcheting.</span>")
 		disconnect_duct()
+		if(ispath(drop_on_wrench))
+			new drop_on_wrench(drop_location())
+			qdel(src)
 	else if(can_anchor())
 		anchored = TRUE
 		active = TRUE
@@ -268,6 +273,7 @@ All the important duct code:
 
 	color_to_color_support = FALSE
 	duct_layer = FIRST_DUCT_LAYER | SECOND_DUCT_LAYER | THIRD_DUCT_LAYER | FOURTH_DUCT_LAYER | FIFTH_DUCT_LAYER
+	drop_on_wrench = null
 
 	lock_connects = TRUE
 	lock_layers = TRUE
@@ -289,3 +295,32 @@ All the important duct code:
 	if(istype(D, /obj/machinery/duct/multilayered))
 		return
 	return ..()
+
+/obj/item/stack/ducts
+	name = "stack of duct"
+	desc = "A stack of fluid ducts."
+	singular_name = "duct"
+	icon = 'icons/obj/plumbing/fluid_ducts.dmi'
+	icon_state = "ducts"
+	w_class = WEIGHT_CLASS_TINY
+	novariants = FALSE
+	max_amount = 50
+	item_flags = NOBLUDGEON
+	var/duct_color
+	var/duct_layer = DUCT_LAYER_DEFAULT
+
+/obj/item/stack/ducts/afterattack(atom/A, user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	if(istype(A, /obj/machinery/duct))
+		var/obj/machinery/duct/D = A
+		if(!D.anchored)
+			add(1)
+			qdel(D)
+	if(istype(A, /turf/open))
+		var/turf/open/OT = A
+		new(OT, color_of_duct = duct_color, layer_of_duct = duct_layer)
+
+/obj/item/stack/ducts/duct/fifty
+	amount = 50

@@ -50,6 +50,13 @@
 	description = "Basic mechanical, electronic, surgical and botanical tools."
 	design_ids = list("screwdriver", "wrench", "wirecutters", "crowbar", "multitool", "welding_tool", "tscanner", "analyzer", "cable_coil", "pipe_painter", "airlock_painter", "scalpel", "circular_saw", "surgicaldrill", "retractor", "cautery", "hemostat", "surgical_drapes", "syringe", "cultivator", "plant_analyzer", "shovel", "spade", "hatchet",  "mop")
 
+/datum/techweb_node/plumbing
+	id = "plumbing"
+	starting_node = TRUE
+	display_name = "Plumbing Machinery"
+	description = "All the basic boards necessary for chemical factories and sewage controle."
+	design_ids = list("plumbing_synthesizer","plumbing_acclimator","plumbing_splitter","plumbing_filter","plumbing_disposer","plumbing_pill_press","plumbing_reaction_chamber","plumbing_output","plumbing_input")
+
 /////////////////////////Biotech/////////////////////////
 /datum/techweb_node/biotech
 	id = "biotech"
