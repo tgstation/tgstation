@@ -953,8 +953,12 @@
 	if(src.job in list("Medical Doctor","Atmospheric Technician","Chief Medical Officer"))
 		job_speed = 20 //lifesavers are faster
 	if(can_be_firemanned(target))
-		visible_message("<span class='notice'>[src] starts lifting [target] onto their back...</span>",
-			"<span class='notice'>You start lifting [target] onto your back...</span>")
+		if(job_speed = 50)
+			visible_message("<span class='notice'>[src] starts lifting [target] onto their back...</span>",
+				"<span class='notice'>You start lifting [target] onto your back...</span>")
+		else
+			visible_message("<span class='notice'>[src] starts expertly lifting [target] onto their back.</span>",
+				"<span class='notice'>You quickly begin lifting [target] onto your back.</span>")
 		if(do_after(src, job_speed, TRUE, target))
 			//Second check to make sure they're still valid to be carried
 			if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
