@@ -46,8 +46,8 @@ new /datum/disease_ability/symptom/powerful/heal/water,
 new /datum/disease_ability/symptom/powerful/heal/plasma,
 new /datum/disease_ability/symptom/powerful/heal/radiation,
 new /datum/disease_ability/symptom/powerful/heal/coma,
-new /datum/disease_ability/symptom/powerful/youth
-new /datum/disease_ability/symptom/powerful/emp
+new /datum/disease_ability/symptom/powerful/youth,
+new /datum/disease_ability/symptom/powerful/emp,
 new /datum/disease_ability/symptom/powerful/hugging
 ))
 
