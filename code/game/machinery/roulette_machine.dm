@@ -13,7 +13,7 @@
 ///Machine that lets you play roulette. Odds are pre-defined to be the same as European Roulette without the "En Prison" rule
 /obj/machinery/roulette
 	name = "Roulette Table"
-	desc = "A computerized roulette table."
+	desc = "A computerized roulette table. Swipe your ID to play or register yourself as owner!"
 	icon = 'icons/obj/machines/roulette.dmi'
 	icon_state = "idle"
 	density = TRUE
@@ -44,7 +44,7 @@
 /obj/machinery/roulette/Initialize()
 	. = ..()
 	jackpot_loop = new(list(src), FALSE)
-	wires = new /datum/wires/roulette
+	wires = new /datum/wires/roulette(src)
 
 /obj/machinery/roulette/obj_break(damage_flag)
 	prize_theft(0.05)
@@ -108,15 +108,17 @@
 		wires.interact(user)
 		return
 	if(playing)
-		return
-	if(stat & MAINT || stat & NOPOWER || locked)
-		to_chat(user, "<span class='notice'>The machine appears to be disabled.</span>")
-		return
-	playsound(src, 'sound/machines/card_slide.ogg', 50, TRUE)
+		return ..()
 	if(istype(W, /obj/item/card/id))
+		playsound(src, 'sound/machines/card_slide.ogg', 50, TRUE)
+
+		if(stat & MAINT || stat & NOPOWER || locked)
+			to_chat(user, "<span class='notice'>The machine appears to be disabled.</span>")
+			return FALSE
+
 		if(my_card)
 			var/obj/item/card/id/player_card = W
-			if(player_card.registered_account.account_balance <= chosen_bet_amount) //Does the player have enough funds
+			if(player_card.registered_account.account_balance < chosen_bet_amount) //Does the player have enough funds
 				audible_message("<span class='warning'>You do not have the funds to play! Lower your bet or get more money.</span>")
 				playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
 				return FALSE
@@ -139,6 +141,7 @@
 			playsound(src, 'sound/machines/chime.ogg', 50)
 
 			addtimer(CALLBACK(src, .proc/play, user, player_card, chosen_bet_type, chosen_bet_amount, potential_payout), 4) //Animation first
+			return TRUE
 		else
 			var/obj/item/card/id/new_card = W
 			if(new_card.registered_account)
@@ -150,6 +153,7 @@
 				my_card = new_card
 				to_chat(user, "<span class='notice'>You link the wheel to your account.</span>")
 				return
+	return ..()
 
 ///Proc called when player is going to try and play
 /obj/machinery/roulette/proc/play(mob/user, obj/item/card/id/player_id, bet_type, bet_amount, potential_payout)
@@ -363,7 +367,11 @@
 	addtimer(CALLBACK(src, .proc/launch_payload), 40)
 
 /obj/item/roulette_wheel_beacon/proc/launch_payload()
-	new /obj/effect/DPtarget(drop_location(), /obj/structure/closet/supplypod/centcompod, /obj/machinery/roulette)
+	var/obj/structure/closet/supplypod/centcompod/toLaunch = new()
+
+	new /obj/machinery/roulette(toLaunch)
+
+	new /obj/effect/DPtarget(drop_location(), toLaunch)
 
 #undef ROULETTE_SINGLES_PAYOUT
 #undef ROULETTE_SIMPLE_PAYOUT
