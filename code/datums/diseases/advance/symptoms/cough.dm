@@ -10,7 +10,8 @@ Coughing
 	Low Level.
 
 BONUS
-	Will force the affected mob to drop small items!
+	Spreads the virus in a small square around the host.
+	Can force the affected mob to drop small items!
 
 //////////////////////////////////////
 */
