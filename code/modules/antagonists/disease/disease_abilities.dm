@@ -47,6 +47,8 @@ new /datum/disease_ability/symptom/powerful/heal/plasma,
 new /datum/disease_ability/symptom/powerful/heal/radiation,
 new /datum/disease_ability/symptom/powerful/heal/coma,
 new /datum/disease_ability/symptom/powerful/youth
+new /datum/disease_ability/symptom/powerful/emp
+new /datum/disease_ability/symptom/powerful/hugging
 ))
 
 /datum/disease_ability
@@ -419,6 +421,12 @@ new /datum/disease_ability/symptom/powerful/youth
 	symptoms = list(/datum/symptom/youth)
 	short_desc = "Cause victims to become eternally young."
 	long_desc = "Cause victims to become eternally young. Provides boosts to all stats except transmissibility."
+
+/datum/disease_ability/symptom/powerful/emp
+	symptoms = list(/datum/symptom/emp)
+
+/datum/disease_ability/symptom/powerful/hugging
+	symptoms = list(/datum/symptom/hugging)
 
 /****HEALING SUBTYPE****/
 
