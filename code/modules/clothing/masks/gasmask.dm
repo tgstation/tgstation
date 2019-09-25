@@ -13,19 +13,19 @@
 
 /obj/item/clothing/mask/gas/atmos
 	name = "atmospheric gas mask"
-	desc = "Improved fireproof mask utilized by atmospheric technicians. Still not very good at blocking gas flow, but it's flameproof."
+	desc = "Improved gas mask utilized by atmospheric technicians. Still not very good at blocking gas flow, but it's flameproof!"
 	icon_state = "gas_atmos"
-	w_class = WEIGHT_CLASS_SMALL
 	item_state = "gas_atmos"
-	gas_transfer_coefficient = 0
-	permeability_coefficient = 0 //it gooder
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 20, "acid" = 10)
+	w_class = WEIGHT_CLASS_SMALL
+	gas_transfer_coefficient = 0.001 //cargo cult time, this var does nothing but just in case someone actually makes it do something
+	permeability_coefficient = 0.001
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/mask/gas/atmos/captain
 	name = "captain's gas mask"
 	desc = "Nanotrasen cut corners and repainted a spare atmospheric gas mask, but don't tell anyone."
 	icon_state = "gas_cap"
-	w_class = WEIGHT_CLASS_SMALL
 	item_state = "gas_cap"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
@@ -38,7 +38,7 @@
 	materials = list(/datum/material/iron=4000, /datum/material/glass=2000)
 	flash_protect = 2
 	tint = 2
-	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 55)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 55)
 	actions_types = list(/datum/action/item_action/toggle)
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 	flags_cover = MASKCOVERSEYES

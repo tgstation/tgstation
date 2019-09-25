@@ -48,6 +48,7 @@
 	desc = "An expensive firesuit that protects against even the most deadly of station fires. Designed to protect even if the wearer is set aflame."
 	icon_state = "atmos_firesuit"
 	item_state = "firesuit_atmos"
+	armor = list("melee" = 10, "bullet" = 5, "laser" = 20, "energy" = 10, "bomb" = 30, "bio" = 50, "rad" = 40, "fire" = 100, "acid" = 80)
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 
 /*
