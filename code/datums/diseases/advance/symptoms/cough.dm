@@ -30,7 +30,7 @@ BONUS
 	symptom_delay_max = 15
 	var/spread_range = 1
 	threshold_desc = "<b>Resistance 11:</b> The host will drop small items when coughing.<br>\
-					  <b>Resistance 15:</b> Occasionally causes coughing fits that stun the host and spread the virus.<br>\
+					  <b>Resistance 15:</b> Occasionally causes coughing fits that stun the host. The extra coughs do not spread the virus.<br>\
 					  <b>Stage Speed 6:</b> Increases cough frequency.<br>\
 					  <b>Transmission 7:</b> Coughing will now infect bystanders up to 2 tiles away.<br>\
 					  <b>Stealth 4:</b> The symptom remains hidden until active."
@@ -59,7 +59,8 @@ BONUS
 				to_chat(M, "<span notice='warning'>[pick("You swallow excess mucus.", "You lightly cough.")]</span>")
 		else
 			M.emote("cough")
-			A.spread(spread_range)
+			if(M.CanSpreadAirborneDisease())
+				A.spread(spread_range)
 			if(power >= 1.5)
 				var/obj/item/I = M.get_active_held_item()
 				if(I && I.w_class == WEIGHT_CLASS_TINY)
@@ -68,8 +69,5 @@ BONUS
 				to_chat(M, "<span notice='userdanger'>[pick("You have a coughing fit!", "You can't stop coughing!")]</span>")
 				M.Immobilize(20)
 				addtimer(CALLBACK(M, /mob/.proc/emote, "cough"), 6)
-				addtimer(CALLBACK(A, /disease/.proc/spread, spread_range), 6)
 				addtimer(CALLBACK(M, /mob/.proc/emote, "cough"), 12)
-				addtimer(CALLBACK(A, /disease/.proc/spread, spread_range), 12)
 				addtimer(CALLBACK(M, /mob/.proc/emote, "cough"), 18)
-				addtimer(CALLBACK(A, /disease/.proc/spread, spread_range), 18)
