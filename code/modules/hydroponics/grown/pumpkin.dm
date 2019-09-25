@@ -28,7 +28,7 @@
 	wine_power = 20
 
 /obj/item/reagent_containers/food/snacks/grown/pumpkin/attackby(obj/item/W as obj, mob/user as mob, params)
-	if(W.is_sharp())
+	if(W.get_sharpness())
 		user.show_message("<span class='notice'>You carve a face into [src]!</span>", MSG_VISUAL)
 		new /obj/item/clothing/head/hardhat/pumpkinhead(user.loc)
 		qdel(src)

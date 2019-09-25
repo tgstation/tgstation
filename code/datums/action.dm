@@ -357,6 +357,9 @@
 /datum/action/item_action/toggle_helmet_mode
 	name = "Toggle Helmet Mode"
 
+/datum/action/item_action/crew_monitor
+	name = "Interface With Crew Monitor"
+
 /datum/action/item_action/toggle
 
 /datum/action/item_action/toggle/New(Target)

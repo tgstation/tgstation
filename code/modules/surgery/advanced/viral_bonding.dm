@@ -26,7 +26,7 @@
 
 /datum/surgery_step/viral_bond/tool_check(mob/user, obj/item/tool)
 	if(implement_type == TOOL_WELDER || implement_type == /obj/item)
-		return tool.is_hot()
+		return tool.get_temperature()
 
 	return TRUE
 
