@@ -1,6 +1,6 @@
 /datum/symptom/hugging
 	name = "Hugging"
-	desc = "The virus causes the host to uncontrollably hug nearby people. This symptom only affects sapient creatures."
+	desc = "The virus causes the host to uncontrollably hug, pet, or otherwise nonharmfully interact with nearby creatures. This symptom only affects sapient creatures."
 	stealth = -1
 	resistance = -2
 	stage_speed = 2
