@@ -58,6 +58,15 @@
     return
   return
 
+/obj/machinery/medical_kiosk/attackby(obj/item/O, mob/user, params)
+  if(default_deconstruction_screwdriver(user, "kiosk_open", "kiosk", O))
+    return
+
+  else if(default_deconstruction_crowbar(O))
+    return
+
+  return ..()
+
 /obj/machinery/medical_kiosk/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
   ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
   if(!ui)
@@ -68,16 +77,6 @@
   if(ishuman(user))
     H = user
     C = H.get_idcard(TRUE)
-
-/obj/machinery/medical_kiosk/attackby(obj/item/O, mob/user, params)
-  if(default_deconstruction_screwdriver(user, "kiosk_open", "kiosk", O))
-    return
-
-  if(default_pry_open(O))
-    return
-
-  if(default_deconstruction_crowbar(O))
-    return
 
 /obj/machinery/medical_kiosk/ui_data(mob/living/carbon/human/user)
   var/list/data = list()
