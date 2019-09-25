@@ -2,6 +2,7 @@
 #define ARENA_GREEN_TEAM "green"
 #define ARENA_DEFAULT_ID "arena_default"
 
+/// Arena related landmarks
 /obj/effect/landmark/arena
 	name = "arena landmark"
 	var/landmark_tag
@@ -15,22 +16,38 @@
 	name = "arena upper right corner"
 	landmark_tag = "arena_end"
 
+/// Controller for admin event arenas
 /obj/machinery/computer/arena
 	name = "arena controller"
+	/// Arena ID
 	var/arena_id = ARENA_DEFAULT_ID
-	var/ready_to_spawn = FALSE //Enables/disables spawning
-	var/list/arena_templates = list()
+	/// Enables/disables spawning
+	var/ready_to_spawn = FALSE
+	/// Assoc list of map templates indexed by user friendly names
+	var/static/list/arena_templates = list()
+	/// Were the config directory arenas loaded
+	var/static/default_arenas_loaded = FALSE
+	/// Name of currently loaded template
 	var/current_arena_template = "None"
-	var/empty_turf_type = /turf/open/indestructible //What turf arena resets to.
+	// What turf arena clears to
+	var/empty_turf_type = /turf/open/indestructible
+	// List of team ids
 	var/list/teams = list(ARENA_RED_TEAM,ARENA_GREEN_TEAM)
+	/// List of hud instances indedxed by team id
 	var/static/list/team_huds = list()
-	var/static/list/team_colors = list(ARENA_RED_TEAM = "red", ARENA_GREEN_TEAM = "green") //Hud colorsGLOB
-	var/static/list/team_hud_index = list() //hud rewrite is needed
+	/// List of hud colors indexed by team id
+	var/static/list/team_colors = list(ARENA_RED_TEAM = "red", ARENA_GREEN_TEAM = "green")
+	// Team hud index in GLOB.huds indexed by team id
+	var/static/list/team_hud_index = list()
 
-	var/list/team_keys = list() // team_keys["red"] = list(ckey1,ckey2,ckey3)
-	var/list/outfits = list() // outfits["red"] = outfit datum/outfit datum type
+	/// List of ckeys indexed by team id
+	var/list/team_keys = list()
+	/// List of outfit datums/types indexed by team id, can be empty
+	var/list/outfits = list()
+	/// Default team outfit if outfits[team] is empty
 	var/default_outfit = /datum/outfit/job/assistant
 
+	/// Is the arena template loading in
 	var/loading = FALSE
 
 /obj/machinery/computer/arena/Initialize(mapload, obj/item/circuitboard/C)
@@ -38,24 +55,28 @@
 	LoadDefaultArenas()
 	GenerateAntagHuds()
 
-
 /obj/machinery/computer/arena/proc/GenerateAntagHuds()
 	for(var/team in teams)
 		var/datum/atom_hud/antag/teamhud = team_huds[team]
-		if(!teamhud) //These will be shared between areas because this stuff is expensive and cross arena fighting is not a thing anyway
+		if(!teamhud) //These will be shared between arenas because this stuff is expensive and cross arena fighting is not a thing anyway
 			teamhud = new
 			teamhud.icon_color = team //change to lookup table
 			GLOB.huds += teamhud
 			team_huds[team] = teamhud
 			team_hud_index[team] = length(GLOB.huds)
 
+/**
+  * Loads the arenas from config directory.
+  * THESE ARE FULLY CACHED FOR QUICK SWITCHING SO KEEP TRACK OF THE AMOUNT
+  */
 /obj/machinery/computer/arena/proc/LoadDefaultArenas()
+	if(default_arenas_loaded)
+		return
 	var/arena_dir = "[global.config.directory]/arenas/"
 	var/list/default_arenas = flist(arena_dir)
 	for(var/arena_file in default_arenas)
 		var/simple_name = replacetext(replacetext(arena_file,arena_dir,""),".dmm","")
 		add_new_arena_template(null,arena_dir + arena_file,simple_name)
-	return
 
 /obj/machinery/computer/arena/proc/get_landmark_turf(landmark_tag)
 	for(var/obj/effect/landmark/arena/L in GLOB.landmarks_list)
@@ -65,7 +86,7 @@
 /obj/machinery/computer/arena/proc/clear_arena()
 	for(var/turf/T in block(get_landmark_turf("arena_start"),get_landmark_turf("arena_end")))
 		T.empty(turf_type = /turf/open/indestructible)
-	return
+	current_arena_template = "None"
 
 /obj/machinery/computer/arena/proc/load_arena(arena_template,mob/user)
 	if(loading)
@@ -75,6 +96,13 @@
 		to_chat(user,"<span class='warning'>No such arena</span>")
 		return
 	clear_arena() //Clear current arena
+	var/turf/TL = get_landmark_turf("arena_start")
+	var/turf/TH = get_landmark_turf("arena_end")
+	var/wh = TH.x - TL.x
+	var/hz = TH.y - TL.y
+	if(M.width > wh || M.height > hz)
+		to_chat(user,"<span class='warning'>Arena template is too big for the current arena!</span>")
+		return
 	loading = TRUE
 	var/bd = M.load(get_landmark_turf("arena_start"))
 	if(bd)
@@ -82,10 +110,15 @@
 		arena_afterload(arena_template)
 	loading = FALSE
 
+/// Handle arena specific special effects here.
 /obj/machinery/computer/arena/proc/arena_afterload(arena_filename)
+	/* Example code
 	switch(arena_filename)
 		if("example.dmm")
 			to_chat(world,"EXAMPLE ARENA FIGHT STARTING NOW. OR WHATEVER")
+		if("ripandtear.dmm")
+			give_everyone_chainsaws()
+	*/
 
 /obj/machinery/computer/arena/proc/add_new_arena_template(user,fname,friendly_name)
 	if(!fname)
@@ -126,24 +159,29 @@
 		return
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(get_turf(spawnpoint))
 	oldbody.client.prefs.copy_to(M)
-	M.set_species(/datum/species/human) //Might set per team
+	M.set_species(/datum/species/human) // Could use setting per team
 	M.equipOutfit(outfits[team] ? outfits[team] : default_outfit)
-	M.faction += team //In case anyone wants to add team based stuff to arenas
+	M.faction += team //In case anyone wants to add team based stuff to arena special effects
 	M.key = ckey
 	
 	var/datum/atom_hud/antag/team_hud = team_huds[team]
 	team_hud.join_hud(M)
-	set_antag_hud(M,"brother",team_hud_index[team]) //Add new icon or whatever
+	set_antag_hud(M,"brother",team_hud_index[team]) // Could use new icon
 	
 
 /obj/machinery/computer/arena/proc/change_outfit(mob/user,team)
 	outfits[team] = user.client.robust_dress_shop()
 
+/obj/machinery/computer/arena/proc/toggle_spawn(mob/user)
+	ready_to_spawn = !ready_to_spawn
+	to_chat(user,"You [ready_to_spawn ? "enable" : "disable"] the spawners.")
+	// Could use update_icon on spawnpoints here to show they're on
+
 /obj/machinery/computer/arena/Topic(href, href_list)
 	. = ..()
 	var/mob/user = usr
 
-	if(!user.client.holder) //These things are dangerous enough
+	if(!user.client.holder) // Should it require specific perm ?
 		return
 
 	if(href_list["upload"])
@@ -164,10 +202,10 @@
 			if("reset")
 				clear_arena()
 			//Just example in case you want to add more
-			if("rockfallseverybodydies")
-				kill_everyone_in_arena()
+			if("randomarena")
+				load_random_arena(user)
 			if("spawntrophy")
-				trophy_for_last_man_standing()
+				trophy_for_last_man_standing(user)
 	if(href_list["member_action"])
 		var/ckey = href_list["ckey"]
 		var/team = href_list["team"]
@@ -176,17 +214,14 @@
 				remove_member(user,ckey,team)
 	updateUsrDialog()
 
-/obj/machinery/computer/arena/proc/kill_everyone_in_arena()
-	to_chat(world,"Rocks fall, everybody dies.")
-	var/arena_turfs = block(get_landmark_turf("arena_start"),get_landmark_turf("arena_end"))
-	for(var/mob/living/L in GLOB.mob_living_list)
-		if(get_turf(L) in arena_turfs)
-			L.death()
+// Special functions
 
-/obj/machinery/computer/arena/proc/toggle_spawn(mob/user)
-	ready_to_spawn = !ready_to_spawn
-	to_chat(user,"You [ready_to_spawn ? "enable" : "disable"] the spawners.")
-	//Could use update_icon on spawnpoints to show they're on
+/obj/machinery/computer/arena/proc/load_random_arena(mob/user)
+	if(!length(arena_templates))
+		to_chat(user,"<span class='warning'>No arenas present</span>")
+		return
+	var/picked = pick(arena_templates)
+	load_arena(picked,user)
 
 /obj/machinery/computer/arena/proc/trophy_for_last_man_standing()
 	var/arena_turfs = block(get_landmark_turf("arena_start"),get_landmark_turf("arena_end"))
@@ -231,21 +266,25 @@
 	dat += "<hr>"
 	//Special actions
 	dat += "<a href='?src=[REF(src)];special=reset'>Reset Arena.</a><br>"
-	dat += "<a href='?src=[REF(src)];special=rockfallseverybodydies'>Kill everyone in the arena.</a><br>"
+	dat += "<a href='?src=[REF(src)];special=randomarena'>Load random arena.</a><br>"
 	dat += "<a href='?src=[REF(src)];special=spawntrophy'>Spawn trophies for survivors.</a><br>"
 
-	var/datum/browser/popup = new(user, "arena controller", "Arena Controller", 300, 300)
+	var/datum/browser/popup = new(user, "arena controller", "Arena Controller", 500, 600)
 	popup.set_content(dat.Join())
 	popup.open()
 
+/// Arena spawnpoint
 /obj/machinery/arena_spawn
 	name = "Arena Spawnpoint"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 	resistance_flags = INDESTRUCTIBLE
-	var/arena_id = ARENA_DEFAULT_ID //In case we have multiple arena controllers at once.
+	/// In case we have multiple arena controllers at once.
+	var/arena_id = ARENA_DEFAULT_ID
+	/// Team ID
 	var/team = "default"
-	var/obj/machinery/computer/arena/_controller //only exist to cut down on glob.machines lookups
+	/// only exist to cut down on glob.machines lookups, do not modify
+	var/obj/machinery/computer/arena/_controller 
 
 /obj/machinery/arena_spawn/red
 	name = "Red Team Spawnpoint"
@@ -273,3 +312,7 @@
 			to_chat(user,"<span class='warning'>You're not on the team list.</span>")
 			return
 		C.spawn_member(src,user.ckey,team)
+
+#undef ARENA_GREEN_TEAM
+#undef ARENA_RED_TEAM
+#undef ARENA_DEFAULT_ID
