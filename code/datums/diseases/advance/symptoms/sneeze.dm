@@ -18,7 +18,7 @@ Bonus
 
 /datum/symptom/sneeze
 	name = "Sneezing"
-	desc = "The virus causes irritation of the nasal cavity, making the host sneeze occasionally."
+	desc = "The virus causes irritation of the nasal cavity, making the host sneeze occasionally. Sneezes from this symptom will spread the virus in a 4 meter cone in front of the host."
 	stealth = -2
 	resistance = 3
 	stage_speed = 0
@@ -27,14 +27,15 @@ Bonus
 	severity = 1
 	symptom_delay_min = 5
 	symptom_delay_max = 35
-	threshold_desc = "<b>Transmission 9:</b> Increases sneezing range, spreading the virus over a larger area.<br>\
+	var/spread_range = 4
+	threshold_desc = "<b>Transmission 9:</b> Increases sneezing range, spreading the virus over 6 meter cone instead of over a 4 meter cone.<br>\
 					  <b>Stealth 4:</b> The symptom remains hidden until active."
 
 /datum/symptom/sneeze/Start(datum/disease/advance/A)
 	if(!..())
 		return
 	if(A.properties["transmittable"] >= 9) //longer spread range
-		power = 2
+		spread_range = 6
 	if(A.properties["stealth"] >= 4)
 		suppress_warning = TRUE
 
@@ -49,4 +50,6 @@ Bonus
 		else
 			M.emote("sneeze")
 			if(M.CanSpreadAirborneDisease()) //don't spread germs if they covered their mouth
-				A.spread(4 + power)
+				for(var/mob/living/L in oview(spread_range, M))
+					if(is_A_facing_B(M, L) && disease_air_spread_walk(get_turf(M), get_turf(L)))
+						L.AirborneContractDisease(A, TRUE)
