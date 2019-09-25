@@ -86,7 +86,7 @@
 		freeze_projectile(A)
 	else if(istype(A, /obj/mecha))
 		freeze_mecha(A)
-	else if(ismachinery(A) || isstructure(A))
+	else if((ismachinery(A) && !istype(A, /obj/machinery/light)) || isstructure(A)) //Special exception for light fixtures since recoloring causes them to change light
 		freeze_structure(A)
 	else
 		frozen = FALSE
