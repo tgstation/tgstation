@@ -953,7 +953,7 @@
 	if(src.job in list("Medical Doctor","Atmospheric Technician","Chief Medical Officer"))
 		job_speed = 20 //lifesavers are faster
 	if(can_be_firemanned(target))
-		if(job_speed = 50)
+		if(job_speed == 50)
 			visible_message("<span class='notice'>[src] starts lifting [target] onto their back...</span>",
 				"<span class='notice'>You start lifting [target] onto your back...</span>")
 		else
