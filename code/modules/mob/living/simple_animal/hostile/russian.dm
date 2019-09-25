@@ -9,9 +9,6 @@
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 0
 	turns_per_move = 5
-	response_help = "pokes"
-	response_disarm = "shoves"
-	response_harm = "hits"
 	speed = 0
 	maxHealth = 100
 	health = 100

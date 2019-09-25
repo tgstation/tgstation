@@ -633,8 +633,11 @@ Difficulty: Very Hard
 	icon_dead = "butterfly_dead"
 	turns_per_move = 1
 	response_help = "waves away"
+	response_help2 = "wave away"
 	response_disarm = "brushes aside"
+	response_disarm2 = "brush aside"
 	response_harm = "disrupts"
+	response_harm2 = "disrupt"
 	speak_emote = list("oscillates")
 	maxHealth = 2
 	health = 2

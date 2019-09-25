@@ -12,8 +12,11 @@
 	turns_per_move = 5
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 3)
 	response_help = "pets"
+	response_help2 = "pet"
 	response_disarm = "gently pushes aside"
+	response_disarm2 = "gently push aside"
 	response_harm = "kicks"
+	response_harm2 = "kick"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	gold_core_spawnable = FRIENDLY_SPAWN
 	melee_damage_lower = 18

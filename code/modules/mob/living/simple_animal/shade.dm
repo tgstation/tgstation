@@ -13,9 +13,12 @@
 	healable = 0
 	speak_emote = list("hisses")
 	emote_hear = list("wails.","screeches.")
-	response_help  = "puts their hand through"
+	response_help = "puts their hand through"
+	response_help2 = "put your hand through"
 	response_disarm = "flails at"
-	response_harm   = "punches"
+	response_disarm2 = "flail at"
+	response_harm = "punches"
+	response_harm2 = "punch"
 	speak_chance = 1
 	melee_damage_lower = 5
 	melee_damage_upper = 12

@@ -11,9 +11,12 @@
 	health = 30
 	see_in_dark = 3
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/killertomato = 2)
-	response_help  = "prods"
+	response_help = "prods"
+	response_help2 = "prod"
 	response_disarm = "pushes aside"
-	response_harm   = "smacks"
+	response_disarm2 = "push aside"
+	response_harm = "smacks"
+	response_harm2 = "smack"
 	melee_damage_lower = 8
 	melee_damage_upper = 12
 	attacktext = "slams"

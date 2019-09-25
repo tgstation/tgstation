@@ -16,5 +16,8 @@
 	turns_per_move = 2
 	butcher_results = list()
 	response_help = "pets"
+	response_help2 = "pet"
 	response_disarm = "pushes aside"
+	response_disarm2 = "push aside"
 	response_harm = "kicks"
+	response_harm2 = "kick"

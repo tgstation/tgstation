@@ -15,8 +15,11 @@
 	see_in_dark = 6
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 3)
 	response_help = "pets"
+	response_help2 = "pet"
 	response_disarm = "gently pushes aside"
+	response_disarm2 = "gently push aside"
 	response_harm = "kicks"
+	response_harm2 = "kick"
 	gold_core_spawnable = FRIENDLY_SPAWN
 
 	do_footstep = TRUE

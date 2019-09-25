@@ -18,9 +18,12 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	move_to_delay = 15
-	response_help  = "pets"
+	response_help = "pets"
+	response_help2 = "pet"
 	response_disarm = "gently pushes aside"
-	response_harm   = "squishes"
+	response_disarm2 = "gently push aside"
+	response_harm = "squishes"
+	response_harm2 = "squish"
 	friendly = "pinches"
 	friendly2 = "pinch"
 	a_intent = INTENT_HELP

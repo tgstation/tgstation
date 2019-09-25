@@ -25,9 +25,12 @@
 	var/stop_automated_movement_when_pulled = 1 //When set to 1 this stops the animal from moving when someone is pulling it.
 
 	//Interaction
-	var/response_help   = "pokes"
+	var/response_help = "pokes"
+	var/response_help2 = "poke"
 	var/response_disarm = "shoves"
-	var/response_harm   = "hits"
+	var/response_disarm2 = "shove"
+	var/response_harm = "hits"
+	var/response_harm2 = "hit"
 	var/harm_intent_damage = 3
 	var/force_threshold = 0 //Minimum force required to deal any damage
 

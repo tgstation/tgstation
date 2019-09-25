@@ -12,9 +12,12 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	gender = NEUTER
 	mob_biotypes = NONE
 	bubble_icon = "guardian"
-	response_help  = "passes through"
+	response_help = "passes through"
+	response_help2 = "pass through"
 	response_disarm = "flails at"
-	response_harm   = "punches"
+	response_disarm2 = "flail at"
+	response_harm = "punches"
+	response_harm2 = "punch"
 	icon = 'icons/mob/guardian.dmi'
 	icon_state = "magicOrange"
 	icon_living = "magicOrange"

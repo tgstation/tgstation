@@ -6,8 +6,11 @@
 	icon_dead = "butterfly_dead"
 	turns_per_move = 1
 	response_help = "shoos"
+	response_help2 = "shoo"
 	response_disarm = "brushes aside"
+	response_disarm2 = "brush aside"
 	response_harm = "squashes"
+	response_harm2 = "squash"
 	speak_emote = list("flutters")
 	maxHealth = 2
 	health = 2

@@ -12,9 +12,12 @@
 	attacktext2 = "bite"
 	melee_damage_lower = 1
 	melee_damage_upper = 2
-	response_help  = "pets"
+	response_help = "pets"
+	response_help2 = "pet"
 	response_disarm = "shoos"
-	response_harm   = "stomps on"
+	response_disarm2 = "shoo"
+	response_harm = "stomps on"
+	response_harm2 = "stomp on"
 	ventcrawler = VENTCRAWLER_ALWAYS
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB

@@ -9,8 +9,7 @@
 	speak_chance = 0
 	turns_per_move = 5
 	response_help = "passes through"
-	response_disarm = "shoves"
-	response_harm = "hits"
+	response_help2 = "pass through"
 	emote_taunt = list("wails")
 	taunt_chance = 25
 	speed = 0

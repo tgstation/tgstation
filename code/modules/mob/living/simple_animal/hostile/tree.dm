@@ -10,8 +10,9 @@
 	speak_chance = 0
 	turns_per_move = 5
 	response_help = "brushes"
+	response_help2 = "brush"
 	response_disarm = "pushes"
-	response_harm = "hits"
+	response_disarm2 = "push"
 	faction = list("plants")
 	speed = 1
 	maxHealth = 250

@@ -13,9 +13,12 @@
 	turns_per_move = 5
 	see_in_dark = 6
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 4)
-	response_help  = "pets"
+	response_help = "pets"
+	response_help2 = "pet"
 	response_disarm = "gently pushes aside"
-	response_harm   = "kicks"
+	response_disarm2 = "gently push aside"
+	response_harm = "kicks"
+	response_harm2 = "kick"
 	faction = list("neutral")
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	attack_same = 1
@@ -123,9 +126,12 @@
 	turns_per_move = 5
 	see_in_dark = 6
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 6)
-	response_help  = "pets"
+	response_help = "pets"
+	response_help2 = "pet"
 	response_disarm = "gently pushes aside"
-	response_harm   = "kicks"
+	response_disarm2 = "gently push aside"
+	response_harm = "kicks"
+	response_harm2 = "kick"
 	attacktext = "kicks"
 	attacktext2 = "kick"
 	attack_sound = 'sound/weapons/punch1.ogg'
@@ -201,9 +207,12 @@
 	speak_chance = 2
 	turns_per_move = 2
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 1)
-	response_help  = "pets"
+	response_help = "pets"
+	response_help2 = "pet"
 	response_disarm = "gently pushes aside"
-	response_harm   = "kicks"
+	response_disarm2 = "gently push aside"
+	response_harm = "kicks"
+	response_harm2 = "kick"
 	attacktext = "kicks"
 	attacktext2 = "kick"
 	health = 3
@@ -253,9 +262,12 @@
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2)
 	var/egg_type = /obj/item/reagent_containers/food/snacks/egg
 	var/food_type = /obj/item/reagent_containers/food/snacks/grown/wheat
-	response_help  = "pets"
+	response_help = "pets"
+	response_help2 = "pet"
 	response_disarm = "gently pushes aside"
-	response_harm   = "kicks"
+	response_disarm2 = "gently push aside"
+	response_harm = "kicks"
+	response_harm2 = "kick"
 	attacktext = "kicks"
 	attacktext2 = "kick"
 	health = 15

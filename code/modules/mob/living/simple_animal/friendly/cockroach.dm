@@ -13,9 +13,10 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
-	response_help  = "pokes"
 	response_disarm = "shoos"
-	response_harm   = "splats"
+	response_disarm2 = "shoo"
+	response_harm = "splats"
+	response_harm2 = "splat"
 	speak_emote = list("chitters")
 	density = FALSE
 	ventcrawler = VENTCRAWLER_ALWAYS

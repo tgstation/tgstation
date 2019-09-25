@@ -5,9 +5,12 @@
 	gender = NEUTER
 	mob_biotypes = NONE
 	speak_emote = list("hisses")
-	response_help  = "thinks better of touching"
+	response_help = "thinks better of touching"
+	response_help2 = "think better of touching"
 	response_disarm = "flails at"
-	response_harm   = "punches"
+	response_disarm2 = "flail at"
+	response_harm = "punches"
+	response_harm2 = "punch"
 	speak_chance = 1
 	icon = 'icons/mob/mob.dmi'
 	speed = 0
@@ -123,6 +126,7 @@
 	maxHealth = 150
 	health = 150
 	response_harm = "harmlessly punches"
+	response_harm2 = "harmlessly punch"
 	harm_intent_damage = 0
 	obj_damage = 90
 	melee_damage_lower = 25
@@ -248,6 +252,7 @@
 	maxHealth = 50
 	health = 50
 	response_harm = "viciously beats"
+	response_harm2 = "viciously beat"
 	harm_intent_damage = 5
 	obj_damage = 60
 	melee_damage_lower = 5

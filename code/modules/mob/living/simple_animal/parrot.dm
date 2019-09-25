@@ -50,9 +50,12 @@
 	melee_damage_upper = 10
 	melee_damage_lower = 5
 
-	response_help  = "pets"
+	response_help = "pets"
+	response_help2 = "pet"
 	response_disarm = "gently moves aside"
-	response_harm   = "swats"
+	response_disarm2 = "gently move aside"
+	response_harm = "swats"
+	response_harm2 = "swat"
 	stop_automated_movement = 1
 	a_intent = INTENT_HARM //parrots now start "aggressive" since only player parrots will nuzzle.
 	attacktext = "chomps"

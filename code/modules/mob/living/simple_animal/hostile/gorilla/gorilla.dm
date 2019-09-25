@@ -15,9 +15,12 @@
 	health = 220
 	loot = list(/obj/effect/gibspawner/generic/animal)
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/gorilla = 4)
-	response_help  = "prods"
+	response_help = "prods"
+	response_help2 = "prod"
 	response_disarm = "challenges"
-	response_harm   = "thumps"
+	response_disarm2 = "challenge"
+	response_harm = "thumps"
+	response_harm2 = "thump"
 	speed = 1
 	melee_damage_lower = 15
 	melee_damage_upper = 18

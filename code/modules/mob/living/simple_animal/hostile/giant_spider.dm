@@ -29,9 +29,10 @@
 	turns_per_move = 5
 	see_in_dark = 10
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/reagent_containers/food/snacks/spiderleg = 8)
-	response_help  = "pets"
+	response_help = "pets"
+	response_help2 = "pet"
 	response_disarm = "gently pushes aside"
-	response_harm   = "hits"
+	response_disarm2 = "gently push aside"
 	maxHealth = 200
 	health = 200
 	obj_damage = 60

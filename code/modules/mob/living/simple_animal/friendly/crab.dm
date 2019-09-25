@@ -11,9 +11,12 @@
 	speak_chance = 1
 	turns_per_move = 5
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/rawcrab = 2)
-	response_help  = "pets"
+	response_help = "pets"
+	response_help2 = "pet"
 	response_disarm = "gently pushes aside"
-	response_harm   = "stomps"
+	response_disarm2 = "gently push aside"
+	response_harm = "stomps"
+	response_harm2 = "stomp"
 	stop_automated_movement = 1
 	friendly = "pinches"
 	friendly2 = "pinch"
@@ -41,9 +44,6 @@
 	real_name = "Coffee"
 	desc = "It's Coffee, the other pet!"
 	gender = FEMALE
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "stomps"
 	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/crab/evil
@@ -53,9 +53,6 @@
 	icon_state = "evilcrab"
 	icon_living = "evilcrab"
 	icon_dead = "evilcrab_dead"
-	response_help = "pokes"
-	response_disarm = "shoves"
-	response_harm = "stomps"
 	gold_core_spawnable = HOSTILE_SPAWN
 
 /mob/living/simple_animal/crab/kreb
@@ -65,9 +62,6 @@
 	icon_state = "kreb"
 	icon_living = "kreb"
 	icon_dead = "kreb_dead"
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "stomps"
 	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/crab/evil/kreb

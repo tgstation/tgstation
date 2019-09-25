@@ -7,8 +7,9 @@
 	icon_gib = "bat_dead"
 	turns_per_move = 1
 	response_help = "brushes aside"
+	response_help2 = "brush aside"
 	response_disarm = "flails at"
-	response_harm = "hits"
+	response_disarm2 = "flail at"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak_chance = 0
 	maxHealth = 15

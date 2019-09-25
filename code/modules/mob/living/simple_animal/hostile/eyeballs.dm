@@ -7,8 +7,9 @@
 	gender = NEUTER
 	mob_biotypes = MOB_ORGANIC
 	response_help = "pets"
+	response_help2 = "pet"
 	response_disarm = "gently pushes aside"
-	response_harm = "hits"
+	response_disarm2 = "gently push aside"
 	emote_taunt = list("glares")
 	taunt_chance = 25
 	maxHealth = 45

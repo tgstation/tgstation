@@ -7,9 +7,6 @@
 	icon_dead = "alienh_dead"
 	icon_gib = "syndicate_gib"
 	gender = FEMALE
-	response_help = "pokes"
-	response_disarm = "shoves"
-	response_harm = "hits"
 	speed = 0
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 4,
 							/obj/item/stack/sheet/animalhide/xeno = 1)

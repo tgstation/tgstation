@@ -12,7 +12,9 @@
 	mob_biotypes = MOB_HUMANOID
 
 	response_help = "touches"
+	response_help2 = "touch"
 	response_disarm = "pushes"
+	response_disarm2 = "push"
 
 	speed = -1
 	maxHealth = 50000

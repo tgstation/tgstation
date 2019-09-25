@@ -8,8 +8,7 @@
 	speak_chance = 0
 	turns_per_move = 5
 	response_help = "passes through"
-	response_disarm = "shoves"
-	response_harm = "hits"
+	response_help2 = "pass through"
 	a_intent = INTENT_HARM
 	healable = 0
 	speed = 0

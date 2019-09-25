@@ -24,9 +24,12 @@
 	melee_damage_upper = 1
 	attacktext = "stings"
 	attacktext2 = "sting"
-	response_help  = "shoos"
+	response_help = "shoos"
+	response_help2 = "shoo"
 	response_disarm = "swats away"
-	response_harm   = "squashes"
+	response_disarm2 = "swat away"
+	response_harm = "squashes"
+	response_harm2 = "squash"
 	maxHealth = 10
 	health = 10
 	spacewalk = TRUE

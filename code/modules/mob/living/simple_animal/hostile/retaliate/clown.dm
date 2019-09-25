@@ -8,9 +8,10 @@
 	icon_gib = "clown_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	turns_per_move = 5
-	response_help = "pokes"
 	response_disarm = "gently pushes aside"
+	response_disarm2 = "gently push aside"
 	response_harm = "robusts"
+	response_harm2 = "robust"
 	speak = list("HONK", "Honk!", "Welcome to clown planet!")
 	emote_see = list("honks", "squeaks")
 	speak_chance = 1
@@ -68,7 +69,9 @@
 	icon_living = "lube"
 	turns_per_move = 1
 	response_help = "dips a finger into"
+	response_help2 = "dip a finger into"
 	response_disarm = "gently scoops and pours aside"
+	response_disarm2 = "gently scoop and pour aside"
 	emote_see = list("bubbles", "oozes")
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/particle_effect/foam)
 
@@ -81,9 +84,10 @@
 	desc = "A fusion of clown and banana DNA birthed from a botany experiment gone wrong."
 	icon_state = "banana tree"
 	icon_living = "banana tree"
-	response_help = "pokes"
 	response_disarm = "peels"
+	response_disarm2 = "peel"
 	response_harm = "peels"
+	response_harm2 = "peel"
 	turns_per_move = 1
 	speak = list("HONK", "Honk!", "YA-HONK!!!")
 	emote_see = list("honks", "bites into the banana", "plucks a banana off its head", "photosynthesizes")
@@ -115,8 +119,11 @@
 	icon_state = "fleshclown"
 	icon_living = "fleshclown"
 	response_help = "reluctantly pokes"
+	response_help2 = "reluctantly poke"
 	response_disarm = "sinks his hands into the spongy flesh of"
+	response_disarm2 = "sink your hands into the spongy flesh of"
 	response_harm = "cleanses the world of"
+	response_harm2 = "cleanse the world of"
 	speak = list("HONK", "Honk!", "I didn't ask for this", "I feel constant and horrible pain", "YA-HONK!!!", "this body is a merciless and unforgiving prison", "I was born out of mirthful pranking but I live in suffering")
 	emote_see = list("honks", "sweats", "jiggles", "contemplates its existence")
 	speak_chance = 5
@@ -138,9 +145,12 @@
 	icon_living = "long face"
 	move_resist = INFINITY
 	turns_per_move = 10
-	response_help = "tries awkwardly to hug"
+	response_help = "tries to awkwardly hug"
+	response_help2 = "try to awkwardly hug"
 	response_disarm = "pushes the unwieldy frame of"
+	response_disarm2 = "push the unwieldy frame of"
 	response_harm = "tries to shut up"
+	response_harm2 = "try to shut up"
 	speak = list("YA-HONK!!!")
 	emote_see = list("honks", "squeaks")
 	speak_chance = 60
@@ -161,8 +171,11 @@
 	icon_living = "honkhulk"
 	move_resist = INFINITY
 	response_help = "tries desperately to appease"
+	response_help2 = "try desperately to appease"
 	response_disarm = "foolishly pushes"
+	response_disarm2 = "foolishly push"
 	response_harm = "angers"
+	response_harm2 = "anger"
 	speak = list("HONK", "Honk!", "HAUAUANK!!!", "GUUURRRRAAAHHH!!!")
 	emote_see = list("honks", "sweats", "grunts")
 	speak_chance = 5
@@ -185,8 +198,11 @@
 	icon_state = "chlown"
 	icon_living = "chlown"
 	response_help = "submits to"
+	response_help2 = "submit to"
 	response_disarm = "tries to assert dominance over"
+	response_disarm2 = "try to assert dominance over"
 	response_harm = "makes a weak beta attack at"
+	response_harm2 = "make a weak beta attack at"
 	speak = list("HONK", "Honk!", "Bruh", "cheeaaaahhh?")
 	emote_see = list("asserts his dominance", "emasculates everyone implicitly")
 	maxHealth = 500
@@ -204,7 +220,9 @@
 	icon_state = "honkmunculus"
 	icon_living = "honkmunculus"
 	response_help = "skeptically pokes"
+	response_help2 = "skeptically poke"
 	response_disarm = "pushes the unwieldy frame of"
+	response_disarm2 = "push the unwieldy frame of"
 	speak = list("honk")
 	emote_see = list("squirms", "writhes")
 	speak_chance = 1
@@ -250,8 +268,11 @@
 	move_resist = INFINITY
 	turns_per_move = 10
 	response_help = "reluctantly sinks a finger into"
+	response_help2 = "reluctantly sink a finger into"
 	response_disarm = "squishes into"
+	response_disarm2 = "squish into"
 	response_harm = "squishes into"
+	response_harm2 = "squish into"
 	speak = list("aaaaaahhhhuuhhhuhhhaaaaa", "AAAaaauuuaaAAAaauuhhh", "huuuuuh... hhhhuuuooooonnnnkk", "HuaUAAAnKKKK")
 	emote_see = list("squirms", "writhes", "pulsates", "froths", "oozes")
 	speak_chance = 10

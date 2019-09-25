@@ -7,7 +7,7 @@
 			if (health > 0)
 				visible_message("<span class='notice'>[M] [response_help] [src].</span>", \
 								"<span class='notice'>[M] [response_help] you.</span>", null, null, M)
-				to_chat(M, "<span class='notice'>You [response_help] [src].</span>")
+				to_chat(M, "<span class='notice'>You [response_help2] [src].</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 		if("grab")
@@ -20,7 +20,7 @@
 			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>",\
 							"<span class='userdanger'>[M] [response_harm] you!</span>", null, COMBAT_MESSAGE_RANGE, M)
-			to_chat(M, "<span class='danger'>You [response_harm] [src]!</span>")
+			to_chat(M, "<span class='danger'>You [response_harm2] [src]!</span>")
 			playsound(loc, attacked_sound, 25, TRUE, -1)
 			attack_threshold_check(harm_intent_damage)
 			log_combat(M, src, "attacked")
@@ -47,7 +47,7 @@
 		if (health > 0)
 			visible_message("<span class='notice'>[M.name] [response_help] [src].</span>", \
 							"<span class='notice'>[M.name] [response_help] you.</span>", null, COMBAT_MESSAGE_RANGE, M)
-			to_chat(M, "<span class='notice'>You [response_help] [src].</span>")
+			to_chat(M, "<span class='notice'>You [response_help2] [src].</span>")
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 
@@ -57,7 +57,7 @@
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
 			visible_message("<span class='danger'>[M] [response_disarm] [name]!</span>", \
 							"<span class='userdanger'>[M] [response_disarm] you!</span>", null, COMBAT_MESSAGE_RANGE, M)
-			to_chat(M, "<span class='danger'>You [response_disarm] [name]!</span>")
+			to_chat(M, "<span class='danger'>You [response_disarm2] [name]!</span>")
 			log_combat(M, src, "disarmed")
 		else
 			var/damage = rand(15, 30)

@@ -9,9 +9,12 @@
 	maxHealth = 10
 	health = 10
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/hugemushroomslice = 1)
-	response_help  = "pets"
+	response_help = "pets"
+	response_help2 = "pet"
 	response_disarm = "gently pushes aside"
-	response_harm   = "whacks"
+	response_disarm2 = "gently push aside"
+	response_harm = "whacks"
+	response_harm2 = "whack"
 	harm_intent_damage = 5
 	obj_damage = 0
 	melee_damage_lower = 1

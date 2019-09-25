@@ -15,9 +15,12 @@
 	melee_damage_upper = 5
 	attacktext = "bites"
 	attacktext2 = "bite"
-	response_help  = "pets"
+	response_help = "pets"
+	response_help2 = "pet"
 	response_disarm = "pokes"
-	response_harm   = "splats"
+	response_disarm2 = "poke"
+	response_harm = "splats"
+	response_harm2 = "splat"
 	density = FALSE
 	ventcrawler = VENTCRAWLER_ALWAYS
 	faction = list("hostile")

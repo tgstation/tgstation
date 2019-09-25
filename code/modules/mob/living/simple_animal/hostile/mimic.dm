@@ -6,8 +6,9 @@
 	icon_living = "crate"
 
 	response_help = "touches"
+	response_help2 = "touch"
 	response_disarm = "pushes"
-	response_harm = "hits"
+	response_disarm2 = "push"
 	speed = 0
 	maxHealth = 250
 	health = 250

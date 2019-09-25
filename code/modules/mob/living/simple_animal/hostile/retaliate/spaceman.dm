@@ -8,9 +8,10 @@
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	gender = MALE
 	turns_per_move = 5
-	response_help = "pokes"
 	response_disarm = "gently pushes aside"
+	response_disarm2 = "gently push aside"
 	response_harm = "punches"
+	response_harm2 = "punch"
 	a_intent = INTENT_HARM
 	maxHealth = 100
 	health = 100
@@ -36,9 +37,6 @@
 	icon_dead = null
 	icon_gib = "syndicate_gib"
 	turns_per_move = 5
-	response_help = "pokes"
-	response_disarm = "shoves"
-	response_harm = "hits"
 	speed = 0
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1

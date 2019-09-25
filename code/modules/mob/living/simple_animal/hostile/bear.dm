@@ -16,9 +16,10 @@
 	turns_per_move = 5
 	see_in_dark = 6
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/bear = 5, /obj/item/clothing/head/bearpelt = 1)
-	response_help  = "pets"
+	response_help = "pets"
+	response_help2 = "pet"
 	response_disarm = "gently pushes aside"
-	response_harm   = "hits"
+	response_disarm2 = "gently push aside"
 	maxHealth = 60
 	health = 60
 	spacewalk = TRUE
@@ -153,24 +154,3 @@ mob/living/simple_animal/hostile/bear/butter/AttackingTarget() //Makes some atta
 			L.Knockdown(20)
 			playsound(loc, 'sound/misc/slip.ogg', 15)
 			L.visible_message("<span class='danger'>[L] slips on butter!</span>")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

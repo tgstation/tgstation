@@ -12,9 +12,12 @@
 	harm_intent_damage = 5
 	icon_living = "grey baby slime"
 	icon_dead = "grey baby slime dead"
-	response_help  = "pets"
+	response_help = "pets"
+	response_help2 = "pet"
 	response_disarm = "shoos"
-	response_harm   = "stomps on"
+	response_disarm2 = "shoo"
+	response_harm = "stomps on"
+	response_harm2 = "stomp on"
 	emote_see = list("jiggles", "bounces in place")
 	speak_emote = list("blorbles")
 	bubble_icon = "slime"

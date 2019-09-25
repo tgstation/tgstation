@@ -6,9 +6,12 @@
 	desc = "A large, menacing creature covered in armored black scales."
 	speak_emote = list("gurgles")
 	emote_hear = list("wails","screeches")
-	response_help  = "thinks better of touching"
+	response_help = "thinks better of touching"
+	response_help2 = "think better of touching"
 	response_disarm = "flails at"
-	response_harm   = "punches"
+	response_disarm2 = "flail at"
+	response_harm = "punches"
+	response_harm2 = "punch"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "daemon"
 	icon_living = "daemon"
@@ -116,7 +119,7 @@
 	desc = "A large, adorable creature covered in armor with pink bows."
 	speak_emote = list("giggles","titters","chuckles")
 	emote_hear = list("guffaws","laughs")
-	response_help  = "hugs"
+	response_help = "hugs"
 	attacktext = "wildly tickles"
 	attacktext2 = "wildly tickle"
 
