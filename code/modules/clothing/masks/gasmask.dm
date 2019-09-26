@@ -33,9 +33,9 @@
 
 /obj/item/clothing/mask/gas/welding/up
 
-/obj/item/clothing/mask/gas/welding/up/equipped(mob/user, slot)
+/obj/item/clothing/mask/gas/welding/up/Initialize()
 	..()
-	weldingvisortoggle(user)	
+	visor_toggling()
 
 // ********************************************************************
 
