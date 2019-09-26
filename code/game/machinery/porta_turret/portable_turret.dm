@@ -711,7 +711,7 @@
 
 /obj/machinery/porta_turret/ai
 	faction = list("silicon")
-	turret_flags = TURRET_FLAG_SHOOT_CRIMINALS | TURRET_FLAG_SHOOT_ANOMALOUS
+	turret_flags = TURRET_FLAG_SHOOT_CRIMINALS | TURRET_FLAG_SHOOT_ANOMALOUS | TURRET_FLAG_SHOOT_HEADS
 
 /obj/machinery/porta_turret/ai/assess_perp(mob/living/carbon/human/perp)
 	return 10 //AI turrets shoot at everything not in their faction
@@ -823,7 +823,6 @@
 	for(var/obj/machinery/porta_turret/T in control_area)
 		turrets |= T
 		T.cp = src
-		T.turret_flags |= TURRET_FLAG_SHOOT_HEADS
 		
 /obj/machinery/turretid/examine(mob/user)
 	. += ..()
