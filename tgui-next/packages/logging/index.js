@@ -1,0 +1,71 @@
+/**
+ * Copyright (c) 2019 Aleksej Komarov
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
+const inception = Date.now();
+
+// Runtime detection
+const isNode = process && process.release && process.release.name === 'node';
+let isChrome = false;
+try {
+  isChrome = window.navigator.userAgent.toLowerCase().includes('chrome');
+}
+catch {}
+
+// Timestamping function
+function getTimestamp() {
+  const timestamp = String(Date.now() - inception)
+    .padStart(4, '0')
+    .padStart(7, ' ');
+  const seconds = timestamp.substr(0, timestamp.length - 3);
+  const millis = timestamp.substr(-3);
+  return `${seconds}.${millis}`;
+}
+
+const getPrefix = (() => {
+  if (isNode) {
+    // Escape sequences
+    const ESC = {
+      dimmed: "\x1b[38;5;240m",
+      bright: "\x1b[37;1m",
+      reset: "\x1b[0m",
+    };
+    return ns => [
+      `${ESC.dimmed}${getTimestamp()} ${ESC.bright}${ns}${ESC.reset}`,
+    ];
+  }
+  if (isChrome) {
+    // Styles
+    const styles = {
+      dimmed: 'color: #888',
+      bright: 'font-weight: bold',
+    };
+    return ns => [
+      `%c${getTimestamp()}%c ${ns}`,
+      styles.dimmed,
+      styles.bright,
+    ];
+  }
+  return ns => [
+    `${getTimestamp()} ${ns}`,
+  ];
+})();
+
+export const createLogger = ns => ({
+  log(...args) {
+    console.log(...getPrefix(ns), ...args);
+  },
+  error(...args) {
+    console.error(...getPrefix(ns), ...args);
+  },
+  warn(...args) {
+    console.warn(...getPrefix(ns), ...args);
+  },
+  debug(...args) {
+    console.debug(...getPrefix(ns), ...args);
+  },
+});
+
+export const log = (ns, ...args) =>
+  console.log(...getPrefix(ns), ...args);

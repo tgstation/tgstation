@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "name": "tgui-dev-server",
+  "version": "0.1.0",
+  "type": "module",
+  "dependencies": {
+    "ws": "^7.1.2"
+  }
+}

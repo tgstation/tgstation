@@ -1,0 +1,15 @@
+@import './functions.scss';
+@import './variables.scss';
+@import './reset.scss';
+@import './atomic/color.scss';
+@import '../components/Button.scss';
+@import '../components/TitleBar.scss';
+
+body {
+  color: $text-color-normal;
+  background-color: $background-color-start;
+  background-image: linear-gradient(
+    to bottom,
+    $background-color-start 0%,
+    $background-color-end 100%);
+}
