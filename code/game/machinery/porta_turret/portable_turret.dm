@@ -204,19 +204,19 @@
 	if(href_list["operation"])
 		switch(href_list["operation"])	//toggles customizable behavioural protocols
 			if("authweapon")
-				TOGGLE_BITFIELD(turret_flags, TURRET_FLAG_AUTH_WEAPONS)
+				turret_flags ^= TURRET_FLAG_AUTH_WEAPONS
 			if("shootcriminals")
-				TOGGLE_BITFIELD(turret_flags, TURRET_FLAG_SHOOT_CRIMINALS)
+				turret_flags ^= TURRET_FLAG_SHOOT_CRIMINALS
 			if("shootall")
-				TOGGLE_BITFIELD(turret_flags, TURRET_FLAG_SHOOT_ALL)
+				turret_flags ^= TURRET_FLAG_SHOOT_ALL
 			if("checkxenos")
-				TOGGLE_BITFIELD(turret_flags, TURRET_FLAG_SHOOT_ANOMALOUS)
+				turret_flags ^= TURRET_FLAG_SHOOT_ANOMALOUS
 			if("checkloyal")
-				TOGGLE_BITFIELD(turret_flags, TURRET_FLAG_SHOOT_UNSHIELDED)
+				turret_flags ^= TURRET_FLAG_SHOOT_UNSHIELDED
 			if ("shootborgs")
-				TOGGLE_BITFIELD(turret_flags, TURRET_FLAG_SHOOT_BORGS)
+				turret_flags ^= TURRET_FLAG_SHOOT_BORGS
 			if ("shootheads")
-				TOGGLE_BITFIELD(turret_flags, TURRET_FLAG_SHOOT_HEADS)
+				turret_flags ^= TURRET_FLAG_SHOOT_HEADS
 			if("manual")
 				if(issilicon(usr) && !manual_control)
 					give_control(usr)
@@ -319,11 +319,11 @@
 		if(prob(30))
 			spark_system.start()
 		if(on && !(turret_flags & TURRET_FLAG_BEEN_ATTACKED) && !(obj_flags & EMAGGED))
-			ENABLE_BITFIELD(turret_flags, TURRET_FLAG_BEEN_ATTACKED)
+			turret_flags |= TURRET_FLAG_BEEN_ATTACKED
 			addtimer(CALLBACK(src, .proc/reset_attacked), 60)
 
 /obj/machinery/porta_turret/proc/reset_attacked()
-	DISABLE_BITFIELD(turret_flags, TURRET_FLAG_BEEN_ATTACKED)
+	turret_flags &= ~TURRET_FLAG_BEEN_ATTACKED
 
 /obj/machinery/porta_turret/deconstruct(disassembled = TRUE)
 	qdel(src)
@@ -562,7 +562,7 @@
 	if(controllock)
 		return
 
-	shoot_cyborgs ? ENABLE_BITFIELD(turret_flags, TURRET_FLAG_SHOOT_BORGS) : DISABLE_BITFIELD(turret_flags, TURRET_FLAG_SHOOT_BORGS)
+	shoot_cyborgs ? (turret_flags |= TURRET_FLAG_SHOOT_BORGS) : (turret_flags &= ~TURRET_FLAG_SHOOT_BORGS)
 	src.on = on
 	if(!on)
 		popDown()
