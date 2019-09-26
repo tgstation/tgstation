@@ -99,7 +99,7 @@
 		to_chat(user, "<span class='notice'>You insert a material total of [inserted] into [parent].</span>")
 		qdel(I)
 		if(after_insert)
-			after_insert.Invoke(I.type, last_inserted_id, inserted)
+			after_insert.Invoke(I, last_inserted_id, inserted)
 	else if(I == active_held)
 		user.put_in_active_hand(I)
 
