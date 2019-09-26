@@ -71,7 +71,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("pie" = 1, "meat" = 1, "salmon" = 1)
-	foodtype = GRAIN | SUGAR
+	foodtype = GRAIN | SUGAR | MEAT | FRUIT
 
 /obj/item/reagent_containers/food/snacks/pie/meatpie
 	name = "meat-pie"
@@ -202,7 +202,7 @@
 
 /obj/item/reagent_containers/food/snacks/pie/cocolavatart
 	name = "chocolate lava tart"
-	desc = "A tasty dessert made of chocaloate, with a liquid core."
+	desc = "A tasty dessert made of chocolate, with a liquid core."
 	icon_state = "cocolavatart"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
