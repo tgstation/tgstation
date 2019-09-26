@@ -14,15 +14,12 @@
 
 /obj/item/debug/human_spawner/afterattack(atom/target, mob/user, proximity)
 	..()
-	new_human(target, selected_species)
+	if(isturf(target))
+		var/mob/living/carbon/human/H = new /mob/living/carbon/human(target)
+		if(selected_species)
+			H.set_species(selected_species)
 
 /obj/item/debug/human_spawner/attack_self(mob/user)
 	..()
 	var/choice = input("Select a species", "Human Spawner", null) in GLOB.species_list
 	selected_species = GLOB.species_list[choice]
-
-/obj/item/debug/human_spawner/proc/new_human(atom/target, species)
-	if(isturf(target))
-		var/mob/living/carbon/human/H = new /mob/living/carbon/human(target)
-		if(species)
-			H.set_species(species)
