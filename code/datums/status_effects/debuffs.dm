@@ -437,6 +437,7 @@
 	else
 		C.apply_curse(set_curse)
 		C.duration += 3000 //time added by additional curses
+	return C
 
 /datum/status_effect/necropolis_curse
 	id = "necrocurse"
