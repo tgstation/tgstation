@@ -306,6 +306,7 @@ All the important duct code:
 	novariants = FALSE
 	max_amount = 50
 	item_flags = NOBLUDGEON
+	merge_type = /obj/item/stack/ducts
 	var/duct_color
 	var/duct_layer = DUCT_LAYER_DEFAULT
 
@@ -318,9 +319,9 @@ All the important duct code:
 		if(!D.anchored)
 			add(1)
 			qdel(D)
-	if(istype(A, /turf/open))
+	if(istype(A, /turf/open) && use(1))
 		var/turf/open/OT = A
-		new(OT, color_of_duct = duct_color, layer_of_duct = duct_layer)
+		new /obj/machinery/duct(OT, FALSE, duct_color, duct_layer)
 
 /obj/item/stack/ducts/duct/fifty
 	amount = 50
