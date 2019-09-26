@@ -252,9 +252,10 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 			break
 	if(!sanity)
 		return
-	SpawnFlora(T)
+	if(is_mining_level(z))
+		SpawnFlora(T)	//No space mushrooms, cacti.
 	// SpawnTerrain(T)
-	SpawnMonster(T)
+	SpawnMonster(T)		//Checks for danger area.
 	T.ChangeTurf(turf_type, null, CHANGETURF_IGNORE_AIR)
 
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnMonster(turf/T)
