@@ -788,6 +788,10 @@
 	last_nightshift_switch = world.time
 	set_nightshift(!nightshift_lights)
 
+/obj/machinery/power/apc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(stat & BROKEN)
+		return damage_amount
+	. = ..()
 
 /obj/machinery/power/apc/obj_break(damage_flag)
 	. = ..()
