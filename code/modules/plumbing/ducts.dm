@@ -323,5 +323,5 @@ All the important duct code:
 		var/turf/open/OT = A
 		new /obj/machinery/duct(OT, FALSE, duct_color, duct_layer)
 
-/obj/item/stack/ducts/duct/fifty
+/obj/item/stack/ducts/fifty
 	amount = 50
