@@ -162,6 +162,7 @@
 #include "code\_globalvars\misc.dm"
 #include "code\_globalvars\regexes.dm"
 #include "code\_globalvars\traits.dm"
+#include "code\_globalvars\lists\admin.dm"
 #include "code\_globalvars\lists\flavor_misc.dm"
 #include "code\_globalvars\lists\maintenance_loot.dm"
 #include "code\_globalvars\lists\mapping.dm"
