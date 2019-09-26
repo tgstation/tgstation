@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	materials = list(/datum/material/iron=1000)
 	max_amount = 50
 	attack_verb = list("hit", "bludgeoned", "whacked")
-	hitsound = 'sound/weapons/grenadelaunch.ogg'
+	hitsound = 'sound/weapons/gun/general/grenade_launch.ogg'
 	novariants = TRUE
 
 /obj/item/stack/rods/suicide_act(mob/living/carbon/user)

@@ -9,8 +9,10 @@
 	icon_state = "datadisk3"
 
 
-/obj/item/malf_upgrade/afterattack(mob/living/silicon/ai/AI, mob/user)
+/obj/item/malf_upgrade/afterattack(mob/living/silicon/ai/AI, mob/user, proximity)
 	. = ..()
+	if(!proximity)
+		return
 	if(!istype(AI))
 		return
 	if(AI.malf_picker)
@@ -33,8 +35,10 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "datadisk3"
 
-/obj/item/surveillance_upgrade/afterattack(mob/living/silicon/ai/AI, mob/user)
+/obj/item/surveillance_upgrade/afterattack(mob/living/silicon/ai/AI, mob/user, proximity)
 	. = ..()
+	if(!proximity)
+		return
 	if(!istype(AI))
 		return
 	if(AI.eyeobj)

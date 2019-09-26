@@ -3,12 +3,12 @@
 	desc = "A suspicious revolver. Uses .357 ammo." //usually used by syndicates
 	icon_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
-	fire_sound = 'sound/weapons/revolver357shot.ogg'
-	load_sound = 'sound/weapons/revolverload.ogg'
-	eject_sound = 'sound/weapons/revolverempty.ogg'
+	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
+	load_sound = 'sound/weapons/gun/revolver/load_bullet.ogg'
+	eject_sound = 'sound/weapons/gun/revolver/empty.ogg'
 	vary_fire_sound = FALSE
 	fire_sound_volume = 90
-	dry_fire_sound = 'sound/weapons/revolverdry.ogg'
+	dry_fire_sound = 'sound/weapons/gun/revolver/dry_fire.ogg'
 	casing_ejector = FALSE
 	internal_magazine = TRUE
 	bolt_type = BOLT_TYPE_NO_BOLT
@@ -75,7 +75,7 @@
 /obj/item/gun/ballistic/revolver/detective
 	name = "\improper Colt Detective Special"
 	desc = "A classic, if not outdated, law enforcement firearm. Uses .38-special rounds."
-	fire_sound = 'sound/weapons/revolver38shot.ogg'
+	fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
 	icon_state = "detective"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	obj_flags = UNIQUE_RENAME
@@ -114,7 +114,7 @@
 				to_chat(user, "<span class='warning'>You can't modify it!</span>")
 				return TRUE
 			magazine.caliber = "357"
-			fire_sound = 'sound/weapons/revolver357shot.ogg'
+			fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
 			desc = "The barrel and chamber assembly seems to have been modified."
 			to_chat(user, "<span class='notice'>You reinforce the barrel of [src]. Now it will fire .357 rounds.</span>")
 	else
@@ -128,7 +128,7 @@
 				to_chat(user, "<span class='warning'>You can't modify it!</span>")
 				return
 			magazine.caliber = "38"
-			fire_sound = 'sound/weapons/revolver38shot.ogg'
+			fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
 			desc = initial(desc)
 			to_chat(user, "<span class='notice'>You remove the modifications on [src]. Now it will fire .38 rounds.</span>")
 	return TRUE

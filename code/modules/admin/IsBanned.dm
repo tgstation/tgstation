@@ -89,7 +89,23 @@
 				[expires]"}
 				log_access("Failed Login: [key] [computer_id] [address] - Banned (#[i["id"]])")
 				return list("reason"="Banned","desc"="[desc]")
+	if (admin)
+		if (GLOB.directory[ckey])
+			return
 
+		//oh boy, so basically, because of a bug in byond, sometimes stickyban matches don't trigger here, so we can't exempt admins.
+		//	Whitelisting the ckey with the byond whitelist field doesn't work.
+		//	So we instead have to remove every stickyban than later re-add them.
+		if (!length(GLOB.stickybanadminexemptions))
+			for (var/banned_ckey in world.GetConfig("ban"))
+				GLOB.stickybanadmintexts[banned_ckey] = world.GetConfig("ban", banned_ckey)
+				world.SetConfig("ban", banned_ckey, null)
+		if (!SSstickyban.initialized)
+			return
+		GLOB.stickybanadminexemptions[ckey] = world.time
+		stoplag() // sleep a byond tick
+		GLOB.stickbanadminexemptiontimerid = addtimer(CALLBACK(GLOBAL_PROC, /proc/restore_stickybans), 5 SECONDS, TIMER_STOPPABLE|TIMER_UNIQUE|TIMER_OVERRIDE)
+		return
 	var/list/ban = ..()	//default pager ban stuff
 
 	if (ban)
@@ -199,6 +215,14 @@
 
 	return .
 
+/proc/restore_stickybans()
+	for (var/banned_ckey in GLOB.stickybanadmintexts)
+		world.SetConfig("ban", banned_ckey, GLOB.stickybanadmintexts[banned_ckey])
+	GLOB.stickybanadminexemptions = list()
+	GLOB.stickybanadmintexts = list()
+	if (GLOB.stickbanadminexemptiontimerid)
+		deltimer(GLOB.stickbanadminexemptiontimerid)
+	GLOB.stickbanadminexemptiontimerid = null
 
 #undef STICKYBAN_MAX_MATCHES
 #undef STICKYBAN_MAX_EXISTING_USER_MATCHES

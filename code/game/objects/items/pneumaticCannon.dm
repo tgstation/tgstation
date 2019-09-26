@@ -312,7 +312,7 @@
 	item_state = "speargun"
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
-	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
 	gasPerThrow = 0
 	checktank = FALSE
 	range_multiplier = 3

@@ -162,9 +162,7 @@
 	target = null //so we pick a new hydro tray next FindTarget(), instead of loving the same plant for eternity
 	wanted_objects -= hydroponicstypecache //so we only hunt them while they're alive/seeded/not visisted
 	Hydro.recent_bee_visit = TRUE
-	spawn(BEE_TRAY_RECENT_VISIT)
-		if(Hydro)
-			Hydro.recent_bee_visit = FALSE
+	addtimer(VARSET_CALLBACK(Hydro, recent_bee_visit, FALSE), BEE_TRAY_RECENT_VISIT)
 
 	var/growth = health //Health also means how many bees are in the swarm, roughly.
 	//better healthier plants!
