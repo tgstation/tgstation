@@ -1,6 +1,8 @@
 #define ARENA_RED_TEAM "red"
 #define ARENA_GREEN_TEAM "green"
 #define ARENA_DEFAULT_ID "arena_default"
+#define ARENA_CORNER_A "cornerA"
+#define ARENA_CORNER_B "cornerB"
 
 /// Arena related landmarks
 /obj/effect/landmark/arena
@@ -9,12 +11,12 @@
 	var/arena_id = ARENA_DEFAULT_ID
 
 /obj/effect/landmark/arena/start
-	name = "arena lower left corner"
-	landmark_tag = "arena_start"
+	name = "arena corner A"
+	landmark_tag = ARENA_CORNER_A
 
 /obj/effect/landmark/arena/end
-	name = "arena upper right corner"
-	landmark_tag = "arena_end"
+	name = "arena corner B"
+	landmark_tag = ARENA_CORNER_B
 
 /// Controller for admin event arenas
 /obj/machinery/computer/arena
@@ -78,13 +80,27 @@
 		var/simple_name = replacetext(replacetext(arena_file,arena_dir,""),".dmm","")
 		add_new_arena_template(null,arena_dir + arena_file,simple_name)
 
+
+
 /obj/machinery/computer/arena/proc/get_landmark_turf(landmark_tag)
 	for(var/obj/effect/landmark/arena/L in GLOB.landmarks_list)
 		if(L.arena_id == arena_id && L.landmark_tag == landmark_tag && isturf(L.loc))
 			return L.loc
 
+/obj/machinery/computer/arena/proc/get_load_point()
+	var/turf/A = get_landmark_turf(ARENA_CORNER_A)
+	var/turf/B = get_landmark_turf(ARENA_CORNER_B)
+	return locate(min(A.x,B.x),min(A.y,B.y),A.z)
+
+/obj/machinery/computer/arena/proc/get_arena_turfs()
+	var/lp = get_load_point()
+	var/turf/A = get_landmark_turf(ARENA_CORNER_A)
+	var/turf/B = get_landmark_turf(ARENA_CORNER_B)
+	var/turf/hp = locate(max(A.x,B.x),max(A.y,B.y),A.z)
+	return block(lp,hp)
+
 /obj/machinery/computer/arena/proc/clear_arena()
-	for(var/turf/T in block(get_landmark_turf("arena_start"),get_landmark_turf("arena_end")))
+	for(var/turf/T in get_arena_turfs())
 		T.empty(turf_type = /turf/open/indestructible)
 	current_arena_template = "None"
 
@@ -96,19 +112,24 @@
 		to_chat(user,"<span class='warning'>No such arena</span>")
 		return
 	clear_arena() //Clear current arena
-	var/turf/TL = get_landmark_turf("arena_start")
-	var/turf/TH = get_landmark_turf("arena_end")
-	var/wh = TH.x - TL.x
-	var/hz = TH.y - TL.y
+	var/turf/A = get_landmark_turf(ARENA_CORNER_A)
+	var/turf/B = get_landmark_turf(ARENA_CORNER_B)
+	var/wh = abs(A.x - B.x)
+	var/hz = abs(A.y - B.y)
 	if(M.width > wh || M.height > hz)
 		to_chat(user,"<span class='warning'>Arena template is too big for the current arena!</span>")
 		return
 	loading = TRUE
-	var/bd = M.load(get_landmark_turf("arena_start"))
+	var/bd = M.load(get_load_point())
 	if(bd)
 		current_arena_template = arena_template
 		arena_afterload(arena_template)
 	loading = FALSE
+	
+	message_admins("[key_name_admin(user)] loaded [arena_template] event arena for [arena_id] arena.")
+	log_admin("[key_name(user)] loaded [arena_template] event arena for [arena_id] arena.")
+
+	
 
 /// Handle arena specific special effects here.
 /obj/machinery/computer/arena/proc/arena_afterload(arena_filename)
@@ -126,7 +147,7 @@
 	if(!fname)
 		return
 	if(!friendly_name)
-		friendly_name = fname //Could ask the user for friendly name here
+		friendly_name = "[fname]" //Could ask the user for friendly name here
 
 	var/datum/map_template/T = new(fname,friendly_name,TRUE)
 	if(!T.cached_map || T.cached_map.check_for_errors())
@@ -134,6 +155,8 @@
 		return
 
 	arena_templates[T.name] = T
+	message_admins("[key_name_admin(user)] uploaded new event arena: [friendly_name].")
+	log_admin("[key_name(user)] uploaded new event arena: [friendly_name].")
 
 /obj/machinery/computer/arena/proc/add_team_member(mob/user,team)
 	var/list/keys = list()
@@ -166,7 +189,7 @@
 	
 	var/datum/atom_hud/antag/team_hud = team_huds[team]
 	team_hud.join_hud(M)
-	set_antag_hud(M,"brother",team_hud_index[team]) // Could use new icon
+	set_antag_hud(M,"arena",team_hud_index[team])
 	
 
 /obj/machinery/computer/arena/proc/change_outfit(mob/user,team)
@@ -175,6 +198,7 @@
 /obj/machinery/computer/arena/proc/toggle_spawn(mob/user)
 	ready_to_spawn = !ready_to_spawn
 	to_chat(user,"You [ready_to_spawn ? "enable" : "disable"] the spawners.")
+	log_admin("[key_name(user)] toggled event arena spawning for [arena_id] arena.")
 	// Could use update_icon on spawnpoints here to show they're on
 
 /obj/machinery/computer/arena/Topic(href, href_list)
@@ -224,7 +248,7 @@
 	load_arena(picked,user)
 
 /obj/machinery/computer/arena/proc/trophy_for_last_man_standing()
-	var/arena_turfs = block(get_landmark_turf("arena_start"),get_landmark_turf("arena_end"))
+	var/arena_turfs = get_arena_turfs()
 	for(var/mob/living/L in GLOB.mob_living_list)
 		if(L.stat != DEAD && (get_turf(L) in arena_turfs))
 			var/obj/item/reagent_containers/food/drinks/trophy/gold_cup/G = new(get_turf(L))
@@ -316,3 +340,5 @@
 #undef ARENA_GREEN_TEAM
 #undef ARENA_RED_TEAM
 #undef ARENA_DEFAULT_ID
+#undef ARENA_CORNER_A
+#undef ARENA_CORNER_B
