@@ -1162,6 +1162,9 @@
 
 ///Sets the custom materials for an item.
 /atom/proc/set_custom_materials(var/list/materials, multiplier = 1)
+	if(material_flags & MATERIAL_NO_EFFECTS)
+		return //we do naffin
+
 	if(!materials)
 		materials = custom_materials
 
