@@ -597,12 +597,6 @@
 		return FALSE
 	return add_blood_DNA(blood_dna)
 
-///wash cream off this object
-///
-///(for the love of space jesus please make this a component)
-/atom/proc/wash_cream()
-	return TRUE
-
 ///Is this atom in space
 /atom/proc/isinspace()
 	if(isspaceturf(get_turf(src)))

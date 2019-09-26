@@ -129,6 +129,7 @@
 	return ..()
 
 /obj/item/twohanded/offhand/dropped(mob/living/user, show_message = TRUE) //Only utilized by dismemberment since you can't normally switch to the offhand to drop it.
+	SHOULD_CALL_PARENT(FALSE)
 	var/obj/I = user.get_active_held_item()
 	if(I && istype(I, /obj/item/twohanded))
 		var/obj/item/twohanded/thw = I
@@ -492,15 +493,6 @@
 		icon_prefix = "spearplasma"
 	update_icon()
 	qdel(tip)
-	var/obj/item/grenade/G = locate() in parts_list
-	if(G)
-		var/obj/item/twohanded/spear/explosive/lance = new /obj/item/twohanded/spear/explosive(src.loc, G)
-		lance.force_wielded = force_wielded
-		lance.force_unwielded = force_unwielded
-		lance.throwforce = throwforce
-		lance.icon_prefix = icon_prefix
-		parts_list -= G
-		qdel(src)
 	..()
 
 
@@ -516,6 +508,21 @@
 	explosive = G
 	desc = "A makeshift spear with [G] attached to it"
 	update_icon()
+
+
+/obj/item/twohanded/spear/explosive/CheckParts(list/parts_list)
+	var/obj/item/grenade/G = locate() in parts_list
+	if(G)
+		var/obj/item/twohanded/spear/lancePart = locate() in parts_list
+		force_wielded = lancePart.force_wielded
+		force_unwielded = lancePart.force_unwielded
+		throwforce = lancePart.throwforce
+		icon_prefix = lancePart.icon_prefix
+		parts_list -= G
+		parts_list -= lancePart
+		Initialize(src.loc, G)
+		qdel(lancePart)
+	..()
 
 /obj/item/twohanded/spear/explosive/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -698,6 +705,7 @@
 	return (BRUTELOSS)
 
 /obj/item/twohanded/pitchfork/demonic/pickup(mob/living/user)
+	. = ..()
 	if(isliving(user) && user.mind && user.owns_soul() && !is_devil(user))
 		var/mob/living/U = user
 		U.visible_message("<span class='warning'>As [U] picks [src] up, [U]'s arms briefly catch fire.</span>", \

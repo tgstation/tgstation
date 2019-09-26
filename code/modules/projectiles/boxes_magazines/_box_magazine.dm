@@ -107,7 +107,7 @@
 	if(num_loaded)
 		if(!silent)
 			to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
-			playsound(src, 'sound/weapons/bulletinsert.ogg', 60, TRUE)
+			playsound(src, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
 		A.update_icon()
 		update_icon()
 	return num_loaded
@@ -118,7 +118,7 @@
 		A.forceMove(drop_location())
 		if(!user.is_holding(src) || !user.put_in_hands(A))	//incase they're using TK
 			A.bounce_away(FALSE, NONE)
-		playsound(src, 'sound/weapons/bulletinsert.ogg', 60, TRUE)
+		playsound(src, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
 		to_chat(user, "<span class='notice'>You remove a round from [src]!</span>")
 		update_icon()
 

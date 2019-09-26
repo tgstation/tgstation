@@ -186,10 +186,8 @@
 	filled = 1
 	release_pressure = ONE_ATMOSPHERE*2
 
-
-
-/obj/machinery/portable_atmospherics/canister/New(loc, datum/gas_mixture/existing_mixture)
-	..()
+/obj/machinery/portable_atmospherics/canister/Initialize(mapload, datum/gas_mixture/existing_mixture)
+	. = ..()
 	if(existing_mixture)
 		air_contents.copy_from(existing_mixture)
 	else
@@ -198,8 +196,6 @@
 	pump.on = TRUE
 	pump.stat = 0
 	pump.build_network()
-
-	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/Destroy()
 	qdel(pump)
@@ -404,6 +400,7 @@
 				var/newtype = label2types[label]
 				if(newtype)
 					var/obj/machinery/portable_atmospherics/canister/replacement = newtype
+					investigate_log("was relabelled to [initial(replacement.name)] by [key_name(usr)].", INVESTIGATE_ATMOS)
 					name = initial(replacement.name)
 					desc = initial(replacement.desc)
 					icon_state = initial(replacement.icon_state)

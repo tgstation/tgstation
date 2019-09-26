@@ -41,22 +41,15 @@
 	new/obj/effect/decal/cleanable/food/pie_smudge(T)
 	if(reagents && reagents.total_volume)
 		reagents.reaction(hit_atom, TOUCH)
-	if(ishuman(hit_atom))
-		var/mob/living/carbon/human/H = hit_atom
-		var/mutable_appearance/creamoverlay = mutable_appearance('icons/effects/creampie.dmi')
-		if(H.dna.species.limbs_id == "lizard")
-			creamoverlay.icon_state = "creampie_lizard"
-		else
-			creamoverlay.icon_state = "creampie_human"
+	if(isliving(hit_atom))
+		var/mob/living/L = hit_atom
 		if(stunning)
-			H.Paralyze(20) //splat!
-		H.adjust_blurriness(1)
-		H.visible_message("<span class='warning'>[H] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
-		playsound(H, "desceration", 50, TRUE)
-		if(!H.creamed) // one layer at a time
-			H.add_overlay(creamoverlay)
-			H.creamed = TRUE
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "creampie", /datum/mood_event/creampie)
+			L.Paralyze(20) //splat!
+		L.adjust_blurriness(1)
+		L.visible_message("<span class='warning'>[L] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
+		playsound(L, "desceration", 50, TRUE)
+	if(is_type_in_typecache(hit_atom, GLOB.creamable))
+		hit_atom.AddComponent(/datum/component/creamed, src)
 	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/pie/cream/nostun
@@ -78,7 +71,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("pie" = 1, "meat" = 1, "salmon" = 1)
-	foodtype = GRAIN | SUGAR
+	foodtype = GRAIN | SUGAR | MEAT | FRUIT
 
 /obj/item/reagent_containers/food/snacks/pie/meatpie
 	name = "meat-pie"
@@ -209,7 +202,7 @@
 
 /obj/item/reagent_containers/food/snacks/pie/cocolavatart
 	name = "chocolate lava tart"
-	desc = "A tasty dessert made of chocaloate, with a liquid core."
+	desc = "A tasty dessert made of chocolate, with a liquid core."
 	icon_state = "cocolavatart"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
