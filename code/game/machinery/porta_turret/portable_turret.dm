@@ -563,7 +563,8 @@
 /obj/machinery/porta_turret/proc/setState(on, mode, shoot_cyborgs)
 	if(controllock)
 		return
-	src.shoot_cyborgs = shoot_cyborgs
+
+	shoot_cyborgs ? ENABLE_BITFIELD(turret_flags, TURRET_FLAG_SHOOT_BORGS) : DISABLE_BITFIELD(turret_flags, TURRET_FLAG_SHOOT_BORGS)
 	src.on = on
 	if(!on)
 		popDown()
@@ -824,7 +825,7 @@
 	for(var/obj/machinery/porta_turret/T in control_area)
 		turrets |= T
 		T.cp = src
-		T.shoot_heads_of_staff = TRUE
+		T.turret_flags |= TURRET_FLAG_SHOOT_HEADS
 		
 /obj/machinery/turretid/examine(mob/user)
 	. += ..()
@@ -899,7 +900,7 @@
 			t += "<div class='notice icon'>Swipe ID card to lock interface</div>"
 		t += "Turrets [enabled?"activated":"deactivated"] - <A href='?src=[REF(src)];toggleOn=1'>[enabled?"Disable":"Enable"]?</a><br>"
 		t += "Currently set for [lethal?"lethal":"stun repeatedly"] - <A href='?src=[REF(src)];toggleLethal=1'>Change to [lethal?"Stun repeatedly":"Lethal"]?</a><br>"
-		t += "Target Cyborgs [shoot_cyborgs?"Yes":"No"] - <A href='?src=[REF(src)];shoot_silicons=1'>Change to [shoot_cyborgs?"Shoot Borgs":"Dont Shoot Borgs"]?</a><br>"
+		t += "Target Cyborgs [shoot_cyborgs?"Yes":"No"] - <A href='?src=[REF(src)];shoot_silicons=1'>Change to [shoot_cyborgs?"Dont Shoot Borgs":"Shoot Borgs"]?</a><br>"
 	var/datum/browser/popup = new(user, "turretid", "Turret Control Panel ([get_area_name(src, TRUE)])")
 	popup.set_content(t)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -916,6 +917,8 @@
 		toggle_on(usr)
 	else if (href_list["toggleLethal"])
 		toggle_lethal(usr)
+	else if (href_list["shoot_silicons"])
+		shoot_silicons(usr)
 	attack_hand(usr)
 
 /obj/machinery/turretid/proc/toggle_lethal(mob/user)
