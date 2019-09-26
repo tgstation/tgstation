@@ -423,18 +423,21 @@
 	name = "Debug outfit"
 	uniform = /obj/item/clothing/under/misc/patriotsuit
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite
-	shoes = /obj/item/clothing/shoes/magboots/advance
-	suit_store = /obj/item/tank/internals/oxygen
-	mask = /obj/item/clothing/mask/gas/welding
-	belt = /obj/item/storage/belt/utility/chief/full
-	gloves = /obj/item/clothing/gloves/combat
-	id = /obj/item/card/id/ert
 	glasses = /obj/item/clothing/glasses/meson/night
 	ears = /obj/item/radio/headset/headset_cent/commander
+	mask = /obj/item/clothing/mask/gas/welding/up
+	gloves = /obj/item/clothing/gloves/combat
+	belt = /obj/item/storage/belt/utility/chief/full
+	shoes = /obj/item/clothing/shoes/magboots/advance
+	id = /obj/item/card/id/ert
+	suit_store = /obj/item/tank/internals/oxygen
 	back = /obj/item/storage/backpack/holding
-	backpack_contents = list(/obj/item/card/emag=1,\
-		/obj/item/flashlight/emp/debug=1,\
+	box = /obj/item/storage/box/debugtools
+	internals_slot = SLOT_S_STORE
+	backpack_contents = list(
 		/obj/item/construction/rcd/combat=1,\
-		/obj/item/gun/magic/wand/resurrection/debug=1,\
 		/obj/item/melee/transforming/energy/axe=1,\
-		/obj/item/storage/part_replacer/bluespace/tier4=1)
+		/obj/item/storage/part_replacer/bluespace/tier4=1,\
+		/obj/item/gun/magic/wand/resurrection/debug=1,\
+		/obj/item/debug/human_spawner=1
+		)
