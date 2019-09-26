@@ -490,12 +490,9 @@
 		threatcount += 4
 
 	// If we aren't shooting heads then return a threatcount of 0
-	if (!(turret_flags & TURRET_FLAG_SHOOT_HEADS) && perp.get_assignment() in GLOB.command_positions)
+	if (!(turret_flags & TURRET_FLAG_SHOOT_HEADS) && (perp.get_assignment() in GLOB.command_positions))
 		return 0
 	
-	if (turret_flags & TURRET_FLAG_SHOOT_BORGS)
-		if (iscyborg(perp))
-			threatcount +=4
 	return threatcount
 
 /obj/machinery/porta_turret/proc/in_faction(mob/target)
