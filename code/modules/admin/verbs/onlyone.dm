@@ -13,7 +13,7 @@ GLOBAL_VAR_INIT(highlander, FALSE)
 			component.relocate() //Gets it out of bags and such
 
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
-		if(H.stat == DEAD || !(H.client))
+		if(H.stat == DEAD)
 			continue
 		H.make_scottish()
 

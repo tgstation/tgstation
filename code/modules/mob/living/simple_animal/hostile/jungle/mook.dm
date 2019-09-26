@@ -100,7 +100,7 @@
 			return
 		var/swing_turf = get_step(src,mob_direction)
 		new /obj/effect/temp_visual/kinetic_blast(swing_turf)
-		playsound(src, 'sound/weapons/slashmiss.ogg', 50, 1)
+		playsound(src, 'sound/weapons/slashmiss.ogg', 50, TRUE)
 
 /mob/living/simple_animal/hostile/jungle/mook/proc/LeapAttack()
 	if(target && !stat && attack_state == MOOK_ATTACK_WARMUP)
@@ -110,8 +110,8 @@
 		melee_damage_upper = 30
 		update_icons()
 		new /obj/effect/temp_visual/mook_dust(get_turf(src))
-		playsound(src, 'sound/weapons/thudswoosh.ogg', 25, 1)
-		playsound(src, 'sound/voice/mook_leap_yell.ogg', 100, 1)
+		playsound(src, 'sound/weapons/thudswoosh.ogg', 25, TRUE)
+		playsound(src, 'sound/voice/mook_leap_yell.ogg', 100, TRUE)
 		var/target_turf = get_turf(target)
 		throw_at(target_turf, 7, 1, src, FALSE, callback = CALLBACK(src, .proc/AttackRecovery))
 		return

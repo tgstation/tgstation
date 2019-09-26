@@ -10,6 +10,7 @@
 
 	density = FALSE
 	stat = DEAD
+	hud_possible = list()
 
 	var/mob/living/new_character	//for instant transfer once the round is set up
 
@@ -29,6 +30,12 @@
 	ComponentInitialize()
 
 	. = ..()
+
+	GLOB.new_player_list += src
+
+/mob/dead/new_player/Destroy()
+	GLOB.new_player_list -= src
+	return ..()
 
 /mob/dead/new_player/prepare_huds()
 	return

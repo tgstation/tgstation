@@ -596,6 +596,22 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"pill22" = 'icons/UI_Icons/Pills/pill22.png',
 	)
 
+
+/datum/asset/spritesheet/simple/roulette
+	name = "roulette"
+	assets = list(
+		"black" = 'icons/UI_Icons/Roulette/black.png',
+		"red" = 'icons/UI_Icons/Roulette/red.png',
+		"odd" = 'icons/UI_Icons/Roulette/odd.png',
+		"even" = 'icons/UI_Icons/Roulette/even.png',
+		"low" = 'icons/UI_Icons/Roulette/1-18.png',
+		"high" = 'icons/UI_Icons/Roulette/19-36.png',
+		"nano" = 'icons/UI_Icons/Roulette/nano.png',
+		"zero" = 'icons/UI_Icons/Roulette/0.png'
+
+	)
+
+
 //this exists purely to avoid meta by pre-loading all language icons.
 /datum/asset/language/register()
 	for(var/path in typesof(/datum/language))
@@ -690,7 +706,13 @@ GLOBAL_LIST_EMPTY(asset_datums)
 			if (!isnull(c) && c != "#FFFFFF")
 				I.Blend(c, ICON_MULTIPLY)
 		else
-			stack_trace("[item] does not have a valid icon state, icon=[icon_file], icon_state=[json_encode(icon_state)], icon_states=[json_encode(icon_states_list)]")
+			var/icon_states_string
+			for (var/an_icon_state in icon_states_list)
+				if (!icon_states_string)
+					icon_states_string = "[json_encode(an_icon_state)](\ref[an_icon_state])"
+				else
+					icon_states_string += ", [json_encode(an_icon_state)](\ref[an_icon_state])"
+			stack_trace("[item] does not have a valid icon state, icon=[icon_file], icon_state=[json_encode(icon_state)](\ref[icon_state]), icon_states=[icon_states_string]")
 			I = icon('icons/turf/floors.dmi', "", SOUTH)
 
 		var/imgid = replacetext(replacetext("[item]", "/obj/item/", ""), "/", "-")

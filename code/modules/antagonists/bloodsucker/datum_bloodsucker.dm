@@ -44,7 +44,7 @@
 
 	// LISTS
 	var/static/list/defaultTraits = list (TRAIT_STABLEHEART, TRAIT_NOBREATH, TRAIT_SLEEPIMMUNE, TRAIT_NOCRITDAMAGE, TRAIT_RESISTCOLD, TRAIT_RADIMMUNE, TRAIT_VIRUSIMMUNE, TRAIT_NIGHT_VISION, \
-										  TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_AGEUSIA, TRAIT_COLDBLOODED, TRAIT_NONATURALHEAL)
+										  TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_AGEUSIA, TRAIT_COLDBLOODED, TRAIT_NONATURALHEAL, TRAIT_NOMARROW, TRAIT_NOPULSE)
 	// NOTES: TRAIT_AGEUSIA <-- Doesn't like flavors.
 	// REMOVED: TRAIT_NODEATH
 	// TO ADD:
@@ -133,7 +133,8 @@
 						"Sveyn","Aurel","Alexe","Iustin","Theodor","Dimitrie","Octav","Damien","Magnus","Caine","Abel", // Romanian/Ancient
 						"Lucius","Gaius","Otho","Balbinus","Arcadius","Romanos","Alexios","Vitellius",  // Latin
 						"Melanthus","Teuthras","Orchamus","Amyntor","Axion",  // Greek
-						"Thoth","Thutmose") // Egyptian
+						"Thoth","Thutmose", // Egyptian
+						"Dio") // Senpai
 
 	else
 		vampname = pick("Islana","Tyrra","Greganna","Pytra","Hilda","Andra","Crina","Viorela","Viorica","Anemona","Camelia","Narcisa","Sorina","Alessia","Sophia","Gladda","Arcana","Morgan","Lasarra","Ioana","Elena", \
@@ -233,7 +234,7 @@
 		var/datum/species/S = H.dna.species
 		// Make Changes
 		S.brutemod *= 0.5
-		S.burnmod += 0.2 // 0.5													//  <--------------------  Start small, but burn mod increases based on blood pool!
+		S.burnmod += 0.2 // 0.5													//  <--------------------  Start small, but burn mod increases based on rank!
 		S.coldmod = 0
 		S.stunmod *= 0.8 // 0.5
 		S.siemens_coeff *= 0.75 	//base electrocution coefficient  1
@@ -371,7 +372,7 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 	if (ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
 		var/datum/species/S = H.dna.species
-		S.burnmod += 0.05 			// Slightly more burn damage
+		S.burnmod += 0.025 			// Slightly more burn damage
 		S.stunmod *= 0.95			// Slightly less stun time.
 		S.punchdamagelow += 0.5
 		S.punchdamagehigh += 0.5    // NOTE: This affects the hitting power of Brawn.

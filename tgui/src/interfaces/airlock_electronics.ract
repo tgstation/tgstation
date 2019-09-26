@@ -27,19 +27,3 @@
 	<ui-button icon='{{data.unres_direction & 2 ? "check-square-o" : "square-o"}}' style='{{data.unres_direction & 2 ? "selected" : null}}' action='direc_set' params='{"unres_direction": "2"}'>South</ui-button>
 	<ui-button icon='{{data.unres_direction & 8 ? "check-square-o" : "square-o"}}' style='{{data.unres_direction & 8 ? "selected" : null}}' action='direc_set' params='{"unres_direction": "8"}'>West</ui-button>
 </ui-display>
-
-<style>
-  table {
-    width: 100%;
-    border-spacing: 2px;
-  }
-  th {
-    text-align: left;
-  }
-  td {
-    vertical-align: top;
-  }
-  td .button {
-    margin-top: 4px
-  }
-</style>

@@ -6,7 +6,7 @@
 	fulp_item = TRUE
 	icon = 'icons/obj/clothing/shoes_fulp.dmi'
 	icon_state = "digi_laceups"
-	alternate_worn_icon = 'icons/mob/feet_fulp.dmi'
+	mob_overlay_icon = 'icons/mob/feet_fulp.dmi'
 	item_state = "digi_laceups"
 
 /obj/item/clothing/shoes/workboots/digitigrade
@@ -16,7 +16,7 @@
 	fulp_item = TRUE
 	icon = 'icons/obj/clothing/shoes_fulp.dmi'
 	icon_state = "digi_workboots"
-	alternate_worn_icon = 'icons/mob/feet_fulp.dmi'
+	mob_overlay_icon = 'icons/mob/feet_fulp.dmi'
 	item_state = "digi_workboots"
 
 /obj/item/clothing/shoes/digicombat
@@ -26,7 +26,7 @@
 	fulp_item = TRUE
 	icon = 'icons/obj/clothing/shoes_fulp.dmi'
 	icon_state = "digi_combats"
-	alternate_worn_icon = 'icons/mob/feet_fulp.dmi'
+	mob_overlay_icon = 'icons/mob/feet_fulp.dmi'
 	item_state = "digi_combats"
 	resistance_flags = FIRE_PROOF
 	permeability_coefficient = 0.05
@@ -40,7 +40,7 @@
 	fulp_item = TRUE
 	icon = 'icons/obj/clothing/shoes_fulp.dmi'
 	icon_state = "digi_jackboots"
-	alternate_worn_icon = 'icons/mob/feet_fulp.dmi'
+	mob_overlay_icon = 'icons/mob/feet_fulp.dmi'
 	item_state = "digi_jackboots"
 
 /obj/item/clothing/shoes/clown_shoes/digitigrade
@@ -50,7 +50,7 @@
 	fulp_item = TRUE
 	icon = 'icons/obj/clothing/shoes_fulp.dmi'
 	icon_state = "digi_clown"
-	alternate_worn_icon = 'icons/mob/feet_fulp.dmi'
+	mob_overlay_icon = 'icons/mob/feet_fulp.dmi'
 	item_state = "digi_clown"
 
 /obj/item/clothing/shoes/sandal/digitigrade
@@ -60,7 +60,7 @@
 	fulp_item = TRUE
 	icon = 'icons/obj/clothing/shoes_fulp.dmi'
 	icon_state = "digi_wizard"
-	alternate_worn_icon = 'icons/mob/feet_fulp.dmi'
+	mob_overlay_icon = 'icons/mob/feet_fulp.dmi'
 	item_state = "digi_wizard"
 
 /obj/item/clothing/shoes/sneakers/brown/digitigrade
@@ -70,7 +70,7 @@
 	fulp_item = TRUE
 	icon = 'icons/obj/clothing/shoes_fulp.dmi'
 	icon_state = "digi_brown"
-	alternate_worn_icon = 'icons/mob/feet_fulp.dmi'
+	mob_overlay_icon = 'icons/mob/feet_fulp.dmi'
 	item_state = "digi_brown"
 
 // not working, will fix later
@@ -91,5 +91,5 @@
 	fulp_item = TRUE
 	icon = 'icons/obj/clothing/shoes_fulp.dmi'
 	icon_state = "digi_mime"
-	alternate_worn_icon = 'icons/mob/feet_fulp.dmi'
+	mob_overlay_icon = 'icons/mob/feet_fulp.dmi'
 	item_state = "digi_mime"

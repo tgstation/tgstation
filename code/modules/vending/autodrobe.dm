@@ -117,13 +117,20 @@
 					/obj/item/clothing/ears/headphones = 2,
 					/obj/item/clothing/head/delinquent = 1,
 					/obj/item/clothing/head/wig/random = 3,
+					/obj/item/clothing/head/zepellihat = 1, //fulp
 					/obj/item/clothing/shoes/clown_shoes/digitigrade = 1, //fulp
-					/obj/item/clothing/shoes/sneakers/mime/digitigrade = 1) //fulp
+					/obj/item/clothing/shoes/sneakers/mime/digitigrade = 1, //fulp
+					/obj/item/clothing/under/costume/saiyan = 1) //fulp
 	contraband = list(/obj/item/clothing/suit/judgerobe = 1,
 					  /obj/item/clothing/head/powdered_wig = 1,
 					  /obj/item/gun/magic/wand = 2,
 					  /obj/item/clothing/glasses/sunglasses/garb = 2,
 					  /obj/item/clothing/glasses/blindfold = 1,
+					  /obj/item/clothing/under/costume/diojumpsuit = 1, // Fulp VVV
+					  /obj/item/clothing/suit/diojacket = 1,
+					  /obj/item/clothing/shoes/dioshoes = 1,
+					  /obj/item/clothing/head/dioband = 1,
+					  /obj/item/clothing/gloves/diowristbands = 1,  // Fulp ^^^
 					  /obj/item/clothing/mask/muzzle = 2)
 	premium = list(/obj/item/clothing/suit/pirate/captain = 2,
 				   /obj/item/clothing/head/pirate/captain = 2,

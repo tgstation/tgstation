@@ -30,13 +30,13 @@
 		if(U.check_acedia())
 			to_chat(user, "<span class='notice'>None of this matters, why are you reading this? You put [title] down.</span>")
 			return
-	user.visible_message("[user] opens [title] and begins reading intently.")
+	user.visible_message("<span class='notice'>[user] opens [title] and begins reading intently.</span>")
 	ask_name(user)
 
 
 /obj/item/book/codex_gigas/proc/perform_research(mob/user, devilName)
 	if(!devilName)
-		user.visible_message("[user] closes [title] without looking anything up.")
+		user.visible_message("<span class='notice'>[user] closes [title] without looking anything up.</span>")
 		return
 	inUse = TRUE
 	var/speed = 300

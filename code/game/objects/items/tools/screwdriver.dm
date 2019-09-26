@@ -128,7 +128,7 @@
 	return(BRUTELOSS)
 
 /obj/item/screwdriver/power/attack_self(mob/user)
-	playsound(get_turf(user),'sound/items/change_drill.ogg',50,1)
+	playsound(get_turf(user),'sound/items/change_drill.ogg',50,TRUE)
 	var/obj/item/wrench/power/b_drill = new /obj/item/wrench/power(drop_location())
 	to_chat(user, "<span class='notice'>You attach the bolt driver bit to [src].</span>")
 	qdel(src)

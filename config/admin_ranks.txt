@@ -55,7 +55,7 @@ Exclude =
 Edit =
 
 Name = Admin Jr.
-Include = @ SPAWN VAREDIT
+Include = @ SPAWN VAREDIT FUN
 Exclude =
 Edit =
 

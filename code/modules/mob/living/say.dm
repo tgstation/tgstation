@@ -89,7 +89,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/static/list/one_character_prefix = list(MODE_HEADSET = TRUE, MODE_ROBOT = TRUE, MODE_WHISPER = TRUE)
 
 	var/ic_blocked = FALSE
-	if(client && !forced && config.ic_filter_regex && findtext(message, config.ic_filter_regex))
+	if(client && !forced && CHAT_FILTER_CHECK(message))
 		//The filter doesn't act on the sanitized message, but the raw message.
 		ic_blocked = TRUE
 
@@ -244,7 +244,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 
-	show_message(message, 2, deaf_message, deaf_type)
+	show_message(message, MSG_AUDIBLE, deaf_message, deaf_type)
 	return message
 
 /mob/living/send_speech(message, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language=null, message_mode)
@@ -258,7 +258,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		var/mob/M = _M
 		if(!M || M.stat != DEAD) //not dead, not important	// FULPFIX: If this person does not exist. 4/13/19
 			continue
-		if(!M.client || !client) //client is so that ghosts don't have to listen to mice
+		if(!client) //client is so that ghosts don't have to listen to mice
 			continue
 		if(get_dist(M, src) > 7 || M.z != z) //they're out of range of normal hearing
 			if(eavesdropping_modes[message_mode] && !(M.client.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off

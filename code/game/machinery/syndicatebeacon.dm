@@ -68,7 +68,7 @@
 			return
 		else
 			if(!connect_to_network())
-				to_chat(user, "<span class='warning'>\the [src] must be placed over an exposed, powered cable node!</span>")
+				to_chat(user, "<span class='warning'>\The [src] must be placed over an exposed, powered cable node!</span>")
 				return
 			setAnchored(TRUE)
 			to_chat(user, "<span class='notice'>You bolt \the [src] to the floor and attach it to the cable.</span>")
@@ -122,7 +122,7 @@
 	if(user)
 		to_chat(user, "<span class='notice'>Locked In.</span>")
 		new droptype( user.loc )
-		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
+		playsound(src, 'sound/effects/pop.ogg', 100, TRUE, TRUE)
 		qdel(src)
 	return
 

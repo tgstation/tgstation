@@ -22,8 +22,8 @@
 	var/pressureSetting = 1 //How powerful the cannon is - higher pressure = more gas but more powerful throws
 	var/checktank = TRUE
 	var/range_multiplier = 1
-	var/throw_amount = 20	//How many items to throw per fire
-	var/fire_mode = PCANNON_FIREALL
+	var/throw_amount = 1	//How many items to throw per fire
+	var/fire_mode = PCANNON_FIFO
 	var/automatic = FALSE
 	var/clumsyCheck = TRUE
 	var/list/allowed_typecache		//Leave as null to allow all.
@@ -170,7 +170,7 @@
 				    		 "<span class='danger'>You fire \the [src]!</span>")
 	log_combat(user, target, "fired at", src)
 	var/turf/T = get_target(target, get_turf(src))
-	playsound(src, fire_sound, 50, 1)
+	playsound(src, fire_sound, 50, TRUE)
 	fire_items(T, user)
 	if(pressureSetting >= 3 && iscarbon(user))
 		var/mob/living/carbon/C = user
@@ -235,6 +235,7 @@
 	force = 5
 	maxWeightClass = 7
 	gasPerThrow = 5
+	maxWeightClass = 10
 
 /obj/item/pneumatic_cannon/proc/updateTank(obj/item/tank/internals/thetank, removing = 0, mob/living/carbon/human/user)
 	if(removing)
@@ -311,7 +312,7 @@
 	item_state = "speargun"
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
-	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
 	gasPerThrow = 0
 	checktank = FALSE
 	range_multiplier = 3
