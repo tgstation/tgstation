@@ -129,7 +129,7 @@
 	if(panel_open)
 		. += "<span class='info'>Its maintenance panel is currently open.</span>"
 		if(!status && powered())
-			. += "<span class='info'>It can reactivated with a <b>screwdriver</b>.</span>"
+			. += "<span class='info'>It can reactivated with <b>wirecutters</b>.</span>"
 
 /obj/machinery/camera/emp_act(severity)
 	. = ..()
