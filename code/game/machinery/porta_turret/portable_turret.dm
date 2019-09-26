@@ -173,7 +173,7 @@
 		dat += "Neutralize All Unidentified Life Signs: <A href='?src=[REF(src)];operation=checkxenos'>[turret_flags & TURRET_FLAG_SHOOT_ANOMALOUS ? "Yes" : "No"]</A><BR>"
 		dat += "Neutralize All Non-Mindshielded Personnel: <A href='?src=[REF(src)];operation=checkloyal'>[turret_flags & TURRET_FLAG_SHOOT_UNSHIELDED ? "Yes" : "No"]</A><BR>"
 		dat += "Neutralize All Cyborgs: <A href='?src=[REF(src)];operation=shootborgs'>[turret_flags & TURRET_FLAG_SHOOT_BORGS ? "Yes" : "No"]</A><BR>"
-		dat += "Ignore Heads Of Staff: <A href='?src=[REF(src)];operation=shootheads'>[turret_flags & TURRET_FLAG_SHOOT_HEADS ? "Yes" : "No"]</A><BR>"
+		dat += "Ignore Heads Of Staff: <A href='?src=[REF(src)];operation=shootheads'>[turret_flags & TURRET_FLAG_SHOOT_HEADS ? "No" : "Yes"]</A><BR>"
 	if(issilicon(user))
 		if(!manual_control)
 			var/mob/living/silicon/S = user
