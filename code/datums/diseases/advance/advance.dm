@@ -208,8 +208,8 @@
 	AssignProperties()
 	if(processing && symptoms && symptoms.len)
 		for(var/datum/symptom/S in symptoms)
-			if(S.Start(src)) //this will return FALSE if the symptom is neutered
-				S.on_stage_change(src)
+			S.Start(src)
+			S.on_stage_change(src)
 	id = null
 
 	var/the_id = GetDiseaseID()
