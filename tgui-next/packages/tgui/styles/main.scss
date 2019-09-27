@@ -1,10 +1,17 @@
+// Core styles
 @import './functions.scss';
 @import './variables.scss';
 @import './reset.scss';
+
+// Atomic classes
 @import './atomic/color.scss';
+
+// Components
 @import '../components/Button.scss';
+@import '../components/Layout.scss';
 @import '../components/TitleBar.scss';
 
+// Misc
 body {
   color: $text-color-normal;
   background-color: $background-color-start;

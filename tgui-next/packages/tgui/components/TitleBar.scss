@@ -1,10 +1,4 @@
 .TitleBar {
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 32px;
   background-color: $titlebar-color-background;
   border-bottom: 1px solid $titlebar-color-coreshadow;
   box-shadow: 0 3px 3px $titlebar-color-shadow;
@@ -32,7 +26,7 @@
   white-space: nowrap;
 }
 
-.TitleBar__status-icon {
+.TitleBar__statusIcon {
   position: absolute;
   top: 4px;
   left: 12px;
@@ -51,8 +45,8 @@
   right: 12px;
 }
 
-.TitleBar--no-icons {
-  .TitleBar__status-icon {
+.TitleBar--noIcons {
+  .TitleBar__statusIcon {
     &::after {
       content: 'O';
     }

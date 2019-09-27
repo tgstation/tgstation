@@ -10,11 +10,9 @@ PATH="${PATH}:node_modules/.bin"
 
 yarn install
 
-cd "${base_dir}/packages/tgui"
-webpack --mode=development
+if [[ ${1} == "--dev" ]]; then
+  cd "${base_dir}/packages/tgui-dev-server"
+  exec node --experimental-modules server.js
+fi
 
-cd "${base_dir}"
-./reload.bat
-
-cd "${base_dir}/packages/tgui-dev-server"
-node --experimental-modules server.js
+exec webpack "${@}"

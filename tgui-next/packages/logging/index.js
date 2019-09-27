@@ -52,20 +52,19 @@ const getPrefix = (() => {
   ];
 })();
 
+/**
+ * Creates a logger object.
+ */
 export const createLogger = ns => ({
-  log(...args) {
-    console.log(...getPrefix(ns), ...args);
-  },
-  error(...args) {
-    console.error(...getPrefix(ns), ...args);
-  },
-  warn(...args) {
-    console.warn(...getPrefix(ns), ...args);
-  },
-  debug(...args) {
-    console.debug(...getPrefix(ns), ...args);
-  },
+  log: (...args) => console.log(...getPrefix(ns), ...args),
+  debug: (...args) => console.debug(...getPrefix(ns), ...args),
+  info: (...args) => console.info(...getPrefix(ns), ...args),
+  warn: (...args) => console.warn(...getPrefix(ns), ...args),
+  error: (...args) => console.error(...getPrefix(ns), ...args),
 });
 
-export const log = (ns, ...args) =>
+/**
+ * Explicitly log with chosen namespace.
+ */
+export const directLog = (ns, ...args) =>
   console.log(...getPrefix(ns), ...args);

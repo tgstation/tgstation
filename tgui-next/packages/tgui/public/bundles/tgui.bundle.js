@@ -18537,51 +18537,10 @@ var decodeHtmlEntities = function decodeHtmlEntities(str) {
 
 /***/ }),
 
-/***/ "../tgui-dev-server/client.js":
-/*!******************************!*\
-  !*** .-dev-server/client.js ***!
-  \******************************/
-/*! exports provided: sendLogEntry */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sendLogEntry", function() { return sendLogEntry; });
-var _this = undefined;
-
-function _newArrowCheck(innerThis, boundThis) { if (innerThis !== boundThis) { throw new TypeError("Cannot instantiate an arrow function"); } }
-
-var socket;
-var sendLogEntry = function sendLogEntry(ns) {
-  _newArrowCheck(this, _this);
-
-  if (true) {
-    try {
-      if (!socket) {
-        socket = new WebSocket('ws://localhost:3001');
-      }
-
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
-
-      socket.send(JSON.stringify({
-        type: 'log',
-        payload: {
-          ns: ns,
-          args: args
-        }
-      }));
-    } catch (err) {}
-  }
-}.bind(undefined);
-
-/***/ }),
-
-/***/ "./src/components/Box.js":
-/*!*******************************!*\
-  !*** ./src/components/Box.js ***!
-  \*******************************/
+/***/ "../tgui/components/Box.js":
+/*!*********************************!*\
+  !*** ../tgui/components/Box.js ***!
+  \*********************************/
 /*! exports provided: computeBoxProps, Box */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -18677,10 +18636,10 @@ var Box = function Box(props) {
 
 /***/ }),
 
-/***/ "./src/components/Button.js":
-/*!**********************************!*\
-  !*** ./src/components/Button.js ***!
-  \**********************************/
+/***/ "../tgui/components/Button.js":
+/*!************************************!*\
+  !*** ../tgui/components/Button.js ***!
+  \************************************/
 /*! exports provided: Button */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -18688,7 +18647,7 @@ var Box = function Box(props) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Button", function() { return Button; });
 /* harmony import */ var inferno__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! inferno */ "../../node_modules/inferno/index.esm.js");
-/* harmony import */ var _Icon__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Icon */ "./src/components/Icon.js");
+/* harmony import */ var _Icon__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Icon */ "../tgui/components/Icon.js");
 /* harmony import */ var react_tools__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-tools */ "../react-tools/index.js");
 var _this = undefined;
 
@@ -18732,10 +18691,10 @@ var Button = function Button(props) {
 
 /***/ }),
 
-/***/ "./src/components/Icon.js":
-/*!********************************!*\
-  !*** ./src/components/Icon.js ***!
-  \********************************/
+/***/ "../tgui/components/Icon.js":
+/*!**********************************!*\
+  !*** ../tgui/components/Icon.js ***!
+  \**********************************/
 /*! exports provided: Icon */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -18771,10 +18730,10 @@ var Icon = function Icon(props) {
 
 /***/ }),
 
-/***/ "./src/components/TitleBar.js":
-/*!************************************!*\
-  !*** ./src/components/TitleBar.js ***!
-  \************************************/
+/***/ "../tgui/components/TitleBar.js":
+/*!**************************************!*\
+  !*** ../tgui/components/TitleBar.js ***!
+  \**************************************/
 /*! exports provided: TitleBar */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -18783,8 +18742,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TitleBar", function() { return TitleBar; });
 /* harmony import */ var inferno__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! inferno */ "../../node_modules/inferno/index.esm.js");
 /* harmony import */ var react_tools__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-tools */ "../react-tools/index.js");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../constants */ "./src/constants.js");
-/* harmony import */ var _Icon__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Icon */ "./src/components/Icon.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../constants */ "../tgui/constants.js");
+/* harmony import */ var _Icon__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Icon */ "../tgui/components/Icon.js");
 var _this = undefined;
 
 
@@ -18818,7 +18777,7 @@ var TitleBar = function TitleBar(props) {
       status = props.status,
       onDrag = props.onDrag;
   return Object(inferno__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(1, "div", "TitleBar", [Object(inferno__WEBPACK_IMPORTED_MODULE_0__["createComponentVNode"])(2, _Icon__WEBPACK_IMPORTED_MODULE_3__["Icon"], {
-    "className": Object(react_tools__WEBPACK_IMPORTED_MODULE_1__["classes"])(['TitleBar__status-icon', statusToClassName(status)]),
+    "className": Object(react_tools__WEBPACK_IMPORTED_MODULE_1__["classes"])(['TitleBar__statusIcon', statusToClassName(status)]),
     "name": "eye",
     "size": 2
   }), Object(inferno__WEBPACK_IMPORTED_MODULE_0__["createVNode"])(1, "span", "TitleBar__title", title, 0)], 4, {
@@ -18828,25 +18787,25 @@ var TitleBar = function TitleBar(props) {
 
 /***/ }),
 
-/***/ "./src/components/index.js":
-/*!*********************************!*\
-  !*** ./src/components/index.js ***!
-  \*********************************/
+/***/ "../tgui/components/index.js":
+/*!***********************************!*\
+  !*** ../tgui/components/index.js ***!
+  \***********************************/
 /*! exports provided: Box, Button, Icon, TitleBar */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Box__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Box */ "./src/components/Box.js");
+/* harmony import */ var _Box__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Box */ "../tgui/components/Box.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Box", function() { return _Box__WEBPACK_IMPORTED_MODULE_0__["Box"]; });
 
-/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Button */ "./src/components/Button.js");
+/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Button */ "../tgui/components/Button.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Button", function() { return _Button__WEBPACK_IMPORTED_MODULE_1__["Button"]; });
 
-/* harmony import */ var _Icon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Icon */ "./src/components/Icon.js");
+/* harmony import */ var _Icon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Icon */ "../tgui/components/Icon.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Icon", function() { return _Icon__WEBPACK_IMPORTED_MODULE_2__["Icon"]; });
 
-/* harmony import */ var _TitleBar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TitleBar */ "./src/components/TitleBar.js");
+/* harmony import */ var _TitleBar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TitleBar */ "../tgui/components/TitleBar.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TitleBar", function() { return _TitleBar__WEBPACK_IMPORTED_MODULE_3__["TitleBar"]; });
 
 
@@ -18856,10 +18815,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/constants.js":
-/*!**************************!*\
-  !*** ./src/constants.js ***!
-  \**************************/
+/***/ "../tgui/constants.js":
+/*!****************************!*\
+  !*** ../tgui/constants.js ***!
+  \****************************/
 /*! exports provided: UI_INTERACTIVE, UI_UPDATE, UI_DISABLED, UI_CLOSE */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -18878,10 +18837,10 @@ var UI_CLOSE = -1;
 
 /***/ }),
 
-/***/ "./src/index.js":
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
+/***/ "../tgui/index.js":
+/*!************************!*\
+  !*** ../tgui/index.js ***!
+  \************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -18891,8 +18850,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var byond__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! byond */ "../byond/index.js");
 /* harmony import */ var fg_loadcss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! fg-loadcss */ "../../node_modules/fg-loadcss/src/loadCSS.js");
 /* harmony import */ var fg_loadcss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(fg_loadcss__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _logging__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./logging */ "./src/logging.js");
-/* harmony import */ var _layout__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./layout */ "./src/layout.js");
+/* harmony import */ var _layout__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./layout */ "../tgui/layout.js");
+/* harmony import */ var _logging__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./logging */ "../tgui/logging.js");
 var _this = undefined;
 
 
@@ -18904,26 +18863,16 @@ function _newArrowCheck(innerThis, boundThis) { if (innerThis !== boundThis) { t
 
 
 
-var logger = Object(_logging__WEBPACK_IMPORTED_MODULE_3__["createLogger"])();
+var logger = Object(_logging__WEBPACK_IMPORTED_MODULE_4__["createLogger"])();
 var reactRoot = document.getElementById('react-root');
 
 var renderLayout = function renderLayout(state) {
-  var _this2 = this;
-
   _newArrowCheck(this, _this);
 
   logger.log('Rendering with state', state);
 
-  if (state.data && state.data.scrubbers) {
-    state.data.scrubbers.forEach(function (scrubber) {
-      _newArrowCheck(this, _this2);
-
-      return logger.log('scrubber', scrubber);
-    }.bind(this));
-  }
-
   try {
-    var element = Object(inferno__WEBPACK_IMPORTED_MODULE_0__["createComponentVNode"])(2, _layout__WEBPACK_IMPORTED_MODULE_4__["Layout"], {
+    var element = Object(inferno__WEBPACK_IMPORTED_MODULE_0__["createComponentVNode"])(2, _layout__WEBPACK_IMPORTED_MODULE_3__["Layout"], {
       "state": state
     });
     Object(inferno__WEBPACK_IMPORTED_MODULE_0__["render"])(element, reactRoot);
@@ -18971,10 +18920,10 @@ window.onerror = function (msg, url, line, col, error) {
 
 /***/ }),
 
-/***/ "./src/interfaces/AirAlarm.js":
-/*!************************************!*\
-  !*** ./src/interfaces/AirAlarm.js ***!
-  \************************************/
+/***/ "../tgui/interfaces/AirAlarm.js":
+/*!**************************************!*\
+  !*** ../tgui/interfaces/AirAlarm.js ***!
+  \**************************************/
 /*! exports provided: AirAlarm */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -18983,8 +18932,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AirAlarm", function() { return AirAlarm; });
 /* harmony import */ var inferno__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! inferno */ "../../node_modules/inferno/index.esm.js");
 /* harmony import */ var byond__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! byond */ "../byond/index.js");
-/* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components */ "./src/components/index.js");
-/* harmony import */ var _logging__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../logging */ "./src/logging.js");
+/* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components */ "../tgui/components/index.js");
+/* harmony import */ var _logging__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../logging */ "../tgui/logging.js");
 var _this = undefined;
 
 
@@ -19000,7 +18949,7 @@ function _newArrowCheck(innerThis, boundThis) { if (innerThis !== boundThis) { t
 
 
 
-var logger = Object(_logging__WEBPACK_IMPORTED_MODULE_3__["createLogger"])();
+var logger = Object(_logging__WEBPACK_IMPORTED_MODULE_3__["createLogger"])('AirAlarm');
 var AirAlarm = function AirAlarm(props) {
   var _this2 = this;
 
@@ -19139,6 +19088,11 @@ var Scrubbers = function Scrubbers(props) {
 
   var state = props.state,
       scrubbers = props.scrubbers;
+
+  if (!scrubbers) {
+    return 'Nothing to show';
+  }
+
   return scrubbers.map(function (scrubber) {
     _newArrowCheck(this, _this3);
 
@@ -19232,21 +19186,22 @@ var Scrubber = function Scrubber(props) {
 
 /***/ }),
 
-/***/ "./src/layout.js":
-/*!***********************!*\
-  !*** ./src/layout.js ***!
-  \***********************/
-/*! exports provided: Layout */
+/***/ "../tgui/layout.js":
+/*!*************************!*\
+  !*** ../tgui/layout.js ***!
+  \*************************/
+/*! exports provided: getRoutedComponent, Layout */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRoutedComponent", function() { return getRoutedComponent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Layout", function() { return Layout; });
 /* harmony import */ var inferno__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! inferno */ "../../node_modules/inferno/index.esm.js");
 /* harmony import */ var string_tools__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! string-tools */ "../string-tools/index.js");
-/* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components */ "./src/components/index.js");
-/* harmony import */ var _interfaces_AirAlarm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./interfaces/AirAlarm */ "./src/interfaces/AirAlarm.js");
-/* harmony import */ var _logging__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./logging */ "./src/logging.js");
+/* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components */ "../tgui/components/index.js");
+/* harmony import */ var _interfaces_AirAlarm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./interfaces/AirAlarm */ "../tgui/interfaces/AirAlarm.js");
+/* harmony import */ var _logging__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./logging */ "../tgui/logging.js");
 var _this = undefined;
 
 
@@ -19261,42 +19216,50 @@ var logger = Object(_logging__WEBPACK_IMPORTED_MODULE_4__["createLogger"])();
 var routedComponents = {
   airalarm: _interfaces_AirAlarm__WEBPACK_IMPORTED_MODULE_3__["AirAlarm"]
 };
+var getRoutedComponent = function getRoutedComponent(name) {
+  _newArrowCheck(this, _this);
+
+  return routedComponents[name];
+}.bind(undefined);
 var Layout = function Layout(props) {
   _newArrowCheck(this, _this);
 
   var state = props.state;
   var config = state.config;
-  var Component = routedComponents[config["interface"]];
+  var Component = getRoutedComponent(config["interface"]);
 
   if (!Component) {
     return "Component for '".concat(config["interface"], "' was not found.");
   }
 
   return Object(inferno__WEBPACK_IMPORTED_MODULE_0__["createFragment"])([Object(inferno__WEBPACK_IMPORTED_MODULE_0__["createComponentVNode"])(2, _components__WEBPACK_IMPORTED_MODULE_2__["TitleBar"], {
+    "className": "Layout__titleBar",
     "title": Object(string_tools__WEBPACK_IMPORTED_MODULE_1__["decodeHtmlEntities"])(config.title),
     "status": config.status
   }), Object(inferno__WEBPACK_IMPORTED_MODULE_0__["createComponentVNode"])(2, _components__WEBPACK_IMPORTED_MODULE_2__["Box"], {
-    "m": 1,
-    "mt": 6,
-    children: Object(inferno__WEBPACK_IMPORTED_MODULE_0__["createComponentVNode"])(2, Component, {
-      "state": state
+    "className": "Layout__content",
+    children: Object(inferno__WEBPACK_IMPORTED_MODULE_0__["createComponentVNode"])(2, _components__WEBPACK_IMPORTED_MODULE_2__["Box"], {
+      "m": 2,
+      children: Object(inferno__WEBPACK_IMPORTED_MODULE_0__["createComponentVNode"])(2, Component, {
+        "state": state
+      })
     })
   })], 4);
 }.bind(undefined);
 
 /***/ }),
 
-/***/ "./src/logging.js":
-/*!************************!*\
-  !*** ./src/logging.js ***!
-  \************************/
+/***/ "../tgui/logging.js":
+/*!**************************!*\
+  !*** ../tgui/logging.js ***!
+  \**************************/
 /*! exports provided: createLogger */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createLogger", function() { return createLogger; });
-/* harmony import */ var tgui_dev_server_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tgui-dev-server/client */ "../tgui-dev-server/client.js");
+/* harmony import */ var tgui_dev_server_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tgui-dev-server/client */ "./client.js");
 var _this = undefined;
 
 function _newArrowCheck(innerThis, boundThis) { if (innerThis !== boundThis) { throw new TypeError("Cannot instantiate an arrow function"); } }
@@ -19315,13 +19278,15 @@ var _log = function log(ns) {
   (_console = console).log.apply(_console, args);
 
   if (true) {
-    tgui_dev_server_client__WEBPACK_IMPORTED_MODULE_0__["sendLogEntry"].apply(void 0, [''].concat(args));
+    tgui_dev_server_client__WEBPACK_IMPORTED_MODULE_0__["sendLogEntry"].apply(void 0, [ns].concat(args));
   }
 }.bind(undefined); // TODO: Add namespace support.
 
 
-var createLogger = function createLogger(ns) {
+var createLogger = function createLogger() {
   var _this2 = this;
+
+  var ns = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'client';
 
   _newArrowCheck(this, _this);
 
@@ -19376,10 +19341,10 @@ var createLogger = function createLogger(ns) {
 
 /***/ }),
 
-/***/ "./src/styles/main.scss":
-/*!******************************!*\
-  !*** ./src/styles/main.scss ***!
-  \******************************/
+/***/ "../tgui/styles/main.scss":
+/*!********************************!*\
+  !*** ../tgui/styles/main.scss ***!
+  \********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19389,18 +19354,59 @@ var createLogger = function createLogger(ns) {
 
 /***/ }),
 
+/***/ "./client.js":
+/*!*******************!*\
+  !*** ./client.js ***!
+  \*******************/
+/*! exports provided: sendLogEntry */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sendLogEntry", function() { return sendLogEntry; });
+var _this = undefined;
+
+function _newArrowCheck(innerThis, boundThis) { if (innerThis !== boundThis) { throw new TypeError("Cannot instantiate an arrow function"); } }
+
+var socket;
+var sendLogEntry = function sendLogEntry(ns) {
+  _newArrowCheck(this, _this);
+
+  if (true) {
+    try {
+      if (!socket) {
+        socket = new WebSocket('ws://localhost:3001');
+      }
+
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
+
+      socket.send(JSON.stringify({
+        type: 'log',
+        payload: {
+          ns: ns,
+          args: args
+        }
+      }));
+    } catch (err) {}
+  }
+}.bind(undefined);
+
+/***/ }),
+
 /***/ 0:
-/*!***************************************************************************************************!*\
-  !*** multi core-js/stable regenerator-runtime/runtime dom4 ./src/styles/main.scss ./src/index.js ***!
-  \***************************************************************************************************/
+/*!*******************************************************************************************************!*\
+  !*** multi core-js/stable regenerator-runtime/runtime dom4 ../tgui/styles/main.scss ../tgui/index.js ***!
+  \*******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! core-js/stable */"../../node_modules/core-js/stable/index.js");
 __webpack_require__(/*! regenerator-runtime/runtime */"../../node_modules/regenerator-runtime/runtime.js");
 __webpack_require__(/*! dom4 */"../../node_modules/dom4/build/dom4.max.js");
-__webpack_require__(/*! ./src/styles/main.scss */"./src/styles/main.scss");
-module.exports = __webpack_require__(/*! ./src/index.js */"./src/index.js");
+__webpack_require__(/*! C:\MSys64\home\style\tgstation\tgui-next\packages\tgui\styles\main.scss */"../tgui/styles/main.scss");
+module.exports = __webpack_require__(/*! C:\MSys64\home\style\tgstation\tgui-next\packages\tgui\index.js */"../tgui/index.js");
 
 
 /***/ })

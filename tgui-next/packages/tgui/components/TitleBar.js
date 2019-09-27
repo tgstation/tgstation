@@ -20,7 +20,7 @@ export const TitleBar = props => {
     <div className="TitleBar" onMousedown={onDrag}>
       <Icon
         className={classes([
-          'TitleBar__status-icon',
+          'TitleBar__statusIcon',
           statusToClassName(status),
         ])}
         name="eye"

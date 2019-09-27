@@ -2,7 +2,7 @@ import { act } from 'byond';
 import { Button } from '../components';
 import { createLogger } from '../logging';
 
-const logger = createLogger();
+const logger = createLogger('AirAlarm');
 
 export const AirAlarm = props => {
   const { state } = props;
@@ -89,6 +89,9 @@ const Section = props => {
 
 const Scrubbers = props => {
   const { state, scrubbers } = props;
+  if (!scrubbers) {
+    return 'Nothing to show';
+  }
   return scrubbers.map(scrubber => (
     <Scrubber key={scrubber.id_tag}
       state={state}

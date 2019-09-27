@@ -1,8 +1,8 @@
 import { act } from 'byond';
 import { loadCSS } from 'fg-loadcss';
 import { render } from 'inferno';
-import { createLogger } from './logging';
 import { Layout } from './layout';
+import { createLogger } from './logging';
 
 const logger = createLogger();
 
@@ -10,9 +10,6 @@ const reactRoot = document.getElementById('react-root');
 
 const renderLayout = state => {
   logger.log('Rendering with state', state);
-  if (state.data && state.data.scrubbers) {
-    state.data.scrubbers.forEach(scrubber => logger.log('scrubber', scrubber));
-  }
   try {
     const element = <Layout state={state} />;
     render(element, reactRoot);

@@ -11,12 +11,12 @@ module.exports = (env = {}, argv) => {
         'core-js/stable',
         'regenerator-runtime/runtime',
         'dom4',
-        './src/styles/main.scss',
-        './src/index.js',
+        path.resolve(__dirname, './styles/main.scss'),
+        path.resolve(__dirname, './index.js'),
       ],
     },
     output: {
-      path: path.resolve(__dirname, 'public/bundles'),
+      path: path.resolve(__dirname, './public/bundles'),
       publicPath: '/bundles/',
       filename: '[name].bundle.js',
       chunkFilename: '[name].chunk.js',
@@ -177,34 +177,34 @@ module.exports = (env = {}, argv) => {
       new BuildNotifierPlugin(),
     ];
     config.devtool = 'cheap-module-source-map';
-    // config.devServer = {
-    //   // Mandatory settings
-    //   port: 3000,
-    //   publicPath: '/bundles/',
-    //   contentBase: 'public',
-    //   historyApiFallback: {
-    //     index: '/index.html',
-    //   },
-    //   // Hot module replacement
-    //   hot: true,
-    //   // Informational flags
-    //   progress: false,
-    //   quiet: false,
-    //   noInfo: false,
-    //   // Fine-grained logging control
-    //   stats: {
-    //     assets: false,
-    //     builtAt: false,
-    //     cached: false,
-    //     children: false,
-    //     chunks: false,
-    //     colors: true,
-    //     hash: false,
-    //     timings: false,
-    //     version: false,
-    //     modules: false,
-    //   },
-    // };
+    config.devServer = {
+      // Mandatory settings
+      port: 3000,
+      publicPath: '/bundles/',
+      contentBase: 'public',
+      historyApiFallback: {
+        index: '/index.html',
+      },
+      // Hot module replacement
+      hot: true,
+      // Informational flags
+      progress: false,
+      quiet: false,
+      noInfo: false,
+      // Fine-grained logging control
+      stats: {
+        assets: false,
+        builtAt: false,
+        cached: false,
+        children: false,
+        chunks: false,
+        colors: true,
+        hash: false,
+        timings: false,
+        version: false,
+        modules: false,
+      },
+    };
   }
 
   return config;
