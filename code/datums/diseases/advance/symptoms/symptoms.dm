@@ -42,8 +42,7 @@
 /datum/symptom/proc/Start(datum/disease/advance/A)
 	if(neutered)
 		return FALSE
-	if(A)
-		on_stage_change(A.stage, A) //in case a sentient disease adds a symptom to themselves while already at stage 4-5 in a host
+	on_stage_change(A) //in case a sentient disease adds a symptom to themselves while already at stage 4-5 in a host
 	next_activation = world.time + rand(symptom_delay_min * 10, symptom_delay_max * 10) //so it doesn't instantly activate on infection
 	return TRUE
 
@@ -62,7 +61,7 @@
 		next_activation = world.time + rand(symptom_delay_min * 10, symptom_delay_max * 10)
 		return TRUE
 
-/datum/symptom/proc/on_stage_change(new_stage, datum/disease/advance/A)
+/datum/symptom/proc/on_stage_change(datum/disease/advance/A)
 	if(neutered)
 		return FALSE
 	return TRUE
