@@ -29,7 +29,7 @@
 	name = "meteorslug"
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "dust"
-	damage = 20
+	damage = 30
 	knockdown = 80
 	hitsound = 'sound/effects/meteorimpact.ogg'
 
