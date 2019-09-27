@@ -15,8 +15,5 @@
 			E.mode = !E.mode
 			E.set_projectile()
 		if(WIRE_TOGGLE)
-			if(E.active == TRUE)
-				E.active = FALSE
-			else
-				E.interact(usr)
+			E.interact(usr)
 	..()
