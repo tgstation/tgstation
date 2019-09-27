@@ -42,6 +42,6 @@
 	switch(A.stage)
 		if(1, 2, 3)
 			if(prob(base_message_chance))
-				to_chat(M, "<span class='warning'>[pick("The hair on your arm stands on end.", "Your skin hums with power for a moment.")]</span>")
+				to_chat(M, "<span class='warning'>[pick("Your hairs stand on end.", "Your skin hums with power for a moment.")]</span>")
 		else
 			empulse(M, light_radius, heavy_radius)
