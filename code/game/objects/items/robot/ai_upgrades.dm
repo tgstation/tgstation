@@ -22,6 +22,7 @@
 		to_chat(AI, "<span class='userdanger'>[user] has upgraded you with combat software!</span>")
 		to_chat(AI, "<span class='userdanger'>Your current laws and objectives remain unchanged.</span>") //this unlocks malf powers, but does not give the license to plasma flood
 		AI.add_malf_picker()
+		AI.hack_software = TRUE
 		log_game("[key_name(user)] has upgraded [key_name(AI)] with a [src].")
 		message_admins("[ADMIN_LOOKUPFLW(user)] has upgraded [ADMIN_LOOKUPFLW(AI)] with a [src].")
 	to_chat(user, "<span class='notice'>You upgrade [AI]. [src] is consumed in the process.</span>")
