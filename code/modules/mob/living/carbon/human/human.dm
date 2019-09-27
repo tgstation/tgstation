@@ -949,10 +949,21 @@
 	return (ishuman(target) && !(target.mobility_flags & MOBILITY_STAND))
 
 /mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/target)
+	var/carryspeed = 0 //if you have latex you are faster at grabbing
+	if(HAS_TRAIT(src, TRAIT_QUICKER_CARRY))
+		carryspeed = 35
+	else if(HAS_TRAIT(src, TRAIT_QUICK_CARRY))
+		carryspeed = 40
+	else 
+		carryspeed = 50
 	if(can_be_firemanned(target))
-		visible_message("<span class='notice'>[src] starts lifting [target] onto their back...</span>",
+		if(carryspeed < 45)
+			visible_message("<span class='notice'>[src] starts expertly lifting [target] onto their back.</span>",
+			"<span class='notice'>Using your gloves' nanochips, you quickly start to lift [target] onto your back.</span>")
+		else 
+			visible_message("<span class='notice'>[src] starts lifting [target] onto their back...</span>",
 			"<span class='notice'>You start lifting [target] onto your back...</span>")
-		if(do_after(src, 25, TRUE, target))
+		if(do_after(src, carryspeed, TRUE, target))
 			//Second check to make sure they're still valid to be carried
 			if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
 				buckle_mob(target, TRUE, TRUE, 90, 1, 0)
