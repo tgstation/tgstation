@@ -146,7 +146,7 @@
 			user.Dizzy(30)
 			return
 		if(SS.purified && iscultist(user))
-			hot_potato(user)
+			SS.hot_potato(user)
 			return
 		SS.transfer_soul("CONSTRUCT",src,user)
 		SS.was_used()
