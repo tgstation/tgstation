@@ -1,6 +1,10 @@
 {
- "private": true,
- "workspaces": [
-  "packages/*"
- ]
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "watch": "cd packages/tgui-dev-server && node --experimental-modules server.js",
+    "build": "cd packages/tgui && webpack --mode=production"
+  }
 }

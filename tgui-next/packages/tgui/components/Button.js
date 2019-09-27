@@ -30,7 +30,7 @@ export const Button = props => {
       title={title}
       clickable={disabled}
       onClick={e => {
-        if (disabled) {
+        if (disabled || !onClick) {
           return;
         }
         onClick(e);

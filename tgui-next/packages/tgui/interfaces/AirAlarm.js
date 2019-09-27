@@ -1,10 +1,10 @@
 import { act } from 'byond';
-import { Button, NoticeBox, Section, Box, LabeledList } from '../components';
-import { createLogger } from '../logging';
 import { Fragment } from 'inferno';
-import { Flex } from '../components/Flex';
-import { fixed } from '../math';
 import { decodeHtmlEntities } from 'string-tools';
+import { Box, Button, LabeledList, NoticeBox, Section } from '../components';
+import { Flex } from '../components/Flex';
+import { createLogger } from '../logging';
+import { fixed } from '../math';
 
 const logger = createLogger('AirAlarm');
 
@@ -220,7 +220,109 @@ const AirAlarmControlHome = props => {
 //  Vents
 // --------------------------------------------------------
 
-const AirAlarmControlVents = props => 'TODO';
+const AirAlarmControlVents = props => {
+  const { state } = props;
+  const { vents } = state.data;
+  if (!vents || vents.length === 0) {
+    return 'Nothing to show';
+  }
+  return vents.map(vent => (
+    <Vent key={vent.id_tag}
+      state={state}
+      {...vent} />
+  ));
+};
+
+const Vent = props => {
+  const {
+    state,
+    id_tag,
+    long_name,
+    power,
+    checks,
+    excheck,
+    incheck,
+    direction,
+    external,
+    internal,
+    extdefault,
+    intdefault,
+  } = props;
+  const { ref } = state.config;
+  return (
+    <Section
+      level={2}
+      title={decodeHtmlEntities(long_name)}
+      buttons={(
+        <Button
+          icon={power ? 'power-off' : 'close'}
+          selected={power}
+          content={power ? 'On' : 'Off'}
+          onClick={() => act(ref, 'power', {
+            id_tag,
+            val: Number(!power),
+          })} />
+      )}>
+      <LabeledList>
+        <LabeledList.Item label="Mode">
+          {direction === 'release' ? 'Pressurizing' : 'Releasing'}
+        </LabeledList.Item>
+        <LabeledList.Item label="Pressure Regulator">
+          <Button
+            icon="sign-in"
+            content="Internal"
+            selected={incheck}
+            onClick={() => act(ref, 'incheck', {
+              id_tag,
+              val: checks,
+            })} />
+          <Button
+            icon="sign-out"
+            content="External"
+            selected={excheck}
+            onClick={() => act(ref, 'excheck', {
+              id_tag,
+              val: checks,
+            })} />
+        </LabeledList.Item>
+        {!!incheck && (
+          <LabeledList.Item label="Internal Target">
+            <Button
+              icon="pencil"
+              content={fixed(internal)}
+              onClick={() => act(ref, 'set_internal_pressure', {
+                id_tag,
+              })} />
+            <Button
+              icon="refresh"
+              disabled={intdefault}
+              content="Reset"
+              onClick={() => act(ref, 'reset_internal_pressure', {
+                id_tag,
+              })} />
+          </LabeledList.Item>
+        )}
+        {!!excheck && (
+          <LabeledList.Item label="External Target">
+            <Button
+              icon="pencil"
+              content={fixed(external)}
+              onClick={() => act(ref, 'set_external_pressure', {
+                id_tag,
+              })} />
+            <Button
+              icon="refresh"
+              disabled={extdefault}
+              content="Reset"
+              onClick={() => act(ref, 'reset_external_pressure', {
+                id_tag,
+              })} />
+          </LabeledList.Item>
+        )}
+      </LabeledList>
+    </Section>
+  );
+};
 
 
 //  Scrubbers
@@ -229,20 +331,14 @@ const AirAlarmControlVents = props => 'TODO';
 const AirAlarmControlScrubbers = props => {
   const { state } = props;
   const { scrubbers } = state.data;
-  if (!scrubbers) {
+  if (!scrubbers || scrubbers.length === 0) {
     return 'Nothing to show';
   }
-  const empty = !scrubbers || scrubbers.length === 0;
-  return (
-    <Fragment>
-      {empty && 'Nothing to show'}
-      {empty || scrubbers.map(scrubber => (
-        <Scrubber key={scrubber.id_tag}
-          state={state}
-          {...scrubber} />
-      ))}
-    </Fragment>
-  );
+  return scrubbers.map(scrubber => (
+    <Scrubber key={scrubber.id_tag}
+      state={state}
+      {...scrubber} />
+  ));
 };
 
 const GAS_NOTATION_MAPPING = {
@@ -253,7 +349,7 @@ const GAS_NOTATION_MAPPING = {
   n2o: 'N₂O',
   no2: 'NO₂',
   bz: 'BZ',
-}
+};
 
 const Scrubber = props => {
   const {
@@ -317,17 +413,70 @@ const Scrubber = props => {
         </LabeledList.Item>
       </LabeledList>
     </Section>
-  )
-}
+  );
+};
 
 
 //  Modes
 // --------------------------------------------------------
 
-const AirAlarmControlModes = props => 'TODO';
+const AirAlarmControlModes = props => {
+  const { state } = props;
+  const { ref } = state.config;
+  const { modes } = state.data;
+  if (!modes || modes.length === 0) {
+    return 'Nothing to show';
+  }
+  return modes.map(mode => (
+    <Fragment>
+      <Button
+        icon={mode.selected ? 'check-square-o' : 'square-o'}
+        selected={mode.selected}
+        color={mode.selected && mode.danger && 'danger'}
+        content={mode.name}
+        onClick={() => act(ref, 'mode', { mode: mode.mode })} />
+      <Box mt={1} />
+    </Fragment>
+  ));
+};
 
 
 //  Thresholds
 // --------------------------------------------------------
 
-const AirAlarmControlThresholds = props => 'TODO';
+const AirAlarmControlThresholds = props => {
+  const { state } = props;
+  const { ref } = state.config;
+  const { thresholds } = state.data;
+  return (
+    <table className="LabeledList"
+      style={{ width: '100%' }}>
+      <thead>
+        <tr>
+          <td />
+          <td className="color-bad">min2</td>
+          <td className="color-average">min1</td>
+          <td className="color-average">max1</td>
+          <td className="color-bad">max2</td>
+        </tr>
+      </thead>
+      <tbody>
+        {thresholds.map(threshold => (
+          <tr>
+            <td className="LabeledList__label">{threshold.name}</td>
+            {threshold.settings.map(setting => (
+              <td>
+                <Button
+                  content={fixed(setting.selected, 2)}
+                  onClick={() => act(ref, 'threshold', {
+                    env: setting.env,
+                    var: setting.val,
+                  })} />
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+};

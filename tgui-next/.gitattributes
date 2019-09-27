@@ -1,5 +1,10 @@
 * text=auto
+
+## Enforce text mode and LF line breaks
 *.js text eol=lf
 *.css text eol=lf
 *.html text eol=lf
 *.json text eol=lf
+
+## Treat bundles as binary
+*.bundle.* binary
