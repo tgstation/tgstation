@@ -13,8 +13,8 @@
 	var/light_radius = 0
 	var/heavy_radius = -1
 	threshold_desc = "<b>Resistance 8:</b> The center of the EMP will sometimes have an even stronger effect on affected electronics.<br>\
-					  <b>Transmission 6:</b> The EMP will affect electronics in tiles within 2 tiles of the host's tile as well.<br>\
-					  <b>Transmission 12:</b> The EMP will affect electronics in tiles within 4 tiles of the host's tile as well.<br>\
+					  <b>Transmission 6:</b> The EMP will affect electronics in tiles within 1 tile of the host's tile as well.<br>\
+					  <b>Transmission 12:</b> The EMP will affect electronics in tiles within 2 tiles of the host's tile as well.<br>\
 					  <b>Stage Speed 6:</b> The virus emits EMPs twice as often."
 
 /datum/symptom/emp/Start(datum/disease/advance/A)
@@ -23,13 +23,11 @@
 	if(A.properties["resistance"] >= 8)
 		heavy_radius = 0 //50% chance of delivering a heavy EMP effect to the host's tile instead of a light one
 	if(A.properties["transmittable"] >= 6)
+		light_radius = 1
+	if(A.properties["transmittable"] >= 12)
 		light_radius = 2
 		if(A.properties["resistance"] >= 8)
 			heavy_radius = 1 //increases the radius of the heavy EMP effect as well, but only if the threshold to get the heavy EMP effect has been met
-	if(A.properties["transmittable"] >= 12)
-		light_radius = 4
-	if(A.properties["resistance"] >= 8)
-		heavy_radius = 2 //increases the radius of the heavy EMP effect as well, but only if the threshold to get the heavy EMP effect has been met
 	if(A.properties["stage_rate"] >= 6)
 		symptom_delay_min = 15 //30 seconds
 		symptom_delay_max = 45 //90 seconds
