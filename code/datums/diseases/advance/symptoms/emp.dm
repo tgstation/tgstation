@@ -21,13 +21,13 @@
 	if(!..())
 		return
 	if(A.properties["resistance"] >= 8)
-		heavy_radius = 0 //50% chance of delivering a heavy EMP effect to the host's tile instead of a light one
+		heavy_radius = 0 //50% chance of delivering a heavy EMP effect instead of a light one to the host's tile
 	if(A.properties["transmittable"] >= 6)
 		light_radius = 1
 	if(A.properties["transmittable"] >= 12)
 		light_radius = 2
-		if(A.properties["resistance"] >= 8)
-			heavy_radius = 1 //increases the radius of the heavy EMP effect as well, but only if the threshold to get the heavy EMP effect has been met
+		if(A.properties["resistance"] >= 8) //increases the radius of the heavy EMP effect as well, but only if the threshold to get the heavy EMP effect has been met
+			heavy_radius = 1 //100% chance of delivering a heavy EMP effect instead of a light one to the host's tile and a 50% chance (calculated separately for each tile) of delivering a heavy EMP effect instead of a light one to the tiles adjacent to the host's tile, because the empulse proc is coded weirdly
 	if(A.properties["stage_rate"] >= 6)
 		symptom_delay_min = 15 //30 seconds
 		symptom_delay_max = 45 //90 seconds
