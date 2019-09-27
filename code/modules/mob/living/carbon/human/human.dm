@@ -957,9 +957,12 @@
 	else 
 		carryspeed = 50
 	if(can_be_firemanned(target))
-		if(carryspeed < 45)
+		if(carryspeed == 35)
 			visible_message("<span class='notice'>[src] starts expertly lifting [target] onto their back.</span>",
 			"<span class='notice'>Using your gloves' nanochips, you quickly start to lift [target] onto your back.</span>")
+		else if(carryspeed == 40)
+			visible_message("<span class='notice'>[src] starts quickly lifting [target] onto their back..</span>",
+			"<span class='notice'>You start to lift [target] onto your back, while assisted by the nanochips in your gloves..</span>")
 		else 
 			visible_message("<span class='notice'>[src] starts lifting [target] onto their back...</span>",
 			"<span class='notice'>You start lifting [target] onto your back...</span>")
