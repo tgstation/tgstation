@@ -1934,9 +1934,7 @@
 	pixel_x = 32
 	},
 /obj/structure/cable,
-/obj/machinery/computer/shuttle/mining{
-	dir = 2
-	},
+/obj/machinery/computer/shuttle/mining,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "gk" = (
@@ -2115,6 +2113,14 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/science)
+"hk" = (
+/obj/machinery/power/apc{
+	dir = 8;
+	pixel_x = -25
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/construction)
 "hD" = (
 /obj/structure/closet/secure_closet/chemical/heisenberg{
 	locked = 0
@@ -2130,11 +2136,21 @@
 	},
 /turf/open/floor/plasteel,
 /area/construction)
+"ik" = (
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/obj/structure/cable/layer3,
+/turf/open/floor/plating,
+/area/construction)
 "jb" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/science)
+"jd" = (
+/obj/structure/cable/layer1,
+/turf/open/floor/plating,
+/area/construction)
 "jE" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -2157,6 +2173,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"ku" = (
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/obj/structure/cable/layer3,
+/turf/open/floor/plating,
+/area/construction)
 "kQ" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -2184,6 +2206,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"mW" = (
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/obj/structure/cable/layer3,
+/turf/open/floor/plating,
+/area/construction)
 "nq" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -2195,6 +2223,12 @@
 /obj/item/storage/toolbox/syndicate,
 /turf/open/floor/plasteel,
 /area/storage/primary)
+"nP" = (
+/obj/machinery/power/smes{
+	charge = 5e+006
+	},
+/turf/open/floor/plating,
+/area/construction)
 "od" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -2223,6 +2257,13 @@
 /obj/machinery/door/airlock/external/glass,
 /turf/open/floor/plating,
 /area/medical/medbay)
+"pQ" = (
+/obj/structure/cable/layer3,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/construction)
 "qb" = (
 /obj/machinery/door/airlock,
 /turf/open/floor/plating,
@@ -2241,6 +2282,12 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"sw" = (
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/obj/structure/cable/layer3,
+/turf/open/floor/plating,
+/area/construction)
 "sE" = (
 /obj/machinery/power/rtg/advanced,
 /obj/structure/cable,
@@ -2338,6 +2385,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"xz" = (
+/obj/structure/cable/layer3,
+/turf/open/floor/plating,
+/area/construction)
 "yK" = (
 /obj/structure/fans/tiny/invisible,
 /obj/effect/turf_decal/stripes/line{
@@ -2350,12 +2401,28 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"zr" = (
+/obj/machinery/power/apc{
+	dir = 8;
+	pixel_x = -25
+	},
+/obj/structure/cable/layer3,
+/turf/open/floor/plating,
+/area/construction)
 "AP" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/science)
+"Bc" = (
+/obj/machinery/power/apc{
+	dir = 8;
+	pixel_x = -25
+	},
+/obj/structure/cable/layer1,
+/turf/open/floor/plating,
+/area/construction)
 "BB" = (
 /obj/machinery/computer/cloning{
 	dir = 1
@@ -2375,6 +2442,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/bridge)
+"BE" = (
+/obj/structure/cable/layer3,
+/turf/open/floor/plating,
+/area/construction)
 "BG" = (
 /obj/structure/table,
 /obj/item/ammo_box/c10mm,
@@ -2384,6 +2455,13 @@
 "Ce" = (
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
+"Cm" = (
+/obj/structure/cable/layer1,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/construction)
 "Ct" = (
 /obj/structure/closet/syndicate/resources/everything,
 /turf/open/floor/plasteel,
@@ -2438,6 +2516,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
+"FY" = (
+/obj/structure/cable/layer1,
+/turf/open/floor/plating,
+/area/construction)
+"Hz" = (
+/obj/structure/cable/layer3,
+/turf/open/floor/plating,
+/area/construction)
 "If" = (
 /obj/machinery/rnd/production/techfab/department,
 /turf/open/floor/plasteel,
@@ -2458,6 +2544,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
+"JA" = (
+/obj/structure/cable/layer3,
+/turf/open/floor/plating,
+/area/construction)
 "JF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -2471,8 +2561,8 @@
 	height = 5;
 	id = "mining_home";
 	name = "mining shuttle bay";
-	width = 7;
-	roundstart_template = /datum/map_template/shuttle/mining/box
+	roundstart_template = /datum/map_template/shuttle/mining/box;
+	width = 7
 	},
 /turf/open/floor/engine,
 /area/quartermaster/miningoffice)
@@ -2495,12 +2585,30 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"Mq" = (
+/obj/machinery/power/smes{
+	charge = 5e+006
+	},
+/turf/open/floor/plating,
+/area/construction)
+"Mw" = (
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/obj/structure/cable/layer3,
+/turf/open/floor/plating,
+/area/construction)
 "ME" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
+"ML" = (
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/obj/structure/cable/layer3,
+/turf/open/floor/plating,
+/area/construction)
 "MY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
@@ -2515,6 +2623,10 @@
 /obj/machinery/rnd/production/protolathe/department,
 /turf/open/floor/plasteel,
 /area/science)
+"OO" = (
+/obj/structure/cable/layer1,
+/turf/open/floor/plating,
+/area/construction)
 "OU" = (
 /obj/item/disk/tech_disk/debug,
 /turf/open/floor/plasteel,
@@ -2530,6 +2642,12 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"Rd" = (
+/obj/machinery/power/smes{
+	charge = 5e+006
+	},
+/turf/open/floor/plating,
+/area/construction)
 "Re" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -2624,6 +2742,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/engineering)
+"Xc" = (
+/obj/structure/cable/layer1,
+/turf/open/floor/plating,
+/area/construction)
 "Xg" = (
 /obj/machinery/light{
 	dir = 4
@@ -2667,6 +2789,13 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/science)
+"Zi" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/construction)
 "ZD" = (
 /obj/machinery/suit_storage_unit/ce,
 /turf/open/floor/plasteel,
@@ -6201,11 +6330,11 @@ TV
 EA
 dn
 dn
+zr
 dn
+hk
 dn
-dn
-dn
-dn
+Bc
 dn
 dn
 dn
@@ -6293,11 +6422,11 @@ ef
 cY
 dn
 dn
-dn
-dn
-dn
-dn
-dn
+xz
+xz
+Mw
+jd
+jd
 dn
 dn
 dn
@@ -6389,7 +6518,7 @@ dn
 dn
 dn
 dn
-dn
+Mw
 dn
 dn
 dn
@@ -6481,7 +6610,7 @@ dn
 dn
 dn
 dn
-dn
+Mw
 dn
 dn
 dn
@@ -6573,7 +6702,7 @@ dn
 dn
 dn
 dn
-dn
+Mw
 dn
 dn
 dn
@@ -6665,7 +6794,7 @@ dn
 dn
 dn
 dn
-dn
+Mw
 dn
 dn
 dn
@@ -6753,11 +6882,11 @@ cN
 cY
 dn
 dn
-dn
-dn
-dn
-dn
-dn
+xz
+xz
+Mw
+jd
+jd
 dn
 dn
 dn
@@ -6845,11 +6974,11 @@ ef
 cY
 dn
 dn
+pQ
 dn
+Zi
 dn
-dn
-dn
-dn
+Cm
 dn
 dn
 dn
@@ -6937,11 +7066,11 @@ ef
 cY
 dn
 dn
+Rd
 dn
+Rd
 dn
-dn
-dn
-dn
+Rd
 dn
 dn
 dn
