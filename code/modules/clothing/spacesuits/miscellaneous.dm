@@ -260,7 +260,7 @@ Contains:
 	icon_state = "space"
 	item_state = "space"
 	desc = "A lightweight space helmet with the basic ability to protect the wearer from the vacuum of space during emergencies."
-	flash_protect = 0
+	flash_protect = FLASH_PROTECTION_NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 20, "fire" = 50, "acid" = 65)
 
 /obj/item/clothing/head/helmet/space/freedom

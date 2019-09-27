@@ -226,7 +226,7 @@
 		qdel(fried)
 	else
 		fried.forceMove(src)
-	
+
 /obj/item/reagent_containers/food/snacks/deepfryholder/Destroy()
 	if(contents)
 		QDEL_LIST(contents)
@@ -279,6 +279,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("butter", "exotic butter")
+	foodtype = GRAIN | DAIRY
 
 /obj/item/reagent_containers/food/snacks/butterdog/ComponentInitialize()
 	. = ..()
