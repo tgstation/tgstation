@@ -15,4 +15,6 @@ if [[ ${1} == "--dev" ]]; then
   exec node --experimental-modules server.js
 fi
 
+cd "${base_dir}/packages/tgui"
+rm -rf public/bundles
 exec webpack "${@}"

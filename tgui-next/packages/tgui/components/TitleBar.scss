@@ -2,18 +2,19 @@
   background-color: $titlebar-color-background;
   border-bottom: 1px solid $titlebar-color-coreshadow;
   box-shadow: 0 3px 3px $titlebar-color-shadow;
+  user-select: none;
+  -ms-user-select: none;
 }
 
 .TitleBar__clickable {
-  display: inline-block;
-  position: relative;
-  // To make a bigger clickable area.
-  padding: 7px;
-  margin: -7px;
-  color: $titlebar-color-button;
+  color: rgba(255, 255, 255, 0.5);
+  background-color: darken($gray, 20%);
+  transition: color, background-color 250ms;
 
   &:hover {
-    color: lighten($titlebar-color-button, $button-lighten-hover);
+    color: rgba(255, 255, 255, 1.0);
+    background-color: #c00;
+    transition: color, background-color 0ms;
   }
 }
 
@@ -24,6 +25,14 @@
   color: $titlebar-color-text;
   font-size: 16px;
   white-space: nowrap;
+}
+
+.TitleBar__dragZone {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 32px;
 }
 
 .TitleBar__statusIcon {
@@ -41,26 +50,14 @@
 
 .TitleBar__close {
   position: absolute;
-  top: 4px;
-  right: 12px;
-}
+  top: 0;
+  right: 0;
+  width: 42px;
+  font-size: 20px;
+  line-height: 31px;
+  text-align: center;
 
-.TitleBar--noIcons {
-  .TitleBar__statusIcon {
-    &::after {
-      content: 'O';
-    }
-  }
-
-  .TitleBar__minimize {
-    &::after {
-      content: '—';
-    }
-  }
-
-  .TitleBar__close {
-    &::after {
-      content: 'X';
-    }
+  &::after {
+    content: '×';
   }
 }

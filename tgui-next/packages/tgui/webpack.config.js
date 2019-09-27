@@ -62,7 +62,12 @@ module.exports = (env = {}, argv) => {
                 hot: true,
               },
             },
-            'css-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                // url: false,
+              },
+            },
             'sass-loader',
           ],
         },
@@ -75,7 +80,12 @@ module.exports = (env = {}, argv) => {
                 hot: true,
               },
             },
-            'css-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                // url: false,
+              },
+            },
           ],
         },
         {
@@ -139,16 +149,19 @@ module.exports = (env = {}, argv) => {
     const TerserPlugin = require('terser-webpack-plugin');
     const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
     config.mode = 'production';
-    config.devtool = 'cheap-module-source-map';
+    config.devtool = false;
     config.performance = {
       hints: false,
     };
     config.optimization.minimizer = [
       new TerserPlugin({
+        extractComments: false,
         terserOptions: {
           ie8: true,
           output: {
             ascii_only: true,
+            beautify: true,
+            indent_level: 2,
           },
         },
       }),
@@ -176,7 +189,8 @@ module.exports = (env = {}, argv) => {
       ...config.plugins,
       new BuildNotifierPlugin(),
     ];
-    config.devtool = 'cheap-module-source-map';
+    // config.devtool = 'cheap-module-source-map';
+    config.devtool = false;
     config.devServer = {
       // Mandatory settings
       port: 3000,

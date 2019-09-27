@@ -1,0 +1,20 @@
+.LabeledList__row {
+  display: table-row;
+}
+
+.LabeledList__label,
+.LabeledList__content {
+  display: table-cell;
+  margin: 0;
+  padding-bottom: 6px;
+  text-align: left;
+  vertical-align: baseline;
+}
+
+.LabeledList__label {
+  width: 1%;
+  padding-right: 12px;
+  min-width: 60px;
+  white-space: nowrap;
+  color: $section-color-label;
+}

@@ -15,9 +15,9 @@ const statusToClassName = status => {
 };
 
 export const TitleBar = props => {
-  const { title, status, onDrag } = props;
+  const { className, title, status, fancy, onDragStart, onClose } = props;
   return (
-    <div className="TitleBar" onMousedown={onDrag}>
+    <div className={classes('TitleBar', className)}>
       <Icon
         className={classes([
           'TitleBar__statusIcon',
@@ -25,9 +25,15 @@ export const TitleBar = props => {
         ])}
         name="eye"
         size={2} />
-      <span className="TitleBar__title">
+      <div className="TitleBar__title">
         {title}
-      </span>
+      </div>
+      <div className="TitleBar__dragZone"
+        onMousedown={e => fancy && onDragStart(e)} />
+      {fancy && (
+        <div className="TitleBar__close TitleBar__clickable"
+          onClick={onClose} />
+      )}
     </div>
   );
 };

@@ -7,7 +7,6 @@ const log = (ns, ...args) => {
   }
 };
 
-// TODO: Add namespace support.
 export const createLogger = (ns = 'client') => {
   return {
     log: (...args) => log(ns, ...args),

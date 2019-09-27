@@ -9,6 +9,7 @@ export const Button = props => {
     disabled,
     selected,
     tooltip,
+    title,
     content,
     children,
     onClick,
@@ -26,6 +27,7 @@ export const Button = props => {
       ])}
       tabindex={!disabled && '0'}
       data-tooltip={tooltip}
+      title={title}
       clickable={disabled}
       onClick={e => {
         if (disabled) {

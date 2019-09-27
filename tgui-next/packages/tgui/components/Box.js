@@ -31,7 +31,7 @@ export const computeBoxProps = props => {
   return {
     ...rest,
     style: {
-      display: inline ? 'inline-block' : 'block',
+      display: inline ? 'inline-block' : undefined,
       ...rest.style,
       'margin-top':    unit(firstDefined(mt, my, m)),
       'margin-bottom': unit(firstDefined(mb, my, m)),
@@ -44,4 +44,12 @@ export const computeBoxProps = props => {
   };
 };
 
-export const Box = props => <div {...computeBoxProps(props)} />;
+export const Box = props => {
+  const { content, children, ...rest } = props;
+  return (
+    <div {...computeBoxProps(rest)}>
+      {content}
+      {children}
+    </div>
+  );
+};
