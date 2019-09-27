@@ -21,6 +21,11 @@ var/bicarHeal = 2
 var/keloHeal = 2
 var/toxHeal = 2
 var/tricHeal = 2
+
+var/synthBicarHeal = 1
+var/synthKeloHeal = 1
+var/synthToxHeal = 1
+var/synthTricHeal = 1
 //Trekkie Chems :  Uses discarded recipes with new lock-reagent to keep it T4/5
 //Bicaridine (Brute Heal)
 /datum/reagent/medicine/CF/bicaridine
@@ -38,32 +43,48 @@ var/tricHeal = 2
 		if(method in list(INJECT))
 			if(show_message)
 				to_chat(M, "<span class='notice'>You hear a distant comms chirp as your bruises heal.</span>")
-			l_1 = 1
-			//for(var/datum/reagent/medicine/CF/bicaridine/bicar in M.reagents.reagent_list)
-
+		else
+			M.reagents.remove_reagent(/datum/reagent/medicine/CF/bicaridine, reac_volume)
 	..()
 	. = 1
 
-/datum/reagent/medicine/CF/bicaridine/on_mob_metabolize(mob/living/M)
-	bic1 = 1
-	. = ..()
-
-/datum/reagent/medicine/CF/bicaridine/on_mob_end_metabolize(mob/living/M)
-	bic1 = 0
-	l_1 = 0
-	. = ..()
-
 /datum/reagent/medicine/CF/bicaridine/on_mob_life(mob/living/carbon/M)
-	if(l_1 == 1 && bic1 == 1)
-		M.adjustBruteLoss(-bicarHeal*REMF, 0)
+	M.adjustBruteLoss(-bicarHeal*REMF, 0)
 	. = ..()
 
 /datum/reagent/medicine/CF/bicaridine/overdose_process(mob/living/M)
-	l_1 = 0	
 	M.adjustBruteLoss(bicarHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
+//Synth Bicar
+/datum/reagent/medicine/CF/synth_bicaridine
+	name = "Synthetic Bicaridine"
+	description = "A weaker advanced Brute Healing designed for robotic use. Injection only, Scotty."
+	reagent_state = LIQUID
+	color = "#FF1744"
+	metabolization_rate = 0.4
+	overdose_threshold = 40
 
+/datum/reagent/medicine/CF/synth_bicaridine/reaction_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
+	if(iscarbon(M))
+		if(M.stat == DEAD)
+			show_message = 0
+		if(method in list(INJECT))
+			if(show_message)
+				to_chat(M, "<span class='notice'>You hear a distant comms chirp as your bruises heal.</span>")
+		else
+			M.reagents.remove_reagent(/datum/reagent/medicine/CF/synth_bicaridine, reac_volume)
+	..()
+	. = 1
+
+/datum/reagent/medicine/CF/synth_bicaridine/on_mob_life(mob/living/carbon/M)
+	M.adjustBruteLoss(-synthBicarHeal*REMF, 0)
+	. = ..()
+
+/datum/reagent/medicine/CF/synth_bicaridine/overdose_process(mob/living/M)
+	M.adjustBruteLoss(synthBicarHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
+	..()
+	. = 1
 //Kelotane (Burn Heal)
 /datum/reagent/medicine/CF/kelotane
 	name = "Kelotane"
@@ -80,30 +101,49 @@ var/tricHeal = 2
 		if(method in list(INJECT))
 			if(show_message)
 				to_chat(M, "<span class='notice'>You hear a distant comms chirp as your burns heal.</span>")
-			l_2 = 1
+		else
+			M.reagents.remove_reagent(/datum/reagent/medicine/CF/kelotane, reac_volume)
 	..()
 	. = 1
 
-/datum/reagent/medicine/CF/kelotane/on_mob_metabolize(mob/living/M)
-	kel1 = 1
-	. = ..()
-
-/datum/reagent/medicine/CF/kelotane/on_mob_end_metabolize(mob/living/M)
-	kel1 = 0
-	l_1 = 0
-	. = ..()
-
 /datum/reagent/medicine/CF/kelotane/on_mob_life(mob/living/carbon/M)
-	if(l_2 == 1 && kel1 == 1)
-		M.adjustFireLoss(-keloHeal*REMF, 0)
+	M.adjustFireLoss(-keloHeal*REMF, 0)
 	. = ..()
 
-/datum/reagent/medicine/CF/kelotane/overdose_process(mob/living/M)
-	l_2 = 0	
+/datum/reagent/medicine/CF/kelotane/overdose_process(mob/living/M)	
 	M.adjustFireLoss(keloHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
-		
+//Synth Kelo
+/datum/reagent/medicine/CF/synth_kelotane
+	name = "Synthetic Kelotane"
+	description = "A weaker advanced Burn Healing designed for robotic use. Injection only, Scotty."
+	reagent_state = LIQUID
+	color = "#C7FB34"
+	metabolization_rate = 0.4
+	overdose_threshold = 40
+
+/datum/reagent/medicine/CF/synth_kelotane/reaction_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
+	if(iscarbon(M))
+		if(M.stat == DEAD)
+			show_message = 0
+		if(method in list(INJECT))
+			if(show_message)
+				to_chat(M, "<span class='notice'>You hear a distant comms chirp as your burns heal.</span>")
+		else
+			M.reagents.remove_reagent(/datum/reagent/medicine/CF/synth_kelotane, reac_volume)
+	..()
+	. = 1
+
+/datum/reagent/medicine/CF/synth_kelotane/on_mob_life(mob/living/carbon/M)
+	M.adjustFireLoss(-synthKeloHeal*REMF, 0)
+	. = ..()
+
+/datum/reagent/medicine/CF/synth_kelotane/overdose_process(mob/living/M)	
+	M.adjustFireLoss(synthKeloHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
+	..()
+	. = 1
+
 //Anti-Toxin (Toxin Heal)
 /datum/reagent/medicine/CF/antitoxin
 	name = "Anti-Toxin"
@@ -120,27 +160,46 @@ var/tricHeal = 2
 		if(method in list(INJECT))
 			if(show_message)
 				to_chat(M, "<span class='notice'>You hear a distant comms chirp as your body purges itself of toxins.</span>")
-			l_3 = 1
+		else
+			M.reagents.remove_reagent(/datum/reagent/medicine/CF/antitoxin, reac_volume)
 	..()
 	. = 1
 
-/datum/reagent/medicine/CF/antitoxin/on_mob_metabolize(mob/living/M)
-	tox1 = 1
-	. = ..()
-
-/datum/reagent/medicine/CF/antitoxin/on_mob_end_metabolize(mob/living/M)
-	tox1 = 0
-	l_3 = 0
-	. = ..()
-
 /datum/reagent/medicine/CF/antitoxin/on_mob_life(mob/living/carbon/M)
-	if(l_3 == 1 && tox1 == 1)
-		M.adjustToxLoss(-toxHeal*REMF, 0)
+	M.adjustToxLoss(-toxHeal*REMF, 0)
 	. = ..()
 
-/datum/reagent/medicine/CF/antitoxin/overdose_process(mob/living/M)
-	l_3 = 0	
+/datum/reagent/medicine/CF/antitoxin/overdose_process(mob/living/M)	
 	M.adjustToxLoss(toxHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
+	..()
+	. = 1
+//Synth AntiTox
+/datum/reagent/medicine/CF/synth_antitoxin
+	name = "Synthetic Anti-Toxin"
+	description = "A weaker advanced Toxin Healing designed for robotic use. Injection only, Scotty."
+	reagent_state = LIQUID
+	color = "#33B20C"
+	metabolization_rate = 0.4
+	overdose_threshold = 40
+
+/datum/reagent/medicine/CF/synth_antitoxin/reaction_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
+	if(iscarbon(M))
+		if(M.stat == DEAD)
+			show_message = 0
+		if(method in list(INJECT))
+			if(show_message)
+				to_chat(M, "<span class='notice'>You hear a distant comms chirp as your body purges itself of toxins.</span>")
+		else
+			M.reagents.remove_reagent(/datum/reagent/medicine/CF/synth_antitoxin, reac_volume)
+	..()
+	. = 1
+
+/datum/reagent/medicine/CF/synth_antitoxin/on_mob_life(mob/living/carbon/M)
+	M.adjustToxLoss(-synthToxHeal*REMF, 0)
+	. = ..()
+
+/datum/reagent/medicine/CF/synth_antitoxin/overdose_process(mob/living/M)	
+	M.adjustToxLoss(synthToxHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
 
@@ -160,37 +219,62 @@ var/tricHeal = 2
 		if(method in list(INJECT))
 			if(show_message)
 				to_chat(M, "<span class='notice'>You hear a distant comms chirp as your body heals all wounds.</span>")
-			l_4 = 1
+		else
+			M.reagents.remove_reagent(/datum/reagent/medicine/CF/tricordrazine, reac_volume)
 		
 	..()
 	. = 1
 
-/datum/reagent/medicine/CF/tricordrazine/on_mob_metabolize(mob/living/M)
-	tri1 = 1
+/datum/reagent/medicine/CF/tricordrazine/on_mob_life(mob/living/carbon/M)
+	M.adjustBruteLoss(-tricHeal*REMF, 0)
+	M.adjustFireLoss(-tricHeal*REMF, 0)
+	M.adjustToxLoss(-tricHeal*REMF, 0)
+	M.adjustOxyLoss(-tricHeal*REMF, 0)
 	. = ..()
 
-/datum/reagent/medicine/CF/bicaridine/on_mob_end_metabolize(mob/living/M)
-	tri1 = 0
-	l_4 = 0
-	. = ..()
-
-/datum/reagent/medicine/CF/bicaridine/on_mob_life(mob/living/carbon/M)
-	if(l_4 == 1 && tri1 == 1)
-		M.adjustBruteLoss(-tricHeal*REMF, 0)
-		M.adjustFireLoss(-tricHeal*REMF, 0)
-		M.adjustToxLoss(-tricHeal*REMF, 0)
-		M.adjustOxyLoss(-tricHeal*REMF, 0)
-	. = ..()
-
-/datum/reagent/medicine/CF/tricordrazine/overdose_process(mob/living/M)
-	l_4 = 0	
+/datum/reagent/medicine/CF/tricordrazine/overdose_process(mob/living/M)	
 	M.adjustBruteLoss(tricHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
 	M.adjustFireLoss(tricHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
 	M.adjustToxLoss(tricHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
 	M.adjustOxyLoss(tricHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
+//Synth Trico
+/datum/reagent/medicine/CF/synth_tricordrazine
+	name = "Synthetic Tricordrazine"
+	description = "A weaker yet advanced All-Heal designed for robotic use. Injection only, Scotty."
+	reagent_state = LIQUID
+	color = "#FDDA08"
+	metabolization_rate = 0.4
+	overdose_threshold = 60
 
+/datum/reagent/medicine/CF/synth_tricordrazine/reaction_mob(mob/living/M, method=INJECT, reac_volume, show_message = 1)
+	if(iscarbon(M))
+		if(M.stat == DEAD)
+			show_message = 0
+		if(method in list(INJECT))
+			if(show_message)
+				to_chat(M, "<span class='notice'>You hear a distant comms chirp as your body heals all wounds.</span>")
+		else
+			M.reagents.remove_reagent(/datum/reagent/medicine/CF/synth_tricordrazine, reac_volume)
+		
+	..()
+	. = 1
+
+/datum/reagent/medicine/CF/synth_tricordrazine/on_mob_life(mob/living/carbon/M)
+	M.adjustBruteLoss(-synthTricHeal*REMF, 0)
+	M.adjustFireLoss(-synthTricHeal*REMF, 0)
+	M.adjustToxLoss(-synthTricHeal*REMF, 0)
+	M.adjustOxyLoss(-synthTricHeal*REMF, 0)
+	. = ..()
+
+/datum/reagent/medicine/CF/synth_tricordrazine/overdose_process(mob/living/M)	
+	M.adjustBruteLoss(synthTricHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustFireLoss(synthTricHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustToxLoss(synthTricHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustOxyLoss(synthTricHeal*REMF, FALSE, FALSE, BODYPART_ORGANIC)
+	..()
+	. = 1
 //End Trek Chems
 
 //Charcoal (Toxin Heal / Chem Purge)
@@ -206,23 +290,15 @@ var/tricHeal = 2
 			show_message = 0
 		if(show_message)
 			to_chat(M, "<span class='notice'>You taste chalky powder, it isn't great...</span>")
-		l_5 = 1
+		else
+			M.reagents.remove_reagent(/datum/reagent/medicine/CF/charcoal, reac_volume)
 	..()
 	return TRUE
 
-/datum/reagent/medicine/CF/charcoal/on_mob_metabolize(mob/living/M)
-	chr1 = 1
-	. = ..()
-
-/datum/reagent/medicine/CF/charcoal/on_mob_end_metabolize(mob/living/M)
-	chr1 = 0
-	l_5 = 0
-	. = ..()
-
 /datum/reagent/medicine/CF/charcoal/on_mob_life(mob/living/carbon/M)
-	if(l_5 == 1 && chr1 == 1)
-		M.adjustToxLoss(-2.0*REMF, 0)
-		for(var/datum/reagent/R in M.reagents.reagent_list)
+	M.adjustToxLoss(-2.0*REMF, 0)
+	for(var/datum/reagent/R in M.reagents.reagent_list)
+		if(R != /datum/reagent/medicine/CF/charcoal)
 			M.reagents.remove_reagent(R.type, 0.5)
 	. = ..()
 

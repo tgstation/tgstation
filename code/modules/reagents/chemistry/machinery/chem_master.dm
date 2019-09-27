@@ -304,7 +304,37 @@
 				adjust_item_drop_location(P)
 				reagents.trans_to(P,vol_each, transfered_by = usr)
 			. = TRUE
+		//SalChems medipen patch, allows for medipens to be crafted in the chem_master //FULP
+		if("createMedipen")	//FULP
+			var/medipen_list = list(/datum/reagent/medicine/CF/bicaridine, /datum/reagent/medicine/CF/kelotane, /datum/reagent/medicine/CF/antitoxin, /datum/reagent/medicine/CF/tricordrazine, /datum/reagent/medicine/epinephrine, /datum/reagent/medicine/salbutamol, /datum/reagent/medicine/sal_acid, /datum/reagent/medicine/oxandrolone)
+			if(reagents in medipen_list)
+				var/many = params["many"]	//FULP
+				if(reagents.total_volume < 10)	//FULP
+					return	//FULP
+				var/amount = 1	//FULP
+				var/vol_each = 10	//FULP
+				var/max_amount = 1	//FULP
+				if(text2num(many))	//FULP
+					amount = CLAMP(round(input(usr, "Medipens only accept 10u, with max of 10 to make.", "How many medipens?", amount) as num|null), 0, 10)	//FULP
+					if(!amount)	//FULP
+						return	//FULP
+					for(var/i = 10;i <= reagents.total_volume;i+=10)	//FULP
+						max_amount++	//FULP
+					if(max_amount < amount)	//FULP
+						amount = max_amount	//FULP
 
+				var/name = stripped_input(usr,"Name:","Name your stabby-stick!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)	//FULP
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))	//FULP
+					return	//FULP
+				var/obj/item/reagent_containers/hypospray/medipen/P	//FULP
+
+				for(var/i = 0; i < amount; i++)	//FULP
+					P = new/obj/item/reagent_containers/hypospray/medipen(drop_location())	//FULP
+					P.name = trim("[name] medipen")	//FULP
+					adjust_item_drop_location(P)	//FULP
+					reagents.trans_to(P,vol_each, transfered_by = usr)	//FULP
+			. = TRUE	//FULP
+			
 		if("createBottle")
 			var/many = params["many"]
 			if(reagents.total_volume == 0)
