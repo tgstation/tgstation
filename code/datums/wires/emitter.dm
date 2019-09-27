@@ -18,7 +18,5 @@
 			if(E.active == TRUE)
 				E.active = FALSE
 			else
-				E.active = TRUE
-				E.shot_number = 0
-				E.fire_delay = E.maximum_fire_delay
+				E.interact(usr)
 	..()
