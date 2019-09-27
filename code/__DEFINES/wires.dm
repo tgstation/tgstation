@@ -43,6 +43,7 @@
 #define WIRE_STRENGTH "Strength"
 #define WIRE_THROW "Throw"
 #define WIRE_TIMING "Timing"
+#define WIRE_TOGGLE "Toggle"
 #define WIRE_TX "Transmit"
 #define WIRE_UNBOLT "Unbolt"
 #define WIRE_ZAP "High Voltage Circuit"
