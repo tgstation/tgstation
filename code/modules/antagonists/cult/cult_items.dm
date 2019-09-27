@@ -455,7 +455,7 @@
 	name = "zealot's blindfold"
 	icon_state = "blindfold"
 	item_state = "blindfold"
-	flash_protect = 1
+	flash_protect = FLASH_PROTECTION_FLASH
 
 /obj/item/clothing/glasses/hud/health/night/cultblind/equipped(mob/living/user, slot)
 	..()

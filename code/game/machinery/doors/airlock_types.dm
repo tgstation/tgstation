@@ -599,6 +599,7 @@
 	return TRUE //yes we do have power
 
 /obj/machinery/door/airlock/clockwork/obj_break(damage_flag)
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/machinery/door/airlock/clockwork/deconstruct(disassembled = TRUE)

@@ -7,7 +7,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ac" = (
-/turf/closed/mineral,
+/turf/closed/mineral/random/no_caves,
 /area/ruin/unpowered)
 "ad" = (
 /turf/closed/wall/r_wall,
@@ -4882,7 +4882,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/rnd)
 "lU" = (
-/turf/closed/mineral,
+/turf/closed/mineral/random/no_caves,
 /area/ruin/space/has_grav/ancientstation/betanorth)
 "lV" = (
 /obj/structure/grille/broken,
@@ -4927,7 +4927,7 @@
 /area/ruin/space/has_grav/ancientstation)
 "md" = (
 /obj/structure/girder,
-/turf/closed/mineral,
+/turf/closed/mineral/random/no_caves,
 /area/ruin/space/has_grav/ancientstation/betanorth)
 "me" = (
 /turf/open/floor/plating/airless,
@@ -4938,7 +4938,7 @@
 /area/ruin/space/has_grav/ancientstation/betanorth)
 "mg" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/closed/mineral,
+/turf/closed/mineral/random/no_caves,
 /area/ruin/space/has_grav/ancientstation/betanorth)
 "mh" = (
 /obj/effect/decal/cleanable/dirt,
@@ -5363,7 +5363,7 @@
 /area/ruin/space/has_grav/ancientstation/betanorth)
 "ni" = (
 /obj/structure/lattice,
-/turf/closed/mineral,
+/turf/closed/mineral/random/no_caves,
 /area/ruin/unpowered)
 "nj" = (
 /obj/structure/lattice,
