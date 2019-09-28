@@ -68,7 +68,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isskeleton(A) (is_species(A, /datum/species/skeleton))
 #define ismoth(A) (is_species(A, /datum/species/moth))
 #define ishumanbasic(A) (is_species(A, /datum/species/human))
-#define iscatperson(A) (is_species(A, /datum/species/human/felinid))
+#define isfelind(A) (is_species(A, /datum/species/human/felinid))
 #define isethereal(A) (is_species(A, /datum/species/ethereal))
 #define isvampire(A) (is_species(A,/datum/species/vampire))
 
