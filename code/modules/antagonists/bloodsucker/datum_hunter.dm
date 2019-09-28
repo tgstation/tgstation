@@ -94,7 +94,7 @@
 	if (my_kungfu != null)
 		to_chat(owner, "<span class='announce'>Hunter Tip: Use your [my_kungfu.name] techniques to give you an advantage over the enemy.</span><br>")
 		antag_memory += "You remember your training: You are skilled in the [my_kungfu.name] style of combat.<br>"
-	owner.current.playsound_local(null, 'sound/weapons/sawclose.ogg', 100, FALSE, pressure_affected = FALSE)
+	owner.current.playsound_local(null, 'sound/weapons/gun/shotgun/rack.ogg', 100, FALSE, pressure_affected = FALSE)
 
 /datum/antagonist/vamphunter/farewell()
 	to_chat(owner, "<span class='userdanger'>Your hunt has ended: you are no longer a monster hunter!</span>")

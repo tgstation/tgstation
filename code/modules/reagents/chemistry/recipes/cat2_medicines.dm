@@ -2,10 +2,10 @@
 
 /*****BRUTE*****/
 
-/datum/chemical_reaction/sanguibital
-	name = "Sanguibital"
-	id = /datum/reagent/medicine/C2/sanguibital
-	results = list(/datum/reagent/medicine/C2/sanguibital = 3)
+/datum/chemical_reaction/helbital
+	name = "helbital"
+	id = /datum/reagent/medicine/C2/helbital
+	results = list(/datum/reagent/medicine/C2/helbital = 3)
 	required_reagents = list(/datum/reagent/consumable/sugar = 1, /datum/reagent/fluorine = 1, /datum/reagent/carbon = 1)
 	mix_message = "The mixture turns into a thick, yellow powder."
 
