@@ -273,6 +273,7 @@
 				"<span class='hear'>You hear heavy droning fade out.</span>")
 			icon_state = "shield_wall_gen"
 			active = FALSE
+			log_game("[src] deactivated due to lack of power at [AREACOORD(src)]")
 			for(var/d in GLOB.cardinals)
 				cleanup_field(d)
 	else
