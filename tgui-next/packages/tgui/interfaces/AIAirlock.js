@@ -50,7 +50,7 @@ export const AIAirlock = props => {
               {data.power.main ? 'Online' : 'Offline'} {(!data.wires.main_1 || !data.wires.main_2) ? (
                 <span> [Wires have been cut!] </span>
               ) : (
-                <span>{data.power.main_timeleft > 0 && (<span> [{data.power.main_timeleft} seconds left] </span>)}</span>
+                <span>{data.power.main_timeleft > 0 && (<span> [{data.power.main_timeleft}s] </span>)}</span>
               )}
           </LabeledList.Item>
           <LabeledList.Item
@@ -69,7 +69,7 @@ export const AIAirlock = props => {
             {data.power.backup ? 'Online' : 'Offline'} {(!data.wires.backup_1 || !data.wires.backup_2) ? (
               <span> [Wires have been cut!] </span>
             ) : (
-              <span>{data.power.backup_timeleft > 0 && (<span> [{data.power.backup_timeleft} seconds left] </span>)}</span>
+              <span>{data.power.backup_timeleft > 0 && (<span> [{data.power.backup_timeleft}s] </span>)}</span>
             )}
           </LabeledList.Item>
           <LabeledList.Item
@@ -101,7 +101,7 @@ export const AIAirlock = props => {
               <span> [Wires have been cut!] </span>
             ) : (
               <span>
-                {data.shock_timeleft > 0 && (<span> [{data.shock_timeleft} seconds left] </span>)}
+                {data.shock_timeleft > 0 && (<span> [{data.shock_timeleft}s] </span>)}
                 {data.shock_timeleft == -1 && (<span> [Permanent] </span>)}
               </span>
             )}
