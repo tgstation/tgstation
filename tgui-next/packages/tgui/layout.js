@@ -2,6 +2,8 @@ import { decodeHtmlEntities } from 'string-tools';
 import { Box, TitleBar } from './components';
 import { dragStartHandler, resizeStartHandler } from './drag';
 import { AirAlarm } from './interfaces/AirAlarm';
+import { Acclimator } from './interfaces/Acclimator';
+import { AIAirlock } from './interfaces/AIAirlock';
 import { winset, runCommand } from 'byond';
 import { createLogger } from './logging';
 import { UI_INTERACTIVE } from './constants';
@@ -10,11 +12,19 @@ import { Toast } from './components/Toast';
 
 const logger = createLogger('Layout');
 
-const ROUTES = {
+const routedComponents = {
   airalarm: {
-    scrollable: true,
-    component: () => AirAlarm,
+      scrollable: true,
+      component: () => AirAlarm,
   },
+  acclimator: {
+      scrollable: false,
+      component: () => Acclimator,
+  },
+  air_airlock: {
+      scrollable: false,
+      component: () => AIAirlock,
+  }
 };
 
 export const getRoute = name => ROUTES[name];
