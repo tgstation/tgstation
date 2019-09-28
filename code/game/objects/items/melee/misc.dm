@@ -147,8 +147,10 @@
 	attack_verb = list("slashed", "stung", "prickled", "poked")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 
-/obj/item/melee/beesword/afterattack(atom/target, mob/user, proximity = TRUE)
+/obj/item/melee/beesword/afterattack(atom/target, mob/user, proximity)
 	. = ..()
+	if(!proximity)
+		return
 	user.changeNext_move(CLICK_CD_RAPID)
 	if(iscarbon(target))
 		var/mob/living/carbon/H = target
@@ -239,7 +241,7 @@
 
 		user.Paralyze(knockdown_time_carbon * force)
 		user.adjustStaminaLoss(stamina_damage)
-		
+
 		additional_effects_carbon(user) // user is the target here
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -386,7 +388,7 @@
 
 	cooldown = 25
 	stamina_damage = 85
-	affect_silicon = TRUE 
+	affect_silicon = TRUE
 	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
 

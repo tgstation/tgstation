@@ -138,7 +138,7 @@
 
 /obj/item/stack/sheet/mineral/wood/attackby(obj/item/W, mob/user, params) // NOTE: sheet_types.dm is where the WOOD stack lives. Maybe move this over there.
 	// Taken from /obj/item/stack/rods/attackby in [rods.dm]
-	if (W.is_sharp())
+	if (W.get_sharpness())
 		user.visible_message("[user] begins whittling [src] into a pointy object.", \
 				 "<span class='notice'>You begin whittling [src] into a sharp point at one end.</span>", \
 				 "<span class='italics'>You hear wood carving.</span>")
