@@ -46,7 +46,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if (istype(L))
 			L.applyOrganDamage(((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * L.alcohol_tolerance, 0))/150))
 	else
-		if(C.drunkenness > boozepwr && boozepwr <= 0)
+		if(boozepwr < 0)
 			var/booze_power = boozepwr
 			if(HAS_TRAIT(C, TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
 				booze_power *= 0.7
