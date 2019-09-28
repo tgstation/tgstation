@@ -23,5 +23,10 @@ if [[ -z ${1} ]]; then
   exec webpack --mode=production
 fi
 
+## Analyze the bundle
+if [[ ${1} == '--analyze' ]]; then
+  exec webpack --mode=production --env.analyze=1
+fi
+
 ## Run webpack with custom flags
 exec webpack "${@}"

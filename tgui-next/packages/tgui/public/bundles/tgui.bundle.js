@@ -7627,7 +7627,7 @@
       onMousedown: function(t) {
         return Pn(this, e), o && a(t);
       }.bind(this)
-    }), o && C(1, "div", "TitleBar__close TitleBar__clickable", null, 1, {
+    }), !!o && C(1, "div", "TitleBar__close TitleBar__clickable", null, 1, {
       onClick: u
     }) ], 0);
   }.bind(undefined)), Cn = undefined;
