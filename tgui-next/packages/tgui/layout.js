@@ -6,6 +6,7 @@ import { winset, runCommand } from 'byond';
 import { createLogger } from './logging';
 import { UI_INTERACTIVE } from './constants';
 import { classes } from 'react-tools';
+import { Toast } from './components/Toast';
 
 const logger = createLogger('Layout');
 
@@ -19,13 +20,7 @@ const ROUTES = {
 export const getRoute = name => ROUTES[name];
 
 export const Layout = props => {
-  // This way we ensure that both config and data objects always exist,
-  // although they are empty.
-  const state = {
-    ...props.state,
-    config: props.state.config || {},
-    data: props.state.data || {},
-  };
+  const { state } = props;
   const { config } = state;
   const route = getRoute(config.interface);
   if (!route) {
@@ -55,6 +50,9 @@ export const Layout = props => {
       </Box>
       {config.status !== UI_INTERACTIVE && (
         <Box className="Layout__dimmer" />
+      )}
+      {state.toastText && (
+        <Toast content={state.toastText} />
       )}
     </Fragment>
   );

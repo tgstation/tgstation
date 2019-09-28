@@ -1,9 +1,11 @@
 import { act } from 'byond';
 import { loadCSS } from 'fg-loadcss';
 import { render } from 'inferno';
+import { backendUpdate } from './backend';
 import { setupDrag } from './drag';
 import { getRoute, Layout } from './layout';
 import { createLogger } from './logging';
+import { createStore } from './store';
 
 const logger = createLogger();
 
@@ -12,14 +14,13 @@ const reactRoot = document.getElementById('react-root');
 let initialRender = true;
 
 const renderLayout = state => {
-  logger.log('rendering');
   // Initial render setup
   if (initialRender) {
-    logger.log('initial state', state);
+    logger.log('initial render', state);
+    initialRender = false;
     // Setup dragging
     setupDrag(state);
   }
-  initialRender = false;
   // Start rendering
   try {
     const element = <Layout state={state} />;
@@ -33,6 +34,8 @@ const renderLayout = state => {
 // Initialize React app
 // --------------------------------------------------------
 
+const store = createStore();
+
 const setupApp = () => {
   // Find data in the page, load inlined state.
   const holder = document.getElementById('data');
@@ -41,7 +44,7 @@ const setupApp = () => {
   const state = JSON.parse(stateJson);
 
   // Determine if we can handle this route
-  const route = getRoute(state.config.interface);
+  const route = getRoute(state.config && state.config.interface);
   if (!route) {
     // Load old TGUI
     loadCSS('tgui.css');
@@ -64,16 +67,24 @@ const setupApp = () => {
     return;
   }
 
-  // Subscribe to updates
+  // Subscribe for state updates
+  store.subscribe(() => {
+    const state = store.getState();
+    // logger.log('current state', state);
+    renderLayout(state);
+  });
+
+  // Subscribe for bankend updates
   window.update = window.initialize = stateJson => {
     const state = JSON.parse(stateJson);
-    renderLayout(state);
+    // Backend update dispatches a store action
+    store.dispatch(backendUpdate(state));
   };
 
   // Render the app
   if (stateJson !== '{}') {
     logger.log('Found inlined state')
-    renderLayout(state);
+    store.dispatch(backendUpdate(state));
   }
 
   // Initialize
