@@ -449,6 +449,15 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	sideslist = list("valid", "salad")
 	material_flags = MATERIAL_NO_COLOR
 
+/obj/item/coin/arcade_token
+	name = "arcade token"
+	icon_state = "coin_clown"
+	desc = "A coin that allows you to redeem a prize from an arcade machine."
+	custom_materials = list(/datum/material/plastic = 400)
+	sideslist = list("clown", "banana")
+	material_flags = MATERIAL_NO_COLOR
+
+
 /obj/item/coin/iron
 
 #undef ORESTACK_OVERLAYS_MAX

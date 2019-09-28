@@ -55,6 +55,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	icon_screen = "invaders"
 	clockwork = TRUE //it'd look weird
 	var/list/prize_override
+	var/prizeselect = /obj/item/coin/arcade_token
 	light_color = LIGHT_COLOR_GREEN
 
 /obj/machinery/computer/arcade/proc/Reset()
@@ -79,19 +80,33 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(prob(0.0001)) //1 in a million
 		new /obj/item/gun/energy/pulse/prize(src)
 		SSmedals.UnlockMedal(MEDAL_PULSE, user.client)
-
-	if(!contents.len)
-		var/prizeselect
-		if(prize_override)
-			prizeselect = pickweight(prize_override)
-		else
-			prizeselect = pickweight(GLOB.arcade_prize_pool)
+	else
 		new prizeselect(src)
 
 	var/atom/movable/the_prize = pick(contents)
 	visible_message("<span class='notice'>[src] dispenses [the_prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
 
 	the_prize.forceMove(get_turf(src))
+
+/obj/machinery/computer/arcade/proc/redeem(mob/user)
+	var/redeemselect
+	if(!contents.len)
+		if(prize_override)
+			redeemselect = pickweight(prize_override)
+		else
+			redeemselect = pickweight(GLOB.arcade_prize_pool)
+
+	new redeemselect(src)
+	var/atom/movable/the_prize = pick(contents)
+	visible_message("<span class='notice'>[src] dispenses [the_prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
+	the_prize.forceMove(get_turf(src))
+	
+/obj/machinery/computer/arcade/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/coin/arcade_token) || istype(W, /obj/item/coin/bananium))
+		to_chat(user, "<span class='notice'>You insert the [W] into the [src].")
+		redeem(user)
+		qdel(W)
+		return
 
 /obj/machinery/computer/arcade/emp_act(severity)
 	. = ..()
@@ -1090,7 +1105,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	gameStatus = ORION_STATUS_START
 	say("Congratulations, you made it to Orion!")
 	if(obj_flags & EMAGGED)
-		new /obj/item/orion_ship(loc)
+		prizeselect = /obj/item/orion_ship
+		prizevend(user)
+		prizeselect = /obj/item/coin/arcade_token
 		message_admins("[ADMIN_LOOKUPFLW(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
 		log_game("[key_name(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
 	else
