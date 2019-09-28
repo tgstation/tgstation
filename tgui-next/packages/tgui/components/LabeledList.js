@@ -1,4 +1,5 @@
 import { classes } from 'react-tools';
+import { Box } from './Box'
 
 export const LabeledList = props => {
   const { children } = props;
@@ -35,4 +36,16 @@ export const LabeledListItem = props => {
   );
 };
 
+export const LabeledListDivider = props => {
+  const {size} = props;
+  return (
+    <tr className="LabeledList__row">
+      <td>
+        <Box mt={size}/>
+      </td>
+    </tr>
+  );
+};
+
 LabeledList.Item = LabeledListItem;
+LabeledList.Divider = LabeledListDivider;

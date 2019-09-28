@@ -1374,7 +1374,7 @@
 													datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "ai_airlock", name, 550, 456, master_ui, state)
+		ui = new(user, src, ui_key, "ai_airlock", name, 550, 400, master_ui, state)
 		ui.open()
 	return TRUE
 
@@ -1447,14 +1447,10 @@
 			aiDisabledIdScanner = !aiDisabledIdScanner
 			. = TRUE
 		if("emergency-toggle")
-			emergency = !emergency
-			update_icon()
+			toggle_emergency(usr)
 			. = TRUE
 		if("bolt-toggle")
-			if(locked)
-				unbolt()
-			else
-				bolt()
+			toggle_bolt(usr)
 			. = TRUE
 		if("light-toggle")
 			lights = !lights
@@ -1496,6 +1492,26 @@
 		to_chat(user, "The electrification wire has been cut")
 	else
 		set_electrified(MACHINE_ELECTRIFIED_PERMANENT, user)
+
+/obj/machinery/door/airlock/proc/toggle_bolt(mob/user)
+	if(!user_allowed(user))
+		return
+	if(wires.is_cut(WIRE_BOLTS))
+		to_chat(user, "<span class='warning'>The door bolt drop wire is cut - you can't toggle the door bolts.</span>")
+		return
+	if(locked)
+		if(!hasPower())
+			to_chat(user, "<span class='warning'>The door has no power - you can't raise the door bolts.</span>")
+		else
+			unbolt()
+	else
+		bolt()
+
+/obj/machinery/door/airlock/proc/toggle_emergency(mob/user)
+	if(!user_allowed(user))
+		return
+	emergency = !emergency
+	update_icon()
 
 /obj/machinery/door/airlock/proc/user_toggle_open(mob/user)
 	if(!user_allowed(user))

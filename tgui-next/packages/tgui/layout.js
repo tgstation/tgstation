@@ -12,7 +12,7 @@ import { Toast } from './components/Toast';
 
 const logger = createLogger('Layout');
 
-const routedComponents = {
+const ROUTES = {
   airalarm: {
       scrollable: true,
       component: () => AirAlarm,
@@ -21,9 +21,9 @@ const routedComponents = {
       scrollable: false,
       component: () => Acclimator,
   },
-  air_airlock: {
+  ai_airlock: {
       scrollable: false,
-      component: () => AIAirlock,
+      component: () => AIAirlock
   }
 };
 
