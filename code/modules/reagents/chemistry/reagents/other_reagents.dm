@@ -1217,7 +1217,6 @@
 /////////////////////////Colorful Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
 
-
 /datum/reagent/colorful_reagent/powder
 	name = "Mundane Powder" //the name's a bit similar to the name of colorful reagent, but hey, they're practically the same chem anyway
 	var/colorname = "none"
@@ -1233,12 +1232,6 @@
 		description = "An invisible powder. Unfortunately, since it's invisible, it doesn't look like it'd color much of anything..."
 	else
 		description = "\An [colorname] powder, used for coloring things [colorname]."
-
-/datum/reagent/colorful_reagent/powder/on_mob_life(mob/living/carbon/M)
-	return
-
-/datum/reagent/colorful_reagent/powder/reaction_mob(mob/living/M, reac_volume)
-	return
 
 /datum/reagent/colorful_reagent/powder/red
 	name = "Red Powder"
@@ -1293,6 +1286,38 @@
 	colorname = "white"
 	color = "#FFFFFF" // white
 	random_color_list = list("#FFFFFF") //doesn't actually change appearance at all
+
+ /* used by crayons, can't color living things but still used for stuff like food recipes */
+
+/datum/reagent/colorful_reagent/powder/crayon
+
+/datum/reagent/colorful_reagent/powder/crayon/New()
+
+/datum/reagent/colorful_reagent/powder/crayon/on_mob_life(mob/living/carbon/M)
+	return
+
+/datum/reagent/colorful_reagent/powder/crayon/reaction_mob(mob/living/M, reac_volume)
+	return
+
+/datum/reagent/colorful_reagent/powder/crayon/red
+
+/datum/reagent/colorful_reagent/powder/crayon/orange
+
+/datum/reagent/colorful_reagent/powder/crayon/yellow
+
+/datum/reagent/colorful_reagent/powder/crayon/green
+
+/datum/reagent/colorful_reagent/powder/crayon/blue
+
+/datum/reagent/colorful_reagent/powder/crayon/purple
+
+//datum/reagent/colorful_reagent/powder/crayon/invisible
+
+/datum/reagent/colorful_reagent/powder/crayon/black
+
+/datum/reagent/colorful_reagent/powder/crayon/white
+
+
 
 //////////////////////////////////Hydroponics stuff///////////////////////////////
 
