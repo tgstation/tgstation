@@ -1,0 +1,36 @@
+.ProgressBar {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  height: 20px;
+  padding: 1px;
+  border: 1px solid $bar-color-border;
+  background: $bar-color-background;
+}
+
+.ProgressBar__fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: background-color, width 1s;
+  background-color: $bar-color-normal;
+}
+
+.ProgressBar__content {
+  position: absolute;
+  top: 0;
+  right: 3px;
+  line-height: 17px;
+}
+
+.ProgressBar--color--good {
+  background-color: $bar-color-good;
+}
+
+.ProgressBar--color--average {
+  background-color: $bar-color-average;
+}
+
+.ProgressBar--color--bad {
+  background-color: $bar-color-bad;
+}

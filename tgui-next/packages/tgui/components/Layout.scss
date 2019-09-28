@@ -50,3 +50,30 @@
   background-color: darken($gray, 50%);
   color: rgba(255, 255, 255, 0.8);
 }
+
+.Layout__resizeHandle__se {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  cursor: se-resize;
+}
+
+.Layout__resizeHandle__s {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  cursor: s-resize;
+}
+
+.Layout__resizeHandle__e {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 3px;
+  cursor: e-resize;
+}

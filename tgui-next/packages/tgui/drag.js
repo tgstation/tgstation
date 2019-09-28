@@ -5,10 +5,12 @@ const logger = createLogger('drag');
 
 const dragState = {
   dragging: false,
-  lastPosition: {},
+  resizing: false,
   windowRef: undefined,
   screenOffset: { x: 0, y: 0 },
   dragPointOffset: {},
+  resizeMatrix: {},
+  initialWindowSize: {},
 };
 
 export const setupDrag = async state => {
@@ -63,6 +65,58 @@ const dragHandler = event => {
   let y = event.screenY
     + dragState.screenOffset.y
     + dragState.dragPointOffset.y;
-  // logger.log({ x, y });
   winset(dragState.windowRef, 'pos', [x, y].join(','));
+};
+
+export const resizeStartHandler = (x, y) => event => {
+  logger.log('resize start', [x, y]);
+  dragState.resizing = true;
+  dragState.resizeMatrix = { x, y };
+  dragState.dragPointOffset = {
+    x: window.screenX - event.screenX,
+    y: window.screenY - event.screenY,
+  };
+  dragState.initialWindowSize = {
+    x: window.innerWidth,
+    y: window.innerHeight,
+  };
+  document.addEventListener('mousemove', resizeMoveHandler);
+  document.addEventListener('mouseup', resizeEndHandler);
+  resizeHandler(event);
+};
+
+export const resizeMoveHandler = event => {
+  resizeHandler(event);
+};
+
+export const resizeEndHandler = event => {
+  logger.log('resize end');
+  resizeHandler(event);
+  document.removeEventListener('mousemove', resizeMoveHandler);
+  document.removeEventListener('mouseup', resizeEndHandler);
+  dragState.resizing = false;
+};
+
+const resizeHandler = event => {
+  if (!dragState.resizing) {
+    return;
+  }
+  event.preventDefault();
+  let x = dragState.initialWindowSize.x
+    + (event.screenX
+      - window.screenX
+      + dragState.dragPointOffset.x
+      + 1)
+    * dragState.resizeMatrix.x;
+  let y = dragState.initialWindowSize.y
+    + (event.screenY
+      - window.screenY
+      + dragState.dragPointOffset.y
+      + 1)
+    * dragState.resizeMatrix.y;
+  winset(dragState.windowRef, 'size', [
+    // Sane window size values
+    Math.max(x, 250),
+    Math.max(y, 120),
+  ].join(','));
 };

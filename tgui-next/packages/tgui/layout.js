@@ -1,6 +1,6 @@
 import { decodeHtmlEntities } from 'string-tools';
 import { Box, TitleBar } from './components';
-import { dragStartHandler } from './drag';
+import { dragStartHandler, resizeStartHandler } from './drag';
 import { AirAlarm } from './interfaces/AirAlarm';
 import { winset, runCommand } from 'byond';
 import { createLogger } from './logging';
@@ -53,6 +53,16 @@ export const Layout = props => {
       )}
       {state.toastText && (
         <Toast content={state.toastText} />
+      )}
+      {config.fancy && (
+        <Fragment>
+          <div className="Layout__resizeHandle__e"
+            onMousedown={resizeStartHandler(1, 0)} />
+          <div className="Layout__resizeHandle__s"
+            onMousedown={resizeStartHandler(0, 1)} />
+          <div className="Layout__resizeHandle__se"
+            onMousedown={resizeStartHandler(1, 1)} />
+        </Fragment>
       )}
     </Fragment>
   );

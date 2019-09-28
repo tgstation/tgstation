@@ -12,7 +12,7 @@ export const createStore = () => {
     (state = {}, action) => state,
     // Action logger
     (state, action) => {
-      logger.log('reducing action', action.type);
+      logger.log('action:', action.type);
       return state;
     },
     // Add other reducers to the chain

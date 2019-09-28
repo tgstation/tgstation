@@ -19,7 +19,6 @@ const logger = createLogger();
 
 export const TitleBar = props => {
   const { className, title, status, fancy, onDragStart, onClose } = props;
-  logger.log(props);
   return (
     <div className={classes('TitleBar', className)}>
       <Icon
