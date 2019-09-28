@@ -9,7 +9,7 @@
 	e_cost = 100
 
 /obj/item/ammo_casing/energy/electrode/gun
-	fire_sound = 'sound/weapons/gunshot.ogg'
+	fire_sound = 'sound/weapons/gun/pistol/shot.ogg'
 	e_cost = 100
 
 /obj/item/ammo_casing/energy/electrode/old

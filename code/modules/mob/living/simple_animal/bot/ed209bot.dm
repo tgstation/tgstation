@@ -1,7 +1,7 @@
 /mob/living/simple_animal/bot/secbot/ed209
 	name = "\improper ED-209 Security Robot"
 	desc = "A security robot. He looks less than thrilled."
-	icon_state = "ed2090"
+	icon_state = "ed209"
 	density = TRUE
 	health = 100
 	maxHealth = 100
@@ -17,7 +17,7 @@
 	var/shot_delay = 15
 	var/shoot_sound = 'sound/weapons/laser.ogg'
 	var/projectile = /obj/projectile/beam/disabler
-	var/fair_market_projectile = /obj/projectile/bullet/c38 // For shooting the worst scumbags of all: the poor
+	var/fair_market_projectile = /obj/item/bullet/c38 // For shooting the worst scumbags of all: the poor
 	do_footstep = TRUE
 
 /mob/living/simple_animal/bot/secbot/ed209/Initialize(mapload)

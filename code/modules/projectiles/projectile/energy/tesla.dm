@@ -18,7 +18,7 @@
 	qdel(src)
 
 /obj/projectile/energy/tesla/Destroy()
-	qdel(chain)
+	QDEL_NULL(chain)
 	return ..()
 
 /obj/projectile/energy/tesla/revolver
