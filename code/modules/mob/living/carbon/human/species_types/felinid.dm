@@ -143,18 +143,14 @@
 		playsound(get_turf(H), 'sound/effects/meow1.ogg', 50, TRUE, -1)
 
 /proc/purrbation_remove(mob/living/carbon/human/H, silent = FALSE)
-	if(ishumanbasic(H) || iscatperson(H))
+	if(iscatperson(H))
 		H.set_species(/datum/species/human)
-		H.visible_message("[H] if 1")
 	else if(ishuman(H))
-		H.visible_message("[H] if 2")
 		var/organs = H.internal_organs
 		for(var/obj/item/organ/current_organ in organs)
 			if(istype(current_organ, /obj/item/organ/tail/cat))
-				H.visible_message("[H] if 3")
 				current_organ.Remove(H, TRUE)
 			if(istype(current_organ, /obj/item/organ/ears/cat))
-				H.visible_message("[H] if 4")
 				var/obj/item/organ/ears/new_ears = new
 				new_ears.Insert(H, TRUE, FALSE)
 	if(!silent)
