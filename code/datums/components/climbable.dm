@@ -56,7 +56,6 @@
 	if(HAS_TRAIT(user, TRAIT_FREERUNNING)) //do you have any idea how fast I am???
 		adjusted_climb_time *= 0.8
 
-	structureclimbers |= user
 	if(do_after(user, adjusted_climb_time, target = source))
 		do_climb(source, user)
 		user.visible_message("<span class='warning'>[user] climbs onto [source].</span>", \
