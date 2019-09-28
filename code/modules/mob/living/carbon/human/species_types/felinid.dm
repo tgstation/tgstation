@@ -108,13 +108,13 @@
 
 /proc/mass_purrbation()
 	for(var/M in GLOB.mob_list)
-		if(ishumanbasic(M))
+		if(ishuman(M))
 			purrbation_apply(M)
 		CHECK_TICK
 
 /proc/mass_remove_purrbation()
 	for(var/M in GLOB.mob_list)
-		if(ishumanbasic(M))
+		if(ishuman(M))
 			purrbation_remove(M)
 		CHECK_TICK
 
@@ -131,17 +131,31 @@
 /proc/purrbation_apply(mob/living/carbon/human/H, silent = FALSE)
 	if(!ishuman(H) || iscatperson(H))
 		return
-	H.set_species(/datum/species/human/felinid)
-
+	if(ishumanbasic(H))
+		H.set_species(/datum/species/human/felinid)
+	else
+		var/obj/item/organ/ears/cat/kitty_ears = new
+		var/obj/item/organ/tail/cat/kitty_tail = new
+		kitty_ears.Insert(H, TRUE, FALSE) //Gives nonhumans cat tail and ears
+		kitty_tail.Insert(H, TRUE, FALSE)
 	if(!silent)
 		to_chat(H, "Something is nya~t right.")
 		playsound(get_turf(H), 'sound/effects/meow1.ogg', 50, TRUE, -1)
 
 /proc/purrbation_remove(mob/living/carbon/human/H, silent = FALSE)
-	if(!ishuman(H) || !iscatperson(H))
-		return
-
-	H.set_species(/datum/species/human)
-
+	if(ishumanbasic(H) || iscatperson(H))
+		H.set_species(/datum/species/human)
+		H.visible_message("[H] if 1")
+	else if(ishuman(H))
+		H.visible_message("[H] if 2")
+		var/organs = H.internal_organs
+		for(var/obj/item/organ/current_organ in organs)
+			if(istype(current_organ, /obj/item/organ/tail/cat))
+				H.visible_message("[H] if 3")
+				current_organ.Remove(H, TRUE)
+			if(istype(current_organ, /obj/item/organ/ears/cat))
+				H.visible_message("[H] if 4")
+				var/obj/item/organ/ears/new_ears = new
+				new_ears.Insert(H, TRUE, FALSE)
 	if(!silent)
 		to_chat(H, "You are no longer a cat.")
