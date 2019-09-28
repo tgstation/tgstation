@@ -19,7 +19,13 @@ const ROUTES = {
 export const getRoute = name => ROUTES[name];
 
 export const Layout = props => {
-  const { state } = props;
+  // This way we ensure that both config and data objects always exist,
+  // although they are empty.
+  const state = {
+    ...props.state,
+    config: props.state.config || {},
+    data: props.state.data || {},
+  };
   const { config } = state;
   const route = getRoute(config.interface);
   if (!route) {
