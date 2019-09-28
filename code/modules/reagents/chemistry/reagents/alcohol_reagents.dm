@@ -35,7 +35,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 */
 
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/C)
-	if(C.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER)
+	if(C.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER || boozepwr < 0)
 		var/booze_power = boozepwr
 		if(HAS_TRAIT(C, TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
 			booze_power *= 0.7
@@ -45,14 +45,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
 		if (istype(L))
 			L.applyOrganDamage(((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * L.alcohol_tolerance, 0))/150))
-	else
-		if(boozepwr < 0)
-			var/booze_power = boozepwr
-			if(HAS_TRAIT(C, TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
-				booze_power *= 0.7
-			if(HAS_TRAIT(C, TRAIT_LIGHT_DRINKER))
-				booze_power *= 2
-			C.drunkenness = max((C.drunkenness + (sqrt(volume) * booze_power * ALCOHOL_RATE)), 0) //Volume, power, and server alcohol rate effect how quickly one gets sober
 	return ..()
 
 /datum/reagent/consumable/ethanol/reaction_obj(obj/O, reac_volume)
