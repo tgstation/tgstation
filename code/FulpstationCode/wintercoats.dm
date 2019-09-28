@@ -13,7 +13,7 @@
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 90) // Same as the HoS trench coat
 	cold_protection = CHEST|GROIN|LEGS|ARMS // Alright, so *technically* the coat doesn't actually cover the legs, but this has to be as good as the HoS trench coat otherwise it will never be used.
 	heat_protection = CHEST|GROIN|LEGS|ARMS // This may or may not kill the game.
-	strip_delay = 80
+	strip_delay = 80 // Anti-ERP Technology
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/security/head
 
 /obj/item/clothing/head/hooded/winterhood/security/head
