@@ -1,5 +1,5 @@
 /obj/item/chameleon
-	name = "chameleon-projector"
+	name = "chameleon projector"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "shield0"
 	flags_1 = CONDUCT_1
@@ -52,7 +52,9 @@
 	if(iseffect(target))
 		if(!(istype(target, /obj/effect/decal))) //be a footprint
 			return
-	if(istype(target, /obj/structure/closet/cardboard/agent))
+	if(istype(target, /obj/structure/closet/cardboard/agent) || istype(target, /obj/structure/holosign))
+		to_chat(user, "<span class='warning'>[src] emits a soft buzzing noise.</span>")
+		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, TRUE, -6)
 		return
 	playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, TRUE, -6)
 	to_chat(user, "<span class='notice'>Scanned [target].</span>")
@@ -88,7 +90,7 @@
 /obj/item/chameleon/proc/disrupt(delete_dummy = 1)
 	if(active_dummy)
 		for(var/mob/M in active_dummy)
-			to_chat(M, "<span class='danger'>Your chameleon-projector deactivates.</span>")
+			to_chat(M, "<span class='danger'>Your chameleon projector deactivates.</span>")
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 		spark_system.set_up(5, 0, src)
 		spark_system.attach(src)
