@@ -1,36 +1,42 @@
-import { computeBoxProps } from './Box';
+import { classes } from 'react-tools';
+import { Box } from './Box';
 
 export const computeFlexProps = props => {
   const {
+    className,
     direction,
     wrap,
     align,
+    justify,
     ...rest
   } = props;
   return {
+    className: classes('Flex', className),
     style: {
       ...rest.style,
-      'display': 'flex',
       'flex-direction': direction,
       'flex-wrap': wrap,
       'align-items': align,
+      'justify-content': justify,
     },
     ...rest,
   };
 };
 
 export const Flex = props => (
-  <div {...computeBoxProps(computeFlexProps(props))} />
+  <Box {...computeFlexProps(props)} />
 );
 
 export const computeFlexItemProps = props => {
   const {
+    className,
     grow,
     order,
     align,
     ...rest
   } = props;
   return {
+    className: classes('Flex__item', className),
     style: {
       ...rest.style,
       'flex-grow': grow,
@@ -42,7 +48,7 @@ export const computeFlexItemProps = props => {
 };
 
 export const FlexItem = props => (
-  <div {...computeBoxProps(computeFlexItemProps(props))} />
+  <Box {...computeFlexItemProps(props)} />
 );
 
 Flex.Item = FlexItem;

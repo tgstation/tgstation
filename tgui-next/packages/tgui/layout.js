@@ -4,22 +4,29 @@ import { dragStartHandler } from './drag';
 import { AirAlarm } from './interfaces/AirAlarm';
 import { winset, runCommand } from 'byond';
 import { createLogger } from './logging';
+import { UI_INTERACTIVE } from './constants';
+import { classes } from 'react-tools';
 
 const logger = createLogger('Layout');
 
-const routedComponents = {
-  airalarm: AirAlarm,
+const ROUTES = {
+  airalarm: {
+    scrollable: true,
+    component: () => AirAlarm,
+  },
 };
 
-export const getRoutedComponent = name => routedComponents[name];
+export const getRoute = name => ROUTES[name];
 
 export const Layout = props => {
   const { state } = props;
   const { config } = state;
-  const Component = getRoutedComponent(config.interface);
-  if (!Component) {
+  const route = getRoute(config.interface);
+  if (!route) {
     return `Component for '${config.interface}' was not found.`
   }
+  const Component = route.component();
+  const { scrollable } = route;
   return (
     <Fragment>
       <TitleBar
@@ -33,9 +40,16 @@ export const Layout = props => {
           winset(config.window, 'is-visible', false);
           runCommand(`uiclose ${config.ref}`);
         }} />
-      <Box className="Layout__content">
+      <Box
+        className={classes([
+          'Layout__content',
+          scrollable && 'Layout__content--scrollable',
+        ])}>
         <Component state={state} />
       </Box>
+      {config.status !== UI_INTERACTIVE && (
+        <Box className="Layout__dimmer" />
+      )}
     </Fragment>
   );
 };

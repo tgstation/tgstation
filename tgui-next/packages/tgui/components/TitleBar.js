@@ -2,29 +2,30 @@ import { classes } from 'react-tools';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
 import { Icon } from './Icon';
 
-const statusToClassName = status => {
+const statusToColor = status => {
   switch (status) {
     case UI_INTERACTIVE:
-      return 'color-good';
+      return 'good';
     case UI_UPDATE:
-      return 'color-average';
+      return 'average';
     case UI_DISABLED:
     default:
-      return 'color-bad';
+      return 'bad';
   }
 };
 
+import { createLogger } from '../logging';
+const logger = createLogger();
+
 export const TitleBar = props => {
   const { className, title, status, fancy, onDragStart, onClose } = props;
+  logger.log(props);
   return (
     <div className={classes('TitleBar', className)}>
       <Icon
-        className={classes([
-          'TitleBar__statusIcon',
-          statusToClassName(status),
-        ])}
-        name="eye"
-        size={2} />
+        className="TitleBar__statusIcon"
+        color={statusToColor(status)}
+        name="eye" />
       <div className="TitleBar__title">
         {title}
       </div>

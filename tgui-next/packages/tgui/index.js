@@ -1,9 +1,9 @@
-import { act, winset } from 'byond';
+import { act } from 'byond';
 import { loadCSS } from 'fg-loadcss';
 import { render } from 'inferno';
-import { Layout, getRoutedComponent } from './layout';
-import { createLogger } from './logging';
 import { setupDrag } from './drag';
+import { getRoute, Layout } from './layout';
+import { createLogger } from './logging';
 
 const logger = createLogger();
 
@@ -41,7 +41,7 @@ const setupApp = () => {
   const state = JSON.parse(stateJson);
 
   // Determine if we can handle this route
-  const route = getRoutedComponent(state.config.interface);
+  const route = getRoute(state.config.interface);
   if (!route) {
     // Load old TGUI
     loadCSS('tgui.css');

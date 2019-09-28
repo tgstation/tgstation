@@ -1,11 +1,19 @@
+.LabeledList {
+  display: table;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 0;
+  padding: 0;
+}
+
 .LabeledList__row {
   display: table-row;
 }
 
-.LabeledList__label,
-.LabeledList__content {
+.LabeledList__cell {
   display: table-cell;
   margin: 0;
+  padding: 0;
   padding-bottom: 6px;
   text-align: left;
   vertical-align: baseline;
@@ -13,8 +21,13 @@
 
 .LabeledList__label {
   width: 1%;
+  white-space: nowrap;
   padding-right: 12px;
   min-width: 60px;
-  white-space: nowrap;
   color: $section-color-label;
+}
+
+.LabeledList__buttons {
+  width: 1%;
+  white-space: nowrap;
 }

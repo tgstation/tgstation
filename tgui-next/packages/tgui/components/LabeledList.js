@@ -1,30 +1,37 @@
-import { classes } from "react-tools";
+import { classes } from 'react-tools';
 
 export const LabeledList = props => {
   const { children } = props;
   return (
-    <div className="LabeledList">
+    <table className="LabeledList">
       {children}
-    </div>
+    </table>
   );
 };
 
 export const LabeledListItem = props => {
-  const { label, color, content, children } = props;
+  const { label, color, buttons, content, children } = props;
   return (
-    <div className="LabeledList__row">
-      <div className="LabeledList__label">
+    <tr className="LabeledList__row">
+      <td className="LabeledList__cell LabeledList__label">
         {label}:
-      </div>
-      <div
+      </td>
+      <td
         className={classes([
+          'LabeledList__cell',
           'LabeledList__content',
           color && 'color-' + color,
-        ])}>
+        ])}
+        colSpan={buttons ? undefined : 2}>
         {content}
         {children}
-      </div>
-    </div>
+      </td>
+      {buttons && (
+        <td className="LabeledList__cell LabeledList__buttons">
+          {buttons}
+        </td>
+      )}
+    </tr>
   );
 };
 

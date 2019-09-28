@@ -1,3 +1,7 @@
+import { classes } from 'react-tools';
+import { createVNode } from 'inferno';
+import { VNodeFlags, ChildFlags } from 'inferno-vnode-flags';
+
 const REM_PX = 12;
 const REM_PER_INTEGER = 0.5;
 
@@ -21,15 +25,21 @@ const firstDefined = (...args) => {
 
 export const computeBoxProps = props => {
   const {
+    className,
+    color,
+    height,
+    inline,
     m = 0, mx, my, mt, mb, ml, mr,
     opacity,
     width,
-    height,
-    inline,
     ...rest
   } = props;
   return {
     ...rest,
+    className: classes([
+      className,
+      color && 'color-' + color,
+    ]),
     style: {
       display: inline ? 'inline-block' : undefined,
       ...rest.style,
@@ -45,11 +55,18 @@ export const computeBoxProps = props => {
 };
 
 export const Box = props => {
-  const { content, children, ...rest } = props;
-  return (
-    <div {...computeBoxProps(rest)}>
-      {content}
-      {children}
-    </div>
-  );
+  const { as = 'div', content, children, ...rest } = props;
+  // Render props
+  if (typeof children === 'function') {
+    return children(computeBoxProps(props));
+  }
+  const { className, ...computedProps } = computeBoxProps(rest);
+  // Render a wrapper element
+  return createVNode(
+    VNodeFlags.HtmlElement,
+    as,
+    className,
+    content || children,
+    ChildFlags.UnknownChildren,
+    computedProps);
 };

@@ -1,14 +1,14 @@
 .TitleBar {
   background-color: $titlebar-color-background;
   border-bottom: 1px solid $titlebar-color-coreshadow;
-  box-shadow: 0 3px 3px $titlebar-color-shadow;
+  box-shadow: 0 2px 2px $titlebar-color-shadow;
   user-select: none;
   -ms-user-select: none;
 }
 
 .TitleBar__clickable {
   color: rgba(255, 255, 255, 0.5);
-  background-color: darken($gray, 20%);
+  background-color: darken($gray, 0%);
   transition: color, background-color 250ms;
 
   &:hover {
@@ -20,10 +20,11 @@
 
 .TitleBar__title {
   position: absolute;
-  top: 6px;
+  top: 0;
   left: 46px;
-  color: $titlebar-color-text;
-  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  line-height: 31px;
   white-space: nowrap;
 }
 
@@ -37,9 +38,11 @@
 
 .TitleBar__statusIcon {
   position: absolute;
-  top: 4px;
+  top: 0;
   left: 12px;
   transition: color 0.5s;
+  font-size: 20px;
+  line-height: 32px !important;
 }
 
 .TitleBar__minimize {
@@ -50,9 +53,10 @@
 
 .TitleBar__close {
   position: absolute;
-  top: 0;
+  top: -1px;
   right: 0;
-  width: 42px;
+  width: 45px;
+  height: 32px;
   font-size: 20px;
   line-height: 31px;
   text-align: center;
