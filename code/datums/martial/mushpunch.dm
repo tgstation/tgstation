@@ -9,9 +9,10 @@
 		to_chat(A, "<span class='spider'><b>Your attack was interrupted!</b></span>")
 		return TRUE //martial art code was a mistake
 	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
-	atk_verb = pick("punches", "smashes", "ruptures", "cracks")
-	D.visible_message("<span class='danger'>[A] [atk_verb] [D] with inhuman strength, sending [D.p_them()] flying backwards!</span>", \
-					  "<span class='userdanger'>[A] [atk_verb] you with inhuman strength, sending you flying backwards!</span>")
+	atk_verb = pick("punch", "smash", "crack")
+	D.visible_message("<span class='danger'>[A] [atk_verb]ed [D] with such inhuman strength that it sends [D.p_them()] flying backwards!</span>", \
+					"<span class='userdanger'>You're [atk_verb]ed by [A] with such inhuman strength that it sends you flying backwards!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, A)
+	to_chat(A, "<span class='danger'>You [atk_verb] [D] with such inhuman strength that it sends [D.p_them()] flying backwards!</span>")
 	D.apply_damage(rand(15,30), A.dna.species.attack_type)
 	playsound(D, 'sound/effects/meteorimpact.ogg', 25, TRUE, -1)
 	var/throwtarget = get_edge_target_turf(A, get_dir(A, get_step_away(D, A)))

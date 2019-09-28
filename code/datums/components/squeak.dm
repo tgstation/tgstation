@@ -65,6 +65,10 @@
 				return
 	if(istype(AM, /obj/effect/dummy/phased_mob)) //don't squeek if they're in a phased/jaunting container.
 		return
+	if(ismob(AM))
+		var/mob/M = AM
+		if(M.movement_type & (FLYING|FLOATING))
+			return
 	var/atom/current_parent = parent
 	if(isturf(current_parent.loc))
 		play_squeak()

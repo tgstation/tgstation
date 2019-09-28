@@ -289,7 +289,7 @@
 
 /obj/item/voodoo/attackby(obj/item/I, mob/user, params)
 	if(target && cooldown < world.time)
-		if(I.is_hot())
+		if(I.get_temperature())
 			to_chat(target, "<span class='userdanger'>You suddenly feel very hot</span>")
 			target.adjust_bodytemperature(50)
 			GiveHint(target)
