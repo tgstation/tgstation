@@ -108,8 +108,8 @@ new /datum/disease_ability/symptom/powerful/youth
 				SD.symptoms += S
 				S.OnAdd(SD)
 				if(SD.processing)
-					S.Start(SD)
-					S.next_activation = world.time + rand(S.symptom_delay_min * 10, S.symptom_delay_max * 10)
+					if(S.Start(SD))
+						S.next_activation = world.time + rand(S.symptom_delay_min * 10, S.symptom_delay_max * 10)
 			SD.Refresh()
 	for(var/T in actions)
 		var/datum/action/A = new T()
