@@ -12,7 +12,6 @@
 /datum/component/climbable/Initialize(climb_time = 20, climb_stun = 20, table_behaviour = TRUE)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
-	structureclimbers = list()
 	src.climb_time = climb_time
 	src.climb_stun = climb_stun
 	src.table_behaviour = table_behaviour
@@ -22,8 +21,8 @@
 	return ..()
 
 /datum/component/climbable/RegisterWithParent()
-	..()
-	RegisterSignal(parent, list(COMSIG_ATOM_FORCED_MOVEMENT_BUMPED), .proc/on_forced_movement_bump)
+	. = ..()
+	RegisterSignal(parent, list(COMSIG_ATOM_BUMPED), .proc/on_bumped)
 	RegisterSignal(parent, list(COMSIG_MOUSEDROPPED_ONTO), .proc/on_MouseDrop_T)
 	RegisterSignal(parent, list(COMSIG_ATOM_ATTACK_HAND), .proc/on_attack_hand)
 	if(istype(parent, /obj/structure/closet))
@@ -32,10 +31,19 @@
 
 ///Handles the actual act of moving
 /datum/component/climbable/proc/do_climb(atom/source, atom/movable/A)
-	A.forceMove(get_step_towards(A, source))
+	var/dense = source.density //Hacky... alternative solution
+	source.density = FALSE
+	step(A, get_dir(A, source))
+	source.density = dense
 
 ///Handles how long climbing takes and if it is successful + feedback
 /datum/component/climbable/proc/climb_structure(atom/source, mob/living/user)
+	if(!structureclimbers)
+		structureclimbers = list()
+	if(structureclimbers[user])
+		to_chat(user, "<span class='notice'>You are already climbing onto [source]</span>")
+		return
+	structureclimbers[user] = TRUE
 	source.add_fingerprint(user)
 	user.visible_message("<span class='warning'>[user] starts climbing onto [source].</span>", \
 								"<span class='notice'>You start climbing onto [source]...</span>")
@@ -59,10 +67,12 @@
 	else
 		to_chat(user, "<span class='warning'>You fail to climb onto [source].</span>")
 	structureclimbers -= user
+	if(!LAZYLEN(structureclimbers))
+		structureclimbers = null
 
 ///Called on COMSIG_ATOM_ATTACK_HAND. Bumps the current climbers off the table.
 /datum/component/climbable/proc/on_attack_hand(datum/source, mob/user)
-	if(structureclimbers.len && !(user in structureclimbers) && user.a_intent != INTENT_HELP)
+	if(structureclimbers && !(user in structureclimbers) && user.a_intent != INTENT_HELP)
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(source)
 		for(var/i in structureclimbers)
@@ -90,8 +100,8 @@
 		do_climb(source, O)
 
 ///Let's a mob pass over structures if the movement is forced and that's enabled.
-/datum/component/climbable/proc/on_forced_movement_bump(atom/source, mob/bumper, datum/forced_movement/movement)
-	if(movement.allow_climbing)
+/datum/component/climbable/proc/on_bumped(atom/source, atom/movable/bumper)
+	if(bumper.force_moving?.allow_climbing)
 		do_climb(source, bumper)
 
 /datum/component/climbable/proc/on_closet_close()

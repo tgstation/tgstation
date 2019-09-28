@@ -84,8 +84,3 @@
 					. = TryMove(TRUE)
 
 	. = . && (vic.loc != tar.loc)
-
-/mob/Bump(atom/A)
-	. = ..()
-	if(force_moving) //this should be turned into a component.
-		SEND_SIGNAL(A, COMSIG_ATOM_FORCED_MOVEMENT_BUMPED, src, force_moving)

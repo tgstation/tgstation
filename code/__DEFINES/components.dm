@@ -90,8 +90,6 @@
 #define COMSIG_ATOM_INTERCEPT_TELEPORT "intercept_teleport"		//called when teleporting into a protected turf: (channel, turf/origin)
 	#define COMPONENT_BLOCK_TELEPORT 1
 
-#define COMSIG_ATOM_FORCED_MOVEMENT_BUMPED "atom_force_bumped"	//from base of mob/Bump(): (/mob/bumper, /datum/forced_movement/movement)
-
 /////////////////
 #define COMSIG_ATOM_ATTACK_GHOST "atom_attack_ghost"			//from base of atom/attack_ghost(): (mob/dead/observer/ghost)
 #define COMSIG_ATOM_ATTACK_HAND "atom_attack_hand"				//from base of atom/attack_hand(): (mob/user)
