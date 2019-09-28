@@ -78,6 +78,21 @@
 	target.apply_damage(80, BRUTE, L)
 	ADD_TRAIT(target, TRAIT_DISSECTED, "[surgery.name]")
 	repeatable = FALSE
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/obj/item/card/id/C = H.get_idcard(TRUE)
+		if(!C)
+			to_chat(H, "<span class='warning'>You don't have an ID!</span>")
+			return TRUE
+		var/datum/bank_account/account = C.registered_account
+		if(!C.registered_account)
+			to_chat(H, "<span class='warning'>Your ID doesn't have a valid account!</span>")
+			return TRUE
+		var/datum/bank_account/sci_funds = SSeconomy.get_dep_account(ACCOUNT_SCI)
+		if(account.transfer_money(sci_funds, points_earned*0.3))
+			to_chat(H, "<span class='notice'>You have gained [points_earned*0.3] credits.</span>")
+		else
+			to_chat(H, "<span class='warning'>There weren't enough funds in the Research Budget, payment aborted.</span>")
 	return TRUE
 
 /datum/surgery_step/dissection/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
