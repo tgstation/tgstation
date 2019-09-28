@@ -139,12 +139,9 @@
 	resistance_flags = NONE
 
 /obj/item/clothing/gloves/color/latex/equipped(mob/user, slot)
-	. = ..()
-	if(ishuman(user) && slot == SLOT_GLOVES)
-		ADD_TRAIT(user, TRAIT_QUICK_CARRY, CLOTHING_TRAIT)
+	ADD_TRAIT(user, TRAIT_QUICK_CARRY, CLOTHING_TRAIT)
 
 /obj/item/clothing/gloves/color/latex/dropped(mob/user)
-	. = ..()
 	REMOVE_TRAIT(user, TRAIT_QUICK_CARRY, CLOTHING_TRAIT)
 
 /obj/item/clothing/gloves/color/latex/nitrile
@@ -155,12 +152,9 @@
 	transfer_prints = FALSE
 
 /obj/item/clothing/gloves/color/latex/nitrile/equipped(mob/user, slot)
-	. = ..()
-	if(ishuman(user) && slot == SLOT_GLOVES)
-		ADD_TRAIT(user, TRAIT_QUICKER_CARRY, CLOTHING_TRAIT)
+	ADD_TRAIT(user, TRAIT_QUICKER_CARRY, CLOTHING_TRAIT)
 
 /obj/item/clothing/gloves/color/latex/dropped(mob/user)
-	. = ..()
 	REMOVE_TRAIT(user, TRAIT_QUICKER_CARRY, CLOTHING_TRAIT)
 
 /obj/item/clothing/gloves/color/white

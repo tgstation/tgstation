@@ -949,23 +949,19 @@
 	return (ishuman(target) && !(target.mobility_flags & MOBILITY_STAND))
 
 /mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/target)
-	var/carryspeed = 0 //if you have latex you are faster at grabbing
+	var/carryspeed = 50 //if you have latex you are faster at grabbing
+	var/skills_space = " " //cobby told me to do this
 	if(HAS_TRAIT(src, TRAIT_QUICKER_CARRY))
-		carryspeed = 35
+		carryspeed = 30
+		skills_space = " quickly "
 	else if(HAS_TRAIT(src, TRAIT_QUICK_CARRY))
 		carryspeed = 40
-	else 
-		carryspeed = 50
-	if(can_be_firemanned(target))
-		if(carryspeed == 35)
-			visible_message("<span class='notice'>[src] starts expertly lifting [target] onto their back.</span>",
-			"<span class='notice'>Using your gloves' nanochips, you quickly start to lift [target] onto your back.</span>")
-		else if(carryspeed == 40)
-			visible_message("<span class='notice'>[src] starts quickly lifting [target] onto their back..</span>",
-			"<span class='notice'>You start to lift [target] onto your back, while assisted by the nanochips in your gloves..</span>")
-		else 
-			visible_message("<span class='notice'>[src] starts lifting [target] onto their back...</span>",
-			"<span class='notice'>You start lifting [target] onto your back...</span>")
+		skills_space = " expertly "
+	if(carryspeed < 50)
+		visible_message("<span class='notice'>[src] starts[skills_space]lifting [target] onto their back..</span>",
+		//Joe Medic starts quickly/expertly lifting Grey Tider onto their back..
+		"<span class='notice'>[carrydelay < 35 ? "Using your gloves' nanochips, you" : "You"]You[skills_space]start to lift [target] onto your back[carrydelay == 40 ? ", while assisted by the nanochips in your gloves.." : "..."]</span>")
+		//(Using your gloves' nanochips, you/You) ( /quickly/expertly) start to lift Grey Tider onto your back(, while assisted by the nanochips in your gloves../...)
 		if(do_after(src, carryspeed, TRUE, target))
 			//Second check to make sure they're still valid to be carried
 			if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
