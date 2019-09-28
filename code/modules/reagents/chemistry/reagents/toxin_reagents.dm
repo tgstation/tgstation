@@ -156,7 +156,7 @@
 
 /datum/reagent/toxin/zombiepowder
 	name = "Zombie Powder"
-	description = "A strong neurotoxin that puts the subject into a death-like state."
+	description = "A strong neurotoxin that slows metabolism and motor functions to a death-like state. Causes toxin buildup if used too long."
 	silent_toxin = TRUE
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
@@ -165,14 +165,15 @@
 
 /datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/L)
 	..()
-	L.fakedeath(type)
+	ADD_TRAIT(L, TRAIT_FAKEDEATH, type)
 
 /datum/reagent/toxin/zombiepowder/on_mob_end_metabolize(mob/living/L)
-	L.cure_fakedeath(type)
+	REMOVE_TRAIT(L, TRAIT_FAKEDEATH, type)
 	..()
 
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/carbon/M)
 	M.adjustOxyLoss(0.5*REM, 0)
+	M.adjustStaminaLoss(20, 0)
 	..()
 	. = 1
 
