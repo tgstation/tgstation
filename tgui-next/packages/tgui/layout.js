@@ -14,17 +14,17 @@ const logger = createLogger('Layout');
 
 const ROUTES = {
   airalarm: {
-      scrollable: true,
-      component: () => AirAlarm,
+    scrollable: true,
+    component: () => AirAlarm,
   },
   acclimator: {
-      scrollable: false,
-      component: () => Acclimator,
+    scrollable: false,
+    component: () => Acclimator,
   },
   ai_airlock: {
-      scrollable: false,
-      component: () => AIAirlock
-  }
+    scrollable: false,
+    component: () => AIAirlock,
+  },
 };
 
 export const getRoute = name => ROUTES[name];
@@ -64,7 +64,7 @@ export const Layout = props => {
       {state.toastText && (
         <Toast content={state.toastText} />
       )}
-      {config.fancy && (
+      {config.fancy && scrollable && (
         <Fragment>
           <div className="Layout__resizeHandle__e"
             onMousedown={resizeStartHandler(1, 0)} />

@@ -38,12 +38,15 @@
   user-select: none;
   -ms-user-select: none;
 
-  .fa {
-    margin-right: 6px;
-  }
-
   &:last-child {
     margin-right: 0;
+  }
+}
+
+.Button--hasContent {
+  // Add a margin to the icon to keep it separate from the text
+  .fa {
+    margin-right: 6px;
   }
 }
 

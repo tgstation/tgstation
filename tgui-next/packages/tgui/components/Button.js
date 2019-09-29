@@ -14,6 +14,7 @@ export const Button = props => {
     children,
     onClick,
   } = props;
+  const hasContent = !!(content || children);
   return (
     <div
       className={classes([
@@ -21,6 +22,7 @@ export const Button = props => {
         fluid && 'Button--fluid',
         disabled && 'Button--disabled',
         selected && 'Button--selected',
+        hasContent && 'Button--hasContent',
         (color && typeof color === 'string')
           ? 'Button--color--' + color
           : 'Button--color--normal',

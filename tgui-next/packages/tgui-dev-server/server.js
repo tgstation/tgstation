@@ -67,7 +67,7 @@ const reloadByondCache = async bundleDir => {
   const cachePattern = path.resolve(os.homedir(), './*/BYOND/cache/tmp*');
   const cacheDirs = await util.promisify(glob)(cachePattern, {});
   if (cacheDirs.length === 0) {
-    logger.log(`found no cache directories`);
+    logger.log('found no cache directories');
     return;
   }
   // Start the actual reloading

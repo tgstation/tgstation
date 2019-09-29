@@ -83,6 +83,7 @@ rules:
   jsx-quotes: [error, prefer-double]
   key-spacing: [error, { beforeColon: false, afterColon: true }]
   keyword-spacing: [error, { before: true, after: true }]
+  max-len: [error, { code: 120 }]
   multiline-ternary: [error, always-multiline]
   no-mixed-spaces-and-tabs: error
   no-whitespace-before-property: error

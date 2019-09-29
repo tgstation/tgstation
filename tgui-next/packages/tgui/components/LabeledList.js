@@ -1,5 +1,5 @@
 import { classes } from 'react-tools';
-import { Box } from './Box'
+import { Box } from './Box';
 
 export const LabeledList = props => {
   const { children } = props;

@@ -27,9 +27,9 @@ const getPrefix = (() => {
   if (isNode) {
     // Escape sequences
     const ESC = {
-      dimmed: "\x1b[38;5;240m",
-      bright: "\x1b[37;1m",
-      reset: "\x1b[0m",
+      dimmed: '\x1b[38;5;240m',
+      bright: '\x1b[37;1m',
+      reset: '\x1b[0m',
     };
     return ns => [
       `${ESC.dimmed}${getTimestamp()} ${ESC.bright}${ns}${ESC.reset}`,

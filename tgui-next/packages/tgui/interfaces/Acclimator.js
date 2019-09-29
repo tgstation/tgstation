@@ -1,6 +1,6 @@
 import { act } from 'byond';
 import { Fragment } from 'inferno';
-import { Box, Button, LabeledList, NoticeBox, Section } from '../components';
+import { Box, Button, Section } from '../components';
 import { createLogger } from '../logging';
 
 const logger = createLogger('Acclimator');
@@ -18,15 +18,13 @@ export const Acclimator = props => {
         <Button
           icon="thermometer-half"
           content={data.target_temperature}
-          onClick={() => act(ref, 'set_target_temperature')}
-          />
+          onClick={() => act(ref, 'set_target_temperature')} />
         <Box mt={1} />
         Acceptable Temperature Difference -
         <Button
           icon="thermometer-quarter"
           content={data.allowed_temperature_difference}
-          onClick={() => act(ref, 'set_allowed_temperature_difference')}
-          />
+          onClick={() => act(ref, 'set_allowed_temperature_difference')} />
       </Section>
       <Section title="Status">
         Current Operation - {data.acclimate_state}
@@ -35,8 +33,7 @@ export const Acclimator = props => {
           icon="power-off"
           content={data.enabled ? 'On' : 'Off' }
           selected={data.enabled}
-          onClick={() => act(ref, 'toggle_power')}
-         />
+          onClick={() => act(ref, 'toggle_power')} />
       </Section>
     </Fragment>
   );
