@@ -50,7 +50,7 @@
 /obj/item/reagent_containers/food/snacks/jellysandwich/cherry
 	bonus_reagents = list(/datum/reagent/consumable/cherryjelly = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/cherryjelly = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
-	foodtype = GRAIN | FRUIT
+	foodtype = GRAIN | FRUIT | SUGAR
 
 /obj/item/reagent_containers/food/snacks/notasandwich
 	name = "not-a-sandwich"

@@ -7,11 +7,11 @@
 	item_state = "shotgun"
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	fire_sound = "sound/weapons/shotgunshot.ogg"
+	fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
 	vary_fire_sound = FALSE
 	fire_sound_volume = 90
-	rack_sound = "sound/weapons/shotgunpump.ogg"
-	load_sound = "sound/weapons/shotguninsert.ogg"
+	rack_sound = "sound/weapons/gun/shotgun/rack.ogg"
+	load_sound = "sound/weapons/gun/shotgun/insert_shell.ogg"
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	flags_1 =  CONDUCT_1
@@ -127,6 +127,7 @@
 	burst_size = 1
 	fire_delay = 0
 	pin = /obj/item/firing_pin/implant/pindicate
+	fire_sound = 'sound/weapons/gun/shotgun/shot_alt.ogg'
 	actions_types = list()
 	mag_display = TRUE
 	empty_indicator = TRUE

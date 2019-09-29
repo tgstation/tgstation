@@ -122,7 +122,7 @@
 	to_chat(user, "<span class='notice'>You switch the nozzle setting to [stream_mode ? "\"stream\"":"\"spray\""]. You'll now use [amount_per_transfer_from_this] units per use.</span>")
 
 /obj/item/reagent_containers/spray/attackby(obj/item/I, mob/user, params)
-	var/hotness = I.is_hot()
+	var/hotness = I.get_temperature()
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
 		to_chat(user, "<span class='notice'>You heat [name] with [I]!</span>")
