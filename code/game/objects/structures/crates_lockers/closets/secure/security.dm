@@ -65,8 +65,9 @@
 	new /obj/item/door_remote/civillian(src)
 	new /obj/item/circuitboard/machine/techfab/department/service(src)
 	new /obj/item/storage/photo_album/HoP(src)
-	new /obj/item/card/id/departmental_budget/srv(src)
 	new /obj/item/clothing/shoes/laceup/digitigrade(src) //fulp
+	new /obj/item/clothing/suit/hooded/wintercoat/captain/hop(src) // [FULP] [PNX] [PAPRITO]
+	new /obj/item/card/id/departmental_budget/srv(src)
 
 /obj/structure/closet/secure_closet/hos
 	name = "\proper head of security's locker"
@@ -102,6 +103,7 @@
 	new /obj/item/pinpointer/nuke(src)
 	new /obj/item/circuitboard/machine/techfab/department/security(src)
 	new /obj/item/storage/photo_album/HoS(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/security/head(src) // [FULP] [PNX] [PAPRITO]
 	new /obj/item/card/id/departmental_budget/sec(src)
 
 /obj/structure/closet/secure_closet/warden
