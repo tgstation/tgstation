@@ -254,9 +254,7 @@
 	switch(action)
 		if("Claim")
 			var/mob/M = usr
-			if(iscyborg(M))
-				to_chat(usr,"<span class='warning'>INCOMPATIBLE INTERACTION DETECTED!</span>")
-				return
+
 			var/obj/item/card/id/I = M.get_idcard(TRUE)
 			if(points)
 				if(I?.mining_points += points)
