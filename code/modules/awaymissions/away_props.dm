@@ -1,3 +1,5 @@
+GLOBAL_LIST_INIT(vips,world.file2list("config/donators.txt")) 
+
 /obj/effect/oneway
 	name = "one way effect"
 	desc = "Only lets things in from it's dir."
@@ -51,4 +53,15 @@
 			if(blocked_types[thing.type])
 				return reverse
 	return !reverse
-	
+
+/obj/effect/path_blocker/vip
+	name = "VIP barrier"
+	desc = "You feel insignificant looking at it"
+
+/obj/effect/path_blocker/vip/CanPass(atom/movable/mover, turf/target)
+	if(mover.client_mobs_in_contents)
+		var/mob/M = mover
+		if(!(M.ckey in GLOB.vips))
+			return reverse
+		return !reverse
+	return reverse
