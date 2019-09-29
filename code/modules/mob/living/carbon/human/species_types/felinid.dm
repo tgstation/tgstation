@@ -145,13 +145,17 @@
 /proc/purrbation_remove(mob/living/carbon/human/H, silent = FALSE)
 	if(iscatperson(H))
 		H.set_species(/datum/species/human)
-	else if(ishuman(H))
+	else if(ishuman(H) && !ishumanbasic(H))
+		var/datum/species/target_species = H.dna.species
 		var/organs = H.internal_organs
 		for(var/obj/item/organ/current_organ in organs)
 			if(istype(current_organ, /obj/item/organ/tail/cat))
 				current_organ.Remove(H, TRUE)
+				if(target_species.mutanttail)
+					var/obj/item/organ/new_tail = new target_species.mutanttail
+					new_tail.Insert(H, TRUE, FALSE)
 			if(istype(current_organ, /obj/item/organ/ears/cat))
-				var/obj/item/organ/ears/new_ears = new
+				var/obj/item/organ/new_ears = new target_species.mutantears
 				new_ears.Insert(H, TRUE, FALSE)
 	if(!silent)
 		to_chat(H, "You are no longer a cat.")
