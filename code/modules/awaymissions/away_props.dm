@@ -65,3 +65,4 @@ GLOBAL_LIST_INIT(vips,world.file2list("config/donators.txt"))
 			return reverse
 		return !reverse
 	return reverse
+	
