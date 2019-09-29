@@ -117,10 +117,10 @@ export const decodeHtmlEntities = str => {
   const translate_re = /&(nbsp|amp|quot|lt|gt|apos);/g;
   const translate = {
     nbsp: ' ',
-    amp:  '&',
+    amp: '&',
     quot: '"',
-    lt:   '<',
-    gt:   '>',
+    lt: '<',
+    gt: '>',
     apos: '\'',
   };
   return str

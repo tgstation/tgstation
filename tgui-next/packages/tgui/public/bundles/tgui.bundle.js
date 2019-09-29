@@ -7382,26 +7382,26 @@
   var Ye = function(t) {
     return He(this, ze), t ? 12 * t * .5 + "px" : undefined;
   }.bind(undefined), Xe = function() {
+    var t = this;
     He(this, ze);
-    for (var t = arguments.length, e = new Array(t), n = 0; n < t; n++) e[n] = arguments[n];
-    for (var r = 0, i = e; r < i.length; r++) {
-      var o = i[r];
-      if (o !== undefined && null !== o) return o;
-    }
+    for (var e = arguments.length, n = new Array(e), r = 0; r < e; r++) n[r] = arguments[r];
+    return n.find(function(e) {
+      return He(this, t), e !== undefined && null !== e;
+    }.bind(this));
   }.bind(undefined), Je = function(t) {
     He(this, ze);
-    var e = t.className, n = t.color, r = t.height, i = t.inline, o = t.m, a = void 0 === o ? 0 : o, u = t.mx, c = t.my, f = t.mt, s = t.mb, l = t.ml, d = t.mr, h = t.opacity, p = t.width, v = Ge(t, [ "className", "color", "height", "inline", "m", "mx", "my", "mt", "mb", "ml", "mr", "opacity", "width" ]);
-    return qe({}, v, {
+    var e = t.className, n = t.color, r = t.height, i = t.inline, o = t.m, a = t.mx, u = t.my, c = t.mt, f = t.mb, s = t.ml, l = t.mr, d = t.opacity, h = t.width, p = Ge(t, [ "className", "color", "height", "inline", "m", "mx", "my", "mt", "mb", "ml", "mr", "opacity", "width" ]);
+    return qe({}, p, {
       className: Ve([ e, n && "color-" + n ]),
       style: qe({
         display: i ? "inline-block" : undefined
-      }, v.style, {
-        "margin-top": Ye(Xe(f, c, a)),
-        "margin-bottom": Ye(Xe(s, c, a)),
-        "margin-left": Ye(Xe(l, u, a)),
-        "margin-right": Ye(Xe(d, u, a)),
-        opacity: h,
-        width: p,
+      }, p.style, {
+        "margin-top": Ye(Xe(c, u, o)),
+        "margin-bottom": Ye(Xe(f, u, o)),
+        "margin-left": Ye(Xe(s, a, o)),
+        "margin-right": Ye(Xe(l, a, o)),
+        opacity: d,
+        width: h,
         height: r
       })
     });
@@ -7760,7 +7760,7 @@
     var n = t.state, r = n.config, i = n.data, o = (r.ref, i.environment_data || []), a = {
       0: {
         color: "good",
-        localStatusText: "Danger (Internals Required)"
+        localStatusText: "Optimal"
       },
       1: {
         color: "average",
@@ -7768,7 +7768,7 @@
       },
       2: {
         color: "bad",
-        localStatusText: "Optimal"
+        localStatusText: "Danger (Internals Required)"
       }
     }, u = a[i.danger_level] || a[0];
     return T(2, _n, {

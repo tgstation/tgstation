@@ -83,7 +83,7 @@ const setupApp = () => {
 
   // Render the app
   if (stateJson !== '{}') {
-    logger.log('Found inlined state')
+    logger.log('Found inlined state');
     store.dispatch(backendUpdate(state));
   }
 

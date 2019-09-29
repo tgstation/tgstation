@@ -51,7 +51,7 @@ const AirAlarmStatus = props => {
   const dangerMap = {
     0: {
       color: 'good',
-      localStatusText: 'Danger (Internals Required)',
+      localStatusText: 'Optimal',
     },
     1: {
       color: 'average',
@@ -59,7 +59,7 @@ const AirAlarmStatus = props => {
     },
     2: {
       color: 'bad',
-      localStatusText: 'Optimal',
+      localStatusText: 'Danger (Internals Required)',
     },
   };
   const localStatus = dangerMap[data.danger_level] || dangerMap[0];

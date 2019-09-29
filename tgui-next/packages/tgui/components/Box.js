@@ -16,11 +16,7 @@ const unit = value => value
  * Nullish coalesce function
  */
 const firstDefined = (...args) => {
-  for (let arg of args) {
-    if (arg !== undefined && arg !== null) {
-      return arg;
-    }
-  }
+  return args.find(arg => arg !== undefined && arg !== null);
 };
 
 export const computeBoxProps = props => {
@@ -29,7 +25,7 @@ export const computeBoxProps = props => {
     color,
     height,
     inline,
-    m = 0, mx, my, mt, mb, ml, mr,
+    m, mx, my, mt, mb, ml, mr,
     opacity,
     width,
     ...rest
@@ -43,10 +39,10 @@ export const computeBoxProps = props => {
     style: {
       display: inline ? 'inline-block' : undefined,
       ...rest.style,
-      'margin-top':    unit(firstDefined(mt, my, m)),
+      'margin-top': unit(firstDefined(mt, my, m)),
       'margin-bottom': unit(firstDefined(mb, my, m)),
-      'margin-left':   unit(firstDefined(ml, mx, m)),
-      'margin-right':  unit(firstDefined(mr, mx, m)),
+      'margin-left': unit(firstDefined(ml, mx, m)),
+      'margin-right': unit(firstDefined(mr, mx, m)),
       opacity,
       width,
       height,

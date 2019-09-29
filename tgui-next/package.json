@@ -5,6 +5,12 @@
   ],
   "scripts": {
     "watch": "cd packages/tgui-dev-server && node --experimental-modules server.js",
-    "build": "cd packages/tgui && webpack --mode=production"
+    "build": "cd packages/tgui && webpack --mode=production",
+    "analyze": "cd packages/tgui && webpack --mode=production --env.analyze=1",
+    "lint": "eslint packages"
+  },
+  "dependencies": {
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.4.0"
   }
 }

@@ -1,6 +1,40 @@
 # tgui-next
 
+## Introduction
+
+tgui is a robust user interface framework of /tg/station. It is rendered
+completely in the browser, based on JSON data sent from the server.
+This data flow is always unidirectional, and the only way to make changes
+to the game state is to dispatch actions which are processed on the server,
+in a similar method to native BYOND Topic(). Once the action is processed,
+an updated JSON is sent.
+
+tgui is very different from most UIs you will encounter in BYOND programming,
+and is heavily reliant of Javascript and web technologies as opposed to DM.
+However, if you are familiar with NanoUI (a library which can be found on almost
+every other SS13 codebase), tgui should be fairly easy to pick up.
+
+tgui is a fork of an older tgui (based on Ractive), which is a fork of NanoUI.
+The server-side code (DM) is similar and derived from NanoUI, while the
+clientside is a wholly new project with no code in common.
+
+To get a clearer picture how to create a completely new interface from scratch,
+please refer to this [backend tutorial document](docs/tutorial-and-examples.md).
+If you don't know how backend works, or have very little knowledge about
+both frontend and backend, or simply want a step by step instruction,
+we recommend you first read the document linked above.
+
+This project uses **Inferno** - a very fast UI rendering engine with a similar
+API to React. If you are new to Inferno or React, take your time to read
+these documents:
+
+- [React guide](https://reactjs.org/docs/hello-world.html)
+- [Inferno documentation](https://infernojs.org/docs/guides/components) -
+highlights differences with React.
+
 ## Pre-requisites
+
+You will need these programs to start developing in frontend:
 
 - [Node 12.x](https://nodejs.org)
 - [Yarn](https://yarnpkg.com)
@@ -8,44 +42,47 @@
 
 ## Workflow
 
-For MSys2 users:
+For MSys2 or Linux/Mac users:
 
-- `./build.sh --dev` - launch a dev server
-- `./build.sh --mode=production` - produce production bundles
+- `./build.sh` - build the project in production mode
+- `./build.sh --dev` - launch a development server
+- `./build.sh --lint` - show and fix potential problems the with code
+- `./build.sh --analyze` - run a bundle analyzer
 
 For everyone else:
 
 Run `yarn install`, then:
 
-- `yarn run watch` - launch a dev server
-- `yarn run build` - produce production bundles
+- `yarn run build` - build the project in production mode
+- `yarn run watch` - launch a development server
+- `yarn run lint` - show and fix potential problems with the code
+- `yarn run analyze` - run a bundle analyzer
 
 ## Project structure
 
 - `/packages` - home for reusable bits of functionality, where each folder
 is a self-contained node module.
-- `/packages/tgui/components` - Basic UI building blocks. Always stateless
-and have maximum reusability.
-- `/packages/tgui/interfaces` - Actual in-game interfaces. Take in-game state
-via the `state` prop.
 - `/packages/tgui/index.js` - Application entry point.
-- `/packages/tgui/layout.js` - Root-level component, all in-game interfaces
-go through it. Interface routing is also kept here in `routedComponents`
-variable (it defines which interface component to load).
+- `/packages/tgui/components` - Basic UI building blocks.
+- `/packages/tgui/interfaces` - Actual in-game interfaces.
+Take JSON data via the `state` prop and output an html-like stucture,
+which you can build using already existing UI components, such as buttons,
+boxes, labeled lists and other things.
+- `/packages/tgui/layout.js` - A root-level component, this is where you want
+to register new interfaces, otherwise they simply won't load.
 
-## Introduction to the new component system
+## Introduction to the component system
 
 This component framework is inspired by:
 
 - [Semantic UI](https://react.semantic-ui.com/), which felt great because it
-uses a very terse syntax and **semantic** (aka human readable)
-naming conventions. Some things like `as`, `content` props, and shorthand
-binary props, all are inspired straight from this framework.
+has a very terse syntax and human readable naming system. Some things
+like `as`, `content` props, and shorthand binary props, all are inspired
+straight from this framework.
 - [Material UI](https://material-ui.com/components/box/), which has a very
 good API, mainly for it's Box and Grid components, and has a lot very good
-abstractions in general. It was designed for mobile use (React Native),
-where `html5` elements are not really a thing, so having all `html`-like
-components built into the framework is very convenient.
+abstractions in general. It uses a special unit system for margins, which we
+tried to loosely replicate.
 
 While our framework is none of those, we tried to cherry pick the most useful
 abstractions to use in our code, and hopefully it makes UI development very
@@ -191,7 +228,3 @@ if necessary. Inverse of `grow`.
 remaining space is distributed. It can be a length (e.g. `20%`, `5rem`, etc.),
 an `auto` or `content` keyword.
 - `align: string` - This allows the default alignment (or the one specified by align-items) to be overridden for individual flex items. See: `<Flex>`.
-
-### `???`
-
-To be continued...

@@ -9,24 +9,44 @@ PATH="${PATH}:node_modules/.bin"
 
 yarn install
 
+run-webpack() {
+  cd "${base_dir}/packages/tgui"
+  rm -rf public/bundles
+  exec webpack "${@}"
+}
+
 ## Run a development server
 if [[ ${1} == "--dev" ]]; then
   cd "${base_dir}/packages/tgui-dev-server"
   exec node --experimental-modules server.js
 fi
 
-cd "${base_dir}/packages/tgui"
-rm -rf public/bundles
-
-## Make a production webpack build
-if [[ -z ${1} ]]; then
-  exec webpack --mode=production
+## Run a linter through all packages
+if [[ ${1} == '--lint' ]]; then
+  lint_paths=(
+    './packages/byond/*.js'
+    './packages/functional/*.js'
+    './packages/logging/*.js'
+    './packages/react-tools/*.js'
+    './packages/string-tools/*.js'
+    './packages/tgui/components/**/*.js'
+    './packages/tgui/interfaces/**/*.js'
+    './packages/tgui/*.js'
+    './packages/tgui-dev-server/*.js'
+  )
+  shift
+  exec eslint "${lint_paths[@]}" "${@}"
 fi
 
 ## Analyze the bundle
 if [[ ${1} == '--analyze' ]]; then
-  exec webpack --mode=production --env.analyze=1
+  run-webpack --mode=production --env.analyze=1
+fi
+
+## Make a production webpack build
+if [[ -z ${1} ]]; then
+  run-webpack --mode=production
 fi
 
 ## Run webpack with custom flags
-exec webpack "${@}"
+run-webpack "${@}"

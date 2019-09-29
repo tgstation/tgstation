@@ -24,7 +24,7 @@ export const Layout = props => {
   const { config } = state;
   const route = getRoute(config.interface);
   if (!route) {
-    return `Component for '${config.interface}' was not found.`
+    return `Component for '${config.interface}' was not found.`;
   }
   const Component = route.component();
   const { scrollable } = route;

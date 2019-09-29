@@ -14,14 +14,14 @@ try {
 catch {}
 
 // Timestamping function
-function getTimestamp() {
+const getTimestamp = () => {
   const timestamp = String(Date.now() - inception)
     .padStart(4, '0')
     .padStart(7, ' ');
   const seconds = timestamp.substr(0, timestamp.length - 3);
   const millis = timestamp.substr(-3);
   return `${seconds}.${millis}`;
-}
+};
 
 const getPrefix = (() => {
   if (isNode) {
