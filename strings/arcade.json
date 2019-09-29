@@ -47,12 +47,13 @@
 	],
 
 	"rpg_adjective_xmas": [
+		"Bleak Midwinter",
 		"Blustery",
 		"Frostbitten",
 		"Jolly",
 		"Icy",
-		"Midwinter",
 		"Naughty",
+		"Snowbound",
 		"Tinselly",
 		"Yuletide"
 	],
@@ -82,6 +83,7 @@
 		"Butcher",
 		"Dismember",
 		"Exorcise",
+		"Frighten",
 		"Horrify",
 		"Scare",
 		"Scythe",
@@ -161,6 +163,41 @@
 		"Stalking Stocking",
 		"Yeti",
 		"Yuki-Onna"
+	],
+
+	"rpg_weapon": [
+		"baseball bat",
+		"broken bottle",
+		"crowbar",
+		"curator's whip",
+		"fire axe",
+		"fire extinguisher",
+		"full oxygen tank",
+		"glass shard",
+		"liz o' nine tails",
+		"null rod",
+		"potted plant",
+		"screwdriver",
+		"stunprod",
+		"toolbox"
+	],
+	
+	"rpg_weapon_halloween": [
+		"chainsaw",
+		"lit jack-o-lantern",
+		"machete",
+		"silver dagger",
+		"skeleton femur",
+		"wooden stake"
+	],
+	
+	"rpg_weapon_xmas": [
+		"box cutter",
+		"Christmas-light garrotte",
+		"sharpened icicle",
+		"sprig of mistletoe",
+		"thrown snowball",
+		"whole Christmas tree"
 	]
 
 }

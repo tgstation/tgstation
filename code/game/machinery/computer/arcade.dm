@@ -135,6 +135,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	var/gameover = FALSE
 	var/blocked = FALSE //Player cannot attack/heal while set
 	var/turtle = 0
+	var/list/weapons = list()
 
 /obj/machinery/computer/arcade/battle/Reset()
 	var/name_action
@@ -145,14 +146,17 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		name_action = pick_list(ARCADE_FILE, "rpg_action_halloween")
 		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_halloween")
 		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_halloween")
+		weapons = strings(ARCADE_FILE, "rpg_weapon_halloween")
 	else if(SSevents.holidays && SSevents.holidays[CHRISTMAS])
 		name_action = pick_list(ARCADE_FILE, "rpg_action_xmas")
 		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_xmas")
 		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_xmas")
+		weapons = strings(ARCADE_FILE, "rpg_weapon_xmas")
 	else
 		name_action = pick_list(ARCADE_FILE, "rpg_action")
 		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective")
 		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy")
+		weapons = strings(ARCADE_FILE, "rpg_weapon")
 
 	enemy_name = ("The " + name_part1 + " " + name_part2)
 	name = (name_action + " " + enemy_name)
@@ -186,7 +190,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if (href_list["attack"])
 			blocked = TRUE
 			var/attackamt = rand(2,6)
-			temp = "You attack for [attackamt] damage!"
+			var/weapon = pick(weapons)
+			temp = "You attack with a [weapon] for [attackamt] damage!"
 			playsound(loc, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 			updateUsrDialog()
 			if(turtle > 0)
