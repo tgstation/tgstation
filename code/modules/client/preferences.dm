@@ -68,6 +68,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/randomise = list(RANDOM_UNDERWEAR = TRUE, RANDOM_UNDERWEAR_COLOR = TRUE, RANDOM_UNDERSHIRT = TRUE, RANDOM_SOCKS = TRUE, RANDOM_BACKPACK = TRUE, RANDOM_JUMPSUIT_STYLE = TRUE, RANDOM_HAIRSTYLE = TRUE, RANDOM_HAIR_COLOR = TRUE, RANDOM_FACIAL_HAIRSTYLE = TRUE, RANDOM_FACIAL_HAIR_COLOR = TRUE, RANDOM_SKIN_TONE = TRUE, RANDOM_EYE_COLOR = TRUE)
 	var/list/genders = list(MALE, FEMALE, PLURAL)
 	var/list/friendlyGenders = list("Male" = "male", "Female" = "female", "Other" = "plural")
+	var/phobia = "spiders"
 
 	var/list/custom_names = list()
 	var/preferred_ai_core_display = "Blue"
@@ -465,6 +466,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(mutant_category >= MAX_MUTANT_ROWS)
 					dat += "</td>"
 					mutant_category = 0
+
+			//Adds a thing to select which phobia because I can't be assed to put that in the quirks window
+			if("Phobia" in all_quirks)
+				dat += "<h3>Phobia</h3>"
+
+				dat += "<a href='?_src_=prefs;preference=phobia;task=input'>[phobia]</a><BR>"
 
 			if(CONFIG_GET(flag/join_with_mutant_humans))
 
@@ -1394,9 +1401,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(pickedPDAStyle)
 						pda_style = pickedPDAStyle
 				if("pda_color")
-					var/pickedPDAColor = input(user, "Choose your PDA Interface color.", "Character Preference",pda_color) as color|null
+					var/pickedPDAColor = input(user, "Choose your PDA Interface color.", "Character Preference", pda_color) as color|null
 					if(pickedPDAColor)
 						pda_color = pickedPDAColor
+
+				if("phobia")
+					var/phobiaType = input(user, "What are you scared of?", "Character Preference", phobia) as null|anything in SStraumas.phobia_types
+					if(phobiaType)
+						phobia = phobiaType
 
 		else
 			switch(href_list["preference"])

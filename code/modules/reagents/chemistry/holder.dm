@@ -172,8 +172,9 @@
 
 	return master
 
-/datum/reagents/proc/trans_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE, mob/transfered_by, remove_blacklisted = FALSE, method = null, show_message = TRUE)
+/datum/reagents/proc/trans_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE, mob/transfered_by, remove_blacklisted = FALSE, method = null, show_message = TRUE, round_robin = FALSE)
 	//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
+	//if round_robin=TRUE, so transfer 5 from 15 water, 15 sugar and 15 plasma becomes 10, 15, 15 instead of 13.3333, 13.3333 13.3333. Good if you hate floating point errors
 	var/list/cached_reagents = reagent_list
 	if(!target || !total_volume)
 		return
@@ -192,27 +193,47 @@
 		target_atom = target
 
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
-	var/part = amount / src.total_volume
 	var/trans_data = null
 	var/transfer_log = list()
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/T = reagent
-		if(remove_blacklisted && !T.can_synth)
-			continue
-		var/transfer_amount = T.volume * part
-		if(preserve_data)
-			trans_data = copy_data(T)
-		R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
-		if(method)
-			R.react_single(T, target_atom, method, part, show_message)
-			T.on_transfer(target_atom, method, transfer_amount * multiplier)
-		remove_reagent(T.type, transfer_amount)
-		transfer_log[T.type] = transfer_amount
+	if(!round_robin)
+		var/part = amount / src.total_volume
+		for(var/reagent in cached_reagents)
+			var/datum/reagent/T = reagent
+			if(remove_blacklisted && !T.can_synth)
+				continue
+			var/transfer_amount = T.volume * part
+			if(preserve_data)
+				trans_data = copy_data(T)
+			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
+			if(method)
+				R.react_single(T, target_atom, method, part, show_message)
+				T.on_transfer(target_atom, method, transfer_amount * multiplier)
+			remove_reagent(T.type, transfer_amount)
+			transfer_log[T.type] = transfer_amount
+	else
+		var/to_transfer = amount
+		for(var/reagent in cached_reagents)
+			if(!to_transfer)
+				break
+			var/datum/reagent/T = reagent
+			if(remove_blacklisted && !T.can_synth)
+				continue
+			if(preserve_data)
+				trans_data = copy_data(T)
+			var/transfer_amount = amount
+			if(amount > T.volume)
+				transfer_amount = T.volume
+			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1)
+			to_transfer = max(to_transfer - transfer_amount , 0)
+			if(method)
+				R.react_single(T, target_atom, method, transfer_amount, show_message)
+				T.on_transfer(target_atom, method, transfer_amount * multiplier)
+			remove_reagent(T.type, transfer_amount)
+			transfer_log[T.type] = transfer_amount
 
 	if(transfered_by && target_atom)
 		target_atom.add_hiddenprint(transfered_by) //log prints so admins can figure out who touched it last.
 		log_combat(transfered_by, target_atom, "transferred reagents ([log_list(transfer_log)]) from [my_atom] to")
-	
 
 	update_total()
 	R.update_total()
@@ -902,7 +923,7 @@
 	return picked_reagent
 
 /proc/get_chem_id(chem_name)
-	for(var/A in GLOB.chemical_reagents_list)
-		var/datum/reagent/R = GLOB.chemical_reagents_list[A]
-		if(chem_name == ckey(R.name))
-			return R.type
+	for(var/X in GLOB.chemical_reagents_list)
+		var/datum/reagent/R = GLOB.chemical_reagents_list[X]
+		if(chem_name == replacetext(lowertext(R.name), " ", ""))
+			return X

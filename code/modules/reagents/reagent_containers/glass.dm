@@ -91,7 +91,7 @@
 			reagents.clear_reagents()
 
 /obj/item/reagent_containers/glass/attackby(obj/item/I, mob/user, params)
-	var/hotness = I.is_hot()
+	var/hotness = I.get_temperature()
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
 		to_chat(user, "<span class='notice'>You heat [name] with [I]!</span>")
