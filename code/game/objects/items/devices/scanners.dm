@@ -253,23 +253,26 @@ GENE SCANNER
 		var/mob/living/carbon/C = M
 		var/list/damaged = C.get_damaged_bodyparts(1,1)
 		if(length(damaged)>0 || oxy_loss>0 || tox_loss>0 || fire_loss>0)
-			var/dmgreportlist = "<pre><span class='info'>&#9;Damage:&#9;&#9;\
-							<font color='red'><b>Brute</font></span>&#9;\
+			var/dmgreportlist = "<pre>&#9;<font color='#0000CC'>Damage:</font>&#9;&#9;\
+							<font color='red'><b>Brute</font>&#9;\
 							<font color='orange'>Burn</font>&#9;\
 							<font color='green'>Toxin</font>&#9;\
 							<font color='purple'>Suffocation</b></font><br>\
 
-							&#9;&nbsp;&nbsp;&nbsp;&nbsp;<span class='info'>Overall:&#9;\
+							&#9;&nbsp;&nbsp;&nbsp;&nbsp;<font color='#0000CC'>Overall:</font>&#9;\
 							<font color='red'>[brute_loss]</font>&#9;\
 							<font color='orange'>[fire_loss]</font>&#9;\
 							<font color='green'>[tox_loss]</font>&#9;\
-							<font color='purple'>[oxy_loss]</font></span><br>"
-			for(var/obj/item/bodypart/org in damaged) //head, left arm, right arm, etc.
-				dmgreportlist += "&#9;&nbsp;&nbsp;&nbsp;&nbsp;<span class='info'>[capitalize(org.name)]:&nbsp;&#9;\
-							[(org.brute_dam > 0) ? "<font color='red'>[org.brute_dam]</font></span>" : "<font color='red'>0</font>"]&#9;\
-							[(org.burn_dam > 0) ? "<font color='orange'>[org.burn_dam]</font>" : "<font color='orange'>0</font>"]<br>"
+							<font color='purple'>[oxy_loss]</font><br>"
+
+			for(var/o in damaged)
+				var/obj/item/bodypart/org = o //head, left arm, right arm, etc.
+				dmgreportlist += "&#9;&nbsp;&nbsp;&nbsp;&nbsp;<font color='#0000CC'>[capitalize(org.name)]:</font>&nbsp;&#9;\
+							<font color='red'>[(org.brute_dam > 0) ? "[org.brute_dam]" : "0"]</font>&#9;\
+							<font color='orange'>[(org.burn_dam > 0) ? "[org.burn_dam]" : "0"]</font><br>"
 			dmgreportlist += "</pre>"
 			to_chat(user, "[dmgreportlist]")
+
 
 	//Organ damages report
 	if(ishuman(M))
