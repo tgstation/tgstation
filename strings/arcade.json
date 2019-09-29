@@ -167,7 +167,10 @@
 
 	"rpg_weapon": [
 		"baseball bat",
+		"bike horn",
 		"broken bottle",
+		"chef's knife",
+		"claymore",
 		"crowbar",
 		"curator's whip",
 		"fire axe",
@@ -177,6 +180,7 @@
 		"liz o' nine tails",
 		"null rod",
 		"potted plant",
+		"rolling pin",
 		"screwdriver",
 		"stunprod",
 		"toolbox"
