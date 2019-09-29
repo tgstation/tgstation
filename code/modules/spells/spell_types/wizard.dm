@@ -9,27 +9,33 @@
 	invocation_type = "shout"
 	range = 7
 	cooldown_min = 60 //35 deciseconds reduction per rank
-
 	max_targets = 0
-
-	proj_icon_state = "magicm"
-	proj_name = "a magic missile"
-	proj_lingering = 1
-	proj_type = "/obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile"
-
-	proj_lifespan = 20
-	proj_step_delay = 5
-
-	proj_trail = TRUE
-	proj_trail_lifespan = 5
-	proj_trail_icon_state = "magicmd"
-
+	proj_type = /obj/item/projectile/magic/spell/magic_missile
 	action_icon_state = "magicm"
 	sound = 'sound/magic/magic_missile.ogg'
 
-/obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile
-	amt_knockdown = 60
-	sound = 'sound/magic/mm_hit.ogg'
+/obj/item/projectile/magic/spell/magic_missile
+	name = "magic missile"
+	icon_state = "magicm"
+	range = 20
+	speed = 5
+	trigger_range = 0
+	linger = TRUE
+	nodamage = FALSE
+	paralyze = 60
+	hitsound = 'sound/magic/mm_hit.ogg'
+
+	trail = TRUE
+	trail_lifespan = 5
+	trail_icon_state = "magicmd"
+
+/obj/item/projectile/magic/spell/magic_missile/on_hit(target)
+	. = ..()
+	if(ismob(target))
+		var/mob/M = target
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return BULLET_ACT_BLOCK
 
 /obj/effect/proc_holder/spell/targeted/genetic/mutate
 	name = "Mutate"
@@ -145,6 +151,7 @@
 	range = -1
 	include_user = TRUE
 	cooldown_min = 200 //100 deciseconds reduction per rank
+	action_icon_state = "teleport"
 
 	smoke_spread = 1
 	smoke_amt = 2
@@ -163,7 +170,7 @@
 	desc = "This spell stops time for everyone except for you, allowing you to move freely while your enemies and even projectiles are frozen."
 	charge_max = 500
 	clothes_req = TRUE
-	invocation = "TOKI WO TOMARE"
+	invocation = "TOKI YO TOMARE"
 	invocation_type = "shout"
 	range = 0
 	cooldown_min = 100
@@ -283,7 +290,7 @@
 		var/atom/movable/AM = am
 		if(AM == user || AM.anchored)
 			continue
-		
+
 		if(ismob(AM))
 			var/mob/M = AM
 			if(M.anti_magic_check(anti_magic_check, FALSE))
@@ -324,7 +331,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/cast(list/targets,mob/user = usr)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		playsound(C.loc, 'sound/voice/hiss5.ogg', 80, 1, 1)
+		playsound(C.loc, 'sound/voice/hiss5.ogg', 80, TRUE, TRUE)
 		C.spin(6,1)
 	..(targets, user, 60)
 
@@ -358,6 +365,7 @@
 	clothes_req = TRUE
 	item_type = /obj/item/spellpacket/lightningbolt
 	charge_max = 10
+	action_icon_state = "thrownlightning"
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket/cast(list/targets, mob/user = usr)
 	..()

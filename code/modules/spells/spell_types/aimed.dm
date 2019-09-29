@@ -97,8 +97,8 @@
 	invocation = "UN'LTD P'WAH"
 	invocation_type = "shout"
 	cooldown_min = 30
-	active_icon_state = "lightning"
 	base_icon_state = "lightning"
+	action_icon_state = "lightning0"
 	sound = 'sound/magic/lightningbolt.ogg'
 	active = FALSE
 	projectile_var_overrides = list("tesla_range" = 15, "tesla_power" = 20000, "tesla_flags" = TESLA_MOB_DAMAGE)
@@ -124,6 +124,11 @@
 	deactive_msg = "You extinguish your fireball... for now."
 	active = FALSE
 
+/obj/effect/proc_holder/spell/aimed/fireball/fire_projectile(list/targets, mob/living/user)
+	var/range = 6 + 2*spell_level
+	projectile_var_overrides = list("range" = range)
+	return ..()
+
 /obj/effect/proc_holder/spell/aimed/spell_cards
 	name = "Spell Cards"
 	desc = "Blazing hot rapid-fire homing cards. Send your foes to the shadow realm with their mystical power!"
@@ -137,6 +142,8 @@
 	projectile_amount = 5
 	projectiles_per_fire = 7
 	projectile_type = /obj/item/projectile/spellcard
+	base_icon_state = "spellcard"
+	action_icon_state = "spellcard0"
 	var/datum/weakref/current_target_weakref
 	var/projectile_turnrate = 10
 	var/projectile_pixel_homing_spread = 32

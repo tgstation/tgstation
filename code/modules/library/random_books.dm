@@ -15,8 +15,11 @@
 
 /obj/item/book/random/Initialize()
 	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/book/random/LateInitialize()
 	create_random_books(amount, src.loc, TRUE, category)
-	return INITIALIZE_HINT_QDEL
+	qdel(src)
 
 /obj/item/book/random/triple
 	amount = 3
@@ -30,10 +33,11 @@
 
 /obj/structure/bookcase/random/Initialize(mapload)
 	. = ..()
-	if(!book_count || !isnum(book_count))
-		update_icon()
-		return
-	book_count += pick(-1,-1,0,1,1)
+	if(book_count && isnum(book_count))
+		book_count += pick(-1,-1,0,1,1)
+		. = INITIALIZE_HINT_LATELOAD
+
+/obj/structure/bookcase/random/LateInitialize()
 	create_random_books(book_count, src, FALSE, category)
 	update_icon()
 

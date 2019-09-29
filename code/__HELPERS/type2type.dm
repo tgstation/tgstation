@@ -121,7 +121,6 @@
 
 //Converts an angle (degrees) into an ss13 direction
 /proc/angle2dir(degree)
-
 	degree = SIMPLIFY_DEGREES(degree)
 	switch(degree)
 		if(0 to 22.5) //north requires two angle ranges
@@ -143,8 +142,9 @@
 		if(337.5 to 360)
 			return NORTH
 
-/proc/angle2dir_cardinal(angle)
-	switch(round(angle, 0.1))
+/proc/angle2dir_cardinal(degree)
+	degree = SIMPLIFY_DEGREES(degree)
+	switch(round(degree, 0.1))
 		if(315.5 to 360, 0 to 45.5)
 			return NORTH
 		if(45.6 to 135.5)
@@ -448,16 +448,6 @@
 		else
 			. = max(0, min(255, 138.5177312231 * log(temp - 10) - 305.0447927307))
 
-/proc/fusionpower2text(power) //used when displaying fusion power on analyzers
-	switch(power)
-		if(0 to 5)
-			return "low"
-		if(5 to 20)
-			return "mid"
-		if(20 to 50)
-			return "high"
-		if(50 to INFINITY)
-			return "super"
 
 /proc/color2hex(color)	//web colors
 	if(!color)

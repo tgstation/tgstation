@@ -34,25 +34,26 @@
 
 /obj/machinery/nuclearbomb/syndicate/bananium/really_actually_explode(off_station)
 	Cinematic(get_cinematic_type(off_station), world)
-	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+	for(var/i in GLOB.human_list)
+		var/mob/living/carbon/human/H = i
 		var/turf/T = get_turf(H)
 		if(!T || T.z != z)
 			continue
 		H.Stun(10)
 		var/obj/item/clothing/C
 		if(!H.w_uniform || H.dropItemToGround(H.w_uniform))
-			C = new /obj/item/clothing/under/rank/clown(H)
-			C.add_trait(TRAIT_NODROP, CLOWN_NUKE_TRAIT)
+			C = new /obj/item/clothing/under/rank/civilian/clown(H)
+			ADD_TRAIT(C, TRAIT_NODROP, CLOWN_NUKE_TRAIT)
 			H.equip_to_slot_or_del(C, SLOT_W_UNIFORM)
 
 		if(!H.shoes || H.dropItemToGround(H.shoes))
 			C = new /obj/item/clothing/shoes/clown_shoes(H)
-			C.add_trait(TRAIT_NODROP, CLOWN_NUKE_TRAIT)
+			ADD_TRAIT(C, TRAIT_NODROP, CLOWN_NUKE_TRAIT)
 			H.equip_to_slot_or_del(C, SLOT_SHOES)
 
 		if(!H.wear_mask || H.dropItemToGround(H.wear_mask))
 			C = new /obj/item/clothing/mask/gas/clown_hat(H)
-			C.add_trait(TRAIT_NODROP, CLOWN_NUKE_TRAIT)
+			ADD_TRAIT(C, TRAIT_NODROP, CLOWN_NUKE_TRAIT)
 			H.equip_to_slot_or_del(C, SLOT_WEAR_MASK)
 
 		H.dna.add_mutation(CLOWNMUT)

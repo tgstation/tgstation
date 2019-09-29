@@ -114,7 +114,7 @@
 	airlock_type = /obj/machinery/door/airlock/highsecurity
 	noglass = TRUE
 	material_type = /obj/item/stack/sheet/plasteel
-	material_amt = 6
+	material_amt = 4
 
 /obj/structure/door_assembly/door_assembly_vault
 	name = "vault door assembly"
@@ -124,7 +124,7 @@
 	airlock_type = /obj/machinery/door/airlock/vault
 	noglass = TRUE
 	material_type = /obj/item/stack/sheet/plasteel
-	material_amt = 8
+	material_amt = 6
 
 /obj/structure/door_assembly/door_assembly_shuttle
 	name = "shuttle airlock assembly"

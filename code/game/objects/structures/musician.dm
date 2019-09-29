@@ -73,7 +73,7 @@
 	var/sound/music_played = sound(soundfile)
 	for(var/i in hearing_mobs)
 		var/mob/M = i
-		if(user.has_trait(TRAIT_MUSICIAN) && isliving(M))
+		if(HAS_TRAIT(user, TRAIT_MUSICIAN) && isliving(M))
 			var/mob/living/L = M
 			L.apply_status_effect(STATUS_EFFECT_GOOD_MUSIC)
 		if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
@@ -268,8 +268,7 @@
 
 	else if(href_list["play"])
 		playing = TRUE
-		spawn()
-			playsong(usr)
+		INVOKE_ASYNC(src, .proc/playsong, usr)
 
 	else if(href_list["newline"])
 		var/newline = html_encode(input("Enter your line: ", instrumentObj.name) as text|null)
@@ -382,5 +381,6 @@
 	song.interact(user)
 
 /obj/structure/piano/wrench_act(mob/living/user, obj/item/I)
+	..()
 	default_unfasten_wrench(user, I, 40)
 	return TRUE

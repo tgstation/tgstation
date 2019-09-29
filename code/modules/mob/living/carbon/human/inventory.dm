@@ -78,7 +78,8 @@
 		)
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
-/mob/living/carbon/human/equip_to_slot(obj/item/I, slot)
+// Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
+/mob/living/carbon/human/equip_to_slot(obj/item/I, slot, initial = FALSE)
 	if(!..()) //a check failed or the item has already found its slot
 		return
 
@@ -139,7 +140,7 @@
 
 	//Item is handled and in slot, valid to call callback, for this proc should always be true
 	if(!not_handled)
-		I.equipped(src, slot)
+		I.equipped(src, slot, initial)
 
 	return not_handled //For future deeper overrides
 
@@ -187,9 +188,8 @@
 		if(G.tint)
 			update_tint()
 		if(G.vision_correction)
-			if(has_trait(TRAIT_NEARSIGHT))
+			if(HAS_TRAIT(src, TRAIT_NEARSIGHT))
 				overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
-			adjust_eye_damage(0)
 		if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))
 			update_sight()
 		if(!QDELETED(src))

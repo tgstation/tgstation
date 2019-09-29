@@ -9,7 +9,9 @@
 	var/can_contaminate
 
 /datum/radiation_wave/New(atom/_source, dir, _intensity=0, _range_modifier=RAD_DISTANCE_COEFFICIENT, _can_contaminate=TRUE)
-	source = _source
+
+	source = "[_source] \[[REF(_source)]\]"
+
 	master_turf = get_turf(_source)
 
 	move_dir = dir
@@ -66,6 +68,8 @@
 		place = cmaster_turf
 		for(var/i in 1 to distance)
 			place = get_step(place, dir)
+			if(!place)
+				break
 			atoms += get_rad_contents(place)
 
 	return atoms

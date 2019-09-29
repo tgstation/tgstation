@@ -53,6 +53,7 @@
 		..()
 
 /obj/item/minigunpack/dropped(mob/user)
+	. = ..()
 	if(armed)
 		user.dropItemToGround(gun, TRUE)
 
@@ -109,6 +110,7 @@
 	weapon_weight = WEAPON_HEAVY
 	fire_sound = 'sound/weapons/laser.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/minigun
+	tac_reloads = FALSE
 	casing_ejector = FALSE
 	item_flags = NEEDS_PERMIT | SLOWS_WHILE_IN_HAND
 	var/obj/item/minigunpack/ammo_pack
@@ -125,6 +127,7 @@
 	return
 
 /obj/item/gun/ballistic/minigun/dropped(mob/user)
+	SHOULD_CALL_PARENT(FALSE)
 	if(ammo_pack)
 		ammo_pack.attach_gun(user)
 	else
@@ -136,12 +139,9 @@
 			ammo_pack.overheat += burst_size
 			..()
 		else
-			to_chat(user, "The gun's heat sensor locked the trigger to prevent lens damage.")
+			to_chat(user, "<span class='warning'>The gun's heat sensor locked the trigger to prevent lens damage!</span>")
 
 /obj/item/gun/ballistic/minigun/afterattack(atom/target, mob/living/user, flag, params)
 	if(!ammo_pack || ammo_pack.loc != user)
-		to_chat(user, "You need the backpack power source to fire the gun!")
+		to_chat(user, "<span class='warning'>You need the backpack power source to fire the gun!</span>")
 	. = ..()
-
-/obj/item/gun/ballistic/minigun/dropped(mob/living/user)
-	ammo_pack.attach_gun(user)

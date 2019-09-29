@@ -47,9 +47,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/snow_biodome)
 "ak" = (
-/turf/open/floor/plating/asteroid/snow{
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-	},
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "al" = (
 /obj/effect/decal/cleanable/oil,
@@ -66,15 +64,11 @@
 /turf/open/floor/plating,
 /area/ruin/powered/snow_biodome)
 "ao" = (
-/turf/open/floor/plating/ice{
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-	},
+/turf/open/floor/plating/ice,
 /area/ruin/powered/snow_biodome)
 "ap" = (
 /obj/structure/flora/rock/icy,
-/turf/open/floor/plating/asteroid/snow{
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-	},
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "aq" = (
 /turf/closed/wall/mineral/wood,
@@ -105,22 +99,18 @@
 /area/ruin/powered/snow_biodome)
 "ax" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/canned/beans,
 /turf/open/floor/wood,
 /area/ruin/powered/snow_biodome)
 "ay" = (
 /obj/structure/closet/crate/trashcart,
 /obj/item/trash/semki,
 /obj/item/trash/candy,
-/turf/open/floor/plating/asteroid/snow{
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-	},
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "az" = (
 /obj/structure/flora/tree/pine,
-/turf/open/floor/plating/asteroid/snow{
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-	},
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "aA" = (
 /obj/structure/chair/comfy/brown{
@@ -130,15 +120,11 @@
 /area/ruin/powered/snow_biodome)
 "aB" = (
 /obj/structure/flora/rock/pile/icy,
-/turf/open/floor/plating/asteroid/snow{
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-	},
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "aC" = (
 /obj/structure/flora/tree/dead,
-/turf/open/floor/plating/asteroid/snow{
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-	},
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "aD" = (
 /obj/machinery/door/airlock/wood,
@@ -165,15 +151,11 @@
 /area/ruin/powered/snow_biodome)
 "aI" = (
 /obj/structure/flora/bush,
-/turf/open/floor/plating/asteroid/snow{
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-	},
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "aJ" = (
 /obj/vehicle/ridden/atv,
-/turf/open/floor/plating/asteroid/snow{
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-	},
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "aL" = (
 /obj/structure/displaycase/captain,
@@ -197,15 +179,11 @@
 /area/ruin/powered/snow_biodome)
 "aQ" = (
 /obj/structure/flora/grass/both,
-/turf/open/floor/plating/asteroid/snow{
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-	},
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "aR" = (
 /obj/structure/flora/tree/pine/xmas,
-/turf/open/floor/plating/asteroid/snow{
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-	},
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "bl" = (
 /turf/open/floor/wood{
@@ -217,9 +195,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plating/ice{
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-	},
+/turf/open/floor/plating/ice,
 /area/ruin/powered/snow_biodome)
 "bw" = (
 /obj/machinery/light/small{
@@ -238,9 +214,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plating/asteroid/snow{
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-	},
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "bz" = (
 /obj/machinery/light,
@@ -250,29 +224,21 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/snow{
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-	},
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "bD" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plating/asteroid/snow{
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-	},
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "bM" = (
 /obj/machinery/light,
-/turf/open/floor/plating/asteroid/snow{
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-	},
+/turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "bN" = (
 /obj/machinery/light,
-/turf/open/floor/plating/ice{
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-	},
+/turf/open/floor/plating/ice,
 /area/ruin/powered/snow_biodome)
 "dS" = (
 /obj/machinery/light/small,
@@ -305,7 +271,7 @@
 	},
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/pod/dark{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/ruin/powered/snow_biodome)
 "qt" = (
@@ -358,7 +324,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "HR" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "JZ" = (

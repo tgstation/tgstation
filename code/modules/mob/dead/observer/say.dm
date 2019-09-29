@@ -15,9 +15,7 @@
 			client.dsay(message)
 		return
 
-	src.log_talk(message, LOG_SAY, tag="ghost")
-
-	if(check_emote(message))
+	if(check_emote(message, forced))
 		return
 
 	. = say_dead(message)

@@ -38,7 +38,7 @@
 	return ..()
 
 /obj/structure/AIcore/latejoin_inactive
-	name = "Networked AI core"
+	name = "networked AI core"
 	desc = "This AI core is connected by bluespace transmitters to NTNet, allowing for an AI personality to be downloaded to it on the fly mid-shift."
 	can_deconstruct = FALSE
 	icon_state = "ai-empty"
@@ -50,7 +50,8 @@
 
 /obj/structure/AIcore/latejoin_inactive/examine(mob/user)
 	. = ..()
-	to_chat(user, "Its transmitter seems to be [active? "on" : "off"].")
+	. += "Its transmitter seems to be <b>[active? "on" : "off"]</b>."
+	. += "<span class='notice'>You could [active? "deactivate" : "activate"] it with a multitool.</span>"
 
 /obj/structure/AIcore/latejoin_inactive/proc/is_available()			//If people still manage to use this feature to spawn-kill AI latejoins ahelp them.
 	if(!available)
@@ -74,7 +75,7 @@
 /obj/structure/AIcore/latejoin_inactive/attackby(obj/item/P, mob/user, params)
 	if(P.tool_behaviour == TOOL_MULTITOOL)
 		active = !active
-		to_chat(user, "You [active? "activate" : "deactivate"] [src]'s transmitters.")
+		to_chat(user, "You [active? "activate" : "deactivate"] \the [src]'s transmitters.")
 		return
 	return ..()
 
@@ -109,7 +110,7 @@
 				if(istype(P, /obj/item/circuitboard/aicore))
 					if(!user.transferItemToLoc(P, src))
 						return
-					playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
+					playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 					to_chat(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
 					update_icon()
 					state = CIRCUIT_CORE
@@ -140,7 +141,7 @@
 				if(istype(P, /obj/item/stack/cable_coil))
 					var/obj/item/stack/cable_coil/C = P
 					if(C.get_amount() >= 5)
-						playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
+						playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 						to_chat(user, "<span class='notice'>You start to add cables to the frame...</span>")
 						if(do_after(user, 20, target = src) && state == SCREWED_CORE && C.use(5))
 							to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
@@ -164,7 +165,7 @@
 				if(istype(P, /obj/item/stack/sheet/rglass))
 					var/obj/item/stack/sheet/rglass/G = P
 					if(G.get_amount() >= 2)
-						playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
+						playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 						to_chat(user, "<span class='notice'>You start to put in the glass panel...</span>")
 						if(do_after(user, 20, target = src) && state == CABLED_CORE && G.use(2))
 							to_chat(user, "<span class='notice'>You put in the glass panel.</span>")
@@ -332,9 +333,11 @@ That prevents a few funky behaviors.
 		to_chat(AI, "You have been uploaded to a stationary terminal. Remote device connection restored.")
 		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 		card.AI = null
+		AI.battery = circuit.battery
 		qdel(src)
 	else //If for some reason you use an empty card on an empty AI terminal.
 		to_chat(user, "There is no AI loaded on this terminal!")
 
 /obj/item/circuitboard/aicore
 	name = "AI core (AI Core Board)" //Well, duh, but best to be consistent
+	var/battery = 200 //backup battery for when the AI loses power. Copied to/from AI mobs when carding, and placed here to avoid recharge via deconning the core

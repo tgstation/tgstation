@@ -53,9 +53,9 @@
 	return TRUE
 
 /obj/effect/clockwork/spatial_gateway/examine(mob/user)
-	..()
+	. = ..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		to_chat(user, "<span class='brass'>It has [uses] use\s remaining.</span>")
+		. += "<span class='brass'>It has [uses] use\s remaining.</span>"
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/clockwork/spatial_gateway/attack_ghost(mob/user)
@@ -140,11 +140,11 @@
 		var/mob/living/user = A
 		to_chat(user, "<span class='warning'><b>You pass through [src] and appear elsewhere!</b></span>")
 	linked_gateway.visible_message("<span class='warning'>A shape appears in [linked_gateway] before emerging!</span>")
-	playsound(src, 'sound/effects/empulse.ogg', 50, 1)
-	playsound(linked_gateway, 'sound/effects/empulse.ogg', 50, 1)
+	playsound(src, 'sound/effects/empulse.ogg', 50, TRUE)
+	playsound(linked_gateway, 'sound/effects/empulse.ogg', 50, TRUE)
 	transform = matrix() * 1.5
 	linked_gateway.transform = matrix() * 1.5
-	
+
 	if(!no_cost)
 		uses = max(0, uses - 1)
 		linked_gateway.uses = max(0, linked_gateway.uses - 1)

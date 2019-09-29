@@ -4,7 +4,7 @@
 	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "zombie"
 	icon_living = "zombie"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 0
 	stat_attack = UNCONSCIOUS //braains
 	maxHealth = 100
@@ -31,7 +31,7 @@
 /mob/living/simple_animal/hostile/zombie/proc/setup_visuals()
 	var/datum/preferences/dummy_prefs = new
 	dummy_prefs.pref_species = new /datum/species/zombie
-	dummy_prefs.be_random_body = TRUE
+	dummy_prefs.randomise[RANDOM_BODY] = TRUE
 	var/datum/job/J = SSjob.GetJob(zombiejob)
 	var/datum/outfit/O
 	if(J.outfit)

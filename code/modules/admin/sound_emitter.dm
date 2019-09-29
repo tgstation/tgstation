@@ -34,15 +34,15 @@
 	return
 
 /obj/effect/sound_emitter/examine(mob/user)
-	..()
+	. = ..()
 	if(!isobserver(user))
 		return
-	to_chat(user, "<span class='boldnotice'>Sound File:</span> [sound_file ? sound_file : "None chosen"]")
-	to_chat(user, "<span class='boldnotice'>Mode:</span> [motus_operandi]</span>")
-	to_chat(user, "<span class='boldnotice'>Range:</span> [emitter_range]</span>")
-	to_chat(user, "<b>Sound is playing at [sound_volume]% volume.</b>")
+	. += "<span class='boldnotice'>Sound File:</span> [sound_file ? sound_file : "None chosen"]"
+	. += "<span class='boldnotice'>Mode:</span> [motus_operandi]</span>"
+	. += "<span class='boldnotice'>Range:</span> [emitter_range]</span>"
+	. += "<b>Sound is playing at [sound_volume]% volume.</b>"
 	if(user.client.holder)
-		to_chat(user, "<b>Alt-click it to quickly activate it!</b>")
+		. += "<b>Alt-click it to quickly activate it!</b>"
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/sound_emitter/attack_ghost(mob/user)

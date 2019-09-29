@@ -8,7 +8,8 @@
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	var/plantname = "Plants"		// Name of plant when planted.
-	var/product						// A type path. The thing that is created when the plant is harvested.
+	var/obj/item/product						// A type path. The thing that is created when the plant is harvested.
+	var/productdesc
 	var/species = ""				// Used to update icons. Should match the name in the sprites unless all icon_* are overridden.
 
 	var/growing_icon = 'icons/obj/hydroponics/growing.dmi' //the file that stores the sprites of the growing plant from this seed.
@@ -67,6 +68,11 @@
 
 		for(var/reag_id in reagents_add)
 			genes += new /datum/plant_gene/reagent(reag_id, reagents_add[reag_id])
+		reagents_from_genes() //quality coding
+
+/obj/item/seeds/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>Use a pen on it to rename it or change its description.</span>"
 
 /obj/item/seeds/proc/Copy()
 	var/obj/item/seeds/S = new type(null, 1)
@@ -79,6 +85,10 @@
 	S.potency = potency
 	S.weed_rate = weed_rate
 	S.weed_chance = weed_chance
+	S.name = name
+	S.plantname = plantname
+	S.desc = desc
+	S.productdesc = productdesc
 	S.genes = list()
 	for(var/g in genes)
 		var/datum/plant_gene/G = g
@@ -93,6 +103,18 @@
 	reagents_add = list()
 	for(var/datum/plant_gene/reagent/R in genes)
 		reagents_add[R.reagent_id] = R.rate
+
+///This proc adds a mutability_flag to a gene
+/obj/item/seeds/proc/set_mutability(typepath, mutability)
+	var/datum/plant_gene/g = get_gene(typepath)
+	if(g)
+		g.mutability_flags |=  mutability
+
+///This proc removes a mutability_flag from a gene
+/obj/item/seeds/proc/unset_mutability(typepath, mutability)
+	var/datum/plant_gene/g = get_gene(typepath)
+	if(g)
+		g.mutability_flags &=  ~mutability
 
 /obj/item/seeds/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0)
 	adjust_lifespan(rand(-lifemut,lifemut))
@@ -144,11 +166,18 @@
 	var/product_name
 	while(t_amount < getYield())
 		var/obj/item/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, src)
+		if(parent.myseed.plantname != initial(parent.myseed.plantname))
+			t_prod.name = lowertext(parent.myseed.plantname)
+		if(productdesc)
+			t_prod.desc = productdesc
+		t_prod.seed.name = parent.myseed.name
+		t_prod.seed.desc = parent.myseed.desc
+		t_prod.seed.plantname = parent.myseed.plantname
 		result.Add(t_prod) // User gets a consumable
 		if(!t_prod)
 			return
 		t_amount++
-		product_name = t_prod.name
+		product_name = parent.myseed.plantname
 	if(getYield() >= 1)
 		SSblackbox.record_feedback("tally", "food_harvested", getYield(), product_name)
 	parent.update_tray(user)
@@ -164,9 +193,9 @@
 		var/amount = 1 + round(potency * reagents_add[rid], 1)
 
 		var/list/data = null
-		if(rid == "blood") // Hack to make blood in plants always O-
+		if(rid == /datum/reagent/blood) // Hack to make blood in plants always O-
 			data = list("blood_type" = "O-")
-		if(rid == "nutriment" || rid == "vitamin")
+		if(rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin)
 			// apple tastes of apple.
 			if(istype(T, /obj/item/reagent_containers/food/snacks/grown))
 				var/obj/item/reagent_containers/food/snacks/grown/grown_edible = T
@@ -320,13 +349,55 @@
 			to_chat(user, "<span class='notice'>[text]</span>")
 
 		return
+
+	if(istype(O, /obj/item/pen))
+		var/choice = input("What would you like to change?") in list("Plant Name", "Seed Description", "Product Description", "Cancel")
+		if(!user.canUseTopic(src, BE_CLOSE))
+			return
+		switch(choice)
+			if("Plant Name")
+				var/newplantname = reject_bad_text(stripped_input(user, "Write a new plant name:", name, plantname))
+				if(!user.canUseTopic(src, BE_CLOSE))
+					return
+				if (length(newplantname) > 20)
+					to_chat(user, "That name is too long!")
+					return
+				if(!newplantname)
+					to_chat(user, "That name is invalid.")
+					return
+				else
+					name = "[lowertext(newplantname)]"
+					plantname = newplantname
+			if("Seed Description")
+				var/newdesc = stripped_input(user, "Write a new description:", name, desc)
+				if(!user.canUseTopic(src, BE_CLOSE))
+					return
+				if (length(newdesc) > 180)
+					to_chat(user, "That description is too long!")
+					return
+				if(!newdesc)
+					to_chat(user, "That description is invalid.")
+					return
+				else
+					desc = newdesc
+			if("Product Description")
+				if(product && !productdesc)
+					productdesc = initial(product.desc)
+				var/newproductdesc = stripped_input(user, "Write a new description:", name, productdesc)
+				if(!user.canUseTopic(src, BE_CLOSE))
+					return
+				if (length(newproductdesc) > 180)
+					to_chat(user, "That description is too long!")
+					return
+				if(!newproductdesc)
+					to_chat(user, "That description is invalid.")
+					return
+				else
+					productdesc = newproductdesc
+			else
+				return
+
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
-
-
-
-
-
-
 
 // Checks plants for broken tray icons. Use Advanced Proc Call to activate.
 // Maybe some day it would be used as unit test.

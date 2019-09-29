@@ -4,11 +4,21 @@ buttoncolor(selector, color)
   &.{selector}
     transition: background-color 0.5s
     background-color: color
-  &.{selector}.active:hover,
-  &.{selector}.active:focus
-    transition: background-color 0.25s
-    background-color: lighten(color, button-lighten-hover)
-    outline: 0
+    &.active:hover,
+    &.active:focus
+      transition: background-color 0.25s
+      background-color: lighten(color, button-lighten-hover)
+      outline: 0
+
+    if selector is not 'disabled'
+      &:not(.active)
+        background-image: repeating-linear-gradient(
+          -45deg,
+          color,
+          color 1px,
+          button-color-disabled 1px,
+          button-color-disabled 2px
+        )
 
 span.button
   @extend {context} $fontReset

@@ -6,10 +6,11 @@
 	time_coeff = 5
 	instability = 5
 	difficulty = 8
+	power_coeff = 1
 
 
 /datum/mutation/human/radioactive/on_life()
-	radiation_pulse(owner, 20)
+	radiation_pulse(owner, 20 * GET_MUTATION_POWER(src))
 
 /datum/mutation/human/radioactive/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	..()

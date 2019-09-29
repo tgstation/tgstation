@@ -137,6 +137,7 @@
 	command_radio = TRUE
 
 /datum/outfit/syndicate/no_crystals
+	name = "Syndicate Operative - Reinforcement"
 	tc = 0
 
 /datum/outfit/syndicate/post_equip(mob/living/carbon/human/H)
@@ -146,7 +147,7 @@
 	if(command_radio)
 		R.command = TRUE
 
-	if(tc)
+	if(ispath(uplink_type, /obj/item/uplink/nuclear) || tc) // /obj/item/uplink/nuclear understands 0 tc
 		var/obj/item/U = new uplink_type(H, H.key, tc)
 		H.equip_to_slot_or_del(U, SLOT_IN_BACKPACK)
 

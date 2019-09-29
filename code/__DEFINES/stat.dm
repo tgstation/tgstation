@@ -8,6 +8,9 @@
 #define UNCONSCIOUS	2
 #define DEAD		3
 
+//Maximum healthiness an individual can have
+#define MAX_SATIETY 600
+
 // bitflags for machine stat variable
 #define BROKEN	(1<<0)
 #define NOPOWER	(1<<1)

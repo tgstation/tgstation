@@ -63,8 +63,10 @@
 	var/honorific
 	if(owner.current.gender == FEMALE)
 		honorific = "Ms."
-	else
+	else if(owner.current.gender == MALE)
 		honorific = "Mr."
+	else
+		honorific = "Mx."
 	if(GLOB.possible_changeling_IDs.len)
 		changelingID = pick(GLOB.possible_changeling_IDs)
 		GLOB.possible_changeling_IDs -= changelingID
@@ -95,7 +97,7 @@
 	if(istype(C))
 		var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
 		if(B && (B.decoy_override != initial(B.decoy_override)))
-			B.vital = TRUE
+			B.organ_flags |= ORGAN_VITAL
 			B.decoy_override = FALSE
 	remove_changeling_powers()
 	. = ..()
@@ -148,6 +150,15 @@
 		if(istype(S) && S.needs_button)
 			S.Grant(owner.current)
 
+///Handles stinging without verbs.
+/datum/antagonist/changeling/proc/stingAtom(mob/living/carbon/ling, atom/A)
+	if(!chosen_sting || A == ling || !istype(ling) || ling.stat)
+		return
+	if(!chosen_sting.try_to_sting(ling, A))
+		return
+	ling.changeNext_move(CLICK_CD_MELEE)
+	return COMSIG_MOB_CANCEL_CLICKON
+
 /datum/antagonist/changeling/proc/has_sting(datum/action/changeling/power)
 	for(var/P in purchasedpowers)
 		var/datum/action/changeling/otherpower = P
@@ -170,23 +181,23 @@
 		return
 
 	if(absorbedcount < thepower.req_dna)
-		to_chat(owner.current, "We lack the energy to evolve this ability!")
+		to_chat(owner.current, "<span class='warning'>We lack the energy to evolve this ability!</span>")
 		return
 
 	if(has_sting(thepower))
-		to_chat(owner.current, "We have already evolved this ability!")
+		to_chat(owner.current, "<span class='warning'>We have already evolved this ability!</span>")
 		return
 
 	if(thepower.dna_cost < 0)
-		to_chat(owner.current, "We cannot evolve this ability.")
+		to_chat(owner.current, "<span class='warning'>We cannot evolve this ability!</span>")
 		return
 
 	if(geneticpoints < thepower.dna_cost)
-		to_chat(owner.current, "We have reached our capacity for abilities.")
+		to_chat(owner.current, "<span class='warning'>We have reached our capacity for abilities!</span>")
 		return
 
-	if(owner.current.has_trait(TRAIT_DEATHCOMA))//To avoid potential exploits by buying new powers while in stasis, which clears your verblist.
-		to_chat(owner.current, "We lack the energy to evolve new abilities right now.")
+	if(HAS_TRAIT(owner.current, TRAIT_DEATHCOMA))//To avoid potential exploits by buying new powers while in stasis, which clears your verblist.
+		to_chat(owner.current, "<span class='warning'>We lack the energy to evolve new abilities right now!</span>")
 		return
 
 	geneticpoints -= thepower.dna_cost
@@ -195,7 +206,7 @@
 
 /datum/antagonist/changeling/proc/readapt()
 	if(!ishuman(owner.current))
-		to_chat(owner.current, "<span class='danger'>We can't remove our evolutions in this form!</span>")
+		to_chat(owner.current, "<span class='warning'>We can't remove our evolutions in this form!</span>")
 		return
 	if(canrespec)
 		to_chat(owner.current, "<span class='notice'>We have removed our evolutions from this form, and are now ready to readapt.</span>")
@@ -204,7 +215,7 @@
 		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, "Readapt")
 		return 1
 	else
-		to_chat(owner.current, "<span class='danger'>You lack the power to readapt your evolutions!</span>")
+		to_chat(owner.current, "<span class='warning'>You lack the power to readapt your evolutions!</span>")
 		return 0
 
 //Called in life()
@@ -246,11 +257,11 @@
 		if(verbose)
 			to_chat(user, "<span class='warning'>[target] is not compatible with our biology.</span>")
 		return
-	if(target.has_trait(TRAIT_BADDNA))
+	if(HAS_TRAIT(target, TRAIT_BADDNA))
 		if(verbose)
 			to_chat(user, "<span class='warning'>DNA of [target] is ruined beyond usability!</span>")
 		return
-	if(target.has_trait(TRAIT_HUSK))
+	if(HAS_TRAIT(target, TRAIT_HUSK))
 		if(verbose)
 			to_chat(user, "<span class='warning'>[target]'s body is ruined beyond usability!</span>")
 		return
@@ -286,14 +297,14 @@
 	var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
 	for(var/slot in slots)
 		if(slot in H.vars)
-			var/obj/item/I = H.vars[slot]
+			var/obj/item/clothing/I = H.vars[slot]
 			if(!I)
 				continue
 			prof.name_list[slot] = I.name
 			prof.appearance_list[slot] = I.appearance
 			prof.flags_cover_list[slot] = I.flags_cover
-			prof.item_color_list[slot] = I.item_color
 			prof.item_state_list[slot] = I.item_state
+			prof.mob_overlay_icon_list[slot] = I.mob_overlay_icon
 			prof.exists_list[slot] = 1
 		else
 			continue
@@ -348,14 +359,14 @@
 	if(istype(C))
 		var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
 		if(B)
-			B.vital = FALSE
+			B.organ_flags &= ~ORGAN_VITAL
 			B.decoy_override = TRUE
+		RegisterSignal(C, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/stingAtom)
 	update_changeling_icons_added()
-	return
 
 /datum/antagonist/changeling/remove_innate_effects()
 	update_changeling_icons_removed()
-	return
+	UnregisterSignal(owner.current, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
 
 
 /datum/antagonist/changeling/greet()
@@ -508,8 +519,8 @@
 	var/list/appearance_list = list()
 	var/list/flags_cover_list = list()
 	var/list/exists_list = list()
-	var/list/item_color_list = list()
 	var/list/item_state_list = list()
+	var/list/mob_overlay_icon_list = list()
 
 	var/underwear
 	var/undershirt
@@ -528,11 +539,11 @@
 	newprofile.appearance_list = appearance_list.Copy()
 	newprofile.flags_cover_list = flags_cover_list.Copy()
 	newprofile.exists_list = exists_list.Copy()
-	newprofile.item_color_list = item_color_list.Copy()
 	newprofile.item_state_list = item_state_list.Copy()
 	newprofile.underwear = underwear
 	newprofile.undershirt = undershirt
 	newprofile.socks = socks
+	newprofile.mob_overlay_icon_list = mob_overlay_icon_list.Copy()
 
 
 /datum/antagonist/changeling/xenobio

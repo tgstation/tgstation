@@ -8,7 +8,8 @@ div[data-tooltip], span[data-tooltip]
     width: 250px
     padding: 10px
     transform: translateX(-50%)
-
+    pointer-events: none
+  
     visibility: hidden
     opacity: 0
 
@@ -21,6 +22,7 @@ div[data-tooltip], span[data-tooltip]
     background-color: tooltip-color-background
 
   &:hover::after
+    pointer-events: none
     visibility: visible
     opacity: 1
 

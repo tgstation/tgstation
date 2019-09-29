@@ -2,7 +2,7 @@
 	name = "timer"
 	desc = "Used to time things. Works well with contraptions which has to count down. Tick tock."
 	icon_state = "timer"
-	materials = list(MAT_METAL=500, MAT_GLASS=50)
+	materials = list(/datum/material/iron=500, /datum/material/glass=50)
 	attachable = TRUE
 
 	var/timing = FALSE
@@ -31,8 +31,8 @@
 	. = ..()
 
 /obj/item/assembly/timer/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The timer is [timing ? "counting down from [time]":"set for [time] seconds"].</span>")
+	. = ..()
+	. += "<span class='notice'>The timer is [timing ? "counting down from [time]":"set for [time] seconds"].</span>"
 
 /obj/item/assembly/timer/activate()
 	if(!..())

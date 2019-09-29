@@ -155,6 +155,10 @@
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "aF" = (
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed";
+	use_power = 0
+	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "aG" = (
@@ -273,9 +277,7 @@
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "aX" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
+/obj/machinery/stasis,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "aY" = (

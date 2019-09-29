@@ -134,9 +134,14 @@
 		air_update_turf(1)
 
 /obj/machinery/atmospherics/components/proc/safe_input(var/title, var/text, var/default_set)
-	var/new_value = input(usr,text,title,default_set) as num
+	var/new_value = input(usr,text,title,default_set) as num|null
+	
+	if (isnull(new_value))
+		return default_set
+	
 	if(usr.canUseTopic(src))
 		return new_value
+		
 	return default_set
 
 // Helpers
@@ -145,7 +150,7 @@
 	for(var/i in 1 to device_type)
 		var/datum/pipeline/parent = parents[i]
 		if(!parent)
-			throw EXCEPTION("Component is missing a pipenet! Rebuilding...")
+			WARNING("Component is missing a pipenet! Rebuilding...")
 			build_network()
 		parent.update = 1
 
@@ -164,5 +169,5 @@
 
 // Tool acts
 
-/obj/machinery/atmospherics/components/analyzer_act(mob/living/user, obj/item/I)
-	atmosanalyzer_scan(airs, user, src)
+/obj/machinery/atmospherics/components/return_analyzable_air()
+	return airs

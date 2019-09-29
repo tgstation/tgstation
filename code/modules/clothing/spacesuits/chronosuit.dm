@@ -98,7 +98,7 @@
 		user.anchored = FALSE
 		teleporting = 0
 		for(var/obj/item/I in user.held_items)
-			I.remove_trait(TRAIT_NODROP, CHRONOSUIT_TRAIT)
+			REMOVE_TRAIT(I, TRAIT_NODROP, CHRONOSUIT_TRAIT)
 		if(camera)
 			camera.remove_target_ui()
 			camera.forceMove(user)
@@ -133,7 +133,7 @@
 		user.ExtinguishMob()
 
 		for(var/obj/item/I in user.held_items)
-			I.add_trait(TRAIT_NODROP, CHRONOSUIT_TRAIT)
+			ADD_TRAIT(I, TRAIT_NODROP, CHRONOSUIT_TRAIT)
 		user.animate_movement = NO_STEPS
 		user.changeNext_move(8 + phase_in_ds)
 		user.notransform = 1
@@ -192,9 +192,9 @@
 			if(user.head && istype(user.head, /obj/item/clothing/head/helmet/space/chronos))
 				to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Mounting /dev/helm")
 				helmet = user.head
-				helmet.add_trait(TRAIT_NODROP, CHRONOSUIT_TRAIT)
+				ADD_TRAIT(helmet, TRAIT_NODROP, CHRONOSUIT_TRAIT)
 				helmet.suit = src
-				add_trait(TRAIT_NODROP, CHRONOSUIT_TRAIT)
+				ADD_TRAIT(src, TRAIT_NODROP, CHRONOSUIT_TRAIT)
 				to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Starting brainwave scanner")
 				to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Starting ui display driver")
 				to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Initializing chronowalk4-view")
@@ -213,7 +213,7 @@
 		activating = 1
 		var/mob/living/carbon/human/user = src.loc
 		var/hard_landing = teleporting && force
-		remove_trait(TRAIT_NODROP, CHRONOSUIT_TRAIT)
+		REMOVE_TRAIT(src, TRAIT_NODROP, CHRONOSUIT_TRAIT)
 		cooldown = world.time + cooldowntime * 1.5
 		activated = 0
 		activating = 0
@@ -234,7 +234,7 @@
 						to_chat(user, "\[ <span style='color: #ff5500;'>ok</span> \] Unmounting /dev/helmet")
 					to_chat(user, "logout")
 		if(helmet)
-			helmet.remove_trait(TRAIT_NODROP, CHRONOSUIT_TRAIT)
+			REMOVE_TRAIT(helmet, TRAIT_NODROP, CHRONOSUIT_TRAIT)
 			helmet.suit = null
 			helmet = null
 		if(camera)

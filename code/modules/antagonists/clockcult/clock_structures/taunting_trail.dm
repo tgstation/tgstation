@@ -34,7 +34,7 @@
 	return ..()
 
 /obj/structure/destructible/clockwork/taunting_trail/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(src, 'sound/items/welder.ogg', 50, 1)
+	playsound(src, 'sound/items/welder.ogg', 50, TRUE)
 
 /obj/structure/destructible/clockwork/taunting_trail/CanPass(atom/movable/mover, turf/target)
 	return TRUE
@@ -53,7 +53,7 @@
 
 /obj/structure/destructible/clockwork/taunting_trail/proc/affect_mob(mob/living/L)
 	if(istype(L) && !is_servant_of_ratvar(L))
-		if(!L.anti_magic_check(major = FALSE))
+		if(!L.anti_magic_check(chargecost = 0))
 			L.confused = min(L.confused + 15, 50)
 			L.dizziness = min(L.dizziness + 15, 50)
 			if(L.confused >= 25)

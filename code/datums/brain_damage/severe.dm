@@ -13,11 +13,11 @@
 	lose_text = "<span class='notice'>You suddenly remember how to speak.</span>"
 
 /datum/brain_trauma/severe/mute/on_gain()
-	owner.add_trait(TRAIT_MUTE, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_MUTE, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/mute/on_lose()
-	owner.remove_trait(TRAIT_MUTE, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_MUTE, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/aphasia
@@ -109,13 +109,13 @@
 /datum/brain_trauma/severe/paralysis/on_gain()
 	..()
 	for(var/X in paralysis_traits)
-		owner.add_trait(X, "trauma_paralysis")
+		ADD_TRAIT(owner, X, "trauma_paralysis")
 	owner.update_disabled_bodyparts()
 
 /datum/brain_trauma/severe/paralysis/on_lose()
 	..()
 	for(var/X in paralysis_traits)
-		owner.remove_trait(X, "trauma_paralysis")
+		REMOVE_TRAIT(owner, X, "trauma_paralysis")
 	owner.update_disabled_bodyparts()
 
 /datum/brain_trauma/severe/paralysis/paraplegic
@@ -171,7 +171,7 @@
 		stress = max(stress - 4, 0)
 
 /datum/brain_trauma/severe/monophobia/proc/check_alone()
-	if(owner.has_trait(TRAIT_BLIND))
+	if(HAS_TRAIT(owner, TRAIT_BLIND))
 		return TRUE
 	for(var/mob/M in oview(owner, 7))
 		if(!isliving(M)) //ghosts ain't people
@@ -233,11 +233,11 @@
 	lose_text = "<span class='notice'>You feel in control of your hands again.</span>"
 
 /datum/brain_trauma/severe/discoordination/on_gain()
-	owner.add_trait(TRAIT_MONKEYLIKE, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_MONKEYLIKE, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/discoordination/on_lose()
-	owner.remove_trait(TRAIT_MONKEYLIKE, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_MONKEYLIKE, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/pacifism
@@ -248,11 +248,11 @@
 	lose_text = "<span class='notice'>You no longer feel compelled to not harm.</span>"
 
 /datum/brain_trauma/severe/pacifism/on_gain()
-	owner.add_trait(TRAIT_PACIFISM, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_PACIFISM, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/pacifism/on_lose()
-	owner.remove_trait(TRAIT_PACIFISM, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/hypnotic_stupor

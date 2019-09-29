@@ -53,7 +53,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "al" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -75,7 +75,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aq" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -419,13 +419,13 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/shuttle/escape)
 "aX" = (
-/obj/machinery/sleeper,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "aY" = (
@@ -455,6 +455,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/vending/wallmed/pubby{
+	pixel_y = 30
+	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "ba" = (
@@ -480,7 +483,7 @@
 	layer = 2.9
 	},
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = 3;
 	pixel_y = 4
 	},
@@ -500,7 +503,7 @@
 /obj/structure/window/reinforced,
 /obj/structure/table,
 /obj/item/storage/bag/tray,
-/obj/item/clothing/under/waiter,
+/obj/item/clothing/under/suit/waiter,
 /turf/open/floor/plasteel/cafeteria,
 /area/shuttle/escape)
 "bg" = (
@@ -574,7 +577,7 @@
 /area/shuttle/escape)
 "br" = (
 /obj/machinery/light,
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -584,7 +587,7 @@
 /area/shuttle/escape)
 "bt" = (
 /obj/machinery/light,
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -596,7 +599,7 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bv" = (
-/obj/structure/window/plastitanium,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -649,7 +652,7 @@
 /area/shuttle/escape)
 "bE" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/plastitanium,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bG" = (
@@ -685,7 +688,6 @@
 	height = 8;
 	name = "PubbyStation emergency shuttle";
 	port_direction = 4;
-	preferred_direction = 1;
 	width = 46
 	},
 /turf/open/floor/plating,

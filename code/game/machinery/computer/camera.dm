@@ -17,6 +17,11 @@
 		network -= i
 		network += lowertext(i)
 
+/obj/machinery/computer/security/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	for(var/i in network)
+		network -= i
+		network += "[idnum][i]"
+
 /obj/machinery/computer/security/check_eye(mob/user)
 	if( (stat & (NOPOWER|BROKEN)) || user.incapacitated() || user.eye_blind )
 		user.unset_machine()
@@ -54,12 +59,12 @@
 	if(stat)
 		return
 	if (!network)
-		throw EXCEPTION("No camera network")
 		user.unset_machine()
+		CRASH("No camera network")
 		return
 	if (!(islist(network)))
-		throw EXCEPTION("Camera network is not a list")
 		user.unset_machine()
+		CRASH("Camera network is not a list")
 		return
 	if(..())
 		user.unset_machine()
@@ -76,7 +81,7 @@
 		if(!(user in watchers))
 			user.unset_machine() // no usable camera on the network, we disconnect the user from the computer.
 			return
-	playsound(src, 'sound/machines/terminal_prompt.ogg', 25, 0)
+	playsound(src, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
 	use_camera_console(user)
 
 /obj/machinery/computer/security/proc/use_camera_console(mob/user)
@@ -86,14 +91,14 @@
 		return
 	if(!t)
 		user.unset_machine()
-		playsound(src, 'sound/machines/terminal_off.ogg', 25, 0)
+		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 		return
 
 	var/obj/machinery/camera/C = camera_list[t]
 
 	if(t == "Cancel")
 		user.unset_machine()
-		playsound(src, 'sound/machines/terminal_off.ogg', 25, 0)
+		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 		return
 	if(C)
 		var/camera_fail = 0
@@ -110,7 +115,7 @@
 			user.unset_machine()
 			return 0
 
-		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
+		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
 		if(isAI(user))
 			var/mob/living/silicon/ai/A = user
 			A.eyeobj.setLoc(get_turf(C))
@@ -227,7 +232,7 @@
 
 /obj/machinery/computer/security/telescreen/entertainment/Initialize()
 	. = ..()
-	AddComponent(/datum/component/redirect, list(COMSIG_CLICK = CALLBACK(src, .proc/BigClick)))
+	RegisterSignal(src, COMSIG_CLICK, .proc/BigClick)
 
 // Bypass clickchain to allow humans to use the telescreen from a distance
 /obj/machinery/computer/security/telescreen/entertainment/proc/BigClick()
@@ -272,7 +277,7 @@
 /obj/machinery/computer/security/telescreen/toxins
 	name = "bomb test site monitor"
 	desc = "A telescreen that connects to the bomb test site's camera."
-	network = list("toxin")
+	network = list("toxins")
 
 /obj/machinery/computer/security/telescreen/engine
 	name = "engine monitor"

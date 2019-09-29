@@ -9,7 +9,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
-	grind_results = list("iodine" = 4)
+	grind_results = list(/datum/reagent/iodine = 4)
 	var/datum/picture/picture
 	var/scribble		//Scribble on the back.
 
@@ -35,16 +35,16 @@
 /obj/item/photo/update_icon()
 	if(!istype(picture) || !picture.picture_image)
 		return
-	var/icon/I = picture.get_small_icon()
+	var/icon/I = picture.get_small_icon(initial(icon_state))
 	if(I)
 		icon = I
 
 /obj/item/photo/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is taking one last look at \the [src]! It looks like [user.p_theyre()] giving in to death!</span>")//when you wanna look at photo of waifu one last time before you die...
 	if (user.gender == MALE)
-		playsound(user, 'sound/voice/human/manlaugh1.ogg', 50, 1)//EVERY TIME I DO IT MAKES ME LAUGH
+		playsound(user, 'sound/voice/human/manlaugh1.ogg', 50, TRUE)//EVERY TIME I DO IT MAKES ME LAUGH
 	else if (user.gender == FEMALE)
-		playsound(user, 'sound/voice/human/womanlaugh.ogg', 50, 1)
+		playsound(user, 'sound/voice/human/womanlaugh.ogg', 50, TRUE)
 	return OXYLOSS
 
 /obj/item/photo/attack_self(mob/user)
@@ -62,12 +62,12 @@
 	..()
 
 /obj/item/photo/examine(mob/user)
-	..()
+	. = ..()
 
-	if(in_range(src, user))
+	if(in_range(src, user) || isobserver(user))
 		show(user)
 	else
-		to_chat(user, "<span class='warning'>You need to get closer to get a good look at this photo!</span>")
+		. += "<span class='warning'>You need to get closer to get a good look at this photo!</span>"
 
 /obj/item/photo/proc/show(mob/user)
 	if(!istype(picture) || !picture.picture_image)
@@ -91,3 +91,6 @@
 	if((loc == usr || loc.loc && loc.loc == usr) && usr.stat == CONSCIOUS && !usr.incapacitated())
 		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
+
+/obj/item/photo/old
+	icon_state = "photo_old"

@@ -7,7 +7,7 @@
 	icon_state = "arachnid"
 	icon_living = "arachnid"
 	icon_dead = "arachnid_dead"
-	mob_biotypes = list(MOB_ORGANIC, MOB_BUG)
+	mob_biotypes = MOB_ORGANIC|MOB_BUG
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	maxHealth = 300
@@ -50,7 +50,7 @@
 
 /obj/item/projectile/mega_arachnid
 	name = "flesh snare"
-	nodamage = 1
+	nodamage = TRUE
 	damage = 0
 	icon_state = "tentacle_end"
 

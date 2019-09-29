@@ -47,3 +47,21 @@
 
 /obj/item/ammo_casing/magic/locker
 	projectile_type = /obj/item/projectile/magic/locker
+
+/obj/item/ammo_casing/magic/flying
+	projectile_type = /obj/item/projectile/magic/flying
+
+/obj/item/ammo_casing/magic/bounty
+	projectile_type = /obj/item/projectile/magic/bounty
+
+/obj/item/ammo_casing/magic/antimagic
+	projectile_type = /obj/item/projectile/magic/antimagic
+
+/obj/item/ammo_casing/magic/sapping
+	projectile_type = /obj/item/projectile/magic/sapping
+
+/obj/item/ammo_casing/magic/necropotence
+	projectile_type = /obj/item/projectile/magic/necropotence
+
+/obj/item/ammo_casing/magic/wipe
+	projectile_type = /obj/item/projectile/magic/wipe

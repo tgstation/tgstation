@@ -9,11 +9,8 @@
 	e_cost = 100
 
 /obj/item/ammo_casing/energy/electrode/gun
-	fire_sound = 'sound/weapons/gunshot.ogg'
+	fire_sound = 'sound/weapons/gun/pistol/shot.ogg'
 	e_cost = 100
-
-/obj/item/ammo_casing/energy/electrode/hos
-	e_cost = 200
 
 /obj/item/ammo_casing/energy/electrode/old
 	e_cost = 1000
@@ -24,3 +21,6 @@
 	e_cost = 50
 	fire_sound = 'sound/weapons/taser2.ogg'
 	harmful = FALSE
+
+/obj/item/ammo_casing/energy/disabler/hos
+	e_cost = 60

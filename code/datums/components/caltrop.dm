@@ -24,7 +24,7 @@
 
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
-		if(H.has_trait(TRAIT_PIERCEIMMUNE))
+		if(HAS_TRAIT(H, TRAIT_PIERCEIMMUNE))
 			return
 
 		if((flags & CALTROP_IGNORE_WALKERS) && H.m_intent == MOVE_INTENT_WALK)
@@ -46,7 +46,7 @@
 			return
 
 		var/damage = rand(min_damage, max_damage)
-		if(H.has_trait(TRAIT_LIGHT_STEP))
+		if(HAS_TRAIT(H, TRAIT_LIGHT_STEP))
 			damage *= 0.75
 		H.apply_damage(damage, BRUTE, picked_def_zone)
 

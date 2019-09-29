@@ -18,18 +18,18 @@
 
 /obj/effect/proc_holder/spell/targeted/barnyardcurse/cast(list/targets, mob/user = usr)
 	if(!targets.len)
-		to_chat(user, "<span class='notice'>No target found in range.</span>")
+		to_chat(user, "<span class='warning'>No target found in range!</span>")
 		return
 
 	var/mob/living/carbon/target = targets[1]
 
 
 	if(!is_type_in_typecache(target, compatible_mobs_typecache))
-		to_chat(user, "<span class='notice'>You are unable to curse [target]'s head!</span>")
+		to_chat(user, "<span class='warning'>You are unable to curse [target]'s head!</span>")
 		return
 
 	if(!(target in oview(range)))
-		to_chat(user, "<span class='notice'>[target.p_theyre(TRUE)] too far away!</span>")
+		to_chat(user, "<span class='warning'>[target.p_theyre(TRUE)] too far away!</span>")
 		return
 
 	if(target.anti_magic_check())
