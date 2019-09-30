@@ -62,7 +62,7 @@
 	. = ..()
 /datum/reagent/medicine/C2/lenturi/on_mob_end_metabolize(mob/living/carbon/M)
 	M.remove_movespeed_modifier(MOVESPEED_ID_LENTURI)
-	M.adjustOrganLoss(ORGAN_SLOT_STOMACH, 2 * REM)
+	M.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.5 * REM)
 	. = ..()
 /datum/reagent/medicine/C2/aiuri
 	name = "Aiuri"
