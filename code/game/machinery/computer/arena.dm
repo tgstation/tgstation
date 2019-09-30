@@ -52,6 +52,12 @@
 	/// Is the arena template loading in
 	var/loading = FALSE
 
+	//How long between admin pressing start and doors opening
+	var/start_delay = 30 SECONDS
+	//Value for the countdown
+	var/start_time
+	var/list/countdowns = list() //List of countdown effects ticking down to start
+
 /obj/machinery/computer/arena/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 	LoadDefaultArenas()
@@ -79,8 +85,6 @@
 	for(var/arena_file in default_arenas)
 		var/simple_name = replacetext(replacetext(arena_file,arena_dir,""),".dmm","")
 		add_new_arena_template(null,arena_dir + arena_file,simple_name)
-
-
 
 /obj/machinery/computer/arena/proc/get_landmark_turf(landmark_tag)
 	for(var/obj/effect/landmark/arena/L in GLOB.landmarks_list)
@@ -158,19 +162,29 @@
 	message_admins("[key_name_admin(user)] uploaded new event arena: [friendly_name].")
 	log_admin("[key_name(user)] uploaded new event arena: [friendly_name].")
 
-/obj/machinery/computer/arena/proc/add_team_member(mob/user,team)
-	var/list/keys = list()
-	for(var/mob/M in GLOB.player_list)
-		keys += M.client
-	var/client/selection = input("Please, select a player!", "Team member", null, null) as null|anything in sortKey(keys)
-	//Could be freeform if you want to add disconnected i guess
-	if(!selection)
-		return
+/obj/machinery/computer/arena/proc/load_team(user,team)
+	var/rawteam = stripped_multiline_input(user,"Enter team list (ckeys separated by newline)")
+	for(var/i in splittext(rawteam,"\n"))
+		var/key = ckey(i)
+		if(!i)
+			continue
+		add_team_member(user,team,key)
+
+/obj/machinery/computer/arena/proc/add_team_member(mob/user,team,key)
+	if(!key)
+		var/list/keys = list()
+		for(var/mob/M in GLOB.player_list)
+			keys += M.client
+		var/client/selection = input("Please, select a player!", "Team member", null, null) as null|anything in sortKey(keys)
+		//Could be freeform if you want to add disconnected i guess
+		if(!selection)
+			return
+		key = selection.ckey
 	if(!team_keys[team])
-		team_keys[team] = list(selection.ckey)
+		team_keys[team] = list(key)
 	else
-		team_keys[team] |= selection.ckey
-	to_chat(user,"[selection.ckey] added to [team] team.")
+		team_keys[team] |= key
+	to_chat(user,"[key] added to [team] team.")
 
 /obj/machinery/computer/arena/proc/remove_member(mob/user,ckey,team)
 	team_keys[team] -= ckey
@@ -190,7 +204,6 @@
 	var/datum/atom_hud/antag/team_hud = team_huds[team]
 	team_hud.join_hud(M)
 	set_antag_hud(M,"arena",team_hud_index[team])
-	
 
 /obj/machinery/computer/arena/proc/change_outfit(mob/user,team)
 	outfits[team] = user.client.robust_dress_shop()
@@ -200,6 +213,61 @@
 	to_chat(user,"You [ready_to_spawn ? "enable" : "disable"] the spawners.")
 	log_admin("[key_name(user)] toggled event arena spawning for [arena_id] arena.")
 	// Could use update_icon on spawnpoints here to show they're on
+	if(ready_to_spawn)
+		for(var/mob/M in all_contestants())
+			to_chat(M,"<span class='userdanger'>Arena you're signed up for is ready!</span>")
+
+/obj/machinery/computer/arena/proc/all_contestants()
+	. = list()
+	for(var/team in team_keys)
+		for(var/key in team_keys[team])
+			var/mob/M = get_mob_by_key(key)
+			if(M)
+				. += M
+
+/obj/machinery/computer/arena/proc/reset_arena()
+	clear_arena()
+	set_doors(closed = TRUE)
+
+/obj/machinery/computer/arena/proc/get_spawn(team)
+	for(var/obj/machinery/arena_spawn/A in GLOB.machines)
+		if(A.arena_id == arena_id && A.team == team)
+			return A
+
+/obj/machinery/computer/arena/proc/start_match(mob/user)
+	//TODO: Check if everyone is spawned in, if not ask for confirmation.
+	var/timetext = DisplayTimeText(start_delay)
+	to_chat(user,"<span class='notice'>The match will start in [timetext].</span>")
+	for(var/mob/M in all_contestants())
+		to_chat(M,"<span class='userdanger'>The gates will open in [timetext]!</span>")
+	start_time = world.time + start_delay
+	addtimer(CALLBACK(src,.proc/begin),start_delay)
+	for(var/team in teams)
+		var/obj/machinery/arena_spawn/team_spawn = get_spawn(team)
+		var/obj/effect/countdown/arena/A = new(team_spawn)
+		A.start()
+		countdowns += A
+
+/obj/machinery/computer/arena/proc/begin()
+	ready_to_spawn = FALSE
+	set_doors(closed = FALSE)
+	//I guess could add some sound here
+	for(var/mob/M in all_contestants())
+		to_chat(M,"<span class='userdanger'>START!</span>")
+	//Clean up the countdowns
+	QDEL_LIST(countdowns)
+	start_time = null
+	updateUsrDialog()
+
+
+/obj/machinery/computer/arena/proc/set_doors(closed = FALSE)
+	for(var/obj/machinery/door/poddoor/D in GLOB.machines) //I really dislike pathing of these
+		if(D.id != arena_id)
+			continue
+		if(closed)
+			D.close()
+		else
+			D.open()
 
 /obj/machinery/computer/arena/Topic(href, href_list)
 	. = ..()
@@ -214,17 +282,21 @@
 		load_arena(href_list["change_arena"],user)
 	if(href_list["toggle_spawn"])
 		toggle_spawn(user)
+	if(href_list["start"])
+		start_match(user)
 	if(href_list["team_action"])
 		var/team = href_list["team"]
 		switch(href_list["team_action"])
 			if("addmember")
 				add_team_member(user,team)
+			if("loadteam")
+				load_team(user,team)
 			if("outfit")
 				change_outfit(user,team)
 	if(href_list["special"])
 		switch(href_list["special"])
 			if("reset")
-				clear_arena()
+				reset_arena()
 			//Just example in case you want to add more
 			if("randomarena")
 				load_random_arena(user)
@@ -258,6 +330,7 @@
 	. = ..()
 	var/list/dat = list()
 	dat += "<div>Spawning is currently [ready_to_spawn ? "<span class='good'>enabled</span>" : "<span class='bad'>disabled</span>"] <a href='?src=[REF(src)];toggle_spawn=1'>Toggle</a></div>"
+	dat += "<div><a href='?src=[REF(src)];start=1'>[start_time ? "Stop countdown" : "Start!"]</a></div>"
 	for(var/team in teams)
 		dat += "<h2>[capitalize(team)] team:</h2>"
 		dat += "<ul>"
@@ -277,6 +350,7 @@
 				dat += "</li>"
 		dat += "</ul>"
 		dat += "<div> Team Outfit : [outfits[team] ? outfits[team] : default_outfit]</div>"
+		dat += "<a href='?src=[REF(src)];team_action=loadteam;team=[team]'>Load team</a>"
 		dat += "<a href='?src=[REF(src)];team_action=addmember;team=[team]'>Add member</a>"
 		dat += "<a href='?src=[REF(src)];team_action=outfit;team=[team]'>Change Outfit</a>"
 		//Add more per team features here
@@ -312,10 +386,12 @@
 
 /obj/machinery/arena_spawn/red
 	name = "Red Team Spawnpoint"
+	color = "red"
 	team = ARENA_RED_TEAM
 
 /obj/machinery/arena_spawn/green
 	name = "Green Team Spawnpoint"
+	color = "green"
 	team = ARENA_GREEN_TEAM
 
 /obj/machinery/arena_spawn/proc/get_controller()
