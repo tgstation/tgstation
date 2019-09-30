@@ -1131,7 +1131,7 @@
 	shell = TRUE
 	cell = null
 
-/mob/living/silicon/robot/mousedrop_buckle_check(mob/living/M, mob/living/user)
+/mob/living/silicon/robot/mouse_buckle_handling(mob/living/M, mob/living/user)
 	if(can_buckle && istype(M) && !(M in buckled_mobs) && ((user!=src)||(a_intent != INTENT_HARM)))
 		if(buckle_mob(M))
 			return TRUE
