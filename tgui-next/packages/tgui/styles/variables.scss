@@ -24,6 +24,31 @@ $color-average: $yellow-orange;
 $color-bad: $red;
 $color-highlight: $pale-blue;
 
+$color-map: (
+  'white': $white,
+  'pale-red': $pale-red,
+  'red': $red,
+  'dark-red': $dark-red,
+  'yellow-orange': $yellow-orange,
+  'yellow': $yellow,
+  'pale-green': $pale-green,
+  'green': $green,
+  'grass-green': $grass-green,
+  'dark-green': $dark-green,
+  'royal-blue': $royal-blue,
+  'pale-blue': $pale-blue,
+  'black': $black,
+  'black-gray': $black-gray,
+  'dark-gray': $dark-gray,
+  'gray': $gray,
+  'light-gray': $light-gray,
+  'normal': $color-normal,
+  'good': $color-good,
+  'average': $color-average,
+  'bad': $color-bad,
+  'highlight': $color-highlight,
+);
+
 // Text
 $text-color-normal: $white;
 $text-color-inverse: $black;

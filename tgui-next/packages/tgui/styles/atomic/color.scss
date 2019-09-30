@@ -1,19 +1,5 @@
-.color-normal {
-  color: $color-normal;
-}
-
-.color-good {
-  color: $color-good;
-}
-
-.color-average {
-  color: $color-average;
-}
-
-.color-bad {
-  color: $color-bad;
-}
-
-.color-highlight {
-  color: $color-highlight;
+@each $color-name, $color-value in $color-map {
+  .color-#{$color-name} {
+    color: $color-value;
+  }
 }

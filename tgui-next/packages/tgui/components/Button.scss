@@ -1,39 +1,38 @@
 @mixin button-color($color) {
-  transition: background-color 50ms;
+  transition: color, background-color 50ms;
   background-color: $color;
 
   // Adapt button color to background luminance to ensure high contast
   @if luminance($color) > 0.4 {
-    color: #000000;
+    color: rgba(0, 0, 0, 1);
   }
   @else {
-    color: #ffffff;
+    color: rgba(255, 255, 255, 1);
   }
 
   &:not(.Button--disabled):hover {
-    transition: background-color 0ms;
+    transition: color, background-color 0ms;
   }
 
   &:not(.Button--disabled):focus {
-    transition: background-color 100ms;
+    transition: color, background-color 100ms;
   }
 
   &:not(.Button--disabled):hover,
   &:not(.Button--disabled):focus {
     background-color: lighten($color, $button-lighten-hover);
+    color: rgba(255, 255, 255, 1);
   }
 }
 
 .Button {
   display: inline-block;
-  vertical-align: middle;
-  min-height: 20px;
-  line-height: 17px;
-  padding: 1px 6px;
+  line-height: 19px;
+  padding: 0 6px;
   margin-right: 2px;
   white-space: nowrap;
-  border: 1px solid $button-color-border;
   outline: 0;
+  margin-bottom: 2px;
   // Disable selection in buttons
   user-select: none;
   -ms-user-select: none;
@@ -57,6 +56,12 @@
   padding: 3px 6px;
 }
 
+@each $color-name, $color-value in $color-map {
+  .Button--color--#{$color-name} {
+    @include button-color($color-value);
+  }
+}
+
 .Button--color--normal {
   @include button-color($button-color-normal);
 }
@@ -67,6 +72,12 @@
 
 .Button--color--danger {
   @include button-color($button-color-danger);
+}
+
+.Button--color--transparent {
+  @include button-color($dark-gray);
+  background-color: rgba($dark-gray, 0);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .Button--disabled {

@@ -1,17 +1,19 @@
 import { classes } from 'react-tools';
+import { Box } from './Box';
 
 export const Icon = props => {
-  const { name, size, color, className, style = {} } = props;
+  const { name, size, className, style = {}, ...rest } = props;
   if (size) {
     style['font-size'] = (size * 100) + '%';
   }
   return (
-    <i
+    <Box
+      as="i"
       className={classes([
         className,
         'fa fa-' + name,
-        color && 'color-' + color,
       ])}
-      style={style} />
+      style={style}
+      {...rest} />
   );
 };
