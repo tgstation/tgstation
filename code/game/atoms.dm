@@ -1162,8 +1162,6 @@
 
 ///Sets the custom materials for an item.
 /atom/proc/set_custom_materials(var/list/materials, multiplier = 1)
-	if(material_flags & MATERIAL_NO_EFFECTS)
-		return //we do naffin
 
 	if(!materials)
 		materials = custom_materials
@@ -1178,5 +1176,6 @@
 	for(var/x in materials)
 		var/datum/material/custom_material = getmaterialref(x)
 
-		custom_material.on_applied(src, materials[custom_material] * multiplier * material_modifier, material_flags)
+		if(!(material_flags & MATERIAL_NO_EFFECTS))
+			custom_material.on_applied(src, materials[custom_material] * multiplier * material_modifier, material_flags)
 		custom_materials[custom_material] += materials[custom_material] * multiplier
