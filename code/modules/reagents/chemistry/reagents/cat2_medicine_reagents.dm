@@ -185,7 +185,7 @@
 		if(istype(the_reagent, /datum/reagent/medicine))
 			medibonus += 1
 	M.adjustToxLoss(-0.5 * medibonus)
-	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, medibonus)
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.1 * medibonus)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.type, medibonus*0.5)
 	..()
