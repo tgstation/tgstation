@@ -8,3 +8,4 @@ export { ProgressBar } from './ProgressBar';
 export { Section } from './Section';
 export { TitleBar } from './TitleBar';
 export { Toast } from './Toast';
+export { AnimatedNumber } from './AnimatedNumber';

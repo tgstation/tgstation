@@ -37,15 +37,15 @@ export const computeBoxProps = props => {
       color && 'color-' + color,
     ]),
     style: {
-      display: inline ? 'inline-block' : undefined,
-      ...rest.style,
+      'display': inline ? 'inline-block' : undefined,
       'margin-top': unit(firstDefined(mt, my, m)),
       'margin-bottom': unit(firstDefined(mb, my, m)),
       'margin-left': unit(firstDefined(ml, mx, m)),
       'margin-right': unit(firstDefined(mr, mx, m)),
-      opacity,
-      width,
-      height,
+      'opacity': unit(opacity),
+      'width': unit(width),
+      'height': unit(height),
+      ...rest.style,
     },
   };
 };

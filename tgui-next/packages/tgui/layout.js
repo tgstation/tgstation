@@ -9,21 +9,26 @@ import { createLogger } from './logging';
 import { UI_INTERACTIVE } from './constants';
 import { classes } from 'react-tools';
 import { Toast } from './components/Toast';
+import { ChemDispenser } from './interfaces/ChemDispenser';
 
 const logger = createLogger('Layout');
 
 const ROUTES = {
   airalarm: {
-    scrollable: true,
     component: () => AirAlarm,
+    scrollable: true,
   },
   acclimator: {
-    scrollable: false,
     component: () => Acclimator,
+    scrollable: false,
   },
   ai_airlock: {
-    scrollable: false,
     component: () => AIAirlock,
+    scrollable: false,
+  },
+  chem_dispenser: {
+    component: () => ChemDispenser,
+    scrollable: true,
   },
 };
 

@@ -37,11 +37,11 @@ export const LabeledListItem = props => {
 };
 
 export const LabeledListDivider = props => {
-  const {size} = props;
+  const { size = 1 } = props;
   return (
     <tr className="LabeledList__row">
       <td>
-        <Box mt={size}/>
+        <Box mt={size} />
       </td>
     </tr>
   );

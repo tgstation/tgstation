@@ -1,5 +1,6 @@
 import { classes } from 'react-tools';
 import { Icon } from './Icon';
+import { Box } from './Box';
 
 export const Button = props => {
   const {
@@ -13,10 +14,11 @@ export const Button = props => {
     content,
     children,
     onClick,
+    ...rest
   } = props;
   const hasContent = !!(content || children);
   return (
-    <div
+    <Box
       className={classes([
         'Button',
         fluid && 'Button--fluid',
@@ -36,12 +38,13 @@ export const Button = props => {
           return;
         }
         onClick(e);
-      }}>
+      }}
+      {...rest}>
       {icon && (
         <Icon name={icon} />
       )}
       {content}
       {children}
-    </div>
+    </Box>
   );
 };

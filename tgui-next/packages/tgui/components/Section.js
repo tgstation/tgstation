@@ -9,10 +9,12 @@ export const Section = props => {
         'Section--level--' + level,
       ])}>
       <div className="Section__title">
-        {title}
-      </div>
-      <div className="Section__buttons">
-        {buttons}
+        <span className="Section__titleText">
+          {title}
+        </span>
+        <div className="Section__buttons">
+          {buttons}
+        </div>
       </div>
       <div className="Section__content">
         {children}

@@ -6,15 +6,19 @@
 }
 
 .Section__title {
+  position: relative;
   padding: 6px;
+  border-bottom: $rule-size solid $rule-color-normal;
+}
+
+.Section__titleText {
   font-size: 14px;
   font-weight: bold;
-  border-bottom: $rule-size solid $rule-color-normal;
 }
 
 .Section__buttons {
   position: absolute;
-  top: 4px;
+  display: inline-block;
   right: 4px;
 }
 
@@ -22,15 +26,15 @@
   padding: 8px 6px;
 }
 
-.Section--level--1 .Section__title {
+.Section--level--1 .Section__titleText {
   font-size: 14px;
 }
 
-.Section--level--2 .Section__title {
+.Section--level--2 .Section__titleText {
   font-size: 13px;
 }
 
-.Section--level--3 .Section__title {
+.Section--level--3 .Section__titleText {
   font-size: 12px;
 }
 
