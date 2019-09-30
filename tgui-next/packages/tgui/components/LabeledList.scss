@@ -10,6 +10,10 @@
   display: table-row;
 }
 
+.LabeledList__row:last-child .LabeledList__cell {
+  padding-bottom: 0;
+}
+
 .LabeledList__cell {
   display: table-cell;
   margin: 0;
