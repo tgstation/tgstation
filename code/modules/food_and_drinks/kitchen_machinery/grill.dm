@@ -62,7 +62,7 @@
 		var/obj/item/reagent_containers/food/I = grilling
 		I.reagents.add_reagent(/datum/reagent/smoke_powder, 1)
 		grill_fuel -= 10
-		give_grill_marks(I)
+		I.AddComponent(/datum/component/sizzle)
 
 /obj/machinery/grill/wrench_act(mob/living/user, obj/item/I)
 	default_unfasten_wrench(user, I)
