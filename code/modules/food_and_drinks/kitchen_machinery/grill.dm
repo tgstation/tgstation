@@ -91,24 +91,5 @@
 			return
 	return ..()
 
-/obj/machinery/grill/proc/give_grill_marks(to_what)
-	var/obj/item/reagent_containers/food/I = to_what
-	var/index = "[REF(initial(icon))]-[initial(icon_state)]"
-	var/static/list/grill_icons = list()
-	var/icon/grill_icon = grill_icons[index]
-	var/mutable_appearance/grill_marks
-	grill_icon = icon(initial(I.icon), initial(I.icon_state), , 1)	//we only want to apply grill marks to the initial icon_state for each object
-	grill_icon.Blend("#fff", ICON_ADD) 	//fills the icon_state with white (except where it's transparent)
-	grill_icon.Blend(icon('icons/obj/kitchen.dmi', "grillmarks"), ICON_MULTIPLY) //adds grill marks and the remaining white areas become transparant
-	grill_icon = fcopy_rsc(grill_icon)
-	grill_icons[index] = grill_icon
-	grill_marks = grill_icon
-	if(!grill_marks)
-		I.add_overlay(grill_marks)
-		grill_marks.alpha = 0
-	else
-		grill_marks.alpha += 5
-
-
 /obj/machinery/grill/unwrenched
 	anchored = FALSE
