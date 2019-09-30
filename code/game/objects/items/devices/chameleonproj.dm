@@ -49,6 +49,8 @@
 		return
 	if(istype(target, /obj/structure/falsewall))
 		return
+	if(istype(target, /obj/structure/chair/mime) || istype(target, /obj/item/storage/box/mime))
+		return
 	if(iseffect(target))
 		if(!(istype(target, /obj/effect/decal))) //be a footprint
 			return
