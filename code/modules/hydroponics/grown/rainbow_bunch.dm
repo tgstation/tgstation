@@ -42,7 +42,7 @@
 			desc += " This one is in a bright red color."
 		if(2)
 			color = "#FF9300"
-			reagents.add_reagent(/datum/reagent/colorful_reagent/powder/oranges, 3)
+			reagents.add_reagent(/datum/reagent/colorful_reagent/powder/orange, 3)
 			dye_color = DYE_ORANGE
 			desc += " This one is in a citrus orange color."
 		if(3)
