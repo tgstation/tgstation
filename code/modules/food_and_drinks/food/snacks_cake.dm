@@ -406,4 +406,7 @@
 	icon_state = "clowncake_slice"
 	filling_color = "#00FFFF"
 	tastes = list("cake" = 1, "sugar" = 1, "joy" = 10)
-	foodtype = GRAIN | SUGAR | DAIRY 
+	foodtype = GRAIN | SUGAR | DAIRY
+
+/obj/item/reagent_containers/food/snacks/store/cake/trumpet
+	name = "spaceman's trumpet cake"
