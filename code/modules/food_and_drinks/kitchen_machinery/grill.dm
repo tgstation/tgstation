@@ -34,18 +34,14 @@
 				return ..()
 			else if(!grill_fuel)
 				to_chat(user, "<span class='notice'>There is not enough fuel.</span>")
+				return
 			else if(!grilling && user.transferItemToLoc(I, src))
 				grilling = I
 				to_chat(user, "<span class='notice'>You put the [I] on [src].</span>")
-				var/mutable_appearance/grilled_food = new(I)
-				grilled_food.plane = FLOAT_PLANE
-				grilled_food.layer = FLOAT_LAYER
-				grilled_food.pixel_x = 0
-				grilled_food.pixel_y = 5
-				add_overlay(grilled_food)
 				return
 		grill_fuel += (20 * (I.reagents.get_reagent_amount(/datum/reagent/consumable/monkey_energy)))
 		I.reagents.remove_reagent(/datum/reagent/consumable/monkey_energy, I.reagents.get_reagent_amount(/datum/reagent/consumable/monkey_energy))
+		return
 	..()
 
 /obj/machinery/grill/process()
