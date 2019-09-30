@@ -692,7 +692,7 @@
 /obj/structure/window/shuttle/unanchored
 	anchored = FALSE
 
-/obj/structure/window/plastitanium
+/obj/structure/window/plasma/reinforced/plastitanium
 	name = "plastitanium window"
 	desc = "A durable looking window made of an alloy of of plasma and titanium."
 	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
@@ -702,18 +702,20 @@
 	wtype = "shuttle"
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
-	reinf = TRUE
 	heat_resistance = 1600
 	armor = list("melee" = 95, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	explosion_block = 3
+	damage_deflection = 11 //The same as normal reinforced windows.
 	level = 3
 	glass_type = /obj/item/stack/sheet/plastitaniumglass
 	glass_amount = 2
+	rad_insulation = RAD_HEAVY_INSULATION
 
-/obj/structure/window/plastitanium/unanchored
+/obj/structure/window/plasma/reinforced/plastitanium/unanchored
 	anchored = FALSE
+	state = WINDOW_OUT_OF_FRAME
 
 /obj/structure/window/reinforced/clockwork
 	name = "brass window"

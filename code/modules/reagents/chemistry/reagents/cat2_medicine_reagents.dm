@@ -6,29 +6,75 @@
 /******BRUTE******/
 /*Suffix: -bital*/
 
-/datum/reagent/medicine/C2/sanguibital
-	name = "Sanguibital"
-	description = "A unique medicine that heals bruises, scaling with the rate at which one is bleeding out. Dilates blood streams, increasing the amount of blood lost. Overdosing further increases blood loss."
-	color = "#ECEC8D" // rgb: 236	236	141
-	taste_description = "whatever vampires would eat"
+/datum/reagent/medicine/C2/helbital //only REALLY a C2 if you heal the other damages but not being able to outright heal the other guys is close enough to damaging
+	name = "Helbital"
+	description = "Named after the norse goddess Hel, this medicine heals the patient's bruises the closer they are to death. Burns, toxins, and asphyxition will increase healing but these damages must be maintained while the drug is being metabolized or the drug will react negatively."
+	color = "#9400D3"
+	taste_description = "cold and lifeless"
 	overdose_threshold = 35
 	reagent_state = SOLID
+	var/helbent = FALSE
+	var/beginning_combo = 0
+	var/reaping = FALSE
 
-/datum/reagent/medicine/C2/sanguibital/on_mob_life(mob/living/carbon/M)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.bleed_rate)
-			H.bleed(2)
-			H.adjustBruteLoss(round(10*((H.blood_volume/BLOOD_VOLUME_NORMAL)-1),0.1),TRUE) //More Blood Loss = More Healing upto <5 brute per tick
+/datum/reagent/medicine/C2/helbital/on_mob_metabolize(mob/living/carbon/M)
+	beginning_combo = M.getToxLoss() + M.getOxyLoss() + M.getFireLoss() //This DOES mean you can cure Tox/Oxy and then do burn to maintain the brute healing that way.
+	return ..()
+
+/datum/reagent/medicine/C2/helbital/on_mob_life(mob/living/carbon/M)
+	. = TRUE
+	var/cccombo = M.getToxLoss() + M.getOxyLoss() + M.getFireLoss()
+	var/healed_this_iteration = FALSE
+	if(cccombo >= beginning_combo)
+		M.adjustBruteLoss(FLOOR(cccombo/-15,0.1)) //every 15 damage adds 1 per tick
+		healed_this_iteration = TRUE
+	else
+		M.adjustToxLoss((beginning_combo-cccombo)*0.1) //If you are just healing instead of converting the damage we'll KINDLY do it for you AND make it the most difficult!
+
+	if(healed_this_iteration && !reaping && prob(0.0001)) //janken with the grim reaper!
+		reaping = TRUE
+		var/list/RockPaperScissors = list("rock" = "paper", "paper" = "scissors", "scissors" = "rock") //choice = loses to
+		if(M.apply_status_effect(/datum/status_effect/necropolis_curse,CURSE_BLINDING))
+			helbent = TRUE
+		to_chat(M, "<span class='hierophant'>Malevolent spirits appear before you, bartering your life in a 'friendly' game of rock, paper, scissors. Which do you choose?</span>")
+		var/timeisticking = world.time
+		var/RPSchoice = input(M, "Janken Time! You have 60 Seconds to Choose!", "Rock Paper Scissors",null) as null|anything in RockPaperScissors
+		if(QDELETED(M) || (timeisticking+(1.1 MINUTES) < world.time))
+			reaping = FALSE
+			return //good job, you ruined it
+		if(!RPSchoice)
+			to_chat(M, "<span class='hierophant'>You decide to not press your luck, but the spirits remain... hopefully they'll go away soon.</span>")
+			reaping = FALSE
+			return
+		var/grim = pick(RockPaperScissors)
+		if(grim == RPSchoice) //You Tied!
+			to_chat(M, "<span class='hierophant'>You tie, and the malevolent spirits disappear... for now.</span>")
+			reaping = FALSE
+		else if(RockPaperScissors[RPSchoice] == grim) //You lost!
+			to_chat(M, "<span class='hierophant'>You lose, and the malevolent spirits smirk eerily as they surround your body.</span>")
+			M.dust()
+			return
+		else //VICTORY ROYALE
+			to_chat(M, "<span class='hierophant'>You win, and the malevolent spirits fade away as well as your wounds.</span>")
+			SSmedals.UnlockMedal(MEDAL_HELBITALJANKEN,M.client)
+			M.revive(TRUE)
+			M.reagents.del_reagent(type)
+			return
+
+	..()
+	return
+
+/datum/reagent/medicine/C2/helbital/overdose_process(mob/living/carbon/M)
+	if(!helbent)
+		M.apply_necropolis_curse(CURSE_WASTING | CURSE_BLINDING)
+		helbent = TRUE
 	..()
 	return TRUE
 
-/datum/reagent/medicine/C2/sanguibital/overdose_process(mob/living/carbon/M)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.bleed(2)
+/datum/reagent/medicine/C2/helbital/on_mob_delete(mob/living/L)
+	if(helbent)
+		L.remove_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE)
 	..()
-	return TRUE
 
 /datum/reagent/medicine/C2/libital //messes with your liber
 	name = "Libital"
