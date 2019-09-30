@@ -24,7 +24,7 @@
 	. = ..()
 	return mousedrop_buckle_check(M, user)
 	
-/atom/movable/mousedrop_buckle_check(mob/living/M, mob/living/user)
+/atom/movable/proc/mousedrop_buckle_check(mob/living/M, mob/living/user)
 	if(can_buckle && istype(M) && istype(user))
 		if(user_buckle_mob(M, user))
 			return TRUE
