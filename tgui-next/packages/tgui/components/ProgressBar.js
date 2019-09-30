@@ -1,12 +1,17 @@
+import { classes } from 'react-tools';
+
 export const ProgressBar = props => {
-  const { value, content, children } = props;
+  const { value, content, color, children } = props;
   const hasContent = !!(content || children);
   return (
     <div className="ProgressBar">
       <div
-        className="ProgressBar__fill"
+        className={classes([
+          'ProgressBar__fill',
+          color && 'ProgressBar--color--' + color,
+        ])}
         style={{
-          'width': (Math.random() * 100) + '%',
+          'width': (value * 100) + '%',
         }} />
       <div className="ProgressBar__content">
         {value && !hasContent && Math.round(value * 100) + '%'}
