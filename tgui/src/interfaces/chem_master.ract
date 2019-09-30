@@ -74,7 +74,12 @@
 			<ui-button action='createBottle' params='{"many": 0}' state='{{data.bufferContents ? null : "disabled"}}' >Create Bottle (max 30µ)</ui-button>
 			<br/>
 			<ui-button action='createBottle' params='{"many": 1}' state='{{data.bufferContents ? null : "disabled"}}' >Dispense Buffer to Bottles</ui-button>
-			
+			<br/>
+      <span class='content'>Medipens allow only Federation-Complaint reagents</span>
+			<br/>
+      <ui-button action='createMedipen' params='{"many": 0}' state='{{data.bufferContents ? null : "disabled"}}' >Create Medipen (10µ)</ui-button>
+			<br/>
+			<ui-button action='createMedipen' params='{"many": 1}' state='{{data.bufferContents ? null : "disabled"}}' >Create Multiple Medipens</ui-button>
 	</ui-display>
 
 	{{else}}
