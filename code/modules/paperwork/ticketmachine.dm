@@ -208,6 +208,11 @@
 	var/obj/machinery/ticket_machine/source
 	var/ticket_number
 
+/obj/item/ticket_machine_ticket/attack_self(mob/user)
+	if(Adjacent(user))
+		user.visible_message("<span class='notice'>[user] shows you: \the [src.name].</span>", "<span class='notice'>You show \the [src.name].</span>")
+	add_fingerprint(user)
+
 /obj/item/ticket_machine_ticket/attack_hand(mob/user)
 	. = ..()
 	maptext = saved_maptext //For some reason, storage code removes all maptext off objs, this stops its number from being wiped off when taken out of storage.
