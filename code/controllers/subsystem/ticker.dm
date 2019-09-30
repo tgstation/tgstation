@@ -269,7 +269,7 @@ SUBSYSTEM_DEF(ticker)
 	else
 		mode.announce()
 
-	if(!CONFIG_GET(flag/ooc_during_round))
+	if(!CONFIG_GET(flag/ooc_during_round) && GLOB.master_mode != "sandbox") // austation -- OOC remains active during sandbox rounds
 		toggle_ooc(FALSE) // Turn it off
 
 	CHECK_TICK
