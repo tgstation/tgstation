@@ -950,17 +950,17 @@
 
 /mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/target)
 	var/carrydelay = 50 //if you have latex you are faster at grabbing
-	var/skills_space = " " //cobby told me to do this
+	var/skills_space = "" //cobby told me to do this
 	if(HAS_TRAIT(src, TRAIT_QUICKER_CARRY))
 		carrydelay = 30
-		skills_space = " quickly "
+		skills_space = "quickly"
 	else if(HAS_TRAIT(src, TRAIT_QUICK_CARRY))
 		carrydelay = 40
-		skills_space = " expertly "
+		skills_space = "expertly"
 	if(carrydelay < 50)
-		visible_message("<span class='notice'>[src] starts[skills_space]lifting [target] onto their back..</span>",
+		visible_message("<span class='notice'>[src] starts [skills_space] lifting [target] onto their back..</span>",
 		//Joe Medic starts quickly/expertly lifting Grey Tider onto their back..
-		"<span class='notice'>[carrydelay < 35 ? "Using your gloves' nanochips, you" : "You"]You[skills_space]start to lift [target] onto your back[carrydelay == 40 ? ", while assisted by the nanochips in your gloves.." : "..."]</span>")
+		"<span class='notice'>[carrydelay < 35 ? "Using your gloves' nanochips, you" : "You"]You [skills_space] start to lift [target] onto your back[carrydelay == 40 ? ", while assisted by the nanochips in your gloves.." : "..."]</span>")
 		//(Using your gloves' nanochips, you/You) ( /quickly/expertly) start to lift Grey Tider onto your back(, while assisted by the nanochips in your gloves../...)
 		if(do_after(src, carrydelay, TRUE, target))
 			//Second check to make sure they're still valid to be carried
