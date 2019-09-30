@@ -175,7 +175,6 @@
 			M.drowsyness += 1
 		if(5 to INFINITY)
 			M.fakedeath(type)
-			. = 1
 	..()
 	. = 1
 
