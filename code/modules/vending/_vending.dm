@@ -720,16 +720,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 	say(message)
 
 /obj/machinery/vending/power_change()
-	if(stat & BROKEN)
-		return
-
+	. = ..()
 	if(powered())
-		stat &= ~NOPOWER
 		START_PROCESSING(SSmachines, src)
-	else
-		stat |= NOPOWER
-
-	update_icon()
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
 /**
