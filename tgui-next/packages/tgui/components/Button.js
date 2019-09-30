@@ -1,5 +1,5 @@
-import { Icon } from './Icon';
 import { classes } from 'react-tools';
+import { Icon } from './Icon';
 
 export const Button = props => {
   const {
