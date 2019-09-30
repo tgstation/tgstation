@@ -6,14 +6,16 @@ import { setupDrag } from './drag';
 import { getRoute, Layout } from './layout';
 import { createLogger } from './logging';
 import { createStore } from './store';
+import { setupHotReloading } from 'tgui-dev-server/client';
 
 const logger = createLogger();
-
+const store = createStore();
 const reactRoot = document.getElementById('react-root');
 
 let initialRender = true;
 
-const renderLayout = state => {
+const renderLayout = () => {
+  const state = store.getState();
   // Initial render setup
   if (initialRender) {
     logger.log('initial render', state);
@@ -30,11 +32,6 @@ const renderLayout = state => {
     logger.error(err.stack);
   }
 };
-
-// Initialize React app
-// --------------------------------------------------------
-
-const store = createStore();
 
 const setupApp = () => {
   // Find data in the page, load inlined state.
@@ -69,9 +66,7 @@ const setupApp = () => {
 
   // Subscribe for state updates
   store.subscribe(() => {
-    const state = store.getState();
-    // logger.log('current state', state);
-    renderLayout(state);
+    renderLayout();
   });
 
   // Subscribe for bankend updates
@@ -85,6 +80,14 @@ const setupApp = () => {
   if (stateJson !== '{}') {
     logger.log('Found inlined state');
     store.dispatch(backendUpdate(state));
+  }
+
+  // Enable hot module reloading
+  if (module.hot) {
+    setupHotReloading();
+    module.hot.accept(['./layout'], () => {
+      renderLayout();
+    });
   }
 
   // Initialize

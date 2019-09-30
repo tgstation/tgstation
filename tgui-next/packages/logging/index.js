@@ -57,6 +57,7 @@ const getPrefix = (() => {
  */
 export const createLogger = ns => ({
   log: (...args) => console.log(...getPrefix(ns), ...args),
+  trace: (...args) => console.trace(...getPrefix(ns), ...args),
   debug: (...args) => console.debug(...getPrefix(ns), ...args),
   info: (...args) => console.info(...getPrefix(ns), ...args),
   warn: (...args) => console.warn(...getPrefix(ns), ...args),

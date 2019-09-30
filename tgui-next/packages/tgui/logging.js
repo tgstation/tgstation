@@ -7,7 +7,7 @@ const log = (ns, ...args) => {
   }
 };
 
-export const createLogger = (ns = 'client') => {
+export const createLogger = ns => {
   return {
     log: (...args) => log(ns, ...args),
     info: (...args) => log(ns, ...args),

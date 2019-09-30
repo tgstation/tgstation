@@ -6,19 +6,33 @@ import os from 'os';
 import path from 'path';
 import util from 'util';
 import webpack from 'webpack';
-import ws from 'ws';
+import WebSocket from 'ws';
 
-const setupServer = () => {
-  const logger = createLogger('server');
-  const socket = new ws.Server({
-    port: 3001,
-  });
+const logger = createLogger('server');
 
-  let clientCounter = 0;
+const setupServer = async () => {
+  const port = 3000;
+  const wss = new WebSocket.Server({ port });
 
-  socket.on('connection', ws => {
-    const clientId = ++clientCounter;
-    logger.log(`client ${clientId} connected`);
+  setupClientEndpoint(wss);
+  await setupWebpack(wss);
+
+  logger.log(`listening on port ${port}`);
+  return { wss };
+};
+
+const broadcastMessage = (wss, msg) => {
+  const clients = [...wss.clients];
+  logger.log(`broadcasting ${msg.type} to ${clients.length} clients`);
+  for (let client of clients) {
+    const json = JSON.stringify(msg);
+    client.send(json);
+  }
+};
+
+const setupClientEndpoint = wss => {
+  wss.on('connection', ws => {
+    logger.log('client connected');
 
     ws.on('message', msg => {
       const { type, payload } = JSON.parse(msg);
@@ -30,49 +44,82 @@ const setupServer = () => {
     });
 
     ws.on('close', () => {
-      logger.log(`client ${clientId} disconnected`);
+      logger.log('client disconnected');
     });
   });
-
-  logger.log('listening');
 };
 
-const setupWebpack = async () => {
-  const logger = createLogger('webpack');
-  logger.log('setting up');
+const getWebpackConfig = async () => {
   const require = createRequire(import.meta.url);
   const createConfig = await require('tgui/webpack.config.js');
   const config = createConfig({}, {
     mode: 'development',
   });
-  const statsConfig = config.devServer.stats;
-  const compiler = webpack(config);
+  return config;
+};
 
-  // Start the compiler in watch mode
+const setupWebpack = async wss => {
+  const logger = createLogger('webpack');
+  logger.log('setting up');
+  const config = await getWebpackConfig();
+  const bundleDir = config.output.path;
+  // Add HMR webpack plugin
+  config.plugins.push(new webpack.HotModuleReplacementPlugin());
+  // Instantiate the compiler
+  const compiler = webpack(config);
+  // Clear garbage before compiling
+  compiler.hooks.watchRun.tapPromise('tgui-dev-server', async () => {
+    const files = await resolvePath(bundleDir, './*.hot-update.*');
+    logger.log(`clearing garbage (${files.length} files)`);
+    for (let file of files) {
+      await util.promisify(fs.unlink)(file);
+    }
+  });
+  // Start reloading when it's finished
+  compiler.hooks.done.tap('tgui-dev-server', async stats => {
+    await reloadByondCache(bundleDir);
+    // Notify all clients that update has happened
+    broadcastMessage(wss, {
+      type: 'hotUpdate',
+    });
+  });
+  // Start watching
   logger.log('watching for changes');
   compiler.watch({}, (err, stats) => {
     if (err) {
       logger.error('compilation error', err);
       return;
     }
-    logger.log(stats.toString(statsConfig));
-    reloadByondCache(config.output.path);
+    logger.log(stats.toString(config.devServer.stats));
   });
+};
+
+/**
+ * Combines path.resolve with glob patterns.
+ */
+const resolvePath = (...sections) => {
+  return util.promisify(glob)(path.resolve(...sections));
 };
 
 const reloadByondCache = async bundleDir => {
   const logger = createLogger('reloader');
   // First asterisk is an unknown location of "Documents" folder,
   // since it can be localized by the OS.
-  const cachePattern = path.resolve(os.homedir(), './*/BYOND/cache/tmp*');
-  const cacheDirs = await util.promisify(glob)(cachePattern, {});
+  const cacheDirs = await resolvePath(os.homedir(), './*/BYOND/cache/tmp*');
   if (cacheDirs.length === 0) {
     logger.log('found no cache directories');
     return;
   }
   // Start the actual reloading
-  const assetPattern = path.resolve(bundleDir, './*.bundle.*');
-  const assets = await util.promisify(glob)(assetPattern);
+  const assets = await resolvePath(bundleDir, './*.+(bundle|hot-update).*');
+  // Clear garbage
+  for (let cacheDir of cacheDirs) {
+    const garbage = await resolvePath(cacheDir, './*.+(bundle|hot-update).*');
+    for (let file of garbage) {
+      await util.promisify(fs.unlink)(file);
+    }
+  }
+  // Copy assets
   for (let cacheDir of cacheDirs) {
     for (let asset of assets) {
       const destination = path.resolve(cacheDir, path.basename(asset));
@@ -83,4 +130,3 @@ const reloadByondCache = async bundleDir => {
 };
 
 setupServer();
-setupWebpack();

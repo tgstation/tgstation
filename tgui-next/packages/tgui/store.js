@@ -1,23 +1,29 @@
 import { flow } from 'functional';
-import { createStore as createReduxStore } from 'redux';
+import { createStore as createReduxStore, applyMiddleware } from 'redux';
 import { backendReducer } from './backend';
 import { toastReducer } from './components/Toast';
 import { createLogger } from './logging';
 
 const logger = createLogger('store');
 
+// const loggingMiddleware = store => next => action => {
+//   const { type, payload } = action;
+//   logger.log('dispatching', type);
+//   const result = next(action);
+//   return result;
+// };
+
 export const createStore = () => {
   const reducer = flow([
     // State initializer
     (state = {}, action) => state,
-    // Action logger
-    (state, action) => {
-      logger.log('action:', action.type);
-      return state;
-    },
-    // Add other reducers to the chain
+    // Global state reducers
     backendReducer,
     toastReducer,
   ]);
-  return createReduxStore(reducer);
+  const middleware = [
+    // loggingMiddleware,
+  ];
+  return createReduxStore(reducer,
+    applyMiddleware(...middleware));
 };

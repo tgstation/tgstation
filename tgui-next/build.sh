@@ -18,6 +18,7 @@ run-webpack() {
 ## Run a development server
 if [[ ${1} == "--dev" ]]; then
   cd "${base_dir}/packages/tgui-dev-server"
+  rm -rf public/bundles
   exec node --experimental-modules server.js
 fi
 

@@ -17,7 +17,7 @@ module.exports = (env = {}, argv) => {
     },
     output: {
       path: path.resolve(__dirname, './public/bundles'),
-      publicPath: '/bundles/',
+      // publicPath: './',
       filename: '[name].bundle.js',
       chunkFilename: '[name].chunk.js',
     },
@@ -192,20 +192,21 @@ module.exports = (env = {}, argv) => {
     // config.devtool = 'cheap-module-source-map';
     config.devtool = false;
     config.devServer = {
-      // Mandatory settings
-      port: 3000,
-      publicPath: '/bundles/',
-      contentBase: 'public',
-      historyApiFallback: {
-        index: '/index.html',
-      },
-      // Hot module replacement
-      hot: true,
+      // // Mandatory settings
+      // port: 3000,
+      // publicPath: '/bundles/',
+      // contentBase: 'public',
+      // historyApiFallback: {
+      //   index: '/index.html',
+      // },
+      // // Hot module replacement
+      // hotOnly: true,
       // Informational flags
       progress: false,
       quiet: false,
       noInfo: false,
       // Fine-grained logging control
+      clientLogLevel: 'silent',
       stats: {
         assets: false,
         builtAt: false,

@@ -22,11 +22,11 @@ export const showToast = (dispatch, text) => {
   toastTimeout = setTimeout(() => {
     toastTimeout = undefined;
     dispatch({
-      type: 'HIDE_TOAST',
+      type: 'hideToast',
     });
   }, 5000);
   dispatch({
-    type: 'SHOW_TOAST',
+    type: 'showToast',
     payload: { text },
   });
 };
@@ -34,7 +34,7 @@ export const showToast = (dispatch, text) => {
 export const toastReducer = (state, action) => {
   const { type, payload } = action;
 
-  if (type === 'SHOW_TOAST') {
+  if (type === 'showToast') {
     const { text } = payload;
     return {
       ...state,
@@ -42,7 +42,7 @@ export const toastReducer = (state, action) => {
     };
   }
 
-  if (type === 'HIDE_TOAST') {
+  if (type === 'hideToast') {
     return {
       ...state,
       toastText: null,

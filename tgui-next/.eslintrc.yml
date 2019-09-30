@@ -88,7 +88,7 @@ rules:
   no-mixed-spaces-and-tabs: error
   no-whitespace-before-property: error
   operator-linebreak: [error, before]
-  quotes: [error, single]
+  # quotes: [error, single]
   semi: error
   semi-spacing: [error, { before: false, after: true }]
   semi-style: [error, last]

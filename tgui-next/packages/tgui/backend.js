@@ -13,7 +13,7 @@ import { UI_DISABLED, UI_INTERACTIVE } from './constants';
  * Creates a backend update action.
  */
 export const backendUpdate = state => ({
-  type: 'BACKEND_UPDATE',
+  type: 'backendUpdate',
   payload: state,
 });
 
@@ -23,7 +23,7 @@ export const backendUpdate = state => ({
 export const backendReducer = (state, action) => {
   const { type, payload } = action;
 
-  if (type === 'BACKEND_UPDATE') {
+  if (type === 'backendUpdate') {
     // Calculate our own fields
     const visible = payload.config.status !== UI_DISABLED;
     const interactive = payload.config.status === UI_INTERACTIVE;

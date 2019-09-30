@@ -1,2 +1,4 @@
 node_modules
-/packages/tgui/public/bundles/*.map
+/packages/tgui/public/bundles/*
+!/packages/tgui/public/bundles/*.chunk.*
+!/packages/tgui/public/bundles/*.bundle.*
