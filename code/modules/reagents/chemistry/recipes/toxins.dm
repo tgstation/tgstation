@@ -73,7 +73,7 @@
 	name = "Zombie Powder"
 	id = /datum/reagent/toxin/zombiepowder
 	results = list(/datum/reagent/toxin/zombiepowder = 15)
-	required_reagents = list(/datum/reagent/toxin/carpotoxin = 5, /datum/reagent/medicine/morphine = 5, /datum/reagent/water/holywater = 5)
+	required_reagents = list(/datum/reagent/toxin/carpotoxin = 5, /datum/reagent/consumable/ethanol/neurotoxin = 5, /datum/reagent/water/holywater = 5)
 
 /datum/chemical_reaction/ghoulpowder
 	name = "Ghoul Powder"
