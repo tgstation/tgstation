@@ -89,9 +89,9 @@
 
 			if(stream_mode)
 				if(isliving(T))
-					if(!T.can_inject())
-						return
 					var/mob/living/M = T
+					if(!M.can_inject())
+						return
 					if((M.mobility_flags & MOBILITY_STAND) || !range_left)
 						D.reagents.reaction(M, VAPOR)
 						puff_reagent_left -= 1
