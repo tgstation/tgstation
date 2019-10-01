@@ -228,7 +228,7 @@
 			amount2purge *= 5 //very good antitox (well just removing them) for roundstart availability
 		else if(medibonus >= 5 && istype(the_reagent2, /datum/reagent/medicine)) //5 unique meds (4+multiver) will make it not purge medicines
 			continue
-		M.reagents.remove_reagent(the_reagent.type, amount2purge)
+		M.reagents.remove_reagent(the_reagent2.type, amount2purge)
 	..()
 	return TRUE
 
