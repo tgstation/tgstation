@@ -181,47 +181,36 @@
 /******TOXIN******/
 /*Suffix: -iver*/
 
-/datum/reagent/medicine/C2/fiziver //fiz = phys ok?
-  name = "Fiziver"
-  description = "An antitoxin that temporarily weakens the user, making them susceptible to other forms of damage. Weakness and toxin healing scales with length of exposure."
-  overdose_threshold = 11
-  metabolization_rate = 0.25 * REAGENTS_METABOLISM //so that the weakness from a 10u pill will last for around 3 minutes or so
-  var/weak_mod = 1
+/datum/reagent/medicine/C2/seiver //a bit of a gray joke
+  name = "Seiver"
+  description = "A medicine that shifts functionality based on temperature. Colder temperatures incurs radiation removal while hotter temperatures promote antitoxicity. Damages the heart." //CHEM HOLDER TEMPS, NOT AIR TEMPS
 
-/datum/reagent/medicine/C2/fiziver/on_mob_life(mob/living/carbon/human/M)
-	var/datum/physiology/phis = M.physiology
-	phis.brute_mod /= weak_mod
-	phis.burn_mod /= weak_mod
-	phis.oxy_mod /= weak_mod
-	phis.stamina_mod /= weak_mod
-	weak_mod = min(3, (1+(current_cycle*0.04)))
-	phis.brute_mod *= weak_mod
-	phis.burn_mod *= weak_mod
-	phis.oxy_mod *= weak_mod
-	phis.stamina_mod *= weak_mod
-	M.adjustToxLoss(-0.3*weak_mod) //Math is fun if you your PR doesn't accidentally get testmerged before you can test the effects of your equations!
+/datum/reagent/medicine/C2/seiver/on_mob_life(mob/living/carbon/human/M)
+	var/chemtemp = min(M.reagents?.chem_temp, 1000)
+	chemtemp = chemtemp ? chemtemp : 273 //why do you have null sweaty
+	var/healypoints = 0 //5 healypoints = 1 heart damage; 5 rads = 1 tox damage healed for the purpose of healypoints
+
+	//you're hot
+	var/toxcalc = min(round((chemtemp-1000)/175+5,0.1),5) //max 5 tox healing a tick
+	if(toxcalc > 0)
+		M.adjustToxLoss(toxcalc*-1)
+		healypoints += toxcalc
+
+	//and you're cold
+	var/radcalc = round((T0C-chemtemp)/6,0.1) //max ~45 rad loss unless you've hit below 0K. if so, wow.
+	if(radcalc > 0)
+		M.radiation -= radcalc
+		healypoints += (radcalc/5)
+
+	//you're yes and... oh no!
+	healypoints = round(healypoints,0.1)
+	M.adjustOrganLoss(ORGAN_SLOT_HEART, healypoints/5)
 	..()
 	return TRUE
 
-/datum/reagent/medicine/C2/fiziver/on_mob_delete(mob/living/carbon/human/M) //I was considering adding an on_mob_add counterpart to this, but it shouldn't ever be needed... right?
-	var/datum/physiology/phis = M.physiology
-	phis.brute_mod /= weak_mod //apparently, physiology stats are independent of species stats, so nothing bad should happen if someone changes race or something while this chem is in their system... hopefully
-	phis.burn_mod /= weak_mod
-	phis.oxy_mod /= weak_mod
-	phis.stamina_mod /= weak_mod
-	return ..()
-
-/datum/reagent/medicine/C2/fiziver/overdose_process(mob/living/carbon/human/M)
-	if(prob(50))
-		M.adjustBruteLoss(0.2) //the damage from these will, of course, be increased by the brute_mod and burn_mod adjustments
-		M.adjustFireLoss(0.2)
-	..()
-	return TRUE
-
-
-/datum/reagent/medicine/C2/multiver //amplified with MULTIple medicines
+/datum/reagent/medicine/C2/multiver //enhanced with MULTIple medicines
 	name = "Multiver"
-	description = "An antitoxin that scales with the more unique medicines in the body as well as purges chems (including itself). Causes lung damage."
+	description = "A chem-purger that becomes more effective the more unique medicines present. Slightly heals toxicity but causes lung damage (mitigatable by unique medicines)."
 
 /datum/reagent/medicine/C2/multiver/on_mob_life(mob/living/carbon/human/M)
 	var/medibonus = 0 //it will always have itself which makes it REALLY start @ 1
@@ -229,10 +218,17 @@
 		var/datum/reagent/the_reagent = r
 		if(istype(the_reagent, /datum/reagent/medicine))
 			medibonus += 1
-	M.adjustToxLoss(-0.5 * medibonus)
-	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, medibonus)
-	for(var/datum/reagent/R in M.reagents.reagent_list)
-		M.reagents.remove_reagent(R.type, medibonus*0.5)
+	M.adjustToxLoss(-0.2 * medibonus)
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, medibonus ? 2.5/medibonus : 1)
+	for(var/datum/reagent/the_reagent2 in M.reagents.reagent_list)
+		if(the_reagent2 == src)
+			continue
+		var/amount2purge = medibonus*0.1
+		if(istype(the_reagent2,/datum/reagent/toxin))
+			amount2purge *= 5 //very good antitox (well just removing them) for roundstart availability
+		else if(medibonus >= 5 && istype(the_reagent2, /datum/reagent/medicine)) //5 unique meds (4+multiver) will make it not purge medicines
+			continue
+		M.reagents.remove_reagent(the_reagent.type, amount2purge)
 	..()
 	return TRUE
 
@@ -262,8 +258,10 @@
 /datum/reagent/medicine/C2/syriniver/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.8)
 	M.adjustToxLoss(-1*REM, 0)
-	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
-		M.reagents.remove_reagent(R.type,1)
+	for(var/datum/reagent/R in M.reagents.reagent_list)
+		if(R == src)
+			continue
+		M.reagents.remove_reagent(R.type,0.4)
 
 	..()
 	. = 1
@@ -288,7 +286,7 @@
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.1)
 	M.adjustToxLoss(-1*REM, 0)
 	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
-		M.reagents.remove_reagent(R.type,1)
+		M.reagents.remove_reagent(R.type,0.2)
 	..()
 	. = 1
 
