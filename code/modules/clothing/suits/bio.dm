@@ -20,8 +20,8 @@
 	permeability_coefficient = 0.01
 	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	slowdown = 1
-	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/pen, /obj/item/flashlight/pen, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray)
+	slowdown = 0.5
+	allowed = list(/obj/item/tank/internals, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/reagent_containers/glass/beaker)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 80, "fire" = 30, "acid" = 100)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	strip_delay = 70
@@ -51,8 +51,8 @@
 
 /obj/item/clothing/suit/bio_suit/security
 	armor = list("melee" = 25, "bullet" = 15, "laser" = 25, "energy" = 10, "bomb" = 25, "bio" = 100, "rad" = 80, "fire" = 30, "acid" = 100)
+	allowed = list(/obj/item/tank/internals, /obj/item/gun/ballistic, /obj/item/gun/energy, /obj/item/kitchen/knife/combat, /obj/item/melee/baton, /obj/item/melee/classic_baton/telescopic, /obj/item/reagent_containers/spray/pepper, /obj/item/restraints/handcuffs)
 	icon_state = "bio_security"
-
 
 //Janitor's biosuit, grey with purple arms
 /obj/item/clothing/head/bio_hood/janitor
@@ -60,7 +60,7 @@
 
 /obj/item/clothing/suit/bio_suit/janitor
 	icon_state = "bio_janitor"
-	allowed = list(/obj/item/storage/bag/trash)
+	allowed = list(/obj/item/tank/internals, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/reagent_containers/glass/beaker, /obj/item/storage/bag/trash)
 
 //Scientist's biosuit, white with a pink-ish hue
 /obj/item/clothing/head/bio_hood/scientist
@@ -69,14 +69,13 @@
 /obj/item/clothing/suit/bio_suit/scientist
 	icon_state = "bio_scientist"
 
-
 //CMO's biosuit, blue stripe
-/obj/item/clothing/suit/bio_suit/cmo
-	icon_state = "bio_cmo"
-
 /obj/item/clothing/head/bio_hood/cmo
 	icon_state = "bio_cmo"
 
+/obj/item/clothing/suit/bio_suit/cmo
+	icon_state = "bio_cmo"
+	allowed = list(/obj/item/tank/internals, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/reagent_containers/glass/beaker, /obj/item/melee/classic_baton/telescopic)
 
 //Plague Dr mask can be found in clothing/masks/gasmask.dm
 /obj/item/clothing/suit/bio_suit/plaguedoctorsuit
@@ -84,5 +83,6 @@
 	desc = "It protected doctors from the Black Death, back then. You bet your arse it's gonna help you against viruses."
 	icon_state = "plaguedoctor"
 	item_state = "bio_suit"
+	allowed = list(/obj/item/cane)
 	strip_delay = 40
 	equip_delay_other = 20
