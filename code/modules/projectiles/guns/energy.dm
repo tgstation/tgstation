@@ -4,6 +4,44 @@
 	desc = "A basic energy-based gun."
 	icon = 'icons/obj/guns/energy.dmi'
 
+	///sound when inserting cell
+	var/load_sound = "gun_insert_full_magazine"
+	///sound when inserting an empty magazine
+	var/load_empty_sound = "buzz-sigh.ogg"
+	///volume of loading sound
+	var/load_sound_volume = 40
+	///whether loading sound should vary
+	var/load_sound_vary = TRUE
+
+	///Sound of ejecting a magazine
+	var/eject_sound = "gun_remove_full_magazine"
+	///sound of ejecting an empty magazine
+	var/eject_empty_sound = "gun_remove_empty_magazine"
+	///volume of ejecting a magazine
+	var/eject_sound_volume = 40
+	///whether eject sound should vary
+	var/eject_sound_vary = TRUE
+
+	///empty alarm sound (if enabled)
+	var/empty_alarm_sound = 'sound/weapons/smg_empty_alarm.ogg'
+	///empty alarm volume sound
+	var/empty_alarm_volume = 70
+	///whether empty alarm sound varies
+	var/empty_alarm_vary = TRUE
+
+	///Whether the gun alarms when empty or not.
+	var/empty_alarm = FALSE
+	///Whether the gun is currently alarmed to prevent it from spamming sounds
+	var/alarmed = FALSE
+	///Whether the gun's cell can be unloaded
+	var/can_unload = FALSE
+	///Maximum cell charge an unloadable gun will accept; 1000 by default.
+	var/max_accept = 1000
+	///Time it takes to load in deciseconds
+	var/load_time = 15
+	///Time it takes to unload in deciseconds
+	var/unload_time = 15
+
 	var/obj/item/stock_parts/cell/cell //What type of power cell this uses
 	var/cell_type = /obj/item/stock_parts/cell
 	var/modifystate = 0
@@ -130,16 +168,22 @@
 	update_icon(TRUE)
 	return
 
-/obj/item/gun/energy/update_icon(force_update)
+/obj/item/gun/energy/update_icon(force_update, mob/user)
 	if(QDELETED(src))
 		return
 	..()
 	if(!automatic_charge_overlays)
 		return
-	var/ratio = CEILING(CLAMP(cell.charge / cell.maxcharge, 0, 1) * charge_sections, 1)
+	var/charge = 0
+	var/maxcharge = 1
+	if(cell)
+		charge = cell.charge
+		maxcharge = cell.maxcharge
+	var/ratio = CEILING(CLAMP(charge / maxcharge, 0, 1) * charge_sections, 1)
 	if(ratio == old_ratio && !force_update)
 		return
 	old_ratio = ratio
+	to_chat(world,"ENERGY UPDATE ICON DEBUG 1: ratio: [ratio], old_ratio: [old_ratio]")
 	cut_overlays()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	var/iconState = "[icon_state]_charge"
@@ -151,7 +195,7 @@
 		iconState += "_[shot.select_name]"
 		if(itemState)
 			itemState += "[shot.select_name]"
-	if(cell.charge < shot.e_cost)
+	if(charge < shot.e_cost)
 		add_overlay("[icon_state]_empty")
 	else
 		if(!shaded_charge)
@@ -162,9 +206,15 @@
 				add_overlay(charge_overlay)
 		else
 			add_overlay("[icon_state]_charge[ratio]")
+	to_chat(world,"ENERGY UPDATE ICON DEBUG 2: itemState: [itemState]")
 	if(itemState)
 		itemState += "[ratio]"
+		to_chat(world,"ENERGY UPDATE ICON DEBUG 3: itemState: [itemState]")
 		item_state = itemState
+	to_chat(world,"ENERGY UPDATE ICON DEBUG 4: user: [user]")
+	if(user)
+		to_chat(world,"ENERGY UPDATE ICON DEBUG 5: user: [user]")
+		user.update_inv_hands()
 
 /obj/item/gun/energy/suicide_act(mob/living/user)
 	if (istype(user) && can_shoot() && can_trigger_gun(user) && user.get_bodypart(BODY_ZONE_HEAD))
@@ -198,6 +248,10 @@
 
 /obj/item/gun/energy/ignition_effect(atom/A, mob/living/user)
 	if(!can_shoot() || !ammo_type[select])
+		if (!alarmed && empty_alarm)
+			playsound(src, empty_alarm_sound, empty_alarm_volume, empty_alarm_vary)
+			alarmed = TRUE
+			update_icon()
 		shoot_with_empty_chamber()
 		. = ""
 	else
@@ -223,3 +277,82 @@
 			playsound(user, BB.hitsound, 50, TRUE)
 			cell.use(E.e_cost)
 			. = "<span class='danger'>[user] casually lights their [A.name] with [src]. Damn.</span>"
+
+/obj/item/gun/energy/afterattack()
+	. = ..() //The gun actually firing
+	postfire_empty_checks()
+
+///postfire empty checks for sound alarms
+/obj/item/gun/energy/proc/postfire_empty_checks()
+	if (!can_shoot() || !ammo_type[select])
+		if (!alarmed && empty_alarm)
+			playsound(src, empty_alarm_sound, empty_alarm_volume, empty_alarm_vary)
+			alarmed = TRUE
+			update_icon()
+
+/obj/item/gun/energy/proc/eject_cell(mob/user, display_message = TRUE, replace_cell = FALSE)
+	if(!can_unload) //Sanity check
+		return
+	if(!cell) //Sanity check
+		return
+	var/obj/item/stock_parts/cell/C = cell
+	to_chat(user, "<span class='warning'>You start ejecting \the [C]...</span>")
+	if(!do_after(user, unload_time, user)) //Slight delay before the cell is unloaded; must stand still.
+		to_chat(user, "<span class='warning'>You stop ejecting \the [C].</span>")
+		return
+	C.forceMove(drop_location())
+	user.put_in_hands(C)
+	C.update_icon()
+	if (cell.charge)
+		playsound(src, load_sound, load_sound_volume, load_sound_vary)
+	else
+		playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
+	cell = null
+	if (display_message)
+		to_chat(user, "<span class='warning'>You pull [C] out of \the [src].</span>")
+	update_icon(TRUE, user)
+
+/obj/item/gun/energy/proc/load_cell(mob/user, obj/item/stock_parts/cell/C)
+	to_chat(user, "<span class='warning'>You start loading \the [C] into \the [src].</span>")
+	if(!do_after(user, load_time, user)) //Slight delay before the cell is loaded; must stand still.
+		to_chat(user, "<span class='warning'>You stop loading \the [C] into \the [src].</span>")
+		return
+	if(!user.transferItemToLoc(C, src))
+		return
+	cell = C
+	playsound(src, load_sound, load_sound_volume, load_sound_vary)
+	to_chat(user, "<span class='warning'>You install [C] in [src].</span>")
+	alarmed = FALSE
+	update_icon(TRUE, user)
+	return TRUE
+
+
+//ATTACK HAND IGNORING PARENT RETURN VALUE
+/obj/item/gun/energy/attack_hand(mob/user)
+	if(!can_unload) //Only relevant for energy guns that can unload their cell
+		return ..()
+	if(can_charge && loc == user && user.is_holding(src) && cell)
+		eject_cell(user)
+		return
+	return ..()
+
+
+/obj/item/gun/energy/attackby(obj/item/W, mob/user, params)
+	if(!can_charge || !can_unload)
+		return ..()
+
+	var/obj/item/stock_parts/cell/C
+	if(istype(W, /obj/item/stock_parts/cell))
+		C = W
+		if(C.maxcharge > max_accept) //Check that we're not trying to install anything crazy like a bluespace/quantum battery or whatever.
+			to_chat(user, "<span class='warning'>[src] cannot accept cells with a higher capacity than [max_accept].</span>")
+			return
+
+		if(cell && C) //Where we remove the cell.
+			eject_cell(user, TRUE, TRUE) //Remove the cell, then replace it.
+
+		if(!cell && C)
+			load_cell(user, C)
+
+	else
+		return ..()
