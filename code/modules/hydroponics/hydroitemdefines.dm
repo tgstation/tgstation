@@ -80,7 +80,7 @@
 		H.confused = max(H.confused, 10)
 		H.Stun(20)
 		playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
-		H.visible_message("<span class='warning'>[H] steps on [src] causing the handle to hit [H.p_them()] right in the face!.</span>", \
+		H.visible_message("<span class='warning'>[H] steps on [src] causing the handle to hit [H.p_them()] right in the face!</span>", \
 						  "<span class='userdanger'>You step on the [src] causing the handle to hit you right in the face!</span>")
 
 /obj/item/hatchet
