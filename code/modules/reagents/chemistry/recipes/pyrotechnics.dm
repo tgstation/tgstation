@@ -60,7 +60,7 @@
 		playsound(get_turf(holder.my_atom), 'sound/effects/pray.ogg', 80, FALSE, round(created_volume/48))
 		strengthdiv = 8
 		var/deity = GLOB.deity ? GLOB.deity : "Christ"
-		for(var/mob/living/simple_animal/revenant/R in get_hearers_in_view(7,get_turf(holder.my_atom)))
+		for(var/mob/living/simple_animal/revenant/R in get_hearers_in_view(min(7,round(created_volume/25)),get_turf(holder.my_atom)))
 			to_chat(R, "<span class='userdanger'>The power of [deity] compels you!</span>")
 			R.stun(30)
 			R.reveal(100)
