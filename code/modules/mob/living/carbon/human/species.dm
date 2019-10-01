@@ -1917,7 +1917,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		speedmod -= 0.35
 		H.setMovetype(H.movement_type | FLYING)
 		override_float = TRUE
-		H.pass_flags |= PASSTABLE
+		passtable_on(H, SPECIES_TRAIT)
 		H.OpenWings()
 		H.update_mobility()
 	else
@@ -1925,7 +1925,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		speedmod += 0.35
 		H.setMovetype(H.movement_type & ~FLYING)
 		override_float = FALSE
-		H.pass_flags &= ~PASSTABLE
+		passtable_off(H, SPECIES_TRAIT)
 		H.CloseWings()
 
 /datum/action/innate/flight
