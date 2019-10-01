@@ -248,6 +248,11 @@ By default, all atom have a reagents var - but its empty. if you want to use an 
 			to draw from the contents of this object.
 ```
 
+## FERMICHEM OH GOD OH FUCK
+
+A new and improved way for reagents to react.
+
+
 # GOON CHEMS README:
 Credit goes to Cogwerks, and all the other goonstation coders for the original idea and implementation of this over at goonstation.
 
