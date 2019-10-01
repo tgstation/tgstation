@@ -10,6 +10,7 @@ module.exports = (env = {}, argv) => {
       tgui: [
         'core-js/stable',
         'regenerator-runtime/runtime',
+        'ie8',
         'dom4',
         path.resolve(__dirname, './styles/main.scss'),
         path.resolve(__dirname, './index.js'),
