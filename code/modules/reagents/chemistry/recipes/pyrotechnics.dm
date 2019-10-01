@@ -65,7 +65,7 @@
 			R.stun(30)
 			R.reveal(100)
 			R.adjustHealth(50)
-		for(var/mob/living/carbon/C in get_hearers_in_view(7,get_turf(holder.my_atom)))
+		for(var/mob/living/carbon/C in get_hearers_in_view(min(7,round(created_volume/25)),get_turf(holder.my_atom)))
 			if(iscultist(C))
 				to_chat(C, "<span class='userdanger'>The power of [deity] compels you!</span>")
 				C.Paralyze(40)
