@@ -1,0 +1,6 @@
+author: "Irafas"
+delete-after: True
+changes: 
+  - bugfix: "Turretid button to toggle borg shooting works"
+  - bugfix: "Turrets now can shoot borgs when toggled to"
+  - refactor: "Turrets use bitflags instead of several vars"

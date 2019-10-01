@@ -110,11 +110,12 @@
 		return
 
 	if(symptoms && symptoms.len)
-
 		if(!processing)
 			processing = TRUE
 			for(var/datum/symptom/S in symptoms)
-				S.Start(src)
+				if(S.Start(src)) //this will return FALSE if the symptom is neutered
+					S.next_activation = world.time + rand(S.symptom_delay_min * 10, S.symptom_delay_max * 10)
+				S.on_stage_change(src)
 
 		for(var/datum/symptom/S in symptoms)
 			S.Activate(src)
@@ -123,7 +124,7 @@
 /datum/disease/advance/update_stage(new_stage)
 	..()
 	for(var/datum/symptom/S in symptoms)
-		S.on_stage_change(new_stage, src)
+		S.on_stage_change(src)
 
 // Compares type then ID.
 /datum/disease/advance/IsSame(datum/disease/advance/D)
@@ -205,6 +206,10 @@
 /datum/disease/advance/proc/Refresh(new_name = FALSE)
 	GenerateProperties()
 	AssignProperties()
+	if(processing && symptoms && symptoms.len)
+		for(var/datum/symptom/S in symptoms)
+			S.Start(src)
+			S.on_stage_change(src)
 	id = null
 
 	var/the_id = GetDiseaseID()

@@ -1,0 +1,5 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - bugfix: "Fixes and moves around some on_stage_change() and Start()-related things for virus symptoms and (sentient) diseases."
+  - bugfix: "The inorganic biology symptom should work properly now when bought by a sentient disease."
