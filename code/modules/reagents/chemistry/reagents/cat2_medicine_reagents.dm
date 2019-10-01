@@ -232,6 +232,8 @@
 	..()
 	return TRUE
 
+#define issyrinormusc(A)	(istype(A,/datum/reagent/medicine/C2/syriniver) || istype(A,/datum/reagent/medicine/C2/musiver)) //musc is metab of syrin so let's make sure we're not purging either
+
 /datum/reagent/medicine/C2/syriniver //Inject >> SYRINge
 	name = "Syriniver"
 	description = "A potent antidote for intravenous use with a narrow therapeutic index, it is considered an active prodrug of musiver."
@@ -259,7 +261,7 @@
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.8)
 	M.adjustToxLoss(-1*REM, 0)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
-		if(R == src)
+		if(issyrinormusc(R))
 			continue
 		M.reagents.remove_reagent(R.type,0.4)
 
@@ -285,7 +287,9 @@
 /datum/reagent/medicine/C2/musiver/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.1)
 	M.adjustToxLoss(-1*REM, 0)
-	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
+	for(var/datum/reagent/R in M.reagents.reagent_list)
+		if(issyrinormusc(R))
+			continue
 		M.reagents.remove_reagent(R.type,0.2)
 	..()
 	. = 1
@@ -306,6 +310,7 @@
 	..()
 	. = 1
 
+#undef issyrinormusc
 /******COMBOS******/
 /*Suffix: Combo of healing, prob gonna get wack REAL fast*/
 /datum/reagent/medicine/C2/instabitaluri
