@@ -183,7 +183,6 @@
 	if(ratio == old_ratio && !force_update)
 		return
 	old_ratio = ratio
-	to_chat(world,"ENERGY UPDATE ICON DEBUG 1: ratio: [ratio], old_ratio: [old_ratio]")
 	cut_overlays()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	var/iconState = "[icon_state]_charge"
@@ -206,14 +205,10 @@
 				add_overlay(charge_overlay)
 		else
 			add_overlay("[icon_state]_charge[ratio]")
-	to_chat(world,"ENERGY UPDATE ICON DEBUG 2: itemState: [itemState]")
 	if(itemState)
 		itemState += "[ratio]"
-		to_chat(world,"ENERGY UPDATE ICON DEBUG 3: itemState: [itemState]")
 		item_state = itemState
-	to_chat(world,"ENERGY UPDATE ICON DEBUG 4: user: [user]")
 	if(user)
-		to_chat(world,"ENERGY UPDATE ICON DEBUG 5: user: [user]")
 		user.update_inv_hands()
 
 /obj/item/gun/energy/suicide_act(mob/living/user)
@@ -297,7 +292,7 @@
 		return
 	var/obj/item/stock_parts/cell/C = cell
 	to_chat(user, "<span class='warning'>You start ejecting \the [C]...</span>")
-	if(!do_after(user, unload_time, user)) //Slight delay before the cell is unloaded; must stand still.
+	if(!do_after(user, unload_time, target = user)) //Slight delay before the cell is unloaded; must stand still.
 		to_chat(user, "<span class='warning'>You stop ejecting \the [C].</span>")
 		return
 	C.forceMove(drop_location())
@@ -314,7 +309,7 @@
 
 /obj/item/gun/energy/proc/load_cell(mob/user, obj/item/stock_parts/cell/C)
 	to_chat(user, "<span class='warning'>You start loading \the [C] into \the [src].</span>")
-	if(!do_after(user, load_time, user)) //Slight delay before the cell is loaded; must stand still.
+	if(!do_after(user, load_time, target = user)) //Slight delay before the cell is loaded; must stand still.
 		to_chat(user, "<span class='warning'>You stop loading \the [C] into \the [src].</span>")
 		return
 	if(!user.transferItemToLoc(C, src))
