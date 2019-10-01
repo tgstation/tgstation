@@ -8,10 +8,6 @@ module.exports = (env = {}, argv) => {
     mode: 'none',
     entry: {
       tgui: [
-        'core-js/stable',
-        'regenerator-runtime/runtime',
-        'ie8',
-        'dom4',
         path.resolve(__dirname, './styles/main.scss'),
         path.resolve(__dirname, './index.js'),
       ],
@@ -30,17 +26,18 @@ module.exports = (env = {}, argv) => {
       rules: [
         {
           test: /\.m?jsx?$/,
-          exclude: /node_modules/,
+          // exclude: /node_modules/,
           use: [
             {
               loader: 'babel-loader',
               options: {
                 presets: [
                   ['@babel/preset-env', {
-                    modules: false,
+                    modules: 'commonjs',
                     useBuiltIns: 'entry',
                     corejs: '3',
-                    spec: true,
+                    // spec: false,
+                    loose: true,
                     targets: {
                       ie: '8',
                     },
@@ -60,7 +57,7 @@ module.exports = (env = {}, argv) => {
             {
               loader: ExtractCssChunks.loader,
               options: {
-                hot: true,
+                // hot: true,
               },
             },
             {
@@ -78,7 +75,7 @@ module.exports = (env = {}, argv) => {
             {
               loader: ExtractCssChunks.loader,
               options: {
-                hot: true,
+                // hot: true,
               },
             },
             {
@@ -155,17 +152,17 @@ module.exports = (env = {}, argv) => {
       hints: false,
     };
     config.optimization.minimizer = [
-      new TerserPlugin({
-        extractComments: false,
-        terserOptions: {
-          ie8: true,
-          output: {
-            ascii_only: true,
-            beautify: true,
-            indent_level: 2,
-          },
-        },
-      }),
+      // new TerserPlugin({
+      //   extractComments: false,
+      //   terserOptions: {
+      //     ie8: true,
+      //     output: {
+      //       ascii_only: true,
+      //       beautify: true,
+      //       indent_level: 2,
+      //     },
+      //   },
+      // }),
     ];
     config.plugins = [
       ...config.plugins,

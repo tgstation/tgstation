@@ -1,3 +1,6 @@
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+
 import { act } from 'byond';
 import { loadCSS } from 'fg-loadcss';
 import { render } from 'inferno';
@@ -100,7 +103,15 @@ const setupApp = () => {
 
 // Handle global errors
 window.onerror = (msg, url, line, col, error) => {
-  logger.error('Error:', msg, { url, line, col });
+  document.write(JSON.stringify(msg));
 };
 
-setupApp();
+// In case the document is already loaded
+if (document.readyState !== 'loading') {
+  setupApp();
+}
+// Wait for content to load on modern browsers
+// NOTE: This call is polyfilled on IE8.
+else {
+  document.addEventListener('DOMContentLoaded', setupApp);
+}
