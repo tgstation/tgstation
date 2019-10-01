@@ -89,7 +89,7 @@
 
 			if(stream_mode)
 				if(isliving(T))
-					if(!T.can_inject)
+					if(!T.can_inject())
 						return
 					var/mob/living/M = T
 					if((M.mobility_flags & MOBILITY_STAND) || !range_left)
