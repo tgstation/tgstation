@@ -49,16 +49,14 @@
 		return
 	if(istype(target, /obj/structure/falsewall))
 		return
-	if(target.alpha == 0)
+	if(target.alpha != 255)
 		return
-	if(!target.invisibility == 0)
+	if(target.invisibility != 0)
 		return
 	if(iseffect(target))
 		if(!(istype(target, /obj/effect/decal))) //be a footprint
 			return
-	if(istype(target, /obj/structure/closet/cardboard/agent) || istype(target, /obj/structure/holosign))
-		to_chat(user, "<span class='warning'>[src] emits a soft buzzing noise.</span>")
-		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, TRUE, -6)
+	if(istype(target, /obj/structure/closet/cardboard/agent))
 		return
 	playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, TRUE, -6)
 	to_chat(user, "<span class='notice'>Scanned [target].</span>")
