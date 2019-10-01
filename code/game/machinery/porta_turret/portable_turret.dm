@@ -4,7 +4,7 @@
 #define POPUP_ANIM_TIME 5
 #define POPDOWN_ANIM_TIME 5 //Be sure to change the icon animation at the same time or it'll look bad
 
-#define TURRET_FLAG_BEEN_ATTACKED		(1<<0)	// The turret gets pissed off and shoots at people nearby (unless they have sec access!)
+#define TURRET_FLAG_SHOOT_ALL_REACT		(1<<0)	// The turret gets pissed off and shoots at people nearby (unless they have sec access!)
 #define TURRET_FLAG_AUTH_WEAPONS		(1<<1)	// Checks if it can shoot people that have a weapon they aren't authorized to have
 #define TURRET_FLAG_SHOOT_CRIMINALS		(1<<2)	// Checks if it can shoot people that are wanted
 #define TURRET_FLAG_SHOOT_ALL 			(1<<3)  // The turret gets pissed off and shoots at people nearby (unless they have sec access!)
@@ -304,9 +304,12 @@
 	if(on)
 		//if the turret is on, the EMP no matter how severe disables the turret for a while
 		//and scrambles its settings, with a slight chance of having an emag effect
-		turret_flags |= pick(TURRET_FLAG_SHOOT_CRIMINALS, 0)
-		turret_flags |= pick(TURRET_FLAG_AUTH_WEAPONS, 0)
-		turret_flags |= pick(TURRET_FLAG_SHOOT_ALL, 0, 0, 0, 0) // Shooting everyone is a pretty big deal, so it's least likely to get turned on
+		if(prob(50))
+			turret_flags |= TURRET_FLAG_SHOOT_CRIMINALS
+		if(prob(50))
+			turret_flags |= TURRET_FLAG_AUTH_WEAPONS
+		if(prob(20))
+			turret_flags |= TURRET_FLAG_SHOOT_ALL // Shooting everyone is a pretty big deal, so it's least likely to get turned on
 
 		on = FALSE
 		remove_control()
@@ -318,12 +321,12 @@
 	if(. && obj_integrity > 0) //damage received
 		if(prob(30))
 			spark_system.start()
-		if(on && !(turret_flags & TURRET_FLAG_BEEN_ATTACKED) && !(obj_flags & EMAGGED))
-			turret_flags |= TURRET_FLAG_BEEN_ATTACKED
+		if(on && !(turret_flags & TURRET_FLAG_SHOOT_ALL_REACT) && !(obj_flags & EMAGGED))
+			turret_flags |= TURRET_FLAG_SHOOT_ALL_REACT
 			addtimer(CALLBACK(src, .proc/reset_attacked), 60)
 
 /obj/machinery/porta_turret/proc/reset_attacked()
-	turret_flags &= ~TURRET_FLAG_BEEN_ATTACKED
+	turret_flags &= ~TURRET_FLAG_SHOOT_ALL_REACT
 
 /obj/machinery/porta_turret/deconstruct(disassembled = TRUE)
 	qdel(src)
@@ -370,7 +373,7 @@
 			if(ispAI(A))
 				continue
 
-			if(iscyborg(sillycone) && (turret_flags & TURRET_FLAG_SHOOT_BORGS) && sillycone.stat != DEAD)
+			if((turret_flags & TURRET_FLAG_SHOOT_BORGS) && sillycone.stat != DEAD && iscyborg(sillycone))
 				targets += sillycone
 				continue
 
@@ -465,7 +468,7 @@
 	if(obj_flags & EMAGGED)
 		return 10	//if emagged, always return 10.
 
-	if((turret_flags & (TURRET_FLAG_SHOOT_ALL | TURRET_FLAG_BEEN_ATTACKED)) && !allowed(perp))
+	if((turret_flags & (TURRET_FLAG_SHOOT_ALL | TURRET_FLAG_SHOOT_ALL_REACT)) && !allowed(perp))
 		//if the turret has been attacked or is angry, target all non-sec people
 		if(!allowed(perp))
 			return 10
