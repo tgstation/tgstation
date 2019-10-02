@@ -105,29 +105,3 @@
 
 /obj/item/trash/attack(mob/M, mob/living/user)
 	return
-
-/obj/item/trash/coal
-	name = "lump of coal"
-	icon = 'icons/obj/mining.dmi'
-	icon_state = "slag"
-	desc = "Someone's gotten on the naughty list."
-	grind_results = list(/datum/reagent/carbon = 20)
-
-/obj/item/trash/coal/attackby(obj/item/W, mob/user, params)
-	if(W.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
-		if(prob(1))
-			visible_message("<span class='warning'>[src] fuses into a diamond! Someone wasn't so naughty after all...</span>")
-			new /obj/item/stack/sheet/mineral/diamond(loc)
-			qdel(src)
-			return TRUE
-		var/turf/T = get_turf(src)
-		message_admins("Coal ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
-		log_game("Coal ignited by [key_name(user)] in [AREACOORD(T)]")
-		fire_act(W.get_temperature())
-		return TRUE
-	else
-		return ..()
-
-/obj/item/trash/coal/fire_act(exposed_temperature, exposed_volume)
-	atmos_spawn_air("co2=10;TEMP=[exposed_temperature]")
-	qdel(src)
