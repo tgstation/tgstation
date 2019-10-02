@@ -116,7 +116,7 @@
 				to_chat(user, "<span class='notice'>You attach [I] to [src].</span>")
 
 			var/accessory_color = attached_accessory.icon_state
-			accessory_overlay = mutable_appearance('icons/mob/clothing/accessories.dmi', "[accessory_color]")
+			accessory_overlay = mutable_appearance(I.mob_overlay_icon, "[accessory_color]") //FULP modified - changed hardcoded file path to I.mob_overlay_icon
 			accessory_overlay.alpha = attached_accessory.alpha
 			accessory_overlay.color = attached_accessory.color
 
