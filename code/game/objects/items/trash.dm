@@ -119,11 +119,12 @@
 			visible_message("<span class='warning'>[src] fuses into a diamond! Someone wasn't so naughty after all...</span>")
 			new /obj/item/stack/sheet/mineral/diamond(loc)
 			qdel(src)
-			return
+			return TRUE
 		var/turf/T = get_turf(src)
 		message_admins("Coal ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
 		log_game("Coal ignited by [key_name(user)] in [AREACOORD(T)]")
 		fire_act(W.get_temperature())
+		return TRUE
 	else
 		return ..()
 
