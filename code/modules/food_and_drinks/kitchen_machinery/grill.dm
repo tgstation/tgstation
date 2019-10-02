@@ -82,6 +82,7 @@
 		I.AddComponent(/datum/component/sizzle)
 
 /obj/machinery/grill/Exited(atom/movable/AM)
+	finish_grill()
 	..()
 	grilled_item = null
 
