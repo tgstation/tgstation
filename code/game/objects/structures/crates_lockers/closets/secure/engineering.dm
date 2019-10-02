@@ -32,8 +32,9 @@
 	new /obj/item/circuitboard/machine/techfab/department/engineering(src)
 	new /obj/item/extinguisher/advanced(src)
 	new /obj/item/storage/photo_album/CE(src)
+	new /obj/item/clothing/shoes/workboots/digitigrade(src) //fulp
+	new /obj/item/clothing/suit/hooded/wintercoat/engineering/head(src) // [FULP] [PNX] [PAPRITO]
 	new /obj/item/card/id/departmental_budget/eng(src)
-	new/obj/item/clothing/shoes/workboots/digitigrade(src) //fulp
 
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "electrical supplies locker"

@@ -1,0 +1,4 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - bugfix: "Click+dragging someone onto yourself while on harm intent as a cyborg should now only search them, not buckle them to yourself (for realsies this time)."

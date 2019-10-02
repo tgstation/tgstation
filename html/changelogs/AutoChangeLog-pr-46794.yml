@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - bugfix: "The Medical Kiosk is now obtainable from the Biological Technology tech."

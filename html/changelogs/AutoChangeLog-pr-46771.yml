@@ -1,0 +1,4 @@
+author: "Urumasi"
+delete-after: True
+changes: 
+  - code_imp: "Tweaked and renamed iscatperson() to isfelinid()"

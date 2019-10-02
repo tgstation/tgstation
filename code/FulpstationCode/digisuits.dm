@@ -121,6 +121,103 @@
 /obj/item/clothing/under/rank/cargo/miner/lavaland
 	mutantrace_variation = MUTANTRACE_VARIATION
 	fulp_digisuit = TRUE
+
+/obj/item/clothing/under/rank/civilian/bartender/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/civilian/chaplain/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/civilian/chef/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/civilian/hydroponics/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/civilian/janitor/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/civilian/lawyer/black/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/civilian/lawyer/red/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/civilian/lawyer/blue/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/civilian/lawyer/bluesuit/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/civilian/lawyer/purpsuit/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/color/grey/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/civilian/mime/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/civilian/curator/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/engineering/chief_engineer/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/engineering/atmospheric_technician/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/engineering/engineer/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/medical/chief_medical_officer/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/medical/geneticist/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/medical/virologist/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/medical/doctor/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/medical/chemist/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/rnd/research_director/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/rnd/research_director/turtleneck/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/rnd/scientist/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/rnd/roboticist/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/security/officer/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/security/warden/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/security/detective/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/security/head_of_security/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/security/head_of_security/alt/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/prisoner/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
+/obj/item/clothing/under/rank/cargo/qm/skirt
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	fulp_digisuit = FALSE
 /*
 GLOBAL_LIST_INIT(digisuits, list(
 	/obj/item/clothing/under/rank/civilian/bartender, /obj/item/clothing/under/rank/civilian/chaplain,

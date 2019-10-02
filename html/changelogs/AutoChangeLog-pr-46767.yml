@@ -1,0 +1,4 @@
+author: "Rockdtben"
+delete-after: True
+changes: 
+  - bugfix: "Conveyor belts animate again."

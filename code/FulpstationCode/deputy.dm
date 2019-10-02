@@ -38,7 +38,14 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 	fulp_item = TRUE
-	mutantrace_variation = DIGITIGRADE_STYLE
+	mutantrace_variation = MUTANTRACE_VARIATION
+
+/obj/item/clothing/under/rank/security/mallcop/skirt
+	name = "deputy skirt"
+	desc = "An awe-inspiring tactical shirt-and-skirt combo; perfectly tailored for segway-riding."
+	icon_state = "mallcop_skirt"
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	body_parts_covered = CHEST|GROIN|ARMS
 
 /obj/item/clothing/head/beret/sec/engineering
 	name = "engineering deputy beret"

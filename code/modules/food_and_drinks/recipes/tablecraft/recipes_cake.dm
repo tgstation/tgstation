@@ -83,6 +83,7 @@
 		/obj/item/reagent_containers/food/snacks/store/cake/birthday = 1,
 		/obj/item/melee/transforming/energy/sword = 1,
 	)
+	blacklist = list(/obj/item/reagent_containers/food/snacks/store/cake/birthday/energy)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/birthday/energy
 	subcategory = CAT_CAKE
 

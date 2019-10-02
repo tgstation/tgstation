@@ -121,7 +121,7 @@
 /proc/purrbation_toggle(mob/living/carbon/human/H, silent = FALSE)
 	if(!ishumanbasic(H))
 		return
-	if(!iscatperson(H))
+	if(!isfelinid(H))
 		purrbation_apply(H, silent)
 		. = TRUE
 	else
@@ -129,7 +129,7 @@
 		. = FALSE
 
 /proc/purrbation_apply(mob/living/carbon/human/H, silent = FALSE)
-	if(!ishuman(H) || iscatperson(H))
+	if(!ishuman(H) || isfelinid(H))
 		return
 	H.set_species(/datum/species/human/felinid)
 
@@ -138,7 +138,7 @@
 		playsound(get_turf(H), 'sound/effects/meow1.ogg', 50, TRUE, -1)
 
 /proc/purrbation_remove(mob/living/carbon/human/H, silent = FALSE)
-	if(!ishuman(H) || !iscatperson(H))
+	if(!ishuman(H) || !isfelinid(H))
 		return
 
 	H.set_species(/datum/species/human)
