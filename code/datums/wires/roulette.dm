@@ -22,7 +22,7 @@
 	var/obj/machinery/roulette/R = holder
 	var/list/status = list()
 	status += "The machines bolts [R.anchored ? "have fallen!" : "look up."]"
-	status += "The main circuit is [R.stat & on ? "on" : "off"]."
+	status += "The main circuit is [R.on ? "on" : "off"]."
 	status += "The main system lock appears to be [R.locked ? "on" : "off"]."
 	status += "The account balance system appears to be [R.my_card ? "connected to [R.my_card.registered_account.account_holder]" : "disconnected"]."
 	return status
@@ -34,7 +34,7 @@
 			if(isliving(usr))
 				R.shock(usr, 50)
 		if(WIRE_BOLTS) // Pulse to toggle bolts (but only raise if power is on).
-			if(!on)
+			if(!R.on)
 				return
 			R.anchored = !R.anchored
 		if(WIRE_RESETOWNER)
@@ -56,11 +56,11 @@
 			if(isliving(usr))
 				R.shock(usr, 60)
 			if(mend)
-				on = TRUE
+				R.on = TRUE
 			else
-				on = FALSE
+				R.on = FALSE
 		if(WIRE_BOLTS) // Always drop
-			if(!on)
+			if(!R.on)
 				return
 			R.anchored = TRUE
 		if(WIRE_RESETOWNER)
