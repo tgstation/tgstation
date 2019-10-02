@@ -77,16 +77,12 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(!.)
 		return
 	spark_system.start()
-	INVOKE_ASYNC(src, .proc/hulk_punched, user)
-
-/mob/living/silicon/robot/proc/hulk_punched(mob/living/carbon/human/user)
 	step_away(src, user, 15)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/_step_away, src, user, 15), 3)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/_step_away, src, get_turf(user), 15), 3)
 
 /mob/living/silicon/robot/fire_act()
 	if(!on_fire) //Silicons don't gain stacks from hotspots, but hotspots can ignite them
 		IgniteMob()
-
 
 /mob/living/silicon/robot/emp_act(severity)
 	. = ..()
@@ -97,7 +93,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			Stun(160)
 		if(2)
 			Stun(60)
-
 
 /mob/living/silicon/robot/emag_act(mob/user)
 	if(user == src)//To prevent syndieborgs from emagging themselves
