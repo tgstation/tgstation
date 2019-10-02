@@ -3,9 +3,12 @@
 
 /datum/reagent/fermi
 	name = "Fermi" //This should never exist, but it does so that it can exist in the case of errors..
-	id = "fermi"
 	taste_description	= "affection and love!"
 	can_synth = FALSE
+	var/purity
+	var/ImpureChem = /datum/reagent/fermi
+	var/InverseChem = /datum/reagent/fermi
+	var/DoNotSplit = FALSE
 
 //This should process fermichems to find out how pure they are and what effect to do.
 /datum/reagent/fermi/on_mob_add(mob/living/carbon/M, amount)

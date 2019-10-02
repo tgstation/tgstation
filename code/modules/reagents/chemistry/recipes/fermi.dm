@@ -1,6 +1,22 @@
 /datum/chemical_reaction/fermi
 	mix_sound = 'sound/effects/bubbles.ogg'
-
+	//FermiChem vars:
+	var/OptimalTempMin 		= 0 // Lower area of bell curve for determining heat based rate reactions
+	var/OptimalTempMax		= 1000 // Upper end for above
+	var/ExplodeTemp			= 2000 //Temperature at which reaction explodes
+	var/OptimalpHMin		= 7 // Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	var/OptimalpHMax		= 9 // Higest value for above
+	var/ReactpHLim			= 5 // How far out pH wil react, giving impurity place (Exponential phase)
+	var/CatalystFact		= 0 // How much the catalyst affects the reaction (0 = no catalyst)
+	var/CurveSharpT 		= 1.5 // How sharp the temperature exponential curve is (to the power of value)
+	var/CurveSharppH 		= 3 // How sharp the pH exponential curve is (to the power of value)
+	var/ThermicConstant		= 0 //Temperature change per 1u produced
+	var/HIonRelease 		= 0 //pH change per 1u reaction
+	var/RateUpLim 			= 10 //Optimal/max rate possible if all conditions are perfect
+	var/FermiChem 			= TRUE//If the chemical uses the Fermichem reaction mechanics
+	var/FermiExplode 		= FALSE //If the chemical explodes in a special way
+	var/PurityMin			= 0.1 //The minimum purity something has to be above, otherwise it explodes.
+	//use fermicalc.py to do it (i think)
 //Called for every reaction step
 /datum/chemical_reaction/fermi/proc/FermiCreate(holder)
 	return
@@ -148,85 +164,6 @@
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The cells clump up into a horrifying tumour!</span>")
 
-/datum/chemical_reaction/fermi/breast_enlarger
-	name = "Sucubus milk"
-	id = "breast_enlarger"
-	results = list("breast_enlarger" = 0.8)
-	required_reagents = list("salglu_solution" = 0.1, "milk" = 0.1, "synthflesh" = 0.2, "silicon" = 0.3, "aphro" = 0.3)
-	mix_message = "the reaction gives off a mist of milk."
-	//FermiChem vars:
-	OptimalTempMin 			= 200
-	OptimalTempMax			= 800
-	ExplodeTemp 			= 900
-	OptimalpHMin 			= 6
-	OptimalpHMax 			= 10
-	ReactpHLim 				= 3
-	CatalystFact 			= 0
-	CurveSharpT 			= 2
-	CurveSharppH 			= 1
-	ThermicConstant 		= 1
-	HIonRelease 			= -0.1
-	RateUpLim 				= 5
-	FermiChem				= TRUE
-	FermiExplode 			= TRUE
-	PurityMin 				= 0.1
-
-/datum/chemical_reaction/fermi/breast_enlarger/FermiFinish(datum/reagents/holder, var/atom/my_atom)
-	var/datum/reagent/fermi/breast_enlarger/BE = locate(/datum/reagent/fermi/breast_enlarger) in my_atom.reagents.reagent_list
-	var/cached_volume = BE.volume
-	if(BE.purity < 0.35)
-		holder.remove_reagent(src.id, cached_volume)
-		holder.add_reagent("BEsmaller", cached_volume)
-
-
-/datum/chemical_reaction/fermi/breast_enlarger/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
-	var/obj/item/organ/genital/breasts/B = new /obj/item/organ/genital/breasts(get_turf(my_atom))
-	var/list/seen = viewers(8, get_turf(my_atom))
-	for(var/mob/M in seen)
-		to_chat(M, "<span class='warning'>The reaction suddenly condenses, creating a pair of breasts!</b></span>")
-	var/datum/reagent/fermi/breast_enlarger/BE = locate(/datum/reagent/fermi/breast_enlarger) in my_atom.reagents.reagent_list
-	B.size = ((BE.volume * BE.purity) / 10) //half as effective.
-	my_atom.reagents.clear_reagents()
-
-/datum/chemical_reaction/fermi/penis_enlarger
-	name = "Incubus draft"
-	id = "penis_enlarger"
-	results = list("penis_enlarger" = 0.8)
-	required_reagents = list("blood" = 0.5, "synthflesh" = 0.2, "carbon" = 0.2, "aphro" = 0.2, "salglu_solution" = 0.1,)
-	mix_message = "the reaction gives off a spicy mist."
-	//FermiChem vars:
-	OptimalTempMin 			= 200
-	OptimalTempMax			= 800
-	ExplodeTemp 			= 900
-	OptimalpHMin 			= 2
-	OptimalpHMax 			= 6
-	ReactpHLim 				= 3
-	CatalystFact 			= 0
-	CurveSharpT 			= 2
-	CurveSharppH 			= 1
-	ThermicConstant 		= 1
-	HIonRelease 			= 0.1
-	RateUpLim 				= 5
-	FermiChem				= TRUE
-	FermiExplode 			= TRUE
-	PurityMin 				= 0.1
-
-/datum/chemical_reaction/fermi/penis_enlarger/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
-	var/obj/item/organ/genital/penis/P = new /obj/item/organ/genital/penis(get_turf(my_atom))
-	var/list/seen = viewers(8, get_turf(my_atom))
-	for(var/mob/M in seen)
-		to_chat(M, "<span class='warning'>The reaction suddenly condenses, creating a penis!</b></span>")
-	var/datum/reagent/fermi/penis_enlarger/PE = locate(/datum/reagent/fermi/penis_enlarger) in my_atom.reagents.reagent_list
-	P.length = ((PE.volume * PE.purity) / 10)//half as effective.
-	my_atom.reagents.clear_reagents()
-
-/datum/chemical_reaction/fermi/penis_enlarger/FermiFinish(datum/reagents/holder, var/atom/my_atom)
-	var/datum/reagent/fermi/penis_enlarger/PE = locate(/datum/reagent/fermi/penis_enlarger) in my_atom.reagents.reagent_list
-	var/cached_volume = PE.volume
-	if(PE.purity < 0.35)
-		holder.remove_reagent(src.id, cached_volume)
-		holder.add_reagent("PEsmaller", cached_volume)
-
 /datum/chemical_reaction/fermi/astral
 	name = "Astrogen"
 	id = "astral"
@@ -248,86 +185,6 @@
 	FermiChem				= TRUE
 	FermiExplode 			= TRUE
 	PurityMin 				= 0.25
-
-
-/datum/chemical_reaction/fermi/enthrall/ //check this
-	name = "MKUltra"
-	id = "enthrall"
-	results = list("enthrall" = 0.5)
-	//required_reagents = list("iron" = 1, "iodine" = 1) Test vars
-	//required_reagents = list("cocoa" = 0.1, "astral" = 0.1, "mindbreaker" = 0.1, "psicodine" = 0.1, "happiness" = 0.1)
-	required_reagents = list("cocoa" = 0.1, "bluespace" = 0.1, "mindbreaker" = 0.1, "psicodine" = 0.1, "happiness" = 0.1) //TEMPORARY UNTIL HEADMINS GIVE THE OKAY FOR MK USE.
-	required_catalysts = list("blood" = 1)
-	mix_message = "the reaction gives off a burgundy plume of smoke!"
-	//FermiChem vars:
-	OptimalTempMin 			= 780
-	OptimalTempMax			= 820
-	ExplodeTemp 			= 840
-	OptimalpHMin 			= 12
-	OptimalpHMax 			= 13
-	ReactpHLim 				= 2
-	//CatalystFact 			= 0
-	CurveSharpT 			= 0.5
-	CurveSharppH 			= 4
-	ThermicConstant 		= 15
-	HIonRelease 			= 0.1
-	RateUpLim 				= 1
-	FermiChem				= TRUE
-	FermiExplode 			= TRUE
-	PurityMin 				= 0.2
-
-/datum/chemical_reaction/fermi/enthrall/FermiFinish(datum/reagents/holder, var/atom/my_atom)
-	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in my_atom.reagents.reagent_list
-	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in my_atom.reagents.reagent_list
-	if(!B)
-		return
-	if(!B.data)
-		var/list/seen = viewers(5, get_turf(my_atom))
-		for(var/mob/M in seen)
-			to_chat(M, "<span class='warning'>The reaction splutters and fails to react properly.</span>") //Just in case
-			E.purity = 0
-	if (B.data.["gender"] == "female")
-		E.data.["creatorGender"] = "Mistress"
-		E.creatorGender = "Mistress"
-	else
-		E.data.["creatorGender"] = "Master"
-		E.creatorGender = "Master"
-	E.data["creatorName"] = B.data.["real_name"]
-	E.creatorName = B.data.["real_name"]
-	E.data.["creatorID"] = B.data.["ckey"]
-	E.creatorID = B.data.["ckey"]
-
-//So slimes can play too.
-/datum/chemical_reaction/fermi/enthrall/slime
-	required_catalysts = list("slimejelly" = 1)
-
-/datum/chemical_reaction/fermi/enthrall/slime/FermiFinish(datum/reagents/holder, var/atom/my_atom)
-	var/datum/reagent/toxin/slimejelly/B = locate(/datum/reagent/toxin/slimejelly) in my_atom.reagents.reagent_list//The one line change.
-	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in my_atom.reagents.reagent_list
-	if(!B.data)
-		var/list/seen = viewers(5, get_turf(my_atom))
-		for(var/mob/M in seen)
-			to_chat(M, "<span class='warning'>The reaction splutters and fails to react.</span>") //Just in case
-			E.purity = 0
-	if (B.data.["gender"] == "female")
-		E.data.["creatorGender"] = "Mistress"
-		E.creatorGender = "Mistress"
-	else
-		E.data.["creatorGender"] = "Master"
-		E.creatorGender = "Master"
-	E.data["creatorName"] = B.data.["real_name"]
-	E.creatorName = B.data.["real_name"]
-	E.data.["creatorID"] = B.data.["ckey"]
-	E.creatorID = B.data.["ckey"]
-
-/datum/chemical_reaction/fermi/enthrall/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
-	var/turf/T = get_turf(my_atom)
-	var/datum/reagents/R = new/datum/reagents(1000)
-	var/datum/effect_system/smoke_spread/chem/s = new()
-	R.add_reagent("enthrallExplo", volume)
-	s.set_up(R, volume/2, T)
-	s.start()
-	my_atom.reagents.clear_reagents()
 
 /datum/chemical_reaction/fermi/hatmium // done
 	name = "Hat growth serum"
@@ -359,7 +216,7 @@
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The makes an off sounding pop, as a hat suddenly climbs out of the beaker!</b></span>")
 	my_atom.reagents.clear_reagents()
-
+/*
 /datum/chemical_reaction/fermi/furranium
 	name = "Furranium"
 	id = "furranium"
@@ -381,17 +238,17 @@
 	RateUpLim 		= 2
 	FermiChem 		= TRUE
 	PurityMin		= 0.3
-
+*/
 //FOR INSTANT REACTIONS - DO NOT MULTIPLY LIMIT BY 10.
 //There's a weird rounding error or something ugh.
 
 //Nano-b-gone
 /datum/chemical_reaction/fermi/nanite_b_gone//done test
-	name = "Naninte bain"
+	name = "Nanite Bane"
 	id = "nanite_b_gone"
 	results = list("nanite_b_gone" = 4)
 	required_reagents = list("synthflesh" = 1, "uranium" = 1, "iron" = 1, "salglu_solution" = 1)
-	mix_message = "the reaction gurgles, encapsulating the reagents in flesh before the emp can be set off."
+	mix_message = "the reaction gurgles, encapsulating the reagents in flesh."
 	required_temp = 450//To force fermireactions before EMP.
 	//FermiChem vars:
 	OptimalTempMin 	= 500
