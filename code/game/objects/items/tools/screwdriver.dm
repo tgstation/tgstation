@@ -124,7 +124,7 @@
 	random_color = FALSE
 
 /obj/item/screwdriver/power/examine()
-	. += " It's fitted with a [tool_behaviour == TOOL_SCREWDRIVER ? screw : bolt] bit."
+	. += " It's fitted with a [tool_behaviour == TOOL_SCREWDRIVER ? "screw" : "bolt"] bit."
 
 /obj/item/screwdriver/power/suicide_act(mob/user)
 	if(tool_behaviour == TOOL_SCREWDRIVER)
