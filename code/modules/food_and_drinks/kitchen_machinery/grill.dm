@@ -25,16 +25,14 @@
 		icon_state = "grill_open"
 
 /obj/machinery/grill/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/trash/coal))
-		qdel(I)
-		to_chat(user, "<span class='notice'>You put the [I] in [src].</span>")
-		add_fuel(500)
-		return
-	if(istype(I, /obj/item/stack/sheet/mineral/wood))
+	if(istype(I, /obj/item/stack/sheet/mineral/coal) || istype(I, /obj/item/stack/sheet/mineral/wood))
 		var/obj/item/stack/S = I
+		to_chat(user, "<span class='notice'>You put [S.amount] [I]s in [src].</span>")
+		if(istype(I, /obj/item/stack/sheet/mineral/coal))
+			add_fuel(500 * S.amount)
+		else
+			add_fuel(50 * S.amount)
 		S.use(S.get_amount())
-		to_chat(user, "<span class='notice'>You put the [S.amount] [I]s in [src].</span>")
-		add_fuel(50 * S.amount)
 		return
 	if(I.resistance_flags & INDESTRUCTIBLE)
 		to_chat(user, "<span class='warning'>You don't feel it would be wise to grill [I]...</span>")
