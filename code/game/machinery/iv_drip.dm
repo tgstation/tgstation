@@ -3,7 +3,7 @@
 
 /obj/machinery/iv_drip
 	name = "\improper IV drip"
-	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are processed at an accelerated rate."
+	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are processed at an accelerated rate. Alt-Click to change the transfer rate."
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "iv_drip"
 	anchored = FALSE
@@ -173,6 +173,16 @@
 	else
 		toggle_mode()
 
+/obj/machinery/iv_drip/AltClick(mob/living/user)
+	if(!user.canUseTopic(src, be_close=TRUE))
+		return
+	if(dripfeed)
+		dripfeed = FALSE
+		to_chat(usr, "<span class='notice'>You loosen the valve to speed up the [src].</span>")
+	else
+		dripfeed = TRUE
+		to_chat(usr, "<span class='notice'>You tighten the valve to slowly drip-feed the contents of [src].</span>")
+
 /obj/machinery/iv_drip/verb/eject_beaker()
 	set category = "Object"
 	set name = "Remove IV Container"
@@ -203,25 +213,6 @@
 	mode = !mode
 	to_chat(usr, "The IV drip is now [mode ? "injecting" : "taking blood"].")
 	update_icon()
-
-/obj/machinery/iv_drip/verb/adjust_valve()
-	set category = "Object"
-	set name = "Adjust Valve"
-	set src in view(1)
-
-	if(!isliving(usr))
-		to_chat(usr, "<span class='warning'>You can't do that!</span>")
-		return
-
-	if(usr.incapacitated())
-		return
-
-	if(dripfeed)
-		dripfeed = FALSE
-		to_chat(usr, "<span class='notice'>You loosen the valve to speed up the [src].</span>")
-	else
-		dripfeed = TRUE
-		to_chat(usr, "<span class='notice'>You tighten the valve to slowly drip-feed the contents of [src].</span>")
 
 /obj/machinery/iv_drip/examine(mob/user)
 	. = ..()
