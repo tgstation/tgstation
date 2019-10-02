@@ -102,17 +102,17 @@
 	qdel(src)
 
 /obj/item/weldingtool/attack(mob/living/carbon/human/H, mob/user)
-	if(!istype(H))
-		return ..()
-
-	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
-
 	if(isOn())
 		use(1)
 		var/turf/location = get_turf(user)
 		location.hotspot_expose(700, 50, 1)
 		if(get_fuel() <= 0)
 			set_light(0)
+
+	if(!istype(H))
+		return ..()
+
+	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 
 	if(affecting && affecting.status == BODYPART_ROBOTIC && user.a_intent != INTENT_HARM)
 		if(src.use_tool(H, user, 0, volume=50, amount=1))
