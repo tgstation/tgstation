@@ -117,8 +117,8 @@
 /obj/item/organ/stomach/ethereal/proc/charge(datum/source, amount, repairs)
 	adjust_charge(amount / 70)
 
-/obj/item/organ/stomach/ethereal/proc/on_electrocute(datum/source, shock_damage, siemens_coeff = 1, illusion = FALSE)
-	if(illusion)
+/obj/item/organ/stomach/ethereal/proc/on_electrocute(datum/source, shock_damage, siemens_coeff = 1, flags = NONE)
+	if(flags & SHOCK_ILLUSION)
 		return
 	adjust_charge(shock_damage * siemens_coeff * 2)
 	to_chat(owner, "<span class='notice'>You absorb some of the shock into your body!</span>")
