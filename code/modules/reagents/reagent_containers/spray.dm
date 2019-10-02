@@ -91,7 +91,7 @@
 				if(isliving(T))
 					var/mob/living/M = T
 					if(!M.can_inject())
-						return
+						continue
 					if((M.mobility_flags & MOBILITY_STAND) || !range_left)
 						D.reagents.reaction(M, VAPOR)
 						puff_reagent_left -= 1
