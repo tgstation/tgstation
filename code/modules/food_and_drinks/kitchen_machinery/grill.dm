@@ -94,6 +94,7 @@
 	return TRUE
 
 /obj/machinery/grill/deconstruct(disassembled = TRUE)
+	finish_grill()
 	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/metal(loc, 5)
 		new /obj/item/stack/rods(loc, 5)
@@ -105,6 +106,7 @@
 /obj/machinery/grill/attack_hand(mob/user)
 	if(grilled_item)
 		var/obj/item/reagent_containers/food/I = grilled_item
+		finish_grill()
 		to_chat(user, "<span class='notice'>You take out [grilled_item] from [src].</span>")
 		I.forceMove(drop_location())
 		user.put_in_hands(grilled_item)
