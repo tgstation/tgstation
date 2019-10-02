@@ -2,10 +2,10 @@
 	var/mutable_appearance/sizzleicon
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
-/datum/component/sizzle/Initialize(continue = 0)
+/datum/component/sizzle/Initialize()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
-	if(continue)
+	if(!isnull(sizzleicon))
 		sizzleicon.alpha += 5
 		return
 	setup_sizzle()
