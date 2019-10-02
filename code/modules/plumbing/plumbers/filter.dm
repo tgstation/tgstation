@@ -3,6 +3,8 @@
 	name = "chemical filter"
 	desc = "A chemical filter for filtering chemicals. The left and right outputs appear to be from the perspective of the input port."
 	icon_state = "filter"
+	rcd_cost = 15
+	rcd_delay = 15
 	///whitelist of chems id's that go to the left side. Empty to disable port
 	var/list/left = list()
 	///whitelist of chem id's that go to the right side. Empty to disable port
@@ -16,13 +18,9 @@
 	ui_y = 300
 
 
-/obj/machinery/plumbing/filter/Initialize()
+/obj/machinery/plumbing/filter/Initialize(mapload, bolt)
 	. = ..()
 	AddComponent(/datum/component/plumbing/filter)
-
-/obj/machinery/plumbing/filter/wrench_act(mob/living/user, obj/item/I)
-	default_unfasten_wrench(user, I)
-	return TRUE
 
 /obj/machinery/plumbing/filter/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)

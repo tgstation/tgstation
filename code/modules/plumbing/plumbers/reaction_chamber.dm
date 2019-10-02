@@ -14,13 +14,9 @@
 	var/emptying = FALSE
 
 
-/obj/machinery/plumbing/reaction_chamber/Initialize()
+/obj/machinery/plumbing/reaction_chamber/Initialize(mapload, bolt)
 	. = ..()
-	AddComponent(/datum/component/plumbing/reaction_chamber)
-
-/obj/machinery/plumbing/splitter/wrench_act(mob/living/user, obj/item/I)
-	default_unfasten_wrench(user, I)
-	return TRUE
+	AddComponent(/datum/component/plumbing/reaction_chamber, bolt)
 
 /obj/machinery/plumbing/reaction_chamber/on_reagent_change()
 	if(reagents.total_volume == 0 && emptying) //we were emptying, but now we aren't

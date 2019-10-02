@@ -25,14 +25,9 @@
 	ui_x = 300
 	ui_y = 260
 
-/obj/machinery/plumbing/acclimator/Initialize()
+/obj/machinery/plumbing/acclimator/Initialize(mapload, bolt)
 	. = ..()
-	AddComponent(/datum/component/plumbing/acclimator)
-
-/obj/machinery/plumbing/acclimator/wrench_act(mob/living/user, obj/item/I)
-	..()
-	default_unfasten_wrench(user, I)
-	return TRUE
+	AddComponent(/datum/component/plumbing/acclimator, bolt)
 
 /obj/machinery/plumbing/acclimator/process()
 	if(stat & NOPOWER || !enabled || !reagents.total_volume || reagents.chem_temp == target_temperature)

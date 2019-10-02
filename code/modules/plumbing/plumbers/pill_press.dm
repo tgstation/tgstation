@@ -19,9 +19,9 @@
 	var/xen = 500
 	var/yen = 500
 
-/obj/machinery/plumbing/pill_press/Initialize(mapload)
+/obj/machinery/plumbing/pill_press/Initialize(mapload, bolt)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_demand)
+	AddComponent(/datum/component/plumbing/simple_demand, bolt)
 
 	//expertly copypasted from chemmasters
 	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
@@ -31,10 +31,6 @@
 		SL["id"] = x
 		SL["htmltag"] = assets.icon_tag("pill[x]")
 		pill_styles += list(SL)
-
-/obj/machinery/plumbing/pill_press/wrench_act(mob/living/user, obj/item/I)
-	default_unfasten_wrench(user, I)
-	return TRUE
 
 /obj/machinery/plumbing/pill_press/process()
 	if(stat & NOPOWER)
