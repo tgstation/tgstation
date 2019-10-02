@@ -1842,7 +1842,7 @@
 
 /datum/supply_pack/organic/grillfuel
 	name = "Grilling Fuel Kit"
-	desc = "Contains propane and propane accessories. (Note: doesn't contain any actualy propane.)"
+	desc = "Contains propane and propane accessories. (Note: doesn't contain any actual propane.)"
 	cost = 2000
 	crate_type = /obj/structure/closet/crate
 	contains = list(/obj/item/trash/coal,
