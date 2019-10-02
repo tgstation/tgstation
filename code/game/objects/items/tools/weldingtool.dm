@@ -103,11 +103,13 @@
 
 /obj/item/weldingtool/attack(mob/living/carbon/human/H, mob/user)
 	if(isOn())
-		use(1)
-		var/turf/location = get_turf(user)
-		location.hotspot_expose(700, 50, 1)
-		if(get_fuel() <= 0)
-			set_light(0)
+		handle_fuel_and_temps(1, user)
+		
+		if(isliving(H))
+			var/mob/living/L = H
+			if(L.IgniteMob())
+				message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(L)] on fire with [src] at [AREACOORD(user)]")
+				log_game("[key_name(user)] set [key_name(L)] on fire with [src] at [AREACOORD(user)]")
 
 	if(!istype(H))
 		return ..()
@@ -128,11 +130,7 @@
 /obj/item/weldingtool/attack_obj(obj/O, mob/living/user)
 	. = ..()
 	if(isOn())
-		use(1)
-		var/turf/location = get_turf(user)
-		location.hotspot_expose(700, 50, 1)
-		if(get_fuel() <= 0)
-			set_light(0)
+		handle_fuel_and_temps(1, user)
 
 /obj/item/weldingtool/afterattack(atom/O, mob/user, proximity)
 	. = ..()
@@ -144,13 +142,6 @@
 		to_chat(user, "<span class='notice'>You empty [src]'s fuel tank into [O].</span>")
 		update_icon()
 
-	if(isOn() && isliving(O))
-		var/mob/living/L = O
-		if(L.IgniteMob())
-			message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(L)] on fire with [src] at [AREACOORD(user)]")
-			log_game("[key_name(user)] set [key_name(L)] on fire with [src] at [AREACOORD(user)]")
-
-
 /obj/item/weldingtool/attack_self(mob/user)
 	if(src.reagents.has_reagent(/datum/reagent/toxin/plasma))
 		message_admins("[ADMIN_LOOKUPFLW(user)] activated a rigged welder at [AREACOORD(user)].")
@@ -161,6 +152,11 @@
 
 	update_icon()
 
+// Ah fuck, I can't believe you've done this
+/obj/item/weldingtool/proc/handle_fuel_and_temps(used = 0, mob/living/user)
+	use(used)
+	var/turf/location = get_turf(user)
+	location.hotspot_expose(700, 50, 1)
 
 // Returns the amount of fuel in the welder
 /obj/item/weldingtool/proc/get_fuel()
@@ -185,6 +181,7 @@
 //Turns off the welder if there is no more fuel (does this really need to be its own proc?)
 /obj/item/weldingtool/proc/check_fuel(mob/user)
 	if(get_fuel() <= 0 && welding)
+		set_light(0)
 		switched_on(user)
 		update_icon()
 		//mob icon update
