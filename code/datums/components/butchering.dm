@@ -27,12 +27,28 @@
 		if(butchering_enabled && (can_be_blunt || source.get_sharpness()))
 			INVOKE_ASYNC(src, .proc/startButcher, source, M, user)
 			return COMPONENT_ITEM_NO_ATTACK
+	if(user.a_intent == INTENT_HARM && ishuman(M) && source.get_sharpness())
+		var/mob/living/carbon/human/H = M
+		if((H.health <= H.crit_threshold || (user.pulling == H && user.grab_state >= GRAB_NECK) || H.IsSleeping()) && user.zone_selected == BODY_ZONE_HEAD)
+			INVOKE_ASYNC(src, .proc/startNeckSlice, source, H, user)
+			return COMPONENT_ITEM_NO_ATTACK
 
 /datum/component/butchering/proc/startButcher(obj/item/source, mob/living/M, mob/living/user)
 	to_chat(user, "<span class='notice'>You begin to butcher [M]...</span>")
 	playsound(M.loc, butcher_sound, 50, TRUE, -1)
 	if(do_mob(user, M, speed) && M.Adjacent(source))
 		Butcher(user, M)
+
+/datum/component/butchering/proc/startNeckSlice(obj/item/source, mob/living/carbon/human/H, mob/living/user)
+	H.visible_message("<span class='danger'>[user] is slitting [H]'s throat!</span>", \
+					"<span class='userdanger'>Your throat is being slit by [user]!</span>", \
+					"<span class='userdanger'>Something is cutting into your neck!</span>")
+	playsound(H.loc, butcher_sound, 50, TRUE, -1)
+	if(do_mob(user, H, CLAMP(500 / source.force, 30, 50)) && H.Adjacent(source))
+		H.visible_message("<span class='danger'>[user] slits [H]'s throat!</span>", \
+					"<span class='userdanger'>[user] slits your throat...</span>")
+		H.adjustBruteLoss(source.force, 0)
+		H.bleed_rate = CLAMP(H.bleed_rate + 20, 0, 30)
 
 /datum/component/butchering/proc/Butcher(mob/living/butcher, mob/living/meat)
 	var/turf/T = meat.drop_location()
