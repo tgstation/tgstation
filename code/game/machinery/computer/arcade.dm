@@ -87,7 +87,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		new prizeselect(src)
 
 	var/atom/movable/the_prize = pick(contents)
-	visible_message("<span class='notice'>[src] dispenses [the_prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
+		visible_message("<span class='notice'>[src] dispenses [the_prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
 		return
 
 	the_prize.forceMove(get_turf(src))
