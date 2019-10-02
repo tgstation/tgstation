@@ -70,7 +70,7 @@
 	force_opens = TRUE
 
 /obj/item/crowbar/power/examine()
-	. += " It's fitted with a [tool_behaviour == TOOL_CROWBAR ? prying : cutting] head."
+	. += " It's fitted with a [tool_behaviour == TOOL_CROWBAR ? "prying" : "cutting"] head."
 
 /obj/item/crowbar/power/suicide_act(mob/user)
 	if(tool_behaviour == TOOL_CROWBAR)
