@@ -68,7 +68,7 @@
 		var/datum/atom_hud/antag/teamhud = team_huds[team]
 		if(!teamhud) //These will be shared between arenas because this stuff is expensive and cross arena fighting is not a thing anyway
 			teamhud = new
-			teamhud.icon_color = team //change to lookup table
+			teamhud.icon_color = team_colors[team]
 			GLOB.huds += teamhud
 			team_huds[team] = teamhud
 			team_hud_index[team] = length(GLOB.huds)
