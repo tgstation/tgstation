@@ -9,7 +9,7 @@
 	layer = BELOW_OBJ_LAYER
 	use_power = NO_POWER_USE
 	var/grill_fuel = 0
-	var/grilled_item
+	var/obj/item/reagent_containers/food/grilled_item
 	var/grill_time = 0
 	var/datum/looping_sound/grill/grill_loop
 
@@ -76,7 +76,6 @@
 			smoke.start()
 	if(grilled_item)
 		grill_time += 1
-		var/obj/item/reagent_containers/I = grilled_item
 		I.reagents.add_reagent(/datum/reagent/consumable/char, 1)
 		grill_fuel -= 10
 		I.AddComponent(/datum/component/sizzle)
@@ -110,7 +109,6 @@
 
 /obj/machinery/grill/attack_hand(mob/user)
 	if(grilled_item)
-		var/obj/item/reagent_containers/food/I = grilled_item
 		finish_grill()
 		to_chat(user, "<span class='notice'>You take out [grilled_item] from [src].</span>")
 		I.forceMove(drop_location())
