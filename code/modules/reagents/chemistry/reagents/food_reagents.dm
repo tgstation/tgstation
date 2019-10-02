@@ -747,5 +747,5 @@
 
 /datum/reagent/consumable/char/overdose_process(mob/living/carbon/M)
 	if(prob(10))
-		M.say(pick("I hate my wife.", "I just want to grill for God's sake.", "I wish I could just go on my lawnmower and cut the grass.", "Yep, Quake. That was a good game...", "God I hate space millenials."), forced = /datum/reagent/consumable/char)
+		M.say(pick("I hate my wife.", "I just want to grill for God's sake.", "I wish I could just go on my lawnmower and cut the grass.", "Yep, Quake. That was a good game...", "Yeah, my PDA has wi-fi. A wife I hate."), forced = /datum/reagent/consumable/char)
 	..()
