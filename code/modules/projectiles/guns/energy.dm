@@ -5,7 +5,7 @@
 	icon = 'icons/obj/guns/energy.dmi'
 
 	///sound when inserting cell
-	var/load_sound = "gun_insert_full_magazine"
+	var/load_sound = 'sound/weapons/gun/general/magazine_insert_full.ogg'
 	///sound when inserting an empty magazine
 	var/load_empty_sound = "buzz-sigh.ogg"
 	///volume of loading sound
@@ -14,9 +14,9 @@
 	var/load_sound_vary = TRUE
 
 	///Sound of ejecting a magazine
-	var/eject_sound = "gun_remove_full_magazine"
+	var/eject_sound = 'sound/weapons/gun/general/magazine_remove_full.ogg'
 	///sound of ejecting an empty magazine
-	var/eject_empty_sound = "gun_remove_empty_magazine"
+	var/eject_empty_sound = 'sound/weapons/gun/general/magazine_remove_empty.ogg'
 	///volume of ejecting a magazine
 	var/eject_sound_volume = 40
 	///whether eject sound should vary
@@ -33,14 +33,18 @@
 	var/empty_alarm = FALSE
 	///Whether the gun is currently alarmed to prevent it from spamming sounds
 	var/alarmed = FALSE
-	///Whether the gun's cell can be unloaded
-	var/can_unload = FALSE
+
 	///Maximum cell charge an unloadable gun will accept; 1000 by default.
 	var/max_accept = 1000
+	///Where the cell can accept self-charging cells.
+	var/self_charge_allowed = FALSE
+
+	///Whether the gun's cell can be unloaded
+	var/can_unload = FALSE
 	///Time it takes to load in deciseconds
-	var/load_time = 15
+	var/load_time = 40
 	///Time it takes to unload in deciseconds
-	var/unload_time = 15
+	var/unload_time = 0
 
 	var/obj/item/stock_parts/cell/cell //What type of power cell this uses
 	var/cell_type = /obj/item/stock_parts/cell
@@ -339,6 +343,10 @@
 	var/obj/item/stock_parts/cell/C
 	if(istype(W, /obj/item/stock_parts/cell))
 		C = W
+		if(C.self_recharge && !self_charge_allowed)
+			to_chat(user, "<span class='warning'>[src] cannot accept self-recharging cells.</span>")
+			return
+
 		if(C.maxcharge > max_accept) //Check that we're not trying to install anything crazy like a bluespace/quantum battery or whatever.
 			to_chat(user, "<span class='warning'>[src] cannot accept cells with a higher capacity than [max_accept].</span>")
 			return
