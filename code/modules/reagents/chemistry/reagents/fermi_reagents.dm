@@ -406,7 +406,7 @@
 //Turns you into a cute catto while it's in your system.
 //If you manage to gamble perfectly, makes you have cat ears after you transform back. But really, you shouldn't end up with that with how random it is.
 /datum/reagent/fermi/secretcatchem //Should I hide this from code divers? A secret cit chem?
-	name = "secretcatchem" //an attempt at hiding it
+	name = "slipperyslopeinium" //an attempt at hiding it
 	id = "secretcatchem"
 	description = "An illegal and hidden chem that turns people into cats. It's said that it's so rare and unstable that having it means you've been blessed."
 	taste_description = "hairballs and cream"
@@ -426,7 +426,6 @@
 		H.dna.features["mam_ears"] = "Cat"
 		H.verb_say = "mewls"
 		catshift = TRUE
-		playsound(get_turf(H), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
 	to_chat(H, "<span class='notice'>You suddenly turn into a cat!</span>")
 	catto = new(get_turf(H.loc))
 	H.mind.transfer_to(catto)
