@@ -1,0 +1,4 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - tweak: "Reagents from plants are now a minimum of 1 instead of hard-adding 1 (now 50% = 50% instead of 51%)"
