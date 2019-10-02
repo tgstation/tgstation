@@ -36,7 +36,7 @@ module.exports = (env = {}, argv) => {
                     modules: 'commonjs',
                     useBuiltIns: 'entry',
                     corejs: '3',
-                    // spec: false,
+                    spec: false,
                     loose: true,
                     targets: {
                       ie: '8',
@@ -44,6 +44,7 @@ module.exports = (env = {}, argv) => {
                   }],
                 ],
                 plugins: [
+                  '@babel/plugin-transform-jscript',
                   'babel-plugin-inferno',
                   'babel-plugin-lodash',
                 ],

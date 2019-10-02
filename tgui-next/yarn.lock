@@ -407,6 +407,13 @@
     "@babel/helper-function-name" "^7.1.0"
     "@babel/helper-plugin-utils" "^7.0.0"
 
+"@babel/plugin-transform-jscript@^7.2.0":
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-jscript/-/plugin-transform-jscript-7.2.0.tgz#25d87f6a34cc602e8374bd806f2ac753ba5533a1"
+  integrity sha512-7r0hfq8SWlVYdVFX5y+0N/kB0AC6u1ad+vnxvUwSDtPF4UKJ6bUSoj/SEVJkzNWFmNsy4x3nEfz4ywedgjjhsg==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.0.0"
+
 "@babel/plugin-transform-literals@^7.2.0":
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-literals/-/plugin-transform-literals-7.2.0.tgz#690353e81f9267dad4fd8cfd77eafa86aba53ea1"
@@ -1157,9 +1164,9 @@ binary-extensions@^2.0.0:
   integrity sha512-Phlt0plgpIIBOGTT/ehfFnbNlfsDEiqmzE2KRXoX1bLIlir4X/MR+zSyBEkL05ffWgnRSf/DXv+WrUAVr93/ow==
 
 bluebird@^3.5.5:
-  version "3.5.5"
-  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.5.tgz#a8d0afd73251effbbd5fe384a77d73003c17a71f"
-  integrity sha512-5am6HnnfN+urzt4yfg7IgTbotDjIT/u8AJpEt0sIU9FtXfVeezXAPKswrG+xKUCOYAINpSdgZVDU6QFh+cuH3w==
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.0.tgz#56a6a886e03f6ae577cffedeb524f8f2450293cf"
+  integrity sha512-aBQ1FxIa7kSWCcmKHlcHFlT2jt6J/l4FzC7KcPELkOJOsPOb/bccdhmIrKDfXhwFrmc7vDoDrrepFvGqjyXGJg==
 
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   version "4.11.8"
@@ -1455,9 +1462,9 @@ check-types@^8.0.3:
   integrity sha512-YpeKZngUmG65rLudJ4taU7VLkOCTMhNl/u4ctNC56LQS/zJTyNH0Lrtwm1tfTsbLlwvlfsA2d1c8vCf/Kh2KwQ==
 
 "chokidar@>=2.0.0 <4.0.0":
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.2.0.tgz#a0b08f9b770c082def0100e0fbcef322ad156a8a"
-  integrity sha512-ViJAmAatEHwGCbBa8coPyRY6yiQ+yryuHT9XnkV6l0ct140Tf6JguJ0LtgoJrjxr9I9utL8IRuqbjhDJAeWIeg==
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.2.1.tgz#4634772a1924512d990d4505957bf3a510611387"
+  integrity sha512-/j5PPkb5Feyps9e+jo07jUZGvkB5Aj953NrI4s8xSVScrAo/RHeILrtdb4uzR7N6aaFFxxJ+gt8mA8HfNpw76w==
   dependencies:
     anymatch "~3.1.1"
     braces "~3.0.2"
@@ -2150,9 +2157,9 @@ ejs@^2.6.1:
   integrity sha512-kS/gEPzZs3Y1rRsbGX4UOSjtP/CeJP0CxSNZHYxGfVM/VgLcv0ZqM7C45YyTj2DI2g7+P9Dd24C+IMIg6D0nYQ==
 
 electron-to-chromium@^1.3.247:
-  version "1.3.270"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.270.tgz#a3faa2c51f73bf7a020370b3e28a99b32eae47ed"
-  integrity sha512-426qbfgLn0hVE4pDxok2dcAhA3u5lwXlBg2+i6VWQJvnMZNgevkC6s/qr91YH/avVMKXKwxnR5iBznpivg210A==
+  version "1.3.272"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.272.tgz#946a3532fe187b6e4d3503f3d9aa851739339aa4"
+  integrity sha512-TjsDKYOZGgaD8tUJtRiiBNlIrv2Ol6SxNMy4yeTX0goRmoBhV941m4EN8QjA3vfshs16F5KLDyUv2m7GdTqIgg==
 
 elliptic@^6.0.0:
   version "6.5.1"
@@ -3090,15 +3097,6 @@ inferno-vnode-flags@7.3.1:
   version "7.3.1"
   resolved "https://registry.yarnpkg.com/inferno-vnode-flags/-/inferno-vnode-flags-7.3.1.tgz#27f767a03d8f0775f8bc5ad03c9ea07ec66aa2c7"
   integrity sha512-7LKuUGfFVSiFdRH6NVLTetrDbft4BxUePUIjXm4f+g9hginYuBwPbFJbbHK700Ysy4rapTqYnFxSk0k5JBZr+A==
-
-inferno@^7.3.1:
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/inferno/-/inferno-7.3.1.tgz#5e356d9a5a218809eb4da49c333d324126515683"
-  integrity sha512-9t4G/YjhbiC65d8GHxzfn41qALVf2fvykMdH92ySUiSLr3EQak8gs6rno52KuW7puDZcmJgmMHVA0vTVegtfsQ==
-  dependencies:
-    inferno-shared "7.3.1"
-    inferno-vnode-flags "7.3.1"
-    opencollective-postinstall "^2.0.2"
 
 inflight@^1.0.4:
   version "1.0.6"

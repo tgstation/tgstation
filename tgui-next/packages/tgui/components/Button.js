@@ -18,7 +18,7 @@ export const Button = props => {
   } = props;
   const hasContent = !!(content || children);
   return (
-    <Box
+    <Box as="span"
       className={classes([
         'Button',
         fluid && 'Button--fluid',
@@ -32,8 +32,8 @@ export const Button = props => {
       tabindex={!disabled && '0'}
       data-tooltip={tooltip}
       title={title}
-      clickable={disabled}
-      onClick={e => {
+      unselectable={true}
+      onclick={e => {
         if (disabled || !onClick) {
           return;
         }

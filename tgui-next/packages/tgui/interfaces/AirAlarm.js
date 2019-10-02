@@ -72,6 +72,7 @@ const AirAlarmStatus = props => {
               const status = dangerMap[entry.danger_level] || dangerMap[0];
               return (
                 <LabeledList.Item
+                  key={entry.name}
                   label={entry.name}
                   color={status.color}>
                   {fixed(entry.value, 2)}{entry.unit}
@@ -427,7 +428,7 @@ const AirAlarmControlModes = props => {
     return 'Nothing to show';
   }
   return modes.map(mode => (
-    <Fragment>
+    <Fragment key={mode.mode}>
       <Button
         icon={mode.selected ? 'check-square-o' : 'square-o'}
         selected={mode.selected}

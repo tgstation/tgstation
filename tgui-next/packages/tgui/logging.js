@@ -1,9 +1,13 @@
 import { sendLogEntry } from 'tgui-dev-server/client';
 
 const log = (ns, ...args) => {
-  console.log(...args);
+  // Send logs to a remote log collector
   if (process.env.NODE_ENV !== 'production') {
     sendLogEntry(ns, ...args);
+  }
+  // Send logs to a globally defined debug print
+  if (window.debugPrint) {
+    debugPrint([ns, ...args]);
   }
 };
 

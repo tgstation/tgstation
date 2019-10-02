@@ -152,9 +152,7 @@ export const ChemDispenser = props => {
               || data.isBeakerLoaded
                 && (
                   <Fragment>
-                    <AnimatedNumber
-                      value={data.beakerCurrentVolume}
-                      format={value => Math.round(value)} />
+                    <AnimatedNumber value={data.beakerCurrentVolume} />
                     /{data.beakerMaxVolume} units
                   </Fragment>
                 )
@@ -170,9 +168,7 @@ export const ChemDispenser = props => {
               <Box
                 key={chemical.name}
                 color="highlight">
-                <AnimatedNumber
-                  value={chemical.volume}
-                  format={value => fixed(value, 2)} />
+                <AnimatedNumber value={chemical.volume} />
                 {' '}
                 units of {chemical.name}
               </Box>

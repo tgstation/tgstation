@@ -1,7 +1,8 @@
 import { Component } from 'inferno';
+import { fixed } from '../math';
 
-const FPS = 30;
-const Q = 0.6;
+const FPS = 20;
+const Q = 0.5;
 
 export class AnimatedNumber extends Component {
   constructor() {
@@ -13,9 +14,14 @@ export class AnimatedNumber extends Component {
   }
 
   tick() {
+    const { props, state } = this;
+    // Avoid poisoning our state with NaN
+    // TODO: Same for infinity?
+    if (Number.isNaN(props.value)) {
+      return;
+    }
     // Smooth the value using an exponential moving average
-    const value = this.state.value * Q
-      + this.props.value * (1 - Q);
+    const value = state.value * Q + props.value * (1 - Q);
     this.setState({ value });
   }
 
@@ -28,13 +34,15 @@ export class AnimatedNumber extends Component {
   }
 
   render() {
-    const { format } = this.props;
-    if (this.state.value === null) {
+    const { props, state } = this;
+    if (state.value === null) {
       return null;
     }
-    if (format) {
-      return format(this.state.value);
+    const frac = String(props.value).split('.')[1];
+    const precision = frac ? frac.length : 0;
+    if (precision === 0) {
+      return Math.round(state.value);
     }
-    return this.state.value;
+    return fixed(state.value, precision);
   }
 }

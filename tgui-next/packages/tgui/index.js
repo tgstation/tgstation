@@ -1,5 +1,6 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+import './polyfills';
 
 import { act } from 'byond';
 import { loadCSS } from 'fg-loadcss';
@@ -32,7 +33,7 @@ const renderLayout = () => {
     render(element, reactRoot);
   }
   catch (err) {
-    logger.error(err.stack);
+    logger.error('rendering error', err.stack || String(err));
   }
 };
 
@@ -48,10 +49,11 @@ const setupApp = () => {
   if (!route) {
     // Load old TGUI
     loadCSS('tgui.css');
-    const element = document.createElement('script');
-    element.type = 'text/javascript';
-    element.src = 'tgui.js';
-    document.body.appendChild(element);
+    const head = document.getElementsByTagName('head')[0];
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = 'tgui.js';
+    head.appendChild(script);
     // This thing was a part of an old index.html
     window.update = dataString => {
       const data = JSON.parse(dataString);
@@ -99,11 +101,6 @@ const setupApp = () => {
   // Dynamically load font-awesome from browser's cache
   loadCSS('v4shim.css');
   loadCSS('font-awesome.css');
-};
-
-// Handle global errors
-window.onerror = (msg, url, line, col, error) => {
-  document.write(JSON.stringify(msg));
 };
 
 // In case the document is already loaded
