@@ -90,6 +90,10 @@
 	grilled_item = null
 	. = ..()
 
+/obj/machinery/grill/handle_atom_del(atom/A)
+	grilled_item = null
+	. = ..()
+
 /obj/machinery/grill/wrench_act(mob/living/user, obj/item/I)
 	default_unfasten_wrench(user, I)
 	return TRUE
