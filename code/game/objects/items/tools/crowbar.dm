@@ -58,7 +58,7 @@
 
 /obj/item/crowbar/power
 	name = "jaws of life"
-	desc = "A set of jaws of life, compressed through the magic of science. It's fitted with a prying head."
+	desc = "A set of jaws of life, compressed through the magic of science."
 	icon_state = "jaws_pry"
 	item_state = "jawsoflife"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -69,6 +69,9 @@
 	toolspeed = 0.7
 	force_opens = TRUE
 
+/obj/item/crowbar/power/examine()
+	. += "It's fitted with a [tool_behaviour == TOOL_CROWBAR ? prying : cutting] head."
+
 /obj/item/crowbar/power/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is putting [user.p_their()] head in [src], it looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/items/jaws_pry.ogg', 50, TRUE, -1)
@@ -76,10 +79,24 @@
 
 /obj/item/crowbar/power/attack_self(mob/user)
 	playsound(get_turf(user), 'sound/items/change_jaws.ogg', 50, TRUE)
-	var/obj/item/wirecutters/power/cutjaws = new /obj/item/wirecutters/power(drop_location())
-	to_chat(user, "<span class='notice'>You attach the cutting jaws to [src].</span>")
-	qdel(src)
-	user.put_in_active_hand(cutjaws)
+	if(tool_behaviour = TOOL_CROWBAR)
+		tool_behaviour = TOOL_WIRECUTTER
+		to_chat(user, "<span class='notice'>You attach the cutting jaws to [src].</span>")
+		usesound = 'sound/items/jaws_cut.ogg'
+		icon_state = "jaws_cutter"
+	else
+		tool_behaviour = TOOL_CROWBAR
+		to_chat(user, "<span class='notice'>You attach the prying jaws to [src].</span>")
+		usesound = 'sound/items/jaws_pry.ogg'
+		icon_state = "jaws_pry"
+
+/obj/item/crowbar/power/attack(mob/living/carbon/C, mob/user)
+	if(istype(C) && C.handcuffed && tool_behaviour = TOOL_WIRECUTTER)
+		user.visible_message("<span class='notice'>[user] cuts [C]'s restraints with [src]!</span>")
+		qdel(C.handcuffed)
+		return
+	else
+		..()
 
 /obj/item/crowbar/cyborg
 	name = "hydraulic crowbar"
