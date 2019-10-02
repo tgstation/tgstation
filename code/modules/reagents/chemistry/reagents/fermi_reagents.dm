@@ -109,11 +109,13 @@
 	..()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-//										FURRANIUM
+//										FURRANIUM - SLIPPERY SLOPE ZONE
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //OwO whats this?
 //Makes you nya and awoo
 //At a certain amount of time in your system it gives you a fluffy tongue, if pure enough, it's permanent.
+/*
+
 
 /datum/reagent/fermi/furranium
 	name = "Furranium"
@@ -199,7 +201,7 @@
 		M.say("Pleh!")
 	else
 		log_game("FERMICHEM: [M] ckey: [M.key]'s tongue has been made permanent")
-
+*/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //Nanite removal
