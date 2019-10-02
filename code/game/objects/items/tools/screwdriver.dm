@@ -127,7 +127,7 @@
 	. += " It's fitted with a [tool_behaviour == TOOL_SCREWDRIVER ? screw : bolt] bit."
 
 /obj/item/screwdriver/power/suicide_act(mob/user)
-	if(tool_behaviour = TOOL_SCREWDRIVER)
+	if(tool_behaviour == TOOL_SCREWDRIVER)
 		user.visible_message("<span class='suicide'>[user] is putting [src] to [user.p_their()] temple. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	else
 		user.visible_message("<span class='suicide'>[user] is pressing [src] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -136,7 +136,7 @@
 
 /obj/item/wrench/power/attack_self(mob/user)
 	playsound(get_turf(user), 'sound/items/change_drill.ogg', 50, TRUE)
-	if(tool_behaviour = TOOL_SCREWDRIVER)
+	if(tool_behaviour == TOOL_SCREWDRIVER)
 		tool_behaviour = TOOL_WRENCH
 		to_chat(user, "<span class='notice'>You attach the screw bit to [src].</span>")
 		icon_state = "drill_bolt"
