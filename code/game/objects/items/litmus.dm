@@ -60,7 +60,7 @@
     name = "pH indicator strip"
     desc = "A piece of paper that will change colour depending on the pH of a solution."
     icon_state = "pHpaper"
-    icon = 'modular_citadel/icons/obj/FermiChem.dmi'
+    icon = '/icons/obj/FermiChem.dmi'
     item_flags = NOBLUDGEON
     color = "#f5c352"
     var/used = FALSE
@@ -113,7 +113,7 @@
     name = "Chemistry Analyser"
     desc = "A a electrode attached to a small circuit box that will tell you the pH of a solution. The screen currently displays nothing."
     icon_state = "pHmeter"
-    icon = 'modular_citadel/icons/obj/FermiChem.dmi'
+    icon = '/icons/obj/FermiChem.dmi'
     resistance_flags = FLAMMABLE
     w_class = WEIGHT_CLASS_TINY
     var/scanmode = 1
