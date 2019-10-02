@@ -34,7 +34,6 @@
 		var/obj/item/stack/S = I
 		S.use(S.get_amount())
 		to_chat(user, "<span class='notice'>You put the [S.amount] [I]s in [src].</span>")
-		var/obj/item/stack/S = I
 		add_fuel(50 * S.amount)
 		return
 	if(I.resistance_flags & INDESTRUCTIBLE)
