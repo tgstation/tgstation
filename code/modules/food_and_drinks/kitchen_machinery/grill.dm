@@ -10,6 +10,7 @@
 	use_power = NO_POWER_USE
 	var/grill_fuel = 0
 	var/grilled_item
+	var/grill_time = 0
 	var/datum/looping_sound/grill/grill_loop
 
 /obj/machinery/grill/Initialize()
@@ -74,6 +75,7 @@
 			smoke.set_up(1, loc)
 			smoke.start()
 	if(grilled_item)
+		grill_time +=
 		var/obj/item/reagent_containers/I = grilled_item
 		I.reagents.add_reagent(/datum/reagent/consumable/char, 1)
 		grill_fuel -= 10
@@ -109,8 +111,28 @@
 		grilled_item = null
 		update_icon()
 		grill_loop.stop()
+		grill_time = 0
 		return
 	return ..()
+
+/obj/machinery/grill/proc/finish_grill()
+	var/obj/item/reagent_containers/food/I = grilled_item
+	switch(grill_time) //no 0-9 to prevent spam
+		if(10 to 15)
+			I.name = "lightly-grilled [I.name]"
+			I.desc = "[I.desc] It's been lightly grilled."
+		if(16 to 39)
+			I.name = "grilled [I.name]"
+			I.desc = "[I.desc] It's been grilled."
+			I.foodtype |= FRIED
+		if(40 to 50)
+			I.name = "heavily grilled [I.name]"
+			I.desc = "[I.desc] It's been heavily grilled."
+			I.foodtype |= FRIED
+		if(51 to INFINITY) //grill marks reach max alpha
+			I.name = "Powerfully Grilled [I.name]"
+			I.desc = "A very heavily-grilled [I.name]. Reminds you of your wife, wait, no, it's prettier!"
+			I.foodtype |= FRIED
 
 /obj/machinery/grill/unwrenched
 	anchored = FALSE
