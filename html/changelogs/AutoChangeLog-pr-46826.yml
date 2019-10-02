@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "Fulton packs no longer try to send people to destroyed beacons."
