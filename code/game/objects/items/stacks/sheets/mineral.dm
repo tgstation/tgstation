@@ -455,5 +455,8 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 	atmos_spawn_air("co2=[amount*10];TEMP=[exposed_temperature]")
 	qdel(src)
 
+/obj/item/stack/sheet/mineral/coal/five
+	amount = 5
+
 /obj/item/stack/sheet/mineral/coal/ten
 	amount = 10
