@@ -1,0 +1,4 @@
+author: "kopoba"
+delete-after: True
+changes: 
+  - bugfix: "Adamantite shield get his 15 damage back on pickup"

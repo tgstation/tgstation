@@ -1,0 +1,5 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - tweak: "Cultists that attempt to use purified soul stones now burn their hands."
+  - tweak: "Cursed Russian revolvers now spawn non-cult soul shards."
