@@ -75,7 +75,7 @@
 			smoke.set_up(1, loc)
 			smoke.start()
 	if(grilled_item)
-		grill_time +=
+		grill_time += 1
 		var/obj/item/reagent_containers/I = grilled_item
 		I.reagents.add_reagent(/datum/reagent/consumable/char, 1)
 		grill_fuel -= 10
