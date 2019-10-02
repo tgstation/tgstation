@@ -14,14 +14,10 @@
 	A.update_beauty()
 
 /datum/component/beauty/proc/enter_area(datum/source, area/A)
-	message_admins("small penis")
-	message_admins("small penis2")	
 	A.totalbeauty += beauty
 	A.update_beauty()
 
 /datum/component/beauty/proc/exit_area(datum/source, area/A)
-	message_admins("big penis")
-	message_admins("big penis2")
 	A.totalbeauty -= beauty
 	A.update_beauty()
 
