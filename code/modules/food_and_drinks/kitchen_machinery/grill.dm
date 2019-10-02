@@ -80,6 +80,14 @@
 		grill_fuel -= 10
 		I.AddComponent(/datum/component/sizzle)
 
+/obj/machinery/grill/Exited(atom/movable/AM)
+	..()
+	grilled_item = null
+
+/obj/machinery/grill/Destroy()
+	grilled_item = null
+	. = ..()
+
 /obj/machinery/grill/wrench_act(mob/living/user, obj/item/I)
 	default_unfasten_wrench(user, I)
 	return TRUE
