@@ -73,8 +73,7 @@
 			smoke.start()
 	if(grilling)
 		var/obj/item/reagent_containers/food/I = grilling
-		I.reagents.add_reagent(/datum/reagent/smoke_powder, 0.5)
-		I.reagents.add_reagent(/datum/reagent/consumable/nutriment, 0.2)
+		I.reagents.add_reagent(/datum/reagent/consumable/char, 0.5)
 		grill_fuel -= 10
 		I.AddComponent(/datum/component/sizzle)
 

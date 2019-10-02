@@ -5,8 +5,11 @@
 /datum/component/sizzle/Initialize()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
+	var/atom/food = parent
 	if(!isnull(sizzleicon))
 		sizzleicon.alpha += 5
+		food.cut_overlay(sizzleicon)
+		food.add_overlay(sizzleicon)
 		return
 	setup_sizzle()
 
@@ -16,5 +19,5 @@
 	grillmarks.Blend("#fff", ICON_ADD) 	//fills the icon_state with white (except where it's transparent)
 	grillmarks.Blend(icon('icons/obj/kitchen.dmi', "grillmarks"), ICON_MULTIPLY) //adds grill marks and the remaining white areas become transparent
 	sizzleicon = grillmarks
-	food.add_overlay(sizzleicon)
 	sizzleicon.alpha = 0
+	food.add_overlay(sizzleicon)
