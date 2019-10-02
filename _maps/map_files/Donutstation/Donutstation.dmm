@@ -753,10 +753,12 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "abO" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/space/nearstation)
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/engine/engine_room)
 "abP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 6
@@ -3282,6 +3284,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"ahP" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/supermatter)
 "ahQ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -3321,6 +3327,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"ahW" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
 "ahX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -24822,10 +24832,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/aft)
-"boA" = (
-/obj/effect/spawner/structure/window/hollow/plasma/reinforced,
-/turf/open/floor/plating,
-/area/engine/supermatter)
 "boC" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -40016,7 +40022,7 @@
 /area/maintenance/port)
 "ccT" = (
 /obj/machinery/power/apc{
-	areastring = "/area/storage/primary";
+	areastring = "/area/storage/tools";
 	dir = 8;
 	name = "Primary Tool Storage APC";
 	pixel_x = -24
@@ -41944,12 +41950,6 @@
 /obj/item/bikehorn/rubberducky,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/fitness/locker_room)
-"eCr" = (
-/obj/machinery/camera/autoname{
-	dir = 9
-	},
-/turf/open/floor/plasteel/dark,
-/area/engine/engine_room)
 "eEW" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -47253,10 +47253,6 @@
 /obj/item/toy/beach_ball/holoball,
 /turf/open/floor/plasteel,
 /area/security/prison)
-"qDQ" = (
-/obj/machinery/camera/autoname,
-/turf/open/floor/plasteel/dark,
-/area/engine/engine_room)
 "qGM" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/brown{
@@ -49620,10 +49616,6 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
-"vPT" = (
-/obj/machinery/camera,
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
 "vQd" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
 	dir = 8
@@ -85540,7 +85532,7 @@ aal
 aug
 uwV
 gFA
-gFA
+abO
 uwV
 lwp
 dFi
@@ -86816,7 +86808,7 @@ kOR
 asy
 bqC
 aaT
-abO
+aug
 uwV
 amH
 amH
@@ -87075,7 +87067,7 @@ bqC
 aaT
 aug
 uwV
-qDQ
+amH
 amH
 amH
 tus
@@ -87347,7 +87339,7 @@ als
 als
 mpC
 hAk
-vPT
+ahW
 kuZ
 mFO
 amB
@@ -87598,7 +87590,7 @@ gFA
 mJV
 eiC
 son
-boA
+ahP
 nNJ
 jxP
 nNJ
@@ -88360,7 +88352,7 @@ wZv
 aaT
 aug
 uwV
-eCr
+amH
 amH
 jip
 xUj

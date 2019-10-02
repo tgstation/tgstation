@@ -27,10 +27,10 @@
 	for(var/A in immune_atoms)
 		immune[A] = TRUE
 	for(var/mob/living/L in GLOB.player_list)
-		if(locate(/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop) in L.mind.spell_list) //People who can stop time are immune to its effects
+		if(locate(/obj/effect/proc_holder/spell/aoe_turf/timestop) in L.mind.spell_list) //People who can stop time are immune to its effects
 			immune[L] = TRUE
 	for(var/mob/living/simple_animal/hostile/guardian/G in GLOB.parasites)
-		if(G.summoner && locate(/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop) in G.summoner.mind.spell_list) //It would only make sense that a person's stand would also be immune.
+		if(G.summoner && locate(/obj/effect/proc_holder/spell/aoe_turf/timestop) in G.summoner.mind.spell_list) //It would only make sense that a person's stand would also be immune.
 			immune[G] = TRUE
 	if(start)
 		timestop()
@@ -46,9 +46,8 @@
 	chronofield = make_field(/datum/proximity_monitor/advanced/timestop, list("current_range" = freezerange, "host" = src, "immune" = immune, "check_anti_magic" = check_anti_magic, "check_holy" = check_holy))
 	QDEL_IN(src, duration)
 
-/obj/effect/timestop/wizard
+/obj/effect/timestop/magic
 	check_anti_magic = TRUE
-	duration = 100
 
 /datum/proximity_monitor/advanced/timestop
 	name = "chronofield"
@@ -58,6 +57,8 @@
 	var/list/immune = list()
 	var/list/frozen_things = list()
 	var/list/frozen_mobs = list() //cached separately for processing
+	var/list/frozen_structures = list() //Also machinery, and only frozen aestethically
+	var/list/frozen_turfs = list() //Only aesthetically
 	var/check_anti_magic = FALSE
 	var/check_holy = FALSE
 
@@ -85,6 +86,8 @@
 		freeze_projectile(A)
 	else if(istype(A, /obj/mecha))
 		freeze_mecha(A)
+	else if((ismachinery(A) && !istype(A, /obj/machinery/light)) || isstructure(A)) //Special exception for light fixtures since recoloring causes them to change light
+		freeze_structure(A)
 	else
 		frozen = FALSE
 	if(A.throwing)
@@ -105,6 +108,8 @@
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_all()
 	for(var/i in frozen_things)
 		unfreeze_atom(i)
+	for(var/T in frozen_turfs)
+		unfreeze_turf(T)
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_atom(atom/movable/A)
 	if(A.throwing)
@@ -140,6 +145,20 @@
 	if(T)
 		T.paused = FALSE
 
+/datum/proximity_monitor/advanced/timestop/proc/freeze_turf(turf/T)
+	into_the_negative_zone(T)
+	frozen_turfs += T
+
+/datum/proximity_monitor/advanced/timestop/proc/unfreeze_turf(turf/T)
+	escape_the_negative_zone(T)
+
+/datum/proximity_monitor/advanced/timestop/proc/freeze_structure(obj/O)
+	into_the_negative_zone(O)
+	frozen_structures += O
+
+/datum/proximity_monitor/advanced/timestop/proc/unfreeze_structure(obj/O)
+	escape_the_negative_zone(O)
+
 /datum/proximity_monitor/advanced/timestop/process()
 	for(var/i in frozen_mobs)
 		var/mob/living/m = i
@@ -148,6 +167,7 @@
 /datum/proximity_monitor/advanced/timestop/setup_field_turf(turf/T)
 	for(var/i in T.contents)
 		freeze_atom(i)
+	freeze_turf(T)
 	return ..()
 
 
