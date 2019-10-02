@@ -9,7 +9,7 @@
 	layer = BELOW_OBJ_LAYER
 	use_power = NO_POWER_USE
 	var/grill_fuel = 0
-	var/grilling
+	var/grilled_item
 	var/datum/looping_sound/grill/grill_loop
 
 /obj/machinery/grill/Initialize()
@@ -17,7 +17,7 @@
 	grill_loop = new(list(src), FALSE)
 
 /obj/machinery/grill/update_icon()
-	if(grilling)
+	if(grilled_item)
 		icon_state = "grill"
 	else if(!grill_fuel)
 		icon_state = "grill_open"
@@ -28,15 +28,13 @@
 	if(istype(I, /obj/item/trash/coal))
 		qdel(I)
 		to_chat(user, "<span class='notice'>You put the [I] in [src].</span>")
-		grill_fuel += 500
-		update_icon()
+		add_fuel(500)
 		return
 	if(istype(I, /obj/item/stack/sheet/mineral/wood))
 		qdel(I)
-		to_chat(user, "<span class='notice'>You put the [I] in [src].</span>")
+		to_chat(user, "<span class='notice'>You put the [S.amount] [I]s in [src].</span>")
 		var/obj/item/stack/S = I
-		grill_fuel += (50 * S.amount)
-		update_icon()
+		add_fuel(50 * S.amount)
 		return
 	if(I.resistance_flags & INDESTRUCTIBLE)
 		to_chat(user, "<span class='warning'>You don't feel it would be wise to grill [I]...</span>")
@@ -48,18 +46,22 @@
 			else if(!grill_fuel)
 				to_chat(user, "<span class='notice'>There is not enough fuel.</span>")
 				return
-			else if(!grilling && user.transferItemToLoc(I, src))
-				grilling = I
+			else if(!grilled_item && user.transferItemToLoc(I, src))
+				grilled_item = I
 				to_chat(user, "<span class='notice'>You put the [I] on [src].</span>")
 				update_icon()
 				grill_loop.start()
 				return
 		else
-			grill_fuel += (20 * (I.reagents.get_reagent_amount(/datum/reagent/consumable/monkey_energy)))
+			add_fuel(20 * (I.reagents.get_reagent_amount(/datum/reagent/consumable/monkey_energy)))
+			to_chat(user, "<span class='notice'>You pour the Monkey Energy in [src].</span>")
 			I.reagents.remove_reagent(/datum/reagent/consumable/monkey_energy, I.reagents.get_reagent_amount(/datum/reagent/consumable/monkey_energy))
-			update_icon()
 			return
 	..()
+
+/obj/machinery/grill/proc/add_fuel(amount)
+	grill_fuel += amount
+	update_icon()
 
 /obj/machinery/grill/process()
 	..()
@@ -72,8 +74,8 @@
 			var/datum/effect_system/smoke_spread/bad/smoke = new
 			smoke.set_up(1, loc)
 			smoke.start()
-	if(grilling)
-		var/obj/item/reagent_containers/I = grilling
+	if(grilled_item)
+		var/obj/item/reagent_containers/I = grilled_item
 		I.reagents.add_reagent(/datum/reagent/consumable/char, 1)
 		grill_fuel -= 10
 		I.AddComponent(/datum/component/sizzle)
@@ -92,18 +94,16 @@
 	return
 
 /obj/machinery/grill/attack_hand(mob/user)
-	if(grilling)
-		var/obj/item/reagent_containers/food/I = grilling
-		if(I.loc == src)
-			I.name = "grilled [I.name]"
-			to_chat(user, "<span class='notice'>You take out [grilling] from [src].</span>")
-			I.forceMove(drop_location())
-			if(Adjacent(user) && !issilicon(user))
-				user.put_in_hands(grilling)
-			grilling = null
-			update_icon()
-			grill_loop.stop()
-			return
+	if(grilled_item)
+		var/obj/item/reagent_containers/food/I = grilled_item
+		to_chat(user, "<span class='notice'>You take out [grilled_item] from [src].</span>")
+		I.forceMove(drop_location())
+		if(!issilicon(user))
+			user.put_in_hands(grilled_item)
+		grilled_item = null
+		update_icon()
+		grill_loop.stop()
+		return
 	return ..()
 
 /obj/machinery/grill/unwrenched
