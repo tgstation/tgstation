@@ -7,6 +7,7 @@
 	can_synth = FALSE
 	var/purity
 	var/ImpureChem = /datum/reagent/fermi
+	var/InverseChemVal = 0.2 //purity sat which it flips
 	var/InverseChem = /datum/reagent/fermi
 	var/DoNotSplit = FALSE
 
@@ -407,7 +408,7 @@
 	playsound(get_turf(holder.my_atom), 'sound/FermiChem/bufferadd.ogg', 50, 1)
 	holder.remove_reagent(id, volume, ignore_pH = TRUE)
 	..()
-
+/*
 //Turns you into a cute catto while it's in your system.
 //If you manage to gamble perfectly, makes you have cat ears after you transform back. But really, you shouldn't end up with that with how random it is.
 /datum/reagent/fermi/secretcatchem //Should I hide this from code divers? A secret cit chem?
@@ -464,3 +465,4 @@
 	to_chat(H, "<span class='notice'>[words]</span>")
 	qdel(catto)
 	log_game("FERMICHEM: [H] ckey: [H.key] has returned to normal")
+*/
