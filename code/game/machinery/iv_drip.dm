@@ -10,6 +10,7 @@
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/mob/living/carbon/attached
 	var/mode = IV_INJECTING
+	var/dripfeed = FALSE
 	var/obj/item/reagent_containers/beaker
 	var/static/list/drip_containers = typecacheof(list(/obj/item/reagent_containers/blood,
 									/obj/item/reagent_containers/food,
@@ -131,9 +132,11 @@
 		if(mode)
 			if(beaker.reagents.total_volume)
 				var/transfer_amount = 5
+				if (dripfeed)
+					transfer_amount = 1
 				if(istype(beaker, /obj/item/reagent_containers/blood))
 					// speed up transfer on blood packs
-					transfer_amount = 10
+					transfer_amount *= 2
 				beaker.reagents.trans_to(attached, transfer_amount, method = INJECT, show_message = FALSE) //make reagents reacts, but don't spam messages
 				update_icon()
 
@@ -200,6 +203,25 @@
 	mode = !mode
 	to_chat(usr, "The IV drip is now [mode ? "injecting" : "taking blood"].")
 	update_icon()
+
+/obj/machinery/iv_drip/verb/adjust_valve()
+	set category = "Object"
+	set name = "Adjust Valve"
+	set src in view(1)
+
+	if(!isliving(usr))
+		to_chat(usr, "<span class='warning'>You can't do that!</span>")
+		return
+
+	if(usr.incapacitated())
+		return
+
+	if(dripfeed)
+		dripfeed = FALSE
+		to_chat(usr, "<span class='notice'>You loosen the valve to speed up the [src].</span>")
+	else
+		dripfeed = TRUE
+		to_chat(usr, "<span class='notice'>You tighten the valve to slowly drip-feed the contents of [src].</span>")
 
 /obj/machinery/iv_drip/examine(mob/user)
 	. = ..()
