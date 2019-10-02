@@ -107,6 +107,13 @@
 
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 
+	if(isOn())
+		use(1)
+		var/turf/location = get_turf(user)
+		location.hotspot_expose(700, 50, 1)
+		if(get_fuel() <= 0)
+			set_light(0)
+
 	if(affecting && affecting.status == BODYPART_ROBOTIC && user.a_intent != INTENT_HARM)
 		if(src.use_tool(H, user, 0, volume=50, amount=1))
 			if(user == H)
@@ -123,22 +130,17 @@
 	. = ..()
 	if(!proximity)
 		return
+
 	if(!status && O.is_refillable())
 		reagents.trans_to(O, reagents.total_volume, transfered_by = user)
 		to_chat(user, "<span class='notice'>You empty [src]'s fuel tank into [O].</span>")
 		update_icon()
-	if(isOn())
-		use(1)
-		var/turf/location = get_turf(user)
-		location.hotspot_expose(700, 50, 1)
-		if(get_fuel() <= 0)
-			set_light(0)
 
-		if(isliving(O))
-			var/mob/living/L = O
-			if(L.IgniteMob())
-				message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(L)] on fire with [src] at [AREACOORD(user)]")
-				log_game("[key_name(user)] set [key_name(L)] on fire with [src] at [AREACOORD(user)]")
+	if(isOn() && isliving(O))
+		var/mob/living/L = O
+		if(L.IgniteMob())
+			message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(L)] on fire with [src] at [AREACOORD(user)]")
+			log_game("[key_name(user)] set [key_name(L)] on fire with [src] at [AREACOORD(user)]")
 
 
 /obj/item/weldingtool/attack_self(mob/user)
