@@ -470,9 +470,9 @@
 /obj/singularity/vomit/consume(atom/A)
 	if (istype(A, /obj/effect/decal/cleanable/vomit))
 		return
-	var/turf/Tgoose = get_turf(src)
 	var/turf/spawnloc = isturf(A) ? A : get_turf(A)
-	playsound(Tgoose, 'sound/effects/splat.ogg', 50, 1)
+	var/turf/Tgoose = get_turf(src)
+	playsound( Tgoose, 'sound/effects/splat.ogg', 50, 1)
 	new /obj/effect/decal/cleanable/vomit(spawnloc)
 	..()
 
@@ -481,3 +481,18 @@
 
 /obj/singularity/vomit/singularity_act()
 	return //prevents gooseulo from violently exploding as soon as it's spawned
+
+/obj/singularity/vomit/attack_hand(mob/user) //i know this looks unbelievably hacky but it's the only way i can get the vomitgoose singularity to eat mobs
+	..()
+
+/obj/singularity/vomit/attack_paw(mob/user)
+	..()
+
+/obj/singularity/vomit/attack_alien(mob/user)
+	..()
+
+/obj/singularity/vomit/attack_animal(mob/user)
+	..()
+
+/obj/singularity/vomit/attackby(obj/item/W, mob/user, params)
+	..()
