@@ -117,6 +117,7 @@
   * Returns TRUE if the NOPOWER flag was toggled
   */
 /obj/machinery/proc/power_change()
+	SHOULD_CALL_PARENT(TRUE)
 	if(stat & BROKEN)
 		return
 	if(powered(power_channel))
@@ -129,8 +130,7 @@
 			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_LOST)
 			. = TRUE
 		stat |= NOPOWER
-	if(.)
-		update_icon()
+	update_icon()
 
 // connect the machine to a powernet if a node cable or a terminal is present on the turf
 /obj/machinery/power/proc/connect_to_network()

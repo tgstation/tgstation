@@ -38,7 +38,7 @@
 /area/shuttle/hunter)
 "i" = (
 /obj/structure/grille,
-/obj/structure/window/plastitanium,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "j" = (

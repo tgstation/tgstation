@@ -6,7 +6,7 @@
 	icon_state = "judicial_visor_0"
 	item_state = "sunglasses"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	flash_protect = 1
+	flash_protect = FLASH_PROTECTION_FLASH
 	var/active = FALSE //If the visor is online
 	var/recharging = FALSE //If the visor is currently recharging
 	var/obj/effect/proc_holder/judicial_visor/blaster

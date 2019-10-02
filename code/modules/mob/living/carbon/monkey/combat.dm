@@ -103,8 +103,7 @@
 /mob/living/carbon/monkey/proc/pickup_and_wear(var/obj/item/clothing/C)
 	if(!equip_to_appropriate_slot(C))
 		monkeyDrop(get_item_by_slot(C)) // remove the existing item if worn
-		sleep(5)
-		equip_to_appropriate_slot(C)
+		addtimer(CALLBACK(src, .proc/equip_to_appropriate_slot, C), 5)
 
 /mob/living/carbon/monkey/resist_restraints()
 	var/obj/item/I = null

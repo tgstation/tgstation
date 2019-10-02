@@ -78,7 +78,7 @@
 				to_chat(user, "<span class='notice'>You fill the balloon with the contents of [I].</span>")
 				I.reagents.trans_to(src, 10, transfered_by = user)
 				update_icon()
-	else if(I.is_sharp())
+	else if(I.get_sharpness())
 		balloon_burst()
 	else
 		return ..()
@@ -227,10 +227,10 @@
 		return
 	src.add_fingerprint(user)
 	if (src.bullets < 1)
-		user.show_message("<span class='warning'>*click*</span>", 2)
-		playsound(src, 'sound/weapons/gun_dry_fire.ogg', 30, TRUE)
+		user.show_message("<span class='warning'>*click*</span>", MSG_AUDIBLE)
+		playsound(src, 'sound/weapons/gun/revolver/dry_fire.ogg', 30, TRUE)
 		return
-	playsound(user, 'sound/weapons/gunshot.ogg', 100, TRUE)
+	playsound(user, 'sound/weapons/gun/revolver/shot.ogg', 100, TRUE)
 	src.bullets--
 	user.visible_message("<span class='danger'>[user] fires [src] at [target]!</span>", \
 						"<span class='danger'>You fire [src] at [target]!</span>", \
@@ -476,6 +476,7 @@
 	var/timer = 0
 	var/cooldown = 30
 	var/quiet = 0
+	w_class = WEIGHT_CLASS_SMALL
 
 //all credit to skasi for toy mech fun ideas
 /obj/item/toy/prize/attack_self(mob/user)
@@ -581,8 +582,7 @@
 		INVOKE_ASYNC(src, .proc/do_toy_talk, user)
 
 		cooldown = TRUE
-		spawn(recharge_time)
-			cooldown = FALSE
+		addtimer(VARSET_CALLBACK(src, cooldown, FALSE), recharge_time)
 		return
 	..()
 
@@ -612,6 +612,7 @@
 	name = "toy AI"
 	desc = "A little toy model AI core with real law announcing action!"
 	icon_state = "AI"
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/toy/talking/AI/generate_messages()
 	return list(generate_ion_law())
@@ -649,6 +650,7 @@
 	messages = list("You won't get away this time, Griffin!", "Stop right there, criminal!", "Hoot! Hoot!", "I am the night!")
 	chattering = TRUE
 	phomeme = "owl"
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/toy/talking/griffin
 	name = "griffin action figure"
@@ -657,6 +659,7 @@
 	messages = list("You can't stop me, Owl!", "My plan is flawless! The vault is mine!", "Caaaawwww!", "You will never catch me!")
 	chattering = TRUE
 	phomeme = "griffin"
+	w_class = WEIGHT_CLASS_SMALL
 
 /*
 || A Deck of Cards for playing various games of chance ||
@@ -1117,11 +1120,6 @@
 	item_state = "beachball"
 	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
 
-/obj/item/toy/beach_ball/afterattack(atom/target as mob|obj|turf|area, mob/user)
-	. = ..()
-	if(user.dropItemToGround(src))
-		throw_at(target, throw_range, throw_speed)
-
 /*
  * Clockwork Watch
  */
@@ -1212,6 +1210,7 @@
 	var/cooldown = 0
 	var/toysay = "What the fuck did you do?"
 	var/toysound = 'sound/machines/click.ogg'
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/toy/figure/Initialize()
 	. = ..()
