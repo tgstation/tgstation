@@ -14,7 +14,6 @@
 /mob/living/simple_animal/hostile/asteroid/elite/herald
 	name = "herald"
 	desc = "A monstrous beast which fires deadly projectiles at threats and prey."
-	icon = 'icons/mob/lavaland/herald.dmi'
 	icon_state = "herald"
 	icon_living = "herald"
 	icon_aggro = "herald"
@@ -73,13 +72,13 @@
 /datum/action/innate/elite_attack/herald_teleshot
 	name = "Teleport Shot"
 	button_icon_state = "herald_teleshot"
-	chosen_message = "<span class='boldwarning'>You will now teleport to your target.</span>"
+	chosen_message = "<span class='boldwarning'>You will now fire a shot which teleports you where it lands.</span>"
 	chosen_attack_num = 3
 	
 /datum/action/innate/elite_attack/herald_mirror
-	name = "AOE Blast"
+	name = "Summon Mirror"
 	button_icon_state = "herald_mirror"
-	chosen_message = "<span class='boldwarning'>You will spawn a mirror at the target which reflects projectiles toward the target.</span>"
+	chosen_message = "<span class='boldwarning'>You will spawn a mirror which duplicates your attacks.</span>"
 	chosen_attack_num = 4
 	
 /mob/living/simple_animal/hostile/asteroid/elite/herald/OpenFire()
@@ -211,8 +210,8 @@
 /mob/living/simple_animal/hostile/asteroid/elite/herald/mirror
 	name = "herald's mirror"
 	desc = "This fiendish work of magic copies the herald's attacks.  Seems logical to smash it."
-	health = 20
-	maxHealth = 20
+	health = 60
+	maxHealth = 60
 	icon_state = "herald_mirror"
 	deathmessage = "shatters violently!"
 	deathsound = 'sound/effects/glassbr1.ogg'
@@ -239,4 +238,5 @@
 	var/mob/living/simple_animal/hostile/asteroid/elite/herald/mirror/new_mirror = new /mob/living/simple_animal/hostile/asteroid/elite/herald/mirror(loc)
 	my_mirror = new_mirror
 	my_mirror.my_master = src
+	my_mirror.faction = faction.Copy()
 	return

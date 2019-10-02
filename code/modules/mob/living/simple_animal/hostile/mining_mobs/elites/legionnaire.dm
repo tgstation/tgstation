@@ -14,7 +14,6 @@
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire
 	name = "legionnaire"
 	desc = "A towering skeleton, embodying the terrifying power of Legion."
-	icon = 'icons/mob/lavaland/legionnaire.dmi'
 	icon_state = "legionnaire"
 	icon_living = "legionnaire"
 	icon_aggro = "legionnaire"
@@ -139,14 +138,13 @@
 /mob/living/simple_animal/hostile/asteroid/elite/legionnairehead
 	name = "legionnaire head"
 	desc = "The legionnaire's head floating by itself.  One shouldn't get too close, though once it sees you, you really don't have a choice."
-	icon = 'icons/mob/lavaland/legionnaire.dmi'
 	icon_state = "legionnaire_head"
 	icon_living = "legionnaire_head"
 	icon_aggro = "legionnaire_head"
 	icon_dead = "legionnaire_dead"
 	icon_gib = "syndicate_gib"
-	maxHealth = 60
-	health = 60
+	maxHealth = 80
+	health = 80
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	attacktext = "bites at"
@@ -209,7 +207,7 @@
 /obj/structure/legionnaire_bonfire
 	name = "bone pile"
 	desc = "A pile of bones which seems to occasionally move a little.  It's probably a good idea to smash them."
-	icon = 'icons/mob/lavaland/legionnaire_bonfire.dmi'
+	icon = 'icons/obj/lavaland/legionnaire_bonfire.dmi'
 	icon_state = "bonfire"
 	max_integrity = 100
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG

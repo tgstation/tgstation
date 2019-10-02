@@ -1,12 +1,12 @@
-#define CREVICE_INACTIVE 0
-#define CREVICE_ACTIVE 1
-#define CREVICE_PASSIVE 2
+#define TUMOR_INACTIVE 0
+#define TUMOR_ACTIVE 1
+#define TUMOR_PASSIVE 2
 
 //Elite mining mobs
 /mob/living/simple_animal/hostile/asteroid/elite
 	name = "elite"
-	desc = "An elite monster, found in one of the strange glowing crevices on lavaland."
-	icon = 'icons/mob/lavaland/elite_lavaland_monsters.dmi'
+	desc = "An elite monster, found in one of the strange tumors on lavaland."
+	icon = 'icons/mob/lavaland/lavaland_elites.dmi'
 	faction = list("boss")
 	robust_searching = TRUE
 	ranged_ignores_vision = TRUE
@@ -18,7 +18,7 @@
 	var/list/attack_action_types = list()
 	environment_smash = ENVIRONMENT_SMASH_NONE  //This is to prevent elites smashing up the mining station, we'll make sure they can smash minerals fine below.
 	harm_intent_damage = 0 //Punching elites gets you nowhere
-	var/obj/structure/elite_crevice/myparent = null
+	var/obj/structure/elite_tumor/myparent = null
 	var/can_talk = 0
 	stat_attack = UNCONSCIOUS
 	layer = LARGE_MOB_LAYER
@@ -74,13 +74,13 @@ While using this makes the system rely on OnFire, it still gives options for tim
 /mob/living/simple_animal/hostile/asteroid/elite/Life()
 	. = ..()
 	if(isturf(loc))
-		for(var/obj/structure/elite_crevice/crevice in loc)
-			if(crevice == myparent && myparent.activity == CREVICE_PASSIVE)
+		for(var/obj/structure/elite_tumor/tumor in loc)
+			if(tumor == myparent && myparent.activity == TUMOR_PASSIVE)
 				adjustHealth(-maxHealth*0.05)
 				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src))
 				H.color = "#FF0000"
 	if(myparent)
-		if(myparent.activity == CREVICE_ACTIVE && myparent.activator.stat == DEAD)
+		if(myparent.activity == TUMOR_ACTIVE && myparent.activator.stat == DEAD)
 			myparent.onEliteWon()
 
 /mob/living/simple_animal/hostile/asteroid/elite/death()
@@ -88,39 +88,40 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	if(myparent)
 		myparent.onEliteLoss()
 
-//The Glowing Crevice, the actual "spawn-point" of elites, handles the spawning, arena, and procs for dealing with basic scenarios.
+//The Glowing Tumor, the actual "spawn-point" of elites, handles the spawning, arena, and procs for dealing with basic scenarios.
 
-/obj/structure/elite_crevice
-	name = "glowing crevice"
-	desc = "A glowing, red hole which doesn't seem to have a bottom.  You feel pressured to reach your hand out towards it..."
+/obj/structure/elite_tumor
+	name = "pulsing tumor"
+	desc = "An odd, pulsing tumor sticking out of the ground.  You fell compelled to reach out and touch it..."
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	resistance_flags = INDESTRUCTIBLE
-	var/activity = CREVICE_INACTIVE
+	var/activity = TUMOR_INACTIVE
 	var/boosted = FALSE
 	var/times_won = 0
 	var/mob/living/carbon/human/activator = null
 	var/mob/living/simple_animal/hostile/asteroid/elite/mychild = null
-	var/potentialspawns = list(/mob/living/simple_animal/hostile/asteroid/elite/goliath,
+	var/potentialspawns = list(/mob/living/simple_animal/hostile/asteroid/elite/broodmother,
 								/mob/living/simple_animal/hostile/asteroid/elite/pandora,
 								/mob/living/simple_animal/hostile/asteroid/elite/legionnaire,
 								/mob/living/simple_animal/hostile/asteroid/elite/herald)
-	icon = 'icons/mob/lavaland/elite_lavaland_monsters.dmi'
-	icon_state = "elite_crevice"
+	icon = 'icons/obj/lavaland/tumor.dmi'
+	icon_state = "tumor"
+	pixel_x = -16
 	light_color = LIGHT_COLOR_RED
 	light_range = 3
 	anchored = TRUE
 	density = FALSE
 	
-/obj/structure/elite_crevice/attack_hand(mob/user)
+/obj/structure/elite_tumor/attack_hand(mob/user)
 	switch(activity)
-		if(CREVICE_INACTIVE)
+		if(TUMOR_INACTIVE)
 			if(istype(user, /mob/living/carbon/human))
-				activity = CREVICE_ACTIVE
+				activity = TUMOR_ACTIVE
 				var/mob/dead/observer/elitemind = null
-				visible_message("<span class='boldwarning'>The crevice glows.  Your instincts tell you to step back.</span>")
+				visible_message("<span class='boldwarning'>The tumor begins to convulse.  Your instincts tell you to step back.</span>")
 				activator = user
 				if(boosted)
-					visible_message("<span class='boldwarning'>Something within the crevice stirs...</span>")
+					visible_message("<span class='boldwarning'>Something within the tumor stirs...</span>")
 					var/list/candidates = pollCandidatesForMob("Do you want to play as a lavaland elite?", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, src, POLL_IGNORE_SENTIENCE_POTION)
 					if(candidates.len)
 						audible_message("<span class='boldwarning'>The stirring sounds increase in volume!</span>")
@@ -131,30 +132,30 @@ While using this makes the system rely on OnFire, it still gives options for tim
 						return
 					else
 						visible_message("<span class='boldwarning'>The stirring stops, and nothing emerges.  Perhaps try again later.</span>")
-						activity = CREVICE_INACTIVE
+						activity = TUMOR_INACTIVE
 						activator = null
 						return
 				else
 					addtimer(CALLBACK(src, .proc/spawn_elite), 30)
 				return
-		if(CREVICE_PASSIVE)
+		if(TUMOR_PASSIVE)
 			if(istype(user, /mob/living/carbon/human))
-				activity = CREVICE_ACTIVE
-				visible_message("<span class='boldwarning'>The crevice glows as your arm enters its radius.  Your instincts tell you to step back.</span>")
+				activity = TUMOR_ACTIVE
+				visible_message("<span class='boldwarning'>The tumor convulses as your arm enters its radius.  Your instincts tell you to step back.</span>")
 				activator = user
 				INVOKE_ASYNC(src, .proc/arena_trap)
 				if(boosted)
 					SEND_SOUND(mychild, sound('sound/effects/magic.ogg'))
-					to_chat(mychild, "<b>Someone has activated your crevice.  You will be returned to fight shortly, get ready!</b>")
+					to_chat(mychild, "<b>Someone has activated your tumor.  You will be returned to fight shortly, get ready!</b>")
 				addtimer(CALLBACK(src, .proc/return_elite), 30)
 				return
 
 				
-obj/structure/elite_crevice/proc/spawn_elite(var/mob/dead/observer/elitemind)
+obj/structure/elite_tumor/proc/spawn_elite(var/mob/dead/observer/elitemind)
 	var/selectedspawn = pick(potentialspawns)
 	mychild = new selectedspawn(loc)
 	mychild.myparent = src
-	visible_message("<span class='boldwarning'>[mychild] emerges from the crevice!</span>")
+	visible_message("<span class='boldwarning'>[mychild] emerges from the tumor!</span>")
 	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 	if(boosted)
 		mychild.key = elitemind.key
@@ -162,9 +163,9 @@ obj/structure/elite_crevice/proc/spawn_elite(var/mob/dead/observer/elitemind)
 	INVOKE_ASYNC(src, .proc/arena_trap)
 	return
 
-obj/structure/elite_crevice/proc/return_elite()
+obj/structure/elite_tumor/proc/return_elite()
 	mychild.forceMove(loc)
-	visible_message("<span class='boldwarning'>[mychild] emerges from the crevice!</span>")
+	visible_message("<span class='boldwarning'>[mychild] emerges from the tumor!</span>")
 	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 	mychild.revive(full_heal = TRUE, admin_revive = TRUE)
 	if(boosted)
@@ -172,44 +173,47 @@ obj/structure/elite_crevice/proc/return_elite()
 		mychild.health = mychild.maxHealth
 	return
 		
-/obj/structure/elite_crevice/Initialize()
+/obj/structure/elite_tumor/Initialize()
 	. = ..()
 	AddComponent(/datum/component/gps, "Menacing Signal")
 		
-/obj/structure/elite_crevice/attackby(obj/item/W, mob/user, params)
+/obj/structure/elite_tumor/attackby(obj/item/W, mob/user, params)
 	. = ..()
-	if(istype(W, /obj/item/organ/regenerative_core) && activity == CREVICE_INACTIVE && !boosted)
+	if(istype(W, /obj/item/organ/regenerative_core) && activity == TUMOR_INACTIVE && !boosted)
 		var/obj/item/organ/regenerative_core/core = W
 		if(core.preserved)
-			visible_message("<span class='boldwarning'>As [user] drops the core into the crevice, the red light intensifies for a brief moment, then returns to normal.</span>")
+			visible_message("<span class='boldwarning'>As [user] drops the core into the tumor, the tumor appears to swell.</span>")
+			icon_state = "advanced_tumor"
 			boosted = TRUE
+			light_range = 6
+			desc = "[desc]  This one seems to glow with a strong intensity."
 			qdel(core)
 			return TRUE
 			
-/obj/structure/elite_crevice/proc/arena_trap()
+/obj/structure/elite_tumor/proc/arena_trap()
 	var/turf/T = get_turf(src)
-	if(T && activity == CREVICE_ACTIVE)
+	if(T && activity == TUMOR_ACTIVE)
 		for(var/t in RANGE_TURFS(12, T))
 			if(t && get_dist(t, T) == 12)
-				var/obj/effect/temp_visual/elite_crevice_wall/newwall
-				newwall = new /obj/effect/temp_visual/elite_crevice_wall(t, src)
+				var/obj/effect/temp_visual/elite_tumor_wall/newwall
+				newwall = new /obj/effect/temp_visual/elite_tumor_wall(t, src)
 				newwall.activator = src.activator
 				newwall.ourelite = src.mychild
-		addtimer(CALLBACK(src, .proc/arena_checks), 100)
+		addtimer(CALLBACK(src, .proc/arena_checks), 50)
 		return
 
-/obj/structure/elite_crevice/proc/arena_checks()
+/obj/structure/elite_tumor/proc/arena_checks()
 	if(src) //Checking to see if we still exist
 		INVOKE_ASYNC(src, .proc/arena_trap)  //Gets another arena trap queued up for when this one runs out.
 		INVOKE_ASYNC(src, .proc/border_check)  //Checks to see if our fighters got out of the arena somehow.
 	return
 		
-/obj/effect/temp_visual/elite_crevice_wall
+/obj/effect/temp_visual/elite_tumor_wall
 	name = "magic wall"
 	icon = 'icons/turf/walls/hierophant_wall_temp.dmi'
 	icon_state = "wall"
 
-	duration = 100
+	duration = 50
 	smooth = SMOOTH_TRUE
 	layer = BELOW_MOB_LAYER
 	var/mob/living/carbon/human/activator = null
@@ -218,52 +222,52 @@ obj/structure/elite_crevice/proc/return_elite()
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	light_color = LIGHT_COLOR_RED
 	
-/obj/effect/temp_visual/elite_crevice_wall/Initialize(mapload, new_caster)
+/obj/effect/temp_visual/elite_tumor_wall/Initialize(mapload, new_caster)
 	. = ..()
 	queue_smooth_neighbors(src)
 	queue_smooth(src)
 
-/obj/effect/temp_visual/elite_crevice_wall/Destroy()
+/obj/effect/temp_visual/elite_tumor_wall/Destroy()
 	queue_smooth_neighbors(src)
 	return ..()
 
-/obj/effect/temp_visual/elite_crevice_wall/CanPass(atom/movable/mover, turf/target)
+/obj/effect/temp_visual/elite_tumor_wall/CanPass(atom/movable/mover, turf/target)
 	if(mover == ourelite || mover == activator)
 		return FALSE
 	else
 		return TRUE
 		
-/obj/structure/elite_crevice/proc/border_check()
-	if(activity == CREVICE_ACTIVE)
+/obj/structure/elite_tumor/proc/border_check()
+	if(activity == TUMOR_ACTIVE)
 		if(activator != null && get_dist(src, activator) >= 12)
 			if(loc)
 				activator.forceMove(loc)
-				visible_message("<span class='boldwarning'>[activator] suddenly reappears above the crevice!</span>")
+				visible_message("<span class='boldwarning'>[activator] suddenly reappears above the tumor!</span>")
 				playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 		if(mychild != null && get_dist(src, mychild) >= 12)
 			if(loc)
 				mychild.forceMove(loc)
-				visible_message("<span class='boldwarning'>[mychild] suddenly appears above the crevice!</span>")
+				visible_message("<span class='boldwarning'>[mychild] suddenly reappears above the tumor!</span>")
 				playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 	
-obj/structure/elite_crevice/proc/onEliteLoss()
+obj/structure/elite_tumor/proc/onEliteLoss()
 	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, 0, 50, TRUE, TRUE)
-	visible_message("<span class='boldwarning'>The glowing crevice wanes and dims, before beginning to close.</span>")
+	visible_message("<span class='boldwarning'>The tumor begins to convulse violently before beginning to dissipate.</span>")
 	mychild.myparent = null
-	if(activity == CREVICE_ACTIVE)
-		visible_message("<span class='boldwarning'>As the crevice closes, something is forced out from down below.</span>")
+	if(activity == TUMOR_ACTIVE)
+		visible_message("<span class='boldwarning'>As the tumor closes, something is forced up from down below.</span>")
 		new /obj/structure/closet/crate/necropolis/tendril(loc)
 		if(boosted)
 			var/lootpick = rand(1, 4)
 			if(lootpick == 1)
-				new /obj/item/crevice_shard(loc)
+				new /obj/item/tumor_shard(loc)
 			else
 				new /obj/structure/closet/crate/necropolis/tendril(loc)
 	qdel(src)
 	
-obj/structure/elite_crevice/proc/onEliteWon()
+obj/structure/elite_tumor/proc/onEliteWon()
 	times_won++
-	activity = CREVICE_PASSIVE
+	activity = TUMOR_PASSIVE
 	activator = null
 	mychild.revive(full_heal = TRUE, admin_revive = TRUE)
 	if(boosted)
@@ -272,11 +276,11 @@ obj/structure/elite_crevice/proc/onEliteWon()
 		if(times_won == 1)
 			SEND_SOUND(mychild, sound('sound/effects/magic.ogg'))
 			to_chat(mychild, "<span class='boldwarning'>As the life in the activator's eyes fade, the forcefield around you dies out and you feel your power subside.\nDespite this inferno being your home, you feel as if you aren't welcome here anymore.\nWithout any guidance, your purpose is now for you to decide.</span>")
-			to_chat(mychild, "<b>Your max health has been halved, but can now heal by standing on your crevice.  Note, it's your only way to heal.\nBear in mind, if anyone interacts with your crevice, you'll be resummoned here to carry out another fight.  In such a case, you will regain your full max health.\nAlso, be weary of your fellow inhabitants, they likely won't be happy to see you!</b>")
+			to_chat(mychild, "<b>Your max health has been halved, but can now heal by standing on your tumor.  Note, it's your only way to heal.\nBear in mind, if anyone interacts with your tumor, you'll be resummoned here to carry out another fight.  In such a case, you will regain your full max health.\nAlso, be weary of your fellow inhabitants, they likely won't be happy to see you!</b>")
 			
-/obj/item/crevice_shard
-	name = "crevice shard"
-	desc = "A strange, sharp, crystal shard from a glowing crevice on Lavaland.  Stabbing the corpse of a lavaland elite with this will revive them, assuming their soul still lingers.  Revived lavaland elites only have half their max health, but are completely loyal to their reviver."
+/obj/item/tumor_shard
+	name = "tumor shard"
+	desc = "A strange, sharp, crystal shard from an odd tumor on Lavaland.  Stabbing the corpse of a lavaland elite with this will revive them, assuming their soul still lingers.  Revived lavaland elites only have half their max health, but are completely loyal to their reviver."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "crevice_shard"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -287,7 +291,7 @@ obj/structure/elite_crevice/proc/onEliteWon()
 	throw_speed = 3
 	throw_range = 5
 	
-/obj/item/crevice_shard/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/tumor_shard/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
 	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite) && proximity_flag)
 		var/mob/living/simple_animal/hostile/asteroid/elite/E = target

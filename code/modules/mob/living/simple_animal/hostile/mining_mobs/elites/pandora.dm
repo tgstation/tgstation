@@ -14,7 +14,6 @@
 /mob/living/simple_animal/hostile/asteroid/elite/pandora
 	name = "pandora"
 	desc = "A large magic box with similar power and design to the Hierophant.  Once it opens, it's not easy to close it."
-	icon = 'icons/mob/lavaland/pandora.dmi'
 	icon_state = "pandora"
 	icon_living = "pandora"
 	icon_aggro = "pandora"
@@ -94,7 +93,7 @@
 	monster_damage_boost = TRUE
 	
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/singular_shot(target)	
-	ranged_cooldown = world.time + cooldown_time
+	ranged_cooldown = world.time + (cooldown_time * 0.5)
 	var/dir_to_target = get_dir(get_turf(src), get_turf(target))
 	var/turf/T = get_step(get_turf(src), dir_to_target)
 	singular_shot_line(sing_shot_length, dir_to_target, T)
