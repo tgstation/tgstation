@@ -125,6 +125,14 @@
 	else
 		return ..()
 
+/obj/item/weldingtool/attack_obj(obj/O, mob/living/user)
+	. = ..()
+	if(isOn())
+		use(1)
+		var/turf/location = get_turf(user)
+		location.hotspot_expose(700, 50, 1)
+		if(get_fuel() <= 0)
+			set_light(0)
 
 /obj/item/weldingtool/afterattack(atom/O, mob/user, proximity)
 	. = ..()
