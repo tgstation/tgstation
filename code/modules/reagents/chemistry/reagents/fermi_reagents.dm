@@ -13,7 +13,7 @@
 	if(!M)
 		return
 	if(purity < 0)
-		CRASH("Purity below 0 for chem: [id], Please let Fermis Know!")
+		CRASH("Purity below 0 for chem: [id], yell at coders")
 	if (purity == 1 || DoNotSplit == TRUE)
 		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [id]")
 		return
@@ -36,7 +36,7 @@
 	if(!ishuman(M))
 		return
 	if (purity < 0)
-		CRASH("Purity below 0 for chem: [id], Please let Fermis Know!")
+		CRASH("Purity below 0 for chem: [id], yell at coders")
 	if (purity == 1 || DoNotSplit == TRUE)
 		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume]u of [id] in themselves")
 		return
@@ -206,7 +206,7 @@
 //Writen by Trilby!! Embellsished a little by me.
 
 /datum/reagent/fermi/nanite_b_gone
-	name = "Naninte bane"
+	name = "Nanite bane"
 	id = "nanite_b_gone"
 	description = "A stablised EMP that is highly volatile, shocking small nano machines that will kill them off at a rapid rate in a patient's system."
 	color = "#708f8f"
@@ -246,7 +246,7 @@
 	O.emp_act(EMP_HEAVY)
 
 /datum/reagent/fermi/nanite_b_goneTox
-	name = "Naninte bain"
+	name = "Nanite pain"
 	id = "nanite_b_goneTox"
 	description = "Poorly made, and shocks you!"
 	metabolization_rate = 1
