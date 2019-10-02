@@ -106,17 +106,91 @@
 	turf_type = /turf/open/floor/carpet
 	resistance_flags = FLAMMABLE
 
-/obj/item/stack/tile/carpet/fifty
-	amount = 50
-
 /obj/item/stack/tile/carpet/black
 	name = "black carpet"
 	icon_state = "tile-carpet-black"
 	item_state = "tile-carpet-black"
 	turf_type = /turf/open/floor/carpet/black
 
+/obj/item/stack/tile/carpet/blue
+	name = "blue carpet"
+	icon_state = "tile-carpet-blue"
+	item_state = "tile-carpet-blue"
+	turf_type = /turf/open/floor/carpet/blue
+
+/obj/item/stack/tile/carpet/cyan
+	name = "cyan carpet"
+	icon_state = "tile-carpet-cyan"
+	item_state = "tile-carpet-cyan"
+	turf_type = /turf/open/floor/carpet/cyan
+
+/obj/item/stack/tile/carpet/green
+	name = "green carpet"
+	icon_state = "tile-carpet-green"
+	item_state = "tile-carpet-green"
+	turf_type = /turf/open/floor/carpet/green
+
+/obj/item/stack/tile/carpet/orange
+	name = "orange carpet"
+	icon_state = "tile-carpet-orange"
+	item_state = "tile-carpet-orange"
+	turf_type = /turf/open/floor/carpet/orange
+
+/obj/item/stack/tile/carpet/purple
+	name = "purple carpet"
+	icon_state = "tile-carpet-purple"
+	item_state = "tile-carpet-purple"
+	turf_type = /turf/open/floor/carpet/purple
+
+/obj/item/stack/tile/carpet/red
+	name = "red carpet"
+	icon_state = "tile-carpet-red"
+	item_state = "tile-carpet-red"
+	turf_type = /turf/open/floor/carpet/red
+
+/obj/item/stack/tile/carpet/royalblack
+	name = "royal black carpet"
+	icon_state = "tile-carpet-royalblack"
+	item_state = "tile-carpet-royalblack"
+	turf_type = /turf/open/floor/carpet/royalblack
+
+/obj/item/stack/tile/carpet/royalblue
+	name = "royal blue carpet"
+	icon_state = "tile-carpet-royalblue"
+	item_state = "tile-carpet-royalblue"
+	turf_type = /turf/open/floor/carpet/royalblue
+
+
+/obj/item/stack/tile/carpet/fifty
+	amount = 50
+
 /obj/item/stack/tile/carpet/black/fifty
 	amount = 50
+
+/obj/item/stack/tile/carpet/blue/fifty
+	amount = 50
+
+/obj/item/stack/tile/carpet/cyan/fifty
+	amount = 50
+
+/obj/item/stack/tile/carpet/green/fifty
+	amount = 50
+
+/obj/item/stack/tile/carpet/orange/fifty
+	amount = 50
+
+/obj/item/stack/tile/carpet/purple/fifty
+	amount = 50
+
+/obj/item/stack/tile/carpet/red/fifty
+	amount = 50
+
+/obj/item/stack/tile/carpet/royalblack/fifty
+	amount = 50
+
+/obj/item/stack/tile/carpet/royalblue/fifty
+	amount = 50
+
 
 /obj/item/stack/tile/fakespace
 	name = "astral carpet"
