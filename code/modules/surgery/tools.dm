@@ -78,7 +78,7 @@
 	toolspeed = 1
 
 /obj/item/surgicaldrill/augment
-	desc = "Effectively a small power drill contained within your arm, edges dulled to prevent tissue damage. May or may not pierce the heavens." = "drill"
+	desc = "Effectively a small power drill contained within your arm, edges dulled to prevent tissue damage. May or may not pierce the heavens."
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	force = 10
 	w_class = WEIGHT_CLASS_SMALL
