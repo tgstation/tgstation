@@ -73,8 +73,18 @@
 	. += "It's fitted with a [tool_behaviour == TOOL_CROWBAR ? prying : cutting] head."
 
 /obj/item/crowbar/power/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is putting [user.p_their()] head in [src], it looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(loc, 'sound/items/jaws_pry.ogg', 50, TRUE, -1)
+	if(tool_behaviour = TOOL_CROWBAR)
+		user.visible_message("<span class='suicide'>[user] is putting [user.p_their()] head in [src], it looks like [user.p_theyre()] trying to commit suicide!</span>")
+		playsound(loc, 'sound/items/jaws_pry.ogg', 50, TRUE, -1)
+	else
+		user.visible_message("<span class='suicide'>[user] is wrapping \the [src] around [user.p_their()] neck. It looks like [user.p_theyre()] trying to rip [user.p_their()] head off!</span>")
+		playsound(loc, 'sound/items/jaws_cut.ogg', 50, TRUE, -1)
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
+			if(BP)
+				BP.drop_limb()
+				playsound(loc, "desceration", 50, TRUE, -1)
 	return (BRUTELOSS)
 
 /obj/item/crowbar/power/attack_self(mob/user)
