@@ -51,10 +51,11 @@
 				grill_loop.start()
 				return
 		else
-			add_fuel(20 * (I.reagents.get_reagent_amount(/datum/reagent/consumable/monkey_energy)))
-			to_chat(user, "<span class='notice'>You pour the Monkey Energy in [src].</span>")
-			I.reagents.remove_reagent(/datum/reagent/consumable/monkey_energy, I.reagents.get_reagent_amount(/datum/reagent/consumable/monkey_energy))
-			return
+			if(I.has_reagent(/datum/reagent/consumable/monkey_energy))
+				add_fuel(20 * (I.reagents.get_reagent_amount(/datum/reagent/consumable/monkey_energy)))
+				to_chat(user, "<span class='notice'>You pour the Monkey Energy in [src].</span>")
+				I.reagents.remove_reagent(/datum/reagent/consumable/monkey_energy, I.reagents.get_reagent_amount(/datum/reagent/consumable/monkey_energy))
+				return
 	..()
 
 /obj/machinery/grill/proc/add_fuel(amount)
