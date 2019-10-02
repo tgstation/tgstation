@@ -47,7 +47,7 @@
 				return
 			else if(!grilled_item && user.transferItemToLoc(I, src))
 				grilled_item = I
-				to_chat(user, "<span class='notice'>You put the [I] on [src].</span>")
+				to_chat(user, "<span class='notice'>You put the [grilled_item] on [src].</span>")
 				update_icon()
 				grill_loop.start()
 				return
@@ -76,9 +76,9 @@
 			smoke.start()
 	if(grilled_item)
 		grill_time += 1
-		I.reagents.add_reagent(/datum/reagent/consumable/char, 1)
+		grilled_item.reagents.add_reagent(/datum/reagent/consumable/char, 1)
 		grill_fuel -= 10
-		I.AddComponent(/datum/component/sizzle)
+		grilled_item.AddComponent(/datum/component/sizzle)
 
 /obj/machinery/grill/Exited(atom/movable/AM)
 	finish_grill()
@@ -111,7 +111,7 @@
 	if(grilled_item)
 		finish_grill()
 		to_chat(user, "<span class='notice'>You take out [grilled_item] from [src].</span>")
-		I.forceMove(drop_location())
+		grilled_item.forceMove(drop_location())
 		user.put_in_hands(grilled_item)
 		grilled_item = null
 		update_icon()
@@ -121,23 +121,22 @@
 	return ..()
 
 /obj/machinery/grill/proc/finish_grill()
-	var/obj/item/reagent_containers/food/I = grilled_item
 	switch(grill_time) //no 0-9 to prevent spam
 		if(10 to 15)
-			I.name = "lightly-grilled [I.name]"
-			I.desc = "[I.desc] It's been lightly grilled."
+			grilled_item.name = "lightly-grilled [grilled_item.name]"
+			grilled_item.desc = "[grilled_item.desc] It's been lightly grilled."
 		if(16 to 39)
-			I.name = "grilled [I.name]"
-			I.desc = "[I.desc] It's been grilled."
-			I.foodtype |= FRIED
+			grilled_item.name = "grilled [grilled_item.name]"
+			grilled_item.desc = "[grilled_item.desc] It's been grilled."
+			grilled_item.foodtype |= FRIED
 		if(40 to 50)
-			I.name = "heavily grilled [I.name]"
-			I.desc = "[I.desc] It's been heavily grilled."
-			I.foodtype |= FRIED
+			grilled_item.name = "heavily grilled [grilled_item.name]"
+			grilled_item.desc = "[grilled_item.desc] It's been heavily grilled."
+			grilled_item.foodtype |= FRIED
 		if(51 to INFINITY) //grill marks reach max alpha
-			I.name = "Powerfully Grilled [I.name]"
-			I.desc = "A very heavily-grilled [I.name]. Reminds you of your wife, wait, no, it's prettier!"
-			I.foodtype |= FRIED
+			grilled_item.name = "Powerfully Grilled [grilled_item.name]"
+			grilled_item.desc = "A very heavily-grilled [grilled_item.name]. Reminds you of your wife, wait, no, it's prettier!"
+			grilled_item.foodtype |= FRIED
 
 /obj/machinery/grill/unwrenched
 	anchored = FALSE
