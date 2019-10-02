@@ -79,12 +79,16 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
 	if(prob(0.0001)) //1 in a million
 		new /obj/item/gun/energy/pulse/prize(src)
+		visible_message("<span class='notice'>[src] dispenses.. woah, a gun! Way past cool.</span>", "<span class='notice'>You hear a chime and a shot.</span>")
 		SSmedals.UnlockMedal(MEDAL_PULSE, user.client)
+    
 	else
+  
 		new prizeselect(src)
 
 	var/atom/movable/the_prize = pick(contents)
 	visible_message("<span class='notice'>[src] dispenses [the_prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
+		return
 
 	the_prize.forceMove(get_turf(src))
 

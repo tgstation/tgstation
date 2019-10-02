@@ -142,7 +142,7 @@
 	family = list()
 	if(!dead)
 		for(var/mob/living/simple_animal/pet/cat/kitten/C in children)
-			if(istype(C,type) || C.stat || !C.z || !C.butcher_results) //That last one is a work around for hologram cats
+			if(istype(C,type) || C.stat || !C.z || (C.flags_1 & HOLOGRAM_1))
 				continue
 			if(C.type in family)
 				family[C.type] += 1
