@@ -44,7 +44,7 @@
 					"<span class='userdanger'>Your throat is being slit by [user]!</span>", \
 					"<span class='userdanger'>Something is cutting into your neck!</span>")
 	playsound(H.loc, butcher_sound, 50, TRUE, -1)
-	if(do_mob(user, H, CLAMP(500 / source.force, 30, 50)) && H.Adjacent(source))
+	if(do_mob(user, H, CLAMP(500 / source.force, 30, 100)) && H.Adjacent(source))
 		H.visible_message("<span class='danger'>[user] slits [H]'s throat!</span>", \
 					"<span class='userdanger'>[user] slits your throat...</span>")
 		H.adjustBruteLoss(source.force, 0)
