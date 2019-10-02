@@ -31,7 +31,8 @@
 		add_fuel(500)
 		return
 	if(istype(I, /obj/item/stack/sheet/mineral/wood))
-		I.use(I.get_amount())
+		var/obj/item/stack/S = I
+		S.use(S.get_amount())
 		to_chat(user, "<span class='notice'>You put the [S.amount] [I]s in [src].</span>")
 		var/obj/item/stack/S = I
 		add_fuel(50 * S.amount)
