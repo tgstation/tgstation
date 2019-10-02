@@ -98,7 +98,7 @@
 			pai.slurring = 0
 			pai.derpspeech = 0
 		if(href_list["toggle_transmit"] || href_list["toggle_receive"])
-			var/transmitting = href_list["toggle_transmit"] //it can't be both so if we know it's not transmitting it must be receiving. 
+			var/transmitting = href_list["toggle_transmit"] //it can't be both so if we know it's not transmitting it must be receiving.
 			var/transmit_holder = (transmitting ? WIRE_TX : WIRE_RX)
 			if(transmitting)
 				pai.can_transmit = !pai.can_transmit
@@ -162,6 +162,15 @@
 
 /obj/item/paicard/proc/alertUpdate()
 	audible_message("<span class='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"</span>", "<span class='notice'>[src] vibrates with an alert.</span>")
+	cut_overlays()
+	add_overlay("pai-alert")
+	addtimer(CALLBACK(src, .proc/clearalert), 2 MINUTES)
+
+/obj/item/paicard/proc/clearalert()
+	if(pai)
+		return
+	cut_overlays()
+	add_overlay("pai-off")
 
 /obj/item/paicard/emp_act(severity)
 	. = ..()
