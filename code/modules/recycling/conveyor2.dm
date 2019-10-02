@@ -275,6 +275,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	for(var/obj/machinery/conveyor/C in GLOB.conveyors_by_id[id])
 		C.operating = position
 		C.update_move_direction()
+		C.update_icon()
 		CHECK_TICK
 
 // attack with hand, switch position
