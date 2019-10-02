@@ -7,6 +7,7 @@
 	icon_state = "grill_open"
 	density = TRUE
 	layer = BELOW_OBJ_LAYER
+	use_power = NO_POWER_USE
 	var/grill_fuel = 0
 	var/grilling
 	var/datum/looping_sound/grill/grill_loop
