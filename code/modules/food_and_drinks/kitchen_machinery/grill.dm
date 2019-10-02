@@ -13,16 +13,16 @@
 	var/datum/looping_sound/grill/grill_loop
 
 /obj/machinery/grill/Initialize()
-	..()
+	. = ..()
 	grill_loop = new(list(src), FALSE)
 
 /obj/machinery/grill/update_icon()
 	if(grilled_item)
 		icon_state = "grill"
-	else if(!grill_fuel)
-		icon_state = "grill_open"
-	else
+	else if(grill_fuel)
 		icon_state = "grill_on"
+	else
+		icon_state = "grill_open"
 
 /obj/machinery/grill/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/trash/coal))
@@ -31,7 +31,7 @@
 		add_fuel(500)
 		return
 	if(istype(I, /obj/item/stack/sheet/mineral/wood))
-		qdel(I)
+		I.use(I.get_amount())
 		to_chat(user, "<span class='notice'>You put the [S.amount] [I]s in [src].</span>")
 		var/obj/item/stack/S = I
 		add_fuel(50 * S.amount)
@@ -88,7 +88,7 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/metal(loc, 5)
 		new /obj/item/stack/rods(loc, 5)
-	qdel(src)
+	..()
 
 /obj/machinery/grill/attack_ai(mob/user)
 	return
@@ -98,8 +98,7 @@
 		var/obj/item/reagent_containers/food/I = grilled_item
 		to_chat(user, "<span class='notice'>You take out [grilled_item] from [src].</span>")
 		I.forceMove(drop_location())
-		if(!issilicon(user))
-			user.put_in_hands(grilled_item)
+		user.put_in_hands(grilled_item)
 		grilled_item = null
 		update_icon()
 		grill_loop.stop()
