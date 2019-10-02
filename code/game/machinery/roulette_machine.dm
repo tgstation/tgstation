@@ -153,6 +153,7 @@
 				desc = "Owned by [new_card.registered_account.account_holder], draws directly from [user.p_their()] account."
 				my_card = new_card
 				to_chat(user, "<span class='notice'>You link the wheel to your account.</span>")
+				power_change()
 				return
 	return ..()
 
