@@ -2,7 +2,7 @@
     name = "pH indicator booklet"
     desc = "A booklet containing paper soaked in universal indicator."
     icon_state = "pHbooklet"
-    icon = 'modular_citadel/icons/obj/FermiChem.dmi'
+    icon = '/icons/obj/FermiChem.dmi'
     item_flags = NOBLUDGEON
     var/numberOfPages = 50
     resistance_flags = FLAMMABLE
