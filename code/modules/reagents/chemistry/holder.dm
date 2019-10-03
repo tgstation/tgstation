@@ -181,6 +181,65 @@
 
 	return master
 
+
+/datum/reagents/proc/remove_reagent(reagent, amount, safety, ignore_pH = FALSE)//Added a safety check for the trans_id_to
+
+	if(isnull(amount))
+		amount = 0
+		CRASH("null amount passed to reagent code")
+		return FALSE
+
+	if(!isnum(amount))
+		return FALSE
+
+	if(amount < 0)
+		return FALSE
+
+	var/list/cached_reagents = reagent_list
+
+	for(var/A in cached_reagents)
+		var/datum/reagent/R = A
+		if (R.type == reagent)
+			if((total_volume - amount) <= 0)//Because this can result in 0, I don't want it to crash.
+				pH = 7
+			//In practice this is really confusing and players feel like it randomly melts their beakers, but I'm not sure how else to handle it. We'll see how it goes and I can remove this if it confuses people.
+			else if (ignore_pH == FALSE)
+				//if (((pH > R.pH) && (pH <= 7)) || ((pH < R.pH) && (pH >= 7)))
+				pH = (((pH - R.pH) / total_volume) * amount) + pH
+			if(istype(my_atom, /obj/item/reagent_containers/))
+				var/obj/item/reagent_containers/RC = my_atom
+				RC.pH_check()//checks beaker resilience)
+			//clamp the removal amount to be between current reagent amount
+			//and zero, to prevent removing more than the holder has stored
+			amount = CLAMP(amount, 0, R.volume)
+			R.volume -= amount
+			update_total()
+			if(!safety)//So it does not handle reactions when it need not to
+				handle_reactions()
+			if(my_atom)
+				my_atom.on_reagent_change(REM_REAGENT)
+			return TRUE
+
+	return FALSE
+
+/datum/reagents/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
+	var/list/cached_reagents = reagent_list
+	for(var/_reagent in cached_reagents)
+		var/datum/reagent/R = _reagent
+		if (R.type == reagent)
+			if(!amount)
+				if(needs_metabolizing && !R.metabolizing)
+					return 0
+				return R
+			else
+				if(round(R.volume, CHEMICAL_QUANTISATION_LEVEL) >= amount)
+					if(needs_metabolizing && !R.metabolizing)
+						return 0
+					return R
+				else
+					return 0
+
+
 /datum/reagents/proc/trans_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE, mob/transfered_by, remove_blacklisted = FALSE, method = null, show_message = TRUE, round_robin = FALSE)
 	//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
 	//if round_robin=TRUE, so transfer 5 from 15 water, 15 sugar and 15 plasma becomes 10, 15, 15 instead of 13.3333, 13.3333 13.3333. Good if you hate floating point errors
@@ -232,7 +291,7 @@
 			var/transfer_amount = amount
 			if(amount > T.volume)
 				transfer_amount = T.volume
-			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, current_reagent.purity, pH, no_react = TRUE)
+			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, purity, pH, no_react = TRUE)
 			to_transfer = max(to_transfer - transfer_amount , 0)
 			if(method)
 				R.react_single(T, target_atom, method, transfer_amount, show_message)
@@ -985,62 +1044,6 @@
 		var/amt = list_reagents[r_id]
 		add_reagent(r_id, amt, data)
 
-/datum/reagents/proc/remove_reagent(reagent, amount, safety, ignore_pH = FALSE)//Added a safety check for the trans_id_to
-
-	if(isnull(amount))
-		amount = 0
-		CRASH("null amount passed to reagent code")
-		return FALSE
-
-	if(!isnum(amount))
-		return FALSE
-
-	if(amount < 0)
-		return FALSE
-
-	var/list/cached_reagents = reagent_list
-
-	for(var/A in cached_reagents)
-		var/datum/reagent/R = A
-		if (R.type == reagent)
-			if((total_volume - amount) <= 0)//Because this can result in 0, I don't want it to crash.
-				pH = 7
-			//In practice this is really confusing and players feel like it randomly melts their beakers, but I'm not sure how else to handle it. We'll see how it goes and I can remove this if it confuses people.
-			else if (ignore_pH == FALSE)
-				//if (((pH > R.pH) && (pH <= 7)) || ((pH < R.pH) && (pH >= 7)))
-				pH = (((pH - R.pH) / total_volume) * amount) + pH
-			if(istype(my_atom, /obj/item/reagent_containers/))
-				var/obj/item/reagent_containers/RC = my_atom
-				RC.pH_check()//checks beaker resilience)
-			//clamp the removal amount to be between current reagent amount
-			//and zero, to prevent removing more than the holder has stored
-			amount = CLAMP(amount, 0, R.volume)
-			R.volume -= amount
-			update_total()
-			if(!safety)//So it does not handle reactions when it need not to
-				handle_reactions()
-			if(my_atom)
-				my_atom.on_reagent_change(REM_REAGENT)
-			return TRUE
-
-	return FALSE
-
-/datum/reagents/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
-	var/list/cached_reagents = reagent_list
-	for(var/_reagent in cached_reagents)
-		var/datum/reagent/R = _reagent
-		if (R.type == reagent)
-			if(!amount)
-				if(needs_metabolizing && !R.metabolizing)
-					return 0
-				return R
-			else
-				if(round(R.volume, CHEMICAL_QUANTISATION_LEVEL) >= amount)
-					if(needs_metabolizing && !R.metabolizing)
-						return 0
-					return R
-				else
-					return 0
 
 	return 0
 

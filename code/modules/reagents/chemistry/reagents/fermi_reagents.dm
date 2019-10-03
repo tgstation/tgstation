@@ -5,7 +5,6 @@
 	name = "Fermi" //This should never exist, but it does so that it can exist in the case of errors..
 	taste_description	= "affection and love!"
 	can_synth = FALSE
-	var/purity
 	var/addProc
 	var/ImpureChem = /datum/reagent/fermi
 	var/InverseChemVal = 0.2 //purity sat which it flips
