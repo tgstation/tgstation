@@ -2,6 +2,11 @@
 #define LIQUID			2
 #define GAS				3
 
+#define REAGENT_NORMAL_PH 7.000
+#define REAGENT_PH_ACCURACY 0.001
+#define REAGENT_PURITY_ACCURACY 0.001
+#define DEFAULT_SPECIFIC_HEAT 200
+
 #define INJECTABLE		(1<<0)	// Makes it possible to add reagents through droppers and syringes.
 #define DRAWABLE		(1<<1)	// Makes it possible to remove reagents through syringes.
 

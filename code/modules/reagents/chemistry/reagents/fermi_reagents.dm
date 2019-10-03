@@ -23,7 +23,7 @@
 		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [type]")
 		return
 	else if (InverseChemVal > purity)//Turns all of a added reagent into the inverse chem
-		M.reagents.remove_reagent(id, amount, FALSE)
+		M.reagents.remove_reagent(type, amount, FALSE)
 		M.reagents.add_reagent(InverseChem, amount, FALSE, other_purity = 1)
 		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [InverseChem]")
 		return
@@ -59,7 +59,7 @@
 	if((method==VAPOR) && (!C.wear_mask))
 		if(prob(20))
 			to_chat(C, "<span class='warning'>You can feel an intense burning sensation in your lungs!</b></span>")
-		M.adjustOrganLoss(ORGAN_SLOT_LUNGS, -2)
+		C.adjustOrganLoss(ORGAN_SLOT_LUNGS, -2)
 		C.apply_damage(acidstr/5, BURN, target)
 	C.acid_act(acidstr, volume)
 	..()
@@ -81,7 +81,8 @@
 	var/acidstr = (5-holder.pH)
 	T.acid_act(acidstr, volume)
 	..()
-
+/* idk what this does so commented out lol - it was causing errors
+what the fuck is holder anyways
 /datum/reagent/fermi/fermiTest
 	name = "Fermis Test Reagent"
 	description = "You should be really careful with this...! Also, how did you get this?"
@@ -112,7 +113,7 @@
 				var/datum/chemical_reaction/Ferm  = GLOB.chemical_reagents_list[reagent.type]
 				Ferm.on_reaction(holder, reagent.volume)
 	holder.clear_reagents()
-
+*/
 /datum/reagent/fermi/fermiTox
 	name = "FermiTox"
 	description = "You should be really careful with this...! Also, how did you get this? You shouldn't have this!"
