@@ -15,9 +15,9 @@
 	var/atom/food = parent
 	if(!isnull(sizzling))
 		food.cut_overlay(sizzling)
-	sizzling = mutable_appearance(initial(food.icon), initial(food.icon_state))	//we only want to apply grill marks to the initial icon_state for each object
-	sizzling.Blend("#fff", ICON_ADD) 	//fills the icon_state with white (except where it's transparent)
-	sizzling.Blend(icon('icons/obj/kitchen.dmi', "grillmarks"), ICON_MULTIPLY) //adds grill marks and the remaining white areas become transparent
-	sizzling.alpha = sizzlealpha
+	var/icon/grillmarks = mutable_appearance(initial(food.icon), initial(food.icon_state))	//we only want to apply grill marks to the initial icon_state for each object
+	grillmarks.Blend("#fff", ICON_ADD) 	//fills the icon_state with white (except where it's transparent)
+	grillmarks.Blend(icon('icons/obj/kitchen.dmi', "grillmarks"), ICON_MULTIPLY) //adds grill marks and the remaining white areas become transparent
 	sizzling = grillmarks
+	sizzling.alpha = sizzlealpha
 	food.add_overlay(sizzling)
