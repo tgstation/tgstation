@@ -598,7 +598,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/proc/target_patrol()
 	calc_path()		// Find a route to it
-	if(path.len == 0)
+	if(!path.len)
 		patrol_target = null
 		return
 	mode = BOT_PATROL
