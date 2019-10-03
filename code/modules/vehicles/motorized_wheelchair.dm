@@ -6,6 +6,7 @@
 	var/power_efficiency = 1
 	var/power_usage = 100
 	var/panel_open = FALSE
+	var/t5 = 0 //Var for what the overall rating of the parts is
 	var/list/required_parts = list(/obj/item/stock_parts/manipulator, 
 							/obj/item/stock_parts/manipulator,
 							/obj/item/stock_parts/capacitor)
@@ -18,8 +19,10 @@
 /obj/vehicle/ridden/wheelchair/motorized/proc/refresh_parts()
 	speed = 1 // Should never be under 1
 	for(var/obj/item/stock_parts/manipulator/M in contents)
+		t5 += M.rating
 		speed += M.rating
 	for(var/obj/item/stock_parts/capacitor/C in contents)
+		t5 += C.rating
 		power_efficiency = C.rating
 	var/datum/component/riding/D = GetComponent(/datum/component/riding)
 	D.vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * delay_multiplier) / speed
@@ -144,22 +147,26 @@
 		return
 	// If the speed is higher than delay_multiplier throw the person on the wheelchair away
 	if(M.density && speed > delay_multiplier && has_buckled_mobs())
-		var/mob/living/H = buckled_mobs[1]
-		var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
-		unbuckle_mob(H)
-		H.throw_at(throw_target, 2, 3)
-		H.Knockdown(100)
-		H.adjustStaminaLoss(40)
-		if(isliving(M))
-			var/mob/living/D = M
-			throw_target = get_edge_target_turf(D, pick(GLOB.cardinals))
-			D.throw_at(throw_target, 2, 3)
-			D.Knockdown(80)
-			D.adjustStaminaLoss(35)
-			visible_message("<span class='danger'>[src] crashes into [M], sending [H] and [D] flying!</span>")
-		else
-			visible_message("<span class='danger'>[src] crashes into [M], sending [H] flying!</span>")
-		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+		if(t5 < 30) // If T5 (T5 identifier) is less than 30, execute as normal
+			var/mob/living/H = buckled_mobs[1]
+			var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
+			unbuckle_mob(H)
+			H.throw_at(throw_target, 2, 3)
+			H.Knockdown(100)
+			H.adjustStaminaLoss(40)
+			if(isliving(M)) //T5 wheelchairs have fucking proper seatbelts, so no getting yeeted while crunching people!
+				var/mob/living/D = M
+				throw_target = get_edge_target_turf(D, pick(GLOB.cardinals))
+				D.throw_at(throw_target, 2, 3)
+				D.Knockdown(80)
+				D.adjustStaminaLoss(35)
+				visible_message("<span class='danger'>[src] crashes into [M], sending [H] and [D] flying!</span>")
+			else
+				visible_message("<span class='danger'>[src] crashes into [M], sending [H] flying!</span>")
+			playsound(src, 'sound/effects/bang.ogg', 50, 1)
+		else //If T5 is greater than 30, run that fucker over!
+			if(isliving(M))
+				RunOver(M)
 		
 /obj/vehicle/ridden/wheelchair/motorized/emag_act(mob/user)
 	if((obj_flags & EMAGGED) || !panel_open)
