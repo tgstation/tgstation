@@ -4,6 +4,8 @@
  * You can subscribe using console.__subscribe__(fn) to handle
  * incoming log messages, otherwise they will be simply lost.
  */
+
+/* eslint-disable */
 (function () {
 
 // Ignore user agents with console.

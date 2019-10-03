@@ -1,9 +1,9 @@
 import { act } from 'byond';
 import { Fragment } from 'inferno';
+import { fixed } from 'math';
 import { decodeHtmlEntities } from 'string-tools';
 import { Box, Button, Flex, LabeledList, NoticeBox, Section } from '../components';
 import { createLogger } from '../logging';
-import { fixed } from '../math';
 
 const logger = createLogger('AirAlarm');
 

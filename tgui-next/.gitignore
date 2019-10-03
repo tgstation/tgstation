@@ -1,4 +1,3 @@
 node_modules
-/packages/tgui/public/bundles/*
-!/packages/tgui/public/bundles/*.chunk.*
-!/packages/tgui/public/bundles/*.bundle.*
+*.log
+/packages/tgui/public/bundles/*.hot-update.*

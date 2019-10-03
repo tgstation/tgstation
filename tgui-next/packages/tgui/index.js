@@ -2,15 +2,15 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import './polyfills';
 
-import { act } from 'byond';
+import { act, tridentVersion } from 'byond';
 import { loadCSS } from 'fg-loadcss';
 import { render } from 'inferno';
+import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { backendUpdate } from './backend';
 import { setupDrag } from './drag';
 import { getRoute, Layout } from './layout';
 import { createLogger } from './logging';
 import { createStore } from './store';
-import { setupHotReloading } from 'tgui-dev-server/client';
 
 const logger = createLogger();
 const store = createStore();
@@ -47,7 +47,12 @@ const setupApp = () => {
   // Determine if we can handle this route
   const route = getRoute(state.config && state.config.interface);
   if (!route) {
-    // Load old TGUI
+    // Load old TGUI using redirection method for IE8
+    if (tridentVersion <= 4) {
+      location.href = 'tgui-fallback.html?ref=' + ref;
+      return;
+    }
+    // Load old TGUI by injecting new scripts
     loadCSS('tgui.css');
     const head = document.getElementsByTagName('head')[0];
     const script = document.createElement('script');
@@ -82,7 +87,7 @@ const setupApp = () => {
   };
 
   // Render the app
-  if (stateJson !== '{}') {
+  if (state.config) {
     logger.log('Found inlined state');
     store.dispatch(backendUpdate(state));
   }

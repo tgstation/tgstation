@@ -4,7 +4,7 @@
     "packages/*"
   ],
   "scripts": {
-    "watch": "cd packages/tgui-dev-server && node --experimental-modules server.js",
+    "watch": "cd packages/tgui-dev-server && node --experimental-modules index.js",
     "build": "cd packages/tgui && webpack --mode=production",
     "analyze": "cd packages/tgui && webpack --mode=production --env.analyze=1",
     "lint": "eslint packages"

@@ -1,3 +1,21 @@
+/**
+ * Version of Trident engine used in Internet Explorer.
+ *
+ * - IE 8 - Trident 4.0
+ * - IE 11 - Trident 7.0
+ *
+ * @return An integer number or 'null' if this is not a trident engine.
+ */
+export const tridentVersion = (() => {
+  const { userAgent } = navigator;
+  const groups = userAgent.match(/Trident\/(\d+).+?;/i);
+  const majorVersion = groups[1];
+  if (!majorVersion) {
+    return null;
+  }
+  return parseInt(majorVersion, 10);
+})();
+
 const buildQueryString = obj => Object.keys(obj)
   .map(key => encodeURIComponent(key)
     + '=' + encodeURIComponent(obj[key]))
@@ -7,7 +25,7 @@ const buildQueryString = obj => Object.keys(obj)
  * Helper to generate a BYOND href given 'params' as an object
  * (with an optional 'url' for eg winset).
  */
-export const href = (url, params = {}) => {
+const href = (url, params = {}) => {
   return 'byond://' + url + '?' + buildQueryString(params);
 };
 
@@ -37,31 +55,22 @@ export const callByondAsync = (url, params = {}) => {
   return promise;
 };
 
-// Helper to make a BYOND ui_act() call on the UI 'src' given an 'action'
-// and optional 'params'.
-export const act = (src, action, params = {}) =>
-  callByond('', { src, action, ...params });
-
+/**
+ * Literally types a command on the client.
+ */
 export const runCommand = command => callByond('winset', { command });
 
 /**
- * A simple debug print.
- *
- * TODO: Find a better way to debug print.
- * Right now we just print into the game chat.
+ * Helper to make a BYOND ui_act() call on the UI 'src' given an 'action'
+ * and optional 'params'.
  */
-export const debugPrint = (...args) => {
-  const str = args
-    .map(arg => {
-      if (typeof arg === 'string') {
-        return arg;
-      }
-      return JSON.stringify(arg);
-    })
-    .join(' ');
-  return runCommand('Me [debugPrint] ' + str);
+export const act = (src, action, params = {}) => {
+  return callByond('', { src, action, ...params });
 };
 
+/**
+ * Calls 'winget' on window, retrieving value by the 'key'.
+ */
 export const winget = async (win, key) => {
   const obj = await callByondAsync('winget', {
     id: win,
@@ -70,7 +79,9 @@ export const winget = async (win, key) => {
   return obj[key];
 };
 
-// Helper to make a BYOND winset() call on 'window', setting 'key' to 'value'
+/**
+ * Calls 'winset' on window, setting 'key' to 'value'.
+ */
 export const winset = (win, key, value) => callByond('winset', {
   [`${win}.${key}`]: value,
 });

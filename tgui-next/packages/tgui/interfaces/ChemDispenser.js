@@ -1,8 +1,8 @@
 import { act } from 'byond';
 import { Fragment } from 'inferno';
+import { fixed } from 'math';
 import { toTitleCase } from 'string-tools';
 import { AnimatedNumber, Box, Button, Icon, LabeledList, ProgressBar, Section } from '../components';
-import { fixed } from '../math';
 
 export const ChemDispenser = props => {
   const { state } = props;

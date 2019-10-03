@@ -11,37 +11,25 @@ yarn install
 
 run-webpack() {
   cd "${base_dir}/packages/tgui"
-  rm -rf public/bundles
   exec webpack "${@}"
 }
 
 ## Run a development server
 if [[ ${1} == "--dev" ]]; then
+  shift
   cd "${base_dir}/packages/tgui-dev-server"
-  rm -rf public/bundles
-  exec node --experimental-modules server.js
+  exec node --experimental-modules index.js "${@}"
 fi
 
 ## Run a linter through all packages
 if [[ ${1} == '--lint' ]]; then
-  lint_paths=(
-    './packages/byond/*.js'
-    './packages/functional/*.js'
-    './packages/logging/*.js'
-    './packages/react-tools/*.js'
-    './packages/string-tools/*.js'
-    './packages/tgui/components/**/*.js'
-    './packages/tgui/interfaces/**/*.js'
-    './packages/tgui/*.js'
-    './packages/tgui-dev-server/*.js'
-  )
   shift
-  exec eslint "${lint_paths[@]}" "${@}"
+  exec eslint ./packages "${@}"
 fi
 
 ## Analyze the bundle
 if [[ ${1} == '--analyze' ]]; then
-  run-webpack --mode=production --env.analyze=1
+  run-webpack --mode=production --analyze
 fi
 
 ## Make a production webpack build

@@ -1,2 +1,5 @@
 /**/node_modules
 /**/*.bundle.*
+/**/*.chunk.*
+/**/*.hot-update.*
+/packages/tgui/public/shim-*.js

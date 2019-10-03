@@ -1,4 +1,4 @@
-import { sendLogEntry } from 'tgui-dev-server/client';
+import { sendLogEntry } from 'tgui-dev-server/link/client';
 
 const log = (ns, ...args) => {
   // Send logs to a remote log collector

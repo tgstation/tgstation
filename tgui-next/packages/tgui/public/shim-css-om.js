@@ -1,5 +1,10 @@
-// Adapted from: https://github.com/shawnbot/aight
-/* CSS Object Model patches */
+/**
+ * CSS Object Model patches
+ *
+ * Adapted from: https://github.com/shawnbot/aight
+ */
+
+/* eslint-disable */
 (function(Proto) {
 
   function toAttr(prop) {

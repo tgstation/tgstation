@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 
 <!-- Styles -->
-<link rel="stylesheet" href="tgui.bundle.css">
+<link rel="stylesheet" type="text/css" href="tgui.bundle.css">
 
 <!-- This is processed in byond, so interfaces can override the
   html head if needed, for custom sheets of style etc. -->
@@ -23,34 +23,17 @@
 
 <!-- Scripts -->
 <script type="text/javascript">
-// Hobo debugging solution for IE8
-// window.debugPrint = function (obj) {
-//   var req = new XMLHttpRequest();
-//   req.open('POST', 'http://127.0.0.1:65000', true);
-//   var str;
-//   try {
-//     str = JSON.stringify(obj)
-//   }
-//   catch (err) {
-//     str = err.message;
-//   }
-//   req.send(str);
-// };
 // Global error handling
 window.onerror = function (msg, url, line, col, error) {
-  document.write(msg + ' (' + url + ' line ' + line + ' col ' + col + ')');
+  document.write(msg + ' (' + url + ' line ' + line + ')');
 };
 </script>
-<!--[if lt IE 9]>
 <script type="text/javascript" src="shim-console.js"></script>
-<script type="text/javascript" src="shim-html5shiv.js"></script>
-<script type="text/javascript" src="shim-ie8.js"></script>
-<![endif]-->
-<script type="text/javascript" src="shim-dom4.js"></script>
-<!--[if lt IE 9]>
-<script type="text/javascript" src="shim-css-om.js"></script>
-<![endif]-->
-<script defer type="text/javascript" src="tgui.bundle.js"></script>
+<script type="text/javascript" defer src="shim-html5shiv.js"></script>
+<script type="text/javascript" defer src="shim-ie8.js"></script>
+<script type="text/javascript" defer src="shim-dom4.js"></script>
+<script type="text/javascript" defer src="shim-css-om.js"></script>
+<script type="text/javascript" defer src="tgui.bundle.js"></script>
 
 <noscript>
   <div class="NoticeBox">

@@ -1,70 +1,41 @@
 import fs from 'fs';
 import glob from 'glob';
-import { createLogger, directLog } from 'logging';
+import { createLogger } from 'logging';
 import { createRequire } from 'module';
 import os from 'os';
 import path from 'path';
 import util from 'util';
 import webpack from 'webpack';
-import WebSocket from 'ws';
+import { broadcastMessage, setupLink } from './link/server.js';
 
-const logger = createLogger('server');
+const WEBPACK_HMR_ENABLED = process.platform === 'win32'
+  || process.argv.includes('--hot');
 
 const setupServer = async () => {
-  const port = 3000;
-  const wss = new WebSocket.Server({ port });
-
-  setupClientEndpoint(wss);
-  await setupWebpack(wss);
-
-  logger.log(`listening on port ${port}`);
-  return { wss };
-};
-
-const broadcastMessage = (wss, msg) => {
-  const clients = [...wss.clients];
-  logger.log(`broadcasting ${msg.type} to ${clients.length} clients`);
-  for (let client of clients) {
-    const json = JSON.stringify(msg);
-    client.send(json);
-  }
-};
-
-const setupClientEndpoint = wss => {
-  wss.on('connection', ws => {
-    logger.log('client connected');
-
-    ws.on('message', msg => {
-      const { type, payload } = JSON.parse(msg);
-      if (type === 'log') {
-        const { ns, args } = payload;
-        directLog(ns, ...args);
-        return;
-      }
-    });
-
-    ws.on('close', () => {
-      logger.log('client disconnected');
-    });
-  });
+  const link = setupLink();
+  await setupWebpack(link);
 };
 
 const getWebpackConfig = async () => {
+  const logger = createLogger('webpack');
   const require = createRequire(import.meta.url);
   const createConfig = await require('tgui/webpack.config.js');
   const config = createConfig({}, {
     mode: 'development',
+    // Enable hot module reloading only on Windows.
+    hot: WEBPACK_HMR_ENABLED,
   });
+  if (!WEBPACK_HMR_ENABLED) {
+    logger.log('hot module reloading is disabled');
+  }
   return config;
 };
 
-const setupWebpack = async wss => {
+const setupWebpack = async link => {
   const logger = createLogger('webpack');
   logger.log('setting up');
   const config = await getWebpackConfig();
   const bundleDir = config.output.path;
-  // Add HMR webpack plugin
-  config.plugins.push(new webpack.HotModuleReplacementPlugin());
   // Instantiate the compiler
   const compiler = webpack(config);
   // Clear garbage before compiling
@@ -79,9 +50,11 @@ const setupWebpack = async wss => {
   compiler.hooks.done.tap('tgui-dev-server', async stats => {
     await reloadByondCache(bundleDir);
     // Notify all clients that update has happened
-    broadcastMessage(wss, {
-      type: 'hotUpdate',
-    });
+    if (WEBPACK_HMR_ENABLED) {
+      broadcastMessage(link, {
+        type: 'hotUpdate',
+      });
+    }
   });
   // Start watching
   logger.log('watching for changes');
@@ -101,17 +74,27 @@ const resolvePath = (...sections) => {
   return util.promisify(glob)(path.resolve(...sections));
 };
 
+const CACHE_PATTERN = './BYOND/cache/tmp*';
+
 const reloadByondCache = async bundleDir => {
   const logger = createLogger('reloader');
-  // First asterisk is an unknown location of "Documents" folder,
-  // since it can be localized by the OS.
-  const cacheDirs = await resolvePath(os.homedir(), './*/BYOND/cache/tmp*');
+  // Find BYOND cache folders
+  const cacheDirs = [
+    // Windows 10
+    ...(await resolvePath(os.homedir(), '*', CACHE_PATTERN)),
+    // Standard Wine setup
+    ...(await resolvePath(os.homedir(),
+      '.wine/drive_c/users/*/*',
+      CACHE_PATTERN)),
+    // Standard Lutris setup
+    ...(await resolvePath(os.homedir(),
+      'Games/byond/drive_c/users/*/*',
+      CACHE_PATTERN)),
+  ];
   if (cacheDirs.length === 0) {
     logger.log('found no cache directories');
     return;
   }
-  // Start the actual reloading
-  const assets = await resolvePath(bundleDir, './*.+(bundle|hot-update).*');
   // Clear garbage
   for (let cacheDir of cacheDirs) {
     const garbage = await resolvePath(cacheDir, './*.+(bundle|hot-update).*');
@@ -120,12 +103,13 @@ const reloadByondCache = async bundleDir => {
     }
   }
   // Copy assets
+  const assets = await resolvePath(bundleDir, './*.+(bundle|hot-update).*');
   for (let cacheDir of cacheDirs) {
     for (let asset of assets) {
       const destination = path.resolve(cacheDir, path.basename(asset));
       await util.promisify(fs.copyFile)(asset, destination);
     }
-    logger.log(`copied ${assets.length} files to ${cacheDir}`);
+    logger.log(`copied ${assets.length} files to '${cacheDir}'`);
   }
 };
 

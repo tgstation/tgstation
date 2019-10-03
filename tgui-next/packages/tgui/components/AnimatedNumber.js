@@ -1,5 +1,5 @@
 import { Component } from 'inferno';
-import { fixed } from '../math';
+import { fixed } from 'math';
 
 const FPS = 20;
 const Q = 0.5;

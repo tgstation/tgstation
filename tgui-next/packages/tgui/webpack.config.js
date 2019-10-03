@@ -58,13 +58,13 @@ module.exports = (env = {}, argv) => {
             {
               loader: ExtractCssChunks.loader,
               options: {
-                // hot: true,
+                hot: argv.hot,
               },
             },
             {
               loader: 'css-loader',
               options: {
-                // url: false,
+                url: false,
               },
             },
             'sass-loader',
@@ -76,13 +76,13 @@ module.exports = (env = {}, argv) => {
             {
               loader: ExtractCssChunks.loader,
               options: {
-                // hot: true,
+                hot: argv.hot,
               },
             },
             {
               loader: 'css-loader',
               options: {
-                // url: false,
+                url: false,
               },
             },
           ],
@@ -112,6 +112,7 @@ module.exports = (env = {}, argv) => {
       ],
     },
     optimization: {
+      noEmitOnErrors: true,
       // splitChunks: {
       //   cacheGroups: {
       //     commons: {
@@ -125,6 +126,7 @@ module.exports = (env = {}, argv) => {
     plugins: [
       new webpack.EnvironmentPlugin({
         NODE_ENV: env.NODE_ENV || argv.mode || 'development',
+        WEBPACK_HMR_ENABLED: argv.hot,
       }),
       new ExtractCssChunks({
         filename: '[name].bundle.css',
@@ -135,7 +137,7 @@ module.exports = (env = {}, argv) => {
   };
 
   // Add a bundle analyzer to the plugins array
-  if (env.analyze) {
+  if (argv.analyze) {
     const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
     config.plugins = [
       ...config.plugins,
@@ -153,17 +155,18 @@ module.exports = (env = {}, argv) => {
       hints: false,
     };
     config.optimization.minimizer = [
-      // new TerserPlugin({
-      //   extractComments: false,
-      //   terserOptions: {
-      //     ie8: true,
-      //     output: {
-      //       ascii_only: true,
-      //       beautify: true,
-      //       indent_level: 2,
-      //     },
-      //   },
-      // }),
+      new TerserPlugin({
+        extractComments: false,
+        terserOptions: {
+          ie8: true,
+          // mangle: false,
+          output: {
+            ascii_only: true,
+            // beautify: true,
+            // indent_level: 2,
+          },
+        },
+      }),
     ];
     config.plugins = [
       ...config.plugins,
@@ -188,18 +191,12 @@ module.exports = (env = {}, argv) => {
       ...config.plugins,
       new BuildNotifierPlugin(),
     ];
+    if (argv.hot) {
+      config.plugins.push(new webpack.HotModuleReplacementPlugin());
+    }
     // config.devtool = 'cheap-module-source-map';
     config.devtool = false;
     config.devServer = {
-      // // Mandatory settings
-      // port: 3000,
-      // publicPath: '/bundles/',
-      // contentBase: 'public',
-      // historyApiFallback: {
-      //   index: '/index.html',
-      // },
-      // // Hot module replacement
-      // hotOnly: true,
       // Informational flags
       progress: false,
       quiet: false,
