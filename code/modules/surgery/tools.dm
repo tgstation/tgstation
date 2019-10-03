@@ -258,7 +258,7 @@
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, TRUE)
 	if(tool_behaviour == TOOL_SCALPEL)
 		tool_behaviour = TOOL_SAW
-		to_chat(user, "<span class='notice'>You incease the power of [src], now it can cut bones.</span>")
+		to_chat(user, "<span class='notice'>You increase the power of [src], now it can cut bones.</span>")
 		set_light(2)
 		force += 1 //we don't want to ruin sharpened stuff
 		icon_state = "saw_a"
