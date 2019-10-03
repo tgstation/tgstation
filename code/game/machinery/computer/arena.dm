@@ -58,6 +58,10 @@
 	var/start_time
 	var/list/countdowns = list() //List of countdown effects ticking down to start
 
+	//Sound played when the fight starts.
+	var/start_sound = 'sound/items/airhorn2.ogg'
+	var/start_sound_volume = 50
+
 /obj/machinery/computer/arena/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 	LoadDefaultArenas()
@@ -251,7 +255,10 @@
 /obj/machinery/computer/arena/proc/begin()
 	ready_to_spawn = FALSE
 	set_doors(closed = FALSE)
-	//I guess could add some sound here
+	if(start_sound)
+		for(var/team in teams)
+			var/obj/machinery/arena_spawn/A = get_spawn(team)
+			playsound(A,start_sound, start_sound_volume)
 	for(var/mob/M in all_contestants())
 		to_chat(M,"<span class='userdanger'>START!</span>")
 	//Clean up the countdowns
