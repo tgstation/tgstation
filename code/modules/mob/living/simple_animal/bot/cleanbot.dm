@@ -229,6 +229,7 @@
 		visible_message("<span class='danger'>[src] sprays hydrofluoric acid at [A]!</span>")
 		playsound(src, 'sound/effects/spray2.ogg', 50, TRUE, -6)
 		A.acid_act(75, 10)
+		target = null
 	else if(istype(A, /mob/living/simple_animal/cockroach) || istype(A, /mob/living/simple_animal/mouse))
 		var/mob/living/simple_animal/M = target
 		if(!M.stat)
@@ -279,7 +280,6 @@
 
 /obj/machinery/bot_core/cleanbot
 	req_one_access = list(ACCESS_JANITOR, ACCESS_ROBOTICS)
-
 
 /mob/living/simple_animal/bot/cleanbot/get_controls(mob/user)
 	var/dat
