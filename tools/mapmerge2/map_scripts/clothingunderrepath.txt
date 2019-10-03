@@ -51,7 +51,6 @@
 /obj/item/clothing/under/schoolgirl/orange : /obj/item/clothing/under/costume/schoolgirl/orange
 /obj/item/clothing/under/pirate : /obj/item/clothing/under/costume/pirate
 /obj/item/clothing/under/soviet : /obj/item/clothing/under/costume/soviet
-/obj/item/clothing/under/redcoat : /obj/item/clothing/under/costume/redcoat
 /obj/item/clothing/under/kilt : /obj/item/clothing/under/costume/kilt
 /obj/item/clothing/under/kilt/highlander : /obj/item/clothing/under/costume/kilt/highlander
 /obj/item/clothing/under/gladiator : /obj/item/clothing/under/costume/gladiator

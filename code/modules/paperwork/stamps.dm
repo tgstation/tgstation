@@ -56,11 +56,6 @@
 	icon_state = "stamp-cmo"
 	dye_color = DYE_CMO
 
-/obj/item/stamp/denied
-	name = "\improper DENIED rubber stamp"
-	icon_state = "stamp-deny"
-	dye_color = DYE_REDCOAT
-
 /obj/item/stamp/clown
 	name = "clown's rubber stamp"
 	icon_state = "stamp-clown"
