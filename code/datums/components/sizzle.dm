@@ -18,7 +18,6 @@
 		food.cut_overlay(sizzleicon)
 	grillmarks.Blend("#fff", ICON_ADD) 	//fills the icon_state with white (except where it's transparent)
 	grillmarks.Blend(icon('icons/obj/kitchen.dmi', "grillmarks"), ICON_MULTIPLY) //adds grill marks and the remaining white areas become transparent
-	sizzling = grillmarks
 	sizzling.alpha = sizzlealpha
+	sizzling = grillmarks
 	food.add_overlay(sizzling)
-
