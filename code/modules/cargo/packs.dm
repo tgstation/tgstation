@@ -424,7 +424,7 @@
 					/obj/item/clothing/suit/armor/bulletproof,
 					/obj/item/clothing/suit/armor/bulletproof)
 	crate_name = "bulletproof armor crate"
-	
+
 /datum/supply_pack/security/armory/bullethelmets
 	name = "Bulletproof Helmets Crate"
 	desc = "Contains three bulletproof helmets. Requires Armory access to open."
@@ -803,6 +803,22 @@
 	cost = 1500
 	contains = list(/obj/item/vending_refill/engivend)
 	crate_name = "engineering supply crate"
+
+/datum/supply_pack/engineering/portapump
+	name = "Portable Air Pump Crate"
+	desc = "Did someone let the air out of the shuttle again? We've got you covered. Contains two portable air pumps."
+	cost = 2500
+	contains = list(/obj/machinery/portable_atmospherics/pump,
+					/obj/machinery/portable_atmospherics/pump)
+	crate_name = "portable air pump crate"
+
+/datum/supply_pack/engineering/portascrubber
+	name = "Portable Scrubber Crate"
+	desc = "Clean up that pesky plasma leak with your very own set of two portable scrubbers."
+	cost = 2500
+	contains = list(/obj/machinery/portable_atmospherics/scrubber,
+					/obj/machinery/portable_atmospherics/scrubber)
+	crate_name = "portable scrubber crate"
 
 /datum/supply_pack/engineering/bsa
 	name = "Bluespace Artillery Parts"
