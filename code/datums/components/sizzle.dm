@@ -1,6 +1,6 @@
 /datum/component/sizzle
 	var/mutable_appearance/sizzling
-	var/sizzlealpha = 0
+	var/sizzlealpha = 5
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
 /datum/component/sizzle/Initialize()
@@ -9,7 +9,7 @@
 	setup_sizzle()
 
 /datum/component/sizzle/InheritComponent(datum/component/C, i_am_original)
-	sizzlealpha = 5
+	sizzlealpha += 5
 
 /datum/component/sizzle/proc/setup_sizzle()
 	var/atom/food = parent
