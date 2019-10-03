@@ -122,7 +122,7 @@
 	materials = list(/datum/material/iron= 180, /datum/material/glass = 180, /datum/material/uranium = 90, /datum/material/diamond = 90)
 
 /obj/item/stock_parts/matter_bin/quantumbin
-	name = "entangled matter bin"
+	name = "quantum entangled matter bin"
 	desc = "A bluespace matter bin that makes use of entangled particles to store states of materials as energy."
 	icon_state = "quantumbin"
 	icon = 'icons/Fulpicons/quantumcell_fulp.dmi'
