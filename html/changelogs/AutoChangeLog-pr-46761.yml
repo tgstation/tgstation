@@ -1,0 +1,5 @@
+author: "actioninja"
+delete-after: True
+changes: 
+  - rscadd: "Cable layers, ctrl click on a cable coil to switch the layer you are placing on"
+  - rscadd: "Cable bridges can be used to connect layers or connect machines to layers other than yellow"

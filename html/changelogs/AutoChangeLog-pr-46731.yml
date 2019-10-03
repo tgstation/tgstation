@@ -1,0 +1,4 @@
+author: "Bumtickley00"
+delete-after: True
+changes: 
+  - rscadd: "Cryo cell shortcuts: alt-click toggles the doors, ctrl-click toggles the power"
