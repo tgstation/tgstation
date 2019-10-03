@@ -1,4 +1,4 @@
-import { flow } from 'functional';
+import { flow } from 'common/fp';
 import { backendReducer } from './backend';
 import { toastReducer } from './components/Toast';
 import { createLogger } from './logging';

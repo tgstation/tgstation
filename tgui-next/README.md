@@ -37,10 +37,21 @@ highlights differences with React.
 You will need these programs to start developing in frontend:
 
 - [Node 12.x](https://nodejs.org)
-- [Yarn](https://yarnpkg.com)
 - [MSys2](https://www.msys2.org/) (optional)
 
+> MSys2 closely replicates a unix-like environment which might be useful
+> for some users. It comes with a robust "mintty" terminal emulator, which
+> is better than any standard Windows shell, and you can install "git"
+> and a text editor as well, for a full boomer experience.
+
 ## Workflow
+
+Run `npm install`, then:
+
+- `npm run build` - build the project in production mode
+- `npm run watch` - launch a development server
+- `npm run lint` - show and fix potential problems with the code
+- `npm run analyze` - run a bundle analyzer
 
 For MSys2 or Linux/Mac users:
 
@@ -49,14 +60,10 @@ For MSys2 or Linux/Mac users:
 - `./build.sh --lint` - show and fix potential problems the with code
 - `./build.sh --analyze` - run a bundle analyzer
 
-For everyone else:
-
-Run `yarn install`, then:
-
-- `yarn run build` - build the project in production mode
-- `yarn run watch` - launch a development server
-- `yarn run lint` - show and fix potential problems with the code
-- `yarn run analyze` - run a bundle analyzer
+Remember to always run a full build before submitting a PR. It creates
+a compressed javascript bundle which is then referenced from DM code.
+We prefer to keep it version controlled, so that people could build the
+game only with Dream Maker.
 
 ## Project structure
 

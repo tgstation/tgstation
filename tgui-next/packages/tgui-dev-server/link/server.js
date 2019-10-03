@@ -1,5 +1,5 @@
+import { createLogger, directLog } from 'common/logging.js';
 import http from 'http';
-import { createLogger, directLog } from 'logging';
 import WebSocket from 'ws';
 
 const logger = createLogger('link');

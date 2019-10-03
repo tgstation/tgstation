@@ -1,4 +1,4 @@
-import { classes } from 'react-tools';
+import { classes } from 'common/react';
 import { Box } from './Box';
 
 export const computeFlexProps = props => {

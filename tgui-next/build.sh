@@ -7,12 +7,22 @@ base_dir="$(pwd)"
 ## Add locally installed node programs to path
 PATH="${PATH}:node_modules/.bin"
 
-yarn install
-
 run-webpack() {
   cd "${base_dir}/packages/tgui"
   exec webpack "${@}"
 }
+
+## Mr. Proper
+if [[ ${1} == "--clean" ]]; then
+  shopt -s globstar
+  rm -rf **/node_modules
+  exit 0
+fi
+
+## Install dependencies
+if [[ ! -e node_modules ]]; then
+  npm install
+fi
 
 ## Run a development server
 if [[ ${1} == "--dev" ]]; then

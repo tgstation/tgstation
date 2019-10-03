@@ -1,4 +1,4 @@
-import { classes } from 'react-tools';
+import { classes } from 'common/react';
 
 export const ProgressBar = props => {
   const { value, content, color, children } = props;

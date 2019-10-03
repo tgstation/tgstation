@@ -1,6 +1,6 @@
+import { classes } from 'common/react';
 import { createVNode } from 'inferno';
 import { ChildFlags, VNodeFlags } from 'inferno-vnode-flags';
-import { classes } from 'react-tools';
 
 const REM_PX = 12;
 const REM_PER_INTEGER = 0.5;

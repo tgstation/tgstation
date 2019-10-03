@@ -1,4 +1,4 @@
-import { classes } from 'react-tools';
+import { classes } from 'common/react';
 
 export const Section = props => {
   const { title, level = 1, buttons, children } = props;

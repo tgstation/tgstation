@@ -1,7 +1,7 @@
-import { act } from 'byond';
+import { fixed } from 'common/math';
+import { toTitleCase } from 'common/string';
 import { Fragment } from 'inferno';
-import { fixed } from 'math';
-import { toTitleCase } from 'string-tools';
+import { act } from '../byond';
 import { AnimatedNumber, Box, Button, Icon, LabeledList, ProgressBar, Section } from '../components';
 
 export const ChemDispenser = props => {

@@ -126,7 +126,7 @@ module.exports = (env = {}, argv) => {
     plugins: [
       new webpack.EnvironmentPlugin({
         NODE_ENV: env.NODE_ENV || argv.mode || 'development',
-        WEBPACK_HMR_ENABLED: argv.hot,
+        WEBPACK_HMR_ENABLED: argv.hot || false,
       }),
       new ExtractCssChunks({
         filename: '[name].bundle.css',

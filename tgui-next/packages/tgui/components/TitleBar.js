@@ -1,4 +1,4 @@
-import { classes } from 'react-tools';
+import { classes } from 'common/react';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
 import { Icon } from './Icon';
 

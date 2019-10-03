@@ -2,11 +2,11 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import './polyfills';
 
-import { act, tridentVersion } from 'byond';
 import { loadCSS } from 'fg-loadcss';
 import { render } from 'inferno';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { backendUpdate } from './backend';
+import { act, tridentVersion } from './byond';
 import { setupDrag } from './drag';
 import { getRoute, Layout } from './layout';
 import { createLogger } from './logging';

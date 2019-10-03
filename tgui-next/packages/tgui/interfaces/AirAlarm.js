@@ -1,7 +1,7 @@
-import { act } from 'byond';
+import { fixed } from 'common/math';
+import { decodeHtmlEntities } from 'common/string';
 import { Fragment } from 'inferno';
-import { fixed } from 'math';
-import { decodeHtmlEntities } from 'string-tools';
+import { act } from '../byond';
 import { Box, Button, Flex, LabeledList, NoticeBox, Section } from '../components';
 import { createLogger } from '../logging';
 

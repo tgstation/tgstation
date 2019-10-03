@@ -1,5 +1,5 @@
-import { act } from 'byond';
 import { Fragment } from 'inferno';
+import { act } from '../byond';
 import { Box, Button, Section } from '../components';
 import { createLogger } from '../logging';
 

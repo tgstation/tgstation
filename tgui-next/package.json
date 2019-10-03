@@ -1,5 +1,7 @@
 {
   "private": true,
+  "name": "tgui-next",
+  "version": "0.1.0",
   "workspaces": [
     "packages/*"
   ],
@@ -7,10 +9,12 @@
     "watch": "cd packages/tgui-dev-server && node --experimental-modules index.js",
     "build": "cd packages/tgui && webpack --mode=production",
     "analyze": "cd packages/tgui && webpack --mode=production --env.analyze=1",
-    "lint": "eslint packages"
+    "lint": "eslint packages",
+    "postinstall": "lerna bootstrap --hoist --no-ci"
   },
   "dependencies": {
     "babel-eslint": "^10.0.3",
-    "eslint": "^6.4.0"
+    "eslint": "^6.4.0",
+    "lerna": "^3.16.4"
   }
 }

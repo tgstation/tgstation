@@ -1,3 +1,5 @@
+import { buildQueryString } from 'common/string';
+
 /**
  * Version of Trident engine used in Internet Explorer.
  *
@@ -15,11 +17,6 @@ export const tridentVersion = (() => {
   }
   return parseInt(majorVersion, 10);
 })();
-
-const buildQueryString = obj => Object.keys(obj)
-  .map(key => encodeURIComponent(key)
-    + '=' + encodeURIComponent(obj[key]))
-  .join('&');
 
 /**
  * Helper to generate a BYOND href given 'params' as an object

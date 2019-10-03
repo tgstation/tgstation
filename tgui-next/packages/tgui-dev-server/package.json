@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "type": "module",
   "dependencies": {
+    "common": "0.1.0",
     "glob": "^7.1.4",
     "ws": "^7.1.2"
   }

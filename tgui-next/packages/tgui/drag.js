@@ -1,4 +1,4 @@
-import { winset, winget } from 'byond';
+import { winset, winget } from './byond';
 import { createLogger } from './logging';
 
 const logger = createLogger('drag');

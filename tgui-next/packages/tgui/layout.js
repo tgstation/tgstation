@@ -1,13 +1,13 @@
-import { decodeHtmlEntities } from 'string-tools';
+import { decodeHtmlEntities } from 'common/string';
 import { Box, TitleBar } from './components';
 import { dragStartHandler, resizeStartHandler } from './drag';
 import { AirAlarm } from './interfaces/AirAlarm';
 import { Acclimator } from './interfaces/Acclimator';
 import { AIAirlock } from './interfaces/AIAirlock';
-import { winset, runCommand } from 'byond';
+import { winset, runCommand } from './byond';
 import { createLogger } from './logging';
 import { UI_INTERACTIVE } from './constants';
-import { classes } from 'react-tools';
+import { classes } from 'common/react';
 import { Toast } from './components/Toast';
 import { ChemDispenser } from './interfaces/ChemDispenser';
 

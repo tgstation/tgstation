@@ -1,5 +1,5 @@
-import { act } from 'byond';
 import { Fragment } from 'inferno';
+import { act } from '../byond';
 import { Button, LabeledList, Section } from '../components';
 
 export const AIAirlock = props => {

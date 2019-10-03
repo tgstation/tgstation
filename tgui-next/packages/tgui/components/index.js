@@ -1,3 +1,4 @@
+export { AnimatedNumber } from './AnimatedNumber';
 export { Box } from './Box';
 export { Button } from './Button';
 export { Flex } from './Flex';
@@ -8,4 +9,3 @@ export { ProgressBar } from './ProgressBar';
 export { Section } from './Section';
 export { TitleBar } from './TitleBar';
 export { Toast } from './Toast';
-export { AnimatedNumber } from './AnimatedNumber';

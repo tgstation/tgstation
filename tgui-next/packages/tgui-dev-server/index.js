@@ -1,6 +1,6 @@
+import { createLogger } from 'common/logging.js';
 import fs from 'fs';
 import glob from 'glob';
-import { createLogger } from 'logging';
 import { createRequire } from 'module';
 import os from 'os';
 import path from 'path';
@@ -19,7 +19,7 @@ const setupServer = async () => {
 const getWebpackConfig = async () => {
   const logger = createLogger('webpack');
   const require = createRequire(import.meta.url);
-  const createConfig = await require('tgui/webpack.config.js');
+  const createConfig = await require('../tgui/webpack.config.js');
   const config = createConfig({}, {
     mode: 'development',
     // Enable hot module reloading only on Windows.
