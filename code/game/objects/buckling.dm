@@ -22,9 +22,12 @@
 
 /atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
+	return mouse_buckle_handling(M, user)
+	
+/atom/movable/proc/mouse_buckle_handling(mob/living/M, mob/living/user)
 	if(can_buckle && istype(M) && istype(user))
 		if(user_buckle_mob(M, user))
-			return 1
+			return TRUE
 
 /atom/movable/proc/has_buckled_mobs()
 	if(!buckled_mobs)
