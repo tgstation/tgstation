@@ -1,0 +1,4 @@
+author: "stylemistake"
+delete-after: True
+changes: 
+  - bugfix: "Fix tgui on IE8 by applying es3ify globally"
