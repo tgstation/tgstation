@@ -109,11 +109,8 @@
 
 /obj/machinery/grill/attack_hand(mob/user)
 	if(grilled_item)
-		finish_grill()
 		to_chat(user, "<span class='notice'>You take out [grilled_item] from [src].</span>")
 		grilled_item.forceMove(drop_location())
-		user.put_in_hands(grilled_item)
-		grilled_item = null
 		update_icon()
 		grill_loop.stop()
 		grill_time = 0
