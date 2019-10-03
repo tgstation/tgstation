@@ -112,8 +112,6 @@
 		to_chat(user, "<span class='notice'>You take out [grilled_item] from [src].</span>")
 		grilled_item.forceMove(drop_location())
 		update_icon()
-		grill_loop.stop()
-		grill_time = 0
 		return
 	return ..()
 
@@ -132,8 +130,10 @@
 			grilled_item.foodtype |= FRIED
 		if(51 to INFINITY) //grill marks reach max alpha
 			grilled_item.name = "Powerfully Grilled [grilled_item.name]"
-			grilled_item.desc = "A very heavily-grilled [grilled_item.name]. Reminds you of your wife, wait, no, it's prettier!"
+			grilled_item.desc = "A [grilled_item.name]. Reminds you of your wife, wait, no, it's prettier!"
 			grilled_item.foodtype |= FRIED
+	grill_time = 0
+	grill_loop.stop()
 
 /obj/machinery/grill/unwrenched
 	anchored = FALSE
