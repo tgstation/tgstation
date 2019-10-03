@@ -28,12 +28,13 @@
 /obj/machinery/grill/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/sheet/mineral/coal) || istype(I, /obj/item/stack/sheet/mineral/wood))
 		var/obj/item/stack/S = I
+		var/stackamount = S.get_amount()
 		to_chat(user, "<span class='notice'>You put [S.amount] [I]s in [src].</span>")
 		if(istype(I, /obj/item/stack/sheet/mineral/coal))
-			add_fuel(500 * S.amount)
+			add_fuel(500 * S.stackamount)
 		else
-			add_fuel(50 * S.amount)
-		S.use(S.get_amount())
+			add_fuel(50 * S.stackamount)
+		S.use(stackamount)
 		return
 	if(I.resistance_flags & INDESTRUCTIBLE)
 		to_chat(user, "<span class='warning'>You don't feel it would be wise to grill [I]...</span>")
@@ -83,7 +84,8 @@
 /obj/machinery/grill/Exited(atom/movable/AM)
 	finish_grill()
 	..()
-	grilled_item = null
+	if(AM == grilled_item)
+		grilled_item = null
 
 /obj/machinery/grill/Destroy()
 	grilled_item = null
@@ -95,7 +97,7 @@
 
 /obj/machinery/grill/wrench_act(mob/living/user, obj/item/I)
 	default_unfasten_wrench(user, I)
-	return TRUE
+	..()
 
 /obj/machinery/grill/deconstruct(disassembled = TRUE)
 	finish_grill()
