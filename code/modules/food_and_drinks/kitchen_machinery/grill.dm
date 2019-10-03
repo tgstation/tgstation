@@ -31,9 +31,9 @@
 		var/stackamount = S.get_amount()
 		to_chat(user, "<span class='notice'>You put [S.amount] [I]s in [src].</span>")
 		if(istype(I, /obj/item/stack/sheet/mineral/coal))
-			add_fuel(500 * S.stackamount)
+			add_fuel(500 * stackamount)
 		else
-			add_fuel(50 * S.stackamount)
+			add_fuel(50 * stackamount)
 		S.use(stackamount)
 		return
 	if(I.resistance_flags & INDESTRUCTIBLE)
