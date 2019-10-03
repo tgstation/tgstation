@@ -47,7 +47,7 @@
 /*Suffix: -uri*/
 /datum/reagent/medicine/C2/lenturi
 	name = "Lenturi"
-	description = "Used to treat burns. Heals better when you are slower."
+	description = "Used to treat burns. Makes you move slower while it is in your system. Applies stomach damage when it leaves your system."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	var/resetting_probability = 0
