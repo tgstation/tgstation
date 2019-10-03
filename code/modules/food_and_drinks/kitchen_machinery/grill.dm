@@ -29,12 +29,13 @@
 	if(istype(I, /obj/item/stack/sheet/mineral/coal) || istype(I, /obj/item/stack/sheet/mineral/wood))
 		var/obj/item/stack/S = I
 		var/stackamount = S.get_amount()
-		to_chat(user, "<span class='notice'>You put [S.amount] [I]s in [src].</span>")
+		to_chat(user, "<span class='notice'>You put [stackamount] [I]s in [src].</span>")
 		if(istype(I, /obj/item/stack/sheet/mineral/coal))
-			add_fuel(500 * stackamount)
+			grill_fuel += (500 * stackamount)
 		else
-			add_fuel(50 * stackamount)
+			grill_fuel += (50 * stackamount)
 		S.use(stackamount)
+		update_icon()
 		return
 	if(I.resistance_flags & INDESTRUCTIBLE)
 		to_chat(user, "<span class='warning'>You don't feel it would be wise to grill [I]...</span>")
@@ -54,15 +55,12 @@
 				return
 		else
 			if(I.reagents.has_reagent(/datum/reagent/consumable/monkey_energy))
-				add_fuel(20 * (I.reagents.get_reagent_amount(/datum/reagent/consumable/monkey_energy)))
+				grill_fuel += (20 * (I.reagents.get_reagent_amount(/datum/reagent/consumable/monkey_energy)))
 				to_chat(user, "<span class='notice'>You pour the Monkey Energy in [src].</span>")
 				I.reagents.remove_reagent(/datum/reagent/consumable/monkey_energy, I.reagents.get_reagent_amount(/datum/reagent/consumable/monkey_energy))
+				update_icon()
 				return
 	..()
-
-/obj/machinery/grill/proc/add_fuel(amount)
-	grill_fuel += amount
-	update_icon()
 
 /obj/machinery/grill/process()
 	..()
