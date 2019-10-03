@@ -70,10 +70,7 @@
 
 	for (var/datum/reagent/reagent in my_atom.reagents.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
 		R.add_reagent(reagent.type, reagent.volume/3) //Seems fine? I think I fixed the infinite explosion bug.
-
-		if (reagent.purity < 0.6)
 			ImpureTot = (ImpureTot + (1-reagent.purity)) / 2
-
 	if(pH < 4) //if acidic, make acid spray
 		R.add_reagent("fermiAcid", (volume/3))
 	if(R.reagent_list)
