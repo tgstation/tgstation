@@ -957,17 +957,18 @@
 	else if(HAS_TRAIT(src, TRAIT_QUICK_CARRY))
 		carrydelay = 40
 		skills_space = "quickly"
-	if(carrydelay < 50)
-		visible_message("<span class='notice'>[src] starts [skills_space] lifting [target] onto their back..</span>",
-		//Joe Medic starts quickly/expertly lifting Grey Tider onto their back..
-		"<span class='notice'>[carrydelay < 35 ? "Using your gloves' nanochips, you" : "You"] [skills_space] start to lift [target] onto your back[carrydelay == 40 ? ", while assisted by the nanochips in your gloves.." : "..."]</span>")
-		//(Using your gloves' nanochips, you/You) ( /quickly/expertly) start to lift Grey Tider onto your back(, while assisted by the nanochips in your gloves../...)
-		if(do_after(src, carrydelay, TRUE, target))
-			//Second check to make sure they're still valid to be carried
-			if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
-				buckle_mob(target, TRUE, TRUE, 90, 1, 0)
-				return
-		visible_message("<span class='warning'>[src] fails to fireman carry [target]!")
+	if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
+		if(carrydelay < 50)
+			visible_message("<span class='notice'>[src] starts [skills_space] lifting [target] onto their back..</span>",
+			//Joe Medic starts quickly/expertly lifting Grey Tider onto their back..
+			"<span class='notice'>[carrydelay < 35 ? "Using your gloves' nanochips, you" : "You"] [skills_space] start to lift [target] onto your back[carrydelay == 40 ? ", while assisted by the nanochips in your gloves.." : "..."]</span>")
+			//(Using your gloves' nanochips, you/You) ( /quickly/expertly) start to lift Grey Tider onto your back(, while assisted by the nanochips in your gloves../...)
+			if(do_after(src, carrydelay, TRUE, target))
+				//Second check to make sure they're still valid to be carried
+				if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
+					buckle_mob(target, TRUE, TRUE, 90, 1, 0)
+					return
+			visible_message("<span class='warning'>[src] fails to fireman carry [target]!")
 	else
 		to_chat(src, "<span class='warning'>You can't fireman carry [target] while they're standing!</span>")
 

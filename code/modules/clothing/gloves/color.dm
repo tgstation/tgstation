@@ -156,7 +156,7 @@
 	if(slot == SLOT_GLOVES)
 		ADD_TRAIT(user, TRAIT_QUICKER_CARRY, CLOTHING_TRAIT)
 
-/obj/item/clothing/gloves/color/latex/dropped(mob/user)
+/obj/item/clothing/gloves/color/latex/nitrile/dropped(mob/user)
 	REMOVE_TRAIT(user, TRAIT_QUICKER_CARRY, CLOTHING_TRAIT)
 
 /obj/item/clothing/gloves/color/white
