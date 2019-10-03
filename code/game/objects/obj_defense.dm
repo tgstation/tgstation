@@ -132,7 +132,7 @@
 /obj/attack_slime(mob/living/simple_animal/slime/user)
 	if(!user.is_adult)
 		return
-	attack_generic(user, rand(10, 15), "melee", 1)
+	attack_generic(user, rand(10, 15), BRUTE, "melee", 1)
 
 /obj/mech_melee_attack(obj/mecha/M)
 	M.do_attack_animation(src)
@@ -240,7 +240,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
-			buckled_mob.electrocute_act((CLAMP(round(strength/400), 10, 90) + rand(-5, 5)), src, tesla_shock = 1)
+			buckled_mob.electrocute_act((CLAMP(round(strength/400), 10, 90) + rand(-5, 5)), src, flags = SHOCK_TESLA)
 
 /obj/proc/reset_shocked()
 	obj_flags &= ~BEING_SHOCKED

@@ -52,12 +52,6 @@
 	var/on_state = on && nodes[1] && nodes[2] && nodes[3] && is_operational()
 	icon_state = "mixer_[on_state ? "on" : "off"][flipped ? "_f" : ""]"
 
-/obj/machinery/atmospherics/components/trinary/mixer/power_change()
-	var/old_stat = stat
-	..()
-	if(stat != old_stat)
-		update_icon()
-
 /obj/machinery/atmospherics/components/trinary/mixer/New()
 	..()
 	var/datum/gas_mixture/air3 = airs[3]

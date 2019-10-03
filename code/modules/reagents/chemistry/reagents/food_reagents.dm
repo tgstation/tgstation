@@ -675,7 +675,7 @@
 	description = "The blood of Ethereals, and the stuff that keeps them going. Great for them, horrid for anyone else."
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#97ee63"
-	taste_description = "pure electrictiy"
+	taste_description = "pure electricity"
 
 /datum/reagent/consumable/liquidelectricity/reaction_mob(mob/living/M, method=TOUCH, reac_volume) //can't be on life because of the way blood works.
 	if((method == INGEST || method == INJECT || method == PATCH) && iscarbon(M))
@@ -709,7 +709,7 @@
 
 /datum/reagent/consumable/secretsauce
 	name = "Secret Sauce"
-	description = "What could it be."
+	description = "What could it be?"
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#792300"
 	taste_description = "indescribable"
@@ -728,7 +728,7 @@
 
 /datum/reagent/consumable/caramel
 	name = "Caramel"
-	description = "Who would have guessed that heating sugar is so delicious?"
+	description = "Who would have guessed that heated sugar could be so delicious?"
 	nutriment_factor = 10 * REAGENTS_METABOLISM
 	color = "#D98736"
 	taste_mult = 2

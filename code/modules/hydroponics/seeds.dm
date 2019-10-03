@@ -190,7 +190,7 @@
 		CRASH("[T] has no reagents.")
 
 	for(var/rid in reagents_add)
-		var/amount = 1 + round(potency * reagents_add[rid], 1)
+		var/amount = max(1, round(potency * reagents_add[rid], 1)) //the plant will always have at least 1u of each of the reagents in its reagent production traits
 
 		var/list/data = null
 		if(rid == /datum/reagent/blood) // Hack to make blood in plants always O-

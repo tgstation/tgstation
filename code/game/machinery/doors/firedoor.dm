@@ -76,11 +76,8 @@
 
 
 /obj/machinery/door/firedoor/power_change()
-	if(powered(power_channel))
-		stat &= ~NOPOWER
-		latetoggle()
-	else
-		stat |= NOPOWER
+	. = ..()
+	latetoggle()
 
 /obj/machinery/door/firedoor/attack_hand(mob/user)
 	. = ..()

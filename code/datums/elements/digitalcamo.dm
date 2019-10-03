@@ -15,6 +15,7 @@
 	var/image/img = image(loc = target)
 	img.override = TRUE
 	attached_mobs[target] = img
+	HideFromAIHuds(target)
 
 /datum/element/digitalcamo/Detach(datum/target)
 	. = ..()
@@ -22,6 +23,21 @@
 	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
 		AI.client.images -= attached_mobs[target]
 	attached_mobs -= target
+	UnhideFromAIHuds(target)
+
+/datum/element/digitalcamo/proc/HideFromAIHuds(mob/living/target)
+	for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
+		var/datum/atom_hud/M = GLOB.huds[AI.med_hud]
+		M.hide_single_atomhud_from(AI,target)
+		var/datum/atom_hud/S = GLOB.huds[AI.sec_hud]
+		S.hide_single_atomhud_from(AI,target)
+
+/datum/element/digitalcamo/proc/UnhideFromAIHuds(mob/living/target)
+	for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
+		var/datum/atom_hud/M = GLOB.huds[AI.med_hud]
+		M.unhide_single_atomhud_from(AI,target)
+		var/datum/atom_hud/S = GLOB.huds[AI.sec_hud]
+		S.unhide_single_atomhud_from(AI,target)
 
 /datum/element/digitalcamo/proc/on_examine(datum/source, mob/M)
 	to_chat(M, "<span class = 'warning'>[source.p_their()] skin seems to be shifting and morphing like is moving around below it.</span>")

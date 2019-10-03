@@ -10,6 +10,7 @@
 
 	density = FALSE
 	stat = DEAD
+	hud_possible = list()
 
 	var/mob/living/new_character	//for instant transfer once the round is set up
 

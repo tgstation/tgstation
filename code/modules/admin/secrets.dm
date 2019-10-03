@@ -350,7 +350,7 @@
 			for(var/mob/living/H in GLOB.player_list)
 				if(!(ishuman(H)||istype(H, /mob/living/silicon/)))
 					continue
-				if(H.stat == DEAD || !H.client || !H.mind || ispAI(H))
+				if(H.stat == DEAD || !H.mind || ispAI(H))
 					continue
 				if(is_special_character(H))
 					continue

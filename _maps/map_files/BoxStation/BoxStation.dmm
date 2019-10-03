@@ -10184,7 +10184,8 @@
 "azy" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
-	name = "Port Docking Bay 1"
+	name = "Port Docking Bay 1";
+	safety_mode = 1
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
@@ -16634,7 +16635,8 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "Security Escape Airlock";
-	req_access_txt = "2"
+	req_access_txt = "2";
+	safety_mode = 1
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit)
@@ -17620,7 +17622,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/external{
-	name = "Escape Airlock"
+	name = "Escape Airlock";
+	safety_mode = 1
 	},
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = 32
@@ -17632,7 +17635,8 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/external{
-	name = "Escape Airlock"
+	name = "Escape Airlock";
+	safety_mode = 1
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit)
@@ -21424,7 +21428,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/external{
-	name = "Cargo Escape Airlock"
+	name = "Cargo Escape Airlock";
+	safety_mode = 1
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit)
@@ -34847,9 +34852,6 @@
 /turf/closed/wall/r_wall,
 /area/science/mixing/chamber)
 "bMw" = (
-/obj/machinery/sparker/toxmix{
-	pixel_x = 25
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -35557,9 +35559,6 @@
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bOE" = (
-/obj/machinery/sparker/toxmix{
-	pixel_x = 25
-	},
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxins_mixing_input{
 	dir = 4
 	},
@@ -46505,7 +46504,8 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "Security Escape Airlock";
-	req_access_txt = "2"
+	req_access_txt = "2";
+	safety_mode = 1
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit)
@@ -46523,7 +46523,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/external{
-	name = "Escape Airlock"
+	name = "Escape Airlock";
+	safety_mode = 1
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit)
@@ -46532,7 +46533,8 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/external{
-	name = "Cargo Escape Airlock"
+	name = "Cargo Escape Airlock";
+	safety_mode = 1
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit)
@@ -48774,7 +48776,8 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock/external{
-	name = "Port Docking Bay 1"
+	name = "Port Docking Bay 1";
+	safety_mode = 1
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
@@ -49854,6 +49857,14 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"hFg" = (
+/obj/machinery/door/airlock/external{
+	name = "Port Docking Bay 1";
+	safety_mode = 1
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "hQK" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -51911,6 +51922,10 @@
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
+"uSD" = (
+/obj/machinery/igniter/incinerator_toxmix,
+/turf/open/floor/engine/vacuum,
+/area/science/mixing/chamber)
 "uTi" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -62082,7 +62097,7 @@ aaa
 aaa
 aaa
 aaa
-azy
+hFg
 auP
 cIh
 ayl
@@ -99900,7 +99915,7 @@ bxY
 bCg
 dGF
 bMt
-bNt
+uSD
 bNt
 dGF
 bQT

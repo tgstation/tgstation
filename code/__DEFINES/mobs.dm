@@ -219,6 +219,16 @@
 
 #define MAX_CHICKENS 50
 
+///Flags used by the flags parameter of electrocute act.
+
+///Makes it so that the shock doesn't take gloves into account.
+#define SHOCK_NOGLOVES (1 << 0)
+///Used when the shock is from a tesla bolt.
+#define SHOCK_TESLA (1 << 1)
+///Used when an illusion shocks something. Makes the shock deal stamina damage and not trigger certain secondary effects.
+#define SHOCK_ILLUSION (1 << 2)
+///The shock doesn't stun.
+#define SHOCK_NOSTUN (1 << 3)
 
 #define INCORPOREAL_MOVE_BASIC 1
 #define INCORPOREAL_MOVE_SHADOW 2 // leaves a trail of shadows
@@ -266,6 +276,12 @@
 #define	ETHEREAL_CHARGE_FACTOR	0.12 //factor at which ethereal's charge decreases
 #define	REAGENTS_METABOLISM 0.4	//How many units of reagent are consumed per tick, by default.
 #define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4)	// By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
+
+// Eye protection
+#define FLASH_PROTECTION_SENSITIVE -1
+#define FLASH_PROTECTION_NONE 0
+#define FLASH_PROTECTION_FLASH 1
+#define FLASH_PROTECTION_WELDER 2
 
 // Roundstart trait system
 
