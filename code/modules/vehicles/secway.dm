@@ -3,10 +3,10 @@
 	name = "secway"
 	desc = "A brave security cyborg gave its life to help you look like a complete tool."
 	icon_state = "secway"
-	max_integrity = 100
-	armor = list("melee" = 20, "bullet" = 15, "laser" = 10, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
+	max_integrity = 60
+	armor = list("melee" = 10, "bullet" = 0, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
 	key_type = /obj/item/key/security
-	integrity_failure = 50
+	integrity_failure = 30
 
 /obj/vehicle/ridden/secway/Initialize()
 	. = ..()
