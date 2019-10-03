@@ -16,6 +16,7 @@
 #define DYE_RAINBOW "rainbow"
 #define DYE_MIME "mime"
 #define DYE_COSMIC "cosmic"
+#define DYE_SYNDICATE "syndicate"
 #define DYE_QM "qm"
 #define DYE_LAW "law"
 #define DYE_CAPTAIN "captain"

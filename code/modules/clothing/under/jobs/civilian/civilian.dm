@@ -132,6 +132,31 @@
 	name = "Lawyer suit"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/rank/civilian/lawyer/dye_item(dye_color)
+	if(undyeable || (dye_color != DYE_COSMIC && dye_color != DYE_SYNDICATE))
+		..()
+	else
+		// get type
+		var/obj/item/target_type
+		if (dye_color == DYE_COSMIC)
+			target_type = /obj/item/clothing/under/rank/civilian/lawyer/galaxy/blue
+		else
+			target_type = /obj/item/clothing/under/rank/civilian/lawyer/galaxy/red
+		
+		// apply appearance
+		if(target_type)
+			icon = initial(target_type.icon)
+			icon_state = initial(target_type.icon_state)
+			lefthand_file = initial(target_type.lefthand_file)
+			righthand_file = initial(target_type.righthand_file)
+			item_state = initial(target_type.item_state)
+			mob_overlay_icon = initial(target_type.mob_overlay_icon)
+			inhand_x_dimension = initial(target_type.inhand_x_dimension)
+			inhand_y_dimension = initial(target_type.inhand_y_dimension)
+			name = initial(target_type.name)
+			desc = "[initial(target_type.desc)] The colors look a little dodgy."
+			return target_type
+
 /obj/item/clothing/under/rank/civilian/lawyer/black
 	name = "lawyer black suit"
 	icon_state = "lawyer_black"
@@ -208,3 +233,17 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
+
+/obj/item/clothing/under/rank/civilian/lawyer/galaxy
+	mob_overlay_icon = 'icons/mob/clothing/under/lawyer_galaxy.dmi'
+	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/civilian/lawyer/galaxy/blue
+	name = "blue galaxy suit"
+	icon_state = "lawyer_galaxy_blue"
+	item_state = "b_suit"
+
+/obj/item/clothing/under/rank/civilian/lawyer/galaxy/red
+	name = "red galaxy suit"
+	icon_state = "lawyer_galaxy_red"
+	item_state = "r_suit"
