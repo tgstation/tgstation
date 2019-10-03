@@ -131,23 +131,12 @@
 	var/bd = M.load(get_load_point())
 	if(bd)
 		current_arena_template = arena_template
-		arena_afterload(arena_template)
 	loading = FALSE
 	
 	message_admins("[key_name_admin(user)] loaded [arena_template] event arena for [arena_id] arena.")
 	log_admin("[key_name(user)] loaded [arena_template] event arena for [arena_id] arena.")
 
 	
-
-/// Handle arena specific special effects here.
-/obj/machinery/computer/arena/proc/arena_afterload(arena_filename)
-	/* Example code
-	switch(arena_filename)
-		if("example.dmm")
-			to_chat(world,"EXAMPLE ARENA FIGHT STARTING NOW. OR WHATEVER")
-		if("ripandtear.dmm")
-			give_everyone_chainsaws()
-	*/
 
 /obj/machinery/computer/arena/proc/add_new_arena_template(user,fname,friendly_name)
 	if(!fname)
