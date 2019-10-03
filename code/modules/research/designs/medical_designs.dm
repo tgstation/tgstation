@@ -44,6 +44,25 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/medkitmount
+	name = "Medkit Wall Cabinet"
+	desc = "A wall cabinet for medkits.."
+	id = "medkitmount"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 4000)
+	build_path = /obj/item/wallframe/medkit_cabinet
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/emptymedkit
+	name = "Empty Medkit"
+	desc = "An empty medkit for storing medicines and medical tools."
+	id = "empty_medkit"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/plastic = 2000)
+	build_path = /obj/item/storage/firstaid
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /datum/design/xlarge_beaker
 	name = "X-large Beaker"
 	id = "xlarge_beaker"
