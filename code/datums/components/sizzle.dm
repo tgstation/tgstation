@@ -9,8 +9,9 @@
 	setup_sizzle()
 
 /datum/component/sizzle/InheritComponent(datum/component/C, i_am_original)
+	var/atom/food = parent
 	sizzlealpha += 5
-	sizzling.alpha = sizzle_alpha
+	sizzling.alpha = sizzlealpha
 	food.cut_overlay(sizzling)
 	food.add_overlay(sizzling)
 
