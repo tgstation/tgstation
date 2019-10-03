@@ -23,11 +23,7 @@
 
 ///Blind a mobs eyes by amount
 /mob/proc/blind_eyes(amount)
-	if(amount>0)
-		var/old_eye_blind = eye_blind
-		eye_blind = max(eye_blind, amount)
-		if(!old_eye_blind || !eye_blind && !HAS_TRAIT(src, TRAIT_BLIND))
-			update_blindness()
+	adjust_blindness(amount)
 
 /**
   * Adjust a mobs blindness by an amount
