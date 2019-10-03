@@ -307,8 +307,26 @@ All the important duct code:
 	max_amount = 50
 	item_flags = NOBLUDGEON
 	merge_type = /obj/item/stack/ducts
-	var/duct_color
-	var/duct_layer = DUCT_LAYER_DEFAULT
+	///Color of our duct
+	var/duct_color = "grey"
+	///Default layer of our duct
+	var/duct_layer = "Default Layer"
+	///Assoc index with all the available layers. yes five might be a bit much. Colors uses a global by the way
+	var/list/layers = list("First Layer" = FIRST_DUCT_LAYER, "Second Layer" = SECOND_DUCT_LAYER, "Default Layer" = DUCT_LAYER_DEFAULT, 
+		"Fourth Layer" = FOURTH_DUCT_LAYER, "Fifth Layer" = FIFTH_DUCT_LAYER)
+
+/obj/item/stack/ducts/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>It's current color and layer are [duct_color] and [duct_layer]. Use in-hand to change.</span>"
+
+/obj/item/stack/ducts/attack_self(mob/user)
+	var/new_layer = input("Select a layer", "Layer") as null|anything in layers
+	if(new_layer)
+		duct_layer = new_layer
+	var/new_color = input("Select a color", "Color") as null|anything in GLOB.pipe_paint_colors
+	if(new_color)
+		duct_color = new_color
+		add_atom_colour(GLOB.pipe_paint_colors[new_color], FIXED_COLOUR_PRIORITY)
 
 /obj/item/stack/ducts/afterattack(atom/A, user, proximity)
 	. = ..()
@@ -321,7 +339,7 @@ All the important duct code:
 			qdel(D)
 	if(istype(A, /turf/open) && use(1))
 		var/turf/open/OT = A
-		new /obj/machinery/duct(OT, FALSE, duct_color, duct_layer)
+		new /obj/machinery/duct(OT, FALSE, GLOB.pipe_paint_colors[duct_color], layers[duct_layer])
 
 /obj/item/stack/ducts/fifty
 	amount = 50

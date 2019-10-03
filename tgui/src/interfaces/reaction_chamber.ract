@@ -1,4 +1,4 @@
-<ui-display title='Splitter' button> 
+<ui-display title='Reaction Chamber' button> 
 	<ui-section>
 		{{#each data.reagents: reagent}}
 			<span>{{reagent}} : {{data.reagents[reagent]}}</span>

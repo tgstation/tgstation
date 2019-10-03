@@ -7,6 +7,7 @@
 </ui-display>
 <ui-display title='Status'>
 	<ui-section>
+    <span> Maximum Volume - <ui-button action='change_volume'>{{data.max_volume}}</ui-button>  <ui-button action='reset_volume'>Reset</ui-button></span>
 		<span> Current Operation - {{data.acclimate_state}} </span> <br/>
 		{{#if data.enabled}}
 			<ui-button state='selected' action='turn_on'>On</ui-button>

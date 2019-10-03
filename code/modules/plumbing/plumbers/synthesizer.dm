@@ -5,8 +5,8 @@
 
 	icon_state = "synthesizer"
 	icon = 'icons/obj/plumbing/plumbers.dmi'
-	rcd_cost = 40
-	rcd_delay = 30
+	rcd_cost = 25
+	rcd_delay = 15
 
 	///Amount we produce for every process. Ideally keep under 5 since thats currently the standard duct capacity
 	var/amount = 1

@@ -68,6 +68,7 @@
 	data["target_temperature"] = target_temperature
 	data["allowed_temperature_difference"] = allowed_temperature_difference
 	data["acclimate_state"] = acclimate_state
+	data["max_volume"] = reagents.maximum_volume
 	return data
 
 /obj/machinery/plumbing/acclimator/ui_act(action, params)
@@ -85,6 +86,18 @@
 			enabled = TRUE
 		if("turn_off")
 			enabled = FALSE
+		if("change_volume")
+			var/target = input("New maximum volume between 1 and [buffer]):", name, reagents.maximum_volume) as num|null
+			if(!target)
+				return
+			if(reagents.total_volume > target)
+				to_chat(usr, "<span class='warning'>You can't set the maximum volume lower than the current total reagent volume! Empty it first!</span>")
+				return
+			reagents.maximum_volume = CLAMP(round(target), 1, buffer)
+		if("reset_volume")
+			reagents.maximum_volume = buffer
+
+
 #undef COOLING
 #undef HEATING
 #undef NEUTRAL

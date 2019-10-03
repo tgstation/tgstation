@@ -3,8 +3,7 @@
 	name = "chemical filter"
 	desc = "A chemical filter for filtering chemicals. The left and right outputs appear to be from the perspective of the input port."
 	icon_state = "filter"
-	rcd_cost = 15
-	rcd_delay = 15
+	density = FALSE
 	///whitelist of chems id's that go to the left side. Empty to disable port
 	var/list/left = list()
 	///whitelist of chem id's that go to the right side. Empty to disable port
@@ -16,7 +15,6 @@
 
 	ui_x = 500
 	ui_y = 300
-
 
 /obj/machinery/plumbing/filter/Initialize(mapload, bolt)
 	. = ..()

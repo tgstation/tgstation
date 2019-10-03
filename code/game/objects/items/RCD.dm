@@ -842,6 +842,13 @@ RLD
 
 /obj/item/construction/plumbing
 	name = "Plumbing Constructor"
+	desc = "An expertly modified RCD outfitted to construct plumbing machinery."
+	icon_state = "plumberer2"
+	icon = 'icons/obj/tools.dmi'
+
+	matter = 200
+	max_matter = 200
+
 	///type of the plumbing machine
 	var/blueprint = null
 	///index, used in the attack self to get the type. stored here since it doesnt change
@@ -849,7 +856,7 @@ RLD
 	///index, used in the attack self to get the type. stored here since it doesnt change
 	var/list/name_to_type = list() 
 	///
-	var/list/machinery_data = list()
+	var/list/machinery_data = list("cost" = list(), "delay" = list())
 
 /obj/item/construction/plumbing/attack_self(mob/user)
 	..()
@@ -859,8 +866,8 @@ RLD
 			if(initial(M.rcd_constructable))
 				choices += list(initial(M.name) = image(icon = initial(M.icon), icon_state = initial(M.icon_state)))
 				name_to_type[initial(M.name)] = M
-				machinery_data[type]["cost"] = initial(M.rcd_cost)
-				machinery_data[type]["delay"] = initial(M.rcd_delay)
+				machinery_data["cost"][A] = initial(M.rcd_cost)
+				machinery_data["delay"][A] = initial(M.rcd_delay)
 
 	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
@@ -875,13 +882,13 @@ RLD
 	if(!machinery_data || !isopenturf(A))
 		return FALSE
 
-	if(checkResource(machinery_data[blueprint]["cost"], user) && blueprint)
-		if(do_after(user, machinery_data[blueprint]["delay"], target = A))
-			if(checkResource(machinery_data[blueprint]["cost"], user) && canPlace(A))
-				useResource(machinery_data[blueprint]["cost"], user)
+	if(checkResource(machinery_data["cost"][blueprint], user) && blueprint)
+		if(do_after(user, machinery_data["delay"][blueprint], target = A))
+			if(checkResource(machinery_data["cost"][blueprint], user) && canPlace(A))
+				useResource(machinery_data["cost"][blueprint], user)
 				activate()
 				playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-				new blueprint (A)
+				new blueprint (A, FALSE, FALSE)
 				return TRUE
 
 /obj/item/construction/plumbing/proc/canPlace(turf/T)

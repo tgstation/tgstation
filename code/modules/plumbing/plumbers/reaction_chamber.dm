@@ -4,7 +4,7 @@
 	desc = "Keeps chemicals seperated until given conditions are met."
 	icon_state = "reaction_chamber"
 
-	buffer = 100
+	buffer = 200
 	reagent_flags = TRANSPARENT | NO_REACT
 	/**list of set reagents that the reaction_chamber allows in, and must all be present before mixing is enabled.
 	* example: list(/datum/reagent/water = 20, /datum/reagent/oil = 50)
@@ -12,7 +12,6 @@
 	var/list/required_reagents = list()
 	///our reagent goal has been reached, so now we lock our inputs and start emptying
 	var/emptying = FALSE
-
 
 /obj/machinery/plumbing/reaction_chamber/Initialize(mapload, bolt)
 	. = ..()
@@ -45,7 +44,7 @@
 	. = TRUE
 	switch(action)
 		if("remove")
-			var/reagent = get_chem_id(params["chem"])
+			var/reagent = get_chem_id(params["reagent"])
 			if(reagent)
 				required_reagents.Remove(reagent)
 		if("add")
