@@ -30,6 +30,7 @@
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "dust"
 	damage = 30
+	paralyze = 15
 	knockdown = 80
 	hitsound = 'sound/effects/meteorimpact.ogg'
 
