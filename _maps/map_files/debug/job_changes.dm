@@ -3,7 +3,6 @@
 /datum/outfit/job/New()
 	..()
 	MAP_JOB_CHECK
-	box = /obj/item/twohanded/binoculars/
 
 /datum/job/assistant/New()
     ..()

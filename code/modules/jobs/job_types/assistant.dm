@@ -28,6 +28,7 @@ Assistant
 /datum/outfit/job/assistant
 	name = "Assistant"
 	jobtype = /datum/job/assistant
+	box = /obj/item/storage/box/tournament
 
 /datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -41,3 +42,4 @@ Assistant
 			uniform = /obj/item/clothing/under/color/random
 		else
 			uniform = /obj/item/clothing/under/color/jumpskirt/random
+	

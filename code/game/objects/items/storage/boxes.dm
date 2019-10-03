@@ -183,6 +183,24 @@
 	..() // we want the regular stuff too
 	new /obj/item/radio/off(src)
 
+
+// Tournament box
+/obj/item/storage/box/tournament/PopulateContents()
+	new /obj/item/clothing/mask/breath(src)
+
+	if(!isplasmaman(loc))
+		new /obj/item/tank/internals/emergency_oxygen(src)
+	else
+		new /obj/item/tank/internals/plasmaman/belt(src)
+	new /obj/item/twohanded/binoculars(src)
+	new /obj/item/cowbell(src)
+
+/obj/item/storage/box/tournament/vip/PopulateContents()
+	..() // we want the regular stuff too
+	new /obj/item/reagent_containers/food/snacks/donkpocket(src)
+	stack_trace("citrus is dumb if he doesn't fill this box before the tournament")
+
+
 /obj/item/storage/box/gloves
 	name = "box of latex gloves"
 	desc = "Contains sterile latex gloves."
