@@ -235,10 +235,12 @@
 	if(A.properties["stealth"] >= 2)
 		deathgasp = TRUE
 
-/datum/symptom/heal/coma/on_stage_change(new_stage, datum/disease/advance/A)  //mostly copy+pasted from the code for self-respiration's TRAIT_NOBREATH stuff
+/datum/symptom/heal/coma/on_stage_change(datum/disease/advance/A)  //mostly copy+pasted from the code for self-respiration's TRAIT_NOBREATH stuff
 	if(!..())
 		return FALSE
-	if(A.stage <= 3)
+	if(A.stage >= 4 && stabilize)
+		ADD_TRAIT(A.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
+	else
 		REMOVE_TRAIT(A.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
 	return TRUE
 
@@ -249,8 +251,6 @@
 
 /datum/symptom/heal/coma/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
-	if(stabilize)
-		ADD_TRAIT(M, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
 	if(HAS_TRAIT(M, TRAIT_DEATHCOMA))
 		return power
 	else if(M.IsUnconscious() || M.stat == UNCONSCIOUS)
