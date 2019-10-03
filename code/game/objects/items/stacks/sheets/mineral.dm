@@ -438,11 +438,6 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 
 /obj/item/stack/sheet/mineral/coal/attackby(obj/item/W, mob/user, params)
 	if(W.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
-		if(prob(1))
-			visible_message("<span class='warning'>[src] fuses into a diamond! Someone wasn't so naughty after all...</span>")
-			new /obj/item/stack/sheet/mineral/diamond(loc)
-			qdel(src)
-			return TRUE
 		var/turf/T = get_turf(src)
 		message_admins("Coal ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
 		log_game("Coal ignited by [key_name(user)] in [AREACOORD(T)]")
