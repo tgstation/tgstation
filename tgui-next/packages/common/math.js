@@ -1,13 +1,13 @@
 /**
- * Helper to limit a number to be inside 'min' and 'max'.
+ * Limits a number to the range between 'min' and 'max'.
  */
-export const clamp = (min, max, value) => {
+export const clamp = (value, min = 0, max = 1) => {
   return Math.max(min, Math.min(value, max));
 };
 
 /**
- * Helper to round a number to 'decimals' decimals.
+ * Returns a string representing a number in fixed point notation.
  */
-export const fixed = (value, decimals = 1) => {
-  return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+export const toFixed = (value, fractionDigits = 0) => {
+  return Number(value).toFixed(fractionDigits);
 };

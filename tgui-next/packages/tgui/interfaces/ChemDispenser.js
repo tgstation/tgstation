@@ -1,4 +1,4 @@
-import { fixed } from 'common/math';
+import { toFixed } from 'common/math';
 import { toTitleCase } from 'common/string';
 import { Fragment } from 'inferno';
 import { act } from '../byond';
@@ -40,7 +40,7 @@ export const ChemDispenser = props => {
           <LabeledList.Item label="Energy">
             <ProgressBar
               value={data.energy / data.maxEnergy}
-              content={fixed(data.energy) + ' units'} />
+              content={toFixed(data.energy) + ' units'} />
           </LabeledList.Item>
         </LabeledList>
       </Section>

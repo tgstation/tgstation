@@ -1,4 +1,4 @@
-import { fixed } from 'common/math';
+import { toFixed } from 'common/math';
 import { decodeHtmlEntities } from 'common/string';
 import { Fragment } from 'inferno';
 import { act } from '../byond';
@@ -75,7 +75,7 @@ const AirAlarmStatus = props => {
                   key={entry.name}
                   label={entry.name}
                   color={status.color}>
-                  {fixed(entry.value, 2)}{entry.unit}
+                  {toFixed(entry.value, 2)}{entry.unit}
                 </LabeledList.Item>
               );
             })}
@@ -289,7 +289,7 @@ const Vent = props => {
           <LabeledList.Item label="Internal Target">
             <Button
               icon="pencil"
-              content={fixed(internal)}
+              content={toFixed(internal)}
               onClick={() => act(ref, 'set_internal_pressure', {
                 id_tag,
               })} />
@@ -306,7 +306,7 @@ const Vent = props => {
           <LabeledList.Item label="External Target">
             <Button
               icon="pencil"
-              content={fixed(external)}
+              content={toFixed(external)}
               onClick={() => act(ref, 'set_external_pressure', {
                 id_tag,
               })} />
@@ -467,7 +467,7 @@ const AirAlarmControlThresholds = props => {
             {threshold.settings.map(setting => (
               <td>
                 <Button
-                  content={fixed(setting.selected, 2)}
+                  content={toFixed(setting.selected, 2)}
                   onClick={() => act(ref, 'threshold', {
                     env: setting.env,
                     var: setting.val,

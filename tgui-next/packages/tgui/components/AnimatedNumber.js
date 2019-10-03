@@ -1,4 +1,4 @@
-import { fixed } from 'common/math';
+import { clamp, toFixed } from 'common/math';
 import { Component } from 'inferno';
 
 const FPS = 20;
@@ -15,13 +15,14 @@ export class AnimatedNumber extends Component {
 
   tick() {
     const { props, state } = this;
-    // Avoid poisoning our state with NaN
-    // TODO: Same for infinity?
-    if (Number.isNaN(props.value)) {
+    const currentValue = Number(state.value);
+    const targetValue = Number(props.value);
+    // Avoid poisoning our state with infinities and NaN
+    if (!Number.isFinite(targetValue) || Number.isNaN(targetValue)) {
       return;
     }
     // Smooth the value using an exponential moving average
-    const value = state.value * Q + props.value * (1 - Q);
+    const value = currentValue * Q + targetValue * (1 - Q);
     this.setState({ value });
   }
 
@@ -35,14 +36,17 @@ export class AnimatedNumber extends Component {
 
   render() {
     const { props, state } = this;
-    if (state.value === null) {
-      return null;
+    const currentValue = state.value;
+    const targetValue = props.value;
+    // Directly display values which can't be animated
+    if (typeof targetValue !== 'number'
+        || !Number.isFinite(targetValue)
+        || Number.isNaN(targetValue)) {
+      return targetValue || null;
     }
-    const frac = String(props.value).split('.')[1];
-    const precision = frac ? frac.length : 0;
-    if (precision === 0) {
-      return Math.round(state.value);
-    }
-    return fixed(state.value, precision);
+    // Fix our animated precision at target value's precision.
+    const fraction = String(targetValue).split('.')[1];
+    const precision = fraction ? fraction.length : 0;
+    return toFixed(currentValue, clamp(precision, 0, 8));
   }
 }
