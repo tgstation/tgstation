@@ -347,16 +347,16 @@
 	return 1
 
 ///As the name suggests, this should be called to apply electric shocks.
-/mob/living/proc/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = FALSE, override = FALSE, tesla_shock = FALSE, illusion = FALSE, stun = TRUE)
-	SEND_SIGNAL(src, COMSIG_LIVING_ELECTROCUTE_ACT, shock_damage, source, siemens_coeff, safety, override, tesla_shock, illusion, stun)
+/mob/living/proc/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
+	SEND_SIGNAL(src, COMSIG_LIVING_ELECTROCUTE_ACT, shock_damage, source, siemens_coeff, flags)
 	shock_damage *= siemens_coeff
-	if(tesla_shock && (flags_1 & TESLA_IGNORE_1))
+	if((flags & SHOCK_TESLA) && (flags_1 & TESLA_IGNORE_1))
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
 		return FALSE
-	if(shock_damage < 1 && !override)
+	if(shock_damage < 1)
 		return FALSE
-	if(!illusion)
+	if(!(flags & SHOCK_ILLUSION))
 		adjustFireLoss(shock_damage)
 	else
 		adjustStaminaLoss(shock_damage)

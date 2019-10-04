@@ -219,6 +219,16 @@
 
 #define MAX_CHICKENS 50
 
+///Flags used by the flags parameter of electrocute act.
+
+///Makes it so that the shock doesn't take gloves into account.
+#define SHOCK_NOGLOVES (1 << 0)
+///Used when the shock is from a tesla bolt.
+#define SHOCK_TESLA (1 << 1)
+///Used when an illusion shocks something. Makes the shock deal stamina damage and not trigger certain secondary effects.
+#define SHOCK_ILLUSION (1 << 2)
+///The shock doesn't stun.
+#define SHOCK_NOSTUN (1 << 3)
 
 #define INCORPOREAL_MOVE_BASIC 1
 #define INCORPOREAL_MOVE_SHADOW 2 // leaves a trail of shadows

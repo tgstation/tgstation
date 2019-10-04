@@ -42,11 +42,11 @@
 	..()
 
 /obj/machinery/computer/cargo/proc/get_export_categories()
-	var/cat = EXPORT_CARGO
+	. = EXPORT_CARGO
 	if(contraband)
-		cat |= EXPORT_CONTRABAND
+		. |= EXPORT_CONTRABAND
 	if(obj_flags & EMAGGED)
-		cat |= EXPORT_EMAG
+		. |= EXPORT_EMAG
 
 /obj/machinery/computer/cargo/emag_act(mob/user)
 	if(obj_flags & EMAGGED)

@@ -833,7 +833,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			. = zapdir
 
 	if(target_mob)
-		target_mob.electrocute_act(rand(5,10), "Supermatter Discharge Bolt", 1, stun = 0)
+		target_mob.electrocute_act(rand(5,10), "Supermatter Discharge Bolt", 1, SHOCK_NOSTUN)
 		if(prob(15))
 			supermatter_zap(target_mob, 5, power / 2)
 			supermatter_zap(target_mob, 5, power / 2)
