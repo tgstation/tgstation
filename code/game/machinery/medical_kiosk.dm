@@ -11,6 +11,7 @@
 	payment_department = ACCOUNT_MED
 	var/default_price = 5  //I'm defaulting to a low price on this, but in the future I wouldn't have an issue making it more or less expensive.
 	var/scan_active = null  //Shows if the machine is being used. resets upon new viewer.
+	var/upgrade_scan_active = null
 	var/adv_scan_active = null  //Shows if the machine has upgraded functionality
 	var/datum/bank_account/account  //payer's account.
 	var/mob/living/carbon/human/H   //the person using the console in each instance.
@@ -34,6 +35,7 @@
   scan_active = 0
   icon_state = "kiosk_active"
   say("Thank you for your patronage!")
+  upgrade_scan_active = 1
   adv_scan_active = 1
   RefreshParts()
   return
@@ -53,15 +55,18 @@
   var/A
   for(var/obj/item/stock_parts/scanning_module/S in component_parts)
     A += S.rating
-  if(A >=3)
+  if(A >= 3)
+    upgrade_scan_active = 0
     adv_scan_active = 0
+    return
+  else if(A >= 2)
+    upgrade_scan_active = 0
     return
   return
 
 /obj/machinery/medical_kiosk/attackby(obj/item/O, mob/user, params)
   if(default_deconstruction_screwdriver(user, "kiosk_open", "kiosk", O))
     return
-
   else if(default_deconstruction_crowbar(O))
     return
 
@@ -70,7 +75,7 @@
 /obj/machinery/medical_kiosk/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
   ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
   if(!ui)
-    ui = new(user, src, ui_key, "medical_kiosk", name, 550, 400, master_ui, state)
+    ui = new(user, src, ui_key, "medical_kiosk", name, 600, 500, master_ui, state)
     ui.open()
     scan_active = 1
     icon_state = "kiosk_off"
@@ -80,22 +85,41 @@
 
 /obj/machinery/medical_kiosk/ui_data(mob/living/carbon/human/user)
   var/list/data = list()
-  var/patient_name = user.name
+  var/patient_name = user.name   //T1 upgrade information
   var/patient_status = "Alive."
   var/brute_loss = user.getBruteLoss()
   var/fire_loss = user.getFireLoss()
   var/tox_loss = user.getToxLoss()
   var/oxy_loss = user.getOxyLoss()
-  var/clone_loss = user.getCloneLoss()
-  var/brain_loss = user.getOrganLoss(ORGAN_SLOT_BRAIN)
-  var/brain_status = "Brain patterns normal."
   var/sickness = "Patient does not show signs of disease."
   for(var/thing in user.diseases)
     var/datum/disease/D = thing
     if(!(D.visibility_flags & HIDDEN_SCANNER))
       sickness = "Warning: Patient is harboring some form of viral disease. Seek further medical attention."
 
-  if(user.stat == DEAD || HAS_TRAIT(user, TRAIT_FAKEDEATH))
+  var/rad_value = user.radiation  //T2 upgrade information
+  var/rad_status = "Target within normal-low radiation levels."
+  var/trauma_status = "Patient is free of unique brain trauma."
+
+  var/clone_loss = user.getCloneLoss()  //T3 Upgrade information
+  var/brain_loss = user.getOrganLoss(ORGAN_SLOT_BRAIN)
+  var/brain_status = "Brain patterns normal."
+  if(LAZYLEN(user.get_traumas()))
+    var/list/trauma_text = list()
+    for(var/datum/brain_trauma/B in user.get_traumas())
+      var/trauma_desc = ""
+      switch(B.resilience)
+        if(TRAUMA_RESILIENCE_SURGERY)
+          trauma_desc += "severe "
+        if(TRAUMA_RESILIENCE_LOBOTOMY)
+          trauma_desc += "deep-rooted "
+        if(TRAUMA_RESILIENCE_MAGIC, TRAUMA_RESILIENCE_ABSOLUTE)
+          trauma_desc += "permanent "
+      trauma_desc += B.scan_desc
+      trauma_text += trauma_desc
+    trauma_status = "Cerebral traumas detected: patient appears to be suffering from [english_list(trauma_text)]."
+
+  if(user.stat == DEAD || HAS_TRAIT(user, TRAIT_FAKEDEATH))  //Patient status checks.
     patient_status = "Dead."
   if((brute_loss+fire_loss+tox_loss+oxy_loss) >= 80)
     patient_status = "Gravely Injured"
@@ -104,7 +128,7 @@
   else if((brute_loss+fire_loss+tox_loss+oxy_loss) >= 20)
     patient_status = "Lightly Injured"
 
-  if((brain_loss) >= 100)
+  if((brain_loss) >= 100)   //Brain status checks.
     brain_status = "Grave brain damage detected."
   else if((brain_loss) >= 50)
     brain_status = "Severe brain damage detected."
@@ -113,6 +137,13 @@
   else if((brain_loss) >= 1)
     brain_status = "Mild brain damage detected."  //You may have a miiiild case of severe brain damage.
 
+  if(user.radiation >=1000)  //
+    rad_status = "Patient is suffering from extreme radiation poisoning. Suggested treatment: Isolation of patient, followed by repeated dosages of Pentetic Acid."
+  else if(user.radiation >= 500)
+    rad_status = "Patient is suffering from alarming radiation poisoning. Suggested treatment: Heavy use of showers and decontamination of clothing. Take Pentetic Acid or Potassium Iodine."
+  else if(user.radiation >= 100)
+    rad_status = "Patient has moderate radioactive signatures. Keep under showers until symptoms subside."
+
   data["patient_name"] = patient_name
   data["brute_health"] = brute_loss
   data["burn_health"] = fire_loss
@@ -120,11 +151,15 @@
   data["suffocation_health"] = oxy_loss
   data["clone_health"] = clone_loss
   data["brain_health"] = brain_status
+  data["brain_damage"] = brain_loss
   data["patient_status"] = patient_status
+  data["rad_value"] = rad_value
+  data["rad_status"] = rad_status
+  data["trauma_status"] = trauma_status
   data["patient_illness"] = sickness
   data["active_status"] = scan_active ? 0 : 1
+  data["upgrade_active_status"] = upgrade_scan_active ? 0 : 1
   data["adv_active_status"] = adv_scan_active ? 0 : 1
-
   return data
 
 /obj/machinery/medical_kiosk/ui_act(action,active)
