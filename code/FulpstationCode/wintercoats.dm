@@ -3,8 +3,8 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/security/head
 	name = "\improper Head of Security's winter coat"
-	desc = "this is the Head of Security's personal winter coat. Although it looks like a normal coat, it actually has armor woven inside."
-	icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
+	desc = "This is the Head of Security's personal winter coat. Although it looks like a normal coat, it actually has armor woven inside."
+	icon = 'icons/fulpicons/phoenix_nest/wintercoats_icons.dmi'
 	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
 	icon_state = "wintercoat_hos"
 	item_state = "wintercoat_hos"
@@ -24,8 +24,8 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/medical/head
 	name = "\improper Chief Medical Officer's winter coat"
-	desc = "this is the Chief Medical Officer's personal winter coat."
-	icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
+	desc = "This is the Chief Medical Officer's personal winter coat."
+	icon = 'icons/fulpicons/phoenix_nest/wintercoats_icons.dmi'
 	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
 	icon_state = "wintercoat_cmo"
 	item_state = "wintercoat_cmo"
@@ -43,8 +43,8 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/science/head
 	name = "\improper Research Director's winter coat"
-	desc = "this is the Research Director's personal winter coat."
-	icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
+	desc = "This is the Research Director's personal winter coat."
+	icon = 'icons/fulpicons/phoenix_nest/wintercoats_icons.dmi'
 	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
 	icon_state = "wintercoat_rd"
 	item_state = "wintercoat_rd"
@@ -61,8 +61,8 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/engineering/head
 	name = "\improper Chief Engineer's winter coat"
-	desc = "this is the Chief Engineer's personal winter coat."
-	icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
+	desc = "This is the Chief Engineer's personal winter coat."
+	icon = 'icons/fulpicons/phoenix_nest/wintercoats_icons.dmi'
 	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
 	icon_state = "wintercoat_ce"
 	item_state = "wintercoat_ce"
@@ -80,8 +80,8 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/captain/hop
 	name = "\improper Head of Personel's winter coat"
-	desc = "this is the Head of Personel's personal winter coat. It has a small armor vest woven inside."
-	icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
+	desc = "This is the Head of Personel's personal winter coat. It has a small armor vest woven inside."
+	icon = 'icons/fulpicons/phoenix_nest/wintercoats_icons.dmi'
 	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
 	icon_state = "wintercoat_hop"
 	item_state = "wintercoat_hop"
