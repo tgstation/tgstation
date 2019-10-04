@@ -163,7 +163,7 @@
 	if(!can_use(usr))
 		return
 	if(broken_hailer)
-		to_chat(usr, "<span class='warning'>\The [src]'s screeching system is jammed full of bananas paste.</span>")
+		to_chat(usr, "<span class='warning'>\The [src]'s screeching system is jammed full of banana paste.</span>")
 		return
 
 	var/phrase = 0	//selects which phrase to use
