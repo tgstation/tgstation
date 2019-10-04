@@ -20,6 +20,7 @@
 	harm_intent_damage = 0 //Punching elites gets you nowhere
 	var/obj/structure/elite_tumor/myparent = null
 	var/can_talk = 0
+	var/obj/loot_drop = null
 	stat_attack = UNCONSCIOUS
 	layer = LARGE_MOB_LAYER
 	sentience_type = SENTIENCE_BOSS
@@ -256,13 +257,13 @@ obj/structure/elite_tumor/proc/onEliteLoss()
 	mychild.myparent = null
 	if(activity == TUMOR_ACTIVE)
 		visible_message("<span class='boldwarning'>As the tumor closes, something is forced up from down below.</span>")
-		new /obj/structure/closet/crate/necropolis/tendril(loc)
+		var/obj/structure/closet/crate/necropolis/tendril/lootbox = new /obj/structure/closet/crate/necropolis/tendril(loc)
 		if(boosted)
-			var/lootpick = rand(1, 4)
-			if(lootpick == 1)
-				new /obj/item/tumor_shard(loc)
+			var/lootpick = rand(1, 2)
+			if(lootpick == 1 && mychild.loot_drop != null)
+				lootbox.contents += new mychild.loot_drop(lootbox.loc)
 			else
-				new /obj/structure/closet/crate/necropolis/tendril(loc)
+				lootbox.contents += new /obj/item/tumor_shard(lootbox.loc)
 	qdel(src)
 	
 obj/structure/elite_tumor/proc/onEliteWon()

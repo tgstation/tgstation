@@ -31,6 +31,7 @@
 	mouse_opacity = MOUSE_OPACITY_ICON
 	deathsound = 'sound/magic/curse.ogg'
 	deathmessage = "'s arms reach out before it falls apart onto the floor, lifeless."
+	loot_drop = /obj/item/crusher_trophy/legionnaire_spine
 
 	attack_action_types = list(/datum/action/innate/elite_attack/legionnaire_charge,
 								/datum/action/innate/elite_attack/head_detach,
@@ -56,7 +57,7 @@
 /datum/action/innate/elite_attack/bonfire_teleport
 	name = "Bonfire Teleport"
 	button_icon_state = "bonfire_teleport"
-	chosen_message = "<span class='boldwarning'>You will leave a bonfire.  Second use will let you swap positions with it indefintiely.  Using it on the same tile as an active bonfire removes it.</span>"
+	chosen_message = "<span class='boldwarning'>You will leave a bonfire.  Second use will let you swap positions with it indefintiely.  Using this move on the same tile as your active bonfire removes it.</span>"
 	chosen_attack_num = 3
 	
 /datum/action/innate/elite_attack/spew_smoke
@@ -270,3 +271,24 @@
 	var/datum/effect_system/smoke_spread/smoke = new
 	smoke.set_up(2, T)
 	smoke.start()
+	
+// Legionnaire's loot: Legionnaire Spine
+
+/obj/item/crusher_trophy/legionnaire_spine
+	name = "legionnaire spine"
+	desc = "The spine of a legionnaire.  It almost feels like it's moving..."
+	icon = 'icons/obj/lavaland/elite_trophies.dmi'
+	icon_state = "legionnaire_spine"
+	denied_type = /obj/item/crusher_trophy/legionnaire_spine
+	bonus_value = 20
+
+/obj/item/crusher_trophy/legionnaire_spine/effect_desc()
+	return "mark detonation to have a <b>[bonus_value]%</b> chance to summon a loyal legion skull"
+
+/obj/item/crusher_trophy/legionnaire_spine/on_mark_detonation(mob/living/target, mob/living/user)
+	if(rand(1, 100) <= bonus_value)
+		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion(user.loc)
+		A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
+		A.GiveTarget(target)
+		A.friends = user
+		A.faction = user.faction.Copy()

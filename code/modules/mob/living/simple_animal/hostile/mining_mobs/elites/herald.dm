@@ -30,7 +30,8 @@
 	move_to_delay = 10
 	mouse_opacity = MOUSE_OPACITY_ICON
 	deathsound = 'sound/magic/demon_dies.ogg'
-	deathmessage = "begins to shudder, as it begins to become transparent..."
+	deathmessage = "begins to shudder as it becomes transparent..."
+	loot_drop = /obj/item/clothing/neck/cloak/herald_cloak
 	
 	can_talk = 1
 
@@ -240,3 +241,14 @@
 	my_mirror.my_master = src
 	my_mirror.faction = faction.Copy()
 	return
+	
+//Herald's loot: Cloak of the Prophet
+
+/obj/item/clothing/neck/cloak/herald_cloak
+	name = "Cloak of the Prophet"
+	desc = "A cloak which protects you from the heresy of the world."
+	icon = 'icons/obj/lavaland/elite_trophies.dmi'
+	icon_state = "herald_cloak"
+	item_state = ""
+	armor = list("melee" = 10, "bullet" = 25, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	body_parts_covered = CHEST|GROIN|ARMS

@@ -31,6 +31,7 @@
 	mouse_opacity = MOUSE_OPACITY_ICON
 	deathsound = 'sound/magic/repulse.ogg'
 	deathmessage = "'s lights flicker, before its top part falls down."
+	loot_drop = /obj/item/clothing/accessory/pandora_hope
 
 	attack_action_types = list(/datum/action/innate/elite_attack/singular_shot,
 								/datum/action/innate/elite_attack/magic_box,
@@ -166,3 +167,13 @@
 	else
 		cooldown_time = 10
 		return
+		
+//Pandora's loot: Hope
+
+/obj/item/clothing/accessory/pandora_hope
+	name = "Hope"
+	desc = "Found at the bottom of Pandora. After all the evil was released, this was the only thing left inside."
+	icon = 'icons/obj/lavaland/elite_trophies.dmi'
+	icon_state = "hope"
+	resistance_flags = FIRE_PROOF
+	armor = list("melee" = 5, "bullet" = 5, "energy" = 5)

@@ -8,7 +8,7 @@
   * - Spawns 2 baby goliaths on its tile, up to a max of 8.  Children blow up when they die.
   * - The broodmother lets out a noise, and is able to move faster for 6.5 seconds.
   * - Summons your children around you.
-  * The broodmother is a fight revolving around stage control, as the activator has to manage the baby goliaths, both dead and alive, and the broodmother herself, along with all the tendrils.
+  * The broodmother is a fight revolving around stage control, as the activator has to manage the baby goliaths and the broodmother herself, along with all the tendrils.
   */
 
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother
@@ -31,9 +31,8 @@
 	move_to_delay = 5
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/bone = 2)
-	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/goliath_hide = 1)
 	deathmessage = "explodes into gore!"
+	loot_drop = /obj/item/crusher_trophy/broodmother_tongue
 
 	attack_action_types = list(/datum/action/innate/elite_attack/tentacle_patch,
 								/datum/action/innate/elite_attack/spawn_children,
@@ -52,7 +51,7 @@
 /datum/action/innate/elite_attack/spawn_children
 	name = "Spawn Children"
 	button_icon_state = "spawn_children"
-	chosen_message = "<span class='boldwarning'>You will spawn two children at your location to assist you in combat temporarily.  You can have up to 8.</span>"
+	chosen_message = "<span class='boldwarning'>You will spawn two children at your location to assist you in combat.  You can have up to 8.</span>"
 	chosen_attack_num = 2
 	
 /datum/action/innate/elite_attack/rage
@@ -220,3 +219,20 @@
 		if(T)
 			child.forceMove(T)
 			playsound(src, 'sound/effects/bamf.ogg', 100, 1)
+			
+// Broodmother's loot: Broodmother Tongue
+
+/obj/item/crusher_trophy/broodmother_tongue
+	name = "broodmother tongue"
+	desc = "The tongue of a broodmother.  If attached a certain way, makes for a suitable crusher trophy."
+	icon = 'icons/obj/lavaland/elite_trophies.dmi'
+	icon_state = "broodmother_tongue"
+	denied_type = /obj/item/crusher_trophy/broodmother_tongue
+	bonus_value = 10
+
+/obj/item/crusher_trophy/broodmother_tongue/effect_desc()
+	return "mark detonation to have a <b>[bonus_value]%</b> chance to summon a patch of goliath tentacles at the target's location"
+
+/obj/item/crusher_trophy/broodmother_tongue/on_mark_detonation(mob/living/target, mob/living/user)
+	if(rand(1, 100) <= bonus_value)
+		new /obj/effect/temp_visual/goliath_tentacle/broodmother/patch(get_turf(target), user)
