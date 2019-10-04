@@ -50,7 +50,7 @@
 	id = "medkitmount"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 4000)
-	build_path = /obj/item/wallframe/medkit_cabinet
+	build_path = /obj/item/wallframe/extinguisher_cabinet/medkit
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
