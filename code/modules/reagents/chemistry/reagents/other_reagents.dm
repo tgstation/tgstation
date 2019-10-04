@@ -1149,7 +1149,7 @@
 	reagent_state = GAS
 	color = "#404030" // rgb: 64, 64, 48
 	taste_description = "mordant"
-	11.6
+	pH = 11.6
 
 /datum/reagent/diethylamine
 	name = "Diethylamine"
