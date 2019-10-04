@@ -32,3 +32,5 @@
 
 
 
+/obj/item/clothing/accessory
+	mob_overlay_icon = 'icons/mob/clothing/accessories.dmi'
