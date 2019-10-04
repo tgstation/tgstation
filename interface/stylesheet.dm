@@ -166,15 +166,15 @@ h1.alert, h2.alert		{color: #000000;}
 		100%	{color: #3bb5d3;}
 }
 
-.rainbow					{color: #660015; 	font-weight: bold; animation: rainbow 5000ms infinite;}
-@keyframes rainbow {
+.rainbow				{color: #660015; 	font-weight: bold; animation: rainbow 5000ms infinite;}
+.bigrainbow				{color: #660015; 	font-weight: bold;font-size: 3; animation: rainbow 5000ms infinite;}
+	@keyframes rainbow {
 	0% { color: #400020; }
 	40% { color: #FF0000; }
 	50% { color: #FF8888; }
 	60% { color: #FF0000; }
 	100% { color: #400020; }
 }
-.bigrainbow					{color: #660015; 	font-weight: bold;font-size: 3; animation: rainbow 5000ms infinite;}
 
 .phobia			{color: #dd0000;	font-weight: bold;	animation: phobia 750ms infinite;}
 	@keyframes phobia {
