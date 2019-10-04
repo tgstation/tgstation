@@ -461,7 +461,7 @@
 			filter = MUT_MSG_EXTENDED
 		else
 			filter = MUT_MSG_ABOUT2TURN
-			
+
 		for(var/i in mutationtexts)
 			if(mutationtexts[i] == filter)
 				pick_ur_fav += i
@@ -1807,3 +1807,28 @@
 	A.reagents.add_reagent(/datum/reagent/water, trans_volume * 0.25)
 
 	return ..()
+
+/datum/reagent/rainbowium
+	name = "Polychromatic Rainbowium"
+	description = "A liquid that constantly changes colour. Drinking it can modify your vocal chords."
+	color = "#FFFF00"
+	taste_description = "a gamut of colour"
+	taste_mult = 4
+	can_synth = FALSE
+	metabolization_rate = 0.4 * REAGENTS_METABOLISM
+
+
+/datum/reagent/rainbowium/on_mob_life(mob/living/carbon/C)
+	var/obj/item/organ/vocal_cords/Vc = M.getorganslot(ORGAN_SLOT_VOICE)
+	var/obj/item/organ/vocal_cords/nVc = new /obj/item/organ/vocal_cords/rainbow
+	var/obj/item/organ/vocal_cords/ncVc = new /obj/item/organ/vocal_cords/honkmother
+	if(Vc)
+	Vc.Remove(M)
+	if(user.mind && user.mind.assigned_role == "Clown")
+		ncVc.Insert(M)
+		to_chat(M, "<span class='notice'>You feel your vocal chords resonate with laughter and happiness, as if blessed by the</span><span class='rainbow'> Honkmother</span><span class='notice'> herself.</span>")
+	else
+		nVc.Insert(M)
+		to_chat(M, "<span class='notice'>You feel your vocal chords tingle as your voice comes out in a more sultry tone.</span>")
+	qdel(Vc)
+	holder.del_reagent(type)

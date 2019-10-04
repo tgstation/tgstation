@@ -87,7 +87,7 @@
 	name = "Acetic acid buffer"
 	id = "acidic_buffer"
 	results = list(/datum/reagent/acidic_buffer = 2) //acetic acid
-	required_reagents = list("salglu_solution" = 0.2, "ethanol" = 0.6, "oxygen" = 0.6, "water" = 0.6)
+	required_reagents = list(/datum/reagent/medicine/salglu_solution = 0.2, /datum/reagent/consumable/ethanol = 0.6, /datum/reagent/oxygen = 0.6, /datum/reagent/water = 0.6)
 	//FermiChem vars:
 	OptimalTempMin 	= 250
 	OptimalTempMax 	= 500
@@ -114,8 +114,8 @@
 	name = "Ethyl Ethanoate buffer"
 	id = "basic_buffer"
 	results = list(/datum/reagent/basic_buffer = 1.5)
-	required_reagents = list("acidic_buffer" = 0.5, "ethanol" = 0.5, "water" = 0.5)
-	required_catalysts = list("sacid" = 1) //vagely acetic
+	required_reagents = list(/datum/reagent/acidic_buffer = 0.5,  /datum/reagent/consumable/ethanol = 0.5, /datum/reagent/water = 0.5)
+	required_catalysts = list(/datum/reagent/toxin/acid = 1) //vagely acetic
 	//FermiChem vars:x
 	OptimalTempMin 	= 250
 	OptimalTempMax 	= 500
@@ -123,7 +123,6 @@
 	OptimalpHMin 	= 5
 	OptimalpHMax 	= 12
 	ReactpHLim 		= 0
-	//CatalystFact 	= 0 //To do 1
 	CurveSharpT 	= 4
 	CurveSharppH 	= 0
 	ThermicConstant = 0
@@ -138,3 +137,21 @@
 	var/datum/reagent/basic_buffer/Fb = locate(/datum/reagent/basic_buffer) in my_atom.reagents.reagent_list
 	Fb.data = 14
 
+/datum/chemical_reaction/fermi/rainbowium
+	name = "Polychromatic Rainbowium"
+	id = "rainbowium"
+	results = list(/datum/reagent/rainbowium = 0.1)
+	required_reagents = list(/datum/reagent/colorful_reagent = 0.5, /datum/reagent/happiness = 0.5, /datum/reagent/potassium = 0.25 /datum/reagent/toxin/mindbreaker = 1)
+	OptimalTempMin 	= 770
+	OptimalTempMax 	= 850
+	ExplodeTemp 	= 920 //check to see overflow doesn't happen!
+	OptimalpHMin 	= 9
+	OptimalpHMax 	= 11
+	ReactpHLim 		= 1
+	//CatalystFact 	= 0 //To do 1
+	CurveSharpT 	= 4
+	CurveSharppH 	= 4
+	ThermicConstant = 25
+	HIonRelease 	= -0.1
+	RateUpLim 		= 1
+	FermiChem 		= TRUE
