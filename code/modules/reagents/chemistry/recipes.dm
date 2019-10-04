@@ -4,6 +4,22 @@
 	var/list/results = new/list()
 	var/list/required_reagents = new/list()
 	var/list/required_catalysts = new/list()
+		//FermiChem vars:
+	var/OptimalTempMin 		= 0 // Lower area of bell curve for determining heat based rate reactions
+	var/OptimalTempMax		= 1000 // Upper end for above
+	var/ExplodeTemp			= 9999 //Temperature at which reaction explodes
+	var/OptimalpHMin		= 1 // Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	var/OptimalpHMax		= 14 // Higest value for above
+	var/ReactpHLim			= 0 // How far out pH wil react, giving impurity place (Exponential phase)
+	//var/CatalystFact		= 0 // How much the catalyst affects the reaction (0 = no catalyst) //unimplemented, coming soon
+	var/CurveSharpT 		= 1.5 // How sharp the temperature exponential curve is (to the power of value)
+	var/CurveSharppH 		= 3 // How sharp the pH exponential curve is (to the power of value)
+	var/ThermicConstant		= 0 //Temperature change per 1u produced
+	var/HIonRelease 		= 0 //pH change per 1u reaction
+	var/RateUpLim 			= 10 //Optimal/max rate possible if all conditions are perfect
+	var/FermiExplode 		= FALSE //If the chemical explodes in a special way
+	var/PurityMin			= 0.1 //The minimum purity something has to be above, otherwise it explodes.
+	var/FermiChem = FALSE // If the chemical uses the Fermichem reaction mechanics\
 
 	// Both of these variables are mostly going to be used with slime cores - but if you want to, you can use them for other things
 	var/required_container = null // the exact container path required for the reaction to happen
@@ -19,6 +35,9 @@
 /datum/chemical_reaction/proc/on_reaction(datum/reagents/holder, created_volume)
 	return
 	//I recommend you set the result amount to the total volume of all components.
+
+/datum/chemical_reaction/proc/check_special_react(datum/reagents/holder)
+	return
 
 /datum/chemical_reaction/proc/chemical_mob_spawn(datum/reagents/holder, amount_to_spawn, reaction_name, mob_class = HOSTILE_SPAWN, mob_faction = "chemicalsummon", random = TRUE)
 	if(holder && holder.my_atom)

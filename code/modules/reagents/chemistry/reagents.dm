@@ -40,9 +40,18 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/self_consuming = FALSE
 	var/reagent_weight = 1 //affects how far it travels when sprayed
 	var/metabolizing = FALSE
-	var/pH //potential of hydrogen = how acid/base it is
-	var/purity = 1 //how good it is
 	var/harmful = FALSE //is it bad for you? Currently only used for borghypo. C2s and Toxins have it TRUE by default.
+	//fermichem
+	var/pH = 7//potential of hydrogen = how acid/base it is
+	var/purity = 1 //Purity, affects Fermichem
+	var/addProc = FALSE 				//If the chemical should force an on_new() call
+	var/turf/loc = null
+	var/ImpureChem = /datum/reagent
+	var/InverseChemVal = 0.2 //purity sat which it flips
+	var/InverseChem = /datum/reagent
+	var/DoNotSplit = FALSE
+	var/OnMobMergeCheck 	= FALSE 	//Call on_mob_life proc when reagents are merging.
+
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()

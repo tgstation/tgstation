@@ -3,13 +3,8 @@
 
 /datum/reagent/fermi
 	name = "Fermi" //This should never exist, but it does so that it can exist in the case of errors..
-	taste_description	= "affection and love!"
+	taste_description = "gamebreaking bugs and fourth-wall breaks"
 	can_synth = FALSE
-	var/addProc
-	var/ImpureChem = /datum/reagent/fermi
-	var/InverseChemVal = 0.2 //purity sat which it flips
-	var/InverseChem = /datum/reagent/fermi
-	var/DoNotSplit = FALSE
 
 //This should process fermichems to find out how pure they are and what effect to do.
 /datum/reagent/fermi/on_mob_add(mob/living/carbon/M, amount)
@@ -39,15 +34,15 @@
 //				MISC FERMICHEM CHEMS FOR SPECIFIC INTERACTIONS ONLY
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-/datum/reagent/fermi/fermiAcid
+/datum/reagent/acidvapour
 	name = "Acid vapour"
 	description = "Someone didn't do like an otter, and add acid to water."
-	taste_description = "acid burns, ow"
+	taste_description = "acid burns"
 	color = "#FFFFFF"
 	pH = 0
 	can_synth = FALSE
 
-/datum/reagent/fermi/fermiAcid/reaction_mob(mob/living/carbon/C, method)
+/datum/reagent/acidvapour/reaction_mob(mob/living/carbon/C, method)
 	var/target = C.get_bodypart(BODY_ZONE_CHEST)
 	var/acidstr
 	if(!C.reagents.pH || C.reagents.pH >5)
@@ -63,7 +58,7 @@
 	C.acid_act(acidstr, volume)
 	..()
 
-/datum/reagent/fermi/fermiAcid/reaction_obj(obj/O, reac_volume)
+/datum/reagent/acidvapour/reaction_obj(obj/O, reac_volume)
 	if(ismob(O.loc)) //handled in human acid_act()
 		return
 	if((holder.pH > 5) || (volume < 0.1)) //Shouldn't happen, but just in case
@@ -73,59 +68,15 @@
 	O.acid_act(acidstr, volume)
 	..()
 
-/datum/reagent/fermi/fermiAcid/reaction_turf(turf/T, reac_volume)
+/datum/reagent/acidvapour/reaction_turf(turf/T, reac_volume)
 	if (!istype(T))
 		return
 	reac_volume = round(volume,0.1)
 	var/acidstr = (5-holder.pH)
 	T.acid_act(acidstr, volume)
 	..()
-/* idk what this does so commented out lol - it was causing errors
-what the fuck is holder anyways
-/datum/reagent/fermi/fermiTest
-	name = "Fermis Test Reagent"
-	description = "You should be really careful with this...! Also, how did you get this?"
-	addProc = TRUE
-	can_synth = FALSE
 
-/datum/reagent/fermi/fermiTest/on_new(datum/reagents/holder)
-	..()
-	if(LAZYLEN(holder.reagent_list) == 1)
-		return
-	else
-		holder.remove_reagent("fermiTest", volume)//Avoiding recurrsion
-	var/location = get_turf(holder.my_atom)
-	if(purity < 0.34 || purity == 1)
-		var/datum/effect_system/foam_spread/s = new()
-		s.set_up(volume*2, location, holder)
-		s.start()
-	if((purity < 0.67 && purity >= 0.34)|| purity == 1)
-		var/datum/effect_system/smoke_spread/chem/s = new()
-		s.set_up(holder, volume*2, location)
-		s.start()
-	if(purity >= 0.67)
-		for (var/datum/reagent/reagent in holder.reagent_list)
-			if (istype(reagent, /datum/reagent/fermi))
-				var/datum/chemical_reaction/fermi/Ferm  = GLOB.chemical_reagents_list[reagent.type]
-				Ferm.FermiExplode(src, holder.my_atom, holder, holder.total_volume, holder.chem_temp, holder.pH)
-			else
-				var/datum/chemical_reaction/Ferm  = GLOB.chemical_reagents_list[reagent.type]
-				Ferm.on_reaction(holder, reagent.volume)
-	holder.clear_reagents()
-*/
-/datum/reagent/fermi/fermiTox
-	name = "FermiTox"
-	description = "You should be really careful with this...! Also, how did you get this? You shouldn't have this!"
-	data = "merge"
-	color = "FFFFFF"
-	can_synth = FALSE
-
-//I'm concerned this is too weak, but I also don't want deathmixes.
-/datum/reagent/fermi/fermiTox/on_mob_life(mob/living/carbon/C, method)
-		C.adjustToxLoss(2)
-		..()
-
-/datum/reagent/fermi/acidic_buffer
+/datum/reagent/acidic_buffer
 	name = "Acidic buffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards acidity when added to another."
 	color = "#fbc314"
@@ -133,7 +84,7 @@ what the fuck is holder anyways
 	can_synth = TRUE
 
 //Consumes self on addition and shifts pH
-/datum/reagent/fermi/acidic_buffer/on_new(datapH)
+/datum/reagent/acidic_buffer/on_new(datapH)
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
@@ -145,14 +96,14 @@ what the fuck is holder anyways
 	holder.remove_reagent(type, volume, ignore_pH = TRUE)
 	..()
 
-/datum/reagent/fermi/basic_buffer
+/datum/reagent/basic_buffer
 	name = "Basic buffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards alkalinity when added to another."
 	color = "#3853a4"
 	pH = 14
 	can_synth = TRUE
 
-/datum/reagent/fermi/basic_buffer/on_new(datapH)
+/datum/reagent/basic_buffer/on_new(datapH)
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return

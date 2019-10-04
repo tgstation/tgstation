@@ -1,4 +1,5 @@
 /obj/item/reagent_containers/pill
+/obj/item/reagent_containers/pill
 	name = "pill"
 	desc = "A tablet or capsule."
 	icon = 'icons/obj/chemical.dmi'
@@ -29,30 +30,33 @@
 
 /obj/item/reagent_containers/pill/attack(mob/M, mob/user, def_zone)
 	if(!canconsume(M, user))
-		return FALSE
+		return 0
 
 	if(M == user)
 		M.visible_message("<span class='notice'>[user] attempts to [apply_method] [src].</span>")
 		if(self_delay)
 			if(!do_mob(user, M, self_delay))
-				return FALSE
+				return 0
 		to_chat(M, "<span class='notice'>You [apply_method] [src].</span>")
 
 	else
 		M.visible_message("<span class='danger'>[user] attempts to force [M] to [apply_method] [src].</span>", \
-							"<span class='userdanger'>[user] attempts to force you to [apply_method] [src].</span>")
+							"<span class='userdanger'>[user] attempts to force [M] to [apply_method] [src].</span>")
 		if(!do_mob(user, M))
-			return FALSE
+			return 0
 		M.visible_message("<span class='danger'>[user] forces [M] to [apply_method] [src].</span>", \
-							"<span class='userdanger'>[user] forces you to [apply_method] [src].</span>")
+							"<span class='userdanger'>[user] forces [M] to [apply_method] [src].</span>")
 
+	var/makes_me_think = pick(strings("redpill.json", "redpill_questions"))
 	if(icon_state == "pill4" && prob(5)) //you take the red pill - you stay in Wonderland, and I show you how deep the rabbit hole goes
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, M, "<span class='notice'>[pick(strings(REDPILL_FILE, "redpill_questions"))]</span>"), 50)
+		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, M, "<span class='notice'>[makes_me_think]</span>"), 50)
 
+	log_combat(user, M, "fed", reagents.log_list())
 	if(reagents.total_volume)
-		reagents.trans_to(M, reagents.total_volume, transfered_by = user, method = apply_type)
+		reagents.reaction(M, apply_type)
+		reagents.trans_to(M, reagents.total_volume)
 	qdel(src)
-	return TRUE
+	return 1
 
 
 /obj/item/reagent_containers/pill/afterattack(obj/target, mob/user , proximity)
@@ -69,8 +73,10 @@
 		to_chat(user, "<span class='warning'>[target] is full.</span>")
 		return
 
-	user.visible_message("<span class='warning'>[user] slips something into [target]!</span>", "<span class='notice'>You dissolve [src] in [target].</span>", null, 2)
-	reagents.trans_to(target, reagents.total_volume, transfered_by = user)
+	to_chat(user, "<span class='notice'>You dissolve [src] in [target].</span>")
+	for(var/mob/O in viewers(2, user))	//viewers is necessary here because of the small radius
+		to_chat(O, "<span class='warning'>[user] slips something into [target]!</span>")
+	reagents.trans_to(target, reagents.total_volume)
 	qdel(src)
 
 /obj/item/reagent_containers/pill/tox

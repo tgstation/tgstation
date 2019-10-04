@@ -1,3 +1,6 @@
+#define PH_WEAK 		(1 << 0)
+#define TEMP_WEAK 		(1 << 1)
+
 /obj/item/reagent_containers
 	name = "Container"
 	desc = "..."
@@ -12,6 +15,8 @@
 	var/spawned_disease = null
 	var/disease_amount = 20
 	var/spillable = FALSE
+	var/beaker_weakness_bitflag = NONE//Bitflag!
+	var/container_HP = 2
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
 	. = ..()
@@ -117,7 +122,44 @@
 
 /obj/item/reagent_containers/microwave_act(obj/machinery/microwave/M)
 	reagents.expose_temperature(1000)
+	if(beaker_weakness_bitflag & TEMP_WEAK)
+		var/list/seen = viewers(5, get_turf(src))
+		var/iconhtml = icon2html(src, seen)
+		for(var/mob/H in seen)
+			to_chat(H, "<span class='notice'>[iconhtml] \The [src]'s melts from the temperature!</span>")
+			playsound(get_turf(src), 'sound/FermiChem/heatmelt.ogg', 80, 1)
+		qdel(src)
 	..()
 
 /obj/item/reagent_containers/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	reagents.expose_temperature(exposed_temperature)
+	temp_check()
+
+
+/obj/item/reagent_containers/proc/pH_check()
+	if(beaker_weakness_bitflag & PH_WEAK)
+		if((reagents.pH < 0.5) || (reagents.pH > 13.5))
+			var/list/seen = viewers(5, get_turf(src))
+			var/iconhtml = icon2html(src, seen)
+			container_HP--
+			if(container_HP <= 0)
+				for(var/mob/M in seen)
+					to_chat(M, "<span class='notice'>[iconhtml] \The [src]'s melts from the extreme pH!</span>")
+					playsound(get_turf(src), 'sound/FermiChem/acidmelt.ogg', 80, 1)
+				SSblackbox.record_feedback("tally", "fermi_chem", 1, "Times beakers have melted from pH")
+				qdel(src)
+			else
+				for(var/mob/M in seen)
+					to_chat(M, "<span class='notice'>[iconhtml] \The [src]'s is damaged by the extreme pH and begins to deform!</span>")
+					playsound(get_turf(src), 'sound/FermiChem/bufferadd.ogg', 50, 1)
+
+/obj/item/reagent_containers/proc/temp_check()
+	if(beaker_weakness_bitflag & TEMP_WEAK)
+		if(reagents.chem_temp >= 444)//assuming polypropylene
+			var/list/seen = viewers(5, get_turf(src))
+			var/iconhtml = icon2html(src, seen)
+			for(var/mob/M in seen)
+				to_chat(M, "<span class='notice'>[iconhtml] \The [src]'s melts from the temperature!</span>")
+				playsound(get_turf(src), 'sound/FermiChem/heatmelt.ogg', 80, 1)
+			SSblackbox.record_feedback("tally", "fermi_chem", 1, "Times beakers have melted from temperature")
+			qdel(src)

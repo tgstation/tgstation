@@ -1,21 +1,6 @@
-/datum/chemical_reaction/fermi
+/datum/chemical_reaction/
 	mix_sound = 'sound/effects/bubbles.ogg'
-	//FermiChem vars:
-	var/OptimalTempMin 		= 0 // Lower area of bell curve for determining heat based rate reactions
-	var/OptimalTempMax		= 1000 // Upper end for above
-	var/ExplodeTemp			= 9999 //Temperature at which reaction explodes
-	var/OptimalpHMin		= 1 // Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
-	var/OptimalpHMax		= 14 // Higest value for above
-	var/ReactpHLim			= 0 // How far out pH wil react, giving impurity place (Exponential phase)
-	var/CatalystFact		= 0 // How much the catalyst affects the reaction (0 = no catalyst)
-	var/CurveSharpT 		= 1.5 // How sharp the temperature exponential curve is (to the power of value)
-	var/CurveSharppH 		= 3 // How sharp the pH exponential curve is (to the power of value)
-	var/ThermicConstant		= 0 //Temperature change per 1u produced
-	var/HIonRelease 		= 0 //pH change per 1u reaction
-	var/RateUpLim 			= 10 //Optimal/max rate possible if all conditions are perfect
-	var/FermiChem 			= TRUE//If the chemical uses the Fermichem reaction mechanics
-	var/FermiExplode 		= FALSE //If the chemical explodes in a special way
-	var/PurityMin			= 0.1 //The minimum purity something has to be above, otherwise it explodes.
+
 	//use fermicalc.py to calculate how the curves look(i think)
 //Called for every reaction step
 /datum/chemical_reaction/fermi/proc/FermiCreate(holder)
@@ -27,7 +12,7 @@
 
 //Called when temperature is above a certain threshold, or if purity is too low.
 /datum/chemical_reaction/fermi/proc/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH, Exploding = FALSE)
-	if (Exploding == TRUE)
+	if (Exploding)
 		return
 
 	if(!pH)//Dunno how things got here without a pH, but just in case
@@ -101,7 +86,7 @@
 /datum/chemical_reaction/fermi/acidic_buffer//done test
 	name = "Acetic acid buffer"
 	id = "acidic_buffer"
-	results = list(/datum/reagent/fermi/acidic_buffer = 2) //acetic acid
+	results = list(/datum/reagent/acidic_buffer = 2) //acetic acid
 	required_reagents = list("salglu_solution" = 0.2, "ethanol" = 0.6, "oxygen" = 0.6, "water" = 0.6)
 	//FermiChem vars:
 	OptimalTempMin 	= 250
@@ -120,15 +105,15 @@
 
 
 /datum/chemical_reaction/fermi/acidic_buffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
-	if(!locate(/datum/reagent/fermi/acidic_buffer) in my_atom.reagents.reagent_list)
+	if(!locate(/datum/reagent/acidic_buffer) in my_atom.reagents.reagent_list)
 		return
-	var/datum/reagent/fermi/acidic_buffer/Fa = locate(/datum/reagent/fermi/acidic_buffer) in my_atom.reagents.reagent_list
+	var/datum/reagent/acidic_buffer/Fa = locate(/datum/reagent/acidic_buffer) in my_atom.reagents.reagent_list
 	Fa.data = 0.1//setting it to 0 means byond thinks it's not there.
 
 /datum/chemical_reaction/fermi/basic_buffer//done test
 	name = "Ethyl Ethanoate buffer"
 	id = "basic_buffer"
-	results = list(/datum/reagent/fermi/basic_buffer = 1.5)
+	results = list(/datum/reagent/basic_buffer = 1.5)
 	required_reagents = list("acidic_buffer" = 0.5, "ethanol" = 0.5, "water" = 0.5)
 	required_catalysts = list("sacid" = 1) //vagely acetic
 	//FermiChem vars:x
@@ -148,8 +133,8 @@
 
 
 /datum/chemical_reaction/fermi/basic_buffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
-	if(!locate(/datum/reagent/fermi/basic_buffer) in my_atom.reagents.reagent_list)
+	if(!locate(/datum/reagent/basic_buffer) in my_atom.reagents.reagent_list)
 		return
-	var/datum/reagent/fermi/basic_buffer/Fb = locate(/datum/reagent/fermi/basic_buffer) in my_atom.reagents.reagent_list
+	var/datum/reagent/basic_buffer/Fb = locate(/datum/reagent/basic_buffer) in my_atom.reagents.reagent_list
 	Fb.data = 14
 

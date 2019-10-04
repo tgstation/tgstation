@@ -7,7 +7,7 @@
 	reagent_flags = OPENCONTAINER
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
-
+	container_HP = 3
 
 /obj/item/reagent_containers/glass/attack(mob/M, mob/user, obj/target)
 	if(!canconsume(M, user))
@@ -116,6 +116,9 @@
 	icon_state = "beaker"
 	item_state = "beaker"
 	materials = list(/datum/material/glass=500)
+	beaker_weakness_bitflag = PH_WEAK
+	container_HP = 5
+
 
 /obj/item/reagent_containers/glass/beaker/Initialize()
 	. = ..()
@@ -156,13 +159,13 @@
 
 /obj/item/reagent_containers/glass/beaker/jar
 	name = "honey jar"
-	desc = "A jar for honey. It can hold up to 50 units of sweet delight."
+	desc = "A jar for honey. It can hold up to 50 units of sweet delight. Unable to withstand reagents of an extreme pH."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "vapour"
 
 /obj/item/reagent_containers/glass/beaker/large
 	name = "large beaker"
-	desc = "A large beaker. Can hold up to 100 units."
+	desc = "A large beaker. Can hold up to 100 units. Unable to withstand reagents of an extreme pH."
 	icon_state = "beakerlarge"
 	materials = list(/datum/material/glass=2500)
 	volume = 100
@@ -171,12 +174,18 @@
 
 /obj/item/reagent_containers/glass/beaker/plastic
 	name = "x-large beaker"
-	desc = "An extra-large beaker. Can hold up to 120 units."
+	desc = "An extra-large beaker. Can hold up to 120 units. Resistant to pH but melts easily."
 	icon_state = "beakerwhite"
 	materials = list(/datum/material/glass=2500, /datum/material/plastic=3000)
 	volume = 120
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,60,120)
+
+/obj/item/reagent_containers/glass/beaker/plastic/Initialize()
+	beaker_weakness_bitflag &= ~PH_WEAK
+	beaker_weakness_bitflag |= TEMP_WEAK
+	. = ..()
+
 
 /obj/item/reagent_containers/glass/beaker/plastic/update_icon()
 	icon_state = "beakerlarge" // hack to lets us reuse the large beaker reagent fill states
@@ -185,12 +194,16 @@
 
 /obj/item/reagent_containers/glass/beaker/meta
 	name = "metamaterial beaker"
-	desc = "A large beaker. Can hold up to 180 units."
+	desc = "A large beaker. Can hold up to 180 units. Is able to withstand all chemical situations."
 	icon_state = "beakergold"
 	materials = list(/datum/material/glass=2500, /datum/material/plastic=3000, /datum/material/gold=1000, /datum/material/titanium=1000)
 	volume = 180
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,60,120,180)
+
+/obj/item/reagent_containers/glass/beaker/meta/Initialize()
+	beaker_weakness_bitflag &= ~PH_WEAK
+	. = ..()
 
 /obj/item/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
@@ -202,11 +215,15 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 
+/obj/item/reagent_containers/glass/beaker/noreact/Initialize()
+	beaker_weakness_bitflag &= ~PH_WEAK
+	. = ..()
+
 /obj/item/reagent_containers/glass/beaker/bluespace
 	name = "bluespace beaker"
 	desc = "A bluespace beaker, powered by experimental bluespace technology \
 		and Element Cuban combined with the Compound Pete. Can hold up to \
-		300 units."
+		300 units. Unable to withstand reagents of an extreme pH."
 	icon_state = "beakerbluespace"
 	materials = list(/datum/material/glass = 5000, /datum/material/plasma = 3000, /datum/material/diamond = 1000, /datum/material/bluespace = 1000)
 	volume = 300
@@ -257,6 +274,7 @@
 	flags_inv = HIDEHAIR
 	slot_flags = ITEM_SLOT_HEAD
 	resistance_flags = NONE
+	container_HP = 2
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 75, "acid" = 50) //Weak melee protection, because you can wear it on your head
 	slot_equipment_priority = list( \
 		SLOT_BACK, SLOT_WEAR_ID,\
@@ -268,6 +286,10 @@
 		SLOT_L_STORE, SLOT_R_STORE,\
 		SLOT_GENERC_DEXTROUS_STORAGE
 	)
+
+/obj/item/reagent_containers/glass/bucket/Initialize()
+	beaker_weakness_bitflag |= TEMP_WEAK
+	. = ..()
 
 /obj/item/reagent_containers/glass/bucket/wooden
 	name = "wooden bucket"
@@ -325,6 +347,7 @@
 	materials = list(/datum/material/glass=0)
 	volume = 50
 	amount_per_transfer_from_this = 10
+	container_HP = 2
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/empty
 	list_reagents = list()

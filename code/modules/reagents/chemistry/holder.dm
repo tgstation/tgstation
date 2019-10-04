@@ -291,7 +291,7 @@
 			var/transfer_amount = amount
 			if(amount > T.volume)
 				transfer_amount = T.volume
-			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, purity, pH, no_react = TRUE)
+			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, T.purity, pH, no_react = TRUE)
 			to_transfer = max(to_transfer - transfer_amount , 0)
 			if(method)
 				R.react_single(T, target_atom, method, transfer_amount, show_message)
@@ -473,7 +473,7 @@
 	update_total()
 
 /datum/reagents/proc/handle_reactions()
-	if(fermiIsReacting == TRUE)
+	if(fermiIsReacting)
 		return
 
 	if(flags & NO_REACT)
@@ -566,7 +566,7 @@
 			//Temperature plays into a larger role too.
 			var/datum/chemical_reaction/C = selected_reaction
 
-			if (C.FermiChem == TRUE && !continue_reacting)
+			if (C.FermiChem && !continue_reacting)
 				if (chem_temp > C.ExplodeTemp) //This is first to ensure explosions.
 					var/datum/chemical_reaction/fermi/Ferm = selected_reaction
 					fermiIsReacting = FALSE
@@ -598,7 +598,7 @@
 
 		//Standard reaction mechanics:
 			else
-				if (C.FermiChem == TRUE)//Just to make sure
+				if (C.FermiChem)//Just to make sure
 					return 0
 
 				for(var/B in cached_required_reagents) //
@@ -659,7 +659,7 @@
 	if (fermiIsReacting == FALSE)
 		CRASH("Fermi has refused to stop reacting even though we asked her nicely.")
 
-	if (chem_temp > C.OptimalTempMin && fermiIsReacting == TRUE)//To prevent pointless reactions
+	if (chem_temp > C.OptimalTempMin && fermiIsReacting)//To prevent pointless reactions
 		if( (pH >= (C.OptimalpHMin - C.ReactpHLim)) && (pH <= (C.OptimalpHMax + C.ReactpHLim)) )
 			if (reactedVol < targetVol)
 				reactedVol = fermiReact(fermiReactID, chem_temp, pH, reactedVol, targetVol, cached_required_reagents, cached_results, multiplier)
@@ -768,10 +768,10 @@
 		SSblackbox.record_feedback("tally", "fermi_chem", addChemAmmount, P)
 		add_reagent(P, (addChemAmmount), null, cached_temp, purity)//add reagent function!! I THINK I can do this:
 		TotalStep += addChemAmmount//for multiple products
-		//Above should reduce yeild based on holder purity.
+		//Above should reduce yield based on holder purity.
 		//Purity Check
 		for(var/datum/reagent/R in my_atom.reagents.reagent_list)
-			if(P == R.id)
+			if(P == R.type)
 				if (R.purity < C.PurityMin)//If purity is below the min, blow it up.
 					fermiIsReacting = FALSE
 					SSblackbox.record_feedback("tally", "fermi_chem", 1, ("[P] explosion"))
@@ -946,7 +946,7 @@
 		return FALSE
 
 
-	if (D.id == "water" && no_react == FALSE && !istype(my_atom, /obj/item/reagent_containers/food)) //Do like an otter, add acid to water, but also don't blow up botany.
+	if (D.type == "water" && no_react == FALSE && !istype(my_atom, /obj/item/reagent_containers/food)) //Do like an otter, add acid to water, but also don't blow up botany.
 		if (pH <= 2)
 			SSblackbox.record_feedback("tally", "fermi_chem", 1, "water-acid explosions")
 			var/datum/effect_system/smoke_spread/chem/s = new
@@ -991,7 +991,7 @@
 	////
 
 		//cacluate reagent based pH shift.
-	if(ignore_pH == TRUE)
+	if(ignore_pH)
 		pH = ((cached_pH * cached_total)+(other_pH * amount))/(cached_total + amount)//should be right
 	else
 		pH = ((cached_pH * cached_total)+(D.pH * amount))/(cached_total + amount)//should be right
@@ -1024,10 +1024,10 @@
 	if(data)
 		R.data = data
 		R.on_new(data)
-	if(R.addProc == TRUE)//Allows on new without data overhead.
+	if(R.addProc)//Allows on new without data overhead.
 		R.on_new(pH) //Add more as desired.
 	if(isliving(my_atom))
-		if(R.OnMobMergeCheck == TRUE)//Forces on_mob_add proc when a chem is merged
+		if(R.OnMobMergeCheck)//Forces on_mob_add proc when a chem is merged
 			R.on_mob_add(my_atom, amount)
 		//else
 			//	R.on_merge(data, amount, my_atom, other_purity)
