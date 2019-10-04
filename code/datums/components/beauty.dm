@@ -8,23 +8,21 @@
 	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/enter_area)
 	RegisterSignal(parent, COMSIG_EXIT_AREA, .proc/exit_area)
 	var/area/A = get_area(parent)
-	if(!A || A.outdoors)
-		return
-	A.totalbeauty += beauty
-	A.update_beauty()
+	enter_area(null, A)
 
 /datum/component/beauty/proc/enter_area(datum/source, area/A)
+	if(!A || A.outdoors)
+			return
 	A.totalbeauty += beauty
 	A.update_beauty()
 
 /datum/component/beauty/proc/exit_area(datum/source, area/A)
+	if(!A || A.outdoors)
+		return
 	A.totalbeauty -= beauty
 	A.update_beauty()
 
 /datum/component/beauty/Destroy()
 	. = ..()
 	var/area/A = get_area(parent)
-	if(!A || A.outdoors)
-		return
-	A.totalbeauty -= beauty
-	A.update_beauty()
+	exit_area(null, A)
