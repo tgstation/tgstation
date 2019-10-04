@@ -7,7 +7,7 @@
 	reagent_flags = OPENCONTAINER
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
-	container_HP = 3
+	container_HP = 2
 
 /obj/item/reagent_containers/glass/attack(mob/M, mob/user, obj/target)
 	if(!canconsume(M, user))
@@ -117,7 +117,7 @@
 	item_state = "beaker"
 	materials = list(/datum/material/glass=500)
 	beaker_weakness_bitflag = PH_WEAK
-	container_HP = 5
+	container_HP = 2
 
 
 /obj/item/reagent_containers/glass/beaker/Initialize()
@@ -131,6 +131,8 @@
 	update_icon()
 
 /obj/item/reagent_containers/glass/beaker/update_icon()
+	if(!cached_icon)
+		cached_icon = icon_state
 	cut_overlays()
 
 	if(reagents.total_volume)
@@ -139,19 +141,19 @@
 		var/percent = round((reagents.total_volume / volume) * 100)
 		switch(percent)
 			if(0 to 9)
-				filling.icon_state = "[icon_state]-10"
+				filling.icon_state = "[cached_icon]-10"
 			if(10 to 24)
-				filling.icon_state = "[icon_state]10"
+				filling.icon_state = "[cached_icon]10"
 			if(25 to 49)
-				filling.icon_state = "[icon_state]25"
+				filling.icon_state = "[cached_icon]25"
 			if(50 to 74)
-				filling.icon_state = "[icon_state]50"
+				filling.icon_state = "[cached_icon]50"
 			if(75 to 79)
-				filling.icon_state = "[icon_state]75"
+				filling.icon_state = "[cached_icon]75"
 			if(80 to 90)
-				filling.icon_state = "[icon_state]80"
+				filling.icon_state = "[cached_icon]80"
 			if(91 to INFINITY)
-				filling.icon_state = "[icon_state]100"
+				filling.icon_state = "[cached_icon]100"
 
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(filling)
@@ -171,6 +173,7 @@
 	volume = 100
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
+    container_HP = 3
 
 /obj/item/reagent_containers/glass/beaker/plastic
 	name = "x-large beaker"
@@ -180,6 +183,7 @@
 	volume = 120
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,60,120)
+	container_HP = 4
 
 /obj/item/reagent_containers/glass/beaker/plastic/Initialize()
 	beaker_weakness_bitflag &= ~PH_WEAK
@@ -274,7 +278,7 @@
 	flags_inv = HIDEHAIR
 	slot_flags = ITEM_SLOT_HEAD
 	resistance_flags = NONE
-	container_HP = 2
+	container_HP = 1
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 75, "acid" = 50) //Weak melee protection, because you can wear it on your head
 	slot_equipment_priority = list( \
 		SLOT_BACK, SLOT_WEAR_ID,\
@@ -347,7 +351,7 @@
 	materials = list(/datum/material/glass=0)
 	volume = 50
 	amount_per_transfer_from_this = 10
-	container_HP = 2
+	container_HP = 1
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/empty
 	list_reagents = list()

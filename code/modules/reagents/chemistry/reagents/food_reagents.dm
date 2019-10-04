@@ -231,6 +231,7 @@
 	description = "A special oil that noticably chills the body. Extracted from Icepeppers and slimes."
 	color = "#8BA6E9" // rgb: 139, 166, 233
 	taste_description = "mint"
+	pH = 13
 
 /datum/reagent/consumable/frostoil/on_mob_life(mob/living/carbon/M)
 	var/cooling = 0
@@ -279,11 +280,11 @@
 /datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!ishuman(M) && !ismonkey(M))
 		return
-		
+
 	var/mob/living/carbon/victim = M
 	if(method == TOUCH || method == VAPOR)
 		var/pepper_proof = victim.is_pepper_proof()
-	
+
 		//check for protection
 		//actually handle the pepperspray effects
 		if (!(pepper_proof)) // you need both eye and mouth protection
@@ -296,7 +297,7 @@
 			victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.25, blacklisted_movetypes=(FLYING|FLOATING))
 			addtimer(CALLBACK(victim, /mob.proc/remove_movespeed_modifier, MOVESPEED_ID_PEPPER_SPRAY), 10 SECONDS)
 		victim.update_damage_hud()
-			
+
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
 		M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
@@ -357,6 +358,7 @@
 	color = "#E700E7" // rgb: 231, 0, 231
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	taste_description = "mushroom"
+	pH = 11
 
 /datum/reagent/drug/mushroomhallucinogen/on_mob_life(mob/living/carbon/M)
 	if(!M.slurring)
@@ -570,6 +572,7 @@
 	description = "A blinding substance extracted from certain onions."
 	color = "#c0c9a0"
 	taste_description = "bitterness"
+	pH = 5
 
 /datum/reagent/consumable/tearjuice/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!istype(M))
@@ -622,6 +625,7 @@
 	description = "An ichor, derived from a certain mushroom, makes for a bad time."
 	color = "#1d043d"
 	taste_description = "bitter mushroom"
+	pH = 12
 
 /datum/reagent/consumable/entpoly/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 10)
@@ -641,6 +645,7 @@
 	description = "A stimulating ichor which causes luminescent fungi to grow on the skin. "
 	color = "#b5a213"
 	taste_description = "tingling mushroom"
+	pH = 11.2
 
 /datum/reagent/consumable/tinlux/reaction_mob(mob/living/M)
 	M.set_light(2)
@@ -654,6 +659,7 @@
 	color = "#d3a308"
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	taste_description = "fruity mushroom"
+	pH = 10.4
 
 /datum/reagent/consumable/vitfro/on_mob_life(mob/living/carbon/M)
 	if(prob(80))
@@ -668,6 +674,7 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#eef442" // rgb: 238, 244, 66
 	taste_description = "mournful honking"
+	pH = 9.2
 
 
 /datum/reagent/consumable/liquidelectricity
@@ -676,6 +683,7 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#97ee63"
 	taste_description = "pure electricity"
+	pH = 6.4
 
 /datum/reagent/consumable/liquidelectricity/reaction_mob(mob/living/M, method=TOUCH, reac_volume) //can't be on life because of the way blood works.
 	if((method == INGEST || method == INJECT || method == PATCH) && iscarbon(M))
@@ -700,6 +708,7 @@
 	taste_mult = 8
 	taste_description = "sweetness"
 	overdose_threshold = 17
+	pH = 6.2
 
 /datum/reagent/consumable/astrotame/overdose_process(mob/living/carbon/M)
 	if(M.disgust < 80)
@@ -716,6 +725,7 @@
 	quality = FOOD_AMAZING
 	taste_mult = 100
 	can_synth = FALSE
+	pH = 6.1
 
 /datum/reagent/consumable/nutriment/peptides
 	name = "Peptides"

@@ -21,6 +21,7 @@
 	var/analyzeVars[0]
 	var/useramount = 30 // Last used amount
 	var/list/pillStyles = null
+	var/fermianalyze //Give more detail on fermireactions on analysis
 
 /obj/machinery/chem_master/Initialize()
 	create_reagents(100)
@@ -163,6 +164,7 @@
 	data["condi"] = condi
 	data["screen"] = screen
 	data["analyzeVars"] = analyzeVars
+	data["fermianalyze"] = fermianalyze
 	data["chosenPillStyle"] = chosenPillStyle
 	data["isPillBottleLoaded"] = bottle ? 1 : 0
 	if(bottle)
@@ -206,11 +208,13 @@
 				var/reagent = GLOB.name2reagent[params["id"]]
 				var/amount = text2num(params["amount"])
 				if (amount > 0)
+					end_fermi_reaction()
 					beaker.reagents.trans_id_to(src, reagent, amount)
 					. = TRUE
 				else if (amount == -1) // -1 means custom amount
 					useramount = input("Enter the Amount you want to transfer:", name, useramount) as num|null
 					if (useramount > 0)
+						end_fermi_reaction()
 						beaker.reagents.trans_id_to(src, reagent, useramount)
 						. = TRUE
 
@@ -355,6 +359,14 @@
 				var/const/P = 3 //The number of seconds between life ticks
 				var/T = initial(R.metabolization_rate) * (60 / P)
 				analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))
+				if(istype(R, /datum/reagent/fermi))
+					fermianalyze = TRUE
+					var/datum/chemical_reaction/Rcr = get_chemical_reaction(R.type)
+					var/pHpeakCache = (Rcr.OptimalpHMin + Rcr.OptimalpHMax)/2
+					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold), "purityF" = initial(R.purity), "inverseRatioF" = initial(R.InverseChemVal), "purityE" = initial(Rcr.PurityMin), "minTemp" = initial(Rcr.OptimalTempMin), "maxTemp" = initial(Rcr.OptimalTempMax), "eTemp" = initial(Rcr.ExplodeTemp), "pHpeak" = pHpeakCache)
+				else
+					fermianalyze = FALSE
+					analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))
 				screen = "analyze"
 				return
 
@@ -397,6 +409,10 @@
 		. = . % 9
 		AM.pixel_x = ((.%3)*6)
 		AM.pixel_y = -8 + (round( . / 3)*8)
+
+/obj/machinery/chem_master/proc/end_fermi_reaction()//Ends any reactions upon moving.
+	if(beaker.reagents.fermiIsReacting)
+		beaker.reagents.fermiEnd()
 
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"

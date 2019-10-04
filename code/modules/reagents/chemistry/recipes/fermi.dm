@@ -141,7 +141,7 @@
 	name = "Polychromatic Rainbowium"
 	id = "rainbowium"
 	results = list(/datum/reagent/rainbowium = 0.1)
-	required_reagents = list(/datum/reagent/colorful_reagent = 0.5, /datum/reagent/happiness = 0.5, /datum/reagent/potassium = 0.25 /datum/reagent/toxin/mindbreaker = 1)
+	required_reagents = list(/datum/reagent/colorful_reagent = 0.5, /datum/reagent/drug/happiness = 0.5, /datum/reagent/potassium = 0.25, /datum/reagent/toxin/mindbreaker = 1)
 	OptimalTempMin 	= 770
 	OptimalTempMax 	= 850
 	ExplodeTemp 	= 920 //check to see overflow doesn't happen!

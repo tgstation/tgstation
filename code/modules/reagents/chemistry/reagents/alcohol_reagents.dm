@@ -13,6 +13,7 @@
 	nutriment_factor = 0
 	taste_description = "alcohol"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	pH = 7.33
 	var/boozepwr = 65 //Higher numbers equal higher hardness, higher hardness equals more intense alcohol poisoning
 
 /*
@@ -87,6 +88,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "piss water"
 	glass_name = "glass of beer"
 	glass_desc = "A freezing pint of beer."
+	pH = 4
+
 
 /datum/reagent/consumable/ethanol/beer/light
 	name = "Light Beer"
@@ -95,6 +98,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "dish water"
 	glass_name = "glass of light beer"
 	glass_desc = "A freezing pint of watery light beer."
+	pH = 6
 
 /datum/reagent/consumable/ethanol/beer/green
 	name = "Green Beer"
@@ -104,6 +108,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "greenbeerglass"
 	glass_name = "glass of green beer"
 	glass_desc = "A freezing pint of green beer. Festive."
+	pH = 6
 
 /datum/reagent/consumable/ethanol/beer/green/on_mob_life(mob/living/carbon/M)
 	if(M.color != color)
@@ -122,6 +127,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of RR coffee liquor"
 	glass_desc = "DAMN, THIS THING LOOKS ROBUST!"
 	shot_glass_icon_state = "shotglasscream"
+	pH = 6
 
 /datum/reagent/consumable/ethanol/kahlua/on_mob_life(mob/living/carbon/M)
 	M.dizziness = max(0,M.dizziness-5)
@@ -142,6 +148,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of whiskey"
 	glass_desc = "The silky, smokey whiskey goodness inside the glass makes the drink look very classy."
 	shot_glass_icon_state = "shotglassbrown"
+	pH = 4.5
 
 /datum/reagent/consumable/ethanol/thirteenloko
 	name = "Thirteen Loko"
@@ -216,6 +223,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of vodka"
 	glass_desc = "The glass contain wodka. Xynta."
 	shot_glass_icon_state = "shotglassclear"
+	pH = 8.1
 
 /datum/reagent/consumable/ethanol/vodka/on_mob_life(mob/living/carbon/M)
 	M.radiation = max(M.radiation-2,0)
@@ -248,6 +256,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "threemileislandglass"
 	glass_name = "Three Mile Island Ice Tea"
 	glass_desc = "A glass of this is sure to prevent a meltdown."
+	pH = 3.5
 
 /datum/reagent/consumable/ethanol/threemileisland/on_mob_life(mob/living/carbon/M)
 	M.set_drugginess(50)
@@ -262,6 +271,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "ginvodkaglass"
 	glass_name = "glass of gin"
 	glass_desc = "A crystal clear glass of Griffeater gin."
+	pH = 6.9
 
 /datum/reagent/consumable/ethanol/rum
 	name = "Rum"
@@ -273,6 +283,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of rum"
 	glass_desc = "Now you want to Pray for a pirate suit, don't you?"
 	shot_glass_icon_state = "shotglassbrown"
+	pH = 6.5
 
 /datum/reagent/consumable/ethanol/tequila
 	name = "Tequila"
@@ -284,6 +295,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of tequila"
 	glass_desc = "Now all that's missing is the weird colored shades!"
 	shot_glass_icon_state = "shotglassgold"
+	pH = 4
 
 /datum/reagent/consumable/ethanol/vermouth
 	name = "Vermouth"
@@ -295,6 +307,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of vermouth"
 	glass_desc = "You wonder why you're even drinking this straight."
 	shot_glass_icon_state = "shotglassclear"
+	pH = 3.25
 
 /datum/reagent/consumable/ethanol/wine
 	name = "Wine"
@@ -306,6 +319,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of wine"
 	glass_desc = "A very classy looking drink."
 	shot_glass_icon_state = "shotglassred"
+	pH = 3.45
 
 /datum/reagent/consumable/ethanol/lizardwine
 	name = "Lizard wine"
@@ -314,6 +328,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 45
 	quality = DRINK_FANTASTIC
 	taste_description = "scaley sweetness"
+	pH = 3
 
 /datum/reagent/consumable/ethanol/grappa
 	name = "Grappa"
@@ -324,6 +339,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "grappa"
 	glass_name = "glass of grappa"
 	glass_desc = "A fine drink originally made to prevent waste by using the leftovers from winemaking."
+	pH = 3.5
 
 /datum/reagent/consumable/ethanol/cognac
 	name = "Cognac"
@@ -335,6 +351,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of cognac"
 	glass_desc = "Damn, you feel like some kind of French aristocrat just by holding this."
 	shot_glass_icon_state = "shotglassbrown"
+	pH = 3.5
 
 /datum/reagent/consumable/ethanol/absinthe
 	name = "Absinthe"
@@ -346,6 +363,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of absinthe"
 	glass_desc = "It's as strong as it smells."
 	shot_glass_icon_state = "shotglassgreen"
+	pH = 4.5
 
 /datum/reagent/consumable/ethanol/absinthe/on_mob_life(mob/living/carbon/M)
 	if(prob(10) && !HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
@@ -361,6 +379,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "glass_brown2"
 	glass_name = "Hooch"
 	glass_desc = "You've really hit rock bottom now... your liver packed its bags and left last night."
+	pH = 2
 
 /datum/reagent/consumable/ethanol/hooch/on_mob_life(mob/living/carbon/M)
 	if(M.mind && M.mind.assigned_role == "Assistant")
@@ -377,6 +396,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "aleglass"
 	glass_name = "glass of ale"
 	glass_desc = "A freezing pint of delicious Ale."
+	pH = 4.5
 
 /datum/reagent/consumable/ethanol/goldschlager
 	name = "Goldschlager"
@@ -389,6 +409,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of goldschlager"
 	glass_desc = "100% proof that teen girls will drink anything with gold in it."
 	shot_glass_icon_state = "shotglassgold"
+	pH = 3.5
 
 /datum/reagent/consumable/ethanol/patron
 	name = "Patron"
@@ -401,6 +422,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of patron"
 	glass_desc = "Drinking patron in the bar, with all the subpar ladies."
 	shot_glass_icon_state = "shotglassclear"
+	pH = 4.5
 
 /datum/reagent/consumable/ethanol/gintonic
 	name = "Gin and Tonic"
@@ -412,6 +434,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "gintonicglass"
 	glass_name = "Gin and Tonic"
 	glass_desc = "A mild but still great cocktail. Drink up, like a true Englishman."
+	pH = 3
 
 /datum/reagent/consumable/ethanol/rum_coke
 	name = "Rum and Coke"
@@ -423,6 +446,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "whiskeycolaglass"
 	glass_name = "Rum and Coke"
 	glass_desc = "The classic go-to of space-fratboys."
+	pH = 4
 
 /datum/reagent/consumable/ethanol/cuba_libre
 	name = "Cuba Libre"
@@ -611,6 +635,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Heavy, hot and strong. Just like the Iron fist of the LAW."
 	overdose_threshold = 40
 	var/datum/brain_trauma/special/beepsky/B
+	pH = 2
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_metabolize(mob/living/carbon/M)
 	if(HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
@@ -1494,6 +1519,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Bastion Bourbon"
 	glass_desc = "If you're feeling low, count on the buttery flavor of our own bastion bourbon."
 	shot_glass_icon_state = "shotglassgreen"
+	pH = 4
 
 /datum/reagent/consumable/ethanol/bastion_bourbon/on_mob_metabolize(mob/living/L)
 	var/heal_points = 10

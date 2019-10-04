@@ -844,11 +844,14 @@
 	total_volume = 0
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
-		if(R.volume < 0.1)
+		if(R.volume == 0)
+			del_reagent(R.type)
+		if(R.volume < 0.01 && !fermiIsReacting)
 			del_reagent(R.type)
 		else
 			total_volume += R.volume
-
+		if(!reagent_list)
+			pH = 7
 	return 0
 
 /datum/reagents/proc/clear_reagents()
