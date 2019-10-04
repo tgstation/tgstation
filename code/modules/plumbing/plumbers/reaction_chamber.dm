@@ -28,6 +28,12 @@
 		ui = new(user, src, ui_key, "reaction_chamber", name, 500, 300, master_ui, state)
 		ui.open()
 
+/obj/machinery/plumbing/reaction_chamber/power_change()
+	if(use_power != NO_POWER_USE)
+		icon_state = initial(icon_state) + "_on"
+	else
+		icon_state = initial(icon_state)
+
 /obj/machinery/plumbing/reaction_chamber/ui_data(mob/user)
 	var/list/data = list()
 	var/list/text_reagents = list()
@@ -44,7 +50,7 @@
 	. = TRUE
 	switch(action)
 		if("remove")
-			var/reagent = get_chem_id(params["reagent"])
+			var/reagent = get_chem_id(params["chem"])
 			if(reagent)
 				required_reagents.Remove(reagent)
 		if("add")
@@ -53,3 +59,4 @@
 				var/input_amount = CLAMP(round(input("Enter amount", "Input") as num|null), 1, 100)
 				if(input_amount)
 					required_reagents[input_reagent] = input_amount
+				emptying = FALSE //When entering the chems and already having a flow of them incoming, it could force you to plunger it empty unnecessarily

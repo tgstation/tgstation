@@ -74,3 +74,15 @@
 /obj/machinery/plumbing/output/Initialize(mapload, bolt)
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_demand, bolt)
+
+/obj/machinery/plumbing/tank
+	name = "chemical tank"
+	desc = "A massive chemical holding tank."
+	icon_state = "tank"
+	reagent_flags = TRANSPARENT
+	rcd_cost = 25
+	rcd_delay = 20
+
+/obj/machinery/plumbing/tank/Initialize(mapload, bolt)
+	. = ..()
+	AddComponent(/datum/component/plumbing/tank, bolt)

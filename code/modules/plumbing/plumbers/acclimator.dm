@@ -21,6 +21,10 @@
 	var/enabled = TRUE
 	///COOLING, HEATING or NEUTRAL. We track this for change, so we dont needlessly update our icon
 	var/acclimate_state
+	/**We can't take anything in, at least till we're emptied. Down side of the round robin chem transfer, otherwise while emptying 5u of an unreacted chem gets added,
+	and you get nasty leftovers 
+	*/
+	var/emptying = FALSE
 
 	ui_x = 300
 	ui_y = 260
@@ -42,6 +46,11 @@
 	else if(reagents.chem_temp > target_temperature && acclimate_state != COOLING)
 		acclimate_state = COOLING
 		update_icon()
+	if(!emptying)
+		if(reagents.chem_temp >= target_temperature && target_temperature + allowed_temperature_difference >= reagents.chem_temp) //cooling here
+			emptying = TRUE
+		if(reagents.chem_temp <= target_temperature && target_temperature - allowed_temperature_difference <= reagents.chem_temp) //heating here
+			emptying = TRUE
 
 	reagents.adjust_thermal_energy((target_temperature - reagents.chem_temp) * heater_coefficient * SPECIFIC_HEAT_DEFAULT * reagents.total_volume) //keep constant with chem heater
 	reagents.handle_reactions()
@@ -69,6 +78,7 @@
 	data["allowed_temperature_difference"] = allowed_temperature_difference
 	data["acclimate_state"] = acclimate_state
 	data["max_volume"] = reagents.maximum_volume
+	data["emptying"] = emptying
 	return data
 
 /obj/machinery/plumbing/acclimator/ui_act(action, params)

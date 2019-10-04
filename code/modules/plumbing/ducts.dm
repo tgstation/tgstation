@@ -265,7 +265,7 @@ All the important duct code:
 	connect_network(D, direction, TRUE)
 	add_connects(direction)
 	update_icon()
-///has a total of 5 layers and doesnt give a shit about color. its also dumb so doesnt autoconnect. the sprite is vomit inducing
+///has a total of 5 layers and doesnt give a shit about color. its also dumb so doesnt autoconnect. 
 /obj/machinery/duct/multilayered
 	name = "duct layer-manifold"
 	icon = 'icons/obj/2x2.dmi'
@@ -280,16 +280,23 @@ All the important duct code:
 	ignore_colors = TRUE
 	dumb = TRUE
 
+	active = FALSE
+	anchored = FALSE
+
+/obj/machinery/duct/multilayered/Move(atom/newloc, direct)
+	. = ..()
+	update_icon()
+
 /obj/machinery/duct/multilayered/update_icon()
 	icon_state = initial(icon_state)
-	if((connects & NORTH) || (connects & SOUTH))
+	if(dir & NORTH || dir & SOUTH)
 		icon_state += "_vertical"
-		pixel_x = -15
-		pixel_y = -15
+		pixel_x = -17
+		pixel_y = -17
 	else
 		icon_state += "_horizontal"
-		pixel_x = -10
-		pixel_y = -12
+		pixel_x = -17
+		pixel_y = -17
 ///don't connect to other multilayered stuff because honestly it shouldnt be done and I dont wanna deal with it
 /obj/machinery/duct/multilayered/connect_duct(obj/machinery/duct/D, direction, ignore_color)
 	if(istype(D, /obj/machinery/duct/multilayered))
