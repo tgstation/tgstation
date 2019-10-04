@@ -3585,10 +3585,6 @@
 "tS" = (
 /turf/template_noop,
 /area/ruin/unpowered/no_grav)
-"ux" = (
-/obj/structure/cable,
-/turf/closed/wall,
-/area/ruin/space/derelict/solar_control)
 "vf" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
@@ -3681,6 +3677,10 @@
 /obj/structure/lattice,
 /turf/template_noop,
 /area/ruin/unpowered/no_grav)
+"GP" = (
+/obj/structure/cable,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
 "Ih" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
@@ -3720,12 +3720,6 @@
 	icon_state = "floorscorched2"
 	},
 /area/space/nearstation)
-"JI" = (
-/obj/structure/cable,
-/turf/open/floor/plasteel/airless{
-	icon_state = "damaged4"
-	},
-/area/ruin/space/derelict/bridge/ai_upload)
 "Kf" = (
 /obj/item/paper/fluff/ruins/thederelict/vaultraider,
 /obj/effect/decal/remains/human{
@@ -3842,15 +3836,6 @@
 "Sv" = (
 /turf/closed/wall/r_wall,
 /area/space/nearstation)
-"ST" = (
-/obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/ruin/space/derelict/solar_control)
 "Tm" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary/port)
@@ -3917,11 +3902,6 @@
 	amount = 15
 	},
 /turf/open/floor/plasteel/airless,
-/area/ruin/space/derelict/bridge/ai_upload)
-"ZA" = (
-/obj/structure/grille,
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "ZB" = (
 /obj/structure/lattice,
@@ -10395,10 +10375,10 @@ bj
 ax
 bG
 Ob
-bO
-bz
-bO
-ax
+xr
+GP
+YQ
+ce
 aa
 aa
 aa
@@ -10503,15 +10483,15 @@ Uz
 ax
 bj
 bj
-ZA
-ZA
-ce
-xr
-JI
-bO
-bO
-bO
+bj
+bj
 ax
+bO
+bE
+bO
+bO
+bO
+ce
 aa
 aa
 aa
@@ -10616,7 +10596,7 @@ Sv
 ax
 bj
 bj
-ZA
+bj
 bj
 ax
 bK
@@ -10729,7 +10709,7 @@ Uz
 ax
 bj
 bj
-ZA
+bj
 bj
 ax
 ax
@@ -10739,7 +10719,7 @@ ce
 ax
 ax
 bj
-ZA
+bj
 bj
 cs
 ZM
@@ -10842,7 +10822,7 @@ Uz
 ax
 bj
 bj
-ZA
+bj
 bj
 bW
 bW
@@ -10852,7 +10832,7 @@ Vt
 bW
 bW
 bj
-ZA
+bj
 bj
 cs
 cx
@@ -10955,7 +10935,7 @@ Uz
 ax
 bj
 bj
-ZA
+bj
 bj
 bW
 Xu
@@ -10965,7 +10945,7 @@ Ni
 Xu
 bW
 bj
-ZA
+bj
 bj
 cs
 cy
@@ -11068,7 +11048,7 @@ Uz
 ax
 bj
 bj
-ZA
+bj
 bj
 bW
 my
@@ -11078,7 +11058,7 @@ bz
 DX
 bW
 bj
-ZA
+bj
 bj
 cs
 cz
@@ -11181,7 +11161,7 @@ Uz
 ax
 bj
 bj
-ZA
+bj
 bj
 bW
 Zu
@@ -11191,7 +11171,7 @@ KP
 vo
 bW
 bj
-ZA
+bj
 bj
 cs
 cA
@@ -11294,7 +11274,7 @@ Uz
 ax
 bj
 bj
-ZA
+bj
 bj
 bW
 bW
@@ -11304,7 +11284,7 @@ bW
 bW
 bW
 bj
-ZA
+bj
 bj
 cs
 cB
@@ -11407,17 +11387,17 @@ aS
 aS
 bj
 bj
-ZA
-ZA
-ZA
-ZA
-ZA
-ZA
-ZA
-ZA
-ZA
-ZA
-ZA
+bj
+bj
+bj
+bj
+bj
+bj
+bj
+bj
+bj
+bj
+bj
 bj
 cs
 cs
@@ -11523,7 +11503,7 @@ bj
 bj
 bj
 bj
-ZA
+bj
 bj
 bj
 bj
@@ -11636,7 +11616,7 @@ bj
 as
 as
 as
-ux
+as
 as
 as
 as
@@ -11749,7 +11729,7 @@ as
 as
 bk
 bA
-ST
+bH
 az
 az
 az
@@ -11862,7 +11842,7 @@ as
 bq
 az
 az
-aB
+az
 az
 az
 az
