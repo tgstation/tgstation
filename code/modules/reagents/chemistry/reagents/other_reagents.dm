@@ -1449,7 +1449,7 @@
 		return ..()
 
 /datum/reagent/colorful_reagent/reaction_mob(mob/living/M, reac_volume)
-	if(can_colour_mobs == TRUE)
+	if(can_colour_mobs)
 		M.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
 		..()
 
