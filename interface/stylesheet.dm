@@ -166,17 +166,22 @@ h1.alert, h2.alert		{color: #000000;}
 		100%	{color: #3bb5d3;}
 }
 
-.rainbow				{color: #660015; 	font-weight: bold; animation: rainbow 5000ms infinite;}
-.bigrainbow				{color: #660015; 	font-weight: bold;font-size: 3; animation: rainbow 5000ms infinite;}
-	@keyframes rainbow {
-	0% { color: #400020; }
-	40% { color: #FF0000; }
-	50% { color: #FF8888; }
-	60% { color: #FF0000; }
-	100% { color: #400020; }
+.rainbow				{color: #000000; 	font-weight: bold; animation: rainbowanim 5000ms infinite;}
+.bigrainbow				{color: #000000; 	font-weight: bold;font-size: 3; animation: rainbowanim 5000ms infinite;}
+	@keyframes rainbowanim {
+	0% { color: #FF0000; }
+	15% { color: #FFA321; }
+	30% { color: #F6FF00; }
+	45% { color: #09B800; }
+	60% { color: #00BFE0; }
+	75% { color: #4059FF; }
+	80% { color: #9900FF; }
+	95% { color: #9500B3; }
+	100% { color: #FF004C; }
 }
 
 .phobia			{color: #dd0000;	font-weight: bold;	animation: phobia 750ms infinite;}
+
 	@keyframes phobia {
 		0%		{color: #0d0d0d;}
 		50%		{color: #dd0000;}
