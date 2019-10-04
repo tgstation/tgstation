@@ -170,14 +170,12 @@ h1.alert, h2.alert		{color: #000000;}
 .bigrainbow				{color: #000000; 	font-weight: bold;font-size: 3; animation: rainbowanim 5000ms infinite;}
 	@keyframes rainbowanim {
 	0% { color: #FF0000; }
-	15% { color: #FFA321; }
-	30% { color: #F6FF00; }
-	45% { color: #09B800; }
-	60% { color: #00BFE0; }
-	75% { color: #4059FF; }
-	80% { color: #9900FF; }
-	95% { color: #9500B3; }
-	100% { color: #FF004C; }
+	17% { color: #FFA321; }
+	34% { color: #F6FF00; }
+	51% { color: #09B800; }
+	68% { color: #00BFE0; }
+	85% { color: #4059FF; }
+	100% { color: #9900FF; }
 }
 
 .phobia			{color: #dd0000;	font-weight: bold;	animation: phobia 750ms infinite;}
