@@ -6685,7 +6685,7 @@
 	req_access_txt = "201"
 	},
 /obj/item/clothing/suit/toggle/labcoat,
-/obj/item/tank/internals/air,
+/obj/item/tank/internals/oxygen,
 /obj/item/clothing/mask/gas,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{

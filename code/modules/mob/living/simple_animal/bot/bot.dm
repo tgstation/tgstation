@@ -588,19 +588,20 @@ Pass a positive integer as an argument to override a bot's default speed.
 		mode = BOT_IDLE
 		return
 
-	if(patrol_target)		// has patrol target
-		spawn(0)
-			calc_path()		// Find a route to it
-			if(path.len == 0)
-				patrol_target = null
-				return
-			mode = BOT_PATROL
+	if(patrol_target) // has patrol target
+		INVOKE_ASYNC(src, .proc/target_patrol)
 	else					// no patrol target, so need a new one
 		speak("Engaging patrol mode.")
 		find_patrol_target()
 		tries++
 	return
 
+/mob/living/simple_animal/bot/proc/target_patrol()
+	calc_path()		// Find a route to it
+	if(!path.len)
+		patrol_target = null
+		return
+	mode = BOT_PATROL
 // perform a single patrol step
 
 /mob/living/simple_animal/bot/proc/patrol_step()

@@ -7011,7 +7011,7 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/air,
-/obj/item/tank/internals/air,
+/obj/item/tank/internals/oxygen,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aoj" = (
@@ -28865,7 +28865,7 @@
 /area/crew_quarters/heads/hop)
 "bkA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/tank/internals/air,
+/obj/item/tank/internals/oxygen,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "bkB" = (
@@ -41428,8 +41428,8 @@
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
 "bNd" = (
-/obj/item/tank/internals/air,
-/obj/item/tank/internals/air,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/machinery/light/small{
@@ -47919,8 +47919,8 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cbH" = (
-/obj/item/tank/internals/air,
-/obj/item/tank/internals/air,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/structure/disposalpipe/segment{
@@ -58046,6 +58046,15 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/port/aft)
+"cxb" = (
+/obj/structure/rack,
+/obj/item/tank/internals/oxygen,
+/obj/item/wrench,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/maintenance/port/aft)
 "cxc" = (
 /obj/item/trash/chips,
 /turf/open/floor/plating,
@@ -72000,8 +72009,8 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "diL" = (
-/obj/item/tank/internals/air,
-/obj/item/tank/internals/air,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/machinery/space_heater,
