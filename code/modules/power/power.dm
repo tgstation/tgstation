@@ -356,9 +356,11 @@
 /turf/proc/get_cable_node()
 	if(!can_have_cabling())
 		return null
+	var/obj/structure/cable_bridge/B = locate() in src
 	for(var/obj/structure/cable/C in src)
-		C.update_icon()
-		return C
+		if(C.cable_layer == CABLE_LAYER_2 || B)
+			C.update_icon()
+			return C
 	return null
 
 /area/proc/get_apc()

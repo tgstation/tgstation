@@ -428,6 +428,7 @@
 	buildstacktype = null
 	item_chair = null
 	flags_1 = NODECONSTRUCT_1
+	alpha = 0
 
 /obj/structure/chair/mime/post_buckle_mob(mob/living/M)
 	M.pixel_y += 5

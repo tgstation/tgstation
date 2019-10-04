@@ -222,7 +222,7 @@
 			teleport_now.Remove(user)
 			if(user.wear_suit == src)
 				if(hard_landing)
-					user.electrocute_act(35, src, safety = 1)
+					user.electrocute_act(35, src, flags = SHOCK_NOGLOVES)
 					user.Paralyze(200)
 				if(!silent)
 					to_chat(user, "\nroot@ChronosuitMK4# chronowalk4 --stop\n")
