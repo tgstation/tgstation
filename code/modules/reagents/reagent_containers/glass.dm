@@ -382,6 +382,19 @@
 			to_chat(user, "<span class='warning'>[src] has a cap firmly twisted on!</span>")
 	. = ..()
 
+// heehoo bottle flipping
+/obj/item/reagent_containers/glass/beaker/waterbottle/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(cap_on && reagents.total_volume)
+		if(prob(10)) // landed upright
+			src.visible_message("<span class='notice'>The [name] lands upright!</span>")
+		else // landed on it's side
+			animate(src, transform = matrix(prob(50)? 90 : -90, MATRIX_ROTATE), time = 3, loop = 0)
+
+/obj/item/reagent_containers/glass/beaker/waterbottle/pickup(mob/user)
+	. = ..()
+	animate(src, transform = null, time = 1, loop = 0)
+
 /obj/item/reagent_containers/glass/beaker/waterbottle/empty
 	list_reagents = list()
 	cap_on = FALSE
