@@ -76,27 +76,33 @@ export const sendLogEntry = (ns, ...args) => {
 export const setupHotReloading = () => {
   if (process.env.NODE_ENV !== 'production'
       && process.env.WEBPACK_HMR_ENABLED
-      && window.WebSocket && module.hot) {
-    ensureConnection();
-    sendLogEntry(null, 'setting up hot reloading');
-    subscribe(msg => {
-      const { type } = msg;
-      sendLogEntry(null, 'received', type);
-      if (type === 'hotUpdate') {
-        const status = module.hot.status();
-        if (status !== 'idle') {
-          sendLogEntry(null, 'hot reload status:', status);
+      && window.WebSocket) {
+    if (module.hot) {
+      ensureConnection();
+      sendLogEntry(null, 'setting up hot reloading');
+      subscribe(msg => {
+        const { type } = msg;
+        sendLogEntry(null, 'received', type);
+        if (type === 'hotUpdate') {
+          const status = module.hot.status();
+          if (status !== 'idle') {
+            sendLogEntry(null, 'hot reload status:', status);
+            return;
+          }
+          module.hot
+            .check({
+              ignoreUnaccepted: true,
+              ignoreDeclined: true,
+              ignoreErrored: true,
+            })
+            // .then(modules => {
+            //   sendLogEntry(null, 'outdated modules', modules);
+            // })
+            .catch(err => {
+              sendLogEntry(null, 'reload error', err);
+            });
         }
-        module.hot
-          .check({
-            ignoreUnaccepted: true,
-            ignoreDeclined: true,
-            ignoreErrored: true,
-          })
-          .catch(err => {
-            sendLogEntry(null, 'reload error', err);
-          });
-      }
-    });
+      });
+    }
   }
 };

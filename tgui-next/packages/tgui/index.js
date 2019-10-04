@@ -8,7 +8,7 @@ import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { backendUpdate } from './backend';
 import { act, tridentVersion } from './byond';
 import { setupDrag } from './drag';
-import { getRoute, Layout } from './layout';
+import { getRoute } from './layout';
 import { createLogger } from './logging';
 import { createStore } from './store';
 
@@ -29,6 +29,7 @@ const renderLayout = () => {
   }
   // Start rendering
   try {
+    const { Layout } = require('./layout');
     const element = <Layout state={state} />;
     render(element, reactRoot);
   }

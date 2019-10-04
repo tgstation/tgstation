@@ -45,6 +45,7 @@ const setupWebpack = async link => {
     for (let file of files) {
       await util.promisify(fs.unlink)(file);
     }
+    logger.log('compiling');
   });
   // Start reloading when it's finished
   compiler.hooks.done.tap('tgui-dev-server', async stats => {

@@ -6,6 +6,7 @@ const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 module.exports = (env = {}, argv) => {
   const config = {
     mode: 'none',
+    context: __dirname,
     entry: {
       tgui: [
         path.resolve(__dirname, './styles/main.scss'),

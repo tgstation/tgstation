@@ -25,14 +25,6 @@
     "rollup",
     "vdom"
   ],
-  "collective": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/inferno",
-    "logo": "https://opencollective.com/inferno/logo.txt"
-  },
-  "scripts": {
-    "postinstall": "opencollective-postinstall"
-  },
   "rollup": {
     "bundledDependencies": [
       "inferno-shared",
@@ -54,8 +46,7 @@
   "repository": "https://github.com/infernojs/inferno",
   "dependencies": {
     "inferno-shared": "7.3.1",
-    "inferno-vnode-flags": "7.3.1",
-    "opencollective-postinstall": "^2.0.2"
+    "inferno-vnode-flags": "7.3.1"
   },
   "gitHead": "520273383d027e7aa0bf45aaeec45be1b28153b7"
 }
