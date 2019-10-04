@@ -190,3 +190,101 @@
 		playsound(src.loc, "sound/voice/complionator/[phrase_sound].ogg", 100, FALSE, 4)
 		cooldown = world.time
 		cooldown_special = world.time
+
+
+/obj/item/clothing/mask/gas/monkeymask/noisy
+	name = "noisy monkey mask"
+	desc = "A mask to look like a monkey but something feels off."
+	clothing_flags = MASKINTERNALS
+	icon_state = "monkeymask"
+	item_state = "monkeymask"
+	flags_cover = MASKCOVERSEYES
+	resistance_flags = FLAMMABLE
+	actions_types = list(/datum/action/item_action/screech)
+	var/recent_uses = 0
+	var/broken_hailer = 0
+	var/gorilla = FALSE
+	var/cooldown_special
+
+/obj/item/clothing/mask/gas/monkeymask/noisy/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/screech))
+		screech()
+	else
+		adjustmask(user)
+
+/obj/item/clothing/mask/gas/monkeymask/noisy/attack_self()
+	screech()
+/obj/item/clothing/mask/gas/monkeymask/noisy/emag_act(mob/user as mob)
+	if(!gorilla)
+		to_chat(user, "<span class='warning'>You silently turn on [src]'s gorilla module with the cryptographic sequencer.</span>")
+	else
+		return
+
+/obj/item/clothing/mask/gas/monkeymask/noisy/verb/screech()
+	set category = "Object"
+	set name = "Screech"
+	set src in usr
+	if(!isliving(usr))
+		return
+	if(!can_use(usr))
+		return
+	if(broken_hailer)
+		to_chat(usr, "<span class='warning'>\The [src]'s screeching system is jammed full of bananas paste.</span>")
+		return
+
+	var/phrase = 0	//selects which phrase to use
+	var/phrase_text = null
+	var/phrase_sound = null
+
+
+	if(cooldown < world.time - 30) // A cooldown, to stop people being jerks
+		recent_uses++
+		if(cooldown_special < world.time - 180) //A better cooldown that burns jerks
+			recent_uses = initial(recent_uses)
+
+		switch(recent_uses)
+			if(3)
+				to_chat(usr, "<span class='warning'>\The [src] is starting to smell weird.</span>")
+			if(4)
+				to_chat(usr, "<span class='userdanger'>\The [src] is smelling like burnt peanuts!</span>")
+			if(5) //overload
+				broken_hailer = 1
+				to_chat(usr, "<span class='userdanger'>\The [src]'s the depleted banana module gets ejected.</span>")
+				new /obj/item/grown/bananapeel(src)
+				return
+
+		phrase = rand(1,5)
+
+		if(gorilla)
+			phrase_text = "."
+			phrase_sound = "emag"
+		else
+
+			switch(phrase)	//sets the properties of the chosen phrase
+				if(1)				// good cop
+					phrase_text = "Heehoo give me peanut!"
+					phrase_sound = "halt"
+				if(2)
+					phrase_text = "Get me banana!"
+					phrase_sound = "bobby"
+				if(3)
+					phrase_text = "Compliance is in your best interest."
+					phrase_sound = "compliance"
+				if(4)
+					phrase_text = "Prepare for justice!"
+					phrase_sound = "justice"
+				if(5)
+					phrase_text = "Running will only increase your sentence."
+					phrase_sound = "running"
+
+		usr.audible_message("[usr]'s Banana-tor:")
+		var/list/hearers = get_hearers_in_view(DEFAULT_MESSAGE_RANGE, src)
+		var/datum/language/gamerspeak = GLOB.language_datum_instances[/datum/language/monkey]
+		for(var/mob/gamer in hearers)
+			if(gamer.has_language(/datum/language/monkey))
+				to_chat(gamer, "<font color='brown' size='4'><b>[phrase_text]</b></font>")
+			if(!gamer.has_language(/datum/language/monkey))
+				to_chat(gamer, "<font color='brown' size='4'><b>[gamerspeak.scramble(phrase_text)]</b></font>")
+		playsound(src.loc, "sound/voice/complionator/monkey/[phrase_sound].ogg", 100, FALSE, 4)
+		cooldown = world.time
+		cooldown_special = world.time
