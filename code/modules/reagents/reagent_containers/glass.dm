@@ -326,6 +326,50 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 
+	var/cap_icon_state = "bottle_cap"
+	var/cap_on = FALSE
+	var/mutable_appearance/cap_overlay
+	var/cap_x_offset = 0
+	var/cap_y_offset = -5 // small bottle is shorter
+
+
+/obj/item/reagent_containers/glass/beaker/waterbottle/Initialize()
+	. = ..()
+	cap_overlay = mutable_appearance(icon, cap_icon_state)
+	cap_overlay.pixel_x = cap_x_offset
+	cap_overlay.pixel_y = cap_y_offset
+
+/obj/item/reagent_containers/glass/beaker/waterbottle/examine(mob/user)
+	. = ..()
+	if(cap_on)
+		. += "<span class='notice'>The cap is firmly on to prevent spilling. Alt-click to remove the cap.</span>"
+	else
+		. += "<span class='notice'>The cap has been taken off. Alt-click to put a cap on.</span>"
+
+/obj/item/reagent_containers/glass/beaker/waterbottle/AltClick(mob/user)
+	. = ..()
+	if(cap_on)
+		cap_on = FALSE
+		spillable = TRUE
+		to_chat(user, "<span class='notice'>You remove the cap from [src].</span>")
+		cut_overlay(cap_overlay, TRUE)
+	else
+		cap_on = TRUE
+		spillable = FALSE
+		to_chat(user, "<span class='notice'>You put the cap on [src].</span>")
+		add_overlay(cap_overlay, TRUE)
+	update_icon()
+
+/obj/item/reagent_containers/glass/beaker/waterbottle/is_refillable()
+	if(cap_on)
+		return FALSE
+	. = ..()
+
+/obj/item/reagent_containers/glass/beaker/waterbottle/is_drainable()
+	if(cap_on)
+		return FALSE
+	. = ..()
+
 /obj/item/reagent_containers/glass/beaker/waterbottle/empty
 	list_reagents = list()
 
@@ -336,6 +380,7 @@
 	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
 	amount_per_transfer_from_this = 20
+	cap_y_offset = 0
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/large/empty
 	list_reagents = list()
