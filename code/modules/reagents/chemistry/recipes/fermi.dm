@@ -77,7 +77,7 @@
 
 	my_atom.reagents.clear_reagents() //just in case
 	return
-/
+
 //FOR INSTANT REACTIONS - DO NOT MULTIPLY LIMIT BY 10.
 //There's a weird rounding error or something ugh.
 
