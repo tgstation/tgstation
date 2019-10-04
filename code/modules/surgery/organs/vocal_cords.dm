@@ -574,6 +574,21 @@
 
 	return cooldown
 
+/obj/item/organ/vocal_cords/rainbow
+	name = "polychromatic vocal chords"
+	desc = "A magic set of vocal chords that makes your voice nice."
+	spans = list("rainbow")
+
+/obj/item/organ/vocal_cords/rainbow/handle_speech(message)
+	owner.say(message, spans = spans, sanitize = FALSE)
+
+/obj/item/organ/vocal_cords/honkmother
+	name = "honkmother-blessed voicebox"
+	desc = "Blessed by the Honkmother to bring amusement to all who hear."
+	spans = list("bigrainbow")
+
+/obj/item/organ/vocal_cords/honkmother/handle_speech(message)
+	owner.say(message, spans = spans, sanitize = FALSE)
 
 #undef COOLDOWN_STUN
 #undef COOLDOWN_DAMAGE
