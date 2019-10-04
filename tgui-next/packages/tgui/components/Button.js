@@ -2,6 +2,11 @@ import { classes } from 'common/react';
 import { Box } from './Box';
 import { Icon } from './Icon';
 
+export const BUTTON_ACTIVATION_KEYCODES = [
+  13, // Enter
+  32, // Space
+];
+
 export const Button = props => {
   const {
     fluid,
@@ -38,6 +43,13 @@ export const Button = props => {
           return;
         }
         onClick(e);
+      }}
+      onKeyPress={e => {
+        const keyCode = window.event ? e.which : e.keyCode;
+        if (BUTTON_ACTIVATION_KEYCODES.includes(keyCode)) {
+          e.preventDefault();
+          onClick(e);
+        }
       }}
       {...rest}>
       {icon && (
