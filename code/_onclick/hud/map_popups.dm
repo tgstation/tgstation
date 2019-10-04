@@ -1,20 +1,20 @@
 /client/
 	var/list/screen_maps = list() //assoc list with all the active maps - when a screen obj is added to a map, it's put in here as well. "mapname" = list(screen objs in map)
 
-/obj/abstract/screen
+/obj/screen
 	var/assigned_map = null
 	var/list/screen_info = list()//x,x pix, y, y pix || x,y
 
 /client/proc/clear_all_popups(var/map_to_clear = null)//not really needed most of the time, as the client's screen list gets reset on relog. any of the buttons are going to get caught by garbage collection anyway. they're effectively qdel'd.
 	if(!map_to_clear)
 		return FALSE
-	for(var/obj/abstract/screen/searched in screen)
+	for(var/obj/screen/searched in screen)
 		if(searched.assigned_map == map_to_clear)
 			qdel(searched)
 
 /client/verb/handle_popup_close(window_id as text) //when the popup closes, it calls this.
 	set hidden = 1
-	for(var/obj/abstract/screen/screenobj in screen_maps["[window_id]_map"])
+	for(var/obj/screen/screenobj in screen_maps["[window_id]_map"])
 		screen -= screenobj
 		qdel(screenobj)
 
@@ -47,7 +47,7 @@
 	var/x_value = world.icon_size*tilesize*width
 	var/y_value = world.icon_size*tilesize*height
 	var/newmap = create_popup(popup_name,x_value,y_value)
-	var/obj/abstract/screen/background = new
+	var/obj/screen/background = new
 	background.name = "background"
 	background.assigned_map = newmap
 	background.screen_loc = "[newmap]:1,1 TO [width],[height]"
@@ -62,7 +62,7 @@
 
 /client/proc/add_objs_to_map(var/list/to_add)
 	if(!to_add.len) return
-	for(var/obj/abstract/screen/adding in to_add)
+	for(var/obj/screen/adding in to_add)
 		var/len = adding.screen_info.len
 		var/list/data = adding.screen_info
 		switch (len)
