@@ -3,6 +3,7 @@ import { decodeHtmlEntities } from 'common/string';
 import { Component, createRef } from 'inferno';
 import { runCommand, winset } from './byond';
 import { TitleBar } from './components';
+import { BUTTON_ACTIVATION_KEYCODES } from './components/Button';
 import { Toast } from './components/Toast';
 import { UI_INTERACTIVE } from './constants';
 import { dragStartHandler, resizeStartHandler } from './drag';
@@ -73,6 +74,13 @@ export class Layout extends Component {
           onclick={() => {
             // Bring focus back to the window on every click
             this.contentRef.current.focus();
+          }}
+          onKeyPress={e => {
+            // Bring focus back to the window on every keypress
+            const keyCode = window.event ? e.which : e.keyCode;
+            if (BUTTON_ACTIVATION_KEYCODES.includes(keyCode)) {
+              this.contentRef.current.focus();
+            }
           }}>
           <Component state={state} />
         </div>
