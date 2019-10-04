@@ -1,7 +1,7 @@
 <ui-display title='Health kiosk'>
-  <ui-section>Greetings valued nanotransen employee. Insert 5 Credits to begin health analysis.</ui-section>
+  <ui-section>Greetings valued nanotransen employee. Insert {{data.kiosk_cost}} Credits to begin health analysis.</ui-section>
   <ui-section>
-    <ui-button icon='power-off' state='{{data.active_status  ? 'disabled' : null}}' action='beginScan'>Begin Scan (Cost: 5 Credits)</ui-button><br/>
+    <ui-button icon='power-off' state='{{data.active_status  ? 'disabled' : null}}' action='beginScan'>Begin Scan (Cost: {{data.kiosk_cost}} Credits)</ui-button><br/>
   </ui-section>
   {{#if data.active_status == 1}}
     <ui-section title='Medical Report'>
