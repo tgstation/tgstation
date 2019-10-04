@@ -820,6 +820,14 @@
 					/obj/machinery/portable_atmospherics/scrubber)
 	crate_name = "portable scrubber crate"
 
+/datum/supply_pack/engineering/hugescrubber
+	name = "Huge Portable Scrubber Crate"
+	desc = "A huge portable scrubber for huge atmospherics mistakes."
+	cost = 5000
+	contains = list(/obj/machinery/portable_atmospherics/scrubber/huge/movable/cargo)
+	crate_name = "huge portable scrubber crate"
+	crate_type = /obj/structure/closet/crate/large
+
 /datum/supply_pack/engineering/bsa
 	name = "Bluespace Artillery Parts"
 	desc = "The pride of Nanotrasen Naval Command. The legendary Bluespace Artillery Cannon is a devastating feat of human engineering and testament to wartime determination. Highly advanced research is required for proper construction. "
