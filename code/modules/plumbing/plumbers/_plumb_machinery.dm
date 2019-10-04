@@ -25,7 +25,7 @@
 	. = ..()
 	anchored = bolt
 	create_reagents(buffer, reagent_flags)
-	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS )
+	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS )
 
 /obj/machinery/plumbing/wrench_act(mob/living/user, obj/item/I)
 	..()
