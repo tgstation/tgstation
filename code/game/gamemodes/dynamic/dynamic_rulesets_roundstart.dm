@@ -377,6 +377,8 @@
 	return TRUE
 	
 /datum/dynamic_ruleset/roundstart/revs/rule_process()
+	if(!revolution)
+		return
 	if(check_rev_victory())
 		finished = 1
 	else if(check_heads_victory())
