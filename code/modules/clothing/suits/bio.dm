@@ -48,11 +48,14 @@
 /obj/item/clothing/head/bio_hood/security
 	armor = list("melee" = 25, "bullet" = 15, "laser" = 25, "energy" = 10, "bomb" = 25, "bio" = 100, "rad" = 80, "fire" = 30, "acid" = 100)
 	icon_state = "bio_security"
-
+	
 /obj/item/clothing/suit/bio_suit/security
 	armor = list("melee" = 25, "bullet" = 15, "laser" = 25, "energy" = 10, "bomb" = 25, "bio" = 100, "rad" = 80, "fire" = 30, "acid" = 100)
-	allowed = list(/obj/item/tank/internals, /obj/item/gun/ballistic, /obj/item/gun/energy, /obj/item/kitchen/knife/combat, /obj/item/melee/baton, /obj/item/melee/classic_baton/telescopic, /obj/item/reagent_containers/spray/pepper, /obj/item/restraints/handcuffs)
 	icon_state = "bio_security"
+
+/obj/item/clothing/suit/bio_suit/security/Initialize()
+	. = ..()
+	allowed += GLOB.security_vest_allowed
 
 //Janitor's biosuit, grey with purple arms
 /obj/item/clothing/head/bio_hood/janitor
@@ -60,7 +63,10 @@
 
 /obj/item/clothing/suit/bio_suit/janitor
 	icon_state = "bio_janitor"
-	allowed = list(/obj/item/tank/internals, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/reagent_containers/glass/beaker, /obj/item/storage/bag/trash)
+
+/obj/item/clothing/suit/bio_suit/janitor/Initialize()
+	. = ..()
+	allowed += list(/obj/item/storage/bag/trash, /obj/item/reagent_containers/spray)
 
 //Scientist's biosuit, white with a pink-ish hue
 /obj/item/clothing/head/bio_hood/scientist
@@ -75,7 +81,10 @@
 
 /obj/item/clothing/suit/bio_suit/cmo
 	icon_state = "bio_cmo"
-	allowed = list(/obj/item/tank/internals, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/reagent_containers/glass/beaker, /obj/item/melee/classic_baton/telescopic)
+
+/obj/item/clothing/suit/bio_suit/cmo/Initialize()
+	. = ..()
+	allowed += list(/obj/item/melee/classic_baton/telescopic)
 
 //Plague Dr mask can be found in clothing/masks/gasmask.dm
 /obj/item/clothing/suit/bio_suit/plaguedoctorsuit
