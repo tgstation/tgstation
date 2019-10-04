@@ -1,0 +1,4 @@
+author: "carlarctg"
+delete-after: True
+changes: 
+  - rscadd: "Biosuit buff! Biosuits can carry most of what you'd expect them to have (Large tanks, guns and etc for security suits, telescopic baton for CMO suit, cane for plague doctor suit), and they also have less slowdown."
