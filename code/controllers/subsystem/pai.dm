@@ -31,6 +31,11 @@ SUBSYSTEM_DEF(pai)
 
 			candidates -= candidate
 			usr << browse(null, "window=findPai")
+		if (!candidates.len)
+			for(var/obj/item/paicard/p in pai_card_list)
+				if(!p.pai)
+					p.clearalert()
+
 
 	if(href_list["new"])
 		var/datum/paiCandidate/candidate = locate(href_list["candidate"]) in candidates

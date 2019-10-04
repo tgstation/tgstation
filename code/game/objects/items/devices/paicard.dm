@@ -130,6 +130,7 @@
 
 /obj/item/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
 	src.pai = personality
+	cut_overlays()
 	src.add_overlay("pai-null")
 
 	playsound(loc, 'sound/effects/pai_boot.ogg', 50, TRUE, -1)
@@ -166,7 +167,6 @@
 	audible_message("<span class='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"</span>", "<span class='notice'>[src] vibrates with an alert.</span>")
 	cut_overlays()
 	add_overlay("pai-alert")
-	addtimer(CALLBACK(src, .proc/clearalert), 2 MINUTES)
 
 /obj/item/paicard/proc/clearalert()
 	if(pai)
