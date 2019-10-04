@@ -725,13 +725,3 @@
 	tools = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)
 
 
-/datum/crafting_recipe/noisymask
-	name = "noisy monkey mask"
-	result = /obj/item/clothing/mask/gas/monkeymask/noisy
-	time = 50
-	reqs = list(/obj/item/clothing/mask/gas/monkeymask = 1,
-	/obj/item/reagent_containers/food/snacks/grown/banana = 2,
-	/obj/item/clothing/mask/gas/sechailer = 1,
-	/obj/item/stack/cable_coil = 5)
-	category = CAT_MISC
-	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
