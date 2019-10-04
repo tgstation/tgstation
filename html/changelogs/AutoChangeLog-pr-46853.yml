@@ -1,0 +1,4 @@
+author: "Floyd"
+delete-after: True
+changes: 
+  - bugfix: "The roulette wheel now understands how power works"
