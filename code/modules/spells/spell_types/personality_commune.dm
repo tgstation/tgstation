@@ -29,13 +29,13 @@
 		return
 	to_chat(user, "<span class='[boldnotice]'>You concentrate and send thoughts to your other self:</span> <span class='[notice]'>[msg]</span>")
 	if(ishost)
-		if(trauma.current_controller == 1)
+		if(trauma.current_controller == 1) // Stranger in control, send to owner backseat
 			to_chat(trauma.owner_backseat, "<span class='[boldnotice]'>[flufftext]</span> <span class='[notice]'>[msg]</span>")
 			log_directed_talk(user, trauma.owner_backseat, msg, LOG_SAY ,"[name]")
-		else
+		else // Owner in control, send to stranger backseat
 			to_chat(trauma.stranger_backseat, "<span class='[boldnotice]'>[flufftext]</span> <span class='[notice]'>[msg]</span>")
 			log_directed_talk(user, trauma.stranger_backseat, msg, LOG_SAY ,"[name]")
-	else
+	else //  We're in the backseat, send to body
 		to_chat(trauma.owner, "<span class='[boldnotice]'>[flufftext]</span> <span class='[notice]'>[msg]</span>")
 		log_directed_talk(user, trauma.owner, msg, LOG_SAY ,"[name]")
 	for(var/ded in GLOB.dead_mob_list)
