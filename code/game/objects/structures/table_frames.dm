@@ -31,7 +31,7 @@
 		return
 	
 	var/obj/item/stack/material = I
-	if (material?.tableVariant)
+	if (istype(I, /obj/item/stack) && material?.tableVariant)
 		if(material.get_amount() < 1)
 			to_chat(user, "<span class='warning'>You need one [material.name] sheet to do this!</span>")
 			return
@@ -73,9 +73,9 @@
 	resistance_flags = FLAMMABLE
 
 /obj/structure/table_frame/wood/attackby(obj/item/I, mob/user, params)
-	var/obj/item/stack/material = I
-	if (material)
-		var/obj/structure/table/toConstruct
+	if (istype(I, /obj/item/stack))
+		var/obj/item/stack/material = I
+		var/toConstruct // stores the table variant
 		if(istype(I, /obj/item/stack/sheet/mineral/wood))
 			toConstruct = /obj/structure/table/wood
 		else if(istype(I, /obj/item/stack/tile/carpet))
