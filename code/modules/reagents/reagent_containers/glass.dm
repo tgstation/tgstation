@@ -328,7 +328,6 @@
 
 	var/cap_icon_state = "bottle_cap"
 	var/cap_on = TRUE
-	spillable = FALSE
 	var/mutable_appearance/cap_overlay
 	var/cap_x_offset = 0
 	var/cap_y_offset = -5 // small bottle is shorter
@@ -340,6 +339,7 @@
 	cap_overlay.pixel_x = cap_x_offset
 	cap_overlay.pixel_y = cap_y_offset
 	if(cap_on)
+		spillable = FALSE
 		add_overlay(cap_overlay, TRUE)
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/examine(mob/user)
@@ -371,6 +371,15 @@
 /obj/item/reagent_containers/glass/beaker/waterbottle/is_drainable()
 	if(cap_on)
 		return FALSE
+	. = ..()
+
+/obj/item/reagent_containers/glass/beaker/waterbottle/afterattack(obj/target, mob/user, proximity)
+	if(cap_on)
+		to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
+	else if(istype(target, /obj/item/reagent_containers/glass/beaker/waterbottle))
+		var/obj/item/reagent_containers/glass/beaker/waterbottle/WB = target
+		if(WB.cap_on)
+			to_chat(user, "<span class='warning'>[src] has a cap firmly twisted on!</span>")
 	. = ..()
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/empty
