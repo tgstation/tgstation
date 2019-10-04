@@ -1,3 +1,5 @@
+GLOBAL_LIST_INIT(vips,world.file2list("config/donators.txt")) 
+
 #define WHITELISTFILE "[global.config.directory]/whitelist.txt"
 
 GLOBAL_LIST(whitelist)
@@ -21,3 +23,8 @@ GLOBAL_PROTECT(whitelist)
 	. = (ckey in GLOB.whitelist)
 
 #undef WHITELISTFILE
+
+/proc/check_donators(var/ckey)
+	if(!GLOB.vips)
+		return FALSE
+	. = (ckey in GLOB.vips)
