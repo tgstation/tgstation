@@ -9,7 +9,11 @@
 	integrity_failure = 50
 	var/obj/item/extinguisher/stored_extinguisher
 	var/opened = FALSE
+	//set allowed item to determine what item is allowed inside.
+	var/alloweditem
+	alloweditem = /obj/item/extinguisher
 
+//mapcode
 /obj/structure/extinguisher_cabinet/Initialize(mapload, ndir, building)
 	. = ..()
 	if(building)
@@ -31,6 +35,7 @@
 		stored_extinguisher = null
 	return ..()
 
+//explosion handling
 /obj/structure/extinguisher_cabinet/contents_explosion(severity, target)
 	if(stored_extinguisher)
 		stored_extinguisher.ex_act(severity, target)
@@ -40,6 +45,7 @@
 		stored_extinguisher = null
 		update_icon()
 
+//deconstruct and add item code
 /obj/structure/extinguisher_cabinet/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH && !stored_extinguisher)
 		to_chat(user, "<span class='notice'>You start unsecuring [name]...</span>")
@@ -52,7 +58,7 @@
 
 	if(iscyborg(user) || isalien(user))
 		return
-	if(istype(I, /obj/item/extinguisher))
+	if(istype(I, alloweditem))
 		if(!stored_extinguisher && opened)
 			if(!user.transferItemToLoc(I, src))
 				return
@@ -67,7 +73,7 @@
 	else
 		return ..()
 
-
+//remove item from cabinet
 /obj/structure/extinguisher_cabinet/attack_hand(mob/user)
 	. = ..()
 	if(.)
@@ -113,7 +119,7 @@
 		playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 		opened = !opened
 		update_icon()
-
+//sprite stuff
 /obj/structure/extinguisher_cabinet/update_icon()
 	if(!opened)
 		icon_state = "extinguisher_closed"
@@ -152,6 +158,7 @@
 	desc = "Used for building wall-mounted extinguisher cabinets."
 	icon_state = "extinguisher"
 	result_path = /obj/structure/extinguisher_cabinet
+
 //wall mounted medkits
 /obj/structure/extinguisher_cabinet/medkit
 	name = "medkit cabinet"
@@ -159,7 +166,10 @@
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "medkit_closed"
 	var/obj/item/storage/firstaid/regular/stored_medkit
+	//sets allowed item for the cabinet. Setting it to main type will allow subtypes.
+	alloweditem = /obj/item/storage/firstaid
 
+//mapcode
 /obj/structure/extinguisher_cabinet/medkit/Initialize(mapload, ndir, building)
 	. = ..()
 	if(building)
@@ -167,37 +177,12 @@
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -27 : 27)
 		pixel_y = (dir & 3)? (dir ==1 ? -30 : 30) : 0
 		opened = TRUE
-		icon_state = "medkit_empty"
+		icon_state = "extinguisher_empty"
 	else
-		stored_extinguisher = new /obj/item/storage/firstaid/regular(src)
+		//set this for item spawned inside
+		stored_extinguisher = new /obj/item/storage/firstaid/regular/(src)
 
-/obj/structure/extinguisher_cabinet/medkit/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WRENCH && !stored_extinguisher)
-		to_chat(user, "<span class='notice'>You start unsecuring [name]...</span>")
-		I.play_tool_sound(src)
-		if(I.use_tool(src, user, 60))
-			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-			to_chat(user, "<span class='notice'>You unsecure [name].</span>")
-			deconstruct(TRUE)
-		return
-
-	if(iscyborg(user) || isalien(user))
-		return
-	if(istype(I, /obj/item/storage/firstaid))
-		if(!stored_extinguisher && opened)
-			if(!user.transferItemToLoc(I, src))
-				return
-			stored_extinguisher = I
-			to_chat(user, "<span class='notice'>You place [I] in [src].</span>")
-			update_icon()
-			return TRUE
-		else
-			toggle_cabinet(user)
-	else if(user.a_intent != INTENT_HARM)
-		toggle_cabinet(user)
-	else
-		return ..()
-
+//sprite code
 /obj/structure/extinguisher_cabinet/medkit/update_icon()
 	if(!opened)
 		icon_state = "medkit_closed"
@@ -210,6 +195,7 @@
 	else
 		icon_state = "medkit_empty"
 
+//wallframe
 /obj/item/wallframe/extinguisher_cabinet/medkit
 	name = "medkit cabinet frame"
 	desc = "Used for building wall-mounted medkit cabinets."
