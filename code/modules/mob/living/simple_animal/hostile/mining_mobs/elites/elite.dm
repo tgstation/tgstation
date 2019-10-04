@@ -24,6 +24,7 @@
 	stat_attack = UNCONSCIOUS
 	layer = LARGE_MOB_LAYER
 	sentience_type = SENTIENCE_BOSS
+	hud_type = /datum/hud/lavaland_elite
 	
 		
 //Gives player-controlled variants the ability to swap attacks
@@ -83,11 +84,45 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	if(myparent)
 		if(myparent.activity == TUMOR_ACTIVE && myparent.activator.stat == DEAD)
 			myparent.onEliteWon()
+	update_health_hud()
 
 /mob/living/simple_animal/hostile/asteroid/elite/death()
 	. = ..()
 	if(myparent)
 		myparent.onEliteLoss()
+		
+/mob/living/simple_animal/hostile/asteroid/elite/update_health_hud()
+	if(hud_used)
+		var/severity = 0
+		var/healthpercent = (health/maxHealth) * 100
+		switch(healthpercent)
+			if(100 to INFINITY)
+				hud_used.healths.icon_state = "elite_health0"
+			if(80 to 100)
+				hud_used.healths.icon_state = "elite_health1"
+				severity = 1
+			if(60 to 80)
+				hud_used.healths.icon_state = "elite_health2"
+				severity = 2
+			if(40 to 60)
+				hud_used.healths.icon_state = "elite_health3"
+				severity = 3
+			if(20 to 40)
+				hud_used.healths.icon_state = "elite_health4"
+				severity = 4
+			if(10 to 20)
+				hud_used.healths.icon_state = "elite_health5"
+				severity = 5
+			if(1 to 20)
+				hud_used.healths.icon_state = "elite_health6"
+				severity = 6
+			else
+				hud_used.healths.icon_state = "elite_health7"
+				severity = 7
+		if(severity > 0)
+			overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
+		else
+			clear_fullscreen("brute")
 
 //The Glowing Tumor, the actual "spawn-point" of elites, handles the spawning, arena, and procs for dealing with basic scenarios.
 
