@@ -373,13 +373,18 @@
 		return FALSE
 	. = ..()
 
+/obj/item/reagent_containers/glass/beaker/waterbottle/attack(mob/M, mob/user, obj/target)
+	if(cap_on && reagents.total_volume && istype(M))
+		to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
+	. = ..()
+
 /obj/item/reagent_containers/glass/beaker/waterbottle/afterattack(obj/target, mob/user, proximity)
-	if(cap_on)
+	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && user.a_intent == INTENT_HARM)))
 		to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
 	else if(istype(target, /obj/item/reagent_containers/glass/beaker/waterbottle))
 		var/obj/item/reagent_containers/glass/beaker/waterbottle/WB = target
 		if(WB.cap_on)
-			to_chat(user, "<span class='warning'>[src] has a cap firmly twisted on!</span>")
+			to_chat(user, "<span class='warning'>[WB] has a cap firmly twisted on!</span>")
 	. = ..()
 
 // heehoo bottle flipping
@@ -387,7 +392,7 @@
 	. = ..()
 	if(cap_on && reagents.total_volume)
 		if(prob(10)) // landed upright
-			src.visible_message("<span class='notice'>The [name] lands upright!</span>")
+			src.visible_message("<span class='notice'>[src] lands upright!</span>")
 		else // landed on it's side
 			animate(src, transform = matrix(prob(50)? 90 : -90, MATRIX_ROTATE), time = 3, loop = 0)
 
