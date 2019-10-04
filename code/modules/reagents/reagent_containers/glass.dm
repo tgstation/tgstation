@@ -327,7 +327,8 @@
 	amount_per_transfer_from_this = 10
 
 	var/cap_icon_state = "bottle_cap"
-	var/cap_on = FALSE
+	var/cap_on = TRUE
+	spillable = FALSE
 	var/mutable_appearance/cap_overlay
 	var/cap_x_offset = 0
 	var/cap_y_offset = -5 // small bottle is shorter
@@ -338,6 +339,8 @@
 	cap_overlay = mutable_appearance(icon, cap_icon_state)
 	cap_overlay.pixel_x = cap_x_offset
 	cap_overlay.pixel_y = cap_y_offset
+	if(cap_on)
+		add_overlay(cap_overlay, TRUE)
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/examine(mob/user)
 	. = ..()
@@ -372,6 +375,7 @@
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/empty
 	list_reagents = list()
+	cap_on = FALSE
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/large
 	desc = "A fresh commercial-sized bottle of water."
@@ -384,6 +388,7 @@
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/large/empty
 	list_reagents = list()
+	cap_on = FALSE
 
 /obj/item/pestle
 	name = "pestle"
