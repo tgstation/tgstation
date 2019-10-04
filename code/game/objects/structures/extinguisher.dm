@@ -152,3 +152,66 @@
 	desc = "Used for building wall-mounted extinguisher cabinets."
 	icon_state = "extinguisher"
 	result_path = /obj/structure/extinguisher_cabinet
+//wall mounted medkits
+/obj/structure/extinguisher_cabinet/medkit
+	name = "medkit cabinet"
+	desc = "A small wall mounted cabinet designed to hold a first aid kit."
+	icon = 'icons/obj/wallmounts.dmi'
+	icon_state = "medkit_closed"
+	var/obj/item/storage/firstaid/regular/stored_medkit
+
+/obj/structure/extinguisher_cabinet/medkit/Initialize(mapload, ndir, building)
+	. = ..()
+	if(building)
+		setDir(ndir)
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -27 : 27)
+		pixel_y = (dir & 3)? (dir ==1 ? -30 : 30) : 0
+		opened = TRUE
+		icon_state = "medkit_empty"
+	else
+		stored_extinguisher = new /obj/item/storage/firstaid/regular(src)
+
+/obj/structure/extinguisher_cabinet/medkit/attackby(obj/item/I, mob/user, params)
+	if(I.tool_behaviour == TOOL_WRENCH && !stored_extinguisher)
+		to_chat(user, "<span class='notice'>You start unsecuring [name]...</span>")
+		I.play_tool_sound(src)
+		if(I.use_tool(src, user, 60))
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+			to_chat(user, "<span class='notice'>You unsecure [name].</span>")
+			deconstruct(TRUE)
+		return
+
+	if(iscyborg(user) || isalien(user))
+		return
+	if(istype(I, /obj/item/storage/firstaid))
+		if(!stored_extinguisher && opened)
+			if(!user.transferItemToLoc(I, src))
+				return
+			stored_extinguisher = I
+			to_chat(user, "<span class='notice'>You place [I] in [src].</span>")
+			update_icon()
+			return TRUE
+		else
+			toggle_cabinet(user)
+	else if(user.a_intent != INTENT_HARM)
+		toggle_cabinet(user)
+	else
+		return ..()
+
+/obj/structure/extinguisher_cabinet/medkit/update_icon()
+	if(!opened)
+		icon_state = "medkit_closed"
+		return
+	if(stored_extinguisher)
+		if(istype(stored_extinguisher, /obj/item/storage/firstaid/regular)) //leave this in case someone decides to add more sprites for different kits
+			icon_state = "medkit_white"
+		else
+			icon_state = "medkit_white"
+	else
+		icon_state = "medkit_empty"
+
+/obj/item/wallframe/extinguisher_cabinet/medkit
+	name = "medkit cabinet frame"
+	desc = "Used for building wall-mounted medkit cabinets."
+	icon_state = "medkit"
+	result_path = /obj/structure/extinguisher_cabinet/medkit
