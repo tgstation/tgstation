@@ -328,6 +328,7 @@
 
 	var/cap_icon_state = "bottle_cap"
 	var/cap_on = TRUE
+	var/cap_lost = FALSE
 	var/mutable_appearance/cap_overlay
 	var/cap_x_offset = 0
 	var/cap_y_offset = -5 // small bottle is shorter
@@ -344,23 +345,34 @@
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/examine(mob/user)
 	. = ..()
-	if(cap_on)
+	if(cap_lost)
+		. += "<span class='notice'>The cap seems to be missing.</span>"
+	else if(cap_on)
 		. += "<span class='notice'>The cap is firmly on to prevent spilling. Alt-click to remove the cap.</span>"
 	else
 		. += "<span class='notice'>The cap has been taken off. Alt-click to put a cap on.</span>"
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/AltClick(mob/user)
 	. = ..()
-	if(cap_on)
+	if(cap_lost)
+		to_chat(user, "<span class='warning'>The cap seems to be missing! Where did it go?</span>")
+		return
+	
+	var/fumbled = HAS_TRAIT(user, TRAIT_CLUMSY) && prob(5)
+	if(cap_on || fumbled)
 		cap_on = FALSE
 		spillable = TRUE
-		to_chat(user, "<span class='notice'>You remove the cap from [src].</span>")
 		cut_overlay(cap_overlay, TRUE)
+		if(fumbled)
+			to_chat(user, "<span class='warning'>You fumble with [src]'s cap! The cap falls onto the ground and simply vanishes. Where the hell did it go?</span>")
+			cap_lost = TRUE
+		else
+			to_chat(user, "<span class='notice'>You remove the cap from [src].</span>")
 	else
 		cap_on = TRUE
 		spillable = FALSE
-		to_chat(user, "<span class='notice'>You put the cap on [src].</span>")
 		add_overlay(cap_overlay, TRUE)
+		to_chat(user, "<span class='notice'>You put the cap on [src].</span>")
 	update_icon()
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/is_refillable()
