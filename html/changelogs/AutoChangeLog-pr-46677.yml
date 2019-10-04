@@ -1,0 +1,4 @@
+author: "Floyd & ActionNinja"
+delete-after: True
+changes: 
+  - soundadd: "Some things now make sounds when picked up, thrown, or dropped."
