@@ -292,7 +292,7 @@
 		if("tgui:log")
 			if(params["error"])
 				log_error(params["log"])
-			else
+			else if(CONFIG_GET(flag/log_tgui_debug)) // Possible premature optimization; prevent the calls from happening if tgui logging isn't enabled
 				log_debug(params["log"])
 		if("tgui:link")
 			user << link(params["url"])
