@@ -18,7 +18,7 @@
 	///What type of power cell the cartridge has by default
 	var/obj/item/stock_parts/cell/cell
 	var/cell_type = /obj/item/stock_parts/cell
-	var/can_load = TRUE //if false, cannot load or unload cells.
+	var/can_load = FALSE //if false, cannot load or unload cells.
 	var/can_charge = TRUE //if calse, cannot recharge in a recharger
 	var/charge_sections = 4 //Number of charge sections for visualization of remaining charge.
 	var/old_ratio = 0 // stores the cell's previous charge ratio to see if it needs an updated icon
@@ -72,10 +72,8 @@
 	add_overlay("[icon_state]_charge[ratio]")
 
 
-
-//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/cell_cartridge/attack_hand(mob/user)
-	if(!can_load) //Only relevant for energy guns that can unload their cell
+	if(!can_load) //Only relevant for cartridges that can unload their cell
 		to_chat(user, "<span class='warning'>[src] cannot unload its cell!</span>")
 		return ..()
 	if(loc == user && user.is_holding(src) && cell)
