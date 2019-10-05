@@ -238,7 +238,7 @@
 				if (!isnull(chosen_colour))
 					paint_color = chosen_colour
 					. = TRUE
-				else 
+				else
 					. = FALSE
 		if("enter_text")
 			var/txt = stripped_input(usr,"Choose what to write.",
@@ -315,7 +315,9 @@
 		temp = "drawing"
 	else if(drawing in graffiti|oriented)
 		temp = "graffiti"
-
+	var/gang_check = hippie_gang_check(user,target) // hippie start -- gang check and temp setting
+	if(!gang_check) return
+	else if(gang_check == "gang graffiti") temp = gang_check // hippie end
 
 	var/graf_rot
 	if(drawing in oriented)
@@ -347,7 +349,7 @@
 	var/wait_time = 50
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
 		wait_time *= 3
-
+	if(gang) instant = FALSE // hippie -- gang spraying must not be instant, balance reasons
 	if(!instant)
 		if(!do_after(user, 50, target = target))
 			return
@@ -358,6 +360,11 @@
 
 	var/list/turf/affected_turfs = list()
 
+	if(gang) // hippie start -- gang spraying is done differently
+		if(gang_final(user, target, affected_turfs))
+			return
+		actually_paints = FALSE // skip the next if check
+	// hippie end
 	if(actually_paints)
 		var/obj/effect/decal/cleanable/crayon/C
 		switch(paint_mode)
@@ -669,7 +676,7 @@
 			if(color_hex2num(paint_color) < 350 && !istype(target, /obj/structure/window)) //Colors too dark are rejected
 				to_chat(usr, "<span class='warning'>A colour that dark on an object like this? Surely not...</span>")
 				return FALSE
-				
+
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 
 			if(istype(target, /obj/structure/window))
