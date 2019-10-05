@@ -289,6 +289,11 @@
 			if(params["screen"])
 				ui_screen = params["screen"]
 			SStgui.update_uis(src_object)
+		if("tgui:log")
+			if(params["error"])
+				log_error(params["log"])
+			else
+				log_debug(params["log"])
 		if("tgui:link")
 			user << link(params["url"])
 		if("tgui:fancy")
@@ -385,3 +390,15 @@
 
 /datum/tgui/proc/set_titlebar(value)
 	titlebar = value
+
+/datum/tgui/proc/log_error(message)
+	var/out_message = {"ERROR: [mob] ([mob.ckey]) using "[title]":\n
+		[message]
+		"}
+	log_tgui_error(out_message)
+
+/datum/tgui/proc/log_debug(message)
+	var/out_message = {"DEBUG: [mob] ([mob.ckey]) using "[title]":\n
+		[message]
+		"}
+	log_tgui_debug(out_message)
