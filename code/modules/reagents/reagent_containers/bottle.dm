@@ -309,6 +309,41 @@
 	desc = "A small bottle containing Bio Virus Antidote Kit."
 	list_reagents = list(/datum/reagent/vaccine/fungal_tb = 30)
 
+/obj/item/reagent_containers/glass/bottle/flymutation
+	name = "ancient bottle"
+	desc = "An old bottle with a faded label from eras gone-by. You can't tell if the label has worn away natrually or if it has been hastily scratched off."
+	list_reagents = list(/datum/reagent/mutationtoxin/fly = 5)
+
+/obj/item/reagent_containers/glass/bottle/catmutation
+	name = "ancient bottle"
+	desc = "An old bottle with a faded label from eras gone-by. You can't tell if the label has worn away natrually or if it has been hastily scratched off."
+	list_reagents = list(/datum/reagent/mutationtoxin/felinid = 5)
+
+/obj/item/reagent_containers/glass/bottle/skeletonmutation
+	name = "ancient bottle"
+	desc = "An old bottle with a faded label from eras gone-by. You can't tell if the label has worn away natrually or if it has been hastily scratched off."
+	list_reagents = list(/datum/reagent/mutationtoxin/skeleton = 5)
+
+/obj/item/reagent_containers/glass/bottle/lizardmutation
+	name = "ancient bottle"
+	desc = "An old bottle with a faded label from eras gone-by. You can't tell if the label has worn away natrually or if it has been hastily scratched off."
+	list_reagents = list(/datum/reagent/mutationtoxin/lizard = 5)
+
+/obj/item/reagent_containers/glass/bottle/mothmutation
+	name = "ancient bottle"
+	desc = "An old bottle with a faded label from eras gone-by. You can't tell if the label has worn away natrually or if it has been hastily scratched off."
+	list_reagents = list(/datum/reagent/mutationtoxin/moth = 5)
+
+/obj/item/reagent_containers/glass/bottle/mothmutation
+	name = "ancient bottle"
+	desc = "An old bottle with a faded label from eras gone-by. You can't tell if the label has worn away natrually or if it has been hastily scratched off."
+	list_reagents = list(/datum/reagent/mutationtoxin/moth = 5)
+
+/obj/item/reagent_containers/glass/bottle/podmutation
+	name = "ancient bottle"
+	desc = "An old bottle with a faded label from eras gone-by. You can't tell if the label has worn away natrually or if it has been hastily scratched off."
+	list_reagents = list(/datum/reagent/mutationtoxin/pod = 5)
+
 //Oldstation.dmm chemical storage bottles
 
 /obj/item/reagent_containers/glass/bottle/hydrogen
@@ -410,3 +445,4 @@
 /obj/item/reagent_containers/glass/bottle/bromine
 	name = "bromine bottle"
 	list_reagents = list(/datum/reagent/bromine = 30)
+
