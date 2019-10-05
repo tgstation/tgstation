@@ -1372,28 +1372,28 @@
 	name = "Bromine"
 	description = "A brownish liquid that's highly reactive. Useful for stopping free radicals, but not intended for human consumption."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "D35415"
 	taste_description = "chemicals"
 
 /datum/reagent/phenol
 	name = "Phenol"
 	description = "An aromatic ring of carbon with a hydroxyl group. A useful precursor to some medicines, but has no healing properties on its own."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#E7EA91"
 	taste_description = "acid"
 
 /datum/reagent/ash
 	name = "Ash"
 	description = "Supposedly phoenixes rise from these, but you've never seen it."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#515151"
 	taste_description = "ash"
 
 /datum/reagent/acetone
 	name = "Acetone"
 	description = "A slick, slightly carcinogenic liquid. Has a multitude of mundane uses in everyday life."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#AF14B7"
 	taste_description = "acid"
 
 /datum/reagent/colorful_reagent
@@ -1404,6 +1404,8 @@
 	var/list/random_color_list = list("#00aedb","#a200ff","#f47835","#d41243","#d11141","#00b159","#00aedb","#f37735","#ffc425","#008744","#0057e7","#d62d20","#ffa700")
 	taste_description = "rainbows"
 
+/datum/reagent/colorful_reagent/Initialize()
+	color = pick(random_color_list)
 
 /datum/reagent/colorful_reagent/on_mob_life(mob/living/carbon/M)
 	M.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
@@ -1427,7 +1429,7 @@
 	name = "Quantum Hair Dye"
 	description = "Has a high chance of making you look like a mad scientist."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = potential_colors
 	var/list/potential_colors = list("0ad","a0f","f73","d14","d14","0b5","0ad","f73","fc2","084","05e","d22","fa0") // fucking hair code
 	taste_description = "sourness"
 
